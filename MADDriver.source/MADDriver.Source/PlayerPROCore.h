@@ -1,0 +1,23 @@
+/*
+ *  PlayerPROCore.h
+ *  PPMacho
+ *
+ *  Created by C.W. Betts on 11/22/09.
+ *  Copyright 2009 __MyCompanyName__. All rights reserved.
+ *
+ */
+
+#ifndef __PLAYERPROCORE_H__
+#define __PLAYERPROCORE_H__
+
+#ifndef _MAC_H
+#define _MAC_H
+#endif
+
+#include <PlayerPROCore/MAD.h>
+#include <PlayerPROCore/FileUtils.h>
+#include <PlayerPROCore/PPDefs.h>
+#include <PlayerPROCore/RDriver.h>
+#include <PlayerPROCore/PPPlug.h>
+
+#endif

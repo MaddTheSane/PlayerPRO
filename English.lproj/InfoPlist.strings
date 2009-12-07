@@ -1,0 +1,23 @@
+/* 
+   InfoPlist.strings
+   PPMacho
+
+   Created by C.W. Betts on 11/22/09.
+   Copyright 2009 __MyCompanyName__. All rights reserved.
+ */
+
+"PPMTMFile" = "Multitracker Audio";
+"PPS3MFile" = "ScreamTracker Audio";
+"PPMODFile" = "ProTracker Audio";
+"PPXMFile" = "FastTracker Audio";
+"PPITFile" = "ImpulseTracker Audio";
+
+"PPMADFile" = "PlayerPRO MAD Tracker";
+"PPMADFGFile" = "PlayerPRO MADfg Tracker";
+"PPMADIFile" = "PlayerPRO MADI Tracker";
+"PPMADKFile" = "PlayerPRO MADK Tracker";
+"PPMADHFile" = "PlayerPRO MADH Tracker";
+
+"PPMIDI" = "MIDI File";
+"PPImpExpBundle" = "PlayerPRO Import/Export PlugIn";
+
