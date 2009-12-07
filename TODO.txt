@@ -1,0 +1,8 @@
+Please note that this code is still in Beta, in that many parts of the code
+doesn't work as expected or desired.
+
+* There isn't a Window or a Help menu.
+* The localization Rez files and the app-wide Rez files have multiply defined
+    resources
+* Some buttons are missing.
+* The Plug-in architecture needs to be re-written.
