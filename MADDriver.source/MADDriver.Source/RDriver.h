@@ -432,11 +432,7 @@ typedef PPSndDoubleBufferHeader2 *        PPSndDoubleBufferHeader2Ptr;
 
 typedef struct _MADFileFormatPlugin {
     IUNKNOWN_C_GUTS;
-	OSErr (STDMETHODCALLTYPE *TestFile)(FSRefPtr AlienRef);
-	OSErr (STDMETHODCALLTYPE *ExtractInfo)( PPInfoRec *info, FSRefPtr AlienRef);
-//	OSErr (STDMETHODCALLTYPE *FillPlugX)( MADPlugInfo *p);
-	OSErr (STDMETHODCALLTYPE *ConvertX2Mad)(Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info);
-	OSErr (STDMETHODCALLTYPE *ConvertMad2X)(Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info);
+	OSErr (STDMETHODCALLTYPE *ThePlugMain)(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 } MADFileFormatPlugin;
 
 
@@ -445,7 +441,7 @@ struct PlugInfo
 #ifdef MAC_OS_9
 	Handle		IOPlug;										// Plug CODE
 #else
-	struct IUnknownVTbl **IOPlug;
+	MADFileFormatPlugin **IOPlug;
 #endif
 	Str63		MenuName;										// Plug name
 	Str63		AuthorString;									// Plug author

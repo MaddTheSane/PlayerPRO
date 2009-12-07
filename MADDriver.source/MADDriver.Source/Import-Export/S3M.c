@@ -1312,3 +1312,9 @@ OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	
 	return myErr;
 }
+
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x9B, 0xC1, 0x10, 0x3B, 0x2C, 0x9F, 0x4F, 0x2C, 0x95, 0xAD, 0xA3, 0x00, 0x6E, 0xE3, 0x76, 0x71)) //9BC1103B-2C9F-4F2C-95AD-A3006EE37671
+//#define CFPlugType S3MType
+
+#define PLUGINFACTORY S3MFactory
+#include "CFPlugin-bridge.c"

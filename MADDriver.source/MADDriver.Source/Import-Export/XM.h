@@ -290,14 +290,6 @@
 #pragma options align=mac68k
 #endif
 
-/*
-#define UWORD unsigned short
-#define ULONG unsigned long
-#define UBYTE Byte
-#define BYTE char
-#define BOOL Boolean 
- */
-
 typedef struct XMHEADER{
 	char  id[17];                   // ID text: 'Extended module: '
 	char  songname[21];             // Module name, padded with zeroes and 0x1a at the end

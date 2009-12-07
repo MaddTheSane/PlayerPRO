@@ -17,7 +17,21 @@
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.0</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<false/>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>08D9626A-F3D9-4536-A29B-78222DFD8F32</key>
+		<string>OKTAFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>9415E357-0ED2-4F9F-9CA1-B7280C27F59B</key>
+		<array>
+			<string>08D9626A-F3D9-4536-A29B-78222DFD8F32</string>
+		</array>
+	</dict>
 	<key>CSResourcesFileMapped</key>
 	<true/>
 </dict>

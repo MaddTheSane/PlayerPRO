@@ -17,7 +17,21 @@
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.0</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<false/>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>2C23FDF2-61BD-47B4-8380-784AC4A1E50D</key>
+		<string>MEDFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>9415E357-0ED2-4F9F-9CA1-B7280C27F59B</key>
+		<array>
+			<string>2C23FDF2-61BD-47B4-8380-784AC4A1E50D</string>
+		</array>
+	</dict>
 	<key>CSResourcesFileMapped</key>
 	<true/>
 </dict>

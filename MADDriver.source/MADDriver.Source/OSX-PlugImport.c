@@ -104,6 +104,8 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 	MADFileFormatPlugin		**formatPlugA = NULL;
 	Boolean					foundInterface = false;
 	CFArrayRef				factories;
+	MADDriverSettings		driverSettings;
+	
 	
 	//  See if this plug-in implements the Test type.
 	factories	= CFPlugInFindFactoriesForPlugInTypeInPlugIn( kPlayerPROModFormatTypeID, tempPlugRef );
@@ -162,28 +164,7 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 	
 	
 	CFRelease( factories );
-	
-	switch (order) {
-		case 'TEST':
-			tempRef = (FSRefPtr)NewPtrClear(sizeof(FSRef));
-			FSPathMakeRef((UInt8*)AlienFile, tempRef, NULL);
-			iErr = (*formatPlugA)->TestFile(tempRef);
-			break;
-		case 'INFO':
-			tempRef = (FSRefPtr)NewPtrClear(sizeof(FSRef));
-			FSPathMakeRef((UInt8*)AlienFile, tempRef, NULL);
-			iErr = (*formatPlugA)->ExtractInfo(info, tempRef);
-			break;
-		case 'IMPL':
-			iErr = (*formatPlugA)->ConvertX2Mad(AlienFile, theNewMAD, info);
-			break;
-		case 'EXPL':
-			iErr = (*formatPlugA)->ConvertMad2X(AlienFile, theNewMAD, info);
-			break;
-		default:
-			iErr = MADOrderNotImplemented;
-			break;
-	}
+	iErr = (*formatPlugA)->ThePlugMain(order, AlienFile, theNewMAD, info, &driverSettings);
 	if (tempRef != NULL) {
 		DisposePtr((Ptr)tempRef);
 		tempRef = NULL;

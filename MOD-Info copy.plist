@@ -17,7 +17,21 @@
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>0.9</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<false/>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>873AA791-E9E5-42EB-8FE0-351A99CF9A3A</key>
+		<string>PPMIDIFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>9415E357-0ED2-4F9F-9CA1-B7280C27F59B</key>
+		<array>
+			<string>873AA791-E9E5-42EB-8FE0-351A99CF9A3A</string>
+		</array>
+	</dict>
 	<key>CSResourcesFileMapped</key>
 	<true/>
 </dict>

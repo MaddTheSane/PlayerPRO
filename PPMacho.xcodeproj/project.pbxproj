@@ -680,6 +680,7 @@
 		5518105A10C35A2600ADA9F4 /* small MOD Music.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MOD Music.mod"; sourceTree = "<group>"; };
 		5518107210C35A4500ADA9F4 /* PlayerPRO Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5518107410C35A4500ADA9F4 /* PlayerPRO Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PlayerPRO Example-Info.plist"; path = "../PlayerPRO Example-Info.plist"; sourceTree = "<group>"; };
+		551E166910CCD531003C842A /* CFPlugin-bridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-bridge.c"; sourceTree = "<group>"; };
 		553340D910BB5368005208D1 /* 669.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = 669.c; sourceTree = "<group>"; };
 		553340DA10BB5368005208D1 /* 669.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = 669.h; sourceTree = "<group>"; };
 		553340DB10BB5368005208D1 /* AMF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = AMF.c; sourceTree = "<group>"; };
@@ -1229,75 +1230,204 @@
 			path = Example;
 			sourceTree = "<group>";
 		};
-		553340D810BB5368005208D1 /* Import-Export */ = {
+		551E166C10CCD5DF003C842A /* 669 */ = {
+			isa = PBXGroup;
+			children = (
+				5533415710BB572C005208D1 /* 669-Info.plist */,
+				558689FE10BFB31500FCC24D /* 669_Plug.rsrc.r */,
+				553340D910BB5368005208D1 /* 669.c */,
+				553340DA10BB5368005208D1 /* 669.h */,
+			);
+			name = 669;
+			sourceTree = "<group>";
+		};
+		551E166D10CCD5F3003C842A /* AMF */ = {
+			isa = PBXGroup;
+			children = (
+				553341D410BB5FE0005208D1 /* AMF-Info.plist */,
+				558689FF10BFB31500FCC24D /* AMF_Plug.rsrc.r */,
+				553340DB10BB5368005208D1 /* AMF.c */,
+				553340DC10BB5368005208D1 /* AMF.h */,
+			);
+			name = AMF;
+			sourceTree = "<group>";
+		};
+		551E166E10CCD607003C842A /* DMF */ = {
+			isa = PBXGroup;
+			children = (
+				553341EA10BB5FFA005208D1 /* DMF-Info.plist */,
+				55868A0110BFB31500FCC24D /* DMF_Plug.rsrc.r */,
+				553340DE10BB5368005208D1 /* DMF.c */,
+				553340DF10BB5368005208D1 /* DMF.h */,
+			);
+			name = DMF;
+			sourceTree = "<group>";
+		};
+		551E166F10CCD619003C842A /* APPL */ = {
+			isa = PBXGroup;
+			children = (
+				55868A6810BFB46100FCC24D /* APPL-Info.plist */,
+				55868A0010BFB31500FCC24D /* APPL_Plug.rsrc.r */,
+				553340DD10BB5368005208D1 /* APPL.c */,
+			);
+			name = APPL;
+			sourceTree = "<group>";
+		};
+		551E167010CCD628003C842A /* IT */ = {
+			isa = PBXGroup;
+			children = (
+				553341FD10BB600A005208D1 /* IT-Info.plist */,
+				55868A0210BFB31500FCC24D /* IT_Plug.rsrc.r */,
+				553340E110BB5368005208D1 /* IT.c */,
+				553340E210BB5368005208D1 /* IT.h */,
+			);
+			name = IT;
+			sourceTree = "<group>";
+		};
+		551E167110CCD642003C842A /* MADfg */ = {
+			isa = PBXGroup;
+			children = (
+				5586871010BF5C4700FCC24D /* MADfg-Info.plist */,
+				55868A0310BFB31500FCC24D /* MADfg_Plug.rsrc.r */,
+				553340E310BB5368005208D1 /* MADfg.c */,
+				553340E410BB5368005208D1 /* MADfg.h */,
+			);
+			name = MADfg;
+			sourceTree = "<group>";
+		};
+		551E167210CCD652003C842A /* MADH */ = {
+			isa = PBXGroup;
+			children = (
+				5586871F10BF5C4A00FCC24D /* MADH-Info.plist */,
+				55868A0410BFB31500FCC24D /* MADH_Plug.rsrc.r */,
+				553340E510BB5368005208D1 /* MADH.c */,
+				553340E610BB5368005208D1 /* MADH.h */,
+			);
+			name = MADH;
+			sourceTree = "<group>";
+		};
+		551E167310CCD660003C842A /* MADI */ = {
+			isa = PBXGroup;
+			children = (
+				5586872E10BF5C4E00FCC24D /* MADI-Info.plist */,
+				55868A0510BFB31500FCC24D /* MADI_Plug.rsrc.r */,
+				553340E710BB5368005208D1 /* MADI.c */,
+				553340E810BB5368005208D1 /* MADI.h */,
+			);
+			name = MADI;
+			sourceTree = "<group>";
+		};
+		551E167410CCD66F003C842A /* MED */ = {
+			isa = PBXGroup;
+			children = (
+				5586874E10BF5D3700FCC24D /* MED-Info.plist */,
+				55868A0610BFB31500FCC24D /* MED_Plug.rsrc.r */,
+				553340E910BB5368005208D1 /* MED.c */,
+				553340EA10BB5368005208D1 /* MED.h */,
+			);
+			name = MED;
+			sourceTree = "<group>";
+		};
+		551E167510CCD681003C842A /* MOD */ = {
 			isa = PBXGroup;
 			children = (
 				5533411210BB547D005208D1 /* MOD-Info.plist */,
-				5533415710BB572C005208D1 /* 669-Info.plist */,
-				553341D410BB5FE0005208D1 /* AMF-Info.plist */,
-				553341EA10BB5FFA005208D1 /* DMF-Info.plist */,
-				553341FD10BB600A005208D1 /* IT-Info.plist */,
-				5586871010BF5C4700FCC24D /* MADfg-Info.plist */,
-				5586871F10BF5C4A00FCC24D /* MADH-Info.plist */,
-				5586872E10BF5C4E00FCC24D /* MADI-Info.plist */,
-				5586874E10BF5D3700FCC24D /* MED-Info.plist */,
-				5586876310BF5E4D00FCC24D /* MTM-Info.plist */,
-				558687DF10BF620500FCC24D /* Okta-Info.plist */,
-				558687FB10BF624E00FCC24D /* S3M-Info.plist */,
-				5586881C10BF62F100FCC24D /* ULT-Info.plist */,
-				5586882D10BF62F500FCC24D /* UMX-Info.plist */,
-				5586883E10BF62FB00FCC24D /* XM-Info.plist */,
-				5586889810BF67F100FCC24D /* MOD-Info copy.plist */,
-				55868A6810BFB46100FCC24D /* APPL-Info.plist */,
-				558689FE10BFB31500FCC24D /* 669_Plug.rsrc.r */,
-				558689FF10BFB31500FCC24D /* AMF_Plug.rsrc.r */,
-				55868A0010BFB31500FCC24D /* APPL_Plug.rsrc.r */,
-				55868A0110BFB31500FCC24D /* DMF_Plug.rsrc.r */,
-				55868A0210BFB31500FCC24D /* IT_Plug.rsrc.r */,
-				55868A0310BFB31500FCC24D /* MADfg_Plug.rsrc.r */,
-				55868A0410BFB31500FCC24D /* MADH_Plug.rsrc.r */,
-				55868A0510BFB31500FCC24D /* MADI_Plug.rsrc.r */,
-				55868A0610BFB31500FCC24D /* MED_Plug.rsrc.r */,
-				55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */,
 				55868A0810BFB31500FCC24D /* MOD_Plug.rsrc.r */,
-				55868A0910BFB31500FCC24D /* MTM_Plug.rsrc.r */,
-				55868A0A10BFB31500FCC24D /* OKTA_Plug.rsrc.r */,
-				55868A0B10BFB31500FCC24D /* S3M_Plug.rsrc.r */,
-				55868A0C10BFB31500FCC24D /* ULT_Plug.rsrc.r */,
-				55868A0D10BFB31500FCC24D /* UMX_Plug.rsrc.r */,
-				55868A0E10BFB31500FCC24D /* XM_Plug.rsrc.r */,
-				553340D910BB5368005208D1 /* 669.c */,
-				553340DA10BB5368005208D1 /* 669.h */,
-				553340DB10BB5368005208D1 /* AMF.c */,
-				553340DC10BB5368005208D1 /* AMF.h */,
-				553340DD10BB5368005208D1 /* APPL.c */,
-				553340DE10BB5368005208D1 /* DMF.c */,
-				553340DF10BB5368005208D1 /* DMF.h */,
-				553340E110BB5368005208D1 /* IT.c */,
-				553340E210BB5368005208D1 /* IT.h */,
-				553340E310BB5368005208D1 /* MADfg.c */,
-				553340E410BB5368005208D1 /* MADfg.h */,
-				553340E510BB5368005208D1 /* MADH.c */,
-				553340E610BB5368005208D1 /* MADH.h */,
-				553340E710BB5368005208D1 /* MADI.c */,
-				553340E810BB5368005208D1 /* MADI.h */,
-				553340E910BB5368005208D1 /* MED.c */,
-				553340EA10BB5368005208D1 /* MED.h */,
-				553340EB10BB5368005208D1 /* MIDI Folder */,
 				553340F610BB5368005208D1 /* Mod.c */,
 				553340F710BB5368005208D1 /* MOD.h */,
+			);
+			name = MOD;
+			sourceTree = "<group>";
+		};
+		551E167610CCD68E003C842A /* MTM */ = {
+			isa = PBXGroup;
+			children = (
+				5586876310BF5E4D00FCC24D /* MTM-Info.plist */,
+				55868A0910BFB31500FCC24D /* MTM_Plug.rsrc.r */,
 				553340F810BB5368005208D1 /* MTM.c */,
 				553340F910BB5368005208D1 /* MTM.h */,
+			);
+			name = MTM;
+			sourceTree = "<group>";
+		};
+		551E167710CCD699003C842A /* Okta */ = {
+			isa = PBXGroup;
+			children = (
+				558687DF10BF620500FCC24D /* Okta-Info.plist */,
+				55868A0A10BFB31500FCC24D /* OKTA_Plug.rsrc.r */,
 				553340FA10BB5368005208D1 /* Okta.c */,
 				553340FB10BB5368005208D1 /* Okta.h */,
+			);
+			name = Okta;
+			sourceTree = "<group>";
+		};
+		551E167810CCD6A5003C842A /* S3M */ = {
+			isa = PBXGroup;
+			children = (
+				558687FB10BF624E00FCC24D /* S3M-Info.plist */,
+				55868A0B10BFB31500FCC24D /* S3M_Plug.rsrc.r */,
 				553340FC10BB5368005208D1 /* S3M.c */,
 				553340FD10BB5368005208D1 /* S3M.h */,
-				553340FE10BB5368005208D1 /* ULT.c */,
-				553340FF10BB5368005208D1 /* ULT.h */,
+			);
+			name = S3M;
+			sourceTree = "<group>";
+		};
+		551E167910CCD6B4003C842A /* UMX */ = {
+			isa = PBXGroup;
+			children = (
+				5586882D10BF62F500FCC24D /* UMX-Info.plist */,
+				55868A0D10BFB31500FCC24D /* UMX_Plug.rsrc.r */,
 				5533410010BB5368005208D1 /* UMX.c */,
 				5533410110BB5368005208D1 /* UMX.h */,
+			);
+			name = UMX;
+			sourceTree = "<group>";
+		};
+		551E167A10CCD6BE003C842A /* ULT */ = {
+			isa = PBXGroup;
+			children = (
+				5586881C10BF62F100FCC24D /* ULT-Info.plist */,
+				55868A0C10BFB31500FCC24D /* ULT_Plug.rsrc.r */,
+				553340FE10BB5368005208D1 /* ULT.c */,
+				553340FF10BB5368005208D1 /* ULT.h */,
+			);
+			name = ULT;
+			sourceTree = "<group>";
+		};
+		551E167B10CCD6C8003C842A /* XM */ = {
+			isa = PBXGroup;
+			children = (
+				5586883E10BF62FB00FCC24D /* XM-Info.plist */,
+				55868A0E10BFB31500FCC24D /* XM_Plug.rsrc.r */,
 				5533410310BB5368005208D1 /* XM.c */,
 				5533410410BB5368005208D1 /* XM.h */,
+			);
+			name = XM;
+			sourceTree = "<group>";
+		};
+		553340D810BB5368005208D1 /* Import-Export */ = {
+			isa = PBXGroup;
+			children = (
+				551E166910CCD531003C842A /* CFPlugin-bridge.c */,
+				551E167510CCD681003C842A /* MOD */,
+				551E166C10CCD5DF003C842A /* 669 */,
+				551E166D10CCD5F3003C842A /* AMF */,
+				551E166E10CCD607003C842A /* DMF */,
+				551E167010CCD628003C842A /* IT */,
+				551E167110CCD642003C842A /* MADfg */,
+				551E167210CCD652003C842A /* MADH */,
+				551E167310CCD660003C842A /* MADI */,
+				551E167410CCD66F003C842A /* MED */,
+				551E167610CCD68E003C842A /* MTM */,
+				551E167710CCD699003C842A /* Okta */,
+				551E167810CCD6A5003C842A /* S3M */,
+				551E167A10CCD6BE003C842A /* ULT */,
+				551E167910CCD6B4003C842A /* UMX */,
+				551E167B10CCD6C8003C842A /* XM */,
+				5586889810BF67F100FCC24D /* MOD-Info copy.plist */,
+				551E166F10CCD619003C842A /* APPL */,
+				55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */,
+				553340EB10BB5368005208D1 /* MIDI Folder */,
 			);
 			path = "Import-Export";
 			sourceTree = "<group>";

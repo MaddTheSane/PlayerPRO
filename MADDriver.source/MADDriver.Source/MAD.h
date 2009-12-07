@@ -24,19 +24,13 @@
 
 
 //////////////////////////////////////////////////////////////////////
-#if defined(_MAC_H)			// MACINTOSH
-//#define _MAC_H
+#if defined(__APPLE__)			// MACINTOSH
+#ifndef _MAC_H
+#define _MAC_H
+#endif
 #define EXP extern
 
 #include <Carbon/Carbon.h>
-
-#elif macintosh					// MACINTOSH - CODEWARRIOR				
-
-//#define _MAC_H
-
-//#define _MIDIHARDWARE_			// DONT DEFINE IT, IF YOU DONT WANT TO SUPPORT OMS !!!!
-
-#define EXP
 
 //////////////////////////////////////////////////////////////////////
 #else 			// WIN32 - 95/NT
@@ -59,10 +53,10 @@
 #if defined(WIN32) || defined (_BE_H)
 
 #if !defined(THINK_C)
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
-#include "stdint.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
 
 typedef unsigned char 	Byte;
 typedef char 			*Ptr;
@@ -84,8 +78,8 @@ typedef UInt32			UnsignedFixed;
 
 #define NewPtr(x)					(Ptr) malloc(x)
 #define NewPtrClear(x) 	 			(Ptr) calloc(x, 1)
-#define NewPtrSys(x)				(Ptr) malloc(x)
-#define NewPtrSysClear(x) 			(Ptr) calloc(x, 1)
+//#define NewPtrSys(x)				(Ptr) malloc(x)
+//#define NewPtrSysClear(x) 			(Ptr) calloc(x, 1)
 
 //#define DisposPtr(x)				free(x)
 #define DisposePtr(x)				free(x)

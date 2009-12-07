@@ -1499,3 +1499,8 @@ EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	
 	return myErr;
 }
+
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xC9, 0x3F, 0x7E, 0x10, 0x99, 0xA0, 0x42, 0xCE, 0xB1, 0x01, 0x1B, 0xF2, 0x6F, 0x2A, 0x1D, 0xB8)) //C93F7E10-99A0-42CE-B101-1BF26F2A1DB8
+
+#define PLUGINFACTORY ITFactory
+#include "CFPlugin-bridge.c"

@@ -457,3 +457,8 @@ OSErr main( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *inf
 
 	return myErr;
 }
+
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x16, 0x94, 0x9F, 0x32, 0x8E, 0x4F, 0x4D, 0x37, 0xAC, 0x8C, 0xE1, 0xD3, 0x83, 0x59, 0x6C, 0x51)) //16949F32-8E4F-4D37-AC8C-E1D383596C51
+
+#define PLUGINFACTORY MADHFactory
+#include "CFPlugin-bridge.c"
