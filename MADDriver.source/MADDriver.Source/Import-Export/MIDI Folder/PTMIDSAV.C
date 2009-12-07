@@ -600,7 +600,7 @@ int PutpatternsPtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *ini
  extern		Boolean				UseQKIns;
  extern		MADMusic			*curMusic = NULL;
  
-void mystrcpy( Ptr a, BytePtr b)
+static inline void mystrcpy( Ptr a, BytePtr b)
 {
 	BlockMoveData( b + 1, a, b[ 0]);
 }

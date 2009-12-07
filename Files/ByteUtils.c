@@ -7,8 +7,8 @@
  *
  */
 
-#include "ByteUtils.h"
 #include "Shuddup.h"
+#include "ByteUtils.h"
 
 void SwapPrefs(Prefs *swapPrefs)
 {

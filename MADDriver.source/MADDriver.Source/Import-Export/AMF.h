@@ -51,7 +51,9 @@ typedef struct {
     uchar       volume;
     ulong       loopstart,loopend;
 } INSTRUMENT;
+
 #if defined(powerc) || defined(__powerc) || defined(__APPLE__)
 #pragma options align=reset
 #endif
+
 #endif

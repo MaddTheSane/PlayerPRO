@@ -11,11 +11,8 @@
 //This is a bridge for old-style PlayerPRO import-export plugins.
 //the following needs to be defined before this file is included:
 /*
-#define PLUGMAINFUNCTION mainMOD //This is the function that was traditionally called 'main'.  Due to possible naming conflicts, use a different name
 #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(NULL, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46) //The UUID of the plugin.  MUST match the one in the Info.plist file
-#define PLUGNAME MOD //The name of the plugin
-
- 
+#define PLUGINFACTORY SixSixNineFactory //The factory name as defined in the Info.plist file
  */
 
 #include <PlayerPROCore/PPPlug.h>
@@ -27,10 +24,6 @@ typedef struct _CFPlugType {
 	UInt32 _refCount;
 } CFPlugType;
 
-static OSErr ThePlugMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-{
-	return main(order, AlienFileName, MadFile, info, init);
-}
 
 static void _deallocCFPlugType( CFPlugType *myInstance );
 
@@ -104,7 +97,7 @@ static MADFileFormatPlugin CFPlugFormat =
 	CFPlugQueryInterface,
 	CFPlugAddRef,
 	CFPlugRelease,
-	ThePlugMain
+	main
 };
 
 static CFPlugType *_allocCFPlugType( CFUUIDRef factoryID )

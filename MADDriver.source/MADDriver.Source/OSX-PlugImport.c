@@ -99,76 +99,15 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 					 PPInfoRec				*info)
 {
 	OSErr					iErr = noErr;
-	FSRefPtr				tempRef = NULL;
-	CFPlugInRef				tempPlugRef /*= inMADDriver->ThePlug[PlugNo].IOPlug*/;
-	MADFileFormatPlugin		**formatPlugA = NULL;
-	Boolean					foundInterface = false;
-	CFArrayRef				factories;
+	MADFileFormatPlugin		**formatPlugA = inMADDriver->ThePlug[PlugNo].IOPlug;
 	MADDriverSettings		driverSettings;
 	
+	driverSettings.sysMemory = false;
 	
 	//  See if this plug-in implements the Test type.
-	factories	= CFPlugInFindFactoriesForPlugInTypeInPlugIn( kPlayerPROModFormatTypeID, tempPlugRef );
 	
 	
-	if ( factories != NULL )
-	{
-		CFIndex	factoryCount;
-		CFIndex	index;
-		//TODO: Shrink this so that it doesn't call IUnknownVTbl
-		
-		factoryCount	= CFArrayGetCount( factories );
-		if ( factoryCount > 0 )
-		{
-			for ( index = 0 ; (index < factoryCount) && (foundInterface == false) ; index++ )
-			{
-				CFUUIDRef	factoryID;
-				
-				//  Get the factory ID for the first location in the array of IDs.
-				factoryID = (CFUUIDRef) CFArrayGetValueAtIndex( factories, index );
-				if ( factoryID )
-				{
-					IUnknownVTbl **iunknown;
-					
-					//  Use the factory ID to get an IUnknown interface. Here the plug-in code is loaded.
-					iunknown	= (IUnknownVTbl **) CFPlugInInstanceCreate( NULL, factoryID, kPlayerPROModFormatTypeID );
-					
-					if ( iunknown )
-					{
-						//  If this is an IUnknown interface, query for the test interface.
-						(*iunknown)->QueryInterface( iunknown, CFUUIDGetUUIDBytes( kPlayerPROModFormatInterfaceID ), (LPVOID *)( &formatPlugA ) );
-						
-						// Now we are done with IUnknown
-						(*iunknown)->Release( iunknown );
-						
-						if ( formatPlugA )
-						{
-							//	We found the interface we need
-							foundInterface	= true;
-						}
-					}
-				}
-			}
-		}
-		else {
-			return MADUnknownErr;
-		}
-	}
-	else {
-		return MADUnknownErr;
-	}
-	
-	if (foundInterface == false) {
-		return MADCannotFindPlug;
-	}
-	
-	
-	CFRelease( factories );
 	iErr = (*formatPlugA)->ThePlugMain(order, AlienFile, theNewMAD, info, &driverSettings);
-	if (tempRef != NULL) {
-		DisposePtr((Ptr)tempRef);
-		tempRef = NULL;
-	}
 	return iErr;
 }
 
@@ -194,75 +133,15 @@ void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
 void CloseImportPlug(MADLibrary *inMADDriver)
 {
 	short	i;
-	
+	ULONG RelCount = 0;
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		{
-			Boolean				foundInterface = false;
-			CFArrayRef			factories;
-			CFPlugInRef			tempPlugRef /*= inMADDriver->ThePlug[PlugNo].IOPlug*/;
-			MADFileFormatPlugin	**formatPlugA = NULL;
-			//TODO: Shrink this so that it doesn't call IUnknownVTbl
-			factories	= CFPlugInFindFactoriesForPlugInTypeInPlugIn( kPlayerPROModFormatTypeID, tempPlugRef );
-			if ( factories != NULL )
-			{
-				CFIndex	factoryCount;
-				CFIndex	index;
-				
-				factoryCount	= CFArrayGetCount( factories );
-				if ( factoryCount > 0 )
-				{
-					for ( index = 0 ; (index < factoryCount) && (foundInterface == false) ; index++ )
-					{
-						CFUUIDRef	factoryID;
-						
-						//  Get the factory ID for the first location in the array of IDs.
-						factoryID = (CFUUIDRef) CFArrayGetValueAtIndex( factories, index );
-						if ( factoryID )
-						{
-							IUnknownVTbl **iunknown;
-							
-							//  Use the factory ID to get an IUnknown interface. Here the plug-in code is loaded.
-							iunknown	= (IUnknownVTbl **) CFPlugInInstanceCreate( NULL, factoryID, kPlayerPROModFormatTypeID );
-							
-							if ( iunknown )
-							{
-								//  If this is an IUnknown interface, query for the test interface.
-								(*iunknown)->QueryInterface( iunknown, CFUUIDGetUUIDBytes( kPlayerPROModFormatInterfaceID ), (LPVOID *)( &formatPlugA ) );
-								
-								// Now we are done with IUnknown
-								(*iunknown)->Release( iunknown );
-								
-								if ( formatPlugA )
-								{
-									//	We found the interface we need
-									foundInterface	= true;
-								}
-							}
-						}
-					}
-				}
-			}
-			
-			CFRelease( factories );
-			int RelCount;
-			if(foundInterface != false)
-			{
-				do {
-					RelCount = (*formatPlugA)->Release(formatPlugA);
-				} while (RelCount > 0);
-			}
-			
-			
-		}
-		//		CFRelease(inMADDriver->ThePlug[i].IOPlug);
-		CFRelease(inMADDriver->ThePlug[i].MenuName);
-		CFRelease(inMADDriver->ThePlug[i].AuthorString);
-		//		CFRelease(inMADDriver->ThePlug[i].file);
-		CFRelease(inMADDriver->ThePlug[i].filename);
+		MADFileFormatPlugin	**formatPlugA = inMADDriver->ThePlug[i].IOPlug;
+		do {
+			RelCount = (*formatPlugA)->Release(formatPlugA);
+		} while (RelCount > 0);			
 	}
-	
 	DisposePtr( (Ptr) inMADDriver->ThePlug);		inMADDriver->ThePlug = NULL;
 }
 
@@ -338,7 +217,7 @@ OSErr PPIdentifyFile( MADLibrary *inMADDriver, char *type, char *AlienFile)
 	strcpy( type, "!!!!");
 	return MADCannotFindPlug;
 }
-
+/*
 OSErr PPIdentifyFSRef( MADLibrary *inMADDriver, char *type, FSRefPtr AlienRef)
 {
 	UInt8 AlienFileName[PATH_MAX];
@@ -349,7 +228,7 @@ OSErr PPIdentifyFSRef( MADLibrary *inMADDriver, char *type, FSRefPtr AlienRef)
 	
 	return PPIdentifyFile(inMADDriver, type, (char*)AlienFileName);
 }
-
+*/
 
 Boolean	MADPlugAvailable( MADLibrary *inMADDriver, char* kindFile)
 {

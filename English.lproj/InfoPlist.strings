@@ -6,7 +6,7 @@
    Copyright 2009 __MyCompanyName__. All rights reserved.
  */
 
-"PPMTMFile" = "Multitracker Audio";
+"PPMTMFile" = "MultiTracker Audio";
 "PPS3MFile" = "ScreamTracker Audio";
 "PPMODFile" = "ProTracker Audio";
 "PPXMFile" = "FastTracker Audio";
@@ -18,6 +18,6 @@
 "PPMADKFile" = "PlayerPRO MADK Tracker";
 "PPMADHFile" = "PlayerPRO MADH Tracker";
 
-"PPMIDI" = "MIDI File";
+"MIDI File" = "MIDI File";
 "PPImpExpBundle" = "PlayerPRO Import/Export PlugIn";
 

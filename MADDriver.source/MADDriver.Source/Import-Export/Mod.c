@@ -75,20 +75,9 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
-
-
-/*Ptr MADPlugNewPtr( long size, MADDriverSettings* init)
-{
-	return NewPtr( size);
-}
-
-Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init)
-{
-	return NewPtrClear( size);
-}*/
 #endif
 
-void AnalyseSignatureMOD( long EOFo, long temp, short *maxInstru, long *PatternSize, short *tracksNo, MODDef* aMOD)
+static void AnalyseSignatureMOD( long EOFo, long temp, short *maxInstru, long *PatternSize, short *tracksNo, MODDef* aMOD)
 {
 	long 		test, i;
 	Boolean		result;

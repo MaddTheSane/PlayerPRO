@@ -1,4 +1,7 @@
 //TODO: Sync up resource codes with English Localization
+//TODO: make resources more edit-friendly or move over to NIBs
+
+#include <Carbon/Carbon.r>
 
 data 'ALRT' (130, "FATAL ERROR") {
 	$"0028 0028 00AD 0131 0082 5555 280A"                 /* .(.(.≠.1.ÇUU(¬ */

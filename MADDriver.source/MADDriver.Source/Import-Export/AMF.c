@@ -79,23 +79,24 @@ long		 			finetune[16] =
 
 short					pan, uusize, oldIns = 1;
 
-theAMFRead = AMFCopyPtr;
+	theAMFRead = AMFCopyPtr;
 
-READAMFFILE( &AMFType, 4);		// AMF Type
-if( AMFType >= 0x414D460C ) pan = 32;
-else pan = 16;
+	READAMFFILE( &AMFType, 4);		// AMF Type
+	//TODO: Byte-checking!
+	if( AMFType >= 0x414D460C ) pan = 32;
+	else pan = 16;
 
-if( AMFType == 0x414D4601 ) uusize = 3;
-else if( AMFType >= 0x414D460A ) oldIns = 0;
-else if( AMFType!= 0x414D4608 && AMFType != 0x414D4609) return MADFileNotSupportedByThisPlug;
+	if( AMFType == 0x414D4601 ) uusize = 3;
+	else if( AMFType >= 0x414D460A ) oldIns = 0;
+	else if( AMFType!= 0x414D4608 && AMFType != 0x414D4609) return MADFileNotSupportedByThisPlug;
 
 // Conversion
-theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);	
-if( theMAD->header == NULL) return MADNeedMemory;
+	theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);	
+	if( theMAD->header == NULL) return MADNeedMemory;
 
-mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO AMF Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO AMF Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 
-theMAD->header->MAD = 'MADK';
+	theMAD->header->MAD = 'MADK';
 
 READAMFFILE( theMAD->header->name, 32);
 READAMFFILE( &tempByte, 1);		noIns = tempByte;
@@ -339,7 +340,7 @@ static OSErr ExtractAMFInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Total Instruments ***/
 	info->totalInstruments = 0;
 	
-	pStrcpy( (unsigned char*) info->formatDescription, "\pAMF Plug");
+	strcpy( info->formatDescription, "AMF Plug");
 
 	return noErr;
 }
@@ -430,7 +431,7 @@ EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
-					myErr = iRead( sndSize, AlienFile,iFileRefI);
+					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					if( myErr == noErr)
 					{
 						myErr = ExtractAMFInfo( info, AlienFile);

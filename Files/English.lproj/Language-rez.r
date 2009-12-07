@@ -1,3 +1,5 @@
+//TODO: make resources more edit-friendly or move over to NIBs
+
 #include <Carbon/Carbon.r>
 
 data 'TEXT' (200, "Arpeggio") {

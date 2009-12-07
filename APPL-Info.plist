@@ -17,9 +17,22 @@
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
-		<key>CSResourcesFileMapped</key>
+	<string>1.0</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<false/>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>D12AD705-3138-4C80-A8E1-C06F48752008</key>
+		<string>APPLFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>9415E357-0ED2-4F9F-9CA1-B7280C27F59B</key>
+		<array>
+			<string>D12AD705-3138-4C80-A8E1-C06F48752008</string>
+		</array>
+	</dict>
+	<key>CSResourcesFileMapped</key>
 	<true/>
-
 </dict>
 </plist>

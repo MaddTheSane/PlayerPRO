@@ -65,6 +65,8 @@ int MADstrcmp( const char *dst, const char* src);
 	
 unsigned char* MYC2PStr( Ptr cStr);
 void MYP2CStr( unsigned char *cStr);
+OSType Ptr2OSType( Ptr str);
+void OSType2Ptr( OSType type, Ptr str);
 
 
 ////////////////////////////////////////////////////////////

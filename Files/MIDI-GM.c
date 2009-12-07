@@ -36,7 +36,7 @@
 
 
 #ifdef __BIG_ENDIAN__
-#define GetNELong
+#define GetNELong(toget) toget
 #else
 #define	GetNELong(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
@@ -54,19 +54,19 @@
 #endif
 
 #ifdef __BIG_ENDIAN__
-#define GetNEShort
+#define GetNEShort(toget) toget
 #else
 #define GetNEShort(toget) EndianU16_BtoL(toget.bigEndianValue)
 #endif
 
 #ifdef __BIG_ENDIAN__
-#define GetNEOSType
+#define GetNEOSType(toget) toget
 #else
 #define GetNEOSType(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
 
 #ifdef __BIG_ENDIAN__
-#define GetNEUnsignedFixed
+#define GetNEUnsignedFixed(toget) toget
 #else
 #define	GetNEUnsignedFixed(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
@@ -232,7 +232,7 @@ void SetSampNameM( Str255 theNewName, Ptr destName)
 	}
 }
 
-#include <CoreFoundation/CFBundle.h>
+#include <CFBundle.h>
 
 short GenerateDLSFromBundle()
 {
@@ -608,11 +608,11 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 	MyAtom						at, sat, insAt, insHe, rgnAt, sat3, sat4, InfoAt, InfoData;
 	INSTHEADER 					curIns;
 	
-//	if( TestRunningOnCarbonX())
-//	{
+	if( TestRunningOnCarbonX())
+	{
 		iFileRef = GenerateDLSFromBundle();
 		iErr = noErr;
-/*	}
+	}
 	else
 	{
 		iErr = FindFolder( kOnSystemDisk, kExtensionFolderType, kDontCreateFolder, &foundVRefNum, &foundDirID);
@@ -623,7 +623,7 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 			iFileRef = OpenDataFileQK( foundDirID, foundVRefNum);
 		}
 	}
-	*/
+	
 	if( iErr == noErr)
 	{
 		if( iFileRef != -1)
@@ -890,6 +890,7 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 						
 						switch( fmt.wBitsPerSample)
 						{
+							//TODO: Handle 24-bit sound?
 							case 8:
 								ConvertInstrumentIn( (Byte*) curData->data, dataAt.size);
 								break;
@@ -935,7 +936,7 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 				}
 			}
 			
-			iClose( iFileRef);
+			FSCloseFork( iFileRef);
 		}
 	}
 	
@@ -1426,7 +1427,7 @@ short OpenResFileQK( long dirID, short VRefNum)
 	FSSpec			spec;
 	short			ret;
 	
-	pStrcpy( spec.name, "\pQuickTimeâ„¢ Musical Instruments");
+	pStrcpy( spec.name, "\pQuickTimeª Musical Instruments");
 	spec.vRefNum = VRefNum;
 	spec.parID = dirID;
 	
