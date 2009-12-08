@@ -10,10 +10,6 @@
 #ifndef __PLAYERPROCORE_H__
 #define __PLAYERPROCORE_H__
 
-#ifndef _MAC_H
-#define _MAC_H
-#endif
-
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPDefs.h>

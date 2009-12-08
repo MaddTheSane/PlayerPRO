@@ -78,7 +78,7 @@ MaxApplZone();*/
 	}
 
 /***************************************************/
-/***   Open MADH Resource ID 3214 and play it !   **/
+/***   Open MADK Resource ID 3214 and play it !   **/
 /***************************************************/
 
 	if( MADLoadMusicRsrc( &Music, 'MADK', kMADKmusic) != noErr)

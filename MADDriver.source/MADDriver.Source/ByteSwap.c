@@ -7,8 +7,7 @@
  *
  */
 
-#include <CoreServices/CoreServices.h>
-
+#include "MAD.h"
 
 static __inline__ void MADByteSwap32(void *theData)
 {
@@ -23,10 +22,10 @@ static __inline__ void MADByteSwap32(void *theData)
 static __inline__ void MADByteSwap16(void *theData)
 {
 	UInt16			buf = *((UInt16*) theData);
-#ifndef _MAC_H
-	*((UInt16*) msg_buf) = (((((UInt16)buf)<<8) & 0xFF00) | ((((UInt16)buf)>>8) & 0x00FF));
-#else
+#ifdef _MAC_H
 	*((UInt16*) theData) = Endian16_Swap(buf);
+#else
+	*((UInt16*) msg_buf) = (((((UInt16)buf)<<8) & 0xFF00) | ((((UInt16)buf)>>8) & 0x00FF));
 #endif
 }
 

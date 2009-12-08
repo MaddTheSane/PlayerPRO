@@ -157,7 +157,11 @@ void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 		PlugLocations = GetPluginFolderLocationsWithFSRef(PluginFolder);
 	}
 	CFRetain(PlugLocations);
-	
+	{
+		
+		
+	}
+	CFRelease(PlugLocations);
 	CFRelease(PlugLocations);
 	PlugLocations = NULL;
 	NScanResource(inMADDriver);

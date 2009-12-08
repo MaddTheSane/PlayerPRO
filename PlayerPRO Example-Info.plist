@@ -193,7 +193,7 @@
 				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMIDI</string>
+			<string>MIDI Music</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.midi-audio</string>
 			<key>UTTypeReferenceURL</key>
