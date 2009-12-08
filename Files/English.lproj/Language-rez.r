@@ -1377,1292 +1377,2384 @@ data 'styl' (400) {
 	$"0000 0000 0000"                                     /* ...... */
 };
 
-resource 'STR#' (128, "Errors")
-{
-	{
-		"PlayerPRO can only read 11Khz or 22Khz sounds.",
-		"There isn’t enough memory for this sound. Allocate more memory for PlayerPRO using the Finder’s “Get Info.”",
-		"This program requires 32-bit addressing. Use the Memory Control Panel to set your system to 32-bit mode and restart.",
-		"No sounds/music could be found in this file. Check this file.",
-		"A file error has occured. There probably wasn’t enough room.",
-		"MacOS 8.0 or higher is required by PlayerPRO.",
-		"This sound uses a compression format which can't be read by Player PRO. Please refer to the documentation.",
-		"Your changes will not be in effect until the next MOD file is opened.",
-		"Memory is getting critically low.  Allocate more memory for Player PRO using the Finder’s “Get Info.”",
-		"This music couldn't be found.",
-		"This driver is only available on the AV series Macintoshs.",
-		"Sorry, but this is the un-registered version of PlayerPRO! You need to register PlayerPRO to do this!",
-		"To do this, you will need to select an instrument in the “Instrument List” window.",
-		"Do you really want to replace this instrument?",
-		"This MOD file is out of date. Should I update it?",
-		"This Macintosh is able to use a higher-performance driver. It's better to use the ROSSET Routines MOD 2.",
-		"Your Macintosh is unable to play sound in stereo. Buy another Macintosh!",
-		"Where is the Apple Sound Chip (ASC)? What is this computer?",
-		"Sorry, but you don’t have a microphone.",
-		"The instrument loop is incorrect. Please fix it.",
-		"Are you sure that you want to delete this instrument?",
-		"Sorry, but you can't use this driver without an Apple Sound Chip.",
-		"You must be in 256 color mode and have a 640x480 monitor to use this function.",
-		"Sorry, but that sound is too large. Instruments must be smaller than 128K.",
-		"Please rebuild your Desktop! (Reboot while holding the Command and Option keys.)",
-		"Sorry, but that response was invalid. Please enter a number between 0 and the highest pattern.",
-		"PlayerPRO requires the Sound Manager 3.0 to run.",
-		"Sorry, but the length of the partition must be between 1 and 128.",
-		"Sorry, but this registration code is incorrect.",
-		"Please enter your name.",
-		"This program has already been registered.",
-		"The un-registered version of PlayerPRO is limited to only 20 minutes! Please support PlayerPRO development!",
-		"Sorry, but PlayerPRO requires AppleEvents.",
-		"Sorry, but there’s nothing in this window to print.",
-		"This MIDI file is unrecognizable. It doesn’t seem to be a SMF (MThd) file.",
-		"In your pattern list, the higher pattern number MUST appear at least one time!",
-		"Are you sure that you want to replace the current partition with this partition of the MIDI file?",
-		"Sorry, but nothing is selected.",
-		"This MIDI file has no samples. Samples are required if you want to hear something!",
-		"Sorry, but the “Plug-In” modules returned an error. Please refer to the documentation.",
-		"Sorry, but PlayerPRO is UNREGISTERED, and your 15 day trial period is over. You must either purchase this program or delete it!",
-		"This function doesn't work in this version.",
-		"It's not a valid value!",
-		"I cannot open this file.\nFile Type Error.",
-		"I don't have Import Methode to open this file.",
-		"Are you sure that you want to delete notes of this track and pattern?",
-		"WARNING - This is a beta version of this Import Plug!",
-		"Are you sure that you want to purge this pattern?",
-		"I cannot delete this pattern. Your music file MUST have 1 pattern at least.",
-		"Are you sure that you want to delete this pattern?",
-		"Do you want to replace the selected pattern or load it as a new pattern?",
-		"This PlayerPRO version supports pattern size from 1 to 999. Change it, please!",
-		"Do you really want to change the amplitude of this sound?",
-		"Printer Driver Error...",
-		"Use PtMid program to convert Midi files into Player PRO files.",
-		"I cannot find any help file.",
-		"MIDI Hardware Error. Check PatchBay Control Panel and your connections.",
-		"MIDI Factor value must be between 0% and 500% of the velocity value.",
-		"Error in 'argument' value. It's a hexadecimal from 0 to FF.",
-		"Correct the file type & creator of this file before opening?",
-		"This SoundInPut device doesn't support options dialog.",
-		"File not found!\nI cannot find this music on your hard disk.",
-		"Not enough memory to do this operation. Allocate more memory to PlayerPRO.",
-		"The name “^2” is already taken by another file. Please use a different name.",
-		"Give a name to this sound, if you want to create a file!",
-		"Sorry, but sample rate (c2spd) must be between 1 Hz and 50 Khz.",
-		"PLUG ERROR: This function is not supported by this plug. (orderNotImplemented)",
-		"PLUG ERROR: Not enough memory to do this operation. Allocate more memory to PlayerPRO. (needMoreMemory)",
-		"PLUG ERROR: This file format isn't supported by this plug. (fileNotSupportedByThisPlug)",
-		"PLUG ERROR: Unknown Error. (unknowError)",
-		"PLUG ERROR: PlayerPRO cannot find a plug to open this file format.\n(cannotFindPlug)",
-		"You don't have 'QuickTime™ Musical Instruments' extension. You cannot use this function.",
-		"Error: PlayerPRO cannot open 'Help PP' resources.",
-		"Error: I cannot find an input device.",
-		"Writing Error: volume write protected.",
-		"Sorry, but RealNote must be between -96 and 96.",
-		"Sorry, but Volume must be between 0 and 64.",
-		"Sorry, but Volume Fade must be between 0 and 32767.",
-		"Sorry, maximum points for volume envelope is 12.",
-		"Error in 'volume' value. It's a hexadecimal from 0 to FF.",
-		"Sorry, but the unregistered version cannot open this kind of files. Only registered version can open all sound/music files.",
-		"You have to turn OFF Recording state. See Tools Window.",
-		"Writing Error. I cannot write this file on this hard disk.",
-		"Please enter your country.",
-		"Please select the distributor, by clicking on the pop-up menu.",
-		"PLUG ERROR: PlayerPRO cannot find the plug to do this operation.\n(cannotFindPlug)",
-		"Your 'PlayerPRO Pref' file was CORRUPTED. It has been deleted!",
-		"WARNING - This function doesn't support UNDO. This function will remove all unused data of this music. Continue?",
-		"I'm sorry, this function needs Drag Manager Extension. It is available on your system disks.",
-		"PlayerPRO has a problem to identify your name & your registration ID. Check it!",
-		"Do you really want to change the mode of this sound?",
-		"PlayerPRO requires Appearance Manager extension. Please update your MacOS to version 8.0 or higher.",
-		"This beta version has expired. Please download final version on www.quadmation.com/pphome.htm",
-		"WARNING !\nYou are entering in a protected area.",
-		"PlayerPRO requires Quicktime extension version 2.5 or higher.",
-		"PlayerPRO is not able to open this kind of file.",
-		"There are NO space between letters in the registration code! Remove them please.",
-		"Not enough memory to load your internet browser. Closing applications can make more memory available.",
-		"Internet Connection Error.",
-		"Are you sure that you want to reset the URLs list to the default one?",
-		"This version of PlayerPRO requires a PowerPC G4 with Altivec support.",
-		"Are you sure that you want to delete this music file?\nYou cannot undo this operation.",
-		"You need to open “Digital Editor” window to use this function.",
-		"Are you sure that you want to delete this VST settings?",
-		"Are you sure that you want to replace these settings with current one?",
-		"This file is compressed in “.zip” format. You need to uncompress it before PlayerPRO can use it.",
-		"Some VST Plugs are not available: ",
-		"MPEG4 requires Quicktime 6 or higher. You can download it on http://www.apple.com/quicktime",
-		
+resource 'STR#' (132, "Note") {
+	{	/* array StringArray: 36 elements */
+		/* [1] */
+		"B 6",
+		/* [2] */
+		"B#6",
+		/* [3] */
+		"A 6",
+		/* [4] */
+		"A#6",
+		/* [5] */
+		"G#6",
+		/* [6] */
+		"G 6",
+		/* [7] */
+		"F#6",
+		/* [8] */
+		"F 6",
+		/* [9] */
+		"E 6",
+		/* [10] */
+		"D#6",
+		/* [11] */
+		"D 6",
+		/* [12] */
+		"C#6",
+		/* [13] */
+		"C 6",
+		/* [14] */
+		"B 5",
+		/* [15] */
+		"A#5",
+		/* [16] */
+		"G#5",
+		/* [17] */
+		"G 5",
+		/* [18] */
+		"F#5",
+		/* [19] */
+		"F 5",
+		/* [20] */
+		"E 5",
+		/* [21] */
+		"D#5",
+		/* [22] */
+		"D 5",
+		/* [23] */
+		"C#5",
+		/* [24] */
+		"C 5",
+		/* [25] */
+		"B 4",
+		/* [26] */
+		"A#4",
+		/* [27] */
+		"A 4",
+		/* [28] */
+		"G#4",
+		/* [29] */
+		"G 4",
+		/* [30] */
+		"F#4",
+		/* [31] */
+		"F 4",
+		/* [32] */
+		"E 4",
+		/* [33] */
+		"D#4",
+		/* [34] */
+		"D 4",
+		/* [35] */
+		"C#4",
+		/* [36] */
+		"C 4"
 	}
 };
 
-data 'STR#' (132, "Note") {
-	$"0024 0342 2036 0342 2336 0341 2036 0341"            /* .$.B 6.B#6.A 6.A */
-	$"2336 0347 2336 0347 2036 0346 2336 0346"            /* #6.G#6.G 6.F#6.F */
-	$"2036 0345 2036 0344 2336 0344 2036 0343"            /*  6.E 6.D#6.D 6.C */
-	$"2336 0343 2036 0342 2035 0341 2335 0347"            /* #6.C 6.B 5.A#5.G */
-	$"2335 0347 2035 0346 2335 0346 2035 0345"            /* #5.G 5.F#5.F 5.E */
-	$"2035 0344 2335 0344 2035 0343 2335 0343"            /*  5.D#5.D 5.C#5.C */
-	$"2035 0342 2034 0341 2334 0341 2034 0347"            /*  5.B 4.A#4.A 4.G */
-	$"2334 0347 2034 0346 2334 0346 2034 0345"            /* #4.G 4.F#4.F 4.E */
-	$"2034 0344 2334 0344 2034 0343 2334 0343"            /*  4.D#4.D 4.C#4.C */
-	$"2034"                                               /*  4 */
-};
-
-data 'STR#' (129, "ScreenSaver") {
-	$"0007 0E50 6C61 7965 7220 5052 4F20 352E"            /* ...Player PRO 5. */
-	$"300B 596F 7520 6361 6E20 6E6F 770A 6F72"            /* 0.You can now¬or */
-	$"6465 7220 796F 7572 1050 6C61 7965 7250"            /* der your.PlayerP */
-	$"524F 2043 442D 526F 6D10 7769 7468 2033"            /* RO CD-Rom.with 3 */
-	$"3530 3020 6D75 7369 6373 0F35 3030 2069"            /* 500 musics.500 i */
-	$"6E73 7472 756D 656E 7473 0F61 6E64 206D"            /* nstruments.and m */
-	$"7573 6963 2074 6F6F 6C73"                           /* usic tools */
-};
-
-data 'STR#' (200, "Instruments list help") {
-	$"0009 4843 7265 6174 6520 6120 6E65 7720"            /* .∆HCreate a new  */
-	$"736F 756E 6420 696E 746F 2074 6865 2073"            /* sound into the s */
-	$"656C 6563 7465 6420 696E 7374 7275 6D65"            /* elected instrume */
-	$"6E74 2063 656C 6C2E 2043 686F 6F73 6520"            /* nt cell. Choose  */
-	$"7468 6520 6D65 7468 6F64 2E29 5361 7665"            /* the method.)Save */
-	$"2074 6865 2073 656C 6563 7465 6420 696E"            /*  the selected in */
-	$"7374 7275 6D65 6E74 2069 6E74 6F20 6120"            /* strument into a  */
-	$"6669 6C65 2E34 4C6F 6164 2061 2073 6F75"            /* file.4Load a sou */
-	$"6E64 2066 696C 6520 696E 746F 2074 6865"            /* nd file into the */
-	$"2073 656C 6563 7465 6420 696E 7374 7275"            /*  selected instru */
-	$"6D65 6E74 2063 656C 6C2E 1F44 656C 6574"            /* ment cell..Delet */
-	$"6520 7468 6520 7365 6C65 6374 6564 2069"            /* e the selected i */
-	$"6E73 7472 756D 656E 742E 2F4D 6F72 6520"            /* nstrument./More  */
-	$"696E 666F 726D 6174 696F 6E20 6162 6F75"            /* information abou */
-	$"7420 7468 6520 7365 6C65 6374 6564 2069"            /* t the selected i */
-	$"6E73 7472 756D 656E 742E 3E54 6865 2063"            /* nstrument.>The c */
-	$"6F6C 6F72 2069 6E64 6963 6174 6573 2074"            /* olor indicates t */
-	$"6865 2074 7261 636B 206F 6E20 7768 6963"            /* he track on whic */
-	$"6820 7468 6520 696E 7374 7275 6D65 6E74"            /* h the instrument */
-	$"2069 7320 7573 6564 2E2D 4C69 7374 206F"            /*  is used.-List o */
-	$"6620 696E 7374 7275 6D65 6E74 7320 7573"            /* f instruments us */
-	$"6564 2069 6E20 7468 6520 6375 7272 656E"            /* ed in the curren */
-	$"7420 736F 6E67 2E24 506C 6179 2074 6865"            /* t song.$Play the */
-	$"2073 656C 6563 7465 6420 696E 7374 7275"            /*  selected instru */
-	$"6D65 6E74 2F73 616D 706C 652E 2D53 686F"            /* ment/sample.-Sho */
-	$"7720 7468 6520 7761 7665 666F 726D 206F"            /* w the waveform o */
-	$"6620 7468 6520 7365 6C65 6374 6564 2069"            /* f the selected i */
-	$"6E73 7472 756D 656E 742E"                           /* nstrument. */
-};
-
-data 'STR#' (1000, "PatList Help") {
-	$"0007 2C43 7265 6174 6520 6120 6E65 7720"            /* ..,Create a new  */
-	$"7061 7474 6572 6E20 616E 6420 6164 6420"            /* pattern and add  */
-	$"6974 2074 6F20 7468 6520 6C69 7374 2E2B"            /* it to the list.+ */
-	$"4C6F 6164 2061 2070 6174 7465 726E 2066"            /* Load a pattern f */
-	$"696C 6520 616E 6420 6164 6420 6974 2074"            /* ile and add it t */
-	$"6F20 7468 6520 6C69 7374 2E26 5361 7665"            /* o the list.&Save */
-	$"2074 6865 2073 656C 6563 7465 6420 7061"            /*  the selected pa */
-	$"7474 6572 6E20 696E 746F 2061 2066 696C"            /* ttern into a fil */
-	$"652E 1C44 656C 6574 6520 7468 6520 7365"            /* e..Delete the se */
-	$"6C65 6374 6564 2070 6174 7465 726E 2E30"            /* lected pattern.0 */
-	$"4765 7420 6D6F 7265 2069 6E66 6F72 6D61"            /* Get more informa */
-	$"7469 6F6E 2061 626F 7574 2074 6865 2073"            /* tion about the s */
-	$"656C 6563 7465 6420 7061 7474 6572 6E2E"            /* elected pattern. */
-	$"1D44 6973 706C 6179 2074 6865 2073 656C"            /* .Display the sel */
-	$"6563 7465 6420 7061 7474 6572 6E2E 2A54"            /* ected pattern.*T */
-	$"6865 2070 6174 7465 726E 206C 6973 7420"            /* he pattern list  */
-	$"7573 6564 2069 6E20 7468 6520 6375 7272"            /* used in the curr */
-	$"656E 7420 736F 6E67 2E"                             /* ent song. */
-};
-
-data 'STR#' (1200, "Adaptors Help") {
-	$"000A 354C 6F61 6420 616E 2027 6164 6170"            /* .¬5Load an 'adap */
-	$"746F 7273 2720 6669 6C65 2061 6E64 2072"            /* tors' file and r */
-	$"6570 6C61 6365 2063 7572 7265 6E74 2073"            /* eplace current s */
-	$"6574 7469 6E67 732E 2D53 6176 6520 6375"            /* ettings.-Save cu */
-	$"7272 656E 7420 7365 7474 696E 6773 2069"            /* rrent settings i */
-	$"6E74 6F20 6120 2761 6461 7074 6F72 7327"            /* nto a 'adaptors' */
-	$"2066 696C 652E 2952 6573 6574 2073 7065"            /*  file.)Reset spe */
-	$"6564 2073 6574 7469 6E67 2074 6F20 7374"            /* ed setting to st */
-	$"616E 6461 7264 2073 6574 7469 6E67 732E"            /* andard settings. */
-	$"2D53 6574 2075 7020 6C65 6674 2F72 6967"            /* -Set up left/rig */
-	$"6874 2076 6F6C 756D 6520 6261 7365 6420"            /* ht volume based  */
-	$"6F6E 2074 7261 636B 206E 6F20 312E 2643"            /* on track no 1.&C */
-	$"6861 6E67 6520 7468 6520 706C 6179 696E"            /* hange the playin */
-	$"6720 7069 7463 682E 2043 6C69 636B 206F"            /* g pitch. Click o */
-	$"6E20 6974 2E26 4368 616E 6765 2074 6865"            /* n it.&Change the */
-	$"2070 6C61 7969 6E67 2073 7065 6564 2E20"            /*  playing speed.  */
-	$"436C 6963 6B20 6F6E 2069 742E 3943 6861"            /* Click on it.9Cha */
-	$"6E67 6520 7468 6520 706C 6179 696E 6720"            /* nge the playing  */
-	$"766F 6C75 6D65 2028 4841 5244 5741 5245"            /* volume (HARDWARE */
-	$"2076 6F6C 756D 6529 2E20 436C 6963 6B20"            /*  volume). Click  */
-	$"6F6E 2069 742E 5943 6861 6E67 6520 766F"            /* on it.YChange vo */
-	$"6C75 6D65 2F70 616E 6E69 6E67 2066 6F72"            /* lume/panning for */
-	$"2065 6163 6820 7472 6163 6B2E 2043 6C69"            /*  each track. Cli */
-	$"636B 206F 6E20 6974 2E20 5573 6520 276F"            /* ck on it. Use 'o */
-	$"7074 696F 6E27 206B 6579 2074 6F20 6368"            /* ption' key to ch */
-	$"616E 6765 2061 6C6C 2074 7261 636B 732E"            /* ange all tracks. */
-	$"3943 6861 6E67 6520 7468 6520 706C 6179"            /* 9Change the play */
-	$"696E 6720 766F 6C75 6D65 2028 534F 4654"            /* ing volume (SOFT */
-	$"5741 5245 2076 6F6C 756D 6529 2E20 436C"            /* WARE volume). Cl */
-	$"6963 6B20 6F6E 2069 742E 2952 6573 6574"            /* ick on it.)Reset */
-	$"2070 6974 6368 2073 6574 7469 6E67 2074"            /*  pitch setting t */
-	$"6F20 7374 616E 6461 7264 2073 6574 7469"            /* o standard setti */
-	$"6E67 732E"                                          /* ngs. */
-};
-
-data 'STR#' (1400, "Music List Help") {
-	$"0009 2353 6F72 7420 7468 6520 6D75 7369"            /* .∆#Sort the musi */
-	$"6320 6C69 7374 2061 6C70 6861 6265 7469"            /* c list alphabeti */
-	$"6361 6C6C 792E 2741 6464 2061 206E 6577"            /* cally.'Add a new */
-	$"206D 7573 6963 2066 696C 6520 746F 2074"            /*  music file to t */
-	$"6865 206D 7573 6963 206C 6973 742E 2D52"            /* he music list.-R */
-	$"656D 6F76 6520 7468 6520 7365 6C65 6374"            /* emove the select */
-	$"6564 206D 7573 6963 2066 696C 6520 6672"            /* ed music file fr */
-	$"6F6D 2074 6865 206C 6973 742E 2E43 6861"            /* om the list..Cha */
-	$"6E67 6520 696E 666F 726D 6174 696F 6E20"            /* nge information  */
-	$"6F66 2074 6865 2073 656C 6563 7465 6420"            /* of the selected  */
-	$"6D75 7369 6320 6669 6C65 2E35 4C6F 6164"            /* music file.5Load */
-	$"2074 6865 2073 656C 6563 7465 6420 6D75"            /*  the selected mu */
-	$"7369 6320 6669 6C65 2069 6E74 6F20 6D65"            /* sic file into me */
-	$"6D6F 7279 2061 6E64 2070 6C61 7920 6974"            /* mory and play it */
-	$"2E2E 4F70 656E 2074 6865 2070 7265 6665"            /* ..Open the prefe */
-	$"7265 6E63 6520 7769 6E64 6F77 2066 6F72"            /* rence window for */
-	$"2074 6865 206D 7573 6963 206C 6973 742E"            /*  the music list. */
-	$"2F4D 6F72 6520 696E 666F 726D 6174 696F"            /* /More informatio */
-	$"6E20 6162 6F75 7420 7468 6520 7365 6C65"            /* n about the sele */
-	$"6374 6564 206D 7573 6963 2066 696C 652E"            /* cted music file. */
-	$"4154 6865 206D 7573 6963 206C 6973 7420"            /* AThe music list  */
-	$"2D20 746F 206F 7065 6E20 6120 6D75 7369"            /* - to open a musi */
-	$"6320 6669 6C65 2C20 646F 7562 6C65 2063"            /* c file, double c */
-	$"6C69 636B 206F 6E20 6974 7320 7469 746C"            /* lick on its titl */
-	$"652E 3A54 6865 2070 6F73 6974 696F 6E20"            /* e.:The position  */
-	$"6F66 2074 6865 2073 656C 6563 7465 6420"            /* of the selected  */
-	$"6D75 7369 6320 6669 6C65 206F 6E20 796F"            /* music file on yo */
-	$"7572 2068 6172 6420 6469 736B 2E"                   /* ur hard disk. */
-};
-
-data 'STR#' (1600, "Tools Help") {
-	$"000F 1747 6F20 746F 2070 7265 7669 6F75"            /* ...Go to previou */
-	$"7320 7061 7474 6572 6E2E 1450 6C61 7920"            /* s pattern..Play  */
-	$"736F 6E67 2062 6163 6B77 6172 6473 2E16"            /* song backwards.. */
-	$"5374 6F70 2074 6865 2063 7572 7265 6E74"            /* Stop the current */
-	$"2073 6F6E 672E 1650 6C61 7920 7468 6520"            /*  song..Play the  */
-	$"6375 7272 656E 7420 736F 6E67 2E0D 4661"            /* current song..Fa */
-	$"7374 2066 6F72 7761 7264 2E13 476F 2074"            /* st forward..Go t */
-	$"6F20 6E65 7874 2070 6174 7465 726E 2E49"            /* o next pattern.I */
-	$"496E 6469 6361 7465 2074 6865 2070 726F"            /* Indicate the pro */
-	$"6772 6573 7369 6F6E 206F 6620 7468 6520"            /* gression of the  */
-	$"736F 6E67 2E20 436C 6963 6B20 696E 2069"            /* song. Click in i */
-	$"7420 746F 2063 6861 6E67 6520 7468 6520"            /* t to change the  */
-	$"706F 7369 7469 6F6E 2E27 4669 6C65 6E61"            /* position.'Filena */
-	$"6D65 206F 6620 7468 6520 6375 7272 656E"            /* me of the curren */
-	$"7420 736F 6E67 2069 6E20 6D65 6D6F 7279"            /* t song in memory */
-	$"2E35 496E 7374 7275 6D65 6E74 206F 6620"            /* .5Instrument of  */
-	$"7468 6520 7365 6C65 6374 6564 2063 656C"            /* the selected cel */
-	$"6C20 2873 6565 2044 6967 6974 616C 2045"            /* l (see Digital E */
-	$"6469 746F 7229 2E2F 4E6F 7465 206F 6620"            /* ditor)./Note of  */
-	$"7468 6520 7365 6C65 6374 6564 2063 656C"            /* the selected cel */
-	$"6C20 2873 6565 2044 6967 6974 616C 2045"            /* l (see Digital E */
-	$"6469 746F 7229 2E31 4566 6665 6374 206F"            /* ditor).1Effect o */
-	$"6620 7468 6520 7365 6C65 6374 6564 2063"            /* f the selected c */
-	$"656C 6C20 2873 6565 2044 6967 6974 616C"            /* ell (see Digital */
-	$"2045 6469 746F 7229 2E33 4172 6775 6D65"            /*  Editor).3Argume */
-	$"6E74 206F 6620 7468 6520 7365 6C65 6374"            /* nt of the select */
-	$"6564 2063 656C 6C20 2873 6565 2044 6967"            /* ed cell (see Dig */
-	$"6974 616C 2045 6469 746F 7229 2E2C 506C"            /* ital Editor).,Pl */
-	$"6179 2074 6865 2073 656C 6563 7465 6420"            /* ay the selected  */
-	$"6365 6C6C 2028 7365 6520 4469 6769 7461"            /* cell (see Digita */
-	$"6C20 4564 6974 6F72 292E 2E44 656C 6574"            /* l Editor)..Delet */
-	$"6520 7468 6520 7365 6C65 6374 6564 2063"            /* e the selected c */
-	$"656C 6C20 2873 6565 2044 6967 6974 616C"            /* ell (see Digital */
-	$"2045 6469 746F 7229 2E3F 4170 706C 7920"            /*  Editor).?Apply  */
-	$"6D6F 6469 6669 6361 7469 6F6E 7320 746F"            /* modifications to */
-	$"2061 6C6C 2073 656C 6563 7465 6420 6365"            /*  all selected ce */
-	$"6C6C 7320 2873 6565 2044 6967 6974 616C"            /* lls (see Digital */
-	$"2045 6469 746F 7229 2E"                             /*  Editor). */
-};
-
-data 'STR#' (1800, "Instrument Help") {
-	$"0009 2943 6861 6E67 6520 696E 666F 726D"            /* .∆)Change inform */
-	$"6174 696F 6E20 6162 6F75 7420 7468 6973"            /* ation about this */
-	$"2069 6E73 7472 756D 656E 742E 4B53 7769"            /*  instrument.KSwi */
-	$"7463 6820 746F 2073 656C 6563 7469 6F6E"            /* tch to selection */
-	$"206D 6F64 653A 2074 6F20 6170 706C 7920"            /*  mode: to apply  */
-	$"706C 7567 732C 2063 7574 2C20 636F 7079"            /* plugs, cut, copy */
-	$"2061 6E64 2070 6173 7465 2074 6865 2077"            /*  and paste the w */
-	$"6176 6566 6F72 6D2E 2E53 7769 7463 6820"            /* aveform..Switch  */
-	$"746F 2070 656E 6369 6C20 6D6F 6465 3A20"            /* to pencil mode:  */
-	$"746F 2072 6564 7261 7720 7468 6520 7761"            /* to redraw the wa */
-	$"7665 666F 726D 2E51 5377 6974 6368 2074"            /* veform.QSwitch t */
-	$"6F20 7A6F 6F6D 2049 4E2F 4F55 5420 6D6F"            /* o zoom IN/OUT mo */
-	$"6465 2E20 546F 207A 6F6F 6D20 494E 3A20"            /* de. To zoom IN:  */
-	$"636C 6963 6B2C 2074 6F20 7A6F 6F6D 204F"            /* click, to zoom O */
-	$"5554 3A20 636C 6963 6B20 2B20 276F 7074"            /* UT: click + 'opt */
-	$"696F 6E27 206B 6579 2E4D 4170 706C 7920"            /* ion' key.MApply  */
-	$"6120 706C 7567 2074 6F20 7468 6520 7365"            /* a plug to the se */
-	$"6C65 6374 696F 6E2E 2049 6620 6E6F 7468"            /* lection. If noth */
-	$"696E 6720 6973 2073 656C 6563 7465 642C"            /* ing is selected, */
-	$"2074 6F20 7468 6520 7768 6F6C 6520 7761"            /*  to the whole wa */
-	$"7665 666F 726D 2E1F 5468 6520 7761 7665"            /* veform..The wave */
-	$"666F 726D 206F 6620 7468 6520 696E 7374"            /* form of the inst */
-	$"7275 6D65 6E74 2E16 5377 6974 6368 2045"            /* rument..Switch E */
-	$"6E76 656C 6F70 6520 4F4E 2F4F 4646 1B53"            /* nvelope ON/OFF.S */
-	$"7769 7463 6820 5375 7374 6169 6E20 506F"            /* witch Sustain Po */
-	$"696E 7420 4F4E 2F4F 4646 1B53 7769 7463"            /* int ON/OFF.Switc */
-	$"6820 456E 7665 6C6F 7065 204C 6F6F 7020"            /* h Envelope Loop  */
-	$"4F4E 2F4F 4646"                                     /* ON/OFF */
-};
-
-data 'STR#' (2200, "Classic Help") {
-	$"0006 244D 6F72 6520 696E 666F 726D 6174"            /* ..$More informat */
-	$"696F 6E20 6162 6F75 7420 7468 6973 2070"            /* ion about this p */
-	$"6174 7465 726E 2E32 5377 6974 6368 2074"            /* attern.2Switch t */
-	$"6F20 706C 6179 206D 6F64 652E 2043 6C69"            /* o play mode. Cli */
-	$"636B 2074 6865 2070 6174 7465 726E 2074"            /* ck the pattern t */
-	$"6F20 706C 6179 2069 742E 4C53 7769 7463"            /* o play it.LSwitc */
-	$"6820 746F 207A 6F6F 6D20 494E 2F4F 5554"            /* h to zoom IN/OUT */
-	$"2E20 546F 207A 6F6F 6D20 494E 3A20 636C"            /* . To zoom IN: cl */
-	$"6963 6B2C 2074 6F20 7A6F 6F6D 204F 5554"            /* ick, to zoom OUT */
-	$"3A20 636C 6963 6B20 2B20 276F 7074 696F"            /* : click + 'optio */
-	$"6E27 206B 6579 2E22 5365 6C65 6374 2074"            /* n' key."Select t */
-	$"6865 2074 7261 636B 7320 746F 2062 6520"            /* he tracks to be  */
-	$"6469 7370 6C61 7965 642E 2753 656C 6563"            /* displayed.'Selec */
-	$"7420 7468 6520 696E 7374 7275 6D65 6E74"            /* t the instrument */
-	$"7320 746F 2062 6520 6469 7370 6C61 7965"            /* s to be displaye */
-	$"642E 0C54 6865 2070 6174 7465 726E 2E"              /* d..The pattern. */
-};
-
-data 'STR#' (2400, "Oscillo Help") {
-	$"0003 1A43 6861 6E67 6520 7468 6520 6F73"            /* ...Change the os */
-	$"6369 6C6C 6F20 736F 7572 6365 2E1A 4368"            /* cillo source..Ch */
-	$"616E 6765 2074 6865 206F 7363 696C 6C6F"            /* ange the oscillo */
-	$"2068 6569 6768 742E 1154 6865 206F 7363"            /*  height..The osc */
-	$"696C 6C6F 7363 6F70 652E"                           /* illoscope. */
-};
-
-data 'STR#' (2600, "Classical Editor Help") {
-	$"000C 1C50 6F70 2D75 7020 6D65 6E75 2074"            /* ...Pop-up menu t */
-	$"6F20 6368 616E 6765 2074 7261 636B 2E4E"            /* o change track.N */
-	$"506F 702D 7570 206D 656E 7520 746F 2073"            /* Pop-up menu to s */
-	$"656C 6563 7420 616E 2069 6E73 7472 756D"            /* elect an instrum */
-	$"656E 743A 2075 7365 6420 696E 204E 6F74"            /* ent: used in Not */
-	$"6520 6D6F 6465 2077 6865 6E20 6372 6561"            /* e mode when crea */
-	$"7469 6E67 206E 6577 206E 6F74 652E 4A50"            /* ting new note.JP */
-	$"6F70 2D75 7020 6D65 6E75 2074 6F20 7365"            /* op-up menu to se */
-	$"6C65 6374 2061 6E20 6566 6665 6374 3A20"            /* lect an effect:  */
-	$"7573 6564 2069 6E20 4E6F 7465 206D 6F64"            /* used in Note mod */
-	$"6520 7768 656E 2063 7265 6174 696E 6720"            /* e when creating  */
-	$"6E65 7720 6E6F 7465 2E2F 4765 7420 6D6F"            /* new note./Get mo */
-	$"7265 2069 6E66 6F72 6D61 7469 6F6E 2061"            /* re information a */
-	$"626F 7574 2074 6865 2063 7572 7265 6E74"            /* bout the current */
-	$"2070 6174 7465 726E 2E34 4F70 656E 2074"            /*  pattern.4Open t */
-	$"6865 2070 7265 6665 7265 6E63 6520 7769"            /* he preference wi */
-	$"6E64 6F77 2066 6F72 2074 6865 2063 6C61"            /* ndow for the cla */
-	$"7373 6963 616C 2065 6469 746F 722E 2C53"            /* ssical editor.,S */
-	$"686F 7720 616C 6C20 7472 6163 6B73 2C20"            /* how all tracks,  */
-	$"6E6F 7420 6F6E 6C79 2074 6865 2063 7572"            /* not only the cur */
-	$"7265 6E74 2074 7261 636B 2E42 5377 6974"            /* rent track.BSwit */
-	$"6368 2074 6F20 4E6F 7465 206D 6F64 652E"            /* ch to Note mode. */
-	$"2059 6F75 2063 616E 206E 6F77 2064 726F"            /*  You can now dro */
-	$"702F 6D6F 7665 206E 6F74 6573 206F 6E20"            /* p/move notes on  */
-	$"7468 6520 7061 7274 6974 696F 6E2E 4953"            /* the partition.IS */
-	$"7769 7463 6820 746F 2053 656C 6563 7469"            /* witch to Selecti */
-	$"6F6E 206D 6F64 652E 2059 6F75 2063 616E"            /* on mode. You can */
-	$"206E 6F77 2073 656C 6563 742F 6D6F 7665"            /*  now select/move */
-	$"206E 6F74 6573 206F 6E20 7468 6520 7061"            /*  notes on the pa */
-	$"7274 6974 696F 6E2E 6253 7769 7463 6820"            /* rtition.bSwitch  */
-	$"746F 2050 6C61 7920 6D6F 6465 2E20 596F"            /* to Play mode. Yo */
-	$"7520 6361 6E20 6E6F 7720 636C 6963 6B20"            /* u can now click  */
-	$"6F6E 2070 6172 7469 7469 6F6E 2061 6E64"            /* on partition and */
-	$"2068 6561 7220 6E6F 7465 7320 6D61 6465"            /*  hear notes made */
-	$"2062 7920 7468 6520 6375 7272 656E 7420"            /*  by the current  */
-	$"696E 7374 7275 6D65 6E74 2E35 5377 6974"            /* instrument.5Swit */
-	$"6368 2074 6F20 4465 6C65 7465 206D 6F64"            /* ch to Delete mod */
-	$"653A 2063 6C69 636B 206F 6E20 6E6F 7465"            /* e: click on note */
-	$"7320 746F 2064 656C 6574 6520 7468 656D"            /* s to delete them */
-	$"2E36 4120 736D 616C 6C20 7669 6577 206F"            /* .6A small view o */
-	$"6620 7468 6520 7061 7274 6974 696F 6E2E"            /* f the partition. */
-	$"2043 6C69 636B 206F 6E20 6974 2074 6F20"            /*  Click on it to  */
-	$"706C 6179 2069 742E 3E53 7769 7463 6820"            /* play it.>Switch  */
-	$"746F 205A 6F6F 6D20 6D6F 6465 2E20 596F"            /* to Zoom mode. Yo */
-	$"7520 6361 6E20 6E6F 7720 7A6F 6F6D 2069"            /* u can now zoom i */
-	$"6E2F 6F75 7420 696E 2074 6865 2070 6172"            /* n/out in the par */
-	$"7469 7469 6F6E 2E"                                  /* tition. */
-};
-
-data 'STR#' (4000, "Spectrum Help") {
-	$"0004 1B43 6861 6E67 6520 7468 6520 7370"            /* ...Change the sp */
-	$"6563 7472 756D 2073 6F75 7263 652E 1B43"            /* ectrum source..C */
-	$"6861 6E67 6520 7468 6520 7370 6563 7472"            /* hange the spectr */
-	$"756D 2068 6569 6768 742E 3754 6865 2073"            /* um height.7The s */
-	$"7065 6374 7275 6D2E 2043 6C69 636B 206F"            /* pectrum. Click o */
-	$"6E20 6974 2074 6F20 6669 6E64 2061 2073"            /* n it to find a s */
-	$"7065 6369 6669 6320 6672 6571 7565 6E63"            /* pecific frequenc */
-	$"792E 3243 6861 6E67 6520 7468 6520 7370"            /* y.2Change the sp */
-	$"6563 7472 756D 2073 6361 6C65 203A 206C"            /* ectrum scale : l */
-	$"696E 6561 7220 6F72 206C 6F67 6172 6974"            /* inear or logarit */
-	$"686D 6963 2E"                                       /* hmic. */
-};
-
-data 'STR#' (5400, "Classical Editor Help") {
-	$"000A 2553 7769 7463 6820 746F 206E 6F74"            /* .¬%Switch to not */
-	$"6520 6564 6974 696E 6720 6D6F 6465 2028"            /* e editing mode ( */
-	$"5461 6220 6B65 7929 1F53 7769 7463 6820"            /* Tab key).Switch  */
-	$"746F 2073 656C 6563 7420 6D6F 6465 2028"            /* to select mode ( */
-	$"5461 6220 6B65 7929 324C 6F61 6420 6120"            /* Tab key)2Load a  */
-	$"5063 6D64 2066 696C 6520 616E 6420 7061"            /* Pcmd file and pa */
-	$"7374 6520 6974 2061 7420 6375 7272 656E"            /* ste it at curren */
-	$"7420 706F 7369 7469 6F6E 2E29 506C 6179"            /* t position.)Play */
-	$"2063 7572 7265 6E74 2073 656C 6563 7469"            /*  current selecti */
-	$"6F6E 2028 5573 6520 7365 6C65 6374 206D"            /* on (Use select m */
-	$"6F64 6529 2E26 5361 7665 2063 7572 7265"            /* ode).&Save curre */
-	$"6E74 2073 656C 6563 7469 6F6E 2069 6E20"            /* nt selection in  */
-	$"6120 5063 6D64 2066 696C 652E 2647 6574"            /* a Pcmd file.&Get */
-	$"2069 6E66 6F72 6D61 7469 6F6E 2061 626F"            /*  information abo */
-	$"7574 2063 7572 7265 6E74 2070 6174 7465"            /* ut current patte */
-	$"726E 2E24 4170 706C 7920 6120 6669 6C74"            /* rn.$Apply a filt */
-	$"6572 2074 6F20 6375 7272 656E 7420 7365"            /* er to current se */
-	$"6C65 6374 696F 6E2E 184F 7065 6E20 5072"            /* lection..Open Pr */
-	$"6566 6572 656E 6365 7320 7769 6E64 6F77"            /* eferences window */
-	$"2E2F 5365 6C65 6374 206E 6F74 6520 6C65"            /* ./Select note le */
-	$"6E67 7468 2074 6F20 7573 6520 696E 206E"            /* ngth to use in n */
-	$"6F74 6520 6564 6974 696E 6720 6D6F 6465"            /* ote editing mode */
-	$"2E2E 5365 6C65 6374 2069 6E73 7472 756D"            /* ..Select instrum */
-	$"656E 7420 746F 2075 7365 2069 6E20 6E6F"            /* ent to use in no */
-	$"7465 2065 6469 7469 6E67 206D 6F64 652E"            /* te editing mode. */
-};
-
-data 'STR#' (2000, "Piano Help") {
-	$"0003 4D54 6865 2050 6961 6E6F 3A20 636C"            /* ..MThe Piano: cl */
-	$"6963 6B20 6F6E 2069 7420 746F 2068 6561"            /* ick on it to hea */
-	$"7220 7468 6520 7365 6C65 6374 6564 2069"            /* r the selected i */
-	$"6E73 7472 756D 656E 7420 2873 6565 2069"            /* nstrument (see i */
-	$"6E73 7472 756D 656E 7420 6C69 7374 292E"            /* nstrument list). */
-	$"1553 6869 6674 204B 6579 2D4D 6170 2074"            /* .Shift Key-Map t */
-	$"6F20 6C65 6674 234F 7065 6E20 7468 6520"            /* o left#Open the  */
-	$"5069 616E 6F27 7320 5072 6566 6572 656E"            /* Piano's Preferen */
-	$"6365 2077 696E 646F 772E"                           /* ce window. */
-};
-
-data 'STR#' (4200, "Partition Help") {
-	$"0007 1A4F 7065 6E20 7468 6520 7365 6C65"            /* ...Open the sele */
-	$"6374 6564 2070 6174 7465 726E 2E31 496E"            /* cted pattern.1In */
-	$"6469 6361 7465 2070 6172 7469 7469 6F6E"            /* dicate partition */
-	$"206C 656E 6774 682E 2043 6C69 636B 206F"            /*  length. Click o */
-	$"6E20 6974 2074 6F20 6368 616E 6765 2E39"            /* n it to change.9 */
-	$"506F 7055 702D 6D65 6E75 2074 6F20 6368"            /* PopUp-menu to ch */
-	$"616E 6765 2074 6865 2070 6174 7465 726E"            /* ange the pattern */
-	$"206E 756D 6265 7220 6174 2074 6869 7320"            /*  number at this  */
-	$"706F 7369 7469 6F6E 2E38 5468 6520 7061"            /* position.8The pa */
-	$"7274 6974 696F 6E20 7769 7468 2070 6174"            /* rtition with pat */
-	$"7465 726E 206E 756D 6265 7220 2873 6565"            /* tern number (see */
-	$"2027 5061 7474 6572 6E73 206C 6973 7427"            /*  'Patterns list' */
-	$"292E 3047 6574 206D 6F72 6520 696E 666F"            /* ).0Get more info */
-	$"726D 6174 696F 6E20 6162 6F75 7420 7468"            /* rmation about th */
-	$"6520 7365 6C65 6374 6564 2070 6174 7465"            /* e selected patte */
-	$"726E 2E1A 4164 6420 6120 726F 7720 696E"            /* rn..Add a row in */
-	$"2074 6865 2070 6172 7469 7469 6F6E 2052"            /*  the partition R */
-	$"656D 6F76 6520 7468 6973 2072 6F77 2069"            /* emove this row i */
-	$"6E20 7468 6520 7061 7274 6974 696F 6E"              /* n the partition */
-};
-
-data 'STR#' (400, "Digital Editor Help") {
-	$"0015 2C4F 7065 6E20 7468 6520 4469 6769"            /* ..,Open the Digi */
-	$"7461 6C20 4564 6974 6F72 2773 2050 7265"            /* tal Editor's Pre */
-	$"6665 7265 6E63 6520 7769 6E64 6F77 2E33"            /* ference window.3 */
-	$"4C6F 6164 2061 2050 636D 6420 6669 6C65"            /* Load a Pcmd file */
-	$"2061 6E64 2070 6173 7465 2069 7420 6173"            /*  and paste it as */
-	$"2063 7572 7265 6E74 2073 656C 6563 7469"            /*  current selecti */
-	$"6F6E 2E28 5361 7665 2063 7572 7265 6E74"            /* on.(Save current */
-	$"2073 656C 6563 7469 6F6E 2069 6E74 6F20"            /*  selection into  */
-	$"6120 5063 6D64 2066 696C 652E 6254 7261"            /* a Pcmd file.bTra */
-	$"6E73 706F 7365 2075 7020 6E6F 7465 7320"            /* nspose up notes  */
-	$"6F66 2063 7572 7265 6E74 2073 656C 6563"            /* of current selec */
-	$"7469 6F6E 2062 7920 312E 2057 6974 6820"            /* tion by 1. With  */
-	$"7368 6966 7420 6B65 793A 206F 6E6C 7920"            /* shift key: only  */
-	$"6375 7272 656E 7420 696E 7374 7275 6D65"            /* current instrume */
-	$"6E74 2E20 283D 204B 6579 2027 2A27 292F"            /* nt. (= Key '*')/ */
-	$"4765 7420 6D6F 7265 2069 6E66 6F72 6D61"            /* Get more informa */
-	$"7469 6F6E 2061 626F 7574 2074 6865 2063"            /* tion about the c */
-	$"7572 7265 6E74 2070 6174 7465 726E 2E1B"            /* urrent pattern.. */
-	$"506C 6179 2074 6865 2063 7572 7265 6E74"            /* Play the current */
-	$"2073 656C 6563 7469 6F6E 2E45 5377 6974"            /*  selection.ESwit */
-	$"6368 2069 6E20 7265 636F 7264 206D 6F64"            /* ch in record mod */
-	$"653A 2070 7265 7373 206F 6E20 796F 7572"            /* e: press on your */
-	$"204D 6163 206B 6579 626F 6172 6420 746F"            /*  Mac keyboard to */
-	$"2065 6E74 6572 206E 6577 206E 6F74 6573"            /*  enter new notes */
-	$"2E32 4F70 656E 2074 6865 2063 6F6D 6D61"            /* .2Open the comma */
-	$"6E64 2065 6469 746F 7220 746F 2065 6469"            /* nd editor to edi */
-	$"7420 7468 6520 7365 6C65 6374 6564 2063"            /* t the selected c */
-	$"656C 6C2E 1354 7261 636B 2049 4420 616E"            /* ell..Track ID an */
-	$"6420 636F 6C6F 722E 0C50 6F73 6974 696F"            /* d color..Positio */
-	$"6E20 4944 2E5B 5468 6520 6375 7272 656E"            /* n ID.[The curren */
-	$"7420 7061 7474 6572 6E3A 2063 6C69 636B"            /* t pattern: click */
-	$"2074 6F20 7365 6C65 6374 2061 206E 6F74"            /*  to select a not */
-	$"652C 2075 7365 2063 6C69 636B 202B 2027"            /* e, use click + ' */
-	$"7368 6966 7427 206B 6579 2074 6F20 6578"            /* shift' key to ex */
-	$"7061 6E64 2061 2073 656C 6563 7469 6F6E"            /* pand a selection */
-	$"2E2B 4170 706C 7920 616E 2063 6F6D 6D61"            /* .+Apply an comma */
-	$"6E64 2070 6C75 6720 746F 2063 7572 7265"            /* nd plug to curre */
-	$"6E74 2073 656C 6563 7469 6F6E 2E1D 5377"            /* nt selection..Sw */
-	$"6974 6368 2050 6174 7465 726E 204C 6F6F"            /* itch Pattern Loo */
-	$"7069 6E67 204F 4E2F 4F46 4610 4F70 656E"            /* ping ON/OFF.Open */
-	$"2046 696E 6420 5769 6E64 6F77 6354 7261"            /*  Find WindowcTra */
-	$"6E73 706F 7365 2064 6F77 6E20 6E6F 7465"            /* nspose down note */
-	$"7320 6F66 2063 7572 7265 6E74 2073 656C"            /* s of current sel */
-	$"6563 7469 6F6E 2062 7920 312E 2057 6974"            /* ection by 1. Wit */
-	$"6820 7368 6966 7420 6B65 793A 206F 6E6C"            /* h shift key: onl */
-	$"7920 6375 7272 656E 7420 696E 7374 7275"            /* y current instru */
-	$"6D65 6E74 2E28 3D20 4B65 7920 272F 2729"            /* ment.(= Key '/') */
-	$"2646 696C 6C20 7365 6C65 6374 6564 2061"            /* &Fill selected a */
-	$"7265 6120 7769 7468 2064 6566 6175 6C74"            /* rea with default */
-	$"2076 616C 7565 7311 5365 7420 6465 6661"            /*  values.Set defa */
-	$"756C 7420 5661 6C75 6511 5365 7420 6465"            /* ult Value.Set de */
-	$"6661 756C 7420 5661 6C75 6511 5365 7420"            /* fault Value.Set  */
-	$"6465 6661 756C 7420 5661 6C75 6511 5365"            /* default Value.Se */
-	$"7420 6465 6661 756C 7420 5661 6C75 6527"            /* t default Value' */
-	$"5365 7420 7374 6570 2077 6865 6E20 7072"            /* Set step when pr */
-	$"6573 7369 6E67 2061 7272 6F77 7320 6F72"            /* essing arrows or */
-	$"2072 6574 7572 6E"                                  /*  return */
-};
-
-data 'STR#' (133, "Internet Menu") {
-	$"0003 2468 7474 703A 2F2F 7777 772E 7175"            /* ..$http://www.qu */
-	$"6164 6D61 7469 6F6E 2E63 6F6D 2F70 7068"            /* admation.com/pph */
-	$"6F6D 652E 6874 6D3F 6874 7470 3A2F 2F68"            /* ome.htm?http://h */
-	$"7970 6572 6172 6368 6976 652E 6C63 732E"            /* yperarchive.lcs. */
-	$"6D69 742E 6564 752F 6367 692D 6269 6E2F"            /* mit.edu/cgi-bin/ */
-	$"4E65 7753 6561 7263 683F 6B65 793D 506C"            /* NewSearch?key=Pl */
-	$"6179 6572 5052 4F1F 6D61 696C 746F 3A72"            /* ayerPRO.mailto:r */
-	$"6F73 7365 7461 6E74 6F69 6E65 4062 6C75"            /* ossetantoine@blu */
-	$"6577 696E 2E63 68"                                  /* ewin.ch */
-};
-
-data 'STR#' (130, "Effects") {
-	$"0011 1130 2D4E 6F72 6D61 6C2F 4172 7065"            /* ...0-Normal/Arpe */
-	$"6767 696F 0A31 2D53 6C69 6465 2055 700C"            /* ggio¬1-Slide Up. */
-	$"322D 536C 6964 6520 446F 776E 0C33 2D50"            /* 2-Slide Down.3-P */
-	$"6F72 7461 6D65 6E74 6F0A 342D 0056 6962"            /* ortamento¬4-.Vib */
-	$"7261 746F 1035 2D50 6F72 7461 6D65 6E74"            /* rato.5-Portament */
-	$"6F2B 566F 6C13 362D 5669 6272 6174 6F2B"            /* o+Vol.6-Vibrato+ */
-	$"566F 6C20 536C 6964 6509 372D 5472 656D"            /* Vol Slide∆7-Trem */
-	$"6F6C 6F0D 382D 5365 7420 5061 6E6E 696E"            /* olo.8-Set Pannin */
-	$"6712 392D 5365 7420 5361 6D70 6C65 4F66"            /* g.9-Set SampleOf */
-	$"6673 6574 0D41 2D56 6F6C 756D 6553 6C69"            /* fset.A-VolumeSli */
-	$"6465 0F42 2D50 6F73 6974 696F 6E20 4A75"            /* de.B-Position Ju */
-	$"6D70 0C43 2D53 6574 2056 6F6C 756D 650F"            /* mp.C-Set Volume. */
-	$"442D 5061 7474 6572 6E20 4272 6561 6B0C"            /* D-Pattern Break. */
-	$"452D 4520 436F 6D6D 616E 6473 0B46 2D53"            /* E-E Commands.F-S */
-	$"6574 2053 7065 6564 0A47 2D4E 6F74 6520"            /* et Speed¬G-Note  */
-	$"4F66 66"                                            /* Off */
-};
-
-data 'STR#' (131) {
-	$"0046 0B50 6C61 7965 7250 524F 2035 1968"            /* .F.PlayerPRO 5.h */
-	$"7474 703A 2F2F 7777 772E 7175 6164 6D61"            /* ttp://www.quadma */
-	$"7469 6F6E 2E63 6F6D 0E53 7065 6369 616C"            /* tion.com.Special */
-	$"2074 6861 6E6B 7301 260B 5361 6C75 7461"            /*  thanks.&.Saluta */
-	$"7469 6F6E 7302 746F 1C43 6861 6E74 616C"            /* tions.to.Chantal */
-	$"204D 756C 6861 7570 7420 2843 6861 6E2D"            /*  Mulhaupt (Chan- */
-	$"4368 616E 290F 4461 7269 6F20 4163 636F"            /* Chan).Dario Acco */
-	$"726E 6572 6F0F 5361 6D75 656C 204C 696E"            /* rnero.Samuel Lin */
-	$"6465 6D61 6E0C 4D61 726B 2043 6F6F 6B73"            /* deman.Mark Cooks */
-	$"6F6E 1A4A 6F91 6C20 4261 7272 698F 7265"            /* on.Joël Barrière */
-	$"2028 4672 656E 6368 204D 616E 291D 5065"            /*  (French Man).Pe */
-	$"7474 6572 6920 4C61 6A75 6E65 6E20 2850"            /* tteri Lajunen (P */
-	$"6573 742F 5472 616E 5A65 291B 5374 6576"            /* est/TranZe).Stev */
-	$"6520 4A6F 6273 2028 4D61 6320 5370 6563"            /* e Jobs (Mac Spec */
-	$"6961 6C69 7374 290B 4A6F 686E 2053 7469"            /* ialist).John Sti */
-	$"6C65 7310 416C 6C20 4A61 7061 6E20 7573"            /* les.All Japan us */
-	$"6572 7321 0E46 8E6C 6978 204C 6170 6F69"            /* ers!.Félix Lapoi */
-	$"6E74 650E 4875 6265 7274 2047 6172 7269"            /* nte.Hubert Garri */
-	$"646F 0D4C 6176 616C 6C65 6520 4D61 7263"            /* do.Lavallee Marc */
-	$"0B44 6961 7A20 4D69 6775 656C 1143 6872"            /* .Diaz Miguel.Chr */
-	$"6973 7469 616E 204C 6163 726F 6978 0E4C"            /* istian Lacroix.L */
-	$"6175 7265 6E74 2043 7269 6164 6F07 5374"            /* aurent Criado.St */
-	$"7978 2E2E 2E06 546F 7061 7A65 0B44 6F63"            /* yx....Topaze.Doc */
-	$"746F 7220 5965 6C6D 0E4D 6173 7465 7220"            /* tor Yelm.Master  */
-	$"4279 616B 6865 6509 446F 6374 6F72 2050"            /* Byakhee∆Doctor P */
-	$"4D14 4D79 206E 6577 2048 6F6E 6461 2056"            /* M.My new Honda V */
-	$"5452 3130 3030 0B4C 6520 4368 6E69 6E6B"            /* TR1000.Le Chnink */
-	$"656C 114F 736D 616E 2052 6174 6962 2026"            /* el.Osman Ratib & */
-	$"2055 494E 0B59 7665 7320 4C69 6769 6572"            /*  UIN.Yves Ligier */
-	$"1043 6872 6973 7469 616E 2047 6972 6172"            /* .Christian Girar */
-	$"6404 4572 6963 0947 8E72 616C 6469 6E65"            /* d.Eric∆Géraldine */
-	$"0743 6F72 696E 6E65 074C 6175 7265 6E74"            /* .Corinne.Laurent */
-	$"0E43 8E64 7269 6320 4C6F 6D62 6172 640C"            /* .Cédric Lombard. */
-	$"4572 6963 204C 6170 6F72 7465 1944 6F72"            /* Eric Laporte.Dor */
-	$"6F74 688E 6520 7769 7468 2047 7565 756C"            /* othée with Gueul */
-	$"6544 6552 616B 0F42 756E 6769 6520 536F"            /* eDeRak.Bungie So */
-	$"6674 7761 7265 1244 616E 6965 6C20 4C65"            /* ftware.Daniel Le */
-	$"7363 686E 7A69 6E65 7207 4761 682D 4761"            /* schnziner.Gah-Ga */
-	$"680D 4361 726C 6F73 2053 6572 616E 6F0D"            /* h.Carlos Serano. */
-	$"5472 6D20 4949 2F34 202D 2D20 350E 4672"            /* Trm II/4 -- 5.Fr */
-	$"616E 8D6F 6973 2052 6F73 7369 0E4C 7563"            /* ançois Rossi.Luc */
-	$"2044 6573 6368 656E 6175 780E 4170 706C"            /*  Deschenaux.Appl */
-	$"6520 436F 6D70 7574 6572 0E47 696C 6C65"            /* e Computer.Gille */
-	$"7320 4275 726E 6965 7207 4361 6E61 6C20"            /* s Burnier.Canal  */
-	$"2B10 4A61 6371 7565 6C69 6E65 204D 6579"            /* +.Jacqueline Mey */
-	$"6572 0A48 4355 4720 2620 434D 551C 416C"            /* er¬HCUG & CMU.Al */
-	$"6C20 5278 206C 6F76 6572 7320 6F66 2074"            /* l Rx lovers of t */
-	$"6869 7320 706C 616E 6574 104D 6172 6375"            /* his planet.Marcu */
-	$"7320 5363 686C 6170 6665 7212 5374 6570"            /* s Schlapfer.Step */
-	$"6865 6E20 416C 7472 6963 6874 6572 1B41"            /* hen Altrichter.A */
-	$"6C6C 2074 6865 2074 686F 6E73 206F 6620"            /* ll the thons of  */
-	$"7468 6520 766F 6C6C 8E65 1A53 7964 6E65"            /* the vollée.Sydne */
-	$"7920 4368 696C 6472 656E D573 2048 6F73"            /* y Children’s Hos */
-	$"7069 7461 6C14 4899 7069 7461 6C20 436F"            /* pital.Hôpital Co */
-	$"6368 696E 2050 6172 6973 0C4C 6573 204C"            /* chin Paris.Les L */
-	$"6575 6368 7465 720A 4C65 7320 4265 6E61"            /* euchter¬Les Bena */
-	$"6E69 1452 6573 7461 7572 616E 7420 486F"            /* ni.Restaurant Ho */
-	$"6E67 2D4B 6F6E 670D 426F 7373 6579 2046"            /* ng-Kong.Bossey F */
-	$"7261 6E63 6508 4D6F 746F 726F 6C61 1A43"            /* rance.Motorola.C */
-	$"6174 204D 6174 6869 6C64 6520 284E 6F77"            /* at Mathilde (Now */
-	$"2064 6561 642E 2E2E 291D 4361 7420 446F"            /*  dead...).Cat Do */
-	$"7578 2D44 6F75 7820 2853 6D6F 6F74 682D"            /* ux-Doux (Smooth- */
-	$"536D 6F6F 7468 2918 4D79 204D 6163 2063"            /* Smooth).My Mac c */
-	$"6F6D 7075 7465 7220 2847 332F 3330 3029"            /* omputer (G3/300) */
-	$"0744 6179 7374 6172 104E 616E 7475 636B"            /* .Daystar.Nantuck */
-	$"6574 2049 736C 616E 6414 4368 6172 6C65"            /* et Island.Charle */
-	$"7320 486F 7465 6C20 426F 7374 6F6E 0B43"            /* s Hotel Boston.C */
-	$"6872 6F6E 6F6C 6F67 6965 0C45 6C6C 6973"            /* hronologie.Ellis */
-	$"2046 5241 4E43 4512 282B 3333 2920 3134"            /*  FRANCE.(+33) 14 */
-	$"3320 3333 2031 3520 3437"                           /* 3 33 15 47 */
-};
-
-data 'MENU' (128) {
-	$"0080 0000 0000 0000 0000 FFEF B6FF 0446"            /* .Ä........ˇÔ∂ˇ.F */
-	$"696C 6506 4E65 772E 2E2E 004E 0000 074F"            /* ile.New....N...O */
-	$"7065 6E2E 2E2E 004F 0000 0453 6176 6500"            /* pen....O...Save. */
-	$"5300 000A 5361 7665 2061 732E 2E2E 0000"            /* S..¬Save as..... */
-	$"0000 0543 6C6F 7365 0057 0000 0C45 7870"            /* ...Close.W...Exp */
-	$"6F72 7420 6173 2E2E 2E00 1B8B 0005 5265"            /* ort as.....ã..Re */
-	$"7365 7400 5200 0001 2D00 0000 0012 5361"            /* set.R...-.....Sa */
-	$"7665 204D 7573 6963 204C 6973 742E 2E2E"            /* ve Music List... */
-	$"0000 0000 1043 6C65 6172 204D 7573 6963"            /* .....Clear Music */
-	$"204C 6973 7400 0000 0001 2D00 0000 000D"            /*  List.....-..... */
-	$"5061 6765 2053 6574 5570 2E2E 2E00 0000"            /* Page SetUp...... */
-	$"0008 5072 696E 742E 2E2E 0000 0000 012D"            /* ..Print........- */
-	$"0000 0000 0E50 7265 6665 7265 6E63 6573"            /* .....Preferences */
-	$"2E2E 2E00 1BC8 000F 5769 6E64 6F77 7320"            /* .....»..Windows  */
-	$"5365 7473 2E2E 2E00 1BB0 0016 536F 756E"            /* Sets.....∞..Soun */
-	$"6420 436F 6E74 726F 6C20 5061 6E65 6C2E"            /* d Control Panel. */
-	$"2E2E 0000 0000 134F 4D53 2053 7475 6469"            /* .......OMS Studi */
-	$"6F20 5365 7475 702E 2E2E 0000 0000 114F"            /* o Setup........O */
-	$"4D53 204D 4944 4920 5365 7475 702E 2E2E"            /* MS MIDI Setup... */
-	$"0000 0000 012D 0000 0000 0451 7569 7400"            /* .....-.....Quit. */
-	$"5100 0000"                                          /* Q... */
-};
-
-data 'MENU' (129) {
-	$"0081 0000 0000 0000 0000 FFFF FFFF 0751"            /* .Å........ˇˇˇˇ.Q */
-	$"7561 6C69 7479 0535 204B 687A 0000 0000"            /* uality.5 Khz.... */
-	$"0631 3120 4B68 7A00 0000 0006 3136 204B"            /* .11 Khz.....16 K */
-	$"687A 0000 0000 0632 3220 4B68 7A00 0000"            /* hz.....22 Khz... */
-	$"0006 3434 204B 687A 0000 0000 0634 3820"            /* ..44 Khz.....48  */
-	$"4B68 7A00 0000 0000"                                /* Khz..... */
-};
-
-data 'MENU' (137) {
-	$"0089 0000 0000 0000 0000 FFFF FFFF 0554"            /* .â........ˇˇˇˇ.T */
-	$"6974 6C65 00"                                       /* itle. */
-};
-
-data 'MENU' (134) {
-	$"0086 0000 0000 0000 0000 FFFF FFFF 0649"            /* .Ü........ˇˇˇˇ.I */
-	$"6E73 7472 7500"                                     /* nstru. */
-};
-
-data 'MENU' (138, "Import Special Format...") {
-	$"008A 0000 0000 0000 0000 FFFF FFFF 0649"            /* .ä........ˇˇˇˇ.I */
-	$"6D70 6F72 7400"                                     /* mport. */
-};
-
-data 'MENU' (139) {
-	$"008B 0000 0000 0000 0000 FFFF FFF3 0645"            /* .ã........ˇˇˇÛ.E */
-	$"7870 6F72 740A 4149 4646 2053 6F75 6E64"            /* xport¬AIFF Sound */
-	$"0000 0000 0B4D 6163 4F53 204D 7573 6963"            /* .....MacOS Music */
-	$"0000 0000 012D 0000 0000 00"                        /* .....-..... */
-};
-
-data 'MENU' (143) {
-	$"008F 0000 0000 0000 0000 FFFF FFFF 0751"            /* .è........ˇˇˇˇ.Q */
-	$"7561 6C69 7479 0A46 2335 202D 2047 6F6F"            /* uality¬F#5 - Goo */
-	$"6400 0000 000C 4623 3420 2D20 4265 7474"            /* d.....F#4 - Bett */
-	$"6572 0000 0000 0A46 2333 202D 2042 6573"            /* er....¬F#3 - Bes */
-	$"7400 0000 0000"                                     /* t..... */
-};
-
-data 'MENU' (144) {
-	$"0090 0000 0000 0000 0000 FFFF FFFF 0554"            /* .ê........ˇˇˇˇ.T */
-	$"6974 6C65 034F 6666 0000 0000 024F 6E00"            /* itle.Off.....On. */
-	$"0000 0000"                                          /* .... */
-};
-
-data 'MENU' (145) {
-	$"0091 0000 0000 0000 0000 FFFF FFF7 0850"            /* .ë........ˇˇˇ˜.P */
-	$"6174 7465 726E 730E 5061 7274 6974 696F"            /* atterns.Partitio */
-	$"6E20 4C69 7374 0000 0000 0D50 6174 7465"            /* n List.....Patte */
-	$"726E 7320 4C69 7374 0000 0000 012D 0000"            /* rns List.....-.. */
-	$"0000 1243 7265 6174 6520 6E65 7720 7061"            /* ...Create new pa */
-	$"7474 6572 6E00 0000 0007 4F70 656E 2E2E"            /* ttern.....Open.. */
-	$"2E00 0000 000A 5361 7665 2041 732E 2E2E"            /* .....¬Save As... */
-	$"0000 0000 0550 7572 6765 0000 0000 0644"            /* .....Purge.....D */
-	$"656C 6574 6500 0000 0000"                           /* elete..... */
-};
-
-data 'MENU' (147) {
-	$"0093 0000 0000 0000 0000 FFFF FFFF 0B43"            /* .ì........ˇˇˇˇ.C */
-	$"6F6D 7072 6573 7369 6F6E 044E 4F4E 4500"            /* ompression.NONE. */
-	$"0000 0004 4D41 4431 0000 0000 00"                   /* ....MAD1..... */
-};
-
-data 'MENU' (148) {
-	$"0094 0000 0000 0000 0000 FFFF FFF7 0941"            /* .î........ˇˇˇ˜∆A */
-	$"6D70 6C69 7475 6465 0638 2062 6974 7300"            /* mplitude.8 bits. */
-	$"0000 0007 3136 2062 6974 7300 0000 0007"            /* ....16 bits..... */
-	$"3234 2062 6974 7300 0000 0000"                      /* 24 bits..... */
-};
-
-data 'MENU' (146) {
-	$"0092 0000 0000 0000 0000 FFFF FFFF 0554"            /* .í........ˇˇˇˇ.T */
-	$"6974 6C65 00"                                       /* itle. */
-};
-
-data 'MENU' (149) {
-	$"0095 0000 0000 0000 0000 FFFF FFFF 0C53"            /* .ï........ˇˇˇˇ.S */
-	$"7065 6369 616C 204B 6579 7303 4573 6300"            /* pecial Keys.Esc. */
-	$"0000 0003 5461 6200 0000 0002 4631 0000"            /* ....Tab.....F1.. */
-	$"0000 0246 3200 0000 0002 4633 0000 0000"            /* ...F2.....F3.... */
-	$"0246 3400 0000 0002 4635 0000 0000 0246"            /* .F4.....F5.....F */
-	$"3600 0000 0002 4637 0000 0000 0246 3800"            /* 6.....F7.....F8. */
-	$"0000 0002 4639 0000 0000 0346 3130 0000"            /* ....F9.....F10.. */
-	$"0000 0346 3132 0000 0000 0346 3131 0000"            /* ...F12.....F11.. */
-	$"0000 0346 3133 0000 0000 0346 3134 0000"            /* ...F13.....F14.. */
-	$"0000 0346 3135 0000 0000 00"                        /* ...F15..... */
-};
-
-data 'MENU' (151) {
-	$"0097 0000 0000 0000 0000 FFFF FFFF 0130"            /* .ó........ˇˇˇˇ.0 */
-	$"0231 3600 0000 0002 3332 0000 0000 0236"            /* .16.....32.....6 */
-	$"3400 0000 0003 3132 3800 0000 0003 3235"            /* 4.....128.....25 */
-	$"3600 0000 0000"                                     /* 6..... */
-};
-
-data 'MENU' (152) {
-	$"0098 0000 0000 0000 0000 FFFF FFFF 134D"            /* .ò........ˇˇˇˇ.M */
-	$"4944 4920 474D 2049 6E73 7472 756D 656E"            /* IDI GM Instrumen */
-	$"7473 0550 6961 6E6F 0000 0000 1443 6872"            /* ts.Piano.....Chr */
-	$"6F6D 6174 6963 2050 6572 6375 7373 696F"            /* omatic Percussio */
-	$"6E00 0000 0005 4F72 6761 6E00 0000 0006"            /* n.....Organ..... */
-	$"4775 6974 6172 0000 0000 0442 6173 7300"            /* Guitar.....Bass. */
-	$"0000 0007 5374 7269 6E67 7300 0000 0008"            /* ....Strings..... */
-	$"456E 7365 6D62 6C65 0000 0000 0542 7261"            /* Ensemble.....Bra */
-	$"7373 0000 0000 0452 6565 6400 0000 0004"            /* ss.....Reed..... */
-	$"5069 7065 0000 0000 0A53 796E 7468 204C"            /* Pipe....¬Synth L */
-	$"6561 6400 0000 0009 5379 6E74 6820 5061"            /* ead....∆Synth Pa */
-	$"6400 0000 000D 5379 6E74 6820 4566 6665"            /* d.....Synth Effe */
-	$"6374 7300 0000 0006 4574 686E 6963 0000"            /* cts.....Ethnic.. */
-	$"0000 0A50 6572 6375 7373 6976 6500 0000"            /* ..¬Percussive... */
-	$"000D 536F 756E 6420 4566 6665 6374 7300"            /* ..Sound Effects. */
-	$"0000 0005 4472 756D 7300 0000 0000"                 /* ....Drums..... */
-};
-
-data 'MENU' (153) {
-	$"0096 0000 0000 0000 0000 FFFF FFFF 0100"            /* .ñ........ˇˇˇˇ.. */
-	$"0C41 7564 696F 204F 7574 5075 7400 0000"            /* .Audio OutPut... */
-	$"000B 4175 6469 6F20 496E 5075 7400 0000"            /* ..Audio InPut... */
-	$"0000"                                               /* .. */
-};
-
-data 'MENU' (155) {
-	$"009B 0000 0000 0000 0000 FFFF FFFF 0743"            /* .õ........ˇˇˇˇ.C */
-	$"7265 6174 6F72 1053 4E50 4C20 2D20 506C"            /* reator.SNPL - Pl */
-	$"6179 6572 5052 4F00 0000 0010 4D4D 4B52"            /* ayerPRO.....MMKR */
-	$"202D 204D 6163 4D6F 6450 726F 0000 0000"            /*  - MacModPro.... */
-	$"1453 5472 6B20 2D20 536F 756E 642D 5472"            /* .STrk - Sound-Tr */
-	$"6563 6B65 7200 0000 000F 5343 504C 202D"            /* ecker.....SCPL - */
-	$"2053 6F75 6E64 4170 7000 0000 0000"                 /*  SoundApp..... */
-};
-
-data 'MENU' (141) {
-	$"008D 0000 0000 07B4 0000 FFFF FFFF 0554"            /* .ç.....¥..ˇˇˇˇ.T */
-	$"6974 6C65 0100 0000 0000 00"                        /* itle....... */
-};
-
-data 'MENU' (157) {
-	$"009D 0000 0000 0000 0000 FFFF FFFF 044D"            /* .ù........ˇˇˇˇ.M */
-	$"4F44 7309 506C 6179 6572 5052 4F00 0000"            /* ODs∆PlayerPRO... */
-	$"0008 536F 756E 6441 7070 0000 0000 0C53"            /* ..SoundApp.....S */
-	$"6F75 6E64 5472 6563 6B65 7200 0000 000A"            /* oundTrecker....¬ */
-	$"4D61 634D 6F64 2050 726F 0000 0000 064D"            /* MacMod Pro.....M */
-	$"4465 6C74 6100 0000 0000"                           /* Delta..... */
-};
-
-data 'MENU' (158) {
-	$"009E 0000 0000 0000 0000 FFFF FFFF 0A54"            /* .û........ˇˇˇˇ¬T */
-	$"7970 6520 4669 6C65 7304 4D41 4449 0000"            /* ype Files.MADI.. */
-	$"0000 044D 4144 4800 0000 0004 4D41 4446"            /* ...MADH.....MADF */
-	$"0000 0000 0A53 5472 6B20 2D20 4D4F 4400"            /* ....¬STrk - MOD. */
-	$"0000 0004 4D54 4D20 0000 0000 0453 334D"            /* ....MTM .....S3M */
-	$"2000 0000 0004 4F4B 5441 0000 0000 0436"            /*  .....OKTA.....6 */
-	$"3636 3900 0000 0004 4D69 6469 0000 0000"            /* 669.....Midi.... */
-	$"0458 4D20 2000 0000 0004 4954 2020 0000"            /* .XM  .....IT  .. */
-	$"0000 00"                                            /* ... */
-};
-
-data 'MENU' (156) {
-	$"009C 0000 0000 0000 0000 FFFF FFF7 0753"            /* .ú........ˇˇˇ˜.S */
-	$"616D 706C 6573 0F56 6F6C 756D 6520 456E"            /* amples.Volume En */
-	$"7665 6C6F 7065 0000 0000 1050 616E 6E69"            /* velope.....Panni */
-	$"6E67 2045 6E76 656C 6F70 6500 0000 0001"            /* ng Envelope..... */
-	$"2D00 0000 0000"                                     /* -..... */
-};
-
-data 'MENU' (159) {
-	$"009F 0000 0000 0000 0000 FFFF FFFF 0450"            /* .ü........ˇˇˇˇ.P */
-	$"5044 4700"                                          /* PDG. */
-};
-
-data 'MENU' (160) {
-	$"00A0 0000 0000 0000 0000 FFFF FFFF 0573"            /* .†........ˇˇˇˇ.s */
-	$"6361 6C65 066C 696E 6561 7200 0000 000B"            /* cale.linear..... */
-	$"6C6F 6761 7269 7468 6D69 6300 0000 0000"            /* logarithmic..... */
-};
-
-data 'MENU' (163) {
-	$"00A3 0000 0000 0000 0000 FFFF FFBF 0100"            /* .£........ˇˇˇø.. */
-	$"0831 3130 3235 2048 7A00 0000 0008 3131"            /* .11025 Hz.....11 */
-	$"3132 3720 487A 0000 0000 0832 3230 3530"            /* 127 Hz.....22050 */
-	$"2068 7A00 0000 0008 3232 3235 3420 487A"            /*  hz.....22254 Hz */
-	$"0000 0000 0834 3431 3030 2048 7A00 0000"            /* .....44100 Hz... */
-	$"0001 2D00 0000 0012 3833 3633 2048 7A20"            /* ..-.....8363 Hz  */
-	$"2841 6D69 6761 202B 3029 0000 0000 1238"            /* (Amiga +0).....8 */
-	$"3431 3320 487A 2028 416D 6967 6120 2B31"            /* 413 Hz (Amiga +1 */
-	$"2900 0000 0012 3834 3633 2048 7A20 2841"            /* ).....8463 Hz (A */
-	$"6D69 6761 202B 3229 0000 0000 1238 3532"            /* miga +2).....852 */
-	$"3920 487A 2028 416D 6967 6120 2B33 2900"            /* 9 Hz (Amiga +3). */
-	$"0000 0012 3835 3831 2048 7A20 2841 6D69"            /* ....8581 Hz (Ami */
-	$"6761 202B 3429 0000 0000 1238 3635 3120"            /* ga +4).....8651  */
-	$"487A 2028 416D 6967 6120 2B35 2900 0000"            /* Hz (Amiga +5)... */
-	$"0012 3837 3233 2048 7A20 2841 6D69 6761"            /* ..8723 Hz (Amiga */
-	$"202B 3629 0000 0000 1238 3735 3720 487A"            /*  +6).....8757 Hz */
-	$"2028 416D 6967 6120 2B37 2900 0000 0012"            /*  (Amiga +7)..... */
-	$"3832 3830 2048 7A20 2841 6D69 6761 202D"            /* 8280 Hz (Amiga - */
-	$"3129 0000 0000 1238 3233 3220 487A 2028"            /* 1).....8232 Hz ( */
-	$"416D 6967 6120 2D32 2900 0000 0012 3831"            /* Amiga -2).....81 */
-	$"3639 2048 7A20 2841 6D69 6761 202D 3329"            /* 69 Hz (Amiga -3) */
-	$"0000 0000 1238 3130 3720 487A 2028 416D"            /* .....8107 Hz (Am */
-	$"6967 6120 2D34 2900 0000 0012 3830 3436"            /* iga -4).....8046 */
-	$"2048 7A20 2841 6D69 6761 202D 3529 0000"            /*  Hz (Amiga -5).. */
-	$"0000 1237 3938 3520 487A 2028 416D 6967"            /* ...7985 Hz (Amig */
-	$"6120 2D36 2900 0000 0012 3739 3431 2048"            /* a -6).....7941 H */
-	$"7A20 2841 6D69 6761 202D 3729 0000 0000"            /* z (Amiga -7).... */
-	$"1237 3839 3520 487A 2028 416D 6967 6120"            /* .7895 Hz (Amiga  */
-	$"2D38 2900 0000 0000"                                /* -8)..... */
-};
-
-data 'MENU' (164) {
-	$"00A4 0000 0000 0000 0000 FFFF EEFF 0554"            /* .§........ˇˇÓˇ.T */
-	$"6974 6C65 0355 5341 0000 0000 0643 616E"            /* itle.USA.....Can */
-	$"6164 6100 0000 0005 4368 696E 6100 0000"            /* ada.....China... */
-	$"0009 486F 6E67 204B 6F6E 6700 0000 000D"            /* .∆Hong Kong..... */
-	$"536F 7574 6820 416D 6572 6963 6100 0000"            /* South America... */
-	$"0006 5461 6977 616E 0000 0000 0854 6861"            /* ..Taiwan.....Tha */
-	$"696C 616E 6400 0000 0001 2D00 0000 0007"            /* iland.....-..... */
-	$"456E 676C 616E 6400 0000 0006 4672 616E"            /* England.....Fran */
-	$"6365 0000 0000 184F 7468 6572 2045 7572"            /* ce.....Other Eur */
-	$"6F70 6561 6E20 436F 756E 7472 6965 7300"            /* opean Countries. */
-	$"0000 0001 2D00 0000 000F 4F74 6865 7220"            /* ....-.....Other  */
-	$"636F 756E 7472 6965 7300 0000 0000"                 /* countries..... */
-};
-
-data 'MENU' (165) {
-	$"00A5 0000 0000 0000 0000 FFFF FFFF 024D"            /* .•........ˇˇˇˇ.M */
-	$"5304 3120 6D73 0000 0000 0531 3020 6D73"            /* S.1 ms.....10 ms */
-	$"0000 0000 0532 3520 6D73 0000 0000 0533"            /* .....25 ms.....3 */
-	$"3020 6D73 0000 0000 0533 3520 6D73 0000"            /* 0 ms.....35 ms.. */
-	$"0000 0534 3020 6D73 0000 0000 0534 3520"            /* ...40 ms.....45  */
-	$"6D73 0000 0000 0535 3020 6D73 0000 0000"            /* ms.....50 ms.... */
-	$"0536 3020 6D73 0000 0000 0537 3020 6D73"            /* .60 ms.....70 ms */
-	$"0000 0000 0538 3020 6D73 0000 0000 0539"            /* .....80 ms.....9 */
-	$"3020 6D73 0000 0000 0631 3030 206D 7300"            /* 0 ms.....100 ms. */
-	$"0000 0006 3230 3020 6D73 0000 0000 00"              /* ....200 ms..... */
-};
-
-data 'MENU' (166) {
-	$"00A6 0000 0000 0000 0000 FFFF FFFF 0450"            /* .¶........ˇˇˇˇ.P */
-	$"5049 4E00"                                          /* PIN. */
-};
-
-data 'MENU' (167) {
-	$"00A7 0000 0000 0000 0000 FFFF FFFF 0450"            /* .ß........ˇˇˇˇ.P */
-	$"5049 4E00"                                          /* PIN. */
-};
-
-data 'MENU' (168) {
-	$"00A8 0000 0000 0000 0000 FFFF FFFF 094F"            /* .®........ˇˇˇˇ∆O */
-	$"7363 6920 4D6F 6465 0553 7461 636B 0000"            /* sci Mode.Stack.. */
-	$"0000 0454 696C 6500 0000 0000"                      /* ...Tile..... */
-};
-
-data 'MENU' (169) {
-	$"00A9 0000 0000 0000 0000 FFFF FFFF 0554"            /* .©........ˇˇˇˇ.T */
-	$"6974 6C65 0431 3020 2500 0000 0004 3230"            /* itle.10 %.....20 */
-	$"2025 0000 0000 0433 3020 2500 0000 0004"            /*  %.....30 %..... */
-	$"3430 2025 0000 0000 0435 3020 2500 0000"            /* 40 %.....50 %... */
-	$"0004 3630 2025 0000 0000 0437 3020 2500"            /* ..60 %.....70 %. */
-	$"0000 0000"                                          /* .... */
-};
-
-data 'MENU' (170) {
-	$"00AA 0000 0000 0000 0000 FFFF FFFF 024D"            /* .™........ˇˇˇˇ.M */
-	$"5305 3235 206D 7300 0000 0005 3330 206D"            /* S.25 ms.....30 m */
-	$"7300 0000 0005 3335 206D 7300 0000 0005"            /* s.....35 ms..... */
-	$"3430 206D 7300 0000 0005 3435 206D 7300"            /* 40 ms.....45 ms. */
-	$"0000 0005 3530 206D 7300 0000 0005 3630"            /* ....50 ms.....60 */
-	$"206D 7300 0000 0005 3730 206D 7300 0000"            /*  ms.....70 ms... */
-	$"0005 3830 206D 7300 0000 0005 3930 206D"            /* ..80 ms.....90 m */
-	$"7300 0000 0006 3130 3020 6D73 0000 0000"            /* s.....100 ms.... */
-	$"0632 3030 206D 7300 0000 0006 3330 3020"            /* .200 ms.....300  */
-	$"6D73 0000 0000 0634 3030 206D 7300 0000"            /* ms.....400 ms... */
-	$"0000"                                               /* .. */
-};
-
-data 'MENU' (500) {
-	$"01F4 0000 0000 0000 0000 FFFF FFAF 0453"            /* .Ù........ˇˇˇØ.S */
-	$"686F 7715 416C 6C20 4176 6169 6C61 626C"            /* how.All Availabl */
-	$"6520 666F 726D 6174 7300 0000 0012 416C"            /* e formats.....Al */
-	$"6C20 5265 6164 6162 6C65 2066 696C 6573"            /* l Readable files */
-	$"0000 0000 0941 6C6C 2066 696C 6573 0000"            /* ....∆All files.. */
-	$"0000 012D 0000 0000 0E4D 4144 4920 506C"            /* ...-.....MADI Pl */
-	$"6179 6572 5052 4F00 0000 0001 2D00 0000"            /* ayerPRO.....-... */
-	$"0000"                                               /* .. */
-};
-
-data 'MENU' (171) {
-	$"00AB 0000 0000 0000 0000 FFFF FFFF 0554"            /* .´........ˇˇˇˇ.T */
-	$"6974 6C65 0331 3030 0000 0000 0331 3130"            /* itle.100.....110 */
-	$"0000 0000 0331 3230 0000 0000 0331 3330"            /* .....120.....130 */
-	$"0000 0000 0331 3430 0000 0000 0331 3630"            /* .....140.....160 */
-	$"0000 0000 0331 3830 0000 0000 0332 3030"            /* .....180.....200 */
-	$"0000 0000 00"                                       /* ..... */
-};
-
-data 'MENU' (172) {
-	$"00A5 0000 0000 0000 0000 FFFF FFFF 044D"            /* .•........ˇˇˇˇ.M */
-	$"6F64 6504 4D6F 6E6F 0000 0000 0653 7465"            /* ode.Mono.....Ste */
-	$"7265 6F00 0000 0000"                                /* reo..... */
-};
-
-data 'MENU' (173) {
-	$"00AD 0000 0000 0000 0000 FFFF FFFF 0100"            /* .≠........ˇˇˇˇ.. */
-	$"0C43 6C61 7373 6963 204C 6F6F 7000 0000"            /* .Classic Loop... */
-	$"000E 5069 6E67 2D50 6F6E 6720 4C6F 6F70"            /* ..Ping-Pong Loop */
-	$"0000 0000 00"                                       /* ..... */
-};
-
-data 'MENU' (142) {
-	$"008E 0000 0000 0000 0000 FFFF FFFF 0D54"            /* .é........ˇˇˇˇ.T */
-	$"7261 636B 7320 4E75 6D62 6572 00"                   /* racks Number. */
-};
-
-data 'MENU' (174) {
-	$"00AE 0000 0000 0000 0000 FFFF FFFF 0554"            /* .Æ........ˇˇˇˇ.T */
-	$"6974 6C65 094E 6F20 4564 6974 6F72 0000"            /* itle∆No Editor.. */
-	$"0000 0E44 6967 6974 616C 2045 6469 746F"            /* ...Digital Edito */
-	$"7200 0000 000A 426F 7820 4564 6974 6F72"            /* r....¬Box Editor */
-	$"0000 0000 0E43 6C61 7373 6963 2045 6469"            /* .....Classic Edi */
-	$"746F 7200 0000 000C 5761 7665 2050 7265"            /* tor.....Wave Pre */
-	$"7669 6577 0000 0000 0C50 6174 7465 726E"            /* view.....Pattern */
-	$"2056 6965 7700 0000 0000"                           /*  View..... */
-};
-
-data 'MENU' (130) {
-	$"0082 0000 0000 0000 0000 FFFF FFBB 0B49"            /* .Ç........ˇˇˇª.I */
-	$"6E73 7472 756D 656E 7473 1049 6E73 7472"            /* nstruments.Instr */
-	$"756D 656E 7473 204C 6973 7400 4C00 0001"            /* uments List.L... */
-	$"2D00 0000 0006 4E65 772E 2E2E 001B 9A00"            /* -.....New.....ö. */
-	$"0C45 7870 6F72 7420 4173 2E2E 2E00 0000"            /* .Export As...... */
-	$"0006 4465 6C65 7465 0000 0000 012D 0000"            /* ..Delete.....-.. */
-	$"0000 1853 6176 6520 496E 7374 7275 6D65"            /* ...Save Instrume */
-	$"6E74 7320 4C69 7374 2E2E 2E00 0000 0000"            /* nts List........ */
-};
-
-data 'MENU' (200, "Prefs") {
-	$"00C8 0000 0000 0000 0000 FFFF FFFF 0B50"            /* .»........ˇˇˇˇ.P */
-	$"7265 6665 7265 6E63 6573 0F44 7269 7665"            /* references.Drive */
-	$"7220 2D20 4F75 7470 7574 0000 0000 0550"            /* r - Output.....P */
-	$"6961 6E6F 0000 0000 0A4D 7573 6963 204C"            /* iano....¬Music L */
-	$"6973 7400 0000 0005 436F 6C6F 7200 0000"            /* ist.....Color... */
-	$"0004 4D69 7363 0000 0000 0A42 6F78 2045"            /* ..Misc....¬Box E */
-	$"6469 746F 7200 0000 000E 4469 6769 7461"            /* ditor.....Digita */
-	$"6C20 4564 6974 6F72 0000 0000 0E43 6C61"            /* l Editor.....Cla */
-	$"7373 6963 2045 6469 746F 7200 0000 0005"            /* ssic Editor..... */
-	$"464B 4559 7300 0000 000D 4D49 4449 2048"            /* FKEYs.....MIDI H */
-	$"6172 6477 6172 6500 0000 0000"                      /* ardware..... */
-};
-
-data 'MENU' (133) {
-	$"0085 0000 0000 0000 0000 FFFF FFF7 0114"            /* .Ö........ˇˇˇ˜.. */
-	$"0F41 626F 7574 2050 6C61 7965 7250 524F"            /* .About PlayerPRO */
-	$"0000 0000 1647 656E 6572 616C 2049 6E66"            /* .....General Inf */
-	$"6F72 6D61 7469 6F6E 2E2E 2E00 0000 0001"            /* ormation........ */
-	$"2D00 0000 0000"                                     /* -..... */
-};
-
-data 'MENU' (175) {
-	$"00AF 0000 0000 0000 0000 FFFF FFFF 0C4F"            /* .Ø........ˇˇˇˇ.O */
-	$"7665 7253 616D 706C 696E 6703 3220 7800"            /* verSampling.2 x. */
-	$"0000 0003 3320 7800 0000 0003 3420 7800"            /* ....3 x.....4 x. */
-	$"0000 0003 3620 7800 0000 0003 3820 7800"            /* ....6 x.....8 x. */
-	$"0000 0004 3130 2078 0000 0000 00"                   /* ....10 x..... */
-};
-
-data 'MENU' (154) {
-	$"009A 0000 0000 0000 0000 FFFF FFFF 0554"            /* .ö........ˇˇˇˇ.T */
-	$"6974 6C65 1049 6D70 6F72 7420 6120 4669"            /* itle.Import a Fi */
-	$"6C65 2E2E 2E00 0000 0016 5369 6C65 6E63"            /* le........Silenc */
-	$"652F 546F 6E65 2047 656E 6572 6174 6F72"            /* e/Tone Generator */
-	$"0000 0000 1452 6563 6F72 6420 2841 7564"            /* .....Record (Aud */
-	$"696F 2049 6E70 7574 2900 0000 0014 5175"            /* io Input).....Qu */
-	$"6963 6B74 696D 6520 496E 7374 7275 6D65"            /* icktime Instrume */
-	$"6E74 0000 0000 1252 4157 2044 6174 6120"            /* nt.....RAW Data  */
-	$"496D 706F 7274 2E2E 2E00 0000 0012 4175"            /* Import........Au */
-	$"6469 6F20 4344 2049 6D70 6F72 742E 2E2E"            /* dio CD Import... */
-	$"0000 0000 00"                                       /* ..... */
-};
-
-data 'MENU' (132) {
-	$"0084 0000 0000 0000 0000 FFFF FF79 0445"            /* .Ñ........ˇˇˇy.E */
-	$"6469 7404 556E 646F 005A 0000 012D 0000"            /* dit.Undo.Z...-.. */
-	$"0000 0343 7574 0058 0000 0443 6F70 7900"            /* ...Cut.X...Copy. */
-	$"4300 0005 5061 7374 6500 5600 0005 436C"            /* C...Paste.V...Cl */
-	$"6561 7200 0000 0001 2D00 0000 0009 4475"            /* ear.....-....∆Du */
-	$"706C 6963 6174 6500 0000 000A 5365 6C65"            /* plicate....¬Sele */
-	$"6374 2041 6C6C 0041 0000 0B47 6574 2049"            /* ct All.A...Get I */
-	$"6E66 6F2E 2E2E 0049 0000 00"                        /* nfo....I... */
-};
-
-data 'MENU' (140) {
-	$"008C 0000 0000 0000 0000 FFFF F6DF 0645"            /* .å........ˇˇˆﬂ.E */
-	$"6469 746F 720E 4469 6769 7461 6C20 4564"            /* ditor.Digital Ed */
-	$"6974 6F72 0044 0000 0A42 6F78 2045 6469"            /* itor.D..¬Box Edi */
-	$"746F 7200 0000 000E 436C 6173 7369 6320"            /* tor.....Classic  */
-	$"4564 6974 6F72 0000 0000 0C57 6176 6520"            /* Editor.....Wave  */
-	$"5072 6576 6965 7700 0000 0001 2D00 0000"            /* Preview.....-... */
-	$"0007 4669 6E64 2E2E 2E00 4600 0011 4669"            /* ..Find....F...Fi */
-	$"6E64 2043 7572 7265 6E74 204E 6F74 6500"            /* nd Current Note. */
-	$"4500 0001 2D00 0000 0008 4D69 6E69 6D69"            /* E...-.....Minimi */
-	$"7A65 0000 0000 1F43 6F6E 7665 7274 2061"            /* ze.....Convert a */
-	$"6C6C 2050 6174 7465 726E 7320 746F 2036"            /* ll Patterns to 6 */
-	$"3420 726F 7773 0000 0000 012D 0000 0000"            /* 4 rows.....-.... */
-	$"1347 656E 6572 616C 2049 6E66 6F72 6D61"            /* .General Informa */
-	$"7469 6F6E 0000 0000 00"                             /* tion..... */
-};
-
-data 'MENU' (176) {
-	$"00B0 0000 0000 0000 0000 FFFF FFEF 0757"            /* .∞........ˇˇˇÔ.W */
-	$"696E 646F 7773 0100 0031 0000 0100 0032"            /* indows...1.....2 */
-	$"0000 0100 0033 0000 012D 0000 0000 0853"            /* .....3...-.....S */
-	$"6574 7469 6E67 7300 0000 0000"                      /* ettings..... */
-};
-
-data 'MENU' (178) {
-	$"00B2 0000 0000 0000 0000 FFFF FFFF 0453"            /* .≤........ˇˇˇˇ.S */
-	$"7465 7001 3100 0000 0001 3200 0000 0001"            /* tep.1.....2..... */
-	$"3300 0000 0001 3400 0000 0001 3500 0000"            /* 3.....4.....5... */
-	$"0001 3600 0000 0001 3700 0000 0001 3800"            /* ..6.....7.....8. */
-	$"0000 0001 3900 0000 0000"                           /* ....9..... */
-};
-
-data 'MENU' (177) {
-	$"00B1 0000 0000 0000 0000 FFFF FFFF 0E4E"            /* .±........ˇˇˇˇ.N */
-	$"6F20 636F 6D70 7265 7373 696F 6E0E 4E6F"            /* o compression.No */
-	$"2063 6F6D 7072 6573 7369 6F6E 0000 0000"            /*  compression.... */
-	$"044D 4143 3300 0000 0004 4D41 4336 0000"            /* .MAC3.....MAC6.. */
-	$"0000 0469 6D61 3400 0000 0004 756C 6177"            /* ...ima4.....ulaw */
-	$"0000 0000 0461 6C61 7700 0000 0004 5144"            /* .....alaw.....QD */
-	$"4D43 0000 0000 0451 444D 3200 0000 0000"            /* MC.....QDM2..... */
-};
-
-data 'MENU' (150) {
-	$"0096 0000 0000 0000 0000 FFFF FFEF 0100"            /* .ñ........ˇˇˇÔ.. */
-	$"0C41 7564 696F 204F 7574 5075 7400 0000"            /* .Audio OutPut... */
-	$"000D 4472 6976 6572 2054 7261 636B 7300"            /* ..Driver Tracks. */
-	$"0000 000B 4175 6469 6F20 496E 5075 7400"            /* ....Audio InPut. */
-	$"0000 0011 5175 6963 6B74 696D 6520 4368"            /* ....Quicktime Ch */
-	$"616E 6E65 6C00 0000 0000"                           /* annel..... */
-};
-
-data 'MENU' (131) {
-	$"0083 0000 0000 0000 0000 FFFF FDBB 0556"            /* .É........ˇˇ˝ª.V */
-	$"6965 7773 1053 686F 7720 4F6E 6C69 6E65"            /* iews.Show Online */
-	$"2048 656C 7000 0000 0001 2D00 0000 000C"            /*  Help.....-..... */
-	$"5061 7474 6572 6E20 5669 6577 0000 0000"            /* Pattern View.... */
-	$"0C44 6967 6974 616C 2056 6965 7700 0000"            /* .Digital View... */
-	$"000F 496E 7374 7275 6D65 6E74 2056 6965"            /* ..Instrument Vie */
-	$"7700 0000 0001 2D00 0000 000C 4F73 6369"            /* w.....-.....Osci */
-	$"6C6C 6F20 5669 6577 0000 0000 0D53 7065"            /* llo View.....Spe */
-	$"6374 7275 6D20 5669 6577 0000 0000 012D"            /* ctrum View.....- */
-	$"0000 0000 0554 6F6F 6C73 0054 0000 0A4D"            /* .....Tools.T..¬M */
-	$"7573 6963 204C 6973 7400 4D00 0005 4D69"            /* usic List.M...Mi */
-	$"7865 7200 4200 0009 4571 7561 6C69 7A65"            /* xer.B..∆Equalize */
-	$"7200 0000 0005 5069 616E 6F00 5000 000B"            /* r.....Piano.P... */
-	$"4D65 6D6F 7279 2056 6965 7700 0000 0000"            /* Memory View..... */
-};
-
-data 'MENU' (162) {
-	$"00A2 0000 0000 0000 0000 FFFF FFFF 0554"            /* .¢........ˇˇˇˇ.T */
-	$"6974 6C65 0F53 656C 6563 7469 6F6E 2D3E"            /* itle.Selection-> */
-	$"6C6F 6F70 0000 0000 0F4C 6F6F 702D 3E53"            /* loop.....Loop->S */
-	$"656C 6563 7469 6F6E 0000 0000 1153 6574"            /* election.....Set */
-	$"2053 7573 7461 696E 2050 6F69 6E74 0000"            /*  Sustain Point.. */
-	$"0000 00"                                            /* ... */
-};
-
-data 'MENU' (136) {
-	$"0088 0000 0000 0000 0000 FFFF FF6F 0645"            /* .à........ˇˇˇo.E */
-	$"6666 6563 740F 5365 6C65 6374 696F 6E2D"            /* ffect.Selection- */
-	$"3E4C 6F6F 7000 0000 000F 4C6F 6F70 2D3E"            /* >Loop.....Loop-> */
-	$"5365 6C65 6374 696F 6E00 0000 0006 4465"            /* Selection.....De */
-	$"6C65 7465 0000 0000 012D 0000 0000 0F46"            /* lete.....-.....F */
-	$"4654 202D 2048 7A20 4669 6C74 6572 0000"            /* FT - Hz Filter.. */
-	$"0000 0E46 4654 202D 2048 7A20 5368 6966"            /* ...FFT - Hz Shif */
-	$"7400 0000 0001 2D00 0000 0000"                      /* t.....-..... */
-};
-
-data 'MENU' (135) {
-	$"0087 0000 0000 0000 0000 FFFF FFFF 0745"            /* .á........ˇˇˇˇ.E */
-	$"6666 6563 743A 1130 2D4E 6F72 6D61 6C2F"            /* ffect:.0-Normal/ */
-	$"4172 7065 6767 696F 0000 0000 0A31 2D53"            /* Arpeggio....¬1-S */
-	$"6C69 6465 2055 7000 0000 000C 322D 536C"            /* lide Up.....2-Sl */
-	$"6964 6520 446F 776E 0000 0000 0C33 2D50"            /* ide Down.....3-P */
-	$"6F72 7461 6D65 6E74 6F00 0000 000A 342D"            /* ortamento....¬4- */
-	$"0056 6962 7261 746F 0000 0000 1635 2D50"            /* .Vibrato.....5-P */
-	$"6F72 7461 6D65 6E74 6F2B 566F 6C20 536C"            /* ortamento+Vol Sl */
-	$"6964 6500 0000 0013 362D 5669 6272 6174"            /* ide.....6-Vibrat */
-	$"6F2B 566F 6C20 536C 6964 6500 0000 0009"            /* o+Vol Slide....∆ */
-	$"372D 5472 656D 6F6C 6F00 0000 000D 382D"            /* 7-Tremolo.....8- */
-	$"5365 7420 5061 6E6E 696E 6700 0000 0012"            /* Set Panning..... */
-	$"392D 5365 7420 5361 6D70 6C65 4F66 6673"            /* 9-Set SampleOffs */
-	$"6574 0000 0000 0D41 2D56 6F6C 756D 6553"            /* et.....A-VolumeS */
-	$"6C69 6465 0000 0000 0F42 2D50 6F73 6974"            /* lide.....B-Posit */
-	$"696F 6E20 4A75 6D70 0000 0000 0C43 2D53"            /* ion Jump.....C-S */
-	$"6574 2056 6F6C 756D 6500 0000 000F 442D"            /* et Volume.....D- */
-	$"5061 7474 6572 6E20 4272 6561 6B00 0000"            /* Pattern Break... */
-	$"000C 452D 4520 436F 6D6D 616E 6473 0000"            /* ..E-E Commands.. */
-	$"0000 0B46 2D53 6574 2053 7065 6564 0000"            /* ...F-Set Speed.. */
-	$"0000 2147 2D4E 6F74 6520 4F46 4620 284D"            /* ..!G-Note OFF (M */
-	$"756C 7469 2D43 6861 6E6E 656C 2054 7261"            /* ulti-Channel Tra */
-	$"636B 7329 0000 0000 00"                             /* cks)..... */
-};
-
-data 'MENU' (179) {
-	$"00B3 0000 0000 0000 0000 FFFF FFAF 0849"            /* .≥........ˇˇˇØ.I */
-	$"6E74 6572 6E65 7417 506C 6179 6572 5052"            /* nternet.PlayerPR */
-	$"4F20 4F66 6669 6369 616C 2053 6974 6500"            /* O Official Site. */
-	$"0000 0019 4D49 5420 4172 6368 6976 6520"            /* ....MIT Archive  */
-	$"666F 7220 506C 6179 6572 5052 4F00 0000"            /* for PlayerPRO... */
-	$"0020 456D 6169 6C20 746F 2074 6865 2061"            /* . Email to the a */
-	$"7574 686F 7220 6F66 2050 6C61 7965 7250"            /* uthor of PlayerP */
-	$"524F 0000 0000 012D 0000 0000 1741 6464"            /* RO.....-.....Add */
-	$"2F52 656D 6F76 6520 626F 6F6B 6D61 726B"            /* /Remove bookmark */
-	$"732E 2E2E 0000 0000 012D 0000 0000 00"              /* s........-..... */
-};
-
-data 'MENU' (161) {
-	$"07D0 0000 0000 00C8 0000 FFFF FFFF 0653"            /* .–.....»..ˇˇˇˇ.S */
-	$"616D 706C 6501 3000 0000 0001 3100 0000"            /* ample.0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0001 3000 0000 0001 3100 0000"            /* F.....0.....1... */
-	$"0001 3200 0000 0001 3300 0000 0001 3400"            /* ..2.....3.....4. */
-	$"0000 0001 3500 0000 0001 3600 0000 0001"            /* ....5.....6..... */
-	$"3700 0000 0001 3800 0000 0001 3900 0000"            /* 7.....8.....9... */
-	$"0001 4100 0000 0001 4200 0000 0001 4300"            /* ..A.....B.....C. */
-	$"0000 0001 4400 0000 0001 4500 0000 0001"            /* ....D.....E..... */
-	$"4600 0000 0000"                                     /* F..... */
+resource 'STR#' (129, "ScreenSaver") {
+	{	/* array StringArray: 7 elements */
+		/* [1] */
+		"Player PRO 5.0",
+		/* [2] */
+		"You can now",
+		/* [3] */
+		"order your",
+		/* [4] */
+		"PlayerPRO CD-Rom",
+		/* [5] */
+		"with 3500 musics",
+		/* [6] */
+		"500 instruments",
+		/* [7] */
+		"and music tools"
+	}
+};
+
+resource 'STR#' (200, "Instruments list help") {
+	{	/* array StringArray: 9 elements */
+		/* [1] */
+		"Create a new sound into the selected ins"
+		"trument cell. Choose the method.",
+		/* [2] */
+		"Save the selected instrument into a file"
+		".",
+		/* [3] */
+		"Load a sound file into the selected inst"
+		"rument cell.",
+		/* [4] */
+		"Delete the selected instrument.",
+		/* [5] */
+		"More information about the selected inst"
+		"rument.",
+		/* [6] */
+		"The color indicates the track on which t"
+		"he instrument is used.",
+		/* [7] */
+		"List of instruments used in the current "
+		"song.",
+		/* [8] */
+		"Play the selected instrument/sample.",
+		/* [9] */
+		"Show the waveform of the selected instru"
+		"ment."
+	}
+};
+
+resource 'STR#' (1000, "PatList Help") {
+	{	/* array StringArray: 7 elements */
+		/* [1] */
+		"Create a new pattern and add it to the l"
+		"ist.",
+		/* [2] */
+		"Load a pattern file and add it to the li"
+		"st.",
+		/* [3] */
+		"Save the selected pattern into a file.",
+		/* [4] */
+		"Delete the selected pattern.",
+		/* [5] */
+		"Get more information about the selected "
+		"pattern.",
+		/* [6] */
+		"Display the selected pattern.",
+		/* [7] */
+		"The pattern list used in the current son"
+		"g."
+	}
+};
+
+resource 'STR#' (1200, "Adaptors Help") {
+	{	/* array StringArray: 10 elements */
+		/* [1] */
+		"Load an 'adaptors' file and replace curr"
+		"ent settings.",
+		/* [2] */
+		"Save current settings into a 'adaptors' "
+		"file.",
+		/* [3] */
+		"Reset speed setting to standard settings"
+		".",
+		/* [4] */
+		"Set up left/right volume based on track "
+		"no 1.",
+		/* [5] */
+		"Change the playing pitch. Click on it.",
+		/* [6] */
+		"Change the playing speed. Click on it.",
+		/* [7] */
+		"Change the playing volume (HARDWARE volu"
+		"me). Click on it.",
+		/* [8] */
+		"Change volume/panning for each track. Cl"
+		"ick on it. Use 'option' key to change al"
+		"l tracks.",
+		/* [9] */
+		"Change the playing volume (SOFTWARE volu"
+		"me). Click on it.",
+		/* [10] */
+		"Reset pitch setting to standard settings"
+		"."
+	}
+};
+
+resource 'STR#' (1400, "Music List Help") {
+	{	/* array StringArray: 9 elements */
+		/* [1] */
+		"Sort the music list alphabetically.",
+		/* [2] */
+		"Add a new music file to the music list.",
+		/* [3] */
+		"Remove the selected music file from the "
+		"list.",
+		/* [4] */
+		"Change information of the selected music"
+		" file.",
+		/* [5] */
+		"Load the selected music file into memory"
+		" and play it.",
+		/* [6] */
+		"Open the preference window for the music"
+		" list.",
+		/* [7] */
+		"More information about the selected musi"
+		"c file.",
+		/* [8] */
+		"The music list - to open a music file, d"
+		"ouble click on its title.",
+		/* [9] */
+		"The position of the selected music file "
+		"on your hard disk."
+	}
+};
+
+resource 'STR#' (1600, "Tools Help") {
+	{	/* array StringArray: 15 elements */
+		/* [1] */
+		"Go to previous pattern.",
+		/* [2] */
+		"Play song backwards.",
+		/* [3] */
+		"Stop the current song.",
+		/* [4] */
+		"Play the current song.",
+		/* [5] */
+		"Fast forward.",
+		/* [6] */
+		"Go to next pattern.",
+		/* [7] */
+		"Indicate the progression of the song. Cl"
+		"ick in it to change the position.",
+		/* [8] */
+		"Filename of the current song in memory.",
+		/* [9] */
+		"Instrument of the selected cell (see Dig"
+		"ital Editor).",
+		/* [10] */
+		"Note of the selected cell (see Digital E"
+		"ditor).",
+		/* [11] */
+		"Effect of the selected cell (see Digital"
+		" Editor).",
+		/* [12] */
+		"Argument of the selected cell (see Digit"
+		"al Editor).",
+		/* [13] */
+		"Play the selected cell (see Digital Edit"
+		"or).",
+		/* [14] */
+		"Delete the selected cell (see Digital Ed"
+		"itor).",
+		/* [15] */
+		"Apply modifications to all selected cell"
+		"s (see Digital Editor)."
+	}
+};
+
+resource 'STR#' (1800, "Instrument Help") {
+	{	/* array StringArray: 9 elements */
+		/* [1] */
+		"Change information about this instrument"
+		".",
+		/* [2] */
+		"Switch to selection mode: to apply plugs"
+		", cut, copy and paste the waveform.",
+		/* [3] */
+		"Switch to pencil mode: to redraw the wav"
+		"eform.",
+		/* [4] */
+		"Switch to zoom IN/OUT mode. To zoom IN: "
+		"click, to zoom OUT: click + 'option' key"
+		".",
+		/* [5] */
+		"Apply a plug to the selection. If nothin"
+		"g is selected, to the whole waveform.",
+		/* [6] */
+		"The waveform of the instrument.",
+		/* [7] */
+		"Switch Envelope ON/OFF",
+		/* [8] */
+		"Switch Sustain Point ON/OFF",
+		/* [9] */
+		"Switch Envelope Loop ON/OFF"
+	}
+};
+
+resource 'STR#' (2200, "Classic Help") {
+	{	/* array StringArray: 6 elements */
+		/* [1] */
+		"More information about this pattern.",
+		/* [2] */
+		"Switch to play mode. Click the pattern t"
+		"o play it.",
+		/* [3] */
+		"Switch to zoom IN/OUT. To zoom IN: click"
+		", to zoom OUT: click + 'option' key.",
+		/* [4] */
+		"Select the tracks to be displayed.",
+		/* [5] */
+		"Select the instruments to be displayed.",
+		/* [6] */
+		"The pattern."
+	}
+};
+
+resource 'STR#' (2400, "Oscillo Help") {
+	{	/* array StringArray: 3 elements */
+		/* [1] */
+		"Change the oscillo source.",
+		/* [2] */
+		"Change the oscillo height.",
+		/* [3] */
+		"The oscilloscope."
+	}
+};
+
+resource 'STR#' (2600, "Classical Editor Help") {
+	{	/* array StringArray: 12 elements */
+		/* [1] */
+		"Pop-up menu to change track.",
+		/* [2] */
+		"Pop-up menu to select an instrument: use"
+		"d in Note mode when creating new note.",
+		/* [3] */
+		"Pop-up menu to select an effect: used in"
+		" Note mode when creating new note.",
+		/* [4] */
+		"Get more information about the current p"
+		"attern.",
+		/* [5] */
+		"Open the preference window for the class"
+		"ical editor.",
+		/* [6] */
+		"Show all tracks, not only the current tr"
+		"ack.",
+		/* [7] */
+		"Switch to Note mode. You can now drop/mo"
+		"ve notes on the partition.",
+		/* [8] */
+		"Switch to Selection mode. You can now se"
+		"lect/move notes on the partition.",
+		/* [9] */
+		"Switch to Play mode. You can now click o"
+		"n partition and hear notes made by the c"
+		"urrent instrument.",
+		/* [10] */
+		"Switch to Delete mode: click on notes to"
+		" delete them.",
+		/* [11] */
+		"A small view of the partition. Click on "
+		"it to play it.",
+		/* [12] */
+		"Switch to Zoom mode. You can now zoom in"
+		"/out in the partition."
+	}
+};
+
+resource 'STR#' (4000, "Spectrum Help") {
+	{	/* array StringArray: 4 elements */
+		/* [1] */
+		"Change the spectrum source.",
+		/* [2] */
+		"Change the spectrum height.",
+		/* [3] */
+		"The spectrum. Click on it to find a spec"
+		"ific frequency.",
+		/* [4] */
+		"Change the spectrum scale : linear or lo"
+		"garithmic."
+	}
+};
+
+resource 'STR#' (5400, "Classical Editor Help") {
+	{	/* array StringArray: 10 elements */
+		/* [1] */
+		"Switch to note editing mode (Tab key)",
+		/* [2] */
+		"Switch to select mode (Tab key)",
+		/* [3] */
+		"Load a Pcmd file and paste it at current"
+		" position.",
+		/* [4] */
+		"Play current selection (Use select mode)"
+		".",
+		/* [5] */
+		"Save current selection in a Pcmd file.",
+		/* [6] */
+		"Get information about current pattern.",
+		/* [7] */
+		"Apply a filter to current selection.",
+		/* [8] */
+		"Open Preferences window.",
+		/* [9] */
+		"Select note length to use in note editin"
+		"g mode.",
+		/* [10] */
+		"Select instrument to use in note editing"
+		" mode."
+	}
+};
+
+resource 'STR#' (2000, "Piano Help") {
+	{	/* array StringArray: 3 elements */
+		/* [1] */
+		"The Piano: click on it to hear the selec"
+		"ted instrument (see instrument list).",
+		/* [2] */
+		"Shift Key-Map to left",
+		/* [3] */
+		"Open the Piano's Preference window."
+	}
+};
+
+resource 'STR#' (4200, "Partition Help") {
+	{	/* array StringArray: 7 elements */
+		/* [1] */
+		"Open the selected pattern.",
+		/* [2] */
+		"Indicate partition length. Click on it t"
+		"o change.",
+		/* [3] */
+		"PopUp-menu to change the pattern number "
+		"at this position.",
+		/* [4] */
+		"The partition with pattern number (see '"
+		"Patterns list').",
+		/* [5] */
+		"Get more information about the selected "
+		"pattern.",
+		/* [6] */
+		"Add a row in the partition",
+		/* [7] */
+		"Remove this row in the partition"
+	}
+};
+
+resource 'STR#' (400, "Digital Editor Help") {
+	{	/* array StringArray: 21 elements */
+		/* [1] */
+		"Open the Digital Editor's Preference win"
+		"dow.",
+		/* [2] */
+		"Load a Pcmd file and paste it as current"
+		" selection.",
+		/* [3] */
+		"Save current selection into a Pcmd file.",
+		/* [4] */
+		"Transpose up notes of current selection "
+		"by 1. With shift key: only current instr"
+		"ument. (= Key '*')",
+		/* [5] */
+		"Get more information about the current p"
+		"attern.",
+		/* [6] */
+		"Play the current selection.",
+		/* [7] */
+		"Switch in record mode: press on your Mac"
+		" keyboard to enter new notes.",
+		/* [8] */
+		"Open the command editor to edit the sele"
+		"cted cell.",
+		/* [9] */
+		"Track ID and color.",
+		/* [10] */
+		"Position ID.",
+		/* [11] */
+		"The current pattern: click to select a n"
+		"ote, use click + 'shift' key to expand a"
+		" selection.",
+		/* [12] */
+		"Apply an command plug to current selecti"
+		"on.",
+		/* [13] */
+		"Switch Pattern Looping ON/OFF",
+		/* [14] */
+		"Open Find Window",
+		/* [15] */
+		"Transpose down notes of current selectio"
+		"n by 1. With shift key: only current ins"
+		"trument.(= Key '/')",
+		/* [16] */
+		"Fill selected area with default values",
+		/* [17] */
+		"Set default Value",
+		/* [18] */
+		"Set default Value",
+		/* [19] */
+		"Set default Value",
+		/* [20] */
+		"Set default Value",
+		/* [21] */
+		"Set step when pressing arrows or return"
+	}
+};
+
+resource 'STR#' (133, "Internet Menu") {
+	{	/* array StringArray: 3 elements */
+		/* [1] */
+		"http://www.quadmation.com/pphome.htm",
+		/* [2] */
+		"http://hyperarchive.lcs.mit.edu/cgi-bin/"
+		"NewSearch?key=PlayerPRO",
+		/* [3] */
+		"mailto:rossetantoine@bluewin.ch"
+	}
+};
+
+resource 'STR#' (130, "Effects") {
+	{	/* array StringArray: 17 elements */
+		/* [1] */
+		"0-Normal/Arpeggio",
+		/* [2] */
+		"1-Slide Up",
+		/* [3] */
+		"2-Slide Down",
+		/* [4] */
+		"3-Portamento",
+		/* [5] */
+		"4-\0x00Vibrato",
+		/* [6] */
+		"5-Portamento+Vol",
+		/* [7] */
+		"6-Vibrato+Vol Slide",
+		/* [8] */
+		"7-Tremolo",
+		/* [9] */
+		"8-Set Panning",
+		/* [10] */
+		"9-Set SampleOffset",
+		/* [11] */
+		"A-VolumeSlide",
+		/* [12] */
+		"B-Position Jump",
+		/* [13] */
+		"C-Set Volume",
+		/* [14] */
+		"D-Pattern Break",
+		/* [15] */
+		"E-E Commands",
+		/* [16] */
+		"F-Set Speed",
+		/* [17] */
+		"G-Note Off"
+	}
+};
+
+resource 'STR#' (131) {
+	{	/* array StringArray: 70 elements */
+		/* [1] */
+		"PlayerPRO 5",
+		/* [2] */
+		"http://www.quadmation.com",
+		/* [3] */
+		"Special thanks",
+		/* [4] */
+		"&",
+		/* [5] */
+		"Salutations",
+		/* [6] */
+		"to",
+		/* [7] */
+		"Chantal Mulhaupt (Chan-Chan)",
+		/* [8] */
+		"Dario Accornero",
+		/* [9] */
+		"Samuel Lindeman",
+		/* [10] */
+		"Mark Cookson",
+		/* [11] */
+		"Joël Barrière (French Man)",
+		/* [12] */
+		"Petteri Lajunen (Pest/TranZe)",
+		/* [13] */
+		"Steve Jobs (Mac Specialist)",
+		/* [14] */
+		"John Stiles",
+		/* [15] */
+		"All Japan users!",
+		/* [16] */
+		"Félix Lapointe",
+		/* [17] */
+		"Hubert Garrido",
+		/* [18] */
+		"Lavallee Marc",
+		/* [19] */
+		"Diaz Miguel",
+		/* [20] */
+		"Christian Lacroix",
+		/* [21] */
+		"Laurent Criado",
+		/* [22] */
+		"Styx...",
+		/* [23] */
+		"Topaze",
+		/* [24] */
+		"Doctor Yelm",
+		/* [25] */
+		"Master Byakhee",
+		/* [26] */
+		"Doctor PM",
+		/* [27] */
+		"My new Honda VTR1000",
+		/* [28] */
+		"Le Chninkel",
+		/* [29] */
+		"Osman Ratib & UIN",
+		/* [30] */
+		"Yves Ligier",
+		/* [31] */
+		"Christian Girard",
+		/* [32] */
+		"Eric",
+		/* [33] */
+		"Géraldine",
+		/* [34] */
+		"Corinne",
+		/* [35] */
+		"Laurent",
+		/* [36] */
+		"Cédric Lombard",
+		/* [37] */
+		"Eric Laporte",
+		/* [38] */
+		"Dorothée with GueuleDeRak",
+		/* [39] */
+		"Bungie Software",
+		/* [40] */
+		"Daniel Leschnziner",
+		/* [41] */
+		"Gah-Gah",
+		/* [42] */
+		"Carlos Serano",
+		/* [43] */
+		"Trm II/4 -- 5",
+		/* [44] */
+		"François Rossi",
+		/* [45] */
+		"Luc Deschenaux",
+		/* [46] */
+		"Apple Computer",
+		/* [47] */
+		"Gilles Burnier",
+		/* [48] */
+		"Canal +",
+		/* [49] */
+		"Jacqueline Meyer",
+		/* [50] */
+		"HCUG & CMU",
+		/* [51] */
+		"All Rx lovers of this planet",
+		/* [52] */
+		"Marcus Schlapfer",
+		/* [53] */
+		"Stephen Altrichter",
+		/* [54] */
+		"All the thons of the vollée",
+		/* [55] */
+		"Sydney Children’s Hospital",
+		/* [56] */
+		"Hôpital Cochin Paris",
+		/* [57] */
+		"Les Leuchter",
+		/* [58] */
+		"Les Benani",
+		/* [59] */
+		"Restaurant Hong-Kong",
+		/* [60] */
+		"Bossey France",
+		/* [61] */
+		"Motorola",
+		/* [62] */
+		"Cat Mathilde (Now dead...)",
+		/* [63] */
+		"Cat Doux-Doux (Smooth-Smooth)",
+		/* [64] */
+		"My Mac computer (G3/300)",
+		/* [65] */
+		"Daystar",
+		/* [66] */
+		"Nantucket Island",
+		/* [67] */
+		"Charles Hotel Boston",
+		/* [68] */
+		"Chronologie",
+		/* [69] */
+		"Ellis FRANCE",
+		/* [70] */
+		"(+33) 143 33 15 47"
+	}
+};
+
+resource 'MENU' (128) {
+	128,
+	textMenuProc,
+	0x7FF7DB7F,
+	enabled,
+	"File",
+	{	/* array: 21 elements */
+		/* [1] */
+		"New...", noIcon, "N", noMark, plain,
+		/* [2] */
+		"Open...", noIcon, "O", noMark, plain,
+		/* [3] */
+		"Save", noIcon, "S", noMark, plain,
+		/* [4] */
+		"Save as...", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"Close", noIcon, "W", noMark, plain,
+		/* [6] */
+		"Export as...", noIcon, hierarchicalMenu, "ã", plain,
+		/* [7] */
+		"Reset", noIcon, "R", noMark, plain,
+		/* [8] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [9] */
+		"Save Music List...", noIcon, noKey, noMark, plain,
+		/* [10] */
+		"Clear Music List", noIcon, noKey, noMark, plain,
+		/* [11] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [12] */
+		"Page SetUp...", noIcon, noKey, noMark, plain,
+		/* [13] */
+		"Print...", noIcon, noKey, noMark, plain,
+		/* [14] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [15] */
+		"Preferences...", noIcon, hierarchicalMenu, "»", plain,
+		/* [16] */
+		"Windows Sets...", noIcon, hierarchicalMenu, "∞", plain,
+		/* [17] */
+		"Sound Control Panel...", noIcon, noKey, noMark, plain,
+		/* [18] */
+		"OMS Studio Setup...", noIcon, noKey, noMark, plain,
+		/* [19] */
+		"OMS MIDI Setup...", noIcon, noKey, noMark, plain,
+		/* [20] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [21] */
+		"Quit", noIcon, "Q", noMark, plain
+	}
+};
+
+resource 'MENU' (129) {
+	129,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Quality",
+	{	/* array: 6 elements */
+		/* [1] */
+		"5 Khz", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"11 Khz", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"16 Khz", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"22 Khz", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"44 Khz", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"48 Khz", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (137) {
+	137,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Title",
+	{	/* array: 0 elements */
+	}
+};
+
+resource 'MENU' (134) {
+	134,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Instru",
+	{	/* array: 0 elements */
+	}
+};
+
+resource 'MENU' (138, "Import Special Format...") {
+	138,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Import",
+	{	/* array: 0 elements */
+	}
+};
+
+resource 'MENU' (139) {
+	139,
+	textMenuProc,
+	0x7FFFFFF9,
+	enabled,
+	"Export",
+	{	/* array: 3 elements */
+		/* [1] */
+		"AIFF Sound", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"MacOS Music", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"-", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (143) {
+	143,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Quality",
+	{	/* array: 3 elements */
+		/* [1] */
+		"F#5 - Good", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"F#4 - Better", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"F#3 - Best", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (144) {
+	144,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Title",
+	{	/* array: 2 elements */
+		/* [1] */
+		"Off", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"On", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (145) {
+	145,
+	textMenuProc,
+	0x7FFFFFFB,
+	enabled,
+	"Patterns",
+	{	/* array: 8 elements */
+		/* [1] */
+		"Partition List", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Patterns List", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"Create new pattern", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"Open...", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"Save As...", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"Purge", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"Delete", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (147) {
+	147,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Compression",
+	{	/* array: 2 elements */
+		/* [1] */
+		"NONE", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"MAD1", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (148) {
+	148,
+	textMenuProc,
+	0x7FFFFFFB,
+	enabled,
+	"Amplitude",
+	{	/* array: 3 elements */
+		/* [1] */
+		"8 bits", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"16 bits", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"24 bits", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (146) {
+	146,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Title",
+	{	/* array: 0 elements */
+	}
+};
+
+resource 'MENU' (149) {
+	149,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Special Keys",
+	{	/* array: 17 elements */
+		/* [1] */
+		"Esc", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Tab", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"F1", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"F2", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"F3", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"F4", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"F5", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"F6", noIcon, noKey, noMark, plain,
+		/* [9] */
+		"F7", noIcon, noKey, noMark, plain,
+		/* [10] */
+		"F8", noIcon, noKey, noMark, plain,
+		/* [11] */
+		"F9", noIcon, noKey, noMark, plain,
+		/* [12] */
+		"F10", noIcon, noKey, noMark, plain,
+		/* [13] */
+		"F12", noIcon, noKey, noMark, plain,
+		/* [14] */
+		"F11", noIcon, noKey, noMark, plain,
+		/* [15] */
+		"F13", noIcon, noKey, noMark, plain,
+		/* [16] */
+		"F14", noIcon, noKey, noMark, plain,
+		/* [17] */
+		"F15", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (151) {
+	151,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"0",
+	{	/* array: 5 elements */
+		/* [1] */
+		"16", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"32", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"64", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"128", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"256", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (152) {
+	152,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"MIDI GM Instruments",
+	{	/* array: 17 elements */
+		/* [1] */
+		"Piano", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Chromatic Percussion", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"Organ", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"Guitar", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"Bass", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"Strings", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"Ensemble", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"Brass", noIcon, noKey, noMark, plain,
+		/* [9] */
+		"Reed", noIcon, noKey, noMark, plain,
+		/* [10] */
+		"Pipe", noIcon, noKey, noMark, plain,
+		/* [11] */
+		"Synth Lead", noIcon, noKey, noMark, plain,
+		/* [12] */
+		"Synth Pad", noIcon, noKey, noMark, plain,
+		/* [13] */
+		"Synth Effects", noIcon, noKey, noMark, plain,
+		/* [14] */
+		"Ethnic", noIcon, noKey, noMark, plain,
+		/* [15] */
+		"Percussive", noIcon, noKey, noMark, plain,
+		/* [16] */
+		"Sound Effects", noIcon, noKey, noMark, plain,
+		/* [17] */
+		"Drums", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (153) {
+	150,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"\0x00",
+	{	/* array: 2 elements */
+		/* [1] */
+		"Audio OutPut", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Audio InPut", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (155) {
+	155,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Creator",
+	{	/* array: 4 elements */
+		/* [1] */
+		"SNPL - PlayerPRO", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"MMKR - MacModPro", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"STrk - Sound-Trecker", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"SCPL - SoundApp", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (141) {
+	141,
+	1972,
+	allEnabled,
+	enabled,
+	"Title",
+	{	/* array: 1 elements */
+		/* [1] */
+		"\0x00", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (157) {
+	157,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"MODs",
+	{	/* array: 5 elements */
+		/* [1] */
+		"PlayerPRO", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"SoundApp", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"SoundTrecker", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"MacMod Pro", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"MDelta", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (158) {
+	158,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Type Files",
+	{	/* array: 11 elements */
+		/* [1] */
+		"MADI", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"MADH", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"MADF", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"STrk - MOD", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"MTM ", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"S3M ", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"OKTA", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"6669", noIcon, noKey, noMark, plain,
+		/* [9] */
+		"Midi", noIcon, noKey, noMark, plain,
+		/* [10] */
+		"XM  ", noIcon, noKey, noMark, plain,
+		/* [11] */
+		"IT  ", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (156) {
+	156,
+	textMenuProc,
+	0x7FFFFFFB,
+	enabled,
+	"Samples",
+	{	/* array: 3 elements */
+		/* [1] */
+		"Volume Envelope", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Panning Envelope", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"-", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (159) {
+	159,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"PPDG",
+	{	/* array: 0 elements */
+	}
+};
+
+resource 'MENU' (160) {
+	160,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"scale",
+	{	/* array: 2 elements */
+		/* [1] */
+		"linear", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"logarithmic", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (163) {
+	163,
+	textMenuProc,
+	0x7FFFFFDF,
+	enabled,
+	"\0x00",
+	{	/* array: 22 elements */
+		/* [1] */
+		"11025 Hz", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"11127 Hz", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"22050 hz", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"22254 Hz", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"44100 Hz", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"8363 Hz (Amiga +0)", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"8413 Hz (Amiga +1)", noIcon, noKey, noMark, plain,
+		/* [9] */
+		"8463 Hz (Amiga +2)", noIcon, noKey, noMark, plain,
+		/* [10] */
+		"8529 Hz (Amiga +3)", noIcon, noKey, noMark, plain,
+		/* [11] */
+		"8581 Hz (Amiga +4)", noIcon, noKey, noMark, plain,
+		/* [12] */
+		"8651 Hz (Amiga +5)", noIcon, noKey, noMark, plain,
+		/* [13] */
+		"8723 Hz (Amiga +6)", noIcon, noKey, noMark, plain,
+		/* [14] */
+		"8757 Hz (Amiga +7)", noIcon, noKey, noMark, plain,
+		/* [15] */
+		"8280 Hz (Amiga -1)", noIcon, noKey, noMark, plain,
+		/* [16] */
+		"8232 Hz (Amiga -2)", noIcon, noKey, noMark, plain,
+		/* [17] */
+		"8169 Hz (Amiga -3)", noIcon, noKey, noMark, plain,
+		/* [18] */
+		"8107 Hz (Amiga -4)", noIcon, noKey, noMark, plain,
+		/* [19] */
+		"8046 Hz (Amiga -5)", noIcon, noKey, noMark, plain,
+		/* [20] */
+		"7985 Hz (Amiga -6)", noIcon, noKey, noMark, plain,
+		/* [21] */
+		"7941 Hz (Amiga -7)", noIcon, noKey, noMark, plain,
+		/* [22] */
+		"7895 Hz (Amiga -8)", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (164) {
+	164,
+	textMenuProc,
+	0x7FFFF77F,
+	enabled,
+	"Title",
+	{	/* array: 13 elements */
+		/* [1] */
+		"USA", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Canada", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"China", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"Hong Kong", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"South America", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"Taiwan", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"Thailand", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [9] */
+		"England", noIcon, noKey, noMark, plain,
+		/* [10] */
+		"France", noIcon, noKey, noMark, plain,
+		/* [11] */
+		"Other European Countries", noIcon, noKey, noMark, plain,
+		/* [12] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [13] */
+		"Other countries", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (165) {
+	165,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"MS",
+	{	/* array: 14 elements */
+		/* [1] */
+		"1 ms", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"10 ms", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"25 ms", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"30 ms", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"35 ms", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"40 ms", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"45 ms", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"50 ms", noIcon, noKey, noMark, plain,
+		/* [9] */
+		"60 ms", noIcon, noKey, noMark, plain,
+		/* [10] */
+		"70 ms", noIcon, noKey, noMark, plain,
+		/* [11] */
+		"80 ms", noIcon, noKey, noMark, plain,
+		/* [12] */
+		"90 ms", noIcon, noKey, noMark, plain,
+		/* [13] */
+		"100 ms", noIcon, noKey, noMark, plain,
+		/* [14] */
+		"200 ms", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (166) {
+	166,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"PPIN",
+	{	/* array: 0 elements */
+	}
+};
+
+resource 'MENU' (167) {
+	167,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"PPIN",
+	{	/* array: 0 elements */
+	}
+};
+
+resource 'MENU' (168) {
+	168,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Osci Mode",
+	{	/* array: 2 elements */
+		/* [1] */
+		"Stack", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Tile", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (169) {
+	169,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Title",
+	{	/* array: 7 elements */
+		/* [1] */
+		"10 %", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"20 %", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"30 %", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"40 %", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"50 %", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"60 %", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"70 %", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (170) {
+	170,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"MS",
+	{	/* array: 14 elements */
+		/* [1] */
+		"25 ms", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"30 ms", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"35 ms", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"40 ms", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"45 ms", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"50 ms", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"60 ms", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"70 ms", noIcon, noKey, noMark, plain,
+		/* [9] */
+		"80 ms", noIcon, noKey, noMark, plain,
+		/* [10] */
+		"90 ms", noIcon, noKey, noMark, plain,
+		/* [11] */
+		"100 ms", noIcon, noKey, noMark, plain,
+		/* [12] */
+		"200 ms", noIcon, noKey, noMark, plain,
+		/* [13] */
+		"300 ms", noIcon, noKey, noMark, plain,
+		/* [14] */
+		"400 ms", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (500) {
+	500,
+	textMenuProc,
+	0x7FFFFFD7,
+	enabled,
+	"Show",
+	{	/* array: 6 elements */
+		/* [1] */
+		"All Available formats", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"All Readable files", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"All files", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"MADI PlayerPRO", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"-", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (171) {
+	171,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Title",
+	{	/* array: 8 elements */
+		/* [1] */
+		"100", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"110", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"120", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"130", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"140", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"160", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"180", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"200", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (172) {
+	165,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Mode",
+	{	/* array: 2 elements */
+		/* [1] */
+		"Mono", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Stereo", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (173) {
+	173,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"\0x00",
+	{	/* array: 2 elements */
+		/* [1] */
+		"Classic Loop", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Ping-Pong Loop", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (142) {
+	142,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Tracks Number",
+	{	/* array: 0 elements */
+	}
+};
+
+resource 'MENU' (174) {
+	174,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Title",
+	{	/* array: 6 elements */
+		/* [1] */
+		"No Editor", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Digital Editor", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"Box Editor", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"Classic Editor", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"Wave Preview", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"Pattern View", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (130) {
+	130,
+	textMenuProc,
+	0x7FFFFFDD,
+	enabled,
+	"Instruments",
+	{	/* array: 7 elements */
+		/* [1] */
+		"Instruments List", noIcon, "L", noMark, plain,
+		/* [2] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"New...", noIcon, hierarchicalMenu, "ö", plain,
+		/* [4] */
+		"Export As...", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"Delete", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"Save Instruments List...", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (200, "Prefs") {
+	200,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Preferences",
+	{	/* array: 10 elements */
+		/* [1] */
+		"Driver - Output", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Piano", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"Music List", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"Color", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"Misc", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"Box Editor", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"Digital Editor", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"Classic Editor", noIcon, noKey, noMark, plain,
+		/* [9] */
+		"FKEYs", noIcon, noKey, noMark, plain,
+		/* [10] */
+		"MIDI Hardware", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (133) {
+	133,
+	textMenuProc,
+	0x7FFFFFFB,
+	enabled,
+	apple,
+	{	/* array: 3 elements */
+		/* [1] */
+		"About PlayerPRO", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"General Information...", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"-", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (175) {
+	175,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"OverSampling",
+	{	/* array: 6 elements */
+		/* [1] */
+		"2 x", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"3 x", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"4 x", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"6 x", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"8 x", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"10 x", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (154) {
+	154,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Title",
+	{	/* array: 6 elements */
+		/* [1] */
+		"Import a File...", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Silence/Tone Generator", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"Record (Audio Input)", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"Quicktime Instrument", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"RAW Data Import...", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"Audio CD Import...", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (132) {
+	132,
+	textMenuProc,
+	0x7FFFFFBC,
+	enabled,
+	"Edit",
+	{	/* array: 10 elements */
+		/* [1] */
+		"Undo", noIcon, "Z", noMark, plain,
+		/* [2] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"Cut", noIcon, "X", noMark, plain,
+		/* [4] */
+		"Copy", noIcon, "C", noMark, plain,
+		/* [5] */
+		"Paste", noIcon, "V", noMark, plain,
+		/* [6] */
+		"Clear", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"Duplicate", noIcon, noKey, noMark, plain,
+		/* [9] */
+		"Select All", noIcon, "A", noMark, plain,
+		/* [10] */
+		"Get Info...", noIcon, "I", noMark, plain
+	}
+};
+
+resource 'MENU' (140) {
+	140,
+	textMenuProc,
+	0x7FFFFB6F,
+	enabled,
+	"Editor",
+	{	/* array: 12 elements */
+		/* [1] */
+		"Digital Editor", noIcon, "D", noMark, plain,
+		/* [2] */
+		"Box Editor", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"Classic Editor", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"Wave Preview", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"Find...", noIcon, "F", noMark, plain,
+		/* [7] */
+		"Find Current Note", noIcon, "E", noMark, plain,
+		/* [8] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [9] */
+		"Minimize", noIcon, noKey, noMark, plain,
+		/* [10] */
+		"Convert all Patterns to 64 rows", noIcon, noKey, noMark, plain,
+		/* [11] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [12] */
+		"General Information", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (176) {
+	176,
+	textMenuProc,
+	0x7FFFFFF7,
+	enabled,
+	"Windows",
+	{	/* array: 5 elements */
+		/* [1] */
+		"\0x00", noIcon, "1", noMark, plain,
+		/* [2] */
+		"\0x00", noIcon, "2", noMark, plain,
+		/* [3] */
+		"\0x00", noIcon, "3", noMark, plain,
+		/* [4] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"Settings", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (178) {
+	178,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Step",
+	{	/* array: 9 elements */
+		/* [1] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [9] */
+		"9", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (177) {
+	177,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"No compression",
+	{	/* array: 8 elements */
+		/* [1] */
+		"No compression", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"MAC3", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"MAC6", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"ima4", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"ulaw", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"alaw", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"QDMC", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"QDM2", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (150) {
+	150,
+	textMenuProc,
+	0x7FFFFFF7,
+	enabled,
+	"\0x00",
+	{	/* array: 4 elements */
+		/* [1] */
+		"Audio OutPut", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Driver Tracks", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"Audio InPut", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"Quicktime Channel", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (162) {
+	162,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Title",
+	{	/* array: 3 elements */
+		/* [1] */
+		"Selection->loop", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Loop->Selection", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"Set Sustain Point", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (136) {
+	136,
+	textMenuProc,
+	0x7FFFFFB7,
+	enabled,
+	"Effect",
+	{	/* array: 7 elements */
+		/* [1] */
+		"Selection->Loop", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"Loop->Selection", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"Delete", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"FFT - Hz Filter", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"FFT - Hz Shift", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"-", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (135) {
+	135,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Effect:",
+	{	/* array: 17 elements */
+		/* [1] */
+		"0-Normal/Arpeggio", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"1-Slide Up", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"2-Slide Down", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"3-Portamento", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"4-\0x00Vibrato", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"5-Portamento+Vol Slide", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"6-Vibrato+Vol Slide", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"7-Tremolo", noIcon, noKey, noMark, plain,
+		/* [9] */
+		"8-Set Panning", noIcon, noKey, noMark, plain,
+		/* [10] */
+		"9-Set SampleOffset", noIcon, noKey, noMark, plain,
+		/* [11] */
+		"A-VolumeSlide", noIcon, noKey, noMark, plain,
+		/* [12] */
+		"B-Position Jump", noIcon, noKey, noMark, plain,
+		/* [13] */
+		"C-Set Volume", noIcon, noKey, noMark, plain,
+		/* [14] */
+		"D-Pattern Break", noIcon, noKey, noMark, plain,
+		/* [15] */
+		"E-E Commands", noIcon, noKey, noMark, plain,
+		/* [16] */
+		"F-Set Speed", noIcon, noKey, noMark, plain,
+		/* [17] */
+		"G-Note OFF (Multi-Channel Tracks)", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (179) {
+	179,
+	textMenuProc,
+	0x7FFFFFD7,
+	enabled,
+	"Internet",
+	{	/* array: 6 elements */
+		/* [1] */
+		"PlayerPRO Official Site", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"MIT Archive for PlayerPRO", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"Email to the author of PlayerPRO", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"Add/Remove bookmarks...", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"-", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (161) {
+	2000,
+	200,
+	allEnabled,
+	enabled,
+	"Sample",
+	{	/* array: 256 elements */
+		/* [1] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [9] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [10] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [11] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [12] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [13] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [14] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [15] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [16] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [17] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [18] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [19] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [20] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [21] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [22] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [23] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [24] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [25] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [26] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [27] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [28] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [29] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [30] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [31] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [32] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [33] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [34] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [35] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [36] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [37] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [38] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [39] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [40] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [41] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [42] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [43] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [44] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [45] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [46] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [47] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [48] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [49] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [50] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [51] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [52] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [53] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [54] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [55] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [56] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [57] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [58] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [59] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [60] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [61] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [62] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [63] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [64] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [65] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [66] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [67] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [68] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [69] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [70] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [71] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [72] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [73] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [74] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [75] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [76] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [77] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [78] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [79] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [80] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [81] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [82] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [83] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [84] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [85] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [86] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [87] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [88] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [89] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [90] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [91] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [92] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [93] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [94] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [95] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [96] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [97] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [98] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [99] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [100] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [101] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [102] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [103] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [104] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [105] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [106] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [107] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [108] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [109] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [110] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [111] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [112] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [113] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [114] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [115] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [116] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [117] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [118] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [119] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [120] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [121] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [122] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [123] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [124] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [125] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [126] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [127] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [128] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [129] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [130] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [131] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [132] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [133] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [134] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [135] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [136] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [137] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [138] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [139] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [140] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [141] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [142] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [143] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [144] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [145] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [146] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [147] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [148] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [149] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [150] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [151] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [152] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [153] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [154] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [155] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [156] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [157] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [158] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [159] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [160] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [161] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [162] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [163] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [164] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [165] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [166] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [167] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [168] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [169] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [170] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [171] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [172] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [173] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [174] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [175] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [176] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [177] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [178] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [179] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [180] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [181] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [182] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [183] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [184] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [185] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [186] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [187] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [188] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [189] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [190] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [191] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [192] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [193] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [194] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [195] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [196] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [197] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [198] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [199] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [200] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [201] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [202] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [203] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [204] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [205] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [206] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [207] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [208] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [209] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [210] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [211] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [212] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [213] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [214] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [215] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [216] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [217] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [218] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [219] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [220] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [221] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [222] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [223] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [224] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [225] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [226] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [227] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [228] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [229] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [230] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [231] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [232] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [233] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [234] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [235] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [236] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [237] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [238] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [239] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [240] */
+		"F", noIcon, noKey, noMark, plain,
+		/* [241] */
+		"0", noIcon, noKey, noMark, plain,
+		/* [242] */
+		"1", noIcon, noKey, noMark, plain,
+		/* [243] */
+		"2", noIcon, noKey, noMark, plain,
+		/* [244] */
+		"3", noIcon, noKey, noMark, plain,
+		/* [245] */
+		"4", noIcon, noKey, noMark, plain,
+		/* [246] */
+		"5", noIcon, noKey, noMark, plain,
+		/* [247] */
+		"6", noIcon, noKey, noMark, plain,
+		/* [248] */
+		"7", noIcon, noKey, noMark, plain,
+		/* [249] */
+		"8", noIcon, noKey, noMark, plain,
+		/* [250] */
+		"9", noIcon, noKey, noMark, plain,
+		/* [251] */
+		"A", noIcon, noKey, noMark, plain,
+		/* [252] */
+		"B", noIcon, noKey, noMark, plain,
+		/* [253] */
+		"C", noIcon, noKey, noMark, plain,
+		/* [254] */
+		"D", noIcon, noKey, noMark, plain,
+		/* [255] */
+		"E", noIcon, noKey, noMark, plain,
+		/* [256] */
+		"F", noIcon, noKey, noMark, plain
+	}
 };
 
 data 'DLOG' (1002, "Open Dialog") {
@@ -2722,10 +3814,15 @@ data 'DLOG' (157, "Track Viewer") {
 	$"72"                                                 /* r */
 };
 
-data 'DLOG' (158, "Debug") {
-	$"0074 004E 00E0 018B 0005 0100 0100 0000"            /* .t.N.‡.ã........ */
-	$"0000 026F 1250 6572 666F 726D 616E 6365"            /* ...o.Performance */
-	$"2057 696E 646F 77A5 280A"                           /*  Window•(¬ */
+resource 'DLOG' (158, "Debug") {
+	{116, 78, 224, 395},
+	movableDBoxProc,
+	visible,
+	goAway,
+	0x0,
+	623,
+	"Performance Window",
+	centerMainScreen
 };
 
 data 'DLOG' (163, "Memory") {
@@ -2738,10 +3835,15 @@ data 'DLOG' (164, "Spectrum") {
 	$"0014 0151 0853 7065 6374 7275 6D"                   /* ...Q.Spectrum */
 };
 
-data 'DLOG' (167, "Pattern Info") {
-	$"0060 00A4 00DD 019E 0005 0000 0100 0000"            /* .`.§.›.û........ */
-	$"0000 00D9 0C50 6174 7465 726E 2049 6E66"            /* ...Ÿ.Pattern Inf */
-	$"6FF9 280A"                                          /* o˘(¬ */
+resource 'DLOG' (167, "Pattern Info") {
+	{96, 164, 221, 414},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x0,
+	217,
+	"Pattern Info",
+	centerMainScreen
 };
 
 data 'DLOG' (168, "File information") {
@@ -2750,15 +3852,26 @@ data 'DLOG' (168, "File information") {
 	$"6174 696F 6E"                                       /* ation */
 };
 
-data 'DLOG' (169, "Help PP") {
-	$"004C 006E 0153 024F 0008 0000 0100 0000"            /* .L.n.S.O........ */
-	$"0016 00C3 0448 656C 7072 280A"                      /* ...√.Helpr(¬ */
+resource 'DLOG' (169, "Help PP") {
+	{76, 110, 339, 591},
+	zoomDocProc,
+	invisible,
+	goAway,
+	0x16,
+	195,
+	"Help",
+	centerMainScreen
 };
 
-data 'DLOG' (161, "SoundFormat Export") {
-	$"0051 004D 00A5 0155 0005 0000 0100 0000"            /* .Q.M.•.U........ */
-	$"1C8F 00AB 1153 6F75 6E64 2046 696C 6520"            /* .è.´.Sound File  */
-	$"4578 706F 7274 280A"                                /* Export(¬ */
+resource 'DLOG' (161, "SoundFormat Export") {
+	{81, 77, 165, 341},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x1C8F,
+	171,
+	"Sound File Export",
+	centerMainScreen
 };
 
 data 'DLOG' (170, "MIDI Channels") {
@@ -2767,10 +3880,15 @@ data 'DLOG' (170, "MIDI Channels") {
 	$"6C73 2053 6574 7570"                                /* ls Setup */
 };
 
-data 'DLOG' (172, "Move") {
-	$"005C 000C 00E5 0217 0005 0100 0100 0000"            /* .\...Â.......... */
-	$"0000 00AC 0A4D 6F76 6520 6E6F 7465 736E"            /* ...¨¬Move notesn */
-	$"280A"                                               /* (¬ */
+resource 'DLOG' (172, "Move") {
+	{92, 12, 229, 535},
+	movableDBoxProc,
+	visible,
+	goAway,
+	0x0,
+	172,
+	"Move notes",
+	centerMainScreen
 };
 
 data 'DLOG' (179, "OpenDialog Sample/Instrument") {
@@ -2778,9 +3896,15 @@ data 'DLOG' (179, "OpenDialog Sample/Instrument") {
 	$"0000 00A1 0B4F 7065 6E20 4469 616C 6F67"            /* ...°.Open Dialog */
 };
 
-data 'DLOG' (171, "StartUp Dialog") {
-	$"0056 0049 012D 01CA 0001 0100 0100 0000"            /* .V.I.-. ........ */
-	$"0000 015A 0000 280A"                                /* ...Z..(¬ */
+resource 'DLOG' (171, "StartUp Dialog") {
+	{86, 73, 301, 458},
+	dBoxProc,
+	visible,
+	goAway,
+	0x0,
+	346,
+	"",
+	centerMainScreen
 };
 
 data 'DLOG' (128, "Oscilloscope") {
@@ -2800,32 +3924,59 @@ data 'DLOG' (173, "Active Help") {
 	$"0019 00AD 00"                                       /* ...≠. */
 };
 
-data 'DLOG' (3000, "General Error") {
-	$"0034 0031 00C2 0188 0005 0000 0100 0000"            /* .4.1.¬.à........ */
-	$"270C 010C 0545 7272 6F72 700A"                      /* '....Errorp¬ */
+resource 'DLOG' (3000, "General Error") {
+	{52, 49, 194, 392},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x270C,
+	268,
+	"Error",
+	alertPositionParentWindowScreen
 };
 
-data 'DLOG' (3001, "Info") {
-	$"0034 0031 00A7 0188 0005 0000 0100 0000"            /* .4.1.ß.à........ */
-	$"270C 01C9 0449 6E66 6F8E 700A"                      /* '..….Infoép¬ */
+resource 'DLOG' (3001, "Info") {
+	{52, 49, 167, 392},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x270C,
+	457,
+	"Info",
+	alertPositionParentWindowScreen
 };
 
-data 'DLOG' (3002, "Save Or Not?") {
-	$"0034 0031 00B4 0149 0005 0000 0100 0000"            /* .4.1.¥.I........ */
-	$"270C 012C 0B53 6176 6520 4469 616C 6F67"            /* '..,.Save Dialog */
-	$"700A"                                               /* p¬ */
+resource 'DLOG' (3002, "Save Or Not?") {
+	{52, 49, 180, 329},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x270C,
+	300,
+	"Save Dialog",
+	alertPositionParentWindowScreen
 };
 
-data 'DLOG' (153, "Wave") {
-	$"002C 0006 0134 01EC 0008 0000 0100 0000"            /* .,...4.Ï........ */
-	$"001A 0099 0C50 6174 7465 726E 3A20 3030"            /* ...ô.Pattern: 00 */
-	$"3030 280A"                                          /* 00(¬ */
+resource 'DLOG' (153, "Wave") {
+	{44, 6, 308, 492},
+	zoomDocProc,
+	invisible,
+	goAway,
+	0x1A,
+	153,
+	"Pattern: 000",
+	centerMainScreen
 };
 
-data 'DLOG' (174, "Print Order Form") {
-	$"003C 0055 0191 01A3 0005 0000 0100 0000"            /* .<.U.ë.£........ */
-	$"0060 00AE 1050 7269 6E74 204F 7264 6572"            /* .`.Æ.Print Order */
-	$"2046 6F72 6D0E 280A"                                /*  Form.(¬ */
+resource 'DLOG' (174, "Print Order Form") {
+	{60, 85, 401, 419},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x60,
+	174,
+	"Print Order Form",
+	centerMainScreen
 };
 
 data 'DLOG' (151, "OpenDialog2") {
@@ -2843,16 +3994,26 @@ data 'DLOG' (1004, "Save Dialog") {
 	$"0057 0089 0B53 6176 6520 4469 616C 6F67"            /* .W.â.Save Dialog */
 };
 
-data 'DLOG' (3003, "File Not Found") {
-	$"0034 0031 00B4 0149 0005 0000 0100 0000"            /* .4.1.¥.I........ */
-	$"270C 012D 0E46 696C 6520 4E6F 7420 466F"            /* '..-.File Not Fo */
-	$"756E 6405 700A"                                     /* und.p¬ */
+resource 'DLOG' (3003, "File Not Found") {
+	{52, 49, 180, 329},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x270C,
+	301,
+	"File Not Found",
+	alertPositionParentWindowScreen
 };
 
-data 'DLOG' (3004, "Music List Save Or Not?") {
-	$"0034 0031 00B4 0149 0005 0000 0100 0000"            /* .4.1.¥.I........ */
-	$"270C 0BBC 164D 7573 6963 204C 6973 7420"            /* '..º.Music List  */
-	$"5361 7665 2044 6961 6C6F 67FF 700A"                 /* Save Dialogˇp¬ */
+resource 'DLOG' (3004, "Music List Save Or Not?") {
+	{52, 49, 180, 329},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x270C,
+	3004,
+	"Music List Save Dialog",
+	alertPositionParentWindowScreen
 };
 
 data 'DLOG' (149, "Minimize Results") {
@@ -2861,10 +4022,15 @@ data 'DLOG' (149, "Minimize Results") {
 	$"7375 6C74 73"                                       /* sults */
 };
 
-data 'DLOG' (134, "Classic Editor") {
-	$"002C 0006 01E8 03D0 0008 0000 0100 0000"            /* .,...Ë.–........ */
-	$"001B 0086 0C50 6174 7465 726E 3A20 3030"            /* ...Ü.Pattern: 00 */
-	$"3030 280A"                                          /* 00(¬ */
+resource 'DLOG' (134, "Classic Editor") {
+	{44, 6, 488, 976},
+	zoomDocProc,
+	invisible,
+	goAway,
+	0x1B,
+	134,
+	"Pattern: 000",
+	centerMainScreen
 };
 
 data 'DLOG' (2007, "Pref: CLASSIC PREFS") {
@@ -2882,2184 +4048,8932 @@ data 'DLOG' (2003, "Pref: COLOR") {
 	$"0011 07D3 00"                                       /* ...”. */
 };
 
-data 'DLOG' (133, "Preferences") {
-	$"0032 003A 0166 019A 0005 0000 0100 0000"            /* .2.:.f.ö........ */
-	$"0011 0084 0B50 7265 6665 7265 6E63 6573"            /* ...Ñ.Preferences */
-	$"280A"                                               /* (¬ */
-};
-
-data 'DLOG' (177, "Copyright") {
-	$"00B1 00F7 01A9 024B 0005 0100 0000 0000"            /* .±.˜.©.K........ */
-	$"0000 00B1 2743 6F70 7972 6967 6874 2069"            /* ...±'Copyright i */
-	$"6E66 6F72 6D61 7469 6F6E 7320 6162 6F75"            /* nformations abou */
-	$"7420 7468 6973 206D 7573 6963 280A"                 /* t this music(¬ */
-};
-
-data 'DLOG' (175, "Registration") {
-	$"0057 007F 017A 0200 0005 0000 0100 0000"            /* .W...z.......... */
-	$"0000 00AF 0C52 6567 6973 7472 6174 696F"            /* ...Ø.Registratio */
-	$"6E00 280A"                                          /* n.(¬ */
-};
-
-data 'DLOG' (2002, "Pref: MUSIC LIST") {
-	$"0010 0025 0150 01FD 0001 0100 0100 0000"            /* ...%.P.˝........ */
-	$"0011 07D2 0000 0000"                                /* ...“.... */
-};
-
-data 'DLOG' (131, "About") {
-	$"0036 000A 011A 018B 0001 0100 0100 0000"            /* .6.¬...ã........ */
-	$"0000 00C8 0000 280A"                                /* ...»..(¬ */
-};
-
-data 'DLOG' (2005, "Pref: CLASSICAL") {
-	$"0039 0048 0258 02BC 0000 0100 0100 0000"            /* .9.H.X.º........ */
-	$"0000 07D6 0000 0000"                                /* ...÷.... */
-};
-
-data 'DLOG' (165, "Microphone") {
-	$"003F 0040 012A 016A 0005 0000 0100 0000"            /* .?.@.*.j........ */
-	$"19F8 02F9 0B41 7564 696F 2049 6E50 7574"            /* .¯.˘.Audio InPut */
-	$"05DA"                                               /* .⁄ */
-};
-
-data 'DLOG' (2000, "Pref: DRIVER") {
-	$"002A 0028 015C 01AA 0001 0100 0100 0000"            /* .*.(.\.™........ */
-	$"0011 07D0 0000 0000"                                /* ...–.... */
-};
-
-data 'DLOG' (178, "RAW Import") {
-	$"0106 006E 021C 0203 0005 0000 0100 0000"            /* ...n............ */
-	$"0000 00B2 0F52 4157 2044 6174 6120 496D"            /* ...≤.RAW Data Im */
-	$"706F 7274 0000"                                     /* port.. */
-};
-
-data 'DLOG' (156, "ProgressWindow") {
-	$"008E 008E 00F3 01BF 0004 0000 0100 0000"            /* .é.é.Û.ø........ */
-	$"001C 00A3 1553 6F75 6E64 2044 6174 6120"            /* ...£.Sound Data  */
-	$"4765 6E65 7261 7469 6E67 300A"                      /* Generating0¬ */
-};
-
-data 'DLOG' (136, "Windows State") {
-	$"0048 006B 00B1 0196 0005 0000 0100 0000"            /* .H.k.±.ñ........ */
-	$"0000 0088 0D57 696E 646F 7773 2053 7461"            /* ...à.Windows Sta */
-	$"7465 020D"                                          /* te.. */
-};
-
-data 'DLOG' (138, "Reset Window") {
-	$"0138 00ED 01B2 023C 0005 0000 0100 0000"            /* .8.Ì.≤.<........ */
-	$"0000 008A 0552 6573 6574 0000"                      /* ...ä.Reset.. */
-};
-
-data 'DLOG' (139, "Editor") {
-	$"002C 0006 01B8 041F 0008 0000 0100 0000"            /* .,...∏.......... */
-	$"0002 008B 0C50 6174 7465 726E 3A20 3030"            /* ...ã.Pattern: 00 */
-	$"3000 280A"                                          /* 0.(¬ */
-};
-
-data 'DLOG' (160, "Export AIFF/SND") {
-	$"0108 00CA 01E1 0270 0005 0100 0100 0000"            /* ... .·.p........ */
-	$"0000 013F 1253 6F75 6E64 2046 696C 6520"            /* ...?.Sound File  */
-	$"5175 616C 6974 7900 280A"                           /* Quality.(¬ */
-};
-
-data 'DLOG' (2006, "Pref: DIGITAL EDITOR") {
-	$"0031 0023 01F3 0253 0000 0100 0100 0000"            /* .1.#.Û.S........ */
-	$"0000 07D6 0000 0000"                                /* ...÷.... */
-};
-
-data 'DLOG' (2009, "Pref: MIDI OMS") {
-	$"00CE FD76 01B8 FED6 0000 0100 0100 0000"            /* .Œ˝v.∏˛÷........ */
-	$"0000 07D9 0000 0000"                                /* ...Ÿ.... */
-};
-
-data 'DLOG' (2001, "Pref: PIANO") {
-	$"0029 003D 0161 01A1 0001 0100 0100 0000"            /* .).=.a.°........ */
-	$"0011 07D1 0000 0000"                                /* ...—.... */
-};
-
-data 'DLOG' (145, "Piano") {
-	$"0094 00BA 01D7 0378 0008 0000 0100 0000"            /* .î.∫.◊.x........ */
-	$"000A 0091 0550 6961 6E6F 3CB0"                      /* .¬.ë.Piano<∞ */
-};
-
-data 'DLOG' (166, "Partition") {
-	$"0062 005E 0265 02BA 0008 0000 0100 0000"            /* .b.^.e.∫........ */
-	$"0015 0330 0950 6172 7469 7469 6F6E DA70"            /* ...0∆Partition⁄p */
-};
-
-data 'DLOG' (180, "Quicktime Window") {
-	$"016F 003A 0221 0169 0004 0000 0100 0000"            /* .o.:.!.i........ */
-	$"001D 00B4 1051 7569 636B 7469 6D65 2057"            /* ...¥.Quicktime W */
-	$"696E 646F 7700 0000"                                /* indow... */
-};
-
-data 'DLOG' (132, "PUB") {
-	$"002D 0053 01D8 022C 0004 0100 0100 0000"            /* .-.S.ÿ.,........ */
-	$"0018 0368 1648 6F77 2074 6F20 6F72 6465"            /* ...h.How to orde */
-	$"7220 506C 6179 6572 5052 4F00 280A"                 /* r PlayerPRO.(¬ */
-};
-
-data 'DLOG' (181, "Bookmarks") {
-	$"01B1 0095 0309 0231 0005 0000 0100 0000"            /* .±.ï.∆.1........ */
-	$"0F2D 00B5 1441 6464 2F52 656D 6F76 6520"            /* .-.µ.Add/Remove  */
-	$"426F 6F6B 6D61 726B 7300 0000"                      /* Bookmarks... */
-};
-
-data 'DLOG' (2004, "Pref: MISC") {
-	$"002D 01AF 0162 03A7 0000 0100 0100 0000"            /* .-.Ø.b.ß........ */
-	$"0000 07D4 0000 0000"                                /* ...‘.... */
-};
-
-data 'DLOG' (182, "Fine Speed/Pitch Settings") {
-	$"0114 011A 015A 01F2 0005 0000 0100 0000"            /* .....Z.Ú........ */
-	$"0000 00B6 1946 696E 6520 5370 6565 642F"            /* ...∂.Fine Speed/ */
-	$"5069 7463 6820 5365 7474 696E 6773 0000"            /* Pitch Settings.. */
-};
-
-data 'DLOG' (130, "Info") {
-	$"0030 000E 015C 01F9 0001 0100 0100 0000"            /* .0...\.˘........ */
-	$"0000 01A5 0C49 6E66 6F72 6D61 7469 6F6E"            /* ...•.Information */
-	$"7300 280A"                                          /* s.(¬ */
-};
-
-data 'DLOG' (140, "Instruments List") {
-	$"0075 00C0 018F 025D 0008 0000 0100 0000"            /* .u.¿.è.]........ */
-	$"0001 02AC 1049 6E73 7472 756D 656E 7473"            /* ...¨.Instruments */
-	$"204C 6973 7400 0251"                                /*  List..Q */
-};
-
-data 'DLOG' (137, "Samples") {
-	$"005E 0028 00F6 0240 0008 0000 0100 0000"            /* .^.(.ˆ.@........ */
-	$"0009 00CA 0000 0000"                                /* .∆. .... */
-};
-
-data 'DLOG' (148, "General Informations") {
-	$"0084 007C 0175 01DA 0005 0000 0000 0000"            /* .Ñ.|.u.⁄........ */
-	$"2247 0094 1347 656E 6572 616C 2049 6E66"            /* "G.î.General Inf */
-	$"6F72 6D61 7469 6F6E 0000"                           /* ormation.. */
-};
-
-data 'DLOG' (183, "Equalizer") {
-	$"0052 00A1 0110 0184 0004 0000 0100 0000"            /* .R.°...Ñ........ */
-	$"001E 00B7 0945 7175 616C 697A 6572 0000"            /* ...∑∆Equalizer.. */
-};
-
-data 'DLOG' (141, "Mixer") {
-	$"003A 000F 0212 02C8 0008 0000 0100 0000"            /* .:.....»........ */
-	$"0006 008D 054D 6978 6572 0000"                      /* ...ç.Mixer.. */
-};
-
-data 'DLOG' (184, "Hz Shift") {
-	$"004F 00C2 0159 0222 0005 0000 0100 0000"            /* .O.¬.Y."........ */
-	$"0000 00B8 0848 7A20 5368 6966 7400 0000"            /* ...∏.Hz Shift... */
-};
-
-data 'DLOG' (146, "EditInfo Instrument") {
-	$"0095 0106 01E0 02CD 0005 0000 0100 0000"            /* .ï...‡.Õ........ */
-	$"24FB 0092 0F49 6E73 7472 756D 656E 7420"            /* $˚.í.Instrument  */
-	$"496E 666F 280A"                                     /* Info(¬ */
-};
-
-data 'DLOG' (143, "Tools") {
-	$"00FC 01F8 019C 02B0 000C 0000 0100 0000"            /* .¸.¯.ú.∞........ */
-	$"0008 008F 0554 6F6F 6C73 0000"                      /* ...è.Tools.. */
-};
-
-data 'DLOG' (142, "MusicList") {
-	$"002E 0006 01E7 02D3 0008 0000 0100 0000"            /* .....Á.”........ */
-	$"0007 008E 0A4D 7573 6963 204C 6973 7400"            /* ...é¬Music List. */
-	$"0EEA"                                               /* .Í */
-};
-
-data 'DITL' (128, "The Player") {
-	$"000C 0000 0000 0010 0000 0024 0014 8000"            /* ...........$..Ä. */
-	$"0000 0000 0001 0190 000E 01BD 8000 0000"            /* .......ê...ΩÄ... */
-	$"0000 0001 01BC 000E 0215 8000 0000 0000"            /* .....º....Ä..... */
-	$"0001 0003 000E 0036 8808 4469 7370 6C61"            /* .......6à.Displa */
-	$"793A 0000 0000 0001 0095 000E 00A9 4002"            /* y:.......ï...©@. */
-	$"0384 0000 0000 0001 0037 000E 0093 8800"            /* .Ñ.......7...ìà. */
-	$"0000 0000 0001 00B4 000E 00D5 8805 5369"            /* .......¥...’à.Si */
-	$"7A65 3A02 0000 0000 0001 00F3 000E 0107"            /* ze:........Û.... */
-	$"4002 0384 0000 0000 0001 00D6 000E 00F2"            /* @..Ñ.......÷...Ú */
-	$"8800 0000 0000 0010 0000 07E0 07D0 0000"            /* à..........‡.–.. */
-	$"0000 0000 0001 0114 000E 0135 8805 4D6F"            /* ...........5à.Mo */
-	$"6465 3A00 0000 0000 0001 0159 000E 016D"            /* de:........Y...m */
-	$"4002 0384 0000 0000 0001 0136 000E 0158"            /* @..Ñ.......6...X */
-	$"8800"                                               /* à. */
-};
-
-data 'DITL' (1002, purgeable) {
-	$"000A 0000 0000 0093 012C 00A7 017C 0404"            /* .¬.....ì.,.ß.|.. */
-	$"4F70 656E 0000 0000 0000 02BB 0050 02CD"            /* Open.......ª.P.Õ */
-	$"0406 4869 6464 656E 0000 0000 00AF 012C"            /* ..Hidden.....Ø., */
-	$"00C3 017C 0406 4361 6E63 656C 0000 0000"            /* .√.|..Cancel.... */
-	$"0032 0111 0046 0184 8000 0000 0000 004D"            /* .2...F.ÑÄ......M */
-	$"012C 0061 017C 0405 456A 6563 746F 0000"            /* .,.a.|..Ejecto.. */
-	$"0000 0066 012C 007A 017C 0407 4465 736B"            /* ...f.,.z.|..Desk */
-	$"746F 7032 0000 0000 0032 000A 0122 010F"            /* top2.....2.¬.".. */
-	$"0000 0000 0000 0032 010E 0122 011F 0000"            /* .......2...".... */
-	$"0000 0000 0085 0128 0086 0180 8000 0000"            /* .....Ö.(.Ü.ÄÄ... */
-	$"0000 0000 0294 0065 02F4 8800 0000 0000"            /* .....î.e.Ùà..... */
-	$"000A 000A 001A 0140 8825 506C 6561 7365"            /* .¬.¬...@à%Please */
-	$"2C20 6368 6F6F 7365 2061 2073 6F75 6E64"            /* , choose a sound */
-	$"2066 696C 6520 746F 206F 7065 6E20 3A00"            /*  file to open :. */
-};
-
-data 'DITL' (268) {
-	$"0007 0000 0000 0067 010E 007B 0148 0402"            /* .......g...{.H.. */
-	$"4F4B 0000 0000 005A 000A 006A 0070 880D"            /* OK.....Z.¬.j.pà. */
-	$"4572 726F 7220 4944 203A 205E 3100 0000"            /* Error ID : ^1... */
-	$"0000 000A 003C 0055 014B 8802 5E30 0000"            /* ...¬.<.U.Kà.^0.. */
-	$"0000 000A 000A 002A 002A C002 00DC 0000"            /* ...¬.¬.*.*¿..‹.. */
-	$"0000 002E 000C 003E 002B 8800 0000 0000"            /* .......>.+à..... */
-	$"003F 000C 004F 002B 8800 0000 0000 006B"            /* .?...O.+à......k */
-	$"000A 007B 0070 880B 4D65 6D45 7272 203A"            /* .¬.{.pà.MemErr : */
-	$"205E 3200 0000 0000 007C 0013 008C 0070"            /*  ^2......|...å.p */
-	$"880B 5265 7345 7272 203A 205E 3300"                 /* à.ResErr : ^3. */
-};
-
-data 'DITL' (144, "Inst. List") {
-	$"0007 0000 0000 0025 0000 07F5 00C8 0000"            /* .......%...ı.».. */
-	$"0000 0000 0019 0000 0024 00DC 8813 2049"            /* .........$.‹à. I */
-	$"4420 2020 2053 697A 6520 2020 204E 616D"            /* D    Size    Nam */
-	$"6500 0000 0000 0002 0029 0016 003D 0000"            /* e........)...=.. */
-	$"0000 0000 0002 0047 0016 005B 0000 0000"            /* .......G...[.... */
-	$"0000 0002 0065 0016 0079 0000 0000 0000"            /* .....e...y...... */
-	$"0002 0083 0016 0097 0000 0000 0000 0002"            /* ...É...ó........ */
-	$"000B 0016 001F 0000 0000 0000 0002 00A1"            /* ...............° */
-	$"0016 00B5 0000"                                     /* ...µ.. */
-};
-
-data 'DITL' (457) {
-	$"0003 0000 0000 0051 0114 0065 014E 0402"            /* .......Q...e.N.. */
-	$"4F4B 0000 0000 0051 00CC 0065 0106 0406"            /* OK.....Q.Ã.e.... */
-	$"4361 6E63 656C 0000 0000 000A 003C 004C"            /* Cancel.....¬.<.L */
-	$"014C 8802 5E30 0000 0000 000A 000A 002A"            /* .Là.^0.....¬.¬.* */
-	$"002A C002 00DC"                                     /* .*¿..‹ */
-};
-
-data 'DITL' (147) {
-	$"000E 0000 0000 001D 0000 07ED 07D0 0000"            /* ...........Ì.–.. */
-	$"0000 0000 0002 0050 000E 0072 8805 5A6F"            /* .......P...rà.Zo */
-	$"6F6D 3A00 0000 0000 000E 0050 001B 0071"            /* om:........P...q */
-	$"8805 5369 7A65 3A00 0000 0000 0002 00C6"            /* à.Size:........∆ */
-	$"0010 00EE 8806 5472 6163 6B3A 0000 0000"            /* ...Óà.Track:.... */
-	$"0002 011D 0010 0174 8800 0000 0000 000F"            /* .......tà....... */
-	$"00F0 001B 0176 8800 0000 0000 0001 0178"            /* ....và........x */
-	$"000E 018C 4002 00C8 0000 0000 000E 0178"            /* ...å@..».......x */
-	$"001B 018C 4002 00C8 0000 0000 0002 0071"            /* ...å@..».......q */
-	$"000E 00C3 8800 0000 0000 000E 0071 001B"            /* ...√à........q.. */
-	$"00A3 8800 0000 0000 000F 00A8 001B 00EE"            /* .£à........®...Ó */
-	$"880B 496E 7374 7275 6D65 6E74 3A00 0000"            /* à.Instrument:... */
-	$"0000 0004 0005 0018 0019 0000 0000 0000"            /* ................ */
-	$"0002 00F3 000C 0119 8000 0000 0000 0004"            /* ...Û....Ä....... */
-	$"001E 0018 0032 0000 0000 0000 0004 0037"            /* .....2.........7 */
-	$"0018 004B 0000"                                     /* ...K.. */
-};
-
-data 'DITL' (300, purgeable) {
-	$"0004 0000 0000 003E 0009 0052 004F 0403"            /* .......>.∆.R.O.. */
-	$"5965 7300 0000 0000 005C 0009 0070 004F"            /* Yes......\.∆.p.O */
-	$"0402 4E6F 0000 0000 005C 00C8 0070 010E"            /* ..No.....\.».p.. */
-	$"0406 4361 6E63 656C 0000 0000 0006 003C"            /* ..Cancel.......< */
-	$"0036 010E 8819 5361 7665 20D2 5E30 D320"            /* .6..à.Save “^0”  */
-	$"6265 666F 7265 2063 6C6F 7369 6E67 3F00"            /* before closing?. */
-	$"0000 0000 000A 000A 002A 002A C002 00DC"            /* .....¬.¬.*.*¿..‹ */
-};
-
-data 'DITL' (129) {
-	$"0009 0000 0000 0087 00FC 009B 014C 0404"            /* .∆.....á.¸.õ.L.. */
-	$"4F70 656E 0000 0000 0068 00FC 007C 014C"            /* Open.....h.¸.|.L */
-	$"0406 4361 6E63 656C 0000 0000 0000 0000"            /* ..Cancel........ */
-	$"0000 0000 8000 0000 0000 0008 00EB 0018"            /* ....Ä........Î.. */
-	$"0151 0000 0000 0000 0020 00FC 0034 014C"            /* .Q....... .¸.4.L */
-	$"0405 456A 6563 7400 0000 0000 003C 00FC"            /* ..Eject......<.¸ */
-	$"0050 014C 0407 4465 736B 746F 7000 0000"            /* .P.L..Desktop... */
-	$"0000 001D 000C 00FF 00E6 0000 0000 0000"            /* .......ˇ.Ê...... */
-	$"0006 000C 0019 00E6 0000 0000 0000 005B"            /* .......Ê.......[ */
-	$"00FB 005C 014D C002 000B 0000 0000 00A9"            /* .˚.\.M¿........© */
-	$"00FA 00FF 0150 C002 0085"                           /* .˙.ˇ.P¿..Ö */
-};
-
-data 'DITL' (131, purgeable) {
-	$"000C 0000 0000 00A1 00FC 00B5 014C 0404"            /* .......°.¸.µ.L.. */
-	$"5361 7665 0000 0000 0082 00FC 0096 014C"            /* Save.....Ç.¸.ñ.L */
-	$"0406 4361 6E63 656C 0000 0000 0000 0000"            /* ..Cancel........ */
-	$"0000 0000 8000 0000 0000 0008 00EB 0018"            /* ....Ä........Î.. */
-	$"0151 0000 0000 0000 0020 00FC 0034 014C"            /* .Q....... .¸.4.L */
-	$"0405 456A 6563 7400 0000 0000 003C 00FC"            /* ..Eject......<.¸ */
-	$"0050 014C 0407 4465 736B 746F 7000 0000"            /* .P.L..Desktop... */
-	$"0000 001D 000C 00EA 00E6 0000 0000 0000"            /* .......Í.Ê...... */
-	$"0007 000C 001A 00E6 0000 0000 0000 0077"            /* .......Ê.......w */
-	$"00FA 0078 014E C002 000B 0000 0000 0106"            /* .˙.x.N¿......... */
-	$"0010 0116 00E4 1000 0000 0000 00F1 0010"            /* .....‰.......Ò.. */
-	$"0101 00B6 8811 5361 7665 2064 6F63 756D"            /* ...∂à.Save docum */
-	$"656E 7420 6173 3A00 0000 0000 0058 00FC"            /* ent as:......X.¸ */
-	$"006C 014C 8000 0000 0000 00C3 00FA 0119"            /* .l.LÄ......√.˙.. */
-	$"0150 C002 0085"                                     /* .P¿..Ö */
-};
-
-data 'DITL' (150) {
-	$"0001 0000 0000 0009 0048 0019 00C8 900B"            /* .......∆.H...»ê. */
-	$"496E 7374 7275 6D65 6E74 2000 0000 0000"            /* Instrument ..... */
-	$"000A 000A 001A 0038 8805 4E61 6D65 3A00"            /* .¬.¬...8à.Name:. */
-};
-
-data 'DITL' (193) {
-	$"0002 0000 0000 0010 0063 0085 0170 8000"            /* .........c.Ö.pÄ. */
-	$"0000 0000 0008 0007 0140 0017 0702 0099"            /* .........@.....ô */
-	$"0000 0000 0077 0063 012C 13EB 0000"                 /* .....w.c.,.Î.. */
-};
-
-data 'DITL' (133) {
-	$"0013 0000 0000 0087 00FC 009B 014C 0404"            /* .......á.¸.õ.L.. */
-	$"4F70 656E 0000 0000 0068 00FC 007C 014C"            /* Open.....h.¸.|.L */
-	$"0406 4361 6E63 656C 0000 0000 0000 0000"            /* ..Cancel........ */
-	$"0000 0000 8000 0000 0000 0008 00EB 0018"            /* ....Ä........Î.. */
-	$"0151 0000 0000 0000 0020 00FC 0034 014C"            /* .Q....... .¸.4.L */
-	$"0405 456A 6563 7400 0000 0000 003C 00FC"            /* ..Eject......<.¸ */
-	$"0050 014C 0407 4465 736B 746F 7000 0000"            /* .P.L..Desktop... */
-	$"0000 001D 000C 00FF 00E6 0000 0000 0000"            /* .......ˇ.Ê...... */
-	$"0006 000C 0019 00E6 0000 0000 0000 005B"            /* .......Ê.......[ */
-	$"00FB 005C 014D C002 000B 0000 0000 00AF"            /* .˚.\.M¿........Ø */
-	$"00FC 00C3 014C 0403 4164 6400 0000 0000"            /* .¸.√.L..Add..... */
-	$"00FF 0112 010F 0137 0800 0000 0000 00FF"            /* .ˇ.....7.......ˇ */
-	$"000C 0110 0038 0806 5368 6F77 3A20 0000"            /* .....8..Show: .. */
-	$"0000 0115 006B 0126 00EB 8813 4176 6169"            /* .....k.&.Îà.Avai */
-	$"6C61 626C 6520 666F 726D 6174 733A 2012"            /* lable formats: . */
-	$"0000 0000 0126 000C 0156 0150 8800 0000"            /* .....&...V.Pà... */
-	$"0000 0112 FFFF 0113 015F C002 000B 0000"            /* ....ˇˇ..._¿..... */
-	$"0000 00CB 00FC 00DF 014C 0407 4164 6420"            /* ...À.¸.ﬂ.L..Add  */
-	$"416C 6C65 0000 0000 00E7 00FC 00FB 014C"            /* Alle.....Á.¸.˚.L */
-	$"0407 5072 6576 6965 77F0 0000 0000 00A4"            /* ..Preview.....§ */
-	$"00FB 00A5 014D C002 000B 0000 0000 00FF"            /* .˚.•.M¿........ˇ */
-	$"0053 010F 00E4 0800 0000 0000 0101 003A"            /* .S...‰.........: */
-	$"010E 004E 4002 0385"                                /* ...N@..Ö */
-};
-
-data 'DITL' (152) {
-	$"002E 0000 0000 0086 00EC 009A 013B 0404"            /* .......Ü.Ï.ö.;.. */
-	$"4669 6E64 0000 0000 0086 0156 009A 01A5"            /* Find.....Ü.V.ö.• */
-	$"0404 446F 6E65 0000 0000 0011 0003 0023"            /* ..Done.........# */
-	$"0062 050A 496E 7374 7275 6D65 6E74 0000"            /* .b.¬Instrument.. */
-	$"0000 0025 0003 0037 005C 0504 4E6F 7465"            /* ...%...7.\..Note */
-	$"0000 0000 0039 0003 004B 0052 0506 4566"            /* .....9...K.R..Ef */
-	$"6665 6374 0000 0000 004C 0003 005E 005E"            /* fect.....L...^.^ */
-	$"0508 4172 6775 6D65 6E74 0000 0000 0000"            /* ..Argument...... */
-	$"0034 0010 0059 8805 4669 6E64 3A63 0000"            /* .4...Yà.Find:c.. */
-	$"0000 0000 00BD 0010 0101 8808 5265 706C"            /* .....Ω....à.Repl */
-	$"6163 653A 0000 0000 0000 0152 0010 018E"            /* ace:.......R...é */
-	$"8806 5768 6572 653A 0000 0000 0012 0130"            /* à.Where:.......0 */
-	$"0024 01AC 060F 4375 7272 656E 7420 7061"            /* .$.¨..Current pa */
-	$"7474 6572 6E74 0000 0000 0026 0130 0038"            /* tternt.....&.0.8 */
-	$"01C0 0613 5365 6C65 6374 696F 6E20 2844"            /* .¿..Selection (D */
-	$"6967 6974 616C 2977 0000 0000 003A 0130"            /* igital)w.....:.0 */
-	$"004C 019A 060A 4576 6572 7977 6865 7265"            /* .L.ö.¬Everywhere */
-	$"0000 0000 0032 0212 0044 02A9 060C 5261"            /* .....2...D.©..Ra */
-	$"6469 6F20 4275 7474 6F6E 0000 0000 0014"            /* dio Button...... */
-	$"007E 0021 0092 4002 0384 0000 0000 0013"            /* .~.!.í@..Ñ...... */
-	$"0061 0023 007D 8803 3838 3800 0000 0000"            /* .a.#.}à.888..... */
-	$"0028 007E 0035 0092 4002 0384 0000 0000"            /* .(.~.5.í@..Ñ.... */
-	$"0027 0061 0037 007D 8803 3838 3800 0000"            /* .'.a.7.}à.888... */
-	$"0000 004E 0064 005D 0076 1002 3030 0000"            /* ...N.d.].v..00.. */
-	$"0000 003C 007E 0049 0092 4002 0384 0000"            /* ...<.~.I.í@..Ñ.. */
-	$"0000 003B 0064 004A 007A 8802 3939 0000"            /* ...;.d.J.zà.99.. */
-	$"0000 0010 0099 0022 00F8 050A 496E 7374"            /* .....ô.".¯.¬Inst */
-	$"7275 6D65 6E74 0000 0000 0024 0099 0036"            /* rument.....$.ô.6 */
-	$"00F2 0504 4E6F 7465 0000 0000 0038 0099"            /* .Ú..Note.....8.ô */
-	$"004A 00E4 0506 4566 6665 6374 0000 0000"            /* .J.‰..Effect.... */
-	$"004C 0099 005E 00F4 0508 4172 6775 6D65"            /* .L.ô.^.Ù..Argume */
-	$"6E74 0000 0000 0014 0114 0021 0128 4002"            /* nt.........!.(@. */
-	$"0384 0000 0000 0012 00F7 0022 0113 8803"            /* .Ñ.......˜."..à. */
-	$"3838 3800 0000 0000 0028 0114 0035 0128"            /* 888......(...5.( */
-	$"4002 0384 0000 0000 0026 00F7 0036 0113"            /* @..Ñ.....&.˜.6.. */
-	$"8803 3939 3900 0000 0000 004E 00FA 005D"            /* à.999......N.˙.] */
-	$"010C 1002 3939 0000 0000 003C 0114 0049"            /* ....99.....<...I */
-	$"0128 4002 0384 0000 0000 0039 00FA 0049"            /* .(@..Ñ.....9.˙.I */
-	$"0110 8802 3939 0000 0000 FFF6 0095 0078"            /* ..à.99....ˇˆ.ï.x */
-	$"0096 C002 000B 0000 0000 FFF6 012B 0078"            /* .ñ¿.......ˇˆ.+.x */
-	$"012C C002 000B 0000 0000 00D7 0047 00E1"            /* .,¿........◊.G.· */
-	$"0051 8000 0000 0000 0079 0000 007A 0320"            /* .QÄ......y...z.  */
-	$"C002 000B 0000 0000 00B9 010A 00CD 0173"            /* ¿........π.¬.Õ.s */
-	$"040E 5265 706C 6163 6520 2620 4669 6E64"            /* ..Replace & Find */
-	$"0000 0000 0086 007F 009A 00CE 0407 5265"            /* .....Ü...ö.Œ..Re */
-	$"706C 6163 656E 0000 0000 0086 0011 009A"            /* placen.....Ü...ö */
-	$"0060 040B 5265 706C 6163 6520 416C 6C6E"            /* .`..Replace Alln */
-	$"0000 0000 0062 0003 0074 005E 0506 566F"            /* .....b...t.^..Vo */
-	$"6C75 6D65 0000 0000 0064 0064 0073 0076"            /* lume.....d.d.s.v */
-	$"1002 3030 0000 0000 0062 0099 0074 00F4"            /* ..00.....b.ô.t.Ù */
-	$"0506 566F 6C75 6D65 0000 0000 0064 00FA"            /* ..Volume.....d.˙ */
-	$"0073 010C 1002 3030 0000 0000 0064 0130"            /* .s....00.....d.0 */
-	$"0074 0181 0609 4F6E 2074 7261 636B 3A00"            /* .t.Å.∆On track:. */
-	$"0000 0000 0065 0196 0072 01AA 4002 0384"            /* .....e.ñ.r.™@..Ñ */
-	$"0000 0000 0064 0182 0074 0195 8801 3100"            /* .....d.Ç.t.ïà.1. */
-	$"0000 0000 0052 0130 0062 0181 060A 416C"            /* .....R.0.b.Å.¬Al */
-	$"6C20 7472 6163 6B73 0000 0000 004E 012C"            /* l tracks.....N., */
-	$"004F 044C C002 000B"                                /* .O.L¿... */
-};
-
-data 'DITL' (2003) {
-	$"0003 0000 0000 0039 0004 008C 015F 0000"            /* .......9...å._.. */
-	$"0000 0000 0026 0003 0036 009E 880D 5472"            /* .....&...6.ûà.Tr */
-	$"6163 6B73 2063 6F6C 6F72 3A00 0000 0000"            /* acks color:..... */
-	$"0098 0003 00A8 00C6 8815 436C 6963 6B20"            /* .ò...®.∆à.Click  */
-	$"746F 2063 6861 6E67 6520 636F 6C6F 7200"            /* to change color. */
-	$"0000 0000 001E 00B4 0039 014C 8000"                 /* .......¥.9.LÄ. */
-};
-
-data 'DITL' (155) {
-	$"0000 0000 0000 FFFF FFFF 007D 01E5 0000"            /* ......ˇˇˇˇ.}.Â.. */
-};
-
-data 'DITL' (140) {
-	$"0009 0000 0000 0087 00FC 009B 014C 0404"            /* .∆.....á.¸.õ.L.. */
-	$"4F70 656E 0000 0000 0068 00FC 007C 014C"            /* Open.....h.¸.|.L */
-	$"0406 4361 6E63 656C 0000 0000 0000 0000"            /* ..Cancel........ */
-	$"0000 0000 8000 0000 0000 0008 00EB 0018"            /* ....Ä........Î.. */
-	$"0151 0000 0000 0000 0020 00FC 0034 014C"            /* .Q....... .¸.4.L */
-	$"0405 456A 6563 7400 0000 0000 003C 00FC"            /* ..Eject......<.¸ */
-	$"0050 014C 0407 4465 736B 746F 7000 0000"            /* .P.L..Desktop... */
-	$"0000 001D 000C 009F 00E6 0000 0000 0000"            /* .......ü.Ê...... */
-	$"0006 000C 0019 00E6 0000 0000 0000 005B"            /* .......Ê.......[ */
-	$"00FB 005C 014D C002 000B 0000 0000 00A4"            /* .˚.\.M¿........§ */
-	$"000C 00B7 00C6 0702 008D"                           /* ...∑.∆...ç */
-};
-
-data 'DITL' (151, purgeable) {
-	$"000C 0000 0000 00A1 00FC 00B5 014C 0404"            /* .......°.¸.µ.L.. */
-	$"5361 7665 0000 0000 0082 00FC 0096 014C"            /* Save.....Ç.¸.ñ.L */
-	$"0406 4361 6E63 656C 0000 0000 0000 0000"            /* ..Cancel........ */
-	$"0000 0000 8000 0000 0000 0008 00EB 0018"            /* ....Ä........Î.. */
-	$"0151 0000 0000 0000 0020 00FC 0034 014C"            /* .Q....... .¸.4.L */
-	$"0405 456A 6563 7400 0000 0000 003C 00FC"            /* ..Eject......<.¸ */
-	$"0050 014C 0407 4465 736B 746F 7000 0000"            /* .P.L..Desktop... */
-	$"0000 001D 000C 00B6 00E6 0000 0000 0000"            /* .......∂.Ê...... */
-	$"0007 000C 001A 00E6 0000 0000 0000 0077"            /* .......Ê.......w */
-	$"00FA 0078 014E C002 000B 0000 0000 00D1"            /* .˙.x.N¿........— */
-	$"000E 00E1 00E2 1000 0000 0000 00BC 000E"            /* ...·.‚.......º.. */
-	$"00CC 00E2 8809 4669 6C65 6E61 6D65 3A00"            /* .Ã.‚à∆Filename:. */
-	$"0000 0000 0058 00FC 006C 014C 8000 0000"            /* .....X.¸.l.LÄ... */
-	$"0000 00EB 000B 00FE 00F7 0702 008D"                 /* ...Î...˛.˜...ç */
-};
-
-data 'DITL' (156, "Music list") {
-	$"0010 0000 0000 0000 0000 00C4 00C4 0000"            /* ...........ƒ.ƒ.. */
-	$"0000 0000 0005 00CD 0012 0118 8805 526F"            /* .......Õ....à.Ro */
-	$"7773 3A00 0000 0000 0014 00CD 0021 0137"            /* ws:........Õ.!.7 */
-	$"8808 436F 6C75 6D6E 733A 0000 0000 0050"            /* à.Columns:.....P */
-	$"00CD 005D 014F 8815 536D 616C 6C65 7374"            /* .Õ.].Oà.Smallest */
-	$"2050 6978 656C 2056 616C 7565 3A00 0000"            /*  Pixel Value:... */
-	$"0000 0023 00CD 0030 0118 8806 4465 7074"            /* ...#.Õ.0..à.Dept */
-	$"683A 0000 0000 005F 00CD 006C 0150 880E"            /* h:....._.Õ.l.Pà. */
-	$"5769 6E64 6F77 2043 656E 7465 723A 0000"            /* Window Center:.. */
-	$"0000 0041 00CD 004E 014E 8814 4C61 7267"            /* ...A.Õ.N.Nà.Larg */
-	$"6573 7420 5069 7865 6C20 5661 6C75 653A"            /* est Pixel Value: */
-	$"0000 0000 0032 00CD 003F 0147 8810 5369"            /* .....2.Õ.?.Gà.Si */
-	$"7A65 2028 696E 2062 7974 6573 293A 0000"            /* ze (in bytes):.. */
-	$"0000 0005 0151 0012 01A1 8800 0000 0000"            /* .....Q...°à..... */
-	$"0014 0151 0021 01A1 0800 0000 0000 0050"            /* ...Q.!.°.......P */
-	$"0151 005D 01A1 8800 0000 0000 0032 0151"            /* .Q.].°à......2.Q */
-	$"003F 01A1 8800 0000 0000 005F 0151 006C"            /* .?.°à......_.Q.l */
-	$"01A1 8800 0000 0000 0041 0151 004E 01A1"            /* .°à......A.Q.N.° */
-	$"8800 0000 0000 0023 0151 0030 01A1 8800"            /* à......#.Q.0.°à. */
-	$"0000 0000 006E 00CD 007B 014E 880D 5769"            /* .....n.Õ.{.Nà.Wi */
-	$"6E64 6F77 2057 6964 7468 3A00 0000 0000"            /* ndow Width:..... */
-	$"006E 0151 007A 01A0 8800"                           /* .n.Q.z.†à. */
-};
-
-data 'DITL' (157) {
-	$"0001 0000 0000 FF9E FF6E 002B 0014 8702"            /* ......ˇûˇn.+..á. */
-	$"0080 0000 0000 FFC2 FFB1 0017 0012 8702"            /* .Ä....ˇ¬ˇ±....á. */
-	$"0081"                                               /* .Å */
-};
-
-data 'DITL' (158) {
-	$"0009 0000 0000 0007 0043 000F 0075 0000"            /* .∆.......C...u.. */
-	$"0000 0000 0022 0100 002F 0126 8000 0000"            /* .....".../.&Ä... */
-	$"0000 0038 00EC 0044 013E 8000 0000 0000"            /* ...8.Ï.D.>Ä..... */
-	$"0016 0000 0036 0020 8000 0000 0000 0000"            /* .....6. Ä....... */
-	$"0000 0020 0020 0702 0089 0000 0000 0000"            /* ... . ...â...... */
-	$"0023 0020 0043 0702 0084 0000 0000 0002"            /* .#. .C...Ñ...... */
-	$"00E9 001E 010A 8000 0000 0000 0002 010E"            /* .È...¬Ä......... */
-	$"001E 012F 8000 0000 0000 0000 0046 0020"            /* .../Ä........F.  */
-	$"0066 0000 0000 0000 0004 00BF 001A 0126"            /* .f.........ø...& */
-	$"8000"                                               /* Ä. */
-};
-
-data 'DITL' (159) {
-	$"0003 0000 0000 0050 010E 0064 0148 0402"            /* .......P...d.H.. */
-	$"4F4B 0000 0000 005A 000A 006A 00A3 880C"            /* OK.....Z.¬.j.£à. */
-	$"4572 726F 7220 4944 3A20 5E31 0000 0000"            /* Error ID: ^1.... */
-	$"000A 003C 004C 014C 8802 5E30 0000 0000"            /* .¬.<.L.Là.^0.... */
-	$"000A 000A 002A 002A C002 00DC"                      /* .¬.¬.*.*¿..‹ */
-};
-
-data 'DITL' (160) {
-	$"0003 0000 0000 0051 0114 0065 014E 0402"            /* .......Q...e.N.. */
-	$"4F4B 0000 0000 0051 00CC 0065 0106 0406"            /* OK.....Q.Ã.e.... */
-	$"4361 6E63 656C 0000 0000 000A 003C 004C"            /* Cancel.....¬.<.L */
-	$"014C 8802 5E30 0000 0000 000A 000A 002A"            /* .Là.^0.....¬.¬.* */
-	$"002A C002 00DC"                                     /* .*¿..‹ */
-};
-
-data 'DITL' (162) {
-	$"0001 0000 0000 0018 FFFF 07E8 00C7 8000"            /* ........ˇˇ.Ë.«Ä. */
-	$"0000 0000 0003 0005 0013 00BE 0702 0082"            /* ...........æ...Ç */
-};
-
-data 'DITL' (167, "OSIRIS StdFile Open", purgeable) {
-	$"0009 0000 0000 007B 011B 008D 016B 0402"            /* .∆.....{...ç.k.. */
-	$"4F4B 0000 0000 0094 011B 00A6 016B 0406"            /* OK.....î...¶.k.. */
-	$"4361 6E63 656C 0000 0000 0000 0000 0000"            /* Cancel.......... */
-	$"0000 8000 0000 0000 0010 0110 0020 0176"            /* ..Ä.......... .v */
-	$"8000 0000 0000 0035 011B 0047 016B 0405"            /* Ä......5...G.k.. */
-	$"456A 6563 7400 0000 0000 004E 011B 0060"            /* Eject......N...` */
-	$"016B 0407 4465 736B 746F 7000 0000 0000"            /* .k..Desktop..... */
-	$"0027 000C 0128 0103 0000 0000 0000 000E"            /* .'...(.......... */
-	$"000C 0021 0103 0000 0000 0000 006D 0117"            /* ...!.........m.. */
-	$"006E 016F 8000 0000 0000 0414 0014 0479"            /* .n.oÄ..........y */
-	$"0074 8800"                                          /* .tà. */
-};
-
-data 'DITL' (168) {
-	$"000A 0000 0000 00A1 0117 00B5 0167 0404"            /* .¬.....°...µ.g.. */
-	$"5361 7665 0000 0000 0082 0117 0096 0167"            /* Save.....Ç...ñ.g */
-	$"0406 4361 6E63 656C 0000 0000 0008 010C"            /* ..Cancel........ */
-	$"0018 0172 0000 0000 0000 0020 0117 0034"            /* ...r....... ...4 */
-	$"0167 0405 456A 6563 7400 0000 0000 003C"            /* .g..Eject......< */
-	$"0117 0050 0167 0407 4465 736B 746F 7000"            /* ...P.g..Desktop. */
-	$"0000 0000 001D 000C 011E 0103 0000 0000"            /* ................ */
-	$"0000 0007 000C 001A 0103 0000 0000 0000"            /* ................ */
-	$"0077 0115 0078 0169 C002 000B 0000 0000"            /* .w...x.i¿....... */
-	$"013A 001B 014A 00EF 1000 0000 0000 0125"            /* .:...J.Ô.......% */
-	$"001B 0135 00EF 8809 4669 6C65 6E61 6D65"            /* ...5.Ôà∆Filename */
-	$"3A00 0000 0000 0058 0117 006C 0167 8000"            /* :......X...l.gÄ. */
-};
-
-data 'DITL' (169) {
-	$"000C 0000 0000 0000 0052 0011 00AB 8000"            /* .........R...´Ä. */
-	$"0000 0000 00CB 001A 00DE 00E2 8000 0000"            /* .....À...ﬁ.‚Ä... */
-	$"0000 00DD 0001 00F0 006B 8000 0000 0000"            /* ...›....kÄ..... */
-	$"00DD 0090 00F0 00FA 8000 0000 0000 0000"            /* .›.ê..˙Ä....... */
-	$"0000 0064 00FA C002 0082 0000 0000 0045"            /* ...d.˙¿..Ç.....E */
-	$"0000 00C5 0100 C002 0083 0000 0000 0048"            /* ...≈..¿..É.....H */
-	$"0000 0057 00F3 8000 0000 0000 005A 0000"            /* ...W.ÛÄ......Z.. */
-	$"0069 00F3 8000 0000 0000 006C 0000 007B"            /* .i.ÛÄ......l...{ */
-	$"00F3 8000 0000 0000 007E 0000 008D 00F3"            /* .ÛÄ......~...ç.Û */
-	$"8000 0000 0000 0090 0000 009F 00F3 8000"            /* Ä......ê...ü.ÛÄ. */
-	$"0000 0000 00A2 0000 00B1 00F3 8000 0000"            /* .....¢...±.ÛÄ... */
-	$"0000 00B4 0000 00C3 00F3 8000"                      /* ...¥...√.ÛÄ. */
-};
-
-data 'DITL' (170) {
-	$"0003 0000 0000 0003 0003 0043 00D1 8000"            /* ...........C.—Ä. */
-	$"0000 0000 0046 0003 0086 00D1 8000 0000"            /* .....F...Ü.—Ä... */
-	$"0000 0003 0002 0043 000F 8000 0000 0000"            /* .......C..Ä..... */
-	$"0046 0002 0086 000F 8000"                           /* .F...Ü..Ä. */
-};
-
-data 'DITL' (623) {
-	$"0008 0000 0000 0008 00FC 001C 0136 0405"            /* .........¸...6.. */
-	$"5374 6172 7400 0000 0000 0028 00FC 003C"            /* Start......(.¸.< */
-	$"0136 0403 4279 6500 0000 0000 0008 000C"            /* .6..Bye......... */
-	$"0018 007E 8812 5265 7375 6C74 2028 696E"            /* ...~à.Result (in */
-	$"2074 6963 6B73 293A 0000 0000 0008 0084"            /*  ticks):.......Ñ */
-	$"0018 00CF 8800 0000 0000 0020 000C 0030"            /* ...œà...... ...0 */
-	$"007E 880F 5072 6F63 6573 736F 7220 5469"            /* .~à.Processor Ti */
-	$"6D65 3A00 0000 0000 0020 0084 0030 00CF"            /* me:...... .Ñ.0.œ */
-	$"8800 0000 0000 0046 000A 005A 0058 0408"            /* à......F.¬.Z.X.. */
-	$"4465 6275 6720 4F4E 0000 0000 0046 0064"            /* Debug ON.....F.d */
-	$"005A 00B2 0409 4465 6275 6720 4F46 4600"            /* .Z.≤.∆Debug OFF. */
-	$"0000 0000 0045 00BC 0059 012A 040C 4D65"            /* .....E.º.Y.*..Me */
-	$"6D6F 7279 2050 7572 6765"                           /* mory Purge */
-};
-
-data 'DITL' (364) {
-	$"0012 0000 0000 0002 0002 0012 012D 8000"            /* .............-Ä. */
-	$"0000 0000 0013 0002 0020 004A 880C 5573"            /* ......... .Jà.Us */
-	$"6564 206D 656D 6F72 793A 0000 0000 0013"            /* ed memory:...... */
-	$"004C 0020 007C 8807 3133 3030 204B 6200"            /* .L. .|à.1300 Kb. */
-	$"0000 0000 002E 00D0 003B 00DD 8000 0000"            /* .......–.;.›Ä... */
-	$"0000 0013 00A9 0020 00F4 880C 4672 6565"            /* .....©. .Ùà.Free */
-	$"206D 656D 6F72 793A 0000 0000 0013 00F5"            /*  memory:.......ı */
-	$"0020 012D 8800 0000 0000 0034 00D7 0041"            /* . .-à......4.◊.A */
-	$"00E4 8000 0000 0000 0021 001F 002E 0065"            /* .‰Ä......!.....e */
-	$"880D 536F 756E 6420 4472 6976 6572 3A00"            /* à.Sound Driver:. */
-	$"0000 0000 0021 0067 002E 0097 8800 0000"            /* .....!.g...óà... */
-	$"0000 0021 0002 002E 001E 8803 3230 2500"            /* ...!......à.20%. */
-	$"0000 0000 002F 0024 003C 0065 880C 496E"            /* ...../.$.<.eà.In */
-	$"7374 7275 6D65 6E74 733A 0000 0000 002F"            /* struments:...../ */
-	$"0067 003C 0097 8800 0000 0000 002F 0002"            /* .g.<.óà....../.. */
-	$"003C 001E 8803 3230 2500 0000 0000 003D"            /* .<..à.20%......= */
-	$"0032 004B 0065 880A 5061 7274 6974 696F"            /* .2.K.eà¬Partitio */
-	$"6E3A 0000 0000 003D 0067 004A 0097 8800"            /* n:.....=.g.J.óà. */
-	$"0000 0000 003D 0002 004A 001F 8803 3230"            /* .....=...J..à.20 */
-	$"2500 0000 0000 004B 0029 0058 0065 880B"            /* %......K.).X.eà. */
-	$"506C 6179 6572 2050 726F 3A00 0000 0000"            /* Player Pro:..... */
-	$"004B 0067 0058 0097 8800 0000 0000 004B"            /* .K.g.X.óà......K */
-	$"0002 0058 001D 8803 3230 2500"                      /* ...X..à.20%. */
-};
-
-data 'DITL' (217) {
-	$"0015 0000 0000 0023 00B8 0037 00F2 0402"            /* .......#.∏.7.Ú.. */
-	$"4F4B 0000 0000 0041 00B8 0055 00F2 0406"            /* OK.....A.∏.U.Ú.. */
-	$"4361 6E63 656C 0000 0000 0006 004C 0013"            /* Cancel.......L.. */
-	$"00F1 1000 0000 0000 001A 004C 0027 007B"            /* .Ò.........L.'.{ */
-	$"1000 0000 0000 0006 0027 0013 0049 8805"            /* .........'...Ià. */
-	$"4E61 6D65 3A00 0000 0000 001A 0027 0028"            /* Name:........'.( */
-	$"0049 8805 526F 7773 3A00 0000 0000 006F"            /* .Ià.Rows:......o */
-	$"003B 007C 0064 8807 5472 6163 6B73 3A00"            /* .;.|.dà.Tracks:. */
-	$"0000 0000 006F 0064 007C 007C 8800 0000"            /* .....o.d.|.|à... */
-	$"0000 006F 0084 007C 00C8 880E 5369 7A65"            /* ...o.Ñ.|.»à.Size */
-	$"2069 6E20 6279 7465 733A 0000 0000 006F"            /*  in bytes:.....o */
-	$"00C8 007C 00F9 8800 0000 0000 006A FFED"            /* .».|.˘à......jˇÌ */
-	$"006B 017D C002 000B 0000 0000 006F 0006"            /* .k.}¿........o.. */
-	$"007C 001F 8803 4944 3A00 0000 0000 006F"            /* .|..à.ID:......o */
-	$"0016 007C 0031 8800 0000 0000 002E 0006"            /* ...|.1à......... */
-	$"003B 0049 880C 436F 6D70 7265 7373 696F"            /* .;.Ià.Compressio */
-	$"6E3A 0000 0000 002E 0072 003B 0086 4002"            /* n:.......r.;.Ü@. */
-	$"00C8 0000 0000 002E 004C 003B 006F 8800"            /* .».......L.;.oà. */
-	$"0000 0000 0042 000C 004F 0040 0506 5370"            /* .....B...O.@..Sp */
-	$"6565 643A 0000 0000 0056 000C 0063 0049"            /* eed:.....V...c.I */
-	$"0506 5465 6D70 6F3A 0000 0000 0042 004C"            /* ..Tempo:.....B.L */
-	$"004F 007B 1000 0000 0000 0056 004C 0063"            /* .O.{.......V.L.c */
-	$"007B 1000 0000 0000 0042 0081 004F 00AB"            /* .{.......B.Å.O.´ */
-	$"8808 2830 2E2E 2E33 3129 0000 0000 0056"            /* à.(0...31).....V */
-	$"0081 0063 00B5 880A 2833 322E 2E2E 3235"            /* .Å.c.µà¬(32...25 */
-	$"3529"                                               /* 5) */
-};
-
-data 'DITL' (317) {
-	$"0018 0000 0000 000A 0118 001E 0152 0402"            /* .......¬.....R.. */
-	$"4F4B 0000 0000 0028 0118 003C 0152 0406"            /* OK.....(...<.R.. */
-	$"4361 6E63 656C 0000 0000 000A 0014 0018"            /* Cancel.....¬.... */
-	$"0049 880A 4669 6C65 204E 616D 653A 0000"            /* .Ià¬File Name:.. */
-	$"0000 000A 0052 0017 0102 1000 0000 0000"            /* ...¬.R.......... */
-	$"0022 0029 0030 0049 8805 5479 7065 3A00"            /* .".).0.Ià.Type:. */
-	$"0000 0000 003A 001C 0048 0049 8808 4372"            /* .....:...H.Ià.Cr */
-	$"6561 746F 723A 0000 0000 0022 0052 002F"            /* eator:.....".R./ */
-	$"0073 1000 0000 0000 0022 007A 002F 008E"            /* .s.......".z./.é */
-	$"4002 00C8 0000 0000 003A 0052 0047 0073"            /* @..».....:.R.G.s */
-	$"1000 0000 0000 003A 007A 0047 008E 4002"            /* .......:.z.G.é@. */
-	$"00C8 0000 0000 001D 00BC 003D 00DC 8000"            /* .».......º.=.‹Ä. */
-	$"0000 0000 003D 009F 004A 00F9 8000 0000"            /* .....=.ü.J.˘Ä... */
-	$"0000 004F FFF4 0050 024C C002 000B 0000"            /* ...OˇÙ.P.L¿..... */
-	$"0000 0054 0001 0061 0049 880E 496E 7465"            /* ...T...a.Ià.Inte */
-	$"726E 616C 204E 616D 653A 0000 0000 0072"            /* rnal Name:.....r */
-	$"00C0 007F 00F1 8809 5061 7474 6572 6E73"            /* .¿...Òà∆Patterns */
-	$"3A00 0000 0000 0072 0013 007F 0049 880A"            /* :......r.....Ià¬ */
-	$"506C 7567 2054 7970 653A 0000 0000 0063"            /* Plug Type:.....c */
-	$"00B1 0070 00F1 880C 496E 7374 7275 6D65"            /* .±.p.Òà.Instrume */
-	$"6E74 733A 0000 0000 0063 002C 0070 0049"            /* nts:.....c.,.p.I */
-	$"8805 5369 7A65 3A00 0000 0000 0054 004F"            /* à.Size:......T.O */
-	$"0061 0122 0801 2D00 0000 0000 0072 00F7"            /* .a."..-......r.˜ */
-	$"007F 0156 8801 2D00 0000 0000 0072 004F"            /* ...Và.-......r.O */
-	$"007F 00AE 8801 2D00 0000 0000 0063 00F7"            /* ...Æà.-......c.˜ */
-	$"0070 0156 8801 2D00 0000 0000 0063 004F"            /* .p.Và.-......c.O */
-	$"0070 00AE 8801 2D00 0000 0000 0081 0023"            /* .p.Æà.-......Å.# */
-	$"008E 0049 8806 5768 6572 653A 0000 0000"            /* .é.Ià.Where:.... */
-	$"0081 004F 0112 00E4 8801 2D00"                      /* .Å.O...‰à.-. */
-};
-
-data 'DITL' (172) {
-	$"0019 0000 0000 006E 0172 0082 01AC 0404"            /* .......n.r.Ç.¨.. */
-	$"4D6F 7665 0000 0000 006E 01C2 0082 01FC"            /* Move.....n.¬.Ç.¸ */
-	$"0406 4361 6E63 656C 0000 0000 0014 000A"            /* ..Cancel.......¬ */
-	$"0026 0074 050A 496E 7374 7275 6D65 6E74"            /* .&.t.¬Instrument */
-	$"0000 0000 0028 000A 003A 0063 0504 4E6F"            /* .....(.¬.:.c..No */
-	$"7465 0000 0000 003C 000A 004E 0074 0506"            /* te.....<.¬.N.t.. */
-	$"4566 6665 6374 0000 0000 0050 000A 0062"            /* Effect.....P.¬.b */
-	$"0065 0508 4172 6775 6D65 6E74 0000 0000"            /* .e..Argument.... */
-	$"0000 0046 0010 006B 8804 5748 4154 0000"            /* ...F...kà.WHAT.. */
-	$"0000 0000 0104 0010 0129 8802 4259 0000"            /* .........)à.BY.. */
-	$"0000 0000 019A 0010 01D2 8805 5748 4552"            /* .....ö...“à.WHER */
-	$"4500 0000 0000 0014 0172 0026 01EE 060F"            /* E........r.&.Ó.. */
-	$"4375 7272 656E 7420 7061 7474 6572 6E00"            /* Current pattern. */
-	$"0000 0000 0028 0172 003A 0202 0613 5365"            /* .....(.r.:....Se */
-	$"6C65 6374 696F 6E20 2844 6967 6974 616C"            /* lection (Digital */
-	$"2900 0000 0000 0050 0172 0062 01DC 060A"            /* )......P.r.b.‹.¬ */
-	$"4576 6572 7977 6865 7265 0000 0000 003C"            /* Everywhere.....< */
-	$"0172 004E 0209 0615 5365 6C65 6374 696F"            /* .r.N.∆..Selectio */
-	$"6E20 2843 6C61 7373 6963 616C 2900 0000"            /* n (Classical)... */
-	$"0000 0014 0096 0021 00AA 4002 0384 0000"            /* .....ñ.!.™@..Ñ.. */
-	$"0000 0014 0078 0024 008E 8802 3030 0000"            /* .....x.$.éà.00.. */
-	$"0000 0028 0096 0035 00AA 4002 0384 0000"            /* ...(.ñ.5.™@..Ñ.. */
-	$"0000 0028 0078 0038 008E 8802 3030 0000"            /* ...(.x.8.éà.00.. */
-	$"0000 0050 0078 0060 008A 1002 3030 0000"            /* ...P.x.`.ä..00.. */
-	$"0000 003C 0096 0049 00AA 4002 0384 0000"            /* ...<.ñ.I.™@..Ñ.. */
-	$"0000 003C 0078 004C 008E 8802 3030 0000"            /* ...<.x.L.éà.00.. */
-	$"0000 001E 00D2 0030 0155 0811 4E6F 206F"            /* .....“.0.U..No o */
-	$"6620 7365 6D69 2D74 6F6E 6573 3A00 0000"            /* f semi-tones:... */
-	$"0000 003C 0104 004C 0116 1002 3030 0000"            /* ...<...L....00.. */
-	$"0000 0000 00B4 0064 00B5 C002 000B 0000"            /* .....¥.d.µ¿..... */
-	$"0000 0000 0168 0064 0169 C002 000B 0000"            /* .....h.d.i¿..... */
-	$"0000 0000 0000 0001 0320 C002 000B 0000"            /* ......... ¿..... */
-	$"0000 0064 0000 0065 0320 C002 000B"                 /* ...d...e. ¿... */
-};
-
-data 'DITL' (2005) {
-	$"000C 0000 0000 00A0 000A 00B0 0051 0000"            /* .......†.¬.∞.Q.. */
-	$"0000 0000 00A0 0064 00B0 00AA 0000 0000"            /* .....†.d.∞.™.... */
-	$"0000 00B4 006E 00C4 00B1 0000 0000 0000"            /* ...¥.n.ƒ.±...... */
-	$"0082 000A 0094 0101 0510 4E6F 7465 7320"            /* .Ç.¬.î....Notes  */
-	$"7072 6F6A 6563 7469 6F6E 0000 0000 0028"            /* projection.....( */
-	$"000A 003A 005B 0508 4D61 726B 6572 733A"            /* .¬.:.[..Markers: */
-	$"0000 0000 0046 001E 0056 0053 8807 4F66"            /* .....F...V.Sà.Of */
-	$"6673 6574 3A1E 0000 0000 0046 005A 0056"            /* fset:......F.Z.V */
-	$"00A5 1000 0000 0000 0046 00C8 0056 00FC"            /* .•.......F.».V.¸ */
-	$"8805 4C6F 6F70 3AAF 0000 0000 0046 0104"            /* à.Loop:Ø.....F.. */
-	$"0056 014F 1000 0000 0000 00AA 00C8 00BE"            /* .V.O.......™.».æ */
-	$"00DC 8000 0000 0000 006E 000A 0080 009B"            /* .‹Ä......n.¬.Ä.õ */
-	$"050F 4F63 7461 7665 7320 4D61 726B 6572"            /* ..Octaves Marker */
-	$"735A 0000 0000 0096 0000 009E 0028 8000"            /* sZ.....ñ...û.(Ä. */
-	$"0000 0000 0064 0000 0065 0160 C002 0386"            /* .....d...e.`¿..Ü */
-};
-
-data 'DITL' (161) {
-	$"000F 0000 0000 0087 00FC 009B 014C 0404"            /* .......á.¸.õ.L.. */
-	$"4F70 656E 0000 0000 0068 00FC 007C 014C"            /* Open.....h.¸.|.L */
-	$"0406 4361 6E63 656C 0000 0000 0000 0000"            /* ..Cancel........ */
-	$"0000 0000 8000 0000 0000 0008 00EB 0018"            /* ....Ä........Î.. */
-	$"0151 0000 0000 0000 0020 00FC 0034 014C"            /* .Q....... .¸.4.L */
-	$"0405 456A 6563 7400 0000 0000 003C 00FC"            /* ..Eject......<.¸ */
-	$"0050 014C 0407 4465 736B 746F 7000 0000"            /* .P.L..Desktop... */
-	$"0000 001D 000C 00FF 00E6 0000 0000 0000"            /* .......ˇ.Ê...... */
-	$"0006 000C 0019 00E6 0000 0000 0000 005B"            /* .......Ê.......[ */
-	$"00FB 005C 014D C002 000B 0000 0000 00AA"            /* .˚.\.M¿........™ */
-	$"00FA 0100 0150 C002 0085 0000 0000 00FF"            /* .˙...P¿..Ö.....ˇ */
-	$"000A 0111 00B1 0511 506C 6179 2077 6865"            /* .¬...±..Play whe */
-	$"6E20 636C 6963 6B65 6400 0000 0000 00FF"            /* n clicked......ˇ */
-	$"00BD 010F 00E6 8800 0000 0000 0114 000A"            /* .Ω...Êà........¬ */
-	$"0125 0082 050E 5368 6F77 2041 6C6C 2046"            /* .%.Ç..Show All F */
-	$"696C 6573 0000 0000 012A 006C 013B 00EC"            /* iles.....*.l.;.Ï */
-	$"8813 4176 6169 6C61 626C 6520 666F 726D"            /* à.Available form */
-	$"6174 733A 2000 0000 0000 013B 000D 016B"            /* ats: ......;...k */
-	$"0151 8805 790D 790D 7900 0000 0000 0127"            /* .Qà.y.y.y......' */
-	$"0000 0128 0160 C002 000B"                           /* ...(.`¿... */
-};
-
-data 'DITL' (346) {
-	$"0002 0000 0000 0000 0000 005F 0181 C002"            /* ..........._.Å¿. */
-	$"0080 0000 0000 0002 0068 0015 00E7 C002"            /* .Ä.......h...Á¿. */
-	$"0097 0000 0000 005F 0000 00D7 0181 C002"            /* .ó....._...◊.Å¿. */
-	$"008D"                                               /* .ç */
-};
-
-data 'DITL' (934) {
-	$"0002 0000 0000 0049 00AE 005D 00E8 0402"            /* .......I.Æ.].Ë.. */
-	$"4F4B 0000 0000 0002 0029 0044 00EB 8862"            /* OK.......).D.Îàb */
-	$"4375 7272 656E 746C 792C 205E 3025 206F"            /* Currently, ^0% o */
-	$"6620 7468 6520 7072 6F63 6573 7369 6E67"            /* f the processing */
-	$"2074 696D 6520 6973 2075 7365 6420 666F"            /*  time is used fo */
-	$"7220 6D75 7369 6320 6765 6E65 7261 7469"            /* r music generati */
-	$"6F6E 2061 6E64 206F 7468 6572 2062 6163"            /* on and other bac */
-	$"6B67 726F 756E 6420 7072 6F63 6573 7365"            /* kground processe */
-	$"732E 0000 0000 0003 0004 0023 0024 C002"            /* s..........#.$¿. */
-	$"00DC"                                               /* .‹ */
-};
-
-data 'DITL' (337, "Spectre") {
-	$"000A 0000 0000 0010 0000 0024 0014 8000"            /* .¬.........$..Ä. */
-	$"0000 0000 0001 0113 000E 013B 8806 5363"            /* ...........;à.Sc */
-	$"616C 653A 0000 0000 0001 013C 000E 0164"            /* ale:.......<...d */
-	$"8800 0000 0000 0001 0003 000E 0036 8808"            /* à............6à. */
-	$"4469 7370 6C61 793A 0000 0000 0001 008B"            /* Display:.......ã */
-	$"000E 009F 4002 0384 0000 0000 0001 0037"            /* ...ü@..Ñ.......7 */
-	$"000E 008A 8800 0000 0000 0001 00AB 000E"            /* ...äà........´.. */
-	$"00CC 8805 5369 7A65 3A0E 0000 0000 0001"            /* .Ãà.Size:....... */
-	$"00EC 000E 0100 4002 0384 0000 0000 0001"            /* .Ï....@..Ñ...... */
-	$"00CD 000E 00E9 8800 0000 0000 0010 0000"            /* .Õ...Èà......... */
-	$"07E0 07D0 0000 0000 0000 0001 0167 000E"            /* .‡.–.........g.. */
-	$"017B 4002 0384"                                     /* .{@..Ñ */
-};
-
-data 'DITL' (176) {
-	$"0014 0000 0000 000A 017D 001E 01B7 0402"            /* .......¬.}...∑.. */
-	$"4F4B 0000 0000 0028 017D 003C 01B7 0406"            /* OK.....(.}.<.∑.. */
-	$"4361 6E63 656C 0000 0000 0004 0014 0011"            /* Cancel.......... */
-	$"0048 8809 4361 7465 676F 7279 3A00 0000"            /* .Hà∆Category:... */
-	$"0000 0014 000C 0021 0048 880B 496E 7374"            /* .......!.Hà.Inst */
-	$"7275 6D65 6E74 3A00 0000 0000 0004 004B"            /* rument:........K */
-	$"0011 005F 4002 00C8 0000 0000 0014 004B"            /* ..._@..».......K */
-	$"0021 005F 4002 00C8 0000 0000 0004 0064"            /* .!._@..».......d */
-	$"0011 00DE 8800 0000 0000 0014 0064 0021"            /* ...ﬁà........d.! */
-	$"00DE 8800 0000 0000 004A 0029 0057 0048"            /* .ﬁà......J.).W.H */
-	$"8805 4E6F 7465 3A00 0000 0000 004A 0064"            /* à.Note:......J.d */
-	$"0057 0081 0800 0000 0000 004A 004B 0057"            /* .W.Å.......J.K.W */
-	$"005F 4002 00C8 0000 0000 0024 002A 0031"            /* ._@..».....$.*.1 */
-	$"0048 8805 5369 7A65 3A00 0000 0000 0059"            /* .Hà.Size:......Y */
-	$"0004 0093 01C5 4002 00E1 0000 0000 0024"            /* ...ì.≈@..·.....$ */
-	$"0064 0031 00DE 0800 0000 0000 0046 FFEE"            /* .d.1.ﬁ.......FˇÓ */
-	$"0047 030E C002 000B 0000 0000 0005 01DF"            /* .G..¿..........ﬂ */
-	$"0015 0233 8000 0000 0000 0034 0064 0041"            /* ...3Ä......4.d.A */
-	$"00DE 0800 0000 0000 0034 000A 0041 0048"            /* .ﬁ.......4.¬.A.H */
-	$"080B 4D49 4449 2D47 4D20 4944 3A00 0000"            /* ..MIDI-GM ID:... */
-	$"0000 0035 022D 0045 0289 0000 0000 0000"            /* ...5.-.E.â...... */
-	$"0035 0291 0045 02C5 8000 0000 0000 004A"            /* .5.ë.E.≈Ä......J */
-	$"015E 0057 01C6 8815 5175 6963 6B74 696D"            /* .^.W.∆à.Quicktim */
-	$"6520 7665 7273 696F 6E20 322E 3200"                 /* e version 2.2. */
-};
-
-data 'DITL' (173) {
-	$"0000 0000 0000 0001 0001 000F 07D1 8800"            /* .............—à. */
-};
-
-data 'DITL' (153) {
-	$"000A 0000 0000 0026 000E 07F6 07DE 0000"            /* .¬.....&...ˆ.ﬁ.. */
-	$"0000 0000 0018 0000 0026 07D0 0000 0000"            /* .........&.–.... */
-	$"0000 0001 013E 0015 0152 0000 0000 0000"            /* .....>...R...... */
-	$"0026 0000 07F6 000E 0000 0000 0000 0002"            /* .&...ˆ.......... */
-	$"0018 0016 002C 0000 0000 0000 0002 002C"            /* .....,........., */
-	$"0016 0040 0000 0000 0000 0002 0004 0016"            /* ...@............ */
-	$"0018 0000 0000 0000 0002 00E0 0016 00F4"            /* ...........‡...Ù */
-	$"0000 0000 0000 0005 004D 0012 006E 8805"            /* .........M...nà. */
-	$"5369 7A65 3A00 0000 0000 0005 008C 0012"            /* Size:........å.. */
-	$"00A0 4002 0384 0000 0000 0005 006F 0012"            /* .†@..Ñ.......o.. */
-	$"008B 8800"                                          /* .ãà. */
-};
-
-data 'DITL' (174) {
-	$"0004 0000 0000 0139 00B7 014D 00F1 0405"            /* .......9.∑.M.Ò.. */
-	$"5072 696E 7400 0000 0000 0139 010B 014D"            /* Print......9...M */
-	$"0145 0404 446F 6E65 0000 0000 0085 FFF2"            /* .E..Done.....ÖˇÚ */
-	$"0086 01E6 C002 000B 0000 0000 0006 000B"            /* .Ü.Ê¿........... */
-	$"007F 0143 4002 0087 0000 0000 0131 FFDF"            /* ...C@..á.....1ˇﬂ */
-	$"0132 01D3 C002 000B"                                /* .2.”¿... */
-};
-
-data 'DITL' (154) {
-	$"000D 0000 0000 0005 016D 0019 01A7 0402"            /* .........m...ß.. */
-	$"4F4B 0000 0000 000A 000A 00A8 00A0 0000"            /* OK.....¬.¬.®.†.. */
-	$"0000 0000 000A 00AA 001A 00EB 880D 5369"            /* .....¬.™...Îà.Si */
-	$"7A65 206F 6E20 6469 736B 3A00 0000 0000"            /* ze on disk:..... */
-	$"001E 00AA 002E 00EB 880C 5369 7A65 2069"            /* ...™...Îà.Size i */
-	$"6E20 5241 4D3A 0000 0000 0032 00AA 0042"            /* n RAM:.....2.™.B */
-	$"00EB 8805 436F 6465 3A00 0000 0000 0046"            /* .Îà.Code:......F */
-	$"00AA 0056 00EB 8805 5479 7065 3A00 0000"            /* .™.V.Îà.Type:... */
-	$"0000 005A 00AA 006A 00EB 880A 436F 7079"            /* ...Z.™.j.Îà¬Copy */
-	$"7269 6768 743A 0000 0000 0078 00AA 0088"            /* right:.....x.™.à */
-	$"00EB 8806 5768 6572 653A 0000 0000 000A"            /* .Îà.Where:.....¬ */
-	$"00F0 001A 015A 8800 0000 0000 001E 00F0"            /* ....Zà........ */
-	$"002E 015A 8800 0000 0000 0032 00F0 0042"            /* ...Zà......2..B */
-	$"015A 8800 0000 0000 0046 00F0 0056 015A"            /* .Zà......F..V.Z */
-	$"8800 0000 0000 005A 00F0 0074 01A6 8800"            /* à......Z..t.¶à. */
-	$"0000 0000 0078 00F0 00A8 01A6 8800"                 /* .....x..®.¶à. */
-};
-
-data 'DITL' (137, purgeable) {
-	$"000C 0000 0000 00A1 00FC 00B5 014C 0404"            /* .......°.¸.µ.L.. */
-	$"5361 7665 0000 0000 0082 00FC 0096 014C"            /* Save.....Ç.¸.ñ.L */
-	$"0406 4361 6E63 656C 0000 0000 0000 0000"            /* ..Cancel........ */
-	$"0000 0000 8000 0000 0000 0008 00EB 0018"            /* ....Ä........Î.. */
-	$"0151 0000 0000 0000 0020 00FC 0034 014C"            /* .Q....... .¸.4.L */
-	$"0405 456A 6563 7400 0000 0000 003C 00FC"            /* ..Eject......<.¸ */
-	$"0050 014C 0407 4465 736B 746F 7000 0000"            /* .P.L..Desktop... */
-	$"0000 001D 000C 00EA 00E6 0000 0000 0000"            /* .......Í.Ê...... */
-	$"0007 000C 001A 00E6 0000 0000 0000 0077"            /* .......Ê.......w */
-	$"00FA 0078 014E C002 000B 0000 0000 0106"            /* .˙.x.N¿......... */
-	$"0010 0116 00E4 1000 0000 0000 00F1 0010"            /* .....‰.......Ò.. */
-	$"0101 00B6 8811 5361 7665 2064 6F63 756D"            /* ...∂à.Save docum */
-	$"656E 7420 6173 3A00 0000 0000 0058 00FC"            /* ent as:......X.¸ */
-	$"006C 014C 8000 0000 0000 00C3 00FA 0119"            /* .l.LÄ......√.˙.. */
-	$"0150 C002 0085"                                     /* .P¿..Ö */
-};
-
-data 'DITL' (171) {
-	$"000B 0000 0000 0005 00C8 0019 0102 0402"            /* .........»...... */
-	$"4F4B 0000 0000 0023 00C8 0037 0102 0406"            /* OK.....#.».7.... */
-	$"4361 6E63 656C 0000 0000 0003 000D 0010"            /* Cancel.......... */
-	$"002D 8805 5479 7065 3A00 0000 0000 0003"            /* .-à.Type:....... */
-	$"0030 0010 0077 0800 0000 0000 002B 0003"            /* .0...w.......+.. */
-	$"0038 002D 8807 466F 726D 6174 3A00 0000"            /* .8.-à.Format:... */
-	$"0000 002B 0030 0038 009B 0800 0000 0000"            /* ...+.0.8.õ...... */
-	$"002B 009D 0038 00B1 4002 00C8 0000 0000"            /* .+.ù.8.±@..».... */
-	$"003F 000B 004C 002D 8805 4E61 6D65 3ACC"            /* .?...L.-à.Name:Ã */
-	$"0000 0000 003F 0030 004C 00CE 1000 0000"            /* .....?.0.L.Œ.... */
-	$"0000 0017 0010 0024 002D 8805 5369 7A65"            /* .......$.-à.Size */
-	$"3A00 0000 0000 0017 0030 0024 0087 0800"            /* :........0.$.á.. */
-	$"0000 0000 00AE 0224 00BE 0297 0800"                 /* .....Æ.$.æ.ó.. */
-};
-
-data 'DITL' (301, purgeable) {
-	$"0004 0000 0000 003C 0014 0050 0064 0409"            /* .......<...P.d.∆ */
-	$"5265 6D6F 7665 2069 7400 0000 0000 005C"            /* Remove it......\ */
-	$"0014 0070 0064 0407 4669 6E64 2069 7400"            /* ...p.d..Find it. */
-	$"0000 0000 005C 00BE 0070 010E 0406 4361"            /* .....\.æ.p....Ca */
-	$"6E63 656C 0000 0000 0006 003C 0036 010E"            /* ncel.......<.6.. */
-	$"8824 4920 6361 6E6E 6F74 2066 696E 6420"            /* à$I cannot find  */
-	$"D25E 30D3 2E0D 5768 6174 2073 6861 6C6C"            /* “^0”..What shall */
-	$"2049 2064 6F3F 0000 0000 000A 000A 002A"            /*  I do?.....¬.¬.* */
-	$"002A C002 00DC"                                     /* .*¿..‹ */
-};
-
-data 'DITL' (3004, purgeable) {
-	$"0004 0000 0000 003C 0014 0050 005A 0403"            /* .......<...P.Z.. */
-	$"5965 7300 0000 0000 005C 0014 0070 005A"            /* Yes......\...p.Z */
-	$"0402 4E6F 0000 0000 005C 00C8 0070 010E"            /* ..No.....\.».p.. */
-	$"0406 4361 6E63 656C 0000 0000 0006 003C"            /* ..Cancel.......< */
-	$"0036 010E 882C 5361 7665 2063 7572 7265"            /* .6..à,Save curre */
-	$"6E74 204D 7573 6963 204C 6973 7420 D25E"            /* nt Music List “^ */
-	$"30D3 2062 6566 6F72 6520 636C 6F73 696E"            /* 0” before closin */
-	$"673F 0000 0000 000A 000A 002A 002A C002"            /* g?.....¬.¬.*.*¿. */
-	$"00DC"                                               /* .‹ */
-};
-
-data 'DITL' (302) {
-	$"0002 0000 0000 0051 010E 0065 0148 0402"            /* .......Q...e.H.. */
-	$"4F4B 0000 0000 000A 003C 0043 014B 8831"            /* OK.....¬.<.C.Kà1 */
-	$"596F 7572 206D 7573 6963 2069 7320 6E6F"            /* Your music is no */
-	$"7720 5E30 2062 7974 6573 2073 6D61 6C6C"            /* w ^0 bytes small */
-	$"6572 2074 6861 6E20 6265 666F 7265 2E2E"            /* er than before.. */
-	$"2E00 0000 0000 000A 000A 002A 002A C002"            /* .......¬.¬.*.*¿. */
-	$"00DC"                                               /* .‹ */
-};
-
-data 'DITL' (134) {
-	$"0018 0000 0000 0028 003E 07F8 080E 0000"            /* .......(.>.¯.... */
-	$"0000 0000 001A 0000 0028 07D0 0000 0000"            /* .........(.–.... */
-	$"0000 0003 0016 0017 002A 0000 0000 0000"            /* .........*...... */
-	$"0028 0000 07F8 003E 0000 0000 0000 0003"            /* .(...¯.>........ */
-	$"0002 0017 0016 0000 0000 0000 0003 00AC"            /* ...............¨ */
-	$"0017 00C0 0000 0000 0000 0003 0030 0017"            /* ...¿.........0.. */
-	$"0044 0000 0000 0000 0003 0049 0017 005D"            /* .D.........I...] */
-	$"0000 0000 0000 0005 0170 0015 018B 8804"            /* .........p...ãà. */
-	$"496E 733A 0000 0000 0006 01A8 0013 01BC"            /* Ins:.......®...º */
-	$"4002 00C8 0000 0000 0005 018C 0015 01A6"            /* @..».......å...¶ */
-	$"0803 3030 3000 0000 0000 001A 0000 0028"            /* ..000..........( */
-	$"003E 8000 0000 0000 0001 00C4 0019 00D7"            /* .>Ä........ƒ...◊ */
-	$"0000 0000 0000 0001 00D6 0019 00E9 0000"            /* .........÷...È.. */
-	$"0000 0000 0001 00E8 0019 00FB 0000 0000"            /* .......Ë...˚.... */
-	$"0000 0001 00FA 0019 010D 0000 0000 0000"            /* .....˙.......... */
-	$"0001 010C 0019 011F 0000 0000 0000 0001"            /* ................ */
-	$"0136 0019 0149 0000 0000 0000 0001 0148"            /* .6...I.........H */
-	$"0019 015B 0000 0000 0000 0001 015A 0019"            /* ...[.........Z.. */
-	$"016D 0000 0000 0000 0003 0062 0017 0076"            /* .m.........b...v */
-	$"0000 0000 0000 0003 007B 0017 008F 0000"            /* .........{...è.. */
-	$"0000 0000 0003 0094 0017 00A8 0000 0000"            /* .......î...®.... */
-	$"0000 0005 01BF 0015 02E9 0800 0000 0000"            /* .....ø...È...... */
-	$"0001 011E 0019 0131 0000"                           /* .......1.. */
-};
-
-data 'DITL' (2007) {
-	$"000F 0000 0000 0028 000A 0038 0088 0808"            /* .......(.¬.8.à.. */
-	$"4765 6E65 7261 6C3A 0000 0000 00AE 001F"            /* General:.....Æ.. */
-	$"00C6 010B 8000 0000 0000 0058 001D 0068"            /* .∆..Ä......X...h */
-	$"0069 0508 4D61 726B 6572 733A 0000 0000"            /* .i..Markers:.... */
-	$"0058 0075 0068 00A3 8807 4F66 6673 6574"            /* .X.u.h.£à.Offset */
-	$"3A00 0000 0000 0058 0117 0068 0149 1000"            /* :......X...h.I.. */
-	$"0000 0000 0058 00EC 0068 0111 8805 4C6F"            /* .....X.Ï.h..à.Lo */
-	$"6F70 3A00 0000 0000 0058 00A9 0068 00DB"            /* op:......X.©.h.€ */
-	$"1000 0000 0000 0041 001D 0051 00B4 0511"            /* .......A...Q.¥.. */
-	$"5368 6F77 206E 6F74 6573 206C 656E 6774"            /* Show notes lengt */
-	$"6806 0000 0000 0070 001D 0080 0069 0806"            /* h......p...Ä.i.. */
-	$"5465 6D70 6F3A 0000 0000 0070 008D 0080"            /* Tempo:.....p.ç.Ä */
-	$"00A3 8803 4E6F 3A00 0000 0000 0070 0117"            /* .£à.No:......p.. */
-	$"0080 0149 1000 0000 0000 0070 00F2 0080"            /* .Ä.I.......p.Ú.Ä */
-	$"0111 8805 556E 6974 3A00 0000 0000 0070"            /* ..à.Unit:......p */
-	$"00A9 0080 00DB 1000 0000 0000 0088 001C"            /* .©.Ä.€.......à.. */
-	$"0098 007C 880D 5472 6163 6B20 4865 6967"            /* .ò.|à.Track Heig */
-	$"6874 3A03 0000 0000 0088 00A9 0098 00CF"            /* ht:......à.©.ò.œ */
-	$"0803 3132 3802 0000 0000 0089 00D1 0096"            /* ..128......â.—.ñ */
-	$"00E5 4002 00C8"                                     /* .Â@..» */
-};
-
-data 'DITL' (2008) {
-	$"0027 0000 0000 0028 000A 0038 0088 0808"            /* .'.....(.¬.8.à.. */
-	$"4765 6E65 7261 6C3A 0000 0000 003D 0014"            /* General:.....=.. */
-	$"004D 0045 0502 4631 0000 0000 004D 0014"            /* .M.E..F1.....M.. */
-	$"005D 0045 0502 4632 0000 0000 005D 0014"            /* .].E..F2.....].. */
-	$"006D 0045 0502 4633 0000 0000 006D 0014"            /* .m.E..F3.....m.. */
-	$"007D 0045 0502 4634 0000 0000 007D 0014"            /* .}.E..F4.....}.. */
-	$"008D 0045 0502 4635 0000 0000 008D 0014"            /* .ç.E..F5.....ç.. */
-	$"009D 0045 0502 4636 0000 0000 009D 0014"            /* .ù.E..F6.....ù.. */
-	$"00AD 0045 0502 4637 0000 0000 00AD 0014"            /* .≠.E..F7.....≠.. */
-	$"00BD 0045 0502 4638 0000 0000 00BD 0014"            /* .Ω.E..F8.....Ω.. */
-	$"00CD 0045 0502 4639 0000 0000 00CD 0014"            /* .Õ.E..F9.....Õ.. */
-	$"00DD 0045 0503 4631 3000 0000 0000 00DD"            /* .›.E..F10......› */
-	$"0014 00ED 0045 0503 4631 3100 0000 0000"            /* ...Ì.E..F11..... */
-	$"00ED 0014 00FD 0045 0503 4631 3200 0000"            /* .Ì...˝.E..F12... */
-	$"0000 00FD 0014 010D 0045 0503 4631 3300"            /* ...˝.....E..F13. */
-	$"0000 0000 003E 0047 004B 005B 4002 00C8"            /* .....>.G.K.[@..» */
-	$"0000 0000 004E 0047 005B 005B 4002 00C8"            /* .....N.G.[.[@..» */
-	$"0000 0000 005E 0047 006B 005B 4002 00C8"            /* .....^.G.k.[@..» */
-	$"0000 0000 006E 0047 007B 005B 4002 00C8"            /* .....n.G.{.[@..» */
-	$"0000 0000 007E 0047 008B 005B 4002 00C8"            /* .....~.G.ã.[@..» */
-	$"0000 0000 008E 0047 009B 005B 4002 00C8"            /* .....é.G.õ.[@..» */
-	$"0000 0000 009E 0047 00AB 005B 4002 00C8"            /* .....û.G.´.[@..» */
-	$"0000 0000 00AE 0047 00BB 005B 4002 00C8"            /* .....Æ.G.ª.[@..» */
-	$"0000 0000 00BE 0047 00CB 005B 4002 00C8"            /* .....æ.G.À.[@..» */
-	$"0000 0000 00CE 0047 00DB 005B 4002 00C8"            /* .....Œ.G.€.[@..» */
-	$"0000 0000 00DE 0047 00EB 005B 4002 00C8"            /* .....ﬁ.G.Î.[@..» */
-	$"0000 0000 00EE 0047 00FB 005B 4002 00C8"            /* .....Ó.G.˚.[@..» */
-	$"0000 0000 00FE 0047 010B 005B 4002 00C8"            /* .....˛.G...[@..» */
-	$"0000 0000 003D 005F 004D 0159 8800 0000"            /* .....=._.M.Yà... */
-	$"0000 004D 005F 005D 0159 8800 0000 0000"            /* ...M._.].Yà..... */
-	$"005D 005F 006D 0159 8800 0000 0000 006D"            /* .]._.m.Yà......m */
-	$"005F 007D 0159 8800 0000 0000 007D 005F"            /* ._.}.Yà......}._ */
-	$"008D 0159 8800 0000 0000 008D 005F 009D"            /* .ç.Yà......ç._.ù */
-	$"0159 8800 0000 0000 009D 005F 00AD 0159"            /* .Yà......ù._.≠.Y */
-	$"8800 0000 0000 00AD 005F 00BD 0159 8800"            /* à......≠._.Ω.Yà. */
-	$"0000 0000 00BD 005F 00CD 0159 8800 0000"            /* .....Ω._.Õ.Yà... */
-	$"0000 00CD 005F 00DD 0159 8800 0000 0000"            /* ...Õ._.›.Yà..... */
-	$"00DD 005F 00ED 0159 8800 0000 0000 00ED"            /* .›._.Ì.Yà......Ì */
-	$"005F 00FD 0159 8800 0000 0000 00FD 005F"            /* ._.˝.Yà......˝._ */
-	$"010D 0159 8800"                                     /* ...Yà. */
-};
-
-data 'DITL' (195) {
-	$"0000 0000 0000 FFFB FFFC 7CFB 7CFC 0000"            /* ......ˇ˚ˇ¸|˚|¸.. */
-};
-
-data 'DITL' (149, "Custom open controls") {
-	$"0009 0000 0000 FFFE 0005 000B 000E 8000"            /* .∆....ˇ˛......Ä. */
-	$"0000 0000 000D 0006 001E 0032 0806 5368"            /* ...........2..Sh */
-	$"6F77 3A20 0000 0000 FFFF 0009 000C 0017"            /* ow: ....ˇˇ.∆.... */
-	$"8000 0000 0000 FFFE 0005 0009 0012 8000"            /* Ä.....ˇ˛...∆..Ä. */
-	$"0000 0000 0003 0000 000A 000D 8000 0000"            /* .........¬..Ä... */
-	$"0000 000D 004D 001D 00DE 0800 0000 0000"            /* .....M...ﬁ...... */
-	$"000E 0034 001B 0048 4002 0385 0000 0000"            /* ...4...H@..Ö.... */
-	$"0000 FF38 0014 FF88 8403 4164 6400 0000"            /* ..ˇ8..ˇàÑ.Add... */
-	$"0000 0000 0003 000C 0012 8000 0000 0000"            /* ..........Ä..... */
-	$"0000 FF38 0014 FF88 8407 5072 6576 6965"            /* ..ˇ8..ˇàÑ.Previe */
-	$"7700"                                               /* w. */
-};
-
-data 'DITL' (135) {
-	$"0015 0000 0000 0002 0003 0016 0017 0000"            /* ................ */
-	$"0000 0000 0002 006D 0016 0081 0000 0000"            /* .......m...Å.... */
-	$"0000 0002 0081 0016 0095 0000 0000 0000"            /* .....Å...ï...... */
-	$"0002 0095 0016 00A9 0000 0000 0000 0002"            /* ...ï...©........ */
-	$"00A9 0016 00BD 0000 0000 0000 0002 00F3"            /* .©...Ω.........Û */
-	$"0016 0107 0000 0000 0000 0002 00C3 0016"            /* .............√.. */
-	$"00D7 0000 0000 0000 0002 00DB 0016 00EF"            /* .◊.........€...Ô */
-	$"0000 0000 0000 0026 0033 07F6 0803 0000"            /* .......&.3.ˆ.... */
-	$"0000 0000 0006 011F 0016 0128 8000 0000"            /* ...........(Ä... */
-	$"0000 0026 001F 07F6 0033 0000 0000 0000"            /* ...&...ˆ.3...... */
-	$"FFFE 028B 000E 02C7 0000 0000 0000 0026"            /* ˇ˛.ã...«.......& */
-	$"000F 07F6 001F 0000 0000 0000 0018 0000"            /* ...ˆ............ */
-	$"0026 07D0 0000 0000 0000 0002 012F 0016"            /* .&.–........./.. */
-	$"0143 0000 0000 0000 0026 0000 07F6 000F"            /* .C.......&...ˆ.. */
-	$"8000 0000 0000 0003 0020 0013 0039 0000"            /* Ä........ ...9.. */
-	$"0000 0000 0003 0043 0013 0056 0000 0000"            /* .......C...V.... */
-	$"0000 0003 0055 0013 0066 0000 0000 0000"            /* .....U...f...... */
-	$"0003 0038 0013 0044 0000 0000 0000 0003"            /* ...8...D........ */
-	$"0020 0013 0066 0000 0000 0000 0018 0000"            /* . ...f.......... */
-	$"0026 0033 8000"                                     /* .&.3Ä. */
-};
-
-data 'DITL' (845) {
-	$"000F 0000 0000 0003 0003 0043 00D1 8000"            /* ...........C.—Ä. */
-	$"0000 0000 0003 0002 0043 000F 8000 0000"            /* .........C..Ä... */
-	$"0000 0046 0002 0086 000F 8000 0000 0000"            /* ...F...Ü..Ä..... */
-	$"0089 0002 00C9 000F 8000 0000 0000 00CC"            /* .â...…..Ä......Ã */
-	$"0002 010C 000F 8000 0000 0000 0046 0003"            /* ......Ä......F.. */
-	$"0086 00D1 8000 0000 0000 0089 0003 00C9"            /* .Ü.—Ä......â...… */
-	$"00D1 8000 0000 0000 00CC 0003 010C 00D1"            /* .—Ä......Ã.....— */
-	$"8000 0000 0000 010F 0002 014F 00D0 8000"            /* Ä..........O.–Ä. */
-	$"0000 0000 010F 0001 014F 000E 8000 0000"            /* .........O..Ä... */
-	$"0000 0152 0001 0192 000E 8000 0000 0000"            /* ...R...í..Ä..... */
-	$"0195 0001 01D5 000E 8000 0000 0000 01D8"            /* .ï...’..Ä......ÿ */
-	$"0001 0218 000E 8000 0000 0000 0152 0002"            /* ......Ä......R.. */
-	$"0192 00D0 8000 0000 0000 0195 0002 01D5"            /* .í.–Ä......ï...’ */
-	$"00D0 8000 0000 0000 01D8 0002 0218 00D0"            /* .–Ä......ÿ.....– */
-	$"8000"                                               /* Ä. */
-};
-
-data 'DITL' (132, "MOD Options") {
-	$"0003 0000 0000 0005 00E1 0019 011B 0402"            /* .........·...... */
-	$"4F4B 0000 0000 0005 0122 0019 015C 0406"            /* OK......."...\.. */
-	$"4361 6E63 656C 0000 0000 0006 0014 0019"            /* Cancel.......... */
-	$"00CE 0702 008D 0000 0000 0020 0000 0021"            /* .Œ...ç..... ...! */
-	$"0168 C002 00C9"                                     /* .h¿..… */
-};
-
-data 'DITL' (177, purgeable) {
-	$"0002 0000 0000 00DC 00FC 00F0 014C 0408"            /* .......‹.¸..L.. */
-	$"436F 6E74 696E 7565 0000 0000 0018 0006"            /* Continue........ */
-	$"00D4 014E 0000 0000 0000 0000 0008 0014"            /* .‘.N............ */
-	$"0110 8822 5265 6164 2074 6869 7320 6265"            /* ..à"Read this be */
-	$"666F 7265 2075 7369 6E67 2074 6869 7320"            /* fore using this  */
-	$"6D75 7369 633A"                                     /* music: */
-};
-
-data 'DITL' (175) {
-	$"0009 0000 0000 00E5 013E 00F9 0178 0402"            /* .∆.....Â.>.˘.x.. */
-	$"4F4B 0000 0000 0106 013E 011A 0178 0404"            /* OK.......>...x.. */
-	$"5175 6974 0000 0000 0107 0016 0117 00FC"            /* Quit...........¸ */
-	$"1000 0000 0000 00A2 0016 00B2 00FC 1000"            /* .......¢...≤.¸.. */
-	$"0000 0000 00F0 0016 0102 012C 8824 5365"            /* ..........,à$Se */
-	$"7269 616C 204E 756D 6265 7220 2869 6E63"            /* rial Number (inc */
-	$"6C75 6465 6420 696E 2079 6F75 7220 4344"            /* luded in your CD */
-	$"293A 0000 0000 008A 0016 009C 006F 8805"            /* ):.....ä...ú.oà. */
-	$"4E61 6D65 3A02 0000 0000 006D 004A 0080"            /* Name:......m.J.Ä */
-	$"0170 8824 506C 6561 7365 2065 6E74 6572"            /* .pà$Please enter */
-	$"2066 6F6C 6C6F 7769 6E67 2069 6E66 6F72"            /*  following infor */
-	$"6D61 7469 6F6E 733A 0000 0000 0000 0000"            /* mations:........ */
-	$"005F 0181 4002 0080 0000 0000 00D5 0016"            /* ._.Å@..Ä.....’.. */
-	$"00E5 00FC 1000 0000 0000 00BE 0016 00D0"            /* .Â.¸.......æ...– */
-	$"0098 880D 4F72 6761 6E69 7A61 7469 6F6E"            /* .òà.Organization */
-	$"3A22"                                               /* :" */
-};
-
-data 'DITL' (2002) {
-	$"000E 0000 0000 0050 0014 0062 00A4 060A"            /* .......P...b.§.¬ */
-	$"4C6F 6F70 206D 7573 6963 0000 0000 003C"            /* Loop music.....< */
-	$"00AB 004E 0130 060F 4C6F 6164 206E 6578"            /* .´.N.0..Load nex */
-	$"7420 6D75 7369 6302 0000 0000 0050 00AB"            /* t music......P.´ */
-	$"0064 0160 0615 4C6F 6164 2061 206D 7573"            /* .d.`..Load a mus */
-	$"6963 2072 616E 646F 6D6C 7902 0000 0000"            /* ic randomly..... */
-	$"0028 0008 0038 00C9 881C 4166 7465 7220"            /* .(...8.…à.After  */
-	$"6861 7669 6E67 2070 6C61 7965 6420 6120"            /* having played a  */
-	$"6D75 7369 633A 0000 0000 0000 0000 0023"            /* music:.........# */
-	$"0103 8000 0000 0000 00BD 0015 00CF 0134"            /* ..Ä......Ω...œ.4 */
-	$"0516 5368 6F77 2072 6561 6C20 4669 6E64"            /* ..Show real Find */
-	$"6572 2069 636F 6E73 0000 0000 003C 0014"            /* er icons.....<.. */
-	$"004E 00A4 060C 5374 6F70 2070 6C61 7969"            /* .N.§..Stop playi */
-	$"6E67 0000 0000 0095 0015 00A7 0150 052A"            /* ng.....ï...ß.P.* */
-	$"4C6F 6164 2066 6972 7374 206D 7573 6963"            /* Load first music */
-	$"2077 6865 6E20 6F70 656E 696E 6720 6120"            /*  when opening a  */
-	$"6D75 7369 6320 6C69 7374 0000 0000 0068"            /* music list.....h */
-	$"0000 0069 0160 C002 0386 0000 0000 006E"            /* ...i.`¿..Ü.....n */
-	$"00DC 007D 00F4 8000 0000 0000 00A9 0015"            /* .‹.}.ÙÄ......©.. */
-	$"00BB 0142 0528 476F 2074 6F20 5374 6172"            /* .ª.B.(Go to Star */
-	$"7475 7020 706F 7369 7469 6F6E 2077 6865"            /* tup position whe */
-	$"6E20 646F 6E65 2070 6C61 7969 6E67 0000"            /* n done playing.. */
-	$"0000 00D1 0015 00E3 0134 0525 4173 6B20"            /* ...—...„.4.%Ask  */
-	$"746F 2073 6176 6520 6D6F 6469 6669 6564"            /* to save modified */
-	$"204D 7573 6963 204C 6973 7420 6669 6C65"            /*  Music List file */
-	$"7302 0000 0000 00E5 0015 00F7 0134 0526"            /* s......Â...˜.4.& */
-	$"4175 746F 6D61 7469 6320 2750 6C61 7927"            /* Automatic 'Play' */
-	$"2061 6674 6572 206F 7065 6E69 6E67 2061"            /*  after opening a */
-	$"206D 7573 6963 0000 0000 006D 0008 007D"            /*  music.....m...} */
-	$"00C9 8814 4D75 7369 6320 4C69 7374 2053"            /* .…à.Music List S */
-	$"6574 7469 6E67 733A 0000 0000 0081 0015"            /* ettings:.....Å.. */
-	$"0093 0135 0524 5265 6D65 6D62 6572 204D"            /* .ì.5.$Remember M */
-	$"7573 6963 204C 6973 7420 666F 7220 6E65"            /* usic List for ne */
-	$"7874 2073 7461 7274 7570"                           /* xt startup */
-};
-
-data 'DITL' (200) {
-	$"0007 0000 0000 0000 0000 005F 0181 C002"            /* ..........._.Å¿. */
-	$"0080 0000 0000 006D 008F 007B 00F2 8000"            /* .Ä.....m.è.{.ÚÄ. */
-	$"0000 0000 00F7 005C 0105 00BC 8000 0000"            /* .....˜.\...ºÄ... */
-	$"0000 0095 005C 00A3 0124 8000 0000 0000"            /* ...ï.\.£.$Ä..... */
-	$"0000 0000 00E4 0181 8000 0000 0000 0100"            /* .....‰.ÅÄ....... */
-	$"001C 0120 00E4 8000 0000 0000 00B0 0188"            /* ... .‰Ä......∞.à */
-	$"00D0 0250 C002 0089 0000 0000 00D0 005C"            /* .–.P¿..â.....–.\ */
-	$"00E2 0124 C002 009C"                                /* .‚.$¿..ú */
-};
-
-data 'DITL' (761) {
-	$"002D 0000 0000 0005 0008 0019 0042 0402"            /* .-...........B.. */
-	$"4F4B 0000 0000 0069 00AC 0077 00DC 8809"            /* OK.....i.¨.w.‹à∆ */
-	$"506C 6179 7468 7275 3A02 0000 0000 0069"            /* Playthru:......i */
-	$"00DC 0077 010B 0804 7472 7565 0000 0000"            /* .‹.w....true.... */
-	$"0069 010F 0076 0123 4002 00C8 0000 0000"            /* .i...v.#@..».... */
-	$"0026 0005 0034 00A1 880C 4175 6469 6F20"            /* .&...4.°à.Audio  */
-	$"496E 5075 743A 0000 0000 0046 0005 0077"            /* InPut:.....F...w */
-	$"007E 0000 0000 0000 0035 0005 0043 004C"            /* .~.......5...C.L */
-	$"080D 536F 756E 6420 4472 6976 6572 3A02"            /* ..Sound Driver:. */
-	$"0000 0000 004D 0081 006D 00A1 8000 0000"            /* .....M.Å.m.°Ä... */
-	$"0000 0047 00BF 0055 00DD 8805 5261 7465"            /* ...G.ø.U.›à.Rate */
-	$"3A02 0000 0000 0036 00C1 0044 00DD 8805"            /* :......6.¡.D.›à. */
-	$"4269 7473 3A02 0000 0000 0036 00DC 0044"            /* Bits:......6.‹.D */
-	$"010B 0801 3802 0000 0000 0036 010F 0043"            /* ....8......6...C */
-	$"0123 4002 00C8 0000 0000 0047 00DC 0055"            /* .#@..».....G.‹.U */
-	$"010B 0808 3434 3130 3020 487A 0000 0000"            /* ....44100 Hz.... */
-	$"0047 010F 0054 0123 4002 00C8 0000 0000"            /* .G...T.#@..».... */
-	$"0021 FFBA 0022 01AE C002 000B 0000 0000"            /* .!ˇ∫.".Æ¿....... */
-	$"0005 00BF 0019 00F9 0406 4361 6E63 656C"            /* ...ø...˘..Cancel */
-	$"0000 0000 007A FFB0 007B 01A4 C002 000B"            /* .....zˇ∞.{.§¿... */
-	$"0000 0000 0096 0008 00AA 0024 0000 0000"            /* .....ñ...™.$.... */
-	$"0000 0096 0031 00AA 004D 0000 0000 0000"            /* ...ñ.1.™.M...... */
-	$"0096 0058 00AA 0074 0000 0000 0000 0096"            /* .ñ.X.™.t.......ñ */
-	$"0080 00AA 009C 0000 0000 0000 0083 0005"            /* .Ä.™.ú.......É.. */
-	$"0093 0029 8805 4E61 6D65 3A02 0000 0000"            /* .ì.)à.Name:..... */
-	$"00AA 0005 00B8 0026 8806 5265 636F 7264"            /* .™...∏.&à.Record */
-	$"0000 0000 00AA 0034 00B8 004A 8804 5374"            /* .....™.4.∏.Jà.St */
-	$"6F70 0000 0000 00AA 0058 00B8 0074 8805"            /* op.....™.X.∏.tà. */
-	$"5061 7573 6502 0000 0000 00AA 0082 00B8"            /* Pause......™.Ç.∏ */
-	$"0097 8804 506C 6179 0000 0000 00BA 0008"            /* .óà.Play.....∫.. */
-	$"00CB 009C 8000 0000 0000 0089 00D1 0097"            /* .À.úÄ......â.—.ó */
-	$"00FD 8809 4176 6169 6C61 626C 6502 0000"            /* .˝à∆Available... */
-	$"0000 00A5 00B3 00B3 00DD 8807 4B42 7974"            /* ...•.≥.≥.›à.KByt */
-	$"6573 3A02 0000 0000 00B7 00D2 00C5 00FD"            /* es:......∑.“.≈.˝ */
-	$"8808 5265 636F 7264 6564 0000 0000 00D3"            /* à.Recorded.....” */
-	$"00B3 00E1 00DD 8807 4B42 7974 6573 3A02"            /* .≥.·.›à.KBytes:. */
-	$"0000 0000 0097 00BE 00A5 00DD 8805 5365"            /* .....ó.æ.•.›à.Se */
-	$"6373 3A02 0000 0000 00C5 00BE 00D3 00DD"            /* cs:......≈.æ.”.› */
-	$"8805 5365 6373 3A02 0000 0000 00A5 00DD"            /* à.Secs:......•.› */
-	$"00B3 0123 8800 0000 0000 0097 00DD 00A5"            /* .≥.#à......ó.›.• */
-	$"0123 8800 0000 0000 00D3 00DD 00E1 0123"            /* .#à......”.›.·.# */
-	$"8800 0000 0000 00C5 00DD 00D3 0123 8800"            /* à......≈.›.”.#à. */
-	$"0000 0000 00CE 0008 00DF 009C 8000 0000"            /* .....Œ...ﬂ.úÄ... */
-	$"0000 0083 002C 0090 009B 1000 0000 0000"            /* ...É.,.ê.õ...... */
-	$"00E2 0008 00EA 009C 8000 0000 0000 0035"            /* .‚...Í.úÄ......5 */
-	$"004F 0043 0093 0808 4275 696C 742D 696E"            /* .O.C.ì..Built-in */
-	$"0000 0000 0035 0095 0042 00A9 4002 00C8"            /* .....5.ï.B.©@..» */
-	$"0000 0000 0058 00BC 0066 00DA 8805 4D6F"            /* .....X.º.f.⁄à.Mo */
-	$"6465 3A02 0000 0000 0058 00DC 0066 010B"            /* de:......X.‹.f.. */
-	$"0804 6D6F 6E6F 0000 0000 0058 010F 0065"            /* ..mono.....X...e */
-	$"0123 4002 00C8 0000 0000 0005 0067 0019"            /* .#@..».......g.. */
-	$"00A1 0406 4164 6420 6974"                           /* .°..Add it */
-};
-
-data 'DITL' (2000) {
-	$"0022 0000 0000 0000 0000 0024 0160 8000"            /* .".........$.`Ä. */
-	$"0000 0000 0025 003C 0035 013B 061A 536F"            /* .....%.<.5.;..So */
-	$"756E 6420 4D61 6E61 6765 7220 782E 7820"            /* und Manager x.x  */
-	$"284D 6163 204F 5329 0000 0000 00D3 0082"            /* (Mac OS).....”.Ç */
-	$"00E8 013E 8000 0000 0000 0079 00B8 0089"            /* .Ë.>Ä......y.∏.â */
-	$"00ED 8800 0000 0000 0037 003C 0047 00F5"            /* .Ìà......7.<.G.ı */
-	$"0615 4D49 4449 204F 7574 7075 7420 2D20"            /* ..MIDI Output -  */
-	$"284F 4D53 2920 3A02 0000 0000 004E 003C"            /* (OMS) :......N.< */
-	$"005E 0086 0606 3131 204B 687A 0000 0000"            /* .^.Ü..11 Khz.... */
-	$"004E 008C 005E 00CF 0606 3232 204B 687A"            /* .N.å.^.œ..22 Khz */
-	$"0000 0000 004E 00DC 005E 0131 0606 3434"            /* .....N.‹.^.1..44 */
-	$"204B 687A 0000 0000 0060 003C 0070 0084"            /*  Khz.....`.<.p.Ñ */
-	$"0606 3820 4269 7473 0000 0000 0060 008C"            /* ..8 Bits.....`.å */
-	$"0070 00D6 0607 3136 2042 6974 7302 0000"            /* .p.÷..16 Bits... */
-	$"0000 0060 00DC 0070 0126 8607 3234 2042"            /* ...`.‹.p.&Ü.24 B */
-	$"6974 7302 0000 0000 00B5 003C 00C5 00B6"            /* its......µ.<.≈.∂ */
-	$"050E 4F76 6572 2053 616D 706C 696E 673A"            /* ..Over Sampling: */
-	$"0000 0000 00B6 00B8 00C5 0118 880E 3939"            /* .....∂.∏.≈..à.99 */
-	$"3920 4B68 7A20 2D20 3230 2078 0000 0000"            /* 9 Khz - 20 x.... */
-	$"00E0 00D8 00F0 013C 8000 0000 0000 008D"            /* .‡.ÿ..<Ä......ç */
-	$"010E 009D 0132 8800 0000 0000 00E0 00AC"            /* ...ù.2à......‡.¨ */
-	$"00ED 00C0 8000 0000 0000 00D0 00D5 00E0"            /* .Ì.¿Ä......–.’.‡ */
-	$"00EC 8000 0000 0000 00D8 0080 00E8 0097"            /* .ÏÄ......ÿ.Ä.Ë.ó */
-	$"8000 0000 0000 0049 0000 004A 0160 C002"            /* Ä......I...J.`¿. */
-	$"0386 0000 0000 0079 003C 0089 00AF 050D"            /* .Ü.....y.<.â.Ø.. */
-	$"5374 6572 656F 2044 656C 6179 3A02 0000"            /* Stereo Delay:... */
-	$"0000 00DC 0055 00ED 0074 8000 0000 0000"            /* ...‹.U.Ì.tÄ..... */
-	$"0025 0002 0035 0036 8807 4472 6976 6572"            /* .%...5.6à.Driver */
-	$"3A02 0000 0000 004E 000A 005E 0033 8805"            /* :......N.¬.^.3à. */
-	$"5261 7465 3A02 0000 0000 0060 000F 0070"            /* Rate:......`...p */
-	$"0033 8805 4269 7473 3A02 0000 0000 00DB"            /* .3à.Bits:......€ */
-	$"002E 00EB 005D 8000 0000 0000 007B 00F2"            /* ...Î.]Ä......{.Ú */
-	$"0088 0106 4002 0384 0000 0000 0074 0000"            /* .à..@..Ñ.....t.. */
-	$"0075 0160 4002 0386 0000 0000 0036 00FB"            /* .u.`@..Ü.....6.˚ */
-	$"0048 0149 0406 5365 7420 5570 0000 0000"            /* .H.I..Set Up.... */
-	$"0079 000A 0089 0033 8805 4D69 7363 3A02"            /* .y.¬.â.3à.Misc:. */
-	$"0000 0000 00A1 003C 00B1 00AB 0508 5375"            /* .....°.<.±.´..Su */
-	$"7272 6F75 6E64 0000 0000 008D 00B8 009D"            /* rround.....ç.∏.ù */
-	$"00ED 8800 0000 0000 008D 003C 009D 009C"            /* .Ìà......ç.<.ù.ú */
-	$"0507 5265 7665 7262 3A02 0000 0000 008F"            /* ..Reverb:......è */
-	$"00F2 009C 0106 4002 0384 0000 0000 008F"            /* .Ú.ú..@..Ñ.....è */
-	$"0134 009C 0148 4002 0384 0000 0000 00B7"            /* .4.ú.H@..Ñ.....∑ */
-	$"011C 00C4 0130 4002 0384"                           /* ...ƒ.0@..Ñ */
-};
-
-data 'DITL' (164, "Custom open INSTRU controls") {
-	$"0001 0000 0000 000C 0008 001C 00A8 0511"            /* .............®.. */
-	$"506C 6179 2077 6865 6E20 636C 6963 6B65"            /* Play when clicke */
-	$"6402 0000 0000 000C 00A8 001C 0148 050E"            /* d........®...H.. */
-	$"5368 6F77 2041 6C6C 2046 696C 6573"                 /* Show All Files */
-};
-
-data 'DITL' (178, purgeable) {
-	$"0020 0000 0000 000C 0146 0020 018A 0402"            /* . .......F. .ä.. */
-	$"4F4B 0000 0000 002D 0148 0041 0188 0406"            /* OK.....-.H.A.à.. */
-	$"4361 6E63 656C 0000 0000 0005 0003 0015"            /* Cancel.......... */
-	$"004E 8807 4865 6164 6572 3A02 0000 0000"            /* .Nà.Header:..... */
-	$"001D 0003 002D 0047 8805 4269 7473 3A02"            /* .....-.Gà.Bits:. */
-	$"0000 0000 0035 0003 0045 0047 8805 4D6F"            /* .....5...E.Gà.Mo */
-	$"6465 3A02 0000 0000 004D 0003 005D 0047"            /* de:......M...].G */
-	$"8805 5479 7065 3A02 0000 0000 007C 0003"            /* à.Type:......|.. */
-	$"008B 0047 8807 4C65 6E67 7468 3A02 0000"            /* .ã.Gà.Length:... */
-	$"0000 001D 0064 002D 00A6 0606 3820 4269"            /* .....d.-.¶..8 Bi */
-	$"7473 0000 0000 001D 00D3 002D 0115 0607"            /* ts.......”.-.... */
-	$"3136 2042 6974 7302 0000 0000 0035 0064"            /* 16 Bits......5.d */
-	$"0045 00A6 0604 4D6F 6E6F 0000 0000 0035"            /* .E.¶..Mono.....5 */
-	$"00D3 0045 0115 0606 5374 6572 656F 0000"            /* .”.E....Stereo.. */
-	$"0000 004D 0064 005D 00A6 0606 5369 676E"            /* ...M.d.].¶..Sign */
-	$"6564 0000 0000 004D 00D3 005D 013F 0608"            /* ed.....M.”.].?.. */
-	$"556E 7369 676E 6564 0000 0000 0065 0003"            /* Unsigned.....e.. */
-	$"0075 004F 8807 436F 6469 6E67 3A02 0000"            /* .u.Oà.Coding:... */
-	$"0000 0065 0064 0075 00D1 060D 4C69 7474"            /* ...e.d.u.—..Litt */
-	$"6C65 2045 6E64 6961 6E02 0000 0000 0065"            /* le Endian......e */
-	$"00D3 0075 013F 060A 4269 6720 456E 6469"            /* .”.u.?.¬Big Endi */
-	$"616E 0000 0000 0005 0064 0015 00C8 1000"            /* an.......d...».. */
-	$"0000 0000 0005 00D3 0015 0107 8805 4279"            /* .......”....à.By */
-	$"7465 7302 0000 0000 007B 0157 008B 018B"            /* tes......{.W.ã.ã */
-	$"8805 4279 7465 7302 0000 0000 007B 00EB"            /* à.Bytes......{.Î */
-	$"008B 014F 1000 0000 0000 00BF 0003 00CF"            /* .ã.O.......ø...œ */
-	$"0046 8808 5072 6576 6965 773A 0000 0000"            /* .Fà.Preview:.... */
-	$"0094 0003 00A3 0047 8805 5261 7465 3A02"            /* .î...£.Gà.Rate:. */
-	$"0000 0000 0094 0098 00A4 00AE 8802 487A"            /* .....î.ò.§.Æà.Hz */
-	$"0000 0000 0094 0064 00A4 0093 1000 0000"            /* .....î.d.§.ì.... */
-	$"0000 00BF 0047 00FF 0192 0000 0000 0000"            /* ...ø.G.ˇ.í...... */
-	$"007B 0064 008B 00BC 060B 456E 6420 4F66"            /* .{.d.ã.º..End Of */
-	$"2046 696C 6502 0000 0000 007B 00D3 008B"            /*  File......{.”.ã */
-	$"00E5 0600 0000 0000 00B2 FFF2 00B3 024A"            /* .Â.......≤ˇÚ.≥.J */
-	$"C002 000B 0000 0000 0096 00B0 00A3 00C4"            /* ¿........ñ.∞.£.ƒ */
-	$"4002 0385 0000 0000 0104 0003 0113 0041"            /* @..Ö...........A */
-	$"8808 4469 7370 6C61 793A 0000 0000 0104"            /* à.Display:...... */
-	$"0047 0114 0111 8800 0000 0000 0104 0115"            /* .G....à......... */
-	$"0113 0192 8800 0000 0000 00DD 0003 00F1"            /* ...íà......›...Ò */
-	$"003D 0404 506C 6179"                                /* .=..Play */
-};
-
-data 'DITL' (163) {
-	$"0008 0000 0000 0004 0007 0014 012D 8000"            /* .............-Ä. */
-	$"0000 0000 0017 0007 0028 0080 8811 4B42"            /* .........(.Äà.KB */
-	$"7974 6573 2067 656E 6572 6174 6564 3A00"            /* ytes generated:. */
-	$"0000 0000 0017 0080 0028 012C 8800 0000"            /* .......Ä.(.,à... */
-	$"0000 003F 0007 004F 0069 880D 456C 6170"            /* ...?...O.ià.Elap */
-	$"7365 6420 7469 6D65 3A02 0000 0000 003F"            /* sed time:......? */
-	$"00B9 004F 012D 8800 0000 0000 0053 0007"            /* .π.O.-à......S.. */
-	$"0063 00B9 8819 4573 7469 6D61 7465 6420"            /* .c.πà.Estimated  */
-	$"7265 6D61 696E 696E 6720 7469 6D65 3A02"            /* remaining time:. */
-	$"0000 0000 0053 00B5 0063 012D 8800 0000"            /* .....S.µ.c.-à... */
-	$"0000 002B 0007 003B 006A 880B 5468 726F"            /* ...+...;.jà.Thro */
-	$"7567 6870 7574 3A02 0000 0000 002B 007A"            /* ughput:......+.z */
-	$"003B 012D 8800"                                     /* .;.-à. */
-};
-
-data 'DITL' (136) {
-	$"0008 0000 0000 0018 00EB 002C 0125 0404"            /* .........Î.,.%.. */
-	$"5361 7665 0000 0000 0034 00EB 0048 0125"            /* Save.....4.Î.H.% */
-	$"0406 4361 6E63 656C 0000 0000 0002 0003"            /* ..Cancel........ */
-	$"0012 0100 881E 5361 7665 2063 7572 7265"            /* ....à.Save curre */
-	$"6E74 2077 696E 646F 7773 2073 7461 7465"            /* nt windows state */
-	$"2069 6E3A 0000 0000 0036 003F 0046 00DB"            /*  in:.....6.?.F.€ */
-	$"1000 0000 0000 0036 0008 0046 0039 8805"            /* .......6...F.9à. */
-	$"4E61 6D65 3A02 0000 0000 001E 0008 002E"            /* Name:........... */
-	$"0023 8803 4944 3A02 0000 0000 001E 003F"            /* .#à.ID:........? */
-	$"002E 0053 8801 3002 0000 0000 001F 0055"            /* ...Sà.0........U */
-	$"002C 0069 4002 0384 0000 0000 0051 0006"            /* .,.i@..Ñ.....Q.. */
-	$"0065 013A 882A 4469 7265 6374 2073 6176"            /* .e.:à*Direct sav */
-	$"696E 6720 6279 2070 7265 7373 696E 6720"            /* ing by pressing  */
-	$"3A20 4374 726C 202B 2020 1120 2B20 4944"            /* : Ctrl +  . + ID */
-};
-
-data 'DITL' (138) {
-	$"0006 0000 0000 0045 0109 0059 0143 0405"            /* .......E.∆.Y.C.. */
-	$"5265 7365 7402 0000 0000 0046 00BE 005A"            /* Reset......F.æ.Z */
-	$"00F8 0406 4361 6E63 656C 0000 0000 0016"            /* .¯..Cancel...... */
-	$"0053 0028 0174 0521 4465 6C65 7465 2061"            /* .S.(.t.!Delete a */
-	$"6C6C 2070 6174 7465 726E 7320 616E 6420"            /* ll patterns and  */
-	$"7061 7274 6974 696F 6E02 0000 0000 0002"            /* partition....... */
-	$"0003 0012 004E 8808 446F 2074 6869 733A"            /* .....Nà.Do this: */
-	$"0000 0000 002B 0053 003D 0174 0520 4465"            /* .....+.S.=.t. De */
-	$"6C65 7465 2061 6C6C 2069 6E73 7472 756D"            /* lete all instrum */
-	$"656E 7473 2026 2073 616D 706C 6573 0000"            /* ents & samples.. */
-	$"0000 0001 0053 0013 0174 0512 5075 7267"            /* .....S...t..Purg */
-	$"6520 616C 6C20 7061 7474 6572 6E73 0000"            /* e all patterns.. */
-	$"0000 0062 0002 0075 014E 8831 5761 726E"            /* ...b...u.Nà1Warn */
-	$"696E 673A 2059 6F75 2077 696C 6C20 6E6F"            /* ing: You will no */
-	$"7420 6265 2061 626C 6520 746F 2075 6E64"            /* t be able to und */
-	$"6F20 7468 6973 2072 6573 6574 2100"                 /* o this reset!. */
-};
-
-data 'DITL' (139) {
-	$"0027 0000 0000 0038 0015 13C0 139D 0000"            /* .'.....8...¿.ù.. */
-	$"0000 0000 0002 005B 0016 006F 0000 0000"            /* .......[...o.... */
-	$"0000 0002 0021 0016 0035 0000 0000 0000"            /* .....!...5...... */
-	$"0002 003E 0016 0052 0000 0000 0000 002B"            /* ...>...R.......+ */
-	$"0000 0038 03E8 0000 0000 0000 0002 0004"            /* ...8.Ë.......... */
-	$"0016 0018 0000 0000 0000 0002 0078 0016"            /* .............x.. */
-	$"008C 0000 0000 0000 0002 00CF 0016 00E3"            /* .å.........œ...„ */
-	$"0000 0000 0000 0038 0000 0420 0015 0000"            /* .......8... .... */
-	$"0000 0000 0002 0126 0016 013A 0000 0000"            /* .......&...:.... */
-	$"0000 0002 0095 0016 00A9 0000 0000 0000"            /* .....ï...©...... */
-	$"0002 00B2 0016 00C6 0000 0000 0000 0002"            /* ...≤...∆........ */
-	$"00EC 0016 0100 0000 0000 0000 0002 0109"            /* .Ï.............∆ */
-	$"0016 011D 0000 0000 0000 0004 01C7 0014"            /* .............«.. */
-	$"01E2 8000 0000 0000 0004 01E3 0014 01FC"            /* .‚Ä........„...¸ */
-	$"0000 0000 0000 001B 004D 0028 0061 4002"            /* .........M.(.a@. */
-	$"00C8 0000 0000 001A 0176 002A 01A1 0404"            /* .».......v.*.°.. */
-	$"4669 6C6C 0000 0000 0004 015A 0014 017E"            /* Fill.......Z...~ */
-	$"8805 5374 6570 3A02 0000 0000 0004 017D"            /* à.Step:........} */
-	$"0014 018A 0801 3122 0000 0000 0005 018C"            /* ...ä..1".......å */
-	$"0012 01A0 4002 00C8 0000 0000 0018 FFFF"            /* ...†@..»......ˇˇ */
-	$"0019 07CF C002 0089 0000 0000 0002 0143"            /* ...œ¿..â.......C */
-	$"0016 0157 0000 0000 0000 0004 022C 0014"            /* ...W.........,.. */
-	$"0245 8000 0000 0000 0004 0282 0014 029F"            /* .EÄ........Ç...ü */
-	$"8000 0000 0000 0004 02E1 0014 02FD 8000"            /* Ä........·...˝Ä. */
-	$"0000 0000 0004 0246 0014 0255 0000 0000"            /* .......F...U.... */
-	$"0000 0004 02A1 0014 02B5 0000 0000 0000"            /* .....°...µ...... */
-	$"0004 02FC 0014 030F 0000 0000 0000 001B"            /* ...¸............ */
-	$"015B 0028 016F 4002 00C8 0000 0000 001B"            /* .[.(.o@..»...... */
-	$"00FF 0028 0113 4002 00C8 0000 0000 001B"            /* .ˇ.(..@..»...... */
-	$"00A1 0028 00B5 4002 00C8 0000 0000 0018"            /* .°.(.µ@..»...... */
-	$"0173 002C 0174 C002 0089 0000 0000 0018"            /* .s.,.t¿..â...... */
-	$"00B7 002C 00B8 C002 0089 0000 0000 0018"            /* .∑.,.∏¿..â...... */
-	$"0116 002C 0117 C002 0089 0000 0000 0018"            /* ...,..¿..â...... */
-	$"0064 002C 0065 C002 0089 0000 0000 001A"            /* .d.,.e¿..â...... */
-	$"0066 002A 009F 0000 0000 0000 001A 00BB"            /* .f.*.ü.........ª */
-	$"002A 00FD 0000 0000 0000 001A 011A 002A"            /* .*.˝...........* */
-	$"0159 0000 0000 0000 001A 0003 002A 004A"            /* .Y...........*.J */
-	$"0000"                                               /* .. */
-};
-
-data 'DITL' (319) {
-	$"0025 0000 0000 008A 0158 009E 0192 0402"            /* .%.....ä.X.û.í.. */
-	$"4F4B 0000 0000 00A6 0158 00BA 0192 0406"            /* OK.....¶.X.∫.í.. */
-	$"4361 6E63 656C 0000 0000 002F 015B 003F"            /* Cancel...../.[.? */
-	$"019E 0606 3438 204B 687A 0000 0000 00C2"            /* .û..48 Khz.....¬ */
-	$"00BC 00D2 011C 8800 0000 0000 0121 0084"            /* .º.“..à......!.Ñ */
-	$"0131 00C2 8000 0000 0000 0013 00CF 0023"            /* .1.¬Ä........œ.# */
-	$"01D6 0800 0000 0000 006A 0033 007A 0062"            /* .÷.......j.3.z.b */
-	$"8805 4D6F 6465 3A02 0000 0000 0086 00BC"            /* à.Mode:......Ü.º */
-	$"0096 00F1 8800 0000 0000 002F 0062 003F"            /* .ñ.Òà....../.b.? */
-	$"00AC 0606 3131 204B 687A 0000 0000 002F"            /* .¨..11 Khz...../ */
-	$"00B2 003F 00F5 0606 3232 204B 687A 0000"            /* .≤.?.ı..22 Khz.. */
-	$"0000 002F 0102 003F 0157 0606 3434 204B"            /* .../...?.W..44 K */
-	$"687A 0000 0000 0041 0062 0051 00AA 0606"            /* hz.....A.b.Q.™.. */
-	$"3820 4269 7473 0000 0000 0041 00B2 0051"            /* 8 Bits.....A.≤.Q */
-	$"00FC 0607 3136 2042 6974 7302 0000 0000"            /* .¸..16 Bits..... */
-	$"0041 0102 0051 014C 8607 3234 2042 6974"            /* .A...Q.LÜ.24 Bit */
-	$"7302 0000 0000 0014 00B5 0021 00C9 4002"            /* s........µ.!.…@. */
-	$"0385 0000 0000 006A 00B2 007A 00FA 0606"            /* .Ö.....j.≤.z.˙.. */
-	$"5374 6572 656F 0000 0000 006A 0062 007A"            /* Stereo.....j.b.z */
-	$"00A9 0604 4D6F 6E6F 0000 0000 009A 0110"            /* .©..Mono.....ö.. */
-	$"00AA 0134 8800 0000 0000 0086 003C 0096"            /* .™.4à......Ü.<.ñ */
-	$"00A4 050D 5374 6572 656F 2044 656C 6179"            /* .§..Stereo Delay */
-	$"3A02 0000 0000 00C3 011E 00D0 0132 4002"            /* :......√...–.2@. */
-	$"0385 0000 0000 002F 0039 003F 0062 8805"            /* .Ö...../.9.?.bà. */
-	$"5261 7465 3A02 0000 0000 0041 003E 0051"            /* Rate:......A.>.Q */
-	$"0062 8805 4269 7473 3A02 0000 0000 00C2"            /* .bà.Bits:......¬ */
-	$"003C 00D2 00B7 050E 4F76 6572 2053 616D"            /* .<.“.∑..Over Sam */
-	$"706C 696E 673A 0000 0000 0088 00F4 0095"            /* pling:.....à.Ù.ï */
-	$"0108 4002 0385 0000 0000 0026 FFE2 0027"            /* ..@..Ö.....&ˇ‚.' */
-	$"0221 4002 0386 0000 0000 0086 000E 0096"            /* .!@..Ü.....Ü...ñ */
-	$"0037 8805 4D69 7363 3A02 0000 0000 00AE"            /* .7à.Misc:......Æ */
-	$"003C 00BE 00AB 0508 5375 7272 6F75 6E64"            /* .<.æ.´..Surround */
-	$"0000 0000 009A 00BC 00AA 00F1 8800 0000"            /* .....ö.º.™.Òà... */
-	$"0000 009A 003C 00AA 0087 0507 5265 7665"            /* ...ö.<.™.á..Reve */
-	$"7262 3A02 0000 0000 009C 00F4 00A9 0108"            /* rb:......ú.Ù.©.. */
-	$"4002 0385 0000 0000 009C 0136 00A9 014A"            /* @..Ö.....ú.6.©.J */
-	$"4002 0385 0000 0000 0057 0062 0064 0076"            /* @..Ö.....W.b.d.v */
-	$"4002 0385 0000 0000 0055 0003 0065 0062"            /* @..Ö.....U...e.b */
-	$"880C 436F 6D70 7265 7373 696F 6E3A 0000"            /* à.Compression:.. */
-	$"0000 0055 007F 0065 0169 0800 0000 0000"            /* ...U...e.i...... */
-	$"0081 FFE2 0082 0221 4002 0386 0000 0000"            /* .Åˇ‚.Ç.!@..Ü.... */
-	$"0001 001B 0011 0062 880A 5365 6C65 6374"            /* .......bà¬Select */
-	$"696F 6E3A 0000 0000 0001 0062 0011 00D0"            /* ion:.......b...– */
-	$"060C 456E 7469 7265 204D 7573 6963 0000"            /* ..Entire Music.. */
-	$"0000 0013 0062 0023 00B1 0608 5061 7474"            /* .....b.#.±..Patt */
-	$"6572 6E3A"                                          /* ern: */
-};
-
-data 'DITL' (2006) {
-	$"001F 0000 0000 003C 001E 004C 007F 050A"            /* .......<...L...¬ */
-	$"496E 7374 7275 6D65 6E74 0000 0000 0050"            /* Instrument.....P */
-	$"001E 0060 0057 0504 4E6F 7465 0000 0000"            /* ...`.W..Note.... */
-	$"003C 0096 004C 00D7 0506 4566 6665 6374"            /* .<.ñ.L.◊..Effect */
-	$"0000 0000 0050 0096 0060 00EB 0508 4172"            /* .....P.ñ.`.Î..Ar */
-	$"6775 6D65 6E74 0000 0000 0028 000A 0038"            /* gument.....(.¬.8 */
-	$"0088 0812 4365 6C6C 2069 6E66 6F72 6D61"            /* .à..Cell informa */
-	$"7469 6F6E 733A 0000 0000 003C 0104 004C"            /* tions:.....<...L */
-	$"0151 0506 566F 6C75 6D65 0000 0000 0064"            /* .Q..Volume.....d */
-	$"0000 0065 0160 C002 0386 0000 0000 006E"            /* ...e.`¿..Ü.....n */
-	$"001E 007E 006A 0508 4D61 726B 6572 733A"            /* ...~.j..Markers: */
-	$"0000 0000 006E 0078 007E 00A6 8807 4F66"            /* .....n.x.~.¶à.Of */
-	$"6673 6574 3A02 0000 0000 006E 0118 007E"            /* fset:......n...~ */
-	$"014A 1000 0000 0000 006E 00F0 007E 0115"            /* .J.......n..~.. */
-	$"8805 4C6F 6F70 3A02 0000 0000 006E 00AA"            /* à.Loop:......n.™ */
-	$"007E 00DC 1000 0000 0000 009D 0000 009E"            /* .~.‹.......ù...û */
-	$"0160 C002 0386 0000 0000 0085 00AA 0095"            /* .`¿..Ü.....Ö.™.ï */
-	$"00DC 0000 0000 0000 00A4 000A 00B4 00E2"            /* .‹.......§.¬.¥.‚ */
-	$"881A 506F 702D 7570 206B 6579 733A 206D"            /* à.Pop-up keys: m */
-	$"6F75 7365 2063 6C69 636B 202B 0000 0000"            /* ouse click +.... */
-	$"00B8 001E 00C8 007F 0507 636F 6E74 726F"            /* .∏...»....contro */
-	$"6C02 0000 0000 00CC 001E 00DC 0057 0505"            /* l......Ã...‹.W.. */
-	$"7368 6966 7402 0000 0000 00B8 0096 00C8"            /* shift......∏.ñ.» */
-	$"00EB 0507 636F 6D6D 616E 6402 0000 0000"            /* .Î..command..... */
-	$"00CC 0096 00DC 00E3 0506 6F70 7469 6F6E"            /* .Ã.ñ.‹.„..option */
-	$"0000 0000 00E6 0000 00E7 0160 C002 0386"            /* .....Ê...Á.`¿..Ü */
-	$"0000 0000 00EC 000A 00FC 0062 880D 4C69"            /* .....Ï.¬.¸.bà.Li */
-	$"6E65 7320 6865 6967 6874 3A02 0000 0000"            /* nes height:..... */
-	$"00EC 0096 00FC 00DA 0606 4E6F 726D 616C"            /* .Ï.ñ.¸.⁄..Normal */
-	$"0000 0000 00EC 00F8 00FC 0137 0605 536D"            /* .....Ï.¯.¸.7..Sm */
-	$"616C 6C02 0000 0000 00BE 00F0 00CE 015B"            /* all......æ..Œ.[ */
-	$"8000 0000 0000 0086 0079 0096 00A4 8806"            /* Ä......Ü.y.ñ.§à. */
-	$"436F 6C6F 723A 0000 0000 0128 0000 0129"            /* Color:.....(...) */
-	$"0160 C002 0386 0000 0000 0101 00F8 0111"            /* .`¿..Ü.......¯.. */
-	$"0137 0603 4F66 6602 0000 0000 0101 0096"            /* .7..Off........ñ */
-	$"0111 00DA 0602 4F6E 0000 0000 0101 000A"            /* ...⁄..On.......¬ */
-	$"0111 0062 880C 4D75 7369 6320 5472 6163"            /* ...bà.Music Trac */
-	$"653A 0000 0000 0116 0096 0126 00DA 0604"            /* e:.......ñ.&.⁄.. */
-	$"4C6F 6F70 0000 0000 0116 00F8 0126 0163"            /* Loop.......¯.&.c */
-	$"0609 5061 7274 6974 696F 6E00 0000 0000"            /* .∆Partition..... */
-	$"0116 000A 0126 008B 8811 5061 7474 6572"            /* ...¬.&.ãà.Patter */
-	$"6E20 5772 6170 7069 6E67 3A02"                      /* n Wrapping:. */
-};
-
-data 'DITL' (2009) {
-	$"000A 0000 0000 0000 0000 0024 0160 8000"            /* .¬.........$.`Ä. */
-	$"0000 0000 0045 008B 0059 00D9 0406 5365"            /* .....E.ã.Y.Ÿ..Se */
-	$"7420 5570 0000 0000 0073 001C 0085 00F5"            /* t Up.....s...Ö.ı */
-	$"051C 4D49 4449 2043 6861 6E6E 656C 202D"            /* ..MIDI Channel - */
-	$"3E20 496E 7320 2620 5472 6163 6B73 0000"            /* > Ins & Tracks.. */
-	$"0000 0087 001C 0099 00F5 0517 4D49 4449"            /* ...á...ô.ı..MIDI */
-	$"2056 656C 6F63 6974 7920 2D3E 2056 6F6C"            /*  Velocity -> Vol */
-	$"756D 6502 0000 0000 009B 001C 00AD 010A"            /* ume......õ...≠.¬ */
-	$"0521 5573 6520 4520 2620 4420 4566 6665"            /* .!Use E & D Effe */
-	$"6374 2066 6F72 2070 6F73 6974 696F 6E6E"            /* ct for positionn */
-	$"696E 6702 0000 0000 0046 000A 0057 008A"            /* ing......F.¬.W.ä */
-	$"050E 5573 6520 4D49 4449 2049 6E70 7574"            /* ..Use MIDI Input */
-	$"0000 0000 0027 0007 0039 00A2 8814 4D49"            /* .....'...9.¢à.MI */
-	$"4449 2049 6E70 7574 202D 2028 4F4D 5329"            /* DI Input - (OMS) */
-	$"203A 0000 0000 005D 001C 006F 008E 8810"            /*  :.....]...o.éà. */
-	$"4E6F 7465 2043 6F6E 7665 7273 696F 6E3A"            /* Note Conversion: */
-	$"0000 0000 0025 00AB 0039 00FB 8000 0000"            /* .....%.´.9.˚Ä... */
-	$"0000 00BF 000A 00D0 0116 0524 5365 6E64"            /* ...ø.¬.–...$Send */
-	$"204D 4944 4920 5469 6D69 6E67 2043 6C6F"            /*  MIDI Timing Clo */
-	$"636B 2028 4D49 4449 204F 7574 7075 7429"            /* ck (MIDI Output) */
-	$"0000 0000 00D6 008B 00EA 00D9 0406 5365"            /* .....÷.ã.Í.Ÿ..Se */
-	$"7420 5570"                                          /* t Up */
-};
-
-data 'DITL' (130) {
-	$"000B 0000 0000 0119 0005 012D 0058 0408"            /* ...........-.X.. */
-	$"436F 6E74 696E 7565 0000 0000 005A 0003"            /* Continue.....Z.. */
-	$"008A 0106 8802 5E30 0000 0000 0048 0003"            /* .ä..à.^0.....H.. */
-	$"0058 0070 880C 4465 7363 7269 7074 696F"            /* .X.pà.Descriptio */
-	$"6E3A 0000 0000 0000 0018 0035 00F6 884B"            /* n:.........5.ˆàK */
-	$"4641 5441 4C20 4552 524F 5220 210D 436F"            /* FATAL ERROR !.Co */
-	$"6E74 6163 7420 7468 6520 6175 7468 6F72"            /* ntact the author */
-	$"2C20 706C 6561 7365 2C20 7769 7468 2074"            /* , please, with t */
-	$"6865 2066 6F6C 6C6F 7769 6E67 2069 6E66"            /* he following inf */
-	$"6F72 6D61 7469 6F6E 7320 3A02 0000 0000"            /* ormations :..... */
-	$"0119 005C 012D 00AF 0408 4465 6275 6767"            /* ...\.-.Ø..Debugg */
-	$"6572 0000 0000 0119 00B1 012D 0104 0404"            /* er.......±.-.... */
-	$"4578 6974 0000 0000 00A3 0004 00B5 0108"            /* Exit.....£...µ.. */
-	$"8802 5E31 0000 0000 0091 0004 00A1 0071"            /* à.^1.....ë...°.q */
-	$"880C 536F 7572 6365 2043 6F64 653A 0000"            /* à.Source Code:.. */
-	$"0000 00D1 0004 00E3 0108 8802 5E32 0000"            /* ...—...„..à.^2.. */
-	$"0000 00BF 0004 00CF 0071 8808 4C69 6E65"            /* ...ø...œ.qà.Line */
-	$"204E 6F3A 0000 0000 0100 0004 0112 0108"            /*  No:............ */
-	$"8802 5E33 0000 0000 00EE 0004 00FE 0097"            /* à.^3.....Ó...˛.ó */
-	$"8811 436F 6D70 696C 6174 696F 6E20 6461"            /* à.Compilation da */
-	$"7465 3A19"                                          /* te:. */
-};
-
-data 'DITL' (2001) {
-	$"001B 0000 0000 00AA 0052 00BC 00F3 8816"            /* .......™.R.º.Ûà. */
-	$"4375 7272 656E 7420 4F63 7461 7665 206F"            /* Current Octave o */
-	$"6666 7365 743A 0000 0000 004B 0058 005D"            /* ffset:.....K.X.] */
-	$"00F8 0510 5573 6520 4D61 6320 4B65 7962"            /* .¯..Use Mac Keyb */
-	$"6F61 7264 0000 0000 0092 00E0 00A4 0164"            /* oard.....í.‡.§.d */
-	$"050F 4F63 7461 7665 7320 6D61 726B 6572"            /* ..Octaves marker */
-	$"7302 0000 0000 0077 0111 0089 0149 0604"            /* s......w...â.I.. */
-	$"5374 6F70 0000 0000 0000 0000 0024 0160"            /* Stop.........$.` */
-	$"8000 0000 0000 0028 0005 00C3 0050 0000"            /* Ä......(...√.P.. */
-	$"0000 0000 0077 00B7 0089 0101 0607 4B65"            /* .....w.∑.â....Ke */
-	$"7920 4F46 4602 0000 0000 0028 0052 0048"            /* y OFF......(.R.H */
-	$"0137 882E 5072 6573 7320 6F6E 2079 6F75"            /* .7à.Press on you */
-	$"7220 4D61 6320 6B65 7962 6F61 7264 2074"            /* r Mac keyboard t */
-	$"6F20 6368 616E 6765 2073 6574 7469 6E67"            /* o change setting */
-	$"732E 0000 0000 0092 007F 00A4 00E0 050B"            /* s......í...§.‡.. */
-	$"536D 616C 6C20 5069 616E 6F02 0000 0000"            /* Small Piano..... */
-	$"00AA 00FA 00BC 0148 8800 0000 0000 008D"            /* .™.˙.º.Hà......ç */
-	$"0052 008E 015B C002 0386 0000 0000 0062"            /* .R.é.[¿..Ü.....b */
-	$"0052 0074 00B4 880C 5768 656E 206B 6579"            /* .R.t.¥à.When key */
-	$"2055 503A 0000 0000 0077 0058 0089 00A2"            /*  UP:.....w.X.â.¢ */
-	$"0607 4E6F 7468 696E 6702 0000 0000 0102"            /* ..Nothing....... */
-	$"0057 0114 00DB 0610 4F6E 2043 7572 7265"            /* .W...€..On Curre */
-	$"6E74 2074 7261 636B 0000 0000 0093 0052"            /* nt track.....ì.R */
-	$"00A5 007F 8805 5669 6577 3A02 0000 0000"            /* .•..à.View:..... */
-	$"0102 0015 010E 0032 8000 0000 0000 00F1"            /* .......2Ä......Ò */
-	$"FFC8 0105 0050 8000 0000 0000 00FE 001E"            /* ˇ»...PÄ......˛.. */
-	$"010E 004C 8000 0000 0000 00C9 00F2 012B"            /* ...LÄ......….Ú.+ */
-	$"015A 0000 0000 0000 0100 002A 0114 0046"            /* .Z.........*...F */
-	$"8000 0000 0000 00C6 0005 00EA 0055 8815"            /* Ä......∆...Í.Uà. */
-	$"506C 6179 696E 6720 2620 5265 636F 7264"            /* Playing & Record */
-	$"696E 6720 3A02 0000 0000 00DA 0057 00EC"            /* ing :......⁄.W.Ï */
-	$"00A8 0609 4F6E 2074 7261 636B 3A02 0000"            /* .®.∆On track:... */
-	$"0000 00DD 00BC 00EA 00D0 4002 00C8 0000"            /* ...›.º.Í.–@..».. */
-	$"0000 00DB 00A9 00EB 00BC 8802 3233 0000"            /* ...€.©.Î.ºà.23.. */
-	$"0000 00EE 0057 0100 00C5 060D 4F6E 2061"            /* ...Ó.W...≈..On a */
-	$"6C6C 2074 7261 636B 7302 0000 0000 005E"            /* ll tracks......^ */
-	$"0051 005F 015B C002 0386 0000 0000 00C3"            /* .Q._.[¿..Ü.....√ */
-	$"0050 00C4 015B C002 0386 0000 0000 00C6"            /* .P.ƒ.[¿..Ü.....∆ */
-	$"0057 00D8 00F0 0614 4F6E 2066 6F6C 6C6F"            /* .W.ÿ...On follo */
-	$"7769 6E67 2074 7261 636B 733A"                      /* wing tracks: */
-};
-
-data 'DITL' (145) {
-	$"0006 0000 0000 0000 001A 0064 07EA 0000"            /* ...........d.Í.. */
-	$"0000 0000 007B FFB8 008B 0594 0702 0088"            /* .....{ˇ∏.ã.î...à */
-	$"0000 0000 003C 0019 005C 07E9 0000 0000"            /* .....<...\.È.... */
-	$"0000 0021 0003 002B 0017 0000 0000 0000"            /* ...!...+........ */
-	$"0001 0003 0015 0017 0000 0000 0000 0030"            /* ...............0 */
-	$"0000 003F 001A 8000 0000 0000 0016 0003"            /* ...?..Ä......... */
-	$"0020 0017 0000"                                     /* . .... */
-};
-
-data 'DITL' (816) {
-	$"000B 0000 0000 0025 0008 07F5 02C4 0000"            /* .......%...ı.ƒ.. */
-	$"0000 0000 0018 0008 0024 0024 8803 506F"            /* .........$.$à.Po */
-	$"7302 0000 0000 0008 00D8 001C 00F8 0000"            /* s........ÿ...¯.. */
-	$"0000 0000 0008 0114 001C 0128 0000 0000"            /* ...........(.... */
-	$"0000 0025 0026 07F5 0032 0000 0000 0000"            /* ...%.&.ı.2...... */
-	$"0025 FFFF 07F5 0007 0000 0000 0000 0002"            /* .%ˇˇ.ı.......... */
-	$"0038 0016 004C 0000 0000 0000 0018 0034"            /* .8...L.........4 */
-	$"0024 0050 8802 4944 0000 0000 0018 0050"            /* .$.Pà.ID.......P */
-	$"0023 00AC 8804 4E61 6D65 0000 0000 FFF9"            /* .#.¨à.Name....ˇ˘ */
-	$"004F 0019 006F 0000 0000 0000 0002 0004"            /* .O...o.......... */
-	$"0016 0018 0000 0000 0000 0002 001E 0016"            /* ................ */
-	$"0032 0000"                                          /* .2.. */
-};
-
-data 'DITL' (180, purgeable) {
-	$"001F 0000 0000 0047 0025 0056 003E 0805"            /* .......G.%.V.>.. */
-	$"5369 7A65 3A02 0000 0000 0021 00DA 0041"            /* Size:......!.⁄.A */
-	$"00FA 0000 0000 0000 008B 0001 1413 1389"            /* .˙.......ã.....â */
-	$"0000 0000 0000 0047 003E 0056 0097 0800"            /* .......G.>.V.ó.. */
-	$"0000 0000 0038 0012 0047 003E 0809 4475"            /* .....8...G.>.∆Du */
-	$"7261 7469 6F6E 3A02 0000 0000 001B 0005"            /* ration:......... */
-	$"002A 003E 080B 536F 756E 6420 5479 7065"            /* .*.>..Sound Type */
-	$"3A02 0000 0000 0038 003E 0047 00A6 0800"            /* :......8.>.G.¶.. */
-	$"0000 0000 001B 003E 002A 00D6 0800 0000"            /* .......>.*.÷.... */
-	$"0000 0041 00AC 004E 0129 0000 0000 0000"            /* ...A.¨.N.)...... */
-	$"002A 0002 0039 003E 080B 436F 6D70 7265"            /* .*...9.>..Compre */
-	$"7373 6F72 3A02 0000 0000 002A 003E 0039"            /* ssor:......*.>.9 */
-	$"00D3 0800 0000 0000 0002 0008 0016 001C"            /* .”.............. */
-	$"0000 0000 0000 0060 0005 006E 0028 0807"            /* .......`...n.(.. */
-	$"4C65 7665 6C73 3A02 0000 0000 0069 0083"            /* Levels:......i.É */
-	$"0078 00A6 0807 5472 6562 6C65 3A02 0000"            /* .x.¶..Treble:... */
-	$"0000 005A 008B 0069 00A6 0805 4261 7373"            /* ...Z.ã.i.¶..Bass */
-	$"3A02 0000 0000 0069 00C2 0077 0112 0000"            /* :......i.¬.w.... */
-	$"0000 0000 005A 00C2 0068 0112 0000 0000"            /* .....Z.¬.h...... */
-	$"0000 0069 00A7 0078 00C1 0800 0000 0000"            /* ...i.ß.x.¡...... */
-	$"005A 00A7 0069 00C1 0800 0000 0000 0002"            /* .Z.ß.i.¡........ */
-	$"0026 0016 003A 0000 0000 0000 0079 0114"            /* .&...:.......y.. */
-	$"0088 0128 0000 0000 0000 005B 002A 0065"            /* .à.(.......[.*.e */
-	$"007A 0000 0000 0000 006A 002A 0074 007A"            /* .z.......j.*.t.z */
-	$"0000 0000 0000 0069 0114 0078 0128 0000"            /* .......i...x.(.. */
-	$"0000 0000 005A 0114 0069 0128 0000 0000"            /* .....Z...i.(.... */
-	$"0000 0079 007E 0088 00A6 0808 4261 6C61"            /* ...y.~.à.¶..Bala */
-	$"6E63 653A 0000 0000 0079 00C2 0089 0112"            /* nce:.....y.¬.â.. */
-	$"0000 0000 0000 0077 0002 0086 0028 0807"            /* .......w...Ü.(.. */
-	$"566F 6C75 6D65 3A00 0000 0000 0079 002A"            /* Volume:......y.* */
-	$"0083 007A 0000 0000 0000 0079 00A7 0088"            /* .É.z.......y.ß.à */
-	$"00C1 0800 0000 0000 0018 FFD5 0019 0F75"            /* .¡........ˇ’...u */
-	$"C002 0089 0000 0000 0056 FFD0 0057 0F70"            /* ¿..â.....Vˇ–.W.p */
-	$"C002 0089"                                          /* ¿..â */
-};
-
-data 'DITL' (872) {
-	$"0001 0000 0000 0151 00BF 0166 01A5 0000"            /* .......Q.ø.f.•.. */
-	$"0000 0000 0000 0000 01AB 01D9 C002 0084"            /* .........´.Ÿ¿..Ñ */
-};
-
-data 'DITL' (181, purgeable) {
-	$"000B 0000 0000 000B 0154 001F 0198 0402"            /* .........T...ò.. */
-	$"4F4B 0000 0000 002D 0156 0041 0196 0406"            /* OK.....-.V.A.ñ.. */
-	$"4361 6E63 656C 0000 0000 005B 0156 006F"            /* Cancel.....[.V.o */
-	$"0196 0403 4164 6402 0000 0000 007E 0156"            /* .ñ..Add......~.V */
-	$"0092 0196 0406 5265 6D6F 7665 0000 0000"            /* .í.ñ..Remove.... */
-	$"00DF 0045 00EC 0147 900C 4465 7363 7269"            /* .ﬂ.E.Ï.Gê.Descri */
-	$"7074 696F 6E3A 0000 0000 00F5 0045 0102"            /* ption:.....ı.E.. */
-	$"0147 9004 5445 5854 0000 0000 00F5 0028"            /* .Gê.TEXT.....ı.( */
-	$"0102 003F 8804 5552 4C3A 0000 0000 00DF"            /* ...?à.URL:.....ﬂ */
-	$"0006 00EC 003F 880C 4465 7363 7269 7074"            /* ...Ï.?à.Descript */
-	$"696F 6E3A 0000 0000 0001 0003 00D2 014A"            /* ion:.........“.J */
-	$"0000 0000 0000 00E5 0154 00F9 0194 0406"            /* .......Â.T.˘.î.. */
-	$"4368 616E 6765 0000 0000 010C 0006 0155"            /* Change.........U */
-	$"0197 0000 0000 0000 00A1 0156 00B5 0196"            /* .ó.......°.V.µ.ñ */
-	$"0405 5265 7365 7465"                                /* ..Resete */
-};
-
-data 'DITL' (2004) {
-	$"0012 0000 0000 003C 0013 004E 015A 0527"            /* .......<...N.Z.' */
-	$"4175 746F 6D61 7469 6320 4D41 4431 2063"            /* Automatic MAD1 c */
-	$"6F6D 7072 6573 7369 6F6E 2066 6F72 2070"            /* ompression for p */
-	$"6174 7465 726E 7302 0000 0000 00DE 00C7"            /* atterns......ﬁ.« */
-	$"00EB 00DB 4002 00C8 0000 0000 0028 0008"            /* .Î.€@..».....(.. */
-	$"0038 0106 8822 4175 746F 6D61 7469 6320"            /* .8..à"Automatic  */
-	$"636F 6D70 7265 7373 696F 6E20 7768 656E"            /* compression when */
-	$"2073 6176 696E 673A 0000 0000 0052 0000"            /*  saving:.....R.. */
-	$"0053 0160 C002 0386 0000 0000 0097 0008"            /* .S.`¿..Ü.....ó.. */
-	$"00A7 014F 080D 4F73 6369 6C6C 6F73 636F"            /* .ß.O..Oscillosco */
-	$"7065 3A02 0000 0000 00AB 0013 00BD 015A"            /* pe:......´...Ω.Z */
-	$"0519 4472 6177 206C 696E 6573 2062 6574"            /* ..Draw lines bet */
-	$"7765 656E 2070 6F69 6E74 7302 0000 0000"            /* ween points..... */
-	$"0094 0000 0095 0160 C002 0386 0000 0000"            /* .î...ï.`¿..Ü.... */
-	$"00C7 0008 00D9 015C 082A 5061 7474 6572"            /* .«...Ÿ.\.*Patter */
-	$"6E73 204C 6973 7420 5769 6E64 6F77 2061"            /* ns List Window a */
-	$"6E64 2050 6172 7469 7469 6F6E 2057 696E"            /* nd Partition Win */
-	$"646F 773A 0000 0000 009F 0125 00B7 0159"            /* dow:.....ü.%.∑.Y */
-	$"8000 0000 0000 0069 0013 007B 015D 052E"            /* Ä......i...{.].. */
-	$"4164 6420 6578 7465 6E73 696F 6E20 746F"            /* Add extension to */
-	$"2066 696C 6520 6E61 6D65 7320 2865 7861"            /*  file names (exa */
-	$"6D70 6C65 203A 2022 2E4D 4F44 2229 0000"            /* mple : ".MOD").. */
-	$"0000 00A6 0134 00B4 0147 8000 0000 0000"            /* ...¶.4.¥.GÄ..... */
-	$"00C1 0000 00C2 0160 C002 0386 0000 0000"            /* .¡...¬.`¿..Ü.... */
-	$"00DD 0013 00ED 00C4 881A 5573 6520 7468"            /* .›...Ì.ƒà.Use th */
-	$"6973 2065 6469 746F 7220 7768 656E 206F"            /* is editor when o */
-	$"7065 6E3A 0000 0000 00DD 00DF 00ED 015F"            /* pen:.....›.ﬂ.Ì._ */
-	$"0800 0000 0000 0055 0008 0065 0106 8806"            /* .......U...e..à. */
-	$"4669 6C65 733A 0000 0000 0108 0013 011A"            /* Files:.......... */
-	$"015A 0520 506C 6179 2061 2073 6F75 6E64"            /* .Z. Play a sound */
-	$"2077 6865 6E20 636C 6963 6B20 696E 2026"            /*  when click in & */
-	$"206F 7574 0000 0000 00F4 0008 0104 014F"            /*  out.....Ù.....O */
-	$"080F 5769 6E64 6F77 2042 7574 746F 6E73"            /* ..Window Buttons */
-	$"3A02 0000 0000 00F1 0000 00F2 0160 C002"            /* :......Ò...Ú.`¿. */
-	$"0386 0000 0000 007B 0013 008D 015D 052A"            /* .Ü.....{...ç.].* */
-	$"446F 6ED5 7420 6C6F 6164 204D 6978 6572"            /* Don’t load Mixer */
-	$"2073 6574 7469 6E67 7320 6672 6F6D 206D"            /*  settings from m */
-	$"7573 6963 2066 696C 6573"                           /* usic files */
-};
-
-data 'DITL' (182, purgeable) {
-	$"0005 0000 0000 0008 0087 001C 00CB 0402"            /* .........á...À.. */
-	$"4F4B 0000 0000 002D 0089 0041 00C9 0406"            /* OK.....-.â.A.….. */
-	$"4361 6E63 656C 0000 0000 002D 0005 003D"            /* Cancel.....-...= */
-	$"0032 8806 5370 6565 643A 0000 0000 000A"            /* .2à.Speed:.....¬ */
-	$"000B 001A 0032 8806 5069 7463 683A 0000"            /* .....2à.Pitch:.. */
-	$"0000 000A 003C 001A 006E 1005 3136 3030"            /* ...¬.<...n..1600 */
-	$"3002 0000 0000 002D 003C 003D 006E 1005"            /* 0......-.<.=.n.. */
-	$"3236 3030 3002"                                     /* 26000. */
-};
-
-data 'DITL' (421) {
-	$"0005 0000 0000 0105 015C 0119 01C0 0408"            /* .........\...¿.. */
-	$"436F 6E74 696E 7565 0000 0000 0001 0002"            /* Continue........ */
-	$"00EE 0128 8000 0000 0000 0001 0139 00ED"            /* .Ó.(Ä........9.Ì */
-	$"01E3 C002 0082 0000 0000 0073 012A 007C"            /* .„¿..Ç.....s.*.| */
-	$"0135 0000 0000 0000 00F4 0062 0108 00C6"            /* .5.......Ù.b...∆ */
-	$"040C 486F 7720 746F 204F 7264 6572 0000"            /* ..How to Order.. */
-	$"0000 010F 0008 0123 012E 0421 476F 2074"            /* .......#...!Go t */
-	$"6F20 506C 6179 6572 5052 4F20 4F66 6669"            /* o PlayerPRO Offi */
-	$"6369 616C 2057 6562 2053 6974 6500"                 /* cial Web Site. */
-};
-
-data 'DITL' (684) {
-	$"001F 0000 0000 0019 000C 07E9 00C8 0000"            /* ...........È.».. */
-	$"0000 0000 001B 00CF 0028 0106 880B 496E"            /* .......œ.(..à.In */
-	$"7374 7275 6D65 6E74 3A02 0000 0000 0039"            /* strument:......9 */
-	$"00CF 0046 0101 8805 5369 7A65 3A02 0000"            /* .œ.F..à.Size:... */
-	$"0000 0051 00DA 005E 0102 8806 5374 6172"            /* ...Q.⁄.^..à.Star */
-	$"743A 0000 0000 005D 00DA 006A 0103 8805"            /* t:.....].⁄.j..à. */
-	$"5369 7A65 3A02 0000 0000 0069 00CF 0076"            /* Size:......i.œ.v */
-	$"0101 8807 566F 6C75 6D65 3A02 0000 0000"            /* ..à.Volume:..... */
-	$"0075 00CF 0082 0111 8805 5261 7465 3A3A"            /* .u.œ.Ç..à.Rate:: */
-	$"0000 0000 001B 0108 0028 0153 8800 0000"            /* .........(.Sà... */
-	$"0000 0039 0108 0046 0153 8800 0000 0000"            /* ...9...F.Sà..... */
-	$"0051 0108 005E 0153 8800 0000 0000 005D"            /* .Q...^.Sà......] */
-	$"0108 006A 0153 8800 0000 0000 0069 0108"            /* ...j.Sà......i.. */
-	$"0076 0153 8800 0000 0000 0075 0108 0082"            /* .v.Sà......u...Ç */
-	$"0153 8800 0000 0000 0081 00CF 008E 0105"            /* .Sà......Å.œ.é.. */
-	$"880A 5265 616C 204E 6F74 653A 0000 0000"            /* à¬Real Note:.... */
-	$"0081 0108 008E 0153 8800 0000 0000 008D"            /* .Å...é.Sà......ç */
-	$"00CF 009A 00F9 8805 4269 7473 3A02 0000"            /* .œ.ö.˘à.Bits:... */
-	$"0000 008D 0108 009A 0153 8800 0000 0000"            /* ...ç...ö.Sà..... */
-	$"0002 009F 0016 00B3 0000 0000 0000 0002"            /* ...ü...≥........ */
-	$"0045 0016 0059 0000 0000 0000 0002 0009"            /* .E...Y.........∆ */
-	$"0016 001D 0000 0000 0000 0002 0027 0016"            /* .............'.. */
-	$"003B 0000 0000 0000 0002 0063 0016 0077"            /* .;.........c...w */
-	$"0000 0000 0000 0002 0081 0016 0095 0000"            /* .........Å...ï.. */
-	$"0000 0000 FFF9 00B9 0019 00D9 0000 0000"            /* ....ˇ˘.π...Ÿ.... */
-	$"0000 0019 0000 02D5 000B 0000 0000 0000"            /* .......’........ */
-	$"0045 00CF 0052 00F9 8805 4C6F 6F70 3A02"            /* .E.œ.R.˘à.Loop:. */
-	$"0000 0000 0036 00C9 0037 0229 C002 000B"            /* .....6.….7.)¿... */
-	$"0000 0000 0027 00CF 0034 0108 880B 4E6F"            /* .....'.œ.4..à.No */
-	$"2073 616D 706C 6573 3A02 0000 0000 0027"            /*  samples:......' */
-	$"0108 0034 0153 8800 0000 0000 00AA 00CA"            /* ...4.Sà......™.  */
-	$"00CA 0130 8000 0000 0000 0099 00CF 00A6"            /* . .0Ä......ô.œ.¶ */
-	$"00F9 8805 4D6F 6465 3A65 0000 0000 0099"            /* .˘à.Mode:e.....ô */
-	$"0108 00A6 0153 8800"                                /* ...¶.Sà. */
-};
-
-data 'DITL' (202) {
-	$"0027 0000 0000 0038 0000 0808 07D0 0000"            /* .'.....8.....–.. */
-	$"0000 0000 000E 005F 001A 007F 8805 5369"            /* ......._....à.Si */
-	$"7A65 3A02 0000 0000 000E 0080 001A 00C6"            /* ze:........Ä...∆ */
-	$"8800 0000 0000 0001 00A9 000D 00E8 880A"            /* à........©...Ëà¬ */
-	$"5365 6C65 6374 696F 6E3A 0000 0000 0001"            /* Selection:...... */
-	$"00E9 000D 011B 8800 0000 0000 0001 011C"            /* .È....à......... */
-	$"000D 0130 8803 746F 3A02 0000 0000 0001"            /* ...0à.to:....... */
-	$"0131 000D 0163 8800 0000 0000 000E 00C7"            /* .1...cà........« */
-	$"001A 00E8 8805 4C6F 6F70 3A02 0000 0000"            /* ...Ëà.Loop:..... */
-	$"000E 00E9 001A 011B 8800 0000 0000 000E"            /* ...È....à....... */
-	$"011C 001A 0130 8803 746F 3A02 0000 0000"            /* .....0à.to:..... */
-	$"000E 0131 001A 0163 8800 0000 0000 0002"            /* ...1...cà....... */
-	$"0003 000E 0047 080B 446F 2046 696C 7465"            /* .....G..Do Filte */
-	$"7273 3A02 0000 0000 0029 0051 0036 0065"            /* rs:......).Q.6.e */
-	$"0000 0000 0000 0002 0048 000F 005C 4002"            /* .........H...\@. */
-	$"0384 0000 0000 001B 0065 0027 007E 8804"            /* .Ñ.......e.'.~à. */
-	$"416D 703A 0000 0000 002A 001A 0036 004D"            /* Amp:.....*...6.M */
-	$"8807 5361 6D70 6C65 3A02 0000 0000 001B"            /* à.Sample:....... */
-	$"0080 0027 00B2 8800 0000 0000 0011 0048"            /* .Ä.'.≤à........H */
-	$"0025 005C 0000 0000 0000 001B 00B5 0027"            /* .%.\.........µ.' */
-	$"00E8 8808 4469 7370 6C61 793A 0000 0000"            /* .Ëà.Display:.... */
-	$"001B 00E9 0027 011B 8800 0000 0000 001B"            /* ...È.'..à....... */
-	$"011C 0027 0130 8803 746F 3A02 0000 0000"            /* ...'.0à.to:..... */
-	$"001B 0131 0027 0163 8800 0000 0000 0001"            /* ...1.'.cà....... */
-	$"005F 000D 007F 8805 5A6F 6F6D 3A02 0000"            /* ._....à.Zoom:... */
-	$"0000 0001 0080 000D 00A8 8800 0000 0000"            /* .....Ä...®à..... */
-	$"0011 0003 0025 0017 0000 0000 0000 0011"            /* .....%.......... */
-	$"0034 0025 0048 0000 0000 0000 0011 0020"            /* .4.%.H.........  */
-	$"0025 0034 0000 0000 0000 0029 0003 0036"            /* .%.4.......)...6 */
-	$"0017 4002 0384 0000 0000 0027 FFFD 0028"            /* ..@..Ñ.....'ˇ˝.( */
-	$"07CD C002 000B 0000 0000 002A 00AE 0037"            /* .Õ¿........*.Æ.7 */
-	$"1FEE 8000 0000 0000 0001 0165 000D 01B6"            /* .ÓÄ........e...∂ */
-	$"880D 5261 7465 2028 6334 7370 6429 3A02"            /* à.Rate (c4spd):. */
-	$"0000 0000 0001 01B7 000D 01E9 8800 0000"            /* .......∑...Èà... */
-	$"0000 000E 01B7 001A 01EE 8800 0000 0000"            /* .....∑...Óà..... */
-	$"000E 0177 001A 01B6 880A 5265 616C 204E"            /* ...w...∂à¬Real N */
-	$"6F74 653A 0000 0000 0099 02D6 00B9 02F6"            /* ote:.....ô.÷.π.ˆ */
-	$"8000 0000 0000 0029 0068 0036 007C 0000"            /* Ä......).h.6.|.. */
-	$"0000 0000 0029 007F 0036 0093 0000 0000"            /* .....)...6.ì.... */
-	$"0000 001B 01B7 0027 0225 8800 0000 0000"            /* .....∑.'.%à..... */
-	$"001B 0165 0027 01B6 880D 582F 5920 506F"            /* ...e.'.∂à.X/Y Po */
-	$"7369 7469 6F6E 3A00 0000 0000 0029 0096"            /* sition:......).ñ */
-	$"0036 00AA 0000"                                     /* .6.™.. */
-};
-
-data 'DITL' (148) {
-	$"0015 0000 0000 0005 0118 0019 0152 0402"            /* .............R.. */
-	$"4F4B 0000 0000 0023 0118 0037 0152 0406"            /* OK.....#...7.R.. */
-	$"4361 6E63 656C 0000 0000 0014 005A 0021"            /* Cancel.......Z.! */
-	$"010D 1000 0000 0000 0014 000E 0021 0051"            /* .............!.Q */
-	$"880E 496E 7465 726E 616C 206E 616D 653A"            /* à.Internal name: */
-	$"0000 0000 0028 000D 0035 0051 880E 4465"            /* .....(...5.Qà.De */
-	$"6661 756C 7420 7465 6D70 6F3A 0000 0000"            /* fault tempo:.... */
-	$"003C 000F 0049 0051 880E 4465 6661 756C"            /* .<...I.Qà.Defaul */
-	$"7420 7370 6565 643A 0000 0000 0028 005A"            /* t speed:.....(.Z */
-	$"0035 0096 1000 0000 0000 003C 005A 0049"            /* .5.ñ.......<.Z.I */
-	$"0096 1000 0000 0000 0050 0007 0060 0051"            /* .ñ.......P...`.Q */
-	$"880F 436F 7079 7269 6768 7420 5465 7874"            /* à.Copyright Text */
-	$"3A02 0000 0000 0050 005A 0084 010D 1000"            /* :......P.Z.Ñ.... */
-	$"0000 0000 0028 00A0 0038 00EB 8803 4250"            /* .....(.†.8.Îà.BP */
-	$"4D02 0000 0000 003C 00A0 004C 010E 8816"            /* M......<.†.L..à. */
-	$"5469 6D69 6E67 2070 756C 7365 7320 7065"            /* Timing pulses pe */
-	$"7220 6C69 6E65 0000 0000 0000 002C 000D"            /* r line.......,.. */
-	$"0051 8807 5472 6163 6B73 3A02 0000 0000"            /* .Qà.Tracks:..... */
-	$"0000 005A 000D 007A 8800 0000 0000 008B"            /* ...Z...zà......ã */
-	$"005A 0098 014E 051B 5368 6F77 2043 6F70"            /* .Z.ò.N..Show Cop */
-	$"7972 6967 6874 2077 6865 6E20 6F70 656E"            /* yright when open */
-	$"696E 6702 0000 0000 0000 007F 000D 0093"            /* ing............ì */
-	$"4002 0385 0000 0000 00DD 006B 00ED 00FF"            /* @..Ö.....›.k.Ì.ˇ */
-	$"8814 4D61 7820 6D69 7869 6E67 2063 6861"            /* à.Max mixing cha */
-	$"6E6E 656C 733A 0000 0000 00A0 005A 00AD"            /* nnels:.....†.Z.≠ */
-	$"00FF 0514 4F6C 6420 4D4F 4473 2070 6974"            /* .ˇ..Old MODs pit */
-	$"6368 2074 6162 6C65 0000 0000 00B5 005A"            /* ch table.....µ.Z */
-	$"00C2 014E 050C 4C69 6E65 6172 2054 6162"            /* .¬.N..Linear Tab */
-	$"6C65 0000 0000 00CA 005A 00D7 011D 0514"            /* le..... .Z.◊.... */
-	$"4D75 6C74 692D 4368 616E 6E65 6C20 5472"            /* Multi-Channel Tr */
-	$"6163 6B73 0000 0000 00DF 0124 00EC 0138"            /* acks.....ﬂ.$.Ï.8 */
-	$"4002 0385 0000 0000 00DF 00FF 00EC 011F"            /* @..Ö.....ﬂ.ˇ.Ï.. */
-	$"8800"                                               /* à. */
-};
-
-data 'DITL' (183, purgeable) {
-	$"0028 0000 0000 0003 007D 0012 00A4 0000"            /* .(.......}...§.. */
-	$"0000 0000 001C 0030 002C 00B2 0000 0000"            /* .......0.,.≤.... */
-	$"0000 0030 0030 0040 00B2 0000 0000 0000"            /* ...0.0.@.≤...... */
-	$"0044 0030 0054 00B2 0000 0000 0000 0058"            /* .D.0.T.≤.......X */
-	$"0030 0068 00B2 0000 0000 0000 006C 0030"            /* .0.h.≤.......l.0 */
-	$"007C 00B2 0000 0000 0000 0080 0030 0090"            /* .|.≤.......Ä.0.ê */
-	$"00B2 0000 0000 0000 0094 0030 00A4 00B2"            /* .≤.......î.0.§.≤ */
-	$"0000 0000 0000 00A8 0030 00B8 00B2 0000"            /* .......®.0.∏.≤.. */
-	$"0000 0000 00CE 000B 01CE 010B 0000 0000"            /* .....Œ...Œ...... */
-	$"0000 016B 015E 017B 01E0 0000 0000 0000"            /* ...k.^.{.‡...... */
-	$"017F 015E 018F 01E0 0000 0000 0000 0193"            /* ...^.è.‡.......ì */
-	$"015E 01A3 01E0 0000 0000 0000 0002 0025"            /* .^.£.‡.........% */
-	$"0016 0039 0000 0000 0000 0002 0043 0016"            /* ...9.........C.. */
-	$"0057 0000 0000 0000 0002 0061 0016 0075"            /* .W.........a...u */
-	$"0000 0000 0000 0002 0007 0016 001B 0000"            /* ................ */
-	$"0000 0000 001C 0003 002C 002F 880B 5374"            /* .........,./à.St */
-	$"6174 6963 2054 6578 7402 0000 0000 0030"            /* atic Text......0 */
-	$"0003 0040 002F 880B 5374 6174 6963 2054"            /* ...@./à.Static T */
-	$"6578 7402 0000 0000 0044 0003 0054 002F"            /* ext......D...T./ */
-	$"880B 5374 6174 6963 2054 6578 7402 0000"            /* à.Static Text... */
-	$"0000 0058 0003 0068 002F 880B 5374 6174"            /* ...X...h./à.Stat */
-	$"6963 2054 6578 7402 0000 0000 006C 0003"            /* ic Text......l.. */
-	$"007C 002F 880B 5374 6174 6963 2054 6578"            /* .|./à.Static Tex */
-	$"7402 0000 0000 0080 0003 0090 002F 880B"            /* t......Ä...ê./à. */
-	$"5374 6174 6963 2054 6578 7402 0000 0000"            /* Static Text..... */
-	$"0094 0003 00A4 002F 880B 5374 6174 6963"            /* .î...§./à.Static */
-	$"2054 6578 7402 0000 0000 00A8 0003 00B8"            /*  Text......®...∏ */
-	$"002F 880B 5374 6174 6963 2054 6578 7402"            /* ./à.Static Text. */
-	$"0000 0000 0157 0131 0167 015D 880B 5374"            /* .....W.1.g.]à.St */
-	$"6174 6963 2054 6578 7402 0000 0000 016B"            /* atic Text......k */
-	$"0131 017B 015D 880B 5374 6174 6963 2054"            /* .1.{.]à.Static T */
-	$"6578 7402 0000 0000 017F 0131 018F 015D"            /* ext........1.è.] */
-	$"880B 5374 6174 6963 2054 6578 7402 0000"            /* à.Static Text... */
-	$"0000 0193 0131 01A3 015D 880B 5374 6174"            /* ...ì.1.£.]à.Stat */
-	$"6963 2054 6578 7402 0000 0000 001C 00B4"            /* ic Text........¥ */
-	$"002C 00D5 880B 5374 6174 6963 2054 6578"            /* .,.’à.Static Tex */
-	$"7402 0000 0000 0030 00B4 0040 00D5 880B"            /* t......0.¥.@.’à. */
-	$"5374 6174 6963 2054 6578 7402 0000 0000"            /* Static Text..... */
-	$"0044 00B4 0054 00D5 880B 5374 6174 6963"            /* .D.¥.T.’à.Static */
-	$"2054 6578 7402 0000 0000 0058 00B4 0068"            /*  Text......X.¥.h */
-	$"00D5 880B 5374 6174 6963 2054 6578 7402"            /* .’à.Static Text. */
-	$"0000 0000 006C 00B4 007C 00D5 880B 5374"            /* .....l.¥.|.’à.St */
-	$"6174 6963 2054 6578 7402 0000 0000 0080"            /* atic Text......Ä */
-	$"00B4 0090 00D5 880B 5374 6174 6963 2054"            /* .¥.ê.’à.Static T */
-	$"6578 7402 0000 0000 0094 00B4 00A4 00D5"            /* ext......î.¥.§.’ */
-	$"880B 5374 6174 6963 2054 6578 7402 0000"            /* à.Static Text... */
-	$"0000 00A8 00B4 00B8 00D5 880B 5374 6174"            /* ...®.¥.∏.’à.Stat */
-	$"6963 2054 6578 7402 0000 0000 0157 01E2"            /* ic Text......W.‚ */
-	$"0167 0203 880B 5374 6174 6963 2054 6578"            /* .g..à.Static Tex */
-	$"7402 0000 0000 016B 01E2 017B 0203 880B"            /* t......k.‚.{..à. */
-	$"5374 6174 6963 2054 6578 7402 0000 0000"            /* Static Text..... */
-	$"017F 01E2 018F 0203 880B 5374 6174 6963"            /* ...‚.è..à.Static */
-	$"2054 6578 7402 0000 0000 0193 01E2 01A3"            /*  Text......ì.‚.£ */
-	$"0203 880B 5374 6174 6963 2054 6578 748B"            /* ..à.Static Textã */
-};
-
-data 'DITL' (141, "Adaptator") {
-	$"002B 0000 0000 0071 01E4 007D 021A 8000"            /* .+.....q.‰.}..Ä. */
-	$"0000 0000 0068 002D 0078 006D 0000 0000"            /* .....h.-.x.m.... */
-	$"0000 0013 01CA 0023 01F9 8000 0000 0000"            /* ..... .#.˘Ä..... */
-	$"0066 019E 0076 01C6 0800 0000 0000 002B"            /* .f.û.v.∆.......+ */
-	$"01CA 003B 01F9 8000 0000 0000 0077 014E"            /* . .;.˘Ä......w.N */
-	$"0084 017B 8000 0000 0000 004D 0188 005D"            /* .Ñ.{Ä......M.à.] */
-	$"01AB 8804 4250 4D3A 0000 0000 002D 00D2"            /* .´à.BPM:.....-.“ */
-	$"003D 010E 0000 0000 0000 005B 01CA 006B"            /* .=.........[. .k */
-	$"01F9 8000 0000 0000 001B 00D2 002B 010E"            /* .˘Ä........“.+.. */
-	$"0000 0000 0000 00CF 019E 00DF 01CD 8000"            /* .......œ.û.ﬂ.ÕÄ. */
-	$"0000 0000 001B 001A 002B 009C 0000 0000"            /* .........+.ú.... */
-	$"0000 0070 019D 0080 01AD C002 0081 0000"            /* ...p.ù.Ä.≠¿..Å.. */
-	$"0000 002D 001A 003D 009C 0000 0000 0000"            /* ...-...=.ú...... */
-	$"00AB 019E 00BB 01CD 8000 0000 0000 0066"            /* .´.û.ª.ÕÄ......f */
-	$"0001 1006 012D 0000 0000 0000 0002 0025"            /* .....-.........% */
-	$"0016 0039 0000 0000 0000 003B 0224 004B"            /* ...9.......;.$.K */
-	$"0244 0000 0000 0000 0042 014D 0076 016D"            /* .D.......B.M.v.m */
-	$"8000 0000 0000 002C 00C1 003C 00D1 C002"            /* Ä......,.¡.<.—¿. */
-	$"0081 0000 0000 00D3 0167 00E1 0175 8000"            /* .Å.....”.g.·.uÄ. */
-	$"0000 0000 002E 009D 0042 00B1 0000 0000"            /* .......ù.B.±.... */
-	$"0000 001C 009D 0030 00B1 0000 0000 0000"            /* .....ù.0.±...... */
-	$"00A8 0179 00B8 01DD 0702 0098 0000 0000"            /* .®.y.∏.›...ò.... */
-	$"0002 0007 0016 001B 0000 0000 0000 0002"            /* ................ */
-	$"0043 0016 0057 0000 0000 0000 000E 0174"            /* .C...W.........t */
-	$"001A 01A0 8000 0000 0000 001A 00C1 002A"            /* ...†Ä........¡.* */
-	$"00D1 C002 0081 0000 0000 001B 0005 002B"            /* .—¿..Å.........+ */
-	$"0015 C002 008A 0000 0000 002B 0005 003B"            /* ..¿..ä.....+...; */
-	$"0015 C002 008B 0000 0000 000C 01A0 001C"            /* ..¿..ã.......†.. */
-	$"01B0 8000 0000 0000 000C 0163 001C 0173"            /* .∞Ä........c...s */
-	$"8000 0000 0000 0029 0229 0035 0255 8800"            /* Ä......).).5.Uà. */
-	$"0000 0000 0056 0037 0062 0060 8806 566F"            /* .....V.7.b.`à.Vo */
-	$"6C75 6D65 0000 0000 0056 0086 0062 00B2"            /* lume.....V.Ü.b.≤ */
-	$"8807 5061 6E6E 696E 6702 0000 0000 0055"            /* à.Panning......U */
-	$"FFDC 0056 016C C002 0089 0000 0000 001C"            /* ˇ‹.V.l¿..â...... */
-	$"00A8 0027 00C0 C002 0086 0000 0000 0056"            /* .®.'.¿¿..Ü.....V */
-	$"0001 0062 002F 8808 5472 6163 6B20 4944"            /* ...b./à.Track ID */
-	$"0000 0000 002E 00A8 0039 00C0 C002 0099"            /* .......®.9.¿¿..ô */
-	$"0000 0000 0004 00CE 0014 0102 8800 0000"            /* .......Œ....à... */
-	$"0000 0002 005F 0016 0073 0000 0000 0000"            /* ....._...s...... */
-	$"0041 0002 004B 0017 C002 009D 0000 0000"            /* .A...K..¿..ù.... */
-	$"003F 001A 004F 009C 0000 0000 0000 0040"            /* .?...O.ú.......@ */
-	$"009D 0054 00B1 0000"                                /* .ù.T.±.. */
-};
-
-data 'DITL' (184, purgeable) {
-	$"0008 0000 0000 0007 0006 001B 004A 0402"            /* .............J.. */
-	$"4F4B 0000 0000 002A 0008 003E 0048 0406"            /* OK.....*...>.H.. */
-	$"4361 6E63 656C 0000 0000 0004 0059 0104"            /* Cancel.......Y.. */
-	$"0159 0000 0000 0000 0081 0008 0095 0048"            /* .Y.......Å...ï.H */
-	$"0404 506C 6179 0000 0000 0055 0008 0069"            /* ..Play.....U...i */
-	$"0048 0405 5265 7365 7402 0000 0000 00F4"            /* .H..Reset......Ù */
-	$"0006 0104 0052 0507 5072 6576 6965 7702"            /* .....R..Preview. */
-	$"0000 0000 00C7 0006 00D7 0052 0606 4C69"            /* .....«...◊.R..Li */
-	$"6E65 6172 0000 0000 00D7 0006 00E7 0052"            /* near.....◊...Á.R */
-	$"0603 4C6F 6702 0000 0000 00B7 0006 00C6"            /* ..Log......∑...∆ */
-	$"0034 8805 4D6F 6465 3A02"                           /* .4à.Mode:. */
-};
-
-data 'DITL' (146) {
-	$"003C 0000 0000 000A 0144 001E 017E 0402"            /* .<.....¬.D...~.. */
-	$"4F4B 0000 0000 000A 0186 001E 01C0 0406"            /* OK.....¬.Ü...¿.. */
-	$"4361 6E63 656C 0000 0000 0014 0038 0021"            /* Cancel.......8.! */
-	$"00F6 1005 696A 696A 0D02 0000 0000 00BA"            /* .ˆ..ijij.......∫ */
-	$"00F4 00C7 011C 1000 0000 0000 00BB 0162"            /* .Ù.«.........ª.b */
-	$"00C8 018A 1000 0000 0000 00CD 0053 00DA"            /* .».ä.......Õ.S.⁄ */
-	$"007B 1000 0000 0000 00E1 0053 00EE 007B"            /* .{.......·.S.Ó.{ */
-	$"1000 0000 0000 0014 0013 0021 0035 8805"            /* ...........!.5à. */
-	$"4E61 6D65 3A02 0000 0000 00BA 00B8 00C7"            /* Name:......∫.∏.« */
-	$"00F1 880B 4C6F 6F70 2053 7461 7274 3A02"            /* .Òà.Loop Start:. */
-	$"0000 0000 00BB 012B 00C8 015F 880A 4C6F"            /* .....ª.+.»._à¬Lo */
-	$"6F70 2053 697A 653A 0000 0000 00CD 000D"            /* op Size:.....Õ.. */
-	$"00DA 0050 880D 5261 7465 2028 6334 7370"            /* .⁄.Pà.Rate (c4sp */
-	$"6429 3A02 0000 0000 00E1 000E 00EE 0050"            /* d):......·...Ó.P */
-	$"880C 4261 7365 2056 6F6C 756D 653A 0000"            /* à.Base Volume:.. */
-	$"0000 0090 0006 009D 01C4 8000 0000 0000"            /* ...ê...ù.ƒÄ..... */
-	$"013C 019F 0149 01C4 8000 0000 0000 0069"            /* .<.ü.I.ƒÄ......i */
-	$"0038 0076 014B 0620 4368 616E 6E65 6C20"            /* .8.v.K. Channel  */
-	$"5661 6C75 6520 2853 6565 204D 6978 6572"            /* Value (See Mixer */
-	$"2077 696E 646F 7729 0000 0000 002E 000B"            /*  window)........ */
-	$"003B 0035 0807 566F 6C75 6D65 3A02 0000"            /* .;.5..Volume:... */
-	$"0000 00E1 008E 00EE 00A3 8000 0000 0000"            /* ...·.é.Ó.£Ä..... */
-	$"00E1 00F4 00EE 010E 1000 0000 0000 00E1"            /* .·.Ù.Ó.........· */
-	$"00BC 00EE 00F1 880A 5265 616C 204E 6F74"            /* .º.Ó.Òà¬Real Not */
-	$"653A 0000 0000 00B9 0019 00C6 0050 880A"            /* e:.....π...∆.Pà¬ */
-	$"416D 706C 6974 7564 653A 0000 0000 00B9"            /* Amplitude:.....π */
-	$"0053 00C6 0067 8802 3136 0000 0000 0052"            /* .S.∆.gà.16.....R */
-	$"0120 005F 0181 050B 4669 7865 6420 5370"            /* . ._.Å..Fixed Sp */
-	$"6565 6402 0000 0000 00F8 0000 00F9 0258"            /* eed......¯...˘.X */
-	$"C002 000B 0000 0000 00B9 008E 00C6 00A2"            /* ¿........π.é.∆.¢ */
-	$"4002 0385 0000 0000 0002 0038 000F 00F6"            /* @..Ö.......8...ˆ */
-	$"8000 0000 0000 013D 0003 014A 015C 884B"            /* Ä......=...J.\àK */
-	$"5361 6D70 6C65 2073 6574 7469 6E67 733A"            /* Sample settings: */
-	$"2063 6C69 636B 202B 206F 7074 696F 6E20"            /*  click + option  */
-	$"6B65 7920 746F 2063 6861 6E67 6520 6173"            /* key to change as */
-	$"7369 676E 6174 696F 6E20 6F66 2063 7572"            /* signation of cur */
-	$"7265 6E74 2073 616D 706C 6502 0000 0000"            /* rent sample..... */
-	$"00E1 0113 00EE 0143 8800 0000 0000 00B9"            /* .·...Ó.Cà......π */
-	$"006C 00C6 0083 8804 6269 7473 0000 0000"            /* .l.∆.Éà.bits.... */
-	$"00FF 0003 0139 01C4 4002 00E1 0000 0000"            /* .ˇ...9.ƒ@..·.... */
-	$"015F 0103 016C 0114 8802 3939 0000 0000"            /* ._...l..à.99.... */
-	$"008B FFF4 008C 024C C002 000B 0000 0000"            /* .ãˇÙ.å.L¿....... */
-	$"002E 00BB 003B 00DD 1000 0000 0000 0052"            /* ...ª.;.›.......R */
-	$"0038 005F 008E 0609 456E 7665 6C6F 7065"            /* .8._.é.∆Envelope */
-	$"3A02 0000 0000 00CD 0080 00DA 008D 0802"            /* :......Õ.Ä.⁄.ç.. */
-	$"487A 0000 0000 0040 0038 004D 015B 061E"            /* Hz.....@.8.M.[.. */
-	$"5361 6D70 6C65 2042 6173 6520 566F 6C75"            /* Sample Base Volu */
-	$"6D65 2028 5365 6520 6265 6C6F 7729 0000"            /* me (See below).. */
-	$"0000 0052 00C6 005F 011C 050A 5375 7374"            /* ...R.∆._...¬Sust */
-	$"6169 6E20 7074 0000 0000 00CD 008E 00DA"            /* ain pt.....Õ.é.⁄ */
-	$"00A2 4002 0385 0000 0000 00A1 0196 00B1"            /* .¢@..Ö.....°.ñ.± */
-	$"01B0 0000 0000 0000 0052 008E 005F 00C6"            /* .∞.......R.é._.∆ */
-	$"0504 4C6F 6F70 0000 0000 007B 008E 0088"            /* ..Loop.....{.é.à */
-	$"00C6 0504 4C6F 6F70 0000 0000 007C 0120"            /* .∆..Loop.....|.  */
-	$"0089 0183 050B 4669 7865 6420 5370 6565"            /* .â.É..Fixed Spee */
-	$"6402 0000 0000 0068 0009 0075 0035 8808"            /* d......h.∆.u.5à. */
-	$"5061 6E6E 696E 673A 0000 0000 007B 00C6"            /* Panning:.....{.∆ */
-	$"0088 0120 050A 5375 7374 6169 6E20 7074"            /* .à. .¬Sustain pt */
-	$"0000 0000 009E 01B4 00F6 01C4 0000 0000"            /* .....û.¥.ˆ.ƒ.... */
-	$"0000 00A6 00F4 00B3 018A 1000 0000 0000"            /* ...¶.Ù.≥.ä...... */
-	$"00A6 00CF 00B3 00F1 8805 4E61 6D65 3A02"            /* .¶.œ.≥.Òà.Name:. */
-	$"0000 0000 002E 0039 003B 00B8 0819 566F"            /* .......9.;.∏..Vo */
-	$"6C75 6D65 2046 6164 654F 7574 2028 4B65"            /* lume FadeOut (Ke */
-	$"7920 4F46 4629 3A02 0000 0000 007B 0038"            /* y OFF):......{.8 */
-	$"0088 008D 0609 456E 7665 6C6F 7065 3A02"            /* .à.ç.∆Envelope:. */
-	$"0000 0000 0028 FFEC 0029 0244 C002 000B"            /* .....(ˇÏ.).D¿... */
-	$"0000 0000 0062 FFEF 0063 0247 C002 000B"            /* .....bˇÔ.c.G¿... */
-	$"0000 0000 00A6 002F 00B3 0050 8805 4D6F"            /* .....¶./.≥.Pà.Mo */
-	$"6465 3A02 0000 0000 00A6 0053 00B3 007E"            /* de:......¶.S.≥.~ */
-	$"8800 0000 0000 00A6 008E 00B3 00A2 4002"            /* à......¶.é.≥.¢@. */
-	$"0385 0000 0000 00CD 00BA 00DA 00F1 880A"            /* .Ö.....Õ.∫.⁄.Òà¬ */
-	$"4C6F 6F70 2054 7970 653A 0000 0000 00CD"            /* Loop Type:.....Õ */
-	$"00F4 00DA 0125 8800 0000 0000 00CD 0128"            /* .Ù.⁄.%à......Õ.( */
-	$"00DA 013C 4002 0385 0000 0000 0183 0098"            /* .⁄.<@..Ö.....É.ò */
-	$"0190 00AC 8804 6269 7473 0000 0000 0030"            /* .ê.¨à.bits.....0 */
-	$"0184 0044 01C2 0408 5072 6576 696F 7573"            /* .Ñ.D.¬..Previous */
-	$"0000 0000 004A 0184 005E 01C2 0404 4E65"            /* .....J.Ñ.^.¬..Ne */
-	$"7874 0000 0000 0050 000A 0060 0032 0404"            /* xt.....P.¬.`.2.. */
-	$"4564 6974 0000 0000 0079 000A 0089 0032"            /* Edit.....y.¬.â.2 */
-	$"0404 4564 6974"                                     /* ..Edit */
-};
-
-data 'DITL' (143, "Controls") {
-	$"002C 0000 0000 0024 0001 002F 00B5 0000"            /* .,.....$.../.µ.. */
-	$"0000 0000 0001 0007 0019 001F 0000 0000"            /* ................ */
-	$"0000 0001 0020 0019 0038 0000 0000 0000"            /* ..... ...8...... */
-	$"0001 0052 0019 006A 0000 0000 0000 0001"            /* ...R...j........ */
-	$"006B 0019 0083 0000 0000 0000 0001 0084"            /* .k...É.........Ñ */
-	$"0019 009C 0000 0000 0000 0001 009D 0019"            /* ...ú.........ù.. */
-	$"00B5 0000 0000 0000 0017 0002 0023 0023"            /* .µ...........#.# */
-	$"8805 3030 3A30 3002 0000 0000 0017 0093"            /* à.00:00........ì */
-	$"0023 00B5 8805 3030 3A30 3002 0000 0000"            /* .#.µà.00:00..... */
-	$"0016 0024 0024 0091 0000 0000 0000 002A"            /* ...$.$.ë.......* */
-	$"0063 003A 0073 0000 0000 0000 0032 0036"            /* .c.:.s.......2.6 */
-	$"003E 004F 8804 506F 733A 0000 0000 0032"            /* .>.Oà.Pos:.....2 */
-	$"0001 003E 001A 8804 5061 743A 0000 0000"            /* ...>..à.Pat:.... */
-	$"0032 0074 003E 0099 8806 5472 6163 6B3A"            /* .2.t.>.ôà.Track: */
-	$"0000 0000 0032 001A 003E 0029 8802 3939"            /* .....2...>.)à.99 */
-	$"0000 0000 0032 004F 003E 0063 8803 3634"            /* .....2.O.>.cà.64 */
-	$"3202 0000 0000 0032 0099 003E 00A8 8802"            /* 2......2.ô.>.®à. */
-	$"3939 0000 0000 0042 009F 004F 00B3 4002"            /* 99.....B.ü.O.≥@. */
-	$"0385 0000 0000 0054 009F 0061 00B3 4002"            /* .Ö.....T.ü.a.≥@. */
-	$"0385 0000 0000 0079 0046 0089 007D 8809"            /* .Ö.....y.F.â.}à∆ */
-	$"4172 6775 6D65 6E74 3A02 0000 0000 0057"            /* Argument:......W */
-	$"0006 006B 001A 0000 0000 0000 0040 0006"            /* ...k.........@.. */
-	$"0054 001A 0000 0000 0000 0034 00A8 003C"            /* .T.........4.®.< */
-	$"00B3 4002 008C 0000 0000 0034 002A 003C"            /* .≥@..å.....4.*.< */
-	$"0034 4002 008C 0000 0000 0037 0063 0047"            /* .4@..å.....7.c.G */
-	$"0073 0000 0000 0000 0078 009F 0085 00B3"            /* .s.......x.ü.Ö.≥ */
-	$"4002 0385 0000 0000 003E FFFF 003F 00B7"            /* @..Ö.....>ˇˇ.?.∑ */
-	$"C002 000B 0000 0000 0055 005E 0065 007D"            /* ¿........U.^.e.} */
-	$"8805 4E6F 7465 3A02 0000 0000 0043 003A"            /* à.Note:......C.: */
-	$"0053 007D 880B 496E 7374 7275 6D65 6E74"            /* .S.}à.Instrument */
-	$"3A02 0000 0000 0067 0052 0077 007D 8807"            /* :......g.R.w.}à. */
-	$"4566 6665 6374 3A02 0000 0000 0043 007F"            /* Effect:......C.. */
-	$"004F 009C 0000 0000 0000 0055 007F 0061"            /* .O.ú.......U...a */
-	$"009C 0000 0000 0000 0067 007F 0073 009C"            /* .ú.......g...s.ú */
-	$"0000 0000 0000 0079 007F 0085 009C 0000"            /* .......y...Ö.ú.. */
-	$"0000 0000 0067 0046 0074 0050 0000 0000"            /* .....g.F.t.P.... */
-	$"0000 FFFE 00B7 00C6 00B8 C002 000B 0000"            /* ..ˇ˛.∑.∆.∏¿..... */
-	$"0000 0001 00BA 0087 01C2 0000 0000 0000"            /* .....∫.á.¬...... */
-	$"0030 FFFF 0031 00B7 C002 000B 0000 0000"            /* .0ˇˇ.1.∑¿....... */
-	$"008B 0052 009B 007D 8807 566F 6C75 6D65"            /* .ã.R.õ.}à.Volume */
-	$"3AFC 0000 0000 006E 0006 0082 001A 0000"            /* :¸.....n...Ç.... */
-	$"0000 0000 0066 009F 0073 00B3 4002 0385"            /* .....f.ü.s.≥@..Ö */
-	$"0000 0000 008B 007F 0097 009C 0000 0000"            /* .....ã...ó.ú.... */
-	$"0000 008A 009F 0097 00B3 4002 0385 0000"            /* ...ä.ü.ó.≥@..Ö.. */
-	$"0000 0001 0039 0019 0051 0000 0000 0000"            /* .....9...Q...... */
-	$"0054 0050 0061 005A 0000"                           /* .T.P.a.Z.. */
-};
-
-data 'DITL' (142, "Music list") {
-	$"0020 0000 0000 0031 026F 0041 02BA 8000"            /* . .....1.o.A.∫Ä. */
-	$"0000 0000 0019 0000 07E9 00C8 0000 0000"            /* .........È.».... */
-	$"0000 0015 024F 0029 0289 0000 0000 0000"            /* .....O.).â...... */
-	$"0020 023E 0030 0289 8000 0000 0000 001D"            /* . .>.0.âÄ....... */
-	$"00CE 002A 010B 880A 4669 6C65 204E 616D"            /* .Œ.*..à¬File Nam */
-	$"653A 0000 0000 002C 00CE 0039 0113 880E"            /* e:.....,.Œ.9..à. */
-	$"496E 7465 726E 616C 204E 616D 653A 0000"            /* Internal Name:.. */
-	$"0000 0068 00CE 0075 010A 8809 5061 7474"            /* ...h.Œ.u.¬à∆Patt */
-	$"6572 6E73 3A02 0000 0000 004A 00CE 0057"            /* erns:......J.Œ.W */
-	$"010C 880A 5369 676E 6174 7572 653A 0000"            /* ..à¬Signature:.. */
-	$"0000 0077 00CD 0084 0108 880A 506C 7567"            /* ...w.Õ.Ñ..à¬Plug */
-	$"2054 7970 653A 0000 0000 0059 00CE 0066"            /*  Type:.....Y.Œ.f */
-	$"010D 880C 496E 7374 7275 6D65 6E74 733A"            /* ..à.Instruments: */
-	$"0000 0000 003B 00CE 0048 0107 8805 5369"            /* .....;.Œ.H..à.Si */
-	$"7A65 3A02 0000 0000 001D 0114 002A 019F"            /* ze:..........*.ü */
-	$"8801 2D02 0000 0000 002C 0114 0039 019F"            /* à.-......,...9.ü */
-	$"0801 2D02 0000 0000 0068 0114 0075 0199"            /* ..-......h...u.ô */
-	$"8801 2D02 0000 0000 004A 0114 0057 0196"            /* à.-......J...W.ñ */
-	$"8801 2D02 0000 0000 0077 0114 0084 019A"            /* à.-......w...Ñ.ö */
-	$"8801 2D02 0000 0000 0059 0114 0066 0197"            /* à.-......Y...f.ó */
-	$"8801 2D02 0000 0000 003B 0114 0048 0195"            /* à.-......;...H.ï */
-	$"8801 2D02 0000 0000 0002 009D 0016 00B1"            /* à.-........ù...± */
-	$"0000 0000 0000 0144 00E8 0158 0122 0702"            /* .......D.Ë.X.".. */
-	$"00C8 0000 0000 0035 01E4 0045 024A 8000"            /* .».....5.‰.E.JÄ. */
-	$"0000 0000 0045 01E4 0055 027E 8000 0000"            /* .....E.‰.U.~Ä... */
-	$"0000 001A 00C9 012F 01DD 8000 0000 0000"            /* .....…./.›Ä..... */
-	$"0016 01FC 0037 02B0 8000 0000 0000 0086"            /* ...¸.7.∞Ä......Ü */
-	$"00CD 0093 00F8 8806 5768 6572 653A 0000"            /* .Õ.ì.¯à.Where:.. */
-	$"0000 0086 0114 0117 01A9 8801 2D80 0000"            /* ...Ü.....©à.-Ä.. */
-	$"0000 0002 0061 0016 0075 0000 0000 0000"            /* .....a...u...... */
-	$"0002 007F 0016 0093 0000 0000 0000 0002"            /* .......ì........ */
-	$"0025 0016 0039 0000 0000 0000 FFF9 00B9"            /* .%...9......ˇ˘.π */
-	$"0019 00D9 0000 0000 0000 0002 0043 0016"            /* ...Ÿ.........C.. */
-	$"0057 0000 0000 0000 0002 0007 0016 001B"            /* .W.............. */
-	$"0702 00C8 0000 0000 009F 00E1 00BF 0101"            /* ...».....ü.·.ø.. */
-	$"8000"                                               /* Ä. */
-};
-
-data 'ALRT' (131) {
-	$"0028 0028 008A 0116 03A6 4444 300A"                 /* .(.(.ä...¶DD0¬ */
-};
-
-data 'ALRT' (128, "General Error") {
-	$"006A 0056 00DD 01AD 010C 4444 680A"                 /* .j.V.›.≠..DDh¬ */
-};
-
-data 'ALRT' (129, "Info") {
-	$"006A 0056 00D9 01AD 01C9 4444 680A"                 /* .j.V.Ÿ.≠.…DDh¬ */
-};
-
-data 'ALRT' (300, purgeable) {
-	$"0050 006E 00C7 0183 012C 4444 680A"                 /* .P.n.«.É.,DDh¬ */
-};
-
-data 'ALRT' (132, "Look for music", purgeable) {
-	$"0050 006E 00D0 0186 012D 4444 680A"                 /* .P.n.–.Ü.-DDh¬ */
-};
-
-data 'ALRT' (133, "Minimize", purgeable) {
-	$"0050 006E 00D2 01C5 012E 4444 680A"                 /* .P.n.“.≈..DDh¬ */
-};
-
-data 'ALRT' (130, "FATAL ERROR") {
-	$"0028 0028 015A 0134 0082 5555 280A"                 /* .(.(.Z.4.ÇUU(¬ */
+resource 'DLOG' (133, "Preferences") {
+	{50, 58, 358, 410},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x11,
+	132,
+	"Preferences",
+	centerMainScreen
+};
+
+resource 'DLOG' (177, "Copyright") {
+	{177, 247, 425, 587},
+	movableDBoxProc,
+	visible,
+	noGoAway,
+	0x0,
+	177,
+	"Copyright informations about this music",
+	centerMainScreen
+};
+
+resource 'DLOG' (175, "Registration") {
+	{87, 127, 378, 512},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x0,
+	175,
+	"Registration",
+	centerMainScreen
+};
+
+resource 'DLOG' (2002, "Pref: MUSIC LIST") {
+	{16, 37, 336, 509},
+	dBoxProc,
+	visible,
+	goAway,
+	0x11,
+	2002,
+	"",
+	noAutoCenter
+};
+
+resource 'DLOG' (131, "About") {
+	{54, 10, 282, 395},
+	dBoxProc,
+	visible,
+	goAway,
+	0x0,
+	200,
+	"",
+	centerMainScreen
+};
+
+resource 'DLOG' (2005, "Pref: CLASSICAL") {
+	{57, 72, 600, 700},
+	documentProc,
+	visible,
+	goAway,
+	0x0,
+	2006,
+	"",
+	noAutoCenter
+};
+
+resource 'DLOG' (165, "Microphone") {
+	{63, 64, 298, 362},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x19F8,
+	761,
+	"Audio InPut",
+	1498
+};
+
+resource 'DLOG' (2000, "Pref: DRIVER") {
+	{42, 40, 348, 426},
+	dBoxProc,
+	visible,
+	goAway,
+	0x11,
+	2000,
+	"",
+	noAutoCenter
+};
+
+resource 'DLOG' (178, "RAW Import") {
+	{262, 110, 540, 515},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x0,
+	178,
+	"RAW Data Import",
+	noAutoCenter
+};
+
+resource 'DLOG' (156, "ProgressWindow") {
+	{142, 142, 243, 447},
+	noGrowDocProc,
+	invisible,
+	goAway,
+	0x1C,
+	163,
+	"Sound Data Generating",
+	alertPositionMainScreen
+};
+
+resource 'DLOG' (136, "Windows State") {
+	{72, 107, 177, 406},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x0,
+	136,
+	"Windows State",
+	525
+};
+
+resource 'DLOG' (138, "Reset Window") {
+	{312, 237, 434, 572},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x0,
+	138,
+	"Reset",
+	noAutoCenter
+};
+
+resource 'DLOG' (139, "Editor") {
+	{44, 6, 440, 1055},
+	zoomDocProc,
+	invisible,
+	goAway,
+	0x2,
+	139,
+	"Pattern: 000",
+	centerMainScreen
+};
+
+resource 'DLOG' (160, "Export AIFF/SND") {
+	{264, 202, 481, 624},
+	movableDBoxProc,
+	visible,
+	goAway,
+	0x0,
+	319,
+	"Sound File Quality",
+	centerMainScreen
+};
+
+resource 'DLOG' (2006, "Pref: DIGITAL EDITOR") {
+	{49, 35, 499, 595},
+	documentProc,
+	visible,
+	goAway,
+	0x0,
+	2006,
+	"",
+	noAutoCenter
+};
+
+resource 'DLOG' (2009, "Pref: MIDI OMS") {
+	{206, -650, 440, -298},
+	documentProc,
+	visible,
+	goAway,
+	0x0,
+	2009,
+	"",
+	noAutoCenter
+};
+
+resource 'DLOG' (2001, "Pref: PIANO") {
+	{41, 61, 353, 417},
+	dBoxProc,
+	visible,
+	goAway,
+	0x11,
+	2001,
+	"",
+	noAutoCenter
+};
+
+resource 'DLOG' (145, "Piano") {
+	{148, 186, 471, 888},
+	zoomDocProc,
+	invisible,
+	goAway,
+	0xA,
+	145,
+	"Piano",
+	15536
+};
+
+resource 'DLOG' (166, "Partition") {
+	{98, 94, 613, 698},
+	zoomDocProc,
+	invisible,
+	goAway,
+	0x15,
+	816,
+	"Partition",
+	55920
+};
+
+resource 'DLOG' (180, "Quicktime Window") {
+	{367, 58, 545, 361},
+	noGrowDocProc,
+	invisible,
+	goAway,
+	0x1D,
+	180,
+	"Quicktime Window",
+	noAutoCenter
+};
+
+resource 'DLOG' (132, "PUB") {
+	{45, 83, 472, 556},
+	noGrowDocProc,
+	visible,
+	goAway,
+	0x18,
+	872,
+	"How to order PlayerPRO",
+	centerMainScreen
+};
+
+resource 'DLOG' (181, "Bookmarks") {
+	{433, 149, 777, 561},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0xF2D,
+	181,
+	"Add/Remove Bookmarks",
+	noAutoCenter
+};
+
+resource 'DLOG' (2004, "Pref: MISC") {
+	{45, 431, 354, 935},
+	documentProc,
+	visible,
+	goAway,
+	0x0,
+	2004,
+	"",
+	noAutoCenter
+};
+
+resource 'DLOG' (182, "Fine Speed/Pitch Settings") {
+	{276, 282, 346, 498},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x0,
+	182,
+	"Fine Speed/Pitch Settings",
+	noAutoCenter
+};
+
+resource 'DLOG' (130, "Info") {
+	{48, 14, 348, 505},
+	dBoxProc,
+	visible,
+	goAway,
+	0x0,
+	421,
+	"Informations",
+	centerMainScreen
+};
+
+resource 'DLOG' (140, "Instruments List") {
+	{117, 192, 399, 605},
+	zoomDocProc,
+	invisible,
+	goAway,
+	0x1,
+	684,
+	"Instruments List",
+	593
+};
+
+resource 'DLOG' (137, "Samples") {
+	{94, 40, 246, 576},
+	zoomDocProc,
+	invisible,
+	goAway,
+	0x9,
+	202,
+	"",
+	noAutoCenter
+};
+
+resource 'DLOG' (148, "General Informations") {
+	{132, 124, 373, 474},
+	movableDBoxProc,
+	invisible,
+	noGoAway,
+	0x2247,
+	148,
+	"General Information",
+	noAutoCenter
+};
+
+resource 'DLOG' (183, "Equalizer") {
+	{82, 161, 272, 388},
+	noGrowDocProc,
+	invisible,
+	goAway,
+	0x1E,
+	183,
+	"Equalizer",
+	noAutoCenter
+};
+
+resource 'DLOG' (141, "Mixer") {
+	{58, 15, 530, 712},
+	zoomDocProc,
+	invisible,
+	goAway,
+	0x6,
+	141,
+	"Mixer",
+	noAutoCenter
+};
+
+resource 'DLOG' (184, "Hz Shift") {
+	{79, 194, 345, 546},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x0,
+	184,
+	"Hz Shift",
+	noAutoCenter
+};
+
+resource 'DLOG' (146, "EditInfo Instrument") {
+	{149, 262, 480, 717},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x24FB,
+	146,
+	"Instrument Info",
+	centerMainScreen
+};
+
+resource 'DLOG' (143, "Tools") {
+	{252, 504, 412, 688},
+	zoomNoGrow,
+	invisible,
+	goAway,
+	0x8,
+	143,
+	"Tools",
+	noAutoCenter
+};
+
+resource 'DLOG' (142, "MusicList") {
+	{46, 6, 487, 723},
+	zoomDocProc,
+	invisible,
+	goAway,
+	0x7,
+	142,
+	"Music List",
+	3818
+};
+
+resource 'DITL' (128, "The Player") {
+	{	/* array DITLarray: 13 elements */
+		/* [1] */
+		{16, 0, 36, 20},
+		UserItem {
+			disabled
+		},
+		/* [2] */
+		{1, 400, 14, 445},
+		UserItem {
+			disabled
+		},
+		/* [3] */
+		{1, 444, 14, 533},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{1, 3, 14, 54},
+		StaticText {
+			disabled,
+			"Display:"
+		},
+		/* [5] */
+		{1, 149, 14, 169},
+		Picture {
+			enabled,
+			900
+		},
+		/* [6] */
+		{1, 55, 14, 147},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [7] */
+		{1, 180, 14, 213},
+		StaticText {
+			disabled,
+			"Size:"
+		},
+		/* [8] */
+		{1, 243, 14, 263},
+		Picture {
+			enabled,
+			900
+		},
+		/* [9] */
+		{1, 214, 14, 242},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [10] */
+		{16, 0, 2016, 2000},
+		UserItem {
+			enabled
+		},
+		/* [11] */
+		{1, 276, 14, 309},
+		StaticText {
+			disabled,
+			"Mode:"
+		},
+		/* [12] */
+		{1, 345, 14, 365},
+		Picture {
+			enabled,
+			900
+		},
+		/* [13] */
+		{1, 310, 14, 344},
+		StaticText {
+			disabled,
+			""
+		}
+	}
+};
+
+resource 'DITL' (1002, purgeable) {
+	{	/* array DITLarray: 11 elements */
+		/* [1] */
+		{147, 300, 167, 380},
+		Button {
+			enabled,
+			"Open"
+		},
+		/* [2] */
+		{0, 699, 80, 717},
+		Button {
+			enabled,
+			"Hidden"
+		},
+		/* [3] */
+		{175, 300, 195, 380},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [4] */
+		{50, 273, 70, 388},
+		UserItem {
+			disabled
+		},
+		/* [5] */
+		{77, 300, 97, 380},
+		Button {
+			enabled,
+			"Eject"
+		},
+		/* [6] */
+		{102, 300, 122, 380},
+		Button {
+			enabled,
+			"Desktop"
+		},
+		/* [7] */
+		{50, 10, 290, 271},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{50, 270, 290, 287},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{133, 296, 134, 384},
+		UserItem {
+			disabled
+		},
+		/* [10] */
+		{0, 660, 101, 756},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [11] */
+		{10, 10, 26, 320},
+		StaticText {
+			disabled,
+			"Please, choose a sound file to open :"
+		}
+	}
+};
+
+resource 'DITL' (268) {
+	{	/* array DITLarray: 8 elements */
+		/* [1] */
+		{103, 270, 123, 328},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{90, 10, 106, 112},
+		StaticText {
+			disabled,
+			"Error ID : ^1"
+		},
+		/* [3] */
+		{10, 60, 85, 331},
+		StaticText {
+			disabled,
+			"^0"
+		},
+		/* [4] */
+		{10, 10, 42, 42},
+		Picture {
+			disabled,
+			220
+		},
+		/* [5] */
+		{46, 12, 62, 43},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [6] */
+		{63, 12, 79, 43},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [7] */
+		{107, 10, 123, 112},
+		StaticText {
+			disabled,
+			"MemErr : ^2"
+		},
+		/* [8] */
+		{124, 19, 140, 112},
+		StaticText {
+			disabled,
+			"ResErr : ^3"
+		}
+	}
+};
+
+resource 'DITL' (144, "Inst. List") {
+	{	/* array DITLarray: 8 elements */
+		/* [1] */
+		{37, 0, 2037, 200},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{25, 0, 36, 220},
+		StaticText {
+			disabled,
+			" ID    Size    Name"
+		},
+		/* [3] */
+		{2, 41, 22, 61},
+		UserItem {
+			enabled
+		},
+		/* [4] */
+		{2, 71, 22, 91},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{2, 101, 22, 121},
+		UserItem {
+			enabled
+		},
+		/* [6] */
+		{2, 131, 22, 151},
+		UserItem {
+			enabled
+		},
+		/* [7] */
+		{2, 11, 22, 31},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{2, 161, 22, 181},
+		UserItem {
+			enabled
+		}
+	}
+};
+
+resource 'DITL' (457) {
+	{	/* array DITLarray: 4 elements */
+		/* [1] */
+		{81, 276, 101, 334},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{81, 204, 101, 262},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{10, 60, 76, 332},
+		StaticText {
+			disabled,
+			"^0"
+		},
+		/* [4] */
+		{10, 10, 42, 42},
+		Picture {
+			disabled,
+			220
+		}
+	}
+};
+
+resource 'DITL' (147) {
+	{	/* array DITLarray: 15 elements */
+		/* [1] */
+		{29, 0, 2029, 2000},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{2, 80, 14, 114},
+		StaticText {
+			disabled,
+			"Zoom:"
+		},
+		/* [3] */
+		{14, 80, 27, 113},
+		StaticText {
+			disabled,
+			"Size:"
+		},
+		/* [4] */
+		{2, 198, 16, 238},
+		StaticText {
+			disabled,
+			"Track:"
+		},
+		/* [5] */
+		{2, 285, 16, 372},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [6] */
+		{15, 240, 27, 374},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [7] */
+		{1, 376, 14, 396},
+		Picture {
+			enabled,
+			200
+		},
+		/* [8] */
+		{14, 376, 27, 396},
+		Picture {
+			enabled,
+			200
+		},
+		/* [9] */
+		{2, 113, 14, 195},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [10] */
+		{14, 113, 27, 163},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [11] */
+		{15, 168, 27, 238},
+		StaticText {
+			disabled,
+			"Instrument:"
+		},
+		/* [12] */
+		{4, 5, 24, 25},
+		UserItem {
+			enabled
+		},
+		/* [13] */
+		{2, 243, 12, 281},
+		UserItem {
+			disabled
+		},
+		/* [14] */
+		{4, 30, 24, 50},
+		UserItem {
+			enabled
+		},
+		/* [15] */
+		{4, 55, 24, 75},
+		UserItem {
+			enabled
+		}
+	}
+};
+
+resource 'DITL' (300, purgeable) {
+	{	/* array DITLarray: 5 elements */
+		/* [1] */
+		{62, 9, 82, 79},
+		Button {
+			enabled,
+			"Yes"
+		},
+		/* [2] */
+		{92, 9, 112, 79},
+		Button {
+			enabled,
+			"No"
+		},
+		/* [3] */
+		{92, 200, 112, 270},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [4] */
+		{6, 60, 54, 270},
+		StaticText {
+			disabled,
+			"Save “^0” before closing?"
+		},
+		/* [5] */
+		{10, 10, 42, 42},
+		Picture {
+			disabled,
+			220
+		}
+	}
+};
+
+resource 'DITL' (129) {
+	{	/* array DITLarray: 10 elements */
+		/* [1] */
+		{135, 252, 155, 332},
+		Button {
+			enabled,
+			"Open"
+		},
+		/* [2] */
+		{104, 252, 124, 332},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{0, 0, 0, 0},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{8, 235, 24, 337},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{32, 252, 52, 332},
+		Button {
+			enabled,
+			"Eject"
+		},
+		/* [6] */
+		{60, 252, 80, 332},
+		Button {
+			enabled,
+			"Desktop"
+		},
+		/* [7] */
+		{29, 12, 255, 230},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{6, 12, 25, 230},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{91, 251, 92, 333},
+		Picture {
+			disabled,
+			11
+		},
+		/* [10] */
+		{169, 250, 255, 336},
+		Picture {
+			disabled,
+			133
+		}
+	}
+};
+
+resource 'DITL' (131, purgeable) {
+	{	/* array DITLarray: 13 elements */
+		/* [1] */
+		{161, 252, 181, 332},
+		Button {
+			enabled,
+			"Save"
+		},
+		/* [2] */
+		{130, 252, 150, 332},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{0, 0, 0, 0},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{8, 235, 24, 337},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{32, 252, 52, 332},
+		Button {
+			enabled,
+			"Eject"
+		},
+		/* [6] */
+		{60, 252, 80, 332},
+		Button {
+			enabled,
+			"Desktop"
+		},
+		/* [7] */
+		{29, 12, 234, 230},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{7, 12, 26, 230},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{119, 250, 120, 334},
+		Picture {
+			disabled,
+			11
+		},
+		/* [10] */
+		{262, 16, 278, 228},
+		EditText {
+			enabled,
+			""
+		},
+		/* [11] */
+		{241, 16, 257, 182},
+		StaticText {
+			disabled,
+			"Save document as:"
+		},
+		/* [12] */
+		{88, 252, 108, 332},
+		UserItem {
+			disabled
+		},
+		/* [13] */
+		{195, 250, 281, 336},
+		Picture {
+			disabled,
+			133
+		}
+	}
+};
+
+resource 'DITL' (150) {
+	{	/* array DITLarray: 2 elements */
+		/* [1] */
+		{9, 72, 25, 200},
+		EditText {
+			disabled,
+			"Instrument "
+		},
+		/* [2] */
+		{10, 10, 26, 56},
+		StaticText {
+			disabled,
+			"Name:"
+		}
+	}
+};
+
+resource 'DITL' (193) {
+	{	/* array DITLarray: 3 elements */
+		/* [1] */
+		{16, 99, 133, 368},
+		UserItem {
+			disabled
+		},
+		/* [2] */
+		{8, 7, 320, 23},
+		Control {
+			enabled,
+			153
+		},
+		/* [3] */
+		{119, 99, 300, 5099},
+		UserItem {
+			enabled
+		}
+	}
+};
+
+resource 'DITL' (133) {
+	{	/* array DITLarray: 20 elements */
+		/* [1] */
+		{135, 252, 155, 332},
+		Button {
+			enabled,
+			"Open"
+		},
+		/* [2] */
+		{104, 252, 124, 332},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{0, 0, 0, 0},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{8, 235, 24, 337},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{32, 252, 52, 332},
+		Button {
+			enabled,
+			"Eject"
+		},
+		/* [6] */
+		{60, 252, 80, 332},
+		Button {
+			enabled,
+			"Desktop"
+		},
+		/* [7] */
+		{29, 12, 255, 230},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{6, 12, 25, 230},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{91, 251, 92, 333},
+		Picture {
+			disabled,
+			11
+		},
+		/* [10] */
+		{175, 252, 195, 332},
+		Button {
+			enabled,
+			"Add"
+		},
+		/* [11] */
+		{255, 274, 271, 311},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [12] */
+		{255, 12, 272, 56},
+		StaticText {
+			enabled,
+			"Show: "
+		},
+		/* [13] */
+		{277, 107, 294, 235},
+		StaticText {
+			disabled,
+			"Available formats: "
+		},
+		/* [14] */
+		{294, 12, 342, 336},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [15] */
+		{274, -1, 275, 351},
+		Picture {
+			disabled,
+			11
+		},
+		/* [16] */
+		{203, 252, 223, 332},
+		Button {
+			enabled,
+			"Add All"
+		},
+		/* [17] */
+		{231, 252, 251, 332},
+		Button {
+			enabled,
+			"Preview"
+		},
+		/* [18] */
+		{164, 251, 165, 333},
+		Picture {
+			disabled,
+			11
+		},
+		/* [19] */
+		{255, 83, 271, 228},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [20] */
+		{257, 58, 270, 78},
+		Picture {
+			enabled,
+			901
+		}
+	}
+};
+
+resource 'DITL' (152) {
+	{	/* array DITLarray: 47 elements */
+		/* [1] */
+		{134, 236, 154, 315},
+		Button {
+			enabled,
+			"Find"
+		},
+		/* [2] */
+		{134, 342, 154, 421},
+		Button {
+			enabled,
+			"Done"
+		},
+		/* [3] */
+		{17, 3, 35, 98},
+		CheckBox {
+			enabled,
+			"Instrument"
+		},
+		/* [4] */
+		{37, 3, 55, 92},
+		CheckBox {
+			enabled,
+			"Note"
+		},
+		/* [5] */
+		{57, 3, 75, 82},
+		CheckBox {
+			enabled,
+			"Effect"
+		},
+		/* [6] */
+		{76, 3, 94, 94},
+		CheckBox {
+			enabled,
+			"Argument"
+		},
+		/* [7] */
+		{0, 52, 16, 89},
+		StaticText {
+			disabled,
+			"Find:"
+		},
+		/* [8] */
+		{0, 189, 16, 257},
+		StaticText {
+			disabled,
+			"Replace:"
+		},
+		/* [9] */
+		{0, 338, 16, 398},
+		StaticText {
+			disabled,
+			"Where:"
+		},
+		/* [10] */
+		{18, 304, 36, 428},
+		RadioButton {
+			enabled,
+			"Current pattern"
+		},
+		/* [11] */
+		{38, 304, 56, 448},
+		RadioButton {
+			enabled,
+			"Selection (Digital)"
+		},
+		/* [12] */
+		{58, 304, 76, 410},
+		RadioButton {
+			enabled,
+			"Everywhere"
+		},
+		/* [13] */
+		{50, 530, 68, 681},
+		RadioButton {
+			enabled,
+			"Radio Button"
+		},
+		/* [14] */
+		{20, 126, 33, 146},
+		Picture {
+			enabled,
+			900
+		},
+		/* [15] */
+		{19, 97, 35, 125},
+		StaticText {
+			disabled,
+			"888"
+		},
+		/* [16] */
+		{40, 126, 53, 146},
+		Picture {
+			enabled,
+			900
+		},
+		/* [17] */
+		{39, 97, 55, 125},
+		StaticText {
+			disabled,
+			"888"
+		},
+		/* [18] */
+		{78, 100, 93, 118},
+		EditText {
+			enabled,
+			"00"
+		},
+		/* [19] */
+		{60, 126, 73, 146},
+		Picture {
+			enabled,
+			900
+		},
+		/* [20] */
+		{59, 100, 74, 122},
+		StaticText {
+			disabled,
+			"99"
+		},
+		/* [21] */
+		{16, 153, 34, 248},
+		CheckBox {
+			enabled,
+			"Instrument"
+		},
+		/* [22] */
+		{36, 153, 54, 242},
+		CheckBox {
+			enabled,
+			"Note"
+		},
+		/* [23] */
+		{56, 153, 74, 228},
+		CheckBox {
+			enabled,
+			"Effect"
+		},
+		/* [24] */
+		{76, 153, 94, 244},
+		CheckBox {
+			enabled,
+			"Argument"
+		},
+		/* [25] */
+		{20, 276, 33, 296},
+		Picture {
+			enabled,
+			900
+		},
+		/* [26] */
+		{18, 247, 34, 275},
+		StaticText {
+			disabled,
+			"888"
+		},
+		/* [27] */
+		{40, 276, 53, 296},
+		Picture {
+			enabled,
+			900
+		},
+		/* [28] */
+		{38, 247, 54, 275},
+		StaticText {
+			disabled,
+			"999"
+		},
+		/* [29] */
+		{78, 250, 93, 268},
+		EditText {
+			enabled,
+			"99"
+		},
+		/* [30] */
+		{60, 276, 73, 296},
+		Picture {
+			enabled,
+			900
+		},
+		/* [31] */
+		{57, 250, 73, 272},
+		StaticText {
+			disabled,
+			"99"
+		},
+		/* [32] */
+		{-10, 149, 120, 150},
+		Picture {
+			disabled,
+			11
+		},
+		/* [33] */
+		{-10, 299, 120, 300},
+		Picture {
+			disabled,
+			11
+		},
+		/* [34] */
+		{215, 71, 225, 81},
+		UserItem {
+			disabled
+		},
+		/* [35] */
+		{121, 0, 122, 800},
+		Picture {
+			disabled,
+			11
+		},
+		/* [36] */
+		{185, 266, 205, 371},
+		Button {
+			enabled,
+			"Replace & Find"
+		},
+		/* [37] */
+		{134, 127, 154, 206},
+		Button {
+			enabled,
+			"Replace"
+		},
+		/* [38] */
+		{134, 17, 154, 96},
+		Button {
+			enabled,
+			"Replace All"
+		},
+		/* [39] */
+		{98, 3, 116, 94},
+		CheckBox {
+			enabled,
+			"Volume"
+		},
+		/* [40] */
+		{100, 100, 115, 118},
+		EditText {
+			enabled,
+			"00"
+		},
+		/* [41] */
+		{98, 153, 116, 244},
+		CheckBox {
+			enabled,
+			"Volume"
+		},
+		/* [42] */
+		{100, 250, 115, 268},
+		EditText {
+			enabled,
+			"00"
+		},
+		/* [43] */
+		{100, 304, 116, 385},
+		RadioButton {
+			enabled,
+			"On track:"
+		},
+		/* [44] */
+		{101, 406, 114, 426},
+		Picture {
+			enabled,
+			900
+		},
+		/* [45] */
+		{100, 386, 116, 405},
+		StaticText {
+			disabled,
+			"1"
+		},
+		/* [46] */
+		{82, 304, 98, 385},
+		RadioButton {
+			enabled,
+			"All tracks"
+		},
+		/* [47] */
+		{78, 300, 79, 1100},
+		Picture {
+			disabled,
+			11
+		}
+	}
+};
+
+resource 'DITL' (2003) {
+	{	/* array DITLarray: 4 elements */
+		/* [1] */
+		{57, 4, 140, 351},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{38, 3, 54, 158},
+		StaticText {
+			disabled,
+			"Tracks color:"
+		},
+		/* [3] */
+		{152, 3, 168, 198},
+		StaticText {
+			disabled,
+			"Click to change color"
+		},
+		/* [4] */
+		{30, 180, 57, 332},
+		UserItem {
+			disabled
+		}
+	}
+};
+
+resource 'DITL' (155) {
+	{	/* array DITLarray: 1 elements */
+		/* [1] */
+		{-1, -1, 125, 485},
+		UserItem {
+			enabled
+		}
+	}
+};
+
+resource 'DITL' (140) {
+	{	/* array DITLarray: 10 elements */
+		/* [1] */
+		{135, 252, 155, 332},
+		Button {
+			enabled,
+			"Open"
+		},
+		/* [2] */
+		{104, 252, 124, 332},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{0, 0, 0, 0},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{8, 235, 24, 337},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{32, 252, 52, 332},
+		Button {
+			enabled,
+			"Eject"
+		},
+		/* [6] */
+		{60, 252, 80, 332},
+		Button {
+			enabled,
+			"Desktop"
+		},
+		/* [7] */
+		{29, 12, 159, 230},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{6, 12, 25, 230},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{91, 251, 92, 333},
+		Picture {
+			disabled,
+			11
+		},
+		/* [10] */
+		{164, 12, 183, 198},
+		Control {
+			enabled,
+			141
+		}
+	}
+};
+
+resource 'DITL' (151, purgeable) {
+	{	/* array DITLarray: 13 elements */
+		/* [1] */
+		{161, 252, 181, 332},
+		Button {
+			enabled,
+			"Save"
+		},
+		/* [2] */
+		{130, 252, 150, 332},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{0, 0, 0, 0},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{8, 235, 24, 337},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{32, 252, 52, 332},
+		Button {
+			enabled,
+			"Eject"
+		},
+		/* [6] */
+		{60, 252, 80, 332},
+		Button {
+			enabled,
+			"Desktop"
+		},
+		/* [7] */
+		{29, 12, 182, 230},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{7, 12, 26, 230},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{119, 250, 120, 334},
+		Picture {
+			disabled,
+			11
+		},
+		/* [10] */
+		{209, 14, 225, 226},
+		EditText {
+			enabled,
+			""
+		},
+		/* [11] */
+		{188, 14, 204, 226},
+		StaticText {
+			disabled,
+			"Filename:"
+		},
+		/* [12] */
+		{88, 252, 108, 332},
+		UserItem {
+			disabled
+		},
+		/* [13] */
+		{235, 11, 254, 247},
+		Control {
+			enabled,
+			141
+		}
+	}
+};
+
+resource 'DITL' (156, "Music list") {
+	{	/* array DITLarray: 17 elements */
+		/* [1] */
+		{0, 0, 196, 196},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{5, 205, 18, 280},
+		StaticText {
+			disabled,
+			"Rows:"
+		},
+		/* [3] */
+		{20, 205, 33, 311},
+		StaticText {
+			disabled,
+			"Columns:"
+		},
+		/* [4] */
+		{80, 205, 93, 335},
+		StaticText {
+			disabled,
+			"Smallest Pixel Value:"
+		},
+		/* [5] */
+		{35, 205, 48, 280},
+		StaticText {
+			disabled,
+			"Depth:"
+		},
+		/* [6] */
+		{95, 205, 108, 336},
+		StaticText {
+			disabled,
+			"Window Center:"
+		},
+		/* [7] */
+		{65, 205, 78, 334},
+		StaticText {
+			disabled,
+			"Largest Pixel Value:"
+		},
+		/* [8] */
+		{50, 205, 63, 327},
+		StaticText {
+			disabled,
+			"Size (in bytes):"
+		},
+		/* [9] */
+		{5, 337, 18, 417},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [10] */
+		{20, 337, 33, 417},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [11] */
+		{80, 337, 93, 417},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [12] */
+		{50, 337, 63, 417},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [13] */
+		{95, 337, 108, 417},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [14] */
+		{65, 337, 78, 417},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [15] */
+		{35, 337, 48, 417},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [16] */
+		{110, 205, 123, 334},
+		StaticText {
+			disabled,
+			"Window Width:"
+		},
+		/* [17] */
+		{110, 337, 122, 416},
+		StaticText {
+			disabled,
+			""
+		}
+	}
+};
+
+resource 'DITL' (157) {
+	{	/* array DITLarray: 2 elements */
+		/* [1] */
+		{-98, -146, 43, 20},
+		Control {
+			disabled,
+			128
+		},
+		/* [2] */
+		{-62, -79, 23, 18},
+		Control {
+			disabled,
+			129
+		}
+	}
+};
+
+resource 'DITL' (158) {
+	{	/* array DITLarray: 10 elements */
+		/* [1] */
+		{7, 67, 15, 117},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{34, 256, 47, 294},
+		UserItem {
+			disabled
+		},
+		/* [3] */
+		{56, 236, 68, 318},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{22, 0, 54, 32},
+		UserItem {
+			disabled
+		},
+		/* [5] */
+		{0, 0, 32, 32},
+		Control {
+			enabled,
+			137
+		},
+		/* [6] */
+		{0, 35, 32, 67},
+		Control {
+			enabled,
+			132
+		},
+		/* [7] */
+		{2, 233, 30, 266},
+		UserItem {
+			disabled
+		},
+		/* [8] */
+		{2, 270, 30, 303},
+		UserItem {
+			disabled
+		},
+		/* [9] */
+		{0, 70, 32, 102},
+		UserItem {
+			enabled
+		},
+		/* [10] */
+		{4, 191, 26, 294},
+		UserItem {
+			disabled
+		}
+	}
+};
+
+resource 'DITL' (159) {
+	{	/* array DITLarray: 4 elements */
+		/* [1] */
+		{80, 270, 100, 328},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{90, 10, 106, 163},
+		StaticText {
+			disabled,
+			"Error ID: ^1"
+		},
+		/* [3] */
+		{10, 60, 76, 332},
+		StaticText {
+			disabled,
+			"^0"
+		},
+		/* [4] */
+		{10, 10, 42, 42},
+		Picture {
+			disabled,
+			220
+		}
+	}
+};
+
+resource 'DITL' (160) {
+	{	/* array DITLarray: 4 elements */
+		/* [1] */
+		{81, 276, 101, 334},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{81, 204, 101, 262},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{10, 60, 76, 332},
+		StaticText {
+			disabled,
+			"^0"
+		},
+		/* [4] */
+		{10, 10, 42, 42},
+		Picture {
+			disabled,
+			220
+		}
+	}
+};
+
+resource 'DITL' (162) {
+	{	/* array DITLarray: 2 elements */
+		/* [1] */
+		{24, -1, 2024, 199},
+		UserItem {
+			disabled
+		},
+		/* [2] */
+		{3, 5, 19, 190},
+		Control {
+			enabled,
+			130
+		}
+	}
+};
+
+resource 'DITL' (167, "OSIRIS StdFile Open", purgeable) {
+	{	/* array DITLarray: 10 elements */
+		/* [1] */
+		{123, 283, 141, 363},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{148, 283, 166, 363},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{0, 0, 0, 0},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{16, 272, 32, 374},
+		UserItem {
+			disabled
+		},
+		/* [5] */
+		{53, 283, 71, 363},
+		Button {
+			enabled,
+			"Eject"
+		},
+		/* [6] */
+		{78, 283, 96, 363},
+		Button {
+			enabled,
+			"Desktop"
+		},
+		/* [7] */
+		{39, 12, 296, 259},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{14, 12, 33, 259},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{109, 279, 110, 367},
+		UserItem {
+			disabled
+		},
+		/* [10] */
+		{1044, 20, 1145, 116},
+		StaticText {
+			disabled,
+			""
+		}
+	}
+};
+
+resource 'DITL' (168) {
+	{	/* array DITLarray: 11 elements */
+		/* [1] */
+		{161, 279, 181, 359},
+		Button {
+			enabled,
+			"Save"
+		},
+		/* [2] */
+		{130, 279, 150, 359},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{8, 268, 24, 370},
+		UserItem {
+			enabled
+		},
+		/* [4] */
+		{32, 279, 52, 359},
+		Button {
+			enabled,
+			"Eject"
+		},
+		/* [5] */
+		{60, 279, 80, 359},
+		Button {
+			enabled,
+			"Desktop"
+		},
+		/* [6] */
+		{29, 12, 286, 259},
+		UserItem {
+			enabled
+		},
+		/* [7] */
+		{7, 12, 26, 259},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{119, 277, 120, 361},
+		Picture {
+			disabled,
+			11
+		},
+		/* [9] */
+		{314, 27, 330, 239},
+		EditText {
+			enabled,
+			""
+		},
+		/* [10] */
+		{293, 27, 309, 239},
+		StaticText {
+			disabled,
+			"Filename:"
+		},
+		/* [11] */
+		{88, 279, 108, 359},
+		UserItem {
+			disabled
+		}
+	}
+};
+
+resource 'DITL' (169) {
+	{	/* array DITLarray: 13 elements */
+		/* [1] */
+		{0, 82, 17, 171},
+		UserItem {
+			disabled
+		},
+		/* [2] */
+		{203, 26, 222, 226},
+		UserItem {
+			disabled
+		},
+		/* [3] */
+		{221, 1, 240, 107},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{221, 144, 240, 250},
+		UserItem {
+			disabled
+		},
+		/* [5] */
+		{0, 0, 100, 250},
+		Picture {
+			disabled,
+			130
+		},
+		/* [6] */
+		{69, 0, 197, 256},
+		Picture {
+			disabled,
+			131
+		},
+		/* [7] */
+		{72, 0, 87, 243},
+		UserItem {
+			disabled
+		},
+		/* [8] */
+		{90, 0, 105, 243},
+		UserItem {
+			disabled
+		},
+		/* [9] */
+		{108, 0, 123, 243},
+		UserItem {
+			disabled
+		},
+		/* [10] */
+		{126, 0, 141, 243},
+		UserItem {
+			disabled
+		},
+		/* [11] */
+		{144, 0, 159, 243},
+		UserItem {
+			disabled
+		},
+		/* [12] */
+		{162, 0, 177, 243},
+		UserItem {
+			disabled
+		},
+		/* [13] */
+		{180, 0, 195, 243},
+		UserItem {
+			disabled
+		}
+	}
+};
+
+resource 'DITL' (170) {
+	{	/* array DITLarray: 4 elements */
+		/* [1] */
+		{3, 3, 67, 209},
+		UserItem {
+			disabled
+		},
+		/* [2] */
+		{70, 3, 134, 209},
+		UserItem {
+			disabled
+		},
+		/* [3] */
+		{3, 2, 67, 15},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{70, 2, 134, 15},
+		UserItem {
+			disabled
+		}
+	}
+};
+
+resource 'DITL' (623) {
+	{	/* array DITLarray: 9 elements */
+		/* [1] */
+		{8, 252, 28, 310},
+		Button {
+			enabled,
+			"Start"
+		},
+		/* [2] */
+		{40, 252, 60, 310},
+		Button {
+			enabled,
+			"Bye"
+		},
+		/* [3] */
+		{8, 12, 24, 126},
+		StaticText {
+			disabled,
+			"Result (in ticks):"
+		},
+		/* [4] */
+		{8, 132, 24, 207},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [5] */
+		{32, 12, 48, 126},
+		StaticText {
+			disabled,
+			"Processor Time:"
+		},
+		/* [6] */
+		{32, 132, 48, 207},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [7] */
+		{70, 10, 90, 88},
+		Button {
+			enabled,
+			"Debug ON"
+		},
+		/* [8] */
+		{70, 100, 90, 178},
+		Button {
+			enabled,
+			"Debug OFF"
+		},
+		/* [9] */
+		{69, 188, 89, 298},
+		Button {
+			enabled,
+			"Memory Purge"
+		}
+	}
+};
+
+resource 'DITL' (364) {
+	{	/* array DITLarray: 19 elements */
+		/* [1] */
+		{2, 2, 18, 301},
+		UserItem {
+			disabled
+		},
+		/* [2] */
+		{19, 2, 32, 74},
+		StaticText {
+			disabled,
+			"Used memory:"
+		},
+		/* [3] */
+		{19, 76, 32, 124},
+		StaticText {
+			disabled,
+			"1300 Kb"
+		},
+		/* [4] */
+		{46, 208, 59, 221},
+		UserItem {
+			disabled
+		},
+		/* [5] */
+		{19, 169, 32, 244},
+		StaticText {
+			disabled,
+			"Free memory:"
+		},
+		/* [6] */
+		{19, 245, 32, 301},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [7] */
+		{52, 215, 65, 228},
+		UserItem {
+			disabled
+		},
+		/* [8] */
+		{33, 31, 46, 101},
+		StaticText {
+			disabled,
+			"Sound Driver:"
+		},
+		/* [9] */
+		{33, 103, 46, 151},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [10] */
+		{33, 2, 46, 30},
+		StaticText {
+			disabled,
+			"20%"
+		},
+		/* [11] */
+		{47, 36, 60, 101},
+		StaticText {
+			disabled,
+			"Instruments:"
+		},
+		/* [12] */
+		{47, 103, 60, 151},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [13] */
+		{47, 2, 60, 30},
+		StaticText {
+			disabled,
+			"20%"
+		},
+		/* [14] */
+		{61, 50, 75, 101},
+		StaticText {
+			disabled,
+			"Partition:"
+		},
+		/* [15] */
+		{61, 103, 74, 151},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [16] */
+		{61, 2, 74, 31},
+		StaticText {
+			disabled,
+			"20%"
+		},
+		/* [17] */
+		{75, 41, 88, 101},
+		StaticText {
+			disabled,
+			"Player Pro:"
+		},
+		/* [18] */
+		{75, 103, 88, 151},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [19] */
+		{75, 2, 88, 29},
+		StaticText {
+			disabled,
+			"20%"
+		}
+	}
+};
+
+resource 'DITL' (217) {
+	{	/* array DITLarray: 22 elements */
+		/* [1] */
+		{35, 184, 55, 242},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{65, 184, 85, 242},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{6, 76, 19, 241},
+		EditText {
+			enabled,
+			""
+		},
+		/* [4] */
+		{26, 76, 39, 123},
+		EditText {
+			enabled,
+			""
+		},
+		/* [5] */
+		{6, 39, 19, 73},
+		StaticText {
+			disabled,
+			"Name:"
+		},
+		/* [6] */
+		{26, 39, 40, 73},
+		StaticText {
+			disabled,
+			"Rows:"
+		},
+		/* [7] */
+		{111, 59, 124, 100},
+		StaticText {
+			disabled,
+			"Tracks:"
+		},
+		/* [8] */
+		{111, 100, 124, 124},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [9] */
+		{111, 132, 124, 200},
+		StaticText {
+			disabled,
+			"Size in bytes:"
+		},
+		/* [10] */
+		{111, 200, 124, 249},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [11] */
+		{106, -19, 107, 381},
+		Picture {
+			disabled,
+			11
+		},
+		/* [12] */
+		{111, 6, 124, 31},
+		StaticText {
+			disabled,
+			"ID:"
+		},
+		/* [13] */
+		{111, 22, 124, 49},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [14] */
+		{46, 6, 59, 73},
+		StaticText {
+			disabled,
+			"Compression:"
+		},
+		/* [15] */
+		{46, 114, 59, 134},
+		Picture {
+			enabled,
+			200
+		},
+		/* [16] */
+		{46, 76, 59, 111},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [17] */
+		{66, 12, 79, 64},
+		CheckBox {
+			enabled,
+			"Speed:"
+		},
+		/* [18] */
+		{86, 12, 99, 73},
+		CheckBox {
+			enabled,
+			"Tempo:"
+		},
+		/* [19] */
+		{66, 76, 79, 123},
+		EditText {
+			enabled,
+			""
+		},
+		/* [20] */
+		{86, 76, 99, 123},
+		EditText {
+			enabled,
+			""
+		},
+		/* [21] */
+		{66, 129, 79, 171},
+		StaticText {
+			disabled,
+			"(0...31)"
+		},
+		/* [22] */
+		{86, 129, 99, 181},
+		StaticText {
+			disabled,
+			"(32...255)"
+		}
+	}
+};
+
+resource 'DITL' (317) {
+	{	/* array DITLarray: 25 elements */
+		/* [1] */
+		{10, 280, 30, 338},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{40, 280, 60, 338},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{10, 20, 24, 73},
+		StaticText {
+			disabled,
+			"File Name:"
+		},
+		/* [4] */
+		{10, 82, 23, 258},
+		EditText {
+			enabled,
+			""
+		},
+		/* [5] */
+		{34, 41, 48, 73},
+		StaticText {
+			disabled,
+			"Type:"
+		},
+		/* [6] */
+		{58, 28, 72, 73},
+		StaticText {
+			disabled,
+			"Creator:"
+		},
+		/* [7] */
+		{34, 82, 47, 115},
+		EditText {
+			enabled,
+			""
+		},
+		/* [8] */
+		{34, 122, 47, 142},
+		Picture {
+			enabled,
+			200
+		},
+		/* [9] */
+		{58, 82, 71, 115},
+		EditText {
+			enabled,
+			""
+		},
+		/* [10] */
+		{58, 122, 71, 142},
+		Picture {
+			enabled,
+			200
+		},
+		/* [11] */
+		{29, 188, 61, 220},
+		UserItem {
+			disabled
+		},
+		/* [12] */
+		{61, 159, 74, 249},
+		UserItem {
+			disabled
+		},
+		/* [13] */
+		{79, -12, 80, 588},
+		Picture {
+			disabled,
+			11
+		},
+		/* [14] */
+		{84, 1, 97, 73},
+		StaticText {
+			disabled,
+			"Internal Name:"
+		},
+		/* [15] */
+		{114, 192, 127, 241},
+		StaticText {
+			disabled,
+			"Patterns:"
+		},
+		/* [16] */
+		{114, 19, 127, 73},
+		StaticText {
+			disabled,
+			"Plug Type:"
+		},
+		/* [17] */
+		{99, 177, 112, 241},
+		StaticText {
+			disabled,
+			"Instruments:"
+		},
+		/* [18] */
+		{99, 44, 112, 73},
+		StaticText {
+			disabled,
+			"Size:"
+		},
+		/* [19] */
+		{84, 79, 97, 290},
+		StaticText {
+			enabled,
+			"-"
+		},
+		/* [20] */
+		{114, 247, 127, 342},
+		StaticText {
+			disabled,
+			"-"
+		},
+		/* [21] */
+		{114, 79, 127, 174},
+		StaticText {
+			disabled,
+			"-"
+		},
+		/* [22] */
+		{99, 247, 112, 342},
+		StaticText {
+			disabled,
+			"-"
+		},
+		/* [23] */
+		{99, 79, 112, 174},
+		StaticText {
+			disabled,
+			"-"
+		},
+		/* [24] */
+		{129, 35, 142, 73},
+		StaticText {
+			disabled,
+			"Where:"
+		},
+		/* [25] */
+		{129, 79, 274, 228},
+		StaticText {
+			disabled,
+			"-"
+		}
+	}
+};
+
+resource 'DITL' (172) {
+	{	/* array DITLarray: 26 elements */
+		/* [1] */
+		{110, 370, 130, 428},
+		Button {
+			enabled,
+			"Move"
+		},
+		/* [2] */
+		{110, 450, 130, 508},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{20, 10, 38, 116},
+		CheckBox {
+			enabled,
+			"Instrument"
+		},
+		/* [4] */
+		{40, 10, 58, 99},
+		CheckBox {
+			enabled,
+			"Note"
+		},
+		/* [5] */
+		{60, 10, 78, 116},
+		CheckBox {
+			enabled,
+			"Effect"
+		},
+		/* [6] */
+		{80, 10, 98, 101},
+		CheckBox {
+			enabled,
+			"Argument"
+		},
+		/* [7] */
+		{0, 70, 16, 107},
+		StaticText {
+			disabled,
+			"WHAT"
+		},
+		/* [8] */
+		{0, 260, 16, 297},
+		StaticText {
+			disabled,
+			"BY"
+		},
+		/* [9] */
+		{0, 410, 16, 466},
+		StaticText {
+			disabled,
+			"WHERE"
+		},
+		/* [10] */
+		{20, 370, 38, 494},
+		RadioButton {
+			enabled,
+			"Current pattern"
+		},
+		/* [11] */
+		{40, 370, 58, 514},
+		RadioButton {
+			enabled,
+			"Selection (Digital)"
+		},
+		/* [12] */
+		{80, 370, 98, 476},
+		RadioButton {
+			enabled,
+			"Everywhere"
+		},
+		/* [13] */
+		{60, 370, 78, 521},
+		RadioButton {
+			enabled,
+			"Selection (Classical)"
+		},
+		/* [14] */
+		{20, 150, 33, 170},
+		Picture {
+			enabled,
+			900
+		},
+		/* [15] */
+		{20, 120, 36, 142},
+		StaticText {
+			disabled,
+			"00"
+		},
+		/* [16] */
+		{40, 150, 53, 170},
+		Picture {
+			enabled,
+			900
+		},
+		/* [17] */
+		{40, 120, 56, 142},
+		StaticText {
+			disabled,
+			"00"
+		},
+		/* [18] */
+		{80, 120, 96, 138},
+		EditText {
+			enabled,
+			"00"
+		},
+		/* [19] */
+		{60, 150, 73, 170},
+		Picture {
+			enabled,
+			900
+		},
+		/* [20] */
+		{60, 120, 76, 142},
+		StaticText {
+			disabled,
+			"00"
+		},
+		/* [21] */
+		{30, 210, 48, 341},
+		StaticText {
+			enabled,
+			"No of semi-tones:"
+		},
+		/* [22] */
+		{60, 260, 76, 278},
+		EditText {
+			enabled,
+			"00"
+		},
+		/* [23] */
+		{0, 180, 100, 181},
+		Picture {
+			disabled,
+			11
+		},
+		/* [24] */
+		{0, 360, 100, 361},
+		Picture {
+			disabled,
+			11
+		},
+		/* [25] */
+		{0, 0, 1, 800},
+		Picture {
+			disabled,
+			11
+		},
+		/* [26] */
+		{100, 0, 101, 800},
+		Picture {
+			disabled,
+			11
+		}
+	}
+};
+
+resource 'DITL' (2005) {
+	{	/* array DITLarray: 13 elements */
+		/* [1] */
+		{160, 10, 176, 81},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{160, 100, 176, 170},
+		UserItem {
+			enabled
+		},
+		/* [3] */
+		{180, 110, 196, 177},
+		UserItem {
+			enabled
+		},
+		/* [4] */
+		{130, 10, 148, 257},
+		CheckBox {
+			enabled,
+			"Notes projection"
+		},
+		/* [5] */
+		{40, 10, 58, 91},
+		CheckBox {
+			enabled,
+			"Markers:"
+		},
+		/* [6] */
+		{70, 30, 86, 83},
+		StaticText {
+			disabled,
+			"Offset:"
+		},
+		/* [7] */
+		{70, 90, 86, 165},
+		EditText {
+			enabled,
+			""
+		},
+		/* [8] */
+		{70, 200, 86, 252},
+		StaticText {
+			disabled,
+			"Loop:"
+		},
+		/* [9] */
+		{70, 260, 86, 335},
+		EditText {
+			enabled,
+			""
+		},
+		/* [10] */
+		{170, 200, 190, 220},
+		UserItem {
+			disabled
+		},
+		/* [11] */
+		{110, 10, 128, 155},
+		CheckBox {
+			enabled,
+			"Octaves Markers"
+		},
+		/* [12] */
+		{150, 0, 158, 40},
+		UserItem {
+			disabled
+		},
+		/* [13] */
+		{100, 0, 101, 352},
+		Picture {
+			disabled,
+			902
+		}
+	}
+};
+
+resource 'DITL' (161) {
+	{	/* array DITLarray: 16 elements */
+		/* [1] */
+		{135, 252, 155, 332},
+		Button {
+			enabled,
+			"Open"
+		},
+		/* [2] */
+		{104, 252, 124, 332},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{0, 0, 0, 0},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{8, 235, 24, 337},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{32, 252, 52, 332},
+		Button {
+			enabled,
+			"Eject"
+		},
+		/* [6] */
+		{60, 252, 80, 332},
+		Button {
+			enabled,
+			"Desktop"
+		},
+		/* [7] */
+		{29, 12, 255, 230},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{6, 12, 25, 230},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{91, 251, 92, 333},
+		Picture {
+			disabled,
+			11
+		},
+		/* [10] */
+		{170, 250, 256, 336},
+		Picture {
+			disabled,
+			133
+		},
+		/* [11] */
+		{255, 10, 273, 177},
+		CheckBox {
+			enabled,
+			"Play when clicked"
+		},
+		/* [12] */
+		{255, 189, 271, 230},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [13] */
+		{276, 10, 293, 130},
+		CheckBox {
+			enabled,
+			"Show All Files"
+		},
+		/* [14] */
+		{298, 108, 315, 236},
+		StaticText {
+			disabled,
+			"Available formats: "
+		},
+		/* [15] */
+		{315, 13, 363, 337},
+		StaticText {
+			disabled,
+			"y\ny\ny"
+		},
+		/* [16] */
+		{295, 0, 296, 352},
+		Picture {
+			disabled,
+			11
+		}
+	}
+};
+
+resource 'DITL' (346) {
+	{	/* array DITLarray: 3 elements */
+		/* [1] */
+		{0, 0, 95, 385},
+		Picture {
+			disabled,
+			128
+		},
+		/* [2] */
+		{2, 104, 21, 231},
+		Picture {
+			disabled,
+			151
+		},
+		/* [3] */
+		{95, 0, 215, 385},
+		Picture {
+			disabled,
+			141
+		}
+	}
+};
+
+resource 'DITL' (934) {
+	{	/* array DITLarray: 3 elements */
+		/* [1] */
+		{73, 174, 93, 232},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{2, 41, 68, 235},
+		StaticText {
+			disabled,
+			"Currently, ^0% of the processing time is"
+			" used for music generation and other bac"
+			"kground processes."
+		},
+		/* [3] */
+		{3, 4, 35, 36},
+		Picture {
+			disabled,
+			220
+		}
+	}
+};
+
+resource 'DITL' (337, "Spectre") {
+	{	/* array DITLarray: 11 elements */
+		/* [1] */
+		{16, 0, 36, 20},
+		UserItem {
+			disabled
+		},
+		/* [2] */
+		{1, 275, 14, 315},
+		StaticText {
+			disabled,
+			"Scale:"
+		},
+		/* [3] */
+		{1, 316, 14, 356},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [4] */
+		{1, 3, 14, 54},
+		StaticText {
+			disabled,
+			"Display:"
+		},
+		/* [5] */
+		{1, 139, 14, 159},
+		Picture {
+			enabled,
+			900
+		},
+		/* [6] */
+		{1, 55, 14, 138},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [7] */
+		{1, 171, 14, 204},
+		StaticText {
+			disabled,
+			"Size:"
+		},
+		/* [8] */
+		{1, 236, 14, 256},
+		Picture {
+			enabled,
+			900
+		},
+		/* [9] */
+		{1, 205, 14, 233},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [10] */
+		{16, 0, 2016, 2000},
+		UserItem {
+			enabled
+		},
+		/* [11] */
+		{1, 359, 14, 379},
+		Picture {
+			enabled,
+			900
+		}
+	}
+};
+
+resource 'DITL' (176) {
+	{	/* array DITLarray: 21 elements */
+		/* [1] */
+		{10, 381, 30, 439},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{40, 381, 60, 439},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{4, 20, 17, 72},
+		StaticText {
+			disabled,
+			"Category:"
+		},
+		/* [4] */
+		{20, 12, 33, 72},
+		StaticText {
+			disabled,
+			"Instrument:"
+		},
+		/* [5] */
+		{4, 75, 17, 95},
+		Picture {
+			enabled,
+			200
+		},
+		/* [6] */
+		{20, 75, 33, 95},
+		Picture {
+			enabled,
+			200
+		},
+		/* [7] */
+		{4, 100, 17, 222},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [8] */
+		{20, 100, 33, 222},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [9] */
+		{74, 41, 87, 72},
+		StaticText {
+			disabled,
+			"Note:"
+		},
+		/* [10] */
+		{74, 100, 87, 129},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [11] */
+		{74, 75, 87, 95},
+		Picture {
+			enabled,
+			200
+		},
+		/* [12] */
+		{36, 42, 49, 72},
+		StaticText {
+			disabled,
+			"Size:"
+		},
+		/* [13] */
+		{89, 4, 147, 453},
+		Picture {
+			enabled,
+			225
+		},
+		/* [14] */
+		{36, 100, 49, 222},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [15] */
+		{70, -18, 71, 782},
+		Picture {
+			disabled,
+			11
+		},
+		/* [16] */
+		{5, 479, 21, 563},
+		UserItem {
+			disabled
+		},
+		/* [17] */
+		{52, 100, 65, 222},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [18] */
+		{52, 10, 65, 72},
+		StaticText {
+			enabled,
+			"MIDI-GM ID:"
+		},
+		/* [19] */
+		{53, 557, 69, 649},
+		UserItem {
+			enabled
+		},
+		/* [20] */
+		{53, 657, 69, 709},
+		UserItem {
+			disabled
+		},
+		/* [21] */
+		{74, 350, 87, 454},
+		StaticText {
+			disabled,
+			"Quicktime version 2.2"
+		}
+	}
+};
+
+resource 'DITL' (173) {
+	{	/* array DITLarray: 1 elements */
+		/* [1] */
+		{1, 1, 15, 2001},
+		StaticText {
+			disabled,
+			""
+		}
+	}
+};
+
+resource 'DITL' (153) {
+	{	/* array DITLarray: 11 elements */
+		/* [1] */
+		{38, 14, 2038, 2014},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{24, 0, 38, 2000},
+		UserItem {
+			enabled
+		},
+		/* [3] */
+		{1, 318, 21, 338},
+		UserItem {
+			enabled
+		},
+		/* [4] */
+		{38, 0, 2038, 14},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{2, 24, 22, 44},
+		UserItem {
+			enabled
+		},
+		/* [6] */
+		{2, 44, 22, 64},
+		UserItem {
+			enabled
+		},
+		/* [7] */
+		{2, 4, 22, 24},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{2, 224, 22, 244},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{5, 77, 18, 110},
+		StaticText {
+			disabled,
+			"Size:"
+		},
+		/* [10] */
+		{5, 140, 18, 160},
+		Picture {
+			enabled,
+			900
+		},
+		/* [11] */
+		{5, 111, 18, 139},
+		StaticText {
+			disabled,
+			""
+		}
+	}
+};
+
+resource 'DITL' (174) {
+	{	/* array DITLarray: 5 elements */
+		/* [1] */
+		{313, 183, 333, 241},
+		Button {
+			enabled,
+			"Print"
+		},
+		/* [2] */
+		{313, 267, 333, 325},
+		Button {
+			enabled,
+			"Done"
+		},
+		/* [3] */
+		{133, -14, 134, 486},
+		Picture {
+			disabled,
+			11
+		},
+		/* [4] */
+		{6, 11, 127, 323},
+		Picture {
+			enabled,
+			135
+		},
+		/* [5] */
+		{305, -33, 306, 467},
+		Picture {
+			disabled,
+			11
+		}
+	}
+};
+
+resource 'DITL' (154) {
+	{	/* array DITLarray: 14 elements */
+		/* [1] */
+		{5, 365, 25, 423},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{10, 10, 168, 160},
+		UserItem {
+			enabled
+		},
+		/* [3] */
+		{10, 170, 26, 235},
+		StaticText {
+			disabled,
+			"Size on disk:"
+		},
+		/* [4] */
+		{30, 170, 46, 235},
+		StaticText {
+			disabled,
+			"Size in RAM:"
+		},
+		/* [5] */
+		{50, 170, 66, 235},
+		StaticText {
+			disabled,
+			"Code:"
+		},
+		/* [6] */
+		{70, 170, 86, 235},
+		StaticText {
+			disabled,
+			"Type:"
+		},
+		/* [7] */
+		{90, 170, 106, 235},
+		StaticText {
+			disabled,
+			"Copyright:"
+		},
+		/* [8] */
+		{120, 170, 136, 235},
+		StaticText {
+			disabled,
+			"Where:"
+		},
+		/* [9] */
+		{10, 240, 26, 346},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [10] */
+		{30, 240, 46, 346},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [11] */
+		{50, 240, 66, 346},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [12] */
+		{70, 240, 86, 346},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [13] */
+		{90, 240, 116, 422},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [14] */
+		{120, 240, 168, 422},
+		StaticText {
+			disabled,
+			""
+		}
+	}
+};
+
+resource 'DITL' (137, purgeable) {
+	{	/* array DITLarray: 13 elements */
+		/* [1] */
+		{161, 252, 181, 332},
+		Button {
+			enabled,
+			"Save"
+		},
+		/* [2] */
+		{130, 252, 150, 332},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{0, 0, 0, 0},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{8, 235, 24, 337},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{32, 252, 52, 332},
+		Button {
+			enabled,
+			"Eject"
+		},
+		/* [6] */
+		{60, 252, 80, 332},
+		Button {
+			enabled,
+			"Desktop"
+		},
+		/* [7] */
+		{29, 12, 234, 230},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{7, 12, 26, 230},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{119, 250, 120, 334},
+		Picture {
+			disabled,
+			11
+		},
+		/* [10] */
+		{262, 16, 278, 228},
+		EditText {
+			enabled,
+			""
+		},
+		/* [11] */
+		{241, 16, 257, 182},
+		StaticText {
+			disabled,
+			"Save document as:"
+		},
+		/* [12] */
+		{88, 252, 108, 332},
+		UserItem {
+			disabled
+		},
+		/* [13] */
+		{195, 250, 281, 336},
+		Picture {
+			disabled,
+			133
+		}
+	}
+};
+
+resource 'DITL' (171) {
+	{	/* array DITLarray: 12 elements */
+		/* [1] */
+		{5, 200, 25, 258},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{35, 200, 55, 258},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{3, 13, 16, 45},
+		StaticText {
+			disabled,
+			"Type:"
+		},
+		/* [4] */
+		{3, 48, 16, 119},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [5] */
+		{43, 3, 56, 45},
+		StaticText {
+			disabled,
+			"Format:"
+		},
+		/* [6] */
+		{43, 48, 56, 155},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [7] */
+		{43, 157, 56, 177},
+		Picture {
+			enabled,
+			200
+		},
+		/* [8] */
+		{63, 11, 76, 45},
+		StaticText {
+			disabled,
+			"Name:"
+		},
+		/* [9] */
+		{63, 48, 76, 206},
+		EditText {
+			enabled,
+			""
+		},
+		/* [10] */
+		{23, 16, 36, 45},
+		StaticText {
+			disabled,
+			"Size:"
+		},
+		/* [11] */
+		{23, 48, 36, 135},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [12] */
+		{174, 548, 190, 663},
+		StaticText {
+			enabled,
+			""
+		}
+	}
+};
+
+resource 'DITL' (301, purgeable) {
+	{	/* array DITLarray: 5 elements */
+		/* [1] */
+		{60, 20, 80, 100},
+		Button {
+			enabled,
+			"Remove it"
+		},
+		/* [2] */
+		{92, 20, 112, 100},
+		Button {
+			enabled,
+			"Find it"
+		},
+		/* [3] */
+		{92, 190, 112, 270},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [4] */
+		{6, 60, 54, 270},
+		StaticText {
+			disabled,
+			"I cannot find “^0”.\nWhat shall I do?"
+		},
+		/* [5] */
+		{10, 10, 42, 42},
+		Picture {
+			disabled,
+			220
+		}
+	}
+};
+
+resource 'DITL' (3004, purgeable) {
+	{	/* array DITLarray: 5 elements */
+		/* [1] */
+		{60, 20, 80, 90},
+		Button {
+			enabled,
+			"Yes"
+		},
+		/* [2] */
+		{92, 20, 112, 90},
+		Button {
+			enabled,
+			"No"
+		},
+		/* [3] */
+		{92, 200, 112, 270},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [4] */
+		{6, 60, 54, 270},
+		StaticText {
+			disabled,
+			"Save current Music List “^0” before clos"
+			"ing?"
+		},
+		/* [5] */
+		{10, 10, 42, 42},
+		Picture {
+			disabled,
+			220
+		}
+	}
+};
+
+resource 'DITL' (302) {
+	{	/* array DITLarray: 3 elements */
+		/* [1] */
+		{81, 270, 101, 328},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{10, 60, 67, 331},
+		StaticText {
+			disabled,
+			"Your music is now ^0 bytes smaller than "
+			"before..."
+		},
+		/* [3] */
+		{10, 10, 42, 42},
+		Picture {
+			disabled,
+			220
+		}
+	}
+};
+
+resource 'DITL' (134) {
+	{	/* array DITLarray: 25 elements */
+		/* [1] */
+		{40, 62, 2040, 2062},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{26, 0, 40, 2000},
+		UserItem {
+			enabled
+		},
+		/* [3] */
+		{3, 22, 23, 42},
+		UserItem {
+			enabled
+		},
+		/* [4] */
+		{40, 0, 2040, 62},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{3, 2, 23, 22},
+		UserItem {
+			enabled
+		},
+		/* [6] */
+		{3, 172, 23, 192},
+		UserItem {
+			enabled
+		},
+		/* [7] */
+		{3, 48, 23, 68},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{3, 73, 23, 93},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{5, 368, 21, 395},
+		StaticText {
+			disabled,
+			"Ins:"
+		},
+		/* [10] */
+		{6, 424, 19, 444},
+		Picture {
+			enabled,
+			200
+		},
+		/* [11] */
+		{5, 396, 21, 422},
+		StaticText {
+			enabled,
+			"000"
+		},
+		/* [12] */
+		{26, 0, 40, 62},
+		UserItem {
+			disabled
+		},
+		/* [13] */
+		{1, 196, 25, 215},
+		UserItem {
+			enabled
+		},
+		/* [14] */
+		{1, 214, 25, 233},
+		UserItem {
+			enabled
+		},
+		/* [15] */
+		{1, 232, 25, 251},
+		UserItem {
+			enabled
+		},
+		/* [16] */
+		{1, 250, 25, 269},
+		UserItem {
+			enabled
+		},
+		/* [17] */
+		{1, 268, 25, 287},
+		UserItem {
+			enabled
+		},
+		/* [18] */
+		{1, 310, 25, 329},
+		UserItem {
+			enabled
+		},
+		/* [19] */
+		{1, 328, 25, 347},
+		UserItem {
+			enabled
+		},
+		/* [20] */
+		{1, 346, 25, 365},
+		UserItem {
+			enabled
+		},
+		/* [21] */
+		{3, 98, 23, 118},
+		UserItem {
+			enabled
+		},
+		/* [22] */
+		{3, 123, 23, 143},
+		UserItem {
+			enabled
+		},
+		/* [23] */
+		{3, 148, 23, 168},
+		UserItem {
+			enabled
+		},
+		/* [24] */
+		{5, 447, 21, 745},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [25] */
+		{1, 286, 25, 305},
+		UserItem {
+			enabled
+		}
+	}
+};
+
+resource 'DITL' (2007) {
+	{	/* array DITLarray: 16 elements */
+		/* [1] */
+		{40, 10, 56, 136},
+		StaticText {
+			enabled,
+			"General:"
+		},
+		/* [2] */
+		{174, 31, 198, 267},
+		UserItem {
+			disabled
+		},
+		/* [3] */
+		{88, 29, 104, 105},
+		CheckBox {
+			enabled,
+			"Markers:"
+		},
+		/* [4] */
+		{88, 117, 104, 163},
+		StaticText {
+			disabled,
+			"Offset:"
+		},
+		/* [5] */
+		{88, 279, 104, 329},
+		EditText {
+			enabled,
+			""
+		},
+		/* [6] */
+		{88, 236, 104, 273},
+		StaticText {
+			disabled,
+			"Loop:"
+		},
+		/* [7] */
+		{88, 169, 104, 219},
+		EditText {
+			enabled,
+			""
+		},
+		/* [8] */
+		{65, 29, 81, 180},
+		CheckBox {
+			enabled,
+			"Show notes length"
+		},
+		/* [9] */
+		{112, 29, 128, 105},
+		StaticText {
+			enabled,
+			"Tempo:"
+		},
+		/* [10] */
+		{112, 141, 128, 163},
+		StaticText {
+			disabled,
+			"No:"
+		},
+		/* [11] */
+		{112, 279, 128, 329},
+		EditText {
+			enabled,
+			""
+		},
+		/* [12] */
+		{112, 242, 128, 273},
+		StaticText {
+			disabled,
+			"Unit:"
+		},
+		/* [13] */
+		{112, 169, 128, 219},
+		EditText {
+			enabled,
+			""
+		},
+		/* [14] */
+		{136, 28, 152, 124},
+		StaticText {
+			disabled,
+			"Track Height:"
+		},
+		/* [15] */
+		{136, 169, 152, 207},
+		StaticText {
+			enabled,
+			"128"
+		},
+		/* [16] */
+		{137, 209, 150, 229},
+		Picture {
+			enabled,
+			200
+		}
+	}
+};
+
+resource 'DITL' (2008) {
+	{	/* array DITLarray: 40 elements */
+		/* [1] */
+		{40, 10, 56, 136},
+		StaticText {
+			enabled,
+			"General:"
+		},
+		/* [2] */
+		{61, 20, 77, 69},
+		CheckBox {
+			enabled,
+			"F1"
+		},
+		/* [3] */
+		{77, 20, 93, 69},
+		CheckBox {
+			enabled,
+			"F2"
+		},
+		/* [4] */
+		{93, 20, 109, 69},
+		CheckBox {
+			enabled,
+			"F3"
+		},
+		/* [5] */
+		{109, 20, 125, 69},
+		CheckBox {
+			enabled,
+			"F4"
+		},
+		/* [6] */
+		{125, 20, 141, 69},
+		CheckBox {
+			enabled,
+			"F5"
+		},
+		/* [7] */
+		{141, 20, 157, 69},
+		CheckBox {
+			enabled,
+			"F6"
+		},
+		/* [8] */
+		{157, 20, 173, 69},
+		CheckBox {
+			enabled,
+			"F7"
+		},
+		/* [9] */
+		{173, 20, 189, 69},
+		CheckBox {
+			enabled,
+			"F8"
+		},
+		/* [10] */
+		{189, 20, 205, 69},
+		CheckBox {
+			enabled,
+			"F9"
+		},
+		/* [11] */
+		{205, 20, 221, 69},
+		CheckBox {
+			enabled,
+			"F10"
+		},
+		/* [12] */
+		{221, 20, 237, 69},
+		CheckBox {
+			enabled,
+			"F11"
+		},
+		/* [13] */
+		{237, 20, 253, 69},
+		CheckBox {
+			enabled,
+			"F12"
+		},
+		/* [14] */
+		{253, 20, 269, 69},
+		CheckBox {
+			enabled,
+			"F13"
+		},
+		/* [15] */
+		{62, 71, 75, 91},
+		Picture {
+			enabled,
+			200
+		},
+		/* [16] */
+		{78, 71, 91, 91},
+		Picture {
+			enabled,
+			200
+		},
+		/* [17] */
+		{94, 71, 107, 91},
+		Picture {
+			enabled,
+			200
+		},
+		/* [18] */
+		{110, 71, 123, 91},
+		Picture {
+			enabled,
+			200
+		},
+		/* [19] */
+		{126, 71, 139, 91},
+		Picture {
+			enabled,
+			200
+		},
+		/* [20] */
+		{142, 71, 155, 91},
+		Picture {
+			enabled,
+			200
+		},
+		/* [21] */
+		{158, 71, 171, 91},
+		Picture {
+			enabled,
+			200
+		},
+		/* [22] */
+		{174, 71, 187, 91},
+		Picture {
+			enabled,
+			200
+		},
+		/* [23] */
+		{190, 71, 203, 91},
+		Picture {
+			enabled,
+			200
+		},
+		/* [24] */
+		{206, 71, 219, 91},
+		Picture {
+			enabled,
+			200
+		},
+		/* [25] */
+		{222, 71, 235, 91},
+		Picture {
+			enabled,
+			200
+		},
+		/* [26] */
+		{238, 71, 251, 91},
+		Picture {
+			enabled,
+			200
+		},
+		/* [27] */
+		{254, 71, 267, 91},
+		Picture {
+			enabled,
+			200
+		},
+		/* [28] */
+		{61, 95, 77, 345},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [29] */
+		{77, 95, 93, 345},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [30] */
+		{93, 95, 109, 345},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [31] */
+		{109, 95, 125, 345},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [32] */
+		{125, 95, 141, 345},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [33] */
+		{141, 95, 157, 345},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [34] */
+		{157, 95, 173, 345},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [35] */
+		{173, 95, 189, 345},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [36] */
+		{189, 95, 205, 345},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [37] */
+		{205, 95, 221, 345},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [38] */
+		{221, 95, 237, 345},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [39] */
+		{237, 95, 253, 345},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [40] */
+		{253, 95, 269, 345},
+		StaticText {
+			disabled,
+			""
+		}
+	}
+};
+
+resource 'DITL' (195) {
+	{	/* array DITLarray: 1 elements */
+		/* [1] */
+		{-5, -4, 31995, 31996},
+		UserItem {
+			enabled
+		}
+	}
+};
+
+resource 'DITL' (149, "Custom open controls") {
+	{	/* array DITLarray: 10 elements */
+		/* [1] */
+		{-2, 5, 11, 14},
+		UserItem {
+			disabled
+		},
+		/* [2] */
+		{13, 6, 30, 50},
+		StaticText {
+			enabled,
+			"Show: "
+		},
+		/* [3] */
+		{-1, 9, 12, 23},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{-2, 5, 9, 18},
+		UserItem {
+			disabled
+		},
+		/* [5] */
+		{3, 0, 10, 13},
+		UserItem {
+			disabled
+		},
+		/* [6] */
+		{13, 77, 29, 222},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [7] */
+		{14, 52, 27, 72},
+		Picture {
+			enabled,
+			901
+		},
+		/* [8] */
+		{0, -200, 20, -120},
+		Button {
+			disabled,
+			"Add"
+		},
+		/* [9] */
+		{0, 3, 12, 18},
+		UserItem {
+			disabled
+		},
+		/* [10] */
+		{0, -200, 20, -120},
+		Button {
+			disabled,
+			"Preview"
+		}
+	}
+};
+
+resource 'DITL' (135) {
+	{	/* array DITLarray: 22 elements */
+		/* [1] */
+		{2, 3, 22, 23},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{2, 109, 22, 129},
+		UserItem {
+			enabled
+		},
+		/* [3] */
+		{2, 129, 22, 149},
+		UserItem {
+			enabled
+		},
+		/* [4] */
+		{2, 149, 22, 169},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{2, 169, 22, 189},
+		UserItem {
+			enabled
+		},
+		/* [6] */
+		{2, 243, 22, 263},
+		UserItem {
+			enabled
+		},
+		/* [7] */
+		{2, 195, 22, 215},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{2, 219, 22, 239},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{38, 51, 2038, 2051},
+		UserItem {
+			enabled
+		},
+		/* [10] */
+		{6, 287, 22, 296},
+		UserItem {
+			disabled
+		},
+		/* [11] */
+		{38, 31, 2038, 51},
+		UserItem {
+			enabled
+		},
+		/* [12] */
+		{-2, 651, 14, 711},
+		UserItem {
+			enabled
+		},
+		/* [13] */
+		{38, 15, 2038, 31},
+		UserItem {
+			enabled
+		},
+		/* [14] */
+		{24, 0, 38, 2000},
+		UserItem {
+			enabled
+		},
+		/* [15] */
+		{2, 303, 22, 323},
+		UserItem {
+			enabled
+		},
+		/* [16] */
+		{38, 0, 2038, 15},
+		UserItem {
+			disabled
+		},
+		/* [17] */
+		{3, 32, 19, 57},
+		UserItem {
+			enabled
+		},
+		/* [18] */
+		{3, 67, 19, 86},
+		UserItem {
+			enabled
+		},
+		/* [19] */
+		{3, 85, 19, 102},
+		UserItem {
+			enabled
+		},
+		/* [20] */
+		{3, 56, 19, 68},
+		UserItem {
+			enabled
+		},
+		/* [21] */
+		{3, 32, 19, 102},
+		UserItem {
+			enabled
+		},
+		/* [22] */
+		{24, 0, 38, 51},
+		UserItem {
+			disabled
+		}
+	}
+};
+
+resource 'DITL' (845) {
+	{	/* array DITLarray: 16 elements */
+		/* [1] */
+		{3, 3, 67, 209},
+		UserItem {
+			disabled
+		},
+		/* [2] */
+		{3, 2, 67, 15},
+		UserItem {
+			disabled
+		},
+		/* [3] */
+		{70, 2, 134, 15},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{137, 2, 201, 15},
+		UserItem {
+			disabled
+		},
+		/* [5] */
+		{204, 2, 268, 15},
+		UserItem {
+			disabled
+		},
+		/* [6] */
+		{70, 3, 134, 209},
+		UserItem {
+			disabled
+		},
+		/* [7] */
+		{137, 3, 201, 209},
+		UserItem {
+			disabled
+		},
+		/* [8] */
+		{204, 3, 268, 209},
+		UserItem {
+			disabled
+		},
+		/* [9] */
+		{271, 2, 335, 208},
+		UserItem {
+			disabled
+		},
+		/* [10] */
+		{271, 1, 335, 14},
+		UserItem {
+			disabled
+		},
+		/* [11] */
+		{338, 1, 402, 14},
+		UserItem {
+			disabled
+		},
+		/* [12] */
+		{405, 1, 469, 14},
+		UserItem {
+			disabled
+		},
+		/* [13] */
+		{472, 1, 536, 14},
+		UserItem {
+			disabled
+		},
+		/* [14] */
+		{338, 2, 402, 208},
+		UserItem {
+			disabled
+		},
+		/* [15] */
+		{405, 2, 469, 208},
+		UserItem {
+			disabled
+		},
+		/* [16] */
+		{472, 2, 536, 208},
+		UserItem {
+			disabled
+		}
+	}
+};
+
+resource 'DITL' (132, "MOD Options") {
+	{	/* array DITLarray: 4 elements */
+		/* [1] */
+		{5, 225, 25, 283},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{5, 290, 25, 348},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{6, 20, 25, 206},
+		Control {
+			enabled,
+			141
+		},
+		/* [4] */
+		{32, 0, 33, 360},
+		Picture {
+			disabled,
+			201
+		}
+	}
+};
+
+resource 'DITL' (177, purgeable) {
+	{	/* array DITLarray: 3 elements */
+		/* [1] */
+		{220, 252, 240, 332},
+		Button {
+			enabled,
+			"Continue"
+		},
+		/* [2] */
+		{24, 6, 212, 334},
+		UserItem {
+			enabled
+		},
+		/* [3] */
+		{0, 8, 20, 272},
+		StaticText {
+			disabled,
+			"Read this before using this music:"
+		}
+	}
+};
+
+resource 'DITL' (175) {
+	{	/* array DITLarray: 10 elements */
+		/* [1] */
+		{229, 318, 249, 376},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{262, 318, 282, 376},
+		Button {
+			enabled,
+			"Quit"
+		},
+		/* [3] */
+		{263, 22, 279, 252},
+		EditText {
+			enabled,
+			""
+		},
+		/* [4] */
+		{162, 22, 178, 252},
+		EditText {
+			enabled,
+			""
+		},
+		/* [5] */
+		{240, 22, 258, 300},
+		StaticText {
+			disabled,
+			"Serial Number (included in your CD):"
+		},
+		/* [6] */
+		{138, 22, 156, 111},
+		StaticText {
+			disabled,
+			"Name:"
+		},
+		/* [7] */
+		{109, 74, 128, 368},
+		StaticText {
+			disabled,
+			"Please enter following informations:"
+		},
+		/* [8] */
+		{0, 0, 95, 385},
+		Picture {
+			enabled,
+			128
+		},
+		/* [9] */
+		{213, 22, 229, 252},
+		EditText {
+			enabled,
+			""
+		},
+		/* [10] */
+		{190, 22, 208, 152},
+		StaticText {
+			disabled,
+			"Organization:"
+		}
+	}
+};
+
+resource 'DITL' (2002) {
+	{	/* array DITLarray: 15 elements */
+		/* [1] */
+		{80, 20, 98, 164},
+		RadioButton {
+			enabled,
+			"Loop music"
+		},
+		/* [2] */
+		{60, 171, 78, 304},
+		RadioButton {
+			enabled,
+			"Load next music"
+		},
+		/* [3] */
+		{80, 171, 100, 352},
+		RadioButton {
+			enabled,
+			"Load a music randomly"
+		},
+		/* [4] */
+		{40, 8, 56, 201},
+		StaticText {
+			disabled,
+			"After having played a music:"
+		},
+		/* [5] */
+		{0, 0, 35, 259},
+		UserItem {
+			disabled
+		},
+		/* [6] */
+		{189, 21, 207, 308},
+		CheckBox {
+			enabled,
+			"Show real Finder icons"
+		},
+		/* [7] */
+		{60, 20, 78, 164},
+		RadioButton {
+			enabled,
+			"Stop playing"
+		},
+		/* [8] */
+		{149, 21, 167, 336},
+		CheckBox {
+			enabled,
+			"Load first music when opening a music li"
+			"st"
+		},
+		/* [9] */
+		{104, 0, 105, 352},
+		Picture {
+			disabled,
+			902
+		},
+		/* [10] */
+		{110, 220, 125, 244},
+		UserItem {
+			disabled
+		},
+		/* [11] */
+		{169, 21, 187, 322},
+		CheckBox {
+			enabled,
+			"Go to Startup position when done playing"
+		},
+		/* [12] */
+		{209, 21, 227, 308},
+		CheckBox {
+			enabled,
+			"Ask to save modified Music List files"
+		},
+		/* [13] */
+		{229, 21, 247, 308},
+		CheckBox {
+			enabled,
+			"Automatic 'Play' after opening a music"
+		},
+		/* [14] */
+		{109, 8, 125, 201},
+		StaticText {
+			disabled,
+			"Music List Settings:"
+		},
+		/* [15] */
+		{129, 21, 147, 309},
+		CheckBox {
+			enabled,
+			"Remember Music List for next startup"
+		}
+	}
+};
+
+resource 'DITL' (200) {
+	{	/* array DITLarray: 8 elements */
+		/* [1] */
+		{0, 0, 95, 385},
+		Picture {
+			disabled,
+			128
+		},
+		/* [2] */
+		{109, 143, 123, 242},
+		UserItem {
+			disabled
+		},
+		/* [3] */
+		{247, 92, 261, 188},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{149, 92, 163, 292},
+		UserItem {
+			disabled
+		},
+		/* [5] */
+		{0, 0, 228, 385},
+		UserItem {
+			disabled
+		},
+		/* [6] */
+		{256, 28, 288, 228},
+		UserItem {
+			disabled
+		},
+		/* [7] */
+		{176, 392, 208, 592},
+		Picture {
+			disabled,
+			137
+		},
+		/* [8] */
+		{208, 92, 226, 292},
+		Picture {
+			disabled,
+			156
+		}
+	}
+};
+
+resource 'DITL' (761) {
+	{	/* array DITLarray: 46 elements */
+		/* [1] */
+		{5, 8, 25, 66},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{105, 172, 119, 220},
+		StaticText {
+			disabled,
+			"Playthru:"
+		},
+		/* [3] */
+		{105, 220, 119, 267},
+		StaticText {
+			enabled,
+			"true"
+		},
+		/* [4] */
+		{105, 271, 118, 291},
+		Picture {
+			enabled,
+			200
+		},
+		/* [5] */
+		{38, 5, 52, 161},
+		StaticText {
+			disabled,
+			"Audio InPut:"
+		},
+		/* [6] */
+		{70, 5, 119, 126},
+		UserItem {
+			enabled
+		},
+		/* [7] */
+		{53, 5, 67, 76},
+		StaticText {
+			enabled,
+			"Sound Driver:"
+		},
+		/* [8] */
+		{77, 129, 109, 161},
+		UserItem {
+			disabled
+		},
+		/* [9] */
+		{71, 191, 85, 221},
+		StaticText {
+			disabled,
+			"Rate:"
+		},
+		/* [10] */
+		{54, 193, 68, 221},
+		StaticText {
+			disabled,
+			"Bits:"
+		},
+		/* [11] */
+		{54, 220, 68, 267},
+		StaticText {
+			enabled,
+			"8"
+		},
+		/* [12] */
+		{54, 271, 67, 291},
+		Picture {
+			enabled,
+			200
+		},
+		/* [13] */
+		{71, 220, 85, 267},
+		StaticText {
+			enabled,
+			"44100 Hz"
+		},
+		/* [14] */
+		{71, 271, 84, 291},
+		Picture {
+			enabled,
+			200
+		},
+		/* [15] */
+		{33, -70, 34, 430},
+		Picture {
+			disabled,
+			11
+		},
+		/* [16] */
+		{5, 191, 25, 249},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [17] */
+		{122, -80, 123, 420},
+		Picture {
+			disabled,
+			11
+		},
+		/* [18] */
+		{150, 8, 170, 36},
+		UserItem {
+			enabled
+		},
+		/* [19] */
+		{150, 49, 170, 77},
+		UserItem {
+			enabled
+		},
+		/* [20] */
+		{150, 88, 170, 116},
+		UserItem {
+			enabled
+		},
+		/* [21] */
+		{150, 128, 170, 156},
+		UserItem {
+			enabled
+		},
+		/* [22] */
+		{131, 5, 147, 41},
+		StaticText {
+			disabled,
+			"Name:"
+		},
+		/* [23] */
+		{170, 5, 184, 38},
+		StaticText {
+			disabled,
+			"Record"
+		},
+		/* [24] */
+		{170, 52, 184, 74},
+		StaticText {
+			disabled,
+			"Stop"
+		},
+		/* [25] */
+		{170, 88, 184, 116},
+		StaticText {
+			disabled,
+			"Pause"
+		},
+		/* [26] */
+		{170, 130, 184, 151},
+		StaticText {
+			disabled,
+			"Play"
+		},
+		/* [27] */
+		{186, 8, 203, 156},
+		UserItem {
+			disabled
+		},
+		/* [28] */
+		{137, 209, 151, 253},
+		StaticText {
+			disabled,
+			"Available"
+		},
+		/* [29] */
+		{165, 179, 179, 221},
+		StaticText {
+			disabled,
+			"KBytes:"
+		},
+		/* [30] */
+		{183, 210, 197, 253},
+		StaticText {
+			disabled,
+			"Recorded"
+		},
+		/* [31] */
+		{211, 179, 225, 221},
+		StaticText {
+			disabled,
+			"KBytes:"
+		},
+		/* [32] */
+		{151, 190, 165, 221},
+		StaticText {
+			disabled,
+			"Secs:"
+		},
+		/* [33] */
+		{197, 190, 211, 221},
+		StaticText {
+			disabled,
+			"Secs:"
+		},
+		/* [34] */
+		{165, 221, 179, 291},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [35] */
+		{151, 221, 165, 291},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [36] */
+		{211, 221, 225, 291},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [37] */
+		{197, 221, 211, 291},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [38] */
+		{206, 8, 223, 156},
+		UserItem {
+			disabled
+		},
+		/* [39] */
+		{131, 44, 144, 155},
+		EditText {
+			enabled,
+			""
+		},
+		/* [40] */
+		{226, 8, 234, 156},
+		UserItem {
+			disabled
+		},
+		/* [41] */
+		{53, 79, 67, 147},
+		StaticText {
+			enabled,
+			"Built-in"
+		},
+		/* [42] */
+		{53, 149, 66, 169},
+		Picture {
+			enabled,
+			200
+		},
+		/* [43] */
+		{88, 188, 102, 218},
+		StaticText {
+			disabled,
+			"Mode:"
+		},
+		/* [44] */
+		{88, 220, 102, 267},
+		StaticText {
+			enabled,
+			"mono"
+		},
+		/* [45] */
+		{88, 271, 101, 291},
+		Picture {
+			enabled,
+			200
+		},
+		/* [46] */
+		{5, 103, 25, 161},
+		Button {
+			enabled,
+			"Add it"
+		}
+	}
+};
+
+resource 'DITL' (2000) {
+	{	/* array DITLarray: 35 elements */
+		/* [1] */
+		{0, 0, 36, 352},
+		UserItem {
+			disabled
+		},
+		/* [2] */
+		{37, 60, 53, 315},
+		RadioButton {
+			enabled,
+			"Sound Manager x.x (Mac OS)"
+		},
+		/* [3] */
+		{211, 130, 232, 318},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{121, 184, 137, 237},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [5] */
+		{55, 60, 71, 245},
+		RadioButton {
+			enabled,
+			"MIDI Output - (OMS) :"
+		},
+		/* [6] */
+		{78, 60, 94, 134},
+		RadioButton {
+			enabled,
+			"11 Khz"
+		},
+		/* [7] */
+		{78, 140, 94, 207},
+		RadioButton {
+			enabled,
+			"22 Khz"
+		},
+		/* [8] */
+		{78, 220, 94, 305},
+		RadioButton {
+			enabled,
+			"44 Khz"
+		},
+		/* [9] */
+		{96, 60, 112, 132},
+		RadioButton {
+			enabled,
+			"8 Bits"
+		},
+		/* [10] */
+		{96, 140, 112, 214},
+		RadioButton {
+			enabled,
+			"16 Bits"
+		},
+		/* [11] */
+		{96, 220, 112, 294},
+		RadioButton {
+			disabled,
+			"24 Bits"
+		},
+		/* [12] */
+		{181, 60, 197, 182},
+		CheckBox {
+			enabled,
+			"Over Sampling:"
+		},
+		/* [13] */
+		{182, 184, 197, 280},
+		StaticText {
+			disabled,
+			"999 Khz - 20 x"
+		},
+		/* [14] */
+		{224, 216, 240, 316},
+		UserItem {
+			disabled
+		},
+		/* [15] */
+		{141, 270, 157, 306},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [16] */
+		{224, 172, 237, 192},
+		UserItem {
+			disabled
+		},
+		/* [17] */
+		{208, 213, 224, 236},
+		UserItem {
+			disabled
+		},
+		/* [18] */
+		{216, 128, 232, 151},
+		UserItem {
+			disabled
+		},
+		/* [19] */
+		{73, 0, 74, 352},
+		Picture {
+			disabled,
+			902
+		},
+		/* [20] */
+		{121, 60, 137, 175},
+		CheckBox {
+			enabled,
+			"Stereo Delay:"
+		},
+		/* [21] */
+		{220, 85, 237, 116},
+		UserItem {
+			disabled
+		},
+		/* [22] */
+		{37, 2, 53, 54},
+		StaticText {
+			disabled,
+			"Driver:"
+		},
+		/* [23] */
+		{78, 10, 94, 51},
+		StaticText {
+			disabled,
+			"Rate:"
+		},
+		/* [24] */
+		{96, 15, 112, 51},
+		StaticText {
+			disabled,
+			"Bits:"
+		},
+		/* [25] */
+		{219, 46, 235, 93},
+		UserItem {
+			disabled
+		},
+		/* [26] */
+		{123, 242, 136, 262},
+		Picture {
+			enabled,
+			900
+		},
+		/* [27] */
+		{116, 0, 117, 352},
+		Picture {
+			enabled,
+			902
+		},
+		/* [28] */
+		{54, 251, 72, 329},
+		Button {
+			enabled,
+			"Set Up"
+		},
+		/* [29] */
+		{121, 10, 137, 51},
+		StaticText {
+			disabled,
+			"Misc:"
+		},
+		/* [30] */
+		{161, 60, 177, 171},
+		CheckBox {
+			enabled,
+			"Surround"
+		},
+		/* [31] */
+		{141, 184, 157, 237},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [32] */
+		{141, 60, 157, 156},
+		CheckBox {
+			enabled,
+			"Reverb:"
+		},
+		/* [33] */
+		{143, 242, 156, 262},
+		Picture {
+			enabled,
+			900
+		},
+		/* [34] */
+		{143, 308, 156, 328},
+		Picture {
+			enabled,
+			900
+		},
+		/* [35] */
+		{183, 284, 196, 304},
+		Picture {
+			enabled,
+			900
+		}
+	}
+};
+
+resource 'DITL' (164, "Custom open INSTRU controls") {
+	{	/* array DITLarray: 2 elements */
+		/* [1] */
+		{12, 8, 28, 168},
+		CheckBox {
+			enabled,
+			"Play when clicked"
+		},
+		/* [2] */
+		{12, 168, 28, 328},
+		CheckBox {
+			enabled,
+			"Show All Files"
+		}
+	}
+};
+
+resource 'DITL' (178, purgeable) {
+	{	/* array DITLarray: 33 elements */
+		/* [1] */
+		{12, 326, 32, 394},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{45, 328, 65, 392},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{5, 3, 21, 78},
+		StaticText {
+			disabled,
+			"Header:"
+		},
+		/* [4] */
+		{29, 3, 45, 71},
+		StaticText {
+			disabled,
+			"Bits:"
+		},
+		/* [5] */
+		{53, 3, 69, 71},
+		StaticText {
+			disabled,
+			"Mode:"
+		},
+		/* [6] */
+		{77, 3, 93, 71},
+		StaticText {
+			disabled,
+			"Type:"
+		},
+		/* [7] */
+		{124, 3, 139, 71},
+		StaticText {
+			disabled,
+			"Length:"
+		},
+		/* [8] */
+		{29, 100, 45, 166},
+		RadioButton {
+			enabled,
+			"8 Bits"
+		},
+		/* [9] */
+		{29, 211, 45, 277},
+		RadioButton {
+			enabled,
+			"16 Bits"
+		},
+		/* [10] */
+		{53, 100, 69, 166},
+		RadioButton {
+			enabled,
+			"Mono"
+		},
+		/* [11] */
+		{53, 211, 69, 277},
+		RadioButton {
+			enabled,
+			"Stereo"
+		},
+		/* [12] */
+		{77, 100, 93, 166},
+		RadioButton {
+			enabled,
+			"Signed"
+		},
+		/* [13] */
+		{77, 211, 93, 319},
+		RadioButton {
+			enabled,
+			"Unsigned"
+		},
+		/* [14] */
+		{101, 3, 117, 79},
+		StaticText {
+			disabled,
+			"Coding:"
+		},
+		/* [15] */
+		{101, 100, 117, 209},
+		RadioButton {
+			enabled,
+			"Little Endian"
+		},
+		/* [16] */
+		{101, 211, 117, 319},
+		RadioButton {
+			enabled,
+			"Big Endian"
+		},
+		/* [17] */
+		{5, 100, 21, 200},
+		EditText {
+			enabled,
+			""
+		},
+		/* [18] */
+		{5, 211, 21, 263},
+		StaticText {
+			disabled,
+			"Bytes"
+		},
+		/* [19] */
+		{123, 343, 139, 395},
+		StaticText {
+			disabled,
+			"Bytes"
+		},
+		/* [20] */
+		{123, 235, 139, 335},
+		EditText {
+			enabled,
+			""
+		},
+		/* [21] */
+		{191, 3, 207, 70},
+		StaticText {
+			disabled,
+			"Preview:"
+		},
+		/* [22] */
+		{148, 3, 163, 71},
+		StaticText {
+			disabled,
+			"Rate:"
+		},
+		/* [23] */
+		{148, 152, 164, 174},
+		StaticText {
+			disabled,
+			"Hz"
+		},
+		/* [24] */
+		{148, 100, 164, 147},
+		EditText {
+			enabled,
+			""
+		},
+		/* [25] */
+		{191, 71, 255, 402},
+		UserItem {
+			enabled
+		},
+		/* [26] */
+		{123, 100, 139, 188},
+		RadioButton {
+			enabled,
+			"End Of File"
+		},
+		/* [27] */
+		{123, 211, 139, 229},
+		RadioButton {
+			enabled,
+			""
+		},
+		/* [28] */
+		{178, -14, 179, 586},
+		Picture {
+			disabled,
+			11
+		},
+		/* [29] */
+		{150, 176, 163, 196},
+		Picture {
+			enabled,
+			901
+		},
+		/* [30] */
+		{260, 3, 275, 65},
+		StaticText {
+			disabled,
+			"Display:"
+		},
+		/* [31] */
+		{260, 71, 276, 273},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [32] */
+		{260, 277, 275, 402},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [33] */
+		{221, 3, 241, 61},
+		Button {
+			enabled,
+			"Play"
+		}
+	}
+};
+
+resource 'DITL' (163) {
+	{	/* array DITLarray: 9 elements */
+		/* [1] */
+		{4, 7, 20, 301},
+		UserItem {
+			disabled
+		},
+		/* [2] */
+		{23, 7, 40, 128},
+		StaticText {
+			disabled,
+			"KBytes generated:"
+		},
+		/* [3] */
+		{23, 128, 40, 300},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [4] */
+		{63, 7, 79, 105},
+		StaticText {
+			disabled,
+			"Elapsed time:"
+		},
+		/* [5] */
+		{63, 185, 79, 301},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [6] */
+		{83, 7, 99, 185},
+		StaticText {
+			disabled,
+			"Estimated remaining time:"
+		},
+		/* [7] */
+		{83, 181, 99, 301},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [8] */
+		{43, 7, 59, 106},
+		StaticText {
+			disabled,
+			"Throughput:"
+		},
+		/* [9] */
+		{43, 122, 59, 301},
+		StaticText {
+			disabled,
+			""
+		}
+	}
+};
+
+resource 'DITL' (136) {
+	{	/* array DITLarray: 9 elements */
+		/* [1] */
+		{24, 235, 44, 293},
+		Button {
+			enabled,
+			"Save"
+		},
+		/* [2] */
+		{52, 235, 72, 293},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{2, 3, 18, 256},
+		StaticText {
+			disabled,
+			"Save current windows state in:"
+		},
+		/* [4] */
+		{54, 63, 70, 219},
+		EditText {
+			enabled,
+			""
+		},
+		/* [5] */
+		{54, 8, 70, 57},
+		StaticText {
+			disabled,
+			"Name:"
+		},
+		/* [6] */
+		{30, 8, 46, 35},
+		StaticText {
+			disabled,
+			"ID:"
+		},
+		/* [7] */
+		{30, 63, 46, 83},
+		StaticText {
+			disabled,
+			"0"
+		},
+		/* [8] */
+		{31, 85, 44, 105},
+		Picture {
+			enabled,
+			900
+		},
+		/* [9] */
+		{81, 6, 101, 314},
+		StaticText {
+			disabled,
+			"Direct saving by pressing : Ctrl +  \0x11 + "
+			"ID"
+		}
+	}
+};
+
+resource 'DITL' (138) {
+	{	/* array DITLarray: 7 elements */
+		/* [1] */
+		{69, 265, 89, 323},
+		Button {
+			enabled,
+			"Reset"
+		},
+		/* [2] */
+		{70, 190, 90, 248},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{22, 83, 40, 372},
+		CheckBox {
+			enabled,
+			"Delete all patterns and partition"
+		},
+		/* [4] */
+		{2, 3, 18, 78},
+		StaticText {
+			disabled,
+			"Do this:"
+		},
+		/* [5] */
+		{43, 83, 61, 372},
+		CheckBox {
+			enabled,
+			"Delete all instruments & samples"
+		},
+		/* [6] */
+		{1, 83, 19, 372},
+		CheckBox {
+			enabled,
+			"Purge all patterns"
+		},
+		/* [7] */
+		{98, 2, 117, 334},
+		StaticText {
+			disabled,
+			"Warning: You will not be able to undo th"
+			"is reset!"
+		}
+	}
+};
+
+resource 'DITL' (139) {
+	{	/* array DITLarray: 40 elements */
+		/* [1] */
+		{56, 21, 5056, 5021},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{2, 91, 22, 111},
+		UserItem {
+			enabled
+		},
+		/* [3] */
+		{2, 33, 22, 53},
+		UserItem {
+			enabled
+		},
+		/* [4] */
+		{2, 62, 22, 82},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{43, 0, 56, 1000},
+		UserItem {
+			enabled
+		},
+		/* [6] */
+		{2, 4, 22, 24},
+		UserItem {
+			enabled
+		},
+		/* [7] */
+		{2, 120, 22, 140},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{2, 207, 22, 227},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{56, 0, 1056, 21},
+		UserItem {
+			enabled
+		},
+		/* [10] */
+		{2, 294, 22, 314},
+		UserItem {
+			enabled
+		},
+		/* [11] */
+		{2, 149, 22, 169},
+		UserItem {
+			enabled
+		},
+		/* [12] */
+		{2, 178, 22, 198},
+		UserItem {
+			enabled
+		},
+		/* [13] */
+		{2, 236, 22, 256},
+		UserItem {
+			enabled
+		},
+		/* [14] */
+		{2, 265, 22, 285},
+		UserItem {
+			enabled
+		},
+		/* [15] */
+		{4, 455, 20, 482},
+		UserItem {
+			disabled
+		},
+		/* [16] */
+		{4, 483, 20, 508},
+		UserItem {
+			enabled
+		},
+		/* [17] */
+		{27, 77, 40, 97},
+		Picture {
+			enabled,
+			200
+		},
+		/* [18] */
+		{26, 374, 42, 417},
+		Button {
+			enabled,
+			"Fill"
+		},
+		/* [19] */
+		{4, 346, 20, 382},
+		StaticText {
+			disabled,
+			"Step:"
+		},
+		/* [20] */
+		{4, 381, 20, 394},
+		StaticText {
+			enabled,
+			"1"
+		},
+		/* [21] */
+		{5, 396, 18, 416},
+		Picture {
+			enabled,
+			200
+		},
+		/* [22] */
+		{24, -1, 25, 1999},
+		Picture {
+			disabled,
+			137
+		},
+		/* [23] */
+		{2, 323, 22, 343},
+		UserItem {
+			enabled
+		},
+		/* [24] */
+		{4, 556, 20, 581},
+		UserItem {
+			disabled
+		},
+		/* [25] */
+		{4, 642, 20, 671},
+		UserItem {
+			disabled
+		},
+		/* [26] */
+		{4, 737, 20, 765},
+		UserItem {
+			disabled
+		},
+		/* [27] */
+		{4, 582, 20, 597},
+		UserItem {
+			enabled
+		},
+		/* [28] */
+		{4, 673, 20, 693},
+		UserItem {
+			enabled
+		},
+		/* [29] */
+		{4, 764, 20, 783},
+		UserItem {
+			enabled
+		},
+		/* [30] */
+		{27, 347, 40, 367},
+		Picture {
+			enabled,
+			200
+		},
+		/* [31] */
+		{27, 255, 40, 275},
+		Picture {
+			enabled,
+			200
+		},
+		/* [32] */
+		{27, 161, 40, 181},
+		Picture {
+			enabled,
+			200
+		},
+		/* [33] */
+		{24, 371, 44, 372},
+		Picture {
+			disabled,
+			137
+		},
+		/* [34] */
+		{24, 183, 44, 184},
+		Picture {
+			disabled,
+			137
+		},
+		/* [35] */
+		{24, 278, 44, 279},
+		Picture {
+			disabled,
+			137
+		},
+		/* [36] */
+		{24, 100, 44, 101},
+		Picture {
+			disabled,
+			137
+		},
+		/* [37] */
+		{26, 102, 42, 159},
+		UserItem {
+			enabled
+		},
+		/* [38] */
+		{26, 187, 42, 253},
+		UserItem {
+			enabled
+		},
+		/* [39] */
+		{26, 282, 42, 345},
+		UserItem {
+			enabled
+		},
+		/* [40] */
+		{26, 3, 42, 74},
+		UserItem {
+			enabled
+		}
+	}
+};
+
+resource 'DITL' (319) {
+	{	/* array DITLarray: 38 elements */
+		/* [1] */
+		{138, 344, 158, 402},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{166, 344, 186, 402},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{47, 347, 63, 414},
+		RadioButton {
+			enabled,
+			"48 Khz"
+		},
+		/* [4] */
+		{194, 188, 210, 284},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [5] */
+		{289, 132, 305, 194},
+		UserItem {
+			disabled
+		},
+		/* [6] */
+		{19, 207, 35, 470},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [7] */
+		{106, 51, 122, 98},
+		StaticText {
+			disabled,
+			"Mode:"
+		},
+		/* [8] */
+		{134, 188, 150, 241},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [9] */
+		{47, 98, 63, 172},
+		RadioButton {
+			enabled,
+			"11 Khz"
+		},
+		/* [10] */
+		{47, 178, 63, 245},
+		RadioButton {
+			enabled,
+			"22 Khz"
+		},
+		/* [11] */
+		{47, 258, 63, 343},
+		RadioButton {
+			enabled,
+			"44 Khz"
+		},
+		/* [12] */
+		{65, 98, 81, 170},
+		RadioButton {
+			enabled,
+			"8 Bits"
+		},
+		/* [13] */
+		{65, 178, 81, 252},
+		RadioButton {
+			enabled,
+			"16 Bits"
+		},
+		/* [14] */
+		{65, 258, 81, 332},
+		RadioButton {
+			disabled,
+			"24 Bits"
+		},
+		/* [15] */
+		{20, 181, 33, 201},
+		Picture {
+			enabled,
+			901
+		},
+		/* [16] */
+		{106, 178, 122, 250},
+		RadioButton {
+			enabled,
+			"Stereo"
+		},
+		/* [17] */
+		{106, 98, 122, 169},
+		RadioButton {
+			enabled,
+			"Mono"
+		},
+		/* [18] */
+		{154, 272, 170, 308},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [19] */
+		{134, 60, 150, 164},
+		CheckBox {
+			enabled,
+			"Stereo Delay:"
+		},
+		/* [20] */
+		{195, 286, 208, 306},
+		Picture {
+			enabled,
+			901
+		},
+		/* [21] */
+		{47, 57, 63, 98},
+		StaticText {
+			disabled,
+			"Rate:"
+		},
+		/* [22] */
+		{65, 62, 81, 98},
+		StaticText {
+			disabled,
+			"Bits:"
+		},
+		/* [23] */
+		{194, 60, 210, 183},
+		CheckBox {
+			enabled,
+			"Over Sampling:"
+		},
+		/* [24] */
+		{136, 244, 149, 264},
+		Picture {
+			enabled,
+			901
+		},
+		/* [25] */
+		{38, -30, 39, 545},
+		Picture {
+			enabled,
+			902
+		},
+		/* [26] */
+		{134, 14, 150, 55},
+		StaticText {
+			disabled,
+			"Misc:"
+		},
+		/* [27] */
+		{174, 60, 190, 171},
+		CheckBox {
+			enabled,
+			"Surround"
+		},
+		/* [28] */
+		{154, 188, 170, 241},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [29] */
+		{154, 60, 170, 135},
+		CheckBox {
+			enabled,
+			"Reverb:"
+		},
+		/* [30] */
+		{156, 244, 169, 264},
+		Picture {
+			enabled,
+			901
+		},
+		/* [31] */
+		{156, 310, 169, 330},
+		Picture {
+			enabled,
+			901
+		},
+		/* [32] */
+		{87, 98, 100, 118},
+		Picture {
+			enabled,
+			901
+		},
+		/* [33] */
+		{85, 3, 101, 98},
+		StaticText {
+			disabled,
+			"Compression:"
+		},
+		/* [34] */
+		{85, 127, 101, 361},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [35] */
+		{129, -30, 130, 545},
+		Picture {
+			enabled,
+			902
+		},
+		/* [36] */
+		{1, 27, 17, 98},
+		StaticText {
+			disabled,
+			"Selection:"
+		},
+		/* [37] */
+		{1, 98, 17, 208},
+		RadioButton {
+			enabled,
+			"Entire Music"
+		},
+		/* [38] */
+		{19, 98, 35, 177},
+		RadioButton {
+			enabled,
+			"Pattern:"
+		}
+	}
+};
+
+resource 'DITL' (2006) {
+	{	/* array DITLarray: 32 elements */
+		/* [1] */
+		{60, 30, 76, 127},
+		CheckBox {
+			enabled,
+			"Instrument"
+		},
+		/* [2] */
+		{80, 30, 96, 87},
+		CheckBox {
+			enabled,
+			"Note"
+		},
+		/* [3] */
+		{60, 150, 76, 215},
+		CheckBox {
+			enabled,
+			"Effect"
+		},
+		/* [4] */
+		{80, 150, 96, 235},
+		CheckBox {
+			enabled,
+			"Argument"
+		},
+		/* [5] */
+		{40, 10, 56, 136},
+		StaticText {
+			enabled,
+			"Cell informations:"
+		},
+		/* [6] */
+		{60, 260, 76, 337},
+		CheckBox {
+			enabled,
+			"Volume"
+		},
+		/* [7] */
+		{100, 0, 101, 352},
+		Picture {
+			disabled,
+			902
+		},
+		/* [8] */
+		{110, 30, 126, 106},
+		CheckBox {
+			enabled,
+			"Markers:"
+		},
+		/* [9] */
+		{110, 120, 126, 166},
+		StaticText {
+			disabled,
+			"Offset:"
+		},
+		/* [10] */
+		{110, 280, 126, 330},
+		EditText {
+			enabled,
+			""
+		},
+		/* [11] */
+		{110, 240, 126, 277},
+		StaticText {
+			disabled,
+			"Loop:"
+		},
+		/* [12] */
+		{110, 170, 126, 220},
+		EditText {
+			enabled,
+			""
+		},
+		/* [13] */
+		{157, 0, 158, 352},
+		Picture {
+			disabled,
+			902
+		},
+		/* [14] */
+		{133, 170, 149, 220},
+		UserItem {
+			enabled
+		},
+		/* [15] */
+		{164, 10, 180, 226},
+		StaticText {
+			disabled,
+			"Pop-up keys: mouse click +"
+		},
+		/* [16] */
+		{184, 30, 200, 127},
+		CheckBox {
+			enabled,
+			"control"
+		},
+		/* [17] */
+		{204, 30, 220, 87},
+		CheckBox {
+			enabled,
+			"shift"
+		},
+		/* [18] */
+		{184, 150, 200, 235},
+		CheckBox {
+			enabled,
+			"command"
+		},
+		/* [19] */
+		{204, 150, 220, 227},
+		CheckBox {
+			enabled,
+			"option"
+		},
+		/* [20] */
+		{230, 0, 231, 352},
+		Picture {
+			disabled,
+			902
+		},
+		/* [21] */
+		{236, 10, 252, 98},
+		StaticText {
+			disabled,
+			"Lines height:"
+		},
+		/* [22] */
+		{236, 150, 252, 218},
+		RadioButton {
+			enabled,
+			"Normal"
+		},
+		/* [23] */
+		{236, 248, 252, 311},
+		RadioButton {
+			enabled,
+			"Small"
+		},
+		/* [24] */
+		{190, 240, 206, 347},
+		UserItem {
+			disabled
+		},
+		/* [25] */
+		{134, 121, 150, 164},
+		StaticText {
+			disabled,
+			"Color:"
+		},
+		/* [26] */
+		{296, 0, 297, 352},
+		Picture {
+			disabled,
+			902
+		},
+		/* [27] */
+		{257, 248, 273, 311},
+		RadioButton {
+			enabled,
+			"Off"
+		},
+		/* [28] */
+		{257, 150, 273, 218},
+		RadioButton {
+			enabled,
+			"On"
+		},
+		/* [29] */
+		{257, 10, 273, 98},
+		StaticText {
+			disabled,
+			"Music Trace:"
+		},
+		/* [30] */
+		{278, 150, 294, 218},
+		RadioButton {
+			enabled,
+			"Loop"
+		},
+		/* [31] */
+		{278, 248, 294, 355},
+		RadioButton {
+			enabled,
+			"Partition"
+		},
+		/* [32] */
+		{278, 10, 294, 139},
+		StaticText {
+			disabled,
+			"Pattern Wrapping:"
+		}
+	}
+};
+
+resource 'DITL' (2009) {
+	{	/* array DITLarray: 11 elements */
+		/* [1] */
+		{0, 0, 36, 352},
+		UserItem {
+			disabled
+		},
+		/* [2] */
+		{69, 139, 89, 217},
+		Button {
+			enabled,
+			"Set Up"
+		},
+		/* [3] */
+		{115, 28, 133, 245},
+		CheckBox {
+			enabled,
+			"MIDI Channel -> Ins & Tracks"
+		},
+		/* [4] */
+		{135, 28, 153, 245},
+		CheckBox {
+			enabled,
+			"MIDI Velocity -> Volume"
+		},
+		/* [5] */
+		{155, 28, 173, 266},
+		CheckBox {
+			enabled,
+			"Use E & D Effect for positionning"
+		},
+		/* [6] */
+		{70, 10, 87, 138},
+		CheckBox {
+			enabled,
+			"Use MIDI Input"
+		},
+		/* [7] */
+		{39, 7, 57, 162},
+		StaticText {
+			disabled,
+			"MIDI Input - (OMS) :"
+		},
+		/* [8] */
+		{93, 28, 111, 142},
+		StaticText {
+			disabled,
+			"Note Conversion:"
+		},
+		/* [9] */
+		{37, 171, 57, 251},
+		UserItem {
+			disabled
+		},
+		/* [10] */
+		{191, 10, 208, 278},
+		CheckBox {
+			enabled,
+			"Send MIDI Timing Clock (MIDI Output)"
+		},
+		/* [11] */
+		{214, 139, 234, 217},
+		Button {
+			enabled,
+			"Set Up"
+		}
+	}
+};
+
+resource 'DITL' (130) {
+	{	/* array DITLarray: 12 elements */
+		/* [1] */
+		{281, 5, 301, 88},
+		Button {
+			enabled,
+			"Continue"
+		},
+		/* [2] */
+		{90, 3, 138, 262},
+		StaticText {
+			disabled,
+			"^0"
+		},
+		/* [3] */
+		{72, 3, 88, 112},
+		StaticText {
+			disabled,
+			"Description:"
+		},
+		/* [4] */
+		{0, 24, 53, 246},
+		StaticText {
+			disabled,
+			"FATAL ERROR !\nContact the author, please"
+			", with the following informations :"
+		},
+		/* [5] */
+		{281, 92, 301, 175},
+		Button {
+			enabled,
+			"Debugger"
+		},
+		/* [6] */
+		{281, 177, 301, 260},
+		Button {
+			enabled,
+			"Exit"
+		},
+		/* [7] */
+		{163, 4, 181, 264},
+		StaticText {
+			disabled,
+			"^1"
+		},
+		/* [8] */
+		{145, 4, 161, 113},
+		StaticText {
+			disabled,
+			"Source Code:"
+		},
+		/* [9] */
+		{209, 4, 227, 264},
+		StaticText {
+			disabled,
+			"^2"
+		},
+		/* [10] */
+		{191, 4, 207, 113},
+		StaticText {
+			disabled,
+			"Line No:"
+		},
+		/* [11] */
+		{256, 4, 274, 264},
+		StaticText {
+			disabled,
+			"^3"
+		},
+		/* [12] */
+		{238, 4, 254, 151},
+		StaticText {
+			disabled,
+			"Compilation date:"
+		}
+	}
+};
+
+resource 'DITL' (2001) {
+	{	/* array DITLarray: 28 elements */
+		/* [1] */
+		{170, 82, 188, 243},
+		StaticText {
+			disabled,
+			"Current Octave offset:"
+		},
+		/* [2] */
+		{75, 88, 93, 248},
+		CheckBox {
+			enabled,
+			"Use Mac Keyboard"
+		},
+		/* [3] */
+		{146, 224, 164, 356},
+		CheckBox {
+			enabled,
+			"Octaves markers"
+		},
+		/* [4] */
+		{119, 273, 137, 329},
+		RadioButton {
+			enabled,
+			"Stop"
+		},
+		/* [5] */
+		{0, 0, 36, 352},
+		UserItem {
+			disabled
+		},
+		/* [6] */
+		{40, 5, 195, 80},
+		UserItem {
+			enabled
+		},
+		/* [7] */
+		{119, 183, 137, 257},
+		RadioButton {
+			enabled,
+			"Key OFF"
+		},
+		/* [8] */
+		{40, 82, 72, 311},
+		StaticText {
+			disabled,
+			"Press on your Mac keyboard to change set"
+			"tings."
+		},
+		/* [9] */
+		{146, 127, 164, 224},
+		CheckBox {
+			enabled,
+			"Small Piano"
+		},
+		/* [10] */
+		{170, 250, 188, 328},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [11] */
+		{141, 82, 142, 347},
+		Picture {
+			disabled,
+			902
+		},
+		/* [12] */
+		{98, 82, 116, 180},
+		StaticText {
+			disabled,
+			"When key UP:"
+		},
+		/* [13] */
+		{119, 88, 137, 162},
+		RadioButton {
+			enabled,
+			"Nothing"
+		},
+		/* [14] */
+		{258, 87, 276, 219},
+		RadioButton {
+			enabled,
+			"On Current track"
+		},
+		/* [15] */
+		{147, 82, 165, 127},
+		StaticText {
+			disabled,
+			"View:"
+		},
+		/* [16] */
+		{258, 21, 270, 50},
+		UserItem {
+			disabled
+		},
+		/* [17] */
+		{241, -56, 261, 80},
+		UserItem {
+			disabled
+		},
+		/* [18] */
+		{254, 30, 270, 76},
+		UserItem {
+			disabled
+		},
+		/* [19] */
+		{201, 242, 299, 346},
+		UserItem {
+			enabled
+		},
+		/* [20] */
+		{256, 42, 276, 70},
+		UserItem {
+			disabled
+		},
+		/* [21] */
+		{198, 5, 234, 85},
+		StaticText {
+			disabled,
+			"Playing & Recording :"
+		},
+		/* [22] */
+		{218, 87, 236, 168},
+		RadioButton {
+			enabled,
+			"On track:"
+		},
+		/* [23] */
+		{221, 188, 234, 208},
+		Picture {
+			enabled,
+			200
+		},
+		/* [24] */
+		{219, 169, 235, 188},
+		StaticText {
+			disabled,
+			"23"
+		},
+		/* [25] */
+		{238, 87, 256, 197},
+		RadioButton {
+			enabled,
+			"On all tracks"
+		},
+		/* [26] */
+		{94, 81, 95, 347},
+		Picture {
+			disabled,
+			902
+		},
+		/* [27] */
+		{195, 80, 196, 347},
+		Picture {
+			disabled,
+			902
+		},
+		/* [28] */
+		{198, 87, 216, 240},
+		RadioButton {
+			enabled,
+			"On following tracks:"
+		}
+	}
+};
+
+resource 'DITL' (145) {
+	{	/* array DITLarray: 7 elements */
+		/* [1] */
+		{0, 26, 100, 2026},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{123, -72, 139, 1428},
+		Control {
+			enabled,
+			136
+		},
+		/* [3] */
+		{60, 25, 92, 2025},
+		UserItem {
+			enabled
+		},
+		/* [4] */
+		{33, 3, 43, 23},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{1, 3, 21, 23},
+		UserItem {
+			enabled
+		},
+		/* [6] */
+		{48, 0, 63, 26},
+		UserItem {
+			disabled
+		},
+		/* [7] */
+		{22, 3, 32, 23},
+		UserItem {
+			enabled
+		}
+	}
+};
+
+resource 'DITL' (816) {
+	{	/* array DITLarray: 12 elements */
+		/* [1] */
+		{37, 8, 2037, 708},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{24, 8, 36, 36},
+		StaticText {
+			disabled,
+			"Pos"
+		},
+		/* [3] */
+		{8, 216, 28, 248},
+		UserItem {
+			enabled
+		},
+		/* [4] */
+		{8, 276, 28, 296},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{37, 38, 2037, 50},
+		UserItem {
+			enabled
+		},
+		/* [6] */
+		{37, -1, 2037, 7},
+		UserItem {
+			enabled
+		},
+		/* [7] */
+		{2, 56, 22, 76},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{24, 52, 36, 80},
+		StaticText {
+			disabled,
+			"ID"
+		},
+		/* [9] */
+		{24, 80, 35, 172},
+		StaticText {
+			disabled,
+			"Name"
+		},
+		/* [10] */
+		{-7, 79, 25, 111},
+		UserItem {
+			enabled
+		},
+		/* [11] */
+		{2, 4, 22, 24},
+		UserItem {
+			enabled
+		},
+		/* [12] */
+		{2, 30, 22, 50},
+		UserItem {
+			enabled
+		}
+	}
+};
+
+resource 'DITL' (180, purgeable) {
+	{	/* array DITLarray: 32 elements */
+		/* [1] */
+		{71, 37, 86, 62},
+		StaticText {
+			enabled,
+			"Size:"
+		},
+		/* [2] */
+		{33, 218, 65, 250},
+		UserItem {
+			enabled
+		},
+		/* [3] */
+		{139, 1, 5139, 5001},
+		UserItem {
+			enabled
+		},
+		/* [4] */
+		{71, 62, 86, 151},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [5] */
+		{56, 18, 71, 62},
+		StaticText {
+			enabled,
+			"Duration:"
+		},
+		/* [6] */
+		{27, 5, 42, 62},
+		StaticText {
+			enabled,
+			"Sound Type:"
+		},
+		/* [7] */
+		{56, 62, 71, 166},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [8] */
+		{27, 62, 42, 214},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [9] */
+		{65, 172, 78, 297},
+		UserItem {
+			enabled
+		},
+		/* [10] */
+		{42, 2, 57, 62},
+		StaticText {
+			enabled,
+			"Compressor:"
+		},
+		/* [11] */
+		{42, 62, 57, 211},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [12] */
+		{2, 8, 22, 28},
+		UserItem {
+			enabled
+		},
+		/* [13] */
+		{96, 5, 110, 40},
+		StaticText {
+			enabled,
+			"Levels:"
+		},
+		/* [14] */
+		{105, 131, 120, 166},
+		StaticText {
+			enabled,
+			"Treble:"
+		},
+		/* [15] */
+		{90, 139, 105, 166},
+		StaticText {
+			enabled,
+			"Bass:"
+		},
+		/* [16] */
+		{105, 194, 119, 274},
+		UserItem {
+			enabled
+		},
+		/* [17] */
+		{90, 194, 104, 274},
+		UserItem {
+			enabled
+		},
+		/* [18] */
+		{105, 167, 120, 193},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [19] */
+		{90, 167, 105, 193},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [20] */
+		{2, 38, 22, 58},
+		UserItem {
+			enabled
+		},
+		/* [21] */
+		{121, 276, 136, 296},
+		UserItem {
+			enabled
+		},
+		/* [22] */
+		{91, 42, 101, 122},
+		UserItem {
+			enabled
+		},
+		/* [23] */
+		{106, 42, 116, 122},
+		UserItem {
+			enabled
+		},
+		/* [24] */
+		{105, 276, 120, 296},
+		UserItem {
+			enabled
+		},
+		/* [25] */
+		{90, 276, 105, 296},
+		UserItem {
+			enabled
+		},
+		/* [26] */
+		{121, 126, 136, 166},
+		StaticText {
+			enabled,
+			"Balance:"
+		},
+		/* [27] */
+		{121, 194, 137, 274},
+		UserItem {
+			enabled
+		},
+		/* [28] */
+		{119, 2, 134, 40},
+		StaticText {
+			enabled,
+			"Volume:"
+		},
+		/* [29] */
+		{121, 42, 131, 122},
+		UserItem {
+			enabled
+		},
+		/* [30] */
+		{121, 167, 136, 193},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [31] */
+		{24, -43, 25, 3957},
+		Picture {
+			disabled,
+			137
+		},
+		/* [32] */
+		{86, -48, 87, 3952},
+		Picture {
+			disabled,
+			137
+		}
+	}
+};
+
+resource 'DITL' (872) {
+	{	/* array DITLarray: 2 elements */
+		/* [1] */
+		{337, 191, 358, 421},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{0, 0, 427, 473},
+		Picture {
+			disabled,
+			132
+		}
+	}
+};
+
+resource 'DITL' (181, purgeable) {
+	{	/* array DITLarray: 12 elements */
+		/* [1] */
+		{11, 340, 31, 408},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{45, 342, 65, 406},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{91, 342, 111, 406},
+		Button {
+			enabled,
+			"Add"
+		},
+		/* [4] */
+		{126, 342, 146, 406},
+		Button {
+			enabled,
+			"Remove"
+		},
+		/* [5] */
+		{223, 69, 236, 327},
+		EditText {
+			disabled,
+			"Description:"
+		},
+		/* [6] */
+		{245, 69, 258, 327},
+		EditText {
+			disabled,
+			"TEXT"
+		},
+		/* [7] */
+		{245, 40, 258, 63},
+		StaticText {
+			disabled,
+			"URL:"
+		},
+		/* [8] */
+		{223, 6, 236, 63},
+		StaticText {
+			disabled,
+			"Description:"
+		},
+		/* [9] */
+		{1, 3, 210, 330},
+		UserItem {
+			enabled
+		},
+		/* [10] */
+		{229, 340, 249, 404},
+		Button {
+			enabled,
+			"Change"
+		},
+		/* [11] */
+		{268, 6, 341, 407},
+		UserItem {
+			enabled
+		},
+		/* [12] */
+		{161, 342, 181, 406},
+		Button {
+			enabled,
+			"Reset"
+		}
+	}
+};
+
+resource 'DITL' (2004) {
+	{	/* array DITLarray: 19 elements */
+		/* [1] */
+		{60, 19, 78, 346},
+		CheckBox {
+			enabled,
+			"Automatic MAD1 compression for patterns"
+		},
+		/* [2] */
+		{222, 199, 235, 219},
+		Picture {
+			enabled,
+			200
+		},
+		/* [3] */
+		{40, 8, 56, 262},
+		StaticText {
+			disabled,
+			"Automatic compression when saving:"
+		},
+		/* [4] */
+		{82, 0, 83, 352},
+		Picture {
+			disabled,
+			902
+		},
+		/* [5] */
+		{151, 8, 167, 335},
+		StaticText {
+			enabled,
+			"Oscilloscope:"
+		},
+		/* [6] */
+		{171, 19, 189, 346},
+		CheckBox {
+			enabled,
+			"Draw lines between points"
+		},
+		/* [7] */
+		{148, 0, 149, 352},
+		Picture {
+			disabled,
+			902
+		},
+		/* [8] */
+		{199, 8, 217, 348},
+		StaticText {
+			enabled,
+			"Patterns List Window and Partition Windo"
+			"w:"
+		},
+		/* [9] */
+		{159, 293, 183, 345},
+		UserItem {
+			disabled
+		},
+		/* [10] */
+		{105, 19, 123, 349},
+		CheckBox {
+			enabled,
+			"Add extension to file names (example : \""
+			".MOD\")"
+		},
+		/* [11] */
+		{166, 308, 180, 327},
+		UserItem {
+			disabled
+		},
+		/* [12] */
+		{193, 0, 194, 352},
+		Picture {
+			disabled,
+			902
+		},
+		/* [13] */
+		{221, 19, 237, 196},
+		StaticText {
+			disabled,
+			"Use this editor when open:"
+		},
+		/* [14] */
+		{221, 223, 237, 351},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [15] */
+		{85, 8, 101, 262},
+		StaticText {
+			disabled,
+			"Files:"
+		},
+		/* [16] */
+		{264, 19, 282, 346},
+		CheckBox {
+			enabled,
+			"Play a sound when click in & out"
+		},
+		/* [17] */
+		{244, 8, 260, 335},
+		StaticText {
+			enabled,
+			"Window Buttons:"
+		},
+		/* [18] */
+		{241, 0, 242, 352},
+		Picture {
+			disabled,
+			902
+		},
+		/* [19] */
+		{123, 19, 141, 349},
+		CheckBox {
+			enabled,
+			"Don’t load Mixer settings from music fil"
+			"es"
+		}
+	}
+};
+
+resource 'DITL' (182, purgeable) {
+	{	/* array DITLarray: 6 elements */
+		/* [1] */
+		{8, 135, 28, 203},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{45, 137, 65, 201},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{45, 5, 61, 50},
+		StaticText {
+			disabled,
+			"Speed:"
+		},
+		/* [4] */
+		{10, 11, 26, 50},
+		StaticText {
+			disabled,
+			"Pitch:"
+		},
+		/* [5] */
+		{10, 60, 26, 110},
+		EditText {
+			enabled,
+			"16000"
+		},
+		/* [6] */
+		{45, 60, 61, 110},
+		EditText {
+			enabled,
+			"26000"
+		}
+	}
+};
+
+resource 'DITL' (421) {
+	{	/* array DITLarray: 6 elements */
+		/* [1] */
+		{261, 348, 281, 448},
+		Button {
+			enabled,
+			"Continue"
+		},
+		/* [2] */
+		{1, 2, 238, 296},
+		UserItem {
+			disabled
+		},
+		/* [3] */
+		{1, 313, 237, 483},
+		Picture {
+			disabled,
+			130
+		},
+		/* [4] */
+		{115, 298, 124, 309},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{244, 98, 264, 198},
+		Button {
+			enabled,
+			"How to Order"
+		},
+		/* [6] */
+		{271, 8, 291, 302},
+		Button {
+			enabled,
+			"Go to PlayerPRO Official Web Site"
+		}
+	}
+};
+
+resource 'DITL' (684) {
+	{	/* array DITLarray: 32 elements */
+		/* [1] */
+		{25, 12, 2025, 200},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{27, 207, 40, 262},
+		StaticText {
+			disabled,
+			"Instrument:"
+		},
+		/* [3] */
+		{57, 207, 70, 257},
+		StaticText {
+			disabled,
+			"Size:"
+		},
+		/* [4] */
+		{81, 218, 94, 258},
+		StaticText {
+			disabled,
+			"Start:"
+		},
+		/* [5] */
+		{93, 218, 106, 259},
+		StaticText {
+			disabled,
+			"Size:"
+		},
+		/* [6] */
+		{105, 207, 118, 257},
+		StaticText {
+			disabled,
+			"Volume:"
+		},
+		/* [7] */
+		{117, 207, 130, 273},
+		StaticText {
+			disabled,
+			"Rate:"
+		},
+		/* [8] */
+		{27, 264, 40, 339},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [9] */
+		{57, 264, 70, 339},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [10] */
+		{81, 264, 94, 339},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [11] */
+		{93, 264, 106, 339},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [12] */
+		{105, 264, 118, 339},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [13] */
+		{117, 264, 130, 339},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [14] */
+		{129, 207, 142, 261},
+		StaticText {
+			disabled,
+			"Real Note:"
+		},
+		/* [15] */
+		{129, 264, 142, 339},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [16] */
+		{141, 207, 154, 249},
+		StaticText {
+			disabled,
+			"Bits:"
+		},
+		/* [17] */
+		{141, 264, 154, 339},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [18] */
+		{2, 159, 22, 179},
+		UserItem {
+			enabled
+		},
+		/* [19] */
+		{2, 69, 22, 89},
+		UserItem {
+			enabled
+		},
+		/* [20] */
+		{2, 9, 22, 29},
+		UserItem {
+			enabled
+		},
+		/* [21] */
+		{2, 39, 22, 59},
+		UserItem {
+			enabled
+		},
+		/* [22] */
+		{2, 99, 22, 119},
+		UserItem {
+			enabled
+		},
+		/* [23] */
+		{2, 129, 22, 149},
+		UserItem {
+			enabled
+		},
+		/* [24] */
+		{-7, 185, 25, 217},
+		UserItem {
+			enabled
+		},
+		/* [25] */
+		{25, 0, 725, 11},
+		UserItem {
+			enabled
+		},
+		/* [26] */
+		{69, 207, 82, 249},
+		StaticText {
+			disabled,
+			"Loop:"
+		},
+		/* [27] */
+		{54, 201, 55, 553},
+		Picture {
+			disabled,
+			11
+		},
+		/* [28] */
+		{39, 207, 52, 264},
+		StaticText {
+			disabled,
+			"No samples:"
+		},
+		/* [29] */
+		{39, 264, 52, 339},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [30] */
+		{170, 202, 202, 304},
+		UserItem {
+			disabled
+		},
+		/* [31] */
+		{153, 207, 166, 249},
+		StaticText {
+			disabled,
+			"Mode:"
+		},
+		/* [32] */
+		{153, 264, 166, 339},
+		StaticText {
+			disabled,
+			""
+		}
+	}
+};
+
+resource 'DITL' (202) {
+	{	/* array DITLarray: 40 elements */
+		/* [1] */
+		{56, 0, 2056, 2000},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{14, 95, 26, 127},
+		StaticText {
+			disabled,
+			"Size:"
+		},
+		/* [3] */
+		{14, 128, 26, 198},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [4] */
+		{1, 169, 13, 232},
+		StaticText {
+			disabled,
+			"Selection:"
+		},
+		/* [5] */
+		{1, 233, 13, 283},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [6] */
+		{1, 284, 13, 304},
+		StaticText {
+			disabled,
+			"to:"
+		},
+		/* [7] */
+		{1, 305, 13, 355},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [8] */
+		{14, 199, 26, 232},
+		StaticText {
+			disabled,
+			"Loop:"
+		},
+		/* [9] */
+		{14, 233, 26, 283},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [10] */
+		{14, 284, 26, 304},
+		StaticText {
+			disabled,
+			"to:"
+		},
+		/* [11] */
+		{14, 305, 26, 355},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [12] */
+		{2, 3, 14, 71},
+		StaticText {
+			enabled,
+			"Do Filters:"
+		},
+		/* [13] */
+		{41, 81, 54, 101},
+		UserItem {
+			enabled
+		},
+		/* [14] */
+		{2, 72, 15, 92},
+		Picture {
+			enabled,
+			900
+		},
+		/* [15] */
+		{27, 101, 39, 126},
+		StaticText {
+			disabled,
+			"Amp:"
+		},
+		/* [16] */
+		{42, 26, 54, 77},
+		StaticText {
+			disabled,
+			"Sample:"
+		},
+		/* [17] */
+		{27, 128, 39, 178},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [18] */
+		{17, 72, 37, 92},
+		UserItem {
+			enabled
+		},
+		/* [19] */
+		{27, 181, 39, 232},
+		StaticText {
+			disabled,
+			"Display:"
+		},
+		/* [20] */
+		{27, 233, 39, 283},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [21] */
+		{27, 284, 39, 304},
+		StaticText {
+			disabled,
+			"to:"
+		},
+		/* [22] */
+		{27, 305, 39, 355},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [23] */
+		{1, 95, 13, 127},
+		StaticText {
+			disabled,
+			"Zoom:"
+		},
+		/* [24] */
+		{1, 128, 13, 168},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [25] */
+		{17, 3, 37, 23},
+		UserItem {
+			enabled
+		},
+		/* [26] */
+		{17, 52, 37, 72},
+		UserItem {
+			enabled
+		},
+		/* [27] */
+		{17, 32, 37, 52},
+		UserItem {
+			enabled
+		},
+		/* [28] */
+		{41, 3, 54, 23},
+		Picture {
+			enabled,
+			900
+		},
+		/* [29] */
+		{39, -3, 40, 1997},
+		Picture {
+			disabled,
+			11
+		},
+		/* [30] */
+		{42, 174, 55, 8174},
+		UserItem {
+			disabled
+		},
+		/* [31] */
+		{1, 357, 13, 438},
+		StaticText {
+			disabled,
+			"Rate (c4spd):"
+		},
+		/* [32] */
+		{1, 439, 13, 489},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [33] */
+		{14, 439, 26, 494},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [34] */
+		{14, 375, 26, 438},
+		StaticText {
+			disabled,
+			"Real Note:"
+		},
+		/* [35] */
+		{153, 726, 185, 758},
+		UserItem {
+			disabled
+		},
+		/* [36] */
+		{41, 104, 54, 124},
+		UserItem {
+			enabled
+		},
+		/* [37] */
+		{41, 127, 54, 147},
+		UserItem {
+			enabled
+		},
+		/* [38] */
+		{27, 439, 39, 549},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [39] */
+		{27, 357, 39, 438},
+		StaticText {
+			disabled,
+			"X/Y Position:"
+		},
+		/* [40] */
+		{41, 150, 54, 170},
+		UserItem {
+			enabled
+		}
+	}
+};
+
+resource 'DITL' (148) {
+	{	/* array DITLarray: 22 elements */
+		/* [1] */
+		{5, 280, 25, 338},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{35, 280, 55, 338},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{20, 90, 33, 269},
+		EditText {
+			enabled,
+			""
+		},
+		/* [4] */
+		{20, 14, 33, 81},
+		StaticText {
+			disabled,
+			"Internal name:"
+		},
+		/* [5] */
+		{40, 13, 53, 81},
+		StaticText {
+			disabled,
+			"Default tempo:"
+		},
+		/* [6] */
+		{60, 15, 73, 81},
+		StaticText {
+			disabled,
+			"Default speed:"
+		},
+		/* [7] */
+		{40, 90, 53, 150},
+		EditText {
+			enabled,
+			""
+		},
+		/* [8] */
+		{60, 90, 73, 150},
+		EditText {
+			enabled,
+			""
+		},
+		/* [9] */
+		{80, 7, 96, 81},
+		StaticText {
+			disabled,
+			"Copyright Text:"
+		},
+		/* [10] */
+		{80, 90, 132, 269},
+		EditText {
+			enabled,
+			""
+		},
+		/* [11] */
+		{40, 160, 56, 235},
+		StaticText {
+			disabled,
+			"BPM"
+		},
+		/* [12] */
+		{60, 160, 76, 270},
+		StaticText {
+			disabled,
+			"Timing pulses per line"
+		},
+		/* [13] */
+		{0, 44, 13, 81},
+		StaticText {
+			disabled,
+			"Tracks:"
+		},
+		/* [14] */
+		{0, 90, 13, 122},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [15] */
+		{139, 90, 152, 334},
+		CheckBox {
+			enabled,
+			"Show Copyright when opening"
+		},
+		/* [16] */
+		{0, 127, 13, 147},
+		Picture {
+			enabled,
+			901
+		},
+		/* [17] */
+		{221, 107, 237, 255},
+		StaticText {
+			disabled,
+			"Max mixing channels:"
+		},
+		/* [18] */
+		{160, 90, 173, 255},
+		CheckBox {
+			enabled,
+			"Old MODs pitch table"
+		},
+		/* [19] */
+		{181, 90, 194, 334},
+		CheckBox {
+			enabled,
+			"Linear Table"
+		},
+		/* [20] */
+		{202, 90, 215, 285},
+		CheckBox {
+			enabled,
+			"Multi-Channel Tracks"
+		},
+		/* [21] */
+		{223, 292, 236, 312},
+		Picture {
+			enabled,
+			901
+		},
+		/* [22] */
+		{223, 255, 236, 287},
+		StaticText {
+			disabled,
+			""
+		}
+	}
+};
+
+resource 'DITL' (183, purgeable) {
+	{	/* array DITLarray: 41 elements */
+		/* [1] */
+		{3, 125, 18, 164},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{28, 48, 44, 178},
+		UserItem {
+			enabled
+		},
+		/* [3] */
+		{48, 48, 64, 178},
+		UserItem {
+			enabled
+		},
+		/* [4] */
+		{68, 48, 84, 178},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{88, 48, 104, 178},
+		UserItem {
+			enabled
+		},
+		/* [6] */
+		{108, 48, 124, 178},
+		UserItem {
+			enabled
+		},
+		/* [7] */
+		{128, 48, 144, 178},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{148, 48, 164, 178},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{168, 48, 184, 178},
+		UserItem {
+			enabled
+		},
+		/* [10] */
+		{206, 11, 462, 267},
+		UserItem {
+			enabled
+		},
+		/* [11] */
+		{363, 350, 379, 480},
+		UserItem {
+			enabled
+		},
+		/* [12] */
+		{383, 350, 399, 480},
+		UserItem {
+			enabled
+		},
+		/* [13] */
+		{403, 350, 419, 480},
+		UserItem {
+			enabled
+		},
+		/* [14] */
+		{2, 37, 22, 57},
+		UserItem {
+			enabled
+		},
+		/* [15] */
+		{2, 67, 22, 87},
+		UserItem {
+			enabled
+		},
+		/* [16] */
+		{2, 97, 22, 117},
+		UserItem {
+			enabled
+		},
+		/* [17] */
+		{2, 7, 22, 27},
+		UserItem {
+			enabled
+		},
+		/* [18] */
+		{28, 3, 44, 47},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [19] */
+		{48, 3, 64, 47},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [20] */
+		{68, 3, 84, 47},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [21] */
+		{88, 3, 104, 47},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [22] */
+		{108, 3, 124, 47},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [23] */
+		{128, 3, 144, 47},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [24] */
+		{148, 3, 164, 47},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [25] */
+		{168, 3, 184, 47},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [26] */
+		{343, 305, 359, 349},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [27] */
+		{363, 305, 379, 349},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [28] */
+		{383, 305, 399, 349},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [29] */
+		{403, 305, 419, 349},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [30] */
+		{28, 180, 44, 213},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [31] */
+		{48, 180, 64, 213},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [32] */
+		{68, 180, 84, 213},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [33] */
+		{88, 180, 104, 213},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [34] */
+		{108, 180, 124, 213},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [35] */
+		{128, 180, 144, 213},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [36] */
+		{148, 180, 164, 213},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [37] */
+		{168, 180, 184, 213},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [38] */
+		{343, 482, 359, 515},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [39] */
+		{363, 482, 379, 515},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [40] */
+		{383, 482, 399, 515},
+		StaticText {
+			disabled,
+			"Static Text"
+		},
+		/* [41] */
+		{403, 482, 419, 515},
+		StaticText {
+			disabled,
+			"Static Text"
+		}
+	}
+};
+
+resource 'DITL' (141, "Adaptator") {
+	{	/* array DITLarray: 44 elements */
+		/* [1] */
+		{113, 484, 125, 538},
+		UserItem {
+			disabled
+		},
+		/* [2] */
+		{104, 45, 120, 109},
+		UserItem {
+			enabled
+		},
+		/* [3] */
+		{19, 458, 35, 505},
+		UserItem {
+			disabled
+		},
+		/* [4] */
+		{102, 414, 118, 454},
+		StaticText {
+			enabled,
+			""
+		},
+		/* [5] */
+		{43, 458, 59, 505},
+		UserItem {
+			disabled
+		},
+		/* [6] */
+		{119, 334, 132, 379},
+		UserItem {
+			disabled
+		},
+		/* [7] */
+		{77, 392, 93, 427},
+		StaticText {
+			disabled,
+			"BPM:"
+		},
+		/* [8] */
+		{45, 210, 61, 270},
+		UserItem {
+			enabled
+		},
+		/* [9] */
+		{91, 458, 107, 505},
+		UserItem {
+			disabled
+		},
+		/* [10] */
+		{27, 210, 43, 270},
+		UserItem {
+			enabled
+		},
+		/* [11] */
+		{207, 414, 223, 461},
+		UserItem {
+			disabled
+		},
+		/* [12] */
+		{27, 26, 43, 156},
+		UserItem {
+			enabled
+		},
+		/* [13] */
+		{112, 413, 128, 429},
+		Picture {
+			disabled,
+			129
+		},
+		/* [14] */
+		{45, 26, 61, 156},
+		UserItem {
+			enabled
+		},
+		/* [15] */
+		{171, 414, 187, 461},
+		UserItem {
+			disabled
+		},
+		/* [16] */
+		{102, 1, 4102, 301},
+		UserItem {
+			enabled
+		},
+		/* [17] */
+		{2, 37, 22, 57},
+		UserItem {
+			enabled
+		},
+		/* [18] */
+		{59, 548, 75, 580},
+		UserItem {
+			enabled
+		},
+		/* [19] */
+		{66, 333, 118, 365},
+		UserItem {
+			disabled
+		},
+		/* [20] */
+		{44, 193, 60, 209},
+		Picture {
+			disabled,
+			129
+		},
+		/* [21] */
+		{211, 359, 225, 373},
+		UserItem {
+			disabled
+		},
+		/* [22] */
+		{46, 157, 66, 177},
+		UserItem {
+			enabled
+		},
+		/* [23] */
+		{28, 157, 48, 177},
+		UserItem {
+			enabled
+		},
+		/* [24] */
+		{168, 377, 184, 477},
+		Control {
+			enabled,
+			152
+		},
+		/* [25] */
+		{2, 7, 22, 27},
+		UserItem {
+			enabled
+		},
+		/* [26] */
+		{2, 67, 22, 87},
+		UserItem {
+			enabled
+		},
+		/* [27] */
+		{14, 372, 26, 416},
+		UserItem {
+			disabled
+		},
+		/* [28] */
+		{26, 193, 42, 209},
+		Picture {
+			disabled,
+			129
+		},
+		/* [29] */
+		{27, 5, 43, 21},
+		Picture {
+			disabled,
+			138
+		},
+		/* [30] */
+		{43, 5, 59, 21},
+		Picture {
+			disabled,
+			139
+		},
+		/* [31] */
+		{12, 416, 28, 432},
+		UserItem {
+			disabled
+		},
+		/* [32] */
+		{12, 355, 28, 371},
+		UserItem {
+			disabled
+		},
+		/* [33] */
+		{41, 553, 53, 597},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [34] */
+		{86, 55, 98, 96},
+		StaticText {
+			disabled,
+			"Volume"
+		},
+		/* [35] */
+		{86, 134, 98, 178},
+		StaticText {
+			disabled,
+			"Panning"
+		},
+		/* [36] */
+		{85, -36, 86, 364},
+		Picture {
+			disabled,
+			137
+		},
+		/* [37] */
+		{28, 168, 39, 192},
+		Picture {
+			disabled,
+			134
+		},
+		/* [38] */
+		{86, 1, 98, 47},
+		StaticText {
+			disabled,
+			"Track ID"
+		},
+		/* [39] */
+		{46, 168, 57, 192},
+		Picture {
+			disabled,
+			153
+		},
+		/* [40] */
+		{4, 206, 20, 258},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [41] */
+		{2, 95, 22, 115},
+		UserItem {
+			enabled
+		},
+		/* [42] */
+		{65, 2, 75, 23},
+		Picture {
+			disabled,
+			157
+		},
+		/* [43] */
+		{63, 26, 79, 156},
+		UserItem {
+			enabled
+		},
+		/* [44] */
+		{64, 157, 84, 177},
+		UserItem {
+			enabled
+		}
+	}
+};
+
+resource 'DITL' (184, purgeable) {
+	{	/* array DITLarray: 9 elements */
+		/* [1] */
+		{7, 6, 27, 74},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{42, 8, 62, 72},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{4, 89, 260, 345},
+		UserItem {
+			enabled
+		},
+		/* [4] */
+		{129, 8, 149, 72},
+		Button {
+			enabled,
+			"Play"
+		},
+		/* [5] */
+		{85, 8, 105, 72},
+		Button {
+			enabled,
+			"Reset"
+		},
+		/* [6] */
+		{244, 6, 260, 82},
+		CheckBox {
+			enabled,
+			"Preview"
+		},
+		/* [7] */
+		{199, 6, 215, 82},
+		RadioButton {
+			enabled,
+			"Linear"
+		},
+		/* [8] */
+		{215, 6, 231, 82},
+		RadioButton {
+			enabled,
+			"Log"
+		},
+		/* [9] */
+		{183, 6, 198, 52},
+		StaticText {
+			disabled,
+			"Mode:"
+		}
+	}
+};
+
+resource 'DITL' (146) {
+	{	/* array DITLarray: 61 elements */
+		/* [1] */
+		{10, 324, 30, 382},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{10, 390, 30, 448},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{20, 56, 33, 246},
+		EditText {
+			enabled,
+			"ijij\n"
+		},
+		/* [4] */
+		{186, 244, 199, 284},
+		EditText {
+			enabled,
+			""
+		},
+		/* [5] */
+		{187, 354, 200, 394},
+		EditText {
+			enabled,
+			""
+		},
+		/* [6] */
+		{205, 83, 218, 123},
+		EditText {
+			enabled,
+			""
+		},
+		/* [7] */
+		{225, 83, 238, 123},
+		EditText {
+			enabled,
+			""
+		},
+		/* [8] */
+		{20, 19, 33, 53},
+		StaticText {
+			disabled,
+			"Name:"
+		},
+		/* [9] */
+		{186, 184, 199, 241},
+		StaticText {
+			disabled,
+			"Loop Start:"
+		},
+		/* [10] */
+		{187, 299, 200, 351},
+		StaticText {
+			disabled,
+			"Loop Size:"
+		},
+		/* [11] */
+		{205, 13, 218, 80},
+		StaticText {
+			disabled,
+			"Rate (c4spd):"
+		},
+		/* [12] */
+		{225, 14, 238, 80},
+		StaticText {
+			disabled,
+			"Base Volume:"
+		},
+		/* [13] */
+		{144, 6, 157, 452},
+		UserItem {
+			disabled
+		},
+		/* [14] */
+		{316, 415, 329, 452},
+		UserItem {
+			disabled
+		},
+		/* [15] */
+		{105, 56, 118, 331},
+		RadioButton {
+			enabled,
+			"Channel Value (See Mixer window)"
+		},
+		/* [16] */
+		{46, 11, 59, 53},
+		StaticText {
+			enabled,
+			"Volume:"
+		},
+		/* [17] */
+		{225, 142, 238, 163},
+		UserItem {
+			disabled
+		},
+		/* [18] */
+		{225, 244, 238, 270},
+		EditText {
+			enabled,
+			""
+		},
+		/* [19] */
+		{225, 188, 238, 241},
+		StaticText {
+			disabled,
+			"Real Note:"
+		},
+		/* [20] */
+		{185, 25, 198, 80},
+		StaticText {
+			disabled,
+			"Amplitude:"
+		},
+		/* [21] */
+		{185, 83, 198, 103},
+		StaticText {
+			disabled,
+			"16"
+		},
+		/* [22] */
+		{82, 288, 95, 385},
+		CheckBox {
+			enabled,
+			"Fixed Speed"
+		},
+		/* [23] */
+		{248, 0, 249, 600},
+		Picture {
+			disabled,
+			11
+		},
+		/* [24] */
+		{185, 142, 198, 162},
+		Picture {
+			enabled,
+			901
+		},
+		/* [25] */
+		{2, 56, 15, 246},
+		UserItem {
+			disabled
+		},
+		/* [26] */
+		{317, 3, 330, 348},
+		StaticText {
+			disabled,
+			"Sample settings: click + option key to c"
+			"hange assignation of current sample"
+		},
+		/* [27] */
+		{225, 275, 238, 323},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [28] */
+		{185, 108, 198, 131},
+		StaticText {
+			disabled,
+			"bits"
+		},
+		/* [29] */
+		{255, 3, 313, 452},
+		Picture {
+			enabled,
+			225
+		},
+		/* [30] */
+		{351, 259, 364, 276},
+		StaticText {
+			disabled,
+			"99"
+		},
+		/* [31] */
+		{139, -12, 140, 588},
+		Picture {
+			disabled,
+			11
+		},
+		/* [32] */
+		{46, 187, 59, 221},
+		EditText {
+			enabled,
+			""
+		},
+		/* [33] */
+		{82, 56, 95, 142},
+		RadioButton {
+			enabled,
+			"Envelope:"
+		},
+		/* [34] */
+		{205, 128, 218, 141},
+		StaticText {
+			enabled,
+			"Hz"
+		},
+		/* [35] */
+		{64, 56, 77, 347},
+		RadioButton {
+			enabled,
+			"Sample Base Volume (See below)"
+		},
+		/* [36] */
+		{82, 198, 95, 284},
+		CheckBox {
+			enabled,
+			"Sustain pt"
+		},
+		/* [37] */
+		{205, 142, 218, 162},
+		Picture {
+			enabled,
+			901
+		},
+		/* [38] */
+		{161, 406, 177, 432},
+		UserItem {
+			enabled
+		},
+		/* [39] */
+		{82, 142, 95, 198},
+		CheckBox {
+			enabled,
+			"Loop"
+		},
+		/* [40] */
+		{123, 142, 136, 198},
+		CheckBox {
+			enabled,
+			"Loop"
+		},
+		/* [41] */
+		{124, 288, 137, 387},
+		CheckBox {
+			enabled,
+			"Fixed Speed"
+		},
+		/* [42] */
+		{104, 9, 117, 53},
+		StaticText {
+			disabled,
+			"Panning:"
+		},
+		/* [43] */
+		{123, 198, 136, 288},
+		CheckBox {
+			enabled,
+			"Sustain pt"
+		},
+		/* [44] */
+		{158, 436, 246, 452},
+		UserItem {
+			enabled
+		},
+		/* [45] */
+		{166, 244, 179, 394},
+		EditText {
+			enabled,
+			""
+		},
+		/* [46] */
+		{166, 207, 179, 241},
+		StaticText {
+			disabled,
+			"Name:"
+		},
+		/* [47] */
+		{46, 57, 59, 184},
+		StaticText {
+			enabled,
+			"Volume FadeOut (Key OFF):"
+		},
+		/* [48] */
+		{123, 56, 136, 141},
+		RadioButton {
+			enabled,
+			"Envelope:"
+		},
+		/* [49] */
+		{40, -20, 41, 580},
+		Picture {
+			disabled,
+			11
+		},
+		/* [50] */
+		{98, -17, 99, 583},
+		Picture {
+			disabled,
+			11
+		},
+		/* [51] */
+		{166, 47, 179, 80},
+		StaticText {
+			disabled,
+			"Mode:"
+		},
+		/* [52] */
+		{166, 83, 179, 126},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [53] */
+		{166, 142, 179, 162},
+		Picture {
+			enabled,
+			901
+		},
+		/* [54] */
+		{205, 186, 218, 241},
+		StaticText {
+			disabled,
+			"Loop Type:"
+		},
+		/* [55] */
+		{205, 244, 218, 293},
+		StaticText {
+			disabled,
+			""
+		},
+		/* [56] */
+		{205, 296, 218, 316},
+		Picture {
+			enabled,
+			901
+		},
+		/* [57] */
+		{387, 152, 400, 172},
+		StaticText {
+			disabled,
+			"bits"
+		},
+		/* [58] */
+		{48, 388, 68, 450},
+		Button {
+			enabled,
+			"Previous"
+		},
+		/* [59] */
+		{74, 388, 94, 450},
+		Button {
+			enabled,
+			"Next"
+		},
+		/* [60] */
+		{80, 10, 96, 50},
+		Button {
+			enabled,
+			"Edit"
+		},
+		/* [61] */
+		{121, 10, 137, 50},
+		Button {
+			enabled,
+			"Edit"
+		}
+	}
+};
+
+resource 'DITL' (143, "Controls") {
+	{	/* array DITLarray: 45 elements */
+		/* [1] */
+		{36, 1, 47, 181},
+		UserItem {
+			enabled
+		},
+		/* [2] */
+		{1, 7, 25, 31},
+		UserItem {
+			enabled
+		},
+		/* [3] */
+		{1, 32, 25, 56},
+		UserItem {
+			enabled
+		},
+		/* [4] */
+		{1, 82, 25, 106},
+		UserItem {
+			enabled
+		},
+		/* [5] */
+		{1, 107, 25, 131},
+		UserItem {
+			enabled
+		},
+		/* [6] */
+		{1, 132, 25, 156},
+		UserItem {
+			enabled
+		},
+		/* [7] */
+		{1, 157, 25, 181},
+		UserItem {
+			enabled
+		},
+		/* [8] */
+		{23, 2, 35, 35},
+		StaticText {
+			disabled,
+			"00:00"
+		},
+		/* [9] */
+		{23, 147, 35, 181},
+		StaticText {
+			disabled,
+			"00:00"
+		},
+		/* [10] */
+		{22, 36, 36, 145},
+		UserItem {
+			enabled
+		},
+		/* [11] */
+		{42, 99, 58, 115},
+		UserItem {
+			enabled
+		},
+		/* [12] */
+		{50, 54, 62, 79},
+		StaticText {
+			disabled,
+			"Pos:"
+		},
+		/* [13] */
+		{50, 1, 62, 26},
+		StaticText {
+			disabled,
+			"Pat:"
+		},
+		/* [14] */
+		{50, 116, 62, 153},
+		StaticText {
+			disabled,
+			"Track:"
+		},
+		/* [15] */
+		{50, 26, 62, 41},
+		StaticText {
+			disabled,
+			"99"
+		},
+		/* [16] */
+		{50, 79, 62, 99},
+		StaticText {
+			disabled,
+			"642"
+		},
+		/* [17] */
+		{50, 153, 62, 168},
+		StaticText {
+			disabled,
+			"99"
+		},
+		/* [18] */
+		{66, 159, 79, 179},
+		Picture {
+			enabled,
+			901
+		},
+		/* [19] */
+		{84, 159, 97, 179},
+		Picture {
+			enabled,
+			901
+		},
+		/* [20] */
+		{121, 70, 137, 125},
+		StaticText {
+			disabled,
+			"Argument:"
+		},
+		/* [21] */
+		{87, 6, 107, 26},
+		UserItem {
+			enabled
+		},
+		/* [22] */
+		{64, 6, 84, 26},
+		UserItem {
+			enabled
+		},
+		/* [23] */
+		{52, 168, 60, 179},
+		Picture {
+			enabled,
+			140
+		},
+		/* [24] */
+		{52, 42, 60, 52},
+		Picture {
+			enabled,
+			140
+		},
+		/* [25] */
+		{55, 99, 71, 115},
+		UserItem {
+			enabled
+		},
+		/* [26] */
+		{120, 159, 133, 179},
+		Picture {
+			enabled,
+			901
+		},
+		/* [27] */
+		{62, -1, 63, 183},
+		Picture {
+			disabled,
+			11
+		},
+		/* [28] */
+		{85, 94, 101, 125},
+		StaticText {
+			disabled,
+			"Note:"
+		},
+		/* [29] */
+		{67, 58, 83, 125},
+		StaticText {
+			disabled,
+			"Instrument:"
+		},
+		/* [30] */
+		{103, 82, 119, 125},
+		StaticText {
+			disabled,
+			"Effect:"
+		},
+		/* [31] */
+		{67, 127, 79, 156},
+		UserItem {
+			enabled
+		},
+		/* [32] */
+		{85, 127, 97, 156},
+		UserItem {
+			enabled
+		},
+		/* [33] */
+		{103, 127, 115, 156},
+		UserItem {
+			enabled
+		},
+		/* [34] */
+		{121, 127, 133, 156},
+		UserItem {
+			enabled
+		},
+		/* [35] */
+		{103, 70, 116, 80},
+		UserItem {
+			enabled
+		},
+		/* [36] */
+		{-2, 183, 198, 184},
+		Picture {
+			disabled,
+			11
+		},
+		/* [37] */
+		{1, 186, 135, 450},
+		UserItem {
+			enabled
+		},
+		/* [38] */
+		{48, -1, 49, 183},
+		Picture {
+			disabled,
+			11
+		},
+		/* [39] */
+		{139, 82, 155, 125},
+		StaticText {
+			disabled,
+			"Volume:"
+		},
+		/* [40] */
+		{110, 6, 130, 26},
+		UserItem {
+			enabled
+		},
+		/* [41] */
+		{102, 159, 115, 179},
+		Picture {
+			enabled,
+			901
+		},
+		/* [42] */
+		{139, 127, 151, 156},
+		UserItem {
+			enabled
+		},
+		/* [43] */
+		{138, 159, 151, 179},
+		Picture {
+			enabled,
+			901
+		},
+		/* [44] */
+		{1, 57, 25, 81},
+		UserItem {
+			enabled
+		},
+		/* [45] */
+		{84, 80, 97, 90},
+		UserItem {
+			enabled
+		}
+	}
+};
+
+resource 'DITL' (142, "Music list") {
+	{	/* array DITLarray: 33 elements */
+		/* [1] */
+		{49, 623, 65, 698},
+		UserItem {
+			disabled
+		},
+		/* [2] */
+		{25, 0, 2025, 200},
+		UserItem {
+			enabled
+		},
+		/* [3] */
+		{21, 591, 41, 649},
+		UserItem {
+			enabled
+		},
+		/* [4] */
+		{32, 574, 48, 649},
+		UserItem {
+			disabled
+		},
+		/* [5] */
+		{29, 206, 42, 267},
+		StaticText {
+			disabled,
+			"File Name:"
+		},
+		/* [6] */
+		{44, 206, 57, 275},
+		StaticText {
+			disabled,
+			"Internal Name:"
+		},
+		/* [7] */
+		{104, 206, 117, 266},
+		StaticText {
+			disabled,
+			"Patterns:"
+		},
+		/* [8] */
+		{74, 206, 87, 268},
+		StaticText {
+			disabled,
+			"Signature:"
+		},
+		/* [9] */
+		{119, 205, 132, 264},
+		StaticText {
+			disabled,
+			"Plug Type:"
+		},
+		/* [10] */
+		{89, 206, 102, 269},
+		StaticText {
+			disabled,
+			"Instruments:"
+		},
+		/* [11] */
+		{59, 206, 72, 263},
+		StaticText {
+			disabled,
+			"Size:"
+		},
+		/* [12] */
+		{29, 276, 42, 415},
+		StaticText {
+			disabled,
+			"-"
+		},
+		/* [13] */
+		{44, 276, 57, 415},
+		StaticText {
+			enabled,
+			"-"
+		},
+		/* [14] */
+		{104, 276, 117, 409},
+		StaticText {
+			disabled,
+			"-"
+		},
+		/* [15] */
+		{74, 276, 87, 406},
+		StaticText {
+			disabled,
+			"-"
+		},
+		/* [16] */
+		{119, 276, 132, 410},
+		StaticText {
+			disabled,
+			"-"
+		},
+		/* [17] */
+		{89, 276, 102, 407},
+		StaticText {
+			disabled,
+			"-"
+		},
+		/* [18] */
+		{59, 276, 72, 405},
+		StaticText {
+			disabled,
+			"-"
+		},
+		/* [19] */
+		{2, 157, 22, 177},
+		UserItem {
+			enabled
+		},
+		/* [20] */
+		{324, 232, 344, 290},
+		Control {
+			enabled,
+			200
+		},
+		/* [21] */
+		{53, 484, 69, 586},
+		UserItem {
+			disabled
+		},
+		/* [22] */
+		{69, 484, 85, 638},
+		UserItem {
+			disabled
+		},
+		/* [23] */
+		{26, 201, 303, 477},
+		UserItem {
+			disabled
+		},
+		/* [24] */
+		{22, 508, 55, 688},
+		UserItem {
+			disabled
+		},
+		/* [25] */
+		{134, 205, 147, 248},
+		StaticText {
+			disabled,
+			"Where:"
+		},
+		/* [26] */
+		{134, 276, 279, 425},
+		StaticText {
+			disabled,
+			"-"
+		},
+		/* [27] */
+		{2, 97, 22, 117},
+		UserItem {
+			enabled
+		},
+		/* [28] */
+		{2, 127, 22, 147},
+		UserItem {
+			enabled
+		},
+		/* [29] */
+		{2, 37, 22, 57},
+		UserItem {
+			enabled
+		},
+		/* [30] */
+		{-7, 185, 25, 217},
+		UserItem {
+			enabled
+		},
+		/* [31] */
+		{2, 67, 22, 87},
+		UserItem {
+			enabled
+		},
+		/* [32] */
+		{2, 7, 22, 27},
+		Control {
+			enabled,
+			200
+		},
+		/* [33] */
+		{159, 225, 191, 257},
+		UserItem {
+			disabled
+		}
+	}
+};
+
+resource 'ALRT' (131) {
+	{40, 40, 138, 278},
+	934,
+	{	/* array: 4 elements */
+		/* [1] */
+		OK, visible, silent,
+		/* [2] */
+		OK, visible, silent,
+		/* [3] */
+		OK, visible, silent,
+		/* [4] */
+		OK, visible, silent
+	},
+	alertPositionMainScreen
+};
+
+resource 'ALRT' (128, "General Error") {
+	{106, 86, 221, 429},
+	268,
+	{	/* array: 4 elements */
+		/* [1] */
+		OK, visible, silent,
+		/* [2] */
+		OK, visible, silent,
+		/* [3] */
+		OK, visible, silent,
+		/* [4] */
+		OK, visible, silent
+	},
+	centerParentWindowScreen
+};
+
+resource 'ALRT' (129, "Info") {
+	{106, 86, 217, 429},
+	457,
+	{	/* array: 4 elements */
+		/* [1] */
+		OK, visible, silent,
+		/* [2] */
+		OK, visible, silent,
+		/* [3] */
+		OK, visible, silent,
+		/* [4] */
+		OK, visible, silent
+	},
+	centerParentWindowScreen
+};
+
+resource 'ALRT' (300, purgeable) {
+	{80, 110, 199, 387},
+	300,
+	{	/* array: 4 elements */
+		/* [1] */
+		OK, visible, silent,
+		/* [2] */
+		OK, visible, silent,
+		/* [3] */
+		OK, visible, silent,
+		/* [4] */
+		OK, visible, silent
+	},
+	centerParentWindowScreen
+};
+
+resource 'ALRT' (132, "Look for music", purgeable) {
+	{80, 110, 208, 390},
+	301,
+	{	/* array: 4 elements */
+		/* [1] */
+		OK, visible, silent,
+		/* [2] */
+		OK, visible, silent,
+		/* [3] */
+		OK, visible, silent,
+		/* [4] */
+		OK, visible, silent
+	},
+	centerParentWindowScreen
+};
+
+resource 'ALRT' (133, "Minimize", purgeable) {
+	{80, 110, 210, 453},
+	302,
+	{	/* array: 4 elements */
+		/* [1] */
+		OK, visible, silent,
+		/* [2] */
+		OK, visible, silent,
+		/* [3] */
+		OK, visible, silent,
+		/* [4] */
+		OK, visible, silent
+	},
+	centerParentWindowScreen
+};
+
+resource 'ALRT' (130, "FATAL ERROR") {
+	{40, 40, 346, 308},
+	130,
+	{	/* array: 4 elements */
+		/* [1] */
+		OK, visible, sound1,
+		/* [2] */
+		OK, visible, sound1,
+		/* [3] */
+		OK, visible, sound1,
+		/* [4] */
+		OK, visible, sound1
+	},
+	centerMainScreen
 };
 
 data 'PKEY' (128) {
@@ -5099,376 +13013,934 @@ data 'PKEY' (128) {
 	$"001D"                                               /* .. */
 };
 
-data 'dctb' (128) {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (128) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (500) {
-	$"0000 0000 0000 0004 0000 AAAA AAAA AAAA"            /* ..........™™™™™™ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (500) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 43690, 43690, 43690,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (141, "Adaptators") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (141, "Adaptators") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (144, "PatList") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (144, "PatList") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (129) {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (129) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (137, "Samples") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (137, "Samples") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (150, "Digi") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (150, "Digi") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (143, "MusicList") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (143, "MusicList") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (153, "Digi") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (153, "Digi") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (154) {
-	$"0000 0000 0000 0004 0000 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (154) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 65535, 65535, 65535,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (133, "Registration") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (133, "Registration") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (157) {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (157) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (134, "Registration") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (134, "Registration") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (163, "MusicList") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (163, "MusicList") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (135, "Samples") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (135, "Samples") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (147, "Samples") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (147, "Samples") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (166, "PatList") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (166, "PatList") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (145, "Piano") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (145, "Piano") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (140, "Samples") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (140, "Samples") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (155, "Color") {
-	$"0000 0000 0000 0004 0000 0000 0000 0000"            /* ................ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (155, "Color") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 0, 0, 0,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (171, "StartUp Dialog") {
-	$"0000 0000 0000 0004 0000 0000 0000 0000"            /* ................ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (171, "StartUp Dialog") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 0, 0, 0,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (164, "Spectrum") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (164, "Spectrum") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (173) {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (173) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (165, "Microphone") {
-	$"0000 0000 0000 0004 0000 EEEE EEEE EEEE"            /* ..........ÓÓÓÓÓÓ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (165, "Microphone") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 61166, 61166, 61166,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (168, "File informations") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (168, "File informations") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (176, "Quicktime 2.0 Instruments") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (176, "Quicktime 2.0 Instruments") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (156, "ProgressWindow") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 0000 0000 0000"            /* ................ */
+resource 'dctb' (156, "ProgressWindow") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 0, 0, 0
+	}
 };
 
-data 'dctb' (160, "Export AIFF/SND") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (160, "Export AIFF/SND") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (167, "Pattern Info") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (167, "Pattern Info") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (161, "SoundFormat Export") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (161, "SoundFormat Export") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (172, "Move") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (172, "Move") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (174, "Print Order Form") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (174, "Print Order Form") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (175, "Registration") {
-	$"0000 0000 0000 0004 0000 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (175, "Registration") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 65535, 65535, 65535,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (2000, "Pref: DRIVER") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (2000, "Pref: DRIVER") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (3000, "General Error") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (3000, "General Error") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (3001, "Info") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (3001, "Info") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (3002, "Save Or Not?") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (3002, "Save Or Not?") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (3003, "File Not Found") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (3003, "File Not Found") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (3004, "Music List Save Or Not?") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (3004, "Music List Save Or Not?") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (149, "Minimize Results") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (149, "Minimize Results") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (152, "Find/Replace") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (152, "Find/Replace") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (2001) {
-	$"0000 0000 0000 0004 0000 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (2001) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 65535, 65535, 65535,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (177) {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (177) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (131, "Intro") {
-	$"0000 0000 0000 0004 0000 0000 0000 0000"            /* ................ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (131, "Intro") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 0, 0, 0,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (2005) {
-	$"0000 0000 0000 0004 0000 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (2005) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 65535, 65535, 65535,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (2004) {
-	$"0000 0000 0000 0004 0000 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (2004) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 65535, 65535, 65535,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (178) {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (178) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (139, "Editor") {
-	$"0000 0000 0000 0004 0000 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (139, "Editor") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 65535, 65535, 65535,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (136, "Windows State") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (136, "Windows State") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (138, "Reset Window") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (138, "Reset Window") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (2009) {
-	$"0000 0000 0000 0004 0000 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (2009) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 65535, 65535, 65535,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (2006) {
-	$"0000 0000 0000 0004 0000 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (2006) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 65535, 65535, 65535,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (180) {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (180) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (181) {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (181) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (132) {
-	$"0000 0000 0000 0004 0000 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (132) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 65535, 65535, 65535,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (130) {
-	$"0000 0000 0000 0004 0000 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (130) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 65535, 65535, 65535,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (182) {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (182) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (148, "General Informations") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (148, "General Informations") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (183) {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (183) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (184) {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (184) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (146, "EditInfo Instrument") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (146, "EditInfo Instrument") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
-data 'dctb' (142, "MusicList") {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (142, "MusicList") {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
 data 'ictb' (177) {
@@ -5879,25 +14351,70 @@ data 'Mcmd' (161) {
 	$"0000"                                               /* .. */
 };
 
-data 'mctb' (178) {
-	$"0001 FF9D 0000 0000 0000 0000 0000 0000"            /* ..ˇù............ */
-	$"0000 0000 0000 0000 0000 0000 0000 0000"            /* ................ */
+resource 'mctb' (178) {
+	{	/* array MCTBArray: 1 elements */
+		/* [1] */
+		mctbLast, 0,
+		{	/* array: 4 elements */
+			/* [1] */
+			0, 0, 0,
+			/* [2] */
+			0, 0, 0,
+			/* [3] */
+			0, 0, 0,
+			/* [4] */
+			0, 0, 0
+		}
+	}
 };
 
-data 'mctb' (177) {
-	$"0001 FF9D 0000 0000 0000 0000 0000 0000"            /* ..ˇù............ */
-	$"0000 0000 0000 0000 0000 0000 0000 0000"            /* ................ */
+resource 'mctb' (177) {
+	{	/* array MCTBArray: 1 elements */
+		/* [1] */
+		mctbLast, 0,
+		{	/* array: 4 elements */
+			/* [1] */
+			0, 0, 0,
+			/* [2] */
+			0, 0, 0,
+			/* [3] */
+			0, 0, 0,
+			/* [4] */
+			0, 0, 0
+		}
+	}
 };
 
-data 'mctb' (135) {
-	$"0001 FF9D 0000 0000 0000 0000 0000 0000"            /* ..ˇù............ */
-	$"0000 0000 0000 0000 0000 0000 0000 0000"            /* ................ */
+resource 'mctb' (135) {
+	{	/* array MCTBArray: 1 elements */
+		/* [1] */
+		mctbLast, 0,
+		{	/* array: 4 elements */
+			/* [1] */
+			0, 0, 0,
+			/* [2] */
+			0, 0, 0,
+			/* [3] */
+			0, 0, 0,
+			/* [4] */
+			0, 0, 0
+		}
+	}
 };
 
-data 'actb' (130) {
-	$"0000 0000 0000 0004 0000 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'actb' (130) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 65535, 65535, 65535,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
 data 'DLGX' (148) {
@@ -6150,14 +14667,407 @@ data 'DLGX' (142) {
 	$"0000 000A 0000 0000 0000 0000 0000"                 /* ...¬.......... */
 };
 
-data 'cctb' (200) {
-	$"0000 0000 0000 0003 0000 DEF7 DEF7 DEF7"            /* ..........ﬁ˜ﬁ˜ﬁ˜ */
-	$"0001 FFFF FFFF FFFF 0002 0000 0000 0000"            /* ..ˇˇˇˇˇˇ........ */
-	$"0003 FFFF FFFF FFFF"                                /* ..ˇˇˇˇˇˇ */
+resource 'cctb' (200) {
+	{	/* array ColorSpec: 4 elements */
+		/* [1] */
+		cFrameColor, 57079, 57079, 57079,
+		/* [2] */
+		cBodyColor, 65535, 65535, 65535,
+		/* [3] */
+		cTextColor, 0, 0, 0,
+		/* [4] */
+		cElevatorColor, 65535, 65535, 65535
+	}
 };
 
-data 'CNTL' (200, purgeable) {
-	$"0073 0203 0087 0217 0000 0100 00AB 0301"            /* .s...á.......´.. */
-	$"0021 0000 0000 00"                                  /* .!..... */
+resource 'CNTL' (200, purgeable) {
+	{115, 515, 135, 535},
+	0,
+	visible,
+	171,
+	769,
+	33,
+	0,
+	""
+};
+
+
+
+resource 'MENU' (131) {
+	131,
+	textMenuProc,
+	0x7FFFFFB5,
+	enabled,
+	"Views",
+	{	/* array: 11 elements */
+		/* [1] */
+		"Show Online Help", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"Tools", noIcon, "T", noMark, plain,
+		/* [4] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"Oscillo View", noIcon, noKey, noMark, plain,
+		/* [6] */
+		"Spectrum View", noIcon, noKey, noMark, plain,
+		/* [7] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [8] */
+		"Mixer", noIcon, "B", noMark, plain,
+		/* [9] */
+		"Equalizer", noIcon, noKey, noMark, plain,
+		/* [10] */
+		"Pattern View", noIcon, noKey, noMark, plain,
+		/* [11] */
+		"Piano", noIcon, "P", noMark, plain
+	}
+};
+
+resource 'STR#' (128, "Errors") {
+	{	/* array StringArray: 108 elements */
+		/* [1] */
+		"Player PRO can only read 11Khz or 22Khz "
+		"sounds.",
+		/* [2] */
+		"There isn’t enough memory for this sound"
+		". Allocate more memory for Player PRO us"
+		"ing the Finder’s “Get Info.” ",
+		/* [3] */
+		"This program requires 32-bit addressing."
+		" Use the Memory Control Panel to set you"
+		"r system to 32-bit mode and restart.",
+		/* [4] */
+		"No sounds/music could be found in this f"
+		"ile. Check this file.",
+		/* [5] */
+		"A file error has occured. There probably"
+		" wasn’t enough room.",
+		/* [6] */
+		"MacOS 8.0 or higher is required by Playe"
+		"r PRO.",
+		/* [7] */
+		"This sound uses a compression format whi"
+		"ch can't be read by Player PRO. Please r"
+		"efer to the documentation.",
+		/* [8] */
+		"Your changes will not be in effect until"
+		" the next MOD file is opened.",
+		/* [9] */
+		"Memory is getting critically low.  Alloc"
+		"ate more memory for Player PRO using the"
+		" Finder’s “Get Info.” ",
+		/* [10] */
+		"This music couldn't be found.",
+		/* [11] */
+		"This driver is only available on the AV "
+		"series Macintoshs.",
+		/* [12] */
+		"Sorry, but this is the un-registered ver"
+		"sion of PlayerPRO! You need to register "
+		"PlayerPRO to do this!",
+		/* [13] */
+		"To do this, you will need to select an i"
+		"nstrument in the “Instrument List” windo"
+		"w.",
+		/* [14] */
+		"Do you really want to replace this instr"
+		"ument?",
+		/* [15] */
+		"This MOD file is out of date. Should I u"
+		"pdate it?",
+		/* [16] */
+		"This Macintosh is able to use a higher-p"
+		"erformance driver. It's better to use th"
+		"e ROSSET Routines MOD 2.",
+		/* [17] */
+		"Your Macintosh is unable to play sound i"
+		"n stereo. Buy another Macintosh!",
+		/* [18] */
+		"Where is the Apple Sound Chip (ASC)? Wha"
+		"t is this computer?",
+		/* [19] */
+		"Sorry, but you don’t have a microphone.",
+		/* [20] */
+		"The instrument loop is incorrect. Please"
+		" fix it.",
+		/* [21] */
+		"Are you sure that you want to delete thi"
+		"s instrument?",
+		/* [22] */
+		"Sorry, but you can't use this driver wit"
+		"hout an Apple Sound Chip.",
+		/* [23] */
+		"You must be in 256 color mode and have a"
+		" 640x480 monitor to use this function.",
+		/* [24] */
+		"Sorry, but that sound is too large. Inst"
+		"ruments must be smaller than 128K.",
+		/* [25] */
+		"Please rebuild your Desktop! (Reboot whi"
+		"le holding the Command and Option keys.)",
+		/* [26] */
+		"Sorry, but that response was invalid. Pl"
+		"ease enter a number between 0 and the hi"
+		"ghest pattern.",
+		/* [27] */
+		"Player PRO requires the Sound Manager 3."
+		"0 to run.",
+		/* [28] */
+		"Sorry, but the length of the partition m"
+		"ust be between 1 and 128.",
+		/* [29] */
+		"Sorry, but this registration code is inc"
+		"orrect.",
+		/* [30] */
+		"Please enter your name.",
+		/* [31] */
+		"This program has already been registered"
+		".",
+		/* [32] */
+		"The un-registered version of PlayerPRO i"
+		"s limited to only 20 minutes! Please sup"
+		"port PlayerPRO development!",
+		/* [33] */
+		"Sorry, but Player PRO requires AppleEven"
+		"ts.",
+		/* [34] */
+		"Sorry, but there’s nothing in this windo"
+		"w to print.",
+		/* [35] */
+		"This MIDI file is unrecognizable. It doe"
+		"sn’t seem to be a SMF (MThd) file.",
+		/* [36] */
+		"In your pattern list, the higher pattern"
+		" number MUST appear at least one time!",
+		/* [37] */
+		"Are you sure that you want to replace th"
+		"e current partition with this partition "
+		"of the MIDI file?",
+		/* [38] */
+		"Sorry, but nothing is selected.",
+		/* [39] */
+		"This MIDI file has no samples. Samples a"
+		"re required if you want to hear somethin"
+		"g!",
+		/* [40] */
+		"Sorry, but the “Plug-In” modules returne"
+		"d an error. Please refer to the document"
+		"ation.",
+		/* [41] */
+		"Sorry, but PlayerPRO is UNREGISTERED, an"
+		"d your 15 day trial period is over. You "
+		"must either purchase this program or del"
+		"ete it!",
+		/* [42] */
+		"This function doesn't work in this versi"
+		"on.",
+		/* [43] */
+		"It's not a valid value!",
+		/* [44] */
+		"I cannot open this file.\nFile Type Error"
+		".\nPlug Import Error.",
+		/* [45] */
+		"I don't have Import Methode to open this"
+		" file.",
+		/* [46] */
+		"Are you sure that you want to delete not"
+		"es of this track and pattern?",
+		/* [47] */
+		"WARNING - This is a beta version of this"
+		" Import Plug !",
+		/* [48] */
+		"Are you sure that you want to purge this"
+		" pattern?",
+		/* [49] */
+		"I cannot delete this pattern. Your music"
+		" file MUST have 1 pattern at least.",
+		/* [50] */
+		"Are you sure that you want to delete thi"
+		"s pattern?",
+		/* [51] */
+		"Do you want to replace the selected patt"
+		"ern or load it as a new pattern?",
+		/* [52] */
+		"This PlayerPRO version supports pattern "
+		"size from 1 to 999. Change it, please!",
+		/* [53] */
+		"Do you really want to change the amplitu"
+		"de of this sound?",
+		/* [54] */
+		"Printer Driver Error...",
+		/* [55] */
+		"Use PtMid program to convert Midi files "
+		"into Player PRO files.",
+		/* [56] */
+		"I cannot find any help file.",
+		/* [57] */
+		"MIDI Hardware Error. Check PatchBay Cont"
+		"rol Panel and your connections.",
+		/* [58] */
+		"MIDI Factor value must be between 0% and"
+		" 500% of the velocity value.",
+		/* [59] */
+		"Error in 'argument' value. It's a hexade"
+		"cimal from 0 to FF.",
+		/* [60] */
+		"Correct the file type & creator of this "
+		"file before opening ?",
+		/* [61] */
+		"This SoundInPut device doesn't support o"
+		"ptions dialog.",
+		/* [62] */
+		"File not found !\nI cannot find this musi"
+		"c on your hard disk.",
+		/* [63] */
+		"Not enough memory to do this operation. "
+		"Allocate more memory to PlayerPRO.",
+		/* [64] */
+		"The name “^2” is already taken by anothe"
+		"r file. Please use a different name.",
+		/* [65] */
+		"Give a name to this sound, if you want t"
+		"o create a file !",
+		/* [66] */
+		"Sorry, but sample rate (c2spd) must be b"
+		"etween 1 Hz and 50 Khz.",
+		/* [67] */
+		"PLUG ERROR: This function is not support"
+		"ed by this plug. (orderNotImplemented)",
+		/* [68] */
+		"PLUG ERROR: Not enough memory to do this"
+		" operation. Allocate more memory to Play"
+		"erPRO. (needMoreMemory)",
+		/* [69] */
+		"PLUG ERROR: This file format isn't suppo"
+		"rted by this plug. (fileNotSupportedByTh"
+		"isPlug)",
+		/* [70] */
+		"PLUG ERROR: Unknow Error. (unknowError)",
+		/* [71] */
+		"PLUG ERROR: PlayerPRO cannot find a plug"
+		" to open this file format.\n(cannotFindPl"
+		"ug)",
+		/* [72] */
+		"You don't have 'QuickTime™ Musical Instr"
+		"uments' extension. You cannot use this f"
+		"unction.",
+		/* [73] */
+		"Error: PlayerPRO cannot open 'Help PP' r"
+		"esources.",
+		/* [74] */
+		"Error: I cannot find an input device.",
+		/* [75] */
+		"Writing Error: volume write protected.\n\n"
+		"Choose another volume to save this file.",
+		/* [76] */
+		"Sorry, but RealNote must be between -96 "
+		"and 96.",
+		/* [77] */
+		"Sorry, but Volume must be between 0 and "
+		"64.",
+		/* [78] */
+		"Sorry, but Volume Fade must be between 0"
+		" and 32767.",
+		/* [79] */
+		"Sorry, maximum points for volume envelop"
+		"e is 12.",
+		/* [80] */
+		"Error in 'volume' value. It's a hexadeci"
+		"mal from 0 to FF.",
+		/* [81] */
+		"Sorry, but the unregistered version cann"
+		"ot open this kind of files. Only registe"
+		"red version can open all sound/music fil"
+		"es.",
+		/* [82] */
+		"You have to turn OFF Recording state. Se"
+		"e Tools Window.",
+		/* [83] */
+		"Writing Error. I cannot write this file "
+		"on this hard disk.",
+		/* [84] */
+		"Please enter your country.",
+		/* [85] */
+		"Please select the distributor, by clicki"
+		"ng on the pop-up menu.",
+		/* [86] */
+		"PLUG ERROR: PlayerPRO cannot find the pl"
+		"ug to do this operation.\n(cannotFindPlug"
+		")",
+		/* [87] */
+		"Your 'PlayerPRO Pref' file was CORRUPTED"
+		". It has been deleted!",
+		/* [88] */
+		"WARNING - This function doesn't support "
+		"UNDO. This function will remove all unus"
+		"ed data of this music. Continue?",
+		/* [89] */
+		"I'm sorry, this function needs Drag Mana"
+		"ger Extension. It is available on yours "
+		"system disks.",
+		/* [90] */
+		"PlayerPRO has a problem to identify your"
+		" name & your registration ID. Check it!",
+		/* [91] */
+		"Do you really want to change the mode of"
+		" this sound?",
+		/* [92] */
+		"PlayerPRO requires AppearanceManager ext"
+		"ension, please update your MacOS to vers"
+		"ion 8.0 or higher.",
+		/* [93] */
+		"This beta version has expired. Please do"
+		"wnload final version on www.quadmation.c"
+		"om/pphome.htm",
+		/* [94] */
+		"WARNING !\nYou are entering in a protecte"
+		"d area.\nYou should not be here.\nPlease e"
+		"xit NOW !",
+		/* [95] */
+		"PlayerPRO requires Quicktime extension v"
+		"ersion 2.5 or higher.",
+		/* [96] */
+		"PlayerPRO is not able to open this kind "
+		"of file.",
+		/* [97] */
+		"There are NO space between letters in th"
+		"e registration code! Remove them please.",
+		/* [98] */
+		"Not enough memory to load your internet "
+		"browser. Closing application can make mo"
+		"re memory available.",
+		/* [99] */
+		"Internet Connection Error.",
+		/* [100] */
+		"Are you sure that you want to reset the "
+		"URLs list to the default one?",
+		/* [101] */
+		"This version of PlayerPRO requires a Pow"
+		"erPC G4 with Altivec support.",
+		/* [102] */
+		"Are you sure that you want to delete thi"
+		"s music file?\nYou cannot undo this opera"
+		"tion.",
+		/* [103] */
+		"You need to open “Digital Editor” window"
+		" to use this function.",
+		/* [104] */
+		"Are you sure that you want to delete thi"
+		"s VST settings?",
+		/* [105] */
+		"Are you sure that you want to replace th"
+		"ese settings with current one?",
+		/* [106] */
+		"This file is compressed in “.zip” format"
+		". You need to uncompress it before it can be used.",
+		/* [107] */
+		"Some VST Plugs are not available: ",
+		/* [108] */
+		"MPEG4 requires Quicktime 6 or higher. Yo"
+		"u can download it on http://www.apple.co"
+		"m/quicktime"
+	}
 };
 

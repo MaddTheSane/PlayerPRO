@@ -1,1 +1,26 @@
-data 'STR#' (1000) {	$"0004 0441 4D46 2004 494D 504C 0341 4D46"            /* ...AMF .IMPL.AMF */	$"1657 7269 7474 656E 2062 7920 412E 524F"            /* .Written by A.RO */	$"5353 4554 2039 36"                                  /* SSET 96 */};data 'vers' (1) {	$"0100 8000 0000 0431 2E30 302E 312E 3030"            /* ..Ä....1.00.1.00 */	$"202D 2052 4F53 5345 5420 416E 746F 696E"            /*  - ROSSET Antoin */	$"6520 3936 0D54 6861 6E6B 7320 746F 204D"            /* e 96¬Thanks to M */	$"6172 6B20 5468 6F6D 6173"                           /* ark Thomas */};
+#include <Carbon/Carbon.r>
+
+resource 'vers' (1) {
+	0x1,
+	0x0,
+	release,
+	0x0,
+	0,
+	"1.00",
+	"1.00 - ROSSET Antoine 96\nThanks to Mark "
+	"Thomas"
+};
+
+resource 'STR#' (1000) {
+	{	/* array StringArray: 4 elements */
+		/* [1] */
+		"AMF ",
+		/* [2] */
+		"IMPL",
+		/* [3] */
+		"AMF",
+		/* [4] */
+		"Written by A.ROSSET 96"
+	}
+};
+
