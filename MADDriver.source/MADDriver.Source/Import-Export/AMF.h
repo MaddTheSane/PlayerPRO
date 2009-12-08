@@ -28,9 +28,9 @@
 #pragma options align=mac68k
 #endif
 
-#define uchar unsigned char
-#define ushort unsigned short
-#define ulong unsigned long
+typedef unsigned char uchar;
+//typedef unsigned short ushort;
+typedef unsigned long ulong;
 
 typedef struct {
     uchar       type;

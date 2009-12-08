@@ -40,7 +40,7 @@
 */
 
 #ifndef __MP3PLAYER__
-	#define __MP3PLAYER__
+#define __MP3PLAYER__
 
 // build for carbon
 

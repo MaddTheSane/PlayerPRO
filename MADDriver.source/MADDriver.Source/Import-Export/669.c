@@ -311,11 +311,8 @@ EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
-	short	vRefNum;
 	UNFILE	iFileRefI;
-	long	dirID, sndSize;
-	
-//	MYC2PStr( AlienFileName);
+	long	sndSize;
 	
 	myErr = noErr;
 
@@ -402,8 +399,6 @@ EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 			myErr = MADOrderNotImplemented;
 		break;
 	}
-
-//	MYP2CStr( (unsigned char*) AlienFileName);
 
 	return myErr;
 }

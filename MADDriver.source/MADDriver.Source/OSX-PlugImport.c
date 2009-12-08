@@ -83,6 +83,40 @@ static Handle MADGet1Resource( OSType type, short id, MADLibrary* init)
 	return dH;
 }
 
+OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
+{
+	MADSpec		*theMAD;
+	long			fileSize;
+	short			fileID;
+	
+	theMAD = (MADSpec*) NewPtr( sizeof( MADSpec) + 200);
+	
+	fileID = iFileOpen( AlienFile);
+	if( !fileID)
+	{
+		DisposePtr( (Ptr) theMAD);
+		return -1;
+	}
+	fileSize = iGetEOF( fileID);
+	
+	iRead( sizeof( MADSpec), (Ptr) theMAD, fileID);
+	iClose( fileID);
+	
+	strcpy( InfoRec->internalFileName, theMAD->name);
+	
+	InfoRec->totalPatterns = theMAD->numPat;
+	InfoRec->partitionLength = theMAD->numPointers;
+	InfoRec->totalTracks = theMAD->numChn;
+	InfoRec->signature = 'MADK';
+	strcpy( InfoRec->formatDescription, "MADK");
+	InfoRec->totalInstruments = theMAD->numInstru;
+	InfoRec->fileSize = fileSize;
+	
+	DisposePtr( (Ptr) theMAD);	
+	theMAD = NULL;
+	
+	return noErr;
+}
 
 void NScanResource( MADLibrary *inMADDriver)
 {
@@ -221,9 +255,26 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 	DisposePtr( (Ptr) inMADDriver->ThePlug);		inMADDriver->ThePlug = NULL;
 }
 
-OSErr PPInfoFile( MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile, PPInfoRec *InfoRec)
+OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)
 {
-	return -8;
+	short			i;
+	MADMusic	aMAD;
+	
+	if( !strcmp( kindFile, "MADK"))
+	{
+		PPMADInfoFile( AlienFile, InfoRec);
+		
+		return noErr;
+	}
+	
+	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	{
+		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		{
+			return( CallImportPlug( inMADDriver, i, 'INFO', AlienFile, &aMAD, InfoRec));
+		}
+	}
+	return MADCannotFindPlug;
 }
 
 OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD)

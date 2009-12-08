@@ -12,8 +12,6 @@
 
 #include "RDriver.h"
 
-OSErr PPIdentifyFSRef( MADLibrary *inMADDriver, char *type, FSRefPtr AlienRef);
-
 #pragma mark Core Audio Functions
 OSErr initCoreAudio( MADDriverRec *inMADDriver, long init);
 OSErr closeCoreAudio( MADDriverRec *inMADDriver);

@@ -56463,21 +56463,21 @@ data 'styl' (5632) {
 
 resource 'vers' (1) {
 	0x5,
-	-0x6A,
-	release,
+	0x9A,
+	beta,
 	0x1,
 	0,
-	"5.9.6",
-	"5.9.6  (11/2002)"
+	"5.9.10",
+	"5.9.10  (11/2002)"
 };
 
 resource 'vers' (2) {
 	0x5,
-	-0x6A,
-	release,
+	0x9A,
+	beta,
 	0x1,
 	0,
-	"5.9.6",
-	"5.9.6 by Antoine ROSSET"
+	"5.9.10",
+	"5.9.10 by Antoine ROSSET"
 };
 

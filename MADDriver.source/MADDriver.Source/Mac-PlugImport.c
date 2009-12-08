@@ -193,7 +193,7 @@ OSErr	PPInfoFile( MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile, PPIn
 	short			i;
 	MADMusic	aMAD;
 	
-	if( !MADstrcmp( kindFile, "MADK"))
+	if( !strcmp( kindFile, "MADK"))
 	{
 		PPMADInfoFile( AlienFile, InfoRec);
 		
@@ -202,7 +202,7 @@ OSErr	PPInfoFile( MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile, PPIn
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( !MADstrcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
 			return( CallImportPlug( inMADDriver, i, 'INFO', AlienFile, &aMAD, InfoRec));
 		}

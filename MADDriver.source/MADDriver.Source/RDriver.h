@@ -117,7 +117,7 @@ enum
 /*** 			   Channel structure definition					***/
 /********************						***********************/
 
-struct Channel
+typedef struct Channel
 {
 		long		ID;					// Channel ID - 0 to MAXTRACK
 		long		TrackID;			// TrackID - 0 to MAXTRACK (Used in multiChannel mode)
@@ -241,8 +241,7 @@ struct Channel
 		short		PatternLoopE6, PatternLoopE6Count, PatternLoopE6ID;
 		
 		long		TimeCounter;
-};
-typedef		struct Channel	Channel;
+} Channel;
 
 /********************						***********************/
 /*** 		Music description - used in Import/Export filter	***/
@@ -299,7 +298,7 @@ enum
 struct MADDriverSettings
 {
 	short					numChn;								// Active tracks from 2 to 32, automatically setup when a new music is loaded
-	short					outPutBits;							// 8 or 16 Bits
+	short					outPutBits;							// 8 or 16 Bits TODO: 24 Bits
 	UnsignedFixed			outPutRate;							// Fixed number, by example : rate44khz, rate22050hz, rate22khz, rate11khz, rate11025hz
 	short					outPutMode;							// Now, only DeluxeStereoOutPut is available !
 	short					driverMode;							// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
@@ -438,8 +437,8 @@ typedef struct _MADFileFormatPlugin {
 
 struct PlugInfo
 {
-#ifdef MAC_OS_9
-	Handle		IOPlug;										// Plug CODE
+#ifndef TARGET_RT_MAC_MACHO
+	Handle		IOPlug;											// Plug CODE
 #else
 	MADFileFormatPlugin **IOPlug;
 #endif
@@ -455,7 +454,7 @@ typedef struct PlugInfo PlugInfo;
 #endif
 
 #ifdef WIN32
-#include "windows.h"
+#include <windows.h>
 typedef OSErr (*PLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 struct PlugInfo
 {
@@ -570,14 +569,14 @@ struct MADDriverRec
 	Boolean					Active[ MAXTRACK];								// Channel Active?
 	Boolean					Equalizer;										// Is Equalizer Active?
 	
-	#ifdef _MAC_H
+#ifdef _MAC_H
 	SndChannelPtr 			MusicChannelPP;									// The SndChannelPtr to apply SndDoCommand, etc.
-	#endif																	// ONLY available if you are using MAC SoundManager driver
+#endif																		// ONLY available if you are using MAC SoundManager driver
 	
-	#ifdef _INTEL_H
+#ifdef WIN32
 	LPDIRECTSOUND			lpDirectSound;									// The LPDIRECTSOUND to apply & get informations, etc.
 	LPDIRECTSOUNDBUFFER		lpDirectSoundBuffer, lpSwSamp;					// ONLY available if you are using Win95 DirectSound driver
-	#endif	
+#endif	
 	
 	Ptr						OscilloWavePtr;									// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
 	long					OscilloWaveSize;								// Size of previous buffer
@@ -626,15 +625,15 @@ struct MADDriverRec
 	long					curCenterL, curCenterR;
 	
 
-	#ifdef _MAC_H
+#ifdef _MAC_H
 	VSTEffect				*masterVST[ 10];
 	VSTEffect				*chanVST[ MAXTRACK][ 4];
-	#if CALL_NOT_IN_CARBON
+#if CALL_NOT_IN_CARBON
 	SndDoubleBufferHeader 	TheHeader;
-	#else
+#else
 	PPSndDoubleBufferHeader 	TheHeader;
-	#endif
-	#endif
+#endif
+#endif
 
 };
 typedef struct MADDriverRec MADDriverRec;

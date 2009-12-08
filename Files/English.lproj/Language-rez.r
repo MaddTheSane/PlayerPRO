@@ -1,5 +1,3 @@
-//TODO: make resources more edit-friendly or move over to NIBs
-
 #include <Carbon/Carbon.r>
 
 data 'TEXT' (200, "Arpeggio") {
@@ -1457,7 +1455,7 @@ resource 'STR#' (132, "Note") {
 resource 'STR#' (129, "ScreenSaver") {
 	{	/* array StringArray: 7 elements */
 		/* [1] */
-		"Player PRO 5.0",
+		"PlayerPRO 5.0",
 		/* [2] */
 		"You can now",
 		/* [3] */
@@ -6217,7 +6215,7 @@ resource 'DITL' (364) {
 		{75, 41, 88, 101},
 		StaticText {
 			disabled,
-			"Player Pro:"
+			"PlayerPRO:"
 		},
 		/* [18] */
 		{75, 103, 88, 151},
@@ -14728,11 +14726,11 @@ resource 'MENU' (131) {
 resource 'STR#' (128, "Errors") {
 	{	/* array StringArray: 108 elements */
 		/* [1] */
-		"Player PRO can only read 11Khz or 22Khz "
+		"PlayerPRO can only read 11Khz or 22Khz "
 		"sounds.",
 		/* [2] */
 		"There isn’t enough memory for this sound"
-		". Allocate more memory for Player PRO us"
+		". Allocate more memory for PlayerPRO us"
 		"ing the Finder’s “Get Info.” ",
 		/* [3] */
 		"This program requires 32-bit addressing."
@@ -14749,14 +14747,14 @@ resource 'STR#' (128, "Errors") {
 		"r PRO.",
 		/* [7] */
 		"This sound uses a compression format whi"
-		"ch can't be read by Player PRO. Please r"
+		"ch can't be read by PlayerPRO. Please r"
 		"efer to the documentation.",
 		/* [8] */
 		"Your changes will not be in effect until"
 		" the next MOD file is opened.",
 		/* [9] */
 		"Memory is getting critically low.  Alloc"
-		"ate more memory for Player PRO using the"
+		"ate more memory for PlayerPRO using the"
 		" Finder’s “Get Info.” ",
 		/* [10] */
 		"This music couldn't be found.",
@@ -14812,7 +14810,7 @@ resource 'STR#' (128, "Errors") {
 		"ease enter a number between 0 and the hi"
 		"ghest pattern.",
 		/* [27] */
-		"Player PRO requires the Sound Manager 3."
+		"PlayerPRO requires the Sound Manager 3."
 		"0 to run.",
 		/* [28] */
 		"Sorry, but the length of the partition m"
@@ -14830,7 +14828,7 @@ resource 'STR#' (128, "Errors") {
 		"s limited to only 20 minutes! Please sup"
 		"port PlayerPRO development!",
 		/* [33] */
-		"Sorry, but Player PRO requires AppleEven"
+		"Sorry, but PlayerPRO requires AppleEven"
 		"ts.",
 		/* [34] */
 		"Sorry, but there’s nothing in this windo"
@@ -14869,14 +14867,14 @@ resource 'STR#' (128, "Errors") {
 		"I cannot open this file.\nFile Type Error"
 		".\nPlug Import Error.",
 		/* [45] */
-		"I don't have Import Methode to open this"
+		"I don't have Import Method to open this"
 		" file.",
 		/* [46] */
 		"Are you sure that you want to delete not"
 		"es of this track and pattern?",
 		/* [47] */
 		"WARNING - This is a beta version of this"
-		" Import Plug !",
+		" Import Plug!",
 		/* [48] */
 		"Are you sure that you want to purge this"
 		" pattern?",
@@ -14899,7 +14897,7 @@ resource 'STR#' (128, "Errors") {
 		"Printer Driver Error...",
 		/* [55] */
 		"Use PtMid program to convert Midi files "
-		"into Player PRO files.",
+		"into PlayerPRO files.",
 		/* [56] */
 		"I cannot find any help file.",
 		/* [57] */
@@ -14913,7 +14911,7 @@ resource 'STR#' (128, "Errors") {
 		"cimal from 0 to FF.",
 		/* [60] */
 		"Correct the file type & creator of this "
-		"file before opening ?",
+		"file before opening?",
 		/* [61] */
 		"This SoundInPut device doesn't support o"
 		"ptions dialog.",
@@ -14944,7 +14942,7 @@ resource 'STR#' (128, "Errors") {
 		"rted by this plug. (fileNotSupportedByTh"
 		"isPlug)",
 		/* [70] */
-		"PLUG ERROR: Unknow Error. (unknowError)",
+		"PLUG ERROR: Unknown Error. (unknowError)",
 		/* [71] */
 		"PLUG ERROR: PlayerPRO cannot find a plug"
 		" to open this file format.\n(cannotFindPl"
@@ -14983,7 +14981,7 @@ resource 'STR#' (128, "Errors") {
 		"es.",
 		/* [82] */
 		"You have to turn OFF Recording state. Se"
-		"e Tools Window.",
+		"e the Tools Window.",
 		/* [83] */
 		"Writing Error. I cannot write this file "
 		"on this hard disk.",
@@ -15005,7 +15003,7 @@ resource 'STR#' (128, "Errors") {
 		"ed data of this music. Continue?",
 		/* [89] */
 		"I'm sorry, this function needs Drag Mana"
-		"ger Extension. It is available on yours "
+		"ger Extension. It is available on your "
 		"system disks.",
 		/* [90] */
 		"PlayerPRO has a problem to identify your"
