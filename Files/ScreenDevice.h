@@ -104,21 +104,21 @@ class ScreenDevice {
 		long					mBitDepth;			 
 		GrafPtr					mFS_DC;
 		
-		#if USE_DRAW_SPROCKETS
+#if USE_DRAW_SPROCKETS
 		DSpContextReference		mContextRef;
-//		DSpContextAttributes	mContext;
-		#elif USE_DISP_MGR
+		DSpContextAttributes	mContext;
+#elif USE_DISP_MGR
 		GrafPtr					mContextRef;
 		RgnHandle				mMenuBarRgn;
 		long					mMenuBarHeight;
-		#elif EG_WIN
+#elif EG_WIN
 		LPDIRECTDRAWPALETTE FAR	mFS_Palette;
 		LPDIRECTDRAWSURFACE		mContextRef;
 		LPDIRECTDRAW			mDDObj;
 		HWND					mFS_Win;
-		#else			
+#else			
 		long					mContextRef;
-		#endif
+#endif
 
 
 };

@@ -116,7 +116,7 @@ OSErr CallImportPlug( 		MADLibrary		*inMADDriver,
 		UseResFile( fileID);
 	}
 	
-  myErr = GetDiskFragment( &inMADDriver->ThePlug[ PlugNo].file, 0, kCFragGoesToEOF, inMADDriver->ThePlug[ PlugNo].file.name, kLoadCFrag, &connID, (Ptr *) &mainPLUG, errName);
+	myErr = GetDiskFragment( &inMADDriver->ThePlug[ PlugNo].file, 0, kCFragGoesToEOF, inMADDriver->ThePlug[ PlugNo].file.name, kLoadCFrag, &connID, (Ptr *) &mainPLUG, errName);
 
 	if( myErr == noErr)
 	{

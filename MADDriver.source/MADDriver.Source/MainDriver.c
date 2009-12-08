@@ -508,33 +508,13 @@ long MADMinimize( MADMusic *music)
 }
 #endif
 
-#if 0
-Ptr MADNewPtr( long size, MADLibrary* init)
-{
-	if( size == 0) size = 1;	// Myriad, zeroptr on PC
-	
-//	if( init->sysMemory) return NewPtrSys( size);
-//	else
-	
-	return NewPtr( size);
-}
-
-Ptr MADNewPtrClear( long size, MADLibrary* init)
-{
-//	if( init->sysMemory) return NewPtrSysClear( size);
-//	else
-	
-	return NewPtrClear( size);
-}
-#endif
-
 void MADGetBestDriver( MADDriverSettings	*Init)
 {
 #ifdef _MAC_H
-SInt32			gestaltAnswer;
-short			myBit;
-NumVersion		nVers;
-Boolean			Stereo, StereoMixing, NewSoundManager, NewSoundManager31, hasASC, Audio16;
+	SInt32			gestaltAnswer;
+	short			myBit;
+	NumVersion		nVers;
+	Boolean			Stereo, StereoMixing, NewSoundManager, NewSoundManager31, hasASC, Audio16;
 
 /***************					****************/
 /****** HARDWARE IDENTIFICATION AND CHECK **********/
@@ -545,6 +525,7 @@ Boolean			Stereo, StereoMixing, NewSoundManager, NewSoundManager31, hasASC, Audi
 /****************/
 
 	Gestalt( kSoundOutputDeviceType, &gestaltAnswer);
+	gestaltAnswer = EndianS32_BtoN(gestaltAnswer);
 	if( gestaltAnswer == kASCSubType) hasASC = true;
 	else hasASC = false;
 
@@ -553,6 +534,7 @@ Boolean			Stereo, StereoMixing, NewSoundManager, NewSoundManager31, hasASC, Audi
 /**************/
 
 	Gestalt( gestaltSoundAttr, &gestaltAnswer);
+	gestaltAnswer = EndianS32_BtoN(gestaltAnswer);
 	myBit = gestaltStereoCapability;
 	Stereo = BitTst( &gestaltAnswer, 31-myBit);
 

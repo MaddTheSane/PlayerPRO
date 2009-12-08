@@ -7,7 +7,7 @@
  *
  */
 
-//TODO: Use CoreFoundation to link Plugins to the framework
+//TODO: Use CoreFoundation to link Plugins to the framework and app
 #include "RDriver.h"
 #include "RDriverInt.h"
 
@@ -72,15 +72,85 @@ static CFMutableArrayRef GetPluginFolderLocationsWithFSRef(FSRefPtr UserAddedPla
 	return FoldLocs;
 }
 
+static Handle MADGet1Resource( OSType type, short id, MADLibrary* init)
+{
+	Handle dH = Get1Resource( type, id);
+	if( dH == NULL) return NULL;
+	
+	DetachResource( dH);
+	HNoPurge( dH);
+	
+	return dH;
+}
+
+
+void NScanResource( MADLibrary *inMADDriver)
+{
+	short	i;
+	
+#define BASERES	5000
+	
+	for( i = 0; i < MAXPLUG; i++)
+	{
+		Boolean ResourceOK;
+		Handle	aRes, bRes;
+		
+		ResourceOK = true;
+		
+		aRes = MADGet1Resource( 'CODE', BASERES + i, inMADDriver);
+		if( aRes == NULL) ResourceOK = false;
+		else
+		{
+			DisposeHandle( aRes);
+			aRes = NULL;
+		}
+		
+		bRes = MADGet1Resource( 'STR#', BASERES + i, inMADDriver);
+		if( bRes == NULL) ResourceOK = false;
+		else
+		{
+			DisposeHandle( bRes);
+			bRes = NULL;
+		}
+		
+		if( inMADDriver->TotalPlug < MAXPLUG && ResourceOK == true)
+		{
+			short		No = inMADDriver->TotalPlug;
+			Handle		theRes;
+			Str255		tStr;
+			
+			//	theName = LMGetCurApName();
+			
+			HGetVol( NULL, &inMADDriver->ThePlug[ No].file.vRefNum, &inMADDriver->ThePlug[ No].file.parID);
+			pStrcpy( inMADDriver->ThePlug[ No].file.name, RSRCNAME);
+			
+			/** CODE du Plug-in **/
+			
+			GetIndString( tStr, BASERES+i, 1);
+			BlockMoveData( tStr + 1, &inMADDriver->ThePlug[ No].type, 4);
+			inMADDriver->ThePlug[ No].type[ 4] = 0;
+			
+			GetIndString( tStr, BASERES+i, 2);
+			BlockMoveData( tStr + 1, &inMADDriver->ThePlug[ No].mode, 4);
+			
+			GetIndString( inMADDriver->ThePlug[ No].MenuName, BASERES+i, 3);
+			GetIndString( inMADDriver->ThePlug[ No].AuthorString, BASERES+i, 4);
+			
+			inMADDriver->TotalPlug++;
+		}
+	}
+}
+
 void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 {
+	CFMutableArrayRef PlugLocations = NULL;
+
 	inMADDriver->ThePlug = (PlugInfo*) NewPtr( MAXPLUG * sizeof( PlugInfo));
 	inMADDriver->TotalPlug = 0;
 	if (PluginFolder != NULL) {
 		Boolean UnusedBool1, isFolder;
 		FSResolveAliasFile(PluginFolder, TRUE, &isFolder, &UnusedBool1);
 	}
-	CFMutableArrayRef PlugLocations;
 	if (PluginFolder == NULL) {
 		PlugLocations = GetDefaultPluginFolderLocations();
 	} else {
@@ -89,6 +159,8 @@ void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 	CFRetain(PlugLocations);
 	
 	CFRelease(PlugLocations);
+	PlugLocations = NULL;
+	NScanResource(inMADDriver);
 }
 
 OSErr CallImportPlug(MADLibrary				*inMADDriver,
@@ -217,31 +289,17 @@ OSErr PPIdentifyFile( MADLibrary *inMADDriver, char *type, char *AlienFile)
 	strcpy( type, "!!!!");
 	return MADCannotFindPlug;
 }
-/*
-OSErr PPIdentifyFSRef( MADLibrary *inMADDriver, char *type, FSRefPtr AlienRef)
-{
-	UInt8 AlienFileName[PATH_MAX];
-	Boolean isFolder, UnusedBool1;
-	FSResolveAliasFile(AlienRef, TRUE, &isFolder, &UnusedBool1);
-	
-	FSRefMakePath(AlienRef, AlienFileName, PATH_MAX);
-	
-	return PPIdentifyFile(inMADDriver, type, (char*)AlienFileName);
-}
-*/
 
 Boolean	MADPlugAvailable( MADLibrary *inMADDriver, char* kindFile)
 {
 	short		i;
 	
-	if( !strcmp( kindFile, "MADK")) return true;
-	//	if (kindFile == 'MADK') return TRUE;
+	if( !strcmp( kindFile, "MADK")) return TRUE;
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		OSType temp1;
 		temp1 = Ptr2OSType(kindFile);
-		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type)) return true;
-		//if( temp1 == inMADDriver->ThePlug[i].type) return TRUE;
+		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type)) return TRUE;
 	}
 	return FALSE;
 }

@@ -5,4 +5,4 @@ doesn't work as expected or desired.
 * The localization Rez files and the app-wide Rez files have multiply defined
     resources
 * Some buttons are missing.
-* The Plug-in architecture needs to be re-written.
+* The Plug-in architecture(s) for Mac OS X needs to be re-written.

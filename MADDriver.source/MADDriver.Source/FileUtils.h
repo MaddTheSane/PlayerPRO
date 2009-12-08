@@ -67,6 +67,7 @@ unsigned char* MYC2PStr( Ptr cStr);
 void MYP2CStr( unsigned char *cStr);
 OSType Ptr2OSType( Ptr str);
 void OSType2Ptr( OSType type, Ptr str);
+void pStrcpy(register unsigned char *s1, register unsigned char *s2);
 
 
 ////////////////////////////////////////////////////////////
