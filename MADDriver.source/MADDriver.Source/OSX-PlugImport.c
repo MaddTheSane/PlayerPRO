@@ -86,8 +86,8 @@ static Handle MADGet1Resource( OSType type, short id, MADLibrary* init)
 OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 {
 	MADSpec		*theMAD;
-	long			fileSize;
-	short			fileID;
+	long		fileSize;
+	short		fileID;
 	
 	theMAD = (MADSpec*) NewPtr( sizeof( MADSpec) + 200);
 	
@@ -175,6 +175,65 @@ void NScanResource( MADLibrary *inMADDriver)
 	}
 }
 
+static MADFileFormatPlugin **GetMADPlugInterface(CFPlugInRef plugToTest)
+{		
+	CFArrayRef				factories;
+	Boolean					foundInterface;
+	MADFileFormatPlugin		**formatPlugA = NULL;
+
+	//  See if this plug-in implements the Test type.
+	factories	= CFPlugInFindFactoriesForPlugInTypeInPlugIn( kPlayerPROModFormatTypeID, plugToTest );
+	
+	if ( factories != NULL )
+	{
+		CFIndex	factoryCount;
+		CFIndex	index;
+		
+		factoryCount	= CFArrayGetCount( factories );
+		if ( factoryCount > 0 )
+		{
+			for ( index = 0 ; (index < factoryCount) && (foundInterface == false) ; index++ )
+			{
+				CFUUIDRef	factoryID;
+				
+				//  Get the factory ID for the first location in the array of IDs.
+				factoryID = (CFUUIDRef) CFArrayGetValueAtIndex( factories, index );
+				if ( factoryID )
+				{
+					IUnknownVTbl **iunknown;
+					
+					//  Use the factory ID to get an IUnknown interface. Here the plug-in code is loaded.
+					iunknown	= (IUnknownVTbl **) CFPlugInInstanceCreate( NULL, factoryID, kPlayerPROModFormatTypeID );
+					
+					if ( iunknown )
+					{
+						//  If this is an IUnknown interface, query for the test interface.
+						(*iunknown)->QueryInterface( iunknown, CFUUIDGetUUIDBytes( kPlayerPROModFormatInterfaceID ), (LPVOID *)( &formatPlugA ) );
+						
+						// Now we are done with IUnknown
+						(*iunknown)->Release( iunknown );
+						
+						if ( formatPlugA )
+						{
+							//	We found the interface we need
+							foundInterface	= true;
+						}
+					}
+				}
+			}
+		}
+		else {
+			return NULL;
+		}
+	}
+	else {
+		return NULL;
+	}
+	
+	
+	return formatPlugA;
+}	
+
 void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 {
 	CFMutableArrayRef PlugLocations = NULL;
@@ -214,9 +273,6 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 	
 	driverSettings.sysMemory = false;
 	
-	//  See if this plug-in implements the Test type.
-	
-	
 	iErr = (*formatPlugA)->ThePlugMain(order, AlienFile, theNewMAD, info, &driverSettings);
 	return iErr;
 }
@@ -243,7 +299,7 @@ void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
 void CloseImportPlug(MADLibrary *inMADDriver)
 {
 	short	i;
-	ULONG RelCount = 0;
+	ULONG	RelCount = 0;
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
@@ -279,7 +335,20 @@ OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInf
 
 OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD)
 {
-	return -8;
+	short		i;
+	PPInfoRec	InfoRec;
+	
+	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	{
+		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		{
+			*theNewMAD = (MADMusic*) MADNewPtrClear( sizeof( MADMusic), inMADDriver);
+			if( !*theNewMAD) return MADNeedMemory;
+			
+			return( CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec));
+		}
+	}
+	return MADCannotFindPlug;
 }
 
 OSErr CheckMADFile(char* name)
@@ -361,15 +430,62 @@ Boolean	MADPlugAvailable( MADLibrary *inMADDriver, char* kindFile)
 
 OSErr PPExportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD)
 {
-	return -8;
+	short		i;
+	PPInfoRec	InfoRec;
+	
+	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	{
+		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		{
+			return( CallImportPlug( inMADDriver, i, 'EXPL', AlienFile, theNewMAD, &InfoRec));
+		}
+	}
+	return MADCannotFindPlug;
 }
 
 OSErr PPTestFile( MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
 {
-	return -8;
+	short			i;
+	MADMusic		aMAD;
+	PPInfoRec		InfoRec;
+	
+	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	{
+		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		{
+			return( CallImportPlug( inMADDriver, i, 'TEST', AlienFile, &aMAD, &InfoRec));
+		}
+	}
+	return MADCannotFindPlug;
 }
 
 OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 {
-	return -8;
+	short	i, x;
+	
+	if( ID >= inMADDriver->TotalPlug) MyDebugStr( __LINE__, __FILE__, "PP-Plug ERROR. ");
+	
+	for( i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
+	{
+		if( inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == 'EXIM')
+		{
+			if( ID == x)
+			{
+				short 	xx;
+				OSType	type;
+				
+				xx = strlen( inMADDriver->ThePlug[ i].type);
+				if( xx > 4) xx = 4;
+				type = '    ';
+				BlockMoveData( inMADDriver->ThePlug[ i].type, &type, xx);
+				
+				return type;
+			}
+			x++;
+		}
+	}
+	
+	MyDebugStr( __LINE__, __FILE__, "PP-Plug ERROR II.");
+	
+	return noErr;
 }

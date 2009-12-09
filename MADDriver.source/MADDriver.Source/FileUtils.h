@@ -92,10 +92,10 @@ static inline void MADByteSwap32(void *msg_buf)
 static inline void MADByteSwap16(void *msg_buf)
 {
 	UInt16			buf = *((UInt16*) msg_buf);
-#ifndef _MAC_H
-	*((UInt16*) msg_buf) = (((((UInt16)buf)<<8) & 0xFF00) | ((((UInt16)buf)>>8) & 0x00FF));
-#else
+#ifdef _MAC_H
 	*((UInt16*) msg_buf) = Endian16_Swap(buf);
+#else
+	*((UInt16*) msg_buf) = (((((UInt16)buf)<<8) & 0xFF00) | ((((UInt16)buf)>>8) & 0x00FF));
 #endif
 }
 

@@ -33,8 +33,6 @@ void SwapPrefs(Prefs *swapPrefs)
 			swapPrefs->a8[x][i] = EndianS16_BtoN(swapPrefs->a8[x][i]);
 			swapPrefs->a9[x][i] = EndianS16_BtoN(swapPrefs->a9[x][i]);
 			swapPrefs->a10[x][i] = EndianS32_BtoN(swapPrefs->a10[x][i]);
-
-
 		}
 	}
 	for (i=0; i < 300; i++) {
@@ -57,12 +55,9 @@ void SwapPrefs(Prefs *swapPrefs)
 		swapPrefs->Previous_Sets[i].id = EndianS16_BtoL(swapPrefs->Previous_Sets[i].id);
 		swapPrefs->Previous_Sets[i].FXID = EndianS32_BtoL(swapPrefs->Previous_Sets[i].FXID);
 		swapPrefs->Previous_Sets[i].noArg = EndianS16_BtoL(swapPrefs->Previous_Sets[i].noArg);
-//		swapPrefs->Previous_Sets[i] = EndianS16_BtoL(swapPrefs->Previous_Sets[i]);
-//		swapPrefs->Previous_Sets[i] = EndianS16_BtoL(swapPrefs->Previous_Sets[i]);
 		for (x=0; x < 4; x++) {
 			swapPrefs->Previous_chanEffect[i][x] = EndianS32_BtoN(swapPrefs->Previous_chanEffect[i][x]);
 		}
-		
 	}
 	
 	swapPrefs->PianoPos = EndianS16_BtoN(swapPrefs->PianoPos);
@@ -141,7 +136,6 @@ void SwapPrefs(Prefs *swapPrefs)
 		}
 	}
 	
-	
 	swapPrefs->lastVisualPlugin = EndianS16_BtoN(swapPrefs->lastVisualPlugin);
 	swapPrefs->channelNumber = EndianS16_BtoN(swapPrefs->channelNumber);
 
@@ -154,9 +148,6 @@ void SwapPrefs(Prefs *swapPrefs)
 	swapPrefs->DirectDriverType.ReverbSize = EndianS32_BtoN(swapPrefs->DirectDriverType.ReverbSize);
 	swapPrefs->DirectDriverType.ReverbStrength = EndianS32_BtoN(swapPrefs->DirectDriverType.ReverbStrength);
 	swapPrefs->DirectDriverType.oversampling = EndianS32_BtoN(swapPrefs->DirectDriverType.oversampling);
-//	swapPrefs->DirectDriverType = EndianS16_BtoN(swapPrefs->DirectDriverType);
-//	swapPrefs->DirectDriverType = EndianS16_BtoN(swapPrefs->DirectDriverType);
-//	swapPrefs->DirectDriverType = EndianS16_BtoN(swapPrefs->DirectDriverType);
 	for (i=0; i < 10; i++) {
 		swapPrefs->Previous_globalEffect[i] = EndianS16_BtoN(swapPrefs->Previous_globalEffect[i]);
 	}

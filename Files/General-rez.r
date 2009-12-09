@@ -56481,3 +56481,348 @@ resource 'vers' (2) {
 	"5.9.10 by Antoine ROSSET"
 };
 
+resource 'STR#' (128, "Errors") {
+	{	/* array StringArray: 108 elements */
+		/* [1] */
+		"PlayerPRO can only read 11Khz or 22Khz "
+		"sounds.",
+		/* [2] */
+		"There isn’t enough memory for this sound"
+		". Allocate more memory for PlayerPRO us"
+		"ing the Finder’s “Get Info.” ",
+		/* [3] */
+		"This program requires 32-bit addressing."
+		" Use the Memory Control Panel to set you"
+		"r system to 32-bit mode and restart.",
+		/* [4] */
+		"No sounds/music could be found in this f"
+		"ile. Check this file.",
+		/* [5] */
+		"A file error has occured. There probably"
+		" wasn’t enough room.",
+		/* [6] */
+		"MacOS 8.0 or higher is required by Playe"
+		"r PRO.",
+		/* [7] */
+		"This sound uses a compression format whi"
+		"ch can't be read by PlayerPRO. Please r"
+		"efer to the documentation.",
+		/* [8] */
+		"Your changes will not be in effect until"
+		" the next MOD file is opened.",
+		/* [9] */
+		"Memory is getting critically low.  Alloc"
+		"ate more memory for PlayerPRO using the"
+		" Finder’s “Get Info.” ",
+		/* [10] */
+		"This music couldn't be found.",
+		/* [11] */
+		"This driver is only available on the AV "
+		"series Macintoshs.",
+		/* [12] */
+		"Sorry, but this is the un-registered ver"
+		"sion of PlayerPRO! You need to register "
+		"PlayerPRO to do this!",
+		/* [13] */
+		"To do this, you will need to select an i"
+		"nstrument in the “Instrument List” windo"
+		"w.",
+		/* [14] */
+		"Do you really want to replace this instr"
+		"ument?",
+		/* [15] */
+		"This MOD file is out of date. Should I u"
+		"pdate it?",
+		/* [16] */
+		"This Macintosh is able to use a higher-p"
+		"erformance driver. It's better to use th"
+		"e ROSSET Routines MOD 2.",
+		/* [17] */
+		"Your Macintosh is unable to play sound i"
+		"n stereo. Buy another Macintosh!",
+		/* [18] */
+		"Where is the Apple Sound Chip (ASC)? Wha"
+		"t is this computer?",
+		/* [19] */
+		"Sorry, but you don’t have a microphone.",
+		/* [20] */
+		"The instrument loop is incorrect. Please"
+		" fix it.",
+		/* [21] */
+		"Are you sure that you want to delete thi"
+		"s instrument?",
+		/* [22] */
+		"Sorry, but you can't use this driver wit"
+		"hout an Apple Sound Chip.",
+		/* [23] */
+		"You must be in 256 color mode and have a"
+		" 640x480 monitor to use this function.",
+		/* [24] */
+		"Sorry, but that sound is too large. Inst"
+		"ruments must be smaller than 128K.",
+		/* [25] */
+		"Please rebuild your Desktop! (Reboot whi"
+		"le holding the Command and Option keys.)",
+		/* [26] */
+		"Sorry, but that response was invalid. Pl"
+		"ease enter a number between 0 and the hi"
+		"ghest pattern.",
+		/* [27] */
+		"PlayerPRO requires the Sound Manager 3."
+		"0 to run.",
+		/* [28] */
+		"Sorry, but the length of the partition m"
+		"ust be between 1 and 128.",
+		/* [29] */
+		"Sorry, but this registration code is inc"
+		"orrect.",
+		/* [30] */
+		"Please enter your name.",
+		/* [31] */
+		"This program has already been registered"
+		".",
+		/* [32] */
+		"The un-registered version of PlayerPRO i"
+		"s limited to only 20 minutes! Please sup"
+		"port PlayerPRO development!",
+		/* [33] */
+		"Sorry, but PlayerPRO requires AppleEven"
+		"ts.",
+		/* [34] */
+		"Sorry, but there’s nothing in this windo"
+		"w to print.",
+		/* [35] */
+		"This MIDI file is unrecognizable. It doe"
+		"sn’t seem to be a SMF (MThd) file.",
+		/* [36] */
+		"In your pattern list, the higher pattern"
+		" number MUST appear at least one time!",
+		/* [37] */
+		"Are you sure that you want to replace th"
+		"e current partition with this partition "
+		"of the MIDI file?",
+		/* [38] */
+		"Sorry, but nothing is selected.",
+		/* [39] */
+		"This MIDI file has no samples. Samples a"
+		"re required if you want to hear somethin"
+		"g!",
+		/* [40] */
+		"Sorry, but the “Plug-In” modules returne"
+		"d an error. Please refer to the document"
+		"ation.",
+		/* [41] */
+		"Sorry, but PlayerPRO is UNREGISTERED, an"
+		"d your 15 day trial period is over. You "
+		"must either purchase this program or del"
+		"ete it!",
+		/* [42] */
+		"This function doesn't work in this versi"
+		"on.",
+		/* [43] */
+		"It's not a valid value!",
+		/* [44] */
+		"I cannot open this file.\nFile Type Error"
+		".\nPlug Import Error.",
+		/* [45] */
+		"I don't have Import Method to open this"
+		" file.",
+		/* [46] */
+		"Are you sure that you want to delete not"
+		"es of this track and pattern?",
+		/* [47] */
+		"WARNING - This is a beta version of this"
+		" Import Plug!",
+		/* [48] */
+		"Are you sure that you want to purge this"
+		" pattern?",
+		/* [49] */
+		"I cannot delete this pattern. Your music"
+		" file MUST have 1 pattern at least.",
+		/* [50] */
+		"Are you sure that you want to delete thi"
+		"s pattern?",
+		/* [51] */
+		"Do you want to replace the selected patt"
+		"ern or load it as a new pattern?",
+		/* [52] */
+		"This PlayerPRO version supports pattern "
+		"size from 1 to 999. Change it, please!",
+		/* [53] */
+		"Do you really want to change the amplitu"
+		"de of this sound?",
+		/* [54] */
+		"Printer Driver Error...",
+		/* [55] */
+		"Use PtMid program to convert Midi files "
+		"into PlayerPRO files.",
+		/* [56] */
+		"I cannot find any help file.",
+		/* [57] */
+		"MIDI Hardware Error. Check PatchBay Cont"
+		"rol Panel and your connections.",
+		/* [58] */
+		"MIDI Factor value must be between 0% and"
+		" 500% of the velocity value.",
+		/* [59] */
+		"Error in 'argument' value. It's a hexade"
+		"cimal from 0 to FF.",
+		/* [60] */
+		"Correct the file type & creator of this "
+		"file before opening?",
+		/* [61] */
+		"This SoundInPut device doesn't support o"
+		"ptions dialog.",
+		/* [62] */
+		"File not found !\nI cannot find this musi"
+		"c on your hard disk.",
+		/* [63] */
+		"Not enough memory to do this operation. "
+		"Allocate more memory to PlayerPRO.",
+		/* [64] */
+		"The name “^2” is already taken by anothe"
+		"r file. Please use a different name.",
+		/* [65] */
+		"Give a name to this sound, if you want t"
+		"o create a file !",
+		/* [66] */
+		"Sorry, but sample rate (c2spd) must be b"
+		"etween 1 Hz and 50 Khz.",
+		/* [67] */
+		"PLUG ERROR: This function is not support"
+		"ed by this plug. (orderNotImplemented)",
+		/* [68] */
+		"PLUG ERROR: Not enough memory to do this"
+		" operation. Allocate more memory to Play"
+		"erPRO. (needMoreMemory)",
+		/* [69] */
+		"PLUG ERROR: This file format isn't suppo"
+		"rted by this plug. (fileNotSupportedByTh"
+		"isPlug)",
+		/* [70] */
+		"PLUG ERROR: Unknown Error. (unknowError)",
+		/* [71] */
+		"PLUG ERROR: PlayerPRO cannot find a plug"
+		" to open this file format.\n(cannotFindPl"
+		"ug)",
+		/* [72] */
+		"You don't have 'QuickTime™ Musical Instr"
+		"uments' extension. You cannot use this f"
+		"unction.",
+		/* [73] */
+		"Error: PlayerPRO cannot open 'Help PP' r"
+		"esources.",
+		/* [74] */
+		"Error: I cannot find an input device.",
+		/* [75] */
+		"Writing Error: volume write protected.\n\n"
+		"Choose another volume to save this file.",
+		/* [76] */
+		"Sorry, but RealNote must be between -96 "
+		"and 96.",
+		/* [77] */
+		"Sorry, but Volume must be between 0 and "
+		"64.",
+		/* [78] */
+		"Sorry, but Volume Fade must be between 0"
+		" and 32767.",
+		/* [79] */
+		"Sorry, maximum points for volume envelop"
+		"e is 12.",
+		/* [80] */
+		"Error in 'volume' value. It's a hexadeci"
+		"mal from 0 to FF.",
+		/* [81] */
+		"Sorry, but the unregistered version cann"
+		"ot open this kind of files. Only registe"
+		"red version can open all sound/music fil"
+		"es.",
+		/* [82] */
+		"You have to turn OFF Recording state. Se"
+		"e the Tools Window.",
+		/* [83] */
+		"Writing Error. I cannot write this file "
+		"on this hard disk.",
+		/* [84] */
+		"Please enter your country.",
+		/* [85] */
+		"Please select the distributor, by clicki"
+		"ng on the pop-up menu.",
+		/* [86] */
+		"PLUG ERROR: PlayerPRO cannot find the pl"
+		"ug to do this operation.\n(cannotFindPlug"
+		")",
+		/* [87] */
+		"Your 'PlayerPRO Pref' file was CORRUPTED"
+		". It has been deleted!",
+		/* [88] */
+		"WARNING - This function doesn't support "
+		"UNDO. This function will remove all unus"
+		"ed data of this music. Continue?",
+		/* [89] */
+		"I'm sorry, this function needs Drag Mana"
+		"ger Extension. It is available on your "
+		"system disks.",
+		/* [90] */
+		"PlayerPRO has a problem to identify your"
+		" name & your registration ID. Check it!",
+		/* [91] */
+		"Do you really want to change the mode of"
+		" this sound?",
+		/* [92] */
+		"PlayerPRO requires AppearanceManager ext"
+		"ension, please update your MacOS to vers"
+		"ion 8.0 or higher.",
+		/* [93] */
+		"This beta version has expired. Please do"
+		"wnload final version on www.quadmation.c"
+		"om/pphome.htm",
+		/* [94] */
+		"WARNING !\nYou are entering in a protecte"
+		"d area.\nYou should not be here.\nPlease e"
+		"xit NOW !",
+		/* [95] */
+		"PlayerPRO requires Quicktime extension v"
+		"ersion 2.5 or higher.",
+		/* [96] */
+		"PlayerPRO is not able to open this kind "
+		"of file.",
+		/* [97] */
+		"There are NO space between letters in th"
+		"e registration code! Remove them please.",
+		/* [98] */
+		"Not enough memory to load your internet "
+		"browser. Closing application can make mo"
+		"re memory available.",
+		/* [99] */
+		"Internet Connection Error.",
+		/* [100] */
+		"Are you sure that you want to reset the "
+		"URLs list to the default one?",
+		/* [101] */
+		"This version of PlayerPRO requires a Pow"
+		"erPC G4 with Altivec support.",
+		/* [102] */
+		"Are you sure that you want to delete thi"
+		"s music file?\nYou cannot undo this opera"
+		"tion.",
+		/* [103] */
+		"You need to open “Digital Editor” window"
+		" to use this function.",
+		/* [104] */
+		"Are you sure that you want to delete thi"
+		"s VST settings?",
+		/* [105] */
+		"Are you sure that you want to replace th"
+		"ese settings with current one?",
+		/* [106] */
+		"This file is compressed in “.zip” format"
+		". You need to uncompress it before it can be used.",
+		/* [107] */
+		"Some VST Plugs are not available: ",
+		/* [108] */
+		"MPEG4 requires Quicktime 6 or higher. Yo"
+		"u can download it from http://www.apple.co"
+		"m/quicktime"
+	}
+};

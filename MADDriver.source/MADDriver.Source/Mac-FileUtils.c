@@ -27,8 +27,6 @@
 extern void NSLog(CFStringRef format, ...);
 
 //TODO: migrate PlayerPRO away from FSSpec!
-//TODO: migrate PlayerPRO away from FSSpec!
-//TODO: migrate PlayerPRO away from FSSpec!
 //TODO: HSetVol isn't available in 64-bit code :(
 //TODO: Also, FSSpec is defined as UInt8 hidden[70]
  
@@ -75,7 +73,7 @@ UNFILE iFileOpen(Ptr name)
 	
 	pStrcpy( spec.name, (unsigned char*) name);
 
-	MYP2CStr((BytePtr)name);
+	MYP2CStr((unsigned char*)name);
 	
 	iErr = FSpMakeFSRef(&spec, &Ref);
 	if(iErr != noErr) return 0;

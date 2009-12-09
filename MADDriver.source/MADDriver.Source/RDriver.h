@@ -435,12 +435,12 @@ typedef struct _MADFileFormatPlugin {
 } MADFileFormatPlugin;
 
 
-struct PlugInfo
+typedef struct PlugInfo
 {
 #ifndef TARGET_RT_MAC_MACHO
 	Handle		IOPlug;											// Plug CODE
 #else
-	MADFileFormatPlugin **IOPlug;
+	MADFileFormatPlugin **IOPlug;								// Plug CODE
 #endif
 	Str63		MenuName;										// Plug name
 	Str63		AuthorString;									// Plug author
@@ -449,8 +449,7 @@ struct PlugInfo
 	char		type[ 5];										// OSType of file support
 	OSType		mode;											// Mode support : Import +/ Export
 	Boolean		hasPPCCode;										// Is Plug FAT?
-};
-typedef struct PlugInfo PlugInfo;
+} PlugInfo;
 #endif
 
 #ifdef WIN32

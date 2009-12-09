@@ -194,7 +194,6 @@
 		55868A6210BFB46100FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55868A7C10BFB4B300FCC24D /* APPL.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DD10BB5368005208D1 /* APPL.c */; };
 		55868A7D10BFB4B500FCC24D /* APPL_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0010BFB31500FCC24D /* APPL_Plug.rsrc.r */; };
-		559343BC1002EAF800F95B82 /* Language-rez.r in Rez */ = {isa = PBXBuildFile; fileRef = 559343BB1002EAF800F95B82 /* Language-rez.r */; };
 		55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
 		55DB45D50FEAB8CD0088C375 /* DFTB.r in Rez */ = {isa = PBXBuildFile; fileRef = 55DB45D40FEAB8CD0088C375 /* DFTB.r */; };
 		55EE8C741003E83A00E75E63 /* General-rez.r in Rez */ = {isa = PBXBuildFile; fileRef = 55EE8C731003E83A00E75E63 /* General-rez.r */; };
@@ -683,6 +682,8 @@
 		550BFF2410BA01BA004FC5D7 /* Game.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Game.c; sourceTree = "<group>"; };
 		550BFF2510BA01BA004FC5D7 /* Game.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; path = Game.r; sourceTree = "<group>"; };
 		550BFF2610BA01BA004FC5D7 /* Game.Rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Game.Rsrc; sourceTree = "<group>"; };
+		5514AA6D10D017E9009A6BD3 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = English; path = "Files/English.lproj/Language-rez.r"; sourceTree = "<group>"; };
+		5514AA6E10D01803009A6BD3 /* French */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; name = French; path = "Files/French.lproj/Language-rez.r"; sourceTree = "<group>"; };
 		5518105610C35A2600ADA9F4 /* Example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Example.c; sourceTree = "<group>"; };
 		5518105710C35A2600ADA9F4 /* small MAD Music */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music"; sourceTree = "<group>"; };
 		5518105810C35A2600ADA9F4 /* small MAD Music.mad */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music.mad"; sourceTree = "<group>"; };
@@ -800,8 +801,6 @@
 		55868A6710BFB46100FCC24D /* APPL.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APPL.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		55868A6810BFB46100FCC24D /* APPL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "APPL-Info.plist"; path = "../../../APPL-Info.plist"; sourceTree = "<group>"; };
 		558A15250FE749B400533D71 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		559343B91002EAD700F95B82 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = English; path = "Files/English.lproj/Language-rez.r"; sourceTree = "<group>"; };
-		559343BD1002EB0400F95B82 /* French */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; name = French; path = "Files/French.lproj/Language-rez.r"; sourceTree = "<group>"; };
 		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 1; name = DFTB.r; path = Files/DFTB.r; sourceTree = "<group>"; };
 		55E30828102C0F0900378338 /* G3.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = G3.rsrc; path = Files/G3.rsrc; sourceTree = "<group>"; };
 		55E30829102C0F0900378338 /* G4.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = G4.rsrc; path = Files/G4.rsrc; sourceTree = "<group>"; };
@@ -1704,9 +1703,9 @@
 		88E0C3CA0C2F21DD00D6C081 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5514AA6C10D017E9009A6BD3 /* Language-rez.r */,
 				55E30828102C0F0900378338 /* G3.rsrc */,
 				55E30829102C0F0900378338 /* G4.rsrc */,
-				559343BB1002EAF800F95B82 /* Language-rez.r */,
 				55DB45D40FEAB8CD0088C375 /* DFTB.r */,
 				55E30832102C0F4000378338 /* Carbon.rsrc */,
 				558A15250FE749B400533D71 /* Info.plist */,
@@ -2731,7 +2730,6 @@
 			files = (
 				88E0C4690C2F21DE00D6C081 /* Carbon.r in Rez */,
 				55DB45D50FEAB8CD0088C375 /* DFTB.r in Rez */,
-				559343BC1002EAF800F95B82 /* Language-rez.r in Rez */,
 				55EE8C741003E83A00E75E63 /* General-rez.r in Rez */,
 				557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */,
 			);
@@ -3201,11 +3199,11 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		559343BB1002EAF800F95B82 /* Language-rez.r */ = {
+		5514AA6C10D017E9009A6BD3 /* Language-rez.r */ = {
 			isa = PBXVariantGroup;
 			children = (
-				559343B91002EAD700F95B82 /* English */,
-				559343BD1002EB0400F95B82 /* French */,
+				5514AA6D10D017E9009A6BD3 /* English */,
+				5514AA6E10D01803009A6BD3 /* French */,
 			);
 			name = "Language-rez.r";
 			sourceTree = "<group>";
