@@ -24,6 +24,26 @@ typedef struct _CFPlugType {
 	UInt32 _refCount;
 } CFPlugType;
 
+#define BASERES 1000
+static OSErr CFFillPlugInfo(PlugInfo *FillPlug)
+{
+	Str63 tStr;
+	GetIndString( tStr, BASERES, 1);
+	BlockMoveData( tStr + 1, &FillPlug->type, 4);
+	FillPlug->type[ 4] = 0;
+	
+	GetIndString( tStr, BASERES, 2);
+	BlockMoveData( tStr + 1, &FillPlug->mode, 4);
+#ifdef __LITTLE_ENDIAN__
+	MOT32(&FillPlug->mode);
+#endif
+	
+	GetIndString( FillPlug->MenuName, BASERES, 3);
+	GetIndString( FillPlug->AuthorString, BASERES, 4);
+	
+	return noErr;
+}
+#undef BASERES
 
 static void _deallocCFPlugType( CFPlugType *myInstance );
 
@@ -97,7 +117,8 @@ static MADFileFormatPlugin CFPlugFormat =
 	CFPlugQueryInterface,
 	CFPlugAddRef,
 	CFPlugRelease,
-	main
+	main,
+	CFFillPlugInfo
 };
 
 static CFPlugType *_allocCFPlugType( CFUUIDRef factoryID )

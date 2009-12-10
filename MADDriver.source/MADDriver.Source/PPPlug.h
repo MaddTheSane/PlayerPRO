@@ -239,7 +239,7 @@ OSErr	PPINGetPlugByID( OSType *type, short id, short samp);
 
 Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo);
 OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug);
-void pStrcpy(register unsigned char *s1, register unsigned char *s2);
+void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
 Ptr 	MyExp1to6( Ptr sound, unsigned long numSampleFrames);
 Ptr 	MyExp1to3( Ptr sound, unsigned long numSampleFrames);
 void 	ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);

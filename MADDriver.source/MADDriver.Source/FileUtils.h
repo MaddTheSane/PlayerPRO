@@ -67,7 +67,7 @@ unsigned char* MYC2PStr( Ptr cStr);
 void MYP2CStr( unsigned char *cStr);
 OSType Ptr2OSType( Ptr str);
 void OSType2Ptr( OSType type, Ptr str);
-void pStrcpy(register unsigned char *s1, register unsigned char *s2);
+void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
 
 
 ////////////////////////////////////////////////////////////
@@ -85,7 +85,9 @@ static inline void MADByteSwap32(void *msg_buf)
 #ifdef _MAC_H
 	*((UInt32*) msg_buf) = Endian32_Swap(temp);
 #else
-	*((UInt32*) msg_buf) = ((((temp & 0xff000000) >> 24) | (( temp & 0x00ff0000) >> 8) | (( temp & 0x0000ff00) << 8) | (temp & 0x000000ff) << 24));
+	*((UInt32*) msg_buf) = ((((temp & 0xff000000) >> 24) | \
+	(( temp & 0x00ff0000) >> 8) | (( temp & 0x0000ff00) << 8) | \
+	(temp & 0x000000ff) << 24));
 #endif
 }
 

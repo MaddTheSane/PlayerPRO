@@ -24,6 +24,34 @@ extern void NSLog(CFStringRef format, ...);
 #include "PPPrivate.h"
 #define CharlMADcheckLength 10
 
+static inline OSErr GetFSSpecFromCFBundle(FSSpecPtr out, CFBundleRef in)
+{
+	OSErr		iErr = noErr;
+	FSRef		tempRef;
+	CFURLRef	tempURL;
+	tempURL = CFBundleCopyBundleURL(in);
+	iErr = CFURLGetFSRef(tempURL, &tempRef);
+	if (iErr) {
+		iErr = noErr;
+	}
+	else {
+		return -43;
+	}
+
+	return FSGetCatalogInfo(&tempRef, kFSCatInfoNone, NULL, NULL, out, NULL);
+	
+}
+
+static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriver, CFBundleRef tempBundle)
+{
+	OSStatus iErr;
+	short PlugNum = inMADDriver->TotalPlug;
+	(*tempMADPlug)->FillPlugInfo( &(inMADDriver->ThePlug[PlugNum]));
+	inMADDriver->ThePlug[PlugNum].IOPlug = tempMADPlug;
+	iErr = GetFSSpecFromCFBundle(&(inMADDriver->ThePlug[PlugNum].file), tempBundle);
+	
+	inMADDriver->TotalPlug++;
+}
 
 #pragma mark Plug-in Locations
 //There are many places that a plug-in might be kept in OS X
@@ -48,17 +76,20 @@ static CFMutableArrayRef GetDefaultPluginFolderLocations()
 	temp1 = CFBundleCopyBuiltInPlugInsURL(CFBundleGetMainBundle());
 	CFArrayAppendValue(PlugFolds, temp1);
 	CFRelease(temp1);
+	temp1 = NULL;
 	
 	//Local systemwide plugins
 	temp1 = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, CFSTR("/Library/Application Support/PlayerPRO/Plugins"), kCFURLPOSIXPathStyle, true);
 	CFArrayAppendValue(PlugFolds, temp1);
 	CFRelease(temp1);
+	temp1 = NULL;
 	
 	//User plugins
 	temp1 = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, CFSTR("~/Library/Application Support/PlayerPRO/Plugins"), kCFURLPOSIXPathStyle, true);
 	CFArrayAppendValue(PlugFolds, temp1);
 	CFRelease(temp1);
-	
+	temp1 = NULL;
+
 	
 	return PlugFolds;
 }
@@ -177,8 +208,8 @@ void NScanResource( MADLibrary *inMADDriver)
 
 static MADFileFormatPlugin **GetMADPlugInterface(CFPlugInRef plugToTest)
 {		
-	CFArrayRef				factories;
-	Boolean					foundInterface;
+	CFArrayRef				factories = NULL;
+	Boolean					foundInterface = FALSE;
 	MADFileFormatPlugin		**formatPlugA = NULL;
 
 	//  See if this plug-in implements the Test type.
@@ -203,7 +234,7 @@ static MADFileFormatPlugin **GetMADPlugInterface(CFPlugInRef plugToTest)
 					IUnknownVTbl **iunknown;
 					
 					//  Use the factory ID to get an IUnknown interface. Here the plug-in code is loaded.
-					iunknown	= (IUnknownVTbl **) CFPlugInInstanceCreate( NULL, factoryID, kPlayerPROModFormatTypeID );
+					iunknown	= (IUnknownVTbl **) CFPlugInInstanceCreate( kCFAllocatorDefault, factoryID, kPlayerPROModFormatTypeID );
 					
 					if ( iunknown )
 					{
@@ -237,7 +268,10 @@ static MADFileFormatPlugin **GetMADPlugInterface(CFPlugInRef plugToTest)
 void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 {
 	CFMutableArrayRef PlugLocations = NULL;
-
+	CFArrayRef		somePlugs = NULL;
+	CFBundleRef		tempBundle = NULL;
+//	CFPlugInRef		tempPlug = NULL;
+	CFIndex			PlugLocNums, PlugNums, i, x;
 	inMADDriver->ThePlug = (PlugInfo*) NewPtr( MAXPLUG * sizeof( PlugInfo));
 	inMADDriver->TotalPlug = 0;
 	if (PluginFolder != NULL) {
@@ -250,14 +284,32 @@ void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 		PlugLocations = GetPluginFolderLocationsWithFSRef(PluginFolder);
 	}
 	CFRetain(PlugLocations);
-	{
-		
-		
+	PlugLocNums	= CFArrayGetCount( PlugLocations );
+
+	for (i=0; i < PlugLocNums; i++) {
+		CFURLRef aPlugLoc;
+		aPlugLoc = CFArrayGetValueAtIndex(PlugLocations, i);
+		somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, CFSTR("ppimpexp"));
+		PlugNums = CFArrayGetCount( somePlugs );
+		if (PlugNums > 0) {
+			for (x = 0; x < PlugNums; x++) {
+				CFPlugInRef tempPlugRef = NULL;
+				CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
+				tempPlugRef = CFBundleGetPlugIn(tempBundleRef);
+				MADFileFormatPlugin** tempMADPlug = NULL;
+				tempMADPlug = GetMADPlugInterface(tempPlugRef);
+				if (tempMADPlug) {
+					MakeMADPlug(tempMADPlug, inMADDriver, tempBundleRef);
+				}
+			
+			}
+		}
+		CFRelease(somePlugs);
 	}
 	CFRelease(PlugLocations);
 	CFRelease(PlugLocations);
 	PlugLocations = NULL;
-	NScanResource(inMADDriver);
+//	NScanResource(inMADDriver);
 }
 
 OSErr CallImportPlug(MADLibrary				*inMADDriver,

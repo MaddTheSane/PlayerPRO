@@ -682,9 +682,9 @@
 		550BFF2410BA01BA004FC5D7 /* Game.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Game.c; sourceTree = "<group>"; };
 		550BFF2510BA01BA004FC5D7 /* Game.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; path = Game.r; sourceTree = "<group>"; };
 		550BFF2610BA01BA004FC5D7 /* Game.Rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Game.Rsrc; sourceTree = "<group>"; };
-		5514AA6D10D017E9009A6BD3 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = English; path = "Files/English.lproj/Language-rez.r"; sourceTree = "<group>"; };
-		5514AA6E10D01803009A6BD3 /* French */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; name = French; path = "Files/French.lproj/Language-rez.r"; sourceTree = "<group>"; };
-		5518105610C35A2600ADA9F4 /* Example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Example.c; sourceTree = "<group>"; };
+		5514AA6D10D017E9009A6BD3 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = English; path = "Files/English.lproj/Language-rez.r"; sourceTree = "<group>"; };
+		5514AA6E10D01803009A6BD3 /* French */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = French; path = "Files/French.lproj/Language-rez.r"; sourceTree = "<group>"; };
+		5518105610C35A2600ADA9F4 /* Example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Example.c; sourceTree = "<group>"; };
 		5518105710C35A2600ADA9F4 /* small MAD Music */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music"; sourceTree = "<group>"; };
 		5518105810C35A2600ADA9F4 /* small MAD Music.mad */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music.mad"; sourceTree = "<group>"; };
 		5518105910C35A2600ADA9F4 /* small MOD Music */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MOD Music"; sourceTree = "<group>"; };
@@ -758,7 +758,7 @@
 		5573A46D10B51CAB00FF8B50 /* ByteSwap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = ByteSwap.c; sourceTree = "<group>"; };
 		5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawSprocket.framework; path = System/Library/Frameworks/DrawSprocket.framework; sourceTree = SDKROOT; };
 		5573A59F10B542F300FF8B50 /* Proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = Proto.c; path = "(Proto)/Proto.c"; sourceTree = "<group>"; };
-		557B8FD910CE01BF00B9A37D /* DefaultPref.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = DefaultPref.r; path = Files/DefaultPref.r; sourceTree = "<group>"; };
+		557B8FD910CE01BF00B9A37D /* DefaultPref.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DefaultPref.r; path = Files/DefaultPref.r; sourceTree = "<group>"; };
 		5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADfg.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5586871010BF5C4700FCC24D /* MADfg-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MADfg-Info.plist"; path = "../../../MADfg-Info.plist"; sourceTree = "<group>"; };
 		5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADH.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -801,7 +801,7 @@
 		55868A6710BFB46100FCC24D /* APPL.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APPL.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		55868A6810BFB46100FCC24D /* APPL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "APPL-Info.plist"; path = "../../../APPL-Info.plist"; sourceTree = "<group>"; };
 		558A15250FE749B400533D71 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 1; name = DFTB.r; path = Files/DFTB.r; sourceTree = "<group>"; };
+		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DFTB.r; path = Files/DFTB.r; sourceTree = "<group>"; };
 		55E30828102C0F0900378338 /* G3.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = G3.rsrc; path = Files/G3.rsrc; sourceTree = "<group>"; };
 		55E30829102C0F0900378338 /* G4.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = G4.rsrc; path = Files/G4.rsrc; sourceTree = "<group>"; };
 		55E30832102C0F4000378338 /* Carbon.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = Carbon.rsrc; path = Files/Carbon.rsrc; sourceTree = "<group>"; };
@@ -3495,11 +3495,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "(Proto)/Proto.c";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					TARGET_API_MAC_CARBON,
 					USE_DRAW_SPROCKETS,
 					MAINPLAYERPRO,
 					_MAC_H,
-					macintosh,
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
@@ -3557,7 +3555,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = _MAC_H;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				INSTALL_PATH = /Library/Frameworks;
 				PREBINDING = NO;
 				PRODUCT_NAME = PlayerPROCore;
 			};
@@ -4001,12 +3999,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "(Proto)/Proto.c";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					TARGET_API_MAC_CARBON,
 					DEBUG_MODE,
 					USE_DRAW_SPROCKETS,
 					MAINPLAYERPRO,
 					_MAC_H,
-					macintosh,
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
