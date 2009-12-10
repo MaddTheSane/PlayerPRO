@@ -19,7 +19,7 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFPlugInDynamicRegistration</key>
-	<true/>
+	<false/>
 	<key>CFPlugInFactories</key>
 	<dict>
 		<key>E993EFD8-0C3F-46F6-9063-6E340C179D88</key>
