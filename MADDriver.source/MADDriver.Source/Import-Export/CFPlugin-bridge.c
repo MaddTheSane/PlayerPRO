@@ -27,6 +27,7 @@ typedef struct _CFPlugType {
 #define BASERES 1000
 static OSErr CFFillPlugInfo(PlugInfo *FillPlug)
 {
+//TODO: use plug-in's resource file, not the App's!
 	Str63 tStr;
 	GetIndString( tStr, BASERES, 1);
 	BlockMoveData( tStr + 1, &FillPlug->type, 4);
