@@ -31,6 +31,7 @@ static inline OSErr GetFSSpecFromCFBundle(FSSpecPtr out, CFBundleRef in)
 	CFURLRef	tempURL;
 	tempURL = CFBundleCopyBundleURL(in);
 	iErr = CFURLGetFSRef(tempURL, &tempRef);
+	CFRelease(tempURL);
 	if (iErr) {
 		iErr = noErr;
 	}
@@ -153,7 +154,7 @@ void NScanResource( MADLibrary *inMADDriver)
 {
 	short	i;
 	
-#define BASERES	5000
+#define BASERES	1000
 	
 	for( i = 0; i < MAXPLUG; i++)
 	{
@@ -269,9 +270,8 @@ void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 {
 	CFMutableArrayRef PlugLocations = NULL;
 	CFArrayRef		somePlugs = NULL;
-	CFBundleRef		tempBundle = NULL;
-//	CFPlugInRef		tempPlug = NULL;
 	CFIndex			PlugLocNums, PlugNums, i, x;
+	
 	inMADDriver->ThePlug = (PlugInfo*) NewPtr( MAXPLUG * sizeof( PlugInfo));
 	inMADDriver->TotalPlug = 0;
 	if (PluginFolder != NULL) {
