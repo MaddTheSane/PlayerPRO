@@ -1026,17 +1026,6 @@ EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	return myErr;
 }
 
-OSErr MODFillPlugInfo(PlugInfo *FillPlug)
-{
-	strcpy(FillPlug->type, "STrk");
-	FillPlug->mode = 'EXIM';
-	
-	pStrcpy(FillPlug->MenuName, "\pMOD");
-	pStrcpy(FillPlug->AuthorString, "\pWritten by A.ROSSET 95"); 
-	
-	return noErr;
-}
-
 static void _deallocCFPlugType( MODPlugType *myInstance );
 
 
@@ -1109,8 +1098,7 @@ static MADFileFormatPlugin CFPlugFormat =
 	CFPlugQueryInterface,
 	CFPlugAddRef,
 	CFPlugRelease,
-	main,
-	MODFillPlugInfo
+	main
 };
 
 static MODPlugType *_allocCFPlugType( CFUUIDRef factoryID )

@@ -434,7 +434,6 @@ typedef struct PlugInfo PlugInfo;
 typedef struct _MADFileFormatPlugin {
     IUNKNOWN_C_GUTS;
 	OSErr (STDMETHODCALLTYPE *ThePlugMain)(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
-	OSErr (STDMETHODCALLTYPE *FillPlugInfo)(PlugInfo *FillPlug);
 } MADFileFormatPlugin;
 
 

@@ -196,6 +196,7 @@
 		55868A7D10BFB4B500FCC24D /* APPL_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0010BFB31500FCC24D /* APPL_Plug.rsrc.r */; };
 		55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
 		55DB45D50FEAB8CD0088C375 /* DFTB.r in Rez */ = {isa = PBXBuildFile; fileRef = 55DB45D40FEAB8CD0088C375 /* DFTB.r */; };
+		55ED50AB10D40BFE00824C61 /* MOD.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55EE8C741003E83A00E75E63 /* General-rez.r in Rez */ = {isa = PBXBuildFile; fileRef = 55EE8C731003E83A00E75E63 /* General-rez.r */; };
 		55EE8EC2100404EB00E75E63 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBC100404EB00E75E63 /* CoreAudio.framework */; };
 		55EE8EC4100404EB00E75E63 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBE100404EB00E75E63 /* CoreMIDI.framework */; };
@@ -624,9 +625,26 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
+		55ED50B910D40C0B00824C61 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5533411010BB547C005208D1 /* MOD */;
+			remoteInfo = MOD;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		55ED50BD10D40C3400824C61 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				55ED50AB10D40BFE00824C61 /* MOD.ppimpexp in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55FA5F7E102D2B9000CB63DA /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1994,11 +2012,13 @@
 				5518106E10C35A4500ADA9F4 /* Resources */,
 				5518106F10C35A4500ADA9F4 /* Sources */,
 				5518107010C35A4500ADA9F4 /* Frameworks */,
+				55ED50BD10D40C3400824C61 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				5518107A10C35A4C00ADA9F4 /* PBXTargetDependency */,
+				55ED50BA10D40C0B00824C61 /* PBXTargetDependency */,
 			);
 			name = "PlayerPRO Example";
 			productName = "PlayerPRO Example";
@@ -3187,6 +3207,11 @@
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 55868A5A10BFB46100FCC24D /* PBXContainerItemProxy */;
+		};
+		55ED50BA10D40C0B00824C61 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5533411010BB547C005208D1 /* MOD */;
+			targetProxy = 55ED50B910D40C0B00824C61 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
