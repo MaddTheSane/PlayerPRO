@@ -19,6 +19,7 @@ extern void NSLog(CFStringRef format, ...);
 
 #define MAXPLUG	40
 #define RSRCNAME "\pRsrc Plug Sys##"
+#define RSRCSUFFIX ".rsrc"
 
 #include "PPPlug.h"
 #include "PPPrivate.h"
@@ -38,21 +39,75 @@ static inline OSErr GetFSSpecFromCFBundle(FSSpecPtr out, CFBundleRef in)
 	else {
 		return -43;
 	}
-
-	return FSGetCatalogInfo(&tempRef, kFSCatInfoNone, NULL, NULL, out, NULL);
 	
+	return FSGetCatalogInfo(&tempRef, kFSCatInfoNone, NULL, NULL, out, NULL);
 }
 
+#define BASERES 1000
 static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
-	OSStatus iErr;
+	OSStatus iErr = noErr;
 	short PlugNum = inMADDriver->TotalPlug;
-	(*tempMADPlug)->FillPlugInfo( &(inMADDriver->ThePlug[PlugNum]));
-	inMADDriver->ThePlug[PlugNum].IOPlug = tempMADPlug;
-	iErr = GetFSSpecFromCFBundle(&(inMADDriver->ThePlug[PlugNum].file), tempBundle);
+	PlugInfo *FillPlug = &(inMADDriver->ThePlug[PlugNum]);
+	{
+		CFStringRef PlugName;
+		{
+			CFDictionaryRef bundleInfoDict;
+			
+			// Get an instance of the non-localized keys.
+			bundleInfoDict = CFBundleGetInfoDictionary( tempBundle );
+			
+			// If we succeeded, look for our property.
+			if ( bundleInfoDict != NULL ) {
+				PlugName = CFDictionaryGetValue( bundleInfoDict, kCFBundleExecutableKey );
+			}
+		}
+		CFURLRef rsrcRef = NULL, plugResource;
+		plugResource = CFBundleCopyResourcesDirectoryURL(tempBundle);
+		CFMutableStringRef plugRsrcName = CFStringCreateMutableCopy(kCFAllocatorDefault, 255, PlugName);
+		CFStringAppend(plugRsrcName, CFSTR(RSRCSUFFIX));
+		rsrcRef = CFURLCreateWithString(kCFAllocatorDefault, plugRsrcName, plugResource);
+
+		FSRef rsrcRefRef;
+		CFURLGetFSRef(rsrcRef, &rsrcRefRef);
+		short resFileNum;
+		FSOpenResourceFile(&rsrcRefRef, 0, 0, fsCurPerm, &resFileNum);
+		if(resFileNum == -1)
+		{
+			OSStatus whatErr = ResError();
+			NSLog(CFSTR("Error of type %i occured"), whatErr);
+			CFRelease(rsrcRef);
+			CFRelease(plugResource);
+			CFRelease(plugRsrcName);
+			return;			
+		}
+		UseResFile(resFileNum);
+		
+		Str255 tStr;
+		GetIndString( tStr, BASERES, 1);
+		BlockMoveData( tStr + 1, &FillPlug->type, 4);
+		FillPlug->type[ 4] = 0;
+			
+		GetIndString( tStr, BASERES, 2);
+		BlockMoveData( tStr + 1, &FillPlug->mode, 4);
+#ifdef __LITTLE_ENDIAN__
+		MOT32(&FillPlug->mode);
+#endif
+			
+		GetIndString( FillPlug->MenuName, BASERES, 3);
+		GetIndString( FillPlug->AuthorString, BASERES, 4);
+		CFRelease(rsrcRef);
+		CFRelease(plugResource);
+		CFRelease(plugRsrcName);
+		FSCloseFork(resFileNum);
+	}
+	
+	FillPlug->IOPlug = tempMADPlug;
+	iErr = GetFSSpecFromCFBundle(&(FillPlug->file), tempBundle);
 	
 	inMADDriver->TotalPlug++;
 }
+#undef BASERES	
 
 #pragma mark Plug-in Locations
 //There are many places that a plug-in might be kept in OS X
@@ -232,7 +287,7 @@ static MADFileFormatPlugin **GetMADPlugInterface(CFPlugInRef plugToTest)
 				factoryID = (CFUUIDRef) CFArrayGetValueAtIndex( factories, index );
 				if ( factoryID )
 				{
-					IUnknownVTbl **iunknown;
+					IUnknownVTbl **iunknown = NULL;
 					
 					//  Use the factory ID to get an IUnknown interface. Here the plug-in code is loaded.
 					iunknown	= (IUnknownVTbl **) CFPlugInInstanceCreate( kCFAllocatorDefault, factoryID, kPlayerPROModFormatTypeID );
