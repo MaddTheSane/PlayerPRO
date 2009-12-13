@@ -53,7 +53,7 @@
 #include <Gestalt.h>
 #include <Navigation.h>
 #ifndef TARGET_API_MAC_CARBON
-	#include <StandardFile.h>
+#include <StandardFile.h>
 #endif
 
 #include "AtomInfo.h"

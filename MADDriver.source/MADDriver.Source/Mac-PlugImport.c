@@ -20,7 +20,6 @@
 //	Internet: 		RossetAntoine@bluewin.ch
 //
 /********************						***********************/
-//TODO: Rewrite plug-in code for OS X and bundles.
 
 #include <MixedMode.h>
 
@@ -52,7 +51,7 @@ static inline void pStrCpy( unsigned char *s1, unsigned char *s2)
 
 Handle MADGet1Resource( OSType type, short id, MADLibrary* init)
 {
-	/*if( init->sysMemory)
+	if( init->sysMemory)
 	{
 		Handle	tH, dH;
 		
@@ -79,7 +78,7 @@ Handle MADGet1Resource( OSType type, short id, MADLibrary* init)
 		
 		return dH;
 	}
-	else*/
+	else
 	{
 		Handle dH = Get1Resource( type, id);
 		if( dH == NULL) return NULL;
@@ -436,15 +435,15 @@ void NScanDirImportPlug( MADLibrary		*inMADDriver, long dirID, short VRefNum, St
 			}
 		}
 		
-		#if CALL_NOT_IN_CARBON
+#if CALL_NOT_IN_CARBON
 		
 		else if( fndrInfo.fdType == 'IMPL')
 		
-		#else
+#else
 		
 		else if( fndrInfo.fdType == 'shlb')
 		
-		#endif
+#endif
 		
 		{
 			if( inMADDriver->TotalPlug < MAXPLUG)
@@ -491,7 +490,7 @@ void NScanResource( MADLibrary *inMADDriver)
 {
 	short	i;
 	
-	#define BASERES	5000
+#define BASERES	1000
 	
 	for( i = 0; i < MAXPLUG; i++)
 	{

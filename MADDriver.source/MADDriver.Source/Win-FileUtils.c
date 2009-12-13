@@ -68,32 +68,6 @@ void iClose( FILE* iFileRefI)
 	fclose( iFileRefI);
 }
 
-void MOT32( void *msg_buf)
-{
-  unsigned char 	*buf = (unsigned char*) msg_buf;
-  unsigned long		out;
-  
-  out = ( (unsigned long) buf[0] << 24L) | ( (unsigned long) buf[1] << 16L) | ( (unsigned long) buf[ 2] << 8L) | ( (unsigned long) buf[3]);
-	*((unsigned long*) msg_buf) = out;
-}
-
-void MOT16( void *msg_buf)
-{
-  unsigned char 	*buf = (unsigned char*) msg_buf;
-  unsigned short	out;
-  
-  out = ((unsigned short) buf[0] << 8L) | ( (unsigned short) buf[1]);
-	*((unsigned short*) msg_buf) = out;
-}
-
-void xINT32( void *msg_buf)
-{
-}
-
-void INT16( void *msg_buf)
-{
-}
-
 Ptr MADstrcpy( Ptr dst, const char* src)
 {
 	long i = 0;

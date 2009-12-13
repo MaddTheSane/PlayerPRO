@@ -122,9 +122,9 @@ static void DebugStr( unsigned char* x)
 	BlockMoveData( x+1, temp, x[ 0]);
 	temp[ x[ 0]] = 0;
 	
-	#ifdef _MAC_H
+#ifdef _MAC_H
 	debugger( temp);
-	#endif
+#endif
 	
 	DisposePtr( temp);
 }

@@ -21,7 +21,9 @@
 //
 /********************						***********************/
 
+#ifdef MAINPLAYERPRO
 #include "Shuddup.h"
+#endif
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "FileUtils.h"
@@ -587,7 +589,7 @@ void MADGetBestDriver( MADDriverSettings	*Init)
 		
 		////////
 		
-		#if !TARGET_RT_MAC_CFM
+#if !(defined(TARGET_RT_MAC_CFM) || defined(TARGET_RT_MAC_MACHO))
 		if( NewSoundManager31)
 		{
 			OSErr	iErr;
@@ -596,7 +598,7 @@ void MADGetBestDriver( MADDriverSettings	*Init)
 			iErr = GetSoundOutputInfo( NULL, siSampleSize, (void*) &Init->outPutBits);	if(iErr) goto oldWay;
 		}
 		else
-		#endif
+#endif
 		{
 			 oldWay:;
 			 
@@ -611,9 +613,9 @@ void MADGetBestDriver( MADDriverSettings	*Init)
 		Init->outPutBits = 8;
 		Init->outPutRate = rate22khz;
 	}
-	#else
+#else
 	
-	#endif
+#endif
 }
 
 OSErr MADCreateMicroDelay( MADDriverRec *intDriver)
@@ -815,9 +817,9 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	/*************************/
 	
 #if defined(powerc) || defined (__powerc) || defined(__APPLE__)
-	#else
+#else
 	DriverInitParam->oversampling = 1;			// We do NOT support oversampling on NON-64bits processor
-	#endif
+#endif
 	
 	
 	
@@ -950,13 +952,13 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	switch( MDriver->DriverSettings.driverMode)
 	{
 		case ASIOSoundManager:
-		#if MACOS9VERSION
+#if MACOS9VERSION
 			theErr = InitASIOManager( MDriver, initStereo);
 			if( theErr != noErr) return theErr;
-		#endif
+#endif
 		break;
 		
-		#ifdef _MIDIHARDWARE_
+#ifdef _MIDIHARDWARE_
 		case MIDISoundDriver:
 		
 			OpenMIDIHardware();
@@ -967,9 +969,9 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 			theErr = InitDBSoundManager( MDriver, initStereo);
 			if( theErr != noErr) return theErr;
 		break;
-		#endif
+#endif
 		
-		#ifdef _MAC_H
+#ifdef _MAC_H
 		case SoundManagerDriver:
 			theErr = InitDBSoundManager( MDriver, initStereo);
 			if( theErr != noErr) return theErr;
@@ -1019,16 +1021,16 @@ OSErr MADDisposeDriver( MADDriverRec* MDriver)
 	
 	switch( MDriver->DriverSettings.driverMode)
 	{
-		#ifdef _MAC_H
+#ifdef _MAC_H
 		case MIDISoundDriver:
 			AllNoteOff( MDriver);
 			DBSndClose( MDriver);
 		break;
 		
 		case ASIOSoundManager:
-		#if MACOS9VERSION
+#if MACOS9VERSION
 			ASIOSndClose( MDriver);
-		#endif
+#endif
 		break;
 		
 		case SoundManagerDriver:
@@ -1404,18 +1406,26 @@ long			vol = 0;
 
 OSErr MADLoadMusicFSRefFile( MADLibrary *lib, MADMusic **music, OSType type, FSRefPtr theRef)
 {
-	char chartype[5];
-	OSErr iErr = noErr;
-	UInt8 AlienFileName[PATH_MAX];
+	//unfortunately, this function won't work if I just put a full path into it.
+	char	chartype[5];
+	OSErr	iErr = noErr;
+	FSSpec	oldspec, oldspecInfo;
+	Str63	AlienFileName;
 	Boolean UnusedBool1, UnusedBool2;
 	iErr = FSResolveAliasFile(theRef, TRUE, &UnusedBool1, &UnusedBool2);
 	if(iErr == fnfErr) return MADReadingErr;
 	else iErr = noErr;
-	FSRefMakePath(theRef, AlienFileName, PATH_MAX);
+	FSGetCatalogInfo(theRef, kFSCatInfoNone, NULL, NULL, &oldspec, NULL);
+	HGetVol(NULL, &oldspecInfo.vRefNum , &oldspecInfo.parID);
+	HSetVol(NULL, oldspec.vRefNum, oldspec.parID);
+	pStrcpy(AlienFileName, oldspec.name);
+	MYP2CStr(AlienFileName);
 	
 	OSType2Ptr(type, chartype);
 	if( type == 'MADK')					iErr = MADLoadMADFileCString( music, (char *)AlienFileName);
 	else								iErr = MADLoadMusicFileCString( lib, music, chartype, (char *)AlienFileName);
+	HSetVol(NULL, oldspecInfo.vRefNum, oldspecInfo.parID);
+
 	return iErr;
 }
 
@@ -1428,14 +1438,19 @@ OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFU
 
 OSErr MADLoadMusicFSpFile( MADLibrary *lib, MADMusic **music, char *plugType, FSSpec *theSpec)
 {
-	FSRef TheRef;
-	OSType theType;
-	OSErr iErr;
-	iErr = FSpMakeFSRef(theSpec, &TheRef);
-	if (iErr == noErr) {
-		theType = Ptr2OSType(plugType);
-		iErr = MADLoadMusicFSRefFile(lib, music, theType, &TheRef);
-	}
+	OSErr			iErr;
+	FSSpec			saved;
+	
+	HGetVol( NULL, &saved.vRefNum, &saved.parID);
+	HSetVol( NULL, theSpec->vRefNum , theSpec->parID);
+	MYP2CStr( theSpec->name);
+	
+	if( !strcmp( "MADK", plugType)) 	iErr = MADLoadMADFileCString( music, (Ptr) theSpec->name);
+	else								iErr = MADLoadMusicFileCString( lib, music, plugType, (Ptr) theSpec->name);
+	
+	MYC2PStr( (Ptr) theSpec->name);
+	HSetVol( NULL, saved.vRefNum , saved.parID);
+	
 	return iErr;
 }
 
@@ -1498,19 +1513,26 @@ OSErr MADCopyCurrentPartition( MADMusic *aPartition)
 
 OSErr	MADMusicIdentifyFSRef( MADLibrary *lib, OSType *type, FSRefPtr theRef)
 {
-	char chartype[5];
-	OSErr iErr = noErr;
-	UInt8 AlienFileName[PATH_MAX];
+	//unfortunately, this function won't work if I just put a full path into it.
+	char	chartype[5];
+	FSSpec	oldspec, oldspecInfo;
+	Str63	AlienFileName;
+	OSErr	iErr = noErr;
 	Boolean UnusedBool1, UnusedBool2;
 	iErr = FSResolveAliasFile(theRef, TRUE, &UnusedBool1, &UnusedBool2);
 	if(iErr == fnfErr) return MADReadingErr;
 	else iErr = noErr;
-
-	FSRefMakePath(theRef, AlienFileName, PATH_MAX);
+	FSGetCatalogInfo(theRef, kFSCatInfoNone, NULL, NULL, &oldspec, NULL);
+	HGetVol(NULL, &oldspecInfo.vRefNum , &oldspecInfo.parID);
+	HSetVol(NULL, oldspec.vRefNum, oldspec.parID);
+	pStrcpy(AlienFileName, oldspec.name);
+	MYP2CStr(AlienFileName);
 	
 	OSType2Ptr(*type, chartype);
 	iErr = PPIdentifyFile( lib, chartype, (char *)AlienFileName);
 	*type = Ptr2OSType(chartype);
+	HSetVol(NULL, oldspecInfo.vRefNum, oldspecInfo.parID);
+
 	return iErr;
 }
 
@@ -1523,16 +1545,19 @@ OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, OSType *type, CFURLRef URLRef)
 
 OSErr	MADMusicIdentifyFSp( MADLibrary *lib, char *type, FSSpec *theSpec)
 {
-	FSRef TheRef;
-	OSType theType;
-	OSErr iErr;
-	iErr = FSpMakeFSRef(theSpec, &TheRef);
-	if (iErr == noErr) {
-		theType = Ptr2OSType(type);
-		iErr = MADMusicIdentifyFSRef(lib, &theType, &TheRef);
-		OSType2Ptr(theType, type);
-	}
-	return iErr;
+	FSSpec	saved;
+	OSErr	err;
+	
+	HGetVol( NULL, &saved.vRefNum, &saved.parID);
+	HSetVol( NULL, theSpec->vRefNum, theSpec->parID);
+	MYP2CStr( theSpec->name);
+	
+	err =  PPIdentifyFile( lib, type, (Ptr) theSpec->name);
+	
+	MYC2PStr( (Ptr) theSpec->name);
+	HSetVol( NULL, saved.vRefNum, saved.parID);
+	
+	return err;
 }
 
 OSErr	MADMusicIdentifyPString( MADLibrary *lib, char *type, Str255 fName)
@@ -2645,9 +2670,9 @@ OSErr MADStopMusic( MADDriverRec *MDriver)
 	if( !MDriver->curMusic) return MADDriverHasNoMusic;
 	
 	MDriver->Reading = false;
-	#ifdef _MIDIHARDWARE_
+#ifdef _MIDIHARDWARE_
 	if( MDriver->SendMIDIClockData) SendMIDIClock( MDriver, 0xFC);
-	#endif
+#endif
 	
 	return noErr;
 }
@@ -2747,9 +2772,9 @@ OSErr MADStopDriver( MADDriverRec *MDriver)
 	
 	MADCleanDriver( MDriver);
 	
-	#ifdef _MIDIHARDWARE_
+#ifdef _MIDIHARDWARE_
 	if( MDriver->SendMIDIClockData) SendMIDIClock( MDriver, 0xFC);
-	#endif
+#endif
 	
 	return( noErr);
 }
@@ -2884,10 +2909,10 @@ OSErr MADPlaySoundDataSYNC( MADDriverRec *MDriver, Ptr soundPtr, long size, long
 			if( MADIsPressed( (unsigned char*) km, 0x37) && MADIsPressed( (unsigned char*) km, 0x2F)) continueLoop = false;
 			if( Button()) continueLoop = false;
 			
-			#if MAINPLAYERPRO
+#if MAINPLAYERPRO
 			DoGlobalNull();
 			WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-			#endif
+#endif
 		}
 		
 		if( MDriver->chan[ channel].samplePtr != NULL)

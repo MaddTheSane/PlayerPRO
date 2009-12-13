@@ -1177,7 +1177,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 		}
 		else	// No Data for this pattern - Clear Pattern
 		{
-			#define DEFSIZE 10L
+#define DEFSIZE 10
 		
 			theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear( sizeof( PatHeader) + theMAD->header->numChn * DEFSIZE * sizeof( Cmd), init);
 			if( theMAD->partition[ i] == NULL) return MADNeedMemory;

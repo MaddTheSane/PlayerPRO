@@ -197,6 +197,8 @@
 		55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
 		55DB45D50FEAB8CD0088C375 /* DFTB.r in Rez */ = {isa = PBXBuildFile; fileRef = 55DB45D40FEAB8CD0088C375 /* DFTB.r */; };
 		55ED50AB10D40BFE00824C61 /* MOD.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
+		55ED51D610D4CE6F00824C61 /* OSX-CoreMIDI.c in Sources */ = {isa = PBXBuildFile; fileRef = 55ED51D510D4CE6F00824C61 /* OSX-CoreMIDI.c */; };
+		55ED51D710D4CE6F00824C61 /* OSX-CoreMIDI.c in Sources */ = {isa = PBXBuildFile; fileRef = 55ED51D510D4CE6F00824C61 /* OSX-CoreMIDI.c */; };
 		55EE8C741003E83A00E75E63 /* General-rez.r in Rez */ = {isa = PBXBuildFile; fileRef = 55EE8C731003E83A00E75E63 /* General-rez.r */; };
 		55EE8EC2100404EB00E75E63 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBC100404EB00E75E63 /* CoreAudio.framework */; };
 		55EE8EC4100404EB00E75E63 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBE100404EB00E75E63 /* CoreMIDI.framework */; };
@@ -823,6 +825,7 @@
 		55E30828102C0F0900378338 /* G3.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = G3.rsrc; path = Files/G3.rsrc; sourceTree = "<group>"; };
 		55E30829102C0F0900378338 /* G4.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = G4.rsrc; path = Files/G4.rsrc; sourceTree = "<group>"; };
 		55E30832102C0F4000378338 /* Carbon.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = Carbon.rsrc; path = Files/Carbon.rsrc; sourceTree = "<group>"; };
+		55ED51D510D4CE6F00824C61 /* OSX-CoreMIDI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "OSX-CoreMIDI.c"; sourceTree = "<group>"; };
 		55EE8C731003E83A00E75E63 /* General-rez.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = "General-rez.r"; path = "Files/General-rez.r"; sourceTree = "<group>"; };
 		55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		55EE8EBC100404EB00E75E63 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
@@ -1570,6 +1573,7 @@
 			isa = PBXGroup;
 			children = (
 				550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */,
+				55ED51D510D4CE6F00824C61 /* OSX-CoreMIDI.c */,
 				550B011310BA1E1C004FC5D7 /* PPPrivate.h */,
 				88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */,
 				5573A46D10B51CAB00FF8B50 /* ByteSwap.c */,
@@ -2832,6 +2836,7 @@
 				5573A46E10B51CAB00FF8B50 /* ByteSwap.c in Sources */,
 				550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
 				55672F4810CAE90B008C5C3D /* OSX-PlugImport.c in Sources */,
+				55ED51D710D4CE6F00824C61 /* OSX-CoreMIDI.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3017,6 +3022,7 @@
 				550B011710BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
 				5547CE5F10C6E5490041DEF6 /* ByteUtils.c in Sources */,
 				55672E9010CAD830008C5C3D /* OSX-PlugImport.c in Sources */,
+				55ED51D610D4CE6F00824C61 /* OSX-CoreMIDI.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

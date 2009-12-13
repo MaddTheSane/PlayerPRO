@@ -23,7 +23,7 @@
 
 #include <math.h>
 #include "Rdriver.h"
-#include "Rdriverint.h"
+#include "RdriverInt.h"
 
 #define SWAP(a,b) tempr=(a);(a)=(b);(b)=tempr
 

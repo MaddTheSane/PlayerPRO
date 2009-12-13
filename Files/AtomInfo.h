@@ -40,14 +40,14 @@
 */
 
 #ifndef __ATOMINFO__
-	#define __ATOMINFO__
+#define __ATOMINFO__
 
 #if PRAGMA_STRUCT_ALIGN
-	#pragma options align=mac68k
+#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-	#pragma pack(push, 2)
+#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-	#pragma pack(2)
+#pragma pack(2)
 #endif
 
 typedef struct {
@@ -63,11 +63,11 @@ typedef struct {
 } AudioCompressionAtom, *AudioCompressionAtomPtr, **AudioCompressionAtomHandle;
 
 #if PRAGMA_STRUCT_ALIGN
-	#pragma options align=reset
+#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-	#pragma pack(pop)
+#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-	#pragma pack()
+#pragma pack()
 #endif
 
 #endif // __ATOMINFO__

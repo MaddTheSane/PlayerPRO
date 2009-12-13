@@ -23,7 +23,7 @@
 	<key>CFPlugInFactories</key>
 	<dict>
 		<key>73CB5A1C-87A8-47BE-91C8-78D3D2D52B66</key>
-		<string>MEDFactory</string>
+		<string>MTMFactory</string>
 	</dict>
 	<key>CFPlugInTypes</key>
 	<dict>

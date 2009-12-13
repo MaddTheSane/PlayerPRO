@@ -369,11 +369,11 @@ void Convqpm(unsigned qpm, int rgbTempo[2], int ticks)
 		int j, k, kMax;
 		double ratio;
 		
-		#ifdef __POWERPC__
+#if defined( __POWERPC__) || defined( __ppc__)
 		double junk;
-		#else
+#else
 		long double junk;
-		#endif
+#endif
 		
 		ratio = qpm / 24.0;
 		j = k = 791 / qpm + 1; /** I hope these constraints are Ok **/

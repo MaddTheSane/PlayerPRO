@@ -1161,9 +1161,9 @@ short FindAFreeChannel( MADDriverRec *intDriver)
 	
 	if( chanID == -1)	// Find the oldest channel
 	{
-		#ifdef _MAC_H
+#ifdef _MAC_H
 		oldTick = TickCount();
-		#endif
+#endif
 		
 		chanID = 0;
 		
@@ -1224,13 +1224,13 @@ long i;
 				
 				// APPLY VST - EFFECTS
 				
-				#if defined( MAINPLAYERPRO)
+#if defined( MAINPLAYERPRO)
 				if( intDriver->currentlyExporting)
 				{
 					if( intDriver->thisExport) ProcessVSTPlug( intDriver, (long*) intDriver->DASCEffectBuffer[ i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[ i]);
 				}
 				else ProcessVSTPlug( intDriver, (long*) intDriver->DASCEffectBuffer[ i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[ i]);
-				#endif
+#endif
 				
 				
 				// *** *** *** *** ***
@@ -1427,9 +1427,9 @@ short					*DASCopy8;
 										
 										intDriver->lastChannelUsed[ i] = chanID;
 										
-										#ifdef _MAC_H
+#ifdef _MAC_H
 										intDriver->chan[ chanID].eventTime = TickCount();
-										#endif
+#endif
 										intDriver->chan[ chanID].TrackID = i;
 										intDriver->chan[ chanID].TimeCounter = 100;
 										
@@ -1478,21 +1478,21 @@ short					*DASCopy8;
 						{
 							if( intDriver->wasReading == false)
 							{
-								#ifdef _MIDIHARDWARE_
+#ifdef _MIDIHARDWARE_
 							//	if( intDriver->SendMIDIClockData) SendMIDIClock( intDriver, 0xFB);
 								if( intDriver->PartitionReader == 0 && intDriver->PL == 0) SendMIDIClock( intDriver, 0xFA);
 								else SendMIDIClock( intDriver, 0xFB);
-								#endif
+#endif
 								intDriver->wasReading = true;
 							}
 							
-							#ifdef _MIDIHARDWARE_
+#ifdef _MIDIHARDWARE_
 							if( intDriver->SendMIDIClockData)
 							{
 								SendMIDIClock( intDriver, 0xF8);
 								SendMIDITimingClock( intDriver);
 							}
-							#endif
+#endif
 							
 							for( i = 0; i < MAXTRACK; i++) intDriver->TrackLineReading[ i] = true;
 							
@@ -1543,9 +1543,9 @@ short					*DASCopy8;
 							
 							if( intDriver->wasReading == true)
 							{
-								#ifdef _MIDIHARDWARE_
+#ifdef _MIDIHARDWARE_
 								if( intDriver->SendMIDIClockData) SendMIDIClock( intDriver, 0xFC);
-								#endif
+#endif
 								intDriver->wasReading = false;
 							}
 						}
@@ -1581,9 +1581,9 @@ short					*DASCopy8;
 								intDriver->wasReading = true;
 							}*/
 							
-							#ifdef _MIDIHARDWARE_
+#ifdef _MIDIHARDWARE_
 							if( intDriver->SendMIDIClockData) SendMIDIClock( intDriver, 0xF8);
-							#endif
+#endif
 							
 							if( intDriver->smallcounter == intDriver->speed - 1)
 							{
@@ -1598,9 +1598,9 @@ short					*DASCopy8;
 						{
 							if( intDriver->wasReading == true)
 							{
-								#ifdef _MIDIHARDWARE_
+#ifdef _MIDIHARDWARE_
 								if( intDriver->SendMIDIClockData) SendMIDIClock( intDriver, 0xFC);
-								#endif
+#endif
 								intDriver->wasReading = false;
 							}
 						}
@@ -1688,7 +1688,7 @@ short					*DASCopy8;
 	
 	// *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
 	
-	#if defined( MAINPLAYERPRO)
+#if defined( MAINPLAYERPRO)
 	if( intDriver->DriverSettings.outPutBits == 16)
 	{
 		if( intDriver->currentlyExporting)
@@ -1700,7 +1700,7 @@ short					*DASCopy8;
 		}
 		else ProcessVSTPlug( intDriver, (long*) intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
 	}
-	#endif
+#endif
 	
 	// *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
 	
@@ -1989,7 +1989,7 @@ short					*DASCopy8;
 			}
 	}
 	
-	#if defined( MAINPLAYERPRO)
+#if defined( MAINPLAYERPRO)
 	if( intDriver->DriverSettings.outPutBits == 16)
 	{
 		if( intDriver->currentlyExporting)
@@ -1998,7 +1998,7 @@ short					*DASCopy8;
 		}
 		else ProcessVisualPlug( intDriver, (short*) intDriver->IntDataPtr, intDriver->ASCBUFFERReal);
 	}
-	#endif
+#endif
 }
 
 void ApplySurround( MADDriverRec *intDriver)
@@ -2248,9 +2248,9 @@ void NoteOff(short oldIns, short oldN, short oldV, MADDriverRec *intDriver)
 	if( oldV < 64) pack.data[ 2] = 63 + oldV;	
 	else pack.data[ 2] = 127;
 	
-	#if defined(__MWERKS__)
+#if defined(__MWERKS__)
 	OMSWritePacket2( &pack, gOutNodeRefNum, gOutputPortRefNum);
-	#endif
+#endif
 }
 
 void AllNoteOff( MADDriverRec *intDriver)
@@ -2286,9 +2286,9 @@ void SampleMIDI( Channel *curVoice, short channel, short curN, MADDriverRec *int
 	if( curVoice->vol < 64) pack.data[ 2] = 63 + curVoice->vol;	
 	else pack.data[ 2] = 127;
 	
-	#if defined(__MWERKS__)
+#if defined(__MWERKS__)
 	OMSWritePacket2( &pack, gOutNodeRefNum, gOutputPortRefNum);
-	#endif
+#endif
 }
 #else
 void SampleMIDI( Channel *curVoice, short channel, short curN, MADDriverRec *intDriver){}

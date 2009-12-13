@@ -971,7 +971,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 			
 			if( curData->c2spd > 8757 || curData->c2spd < 7895)
 			{
-				#define BASECALC	45
+#define BASECALC	45
 				
 				wh.finetune = 0;			// <- 8363 Hz
 				

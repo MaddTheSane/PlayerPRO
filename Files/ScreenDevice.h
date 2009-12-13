@@ -41,10 +41,10 @@ typedef ColorSpec PixPalEntry;
 
 
 #if USE_DISP_MGR
-	#undef USE_DRAW_SPROCKETS
-	#include "RequestVideo.h"
+#undef USE_DRAW_SPROCKETS
+#include "RequestVideo.h"
 #elif USE_DRAW_SPROCKETS
-	#include <DrawSprocket.h>
+#include <DrawSprocket.h>
 #else
 	typedef long DSpContextReference;
 	struct DSpContextAttributes	{ };

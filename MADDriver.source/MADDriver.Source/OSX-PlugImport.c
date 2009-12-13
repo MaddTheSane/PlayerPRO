@@ -37,7 +37,7 @@ static inline OSErr GetFSSpecFromCFBundle(FSSpecPtr out, CFBundleRef in)
 		iErr = noErr;
 	}
 	else {
-		return -43;
+		return fnfErr;
 	}
 	
 	return FSGetCatalogInfo(&tempRef, kFSCatInfoNone, NULL, NULL, out, NULL);
@@ -99,7 +99,7 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 		CFRelease(rsrcRef);
 		CFRelease(plugResource);
 		CFRelease(plugRsrcName);
-		FSCloseFork(resFileNum);
+		CloseResFile(resFileNum);
 	}
 	
 	FillPlug->IOPlug = tempMADPlug;

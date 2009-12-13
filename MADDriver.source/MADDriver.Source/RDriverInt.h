@@ -50,9 +50,9 @@
 
 	/**  Some #define functions for easiest access **/
 
-	#define SampleDataN(InsD,NoteD)			curMusic->sample[ curMusic->fid[ InsD].firstSample + curMusic->fid[ InsD].what[ NoteD]]
-	#define SampleDataS(InsD,SampleD)		curMusic->sample[ curMusic->fid[ InsD].firstSample + SampleD]
-	#define SampleDataD(InsD)						curMusic->sample[ curMusic->fid[ InsD].firstSample + curSample[ InsD]]
+#define SampleDataN(InsD,NoteD)			curMusic->sample[ curMusic->fid[ InsD].firstSample + curMusic->fid[ InsD].what[ NoteD]]
+#define SampleDataS(InsD,SampleD)		curMusic->sample[ curMusic->fid[ InsD].firstSample + SampleD]
+#define SampleDataD(InsD)						curMusic->sample[ curMusic->fid[ InsD].firstSample + curSample[ InsD]]
 
 #ifdef __cplusplus
 extern "C" {
