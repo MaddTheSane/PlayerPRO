@@ -43,12 +43,12 @@
 #endif
 #endif
 
-
-#define _INTEL_H
-#define EXP __declspec(dllexport)
-
 #endif
 //////////////////////////////////////////////////////////////////////
+
+#ifdef WIN32
+#define EXP __declspec(dllexport)
+#endif
 
 #if defined(WIN32) || defined (_BE_H)
 
@@ -78,14 +78,14 @@ typedef UInt32			UnsignedFixed;
 
 #define NewPtr(x)					(Ptr) malloc(x)
 #define NewPtrClear(x) 	 			(Ptr) calloc(x, 1)
-//#define NewPtrSys(x)				(Ptr) malloc(x)
-//#define NewPtrSysClear(x) 			(Ptr) calloc(x, 1)
+#define NewPtrSys(x)				(Ptr) malloc(x)
+#define NewPtrSysClear(x) 			(Ptr) calloc(x, 1)
 
 //#define DisposPtr(x)				free(x)
 #define DisposePtr(x)				free(x)
 #define BlockMoveData(x,y,z)		memcpy(y,x,z)
 //#define BlockMoveData(x,y,z)			memcpy(y,x,z)
-#define BlockZero(x, y)				memset(x, y, 0)
+//#define BlockZero(x, y)				memset(x, y, 0)
 static inline void BlockZero( void* a, long size)
 {
 	Ptr b = (Ptr) a;
@@ -149,7 +149,7 @@ static void DebugStr( unsigned char* x)
 // ***	PATTERN DESCRIPTION
 // ***	
 
-struct Cmd							// COMMAND
+typedef struct Cmd							// COMMAND
 {
 	Byte	ins;					// Instrument no		0x00: no ins cmd
 	Byte 	note;					// Note, see table		0xFF : no note cmd
@@ -157,26 +157,25 @@ struct Cmd							// COMMAND
 	Byte 	arg;					// Effect argument
 	Byte	vol;					// Volume				0xFF : no volume cmd
 	Byte	unused;
-};
-typedef struct Cmd Cmd;
+}Cmd;
+typedef Cmd MadCommand;
 
-struct PatHeader					// HEADER
+typedef struct PatHeader					// HEADER
 {
 	long	size;					// Length of pattern: standard = 64
 	long	compMode;				// Compression mode, none = 'NONE'
 	char	name[ 32];
 	long	patBytes;				// Pattern Size in Bytes
 	long	unused2;
-};
-typedef struct PatHeader PatHeader;
+}PatHeader;
 typedef PatHeader PatternHeader;
 
-struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
+typedef struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
 {									// Pattern = 64 notes to play
 	PatHeader	header;
 	Cmd			Cmds[ 1];
-};
-typedef struct PatData PatData;
+}PatData;
+typedef PatData PatternData;
 
 
 
@@ -185,7 +184,7 @@ typedef struct PatData PatData;
 // ***	
 
 
-struct sData								// SAMPLE
+typedef struct sData								// SAMPLE
 {
 	long 				size;				// Sample length
 	long				loopBeg;			// LoopStart
@@ -198,8 +197,7 @@ struct sData								// SAMPLE
 	char 				name[ 32];			// Sample name
 	Byte				stereo;				// Stereo
 	Ptr					data;				// Used only in memory, not in files
-};
-typedef struct sData sData;
+}sData;
 
 enum
 {
@@ -208,14 +206,13 @@ enum
 };
 
 
-struct EnvRec				// Volume Enveloppe
+typedef struct EnvRec				// Volume Enveloppe
 {
 	short 	pos;				// pos
 	short	val;				// val
-};
-typedef struct EnvRec EnvRec;
+}EnvRec;
 
-struct InstrData				// INSTRUMENT
+typedef struct InstrData				// INSTRUMENT
 {
 	char 	name[ 32];			// instrument name
 	Byte 	type;				// Instrument type = 0
@@ -258,8 +255,8 @@ struct InstrData				// INSTRUMENT
 	
 	Byte	vibDepth;
 	Byte	vibRate;
-};
-typedef struct InstrData InstrData;
+}InstrData;
+typedef InstrData InstrumentData;
 
 
 enum
@@ -287,7 +284,7 @@ typedef struct
 	
 }	FXBus;
 
-struct MADSpec
+typedef struct MADSpec
 {
 	OSType		MAD;						// Mad Identification
 	char 		name[ 32];					// Music's name
@@ -319,10 +316,9 @@ struct MADSpec
 	
 	long		chanEffect[ MAXTRACK][ 4];	// Channel Effect IDs
 	FXBus		chanBus[ MAXTRACK];
-};
-typedef struct MADSpec MADSpec;
+}MADSpec;
 
-struct FXSets
+typedef struct FXSets
 {
 	short	track;
 	short	id;
@@ -330,8 +326,7 @@ struct FXSets
 	short	noArg;
 	float	values[ 100];
 	Str63	name;
-};	// and then float values
-typedef struct FXSets FXSets;
+}FXSets;	// and then float values
 
 
 #if defined(powerc) || defined (__powerc) || defined(__APPLE__)

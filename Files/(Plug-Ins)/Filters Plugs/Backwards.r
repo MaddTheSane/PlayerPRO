@@ -1,4 +1,7 @@
-data 'STR#' (1000) {
-	$"0001 0942 6163 6B77 6172 6473"                      /* ..ÆBackwards */
+resource 'STR#' (1000) {
+	{	/* array StringArray: 1 elements */
+		/* [1] */
+		"Backwards"
+	}
 };
 

@@ -1,7 +1,15 @@
-data 'STR#' (1000) {
-	$"0005 0473 6E64 2004 494D 504C 0853 6E64"            /* ...snd .IMPL.Snd */
-	$"2046 696C 651B 436F 7079 7269 6768 7420"            /*  File.Copyright  */
-	$"3936 2041 6E74 6F69 6E65 2052 4F53 5345"            /* 96 Antoine ROSSE */
-	$"5404 5341 4D50"                                     /* T.SAMP */
+resource 'STR#' (1000) {
+	{	/* array StringArray: 5 elements */
+		/* [1] */
+		"snd ",
+		/* [2] */
+		"IMPL",
+		/* [3] */
+		"Snd File",
+		/* [4] */
+		"Copyright 96 Antoine ROSSET",
+		/* [5] */
+		"SAMP"
+	}
 };
 

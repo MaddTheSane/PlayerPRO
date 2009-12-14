@@ -1,13 +1,42 @@
-data 'DITL' (128) {
-	$"0005 0000 0000 000A 00A5 001B 00DF 0402"            /* .......¬.•...ﬂ.. */
-	$"4F4B 0000 0000 0028 00A5 0039 00DF 0406"            /* OK.....(.•.9.ﬂ.. */
-	$"4361 6E63 656C 0000 0000 0010 0074 0020"            /* Cancel.......t.  */
-	$"0094 1000 0000 0000 0010 0003 0020 004E"            /* .î........... .N */
-	$"880C 5472 616E 736C 6174 696F 6E3A 0000"            /* à.Translation:.. */
-	$"0000 0010 0050 0020 0067 8803 2B2F 2D02"            /* .....P. .gà.+/-. */
-	$"0000 0000 0027 0003 0039 009E 8817 2831"            /* .....'...9.ûà.(1 */
-	$"3220 6E6F 7465 7320 203D 2020 3120 4F63"            /* 2 notes  =  1 Oc */
-	$"7461 7665 296F"                                     /* tave)o */
+resource 'DITL' (128) {
+	{	/* array DITLarray: 6 elements */
+		/* [1] */
+		{10, 165, 27, 223},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{40, 165, 57, 223},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{16, 116, 32, 148},
+		EditText {
+			enabled,
+			""
+		},
+		/* [4] */
+		{16, 3, 32, 78},
+		StaticText {
+			disabled,
+			"Translation:"
+		},
+		/* [5] */
+		{16, 80, 32, 103},
+		StaticText {
+			disabled,
+			"+/-"
+		},
+		/* [6] */
+		{39, 3, 57, 158},
+		StaticText {
+			disabled,
+			"(12 notes  =  1 Octave)"
+		}
+	}
 };
 
 data 'DLGX' (128) {
@@ -23,21 +52,37 @@ data 'DLGX' (128) {
 	$"0000 0000 0000 0000 0000"                           /* .......... */
 };
 
-data 'DLOG' (128) {
-	$"0065 008F 00A7 0177 0005 0000 0100 0000"            /* .e.è.ß.w........ */
-	$"0000 0080 104E 6F74 6520 5472 616E 736C"            /* ...Ä.Note Transl */
-	$"6174 696F 6E00 280A"                                /* ation.(¬ */
+resource 'DLOG' (128) {
+	{101, 143, 167, 375},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x0,
+	128,
+	"Note Translation",
+	centerMainScreen
 };
 
-data 'STR#' (1000) {
-	$"0001 0E4E 6F74 6520 5472 616E 736C 6174"            /* ...Note Translat */
-	$"65"                                                 /* e */
+resource 'STR#' (1000) {
+	{	/* array StringArray: 1 elements */
+		/* [1] */
+		"Note Translate"
+	}
 };
 
-data 'dctb' (128) {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (128) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
 data 'ictb' (128) {

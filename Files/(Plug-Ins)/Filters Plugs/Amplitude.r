@@ -1,10 +1,36 @@
-data 'DITL' (128) {
-	$"0004 0000 0000 0028 000C 0039 0048 0402"            /* .......(...9.H.. */
-	$"4F4B 0000 0000 0028 005C 0039 0098 0406"            /* OK.....(.\.9.˜.. */
-	$"4361 6E63 656C 0000 0000 000A 005C 001A"            /* Cancel.....Â.\.. */
-	$"007F 1000 0000 0000 000A 0084 001A 0097"            /* .........Â.„...— */
-	$"8801 2502 0000 0000 000A 000C 001A 0057"            /* ˆ.%......Â.....W */
-	$"880A 416D 706C 6974 7564 653A"                      /* ˆÂAmplitude: */
+resource 'DITL' (128) {
+	{	/* array DITLarray: 5 elements */
+		/* [1] */
+		{40, 12, 57, 72},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{40, 92, 57, 152},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{10, 92, 26, 127},
+		EditText {
+			enabled,
+			""
+		},
+		/* [4] */
+		{10, 132, 26, 151},
+		StaticText {
+			disabled,
+			"%"
+		},
+		/* [5] */
+		{10, 12, 26, 87},
+		StaticText {
+			disabled,
+			"Amplitude:"
+		}
+	}
 };
 
 data 'DLGX' (128) {
@@ -19,19 +45,37 @@ data 'DLGX' (128) {
 	$"0000 0006 0000 0000 0000 0000 0000"                 /* .............. */
 };
 
-data 'DLOG' (128) {
-	$"006E 00A1 00B1 0146 0005 0000 0100 0000"            /* .n.¡.±.F........ */
-	$"0000 0080 0941 6D70 6C69 7475 6465 280A"            /* ...€ÆAmplitude(Â */
+resource 'DLOG' (128) {
+	{110, 161, 177, 326},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x0,
+	128,
+	"Amplitude",
+	centerMainScreen
 };
 
-data 'STR#' (1000) {
-	$"0001 0941 6D70 6C69 7475 6465"                      /* ..ÆAmplitude */
+resource 'STR#' (1000) {
+	{	/* array StringArray: 1 elements */
+		/* [1] */
+		"Amplitude"
+	}
 };
 
-data 'dctb' (128) {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........ÝÝÝÝÝÝ */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ÿÿÿÿÿÿ */
+resource 'dctb' (128) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
 data 'ictb' (128) {

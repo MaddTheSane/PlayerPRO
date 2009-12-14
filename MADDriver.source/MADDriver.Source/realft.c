@@ -52,7 +52,7 @@ OSErr MADInitEqualizer( MADDriverRec *intDriver)
 	intDriver->Filter	= (double*) NewPtrClear( sizeof( double) * ((EQPACKET*2)+2));
 	intDriver->fData	= (double*) NewPtrClear( sizeof( double) * ((EQPACKET*2)+2));
 	
-	
+
 	
 	if( intDriver->Filter == NULL) return -1;
 	
@@ -94,7 +94,7 @@ void MADfour1( double *data,int nn,int isign)
 	while (n > mmax) {
 		istep=2*mmax;
 		
-		theta=3.1415926535897932384626433/(isign*mmax);
+		theta=M_PI/(isign*mmax);
 		wtemp=sin(theta);
 		wpr = -2.0*wtemp*wtemp;
 		wpi=sin(2.0*theta);
@@ -126,7 +126,7 @@ void MADrealft(double *data,int n,int isign)
 	double 		c1=0.5,c2,h1r,h1i,h2r,h2i;
 	double 		wr,wi,wpr,wpi,wtemp,theta;
 
-	theta=3.1415926535897932384626433/(double) n;
+	theta=M_PI/(double) n;
 	if (isign == 1) {
 		c2 = -0.5;
 		MADfour1(data,n,1);

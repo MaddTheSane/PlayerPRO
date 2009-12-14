@@ -13,3 +13,5 @@ doesn't work as expected or desired.
 * Migrate away from QuickDraw. Maybe use Carbon NIBs? Or port GUI to Cocoa?
 * Maybe use OS X VSTs and Audio Unit Plugins?
 * Make a MODList that stores file references as Aliases.
+
+Also note that there are TODOs scattered accross the source files.

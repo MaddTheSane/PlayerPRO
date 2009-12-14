@@ -1,7 +1,15 @@
-data 'STR#' (1000) {
-	$"0005 0441 4946 4604 4558 494D 0441 4946"            /* ...AIFF.EXIM.AIF */
-	$"461B 436F 7079 7269 6768 7420 3936 2041"            /* F.Copyright 96 A */
-	$"6E74 6F69 6E65 2052 4F53 5345 5404 5341"            /* ntoine ROSSET.SA */
-	$"4D50"                                               /* MP */
+resource 'STR#' (1000) {
+	{	/* array StringArray: 5 elements */
+		/* [1] */
+		"AIFF",
+		/* [2] */
+		"EXIM",
+		/* [3] */
+		"AIFF",
+		/* [4] */
+		"Copyright 96 Antoine ROSSET",
+		/* [5] */
+		"SAMP"
+	}
 };
 

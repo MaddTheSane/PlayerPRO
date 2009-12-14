@@ -100,6 +100,7 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 		CFRelease(plugResource);
 		CFRelease(plugRsrcName);
 		CloseResFile(resFileNum);
+		FSCloseFork(resFileNum);
 	}
 	
 	FillPlug->IOPlug = tempMADPlug;
@@ -113,9 +114,9 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 //There are many places that a plug-in might be kept in OS X
 /*
  * Possible plugin places:
- * Local Application Support/PlayerPRO/PlugIns
- * User Application Support/PlayerPRO/PlugIns
- * Application Contents/PlugIns
+- * Local Application Support/PlayerPRO/PlugIns
+- * User Application Support/PlayerPRO/PlugIns
+- * Application Contents/PlugIns
  * Local Framework PlugIns
  * User Framework PlugIns
  * Application Contents/Frameworks/PlugIns
@@ -203,63 +204,6 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	theMAD = NULL;
 	
 	return noErr;
-}
-
-void NScanResource( MADLibrary *inMADDriver)
-{
-	short	i;
-	
-#define BASERES	1000
-	
-	for( i = 0; i < MAXPLUG; i++)
-	{
-		Boolean ResourceOK;
-		Handle	aRes, bRes;
-		
-		ResourceOK = true;
-		
-		aRes = MADGet1Resource( 'CODE', BASERES + i, inMADDriver);
-		if( aRes == NULL) ResourceOK = false;
-		else
-		{
-			DisposeHandle( aRes);
-			aRes = NULL;
-		}
-		
-		bRes = MADGet1Resource( 'STR#', BASERES + i, inMADDriver);
-		if( bRes == NULL) ResourceOK = false;
-		else
-		{
-			DisposeHandle( bRes);
-			bRes = NULL;
-		}
-		
-		if( inMADDriver->TotalPlug < MAXPLUG && ResourceOK == true)
-		{
-			short		No = inMADDriver->TotalPlug;
-			Handle		theRes;
-			Str255		tStr;
-			
-			//	theName = LMGetCurApName();
-			
-			HGetVol( NULL, &inMADDriver->ThePlug[ No].file.vRefNum, &inMADDriver->ThePlug[ No].file.parID);
-			pStrcpy( inMADDriver->ThePlug[ No].file.name, RSRCNAME);
-			
-			/** CODE du Plug-in **/
-			
-			GetIndString( tStr, BASERES+i, 1);
-			BlockMoveData( tStr + 1, &inMADDriver->ThePlug[ No].type, 4);
-			inMADDriver->ThePlug[ No].type[ 4] = 0;
-			
-			GetIndString( tStr, BASERES+i, 2);
-			BlockMoveData( tStr + 1, &inMADDriver->ThePlug[ No].mode, 4);
-			
-			GetIndString( inMADDriver->ThePlug[ No].MenuName, BASERES+i, 3);
-			GetIndString( inMADDriver->ThePlug[ No].AuthorString, BASERES+i, 4);
-			
-			inMADDriver->TotalPlug++;
-		}
-	}
 }
 
 static MADFileFormatPlugin **GetMADPlugInterface(CFPlugInRef plugToTest)

@@ -1,25 +1,90 @@
-data 'ALRT' (5011, purgeable) {
-	$"0050 0074 00EB 01A6 1393 5555 300A"                 /* .P.t.Î.¶.ìUU0¬ */
+resource 'ALRT' (5011, purgeable) {
+	{80, 116, 235, 422},
+	5011,
+	{	/* array: 4 elements */
+		/* [1] */
+		OK, visible, sound1,
+		/* [2] */
+		OK, visible, sound1,
+		/* [3] */
+		OK, visible, sound1,
+		/* [4] */
+		OK, visible, sound1
+	},
+	alertPositionMainScreen
 };
 
-data 'DITL' (5010, purgeable) {
-	$"0008 0000 0000 0044 0154 0055 0190 0402"            /* .......D.T.U.ê.. */
-	$"4F4B 0000 0000 0044 0103 0055 013F 0406"            /* OK.....D...U.?.. */
-	$"4361 6E63 656C 0000 0000 0008 0060 0018"            /* Cancel.......`.. */
-	$"010B 8808 556E 7469 746C 6564 0000 0000"            /* ..à.Untitled.... */
-	$"0024 0060 0034 010B 8808 556E 7469 746C"            /* .$.`.4..à.Untitl */
-	$"6564 0000 0000 0008 0128 0018 018C 0000"            /* ed.......(...å.. */
-	$"0000 0000 0024 0128 0034 018C 0000 0000"            /* .....$.(.4.å.... */
-	$"0000 0008 0008 0018 005D 880B 496E 7374"            /* .........]à.Inst */
-	$"7275 6D65 6E74 3A02 0000 0000 0024 0008"            /* rument:......$.. */
-	$"0034 005D 880A 436C 6970 626F 6172 643A"            /* .4.]à¬Clipboard: */
-	$"0000 0000 0004 0004 0038 0190 8000"                 /* .........8.êÄ. */
+resource 'DITL' (5010, purgeable) {
+	{	/* array DITLarray: 9 elements */
+		/* [1] */
+		{68, 340, 85, 400},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{68, 259, 85, 319},
+		Button {
+			enabled,
+			"Cancel"
+		},
+		/* [3] */
+		{8, 96, 24, 267},
+		StaticText {
+			disabled,
+			"Untitled"
+		},
+		/* [4] */
+		{36, 96, 52, 267},
+		StaticText {
+			disabled,
+			"Untitled"
+		},
+		/* [5] */
+		{8, 296, 24, 396},
+		UserItem {
+			enabled
+		},
+		/* [6] */
+		{36, 296, 52, 396},
+		UserItem {
+			enabled
+		},
+		/* [7] */
+		{8, 8, 24, 93},
+		StaticText {
+			disabled,
+			"Instrument:"
+		},
+		/* [8] */
+		{36, 8, 52, 93},
+		StaticText {
+			disabled,
+			"Clipboard:"
+		},
+		/* [9] */
+		{4, 4, 56, 400},
+		UserItem {
+			disabled
+		}
+	}
 };
 
-data 'DITL' (5011, purgeable) {
-	$"0001 0000 0000 007B 00E5 008F 0121 0402"            /* .......{.Â.è.!.. */
-	$"4F4B 0000 0000 000D 003C 0076 0126 8802"            /* OK.......<.v.&à. */
-	$"5E30"                                               /* ^0 */
+resource 'DITL' (5011, purgeable) {
+	{	/* array DITLarray: 2 elements */
+		/* [1] */
+		{123, 229, 143, 289},
+		Button {
+			enabled,
+			"OK"
+		},
+		/* [2] */
+		{13, 60, 118, 294},
+		StaticText {
+			disabled,
+			"^0"
+		}
+	}
 };
 
 data 'DLGX' (5010) {
@@ -37,33 +102,51 @@ data 'DLGX' (5010) {
 	$"0000 000A 0000 0000 0000 0000 0000"                 /* ...¬.......... */
 };
 
-data 'DLOG' (5010, purgeable) {
-	$"0032 002B 0095 01C1 0005 0000 0100 0000"            /* .2.+.ï.¡........ */
-	$"0000 1392 034D 6978 300A"                           /* ...í.Mix0¬ */
+resource 'DLOG' (5010, purgeable) {
+	{50, 43, 149, 449},
+	movableDBoxProc,
+	invisible,
+	goAway,
+	0x0,
+	5010,
+	"Mix",
+	alertPositionMainScreen
 };
 
-data 'STR#' (1000) {
-	$"0001 044D 6978 C9"                                  /* ...Mix… */
+resource 'STR#' (1000) {
+	{	/* array StringArray: 1 elements */
+		/* [1] */
+		"Mix…"
+	}
 };
 
-data 'STR#' (5010) {
-	$"0003 3753 6F72 7279 2C20 6275 7420 4D69"            /* ..7Sorry, but Mi */
-	$"7820 7265 7175 6972 6573 2061 2073 6F75"            /* x requires a sou */
-	$"6E64 2074 6F20 6265 2069 6E20 7468 6520"            /* nd to be in the  */
-	$"636C 6970 626F 6172 642E 3053 6F72 7279"            /* clipboard.0Sorry */
-	$"2C20 6275 7420 4920 646F 6E27 7420 6B6E"            /* , but I don't kn */
-	$"6F77 2061 626F 7574 2074 6869 7320 736F"            /* ow about this so */
-	$"756E 6420 666F 726D 6174 2E3B 536F 7272"            /* und format.;Sorr */
-	$"792C 2062 7574 2074 6865 2073 6F75 6E64"            /* y, but the sound */
-	$"2069 6E20 7468 6520 636C 6970 626F 6172"            /*  in the clipboar */
-	$"6420 6169 6E27 7420 6120 7361 6D70 6C65"            /* d ain't a sample */
-	$"6420 736F 756E 64"                                  /* d sound */
+resource 'STR#' (5010) {
+	{	/* array StringArray: 3 elements */
+		/* [1] */
+		"Sorry, but Mix requires a sound to be in"
+		" the clipboard.",
+		/* [2] */
+		"Sorry, but I don't know about this sound"
+		" format.",
+		/* [3] */
+		"Sorry, but the sound in the clipboard ai"
+		"n't a sampled sound"
+	}
 };
 
-data 'dctb' (5010) {
-	$"0000 0000 0000 0004 0000 DDDD DDDD DDDD"            /* ..........›››››› */
-	$"0001 0000 0000 0000 0002 0000 0000 0000"            /* ................ */
-	$"0003 0000 0000 0000 0004 FFFF FFFF FFFF"            /* ..........ˇˇˇˇˇˇ */
+resource 'dctb' (5010) {
+	{	/* array ColorSpec: 5 elements */
+		/* [1] */
+		wContentColor, 56797, 56797, 56797,
+		/* [2] */
+		wFrameColor, 0, 0, 0,
+		/* [3] */
+		wTextColor, 0, 0, 0,
+		/* [4] */
+		wHiliteColor, 0, 0, 0,
+		/* [5] */
+		wTitleBarColor, 65535, 65535, 65535
+	}
 };
 
 data 'ictb' (5010) {

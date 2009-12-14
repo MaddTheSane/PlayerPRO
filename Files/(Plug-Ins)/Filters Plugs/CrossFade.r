@@ -1,4 +1,7 @@
-data 'STR#' (1000) {
-	$"0001 0943 726F 7373 4661 6465"                      /* ..ÆCrossFade */
+resource 'STR#' (1000) {
+	{	/* array StringArray: 1 elements */
+		/* [1] */
+		"CrossFade"
+	}
 };
 

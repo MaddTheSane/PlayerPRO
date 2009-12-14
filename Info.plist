@@ -258,6 +258,10 @@
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>MAD</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>audio/x-mad</string>
+			</array>
 			<key>CFBundleTypeName</key>
 			<string>PPMADIFile</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -281,6 +285,10 @@
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>MAD</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>audio/x-mad</string>
+			</array>
 			<key>CFBundleTypeName</key>
 			<string>PPMADFGFile</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -304,6 +312,10 @@
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>MAD</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>audio/x-mad</string>
+			</array>
 			<key>CFBundleTypeName</key>
 			<string>PPMADHFile</string>
 			<key>CFBundleTypeOSTypes</key>

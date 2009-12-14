@@ -1,4 +1,7 @@
-data 'STR#' (1000) {
-	$"0001 0849 6E76 6572 7365 72"                        /* ...Inverser */
+resource 'STR#' (1000) {
+	{	/* array StringArray: 1 elements */
+		/* [1] */
+		"Inverser"
+	}
 };
 

@@ -1,4 +1,7 @@
-data 'STR#' (1000) {
-	$"0001 0443 726F 70"                                  /* ...Crop */
+resource 'STR#' (1000) {
+	{	/* array StringArray: 1 elements */
+		/* [1] */
+		"Crop"
+	}
 };
 

@@ -1,13 +1,13 @@
 resource 'STR#' (1000) {
 	{	/* array StringArray: 5 elements */
 		/* [1] */
-		"AIFC",
+		"dvc!",
 		/* [2] */
 		"IMPL",
 		/* [3] */
-		"AIFC",
+		"DVC",
 		/* [4] */
-		"Copyright 96 Antoine ROSSET",
+		"Copyright 99 Antoine ROSSET",
 		/* [5] */
 		"SAMP"
 	}

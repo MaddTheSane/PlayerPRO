@@ -17,5 +17,4 @@ void MyDebugStr( short line, Ptr file, Ptr text)
 	NSLog(CFSTR("ERROR!! %s:%u error text:%s!"), file, line, text);
 	
 	Debugger();
-	
 }

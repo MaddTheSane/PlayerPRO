@@ -23,7 +23,7 @@
 
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "Timer.h"
+#include <Timer.h>
 #include "asiosys.h"
 #include "asio.h"
 #include "asiodrivers.h"
@@ -496,8 +496,8 @@ void bufferSwitch(long index, ASIOBool processNow)
 
 OSErr	ASIOSndClose( MADDriverRec *inMADDriver)
 {
-OSErr		err;
-short			i;
+	OSErr		err;
+	short		i;
 
 
 	ASIODisposeBuffers();

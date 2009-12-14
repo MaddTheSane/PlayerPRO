@@ -1,13 +1,13 @@
 resource 'STR#' (1000) {
 	{	/* array StringArray: 5 elements */
 		/* [1] */
-		"PAT ",
+		"MINs",
 		/* [2] */
-		"IMPL",
+		"EXIM",
 		/* [3] */
-		"PAT",
+		"PP Instrument",
 		/* [4] */
-		"Copyright 99 Antoine ROSSET",
+		"Copyright 2000 Antoine ROSSET",
 		/* [5] */
 		"INST"
 	}
@@ -157,7 +157,7 @@ resource 'ics8' (128) {
 };
 
 resource 'FREF' (128) {
-	'MINS',
+	'MINs',
 	0,
 	""
 };
