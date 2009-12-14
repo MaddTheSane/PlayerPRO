@@ -5186,6 +5186,7 @@ resource 'DITL' (174) {
 	}
 };
 
+#if 0
 resource 'DITL' (175) {
 	{	/* array DITLarray: 10 elements */
 		/* [1] */
@@ -5250,6 +5251,7 @@ resource 'DITL' (175) {
 		}
 	}
 };
+#endif
 
 resource 'DITL' (176) {
 	{	/* array DITLarray: 21 elements */
@@ -7672,7 +7674,7 @@ resource 'DITL' (421) {
 		/* [7] */
 		{276, 8, 296, 302},
 		Button {
-			enabled,
+			disabled,
 			"Enter your Registration ID"
 		}
 	}
@@ -11202,6 +11204,7 @@ resource 'DLOG' (174, "Print Order Form") {
 	centerMainScreen
 };
 
+#if 0
 resource 'DLOG' (175, "Registration") {
 	{87, 127, 378, 512},
 	movableDBoxProc,
@@ -11212,6 +11215,7 @@ resource 'DLOG' (175, "Registration") {
 	"Registration",
 	centerMainScreen
 };
+#endif
 
 resource 'DLOG' (176, "Quicktime Instruments") {
 	{68, 54, 220, 511},
@@ -14416,7 +14420,11 @@ resource 'MBAR' (128) {
 		/* [7] */
 		145,
 		/* [8] */
-		179
+		179/*,
+		//TODO: Help and Window menus
+			182,
+			183
+			*/
 	}
 };
 
@@ -16318,6 +16326,41 @@ resource 'MENU' (181) {
 		"-", noIcon, noKey, noMark, plain
 	}
 };
+
+resource 'MENU' (182, "Window Menu") {
+	182,
+	textMenuProc,
+	allEnabled,
+	enabled,
+	"Window",
+	{	/* array: 5 elements */
+		/* [1] */
+		"Minimize", noIcon, "M", noMark, plain,
+		/* [2] */
+		"Zoom", noIcon, noKey, noMark, plain,
+		/* [3] */
+		"-", noIcon, noKey, noMark, plain,
+		/* [4] */
+		"Bring All to Front", noIcon, noKey, noMark, plain,
+		/* [5] */
+		"-", noIcon, noKey, noMark, plain
+	}
+};
+
+resource 'MENU' (183, "Help Menu") {
+	183,
+	textMenuProc,
+	0x7FFFFFFB,
+	enabled,
+	"Help",
+	{	/* array: 2 elements */
+		/* [1] */
+		"PlayerPRO Help", noIcon, noKey, noMark, plain,
+		/* [2] */
+		"-", noIcon, noKey, noMark, plain
+	}
+};
+
 
 resource 'MENU' (200, "Prefs") {
 	200,
@@ -34775,7 +34818,7 @@ resource 'PICT' (154) {
 	$"00FF"
 };
 
-resource 'PICT' (156, "(from Desk Scrap)") {
+resource 'PICT' (156) {
 	3852,
 	{0, 0, 18, 200},
 	$"0011 02FF 0C00 FFFE 0000 0047 FFBE 0047"
@@ -35021,7 +35064,7 @@ resource 'PICT' (156, "(from Desk Scrap)") {
 	$"00FF"
 };
 
-resource 'PICT' (157, "(from Desk Scrap)") {
+resource 'PICT' (157) {
 	1014,
 	{0, 0, 10, 21},
 	$"0011 02FF 0C00 FFFE 0000 0048 0000 0048"
@@ -35803,7 +35846,7 @@ resource 'PICT' (225) {
 	$"FF01 8000 FF"
 };
 
-resource 'PICT' (230, "(from Desk Scrap)") {
+resource 'PICT' (230) {
 	1386,
 	{0, 0, 12, 58},
 	$"0011 02FF 0C00 FFFE 0000 0048 0000 0048"
@@ -35894,7 +35937,7 @@ resource 'PICT' (230, "(from Desk Scrap)") {
 	$"A6B3 DDC1 A6A6 CFF6 DD04 81DD D3DD 00FF"
 };
 
-resource 'PICT' (243, "(from Desk Scrap)") {
+resource 'PICT' (243) {
 	944,
 	{0, 0, 10, 16},
 	$"0011 02FF 0C00 FFFE 0000 0048 0000 0048"
@@ -35958,7 +36001,7 @@ resource 'PICT' (243, "(from Desk Scrap)") {
 	$"0011 0000 00FF"
 };
 
-resource 'PICT' (300, "(from Desk Scrap)") {
+resource 'PICT' (300) {
 	2650,
 	{0, 0, 16, 43},
 	$"0011 02FF 0C00 FFFE 0000 0048 0000 0048"
@@ -36655,7 +36698,7 @@ resource 'PICT' (902, sysheap) {
 	$"0000 0000 0001 0001 00FF"
 };
 
-resource 'PICT' (906, "(from Desk Scrap)") {
+resource 'PICT' (906) {
 	2362,
 	{0, 0, 13, 20},
 	$"0011 02FF 0C00 FFFE 0000 0048 0000 0048"

@@ -21,6 +21,8 @@
 //
 /********************						***********************/
 
+//NOTE: this file can be used on Linux as well.
+
 #include "RDriver.h"
 #include "FileUtils.h"
 

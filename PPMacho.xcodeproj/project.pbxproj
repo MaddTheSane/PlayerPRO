@@ -71,17 +71,12 @@
 		551E57A1102AB9A30086C86E /* Mozart.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4170C2F21DD00D6C081 /* Mozart.c */; };
 		552C6FE310CD9DAC00C0E0D4 /* ByteUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */; };
 		552C6FE410CD9DB700C0E0D4 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; };
-		5533411F10BB549A005208D1 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5533412010BB54A3005208D1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
-		5533414C10BB572C005208D1 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5533414D10BB572C005208D1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5533416210BB577F005208D1 /* Mod.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F610BB5368005208D1 /* Mod.c */; };
 		5533416310BB5787005208D1 /* 669.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340D910BB5368005208D1 /* 669.c */; };
-		553341CC10BB5FE0005208D1 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		553341CD10BB5FE0005208D1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
-		553341E210BB5FFA005208D1 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		553341E310BB5FFA005208D1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
-		553341F510BB600A005208D1 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		553341F610BB600A005208D1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5533421410BB6187005208D1 /* AMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DB10BB5368005208D1 /* AMF.c */; };
 		5533421D10BB6445005208D1 /* DMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DE10BB5368005208D1 /* DMF.c */; };
@@ -134,37 +129,26 @@
 		5573A46F10B51CAB00FF8B50 /* ByteSwap.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A46D10B51CAB00FF8B50 /* ByteSwap.c */; };
 		5573A51C10B52EB500FF8B50 /* DrawSprocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */; };
 		557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */ = {isa = PBXBuildFile; fileRef = 557B8FD910CE01BF00B9A37D /* DefaultPref.r */; };
-		5586870A10BF5C4700FCC24D /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5586870B10BF5C4700FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
-		5586871910BF5C4A00FCC24D /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5586871A10BF5C4A00FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
-		5586872810BF5C4E00FCC24D /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5586872910BF5C4E00FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5586873D10BF5D0900FCC24D /* MADfg.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E310BB5368005208D1 /* MADfg.c */; };
 		5586873E10BF5D2700FCC24D /* MADI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E710BB5368005208D1 /* MADI.c */; };
 		5586873F10BF5D2D00FCC24D /* MADH.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E510BB5368005208D1 /* MADH.c */; };
-		5586874810BF5D3700FCC24D /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5586874910BF5D3700FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5586875210BF5D8A00FCC24D /* MED.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E910BB5368005208D1 /* MED.c */; };
-		5586875D10BF5E4D00FCC24D /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5586875E10BF5E4D00FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5586876710BF5E7C00FCC24D /* MTM.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F810BB5368005208D1 /* MTM.c */; };
-		558687D910BF620500FCC24D /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		558687DA10BF620500FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
-		558687F510BF624E00FCC24D /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		558687F610BF624E00FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5586880810BF628500FCC24D /* Okta.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340FA10BB5368005208D1 /* Okta.c */; };
 		5586880910BF628D00FCC24D /* S3M.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340FC10BB5368005208D1 /* S3M.c */; };
-		5586881610BF62F100FCC24D /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5586881710BF62F100FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
-		5586882410BF62F500FCC24D /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5586882510BF62F500FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
-		5586883810BF62FB00FCC24D /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5586883910BF62FB00FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5586884810BF632500FCC24D /* ULT.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340FE10BB5368005208D1 /* ULT.c */; };
 		5586884910BF632C00FCC24D /* UMX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5533410010BB5368005208D1 /* UMX.c */; };
 		5586884A10BF633300FCC24D /* XM.c in Sources */ = {isa = PBXBuildFile; fileRef = 5533410310BB5368005208D1 /* XM.c */; };
-		5586889210BF67F100FCC24D /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5586889310BF67F100FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		558688A210BF683000FCC24D /* MIDI-GM-Small.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340EC10BB5368005208D1 /* MIDI-GM-Small.c */; };
 		558688A310BF683100FCC24D /* MIDI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340ED10BB5368005208D1 /* MIDI.c */; };
@@ -190,7 +174,6 @@
 		55868A4110BFB42600FCC24D /* UMX_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0D10BFB31500FCC24D /* UMX_Plug.rsrc.r */; };
 		55868A4210BFB42C00FCC24D /* XM_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0E10BFB31500FCC24D /* XM_Plug.rsrc.r */; };
 		55868A4510BFB44700FCC24D /* Midi_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */; };
-		55868A6110BFB46100FCC24D /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55868A6210BFB46100FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55868A7C10BFB4B300FCC24D /* APPL.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DD10BB5368005208D1 /* APPL.c */; };
 		55868A7D10BFB4B500FCC24D /* APPL_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0010BFB31500FCC24D /* APPL_Plug.rsrc.r */; };
@@ -344,7 +327,6 @@
 		88E0C4FF0C2F21E600D6C081 /* PubWindow.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4FE0C2F21E600D6C081 /* PubWindow.proto.h */; };
 		88E0C5010C2F21E600D6C081 /* Quicktime.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5000C2F21E600D6C081 /* Quicktime.proto.h */; };
 		88E0C5030C2F21E600D6C081 /* Record.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5020C2F21E600D6C081 /* Record.proto.h */; };
-		88E0C5050C2F21E600D6C081 /* Registration.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5040C2F21E600D6C081 /* Registration.proto.h */; };
 		88E0C5070C2F21E600D6C081 /* Samples.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5060C2F21E600D6C081 /* Samples.proto.h */; };
 		88E0C5090C2F21E600D6C081 /* SoundInput.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5080C2F21E600D6C081 /* SoundInput.proto.h */; };
 		88E0C50B0C2F21E600D6C081 /* Spectrum.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C50A0C2F21E600D6C081 /* Spectrum.proto.h */; };
@@ -899,7 +881,6 @@
 		88E0C4010C2F21DD00D6C081 /* PubWindow.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = PubWindow.c; sourceTree = "<group>"; };
 		88E0C4020C2F21DD00D6C081 /* QuicktimeWindow.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = QuicktimeWindow.c; sourceTree = "<group>"; };
 		88E0C4030C2F21DD00D6C081 /* Record.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = Record.c; path = Files/Record.c; sourceTree = SOURCE_ROOT; };
-		88E0C4040C2F21DD00D6C081 /* Registration.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = Registration.c; path = Files/Registration.c; sourceTree = SOURCE_ROOT; };
 		88E0C4050C2F21DD00D6C081 /* Samples.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = Samples.c; sourceTree = "<group>"; };
 		88E0C4060C2F21DD00D6C081 /* SoundInput.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = SoundInput.c; path = Files/SoundInput.c; sourceTree = SOURCE_ROOT; };
 		88E0C4070C2F21DD00D6C081 /* Spectrum.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = Spectrum.c; sourceTree = "<group>"; };
@@ -991,7 +972,6 @@
 		88E0C4FE0C2F21E600D6C081 /* PubWindow.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = PubWindow.proto.h; path = "(Proto)/PubWindow.proto.h"; sourceTree = "<group>"; };
 		88E0C5000C2F21E600D6C081 /* Quicktime.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = Quicktime.proto.h; path = "(Proto)/Quicktime.proto.h"; sourceTree = "<group>"; };
 		88E0C5020C2F21E600D6C081 /* Record.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = Record.proto.h; path = "(Proto)/Record.proto.h"; sourceTree = "<group>"; };
-		88E0C5040C2F21E600D6C081 /* Registration.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = Registration.proto.h; path = "(Proto)/Registration.proto.h"; sourceTree = "<group>"; };
 		88E0C5060C2F21E600D6C081 /* Samples.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = Samples.proto.h; path = "(Proto)/Samples.proto.h"; sourceTree = "<group>"; };
 		88E0C5080C2F21E600D6C081 /* SoundInput.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = SoundInput.proto.h; path = "(Proto)/SoundInput.proto.h"; sourceTree = "<group>"; };
 		88E0C50A0C2F21E600D6C081 /* Spectrum.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = Spectrum.proto.h; path = "(Proto)/Spectrum.proto.h"; sourceTree = "<group>"; };
@@ -1037,7 +1017,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5533411F10BB549A005208D1 /* PlayerPROCore.framework in Frameworks */,
 				5533412010BB54A3005208D1 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1046,7 +1025,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5533414C10BB572C005208D1 /* PlayerPROCore.framework in Frameworks */,
 				5533414D10BB572C005208D1 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1055,7 +1033,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				553341CC10BB5FE0005208D1 /* PlayerPROCore.framework in Frameworks */,
 				553341CD10BB5FE0005208D1 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1064,7 +1041,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				553341E210BB5FFA005208D1 /* PlayerPROCore.framework in Frameworks */,
 				553341E310BB5FFA005208D1 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1073,7 +1049,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				553341F510BB600A005208D1 /* PlayerPROCore.framework in Frameworks */,
 				553341F610BB600A005208D1 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1093,7 +1068,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5586870A10BF5C4700FCC24D /* PlayerPROCore.framework in Frameworks */,
 				5586870B10BF5C4700FCC24D /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1102,7 +1076,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5586871910BF5C4A00FCC24D /* PlayerPROCore.framework in Frameworks */,
 				5586871A10BF5C4A00FCC24D /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1111,7 +1084,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5586872810BF5C4E00FCC24D /* PlayerPROCore.framework in Frameworks */,
 				5586872910BF5C4E00FCC24D /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1120,7 +1092,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5586874810BF5D3700FCC24D /* PlayerPROCore.framework in Frameworks */,
 				5586874910BF5D3700FCC24D /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1129,7 +1100,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5586875D10BF5E4D00FCC24D /* PlayerPROCore.framework in Frameworks */,
 				5586875E10BF5E4D00FCC24D /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1138,7 +1108,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				558687D910BF620500FCC24D /* PlayerPROCore.framework in Frameworks */,
 				558687DA10BF620500FCC24D /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1147,7 +1116,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				558687F510BF624E00FCC24D /* PlayerPROCore.framework in Frameworks */,
 				558687F610BF624E00FCC24D /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1156,7 +1124,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5586881610BF62F100FCC24D /* PlayerPROCore.framework in Frameworks */,
 				5586881710BF62F100FCC24D /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1165,7 +1132,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5586882410BF62F500FCC24D /* PlayerPROCore.framework in Frameworks */,
 				5586882510BF62F500FCC24D /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1174,7 +1140,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5586883810BF62FB00FCC24D /* PlayerPROCore.framework in Frameworks */,
 				5586883910BF62FB00FCC24D /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1183,7 +1148,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5586889210BF67F100FCC24D /* PlayerPROCore.framework in Frameworks */,
 				5586889310BF67F100FCC24D /* Carbon.framework in Frameworks */,
 				558688A910BF683C00FCC24D /* QuickTime.framework in Frameworks */,
 			);
@@ -1193,7 +1157,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A6110BFB46100FCC24D /* PlayerPROCore.framework in Frameworks */,
 				55868A6210BFB46100FCC24D /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1507,7 +1470,6 @@
 				88E0C4FE0C2F21E600D6C081 /* PubWindow.proto.h */,
 				88E0C5000C2F21E600D6C081 /* Quicktime.proto.h */,
 				88E0C5020C2F21E600D6C081 /* Record.proto.h */,
-				88E0C5040C2F21E600D6C081 /* Registration.proto.h */,
 				88E0C5060C2F21E600D6C081 /* Samples.proto.h */,
 				88E0C5080C2F21E600D6C081 /* SoundInput.proto.h */,
 				88E0C50A0C2F21E600D6C081 /* Spectrum.proto.h */,
@@ -1790,7 +1752,6 @@
 				88E0C3FD0C2F21DD00D6C081 /* PrivateList.c */,
 				88E0C3FF0C2F21DD00D6C081 /* Progress.c */,
 				88E0C4030C2F21DD00D6C081 /* Record.c */,
-				88E0C4040C2F21DD00D6C081 /* Registration.c */,
 				88E0C4060C2F21DD00D6C081 /* SoundInput.c */,
 				88E0C4080C2F21DD00D6C081 /* ThreadSystem.c */,
 				88E0C40B0C2F21DD00D6C081 /* Undo.h */,
@@ -1960,7 +1921,6 @@
 				88E0C4FF0C2F21E600D6C081 /* PubWindow.proto.h in Headers */,
 				88E0C5010C2F21E600D6C081 /* Quicktime.proto.h in Headers */,
 				88E0C5030C2F21E600D6C081 /* Record.proto.h in Headers */,
-				88E0C5050C2F21E600D6C081 /* Registration.proto.h in Headers */,
 				88E0C5070C2F21E600D6C081 /* Samples.proto.h in Headers */,
 				88E0C5090C2F21E600D6C081 /* SoundInput.proto.h in Headers */,
 				88E0C50B0C2F21E600D6C081 /* Spectrum.proto.h in Headers */,
@@ -3337,6 +3297,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MOD;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3353,8 +3317,13 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MOD;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3371,6 +3340,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = 669;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3389,6 +3362,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = 669;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3405,6 +3382,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AMF;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3423,6 +3404,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AMF;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3439,6 +3424,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = DMF;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3457,6 +3446,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = DMF;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3473,6 +3466,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "IT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = IT;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3491,6 +3488,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "IT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = IT;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3602,6 +3603,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MADfg;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3620,6 +3625,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MADfg;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3636,6 +3645,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MADH;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3654,6 +3667,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MADH;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3670,6 +3687,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MADI;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3688,6 +3709,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MADI;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3704,6 +3729,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MED;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3722,6 +3751,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MED;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3738,6 +3771,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MTM;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3756,6 +3793,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MTM;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3772,6 +3813,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Okta;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3790,6 +3835,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Okta;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3806,6 +3855,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = S3M;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3824,6 +3877,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = S3M;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3840,6 +3897,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ULT;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3858,6 +3919,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ULT;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3874,6 +3939,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = UMX;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3892,6 +3961,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = UMX;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3908,6 +3981,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = XM;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3926,6 +4003,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = XM;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3942,6 +4023,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MIDI;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3960,6 +4045,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MIDI;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3976,6 +4065,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = APPL;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -3994,6 +4087,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = APPL;
 				WRAPPER_EXTENSION = ppimpexp;

@@ -3,6 +3,13 @@ doesn't work as expected or desired.
 
 * There isn't a Window or a Help menu.
 * The localization Rez files and the app-wide Rez files have multiply defined
-    resources
-* Some buttons are missing.
+    resources.
+* The localization Rez files are outdated and are disabled.
 * The Plug-in architecture(s) for Mac OS X needs to be re-written.
+* CoreAudio Output is currently a stub.
+* Hardware MIDI support needs to use CoreMIDI on OS X.
+* Printing needs to be re-written.
+* It would be great if PlayerPROCore was 64-bit.
+* Migrate away from QuickDraw. Maybe use Carbon NIBs? Or port GUI to Cocoa?
+* Maybe use OS X VSTs and Audio Unit Plugins?
+* Make a MODList that stores file references as Aliases.
