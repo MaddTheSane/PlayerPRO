@@ -791,7 +791,6 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	   DriverInitParam->driverMode != Wave95NT &&
 	   DriverInitParam->driverMode != ASIOSoundManager &&
 	   DriverInitParam->driverMode != CoreAudioDriver &&
-	   DriverInitParam->driverMode != CoreMIDIDriver &&
 	   DriverInitParam->driverMode != NoHardwareDriver) theErr = MADParametersErr;
 	
 	if( DriverInitParam->MicroDelaySize < 0) 		theErr = MADParametersErr;

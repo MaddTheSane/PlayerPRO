@@ -1,3 +1,5 @@
+#include <Carbon/Carbon.r>
+
 resource 'STR#' (1000) {
 	{	/* array StringArray: 5 elements */
 		/* [1] */

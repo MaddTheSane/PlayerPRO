@@ -1,3 +1,5 @@
+#include <Carbon/Carbon.r>
+
 resource 'DITL' (5000) {
 	{	/* array DITLarray: 9 elements */
 		/* [1] */

@@ -1,3 +1,5 @@
+#include <Carbon/Carbon.r>
+
 resource 'DITL' (128) {
 	{	/* array DITLarray: 8 elements */
 		/* [1] */
@@ -80,7 +82,7 @@ resource 'DLOG' (128) {
 resource 'STR#' (1000) {
 	{	/* array StringArray: 1 elements */
 		/* [1] */
-		"Fade Vol"
+		"Fade Volume"
 	}
 };
 

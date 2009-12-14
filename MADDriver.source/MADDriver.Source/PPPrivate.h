@@ -18,12 +18,4 @@ OSErr closeCoreAudio( MADDriverRec *inMADDriver);
 void StopChannelCA(MADDriverRec *inMADDriver);
 void PlayChannelCA(MADDriverRec *inMADDriver);
 
-#pragma mark CoreMIDI Functions
-OSErr initCoreMIDI( MADDriverRec *inMADDriver, long init);
-OSErr closeCoreMIDI( MADDriverRec *inMADDriver);
-void StopChannelCoreMIDI(MADDriverRec *inMADDriver);
-void PlayChannelCoreMIDI(MADDriverRec *inMADDriver);
-
-
-
 #endif

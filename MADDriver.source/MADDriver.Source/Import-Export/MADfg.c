@@ -77,7 +77,7 @@ struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, sho
 			case 0x01:
 				srcPtr++;
 				
-				((short*)myCmd)[ 0] = 0L;
+				((short*)myCmd)[ 0] = NULL;
 				((short*)myCmd)[ 1] = *((short*) srcPtr);
 				
 				srcPtr += 2;
@@ -86,7 +86,7 @@ struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, sho
 			case 0x00:
 				srcPtr ++;
 				
-				*((long*)myCmd) = 0L;
+				*((long*)myCmd) = 0;
 			break;
 			
 			default:

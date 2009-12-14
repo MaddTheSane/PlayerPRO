@@ -3,11 +3,11 @@
 resource 'STR#' (1000) {
 	{	/* array StringArray: 5 elements */
 		/* [1] */
-		"sfil",
+		"clps",
 		/* [2] */
-		"EXIM",
+		"IMPL",
 		/* [3] */
-		"System 7 Snd",
+		"Clip Files",
 		/* [4] */
 		"Copyright 96 Antoine ROSSET",
 		/* [5] */

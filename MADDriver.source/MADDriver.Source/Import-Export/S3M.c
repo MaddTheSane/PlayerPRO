@@ -1220,7 +1220,7 @@ OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 					iWrite( sndSize, AlienFile, iFileRefI);
 					iClose( iFileRefI);
 				}
-				DisposePtr( AlienFile);	AlienFile = 0L;
+				DisposePtr( AlienFile);	AlienFile = NULL;
 			}
 			else myErr = MADNeedMemory;
 		break;

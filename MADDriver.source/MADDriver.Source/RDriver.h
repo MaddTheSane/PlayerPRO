@@ -247,7 +247,7 @@ typedef struct Channel
 /*** 		Music description - used in Import/Export filter	***/
 /********************						***********************/
 
-struct	MADMusic
+typedef struct MADMusic
 {
 	MADSpec					*header;								// Music Header - See 'MAD.h'
 	PatData					*partition[ MAXPATTERN];				// Patterns
@@ -260,8 +260,7 @@ struct	MADMusic
 	long					position, fullTime;
 	OSType					originalFormat;
 	
-};
-typedef		struct MADMusic	MADMusic;
+} MADMusic;
 
 /********************						***********************/
 /*** 			     Driver Settings definition					***/
@@ -280,7 +279,6 @@ enum
 	Wave95NT,						// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
 	NoHardwareDriver,				// NO HARDWARE CONNECTION, will not produce any sound
 	CoreAudioDriver,				// OSX ONLY Core Audio driver
-	CoreMIDIDriver,					// OSX ONLY Core MIDI backend
 	ASIOSoundManager				// ASIO Sound Driver by Steinberg
 };
 
@@ -295,7 +293,7 @@ enum
 	MonoOutPut = oldMonoOutPut
 };
 
-struct MADDriverSettings
+typedef struct MADDriverSettings
 {
 	short					numChn;								// Active tracks from 2 to 32, automatically setup when a new music is loaded
 	short					outPutBits;							// 8 or 16 Bits TODO: 24 Bits
@@ -314,8 +312,7 @@ struct MADDriverSettings
 	long					ReverbStrength;						// Reverb strength in % (0 <-> 70)
 	Boolean					TickRemover;						// Remove volume/sample/loop ticks.
 	long					oversampling;						// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
-};
-typedef struct MADDriverSettings MADDriverSettings;
+} MADDriverSettings;
 
 /******************************************************************/
 //******************* MUSICS IMPORT/EXPORT PLUGS  *****************/
@@ -360,7 +357,7 @@ typedef struct MADDriverSettings MADDriverSettings;
 //
 /********************						***********************/
 
-struct PPInfoRec
+typedef struct PPInfoRec
 {
 	char		internalFileName[ 60];
 	char		formatDescription[ 60];
@@ -375,8 +372,7 @@ struct PPInfoRec
 	
 	long		fileSize;
 	
-};
-typedef struct PPInfoRec PPInfoRec;
+} PPInfoRec;
 
 
 /********************						***********************/

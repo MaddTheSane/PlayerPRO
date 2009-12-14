@@ -1,3 +1,5 @@
+#include <Carbon/Carbon.r>
+
 resource 'ALRT' (5011, purgeable) {
 	{80, 116, 235, 422},
 	5011,
