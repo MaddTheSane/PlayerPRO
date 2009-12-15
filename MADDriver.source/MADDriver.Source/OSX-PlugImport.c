@@ -50,40 +50,9 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 	short PlugNum = inMADDriver->TotalPlug;
 	PlugInfo *FillPlug = &(inMADDriver->ThePlug[PlugNum]);
 	{
-		CFStringRef PlugName;
-		{
-			CFDictionaryRef bundleInfoDict;
-			
-			// Get an instance of the non-localized keys.
-			bundleInfoDict = CFBundleGetInfoDictionary( tempBundle );
-			
-			// If we succeeded, look for our property.
-			if ( bundleInfoDict != NULL ) {
-				PlugName = CFDictionaryGetValue( bundleInfoDict, kCFBundleExecutableKey );
-			}
-		}
-		CFURLRef rsrcRef = NULL, plugResource;
-		plugResource = CFBundleCopyResourcesDirectoryURL(tempBundle);
-		CFMutableStringRef plugRsrcName = CFStringCreateMutableCopy(kCFAllocatorDefault, 255, PlugName);
-		CFStringAppend(plugRsrcName, CFSTR(RSRCSUFFIX));
-		rsrcRef = CFURLCreateWithString(kCFAllocatorDefault, plugRsrcName, plugResource);
-
-		FSRef rsrcRefRef;
-		CFURLGetFSRef(rsrcRef, &rsrcRefRef);
-		short resFileNum;
-		FSOpenResourceFile(&rsrcRefRef, 0, 0, fsCurPerm, &resFileNum);
-		if(resFileNum == -1)
-		{
-			OSStatus whatErr = ResError();
-			NSLog(CFSTR("Error of type %i occured"), whatErr);
-			CFRelease(rsrcRef);
-			CFRelease(plugResource);
-			CFRelease(plugRsrcName);
-			return;			
-		}
-		UseResFile(resFileNum);
-		
+		short resFileNum = CFBundleOpenBundleResourceMap(tempBundle);
 		Str255 tStr;
+		
 		GetIndString( tStr, BASERES, 1);
 		BlockMoveData( tStr + 1, &FillPlug->type, 4);
 		FillPlug->type[ 4] = 0;
@@ -96,15 +65,12 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 			
 		GetIndString( FillPlug->MenuName, BASERES, 3);
 		GetIndString( FillPlug->AuthorString, BASERES, 4);
-		CFRelease(rsrcRef);
-		CFRelease(plugResource);
-		CFRelease(plugRsrcName);
-		CloseResFile(resFileNum);
-		FSCloseFork(resFileNum);
+		CFBundleCloseBundleResourceMap(tempBundle, resFileNum);
 	}
 	
 	FillPlug->IOPlug = tempMADPlug;
 	iErr = GetFSSpecFromCFBundle(&(FillPlug->file), tempBundle);
+	//TODO: FillPlug->filename
 	
 	inMADDriver->TotalPlug++;
 }
@@ -260,7 +226,7 @@ static MADFileFormatPlugin **GetMADPlugInterface(CFPlugInRef plugToTest)
 	else {
 		return NULL;
 	}
-	
+	CFRelease(factories); factories = NULL;
 	
 	return formatPlugA;
 }	
