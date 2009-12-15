@@ -907,11 +907,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /*****************/
 /* MAIN FUNCTION */
 /*****************/
-#ifdef _SRC
 OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#else
-EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#endif
 {
 	OSErr		myErr;
 	Ptr			AlienFile;
@@ -1026,10 +1022,10 @@ EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	return myErr;
 }
 
-static void _deallocCFPlugType( MODPlugType *myInstance );
+static void _deallocMODPlugType( MODPlugType *myInstance );
 
 
-static HRESULT CFPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
+static HRESULT MODPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
 {
     //  Create a CoreFoundation UUIDRef for the requested interface.
 	
@@ -1069,7 +1065,7 @@ static HRESULT CFPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
     }
 }
 
-static ULONG CFPlugAddRef( void *myInstance )
+static ULONG MODPlugAddRef( void *myInstance )
 {
     ( (MODPlugType *) myInstance )->_refCount += 1;
     return ( (MODPlugType *) myInstance )->_refCount;
@@ -1081,11 +1077,11 @@ static ULONG CFPlugAddRef( void *myInstance )
 //  If the refCount goes to zero, deallocate the instance.
 //
 
-static ULONG CFPlugRelease( void *myInstance )
+static ULONG MODPlugRelease( void *myInstance )
 {
     ( (MODPlugType *) myInstance )->_refCount -= 1;
     if ( ( (MODPlugType *) myInstance )->_refCount == 0 ) {
-        _deallocCFPlugType( (MODPlugType *) myInstance );
+        _deallocMODPlugType( (MODPlugType *) myInstance );
         return 0;
     }
     else
@@ -1095,13 +1091,13 @@ static ULONG CFPlugRelease( void *myInstance )
 static MADFileFormatPlugin CFPlugFormat =
 {
 	NULL,
-	CFPlugQueryInterface,
-	CFPlugAddRef,
-	CFPlugRelease,
-	main
+	MODPlugQueryInterface,
+	MODPlugAddRef,
+	MODPlugRelease,
+	mainMOD
 };
 
-static MODPlugType *_allocCFPlugType( CFUUIDRef factoryID )
+static MODPlugType *_allocMODPlugType( CFUUIDRef factoryID )
 {
     //  Allocate memory for the new instance.
 	
@@ -1129,7 +1125,7 @@ static MODPlugType *_allocCFPlugType( CFUUIDRef factoryID )
 //  Utility function that deallocates the instance when the refCount goes to zero.
 //
 
-static void _deallocCFPlugType( MODPlugType *myInstance )
+static void _deallocMODPlugType( MODPlugType *myInstance )
 {
     CFUUIDRef factoryID = myInstance->_factoryID;
     free( myInstance );
@@ -1146,7 +1142,7 @@ EXP void * ModFactory( CFAllocatorRef allocator, CFUUIDRef typeID )
     //  the IUnknown interface.
 	
     if ( CFEqual( typeID, kPlayerPROModFormatTypeID ) ) {
-        MODPlugType *result = _allocCFPlugType( kMODPlugID );
+        MODPlugType *result = _allocMODPlugType( kMODPlugID );
         return result;
     }
     else {

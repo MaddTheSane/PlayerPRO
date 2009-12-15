@@ -46,6 +46,10 @@ static inline OSErr GetFSSpecFromCFBundle(FSSpecPtr out, CFBundleRef in)
 #define BASERES 1000
 static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
+	if ((inMADDriver->TotalPlug + 1) == MAXPLUG) {
+		MyDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
+	}
+	
 	OSStatus iErr = noErr;
 	short PlugNum = inMADDriver->TotalPlug;
 	PlugInfo *FillPlug = &(inMADDriver->ThePlug[PlugNum]);

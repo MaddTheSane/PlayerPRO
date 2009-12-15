@@ -96,7 +96,7 @@ static MADFileFormatPlugin CFPlugFormat =
 	CFPlugQueryInterface,
 	CFPlugAddRef,
 	CFPlugRelease,
-	main
+	PLUGMAIN
 };
 
 static CFPlugType *_allocCFPlugType( CFUUIDRef factoryID )

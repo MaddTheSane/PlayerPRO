@@ -300,14 +300,7 @@ if( the669->marker == 0x6669 || the669->marker == 0x6966) return   noErr;
 else return  MADFileNotSupportedByThisPlug;
 }
 
-#ifdef _SRC
 OSErr main669( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#else
-EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#endif
-
-
-//OSErr  main( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
@@ -403,7 +396,9 @@ EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xF4, 0x42, 0xE8, 0xED, 0x0F, 0xDE, 0x48, 0x53, 0xA8, 0x75, 0xA1, 0x95, 0xE8, 0xF5, 0x10, 0x0E)) //F442E8ED-0FDE-4853-A875-A195E8F5100E
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xF4, 0x42, 0xE8, 0xED, 0x0F, 0xDE, 0x48, 0x53, 0xA8, 0x75, 0xA1, 0x95, 0xE8, 0xF5, 0x10, 0x0E))
+//F442E8ED-0FDE-4853-A875-A195E8F5100E
 
+#define PLUGMAIN main669
 #define PLUGINFACTORY SixSixNineFactory
 #include "CFPlugin-bridge.c"

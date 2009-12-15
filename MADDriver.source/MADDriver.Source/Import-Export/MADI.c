@@ -380,11 +380,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 /* MAIN FUNCTION */
 /*****************/
 
-#ifdef _SRC
 OSErr mainMADI( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#elif defined(_MAC_H)
-OSErr main( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#endif
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
@@ -479,7 +475,9 @@ OSErr main( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *inf
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x9D, 0xC5, 0xE4, 0xB1, 0xF2, 0xE1, 0x4D, 0x6E, 0x96, 0x3F, 0x70, 0x0B, 0x9C, 0xC2, 0x45, 0xFB)) //9DC5E4B1-F2E1-4D6E-963F-700B9CC245FB
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x9D, 0xC5, 0xE4, 0xB1, 0xF2, 0xE1, 0x4D, 0x6E, 0x96, 0x3F, 0x70, 0x0B, 0x9C, 0xC2, 0x45, 0xFB))
+//9DC5E4B1-F2E1-4D6E-963F-700B9CC245FB
 
+#define PLUGMAIN mainMADI
 #define PLUGINFACTORY MADIFactory
 #include "CFPlugin-bridge.c"

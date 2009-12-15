@@ -17,12 +17,12 @@
 
 OSErr initCoreAudio( MADDriverRec *inMADDriver, long init)
 {
-	return -8;
+	return MADUnknownErr;
 }
 
 OSErr closeCoreAudio( MADDriverRec *inMADDriver)
 {
-	return -8;
+	return MADUnknownErr;
 }
 
 void StopChannelCA(MADDriverRec *inMADDriver)

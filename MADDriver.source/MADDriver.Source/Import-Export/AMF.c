@@ -65,24 +65,24 @@ static inline UInt32 Tdecode32( void *msg_buf)
 
 static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
-Byte					tempByte;
-short 					i, x, noIns, tempShort, trackCount, trckPtr, t;
-long 					inOutCount, OffSetToSample = 0, z;
-OSErr					theErr = noErr;
-Ptr						tempPtr;
-OSType					AMFType;
-long		 			finetune[16] = 
+	Byte			tempByte;
+	short			i, x, noIns, tempShort, trackCount, trckPtr, t;
+	long			inOutCount, OffSetToSample = 0, z;
+	OSErr			theErr = noErr;
+	Ptr				tempPtr;
+	OSType			AMFType;
+	long			finetune[16] = 
 						{
 							8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 							7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
 						};
 
-short					pan, uusize, oldIns = 1;
+	short			pan, uusize, oldIns = 1;
 
 	theAMFRead = AMFCopyPtr;
 
 	READAMFFILE( &AMFType, 4);		// AMF Type
-	//TODO: Byte-checking!
+	//TODO: Byte-swapping!
 	if( AMFType >= 0x414D460C ) pan = 32;
 	else pan = 16;
 
@@ -349,13 +349,7 @@ static OSErr ExtractAMFInfo( PPInfoRec *info, Ptr AlienFile)
 /* MAIN FUNCTION */
 /*****************/
 
-#ifdef _SRC
 OSErr mainAMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#else
-EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#endif
-
-//OSErr main( OSType order, char *AlienFileFSSpec, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
@@ -452,8 +446,10 @@ EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xE9, 0x93, 0xEF, 0xD8, 0x0C, 0x3F, 0x46, 0xF6, 0x90, 0x63, 0x6E, 0x34, 0x0C, 0x17, 0x9D, 0x88)) //E993EFD8-0C3F-46F6-9063-6E340C179D88
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xE9, 0x93, 0xEF, 0xD8, 0x0C, 0x3F, 0x46, 0xF6, 0x90, 0x63, 0x6E, 0x34, 0x0C, 0x17, 0x9D, 0x88))
+//E993EFD8-0C3F-46F6-9063-6E340C179D88
 
+#define PLUGMAIN mainAMF
 #define PLUGINFACTORY AMFFactory
 #include "CFPlugin-bridge.c"
 

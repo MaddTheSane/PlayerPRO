@@ -198,6 +198,7 @@ typedef struct sData								// SAMPLE
 	Byte				stereo;				// Stereo
 	Ptr					data;				// Used only in memory, not in files
 }sData;
+typedef sData SampleData;
 
 enum
 {

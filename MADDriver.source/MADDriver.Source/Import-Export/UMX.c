@@ -901,18 +901,8 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /*****************/
 /* MAIN FUNCTION */
 /*****************/
-/*#ifdef _SRC
-OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#elif defined(_MAC_H)
-OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#else
-EXP OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#endif*/
-#ifdef _SRC
+
 OSErr mainUMX( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#else
-EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#endif
 {
 	OSErr		myErr;
 	Ptr			AlienFile;
@@ -1010,8 +1000,9 @@ EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xA5, 0xC3, 0xEB, 0x8E, 0x71, 0xD1, 0x4E, 0xEE, 0xB2, 0x43, 0x5E, 0x1B, 0x80, 0x38, 0x70, 0xA4)) //A5C3EB8E-71D1-4EEE-B243-5E1B803870A4
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xA5, 0xC3, 0xEB, 0x8E, 0x71, 0xD1, 0x4E, 0xEE, 0xB2, 0x43, 0x5E, 0x1B, 0x80, 0x38, 0x70, 0xA4)) 
+//A5C3EB8E-71D1-4EEE-B243-5E1B803870A4
 
-//#define PLUGNAME Okta
+#define PLUGMAIN mainUMX
 #define PLUGINFACTORY UMXFactory
 #include "CFPlugin-bridge.c"

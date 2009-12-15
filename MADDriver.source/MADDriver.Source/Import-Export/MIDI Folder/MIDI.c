@@ -81,7 +81,7 @@ void CreateResult( Ptr aPtr)
 
 void  ConvertMidiFile( char	*src, MADMusic *theMAD, MADDriverSettings *init);
 
-OSErr main( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+OSErr mainMIDI( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
@@ -175,8 +175,10 @@ OSErr main( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *inf
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x87, 0x3A, 0xA7, 0x91, 0xE9, 0xE5, 0x42, 0xEB, 0x8F, 0xE0, 0x35, 0x1A, 0x99, 0xCF, 0x9A, 0x3A)) //873AA791-E9E5-42EB-8FE0-351A99CF9A3A
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x87, 0x3A, 0xA7, 0x91, 0xE9, 0xE5, 0x42, 0xEB, 0x8F, 0xE0, 0x35, 0x1A, 0x99, 0xCF, 0x9A, 0x3A))
+//873AA791-E9E5-42EB-8FE0-351A99CF9A3A
 
+#define PLUGMAIN mainMIDI
 #define PLUGINFACTORY PPMIDIFactory
 #include "../CFPlugin-bridge.c"
 

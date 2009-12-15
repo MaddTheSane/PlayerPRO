@@ -442,14 +442,7 @@ static OSErr TestOKTAFile( Ptr AlienFile)
 	else return  MADFileNotSupportedByThisPlug;
 }
 
-#ifdef _SRC
 OSErr mainOKTA( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#else
-EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#endif
-
-
-//OSErr main( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
@@ -542,7 +535,9 @@ EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x08, 0xD9, 0x62, 0x6A, 0xF3, 0xD9, 0x45, 0x36, 0xA2, 0x9B, 0x78, 0x22, 0x2D, 0xFD, 0x8F, 0x32)) //08D9626A-F3D9-4536-A29B-78222DFD8F32
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x08, 0xD9, 0x62, 0x6A, 0xF3, 0xD9, 0x45, 0x36, 0xA2, 0x9B, 0x78, 0x22, 0x2D, 0xFD, 0x8F, 0x32))
+//08D9626A-F3D9-4536-A29B-78222DFD8F32
 
+#define PLUGMAIN mainOKTA
 #define PLUGINFACTORY OKTAFactory
 #include "CFPlugin-bridge.c"
