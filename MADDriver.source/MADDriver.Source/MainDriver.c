@@ -3186,8 +3186,8 @@ void MADDisposeVolumeTable( MADDriverRec *intDriver)
 
 OSErr MADCreateVolumeTable( MADDriverRec *intDriver)
 {
-long			Tracks = intDriver->DriverSettings.numChn;
-OSErr			theErr;
+	long		Tracks = intDriver->DriverSettings.numChn;
+	OSErr		theErr;
 
 	theErr = MADCreateMicroDelay( intDriver);			if( theErr != noErr) return theErr;
 

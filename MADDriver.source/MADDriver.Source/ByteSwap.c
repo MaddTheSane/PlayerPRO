@@ -4,6 +4,8 @@
  *
  *  Created by C.W. Betts on 11/18/09.
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
+ * 
+ *  This is in case the developer(s) decideed that they didn't want the inline byteswapping functions
  *
  */
 
@@ -29,14 +31,14 @@ static __inline__ void MADByteSwap16(void *theData)
 #endif
 }
 
-extern void MOT32(void *msg_buf)
+EXP void MOT32(void *msg_buf)
 {
 #ifdef __LITTLE_ENDIAN__
 	MADByteSwap32(msg_buf);
 #endif
 }
 
-extern void MOT16(void *msg_buf)
+EXP void MOT16(void *msg_buf)
 {
 #ifdef __LITTLE_ENDIAN__
 	MADByteSwap16(msg_buf);
@@ -45,14 +47,14 @@ extern void MOT16(void *msg_buf)
 
 
 /////////////////////////////////
-extern void INT32(void *msg_buf)
+EXP void INT32(void *msg_buf)
 {
 #ifdef __BIG_ENDIAN__
 	MADByteSwap32(msg_buf);
 #endif
 }
 
-extern void INT16(void *msg_buf)
+EXP void INT16(void *msg_buf)
 {
 #ifdef __BIG_ENDIAN__
 	MADByteSwap16(msg_buf);

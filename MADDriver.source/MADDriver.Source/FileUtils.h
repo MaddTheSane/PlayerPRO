@@ -49,24 +49,24 @@ typedef FSIORefNum UNFILE;
 typedef FILE* UNFILE;
 #endif
 	
-UNFILE iFileOpen( Ptr name);
-void iFileCreate( Ptr name, OSType);
+EXP UNFILE iFileOpen( Ptr name);
+EXP void iFileCreate( Ptr name, OSType);
 
-long iGetEOF( UNFILE iFileRefI);
-OSErr iRead( long size, Ptr dest, UNFILE iFileRefI);
-OSErr iWrite( long size, Ptr dest, UNFILE iFileRefI);
-OSErr iSeekCur( long size, UNFILE iFileRefI);
+EXP long iGetEOF( UNFILE iFileRefI);
+EXP OSErr iRead( long size, Ptr dest, UNFILE iFileRefI);
+EXP OSErr iWrite( long size, Ptr dest, UNFILE iFileRefI);
+EXP OSErr iSeekCur( long size, UNFILE iFileRefI);
 
-void iClose( UNFILE iFileRefI);
+EXP void iClose( UNFILE iFileRefI);
 
-char* MADstrcpy( char*, const char*) DEPRECATED_ATTRIBUTE;
-int MADstrcmp( const char *dst, const char* src);
+EXP char* MADstrcpy( char*, const char*) DEPRECATED_ATTRIBUTE;
+EXP int MADstrcmp( const char *dst, const char* src);
 
 	
-unsigned char* MYC2PStr( Ptr cStr);
-void MYP2CStr( unsigned char *cStr);
-OSType Ptr2OSType( Ptr str);
-void OSType2Ptr( OSType type, Ptr str);
+EXP unsigned char* MYC2PStr( Ptr cStr);
+EXP void MYP2CStr( unsigned char *cStr);
+EXP OSType Ptr2OSType( Ptr str);
+EXP void OSType2Ptr( OSType type, Ptr str);
 void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
 
 

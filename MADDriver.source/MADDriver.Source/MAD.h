@@ -28,7 +28,7 @@
 #ifndef _MAC_H
 #define _MAC_H
 #endif
-#define EXP extern
+#define EXP extern __attribute__((visibility("default")))
 
 #include <Carbon/Carbon.h>
 
