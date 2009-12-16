@@ -7,7 +7,6 @@
  *
  */
 
-//TODO: Use CoreFoundation to link Plugins to the framework and app
 #include "RDriver.h"
 #include "RDriverInt.h"
 

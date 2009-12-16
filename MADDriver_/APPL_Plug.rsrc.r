@@ -4865,7 +4865,7 @@ resource 'MENU' (129) {
 	}
 };
 
-//TODO: This needs to be re-evaluated
+//TODO: This code needs to be rewritten
 data 'XXXX' (128) {
 	$"4A6F 7921 7065 6666 7077 7063 0000 0001"            /* Joy!peffpwpc.... */
 	$"B461 E55E 0000 0000 0000 0000 0000 0000"            /* ´aå^............ */
