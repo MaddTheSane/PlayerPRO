@@ -25,6 +25,8 @@
 #include "MOD.h"
 #include "MADH.h"
 
+//TODO: Byteswap on Intel!
+
 #ifndef _SRC
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {

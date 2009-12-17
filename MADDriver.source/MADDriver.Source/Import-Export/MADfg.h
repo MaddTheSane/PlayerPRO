@@ -34,59 +34,35 @@ struct oldPatHeader {
 	long	PatBytes;				// Pattern Size in Bytes
 	long	unused2;
 };
-#if defined(powerc) || defined(__powerc)
-#pragma options align=reset
-#endif
 
-#if defined(powerc) || defined (__powerc)
-#pragma options align=mac68k
-#endif
 struct Command {
 	Byte	InstrumentNo;		// Instrument no
 	Byte 	AmigaPeriod;		// Note, see table
 	Byte 	EffectCmd;			// Effect cmd
 	Byte 	EffectArg;			// Effect arg
 };
-#if defined(powerc) || defined(__powerc)
-#pragma options align=reset
-#endif
 
-#if defined(powerc) || defined (__powerc)
-#pragma options align=mac68k
-#endif
 struct MusicPattern
 {								// Pattern = 64 notes to play
 	struct oldPatHeader	header;
 	struct Command	Commands[];
 };
-#if defined(powerc) || defined(__powerc)
-#pragma options align=reset
-#endif
 
-#if defined(powerc) || defined (__powerc)
-#pragma options align=mac68k
-#endif
 struct FileInstrData {
 	char 	Filename[ 32];		// Instrument's filename
 	long 	insSize;			// Sample length
 	Byte 	fineTune;
-	Byte 	volume;			// Base volume
+	Byte 	volume;				// Base volume
 	short	CompCode;			// Compression Code, 0 = nothing, M3 = MAC3, M6 = MAC6
 	short	freq;				// Base frequence, simple, double, quadruple
 	Byte	amplitude;			// 8 or 16 bits
 	long	loopStart;			// LoopStart
 	long	loopLenght;			// LoopLength
 };
-#if defined(powerc) || defined(__powerc)
-#pragma options align=reset
-#endif
 
-#if defined(powerc) || defined (__powerc)
-#pragma options align=mac68k
-#endif
 struct oldMADSpec
 {
-	long	MADIdentification;		// Mad Identification: MADG in version 2.0
+	OSType	MADIdentification;		// Mad Identification: MADG in version 2.0
 	char 	NameSignature[ 32];	// Music's name
 	struct 	FileInstrData fid[ 64];	// 64 instruments descriptor
 	Byte	PatMax;
@@ -94,10 +70,10 @@ struct oldMADSpec
 	Byte	oPointers[ 128];		// Patterns list
 	Byte	Tracks;					// Tracks number
 };
+typedef struct oldMADSpec oldMADSpec;
+
 #if defined(powerc) || defined(__powerc) || defined(__APPLE__)
 #pragma options align=reset
 #endif
-
-typedef struct oldMADSpec oldMADSpec;
 
 #endif

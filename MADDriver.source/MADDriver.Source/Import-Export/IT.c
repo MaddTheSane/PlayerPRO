@@ -20,7 +20,8 @@
 //	Internet: 	RossetAntoine@bluewin.ch
 //
 /********************						***********************/
-
+//FIXME: There are some audio artifacts that aren't present in other tracker players.
+//play GADGET.it from MikIT for more info
 #include <PlayerPROCore/PlayerPROCore.h>
 #include "IT.h"
 

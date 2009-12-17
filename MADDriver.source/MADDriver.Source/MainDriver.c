@@ -1140,8 +1140,8 @@ OSErr MADDisposeLibrary( MADLibrary *MLibrary)
 
 OSErr MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned char *MissingPlugs)
 {
-short		alpha, x, i, index;
-Boolean		needToReset;
+	short		alpha, x, i, index;
+	Boolean		needToReset;
 
 	if( !driver) return -1;
 	if( !music) return -1;
@@ -1328,8 +1328,8 @@ OSErr MADLoadMusicPtr( MADMusic **music, Ptr myPtr)
 
 OSErr MADLoadMADFileCString( MADMusic **music, Ptr fName)
 {
-OSErr		theErr;
-UNFILE	srcFile;
+	OSErr		theErr;
+	UNFILE	srcFile;
 
 //	MADDisposeMusic( music);
 	
@@ -1352,10 +1352,10 @@ UNFILE	srcFile;
 #ifdef _MAC_H
 OSErr MADSetHardwareVolume( long vol)
 {
-Point			tempL;
-long			*tL;
-NumVersion		nVers;
-Boolean			NewSoundManager;
+	Point			tempL;
+	long			*tL;
+	NumVersion		nVers;
+	Boolean			NewSoundManager;
 
 //	if(vol > 255) vol = 255;
 //	if(vol < 1) vol = 1;
@@ -1383,10 +1383,10 @@ Boolean			NewSoundManager;
 
 long MADGetHardwareVolume()
 {
-Point			tempL;
-NumVersion		nVers;
-Boolean			NewSoundManager;
-long			vol = 0;
+	Point			tempL;
+	NumVersion		nVers;
+	Boolean			NewSoundManager;
+	long			vol = 0;
 	
 	nVers = SndSoundManagerVersion();
 //	BlockMoveData( &tt, &nVers, 4);
@@ -1459,7 +1459,7 @@ OSErr MADLoadMusicFilePString( MADLibrary *lib, MADMusic **music, char *plugType
 	
 	MYP2CStr( fName);
 	
-	if( !MADstrcmp( "MADK", plugType)) 	iErr = MADLoadMADFileCString(  music, (Ptr) fName);
+	if( !strcmp( "MADK", plugType)) 	iErr = MADLoadMADFileCString(  music, (Ptr) fName);
 	else								iErr = MADLoadMusicFileCString( lib, music, plugType, (Ptr) fName);
 	
 	MYC2PStr( (Ptr) fName);
@@ -1584,7 +1584,7 @@ OSErr MADLoadMusicFileCString( MADLibrary *lib, MADMusic **music, char *plugType
 {
 OSErr			iErr;
 
-	if( !MADstrcmp( "MADK", plugType)) iErr = MADLoadMADFileCString( music, fName);
+	if( !strcmp( "MADK", plugType)) iErr = MADLoadMADFileCString( music, fName);
 	else
 	{
 		iErr = PPImportFile( lib, plugType, fName, music);
@@ -1836,6 +1836,12 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 			BlockMoveData( MADPtr, MDriver->header, inOutCount);
 			OffSetToSample += inOutCount;
 			break;
+			
+		default:
+			DisposePtr( (Ptr) MDriver->header);
+			DisposePtr( (Ptr) MDriver);
+			return MADParametersErr;
+			break;			
 	}
 	
 	MOT32( &MDriver->header->MAD);
