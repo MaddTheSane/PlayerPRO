@@ -1,3 +1,4 @@
+#error this Rez file is outdated. Please don't use
 #include <Carbon/Carbon.r>
 
 data 'TEXT' (200, "Arpeggio") {
