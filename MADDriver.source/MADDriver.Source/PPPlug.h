@@ -20,6 +20,7 @@
 //	Internet: 	RossetAntoine@bluewin.ch
 //
 /********************						***********************/
+//TODO: export functions that need exportin
 
 #ifndef __PPPLUGH__
 #define __PPPLUGH__
@@ -30,10 +31,6 @@
 
 #if defined(powerc) || defined (__powerc) || defined(__APPLE__)
 #pragma pack(push, 2)
-#else
-#if !defined(THINK_C)
-#pragma pack(push, 2)
-#endif
 #endif
 
 /******************************************************************/
@@ -79,7 +76,6 @@ typedef struct
 	void		*UpdateALLWindowUPP;	//	void			UpdateALLWindow( void)
 	void		*MyDlgFilterUPP;		//	pascal Boolean	MyDlgFilter( DialogPtr theDlg, EventRecord *theEvt, short *itemHit)
 	OSType		fileType;
-	
 } PPInfoPlug;
 
 typedef OSErr			(*RPlaySoundUPP)		( Ptr, long, long, long, long, long, long, unsigned long, Boolean);
@@ -176,6 +172,12 @@ typedef pascal Boolean	(*MyDlgFilterUPP)		( DialogPtr, EventRecord*, short*);
 //
 /********************						***********************/
 
+#define kPlayerPRODigitalPlugTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xE9, 0xAF, 0xFD, 0x6D, 0xB9, 0x8B, 0x40, 0xD2, 0x8C, 0xC2, 0xBF, 0x74, 0x04, 0xEF, 0xAA, 0x51))
+//E9AFFD6D-B98B-40D2-8CC2-BF7404EFAA51
+
+#define kPlayerPRODigitalPlugInterfaceID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xF8, 0x1F, 0x0B, 0x38, 0x54, 0x1D, 0x43, 0xAE, 0x9C, 0x86, 0xB4, 0x83, 0x27, 0xCC, 0xEF, 0x56))
+//F81F0B38-541D-43AE-9C86-B48327CCEF56
+
 typedef struct
 {
 	short			tracks;					// number of tracks in myCmd[]
@@ -185,6 +187,12 @@ typedef struct
 	long			structSize;				// struct size in bytes - see Definition
 	Cmd				myCmd[];
 } Pcmd;
+
+typedef struct _PPDigitalPlugin {
+    IUNKNOWN_C_GUTS;
+	OSErr (STDMETHODCALLTYPE *MyProcPtr) (Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug);
+} PPDigitalPlugin;
+
 
 /******************************************************************/
 //******************* INSTRUMENTS IMPORT/EXPORT PLUGS  ************/
@@ -259,9 +267,5 @@ sData	* inMADCreateSample();
 
 #if defined(powerc) || defined (__powerc) || defined(__APPLE__)
 #pragma pack(pop)
-#else
-#if !defined(THINK_C)
-#pragma pack(pop)
-#endif
 #endif
 #endif

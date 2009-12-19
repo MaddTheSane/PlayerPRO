@@ -13,12 +13,14 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreFoundation/CFPlugInCOM.h>
 #include "FileUtils.h"
+#include "PPPrivate.h"
+
+#define BASERES 1000
 
 extern void NSLog(CFStringRef format, ...);
 
 #define MAXPLUG	40
 #define RSRCNAME "\pRsrc Plug Sys##"
-#define RSRCSUFFIX ".rsrc"
 
 #include "PPPlug.h"
 #include "PPPrivate.h"
@@ -42,7 +44,6 @@ static inline OSErr GetFSSpecFromCFBundle(FSSpecPtr out, CFBundleRef in)
 	return FSGetCatalogInfo(&tempRef, kFSCatInfoNone, NULL, NULL, out, NULL);
 }
 
-#define BASERES 1000
 static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
 	if ((inMADDriver->TotalPlug + 1) == MAXPLUG) {
@@ -59,13 +60,13 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 		GetIndString( tStr, BASERES, 1);
 		BlockMoveData( tStr + 1, &FillPlug->type, 4);
 		FillPlug->type[ 4] = 0;
-			
+		
 		GetIndString( tStr, BASERES, 2);
 		BlockMoveData( tStr + 1, &FillPlug->mode, 4);
 #ifdef __LITTLE_ENDIAN__
 		MOT32(&FillPlug->mode);
 #endif
-			
+		
 		GetIndString( FillPlug->MenuName, BASERES, 3);
 		GetIndString( FillPlug->AuthorString, BASERES, 4);
 		CFBundleCloseBundleResourceMap(tempBundle, resFileNum);
@@ -73,19 +74,19 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 	
 	FillPlug->IOPlug = tempMADPlug;
 	iErr = GetFSSpecFromCFBundle(&(FillPlug->file), tempBundle);
-	//TODO: FillPlug->filename
+	CFRetain(tempBundle);
+	FillPlug->filename = tempBundle;
 	
 	inMADDriver->TotalPlug++;
 }
-#undef BASERES	
 
 #pragma mark Plug-in Locations
 //There are many places that a plug-in might be kept in OS X
 /*
  * Possible plugin places:
-- * Local Application Support/PlayerPRO/PlugIns
-- * User Application Support/PlayerPRO/PlugIns
-- * Application Contents/PlugIns
+ - * Local Application Support/PlayerPRO/PlugIns
+ - * User Application Support/PlayerPRO/PlugIns
+ - * Application Contents/PlugIns
  * Local Framework PlugIns
  * User Framework PlugIns
  * Application Contents/Frameworks/PlugIns
@@ -94,7 +95,7 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 //static const CFStringRef PluginFolderLocations[] = {CFSTR("/Library/Application Support/PlayerPRO/Plugins"), 
 //CFSTR("~/Library/Application Support/PlayerPRO/Plugins"),CFSTR("")};
 
-static CFMutableArrayRef GetDefaultPluginFolderLocations()
+CFMutableArrayRef GetDefaultPluginFolderLocations()
 {
 	CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 20, &kCFTypeArrayCallBacks);
 	CFURLRef temp1;
@@ -115,7 +116,7 @@ static CFMutableArrayRef GetDefaultPluginFolderLocations()
 	CFArrayAppendValue(PlugFolds, temp1);
 	CFRelease(temp1);
 	temp1 = NULL;
-
+	
 	
 	return PlugFolds;
 }
@@ -125,7 +126,7 @@ static CFMutableArrayRef GetPluginFolderLocationsWithFSRef(FSRefPtr UserAddedPla
 	CFMutableArrayRef FoldLocs = GetDefaultPluginFolderLocations();
 	CFURLRef custfolder = CFURLCreateFromFSRef(kCFAllocatorDefault, UserAddedPlace);
 	CFArrayAppendValue(FoldLocs, custfolder);
-	CFRelease(custfolder);
+	CFRelease(custfolder); custfolder = NULL;
 	return FoldLocs;
 }
 
@@ -180,14 +181,13 @@ static MADFileFormatPlugin **GetMADPlugInterface(CFPlugInRef plugToTest)
 	CFArrayRef				factories = NULL;
 	Boolean					foundInterface = FALSE;
 	MADFileFormatPlugin		**formatPlugA = NULL;
-
+	
 	//  See if this plug-in implements the Test type.
 	factories	= CFPlugInFindFactoriesForPlugInTypeInPlugIn( kPlayerPROModFormatTypeID, plugToTest );
 	
 	if ( factories != NULL )
 	{
-		CFIndex	factoryCount;
-		CFIndex	index;
+		CFIndex	factoryCount, index;
 		
 		factoryCount	= CFArrayGetCount( factories );
 		if ( factoryCount > 0 )
@@ -223,6 +223,7 @@ static MADFileFormatPlugin **GetMADPlugInterface(CFPlugInRef plugToTest)
 			}
 		}
 		else {
+			CFRelease(factories); factories = NULL;
 			return NULL;
 		}
 	}
@@ -251,12 +252,16 @@ void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 	} else {
 		PlugLocations = GetPluginFolderLocationsWithFSRef(PluginFolder);
 	}
+#ifndef MAINPLAYERPRO
+	{
+		//TODO: Add Framework plug-in paths. I'm thankful I made it a mutable data type.
+	}
+#endif
 	CFRetain(PlugLocations);
 	PlugLocNums	= CFArrayGetCount( PlugLocations );
-
+	
 	for (i=0; i < PlugLocNums; i++) {
-		CFURLRef aPlugLoc;
-		aPlugLoc = CFArrayGetValueAtIndex(PlugLocations, i);
+		CFURLRef aPlugLoc = CFArrayGetValueAtIndex(PlugLocations, i);
 		somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, CFSTR("ppimpexp"));
 		PlugNums = CFArrayGetCount( somePlugs );
 		if (PlugNums > 0) {
@@ -269,7 +274,7 @@ void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 				if (tempMADPlug) {
 					MakeMADPlug(tempMADPlug, inMADDriver, tempBundleRef);
 				}
-			
+				
 			}
 		}
 		CFRelease(somePlugs);
@@ -277,7 +282,6 @@ void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 	CFRelease(PlugLocations);
 	CFRelease(PlugLocations);
 	PlugLocations = NULL;
-//	NScanResource(inMADDriver);
 }
 
 OSErr CallImportPlug(MADLibrary				*inMADDriver,
@@ -289,11 +293,19 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 {
 	OSErr					iErr = noErr;
 	MADFileFormatPlugin		**formatPlugA = inMADDriver->ThePlug[PlugNo].IOPlug;
-	MADDriverSettings		driverSettings;
-	
-	driverSettings.sysMemory = false;
-	
-	iErr = (*formatPlugA)->ThePlugMain(order, AlienFile, theNewMAD, info, &driverSettings);
+	{
+		GrafPtr savedPort;
+		GetPort(&savedPort);
+		short resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].filename);
+		MADDriverSettings		driverSettings;
+		
+		driverSettings.sysMemory = false;
+		
+		iErr = (*formatPlugA)->ThePlugMain(order, AlienFile, theNewMAD, info, &driverSettings);
+		
+		CFBundleCloseBundleResourceMap(inMADDriver->ThePlug[PlugNo].filename, resFileNum);
+		SetPort(savedPort);
+	}
 	return iErr;
 }
 
@@ -326,7 +338,8 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 		MADFileFormatPlugin	**formatPlugA = inMADDriver->ThePlug[i].IOPlug;
 		do {
 			RelCount = (*formatPlugA)->Release(formatPlugA);
-		} while (RelCount > 0);			
+		} while (RelCount > 0);
+		CFRelease(inMADDriver->ThePlug[i].filename);
 	}
 	DisposePtr( (Ptr) inMADDriver->ThePlug);		inMADDriver->ThePlug = NULL;
 }
@@ -441,8 +454,6 @@ Boolean	MADPlugAvailable( MADLibrary *inMADDriver, char* kindFile)
 	if( !strcmp( kindFile, "MADK")) return TRUE;
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		OSType temp1;
-		temp1 = Ptr2OSType(kindFile);
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type)) return TRUE;
 	}
 	return FALSE;

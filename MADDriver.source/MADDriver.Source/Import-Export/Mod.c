@@ -37,8 +37,8 @@ typedef struct _MODPlugType {
 static short FoundNote( short Period)
 {
 	short 			note;
-	short				MODTuning[ 70] =
-{
+	short			MODTuning[ 70] =
+	{
 
 // -> Tuning 0
 
@@ -47,7 +47,7 @@ static short FoundNote( short Period)
 	428,404,381,360,339,320,302,285,269,254,240,226,
 	214,202,190,180,170,160,151,143,135,127,120,113,
 	107,101,95,90,85,80,75,71,67,63,60,56
-};
+	};
 	note = 0xFF;
 	
 	
@@ -909,10 +909,10 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /*****************/
 OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
-	OSErr		myErr;
-	Ptr			AlienFile;
-	long		sndSize;
-	UNFILE		iFileRefI;
+	OSErr	myErr;
+	Ptr		AlienFile;
+	long	sndSize;
+	UNFILE	iFileRefI;
 	
 	myErr = noErr;
 	
@@ -953,7 +953,7 @@ OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 			iFileRefI = iFileOpen( AlienFileName);
 			if( iFileRefI)
 			{
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
@@ -995,7 +995,7 @@ OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 			{
 				info->fileSize = iGetEOF( iFileRefI);
 				
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
@@ -1088,7 +1088,7 @@ static ULONG MODPlugRelease( void *myInstance )
         return ( (MODPlugType *) myInstance )->_refCount;
 }
 
-static MADFileFormatPlugin CFPlugFormat =
+static MADFileFormatPlugin MODPlugFormat =
 {
 	NULL,
 	MODPlugQueryInterface,
@@ -1105,7 +1105,7 @@ static MODPlugType *_allocMODPlugType( CFUUIDRef factoryID )
 	
     //  Point to the function table
 	
-    newOne->_PPROCFPlugFormat = &CFPlugFormat;
+    newOne->_PPROCFPlugFormat = &MODPlugFormat;
 	
     //  Retain and keep an open instance refcount for each factory.
 	

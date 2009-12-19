@@ -883,6 +883,7 @@
 		5542404110DB602D00C08864 /* MPEG4.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MPEG4.r; sourceTree = "<group>"; };
 		5542404210DB602D00C08864 /* MPEG.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MPEG.r; sourceTree = "<group>"; };
 		5542404310DB602D00C08864 /* AVI.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = AVI.r; sourceTree = "<group>"; };
+		554240C810DBF91300C08864 /* CFPlugin-DigitalBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-DigitalBridge.c"; sourceTree = "<group>"; };
 		5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ByteUtils.h; path = Files/ByteUtils.h; sourceTree = "<group>"; };
 		5547CE5E10C6E5490041DEF6 /* ByteUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = ByteUtils.c; path = Files/ByteUtils.c; sourceTree = "<group>"; };
 		554E0FDF10D6C79D00BB619C /* All.µ */ = {isa = PBXFileReference; lastKnownFileType = file; path = "All.µ"; sourceTree = "<group>"; };
@@ -972,15 +973,15 @@
 		554E106010D6C79E00BB619C /* Note.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Note.c; sourceTree = "<group>"; };
 		554E106110D6C79E00BB619C /* PopupMenu Tester */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "PopupMenu Tester"; sourceTree = "<group>"; };
 		554E106510D6C9E100BB619C /* Read-Me.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Read-Me.rtf"; sourceTree = "<group>"; };
-		554E110510D6F09F00BB619C /* Fade Note.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fade Note.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		554E110510D6F09F00BB619C /* Fade Note.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fade Note.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E112910D6F0A000BB619C /* Fade Note-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Fade Note-Info.plist"; path = "../../../Fade Note-Info.plist"; sourceTree = "<group>"; };
-		554E114C10D6F1BF00BB619C /* Fade Volume.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fade Volume.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		554E114C10D6F1BF00BB619C /* Fade Volume.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fade Volume.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E117010D6F1BF00BB619C /* Fade Volume-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Fade Volume-Info.plist"; path = "../../../Fade Volume-Info.plist"; sourceTree = "<group>"; };
-		554E11B910D6F32900BB619C /* Note Translate.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Note Translate.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		554E11B910D6F32900BB619C /* Note Translate.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Note Translate.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E11DD10D6F32900BB619C /* Note Translate-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Note Translate-Info.plist"; path = "../../../Note Translate-Info.plist"; sourceTree = "<group>"; };
-		554E11FD10D6F3E100BB619C /* Propagate.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Propagate.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		554E11FD10D6F3E100BB619C /* Propagate.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Propagate.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E122110D6F3E100BB619C /* Propagate-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Propagate-Info.plist"; path = "../../../Propagate-Info.plist"; sourceTree = "<group>"; };
-		554E123010D6F3E600BB619C /* Revert.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Revert.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		554E123010D6F3E600BB619C /* Revert.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Revert.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E125410D6F3E600BB619C /* Revert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Revert-Info.plist"; path = "../../../Revert-Info.plist"; sourceTree = "<group>"; };
 		554E15FF10D8BD0600BB619C /* FileUtils.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; name = FileUtils.exp; path = Files/FileUtils.exp; sourceTree = "<group>"; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "OSX-PlugImport.c"; sourceTree = "<group>"; };
@@ -1037,7 +1038,7 @@
 		55868A6710BFB46100FCC24D /* APPL.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APPL.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		55868A6810BFB46100FCC24D /* APPL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "APPL-Info.plist"; path = "../../../APPL-Info.plist"; sourceTree = "<group>"; };
 		558A15250FE749B400533D71 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		55B797DC10D6E6C40073E379 /* Complex Fade.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Complex Fade-Info.plist"; path = "../../../Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DFTB.r; path = Files/DFTB.r; sourceTree = "<group>"; };
 		55ED547310D5F9CD00824C61 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
@@ -1054,7 +1055,7 @@
 		88E0C3C10C2F21DD00D6C081 /* MIDI-Hardware.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = "MIDI-Hardware.c"; path = "Files/MIDI-Hardware.c"; sourceTree = SOURCE_ROOT; };
 		88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = AboutPlugs.c; path = Files/wds_general/AboutPlugs.c; sourceTree = SOURCE_ROOT; };
 		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = FileUtils.h; path = MADDriver.source/MADDriver.Source/FileUtils.h; sourceTree = SOURCE_ROOT; };
-		88E0C3C50C2F21DD00D6C081 /* PlugsPPDGInit.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = PlugsPPDGInit.c; path = Files/PlugsPPDGInit.c; sourceTree = SOURCE_ROOT; };
+		88E0C3C50C2F21DD00D6C081 /* PlugsPPDGInit.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PlugsPPDGInit.c; path = Files/PlugsPPDGInit.c; sourceTree = SOURCE_ROOT; };
 		88E0C3C60C2F21DD00D6C081 /* PlugsPPINInit.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = PlugsPPINInit.c; path = Files/PlugsPPINInit.c; sourceTree = SOURCE_ROOT; };
 		88E0C3C70C2F21DD00D6C081 /* PlugsSoundFilter.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = PlugsSoundFilter.c; path = Files/PlugsSoundFilter.c; sourceTree = SOURCE_ROOT; };
 		88E0C3C80C2F21DD00D6C081 /* PlugVisual.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = PlugVisual.c; path = Files/wds_views/PlugVisual.c; sourceTree = SOURCE_ROOT; };
@@ -1842,6 +1843,7 @@
 				554E0FEE10D6C79D00BB619C /* PPDG PPC.pch */,
 				554E0FF310D6C79D00BB619C /* Read-Me */,
 				554E106510D6C9E100BB619C /* Read-Me.rtf */,
+				554240C810DBF91300C08864 /* CFPlugin-DigitalBridge.c */,
 			);
 			path = "Digital Plugs";
 			sourceTree = "<group>";
@@ -2083,7 +2085,7 @@
 				5518105510C35A0100ADA9F4 /* Example */,
 				550BFF2110BA01BA004FC5D7 /* Game Example */,
 				88E0C3BD0C2F21DD00D6C081 /* Divers */,
-				88E0C3C00C2F21DD00D6C081 /* OMS - MIDI Hardware */,
+				88E0C3C00C2F21DD00D6C081 /* MIDI Hardware */,
 				88E0C3C20C2F21DD00D6C081 /* Plugs */,
 				88E0C3CA0C2F21DD00D6C081 /* Resources */,
 				88E0C3CE0C2F21DD00D6C081 /* MADDriver.Source */,
@@ -2120,12 +2122,12 @@
 				5586889710BF67F100FCC24D /* MIDI.ppimpexp */,
 				55868A6710BFB46100FCC24D /* APPL.ppimpexp */,
 				5518107210C35A4500ADA9F4 /* PlayerPRO Example.app */,
-				55B797DC10D6E6C40073E379 /* Complex Fade.bundle */,
-				554E110510D6F09F00BB619C /* Fade Note.bundle */,
-				554E114C10D6F1BF00BB619C /* Fade Volume.bundle */,
-				554E11B910D6F32900BB619C /* Note Translate.bundle */,
-				554E11FD10D6F3E100BB619C /* Propagate.bundle */,
-				554E123010D6F3E600BB619C /* Revert.bundle */,
+				55B797DC10D6E6C40073E379 /* Complex Fade.plugin */,
+				554E110510D6F09F00BB619C /* Fade Note.plugin */,
+				554E114C10D6F1BF00BB619C /* Fade Volume.plugin */,
+				554E11B910D6F32900BB619C /* Note Translate.plugin */,
+				554E11FD10D6F3E100BB619C /* Propagate.plugin */,
+				554E123010D6F3E600BB619C /* Revert.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2138,12 +2140,12 @@
 			name = Divers;
 			sourceTree = "<group>";
 		};
-		88E0C3C00C2F21DD00D6C081 /* OMS - MIDI Hardware */ = {
+		88E0C3C00C2F21DD00D6C081 /* MIDI Hardware */ = {
 			isa = PBXGroup;
 			children = (
 				88E0C3C10C2F21DD00D6C081 /* MIDI-Hardware.c */,
 			);
-			name = "OMS - MIDI Hardware";
+			name = "MIDI Hardware";
 			sourceTree = "<group>";
 		};
 		88E0C3C20C2F21DD00D6C081 /* Plugs */ = {
@@ -2573,7 +2575,7 @@
 			);
 			name = "Fade Note";
 			productName = "Complex Fade";
-			productReference = 554E110510D6F09F00BB619C /* Fade Note.bundle */;
+			productReference = 554E110510D6F09F00BB619C /* Fade Note.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 		554E113E10D6F1BF00BB619C /* Fade Volume */ = {
@@ -2592,7 +2594,7 @@
 			);
 			name = "Fade Volume";
 			productName = "Complex Fade";
-			productReference = 554E114C10D6F1BF00BB619C /* Fade Volume.bundle */;
+			productReference = 554E114C10D6F1BF00BB619C /* Fade Volume.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 		554E11AB10D6F32900BB619C /* Note Translate */ = {
@@ -2611,7 +2613,7 @@
 			);
 			name = "Note Translate";
 			productName = "Complex Fade";
-			productReference = 554E11B910D6F32900BB619C /* Note Translate.bundle */;
+			productReference = 554E11B910D6F32900BB619C /* Note Translate.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 		554E11EF10D6F3E100BB619C /* Propagate */ = {
@@ -2630,7 +2632,7 @@
 			);
 			name = Propagate;
 			productName = "Complex Fade";
-			productReference = 554E11FD10D6F3E100BB619C /* Propagate.bundle */;
+			productReference = 554E11FD10D6F3E100BB619C /* Propagate.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 		554E122210D6F3E600BB619C /* Revert */ = {
@@ -2649,7 +2651,7 @@
 			);
 			name = Revert;
 			productName = "Complex Fade";
-			productReference = 554E123010D6F3E600BB619C /* Revert.bundle */;
+			productReference = 554E123010D6F3E600BB619C /* Revert.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 		5573A33E10B50D2600FF8B50 /* PlayerPROCore */ = {
@@ -2916,7 +2918,7 @@
 			);
 			name = "Complex Fade";
 			productName = "Complex Fade";
-			productReference = 55B797DC10D6E6C40073E379 /* Complex Fade.bundle */;
+			productReference = 55B797DC10D6E6C40073E379 /* Complex Fade.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 		88E0C3B20C2F21DD00D6C081 /* Carbon */ = {
@@ -4304,7 +4306,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PREBINDING = NO;
 				PRODUCT_NAME = "Fade Note";
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
 		};
@@ -4321,7 +4323,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PREBINDING = NO;
 				PRODUCT_NAME = "Fade Note";
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
 		};
@@ -4336,7 +4338,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PREBINDING = NO;
 				PRODUCT_NAME = "Fade Volume";
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
 		};
@@ -4353,7 +4355,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PREBINDING = NO;
 				PRODUCT_NAME = "Fade Volume";
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
 		};
@@ -4368,7 +4370,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PREBINDING = NO;
 				PRODUCT_NAME = "Note Translate";
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
 		};
@@ -4385,7 +4387,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PREBINDING = NO;
 				PRODUCT_NAME = "Note Translate";
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
 		};
@@ -4400,7 +4402,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PREBINDING = NO;
 				PRODUCT_NAME = Propagate;
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
 		};
@@ -4417,7 +4419,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PREBINDING = NO;
 				PRODUCT_NAME = Propagate;
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
 		};
@@ -4432,7 +4434,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PREBINDING = NO;
 				PRODUCT_NAME = Revert;
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
 		};
@@ -4449,7 +4451,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PREBINDING = NO;
 				PRODUCT_NAME = Revert;
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
 		};
@@ -5139,7 +5141,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PREBINDING = NO;
 				PRODUCT_NAME = "Complex Fade";
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
 		};
@@ -5152,13 +5154,11 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
 				INFOPLIST_FILE = "Complex Fade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PREBINDING = NO;
 				PRODUCT_NAME = "Complex Fade";
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
 		};

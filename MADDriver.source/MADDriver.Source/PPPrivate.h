@@ -18,4 +18,6 @@ OSErr closeCoreAudio( MADDriverRec *inMADDriver);
 void StopChannelCA(MADDriverRec *inMADDriver);
 void PlayChannelCA(MADDriverRec *inMADDriver);
 
+CFMutableArrayRef GetDefaultPluginFolderLocations();
+
 #endif

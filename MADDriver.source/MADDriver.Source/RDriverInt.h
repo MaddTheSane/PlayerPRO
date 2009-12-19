@@ -20,6 +20,7 @@
 //	Internet: 	RossetAntoine@bluewin.ch
 //
 /********************						***********************/
+//TODO: export functions that need exporting
 
 #ifndef __RDRIVERINTH__
 #define __RDRIVERINTH__
@@ -212,19 +213,19 @@ OSErr	PPImportFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile, M
 OSErr	PPIdentifyFile( MADLibrary		*inMADDriver, char *kindFile, char	*AlienFile);
 
 OSType	GetPPPlugType( MADLibrary		*inMADDriver, short ID, OSType type);
-void		MInitImportPlug( MADLibrary		*inMADDriver, FSSpec*);
-void		MADInitImportPlug( MADLibrary	*inMADDriver, FSRefPtr PluginFolder);
+void	MInitImportPlug( MADLibrary		*inMADDriver, FSSpec*);
+void	MADInitImportPlug( MADLibrary	*inMADDriver, FSRefPtr PluginFolder);
 
-void		CloseImportPlug( MADLibrary		*inMADDriver);
-OSErr MADLoadMADFileCString( MADMusic **, Ptr fName);
-OSErr CheckMADFile( char	*AlienFile);
+void	CloseImportPlug( MADLibrary		*inMADDriver);
+OSErr	MADLoadMADFileCString( MADMusic **, Ptr fName);
+OSErr	CheckMADFile( char *AlienFile);
 OSErr	MADCopyCurrentPartition( MADMusic	*theNewMAD);
-OSErr CallImportPlug( 	MADLibrary		*inMADDriver,
-												short					PlugNo,			// CODE du plug
-												OSType				order,
-												char					*AlienFile,
-												MADMusic	*theNewMAD,
-												PPInfoRec			*info);
+OSErr	CallImportPlug( 	MADLibrary		*inMADDriver,
+							short			PlugNo,			// CODE du plug
+							OSType			order,
+							char			*AlienFile,
+							MADMusic		*theNewMAD,
+							PPInfoRec		*info);
 long DoVolPanning( short, Channel *ch, MADDriverRec *intDriver);
 long DoVolPanning256( short, Channel *ch, MADDriverRec *intDriver, Boolean);
 void MADKeyOFF( MADDriverRec *MDriver, short track);

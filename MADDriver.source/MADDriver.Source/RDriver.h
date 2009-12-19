@@ -421,11 +421,11 @@ typedef struct PPSndDoubleBufferHeader2 {
 } PPSndDoubleBufferHeader2;
 typedef PPSndDoubleBufferHeader2 *        PPSndDoubleBufferHeader2Ptr;
 
-#define kPlayerPROModFormatTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x84, 0xF8, 0x01, 0x09, 0x28, 0x85, 0x4E, 0x01, 0x8F, 0xFA, 0x88, 0xAC, 0x75, 0xF3, 0xE0, 0x33)) //84F80109-2885-4E01-8FFA-88AC75F3E033
+#define kPlayerPROModFormatTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x84, 0xF8, 0x01, 0x09, 0x28, 0x85, 0x4E, 0x01, 0x8F, 0xFA, 0x88, 0xAC, 0x75, 0xF3, 0xE0, 0x33))
+//84F80109-2885-4E01-8FFA-88AC75F3E033
 
-#define kPlayerPROModFormatInterfaceID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x94, 0x15, 0xE3, 0x57, 0x0E, 0xD2, 0x4F, 0x9F, 0x9C, 0xA1, 0xB7, 0x28, 0x0C, 0x27, 0xF5, 0x9B)) //9415E357-0ED2-4F9F-9CA1-B7280C27F59B
-
-typedef struct PlugInfo PlugInfo;
+#define kPlayerPROModFormatInterfaceID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x94, 0x15, 0xE3, 0x57, 0x0E, 0xD2, 0x4F, 0x9F, 0x9C, 0xA1, 0xB7, 0x28, 0x0C, 0x27, 0xF5, 0x9B))
+//9415E357-0ED2-4F9F-9CA1-B7280C27F59B
 
 typedef struct _MADFileFormatPlugin {
     IUNKNOWN_C_GUTS;
@@ -433,23 +433,27 @@ typedef struct _MADFileFormatPlugin {
 } MADFileFormatPlugin;
 
 
-struct PlugInfo
+typedef struct PlugInfo
 {
 #ifndef TARGET_API_MAC_CARBON
-	Handle		IOPlug;											// Plug CODE
+//	Handle		IOPlug;											// Plug CODE
 #else
 	MADFileFormatPlugin **IOPlug;								// Plug CODE
 #endif
 	Str63		MenuName;										// Plug name
 	Str63		AuthorString;									// Plug author
 	FSSpec		file;											// Location of plug file
+#ifndef TARGET_API_MAC_CARBON
 	Str255		filename;										// Complete filename from application
+#else
+	CFBundleRef	filename;
+#endif
 	char		type[ 5];										// OSType of file support
 	OSType		mode;											// Mode support : Import +/ Export
 #ifndef TARGET_API_MAC_CARBON
 	Boolean		hasPPCCode;										// Is Plug FAT?
 #endif
-};
+} PlugInfo;
 #endif
 
 #ifdef WIN32
