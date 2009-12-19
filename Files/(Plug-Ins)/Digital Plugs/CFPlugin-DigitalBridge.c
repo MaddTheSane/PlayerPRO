@@ -11,7 +11,7 @@
 //This is a bridge for old-style PlayerPRO import-export plugins.
 //the following needs to be defined before this file is included:
 /*
- #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(NULL, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46) //The UUID of the plugin.  MUST match the one in the Info.plist file
+ #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46) //The UUID of the plugin.  MUST match the one in the Info.plist file
  #define PLUGINFACTORY SixSixNineFactory //The factory name as defined in the Info.plist file
  #define PLUGMAIN main669 //The old main function, renamed please
  */

@@ -127,22 +127,22 @@
 		554E126510D6F4F800BB619C /* Propagate.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FF110D6C79D00BB619C /* Propagate.r */; };
 		554E126610D6F50500BB619C /* Revert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF410D6C79D00BB619C /* Revert.c */; };
 		554E126710D6F50500BB619C /* Revert.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FF510D6C79D00BB619C /* Revert.r */; };
-		55672E1C10CAD641008C5C3D /* MOD.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
-		55672E1D10CAD641008C5C3D /* 669.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
-		55672E1E10CAD641008C5C3D /* AMF.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 553341D310BB5FE0005208D1 /* AMF.ppimpexp */; };
-		55672E1F10CAD641008C5C3D /* DMF.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 553341E910BB5FFA005208D1 /* DMF.ppimpexp */; };
-		55672E2010CAD641008C5C3D /* IT.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 553341FC10BB600A005208D1 /* IT.ppimpexp */; };
-		55672E2110CAD641008C5C3D /* MADfg.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */; };
-		55672E2210CAD641008C5C3D /* MADH.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */; };
-		55672E2310CAD641008C5C3D /* MADI.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5586872D10BF5C4E00FCC24D /* MADI.ppimpexp */; };
-		55672E2410CAD641008C5C3D /* MED.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5586874D10BF5D3700FCC24D /* MED.ppimpexp */; };
-		55672E2510CAD641008C5C3D /* MTM.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5586876210BF5E4D00FCC24D /* MTM.ppimpexp */; };
-		55672E2610CAD641008C5C3D /* Okta.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 558687DE10BF620500FCC24D /* Okta.ppimpexp */; };
-		55672E2710CAD641008C5C3D /* S3M.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; };
-		55672E2810CAD641008C5C3D /* ULT.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; };
-		55672E2910CAD641008C5C3D /* UMX.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5586882910BF62F500FCC24D /* UMX.ppimpexp */; };
-		55672E2A10CAD641008C5C3D /* XM.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; };
-		55672E2B10CAD641008C5C3D /* APPL.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
+		55672E1C10CAD641008C5C3D /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
+		55672E1D10CAD641008C5C3D /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
+		55672E1E10CAD641008C5C3D /* AMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341D310BB5FE0005208D1 /* AMF.ppimpexp */; };
+		55672E1F10CAD641008C5C3D /* DMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341E910BB5FFA005208D1 /* DMF.ppimpexp */; };
+		55672E2010CAD641008C5C3D /* IT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341FC10BB600A005208D1 /* IT.ppimpexp */; };
+		55672E2110CAD641008C5C3D /* MADfg.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */; };
+		55672E2210CAD641008C5C3D /* MADH.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */; };
+		55672E2310CAD641008C5C3D /* MADI.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586872D10BF5C4E00FCC24D /* MADI.ppimpexp */; };
+		55672E2410CAD641008C5C3D /* MED.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586874D10BF5D3700FCC24D /* MED.ppimpexp */; };
+		55672E2510CAD641008C5C3D /* MTM.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586876210BF5E4D00FCC24D /* MTM.ppimpexp */; };
+		55672E2610CAD641008C5C3D /* Okta.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 558687DE10BF620500FCC24D /* Okta.ppimpexp */; };
+		55672E2710CAD641008C5C3D /* S3M.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; };
+		55672E2810CAD641008C5C3D /* ULT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; };
+		55672E2910CAD641008C5C3D /* UMX.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586882910BF62F500FCC24D /* UMX.ppimpexp */; };
+		55672E2A10CAD641008C5C3D /* XM.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; };
+		55672E2B10CAD641008C5C3D /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
 		55672E9010CAD830008C5C3D /* OSX-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */; };
 		5573A35A10B50DCC00FF8B50 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
@@ -220,6 +220,12 @@
 		55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
 		55B797E310D6E6E50073E379 /* CompFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FE110D6C79D00BB619C /* CompFade.c */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
+		55BDD38910DC9EDE00813A3A /* Complex Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55B797DC10D6E6C40073E379 /* Complex Fade.plugin */; };
+		55BDD38A10DC9EDE00813A3A /* Fade Note.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E110510D6F09F00BB619C /* Fade Note.plugin */; };
+		55BDD38B10DC9EDE00813A3A /* Fade Volume.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E114C10D6F1BF00BB619C /* Fade Volume.plugin */; };
+		55BDD38C10DC9EDE00813A3A /* Note Translate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11B910D6F32900BB619C /* Note Translate.plugin */; };
+		55BDD38D10DC9EDE00813A3A /* Propagate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11FD10D6F3E100BB619C /* Propagate.plugin */; };
+		55BDD38E10DC9EDE00813A3A /* Revert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E123010D6F3E600BB619C /* Revert.plugin */; };
 		55DB45D50FEAB8CD0088C375 /* DFTB.r in Rez */ = {isa = PBXBuildFile; fileRef = 55DB45D40FEAB8CD0088C375 /* DFTB.r */; };
 		55ED50AB10D40BFE00824C61 /* MOD.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55ED547410D5F9CD00824C61 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
@@ -759,29 +765,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		55FA5F7E102D2B9000CB63DA /* CopyFiles */ = {
+		55FA5F7E102D2B9000CB63DA /* Copy PlugIns */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				55672E1C10CAD641008C5C3D /* MOD.ppimpexp in CopyFiles */,
-				55672E1D10CAD641008C5C3D /* 669.ppimpexp in CopyFiles */,
-				55672E1E10CAD641008C5C3D /* AMF.ppimpexp in CopyFiles */,
-				55672E1F10CAD641008C5C3D /* DMF.ppimpexp in CopyFiles */,
-				55672E2010CAD641008C5C3D /* IT.ppimpexp in CopyFiles */,
-				55672E2110CAD641008C5C3D /* MADfg.ppimpexp in CopyFiles */,
-				55672E2210CAD641008C5C3D /* MADH.ppimpexp in CopyFiles */,
-				55672E2310CAD641008C5C3D /* MADI.ppimpexp in CopyFiles */,
-				55672E2410CAD641008C5C3D /* MED.ppimpexp in CopyFiles */,
-				55672E2510CAD641008C5C3D /* MTM.ppimpexp in CopyFiles */,
-				55672E2610CAD641008C5C3D /* Okta.ppimpexp in CopyFiles */,
-				55672E2710CAD641008C5C3D /* S3M.ppimpexp in CopyFiles */,
-				55672E2810CAD641008C5C3D /* ULT.ppimpexp in CopyFiles */,
-				55672E2910CAD641008C5C3D /* UMX.ppimpexp in CopyFiles */,
-				55672E2A10CAD641008C5C3D /* XM.ppimpexp in CopyFiles */,
-				55672E2B10CAD641008C5C3D /* APPL.ppimpexp in CopyFiles */,
+				55BDD38910DC9EDE00813A3A /* Complex Fade.plugin in Copy PlugIns */,
+				55BDD38A10DC9EDE00813A3A /* Fade Note.plugin in Copy PlugIns */,
+				55BDD38B10DC9EDE00813A3A /* Fade Volume.plugin in Copy PlugIns */,
+				55BDD38C10DC9EDE00813A3A /* Note Translate.plugin in Copy PlugIns */,
+				55BDD38D10DC9EDE00813A3A /* Propagate.plugin in Copy PlugIns */,
+				55BDD38E10DC9EDE00813A3A /* Revert.plugin in Copy PlugIns */,
+				55672E1C10CAD641008C5C3D /* MOD.ppimpexp in Copy PlugIns */,
+				55672E1D10CAD641008C5C3D /* 669.ppimpexp in Copy PlugIns */,
+				55672E1E10CAD641008C5C3D /* AMF.ppimpexp in Copy PlugIns */,
+				55672E1F10CAD641008C5C3D /* DMF.ppimpexp in Copy PlugIns */,
+				55672E2010CAD641008C5C3D /* IT.ppimpexp in Copy PlugIns */,
+				55672E2110CAD641008C5C3D /* MADfg.ppimpexp in Copy PlugIns */,
+				55672E2210CAD641008C5C3D /* MADH.ppimpexp in Copy PlugIns */,
+				55672E2310CAD641008C5C3D /* MADI.ppimpexp in Copy PlugIns */,
+				55672E2410CAD641008C5C3D /* MED.ppimpexp in Copy PlugIns */,
+				55672E2510CAD641008C5C3D /* MTM.ppimpexp in Copy PlugIns */,
+				55672E2610CAD641008C5C3D /* Okta.ppimpexp in Copy PlugIns */,
+				55672E2710CAD641008C5C3D /* S3M.ppimpexp in Copy PlugIns */,
+				55672E2810CAD641008C5C3D /* ULT.ppimpexp in Copy PlugIns */,
+				55672E2910CAD641008C5C3D /* UMX.ppimpexp in Copy PlugIns */,
+				55672E2A10CAD641008C5C3D /* XM.ppimpexp in Copy PlugIns */,
+				55672E2B10CAD641008C5C3D /* APPL.ppimpexp in Copy PlugIns */,
 			);
+			name = "Copy PlugIns";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -2930,13 +2943,13 @@
 				88E0C3AF0C2F21DD00D6C081 /* Resources */,
 				88E0C3B00C2F21DD00D6C081 /* Frameworks */,
 				88E0C3B10C2F21DD00D6C081 /* Rez */,
-				55FA5F7E102D2B9000CB63DA /* CopyFiles */,
+				55FA5F7E102D2B9000CB63DA /* Copy PlugIns */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				554E127610D6F57100BB619C /* PBXTargetDependency */,
 				55672E6E10CAD650008C5C3D /* PBXTargetDependency */,
+				554E127610D6F57100BB619C /* PBXTargetDependency */,
 			);
 			name = Carbon;
 			productName = Carbon;

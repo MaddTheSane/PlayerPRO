@@ -16,6 +16,20 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<false/>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>7ED00DF2-DA2B-4ACB-AF6E-5430E979D55F</key>
+		<string>PropagateFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>E9AFFD6D-B98B-40D2-8CC2-BF7404EFAA51</key>
+		<array>
+			<string>7ED00DF2-DA2B-4ACB-AF6E-5430E979D55F</string>
+		</array>
+	</dict>
 	<key>CSResourcesFileMapped</key>
 	<string>yes</string>
 </dict>

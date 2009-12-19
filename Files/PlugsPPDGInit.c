@@ -323,18 +323,14 @@ void InitPPDGPlug(void)
 
 #pragma mark This is where we add the plug to the plug library.
 					short		resFileNum = CFBundleOpenBundleResourceMap(tempBundleRef);
-					GrafPtr		savedPort;
-					
-					GetPort(&savedPort);
-					
-					ThePlug[tPlug].PlugCode = tempMADPlug;
 					CFRetain(tempBundleRef);
+
+					ThePlug[tPlug].PlugCode = tempMADPlug;
 					ThePlug[tPlug].file = tempBundleRef;
 					GetIndString( ThePlug[tPlug].MenuName, 1000, 1);
 					ThePlug[tPlug].Type = 'PPDG';
 					
 					CFBundleCloseBundleResourceMap(tempBundleRef, resFileNum);
-					SetPort(savedPort);
 					tPlug++;
 				}
 			}
@@ -343,6 +339,9 @@ void InitPPDGPlug(void)
 		
 	InitPPDGMenu();
 }
+//TODO: close PPDG Plugins?
+//If we don't memory leaks! But The OS should take care of it.
+//I think
 
 #endif
 

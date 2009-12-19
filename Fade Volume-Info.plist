@@ -16,6 +16,20 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<false/>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>02B1554B-DE52-4745-932C-2987AA19D4EF</key>
+		<string>FadeVolFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>E9AFFD6D-B98B-40D2-8CC2-BF7404EFAA51</key>
+		<array>
+			<string>02B1554B-DE52-4745-932C-2987AA19D4EF</string>
+		</array>
+	</dict>
 	<key>CSResourcesFileMapped</key>
 	<string>yes</string>
 </dict>
