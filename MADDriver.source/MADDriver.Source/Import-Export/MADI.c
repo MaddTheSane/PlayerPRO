@@ -109,11 +109,14 @@ static inline void MADHmystrcpy( Ptr a, BytePtr b)
 
 static OSErr MADI2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
-short 					i, x;
-long 					inOutCount, OffSetToSample = 0, z;
-OSErr					theErr = noErr;
-Ptr						tempPtr;
-long 					finetune[16] = 
+#ifdef __LITTLE_ENDIAN
+	return MADFileNotSupportedByThisPlug;
+#endif
+	short		i, x;
+	long		inOutCount, OffSetToSample = 0, z;
+	OSErr		theErr = noErr;
+	Ptr			tempPtr;
+	long		finetune[16] = 
 						{
 						8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 						7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
@@ -330,9 +333,10 @@ return noErr;
 
 static OSErr TestoldMADFile( Ptr AlienFile)
 {
-	OSType	*myMADSign = (OSType*) AlienFile;
+	OSType	myMADSign = *((OSType*) AlienFile);
+	MOT32(&myMADSign);
 
-	if(	*myMADSign == 'MADI') return   noErr;
+	if(	myMADSign == 'MADI') return   noErr;
 	else return  MADFileNotSupportedByThisPlug;
 }
 
@@ -346,6 +350,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Signature ***/
 	
 	info->signature = myMOD->MAD;
+	MOT32(&info->signature);
 	
 	/*** Internal name ***/
 	

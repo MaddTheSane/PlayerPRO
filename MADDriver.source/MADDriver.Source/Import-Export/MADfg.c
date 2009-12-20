@@ -123,6 +123,9 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
 //TODO: byteswap on Intel!
+#ifdef __LITTLE_ENDIAN
+	return MADFileNotSupportedByThisPlug;
+#endif
 	short 			i, x;
 	long 			inOutCount, OffSetToSample = 0, z;
 	OSErr			theErr = noErr;

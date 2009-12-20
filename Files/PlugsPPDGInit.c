@@ -18,12 +18,11 @@ typedef struct FilterInfo
 	Str63			MenuName;
 #if MACOS9VERSION
 	Boolean			hasPPCCode;
-	FSSpec
+	FSSpec			file;
 #else
 	PPDigitalPlugin	**PlugCode;
-	CFBundleRef
+	CFBundleRef		file;
 #endif
-					file;
 	OSType			Type;
 } FilterInfo;
 
@@ -193,16 +192,15 @@ OSErr CallPPDGPlugIns(short PlugNo, Pcmd *myPcmd)
 {
 	OSErr			iErr = noErr;
 	PPDigitalPlugin	**formatPlugA = ThePlug[PlugNo].PlugCode;
-	CFBundleRef		aBundleRef = ThePlug[PlugNo].file;
 	short			resFileNum;
 	GrafPtr			savedPort;
 	
 	GetPort(&savedPort);
-	resFileNum = CFBundleOpenBundleResourceMap(aBundleRef);
+	resFileNum = CFBundleOpenBundleResourceMap(ThePlug[PlugNo].file);
 	
 	iErr = (*formatPlugA)->MyProcPtr(myPcmd, &thePPInfoPlug);
 	
-	CFBundleCloseBundleResourceMap(aBundleRef, resFileNum);
+	CFBundleCloseBundleResourceMap(ThePlug[PlugNo].file, resFileNum);
 	SetPort(savedPort);
 	
 	
@@ -310,7 +308,7 @@ void InitPPDGPlug(void)
 		CFArrayRef	somePlugs;
 		CFURLRef	aPlugLoc;
 		aPlugLoc = CFArrayGetValueAtIndex(PlugLocsDigital, i);
-		somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, CFSTR("plugin"));
+		somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, NULL);
 		PlugNums = CFArrayGetCount( somePlugs );
 		if (PlugNums > 0) {
 			for (x = 0; x < PlugNums; x++) {
@@ -320,11 +318,11 @@ void InitPPDGPlug(void)
 				tempMADPlug = PPDGLoadPlug(tempPlugRef);
 				if (tempMADPlug) {
 					if( tPlug > FilterPlugMax) MyDebugStr( __LINE__, __FILE__, "Too many plugs");
-
+					
 #pragma mark This is where we add the plug to the plug library.
 					short		resFileNum = CFBundleOpenBundleResourceMap(tempBundleRef);
 					CFRetain(tempBundleRef);
-
+					
 					ThePlug[tPlug].PlugCode = tempMADPlug;
 					ThePlug[tPlug].file = tempBundleRef;
 					GetIndString( ThePlug[tPlug].MenuName, 1000, 1);
@@ -336,12 +334,12 @@ void InitPPDGPlug(void)
 			}
 		}
 	}
-		
+	
 	InitPPDGMenu();
 }
 //TODO: close PPDG Plugins?
-//If we don't memory leaks! But The OS should take care of it.
-//I think
+//If we don't, memory leaks! But The OS should take care of it.
+//I think.
 
 #endif
 

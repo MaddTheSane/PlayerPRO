@@ -318,7 +318,6 @@ typedef struct XMINSTHEADER{
 
 
 typedef struct XMPATCHHEADER{
-	
 	UBYTE what[96];         // (byte) Sample number for all notes
 	UWORD volenv[24];       // (byte) Points for volume envelope
 	UBYTE panenv[48];       // (byte) Points for panning envelope

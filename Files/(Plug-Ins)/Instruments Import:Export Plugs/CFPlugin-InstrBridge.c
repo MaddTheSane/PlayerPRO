@@ -1,8 +1,8 @@
 /*
- *  CFPlugin-DigitalBridge.c
+ *  CFPlugin-InstrBridge.c
  *  PPMacho
  *
- *  Created by C.W. Betts on 12/18/09.
+ *  Created by C.W. Betts on 12/19/09.
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
@@ -19,16 +19,16 @@
 #include <PlayerPROCore/PPPlug.h>
 #include <PlayerPROCore/FileUtils.h>
 
-typedef struct _CFPlugType {
+typedef struct _CFInstrPlugType {
 	PPDigitalPlugin		*_PPROCFPlugFormat;
 	CFUUIDRef			_factoryID;
 	UInt32				_refCount;
-} CFPlugType;
+} CFInstrPlugType;
 
-static void _deallocCFPlugType( CFPlugType *myInstance );
+static void _deallocCFInstrPlugType( CFInstrPlugType *myInstance );
 
 
-static HRESULT CFPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
+static HRESULT CFInstrPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
 {
     //  Create a CoreFoundation UUIDRef for the requested interface.
 	
@@ -36,13 +36,13 @@ static HRESULT CFPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
 	
     // Test the requested ID against the valid interfaces.
 	
-    if( CFEqual( interfaceID, kPlayerPRODigitalPlugInterfaceID ) ) 
+    if( CFEqual( interfaceID, kPlayerPROInstrumentPlugInterfaceID ) ) 
 	{
 		
         //  If the TestInterface was requested, bump the ref count, set the ppv parameter
         //  equal to the instance, and return good status.
 		
-        ( (CFPlugType *) myInstance )->_PPROCFPlugFormat->AddRef( myInstance );
+        ( (CFInstrPlugType *) myInstance )->_PPROCFPlugFormat->AddRef( myInstance );
         *ppv = myInstance;
         CFRelease( interfaceID );
         return S_OK;
@@ -52,7 +52,7 @@ static HRESULT CFPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
 		
         //  If the IUnknown interface was requested, same as above.
 		
-        ( (CFPlugType *) myInstance )->_PPROCFPlugFormat->AddRef( myInstance );
+        ( (CFInstrPlugType *) myInstance )->_PPROCFPlugFormat->AddRef( myInstance );
         *ppv = myInstance;
         CFRelease( interfaceID );
         return S_OK;
@@ -68,10 +68,10 @@ static HRESULT CFPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
     }
 }
 
-static ULONG CFPlugAddRef( void *myInstance )
+static ULONG CFInstrPlugAddRef( void *myInstance )
 {
-    ( (CFPlugType *) myInstance )->_refCount += 1;
-    return ( (CFPlugType *) myInstance )->_refCount;
+    ( (CFInstrPlugType *) myInstance )->_refCount += 1;
+    return ( (CFInstrPlugType *) myInstance )->_refCount;
 }
 
 // -------------------------------------------------------------------------------------------
@@ -82,33 +82,33 @@ static ULONG CFPlugAddRef( void *myInstance )
 
 static ULONG CFPlugRelease( void *myInstance )
 {
-    ( (CFPlugType *) myInstance )->_refCount -= 1;
-    if ( ( (CFPlugType *) myInstance )->_refCount == 0 ) {
-        _deallocCFPlugType( (CFPlugType *) myInstance );
+    ( (CFInstrPlugType *) myInstance )->_refCount -= 1;
+    if ( ( (CFInstrPlugType *) myInstance )->_refCount == 0 ) {
+        _deallocCFInstrPlugType( (CFInstrPlugType *) myInstance );
         return 0;
     }
     else
-        return ( (CFPlugType *) myInstance )->_refCount;
+        return ( (CFInstrPlugType *) myInstance )->_refCount;
 }
 
-static PPDigitalPlugin CFPlugFormat =
+static PPInstrumentPlugin CFInstrPlugFormat =
 {
 	NULL,
-	CFPlugQueryInterface,
-	CFPlugAddRef,
-	CFPlugRelease,
+	CFInstrPlugQueryInterface,
+	CFInstrPlugAddRef,
+	CFInstrPlugRelease,
 	PLUGMAIN
 };
 
-static CFPlugType *_allocCFPlugType( CFUUIDRef factoryID )
+static CFInstrPlugType *_allocCFInstrPlugType( CFUUIDRef factoryID )
 {
     //  Allocate memory for the new instance.
 	
-    CFPlugType *newOne = (CFPlugType *)malloc( sizeof(CFPlugType) );
+    CFInstrPlugType *newOne = (CFInstrPlugType *)malloc( sizeof(CFInstrPlugType) );
 	
     //  Point to the function table
 	
-    newOne->_PPROCFPlugFormat = &CFPlugFormat;
+    newOne->_PPROCFPlugFormat = &CFInstrPlugFormat;
 	
     //  Retain and keep an open instance refcount for each factory.
 	
@@ -128,7 +128,7 @@ static CFPlugType *_allocCFPlugType( CFUUIDRef factoryID )
 //  Utility function that deallocates the instance when the refCount goes to zero.
 //
 
-static void _deallocCFPlugType( CFPlugType *myInstance )
+static void _deallocCFInstrPlugType( CFInstrPlugType *myInstance )
 {
     CFUUIDRef factoryID = myInstance->_factoryID;
     free( myInstance );
@@ -144,8 +144,8 @@ EXP void * PLUGINFACTORY( CFAllocatorRef allocator, CFUUIDRef typeID )
     //  If correct type is being requested, allocate an instance of TestType and return
     //  the IUnknown interface.
 	
-    if ( CFEqual( typeID, kPlayerPRODigitalPlugTypeID ) ) {
-        CFPlugType *result = _allocCFPlugType( PLUGUUID );
+    if ( CFEqual( typeID, kPlayerPROInstrumentPlugTypeID ) ) {
+        CFInstrPlugType *result = _allocCFInstrPlugType( PLUGUUID );
         return result;
     }
     else {
@@ -155,3 +155,4 @@ EXP void * PLUGINFACTORY( CFAllocatorRef allocator, CFUUIDRef typeID )
         return NULL;
     }
 }
+

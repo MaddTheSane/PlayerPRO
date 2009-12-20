@@ -242,16 +242,26 @@ OSType	PressPPINMenu( Rect	*PopUpRect, OSType curType, short, Str255);
 OSErr	PPINAvailablePlug( OSType	kindFile, OSType *plugType); // plugType == 'INST' or 'SAMP'
 OSErr	PPINGetPlugByID( OSType *type, short id, short samp);
 
+#define kPlayerPROInstrumentPlugTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x0B, 0x3A, 0x46, 0x73, 0x91, 0x18, 0x46, 0x7E, 0xA4, 0x96, 0x84, 0x6F, 0x5E, 0x1C, 0x92, 0x76))
+//0B3A4673-9118-467E-A496-846F5E1C9276
+
+#define kPlayerPROInstrumentPlugInterfaceID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xB5, 0x87, 0xB2, 0xF1, 0xC8, 0xF8, 0x40, 0xA1, 0x9D, 0xB7, 0x7B, 0x46, 0xF9, 0xF4, 0xE3, 0x41))
+//B587B2F1-C8F8-40A1-9DB7-7B46F9F4E341
+
+typedef struct _PPInstrumentPlugin {
+    IUNKNOWN_C_GUTS;
+	OSErr (STDMETHODCALLTYPE *InstrMain) (OSType,  InstrData*, sData**, short*, FSSpec*, PPInfoPlug*);
+} PPInstrumentPlugin;
 
 // SndUtils.c Definition :
 
-Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo);
-OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug);
-void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
-Ptr 	MyExp1to6( Ptr sound, unsigned long numSampleFrames);
-Ptr 	MyExp1to3( Ptr sound, unsigned long numSampleFrames);
-void 	ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
-OSErr inAddSoundToMAD(	Ptr				theSound,
+Ptr		ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo);
+OSErr	ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug);
+void	pStrcpy(register unsigned char *s1, register const unsigned char *s2);
+Ptr		MyExp1to6( Ptr sound, unsigned long numSampleFrames);
+Ptr		MyExp1to3( Ptr sound, unsigned long numSampleFrames);
+void	ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
+OSErr	inAddSoundToMAD(	Ptr				theSound,
 						long			lS,
 						long			lE,
 						short			sS,
