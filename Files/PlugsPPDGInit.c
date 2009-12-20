@@ -338,7 +338,7 @@ void InitPPDGPlug(void)
 	InitPPDGMenu();
 }
 //TODO: close PPDG Plugins?
-//If we don't, memory leaks! But The OS should take care of it.
+//If we don't, memory leaks! But The OS should take care of it when the program quits.
 //I think.
 
 #endif
