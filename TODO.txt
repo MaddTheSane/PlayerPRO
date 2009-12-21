@@ -14,7 +14,8 @@ doesn't work as expected or desired.
 * Maybe use OS X VSTs and Audio Unit Plugins?
 * Make a MODList that stores file references as Aliases.
 * The windows don't support a scroll wheel.  Need to look into why.
-* Plug-ins need to be checked for places to byteswap. AMF and MADfg are two I 
-    know need this.
+* Plug-ins need to be checked for places to byteswap. AMF and the old MAD plug importers
+    are two I know need this.
+* Determine if a file is openable by determining its UTI.
 
 Also note that there are TODOs scattered accross the source files.

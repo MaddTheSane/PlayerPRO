@@ -20,7 +20,7 @@
 #include <PlayerPROCore/FileUtils.h>
 
 typedef struct _CFInstrPlugType {
-	PPDigitalPlugin		*_PPROCFPlugFormat;
+	PPInstrumentPlugin	*_PPROCFPlugFormat;
 	CFUUIDRef			_factoryID;
 	UInt32				_refCount;
 } CFInstrPlugType;
@@ -80,7 +80,7 @@ static ULONG CFInstrPlugAddRef( void *myInstance )
 //  If the refCount goes to zero, deallocate the instance.
 //
 
-static ULONG CFPlugRelease( void *myInstance )
+static ULONG CFInstrPlugRelease( void *myInstance )
 {
     ( (CFInstrPlugType *) myInstance )->_refCount -= 1;
     if ( ( (CFInstrPlugType *) myInstance )->_refCount == 0 ) {

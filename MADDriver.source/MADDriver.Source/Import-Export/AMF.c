@@ -41,27 +41,27 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
+#ifdef _MAC_H
+#define Tdecode16(msg_buf) EndianU16_LtoN(*(UInt16*)msg_buf);
+#else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
-#ifdef _MAC_H
-	return EndianU16_LtoN(*(UInt16*)msg_buf);
-#else
 	UInt16 toswap = *((UInt16*) msg_buf);
 	INT16(&toswap);
-	return toswap;	
-#endif
+	return toswap;
 }
+#endif
 
+#ifdef _MAC_H
+#define Tdecode32(msg_buf)  EndianU32_LtoN(*(UInt32*)msg_buf);
+#else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
-#ifdef _MAC_H
-	return EndianU32_LtoN(*(UInt32*)msg_buf);
-#else
 	UInt32 toswap = *((UInt32*) msg_buf);
 	INT32(&toswap);
 	return toswap;
-#endif
 }
+#endif
 
 static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {

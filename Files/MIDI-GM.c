@@ -116,12 +116,12 @@ void ConvertInstrument( register	Byte	*tempPtr,	register long sSize);
 void ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
 short OpenDataFileQK( long dirID, short VRefNum);
 
-static NoteRequest					myNoteRequest;
+static NoteRequest	myNoteRequest;
 
 
-Boolean			QuicktimeInstruAvailable;
-static	Boolean			QK50;
-static	short			vers1, vers2;
+Boolean				QuicktimeInstruAvailable;
+static	Boolean		QK50;
+static	short		vers1, vers2;
 
 void InitQuicktimeInstruments(void)
 {
