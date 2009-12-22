@@ -88,7 +88,7 @@ void ScreenDevice() {
 	mFS_DC		= NULL;
 #endif
 	
-//TODO: is THIS needed?
+//TODO: is this needed?
 #if 0	
 	GDHandle gDevice = GetMainDevice();
 	if ( gDevice ) {
@@ -548,7 +548,7 @@ long GetDisplayID( long inX, long inY ) {
 		theGDevice = DMGetNextScreenDevice( theGDevice, false );
 	}	
 
-	//TODO: is this needed?
+	//TODO: is THIS needed?
 //	err = DSpFindContextFromPoint( inPt, &ref );	
 //	if ( ! err )
 //		err = DSpContext_GetDisplayID( ref, &id );

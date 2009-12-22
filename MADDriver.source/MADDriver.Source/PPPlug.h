@@ -33,6 +33,7 @@
 #pragma pack(push, 2)
 #endif
 
+#pragma mark Filters for Samples/Sounds
 /******************************************************************/
 //	*****************	FILTERS FOR SAMPLES/SOUNDS	***************/
 //
@@ -70,6 +71,8 @@
 //
 /********************						***********************/
 
+
+
 typedef struct
 {
 	void		*RPlaySoundUPP;			//	OSErr			RPlaySound( Ptr whichSound, long SoundSize, long whichTrack, long Period, long Amplitude, long loopStart, long loopLength, Boolean Stereo?)
@@ -82,49 +85,22 @@ typedef OSErr			(*RPlaySoundUPP)		( Ptr, long, long, long, long, long, long, uns
 typedef void			(*UpdateALLWindowUPP)	( void);
 typedef pascal Boolean	(*MyDlgFilterUPP)		( DialogPtr, EventRecord*, short*);
 
-
-/*#if defined(powerc) || defined(__powerc)
-
-#include "mixedmode.h"
-
-		// ***** POWERPC calls *********
-
-#define 		RPlaySoundCallMode (	kCStackBased|\
-				RESULT_SIZE( SIZE_CODE( sizeof(OSErr) ))|\
-				STACK_ROUTINE_PARAMETER( 1, SIZE_CODE( sizeof( Ptr)))|\
-				STACK_ROUTINE_PARAMETER( 2, SIZE_CODE( sizeof( long)))|\
-				STACK_ROUTINE_PARAMETER( 3, SIZE_CODE( sizeof( long)))|\
-				STACK_ROUTINE_PARAMETER( 4, SIZE_CODE( sizeof( long)))|\
-				STACK_ROUTINE_PARAMETER( 5, SIZE_CODE( sizeof( long)))|\
-				STACK_ROUTINE_PARAMETER( 6, SIZE_CODE( sizeof( long)))|\
- 				STACK_ROUTINE_PARAMETER( 7, SIZE_CODE( sizeof( long)))|\
- 				STACK_ROUTINE_PARAMETER( 8, SIZE_CODE( sizeof( unsigned long)))|\
- 				STACK_ROUTINE_PARAMETER( 9, SIZE_CODE( sizeof( Boolean))))
- 				
-#define CallRPlaySoundUPP( v1, v2, v3, v4, v5, v6, v7, v8, v9)		\
-		CallUniversalProc( thePPInfoPlug->RPlaySoundUPP, RPlaySoundCallMode, v1, v2, v3, v4, v5, v6, v7, v8, v9)
-
-//
-
-#define UpdateALLWindowCallMode (	kCStackBased)
-
-#define CallUpdateALLWindowUPP()		\
-		CallUniversalProc( thePPInfoPlug->UpdateALLWindowUPP, UpdateALLWindowCallMode)
-
-//
-
-#else*/	// ******* 68K calls ***********
-
 #define CallRPlaySoundUPP( v1, v2, v3, v4, v5, v6, v7, v8, v9)		\
 		(* (RPlaySoundUPP) (thePPInfoPlug->RPlaySoundUPP))( v1, v2, v3, v4, v5, v6, v7, v8, v9)
-
-//
 
 #define CallUpdateALLWindowUPP()		\
 		(* (UpdateALLWindowUPP) (thePPInfoPlug->UpdateALLWindowUPP))
 
-//
-//#endif
+#define kPlayerPROFiltersPlugTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x15, 0x8F, 0xF3, 0x3B, 0x47, 0xF4, 0x44, 0x97, 0x92, 0x92, 0x1B, 0x54, 0x4E, 0x8C, 0x2B, 0x01))
+//158FF33B-47F4-4497-9292-1B544E8C2B01
+
+#define kPlayerPROFiltersPlugInterfaceID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xD2, 0x89, 0xCA, 0xFA, 0x9A, 0xF1, 0x43, 0x5F, 0xBE, 0xD6, 0x3B, 0x15, 0x1D, 0xD8, 0xF2, 0x71))
+//D289CAFA-9AF1-435F-BED6-3B151DD8F271
+
+typedef struct _PPFiltersPlugin {
+    IUNKNOWN_C_GUTS;
+	OSErr (STDMETHODCALLTYPE *FiltersMain) (sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short stereoMode);
+} PPFiltersPlugin;
 
 /********************						***********************/
 //
@@ -136,7 +112,7 @@ typedef pascal Boolean	(*MyDlgFilterUPP)		( DialogPtr, EventRecord*, short*);
 //
 /********************						***********************/
 
-
+#pragma mark Digital Editor Plugs
 /******************************************************************/
 //******************* DIGITAL EDITOR PLUGS  ***********************/
 //
@@ -194,6 +170,7 @@ typedef struct _PPDigitalPlugin {
 } PPDigitalPlugin;
 
 
+#pragma mark Instruments Import/Export Plugs
 /******************************************************************/
 //******************* INSTRUMENTS IMPORT/EXPORT PLUGS  ************/
 //

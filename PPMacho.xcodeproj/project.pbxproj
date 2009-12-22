@@ -24,6 +24,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				557DE3F410E06BD300177B4C /* PBXTargetDependency */,
 				5533429110BB73F3005208D1 /* PBXTargetDependency */,
 				5533428F10BB73F3005208D1 /* PBXTargetDependency */,
 				5567E7D310CA450800272CF9 /* PBXTargetDependency */,
@@ -45,12 +46,23 @@
 			name = "Import-export";
 			productName = "Import-export";
 		};
+		557DE3BD10E06BB500177B4C /* Filters Plugs */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 557DE43610E06BF300177B4C /* Build configuration list for PBXAggregateTarget "Filters Plugs" */;
+			buildPhases = (
+			);
+			dependencies = (
+			);
+			name = "Filters Plugs";
+			productName = "Filters Plugs";
+		};
 		55B797D410D6E66A0073E379 /* Digital Plugs */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 55B797D510D6E6A60073E379 /* Build configuration list for PBXAggregateTarget "Digital Plugs" */;
 			buildPhases = (
 			);
 			dependencies = (
+				557DE3F210E06BC500177B4C /* PBXTargetDependency */,
 				554E10F610D6F09500BB619C /* PBXTargetDependency */,
 				554E113D10D6F1B400BB619C /* PBXTargetDependency */,
 				554E117210D6F1C800BB619C /* PBXTargetDependency */,
@@ -188,6 +200,11 @@
 		557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */ = {isa = PBXBuildFile; fileRef = 557B8FD910CE01BF00B9A37D /* DefaultPref.r */; };
 		557DE1F310E0159600177B4C /* PPMenus.r in Rez */ = {isa = PBXBuildFile; fileRef = 557DE1F110E0158C00177B4C /* PPMenus.r */; };
 		557DE27710E04C1500177B4C /* PPResDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 557DE27610E04C1500177B4C /* PPResDefs.h */; };
+		557DE42D10E06BF200177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE42E10E06BF200177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DE44A10E06CE700177B4C /* Amplitude.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FFA10D6C79D00BB619C /* Amplitude.c */; };
+		557DE44B10E06CE900177B4C /* Amplitude.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FFB10D6C79D00BB619C /* Amplitude.r */; };
+		557DE49410E0738000177B4C /* Amplitude.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE43410E06BF200177B4C /* Amplitude.plugin */; };
 		5586870B10BF5C4700FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5586871A10BF5C4A00FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5586872910BF5C4E00FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
@@ -624,6 +641,34 @@
 			remoteGlobalIDString = 55868A5810BFB46100FCC24D;
 			remoteInfo = APPL;
 		};
+		557DE3F110E06BC500177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE3F310E06BD300177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE3F510E06BE300177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE3BD10E06BB500177B4C /* Filters Plugs */;
+			remoteInfo = "Filters Plugs";
+		};
+		557DE42710E06BF200177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
 		5586870510BF5C4700FCC24D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -811,6 +856,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				557DE49410E0738000177B4C /* Amplitude.plugin in Copy PlugIns */,
 				5515200810DEDC7E0054ABC4 /* XI.plugin in Copy PlugIns */,
 				55BDD38910DC9EDE00813A3A /* Complex Fade.plugin in Copy PlugIns */,
 				55BDD38A10DC9EDE00813A3A /* Fade Note.plugin in Copy PlugIns */,
@@ -1056,6 +1102,9 @@
 		557B8FD910CE01BF00B9A37D /* DefaultPref.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DefaultPref.r; path = Files/DefaultPref.r; sourceTree = "<group>"; };
 		557DE1F110E0158C00177B4C /* PPMenus.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = PPMenus.r; path = Files/PPMenus.r; sourceTree = "<group>"; };
 		557DE27610E04C1500177B4C /* PPResDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPResDefs.h; path = Files/PPResDefs.h; sourceTree = "<group>"; };
+		557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-FilterBridge.c"; sourceTree = "<group>"; };
+		557DE43410E06BF200177B4C /* Amplitude.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amplitude.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		557DE43510E06BF200177B4C /* Amplitude-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Amplitude-Info.plist"; path = "../../../Amplitude-Info.plist"; sourceTree = "<group>"; };
 		5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADfg.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5586871010BF5C4700FCC24D /* MADfg-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MADfg-Info.plist"; path = "../../../MADfg-Info.plist"; sourceTree = "<group>"; };
 		5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADH.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1409,6 +1458,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		557DE42C10E06BF200177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE42D10E06BF200177B4C /* Carbon.framework in Frameworks */,
+				557DE42E10E06BF200177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5586870910BF5C4700FCC24D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1688,6 +1746,7 @@
 		551520C510DEEFEB0054ABC4 /* Amplitude */ = {
 			isa = PBXGroup;
 			children = (
+				557DE43510E06BF200177B4C /* Amplitude-Info.plist */,
 				554E0FFA10D6C79D00BB619C /* Amplitude.c */,
 				554E0FFB10D6C79D00BB619C /* Amplitude.r */,
 			);
@@ -2189,6 +2248,7 @@
 				551520E410DEF09D0054ABC4 /* Tone Generator */,
 				554E0FF810D6C79D00BB619C /* All.µ */,
 				554E0FF910D6C79D00BB619C /* All.µ.xml */,
+				557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */,
 				554E101B10D6C79E00BB619C /* PLug Carbon.pch */,
 				554E101C10D6C79E00BB619C /* PLug PPC.pch */,
 			);
@@ -2417,6 +2477,7 @@
 				554E11FD10D6F3E100BB619C /* Propagate.plugin */,
 				554E123010D6F3E600BB619C /* Revert.plugin */,
 				55151F8010DEDBDB0054ABC4 /* XI.plugin */,
+				557DE43410E06BF200177B4C /* Amplitude.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2984,6 +3045,25 @@
 			productReference = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		557DE42510E06BF200177B4C /* Amplitude */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE43110E06BF200177B4C /* Build configuration list for PBXNativeTarget "Amplitude" */;
+			buildPhases = (
+				557DE42810E06BF200177B4C /* Resources */,
+				557DE42910E06BF200177B4C /* Sources */,
+				557DE42C10E06BF200177B4C /* Frameworks */,
+				557DE42F10E06BF200177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE42610E06BF200177B4C /* PBXTargetDependency */,
+			);
+			name = Amplitude;
+			productName = "Complex Fade";
+			productReference = 557DE43410E06BF200177B4C /* Amplitude.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		5586870310BF5C4700FCC24D /* MADfg */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5586870C10BF5C4700FCC24D /* Build configuration list for PBXNativeTarget "MADfg" */;
@@ -3249,6 +3329,7 @@
 				55672E6E10CAD650008C5C3D /* PBXTargetDependency */,
 				554E127610D6F57100BB619C /* PBXTargetDependency */,
 				55151F8610DEDC1F0054ABC4 /* PBXTargetDependency */,
+				557DE3F610E06BE300177B4C /* PBXTargetDependency */,
 			);
 			name = Carbon;
 			productName = Carbon;
@@ -3302,6 +3383,8 @@
 				554E122210D6F3E600BB619C /* Revert */,
 				55151F3610DEDBD70054ABC4 /* Instrument Plugs */,
 				55151F7210DEDBDB0054ABC4 /* XI */,
+				557DE3BD10E06BB500177B4C /* Filters Plugs */,
+				557DE42510E06BF200177B4C /* Amplitude */,
 			);
 		};
 /* End PBXProject section */
@@ -3400,6 +3483,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5573A33B10B50D2600FF8B50 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE42810E06BF200177B4C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3577,6 +3667,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				554E126710D6F50500BB619C /* Revert.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE42F10E06BF200177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE44B10E06CE900177B4C /* Amplitude.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3862,6 +3960,14 @@
 				5573A46E10B51CAB00FF8B50 /* ByteSwap.c in Sources */,
 				550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
 				55672F4810CAE90B008C5C3D /* OSX-PlugImport.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE42910E06BF200177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE44A10E06CE700177B4C /* Amplitude.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4209,6 +4315,26 @@
 			isa = PBXTargetDependency;
 			target = 55868A5810BFB46100FCC24D /* APPL */;
 			targetProxy = 5567E7D210CA450800272CF9 /* PBXContainerItemProxy */;
+		};
+		557DE3F210E06BC500177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE3F110E06BC500177B4C /* PBXContainerItemProxy */;
+		};
+		557DE3F410E06BD300177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE3F310E06BD300177B4C /* PBXContainerItemProxy */;
+		};
+		557DE3F610E06BE300177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE3BD10E06BB500177B4C /* Filters Plugs */;
+			targetProxy = 557DE3F510E06BE300177B4C /* PBXContainerItemProxy */;
+		};
+		557DE42610E06BF200177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE42710E06BF200177B4C /* PBXContainerItemProxy */;
 		};
 		5586870410BF5C4700FCC24D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -4976,6 +5102,61 @@
 			};
 			name = Debug;
 		};
+		557DE3EF10E06BB500177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = "Filters Plugs";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		557DE3F010E06BB500177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Filters Plugs";
+			};
+			name = Debug;
+		};
+		557DE43210E06BF200177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Amplitude-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Amplitude;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE43310E06BF200177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Amplitude-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Amplitude;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
 		5586870D10BF5C4700FCC24D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -5732,6 +5913,24 @@
 			buildConfigurations = (
 				5573A34210B50D2900FF8B50 /* Release */,
 				5573A34310B50D2900FF8B50 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE43110E06BF200177B4C /* Build configuration list for PBXNativeTarget "Amplitude" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE43210E06BF200177B4C /* Release */,
+				557DE43310E06BF200177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE43610E06BF300177B4C /* Build configuration list for PBXAggregateTarget "Filters Plugs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE3EF10E06BB500177B4C /* Release */,
+				557DE3F010E06BB500177B4C /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

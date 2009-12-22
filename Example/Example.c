@@ -229,8 +229,8 @@ int main( int argc, char* argv[])
 		}
 	}
 	MADStopDriver( MADDriver);				// Stop driver interrupt function
-	MADDisposeDriver( MADDriver);						// Dispose music driver
-	MADDisposeLibrary( MADLib);					// Close music library
+	MADDisposeDriver( MADDriver);			// Dispose music driver
+	MADDisposeLibrary( MADLib);				// Close music library
 	FlushEvents( everyEvent, 0);			// Kill your events and byebye...
 	
 	return EXIT_SUCCESS;

@@ -370,6 +370,7 @@ OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Tracks ***/
 	
 	info->totalTracks = myMOD->Tracks;
+//	MOT16(&info->totalTracks);
 		
 	/*** Total Patterns ***/
 	
@@ -388,7 +389,9 @@ OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	for( i = 0, info->totalInstruments = 0; i < MAXINSTRU ; i++)
 	{
-		if( myMOD->fid[ i].insSize > 5) info->totalInstruments++;
+		long insSizeSwap = myMOD->fid[ i].insSize;
+		MOT32(&insSizeSwap);
+		if( insSizeSwap > 5) info->totalInstruments++;
 	}
 	
 	strcpy( info->formatDescription, "MAD-FG Plug");

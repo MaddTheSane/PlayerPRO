@@ -355,7 +355,9 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	for( i = 0, info->totalInstruments = 0; i < 64 ; i++)
 	{
-		if( myMOD->fid[ i].numSamples > 0) info->totalInstruments++;
+		short numSamSwap = myMOD->fid[ i].numSamples;
+		MOT16(&numSamSwap);
+		if( numSamSwap > 0) info->totalInstruments++;
 	}
 	
 	strcpy( info->formatDescription, "MADH Plug");
