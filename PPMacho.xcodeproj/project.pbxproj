@@ -186,6 +186,8 @@
 		5573A46F10B51CAB00FF8B50 /* ByteSwap.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A46D10B51CAB00FF8B50 /* ByteSwap.c */; };
 		5573A51C10B52EB500FF8B50 /* DrawSprocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */; };
 		557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */ = {isa = PBXBuildFile; fileRef = 557B8FD910CE01BF00B9A37D /* DefaultPref.r */; };
+		557DE1F310E0159600177B4C /* PPMenus.r in Rez */ = {isa = PBXBuildFile; fileRef = 557DE1F110E0158C00177B4C /* PPMenus.r */; };
+		557DE27710E04C1500177B4C /* PPResDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 557DE27610E04C1500177B4C /* PPResDefs.h */; };
 		5586870B10BF5C4700FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5586871A10BF5C4A00FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5586872910BF5C4E00FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
@@ -430,14 +432,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55151F7210DEDBDB0054ABC4 /* XI */;
+			remoteGlobalIDString = 55151F7210DEDBDB0054ABC4;
 			remoteInfo = XI;
 		};
 		55151F8510DEDC1F0054ABC4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55151F3610DEDBD70054ABC4 /* Instrument Plugs */;
+			remoteGlobalIDString = 55151F3610DEDBD70054ABC4;
 			remoteInfo = "Instrument Plugs";
 		};
 		5518107910C35A4C00ADA9F4 /* PBXContainerItemProxy */ = {
@@ -1052,6 +1054,8 @@
 		5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawSprocket.framework; path = System/Library/Frameworks/DrawSprocket.framework; sourceTree = SDKROOT; };
 		5573A59F10B542F300FF8B50 /* Proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = Proto.c; path = "(Proto)/Proto.c"; sourceTree = "<group>"; };
 		557B8FD910CE01BF00B9A37D /* DefaultPref.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DefaultPref.r; path = Files/DefaultPref.r; sourceTree = "<group>"; };
+		557DE1F110E0158C00177B4C /* PPMenus.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = PPMenus.r; path = Files/PPMenus.r; sourceTree = "<group>"; };
+		557DE27610E04C1500177B4C /* PPResDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPResDefs.h; path = Files/PPResDefs.h; sourceTree = "<group>"; };
 		5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADfg.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5586871010BF5C4700FCC24D /* MADfg-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MADfg-Info.plist"; path = "../../../MADfg-Info.plist"; sourceTree = "<group>"; };
 		5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADH.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1098,7 +1102,7 @@
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Complex Fade-Info.plist"; path = "../../../Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DFTB.r; path = Files/DFTB.r; sourceTree = "<group>"; };
 		55ED547310D5F9CD00824C61 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
-		55EE8C731003E83A00E75E63 /* General-rez.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = "General-rez.r"; path = "Files/General-rez.r"; sourceTree = "<group>"; };
+		55EE8C731003E83A00E75E63 /* General-rez.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = "General-rez.r"; path = "Files/General-rez.r"; sourceTree = "<group>"; };
 		55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		55EE8EBC100404EB00E75E63 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -1106,7 +1110,7 @@
 		55EE8EC0100404EB00E75E63 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
 		55FA5FBA102D2D6C00CB63DA /* ppApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ppApp.icns; path = ../ppApp.icns; sourceTree = "<group>"; };
 		88E0C3B50C2F21DD00D6C081 /* PlayerPRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayerPRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		88E0C3BE0C2F21DD00D6C081 /* Carbon.r */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; name = Carbon.r; path = Files/Carbon.r; sourceTree = "<group>"; };
+		88E0C3BE0C2F21DD00D6C081 /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 1; name = Carbon.r; path = Files/Carbon.r; sourceTree = "<group>"; };
 		88E0C3BF0C2F21DD00D6C081 /* PlayerProCarbon.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlayerProCarbon.pch; path = Files/PlayerProCarbon.pch; sourceTree = SOURCE_ROOT; };
 		88E0C3C10C2F21DD00D6C081 /* MIDI-Hardware.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = "MIDI-Hardware.c"; path = "Files/MIDI-Hardware.c"; sourceTree = SOURCE_ROOT; };
 		88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = AboutPlugs.c; path = Files/wds_general/AboutPlugs.c; sourceTree = SOURCE_ROOT; };
@@ -2459,6 +2463,8 @@
 				550B00CF10BA17BC004FC5D7 /* Icons */,
 				550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */,
 				557B8FD910CE01BF00B9A37D /* DefaultPref.r */,
+				557DE1F110E0158C00177B4C /* PPMenus.r */,
+				557DE27610E04C1500177B4C /* PPResDefs.h */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -2704,6 +2710,7 @@
 				550B011410BA1E1C004FC5D7 /* PPPrivate.h in Headers */,
 				552C6FE310CD9DAC00C0E0D4 /* ByteUtils.h in Headers */,
 				552C6FE410CD9DB700C0E0D4 /* PPDefs.h in Headers */,
+				557DE27710E04C1500177B4C /* PPResDefs.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3725,6 +3732,7 @@
 				55DB45D50FEAB8CD0088C375 /* DFTB.r in Rez */,
 				55EE8C741003E83A00E75E63 /* General-rez.r in Rez */,
 				557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */,
+				557DE1F310E0159600177B4C /* PPMenus.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

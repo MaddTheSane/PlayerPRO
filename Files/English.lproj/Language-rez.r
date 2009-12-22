@@ -1,4 +1,5 @@
 #error this Rez file is outdated. Please don't use
+#error unless you update it.
 #include <Carbon/Carbon.r>
 
 data 'TEXT' (200, "Arpeggio") {

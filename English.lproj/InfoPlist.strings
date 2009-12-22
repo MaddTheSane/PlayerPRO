@@ -12,6 +12,8 @@
 "PPXMFile" = "FastTracker Audio";
 "PPITFile" = "ImpulseTracker Audio";
 
+"PPXIFile" = "FastTracker Instrument";
+
 "PPMADFile" = "PlayerPRO MAD Tracker";
 "PPMADFGFile" = "PlayerPRO MADfg Tracker";
 "PPMADIFile" = "PlayerPRO MADI Tracker";

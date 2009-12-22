@@ -1,5 +1,7 @@
+#error this Rez file is outdated. Please don't use
+#error unless you update it.
+
 //TODO: Sync up resource codes with English Localization
-//TODO: make resources more edit-friendly or move over to NIBs
 
 #include <Carbon/Carbon.r>
 
