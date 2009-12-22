@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleSignature</key>
+	<string>SNPL</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<false/>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>AF640451-90E8-4511-837B-58A8F35024F0</key>
+		<string>BackwardsFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>158FF33B-47F4-4497-9292-1B544E8C2B01</key>
+		<array>
+			<string>AF640451-90E8-4511-837B-58A8F35024F0</string>
+		</array>
+	</dict>
+	<key>CSResourcesFileMapped</key>
+	<string>yes</string>
+</dict>
+</plist>
