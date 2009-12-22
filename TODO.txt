@@ -1,11 +1,11 @@
 Please note that this code is still in Beta, in that many parts of the code
 doesn't work as expected or desired.
 
-* There isn't a Window or a Help menu.
+* There isn't a Window menu.
 * The localization Rez files and the app-wide Rez files have multiply defined
     resources.
 * The localization Rez files are outdated and are disabled.
-* The Plug-in architecture(s) for Mac OS X needs to be re-written.
+* The VST and Visual Plug-in architectures for Mac OS X needs to be re-written.
 * CoreAudio Output is currently a stub.
 * Hardware MIDI support needs to use CoreMIDI on OS X.
 * Printing needs to be re-written.
@@ -16,7 +16,10 @@ doesn't work as expected or desired.
 * The windows don't support a scroll wheel.  Need to look into why.
 * Plug-ins need to be checked for places to byteswap. AMF and the old MAD plug 
     importers are those I know need this.
-* Determine if a file is openable by determining its UTI.
+* Determine if a file is openable by determining its UTI, not its old Mac OS 9
+    filetype. Mac OS X doesn't write a file's filetype based on extention on OS 
+    X.
 * The file icons need to be redrawn: they're still 8-bit color and 32*32.
+* The banner on the source files needs to be updated.
 
 Also note that there are TODOs scattered accross the source files.

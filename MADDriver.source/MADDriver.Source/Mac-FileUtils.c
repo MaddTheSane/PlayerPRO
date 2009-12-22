@@ -33,6 +33,8 @@ extern void NSLog(CFStringRef format, ...);
 //TODO: use system native strlen?
 static long MYstrlen( Ptr cStr)
 {
+	NSLog(CFSTR("MADstrlen is depricated; just use strlen"));
+
 	long i = 0;
 	
 	while( cStr[ i] != 0)

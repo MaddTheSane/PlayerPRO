@@ -20,7 +20,6 @@
 //	Internet: 	RossetAntoine@bluewin.ch
 //
 /********************						***********************/
-//TODO: export functions that need exporting
 
 #ifndef __RDRIVERINTH__
 #define __RDRIVERINTH__

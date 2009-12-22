@@ -52,6 +52,21 @@
 			buildPhases = (
 			);
 			dependencies = (
+				557DE5AA10E0826D00177B4C /* PBXTargetDependency */,
+				557DE74010E089DC00177B4C /* PBXTargetDependency */,
+				557DE73E10E089DC00177B4C /* PBXTargetDependency */,
+				557DE73C10E089DC00177B4C /* PBXTargetDependency */,
+				557DE73A10E089DC00177B4C /* PBXTargetDependency */,
+				557DE73810E089DC00177B4C /* PBXTargetDependency */,
+				557DE9EE10E08F2400177B4C /* PBXTargetDependency */,
+				557DE9EC10E08F2400177B4C /* PBXTargetDependency */,
+				557DE9EA10E08F2400177B4C /* PBXTargetDependency */,
+				557DE9E810E08F2400177B4C /* PBXTargetDependency */,
+				557DE9E610E08F2400177B4C /* PBXTargetDependency */,
+				557DE9E410E08F2400177B4C /* PBXTargetDependency */,
+				557DE9E210E08F2400177B4C /* PBXTargetDependency */,
+				557DE9E010E08F2400177B4C /* PBXTargetDependency */,
+				557DE9DE10E08F2400177B4C /* PBXTargetDependency */,
 			);
 			name = "Filters Plugs";
 			productName = "Filters Plugs";
@@ -205,6 +220,76 @@
 		557DE44A10E06CE700177B4C /* Amplitude.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FFA10D6C79D00BB619C /* Amplitude.c */; };
 		557DE44B10E06CE900177B4C /* Amplitude.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FFB10D6C79D00BB619C /* Amplitude.r */; };
 		557DE49410E0738000177B4C /* Amplitude.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE43410E06BF200177B4C /* Amplitude.plugin */; };
+		557DE5D810E0882800177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE5D910E0882800177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DE61B10E0884100177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE61C10E0884100177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DE65D10E0885C00177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE65E10E0885C00177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DE69E10E0886400177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE69F10E0886400177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DE6DF10E0886A00177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE6E010E0886A00177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DE77B10E08A0200177B4C /* Backwards.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FFD10D6C79E00BB619C /* Backwards.c */; };
+		557DE77C10E08A0300177B4C /* Backwards.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FFE10D6C79E00BB619C /* Backwards.r */; };
+		557DE77D10E08A0B00177B4C /* Crop.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100010D6C79E00BB619C /* Crop.c */; };
+		557DE77E10E08A0C00177B4C /* Crop.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E100110D6C79E00BB619C /* Crop.r */; };
+		557DE77F10E08A1500177B4C /* CrossFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100310D6C79E00BB619C /* CrossFade.c */; };
+		557DE78010E08A1600177B4C /* CrossFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E100410D6C79E00BB619C /* CrossFade.r */; };
+		557DE78110E08A2000177B4C /* Depth.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100610D6C79E00BB619C /* Depth.c */; };
+		557DE78210E08A2000177B4C /* Depth.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E100710D6C79E00BB619C /* Depth.r */; };
+		557DE78310E08A2C00177B4C /* Echo.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100910D6C79E00BB619C /* Echo.c */; };
+		557DE78410E08A2D00177B4C /* Echo.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E100A10D6C79E00BB619C /* Echo.r */; };
+		557DE7B510E08D8300177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE7B610E08D8300177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DE7F810E08D8900177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE7F910E08D8900177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DE83B10E08D9E00177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE83C10E08D9E00177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DE87E10E08DA300177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE87F10E08DA300177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DE8C110E08DA800177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE8C210E08DA800177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DE90410E08DAC00177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE90510E08DAC00177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DE91410E08DB000177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE91510E08DB000177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DE95710E08DB900177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE95810E08DB900177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DE99A10E08DC100177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		557DE99B10E08DC100177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		557DEA3710E0900A00177B4C /* Fade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100C10D6C79E00BB619C /* Fade.c */; };
+		557DEA3810E0900A00177B4C /* Fade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E100D10D6C79E00BB619C /* Fade.r */; };
+		557DEA3910E0915900177B4C /* Invert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100F10D6C79E00BB619C /* Invert.c */; };
+		557DEA3A10E0915900177B4C /* Invert.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E101010D6C79E00BB619C /* Invert.r */; };
+		557DEA4610E091E100177B4C /* Length.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E101210D6C79E00BB619C /* Length.c */; };
+		557DEA4710E091E100177B4C /* Length.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E101310D6C79E00BB619C /* Length.r */; };
+		557DEA4E10E0921D00177B4C /* Mix.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E101510D6C79E00BB619C /* Mix.c */; };
+		557DEA4F10E0921E00177B4C /* Mix.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E101610D6C79E00BB619C /* Mix.r */; };
+		557DEA5310E092CE00177B4C /* Normalize.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E101810D6C79E00BB619C /* Normalize.c */; };
+		557DEA5410E092CF00177B4C /* Normalize.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E101910D6C79E00BB619C /* Normalize.r */; };
+		557DEA5510E092D700177B4C /* Sampling Rate.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E101D10D6C79E00BB619C /* Sampling Rate.c */; };
+		557DEA5610E092D800177B4C /* Sampling Rate.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E101E10D6C79E00BB619C /* Sampling Rate.r */; };
+		557DEA5710E092E000177B4C /* Silence.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102010D6C79E00BB619C /* Silence.c */; };
+		557DEA5810E092E000177B4C /* Silence.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E102110D6C79E00BB619C /* Silence.r */; };
+		557DEA5B10E092F300177B4C /* ToneGenerator.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102610D6C79E00BB619C /* ToneGenerator.c */; };
+		557DEA5C10E092F400177B4C /* ToneGenerator.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E102710D6C79E00BB619C /* ToneGenerator.r */; };
+		557DEA5D10E0930100177B4C /* Smooth.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102310D6C79E00BB619C /* Smooth.c */; };
+		557DEA5E10E0930200177B4C /* Smooth.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E102410D6C79E00BB619C /* Smooth.r */; };
+		557DEB2A10E0944100177B4C /* Backwards.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE5DF10E0882800177B4C /* Backwards.plugin */; };
+		557DEB2B10E0944100177B4C /* Crop.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE62210E0884100177B4C /* Crop.plugin */; };
+		557DEB2C10E0944100177B4C /* CrossFade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE66310E0885C00177B4C /* CrossFade.plugin */; };
+		557DEB2D10E0944100177B4C /* Depth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6A410E0886400177B4C /* Depth.plugin */; };
+		557DEB2E10E0944100177B4C /* Echo.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6E510E0886A00177B4C /* Echo.plugin */; };
+		557DEB2F10E0944100177B4C /* Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE7BC10E08D8400177B4C /* Fade.plugin */; };
+		557DEB3010E0944100177B4C /* Invert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE7FF10E08D8900177B4C /* Invert.plugin */; };
+		557DEB3110E0944100177B4C /* Length.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE84210E08D9E00177B4C /* Length.plugin */; };
+		557DEB3210E0944100177B4C /* Mix.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE88510E08DA300177B4C /* Mix.plugin */; };
+		557DEB3310E0944100177B4C /* Normalize.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE8C810E08DA800177B4C /* Normalize.plugin */; };
+		557DEB3410E0944100177B4C /* Sampling Rate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE90B10E08DAC00177B4C /* Sampling Rate.plugin */; };
+		557DEB3510E0944100177B4C /* Silence.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE91B10E08DB000177B4C /* Silence.plugin */; };
+		557DEB3610E0944100177B4C /* Smooth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE95E10E08DB900177B4C /* Smooth.plugin */; };
+		557DEB3710E0944100177B4C /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; };
 		5586870B10BF5C4700FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5586871A10BF5C4A00FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5586872910BF5C4E00FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
@@ -669,6 +754,209 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
+		557DE5A910E0826D00177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE42510E06BF200177B4C /* Amplitude */;
+			remoteInfo = Amplitude;
+		};
+		557DE5D310E0882800177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE61610E0884100177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE65910E0885C00177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE69A10E0886400177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE6DB10E0886A00177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE73710E089DC00177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE6D910E0886A00177B4C /* Echo */;
+			remoteInfo = Echo;
+		};
+		557DE73910E089DC00177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE69810E0886400177B4C /* Depth */;
+			remoteInfo = Depth;
+		};
+		557DE73B10E089DC00177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE65710E0885C00177B4C /* CrossFade */;
+			remoteInfo = CrossFade;
+		};
+		557DE73D10E089DC00177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE61410E0884100177B4C /* Crop */;
+			remoteInfo = Crop;
+		};
+		557DE73F10E089DC00177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE5D110E0882800177B4C /* Backwards */;
+			remoteInfo = Backwards;
+		};
+		557DE7B010E08D8300177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE7F310E08D8900177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE83610E08D9E00177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE87910E08DA300177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE8BC10E08DA800177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE8FF10E08DAC00177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE90F10E08DB000177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE95210E08DB900177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE99510E08DC100177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		557DE9DD10E08F2400177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE99310E08DC100177B4C /* Echo copy copy */;
+			remoteInfo = "Echo copy copy";
+		};
+		557DE9DF10E08F2400177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE95010E08DB900177B4C /* Echo copy 8 */;
+			remoteInfo = "Echo copy 8";
+		};
+		557DE9E110E08F2400177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE90D10E08DB000177B4C /* Echo copy 7 */;
+			remoteInfo = "Echo copy 7";
+		};
+		557DE9E310E08F2400177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE8FD10E08DAC00177B4C /* Echo copy 6 */;
+			remoteInfo = "Echo copy 6";
+		};
+		557DE9E510E08F2400177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE8BA10E08DA800177B4C /* Normalize */;
+			remoteInfo = Normalize;
+		};
+		557DE9E710E08F2400177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE87710E08DA300177B4C /* Mix */;
+			remoteInfo = Mix;
+		};
+		557DE9E910E08F2400177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE83410E08D9E00177B4C /* Length */;
+			remoteInfo = Length;
+		};
+		557DE9EB10E08F2400177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE7F110E08D8900177B4C /* Invert */;
+			remoteInfo = Invert;
+		};
+		557DE9ED10E08F2400177B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE7AE10E08D8300177B4C /* Fade */;
+			remoteInfo = Fade;
+		};
 		5586870510BF5C4700FCC24D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -856,6 +1144,20 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				557DEB2A10E0944100177B4C /* Backwards.plugin in Copy PlugIns */,
+				557DEB2B10E0944100177B4C /* Crop.plugin in Copy PlugIns */,
+				557DEB2C10E0944100177B4C /* CrossFade.plugin in Copy PlugIns */,
+				557DEB2D10E0944100177B4C /* Depth.plugin in Copy PlugIns */,
+				557DEB2E10E0944100177B4C /* Echo.plugin in Copy PlugIns */,
+				557DEB2F10E0944100177B4C /* Fade.plugin in Copy PlugIns */,
+				557DEB3010E0944100177B4C /* Invert.plugin in Copy PlugIns */,
+				557DEB3110E0944100177B4C /* Length.plugin in Copy PlugIns */,
+				557DEB3210E0944100177B4C /* Mix.plugin in Copy PlugIns */,
+				557DEB3310E0944100177B4C /* Normalize.plugin in Copy PlugIns */,
+				557DEB3410E0944100177B4C /* Sampling Rate.plugin in Copy PlugIns */,
+				557DEB3510E0944100177B4C /* Silence.plugin in Copy PlugIns */,
+				557DEB3610E0944100177B4C /* Smooth.plugin in Copy PlugIns */,
+				557DEB3710E0944100177B4C /* Tone Generator.plugin in Copy PlugIns */,
 				557DE49410E0738000177B4C /* Amplitude.plugin in Copy PlugIns */,
 				5515200810DEDC7E0054ABC4 /* XI.plugin in Copy PlugIns */,
 				55BDD38910DC9EDE00813A3A /* Complex Fade.plugin in Copy PlugIns */,
@@ -1105,6 +1407,34 @@
 		557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-FilterBridge.c"; sourceTree = "<group>"; };
 		557DE43410E06BF200177B4C /* Amplitude.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amplitude.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE43510E06BF200177B4C /* Amplitude-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Amplitude-Info.plist"; path = "../../../Amplitude-Info.plist"; sourceTree = "<group>"; };
+		557DE5C310E0876E00177B4C /* Backwards-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Backwards-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE5C410E0877900177B4C /* Crop-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Crop-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE5C510E0878100177B4C /* CrossFade-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CrossFade-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE5C610E0878E00177B4C /* Depth-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Depth-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE5C710E0879D00177B4C /* Echo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Echo-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE5C810E087A600177B4C /* Fade-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Fade-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE5C910E087BA00177B4C /* Invert-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Invert-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE5CA10E087C300177B4C /* Length-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Length-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE5CB10E087CD00177B4C /* Mix-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Mix-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE5CC10E087E100177B4C /* Normalize-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Normalize-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE5CD10E087EB00177B4C /* Sampling Rate-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Sampling Rate-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE5CE10E087F500177B4C /* Silence-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Silence-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE5CF10E087FE00177B4C /* Smooth-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Smooth-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE5D010E0880800177B4C /* Tone Generator-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Tone Generator-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE5DF10E0882800177B4C /* Backwards.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Backwards.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		557DE62210E0884100177B4C /* Crop.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Crop.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		557DE66310E0885C00177B4C /* CrossFade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrossFade.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		557DE6A410E0886400177B4C /* Depth.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Depth.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		557DE6E510E0886A00177B4C /* Echo.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Echo.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		557DE7BC10E08D8400177B4C /* Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Fade.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		557DE7FF10E08D8900177B4C /* Invert.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Invert.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		557DE84210E08D9E00177B4C /* Length.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Length.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		557DE88510E08DA300177B4C /* Mix.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Mix.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		557DE8C810E08DA800177B4C /* Normalize.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Normalize.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		557DE90B10E08DAC00177B4C /* Sampling Rate.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sampling Rate.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		557DE91B10E08DB000177B4C /* Silence.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Silence.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		557DE95E10E08DB900177B4C /* Smooth.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Smooth.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		557DE9A110E08DC100177B4C /* Tone Generator.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tone Generator.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADfg.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5586871010BF5C4700FCC24D /* MADfg-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MADfg-Info.plist"; path = "../../../MADfg-Info.plist"; sourceTree = "<group>"; };
 		5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADH.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1467,6 +1797,132 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		557DE5D710E0882800177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE5D810E0882800177B4C /* Carbon.framework in Frameworks */,
+				557DE5D910E0882800177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE61A10E0884100177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE61B10E0884100177B4C /* Carbon.framework in Frameworks */,
+				557DE61C10E0884100177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE65C10E0885C00177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE65D10E0885C00177B4C /* Carbon.framework in Frameworks */,
+				557DE65E10E0885C00177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE69D10E0886400177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE69E10E0886400177B4C /* Carbon.framework in Frameworks */,
+				557DE69F10E0886400177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE6DE10E0886A00177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE6DF10E0886A00177B4C /* Carbon.framework in Frameworks */,
+				557DE6E010E0886A00177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE7B410E08D8300177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE7B510E08D8300177B4C /* Carbon.framework in Frameworks */,
+				557DE7B610E08D8300177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE7F710E08D8900177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE7F810E08D8900177B4C /* Carbon.framework in Frameworks */,
+				557DE7F910E08D8900177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE83A10E08D9E00177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE83B10E08D9E00177B4C /* Carbon.framework in Frameworks */,
+				557DE83C10E08D9E00177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE87D10E08DA300177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE87E10E08DA300177B4C /* Carbon.framework in Frameworks */,
+				557DE87F10E08DA300177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE8C010E08DA800177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE8C110E08DA800177B4C /* Carbon.framework in Frameworks */,
+				557DE8C210E08DA800177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE90310E08DAC00177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE90410E08DAC00177B4C /* Carbon.framework in Frameworks */,
+				557DE90510E08DAC00177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE91310E08DB000177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE91410E08DB000177B4C /* Carbon.framework in Frameworks */,
+				557DE91510E08DB000177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE95610E08DB900177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE95710E08DB900177B4C /* Carbon.framework in Frameworks */,
+				557DE95810E08DB900177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE99910E08DC100177B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE99A10E08DC100177B4C /* Carbon.framework in Frameworks */,
+				557DE99B10E08DC100177B4C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5586870910BF5C4700FCC24D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1756,6 +2212,7 @@
 		551520C610DEEFFC0054ABC4 /* Backwards */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5C310E0876E00177B4C /* Backwards-Info.plist */,
 				554E0FFD10D6C79E00BB619C /* Backwards.c */,
 				554E0FFE10D6C79E00BB619C /* Backwards.r */,
 			);
@@ -1765,6 +2222,7 @@
 		551520C710DEF0060054ABC4 /* Crop */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5C410E0877900177B4C /* Crop-Info.plist */,
 				554E100010D6C79E00BB619C /* Crop.c */,
 				554E100110D6C79E00BB619C /* Crop.r */,
 			);
@@ -1774,6 +2232,7 @@
 		551520D910DEF0350054ABC4 /* CrossFade */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5C510E0878100177B4C /* CrossFade-Info.plist */,
 				554E100310D6C79E00BB619C /* CrossFade.c */,
 				554E100410D6C79E00BB619C /* CrossFade.r */,
 			);
@@ -1783,6 +2242,7 @@
 		551520DA10DEF03F0054ABC4 /* Depth */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5C610E0878E00177B4C /* Depth-Info.plist */,
 				554E100610D6C79E00BB619C /* Depth.c */,
 				554E100710D6C79E00BB619C /* Depth.r */,
 			);
@@ -1792,6 +2252,7 @@
 		551520DB10DEF0480054ABC4 /* Echo */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5C710E0879D00177B4C /* Echo-Info.plist */,
 				554E100910D6C79E00BB619C /* Echo.c */,
 				554E100A10D6C79E00BB619C /* Echo.r */,
 			);
@@ -1801,6 +2262,7 @@
 		551520DC10DEF0500054ABC4 /* Fade */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5C810E087A600177B4C /* Fade-Info.plist */,
 				554E100C10D6C79E00BB619C /* Fade.c */,
 				554E100D10D6C79E00BB619C /* Fade.r */,
 			);
@@ -1810,6 +2272,7 @@
 		551520DD10DEF0590054ABC4 /* Invert */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5C910E087BA00177B4C /* Invert-Info.plist */,
 				554E100F10D6C79E00BB619C /* Invert.c */,
 				554E101010D6C79E00BB619C /* Invert.r */,
 			);
@@ -1819,6 +2282,7 @@
 		551520DE10DEF0600054ABC4 /* Length */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5CA10E087C300177B4C /* Length-Info.plist */,
 				554E101210D6C79E00BB619C /* Length.c */,
 				554E101310D6C79E00BB619C /* Length.r */,
 			);
@@ -1828,6 +2292,7 @@
 		551520DF10DEF06B0054ABC4 /* Mix */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5CB10E087CD00177B4C /* Mix-Info.plist */,
 				554E101510D6C79E00BB619C /* Mix.c */,
 				554E101610D6C79E00BB619C /* Mix.r */,
 			);
@@ -1837,6 +2302,7 @@
 		551520E010DEF0750054ABC4 /* Normalize */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5CC10E087E100177B4C /* Normalize-Info.plist */,
 				554E101810D6C79E00BB619C /* Normalize.c */,
 				554E101910D6C79E00BB619C /* Normalize.r */,
 			);
@@ -1846,6 +2312,7 @@
 		551520E110DEF07F0054ABC4 /* Sampling Rate */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5CD10E087EB00177B4C /* Sampling Rate-Info.plist */,
 				554E101D10D6C79E00BB619C /* Sampling Rate.c */,
 				554E101E10D6C79E00BB619C /* Sampling Rate.r */,
 			);
@@ -1855,6 +2322,7 @@
 		551520E210DEF08B0054ABC4 /* Silence */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5CE10E087F500177B4C /* Silence-Info.plist */,
 				554E102010D6C79E00BB619C /* Silence.c */,
 				554E102110D6C79E00BB619C /* Silence.r */,
 			);
@@ -1864,6 +2332,7 @@
 		551520E310DEF0950054ABC4 /* Smooth */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5CF10E087FE00177B4C /* Smooth-Info.plist */,
 				554E102310D6C79E00BB619C /* Smooth.c */,
 				554E102410D6C79E00BB619C /* Smooth.r */,
 			);
@@ -1873,6 +2342,7 @@
 		551520E410DEF09D0054ABC4 /* Tone Generator */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5D010E0880800177B4C /* Tone Generator-Info.plist */,
 				554E102610D6C79E00BB619C /* ToneGenerator.c */,
 				554E102710D6C79E00BB619C /* ToneGenerator.r */,
 			);
@@ -2478,6 +2948,20 @@
 				554E123010D6F3E600BB619C /* Revert.plugin */,
 				55151F8010DEDBDB0054ABC4 /* XI.plugin */,
 				557DE43410E06BF200177B4C /* Amplitude.plugin */,
+				557DE5DF10E0882800177B4C /* Backwards.plugin */,
+				557DE62210E0884100177B4C /* Crop.plugin */,
+				557DE66310E0885C00177B4C /* CrossFade.plugin */,
+				557DE6A410E0886400177B4C /* Depth.plugin */,
+				557DE6E510E0886A00177B4C /* Echo.plugin */,
+				557DE7BC10E08D8400177B4C /* Fade.plugin */,
+				557DE7FF10E08D8900177B4C /* Invert.plugin */,
+				557DE84210E08D9E00177B4C /* Length.plugin */,
+				557DE88510E08DA300177B4C /* Mix.plugin */,
+				557DE8C810E08DA800177B4C /* Normalize.plugin */,
+				557DE90B10E08DAC00177B4C /* Sampling Rate.plugin */,
+				557DE91B10E08DB000177B4C /* Silence.plugin */,
+				557DE95E10E08DB900177B4C /* Smooth.plugin */,
+				557DE9A110E08DC100177B4C /* Tone Generator.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3064,6 +3548,272 @@
 			productReference = 557DE43410E06BF200177B4C /* Amplitude.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		557DE5D110E0882800177B4C /* Backwards */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE5DC10E0882800177B4C /* Build configuration list for PBXNativeTarget "Backwards" */;
+			buildPhases = (
+				557DE5D410E0882800177B4C /* Resources */,
+				557DE5D510E0882800177B4C /* Sources */,
+				557DE5D710E0882800177B4C /* Frameworks */,
+				557DE5DA10E0882800177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE5D210E0882800177B4C /* PBXTargetDependency */,
+			);
+			name = Backwards;
+			productName = "Complex Fade";
+			productReference = 557DE5DF10E0882800177B4C /* Backwards.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		557DE61410E0884100177B4C /* Crop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE61F10E0884100177B4C /* Build configuration list for PBXNativeTarget "Crop" */;
+			buildPhases = (
+				557DE61710E0884100177B4C /* Resources */,
+				557DE61810E0884100177B4C /* Sources */,
+				557DE61A10E0884100177B4C /* Frameworks */,
+				557DE61D10E0884100177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE61510E0884100177B4C /* PBXTargetDependency */,
+			);
+			name = Crop;
+			productName = "Complex Fade";
+			productReference = 557DE62210E0884100177B4C /* Crop.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		557DE65710E0885C00177B4C /* CrossFade */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE66010E0885C00177B4C /* Build configuration list for PBXNativeTarget "CrossFade" */;
+			buildPhases = (
+				557DE65A10E0885C00177B4C /* Resources */,
+				557DE65B10E0885C00177B4C /* Sources */,
+				557DE65C10E0885C00177B4C /* Frameworks */,
+				557DE65F10E0885C00177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE65810E0885C00177B4C /* PBXTargetDependency */,
+			);
+			name = CrossFade;
+			productName = "Complex Fade";
+			productReference = 557DE66310E0885C00177B4C /* CrossFade.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		557DE69810E0886400177B4C /* Depth */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE6A110E0886400177B4C /* Build configuration list for PBXNativeTarget "Depth" */;
+			buildPhases = (
+				557DE69B10E0886400177B4C /* Resources */,
+				557DE69C10E0886400177B4C /* Sources */,
+				557DE69D10E0886400177B4C /* Frameworks */,
+				557DE6A010E0886400177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE69910E0886400177B4C /* PBXTargetDependency */,
+			);
+			name = Depth;
+			productName = "Complex Fade";
+			productReference = 557DE6A410E0886400177B4C /* Depth.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		557DE6D910E0886A00177B4C /* Echo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE6E210E0886A00177B4C /* Build configuration list for PBXNativeTarget "Echo" */;
+			buildPhases = (
+				557DE6DC10E0886A00177B4C /* Resources */,
+				557DE6DD10E0886A00177B4C /* Sources */,
+				557DE6DE10E0886A00177B4C /* Frameworks */,
+				557DE6E110E0886A00177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE6DA10E0886A00177B4C /* PBXTargetDependency */,
+			);
+			name = Echo;
+			productName = "Complex Fade";
+			productReference = 557DE6E510E0886A00177B4C /* Echo.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		557DE7AE10E08D8300177B4C /* Fade */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE7B910E08D8300177B4C /* Build configuration list for PBXNativeTarget "Fade" */;
+			buildPhases = (
+				557DE7B110E08D8300177B4C /* Resources */,
+				557DE7B210E08D8300177B4C /* Sources */,
+				557DE7B410E08D8300177B4C /* Frameworks */,
+				557DE7B710E08D8300177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE7AF10E08D8300177B4C /* PBXTargetDependency */,
+			);
+			name = Fade;
+			productName = "Complex Fade";
+			productReference = 557DE7BC10E08D8400177B4C /* Fade.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		557DE7F110E08D8900177B4C /* Invert */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE7FC10E08D8900177B4C /* Build configuration list for PBXNativeTarget "Invert" */;
+			buildPhases = (
+				557DE7F410E08D8900177B4C /* Resources */,
+				557DE7F510E08D8900177B4C /* Sources */,
+				557DE7F710E08D8900177B4C /* Frameworks */,
+				557DE7FA10E08D8900177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE7F210E08D8900177B4C /* PBXTargetDependency */,
+			);
+			name = Invert;
+			productName = "Complex Fade";
+			productReference = 557DE7FF10E08D8900177B4C /* Invert.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		557DE83410E08D9E00177B4C /* Length */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE83F10E08D9E00177B4C /* Build configuration list for PBXNativeTarget "Length" */;
+			buildPhases = (
+				557DE83710E08D9E00177B4C /* Resources */,
+				557DE83810E08D9E00177B4C /* Sources */,
+				557DE83A10E08D9E00177B4C /* Frameworks */,
+				557DE83D10E08D9E00177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE83510E08D9E00177B4C /* PBXTargetDependency */,
+			);
+			name = Length;
+			productName = "Complex Fade";
+			productReference = 557DE84210E08D9E00177B4C /* Length.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		557DE87710E08DA300177B4C /* Mix */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE88210E08DA300177B4C /* Build configuration list for PBXNativeTarget "Mix" */;
+			buildPhases = (
+				557DE87A10E08DA300177B4C /* Resources */,
+				557DE87B10E08DA300177B4C /* Sources */,
+				557DE87D10E08DA300177B4C /* Frameworks */,
+				557DE88010E08DA300177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE87810E08DA300177B4C /* PBXTargetDependency */,
+			);
+			name = Mix;
+			productName = "Complex Fade";
+			productReference = 557DE88510E08DA300177B4C /* Mix.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		557DE8BA10E08DA800177B4C /* Normalize */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE8C510E08DA800177B4C /* Build configuration list for PBXNativeTarget "Normalize" */;
+			buildPhases = (
+				557DE8BD10E08DA800177B4C /* Resources */,
+				557DE8BE10E08DA800177B4C /* Sources */,
+				557DE8C010E08DA800177B4C /* Frameworks */,
+				557DE8C310E08DA800177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE8BB10E08DA800177B4C /* PBXTargetDependency */,
+			);
+			name = Normalize;
+			productName = "Complex Fade";
+			productReference = 557DE8C810E08DA800177B4C /* Normalize.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		557DE8FD10E08DAC00177B4C /* Sampling Rate */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE90810E08DAC00177B4C /* Build configuration list for PBXNativeTarget "Sampling Rate" */;
+			buildPhases = (
+				557DE90010E08DAC00177B4C /* Resources */,
+				557DE90110E08DAC00177B4C /* Sources */,
+				557DE90310E08DAC00177B4C /* Frameworks */,
+				557DE90610E08DAC00177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE8FE10E08DAC00177B4C /* PBXTargetDependency */,
+			);
+			name = "Sampling Rate";
+			productName = "Complex Fade";
+			productReference = 557DE90B10E08DAC00177B4C /* Sampling Rate.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		557DE90D10E08DB000177B4C /* Silence */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE91810E08DB000177B4C /* Build configuration list for PBXNativeTarget "Silence" */;
+			buildPhases = (
+				557DE91010E08DB000177B4C /* Resources */,
+				557DE91110E08DB000177B4C /* Sources */,
+				557DE91310E08DB000177B4C /* Frameworks */,
+				557DE91610E08DB000177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE90E10E08DB000177B4C /* PBXTargetDependency */,
+			);
+			name = Silence;
+			productName = "Complex Fade";
+			productReference = 557DE91B10E08DB000177B4C /* Silence.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		557DE95010E08DB900177B4C /* Smooth */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE95B10E08DB900177B4C /* Build configuration list for PBXNativeTarget "Smooth" */;
+			buildPhases = (
+				557DE95310E08DB900177B4C /* Resources */,
+				557DE95410E08DB900177B4C /* Sources */,
+				557DE95610E08DB900177B4C /* Frameworks */,
+				557DE95910E08DB900177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE95110E08DB900177B4C /* PBXTargetDependency */,
+			);
+			name = Smooth;
+			productName = "Complex Fade";
+			productReference = 557DE95E10E08DB900177B4C /* Smooth.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		557DE99310E08DC100177B4C /* Tone Generator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 557DE99E10E08DC100177B4C /* Build configuration list for PBXNativeTarget "Tone Generator" */;
+			buildPhases = (
+				557DE99610E08DC100177B4C /* Resources */,
+				557DE99710E08DC100177B4C /* Sources */,
+				557DE99910E08DC100177B4C /* Frameworks */,
+				557DE99C10E08DC100177B4C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				557DE99410E08DC100177B4C /* PBXTargetDependency */,
+			);
+			name = "Tone Generator";
+			productName = "Complex Fade";
+			productReference = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		5586870310BF5C4700FCC24D /* MADfg */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5586870C10BF5C4700FCC24D /* Build configuration list for PBXNativeTarget "MADfg" */;
@@ -3385,6 +4135,20 @@
 				55151F7210DEDBDB0054ABC4 /* XI */,
 				557DE3BD10E06BB500177B4C /* Filters Plugs */,
 				557DE42510E06BF200177B4C /* Amplitude */,
+				557DE5D110E0882800177B4C /* Backwards */,
+				557DE61410E0884100177B4C /* Crop */,
+				557DE65710E0885C00177B4C /* CrossFade */,
+				557DE69810E0886400177B4C /* Depth */,
+				557DE6D910E0886A00177B4C /* Echo */,
+				557DE7AE10E08D8300177B4C /* Fade */,
+				557DE7F110E08D8900177B4C /* Invert */,
+				557DE83410E08D9E00177B4C /* Length */,
+				557DE87710E08DA300177B4C /* Mix */,
+				557DE8BA10E08DA800177B4C /* Normalize */,
+				557DE8FD10E08DAC00177B4C /* Sampling Rate */,
+				557DE90D10E08DB000177B4C /* Silence */,
+				557DE95010E08DB900177B4C /* Smooth */,
+				557DE99310E08DC100177B4C /* Tone Generator */,
 			);
 		};
 /* End PBXProject section */
@@ -3490,6 +4254,104 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		557DE42810E06BF200177B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE5D410E0882800177B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE61710E0884100177B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE65A10E0885C00177B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE69B10E0886400177B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE6DC10E0886A00177B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE7B110E08D8300177B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE7F410E08D8900177B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE83710E08D9E00177B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE87A10E08DA300177B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE8BD10E08DA800177B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE90010E08DAC00177B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE91010E08DB000177B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE95310E08DB900177B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE99610E08DC100177B4C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3675,6 +4537,118 @@
 			buildActionMask = 2147483647;
 			files = (
 				557DE44B10E06CE900177B4C /* Amplitude.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE5DA10E0882800177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE77C10E08A0300177B4C /* Backwards.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE61D10E0884100177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE77E10E08A0C00177B4C /* Crop.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE65F10E0885C00177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE78010E08A1600177B4C /* CrossFade.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE6A010E0886400177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE78210E08A2000177B4C /* Depth.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE6E110E0886A00177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE78410E08A2D00177B4C /* Echo.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE7B710E08D8300177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA3810E0900A00177B4C /* Fade.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE7FA10E08D8900177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA3A10E0915900177B4C /* Invert.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE83D10E08D9E00177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA4710E091E100177B4C /* Length.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE88010E08DA300177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA4F10E0921E00177B4C /* Mix.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE8C310E08DA800177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA5410E092CF00177B4C /* Normalize.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE90610E08DAC00177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA5610E092D800177B4C /* Sampling Rate.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE91610E08DB000177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA5810E092E000177B4C /* Silence.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE95910E08DB900177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA5E10E0930200177B4C /* Smooth.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE99C10E08DC100177B4C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA5C10E092F400177B4C /* ToneGenerator.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3968,6 +4942,118 @@
 			buildActionMask = 2147483647;
 			files = (
 				557DE44A10E06CE700177B4C /* Amplitude.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE5D510E0882800177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE77B10E08A0200177B4C /* Backwards.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE61810E0884100177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE77D10E08A0B00177B4C /* Crop.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE65B10E0885C00177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE77F10E08A1500177B4C /* CrossFade.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE69C10E0886400177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE78110E08A2000177B4C /* Depth.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE6DD10E0886A00177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DE78310E08A2C00177B4C /* Echo.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE7B210E08D8300177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA3710E0900A00177B4C /* Fade.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE7F510E08D8900177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA3910E0915900177B4C /* Invert.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE83810E08D9E00177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA4610E091E100177B4C /* Length.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE87B10E08DA300177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA4E10E0921D00177B4C /* Mix.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE8BE10E08DA800177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA5310E092CE00177B4C /* Normalize.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE90110E08DAC00177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA5510E092D700177B4C /* Sampling Rate.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE91110E08DB000177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA5710E092E000177B4C /* Silence.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE95410E08DB900177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA5D10E0930100177B4C /* Smooth.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		557DE99710E08DC100177B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557DEA5B10E092F300177B4C /* ToneGenerator.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4335,6 +5421,151 @@
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 557DE42710E06BF200177B4C /* PBXContainerItemProxy */;
+		};
+		557DE5AA10E0826D00177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE42510E06BF200177B4C /* Amplitude */;
+			targetProxy = 557DE5A910E0826D00177B4C /* PBXContainerItemProxy */;
+		};
+		557DE5D210E0882800177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE5D310E0882800177B4C /* PBXContainerItemProxy */;
+		};
+		557DE61510E0884100177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE61610E0884100177B4C /* PBXContainerItemProxy */;
+		};
+		557DE65810E0885C00177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE65910E0885C00177B4C /* PBXContainerItemProxy */;
+		};
+		557DE69910E0886400177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE69A10E0886400177B4C /* PBXContainerItemProxy */;
+		};
+		557DE6DA10E0886A00177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE6DB10E0886A00177B4C /* PBXContainerItemProxy */;
+		};
+		557DE73810E089DC00177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE6D910E0886A00177B4C /* Echo */;
+			targetProxy = 557DE73710E089DC00177B4C /* PBXContainerItemProxy */;
+		};
+		557DE73A10E089DC00177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE69810E0886400177B4C /* Depth */;
+			targetProxy = 557DE73910E089DC00177B4C /* PBXContainerItemProxy */;
+		};
+		557DE73C10E089DC00177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE65710E0885C00177B4C /* CrossFade */;
+			targetProxy = 557DE73B10E089DC00177B4C /* PBXContainerItemProxy */;
+		};
+		557DE73E10E089DC00177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE61410E0884100177B4C /* Crop */;
+			targetProxy = 557DE73D10E089DC00177B4C /* PBXContainerItemProxy */;
+		};
+		557DE74010E089DC00177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE5D110E0882800177B4C /* Backwards */;
+			targetProxy = 557DE73F10E089DC00177B4C /* PBXContainerItemProxy */;
+		};
+		557DE7AF10E08D8300177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE7B010E08D8300177B4C /* PBXContainerItemProxy */;
+		};
+		557DE7F210E08D8900177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE7F310E08D8900177B4C /* PBXContainerItemProxy */;
+		};
+		557DE83510E08D9E00177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE83610E08D9E00177B4C /* PBXContainerItemProxy */;
+		};
+		557DE87810E08DA300177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE87910E08DA300177B4C /* PBXContainerItemProxy */;
+		};
+		557DE8BB10E08DA800177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE8BC10E08DA800177B4C /* PBXContainerItemProxy */;
+		};
+		557DE8FE10E08DAC00177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE8FF10E08DAC00177B4C /* PBXContainerItemProxy */;
+		};
+		557DE90E10E08DB000177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE90F10E08DB000177B4C /* PBXContainerItemProxy */;
+		};
+		557DE95110E08DB900177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE95210E08DB900177B4C /* PBXContainerItemProxy */;
+		};
+		557DE99410E08DC100177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 557DE99510E08DC100177B4C /* PBXContainerItemProxy */;
+		};
+		557DE9DE10E08F2400177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE99310E08DC100177B4C /* Tone Generator */;
+			targetProxy = 557DE9DD10E08F2400177B4C /* PBXContainerItemProxy */;
+		};
+		557DE9E010E08F2400177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE95010E08DB900177B4C /* Smooth */;
+			targetProxy = 557DE9DF10E08F2400177B4C /* PBXContainerItemProxy */;
+		};
+		557DE9E210E08F2400177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE90D10E08DB000177B4C /* Silence */;
+			targetProxy = 557DE9E110E08F2400177B4C /* PBXContainerItemProxy */;
+		};
+		557DE9E410E08F2400177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE8FD10E08DAC00177B4C /* Sampling Rate */;
+			targetProxy = 557DE9E310E08F2400177B4C /* PBXContainerItemProxy */;
+		};
+		557DE9E610E08F2400177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE8BA10E08DA800177B4C /* Normalize */;
+			targetProxy = 557DE9E510E08F2400177B4C /* PBXContainerItemProxy */;
+		};
+		557DE9E810E08F2400177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE87710E08DA300177B4C /* Mix */;
+			targetProxy = 557DE9E710E08F2400177B4C /* PBXContainerItemProxy */;
+		};
+		557DE9EA10E08F2400177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE83410E08D9E00177B4C /* Length */;
+			targetProxy = 557DE9E910E08F2400177B4C /* PBXContainerItemProxy */;
+		};
+		557DE9EC10E08F2400177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE7F110E08D8900177B4C /* Invert */;
+			targetProxy = 557DE9EB10E08F2400177B4C /* PBXContainerItemProxy */;
+		};
+		557DE9EE10E08F2400177B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE7AE10E08D8300177B4C /* Fade */;
+			targetProxy = 557DE9ED10E08F2400177B4C /* PBXContainerItemProxy */;
 		};
 		5586870410BF5C4700FCC24D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5157,6 +6388,482 @@
 			};
 			name = Debug;
 		};
+		557DE5DD10E0882800177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Backwards-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Backwards;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE5DE10E0882800177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Backwards-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Backwards;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		557DE62010E0884100177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Crop-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Crop;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE62110E0884100177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Crop-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Crop;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		557DE66110E0885C00177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "CrossFade-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = CrossFade;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE66210E0885C00177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "CrossFade-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = CrossFade;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		557DE6A210E0886400177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Depth-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Depth;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE6A310E0886400177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Depth-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Depth;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		557DE6E310E0886A00177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Echo-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Echo;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE6E410E0886A00177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Echo-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Echo;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		557DE7BA10E08D8300177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Fade-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Fade;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE7BB10E08D8300177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Fade-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Fade;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		557DE7FD10E08D8900177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Invert;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE7FE10E08D8900177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Invert;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		557DE84010E08D9E00177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Length;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE84110E08D9E00177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Length;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		557DE88310E08DA300177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Mix;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE88410E08DA300177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Mix;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		557DE8C610E08DA800177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Normalize;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE8C710E08DA800177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Normalize;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		557DE90910E08DAC00177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = "Sampling Rate";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE90A10E08DAC00177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = "Sampling Rate";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		557DE91910E08DB000177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Silence;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE91A10E08DB000177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Silence;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		557DE95C10E08DB900177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Smooth;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE95D10E08DB900177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = Smooth;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		557DE99F10E08DC100177B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = "Tone Generator";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		557DE9A010E08DC100177B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = "Tone Generator";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
 		5586870D10BF5C4700FCC24D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -5931,6 +7638,132 @@
 			buildConfigurations = (
 				557DE3EF10E06BB500177B4C /* Release */,
 				557DE3F010E06BB500177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE5DC10E0882800177B4C /* Build configuration list for PBXNativeTarget "Backwards" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE5DD10E0882800177B4C /* Release */,
+				557DE5DE10E0882800177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE61F10E0884100177B4C /* Build configuration list for PBXNativeTarget "Crop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE62010E0884100177B4C /* Release */,
+				557DE62110E0884100177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE66010E0885C00177B4C /* Build configuration list for PBXNativeTarget "CrossFade" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE66110E0885C00177B4C /* Release */,
+				557DE66210E0885C00177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE6A110E0886400177B4C /* Build configuration list for PBXNativeTarget "Depth" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE6A210E0886400177B4C /* Release */,
+				557DE6A310E0886400177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE6E210E0886A00177B4C /* Build configuration list for PBXNativeTarget "Echo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE6E310E0886A00177B4C /* Release */,
+				557DE6E410E0886A00177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE7B910E08D8300177B4C /* Build configuration list for PBXNativeTarget "Fade" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE7BA10E08D8300177B4C /* Release */,
+				557DE7BB10E08D8300177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE7FC10E08D8900177B4C /* Build configuration list for PBXNativeTarget "Invert" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE7FD10E08D8900177B4C /* Release */,
+				557DE7FE10E08D8900177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE83F10E08D9E00177B4C /* Build configuration list for PBXNativeTarget "Length" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE84010E08D9E00177B4C /* Release */,
+				557DE84110E08D9E00177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE88210E08DA300177B4C /* Build configuration list for PBXNativeTarget "Mix" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE88310E08DA300177B4C /* Release */,
+				557DE88410E08DA300177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE8C510E08DA800177B4C /* Build configuration list for PBXNativeTarget "Normalize" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE8C610E08DA800177B4C /* Release */,
+				557DE8C710E08DA800177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE90810E08DAC00177B4C /* Build configuration list for PBXNativeTarget "Sampling Rate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE90910E08DAC00177B4C /* Release */,
+				557DE90A10E08DAC00177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE91810E08DB000177B4C /* Build configuration list for PBXNativeTarget "Silence" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE91910E08DB000177B4C /* Release */,
+				557DE91A10E08DB000177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE95B10E08DB900177B4C /* Build configuration list for PBXNativeTarget "Smooth" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE95C10E08DB900177B4C /* Release */,
+				557DE95D10E08DB900177B4C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		557DE99E10E08DC100177B4C /* Build configuration list for PBXNativeTarget "Tone Generator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				557DE99F10E08DC100177B4C /* Release */,
+				557DE9A010E08DC100177B4C /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
