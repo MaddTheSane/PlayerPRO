@@ -123,9 +123,9 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
 //TODO: byteswap on Intel!
-#ifdef __LITTLE_ENDIAN
-	return MADFileNotSupportedByThisPlug;
-#endif
+//#ifdef __LITTLE_ENDIAN__
+//	return MADFileNotSupportedByThisPlug;
+//#endif
 	short 			i, x;
 	long 			inOutCount, OffSetToSample = 0, z;
 	OSErr			theErr = noErr;
@@ -187,6 +187,8 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoi
 			inOutCount = sizeof( struct oldPatHeader);
 		
 			BlockMoveData( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
+			MOT32(&tempPatHeader.PatternSize);
+			MOT32(&tempPatHeader.CompressionMode);
 		}
 		else tempPatHeader.PatternSize = 64L;
 	

@@ -105,7 +105,7 @@ static inline void MADHmystrcpy( Ptr a, BytePtr b)
 
 static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
-#ifdef __LITTLE_ENDIAN
+#ifdef __LITTLE_ENDIAN__
 	return MADFileNotSupportedByThisPlug;
 #endif
 	
