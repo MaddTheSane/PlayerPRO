@@ -369,7 +369,7 @@ void Convqpm(unsigned qpm, int rgbTempo[2], int ticks)
 		int j, k, kMax;
 		double ratio;
 		
-#if defined( __POWERPC__) || defined( __ppc__)
+#if defined( __POWERPC__) || defined( __ppc__) || defined(__APPLE__)
 		double junk;
 #else
 		long double junk;

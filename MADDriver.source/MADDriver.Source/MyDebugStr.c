@@ -7,14 +7,14 @@
  *
  */
 
-#include <CoreFoundation/CoreFoundation.h>
+#include <CoreFoundation/CFBase.h>
 #include <Carbon/Carbon.h>
 
 extern void NSLog(CFStringRef format, ...);
 
-void MyDebugStr( short line, Ptr file, Ptr text)
+extern void MyDebugStr( short line, Ptr file, Ptr text)
 {
-	NSLog(CFSTR("ERROR!! %s:%u error text:%s!"), file, line, text);
+	NSLog(CFSTR("%s:%u error text:%s!"), file, line, text);
 	
 	Debugger();
 }

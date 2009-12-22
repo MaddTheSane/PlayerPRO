@@ -222,7 +222,7 @@ int MADstrcmp( const char *dst, const char* src)
 	return 0;
 }
 
-void OSType2Ptr( OSType type, Ptr str)
+EXP void OSType2Ptr( OSType type, Ptr str)
 {
 	short i;
 	
@@ -234,7 +234,7 @@ void OSType2Ptr( OSType type, Ptr str)
 	str[ 4] = 0;
 }
 
-OSType Ptr2OSType( Ptr str)
+EXP OSType Ptr2OSType( Ptr str)
 {
 	short 	i;
 	OSType	type;
