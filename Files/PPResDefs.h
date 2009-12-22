@@ -42,4 +42,4 @@ enum helpMenuEnums {
 enum {
 	mAboutPlayerPRO = 1,
 	mGeneralInfo	= 2
-}
+};
