@@ -47,7 +47,7 @@ struct FileInstrDataz
 	unsigned short loopWords;
 };
 
-struct MODDef
+typedef struct MODDef
 {
 	char NameSignature[ 20];
 	struct FileInstrDataz fid[ 31];
@@ -56,8 +56,7 @@ struct MODDef
 	Byte oPointers[ MAXPTRS];
 	long longFmtSignature;
 	struct MODPat patterns[];
-};
-typedef struct MODDef MODDef;
+} MODDef;
 
 #if defined(powerc) || defined(__powerc) || defined(__APPLE__)
 #pragma options align=reset

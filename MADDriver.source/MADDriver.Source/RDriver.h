@@ -49,7 +49,7 @@
 //The following aren't defined in Mac headers, but are used
 enum{
 #if !defined(_MAC_H) || defined(__LP64__)
-	rate48khz	= (Fixed)0xBB800000,
+	rate48khz	= (UnsignedFixed)0xBB800000,
 	rate44khz	= (Fixed)0xAC440000,
 	rate32khz	= (Fixed)0x7D000000,
 	rate22050hz	= (Fixed)0x56220000,
@@ -65,8 +65,12 @@ enum{
 
 ////////////////////////////////////////////////
 
-#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
+#if PRAGMA_STRUCT_ALIGN
+#pragma options align=mac68k
+#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(push, 2)
+#elif PRAGMA_STRUCT_PACK
+#pragma pack(2)
 #endif
 
 ////////////////////////////////////////////////
@@ -767,7 +771,11 @@ void MyDebugStr(short, Ptr, Ptr);									// Called when a fatal error occurs...
 }
 #endif
 
-#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
+#if PRAGMA_STRUCT_ALIGN
+#pragma options align=reset
+#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(pop)
+#elif PRAGMA_STRUCT_PACK
+#pragma pack()
 #endif
 #endif

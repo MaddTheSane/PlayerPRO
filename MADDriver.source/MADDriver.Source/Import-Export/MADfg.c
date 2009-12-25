@@ -99,7 +99,7 @@ struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, sho
 	return finalPtr;
 }
 
-struct Command* GetOldCommand( short PosX, short	TrackIdX, struct MusicPattern*	tempMusicPat)
+static struct Command* GetOldCommand( short PosX, short TrackIdX, struct MusicPattern* tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;
 	else if( PosX >= tempMusicPat->header.PatternSize) PosX = tempMusicPat->header.PatternSize -1;
@@ -123,11 +123,8 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
 //TODO: byteswap on Intel!
-//#ifdef __LITTLE_ENDIAN__
-//	return MADFileNotSupportedByThisPlug;
-//#endif
 	short 			i, x;
-	long 			inOutCount, OffSetToSample = 0, z;
+	long 			inOutCount = 0, OffSetToSample = 0, z = 0;
 	OSErr			theErr = noErr;
 	Boolean			MADConvert = false;
 	Ptr				tempPtr = NULL;
@@ -168,7 +165,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 	theMAD->header->speed			= 6;
 	theMAD->header->tempo			= 125;
 
-mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (�Antoine ROSSET <rossetantoine@bluewin.ch>)");
 
 
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
@@ -188,7 +185,6 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoi
 		
 			BlockMoveData( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
 			MOT32(&tempPatHeader.PatternSize);
-			MOT32(&tempPatHeader.CompressionMode);
 		}
 		else tempPatHeader.PatternSize = 64L;
 	
@@ -217,6 +213,9 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoi
 	
 		BlockMoveData( MADPtr + OffSetToSample, tempPat, inOutCount);
 		OffSetToSample += inOutCount;
+		MOT32(&tempPat->header.PatternSize);
+		MOT32(&tempPat->header.CompressionMode);
+
 	
 		if( MADConvert)
 		{

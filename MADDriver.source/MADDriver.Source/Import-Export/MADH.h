@@ -50,7 +50,7 @@ typedef struct oldCmd oldCmd;
 struct oldPatHeader					// HEADER
 {
 	long	size;					// Length of pattern: standard = 64
-	long	compMode;				// Compression mode, none = 'NONE'
+	OSType	compMode;				// Compression mode, none = 'NONE'
 	char	name[ 32];
 	long	patBytes;				// Pattern Size in Bytes
 	long	unused2;

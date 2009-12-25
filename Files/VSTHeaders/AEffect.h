@@ -16,7 +16,13 @@
 */
 
 #if __GNUC__
-	#pragma pack(push, 2)
+#if PRAGMA_STRUCT_ALIGN
+#pragma options align=mac68k
+#elif PRAGMA_STRUCT_PACKPUSH
+#pragma pack(push, 2)
+#elif PRAGMA_STRUCT_PACK
+#pragma pack(2)
+#endif
 #elif defined CBUILDER
 	#pragma -a8
 #elif defined(WIN32) || defined(__FLAT__)
@@ -162,7 +168,13 @@ enum
 };
 
 #if __GNUC__
-	#pragma pack(pop)
+#if PRAGMA_STRUCT_ALIGN
+#pragma options align=reset
+#elif PRAGMA_STRUCT_PACKPUSH
+#pragma pack(pop)
+#elif PRAGMA_STRUCT_PACK
+#pragma pack()
+#endif
 #elif defined(WIN32) || defined(__FLAT__)
 	#pragma pack(pop)
 #elif defined CBUILDER

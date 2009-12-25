@@ -29,7 +29,7 @@
 #endif
 struct oldPatHeader {
 	long	PatternSize;			// Length of pattern: standard = 64
-	long	CompressionMode;		// Compression mode, none = 'NONE'
+	OSType	CompressionMode;		// Compression mode, none = 'NONE'
 	char	PatternName[ 20];
 	long	PatBytes;				// Pattern Size in Bytes
 	long	unused2;
@@ -67,7 +67,7 @@ struct oldMADSpec
 	struct 	FileInstrData fid[ 64];	// 64 instruments descriptor
 	Byte	PatMax;
 	Byte 	numPointers;			// Patterns number
-	Byte	oPointers[ 128];		// Patterns list
+	Byte	oPointers[128];		// Patterns list
 	Byte	Tracks;					// Tracks number
 };
 typedef struct oldMADSpec oldMADSpec;

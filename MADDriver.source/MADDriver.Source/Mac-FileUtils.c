@@ -33,7 +33,7 @@ extern void NSLog(CFStringRef format, ...);
 //TODO: use system native strlen?
 static long MYstrlen( Ptr cStr)
 {
-	NSLog(CFSTR("MADstrlen is depricated; just use strlen"));
+	NSLog(CFSTR("MYstrlen is depricated; just use strlen"));
 
 	long i = 0;
 	
@@ -48,8 +48,8 @@ static long MYstrlen( Ptr cStr)
 
 unsigned char* MYC2PStr( Ptr cStr)
 {
-	long size = MYstrlen( cStr);
-	BlockMoveData( cStr, cStr + 1, MYstrlen( cStr));
+	long size = strlen( cStr);
+	BlockMoveData( cStr, cStr + 1, strlen( cStr));
 	cStr[ 0] = size;
 
 	return (unsigned char*) cStr;

@@ -134,8 +134,12 @@ static void DebugStr( unsigned char* x)
 
 //////////////////////////////////////////////////////////////////////
 
-#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
+#if PRAGMA_STRUCT_ALIGN
+#pragma options align=mac68k
+#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(push, 2)
+#elif PRAGMA_STRUCT_PACK
+#pragma pack(2)
 #endif
 
 #define DEFAULT_VOLFADE		300L
@@ -163,7 +167,7 @@ typedef Cmd MadCommand;
 typedef struct PatHeader					// HEADER
 {
 	long	size;					// Length of pattern: standard = 64
-	long	compMode;				// Compression mode, none = 'NONE'
+	OSType	compMode;				// Compression mode, none = 'NONE'
 	char	name[ 32];
 	long	patBytes;				// Pattern Size in Bytes
 	long	unused2;
@@ -330,7 +334,11 @@ typedef struct FXSets
 }FXSets;	// and then float values
 
 
-#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
+#if PRAGMA_STRUCT_ALIGN
+#pragma options align=reset
+#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(pop)
+#elif PRAGMA_STRUCT_PACK
+#pragma pack()
 #endif
 #endif
