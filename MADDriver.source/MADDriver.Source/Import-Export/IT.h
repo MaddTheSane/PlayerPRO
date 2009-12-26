@@ -137,7 +137,7 @@ typedef struct ITOldInsForm		// size = 554
 
 typedef struct ITForm
 {
-	long				ID;
+	OSType				ID;
 	char             		name[26];
 	char             		no[ 2];
 	

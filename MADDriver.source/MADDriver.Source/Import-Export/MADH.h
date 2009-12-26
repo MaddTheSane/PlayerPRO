@@ -137,16 +137,16 @@ typedef struct oldInstrData oldInstrData;
 
 struct oldMADSpec
 {
-	long		MAD;						// Mad Identification: MADG in version 2.0
-	char 		name[ 32];					// Music's name
-	char		infos[ 256];				// Informations & Author name of the music
-	Byte		numPat;					// Patterns number
-	Byte		numChn;					// Channels number
-	Byte 		numPointers;				// Partition length
-	Byte		oPointers[ 256];			// Partition : Patterns ID List
-	short		speed;						// Default speed
-	short		tempo;						// Default tempo
-	oldInstrData 	fid[ 64];					// Instruments description
+	OSType			MAD;					// Mad Identification: MADG in version 2.0
+	char			name[ 32];				// Music's name
+	char			infos[ 256];			// Informations & Author name of the music
+	Byte			numPat;					// Patterns number
+	Byte			numChn;					// Channels number
+	Byte			numPointers;			// Partition length
+	Byte			oPointers[ 256];		// Partition : Patterns ID List
+	short			speed;					// Default speed
+	short			tempo;					// Default tempo
+	oldInstrData 	fid[ 64];				// Instruments description
 };
 typedef struct oldMADSpec oldMADSpec;
 

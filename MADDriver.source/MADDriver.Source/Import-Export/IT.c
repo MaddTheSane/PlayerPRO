@@ -1375,8 +1375,10 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 static OSErr TestITFile( Ptr AlienFile)
 {
 	ITForm	*myIT = ( ITForm*) AlienFile;
-
-	if( ITcompMem( (Ptr) &myIT->ID, "IMPM", 4)) return   noErr;
+	OSType myID = myIT->ID;
+	MOT32(&myID);
+	
+	if( myID == 'IMPM') return noErr;
 	else return  MADFileNotSupportedByThisPlug;
 }
 

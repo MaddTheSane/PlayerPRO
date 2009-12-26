@@ -15,8 +15,7 @@
 #define PLUGINFACTORY SixSixNineFactory //The factory name as defined in the Info.plist file
  */
 
-#include <PlayerPROCore/PPPlug.h>
-#include <PlayerPROCore/FileUtils.h>
+//Please make sure that <PlayerPROCore/PlayerPROCore.h> is already included
 
 typedef struct _CFImpExpPlugType {
 	MADFileFormatPlugin *_PPROCFPlugFormat;

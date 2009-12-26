@@ -167,7 +167,7 @@ typedef struct oldInstrData oldInstrData;
 
 struct oldMADSpec
 {
-	long		MAD;						// Mad Identification
+	OSType		MAD;						// Mad Identification
 	char 		name[ 32];					// Music's name
 	char		infos[ INFOSSIZE];			// Informations & Author name of the music
 	Byte		generalPan;					// General Panning

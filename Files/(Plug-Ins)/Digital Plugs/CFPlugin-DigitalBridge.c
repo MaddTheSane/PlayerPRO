@@ -16,9 +16,6 @@
  #define PLUGMAIN main669 //The old main function, renamed please
  */
 
-#include <PlayerPROCore/PPPlug.h>
-#include <PlayerPROCore/FileUtils.h>
-
 typedef struct _CFPlugType {
 	PPDigitalPlugin		*_PPROCFPlugFormat;
 	CFUUIDRef			_factoryID;
