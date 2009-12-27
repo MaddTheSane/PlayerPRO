@@ -13,6 +13,8 @@
 			buildPhases = (
 			);
 			dependencies = (
+				551FEB7910E7282700EDF2F1 /* PBXTargetDependency */,
+				551FEB7710E7282700EDF2F1 /* PBXTargetDependency */,
 				55151F8410DEDC0F0054ABC4 /* PBXTargetDependency */,
 			);
 			name = "Instrument Plugs";
@@ -166,6 +168,18 @@
 		551E56F2102A9E8B0086C86E /* Main.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F40C2F21DD00D6C081 /* Main.c */; };
 		551E56FA102AA35B0086C86E /* AboutPlugs.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */; };
 		551E57A1102AB9A30086C86E /* Mozart.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4170C2F21DD00D6C081 /* Mozart.c */; };
+		551FEA6210E727AD00EDF2F1 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
+		551FEA6410E727AD00EDF2F1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		551FEA6510E727AD00EDF2F1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		551FEAD110E727B100EDF2F1 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
+		551FEAD310E727B100EDF2F1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		551FEAD410E727B100EDF2F1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		551FEB7C10E728D400EDF2F1 /* MINS.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E103710D6C79E00BB619C /* MINS.c */; };
+		551FEB7D10E728D500EDF2F1 /* MINS.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E104510D6C79E00BB619C /* MINS.r */; };
+		551FEB7E10E728F100EDF2F1 /* PAT.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E104110D6C79E00BB619C /* PAT.c */; };
+		551FEB7F10E728F500EDF2F1 /* PAT.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E104310D6C79E00BB619C /* PAT.r */; };
+		551FEBF510E72AD900EDF2F1 /* MINs.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEA6B10E727AD00EDF2F1 /* MINs.plugin */; };
+		551FEBF610E72AD900EDF2F1 /* PAT.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEADA10E727B100EDF2F1 /* PAT.plugin */; };
 		552C6FE310CD9DAC00C0E0D4 /* ByteUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */; };
 		552C6FE410CD9DB700C0E0D4 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; };
 		5533412010BB54A3005208D1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
@@ -586,6 +600,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
+		};
+		551FEA5E10E727AD00EDF2F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		551FEACD10E727B100EDF2F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		551FEB7610E7282700EDF2F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551FEACB10E727B100EDF2F1 /* PAT */;
+			remoteInfo = PAT;
+		};
+		551FEB7810E7282700EDF2F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551FEA5C10E727AD00EDF2F1 /* MINs */;
+			remoteInfo = MINs;
 		};
 		552C6FED10CD9E3C00C0E0D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1180,6 +1222,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				551FEBF510E72AD900EDF2F1 /* MINs.plugin in Copy PlugIns */,
+				551FEBF610E72AD900EDF2F1 /* PAT.plugin in Copy PlugIns */,
 				557DEB2A10E0944100177B4C /* Backwards.plugin in Copy PlugIns */,
 				557DEB2B10E0944100177B4C /* Crop.plugin in Copy PlugIns */,
 				557DEB2C10E0944100177B4C /* CrossFade.plugin in Copy PlugIns */,
@@ -1264,6 +1308,10 @@
 		5518107210C35A4500ADA9F4 /* PlayerPRO Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5518107410C35A4500ADA9F4 /* PlayerPRO Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PlayerPRO Example-Info.plist"; path = "../PlayerPRO Example-Info.plist"; sourceTree = "<group>"; };
 		551E166910CCD531003C842A /* CFPlugin-bridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = "CFPlugin-bridge.c"; path = "Import-Export/CFPlugin-bridge.c"; sourceTree = "<group>"; };
+		551FEA6B10E727AD00EDF2F1 /* MINs.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MINs.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		551FEAC910E727AD00EDF2F1 /* MINs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MINs-Info.plist"; path = "../../../MINs-Info.plist"; sourceTree = "<group>"; };
+		551FEADA10E727B100EDF2F1 /* PAT.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PAT.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		551FEB2810E727B100EDF2F1 /* PAT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PAT-Info.plist"; path = "../../../PAT-Info.plist"; sourceTree = "<group>"; };
 		552C70C310CDAFBC00C0E0D4 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; path = TODO.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
 		552C70C610CDB07E00C0E0D4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; path = LICENSE.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
 		552C716210CDC11400C0E0D4 /* README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = README.rtf; sourceTree = "<group>"; };
@@ -1393,7 +1441,7 @@
 		554E104110D6C79E00BB619C /* PAT.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = PAT.c; sourceTree = "<group>"; };
 		554E104210D6C79E00BB619C /* PAT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; path = PAT.h; sourceTree = "<group>"; };
 		554E104310D6C79E00BB619C /* PAT.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = PAT.r; sourceTree = "<group>"; };
-		554E104510D6C79E00BB619C /* PP Instrument.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = "PP Instrument.r"; sourceTree = "<group>"; };
+		554E104510D6C79E00BB619C /* MINS.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MINS.r; sourceTree = "<group>"; };
 		554E104710D6C79E00BB619C /* PPIN Carbon.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; path = "PPIN Carbon.pch"; sourceTree = "<group>"; };
 		554E104810D6C79E00BB619C /* PPIN PPC.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; path = "PPIN PPC.pch"; sourceTree = "<group>"; };
 		554E104A10D6C79E00BB619C /* Quicktime Movie.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = "Quicktime Movie.r"; sourceTree = "<group>"; };
@@ -1723,6 +1771,24 @@
 			files = (
 				5518107B10C35A5100ADA9F4 /* PlayerPROCore.framework in Frameworks */,
 				5518109210C35A6C00ADA9F4 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		551FEA6310E727AD00EDF2F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				551FEA6410E727AD00EDF2F1 /* Carbon.framework in Frameworks */,
+				551FEA6510E727AD00EDF2F1 /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		551FEAD210E727B100EDF2F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				551FEAD310E727B100EDF2F1 /* Carbon.framework in Frameworks */,
+				551FEAD410E727B100EDF2F1 /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2234,6 +2300,7 @@
 		551520BA10DEEB370054ABC4 /* PAT */ = {
 			isa = PBXGroup;
 			children = (
+				551FEB2810E727B100EDF2F1 /* PAT-Info.plist */,
 				554E104110D6C79E00BB619C /* PAT.c */,
 				554E104210D6C79E00BB619C /* PAT.h */,
 				554E104310D6C79E00BB619C /* PAT.r */,
@@ -2255,7 +2322,8 @@
 		551520C310DEED260054ABC4 /* MINS */ = {
 			isa = PBXGroup;
 			children = (
-				554E104510D6C79E00BB619C /* PP Instrument.r */,
+				551FEAC910E727AD00EDF2F1 /* MINs-Info.plist */,
+				554E104510D6C79E00BB619C /* MINS.r */,
 				554E103710D6C79E00BB619C /* MINS.c */,
 				554E103F10D6C79E00BB619C /* old MINS.c */,
 			);
@@ -3033,6 +3101,8 @@
 				557DE91B10E08DB000177B4C /* Silence.plugin */,
 				557DE95E10E08DB900177B4C /* Smooth.plugin */,
 				557DE9A110E08DC100177B4C /* Tone Generator.plugin */,
+				551FEA6B10E727AD00EDF2F1 /* MINs.plugin */,
+				551FEADA10E727B100EDF2F1 /* PAT.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3391,6 +3461,44 @@
 			productName = "PlayerPRO Example";
 			productReference = 5518107210C35A4500ADA9F4 /* PlayerPRO Example.app */;
 			productType = "com.apple.product-type.application";
+		};
+		551FEA5C10E727AD00EDF2F1 /* MINs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 551FEA6810E727AD00EDF2F1 /* Build configuration list for PBXNativeTarget "MINs" */;
+			buildPhases = (
+				551FEA5F10E727AD00EDF2F1 /* Resources */,
+				551FEA6010E727AD00EDF2F1 /* Sources */,
+				551FEA6310E727AD00EDF2F1 /* Frameworks */,
+				551FEA6610E727AD00EDF2F1 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				551FEA5D10E727AD00EDF2F1 /* PBXTargetDependency */,
+			);
+			name = MINs;
+			productName = "Complex Fade";
+			productReference = 551FEA6B10E727AD00EDF2F1 /* MINs.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		551FEACB10E727B100EDF2F1 /* PAT */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 551FEAD710E727B100EDF2F1 /* Build configuration list for PBXNativeTarget "PAT" */;
+			buildPhases = (
+				551FEACE10E727B100EDF2F1 /* Resources */,
+				551FEACF10E727B100EDF2F1 /* Sources */,
+				551FEAD210E727B100EDF2F1 /* Frameworks */,
+				551FEAD510E727B100EDF2F1 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				551FEACC10E727B100EDF2F1 /* PBXTargetDependency */,
+			);
+			name = PAT;
+			productName = "Complex Fade";
+			productReference = 551FEADA10E727B100EDF2F1 /* PAT.plugin */;
+			productType = "com.apple.product-type.bundle";
 		};
 		5533411010BB547C005208D1 /* MOD */ = {
 			isa = PBXNativeTarget;
@@ -4205,6 +4313,8 @@
 				554E122210D6F3E600BB619C /* Revert */,
 				55151F3610DEDBD70054ABC4 /* Instrument Plugs */,
 				55151F7210DEDBDB0054ABC4 /* XI */,
+				551FEA5C10E727AD00EDF2F1 /* MINs */,
+				551FEACB10E727B100EDF2F1 /* PAT */,
 				557DE3BD10E06BB500177B4C /* Filters Plugs */,
 				557DE42510E06BF200177B4C /* Amplitude */,
 				557DE5D110E0882800177B4C /* Backwards */,
@@ -4245,6 +4355,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				551810CD10C35C3500ADA9F4 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		551FEA5F10E727AD00EDF2F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		551FEACE10E727B100EDF2F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4561,6 +4685,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				5515200F10DEDC9F0054ABC4 /* XI.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		551FEA6610E727AD00EDF2F1 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				551FEB7D10E728D500EDF2F1 /* MINS.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		551FEAD510E727B100EDF2F1 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				551FEB7F10E728F500EDF2F1 /* PAT.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4905,6 +5045,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				5518109310C35A7500ADA9F4 /* Example.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		551FEA6010E727AD00EDF2F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				551FEA6210E727AD00EDF2F1 /* SndUtils.c in Sources */,
+				551FEB7C10E728D400EDF2F1 /* MINS.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		551FEACF10E727B100EDF2F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				551FEAD110E727B100EDF2F1 /* SndUtils.c in Sources */,
+				551FEB7E10E728F100EDF2F1 /* PAT.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5348,6 +5506,26 @@
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 5518107910C35A4C00ADA9F4 /* PBXContainerItemProxy */;
+		};
+		551FEA5D10E727AD00EDF2F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 551FEA5E10E727AD00EDF2F1 /* PBXContainerItemProxy */;
+		};
+		551FEACC10E727B100EDF2F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 551FEACD10E727B100EDF2F1 /* PBXContainerItemProxy */;
+		};
+		551FEB7710E7282700EDF2F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551FEACB10E727B100EDF2F1 /* PAT */;
+			targetProxy = 551FEB7610E7282700EDF2F1 /* PBXContainerItemProxy */;
+		};
+		551FEB7910E7282700EDF2F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551FEA5C10E727AD00EDF2F1 /* MINs */;
+			targetProxy = 551FEB7810E7282700EDF2F1 /* PBXContainerItemProxy */;
 		};
 		552C6FEE10CD9E3C00C0E0D4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5908,6 +6086,94 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				PREBINDING = NO;
 				PRODUCT_NAME = "PlayerPRO Example";
+			};
+			name = Debug;
+		};
+		551FEA6910E727AD00EDF2F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+				);
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = MINs;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		551FEA6A10E727AD00EDF2F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+				);
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = MINs;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		551FEAD810E727B100EDF2F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+				);
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = PAT;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		551FEAD910E727B100EDF2F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+				);
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = PAT;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
 		};
@@ -7824,6 +8090,24 @@
 			buildConfigurations = (
 				5518107510C35A4600ADA9F4 /* Release */,
 				5518107610C35A4600ADA9F4 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		551FEA6810E727AD00EDF2F1 /* Build configuration list for PBXNativeTarget "MINs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				551FEA6910E727AD00EDF2F1 /* Release */,
+				551FEA6A10E727AD00EDF2F1 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		551FEAD710E727B100EDF2F1 /* Build configuration list for PBXNativeTarget "PAT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				551FEAD810E727B100EDF2F1 /* Release */,
+				551FEAD910E727B100EDF2F1 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
