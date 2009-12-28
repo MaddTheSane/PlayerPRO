@@ -127,9 +127,6 @@
 		55096A5010E0A7AD000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55096A5110E0A7B4000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		55096A5210E0A7B4000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		55096A5510E0A987000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		55096A5610E0A989000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
-		55096A5710E0A98F000EFFE6 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */; };
 		550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		550B001F10BA0293004FC5D7 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		550B002310BA02A0004FC5D7 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -395,6 +392,7 @@
 		55868A7D10BFB4B500FCC24D /* APPL_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0010BFB31500FCC24D /* APPL_Plug.rsrc.r */; };
 		559086D010E73CCE00CE70B8 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		559086EA10E73CD800CE70B8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		559087F510E8364F00CE70B8 /* Exemple.icns in Resources */ = {isa = PBXBuildFile; fileRef = 559087F410E8364F00CE70B8 /* Exemple.icns */; };
 		55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
 		55B797E310D6E6E50073E379 /* CompFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FE110D6C79D00BB619C /* CompFade.c */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
@@ -1416,7 +1414,6 @@
 		554E0FF410D6C79D00BB619C /* Revert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = Revert.c; sourceTree = "<group>"; };
 		554E0FF510D6C79D00BB619C /* Revert.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Revert.r; sourceTree = "<group>"; };
 		554E0FF810D6C79D00BB619C /* All.µ */ = {isa = PBXFileReference; lastKnownFileType = file; path = "All.µ"; sourceTree = "<group>"; };
-		554E0FF910D6C79D00BB619C /* All.µ.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "All.µ.xml"; sourceTree = "<group>"; };
 		554E0FFA10D6C79D00BB619C /* Amplitude.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = Amplitude.c; sourceTree = "<group>"; };
 		554E0FFB10D6C79D00BB619C /* Amplitude.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Amplitude.r; sourceTree = "<group>"; };
 		554E0FFD10D6C79E00BB619C /* Backwards.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = Backwards.c; sourceTree = "<group>"; };
@@ -1583,6 +1580,7 @@
 		55868A6710BFB46100FCC24D /* APPL.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APPL.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		55868A6810BFB46100FCC24D /* APPL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "APPL-Info.plist"; path = "../../../APPL-Info.plist"; sourceTree = "<group>"; };
 		558A15250FE749B400533D71 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		559087F410E8364F00CE70B8 /* Exemple.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Exemple.icns; sourceTree = "<group>"; };
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Complex Fade-Info.plist"; path = "../../../Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DFTB.r; path = Files/DFTB.r; sourceTree = "<group>"; };
@@ -2206,9 +2204,6 @@
 				5573A51C10B52EB500FF8B50 /* DrawSprocket.framework in Frameworks */,
 				55ED547410D5F9CD00824C61 /* CoreMIDI.framework in Frameworks */,
 				554E0DAD10D619D700BB619C /* Foundation.framework in Frameworks */,
-				55096A5510E0A987000EFFE6 /* CoreFoundation.framework in Frameworks */,
-				55096A5610E0A989000EFFE6 /* CoreServices.framework in Frameworks */,
-				55096A5710E0A98F000EFFE6 /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2712,6 +2707,7 @@
 		551FECF610E7358D00EDF2F1 /* AutoExec */ = {
 			isa = PBXGroup;
 			children = (
+				559087F410E8364F00CE70B8 /* Exemple.icns */,
 				551FECC710E7354A00EDF2F1 /* AutoExec-Info.plist */,
 				551FECF710E7358D00EDF2F1 /* AEvent.c */,
 				551FECFC10E7358D00EDF2F1 /* Burk.c */,
@@ -2904,7 +2900,6 @@
 				551520E310DEF0950054ABC4 /* Smooth */,
 				551520E410DEF09D0054ABC4 /* Tone Generator */,
 				554E0FF810D6C79D00BB619C /* All.µ */,
-				554E0FF910D6C79D00BB619C /* All.µ.xml */,
 				557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */,
 				554E101B10D6C79E00BB619C /* PLug Carbon.pch */,
 				554E101C10D6C79E00BB619C /* PLug PPC.pch */,
@@ -3097,9 +3092,9 @@
 				88E0C3DC0C2F21DD00D6C081 /* Source */,
 				88E0C40C0C2F21DD00D6C081 /* Utils Group */,
 				88E0C4740C2F21E400D6C081 /* Headers */,
+				551FECF610E7358D00EDF2F1 /* AutoExec */,
 				88E0C4950C2F21E500D6C081 /* Frameworks */,
 				88E0C3B60C2F21DD00D6C081 /* Products */,
-				551FECF610E7358D00EDF2F1 /* AutoExec */,
 				5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */,
 			);
 			sourceTree = "<group>";
@@ -4448,6 +4443,7 @@
 			files = (
 				551FED0910E7358D00EDF2F1 /* Test.MOD in Resources */,
 				551FED0A10E7358D00EDF2F1 /* TestMADH.MADH in Resources */,
+				559087F510E8364F00CE70B8 /* Exemple.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

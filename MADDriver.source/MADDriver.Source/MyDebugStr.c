@@ -8,7 +8,7 @@
  */
 
 #include <CoreFoundation/CFBase.h>
-#include <Carbon/Carbon.h>
+#include <CoreServices/CoreServices.h>
 
 extern void NSLog(CFStringRef format, ...);
 

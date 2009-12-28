@@ -152,7 +152,5 @@ void SwapPrefs(Prefs *swapPrefs)
 		swapPrefs->Previous_globalEffect[i] = EndianS16_BtoN(swapPrefs->Previous_globalEffect[i]);
 	}
 	
-
-	
 #endif
 }
