@@ -87,7 +87,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 }
 #endif
 
-static void AnalyseSignatureMOD( long EOFo, long temp, short *maxInstru, long *PatternSize, short *tracksNo, MODDef* aMOD)
+static void AnalyseSignatureMOD( long EOFo, OSType temp, short *maxInstru, long *PatternSize, short *tracksNo, MODDef* aMOD)
 {
 	long 		test, i;
 	Boolean		result;
@@ -842,6 +842,7 @@ static OSErr ExtractMODInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Check MOD Type ***/
 	
 	AnalyseSignatureMOD( -1, info->signature, &maxInstru, &PatternSize, &info->totalTracks, myMOD);
+	MOT32(&info->signature);
 	if( maxInstru == 0)
 	{
 		return MADFileNotSupportedByThisPlug;

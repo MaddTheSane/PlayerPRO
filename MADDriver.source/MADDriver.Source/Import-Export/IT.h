@@ -42,7 +42,7 @@ typedef struct ITSampForm
 	Byte		Flag;
 	Byte		Vol;
 	char		SampName[ 26];
-	short	Convert;
+	short		Convert;
 	long		length;
 	long		loopBegin;
 	long		loopEnd;
@@ -81,7 +81,7 @@ typedef struct ITKeyMap
 
 typedef struct ITInsForm		// size = 547
 {
-	long		ID;
+	OSType		ID;
 	char		DOSName[ 12];
 	Byte		no;
 	Byte		NNA;
@@ -110,19 +110,19 @@ typedef struct ITInsForm		// size = 547
 
 typedef struct ITOldInsForm		// size = 554
 {
-	long		ID;
+	OSType		ID;
 	char		DOSName[ 12];
 	Byte		no;
 	Byte		NNA;
 	Byte		DCT;
 	Byte		DCA;
-	short	FadeOut;
+	short		FadeOut;
 	Byte		PPS;
 	Byte		PPC;
 	Byte		GbV;
 	Byte		DfP;
 	char		no2[ 2];
-	short	TrkVers;
+	short		TrkVers;
 	Byte		NoS;
 	Byte		no3;
 	char		INSName[ 26];
@@ -138,17 +138,17 @@ typedef struct ITOldInsForm		// size = 554
 typedef struct ITForm
 {
 	OSType				ID;
-	char             		name[26];
-	char             		no[ 2];
+	char				name[26];
+	char				no[ 2];
 	
-	short  			orderNum;
-	short   			insNum;
-	short   			smpNum;
-	short      			patNum;
-	short     			cwtv;
-	short			cmwt;
-	short      			flags;
-	short			special;
+	short				orderNum;
+	short				insNum;
+	short				smpNum;
+	short				patNum;
+	short				cwtv;
+	short				cmwt;
+	short				flags;
+	short				special;
 	
 	Byte				globalVol;
 	Byte				mixVol;
@@ -156,26 +156,26 @@ typedef struct ITForm
 	Byte				iTempo;
 	char				panSeparation;
 	char				null;
-	short			MsgLgth;
+	short				MsgLgth;
 	long				MsgOffset;
 	char				no2[ 4];
 	
 	char				chanPan[ 64];
 	char				chanVol[ 64];
 	
-	unsigned char  		*orders;
+	unsigned char		*orders;
 	long				*parapins;
 	long				*parapsamp;
 	long				*parappat;
 	
 	ITInsForm			*insdata;
-	ITSampForm		*sampdata;
+	ITSampForm			*sampdata;
 } ITForm;
 #if defined(powerc) || defined(__powerc) || defined(__APPLE__)
 #pragma options align=reset
 #endif
 
-
+#pragma mark Impulse Header Layout
 /*
 
 

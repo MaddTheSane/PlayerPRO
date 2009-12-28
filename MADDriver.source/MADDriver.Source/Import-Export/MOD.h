@@ -54,7 +54,7 @@ typedef struct MODDef
 	Byte numPointers;
 	Byte maxPointers;
 	Byte oPointers[ MAXPTRS];
-	long longFmtSignature;
+	OSType longFmtSignature;
 	struct MODPat patterns[];
 } MODDef;
 

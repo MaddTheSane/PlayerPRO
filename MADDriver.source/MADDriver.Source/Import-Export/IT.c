@@ -61,7 +61,7 @@ static inline Byte _mm_read_UBYTE( Ptr	*samplePtr)
 	return val;
 }
 
-static inline unsigned short ReadUS( Ptr	*samplePtr)
+static inline unsigned short ReadUS( Ptr *samplePtr)
 {
 	unsigned short result=_mm_read_UBYTE(samplePtr);
 	result|=((unsigned short)_mm_read_UBYTE(samplePtr))<<8;
@@ -233,7 +233,7 @@ static OSErr DecompressSample( short bits, Ptr reader, long length, Ptr destPtr)
 	ITPACK			status;
 	unsigned short	incnt;
 
-if( bits == 16) length/=2;
+	if( bits == 16) length/=2;
 
 while( length)
 {
@@ -280,7 +280,7 @@ while( length)
 	destPtr += result;
 }
 
-return noErr;
+	return noErr;
 }
 
 static inline void mystrcpy( Ptr a, BytePtr b)
@@ -290,7 +290,7 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 
 static Boolean ITcompMem( Ptr a, Ptr b, long s)
 {
-long 	i;
+	long i;
 
 	for( i = 0; i < s; i++)
 	{
@@ -304,10 +304,10 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 {
 	Byte		LoB1 = LOW( B1);
 	Byte		HiB1 = HI( B1);
+	Byte		B0X40 = B0 + 0x40;
 	
-	switch( B0 + 0x40)
+	switch( B0X40)
 	{
-		default:	*Cmd = 0;			*Arg = 0;		break;
 		// Speed
 		case 'A':	*Cmd = speedE;		*Arg = B1;	break;
 		// Tempo
@@ -376,7 +376,7 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 			}
 		break;
 
-		case 'G':	*Cmd = portamentoE;	*Arg = B1;	break;
+		case 'G':	*Cmd = portamentoE;		*Arg = B1;	break;
 		case 'H':	*Cmd = vibratoE;		*Arg = B1;	break;
 		
 		case 'J':
@@ -392,20 +392,20 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 		break;
 		case 'K':	*Cmd = vibratoslideE;	*Arg = B1;	break;
 		case 'L':	*Cmd = portaslideE;		*Arg = B1;	break;
-		case 'O':	*Cmd = offsetE;		*Arg = B1;	break;
+		case 'O':	*Cmd = offsetE;			*Arg = B1;	break;
 		
 		case 'S':		// Special Effects
 			switch( HiB1)
 			{
-				default:	*Cmd = 0;		*Arg = 0;							break;
-				case 2:	*Cmd = extendedE;	*Arg = 5 << 4;		*Arg += LoB1;		break;	// FineTune
-				case 3:	*Cmd = extendedE;	*Arg = 4 << 4;		*Arg += LoB1;		break;	// Set Vibrato WaveForm
-				case 4:	*Cmd = extendedE;	*Arg = 7 << 4;		*Arg += LoB1;		break;	// Set Tremolo WaveForm
-				case 8:	*Cmd = extendedE;	*Arg = 8 << 4;		*Arg += LoB1;		break;	// Set Panning
+				case 2:		*Cmd = extendedE;	*Arg = 5 << 4;		*Arg += LoB1;		break;	// FineTune
+				case 3:		*Cmd = extendedE;	*Arg = 4 << 4;		*Arg += LoB1;		break;	// Set Vibrato WaveForm
+				case 4:		*Cmd = extendedE;	*Arg = 7 << 4;		*Arg += LoB1;		break;	// Set Tremolo WaveForm
+				case 8:		*Cmd = extendedE;	*Arg = 8 << 4;		*Arg += LoB1;		break;	// Set Panning
 				case 0xB:	*Cmd = extendedE;	*Arg = 6 << 4;		*Arg += LoB1;		break;	// Loop pattern
-				case 0xC:	*Cmd = extendedE;	*Arg = 12 << 4;	*Arg += LoB1;		break;	// Cut sample
-				case 0xD:	*Cmd = extendedE;	*Arg = 13 << 4;	*Arg += LoB1;		break;	// Delay sample
-				case 0xE:	*Cmd = extendedE;	*Arg = 14 << 4;	*Arg += LoB1;		break;	// Delay pattern
+				case 0xC:	*Cmd = extendedE;	*Arg = 12 << 4;		*Arg += LoB1;		break;	// Cut sample
+				case 0xD:	*Cmd = extendedE;	*Arg = 13 << 4;		*Arg += LoB1;		break;	// Delay sample
+				case 0xE:	*Cmd = extendedE;	*Arg = 14 << 4;		*Arg += LoB1;		break;	// Delay pattern
+				default:	*Cmd = 0;			*Arg = 0;								break;
 			}
 		break;
 		
@@ -422,9 +422,10 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 			else
 			{
 				*Cmd = panningE;
-				 *Arg = B1;
+				*Arg = B1;
 			}
 		break;
+		default:	*Cmd = 0;			*Arg = 0;		break;
 	}
 }
 
@@ -489,12 +490,12 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	ITForm			ITinfo;
 	/********************************/
 	
-	ITinfo.orders = NULL;
-	ITinfo.parapins = NULL;
-	ITinfo.parappat = NULL;
-	ITinfo.insdata = NULL;
-	ITinfo.parapsamp = NULL;
-	ITinfo.sampdata = NULL;
+	ITinfo.orders		= NULL;
+	ITinfo.parapins		= NULL;
+	ITinfo.parappat		= NULL;
+	ITinfo.insdata		= NULL;
+	ITinfo.parapsamp	= NULL;
+	ITinfo.sampdata		= NULL;
 
 	
 	for( i = 0 ; i < 256; i ++)
@@ -508,13 +509,13 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	BlockMoveData( theITCopy, &ITinfo, sizeof( ITinfo));
 	theITCopy += 192;
 	
-	INT16(  &ITinfo.orderNum);
-	INT16(  &ITinfo.insNum);
-	INT16(  &ITinfo.smpNum);
-	INT16(  &ITinfo.patNum);
-	INT16(  &ITinfo.flags);
-	INT16(  &ITinfo.cwtv);
-	INT16(  &ITinfo.cmwt);
+	INT16( &ITinfo.orderNum);
+	INT16( &ITinfo.insNum);
+	INT16( &ITinfo.smpNum);
+	INT16( &ITinfo.patNum);
+	INT16( &ITinfo.flags);
+	INT16( &ITinfo.cwtv);
+	INT16( &ITinfo.cmwt);
 	
 	if( ITinfo.cmwt < 0x100) return -1;
 	
@@ -641,10 +642,10 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO IT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat			= ITinfo.patNum;
-	theMAD->header->numPointers	= ITinfo.orderNum;
-	theMAD->header->speed				= ITinfo.iSpeed;
-	theMAD->header->tempo				= ITinfo.iTempo;
-	theMAD->header->XMLinear			= useLinear;
+	theMAD->header->numPointers		= ITinfo.orderNum;
+	theMAD->header->speed			= ITinfo.iSpeed;
+	theMAD->header->tempo			= ITinfo.iTempo;
+	theMAD->header->XMLinear		= useLinear;
 	
 	//for(i=0; i<256; i++) theMAD->header->oPointers[ i] = 0;
 	for(i=0; i<ITinfo.orderNum; i++)
@@ -1375,11 +1376,9 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 static OSErr TestITFile( Ptr AlienFile)
 {
 	ITForm	*myIT = ( ITForm*) AlienFile;
-	OSType myID = myIT->ID;
-	MOT32(&myID);
 	
-	if( myID == 'IMPM') return noErr;
-	else return  MADFileNotSupportedByThisPlug;
+	if( ITcompMem( (Ptr) &myIT->ID, "IMPM", 4)) return noErr;
+	else return MADFileNotSupportedByThisPlug;
 }
 
 #ifndef _MAC_H
