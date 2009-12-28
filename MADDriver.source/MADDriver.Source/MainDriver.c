@@ -33,7 +33,11 @@
 extern void NSLog(CFStringRef format, ...);
 
 #ifdef _MIDIHARDWARE_
+#ifdef __MACH__
+#include <CoreMIDI/CoreMIDI.h>
+#elif MACOS9VERSION
 #include "OMS.h"
+#endif
 #endif
 
 #ifdef _MAC_H

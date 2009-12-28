@@ -50,15 +50,15 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 
 static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDriverSettings *init)
 {
-	SixSixNine 			*the669;
-	short 				i, PatMax, x, z;
-	long 					sndSize, OffSetToSample, OldTicks, temp;
+	SixSixNine			*the669;
+	short				i, PatMax, x, z;
+	long				sndSize, OffSetToSample, OldTicks, temp;
 	Ptr					MaxPtr;
 	OSErr				theErr;
 	Ptr					theInstrument[ 64], destPtr;
-	unsigned	short		tempS;
+	unsigned short		tempS;
 	short				Note, Octave;
-	Byte					*thePasByte;
+	Byte				*thePasByte;
 	
 	/**** Variables pour le MAD ****/
 	Cmd					*aCmd;
@@ -294,10 +294,11 @@ static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
 
 static OSErr Test669File( Ptr AlienFile)
 {
-SixSixNine	*the669 = (SixSixNine*) AlienFile;
+	SixSixNine	*the669 = (SixSixNine*) AlienFile;
 
-if( the669->marker == 0x6669 || the669->marker == 0x6966) return   noErr;
-else return  MADFileNotSupportedByThisPlug;
+	//This seems to be endian-safe...
+	if( the669->marker == 0x6669 || the669->marker == 0x6966) return   noErr;
+	else return  MADFileNotSupportedByThisPlug;
 }
 
 OSErr main669( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)

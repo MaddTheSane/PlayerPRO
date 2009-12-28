@@ -82,6 +82,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	theAMFRead = AMFCopyPtr;
 
 	READAMFFILE( &AMFType, 4);		// AMF Type
+	MOT32(&AMFType);
 	//TODO: Byte-swapping!
 	if( AMFType >= 0x414D460C ) pan = 32;
 	else pan = 16;
@@ -94,7 +95,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);	
 	if( theMAD->header == NULL) return MADNeedMemory;
 
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO AMF Plug (Â©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO AMF Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 
 	theMAD->header->MAD = 'MADK';
 
@@ -192,8 +193,7 @@ for( i = 0; i < noIns; i++)
 		OLDINSTRUMENT	oi;
 		
 		READAMFFILE( &oi, sizeof( OLDINSTRUMENT));
-		
-		
+				
 		BlockMoveData( oi.name, curIns->name, 32);
 		curIns->type = 0;
 		
@@ -206,14 +206,17 @@ for( i = 0; i < noIns; i++)
 			curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear( sizeof( sData), init);
 			
 			curData->size		= Tdecode32( &oi.size);
-			curData->loopBeg 	= oi.loopstart;
-			curData->loopSize 	= oi.loopend - oi.loopstart;
-			if( oi.loopend == 65535)
+			//FIXME: were loopstart and loopend supposed to be byteswapped on PowerPC?
+			ushort oiloopstart = Tdecode16( &oi.loopstart);
+			ushort oiloopend = Tdecode16( &oi.loopend);
+			curData->loopBeg 	= oiloopstart; 
+			curData->loopSize 	= oiloopend - oiloopstart;
+			if( oiloopend == 65535)
 			{
 				curData->loopSize = curData->loopBeg = 0;
 			}
 			curData->vol		= oi.volume;
-			curData->c2spd		= oi.rate;	//finetune[ oldMAD->fid[ i].fineTune];
+			curData->c2spd		= Tdecode16( &oi.rate);	//finetune[ oldMAD->fid[ i].fineTune];
 			curData->loopType	= 0;
 			curData->amp		= 8;
 			
@@ -303,9 +306,10 @@ return noErr;
 
 static OSErr TestAMFFile( Ptr AlienFile)
 {
-	unsigned long	*myMADSign = (unsigned long*) AlienFile;
+	OSType	myMADSign = *((unsigned long*) AlienFile);
+	MOT32(&myMADSign);
 	
-	if( (*myMADSign & 0xFFFFFF00) == 0x414D4600) return noErr;
+	if( (myMADSign & 0xFFFFFF00) == 0x414D4600) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 	
 	return noErr;

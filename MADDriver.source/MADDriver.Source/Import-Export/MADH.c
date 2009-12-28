@@ -105,10 +105,6 @@ static inline void MADHmystrcpy( Ptr a, BytePtr b)
 
 static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
-#ifdef __LITTLE_ENDIAN__
-	return MADFileNotSupportedByThisPlug;
-#endif
-	
 	short		i, x;
 	long		inOutCount, OffSetToSample = 0, z;
 	OSErr		theErr = noErr;
@@ -148,7 +144,7 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-	MADHmystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-H Plug (Â©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	MADHmystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-H Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 
 /**** Patterns *******/
 

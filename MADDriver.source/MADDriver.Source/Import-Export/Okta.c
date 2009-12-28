@@ -436,9 +436,10 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 
 static OSErr TestOKTAFile( Ptr AlienFile)
 {
-	long	*myOKTA = ( long*) AlienFile;
+	OSType myOKTA = *(( OSType*) AlienFile);
+	MOT32(&myOKTA);
 
-	if( *myOKTA == 'OKTA') return noErr;
+	if( myOKTA == 'OKTA') return noErr;
 	else return  MADFileNotSupportedByThisPlug;
 }
 

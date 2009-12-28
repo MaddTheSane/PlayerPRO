@@ -298,9 +298,11 @@ static OSErr ExtractULTInfo( PPInfoRec *info, Ptr AlienFile)
 static OSErr TestULTFile( Ptr AlienFile)
 {
 	ULTForm	*myULT = ( ULTForm*) AlienFile;
-
-	if( *((long *) myULT->ID) == 'MAS_') return   noErr;
-	else return  MADFileNotSupportedByThisPlug;
+	OSType ultID = *((OSType *) myULT->ID);
+	MOT32(&ultID);
+	
+	if( ultID == 'MAS_') return noErr;
+	else return MADFileNotSupportedByThisPlug;
 }
 
 OSErr mainULT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)

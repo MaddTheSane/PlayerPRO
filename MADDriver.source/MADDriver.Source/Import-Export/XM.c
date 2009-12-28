@@ -33,11 +33,10 @@
 #define IHSIZESMALL	33
 #define IHSSIZE		40
 
-static	Byte		LastAEffect[ MAXTRACK];
-static XMHEADER 	*mh;
-static Ptr			theXMRead, theXMMax;
+static		Byte		LastAEffect[ MAXTRACK];
+static		XMHEADER	*mh;
+static		Ptr			theXMRead, theXMMax;
 
-//FIXME: is this Endian-safe?
 #define READXMFILE(dst, size)	{BlockMoveData( theXMRead, dst, size);	theXMRead += (long) size;}
 #define WRITEXMFILE(src, size)	{BlockMoveData( src, theXMRead, size);	theXMRead += (long) size;}
 
@@ -640,7 +639,7 @@ static OSErr XM_Load( Ptr	theXM, long XMSize, MADMusic *theMAD, MADDriverSetting
 	
 	if( theMAD->header->numPointers > 128) theMAD->header->numPointers = 128;
 	
-	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO XM Plug (Â©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO XM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	for( i = 0; i < mh->songlength; i++)
 	{
@@ -1119,7 +1118,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 
 static inline Boolean compMem( Ptr a, Ptr b, long s)
 {
-long 	i;
+	long 	i;
 
 	for( i = 0; i < s; i++)
 	{
@@ -1225,7 +1224,7 @@ static OSErr ExtractXMInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	info->totalTracks = mh->numchn;
 	
-	if( mh->flags&1) strcpy( info->formatDescription, "XM Linear Plug");
+	if( mh->flags &1) strcpy( info->formatDescription, "XM Linear Plug");
 	else strcpy( info->formatDescription, "XM Log Plug");
 
 	return noErr;

@@ -68,19 +68,19 @@ static OSErr MADResetInstrument( InstrData		*curIns)
 
 static void TurnRadio( short	item, DialogPtr	dlog, Boolean alors)
 {
-Handle		itemHandle;
-short		itemType;
-Rect		itemRect;
+	Handle		itemHandle;
+	short		itemType;
+	Rect		itemRect;
 
-GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
+	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 
-if( alors) SetControlValue( (ControlHandle) itemHandle, 255);
-else SetControlValue( (ControlHandle) itemHandle, 0);
+	if( alors) SetControlValue( (ControlHandle) itemHandle, 255);
+	else SetControlValue( (ControlHandle) itemHandle, 0);
 }
 
 static void CopyResource( OSType type, short ID, short newID)
 {
-Handle	hRsrc;
+	Handle	hRsrc;
 
 	hRsrc = GetResource( type, ID);			DetachResource( hRsrc);
 	AddResource( hRsrc, type, newID, "\p");	WriteResource( hRsrc);
@@ -89,135 +89,135 @@ Handle	hRsrc;
 
 static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 {
-short 					i, maxInstru;
-long 					inOutCount, OffSetToSample;
-struct PatHeader		tempPatHeader;
-MADSpec					*MadHeader;
-
-/**** HEADER ****/
-MadFile->header = (MADSpec*) MADPlugNewPtr( sizeof( MADSpec), init);
-if( MadFile->header == NULL) return MADNeedMemory;
-
-OffSetToSample = 0;
-BlockMoveData( MADPtr, MadFile->header, sizeof( MADSpec));
-OffSetToSample += sizeof( MADSpec);
-
-MadHeader = MadFile->header;
-
-if( MadHeader->MAD != 'MADK') return MADFileNotSupportedByThisPlug;
-
-//////////////////
-
-MadFile->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
-if( !MadFile->fid) return MADNeedMemory;
-
-MadFile->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
-if( !MadFile->sample) return MADNeedMemory;
-
-
-/**** PARTITION ****/
-for( i = MadHeader->numPat; i < MAXPATTERN; i++) MadFile->partition[ i] = NULL;
-
-for( i = 0; i < MadHeader->numPat; i++)
-{
-	inOutCount = sizeof( PatHeader);
-	BlockMoveData( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
+	short 					i, maxInstru;
+	long 					inOutCount, OffSetToSample;
+	struct PatHeader		tempPatHeader;
+	MADSpec					*MadHeader;
 	
-	inOutCount = sizeof( PatHeader) + MadHeader->numChn * tempPatHeader.size * sizeof( Cmd);
-	MadFile->partition[ i] = (PatData*) MADPlugNewPtr( inOutCount, init);
-	if( MadFile->partition[ i] == NULL) return MADNeedMemory;
+	/**** HEADER ****/
+	MadFile->header = (MADSpec*) MADPlugNewPtr( sizeof( MADSpec), init);
+	if( MadFile->header == NULL) return MADNeedMemory;
 	
-	BlockMoveData( MADPtr + OffSetToSample, MadFile->partition[ i], inOutCount);
+	OffSetToSample = 0;
+	BlockMoveData( MADPtr, MadFile->header, sizeof( MADSpec));
+	OffSetToSample += sizeof( MADSpec);
+	
+	MadHeader = MadFile->header;
+	
+	if( MadHeader->MAD != 'MADK') return MADFileNotSupportedByThisPlug;
+	
+	//////////////////
+	
+	MadFile->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
+	if( !MadFile->fid) return MADNeedMemory;
+	
+	MadFile->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
+	if( !MadFile->sample) return MADNeedMemory;
+	
+	
+	/**** PARTITION ****/
+	for( i = MadHeader->numPat; i < MAXPATTERN; i++) MadFile->partition[ i] = NULL;
+	
+	for( i = 0; i < MadHeader->numPat; i++)
+	{
+		inOutCount = sizeof( PatHeader);
+		BlockMoveData( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
+		
+		inOutCount = sizeof( PatHeader) + MadHeader->numChn * tempPatHeader.size * sizeof( Cmd);
+		MadFile->partition[ i] = (PatData*) MADPlugNewPtr( inOutCount, init);
+		if( MadFile->partition[ i] == NULL) return MADNeedMemory;
+		
+		BlockMoveData( MADPtr + OffSetToSample, MadFile->partition[ i], inOutCount);
+		OffSetToSample += inOutCount;
+	}
+	
+	/**** INSTRUMENTS ****/
+	
+	inOutCount = sizeof( InstrData) * (long) MadFile->header->numInstru;
+	BlockMoveData( MADPtr + OffSetToSample, MadFile->fid, inOutCount);
 	OffSetToSample += inOutCount;
-}
-
-/**** INSTRUMENTS ****/
-
-inOutCount = sizeof( InstrData) * (long) MadFile->header->numInstru;
-BlockMoveData( MADPtr + OffSetToSample, MadFile->fid, inOutCount);
-OffSetToSample += inOutCount;
-
-for( i = MadFile->header->numInstru-1; i >= 0 ; i--)
-{
-	InstrData	*curIns = &MadFile->fid[ i];
 	
-	if( i != curIns->no)
+	for( i = MadFile->header->numInstru-1; i >= 0 ; i--)
 	{
-		MadFile->fid[ curIns->no] = *curIns;
-		MADResetInstrument( curIns);
-	}
-}
-MadFile->header->numInstru = MAXINSTRU;
-
-for( i = 0; i < MAXINSTRU ; i++)
-{
-	short x;
-	
-	for( x = 0; x < MadFile->fid[ i].numSamples ; x++)
-	{
-		sData	*curData;
-	
-		// ** Read Sample header **
+		InstrData	*curIns = &MadFile->fid[ i];
 		
-		curData = MadFile->sample[ i*MAXSAMPLE + x] = (sData*) MADPlugNewPtr( sizeof( sData), init);
-		if( curData == NULL) return MADNeedMemory;
-		
-		inOutCount = sizeof( sData);
-		
-		BlockMoveData( MADPtr + OffSetToSample, curData, inOutCount);
-		OffSetToSample += inOutCount;
-		
-		// ** Read Sample DATA
-		
-		inOutCount = curData->size;
-		
-		curData->data = MADPlugNewPtr( inOutCount, init);
-		if( curData->data == NULL) return MADNeedMemory;
-		
-		BlockMoveData( MADPtr + OffSetToSample, curData->data, inOutCount);
-		OffSetToSample += inOutCount;
-	}
-}
-
-for( i = 0; i < MAXINSTRU; i++) MadFile->fid[ i].firstSample = i * MAXSAMPLE;
-
-/*********************/
-
-{
-short	alpha, x;
-
-MadFile->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
-
-alpha = 0;
-
-for( i = 0; i < 10 ; i++)	// Global Effects
-{
-	if( MadFile->header->globalEffect[ i])
-	{
-		inOutCount = sizeof( FXSets);
-		BlockMoveData( MADPtr + OffSetToSample, &MadFile->sets[ alpha], inOutCount);
-		OffSetToSample += inOutCount;
-		alpha++;
-	}
-}
-
-for( i = 0; i < MadFile->header->numChn ; i++)	// Channel Effects
-{
-	for( x = 0; x < 4; x++)
-	{
-		if( MadFile->header->chanEffect[ i][ x])
+		if( i != curIns->no)
 		{
-			inOutCount = sizeof( FXSets);
-			BlockMoveData( MADPtr + OffSetToSample, &MadFile->sets[ alpha], inOutCount);
-			OffSetToSample += inOutCount;
-			alpha++;
+			MadFile->fid[ curIns->no] = *curIns;
+			MADResetInstrument( curIns);
 		}
 	}
-}
-
-}
-
-return( noErr);
+	MadFile->header->numInstru = MAXINSTRU;
+	
+	for( i = 0; i < MAXINSTRU ; i++)
+	{
+		short x;
+		
+		for( x = 0; x < MadFile->fid[ i].numSamples ; x++)
+		{
+			sData	*curData;
+			
+			// ** Read Sample header **
+			
+			curData = MadFile->sample[ i*MAXSAMPLE + x] = (sData*) MADPlugNewPtr( sizeof( sData), init);
+			if( curData == NULL) return MADNeedMemory;
+			
+			inOutCount = sizeof( sData);
+			
+			BlockMoveData( MADPtr + OffSetToSample, curData, inOutCount);
+			OffSetToSample += inOutCount;
+			
+			// ** Read Sample DATA
+			
+			inOutCount = curData->size;
+			
+			curData->data = MADPlugNewPtr( inOutCount, init);
+			if( curData->data == NULL) return MADNeedMemory;
+			
+			BlockMoveData( MADPtr + OffSetToSample, curData->data, inOutCount);
+			OffSetToSample += inOutCount;
+		}
+	}
+	
+	for( i = 0; i < MAXINSTRU; i++) MadFile->fid[ i].firstSample = i * MAXSAMPLE;
+	
+	/*********************/
+	
+	{
+		short	alpha, x;
+		
+		MadFile->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
+		
+		alpha = 0;
+		
+		for( i = 0; i < 10 ; i++)	// Global Effects
+		{
+			if( MadFile->header->globalEffect[ i])
+			{
+				inOutCount = sizeof( FXSets);
+				BlockMoveData( MADPtr + OffSetToSample, &MadFile->sets[ alpha], inOutCount);
+				OffSetToSample += inOutCount;
+				alpha++;
+			}
+		}
+		
+		for( i = 0; i < MadFile->header->numChn ; i++)	// Channel Effects
+		{
+			for( x = 0; x < 4; x++)
+			{
+				if( MadFile->header->chanEffect[ i][ x])
+				{
+					inOutCount = sizeof( FXSets);
+					BlockMoveData( MADPtr + OffSetToSample, &MadFile->sets[ alpha], inOutCount);
+					OffSetToSample += inOutCount;
+					alpha++;
+				}
+			}
+		}
+		
+	}
+	
+	return( noErr);
 }
 
 static OSErr TESTMADH( MADSpec* MADPtr)
@@ -228,7 +228,7 @@ static OSErr TESTMADH( MADSpec* MADPtr)
 
 static OSErr INFOMADF( MADSpec* MADPtr, PPInfoRec *info)
 {
-short	i;
+	short	i;
 
 	strcpy( info->internalFileName, MADPtr->name);
 	
@@ -289,10 +289,10 @@ static short ChooseCompilation()
 
 static OSErr SaveAPPL( short APPLType, short fRefNum, MADMusic *MadFile, MADDriverSettings *init)
 {
-OSErr					iErr;
-short					i, x;
-long					fileSize, inOutCount, tt;
-Handle					hRsrc;
+	OSErr			iErr;
+	short			i, x;
+	long			fileSize, inOutCount, tt;
+	Handle			hRsrc;
 
 
 	// We need to compute number of valid instruments !!! See above....
@@ -647,4 +647,3 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 #define PLUGMAIN mainAPPL
 #define PLUGINFACTORY APPLFactory
 #include "CFPlugin-bridge.c"
-

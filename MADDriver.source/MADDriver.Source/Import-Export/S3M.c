@@ -1163,9 +1163,9 @@ static OSErr TestS3MFile( Ptr AlienFile)
 	s3mform	*myS3M = ( s3mform*) AlienFile;
 
 	if(	myS3M->s3msig[ 0] == 'S' &&
-	   myS3M->s3msig[ 1] == 'C' &&
-	   myS3M->s3msig[ 2] == 'R' &&
-	   myS3M->s3msig[ 3] == 'M') return   noErr;
+		myS3M->s3msig[ 1] == 'C' &&
+		myS3M->s3msig[ 2] == 'R' &&
+		myS3M->s3msig[ 3] == 'M') return noErr;
 		else return  MADFileNotSupportedByThisPlug;
 }
 

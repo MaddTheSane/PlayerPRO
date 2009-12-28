@@ -21,17 +21,18 @@
 //
 /********************						***********************/
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#endif
+#ifndef __OKTA_H_
+#define __OKTA_H_
 
-typedef struct
+#pragma options align=mac68k
+
+typedef struct sectheader
 {
 	long	name;
 	long	length;
 } sectheader;
 
-typedef struct
+typedef struct OktaInstru
 {
       char				name[20];
       long				length;
@@ -42,7 +43,7 @@ typedef struct
       short 			pad2;
 } OktaInstru;
 
-typedef struct
+typedef struct OktaPattern
 {
 	Byte	b1;
 	Byte	b2;
@@ -59,25 +60,24 @@ typedef struct OktaHeader
 	long		SampleLen;
 	int			splitted[4];
 	
-	int samp_count;
-	int linesize;
-	int speed;
-  	int slen;
-  	int plen;
+	int		samp_count;
+	int		linesize;
+	int		speed;
+  	int		slen;
+  	int		plen;
 
-  Ptr	pbod[128];
-  int	pbodlen[128];
+	Ptr		pbod[128];
+	int		pbodlen[128];
        
-  unsigned char *patt;
-  int pointer;
-  int patty;
-  int nextpt;
-  int actspeed;
+	unsigned char *patt;
+	int		pointer;
+	int		patty;
+	int		nextpt;
+	int		actspeed;
 
-  int note[8];
-  int vol[8];
-  int per;
-
+	int		note[8];
+	int		vol[8];
+	int		per;
 } OktaHeader;
 
 static short FreqOktaTable[ 40] =
@@ -86,6 +86,6 @@ static short FreqOktaTable[ 40] =
 			0x01AC,0x0194,0x017D,0x0168,0x0154,0x0141,0x012F,0x011E,0x010E,0x00FE,0x00F0,0x00E3,
 			0x00D6,0x00CA,0x00BF,0x00B4,0x00AA,0x00A0,0x0097,0x008F,0x0087,0x007F,0x0078,0x0071
 		};
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
 #pragma options align=reset
+
 #endif

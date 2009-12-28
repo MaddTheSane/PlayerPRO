@@ -1194,7 +1194,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 				{
 					aCmd = GetMADCommand( Row, z, theMAD->partition[ i]);
 					
-					aCmd->note		= 0xFF;
+					aCmd->note			= 0xFF;
 					aCmd->ins			= 0;
 					aCmd->cmd			= 0;
 					aCmd->arg			= 0;

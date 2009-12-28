@@ -52,7 +52,7 @@ void ConvertInstrument( register	Byte	*tempPtr,	register long sSize)
 	}
 }
 
-void ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize)
+void ConvertInstrumentIn( register Byte *tempPtr, register long sSize)
 {
 	register	Byte			val = 0x80;
 
@@ -63,6 +63,45 @@ void ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize)
 	}
 }
 
+void ConvertInstrument16( register short *tempPtr, register long sSize)
+{
+	register	short			val = 0x8000;
+	
+	sSize /= 2;
+	
+	while( sSize > 0)
+	{
+		sSize--;
+		*(tempPtr++) += val;
+	}
+}
+
+void ConvertInstrumentIn16( register short *tempPtr, register long sSize)
+{
+	register short val = 0x8000;
+	 
+	sSize /= 2;
+	 
+	while( sSize > 0)
+	{
+		 sSize--;
+		 *tempPtr++ -= val;
+	}
+}
+
+void ConvertInstrumentOut16( register short *tempPtr, register long sSize)
+{
+	/*	register	short			val = 0x8000;
+	 
+	 sSize /= 2;
+	 
+	 while( sSize > 0)
+	 {
+	 sSize--;
+	 *tempPtr++ += val;
+	 }*/
+	ConvertInstrument16(tempPtr, sSize);
+}
 
 /*long DoVolPanning( short whichChannel, Channel *ch, MADDriverRec *intDriver)	// MAX = 64
 {

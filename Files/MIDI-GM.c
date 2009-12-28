@@ -7,6 +7,7 @@
 #include <QuickTime/QuickTime.h>
 
 #include "PPDefs.h"
+#include "WAV.h"
 
 #include "dlsmac.h"
 #include "dls.h"
@@ -70,47 +71,6 @@
 #else
 #define	GetNEUnsignedFixed(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
-
-typedef struct InfoRec{
-	Str255	name;
-	Str32	smpls;
-	Str32	dataBits;
-	Str32	stereo;
-}InfoRec;
-typedef InfoRec *InfoPtr;
-typedef InfoPtr *InfoHnd;
-
-
-typedef struct _MMCKINFO{
-	FOURCC		ckid;
-	DWORD		cksize;
-	FOURCC		fccType;
-	DWORD		dwDataOffset;
-	WORD		dwFlags;
-}MMCKINFO;
-
-typedef struct waveformat_tag{
-	WORD		wFormatTag;
-	WORD		nCannels;
-	DWORD		nSamplesPerSec;
-	DWORD		nAvgBytesPerSec;
-	WORD		nBlockAlign;
-	WORD		wBitsPerSample;
-}WAVEFORMAT;
-
-
-typedef struct _CK{
-	FOURCC		ckid;
-	DWORD		cksize;
-}CK;
-
-typedef struct _MyAtom{
-	long		pos;
-	long		id;
-	long		size;
-	short		ref;
-}MyAtom;
-
 
 void ConvertInstrument( register	Byte	*tempPtr,	register long sSize);
 void ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);

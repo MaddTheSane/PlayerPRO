@@ -30,15 +30,9 @@
 
 unsigned char* MYC2PStr( Ptr cStr);
 
-/*void MyDebugStr( short, Ptr a, Ptr b)
-{
-	MYC2PStr( b);
-	DebugStr( (unsigned char*) b);
-}*/
-
 Boolean compMem( Ptr a, Ptr b, long s)
 {
-long 	i;
+	long 	i;
 
 	for( i = 0; i < s; i++)
 	{
