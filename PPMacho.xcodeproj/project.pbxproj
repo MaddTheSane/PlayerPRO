@@ -408,6 +408,7 @@
 		55EE8C741003E83A00E75E63 /* General-rez.r in Rez */ = {isa = PBXBuildFile; fileRef = 55EE8C731003E83A00E75E63 /* General-rez.r */; };
 		55EE8EC2100404EB00E75E63 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBC100404EB00E75E63 /* CoreAudio.framework */; };
 		55EE8EC6100404EB00E75E63 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
+		55F9E65910E9829900DBDE92 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55FA5FBB102D2D6C00CB63DA /* ppApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55FA5FBA102D2D6C00CB63DA /* ppApp.icns */; };
 		55FA5FCA102D31BA00CB63DA /* PlayerHeaders.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4770C2F21E400D6C081 /* PlayerHeaders.c */; };
 		55FD861E10B22C2300F8BDE6 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
@@ -484,7 +485,6 @@
 		88E0C47E0C2F21E400D6C081 /* RDriverInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47D0C2F21E400D6C081 /* RDriverInt.h */; };
 		88E0C4800C2F21E400D6C081 /* PPPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* PPPlug.h */; };
 		88E0C4820C2F21E400D6C081 /* VA.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4810C2F21E400D6C081 /* VA.h */; };
-		88E0C4840C2F21E400D6C081 /* asiodrivers.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4830C2F21E400D6C081 /* asiodrivers.h */; };
 		88E0C4860C2F21E400D6C081 /* VideoToolbox.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4850C2F21E400D6C081 /* VideoToolbox.h */; };
 		88E0C4880C2F21E400D6C081 /* dlsmac.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4870C2F21E400D6C081 /* dlsmac.h */; };
 		88E0C48A0C2F21E400D6C081 /* dls.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4890C2F21E400D6C081 /* dls.h */; };
@@ -563,9 +563,6 @@
 		88E0C51F0C2F21E600D6C081 /* ZoomRect.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C51E0C2F21E600D6C081 /* ZoomRect.proto.h */; };
 		88E0C5210C2F21E600D6C081 /* QuicktimeWindow.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5200C2F21E600D6C081 /* QuicktimeWindow.proto.h */; };
 		88E0C5230C2F21E600D6C081 /* Equalizer.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5220C2F21E600D6C081 /* Equalizer.proto.h */; };
-		88E0C5250C2F21E600D6C081 /* ginclude.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5240C2F21E600D6C081 /* ginclude.h */; };
-		88E0C5270C2F21E600D6C081 /* codefragments.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5260C2F21E600D6C081 /* codefragments.hpp */; };
-		88E0C5290C2F21E600D6C081 /* asiolist.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5280C2F21E600D6C081 /* asiolist.h */; };
 		88E0C52B0C2F21E600D6C081 /* AtomInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C52A0C2F21E600D6C081 /* AtomInfo.h */; };
 		88E0C52D0C2F21E600D6C081 /* AEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C52C0C2F21E600D6C081 /* AEffect.h */; };
 /* End PBXBuildFile section */
@@ -1198,7 +1195,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
 		55B797E110D6E6D00073E379 /* PBXContainerItemProxy */ = {
@@ -1396,6 +1393,8 @@
 		554240C810DBF91300C08864 /* CFPlugin-DigitalBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-DigitalBridge.c"; sourceTree = "<group>"; };
 		5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ByteUtils.h; path = Files/ByteUtils.h; sourceTree = "<group>"; };
 		5547CE5E10C6E5490041DEF6 /* ByteUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = ByteUtils.c; path = Files/ByteUtils.c; sourceTree = "<group>"; };
+		55486BF710E9728B00B96B1C /* ASIO.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ASIO.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		55486BF810E9728B00B96B1C /* ASIO-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ASIO-Info.plist"; sourceTree = "<group>"; };
 		554E0FDF10D6C79D00BB619C /* All.µ */ = {isa = PBXFileReference; lastKnownFileType = file; path = "All.µ"; sourceTree = "<group>"; };
 		554E0FE010D6C79D00BB619C /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 1; path = Carbon.r; sourceTree = "<group>"; };
 		554E0FE110D6C79D00BB619C /* CompFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = CompFade.c; sourceTree = "<group>"; };
@@ -1682,7 +1681,6 @@
 		88E0C47D0C2F21E400D6C081 /* RDriverInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = RDriverInt.h; path = MADDriver.source/MADDriver.Source/RDriverInt.h; sourceTree = SOURCE_ROOT; };
 		88E0C47F0C2F21E400D6C081 /* PPPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = PPPlug.h; path = MADDriver.source/MADDriver.Source/PPPlug.h; sourceTree = SOURCE_ROOT; };
 		88E0C4810C2F21E400D6C081 /* VA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = VA.h; path = Files/VA.h; sourceTree = SOURCE_ROOT; };
-		88E0C4830C2F21E400D6C081 /* asiodrivers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = asiodrivers.h; path = Files/asiosdk2/host/asiodrivers.h; sourceTree = SOURCE_ROOT; };
 		88E0C4850C2F21E400D6C081 /* VideoToolbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = VideoToolbox.h; path = Files/VideoToolbox.h; sourceTree = SOURCE_ROOT; };
 		88E0C4870C2F21E400D6C081 /* dlsmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = dlsmac.h; path = Files/dlsmac.h; sourceTree = SOURCE_ROOT; };
 		88E0C4890C2F21E400D6C081 /* dls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = dls.h; path = Files/dls.h; sourceTree = SOURCE_ROOT; };
@@ -1761,9 +1759,6 @@
 		88E0C51E0C2F21E600D6C081 /* ZoomRect.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = ZoomRect.proto.h; path = "(Proto)/ZoomRect.proto.h"; sourceTree = "<group>"; };
 		88E0C5200C2F21E600D6C081 /* QuicktimeWindow.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = QuicktimeWindow.proto.h; path = "(Proto)/QuicktimeWindow.proto.h"; sourceTree = "<group>"; };
 		88E0C5220C2F21E600D6C081 /* Equalizer.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = Equalizer.proto.h; path = "(Proto)/Equalizer.proto.h"; sourceTree = "<group>"; };
-		88E0C5240C2F21E600D6C081 /* ginclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = ginclude.h; path = Files/asiosdk2/host/ginclude.h; sourceTree = SOURCE_ROOT; };
-		88E0C5260C2F21E600D6C081 /* codefragments.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 1; name = codefragments.hpp; path = Files/asiosdk2/host/mac/codefragments.hpp; sourceTree = SOURCE_ROOT; };
-		88E0C5280C2F21E600D6C081 /* asiolist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = asiolist.h; path = Files/asiosdk2/host/pc/asiolist.h; sourceTree = SOURCE_ROOT; };
 		88E0C52A0C2F21E600D6C081 /* AtomInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = AtomInfo.h; path = Files/AtomInfo.h; sourceTree = SOURCE_ROOT; };
 		88E0C52C0C2F21E600D6C081 /* AEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = AEffect.h; path = Files/VSTHeaders/AEffect.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -1870,6 +1865,14 @@
 				553341F610BB600A005208D1 /* Carbon.framework in Frameworks */,
 				55096A4910E0A797000EFFE6 /* CoreServices.framework in Frameworks */,
 				55096A4A10E0A798000EFFE6 /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55486BF510E9728B00B96B1C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55F9E65910E9829900DBDE92 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3098,6 +3101,7 @@
 				88E0C4950C2F21E500D6C081 /* Frameworks */,
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 				5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */,
+				55486BF810E9728B00B96B1C /* ASIO-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -3150,6 +3154,7 @@
 				551FEA6B10E727AD00EDF2F1 /* MINs.plugin */,
 				551FEADA10E727B100EDF2F1 /* PAT.plugin */,
 				551FECC510E7354900EDF2F1 /* AutoExec.app */,
+				55486BF710E9728B00B96B1C /* ASIO.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3287,7 +3292,6 @@
 				88E0C47D0C2F21E400D6C081 /* RDriverInt.h */,
 				88E0C47F0C2F21E400D6C081 /* PPPlug.h */,
 				88E0C4810C2F21E400D6C081 /* VA.h */,
-				88E0C4830C2F21E400D6C081 /* asiodrivers.h */,
 				88E0C4850C2F21E400D6C081 /* VideoToolbox.h */,
 				88E0C4870C2F21E400D6C081 /* dlsmac.h */,
 				88E0C4890C2F21E400D6C081 /* dls.h */,
@@ -3297,9 +3301,6 @@
 				88E0C4910C2F21E500D6C081 /* SoundJamAPI.h */,
 				88E0C4930C2F21E500D6C081 /* aeffectx.h */,
 				88E0C4980C2F21E500D6C081 /* MIDI.h */,
-				88E0C5240C2F21E600D6C081 /* ginclude.h */,
-				88E0C5260C2F21E600D6C081 /* codefragments.hpp */,
-				88E0C5280C2F21E600D6C081 /* asiolist.h */,
 				88E0C52A0C2F21E600D6C081 /* AtomInfo.h */,
 				88E0C52C0C2F21E600D6C081 /* AEffect.h */,
 				5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */,
@@ -3358,7 +3359,6 @@
 				88E0C47E0C2F21E400D6C081 /* RDriverInt.h in Headers */,
 				88E0C4800C2F21E400D6C081 /* PPPlug.h in Headers */,
 				88E0C4820C2F21E400D6C081 /* VA.h in Headers */,
-				88E0C4840C2F21E400D6C081 /* asiodrivers.h in Headers */,
 				88E0C4860C2F21E400D6C081 /* VideoToolbox.h in Headers */,
 				88E0C4880C2F21E400D6C081 /* dlsmac.h in Headers */,
 				88E0C48A0C2F21E400D6C081 /* dls.h in Headers */,
@@ -3436,9 +3436,6 @@
 				88E0C51F0C2F21E600D6C081 /* ZoomRect.proto.h in Headers */,
 				88E0C5210C2F21E600D6C081 /* QuicktimeWindow.proto.h in Headers */,
 				88E0C5230C2F21E600D6C081 /* Equalizer.proto.h in Headers */,
-				88E0C5250C2F21E600D6C081 /* ginclude.h in Headers */,
-				88E0C5270C2F21E600D6C081 /* codefragments.hpp in Headers */,
-				88E0C5290C2F21E600D6C081 /* asiolist.h in Headers */,
 				88E0C52B0C2F21E600D6C081 /* AtomInfo.h in Headers */,
 				88E0C52D0C2F21E600D6C081 /* AEffect.h in Headers */,
 				550B011410BA1E1C004FC5D7 /* PPPrivate.h in Headers */,
@@ -3659,6 +3656,23 @@
 			name = IT;
 			productName = MOD;
 			productReference = 553341FC10BB600A005208D1 /* IT.ppimpexp */;
+			productType = "com.apple.product-type.bundle";
+		};
+		55486BF610E9728B00B96B1C /* ASIO */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55486BFB10E9728D00B96B1C /* Build configuration list for PBXNativeTarget "ASIO" */;
+			buildPhases = (
+				55486BF310E9728B00B96B1C /* Resources */,
+				55486BF410E9728B00B96B1C /* Sources */,
+				55486BF510E9728B00B96B1C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ASIO;
+			productName = ASIO;
+			productReference = 55486BF710E9728B00B96B1C /* ASIO.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		554E10F710D6F09F00BB619C /* Fade Note */ = {
@@ -4398,6 +4412,7 @@
 				557DE90D10E08DB000177B4C /* Silence */,
 				557DE95010E08DB900177B4C /* Smooth */,
 				557DE99310E08DC100177B4C /* Tone Generator */,
+				55486BF610E9728B00B96B1C /* ASIO */,
 			);
 		};
 /* End PBXProject section */
@@ -4478,6 +4493,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		553341F110BB600A005208D1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55486BF310E9728B00B96B1C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -5197,6 +5219,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5533422410BB6675005208D1 /* IT.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55486BF410E9728B00B96B1C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6592,6 +6621,50 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = IT;
 				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = Debug;
+		};
+		55486BF910E9728C00B96B1C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = "ASIO-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = ASIO;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		55486BFA10E9728C00B96B1C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "ASIO-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = ASIO;
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
@@ -8302,6 +8375,15 @@
 			buildConfigurations = (
 				553341F910BB600A005208D1 /* Release */,
 				553341FA10BB600A005208D1 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55486BFB10E9728D00B96B1C /* Build configuration list for PBXNativeTarget "ASIO" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55486BF910E9728C00B96B1C /* Release */,
+				55486BFA10E9728C00B96B1C /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

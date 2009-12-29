@@ -5,7 +5,7 @@
 	#undef BEOS 
 	#undef MAC 
 	#undef WINDOWS
-	//
+//
 	#define ASIO_BIG_ENDIAN 1
 	#define ASIO_CPU_MIPS 1
 #elif defined WIN32
@@ -21,14 +21,20 @@
 	#undef WINDOWS
 	#define ASIO_LITTLE_ENDIAN 1
 	#define ASIO_CPU_X86 1
-	//
+//
 #else
 	#define MAC 1
 	#undef BEOS 
 	#undef WINDOWS
 	#undef SGI
-	#define ASIO_BIG_ENDIAN 1
+#ifdef __ppc__
 	#define ASIO_CPU_PPC 1
+	#define ASIO_BIG_ENDIAN 1
+#endif
+#ifdef __i386__
+	#define ASIO_CPU_X86 1
+	#define ASIO_LITTLE_ENDIAN 1
+#endif
 #endif
 
 // always
