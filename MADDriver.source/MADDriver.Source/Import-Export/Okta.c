@@ -24,27 +24,27 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include "Okta.h"
 
+#ifdef _MAC_H
+#define decode16(msg_buf) EndianU16_LtoN(*msg_buf)
+#else
 static inline UInt16 decode16 (void *msg_buf)
 {
-#ifdef _MAC_H
-	return EndianU16_LtoN(*(UInt16*)msg_buf);
-#else
 	UInt16 toswap = *((UInt16*) msg_buf);
 	INT16(&toswap);
 	return toswap;	
-#endif
 }
+#endif
 
+#ifdef _MAC_H
+#define decode32(msg_buf) EndianU32_LtoN(*msg_buf)
+#else
 static inline UInt32 decode32 (void *msg_buf)
 {
-#ifdef _MAC_H
-	return EndianU32_LtoN(*(UInt32*)msg_buf);
-#else
 	UInt32 toswap = *((UInt32*) msg_buf);
 	INT32(&toswap);
 	return toswap;
-#endif
 }
+#endif
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
@@ -78,12 +78,12 @@ short	NCount = 1;
 static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short 				i, PatMax, x, z, channel, TrueTracks;
-	long 					sndSize, OffSetToSample, OldTicks, temp, starting;
+	long 				sndSize, OffSetToSample, OldTicks, temp, starting;
 	Ptr					MaxPtr, theOktaPos;
 	OSErr				theErr;
 	Ptr					theInstrument[ 120], destPtr;
-	unsigned	short		tempS;
-	char					tempChar;
+	unsigned short		tempS;
+	char				tempChar;
 	
 	
 	/**** Variables pour le MAD ****/

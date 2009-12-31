@@ -24,16 +24,6 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include "MOD.h"
 
-#define kMODPlugID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x86, 0xC7, 0x43, 0x00, 0x93, 0x96, 0x4E, 0x68, 0x9B, 0x3F, 0x02, 0xCE, 0x56,0x26, 0xA7, 0xC6)) 
-//86C74300-9396-4E68-9B3F-02CE5626A7C6
-
-typedef struct _MODPlugType {
-	MADFileFormatPlugin *_PPROCFPlugFormat;
-	CFUUIDRef _factoryID;
-	UInt32 _refCount;
-} MODPlugType;
-
-
 static short FoundNote( short Period)
 {
 	short 			note;
@@ -1023,134 +1013,9 @@ OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	return myErr;
 }
 
-static void _deallocMODPlugType( MODPlugType *myInstance );
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x86, 0xC7, 0x43, 0x00, 0x93, 0x96, 0x4E, 0x68, 0x9B, 0x3F, 0x02, 0xCE, 0x56,0x26, 0xA7, 0xC6)) 
+//86C74300-9396-4E68-9B3F-02CE5626A7C6
+#define PLUGMAIN mainMOD
+#define PLUGINFACTORY ModFactory
 
-
-static HRESULT MODPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
-{
-    //  Create a CoreFoundation UUIDRef for the requested interface.
-	
-    CFUUIDRef interfaceID = CFUUIDCreateFromUUIDBytes( kCFAllocatorDefault, iid );
-	
-    // Test the requested ID against the valid interfaces.
-	
-    if( CFEqual( interfaceID, kPlayerPROModFormatInterfaceID ) ) 
-	{
-		
-        //  If the TestInterface was requested, bump the ref count, set the ppv parameter
-        //  equal to the instance, and return good status.
-		
-        ( (MODPlugType *) myInstance )->_PPROCFPlugFormat->AddRef( myInstance );
-        *ppv = myInstance;
-        CFRelease( interfaceID );
-        return S_OK;
-    }
-    else if( CFEqual( interfaceID, IUnknownUUID ) ) 
-	{
-		
-        //  If the IUnknown interface was requested, same as above.
-		
-        ( (MODPlugType *) myInstance )->_PPROCFPlugFormat->AddRef( myInstance );
-        *ppv = myInstance;
-        CFRelease( interfaceID );
-        return S_OK;
-    }
-    else 
-	{
-		
-        //  Requested interface unknown, bail with error.
-		
-        *ppv = NULL;
-        CFRelease( interfaceID );
-        return E_NOINTERFACE;
-    }
-}
-
-static ULONG MODPlugAddRef( void *myInstance )
-{
-    ( (MODPlugType *) myInstance )->_refCount += 1;
-    return ( (MODPlugType *) myInstance )->_refCount;
-}
-
-// -------------------------------------------------------------------------------------------
-//
-//  When an interface is released, decrement the refCount.
-//  If the refCount goes to zero, deallocate the instance.
-//
-
-static ULONG MODPlugRelease( void *myInstance )
-{
-    ( (MODPlugType *) myInstance )->_refCount -= 1;
-    if ( ( (MODPlugType *) myInstance )->_refCount == 0 ) {
-        _deallocMODPlugType( (MODPlugType *) myInstance );
-        return 0;
-    }
-    else
-        return ( (MODPlugType *) myInstance )->_refCount;
-}
-
-static MADFileFormatPlugin MODPlugFormat =
-{
-	NULL,
-	MODPlugQueryInterface,
-	MODPlugAddRef,
-	MODPlugRelease,
-	mainMOD
-};
-
-static MODPlugType *_allocMODPlugType( CFUUIDRef factoryID )
-{
-    //  Allocate memory for the new instance.
-	
-    MODPlugType *newOne = (MODPlugType *)malloc( sizeof(MODPlugType) );
-	
-    //  Point to the function table
-	
-    newOne->_PPROCFPlugFormat = &MODPlugFormat;
-	
-    //  Retain and keep an open instance refcount for each factory.
-	
-    if (factoryID) {
-        newOne->_factoryID = (CFUUIDRef)CFRetain( factoryID );
-        CFPlugInAddInstanceForFactory( factoryID );
-    }
-	
-    //  This function returns the IUnknown interface so set the refCount to one.
-	
-    newOne->_refCount = 1;
-    return newOne;
-}
-
-// -------------------------------------------------------------------------------------------
-//
-//  Utility function that deallocates the instance when the refCount goes to zero.
-//
-
-static void _deallocMODPlugType( MODPlugType *myInstance )
-{
-    CFUUIDRef factoryID = myInstance->_factoryID;
-    free( myInstance );
-    if ( factoryID ) {
-        CFPlugInRemoveInstanceForFactory( factoryID );
-        CFRelease( factoryID );
-    }
-}
-
-EXP void * ModFactory( CFAllocatorRef allocator, CFUUIDRef typeID )
-{
-	
-    //  If correct type is being requested, allocate an instance of TestType and return
-    //  the IUnknown interface.
-	
-    if ( CFEqual( typeID, kPlayerPROModFormatTypeID ) ) {
-        MODPlugType *result = _allocMODPlugType( kMODPlugID );
-        return result;
-    }
-    else {
-		
-        // If the requested type is incorrect, return NULL.
-		
-        return NULL;
-    }
-}
-
+#include "CFPlugin-bridge.c"

@@ -408,7 +408,6 @@
 		55EE8C741003E83A00E75E63 /* General-rez.r in Rez */ = {isa = PBXBuildFile; fileRef = 55EE8C731003E83A00E75E63 /* General-rez.r */; };
 		55EE8EC2100404EB00E75E63 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBC100404EB00E75E63 /* CoreAudio.framework */; };
 		55EE8EC6100404EB00E75E63 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
-		55F9E65910E9829900DBDE92 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55FA5FBB102D2D6C00CB63DA /* ppApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55FA5FBA102D2D6C00CB63DA /* ppApp.icns */; };
 		55FA5FCA102D31BA00CB63DA /* PlayerHeaders.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4770C2F21E400D6C081 /* PlayerHeaders.c */; };
 		55FD861E10B22C2300F8BDE6 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
@@ -1330,6 +1329,7 @@
 		551FED0010E7358D00EDF2F1 /* Test.MOD */ = {isa = PBXFileReference; lastKnownFileType = file; path = Test.MOD; sourceTree = "<group>"; };
 		551FED0110E7358D00EDF2F1 /* TestMADH.MADH */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestMADH.MADH; sourceTree = "<group>"; };
 		551FED0E10E7365600EDF2F1 /* Exemple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Exemple.h; sourceTree = "<group>"; };
+		5528625010E9A7FC00BF8792 /* Mac-ASIO.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = "Mac-ASIO.c"; sourceTree = "<group>"; };
 		552C70C310CDAFBC00C0E0D4 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; path = TODO.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
 		552C70C610CDB07E00C0E0D4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; path = LICENSE.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
 		552C716210CDC11400C0E0D4 /* README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = README.rtf; sourceTree = "<group>"; };
@@ -1393,8 +1393,6 @@
 		554240C810DBF91300C08864 /* CFPlugin-DigitalBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-DigitalBridge.c"; sourceTree = "<group>"; };
 		5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ByteUtils.h; path = Files/ByteUtils.h; sourceTree = "<group>"; };
 		5547CE5E10C6E5490041DEF6 /* ByteUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = ByteUtils.c; path = Files/ByteUtils.c; sourceTree = "<group>"; };
-		55486BF710E9728B00B96B1C /* ASIO.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ASIO.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		55486BF810E9728B00B96B1C /* ASIO-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ASIO-Info.plist"; sourceTree = "<group>"; };
 		554E0FDF10D6C79D00BB619C /* All.µ */ = {isa = PBXFileReference; lastKnownFileType = file; path = "All.µ"; sourceTree = "<group>"; };
 		554E0FE010D6C79D00BB619C /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 1; path = Carbon.r; sourceTree = "<group>"; };
 		554E0FE110D6C79D00BB619C /* CompFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = CompFade.c; sourceTree = "<group>"; };
@@ -1632,7 +1630,7 @@
 		88E0C3EB0C2F21DD00D6C081 /* FourierNEW.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = FourierNEW.c; path = Files/FourierNEW.c; sourceTree = SOURCE_ROOT; };
 		88E0C3EC0C2F21DD00D6C081 /* Functions.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = Functions.c; path = Files/Functions.c; sourceTree = SOURCE_ROOT; };
 		88E0C3ED0C2F21DD00D6C081 /* G3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = G3.c; path = Files/G3.c; sourceTree = SOURCE_ROOT; };
-		88E0C3EE0C2F21DD00D6C081 /* Help.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = Help.c; path = Files/Help.c; sourceTree = SOURCE_ROOT; };
+		88E0C3EE0C2F21DD00D6C081 /* Help.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = Help.c; path = Files/Help.c; sourceTree = SOURCE_ROOT; };
 		88E0C3EF0C2F21DD00D6C081 /* Help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = Help.h; path = Files/Help.h; sourceTree = SOURCE_ROOT; };
 		88E0C3F00C2F21DD00D6C081 /* HelpOnline.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = HelpOnline.c; path = Files/HelpOnline.c; sourceTree = SOURCE_ROOT; };
 		88E0C3F10C2F21DD00D6C081 /* InstruList.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = InstruList.c; sourceTree = "<group>"; };
@@ -1865,14 +1863,6 @@
 				553341F610BB600A005208D1 /* Carbon.framework in Frameworks */,
 				55096A4910E0A797000EFFE6 /* CoreServices.framework in Frameworks */,
 				55096A4A10E0A798000EFFE6 /* CoreFoundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55486BF510E9728B00B96B1C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				55F9E65910E9829900DBDE92 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3013,19 +3003,20 @@
 		55868B1810BFC0BB00FCC24D /* Main Driver Source */ = {
 			isa = PBXGroup;
 			children = (
-				550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */,
 				550B011310BA1E1C004FC5D7 /* PPPrivate.h */,
 				88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */,
 				5573A46D10B51CAB00FF8B50 /* ByteSwap.c */,
 				88E0C3D10C2F21DD00D6C081 /* Effects.c */,
 				88E0C3D20C2F21DD00D6C081 /* Interrupt.c */,
+				5528625010E9A7FC00BF8792 /* Mac-ASIO.c */,
 				88E0C3D30C2F21DD00D6C081 /* Mac-FileUtils.c */,
 				88E0C3D40C2F21DD00D6C081 /* Mac-PlugImport.c */,
-				55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */,
 				88E0C3D50C2F21DD00D6C081 /* Mac-SoundManager.c */,
 				88E0C3D60C2F21DD00D6C081 /* MainDriver.c */,
 				88E0C3D80C2F21DD00D6C081 /* MySndPlayDB.h */,
 				88E0C3D70C2F21DD00D6C081 /* MySndPlayDB.c */,
+				550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */,
+				55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */,
 				88E0C3D90C2F21DD00D6C081 /* OutPut8.c */,
 				88E0C3DA0C2F21DD00D6C081 /* realft.c */,
 				88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */,
@@ -3101,7 +3092,6 @@
 				88E0C4950C2F21E500D6C081 /* Frameworks */,
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 				5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */,
-				55486BF810E9728B00B96B1C /* ASIO-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -3154,7 +3144,6 @@
 				551FEA6B10E727AD00EDF2F1 /* MINs.plugin */,
 				551FEADA10E727B100EDF2F1 /* PAT.plugin */,
 				551FECC510E7354900EDF2F1 /* AutoExec.app */,
-				55486BF710E9728B00B96B1C /* ASIO.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3656,23 +3645,6 @@
 			name = IT;
 			productName = MOD;
 			productReference = 553341FC10BB600A005208D1 /* IT.ppimpexp */;
-			productType = "com.apple.product-type.bundle";
-		};
-		55486BF610E9728B00B96B1C /* ASIO */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 55486BFB10E9728D00B96B1C /* Build configuration list for PBXNativeTarget "ASIO" */;
-			buildPhases = (
-				55486BF310E9728B00B96B1C /* Resources */,
-				55486BF410E9728B00B96B1C /* Sources */,
-				55486BF510E9728B00B96B1C /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ASIO;
-			productName = ASIO;
-			productReference = 55486BF710E9728B00B96B1C /* ASIO.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		554E10F710D6F09F00BB619C /* Fade Note */ = {
@@ -4412,7 +4384,6 @@
 				557DE90D10E08DB000177B4C /* Silence */,
 				557DE95010E08DB900177B4C /* Smooth */,
 				557DE99310E08DC100177B4C /* Tone Generator */,
-				55486BF610E9728B00B96B1C /* ASIO */,
 			);
 		};
 /* End PBXProject section */
@@ -4493,13 +4464,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		553341F110BB600A005208D1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55486BF310E9728B00B96B1C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -5219,13 +5183,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5533422410BB6675005208D1 /* IT.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55486BF410E9728B00B96B1C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6621,50 +6578,6 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = IT;
 				WRAPPER_EXTENSION = ppimpexp;
-			};
-			name = Debug;
-		};
-		55486BF910E9728C00B96B1C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = "ASIO-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
-				PRODUCT_NAME = ASIO;
-				WRAPPER_EXTENSION = bundle;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		55486BFA10E9728C00B96B1C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = "ASIO-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
-				PRODUCT_NAME = ASIO;
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
@@ -8375,15 +8288,6 @@
 			buildConfigurations = (
 				553341F910BB600A005208D1 /* Release */,
 				553341FA10BB600A005208D1 /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		55486BFB10E9728D00B96B1C /* Build configuration list for PBXNativeTarget "ASIO" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				55486BF910E9728C00B96B1C /* Release */,
-				55486BFA10E9728C00B96B1C /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

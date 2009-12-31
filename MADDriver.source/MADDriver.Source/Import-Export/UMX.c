@@ -26,9 +26,9 @@
 
 static short FoundNote( short Period)
 {
-short 			note;
-short				MODTuning[ 70] =
-{
+	short 			note;
+	short				MODTuning[ 70] =
+	{
 
 // -> Tuning 0
 
@@ -37,7 +37,7 @@ short				MODTuning[ 70] =
 	428,404,381,360,339,320,302,285,269,254,240,226,
 	214,202,190,180,170,160,151,143,135,127,120,113,
 	107,101,95,90,85,80,75,71,67,63,60,56
-};
+	};
 	note = 0xFF;
 	
 	
@@ -57,9 +57,9 @@ short				MODTuning[ 70] =
 
 static void Convert16to8( Ptr srcPtr, Ptr destPtr, long size)
 {
-long 	i;
+	long 	i;
 
-size /= 2;
+	size /= 2;
 
 	for( i = 0; i < size; i ++)
 	{

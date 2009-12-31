@@ -1247,10 +1247,10 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 
 OSErr mainXM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
-	OSErr			myErr;
-	Ptr				AlienFile;
-	long			sndSize;
-	UNFILE			iFileRefI;
+	OSErr		myErr;
+	Ptr			AlienFile;
+	long		sndSize;
+	UNFILE		iFileRefI;
 	
 	myErr = noErr;
 	
