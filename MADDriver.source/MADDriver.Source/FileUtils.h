@@ -37,7 +37,7 @@ extern "C" {
 
 #ifdef _MAC_H
 #include <CoreServices/CoreServices.h>
-#if !defined(__LP64__) && (__MAC_OS_X_VERSION_MIN_REQUIRED < 1050)
+#if !defined(__LP64__)
 typedef SInt16 UNFILE;
 #else
 typedef FSIORefNum UNFILE;

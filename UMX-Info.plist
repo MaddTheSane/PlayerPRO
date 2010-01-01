@@ -34,5 +34,17 @@
 	</dict>
 	<key>CSResourcesFileMapped</key>
 	<true/>
+	<key>MADPlugMenuName</key>
+	<string>UMX</string>
+	<key>MADPlugAuthorName</key>
+	<string>Written by A.ROSSET 2001</string>
+	<key>MADPlugType</key>
+	<string>UMX </string>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>net.sourceforge.playerpro.mod</string>
+	</array>
+	<key>MADPlugMode</key>
+	<string>IMPL</string>
 </dict>
 </plist>

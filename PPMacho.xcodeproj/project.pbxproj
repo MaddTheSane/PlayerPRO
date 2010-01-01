@@ -1497,7 +1497,7 @@
 		5573A3EB10B5151700FF8B50 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		5573A3ED10B5151700FF8B50 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		5573A3EF10B5151700FF8B50 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		5573A41010B5160000FF8B50 /* PPDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = PPDefs.h; sourceTree = "<group>"; };
+		5573A41010B5160000FF8B50 /* PPDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = PPDefs.h; path = ../../PPDefs.h; sourceTree = "<group>"; };
 		5573A46D10B51CAB00FF8B50 /* ByteSwap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = ByteSwap.c; sourceTree = "<group>"; };
 		5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawSprocket.framework; path = System/Library/Frameworks/DrawSprocket.framework; sourceTree = SDKROOT; };
 		5573A59F10B542F300FF8B50 /* Proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = Proto.c; path = "(Proto)/Proto.c"; sourceTree = "<group>"; };
@@ -1595,7 +1595,7 @@
 		88E0C3BF0C2F21DD00D6C081 /* PlayerProCarbon.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlayerProCarbon.pch; path = Files/PlayerProCarbon.pch; sourceTree = SOURCE_ROOT; };
 		88E0C3C10C2F21DD00D6C081 /* MIDI-Hardware.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = "MIDI-Hardware.c"; path = "Files/MIDI-Hardware.c"; sourceTree = SOURCE_ROOT; };
 		88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = AboutPlugs.c; path = Files/wds_general/AboutPlugs.c; sourceTree = SOURCE_ROOT; };
-		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = FileUtils.h; path = MADDriver.source/MADDriver.Source/FileUtils.h; sourceTree = SOURCE_ROOT; };
+		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = FileUtils.h; sourceTree = "<group>"; };
 		88E0C3C50C2F21DD00D6C081 /* PlugsPPDGInit.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PlugsPPDGInit.c; path = Files/PlugsPPDGInit.c; sourceTree = SOURCE_ROOT; };
 		88E0C3C60C2F21DD00D6C081 /* PlugsPPINInit.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = PlugsPPINInit.c; path = Files/PlugsPPINInit.c; sourceTree = SOURCE_ROOT; };
 		88E0C3C70C2F21DD00D6C081 /* PlugsSoundFilter.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = PlugsSoundFilter.c; path = Files/PlugsSoundFilter.c; sourceTree = SOURCE_ROOT; };
@@ -1672,12 +1672,12 @@
 		88E0C4180C2F21DD00D6C081 /* StaffEditor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = StaffEditor.c; sourceTree = "<group>"; };
 		88E0C4190C2F21DD00D6C081 /* Tools.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = Tools.c; sourceTree = "<group>"; };
 		88E0C41A0C2F21DD00D6C081 /* WaveEditor.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = WaveEditor.c; sourceTree = "<group>"; };
-		88E0C4750C2F21E400D6C081 /* MAD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = MAD.h; path = MADDriver.source/MADDriver.Source/MAD.h; sourceTree = SOURCE_ROOT; };
+		88E0C4750C2F21E400D6C081 /* MAD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = MAD.h; sourceTree = "<group>"; };
 		88E0C4770C2F21E400D6C081 /* PlayerHeaders.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = PlayerHeaders.c; path = Files/PlayerHeaders.c; sourceTree = SOURCE_ROOT; };
 		88E0C4790C2F21E400D6C081 /* Shuddup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = Shuddup.h; path = Files/Shuddup.h; sourceTree = SOURCE_ROOT; };
-		88E0C47B0C2F21E400D6C081 /* RDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = RDriver.h; path = MADDriver.source/MADDriver.Source/RDriver.h; sourceTree = SOURCE_ROOT; };
-		88E0C47D0C2F21E400D6C081 /* RDriverInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = RDriverInt.h; path = MADDriver.source/MADDriver.Source/RDriverInt.h; sourceTree = SOURCE_ROOT; };
-		88E0C47F0C2F21E400D6C081 /* PPPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = PPPlug.h; path = MADDriver.source/MADDriver.Source/PPPlug.h; sourceTree = SOURCE_ROOT; };
+		88E0C47B0C2F21E400D6C081 /* RDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = RDriver.h; sourceTree = "<group>"; };
+		88E0C47D0C2F21E400D6C081 /* RDriverInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = RDriverInt.h; sourceTree = "<group>"; };
+		88E0C47F0C2F21E400D6C081 /* PPPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = PPPlug.h; sourceTree = "<group>"; };
 		88E0C4810C2F21E400D6C081 /* VA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = VA.h; path = Files/VA.h; sourceTree = SOURCE_ROOT; };
 		88E0C4850C2F21E400D6C081 /* VideoToolbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = VideoToolbox.h; path = Files/VideoToolbox.h; sourceTree = SOURCE_ROOT; };
 		88E0C4870C2F21E400D6C081 /* dlsmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = dlsmac.h; path = Files/dlsmac.h; sourceTree = SOURCE_ROOT; };
@@ -3003,6 +3003,12 @@
 		55868B1810BFC0BB00FCC24D /* Main Driver Source */ = {
 			isa = PBXGroup;
 			children = (
+				5573A41010B5160000FF8B50 /* PPDefs.h */,
+				88E0C3C40C2F21DD00D6C081 /* FileUtils.h */,
+				88E0C4750C2F21E400D6C081 /* MAD.h */,
+				88E0C47B0C2F21E400D6C081 /* RDriver.h */,
+				88E0C47D0C2F21E400D6C081 /* RDriverInt.h */,
+				88E0C47F0C2F21E400D6C081 /* PPPlug.h */,
 				550B011310BA1E1C004FC5D7 /* PPPrivate.h */,
 				88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */,
 				5573A46D10B51CAB00FF8B50 /* ByteSwap.c */,
@@ -3169,7 +3175,6 @@
 			children = (
 				554E0FDD10D6C79D00BB619C /* (Plug-Ins) */,
 				88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */,
-				88E0C3C40C2F21DD00D6C081 /* FileUtils.h */,
 				88E0C3C50C2F21DD00D6C081 /* PlugsPPDGInit.c */,
 				88E0C3C60C2F21DD00D6C081 /* PlugsPPINInit.c */,
 				88E0C3C70C2F21DD00D6C081 /* PlugsSoundFilter.c */,
@@ -3273,13 +3278,8 @@
 			isa = PBXGroup;
 			children = (
 				552C70C910CDB46100C0E0D4 /* Proto */,
-				5573A41010B5160000FF8B50 /* PPDefs.h */,
-				88E0C4750C2F21E400D6C081 /* MAD.h */,
 				88E0C4770C2F21E400D6C081 /* PlayerHeaders.c */,
 				88E0C4790C2F21E400D6C081 /* Shuddup.h */,
-				88E0C47B0C2F21E400D6C081 /* RDriver.h */,
-				88E0C47D0C2F21E400D6C081 /* RDriverInt.h */,
-				88E0C47F0C2F21E400D6C081 /* PPPlug.h */,
 				88E0C4810C2F21E400D6C081 /* VA.h */,
 				88E0C4850C2F21E400D6C081 /* VideoToolbox.h */,
 				88E0C4870C2F21E400D6C081 /* dlsmac.h */,
@@ -6770,6 +6770,9 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /Developer/Headers/FlatCarbon;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
@@ -8068,6 +8071,9 @@
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /Developer/Headers/FlatCarbon;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH)";

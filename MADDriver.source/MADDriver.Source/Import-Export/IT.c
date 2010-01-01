@@ -1334,7 +1334,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 {
 	short			i;
-	ITForm		ITinfo;
+	ITForm			ITinfo;
 	/********************************/
 
 	/**** Header principal *****/

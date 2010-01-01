@@ -653,7 +653,7 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverSettings
 	Ptr						theInstrument[ MAXINSTRU];
 	Byte					tempChar, *theS3MCopy;
 	short					Note, Octave, maxTrack;
-	short					S3Mperiod[ 12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
+//	short					S3Mperiod[ 12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
 	Byte					S3Mpan[ 32];
 	
 	/**** Variables pour le MAD ****/

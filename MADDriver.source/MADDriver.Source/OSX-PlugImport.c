@@ -44,40 +44,98 @@ static inline OSErr GetFSSpecFromCFBundle(FSSpecPtr out, CFBundleRef in)
 	return FSGetCatalogInfo(&tempRef, kFSCatInfoNone, NULL, NULL, out, NULL);
 }
 
+const CFStringRef kMadPlugMenuNameKey =		CFSTR("MADPlugMenuName");
+const CFStringRef kMadPlugAuthorNameKey =	CFSTR("MADPlugAuthorName");
+const CFStringRef kMadPlugUTITypesKey =		CFSTR("MADPlugUTITypes");
+const CFStringRef kMadPlugTypeKey =			CFSTR("MADPlugType");
+const CFStringRef kMadPlugModeKey =			CFSTR("MADPlugMode");
+//const CFStringRef kMadPlugModeKey =		CFSTR("");
+
+
 static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
-	if ((inMADDriver->TotalPlug + 1) == MAXPLUG) {
+	if ((inMADDriver->TotalPlug + 1) >= MAXPLUG) {
 		MyDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
 	}
+	CFTypeID stringtype =	CFStringGetTypeID();
+	CFTypeID numbertype =	CFNumberGetTypeID();
+	CFTypeID arraytype =	CFArrayGetTypeID();
 	
 	OSStatus iErr = noErr;
 	short PlugNum = inMADDriver->TotalPlug;
 	PlugInfo *FillPlug = &(inMADDriver->ThePlug[PlugNum]);
 	{
-		short resFileNum = CFBundleOpenBundleResourceMap(tempBundle);
-		Str255 tStr;
+		//CFStringRef tStr;
+		CFTypeID InfoDictionaryType;
+		CFTypeRef OpaqueDictionaryType;
 		
-		GetIndString( tStr, BASERES, 1);
-		BlockMoveData( tStr + 1, &FillPlug->type, 4);
-		FillPlug->type[ 4] = 0;
+		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugMenuNameKey);
+		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
+		if (InfoDictionaryType == stringtype) {
+			FillPlug->MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
+		}
+		else goto badplug;
 		
-		GetIndString( tStr, BASERES, 2);
-		BlockMoveData( tStr + 1, &FillPlug->mode, 4);
-#ifdef __LITTLE_ENDIAN__
-		MOT32(&FillPlug->mode);
-#endif
+		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugAuthorNameKey);
+		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
+		if (InfoDictionaryType == stringtype) {
+			FillPlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
+		}
+		else goto badplug;
 		
-		GetIndString( FillPlug->MenuName, BASERES, 3);
-		GetIndString( FillPlug->AuthorString, BASERES, 4);
-		CFBundleCloseBundleResourceMap(tempBundle, resFileNum);
+		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugTypeKey);
+		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
+		if (InfoDictionaryType == stringtype) {
+			short i;
+			char * tempstring = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
+			if (tempstring == NULL) goto badplug;
+			for (i=0; i < 4; i++) {
+				if (tempstring[i] == 0) {
+					FillPlug->type[i] = ' ';
+				}else FillPlug->type[i] = tempstring[i];
+			}
+			FillPlug->type[4] = 0;
+			
+		}
+		else goto badplug;
+		
+		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugModeKey);
+		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
+		if (InfoDictionaryType == stringtype) {
+			char * thecOSType = NULL;
+			thecOSType = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
+			
+			FillPlug->mode = Ptr2OSType(thecOSType);
+		}
+		else if(InfoDictionaryType == numbertype)
+		{
+			OSType theplugType;
+			CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberIntType, &theplugType);
+			MOT32(&theplugType);
+			FillPlug->mode = theplugType;
+		}
+		else goto badplug;
+		
+		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugUTITypesKey);
+		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
+		if (InfoDictionaryType == arraytype) {
+			FillPlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, (CFArrayRef)OpaqueDictionaryType);
+		}
+		else goto badplug;
 	}
 	
 	FillPlug->IOPlug = tempMADPlug;
 	iErr = GetFSSpecFromCFBundle(&(FillPlug->file), tempBundle);
-	CFRetain(tempBundle);
 	FillPlug->filename = tempBundle;
-	
+	CFRetain(FillPlug->filename);
+
 	inMADDriver->TotalPlug++;
+	return;
+	
+badplug:
+	(*tempMADPlug)->Release(tempMADPlug);
+	NSLog(CFSTR("Error with plug-in"));
+	
 }
 
 #pragma mark Plug-in Locations
@@ -130,17 +188,6 @@ static CFMutableArrayRef GetPluginFolderLocationsWithFSRef(FSRefPtr UserAddedPla
 	return FoldLocs;
 }
 
-static Handle MADGet1Resource( OSType type, short id, MADLibrary* init)
-{
-	Handle dH = Get1Resource( type, id);
-	if( dH == NULL) return NULL;
-	
-	DetachResource( dH);
-	HNoPurge( dH);
-	
-	return dH;
-}
-
 OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 {
 	MADSpec		*theMAD;
@@ -176,14 +223,14 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	return noErr;
 }
 
-static MADFileFormatPlugin **GetMADPlugInterface(CFPlugInRef plugToTest)
+void **GetCOMPlugInterface(CFPlugInRef plugToTest, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
 {		
-	CFArrayRef				factories = NULL;
-	Boolean					foundInterface = FALSE;
-	MADFileFormatPlugin		**formatPlugA = NULL;
+	CFArrayRef	factories = NULL;
+	Boolean		foundInterface = FALSE;
+	void		**formatPlugA = NULL;
 	
 	//  See if this plug-in implements the Test type.
-	factories	= CFPlugInFindFactoriesForPlugInTypeInPlugIn( kPlayerPROModFormatTypeID, plugToTest );
+	factories	= CFPlugInFindFactoriesForPlugInTypeInPlugIn( TypeUUID, plugToTest );
 	
 	if ( factories != NULL )
 	{
@@ -203,12 +250,12 @@ static MADFileFormatPlugin **GetMADPlugInterface(CFPlugInRef plugToTest)
 					IUnknownVTbl **iunknown = NULL;
 					
 					//  Use the factory ID to get an IUnknown interface. Here the plug-in code is loaded.
-					iunknown	= (IUnknownVTbl **) CFPlugInInstanceCreate( kCFAllocatorDefault, factoryID, kPlayerPROModFormatTypeID );
+					iunknown	= (IUnknownVTbl **) CFPlugInInstanceCreate( kCFAllocatorDefault, factoryID, TypeUUID );
 					
 					if ( iunknown )
 					{
 						//  If this is an IUnknown interface, query for the test interface.
-						(*iunknown)->QueryInterface( iunknown, CFUUIDGetUUIDBytes( kPlayerPROModFormatInterfaceID ), (LPVOID *)( &formatPlugA ) );
+						(*iunknown)->QueryInterface( iunknown, CFUUIDGetUUIDBytes( InterfaceUUID ), (LPVOID *)( &formatPlugA ) );
 						
 						// Now we are done with IUnknown
 						(*iunknown)->Release( iunknown );
@@ -234,6 +281,9 @@ static MADFileFormatPlugin **GetMADPlugInterface(CFPlugInRef plugToTest)
 	
 	return formatPlugA;
 }	
+
+
+#define GetMADPlugInterface(plugToTest)  (MADFileFormatPlugin**)GetCOMPlugInterface(plugToTest, kPlayerPROModFormatTypeID, kPlayerPROModFormatInterfaceID)
 
 void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 {
@@ -294,8 +344,10 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 	OSErr					iErr = noErr;
 	MADFileFormatPlugin		**formatPlugA = inMADDriver->ThePlug[PlugNo].IOPlug;
 	{
+#ifndef __LP64__
 		GrafPtr savedPort;
 		GetPort(&savedPort);
+#endif
 		short resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].filename);
 		MADDriverSettings		driverSettings;
 		
@@ -304,7 +356,9 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 		iErr = (*formatPlugA)->ThePlugMain(order, AlienFile, theNewMAD, info, &driverSettings);
 		
 		CFBundleCloseBundleResourceMap(inMADDriver->ThePlug[PlugNo].filename, resFileNum);
+#ifndef __LP64__
 		SetPort(savedPort);
+#endif
 	}
 	return iErr;
 }
@@ -340,8 +394,17 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 			RelCount = (*formatPlugA)->Release(formatPlugA);
 		} while (RelCount > 0);
 		CFRelease(inMADDriver->ThePlug[i].filename);
+		CFRelease(inMADDriver->ThePlug[i].AuthorString);
+		CFRelease(inMADDriver->ThePlug[i].UTItypes);
+		CFRelease(inMADDriver->ThePlug[i].MenuName);
+
 	}
 	DisposePtr( (Ptr) inMADDriver->ThePlug);		inMADDriver->ThePlug = NULL;
+}
+
+void GetPStrFromCFString(const CFStringRef source, Str255 pStrOut)
+{
+	CFStringGetPascalString(source, pStrOut, 255, CFStringGetSystemEncoding());
 }
 
 OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)

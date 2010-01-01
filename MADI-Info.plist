@@ -34,5 +34,17 @@
 	</dict>
 	<key>CSResourcesFileMapped</key>
 	<true/>
+	<key>MADPlugMenuName</key>
+	<string>MADI</string>
+	<key>MADPlugAuthorName</key>
+	<string>Written by A.ROSSET 2000</string>
+	<key>MADPlugType</key>
+	<string>MADI</string>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>com.quadmation.playerpro.madi</string>
+	</array>
+	<key>MADPlugMode</key>
+	<string>IMPL</string>
 </dict>
 </plist>

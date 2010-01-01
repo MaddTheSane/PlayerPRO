@@ -316,9 +316,9 @@ static OSErr TestoldMADFile( Ptr AlienFile)
 static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 {
 	oldMADSpec	*myMOD = ( oldMADSpec*) AlienFile;
-	long		PatternSize;
+//	long		PatternSize;
 	short		i;
-	short		tracksNo;
+//	short		tracksNo;
 	
 	/*** Signature ***/
 	
@@ -369,8 +369,8 @@ OSErr mainMADH( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
-	short	vRefNum, iFileRefI;
-	long	dirID, sndSize;
+	UNFILE	iFileRefI;
+	long	sndSize;
 	
 	myErr = noErr;
 

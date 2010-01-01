@@ -439,24 +439,14 @@ typedef struct _MADFileFormatPlugin {
 
 typedef struct PlugInfo
 {
-#ifndef TARGET_API_MAC_CARBON
-//	Handle		IOPlug;											// Plug CODE
-#else
 	MADFileFormatPlugin **IOPlug;								// Plug CODE
-#endif
-	Str63		MenuName;										// Plug name
-	Str63		AuthorString;									// Plug author
+	CFStringRef	MenuName;										// Plug name
+	CFStringRef	AuthorString;									// Plug author
 	FSSpec		file;											// Location of plug file
-#ifndef TARGET_API_MAC_CARBON
-	Str255		filename;										// Complete filename from application
-#else
 	CFBundleRef	filename;
-#endif
-	char		type[ 5];										// OSType of file support
+	char		type[ 5];										// OSType of file support. Kept for legacy reasons
+	CFArrayRef	UTItypes;										// CFStrings of supported UTIs
 	OSType		mode;											// Mode support : Import +/ Export
-#ifndef TARGET_API_MAC_CARBON
-	Boolean		hasPPCCode;										// Is Plug FAT?
-#endif
 } PlugInfo;
 #endif
 
@@ -545,7 +535,7 @@ typedef struct
 }	VSTEffect;
 #endif
 
-struct MADDriverRec
+typedef struct MADDriverRec
 {
 	/**********************/
 	/** Public variables **/
@@ -642,8 +632,7 @@ struct MADDriverRec
 #endif
 #endif
 
-};
-typedef struct MADDriverRec MADDriverRec;
+} MADDriverRec;
 
 /********************						***********************/
 /*** 					   EFFECTS ID							***/

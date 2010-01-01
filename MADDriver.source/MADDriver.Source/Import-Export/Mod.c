@@ -710,7 +710,7 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 		{
 			for(z=0; z < theMAD->header->numChn; z++)
 			{
-				short		note;
+//				short		note;
 				
 				if( x < theMAD->partition[ i]->header.size)
 				{
