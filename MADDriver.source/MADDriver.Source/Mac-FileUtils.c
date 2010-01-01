@@ -30,22 +30,6 @@ extern void NSLog(CFStringRef format, ...);
 //TODO: HSetVol isn't available in 64-bit code :(
 //TODO: Also, FSSpec is defined as UInt8 hidden[70]
  
-//TODO: use system native strlen?
-static long MYstrlen( Ptr cStr)
-{
-	NSLog(CFSTR("MYstrlen is depricated; just use strlen"));
-
-	long i = 0;
-	
-	while( cStr[ i] != 0)
-	{
-		i++;
-		if( i > 300) return i = 0;
-	}
-	
-	return i;
-}
-
 unsigned char* MYC2PStr( Ptr cStr)
 {
 	long size = strlen( cStr);
