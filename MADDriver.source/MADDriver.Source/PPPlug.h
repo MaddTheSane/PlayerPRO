@@ -216,6 +216,7 @@ typedef struct _PPDigitalPlugin {
 //
 /********************						***********************/
 
+//TODO: Rewrite to take advantage of UTIs
 OSErr	PPINImportFile( OSType	kindFile, short ins, short *samp, FSSpec	*AlienFile);
 OSErr	PPINTestFile( OSType	kindFile, FSSpec	*AlienFile);
 OSErr	PPINExportFile( OSType	kindFile, short ins, short samp, FSSpec	*AlienFile);

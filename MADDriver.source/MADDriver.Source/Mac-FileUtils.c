@@ -208,8 +208,6 @@ int MADstrcmp( const char *dst, const char* src)
 
 EXP void OSType2Ptr( OSType type, Ptr str)
 {
-	short i;
-	
 #ifdef __LITTLE_ENDIAN__
 	MOT32(&type);
 #endif

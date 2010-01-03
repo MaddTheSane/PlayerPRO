@@ -955,11 +955,7 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	switch( MDriver->DriverSettings.driverMode)
 	{
 		case ASIOSoundManager:
-#if MACOS9VERSION
-			theErr = InitASIOManager( MDriver, initStereo);
-			if( theErr != noErr) return theErr;
-#endif
-		break;
+			break;
 		
 #ifdef _MIDIHARDWARE_
 		case MIDISoundDriver:
@@ -1031,10 +1027,7 @@ OSErr MADDisposeDriver( MADDriverRec* MDriver)
 		break;
 		
 		case ASIOSoundManager:
-#if MACOS9VERSION
-			ASIOSndClose( MDriver);
-#endif
-		break;
+			break;
 		
 		case SoundManagerDriver:
 			DBSndClose( MDriver);
@@ -2728,9 +2721,6 @@ OSErr MADStartDriver( MADDriverRec *MDriver)
 			break;			
 			
 		case ASIOSoundManager:
-#if MACOS9VERSION
-			ASIOPlayChannel( MDriver);
-#endif
 			break;
 #endif
 	}
@@ -2772,9 +2762,6 @@ OSErr MADStopDriver( MADDriverRec *MDriver)
 			break;
 
 		case ASIOSoundManager:
-#if MACOS9VERSION
-			ASIOStopChannel( MDriver);
-#endif
 			break;
 #endif
 	}

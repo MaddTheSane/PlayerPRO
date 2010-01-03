@@ -61,7 +61,6 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 	CFTypeID numbertype =	CFNumberGetTypeID();
 	CFTypeID arraytype =	CFArrayGetTypeID();
 	
-	OSStatus iErr = noErr;
 	short PlugNum = inMADDriver->TotalPlug;
 	PlugInfo *FillPlug = &(inMADDriver->ThePlug[PlugNum]);
 	{
@@ -81,7 +80,7 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 		if (InfoDictionaryType == stringtype) {
 			FillPlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
 		}
-		else goto badplug;
+		else goto badplug2;
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugTypeKey);
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
@@ -97,7 +96,7 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 			FillPlug->type[4] = 0;
 			
 		}
-		else goto badplug;
+		else goto badplug3;
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugModeKey);
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
@@ -110,32 +109,35 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 		else if(InfoDictionaryType == numbertype)
 		{
 			OSType theplugType;
-			CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberIntType, &theplugType);
+			CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberSInt32Type, &theplugType);
 			MOT32(&theplugType);
 			FillPlug->mode = theplugType;
 		}
-		else goto badplug;
+		else goto badplug3;
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugUTITypesKey);
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == arraytype) {
 			FillPlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, (CFArrayRef)OpaqueDictionaryType);
 		}
-		else goto badplug;
+		else goto badplug3;
 	}
 	
 	FillPlug->IOPlug = tempMADPlug;
-	iErr = GetFSSpecFromCFBundle(&(FillPlug->file), tempBundle);
-	FillPlug->filename = tempBundle;
-	CFRetain(FillPlug->filename);
+	FillPlug->file = tempBundle;
+	CFRetain(FillPlug->file);
 
 	inMADDriver->TotalPlug++;
 	return;
 	
+badplug3:
+	CFRelease(FillPlug->AuthorString);
+badplug2:
+	CFRelease(FillPlug->MenuName);
 badplug:
 	(*tempMADPlug)->Release(tempMADPlug);
 	NSLog(CFSTR("Error with plug-in"));
-	
+	return;
 }
 
 #pragma mark Plug-in Locations
@@ -348,14 +350,14 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 		GrafPtr savedPort;
 		GetPort(&savedPort);
 #endif
-		short resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].filename);
+		short resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
 		MADDriverSettings		driverSettings;
 		
 		driverSettings.sysMemory = false;
 		
 		iErr = (*formatPlugA)->ThePlugMain(order, AlienFile, theNewMAD, info, &driverSettings);
 		
-		CFBundleCloseBundleResourceMap(inMADDriver->ThePlug[PlugNo].filename, resFileNum);
+		CFBundleCloseBundleResourceMap(inMADDriver->ThePlug[PlugNo].file, resFileNum);
 #ifndef __LP64__
 		SetPort(savedPort);
 #endif
@@ -390,10 +392,10 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		MADFileFormatPlugin	**formatPlugA = inMADDriver->ThePlug[i].IOPlug;
-		do {
-			RelCount = (*formatPlugA)->Release(formatPlugA);
-		} while (RelCount > 0);
-		CFRelease(inMADDriver->ThePlug[i].filename);
+
+		RelCount = (*formatPlugA)->Release(formatPlugA);
+
+		CFRelease(inMADDriver->ThePlug[i].file);
 		CFRelease(inMADDriver->ThePlug[i].AuthorString);
 		CFRelease(inMADDriver->ThePlug[i].UTItypes);
 		CFRelease(inMADDriver->ThePlug[i].MenuName);

@@ -442,8 +442,7 @@ typedef struct PlugInfo
 	MADFileFormatPlugin **IOPlug;								// Plug CODE
 	CFStringRef	MenuName;										// Plug name
 	CFStringRef	AuthorString;									// Plug author
-	FSSpec		file;											// Location of plug file
-	CFBundleRef	filename;
+	CFBundleRef	file;											// Location of plug file
 	char		type[ 5];										// OSType of file support. Kept for legacy reasons
 	CFArrayRef	UTItypes;										// CFStrings of supported UTIs
 	OSType		mode;											// Mode support : Import +/ Export
