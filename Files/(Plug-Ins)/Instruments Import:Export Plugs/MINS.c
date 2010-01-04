@@ -130,7 +130,7 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 					}
 				}
 				
-				FSClose( iFileRefI);
+				FSCloseFork( iFileRefI);
 			}
 		
 			break;
@@ -151,7 +151,7 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 				
 				DisposePtr( theSound);
 				
-				FSClose( iFileRefI);
+				FSCloseFork( iFileRefI);
 			}
 		
 			break;
@@ -182,7 +182,7 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 					inOutCount = curData->size;
 					myErr = FSWrite( iFileRefI, &inOutCount, curData->data);
 				}
-				FSClose( iFileRefI);
+				FSCloseFork( iFileRefI);
 			}
 			break;
 		
@@ -195,9 +195,8 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 }
 
 // 9C897935-C00B-4AAC-81D6-E43049E3A8E0
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x9C, 0x89, 0x79, 0x35, 0xC0, 0x0B, 0x4A, 0xAC, 0x81, 0xD6, 0xE4, 0x30, 0x49, 0xE3, 0xA8, 0xE0)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x9C, 0x89, 0x79, 0x35, 0xC0, 0x0B, 0x4A, 0xAC, 0x81, 0xD6, 0xE4, 0x30, 0x49, 0xE3, 0xA8, 0xE0)
 #define PLUGINFACTORY MINsFactory //The factory name as defined in the Info.plist file
 #define PLUGMAIN mainMINs //The old main function, renamed please
 
 #include "CFPlugin-InstrBridge.c"
-

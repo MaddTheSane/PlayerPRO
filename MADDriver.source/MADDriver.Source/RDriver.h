@@ -59,8 +59,8 @@ enum{
 	rate11025hz	= (Fixed)0x2B110000,
 	rate8khz	= (Fixed)0x1F400000,
 #endif
-	rate2khz	= (UnsignedFixed)0x08000000UL,
-	rate5khz	= (UnsignedFixed)0x15BB9B5CUL
+	rate5khz	= (UnsignedFixed)0x15BB9B5CUL,
+	rate2khz	= (UnsignedFixed)0x08000000UL
 };
 
 ////////////////////////////////////////////////

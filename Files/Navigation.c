@@ -23,6 +23,7 @@
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include <QuickTime/QuickTime.h>
+#include <CoreFoundation/CoreFoundation.h>
 #include "PPPrivate.h"
 
 #ifndef __NAVIGATION__
@@ -50,7 +51,9 @@ extern short		showWhat;
 static MADMusic		*previewPartition;
 static Boolean		gEraseAdd, gEraseAddCurrent, gUpdateCurrentFile;
 
-Boolean QTTestConversion( FSSpec	*file, OSType fileType);
+Boolean QTTestConversion( FSSpec *file, OSType fileType);
+
+CFArrayRef CopySupportedMusicUTIs();
 
 enum
 {
@@ -656,12 +659,12 @@ pascal void myCustomEventProc(	NavEventCallbackMessage 	callBackSelector,
 
 pascal Boolean MyCustomFilter( AEDesc *theItem, void *info, NavCallBackUserData callBackUD, NavFilterModes filterMode)
 {
-Boolean		ready = false;
-short		i;
-FSSpec		spec;
-OSType		type;
-char		tempC[ 5];
-FInfo		fndrInfo;
+	Boolean		ready = false;
+	short		i;
+	FSSpec		spec;
+	OSType		type;
+	char		tempC[ 5];
+	FInfo		fndrInfo;
 
 	if( MyAEGetDescData ( theItem, NULL, &spec, sizeof ( FSSpec ), NULL ) == noErr)
 	{
@@ -890,10 +893,9 @@ OSErr DoCustomSave( Str255 bStr, Str255 fileName, OSType theType, FSSpec *spec)
 
 OSErr DoStandardOpen( FSSpec	*spec, Str255 string, OSType inType)
 {
-	
 	NavReplyRecord			theReply;
 	NavDialogOptions		dialogOptions;
-	//	NavTypeListHandle		openList;
+	//NavTypeListHandle		openList;
 	OSErr					iErr;
 	NavObjectFilterUPP 		filterProcUPP = NULL;
 	
@@ -930,7 +932,7 @@ OSErr DoStandardOpen( FSSpec	*spec, Str255 string, OSType inType)
 	//#if MACOS9VERSION
 	//TODO: Open based on UTI, not Mac OS filetype.
 	//Mac OS X does NOT set filetype or creator based on file extention on any version I know of.
-	iErr = NavGetFile(		NULL,	// use system's default location
+	iErr = NavGetFile(NULL,	// use system's default location
 					  &theReply,
 					  &dialogOptions,
 					  MyDlgFilterNavDesc,
@@ -983,5 +985,14 @@ OSErr DoStandardOpen( FSSpec	*spec, Str255 string, OSType inType)
 	UpdateALLWindow();
 	
 	return iErr;
+}
+
+CFArrayRef CopySupportedMusicUTIs()
+{
+	CFMutableArrayRef UTIs = CFArrayCreateMutable(kCFAllocatorDefault, 20, &kCFTypeArrayCallBacks);
+	CFArrayAppendValue(UTIs, CFSTR("com.quadmation.playerpro.madk"));
 	
+	CFArrayRef outPutUTIs = CFArrayCreateCopy(kCFAllocatorDefault, UTIs);
+	CFRelease(UTIs);
+	return outPutUTIs;
 }

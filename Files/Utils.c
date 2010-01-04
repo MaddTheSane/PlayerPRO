@@ -453,7 +453,7 @@ pascal void MyDlgFilterNav(		NavEventCallbackMessage 	callBackSelector,
 								NavCBRecPtr 				callBackParms, 
 								NavCallBackUserData 		callBackUD)
 {
-	short itemHit;
+	short	itemHit;
 	Rect	caRect;
 	
 	switch (callBackSelector)
@@ -477,10 +477,10 @@ pascal void MyDlgFilterNav(		NavEventCallbackMessage 	callBackSelector,
 						InvalWindowRect( (WindowPtr) event->message, &caRect);
 						SetPort( savedPort);
 					}
-				break;
+					break;
 			}
 			MyDlgFilter( GetDialogFromWindow( callBackParms->window), callBackParms->eventData.eventDataParms.event, &itemHit);
-		break;
+			break;
 	}
 }
 

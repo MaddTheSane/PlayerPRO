@@ -142,15 +142,15 @@ void VisualFullScreen( void)
 
 void DoGrowVisual(void)
 {
-long		lSizeVH;
-GrafPtr		SavePort;
-Rect		temp, cellRect;
-Point		theCell = { 0, 0}, aPt = { 0, 0};
-short		tempA, tempB;
-Handle		itemHandle;
-short		itemType;
-Rect		caRect;
-BitMap		screenBits;
+	long		lSizeVH;
+	GrafPtr		SavePort;
+	Rect		temp, cellRect;
+	Point		theCell = { 0, 0}, aPt = { 0, 0};
+	short		tempA, tempB;
+	Handle		itemHandle;
+	short		itemType;
+	Rect		caRect;
+	BitMap		screenBits;
 	
 	GetPort( &SavePort);
  	SetPortDialogPort( VisualDlog);
@@ -440,12 +440,12 @@ void  UpdateVisualWindow(DialogPtr GetSelection)
 	SetPort( SavePort);
 } 
 
-void LoadVisualPLUG(	short	No, StringPtr	theName)
+void LoadVisualPLUG( short No, StringPtr theName)
 {
-Handle		theRes;
-short		fileID, i, temp;
-Str255		tStr;
-char			aStr[ 255];
+	Handle		theRes;
+	short		fileID, i, temp;
+	Str255		tStr;
+	char		aStr[ 256];
 
 	/***********************/
 	
@@ -481,11 +481,11 @@ static long PlugsFolderOK;
 
 void ScanDirVisualPlug( long dirID, short VRefNum)
 {
-		CInfoPBRec		info;
-		Str255			tempStr, volName;
-		long				dirIDCopy;
-		short			i, vRefNum;
-		OSErr			iErr;
+	CInfoPBRec		info;
+	Str255			tempStr, volName;
+	long			dirIDCopy;
+	short			i, vRefNum;
+	OSErr			iErr;
 
 	info.hFileInfo.ioNamePtr = tempStr;
 	info.hFileInfo.ioVRefNum = VRefNum;
@@ -646,8 +646,8 @@ void CloseVisual(void)
 
 void DoItemPressVisual( short whichItem, DialogPtr whichDialog)
 {
-Point	Location;
-Rect	caRect;
+	Point	Location;
+	Rect	caRect;
 
 	GetMouse( &Location);
 	

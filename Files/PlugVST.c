@@ -1,4 +1,5 @@
 //TODO: rewrite this plug-in architecture!
+//TODO: or use OS X's VST and AU plug-ins
 #include "Shuddup.h"
 #include "MAD.h"
 #include <stdio.h>
@@ -277,49 +278,49 @@ void HandleVSTChoice( short item, VSTEffect** vst, short channelID)
 
 long audioMasterFct(AEffect *effect, long opcode, long index, long value, void *ptr, float opt)
 {
-long	returnVal = 0;
+	long	returnVal = 0;
 
 	switch( opcode)
 	{
 		case audioMasterAutomate:
 			value = 0;	index = 0;	returnVal = 0;
-		break;
+			break;
 		
 		case audioMasterVersion:
 			returnVal = 2;
-		break;
+			break;
 		
 		case audioMasterIdle:
 			
-		break;
+			break;
 		
 		case audioMasterPinConnected:
 		
-		break;
+			break;
 		
 		case audioMasterWillReplaceOrAccumulate:
 		
-		break;
+			break;
 		
 		case audioMasterOpenWindow:
 		//	Debugger();
-		break;
+			break;
 		
 		case audioMasterProcessEvents:
 		//		Debugger();
-		break;
+			break;
 		
 		case audioMasterWantMidi:
 		//		Debugger();
-		break;
+			break;
 		
 		case audioMasterSizeWindow:
 		//	Debugger();
-		break;
+			break;
 		
 		default:
 		//	Debugger();
-		break;
+			break;
 	}
 	
 	return returnVal;
@@ -794,7 +795,7 @@ void ProcessVSTPlug( MADDriverRec *intDriver, long *data, long datasize, short c
 
 void CloseVST( short no, VSTEffect *myEffect)
 {
-OSErr	myErr;
+	OSErr	myErr;
 
 	if( myEffect->connID == NULL) Debugger();
 	myErr = CloseConnection( &myEffect->connID);
@@ -920,12 +921,12 @@ void InitVST( short no, VSTEffect* myEffect)
 	CloseResFile( fileID);
 }
 
-Boolean LoadVSTPLUG(	short	No, StringPtr	theName)
+Boolean LoadVSTPLUG( short No, StringPtr theName)
 {
-Handle		theRes;
-short		fileID, i, temp;
-Str255		tStr;
-char			aStr[ 255];
+	Handle		theRes;
+	short		fileID, i, temp;
+	Str255		tStr;
+	char		aStr[ 256];
 
 	/***********************/
 	
@@ -965,11 +966,11 @@ char			aStr[ 255];
 
 void ScanDirVSTPlug( long dirID, short VRefNum)
 {
-		CInfoPBRec		info;
-		Str255			tempStr, volName;
-		long				dirIDCopy;
-		short			i, vRefNum;
-		OSErr			iErr;
+	CInfoPBRec		info;
+	Str255			tempStr, volName;
+	long				dirIDCopy;
+	short			i, vRefNum;
+	OSErr			iErr;
 
 	info.hFileInfo.ioNamePtr = tempStr;
 	info.hFileInfo.ioVRefNum = VRefNum;
@@ -1293,17 +1294,17 @@ void CheckVSTEditor( VSTEffect *ce)
 
 Boolean VSTEditorOpen( VSTEffect *ce, sData	*curData, long Start, long End, Boolean StereoMode, short channelID)
 {
-short					id, i, itemHit, itemType, x;
-Str255					theString, theString2;
-GrafPtr					savedPort;
-OSErr					err;
-Rect					itemRect, itemRect2, itemRect3, caRect;
-Handle					itemHandle;
-//short					orgX = 0, orgY = 0;
-short					theChar;
-ControlHandle			ctl;
-ControlFontStyleRec		style;
-Point					mouse;
+	short					id, i, itemHit, itemType, x;
+	Str255					theString, theString2;
+	GrafPtr					savedPort;
+	OSErr					err;
+	Rect					itemRect, itemRect2, itemRect3, caRect;
+	Handle					itemHandle;
+	//short					orgX = 0, orgY = 0;
+	short					theChar;
+	ControlHandle			ctl;
+	ControlFontStyleRec		style;
+	Point					mouse;
 
 	
 	if( VSTDlog != NULL)
@@ -1512,31 +1513,82 @@ void VSTEditorDoItemPress( short itemHit, DialogPtr aDia)
 				TurnRadio( 3, aDia, CurrentDialogCE->Active);
 			break;*/
 			
-			case 12:
-				if( CurrentcurData)
-				{
-					BlockMoveData( CurrentSData.data, CurrentcurData->data, CurrentcurData->size);
+		case 12:
+			if( CurrentcurData)
+			{
+				BlockMoveData( CurrentSData.data, CurrentcurData->data, CurrentcurData->size);
 					
-					ApplyVSTFilter( CurrentDialogCE, CurrentcurData, CurrentStart, CurrentEnd);
+				ApplyVSTFilter( CurrentDialogCE, CurrentcurData, CurrentStart, CurrentEnd);
 					
-					MADPlaySoundDataSYNC( MADDriver, CurrentcurData->data, CurrentSData.size, 0, 48 + CurrentSData.relNote, CurrentSData.amp, CurrentSData.loopBeg, CurrentSData.loopSize, ((long)CurrentSData.c2spd) << 16L, CurrentSData.stereo);
-				}
+				MADPlaySoundDataSYNC( MADDriver, CurrentcurData->data, CurrentSData.size, 0, 48 + CurrentSData.relNote, CurrentSData.amp, CurrentSData.loopBeg, CurrentSData.loopSize, ((long)CurrentSData.c2spd) << 16L, CurrentSData.stereo);
+			}
 			break;
 			
-			case 13:	// Preset button!
-				GetDialogItem( aDia, itemHit, &itemType, &itemHandle, &itemRect2);
-				mouse.h = itemRect2.left;
-				mouse.v = itemRect2.top;
+		case 13:	// Preset button!
+			GetDialogItem( aDia, itemHit, &itemType, &itemHandle, &itemRect2);
+			mouse.h = itemRect2.left;
+			mouse.v = itemRect2.top;
 
-				id = PressPresetButton( CurrentDialogCE->ce[ 0]->uniqueID, mouse, &CurrentcurSelec);
+			id = PressPresetButton( CurrentDialogCE->ce[ 0]->uniqueID, mouse, &CurrentcurSelec);
 				
-				if( id == -1)
+			if( id == -1)
+			{
+				long flag;
+				
+				theString[ 0] = 0;
+				flag = 0;
+				GetVSTPrefName( theString, &flag);
+				if( theString[ 0] > 0)
+				{
+					if( flag)	// Clear all settings flags
+					{
+						for( i = 0; i < MAXVSTPREF; i++)
+						{
+							if( VSTPref[ i] != NULL)
+							{
+								if( VSTPref[ i]->ID == CurrentDialogCE->ce[ 0]->uniqueID)
+								{
+									VSTPref[ i]->flag = 0;
+								}
+							}
+						}
+					}
+						
+					for( i = 0; i < MAXVSTPREF; i++)
+					{
+						if( VSTPref[ i] == NULL)
+						{
+							VSTPref[ i] = (VSTPrefsStruct*) NewPtrClear( sizeof( VSTPrefsStruct));
+							
+							VSTPref[ i]->ID = CurrentDialogCE->ce[ 0]->uniqueID;
+							VSTPref[ i]->flag = flag;
+							
+							pStrcpy( VSTPref[ i]->name, theString);
+							
+							if( CurrentDialogCE->ce[ 0]->numParams >= MAXVSTITEM) MyDebugStr( __LINE__, __FILE__, "MAXVST TOO SMALL, Press continue.");
+								
+							for( x = 0; x < CurrentDialogCE->ce[ 0]->numParams && x < MAXVSTITEM; x++)
+							{
+								VSTPref[ i]->value[ x] = CurrentDialogCE->ce[ 0]->getParameter( CurrentDialogCE->ce[ 0], x);
+							}
+							
+							i = MAXVSTPREF;	// break
+						}
+					}
+				}
+			}
+			
+			if( id >= 0)
+			{
+				GetKeys( km);
+				if( IsPressed( 0x0037))		// Replace this pref
 				{
 					long flag;
 					
-					theString[ 0] = 0;
-					flag = 0;
+					pStrcpy( theString, VSTPref[ id]->name);
+					flag = VSTPref[ id]->flag;
 					GetVSTPrefName( theString, &flag);
+					
 					if( theString[ 0] > 0)
 					{
 						if( flag)	// Clear all settings flags
@@ -1553,88 +1605,110 @@ void VSTEditorDoItemPress( short itemHit, DialogPtr aDia)
 							}
 						}
 						
-						for( i = 0; i < MAXVSTPREF; i++)
+						pStrcpy( VSTPref[ id]->name, theString);
+						VSTPref[ id]->flag = flag;
+						
+						for( x = 0; x < CurrentDialogCE->ce[ 0]->numParams; x++)
 						{
-							if( VSTPref[ i] == NULL)
-							{
-								VSTPref[ i] = (VSTPrefsStruct*) NewPtrClear( sizeof( VSTPrefsStruct));
-								
-								VSTPref[ i]->ID = CurrentDialogCE->ce[ 0]->uniqueID;
-								VSTPref[ i]->flag = flag;
-								
-								pStrcpy( VSTPref[ i]->name, theString);
-								
-								if( CurrentDialogCE->ce[ 0]->numParams >= MAXVSTITEM) MyDebugStr( __LINE__, __FILE__, "MAXVST TOO SMALL, Press continue.");
-								
-								for( x = 0; x < CurrentDialogCE->ce[ 0]->numParams && x < MAXVSTITEM; x++)
-								{
-									VSTPref[ i]->value[ x] = CurrentDialogCE->ce[ 0]->getParameter( CurrentDialogCE->ce[ 0], x);
-								}
-								
-								i = MAXVSTPREF;	// break
-							}
+							VSTPref[ id]->value[ x] = CurrentDialogCE->ce[ 0]->getParameter( CurrentDialogCE->ce[ 0], x);
 						}
 					}
 				}
-				
-				if( id >= 0)
+				else
 				{
-					GetKeys( km);
-					if( IsPressed( 0x0037))		// Replace this pref
+					for( x = 0; x < CurrentDialogCE->ce[ 0]->numParams; x++)
 					{
-						long flag;
+						CurrentDialogCE->ce[ 0]->setParameter( CurrentDialogCE->ce[ 0], x, VSTPref[ id]->value[ x]);
+						if( CurrentDialogCE->ce[ 1]) CurrentDialogCE->ce[ 1]->setParameter( CurrentDialogCE->ce[ 1], x, VSTPref[ id]->value[ x]);
 						
-						pStrcpy( theString, VSTPref[ id]->name);
-						flag = VSTPref[ id]->flag;
-						GetVSTPrefName( theString, &flag);
-						
-						if( theString[ 0] > 0)
+						if( CurrentVSTRect == NULL)
 						{
-							if( flag)	// Clear all settings flags
-							{
-								for( i = 0; i < MAXVSTPREF; i++)
-								{
-									if( VSTPref[ i] != NULL)
-									{
-										if( VSTPref[ i]->ID == CurrentDialogCE->ce[ 0]->uniqueID)
-										{
-											VSTPref[ i]->flag = 0;
-										}
-									}
-								}
-							}
-							
-							pStrcpy( VSTPref[ id]->name, theString);
-							VSTPref[ id]->flag = flag;
-							
-							for( x = 0; x < CurrentDialogCE->ce[ 0]->numParams; x++)
-							{
-								VSTPref[ id]->value[ x] = CurrentDialogCE->ce[ 0]->getParameter( CurrentDialogCE->ce[ 0], x);
-							}
+							SetControlValue( VSTCntl[ x], CurrentDialogCE->ce[ 0]->getParameter( CurrentDialogCE->ce[ 0], GetControlReference( VSTCntl[ x])) * 100);
+									
+							dispatcher( CurrentDialogCE, false, effGetParamDisplay, x, 0, (Ptr) theString, 0);
+							MyC2PStr( (Ptr) theString);
+							pStrcat( theString, "\p ");
+						
+							dispatcher( CurrentDialogCE, false, effGetParamLabel, x, 0, (Ptr) theString2, 0);
+							MyC2PStr( (Ptr) theString2);
+							pStrcat( theString, theString2);
+						
+							SetControlData( DescCntl[ x], kControlNoPart, kControlStaticTextTextTag, *theString,(Ptr) theString + 1);
+							Draw1Control( DescCntl[ x]);
+						}
+						
+						if( CurrentcurData)
+						{
+							BlockMoveData( CurrentSData.data, CurrentcurData->data, CurrentcurData->size);
+							ApplyVSTFilter( CurrentDialogCE, CurrentcurData, CurrentStart, CurrentEnd);
 						}
 					}
-					else
+				}
+			}
+		break;
+	}
+	
+	if( CurrentVSTRect == NULL)		// NO EDITOR !!!!
+	{
+		switch( itemHit)
+		{
+			case 4:
+			{
+				Point				myPt;
+				ControlHandle		theControl;
+				short				ctlPart, bogus, ctlID;
+				long				oldH;
+				ControlActionUPP	MyControlUPP;
+				
+				GetMouse( &myPt);
+				
+				theControl = NULL;
+		
+				for( i = 0; i < CurrentDialogCE->ce[ 0]->numParams; i++)
+				{
+					Rect contrlRect;
+					
+					GetControlBounds( VSTCntl[ i], &contrlRect);
+					
+					if( PtInRect( myPt, &contrlRect))
 					{
-						for( x = 0; x < CurrentDialogCE->ce[ 0]->numParams; x++)
+						theControl = VSTCntl[ i];
+						ctlID = i;
+					}
+				}
+				
+				if( theControl)
+				{
+					while( Button())
+					{
+						DoGlobalNull();
+						
+						GetMouse( &myPt);
+						
+						if( oldH != myPt.h)
 						{
-							CurrentDialogCE->ce[ 0]->setParameter( CurrentDialogCE->ce[ 0], x, VSTPref[ id]->value[ x]);
-							if( CurrentDialogCE->ce[ 1]) CurrentDialogCE->ce[ 1]->setParameter( CurrentDialogCE->ce[ 1], x, VSTPref[ id]->value[ x]);
+							oldH = myPt.h;
 							
-							if( CurrentVSTRect == NULL)
-							{
-								SetControlValue( VSTCntl[ x], CurrentDialogCE->ce[ 0]->getParameter( CurrentDialogCE->ce[ 0], GetControlReference( VSTCntl[ x])) * 100);
-										
-								dispatcher( CurrentDialogCE, false, effGetParamDisplay, x, 0, (Ptr) theString, 0);
-								MyC2PStr( (Ptr) theString);
-								pStrcat( theString, "\p ");
+							if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
+							else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
 							
-								dispatcher( CurrentDialogCE, false, effGetParamLabel, x, 0, (Ptr) theString2, 0);
-								MyC2PStr( (Ptr) theString2);
-								pStrcat( theString, theString2);
+							CurrentDialogCE->ce[ 0]->setParameter( CurrentDialogCE->ce[ 0], GetControlReference( theControl), (float) (myPt.h - itemRect.left) / (float) (itemRect.right - itemRect.left));
+							if( CurrentDialogCE->ce[ 1]) CurrentDialogCE->ce[ 1]->setParameter( CurrentDialogCE->ce[ 1], GetControlReference( theControl), (float) (myPt.h - itemRect.left) / (float) (itemRect.right - itemRect.left));
 							
-								SetControlData( DescCntl[ x], kControlNoPart, kControlStaticTextTextTag, *theString,(Ptr) theString + 1);
-								Draw1Control( DescCntl[ x]);
-							}
+							SetControlValue( theControl, CurrentDialogCE->ce[ 0]->getParameter( CurrentDialogCE->ce[ 0], GetControlReference( theControl)) * 100);
+							
+							dispatcher( CurrentDialogCE, false, effGetParamDisplay, ctlID, 0, (Ptr) theString, 0);
+							MyC2PStr( (Ptr) theString);
+							pStrcat( theString, "\p ");
+							
+							dispatcher( CurrentDialogCE, false, effGetParamLabel, ctlID, 0, (Ptr) theString2, 0);
+							MyC2PStr( (Ptr) theString2);
+							pStrcat( theString, theString2);
+							
+							SetControlData( DescCntl[ ctlID], kControlNoPart, kControlStaticTextTextTag, *theString,(Ptr) theString + 1);
+							Draw1Control( DescCntl[ ctlID]);
+							
+							CurrentcurSelec = -1;
 							
 							if( CurrentcurData)
 							{
@@ -1644,126 +1718,53 @@ void VSTEditorDoItemPress( short itemHit, DialogPtr aDia)
 						}
 					}
 				}
+			}
 			break;
 		}
-		
-		if( CurrentVSTRect == NULL)		// NO EDITOR !!!!
+	}
+	else					// OWN EDITOR
+	{			
+		switch( itemHit)
 		{
-			switch( itemHit)
-			{
-				case 4:
-				{
-					Point				myPt;
-					ControlHandle		theControl;
-					short				ctlPart, bogus, ctlID;
-					long				oldH;
-					ControlActionUPP	MyControlUPP;
-					
-					GetMouse( &myPt);
-					
-					theControl = NULL;
+			case -5:
+				dispatcher( CurrentDialogCE, false, effEditIdle, 0, 0, CurrentVSTRect, 0);
+			break;
 			
+			case -updateEvt:
+				dispatcher( CurrentDialogCE, false, effEditDraw, 0, 0, CurrentVSTRect, 0);
+			break;
+			
+			case 4:
+			{
+				Point	myPt;
+				
+			//	SetOrigin( orgX, orgY);
+				GetMouse( &myPt);
+				dispatcher( CurrentDialogCE, false, effEditMouse, myPt.h, myPt.v, NULL, 0);
+				
+				if( CurrentDialogCE->ce[ 1])
+				{
 					for( i = 0; i < CurrentDialogCE->ce[ 0]->numParams; i++)
 					{
-						Rect contrlRect;
+						float myVal;
 						
-						GetControlBounds( VSTCntl[ i], &contrlRect);
-						
-						if( PtInRect( myPt, &contrlRect))
-						{
-							theControl = VSTCntl[ i];
-							ctlID = i;
-						}
-					}
-					
-					if( theControl)
-					{
-						while( Button())
-						{
-							DoGlobalNull();
-							
-							GetMouse( &myPt);
-							
-							if( oldH != myPt.h)
-							{
-								oldH = myPt.h;
-								
-								if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
-								else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
-								
-								CurrentDialogCE->ce[ 0]->setParameter( CurrentDialogCE->ce[ 0], GetControlReference( theControl), (float) (myPt.h - itemRect.left) / (float) (itemRect.right - itemRect.left));
-								if( CurrentDialogCE->ce[ 1]) CurrentDialogCE->ce[ 1]->setParameter( CurrentDialogCE->ce[ 1], GetControlReference( theControl), (float) (myPt.h - itemRect.left) / (float) (itemRect.right - itemRect.left));
-								
-								SetControlValue( theControl, CurrentDialogCE->ce[ 0]->getParameter( CurrentDialogCE->ce[ 0], GetControlReference( theControl)) * 100);
-								
-								dispatcher( CurrentDialogCE, false, effGetParamDisplay, ctlID, 0, (Ptr) theString, 0);
-								MyC2PStr( (Ptr) theString);
-								pStrcat( theString, "\p ");
-								
-								dispatcher( CurrentDialogCE, false, effGetParamLabel, ctlID, 0, (Ptr) theString2, 0);
-								MyC2PStr( (Ptr) theString2);
-								pStrcat( theString, theString2);
-								
-								SetControlData( DescCntl[ ctlID], kControlNoPart, kControlStaticTextTextTag, *theString,(Ptr) theString + 1);
-								Draw1Control( DescCntl[ ctlID]);
-								
-								CurrentcurSelec = -1;
-								
-								if( CurrentcurData)
-								{
-									BlockMoveData( CurrentSData.data, CurrentcurData->data, CurrentcurData->size);
-									ApplyVSTFilter( CurrentDialogCE, CurrentcurData, CurrentStart, CurrentEnd);
-								}
-							}
-						}
+						myVal = CurrentDialogCE->ce[ 0]->getParameter( CurrentDialogCE->ce[ 0], i);
+						CurrentDialogCE->ce[ 1]->setParameter( CurrentDialogCE->ce[ 1], i, myVal);
 					}
 				}
-				break;
-			}
-		}
-		else					// OWN EDITOR
-		{			
-			switch( itemHit)
-			{
-				case -5:
-					dispatcher( CurrentDialogCE, false, effEditIdle, 0, 0, CurrentVSTRect, 0);
-				break;
+			//	SetOrigin( 0, 0);
 				
-				case -updateEvt:
-					dispatcher( CurrentDialogCE, false, effEditDraw, 0, 0, CurrentVSTRect, 0);
-				break;
+				CurrentcurSelec = -1;
 				
-				case 4:
+				if( CurrentcurData)
 				{
-					Point	myPt;
-					
-				//	SetOrigin( orgX, orgY);
-					GetMouse( &myPt);
-					dispatcher( CurrentDialogCE, false, effEditMouse, myPt.h, myPt.v, NULL, 0);
-					
-					if( CurrentDialogCE->ce[ 1])
-					{
-						for( i = 0; i < CurrentDialogCE->ce[ 0]->numParams; i++)
-						{
-							float myVal;
-							
-							myVal = CurrentDialogCE->ce[ 0]->getParameter( CurrentDialogCE->ce[ 0], i);
-							CurrentDialogCE->ce[ 1]->setParameter( CurrentDialogCE->ce[ 1], i, myVal);
-						}
-					}
-				//	SetOrigin( 0, 0);
-					
-					CurrentcurSelec = -1;
-					
-					if( CurrentcurData)
-					{
-						BlockMoveData( CurrentSData.data, CurrentcurData->data, CurrentcurData->size);
-						ApplyVSTFilter( CurrentDialogCE, CurrentcurData, CurrentStart, CurrentEnd);
-					}
+					BlockMoveData( CurrentSData.data, CurrentcurData->data, CurrentcurData->size);
+					ApplyVSTFilter( CurrentDialogCE, CurrentcurData, CurrentStart, CurrentEnd);
 				}
-				break;
 			}
+			break;
 		}
+	}
 }
 
 Boolean VSTEditorClose( DialogPtr aDia, short itemHit)

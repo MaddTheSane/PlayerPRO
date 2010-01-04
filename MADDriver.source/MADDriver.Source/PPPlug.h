@@ -20,7 +20,6 @@
 //	Internet: 	RossetAntoine@bluewin.ch
 //
 /********************						***********************/
-//TODO: export functions that need exportin
 
 #ifndef __PPPLUGH__
 #define __PPPLUGH__

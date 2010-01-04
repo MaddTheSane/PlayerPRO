@@ -87,7 +87,10 @@ void InitPPDGPlug(void)
 				tempPlugRef = CFBundleGetPlugIn(tempBundleRef);
 				tempMADPlug = PPDGLoadPlug(tempPlugRef);
 				if (tempMADPlug) {
-					if( tPlug > FilterPlugMax) MyDebugStr( __LINE__, __FILE__, "Too many plugs!");
+					if( tPlug > FilterPlugMax) {
+						MyDebugStr( __LINE__, __FILE__, "Too many plugs!");
+						break;
+					}
 					
 #pragma mark This is where we add the plug to the plug library.
 					short		resFileNum = CFBundleOpenBundleResourceMap(tempBundleRef);

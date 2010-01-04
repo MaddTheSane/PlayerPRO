@@ -49,7 +49,7 @@ struct PerChanInfo {
 	short 							qType;						/* queue type = 0 */
 	short							stopping;
 #if DEBUG
-		OSType						magic;
+	OSType							magic;
 #endif
 	SndCallBackUPP 					usersCallBack;
 	PPSndDoubleBufferHeaderPtr		theParams;
@@ -64,8 +64,8 @@ typedef struct PerChanInfo *		PerChanInfoPtr;
 	QHdrPtr							gFreeList;
 	Ptr								gSilenceTwos;
 	Ptr								gSilenceOnes;
-static SndCallBackUPP				gMySndPlayDoubleBufferCallBackUPP = nil;
-static SndCallBackUPP				gMySndPlayDoubleBufferCleanUpUPP = nil;
+static SndCallBackUPP				gMySndPlayDoubleBufferCallBackUPP = NULL;
+static SndCallBackUPP				gMySndPlayDoubleBufferCleanUpUPP = NULL;
 
 // Remember this routine could be called at interrupt time, so don't allocate or deallocate memory.
 OSErr	MySndDoImmediate (SndChannelPtr chan, SndCommand * cmd) {
@@ -78,7 +78,7 @@ OSErr	MySndDoImmediate (SndChannelPtr chan, SndCommand * cmd) {
 			// We know that our callBackCmd is the first item in the queue if this is our channel
 			perChanInfoPtr = (PerChanInfoPtr)(chan->queue[chan->qHead].param2);
 #if DEBUG
-				if (perChanInfoPtr->magic != 'SANE') DebugStr("\pBAD in MySndDoImmediate");
+			if (perChanInfoPtr->magic != 'SANE') DebugStr("\pBAD in MySndDoImmediate");
 #endif
 			perChanInfoPtr->stopping = true;
 			Enqueue ((QElemPtr)perChanInfoPtr, gFreeList);
@@ -154,7 +154,7 @@ OSErr	MySndPlayDoubleBuffer (SndChannelPtr chan, PPSndDoubleBufferHeaderPtr theP
 		gNMRecPtr->nmRefCon = 0;
 	}
 
-	perChanInfoPtr = (PerChanInfoPtr)NewPtr (sizeof (PerChanInfo));
+	perChanInfoPtr = (PerChanInfoPtr)NewPtr (sizeof (PerChanInfo));//FIXME: this leaks in PlayerPRO!
 	err = MemError ();
 	if (noErr != err) goto exit;
 
@@ -163,7 +163,7 @@ OSErr	MySndPlayDoubleBuffer (SndChannelPtr chan, PPSndDoubleBufferHeaderPtr theP
 	perChanInfoPtr->qType = 0;				// not used
 	perChanInfoPtr->stopping = 0;
 #if DEBUG
-		perChanInfoPtr->magic = 'SANE';
+	perChanInfoPtr->magic = 'SANE';
 #endif
 	
 	perChanInfoPtr->theParams = theParams;

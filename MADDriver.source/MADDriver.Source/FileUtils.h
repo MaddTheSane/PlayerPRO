@@ -37,16 +37,16 @@ extern "C" {
 
 #ifdef _MAC_H
 #include <CoreServices/CoreServices.h>
-#if !defined(__LP64__)
-typedef SInt16 UNFILE;
+#if defined(__LP64__)
+typedef FSIORefNum	UNFILE;
 #else
-typedef FSIORefNum UNFILE;
+typedef SInt16		UNFILE;
 #endif
 #else
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-typedef FILE* UNFILE;
+typedef FILE*		UNFILE;
 #endif
 	
 EXP UNFILE iFileOpen( Ptr name);
