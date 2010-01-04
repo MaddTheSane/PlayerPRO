@@ -354,4 +354,3 @@ OSErr mainPAT(		OSType					order,						// Order to execute
 #define PLUGMAIN mainPAT //The old main function, renamed please
 
 #include "CFPlugin-InstrBridge.c"
-

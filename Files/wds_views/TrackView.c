@@ -31,8 +31,8 @@ void SmallEffectTrack(void)
 
 void DoGrowTrackView(void)
 {
-short		temp;
-Rect		caRect;
+	short		temp;
+	Rect		caRect;
 
 	GetPortBounds( GetDialogPort( TrackViewDlog), &caRect);
 	

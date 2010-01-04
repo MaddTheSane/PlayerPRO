@@ -4,6 +4,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <Sound.h>
 #include "WAV.h"
+#include <Movies.h>
 
 #define WAVE_FORMAT_PCM		1
 #define kmaxVolume			7
@@ -42,12 +43,12 @@ OSErr TestWAV( PCMWavePtr CC)
 Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo)
 {
 	PCMWavePtr	WAVERsrc;
-	short		fRef,tempResRef,x;
+	short		fRef;//, tempResRef, x;
 	long		fSize;
-	int			theHit;
-	char		test;
- 	short		gRefNum;
- 	short		gVolSet;
+	//int			theHit;
+	//char		test;
+ 	//short		gRefNum;
+ 	//short		gVolSet;
 	
 	*stereo = false;
 	
@@ -56,12 +57,12 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 		GetEOF(fRef, &fSize);
 		if(!(WAVERsrc = (PCMWavePtr) NewPtr(fSize))) 
 		{
-			FSClose(fRef); return NULL;
+			FSCloseFork(fRef); return NULL;
 		}
 		
 		if(FSRead(fRef, &fSize, &(*WAVERsrc)))
 		{
-			FSClose(fRef); return NULL;
+			FSCloseFork(fRef); return NULL;
 		}
 		
 		if((*WAVERsrc).ckid =='RIFF')
@@ -113,7 +114,7 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 			DisposePtr( (Ptr) WAVERsrc);
 			return NULL;
 		}
-		FSClose(fRef);
+		FSCloseFork(fRef);
 	}
 	
 	{
@@ -145,15 +146,15 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 
 OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 {
-	OSType					fileType;
+	//OSType					fileType;
 	OSErr					iErr;
 	Boolean					canceled;
 	Movie 					theMovie;
-	Track					usedTrack;
-	TimeValue				addedDuration;
-	long					outFlags;
-	short					resRefNum, ins, samp, resId;
-	FInfo					fndrInfo;
+	//Track					usedTrack;
+	//TimeValue				addedDuration;
+	//long					outFlags;
+	short					resRefNum, /*ins, samp,*/ resId;
+	//FInfo					fndrInfo;
 	Cursor					watchCrsr;
 	CursHandle				myCursH;
 	Str255					resName;
@@ -179,7 +180,7 @@ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug
 	
 	CallUpdateALLWindowUPP();
 	
-	canceled = false;
+	canceled = FALSE;
 	
 	if( !canceled && iErr == noErr)
 	{

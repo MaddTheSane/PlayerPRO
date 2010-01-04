@@ -119,7 +119,7 @@ void UPDATE_TrackActive( void);
 
 short GetMaxXStaff()
 {
-short	ret;
+	short	ret;
 
 	ret = 1 + GetControlValue( xScroll) + (StaffRect.right - StaffRect.left) / XSize;
 	if( ret > curMusic->partition[ CurrentPat]->header.size) ret = curMusic->partition[ CurrentPat]->header.size;
@@ -129,7 +129,7 @@ short	ret;
 
 short GetMaxYStaff()
 {
-short	ret;
+	short	ret;
 
 	ret = 1 + GetControlValue( yScroll) + (StaffRect.bottom - StaffRect.top) / YSize;
 	if( ret > curMusic->header->numChn) ret = curMusic->header->numChn;
@@ -139,8 +139,8 @@ short	ret;
 
 void SetStaffControl()
 {
-short	tt;
-Rect	caRect;
+	short	tt;
+	Rect	caRect;
 
 	// XScroll
 	
@@ -453,14 +453,14 @@ void DoNullStaff(void)
 
 void DoGrowStaff(void)
 {
-long		lSizeVH;
-GrafPtr		SavePort;
-Rect		caRect, temp, cellRect;
-Point		theCell = { 0, 0}, aPt = { 0, 0};
-short			tempA, tempB;
-Handle		itemHandle;
-short		itemType;
-BitMap		screenBits;
+	long		lSizeVH;
+	GrafPtr		SavePort;
+	Rect		caRect, temp, cellRect;
+	Point		theCell = { 0, 0}, aPt = { 0, 0};
+	short			tempA, tempB;
+	Handle		itemHandle;
+	short		itemType;
+	BitMap		screenBits;
 
 	GetPort( &SavePort);
  	SetPortDialogPort( StaffDlog);
@@ -1305,6 +1305,7 @@ void DrawStaffNotes()
  	SetClip( saveClipRgn);
  	DisposeRgn( saveClipRgn);
 }
+
 void  UpdateStaffWindow(DialogPtr GetSelection)
 { 
 	Rect   		caRect, tempRect, itemRect;
@@ -1381,10 +1382,10 @@ void CalculDiffStartStaff(void)
 
 Pcmd* CreatePcmdFromSelectionStaff(void)
 {
-	Point				theCell;
-	Cmd					*cmd, *cmd2;
-	Pcmd				*myPcmd;
-	short				X, Y, count;
+	Point		theCell;
+	Cmd			*cmd, *cmd2;
+	Pcmd		*myPcmd;
+	short		X, Y, count;
 	
 	if( startXSelec == -1) return NULL;
 	
@@ -1415,9 +1416,9 @@ Pcmd* CreatePcmdFromSelectionStaff(void)
 
 Pcmd* CreatePcmdFromNoteStaff( Point myPt)
 {
-	Point				theCell;
-	Cmd					*cmd;
-	Pcmd				*myPcmd;
+	Point		theCell;
+	Cmd			*cmd;
+	Pcmd		*myPcmd;
 	
 	if( aNoteStaff( myPt, NULL))
 	{
@@ -1481,665 +1482,665 @@ void OpenPcmdStaff( FSSpec	*mySpec)
 
 void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 {
-		Cell				theCell;
-		long				tempLong;
- 		short				temp, i, bogus, ctlPart;
- 		Rect				caRect, cellRect;
- 		GrafPtr				SavePort;
- 		Cmd					*theCommand;
- 		Boolean				DoubleClick;
- 		Point				myPt, lastCell;
- 		ControlHandle		theControl;
- 		ControlActionUPP	MyControlUPP;
- 		
- 		GetPort( &SavePort);
- 		SetPortDialogPort( StaffDlog);
- 		
-		if (theEvent.what == mouseDown)
-		{
-			myPt = theEvent.where;
-			GlobalToLocal( &myPt);
-						
-			DoubleClick = false;
-			
-			if (PtInRect( myPt, &StaffRect))
-			{
-				GetKeys( km);
-				if( IsPressed( 0x37) && PtInRect( myPt, &CurRect))	// On joue la note = PlayCrsr
-				{
-					short		VolExtCopy[ MAXTRACK];
-					
-					PlaySelection:
-					
-					MADDriver->PartitionReader = startXSelec;
-					SetCommandTrack( startYSelec, -1);
-					
-					HiliteControl( playBut, kControlButtonPart);
-					
-					DoRemember();
-					
-			//		for( i = 0; i < MAXTRACK; i++)						VolExtCopy[ i] = curMusic->header->chanVol[ i];		// Copy
-			//		for( i = 0; i < startYSelec; i++)					curMusic->header->chanVol[ i] = 0;
-			//		for( i = endYSelec+1; i < MAXTRACK; i++)			curMusic->header->chanVol[ i] = 0;
-					
-					for( i = 0; i < startYSelec; i++)			MADDriver->TrackReading[ i] = false;
-					for( i = endYSelec+1; i < MAXTRACK; i++)	MADDriver->TrackReading[ i] = false;
-					
-					MADDriver->Reading = true;
-					while( Button() == true  && MADDriver->PartitionReader <= endXSelec) 
-					{
-						DoGlobalNull();
-						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-					}
-					MADDriver->Reading = false;
-					while( Button() == true)
-					{
-						DoGlobalNull();
-						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-					}
-					DoPause();
-					
-					for( i = 0; i < MAXTRACK; i++)					MADDriver->TrackReading[ i] = true;		// Restore
-					
-					HiliteControl( playBut, 0);
-				}
-				else
-				{
-					switch( mode)
-					{
-						case selecM:
-						if( PtInRect( myPt, &CurRect))
-						{
-							Point		myCPt;
-							RgnHandle	tempRgn;
-							Pcmd		*myPcmd;
-							
-							myCPt = myPt;
-							while( Button())
-							{
-								GetMouse( &myPt);
-								if( myCPt.h != myPt.h || myCPt.v != myPt.v) break;
-							}
-							if( !Button()) goto newSelec;
-							
-							tempRgn = NewRgn();
-							RectRgn( tempRgn, &CurRect);
-							
-							myPcmd = CreatePcmdFromSelectionStaff();
-							if( myPcmd != NULL)
-							{
-								CalculDiffStartStaff();
-								
-								SetCursor( &CHandCrsr);
-								
-								DragStaff( tempRgn, myPcmd, &theEvent);
-								
-								DiffStartV = 0;		DiffStartH = 0;
-								
-								MyDisposePtr( (Ptr*) &myPcmd);
-							}
-							
-							DisposeRgn( tempRgn);
-						}
-						else	newSelec:
-						{
-							Point	curPt, start;
-							Rect	prevRect = { -1, -1, -1, -1};
-							short	cendXSelec = endXSelec, cstartXSelec = startXSelec, cendYSelec = endYSelec, cstartYSelec = startYSelec;
-							
-							ConvertPt2Note( myPt, 	&start.h, &start.v, NULL);
-							
-							if( theEvent.modifiers & shiftKey)
-							{
-								if( start.h < startXSelec)  start.h		= 	cendXSelec;
-								else start.h		= 	cstartXSelec;
-								if( start.v < startYSelec)  start.v		= 	cendYSelec;
-								else start.v	= 	cstartYSelec;
-							}
-							
-							do
-							{
-								Rect		aRect;
-								RgnHandle	saveClipRgn;
-								
-								GetMouse( &curPt);
-								
-								if( !PtInRect( curPt, &StaffRect))
-								{
-									if( curPt.h > StaffRect.right) actionProcStaff( xScroll, kControlDownButtonPart);
-									else if( curPt.h < StaffRect.left) actionProcStaff( xScroll, kControlUpButtonPart);
-									
-									if( curPt.v > StaffRect.bottom) actionProcStaff( yScroll, kControlDownButtonPart);
-									else if( curPt.v < StaffRect.top) actionProcStaff( yScroll, kControlUpButtonPart);
-								}
-								
-								ConvertPt2Note( curPt, 		&aRect.left, &aRect.top, NULL);
-								
-								SetMobiusRect( &aRect, aRect.left, aRect.top, start.h, start.v);
-								
-								if( !EqualRect( &aRect, &prevRect))
-								{
-									RgnHandle	tempRgn;
-									Rect		oldRect;
-									
-									prevRect = aRect;
-									
-									startXSelec = aRect.left;	endXSelec = aRect.right;
-									startYSelec = aRect.top;	endYSelec = aRect.bottom;
-									
-									saveClipRgn = NewRgn();
-								 	GetClip( saveClipRgn);
-									
-									StaffRect.top++;
-									ClipRect( &StaffRect);
-									StaffRect.top--;
-									
-									BackColor( whiteColor);
-									
-									oldRect = CurRect;
-									CreateCurStaffRect();
-									
-									CleanInvert( &oldRect, &CurRect);
-									
-									RGBBackColor( &theColor);
-									
-									SetClip( saveClipRgn);
-						 			DisposeRgn( saveClipRgn);
-					 			}
-					 			
-					 			WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-					 		
-					 		//	if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-    						//	QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
-							}
-							while( Button());
-							
-							SetDigitalSelection( startYSelec, startXSelec, endYSelec+1, endXSelec+1);
-							
-							MADDriver->PartitionReader = startXSelec;
-							SetCommandTrack( startYSelec, -1);
-						}
-						break;
-						
-						case noteM:
-						if( aNoteStaff( myPt, NULL))
-						{
-							Point		myCPt;
-							RgnHandle	tempRgn;
-							Pcmd		*myPcmd;
-							short		pos, track, note;
-							
-							myCPt = myPt;
-						/*	while( Button())
-							{
-								GetMouse( &myPt);
-								if( myCPt.h != myPt.h || myCPt.v != myPt.v) break;
-							}*/
-							if( !Button()) goto newSelec;
-							
-							// Select current note
-							
-							ConvertPt2Note( myPt, &pos, &track, &note);
-							
-							InvalWindowRect( GetDialogWindow( whichDialog), &CurRect);
-							
-							startXSelec = pos;		
-							endXSelec	= pos;
+	Cell				theCell;
+	long				tempLong;
+	short				temp, i, bogus, ctlPart;
+	Rect				caRect, cellRect;
+	GrafPtr				SavePort;
+	Cmd					*theCommand;
+	Boolean				DoubleClick;
+	Point				myPt, lastCell;
+	ControlHandle		theControl;
+	ControlActionUPP	MyControlUPP;
 	
-							startYSelec = track;
-							endYSelec	= track;
-							
-							CreateCurStaffRect();
-							InvalWindowRect( GetDialogWindow( whichDialog), &CurRect);
-							
-							//
-							
-							RectRgn( tempRgn = NewRgn(), &(*noteIcn[ 3])->iconPMap.bounds);
-							
-							OffsetRgn( tempRgn, myPt.h - 8, myPt.v - 16);
-							
-							myPcmd = CreatePcmdFromNoteStaff( myPt);
-							if( myPcmd != NULL)
-							{
-								//CalculDiffStartStaff();
-								
-								DiffStartH = 0;
-								DiffStartV = 0;
-								
-								SetCursor( &CHandCrsr);
-								
-								DragStaff( tempRgn, myPcmd, &theEvent);
-								
-								DiffStartV = 0;		DiffStartH = 0;
-								
-								MyDisposePtr( (Ptr*) &myPcmd);
-							}
-							
-							DisposeRgn( tempRgn);
-						}
-						else
-						{
-							short	pos, track, note, tte;
-							Cmd		*cmd;
-							
-							SaveUndo( UPattern, CurrentPat, "\pUndo 'Add Note in Classic Editor'");
-							
-							GetMouse( &myPt);
-							
-							ConvertPt2Note( myPt, &pos, &track, &note);
-							
-							cmd = GetMADCommand( pos, track, curMusic->partition[ CurrentPat]);
-							
-							if( curModif == cUp)		note++;
-							if( curModif == cDown)		note--;
-							
-							cmd->note	= note;
-							cmd->ins	= curInstru;
-							
-							UPDATE_NoteBOUCLE( pos, track);
-							
-							tte = 0;
-						//	if( curDur & cPoint) tte = curNoteLength/2;
-							
-							if( curNoteLength == 0)	// ONLY KEY OFF
-							{
-								cmd->note = 0xFE;
-								cmd->ins = 0;
-								UPDATE_NoteBOUCLE( pos, track);
-							}
-							else
-							{
-								for( i = 1; i <= curNoteLength; i++)
-								{
-									if( pos + i < curMusic->partition[ CurrentPat]->header.size)
-									{
-										cmd = GetMADCommand( pos + i, track, curMusic->partition[ CurrentPat]);
-										
-										if( i == curNoteLength)
-										{
-											if( cmd->note == 0xFF)
-											{
-												cmd->note = 0xFE;
-												cmd->ins = 0;
-											}
-										}
-										else
-										{
-											cmd->note = 0xFF;
-											cmd->ins = 0;
-										}
-										
-										UPDATE_NoteBOUCLE( pos + i, track);
-									}
-								}
-							}
-							UPDATE_NoteFINISH();
-							
-							MADDriver->PartitionReader = pos;
-							
-							SetCommandTrack( track, -1);
-						}
-						break;
-					}
+	GetPort( &SavePort);
+	SetPortDialogPort( StaffDlog);
+	
+	if (theEvent.what == mouseDown)
+	{
+		myPt = theEvent.where;
+		GlobalToLocal( &myPt);
+					
+		DoubleClick = false;
+		
+		if (PtInRect( myPt, &StaffRect))
+		{
+			GetKeys( km);
+			if( IsPressed( 0x37) && PtInRect( myPt, &CurRect))	// On joue la note = PlayCrsr
+			{
+				short		VolExtCopy[ MAXTRACK];
+				
+				PlaySelection:
+				
+				MADDriver->PartitionReader = startXSelec;
+				SetCommandTrack( startYSelec, -1);
+				
+				HiliteControl( playBut, kControlButtonPart);
+				
+				DoRemember();
+				
+		//		for( i = 0; i < MAXTRACK; i++)						VolExtCopy[ i] = curMusic->header->chanVol[ i];		// Copy
+		//		for( i = 0; i < startYSelec; i++)					curMusic->header->chanVol[ i] = 0;
+		//		for( i = endYSelec+1; i < MAXTRACK; i++)			curMusic->header->chanVol[ i] = 0;
+				
+				for( i = 0; i < startYSelec; i++)			MADDriver->TrackReading[ i] = false;
+				for( i = endYSelec+1; i < MAXTRACK; i++)	MADDriver->TrackReading[ i] = false;
+				
+				MADDriver->Reading = true;
+				while( Button() == true  && MADDriver->PartitionReader <= endXSelec) 
+				{
+					DoGlobalNull();
+					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 				}
+				MADDriver->Reading = false;
+				while( Button() == true)
+				{
+					DoGlobalNull();
+					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+				}
+				DoPause();
+				
+				for( i = 0; i < MAXTRACK; i++)					MADDriver->TrackReading[ i] = true;		// Restore
+				
+				HiliteControl( playBut, 0);
 			}
 			else
 			{
-				short	itemType;
-				Handle	itemHandle;
-				Rect	tempRect;
-				
-				GetDialogItem( StaffDlog, 2, &itemType, &itemHandle, &tempRect);
-				tempRect.left = StaffRect.left;
-				tempRect.right = StaffRect.right;
-				
-				if( PtInRect( myPt, &tempRect))
+				switch( mode)
 				{
-					Boolean		IsPlay = MusicPlayActive;
-					Boolean		IsJump = MADDriver->JumpToNextPattern;
-					
-					MADDriver->JumpToNextPattern = false;
-					
-					GetMouse( &myPt);
-					myPt.h -= StaffRect.left;
-					myPt.h /= XSize;
-					myPt.h += GetControlValue( xScroll);
-					
-					if( myPt.h < 0) myPt.h = 0;
-					else if( myPt.h >= curMusic->partition[ CurrentPat]->header.size) myPt.h = curMusic->partition[ CurrentPat]->header.size - 1;
-					MADDriver->PartitionReader = myPt.h;
-					
-					if( IsPlay == false) DoPlay();
-					
-					while( Button())
+					case selecM:
+					if( PtInRect( myPt, &CurRect))
 					{
-						DoGlobalNull();
-						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-					}
-					
-					MADDriver->JumpToNextPattern = IsJump;
-					
-					if( IsPlay == false) DoPause();
-				}
-				
-				tempRect.top = StaffRect.top;
-				tempRect.bottom = StaffRect.bottom;
-				tempRect.left	= 0;
-				tempRect.right	= StaffRect.left - ((*MainNote)->picFrame.right - (*MainNote)->picFrame.left);
-				if( PtInRect( myPt, &tempRect))
-				{
-					short 	track, note;
-					Point	tPt;
+						Point		myCPt;
+						RgnHandle	tempRgn;
+						Pcmd		*myPcmd;
 						
-					GetMouse( &tPt);
-						
-					ConvertPt2Note( tPt, NULL, &track, &note);
-					
-					if( (theEvent.modifiers & cmdKey) != 0)			// Mute
-					{
-						MADDriver->Active[ track] = !MADDriver->Active[ track];
-						
-						UPDATE_TrackActive();
-					}
-					else if( (theEvent.modifiers & optionKey) != 0)	// Solo
-					{
-						short	noActive;
-						
-						for( i = 0, noActive = 0; i < curMusic->header->numChn; i++)
+						myCPt = myPt;
+						while( Button())
 						{
-							if( MADDriver->Active[ i] == true)
-							{
-								noActive++;
-							}
+							GetMouse( &myPt);
+							if( myCPt.h != myPt.h || myCPt.v != myPt.v) break;
+						}
+						if( !Button()) goto newSelec;
+						
+						tempRgn = NewRgn();
+						RectRgn( tempRgn, &CurRect);
+						
+						myPcmd = CreatePcmdFromSelectionStaff();
+						if( myPcmd != NULL)
+						{
+							CalculDiffStartStaff();
+							
+							SetCursor( &CHandCrsr);
+							
+							DragStaff( tempRgn, myPcmd, &theEvent);
+							
+							DiffStartV = 0;		DiffStartH = 0;
+							
+							MyDisposePtr( (Ptr*) &myPcmd);
 						}
 						
-						if( noActive <= 1 && MADDriver->Active[ track] == true)
+						DisposeRgn( tempRgn);
+					}
+					else	newSelec:
+					{
+						Point	curPt, start;
+						Rect	prevRect = { -1, -1, -1, -1};
+						short	cendXSelec = endXSelec, cstartXSelec = startXSelec, cendYSelec = endYSelec, cstartYSelec = startYSelec;
+						
+						ConvertPt2Note( myPt, 	&start.h, &start.v, NULL);
+						
+						if( theEvent.modifiers & shiftKey)
 						{
-							for( i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
+							if( start.h < startXSelec)  start.h		= 	cendXSelec;
+							else start.h		= 	cstartXSelec;
+							if( start.v < startYSelec)  start.v		= 	cendYSelec;
+							else start.v	= 	cstartYSelec;
+						}
+						
+						do
+						{
+							Rect		aRect;
+							RgnHandle	saveClipRgn;
+							
+							GetMouse( &curPt);
+							
+							if( !PtInRect( curPt, &StaffRect))
+							{
+								if( curPt.h > StaffRect.right) actionProcStaff( xScroll, kControlDownButtonPart);
+								else if( curPt.h < StaffRect.left) actionProcStaff( xScroll, kControlUpButtonPart);
+								
+								if( curPt.v > StaffRect.bottom) actionProcStaff( yScroll, kControlDownButtonPart);
+								else if( curPt.v < StaffRect.top) actionProcStaff( yScroll, kControlUpButtonPart);
+							}
+							
+							ConvertPt2Note( curPt, 		&aRect.left, &aRect.top, NULL);
+							
+							SetMobiusRect( &aRect, aRect.left, aRect.top, start.h, start.v);
+							
+							if( !EqualRect( &aRect, &prevRect))
+							{
+								RgnHandle	tempRgn;
+								Rect		oldRect;
+								
+								prevRect = aRect;
+								
+								startXSelec = aRect.left;	endXSelec = aRect.right;
+								startYSelec = aRect.top;	endYSelec = aRect.bottom;
+								
+								saveClipRgn = NewRgn();
+								GetClip( saveClipRgn);
+								
+								StaffRect.top++;
+								ClipRect( &StaffRect);
+								StaffRect.top--;
+								
+								BackColor( whiteColor);
+								
+								oldRect = CurRect;
+								CreateCurStaffRect();
+								
+								CleanInvert( &oldRect, &CurRect);
+								
+								RGBBackColor( &theColor);
+								
+								SetClip( saveClipRgn);
+								DisposeRgn( saveClipRgn);
+							}
+							
+							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+						
+						//	if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+						//	QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+						}
+						while( Button());
+						
+						SetDigitalSelection( startYSelec, startXSelec, endYSelec+1, endXSelec+1);
+						
+						MADDriver->PartitionReader = startXSelec;
+						SetCommandTrack( startYSelec, -1);
+					}
+					break;
+					
+					case noteM:
+					if( aNoteStaff( myPt, NULL))
+					{
+						Point		myCPt;
+						RgnHandle	tempRgn;
+						Pcmd		*myPcmd;
+						short		pos, track, note;
+						
+						myCPt = myPt;
+					/*	while( Button())
+						{
+							GetMouse( &myPt);
+							if( myCPt.h != myPt.h || myCPt.v != myPt.v) break;
+						}*/
+						if( !Button()) goto newSelec;
+						
+						// Select current note
+						
+						ConvertPt2Note( myPt, &pos, &track, &note);
+						
+						InvalWindowRect( GetDialogWindow( whichDialog), &CurRect);
+						
+						startXSelec = pos;		
+						endXSelec	= pos;
+
+						startYSelec = track;
+						endYSelec	= track;
+						
+						CreateCurStaffRect();
+						InvalWindowRect( GetDialogWindow( whichDialog), &CurRect);
+						
+						//
+						
+						RectRgn( tempRgn = NewRgn(), &(*noteIcn[ 3])->iconPMap.bounds);
+						
+						OffsetRgn( tempRgn, myPt.h - 8, myPt.v - 16);
+						
+						myPcmd = CreatePcmdFromNoteStaff( myPt);
+						if( myPcmd != NULL)
+						{
+							//CalculDiffStartStaff();
+							
+							DiffStartH = 0;
+							DiffStartV = 0;
+							
+							SetCursor( &CHandCrsr);
+							
+							DragStaff( tempRgn, myPcmd, &theEvent);
+							
+							DiffStartV = 0;		DiffStartH = 0;
+							
+							MyDisposePtr( (Ptr*) &myPcmd);
+						}
+						
+						DisposeRgn( tempRgn);
+					}
+					else
+					{
+						short	pos, track, note, tte;
+						Cmd		*cmd;
+						
+						SaveUndo( UPattern, CurrentPat, "\pUndo 'Add Note in Classic Editor'");
+						
+						GetMouse( &myPt);
+						
+						ConvertPt2Note( myPt, &pos, &track, &note);
+						
+						cmd = GetMADCommand( pos, track, curMusic->partition[ CurrentPat]);
+						
+						if( curModif == cUp)		note++;
+						if( curModif == cDown)		note--;
+						
+						cmd->note	= note;
+						cmd->ins	= curInstru;
+						
+						UPDATE_NoteBOUCLE( pos, track);
+						
+						tte = 0;
+					//	if( curDur & cPoint) tte = curNoteLength/2;
+						
+						if( curNoteLength == 0)	// ONLY KEY OFF
+						{
+							cmd->note = 0xFE;
+							cmd->ins = 0;
+							UPDATE_NoteBOUCLE( pos, track);
 						}
 						else
 						{
-							for( i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
-							MADDriver->Active[ track] = true;
+							for( i = 1; i <= curNoteLength; i++)
+							{
+								if( pos + i < curMusic->partition[ CurrentPat]->header.size)
+								{
+									cmd = GetMADCommand( pos + i, track, curMusic->partition[ CurrentPat]);
+									
+									if( i == curNoteLength)
+									{
+										if( cmd->note == 0xFF)
+										{
+											cmd->note = 0xFE;
+											cmd->ins = 0;
+										}
+									}
+									else
+									{
+										cmd->note = 0xFF;
+										cmd->ins = 0;
+									}
+									
+									UPDATE_NoteBOUCLE( pos + i, track);
+								}
+							}
 						}
+						UPDATE_NoteFINISH();
 						
-						UPDATE_TrackActive();
+						MADDriver->PartitionReader = pos;
+						
+						SetCommandTrack( track, -1);
 					}
+					break;
+				}
+			}
+		}
+		else
+		{
+			short	itemType;
+			Handle	itemHandle;
+			Rect	tempRect;
+			
+			GetDialogItem( StaffDlog, 2, &itemType, &itemHandle, &tempRect);
+			tempRect.left = StaffRect.left;
+			tempRect.right = StaffRect.right;
+			
+			if( PtInRect( myPt, &tempRect))
+			{
+				Boolean		IsPlay = MusicPlayActive;
+				Boolean		IsJump = MADDriver->JumpToNextPattern;
+				
+				MADDriver->JumpToNextPattern = false;
+				
+				GetMouse( &myPt);
+				myPt.h -= StaffRect.left;
+				myPt.h /= XSize;
+				myPt.h += GetControlValue( xScroll);
+				
+				if( myPt.h < 0) myPt.h = 0;
+				else if( myPt.h >= curMusic->partition[ CurrentPat]->header.size) myPt.h = curMusic->partition[ CurrentPat]->header.size - 1;
+				MADDriver->PartitionReader = myPt.h;
+				
+				if( IsPlay == false) DoPlay();
+				
+				while( Button())
+				{
+					DoGlobalNull();
+					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 				}
 				
-			//	GetDialogItem( StaffDlog, 4, &itemType, &itemHandle, &tempRect);
-				tempRect.top = StaffRect.top;
-				tempRect.bottom = StaffRect.bottom;
-				tempRect.left	= StaffRect.left - ((*MainNote)->picFrame.right - (*MainNote)->picFrame.left);
-				tempRect.right	= StaffRect.left;
+				MADDriver->JumpToNextPattern = IsJump;
 				
-				if( PtInRect( myPt, &tempRect))
-				{
-					short prevV = 0;
+				if( IsPlay == false) DoPause();
+			}
+			
+			tempRect.top = StaffRect.top;
+			tempRect.bottom = StaffRect.bottom;
+			tempRect.left	= 0;
+			tempRect.right	= StaffRect.left - ((*MainNote)->picFrame.right - (*MainNote)->picFrame.left);
+			if( PtInRect( myPt, &tempRect))
+			{
+				short 	track, note;
+				Point	tPt;
 					
-					do
+				GetMouse( &tPt);
+					
+				ConvertPt2Note( tPt, NULL, &track, &note);
+				
+				if( (theEvent.modifiers & cmdKey) != 0)			// Mute
+				{
+					MADDriver->Active[ track] = !MADDriver->Active[ track];
+					
+					UPDATE_TrackActive();
+				}
+				else if( (theEvent.modifiers & optionKey) != 0)	// Solo
+				{
+					short	noActive;
+					
+					for( i = 0, noActive = 0; i < curMusic->header->numChn; i++)
 					{
-						short 	track, note;
-						Point	tPt;
-						
-						GetMouse( &tPt);
-						
-						ConvertPt2Note( tPt, NULL, &track, &note);
-						
-						if( prevV != note)
+						if( MADDriver->Active[ i] == true)
 						{
-							DoPlayInstruInt( note, curInstru-1, 0, 0, 0xFF, &MADDriver->chan[ track], 0, 0);
-						
-							DrawNoteCarre( &tPt);
-							
-							prevV = note;
+							noActive++;
 						}
-						
-						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+					}
 					
-					//	if (QDIsPortBuffered( GetDialogPort( StaffDlog)))
-    				//			QDFlushPortBuffer( GetDialogPort( StaffDlog), NULL);
-						
-					}while( Button());
+					if( noActive <= 1 && MADDriver->Active[ track] == true)
+					{
+						for( i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
+					}
+					else
+					{
+						for( i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
+						MADDriver->Active[ track] = true;
+					}
 					
-					MADKeyOFF( MADDriver, -1);
+					UPDATE_TrackActive();
 				}
+			}
+			
+		//	GetDialogItem( StaffDlog, 4, &itemType, &itemHandle, &tempRect);
+			tempRect.top = StaffRect.top;
+			tempRect.bottom = StaffRect.bottom;
+			tempRect.left	= StaffRect.left - ((*MainNote)->picFrame.right - (*MainNote)->picFrame.left);
+			tempRect.right	= StaffRect.left;
+			
+			if( PtInRect( myPt, &tempRect))
+			{
+				short prevV = 0;
 				
-			//	ctlPart = FindControl( myPt, GetDialogWindow( whichDialog), &theControl);
-				
-				theControl = NULL;
-				if( TestControl(  xScroll, myPt)) theControl = xScroll;
-				if( TestControl(  yScroll, myPt)) theControl = yScroll;
-				
-				if( theControl == xScroll || theControl == yScroll)
+				do
 				{
-					MyControlUPP = NewControlActionUPP( actionProcStaff);
-					gThumbPrev = GetControlValue( theControl);
-					TrackControl(theControl, myPt, MyControlUPP);
-					DisposeControlActionUPP( MyControlUPP);
-				}
+					short 	track, note;
+					Point	tPt;
+					
+					GetMouse( &tPt);
+					
+					ConvertPt2Note( tPt, NULL, &track, &note);
+					
+					if( prevV != note)
+					{
+						DoPlayInstruInt( note, curInstru-1, 0, 0, 0xFF, &MADDriver->chan[ track], 0, 0);
+					
+						DrawNoteCarre( &tPt);
+						
+						prevV = note;
+					}
+					
+					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+				
+				//	if (QDIsPortBuffered( GetDialogPort( StaffDlog)))
+				//			QDFlushPortBuffer( GetDialogPort( StaffDlog), NULL);
+					
+				}while( Button());
+				
+				MADKeyOFF( MADDriver, -1);
 			}
-		}   						/* End of mouseDown */
-		
-	switch( whichItem)
-	{
-		case 21:
-			 	if( MyTrackControl( saveBut, theEvent.where, NULL))
-				SavePcmdFile( CreatePcmdFromSelectionStaff());
-		break;
-		
-		case 8:
-			if( GetControlHilite( loadBut) == 0 && MyTrackControl( loadBut, theEvent.where, NULL))
+			
+		//	ctlPart = FindControl( myPt, GetDialogWindow( whichDialog), &theControl);
+			
+			theControl = NULL;
+			if( TestControl(  xScroll, myPt)) theControl = xScroll;
+			if( TestControl(  yScroll, myPt)) theControl = yScroll;
+			
+			if( theControl == xScroll || theControl == yScroll)
 			{
-				OpenPcmdStaff( NULL);
+				MyControlUPP = NewControlActionUPP( actionProcStaff);
+				gThumbPrev = GetControlValue( theControl);
+				TrackControl(theControl, myPt, MyControlUPP);
+				DisposeControlActionUPP( MyControlUPP);
 			}
-		break;
-		
-		case 22:
-			if( GetControlHilite( infoBut) == 0 && MyTrackControl( infoBut, theEvent.where, NULL))
-			{
-				DialogPatternInfo( CurrentPat);
-			}
-		break;
-		
-		case 6:
-			if( GetControlHilite( prefBut) == 0 && MyTrackControl( prefBut, theEvent.where, NULL))
-			{
+		}
+	}   						/* End of mouseDown */
+	
+switch( whichItem)
+{
+	case 21:
+			if( MyTrackControl( saveBut, theEvent.where, NULL))
+			SavePcmdFile( CreatePcmdFromSelectionStaff());
+	break;
+	
+	case 8:
+		if( GetControlHilite( loadBut) == 0 && MyTrackControl( loadBut, theEvent.where, NULL))
+		{
+			OpenPcmdStaff( NULL);
+		}
+	break;
+	
+	case 22:
+		if( GetControlHilite( infoBut) == 0 && MyTrackControl( infoBut, theEvent.where, NULL))
+		{
+			DialogPatternInfo( CurrentPat);
+		}
+	break;
+	
+	case 6:
+		if( GetControlHilite( prefBut) == 0 && MyTrackControl( prefBut, theEvent.where, NULL))
+		{
 #include "Help.h"
 
-				ShowPrefs( TRUECLASSIC);
-			}
-		break;
-		
-		case 23:
-			if( GetControlHilite( FXBut) == 0 && MyTrackControl( FXBut, theEvent.where, NULL))
-			{
-				short	itemType;
-				Rect	itemRect;
-				Handle	itemHandle;
-			
-				HiliteControl( FXBut, kControlButtonPart);
-			
-				GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
-				
-				itemRect.left += 20;
-				temp = PressPPDGMenu( &itemRect);
-				
-				if( temp != -1)
-				{
-					Pcmd*	myPcmd;
-					
-					myPcmd = CreatePcmdFromSelectionStaff();
-					
-					CallPPDGPlugIns( temp-1, myPcmd);
-					
-					SaveUndo( UPattern, CurrentPat, "\pUndo 'Classic Editor Plug'");
-					
-					PasteCmdStaff( myPcmd);
-					
-					MyDisposePtr( (Ptr*) &myPcmd);
-				}
-				
-				HiliteControl( FXBut, 0);
-			}
-		break;
-		
-		case 13:
-		case 14:
-		case 15:
-		case 16:
-		case 17:
-			for( i = 0; i < 6; i++) HiliteControl( notesIcl[ i], 0);
-			HiliteControl( notesIcl[ whichItem-13], kControlButtonPart);
-			
-			switch( whichItem)
-			{
-				case 13:	curNoteLength = 16;	break;
-				case 14:	curNoteLength = 8;	break;
-				case 15:	curNoteLength = 4;	break;
-				case 16:	curNoteLength = 2;	break;
-				case 17:	curNoteLength = 1;	break;
-			}
-		break;
-		
-		case 25:	// KEY OFF
-			for( i = 0; i < 6; i++) HiliteControl( notesIcl[ i], 0);
-			HiliteControl( notesIcl[ 5], kControlButtonPart);
-			curNoteLength = 0;
-		break;
-		
-/*		case 21:
-		case 22:
-			if( GetControlHilite( durIcl[ whichItem-21]) == kControlButtonPart) HiliteControl( durIcl[ whichItem-21], 0);
-			else HiliteControl( durIcl[ whichItem-21], kControlButtonPart);
-			
-			switch( whichItem)
-			{
-				case 21:	if( curDur & cPoint) 	curDur -= cPoint; 	else curDur += cPoint;		break;
-				case 22:	if( curDur & cLiaison)	curDur -= cLiaison; else curDur += cLiaison;	break;
-			}
-		break;	*/
-		
-		case 18:
-		case 19:
-		case 20:
-			for( i = 0; i < 3; i++) HiliteControl( modifIcl[ i], 0);
-			HiliteControl( modifIcl[ whichItem-18], kControlButtonPart);
-			
-			switch( whichItem)
-			{
-				case 18:	curModif = cNul;	break;
-				case 19:	curModif = cDown;	break;
-				case 20:	curModif = cUp;	break;
-			}
-		break;
-		
-		case 7:
-			if( GetControlHilite( playBut) == 0)
-			{
-				whichItem = -1;
-				goto PlaySelection;
-			}
-		break;
-		
-		case 3:
-		case 5:
-			HiliteControl( noteBut, 0);
-			HiliteControl( selecBut, 0);
-			
-			switch( whichItem)
-			{
-				case 3:		mode = selecM;	HiliteControl( selecBut, kControlButtonPart);	break;
-				case 5:		mode = noteM;	HiliteControl( noteBut, kControlButtonPart);	break;
-			}
-		break;
-		
-		case 11:
-		case 24:
-		case 10:
-		{
-			Str255	aStr;
-			long	mresult;
-			short 	itemType, curSelec;
-			Handle	itemHandle;
-			Rect	itemRect;
-			
-			InsertMenuItem( InstruMenu, "\pNo Ins", 0);
-
-			InsertMenu( InstruMenu, hierMenu );
-			GetDialogItem( StaffDlog, 10, &itemType, &itemHandle, &itemRect);
-			
-			myPt.v = itemRect.top;	myPt.h = itemRect.left;
-			LocalToGlobal( &myPt);
-			
-			SetItemMark( InstruMenu, curInstru+1 , 0xa5);
-			
-			mresult = PopUpMenuSelect(	InstruMenu,
-										myPt.v,
-										myPt.h,
-										curInstru+1 );
-			
-			SetItemMark( InstruMenu, curInstru+1 , 0);
-			
-			if ( HiWord(mresult ) != 0 )
-			{
-				curInstru = (Byte) LoWord( mresult) - 1;
-				
-			//	TextFont( 0);	TextSize( 0);
-				
-				if( curInstru > 0)
-				{
-					NumToString( curInstru, aStr);
-					SetDText( StaffDlog, 11, aStr);
-					
-					NSelectInstruList( curInstru - 1, -1);
-					
-					strcpy( (Ptr) aStr, curMusic->fid[ curInstru-1].name);
-					MyC2PStr( (Ptr) aStr);
-					SetDText( StaffDlog, 24, aStr);
-				}
-				else
-				{
-					SetDText( StaffDlog, 11, "\p");
-					SetDText( StaffDlog, 24, "\pNo Instrument");
-				}
-				
-			//	TextFont( 4);	TextSize( 9);
-			}
-			DeleteMenu( GetMenuID( InstruMenu));
-			DeleteMenuItem( InstruMenu, 1);
+			ShowPrefs( TRUECLASSIC);
 		}
-		break;
+	break;
+	
+	case 23:
+		if( GetControlHilite( FXBut) == 0 && MyTrackControl( FXBut, theEvent.where, NULL))
+		{
+			short	itemType;
+			Rect	itemRect;
+			Handle	itemHandle;
+		
+			HiliteControl( FXBut, kControlButtonPart);
+		
+			GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
+			
+			itemRect.left += 20;
+			temp = PressPPDGMenu( &itemRect);
+			
+			if( temp != -1)
+			{
+				Pcmd*	myPcmd;
+				
+				myPcmd = CreatePcmdFromSelectionStaff();
+				
+				CallPPDGPlugIns( temp-1, myPcmd);
+				
+				SaveUndo( UPattern, CurrentPat, "\pUndo 'Classic Editor Plug'");
+				
+				PasteCmdStaff( myPcmd);
+				
+				MyDisposePtr( (Ptr*) &myPcmd);
+			}
+			
+			HiliteControl( FXBut, 0);
+		}
+	break;
+	
+	case 13:
+	case 14:
+	case 15:
+	case 16:
+	case 17:
+		for( i = 0; i < 6; i++) HiliteControl( notesIcl[ i], 0);
+		HiliteControl( notesIcl[ whichItem-13], kControlButtonPart);
+		
+		switch( whichItem)
+		{
+			case 13:	curNoteLength = 16;	break;
+			case 14:	curNoteLength = 8;	break;
+			case 15:	curNoteLength = 4;	break;
+			case 16:	curNoteLength = 2;	break;
+			case 17:	curNoteLength = 1;	break;
+		}
+	break;
+	
+	case 25:	// KEY OFF
+		for( i = 0; i < 6; i++) HiliteControl( notesIcl[ i], 0);
+		HiliteControl( notesIcl[ 5], kControlButtonPart);
+		curNoteLength = 0;
+	break;
+	
+/*		case 21:
+	case 22:
+		if( GetControlHilite( durIcl[ whichItem-21]) == kControlButtonPart) HiliteControl( durIcl[ whichItem-21], 0);
+		else HiliteControl( durIcl[ whichItem-21], kControlButtonPart);
+		
+		switch( whichItem)
+		{
+			case 21:	if( curDur & cPoint) 	curDur -= cPoint; 	else curDur += cPoint;		break;
+			case 22:	if( curDur & cLiaison)	curDur -= cLiaison; else curDur += cLiaison;	break;
+		}
+	break;	*/
+	
+	case 18:
+	case 19:
+	case 20:
+		for( i = 0; i < 3; i++) HiliteControl( modifIcl[ i], 0);
+		HiliteControl( modifIcl[ whichItem-18], kControlButtonPart);
+		
+		switch( whichItem)
+		{
+			case 18:	curModif = cNul;	break;
+			case 19:	curModif = cDown;	break;
+			case 20:	curModif = cUp;	break;
+		}
+	break;
+	
+	case 7:
+		if( GetControlHilite( playBut) == 0)
+		{
+			whichItem = -1;
+			goto PlaySelection;
+		}
+	break;
+	
+	case 3:
+	case 5:
+		HiliteControl( noteBut, 0);
+		HiliteControl( selecBut, 0);
+		
+		switch( whichItem)
+		{
+			case 3:		mode = selecM;	HiliteControl( selecBut, kControlButtonPart);	break;
+			case 5:		mode = noteM;	HiliteControl( noteBut, kControlButtonPart);	break;
+		}
+	break;
+	
+	case 11:
+	case 24:
+	case 10:
+	{
+		Str255	aStr;
+		long	mresult;
+		short 	itemType, curSelec;
+		Handle	itemHandle;
+		Rect	itemRect;
+		
+		InsertMenuItem( InstruMenu, "\pNo Ins", 0);
+
+		InsertMenu( InstruMenu, hierMenu );
+		GetDialogItem( StaffDlog, 10, &itemType, &itemHandle, &itemRect);
+		
+		myPt.v = itemRect.top;	myPt.h = itemRect.left;
+		LocalToGlobal( &myPt);
+		
+		SetItemMark( InstruMenu, curInstru+1 , 0xa5);
+		
+		mresult = PopUpMenuSelect(	InstruMenu,
+									myPt.v,
+									myPt.h,
+									curInstru+1 );
+		
+		SetItemMark( InstruMenu, curInstru+1 , 0);
+		
+		if ( HiWord(mresult ) != 0 )
+		{
+			curInstru = (Byte) LoWord( mresult) - 1;
+			
+		//	TextFont( 0);	TextSize( 0);
+			
+			if( curInstru > 0)
+			{
+				NumToString( curInstru, aStr);
+				SetDText( StaffDlog, 11, aStr);
+				
+				NSelectInstruList( curInstru - 1, -1);
+				
+				strcpy( (Ptr) aStr, curMusic->fid[ curInstru-1].name);
+				MyC2PStr( (Ptr) aStr);
+				SetDText( StaffDlog, 24, aStr);
+			}
+			else
+			{
+				SetDText( StaffDlog, 11, "\p");
+				SetDText( StaffDlog, 24, "\pNo Instrument");
+			}
+			
+		//	TextFont( 4);	TextSize( 9);
+		}
+		DeleteMenu( GetMenuID( InstruMenu));
+		DeleteMenuItem( InstruMenu, 1);
 	}
-	SetPort( SavePort);
+	break;
+}
+SetPort( SavePort);
 }
 
 pascal void actionProcStaff(ControlHandle theControl, short ctlPart)
 {
-long			lRefCon;
-short			maxValue, minValue, curVal, XX, sVal, itemType;
-RgnHandle		aRgn;
-Handle			itemHandle;
-Rect			tRect;
+	long			lRefCon;
+	short			maxValue, minValue, curVal, XX, sVal, itemType;
+	RgnHandle		aRgn;
+	Handle			itemHandle;
+	Rect			tRect;
 
-if( ctlPart <= 0) return;
+	if( ctlPart <= 0) return;
 
-lRefCon = GetControlReference( theControl);
-maxValue = GetControlMaximum( theControl);
-minValue = GetControlMinimum( theControl);
-curVal = sVal = GetControlValue( theControl);
+	lRefCon = GetControlReference( theControl);
+	maxValue = GetControlMaximum( theControl);
+	minValue = GetControlMinimum( theControl);
+	curVal = sVal = GetControlValue( theControl);
 
 	switch( ctlPart)
 	{
 		case kControlUpButtonPart:
 			curVal -= 1;
 			if( curVal < minValue) curVal = minValue;
-		break;
+			break;
 		
 		case kControlDownButtonPart:
 			curVal += 1;
 			if( curVal > maxValue) curVal = maxValue;
-		break;
+			break;
 		
 		case kControlPageUpPart:
 			switch( GetControlReference( theControl))
@@ -2149,7 +2150,7 @@ curVal = sVal = GetControlValue( theControl);
 			}
 			
 			if( curVal < minValue) curVal = minValue;
-		break;
+			break;
 		
 		case kControlPageDownPart:
 			switch( GetControlReference( theControl))
@@ -2158,12 +2159,12 @@ curVal = sVal = GetControlValue( theControl);
 				case xScrollNum:	curVal += GetMaxXStaff() - GetControlValue( xScroll) - 1;	break;
 			}
 			if( curVal > maxValue) curVal = maxValue;
-		break;
+			break;
 		
 		case kControlIndicatorPart:
 			sVal = gThumbPrev;
 			gThumbPrev = curVal;
-		break;
+			break;
 	}
 	
 	if( sVal != curVal)
@@ -2185,7 +2186,7 @@ curVal = sVal = GetControlValue( theControl);
 				CreateCurStaffRect();
 				InvalWindowRgn( GetDialogWindow( StaffDlog), aRgn);
 				UpdateStaffWindow( StaffDlog);
-			break;
+				break;
 			
 			case xScrollNum:
 				StaffRect.top -= 14;
@@ -2195,7 +2196,7 @@ curVal = sVal = GetControlValue( theControl);
 				CreateCurStaffRect();
 				InvalWindowRgn( GetDialogWindow( StaffDlog), aRgn);
 				UpdateStaffWindow( StaffDlog);
-			break;
+				break;
 		}
 		DisposeRgn( aRgn);
 	}
@@ -2961,9 +2962,9 @@ pascal OSErr MyReceiveDropStaff(WindowPtr theWindow, void* handlerRefCon, DragRe
 
 void PasteCmdStaff( Pcmd *myPcmd)
 {
-short			i, x;
-Cmd				*cmd, *cmd2;
-GrafPtr			SavePort;
+	short			i, x;
+	Cmd				*cmd, *cmd2;
+	GrafPtr			SavePort;
 	
 	GetPort( &SavePort);
 	SetPortDialogPort( StaffDlog);

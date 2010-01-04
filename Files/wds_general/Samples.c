@@ -330,12 +330,12 @@ void EraseTikTak( short ins)
 
 void DoGrowSample( DialogPtr theDia)
 {
-long		lSizeVH;
-GrafPtr		SavePort;
-Rect		caRect, temp;
-Point		theCell = { 0, 0}, aPt = { 0, 0};
-short		tempA, tempB;
-BitMap		screenBits;
+	long		lSizeVH;
+	GrafPtr		SavePort;
+	Rect		caRect, temp;
+	Point		theCell = { 0, 0}, aPt = { 0, 0};
+	short		tempA, tempB;
+	BitMap		screenBits;
 
 
 	GetPort( &SavePort);

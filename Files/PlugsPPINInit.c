@@ -299,7 +299,6 @@ void InitPPINPlug(void)
 				
 				tempMADPlug = PPINLoadPlug(tempPlugRef);
 				if (tempMADPlug) {
-#pragma mark hi ho hi ho
 					MakePPINPlug(tempMADPlug, &(ThePPINPlug[tPlug]), tempBundleRef);
 				}
 			}
@@ -827,8 +826,7 @@ void HandleCustomMouseNAVDown(NavCBRecPtr callBackParms)
 
 static void CFStringToOSType(CFStringRef CFstri, OSType *theOSType)
 {
-	char * thecOSType = NULL;
-	thecOSType = CFStringGetCStringPtr(CFstri, kCFStringEncodingMacRoman);
+	char * thecOSType = CFStringGetCStringPtr(CFstri, kCFStringEncodingMacRoman);
 	
 	*theOSType = Ptr2OSType(thecOSType);
 }
@@ -837,8 +835,11 @@ static const CFStringRef kMadPlugIsSampleKey = CFSTR("MADPlugIsSample");
 
 static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *ThePPINPlugA, CFBundleRef tempBundle)
 {
-	if( tPlug > MAXINSTRPLUG) MyDebugStr( __LINE__, __FILE__, "Too many plugs");
-	return;
+	if( tPlug > MAXINSTRPLUG) 
+	{
+		MyDebugStr( __LINE__, __FILE__, "Too many plugs");
+		return;
+	}
 	//TODO: There's got to be a cleaner way...
 	
 	CFTypeID  stringtype	= CFStringGetTypeID();
@@ -867,6 +868,13 @@ static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *TheP
 	InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 	if (InfoDictionaryType == arraytype) {
 		ThePPINPlugA->UTITypes = CFArrayCreateCopy(kCFAllocatorDefault, (CFArrayRef)OpaqueDictionaryType);
+	}		
+	else if(InfoDictionaryType == stringtype)
+	{
+		CFMutableArrayRef UTIMutableArray = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
+		CFArrayAppendValue(UTIMutableArray, CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)InfoDictionaryType));
+		ThePPINPlugA->UTITypes = CFArrayCreateCopy(kCFAllocatorDefault, UTIMutableArray);
+		CFRelease(UTIMutableArray);
 	}
 	else goto badplug3;
 	

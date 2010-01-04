@@ -103,7 +103,7 @@ void MyP2CStr( unsigned char *cStr)
 
 void NNumToString( short no, Str255 aStr)
 {
-Str255	tStr;
+	Str255	tStr;
 
 	NumToString( no, tStr);
 	
@@ -113,60 +113,6 @@ Str255	tStr;
 	pStrcat( aStr, tStr);
 
 }
-
-/*OSErr InstallVBL (VBLTask *theVBLTask, ProcPtr myVBLProc, Boolean isPersistent)
-{
-	OSErr	theError;
-	THz 	savedZone;
- 
-	if (isPersistent)
-	{
-		savedZone = GetZone();
-		SetZone( SystemZone());
-	}
-	theVBLTask->vblAddr = NewVBLProc( myVBLProc);
-	theError = MemError();
-	if (isPersistent) SetZone(savedZone);
-	
-	if (theVBLTask->vblAddr != nil)
-	{
-		theVBLTask->qType = vType;
-		theVBLTask->vblCount = 1;
-		theVBLTask->vblPhase = 0;
-		theError = VInstall((QElemPtr) theVBLTask);
-	}
-	return (theError);
-}
-
-long	gCounter = 0;
- 
-pascal void MyVBLProc (VBLTask *theVBLTask)
-{
-	theVBLTask->vblCount = 1;
-	gCounter++;
-	return;
-}
-
-void RemoveVBL (VBLTask *theVBLTask)
-{
-	THz	savedZone;
- 
-	VRemove((QElemPtr) theVBLTask);
-	if (theVBLTask->vblAddr)
-	{
-		savedZone = GetZone();
-
-		#if defined(powerc) || defined (__powerc)
-
-		SetZone(PtrZone((Ptr) theVBLTask->vblAddr));
-		#endif		
-
-		DisposeRoutineDescriptor(theVBLTask->vblAddr);
-		
-		SetZone(savedZone);
-	}
-	return;
-}*/
 
 void oldFrameButton( DialogPtr theDlg)
 {
@@ -189,7 +135,7 @@ void oldFrameButton( DialogPtr theDlg)
 void CenterRect( Rect *main, Rect *dst, Rect *result)
 {
 	Rect		tempRect;
-	short			Larg, Haut;
+	short		Larg, Haut;
 	
 	tempRect.left = main->left;		tempRect.right = main->right;
 	tempRect.top = main->top;		tempRect.bottom = main->bottom;
@@ -330,11 +276,11 @@ void MyUpdateDialog( DialogPtr theDia)
 
 Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEvent)
 {
-short			thePart;
-WindowPtr		whichWindow;
-short			LoopSet;
-GrafPtr			savePort;
-DialogPtr		whichDialog;
+	short		thePart;
+	WindowPtr	whichWindow;
+	short		LoopSet;
+	GrafPtr		savePort;
+	DialogPtr	whichDialog;
 
 	WaitNextEvent( everyEvent, myIntEvent, 1, NULL);
 	
@@ -538,12 +484,12 @@ pascal void MyDlgFilterNav(		NavEventCallbackMessage 	callBackSelector,
 	}
 }
 
-void	ToolBoxInit(void)
+void ToolBoxInit(void)
 {
 	InitCursor();
 }
 
-void InverseRadio( short	item, DialogPtr	dlog)
+void InverseRadio( short item, DialogPtr dlog)
 {
 	Handle		itemHandle;
 	short		itemType;
@@ -560,7 +506,7 @@ void InverseRadio( short	item, DialogPtr	dlog)
 }
 
 
-void TurnRadio( short	item, DialogPtr	dlog, Boolean alors)
+void TurnRadio( short item, DialogPtr dlog, Boolean alors)
 {
 	Handle		itemHandle = NULL;
 	short		itemType = 0;
@@ -583,7 +529,7 @@ void TurnRadio( short	item, DialogPtr	dlog, Boolean alors)
 	}
 }
 
-void	ControlSwitch(short	item, DialogPtr	dlog, short	Switch)
+void ControlSwitch(short item, DialogPtr dlog, short Switch)
 {
 	Handle			itemHandle;
 	ControlHandle	control;
@@ -629,7 +575,7 @@ void MySizeControl( ControlHandle ah, short x, short y)
 
 void MySizeWindow( DialogPtr dlg, short right, short bottom, Boolean v)
 {
-Rect	caRect;
+	Rect	caRect;
 
 	GetPortBounds( GetDialogPort( dlg), &caRect);
 	
@@ -653,9 +599,7 @@ pascal void myTrackAction( ControlHandle theCntl, short ctlPart)
 {
 //	WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 	
-//	#if MACOS9VERSION
 	DoGlobalNull();
-//	#endif
 }
 
 
@@ -1035,11 +979,11 @@ short PicToPix (PicHandle thePic, PixMapHandle *offscreenPixMap)
 }
 
 short IclToPix (Handle theIcon, PixMapHandle *offscreenPixMap)
-{	Rect						picRect;
-	OSErr						errCode;
-
-	short							i,x;
-	char						temp1,temp2;
+{
+	Rect			picRect;
+	OSErr			errCode;
+	short			i,x;
+	char			temp1,temp2;
 
 	picRect.bottom 	= 32;
 	picRect.right 	= 32;
@@ -1084,27 +1028,23 @@ unsigned short RangedRdm( unsigned short min, unsigned short max)
 
 void DessineRgn(Rect *PixMapRect, Rect *RectPict)
 {
-Rect	CarreVerif=*RectPict;
-long	Var1,Var2;
+	Rect	CarreVerif=*RectPict;
+	long	Var1,Var2;
 
-Var1 = (long) (RectPict->bottom - RectPict->top);
-Var2 = (long) (Var1 * (PixMapRect->right) / (PixMapRect->bottom));
-RectPict->right = (short) (RectPict->left + Var2);
+	Var1 = (long) (RectPict->bottom - RectPict->top);
+	Var2 = (long) (Var1 * (PixMapRect->right) / (PixMapRect->bottom));
+	RectPict->right = (short) (RectPict->left + Var2);
 
-if(CarreVerif.right < RectPict->right)
-{
-RectPict->right = CarreVerif.right;
-Var1 = (long) (RectPict->right - RectPict->left);
-Var2 = (long) (Var1 * (PixMapRect->bottom) / (PixMapRect->right));
-RectPict->bottom = (short) (RectPict->top + Var2);
+	if(CarreVerif.right < RectPict->right)
+	{
+		RectPict->right = CarreVerif.right;
+		Var1 = (long) (RectPict->right - RectPict->left);
+		Var2 = (long) (Var1 * (PixMapRect->bottom) / (PixMapRect->right));
+		RectPict->bottom = (short) (RectPict->top + Var2);
+	}
 }
-}
 
-/*#ifdef COMPIL68K
-pascal OSErr SetDialogDefaultItem (DialogPtr theDialog, short newItem) = {0x303C,0x0304,0xAA68};
-#endif*/
-
-void	FrameButton(DialogPtr theDia, short whichButton, Boolean drawIt)
+void FrameButton(DialogPtr theDia, short whichButton, Boolean drawIt)
 {
 	SetDialogDefaultItem( theDia, whichButton);
 }
@@ -1130,42 +1070,42 @@ short SetScroll(ControlHandle vScroll, TEHandle TEH)
 
 void FrameRectRelief( Rect *theRect)
 {
-RGBColor	theColor;
-Rect		aCopy;
+	RGBColor	theColor;
+	Rect		aCopy;
 
 #define GrisClair	0xFFFF
 #define GrisFonce	0x4000
 	
-if( (**(**GetMainDevice()).gdPMap).pixelSize < 8)
-{
-	aCopy.left = theRect->left ;
-	aCopy.right = theRect->right +1;
-	aCopy.top = theRect->top ;
-	aCopy.bottom = theRect->bottom +1;
+	if( (**(**GetMainDevice()).gdPMap).pixelSize < 8)
+	{
+		aCopy.left = theRect->left ;
+		aCopy.right = theRect->right +1;
+		aCopy.top = theRect->top ;
+		aCopy.bottom = theRect->bottom +1;
+		ForeColor( blackColor);
+		FrameRect( &aCopy);
+		return;
+	}
+	MoveTo( theRect->left, theRect->top);
+
+	theColor.red = GrisFonce;	theColor.blue = GrisFonce;	theColor.green = GrisFonce;
+	RGBForeColor( &theColor);
+	LineTo( theRect->right, theRect->top);
+
+	theColor.red = GrisClair;	theColor.blue = GrisClair;	theColor.green = GrisClair;
+	RGBForeColor( &theColor);
+	LineTo( theRect->right, theRect->bottom);
+
+	theColor.red = GrisClair;	theColor.blue = GrisClair;	theColor.green = GrisClair;
+	RGBForeColor( &theColor);
+	LineTo( theRect->left, theRect->bottom);
+
+	theColor.red = GrisFonce;	theColor.blue = GrisFonce;	theColor.green = GrisFonce;
+	RGBForeColor( &theColor);
+	LineTo( theRect->left, theRect->top);
+
+
 	ForeColor( blackColor);
-	FrameRect( &aCopy);
-	return;
-}
-MoveTo( theRect->left, theRect->top);
-
-theColor.red = GrisFonce;	theColor.blue = GrisFonce;	theColor.green = GrisFonce;
-RGBForeColor( &theColor);
-LineTo( theRect->right, theRect->top);
-
-theColor.red = GrisClair;	theColor.blue = GrisClair;	theColor.green = GrisClair;
-RGBForeColor( &theColor);
-LineTo( theRect->right, theRect->bottom);
-
-theColor.red = GrisClair;	theColor.blue = GrisClair;	theColor.green = GrisClair;
-RGBForeColor( &theColor);
-LineTo( theRect->left, theRect->bottom);
-
-theColor.red = GrisFonce;	theColor.blue = GrisFonce;	theColor.green = GrisFonce;
-RGBForeColor( &theColor);
-LineTo( theRect->left, theRect->top);
-
-
-ForeColor( blackColor);
 	return;
 }
 

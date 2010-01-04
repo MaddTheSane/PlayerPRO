@@ -69,7 +69,8 @@ void SetCurrentMOD( Str255 theMODName);
 
 
 pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
-{	short				result, offset, i;
+{
+	short				result, offset, i;
 	long				theTime = TickCount();
 	unsigned short		count, index;
 	unsigned long		flavorFlags, attributes;
@@ -280,11 +281,11 @@ void DrawTimeBar(void)
 
 void DoNullTools(void)
 {
-GrafPtr	savePort;
-short	tro;
+	GrafPtr	savePort;
+	short	tro;
 
-GetPort( &savePort);
-SetPortDialogPort( ToolsDlog);
+	GetPort( &savePort);
+	SetPortDialogPort( ToolsDlog);
 
 	if( oldPartition != MADDriver->PartitionReader || oldPL != MADDriver->PL)
 	{
@@ -960,93 +961,93 @@ void DoChangeLoop( void)
 
 void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 {
- 		short				temp,itemType, newPL, newPat, newPartitionReader;
-		Point				myPt;
-		Handle				itemHandle;
-		Rect				itemRect;
-		long				tempLong, max, val;
-		GrafPtr				savePort;
-		Boolean				ReadingCopy;
+	short				temp,itemType, newPL, newPat, newPartitionReader;
+	Point				myPt;
+	Handle				itemHandle;
+	Rect				itemRect;
+	long				tempLong, max, val;
+	GrafPtr				savePort;
+	Boolean				ReadingCopy;
 	
-		GetPort( &savePort);
-		SetPortDialogPort( ToolsDlog);
-		
+	GetPort( &savePort);
+	SetPortDialogPort( ToolsDlog);
+	
 	switch( whichItem)
 	{
-	case 2:
-		if( MyTrackControl( JumpBeforeCntl, theEvent.where, NULL))
-		{
-			DoSearchDown();
-		}
-	break;
-	
-	case 3:
-		IsPlay = MusicPlayActive;
-		MyTrackControl(BackCntl, theEvent.where, BackUPP);
-		if( !IsPlay) DoPause();
-	break;
-	
-	case 44:
-		if( MyTrackControl( RecordCntl, theEvent.where, NULL))
-		{
-			DoRecord();
-		}
-	break;
-
-	case 46:
-		if( MyTrackControl( LoopCntl, theEvent.where, NULL))
-		{
-			DoChangeLoop();
-		}
-	break;
-
-	case 4:
-		if( MyTrackControl( stopCntl, theEvent.where, NULL))
-		{
-			DoPause();
-		}
-	break;
-	
-	case 5:
-		if( MyTrackControl( playCntl, theEvent.where, NULL))
-		{
-			DoPlay();
-		}
-	break;
-	
-	case 6:
-		doubleSpeed = MADDriver->VExt *2;
-		IsPlay = MusicPlayActive;
-		alreadyReady = false;
-		
-		
-		MyTrackControl( ForCntl, theEvent.where, ForeUPP);
-		
-		if( IsPlay)
-		{
-			MADDriver->VExt = doubleSpeed / 2;
-		//	ChangeSpeed();
-		}
-		else DoPause();
-	break;
-	
-	case 7:
-		if( MyTrackControl( JumpNextCntl, theEvent.where, NULL))
-		{
-			DoSearchUp();
-		}
-	break;
-	 
-	case 10:
+		case 2:
+			if( MyTrackControl( JumpBeforeCntl, theEvent.where, NULL))
+			{
+				DoSearchDown();
+			}
+			break;
+			
+		case 3:
+			IsPlay = MusicPlayActive;
+			MyTrackControl(BackCntl, theEvent.where, BackUPP);
+			if( !IsPlay) DoPause();
+			break;
+			
+		case 44:
+			if( MyTrackControl( RecordCntl, theEvent.where, NULL))
+			{
+				DoRecord();
+			}
+			break;
+			
+		case 46:
+			if( MyTrackControl( LoopCntl, theEvent.where, NULL))
+			{
+				DoChangeLoop();
+			}
+			break;
+			
+		case 4:
+			if( MyTrackControl( stopCntl, theEvent.where, NULL))
+			{
+				DoPause();
+			}
+			break;
+			
+		case 5:
+			if( MyTrackControl( playCntl, theEvent.where, NULL))
+			{
+				DoPlay();
+			}
+			break;
+			
+		case 6:
+			doubleSpeed = MADDriver->VExt *2;
+			IsPlay = MusicPlayActive;
+			alreadyReady = false;
+			
+			
+			MyTrackControl( ForCntl, theEvent.where, ForeUPP);
+			
+			if( IsPlay)
+			{
+				MADDriver->VExt = doubleSpeed / 2;
+				//	ChangeSpeed();
+			}
+			else DoPause();
+			break;
+			
+		case 7:
+			if( MyTrackControl( JumpNextCntl, theEvent.where, NULL))
+			{
+				DoSearchUp();
+			}
+			break;
+			
+		case 10:
 			do
 			{
 				GetDialogItem( ToolsDlog , 10, &itemType, &itemHandle, &itemRect);
 				GetMouse( &myPt);
 				
 				DoGlobalNull();
-									
+				
 				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-					
+				
 				if( temp != myPt.h)
 				{
 					short i;
@@ -1067,9 +1068,9 @@ void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 					DrawTimeBar();
 				}
 			}while( Button());
-	break;
+			break;
 	}
-
+	
 	DoItemPressCmdDlog( whichItem, whichDialog);
-
+	
 }

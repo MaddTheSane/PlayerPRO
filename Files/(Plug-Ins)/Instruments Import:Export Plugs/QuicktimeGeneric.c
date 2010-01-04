@@ -1,20 +1,20 @@
 /*	v 1.0			*/
 /*	1999 by ANR		*/
 
-#include "PPPlug.h"
+#include <PlayerPROCore/PlayerPROCore.h>
 #include <AIFF.h>
 #include <SoundInput.h>
 #include <QuicktimeComponents.h>
 #include <Sound.h>
 #include <Movies.h>
 
-OSErr main(		OSType					order,						// Order to execute
-				InstrData				*InsHeader,					// Ptr on instrument header
-				sData					**sample,					// Ptr on samples data
-				short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+OSErr mainQTInst(OSType					order,						// Order to execute
+				 InstrData				*InsHeader,					// Ptr on instrument header
+				 sData					**sample,					// Ptr on samples data
+				 short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
 																	// If sampleID == -1 : add sample else replace selected sample.
-				FSSpec					*AlienFileFSSpec,			// IN/OUT file
-				PPInfoPlug				*thePPInfoPlug)
+				 FSSpec					*AlienFileFSSpec,			// IN/OUT file
+				 PPInfoPlug				*thePPInfoPlug)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
@@ -102,3 +102,10 @@ OSErr main(		OSType					order,						// Order to execute
 	
 	return myErr;
 }
+
+// 26E9A321-0E15-48E3-8A94-062C46FDB875
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x26, 0xE9, 0xA3, 0x21, 0x0E, 0x15, 0x48, 0xE3, 0x8A, 0x94, 0x06, 0x2C, 0x46, 0xFD, 0xB8, 0x75)
+#define PLUGINFACTORY QTInstFactory //The factory name as defined in the Info.plist file
+#define PLUGMAIN mainQTInst //The old main function, renamed please
+
+#include "CFPlugin-InstrBridge.c"

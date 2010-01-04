@@ -472,7 +472,7 @@ void DoNullAdap( void)
 
 void SetUpScroll(void)
 {
-Rect	caRect;
+	Rect	caRect;
 	
 	GetPortBounds( GetDialogPort( AdapDlog), &caRect);
 
@@ -709,10 +709,10 @@ void FillMonoControl( short id)
 
 void FillBarControl( short id, short curval, short maxval)
 {
-Rect		cRect, tRect, contrlRect;
-short		tempH;
-Str255		str;
-RGBColor	color;
+	Rect		cRect, tRect, contrlRect;
+	short		tempH;
+	Str255		str;
+	RGBColor	color;
 	
 	if( id == -1) MyDebugStr( __LINE__, __FILE__, "");
 	
@@ -728,7 +728,7 @@ RGBColor	color;
 
 void FillBarStereo( short id, short curval, short maxval)
 {
-Rect	contrlRect;
+	Rect	contrlRect;
 
 	if( id < 0) MyDebugStr( __LINE__, __FILE__, "");
 	
@@ -743,8 +743,9 @@ Rect	contrlRect;
 
 void FillPulseRect( short id)
 {
-Str255	str2;
-Rect	itemRect;
+	Str255	str2;
+	Rect	itemRect;
+	
 	if( id < 0) MyDebugStr( __LINE__, __FILE__, "");
 	
 	pulseRect[ id].top = VolumeRect.top - (GetControlValue( ScrollAdap) - id)*DISVOL;
@@ -780,143 +781,143 @@ Rect	itemRect;
 
 void UpdateAdapWindow( DialogPtr	GetSelection)
 {
-		Rect   		itemRect;   			/* Temporary rectangle */
- 		GrafPtr		SavePort;
- 		short		itemType,i, max;
- 		Handle		itemHandle;
- 		Str255		str1, str2;
- 		RgnHandle	saveClip;
- 		Rect		contrlRect, caRect;
-		RgnHandle	visibleRegion;
+	Rect   		itemRect;   			/* Temporary rectangle */
+ 	GrafPtr		SavePort;
+ 	short		itemType,i, max;
+ 	Handle		itemHandle;
+ 	Str255		str1, str2;
+ 	RgnHandle	saveClip;
+ 	Rect		contrlRect, caRect;
+	RgnHandle	visibleRegion;
 	
 	
- 		GetPort( &SavePort);
- 		SetPortDialogPort( GetSelection);
- 		
- 		BeginUpdate( GetDialogWindow( GetSelection));
- 		
-		visibleRegion = NewRgn();
-		
-		GetPortVisibleRegion( GetDialogPort( GetSelection), visibleRegion);
- 		
- 		
- 		SetControlVisibility( hardvolCntl, true, false);
- 		SetControlVisibility( softvolCntl, true, false);
- 		SetControlVisibility( speedCntl, true, false);
- 		SetControlVisibility( pitchCntl, true, false);
-		
-		UpdateDialog( GetSelection, visibleRegion);
-		
-		SetControlVisibility( hardvolCntl, false, false);
-		SetControlVisibility( softvolCntl, false, false);
- 		SetControlVisibility( speedCntl, false, false);
- 		SetControlVisibility( pitchCntl, false, false);
- 		
-		DisposeRgn( visibleRegion);
-		
- 		RGBBackColor( &theColor);
- 		
- 		ForeColor( blackColor);
- 		
- 		GetPortBounds( GetDialogPort( GetSelection), &caRect);
- 		
- 		MoveTo( 0, viewRect.top);		LineTo( caRect.right, viewRect.top);
- 		
- 		saveClip = NewRgn();
- 		GetClip( saveClip);
- 		ClipRect( &viewRect);
- 		
- 		max = (caRect.bottom - 15 - VolumeRect.top) / (VolumeRect.bottom - VolumeRect.top);
- 		max++;
- 		
- 		if( GetControlValue( ScrollAdap) + max > gCurrentTrack) max = gCurrentTrack - GetControlValue( ScrollAdap);
- 		
- 		for(i = 0; i < gCurrentTrack; i++)
- 		{
- 			if( i >= 0 && i < gCurrentTrack)
- 			{
- 				FillFxDestControl( i);
- 				
- 				FillFxControl( i);
- 				
- 				FillMonoControl( i);
- 				
- 				FillOnOffControl( i, MADDriver->Active[ i]);
- 				
- 				FillVSTOnOffControl( i, curMusic->header->chanBus[ i].Active);
- 				
- 				FillBarControl( i, curMusic->header->chanVol[i], MAX_CHANVOL);
-	 			
-	 			// Draw Track ID
-	 			
-	 			pStrcpy( str1, "\p");
-	 			NTStr( 3, i+1, (Ptr) str2); MyC2PStr( (Ptr) str2);	pStrcat( str1, str2);
-	 			
-	 			GetControlBounds( volCntl[ i], &contrlRect);
-	 			
-				itemRect = contrlRect;
-				itemRect.top++;
-				TextFace( bold);
-				SetRect( &itemRect, itemRect.left - 42, itemRect.top, itemRect.left - 19, itemRect.top + 12);
-				
-			//	itemRect.left++;
-				SwitchColor( i);
-			//	TETextBox( (Ptr) str1 + 1, str1[ 0], &itemRect, teJustLeft);
-				MyTETextBox2( str1, &itemRect);
-				RGBBackColor( &theColor);
-				itemRect.left--;
-				FrameRectRelief( &itemRect);
-				TextFace( 0);
-				
-				/////////////////
-	 			
-	 			FillBarStereo( i, curMusic->header->chanPan[ i], MAX_PANNING);
-	 			
-	 			/////////////////
-	 			
-	 			FillPulseRect( i);
- 			}
-		}
-		
-		SetClip( saveClip);
-		DisposeRgn( saveClip);
-		
-		MoveTo( 0, 25);
-		LineTo( caRect.right, 25);
-		
-		DrawGrowIconP( GetSelection);
-		
-		ForeColor( blackColor);
-		
- 		MoveTo( 0, viewRect.bottom);	LineTo( caRect.right, viewRect.bottom);
-		
-		if( MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
-		else HiliteControl( ResetPitchBut, 255);
-		
-		if( MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
-		else HiliteControl( ResetSpeedBut, 255);
-		
-		if( MADDriver->globPan != 64) HiliteControl( ResetPanBut, 0);
-		else HiliteControl( ResetPanBut, 255);
-		
-		for( i = 0; i < 10; i++)
+	GetPort( &SavePort);
+ 	SetPortDialogPort( GetSelection);
+ 	
+ 	BeginUpdate( GetDialogWindow( GetSelection));
+ 	
+	visibleRegion = NewRgn();
+	
+	GetPortVisibleRegion( GetDialogPort( GetSelection), visibleRegion);
+	
+	
+	SetControlVisibility( hardvolCntl, true, false);
+	SetControlVisibility( softvolCntl, true, false);
+	SetControlVisibility( speedCntl, true, false);
+	SetControlVisibility( pitchCntl, true, false);
+	
+	UpdateDialog( GetSelection, visibleRegion);
+	
+	SetControlVisibility( hardvolCntl, false, false);
+	SetControlVisibility( softvolCntl, false, false);
+	SetControlVisibility( speedCntl, false, false);
+	SetControlVisibility( pitchCntl, false, false);
+	
+	DisposeRgn( visibleRegion);
+	
+	RGBBackColor( &theColor);
+	
+	ForeColor( blackColor);
+	
+	GetPortBounds( GetDialogPort( GetSelection), &caRect);
+	
+	MoveTo( 0, viewRect.top);		LineTo( caRect.right, viewRect.top);
+	
+	saveClip = NewRgn();
+	GetClip( saveClip);
+	ClipRect( &viewRect);
+	
+	max = (caRect.bottom - 15 - VolumeRect.top) / (VolumeRect.bottom - VolumeRect.top);
+	max++;
+	
+	if( GetControlValue( ScrollAdap) + max > gCurrentTrack) max = gCurrentTrack - GetControlValue( ScrollAdap);
+	
+	for(i = 0; i < gCurrentTrack; i++)
+	{
+		if( i >= 0 && i < gCurrentTrack)
 		{
-			if( curMusic->header->globalFXActive == true)
-			{
-	 			if( MADDriver->masterVST[ i] != NULL) HiliteControl( MainFx[ i], kControlButtonPart);
-				else HiliteControl( MainFx[ i], 0);
-			}
-			else
-			{
-				HiliteControl( MainFx[ i], 255);
-			}
+			FillFxDestControl( i);
+			
+			FillFxControl( i);
+			
+			FillMonoControl( i);
+			
+			FillOnOffControl( i, MADDriver->Active[ i]);
+			
+			FillVSTOnOffControl( i, curMusic->header->chanBus[ i].Active);
+			
+			FillBarControl( i, curMusic->header->chanVol[i], MAX_CHANVOL);
+			
+			// Draw Track ID
+			
+			pStrcpy( str1, "\p");
+			NTStr( 3, i+1, (Ptr) str2); MyC2PStr( (Ptr) str2);	pStrcat( str1, str2);
+			
+			GetControlBounds( volCntl[ i], &contrlRect);
+			
+			itemRect = contrlRect;
+			itemRect.top++;
+			TextFace( bold);
+			SetRect( &itemRect, itemRect.left - 42, itemRect.top, itemRect.left - 19, itemRect.top + 12);
+			
+		//	itemRect.left++;
+			SwitchColor( i);
+		//	TETextBox( (Ptr) str1 + 1, str1[ 0], &itemRect, teJustLeft);
+			MyTETextBox2( str1, &itemRect);
+			RGBBackColor( &theColor);
+			itemRect.left--;
+			FrameRectRelief( &itemRect);
+			TextFace( 0);
+			
+			/////////////////
+			
+			FillBarStereo( i, curMusic->header->chanPan[ i], MAX_PANNING);
+			
+			/////////////////
+			
+			FillPulseRect( i);
 		}
-		
-		SetControlValue( MainFXOnOff, curMusic->header->globalFXActive);
-		
-		EndUpdate( GetDialogWindow( GetSelection));
-		
-		SetPort(SavePort);
+	}
+	
+	SetClip( saveClip);
+	DisposeRgn( saveClip);
+	
+	MoveTo( 0, 25);
+	LineTo( caRect.right, 25);
+	
+	DrawGrowIconP( GetSelection);
+	
+	ForeColor( blackColor);
+	
+	MoveTo( 0, viewRect.bottom);	LineTo( caRect.right, viewRect.bottom);
+	
+	if( MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
+	else HiliteControl( ResetPitchBut, 255);
+	
+	if( MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
+	else HiliteControl( ResetSpeedBut, 255);
+	
+	if( MADDriver->globPan != 64) HiliteControl( ResetPanBut, 0);
+	else HiliteControl( ResetPanBut, 255);
+	
+	for( i = 0; i < 10; i++)
+	{
+		if( curMusic->header->globalFXActive == true)
+		{
+			if( MADDriver->masterVST[ i] != NULL) HiliteControl( MainFx[ i], kControlButtonPart);
+			else HiliteControl( MainFx[ i], 0);
+		}
+		else
+		{
+			HiliteControl( MainFx[ i], 255);
+		}
+	}
+	
+	SetControlValue( MainFXOnOff, curMusic->header->globalFXActive);
+	
+	EndUpdate( GetDialogWindow( GetSelection));
+	
+	SetPort(SavePort);
 }
 
 void ResetAdaptators(void)
@@ -1035,11 +1036,11 @@ void ResetAdaptators(void)
 
 void CreateControlAdap()
 {
-short 	i, x;
-short	itemType;
-long	cntlID, cntlID2;
-Rect	itemRect, cRect;
-Handle	itemHandle;
+	short 	i, x;
+	short	itemType;
+	long	cntlID, cntlID2;
+	Rect	itemRect, cRect;
+	Handle	itemHandle;
 
 	if( AppearanceManager)
 	{
@@ -1437,62 +1438,52 @@ void CloseAdapWindow(void)
 	HideWindow( GetDialogWindow( AdapDlog));
 	
 	SetItemMark( ViewsMenu, mAdap, noMark);
-	
-/*	if( thePrefs.ADAPremember)
-	{
-		FSSpec spec;
-		
-		FindFolder( kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &spec.vRefNum, &spec.parID);
-		pStrcpy( spec.name, "\pPlayerPRO Prefs");
-		
-		SaveAdaptatorsRsrc( &spec);
-	}*/
 }
 
 extern EventRecord				theEvent;
 
 pascal void actionProcAdap(ControlHandle theControl, short ctlPart)
 {
-long			lRefCon;
-short			maxValue, minValue, curVal, sVal;
-RgnHandle		aRgn;
-Rect			tempRect;
+	long			lRefCon;
+	short			maxValue, minValue, curVal, sVal;
+	RgnHandle		aRgn;
+	Rect			tempRect;
 
-if( ctlPart <= 0) return;
+	if( ctlPart <= 0) return;
 
-lRefCon = GetControlReference( theControl);
-maxValue = GetControlMaximum( theControl);
-minValue = GetControlMinimum( theControl);
-curVal = sVal = GetControlValue( theControl);
+	lRefCon = GetControlReference( theControl);
+	maxValue = GetControlMaximum( theControl);
+	minValue = GetControlMinimum( theControl);
+	curVal = sVal = GetControlValue( theControl);
 
 	switch( ctlPart)
 		{
 			case kControlUpButtonPart:
 				curVal -= 1;
 				if( curVal < minValue) curVal = minValue;
-			break;
+				break;
 			
 			case kControlDownButtonPart:
 				curVal += 1;
 				if( curVal > maxValue) curVal = maxValue;
-			break;
+				break;
 			
 			case kControlPageUpPart:
 				curVal -= (viewRect.bottom - viewRect.top) / DISVOL;
 				curVal++;
 				if( curVal < minValue) curVal = minValue;
-			break;
+				break;
 			
 			case kControlPageDownPart:
 				curVal += (viewRect.bottom - viewRect.top) / DISVOL;
 				curVal--;
 				if( curVal > maxValue) curVal = maxValue;
-			break;
+				break;
 			
 			case kControlIndicatorPart:
 				sVal = gThumbPrev;
 				gThumbPrev = curVal;
-			break;
+				break;
 		}
 		
 		SetControlValue( theControl, curVal);
@@ -1514,11 +1505,11 @@ curVal = sVal = GetControlValue( theControl);
 
 void LoadAdaptatorsInt( FSSpec *file)
 {
-OSErr		iErr;
-short		i, fRefNum;
-long		inOutBytes;
-GrafPtr		myPort;
-Rect		caRect;
+	OSErr		iErr;
+	short		i, fRefNum;
+	long		inOutBytes;
+	GrafPtr		myPort;
+	Rect		caRect;
 
 	SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
 	
@@ -1838,12 +1829,12 @@ static short TuningId = 1;
 
 void SaveAdaptorsFile( FSSpec *file)
 {
-short				itemType,i;
-long				inOutBytes;
-OSErr				iErr;
-Ptr					tempPtr;
-short				fRefNum;
-Str255				theStr, str2;
+	short			itemType,i;
+	long			inOutBytes;
+	OSErr			iErr;
+	Ptr				tempPtr;
+	short			fRefNum;
+	Str255			theStr, str2;
 
 	FSpDelete( file);
 	iErr = FSpCreate( file, 'SNPL', TUNINGTYPE,smSystemScript);
@@ -1917,27 +1908,27 @@ Str255				theStr, str2;
 
 void SaveAdaptators(void)
 {
-short				itemType,i;
-long				inOutBytes;
-Point				where = { -1, -1};
-OSErr				iErr;
-GrafPtr				myPort;
-SFTypeList 			typeList;
-FSSpec				spec;
-Ptr					tempPtr;
-short				fRefNum;
-Str255				theStr, str2;
+	short				itemType,i;
+	long				inOutBytes;
+	Point				where = { -1, -1};
+	OSErr				iErr;
+	GrafPtr				myPort;
+	SFTypeList 			typeList;
+	FSSpec				spec;
+	Ptr					tempPtr;
+	short				fRefNum;
+	Str255				theStr, str2;
 
-NumToString( TuningId, str2);
+	NumToString( TuningId, str2);
 
-pStrcpy( theStr, "\pTuning #");
-pStrcat( theStr, str2);
+	pStrcpy( theStr, "\pTuning #");
+	pStrcat( theStr, str2);
 
-if( DoCustomSave( "\pSave mixer settings as:", theStr, TUNINGTYPE, &spec)) return;
+	if( DoCustomSave( "\pSave mixer settings as:", theStr, TUNINGTYPE, &spec)) return;
 
-TuningId++;
+	TuningId++;
 
-SaveAdaptorsFile( &spec);
+	SaveAdaptorsFile( &spec);
 }
 
 pascal void myTrackVolumeAction( ControlHandle theCntl, short ctlPart)
@@ -1950,17 +1941,17 @@ pascal void myTrackVolumeAction( ControlHandle theCntl, short ctlPart)
 
 void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 {
- 		short				x, whichFxTrack, bogus,itemType, ctlPart, i, oldH = -10;
-		Point				Location, myPt;
-		Handle				itemHandle;
-		Rect				itemRect;
-		Boolean				StereoRect, OnOffButton;
-		ControlHandle		theControl;
-		RgnHandle			saveClip;
-		GrafPtr				savePort;
-		ControlActionUPP	MyControlUPP;
-		Byte				kindCntl;
-		
+	short				x, whichFxTrack, bogus,itemType, ctlPart, i, oldH = -10;
+	Point				Location, myPt;
+	Handle				itemHandle;
+	Rect				itemRect;
+	Boolean				StereoRect, OnOffButton;
+	ControlHandle		theControl;
+	RgnHandle			saveClip;
+	GrafPtr				savePort;
+	ControlActionUPP	MyControlUPP;
+	Byte				kindCntl;
+	
 	GetPort( &savePort);
 	SetPortDialogPort( whichDialog);
 	
@@ -1975,15 +1966,15 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 		if( theControl == ScrollAdap)
 		{
 			/*if( ctlPart == kControlIndicatorPart && gUseControlSize == false)
-			{
-				bogus = TrackControl( theControl, myPt, NULL);
-				if( bogus != 0)
-				{
-					EraseRect( &viewRect);
-					InvalWindowRect( GetDialogWindow( whichDialog), &viewRect);
-				}
-			}
-			else if( ctlPart > 0)*/
+			 {
+			 bogus = TrackControl( theControl, myPt, NULL);
+			 if( bogus != 0)
+			 {
+			 EraseRect( &viewRect);
+			 InvalWindowRect( GetDialogWindow( whichDialog), &viewRect);
+			 }
+			 }
+			 else if( ctlPart > 0)*/
 			{
 				MyControlUPP = NewControlActionUPP( actionProcAdap);
 				gThumbPrev = GetControlValue( theControl);
@@ -1995,767 +1986,767 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 	
 	switch( whichItem)
 	{
-/*	case 18:
-		if( GetControlHilite( MaxBut) == 0 && MyTrackControl( MaxBut, theEvent.where, NULL))
-		{
-			EraseGrowIcon( whichDialog);
-
-			if( whichDialog->portRect.right == 300)
-			{
-				MySizeWindow( whichDialog, 200, whichDialog->portRect.bottom, true);
-				SetControlValue( MaxBut, 203);
-			}
-			else
-			{
-				MySizeWindow( whichDialog, 300, whichDialog->portRect.bottom, true);
-				SetControlValue( MaxBut, 204);
-			}
-
-			EraseGrowIcon( whichDialog);
-			SetMaxWindow( whichDialog->portRect.right + 3, 0, whichDialog);
-		}
-	break;*/
-	
-	case 14:
-		//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
-		
-		GetMouse( &Location);
-		GetDialogItem (whichDialog, 14, &itemType, &itemHandle, &itemRect);
-		
-		if(PtInRect( Location, &itemRect))
-		{
-			SetControlVisibility( pitchCntl, true, false);
-			SetControlVisibility( speedCntl, true, false);
+			/*	case 18:
+			 if( GetControlHilite( MaxBut) == 0 && MyTrackControl( MaxBut, theEvent.where, NULL))
+			 {
+			 EraseGrowIcon( whichDialog);
+			 
+			 if( whichDialog->portRect.right == 300)
+			 {
+			 MySizeWindow( whichDialog, 200, whichDialog->portRect.bottom, true);
+			 SetControlValue( MaxBut, 203);
+			 }
+			 else
+			 {
+			 MySizeWindow( whichDialog, 300, whichDialog->portRect.bottom, true);
+			 SetControlValue( MaxBut, 204);
+			 }
+			 
+			 EraseGrowIcon( whichDialog);
+			 SetMaxWindow( whichDialog->portRect.right + 3, 0, whichDialog);
+			 }
+			 break;*/
 			
-			while( Button())
+		case 14:
+			//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
+			
+			GetMouse( &Location);
+			GetDialogItem (whichDialog, 14, &itemType, &itemHandle, &itemRect);
+			
+			if(PtInRect( Location, &itemRect))
 			{
+				SetControlVisibility( pitchCntl, true, false);
+				SetControlVisibility( speedCntl, true, false);
 				
-				
-			//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-    		//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
-				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-				DoGlobalNull();
-				SetPortDialogPort( whichDialog);
-				GetMouse( &Location);
-				
-				if( oldH != Location.h)
+				while( Button())
 				{
-					oldH = Location.h;
 					
-					if( Location.h < itemRect.left) 		Location.h = itemRect.left;
-					else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
-			
-					MADDriver->VExt = (8000 * 2 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
-					if( MADDriver->VExt <= 0) MADDriver->VExt = 1;
-					if( MADDriver->VExt <= 160)	MADDriver->VExt = 160;
 					
-					SetControlValue( speedCntl, MADDriver->VExt);
+					//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+					//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+					DoGlobalNull();
+					SetPortDialogPort( whichDialog);
+					GetMouse( &Location);
 					
-					if( MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
-					else HiliteControl( ResetSpeedBut, 255);
-					
-					DrawValueIndicator( 100. * (MADDriver->VExt / 8000.), true, NULL);
-					
-					curMusic->hasChanged = true;
-					
-					if ((theEvent.modifiers & cmdKey) != 0)
+					if( oldH != Location.h)
 					{
-					MADDriver->FreqExt = 16000 - (16000 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
-					if( MADDriver->FreqExt <= 0) MADDriver->FreqExt = 1;
-					if( 16000 - MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 16000 - 160;
-					if( MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 160;
-					
-					SetControlValue( pitchCntl, 16000 - MADDriver->FreqExt);
-					
-					if( MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
-					else HiliteControl( ResetPitchBut, 255);
-					
-					DrawValueIndicator( 100.*(8000./ (MADDriver->FreqExt)), true, NULL);
-					}
-				}
-			}
-			
-			SetControlVisibility( pitchCntl, false, false);
-			SetControlVisibility( speedCntl, false, false);
-			
-			DrawValueIndicator( -1, false, NULL);
-		}
-	break;
-	
-	case 43:
-		//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
-		
-		GetMouse( &Location);
-		GetDialogItem (whichDialog, 43, &itemType, &itemHandle, &itemRect);
-		
-		if(PtInRect( Location, &itemRect))
-		{
-			while( Button())
-			{
-				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-			//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-    		//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
-    				
-				DoGlobalNull();
-				SetPortDialogPort( whichDialog);
-				GetMouse( &Location);
-				
-				if( oldH != Location.h)
-				{
-					oldH = Location.h;
-					
-					if( Location.h < itemRect.left) 		Location.h = itemRect.left;
-					else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
-					
-					MADDriver->globPan = (64 * 2 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
-					if( MADDriver->globPan <= 0) MADDriver->globPan = 0;
-					
-					SetControlValue( panCntl, MADDriver->globPan);
-					
-					if( MADDriver->globPan != 64) HiliteControl( ResetPanBut, 0);
-					else HiliteControl( ResetPanBut, 255);
-					
-					DrawValueIndicator( 100.*((MADDriver->globPan - 64)/64.), true, NULL);
-					
-					curMusic->hasChanged = true;
-				}
-			}
-			
-			DrawValueIndicator( -1, false, NULL);
-		}
-	break;
-	
-	case 12:
-		//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
-		
-		GetMouse( &Location);
-		GetDialogItem (whichDialog, 12, &itemType, &itemHandle, &itemRect);
-		
-		if(PtInRect( Location, &itemRect))
-		{
-			SetControlVisibility( pitchCntl, true, false);
-			SetControlVisibility( speedCntl, true, false);
-			
-			while( Button())
-			{
-				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-				
-			//	if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-    		//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
-    				
-				DoGlobalNull();
-				SetPortDialogPort( whichDialog);
-				
-				GetMouse( &Location);
-				
-				if( oldH != Location.h)
-				{
-					oldH = Location.h;
-					
-					if( Location.h < itemRect.left) 		Location.h = itemRect.left;
-					else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
-			
-					MADDriver->FreqExt = 16000 - (16000 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
-					if( MADDriver->FreqExt <= 0) MADDriver->FreqExt = 1;
-					if( 16000 - MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 16000 - 160;
-					if( MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 160;
-					
-					SetControlValue( pitchCntl, 16000 - MADDriver->FreqExt);
-					
-					if( MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
-					else HiliteControl( ResetPitchBut, 255);
-					
-					DrawValueIndicator( 100.*(8000./ (MADDriver->FreqExt)), true, NULL);
-					
-					curMusic->hasChanged = true;
-					
-					if ((theEvent.modifiers & cmdKey) != 0)
-					{
-					MADDriver->VExt = (8000 * 2 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
-					if( MADDriver->VExt <= 0) MADDriver->VExt = 1;
-					if( MADDriver->VExt <= 160)	MADDriver->VExt = 160;
-					
-					SetControlValue( speedCntl, MADDriver->VExt);
-					
-					if( MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
-					else HiliteControl( ResetSpeedBut, 255);
-					
-					DrawValueIndicator( 100. * (MADDriver->VExt / 8000.), true, NULL);
-					}
-				}
-			}
-			
-			SetControlVisibility( pitchCntl, false, false);
-			SetControlVisibility( speedCntl, false, false);
-			
-			DrawValueIndicator( -1, false, NULL);
-		}
-	break;
-	
-	case 26:
-		SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
-		
-		if( GetControlHilite( FlipBut) == 0 && MyTrackControl( FlipBut, theEvent.where, NULL))
-		{
-			for( i = 1; i < gCurrentTrack; i++)
-			{
-				if( i % 2 == 0) curMusic->header->chanPan[ i] = curMusic->header->chanPan[ 0];
-				else curMusic->header->chanPan[ i] = MAX_PANNING -curMusic->header->chanPan[ 0];
-			}
-			
-			InvalWindowRect( GetDialogWindow( whichDialog), &viewRect);
-			
-			curMusic->hasChanged = true;
-		}
-	break;
-	
-	case 41:
-		if( GetControlHilite( FineBut) == 0  && MyTrackControl( FineBut, theEvent.where, NULL))
-		{
-			FineSpeedPitchSettings();
-		}
-	break;
-	
-	case 25:
-		if( GetControlHilite( LoadBut) == 0  && MyTrackControl( LoadBut, theEvent.where, NULL))
-		{
-			LoadAdaptators();
-		}
-	break;
-
-	case 17:
-		if( GetControlHilite( SaveBut) == 0  && MyTrackControl( SaveBut, theEvent.where, NULL))
-		{
-			SaveAdaptators();
-		}
-	break;
-	
-	case 44:
-		//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
-		
-		if( GetControlHilite( ResetPanBut) == 0  && MyTrackControl( ResetPanBut, theEvent.where, NULL))
-		{
-			HiliteControl( ResetPanBut, 255);
-			
-			MADDriver->globPan = 64;
-			
-			SetControlValue( panCntl, MADDriver->globPan);
-			
-			curMusic->hasChanged = true;
-		}
-	break;
-	
-	case 22:
-		//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
-		
-		if( GetControlHilite( ResetSpeedBut) == 0  && MyTrackControl( ResetSpeedBut, theEvent.where, NULL))
-		{
-			HiliteControl( ResetSpeedBut, 255);
-			
-			MADDriver->VExt = 8000;
-			
-			SetControlVisibility( speedCntl, true, false);
-			
-			SetControlValue( speedCntl, MADDriver->VExt);
-			
-			SetControlVisibility( speedCntl, false, false);
-			
-			curMusic->hasChanged = true;
-		}
-	break;
-	
-	case 23:
-		//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
-		
-		if( GetControlHilite( ResetPitchBut) == 0  && MyTrackControl( ResetPitchBut, theEvent.where, NULL))
-		{
-			HiliteControl( ResetPitchBut, 255);
-			
-			MADDriver->FreqExt = 8000;
-			
-			SetControlVisibility( pitchCntl, true, false);
-			
-			SetControlValue( pitchCntl, MADDriver->FreqExt);
-			
-			SetControlVisibility( pitchCntl, false, false);
-			
-			curMusic->hasChanged = true;
-		}
-	break;
-	
-/*	case 23:
-		if( GetControlHilite( PrefBut)	 == 0 && MyTrackControl( PrefBut, theEvent.where, NULL))
-		{
-#include "Help.h"
-			
-			ShowPrefs( COMPRESSION);
-		}
-	break;*/
-		
-	case 10:	// Volume HARDWARE
-		//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
-		
-		GetMouse( &Location);
-		GetDialogItem (whichDialog, 10, &itemType, &itemHandle, &itemRect);
-		
-		if(PtInRect( Location, &itemRect))
-		{
-			SetControlVisibility( hardvolCntl, true, false);
-			
-			while( Button())
-			{
-				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-				
-			//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-    		//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
-    				
-			//	DoGlobalNull();
-				SetPortDialogPort( whichDialog);
-				GetMouse( &Location);
-				
-				if( oldH != Location.h)
-				{
-					oldH = Location.h;
-					
-					if( Location.h < itemRect.left) 		Location.h = itemRect.left;
-					else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
-			
-					thePrefs.volumeLevel = (430* (Location.h - itemRect.left)) / ( itemRect.right-itemRect.left);
-					
-					SKVolume( thePrefs.volumeLevel);
-					
-					SetControlValue( hardvolCntl, thePrefs.volumeLevel);
-					
-					DrawValueIndicator( (100*thePrefs.volumeLevel) / 256L, true, NULL);
-				}
-			}
-			
-			SetControlVisibility( hardvolCntl, false, false);
-			
-			DrawValueIndicator( -1, false, NULL);
-		}
-	break;
-	
-	case 8:	// Volume SOFTWARE
-		//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
-		
-		GetMouse( &Location);
-		GetDialogItem (whichDialog, 8, &itemType, &itemHandle, &itemRect);
-		
-		if(PtInRect( Location, &itemRect))
-		{
-			SetControlVisibility( softvolCntl, true, false);
-			
-			while( Button())
-			{
-				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-				
-			//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-    		//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
-    				
-				DoGlobalNull();
-				SetPortDialogPort( whichDialog);
-				GetMouse( &Location);
-				
-				if( oldH != Location.h)
-				{
-					oldH = Location.h;
-					
-					if( Location.h < itemRect.left) 		Location.h = itemRect.left;
-					else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
-					
-					MADDriver->VolGlobal = (128* (Location.h - itemRect.left)) / ( itemRect.right-itemRect.left);
-					
-					SetControlValue( softvolCntl, MADDriver->VolGlobal);
-					
-					DrawValueIndicator( (100*MADDriver->VolGlobal)/64, true, NULL);
-				}
-			}
-			
-			SetControlVisibility( softvolCntl, false, false);
-			
-			DrawValueIndicator( -1, false, NULL);
-			
-			curMusic->hasChanged = true;
-		}
-	break;
-	
-	case 32:
-		myPt = theEvent.where;
-		GlobalToLocal( &myPt);
-				
-		for( i = 0; i < 10; i++)
-		{
-			Rect contrlRect;
-			
-			GetControlBounds( MainFx[ i], &contrlRect);
-			
-			if( PtInRect( myPt, &contrlRect) && curMusic->header->globalFXActive == true)
-			{
-				long		mresult, temp;
-				Point		Zone;
-				short		item;
-				
-				InsertMenu( VSTMenu, hierMenu);
-				
-				Zone.h = contrlRect.left;
-				Zone.v = contrlRect.top;
-				
-				LocalToGlobal( &Zone);
-				
-				if( MADDriver->masterVST[ i])
-				{
-					item = MADDriver->masterVST[ i]->id+3;
-					SetItemMark( VSTMenu, item, diamondMark);
-				}
-				else item = 0;
-				
-				mresult = PopUpMenuSelect(	VSTMenu,
-											Zone.v,
-											Zone.h,
-											item);
-				
-				if( item)
-				{
-					SetItemMark( VSTMenu, item, noMark);
-				}
-				
-				DeleteMenu( GetMenuID( VSTMenu));
-				
-				if ( HiWord( mresult ) != 0 )
-				{
-					temp = LoWord( mresult );
-					
-					switch( temp)
-					{
-						case 1:	// No Effect 
-							if( MADDriver->masterVST[ i])
-							{
-								CheckVSTEditor( MADDriver->masterVST[ i]);
-								DisposeVSTEffect( MADDriver->masterVST[ i]);
-								MADDriver->masterVST[ i] = NULL;
-							}
-						break;
+						oldH = Location.h;
 						
-						default:
-							if( MADDriver->masterVST[ i])
-							{
-								if( temp-3 != MADDriver->masterVST[ i]->id)
+						if( Location.h < itemRect.left) 		Location.h = itemRect.left;
+						else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
+						
+						MADDriver->VExt = (8000 * 2 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
+						if( MADDriver->VExt <= 0) MADDriver->VExt = 1;
+						if( MADDriver->VExt <= 160)	MADDriver->VExt = 160;
+						
+						SetControlValue( speedCntl, MADDriver->VExt);
+						
+						if( MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
+						else HiliteControl( ResetSpeedBut, 255);
+						
+						DrawValueIndicator( 100. * (MADDriver->VExt / 8000.), true, NULL);
+						
+						curMusic->hasChanged = true;
+						
+						if ((theEvent.modifiers & cmdKey) != 0)
+						{
+							MADDriver->FreqExt = 16000 - (16000 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
+							if( MADDriver->FreqExt <= 0) MADDriver->FreqExt = 1;
+							if( 16000 - MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 16000 - 160;
+							if( MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 160;
+							
+							SetControlValue( pitchCntl, 16000 - MADDriver->FreqExt);
+							
+							if( MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
+							else HiliteControl( ResetPitchBut, 255);
+							
+							DrawValueIndicator( 100.*(8000./ (MADDriver->FreqExt)), true, NULL);
+						}
+					}
+				}
+				
+				SetControlVisibility( pitchCntl, false, false);
+				SetControlVisibility( speedCntl, false, false);
+				
+				DrawValueIndicator( -1, false, NULL);
+			}
+			break;
+			
+		case 43:
+			//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
+			
+			GetMouse( &Location);
+			GetDialogItem (whichDialog, 43, &itemType, &itemHandle, &itemRect);
+			
+			if(PtInRect( Location, &itemRect))
+			{
+				while( Button())
+				{
+					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+					//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+					//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+    				
+					DoGlobalNull();
+					SetPortDialogPort( whichDialog);
+					GetMouse( &Location);
+					
+					if( oldH != Location.h)
+					{
+						oldH = Location.h;
+						
+						if( Location.h < itemRect.left) 		Location.h = itemRect.left;
+						else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
+						
+						MADDriver->globPan = (64 * 2 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
+						if( MADDriver->globPan <= 0) MADDriver->globPan = 0;
+						
+						SetControlValue( panCntl, MADDriver->globPan);
+						
+						if( MADDriver->globPan != 64) HiliteControl( ResetPanBut, 0);
+						else HiliteControl( ResetPanBut, 255);
+						
+						DrawValueIndicator( 100.*((MADDriver->globPan - 64)/64.), true, NULL);
+						
+						curMusic->hasChanged = true;
+					}
+				}
+				
+				DrawValueIndicator( -1, false, NULL);
+			}
+			break;
+			
+		case 12:
+			//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
+			
+			GetMouse( &Location);
+			GetDialogItem (whichDialog, 12, &itemType, &itemHandle, &itemRect);
+			
+			if(PtInRect( Location, &itemRect))
+			{
+				SetControlVisibility( pitchCntl, true, false);
+				SetControlVisibility( speedCntl, true, false);
+				
+				while( Button())
+				{
+					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+					
+					//	if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+					//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+    				
+					DoGlobalNull();
+					SetPortDialogPort( whichDialog);
+					
+					GetMouse( &Location);
+					
+					if( oldH != Location.h)
+					{
+						oldH = Location.h;
+						
+						if( Location.h < itemRect.left) 		Location.h = itemRect.left;
+						else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
+						
+						MADDriver->FreqExt = 16000 - (16000 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
+						if( MADDriver->FreqExt <= 0) MADDriver->FreqExt = 1;
+						if( 16000 - MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 16000 - 160;
+						if( MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 160;
+						
+						SetControlValue( pitchCntl, 16000 - MADDriver->FreqExt);
+						
+						if( MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
+						else HiliteControl( ResetPitchBut, 255);
+						
+						DrawValueIndicator( 100.*(8000./ (MADDriver->FreqExt)), true, NULL);
+						
+						curMusic->hasChanged = true;
+						
+						if ((theEvent.modifiers & cmdKey) != 0)
+						{
+							MADDriver->VExt = (8000 * 2 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
+							if( MADDriver->VExt <= 0) MADDriver->VExt = 1;
+							if( MADDriver->VExt <= 160)	MADDriver->VExt = 160;
+							
+							SetControlValue( speedCntl, MADDriver->VExt);
+							
+							if( MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
+							else HiliteControl( ResetSpeedBut, 255);
+							
+							DrawValueIndicator( 100. * (MADDriver->VExt / 8000.), true, NULL);
+						}
+					}
+				}
+				
+				SetControlVisibility( pitchCntl, false, false);
+				SetControlVisibility( speedCntl, false, false);
+				
+				DrawValueIndicator( -1, false, NULL);
+			}
+			break;
+			
+		case 26:
+			SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
+			
+			if( GetControlHilite( FlipBut) == 0 && MyTrackControl( FlipBut, theEvent.where, NULL))
+			{
+				for( i = 1; i < gCurrentTrack; i++)
+				{
+					if( i % 2 == 0) curMusic->header->chanPan[ i] = curMusic->header->chanPan[ 0];
+					else curMusic->header->chanPan[ i] = MAX_PANNING -curMusic->header->chanPan[ 0];
+				}
+				
+				InvalWindowRect( GetDialogWindow( whichDialog), &viewRect);
+				
+				curMusic->hasChanged = true;
+			}
+			break;
+			
+		case 41:
+			if( GetControlHilite( FineBut) == 0  && MyTrackControl( FineBut, theEvent.where, NULL))
+			{
+				FineSpeedPitchSettings();
+			}
+			break;
+			
+		case 25:
+			if( GetControlHilite( LoadBut) == 0  && MyTrackControl( LoadBut, theEvent.where, NULL))
+			{
+				LoadAdaptators();
+			}
+			break;
+			
+		case 17:
+			if( GetControlHilite( SaveBut) == 0  && MyTrackControl( SaveBut, theEvent.where, NULL))
+			{
+				SaveAdaptators();
+			}
+			break;
+			
+		case 44:
+			//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
+			
+			if( GetControlHilite( ResetPanBut) == 0  && MyTrackControl( ResetPanBut, theEvent.where, NULL))
+			{
+				HiliteControl( ResetPanBut, 255);
+				
+				MADDriver->globPan = 64;
+				
+				SetControlValue( panCntl, MADDriver->globPan);
+				
+				curMusic->hasChanged = true;
+			}
+			break;
+			
+		case 22:
+			//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
+			
+			if( GetControlHilite( ResetSpeedBut) == 0  && MyTrackControl( ResetSpeedBut, theEvent.where, NULL))
+			{
+				HiliteControl( ResetSpeedBut, 255);
+				
+				MADDriver->VExt = 8000;
+				
+				SetControlVisibility( speedCntl, true, false);
+				
+				SetControlValue( speedCntl, MADDriver->VExt);
+				
+				SetControlVisibility( speedCntl, false, false);
+				
+				curMusic->hasChanged = true;
+			}
+			break;
+			
+		case 23:
+			//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
+			
+			if( GetControlHilite( ResetPitchBut) == 0  && MyTrackControl( ResetPitchBut, theEvent.where, NULL))
+			{
+				HiliteControl( ResetPitchBut, 255);
+				
+				MADDriver->FreqExt = 8000;
+				
+				SetControlVisibility( pitchCntl, true, false);
+				
+				SetControlValue( pitchCntl, MADDriver->FreqExt);
+				
+				SetControlVisibility( pitchCntl, false, false);
+				
+				curMusic->hasChanged = true;
+			}
+			break;
+			
+			/*	case 23:
+			 if( GetControlHilite( PrefBut)	 == 0 && MyTrackControl( PrefBut, theEvent.where, NULL))
+			 {
+			 #include "Help.h"
+			 
+			 ShowPrefs( COMPRESSION);
+			 }
+			 break;*/
+			
+		case 10:	// Volume HARDWARE
+			//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
+			
+			GetMouse( &Location);
+			GetDialogItem (whichDialog, 10, &itemType, &itemHandle, &itemRect);
+			
+			if(PtInRect( Location, &itemRect))
+			{
+				SetControlVisibility( hardvolCntl, true, false);
+				
+				while( Button())
+				{
+					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+					
+					//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+					//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+    				
+					//	DoGlobalNull();
+					SetPortDialogPort( whichDialog);
+					GetMouse( &Location);
+					
+					if( oldH != Location.h)
+					{
+						oldH = Location.h;
+						
+						if( Location.h < itemRect.left) 		Location.h = itemRect.left;
+						else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
+						
+						thePrefs.volumeLevel = (430* (Location.h - itemRect.left)) / ( itemRect.right-itemRect.left);
+						
+						SKVolume( thePrefs.volumeLevel);
+						
+						SetControlValue( hardvolCntl, thePrefs.volumeLevel);
+						
+						DrawValueIndicator( (100*thePrefs.volumeLevel) / 256L, true, NULL);
+					}
+				}
+				
+				SetControlVisibility( hardvolCntl, false, false);
+				
+				DrawValueIndicator( -1, false, NULL);
+			}
+			break;
+			
+		case 8:	// Volume SOFTWARE
+			//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
+			
+			GetMouse( &Location);
+			GetDialogItem (whichDialog, 8, &itemType, &itemHandle, &itemRect);
+			
+			if(PtInRect( Location, &itemRect))
+			{
+				SetControlVisibility( softvolCntl, true, false);
+				
+				while( Button())
+				{
+					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+					
+					//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+					//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+    				
+					DoGlobalNull();
+					SetPortDialogPort( whichDialog);
+					GetMouse( &Location);
+					
+					if( oldH != Location.h)
+					{
+						oldH = Location.h;
+						
+						if( Location.h < itemRect.left) 		Location.h = itemRect.left;
+						else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
+						
+						MADDriver->VolGlobal = (128* (Location.h - itemRect.left)) / ( itemRect.right-itemRect.left);
+						
+						SetControlValue( softvolCntl, MADDriver->VolGlobal);
+						
+						DrawValueIndicator( (100*MADDriver->VolGlobal)/64, true, NULL);
+					}
+				}
+				
+				SetControlVisibility( softvolCntl, false, false);
+				
+				DrawValueIndicator( -1, false, NULL);
+				
+				curMusic->hasChanged = true;
+			}
+			break;
+			
+		case 32:
+			myPt = theEvent.where;
+			GlobalToLocal( &myPt);
+			
+			for( i = 0; i < 10; i++)
+			{
+				Rect contrlRect;
+				
+				GetControlBounds( MainFx[ i], &contrlRect);
+				
+				if( PtInRect( myPt, &contrlRect) && curMusic->header->globalFXActive == true)
+				{
+					long		mresult, temp;
+					Point		Zone;
+					short		item;
+					
+					InsertMenu( VSTMenu, hierMenu);
+					
+					Zone.h = contrlRect.left;
+					Zone.v = contrlRect.top;
+					
+					LocalToGlobal( &Zone);
+					
+					if( MADDriver->masterVST[ i])
+					{
+						item = MADDriver->masterVST[ i]->id+3;
+						SetItemMark( VSTMenu, item, diamondMark);
+					}
+					else item = 0;
+					
+					mresult = PopUpMenuSelect(	VSTMenu,
+											  Zone.v,
+											  Zone.h,
+											  item);
+					
+					if( item)
+					{
+						SetItemMark( VSTMenu, item, noMark);
+					}
+					
+					DeleteMenu( GetMenuID( VSTMenu));
+					
+					if ( HiWord( mresult ) != 0 )
+					{
+						temp = LoWord( mresult );
+						
+						switch( temp)
+						{
+							case 1:	// No Effect 
+								if( MADDriver->masterVST[ i])
 								{
+									CheckVSTEditor( MADDriver->masterVST[ i]);
 									DisposeVSTEffect( MADDriver->masterVST[ i]);
 									MADDriver->masterVST[ i] = NULL;
 								}
-							}
-							
-							HandleVSTChoice( temp-3, &MADDriver->masterVST[ i], -1);
-						break;
+								break;
+								
+							default:
+								if( MADDriver->masterVST[ i])
+								{
+									if( temp-3 != MADDriver->masterVST[ i]->id)
+									{
+										DisposeVSTEffect( MADDriver->masterVST[ i]);
+										MADDriver->masterVST[ i] = NULL;
+									}
+								}
+								
+								HandleVSTChoice( temp-3, &MADDriver->masterVST[ i], -1);
+								break;
+						}
+						
+						if( MADDriver->masterVST[ i] != NULL) HiliteControl( MainFx[ i], kControlButtonPart);
+						else HiliteControl( MainFx[ i], 0);
+						
+						curMusic->hasChanged = true;
 					}
-					
-					if( MADDriver->masterVST[ i] != NULL) HiliteControl( MainFx[ i], kControlButtonPart);
-					else HiliteControl( MainFx[ i], 0);
-					
-					curMusic->hasChanged = true;
 				}
 			}
-		}
-		
-		if( MyTrackControl( MainFXOnOff, theEvent.where, NULL))
-		{
-			Rect contrlRect;
 			
-			GetControlBounds( MainFXOnOff, &contrlRect);
-			if( PtInRect( myPt, &contrlRect))
+			if( MyTrackControl( MainFXOnOff, theEvent.where, NULL))
 			{
-				curMusic->header->globalFXActive = !curMusic->header->globalFXActive;
+				Rect contrlRect;
 				
-				SetControlValue( MainFXOnOff, curMusic->header->globalFXActive);
-				
-				ResetAdaptators();
-			}
-		}
-
-		FillVSTEffects();
-	break;
-	
-	case 2:
-	case 16:	// Volume Voice
-		SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
-		
-		myPt = theEvent.where;
-		GlobalToLocal( &myPt);
-		
-		theControl = NULL;
-		
-		for( i = 0; i < gCurrentTrack; i++)
-		{
-			Rect contrlRect;
-			
-			GetControlBounds( VSTDest[ i], &contrlRect);
-		
-			if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'D';	theControl = VSTDest[ i];	}
-			
-			GetControlBounds( VSTOnOff[ i], &contrlRect);
-		
-			if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'E';	theControl = VSTOnOff[ i];	}
-			
-			GetControlBounds( volCntl[ i], &contrlRect);
-		
-			if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'V';	theControl = volCntl[ i];	}
-			
-			GetControlBounds( pannCntl[ i], &contrlRect);
-			
-			if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'P';	theControl = pannCntl[ i];	}
-			
-			GetControlBounds( OnOff[ i], &contrlRect);
-			
-			if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'O';	theControl = OnOff[ i];	}
-			
-			GetControlBounds( Mono[ i], &contrlRect);
-			
-			if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'M';	theControl = Mono[ i];	}
-			
-			for( x = 0; x < 4; x++)
-			{
-				GetControlBounds( VSTFx[ i][ x], &contrlRect);
-				
-				if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'F';	theControl = VSTFx[ i][ x];	whichFxTrack = x;}
+				GetControlBounds( MainFXOnOff, &contrlRect);
+				if( PtInRect( myPt, &contrlRect))
+				{
+					curMusic->header->globalFXActive = !curMusic->header->globalFXActive;
+					
+					SetControlValue( MainFXOnOff, curMusic->header->globalFXActive);
+					
+					ResetAdaptators();
+				}
 			}
 			
-			if( theControl) break;
-		}
-		
-		if( theControl)
-		{
-			Rect contrlRect;
+			FillVSTEffects();
+			break;
 			
-			i = GetControlReference( theControl);
+		case 2:
+		case 16:	// Volume Voice
+			SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
 			
-			saveClip = NewRgn();
-	 		GetClip( saveClip);
-	 		ClipRect( &viewRect);
+			myPt = theEvent.where;
+			GlobalToLocal( &myPt);
 			
-			GetControlBounds( theControl, &contrlRect);
+			theControl = NULL;
 			
-			itemRect = contrlRect;
-			
-			curMusic->hasChanged = true;
-			
-			switch( kindCntl)
+			for( i = 0; i < gCurrentTrack; i++)
 			{
+				Rect contrlRect;
 				
-				case 'D':
-					if(  curMusic->header->chanBus[ i].Active == true)
-					{
-						long		mresult, temp;
-						Point		Zone;
-						short		item;
-						MenuHandle	VSTDestMenu;
-						Str255		myStr, myStr2;
+				GetControlBounds( VSTDest[ i], &contrlRect);
+				
+				if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'D';	theControl = VSTDest[ i];	}
+				
+				GetControlBounds( VSTOnOff[ i], &contrlRect);
+				
+				if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'E';	theControl = VSTOnOff[ i];	}
+				
+				GetControlBounds( volCntl[ i], &contrlRect);
+				
+				if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'V';	theControl = volCntl[ i];	}
+				
+				GetControlBounds( pannCntl[ i], &contrlRect);
+				
+				if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'P';	theControl = pannCntl[ i];	}
+				
+				GetControlBounds( OnOff[ i], &contrlRect);
+				
+				if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'O';	theControl = OnOff[ i];	}
+				
+				GetControlBounds( Mono[ i], &contrlRect);
+				
+				if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'M';	theControl = Mono[ i];	}
+				
+				for( x = 0; x < 4; x++)
+				{
+					GetControlBounds( VSTFx[ i][ x], &contrlRect);
+					
+					if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'F';	theControl = VSTFx[ i][ x];	whichFxTrack = x;}
+				}
+				
+				if( theControl) break;
+			}
+			
+			if( theControl)
+			{
+				Rect contrlRect;
+				
+				i = GetControlReference( theControl);
+				
+				saveClip = NewRgn();
+				GetClip( saveClip);
+				ClipRect( &viewRect);
+				
+				GetControlBounds( theControl, &contrlRect);
+				
+				itemRect = contrlRect;
+				
+				curMusic->hasChanged = true;
+				
+				switch( kindCntl)
+				{
 						
-						VSTDestMenu = GetMenu( 181);
-						
-						for( x = 0; x < curMusic->header->numChn; x++)
+					case 'D':
+						if(  curMusic->header->chanBus[ i].Active == true)
 						{
-							pStrcpy( myStr, "\pUse settings of track ");
-							NumToString( x+1, myStr2);
-							pStrcat( myStr, myStr2);
+							long		mresult, temp;
+							Point		Zone;
+							short		item;
+							MenuHandle	VSTDestMenu;
+							Str255		myStr, myStr2;
 							
-							AppendMenu( VSTDestMenu, myStr);
-						}
-						
-						DisableMenuItem( VSTDestMenu, i + 4);
-						
-						for( x = 0; x < curMusic->header->numChn; x++)
-						{
-							if( curMusic->header->chanBus[ x].copyId != x) DisableMenuItem( VSTDestMenu, x + 4);
-						}
-						
-						InsertMenu( VSTDestMenu, hierMenu);
-						
-						Zone.h = itemRect.left;
-						Zone.v = itemRect.top;
-						
-						LocalToGlobal( &Zone);
-						
-						if( curMusic->header->chanBus[ i].copyId != i)
-						{
-							item = curMusic->header->chanBus[ i].copyId + 4;
-						}
-						else
-						{
-							if( curMusic->header->chanBus[ i].ByPass) item = 2;
-							else item = 1;
-						}
-						
-						SetItemMark( VSTDestMenu, item, diamondMark);
-						
-						mresult = PopUpMenuSelect(	VSTDestMenu,
-													Zone.v,
-													Zone.h,
-													item);
-						
-						if( item)
-						{
-							SetItemMark( VSTDestMenu, item, noMark);
-						}
-						
-						DeleteMenu( GetMenuID( VSTDestMenu));
-						DisposeMenu( VSTDestMenu);
-						
-						if ( HiWord( mresult ) != 0 )
-						{
-							temp = LoWord( mresult );
+							VSTDestMenu = GetMenu( 181);
 							
-							switch( temp)
+							for( x = 0; x < curMusic->header->numChn; x++)
 							{
-								case 1:
-									curMusic->header->chanBus[ i].copyId = i;
-									curMusic->header->chanBus[ i].ByPass = false;
-								break;
+								pStrcpy( myStr, "\pUse settings of track ");
+								NumToString( x+1, myStr2);
+								pStrcat( myStr, myStr2);
 								
-								case 2:
-									curMusic->header->chanBus[ i].copyId = i;
-									curMusic->header->chanBus[ i].ByPass = true;
-								break;
-								
-								default:
-									curMusic->header->chanBus[ i].copyId = temp -4;
-									curMusic->header->chanBus[ i].ByPass = false;
-									
-									for( x = 0; x < curMusic->header->numChn; x++)
-									{
-										if( curMusic->header->chanBus[ x].copyId == i) curMusic->header->chanBus[ x].copyId = x;
-									}
-								break;
+								AppendMenu( VSTDestMenu, myStr);
 							}
 							
-							FillFxDestControl( i);
+							DisableMenuItem( VSTDestMenu, i + 4);
 							
-							ResetAdaptators();
-						}
-					}
-				break;
-				
-				
-				case 'F':
-					if( curMusic->header->chanBus[ i].copyId == i && curMusic->header->chanBus[ i].Active == true)
-					{
-						long		mresult, temp;
-						Point		Zone;
-						short		item;
-						
-						InsertMenu( VSTMenu, hierMenu);
-						
-						Zone.h = itemRect.left;
-						Zone.v = itemRect.top;
-						
-						LocalToGlobal( &Zone);
-						
-						if( MADDriver->chanVST[ i][ whichFxTrack])
-						{
-							item = MADDriver->chanVST[ i][ whichFxTrack]->id+3;
-							SetItemMark( VSTMenu, item, diamondMark);
-						}
-						else item = 0;
-						
-						mresult = PopUpMenuSelect(	VSTMenu,
-													Zone.v,
-													Zone.h,
-													item);
-						
-						if( item)
-						{
-							SetItemMark( VSTMenu, item, noMark);
-						}
-						
-						DeleteMenu( GetMenuID( VSTMenu));
-						
-						if ( HiWord( mresult ) != 0 )
-						{
-							temp = LoWord( mresult );
-							
-							switch( temp)
+							for( x = 0; x < curMusic->header->numChn; x++)
 							{
-								case 1:	// No Effect 
-									if( MADDriver->chanVST[ i][ whichFxTrack])
-									{
-										CheckVSTEditor( MADDriver->chanVST[ i][ whichFxTrack]);
-										DisposeVSTEffect( MADDriver->chanVST[ i][ whichFxTrack]);
-										MADDriver->chanVST[ i][ whichFxTrack] = NULL;
-									}
-								break;
+								if( curMusic->header->chanBus[ x].copyId != x) DisableMenuItem( VSTDestMenu, x + 4);
+							}
+							
+							InsertMenu( VSTDestMenu, hierMenu);
+							
+							Zone.h = itemRect.left;
+							Zone.v = itemRect.top;
+							
+							LocalToGlobal( &Zone);
+							
+							if( curMusic->header->chanBus[ i].copyId != i)
+							{
+								item = curMusic->header->chanBus[ i].copyId + 4;
+							}
+							else
+							{
+								if( curMusic->header->chanBus[ i].ByPass) item = 2;
+								else item = 1;
+							}
+							
+							SetItemMark( VSTDestMenu, item, diamondMark);
+							
+							mresult = PopUpMenuSelect(	VSTDestMenu,
+													  Zone.v,
+													  Zone.h,
+													  item);
+							
+							if( item)
+							{
+								SetItemMark( VSTDestMenu, item, noMark);
+							}
+							
+							DeleteMenu( GetMenuID( VSTDestMenu));
+							DisposeMenu( VSTDestMenu);
+							
+							if ( HiWord( mresult ) != 0 )
+							{
+								temp = LoWord( mresult );
 								
-								default:
-									if( MADDriver->chanVST[ i][ whichFxTrack])
-									{
-										if( temp-3 != MADDriver->chanVST[ i][ whichFxTrack]->id)
+								switch( temp)
+								{
+									case 1:
+										curMusic->header->chanBus[ i].copyId = i;
+										curMusic->header->chanBus[ i].ByPass = false;
+										break;
+										
+									case 2:
+										curMusic->header->chanBus[ i].copyId = i;
+										curMusic->header->chanBus[ i].ByPass = true;
+										break;
+										
+									default:
+										curMusic->header->chanBus[ i].copyId = temp -4;
+										curMusic->header->chanBus[ i].ByPass = false;
+										
+										for( x = 0; x < curMusic->header->numChn; x++)
 										{
+											if( curMusic->header->chanBus[ x].copyId == i) curMusic->header->chanBus[ x].copyId = x;
+										}
+										break;
+								}
+								
+								FillFxDestControl( i);
+								
+								ResetAdaptators();
+							}
+						}
+						break;
+						
+						
+					case 'F':
+						if( curMusic->header->chanBus[ i].copyId == i && curMusic->header->chanBus[ i].Active == true)
+						{
+							long		mresult, temp;
+							Point		Zone;
+							short		item;
+							
+							InsertMenu( VSTMenu, hierMenu);
+							
+							Zone.h = itemRect.left;
+							Zone.v = itemRect.top;
+							
+							LocalToGlobal( &Zone);
+							
+							if( MADDriver->chanVST[ i][ whichFxTrack])
+							{
+								item = MADDriver->chanVST[ i][ whichFxTrack]->id+3;
+								SetItemMark( VSTMenu, item, diamondMark);
+							}
+							else item = 0;
+							
+							mresult = PopUpMenuSelect(	VSTMenu,
+													  Zone.v,
+													  Zone.h,
+													  item);
+							
+							if( item)
+							{
+								SetItemMark( VSTMenu, item, noMark);
+							}
+							
+							DeleteMenu( GetMenuID( VSTMenu));
+							
+							if ( HiWord( mresult ) != 0 )
+							{
+								temp = LoWord( mresult );
+								
+								switch( temp)
+								{
+									case 1:	// No Effect 
+										if( MADDriver->chanVST[ i][ whichFxTrack])
+										{
+											CheckVSTEditor( MADDriver->chanVST[ i][ whichFxTrack]);
 											DisposeVSTEffect( MADDriver->chanVST[ i][ whichFxTrack]);
 											MADDriver->chanVST[ i][ whichFxTrack] = NULL;
 										}
-									}
-									
-									SetClip( saveClip);
-									HandleVSTChoice( temp-3, &MADDriver->chanVST[ i][ whichFxTrack], i);
-									ClipRect( &viewRect);
-								break;
-							}
-							
-							FillFxControl( i);
-						}
-					}
-					
-					FillVSTEffects();
-				break;
-			
-				case 'M':
-					if( GetControlHilite( Mono[ i]) == 0 && MyTrackControl( Mono[ i], theEvent.where, NULL))
-					{
-						if( IsPressed( 0x3A))
-						{
-							short		ww;
-							Boolean		newVal;
-							
-							if( GetControlHilite( Mono[ i]) == false) newVal = true;
-							else newVal = false;
-							
-							for( ww = 0; ww < gCurrentTrack; ww++)
-							{
-								FillMonoControl( ww);
+										break;
+										
+									default:
+										if( MADDriver->chanVST[ i][ whichFxTrack])
+										{
+											if( temp-3 != MADDriver->chanVST[ i][ whichFxTrack]->id)
+											{
+												DisposeVSTEffect( MADDriver->chanVST[ i][ whichFxTrack]);
+												MADDriver->chanVST[ i][ whichFxTrack] = NULL;
+											}
+										}
+										
+										SetClip( saveClip);
+										HandleVSTChoice( temp-3, &MADDriver->chanVST[ i][ whichFxTrack], i);
+										ClipRect( &viewRect);
+										break;
+								}
 								
-								if( newVal) curMusic->header->chanPan[ ww] = 32;
-				 				FillBarStereo( ww, curMusic->header->chanPan[ ww], MAX_PANNING);
+								FillFxControl( i);
 							}
 						}
-						else
+						
+						FillVSTEffects();
+						break;
+						
+					case 'M':
+						if( GetControlHilite( Mono[ i]) == 0 && MyTrackControl( Mono[ i], theEvent.where, NULL))
 						{
-							FillMonoControl( i);
-							
-							curMusic->header->chanPan[ i] = 32;
-				 			FillBarStereo( i, curMusic->header->chanPan[ i], MAX_PANNING);
+							if( IsPressed( 0x3A))
+							{
+								short		ww;
+								Boolean		newVal;
+								
+								if( GetControlHilite( Mono[ i]) == false) newVal = true;
+								else newVal = false;
+								
+								for( ww = 0; ww < gCurrentTrack; ww++)
+								{
+									FillMonoControl( ww);
+									
+									if( newVal) curMusic->header->chanPan[ ww] = 32;
+									FillBarStereo( ww, curMusic->header->chanPan[ ww], MAX_PANNING);
+								}
+							}
+							else
+							{
+								FillMonoControl( i);
+								
+								curMusic->header->chanPan[ i] = 32;
+								FillBarStereo( i, curMusic->header->chanPan[ i], MAX_PANNING);
+							}
 						}
-					}
-				break;
-				
-				case 'V':
-				//	if( GetControlHilite( volCntl[ i]) == 0)
+						break;
+						
+					case 'V':
+						//	if( GetControlHilite( volCntl[ i]) == 0)
 					{
-					/*	if( !AppearanceManager)
-						{
-							 if( MyTrackControl( volCntl[ i], theEvent.where, NULL))
-							 {
-							 
-							 }
-						}
-						else*/
+						/*	if( !AppearanceManager)
+						 {
+						 if( MyTrackControl( volCntl[ i], theEvent.where, NULL))
+						 {
+						 
+						 }
+						 }
+						 else*/
 						{
 							while( Button())
 							{
 								WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 								
-							//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-    						//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
-    				
+								//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+								//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+								
 								DoGlobalNull();
 								SetPortDialogPort( whichDialog);
 								GetMouse( &Location);
@@ -2790,18 +2781,18 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 							DrawValueIndicator( -1, false, NULL);
 						}
 					}
-				break;
-				
-				case 'P':
-				//	if( GetControlHilite( pannCntl[ i]) == 0)
+						break;
+						
+					case 'P':
+						//	if( GetControlHilite( pannCntl[ i]) == 0)
 					{
-					/*	if( !AppearanceManager) 
-						{
-							if( MyTrackControl( pannCntl[ i], theEvent.where, NULL))
-							{
-								
-							}
-						}*/
+						/*	if( !AppearanceManager) 
+						 {
+						 if( MyTrackControl( pannCntl[ i], theEvent.where, NULL))
+						 {
+						 
+						 }
+						 }*/
 						if( GetControlHilite( Mono[ i]) == 0)
 						{
 							do
@@ -2844,116 +2835,117 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 								}
 								WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 								
-							//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-    						//		QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+								//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+								//		QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
 								
 							}while( Button());
 							
 							DrawValueIndicator( -1, false, NULL);
 						}
 					}
-				break;
-				
-				case 'E':
-				
-					SetControlVisibility( VSTOnOff[ i], true, false);
-					if( GetControlHilite( VSTOnOff[ i]) == 0 && MyTrackControl( VSTOnOff[ i], theEvent.where, NULL))
-					{
-						if( IsPressed( 0x3A))
-						{
-							short		ww, noActive;
-							Boolean		newVal;
-							
-							for( ww = 0, noActive = 0; ww < curMusic->header->numChn; ww++)
-							{
-								if( curMusic->header->chanBus[ ww].Active == true)
-								{
-									noActive++;
-								}
-							}
-							if( noActive <= 1 && curMusic->header->chanBus[ i].Active == true) newVal = true;
-							else newVal = false;
-							
-							for( ww = 0; ww < gCurrentTrack; ww++)
-							{
-								curMusic->header->chanBus[ ww].Active = newVal;
-							}
-							
-							if( newVal == false)
-							{
-								curMusic->header->chanBus[ i].Active = !newVal;
-							}
-						}
-						else
-						{
-							curMusic->header->chanBus[ i].Active = !curMusic->header->chanBus[ i].Active;
-						}
+						break;
 						
-						ResetAdaptators();
-					}
-				break;
-				
-				case 'O':
-					if( GetControlHilite( OnOff[ i]) == 0 && MyTrackControl( OnOff[ i], theEvent.where, NULL))
-					{
-						if( IsPressed( 0x3A))
+					case 'E':
+						
+						SetControlVisibility( VSTOnOff[ i], true, false);
+						if( GetControlHilite( VSTOnOff[ i]) == 0 && MyTrackControl( VSTOnOff[ i], theEvent.where, NULL))
 						{
-							short		ww, noActive;
-							Boolean		newVal;
-							
-							for( ww = 0, noActive = 0; ww < curMusic->header->numChn; ww++)
+							if( IsPressed( 0x3A))
 							{
-								if( MADDriver->Active[ ww] == true)
+								short		ww, noActive;
+								Boolean		newVal;
+								
+								for( ww = 0, noActive = 0; ww < curMusic->header->numChn; ww++)
 								{
-									noActive++;
+									if( curMusic->header->chanBus[ ww].Active == true)
+									{
+										noActive++;
+									}
+								}
+								if( noActive <= 1 && curMusic->header->chanBus[ i].Active == true) newVal = true;
+								else newVal = false;
+								
+								for( ww = 0; ww < gCurrentTrack; ww++)
+								{
+									curMusic->header->chanBus[ ww].Active = newVal;
+								}
+								
+								if( newVal == false)
+								{
+									curMusic->header->chanBus[ i].Active = !newVal;
 								}
 							}
-							if( noActive <= 1 && MADDriver->Active[ i] == true) newVal = true;
-							else newVal = false;
-							
-							for( ww = 0; ww < gCurrentTrack; ww++)
+							else
 							{
-								MADDriver->Active[ ww] = newVal;
-								
-								FillOnOffControl( ww, MADDriver->Active[ ww]);
-								FillBarControl(  ww, curMusic->header->chanVol[ ww], MAX_CHANVOL);
-								FillBarStereo( ww, curMusic->header->chanPan[ ww], MAX_PANNING);
+								curMusic->header->chanBus[ i].Active = !curMusic->header->chanBus[ i].Active;
 							}
 							
-							if( newVal == false)
+							ResetAdaptators();
+						}
+						break;
+						
+					case 'O':
+						if( GetControlHilite( OnOff[ i]) == 0 && MyTrackControl( OnOff[ i], theEvent.where, NULL))
+						{
+							if( IsPressed( 0x3A))
 							{
-								MADDriver->Active[ i] = !newVal;
+								short		ww, noActive;
+								Boolean		newVal;
+								
+								for( ww = 0, noActive = 0; ww < curMusic->header->numChn; ww++)
+								{
+									if( MADDriver->Active[ ww] == true)
+									{
+										noActive++;
+									}
+								}
+								if( noActive <= 1 && MADDriver->Active[ i] == true) newVal = true;
+								else newVal = false;
+								
+								for( ww = 0; ww < gCurrentTrack; ww++)
+								{
+									MADDriver->Active[ ww] = newVal;
+									
+									FillOnOffControl( ww, MADDriver->Active[ ww]);
+									FillBarControl(  ww, curMusic->header->chanVol[ ww], MAX_CHANVOL);
+									FillBarStereo( ww, curMusic->header->chanPan[ ww], MAX_PANNING);
+								}
+								
+								if( newVal == false)
+								{
+									MADDriver->Active[ i] = !newVal;
+									
+									FillOnOffControl( i, MADDriver->Active[ i]);
+									FillBarControl(  i, curMusic->header->chanVol[ i], MAX_CHANVOL);
+									FillBarStereo( i, curMusic->header->chanPan[ i], MAX_PANNING);
+								}
+							}
+							else
+							{
+								MADDriver->Active[ i] = !MADDriver->Active[ i];
 								
 								FillOnOffControl( i, MADDriver->Active[ i]);
 								FillBarControl(  i, curMusic->header->chanVol[ i], MAX_CHANVOL);
 								FillBarStereo( i, curMusic->header->chanPan[ i], MAX_PANNING);
 							}
-						}
-						else
-						{
-							MADDriver->Active[ i] = !MADDriver->Active[ i];
 							
-							FillOnOffControl( i, MADDriver->Active[ i]);
-							FillBarControl(  i, curMusic->header->chanVol[ i], MAX_CHANVOL);
-				 			FillBarStereo( i, curMusic->header->chanPan[ i], MAX_PANNING);
+							UPDATE_TrackActive();
 						}
-						
-						UPDATE_TrackActive();
-					}
-				break;
+						break;
+				}
+				
+				SetClip( saveClip);
+				DisposeRgn( saveClip);
 			}
-			
-			SetClip( saveClip);
-			DisposeRgn( saveClip);
-		}
-		break;
+			break;
 	}
 	
 	SetPort( savePort);
 }
 
 pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
-{	short				result, offset, i;
+{
+	short				result, offset, i;
 	long				theTime = TickCount();
 	unsigned short		count, index;
 	unsigned long		flavorFlags, attributes;

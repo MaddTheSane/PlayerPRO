@@ -216,7 +216,7 @@ EXP void OSType2Ptr( OSType type, Ptr str)
 	str[ 4] = 0;
 }
 
-EXP OSType Ptr2OSType( Ptr str)
+EXP OSType Ptr2OSType( char* str)
 {
 	short 	i;
 	OSType	type;

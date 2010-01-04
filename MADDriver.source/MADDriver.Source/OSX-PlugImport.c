@@ -120,6 +120,13 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 		if (InfoDictionaryType == arraytype) {
 			FillPlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, (CFArrayRef)OpaqueDictionaryType);
 		}
+		else if(InfoDictionaryType == stringtype)
+		{
+			CFMutableArrayRef UTIMutableArray = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
+			CFArrayAppendValue(UTIMutableArray, CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)InfoDictionaryType));
+			FillPlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, UTIMutableArray);
+			CFRelease(UTIMutableArray);
+		}
 		else goto badplug3;
 	}
 	

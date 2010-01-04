@@ -80,7 +80,7 @@ short	ret;
 
 short GetMaxYWave()
 {
-short	ret;
+	short	ret;
 
 	ret = 1 + GetControlValue( yScroll) + (WaveRect.bottom - WaveRect.top) / YSize;
 	if( ret > WaveDriverType.numChn) ret = WaveDriverType.numChn;
@@ -123,8 +123,8 @@ void FinishFrame()
 
 void SetWaveControl()
 {
-short	tt;
-Rect	caRect;
+	short	tt;
+	Rect	caRect;
 
 	// XScroll
 	
@@ -172,8 +172,8 @@ Rect	caRect;
 
 void CreateCurWaveRect()
 {
-short	temp = ReaderCopy - GetControlValue( xScroll);
-Rect	caRect;
+	short	temp = ReaderCopy - GetControlValue( xScroll);
+	Rect	caRect;
 
 	GetPortBounds( GetDialogPort( WaveDlog), &caRect);
 	
@@ -312,14 +312,14 @@ void DoNullWave(void)
 
 void DoGrowWave(void)
 {
-long		lSizeVH;
-GrafPtr		SavePort;
-Rect		caRect, temp, cellRect;
-Point		theCell = { 0, 0}, aPt = { 0, 0};
-short		tempA, tempB;
-Handle		itemHandle;
-short		itemType;
-BitMap		screenBits;
+	long		lSizeVH;
+	GrafPtr		SavePort;
+	Rect		caRect, temp, cellRect;
+	Point		theCell = { 0, 0}, aPt = { 0, 0};
+	short		tempA, tempB;
+	Handle		itemHandle;
+	short		itemType;
+	BitMap		screenBits;
 
 	GetPort( &SavePort);
  	SetPortDialogPort( WaveDlog);
@@ -372,7 +372,7 @@ BitMap		screenBits;
 
 void GetMinMax( long BS, long BE, Ptr ptr, long *mi, long *mx)
 {
-long	temp, minY, maxY;
+	long	temp, minY, maxY;
 
 	BS /= WaveDriverType.numChn;	BS *= WaveDriverType.numChn;
 	BE /= WaveDriverType.numChn;	BE *= WaveDriverType.numChn;
@@ -959,207 +959,207 @@ void  UpdateWaveWindow(DialogPtr GetSelection)
 void DoItemPressWave( short whichItem, DialogPtr whichDialog)
 {
 	Cell				theCell = {0,0};
-		long				tempLong;
- 		short				temp, temp2, i, bogus, ctlPart;
- 		Rect				caRect, cellRect, tempRect;
- 		GrafPtr				SavePort;
- 		Cmd					*theCommand;
- 		Boolean				DoubleClick;
- 		Point				myPt, lastCell;
- 		ControlHandle		theControl;
- 		ControlActionUPP	MyControlUPP;
- 		
- 		GetPort( &SavePort);
- 		SetPortDialogPort( WaveDlog);
- 		
-		if (theEvent.what == mouseDown)
+	long				tempLong;
+ 	short				temp, temp2, i, bogus, ctlPart;
+ 	Rect				caRect, cellRect, tempRect;
+ 	GrafPtr				SavePort;
+ 	Cmd					*theCommand;
+ 	Boolean				DoubleClick;
+ 	Point				myPt, lastCell;
+ 	ControlHandle		theControl;
+ 	ControlActionUPP	MyControlUPP;
+	
+ 	GetPort( &SavePort);
+ 	SetPortDialogPort( WaveDlog);
+	
+	if (theEvent.what == mouseDown)
+	{
+		myPt = theEvent.where;
+		GlobalToLocal( &myPt);
+		
+		DoubleClick = false;
+		
+		tempRect = WaveRect;
+		tempRect.left = 0;
+		tempRect.right = WaveRect.left;
+		
+		if (PtInRect( myPt, &tempRect))
 		{
-			myPt = theEvent.where;
-			GlobalToLocal( &myPt);
-						
-			DoubleClick = false;
+			GetMouse( &myPt);
 			
-			tempRect = WaveRect;
-			tempRect.left = 0;
-			tempRect.right = WaveRect.left;
+			myPt.v -= WaveRect.top;
+			myPt.v /= YSize;
+			myPt.v += GetControlValue( yScroll);
 			
-			if (PtInRect( myPt, &tempRect))
+			if( myPt.v < 0) myPt.v = 0;
+			if( myPt.v > curMusic->header->numChn)
+				myPt.v = curMusic->header->numChn;
+			
+			
+			if( (theEvent.modifiers & cmdKey) != 0)			// Mute
 			{
-				GetMouse( &myPt);
+				MADDriver->Active[ myPt.v] = !MADDriver->Active[ myPt.v];
 				
-				myPt.v -= WaveRect.top;
-				myPt.v /= YSize;
-				myPt.v += GetControlValue( yScroll);
+				UPDATE_TrackActive();
+			}
+			else if( (theEvent.modifiers & optionKey) != 0)	// Solo
+			{
+				short	noActive;
 				
-				if( myPt.v < 0) myPt.v = 0;
-				if( myPt.v > curMusic->header->numChn)
-					myPt.v = curMusic->header->numChn;
-						
-				
-				if( (theEvent.modifiers & cmdKey) != 0)			// Mute
+				for( i = 0, noActive = 0; i < curMusic->header->numChn; i++)
 				{
-					MADDriver->Active[ myPt.v] = !MADDriver->Active[ myPt.v];
-					
-					UPDATE_TrackActive();
-				}
-				else if( (theEvent.modifiers & optionKey) != 0)	// Solo
-				{
-					short	noActive;
-					
-					for( i = 0, noActive = 0; i < curMusic->header->numChn; i++)
+					if( MADDriver->Active[ i] == true)
 					{
-						if( MADDriver->Active[ i] == true)
-						{
-							noActive++;
-						}
+						noActive++;
+					}
+				}
+				
+				if( noActive <= 1 && MADDriver->Active[ myPt.v] == true)
+				{
+					for( i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
+				}
+				else
+				{
+					for( i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
+					MADDriver->Active[ myPt.v] = true;
+				}
+				
+				UPDATE_TrackActive();
+			}
+		}
+		
+		if (PtInRect( myPt, &WaveRect))
+		{
+			switch( mode)
+			{
+				case playM:
+				{
+					Boolean		IsPlay = MusicPlayActive;
+					Boolean		IsJump = MADDriver->JumpToNextPattern;
+					
+					MADDriver->JumpToNextPattern = false;
+					
+					GetMouse( &myPt);
+					myPt.h -= WaveRect.left;
+					myPt.h /= XSize;
+					myPt.h += GetControlValue( xScroll);
+					
+					if( myPt.h < 0) myPt.h = 0;
+					else if( myPt.h >= curMusic->partition[ CurrentPat]->header.size) myPt.h = curMusic->partition[ CurrentPat]->header.size - 1;
+					MADDriver->PartitionReader = myPt.h;
+					
+					if( IsPlay == false) DoPlay();
+					
+					while( Button())
+					{
+						DoGlobalNull();
+						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 					}
 					
-					if( noActive <= 1 && MADDriver->Active[ myPt.v] == true)
+					MADDriver->JumpToNextPattern = IsJump;
+					
+					if( IsPlay == false) DoPause();
+				}
+					break;
+					
+				case zoomM:
+					if( theEvent.modifiers & optionKey)
 					{
-						for( i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
+						if( XSize > 4)
+						{
+							EraseRect( &WaveRect);
+							XSize /= 2;
+							
+							UpdateWaveInfo();
+						}
 					}
 					else
 					{
-						for( i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
-						MADDriver->Active[ myPt.v] = true;
-					}
-					
-					UPDATE_TrackActive();
-				}
-			}
-			
-			if (PtInRect( myPt, &WaveRect))
-			{
-				switch( mode)
-				{
-					case playM:
-					{
-						Boolean		IsPlay = MusicPlayActive;
-						Boolean		IsJump = MADDriver->JumpToNextPattern;
-						
-						MADDriver->JumpToNextPattern = false;
-						
-						GetMouse( &myPt);
-						myPt.h -= WaveRect.left;
-						myPt.h /= XSize;
-						myPt.h += GetControlValue( xScroll);
-						
-						if( myPt.h < 0) myPt.h = 0;
-						else if( myPt.h >= curMusic->partition[ CurrentPat]->header.size) myPt.h = curMusic->partition[ CurrentPat]->header.size - 1;
-						MADDriver->PartitionReader = myPt.h;
-						
-						if( IsPlay == false) DoPlay();
-						
-						while( Button())
+						if( XSize < 128)
 						{
-							DoGlobalNull();
-							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-						}
-						
-						MADDriver->JumpToNextPattern = IsJump;
-						
-						if( IsPlay == false) DoPause();
-					}
-					break;
-					
-					case zoomM:
-							if( theEvent.modifiers & optionKey)
-							{
-								if( XSize > 4)
-								{
-									EraseRect( &WaveRect);
-									XSize /= 2;
-									
-									UpdateWaveInfo();
-								}
-							}
-							else
-							{
-								if( XSize < 128)
-								{
-									GetMouse( &myPt);
+							GetMouse( &myPt);
 							
-									myPt.h -= WaveRect.left;
-									myPt.h /= XSize;
-									myPt.h += GetControlValue( xScroll);
-									
-									EraseRect( &WaveRect);
-									XSize *= 2;
-									
-									SetWaveControl();
-									
-									GetPortBounds( GetDialogPort( WaveDlog), &caRect);
-									
-									myPt.h -= (caRect.right + 1 - WaveRect.left - 15)/(XSize*2);
-									if( myPt.h < 0) myPt.h = 0;
-									SetControlValue( xScroll, myPt.h);
-									
-									UpdateWaveInfo();
-								}
-							}
-					break;
-					
-					case noteM:
-						GetMouse( &myPt);
-						
-						myPt.h -= WaveRect.left;
-						myPt.h /= XSize;
-						myPt.h += GetControlValue( xScroll);
-						
-						if( myPt.h < 0) myPt.h = 0;
-						if( myPt.h > curMusic->partition[ CurrentPat]->header.size)
-							myPt.h = curMusic->partition[ CurrentPat]->header.size;
+							myPt.h -= WaveRect.left;
+							myPt.h /= XSize;
+							myPt.h += GetControlValue( xScroll);
 							
-						
-						
-						myPt.v -= WaveRect.top;
-						myPt.v /= YSize;
-						myPt.v += GetControlValue( yScroll);
-						
-						if( myPt.v < 0) myPt.v = 0;
-						if( myPt.v > curMusic->header->numChn)
-							myPt.v = curMusic->header->numChn;
-						
-						MADDriver->PartitionReader = myPt.h;
-						
-						ShowCurrentCmdNote();
-						SetCommandTrack( myPt.v, -1);
-					break;
-				}
-			}
-			else
-			{
-			//	ctlPart = FindControl( myPt, GetDialogWindow( whichDialog), &theControl);
-				
-				theControl = NULL;
-				if( TestControl(  xScroll, myPt)) theControl = xScroll;
-				if( TestControl(  yScroll, myPt)) theControl = yScroll;
-				
-				if( theControl == xScroll || theControl == yScroll)
-				{
-				/*	if( ctlPart == kControlIndicatorPart)
-					{
-						bogus = TrackControl( theControl, myPt, NULL);
-						if( bogus != 0)
-						{
+							EraseRect( &WaveRect);
+							XSize *= 2;
+							
+							SetWaveControl();
+							
 							GetPortBounds( GetDialogPort( WaveDlog), &caRect);
-							InvalWindowRect( GetDialogWindow( WaveDlog), &caRect);
-							CreateCurWaveRect();
 							
-							UpdateWaveWindow( WaveDlog);
+							myPt.h -= (caRect.right + 1 - WaveRect.left - 15)/(XSize*2);
+							if( myPt.h < 0) myPt.h = 0;
+							SetControlValue( xScroll, myPt.h);
+							
+							UpdateWaveInfo();
 						}
 					}
-					else if( ctlPart > 0)*/
-					{
-						MyControlUPP = NewControlActionUPP( actionProcWave);
-						gThumbPrev = GetControlValue( theControl);
-						TrackControl(theControl, myPt, MyControlUPP);
-						DisposeControlActionUPP( MyControlUPP);
-					}
+					break;
+					
+				case noteM:
+					GetMouse( &myPt);
+					
+					myPt.h -= WaveRect.left;
+					myPt.h /= XSize;
+					myPt.h += GetControlValue( xScroll);
+					
+					if( myPt.h < 0) myPt.h = 0;
+					if( myPt.h > curMusic->partition[ CurrentPat]->header.size)
+						myPt.h = curMusic->partition[ CurrentPat]->header.size;
+					
+					
+					
+					myPt.v -= WaveRect.top;
+					myPt.v /= YSize;
+					myPt.v += GetControlValue( yScroll);
+					
+					if( myPt.v < 0) myPt.v = 0;
+					if( myPt.v > curMusic->header->numChn)
+						myPt.v = curMusic->header->numChn;
+					
+					MADDriver->PartitionReader = myPt.h;
+					
+					ShowCurrentCmdNote();
+					SetCommandTrack( myPt.v, -1);
+					break;
+			}
+		}
+		else
+		{
+			//	ctlPart = FindControl( myPt, GetDialogWindow( whichDialog), &theControl);
+			
+			theControl = NULL;
+			if( TestControl(  xScroll, myPt)) theControl = xScroll;
+			if( TestControl(  yScroll, myPt)) theControl = yScroll;
+			
+			if( theControl == xScroll || theControl == yScroll)
+			{
+				/*	if( ctlPart == kControlIndicatorPart)
+				 {
+				 bogus = TrackControl( theControl, myPt, NULL);
+				 if( bogus != 0)
+				 {
+				 GetPortBounds( GetDialogPort( WaveDlog), &caRect);
+				 InvalWindowRect( GetDialogWindow( WaveDlog), &caRect);
+				 CreateCurWaveRect();
+				 
+				 UpdateWaveWindow( WaveDlog);
+				 }
+				 }
+				 else if( ctlPart > 0)*/
+				{
+					MyControlUPP = NewControlActionUPP( actionProcWave);
+					gThumbPrev = GetControlValue( theControl);
+					TrackControl(theControl, myPt, MyControlUPP);
+					DisposeControlActionUPP( MyControlUPP);
 				}
 			}
-		}   						/* End of mouseDown */
-		
+		}
+	}   						/* End of mouseDown */
+	
 	switch( whichItem)
 	{
 		case 7:
@@ -1170,12 +1170,12 @@ void DoItemPressWave( short whichItem, DialogPtr whichDialog)
 			HiliteControl( noteBut, 0);
 			
 			switch( whichItem)
-			{
-				case 7:		mode = playM;	HiliteControl( playBut, kControlButtonPart);	break;
-				case 5:		mode = noteM;	HiliteControl( noteBut, kControlButtonPart);	break;
-				case 6:		mode = zoomM;	HiliteControl( zoomBut, kControlButtonPart);	break;
-			}
-			 
+		{
+			case 7:		mode = playM;	HiliteControl( playBut, kControlButtonPart);	break;
+			case 5:		mode = noteM;	HiliteControl( noteBut, kControlButtonPart);	break;
+			case 6:		mode = zoomM;	HiliteControl( zoomBut, kControlButtonPart);	break;
+		}
+			
 			if( whichItem == 6)
 			{
 				if( TickCount() - doubleClick <= GetDblTime())
@@ -1186,8 +1186,8 @@ void DoItemPressWave( short whichItem, DialogPtr whichDialog)
 				}
 				doubleClick = TickCount();
 			}
-		break;
-		
+			break;
+			
 		case 10:
 		{
 			Str255	aStr;
@@ -1195,9 +1195,9 @@ void DoItemPressWave( short whichItem, DialogPtr whichDialog)
 			short 	itemType, curSelec;
 			Handle	itemHandle;
 			Rect	tempRect;
-		
 			
-		
+			
+			
 			InsertMenu( OsciHMenu, hierMenu);
 			GetDialogItem( WaveDlog, whichItem, &itemType, &itemHandle, &tempRect);
 			
@@ -1216,9 +1216,9 @@ void DoItemPressWave( short whichItem, DialogPtr whichDialog)
 			SetItemMark( OsciHMenu, curSelec + 1, 0xa5);
 			
 			mresult = PopUpMenuSelect(	OsciHMenu,
-										myPt.v,
-										myPt.h,
-										curSelec + 1);
+									  myPt.v,
+									  myPt.h,
+									  curSelec + 1);
 			
 			SetItemMark( OsciHMenu, curSelec + 1, 0);
 			
@@ -1242,24 +1242,24 @@ void DoItemPressWave( short whichItem, DialogPtr whichDialog)
 			}
 			DeleteMenu( GetMenuID( OsciHMenu));
 		}
-		break;
+			break;
 	}
 	SetPort( SavePort);
 }
 
 pascal void actionProcWave(ControlHandle theControl, short ctlPart)
 {
-long			lRefCon;
-short			maxValue, minValue, curVal, XX, sVal, itemType;
-RgnHandle		aRgn;
-Handle			itemHandle;
+	long			lRefCon;
+	short			maxValue, minValue, curVal, XX, sVal, itemType;
+	RgnHandle		aRgn;
+	Handle			itemHandle;
 
-if( ctlPart <= 0) return;
+	if( ctlPart <= 0) return;
 
-lRefCon = GetControlReference( theControl);
-maxValue = GetControlMaximum( theControl);
-minValue = GetControlMinimum( theControl);
-curVal = sVal = GetControlValue( theControl);
+	lRefCon = GetControlReference( theControl);
+	maxValue = GetControlMaximum( theControl);
+	minValue = GetControlMinimum( theControl);
+	curVal = sVal = GetControlValue( theControl);
 
 	switch( ctlPart)
 	{
@@ -1491,8 +1491,8 @@ void CreateWaveWindow(void)
 
 void CloseWave(void)
 {
-Point	Start;
-Rect	caRect;
+	Point	Start;
+	Rect	caRect;
 
 	if( WaveDlog != NULL)
 	{

@@ -358,12 +358,12 @@ void SaveUndo( short UndoType, short ID, Str255 textMenu)
 
 void DoUndo(void)
 {
-Ptr					myTempUndo, myTempInstru, myTempSets;
-long				myTempSize, tempL, size;
-InstrData			myTempFid;
-Str255				myStr;
-short				i, x;
-Boolean				IsReading;
+	Ptr				myTempUndo, myTempInstru, myTempSets;
+	long			myTempSize, tempL, size;
+	InstrData		myTempFid;
+	Str255			myStr;
+	short			i, x;
+	Boolean			IsReading;
 
 	if( myUndo.UndoType == 0)
 	{
@@ -398,7 +398,7 @@ Boolean				IsReading;
 				
 				UPDATE_Pattern();
 			}
-		break;
+			break;
 		
 		case USample:
 			// ** REDO **
@@ -483,7 +483,7 @@ Boolean				IsReading;
 			UpdateSampleWindows();
 			UpdateInstruMenu();
 			UpdateSampleWindows();
-		break;
+			break;
 		
 		case UAllSamples:
 		case UAllPatterns:
@@ -650,11 +650,11 @@ Boolean				IsReading;
 			}
 			
 			UPDATE_Total();
-		break;
+			break;
 		
 		default:
 			MyDebugStr( __LINE__, __FILE__, "Unknown UNDO");
-		break;
+			break;
 	}
 	
 	MADDriver->Reading = IsReading;
