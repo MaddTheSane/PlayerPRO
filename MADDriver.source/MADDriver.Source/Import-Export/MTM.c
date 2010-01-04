@@ -332,13 +332,11 @@ static OSErr TestFile( MTMDef *myFile)
 
 OSErr mainMTM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
-	OSErr	myErr;
+	OSErr	myErr = noErr;
 	Ptr		AlienFile;
 	short	iFileRefI;
 	long	sndSize;
 		
-	myErr = noErr;
-	
 	switch( order)
 	{
 		case 'IMPL':

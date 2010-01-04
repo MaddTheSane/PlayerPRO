@@ -150,7 +150,11 @@ void InitPlug(void)
 				tempPlugRef = CFBundleGetPlugIn(tempBundleRef);
 				tempMADPlug = PPFilterLoadPlug(tempPlugRef);
 				if (tempMADPlug) {
-					if( tPlug > MAXFILTERSPLUGS) MyDebugStr( __LINE__, __FILE__, "Too many plugs");
+					if( tPlug > MAXFILTERSPLUGS) 
+					{
+						MyDebugStr( __LINE__, __FILE__, "Too many plugs");
+						break;
+					}
 					
 #pragma mark This is where we add the plug to the plug library.
 					short		resFileNum = CFBundleOpenBundleResourceMap(tempBundleRef);
@@ -170,8 +174,11 @@ void InitPlug(void)
 				}
 			}
 		}
-	}	
 		
+		CFRelease(somePlugs);
+	}	
+	CFRelease(PlugLocsDigital);
+	
 	InitSampleMenu();
 }
 

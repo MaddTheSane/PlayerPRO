@@ -303,8 +303,9 @@ void InitPPINPlug(void)
 				}
 			}
 		}
+		CFRelease(somePlugs);
 	}
-	
+	CFRelease(PlugLocsDigital);
 	
 	InitPPINMenu();
 }
@@ -872,7 +873,7 @@ static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *TheP
 	else if(InfoDictionaryType == stringtype)
 	{
 		CFMutableArrayRef UTIMutableArray = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
-		CFArrayAppendValue(UTIMutableArray, CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)InfoDictionaryType));
+		CFArrayAppendValue(UTIMutableArray, (CFStringRef)InfoDictionaryType);
 		ThePPINPlugA->UTITypes = CFArrayCreateCopy(kCFAllocatorDefault, UTIMutableArray);
 		CFRelease(UTIMutableArray);
 	}
@@ -898,7 +899,8 @@ static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *TheP
 	else if(InfoDictionaryType == stringtype)
 	{
 		CFMutableStringRef tempCFStr = CFStringCreateMutableCopy(kCFAllocatorDefault, 25, (CFStringRef)InfoDictionaryType);
-		CFStringLowercase(tempCFStr, CFLocaleCopyCurrent());
+		CFLocaleRef theLoc = CFLocaleCopyCurrent();
+		CFStringLowercase(tempCFStr, theLoc);
 		if (CFEqual(tempCFStr, CFSTR("yes")) || CFEqual(tempCFStr, CFSTR("1"))) {
 			ThePPINPlugA->isSamp = TRUE;
 		}
@@ -906,8 +908,9 @@ static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *TheP
 			ThePPINPlugA->isSamp = FALSE;
 		}
 		CFRelease(tempCFStr);
+		CFRelease(theLoc);
 	}
-	else goto badplug3;
+	else goto badplug4;
 	
 	
 	OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugTypeKey);
@@ -915,7 +918,7 @@ static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *TheP
 	if (InfoDictionaryType == stringtype) {
 		CFStringToOSType((CFStringRef)OpaqueDictionaryType, &ThePPINPlugA->type);
 	}
-	else goto badplug3;
+	else goto badplug4;
 
 	
 	
@@ -924,7 +927,7 @@ static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *TheP
 	if (InfoDictionaryType == stringtype) {
 		CFStringToOSType((CFStringRef)OpaqueDictionaryType, &ThePPINPlugA->mode);
 	}
-	else goto badplug3;
+	else goto badplug4;
 	
 	ThePPINPlugA->xxxx = tempPPINPlug;
 	ThePPINPlugA->file = tempBundle;
@@ -935,6 +938,8 @@ static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *TheP
 	
 	return;
 	
+badplug4:
+	CFRelease(ThePPINPlugA->UTITypes);
 badplug3:
 	CFRelease(ThePPINPlugA->MenuName);
 badplug2:

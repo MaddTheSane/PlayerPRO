@@ -235,7 +235,7 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	OSErr		myErr;
 	short		iFileRefI, i;
 	Handle		myRes;
-	Boolean		hasToClose;
+	Boolean		hasToClose = FALSE;
 	FSSpec		AlienFileFSSpec;
 	
 	HGetVol( NULL, &AlienFileFSSpec.vRefNum, &AlienFileFSSpec.parID);

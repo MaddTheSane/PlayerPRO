@@ -323,7 +323,7 @@ OSErr mainXI(	OSType		order,						// Order to execute
 		
 		case 'EXPL':
 			myErr = FSpCreate( AlienFileFSSpec, 'SNPL', 'XI  ', smCurrentScript);
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			if(myErr == noErr) myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			
 			if( myErr == noErr)
 			{

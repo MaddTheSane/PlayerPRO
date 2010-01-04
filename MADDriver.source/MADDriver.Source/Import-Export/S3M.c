@@ -1258,7 +1258,7 @@ OSErr mainS3M( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					
-					myErr = TestS3MFile( AlienFile);
+					if(myErr == noErr) myErr = TestS3MFile( AlienFile);
 					
 					DisposePtr( AlienFile);	AlienFile = NULL;
 				}

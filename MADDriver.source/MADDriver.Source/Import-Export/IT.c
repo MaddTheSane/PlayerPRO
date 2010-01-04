@@ -1455,7 +1455,7 @@ OSErr mainIT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *inf
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					
-					myErr = TestITFile( AlienFile);
+					if(myErr == noErr) myErr = TestITFile( AlienFile);
 					
 					DisposePtr( AlienFile);	AlienFile = NULL;
 				}

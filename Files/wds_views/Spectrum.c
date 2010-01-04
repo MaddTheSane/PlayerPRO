@@ -157,11 +157,11 @@ void FillInterTextSpectrum( Rect *tempRect, short i)
 	switch( OsciType)
 	{
 		case OutPutAudio:
-			NumToString( (defV * (MADDriver->DriverSettings.outPutRate / 65535) / 1000), bStr);
+			NumToString( (defV * FixedToInt(MADDriver->DriverSettings.outPutRate) / 1000), bStr);
 		break;
 		
 		case InPutAudio:
-			NumToString( (defV * ( rate22khz/ 65535) / 1000), bStr);			//SoundInputRate
+			NumToString( (defV * FixedToInt( rate22khz) / 1000), bStr);			//SoundInputRate
 		break;
 	}
 	pStrcat( aStr, bStr);

@@ -254,25 +254,15 @@ OSErr mainMix( 	sData					*theData,
 				short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long				lCntOrErr;
-	Handle				aHandle;
+	Handle				aHandle = NULL;
 	OSErr				anErr;
 	ScrapRef			scrap;
 	ScrapFlavorFlags	flags;
-	
-	aHandle = nil;
-	
-#if TARGET_API_MAC_CARBON
 	
 	lCntOrErr = 0;
 	GetCurrentScrap( &scrap);
 	anErr = GetScrapFlavorFlags( scrap, soundListRsrc, &flags);
 	if( anErr == noErr) GetScrapFlavorSize( scrap, soundListRsrc, &lCntOrErr);	
-	
-#else
-	
-	lCntOrErr = GetScrap( NULL, soundListRsrc, &scrapOffset);
-	
-#endif
 	
 	if ( lCntOrErr > 0) {
 		Str255	s1, s2 = "\pUntitled";
@@ -281,14 +271,9 @@ OSErr mainMix( 	sData					*theData,
 		s1[0] = strlen(theData->name);
 		BlockMove(theData->name,&s1[1],s1[0]);
 		
-#if TARGET_API_MAC_CARBON
 		HLock( aHandle);
 		GetScrapFlavorData( scrap, 'STR ', &lCntOrErr, *aHandle);
 		HUnlock( aHandle);
-#else
-		if (GetScrap(aHandle,'STR ',&scrapOffset) > 0)
-			BlockMove(*aHandle,&s2,**aHandle + 1);
-#endif
 		
 		gp1 = 50;
 		gp2 = 50;
@@ -300,13 +285,9 @@ OSErr mainMix( 	sData					*theData,
 			
 			
 			
-#if TARGET_API_MAC_CARBON
 			HLock( aHandle);
 			GetScrapFlavorData( scrap, soundListRsrc, &lCntOrErr, *aHandle);
 			HUnlock( aHandle);
-#else
-			GetScrap(aHandle,soundListRsrc,&scrapOffset);	//get the sound
-#endif
 			
 			HLockHi(aHandle);
 			
@@ -350,7 +331,9 @@ OSErr mainMix( 	sData					*theData,
 						wclipPtr++;
 					}
 					
-					peak = ((long)0x80 * 0x10000) / peak;
+					if (peak) {
+						peak = ((long)0x80 * 0x10000) / peak;
+					}
 					
 					worgPtr = theData->data; wclipPtr = clipPtr - SelectionStart; wresultPtr = resultPtr;
 					for( i = 0; i < resultLength; i++) // one more time, all together, now !!!

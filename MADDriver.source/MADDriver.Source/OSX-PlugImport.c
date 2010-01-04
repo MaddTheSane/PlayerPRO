@@ -164,7 +164,7 @@ badplug:
 
 CFMutableArrayRef GetDefaultPluginFolderLocations()
 {
-	CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 20, &kCFTypeArrayCallBacks);
+	CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 8, &kCFTypeArrayCallBacks);
 	CFURLRef temp1;
 	//Application Main Bundle
 	temp1 = CFBundleCopyBuiltInPlugInsURL(CFBundleGetMainBundle());
@@ -183,7 +183,6 @@ CFMutableArrayRef GetDefaultPluginFolderLocations()
 	CFArrayAppendValue(PlugFolds, temp1);
 	CFRelease(temp1);
 	temp1 = NULL;
-	
 	
 	return PlugFolds;
 }
@@ -316,7 +315,6 @@ void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 		//TODO: Add Framework plug-in paths. I'm thankful I made it a mutable data type.
 	}
 #endif
-	CFRetain(PlugLocations);
 	PlugLocNums	= CFArrayGetCount( PlugLocations );
 	
 	for (i=0; i < PlugLocNums; i++) {
@@ -338,7 +336,6 @@ void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 		}
 		CFRelease(somePlugs);
 	}
-	CFRelease(PlugLocations);
 	CFRelease(PlugLocations);
 	PlugLocations = NULL;
 }

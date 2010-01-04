@@ -106,7 +106,9 @@ void InitPPDGPlug(void)
 				}
 			}
 		}
+		CFRelease(somePlugs);
 	}
+	CFRelease(PlugLocsDigital);
 	
 	InitPPDGMenu();
 }

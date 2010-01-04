@@ -565,14 +565,12 @@ static OSErr ExtractMEDInfo( PPInfoRec *info, Ptr theMED)
 
 OSErr mainMED( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
-	OSErr	myErr;
+	OSErr	myErr = noErr;
 	Ptr		AlienFile;
 	short	vRefNum;
 	UNFILE	iFileRefI;
 	long	dirID, sndSize;
 		
-	myErr = noErr;
-
 	MED_Init( init);
 
 	switch( order)

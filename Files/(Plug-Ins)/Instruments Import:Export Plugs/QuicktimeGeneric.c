@@ -71,7 +71,7 @@ OSErr mainQTInst(OSType					order,						// Order to execute
 				short				numChan;
 				
 				myErr = FSpCreate( AlienFileFSSpec, 'TVOD', 'AIFF', smCurrentScript);
-				myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+				if(myErr == noErr) myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
 				
 				if( myErr == noErr)
 				{
@@ -89,7 +89,7 @@ OSErr mainQTInst(OSType					order,						// Order to execute
 												inOutBytes,
 												0);
 					
-					myErr = FSWrite( iFileRefI, &inOutBytes, curData->data);
+					if(myErr == noErr) myErr = FSWrite( iFileRefI, &inOutBytes, curData->data);
 					FSClose( iFileRefI);
 				}
 			}

@@ -42,7 +42,7 @@ OSErr TestWAV( PCMWavePtr CC)
 
 Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo)
 {
-	PCMWavePtr	WAVERsrc;
+	PCMWavePtr	WAVERsrc = NULL;
 	short		fRef;//, tempResRef, x;
 	long		fSize;
 	//int			theHit;

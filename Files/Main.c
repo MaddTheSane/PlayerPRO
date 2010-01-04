@@ -19,7 +19,6 @@
 #include "PPPrivate.h"
 #include <CoreMIDI/CoreMIDI.h>
 
-static void CarbonEventLoop( void);
 void DoChangeLoop( void);
 void VSTEditorDoNull( void);
 void VSTEditorDoItemPress( short itemHit, DialogPtr aDia);
@@ -1717,15 +1716,6 @@ int main( int argc, char* argv[])
 	/**********************************/
 	
 	
-	/*if( FSpOpenDF( "\pHelp PP", 0, &itemType) == noErr)
-	 {
-	 FSClose( itemType);
-	 HelpAvalaible = true;
-	 
-	 iHelpPP = FSpOpenResFile( "\pHelp PP");
-	 if( iHelpPP == -1) HelpAvalaible = false;
-	 }
-	 else HelpAvalaible = false;*/
 	HelpAvalaible = true;
 	
 	/**********************************/
@@ -1946,8 +1936,10 @@ OnRefaitEvent:
 End:;
 	
 	ExitMovies();
+	MADDisposeLibrary(gMADLib);
 	
 	//DePatchMyDisposePtr( &);
+	return EXIT_SUCCESS;
 }
 
 static	Boolean 		PressInDialog;
@@ -2505,11 +2497,11 @@ void EventLoop2(void)
 			
 			case osEvt:
 				DoOSEvent( &theEvent, false);
-			break;
+				break;
 			
 			case kHighLevelEvent:
 				AEProcessAppleEvent (&theEvent);
-			break;
+				break;
 			
 			case keyUp:
 			if( thePrefs.MacKeyBoard)
@@ -2580,19 +2572,17 @@ void EventLoop2(void)
 			
 			case mouseDown:
 				DoMouseDown(theEvent);
-			break; 
+				break; 
 						
 			case updateEvt:
-			{
 				DoUpdateEvent( &theEvent);
-			}
-			break;
+				break;
 			
 			case nullEvent:
 				mainSystemDrag = true;
 				if( !thePrefs.ThreadUse) DoGlobalNull();
 				else YieldToAnyThread();
-			break;
+				break;
 			
 			case keyDown:
 			case autoKey:
@@ -2695,7 +2685,7 @@ void EventLoop2(void)
 					}
 					else DoNullInstrument();
 				}
-			break;
+				break;
 		}
 }
 
@@ -2759,11 +2749,12 @@ pascal OSStatus CarbonWindowEventHandler(EventHandlerCallRef myHandler, EventRef
     return result;
 }
 
+#if 0
 static void CarbonEventLoop( void)
 {
-
 	RunApplicationEventLoop();
 }
+#endif
 
 pascal short MyGetDirHook(short item, DialogPtr dPtr)
 {

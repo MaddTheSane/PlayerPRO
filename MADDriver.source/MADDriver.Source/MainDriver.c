@@ -1620,7 +1620,11 @@ OSErr MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV)
 	curV -= minV;
 	maxV -= minV;
 	
-	dstTime			= (curV * fullTime)/maxV; //TODO: sometimes throws arithmetic error, AKA divide by zero
+	if (maxV) {
+		dstTime		= (curV * fullTime)/maxV;
+	}
+	else
+	dstTime			= 0;
 	timeResult		= 0;
 	time			= 0;
 	speed			= MDriver->curMusic->header->speed;

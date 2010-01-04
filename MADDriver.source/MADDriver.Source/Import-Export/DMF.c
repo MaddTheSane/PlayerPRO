@@ -658,14 +658,12 @@ static OSErr TestITFile( Ptr AlienFile)
 
 OSErr mainDMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
-	OSErr	myErr;
+	OSErr	myErr = noErr;
 	Ptr		AlienFile;
 	short	vRefNum;
 	UNFILE	iFileRefI;
 	long	dirID, sndSize;
 	
-	myErr = noErr;
-
 	switch( order)
 	{
 		case 'IMPL':
@@ -715,7 +713,7 @@ OSErr mainDMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
-					myErr = TestITFile( AlienFile);
+					if(myErr == noErr) myErr = TestITFile( AlienFile);
 					
 					DisposePtr( AlienFile);	AlienFile = NULL;
 				}

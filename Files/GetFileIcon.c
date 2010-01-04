@@ -159,7 +159,7 @@ OSErr	GetNormalFileIcon(
 /* --> */	IconSelectorValue	iconSelector,
 /* <-- */	Handle				*theSuite)
 {
-	OSErr			err;
+	OSErr			err = noErr;
 	long			dataSize;
 	Handle			iconData;
 	Byte			iconType;
