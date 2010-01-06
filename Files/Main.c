@@ -4191,7 +4191,7 @@ void MenuBarInit( void)
 	NewSoundMenu		= 	GetMenu( 154);
 	
 	if( !QuicktimeInstruAvailable) DisableMenuItem( NewSoundMenu, 3);
-	if( ToneGenerator == -1) DisableMenuItem( NewSoundMenu, 1);		
+	if( ToneGenerator == -1) DisableMenuItem( NewSoundMenu, 2);		
 	
 	InsertMenu( NewSoundMenu, hierMenu);
 	

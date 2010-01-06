@@ -157,20 +157,39 @@ void InitPlug(void)
 					}
 					
 #pragma mark This is where we add the plug to the plug library.
-					short		resFileNum = CFBundleOpenBundleResourceMap(tempBundleRef);
 					CFTypeRef	OpaqueDictionaryType = NULL;
-					
-					ThePlug[tPlug].PlugData = tempMADPlug;
-					ThePlug[tPlug].file = tempBundleRef;
-					CFRetain(ThePlug[tPlug].file);
-					OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundleRef, kMadPlugMenuNameKey);
+					FilterInfo	*curPlug = &(ThePlug[tPlug]);
+					curPlug->PlugData = tempMADPlug;
+					curPlug->file = tempBundleRef;
+					CFRetain(curPlug->file);
+					OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(curPlug->file, kMadPlugMenuNameKey);
 					if(CFGetTypeID(OpaqueDictionaryType) == CFStringGetTypeID())
-						ThePlug[tPlug].MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
+						curPlug->MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
 					
-					ThePlug[tPlug].Type = 'PLug';
-					
-					CFBundleCloseBundleResourceMap(tempBundleRef, resFileNum);
+					curPlug->Type = 'PLug';
 					tPlug++;
+					if (ToneGenerator == -1) {
+						CFArrayRef factories = CFPlugInFindFactoriesForPlugInTypeInPlugIn(kPlayerPROFiltersPlugTypeID, curPlug->file );
+						
+						if ( factories != NULL )
+						{
+							CFIndex	factoryCount, index;
+							
+							factoryCount	= CFArrayGetCount( factories );
+							if ( factoryCount > 0 )
+							{
+								for ( index = 0 ; (index < factoryCount) ; index++ )
+								{
+									CFUUIDRef	factoryID;
+									factoryID = (CFUUIDRef) CFArrayGetValueAtIndex( factories, index );
+									if (CFEqual(factoryID, CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x25, 0xFA, 0x16, 0xEC, 0x75, 0xFF, 0x45, 0x14, 0x9C, 0x84, 0x72, 0x02, 0x36, 0x00, 0x44, 0xB9) /*Tone Generator UUID*/)) {
+										ToneGenerator = tPlug;
+									}
+								}
+							}
+						}
+						CFRelease(factories);
+					}
 				}
 			}
 		}
