@@ -904,12 +904,10 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 
 OSErr mainUMX( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
-	OSErr		myErr;
+	OSErr		myErr = noErr;
 	Ptr			AlienFile;
 	long		sndSize;
 	UNFILE		iFileRefI;
-	
-	myErr = noErr;
 	
 	switch( order)
 	{

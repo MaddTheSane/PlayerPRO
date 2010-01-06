@@ -20,14 +20,14 @@
 	<false/>
 	<key>CFPlugInFactories</key>
 	<dict>
-		<key>D54EE3CC-B94C-4245-9E82-2F1D65C0009D</key>
-		<string>PATFactory</string>
+		<key>26E9A321-0E15-48E3-8A94-062C46FDB875</key>
+		<string>QTInstFactory</string>
 	</dict>
 	<key>CFPlugInTypes</key>
 	<dict>
 		<key>0B3A4673-9118-467E-A496-846F5E1C9276</key>
 		<array>
-			<string>D54EE3CC-B94C-4245-9E82-2F1D65C0009D</string>
+			<string>26E9A321-0E15-48E3-8A94-062C46FDB875</string>
 		</array>
 	</dict>
 	<key>CSResourcesFileMapped</key>
@@ -35,16 +35,32 @@
 	<key>MADPlugAuthorName</key>
 	<string>Copyright 99 Antoine ROSSET</string>
 	<key>MADPlugIsSample</key>
-	<false/>
+	<true/>
 	<key>MADPlugMenuName</key>
-	<string>PAT</string>
+	<string>Quicktime Movie</string>
 	<key>MADPlugMode</key>
-	<string>IMPL</string>
+	<string>EXIM</string>
 	<key>MADPlugType</key>
-	<string>PAT </string>
+	<string>MooV</string>
 	<key>MADPlugUTITypes</key>
 	<array>
-		<string>net.sourceforge.playerpro.pat</string>
+		<string>com.apple.quicktime-movie</string>
+		<string>public.mpeg</string>
+		<string>public.mpeg-2-video</string>
+		<string>public.mpeg-4</string>
+		<string>public.avi</string>
+		<string>public.audio</string>
+		<string>public.mpeg-4-audio</string>
+		<string>com.apple.protected-mpeg-4-audio</string>
+		<string>public.mp3</string>
+		<string>public.ulaw-audio</string>
+		<string>public.au-audio</string>
+		<string>public.aifc-audio</string>
+		<string>public.aiff-audio</string>
+		<string>com.apple.coreaudio-format</string>
+		<string>org.3gpp.adaptive-multi-rate-audio</string>
+		<string>com.digidesign.sd2-audio</string>
+		<string>com.microsoft.waveform-audio</string>
 	</array>
 </dict>
 </plist>

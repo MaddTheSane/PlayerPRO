@@ -445,12 +445,10 @@ static OSErr TestOKTAFile( Ptr AlienFile)
 
 OSErr mainOKTA( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
-	OSErr	myErr;
+	OSErr	myErr = noErr;
 	Ptr		AlienFile;
 	long	sndSize;
 	UNFILE	iFileRefI;
-	
-	myErr = noErr;
 	
 	switch( order)
 	{
@@ -497,7 +495,7 @@ OSErr mainOKTA( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 				else
 				{
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					myErr = TestOKTAFile( AlienFile);
+					if(myErr == noErr) myErr = TestOKTAFile( AlienFile);
 					
 					DisposePtr( AlienFile);	AlienFile = NULL;
 				}

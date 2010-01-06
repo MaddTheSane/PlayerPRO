@@ -261,10 +261,10 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
 {
 	SixSixNine	*the669 = (SixSixNine*) AlienFile;
-	long			PatternSize;
-	short		i;
-	short		maxInstru;
-	short		tracksNo;
+//	long			PatternSize;
+//	short		i;
+//	short		maxInstru;
+//	short		tracksNo;
 	
 	/*** Signature ***/
 	

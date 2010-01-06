@@ -1,1 +1,3 @@
-/* PrintTEHandle.c */void PrintText(TEHandle);
+
+/* PrintTEHandle.c */
+void PrintText(TEHandle);

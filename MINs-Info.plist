@@ -32,5 +32,19 @@
 	</dict>
 	<key>CSResourcesFileMapped</key>
 	<string>yes</string>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>net.sourceforge.playerpro.mins</string>
+	</array>
+	<key>MADPlugMode</key>
+	<string>EXIM</string>
+	<key>MADPlugMenuName</key>
+	<string>PP Instrument</string>
+	<key>MADPlugType</key>
+	<string>MINs</string>
+	<key>MADPlugAuthorName</key>
+	<string>Copyright 2000 Antoine ROSSET</string>
+	<key>MADPlugIsSample</key>
+	<false/>
 </dict>
 </plist>

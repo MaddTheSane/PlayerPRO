@@ -7,7 +7,7 @@ resource 'STR#' (1000) {
 		/* [2] */
 		"IMPL",
 		/* [3] */
-		"DMF ",
+		"DMF",
 		/* [4] */
 		"Written by A.ROSSET 96"
 	}

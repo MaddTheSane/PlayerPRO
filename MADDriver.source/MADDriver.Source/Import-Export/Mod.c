@@ -191,12 +191,12 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
 	};
 	/**** Variables for MAD File *****/
-	Cmd							*aCmd;
+	Cmd					*aCmd;
 
 	/**** Variables for MOD File *****/
-	MODDef 					*theMOD;
+	MODDef 				*theMOD;
 	struct MODPat		*PatInt;
-	MODDef					*MODInt;
+	MODDef				*MODInt;
 	struct MODCom		*n;
 	/********************************/
 	
@@ -710,7 +710,7 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 		{
 			for(z=0; z < theMAD->header->numChn; z++)
 			{
-				short		note;
+//				short		note;
 				
 				if( x < theMAD->partition[ i]->header.size)
 				{

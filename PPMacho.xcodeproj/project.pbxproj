@@ -13,6 +13,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				55E8997D10F17CE5004EB52B /* PBXTargetDependency */,
 				551FEB7910E7282700EDF2F1 /* PBXTargetDependency */,
 				551FEB7710E7282700EDF2F1 /* PBXTargetDependency */,
 				55151F8410DEDC0F0054ABC4 /* PBXTargetDependency */,
@@ -162,7 +163,6 @@
 		5518109310C35A7500ADA9F4 /* Example.c in Sources */ = {isa = PBXBuildFile; fileRef = 5518105610C35A2600ADA9F4 /* Example.c */; };
 		551810CD10C35C3500ADA9F4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */; };
 		551E56F2102A9E8B0086C86E /* Main.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F40C2F21DD00D6C081 /* Main.c */; };
-		551E56FA102AA35B0086C86E /* AboutPlugs.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */; };
 		551E57A1102AB9A30086C86E /* Mozart.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4170C2F21DD00D6C081 /* Mozart.c */; };
 		551FEA6410E727AD00EDF2F1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		551FEA6510E727AD00EDF2F1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -403,6 +403,17 @@
 		55BDD38D10DC9EDE00813A3A /* Propagate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11FD10D6F3E100BB619C /* Propagate.plugin */; };
 		55BDD38E10DC9EDE00813A3A /* Revert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E123010D6F3E600BB619C /* Revert.plugin */; };
 		55DB45D50FEAB8CD0088C375 /* DFTB.r in Rez */ = {isa = PBXBuildFile; fileRef = 55DB45D40FEAB8CD0088C375 /* DFTB.r */; };
+		55E8981A10EEC5BA004EB52B /* AboutPlugs.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */; };
+		55E898B010F17C2B004EB52B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		55E898B110F17C2B004EB52B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		55E8998510F18165004EB52B /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
+		55E8998610F18174004EB52B /* Quicktime Movie.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E104A10D6C79E00BB619C /* Quicktime Movie.r */; };
+		55E8998710F18175004EB52B /* QuicktimeGeneric.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E104C10D6C79E00BB619C /* QuicktimeGeneric.c */; };
+		55E8998E10F18AE3004EB52B /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
+		55E8999110F18AF1004EB52B /* WAVE-Conversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105710D6C79E00BB619C /* WAVE-Conversion.c */; };
+		55E899F910F18B53004EB52B /* QuickTime.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55E898B710F17C2B004EB52B /* QuickTime.plugin */; };
+		55E89D3C10F26A4B004EB52B /* PATN.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55E89D3A10F26A4B004EB52B /* PATN.icns */; };
+		55E89D3D10F26A4B004EB52B /* INS.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55E89D3B10F26A4B004EB52B /* INS.icns */; };
 		55ED50AB10D40BFE00824C61 /* MOD.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55ED547410D5F9CD00824C61 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		55EE8C741003E83A00E75E63 /* General-rez.r in Rez */ = {isa = PBXBuildFile; fileRef = 55EE8C731003E83A00E75E63 /* General-rez.r */; };
@@ -1204,6 +1215,20 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
+		55E898AA10F17C2B004EB52B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		55E8997C10F17CE5004EB52B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55E898A810F17C2B004EB52B;
+			remoteInfo = "PAT copy";
+		};
 		55ED50B910D40C0B00824C61 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1231,6 +1256,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				551FEBF510E72AD900EDF2F1 /* MINs.plugin in Copy PlugIns */,
+				55E899F910F18B53004EB52B /* QuickTime.plugin in Copy PlugIns */,
 				551FEBF610E72AD900EDF2F1 /* PAT.plugin in Copy PlugIns */,
 				557DEB2A10E0944100177B4C /* Backwards.plugin in Copy PlugIns */,
 				557DEB2B10E0944100177B4C /* Crop.plugin in Copy PlugIns */,
@@ -1497,7 +1523,7 @@
 		5573A3EB10B5151700FF8B50 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		5573A3ED10B5151700FF8B50 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		5573A3EF10B5151700FF8B50 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		5573A41010B5160000FF8B50 /* PPDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = PPDefs.h; sourceTree = "<group>"; };
+		5573A41010B5160000FF8B50 /* PPDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = PPDefs.h; path = ../../PPDefs.h; sourceTree = "<group>"; };
 		5573A46D10B51CAB00FF8B50 /* ByteSwap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = ByteSwap.c; sourceTree = "<group>"; };
 		5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawSprocket.framework; path = System/Library/Frameworks/DrawSprocket.framework; sourceTree = SDKROOT; };
 		5573A59F10B542F300FF8B50 /* Proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = Proto.c; path = "(Proto)/Proto.c"; sourceTree = "<group>"; };
@@ -1582,6 +1608,10 @@
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Complex Fade-Info.plist"; path = "../../../Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DFTB.r; path = Files/DFTB.r; sourceTree = "<group>"; };
+		55E898B710F17C2B004EB52B /* QuickTime.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickTime.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		55E8997B10F17CCB004EB52B /* QuickTime-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "QuickTime-Info.plist"; sourceTree = SOURCE_ROOT; };
+		55E89D3A10F26A4B004EB52B /* PATN.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = PATN.icns; sourceTree = "<group>"; };
+		55E89D3B10F26A4B004EB52B /* INS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = INS.icns; sourceTree = "<group>"; };
 		55ED547310D5F9CD00824C61 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		55EE8C731003E83A00E75E63 /* General-rez.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = "General-rez.r"; path = "Files/General-rez.r"; sourceTree = "<group>"; };
 		55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
@@ -1595,7 +1625,7 @@
 		88E0C3BF0C2F21DD00D6C081 /* PlayerProCarbon.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlayerProCarbon.pch; path = Files/PlayerProCarbon.pch; sourceTree = SOURCE_ROOT; };
 		88E0C3C10C2F21DD00D6C081 /* MIDI-Hardware.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = "MIDI-Hardware.c"; path = "Files/MIDI-Hardware.c"; sourceTree = SOURCE_ROOT; };
 		88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = AboutPlugs.c; path = Files/wds_general/AboutPlugs.c; sourceTree = SOURCE_ROOT; };
-		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = FileUtils.h; path = MADDriver.source/MADDriver.Source/FileUtils.h; sourceTree = SOURCE_ROOT; };
+		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = FileUtils.h; sourceTree = "<group>"; };
 		88E0C3C50C2F21DD00D6C081 /* PlugsPPDGInit.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PlugsPPDGInit.c; path = Files/PlugsPPDGInit.c; sourceTree = SOURCE_ROOT; };
 		88E0C3C60C2F21DD00D6C081 /* PlugsPPINInit.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = PlugsPPINInit.c; path = Files/PlugsPPINInit.c; sourceTree = SOURCE_ROOT; };
 		88E0C3C70C2F21DD00D6C081 /* PlugsSoundFilter.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = PlugsSoundFilter.c; path = Files/PlugsSoundFilter.c; sourceTree = SOURCE_ROOT; };
@@ -1672,12 +1702,12 @@
 		88E0C4180C2F21DD00D6C081 /* StaffEditor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = StaffEditor.c; sourceTree = "<group>"; };
 		88E0C4190C2F21DD00D6C081 /* Tools.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = Tools.c; sourceTree = "<group>"; };
 		88E0C41A0C2F21DD00D6C081 /* WaveEditor.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = WaveEditor.c; sourceTree = "<group>"; };
-		88E0C4750C2F21E400D6C081 /* MAD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = MAD.h; path = MADDriver.source/MADDriver.Source/MAD.h; sourceTree = SOURCE_ROOT; };
+		88E0C4750C2F21E400D6C081 /* MAD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = MAD.h; sourceTree = "<group>"; };
 		88E0C4770C2F21E400D6C081 /* PlayerHeaders.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = PlayerHeaders.c; path = Files/PlayerHeaders.c; sourceTree = SOURCE_ROOT; };
 		88E0C4790C2F21E400D6C081 /* Shuddup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = Shuddup.h; path = Files/Shuddup.h; sourceTree = SOURCE_ROOT; };
-		88E0C47B0C2F21E400D6C081 /* RDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = RDriver.h; path = MADDriver.source/MADDriver.Source/RDriver.h; sourceTree = SOURCE_ROOT; };
-		88E0C47D0C2F21E400D6C081 /* RDriverInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = RDriverInt.h; path = MADDriver.source/MADDriver.Source/RDriverInt.h; sourceTree = SOURCE_ROOT; };
-		88E0C47F0C2F21E400D6C081 /* PPPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = PPPlug.h; path = MADDriver.source/MADDriver.Source/PPPlug.h; sourceTree = SOURCE_ROOT; };
+		88E0C47B0C2F21E400D6C081 /* RDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = RDriver.h; sourceTree = "<group>"; };
+		88E0C47D0C2F21E400D6C081 /* RDriverInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = RDriverInt.h; sourceTree = "<group>"; };
+		88E0C47F0C2F21E400D6C081 /* PPPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = PPPlug.h; sourceTree = "<group>"; };
 		88E0C4810C2F21E400D6C081 /* VA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = VA.h; path = Files/VA.h; sourceTree = SOURCE_ROOT; };
 		88E0C4850C2F21E400D6C081 /* VideoToolbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; name = VideoToolbox.h; path = Files/VideoToolbox.h; sourceTree = SOURCE_ROOT; };
 		88E0C4870C2F21E400D6C081 /* dlsmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = dlsmac.h; path = Files/dlsmac.h; sourceTree = SOURCE_ROOT; };
@@ -2188,6 +2218,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55E898AF10F17C2B004EB52B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55E898B010F17C2B004EB52B /* Carbon.framework in Frameworks */,
+				55E898B110F17C2B004EB52B /* CoreFoundation.framework in Frameworks */,
+				55E8998510F18165004EB52B /* QuickTime.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88E0C3B00C2F21DD00D6C081 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2209,6 +2249,8 @@
 			children = (
 				55FA5FBA102D2D6C00CB63DA /* ppApp.icns */,
 				550B00D010BA17BC004FC5D7 /* 669.icns */,
+				55E89D3A10F26A4B004EB52B /* PATN.icns */,
+				55E89D3B10F26A4B004EB52B /* INS.icns */,
 				550B00D110BA17BC004FC5D7 /* IT.icns */,
 				550B00D210BA17BC004FC5D7 /* List.icns */,
 				550B00D310BA17BC004FC5D7 /* MAD.icns */,
@@ -2254,7 +2296,6 @@
 		551520A310DEE9570054ABC4 /* Wave */ = {
 			isa = PBXGroup;
 			children = (
-				554E105710D6C79E00BB619C /* WAVE-Conversion.c */,
 				5590896710E883AF00CE70B8 /* WAV.h */,
 				5542403D10DB602D00C08864 /* WAVE.r */,
 				554E105610D6C79E00BB619C /* WAV.c */,
@@ -2356,6 +2397,7 @@
 		551520C410DEED460054ABC4 /* Quicktime */ = {
 			isa = PBXGroup;
 			children = (
+				55E8997B10F17CCB004EB52B /* QuickTime-Info.plist */,
 				554E104A10D6C79E00BB619C /* Quicktime Movie.r */,
 				554E104C10D6C79E00BB619C /* QuicktimeGeneric.c */,
 			);
@@ -2923,6 +2965,7 @@
 				554E104710D6C79E00BB619C /* PPIN Carbon.pch */,
 				554E104810D6C79E00BB619C /* PPIN PPC.pch */,
 				554E105010D6C79E00BB619C /* SndUtils.c */,
+				554E105710D6C79E00BB619C /* WAVE-Conversion.c */,
 				55151E7410DD4F400054ABC4 /* CFPlugin-InstrBridge.c */,
 			);
 			path = "Instruments Import:Export Plugs";
@@ -3003,6 +3046,12 @@
 		55868B1810BFC0BB00FCC24D /* Main Driver Source */ = {
 			isa = PBXGroup;
 			children = (
+				5573A41010B5160000FF8B50 /* PPDefs.h */,
+				88E0C3C40C2F21DD00D6C081 /* FileUtils.h */,
+				88E0C4750C2F21E400D6C081 /* MAD.h */,
+				88E0C47B0C2F21E400D6C081 /* RDriver.h */,
+				88E0C47D0C2F21E400D6C081 /* RDriverInt.h */,
+				88E0C47F0C2F21E400D6C081 /* PPPlug.h */,
 				550B011310BA1E1C004FC5D7 /* PPPrivate.h */,
 				88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */,
 				5573A46D10B51CAB00FF8B50 /* ByteSwap.c */,
@@ -3144,6 +3193,7 @@
 				551FEA6B10E727AD00EDF2F1 /* MINs.plugin */,
 				551FEADA10E727B100EDF2F1 /* PAT.plugin */,
 				551FECC510E7354900EDF2F1 /* AutoExec.app */,
+				55E898B710F17C2B004EB52B /* QuickTime.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3169,7 +3219,6 @@
 			children = (
 				554E0FDD10D6C79D00BB619C /* (Plug-Ins) */,
 				88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */,
-				88E0C3C40C2F21DD00D6C081 /* FileUtils.h */,
 				88E0C3C50C2F21DD00D6C081 /* PlugsPPDGInit.c */,
 				88E0C3C60C2F21DD00D6C081 /* PlugsPPINInit.c */,
 				88E0C3C70C2F21DD00D6C081 /* PlugsSoundFilter.c */,
@@ -3273,13 +3322,8 @@
 			isa = PBXGroup;
 			children = (
 				552C70C910CDB46100C0E0D4 /* Proto */,
-				5573A41010B5160000FF8B50 /* PPDefs.h */,
-				88E0C4750C2F21E400D6C081 /* MAD.h */,
 				88E0C4770C2F21E400D6C081 /* PlayerHeaders.c */,
 				88E0C4790C2F21E400D6C081 /* Shuddup.h */,
-				88E0C47B0C2F21E400D6C081 /* RDriver.h */,
-				88E0C47D0C2F21E400D6C081 /* RDriverInt.h */,
-				88E0C47F0C2F21E400D6C081 /* PPPlug.h */,
 				88E0C4810C2F21E400D6C081 /* VA.h */,
 				88E0C4850C2F21E400D6C081 /* VideoToolbox.h */,
 				88E0C4870C2F21E400D6C081 /* dlsmac.h */,
@@ -4294,6 +4338,25 @@
 			productReference = 55B797DC10D6E6C40073E379 /* Complex Fade.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		55E898A810F17C2B004EB52B /* QuickTime */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55E898B410F17C2B004EB52B /* Build configuration list for PBXNativeTarget "QuickTime" */;
+			buildPhases = (
+				55E898AB10F17C2B004EB52B /* Resources */,
+				55E898AC10F17C2B004EB52B /* Sources */,
+				55E898AF10F17C2B004EB52B /* Frameworks */,
+				55E898B210F17C2B004EB52B /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55E898A910F17C2B004EB52B /* PBXTargetDependency */,
+			);
+			name = QuickTime;
+			productName = "Complex Fade";
+			productReference = 55E898B710F17C2B004EB52B /* QuickTime.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		88E0C3B20C2F21DD00D6C081 /* Carbon */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 88E0C3B80C2F21DD00D6C081 /* Build configuration list for PBXNativeTarget "Carbon" */;
@@ -4368,6 +4431,7 @@
 				55151F7210DEDBDB0054ABC4 /* XI */,
 				551FEA5C10E727AD00EDF2F1 /* MINs */,
 				551FEACB10E727B100EDF2F1 /* PAT */,
+				55E898A810F17C2B004EB52B /* QuickTime */,
 				557DE3BD10E06BB500177B4C /* Filters Plugs */,
 				557DE42510E06BF200177B4C /* Amplitude */,
 				557DE5D110E0882800177B4C /* Backwards */,
@@ -4708,6 +4772,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55E898AB10F17C2B004EB52B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88E0C3AF0C2F21DD00D6C081 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4729,6 +4800,8 @@
 				550B00EB10BA17BC004FC5D7 /* WAV.icns in Resources */,
 				550B00EC10BA17BC004FC5D7 /* XI.icns in Resources */,
 				550B00ED10BA17BC004FC5D7 /* XM.icns in Resources */,
+				55E89D3C10F26A4B004EB52B /* PATN.icns in Resources */,
+				55E89D3D10F26A4B004EB52B /* INS.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5076,6 +5149,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				55B797E610D6E7070073E379 /* CompFade.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55E898B210F17C2B004EB52B /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55E8998610F18174004EB52B /* Quicktime Movie.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5477,6 +5558,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55E898AC10F17C2B004EB52B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55E8998710F18175004EB52B /* QuicktimeGeneric.c in Sources */,
+				55E8998E10F18AE3004EB52B /* SndUtils.c in Sources */,
+				55E8999110F18AF1004EB52B /* WAVE-Conversion.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88E0C3AE0C2F21DD00D6C081 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -5535,7 +5626,6 @@
 				88E0C46B0C2F21DE00D6C081 /* PlugVST.c in Sources */,
 				88E0C46C0C2F21DE00D6C081 /* ScreenDevice.c in Sources */,
 				551E56F2102A9E8B0086C86E /* Main.c in Sources */,
-				551E56FA102AA35B0086C86E /* AboutPlugs.c in Sources */,
 				551E57A1102AB9A30086C86E /* Mozart.c in Sources */,
 				55356A01102BFDB80093F21D /* DLS Import.c in Sources */,
 				55356A05102BFE7D0093F21D /* Print.c in Sources */,
@@ -5556,6 +5646,7 @@
 				550B011710BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
 				5547CE5F10C6E5490041DEF6 /* ByteUtils.c in Sources */,
 				55672E9010CAD830008C5C3D /* OSX-PlugImport.c in Sources */,
+				55E8981A10EEC5BA004EB52B /* AboutPlugs.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6016,6 +6107,16 @@
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 55B797E110D6E6D00073E379 /* PBXContainerItemProxy */;
+		};
+		55E898A910F17C2B004EB52B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 55E898AA10F17C2B004EB52B /* PBXContainerItemProxy */;
+		};
+		55E8997D10F17CE5004EB52B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55E898A810F17C2B004EB52B /* QuickTime */;
+			targetProxy = 55E8997C10F17CE5004EB52B /* PBXContainerItemProxy */;
 		};
 		55ED50BA10D40C0B00824C61 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6770,6 +6871,9 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /Developer/Headers/FlatCarbon;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
@@ -8068,6 +8172,9 @@
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /Developer/Headers/FlatCarbon;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH)";
@@ -8168,6 +8275,42 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PREBINDING = NO;
 				PRODUCT_NAME = "Complex Fade";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		55E898B510F17C2B004EB52B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "QuickTime-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = QuickTime;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		55E898B610F17C2B004EB52B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "QuickTime-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = QuickTime;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -8612,6 +8755,15 @@
 			buildConfigurations = (
 				55B797DF10D6E6C70073E379 /* Release */,
 				55B797E010D6E6C70073E379 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55E898B410F17C2B004EB52B /* Build configuration list for PBXNativeTarget "QuickTime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55E898B510F17C2B004EB52B /* Release */,
+				55E898B610F17C2B004EB52B /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

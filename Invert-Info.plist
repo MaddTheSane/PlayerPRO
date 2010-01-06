@@ -32,5 +32,7 @@
 	</dict>
 	<key>CSResourcesFileMapped</key>
 	<string>yes</string>
+	<key>MADPlugMenuName</key>
+	<string>Invert</string>
 </dict>
 </plist>

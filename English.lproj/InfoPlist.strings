@@ -11,8 +11,12 @@
 "PPMODFile" = "ProTracker Audio";
 "PPXMFile" = "FastTracker Audio";
 "PPITFile" = "ImpulseTracker Audio";
+"PPAMFFile" = "AMF Tracker Audio";
+"PP669File" = "669 Tracker Audio";
 
 "PPXIFile" = "FastTracker Instrument";
+"PPMINsFile" = "PlayerPRO Instruments";
+"PPPATFile" = "PlayerPRO Patterns";
 
 "PPMADFile" = "PlayerPRO MAD Tracker";
 "PPMADFGFile" = "PlayerPRO MADfg Tracker";

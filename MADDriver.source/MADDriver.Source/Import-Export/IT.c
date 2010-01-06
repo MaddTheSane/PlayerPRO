@@ -1334,7 +1334,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 {
 	short			i;
-	ITForm		ITinfo;
+	ITForm			ITinfo;
 	/********************************/
 
 	/**** Header principal *****/
@@ -1455,7 +1455,7 @@ OSErr mainIT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *inf
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					
-					myErr = TestITFile( AlienFile);
+					if(myErr == noErr) myErr = TestITFile( AlienFile);
 					
 					DisposePtr( AlienFile);	AlienFile = NULL;
 				}

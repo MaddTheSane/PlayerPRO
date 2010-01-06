@@ -34,5 +34,17 @@
 	</dict>
 	<key>CSResourcesFileMapped</key>
 	<true/>
+	<key>MADPlugMenuName</key>
+	<string>Midi</string>
+	<key>MADPlugAuthorName</key>
+	<string>Written by A.ROSSET 95</string>
+	<key>MADPlugType</key>
+	<string>Midi</string>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>public.midi-audio</string>
+	</array>
+	<key>MADPlugMode</key>
+	<string>IMPL</string>
 </dict>
 </plist>

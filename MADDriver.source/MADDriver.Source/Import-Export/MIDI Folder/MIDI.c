@@ -77,14 +77,11 @@ void  ConvertMidiFile( char	*src, MADMusic *theMAD, MADDriverSettings *init);
 
 OSErr mainMIDI( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
-	OSErr	myErr;
+	OSErr	myErr = noErr;
 	Ptr		AlienFile;
-	short	vRefNum;
 	UNFILE	iFileRefI;
-	long	dirID, sndSize;
+	long	sndSize;
 	
-	myErr = noErr;
-
 	switch( order)
 	{
 		case 'IMPL':
@@ -131,7 +128,7 @@ OSErr mainMIDI( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec 
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
-					myErr = TestMIDIFile( AlienFile);
+					if(myErr == noErr) myErr = TestMIDIFile( AlienFile);
 					
 					DisposePtr( AlienFile);	AlienFile = NULL;
 				}
@@ -153,7 +150,7 @@ OSErr mainMIDI( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec 
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
-					myErr = ExtractMIDIInfo( info, AlienFile);
+					if(myErr == noErr) myErr = ExtractMIDIInfo( info, AlienFile);
 					DisposePtr( AlienFile);	AlienFile = NULL;
 				}
 				iClose( iFileRefI);

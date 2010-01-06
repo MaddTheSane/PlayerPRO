@@ -690,6 +690,8 @@ static OSErr XM_Load( Ptr	theXM, long XMSize, MADMusic *theMAD, MADDriverSetting
 	return iErr;
 }
 
+//This Function isn't used right now. #if 0'ing out
+#if 0
 static long ConvertSampleC4SPDXM( Ptr src, long srcSize, short amp, long srcC4SPD, Ptr dst, long dstC4SPD)
 {
 	short	*src16 = (short*) src, *dst16 = (short*) dst;
@@ -713,6 +715,7 @@ static long ConvertSampleC4SPDXM( Ptr src, long srcSize, short amp, long srcC4SP
 	
 	return (srcSize * dstC4SPD) / srcC4SPD;
 }
+#endif
 
 static long XMGetPeriod( short note, long c2spd)
 {
@@ -1321,7 +1324,7 @@ OSErr mainXM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *inf
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					
-					myErr = TestXMFile( AlienFile);
+					if(myErr == noErr) myErr = TestXMFile( AlienFile);
 					
 					DisposePtr( AlienFile);	AlienFile = NULL;
 				}

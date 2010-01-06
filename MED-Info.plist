@@ -34,5 +34,17 @@
 	</dict>
 	<key>CSResourcesFileMapped</key>
 	<true/>
+	<key>MADPlugMenuName</key>
+	<string>MED</string>
+	<key>MADPlugAuthorName</key>
+	<string>Written by A.ROSSET 95</string>
+	<key>MADPlugType</key>
+	<string>MED </string>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>net.sourceforge.playerpro.med</string>
+	</array>
+	<key>MADPlugMode</key>
+	<string>IMPL</string>
 </dict>
 </plist>

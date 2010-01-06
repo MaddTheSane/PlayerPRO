@@ -848,16 +848,16 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	for( i = 0; i < MAXTRACK; i++) MDriver->Active[ i] = true;
 	
 	MDriver->DriverSettings		= *DriverInitParam;
-	MDriver->musicEnd				= false;
-	MDriver->Reading				= false;
+	MDriver->musicEnd			= false;
+	MDriver->Reading			= false;
 	MDriver->JumpToNextPattern	= true;
-	MDriver->smallcounter			= 128;			// Start immediately
+	MDriver->smallcounter		= 128;			// Start immediately
 	MDriver->BufCounter			= 0;
 	MDriver->BytesToGenerate		= 0;
 	MDriver->speed				= 6;
 	MDriver->finespeed			= 125;
-	MDriver->VExt					= 8000;
-	MDriver->FreqExt				= 8000;
+	MDriver->VExt				= 8000;
+	MDriver->FreqExt			= 8000;
 	MDriver->VolGlobal			= 64;
 	MDriver->SendMIDIClockData	= false;
 	MDriver->MODMode			= false;
@@ -955,11 +955,7 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	switch( MDriver->DriverSettings.driverMode)
 	{
 		case ASIOSoundManager:
-#if MACOS9VERSION
-			theErr = InitASIOManager( MDriver, initStereo);
-			if( theErr != noErr) return theErr;
-#endif
-		break;
+			break;
 		
 #ifdef _MIDIHARDWARE_
 		case MIDISoundDriver:
@@ -1031,10 +1027,7 @@ OSErr MADDisposeDriver( MADDriverRec* MDriver)
 		break;
 		
 		case ASIOSoundManager:
-#if MACOS9VERSION
-			ASIOSndClose( MDriver);
-#endif
-		break;
+			break;
 		
 		case SoundManagerDriver:
 			DBSndClose( MDriver);
@@ -1627,7 +1620,11 @@ OSErr MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV)
 	curV -= minV;
 	maxV -= minV;
 	
-	dstTime			= (curV * fullTime)/maxV; //TODO: sometimes throws arithmetic error, AKA divide by zero
+	if (maxV) {
+		dstTime		= (curV * fullTime)/maxV;
+	}
+	else
+	dstTime			= 0;
 	timeResult		= 0;
 	time			= 0;
 	speed			= MDriver->curMusic->header->speed;
@@ -2728,9 +2725,6 @@ OSErr MADStartDriver( MADDriverRec *MDriver)
 			break;			
 			
 		case ASIOSoundManager:
-#if MACOS9VERSION
-			ASIOPlayChannel( MDriver);
-#endif
 			break;
 #endif
 	}
@@ -2772,9 +2766,6 @@ OSErr MADStopDriver( MADDriverRec *MDriver)
 			break;
 
 		case ASIOSoundManager:
-#if MACOS9VERSION
-			ASIOStopChannel( MDriver);
-#endif
 			break;
 #endif
 	}

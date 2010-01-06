@@ -316,9 +316,9 @@ static OSErr TestoldMADFile( Ptr AlienFile)
 static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 {
 	oldMADSpec	*myMOD = ( oldMADSpec*) AlienFile;
-	long		PatternSize;
+//	long		PatternSize;
 	short		i;
-	short		tracksNo;
+//	short		tracksNo;
 	
 	/*** Signature ***/
 	
@@ -367,13 +367,11 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 
 OSErr mainMADH( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
-	OSErr	myErr;
+	OSErr	myErr = noErr;
 	Ptr		AlienFile;
-	short	vRefNum, iFileRefI;
-	long	dirID, sndSize;
+	UNFILE	iFileRefI;
+	long	sndSize;
 	
-	myErr = noErr;
-
 	switch( order)
 	{
 		case 'IMPL':
@@ -419,7 +417,7 @@ OSErr mainMADH( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
-					myErr = TestoldMADFile( AlienFile);
+					if(myErr == noErr) myErr = TestoldMADFile( AlienFile);
 					
 					DisposePtr( AlienFile);	AlienFile = NULL;
 				}
