@@ -167,7 +167,6 @@ void InitPlug(void)
 						curPlug->MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
 					
 					curPlug->Type = 'PLug';
-					tPlug++;
 					if (ToneGenerator == -1) {
 						CFArrayRef factories = CFPlugInFindFactoriesForPlugInTypeInPlugIn(kPlayerPROFiltersPlugTypeID, curPlug->file );
 						
@@ -190,6 +189,7 @@ void InitPlug(void)
 						}
 						CFRelease(factories);
 					}
+					tPlug++;
 				}
 			}
 		}
