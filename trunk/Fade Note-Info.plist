@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleSignature</key>
+	<string>SNPL</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<false/>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>9545DB21-5ADE-49DC-9717-093D09EC4D39</key>
+		<string>FadeNoteFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>E9AFFD6D-B98B-40D2-8CC2-BF7404EFAA51</key>
+		<array>
+			<string>9545DB21-5ADE-49DC-9717-093D09EC4D39</string>
+		</array>
+	</dict>
+	<key>CSResourcesFileMapped</key>
+	<string>yes</string>
+	<key>MADPlugMenuName</key>
+	<string>Fade Note</string>
+</dict>
+</plist>

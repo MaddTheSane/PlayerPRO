@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleSignature</key>
+	<string>SNPL</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<false/>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>9BC1103B-2C9F-4F2C-95AD-A3006EE37671</key>
+		<string>S3MFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>84F80109-2885-4E01-8FFA-88AC75F3E033</key>
+		<array>
+			<string>9BC1103B-2C9F-4F2C-95AD-A3006EE37671</string>
+		</array>
+	</dict>
+	<key>CSResourcesFileMapped</key>
+	<true/>
+	<key>MADPlugMenuName</key>
+	<string>S3M</string>
+	<key>MADPlugAuthorName</key>
+	<string>Written by A.ROSSET 95</string>
+	<key>MADPlugType</key>
+	<string>S3M </string>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>net.sourceforge.playerpro.s3m</string>
+	</array>
+	<key>MADPlugMode</key>
+	<string>EXIM</string>
+</dict>
+</plist>

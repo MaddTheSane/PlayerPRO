@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleSignature</key>
+	<string>SNPL</string>
+	<key>CFBundleVersion</key>
+	<string>0.9</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<false/>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>873AA791-E9E5-42EB-8FE0-351A99CF9A3A</key>
+		<string>PPMIDIFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>84F80109-2885-4E01-8FFA-88AC75F3E033</key>
+		<array>
+			<string>873AA791-E9E5-42EB-8FE0-351A99CF9A3A</string>
+		</array>
+	</dict>
+	<key>CSResourcesFileMapped</key>
+	<true/>
+	<key>MADPlugMenuName</key>
+	<string>Midi</string>
+	<key>MADPlugAuthorName</key>
+	<string>Written by A.ROSSET 95</string>
+	<key>MADPlugType</key>
+	<string>Midi</string>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>public.midi-audio</string>
+	</array>
+	<key>MADPlugMode</key>
+	<string>IMPL</string>
+</dict>
+</plist>

@@ -1,0 +1,33 @@
+
+/* StaffEditor.c */
+short GetMaxXStaff(void);
+short GetMaxYStaff(void);
+void SetStaffControl(void);
+void CreateCurStaffRect(void);
+void ConvertPt2Note(Point, short *, short *, short *);
+Boolean aNoteStaff(Point, short *);
+void DrawNoteCarre(Point *);
+void DoNullStaff(void);
+void DoGrowStaff(void);
+void DrawStaffReader(void);
+void EraseStaffReader(void);
+void DrawStaffFrame(void);
+void UpdateStaffInfo(void);
+void UpdateStaffNote(short);
+short Note2PosStaff(short);
+void DrawStaffNotes(void);
+void UpdateStaffWindow(DialogPtr);
+void CalculDiffStartStaff(void);
+Pcmd *CreatePcmdFromSelectionStaff(void);
+void OpenPcmdStaff(FSSpec *);
+void DoItemPressStaff(short, DialogPtr);
+pascal void actionProcStaff(ControlHandle, short);
+void CreateStaffWindow(void);
+void CloseStaff(void);
+void DoKeyPressStaff(short);
+pascal OSErr MyTrackingStaff(short, WindowPtr, void *, DragReference);
+Boolean DragStaff(RgnHandle, Pcmd *, EventRecord *);
+pascal OSErr MyReceiveDropStaff(WindowPtr, void*, DragReference);
+void PasteCmdStaff(Pcmd *);
+void COPYStaff(void);
+void PASTEStaff(void);

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleSignature</key>
+	<string>SNPL</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<false/>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>620875F5-1E38-45EF-9FBA-AAE929502D63</key>
+		<string>XIFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>0B3A4673-9118-467E-A496-846F5E1C9276</key>
+		<array>
+			<string>620875F5-1E38-45EF-9FBA-AAE929502D63</string>
+		</array>
+	</dict>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>net.sourceforge.playerpro.xi</string>
+	</array>
+	<key>CSResourcesFileMapped</key>
+	<string>yes</string>
+	<key>MADPlugMode</key>
+	<string>EXIM</string>
+	<key>MADPlugMenuName</key>
+	<string>XI Instrument</string>
+	<key>MADPlugType</key>
+	<string>XI  </string>
+	<key>MADPlugAuthorName</key>
+	<string>Copyright 2000 Antoine ROSSET</string>
+	<key>MADPlugIsSample</key>
+	<false/>
+</dict>
+</plist>

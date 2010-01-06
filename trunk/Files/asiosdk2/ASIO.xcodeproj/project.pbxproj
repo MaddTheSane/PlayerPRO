@@ -1,0 +1,367 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5528605910E987E800BF8792 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5528605810E987E800BF8792 /* ApplicationServices.framework */; };
+		5528605B10E987E800BF8792 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5528605A10E987E800BF8792 /* Carbon.framework */; };
+		5528605D10E987E800BF8792 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5528605C10E987E800BF8792 /* CoreServices.framework */; };
+		552860B010E9889F00BF8792 /* asio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5528608810E9889F00BF8792 /* asio.cpp */; };
+		552860B110E9889F00BF8792 /* asiodrvr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5528608A10E9889F00BF8792 /* asiodrvr.cpp */; };
+		552860B310E9889F00BF8792 /* debugmessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5528608F10E9889F00BF8792 /* debugmessage.cpp */; };
+		552860BE10E9889F00BF8792 /* ASIOConvertSamples.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 552860A110E9889F00BF8792 /* ASIOConvertSamples.cpp */; };
+		552860BF10E9889F00BF8792 /* asiodrivers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 552860A310E9889F00BF8792 /* asiodrivers.cpp */; };
+		552860C110E9889F00BF8792 /* codefragments.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 552860A810E9889F00BF8792 /* codefragments.cpp */; };
+		5528612B10E9919600BF8792 /* makesamp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5528609E10E9889F00BF8792 /* makesamp.cpp */; };
+		5528612E10E991A200BF8792 /* mactimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5528609D10E9889F00BF8792 /* mactimer.cpp */; };
+		5528612F10E991A700BF8792 /* macnanosecs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5528609C10E9889F00BF8792 /* macnanosecs.cpp */; };
+		5528613010E991B600BF8792 /* asiosmpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5528609A10E9889F00BF8792 /* asiosmpl.cpp */; };
+		5528613810E9930100BF8792 /* resolve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5528613710E9930100BF8792 /* resolve.cpp */; };
+		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
+		8D5B49A804867FD3000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D5B49A704867FD3000E48DA /* InfoPlist.strings */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		5528605810E987E800BF8792 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		5528605A10E987E800BF8792 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		5528605C10E987E800BF8792 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		5528608810E9889F00BF8792 /* asio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = asio.cpp; sourceTree = "<group>"; };
+		5528608910E9889F00BF8792 /* asio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = asio.h; sourceTree = "<group>"; };
+		5528608A10E9889F00BF8792 /* asiodrvr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = asiodrvr.cpp; sourceTree = "<group>"; };
+		5528608B10E9889F00BF8792 /* asiodrvr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = asiodrvr.h; sourceTree = "<group>"; };
+		5528608C10E9889F00BF8792 /* asiosys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = asiosys.h; sourceTree = "<group>"; };
+		5528608D10E9889F00BF8792 /* combase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = combase.cpp; sourceTree = "<group>"; };
+		5528608E10E9889F00BF8792 /* combase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = combase.h; sourceTree = "<group>"; };
+		5528608F10E9889F00BF8792 /* debugmessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = debugmessage.cpp; sourceTree = "<group>"; };
+		5528609110E9889F00BF8792 /* iasiodrv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = iasiodrv.h; sourceTree = "<group>"; };
+		5528609310E9889F00BF8792 /* wxdebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = wxdebug.h; sourceTree = "<group>"; };
+		5528609910E9889F00BF8792 /* asiosample.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = asiosample.txt; sourceTree = "<group>"; };
+		5528609A10E9889F00BF8792 /* asiosmpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = asiosmpl.cpp; sourceTree = "<group>"; };
+		5528609B10E9889F00BF8792 /* asiosmpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = asiosmpl.h; sourceTree = "<group>"; };
+		5528609C10E9889F00BF8792 /* macnanosecs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macnanosecs.cpp; sourceTree = "<group>"; };
+		5528609D10E9889F00BF8792 /* mactimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 1; path = mactimer.cpp; sourceTree = "<group>"; };
+		5528609E10E9889F00BF8792 /* makesamp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = makesamp.cpp; sourceTree = "<group>"; };
+		5528609F10E9889F00BF8792 /* wintimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = wintimer.cpp; sourceTree = "<group>"; };
+		552860A110E9889F00BF8792 /* ASIOConvertSamples.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = ASIOConvertSamples.cpp; sourceTree = "<group>"; };
+		552860A210E9889F00BF8792 /* ASIOConvertSamples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = ASIOConvertSamples.h; sourceTree = "<group>"; };
+		552860A310E9889F00BF8792 /* asiodrivers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = asiodrivers.cpp; sourceTree = "<group>"; };
+		552860A410E9889F00BF8792 /* asiodrivers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = asiodrivers.h; sourceTree = "<group>"; };
+		552860A510E9889F00BF8792 /* ginclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = ginclude.h; sourceTree = "<group>"; };
+		552860A710E9889F00BF8792 /* asioshlib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 1; path = asioshlib.cpp; sourceTree = "<group>"; };
+		552860A810E9889F00BF8792 /* codefragments.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 1; path = codefragments.cpp; sourceTree = "<group>"; };
+		552860A910E9889F00BF8792 /* codefragments.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 1; path = codefragments.hpp; sourceTree = "<group>"; };
+		552860AE10E9889F00BF8792 /* hostsample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = hostsample.cpp; sourceTree = "<group>"; };
+		5528613710E9930100BF8792 /* resolve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = resolve.cpp; sourceTree = "<group>"; };
+		8D576316048677EA00EA77CD /* ASIO.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ASIO.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D576313048677EA00EA77CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */,
+				5528605910E987E800BF8792 /* ApplicationServices.framework in Frameworks */,
+				5528605B10E987E800BF8792 /* Carbon.framework in Frameworks */,
+				5528605D10E987E800BF8792 /* CoreServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* ASIO */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AFFE84173DC02AAC07 /* Source */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
+				19C28FB6FE9D52B211CA2CBB /* Products */,
+			);
+			name = ASIO;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */,
+				5528605810E987E800BF8792 /* ApplicationServices.framework */,
+				5528605A10E987E800BF8792 /* Carbon.framework */,
+				5528605C10E987E800BF8792 /* CoreServices.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D576317048677EA00EA77CD /* Info.plist */,
+				8D5B49A704867FD3000E48DA /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				5528608710E9889F00BF8792 /* common */,
+				5528609410E9889F00BF8792 /* driver */,
+				552860A010E9889F00BF8792 /* host */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		19C28FB6FE9D52B211CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D576316048677EA00EA77CD /* ASIO.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5528608710E9889F00BF8792 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				5528608810E9889F00BF8792 /* asio.cpp */,
+				5528608910E9889F00BF8792 /* asio.h */,
+				5528608A10E9889F00BF8792 /* asiodrvr.cpp */,
+				5528608B10E9889F00BF8792 /* asiodrvr.h */,
+				5528608C10E9889F00BF8792 /* asiosys.h */,
+				5528608D10E9889F00BF8792 /* combase.cpp */,
+				5528608E10E9889F00BF8792 /* combase.h */,
+				5528608F10E9889F00BF8792 /* debugmessage.cpp */,
+				5528609110E9889F00BF8792 /* iasiodrv.h */,
+				5528609310E9889F00BF8792 /* wxdebug.h */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		5528609410E9889F00BF8792 /* driver */ = {
+			isa = PBXGroup;
+			children = (
+				5528609510E9889F00BF8792 /* asiosample */,
+			);
+			path = driver;
+			sourceTree = "<group>";
+		};
+		5528609510E9889F00BF8792 /* asiosample */ = {
+			isa = PBXGroup;
+			children = (
+				5528609910E9889F00BF8792 /* asiosample.txt */,
+				5528609A10E9889F00BF8792 /* asiosmpl.cpp */,
+				5528609B10E9889F00BF8792 /* asiosmpl.h */,
+				5528609C10E9889F00BF8792 /* macnanosecs.cpp */,
+				5528609D10E9889F00BF8792 /* mactimer.cpp */,
+				5528609E10E9889F00BF8792 /* makesamp.cpp */,
+				5528609F10E9889F00BF8792 /* wintimer.cpp */,
+			);
+			path = asiosample;
+			sourceTree = "<group>";
+		};
+		552860A010E9889F00BF8792 /* host */ = {
+			isa = PBXGroup;
+			children = (
+				552860A110E9889F00BF8792 /* ASIOConvertSamples.cpp */,
+				552860A210E9889F00BF8792 /* ASIOConvertSamples.h */,
+				552860A310E9889F00BF8792 /* asiodrivers.cpp */,
+				552860A410E9889F00BF8792 /* asiodrivers.h */,
+				552860A510E9889F00BF8792 /* ginclude.h */,
+				552860A610E9889F00BF8792 /* mac */,
+				552860AD10E9889F00BF8792 /* sample */,
+			);
+			path = host;
+			sourceTree = "<group>";
+		};
+		552860A610E9889F00BF8792 /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				552860A710E9889F00BF8792 /* asioshlib.cpp */,
+				552860A810E9889F00BF8792 /* codefragments.cpp */,
+				552860A910E9889F00BF8792 /* codefragments.hpp */,
+				5528613710E9930100BF8792 /* resolve.cpp */,
+			);
+			path = mac;
+			sourceTree = "<group>";
+		};
+		552860AD10E9889F00BF8792 /* sample */ = {
+			isa = PBXGroup;
+			children = (
+				552860AE10E9889F00BF8792 /* hostsample.cpp */,
+			);
+			path = sample;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D57630D048677EA00EA77CD /* ASIO */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "ASIO" */;
+			buildPhases = (
+				8D57630F048677EA00EA77CD /* Resources */,
+				8D576311048677EA00EA77CD /* Sources */,
+				8D576313048677EA00EA77CD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ASIO;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = ASIO;
+			productReference = 8D576316048677EA00EA77CD /* ASIO.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "ASIO" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 089C166AFE841209C02AAC07 /* ASIO */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D57630D048677EA00EA77CD /* ASIO */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D57630F048677EA00EA77CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49A804867FD3000E48DA /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D576311048677EA00EA77CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				552860B010E9889F00BF8792 /* asio.cpp in Sources */,
+				552860B110E9889F00BF8792 /* asiodrvr.cpp in Sources */,
+				552860B310E9889F00BF8792 /* debugmessage.cpp in Sources */,
+				552860BE10E9889F00BF8792 /* ASIOConvertSamples.cpp in Sources */,
+				552860BF10E9889F00BF8792 /* asiodrivers.cpp in Sources */,
+				552860C110E9889F00BF8792 /* codefragments.cpp in Sources */,
+				5528612B10E9919600BF8792 /* makesamp.cpp in Sources */,
+				5528612E10E991A200BF8792 /* mactimer.cpp in Sources */,
+				5528612F10E991A700BF8792 /* macnanosecs.cpp in Sources */,
+				5528613010E991B600BF8792 /* asiosmpl.cpp in Sources */,
+				5528613810E9930100BF8792 /* resolve.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8D5B49A704867FD3000E48DA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C167EFE841241C02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB911B08733D790010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = MAC;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = ASIO;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		1DEB911C08733D790010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = MAC;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = ASIO;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		1DEB911F08733D790010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH)";
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		1DEB912008733D790010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "ASIO" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB911B08733D790010E9CD /* Debug */,
+				1DEB911C08733D790010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "ASIO" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB911F08733D790010E9CD /* Debug */,
+				1DEB912008733D790010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

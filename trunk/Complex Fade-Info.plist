@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleSignature</key>
+	<string>SNPL</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<false/>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>2CE90281-E2C2-475A-A0F0-B90C641EAEB1</key>
+		<string>CompFadeFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>E9AFFD6D-B98B-40D2-8CC2-BF7404EFAA51</key>
+		<array>
+			<string>2CE90281-E2C2-475A-A0F0-B90C641EAEB1</string>
+		</array>
+	</dict>
+	<key>CSResourcesFileMapped</key>
+	<string>yes</string>
+	<key>MADPlugMenuName</key>
+	<string>Complex Fade</string>
+</dict>
+</plist>

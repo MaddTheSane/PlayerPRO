@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleSignature</key>
+	<string>SNPL</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<string>NO</string>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>C65934C3-9B3B-4484-A0BF-F02444E4D3FD</key>
+		<string>ULTFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>84F80109-2885-4E01-8FFA-88AC75F3E033</key>
+		<array>
+			<string>C65934C3-9B3B-4484-A0BF-F02444E4D3FD</string>
+		</array>
+	</dict>
+	<key>CSResourcesFileMapped</key>
+	<true/>
+	<key>MADPlugMenuName</key>
+	<string>ULT</string>
+	<key>MADPlugAuthorName</key>
+	<string>Written by A.ROSSET 96</string>
+	<key>MADPlugType</key>
+	<string>ULT </string>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>net.sourceforge.playerpro.ult</string>
+	</array>
+	<key>MADPlugMode</key>
+	<string>IMPL</string>
+</dict>
+</plist>
