@@ -111,7 +111,50 @@ void NNumToString( short no, Str255 aStr)
 	if( no < 100) pStrcat( aStr, "\p0");
 	if( no < 10) pStrcat( aStr, "\p0");
 	pStrcat( aStr, tStr);
+}
 
+void ByteSwapMADSpec(MADSpec *toSwap)
+{
+	MOT32( &toSwap->MAD);
+	MOT16( &toSwap->speed);
+	MOT16( &toSwap->tempo);
+}
+
+void ByteSwapPatHeader(PatHeader *toSwap)
+{
+	MOT32( &toSwap->size);
+	MOT32( &toSwap->compMode);
+	MOT32( &toSwap->patBytes);
+	MOT32( &toSwap->unused2);
+}
+
+void ByteSwapInstrData(InstrData *toSwap)
+{
+	int x;
+	MOT16( &toSwap->numSamples);
+	MOT16( &toSwap->firstSample);
+	MOT16( &toSwap->volFade);
+	
+	for( x = 0; x < 12; x++)
+	{
+		MOT16( &toSwap->volEnv[ x].pos);
+		MOT16( &toSwap->volEnv[ x].val);
+	}
+	
+	for( x = 0; x < 12; x++)
+	{
+		MOT16( &toSwap->pannEnv[ x].pos);
+		MOT16( &toSwap->pannEnv[ x].val);
+	}
+}
+
+void ByteSwapsData(sData *toSwap)
+{
+	MOT32( &toSwap->size);
+	MOT32( &toSwap->loopBeg);
+	MOT32( &toSwap->loopSize);
+	MOT16( &toSwap->c2spd);
+	
 }
 
 void oldFrameButton( DialogPtr theDlg)

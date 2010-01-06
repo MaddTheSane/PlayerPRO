@@ -1163,13 +1163,13 @@ Handle	hRsrc;
 
 void SaveMOD( Boolean	SaveAS, OSType theType)
 {
-OSErr					iErr;
-short					fRefNum,i;
-long					inOutCount, sndSize, fileSize, OffSetToSample, numPat;
-FInfo					fndrInfo;
-Ptr						outFile;
-Str255					fileName, bStr, cStr;
-FSSpec					spec;
+	OSErr			iErr;
+	short			fRefNum,i;
+	long			inOutCount, sndSize, fileSize, OffSetToSample, numPat;
+	FInfo			fndrInfo;
+	Ptr				outFile;
+	Str255			fileName, bStr, cStr;
+	FSSpec			spec;
 
 	if( theType != 'MADK' && theType != 'MADC') if( CallPlug( 0)) return;
 	

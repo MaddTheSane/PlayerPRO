@@ -724,8 +724,6 @@ void ExportFile( OSType theType, FSSpec *newFile)
 	PatData*					PatMAD;
 	char						theTypePtr[ 5];
 	
-#ifndef DEMO
-	
 	HSetVol( NULL, newFile->vRefNum, newFile->parID);
 	/***/
 	
@@ -784,13 +782,7 @@ void ExportFile( OSType theType, FSSpec *newFile)
 	FillVSTEffects();
 	
 	switch( theType)
-	{
-		default:
-			MyP2CStr( newFile->name);
-			iErr = PPExportFile( gMADLib, theTypePtr, (Ptr) newFile->name, curMusic);
-			MyC2PStr( (Ptr) newFile->name);
-			break;
-			
+	{			
 		case 'MADS':
 			// Export to the MADS format
 			
@@ -826,7 +818,10 @@ void ExportFile( OSType theType, FSSpec *newFile)
 			curMusic->header->numInstru = x;
 			
 			inOutCount = sizeof( MADSpec);
+			ByteSwapMADSpec(curMusic->header);
 			iErr = FSWrite( fRefNum, &inOutCount, curMusic->header);
+			//Just in case...
+			ByteSwapMADSpec(curMusic->header);
 			if( iErr) Erreur( 75, iErr);
 			
 			// PATTERNS
@@ -840,7 +835,7 @@ void ExportFile( OSType theType, FSSpec *newFile)
 				{
 					PatMAD = CompressPartitionMAD1( curMusic, curMusic->partition[ i]);
 					inOutCount = PatMAD->header.patBytes + sizeof( PatternHeader);
-					
+					ByteSwapPatHeader(&PatMAD->header);
 					iErr = FSWrite( fRefNum, &inOutCount, PatMAD);
 					
 					MyDisposePtr( (Ptr*) &PatMAD);
@@ -849,8 +844,11 @@ void ExportFile( OSType theType, FSSpec *newFile)
 				{
 					inOutCount = sizeof(  PatHeader);
 					inOutCount += curMusic->header->numChn * curMusic->partition[ i]->header.size * sizeof( Cmd);
-					
+					ByteSwapPatHeader(&curMusic->partition[ i]->header);
 					iErr = FSWrite( fRefNum, &inOutCount, curMusic->partition[ i]);
+					//Just in Case...
+					ByteSwapPatHeader(&curMusic->partition[ i]->header);
+
 				}
 			}
 			
@@ -861,9 +859,12 @@ void ExportFile( OSType theType, FSSpec *newFile)
 				if( curMusic->fid[ i].numSamples > 0 || curMusic->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
 				{
 					curMusic->fid[ i].no = i;
-					
+					ByteSwapInstrData(&(curMusic->fid[ i]));
 					inOutCount = sizeof( InstrData);
 					iErr = FSWrite( fRefNum, &inOutCount, &curMusic->fid[ i]);
+					//Just in case...
+					ByteSwapInstrData(&(curMusic->fid[ i]));
+
 				}
 			}
 			
@@ -878,8 +879,10 @@ void ExportFile( OSType theType, FSSpec *newFile)
 					curData = curMusic->sample[ curMusic->fid[i].firstSample + x];
 					
 					inOutCount = sizeof( sData);
+					ByteSwapsData(curData);
 					iErr = FSWrite( fRefNum, &inOutCount, curData);
-					
+					//Just in case...
+					ByteSwapsData(curData);
 					inOutCount = curData->size;
 					iErr = FSWrite( fRefNum, &inOutCount, curData->data);
 				}
@@ -968,6 +971,13 @@ void ExportFile( OSType theType, FSSpec *newFile)
 		case 'sfil':
 			CreateAIFFExporting( false, fRefNum, newFile, theType, NULL);
 			break;
+			
+		default:
+			MyP2CStr( newFile->name);
+			iErr = PPExportFile( gMADLib, theTypePtr, (Ptr) newFile->name, curMusic);
+			MyC2PStr( (Ptr) newFile->name);
+			break;
+			
 	}
 	
 END:
@@ -975,10 +985,6 @@ END:
 	
 	
 	ReconstructShowInfo();
-	
-#else
-	Erreur( 94, 0);
-#endif
 	
 	SetCursor( GetQDGlobalsArrow( &qdarrow));
 }
