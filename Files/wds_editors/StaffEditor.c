@@ -1898,8 +1898,8 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 					
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 				
-				//	if (QDIsPortBuffered( GetDialogPort( StaffDlog)))
-				//			QDFlushPortBuffer( GetDialogPort( StaffDlog), NULL);
+					if (QDIsPortBuffered( GetDialogPort( StaffDlog)))
+							QDFlushPortBuffer( GetDialogPort( StaffDlog), NULL);
 					
 				}while( Button());
 				

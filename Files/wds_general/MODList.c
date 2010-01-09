@@ -271,11 +271,11 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType);
 
 void EraseMODInfo(void)
 {
-Str255	StrTemp;
-Handle	iHandle;
-Rect	iRect;
-short	iType;
-Rect	caRect;
+	Str255	StrTemp;
+	Handle	iHandle;
+	Rect	iRect;
+	short	iType;
+	Rect	caRect;
 
 	if( MODListDlog == NULL) return;
 	
@@ -298,15 +298,14 @@ Rect	caRect;
 
 void DoGrowMODList( DialogPtr	theDialog)
 {
-long		lSizeVH;
-GrafPtr		SavePort;
-Rect		temp, cellRect, tempRect;
-short		cur, tempB, tempA, itemType;
-Handle		itemHandle;
-Point		theCell = { 0, 0}, aPt = { 0, 0};
-Rect		caRect;
-BitMap		screenBits;
-
+	long		lSizeVH;
+	GrafPtr		SavePort;
+	Rect		temp, cellRect, tempRect;
+	short		cur, tempB, tempA, itemType;
+	Handle		itemHandle;
+	Point		theCell = { 0, 0}, aPt = { 0, 0};
+	Rect		caRect;
+	BitMap		screenBits;
 
 	GetPort( &SavePort);
  	SetPortDialogPort( theDialog);
@@ -400,20 +399,20 @@ OSErr PathNameFromDirIDTRUE(long dirID, short vRefNum, StringPtr fullPathName)
 
 void SaveMyMODListSTCf( FSSpec spec)
 {
-short					itemType,i, theNo, myRes, vRefNum, temp;
-long					inOutBytes, Id;
-Handle					aHandle;
-Rect					itemRect;
-Point					theCell, where = { -1, -1};
-OSErr					iErr;
-Boolean					Info;
-GrafPtr					myPort;
-SFTypeList 				typeList;
-Ptr						aCopy;
-FSSpec					myFSS;
-Str255					tempStr;
-short					*shortPtr;
-FInfo					fndrInfo;
+	short				itemType,i, theNo, myRes, vRefNum, temp;
+	long				inOutBytes, Id;
+	Handle				aHandle;
+	Rect				itemRect;
+	Point				theCell, where = { -1, -1};
+	OSErr				iErr;
+	Boolean				Info;
+	GrafPtr				myPort;
+	SFTypeList			typeList;
+	Ptr					aCopy;
+	FSSpec				myFSS;
+	Str255				tempStr;
+	short				*shortPtr;
+	FInfo				fndrInfo;
 
 #define MAXSTCSIZE	400000	// 400 Kb
 
@@ -567,21 +566,21 @@ static long MLindex = 1;
 
 void SaveMODList(void)
 {
-short					itemType,i, theNo, myRes, vRefNum, temp;
-long					inOutBytes, Id;
-Handle					aHandle;
-Rect					itemRect;
-Point					theCell, where = { -1, -1};
-OSErr					iErr;
-Boolean					Info;
-GrafPtr					myPort;
-FSSpec					spec;
-SFTypeList 				typeList;
-Ptr						aCopy;
-FSSpec					myFSS;
-Str255					str, str2;
+	short				itemType,i, theNo, myRes, vRefNum, temp;
+	long				inOutBytes, Id;
+	Handle				aHandle;
+	Rect				itemRect;
+	Point				theCell, where = { -1, -1};
+	OSErr				iErr;
+	Boolean				Info;
+	GrafPtr				myPort;
+	FSSpec				spec;
+	SFTypeList			typeList;
+	Ptr					aCopy;
+	FSSpec				myFSS;
+	Str255				str, str2;
 
-GetPort( &myPort);
+	GetPort( &myPort);
 
 //	NumToString( MLindex, str2);
 	
@@ -612,7 +611,7 @@ GetPort( &myPort);
 
 void FindName( Str255	String, Str255	Str2)
 {
-short	i,x;
+	short	i,x;
 
 	for(i= String[0]; i>0; i--)
 	{
@@ -641,23 +640,23 @@ void OpenMODListSTCf( FSSpec	spec)
 	FSSpec		myFSS;
 	WDPBRec		wdpb;
 	FInfo		fndrInfo;
-
-if( GereMusicListChanged()) return;
-
-iErr = FSpGetFInfo( &spec, &fndrInfo);
-if( fndrInfo.fdType != 'STCf') return;
-
-GetPort( &myPort);
-SetPortDialogPort( MODListDlog);
-
-iFileRefI = FSpOpenResFile( &spec, fsCurPerm);
-if( ResError())
-{
-	return;
-}
-
-UseResFile( iFileRefI);
-
+	
+	if( GereMusicListChanged()) return;
+	
+	iErr = FSpGetFInfo( &spec, &fndrInfo);
+	if( fndrInfo.fdType != 'STCf') return;
+	
+	GetPort( &myPort);
+	SetPortDialogPort( MODListDlog);
+	
+	iFileRefI = FSpOpenResFile( &spec, fsCurPerm);
+	if( ResError())
+	{
+		return;
+	}
+	
+	UseResFile( iFileRefI);
+	
 	/*******************/
 	aHandle = Get1Resource( 'STR#', 128);
 	if( aHandle == NULL)
@@ -698,8 +697,8 @@ UseResFile( iFileRefI);
 		if( iErr == noErr) HGetVol( NULL, &myFSS.vRefNum, &myFSS.parID);
 		else {myFSS.vRefNum	= 0;	myFSS.parID	= 0;}
 		
-	//	iErr = FSpGetFInfo( &myFSS, &fndrInfo);
-	//	if( iErr) Debugger();
+		//	iErr = FSpGetFInfo( &myFSS, &fndrInfo);
+		//	if( iErr) Debugger();
 		
 		*specList[ theCell.v] = myFSS;
 		
@@ -710,13 +709,13 @@ UseResFile( iFileRefI);
 	
 	RGBBackColor( &theColor);
 	/*******************/
-
+	
 	/*******************/
 	aHandle = Get1Resource( 'selc', 128);
 	if( aHandle)
 	{
 		short 	*shortPtr;
-	
+		
 		DetachResource( aHandle);
 		
 		HLock( aHandle);
@@ -738,29 +737,29 @@ UseResFile( iFileRefI);
 	}
 	
 	
-CloseResFile( iFileRefI);
-
-GetPortBounds( GetDialogPort( MODListDlog), &caRect);
-
-SetRect( &itemRect, 0, myList.rect.bottom, myList.rect.right-16, caRect.bottom);
-InvalWindowRect( GetDialogWindow( MODListDlog), &itemRect);
-
-SetCursor( GetQDGlobalsArrow( &qdarrow));
-
-////////
-{
-Str255	aStr;
-pStrcpy( curMusicList.name, spec.name);
-HGetVol( NULL, &curMusicList.vRefNum, &curMusicList.parID);
-
-pStrcpy( aStr, curMusicList.name);
-SetWTitle( GetDialogWindow( MODListDlog), aStr);
-
-changedMusicList = false;
-curMusicListFile = true;
-}
-////////
-SetPort( myPort);
+	CloseResFile( iFileRefI);
+	
+	GetPortBounds( GetDialogPort( MODListDlog), &caRect);
+	
+	SetRect( &itemRect, 0, myList.rect.bottom, myList.rect.right-16, caRect.bottom);
+	InvalWindowRect( GetDialogWindow( MODListDlog), &itemRect);
+	
+	SetCursor( GetQDGlobalsArrow( &qdarrow));
+	
+	////////
+	{
+		Str255	aStr;
+		pStrcpy( curMusicList.name, spec.name);
+		HGetVol( NULL, &curMusicList.vRefNum, &curMusicList.parID);
+		
+		pStrcpy( aStr, curMusicList.name);
+		SetWTitle( GetDialogWindow( MODListDlog), aStr);
+		
+		changedMusicList = false;
+		curMusicListFile = true;
+	}
+	////////
+	SetPort( myPort);
 }
 
 /*void OpenMODList2(Str255	fName, short	vRefNum)
@@ -904,9 +903,9 @@ short IsAlreadyHere( Str255		aStr)
 
 void NMoveMusicCell( short whichCell, short noCell)
 {
-short	temp, i;
-FSSpec	*myFSS;
-Str255	myPath[ 200];
+	short	temp, i;
+	FSSpec	*myFSS;
+	Str255	myPath[ 200];
 	
 	if( noCell > 200) noCell = 200;
 	
@@ -966,92 +965,92 @@ void MODListSelectThisMusic( Str255 str)
 
 void  AddMODList( Boolean ShowInfo, Str255 theString, short		VRef, long parID)
 { 
-		short   			whichCell; 				/*	The Row that we are adding */
-		Point   			cSize,theCell;  		/*	Pointer to a cell in a list  */
- 		Str255				tempStr, aStr, aStr2;
- 		short				i, tt, val, dataLen;
- 		Ptr					stemp, mainStr;
- 		Boolean				Note;
- 		GrafPtr				SavePort;
- 		FSSpec				myFSS;
- 		Rect				itemRect;
+	short   			whichCell; 				/*	The Row that we are adding */
+	Point   			cSize,theCell;  		/*	Pointer to a cell in a list  */
+ 	Str255				tempStr, aStr, aStr2;
+ 	short				i, tt, val, dataLen;
+ 	Ptr					stemp, mainStr;
+ 	Boolean				Note;
+ 	GrafPtr				SavePort;
+ 	FSSpec				myFSS;
+ 	Rect				itemRect;
  	
- 		GetPort( &SavePort);
-		SetPortDialogPort( MODListDlog);
+	GetPort( &SavePort);
+	SetPortDialogPort( MODListDlog);
+	
+	theCell.v = 0;	theCell.h = 0;
+	
+	whichCell = IsAlreadyHere( theString);
+	
+	if(	whichCell != -1)
+	{
+		if( whichCell < 0) MyDebugStr( __LINE__, __FILE__, "AddModlist err");
 		
-		theCell.v = 0;	theCell.h = 0;
+		theCell.v = whichCell;
+		theCell.h = 0;
 		
-		whichCell = IsAlreadyHere( theString);
+		specList[ theCell.v]->vRefNum = VRef;
+		specList[ theCell.v]->parID = parID;
 		
-		if(	whichCell != -1)
+		
+		if( DropZone >= 0) NMoveMusicCell( theCell.v, 1);
+		
+		if( ShowInfo)
 		{
-			if( whichCell < 0) MyDebugStr( __LINE__, __FILE__, "AddModlist err");
+			cSize.v = cSize.h = 0;
+			PLSetSelect( -1, -1, -1, -1, &myList);
 			
-			theCell.v = whichCell;
-			theCell.h = 0;
+			if( DropZone >= 0) theCell.v = DropZone;
+			else theCell.v = whichCell;
 			
-			specList[ theCell.v]->vRefNum = VRef;
-			specList[ theCell.v]->parID = parID;
+			PLSetSelect( theCell.h, theCell.v, theCell.h, theCell.v, &myList);
+			PLAutoScroll( &myList);
+			RGBBackColor( &theColor);
 			
-			
-			if( DropZone >= 0) NMoveMusicCell( theCell.v, 1);
-			
-			if( ShowInfo)
-			{
-				cSize.v = cSize.h = 0;
-				PLSetSelect( -1, -1, -1, -1, &myList);
-				
-				if( DropZone >= 0) theCell.v = DropZone;
-				else theCell.v = whichCell;
-				
-				PLSetSelect( theCell.h, theCell.v, theCell.h, theCell.v, &myList);
-				PLAutoScroll( &myList);
-				RGBBackColor( &theColor);
-				
-				DoShowInfo( theCell);
-			}
+			DoShowInfo( theCell);
 		}
-		else
-		{
-			BackColor( whiteColor);
+	}
+	else
+	{
+		BackColor( whiteColor);
 		
-			if( DropZone >= 0) val = MLAddRow( 1, DropZone);
-			else val = MLAddRow( 1, MAXITEM);
+		if( DropZone >= 0) val = MLAddRow( 1, DropZone);
+		else val = MLAddRow( 1, MAXITEM);
+		
+		theCell.v = val;
+		theCell.h = 0;
+		
+		pStrcpy( myFSS.name, theString);
+		myFSS.vRefNum = VRef;
+		myFSS.parID = parID;
+		
+		*specList[ theCell.v] = myFSS;
+		
+		PathNameFromDirIDTRUE( myFSS.parID, myFSS.vRefNum, tempStr);
+		
+		pathStrList[ theCell.v] = (unsigned char*) NewPtr( tempStr[ 0] + 1);
+		pStrcpy( pathStrList[ theCell.v], tempStr);
+		
+		if( ShowInfo)
+		{
+			cSize.v = cSize.h = 0;
+			PLSetSelect( -1, -1, -1, -1, &myList);
 			
-			theCell.v = val;
-			theCell.h = 0;
+			PLSetSelect( theCell.h, theCell.v, theCell.h, theCell.v, &myList);
+			PLAutoScroll( &myList);
+			RGBBackColor( &theColor);
 			
-			pStrcpy( myFSS.name, theString);
-			myFSS.vRefNum = VRef;
-			myFSS.parID = parID;
-			
-			*specList[ theCell.v] = myFSS;
-			
-			PathNameFromDirIDTRUE( myFSS.parID, myFSS.vRefNum, tempStr);
-			
-			pathStrList[ theCell.v] = (unsigned char*) NewPtr( tempStr[ 0] + 1);
-			pStrcpy( pathStrList[ theCell.v], tempStr);
-			
-			if( ShowInfo)
-			{
-				cSize.v = cSize.h = 0;
-				PLSetSelect( -1, -1, -1, -1, &myList);
-
-				PLSetSelect( theCell.h, theCell.v, theCell.h, theCell.v, &myList);
-				PLAutoScroll( &myList);
-				RGBBackColor( &theColor);
-				
-				DoShowInfo( theCell);
-			}
-			else RGBBackColor( &theColor);
-			
+			DoShowInfo( theCell);
+		}
+		else RGBBackColor( &theColor);
+		
 		//	SetRect( &itemRect, 0, myList.rect.bottom, myList.rect.right-16, MODListDlog->portRect.bottom);
 		//	InvalWindowRect( GetDialogWindow( &itemRect);
-			
-			DrawNumberMusic();
-		}
-
-		SetPort( SavePort);
+		
+		DrawNumberMusic();
+	}
+	
+	SetPort( SavePort);
 }
 
 void UpdateMODListInfo()

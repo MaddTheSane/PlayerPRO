@@ -2063,8 +2063,8 @@ MenuHandle	tMenu;
 			
 				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 			
-		//		if (QDIsPortBuffered( GetDialogPort( EditorDlog)))
-    	//				QDFlushPortBuffer( GetDialogPort( EditorDlog), NULL);
+				if (QDIsPortBuffered( GetDialogPort( EditorDlog)))
+    					QDFlushPortBuffer( GetDialogPort( EditorDlog), NULL);
 			
 			}
 			while( Button());

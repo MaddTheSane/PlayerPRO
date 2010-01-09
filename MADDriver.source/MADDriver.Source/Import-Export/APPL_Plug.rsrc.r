@@ -4866,6 +4866,7 @@ resource 'MENU' (129) {
 };
 
 //TODO: This code needs to be rewritten
+#if 0
 data 'XXXX' (128) {
 	$"4A6F 7921 7065 6666 7077 7063 0000 0001"            /* Joy!peffpwpc.... */
 	$"B461 E55E 0000 0000 0000 0000 0000 0000"            /* ´aå^............ */
@@ -9774,3 +9775,4 @@ data 'XXXX' (128) {
 	$"6420 4C65 7665 6C01 2D45 7272 2050 6C75"            /* d Level.-Err Plu */
 	$"6720 5273 7263 01"                                  /* g Rsrc. */
 };
+#endif

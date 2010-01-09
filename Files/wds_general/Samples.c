@@ -1977,8 +1977,8 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 		/**/
 		WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 	
-		//	if (QDIsPortBuffered( GetDialogPort( theDia)))
-    	//				QDFlushPortBuffer( GetDialogPort( theDia), NULL);
+		if (QDIsPortBuffered( GetDialogPort( theDia)))
+    		QDFlushPortBuffer( GetDialogPort( theDia), NULL);
 	
 		Boolean		InOutPt;
 	
@@ -3641,8 +3641,8 @@ void MoveLoopSelection( short InstruNo)
 		
 		WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 	
-	//	if (QDIsPortBuffered( GetDialogPort( SampleDlog[ InstruNo])))
-    //					QDFlushPortBuffer( GetDialogPort( SampleDlog[ InstruNo]), NULL);
+		if (QDIsPortBuffered( GetDialogPort( SampleDlog[ InstruNo])))
+    		QDFlushPortBuffer( GetDialogPort( SampleDlog[ InstruNo]), NULL);
 		
 	}while( Button());
 	
@@ -4015,8 +4015,8 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 						
 						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 					
-					//	if (QDIsPortBuffered( GetDialogPort( SampleDlog[ InstruNo])))
-    				//	QDFlushPortBuffer( GetDialogPort( SampleDlog[ InstruNo]), NULL);
+						if (QDIsPortBuffered( GetDialogPort( SampleDlog[ InstruNo])))
+    					QDFlushPortBuffer( GetDialogPort( SampleDlog[ InstruNo]), NULL);
     				
 					}
 					while( Button());

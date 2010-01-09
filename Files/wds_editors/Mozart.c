@@ -2167,8 +2167,8 @@ void PressPartition( Point myPt)
 				
 				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 			
-			//	if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
-    		//			QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
+				if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
+    					QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
 			}
 			while( Button());
 		break;
@@ -2192,8 +2192,8 @@ void PressPartition( Point myPt)
 				
 				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 			
-			//	if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
-    		//			QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
+				if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
+    					QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
 			}
 			while( Button());
 			
@@ -2563,8 +2563,8 @@ void DoItemPressMozart( short whichItem, DialogPtr whichDialog)
 						
 						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 					
-				//		if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
-    			//		QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
+						if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
+    					QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
 						
 					}while( Button());
 	
@@ -2597,8 +2597,8 @@ void DoItemPressMozart( short whichItem, DialogPtr whichDialog)
 					
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 				
-				//	if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
-    			//		QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
+					if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
+    					QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
 				}
 				while( Button());
 				

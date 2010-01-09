@@ -3391,9 +3391,9 @@ void DoUpdateEvent(EventRecord *theEventI)
 			VSTEditorUpdate( GetDialogFromWindow( (WindowPtr) theEventI->message));
 		break;
 		
-		case RefCube:
-			UpdateCubeWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
+		//case RefCube:
+			//UpdateCubeWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
+			//break;
 	
 		case RefPref:
 			UpdatePrefWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
@@ -3413,11 +3413,11 @@ void DoUpdateEvent(EventRecord *theEventI)
 		
 		case RefInstruList:
 			UpdateInstruListWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
+			break;
 		
 		case RefInstruView:
 			UpdateInstruView(GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
+			break;
 		
 	/*	case RefTrackView:
 			UpdateTrackView(GetDialogFromWindow( (WindowPtr) theEventI->message));
@@ -3531,8 +3531,8 @@ void UpdateALLWindow(void)
 			
 			DisposeRgn( updateRgn);
 		}	
-		if (QDIsPortBuffered( GetWindowPort( aWind)))
-		QDFlushPortBuffer( GetWindowPort( aWind), NULL);
+		//if (QDIsPortBuffered( GetWindowPort( aWind)))
+		//QDFlushPortBuffer( GetWindowPort( aWind), NULL);
 
 		aWind = GetNextWindow( aWind);
 	}
@@ -3644,8 +3644,8 @@ void StartDialog(void)
 	DrawDialog( myStartUpDlog);
 	WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 	
-	if (QDIsPortBuffered( GetDialogPort( myStartUpDlog)))
-		QDFlushPortBuffer( GetDialogPort( myStartUpDlog), NULL);
+//	if (QDIsPortBuffered( GetDialogPort( myStartUpDlog)))
+//		QDFlushPortBuffer( GetDialogPort( myStartUpDlog), NULL);
 	
 	if( DebuggingMode)
 	{
