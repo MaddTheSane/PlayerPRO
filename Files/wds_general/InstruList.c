@@ -1,12 +1,11 @@
 #include "Shuddup.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Drag.h>
+#include <Carbon/Carbon.h>
 #include <string.h>
-#include <Aliases.h>
 #include "Undo.h"
 #include "PrivateList.h"
-#include <Movies.h>
+#include <QuickTime/QuickTime.h>
 #include "PPPlug.h"
 
 	/******** HELP MODULE ********/
@@ -464,13 +463,13 @@ void ActiveInstrumentMenu( Boolean Activ)
 
 void DoGrowInstruList( DialogPtr	theDialog)
 {
-long		lSizeVH;
-GrafPtr		SavePort;
-Rect		caRect, temp, cellRect, tempRect;
-short		cur, tempB, tempA, itemType, avant;
-Handle		itemHandle;
-Point		theCell = { 0, 0}, aPt = { 0, 0};
-BitMap		screenBits;
+	long		lSizeVH;
+	GrafPtr		SavePort;
+	Rect		caRect, temp, cellRect, tempRect;
+	short		cur, tempB, tempA, itemType, avant;
+	Handle		itemHandle;
+	Point		theCell = { 0, 0}, aPt = { 0, 0};
+	BitMap		screenBits;
 
 
 	GetPort( &SavePort);
@@ -541,18 +540,21 @@ void GetQualityString( short ID, Str255 str)
 {
 	switch( ID)
 	{
-	case 1:	pStrcpy( str, "\pF#5");
-	break;
+		case 1:
+			pStrcpy( str, "\pF#5");
+			break;
 
-	case 2: pStrcpy( str, "\pF#4");
-	break;
+		case 2:
+			pStrcpy( str, "\pF#4");
+			break;
 
-	case 3: pStrcpy( str, "\pF#3");
-	break;
+		case 3:
+			pStrcpy( str, "\pF#3");
+			break;
 
-	default:
-		pStrcpy( str, "\p???");
-	break;
+		default:
+			pStrcpy( str, "\p???");
+			break;
 	}
 
 }
@@ -631,7 +633,7 @@ enum
 
 void DrawSmallPianoKey( short i, short color, Rect aRect)
 {
-Rect	cRect = aRect;
+	Rect	cRect = aRect;
 
 	if( BlackWhite[ i % 12])		// Black Key
 	{
@@ -840,44 +842,44 @@ void UpdateEditInstruWindow( DialogPtr theDia)
 	
 	BeginUpdate( GetDialogWindow( theDia));
 	
-		DrawDialog( theDia);
-		oldFrameButton( theDia);
+	DrawDialog( theDia);
+	oldFrameButton( theDia);
+	
+	GetDialogItem( theDia, 44, &itemType, &itemHandle, &itemRect);
+	itemRect.left = LEFTBOX;
+	if( curMusic->fid[ insEID].numSamples == 0)
+	{
+		pStrcpy( aStr, "\pNo samples in this instrument");
 		
-		GetDialogItem( theDia, 44, &itemType, &itemHandle, &itemRect);
-		itemRect.left = LEFTBOX;
-		if( curMusic->fid[ insEID].numSamples == 0)
-		{
-			pStrcpy( aStr, "\pNo samples in this instrument");
-			
-			itemRect.right -= 16;
-			TETextBox( aStr + 1, aStr[ 0], &itemRect, teJustCenter);
-			itemRect.right += 16;
-		}
-		
-		FrameRect( &itemRect);
-		
-		if( curMusic->fid[ insEID].numSamples != 0)
-		{
-			DrawWhatSample( insEID, sampleEID);
-		}
-		
-		GetDialogItem( theDia, 25, &itemType, &itemHandle, &itemRect);
-		pStrcpy( aStr, "\pInstrument Info - ");
-		NumToString( insEID+1, bStr);
-		pStrcat( aStr, bStr);
-		TextFace( bold);
-		TETextBox( aStr+1, aStr[ 0], &itemRect, teJustCenter);
-		TextFace( 0);
-		
-		GetDialogItem( theDia, 13, &itemType, &itemHandle, &itemRect);
-		pStrcpy( aStr, "\pSample Info ( ");
-		NumToString( curMusic->fid[ insEID].numSamples, bStr);
-		pStrcat( aStr, bStr);
-		if( curMusic->fid[ insEID].numSamples > 1) pStrcat( aStr, "\p samples)");
-		else pStrcat( aStr, "\p sample)");
-		TextFace( bold);
-		TETextBox( aStr+1, aStr[ 0], &itemRect, teJustCenter);
-		TextFace( 0);
+		itemRect.right -= 16;
+		TETextBox( aStr + 1, aStr[ 0], &itemRect, teJustCenter);
+		itemRect.right += 16;
+	}
+	
+	FrameRect( &itemRect);
+	
+	if( curMusic->fid[ insEID].numSamples != 0)
+	{
+		DrawWhatSample( insEID, sampleEID);
+	}
+	
+	GetDialogItem( theDia, 25, &itemType, &itemHandle, &itemRect);
+	pStrcpy( aStr, "\pInstrument Info - ");
+	NumToString( insEID+1, bStr);
+	pStrcat( aStr, bStr);
+	TextFace( bold);
+	TETextBox( aStr+1, aStr[ 0], &itemRect, teJustCenter);
+	TextFace( 0);
+	
+	GetDialogItem( theDia, 13, &itemType, &itemHandle, &itemRect);
+	pStrcpy( aStr, "\pSample Info ( ");
+	NumToString( curMusic->fid[ insEID].numSamples, bStr);
+	pStrcat( aStr, bStr);
+	if( curMusic->fid[ insEID].numSamples > 1) pStrcat( aStr, "\p samples)");
+	else pStrcat( aStr, "\p sample)");
+	TextFace( bold);
+	TETextBox( aStr+1, aStr[ 0], &itemRect, teJustCenter);
+	TextFace( 0);
 		
 	EndUpdate( GetDialogWindow( theDia));
 	SetPort( savePort);
@@ -910,11 +912,11 @@ void ChangeDialogFont( DialogPtr aDia)
 			
 			if( inStyle.flags == 0)
 			{
-			inStyle.flags = kControlUseFontMask + kControlUseSizeMask;
-			inStyle.font = kFontIDGeneva;
-			inStyle.size = 9;
+				inStyle.flags = kControlUseFontMask + kControlUseSizeMask;
+				inStyle.font = kFontIDGeneva;
+				inStyle.size = 9;
 			
-			SetControlFontStyle( ctl, &inStyle);
+				SetControlFontStyle( ctl, &inStyle);
 			}
 		}
 		
@@ -924,11 +926,11 @@ void ChangeDialogFont( DialogPtr aDia)
 			
 			if( inStyle.flags == 0)
 			{
-			inStyle.flags = kControlUseFontMask + kControlUseSizeMask;
-			inStyle.font = kFontIDGeneva;
-			inStyle.size = 9;
+				inStyle.flags = kControlUseFontMask + kControlUseSizeMask;
+				inStyle.font = kFontIDGeneva;
+				inStyle.size = 9;
 			
-			SetControlFontStyle( ctl, &inStyle);
+				SetControlFontStyle( ctl, &inStyle);
 			}
 		}
 	}
@@ -951,17 +953,17 @@ pascal void actionProcInstru( ControlHandle theControl, short ctlPart)
 		case kControlPageUpPart:
 			curVal -= 1;
 			if( curVal < minValue) curVal = minValue;
-		break;
+			break;
 		
 		case kControlDownButtonPart:
 		case kControlPageDownPart:
 			curVal += 1;
 			if( curVal > maxValue) curVal = maxValue;
-		break;
+			break;
 		
 		case kControlIndicatorPart:
 			sVal = -1;
-		break;
+			break;
 	}
 	
 	if( sVal != curVal)
@@ -1768,7 +1770,7 @@ void DoPlayInstruInt( short	Note, short Instru, short effect, short arg, short v
 	
 	if( Instru < 0) return;
 	
-	samp					= curMusic->fid[ Instru].what[ Note];
+	samp = curMusic->fid[ Instru].what[ Note];
 	
 	DoPlayInstruInt2( curMusic->sample[ curMusic->fid[ Instru].firstSample + samp], &curMusic->fid[ Instru], Note, Instru, effect, arg, vol, curVoice, start, end, 0xFF);
 }
@@ -1876,7 +1878,7 @@ void FreeInstruList( short iD)
 
 void PaintInstruList( short InstruNo, short track)
 {
-	Rect		itemRect;
+	Rect itemRect;
 
 	SwitchColor( track);
 	
@@ -1892,7 +1894,7 @@ void PaintInstruList( short InstruNo, short track)
 
 void PaintArrowList( short ins, short t)
 {
-	short		y;
+	short y;
 
 	SwitchColor( t);
 	
@@ -2228,19 +2230,13 @@ void DrawInstruListItem( short iD)
 		InvertRect( &t);
 	}
 #pragma mark Try updating it like this!
-/*	if (QDIsPortBuffered( GetDialogPort( InstruListDlog)))
-//		QDFlushPortBuffer( GetDialogPort( InstruListDlog), NULL);
-	UpdateRgn = NewRgn();
-//	GetWindowRegion(GetDialogWindow(InstruListDlog), kWindowUpdateRgn, UpdateRgn);
+/*	RgnHandle UpdateRgn = NewRgn();
 	RectRgn(UpdateRgn, destRect);
 
 	if (QDIsPortBuffered( GetDialogPort( InstruListDlog)))
 		QDFlushPortBuffer( GetDialogPort( InstruListDlog), UpdateRgn);
 	DisposeRgn(UpdateRgn);*/
-	/**/
 }
-
-#include <QDOffscreen.h>
 					
 void DrawSmallSamplePreview()
 {
@@ -2375,14 +2371,7 @@ void UpdateInstruListWindow( DialogPtr	GetSelection)
 	RgnHandle	saveClipRgn;
 	Str255		aStr, tempStr;
 	RgnHandle	visibleRegion;
-	/*
-	 
-	 
-	 if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
-	 QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
 
-	 
-	 */
 	GetPort( &SavePort);
 	
 	SetPortDialogPort( GetSelection);
@@ -2493,8 +2482,8 @@ void EraseInstrumentInfo(void)
 
 void NSelectInstruList( short instru, short sample)
 {
-GrafPtr		savePort;
-Point		theCell;
+	GrafPtr		savePort;
+	Point		theCell;
 
 	if( InstruListDlog == NULL) return;
 	if( instru < 0 || instru >= MAXINSTRU) return;
@@ -2614,10 +2603,10 @@ static Boolean firstCall;
 
 Boolean DragInstruSelect( void)
 {
-Point		aPt;
-Rect		cellRect;
-RgnHandle	tempRgn;
-short		ins, samp;
+	Point		aPt;
+	Rect		cellRect;
+	RgnHandle	tempRgn;
+	short		ins, samp;
 
 	if( DragManagerUse)
 	{
@@ -2742,11 +2731,11 @@ pascal OSErr MyTrackingHandler(short message, WindowPtr theWindow, void *handler
 			DragType = 0;
 			if( attributes & kDragInsideSenderWindow) canAcceptDrag = true;
 			else canAcceptDrag = IsMyTypeAvailable( theDrag);
-		break;
+			break;
 		
 		case kDragTrackingEnterWindow:
 		
-		break;
+			break;
 
 		case kDragTrackingInWindow:
 			GetDragMouse(theDrag, &theMouse, NULL);
@@ -2841,15 +2830,15 @@ pascal OSErr MyTrackingHandler(short message, WindowPtr theWindow, void *handler
 				if( PtInRect( localMouse, &contrlRect) && selectedControl == NULL) { HiliteControl( LoadBut, kControlButtonPart);	selectedControl = LoadBut;}
 				else HiliteControl( LoadBut, 0);
 			}
-		break;
+			break;
 
 		case kDragTrackingLeaveWindow:
 			HideDragHilite( theDrag);
-		break;
+			break;
 
 		case kDragTrackingLeaveHandler:
 		
-		break;
+			break;
 
 	}
 	RGBBackColor( &theColor);
@@ -3255,7 +3244,8 @@ pascal OSErr MySendDataProc(FlavorType theFlavor,  void *refCon, ItemReference t
 		pStrcat( sName, "\p:");
 		
 		wdpb.ioNamePtr = sName;
-		PBHSetVol( &wdpb, false);
+		//PBHSetVol( &wdpb, false);
+		PBHSetVolSync( &wdpb);
 		HGetVol( NULL, &target.vRefNum, &target.parID);
 		
 		if( NSoundQualityExportSnd( DragIns, DragSamp, &SoundType, sName) == noErr)
@@ -3742,15 +3732,15 @@ extern EventRecord				theEvent;
 
 void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 {
-		Cell		theCell;
- 		short		temp, NoDigi,i, itemType;
-		Point		myPt;
-		Boolean		DoubleClick;
-		Str255		StrTemp;
-		Rect		cellRect, itemRect;
-		RgnHandle	tempRgn;
-		Handle		itemHandle;
-		GrafPtr		SavePort;
+	Cell		theCell;
+	short		temp, NoDigi,i, itemType;
+	Point		myPt;
+	Boolean		DoubleClick;
+	Str255		StrTemp;
+	Rect		cellRect, itemRect;
+	RgnHandle	tempRgn;
+	Handle		itemHandle;
+	GrafPtr		SavePort;
 		
  	GetPort( &SavePort);
  	SetPortDialogPort( InstruListDlog);
@@ -3924,126 +3914,128 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 	switch( whichItem)
 	{
 		case 18:
-		if( GetControlHilite( PlayBut) == 0)// && MyTrackControl( PlayBut, theEvent.where, NULL))
-		{
-			HiliteControl( PlayBut, kControlButtonPart);
-		
-			theCell.v = 0;	theCell.h = 0;
-			if( PLGetSelect( &theCell, &myList))
+			if( GetControlHilite( PlayBut) == 0)// && MyTrackControl( PlayBut, theEvent.where, NULL))
 			{
-				short	ins, samp;
+				HiliteControl( PlayBut, kControlButtonPart);
 			
-				ConvertIDtoInsSamp( theCell.v, &ins, &samp);
+				theCell.v = 0;	theCell.h = 0;
+				if( PLGetSelect( &theCell, &myList))
+				{
+					short	ins, samp;
 				
-				if( curMusic->fid[ ins].numSamples > 0 && samp >= 0)
-				{
-					short 	track = GetWhichTrackPlay();
-					Channel	*curVoice = &MADDriver->chan[ track];
+					ConvertIDtoInsSamp( theCell.v, &ins, &samp);
 					
-					DoPlayInstruInt2( curMusic->sample[ curMusic->fid[ ins].firstSample + samp], &curMusic->fid[ ins], 48 - curMusic->sample[ curMusic->fid[ ins].firstSample + samp]->relNote, ins, 0, 0, 0xFF, curVoice, 0, 0, samp);
-					
-					while( Button())
+					if( curMusic->fid[ ins].numSamples > 0 && samp >= 0)
 					{
-						DoGlobalNull();
-						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+						short 	track = GetWhichTrackPlay();
+						Channel	*curVoice = &MADDriver->chan[ track];
+						
+						DoPlayInstruInt2( curMusic->sample[ curMusic->fid[ ins].firstSample + samp], &curMusic->fid[ ins], 48 - curMusic->sample[ curMusic->fid[ ins].firstSample + samp]->relNote, ins, 0, 0, 0xFF, curVoice, 0, 0, samp);
+						
+						while( Button())
+						{
+							DoGlobalNull();
+							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+						}
+						MADDriver->chan[ track].loopBeg = 0;
+						MADDriver->chan[ track].loopSize = 0;
+						MADDriver->chan[ track].maxPtr = MADDriver->chan[ track].curPtr;
 					}
-					MADDriver->chan[ track].loopBeg = 0;
-					MADDriver->chan[ track].loopSize = 0;
-					MADDriver->chan[ track].maxPtr = MADDriver->chan[ track].curPtr;
-				}
-				else
-				{
-					short 	track = GetWhichTrackPlay();
-					Channel	*curVoice = &MADDriver->chan[ track];
-					
-					DoPlayInstruInt( 48, ins, 0, 0, 0xFF, curVoice, 0, 0);
-					
-					while( Button())
+					else
 					{
-						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-						DoGlobalNull();
+						short 	track = GetWhichTrackPlay();
+						Channel	*curVoice = &MADDriver->chan[ track];
+						
+						DoPlayInstruInt( 48, ins, 0, 0, 0xFF, curVoice, 0, 0);
+						
+						while( Button())
+						{
+							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+							DoGlobalNull();
+						}
+						MADDriver->chan[ track].loopBeg = 0;
+						MADDriver->chan[ track].loopSize = 0;
+						MADDriver->chan[ track].maxPtr = MADDriver->chan[ track].curPtr;
 					}
-					MADDriver->chan[ track].loopBeg = 0;
-					MADDriver->chan[ track].loopSize = 0;
-					MADDriver->chan[ track].maxPtr = MADDriver->chan[ track].curPtr;
 				}
+				
+				HiliteControl( PlayBut, 0);
 			}
-			
-			HiliteControl( PlayBut, 0);
-		}
-		break;
+			break;
 
 		case 19:
-		if( GetControlHilite( DelBut) == 0   && MyTrackControl( DelBut, theEvent.where, NULL))
-		{
-			DoKeyPressInstruList( 0x08, -1);
-		}
-		break;
+			if( GetControlHilite( DelBut) == 0   && MyTrackControl( DelBut, theEvent.where, NULL))
+			{
+				DoKeyPressInstruList( 0x08, -1);
+			}
+			break;
 
 		case 20:
-		if( GetControlHilite( LoadBut) == 0  && MyTrackControl( LoadBut, theEvent.where, NULL))
-		{
-			HandleNewSound( 1);
-		}
-		break;
+			if( GetControlHilite( LoadBut) == 0  && MyTrackControl( LoadBut, theEvent.where, NULL))
+			{
+				HandleNewSound( 1);
+			}
+			break;
 
 		case 21:
-		if( GetControlHilite( SaveBut) == 0  && MyTrackControl( SaveBut, theEvent.where, NULL))
-		{
-			HandleInstruChoice( 4);
-		}
-		break;
+			if( GetControlHilite( SaveBut) == 0  && MyTrackControl( SaveBut, theEvent.where, NULL))
+			{
+				HandleInstruChoice( 4);
+			}
+			break;
 		
 		case HRec:
-		//if( GetControlHilite( RecBut) == 0)
-		{
-			Point		Zone;
-			long		mresult;
-			Rect		contrlRect;
-			
-			//HiliteControl( RecBut, kControlButtonPart);
-			
-			GetControlBounds( RecBut, &contrlRect);
-			
-			Zone.h = contrlRect.right - 13;
-			Zone.v = contrlRect.top;
-			
-			LocalToGlobal( &Zone);
-			
-			mresult = PopUpMenuSelect(	NewSoundMenu,
-										Zone.v,
-										Zone.h,
-										0 );
-			
-			if ( HiWord( mresult ) != 0 )
+			//if( GetControlHilite( RecBut) == 0)
 			{
-				curMusic->hasChanged = true;
+				Point		Zone;
+				long		mresult;
+				Rect		contrlRect;
 				
-				HandleNewSound( LoWord( mresult));
+				//HiliteControl( RecBut, kControlButtonPart);
 				
-			}
-			
-			//HiliteControl( RecBut, 0);
-		}
-		break;
-		case 23:
-		if( GetControlHilite( OpenBut) == 0  && MyTrackControl( OpenBut, theEvent.where, NULL))
-		{
-			theCell.v = 0;	theCell.h = 0;
-			if( PLGetSelect( &theCell, &myList))
-			{
-				short	ins, samp;
-			
-				ConvertIDtoInsSamp( theCell.v, &ins, &samp);
-			
-				if( samp < 0)
+				GetControlBounds( RecBut, &contrlRect);
+				
+				Zone.h = contrlRect.right - 13;
+				Zone.v = contrlRect.top;
+				
+				LocalToGlobal( &Zone);
+				
+				mresult = PopUpMenuSelect(	NewSoundMenu,
+											Zone.v,
+											Zone.h,
+											0 );
+				
+				if ( HiWord( mresult ) != 0 )
 				{
-					if( GetIns( &temp, &samp)) NEditInstruInfo( temp, samp);
+					curMusic->hasChanged = true;
+					
+					HandleNewSound( LoWord( mresult));
+					
 				}
-				else NCreateSampleWindow( ins, samp);
+				
+				//HiliteControl( RecBut, 0);
 			}
-		}
-		break;
+			break;
+			
+		case 23:
+			if( GetControlHilite( OpenBut) == 0  && MyTrackControl( OpenBut, theEvent.where, NULL))
+			{
+				theCell.v = 0;	theCell.h = 0;
+				if( PLGetSelect( &theCell, &myList))
+				{
+					short	ins, samp;
+				
+					ConvertIDtoInsSamp( theCell.v, &ins, &samp);
+				
+					if( samp < 0)
+					{
+						if( GetIns( &temp, &samp)) NEditInstruInfo( temp, samp);
+					}
+					else NCreateSampleWindow( ins, samp);
+				}
+			}
+			break;
+			
 		case 24:
 			if( GetControlHilite( FlipBut) == 0  && MyTrackControl( FlipBut, theEvent.where, NULL))
 			{
@@ -4072,7 +4064,7 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 				if( caRect.right == 300) SetControlValue( FlipBut, 0);
 				else SetControlValue( FlipBut, 1);
 			}
-		break;
+			break;
 	}
 	
 	SetPort( SavePort);
@@ -4080,11 +4072,11 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 
 void DoKeyPressInstruList( short theChar, short xxxxxxx)
 {
-GrafPtr		SavePort;
-short		theNo, lastNo, i, ins, samp;
-Point		theCell = { 0, 0};
-Rect		cellRect;
-Boolean		Delete;
+	GrafPtr		SavePort;
+	short		theNo, lastNo, i, ins, samp;
+	Point		theCell = { 0, 0};
+	Rect		cellRect;
+	Boolean		Delete;
 
 	if( InstruListDlog == NULL) return;
 	
