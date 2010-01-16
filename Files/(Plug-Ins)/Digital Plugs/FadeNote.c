@@ -337,12 +337,9 @@ OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	long				Result;
 	MenuDefSpec			defSpec2;
 	
-#if CALL_NOT_IN_CARBON
-#else
 	defSpec2.defType = kMenuDefProcPtr;
 	defSpec2.u.defProc = NewMenuDefUPP( MyMenuNoteDefProc );
 	RegisterMenuDefinition( 1972, &defSpec2);
-#endif
 
 	myDia = GetNewDialog( 128, NULL, (WindowPtr) -1L);
 	SetPortDialogPort( myDia);

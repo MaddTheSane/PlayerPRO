@@ -196,10 +196,6 @@ void SetSampNameM( Str255 theNewName, Ptr destName)
 
 short GenerateDLSFromBundle()
 {
-#if CALL_NOT_IN_CARBON
-	//#if 0
-	return -1;
-#else
 	CFBundleRef		AudioBundle;
 	CFURLRef		bundleURL;
 	FSRef 			bundleFSRef, rsrcRef;
@@ -294,7 +290,6 @@ short GenerateDLSFromBundle()
 	CloseResFile( refNum);
 	
 	return ff;
-#endif
 }
 
 void DeleteDLSFile()

@@ -1,4 +1,3 @@
-//TODO: CoreMIDI back-end
 #ifdef MAINPLAYERPRO
 #include "Shuddup.h"
 #endif
@@ -7,11 +6,7 @@
 #include "RDriverInt.h"
 #include "MIDI.h"
 #include <stdio.h>
-#if MACOS9VERSION
 #include "OMS.h"
-#elif __MACH__
-#include <CoreMIDI/CoreMIDI.h>
-#endif
 
 #define refConTime			1L
 #define refConOutput		3L
@@ -48,9 +43,7 @@ short 		gChosenInputID = 0;		/* uniqueID of selected input; 0 means none */
 short		gChosenOutputID = 0;	/* uniqueID of selected output; 0 means none */
 short		gOutNodeRefNum = -1;	/* node refNum of the selected output; -1 means non existant */
 
-#if MACOS9VERSION
 OMSIDListH	prevSelectionIN, prevSelectionOUT;
-#endif
 
 unsigned MidiVolume[128] = {
 	 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
@@ -70,12 +63,6 @@ unsigned MidiVolume[128] = {
 void DoPlayInstruInt( short	Note, short Instru, short effect, short arg, short vol, Channel *curVoice, long start, long end);
 void NPianoRecordProcess( short i, short, short, short);
 
-#ifdef __MACH__
-static MIDIClientRef MADMIDICliRef;
-void MADMIDINotifyProc(const MIDINotification *message, void *refCon);
-#endif
-
-#if MACOS9VERSION
 pascal void MyAppHook(OMSAppHookMsg *pkt, long myRefCon);
 pascal void MyAppHook(OMSAppHookMsg *pkt, long myRefCon)
 {
@@ -102,16 +89,12 @@ pascal void MyAppHook(OMSAppHookMsg *pkt, long myRefCon)
 	SetA5(olda5);
 
 }
-#endif
 
-#if MACOS9VERSION
 static OMSPacket	pktCopy;
 static Boolean		newPacket;
-#endif
 
 void MyNullHook()
 {
-#if MACOS9VERSION
 	short				pLength, i, myNote, curins, curvol, track;
 	Rect				tempRect;
 	GrafPtr				savePort;
@@ -172,7 +155,7 @@ void MyNullHook()
 	}
 	else if( pkt->data[ 0] >= 0x80 && pkt->data[ 0] <= 0x8F)							// NOTE OFF
 	{
-		NOTEOFF:
+	NOTEOFF:
 	
 		myNote = pkt->data[ 1] - 12;
 		if( myNote >= 0 && myNote < NUMBER_NOTES)
@@ -215,10 +198,8 @@ void MyNullHook()
 			}
 		}
 	}
-#endif
 }
 
-#if MACOS9VERSION
 pascal void	MyReadHook(OMSPacket *pkt, long myRefCon);
 pascal void	MyReadHook(OMSPacket *pkt, long myRefCon)
 {
@@ -237,11 +218,9 @@ pascal void	MyReadHook(OMSPacket *pkt, long myRefCon)
 	SetA5(olda5);
 
 }
-#endif
 
 void CloseMIDIHarware(void)
 {
-#if MACOS9VERSION
 	if( MIDIHardware)
 	{
 		if (gSignedInToMIDIMgr)
@@ -255,14 +234,10 @@ void CloseMIDIHarware(void)
 	}
 	
 	MIDIHardware = false;
-#elif __MACH__
-	
-#endif
 }
 
-OSErr	InitOMS(OSType appSignature, OSType inPortID, OSType outPortID)
+OSErr InitOMS(OSType appSignature, OSType inPortID, OSType outPortID)
 {
-#if MACOS9VERSION
 	OSErr 			err;
 	OMSAppHookUPP 	appHook;
 	OMSReadHookUPP 	readHook;
@@ -278,9 +253,9 @@ OSErr	InitOMS(OSType appSignature, OSType inPortID, OSType outPortID)
 	/*	Sign in to OMS */
 	err = OMSSignIn( appSignature, (long)LMGetCurrentA5(), LMGetCurApName(), appHook, &gCompatMode);
 	/*	Passing CurrentA5 as the refCon solves the problem of A5 setup in the appHook.
-		Using other Apple-recommended techniques for setting up A5 in the appHook
-		are fine as well.  The client name will be the same as the application's name,
-		as stored in the low-memory global CurApName. */
+	 Using other Apple-recommended techniques for setting up A5 in the appHook
+	 are fine as well.  The client name will be the same as the application's name,
+	 as stored in the low-memory global CurApName. */
 	
 	if (err)
 		return err;
@@ -296,19 +271,17 @@ OSErr	InitOMS(OSType appSignature, OSType inPortID, OSType outPortID)
 	prevSelectionOUT	= NULL;
 	
 	return noErr;
-
+	
 errexit:
-		OMSSignOut( appSignature);
-		
-		return err;
-#endif
-
-return noErr;
+	OMSSignOut( appSignature);
+	
+	return err;
+	
+	return noErr;
 }
 
 void OpenMIDIHardware( void)	
 {
-#if MACOS9VERSION
 	if( MIDIHardware == false) return;
 	
 	if( MIDIHardwareAlreadyOpen == true) return;
@@ -323,14 +296,10 @@ void OpenMIDIHardware( void)
 		MIDIHardware = true;
 		MIDIHardwareAlreadyOpen = true;
 	}
-#elif __MACH__
-	
-#endif
 }
 
 void InitMIDIHarware(void)
 {
-#if MACOS9VERSION
 	long		size;
 	Handle		ItemHdl;
 	Handle		TheIcon;
@@ -345,21 +314,14 @@ void InitMIDIHarware(void)
 //	if( thePrefs.SendMIDIClockData) OpenMIDIHardware();
 	
 	return;
-#elif __MACH__
-	
-#else
-	MIDIHardware = false;
-	MIDIHardwareAlreadyOpen = false;
-#endif
 }
 
 void NDoPlayInstru(short	Note, short Instru, short effect, short arg, short vol);
 
 void DoMidiSpeaker( short note, short Instru, long arg)
 {
-#if MACOS9VERSION
-Point	theCell;
-short	vol, chan;
+	Point	theCell;
+	short	vol, chan;
 
 	if( thePrefs.MIDIVelocity)
 	{
@@ -380,9 +342,6 @@ short	vol, chan;
 	}
 	
 	DoPlayInstruInt( note, Instru, 0, 0, vol, &MADDriver->chan[ chan], 0, 0);
-#elif __MACH__
-	
-#endif
 }
 
 /*void SquidAllNotesOff(short PortRefNum)
@@ -401,7 +360,6 @@ short	vol, chan;
 void	OpenOrCloseConnection(Boolean opening);
 void	OpenOrCloseConnection(Boolean opening)
 {
-#if MACOS9VERSION
 	OSErr err;
 	OMSConnectionParams conn;
 	
@@ -412,14 +370,10 @@ void	OpenOrCloseConnection(Boolean opening)
 	if (opening)
 		err = OMSOpenConnections(MySignature, 'in  ', 1, &conn, FALSE);
 	else OMSCloseConnections(MySignature, 'in  ', 1, &conn);
-#elif __MACH__
-
-#endif
 }
 
 void SelectOMSConnections( Boolean Input)
 {
-#if MACOS9VERSION
 	GrafPtr	savedPort;
 	
 	GetPort( &savedPort);
@@ -460,13 +414,10 @@ void SelectOMSConnections( Boolean Input)
 	}
 	
 	SetPort( savedPort);
-#endif
 }
 
 void SendMIDIClock( MADDriverRec *intDriver, Byte MIDIByte)
 {
-#if MACOS9VERSION
-
 	OMSMIDIPacket pack;
 	
 	if( MIDIHardware == false) return;
@@ -481,15 +432,10 @@ void SendMIDIClock( MADDriverRec *intDriver, Byte MIDIByte)
 	pack.data[ 0] = MIDIByte;
 	
 	OMSWritePacket2( &pack, gOutNodeRefNum, gOutputPortRefNum);
-#elif __MACH__
-	
-#endif
 }
 
 void SendMIDITimingClock( MADDriverRec *MDriver)
 {
-#if MACOS9VERSION
-
 	OMSMIDIPacket 	pack;
 	short			i, x, y;
 	Cmd				*aCmd;
@@ -581,14 +527,4 @@ void SendMIDITimingClock( MADDriverRec *MDriver)
 	pack.data[ 2] = low;
 	
 	OMSWritePacket2( &pack, gOutNodeRefNum, gOutputPortRefNum);
-#elif __MACH__
-	
-#endif
 }
-
-#ifdef __MACH__
-void MADMIDINotifyProc(const MIDINotification *message, void *refCon)
-{
-	
-}
-#endif

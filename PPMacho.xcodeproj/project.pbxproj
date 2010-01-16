@@ -221,6 +221,7 @@
 		554E126510D6F4F800BB619C /* Propagate.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FF110D6C79D00BB619C /* Propagate.r */; };
 		554E126610D6F50500BB619C /* Revert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF410D6C79D00BB619C /* Revert.c */; };
 		554E126710D6F50500BB619C /* Revert.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FF510D6C79D00BB619C /* Revert.r */; };
+		555E9B4E110192F900986239 /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */; };
 		55672E1C10CAD641008C5C3D /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55672E1D10CAD641008C5C3D /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
 		55672E1E10CAD641008C5C3D /* AMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341D310BB5FE0005208D1 /* AMF.ppimpexp */; };
@@ -475,7 +476,6 @@
 		88E0C4540C2F21DE00D6C081 /* GetFileIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C40E0C2F21DD00D6C081 /* GetFileIcon.h */; };
 		88E0C4550C2F21DE00D6C081 /* PlugsPPDGInit.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C50C2F21DD00D6C081 /* PlugsPPDGInit.c */; };
 		88E0C4580C2F21DE00D6C081 /* PlugsSoundFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C70C2F21DD00D6C081 /* PlugsSoundFilter.c */; };
-		88E0C4590C2F21DE00D6C081 /* MIDI-Hardware.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C10C2F21DD00D6C081 /* MIDI-Hardware.c */; };
 		88E0C45A0C2F21DE00D6C081 /* Navigation.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4100C2F21DD00D6C081 /* Navigation.c */; };
 		88E0C45C0C2F21DE00D6C081 /* QuicktimeWindow.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4020C2F21DD00D6C081 /* QuicktimeWindow.c */; };
 		88E0C4600C2F21DE00D6C081 /* AudioCD.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E10C2F21DD00D6C081 /* AudioCD.c */; };
@@ -1376,7 +1376,7 @@
 		553340E810BB5368005208D1 /* MADI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = MADI.h; sourceTree = "<group>"; };
 		553340E910BB5368005208D1 /* MED.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MED.c; sourceTree = "<group>"; };
 		553340EA10BB5368005208D1 /* MED.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; path = MED.h; sourceTree = "<group>"; };
-		553340EC10BB5368005208D1 /* MIDI-GM-Small.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = "MIDI-GM-Small.c"; sourceTree = "<group>"; };
+		553340EC10BB5368005208D1 /* MIDI-GM-Small.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = "MIDI-GM-Small.c"; sourceTree = "<group>"; };
 		553340ED10BB5368005208D1 /* MIDI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MIDI.c; sourceTree = "<group>"; };
 		553340EE10BB5368005208D1 /* MIDI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIDI.h; sourceTree = "<group>"; };
 		553340EF10BB5368005208D1 /* Progress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = Progress.c; sourceTree = "<group>"; };
@@ -1516,6 +1516,9 @@
 		554E123010D6F3E600BB619C /* Revert.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Revert.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E125410D6F3E600BB619C /* Revert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Revert-Info.plist"; path = "../../../Revert-Info.plist"; sourceTree = "<group>"; };
 		554E15FF10D8BD0600BB619C /* FileUtils.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; lineEnding = 0; name = FileUtils.exp; path = Files/FileUtils.exp; sourceTree = "<group>"; };
+		555E9B491101912100986239 /* MIDI-Hardware-Mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Mac.c"; path = "Files/MIDI-Hardware-Mac.c"; sourceTree = "<group>"; };
+		555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-OSX.c"; path = "Files/MIDI-Hardware-OSX.c"; sourceTree = "<group>"; };
+		555E9B4B1101912100986239 /* MIDI-Hardware-Stub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Stub.c"; path = "Files/MIDI-Hardware-Stub.c"; sourceTree = "<group>"; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "OSX-PlugImport.c"; sourceTree = "<group>"; };
 		5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPROCore-Info.plist"; sourceTree = "<group>"; };
@@ -1623,7 +1626,6 @@
 		88E0C3B50C2F21DD00D6C081 /* PlayerPRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayerPRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88E0C3BE0C2F21DD00D6C081 /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 1; name = Carbon.r; path = Files/Carbon.r; sourceTree = "<group>"; };
 		88E0C3BF0C2F21DD00D6C081 /* PlayerProCarbon.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlayerProCarbon.pch; path = Files/PlayerProCarbon.pch; sourceTree = SOURCE_ROOT; };
-		88E0C3C10C2F21DD00D6C081 /* MIDI-Hardware.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; name = "MIDI-Hardware.c"; path = "Files/MIDI-Hardware.c"; sourceTree = SOURCE_ROOT; };
 		88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = AboutPlugs.c; path = Files/wds_general/AboutPlugs.c; sourceTree = SOURCE_ROOT; };
 		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = FileUtils.h; sourceTree = "<group>"; };
 		88E0C3C50C2F21DD00D6C081 /* PlugsPPDGInit.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PlugsPPDGInit.c; path = Files/PlugsPPDGInit.c; sourceTree = SOURCE_ROOT; };
@@ -3209,7 +3211,9 @@
 		88E0C3C00C2F21DD00D6C081 /* MIDI Hardware */ = {
 			isa = PBXGroup;
 			children = (
-				88E0C3C10C2F21DD00D6C081 /* MIDI-Hardware.c */,
+				555E9B491101912100986239 /* MIDI-Hardware-Mac.c */,
+				555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */,
+				555E9B4B1101912100986239 /* MIDI-Hardware-Stub.c */,
 			);
 			name = "MIDI Hardware";
 			sourceTree = "<group>";
@@ -5613,7 +5617,6 @@
 				88E0C4530C2F21DE00D6C081 /* GetFileIcon.c in Sources */,
 				88E0C4550C2F21DE00D6C081 /* PlugsPPDGInit.c in Sources */,
 				88E0C4580C2F21DE00D6C081 /* PlugsSoundFilter.c in Sources */,
-				88E0C4590C2F21DE00D6C081 /* MIDI-Hardware.c in Sources */,
 				88E0C45A0C2F21DE00D6C081 /* Navigation.c in Sources */,
 				88E0C45C0C2F21DE00D6C081 /* QuicktimeWindow.c in Sources */,
 				88E0C4600C2F21DE00D6C081 /* AudioCD.c in Sources */,
@@ -5647,6 +5650,7 @@
 				5547CE5F10C6E5490041DEF6 /* ByteUtils.c in Sources */,
 				55672E9010CAD830008C5C3D /* OSX-PlugImport.c in Sources */,
 				55E8981A10EEC5BA004EB52B /* AboutPlugs.c in Sources */,
+				555E9B4E110192F900986239 /* MIDI-Hardware-OSX.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
