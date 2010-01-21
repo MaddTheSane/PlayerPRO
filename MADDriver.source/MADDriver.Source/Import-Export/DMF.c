@@ -656,7 +656,7 @@ static OSErr TestITFile( Ptr AlienFile)
 	else return  MADFileNotSupportedByThisPlug;
 }
 
-OSErr mainDMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
@@ -755,10 +755,3 @@ OSErr mainDMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 
 	return myErr;
 }
-
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x45, 0xAE, 0x25, 0xED, 0x47, 0xCE, 0x44, 0xD8, 0xA3, 0x51, 0xE3, 0xCB, 0x1C, 0x48, 0xED, 0xA8))
-//45AE25ED-47CE-44D8-A351-E3CB1C48EDA8
-
-#define PLUGMAIN mainDMF
-#define PLUGINFACTORY DMFFactory
-#include "CFPlugin-bridge.c"

@@ -563,7 +563,7 @@ static OSErr ExtractMEDInfo( PPInfoRec *info, Ptr theMED)
 	return noErr;
 }
 
-OSErr mainMED( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
@@ -660,10 +660,3 @@ OSErr mainMED( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 
 	return myErr;
 }
-
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x2C, 0x23, 0xFD, 0xF2, 0x61, 0xBD, 0x47, 0xB4, 0x83, 0x80, 0x78, 0x4A, 0xC4, 0xA1, 0xE5, 0x0D))
-//2C23FDF2-61BD-47B4-8380-784AC4A1E50D
-
-#define PLUGMAIN mainMED
-#define PLUGINFACTORY MEDFactory
-#include "CFPlugin-bridge.c"

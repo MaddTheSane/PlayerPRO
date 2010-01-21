@@ -898,7 +898,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /*****************/
 /* MAIN FUNCTION */
 /*****************/
-OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
@@ -1012,10 +1012,3 @@ OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	
 	return myErr;
 }
-
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x86, 0xC7, 0x43, 0x00, 0x93, 0x96, 0x4E, 0x68, 0x9B, 0x3F, 0x02, 0xCE, 0x56,0x26, 0xA7, 0xC6)) 
-//86C74300-9396-4E68-9B3F-02CE5626A7C6
-#define PLUGMAIN mainMOD
-#define PLUGINFACTORY ModFactory
-
-#include "CFPlugin-bridge.c"

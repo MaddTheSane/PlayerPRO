@@ -305,7 +305,7 @@ static OSErr TestULTFile( Ptr AlienFile)
 	else return MADFileNotSupportedByThisPlug;
 }
 
-OSErr mainULT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
@@ -399,11 +399,3 @@ OSErr mainULT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	
 	return myErr;
 }
-
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xC6, 0x59, 0x34, 0xC3, 0x9B, 0x3B, 0x44, 0x84, 0xA0, 0xBF, 0xF0, 0x24, 0x44, 0xE4, 0xD3, 0xFD))
-//C65934C3-9B3B-4484-A0BF-F02444E4D3FD
-
-#define PLUGMAIN mainULT
-#define PLUGINFACTORY ULTFactory
-#include "CFPlugin-bridge.c"
-
