@@ -72,17 +72,19 @@ void MyNullHook()
 
 void CloseMIDIHarware(void)
 {
-	if( MIDIHardware)
+	/*if( MIDIHardware)
 	{
-	
-	}
+		OSStatus MIDIErr = MIDIClientDispose(MADMIDICliRef);
+	}*/
 	
 	MIDIHardware = false;
 }
 
 void OpenMIDIHardware( void)	
 {
-
+	/*OSStatus MIDIErr = MIDIClientCreate(CFSTR("PlayerPRO"), MADMIDINotifyProc, NULL, &MADMIDICliRef);
+	if(MIDIErr == noErr) MIDIHardware = TRUE;
+	else */MIDIHardware = FALSE;
 }
 
 void InitMIDIHarware(void)

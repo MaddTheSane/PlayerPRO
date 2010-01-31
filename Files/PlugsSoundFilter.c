@@ -169,22 +169,15 @@ void InitPlug(void)
 					curPlug->Type = 'PLug';
 					if (ToneGenerator == -1) {
 						CFArrayRef factories = CFPlugInFindFactoriesForPlugInTypeInPlugIn(kPlayerPROFiltersPlugTypeID, curPlug->file );
+						CFIndex	factoryCount, index;
 						
-						if ( factories != NULL )
+						factoryCount	= CFArrayGetCount( factories );
+						for ( index = 0 ; (index < factoryCount) ; index++ )
 						{
-							CFIndex	factoryCount, index;
-							
-							factoryCount	= CFArrayGetCount( factories );
-							if ( factoryCount > 0 )
-							{
-								for ( index = 0 ; (index < factoryCount) ; index++ )
-								{
-									CFUUIDRef	factoryID;
-									factoryID = (CFUUIDRef) CFArrayGetValueAtIndex( factories, index );
-									if (CFEqual(factoryID, CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x25, 0xFA, 0x16, 0xEC, 0x75, 0xFF, 0x45, 0x14, 0x9C, 0x84, 0x72, 0x02, 0x36, 0x00, 0x44, 0xB9) /*Tone Generator UUID*/)) {
-										ToneGenerator = tPlug;
-									}
-								}
+							CFUUIDRef	factoryID;
+							factoryID = (CFUUIDRef) CFArrayGetValueAtIndex( factories, index );
+							if (CFEqual(factoryID, CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x25, 0xFA, 0x16, 0xEC, 0x75, 0xFF, 0x45, 0x14, 0x9C, 0x84, 0x72, 0x02, 0x36, 0x00, 0x44, 0xB9) /*Tone Generator UUID*/)) {
+								ToneGenerator = tPlug;
 							}
 						}
 						CFRelease(factories);
