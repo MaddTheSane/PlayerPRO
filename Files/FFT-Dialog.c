@@ -147,7 +147,7 @@ void FFTSampleUpdate( DialogPtr TheDia, Boolean filter)
 
 void ApplyFilter( Boolean filter, sData *SDataSrc)
 {
-short	i, last, z, cur;
+	short	i, last, z, cur;
 
 	if( logMode)
 	{
@@ -295,7 +295,7 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 				if( EQPreview) ApplyFilter( filter, SDataSrc);
 				
 				UpdateSampleWindows();
-			break;
+				break;
 		
 			case 6:
 				EQPreview = !EQPreview;
@@ -306,11 +306,11 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 				if( EQPreview) ApplyFilter( filter, SDataSrc);
 				
 				UpdateSampleWindows();
-			break;
+				break;
 		
 			case -updateEvt:
 				FFTSampleUpdate( TheDia, filter);
-			break;
+				break;
 			
 			case 5:
 				if( filter)
@@ -333,7 +333,7 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 				SetCursor( GetQDGlobalsArrow( &qdarrow));
 				
 				UpdateSampleWindows();
-			break;
+				break;
 			
 			case 3:
 				GetDialogItem( TheDia, 3, &itemType, &itemHandle, &itemRect);
@@ -409,7 +409,7 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 				SetCursor( GetQDGlobalsArrow( &qdarrow));
 				
 				UpdateSampleWindows();
-			break;
+				break;
 			
 			case 4:	// TEST
 				BlockMoveData( SData.data, SDataSrc->data, SDataSrc->size);
@@ -425,7 +425,7 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 				MADPlaySoundDataSYNC( MADDriver, SDataSrc->data, SData.size, 0, 48 + SData.relNote, SData.amp, SData.loopBeg, SData.loopSize, ((long)SData.c2spd) << 16L, SData.stereo);
 			
 				SetCursor( GetQDGlobalsArrow( &qdarrow));
-			break;
+				break;
 		}
 	
 	}while( itemHit != 1 && itemHit != 2);

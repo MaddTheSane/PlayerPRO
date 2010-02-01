@@ -9,7 +9,7 @@
 //	Works on the selected part or all the waveform
 //	if there is no selection.
 
-#include <Dialogs.h>
+#include <Carbon/Carbon.h>
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>

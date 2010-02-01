@@ -1,14 +1,10 @@
 #include "Shuddup.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <AIFF.h>
-#include <sound.h>
-#include <SoundInput.h>
+#include <Carbon/Carbon.h>
 #include "Undo.h"
-#include <FixMath.h>
 #include <math.h>
 #include "PPPlug.h"
-#include <Navigation.h>
 #include <QuickTime/QuickTime.h>
 
 /*void 	SaveMODAPPL( short APPLType, short fRefNum);

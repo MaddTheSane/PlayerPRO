@@ -16,8 +16,7 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "FileUtils.h"
-#include <QDOffscreen.h>
-#include <Navigation.h>
+#include <Carbon/Carbon.h>
 void SetFontStyle( DialogPtr dialog, SInt16 item, ControlFontStyleRec *style );
 
 void				PrefFilterPiano( DialogPtr theDialog, EventRecord *theEventI, short *itemHit);
@@ -84,22 +83,13 @@ void DePatchMyDisposePtr( &)
 
 unsigned char* MyC2PStr( Ptr cStr)
 {
-/*	long size = strlen( cStr);
-	BlockMoveData( cStr, cStr + 1, strlen( cStr));
-	cStr[ 0] = size;
-
-	return (unsigned char*) cStr;*/
 	return MYC2PStr(cStr);
 }
 
 void MyP2CStr( unsigned char *cStr)
 {
-/*	long size = cStr[ 0];
-	BlockMoveData( cStr + 1, cStr, size);
-	cStr[ size] = 0;*/
 	MYP2CStr(cStr);
 }
-
 
 void NNumToString( short no, Str255 aStr)
 {
@@ -403,31 +393,31 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 		
 		switch ( (myIntEvent->message) & charCodeMask )
 		{
-		case 0x03:
-			*itemHit = 1;
-			return true;
-		break;
-		
-		case 0x0d:
-			if( GetWRefCon( GetDialogWindow( theDlg)) != 8775)
-			{
+			case 0x03:
 				*itemHit = 1;
 				return true;
-			}
-		break;
-
-		case 0x1b:
-			*itemHit = 2;
-			return true;
-		break;
-
-		default:
-		{
-			DialogSelect( myIntEvent, &whichDialog, itemHit);
+				break;
 			
-			return false;
-		}
-		break;
+			case 0x0d:
+				if( GetWRefCon( GetDialogWindow( theDlg)) != 8775)
+				{
+					*itemHit = 1;
+					return true;
+				}
+				break;
+
+				case 0x1b:
+					*itemHit = 2;
+					return true;
+					break;
+
+			default:
+			{
+				DialogSelect( myIntEvent, &whichDialog, itemHit);
+				
+				return false;
+			}
+			break;
 		}
 	}
 	else if( myIntEvent->what == nullEvent)

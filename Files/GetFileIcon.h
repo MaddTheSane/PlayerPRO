@@ -3,8 +3,7 @@
 #ifndef __GETFILEICON__
 #define __GETFILEICON__
 
-#include <Icons.h>
-#include <Finder.h>
+#include <Carbon/Carbon.h>
 
 pascal OSErr GetFileIcon( FSSpec *thing, IconSelectorValue iconSelector, Handle *theSuite);
 Boolean IsSuiteEmpty( Handle theSuite );

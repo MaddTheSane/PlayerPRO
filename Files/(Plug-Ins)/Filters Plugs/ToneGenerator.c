@@ -6,7 +6,7 @@
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
-#include <MixedMode.h>
+#include <Carbon/Carbon.h>
 #include <math.h>
 
 enum

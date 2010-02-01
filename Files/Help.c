@@ -4,10 +4,7 @@
 #include "RDriverInt.h"
 #include "Help.h"
 #include <stdio.h>
-#if MACOS9VERSION
-#include "OMS.h"
-#endif
-#include <Appearance.h>
+#include <CoreMIDI/CoreMIDI.h>
 
 //#include "asiodrivers.h"
 

@@ -5,7 +5,6 @@
 #include "Undo.h"
 #include <string.h>
 #include "PrivateList.h"
-#include <Drag.h>
 
 	/******** HELP MODULE ********/
 	enum

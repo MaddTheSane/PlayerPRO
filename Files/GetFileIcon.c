@@ -1,5 +1,4 @@
-#include <Icons.h>
-#include <Finder.h>
+#include <Carbon/Carbon.h>
 #include "GetFileIcon.h"
 
 //TODO: rewrite to handle icns icons?

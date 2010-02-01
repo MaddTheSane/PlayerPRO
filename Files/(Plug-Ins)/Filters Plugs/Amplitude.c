@@ -1,6 +1,7 @@
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
+#include <Carbon/Carbon.h>
 
 static void AutoPosition( DialogPtr aDia)
 {

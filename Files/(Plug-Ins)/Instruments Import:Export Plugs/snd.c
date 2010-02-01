@@ -6,8 +6,7 @@
 //	Usage:
 
 #include "PPPlug.h"
-#include <Sound.h>
-#include <SoundInput.h>
+#include <Carbon/Carbon.h>
 
 void AddLoopToSndHandle( Handle sound, long Start, long End)
 {

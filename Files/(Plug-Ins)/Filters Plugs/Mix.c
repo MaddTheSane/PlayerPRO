@@ -13,7 +13,7 @@
 //	WARNING
 //	This plug does work ONLY with 8 bits data
 
-#include <Sound.h>
+#include <Carbon/Carbon.h>
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>

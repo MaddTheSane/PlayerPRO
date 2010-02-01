@@ -64,6 +64,7 @@ void NPianoRecordProcess( short i, short, short, short);
 
 static MIDIClientRef MADMIDICliRef;
 void MADMIDINotifyProc(const MIDINotification *message, void *refCon);
+static char *MADRefCon;
 
 void MyNullHook()
 {
@@ -72,24 +73,32 @@ void MyNullHook()
 
 void CloseMIDIHarware(void)
 {
-	/*if( MIDIHardware)
+	if( MIDIHardware)
 	{
 		OSStatus MIDIErr = MIDIClientDispose(MADMIDICliRef);
-	}*/
+	}
 	
 	MIDIHardware = false;
 }
 
 void OpenMIDIHardware( void)	
 {
-	/*OSStatus MIDIErr = MIDIClientCreate(CFSTR("PlayerPRO"), MADMIDINotifyProc, NULL, &MADMIDICliRef);
-	if(MIDIErr == noErr) MIDIHardware = TRUE;
-	else */MIDIHardware = FALSE;
+	if(MIDIHardware)
+	{
+		OSStatus MIDIErr = MIDIClientCreate(CFSTR("PlayerPRO"), MADMIDINotifyProc, MADRefCon, &MADMIDICliRef);
+		if(MIDIErr == noErr) MIDIHardware = TRUE;
+		else MIDIHardware = FALSE;
+	}
+	MIDIHardwareAlreadyOpen = FALSE;
 }
 
 void InitMIDIHarware(void)
 {
+#if 1
 	MIDIHardware = false;
+#else
+	MIDIHardware = TRUE;
+#endif
 	MIDIHardwareAlreadyOpen = false;
 }
 

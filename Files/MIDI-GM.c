@@ -5,6 +5,7 @@
 #include <Carbon/Carbon.h>
 #include "Undo.h"
 #include <QuickTime/QuickTime.h>
+#include <CoreFoundation/CoreFoundation.h>
 
 #include "PPDefs.h"
 #include "WAV.h"
@@ -191,8 +192,6 @@ void SetSampNameM( Str255 theNewName, Ptr destName)
 		else destName[i] = '\0';
 	}
 }
-
-#include <CFBundle.h>
 
 short GenerateDLSFromBundle()
 {

@@ -4,7 +4,7 @@
 /*	1996 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Sound.h>
+#include <Carbon/Carbon.h>
 #include "XM.h"
 
 static OSErr TestXI( Ptr CC)

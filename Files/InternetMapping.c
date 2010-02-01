@@ -1,4 +1,4 @@
-#include <InternetConfig.h>
+#include <Carbon/Carbon.h>
 #include "Shuddup.h"
 
 void ChangeMapping( ICInstance inst, Handle prefh, long pos, OSType type, unsigned char* extension, ICMapEntry *entry, Boolean add)

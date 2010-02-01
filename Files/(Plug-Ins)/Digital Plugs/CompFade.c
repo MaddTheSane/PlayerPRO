@@ -168,7 +168,7 @@ OSErr mainCompFade( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	
 	do
 	{
-		RESTART:
+	RESTART:
 	
 		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 		

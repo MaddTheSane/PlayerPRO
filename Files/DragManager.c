@@ -1,6 +1,4 @@
-#include <Drag.h>
-#include <Gestalt.h>
-#include <Folders.h>
+#include <Carbon/Carbon.h>
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"

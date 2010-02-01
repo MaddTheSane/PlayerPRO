@@ -2,9 +2,8 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "PPPlug.h"
-#include <QuicktimeComponents.h>
-#include <Sound.h>
-#include <Movies.h>
+#include <Carbon/Carbon.h>
+#include <QuickTime/QuickTime.h>
 #include "Undo.h"
 
 //OSErr DoStandardOpen( FSSpec	*spec, Str255 string, OSType inType);

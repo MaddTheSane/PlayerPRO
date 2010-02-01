@@ -26,10 +26,6 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include "PPPrivate.h"
 
-#ifndef __NAVIGATION__
-#include <Navigation.h>
-#endif
-
 // the requested dimensions for our sample open customization area:
 #define kCustomWidth			410
 #define kCustomHeight			20

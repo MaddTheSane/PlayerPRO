@@ -1,19 +1,13 @@
 #define MAINSYSTEM2
 
-#include <Sound.h>
+#include <Carbon/Carbon.h>
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Gestalt.h>
-#include <Folders.h>
 #include "Undo.h"
 #include "Help.h"
-#include <QDOffscreen.h>
-#include <Processes.h>
-#include <Navigation.h>
-#include <Appearance.h>
-#include <QuicktimeComponents.h>
+#include <QuickTime/QuickTime.h>
 #include "PPResDefs.h"
 #include "ByteUtils.h"
 #include "PPPrivate.h"

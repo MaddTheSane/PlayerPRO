@@ -112,13 +112,12 @@ OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	SetDText( myDia, 3, "\p0");
 	SelectDialogItemText( myDia, 3, 0, 200);
 	
-	do
-	{
-		RESTART:
+	do {
+	RESTART:
 	
 		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 		
-	}while( itemHit != 1 && itemHit != 2);
+	} while( itemHit != 1 && itemHit != 2);
 	
 	if( itemHit == 1)
 	{

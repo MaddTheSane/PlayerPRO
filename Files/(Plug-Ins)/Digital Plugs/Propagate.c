@@ -20,9 +20,9 @@ Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 
 OSErr mainPropagate( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
-	DialogPtr			myDia;
-	short				itemHit, mode, track, row;
-	Str255				tStr;
+//	DialogPtr			myDia;
+	short				/*itemHit, mode,*/ track, row;
+//	Str255				tStr;
 		
 	for( track = 0; track < myPcmd->tracks; track ++)
 	{

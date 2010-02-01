@@ -4,7 +4,7 @@
 /*	1999 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Sound.h>
+#include <Carbon/Carbon.h>
 #include "PAT.h"
 
 #ifdef _MAC_H

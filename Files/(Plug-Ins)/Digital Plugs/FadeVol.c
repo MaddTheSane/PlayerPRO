@@ -19,10 +19,10 @@ static void GetDText (DialogPtr dlog, short item, StringPtr str)
 
 static void SetDText (DialogPtr dlog, short item, Str255 str)
 {
-	Handle			itemHandle;
-	short			itemType;
-	Rect			itemRect;
-	Str255			myStr;
+	//Handle			itemHandle;
+	//short			itemType;
+	//Rect			itemRect;
+	//Str255			myStr;
 	ControlHandle	control;
 	OSErr			err;
 

@@ -20,8 +20,8 @@ Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 
 OSErr mainRevert( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
-	short				itemHit, mode, track, row;
-	Str255				tStr;
+	short				/*itemHit, mode,*/ track, row;
+//	Str255				tStr;
 	Pcmd				*srcCmd;
 	long				memSize;
 		

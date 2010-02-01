@@ -2,8 +2,7 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Sound.h>
-#include <Finder.h>
+#include <Carbon/Carbon.h>
 #include <QuickTime/QuickTime.h>
 
 extern	DialogPtr		MODListDlog;
@@ -30,9 +29,9 @@ void OtherIntErreur( short ID, OSErr theErr, Str255 otherstr);
 OSErr ConvertMovieToMPEG4(FSSpec *inputFile, FSSpec *outputFile);
 Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, OSType type, FSSpec *dstFile);
 
-static	long	gCompressionID = 0;
-extern MenuHandle				thePatternMenu;
-extern DialogPtr					EditorDlog;
+static long				gCompressionID = 0;
+extern MenuHandle		thePatternMenu;
+extern DialogPtr		EditorDlog;
 
 /*long OpenHeaderMOD( Ptr outPtr, Str255 name, long bytesToRead)
 {

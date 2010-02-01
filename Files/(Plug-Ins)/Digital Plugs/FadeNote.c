@@ -353,13 +353,9 @@ OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	
 	do
 	{
-		RESTART:
+	RESTART:
 	
-//		#if defined(powerc) || defined(__powerc)
 		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
-//		#else
-//		ModalDialog( (ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
-//		#endif
 		
 		switch( itemHit)
 		{
@@ -383,8 +379,6 @@ OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 				
 				if ( HiWord( Result ) != 0 )
 				{
-					OSErr	iErr;
-				
 					OctavesName( LoWord( Result)-1, aStr);
 					SetDText( myDia, itemHit-4, aStr);
 					SelectDialogItemText( myDia, 3, 0, 200);

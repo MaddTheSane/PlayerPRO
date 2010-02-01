@@ -6,8 +6,7 @@
 //	Usage:
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Sound.h>
-#include <SoundInput.h>
+#include <Carbon/Carbon.h>
 
 Ptr MyExp1to3( Ptr sound, unsigned long numSampleFrames);
 Ptr MyExp1to6( Ptr sound, unsigned long numSampleFrames);

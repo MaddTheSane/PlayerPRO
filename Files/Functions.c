@@ -1,21 +1,6 @@
 #include "Shuddup.h"
 #include "RDriver.h"
 #include "Undo.h"
-
-/*void TurnRadio( short	item, DialogPtr	dlog, Boolean alors);
-void SetDText (DialogPtr dlog, short item, Str255 str);
-void ControlSwitch(short	item, DialogPtr	dlog, short	Switch);
-void OutPutHexShort( Str255 outch, short column, short shortNumber);
-void FrameButton(DialogPtr theDia, short whichButton, Boolean drawIt);
-void oldFrameButton( DialogPtr theDlg);
-void SetSelectionEditor( short FPat, short FPos, short FTrack);
-Boolean SetUpFind();
-Cmd * GetEditorSelectCmd( short *track, short *position);
-void DoItemPressFind( short whichItem, DialogPtr whichDialog);
-void GetDigitalSelection( short *XStart, short *YStart, short *XEnd, short *YEnd, short*);
-void SetDigitalSelection( short XStart, short YStart, short XEnd, short YEnd);
-void GetDText (DialogPtr dlog, short item, StringPtr str);
-void Erreur( short ID, OSErr	theErr);*/
 	
 		DialogPtr		FindDlog;
 extern	DialogPtr		MozartDlog, EditorDlog;
@@ -95,7 +80,7 @@ static	short 	FPat, FPos, FTrack;
 
 void NReplaceInt( Cmd	*myCmd, short track, short position, Boolean MakeUpdate)
 {
-Point	cell;
+	Point	cell;
 
 	if( RInstruActi)	myCmd->ins = RInstru;
 	if( RNoteActi)		myCmd->note = RNote;
@@ -113,8 +98,8 @@ Point	cell;
 
 void ReplaceCommand(void)
 {
-Cmd	*myCmd;
-short	track, position;
+	Cmd		*myCmd;
+	short	track, position;
 
 	switch( GetWRefCon( oldWindow))
 	{
@@ -130,13 +115,13 @@ short	track, position;
 			FindEffect	= myCmd->cmd;
 			FindArgu	= myCmd->arg;
 			FindVol		= myCmd->vol;	if( FindVol == 0xFF) FindVol = 0;
-		break;
+			break;
 	}
 }
 
 Boolean FindInternal( short FindType)
 {
-Boolean				goodInstru, goodNote, goodEffect, goodArgu, goodVol;
+	Boolean goodInstru, goodNote, goodEffect, goodArgu, goodVol;
 
 	if( !SetUpFind()) return false;
 
@@ -146,10 +131,10 @@ Boolean				goodInstru, goodNote, goodEffect, goodArgu, goodVol;
 			FPat = MADDriver->Pat;
 			FPos = MADDriver->PartitionReader;
 			goto InBoucle;
-		break;
+			break;
 		
 		case Find:
-		break;
+			break;
 		
 		case ReplaceFind:
 			ReplaceCommand();
@@ -157,7 +142,7 @@ Boolean				goodInstru, goodNote, goodEffect, goodArgu, goodVol;
 			FPat = MADDriver->Pat;
 			FPos = MADDriver->PartitionReader;
 			goto InBoucle;
-		break;
+			break;
 		
 		case ReplaceAll:
 			
@@ -279,8 +264,8 @@ void  UpdateFind(DialogPtr GetSelection)
 
 void SetUpButtons(void)
 {
-short	i;
-Str255	str;
+	short	i;
+	Str255	str;
 
 	if( MozartDlog == NULL)
 	{
@@ -590,28 +575,28 @@ Boolean SetUpFind(void)
 
 void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 {
-		Cell			theCell;
-		long			tempLong;
-		Handle			itemHandle;
-		Rect			itemRect;
- 		short			temp, bogus, itemType, i, *shortPtr, tempInstru, track, position;
- 		long			mresult;
- 		GrafPtr			SavePort;
- 		Point			myPt;
- 		Str255			aStr, theStr;
- 		Boolean			FindModifyBefore;
- 		Cmd				*myCmd;
- 		
- 		GetPort( &SavePort);
- 		SetPortDialogPort( FindDlog);
- 
+	Cell			theCell;
+	long			tempLong;
+	Handle			itemHandle;
+	Rect			itemRect;
+	short			temp, bogus, itemType, i, *shortPtr, tempInstru, track, position;
+	long			mresult;
+	GrafPtr			SavePort;
+	Point			myPt;
+	Str255			aStr, theStr;
+	Boolean			FindModifyBefore;
+	Cmd				*myCmd;
+	
+	GetPort( &SavePort);
+	SetPortDialogPort( FindDlog);
+	
 	//	if( whichItem > 0) SetUpButtons();
- 
- 		FindModifyBefore = FindModify;
- 
- 		switch( whichItem)
-		{
-		/** FIND **/
+	
+	FindModifyBefore = FindModify;
+	
+	switch( whichItem)
+	{
+			/** FIND **/
 		case 3:
 		case 4:
 		case 5:
@@ -622,38 +607,38 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 			InverseRadio( whichItem, FindDlog);
 			
 			switch( whichItem)
-			{
-				case 3:		FInstruActi	= !FInstruActi;		break;
-				case 4:		FNoteActi	= !FNoteActi;		break;
-				case 5:		FEffectActi	= !FEffectActi;		break;
-				case 6:		FArguActi	= !FArguActi;		break;
-				case 39:	FVolActi	= !FVolActi;		break;
-			}
-		break;
-		/***/
-
-		/** REPLACE **/
+		{
+			case 3:		FInstruActi	= !FInstruActi;		break;
+			case 4:		FNoteActi	= !FNoteActi;		break;
+			case 5:		FEffectActi	= !FEffectActi;		break;
+			case 6:		FArguActi	= !FArguActi;		break;
+			case 39:	FVolActi	= !FVolActi;		break;
+		}
+			break;
+			/***/
+			
+			/** REPLACE **/
 		case 21:
 		case 22:
 		case 23:
 		case 24:
 		case 41:
-		//	FindModify = true;
+			//	FindModify = true;
 			
 			InverseRadio( whichItem, FindDlog);
 			
 			switch( whichItem)
-			{
-				case 21:		RInstruActi	= !RInstruActi;		break;
-				case 22:		RNoteActi	= !RNoteActi;		break;
-				case 23:		REffectActi	= !REffectActi;		break;
-				case 24:		RArguActi	= !RArguActi;		break;
-				case 41:		RVolActi	= !RVolActi;		break;
-			}
-		break;
-		/***/
-
-		/** WHERE **/
+		{
+			case 21:		RInstruActi	= !RInstruActi;		break;
+			case 22:		RNoteActi	= !RNoteActi;		break;
+			case 23:		REffectActi	= !REffectActi;		break;
+			case 24:		RArguActi	= !RArguActi;		break;
+			case 41:		RVolActi	= !RVolActi;		break;
+		}
+			break;
+			/***/
+			
+			/** WHERE **/
 		case 10:
 		case 11:
 		case 12:
@@ -664,15 +649,15 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 			TurnRadio( whichItem, FindDlog, true);
 			
 			switch( whichItem)
-			{
-				case 10:	FindWhere	= CurrentPat;			break;
-				case 11:	FindWhere	= DigitalSelection;		break;
-				case 13:	FindWhere	= ClassicalSelection;	break;
-				case 12:	FindWhere	= Everywhere;			break;
-			}
-		break;
-		/***/
-		
+		{
+			case 10:	FindWhere	= CurrentPat;			break;
+			case 11:	FindWhere	= DigitalSelection;		break;
+			case 13:	FindWhere	= ClassicalSelection;	break;
+			case 12:	FindWhere	= Everywhere;			break;
+		}
+			break;
+			/***/
+			
 		case 46:
 		case 43:
 			FindModify = true;
@@ -682,12 +667,12 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 			TurnRadio( whichItem, FindDlog, true);
 			
 			switch( whichItem)
-			{
-				case 46:	FindTrack	= -1;		break;
-				case 43:	GetDText( FindDlog, 45, theStr);	StringToNum( theStr, &FindTrack);	FindTrack--;	break;
-			}
-		break;
-
+		{
+			case 46:	FindTrack	= -1;		break;
+			case 43:	GetDText( FindDlog, 45, theStr);	StringToNum( theStr, &FindTrack);	FindTrack--;	break;
+		}
+			break;
+			
 		case 44:
 			InsertMenu( TrackView, hierMenu);
 			GetDialogItem( FindDlog, whichItem, &itemType, &itemHandle, &itemRect);
@@ -698,9 +683,9 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 			SetItemMark( TrackView, FindTrack + 1, 0xa5);
 			
 			mresult = PopUpMenuSelect(	TrackView,
-										myPt.v,
-										myPt.h,
-										FindTrack + 1);
+									  myPt.v,
+									  myPt.h,
+									  FindTrack + 1);
 			
 			SetItemMark( TrackView, FindTrack + 1, 0);
 			
@@ -713,19 +698,19 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 				
 				TurnRadio( 46, FindDlog, false);
 				TurnRadio( 43, FindDlog, true);
-
+				
 				FindModify = true;
 			}
 			DeleteMenu( GetMenuID( TrackView));
-		break;
-
+			break;
+			
 		case 25:
 		case 14:		// Instru menu
 			InsertMenuItem( InstruMenu, "\pNo Ins", 0);
-		
+			
 			if( whichItem == 25) shortPtr = &RInstru;
 			else shortPtr = &FindInstru;
-				
+			
 			InsertMenu( InstruMenu, hierMenu);
 			GetDialogItem( FindDlog, whichItem, &itemType, &itemHandle, &itemRect);
 			
@@ -735,9 +720,9 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 			SetItemMark( InstruMenu, *shortPtr + 1, 0xa5);
 			
 			mresult = PopUpMenuSelect(	InstruMenu,
-										myPt.v,
-										myPt.h,
-										*shortPtr + 1);		// curInstru + 1
+									  myPt.v,
+									  myPt.h,
+									  *shortPtr + 1);		// curInstru + 1
 			
 			SetItemMark( InstruMenu, *shortPtr + 1, 0);		// curInstru + 1
 			
@@ -745,7 +730,7 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 			{
 				*shortPtr = (Byte) LoWord( mresult) - 1;
 				
-			//=	NumToString( *shortPtr, aStr);
+				//=	NumToString( *shortPtr, aStr);
 				NTStr( 3,  *shortPtr, (Ptr) aStr);	MyC2PStr( (Ptr) aStr);
 				SetDText( FindDlog, whichItem + 1, aStr);
 				
@@ -763,13 +748,13 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 			}
 			DeleteMenu( GetMenuID( InstruMenu));
 			DeleteMenuItem( InstruMenu, 1);
-		break;
-		
+			break;
+			
 		case 27:
 		case 16:		// Note menu
 			InsertMenuItem( NoteMenu, "\p000", NUMBER_NOTES);
 			InsertMenuItem( NoteMenu, "\pOFF", NUMBER_NOTES+1);		
-
+			
 			if( whichItem == 27) shortPtr = &RNote;
 			else shortPtr = &FindNote;
 			
@@ -786,9 +771,9 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 			SetItemMark( NoteMenu, tempInstru+1, 0xa5);
 			
 			mresult = PopUpMenuSelect(	NoteMenu,
-										myPt.v,
-										myPt.h,
-										tempInstru+1);
+									  myPt.v,
+									  myPt.h,
+									  tempInstru+1);
 			
 			SetItemMark( NoteMenu, tempInstru+1, 0);
 			
@@ -798,7 +783,7 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 				
 				if( *shortPtr == NUMBER_NOTES) 		*shortPtr = 0xFF;
 				if( *shortPtr == NUMBER_NOTES+1) 	*shortPtr = 0xFE;
-
+				
 				GetNoteString( *shortPtr, aStr);
 				SetDText( FindDlog, whichItem + 1, aStr);
 				
@@ -817,13 +802,13 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 			DeleteMenu( GetMenuID( NoteMenu));
 			DeleteMenuItem( NoteMenu, NUMBER_NOTES+1);
 			DeleteMenuItem( NoteMenu, NUMBER_NOTES+1);
-		break;
-		
+			break;
+			
 		case 30:
 		case 19:	// Effect menu
 			if( whichItem == 30) shortPtr = &REffect;
 			else shortPtr = &FindEffect;
-
+			
 			InsertMenu( EffectMenu, hierMenu );
 			GetDialogItem( FindDlog, whichItem, &itemType, &itemHandle, &itemRect);
 			
@@ -833,9 +818,9 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 			SetItemMark( EffectMenu, *shortPtr + 1, 0xa5);
 			
 			mresult = PopUpMenuSelect(	EffectMenu,
-										myPt.v,
-										myPt.h,
-										*shortPtr + 1);
+									  myPt.v,
+									  myPt.h,
+									  *shortPtr + 1);
 			
 			SetItemMark( EffectMenu, *shortPtr + 1, 0);
 			
@@ -859,8 +844,8 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 				}
 			}
 			DeleteMenu( GetMenuID( EffectMenu));
-		break;
-		
+			break;
+			
 		case 1:		// FIND
 			if( FindModify == true)
 			{
@@ -871,55 +856,55 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 			{
 				if( !FindInternal( Next)) FindModify = true;
 			}
-		break;
-		
+			break;
+			
 		case 37:		// REPLACE
 			if( !SetUpFind()) break;
-		
+			
 			myCmd = GetEditorSelectCmd( &track, &position);
 			if( myCmd == NULL) break;
 			
 			NReplaceInt( myCmd, track, position, true);
-		break;
-		
+			break;
+			
 		case 36:		// REPLACE & FIND
-		//	FindInternal( ReplaceFind);
-		break;
-		
+			//	FindInternal( ReplaceFind);
+			break;
+			
 		case 38:		// REPLACE ALL
 			FindInternal( ReplaceAll);
 			FindModify = true;
-		break;
-		}
-		
-		if( FindModifyBefore != FindModify)
+			break;
+	}
+	
+	if( FindModifyBefore != FindModify)
+	{
+		if( FindModify)
 		{
-			if( FindModify)
-			{
-				SetCtlName( FindDlog, 1, "\pFind");
-				SetDigitalSelection( DStartTrack, DStartPos, DEndTrack, DEndPos);
-				ControlSwitch( 37, FindDlog, 255);
-				ControlSwitch( 36, FindDlog, 255);
-			}
-			else
-			{
-				SetCtlName( FindDlog, 1, "\pNext");
-				ControlSwitch( 37, FindDlog, 0);
-				ControlSwitch( 36, FindDlog, 0);
-			}
+			SetCtlName( FindDlog, 1, "\pFind");
+			SetDigitalSelection( DStartTrack, DStartPos, DEndTrack, DEndPos);
+			ControlSwitch( 37, FindDlog, 255);
+			ControlSwitch( 36, FindDlog, 255);
 		}
-		
+		else
+		{
+			SetCtlName( FindDlog, 1, "\pNext");
+			ControlSwitch( 37, FindDlog, 0);
+			ControlSwitch( 36, FindDlog, 0);
+		}
+	}
+	
 	//	if( whichItem > 0) SetUpButtons();
 }
 
 void DoKeyPressFind( short theChar)
 {
-Boolean		GoodNote = false;
-GrafPtr		savePort;
-Point		myPt;
-Rect		itemRect;
-Handle		itemHandle;
-short		itemType;
+	Boolean		GoodNote = false;
+	GrafPtr		savePort;
+	Point		myPt;
+	Rect		itemRect;
+	Handle		itemHandle;
+	short		itemType;
 
 	GetPort( &savePort);
 	SetPortDialogPort( FindDlog);
