@@ -22,13 +22,15 @@
 #ifndef __MADI__
 #define __MADI__
 
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#define EXP extern __attribute__((visibility("default")))
+#endif
 
 //////////////////////////////////////////////////////////////////////
 #if defined(__APPLE__)			// MACINTOSH
 #ifndef _MAC_H
 #define _MAC_H
 #endif
-#define EXP extern __attribute__((visibility("default")))
 
 #include <Carbon/Carbon.h>
 
@@ -50,7 +52,11 @@
 #define EXP __declspec(dllexport)
 #endif
 
-#if defined(WIN32) || defined (_BE_H)
+#if !defined(_MAC_H) && !defined(WIN32)
+#define pascal
+#endif
+
+#if !defined(_MAC_H)
 
 #if !defined(THINK_C)
 #include <stdio.h>
@@ -72,7 +78,6 @@ typedef int32_t			SInt32;
 typedef SInt16			OSErr;
 typedef UInt32			FourCharCode;
 typedef FourCharCode	OSType;
-typedef UInt8			Byte;
 typedef SInt32			Fixed;
 typedef UInt32			UnsignedFixed;
 
@@ -84,7 +89,6 @@ typedef UInt32			UnsignedFixed;
 //#define DisposPtr(x)				free(x)
 #define DisposePtr(x)				free(x)
 #define BlockMoveData(x,y,z)		memcpy(y,x,z)
-//#define BlockMoveData(x,y,z)			memcpy(y,x,z)
 //#define BlockZero(x, y)				memset(x, y, 0)
 static inline void BlockZero( void* a, long size)
 {
@@ -99,6 +103,14 @@ static inline void BlockZero( void* a, long size)
 
 #define MemError()					0
 
+#ifndef TRUE
+#define TRUE 1
+#endif
+
+#ifndef FALSE
+#define FALSE 0
+#endif
+
 #ifndef true
 #define true 	TRUE
 #endif
@@ -108,7 +120,8 @@ static inline void BlockZero( void* a, long size)
 #endif
 
 
-#define FSSpec	char
+typedef char	FSSpec;
+typedef char*	FSSpecPtr;
 enum {
 	noErr = 0
 };

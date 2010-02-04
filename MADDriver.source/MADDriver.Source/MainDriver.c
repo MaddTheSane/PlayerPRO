@@ -30,7 +30,9 @@
 #include <string.h>
 #include "PPPrivate.h"
 
+#ifdef _MAC_H
 extern void NSLog(CFStringRef format, ...);
+#endif
 
 #ifdef _MIDIHARDWARE_
 #ifdef __MACH__
@@ -1058,6 +1060,7 @@ OSErr MADDisposeDriver( MADDriverRec* MDriver)
 	return noErr;
 }
 
+#ifdef _MAC_H
 OSErr MADInitLibraryNew( FSRefPtr PlugsFolder, MADLibrary **lib)
 {
 	long 	i, mytab[ 12] =
@@ -1091,7 +1094,6 @@ OSErr MADInitLibraryNew( FSRefPtr PlugsFolder, MADLibrary **lib)
 	return noErr;
 }
 
-
 OSErr MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
 {
 	FSRefPtr TempRef = NULL;
@@ -1121,6 +1123,34 @@ OSErr MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **l
 	}
 	return errmess;
 }
+#else
+
+OSErr MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
+{
+	OSErr errmess = noErr;
+	long 	i, mytab[ 12] =
+	{
+		1712L*16L,1616L*16L,1524L*16L,1440L*16L,1356L*16L,1280L*16L,
+		1208L*16L,1140L*16L,1076L*16L,1016L*16L,960L*16L,907L*16L
+	};
+
+	*lib = (MADLibrary*) NewPtrClear( sizeof( MADLibrary));
+	
+	if( *lib == NULL) return MADNeedMemory;
+	
+	(*lib)->IDType = 'MADD';
+	(*lib)->sysMemory = FALSE;
+	
+	for( i = 0; i < 12; i++)
+	{
+		(*lib)->mytab[ i] = mytab[ i];
+	}
+	
+	MInitImportPlug(*lib, PlugsFolderName);
+	return noErr;
+}
+
+#endif
 
 OSErr MADDisposeLibrary( MADLibrary *MLibrary)
 {
