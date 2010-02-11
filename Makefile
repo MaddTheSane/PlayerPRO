@@ -1,3 +1,3 @@
 all:
-echo Nothing here yet
+echo "Nothing here yet"
 return 1

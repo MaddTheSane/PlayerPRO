@@ -1125,7 +1125,7 @@ OSErr MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **l
 }
 #else
 
-OSErr MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
+OSErr MInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
 {
 	OSErr errmess = noErr;
 	long 	i, mytab[ 12] =
