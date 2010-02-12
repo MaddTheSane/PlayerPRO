@@ -6,7 +6,7 @@
 //TODO: OSS Sound Driver
 #warning The OSS Sound driver is currently not implemented
 
-OSErr initOSS( MADDriverRec *inMADDriver, long init)
+OSErr initOSS( MADDriverRec *inMADDriver)
 {
 	return MADUnknownErr;
 }

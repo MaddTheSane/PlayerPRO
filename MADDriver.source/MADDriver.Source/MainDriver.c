@@ -998,21 +998,21 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 			
 #ifdef _ESOUND
 		case ESDDriver:
-			theErr = initESD(MDriver, initStereo);
+			theErr = initESD(MDriver);
 			if (theErr != noErr) return theErr;
 			break;
 #endif
 			
 #ifdef __LINUX__
 		case ALSADriver:
-			theErr = initALSA(MDriver, initStereo);
+			theErr = initALSA(MDriver);
 			if (theErr != noErr) return theErr;
 			break;
 #endif
 			
 #ifdef _OSSSOUND
 		case OSSDriver:
-			theErr = initOSS(MDriver, initStereo);
+			theErr = initOSS(MDriver);
 			if (theErr != noErr) return theErr;
 			break;			
 #endif
@@ -1071,21 +1071,21 @@ OSErr MADDisposeDriver( MADDriverRec* MDriver)
 
 #ifdef _ESOUND
 		case ESDDriver:
-			theErr = closeESD(MDriver, initStereo);
+			theErr = closeESD(MDriver);
 			if (theErr != noErr) return theErr;
 			break;
 #endif
 			
 #ifdef __LINUX__
 		case ALSADriver:
-			theErr = closeALSA(MDriver, initStereo);
+			theErr = closeALSA(MDriver);
 			if (theErr != noErr) return theErr;
 			break;
 #endif
 			
 #ifdef _OSSSOUND
 		case OSSDriver:
-			theErr = closeOSS(MDriver, initStereo);
+			theErr = closeOSS(MDriver);
 			if (theErr != noErr) return theErr;
 			break;			
 #endif

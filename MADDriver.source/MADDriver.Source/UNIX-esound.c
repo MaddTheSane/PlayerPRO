@@ -6,7 +6,7 @@
 //TODO: Esound Sound Driver
 #warning The Esound Sound driver is currently not implemented
 
-OSErr initESD( MADDriverRec *inMADDriver, long init)
+OSErr initESD( MADDriverRec *inMADDriver)
 {
 	return MADUnknownErr;
 }

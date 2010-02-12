@@ -6,7 +6,7 @@
 //TODO: Linux Sound Driver
 #warning Linux sound driver currently not implemented
 
-OSErr initALSA( MADDriverRec *inMADDriver, long init)
+OSErr initALSA( MADDriverRec *inMADDriver)
 {
 	return MADUnknownErr;
 }

@@ -33,21 +33,21 @@ const CFStringRef kMadPlugTypeKey;
 #endif
 
 #ifdef _ESOUND
-OSErr initESD( MADDriverRec *inMADDriver, long init);
+OSErr initESD( MADDriverRec *inMADDriver);
 OSErr closeESD( MADDriverRec *inMADDriver);
 void StopChannelESD(MADDriverRec *inMADDriver);
 void PlayChannelESD(MADDriverRec *inMADDriver);
 #endif
 
 #ifdef _OSSSOUND
-OSErr initOSS( MADDriverRec *inMADDriver, long init);
+OSErr initOSS( MADDriverRec *inMADDriver);
 OSErr closeOSS( MADDriverRec *inMADDriver);
 void StopChannelOSS(MADDriverRec *inMADDriver);
 void PlayChannelOSS(MADDriverRec *inMADDriver);
 #endif
 
 #ifdef __LINUX__
-OSErr initALSA( MADDriverRec *inMADDriver, long init);
+OSErr initALSA( MADDriverRec *inMADDriver);
 OSErr closeALSA( MADDriverRec *inMADDriver);
 void StopChannelALSA(MADDriverRec *inMADDriver);
 void PlayChannelALSA(MADDriverRec *inMADDriver);
