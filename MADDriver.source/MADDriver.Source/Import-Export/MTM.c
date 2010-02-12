@@ -133,7 +133,7 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 
 
 	/***********************************************/
-	/******** Le MTM a ŽtŽ lu et analysŽ ***********/
+	/******** Le MTM a Ã©tÃ© lu et analysÃ© ***********/
 	/***** Copie des informations dans le MAD ******/
 	/***********************************************/
 	
@@ -157,7 +157,7 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 		theMAD->header->name[i] = MTMFile->songname[i];
 	}
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MTM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MTM Plug (Â©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->tempo = 125;
 	theMAD->header->speed = 6;
@@ -426,9 +426,16 @@ OSErr mainMTM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	return myErr;
 }
 
+#ifdef _MAC_H
 #define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x73, 0xCB, 0x5A, 0x1C, 0x87, 0xA8, 0x47, 0xBE, 0x91, 0xC8, 0x78, 0xD3, 0xD2, 0xD5, 0x2B, 0x66))
 //73CB5A1C-87A8-47BE-91C8-78D3D2D52B66
 
 #define PLUGMAIN mainMTM
 #define PLUGINFACTORY MTMFactory
 #include "CFPlugin-bridge.c"
+#else
+OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+{
+	return mainMTM(order, AlienFileName, MadFile, info, init);
+}
+#endif

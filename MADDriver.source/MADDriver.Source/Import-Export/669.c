@@ -93,13 +93,13 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 		OffSetToSample += SInfo->length;
 	}
 
-	/******** Le 669 a ŽtŽ lu et analysŽ ***********/
+	/******** Le 669 a Ã©tÃ© lu et analysÃ© ***********/
 	/******** Copie des informations dans le MAD ***/
 
 	theMAD->header->MAD = 'MADK';
 	for(i=0; i<32; i++) theMAD->header->name[i] = the669->message[i];
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO 669 Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO 669 Plug (Â©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPointers = 128;	//the669->loopOrder;
 	theMAD->header->tempo = 125;
@@ -342,7 +342,7 @@ OSErr main669( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
+			break;
 		
 		case 'TEST':
 			iFileRefI = iFileOpen( AlienFileName);
@@ -363,7 +363,7 @@ OSErr main669( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
+			break;
 
 		case 'INFO':
 			iFileRefI = iFileOpen( AlienFileName);
@@ -387,19 +387,26 @@ OSErr main669( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
+			break;
 		
 		default:
 			myErr = MADOrderNotImplemented;
-		break;
+			break;
 	}
 
 	return myErr;
 }
 
+#ifdef _MAC_H
 #define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xF4, 0x42, 0xE8, 0xED, 0x0F, 0xDE, 0x48, 0x53, 0xA8, 0x75, 0xA1, 0x95, 0xE8, 0xF5, 0x10, 0x0E))
 //F442E8ED-0FDE-4853-A875-A195E8F5100E
 
 #define PLUGMAIN main669
 #define PLUGINFACTORY SixSixNineFactory
 #include "CFPlugin-bridge.c"
+#else
+OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+{
+	return main669(order, AlienFileName, MadFile, info, init);
+}
+#endif

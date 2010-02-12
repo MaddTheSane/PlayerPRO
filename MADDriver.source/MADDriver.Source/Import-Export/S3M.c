@@ -771,7 +771,7 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverSettings
 	    }
 	}
 
-	/******** Le S3M a ŽtŽ lu et analysŽ ***********/
+	/******** Le S3M a Ã©tÃ© lu et analysÃ© ***********/
 	/******** Copie des informations dans le MAD ***/
 	
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);
@@ -781,7 +781,7 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverSettings
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<28; i++) theMAD->header->name[i] = s3minfo.name[i];
 	
-	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO S3M Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO S3M Plug (Â©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat		= s3minfo.patnum;
 	theMAD->header->numPointers	= s3minfo.ordernum;
@@ -1300,9 +1300,16 @@ OSErr mainS3M( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	return myErr;
 }
 
+#ifdef _MAC_H
 #define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x9B, 0xC1, 0x10, 0x3B, 0x2C, 0x9F, 0x4F, 0x2C, 0x95, 0xAD, 0xA3, 0x00, 0x6E, 0xE3, 0x76, 0x71))
 //9BC1103B-2C9F-4F2C-95AD-A3006EE37671
 
 #define PLUGMAIN mainS3M
 #define PLUGINFACTORY S3MFactory
 #include "CFPlugin-bridge.c"
+#else
+OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+{
+	return mainS3M(order, AlienFileName, MadFile, info, init);
+}
+#endif

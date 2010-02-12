@@ -1,0 +1,33 @@
+
+CC=gcc
+CFLAGS=-pipe -g -O2 -Wall -D__LINUX__
+LD=gcc
+LDFLAGS=
+
+TARGET=dds
+
+SRCS=dds.c ddsread.c ddswrite.c dxt.c mipmap.c misc.c
+OBJS=$(SRCS:.c=.o)
+
+LIBS=$(shell pkg-config --libs gtk+-2.0 gimp-2.0 gimpui-2.0)
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(LD) $(LDFLAGS) $(OBJS) $(LIBS) -o $(TARGET)
+		 
+clean:
+	rm -f *.o $(TARGET)
+
+install: all
+	$(GIMPTOOL) --install-bin $(TARGET)
+
+.c.o:
+	$(CC) -c $(CFLAGS) $<
+
+dds.o: dds.c ddsplugin.h dds.h misc.h
+ddsread.o: ddsread.c ddsplugin.h dds.h dxt.h endian.h
+ddswrite.o: ddswrite.c ddsplugin.h dds.h dxt.h endian.h imath.h mipmap.h
+dxt.o: dxt.c dxt.h dxt_tables.h dds.h endian.h mipmap.h imath.h
+mipmap.o: mipmap.c mipmap.h dds.h imath.h
+misc.o: misc.c misc.h

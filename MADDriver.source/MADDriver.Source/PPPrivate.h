@@ -18,6 +18,7 @@ OSErr closeCoreAudio( MADDriverRec *inMADDriver);
 void StopChannelCA(MADDriverRec *inMADDriver);
 void PlayChannelCA(MADDriverRec *inMADDriver);
 
+#ifdef _MAC_H
 CFMutableArrayRef GetDefaultPluginFolderLocations();
 
 void GetPStrFromCFString(const CFStringRef source, StringPtr pStrOut);
@@ -29,5 +30,6 @@ const CFStringRef kMadPlugAuthorNameKey;
 const CFStringRef kMadPlugUTITypesKey;
 const CFStringRef kMadPlugModeKey;
 const CFStringRef kMadPlugTypeKey;
+#endif
 
 #endif

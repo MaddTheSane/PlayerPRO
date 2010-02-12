@@ -104,7 +104,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriv
 	/**** Copy last infos *****/
 	BlockMoveData( theULTCopy + sizeof( ULTinfo) + ULTinfo.reserved * 32L + 1 + (ULTSuite.NOS * sizeof( ULTIns)), &ULTSuite.pattSeq, 256 + 2);
 	
-	// ******** Le ULT a ŽtŽ lu et analysŽ ***********
+	// ******** Le ULT a Ã©tÃ© lu et analysÃ© ***********
 	// ******** Copie des informations dans le MAD ***
 	
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);
@@ -114,7 +114,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriv
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<32; i++) theMAD->header->name[i] = ULTinfo.name[i];
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO ULT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO ULT Plug (Â©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat			= ULTSuite.NOP;
 	theMAD->header->numPointers	= 1;					// CHANGE
@@ -400,10 +400,17 @@ OSErr mainULT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	return myErr;
 }
 
+#ifdef _MAC_H
 #define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xC6, 0x59, 0x34, 0xC3, 0x9B, 0x3B, 0x44, 0x84, 0xA0, 0xBF, 0xF0, 0x24, 0x44, 0xE4, 0xD3, 0xFD))
 //C65934C3-9B3B-4484-A0BF-F02444E4D3FD
 
 #define PLUGMAIN mainULT
 #define PLUGINFACTORY ULTFactory
 #include "CFPlugin-bridge.c"
+#else
+OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+{
+	return mainULT(order, AlienFileName, MadFile, info, init);
+}
+#endif
 

@@ -283,6 +283,8 @@ enum
 	Wave95NT,						// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
 	NoHardwareDriver,				// NO HARDWARE CONNECTION, will not produce any sound
 	CoreAudioDriver,				// OSX ONLY Core Audio driver
+	ALSADriver,						// LINUX ONLY ALSA driver
+	OSSDriver,						// Open Sound System. Most Unices (NOT OS X) including Linux
 	ASIOSoundManager				// ASIO Sound Driver by Steinberg
 };
 
@@ -465,6 +467,22 @@ struct PlugInfo
 typedef struct PlugInfo PlugInfo;
 #endif
 
+#ifdef __LINUX__
+#include <dlfcn.h>
+typedef OSErr (*MADPLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
+struct PlugInfo
+{
+	MADPLUGDLLFUNC	IOPlug;										// Plug CODE
+	char			MenuName[ 65];								// Plug name
+	char			AuthorString[ 65];							// Plug author
+	char			file[ 255];									// Location of plug file
+	char			type[ 5];									// OSType of file support
+	OSType			mode;										// Mode support : Import +/ Export
+};
+typedef struct PlugInfo PlugInfo;
+#endif
+
+
 /********************						***********************/
 /*** 		Global structure : PlayerPRO variables				***/
 /********************						***********************/
@@ -567,12 +585,22 @@ typedef struct MADDriverRec
 	
 #ifdef _MAC_H
 	SndChannelPtr 			MusicChannelPP;									// The SndChannelPtr to apply SndDoCommand, etc.
-#endif																		// ONLY available if you are using MAC SoundManager driver
+																			// ONLY available if you are using MAC SoundManager driver
+//TODO: CoreAudio Driver
+#endif
 	
 #ifdef WIN32
 	LPDIRECTSOUND			lpDirectSound;									// The LPDIRECTSOUND to apply & get informations, etc.
 	LPDIRECTSOUNDBUFFER		lpDirectSoundBuffer, lpSwSamp;					// ONLY available if you are using Win95 DirectSound driver
-#endif	
+#endif
+
+#ifdef _OSSSOUND
+//TODO: OSS Sound Driver
+#endif
+
+#ifdef __LINUX__
+//TODO: ALSA Sound Driver
+#endif
 	
 	Ptr						OscilloWavePtr;									// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
 	long					OscilloWaveSize;								// Size of previous buffer
@@ -747,11 +775,11 @@ OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
 
 //Ptr MADNewPtr( long size, MADLibrary* init);
 //Ptr MADNewPtrClear( long size, MADLibrary* init);
-//Since we don't use MADLibrary anyway, redefining these terms
+//Since we don't use MADLibrary any more, redefining these terms
 #define MADNewPtr(size, madlib) NewPtr(size)
 #define MADNewPtrClear(size, madlib) NewPtrClear(size)
-#define MADPlugNewPtr(size, init) NewPtr(size)
-#define MADPlugNewPtrClear(size, init) NewPtrClear(size)
+#define MADPlugNewPtr(size, madlib) NewPtr(size)
+#define MADPlugNewPtrClear(size, madlib) NewPtrClear(size)
 	
 void MyDebugStr(short, Ptr, Ptr);									// Called when a fatal error occurs.... Normally, NEVER !
 

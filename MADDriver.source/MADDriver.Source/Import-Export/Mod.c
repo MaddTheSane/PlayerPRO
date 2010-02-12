@@ -305,7 +305,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( inOutCount, init);
 	if( theMAD->header == NULL) return MADNeedMemory;
 	
-	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO MOD Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO MOD Plug (Â©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->MAD = 'MADK';
 	theMAD->header->MODMode = true;
@@ -1013,9 +1013,16 @@ OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	return myErr;
 }
 
+#ifdef _MAC_H
 #define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x86, 0xC7, 0x43, 0x00, 0x93, 0x96, 0x4E, 0x68, 0x9B, 0x3F, 0x02, 0xCE, 0x56,0x26, 0xA7, 0xC6)) 
 //86C74300-9396-4E68-9B3F-02CE5626A7C6
 #define PLUGMAIN mainMOD
 #define PLUGINFACTORY ModFactory
 
 #include "CFPlugin-bridge.c"
+#else
+OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+{
+	return mainMOD(order, AlienFileName, MadFile, info, init);
+}
+#endif

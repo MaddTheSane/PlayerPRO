@@ -132,11 +132,6 @@ void 	SampleMIDI( Channel *curVoice, short channel, short curN, MADDriverRec *in
 void 	CleanDriver( MADDriverRec *intDriver);
 
 #ifdef _MAC_H
-#if MACOS9VERSION
-#include "retrace.h"
-pascal 	void 		MyDoubleBackProc(SndChannelPtr chan, SndDoubleBufferPtr doubleBuffer);
-void				InstallPersistentVBL( MADDriverRec *MDriver, VBLTask *theVBLRec);
-#endif
 
 SndChannelPtr 		CreateSndChannel( long init);
 OSErr 			DBSndPlay (MADDriverRec *inMADDriver, SndChannelPtr chan);
@@ -213,7 +208,9 @@ OSErr	PPIdentifyFile( MADLibrary		*inMADDriver, char *kindFile, char	*AlienFile)
 
 OSType	GetPPPlugType( MADLibrary		*inMADDriver, short ID, OSType type);
 void	MInitImportPlug( MADLibrary		*inMADDriver, FSSpec*);
+#ifdef _MAC_H
 void	MADInitImportPlug( MADLibrary	*inMADDriver, FSRefPtr PluginFolder);
+#endif
 
 void	CloseImportPlug( MADLibrary		*inMADDriver);
 OSErr	MADLoadMADFileCString( MADMusic **, Ptr fName);
