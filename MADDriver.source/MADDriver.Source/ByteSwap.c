@@ -27,7 +27,7 @@ static __inline__ void MADByteSwap16(void *theData)
 #ifdef _MAC_H
 	*((UInt16*) theData) = Endian16_Swap(buf);
 #else
-	*((UInt16*) msg_buf) = (((((UInt16)buf)<<8) & 0xFF00) | ((((UInt16)buf)>>8) & 0x00FF));
+	*((UInt16*) theData) = (((((UInt16)buf)<<8) & 0xFF00) | ((((UInt16)buf)>>8) & 0x00FF));
 #endif
 }
 
