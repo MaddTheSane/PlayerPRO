@@ -4,12 +4,13 @@ CFLAGS=-pipe -g -O2 -Wall -D__LINUX__
 LD=gcc
 LDFLAGS=
 
-TARGET=dds
+TARGET=libPlayerPRO
 
-SRCS=dds.c ddsread.c ddswrite.c dxt.c mipmap.c misc.c
+SRCS=MADDriver.source/MADDriver.Source/ByteSwap.c MADDriver.source/MADDriver.Source/DelayOutPut.c MADDriver.source/MADDriver.Source/Effects.c MADDriver.source/MADDriver.Source/Interrupt.c MADDriver.source/MADDriver.Source/Lin-PlugImport.c MADDriver.source/MADDriver.Source/Lin-alsa.c MADDriver.source/MADDriver.Source/MainDriver.c MADDriver.source/MADDriver.Source/MyDebugStr.c MADDriver.source/MADDriver.Source/OutPut8.c MADDriver.source/MADDriver.Source/TickRemover.c MADDriver.source/MADDriver.Source/UNIX-OSS.c MADDriver.source/MADDriver.Source/UNIX-esound.c MADDriver.source/MADDriver.Source/Win-FileUtils.c MADDriver.source/MADDriver.Source/realft.c
+
 OBJS=$(SRCS:.c=.o)
 
-LIBS=$(shell pkg-config --libs gtk+-2.0 gimp-2.0 gimpui-2.0)
+LIBS=
 
 all: $(TARGET)
 
