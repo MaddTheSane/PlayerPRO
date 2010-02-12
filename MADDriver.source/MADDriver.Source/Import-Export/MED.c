@@ -415,7 +415,7 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	
 	theMAD->header->MAD = 'MADK';
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MED Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MED Plug (Â©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->speed			= 	ms->tempo2;
 	theMAD->header->tempo			=	((long)ms->deftempo * 125L) / 33L;
@@ -659,9 +659,16 @@ OSErr mainMED( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	return myErr;
 }
 
+#ifdef _MAC_H
 #define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x2C, 0x23, 0xFD, 0xF2, 0x61, 0xBD, 0x47, 0xB4, 0x83, 0x80, 0x78, 0x4A, 0xC4, 0xA1, 0xE5, 0x0D))
 //2C23FDF2-61BD-47B4-8380-784AC4A1E50D
 
 #define PLUGMAIN mainMED
 #define PLUGINFACTORY MEDFactory
 #include "CFPlugin-bridge.c"
+#else
+OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+{
+	return mainMED(order, AlienFileName, MadFile, info, init);
+}
+#endif

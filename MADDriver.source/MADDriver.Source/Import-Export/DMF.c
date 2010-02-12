@@ -349,7 +349,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	}
 	
 	
-	// ******** Le IT a ŽtŽ lu et analysŽ ***********
+	// ******** Le IT a Ã©tÃ© lu et analysÃ© ***********
 	// ******** Copie des informations dans le MAD ***
 	
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);
@@ -359,7 +359,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<28; i++) theMAD->header->name[i] = ITinfo.name[i];
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO DMF Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO DMF Plug (Â©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat			= ITinfo.patNum;
 	theMAD->header->numPointers		= ITinfo.orderNum;
@@ -660,9 +660,8 @@ OSErr mainDMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
-	short	vRefNum;
 	UNFILE	iFileRefI;
-	long	dirID, sndSize;
+	long	sndSize;
 	
 	switch( order)
 	{
@@ -700,7 +699,7 @@ OSErr mainDMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
+			break;
 		
 		case 'TEST':
 			iFileRefI = iFileOpen(AlienFileName);
@@ -720,7 +719,7 @@ OSErr mainDMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
+			break;
 
 		case 'INFO':
 			iFileRefI = iFileOpen(AlienFileName);
@@ -744,19 +743,27 @@ OSErr mainDMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
+			break;
 		
 		default:
 			myErr = MADOrderNotImplemented;
-		break;
+			break;
 	}
 
 	return myErr;
 }
 
+#ifdef _MAC_H 
 #define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x45, 0xAE, 0x25, 0xED, 0x47, 0xCE, 0x44, 0xD8, 0xA3, 0x51, 0xE3, 0xCB, 0x1C, 0x48, 0xED, 0xA8))
 //45AE25ED-47CE-44D8-A351-E3CB1C48EDA8
 
 #define PLUGMAIN mainDMF
 #define PLUGINFACTORY DMFFactory
 #include "CFPlugin-bridge.c"
+#else
+OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+{
+	return mainDMF(order, AlienFileName, MadFile, info, init);
+}
+#endif
+

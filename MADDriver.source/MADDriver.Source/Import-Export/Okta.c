@@ -209,7 +209,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 		theOktaPos += aSect->length;
 	}
 
-	/******** Le Okta a ŽtŽ lu et analysŽ ***********/
+	/******** Le Okta a Ã©tÃ© lu et analysÃ© ***********/
 	/******** Copie des informations dans le MAD ***/
 
 	theMAD->header->MAD = 'MADK';
@@ -221,7 +221,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	theMAD->header->tempo 			= 125;
 	theMAD->header->speed 			= Okta->speed;
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO OKTA Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO OKTA Plug (Â©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	for( i = 0;  i < 128; i++) theMAD->header->oPointers[ i] = 0;
 	for( i = 0;  i < pbod_count; i++) theMAD->header->oPointers[ i] = Okta->patt[ i];
@@ -534,9 +534,17 @@ OSErr mainOKTA( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	return myErr;
 }
 
+#ifdef _MAC_H
 #define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x08, 0xD9, 0x62, 0x6A, 0xF3, 0xD9, 0x45, 0x36, 0xA2, 0x9B, 0x78, 0x22, 0x2D, 0xFD, 0x8F, 0x32))
 //08D9626A-F3D9-4536-A29B-78222DFD8F32
 
 #define PLUGMAIN mainOKTA
 #define PLUGINFACTORY OKTAFactory
 #include "CFPlugin-bridge.c"
+#else
+OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+{
+	return mainOKTA(order, AlienFileName, MadFile, info, init);
+}
+#endif
+
