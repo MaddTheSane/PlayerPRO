@@ -46,6 +46,19 @@
 #endif
 #endif
 
+#ifdef __LINUX__
+#include <alsa/asoundlib.h>
+#endif
+
+#ifdef _ESOUND
+#include <esd.h>
+#endif
+
+#ifdef _OSSSOUND
+#warning headers not included!
+//TODO: include headers
+#endif
+
 //The following aren't defined in Mac headers, but are used
 enum{
 #if !defined(_MAC_H) || defined(__LP64__)
@@ -285,6 +298,7 @@ enum
 	CoreAudioDriver,				// OSX ONLY Core Audio driver
 	ALSADriver,						// LINUX ONLY ALSA driver
 	OSSDriver,						// Open Sound System. Most Unices (NOT OS X) including Linux
+	ESDDriver,						// ESound Driver. available on most UNIX Systems
 	ASIOSoundManager				// ASIO Sound Driver by Steinberg
 };
 
@@ -601,6 +615,10 @@ typedef struct MADDriverRec
 #ifdef __LINUX__
 //TODO: ALSA Sound Driver
 #endif
+
+#ifdef _ESOUND
+	//TODO: EsounD driver
+#endif
 	
 	Ptr						OscilloWavePtr;									// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
 	long					OscilloWaveSize;								// Size of previous buffer
@@ -652,11 +670,7 @@ typedef struct MADDriverRec
 #ifdef _MAC_H
 	VSTEffect				*masterVST[ 10];
 	VSTEffect				*chanVST[ MAXTRACK][ 4];
-#if CALL_NOT_IN_CARBON
-	SndDoubleBufferHeader 	TheHeader;
-#else
 	PPSndDoubleBufferHeader 	TheHeader;
-#endif
 #endif
 
 } MADDriverRec;

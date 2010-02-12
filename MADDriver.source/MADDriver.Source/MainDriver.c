@@ -986,25 +986,44 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 			
 #ifdef WIN32
 		case DirectSound95NT:
-			
 			if( !DirectSoundInit( MDriver)) theErr = MADUnknowErr;
 			if( theErr != noErr) return theErr;
-			
-		break;
+			break;
 		
 		case Wave95NT:
 			if( !W95_Init( MDriver)) theErr = MADUnknowErr;
 			if( theErr != noErr) return theErr;
-		break;
+			break;
 #endif
-		
+			
+#ifdef _ESOUND
+		case ESDDriver:
+			theErr = initESD(MDriver, initStereo);
+			if (theErr != noErr) return theErr;
+			break;
+#endif
+			
+#ifdef __LINUX__
+		case ALSADriver:
+			theErr = initALSA(MDriver, initStereo);
+			if (theErr != noErr) return theErr;
+			break;
+#endif
+			
+#ifdef _OSSSOUND
+		case OSSDriver:
+			theErr = initOSS(MDriver, initStereo);
+			if (theErr != noErr) return theErr;
+			break;			
+#endif
+
 		case BeOSSoundDriver:
 		
-		break;
+			break;
 		
 		case NoHardwareDriver:
 		
-		break;
+			break;
 	}
 	
 	*returnDriver = MDriver;
@@ -1026,7 +1045,7 @@ OSErr MADDisposeDriver( MADDriverRec* MDriver)
 		case MIDISoundDriver:
 			AllNoteOff( MDriver);
 			DBSndClose( MDriver);
-		break;
+			break;
 		
 		case ASIOSoundManager:
 			break;
@@ -1043,12 +1062,34 @@ OSErr MADDisposeDriver( MADDriverRec* MDriver)
 #ifdef WIN32
 		case DirectSound95NT:
 			DirectSoundClose( MDriver);
-		break;
+			break;
 		
 		case Wave95NT:
 			W95_Exit( MDriver);
-		break;
+			break;
 #endif
+
+#ifdef _ESOUND
+		case ESDDriver:
+			theErr = closeESD(MDriver, initStereo);
+			if (theErr != noErr) return theErr;
+			break;
+#endif
+			
+#ifdef __LINUX__
+		case ALSADriver:
+			theErr = closeALSA(MDriver, initStereo);
+			if (theErr != noErr) return theErr;
+			break;
+#endif
+			
+#ifdef _OSSSOUND
+		case OSSDriver:
+			theErr = closeOSS(MDriver, initStereo);
+			if (theErr != noErr) return theErr;
+			break;			
+#endif
+			
 	}
 	
 	MADDisposeDriverBuffer( MDriver);			if( MemError()) return MADUnknowErr;
@@ -1125,7 +1166,7 @@ OSErr MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **l
 }
 #else
 
-OSErr MInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
+OSErr MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
 {
 	OSErr errmess = noErr;
 	long 	i, mytab[ 12] =
@@ -1609,7 +1650,7 @@ OSErr	MADMusicIdentifyCString( MADLibrary *lib, char *type, Ptr fName)
 
 OSErr MADLoadMusicFileCString( MADLibrary *lib, MADMusic **music, char *plugType, Ptr fName)
 {
-OSErr			iErr;
+	OSErr		iErr;
 
 	if( !strcmp( "MADK", plugType)) iErr = MADLoadMADFileCString( music, fName);
 	else
@@ -2757,6 +2798,23 @@ OSErr MADStartDriver( MADDriverRec *MDriver)
 		case ASIOSoundManager:
 			break;
 #endif
+#ifdef _ESOUND
+		case ESDDriver:
+			PlayChannelESD(MDriver);
+			break;			
+#endif
+			
+#ifdef __LINUX__
+		case ALSADriver:
+			PlayChannelALSA(MDriver);
+			break;			
+#endif
+			
+#ifdef _OSSSOUND
+		case OSSDriver:
+			PlayChannelOSS(MDriver);
+			break;			
+#endif
 	}
 	
 	return( noErr);
@@ -2797,6 +2855,24 @@ OSErr MADStopDriver( MADDriverRec *MDriver)
 
 		case ASIOSoundManager:
 			break;
+#endif
+			
+#ifdef _ESOUND
+		case ESDDriver:
+			StopChannelESD(MDriver);
+			break;			
+#endif
+			
+#ifdef __LINUX__
+		case ALSADriver:
+			StopChannelALSA(MDriver);
+			break;			
+#endif
+			
+#ifdef _OSSSOUND
+		case OSSDriver:
+			StopChannelOSS(MDriver);
+			break;			
 #endif
 	}
 	
