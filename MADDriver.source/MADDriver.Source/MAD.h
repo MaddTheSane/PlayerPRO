@@ -126,7 +126,7 @@ enum {
 	noErr = 0
 };
 
-static void DebugStr( unsigned char* x)
+static inline void DebugStr( unsigned char* x)
 {
 	char *temp;
 	

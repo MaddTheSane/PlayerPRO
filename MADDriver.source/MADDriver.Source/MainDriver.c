@@ -1071,22 +1071,19 @@ OSErr MADDisposeDriver( MADDriverRec* MDriver)
 
 #ifdef _ESOUND
 		case ESDDriver:
-			theErr = closeESD(MDriver);
-			if (theErr != noErr) return theErr;
+			closeESD(MDriver);
 			break;
 #endif
 			
 #ifdef __LINUX__
 		case ALSADriver:
-			theErr = closeALSA(MDriver);
-			if (theErr != noErr) return theErr;
+			closeALSA(MDriver);
 			break;
 #endif
 			
 #ifdef _OSSSOUND
 		case OSSDriver:
-			theErr = closeOSS(MDriver);
-			if (theErr != noErr) return theErr;
+			closeOSS(MDriver);
 			break;			
 #endif
 			

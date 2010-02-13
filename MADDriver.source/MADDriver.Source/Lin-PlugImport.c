@@ -1,4 +1,5 @@
 #include "RDriver.h"
+#include "FileUtils.h"
 
 OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 {

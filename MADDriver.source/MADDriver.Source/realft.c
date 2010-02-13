@@ -22,8 +22,8 @@
 /********************						***********************/
 
 #include <math.h>
-#include "Rdriver.h"
-#include "RdriverInt.h"
+#include "RDriver.h"
+#include "RDriverInt.h"
 
 #define SWAP(a,b) tempr=(a);(a)=(b);(b)=tempr
 
