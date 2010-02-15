@@ -481,7 +481,7 @@ struct PlugInfo
 typedef struct PlugInfo PlugInfo;
 #endif
 
-#ifdef __LINUX__
+#ifdef __UNIX__
 #include <dlfcn.h>
 typedef OSErr (*MADPLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 struct PlugInfo

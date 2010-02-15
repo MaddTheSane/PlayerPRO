@@ -26,11 +26,13 @@
 #define EXP extern __attribute__((visibility("default")))
 #endif
 
+#if !defined(__BIG_ENDIAN__) && defined(WORDS_BIGENDIAN)
+#define __BIG_ENDIAN__ 1
+#endif
+
 //////////////////////////////////////////////////////////////////////
 #if defined(__APPLE__)			// MACINTOSH
-#ifndef _MAC_H
 #define _MAC_H
-#endif
 
 #include <Carbon/Carbon.h>
 
@@ -63,6 +65,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 typedef unsigned char 	Byte;
 typedef char 			*Ptr;
@@ -110,15 +113,6 @@ static inline void BlockZero( void* a, long size)
 #ifndef FALSE
 #define FALSE 0
 #endif
-
-#ifndef true
-#define true 	TRUE
-#endif
-
-#ifndef false
-#define false	FALSE
-#endif
-
 
 typedef char	FSSpec;
 typedef char*	FSSpecPtr;

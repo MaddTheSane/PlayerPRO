@@ -25,7 +25,7 @@ extern void MyDebugStr( short line, Ptr file, Ptr text)
 
 extern void MyDebugStr( short line, Ptr file, Ptr text)
 {
-	printf("%s:%u error text:%s!", file, line, text);
+	fprintf(stderr, "%s:%u error text:%s!", file, line, text);
 	//TODO: call a debug function?
 	exit(EXIT_FAILURE);
 }
