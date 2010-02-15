@@ -19,7 +19,7 @@ void InitQuicktimeInstruments(void);
 #include <PlayerPROCore/PlayerPROCore.h>
 //#include <stdarg.h>
 #include "PTMID.H"
-#include <dialogs.h>
+#include <Carbon/Carbon.h>
 
 #ifndef R_OK
 #define R_OK 4

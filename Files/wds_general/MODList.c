@@ -1,13 +1,9 @@
-#include <Drag.h>
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Aliases.h>
-//#include <Packages.h>
 #include "PrivateList.h"
 #include "GetFileIcon.h"
-#include <Navigation.h>
 
 #define BIGMUSICLIST	404
 #define MAXITEM			12000
@@ -848,8 +844,6 @@ curMusicListFile = true;
 
 SetPort( myPort);
 }*/
-
-#include "Lists.h"
 
 Boolean PLSearch( Ptr text, short size, short mode, Point *cell, PrivateList	*aL)
 {

@@ -46,7 +46,7 @@
 #endif
 #endif
 
-#ifdef __LINUX__
+#ifdef LINUX
 #include <alsa/asoundlib.h>
 #endif
 
@@ -294,12 +294,13 @@ enum
 	BeOSSoundDriver,				// BE ONLY when using with BeOS compatible systems ! - NOT FOR MAC
 	DirectSound95NT,				// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
 	Wave95NT,						// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
-	NoHardwareDriver,				// NO HARDWARE CONNECTION, will not produce any sound
 	CoreAudioDriver,				// OSX ONLY Core Audio driver
 	ALSADriver,						// LINUX ONLY ALSA driver
 	OSSDriver,						// Open Sound System. Most Unices (NOT OS X) including Linux
 	ESDDriver,						// ESound Driver. available on most UNIX Systems
-	ASIOSoundManager				// ASIO Sound Driver by Steinberg
+	ASIOSoundManager,				// ASIO Sound Driver by Steinberg
+	NoHardwareDriver				// NO HARDWARE CONNECTION, will not produce any sound
+
 };
 
 enum
@@ -612,7 +613,7 @@ typedef struct MADDriverRec
 //TODO: OSS Sound Driver
 #endif
 
-#ifdef __LINUX__
+#ifdef LINUX
 //TODO: ALSA Sound Driver
 #endif
 

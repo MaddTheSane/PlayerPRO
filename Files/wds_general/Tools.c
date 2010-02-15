@@ -2,9 +2,10 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Drag.h>
 #if MACOS9VERSION
 #include "OMS.h"
+#elif __MACH__
+#include <CoreMIDI/CoreMIDI.h>
 #endif
 
 	/******** HELP MODULE FOR TOOLS ********/

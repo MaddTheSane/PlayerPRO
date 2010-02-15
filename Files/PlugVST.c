@@ -7,7 +7,7 @@
 #include "aeffectx.h"
 #include "RDriver.h"
 
-#include <MixedMode.h>
+#include <Carbon/Carbon.h>
 
 	extern	EventRecord				theEvent, gModalDialogEvent;
 	extern	Cursor					HandCrsr;

@@ -2,9 +2,7 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "Undo.h"
-#include <Drag.h>
 #include "PPPlug.h"
-#include <QDOffscreen.h>
 #include "PrivateList.h"
 
 	/******** HELP MODULE ********/
@@ -4205,8 +4203,6 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 	
 	return(noErr);
 }
-
-#include <Aliases.h>
 
 pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemReference theItem,  DragReference theDrag)
 {

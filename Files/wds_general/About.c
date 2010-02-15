@@ -3,7 +3,6 @@
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include <stdio.h>
-#include <Gestalt.h>
 #include <VideoToolbox.h>
 #include "VA.h"
 

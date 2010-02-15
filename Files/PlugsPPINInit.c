@@ -3,7 +3,7 @@
 #include "Shuddup.h"
 #include "Undo.h"
 #include "RDriverInt.h"
-#include <MixedMode.h>
+#include <Carbon/Carbon.h>
 
 #include "PPPlug.h"
 #include "PPPrivate.h"

@@ -44,28 +44,7 @@ project, but without modifying the source files. dhb & dgp.
 #include <string.h>
 #include <time.h>
 // Macintosh headers
-#include <Devices.h>
-#include <Events.h>
-//#include <FixMath.h>	// Must come before mc68881.h
-#include <Gestalt.h>
-#include <Memory.h>
-#include <Events.h>
-#include <OSUtils.h>	// required
-#include <Palettes.h>	// formerly Palette.h
-#include <QDOffscreen.h>// formerly QuickDraw32Bit.h
-#include <QuickDraw.h>	// required
-//#include <Retrace.h>	// required
-//#include <Slots.h>
-#include <Sound.h>
-#if THINK_C				// c2pstr(),CtoPStr()
-	#include <pascal.h>
-#else
-//	#include <Strings.h>// MPW C
-#endif
-#include <Timer.h>		// required
-#include <ToolUtils.h>
-#include <Video.h>
-#include <Windows.h>	// required
+#include <Carbon/Carbon.h>
 // VideoToolbox headers
 //#include "mc68881.h"	// defines mc68881 and mc68020
 

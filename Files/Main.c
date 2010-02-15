@@ -5407,8 +5407,6 @@ ReLoadPrefs:
 	HSetVol(NULL, vRefNumOld, DirIDOld);
 }
 
-#include <SoundComponents.h>
-
 void DoPreferences()
 {
 	OSErr			iErr;

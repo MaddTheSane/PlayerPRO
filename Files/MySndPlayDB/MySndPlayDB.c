@@ -33,11 +33,7 @@
 #define TARGET_API_MAC_CARBON 1
 #define DEBUG 0
 #include "RDriver.h"
-#include <Notification.h>
-#include <OpenTransport.h>
-#include <OSUtils.h>
-#include <Types.h>
-#include <Sound.h>
+#include <Carbon/Carbon.h>
 
 #include "MySndPlayDB.h"
 

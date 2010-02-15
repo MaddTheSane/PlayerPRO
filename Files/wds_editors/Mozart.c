@@ -1,5 +1,4 @@
 #include "Shuddup.h"
-#include <QDOffscreen.h>
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "PPPlug.h"

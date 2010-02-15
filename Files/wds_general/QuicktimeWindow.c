@@ -3,11 +3,7 @@
 #include "RDriver.h"
 #include "FileUtils.h"
 #include <stdio.h>
-#include <QuicktimeComponents.h>
-#include <Sound.h>
-#include <Movies.h>
-#include <Drag.h>
-#include <MediaHandlers.h>
+#include <QuickTime/QuickTime.h>
 //#include "MP3Player.h"
 
 //quicktimewindow.proto.h

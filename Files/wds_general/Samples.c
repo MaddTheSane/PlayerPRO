@@ -3,9 +3,6 @@
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "Undo.h"
-#include <QDOffscreen.h>
-#include <Drag.h>
-#include <Aliases.h>
 
 	/******** HELP MODULE ********/
 	enum

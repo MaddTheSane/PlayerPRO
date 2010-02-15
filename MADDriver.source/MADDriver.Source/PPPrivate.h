@@ -46,7 +46,7 @@ void StopChannelOSS(MADDriverRec *inMADDriver);
 void PlayChannelOSS(MADDriverRec *inMADDriver);
 #endif
 
-#ifdef __LINUX__
+#ifdef LINUX
 OSErr initALSA( MADDriverRec *inMADDriver);
 OSErr closeALSA( MADDriverRec *inMADDriver);
 void StopChannelALSA(MADDriverRec *inMADDriver);

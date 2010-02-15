@@ -410,8 +410,6 @@ short InstallAE(void)
 	return 0;
 }
 
-#include "InternetConfig.h"
-
 OSStatus LaunchURLC(ConstStr255Param urlStr)
 {
     OSStatus err;

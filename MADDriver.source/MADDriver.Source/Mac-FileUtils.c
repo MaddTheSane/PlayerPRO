@@ -22,7 +22,7 @@
 /********************						***********************/
 
 #include "FileUtils.h"
-#include <Script.h>
+#include <Carbon/Carbon.h>
 
 extern void NSLog(CFStringRef format, ...);
 

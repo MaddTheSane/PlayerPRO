@@ -1,8 +1,7 @@
 #include "Undo.h"
-#include <Drag.h>
+#include <Carbon/Carbon.h>
 #include "PPPlug.h"
 #include "RDriverInt.h"
-#include <QDOffscreen.h>
 #include "PrivateList.h"
 #include "Shuddup.h"
 void UpdateStaffInfo();

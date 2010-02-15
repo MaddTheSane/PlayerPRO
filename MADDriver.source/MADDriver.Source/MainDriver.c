@@ -37,15 +37,11 @@ extern void NSLog(CFStringRef format, ...);
 #ifdef _MIDIHARDWARE_
 #ifdef __MACH__
 #include <CoreMIDI/CoreMIDI.h>
-#elif MACOS9VERSION
-#include "OMS.h"
 #endif
 #endif
 
 #ifdef _MAC_H
-#include <Sound.h>
-#include <SoundInput.h>
-#include <SoundComponents.h>
+#include <Carbon/Carbon.h>
 #endif
 
 void debugger( Ptr a);
@@ -797,6 +793,9 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	   DriverInitParam->driverMode != Wave95NT &&
 	   DriverInitParam->driverMode != ASIOSoundManager &&
 	   DriverInitParam->driverMode != CoreAudioDriver &&
+   	   DriverInitParam->driverMode != ALSADriver &&
+	   DriverInitParam->driverMode != OSSDriver &&
+	   DriverInitParam->driverMode != ESDDriver &&
 	   DriverInitParam->driverMode != NoHardwareDriver) theErr = MADParametersErr;
 	
 	if( DriverInitParam->MicroDelaySize < 0) 		theErr = MADParametersErr;
@@ -826,11 +825,7 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	DriverInitParam->oversampling = 1;			// We do NOT support oversampling on NON-64bits processor
 #endif
 	
-	
-	
 	MDriver = (MADDriverRec*) NewPtrClear( sizeof( MADDriverRec));
-	
-	
 	
 	MDriver->lib = lib;
 	MDriver->curMusic = NULL;
@@ -1003,7 +998,7 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 			break;
 #endif
 			
-#ifdef __LINUX__
+#ifdef LINUX
 		case ALSADriver:
 			theErr = initALSA(MDriver);
 			if (theErr != noErr) return theErr;
@@ -1075,7 +1070,7 @@ OSErr MADDisposeDriver( MADDriverRec* MDriver)
 			break;
 #endif
 			
-#ifdef __LINUX__
+#ifdef LINUX
 		case ALSADriver:
 			closeALSA(MDriver);
 			break;
@@ -2801,7 +2796,7 @@ OSErr MADStartDriver( MADDriverRec *MDriver)
 			break;			
 #endif
 			
-#ifdef __LINUX__
+#ifdef LINUX
 		case ALSADriver:
 			PlayChannelALSA(MDriver);
 			break;			
@@ -2860,7 +2855,7 @@ OSErr MADStopDriver( MADDriverRec *MDriver)
 			break;			
 #endif
 			
-#ifdef __LINUX__
+#ifdef LINUX
 		case ALSADriver:
 			StopChannelALSA(MDriver);
 			break;			

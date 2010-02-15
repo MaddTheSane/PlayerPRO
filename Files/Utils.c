@@ -46,9 +46,6 @@ extern	ProcessSerialNumber		playerPROPSN;
 extern	DialogPtr				AHelpDlog;
 extern	SndListHandle			InSound, OutSound;
 
-#include "Sound.h"
-#include "mixedmode.h"
-
 /************************************************************/
 /*static	long	oldMyDisposePtr;
 
