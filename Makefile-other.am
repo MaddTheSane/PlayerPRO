@@ -7,4 +7,6 @@ SUBDIRS = MADDriver.source
 PACKAGE_NAME = @PACKAGE_NAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 
+ACLOCAL_AMFLAGS =+ `-I m4'
+
 # Directories containing Makefiles to 'make'

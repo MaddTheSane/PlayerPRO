@@ -1,1 +1,1 @@
-SUBDIRS = MADDriver.source
+SUBDIRS = MADDriver.Source

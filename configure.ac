@@ -7,13 +7,14 @@ AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
 AM_INIT_AUTOMAKE
+AC_CONFIG_MACRO_DIR([m4])
 
 dnl Checks for programs.
 AC_PROG_MAKE_SET
 AC_PROG_CPP
 AC_PROG_CC
 AC_PROG_INSTALL
-AC_PROG_RANLIB
+LT_INIT
 AC_PROG_LIBTOOL
 
 LIBRARY_CURRENT=5
@@ -47,6 +48,6 @@ AC_FUNC_MEMCMP
 AC_CHECK_FUNCS([memset modf strtol])
 
 
-AC_OUTPUT([Makefile-other 
-MADDriver.source/MADDriver.Source/Makefile
-MADDriver.Source/Makefile])
+AC_OUTPUT([Makefile-other
+MADDriver.source/Makefile
+MADDriver.source/MADDriver.Source/Makefile])
