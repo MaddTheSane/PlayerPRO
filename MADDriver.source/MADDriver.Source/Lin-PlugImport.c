@@ -45,6 +45,7 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 {
 
 }
+
 void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
 {
 
@@ -57,7 +58,7 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 
 OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)
 {
-	short			i;
+	short		i;
 	MADMusic	aMAD;
 	
 	if( !strcmp( kindFile, "MADK"))

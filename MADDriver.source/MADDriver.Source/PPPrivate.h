@@ -12,13 +12,13 @@
 
 #include "RDriver.h"
 
+#ifdef _MAC_H
 #pragma mark Core Audio Functions
 OSErr initCoreAudio( MADDriverRec *inMADDriver, long init);
 OSErr closeCoreAudio( MADDriverRec *inMADDriver);
 void StopChannelCA(MADDriverRec *inMADDriver);
 void PlayChannelCA(MADDriverRec *inMADDriver);
 
-#ifdef _MAC_H
 CFMutableArrayRef GetDefaultPluginFolderLocations();
 
 void GetPStrFromCFString(const CFStringRef source, StringPtr pStrOut);
