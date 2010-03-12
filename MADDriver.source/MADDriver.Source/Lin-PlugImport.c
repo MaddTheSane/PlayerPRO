@@ -48,12 +48,14 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 
 void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
 {
-
+	inMADDriver->ThePlug = (PlugInfo*) MADNewPtr( MAXPLUG * sizeof( PlugInfo), inMADDriver);
+	inMADDriver->TotalPlug = 0;
+	
 }
 
 void CloseImportPlug(MADLibrary *inMADDriver)
 {
-
+	
 }
 
 OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)

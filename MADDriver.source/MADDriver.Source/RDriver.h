@@ -484,10 +484,10 @@ typedef struct PlugInfo PlugInfo;
 
 #ifdef __UNIX__
 #include <dlfcn.h>
-typedef OSErr (*MADPLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
+typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 struct PlugInfo
 {
-	MADPLUGDLLFUNC	IOPlug;										// Plug CODE
+	MADPLUGFUNC		IOPlug;										// Plug CODE
 	char			MenuName[ 65];								// Plug name
 	char			AuthorString[ 65];							// Plug author
 	char			file[ 255];									// Location of plug file
