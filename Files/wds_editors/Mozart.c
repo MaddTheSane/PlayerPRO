@@ -1516,10 +1516,10 @@ void DoNullMozart( void)
 	Str255		String;
 	GrafPtr		SavePort;
 	short		temp, itemType, track;
- 	Rect		tempRect, clipRect, itemRect;
- 	Point		pt, pt2, pt3;
- 	Handle		itemHandle;
- 
+	Rect		tempRect, clipRect, itemRect;
+	Point		pt, pt2, pt3;
+	Handle		itemHandle;
+
  	if( MozartDlog == NULL) return;
   
  	GetPort( &SavePort);

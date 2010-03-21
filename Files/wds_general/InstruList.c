@@ -2368,9 +2368,9 @@ void UpdateInstruListWindow( DialogPtr	GetSelection)
 	short		itemType, i, max, pos;
 	Handle		itemHandle;
 	GrafPtr		SavePort;
-	RgnHandle	saveClipRgn;
+	RgnHandle	saveClipRgn = NULL;
 	Str255		aStr, tempStr;
-	RgnHandle	visibleRegion;
+	RgnHandle	visibleRegion = NULL;
 
 	GetPort( &SavePort);
 	
