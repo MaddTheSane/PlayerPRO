@@ -162,7 +162,7 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 
 	oldMAD = (oldMADSpec*) MADPtr;
   
-  MOToldMADSpec(oldMAD);
+	MOToldMADSpec(oldMAD);
   
 /**** HEADER ****/
 	if( oldMAD->MAD != 'MADH') return MADFileNotSupportedByThisPlug;
