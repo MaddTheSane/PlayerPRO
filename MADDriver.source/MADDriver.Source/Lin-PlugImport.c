@@ -1,5 +1,6 @@
 #include "RDriver.h"
 #include "FileUtils.h"
+#include <dlfcn.h>
 
 OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 {
@@ -43,19 +44,37 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 					 MADMusic				*theNewMAD,
 					 PPInfoRec				*info)
 {
-
+	MADDriverSettings 	driverSettings;
+	
+	driverSettings.sysMemory = inMADDriver->sysMemory;
+	return (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, driverSettings);
 }
+
+typedef OSErr (*FILLPLUG) ( PlugInfo *);;
 
 void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
 {
 	inMADDriver->ThePlug = (PlugInfo*) MADNewPtr( MAXPLUG * sizeof( PlugInfo), inMADDriver);
 	inMADDriver->TotalPlug = 0;
-	
+	int i =0;
+	{
+		inMADDriver->ThePlug[i].hLibrary = dlopen(NULL, RTLD_LAZY);
+		FILLPLUG plugFill = (FILLPLUG)dlsym(inMADDriver->ThePlug[i].hLibrary, "FillPlug");
+		inMADDriver->ThePlug[i].IOPlug = (MADPLUGFUNC)dlsym(inMADDriver->ThePlug[i].hLibrary, "mainPLUG");
+		if(plugFill && inMADDriver->ThePlug[i].IOPlug)
+		{
+			(*plugFill)(&inMADDriver->ThePlug[i]);
+			inMADDriver->TotalPlug++;
+		}
+	}
 }
 
 void CloseImportPlug(MADLibrary *inMADDriver)
 {
-	
+	int i;
+	for (i = 0; i < inMADDriver->TotalPlug; i++) {
+		dlclose(inMADDriver->ThePlug[i].hLibrary);
+	}
 }
 
 OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)
@@ -90,7 +109,7 @@ OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
 			*theNewMAD = (MADMusic*) MADNewPtrClear( sizeof( MADMusic), inMADDriver);
-			if( !*theNewMAD) return MADNeedMemory;
+			if( !theNewMAD) return MADNeedMemory;
 			
 			return( CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec));
 		}

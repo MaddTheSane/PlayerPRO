@@ -453,7 +453,6 @@ typedef struct _MADFileFormatPlugin {
 	OSErr (STDMETHODCALLTYPE *ThePlugMain)(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 } MADFileFormatPlugin;
 
-
 typedef struct PlugInfo
 {
 	MADFileFormatPlugin **IOPlug;								// Plug CODE
@@ -487,10 +486,11 @@ typedef struct PlugInfo PlugInfo;
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 struct PlugInfo
 {
+	void*			hLibrary;
 	MADPLUGFUNC		IOPlug;										// Plug CODE
 	char			MenuName[ 65];								// Plug name
 	char			AuthorString[ 65];							// Plug author
-	char			file[ 255];									// Location of plug file
+	char			file[ PATH_MAX];							// Location of plug file
 	char			type[ 5];									// OSType of file support
 	OSType			mode;										// Mode support : Import +/ Export
 };
