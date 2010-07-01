@@ -61,7 +61,7 @@ OSErr GereMusicListChanged();
 	
 //	static	ListSearchUPP			mySearchUPP, mySearchUPP2;	
 
-	static pascal Boolean myDragClickLoopMOD(void);
+//	static pascal Boolean myDragClickLoopMOD(void);
 
 	/** Supporting Keyboard Navigation of list **/
 	
@@ -223,7 +223,7 @@ void MyResetTypeSelection(void)
 	if( gTSThresh > kMaxKeyThresh) gTSThresh = kMaxKeyThresh;
 }
 
-void MyKeySearchInList( short	newChar)
+void MyKeySearchInList(short newChar)
 {
 	Cell	theCell, tCell;
 
@@ -254,13 +254,6 @@ pascal	void	MyLDEF(	short lMessage, Boolean lSelect, Rect* lRect, Cell lCell, sh
 
 DragTrackingHandlerUPP	MyTrackingMODListUPP;
 DragReceiveHandlerUPP	MyReceiveMODListUPP;
-
-/*
-#if defined(powerc) || defined (__powerc)
-#else
-	pascal OSErr IconIDToRgn (RgnHandle theRgn, const Rect *iconRect, short alignment, short iconID) = {0x303C, 0x0613, 0xABC9};
-#endif
-*/
 
 long OpenHeaderMOD( Ptr outPtr, Str255 name, long bytesToRead);
 Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType);
@@ -593,14 +586,14 @@ void SaveMODList(void)
 	
 	////////
 	{
-	Str255	aStr;
+		Str255	aStr;
 	
-	curMusicList = spec;
+		curMusicList = spec;
 	
-	pStrcpy( aStr, curMusicList.name);
-	SetWTitle( GetDialogWindow( MODListDlog), aStr);
+		pStrcpy( aStr, curMusicList.name);
+		SetWTitle( GetDialogWindow( MODListDlog), aStr);
 	
-	changedMusicList = false;
+		changedMusicList = false;
 	}
 	////////
 }
@@ -622,7 +615,7 @@ void FindName( Str255	String, Str255	Str2)
 	}
 }
 
-void OpenMODListSTCf( FSSpec	spec)
+void OpenMODListSTCf( FSSpec spec)
 {
 	short		itemType,i, theNo, iFileRefI, val;
 	short		temp;
@@ -2464,9 +2457,9 @@ OSType GetTYPE( short item, MenuHandle	menu)
 
 void FileInfoIcon( DialogPtr	theDia)
 {
-short	itemType;
-Rect	itemRect;
-Handle	itemHandle;
+	short	itemType;
+	Rect	itemRect;
+	Handle	itemHandle;
 
 	GetDialogItem( theDia, 11, &itemType, &itemHandle, &itemRect);
 	InvalWindowRect( GetDialogWindow( theDia), &itemRect);
@@ -3103,13 +3096,13 @@ OSErr CheckFileAvailable( short ID)
 
 void DoKeyPressMODList( short theChar)
 {
-GrafPtr		SavePort;
-Point		theCell;
-Str255		StrTemp;
-Rect		cellRect, itemRect;
-short		i, dataLen, rowDelete, firstSelec;
-Boolean		Redraw;
-FSSpec		myFSS;
+	GrafPtr		SavePort;
+	Point		theCell;
+	Str255		StrTemp;
+	Rect		cellRect, itemRect;
+	short		i, dataLen, rowDelete, firstSelec;
+	Boolean		Redraw;
+	FSSpec		myFSS;
 	
 	if( MODListDlog == NULL) return;
 	
@@ -3235,13 +3228,13 @@ FSSpec		myFSS;
 
 void DoLoadOtherMusic( Boolean Affiche)
 {
-Point		theCell, cSize;
-OSErr		iErr;
-short		LastCopy, dataLen;
-GrafPtr		SavePort;
-Byte		ttt;
-FSSpec		myFSS;
-Boolean		loaded;
+	Point		theCell, cSize;
+	OSErr		iErr;
+	short		LastCopy, dataLen;
+	GrafPtr		SavePort;
+	Byte		ttt;
+	FSSpec		myFSS;
+	Boolean		loaded;
 
 	if( myList.maxY <= 0) return;
 	

@@ -142,8 +142,8 @@ badplug3:
 badplug2:
 	CFRelease(FillPlug->MenuName);
 badplug:
+	NSLog(CFSTR("Error with plug-in %@"), tempBundle);
 	(*tempMADPlug)->Release(tempMADPlug);
-	NSLog(CFSTR("Error with plug-in"));
 	return;
 }
 
