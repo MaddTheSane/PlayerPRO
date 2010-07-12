@@ -467,18 +467,12 @@
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleGetInfoString</key>
-	<string>6.0 - Copyright © 1990-2002 Antoine ROSSET, 2010 SourceForge</string>
 	<key>CFBundleIconFile</key>
 	<string>ppApp</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.sourceforge.playerpro.playerpro</string>
+	<string>net.sourceforge.playerpro.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>CFBundleLongVersionString</key>
-	<string>6.0.0, ©1990-2002 Antoine ROSSET</string>
-	<key>CFBundleName</key>
-	<string>PlayerPRO</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -487,10 +481,12 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>6.0</string>
-	<key>CSResourcesFileMapped</key>
-	<string>yes</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

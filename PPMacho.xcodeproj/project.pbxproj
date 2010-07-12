@@ -395,6 +395,7 @@
 		55BDD38C10DC9EDE00813A3A /* Note Translate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11B910D6F32900BB619C /* Note Translate.plugin */; };
 		55BDD38D10DC9EDE00813A3A /* Propagate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11FD10D6F3E100BB619C /* Propagate.plugin */; };
 		55BDD38E10DC9EDE00813A3A /* Revert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E123010D6F3E600BB619C /* Revert.plugin */; };
+		55CB01A711EB82FA0028C6BB /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CB01A611EB82FA0028C6BB /* main.c */; };
 		55CBF89511EADBA60028C6BB /* PPFastForward.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF88E11EADBA50028C6BB /* PPFastForward.png */; };
 		55CBF89611EADBA60028C6BB /* PPNextTrack.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF88F11EADBA50028C6BB /* PPNextTrack.png */; };
 		55CBF89711EADBA60028C6BB /* PPPlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89011EADBA50028C6BB /* PPPlay.png */; };
@@ -402,6 +403,69 @@
 		55CBF89911EADBA60028C6BB /* PPRecord.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89211EADBA50028C6BB /* PPRecord.png */; };
 		55CBF89A11EADBA60028C6BB /* PPReverse.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89311EADBA50028C6BB /* PPReverse.png */; };
 		55CBF89B11EADBA60028C6BB /* PPStop.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89411EADBA50028C6BB /* PPStop.png */; };
+		55CBFAD211EB77ED0028C6BB /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
+		55CBFAD311EB77ED0028C6BB /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
+		55CBFAD411EB77ED0028C6BB /* AMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341D310BB5FE0005208D1 /* AMF.ppimpexp */; };
+		55CBFAD511EB77ED0028C6BB /* DMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341E910BB5FFA005208D1 /* DMF.ppimpexp */; };
+		55CBFAD611EB77ED0028C6BB /* IT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341FC10BB600A005208D1 /* IT.ppimpexp */; };
+		55CBFAD711EB77ED0028C6BB /* MADfg.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */; };
+		55CBFAD811EB77ED0028C6BB /* MADH.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */; };
+		55CBFAD911EB77ED0028C6BB /* MADI.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586872D10BF5C4E00FCC24D /* MADI.ppimpexp */; };
+		55CBFADA11EB77ED0028C6BB /* MED.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586874D10BF5D3700FCC24D /* MED.ppimpexp */; };
+		55CBFADB11EB77ED0028C6BB /* MTM.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586876210BF5E4D00FCC24D /* MTM.ppimpexp */; };
+		55CBFADC11EB77ED0028C6BB /* Okta.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 558687DE10BF620500FCC24D /* Okta.ppimpexp */; };
+		55CBFADD11EB77ED0028C6BB /* S3M.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; };
+		55CBFADE11EB77ED0028C6BB /* ULT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; };
+		55CBFADF11EB77ED0028C6BB /* UMX.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586882910BF62F500FCC24D /* UMX.ppimpexp */; };
+		55CBFAE011EB77ED0028C6BB /* XM.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; };
+		55CBFAE111EB77ED0028C6BB /* MIDI.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppimpexp */; };
+		55CBFAE211EB77ED0028C6BB /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
+		55CBFC3611EB78490028C6BB /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EB10B5151700FF8B50 /* AppKit.framework */; };
+		55CBFC3711EB78510028C6BB /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		55CBFC3A11EB78800028C6BB /* ByteSwap.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A46D10B51CAB00FF8B50 /* ByteSwap.c */; };
+		55CBFC3B11EB78840028C6BB /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
+		55CBFC3C11EB788A0028C6BB /* Effects.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D10C2F21DD00D6C081 /* Effects.c */; };
+		55CBFC3D11EB789A0028C6BB /* Interrupt.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D20C2F21DD00D6C081 /* Interrupt.c */; };
+		55CBFC3E11EB78A70028C6BB /* Mac-FileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D30C2F21DD00D6C081 /* Mac-FileUtils.c */; };
+		55CBFC3F11EB78AD0028C6BB /* Mac-SoundManager.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D50C2F21DD00D6C081 /* Mac-SoundManager.c */; };
+		55CBFC4011EB78B90028C6BB /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
+		55CBFC4111EB78BD0028C6BB /* MyDebugStr.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A3E810B5147C00FF8B50 /* MyDebugStr.c */; };
+		55CBFC4211EB78C20028C6BB /* MySndPlayDB.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D70C2F21DD00D6C081 /* MySndPlayDB.c */; };
+		55CBFC4311EB78C60028C6BB /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
+		55CBFC4411EB78CB0028C6BB /* OSX-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */; };
+		55CBFC4511EB79180028C6BB /* PPNextTrack.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF88F11EADBA50028C6BB /* PPNextTrack.png */; };
+		55CBFC4611EB791C0028C6BB /* PPPlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89011EADBA50028C6BB /* PPPlay.png */; };
+		55CBFC5511EB79DA0028C6BB /* 669.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D010BA17BC004FC5D7 /* 669.icns */; };
+		55CBFC5611EB79DE0028C6BB /* INS.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55E89D3B10F26A4B004EB52B /* INS.icns */; };
+		55CBFC5711EB79E20028C6BB /* IT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D110BA17BC004FC5D7 /* IT.icns */; };
+		55CBFC5811EB79E50028C6BB /* List.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D210BA17BC004FC5D7 /* List.icns */; };
+		55CBFC5911EB79E80028C6BB /* MAD.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D310BA17BC004FC5D7 /* MAD.icns */; };
+		55CBFC5A11EB79EB0028C6BB /* MED.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D410BA17BC004FC5D7 /* MED.icns */; };
+		55CBFC5B11EB79EF0028C6BB /* MIDI.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D510BA17BC004FC5D7 /* MIDI.icns */; };
+		55CBFC5C11EB79F30028C6BB /* MOD.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D610BA17BC004FC5D7 /* MOD.icns */; };
+		55CBFC5D11EB79F60028C6BB /* MTM.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D710BA17BC004FC5D7 /* MTM.icns */; };
+		55CBFC5E11EB79F90028C6BB /* OKTA.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D810BA17BC004FC5D7 /* OKTA.icns */; };
+		55CBFC5F11EB79FD0028C6BB /* PATN.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55E89D3A10F26A4B004EB52B /* PATN.icns */; };
+		55CBFC6011EB7A000028C6BB /* PCMD.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D910BA17BC004FC5D7 /* PCMD.icns */; };
+		55CBFC6111EB7A030028C6BB /* ppApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55FA5FBA102D2D6C00CB63DA /* ppApp.icns */; };
+		55CBFC6211EB7A070028C6BB /* S3M.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DA10BA17BC004FC5D7 /* S3M.icns */; };
+		55CBFC6311EB7A0A0028C6BB /* UMX.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DB10BA17BC004FC5D7 /* UMX.icns */; };
+		55CBFC6411EB7A0D0028C6BB /* WAV.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DC10BA17BC004FC5D7 /* WAV.icns */; };
+		55CBFC6511EB7A110028C6BB /* XI.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DD10BA17BC004FC5D7 /* XI.icns */; };
+		55CBFC6611EB7A1C0028C6BB /* XM.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DE10BA17BC004FC5D7 /* XM.icns */; };
+		55CBFC6711EB7A380028C6BB /* OutPut8.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D90C2F21DD00D6C081 /* OutPut8.c */; };
+		55CBFC6811EB7A3C0028C6BB /* realft.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DA0C2F21DD00D6C081 /* realft.c */; };
+		55CBFC6911EB7A400028C6BB /* TickRemover.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */; };
+		55CBFC7311EB7BD90028C6BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7211EB7BD90028C6BB /* InfoPlist.strings */; };
+		55CBFC7411EB7C0B0028C6BB /* PPStop.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89411EADBA50028C6BB /* PPStop.png */; };
+		55CBFC7511EB7C120028C6BB /* PPFastForward.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF88E11EADBA50028C6BB /* PPFastForward.png */; };
+		55CBFC7611EB7C1D0028C6BB /* PPPrevTrack.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89111EADBA50028C6BB /* PPPrevTrack.png */; };
+		55CBFC7711EB7C250028C6BB /* PPRecord.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89211EADBA50028C6BB /* PPRecord.png */; };
+		55CBFC7811EB7C2D0028C6BB /* PPReverse.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89311EADBA50028C6BB /* PPReverse.png */; };
+		55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7B11EB7C950028C6BB /* MainMenu.xib */; };
+		55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */; };
 		55DB45D50FEAB8CD0088C375 /* DFTB.r in Rez */ = {isa = PBXBuildFile; fileRef = 55DB45D40FEAB8CD0088C375 /* DFTB.r */; };
 		55E8981A10EEC5BA004EB52B /* AboutPlugs.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */; };
 		55E898B010F17C2B004EB52B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
@@ -1207,6 +1271,13 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
+		55CBF9FF11EB77AA0028C6BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5533410810BB5460005208D1 /* Import-export */;
+			remoteInfo = "Import-export";
+		};
 		55E898AA10F17C2B004EB52B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1231,6 +1302,33 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		55CBFB3711EB780B0028C6BB /* Copy PlugIns */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				55CBFAD211EB77ED0028C6BB /* MOD.ppimpexp in Copy PlugIns */,
+				55CBFAD311EB77ED0028C6BB /* 669.ppimpexp in Copy PlugIns */,
+				55CBFAD411EB77ED0028C6BB /* AMF.ppimpexp in Copy PlugIns */,
+				55CBFAD511EB77ED0028C6BB /* DMF.ppimpexp in Copy PlugIns */,
+				55CBFAD611EB77ED0028C6BB /* IT.ppimpexp in Copy PlugIns */,
+				55CBFAD711EB77ED0028C6BB /* MADfg.ppimpexp in Copy PlugIns */,
+				55CBFAD811EB77ED0028C6BB /* MADH.ppimpexp in Copy PlugIns */,
+				55CBFAD911EB77ED0028C6BB /* MADI.ppimpexp in Copy PlugIns */,
+				55CBFADA11EB77ED0028C6BB /* MED.ppimpexp in Copy PlugIns */,
+				55CBFADB11EB77ED0028C6BB /* MTM.ppimpexp in Copy PlugIns */,
+				55CBFADC11EB77ED0028C6BB /* Okta.ppimpexp in Copy PlugIns */,
+				55CBFADD11EB77ED0028C6BB /* S3M.ppimpexp in Copy PlugIns */,
+				55CBFADE11EB77ED0028C6BB /* ULT.ppimpexp in Copy PlugIns */,
+				55CBFADF11EB77ED0028C6BB /* UMX.ppimpexp in Copy PlugIns */,
+				55CBFAE011EB77ED0028C6BB /* XM.ppimpexp in Copy PlugIns */,
+				55CBFAE111EB77ED0028C6BB /* MIDI.ppimpexp in Copy PlugIns */,
+				55CBFAE211EB77ED0028C6BB /* APPL.ppimpexp in Copy PlugIns */,
+			);
+			name = "Copy PlugIns";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55ED50BD10D40C3400824C61 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1296,7 +1394,7 @@
 /* Begin PBXFileReference section */
 		550B001A10BA021A004FC5D7 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Game.h; sourceTree = "<group>"; };
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
-		550B006810BA0676004FC5D7 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		550B006810BA0676004FC5D7 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = ../English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		550B00D010BA17BC004FC5D7 /* 669.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = 669.icns; sourceTree = "<group>"; };
 		550B00D110BA17BC004FC5D7 /* IT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IT.icns; sourceTree = "<group>"; };
 		550B00D210BA17BC004FC5D7 /* List.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = List.icns; sourceTree = "<group>"; };
@@ -1320,8 +1418,8 @@
 		550BFF2310BA01BA004FC5D7 /* chipmunks.MADK */ = {isa = PBXFileReference; lastKnownFileType = file; path = chipmunks.MADK; sourceTree = "<group>"; };
 		550BFF2410BA01BA004FC5D7 /* Game.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Game.c; sourceTree = "<group>"; };
 		550BFF2510BA01BA004FC5D7 /* Game.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; path = Game.r; sourceTree = "<group>"; };
-		5514AA6D10D017E9009A6BD3 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = English; path = "Files/English.lproj/Language-rez.r"; sourceTree = "<group>"; };
-		5514AA6E10D01803009A6BD3 /* French */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = French; path = "Files/French.lproj/Language-rez.r"; sourceTree = "<group>"; };
+		5514AA6D10D017E9009A6BD3 /* Language-rez.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = "Language-rez.r"; path = "../Files/English.lproj/Language-rez.r"; sourceTree = "<group>"; };
+		5514AA6E10D01803009A6BD3 /* Language-rez.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = "Language-rez.r"; path = "../Files/French.lproj/Language-rez.r"; sourceTree = "<group>"; };
 		55151E7410DD4F400054ABC4 /* CFPlugin-InstrBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "CFPlugin-InstrBridge.c"; sourceTree = "<group>"; };
 		55151F8010DEDBDB0054ABC4 /* XI.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XI.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55151F8110DEDBDB0054ABC4 /* XI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "XI-Info.plist"; path = "../../../XI-Info.plist"; sourceTree = "<group>"; };
@@ -1513,9 +1611,9 @@
 		5573A46D10B51CAB00FF8B50 /* ByteSwap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = ByteSwap.c; sourceTree = "<group>"; };
 		5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawSprocket.framework; path = System/Library/Frameworks/DrawSprocket.framework; sourceTree = SDKROOT; };
 		5573A59F10B542F300FF8B50 /* Proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Proto.c; path = "(Proto)/Proto.c"; sourceTree = "<group>"; };
-		557B8FD910CE01BF00B9A37D /* DefaultPref.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DefaultPref.r; path = Files/DefaultPref.r; sourceTree = "<group>"; };
-		557DE1F110E0158C00177B4C /* PPMenus.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = PPMenus.r; path = Files/PPMenus.r; sourceTree = "<group>"; };
-		557DE27610E04C1500177B4C /* PPResDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPResDefs.h; path = Files/PPResDefs.h; sourceTree = "<group>"; };
+		557B8FD910CE01BF00B9A37D /* DefaultPref.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DefaultPref.r; path = ../Files/DefaultPref.r; sourceTree = "<group>"; };
+		557DE1F110E0158C00177B4C /* PPMenus.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = PPMenus.r; path = ../Files/PPMenus.r; sourceTree = "<group>"; };
+		557DE27610E04C1500177B4C /* PPResDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPResDefs.h; path = ../Files/PPResDefs.h; sourceTree = "<group>"; };
 		557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "CFPlugin-FilterBridge.c"; sourceTree = "<group>"; };
 		557DE43410E06BF200177B4C /* Amplitude.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amplitude.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE43510E06BF200177B4C /* Amplitude-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Amplitude-Info.plist"; path = "../../../Amplitude-Info.plist"; sourceTree = "<group>"; };
@@ -1588,25 +1686,32 @@
 		55868A0E10BFB31500FCC24D /* XM_Plug.rsrc.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; path = XM_Plug.rsrc.r; sourceTree = "<group>"; };
 		55868A6710BFB46100FCC24D /* APPL.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APPL.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		55868A6810BFB46100FCC24D /* APPL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "APPL-Info.plist"; path = "../../../APPL-Info.plist"; sourceTree = "<group>"; };
-		558A15250FE749B400533D71 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		558A15250FE749B400533D71 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
 		559087F410E8364F00CE70B8 /* Exemple.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Exemple.icns; sourceTree = "<group>"; };
 		5590896710E883AF00CE70B8 /* WAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WAV.h; sourceTree = "<group>"; };
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Complex Fade-Info.plist"; path = "../../../Complex Fade-Info.plist"; sourceTree = "<group>"; };
-		55CBF88E11EADBA50028C6BB /* PPFastForward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PPFastForward.png; path = Resources/PPFastForward.png; sourceTree = "<group>"; };
-		55CBF88F11EADBA50028C6BB /* PPNextTrack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PPNextTrack.png; path = Resources/PPNextTrack.png; sourceTree = "<group>"; };
-		55CBF89011EADBA50028C6BB /* PPPlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PPPlay.png; path = Resources/PPPlay.png; sourceTree = "<group>"; };
-		55CBF89111EADBA50028C6BB /* PPPrevTrack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PPPrevTrack.png; path = Resources/PPPrevTrack.png; sourceTree = "<group>"; };
-		55CBF89211EADBA50028C6BB /* PPRecord.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PPRecord.png; path = Resources/PPRecord.png; sourceTree = "<group>"; };
-		55CBF89311EADBA50028C6BB /* PPReverse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PPReverse.png; path = Resources/PPReverse.png; sourceTree = "<group>"; };
-		55CBF89411EADBA50028C6BB /* PPStop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PPStop.png; path = Resources/PPStop.png; sourceTree = "<group>"; };
-		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DFTB.r; path = Files/DFTB.r; sourceTree = "<group>"; };
+		55CB01A611EB82FA0028C6BB /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		55CBF88E11EADBA50028C6BB /* PPFastForward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPFastForward.png; sourceTree = "<group>"; };
+		55CBF88F11EADBA50028C6BB /* PPNextTrack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPNextTrack.png; sourceTree = "<group>"; };
+		55CBF89011EADBA50028C6BB /* PPPlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPPlay.png; sourceTree = "<group>"; };
+		55CBF89111EADBA50028C6BB /* PPPrevTrack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPPrevTrack.png; sourceTree = "<group>"; };
+		55CBF89211EADBA50028C6BB /* PPRecord.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPRecord.png; sourceTree = "<group>"; };
+		55CBF89311EADBA50028C6BB /* PPReverse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPReverse.png; sourceTree = "<group>"; };
+		55CBF89411EADBA50028C6BB /* PPStop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPStop.png; sourceTree = "<group>"; };
+		55CBF9A611EB77760028C6BB /* PlayerPRO Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55CBF9A811EB77760028C6BB /* Cocoa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Cocoa-Info.plist"; sourceTree = "<group>"; };
+		55CBFC7011EB7BC90028C6BB /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55CBFC7911EB7C4E0028C6BB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPApp_AppDelegate.h; sourceTree = "<group>"; };
+		55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPApp_AppDelegate.m; sourceTree = "<group>"; };
+		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DFTB.r; path = ../Files/DFTB.r; sourceTree = "<group>"; };
 		55E898B710F17C2B004EB52B /* QuickTime.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickTime.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55E8997B10F17CCB004EB52B /* QuickTime-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "QuickTime-Info.plist"; sourceTree = SOURCE_ROOT; };
 		55E89D3A10F26A4B004EB52B /* PATN.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = PATN.icns; sourceTree = "<group>"; };
 		55E89D3B10F26A4B004EB52B /* INS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = INS.icns; sourceTree = "<group>"; };
 		55ED547310D5F9CD00824C61 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
-		55EE8C731003E83A00E75E63 /* General-rez.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = "General-rez.r"; path = "Files/General-rez.r"; sourceTree = "<group>"; };
+		55EE8C731003E83A00E75E63 /* General-rez.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = "General-rez.r"; path = "../Files/General-rez.r"; sourceTree = "<group>"; };
 		55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		55EE8EBC100404EB00E75E63 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -1614,7 +1719,7 @@
 		55EE8EC0100404EB00E75E63 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
 		55FA5FBA102D2D6C00CB63DA /* ppApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ppApp.icns; path = ../ppApp.icns; sourceTree = "<group>"; };
 		88E0C3B50C2F21DD00D6C081 /* PlayerPRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayerPRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		88E0C3BE0C2F21DD00D6C081 /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 1; name = Carbon.r; path = Files/Carbon.r; sourceTree = "<group>"; };
+		88E0C3BE0C2F21DD00D6C081 /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 1; name = Carbon.r; path = ../Files/Carbon.r; sourceTree = "<group>"; };
 		88E0C3BF0C2F21DD00D6C081 /* PlayerProCarbon.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlayerProCarbon.pch; path = Files/PlayerProCarbon.pch; sourceTree = SOURCE_ROOT; };
 		88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = AboutPlugs.c; path = Files/wds_general/AboutPlugs.c; sourceTree = SOURCE_ROOT; };
 		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = FileUtils.h; sourceTree = "<group>"; };
@@ -2201,6 +2306,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55CBF9A411EB77760028C6BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55CBFC3611EB78490028C6BB /* AppKit.framework in Frameworks */,
+				55CBFC3711EB78510028C6BB /* Carbon.framework in Frameworks */,
+				55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */,
+				55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55E898AF10F17C2B004EB52B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2250,7 +2366,7 @@
 				550B00DE10BA17BC004FC5D7 /* XM.icns */,
 			);
 			name = Icons;
-			path = Files/Icons;
+			path = ../Files/Icons;
 			sourceTree = "<group>";
 		};
 		550BFF2110BA01BA004FC5D7 /* Game Example */ = {
@@ -3050,6 +3166,31 @@
 			name = "Main Driver Source";
 			sourceTree = "<group>";
 		};
+		55CBFC6E11EB7A7A0028C6BB /* Carbon Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5514AA6C10D017E9009A6BD3 /* Language-rez.r */,
+				55DB45D40FEAB8CD0088C375 /* DFTB.r */,
+				88E0C3BE0C2F21DD00D6C081 /* Carbon.r */,
+				55EE8C731003E83A00E75E63 /* General-rez.r */,
+				550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */,
+				557B8FD910CE01BF00B9A37D /* DefaultPref.r */,
+				557DE1F110E0158C00177B4C /* PPMenus.r */,
+				557DE27610E04C1500177B4C /* PPResDefs.h */,
+			);
+			name = "Carbon Resources";
+			sourceTree = "<group>";
+		};
+		55CBFCD411EB7CA00028C6BB /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */,
+				55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */,
+				55CB01A611EB82FA0028C6BB /* main.c */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		55F0DA6610CC808500835D4E /* wds_general */ = {
 			isa = PBXGroup;
 			children = (
@@ -3101,6 +3242,7 @@
 		88E0C3A60C2F21DD00D6C081 = {
 			isa = PBXGroup;
 			children = (
+				55CBFCD411EB7CA00028C6BB /* Classes */,
 				552C70C210CDAF8C00C0E0D4 /* Documentation */,
 				5518105510C35A0100ADA9F4 /* Example */,
 				550BFF2110BA01BA004FC5D7 /* Game Example */,
@@ -3116,6 +3258,7 @@
 				88E0C4950C2F21E500D6C081 /* Frameworks */,
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 				5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */,
+				55CBF9A811EB77760028C6BB /* Cocoa-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -3168,6 +3311,7 @@
 				551FEA6B10E727AD00EDF2F1 /* MINs.plugin */,
 				551FEADA10E727B100EDF2F1 /* PAT.plugin */,
 				55E898B710F17C2B004EB52B /* QuickTime.plugin */,
+				55CBF9A611EB77760028C6BB /* PlayerPRO Cocoa.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3214,18 +3358,13 @@
 				55CBF89211EADBA50028C6BB /* PPRecord.png */,
 				55CBF89311EADBA50028C6BB /* PPReverse.png */,
 				55CBF89411EADBA50028C6BB /* PPStop.png */,
-				5514AA6C10D017E9009A6BD3 /* Language-rez.r */,
-				55DB45D40FEAB8CD0088C375 /* DFTB.r */,
-				88E0C3BE0C2F21DD00D6C081 /* Carbon.r */,
+				55CBFC6E11EB7A7A0028C6BB /* Carbon Resources */,
 				558A15250FE749B400533D71 /* Info.plist */,
-				55EE8C731003E83A00E75E63 /* General-rez.r */,
 				550B00CF10BA17BC004FC5D7 /* Icons */,
-				550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */,
-				557B8FD910CE01BF00B9A37D /* DefaultPref.r */,
-				557DE1F110E0158C00177B4C /* PPMenus.r */,
-				557DE27610E04C1500177B4C /* PPResDefs.h */,
+				55CBFC7211EB7BD90028C6BB /* InfoPlist.strings */,
+				55CBFC7B11EB7C950028C6BB /* MainMenu.xib */,
 			);
-			name = Resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		88E0C3CE0C2F21DD00D6C081 /* MADDriver.Source */ = {
@@ -4302,6 +4441,25 @@
 			productReference = 55B797DC10D6E6C40073E379 /* Complex Fade.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		55CBF9A511EB77760028C6BB /* Cocoa */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55CBF9AB11EB77780028C6BB /* Build configuration list for PBXNativeTarget "Cocoa" */;
+			buildPhases = (
+				55CBF9A211EB77760028C6BB /* Resources */,
+				55CBF9A311EB77760028C6BB /* Sources */,
+				55CBF9A411EB77760028C6BB /* Frameworks */,
+				55CBFB3711EB780B0028C6BB /* Copy PlugIns */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55CBFA0011EB77AA0028C6BB /* PBXTargetDependency */,
+			);
+			name = Cocoa;
+			productName = Cocoa;
+			productReference = 55CBF9A611EB77760028C6BB /* PlayerPRO Cocoa.app */;
+			productType = "com.apple.product-type.application";
+		};
 		55E898A810F17C2B004EB52B /* QuickTime */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55E898B410F17C2B004EB52B /* Build configuration list for PBXNativeTarget "QuickTime" */;
@@ -4351,7 +4509,7 @@
 		88E0C3A80C2F21DD00D6C081 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = NO;
+				BuildIndependentTargetsInParallel = YES;
 			};
 			buildConfigurationList = 88E0C3A90C2F21DD00D6C081 /* Build configuration list for PBXProject "PPMacho" */;
 			compatibilityVersion = "Xcode 3.0";
@@ -4362,6 +4520,7 @@
 			projectRoot = "";
 			targets = (
 				88E0C3B20C2F21DD00D6C081 /* Carbon */,
+				55CBF9A511EB77760028C6BB /* Cocoa */,
 				5518107110C35A4500ADA9F4 /* PlayerPRO Example */,
 				550BFF0F10BA0178004FC5D7 /* Game Example */,
 				5573A33E10B50D2600FF8B50 /* PlayerPROCore */,
@@ -4722,6 +4881,40 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55CBF9A211EB77760028C6BB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55CBFC4511EB79180028C6BB /* PPNextTrack.png in Resources */,
+				55CBFC4611EB791C0028C6BB /* PPPlay.png in Resources */,
+				55CBFC5511EB79DA0028C6BB /* 669.icns in Resources */,
+				55CBFC5611EB79DE0028C6BB /* INS.icns in Resources */,
+				55CBFC5711EB79E20028C6BB /* IT.icns in Resources */,
+				55CBFC5811EB79E50028C6BB /* List.icns in Resources */,
+				55CBFC5911EB79E80028C6BB /* MAD.icns in Resources */,
+				55CBFC5A11EB79EB0028C6BB /* MED.icns in Resources */,
+				55CBFC5B11EB79EF0028C6BB /* MIDI.icns in Resources */,
+				55CBFC5C11EB79F30028C6BB /* MOD.icns in Resources */,
+				55CBFC5D11EB79F60028C6BB /* MTM.icns in Resources */,
+				55CBFC5E11EB79F90028C6BB /* OKTA.icns in Resources */,
+				55CBFC5F11EB79FD0028C6BB /* PATN.icns in Resources */,
+				55CBFC6011EB7A000028C6BB /* PCMD.icns in Resources */,
+				55CBFC6111EB7A030028C6BB /* ppApp.icns in Resources */,
+				55CBFC6211EB7A070028C6BB /* S3M.icns in Resources */,
+				55CBFC6311EB7A0A0028C6BB /* UMX.icns in Resources */,
+				55CBFC6411EB7A0D0028C6BB /* WAV.icns in Resources */,
+				55CBFC6511EB7A110028C6BB /* XI.icns in Resources */,
+				55CBFC6611EB7A1C0028C6BB /* XM.icns in Resources */,
+				55CBFC7311EB7BD90028C6BB /* InfoPlist.strings in Resources */,
+				55CBFC7411EB7C0B0028C6BB /* PPStop.png in Resources */,
+				55CBFC7511EB7C120028C6BB /* PPFastForward.png in Resources */,
+				55CBFC7611EB7C1D0028C6BB /* PPPrevTrack.png in Resources */,
+				55CBFC7711EB7C250028C6BB /* PPRecord.png in Resources */,
+				55CBFC7811EB7C2D0028C6BB /* PPReverse.png in Resources */,
+				55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5501,6 +5694,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55CBF9A311EB77760028C6BB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55CBFC3A11EB78800028C6BB /* ByteSwap.c in Sources */,
+				55CBFC3B11EB78840028C6BB /* DelayOutPut.c in Sources */,
+				55CBFC3C11EB788A0028C6BB /* Effects.c in Sources */,
+				55CBFC3D11EB789A0028C6BB /* Interrupt.c in Sources */,
+				55CBFC3E11EB78A70028C6BB /* Mac-FileUtils.c in Sources */,
+				55CBFC3F11EB78AD0028C6BB /* Mac-SoundManager.c in Sources */,
+				55CBFC4011EB78B90028C6BB /* MainDriver.c in Sources */,
+				55CBFC4111EB78BD0028C6BB /* MyDebugStr.c in Sources */,
+				55CBFC4211EB78C20028C6BB /* MySndPlayDB.c in Sources */,
+				55CBFC4311EB78C60028C6BB /* OSX-CoreAudio.c in Sources */,
+				55CBFC4411EB78CB0028C6BB /* OSX-PlugImport.c in Sources */,
+				55CBFC6711EB7A380028C6BB /* OutPut8.c in Sources */,
+				55CBFC6811EB7A3C0028C6BB /* realft.c in Sources */,
+				55CBFC6911EB7A400028C6BB /* TickRemover.c in Sources */,
+				55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */,
+				55CB01A711EB82FA0028C6BB /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55E898AC10F17C2B004EB52B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6046,6 +6262,11 @@
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 55B797E110D6E6D00073E379 /* PBXContainerItemProxy */;
 		};
+		55CBFA0011EB77AA0028C6BB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5533410810BB5460005208D1 /* Import-export */;
+			targetProxy = 55CBF9FF11EB77AA0028C6BB /* PBXContainerItemProxy */;
+		};
 		55E898A910F17C2B004EB52B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
@@ -6067,7 +6288,7 @@
 		550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				550B006810BA0676004FC5D7 /* English */,
+				550B006810BA0676004FC5D7 /* InfoPlist.strings */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -6075,10 +6296,26 @@
 		5514AA6C10D017E9009A6BD3 /* Language-rez.r */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5514AA6D10D017E9009A6BD3 /* English */,
-				5514AA6E10D01803009A6BD3 /* French */,
+				5514AA6D10D017E9009A6BD3 /* Language-rez.r */,
+				5514AA6E10D01803009A6BD3 /* Language-rez.r */,
 			);
 			name = "Language-rez.r";
+			sourceTree = "<group>";
+		};
+		55CBFC7211EB7BD90028C6BB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55CBFC7011EB7BC90028C6BB /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		55CBFC7B11EB7C950028C6BB /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55CBFC7911EB7C4E0028C6BB /* English */,
+			);
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -6371,10 +6608,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -6397,10 +6630,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -6424,10 +6653,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -6450,10 +6675,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -6477,10 +6698,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -6503,10 +6720,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -6530,10 +6743,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -6556,10 +6765,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -7412,10 +7617,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7437,10 +7638,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -7464,10 +7661,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7490,10 +7683,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -7517,10 +7706,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7543,10 +7728,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -7570,10 +7751,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7596,10 +7773,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -7623,10 +7796,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7649,10 +7818,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -7676,10 +7841,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7702,10 +7863,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -7729,10 +7886,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7755,10 +7908,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -7782,10 +7931,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7808,10 +7953,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -7835,10 +7976,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7861,10 +7998,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -7888,10 +8021,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7914,10 +8043,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -7941,10 +8066,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7967,10 +8088,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -7994,10 +8111,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -8020,10 +8133,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -8147,6 +8256,48 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = "Complex Fade";
 				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		55CBF9A911EB77780028C6BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EXPORTED_SYMBOLS_FILE = Files/FileUtils.exp;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_DRAW_SPROCKETS,
+					MAINPLAYERPRO,
+				);
+				INFOPLIST_FILE = "Cocoa-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				PRODUCT_NAME = "PlayerPRO Cocoa";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		55CBF9AA11EB77780028C6BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				EXPORTED_SYMBOLS_FILE = Files/FileUtils.exp;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_DRAW_SPROCKETS,
+					MAINPLAYERPRO,
+				);
+				INFOPLIST_FILE = "Cocoa-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				PRODUCT_NAME = "PlayerPRO Cocoa";
 			};
 			name = Debug;
 		};
@@ -8617,6 +8768,15 @@
 			buildConfigurations = (
 				55B797DF10D6E6C70073E379 /* Release */,
 				55B797E010D6E6C70073E379 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55CBF9AB11EB77780028C6BB /* Build configuration list for PBXNativeTarget "Cocoa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55CBF9A911EB77780028C6BB /* Release */,
+				55CBF9AA11EB77780028C6BB /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
