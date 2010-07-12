@@ -46,7 +46,7 @@
 #endif
 #endif
 
-#ifdef __LINUX__
+#ifdef LINUX
 #include <alsa/asoundlib.h>
 #endif
 
@@ -294,12 +294,13 @@ enum
 	BeOSSoundDriver,				// BE ONLY when using with BeOS compatible systems ! - NOT FOR MAC
 	DirectSound95NT,				// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
 	Wave95NT,						// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
-	NoHardwareDriver,				// NO HARDWARE CONNECTION, will not produce any sound
 	CoreAudioDriver,				// OSX ONLY Core Audio driver
 	ALSADriver,						// LINUX ONLY ALSA driver
 	OSSDriver,						// Open Sound System. Most Unices (NOT OS X) including Linux
 	ESDDriver,						// ESound Driver. available on most UNIX Systems
-	ASIOSoundManager				// ASIO Sound Driver by Steinberg
+	ASIOSoundManager,				// ASIO Sound Driver by Steinberg
+	NoHardwareDriver				// NO HARDWARE CONNECTION, will not produce any sound
+
 };
 
 enum
@@ -452,7 +453,6 @@ typedef struct _MADFileFormatPlugin {
 	OSErr (STDMETHODCALLTYPE *ThePlugMain)(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 } MADFileFormatPlugin;
 
-
 typedef struct PlugInfo
 {
 	MADFileFormatPlugin **IOPlug;								// Plug CODE
@@ -483,13 +483,14 @@ typedef struct PlugInfo PlugInfo;
 
 #ifdef __UNIX__
 #include <dlfcn.h>
-typedef OSErr (*MADPLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
+typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 struct PlugInfo
 {
-	MADPLUGDLLFUNC	IOPlug;										// Plug CODE
+	void*			hLibrary;
+	MADPLUGFUNC		IOPlug;										// Plug CODE
 	char			MenuName[ 65];								// Plug name
 	char			AuthorString[ 65];							// Plug author
-	char			file[ 255];									// Location of plug file
+	char			file[ PATH_MAX];							// Location of plug file
 	char			type[ 5];									// OSType of file support
 	OSType			mode;										// Mode support : Import +/ Export
 };
@@ -612,7 +613,7 @@ typedef struct MADDriverRec
 //TODO: OSS Sound Driver
 #endif
 
-#ifdef __LINUX__
+#ifdef LINUX
 //TODO: ALSA Sound Driver
 #endif
 

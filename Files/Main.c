@@ -5407,8 +5407,6 @@ ReLoadPrefs:
 	HSetVol(NULL, vRefNumOld, DirIDOld);
 }
 
-#include <SoundComponents.h>
-
 void DoPreferences()
 {
 	OSErr			iErr;
@@ -5577,7 +5575,7 @@ ReLoadPrefs:
 		thePrefs.patternWrapping = false;
 		thePrefs.AutoPlayWhenOpen = true;
 		thePrefs.OscilloLine = true;
-	//TODO: fix i386 code
+	//TODO: implement i386 code
 		if( thePrefs.PPCMachine) thePrefs.Interpolation = true;
 		else thePrefs.Interpolation = false;
 		thePrefs.MicroDelay = false;

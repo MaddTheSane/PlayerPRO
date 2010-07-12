@@ -120,6 +120,28 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 	BlockMoveData( b + 1, a, b[ 0]);
 }
 
+static void MOToldPatHeader(struct oldPatHeader * p) {
+	MOT32(&p->PatternSize);
+	MOT32(&p->CompressionMode);
+	MOT32(&p->PatBytes);
+	MOT32(&p->unused2); // this is probably superfluous, but who knows
+}
+
+static void MOToldInstrData(struct FileInstrData * i) {
+	int j;
+	MOT16(&i->insSize);
+	MOT16(&i->loopStart);
+	MOT16(&i->loopLenght);
+}
+
+static void MOToldMADSpec(struct oldMADSpec * m){
+	int i;
+	MOT32(&m->MADIdentification);
+	for (i = 0; i < 64; i++) {
+		MOToldInstrData(&m->fid[i]);
+	}
+}
+
 OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
 //TODO: byteswap on Intel!
@@ -141,6 +163,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 
 	oldMAD = (oldMADSpec*) MADPtr;
 
+	MOToldMADSpec(oldMAD);
 
 /**** HEADER ****/
 	OSType oldMadIdent = oldMAD->MADIdentification;
@@ -184,7 +207,6 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoi
 			inOutCount = sizeof( struct oldPatHeader);
 		
 			BlockMoveData( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
-			MOT32(&tempPatHeader.PatternSize);
 		}
 		else tempPatHeader.PatternSize = 64L;
 	
@@ -192,7 +214,6 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoi
 	/** Lecture du header + contenu de la partition **/
 	/*************************************************/
 		OSType CompMode = tempPatHeader.CompressionMode;
-		MOT32(&CompMode);
 		if( CompMode == 'MAD1')
 		{
 			inOutCount = sizeof( struct MusicPattern) + tempPatHeader.PatBytes;
@@ -204,7 +225,7 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoi
 	
 		tempPat = (struct MusicPattern*) MADPlugNewPtr( inOutCount, init);
 		if( tempPat == NULL) DebugStr("\pMemory Prob1");
-	
+		
 		if( MADConvert)
 		{
 			tempPat = (struct MusicPattern*) ((Ptr) tempPat + sizeof( struct oldPatHeader));
@@ -213,8 +234,7 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoi
 	
 		BlockMoveData( MADPtr + OffSetToSample, tempPat, inOutCount);
 		OffSetToSample += inOutCount;
-		MOT32(&tempPat->header.PatternSize);
-		MOT32(&tempPat->header.CompressionMode);
+		MOToldPatHeader(&tempPat->header);
 
 	
 		if( MADConvert)

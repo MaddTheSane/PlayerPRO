@@ -2,7 +2,7 @@
 #include "RDriver.h"
 #include "PPPrivate.h"
 
-#ifdef __LINUX__
+#ifdef LINUX
 //TODO: Linux Sound Driver
 #warning Linux sound driver currently not implemented
 

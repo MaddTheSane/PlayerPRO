@@ -103,6 +103,46 @@ static inline void MADHmystrcpy( Ptr a, BytePtr b)
 	BlockMoveData( b + 1, a, b[ 0]);
 }
 
+static void MOToldsData(struct oldsData * s) {
+	MOT32(&s->size);
+	MOT32(&s->loopBeg);
+	MOT32(&s->loopSize);
+	MOT16(&s->c2spd);
+  // i hope data is really not used.....
+}
+
+static void MOToldPatHeader(struct oldPatHeader * p) {
+	MOT32(&p->size);
+	MOT32(&p->compMode);
+	MOT32(&p->patBytes);
+	MOT32(&p->unused2); // this is probably superfluous, but who knows
+}
+
+static void MOToldEnvRec(struct oldEnvRec * e) {
+	MOT16(&e->pos);
+	MOT16(&e->val);
+}
+
+static void MOToldInstrData(struct oldInstrData * i) {
+	int j;
+	MOT16(&i->numSamples);
+	MOT16(&i->volFade);
+	for(j = 0; j < 12; j++){
+		MOToldEnvRec(&i->volEnv[j]);
+		MOToldEnvRec(&i->pannEnv[j]);
+	}
+}
+
+static void MOToldMADSpec(struct oldMADSpec * m){
+	int i;
+	MOT32(&m->MAD);
+	MOT16(&m->speed);
+	MOT16(&m->tempo);
+	for (i = 0; i < 64; i++) {
+		MOToldInstrData(&m->fid[i]);
+	}
+}
+
 static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short		i, x;
@@ -121,8 +161,9 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 	oldMADSpec				*oldMAD;
 
 	oldMAD = (oldMADSpec*) MADPtr;
-
-
+  
+	MOToldMADSpec(oldMAD);
+  
 /**** HEADER ****/
 	if( oldMAD->MAD != 'MADH') return MADFileNotSupportedByThisPlug;
 	OffSetToSample += sizeof( oldMADSpec);
@@ -157,6 +198,8 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 		inOutCount = sizeof( struct oldPatHeader);
 		BlockMoveData( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
 	
+		MOToldPatHeader(&tempPatHeader);
+  
 	/*************************************************/
 	/** Lecture du header + contenu de la partition **/
 	/*************************************************/
@@ -174,6 +217,7 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 		if( tempPat == NULL) DebugStr("\pMemory Prob1");
 	
 		BlockMoveData( MADPtr + OffSetToSample, tempPat, inOutCount);
+		MOToldPatHeader(&tempPat->header);
 		OffSetToSample += inOutCount;
 	
 		if( tempPat->header.compMode == 'MAD1')
@@ -279,6 +323,7 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 			sData		 *curData;
 		
 			oldcurData = (oldsData*) (MADPtr + OffSetToSample);
+			MOToldsData(oldcurData);
 			OffSetToSample += sizeof( oldsData);
 		
 			curData = theMAD->sample[ i*MAXSAMPLE + x] = (sData*) MADPlugNewPtrClear( sizeof( sData), init);

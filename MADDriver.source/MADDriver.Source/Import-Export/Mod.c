@@ -387,7 +387,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
-	for( i=0; i < 64; i++)
+	for( i=0; i < 32; i++)
 	{
 		lastIns[ i] = 0;
 		lastNote[ i] = 0;

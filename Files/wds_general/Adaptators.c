@@ -1,7 +1,6 @@
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
-#include <Appearance.h>
 #include <math.h>
 #include "PrivateList.h"
 #include "Undo.h"

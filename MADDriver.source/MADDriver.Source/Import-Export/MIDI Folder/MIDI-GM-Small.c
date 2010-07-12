@@ -1,11 +1,11 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
-#include <Folders.h>
+#include <Carbon/Carbon.h>
 #include "PTMID.H"
 #include "dlsmac.h"
 #include "dls.h"
 #include "dls2.h"
-#include <QuickTimeMusic.h>
+#include <QuickTime/QuickTime.h>
 
 #include "WAV.h"
 
@@ -1295,8 +1295,6 @@ BAIL:
 	
 	;
 }
-
-#include <CFBundle.h>
 
 short GenerateDLSFromBundle()
 {

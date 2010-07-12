@@ -1,7 +1,7 @@
 #include "Shuddup.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Sound.h>
+
 static	long		WorkStatus, WorkTotal;
 		DialogPtr	theProgressDia;
 static	long		FirstCall, MoyCall;

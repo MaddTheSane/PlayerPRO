@@ -23,7 +23,7 @@
 
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Sound.h>
+#include <Carbon/Carbon.h>
 
 /*************************/
 
