@@ -7,11 +7,25 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#include <PlayerPROCore/PlayerPROCore.h>
 
 
 @interface PPApp_AppDelegate : NSObject {
-    NSWindow *window;
+    NSWindow		*window;
+	NSWindow		*preferences;
+	MADDriverRec	*MADDriver;
+	MADMusic		*Music;
+	MADLibrary		*MADLib;	
 }
+- (IBAction)showMusicList:(id)sender;
+- (IBAction)exportInstrumentAs:(id)sender;
+- (IBAction)showInstrumentsList:(id)sender;
+- (IBAction)showTools:(id)sender;
+- (IBAction)showPreferences:(id)sender;
+
+
 @property (assign) IBOutlet NSWindow *window;
+@property (assign) IBOutlet NSWindow *preferences;
+
 
 @end

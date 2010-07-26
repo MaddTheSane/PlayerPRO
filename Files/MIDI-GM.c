@@ -1218,6 +1218,7 @@ void Quicktime2Converter(void)
 BAIL:
 	
 #if defined( MAINPLAYERPRO)
+//TODO: update windows here (Probably not needed)
 	UpdateALLWindow();
 #endif
 	

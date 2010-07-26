@@ -1103,7 +1103,7 @@ OSErr MADInitLibraryNew( FSRefPtr PlugsFolder, MADLibrary **lib)
 	};
 
 	if (PlugsFolder != NULL) {
-		Boolean UnusedBool1, isFolder;
+		Boolean UnusedBool1, isFolder = TRUE;
 		OSErr aliasErr = noErr;
 		aliasErr = FSResolveAliasFile(PlugsFolder, TRUE, &isFolder, &UnusedBool1);
 		if (isFolder == FALSE) {
@@ -1225,6 +1225,7 @@ OSErr MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned ch
 		}
 	}
 #if MAINPLAYERPRO
+//TODO: Check VST editor
 	CheckVSTEditor( NULL);
 #endif
 	
@@ -1266,6 +1267,7 @@ OSErr MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned ch
 	
 	//INSTALL ALL VST EFFECTS !!!!!!
 #if MAINPLAYERPRO
+//TODO: VST Effects
 	// Purge previous Effects !
 	for( i = 0; i < 10 ; i++)
 	{

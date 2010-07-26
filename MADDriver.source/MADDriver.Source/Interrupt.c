@@ -1264,6 +1264,7 @@ long i;
 				// APPLY VST - EFFECTS
 				
 #if defined( MAINPLAYERPRO)
+//TODO: Apply VST effects
 				if( intDriver->currentlyExporting)
 				{
 					if( intDriver->thisExport) ProcessVSTPlug( intDriver, (long*) intDriver->DASCEffectBuffer[ i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[ i]);
@@ -1728,6 +1729,7 @@ short					*DASCopy8;
 	// *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
 	
 #if defined( MAINPLAYERPRO)
+//TODO: Process VST Plug-in
 	if( intDriver->DriverSettings.outPutBits == 16)
 	{
 		if( intDriver->currentlyExporting)
@@ -2029,6 +2031,7 @@ short					*DASCopy8;
 	}
 	
 #if defined( MAINPLAYERPRO)
+//TODO: Process visual Plug-in
 	if( intDriver->DriverSettings.outPutBits == 16)
 	{
 		if( intDriver->currentlyExporting)

@@ -1,0 +1,14 @@
+/* 
+   Localizable.strings
+   PPMacho
+
+   Created by C.W. Betts on 7/12/10.
+   Copyright 2010 __MyCompanyName__. All rights reserved.
+ */
+
+"MyDebugStr_Error" = "Error!";
+"MyDebugStr_MainText" = "The program has encountered the following error:\n %s\nIt is reccomended to quit the program and send the debug report.";
+"MyDebugStr_Quit" = "Quit";
+"MyDebugStr_Continue" = "Continue";
+"MyDebugStr_Debug" = "Debug";
+
