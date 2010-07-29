@@ -70,7 +70,6 @@
 - (void)dealloc
 {
 	[viewControllers release];
-	[managedObjectContext release];
 	
 	[super dealloc];
 }
