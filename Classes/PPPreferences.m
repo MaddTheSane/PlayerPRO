@@ -18,60 +18,51 @@
 #import "MidiHardwarePreferenceController.h"
 
 @implementation PPPreferences
+@synthesize managedObjectContext;
 
 - (id)init 
 {
-    self = [super init];
+    self = [super initWithWindowNibName:@"Preferences"];
     if (self != nil) {
 		viewControllers =[[NSMutableArray alloc] init];
+		managedObjectContext = [[NSManagedObjectContext alloc] init];
 		
 		ManagingViewController *vc;
 		vc = [[SoundOutputController alloc] init];
-		[vc setManagedObjectContext:[self managedObjectContext]];
 		[viewControllers addObject:vc];
 		[vc release];
 		
 		vc = [[PianoPreferencesController alloc] init];
-		[vc setManagedObjectContext:[self managedObjectContext]];
 		[viewControllers addObject:vc];
 		[vc release];
 		
 		vc = [[MusicListPreferenceController alloc] init];
-		[vc setManagedObjectContext:[self managedObjectContext]];
 		[viewControllers addObject:vc];
 		[vc release];
 		
 		vc = [[ColorPreferenceController alloc] init];
-		[vc setManagedObjectContext:[self managedObjectContext]];
 		[viewControllers addObject:vc];
 		[vc release];
 		
 		vc = [[MiscPreferenceController alloc] init];
-		[vc setManagedObjectContext:[self managedObjectContext]];
 		[viewControllers addObject:vc];
 		[vc release];
 		
 		vc = [[BoxEditorPreferenceController alloc] init];
-		[vc setManagedObjectContext:[self managedObjectContext]];
 		[viewControllers addObject:vc];
 		[vc release];
 		
 		vc = [[DigitalEditorPreferenceControler alloc] init];
-		[vc setManagedObjectContext:[self managedObjectContext]];
 		[viewControllers addObject:vc];
 		[vc release];
 		
 		vc = [[ClassicEditorPreferenceController alloc] init];
-		[vc setManagedObjectContext:[self managedObjectContext]];
 		[viewControllers addObject:vc];
 		[vc release];
 		
 		vc = [[MidiHardwarePreferenceController alloc] init];
-		[vc setManagedObjectContext:[self managedObjectContext]];
 		[viewControllers addObject:vc];
 		[vc release];
-		
-		
 		
     }
     return self;
@@ -79,6 +70,7 @@
 - (void)dealloc
 {
 	[viewControllers release];
+	[managedObjectContext release];
 	
 	[super dealloc];
 }
@@ -126,7 +118,7 @@
 	[self displayViewController:vc];
 }
 
-- (void)windowControllerDidLoadNib:(NSWindowController *)windowController 
+-(void)awakeFromNib
 {
 	NSMenu *menu = [popUp menu];
 	NSInteger i, itemCount;

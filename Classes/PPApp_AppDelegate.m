@@ -7,6 +7,7 @@
 //
 
 #import "PPApp_AppDelegate.h"
+#import "PPPreferences.h"
 
 extern void MyDebugStr( short line, Ptr file, Ptr text)
 {
@@ -33,9 +34,9 @@ extern void MyDebugStr( short line, Ptr file, Ptr text)
 
 - (IBAction)showPreferences:(id)sender {
     if (!preferences) {
-		[NSBundle loadNibNamed:@"preferences" owner:self];
+		preferences = [[PPPreferences alloc] init];
 	}
-	[preferences makeKeyAndOrderFront:self];
+	[preferences showWindow:self];
 
 }
 

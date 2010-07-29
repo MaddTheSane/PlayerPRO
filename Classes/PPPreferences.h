@@ -9,12 +9,12 @@
 #import <Cocoa/Cocoa.h>
 @class ManagingViewController;
 
-@interface PPPreferences : NSObject {
-	IBOutlet NSWindow *preferenceWindow;
+@interface PPPreferences : NSWindowController {
 	IBOutlet NSBox *box;
 	IBOutlet NSPopUpButton *popUp;
 	NSMutableArray *viewControllers;
 }
+
 -(IBAction)changeViewController:(id)sender;
 -(void)displayViewController:(ManagingViewController *)vc;
 

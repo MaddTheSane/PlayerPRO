@@ -89,6 +89,7 @@
 						<int key="objectID">1</int>
 						<reference key="object" ref="1005"/>
 						<reference key="parent" ref="0"/>
+						<string key="objectName">Classic</string>
 					</object>
 				</object>
 			</object>

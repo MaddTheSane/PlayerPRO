@@ -7,12 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#include <PlayerPROCore/PlayerPROCore.h>
-
+#include "PlayerPROCore/PlayerPROCore.h"
+@class PPPreferences;
 
 @interface PPApp_AppDelegate : NSObject {
     NSWindow		*window;
-	NSWindow		*preferences;
+	PPPreferences	*preferences;
 	MADDriverRec	*MADDriver;
 	MADMusic		*Music;
 	MADLibrary		*MADLib;	
@@ -25,7 +25,7 @@
 
 
 @property (assign) IBOutlet NSWindow *window;
-@property (assign) IBOutlet NSWindow *preferences;
+@property (assign) IBOutlet PPPreferences *preferences;
 
 
 @end
