@@ -18,14 +18,12 @@
 #import "MidiHardwarePreferenceController.h"
 
 @implementation PPPreferences
-@synthesize managedObjectContext;
 
 - (id)init 
 {
     self = [super initWithWindowNibName:@"Preferences"];
     if (self != nil) {
 		viewControllers =[[NSMutableArray alloc] init];
-		managedObjectContext = [[NSManagedObjectContext alloc] init];
 		
 		ManagingViewController *vc;
 		vc = [[SoundOutputController alloc] init];
