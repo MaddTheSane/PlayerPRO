@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-@class ManagingViewController;
 
 @interface PPPreferences : NSWindowController {
 	IBOutlet NSBox *box;
@@ -16,6 +15,6 @@
 }
 
 -(IBAction)changeViewController:(id)sender;
--(void)displayViewController:(ManagingViewController *)vc;
+-(void)displayViewController:(NSViewController *)vc;
 
 @end

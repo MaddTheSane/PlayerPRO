@@ -7,9 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ManagingViewController.h"
 
-@interface ColorPreferenceController : ManagingViewController {
+@interface ColorPreferenceController : NSViewController {
 
 }
 

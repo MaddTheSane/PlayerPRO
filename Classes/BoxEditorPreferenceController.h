@@ -7,9 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ManagingViewController.h"
 
-@interface BoxEditorPreferenceController : ManagingViewController {
+@interface BoxEditorPreferenceController : NSViewController {
 
 }
 

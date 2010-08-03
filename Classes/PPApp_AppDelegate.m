@@ -9,24 +9,6 @@
 #import "PPApp_AppDelegate.h"
 #import "PPPreferences.h"
 
-extern void MyDebugStr( short line, Ptr file, Ptr text)
-{
-	NSLog(@"%s:%u error text:%s!", file, line, text);
-	NSInteger alert = NSRunAlertPanel(NSLocalizedString(@"MyDebugStr_Error",@"Error"), [NSString stringWithFormat:NSLocalizedString(@"MyDebugStr_MainText", @"The program has encountered the following error:\n %s\nIt is reccomended to quit the program and send the debug report."), text], NSLocalizedString(@"MyDebugStr_Quit",@"Quit"), NSLocalizedString(@"MyDebugStr_Continue",@"Continue"), NSLocalizedString(@"MyDebugStr_Debug",@"Debug"));
-	switch (alert) {
-		case NSAlertDefaultReturn:
-			exit(EXIT_FAILURE);
-			break;
-		case NSAlertAlternateReturn:
-			break;
-		case NSAlertOtherReturn:
-			Debugger();
-			break;
-	}
-}
-
-
-
 @implementation PPApp_AppDelegate
 - (IBAction)showMusicList:(id)sender {
     
@@ -54,7 +36,6 @@ extern void MyDebugStr( short line, Ptr file, Ptr text)
 }
 
 @synthesize window;
-@synthesize preferences;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	MADInitLibraryNew(NULL, &MADLib);
@@ -62,8 +43,27 @@ extern void MyDebugStr( short line, Ptr file, Ptr text)
 
 -(void)dealloc
 {
+	MADStopDriver( MADDriver);
+	MADDisposeDriver( MADDriver);
+	MADDisposeLibrary( MADLib);
 	
 	[super dealloc];
+}
+
+- (IBAction)deleteInstrument:(id)sender {
+    
+}
+
+- (IBAction)showBoxEditor:(id)sender {
+    
+}
+
+- (IBAction)showClassicEditor:(id)sender {
+    
+}
+
+- (IBAction)showDigitalEditor:(id)sender {
+    
 }
 
 @end

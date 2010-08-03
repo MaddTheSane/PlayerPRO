@@ -7,9 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ManagingViewController.h"
 
-@interface DigitalEditorPreferenceControler : ManagingViewController {
+@interface DigitalEditorPreferenceControler : NSViewController {
 
 }
 

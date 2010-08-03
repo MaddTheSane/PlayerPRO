@@ -7,9 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ManagingViewController.h"
 
-@interface PianoPreferencesController : ManagingViewController {
+@interface PianoPreferencesController : NSViewController {
 
 }
 

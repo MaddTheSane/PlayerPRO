@@ -7,10 +7,10 @@
  *
  */
 
-extern int NSApplicationMain(int argc, const char **argv);
+extern int NSApplicationMain(int argc, const char *argv[]);
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
-	return NSApplicationMain(argc, argv);
+	return NSApplicationMain(argc, (const char**)argv);
 }
 

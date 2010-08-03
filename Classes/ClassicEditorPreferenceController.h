@@ -7,9 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ManagingViewController.h"
 
-@interface ClassicEditorPreferenceController : ManagingViewController {
+@interface ClassicEditorPreferenceController : NSViewController {
 
 }
 

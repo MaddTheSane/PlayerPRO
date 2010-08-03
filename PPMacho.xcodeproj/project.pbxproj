@@ -174,7 +174,6 @@
 		551FEB7F10E728F500EDF2F1 /* PAT.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E104310D6C79E00BB619C /* PAT.r */; };
 		551FEBF510E72AD900EDF2F1 /* MINs.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEA6B10E727AD00EDF2F1 /* MINs.plugin */; };
 		551FEBF610E72AD900EDF2F1 /* PAT.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEADA10E727B100EDF2F1 /* PAT.plugin */; };
-		55232A6A11FDD1D00041A4EC /* ManagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232A6911FDD1D00041A4EC /* ManagingViewController.m */; };
 		55232A7611FDD2A60041A4EC /* SoundOutputController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232A7511FDD2A60041A4EC /* SoundOutputController.m */; };
 		55232A7811FDD2D80041A4EC /* SoundOutput.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232A7711FDD2D80041A4EC /* SoundOutput.xib */; };
 		55232AD811FDDFEA0041A4EC /* PianoPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AD711FDDFEA0041A4EC /* PianoPreferencesController.m */; };
@@ -210,6 +209,7 @@
 		55356A05102BFE7D0093F21D /* Print.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FC0C2F21DD00D6C081 /* Print.c */; };
 		55356A1E102C06550093F21D /* MIDI-GM.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F60C2F21DD00D6C081 /* MIDI-GM.c */; };
 		55356A97102C08650093F21D /* PlugsPPINInit.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C60C2F21DD00D6C081 /* PlugsPPINInit.c */; };
+		55369D63120223EF00702F6F /* MyDebugStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 55369D62120223EF00702F6F /* MyDebugStr.m */; };
 		5547CE5F10C6E5490041DEF6 /* ByteUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 5547CE5E10C6E5490041DEF6 /* ByteUtils.c */; };
 		554E0DAD10D619D700BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
@@ -1466,8 +1466,6 @@
 		551FED0010E7358D00EDF2F1 /* Test.MOD */ = {isa = PBXFileReference; lastKnownFileType = file; path = Test.MOD; sourceTree = "<group>"; };
 		551FED0110E7358D00EDF2F1 /* TestMADH.MADH */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestMADH.MADH; sourceTree = "<group>"; };
 		551FED0E10E7365600EDF2F1 /* Exemple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Exemple.h; sourceTree = "<group>"; };
-		55232A6811FDD1D00041A4EC /* ManagingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagingViewController.h; sourceTree = "<group>"; };
-		55232A6911FDD1D00041A4EC /* ManagingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagingViewController.m; sourceTree = "<group>"; };
 		55232A7411FDD2A60041A4EC /* SoundOutputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundOutputController.h; sourceTree = "<group>"; };
 		55232A7511FDD2A60041A4EC /* SoundOutputController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundOutputController.m; sourceTree = "<group>"; };
 		55232A7711FDD2D80041A4EC /* SoundOutput.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SoundOutput.xib; sourceTree = "<group>"; };
@@ -1550,6 +1548,7 @@
 		553341FC10BB600A005208D1 /* IT.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IT.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		553341FD10BB600A005208D1 /* IT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "IT-Info.plist"; path = "../../../IT-Info.plist"; sourceTree = "<group>"; };
 		5533600111EBC65600525CAF /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		55369D62120223EF00702F6F /* MyDebugStr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDebugStr.m; sourceTree = "<group>"; };
 		5542403D10DB602D00C08864 /* WAVE.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = WAVE.r; sourceTree = "<group>"; };
 		5542403E10DB602D00C08864 /* SoundDesignerII.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = SoundDesignerII.r; sourceTree = "<group>"; };
 		5542403F10DB602D00C08864 /* Mp3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mp3.r; sourceTree = "<group>"; };
@@ -3280,11 +3279,10 @@
 		55CBFCD411EB7CA00028C6BB /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				55232A6811FDD1D00041A4EC /* ManagingViewController.h */,
-				55232A6911FDD1D00041A4EC /* ManagingViewController.m */,
+				55CB01A611EB82FA0028C6BB /* main.c */,
+				55369D62120223EF00702F6F /* MyDebugStr.m */,
 				55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */,
 				55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */,
-				55CB01A611EB82FA0028C6BB /* main.c */,
 				55981C5111EE370D00656EE3 /* PPPreferences.h */,
 				55981C5211EE370D00656EE3 /* PPPreferences.m */,
 				55232AF411FDE5970041A4EC /* PreferenceControllers */,
@@ -5828,7 +5826,6 @@
 				55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */,
 				55CB01A711EB82FA0028C6BB /* main.c in Sources */,
 				55981C5311EE370D00656EE3 /* PPPreferences.m in Sources */,
-				55232A6A11FDD1D00041A4EC /* ManagingViewController.m in Sources */,
 				55232A7611FDD2A60041A4EC /* SoundOutputController.m in Sources */,
 				55232AD811FDDFEA0041A4EC /* PianoPreferencesController.m in Sources */,
 				55232AE711FDE2550041A4EC /* MusicListPreferenceController.m in Sources */,
@@ -5838,6 +5835,7 @@
 				55232AF311FDE56D0041A4EC /* DigitalEditorPreferenceControler.m in Sources */,
 				55232AF711FDE5CB0041A4EC /* ClassicEditorPreferenceController.m in Sources */,
 				55232AFA11FDE5F90041A4EC /* MidiHardwarePreferenceController.m in Sources */,
+				55369D63120223EF00702F6F /* MyDebugStr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

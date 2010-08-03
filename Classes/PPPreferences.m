@@ -25,7 +25,7 @@
     if (self != nil) {
 		viewControllers =[[NSMutableArray alloc] init];
 		
-		ManagingViewController *vc;
+		NSViewController *vc;
 		vc = [[SoundOutputController alloc] init];
 		[viewControllers addObject:vc];
 		[vc release];
@@ -77,7 +77,7 @@
     return @"preferences";
 }
 
--(void)displayViewController:(ManagingViewController *)vc
+-(void)displayViewController:(NSViewController *)vc
 {
 	//try to end editing
 	NSWindow *w = [box window];
@@ -111,7 +111,7 @@
 -(IBAction)changeViewController:(id)sender
 {
 	int i = [sender tag];
-	ManagingViewController *vc = [viewControllers objectAtIndex:i];
+	NSViewController *vc = [viewControllers objectAtIndex:i];
 	[self displayViewController:vc];
 }
 

@@ -7,9 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ManagingViewController.h"
 
-@interface SoundOutputController : ManagingViewController {
+@interface SoundOutputController : NSViewController {
     IBOutlet NSButton *oversampling;
     IBOutlet NSButton *reverb;
     IBOutlet NSButton *stereoDelay;

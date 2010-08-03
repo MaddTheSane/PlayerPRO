@@ -22,10 +22,13 @@
 - (IBAction)showInstrumentsList:(id)sender;
 - (IBAction)showTools:(id)sender;
 - (IBAction)showPreferences:(id)sender;
+- (IBAction)deleteInstrument:(id)sender;
+- (IBAction)showBoxEditor:(id)sender;
+- (IBAction)showClassicEditor:(id)sender;
+- (IBAction)showDigitalEditor:(id)sender;
 
 
 @property (assign) IBOutlet NSWindow *window;
-@property (assign) IBOutlet PPPreferences *preferences;
 
 
 @end
