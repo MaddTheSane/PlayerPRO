@@ -2,6 +2,7 @@
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
+#include "RDriverInt.h"
 #include <stdio.h>
 
 #include "VisualPlugin.h"

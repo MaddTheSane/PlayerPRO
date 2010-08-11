@@ -27,6 +27,7 @@
 
 /*************************/
 
+#ifndef __LP64__
 OSErr	MySndPlayDoubleBuffer (SndChannelPtr chan, PPSndDoubleBufferHeaderPtr theParams);
 
 SndChannelPtr CreateSndChannel( long init)
@@ -165,3 +166,4 @@ void PlayChannel( MADDriverRec *inMADDriver)
 	iErr = MySndPlayDoubleBuffer( inMADDriver->MusicChannelPP, &inMADDriver->TheHeader);
 #endif
 }
+#endif

@@ -1,5 +1,6 @@
 #include "Shuddup.h"
 #include "RDriver.h"
+#include "RDriverInt.h"
 #include "Undo.h"
 	
 		DialogPtr		FindDlog;

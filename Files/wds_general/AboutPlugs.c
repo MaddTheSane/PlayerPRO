@@ -2,6 +2,7 @@
 
 #include "Shuddup.h"
 #include "RDriver.h"
+#include "RDriverInt.h"
 #include "PrivateList.h"
 
 short GetNoPPDG();

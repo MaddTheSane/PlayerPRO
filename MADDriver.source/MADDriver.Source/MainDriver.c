@@ -519,6 +519,7 @@ void MADGetBestDriver( MADDriverSettings	*Init)
 	short			myBit;
 	NumVersion		nVers;
 	Boolean			Stereo, StereoMixing, NewSoundManager, NewSoundManager31, hasASC, Audio16;
+#ifndef __LP64__
 
 /***************					****************/
 /****** HARDWARE IDENTIFICATION AND CHECK **********/
@@ -528,10 +529,7 @@ void MADGetBestDriver( MADDriverSettings	*Init)
 /** ASC CHIP ? **/
 /****************/
 
-	Gestalt( kSoundOutputDeviceType, &gestaltAnswer);
-	gestaltAnswer = EndianS32_BtoN(gestaltAnswer);
-	if( gestaltAnswer == kASCSubType) hasASC = true;
-	else hasASC = false;
+	hasASC = false;
 
 /**************/
 /** STEREO ? **/
@@ -616,7 +614,23 @@ void MADGetBestDriver( MADDriverSettings	*Init)
 		Init->outPutRate = rate22khz;
 	}
 #else
+	//Just going to use CoreAudio on 64-bit code
+	Init->outPutBits		= 16;
+	Init->outPutRate		= rate44khz;
+	Init->numChn			= 4;
+	Init->surround			= false;
+	Init->repeatMusic		= true;
+	Init->sysMemory			= false;
+	Init->MicroDelaySize	= 25;
+	Init->Reverb			= false;
+	Init->ReverbSize		= 100;
+	Init->ReverbStrength	= 20;
+	Init->oversampling		= 1;
+	Init->driverMode		= CoreAudioDriver;
+
+#endif
 	
+#else
 #endif
 }
 
@@ -968,10 +982,12 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 #endif
 		
 #ifdef _MAC_H
+#ifndef __LP64__
 		case SoundManagerDriver:
 			theErr = InitDBSoundManager( MDriver, initStereo);
 			if( theErr != noErr) return theErr;
 			break;
+#endif
 		
 		case CoreAudioDriver:
 			theErr = initCoreAudio(MDriver, initStereo);
@@ -3116,7 +3132,7 @@ void MADKeyOFF( MADDriverRec *MDriver, short track)
 	else MDriver->chan[ track].KeyOn = false;
 }
 
-#ifdef _MAC_H
+#if defined (_MAC_H) && !defined (__LP64__)
 OSErr MADPlaySndHandle( MADDriverRec *MDriver, Handle sound, long channel, long note)
 {
 	Ptr 			soundPtr;

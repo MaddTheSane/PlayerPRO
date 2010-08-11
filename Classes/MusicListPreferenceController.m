@@ -11,6 +11,14 @@
 
 @implementation MusicListPreferenceController
 
+- (IBAction)changePlayedMusic:(id)sender {
+    
+}
+
+- (IBAction)toggleButton:(id)sender {
+    
+}
+
 -(id)init
 {
 	if (![super initWithNibName:@"MusicListPrefs" bundle:nil]) {
@@ -18,6 +26,11 @@
 	}
 	[self setTitle:@"Music List"];
 	return self;
+}
+
+-(void)awakeFromNib
+{
+	
 }
 
 @end

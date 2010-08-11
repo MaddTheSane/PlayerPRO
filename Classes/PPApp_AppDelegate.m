@@ -10,8 +10,14 @@
 #import "PPPreferences.h"
 
 @implementation PPApp_AppDelegate
+
 - (IBAction)showMusicList:(id)sender {
-    
+    [window makeKeyAndOrderFront:sender];
+}
+
+- (BOOL)loadMADMusic:(MADMusic*)musicToLoad
+{
+	
 }
 
 - (IBAction)showPreferences:(id)sender {
@@ -19,7 +25,6 @@
 		preferences = [[PPPreferences alloc] init];
 	}
 	[preferences showWindow:self];
-
 }
 
 
@@ -39,6 +44,9 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	MADInitLibraryNew(NULL, &MADLib);
+	MADDriverSettings init;
+	MADGetBestDriver( &init);
+
 }
 
 -(void)dealloc

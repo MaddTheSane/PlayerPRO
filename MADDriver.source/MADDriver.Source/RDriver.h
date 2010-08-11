@@ -560,7 +560,7 @@ typedef struct
 	short				id;
 	Str63				name;
 	Boolean				Active;
-	CFragConnectionID	connID; //TODO: use something more 64-bit friendly
+	CFBundleRef			connID; //TODO: use something more 64-bit friendly
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
 

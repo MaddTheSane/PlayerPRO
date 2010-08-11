@@ -11,7 +11,18 @@
 @class PPPreferences;
 
 @interface PPApp_AppDelegate : NSObject {
-    NSWindow		*window;
+    IBOutlet NSWindow *window;
+    IBOutlet NSDrawer *infoDrawer;
+    IBOutlet NSToolbar *toolbar;
+	
+	IBOutlet NSTextField *fileName;
+	IBOutlet NSTextField *internalName;
+	IBOutlet NSTextField *fileSize;
+	IBOutlet NSTextField *musicInstrument;
+	IBOutlet NSTextField *musicPatterns;
+	IBOutlet NSTextField *musicPlugType;
+	IBOutlet NSTextField *fileLocation;
+	
 	PPPreferences	*preferences;
 	MADDriverRec	*MADDriver;
 	MADMusic		*Music;
@@ -26,9 +37,10 @@
 - (IBAction)showBoxEditor:(id)sender;
 - (IBAction)showClassicEditor:(id)sender;
 - (IBAction)showDigitalEditor:(id)sender;
+- (BOOL)loadMADMusic:(MADMusic*)musicToLoad;
 
 
-@property (assign) IBOutlet NSWindow *window;
+@property (assign) NSWindow *window;
 
 
 @end

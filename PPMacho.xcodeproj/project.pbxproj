@@ -487,6 +487,9 @@
 		55CBFC7811EB7C2D0028C6BB /* PPReverse.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89311EADBA50028C6BB /* PPReverse.png */; };
 		55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7B11EB7C950028C6BB /* MainMenu.xib */; };
 		55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */; };
+		55D1BCE7120F6FEF004FD083 /* PPAlias.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1BCE6120F6FEF004FD083 /* PPAlias.m */; };
+		55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55D1BD58120FBAC0004FD083 /* Credits.rtf */; };
+		55D1BD5F120FBE51004FD083 /* PPMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1BD5E120FBE51004FD083 /* PPMusicList.m */; };
 		55DB45D50FEAB8CD0088C375 /* DFTB.r in Rez */ = {isa = PBXBuildFile; fileRef = 55DB45D40FEAB8CD0088C375 /* DFTB.r */; };
 		55E8981A10EEC5BA004EB52B /* AboutPlugs.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */; };
 		55E898B010F17C2B004EB52B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
@@ -1758,6 +1761,11 @@
 		55CBFC7911EB7C4E0028C6BB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPApp_AppDelegate.h; sourceTree = "<group>"; };
 		55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPApp_AppDelegate.m; sourceTree = "<group>"; };
+		55D1BCE5120F6FEF004FD083 /* PPAlias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAlias.h; sourceTree = "<group>"; };
+		55D1BCE6120F6FEF004FD083 /* PPAlias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAlias.m; sourceTree = "<group>"; };
+		55D1BD58120FBAC0004FD083 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		55D1BD5D120FBE51004FD083 /* PPMusicList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicList.h; sourceTree = "<group>"; };
+		55D1BD5E120FBE51004FD083 /* PPMusicList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMusicList.m; sourceTree = "<group>"; };
 		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DFTB.r; path = ../Files/DFTB.r; sourceTree = "<group>"; };
 		55E898B710F17C2B004EB52B /* QuickTime.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickTime.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55E8997B10F17CCB004EB52B /* QuickTime-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "QuickTime-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -2959,6 +2967,7 @@
 				552C70C310CDAFBC00C0E0D4 /* TODO.txt */,
 				552C70C610CDB07E00C0E0D4 /* LICENSE.txt */,
 				552C716210CDC11400C0E0D4 /* README.rtf */,
+				55D1BD58120FBAC0004FD083 /* Credits.rtf */,
 			);
 			name = Documentation;
 			sourceTree = "<group>";
@@ -3279,6 +3288,8 @@
 		55CBFCD411EB7CA00028C6BB /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				55D1BCE5120F6FEF004FD083 /* PPAlias.h */,
+				55D1BCE6120F6FEF004FD083 /* PPAlias.m */,
 				55CB01A611EB82FA0028C6BB /* main.c */,
 				55369D62120223EF00702F6F /* MyDebugStr.m */,
 				55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */,
@@ -3286,6 +3297,8 @@
 				55981C5111EE370D00656EE3 /* PPPreferences.h */,
 				55981C5211EE370D00656EE3 /* PPPreferences.m */,
 				55232AF411FDE5970041A4EC /* PreferenceControllers */,
+				55D1BD5D120FBE51004FD083 /* PPMusicList.h */,
+				55D1BD5E120FBE51004FD083 /* PPMusicList.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -5027,6 +5040,7 @@
 				55232B0E11FDF2980041A4EC /* ColorPrefs.xib in Resources */,
 				55232B1111FDF2D50041A4EC /* MusicListPrefs.xib in Resources */,
 				55232B1411FDF3090041A4EC /* PianoPrefs.xib in Resources */,
+				55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5836,6 +5850,8 @@
 				55232AF711FDE5CB0041A4EC /* ClassicEditorPreferenceController.m in Sources */,
 				55232AFA11FDE5F90041A4EC /* MidiHardwarePreferenceController.m in Sources */,
 				55369D63120223EF00702F6F /* MyDebugStr.m in Sources */,
+				55D1BCE7120F6FEF004FD083 /* PPAlias.m in Sources */,
+				55D1BD5F120FBE51004FD083 /* PPMusicList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7152,6 +7168,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 2;
@@ -7172,6 +7190,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;

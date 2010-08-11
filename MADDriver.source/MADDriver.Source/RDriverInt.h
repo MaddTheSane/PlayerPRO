@@ -132,9 +132,10 @@ void 	SampleMIDI( Channel *curVoice, short channel, short curN, MADDriverRec *in
 void 	CleanDriver( MADDriverRec *intDriver);
 
 #ifdef _MAC_H
-
+#ifndef __LP64__
 SndChannelPtr 		CreateSndChannel( long init);
 OSErr 			DBSndPlay (MADDriverRec *inMADDriver, SndChannelPtr chan);
+#endif
 #endif
 
 /*** General Functions ***/
@@ -263,12 +264,6 @@ Boolean NewMADCommand( Cmd *theNoteCmd);
 short FindAFreeChannel( MADDriverRec *intDriver);
 OSErr	ASIOSndClose( MADDriverRec *inMADDriver);
 OSErr	InitASIOManager( MADDriverRec *inMADDriver, long init);
-
-#ifdef _MAC_H
-OSErr ASIOSndPlay ( MADDriverRec *inMADDriver, SndChannelPtr chan);
-void ASIOStopChannel( MADDriverRec *inMADDriver);
-void ASIOPlayChannel( MADDriverRec *inMADDriver);
-#endif
 
 // Effects.c
 

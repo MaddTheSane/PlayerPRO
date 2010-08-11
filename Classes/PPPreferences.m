@@ -30,15 +30,15 @@
 		[viewControllers addObject:vc];
 		[vc release];
 		
-		vc = [[PianoPreferencesController alloc] init];
-		[viewControllers addObject:vc];
-		[vc release];
+		//vc = [[PianoPreferencesController alloc] init];
+		//[viewControllers addObject:vc];
+		//[vc release];
 		
 		vc = [[MusicListPreferenceController alloc] init];
 		[viewControllers addObject:vc];
 		[vc release];
 		
-		vc = [[ColorPreferenceController alloc] init];
+		/*vc = [[ColorPreferenceController alloc] init];
 		[viewControllers addObject:vc];
 		[vc release];
 		
@@ -60,7 +60,7 @@
 		
 		vc = [[MidiHardwarePreferenceController alloc] init];
 		[viewControllers addObject:vc];
-		[vc release];
+		[vc release];*/
 		
     }
     return self;
@@ -110,7 +110,7 @@
 
 -(IBAction)changeViewController:(id)sender
 {
-	int i = [sender tag];
+	NSInteger i = [sender tag];
 	NSViewController *vc = [viewControllers objectAtIndex:i];
 	[self displayViewController:vc];
 }

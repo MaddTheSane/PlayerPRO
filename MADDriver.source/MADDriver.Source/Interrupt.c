@@ -2228,7 +2228,7 @@ MADDriverSettings		driverCopy;
 	return true;
 }
 
-#ifdef _MAC_H
+#if defined(_MAC_H) && !defined(__LP64__)
 #if CALL_NOT_IN_CARBON
 pascal void MyPPDoubleBackProc(SndChannelPtr chan, SndDoubleBufferPtr doubleBuffer)
 #else

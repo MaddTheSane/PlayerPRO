@@ -1,6 +1,7 @@
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
+#include "RDriverInt.h"
 
 #define TrackListSize 	32
 #define	ILARG			13

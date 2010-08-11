@@ -6,6 +6,7 @@
 
 #include "aeffectx.h"
 #include "RDriver.h"
+#include "RDriverInt.h"
 
 #include <Carbon/Carbon.h>
 

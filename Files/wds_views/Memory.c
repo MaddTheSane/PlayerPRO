@@ -1,6 +1,7 @@
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
+#include "RDriverInt.h"
 #include <stdio.h>
 
 	extern	EventRecord				theEvent;

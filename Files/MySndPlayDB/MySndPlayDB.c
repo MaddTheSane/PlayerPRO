@@ -28,7 +28,7 @@
 	   careful about calling MySndDoImmediate at interrupt time with a quietCmd.
 
 */
-
+#ifndef __LP64__
 #define TARGET_API_MAC_OS8 0
 #define TARGET_API_MAC_CARBON 1
 #define DEBUG 0
@@ -367,3 +367,4 @@ static pascal void NMResponseProc (NMRecPtr nmReqPtr) {
 		}
 	} while (nil != perChanInfoPtr && noErr == err);
 }
+#endif
