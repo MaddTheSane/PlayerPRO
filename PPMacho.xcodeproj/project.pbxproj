@@ -355,6 +355,7 @@
 		557DEB3510E0944100177B4C /* Silence.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE91B10E08DB000177B4C /* Silence.plugin */; };
 		557DEB3610E0944100177B4C /* Smooth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE95E10E08DB900177B4C /* Smooth.plugin */; };
 		557DEB3710E0944100177B4C /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; };
+		557EC3E9121711280082B80A /* PPPlay.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 557EC3E8121711280082B80A /* PPPlay.pdf */; };
 		5586870B10BF5C4700FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5586871A10BF5C4A00FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5586872910BF5C4E00FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
@@ -420,7 +421,6 @@
 		55CB01A711EB82FA0028C6BB /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CB01A611EB82FA0028C6BB /* main.c */; };
 		55CBF89511EADBA60028C6BB /* PPFastForward.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF88E11EADBA50028C6BB /* PPFastForward.png */; };
 		55CBF89611EADBA60028C6BB /* PPNextTrack.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF88F11EADBA50028C6BB /* PPNextTrack.png */; };
-		55CBF89711EADBA60028C6BB /* PPPlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89011EADBA50028C6BB /* PPPlay.png */; };
 		55CBF89811EADBA60028C6BB /* PPPrevTrack.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89111EADBA50028C6BB /* PPPrevTrack.png */; };
 		55CBF89911EADBA60028C6BB /* PPRecord.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89211EADBA50028C6BB /* PPRecord.png */; };
 		55CBF89A11EADBA60028C6BB /* PPReverse.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89311EADBA50028C6BB /* PPReverse.png */; };
@@ -457,7 +457,6 @@
 		55CBFC4311EB78C60028C6BB /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
 		55CBFC4411EB78CB0028C6BB /* OSX-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */; };
 		55CBFC4511EB79180028C6BB /* PPNextTrack.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF88F11EADBA50028C6BB /* PPNextTrack.png */; };
-		55CBFC4611EB791C0028C6BB /* PPPlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89011EADBA50028C6BB /* PPPlay.png */; };
 		55CBFC5511EB79DA0028C6BB /* 669.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D010BA17BC004FC5D7 /* 669.icns */; };
 		55CBFC5611EB79DE0028C6BB /* INS.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55E89D3B10F26A4B004EB52B /* INS.icns */; };
 		55CBFC5711EB79E20028C6BB /* IT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D110BA17BC004FC5D7 /* IT.icns */; };
@@ -1698,6 +1697,7 @@
 		557DE91B10E08DB000177B4C /* Silence.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Silence.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE95E10E08DB900177B4C /* Smooth.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Smooth.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE9A110E08DC100177B4C /* Tone Generator.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tone Generator.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		557EC3E8121711280082B80A /* PPPlay.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPPlay.pdf; sourceTree = "<group>"; };
 		5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADfg.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5586871010BF5C4700FCC24D /* MADfg-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MADfg-Info.plist"; path = "../../../MADfg-Info.plist"; sourceTree = "<group>"; };
 		5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADH.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1750,7 +1750,6 @@
 		55CB01A611EB82FA0028C6BB /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		55CBF88E11EADBA50028C6BB /* PPFastForward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPFastForward.png; sourceTree = "<group>"; };
 		55CBF88F11EADBA50028C6BB /* PPNextTrack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPNextTrack.png; sourceTree = "<group>"; };
-		55CBF89011EADBA50028C6BB /* PPPlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPPlay.png; sourceTree = "<group>"; };
 		55CBF89111EADBA50028C6BB /* PPPrevTrack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPPrevTrack.png; sourceTree = "<group>"; };
 		55CBF89211EADBA50028C6BB /* PPRecord.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPRecord.png; sourceTree = "<group>"; };
 		55CBF89311EADBA50028C6BB /* PPReverse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPReverse.png; sourceTree = "<group>"; };
@@ -3463,9 +3462,9 @@
 		88E0C3CA0C2F21DD00D6C081 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				557EC3E8121711280082B80A /* PPPlay.pdf */,
 				55CBF88E11EADBA50028C6BB /* PPFastForward.png */,
 				55CBF88F11EADBA50028C6BB /* PPNextTrack.png */,
-				55CBF89011EADBA50028C6BB /* PPPlay.png */,
 				55CBF89111EADBA50028C6BB /* PPPrevTrack.png */,
 				55CBF89211EADBA50028C6BB /* PPRecord.png */,
 				55CBF89311EADBA50028C6BB /* PPReverse.png */,
@@ -5003,7 +5002,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55CBFC4511EB79180028C6BB /* PPNextTrack.png in Resources */,
-				55CBFC4611EB791C0028C6BB /* PPPlay.png in Resources */,
 				55CBFC5511EB79DA0028C6BB /* 669.icns in Resources */,
 				55CBFC5611EB79DE0028C6BB /* INS.icns in Resources */,
 				55CBFC5711EB79E20028C6BB /* IT.icns in Resources */,
@@ -5041,6 +5039,7 @@
 				55232B1111FDF2D50041A4EC /* MusicListPrefs.xib in Resources */,
 				55232B1411FDF3090041A4EC /* PianoPrefs.xib in Resources */,
 				55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */,
+				557EC3E9121711280082B80A /* PPPlay.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5076,7 +5075,6 @@
 				55E89D3D10F26A4B004EB52B /* INS.icns in Resources */,
 				55CBF89511EADBA60028C6BB /* PPFastForward.png in Resources */,
 				55CBF89611EADBA60028C6BB /* PPNextTrack.png in Resources */,
-				55CBF89711EADBA60028C6BB /* PPPlay.png in Resources */,
 				55CBF89811EADBA60028C6BB /* PPPrevTrack.png in Resources */,
 				55CBF89911EADBA60028C6BB /* PPRecord.png in Resources */,
 				55CBF89A11EADBA60028C6BB /* PPReverse.png in Resources */,
@@ -7168,8 +7166,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 2;
@@ -7190,8 +7186,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;

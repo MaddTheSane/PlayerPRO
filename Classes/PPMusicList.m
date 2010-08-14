@@ -12,6 +12,39 @@
 
 @implementation PPMusicList
 
+-(id)init
+{
+	self = [super init];
+	if (self) {
+		musicList = [[NSMutableArray alloc] init];
+	}
+	return self;
+}
+
+-(void)dealloc
+{
+	[musicList release];
+	
+	[super dealloc];
+}
+
+-(void)addMusicURL:(NSURL *)musicToLoad
+{
+	[musicList addObject:[[[PPAlias alloc] initWithURL:musicToLoad] autorelease]];
+}
+
+-(void)removeObjectAtIndex:(NSUInteger)object
+{
+	[musicList removeObjectAtIndex:object];
+}
+
+-(NSURL*)URLAtIndex:(NSUInteger)index
+{
+	return [[musicList objectAtIndex:index] url];
+}
+
+#pragma mark Archiving
+
 -(id)initWithCoder:(NSCoder *)decoder {
 	
 	if ((self = [super init])) 

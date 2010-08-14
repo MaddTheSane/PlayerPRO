@@ -13,5 +13,6 @@
 @interface PPMusicList : NSObject <NSCoding> {
 	NSMutableArray *musicList;
 }
+-(NSURL*)URLAtIndex:(NSUInteger)index;
 
 @end

@@ -1406,7 +1406,7 @@ OSErr MADLoadMusicPtr( MADMusic **music, Ptr myPtr)
 
 OSErr MADLoadMADFileCString( MADMusic **music, Ptr fName)
 {
-	OSErr		theErr;
+	OSErr	theErr;
 	UNFILE	srcFile;
 
 //	MADDisposeMusic( music);

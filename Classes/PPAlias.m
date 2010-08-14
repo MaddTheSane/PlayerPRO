@@ -19,7 +19,7 @@
 		FSRef target;
 		OSStatus err;
 		//Convert this path to an FSRef so you can call Carbon File Manager routines
-		err = FSPathMakeRef([path UTF8String], &target, NULL);
+		err = FSPathMakeRef((UInt8*)[path UTF8String], &target, NULL);
 		
 		//create a new alias
 		if (err == noErr)
@@ -31,14 +31,23 @@
 	return self;
 }
 
--(id)initWithNSURL:(NSURL *)path
+-(BOOL)isEqual:(id)object
+{
+	if (![object isKindOfClass:[PPAlias class]]) {
+		return FALSE;
+	}
+	NSURL *compareURL = [object url];
+	return [compareURL isEqual:[self url]];
+}
+
+-(id)initWithURL:(NSURL *)path
 {
 	self = [super init];
 	
 	if (self) {
 		FSRef target;
 		OSStatus err;
-		//Convert this path to an FSRef so you can call Carbon File Manager routines
+		//Convert this URL to an FSRef so you can call Carbon File Manager routines
 		err = CFURLGetFSRef((CFURLRef)path, &target);
 		
 		//create a new alias
@@ -51,6 +60,13 @@
 	return self;
 }
 
+-(void)finalize
+{
+	if (mAliasHandle)
+		DisposeHandle((Handle)mAliasHandle);
+	
+	[super finalize];
+}
 
 -(void)dealloc
 {
@@ -81,7 +97,7 @@
 		
 		//create a new path string from the UTF8 buffer
 		if (err==noErr)
-			path = [NSString stringWithUTF8String:buffer];
+			path = [NSString stringWithUTF8String:(char*)buffer];
 	}
 	return path;
 }

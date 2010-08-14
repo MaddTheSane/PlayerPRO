@@ -14,7 +14,7 @@
 	AliasHandle mAliasHandle;
 }
 -(id)initWithPath:(NSString *)path;
--(id)initWithNSURL:(NSURL *)path;
+-(id)initWithURL:(NSURL *)path;
 
 -(NSString *)path;
 -(NSURL *)url;

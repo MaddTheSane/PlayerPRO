@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #include "PlayerPROCore/PlayerPROCore.h"
 @class PPPreferences;
+@class PPMusicList;
 
 @interface PPApp_AppDelegate : NSObject {
     IBOutlet NSWindow *window;
@@ -24,6 +25,7 @@
 	IBOutlet NSTextField *fileLocation;
 	
 	PPPreferences	*preferences;
+	PPMusicList		*musicList;
 	MADDriverRec	*MADDriver;
 	MADMusic		*Music;
 	MADLibrary		*MADLib;	
@@ -37,8 +39,7 @@
 - (IBAction)showBoxEditor:(id)sender;
 - (IBAction)showClassicEditor:(id)sender;
 - (IBAction)showDigitalEditor:(id)sender;
-- (BOOL)loadMADMusic:(MADMusic*)musicToLoad;
-
+- (BOOL)loadMusicFile:(NSURL*)musicToLoad;
 
 @property (assign) NSWindow *window;
 
