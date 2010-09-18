@@ -13,8 +13,6 @@
 
 @interface PPApp_AppDelegate : NSObject {
     IBOutlet NSWindow *window;
-    IBOutlet NSDrawer *infoDrawer;
-    IBOutlet NSToolbar *toolbar;
 	
 	IBOutlet NSTextField *fileName;
 	IBOutlet NSTextField *internalName;
@@ -23,6 +21,7 @@
 	IBOutlet NSTextField *musicPatterns;
 	IBOutlet NSTextField *musicPlugType;
 	IBOutlet NSTextField *fileLocation;
+    IBOutlet NSTableColumn *musicTable;
 	
 	PPPreferences	*preferences;
 	PPMusicList		*musicList;
@@ -39,6 +38,7 @@
 - (IBAction)showBoxEditor:(id)sender;
 - (IBAction)showClassicEditor:(id)sender;
 - (IBAction)showDigitalEditor:(id)sender;
+- (IBAction)getMusicInfo:(id)sender;
 - (BOOL)loadMusicFile:(NSURL*)musicToLoad;
 
 @property (assign) NSWindow *window;

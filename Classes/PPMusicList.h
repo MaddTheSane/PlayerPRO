@@ -7,8 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PPAlias.h"
-
+@class NDAlias;
 
 @interface PPMusicList : NSObject <NSCoding> {
 	NSMutableArray *musicList;

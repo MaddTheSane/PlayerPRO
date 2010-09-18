@@ -86,6 +86,10 @@
     
 }
 
+- (IBAction)getMusicInfo:(id)sender {
+    
+}
+
 enum PPMusicToolbarTypes {
 	PPToolbarSort = 1001,
 	PPToolbarAddMusic,
@@ -104,7 +108,7 @@ enum PPMusicToolbarTypes {
 		case PPToolbarRemoveMusic:
 		case PPToolbarPlayMusic:
 		case PPToolbarFileInfo:
-			//TODO: selected?
+			//[musicTable ]
 			return YES;
 			break;
 		default:

@@ -7,8 +7,9 @@
 //
 
 #import "PPMusicList.h"
+#import "NDAlias/NDAlias.h"
 
-#define kMUSICLISTKEY @"MusicListKey"
+#define kMUSICLISTKEY @"Music List Key1"
 
 @implementation PPMusicList
 
@@ -30,7 +31,7 @@
 
 -(void)addMusicURL:(NSURL *)musicToLoad
 {
-	[musicList addObject:[[[PPAlias alloc] initWithURL:musicToLoad] autorelease]];
+	[musicList addObject:[NDAlias aliasWithURL:musicToLoad]];
 }
 
 -(void)removeObjectAtIndex:(NSUInteger)object
@@ -40,7 +41,7 @@
 
 -(NSURL*)URLAtIndex:(NSUInteger)index
 {
-	return [[musicList objectAtIndex:index] url];
+	return [[musicList objectAtIndex:index] URL];
 }
 
 #pragma mark Archiving
@@ -49,13 +50,21 @@
 	
 	if ((self = [super init])) 
 	{
-		musicList = [[decoder decodeObjectForKey:kMUSICLISTKEY] retain];
+		if ([decoder allowsKeyedCoding]) {
+			musicList = [[decoder decodeObjectForKey:kMUSICLISTKEY] retain];
+		} else {
+			musicList = [[decoder decodeObject] retain];
+		}
 	}
 	return self;
 }
 
 -(void)encodeWithCoder:(NSCoder *)encoder {
-	[encoder encodeObject:musicList forKey:kMUSICLISTKEY];
+	if ([encoder allowsKeyedCoding]) {
+		[encoder encodeObject:musicList forKey:kMUSICLISTKEY];
+	} else {
+		[encoder encodeObject:musicList];
+	}
 }
 
 
