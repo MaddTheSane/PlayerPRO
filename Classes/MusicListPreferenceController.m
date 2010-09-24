@@ -7,7 +7,7 @@
 //
 
 #import "MusicListPreferenceController.h"
-
+#import "UserDefaultKeys.h"
 
 @implementation MusicListPreferenceController
 
@@ -19,8 +19,7 @@
     
 }
 
--(id)init
-{
+-(id)init {
 	if (![super initWithNibName:@"MusicListPrefs" bundle:nil]) {
 		return nil;
 	}
@@ -28,8 +27,7 @@
 	return self;
 }
 
--(void)awakeFromNib
-{
+-(void)awakeFromNib {
 	
 }
 

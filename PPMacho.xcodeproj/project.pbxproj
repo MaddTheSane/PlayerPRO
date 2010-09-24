@@ -192,6 +192,7 @@
 		55232B0E11FDF2980041A4EC /* ColorPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232B0D11FDF2980041A4EC /* ColorPrefs.xib */; };
 		55232B1111FDF2D50041A4EC /* MusicListPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232B1011FDF2D50041A4EC /* MusicListPrefs.xib */; };
 		55232B1411FDF3090041A4EC /* PianoPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232B1311FDF3080041A4EC /* PianoPrefs.xib */; };
+		552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		552C6FE310CD9DAC00C0E0D4 /* ByteUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */; };
 		552C6FE410CD9DB700C0E0D4 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; };
 		5533412010BB54A3005208D1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
@@ -1500,6 +1501,8 @@
 		55232B0D11FDF2980041A4EC /* ColorPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPrefs.xib; sourceTree = "<group>"; };
 		55232B1011FDF2D50041A4EC /* MusicListPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicListPrefs.xib; sourceTree = "<group>"; };
 		55232B1311FDF3080041A4EC /* PianoPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PianoPrefs.xib; sourceTree = "<group>"; };
+		552711E3124881F4005120FC /* UserDefaultKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultKeys.h; sourceTree = "<group>"; };
+		552711E4124881F4005120FC /* UserDefaultKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultKeys.m; sourceTree = "<group>"; };
 		5528625010E9A7FC00BF8792 /* Mac-ASIO.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = "Mac-ASIO.c"; sourceTree = "<group>"; };
 		552C70C310CDAFBC00C0E0D4 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; path = TODO.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
 		552C70C610CDB07E00C0E0D4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; path = LICENSE.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
@@ -3344,6 +3347,8 @@
 				55232AF411FDE5970041A4EC /* PreferenceControllers */,
 				55D1BD5D120FBE51004FD083 /* PPMusicList.h */,
 				55D1BD5E120FBE51004FD083 /* PPMusicList.m */,
+				552711E3124881F4005120FC /* UserDefaultKeys.h */,
+				552711E4124881F4005120FC /* UserDefaultKeys.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -5909,6 +5914,7 @@
 				55C8D99812178D3200D42CB4 /* NSSavePanel+NDAlias.m in Sources */,
 				55C8D99912178D3200D42CB4 /* NSString+NDCarbonUtilities.m in Sources */,
 				55C8D99A12178D3200D42CB4 /* NSURL+NDCarbonUtilities.m in Sources */,
+				552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

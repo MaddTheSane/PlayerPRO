@@ -13,6 +13,20 @@
     IBOutlet NSButton *reverb;
     IBOutlet NSButton *stereoDelay;
     IBOutlet NSButton *surround;
+    IBOutlet NSMatrix *rate;
+    IBOutlet NSMatrix *outputBits;
+    IBOutlet NSMatrix *soundDriver;
+    IBOutlet NSPopUpButton *oversamplingNum;
+    IBOutlet NSPopUpButton *reverbNum;
+    IBOutlet NSPopUpButton *stereoDelayNum;
+    IBOutlet NSPopUpButton *reverbPercent;
 }
-
+- (IBAction)changeBits:(id)sender;
+- (IBAction)changeDriver:(id)sender;
+- (IBAction)changeRate:(id)sender;
+- (IBAction)changeChecked:(id)sender;
+- (IBAction)changeOversampling:(id)sender;
+- (IBAction)changeReverbAmount:(id)sender;
+- (IBAction)changeReverbPercent:(id)sender;
+- (IBAction)changeStereoDelay:(id)sender;
 @end
