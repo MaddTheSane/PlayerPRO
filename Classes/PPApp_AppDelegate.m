@@ -12,26 +12,49 @@
 #import "UserDefaultKeys.h"
 #import "NDAlias/NSURL+NDCarbonUtilities.h"
 
+static inline UnsignedFixed GetFixedRate(int Rate)
+{
+	switch (Rate) {
+		case 11:
+			return rate11025hz;
+			break;
+		case 22:
+			return rate22050hz;
+			break;
+		case 44:
+			return rate44khz;
+			break;
+		case 48:
+			return rate48khz;
+			break;
+			
+		default:
+			return rate44khz;
+			break;
+	}
+}
+
 @implementation PPApp_AppDelegate
 
 +(void)initialize {
 	NSMutableDictionary *defaultPrefs = [NSMutableDictionary dictionary];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPRemberMusicList];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPRememberMusicList];
 	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPLoadMusicAtListLoad];
-	[defaultPrefs setObject:[NSNumber numberWithInt:1] forKey:PPAfterPlayingMusic];
+	[defaultPrefs setObject:[NSNumber numberWithInt:PPStopPlaying] forKey:PPAfterPlayingMusic];
 	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPGotoStartupAfterPlaying];
 	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPSaveModList];
 	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPLoadMusicAtMusicLoad];
 	
 	[defaultPrefs setObject:[NSNumber numberWithInt:16] forKey:PPSoundOutBits];
 	[defaultPrefs setObject:[NSNumber numberWithInt:44] forKey:PPSoundOutRate];
+	[defaultPrefs setObject:[NSNumber numberWithInt:SoundManagerDriver] forKey:PPSoundDriver];
 	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPStereoDelayToggle];
 	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPReverbToggle];
 	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPSurroundToggle];
 	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPOversamplingToggle];
 	[defaultPrefs setObject:[NSNumber numberWithInt:30] forKey:PPStereoDelayAmount];
-	[defaultPrefs setObject:[NSNumber numberWithInt:25] forKey:PPReverbAmount];
-	[defaultPrefs setObject:[NSNumber numberWithInt:30] forKey:PPReverbPercent];
+	[defaultPrefs setObject:[NSNumber numberWithInt:25] forKey:PPReverbSize];
+	[defaultPrefs setObject:[NSNumber numberWithInt:30] forKey:PPReverbStrength];
 	[defaultPrefs setObject:[NSNumber numberWithInt:1] forKey:PPOversamplingAmount];
 	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultPrefs];
@@ -77,14 +100,46 @@
 
 @synthesize window;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	MADInitLibraryNew(NULL, &MADLib);
+- (void)MADDriverWithPreferences {
 	MADDriverSettings init;
 	MADGetBestDriver(&init);
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
+	//TODO: Sanity Checking
+	init.surround = [defaults boolForKey:PPSurroundToggle];
+	init.outPutRate = GetFixedRate([defaults integerForKey:PPSoundOutRate]);
+	init.outPutBits = [defaults integerForKey:PPSoundOutBits];
+	init.oversampling = [defaults integerForKey:PPOversamplingAmount];
+	init.Reverb = [defaults boolForKey:PPReverbToggle];
+	init.ReverbSize = [defaults integerForKey:PPReverbSize];
+	init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
+	init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
+	
+	if (MADDriver) {
+		MADStopDriver(MADDriver);
+		MADDisposeDriver(MADDriver);
+	}
 	MADCreateDriver(&init, MADLib, &MADDriver);
 	MADStartDriver(MADDriver);
 
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	MADInitLibraryNew(NULL, &MADLib);
+	[self MADDriverWithPreferences];
+	
 	musicList = [[PPMusicList alloc] init];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferencesDidChange:) name:PPListPreferencesDidChange object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
+
+}
+
+-(void)soundPreferencesDidChange:(NSNotification *)notification {
+	[self MADDriverWithPreferences];
+}
+
+-(void)preferencesDidChange:(NSNotification *)notification {
+	
 }
 
 -(void)dealloc
@@ -94,6 +149,8 @@
 	MADDisposeLibrary(MADLib);
 	[preferences release];
 	[musicList release];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	[super dealloc];
 }

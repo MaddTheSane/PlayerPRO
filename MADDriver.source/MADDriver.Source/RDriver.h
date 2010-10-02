@@ -299,7 +299,7 @@ enum
 	OSSDriver,						// Open Sound System. Most Unices (NOT OS X) including Linux
 	ESDDriver,						// ESound Driver. available on most UNIX Systems
 	ASIOSoundManager,				// ASIO Sound Driver by Steinberg
-	NoHardwareDriver				// NO HARDWARE CONNECTION, will not produce any sound
+	NoHardwareDriver = INT_MAX		// NO HARDWARE CONNECTION, will not produce any sound
 
 };
 

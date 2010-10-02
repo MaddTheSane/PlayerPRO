@@ -14,6 +14,7 @@
 -(id)init
 {
 	if (![super initWithNibName:@"MidiPrefs" bundle:nil]) {
+		[self autorelease];
 		return nil;
 	}
 	[self setTitle:@"MIDI Hardware"];

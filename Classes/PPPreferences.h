@@ -8,6 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+enum {
+	PPStopPlaying = 0,
+	PPLoopMusic,
+	PPLoadNext,
+	PPLoadRandom
+};
+
 @interface PPPreferences : NSWindowController {
 	IBOutlet NSBox *box;
 	IBOutlet NSPopUpButton *popUp;

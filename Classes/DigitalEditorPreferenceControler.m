@@ -14,6 +14,7 @@
 -(id)init
 {
 	if (![super initWithNibName:@"DigitalPrefs" bundle:nil]) {
+		[self autorelease];
 		return nil;
 	}
 	[self setTitle:@"Digital Editor"];

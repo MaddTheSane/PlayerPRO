@@ -14,6 +14,7 @@
 -(id)init
 {
 	if (![super initWithNibName:@"ClassicPrefs" bundle:nil]) {
+		[self autorelease];
 		return nil;
 	}
 	[self setTitle:@"Classic Editor"];

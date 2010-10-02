@@ -41,6 +41,10 @@
 - (IBAction)getMusicInfo:(id)sender;
 - (BOOL)loadMusicFile:(NSURL*)musicToLoad;
 
+-(void)preferencesDidChange:(NSNotification *)notification;
+-(void)soundPreferencesDidChange:(NSNotification *)notification;
+
+
 @property (assign) NSWindow *window;
 
 

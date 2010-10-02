@@ -14,6 +14,7 @@
 -(id)init
 {
 	if (![super initWithNibName:@"ColorPrefs" bundle:nil]) {
+		[self autorelease];
 		return nil;
 	}
 	[self setTitle:@"Color"];

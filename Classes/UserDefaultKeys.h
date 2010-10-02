@@ -7,19 +7,24 @@
 //
 #import <Foundation/NSString.h>
 
-extern NSString *PPRemberMusicList;
+extern NSString *PPListPreferencesDidChange;
+extern NSString *PPSoundPreferencesDidChange;
+
+extern NSString *PPRememberMusicList;
 extern NSString *PPLoadMusicAtListLoad;
 extern NSString *PPAfterPlayingMusic;
 extern NSString *PPGotoStartupAfterPlaying;
 extern NSString *PPSaveModList;
 extern NSString *PPLoadMusicAtMusicLoad;
+
 extern NSString *PPSoundOutBits;
 extern NSString *PPSoundOutRate;
+extern NSString *PPSoundDriver;
 extern NSString *PPStereoDelayToggle;
 extern NSString *PPReverbToggle;
 extern NSString *PPSurroundToggle;
 extern NSString *PPOversamplingToggle;
 extern NSString *PPStereoDelayAmount;
-extern NSString *PPReverbAmount;
-extern NSString *PPReverbPercent;
+extern NSString *PPReverbSize;
+extern NSString *PPReverbStrength;
 extern NSString *PPOversamplingAmount;
