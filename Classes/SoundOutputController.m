@@ -89,8 +89,7 @@ enum {
 }
 
 - (IBAction)changeDriver:(id)sender {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[defaults setInteger:[self currentSoundDriver] forKey:PPSoundDriver];
+	[[NSUserDefaults standardUserDefaults] setInteger:[self currentSoundDriver] forKey:PPSoundDriver];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 
@@ -120,7 +119,14 @@ enum {
 }
 
 - (IBAction)changeChecked:(id)sender {
-    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setBool:[surround state] forKey:PPSurroundToggle];
+	[defaults setBool:[reverb state] forKey:PPReverbToggle];
+	[defaults setBool:[stereoDelay state] forKey:PPStereoDelayToggle];
+	[defaults setBool:[oversampling state] forKey:PPOversamplingToggle];
+	if (![defaults boolForKey:PPOversamplingToggle]) {
+		[defaults setInteger:1 forKey:PPOversamplingAmount];
+	}
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }

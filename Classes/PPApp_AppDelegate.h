@@ -20,6 +20,7 @@
 	IBOutlet NSTextField *musicInstrument;
 	IBOutlet NSTextField *musicPatterns;
 	IBOutlet NSTextField *musicPlugType;
+	IBOutlet NSTextField *musicSignature;
 	IBOutlet NSTextField *fileLocation;
     IBOutlet NSTableColumn *musicTable;
 	

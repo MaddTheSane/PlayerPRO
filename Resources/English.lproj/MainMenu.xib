@@ -12,8 +12,8 @@
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<integer value="830"/>
-			<integer value="367"/>
 			<integer value="1069"/>
+			<integer value="367"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1358,7 +1358,7 @@
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSTextField" id="670802151">
 						<reference key="NSNextResponder" ref="150741665"/>
-						<int key="NSvFlags">307</int>
+						<int key="NSvFlags">275</int>
 						<string key="NSFrame">{{119, 20}, {224, 78}}</string>
 						<reference key="NSSuperview" ref="150741665"/>
 						<bool key="NSEnabled">YES</bool>
@@ -2019,6 +2019,14 @@
 						<reference key="destination" ref="128437033"/>
 					</object>
 					<int key="connectionID">1126</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">musicSignature</string>
+						<reference key="source" ref="1000799287"/>
+						<reference key="destination" ref="811739988"/>
+					</object>
+					<int key="connectionID">1127</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3345,7 +3353,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1126</int>
+			<int key="maxID">1127</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3414,6 +3422,7 @@
 						<string key="musicInstrument">NSTextField</string>
 						<string key="musicPatterns">NSTextField</string>
 						<string key="musicPlugType">NSTextField</string>
+						<string key="musicSignature">NSTextField</string>
 						<string key="musicTable">NSTableColumn</string>
 						<string key="window">NSWindow</string>
 					</dictionary>
@@ -3444,6 +3453,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="musicPlugType">
 							<string key="name">musicPlugType</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="musicSignature">
+							<string key="name">musicSignature</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="musicTable">

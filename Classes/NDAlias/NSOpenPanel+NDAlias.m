@@ -38,14 +38,14 @@
 - (NSArray *)aliases
 {
 	NSMutableArray *	aliases = nil;
-	NSArray *			filenames = [self filenames];
+	NSArray *			filenames = [self URLs];
 	NSUInteger			i;
 	if (filenames != nil)
 	{
 		aliases = [NSMutableArray array];
 		for( i = 0; i < [filenames count]; i++)
 		{
-			NDAlias *		anAlias = [NDAlias aliasWithPath:[filenames objectAtIndex:i]];
+			NDAlias *		anAlias = [NDAlias aliasWithURL:[filenames objectAtIndex:i]];
 			[aliases addObject:anAlias];
 		}
 	}

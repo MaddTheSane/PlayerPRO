@@ -409,6 +409,9 @@
 		559088E310E87ED100CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		559088E410E87ED700CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		55981C5311EE370D00656EE3 /* PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55981C5211EE370D00656EE3 /* PPPreferences.m */; };
+		55ABFD54125E6D4400B182F1 /* PPNextTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */; };
+		55ABFD55125E6D4400B182F1 /* PPPrevTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */; };
+		55ABFD56125E6D4400B182F1 /* PPRecord.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD53125E6D4400B182F1 /* PPRecord.pdf */; };
 		55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
 		55B797E310D6E6E50073E379 /* CompFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FE110D6C79D00BB619C /* CompFade.c */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
@@ -428,9 +431,6 @@
 		55C8D99912178D3200D42CB4 /* NSString+NDCarbonUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C8D98F12178D3200D42CB4 /* NSString+NDCarbonUtilities.m */; };
 		55C8D99A12178D3200D42CB4 /* NSURL+NDCarbonUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C8D99112178D3200D42CB4 /* NSURL+NDCarbonUtilities.m */; };
 		55CB01A711EB82FA0028C6BB /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CB01A611EB82FA0028C6BB /* main.c */; };
-		55CBF89611EADBA60028C6BB /* PPNextTrack.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF88F11EADBA50028C6BB /* PPNextTrack.png */; };
-		55CBF89811EADBA60028C6BB /* PPPrevTrack.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89111EADBA50028C6BB /* PPPrevTrack.png */; };
-		55CBF89911EADBA60028C6BB /* PPRecord.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89211EADBA50028C6BB /* PPRecord.png */; };
 		55CBFAD211EB77ED0028C6BB /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55CBFAD311EB77ED0028C6BB /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
 		55CBFAD411EB77ED0028C6BB /* AMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341D310BB5FE0005208D1 /* AMF.ppimpexp */; };
@@ -462,7 +462,6 @@
 		55CBFC4211EB78C20028C6BB /* MySndPlayDB.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D70C2F21DD00D6C081 /* MySndPlayDB.c */; };
 		55CBFC4311EB78C60028C6BB /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
 		55CBFC4411EB78CB0028C6BB /* OSX-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */; };
-		55CBFC4511EB79180028C6BB /* PPNextTrack.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF88F11EADBA50028C6BB /* PPNextTrack.png */; };
 		55CBFC5511EB79DA0028C6BB /* 669.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D010BA17BC004FC5D7 /* 669.icns */; };
 		55CBFC5611EB79DE0028C6BB /* INS.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55E89D3B10F26A4B004EB52B /* INS.icns */; };
 		55CBFC5711EB79E20028C6BB /* IT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D110BA17BC004FC5D7 /* IT.icns */; };
@@ -485,8 +484,6 @@
 		55CBFC6811EB7A3C0028C6BB /* realft.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DA0C2F21DD00D6C081 /* realft.c */; };
 		55CBFC6911EB7A400028C6BB /* TickRemover.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */; };
 		55CBFC7311EB7BD90028C6BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7211EB7BD90028C6BB /* InfoPlist.strings */; };
-		55CBFC7611EB7C1D0028C6BB /* PPPrevTrack.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89111EADBA50028C6BB /* PPPrevTrack.png */; };
-		55CBFC7711EB7C250028C6BB /* PPRecord.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CBF89211EADBA50028C6BB /* PPRecord.png */; };
 		55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7B11EB7C950028C6BB /* MainMenu.xib */; };
 		55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */; };
 		55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55D1BD58120FBAC0004FD083 /* Credits.rtf */; };
@@ -1753,6 +1750,9 @@
 		55981C5111EE370D00656EE3 /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
 		55981C5211EE370D00656EE3 /* PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPreferences.m; sourceTree = "<group>"; };
 		55981C5411EE375400656EE3 /* preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = preferences.xib; sourceTree = "<group>"; };
+		55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPNextTrack.pdf; sourceTree = "<group>"; };
+		55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPPrevTrack.pdf; sourceTree = "<group>"; };
+		55ABFD53125E6D4400B182F1 /* PPRecord.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPRecord.pdf; sourceTree = "<group>"; };
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Complex Fade-Info.plist"; path = "../../../Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55C8D97F12178D3200D42CB4 /* NDAlias+AliasFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NDAlias+AliasFile.h"; sourceTree = "<group>"; };
@@ -1775,9 +1775,6 @@
 		55C8D99012178D3200D42CB4 /* NSURL+NDCarbonUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+NDCarbonUtilities.h"; sourceTree = "<group>"; };
 		55C8D99112178D3200D42CB4 /* NSURL+NDCarbonUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+NDCarbonUtilities.m"; sourceTree = "<group>"; };
 		55CB01A611EB82FA0028C6BB /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		55CBF88F11EADBA50028C6BB /* PPNextTrack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPNextTrack.png; sourceTree = "<group>"; };
-		55CBF89111EADBA50028C6BB /* PPPrevTrack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPPrevTrack.png; sourceTree = "<group>"; };
-		55CBF89211EADBA50028C6BB /* PPRecord.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPRecord.png; sourceTree = "<group>"; };
 		55CBF9A611EB77760028C6BB /* PlayerPRO Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CBF9A811EB77760028C6BB /* Cocoa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Cocoa-Info.plist"; sourceTree = "<group>"; };
 		55CBFC7011EB7BC90028C6BB /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3517,9 +3514,9 @@
 				55E52E271245640500315307 /* PPFastForward.pdf */,
 				55E52E281245640500315307 /* PPReverse.pdf */,
 				55E52E291245640500315307 /* PPStop.pdf */,
-				55CBF88F11EADBA50028C6BB /* PPNextTrack.png */,
-				55CBF89111EADBA50028C6BB /* PPPrevTrack.png */,
-				55CBF89211EADBA50028C6BB /* PPRecord.png */,
+				55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */,
+				55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */,
+				55ABFD53125E6D4400B182F1 /* PPRecord.pdf */,
 				55CBFC6E11EB7A7A0028C6BB /* Carbon Resources */,
 				558A15250FE749B400533D71 /* Info.plist */,
 				550B00CF10BA17BC004FC5D7 /* Icons */,
@@ -5060,7 +5057,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55CBFC4511EB79180028C6BB /* PPNextTrack.png in Resources */,
 				55CBFC5511EB79DA0028C6BB /* 669.icns in Resources */,
 				55CBFC5611EB79DE0028C6BB /* INS.icns in Resources */,
 				55CBFC5711EB79E20028C6BB /* IT.icns in Resources */,
@@ -5080,8 +5076,6 @@
 				55CBFC6511EB7A110028C6BB /* XI.icns in Resources */,
 				55CBFC6611EB7A1C0028C6BB /* XM.icns in Resources */,
 				55CBFC7311EB7BD90028C6BB /* InfoPlist.strings in Resources */,
-				55CBFC7611EB7C1D0028C6BB /* PPPrevTrack.png in Resources */,
-				55CBFC7711EB7C250028C6BB /* PPRecord.png in Resources */,
 				55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */,
 				5533600411EBC66400525CAF /* Localizable.strings in Resources */,
 				55E52E2512455E5100315307 /* preferences.xib in Resources */,
@@ -5099,6 +5093,9 @@
 				55E52E2A1245640500315307 /* PPFastForward.pdf in Resources */,
 				55E52E2B1245640500315307 /* PPReverse.pdf in Resources */,
 				55E52E2C1245640500315307 /* PPStop.pdf in Resources */,
+				55ABFD54125E6D4400B182F1 /* PPNextTrack.pdf in Resources */,
+				55ABFD55125E6D4400B182F1 /* PPPrevTrack.pdf in Resources */,
+				55ABFD56125E6D4400B182F1 /* PPRecord.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5132,9 +5129,6 @@
 				550B00ED10BA17BC004FC5D7 /* XM.icns in Resources */,
 				55E89D3C10F26A4B004EB52B /* PATN.icns in Resources */,
 				55E89D3D10F26A4B004EB52B /* INS.icns in Resources */,
-				55CBF89611EADBA60028C6BB /* PPNextTrack.png in Resources */,
-				55CBF89811EADBA60028C6BB /* PPPrevTrack.png in Resources */,
-				55CBF89911EADBA60028C6BB /* PPRecord.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

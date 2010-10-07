@@ -213,8 +213,6 @@
 	[anEncoder encodeDataObject:[self data]];
 }
 
-#ifndef __OBJC_GC__
-
 /*
 	dealloc
  */
@@ -224,8 +222,6 @@
 		DisposeHandle( (Handle)aliasHandle );
 	[super dealloc];
 }
-
-#else
 
 /*
 	finalize
@@ -237,8 +233,6 @@
 		DisposeHandle( (Handle)aliasHandle );
 	[super finalize];
 }
-
-#endif
 
 /*
 	-setAllowUserInteraction:
@@ -527,7 +521,28 @@
 
 -(BOOL)isEqual:(id)class
 {
-	return [self isEqualToAlias:class];
+	if ([class isKindOfClass:[NDAlias class]]) {
+		return [self isEqualToAlias:class];
+	} else if ([class isKindOfClass:[NSURL class]]) {
+		FSRef tempRef;
+		if([class getFSRef:&tempRef])
+		{
+			return [self isEqualToAlias:[NDAlias aliasWithFSRef:&tempRef]];
+		}
+	} else if ([class isKindOfClass:[NSString class]]) {
+		FSRef tempRef;
+		if([class getFSRef:&tempRef])
+		{
+			return [self isEqualToAlias:[NDAlias aliasWithFSRef:&tempRef]];
+		}
+	} else if ([class respondsToSelector:@selector(getFSRef:)]) {
+		FSRef tempRef;
+		if([class getFSRef:&tempRef])
+		{
+			return [self isEqualToAlias:[NDAlias aliasWithFSRef:&tempRef]];
+		}
+	}
+	return NO;
 }
 
 /*

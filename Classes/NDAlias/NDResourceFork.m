@@ -198,8 +198,6 @@ BOOL operateOnResourceUsingFunction( ResFileRefNum afileRef, ResType aType, NSSt
 	}
 }
 
-#ifndef __OBJC_GC__
-
 /*
 	- dealloc
  */
@@ -214,8 +212,6 @@ BOOL operateOnResourceUsingFunction( ResFileRefNum afileRef, ResType aType, NSSt
 	[super dealloc];
 }
 
-#else
-
 /*
 	- finalize
  */
@@ -228,8 +224,6 @@ BOOL operateOnResourceUsingFunction( ResFileRefNum afileRef, ResType aType, NSSt
 	}
 	[super finalize];
 }
-
-#endif
 
 /*
 	- addData:type:Id:name:

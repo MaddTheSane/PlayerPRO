@@ -1,5 +1,5 @@
 /*
- *  untitled.c
+ *  main.c
  *  PPMacho
  *
  *  Created by C.W. Betts on 7/12/10.
