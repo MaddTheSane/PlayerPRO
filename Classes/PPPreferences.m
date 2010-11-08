@@ -23,7 +23,7 @@
 {
     self = [super initWithWindowNibName:@"Preferences"];
     if (self != nil) {
-		viewControllers =[[NSMutableArray alloc] init];
+		viewControllers =[[NSMutableArray alloc] initWithCapacity:3];
 		
 		NSViewController *vc;
 		vc = [[SoundOutputController alloc] init];
@@ -40,13 +40,13 @@
 		
 		/*vc = [[ColorPreferenceController alloc] init];
 		[viewControllers addObject:vc];
-		[vc release];
+		[vc release];*/
 		
 		vc = [[MiscPreferenceController alloc] init];
 		[viewControllers addObject:vc];
 		[vc release];
 		
-		vc = [[BoxEditorPreferenceController alloc] init];
+		/*vc = [[BoxEditorPreferenceController alloc] init];
 		[viewControllers addObject:vc];
 		[vc release];
 		

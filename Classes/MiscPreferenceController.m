@@ -10,6 +10,10 @@
 
 
 @implementation MiscPreferenceController
+- (IBAction)changePrefs:(id)sender {
+    
+}
+
 
 -(id)init
 {
