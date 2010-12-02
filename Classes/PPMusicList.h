@@ -13,5 +13,5 @@
 	NSMutableArray *musicList;
 }
 -(NSURL*)URLAtIndex:(NSUInteger)index;
-
+-(OSErr)openOldMusicList:(NSURL *)toOpen;
 @end

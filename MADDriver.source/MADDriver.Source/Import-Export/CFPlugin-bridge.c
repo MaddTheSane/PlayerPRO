@@ -16,7 +16,7 @@
  */
 
 //Please make sure that <PlayerPROCore/PlayerPROCore.h> is already included
-
+#warning Import-Export plugins shouldn't be using this file anymore!
 typedef struct _CFImpExpPlugType {
 	MADFileFormatPlugin *_PPROCFPlugFormat;
 	CFUUIDRef _factoryID;
@@ -89,9 +89,38 @@ static ULONG CFImpExpPlugRelease( void *myInstance )
         return ( (CFImpExpPlugType *) myInstance )->_refCount;
 }
 
-OSErr CFImpExpGetType(PPInfoRec *info, FSRefPtr AlienFile)
+OSErr SomeMain(OSType order, FSRefPtr AlienFile, MADMusic *MadFile, PPInfoRec *info)
 {
+	OSErr			returnCode;
+	FSSpec			oldSpec;
+	FSVolumeRefNum	vRefNum;
+	SInt32			parID;
 	
+	HGetVol(NULL, &vRefNum, &parID);
+	FSGetCatalogInfo(AlienFile, 0, NULL, NULL, &oldSpec, NULL);
+	HSetVol(NULL, oldSpec.vRefNum, oldSpec.parID);
+	Str63 tempStr;
+	pStrCpy(tempStr, oldSpec.name);
+	P2CStr(tempStr);
+	returnCode = PLUGMAIN(order, tempStr, MadFile, info, NULL);
+	HSetVol(NULL, vRefNum, parID);
+	
+	return returnCode;
+}
+
+OSErr CFImpExpCanPlay(FSRefPtr AlienFile)
+{
+	return SomeMain('TEST', AlienFile, NULL, NULL);
+}
+
+OSErr CFImpExpImport(FSRefPtr AlienFile, MADMusic *MadFile)
+{
+	return SomeMain('IMPL', AlienFile, MadFile, NULL);
+}
+
+OSErr CFImpExpGetType(FSRefPtr AlienFile, PPInfoRec *info)
+{
+	return SomeMain('INFO', AlienFile, NULL,info);
 }
 
 static MADFileFormatPlugin CFImpExpPlugFormat =
@@ -100,7 +129,9 @@ static MADFileFormatPlugin CFImpExpPlugFormat =
 	CFImpExpPlugQueryInterface,
 	CFImpExpPlugAddRef,
 	CFImpExpPlugRelease,
-	PLUGMAIN
+	CFImpExpImport,
+	CFImpExpGetType,
+	CFImpExpCanPlay
 };
 
 static CFImpExpPlugType *_allocCFPlugType( CFUUIDRef factoryID )

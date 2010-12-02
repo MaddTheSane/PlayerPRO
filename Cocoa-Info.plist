@@ -134,7 +134,7 @@
 		</dict>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
-			<string>132</string>
+			<string>List</string>
 			<key>CFBundleTypeName</key>
 			<string>PlayerPRO Music List</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -142,7 +142,7 @@
 				<string>STCf</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSTypeIsPackage</key>
 			<false/>
 		</dict>

@@ -3362,14 +3362,14 @@ void UpdateTracksNumber( MADDriverRec *MDriver)
 
 OSErr MADCreateVibrato( MADDriverRec *MDriver)
 {
-short			i, vibrato_table[ 64] = 
+	short			i, vibrato_table[ 64] = 
 
-{
+	{
 	0,24,49,74,97,120,141,161,
 	180,197,212,224,235,244,250,253,
 	255,253,250,244,235,224,212,197,
 	180,161,141,120,97,74,49,24
-};
+	};
 
 /*	{
 		0,50,100,149,196,241,284,325,362,396,426,452,473,490,502,510,512,
@@ -3705,3 +3705,14 @@ void InstallPersistentVBL( MADDriverRec *MDriver, VBLTask *theVBLRec)
 	if( myErr) DebugStr("\pError in VInstall");
 }
 #endif*/
+
+Boolean MADWasReading(MADDriverRec *driver)
+{
+	return driver->Reading;
+}
+
+void MADSetReading(MADDriverRec *driver, Boolean toSet)
+{
+	driver->Reading = toSet;
+}
+

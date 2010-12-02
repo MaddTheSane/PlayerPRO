@@ -299,7 +299,7 @@ enum
 	OSSDriver,						// Open Sound System. Most Unices (NOT OS X) including Linux
 	ESDDriver,						// ESound Driver. available on most UNIX Systems
 	ASIOSoundManager,				// ASIO Sound Driver by Steinberg
-	NoHardwareDriver = INT_MAX		// NO HARDWARE CONNECTION, will not produce any sound
+	NoHardwareDriver = SHRT_MAX		// NO HARDWARE CONNECTION, will not produce any sound
 
 };
 
@@ -450,7 +450,10 @@ typedef PPSndDoubleBufferHeader2 *        PPSndDoubleBufferHeader2Ptr;
 
 typedef struct _MADFileFormatPlugin {
     IUNKNOWN_C_GUTS;
-	OSErr (STDMETHODCALLTYPE *ThePlugMain)(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+//	OSErr (STDMETHODCALLTYPE *ThePlugMain)(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+	OSErr (STDMETHODCALLTYPE *PlugImport) (FSRefPtr AlienFile, MADMusic *MadFile);
+	OSErr (STDMETHODCALLTYPE *MADFileInfo) (FSRefPtr AlienFile, PPInfoRec *info);
+	OSErr (STDMETHODCALLTYPE *CanPlayFile) (FSRefPtr AlienFile);
 } MADFileFormatPlugin;
 
 typedef struct PlugInfo
@@ -459,7 +462,7 @@ typedef struct PlugInfo
 	CFStringRef	MenuName;										// Plug name
 	CFStringRef	AuthorString;									// Plug author
 	CFBundleRef	file;											// Location of plug file
-	char		type[ 5];										// OSType of file support. Kept for legacy reasons
+	char		type[ 5];										// OSType of file support. Kept for legacy reasons.
 	CFArrayRef	UTItypes;										// CFStrings of supported UTIs
 	OSType		mode;											// Mode support : Import +/ Export
 } PlugInfo;
@@ -681,6 +684,10 @@ OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
 							unsigned long	rate,					// sample rate of the sound data, by ex: rate22khz
 							Boolean			stereo);				// sample is in stereo or in mono?
 
+Boolean MADWasReading(MADDriverRec *driver);
+void MADSetReading(MADDriverRec *driver, Boolean toSet);
+	
+	
 //Ptr MADNewPtr( long size, MADLibrary* init);
 //Ptr MADNewPtrClear( long size, MADLibrary* init);
 //Since we don't use MADLibrary any more, redefining these terms
