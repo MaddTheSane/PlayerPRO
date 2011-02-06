@@ -499,6 +499,16 @@
 				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
+			<string>PPTracker</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.tracker</string>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.audio</string>
+			</array>
+			<key>UTTypeDescription</key>
 			<string>PPMADKFile</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madk</string>

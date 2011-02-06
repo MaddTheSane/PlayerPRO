@@ -20,336 +20,336 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 88E0C3B50C2F21DD00D6C081 /* PlayerPRO.app */;
+			remoteGlobalIDString = 88E0C3B50C2F21DD00D6C081;
 			remoteInfo = Carbon;
 		};
 		554BB76412FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5518107210C35A4500ADA9F4 /* PlayerPRO Example.app */;
+			remoteGlobalIDString = 5518107210C35A4500ADA9F4;
 			remoteInfo = "PlayerPRO Example";
 		};
 		554BB76612FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 550BFF1010BA0179004FC5D7 /* Game Example.app */;
+			remoteGlobalIDString = 550BFF1010BA0179004FC5D7;
 			remoteInfo = "Game Example";
 		};
 		554BB76812FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 551FECC510E7354900EDF2F1 /* AutoExec.app */;
+			remoteGlobalIDString = 551FECC510E7354900EDF2F1;
 			remoteInfo = AutoExec;
 		};
 		554BB76A12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */;
+			remoteGlobalIDString = 5573A33F10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
 		554BB76C12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5533411110BB547D005208D1 /* MOD.ppimpexp */;
+			remoteGlobalIDString = 5533411110BB547D005208D1;
 			remoteInfo = MOD;
 		};
 		554BB76E12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5533415310BB572C005208D1 /* 669.ppimpexp */;
+			remoteGlobalIDString = 5533415310BB572C005208D1;
 			remoteInfo = 669;
 		};
 		554BB77012FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 553341D310BB5FE0005208D1 /* AMF.ppimpexp */;
+			remoteGlobalIDString = 553341D310BB5FE0005208D1;
 			remoteInfo = AMF;
 		};
 		554BB77212FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 553341E910BB5FFA005208D1 /* DMF.ppimpexp */;
+			remoteGlobalIDString = 553341E910BB5FFA005208D1;
 			remoteInfo = DMF;
 		};
 		554BB77412FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 553341FC10BB600A005208D1 /* IT.ppimpexp */;
+			remoteGlobalIDString = 553341FC10BB600A005208D1;
 			remoteInfo = IT;
 		};
 		554BB77612FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */;
+			remoteGlobalIDString = 5586870F10BF5C4700FCC24D;
 			remoteInfo = MADfg;
 		};
 		554BB77812FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */;
+			remoteGlobalIDString = 5586871E10BF5C4A00FCC24D;
 			remoteInfo = MADH;
 		};
 		554BB77A12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5586872D10BF5C4E00FCC24D /* MADI.ppimpexp */;
+			remoteGlobalIDString = 5586872D10BF5C4E00FCC24D;
 			remoteInfo = MADI;
 		};
 		554BB77C12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5586874D10BF5D3700FCC24D /* MED.ppimpexp */;
+			remoteGlobalIDString = 5586874D10BF5D3700FCC24D;
 			remoteInfo = MED;
 		};
 		554BB77E12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5586876210BF5E4D00FCC24D /* MTM.ppimpexp */;
+			remoteGlobalIDString = 5586876210BF5E4D00FCC24D;
 			remoteInfo = MTM;
 		};
 		554BB78012FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 558687DE10BF620500FCC24D /* Okta.ppimpexp */;
+			remoteGlobalIDString = 558687DE10BF620500FCC24D;
 			remoteInfo = Okta;
 		};
 		554BB78212FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */;
+			remoteGlobalIDString = 558687FA10BF624E00FCC24D;
 			remoteInfo = S3M;
 		};
 		554BB78412FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */;
+			remoteGlobalIDString = 5586881B10BF62F100FCC24D;
 			remoteInfo = ULT;
 		};
 		554BB78612FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5586882910BF62F500FCC24D /* UMX.ppimpexp */;
+			remoteGlobalIDString = 5586882910BF62F500FCC24D;
 			remoteInfo = UMX;
 		};
 		554BB78812FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */;
+			remoteGlobalIDString = 5586883D10BF62FB00FCC24D;
 			remoteInfo = XM;
 		};
 		554BB78A12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5586889710BF67F100FCC24D /* MIDI.ppimpexp */;
+			remoteGlobalIDString = 5586889710BF67F100FCC24D;
 			remoteInfo = MIDI;
 		};
 		554BB78C12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */;
+			remoteGlobalIDString = 55868A6710BFB46100FCC24D;
 			remoteInfo = APPL;
 		};
 		554BB78E12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 55B797DC10D6E6C40073E379 /* Complex Fade.plugin */;
+			remoteGlobalIDString = 55B797DC10D6E6C40073E379;
 			remoteInfo = "Complex Fade";
 		};
 		554BB79012FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 554E110510D6F09F00BB619C /* Fade Note.plugin */;
+			remoteGlobalIDString = 554E110510D6F09F00BB619C;
 			remoteInfo = "Fade Note";
 		};
 		554BB79212FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 554E114C10D6F1BF00BB619C /* Fade Volume.plugin */;
+			remoteGlobalIDString = 554E114C10D6F1BF00BB619C;
 			remoteInfo = "Fade Volume";
 		};
 		554BB79412FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 554E11B910D6F32900BB619C /* Note Translate.plugin */;
+			remoteGlobalIDString = 554E11B910D6F32900BB619C;
 			remoteInfo = "Note Translate";
 		};
 		554BB79612FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 554E11FD10D6F3E100BB619C /* Propagate.plugin */;
+			remoteGlobalIDString = 554E11FD10D6F3E100BB619C;
 			remoteInfo = Propagate;
 		};
 		554BB79812FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 554E123010D6F3E600BB619C /* Revert.plugin */;
+			remoteGlobalIDString = 554E123010D6F3E600BB619C;
 			remoteInfo = Revert;
 		};
 		554BB79A12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 55151F8010DEDBDB0054ABC4 /* XI.plugin */;
+			remoteGlobalIDString = 55151F8010DEDBDB0054ABC4;
 			remoteInfo = XI;
 		};
 		554BB79C12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 551FEA6B10E727AD00EDF2F1 /* MINs.plugin */;
+			remoteGlobalIDString = 551FEA6B10E727AD00EDF2F1;
 			remoteInfo = MINs;
 		};
 		554BB79E12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 551FEADA10E727B100EDF2F1 /* PAT.plugin */;
+			remoteGlobalIDString = 551FEADA10E727B100EDF2F1;
 			remoteInfo = PAT;
 		};
 		554BB7A012FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 55E898B710F17C2B004EB52B /* QuickTime.plugin */;
+			remoteGlobalIDString = 55E898B710F17C2B004EB52B;
 			remoteInfo = QuickTime;
 		};
 		554BB7A212FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE43410E06BF200177B4C /* Amplitude.plugin */;
+			remoteGlobalIDString = 557DE43410E06BF200177B4C;
 			remoteInfo = Amplitude;
 		};
 		554BB7A412FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE5DF10E0882800177B4C /* Backwards.plugin */;
+			remoteGlobalIDString = 557DE5DF10E0882800177B4C;
 			remoteInfo = Backwards;
 		};
 		554BB7A612FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE62210E0884100177B4C /* Crop.plugin */;
+			remoteGlobalIDString = 557DE62210E0884100177B4C;
 			remoteInfo = Crop;
 		};
 		554BB7A812FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE66310E0885C00177B4C /* CrossFade.plugin */;
+			remoteGlobalIDString = 557DE66310E0885C00177B4C;
 			remoteInfo = CrossFade;
 		};
 		554BB7AA12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE6A410E0886400177B4C /* Depth.plugin */;
+			remoteGlobalIDString = 557DE6A410E0886400177B4C;
 			remoteInfo = Depth;
 		};
 		554BB7AC12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE6E510E0886A00177B4C /* Echo.plugin */;
+			remoteGlobalIDString = 557DE6E510E0886A00177B4C;
 			remoteInfo = Echo;
 		};
 		554BB7AE12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE7BC10E08D8400177B4C /* Fade.plugin */;
+			remoteGlobalIDString = 557DE7BC10E08D8400177B4C;
 			remoteInfo = Fade;
 		};
 		554BB7B012FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE7FF10E08D8900177B4C /* Invert.plugin */;
+			remoteGlobalIDString = 557DE7FF10E08D8900177B4C;
 			remoteInfo = Invert;
 		};
 		554BB7B212FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE84210E08D9E00177B4C /* Length.plugin */;
+			remoteGlobalIDString = 557DE84210E08D9E00177B4C;
 			remoteInfo = Length;
 		};
 		554BB7B412FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE88510E08DA300177B4C /* Mix.plugin */;
+			remoteGlobalIDString = 557DE88510E08DA300177B4C;
 			remoteInfo = Mix;
 		};
 		554BB7B612FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE8C810E08DA800177B4C /* Normalize.plugin */;
+			remoteGlobalIDString = 557DE8C810E08DA800177B4C;
 			remoteInfo = Normalize;
 		};
 		554BB7B812FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE90B10E08DAC00177B4C /* Sampling Rate.plugin */;
+			remoteGlobalIDString = 557DE90B10E08DAC00177B4C;
 			remoteInfo = "Sampling Rate";
 		};
 		554BB7BA12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE91B10E08DB000177B4C /* Silence.plugin */;
+			remoteGlobalIDString = 557DE91B10E08DB000177B4C;
 			remoteInfo = Silence;
 		};
 		554BB7BC12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE95E10E08DB900177B4C /* Smooth.plugin */;
+			remoteGlobalIDString = 557DE95E10E08DB900177B4C;
 			remoteInfo = Smooth;
 		};
 		554BB7BE12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */;
+			remoteGlobalIDString = 557DE9A110E08DC100177B4C;
 			remoteInfo = "Tone Generator";
 		};
 		554BB7C512FDC5EB001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
 /* End PBXContainerItemProxy section */
@@ -925,6 +925,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "../build/${BUILD_STYLE}/";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/Spotlight;
@@ -936,6 +937,7 @@
 		70138C860896BE9A00968C2F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "../build/${BUILD_STYLE}/";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/Spotlight;

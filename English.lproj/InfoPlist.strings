@@ -23,6 +23,7 @@
 "PPMADIFile" = "PlayerPRO MADI Tracker";
 "PPMADKFile" = "PlayerPRO MADK Tracker";
 "PPMADHFile" = "PlayerPRO MADH Tracker";
+"PPTracker" = "Music Tracker";
 
 "MIDI File" = "MIDI File";
 "PPImpExpBundle" = "PlayerPRO Import/Export PlugIn";

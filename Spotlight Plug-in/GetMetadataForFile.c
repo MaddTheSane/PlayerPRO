@@ -52,6 +52,49 @@ Boolean GetMetadataForFile(void* thisInterface,
     /* Return the attribute keys and attribute values in the dict */
     /* Return TRUE if successful, FALSE if there was no data provided */
     
-    #warning To complete your importer please implement the function GetMetadataForFile in GetMetadataForFile.c
+    //#warning To complete your importer please implement the function GetMetadataForFile in GetMetadataForFile.c
+	MADDriverRec			*MADDriver;
+	MADMusic				*MADMusic1;
+	MADLibrary				*MADLib;
+	MADDriverSettings		init;
+	
+	MADGetBestDriver(&init);
+	init.driverMode = NoHardwareDriver;
+	if(MADInitLibrary(NULL, FALSE, &MADLib) != noErr) return FALSE;
+	if( MADCreateDriver( &init, MADLib, &MADDriver) != noErr) 
+	{
+		MADDisposeLibrary(MADLib);
+		return FALSE;
+	}
+	{
+		char		type[ 5];
+		OSType		info;
+		CFStringRef ostypes;
+		
+		ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
+		
+		info = UTGetOSTypeFromString(ostypes);
+		if (!info) {
+			goto fail1;
+		}
+		
+		OSType2Ptr( info, type);
+		
+		if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
+		{
+			
+		}
+	}
+	
+	MADStopDriver(MADDriver);				// Stop driver interrupt function
+	MADDisposeDriver(MADDriver);			// Dispose music driver
+	MADDisposeLibrary(MADLib);				// Close music library
+	return TRUE;
+	
+fail1:
+	MADStopDriver(MADDriver);				// Stop driver interrupt function
+	MADDisposeDriver(MADDriver);			// Dispose music driver
+	MADDisposeLibrary(MADLib);				// Close music library
+	
     return FALSE;
 }
