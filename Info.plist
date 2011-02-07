@@ -506,7 +506,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADKFile</string>
@@ -693,12 +694,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMODFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>MOD</string>
 			<key>UTTypeIdentifier</key>
@@ -723,12 +725,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PP669File</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>669</string>
 			<key>UTTypeIdentifier</key>
@@ -746,12 +749,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPAMFFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>AMF</string>
 			<key>UTTypeIdentifier</key>
@@ -769,12 +773,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPITFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>IT</string>
 			<key>UTTypeIdentifier</key>
@@ -792,12 +797,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMTMFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>MTM</string>
 			<key>UTTypeIdentifier</key>
@@ -815,12 +821,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>OKTA Tracker</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>OKTA</string>
 			<key>UTTypeIdentifier</key>
@@ -839,12 +846,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPS3MFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>S3M</string>
 			<key>UTTypeIdentifier</key>
@@ -862,12 +870,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPULTFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>ULT</string>
 			<key>UTTypeIdentifier</key>
@@ -885,12 +894,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPXMFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>XM</string>
 			<key>UTTypeIdentifier</key>
@@ -908,12 +918,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPXIFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>XI</string>
 			<key>UTTypeIdentifier</key>
@@ -931,12 +942,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPPATFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>INS</string>
 			<key>UTTypeIdentifier</key>

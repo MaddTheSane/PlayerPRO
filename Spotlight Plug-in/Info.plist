@@ -11,7 +11,7 @@
 			<string>MDImporter</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>SUPPORTED_UTI_TYPE</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 		</dict>
 	</array>
@@ -53,39 +53,128 @@
 				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>MIDI File</string>
+			<string>PPTracker</string>
 			<key>UTTypeIdentifier</key>
-			<string>public.midi-audio</string>
-			<key>UTTypeReferenceURL</key>
-			<string>http://www.midi.org/about-midi/specinfo.shtml</string>
+			<string>net.sourceforge.playerpro.tracker</string>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PPMADKFile</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.quadmation.playerpro.madk</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.ostype</key>
 				<array>
-					<string>Midi</string>
+					<string>MADK</string>
 				</array>
 				<key>public.filename-extension</key>
 				<array>
-					<string>mid</string>
-					<string>kar</string>
-					<string>smf</string>
-					<string>midi</string>
+					<string>madk</string>
+					<string>mad</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
-					<string>audio/mid</string>
-					<string>audio/midi</string>
-					<string>audio/x-midi</string>
+					<string>audio/x-mad</string>
 				</array>
 			</dict>
 		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>UTTypeDescription</key>
+			<string>PPMADHFile</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.quadmation.playerpro.madh</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>MADH</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>madh</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.quadmation.playerpro.madk</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PPMADFGFile</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.quadmation.playerpro.madfg</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>MADF</string>
+					<string>MADG</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>madf</string>
+					<string>madg</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.quadmation.playerpro.madk</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PPMADIFile</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.quadmation.playerpro.madi</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>MADI</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>madi</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.package</string>
+				<string>com.apple.bundle</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PPImpExpBundle</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.ppimpexp</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ppimpexp</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeDescription</key>
 			<string>PPMODFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>MOD</string>
 			<key>UTTypeIdentifier</key>
@@ -110,12 +199,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PP669File</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>669</string>
 			<key>UTTypeIdentifier</key>
@@ -133,12 +223,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPAMFFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>AMF</string>
 			<key>UTTypeIdentifier</key>
@@ -156,12 +247,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPITFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>IT</string>
 			<key>UTTypeIdentifier</key>
@@ -179,12 +271,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMTMFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>MTM</string>
 			<key>UTTypeIdentifier</key>
@@ -202,12 +295,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>OKTA Tracker</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>OKTA</string>
 			<key>UTTypeIdentifier</key>
@@ -226,12 +320,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPS3MFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>S3M</string>
 			<key>UTTypeIdentifier</key>
@@ -249,12 +344,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPULTFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>ULT</string>
 			<key>UTTypeIdentifier</key>
@@ -272,12 +368,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPXMFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>XM</string>
 			<key>UTTypeIdentifier</key>
@@ -291,52 +388,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>xm</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>PPXIFile</string>
-			<key>UTTypeIconFile</key>
-			<string>XI</string>
-			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.xi</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>com.apple.ostype</key>
-				<array>
-					<string>XI  </string>
-				</array>
-				<key>public.filename-extension</key>
-				<array>
-					<string>xi</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>PPPATFile</string>
-			<key>UTTypeIconFile</key>
-			<string>INS</string>
-			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.pat</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>com.apple.ostype</key>
-				<array>
-					<string>PAT </string>
-				</array>
-				<key>public.filename-extension</key>
-				<array>
-					<string>pat</string>
 				</array>
 			</dict>
 		</dict>

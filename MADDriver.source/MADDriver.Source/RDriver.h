@@ -745,6 +745,7 @@ OSErr	MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned ch
 OSErr	MADLoadMusicRsrc( MADMusic **music, OSType IDName, short IDNo);				// MAD ONLY - Load a MAD Rsrc into memory
 OSErr	MADLoadMusicPtr( MADMusic **music, Ptr myPtr);								// MAD ONLY - Load a MAD Ptr into memory, you can DisposPtr your Ptr after this call
 
+OSErr	MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef);	// Load a music file with plugs
 OSErr	MADLoadMusicFilePString( MADLibrary *, MADMusic **music, char *type, Str255 fName);			// Load a music file with plugs
 OSErr	MADLoadMusicFileCString( MADLibrary *, MADMusic **music, char *type, Ptr fName);			// Load a music file with plugs
 OSErr	MADLoadMusicFSpFile( MADLibrary *, MADMusic **music, char *type, FSSpec *theSpec);			// Load a music file with plugs

@@ -74,16 +74,18 @@ Boolean GetMetadataForFile(void* thisInterface,
 		ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
 		
 		info = UTGetOSTypeFromString(ostypes);
-		if (!info) {
-			goto fail1;
-		}
+		if (!info) goto fail1;
+		
 		
 		OSType2Ptr( info, type);
 		
 		if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 		{
+			CFURLRef tempRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
+			MADLoadMusicCFURLFile(MADLib, &MADMusic1, info, tempRef);
+			CFRelease(tempRef);
 			
-		}
+		} else goto fail1;
 	}
 	
 	MADStopDriver(MADDriver);				// Stop driver interrupt function
