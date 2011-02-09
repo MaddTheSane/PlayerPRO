@@ -58,12 +58,14 @@ Boolean GetMetadataForFile(void* thisInterface,
 	
 	MADGetBestDriver(&init);
 	init.driverMode = NoHardwareDriver;
+	
 	if(MADInitLibrary(NULL, FALSE, &MADLib) != noErr) return FALSE;
 	if( MADCreateDriver( &init, MADLib, &MADDriver) != noErr) 
 	{
 		MADDisposeLibrary(MADLib);
 		return FALSE;
 	}
+	
 	{
 		char		type[ 5];
 		OSType		info;
@@ -94,14 +96,19 @@ Boolean GetMetadataForFile(void* thisInterface,
 	
 	{
 		//Set duration metadata
-		CFNumberRef duration = CFNumberCreate(kCFAllocatorDefault, kCFNumberLongType, &MADMusic1->fullTime);
+		MADAttachDriverToMusic( MADDriver, MADMusic1, NULL);
+		long fT, cT;
+		MADGetMusicStatus( MADDriver, &fT, &cT);	// Some infos about current music
+		double fTd = fT / 60.0f;
+		
+		CFNumberRef duration = CFNumberCreate(kCFAllocatorDefault, kCFNumberDoubleType, &fTd);
 		CFDictionarySetValue(attributes, kMDItemDurationSeconds, duration);
 		CFRelease(duration);
 	}
 	
 	{
 		CFMutableArrayRef InstruArray = CFArrayCreateMutable(kCFAllocatorDefault, MAXINSTRU, &kCFTypeArrayCallBacks);
-		int	i = 0;
+		int	i;
 
 		for( i = 0; i < MAXINSTRU ; i++)
 		{
@@ -112,9 +119,12 @@ Boolean GetMetadataForFile(void* thisInterface,
 		
 		CFRelease(InstruArray);
 	}
-	MADStopDriver(MADDriver);				// Stop driver interrupt function
-	MADDisposeDriver(MADDriver);			// Dispose music driver
-	MADDisposeLibrary(MADLib);				// Close music library
+	
+	MADCleanDriver( MADDriver);
+	MADDisposeMusic( &MADMusic1, MADDriver);	// Dispose the current music
+	MADStopDriver(MADDriver);					// Stop driver interrupt function
+	MADDisposeDriver(MADDriver);				// Dispose music driver
+	MADDisposeLibrary(MADLib);					// Close music library
 	return TRUE;
 	
 fail1:
