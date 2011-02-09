@@ -11,6 +11,7 @@
 			<string>MDImporter</string>
 			<key>LSItemContentTypes</key>
 			<array>
+				<string>com.quadmation.playerpro.madk</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 		</dict>

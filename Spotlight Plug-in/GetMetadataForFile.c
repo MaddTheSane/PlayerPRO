@@ -34,7 +34,7 @@
   
    ----------------------------------------------------------------------------- */
 
-
+CFStringRef kPPMDInstumentsList = CFSTR("net_sourceforge_playerpro_tracker_instumentlist");
 
 /* -----------------------------------------------------------------------------
     Get metadata attributes from file
@@ -51,9 +51,7 @@ Boolean GetMetadataForFile(void* thisInterface,
     /* Pull any available metadata from the file at the specified path */
     /* Return the attribute keys and attribute values in the dict */
     /* Return TRUE if successful, FALSE if there was no data provided */
-    
-    //#warning To complete your importer please implement the function GetMetadataForFile in GetMetadataForFile.c
-	MADDriverRec			*MADDriver;
+    MADDriverRec			*MADDriver;
 	MADMusic				*MADMusic1;
 	MADLibrary				*MADLib;
 	MADDriverSettings		init;
@@ -70,7 +68,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 		char		type[ 5];
 		OSType		info;
 		CFStringRef ostypes;
-		
+		//Try to get the OSType of the UTI.
 		ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
 		
 		info = UTGetOSTypeFromString(ostypes);
@@ -78,16 +76,42 @@ Boolean GetMetadataForFile(void* thisInterface,
 		
 		
 		OSType2Ptr( info, type);
-		
+		//check to see if there is a
 		if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 		{
 			CFURLRef tempRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
-			MADLoadMusicCFURLFile(MADLib, &MADMusic1, info, tempRef);
+			OSErr err = noErr;
+			err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, info, tempRef);
 			CFRelease(tempRef);
+			if(err != noErr) goto fail1;
 			
 		} else goto fail1;
+		//Set the title metadata
+		CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->header->name, kCFStringEncodingMacRoman); //TODO: Check for other encodings?
+		CFDictionarySetValue(attributes, kMDItemTitle, title);
+		CFRelease(title);
 	}
 	
+	{
+		//Set duration metadata
+		CFNumberRef duration = CFNumberCreate(kCFAllocatorDefault, kCFNumberLongType, &MADMusic1->fullTime);
+		CFDictionarySetValue(attributes, kMDItemDurationSeconds, duration);
+		CFRelease(duration);
+	}
+	
+	{
+		CFMutableArrayRef InstruArray = CFArrayCreateMutable(kCFAllocatorDefault, MAXINSTRU, &kCFTypeArrayCallBacks);
+		int	i = 0;
+
+		for( i = 0; i < MAXINSTRU ; i++)
+		{
+			
+		}
+		
+		CFDictionarySetValue(attributes, kPPMDInstumentsList, InstruArray);
+		
+		CFRelease(InstruArray);
+	}
 	MADStopDriver(MADDriver);				// Stop driver interrupt function
 	MADDisposeDriver(MADDriver);			// Dispose music driver
 	MADDisposeLibrary(MADLib);				// Close music library

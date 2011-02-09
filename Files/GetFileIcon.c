@@ -298,7 +298,7 @@ void GetFinderFilename(
 			
 			default:
 				// The desktop database does not have "mini" icons
-				deskRec.ioIconType = 1000;
+				deskRec.ioIconType = 1000u;
 				break;
 		}
 

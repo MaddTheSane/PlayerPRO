@@ -23,19 +23,45 @@
             To see the system's definitions for the builtin attributes and file types, look at the system schema,
             /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Resources/schema.xml
     -->
+	
+	<attributes>
+	<attribute name="net_sourceforge_playerpro_tracker_instumentlist" multivalued="true" type="CFString"/>
+	</attributes>
 
     <types>
-        <type name="net.sourceforge.playerpro.tracker">  <!-- add one <type>...</type> entry for each UTI that you need to define.
+        <type name="net.sourceforge.playerpro.tracker">  <!-- add one <type>...</type> entry for each UTI that you need to define.-->
          
             <!-- 'allattrs' is a whitespace separated list of all of the attributes that this UTI type normally has.
                  It does not have to be exhaustive. -->
             <allattrs> 
+			kMDItemTitle
+			kMDItemDurationSeconds
+			net_sourceforge_playerpro_tracker_instumentlist
             </allattrs>
             <!-- 'displayattrs' is a whitespace separated list of the attributes that should normally be displayed when previewing files of this UTI type. -->
             <displayattrs>
+			kMDItemTitle
+			kMDItemDurationSeconds
             </displayattrs>
             
         </type>
+		        <type name="com.quadmation.playerpro.madk">  <!-- add one <type>...</type> entry for each UTI that you need to define.-->
+         
+            <!-- 'allattrs' is a whitespace separated list of all of the attributes that this UTI type normally has.
+                 It does not have to be exhaustive. -->
+            <allattrs> 
+			kMDItemTitle
+			kMDItemDurationSeconds
+			net_sourceforge_playerpro_tracker_instumentlist
+            </allattrs>
+            <!-- 'displayattrs' is a whitespace separated list of the attributes that should normally be displayed when previewing files of this UTI type. -->
+            <displayattrs>
+			kMDItemTitle
+			kMDItemDurationSeconds
+            </displayattrs>
+            
+        </type>
+
     </types>
 </schema>
 
