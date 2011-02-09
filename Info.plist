@@ -405,6 +405,28 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>it</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>IT</string>
+			<key>CFBundleTypeName</key>
+			<string>PPITFile</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>IT  </string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.it</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>pat</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -620,24 +642,6 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.apple.package</string>
-				<string>com.apple.bundle</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>PPImpExpBundle</string>
-			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.ppimpexp</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>ppimpexp</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
 				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -655,6 +659,25 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>mins</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.plugin</string>
+				<string>com.apple.package</string>
+				<string>com.apple.bundle</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PPImpExpBundle</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.ppimpexp</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ppimpexp</string>
 				</array>
 			</dict>
 		</dict>

@@ -18,6 +18,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		553A9CDB13024D60004F002C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5533410810BB5460005208D1;
+			remoteInfo = "Import-export";
+		};
 		554BB76212FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
@@ -361,7 +368,6 @@
 		08FB77B6FE84183AC02AAC07 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		2C05A19B06CAA52B00D84F6F /* GetMetadataForFile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GetMetadataForFile.c; sourceTree = "<group>"; };
-		554BB6D512FDC387001A025C /* MDItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDItem.h; path = System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Headers/MDItem.h; sourceTree = SDKROOT; };
 		554BB6F712FDC521001A025C /* PPMacho.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PPMacho.xcodeproj; path = ../PPMacho.xcodeproj; sourceTree = SOURCE_ROOT; };
 		8D576316048677EA00EA77CD /* PlayerPROImporter.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlayerPROImporter.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -419,7 +425,6 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				554BB6D512FDC387001A025C /* MDItem.h */,
 				2C05A19B06CAA52B00D84F6F /* GetMetadataForFile.c */,
 				08FB77B6FE84183AC02AAC07 /* main.c */,
 			);
@@ -503,6 +508,7 @@
 			);
 			dependencies = (
 				554BB7C612FDC5EB001A025C /* PBXTargetDependency */,
+				553A9CDC13024D60004F002C /* PBXTargetDependency */,
 			);
 			name = PlayerPROImporter;
 			productInstallPath = /Library/Spotlight;
@@ -898,6 +904,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		553A9CDC13024D60004F002C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Import-export";
+			targetProxy = 553A9CDB13024D60004F002C /* PBXContainerItemProxy */;
+		};
 		554BB7C612FDC5EB001A025C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = PlayerPROCore;
