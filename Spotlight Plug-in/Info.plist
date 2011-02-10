@@ -13,6 +13,17 @@
 			<array>
 				<string>com.quadmation.playerpro.madk</string>
 				<string>net.sourceforge.playerpro.tracker</string>
+				<string>com.quadmation.playerpro.madh</string>
+				<string>com.quadmation.playerpro.madi</string>
+				<string>com.quadmation.playerpro.madfg</string>
+				<string>net.sourceforge.playerpro.mod</string>
+				<string>net.sourceforge.playerpro.669</string>
+				<string>net.sourceforge.playerpro.s3m</string>
+				<string>net.sourceforge.playerpro.ult</string>
+				<string>net.sourceforge.playerpro.xm</string>
+				<string>net.sourceforge.playerpro.okta</string>
+				<string>net.sourceforge.playerpro.it</string>
+				<string>net.sourceforge.playerpro.mtm</string>
 			</array>
 		</dict>
 	</array>
