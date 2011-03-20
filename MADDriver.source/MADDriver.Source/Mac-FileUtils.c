@@ -25,10 +25,6 @@
 #include <Carbon/Carbon.h>
 
 extern void NSLog(CFStringRef format, ...);
-
-//TODO: migrate PlayerPRO away from FSSpec!
-//TODO: HSetVol isn't available in 64-bit code :(
-//TODO: Also, FSSpec is defined as UInt8 hidden[70]
  
 unsigned char* MYC2PStr( Ptr cStr)
 {
@@ -46,28 +42,23 @@ void MYP2CStr( unsigned char *cStr)
 	cStr[ size] = 0;
 }
 
-UNFILE iFileOpen(Ptr name)
+UNFILEName iFileNameOpen (Ptr name)
+{
+	UNFILEName temp;
+	FSPathMakeRef((UInt8)name, temp, FALSE);
+	return temp;
+}
+
+UNFILE iFileOpen(UNFILEName name)
 {
 	UNFILE	temp;
 	OSErr	iErr;
-	FSRef	Ref;
-	FSSpec	spec;
 	
-	HGetVol( NULL, &spec.vRefNum, &spec.parID);
-	
-	MYC2PStr( name);
-	
-	pStrcpy( spec.name, (unsigned char*) name);
-
-	MYP2CStr((unsigned char*)name);
-	
-	iErr = FSpMakeFSRef(&spec, &Ref);
-	if(iErr != noErr) return 0;
 	Boolean	UnusedBoolean, UnusedBoolean2;
 	HFSUniStr255 whythis;
 	FSGetDataForkName(&whythis);
-	FSResolveAliasFile(&Ref, TRUE, &UnusedBoolean, &UnusedBoolean2);
-	iErr = FSOpenFork(&Ref, whythis.length, whythis.unicode, fsCurPerm, &temp);
+	FSResolveAliasFile(name, TRUE, &UnusedBoolean, &UnusedBoolean2);
+	iErr = FSOpenFork(name, whythis.length, whythis.unicode, fsCurPerm, &temp);
 	if(iErr != noErr) return 0;
 	else return temp;
 }
@@ -91,81 +82,36 @@ OSErr iSeekCur(long size, UNFILE iFileRefI)
 	return FSSetForkPosition( iFileRefI, fsFromMark, size);
 }
 
-void iFileCreate(Ptr name, OSType type)
+void iFileCreate(UNFILEName folder, Ptr name, OSType type)
 {
-/*
-	char			*folderPath, *FileName;
-	Boolean			isFolder, unusedBool;
-	OSStatus		iErr; 
-	FSRef			Ref;
-	int				slashCharPos = 0, nameLen, i, ii;
-	FSCatalogInfo	fileCat;
-	FileInfo		*fInfo = (FileInfo*)&fileCat.finderInfo;
-	if(FSPathMakeRef((UInt8*)name, &Ref, NULL) == noErr)
-	{
-		FSDeleteObject(&Ref);
-	}
-	nameLen = strlen(name);
-	for(i = 0; i > (nameLen); i++)
-	{
-		if(name[i] == '/') slashCharPos = i;
-	}
-	//TODO: use a better function
-	folderPath = calloc((slashCharPos + 2), sizeof(char)); 
-	FileName = calloc((nameLen - slashCharPos + 2), sizeof(char));
-	for(i = 0; i == slashCharPos;i++)
-	{
-		folderPath[i] = name[i];
-	}
-	for(i=slashCharPos+1, ii=0;i == nameLen;i++, ii++)
-	{
-		FileName[ii] = name[i];
-		FileName[ii+1] = '\0';
-	}
-	//	folderPath[slashCharPos+1] = '\0';
-	iErr = FSPathMakeRef((UInt8*)folderPath, &Ref, &isFolder);
-	if(iErr != noErr) MyDebugStr(__LINE__, __FILE__, "Error creating FSRef");
-	if(isFolder == FALSE) NSLog(CFSTR("FSRef wasn't a folder. Ignoring, hoping it is an alias."));
-	iErr= FSResolveAliasFile(&Ref, TRUE, &isFolder, &unusedBool);
-	if(iErr != noErr) MyDebugStr(__LINE__, __FILE__, "Error resolving Alias");
-	if(isFolder == FALSE) MyDebugStr(__LINE__, __FILE__, "FSRef wasn't a folder!");
-	
-	//TODO: do NOT use CFString!
-	CFStringRef		UniCFSTR = CFStringCreateWithCString(kCFAllocatorDefault, FileName, CFStringGetSystemEncoding());
+	CFStringRef		UniCFSTR = CFStringCreateWithCString(kCFAllocatorDefault, name, CFStringGetSystemEncoding());
 	CFIndex			UNIcharLen = CFStringGetLength(UniCFSTR);
 	UniChar*		UNICHARThing = calloc(UNIcharLen, sizeof(UniChar));
 	CFRange			UNIRange;
 	UNIRange.location	= 0;
 	UNIRange.length		= UNIcharLen;
 	CFStringGetCharacters(UniCFSTR, UNIRange, UNICHARThing);
-	
-	fInfo->fileType		 = type;
-	fInfo->fileCreator	 = 'SNPL';
-	fInfo->finderFlags	 = 0;
-	fInfo->location.h	 = 0;
-	fInfo->location.v	 = 0;
-	fInfo->reservedField = 0;
-	
-	FSCreateFileUnicode(&Ref, UNIcharLen, UNICHARThing, kFSCatInfoFinderInfo, &fileCat, NULL, NULL);
-	
-	CFRelease(UniCFSTR);
-	free(folderPath);
-	free(FileName);
-	free(UNICHARThing);
- */
-	FSSpec	spec;
-	
-	HGetVol( NULL, &spec.vRefNum, &spec.parID);
-	
-	MYC2PStr( name);
-	
-	pStrcpy( spec.name, (unsigned char*) name);
-	
-	FSpDelete( &spec);
-	FSpCreate( &spec, 'SNPL', type, smSystemScript);
-	
-	MYP2CStr( (unsigned char*) name);
-	
+
+	{
+		FSRef maybeRef;
+
+		FSMakeFSRefUnicode(folder, UNIcharLen, UNICHARThing, kTextEncodingDefaultFormat, &maybeRef);
+		
+		FSDeleteObject(&maybeRef);
+	}
+	{
+		FSCatalogInfo	fileCat;
+		FileInfo		*fInfo = (FileInfo*)&fileCat.finderInfo;	
+		fInfo->fileType		 = type;
+		fInfo->fileCreator	 = 'SNPL';
+		fInfo->finderFlags	 = 0;
+		fInfo->location.h	 = 0;
+		fInfo->location.v	 = 0;
+		fInfo->reservedField = 0;
+
+		FSCreateFileUnicode(folder, UNIcharLen, UNICHARThing, kFSCatInfoFinderInfo, &fileCat, NULL, NULL);
+	}
+		
 }
 
 OSErr iWrite(long size, Ptr dest, UNFILE iFileRefI)
