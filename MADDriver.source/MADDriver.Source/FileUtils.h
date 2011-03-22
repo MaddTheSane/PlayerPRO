@@ -37,19 +37,16 @@ extern "C" {
 
 #ifdef _MAC_H
 #include <CoreServices/CoreServices.h>
-typedef FSRefPtr	UNFILEName;
 typedef FSIORefNum	UNFILE;
 #else
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-typedef char*		UNFILEName;
 typedef FILE*		UNFILE;
 #endif
 	
-EXP UNFILE iFileOpen( UNFILEName name);
-EXP UNFILEName iFileNameOpen (Ptr name); //Must be full path!
-EXP void iFileCreate( UNFILEName folder, Ptr name, OSType);
+EXP UNFILE iFileOpen( Ptr name);
+EXP void iFileCreate( Ptr folder, Ptr name, OSType);
 
 EXP long iGetEOF( UNFILE iFileRefI);
 EXP OSErr iRead( long size, Ptr dest, UNFILE iFileRefI);

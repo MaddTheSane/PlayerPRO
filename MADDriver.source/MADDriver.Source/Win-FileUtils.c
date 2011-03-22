@@ -26,11 +26,6 @@
 #include "RDriver.h"
 #include "FileUtils.h"
 
-UNFILEName iFileNameOpen (Ptr name)
-{
-	return name;
-}
-
 void iFileCreate( UNFILEName folder, Ptr name, OSType)
 {
 }

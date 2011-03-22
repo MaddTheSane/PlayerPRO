@@ -29,7 +29,7 @@ extern void NSLog(CFStringRef format, ...);
 unsigned char* MYC2PStr( Ptr cStr)
 {
 	long size = strlen( cStr);
-	BlockMoveData( cStr, cStr + 1, strlen( cStr));
+	memmove( cStr, cStr + 1, strlen( cStr));
 	cStr[ 0] = size;
 
 	return (unsigned char*) cStr;
@@ -38,27 +38,23 @@ unsigned char* MYC2PStr( Ptr cStr)
 void MYP2CStr( unsigned char *cStr)
 {
 	long size = cStr[ 0];
-	BlockMoveData( cStr + 1, cStr, size);
+	memmove( cStr + 1, cStr, size);
 	cStr[ size] = 0;
 }
 
-UNFILEName iFileNameOpen (Ptr name)
-{
-	UNFILEName temp;
-	FSPathMakeRef((UInt8)name, temp, FALSE);
-	return temp;
-}
-
-UNFILE iFileOpen(UNFILEName name)
+UNFILE iFileOpen(Ptr name)
 {
 	UNFILE	temp;
+	FSRef	ref;
 	OSErr	iErr;
+	FSPathMakeRef((UInt8)name, &ref, FALSE);
+
 	
 	Boolean	UnusedBoolean, UnusedBoolean2;
 	HFSUniStr255 whythis;
 	FSGetDataForkName(&whythis);
-	FSResolveAliasFile(name, TRUE, &UnusedBoolean, &UnusedBoolean2);
-	iErr = FSOpenFork(name, whythis.length, whythis.unicode, fsCurPerm, &temp);
+	FSResolveAliasFile(&ref, TRUE, &UnusedBoolean, &UnusedBoolean2);
+	iErr = FSOpenFork(&ref, whythis.length, whythis.unicode, fsCurPerm, &temp);
 	if(iErr != noErr) return 0;
 	else return temp;
 }
@@ -82,8 +78,9 @@ OSErr iSeekCur(long size, UNFILE iFileRefI)
 	return FSSetForkPosition( iFileRefI, fsFromMark, size);
 }
 
-void iFileCreate(UNFILEName folder, Ptr name, OSType type)
+void iFileCreate(Ptr folder, Ptr name, OSType type)
 {
+	FSRef			temp;
 	CFStringRef		UniCFSTR = CFStringCreateWithCString(kCFAllocatorDefault, name, CFStringGetSystemEncoding());
 	CFIndex			UNIcharLen = CFStringGetLength(UniCFSTR);
 	UniChar*		UNICHARThing = calloc(UNIcharLen, sizeof(UniChar));
@@ -91,11 +88,12 @@ void iFileCreate(UNFILEName folder, Ptr name, OSType type)
 	UNIRange.location	= 0;
 	UNIRange.length		= UNIcharLen;
 	CFStringGetCharacters(UniCFSTR, UNIRange, UNICHARThing);
+	FSPathMakeRef((UInt8)folder, &temp, FALSE);
 
 	{
 		FSRef maybeRef;
 
-		FSMakeFSRefUnicode(folder, UNIcharLen, UNICHARThing, kTextEncodingDefaultFormat, &maybeRef);
+		FSMakeFSRefUnicode(&temp, UNIcharLen, UNICHARThing, kTextEncodingDefaultFormat, &maybeRef);
 		
 		FSDeleteObject(&maybeRef);
 	}
@@ -109,7 +107,7 @@ void iFileCreate(UNFILEName folder, Ptr name, OSType type)
 		fInfo->location.v	 = 0;
 		fInfo->reservedField = 0;
 
-		FSCreateFileUnicode(folder, UNIcharLen, UNICHARThing, kFSCatInfoFinderInfo, &fileCat, NULL, NULL);
+		FSCreateFileUnicode(&temp, UNIcharLen, UNICHARThing, kFSCatInfoFinderInfo, &fileCat, NULL, NULL);
 	}
 		
 }
@@ -158,7 +156,7 @@ EXP void OSType2Ptr( OSType type, Ptr str)
 	MOT32(&type);
 #endif
 	
-	BlockMoveData( &type, str, 4);
+	memmove( &type, str, 4);
 	str[ 4] = 0;
 }
 
@@ -170,7 +168,7 @@ EXP OSType Ptr2OSType( char* str)
 	i = strlen( str);
 	if( i > 4) i = 4;
 	type = '    ';
-	BlockMoveData( str, &type, i);
+	memmove( str, &type, i);
 #ifdef __LITTLE_ENDIAN__
 	MOT32(&type);
 #endif
