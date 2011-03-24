@@ -12,6 +12,28 @@
 @class PPMusicList;
 
 @interface PPApp_AppDelegate : NSObject {
+	IBOutlet NSButton *loopButton;
+    IBOutlet NSButton *playButton;
+    IBOutlet NSButton *recordButton;
+    IBOutlet NSTextField *songLabel;
+    IBOutlet NSButton *stopButton;
+	IBOutlet NSTextField *songCurTime;
+	IBOutlet NSTextField *songTotalTime;
+	IBOutlet NSSlider *songPos;
+	
+	IBOutlet NSTextField *fileName;
+	IBOutlet NSTextField *internalName;
+	IBOutlet NSTextField *fileSize;
+	IBOutlet NSTextField *musicInstrument;
+	IBOutlet NSTextField *musicPatterns;
+	IBOutlet NSTextField *musicPlugType;
+	IBOutlet NSTextField *musicSignature;
+	IBOutlet NSTextField *fileLocation;
+	
+	MADDriverRec	*MADDriver;
+	MADMusic		*Music;
+	MADLibrary		*MADLib;	
+	
     IBOutlet NSWindow *window;
 	
     IBOutlet NSTableColumn *musicTable;
@@ -34,6 +56,19 @@
 
 
 @property (assign) NSWindow *window;
+
+
+- (IBAction)fastForwardButtonPressed:(id)sender;
+- (IBAction)loopButtonPressed:(id)sender;
+- (IBAction)nextButtonPressed:(id)sender;
+- (IBAction)playButtonPressed:(id)sender;
+- (IBAction)prevButtonPressed:(id)sender;
+- (IBAction)recordButtonPressed:(id)sender;
+- (IBAction)rewindButtonPressed:(id)sender;
+- (IBAction)sliderChanged:(id)sender;
+- (IBAction)stopButtonPressed:(id)sender;
+
+-(void)soundPreferencesDidChange:(NSNotification *)notification;
 
 
 @end

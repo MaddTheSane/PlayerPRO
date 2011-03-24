@@ -73,7 +73,6 @@ MADMusic* CreateFreeMADK( void)
 	MADMusic	*music = (MADMusic*) NewPtrClear( sizeof( MADMusic));
 	MADSpec		*MADI;
 	short		i, x, z;
-	FSSpec		aSpec;
 	Cmd			*aCmd;
 	
 	// ******* HEADER *********
@@ -245,7 +244,7 @@ void ConvertTo64Rows( MADMusic *music)
 			newPat->header.patBytes 	= 0;
 			newPat->header.unused2 		= 0;
 			
-			BlockMoveData( music->partition[ i]->header.name, newPat->header.name, 32);
+			memmove( music->partition[ i]->header.name, newPat->header.name, 32);
 			
 			// Upgrade length to 64
 			
@@ -301,7 +300,7 @@ void ConvertTo64Rows( MADMusic *music)
 				newPat->header.patBytes 	= 0;
 				newPat->header.unused2 		= 0;
 				
-				BlockMoveData( srcPat->header.name, newPat->header.name, 32);
+				memmove( srcPat->header.name, newPat->header.name, 32);
 				
 				for( x = 0; x < 64; x++, patsize++)
 				{
@@ -1915,7 +1914,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 			
 		case MADPtrType:
 			OffSetToSample = 0;
-			BlockMoveData( MADPtr, MDriver->header, inOutCount);
+			memmove( MADPtr, MDriver->header, inOutCount);
 			OffSetToSample += inOutCount;
 			break;
 			
@@ -1963,7 +1962,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 				break;
 				
 			case MADPtrType:
-				BlockMoveData( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
+				memmove( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
 				break;
 		}
 		
@@ -2014,7 +2013,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 				break;
 				
 			case MADPtrType:
-				BlockMoveData( MADPtr + OffSetToSample, MDriver->partition[ i], inOutCount);
+				memmove( MADPtr + OffSetToSample, MDriver->partition[ i], inOutCount);
 				OffSetToSample += inOutCount;
 				break;
 		}
@@ -2074,7 +2073,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 			break;
 			
 		case MADPtrType:
-			BlockMoveData( MADPtr + OffSetToSample, MDriver->fid, inOutCount);
+			memmove( MADPtr + OffSetToSample, MDriver->fid, inOutCount);
 			OffSetToSample += inOutCount;
 			break;
 	}
@@ -2162,7 +2161,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 					break;
 					
 				case MADPtrType:
-					BlockMoveData( MADPtr + OffSetToSample, curData, inOutCount);
+					memmove( MADPtr + OffSetToSample, curData, inOutCount);
 					OffSetToSample += inOutCount;
 					break;
 			}
@@ -2204,7 +2203,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 					break;
 					
 				case MADPtrType:
-					BlockMoveData( MADPtr + OffSetToSample, curData->data, inOutCount);
+					memmove( MADPtr + OffSetToSample, curData->data, inOutCount);
 					OffSetToSample += inOutCount;
 					break;
 			}
@@ -2249,7 +2248,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 						break;
 						
 					case MADPtrType:
-						BlockMoveData( MADPtr + OffSetToSample, &MDriver->sets[ alpha], inOutCount);
+						memmove( MADPtr + OffSetToSample, &MDriver->sets[ alpha], inOutCount);
 						OffSetToSample += inOutCount;
 						break;
 				}
@@ -2278,7 +2277,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 							break;
 							
 						case MADPtrType:
-							BlockMoveData( MADPtr + OffSetToSample, &MDriver->sets[ alpha], inOutCount);
+							memmove( MADPtr + OffSetToSample, &MDriver->sets[ alpha], inOutCount);
 							OffSetToSample += inOutCount;
 							break;
 					}
@@ -3503,7 +3502,7 @@ PatData* DecompressPartitionMAD1( MADMusic *MDriver, PatData* myPat)
 	finalPtr = ( PatData*) NewPtr( sizeof( PatHeader) + myPat->header.size * MDriver->header->numChn * sizeof( Cmd));
 	if( finalPtr == NULL) return NULL;
 	
-	BlockMoveData( myPat, finalPtr, sizeof( PatHeader));
+	memmove( myPat, finalPtr, sizeof( PatHeader));
 
 	srcPtr = (Byte*) myPat->Cmds;
 	myCmd = (Cmd*) finalPtr->Cmds;
@@ -3543,7 +3542,7 @@ PatData* CompressPartitionMAD1( MADMusic *MDriver, PatData* myPat)
 	finalPtr = ( PatData*) NewPtr( sizeof( PatHeader) + myPat->header.size * MDriver->header->numChn * 6L);
 	if( finalPtr == NULL) DebugStr("\pCompressPartitionMAD1");
 	
-	BlockMoveData( myPat, finalPtr, sizeof( PatHeader));
+	memmove( myPat, finalPtr, sizeof( PatHeader));
 	
 	dstPtr = (Byte*) finalPtr->Cmds;
 	myCmd = (Cmd*) myPat->Cmds;

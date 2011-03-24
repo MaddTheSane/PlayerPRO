@@ -79,7 +79,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	if( MadFile->header == NULL) return MADNeedMemory;
 	
 	OffSetToSample = 0;
-	BlockMoveData( MADPtr, MadFile->header, sizeof( MADSpec));
+	memmove( MADPtr, MadFile->header, sizeof( MADSpec));
 	OffSetToSample += sizeof( MADSpec);
 	
 	MadHeader = MadFile->header;

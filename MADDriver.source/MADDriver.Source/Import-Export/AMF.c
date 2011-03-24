@@ -26,12 +26,12 @@
 
 static inline void mystrcpy( Ptr a, BytePtr b)
 {
-	BlockMoveData( b + 1, a, b[ 0]);
+	memmove( b + 1, a, b[ 0]);
 }
 
 static Ptr			theAMFRead;
 
-#define READAMFFILE(dst, size)	{BlockMoveData( theAMFRead, dst, size);	theAMFRead += (long) size;}
+#define READAMFFILE(dst, size)	{memmove( theAMFRead, dst, size);	theAMFRead += (long) size;}
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
@@ -194,7 +194,7 @@ for( i = 0; i < noIns; i++)
 		
 		READAMFFILE( &oi, sizeof( OLDINSTRUMENT));
 				
-		BlockMoveData( oi.name, curIns->name, 32);
+		memmove( oi.name, curIns->name, 32);
 		curIns->type = 0;
 		
 		if( oi.size > 0)
@@ -234,7 +234,7 @@ for( i = 0; i < noIns; i++)
 		READAMFFILE( &oi, sizeof( INSTRUMENT));
 		theAMFRead--;
 		
-		BlockMoveData( oi.name, curIns->name, 32);
+		memmove( oi.name, curIns->name, 32);
 		curIns->type = 0;
 		
 		if( oi.size > 0)

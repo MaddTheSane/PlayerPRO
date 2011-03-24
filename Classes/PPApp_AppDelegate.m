@@ -11,9 +11,66 @@
 #import "PPMusicList.h"
 #import "UserDefaultKeys.h"
 #import "NDAlias/NSURL+NDCarbonUtilities.h"
-#include "RDriverInt.h"
+
+static inline UnsignedFixed GetFixedRate(int Rate)
+{
+	switch (Rate) {
+		case 11:
+			return rate11025hz;
+			break;
+		case 22:
+			return rate22050hz;
+			break;
+		case 44:
+			return rate44khz;
+			break;
+		case 48:
+			return rate48khz;
+			break;
+			
+		default:
+			return rate44khz;
+			break;
+	}
+}
+
 
 @implementation PPApp_AppDelegate
+
+- (void)MADDriverWithPreferences {
+	Boolean madWasReading = NO;
+	long fullTime = 0, curTime = 0;
+	if (MADDriver) {
+		madWasReading = MADWasReading(MADDriver);
+		MADSetReading( MADDriver, FALSE);
+		MADStopDriver(MADDriver);
+		MADDisposeDriver(MADDriver);
+		if (madWasReading) {
+			MADGetMusicStatus(MADDriver, &fullTime, &curTime);
+		}
+	}
+	MADDriverSettings init;
+	MADGetBestDriver(&init);
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
+	//TODO: Sanity Checking
+	init.surround = [defaults boolForKey:PPSurroundToggle];
+	init.outPutRate = GetFixedRate([defaults integerForKey:PPSoundOutRate]);
+	init.outPutBits = [defaults integerForKey:PPSoundOutBits];
+	init.oversampling = [defaults integerForKey:PPOversamplingAmount];
+	init.Reverb = [defaults boolForKey:PPReverbToggle];
+	init.ReverbSize = [defaults integerForKey:PPReverbSize];
+	init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
+	init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
+	
+	MADCreateDriver(&init, MADLib, &MADDriver);
+	MADStartDriver(MADDriver);
+	if (madWasReading) {
+		MADAttachDriverToMusic(MADDriver, Music, NULL);
+		MADSetMusicStatus(MADDriver, 0, fullTime, curTime);
+		MADSetReading(MADDriver, true);
+	}
+}
 
 +(void)initialize {
 	NSMutableDictionary *defaultPrefs = [NSMutableDictionary dictionary];
@@ -43,7 +100,7 @@
     [window makeKeyAndOrderFront:sender];
 }
 
-/*
+
 - (BOOL)loadMusicFile:(NSURL*)musicToLoad
 {
 	MADStopMusic(MADDriver);
@@ -56,7 +113,7 @@
 	
 	MADAttachDriverToMusic(MADDriver, Music, NULL);
 	MADPlayMusic(MADDriver);
-}*/
+}
 
 - (IBAction)showPreferences:(id)sender {
     if (!preferences) {
@@ -80,15 +137,15 @@
 
 @synthesize window;
 
-
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	
 	musicList = [[PPMusicList alloc] init];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferencesDidChange:) name:PPListPreferencesDidChange object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
+	MADInitLibraryNew(NULL, &MADLib);
+	[self MADDriverWithPreferences];
 
 }
-
 
 -(void)preferencesDidChange:(NSNotification *)notification {
 	
@@ -96,6 +153,10 @@
 
 -(void)dealloc
 {
+	MADStopDriver(MADDriver);
+	MADDisposeDriver(MADDriver);
+	MADDisposeLibrary(MADLib);
+	
 	[preferences release];
 	[musicList release];
 	
@@ -150,5 +211,46 @@ enum PPMusicToolbarTypes {
 		break;
 	}	
 }
+
+- (void)soundPreferencesDidChange:(NSNotification *)notification {
+	[self MADDriverWithPreferences];
+}
+
+- (IBAction)fastForwardButtonPressed:(id)sender {
+    
+}
+
+- (IBAction)loopButtonPressed:(id)sender {
+    
+}
+
+- (IBAction)nextButtonPressed:(id)sender {
+    
+}
+
+- (IBAction)playButtonPressed:(id)sender {
+    
+}
+
+- (IBAction)prevButtonPressed:(id)sender {
+    
+}
+
+- (IBAction)recordButtonPressed:(id)sender {
+    
+}
+
+- (IBAction)rewindButtonPressed:(id)sender {
+    
+}
+
+- (IBAction)sliderChanged:(id)sender {
+    
+}
+
+- (IBAction)stopButtonPressed:(id)sender {
+    
+}
+
 
 @end

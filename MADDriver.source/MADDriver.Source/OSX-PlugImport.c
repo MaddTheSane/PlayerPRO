@@ -187,7 +187,7 @@ CFMutableArrayRef GetDefaultPluginFolderLocations()
 	return PlugFolds;
 }
 
-static CFMutableArrayRef GetPluginFolderLocationsWithFSRef(FSRefPtr UserAddedPlace)
+static inline CFMutableArrayRef GetPluginFolderLocationsWithFSRef(FSRefPtr UserAddedPlace)
 {
 	CFMutableArrayRef FoldLocs = GetDefaultPluginFolderLocations();
 	CFURLRef custfolder = CFURLCreateFromFSRef(kCFAllocatorDefault, UserAddedPlace);
@@ -377,7 +377,7 @@ void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
 		convDir = (FSRefPtr)NewPtr(sizeof(FSRef));
 		OSErr iErr;
 		iErr = FSpMakeFSRef(PlugsFolderName, convDir);
-		if(iErr =! noErr)
+		if((iErr =! noErr))
 		{
 			DisposePtr((Ptr)convDir);
 			convDir = NULL;
@@ -416,7 +416,7 @@ void GetPStrFromCFString(const CFStringRef source, Str255 pStrOut)
 OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)
 {
 	short			i;
-	MADMusic	aMAD;
+//	MADMusic	aMAD;
 	
 	if( !strcmp( kindFile, "MADK"))
 	{
@@ -609,7 +609,7 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 				xx = strlen( inMADDriver->ThePlug[ i].type);
 				if( xx > 4) xx = 4;
 				type = '    ';
-				BlockMoveData( inMADDriver->ThePlug[ i].type, &type, xx);
+				memmove( inMADDriver->ThePlug[ i].type, &type, xx);
 				
 				return type;
 			}

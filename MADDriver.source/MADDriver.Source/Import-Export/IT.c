@@ -285,7 +285,7 @@ while( length)
 
 static inline void mystrcpy( Ptr a, BytePtr b)
 {
-	BlockMoveData( b + 1, a, b[ 0]);
+	memmove( b + 1, a, b[ 0]);
 }
 
 static Boolean ITcompMem( Ptr a, Ptr b, long s)
@@ -506,7 +506,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	/**** Header principal *****/
 	theITCopy = (Byte*) theIT;
 	
-	BlockMoveData( theITCopy, &ITinfo, sizeof( ITinfo));
+	memmove( theITCopy, &ITinfo, sizeof( ITinfo));
 	theITCopy += 192;
 	
 	INT16( &ITinfo.orderNum);
@@ -532,13 +532,13 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	/**** Order Num *****/
 	ITinfo.orders = (unsigned char *) MADPlugNewPtr( ITinfo.orderNum, init);
 	if( ITinfo.orders == NULL) return MADNeedMemory;
-	BlockMoveData( theITCopy, ITinfo.orders, ITinfo.orderNum);
+	memmove( theITCopy, ITinfo.orders, ITinfo.orderNum);
 	theITCopy += ITinfo.orderNum;
 	
 	/**** Ins Num *****/
 	ITinfo.parapins = (long *) MADPlugNewPtr( ITinfo.insNum * 4L, init);
 	if( ITinfo.parapins == NULL) return MADNeedMemory;
-	BlockMoveData( theITCopy, ITinfo.parapins, ITinfo.insNum * 4L);
+	memmove( theITCopy, ITinfo.parapins, ITinfo.insNum * 4L);
 	theITCopy += ITinfo.insNum * 4L;
 	for( i = 0; i < ITinfo.insNum; i++)
 	{
@@ -549,7 +549,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	/**** Samp Num *****/
 	ITinfo.parapsamp = (long *) MADPlugNewPtr( ITinfo.smpNum * 4L, init);
 	if( ITinfo.parapsamp == NULL) return MADNeedMemory;
-	BlockMoveData( theITCopy, ITinfo.parapsamp, ITinfo.smpNum * 4L);
+	memmove( theITCopy, ITinfo.parapsamp, ITinfo.smpNum * 4L);
 	theITCopy += ITinfo.smpNum * 4L;
 	for( i = 0; i < ITinfo.smpNum; i++)
 	{
@@ -559,7 +559,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	/**** Pat Num *****/
 	ITinfo.parappat = (long *) MADPlugNewPtr( ITinfo.patNum * 4L, init);
 	if( ITinfo.parappat == NULL) return MADNeedMemory;
-	BlockMoveData( theITCopy, ITinfo.parappat, ITinfo.patNum * 4L);
+	memmove( theITCopy, ITinfo.parappat, ITinfo.patNum * 4L);
 	theITCopy += ITinfo.patNum * 4L;
 	for( i = 0; i < ITinfo.patNum; i++)
 	{
@@ -577,7 +577,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 			theITCopy = (Byte*) theIT;
 			theITCopy += ITinfo.parapins[i];
 			
-			BlockMoveData( theITCopy, &ITinfo.insdata[i], sizeof( ITInsForm));
+			memmove( theITCopy, &ITinfo.insdata[i], sizeof( ITInsForm));
 			
 			if( !ITcompMem( (Ptr) &ITinfo.insdata[i].ID, "IMPI", 4))
 			{
@@ -600,7 +600,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 		theITCopy = (Byte*) theIT;
 		theITCopy += ITinfo.parapsamp[i];
 		
-		BlockMoveData( theITCopy, &ITinfo.sampdata[i], sizeof( ITSampForm));
+		memmove( theITCopy, &ITinfo.sampdata[i], sizeof( ITSampForm));
 		
 		if( !ITcompMem( (Ptr) &ITinfo.sampdata[i].ID, "IMPS", 4))
 		{
@@ -844,7 +844,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 										for( temp = 0; temp < curData->size; temp++) *(curData->data + temp) = 0;
 									}
 								}
-								else BlockMoveData( theInstrument[ prevSamp], curData->data, curData->size);
+								else memmove( theInstrument[ prevSamp], curData->data, curData->size);
 								
 								if( !(ITinfo.sampdata[ prevSamp].Convert & 1) && curData->amp == 8)
 								{
@@ -1005,7 +1005,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 							for( temp = 0; temp < curData->size; temp++) *(curData->data + temp) = 0;
 						}
 					}
-					else BlockMoveData( theInstrument[ i], curData->data, curData->size);
+					else memmove( theInstrument[ i], curData->data, curData->size);
 							
 				//	BlockMoveData( theInstrument[i], curData->data, curData->size);
 					
@@ -1338,7 +1338,7 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 	/********************************/
 
 	/**** Header principal *****/
-	BlockMoveData( AlienFile, &ITinfo, 96);
+	memmove( AlienFile, &ITinfo, 96);
 	
 	/*** Signature ***/
 	

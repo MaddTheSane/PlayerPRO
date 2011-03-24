@@ -1932,15 +1932,15 @@ short					*DASCopy8;
 		switch( intDriver->DriverSettings.outPutBits)
 		{
 			case 16:
-				BlockMoveData( intDriver->DASCBuffer + intDriver->ASCBUFFER*2, intDriver->DASCBuffer, realMDelay*8L);
-				BlockZero( (intDriver->DASCBuffer + realMDelay*2L), intDriver->ASCBUFFER*8L);
+				memmove( intDriver->DASCBuffer + intDriver->ASCBUFFER*2, intDriver->DASCBuffer, realMDelay*8L);
+				bzero( (intDriver->DASCBuffer + realMDelay*2L), intDriver->ASCBUFFER*8L);
 				
 				for( i = 0; i < MAXCHANEFFECT; i++)
 				{
 					if( intDriver->EffectBufferID[ i] != -1)
 					{
-						BlockMoveData( intDriver->DASCEffectBuffer[ i] + intDriver->ASCBUFFER*2, intDriver->DASCEffectBuffer[ i], realMDelay*8L);
-						BlockZero( (intDriver->DASCEffectBuffer[ i] + realMDelay*2L), intDriver->ASCBUFFER*8L);
+						memmove( intDriver->DASCEffectBuffer[ i] + intDriver->ASCBUFFER*2, intDriver->DASCEffectBuffer[ i], realMDelay*8L);
+						bzero( (intDriver->DASCEffectBuffer[ i] + realMDelay*2L), intDriver->ASCBUFFER*8L);
 					}
 				}
 			break;
@@ -1948,15 +1948,15 @@ short					*DASCopy8;
 			case 8:
 				if( realMDelay % 2 != 0)
 				{
-					BlockMoveData( intDriver->DASCBuffer8 + intDriver->ASCBUFFER*2, intDriver->DASCBuffer8, 1 + realMDelay*4L);
+					memmove( intDriver->DASCBuffer8 + intDriver->ASCBUFFER*2, intDriver->DASCBuffer8, 1 + realMDelay*4L);
 					
-					BlockZero( (intDriver->DASCBuffer8 + realMDelay*2L), (1 + intDriver->ASCBUFFER/2)*8L);
+					bzero( (intDriver->DASCBuffer8 + realMDelay*2L), (1 + intDriver->ASCBUFFER/2)*8L);
 				}
 				else
 				{
-					BlockMoveData( intDriver->DASCBuffer8 + intDriver->ASCBUFFER*2, intDriver->DASCBuffer8, realMDelay*4L);
+					memmove( intDriver->DASCBuffer8 + intDriver->ASCBUFFER*2, intDriver->DASCBuffer8, realMDelay*4L);
 					
-					BlockZero( (intDriver->DASCBuffer8 + realMDelay*2L), (intDriver->ASCBUFFER/2)*8L);
+					bzero( (intDriver->DASCBuffer8 + realMDelay*2L), (intDriver->ASCBUFFER/2)*8L);
 				}
 			break;
 		}
@@ -1968,18 +1968,18 @@ short					*DASCopy8;
 			switch( intDriver->DriverSettings.outPutBits)
 			{
 				case 16:
-					BlockZero( (intDriver->DASCBuffer), intDriver->ASCBUFFER*8L);
+					bzero( (intDriver->DASCBuffer), intDriver->ASCBUFFER*8L);
 					for( i = 0; i < MAXCHANEFFECT; i++)
 					{
 						if( intDriver->EffectBufferID[ i] != -1)
 						{
-							BlockZero( intDriver->DASCEffectBuffer[ i], intDriver->ASCBUFFER*8L);
+							bzero( intDriver->DASCEffectBuffer[ i], intDriver->ASCBUFFER*8L);
 						}
 					}
 				break;
 				
 				case 8:
-					BlockZero( (intDriver->DASCBuffer8), (intDriver->ASCBUFFER/2)*8L);
+					bzero( (intDriver->DASCBuffer8), (intDriver->ASCBUFFER/2)*8L);
 				break;
 			}
 		}
@@ -2001,14 +2001,14 @@ short					*DASCopy8;
 			{
 				case 8:
 					ComputeReverb8( (Byte*) intDriver->ReverbPtr, (Byte*) intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->DriverSettings.ReverbStrength);
-					BlockMoveData( intDriver->ReverbPtr + intDriver->ASCBUFFERReal*2L, intDriver->ReverbPtr, intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L);
-					BlockMoveData( intDriver->IntDataPtr, intDriver->ReverbPtr + intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L, intDriver->ASCBUFFERReal*2L);
+					memmove( intDriver->ReverbPtr + intDriver->ASCBUFFERReal*2L, intDriver->ReverbPtr, intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L);
+					memmove( intDriver->IntDataPtr, intDriver->ReverbPtr + intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L, intDriver->ASCBUFFERReal*2L);
 				break;
 				
 				case 16:
 					ComputeReverb16( (short*) intDriver->ReverbPtr, (short*) intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->DriverSettings.ReverbStrength);
-					BlockMoveData( intDriver->ReverbPtr + intDriver->ASCBUFFERReal*4, intDriver->ReverbPtr, (intDriver->RDelay - intDriver->ASCBUFFERReal)*4);
-					BlockMoveData( intDriver->IntDataPtr, intDriver->ReverbPtr + intDriver->RDelay*4 - intDriver->ASCBUFFERReal*4, intDriver->ASCBUFFERReal*4);
+					memmove( intDriver->ReverbPtr + intDriver->ASCBUFFERReal*4, intDriver->ReverbPtr, (intDriver->RDelay - intDriver->ASCBUFFERReal)*4);
+					memmove( intDriver->IntDataPtr, intDriver->ReverbPtr + intDriver->RDelay*4 - intDriver->ASCBUFFERReal*4, intDriver->ASCBUFFERReal*4);
 				break;
 			}
 		}

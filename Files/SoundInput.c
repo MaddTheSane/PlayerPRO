@@ -59,7 +59,7 @@ pascal void CompletionRoutine (SPBPtr inParamPtr)
 	{
 		if( RecordingPtr - StartRecordingPtr + SOUNDINPUTMUL*deviceBufferSize < maxSndSize)
 		{
-			BlockMoveData( SoundInputPtr, RecordingPtr, SOUNDINPUTMUL*deviceBufferSize);
+			memmove( SoundInputPtr, RecordingPtr, SOUNDINPUTMUL*deviceBufferSize);
 			
 			if( SoundInputStereo == false && baseChan > 1)
 			{
@@ -1162,9 +1162,9 @@ onrecommence:
 			
 			HLock( *RecordedSound);
 			HLock( tHandle);
-			BlockMoveData( **RecordedSound, (**RecordedSound) + headerLen, sndSize);
+			memmove( **RecordedSound, (**RecordedSound) + headerLen, sndSize);
 			if( SoundInputBits == 16) ConvertInstrument16LL( (short*) ((**RecordedSound) + headerLen), sndSize);
-			BlockMoveData( *tHandle, **RecordedSound, headerLen);
+			memmove( *tHandle, **RecordedSound, headerLen);
 			HUnlock( *RecordedSound);
 			HUnlock( tHandle);
 			DisposeHandle( tHandle);
