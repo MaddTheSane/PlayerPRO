@@ -46,7 +46,8 @@ typedef FILE*		UNFILE;
 #endif
 	
 EXP UNFILE iFileOpen( Ptr name);
-EXP void iFileCreate( Ptr folder, Ptr name, OSType);
+EXP void iFileCreate(Ptr path, OSType type);
+EXP void iFileCreateName( Ptr folder, Ptr name, OSType);
 
 EXP long iGetEOF( UNFILE iFileRefI);
 EXP OSErr iRead( long size, Ptr dest, UNFILE iFileRefI);

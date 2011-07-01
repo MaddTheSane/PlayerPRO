@@ -18,33 +18,17 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>16949F32-8E4F-4D37-AC8C-E1D383596C51</key>
-		<string>MADHFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>84F80109-2885-4E01-8FFA-88AC75F3E033</key>
-		<array>
-			<string>16949F32-8E4F-4D37-AC8C-E1D383596C51</string>
-		</array>
-	</dict>
-	<key>CSResourcesFileMapped</key>
-	<true/>
-	<key>MADPlugMenuName</key>
-	<string>MADH</string>
 	<key>MADPlugAuthorName</key>
 	<string>Written by A.ROSSET 98</string>
+	<key>MADPlugMenuName</key>
+	<string>MADH</string>
+	<key>MADPlugMode</key>
+	<string>IMPL</string>
 	<key>MADPlugType</key>
 	<string>MADH</string>
 	<key>MADPlugUTITypes</key>
 	<array>
 		<string>com.quadmation.playerpro.madh</string>
 	</array>
-	<key>MADPlugMode</key>
-	<string>IMPL</string>
 </dict>
 </plist>

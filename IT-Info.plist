@@ -18,33 +18,17 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>C93F7E10-99A0-42CE-B101-1BF26F2A1DB8</key>
-		<string>ITFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>84F80109-2885-4E01-8FFA-88AC75F3E033</key>
-		<array>
-			<string>C93F7E10-99A0-42CE-B101-1BF26F2A1DB8</string>
-		</array>
-	</dict>
-	<key>CSResourcesFileMapped</key>
-	<true/>
-	<key>MADPlugMenuName</key>
-	<string>IT</string>
 	<key>MADPlugAuthorName</key>
 	<string>Written by A.ROSSET 96</string>
+	<key>MADPlugMenuName</key>
+	<string>IT</string>
+	<key>MADPlugMode</key>
+	<string>IMPL</string>
 	<key>MADPlugType</key>
 	<string>IT  </string>
 	<key>MADPlugUTITypes</key>
 	<array>
 		<string>net.sourceforge.playerpro.it</string>
 	</array>
-	<key>MADPlugMode</key>
-	<string>IMPL</string>
 </dict>
 </plist>

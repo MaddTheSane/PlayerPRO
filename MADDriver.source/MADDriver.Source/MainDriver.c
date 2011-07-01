@@ -1142,6 +1142,7 @@ OSErr MADInitLibraryNew( FSRefPtr PlugsFolder, MADLibrary **lib)
 	return noErr;
 }
 
+#ifndef __LP64__
 OSErr MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
 {
 	FSRefPtr TempRef = NULL;
@@ -1171,6 +1172,7 @@ OSErr MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **l
 	}
 	return errmess;
 }
+#endif
 #else
 
 OSErr MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
@@ -1512,6 +1514,8 @@ OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFU
 	return MADLoadMusicFSRefFile(lib, music, type, &tempRef);
 }
 
+
+#ifndef __LP64__
 OSErr MADLoadMusicFSpFile( MADLibrary *lib, MADMusic **music, char *plugType, FSSpec *theSpec)
 {
 	OSErr			iErr;
@@ -1529,6 +1533,7 @@ OSErr MADLoadMusicFSpFile( MADLibrary *lib, MADMusic **music, char *plugType, FS
 	
 	return iErr;
 }
+#endif
 
 OSErr MADLoadMusicFilePString( MADLibrary *lib, MADMusic **music, char *plugType, Str255 fName)
 {
@@ -1619,6 +1624,7 @@ OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, OSType *type, CFURLRef URLRef)
 	return MADMusicIdentifyFSRef(lib, type, &tempRef);
 }
 
+#ifndef __LP64__
 OSErr	MADMusicIdentifyFSp( MADLibrary *lib, char *type, FSSpec *theSpec)
 {
 	FSSpec	saved;
@@ -1635,6 +1641,7 @@ OSErr	MADMusicIdentifyFSp( MADLibrary *lib, char *type, FSSpec *theSpec)
 	
 	return err;
 }
+#endif
 
 OSErr	MADMusicIdentifyPString( MADLibrary *lib, char *type, Str255 fName)
 {

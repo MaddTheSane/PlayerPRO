@@ -353,7 +353,7 @@ static OSErr ExtractAMFInfo( PPInfoRec *info, Ptr AlienFile)
 /* MAIN FUNCTION */
 /*****************/
 
-OSErr mainAMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
@@ -449,18 +449,4 @@ OSErr mainAMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 
 	return myErr;
 }
-
-#ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xE9, 0x93, 0xEF, 0xD8, 0x0C, 0x3F, 0x46, 0xF6, 0x90, 0x63, 0x6E, 0x34, 0x0C, 0x17, 0x9D, 0x88))
-//E993EFD8-0C3F-46F6-9063-6E340C179D88
-
-#define PLUGMAIN mainAMF
-#define PLUGINFACTORY AMFFactory
-#include "CFPlugin-bridge.c"
-#else
-OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-{
-	return mainAMF(order, AlienFileName, MadFile, info, init);
-}
-#endif
 

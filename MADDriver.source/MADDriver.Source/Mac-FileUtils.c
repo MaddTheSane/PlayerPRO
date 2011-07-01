@@ -78,7 +78,36 @@ OSErr iSeekCur(long size, UNFILE iFileRefI)
 	return FSSetForkPosition( iFileRefI, fsFromMark, size);
 }
 
-void iFileCreate(Ptr folder, Ptr name, OSType type)
+void iFileCreate(Ptr path, OSType type)
+{
+	char parentDir[PATH_MAX];
+	char fileName[FILENAME_MAX];
+
+	char *c;
+	strncpy(parentDir, path, sizeof(parentDir));
+	//strncpy(fileName, path, sizeof(fileName));
+
+	c = (char*)parentDir;
+	
+	while (*c != '\0')     /* go to end */
+	{
+		c++;
+	}
+	
+	while (*c != '/')      /* back up to parent */
+	{
+		c--;
+	}
+	strncpy(fileName, c, sizeof(fileName));
+	*c++ = '\0';           /* cut off last part (binary name) */
+	
+	
+	
+	iFileCreateName(parentDir, fileName, type);
+
+}
+
+void iFileCreateName(Ptr folder, Ptr name, OSType type)
 {
 	FSRef			temp;
 	CFStringRef		UniCFSTR = CFStringCreateWithCString(kCFAllocatorDefault, name, CFStringGetSystemEncoding());
@@ -88,7 +117,7 @@ void iFileCreate(Ptr folder, Ptr name, OSType type)
 	UNIRange.location	= 0;
 	UNIRange.length		= UNIcharLen;
 	CFStringGetCharacters(UniCFSTR, UNIRange, UNICHARThing);
-	FSPathMakeRef((UInt8)folder, &temp, FALSE);
+	FSPathMakeRef((UInt8*)folder, &temp, FALSE);
 
 	{
 		FSRef maybeRef;

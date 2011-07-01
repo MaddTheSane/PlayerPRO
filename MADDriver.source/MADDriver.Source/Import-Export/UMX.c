@@ -886,7 +886,7 @@ static OSErr TestUMXFile( Ptr AlienFile, long EOFo)
 #ifndef _MAC_H
 
 extern "C" EXP OSErr FillPlug( PlugInfo *p);
-extern "C" EXP OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -902,7 +902,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /* MAIN FUNCTION */
 /*****************/
 
-OSErr mainUMX( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr		myErr = noErr;
 	Ptr			AlienFile;
@@ -997,17 +997,3 @@ OSErr mainUMX( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	
 	return myErr;
 }
-
-#ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xA5, 0xC3, 0xEB, 0x8E, 0x71, 0xD1, 0x4E, 0xEE, 0xB2, 0x43, 0x5E, 0x1B, 0x80, 0x38, 0x70, 0xA4)) 
-//A5C3EB8E-71D1-4EEE-B243-5E1B803870A4
-
-#define PLUGMAIN mainUMX
-#define PLUGINFACTORY UMXFactory
-#include "CFPlugin-bridge.c"
-#else
-OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-{
-	return mainUMX(order, AlienFileName, MadFile, info, init);
-}
-#endif

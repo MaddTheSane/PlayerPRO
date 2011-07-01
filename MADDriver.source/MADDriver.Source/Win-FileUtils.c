@@ -26,7 +26,11 @@
 #include "RDriver.h"
 #include "FileUtils.h"
 
-void iFileCreate( UNFILEName folder, Ptr name, OSType)
+void iFileCreate( UNFILEName folder, OSType)
+{
+}
+
+void iFileCreateName( UNFILEName folder, Ptr name, OSType)
 {
 }
 

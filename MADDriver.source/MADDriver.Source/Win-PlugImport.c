@@ -198,7 +198,7 @@ Boolean LoadPlugLib( Ptr name, PlugInfo* plug)
 	plug->hLibrary = LoadLibrary( name);
 	if( !plug->hLibrary) return false;
 	
-	plug->IOPlug = (PLUGDLLFUNC) GetProcAddress( plug->hLibrary, "mainPLUG");
+	plug->IOPlug = (PLUGDLLFUNC) GetProcAddress( plug->hLibrary, "PPImpExpMain");
 	if( !plug->IOPlug) return false;
 	
 	fpFuncAddress = (PLUGFILLDLLFUNC) GetProcAddress( plug->hLibrary, "FillPlug");

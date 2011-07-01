@@ -1172,7 +1172,7 @@ static OSErr TestS3MFile( Ptr AlienFile)
 #ifndef _MAC_H
 
 extern "C" EXP OSErr FillPlug( PlugInfo *p);
-extern "C" EXP OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP OSErr FillPlug( PlugInfo *p)
 {
@@ -1184,7 +1184,7 @@ EXP OSErr FillPlug( PlugInfo *p)
 }
 #endif
 
-OSErr mainS3M( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr		myErr;
 	Ptr			AlienFile;
@@ -1299,17 +1299,3 @@ OSErr mainS3M( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	
 	return myErr;
 }
-
-#ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x9B, 0xC1, 0x10, 0x3B, 0x2C, 0x9F, 0x4F, 0x2C, 0x95, 0xAD, 0xA3, 0x00, 0x6E, 0xE3, 0x76, 0x71))
-//9BC1103B-2C9F-4F2C-95AD-A3006EE37671
-
-#define PLUGMAIN mainS3M
-#define PLUGINFACTORY S3MFactory
-#include "CFPlugin-bridge.c"
-#else
-OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-{
-	return mainS3M(order, AlienFileName, MadFile, info, init);
-}
-#endif

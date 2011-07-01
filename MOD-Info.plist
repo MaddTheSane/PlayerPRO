@@ -18,33 +18,17 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>86C74300-9396-4E68-9B3F-02CE5626A7C6</key>
-		<string>ModFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>84F80109-2885-4E01-8FFA-88AC75F3E033</key>
-		<array>
-			<string>86C74300-9396-4E68-9B3F-02CE5626A7C6</string>
-		</array>
-	</dict>
-	<key>CSResourcesFileMapped</key>
-	<true/>
-	<key>MADPlugMenuName</key>
-	<string>MOD</string>
 	<key>MADPlugAuthorName</key>
 	<string>Written by A.ROSSET 95</string>
+	<key>MADPlugMenuName</key>
+	<string>MOD</string>
+	<key>MADPlugMode</key>
+	<string>EXIM</string>
 	<key>MADPlugType</key>
 	<string>STrk</string>
 	<key>MADPlugUTITypes</key>
 	<array>
 		<string>net.sourceforge.playerpro.mod</string>
 	</array>
-	<key>MADPlugMode</key>
-	<string>EXIM</string>
 </dict>
 </plist>

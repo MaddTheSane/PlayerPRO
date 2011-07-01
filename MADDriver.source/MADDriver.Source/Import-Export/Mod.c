@@ -883,7 +883,7 @@ static OSErr TestMODFile( Ptr AlienFile, long EOFo)
 #ifndef _MAC_H
 
 extern "C" EXP OSErr FillPlug( PlugInfo *p);
-extern "C" EXP OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -898,7 +898,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /*****************/
 /* MAIN FUNCTION */
 /*****************/
-OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
@@ -916,7 +916,7 @@ OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 				sndSize = iGetEOF( iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = MADPlugNewPtr( sndSize * 2L, init);
+				AlienFile = NewPtr( sndSize * 2L);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
@@ -924,7 +924,7 @@ OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 				{
 					DisposePtr( AlienFile);
 					
-					AlienFile = MADPlugNewPtr( sndSize, init);
+					AlienFile = NewPtr( sndSize);
 					iRead( sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestMODFile( AlienFile, sndSize);
@@ -946,7 +946,7 @@ OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 			{
 				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = MADPlugNewPtr( sndSize, init);
+				AlienFile = NewPtr( sndSize);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
@@ -988,7 +988,7 @@ OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 				
 				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = MADPlugNewPtr( sndSize, init);
+				AlienFile = NewPtr( sndSize);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
@@ -1012,17 +1012,3 @@ OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	
 	return myErr;
 }
-
-#ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x86, 0xC7, 0x43, 0x00, 0x93, 0x96, 0x4E, 0x68, 0x9B, 0x3F, 0x02, 0xCE, 0x56,0x26, 0xA7, 0xC6)) 
-//86C74300-9396-4E68-9B3F-02CE5626A7C6
-#define PLUGMAIN mainMOD
-#define PLUGINFACTORY ModFactory
-
-#include "CFPlugin-bridge.c"
-#else
-OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-{
-	return mainMOD(order, AlienFileName, MadFile, info, init);
-}
-#endif

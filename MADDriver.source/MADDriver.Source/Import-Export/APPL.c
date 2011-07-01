@@ -230,7 +230,7 @@ static OSErr INFOMADF( MADSpec* MADPtr, PPInfoRec *info)
 /* MAIN FUNCTION */
 /*****************/
 
-OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr		myErr;
 	short		iFileRefI, i;
@@ -331,9 +331,3 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xD1, 0x2A, 0xD7, 0x05, 0x31, 0x38, 0x4C, 0x80, 0xA8, 0xE1, 0xC0, 0x6F, 0x48, 0x75, 0x20, 0x08))
-//D12AD705-3138-4C80-A8E1-C06F48752008
-
-#define PLUGMAIN mainAPPL
-#define PLUGINFACTORY APPLFactory
-#include "CFPlugin-bridge.c"

@@ -60,7 +60,7 @@ void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
 	{
 		inMADDriver->ThePlug[i].hLibrary = dlopen(NULL, RTLD_LAZY);
 		FILLPLUG plugFill = (FILLPLUG)dlsym(inMADDriver->ThePlug[i].hLibrary, "FillPlug");
-		inMADDriver->ThePlug[i].IOPlug = (MADPLUGFUNC)dlsym(inMADDriver->ThePlug[i].hLibrary, "mainPLUG");
+		inMADDriver->ThePlug[i].IOPlug = (MADPLUGFUNC)dlsym(inMADDriver->ThePlug[i].hLibrary, "PPImpExpMain");
 		if(plugFill && inMADDriver->ThePlug[i].IOPlug)
 		{
 			(*plugFill)(&inMADDriver->ThePlug[i]);

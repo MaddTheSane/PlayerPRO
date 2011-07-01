@@ -153,6 +153,7 @@
 		550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
 		550BFF2910BA01BA004FC5D7 /* Game.c in Sources */ = {isa = PBXBuildFile; fileRef = 550BFF2410BA01BA004FC5D7 /* Game.c */; };
 		550BFF2A10BA01BA004FC5D7 /* Game.r in Rez */ = {isa = PBXBuildFile; fileRef = 550BFF2510BA01BA004FC5D7 /* Game.r */; };
+		55105C9C13BE638D00902106 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55113CB913367DD10008C2AF /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55113CB813367DD10008C2AF /* CoreMIDI.framework */; };
 		55151F7910DEDBDB0054ABC4 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55151F7A10DEDBDB0054ABC4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -387,25 +388,11 @@
 		558688A710BF683400FCC24D /* PTMIDSAV.C in Sources */ = {isa = PBXBuildFile; fileRef = 553340F310BB5368005208D1 /* PTMIDSAV.C */; };
 		558688A810BF683500FCC24D /* PTMIDZAP.C in Sources */ = {isa = PBXBuildFile; fileRef = 553340F410BB5368005208D1 /* PTMIDZAP.C */; };
 		558688A910BF683C00FCC24D /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
-		55868A3410BFB3A000FCC24D /* 669_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 558689FE10BFB31500FCC24D /* 669_Plug.rsrc.r */; };
-		55868A3510BFB3B500FCC24D /* AMF_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 558689FF10BFB31500FCC24D /* AMF_Plug.rsrc.r */; };
-		55868A3610BFB3BD00FCC24D /* DMF_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0110BFB31500FCC24D /* DMF_Plug.rsrc.r */; };
-		55868A3710BFB3C400FCC24D /* IT_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0210BFB31500FCC24D /* IT_Plug.rsrc.r */; };
-		55868A3810BFB3CF00FCC24D /* MADfg_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0310BFB31500FCC24D /* MADfg_Plug.rsrc.r */; };
-		55868A3910BFB3DA00FCC24D /* MADH_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0410BFB31500FCC24D /* MADH_Plug.rsrc.r */; };
-		55868A3A10BFB3DF00FCC24D /* MADI_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0510BFB31500FCC24D /* MADI_Plug.rsrc.r */; };
-		55868A3B10BFB3E600FCC24D /* MED_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0610BFB31500FCC24D /* MED_Plug.rsrc.r */; };
-		55868A3C10BFB40300FCC24D /* MOD_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0810BFB31500FCC24D /* MOD_Plug.rsrc.r */; };
 		55868A3D10BFB40C00FCC24D /* MTM_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0910BFB31500FCC24D /* MTM_Plug.rsrc.r */; };
-		55868A3E10BFB41200FCC24D /* OKTA_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0A10BFB31500FCC24D /* OKTA_Plug.rsrc.r */; };
-		55868A3F10BFB41900FCC24D /* S3M_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0B10BFB31500FCC24D /* S3M_Plug.rsrc.r */; };
-		55868A4010BFB42000FCC24D /* ULT_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0C10BFB31500FCC24D /* ULT_Plug.rsrc.r */; };
-		55868A4110BFB42600FCC24D /* UMX_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0D10BFB31500FCC24D /* UMX_Plug.rsrc.r */; };
-		55868A4210BFB42C00FCC24D /* XM_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0E10BFB31500FCC24D /* XM_Plug.rsrc.r */; };
 		55868A4510BFB44700FCC24D /* Midi_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */; };
 		55868A6210BFB46100FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55868A7C10BFB4B300FCC24D /* APPL.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DD10BB5368005208D1 /* APPL.c */; };
-		55868A7D10BFB4B500FCC24D /* APPL_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0010BFB31500FCC24D /* APPL_Plug.rsrc.r */; };
+		558A748313BE59F4000FD667 /* APPL_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0010BFB31500FCC24D /* APPL_Plug.rsrc.r */; };
 		559088E210E87E8800CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		559088E310E87ED100CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		559088E410E87ED700CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
@@ -453,16 +440,6 @@
 		55CBFC3711EB78510028C6BB /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		55CBFC3A11EB78800028C6BB /* ByteSwap.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A46D10B51CAB00FF8B50 /* ByteSwap.c */; };
-		55CBFC3B11EB78840028C6BB /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
-		55CBFC3C11EB788A0028C6BB /* Effects.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D10C2F21DD00D6C081 /* Effects.c */; };
-		55CBFC3D11EB789A0028C6BB /* Interrupt.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D20C2F21DD00D6C081 /* Interrupt.c */; };
-		55CBFC3E11EB78A70028C6BB /* Mac-FileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D30C2F21DD00D6C081 /* Mac-FileUtils.c */; };
-		55CBFC3F11EB78AD0028C6BB /* Mac-SoundManager.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D50C2F21DD00D6C081 /* Mac-SoundManager.c */; };
-		55CBFC4011EB78B90028C6BB /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
-		55CBFC4211EB78C20028C6BB /* MySndPlayDB.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D70C2F21DD00D6C081 /* MySndPlayDB.c */; };
-		55CBFC4311EB78C60028C6BB /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
-		55CBFC4411EB78CB0028C6BB /* OSX-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */; };
 		55CBFC5511EB79DA0028C6BB /* 669.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D010BA17BC004FC5D7 /* 669.icns */; };
 		55CBFC5611EB79DE0028C6BB /* INS.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55E89D3B10F26A4B004EB52B /* INS.icns */; };
 		55CBFC5711EB79E20028C6BB /* IT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D110BA17BC004FC5D7 /* IT.icns */; };
@@ -481,9 +458,6 @@
 		55CBFC6411EB7A0D0028C6BB /* WAV.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DC10BA17BC004FC5D7 /* WAV.icns */; };
 		55CBFC6511EB7A110028C6BB /* XI.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DD10BA17BC004FC5D7 /* XI.icns */; };
 		55CBFC6611EB7A1C0028C6BB /* XM.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DE10BA17BC004FC5D7 /* XM.icns */; };
-		55CBFC6711EB7A380028C6BB /* OutPut8.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D90C2F21DD00D6C081 /* OutPut8.c */; };
-		55CBFC6811EB7A3C0028C6BB /* realft.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DA0C2F21DD00D6C081 /* realft.c */; };
-		55CBFC6911EB7A400028C6BB /* TickRemover.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */; };
 		55CBFC7311EB7BD90028C6BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7211EB7BD90028C6BB /* InfoPlist.strings */; };
 		55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7B11EB7C950028C6BB /* MainMenu.xib */; };
 		55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */; };
@@ -1291,6 +1265,13 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
+		55A01A1A13BE63180049B720 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
 		55B797E110D6E6D00073E379 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1463,7 +1444,6 @@
 		5518105A10C35A2600ADA9F4 /* small MOD Music.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MOD Music.mod"; sourceTree = "<group>"; };
 		5518107210C35A4500ADA9F4 /* PlayerPRO Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5518107410C35A4500ADA9F4 /* PlayerPRO Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PlayerPRO Example-Info.plist"; path = "../PlayerPRO Example-Info.plist"; sourceTree = "<group>"; };
-		551E166910CCD531003C842A /* CFPlugin-bridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = "CFPlugin-bridge.c"; path = "Import-Export/CFPlugin-bridge.c"; sourceTree = "<group>"; };
 		551FEA6B10E727AD00EDF2F1 /* MINs.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MINs.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		551FEAC910E727AD00EDF2F1 /* MINs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MINs-Info.plist"; path = "../../../MINs-Info.plist"; sourceTree = "<group>"; };
 		551FEADA10E727B100EDF2F1 /* PAT.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PAT.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2402,6 +2382,7 @@
 				55CBFC3711EB78510028C6BB /* Carbon.framework in Frameworks */,
 				55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */,
 				55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */,
+				55105C9C13BE638D00902106 /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3410,7 +3391,6 @@
 		88E0C3A60C2F21DD00D6C081 = {
 			isa = PBXGroup;
 			children = (
-				55113CB813367DD10008C2AF /* CoreMIDI.framework */,
 				55CBFCD411EB7CA00028C6BB /* Classes */,
 				552C70C210CDAF8C00C0E0D4 /* Documentation */,
 				5518105510C35A0100ADA9F4 /* Example */,
@@ -3434,8 +3414,8 @@
 		88E0C3B60C2F21DD00D6C081 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				88E0C3B50C2F21DD00D6C081 /* PlayerPRO.app */,
 				5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */,
+				88E0C3B50C2F21DD00D6C081 /* PlayerPRO.app */,
 				550BFF1010BA0179004FC5D7 /* Game Example.app */,
 				5533411110BB547D005208D1 /* MOD.ppimpexp */,
 				5533415310BB572C005208D1 /* 669.ppimpexp */,
@@ -3543,7 +3523,6 @@
 			isa = PBXGroup;
 			children = (
 				553340D810BB5368005208D1 /* Import-Export */,
-				551E166910CCD531003C842A /* CFPlugin-bridge.c */,
 				88E0C3CF0C2F21DD00D6C081 /* ASIO Driver */,
 				55868B1810BFC0BB00FCC24D /* Main Driver Source */,
 			);
@@ -3638,6 +3617,7 @@
 		88E0C4950C2F21E500D6C081 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55113CB813367DD10008C2AF /* CoreMIDI.framework */,
 				5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */,
 				55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */,
 				55EE8EBC100404EB00E75E63 /* CoreAudio.framework */,
@@ -4625,6 +4605,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55A01A1B13BE63180049B720 /* PBXTargetDependency */,
 				55CBFA0011EB77AA0028C6BB /* PBXTargetDependency */,
 			);
 			name = Cocoa;
@@ -5341,7 +5322,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A3C10BFB40300FCC24D /* MOD_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5349,7 +5329,7 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A7D10BFB4B500FCC24D /* APPL_Plug.rsrc.r in Rez */,
+				558A748313BE59F4000FD667 /* APPL_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5357,7 +5337,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A3410BFB3A000FCC24D /* 669_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5365,7 +5344,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A3510BFB3B500FCC24D /* AMF_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5373,7 +5351,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A3610BFB3BD00FCC24D /* DMF_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5381,7 +5358,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A3710BFB3C400FCC24D /* IT_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5389,7 +5365,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A3810BFB3CF00FCC24D /* MADfg_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5397,7 +5372,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A3910BFB3DA00FCC24D /* MADH_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5405,7 +5379,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A3A10BFB3DF00FCC24D /* MADI_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5413,7 +5386,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A3B10BFB3E600FCC24D /* MED_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5429,7 +5401,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A3E10BFB41200FCC24D /* OKTA_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5437,7 +5408,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A3F10BFB41900FCC24D /* S3M_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5445,7 +5415,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A4010BFB42000FCC24D /* ULT_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5453,7 +5422,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A4110BFB42600FCC24D /* UMX_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5461,7 +5429,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A4210BFB42C00FCC24D /* XM_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5882,19 +5849,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55CBFC3A11EB78800028C6BB /* ByteSwap.c in Sources */,
-				55CBFC3B11EB78840028C6BB /* DelayOutPut.c in Sources */,
-				55CBFC3C11EB788A0028C6BB /* Effects.c in Sources */,
-				55CBFC3D11EB789A0028C6BB /* Interrupt.c in Sources */,
-				55CBFC3E11EB78A70028C6BB /* Mac-FileUtils.c in Sources */,
-				55CBFC3F11EB78AD0028C6BB /* Mac-SoundManager.c in Sources */,
-				55CBFC4011EB78B90028C6BB /* MainDriver.c in Sources */,
-				55CBFC4211EB78C20028C6BB /* MySndPlayDB.c in Sources */,
-				55CBFC4311EB78C60028C6BB /* OSX-CoreAudio.c in Sources */,
-				55CBFC4411EB78CB0028C6BB /* OSX-PlugImport.c in Sources */,
-				55CBFC6711EB7A380028C6BB /* OutPut8.c in Sources */,
-				55CBFC6811EB7A3C0028C6BB /* realft.c in Sources */,
-				55CBFC6911EB7A400028C6BB /* TickRemover.c in Sources */,
 				55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */,
 				55CB01A711EB82FA0028C6BB /* main.c in Sources */,
 				55981C5311EE370D00656EE3 /* PPPreferences.m in Sources */,
@@ -6461,6 +6415,11 @@
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 55868A5A10BFB46100FCC24D /* PBXContainerItemProxy */;
+		};
+		55A01A1B13BE63180049B720 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 55A01A1A13BE63180049B720 /* PBXContainerItemProxy */;
 		};
 		55B797E210D6E6D00073E379 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7187,7 +7146,8 @@
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 			};
 			name = Release;
 		};
@@ -8383,8 +8343,9 @@
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH)";
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
