@@ -112,7 +112,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 
 		for( i = 0; i < MAXINSTRU ; i++)
 		{
-			CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->fid[i].name, kCFStringEncodingMacRoman);
+			CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->fid[i].name, kCFStringEncodingMacRoman);//TODO: check for other encodings?
 			if (!(CFEqual(CFSTR(""), temp))) {
 				CFArrayAppendValue(InstruArray, temp);
 			}
