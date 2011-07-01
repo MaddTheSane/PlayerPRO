@@ -405,6 +405,28 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>it</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>IT</string>
+			<key>CFBundleTypeName</key>
+			<string>PPITFile</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>IT  </string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.it</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>pat</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -506,7 +528,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADKFile</string>
@@ -619,24 +642,6 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.apple.package</string>
-				<string>com.apple.bundle</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>PPImpExpBundle</string>
-			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.ppimpexp</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>ppimpexp</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
 				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -654,6 +659,25 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>mins</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.plugin</string>
+				<string>com.apple.package</string>
+				<string>com.apple.bundle</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PPImpExpBundle</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.ppimpexp</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ppimpexp</string>
 				</array>
 			</dict>
 		</dict>
@@ -693,12 +717,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMODFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>MOD</string>
 			<key>UTTypeIdentifier</key>
@@ -723,12 +748,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PP669File</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>669</string>
 			<key>UTTypeIdentifier</key>
@@ -746,12 +772,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPAMFFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>AMF</string>
 			<key>UTTypeIdentifier</key>
@@ -769,12 +796,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPITFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>IT</string>
 			<key>UTTypeIdentifier</key>
@@ -792,12 +820,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMTMFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>MTM</string>
 			<key>UTTypeIdentifier</key>
@@ -815,12 +844,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>OKTA Tracker</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>OKTA</string>
 			<key>UTTypeIdentifier</key>
@@ -839,12 +869,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPS3MFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>S3M</string>
 			<key>UTTypeIdentifier</key>
@@ -862,12 +893,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPULTFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>ULT</string>
 			<key>UTTypeIdentifier</key>
@@ -885,12 +917,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPXMFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>XM</string>
 			<key>UTTypeIdentifier</key>
@@ -908,12 +941,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPXIFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>XI</string>
 			<key>UTTypeIdentifier</key>
@@ -931,12 +965,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPPATFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
 			<string>INS</string>
 			<key>UTTypeIdentifier</key>

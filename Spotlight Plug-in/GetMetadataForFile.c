@@ -34,7 +34,7 @@
   
    ----------------------------------------------------------------------------- */
 
-
+CFStringRef kPPMDInstumentsList = CFSTR("net_sourceforge_playerpro_tracker_instumentlist");
 
 /* -----------------------------------------------------------------------------
     Get metadata attributes from file
@@ -51,44 +51,84 @@ Boolean GetMetadataForFile(void* thisInterface,
     /* Pull any available metadata from the file at the specified path */
     /* Return the attribute keys and attribute values in the dict */
     /* Return TRUE if successful, FALSE if there was no data provided */
-    
-    //#warning To complete your importer please implement the function GetMetadataForFile in GetMetadataForFile.c
-	MADDriverRec			*MADDriver;
+    MADDriverRec			*MADDriver;
 	MADMusic				*MADMusic1;
 	MADLibrary				*MADLib;
 	MADDriverSettings		init;
 	
 	MADGetBestDriver(&init);
 	init.driverMode = NoHardwareDriver;
+	
 	if(MADInitLibrary(NULL, FALSE, &MADLib) != noErr) return FALSE;
 	if( MADCreateDriver( &init, MADLib, &MADDriver) != noErr) 
 	{
 		MADDisposeLibrary(MADLib);
 		return FALSE;
 	}
+	
 	{
 		char		type[ 5];
 		OSType		info;
 		CFStringRef ostypes;
-		
+		//Try to get the OSType of the UTI.
 		ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
 		
 		info = UTGetOSTypeFromString(ostypes);
-		if (!info) {
-			goto fail1;
-		}
+		if (!info) goto fail1;
+		
 		
 		OSType2Ptr( info, type);
-		
+		//check to see if there is a
 		if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 		{
+			CFURLRef tempRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
+			OSErr err = noErr;
+			err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, info, tempRef);
+			CFRelease(tempRef);
+			if(err != noErr) goto fail1;
 			
-		}
+		} else goto fail1;
+		//Set the title metadata
+		CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->header->name, kCFStringEncodingMacRoman); //TODO: Check for other encodings?
+		CFDictionarySetValue(attributes, kMDItemTitle, title);
+		CFRelease(title);
 	}
 	
-	MADStopDriver(MADDriver);				// Stop driver interrupt function
-	MADDisposeDriver(MADDriver);			// Dispose music driver
-	MADDisposeLibrary(MADLib);				// Close music library
+	{
+		//Set duration metadata
+		MADAttachDriverToMusic( MADDriver, MADMusic1, NULL);
+		long fT, cT;
+		MADGetMusicStatus( MADDriver, &fT, &cT);	// Some infos about current music
+		double fTd = fT / 60.0f;
+		
+		CFNumberRef duration = CFNumberCreate(kCFAllocatorDefault, kCFNumberDoubleType, &fTd);
+		CFDictionarySetValue(attributes, kMDItemDurationSeconds, duration);
+		CFRelease(duration);
+	}
+	
+	{
+		CFMutableArrayRef InstruArray = CFArrayCreateMutable(kCFAllocatorDefault, MAXINSTRU, &kCFTypeArrayCallBacks);
+		int	i;
+
+		for( i = 0; i < MAXINSTRU ; i++)
+		{
+			CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->fid[i].name, kCFStringEncodingMacRoman);//TODO: check for other encodings?
+			if (!(CFEqual(CFSTR(""), temp))) {
+				CFArrayAppendValue(InstruArray, temp);
+			}
+			CFRelease(temp);
+		}
+		
+		CFDictionarySetValue(attributes, kPPMDInstumentsList, InstruArray);
+		
+		CFRelease(InstruArray);
+	}
+	
+	MADCleanDriver( MADDriver);
+	MADDisposeMusic( &MADMusic1, MADDriver);	// Dispose the current music
+	MADStopDriver(MADDriver);					// Stop driver interrupt function
+	MADDisposeDriver(MADDriver);				// Dispose music driver
+	MADDisposeLibrary(MADLib);					// Close music library
 	return TRUE;
 	
 fail1:
