@@ -34,7 +34,6 @@
 #ifndef __SOUND__
 #include <Carbon/Carbon.h>
 #endif
-#include <CoreFoundation/CFPlugInCOM.h>
 #endif
 
 ////////////////////////////////////////////////
@@ -401,7 +400,7 @@ typedef struct PPInfoRec
 /********************						***********************/
 
 #ifdef _MAC_H
-
+#ifndef __LP64__
 enum {
   PPdbBufferReady                 = 0x00000001, /*double buffer is filled*/
   PPdbLastBuffer                  = 0x00000004 /*last double buffer to play*/
@@ -441,24 +440,15 @@ typedef struct PPSndDoubleBufferHeader2 {
   OSType              dbhFormat;
 } PPSndDoubleBufferHeader2;
 typedef PPSndDoubleBufferHeader2 *        PPSndDoubleBufferHeader2Ptr;
+#endif
 
-#define kPlayerPROModFormatTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x84, 0xF8, 0x01, 0x09, 0x28, 0x85, 0x4E, 0x01, 0x8F, 0xFA, 0x88, 0xAC, 0x75, 0xF3, 0xE0, 0x33))
-//84F80109-2885-4E01-8FFA-88AC75F3E033
-
-#define kPlayerPROModFormatInterfaceID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x94, 0x15, 0xE3, 0x57, 0x0E, 0xD2, 0x4F, 0x9F, 0x9C, 0xA1, 0xB7, 0x28, 0x0C, 0x27, 0xF5, 0x9B))
-//9415E357-0ED2-4F9F-9CA1-B7280C27F59B
-
-typedef struct _MADFileFormatPlugin {
-    IUNKNOWN_C_GUTS;
-//	OSErr (STDMETHODCALLTYPE *ThePlugMain)(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
-	OSErr (STDMETHODCALLTYPE *PlugImport) (FSRefPtr AlienFile, MADMusic *MadFile);
-	OSErr (STDMETHODCALLTYPE *MADFileInfo) (FSRefPtr AlienFile, PPInfoRec *info);
-	OSErr (STDMETHODCALLTYPE *CanPlayFile) (FSRefPtr AlienFile);
-} MADFileFormatPlugin;
+#include <dlfcn.h>
+typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 
 typedef struct PlugInfo
 {
-	MADFileFormatPlugin **IOPlug;								// Plug CODE
+	void*		hLibrary;										
+	MADPLUGFUNC	IOPlug;											// Plug CODE
 	CFStringRef	MenuName;										// Plug name
 	CFStringRef	AuthorString;									// Plug author
 	CFBundleRef	file;											// Location of plug file
@@ -484,7 +474,7 @@ struct PlugInfo
 typedef struct PlugInfo PlugInfo;
 #endif
 
-#ifdef __UNIX__
+#if (defined( __UNIX__) && !defined (_MAC_H))
 #include <dlfcn.h>
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 struct PlugInfo
