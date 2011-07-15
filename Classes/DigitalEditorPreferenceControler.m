@@ -21,4 +21,21 @@
 	return self;
 }
 
+- (IBAction)cellInformationCheckClicked:(id)sender {
+	
+}
+
+- (IBAction)markersCheckClicked:(id)sender {
+	
+}
+
+- (IBAction)mouseCheckClicked:(id)sender {
+	
+}
+
+-(void)awakeFromNib {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
+}
+
 @end

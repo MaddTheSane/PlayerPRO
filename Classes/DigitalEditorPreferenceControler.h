@@ -10,6 +10,25 @@
 
 @interface DigitalEditorPreferenceControler : NSViewController {
 
+	IBOutlet NSButton *PPDEEffect;
+	IBOutlet NSButton *PPDENote;
+	IBOutlet NSButton *PPDEInstrument;
+	IBOutlet NSButton *PPDEArgument;
+	IBOutlet NSButton *PPDEVolume;
+	
+	IBOutlet NSButton *PPDEMarkerSelect;
+	IBOutlet NSTextField *PPDEMarkerOffset;
+	IBOutlet NSTextField *PPDEMarkerLoop;
+	IBOutlet NSColorWell *PPDEMarkerColor;
+	
+	
+	IBOutlet NSButton *PPDEMouseClickControl;
+	IBOutlet NSButton *PPDEMouseClickShift;
+	IBOutlet NSButton *PPDEMouseClickCommand;
+	IBOutlet NSButton *PPDEMouseClickOption;
 }
+- (IBAction)cellInformationCheckClicked:(id)sender;
+- (IBAction)markersCheckClicked:(id)sender;
+- (IBAction)mouseCheckClicked:(id)sender;
 
 @end
