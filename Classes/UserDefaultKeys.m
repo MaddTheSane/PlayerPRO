@@ -10,6 +10,7 @@
 
 NSString *PPListPreferencesDidChange = @"Music List Preferences Changed";
 NSString *PPSoundPreferencesDidChange = @"Sound Preferences changed";
+NSString *PPDigitalEditorPrefrencesDidChange = @"Digital Editor Preferences changed";
 
 NSString *PPRememberMusicList = @"Remember Music List";
 NSString *PPLoadMusicAtListLoad = @"Load music when loading list";

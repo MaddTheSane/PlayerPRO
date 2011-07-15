@@ -71,4 +71,7 @@
 -(void)soundPreferencesDidChange:(NSNotification *)notification;
 
 
+- (void)digitalEditorPreferencesDidChange:(NSNotification *)notification;
+
+
 @end

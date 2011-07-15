@@ -9,6 +9,7 @@
 
 extern NSString *PPListPreferencesDidChange;
 extern NSString *PPSoundPreferencesDidChange;
+extern NSString *PPDigitalEditorPrefrencesDidChange;
 
 extern NSString *PPRememberMusicList;
 extern NSString *PPLoadMusicAtListLoad;
@@ -28,3 +29,5 @@ extern NSString *PPStereoDelayAmount;
 extern NSString *PPReverbSize;
 extern NSString *PPReverbStrength;
 extern NSString *PPOversamplingAmount;
+
+

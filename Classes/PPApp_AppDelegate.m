@@ -140,8 +140,11 @@ static inline UnsignedFixed GetFixedRate(int Rate)
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	
 	musicList = [[PPMusicList alloc] init];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferencesDidChange:) name:PPListPreferencesDidChange object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
+	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+	[defaultCenter addObserver:self selector:@selector(preferencesDidChange:) name:PPListPreferencesDidChange object:nil];
+	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
+	[defaultCenter addObserver:self selector:@selector(digitalEditorPreferencesDidChange:) name:PPDigitalEditorPrefrencesDidChange object:nil];
+	
 	MADInitLibraryNew(NULL, &MADLib);
 	[self MADDriverWithPreferences];
 
@@ -214,6 +217,10 @@ enum PPMusicToolbarTypes {
 
 - (void)soundPreferencesDidChange:(NSNotification *)notification {
 	[self MADDriverWithPreferences];
+}
+
+- (void)digitalEditorPreferencesDidChange:(NSNotification *)notification {
+	
 }
 
 - (IBAction)fastForwardButtonPressed:(id)sender {

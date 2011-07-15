@@ -28,39 +28,39 @@
 		NSViewController *vc;
 		vc = [[SoundOutputController alloc] init];
 		[viewControllers addObject:vc];
-		[vc release];
+		[vc release], vc = nil;
 		
-		//vc = [[PianoPreferencesController alloc] init];
-		//[viewControllers addObject:vc];
-		//[vc release];
+		vc = [[PianoPreferencesController alloc] init];
+		[viewControllers addObject:vc];
+		[vc release], vc = nil;
 		
 		vc = [[MusicListPreferenceController alloc] init];
 		[viewControllers addObject:vc];
-		[vc release];
+		[vc release], vc = nil;
 		
-		/*vc = [[ColorPreferenceController alloc] init];
+		vc = [[ColorPreferenceController alloc] init];
 		[viewControllers addObject:vc];
-		[vc release];*/
+		[vc release], vc = nil;
 		
 		vc = [[MiscPreferenceController alloc] init];
 		[viewControllers addObject:vc];
-		[vc release];
+		[vc release], vc = nil;
 		
-		/*vc = [[BoxEditorPreferenceController alloc] init];
+		vc = [[BoxEditorPreferenceController alloc] init];
 		[viewControllers addObject:vc];
-		[vc release];
+		[vc release], vc = nil;
 		
 		vc = [[DigitalEditorPreferenceControler alloc] init];
 		[viewControllers addObject:vc];
-		[vc release];
+		[vc release], vc = nil;
 		
 		vc = [[ClassicEditorPreferenceController alloc] init];
 		[viewControllers addObject:vc];
-		[vc release];
+		[vc release], vc = nil;
 		
 		vc = [[MidiHardwarePreferenceController alloc] init];
 		[viewControllers addObject:vc];
-		[vc release];*/
+		[vc release], vc = nil;
 		
     }
     return self;
