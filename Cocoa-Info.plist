@@ -401,6 +401,16 @@
 				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
+			<string>Music Tracker</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.tracker</string>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
+			<key>UTTypeDescription</key>
 			<string>PPMADKFile</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madk</string>
@@ -511,8 +521,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.apple.package</string>
-				<string>com.apple.bundle</string>
+				<string>com.apple.application-bundle</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPImpExpBundle</string>
@@ -587,7 +596,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMODFile</string>
@@ -617,7 +626,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PP669File</string>
@@ -640,7 +649,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPAMFFile</string>
@@ -663,7 +672,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPITFile</string>
@@ -686,7 +695,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMTMFile</string>
@@ -709,7 +718,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>OKTA Tracker</string>
@@ -733,7 +742,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPS3MFile</string>
@@ -779,7 +788,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPXMFile</string>

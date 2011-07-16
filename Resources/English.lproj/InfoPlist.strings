@@ -25,6 +25,8 @@ CFBundleName = "PlayerPRO";
 "PPMADKFile" = "PlayerPRO MADK Tracker";
 "PPMADHFile" = "PlayerPRO MADH Tracker";
 
+"Music Tracker" = "Music Tracker";
+
 "MIDI File" = "MIDI File";
 "PPImpExpBundle" = "PlayerPRO Import/Export PlugIn";
 
