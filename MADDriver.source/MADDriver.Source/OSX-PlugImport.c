@@ -11,7 +11,6 @@
 #include "RDriverInt.h"
 
 #include <CoreFoundation/CoreFoundation.h>
-#include <CoreFoundation/CFPlugInCOM.h>
 #include "FileUtils.h"
 #include "PPPrivate.h"
 
@@ -129,18 +128,24 @@ static void MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		}
 		else goto badplug3;
 	}
+	CFURLRef tempURL = CFBundleCopyBundleURL(tempBundle);
 	
-	CFStringRef URLString = CFURLGetString(CFBundleCopyBundleURL(tempBundle));
+	CFStringRef URLString = CFURLGetString(tempURL);
+	CFRelease(tempURL);
 	char URLcString[PATH_MAX];
 	CFStringGetFileSystemRepresentation(URLString, URLcString, PATH_MAX);
 	FillPlug->hLibrary = dlopen(URLcString , RTLD_LAZY);
 	FillPlug->IOPlug = dlsym(FillPlug->hLibrary, "PPImpExpMain");
+	if(!FillPlug->IOPlug)
+		goto badplug4;
 	FillPlug->file = tempBundle;
 	CFRetain(FillPlug->file);
 
 	inMADDriver->TotalPlug++;
 	return;
 	
+badplug4:
+	dlclose(FillPlug->hLibrary);
 badplug3:
 	CFRelease(FillPlug->AuthorString);
 badplug2:
@@ -233,68 +238,6 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	
 	return noErr;
 }
-
-void **GetCOMPlugInterface(CFPlugInRef plugToTest, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
-{		
-	CFArrayRef	factories = NULL;
-	Boolean		foundInterface = FALSE;
-	void		**formatPlugA = NULL;
-	
-	//  See if this plug-in implements the Test type.
-	factories	= CFPlugInFindFactoriesForPlugInTypeInPlugIn( TypeUUID, plugToTest );
-	
-	if ( factories != NULL )
-	{
-		CFIndex	factoryCount, index;
-		
-		factoryCount	= CFArrayGetCount( factories );
-		if ( factoryCount > 0 )
-		{
-			for ( index = 0 ; (index < factoryCount) && (foundInterface == false) ; index++ )
-			{
-				CFUUIDRef	factoryID;
-				
-				//  Get the factory ID for the first location in the array of IDs.
-				factoryID = (CFUUIDRef) CFArrayGetValueAtIndex( factories, index );
-				if ( factoryID )
-				{
-					IUnknownVTbl **iunknown = NULL;
-					
-					//  Use the factory ID to get an IUnknown interface. Here the plug-in code is loaded.
-					iunknown	= (IUnknownVTbl **) CFPlugInInstanceCreate( kCFAllocatorDefault, factoryID, TypeUUID );
-					
-					if ( iunknown )
-					{
-						//  If this is an IUnknown interface, query for the test interface.
-						(*iunknown)->QueryInterface( iunknown, CFUUIDGetUUIDBytes( InterfaceUUID ), (LPVOID *)( &formatPlugA ) );
-						
-						// Now we are done with IUnknown
-						(*iunknown)->Release( iunknown );
-						
-						if ( formatPlugA )
-						{
-							//	We found the interface we need
-							foundInterface	= true;
-						}
-					}
-				}
-			}
-		}
-		else {
-			CFRelease(factories); factories = NULL;
-			return NULL;
-		}
-	}
-	else {
-		return NULL;
-	}
-	CFRelease(factories); factories = NULL;
-	
-	return formatPlugA;
-}	
-
-
-//#define GetMADPlugInterface(plugToTest)  (MADFileFormatPlugin**)GetCOMPlugInterface(plugToTest, kPlayerPROModFormatTypeID, kPlayerPROModFormatInterfaceID)
 
 void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 {
