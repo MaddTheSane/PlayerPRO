@@ -12,6 +12,10 @@
 
 #include "RDriver.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifdef _MAC_H
 #pragma mark Core Audio Functions
 OSErr initCoreAudio( MADDriverRec *inMADDriver, long init);
@@ -22,8 +26,6 @@ void PlayChannelCA(MADDriverRec *inMADDriver);
 CFMutableArrayRef GetDefaultPluginFolderLocations();
 
 void GetPStrFromCFString(const CFStringRef source, StringPtr pStrOut);
-void **GetCOMPlugInterface(CFPlugInRef plugToTest, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID);
-
 
 const CFStringRef kMadPlugMenuNameKey;
 const CFStringRef kMadPlugAuthorNameKey;
@@ -51,6 +53,10 @@ OSErr initALSA( MADDriverRec *inMADDriver);
 OSErr closeALSA( MADDriverRec *inMADDriver);
 void StopChannelALSA(MADDriverRec *inMADDriver);
 void PlayChannelALSA(MADDriverRec *inMADDriver);
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 

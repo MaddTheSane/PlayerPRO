@@ -30,4 +30,20 @@ extern NSString *PPReverbSize;
 extern NSString *PPReverbStrength;
 extern NSString *PPOversamplingAmount;
 
-
+extern NSString *PPDEShowInstrument;
+extern NSString *PPDEShowNote;
+extern NSString *PPDEShowEffect;
+extern NSString *PPDEShowArgument;
+extern NSString *PPDEShowVolume;
+extern NSString *PPDEShowMarkers;
+extern NSString *PPDEMarkerOffset;
+extern NSString *PPDEMarkerLoop;
+extern NSString *PPDEMarkerColor;
+extern NSString *PPDEMouseClickControl;
+extern NSString *PPDEMouseClickShift;
+extern NSString *PPDEMouseClickCommand;
+extern NSString *PPDEMouseClickOption;
+extern NSString *PPDELineHeightNormal;
+extern NSString *PPDEMusicTraceOn;
+extern NSString *PPDEPatternWrappingPartition;
+extern NSString *PPDEDragAsPcmd;

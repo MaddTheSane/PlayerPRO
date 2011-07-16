@@ -7,6 +7,7 @@
 //
 
 #import "MiscPreferenceController.h"
+#import "UserDefaultKeys.h"
 
 
 @implementation MiscPreferenceController
@@ -23,6 +24,11 @@
 	}
 	[self setTitle:@"Misc."];
 	return self;
+}
+
+-(void)awakeFromNib {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
 }
 
 @end

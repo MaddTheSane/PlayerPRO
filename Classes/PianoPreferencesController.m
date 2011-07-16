@@ -7,6 +7,7 @@
 //
 
 #import "PianoPreferencesController.h"
+#import "UserDefaultKeys.h"
 
 
 @implementation PianoPreferencesController
@@ -19,6 +20,11 @@
 	}
 	[self setTitle:@"Piano"];
 	return self;
+}
+
+-(void)awakeFromNib {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
 }
 
 @end

@@ -22,7 +22,7 @@
 /********************						***********************/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include "IT.h"
+#include "DMF.h"
 
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
@@ -641,7 +641,7 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	//info->totalTracks	 = Tdecode16(  &ITinfo.insNum);
 	
-	mystrcpy( info->formatDescription, "\pIT Plug");
+	mystrcpy( info->formatDescription, "\pDMF Plug");
 
 	return noErr;
 }

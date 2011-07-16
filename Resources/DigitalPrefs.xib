@@ -403,7 +403,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 											<int key="NSPeriodicDelay">400</int>
 											<int key="NSPeriodicInterval">75</int>
 										</object>
-										<reference key="NSSelectedCell" ref="39016340"/>
+										<int key="NSSelectedCol">1</int>
+										<reference key="NSSelectedCell" ref="891175750"/>
 										<reference key="NSBackgroundColor" ref="530358426"/>
 										<reference key="NSCellBackgroundColor" ref="279326980"/>
 										<reference key="NSFont" ref="459795841"/>
@@ -414,7 +415,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 										<string key="NSFrame">{{140, 14}, {184, 18}}</string>
 										<reference key="NSSuperview" ref="723718231"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<bool key="NSEnabled">YES</bool>
 										<int key="NSNumRows">1</int>
 										<int key="NSNumCols">2</int>
@@ -1263,6 +1263,70 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<int key="connectionID">89</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">PPDELineHeightMatrix</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="395540084"/>
+					</object>
+					<int key="connectionID">90</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">PPDEMusicTraceMatrix</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="374793316"/>
+					</object>
+					<int key="connectionID">91</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">PPDEPatternWrappingMatrix</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="352765513"/>
+					</object>
+					<int key="connectionID">92</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">PPDEDragAsMatrix</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="625827240"/>
+					</object>
+					<int key="connectionID">93</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">lineHeightClicked:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="395540084"/>
+					</object>
+					<int key="connectionID">94</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">musicTraceClicked:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="374793316"/>
+					</object>
+					<int key="connectionID">96</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">patternWrappingClicked:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="352765513"/>
+					</object>
+					<int key="connectionID">97</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dragAsClicked:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="625827240"/>
+					</object>
+					<int key="connectionID">98</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1895,7 +1959,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">89</int>
+			<int key="maxID">98</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1908,11 +1972,19 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>cellInformationCheckClicked:</string>
+							<string>dragAsClicked:</string>
+							<string>lineHeightClicked:</string>
 							<string>markersCheckClicked:</string>
 							<string>mouseCheckClicked:</string>
+							<string>musicTraceClicked:</string>
+							<string>patternWrappingClicked:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -1923,13 +1995,25 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>cellInformationCheckClicked:</string>
+							<string>dragAsClicked:</string>
+							<string>lineHeightClicked:</string>
 							<string>markersCheckClicked:</string>
 							<string>mouseCheckClicked:</string>
+							<string>musicTraceClicked:</string>
+							<string>patternWrappingClicked:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">cellInformationCheckClicked:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">dragAsClicked:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">lineHeightClicked:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -1940,6 +2024,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 								<string key="name">mouseCheckClicked:</string>
 								<string key="candidateClassName">id</string>
 							</object>
+							<object class="IBActionInfo">
+								<string key="name">musicTraceClicked:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">patternWrappingClicked:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
@@ -1947,8 +2039,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>PPDEArgument</string>
+							<string>PPDEDragAsMatrix</string>
 							<string>PPDEEffect</string>
 							<string>PPDEInstrument</string>
+							<string>PPDELineHeightMatrix</string>
 							<string>PPDEMarkerColor</string>
 							<string>PPDEMarkerLoop</string>
 							<string>PPDEMarkerOffset</string>
@@ -1957,14 +2051,18 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>PPDEMouseClickControl</string>
 							<string>PPDEMouseClickOption</string>
 							<string>PPDEMouseClickShift</string>
+							<string>PPDEMusicTraceMatrix</string>
 							<string>PPDENote</string>
+							<string>PPDEPatternWrappingMatrix</string>
 							<string>PPDEVolume</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSButton</string>
+							<string>NSMatrix</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
+							<string>NSMatrix</string>
 							<string>NSColorWell</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
@@ -1973,7 +2071,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
+							<string>NSMatrix</string>
 							<string>NSButton</string>
+							<string>NSMatrix</string>
 							<string>NSButton</string>
 						</object>
 					</object>
@@ -1982,8 +2082,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>PPDEArgument</string>
+							<string>PPDEDragAsMatrix</string>
 							<string>PPDEEffect</string>
 							<string>PPDEInstrument</string>
+							<string>PPDELineHeightMatrix</string>
 							<string>PPDEMarkerColor</string>
 							<string>PPDEMarkerLoop</string>
 							<string>PPDEMarkerOffset</string>
@@ -1992,7 +2094,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>PPDEMouseClickControl</string>
 							<string>PPDEMouseClickOption</string>
 							<string>PPDEMouseClickShift</string>
+							<string>PPDEMusicTraceMatrix</string>
 							<string>PPDENote</string>
+							<string>PPDEPatternWrappingMatrix</string>
 							<string>PPDEVolume</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -2002,12 +2106,20 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
+								<string key="name">PPDEDragAsMatrix</string>
+								<string key="candidateClassName">NSMatrix</string>
+							</object>
+							<object class="IBToOneOutletInfo">
 								<string key="name">PPDEEffect</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">PPDEInstrument</string>
 								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">PPDELineHeightMatrix</string>
+								<string key="candidateClassName">NSMatrix</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">PPDEMarkerColor</string>
@@ -2042,8 +2154,16 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
+								<string key="name">PPDEMusicTraceMatrix</string>
+								<string key="candidateClassName">NSMatrix</string>
+							</object>
+							<object class="IBToOneOutletInfo">
 								<string key="name">PPDENote</string>
 								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">PPDEPatternWrappingMatrix</string>
+								<string key="candidateClassName">NSMatrix</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">PPDEVolume</string>

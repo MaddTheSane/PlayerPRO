@@ -7,6 +7,7 @@
 //
 
 #import "DigitalEditorPreferenceControler.h"
+#import "UserDefaultKeys.h"
 
 
 @implementation DigitalEditorPreferenceControler
@@ -30,6 +31,22 @@
 }
 
 - (IBAction)mouseCheckClicked:(id)sender {
+	
+}
+
+- (IBAction)lineHeightClicked:(id)sender {
+	
+}
+
+- (IBAction)musicTraceClicked:(id)sender {
+	
+}
+
+- (IBAction)patternWrappingClicked:(id)sender {
+	
+}
+
+- (IBAction)dragAsClicked:(id)sender {
 	
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "BoxEditorPreferenceController.h"
+#import "UserDefaultKeys.h"
 
 
 @implementation BoxEditorPreferenceController
@@ -19,6 +20,11 @@
 	}
 	[self setTitle:@"Box Editor"];
 	return self;
+}
+
+-(void)awakeFromNib {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
 }
 
 @end

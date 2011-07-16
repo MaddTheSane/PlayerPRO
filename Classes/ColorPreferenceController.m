@@ -7,6 +7,7 @@
 //
 
 #import "ColorPreferenceController.h"
+#import "UserDefaultKeys.h"
 
 
 @implementation ColorPreferenceController
@@ -19,6 +20,11 @@
 	}
 	[self setTitle:@"Color"];
 	return self;
+}
+
+-(void)awakeFromNib {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "MidiHardwarePreferenceController.h"
+#import "UserDefaultKeys.h"
 
 
 @implementation MidiHardwarePreferenceController
@@ -19,6 +20,11 @@
 	}
 	[self setTitle:@"MIDI Hardware"];
 	return self;
+}
+
+-(void)awakeFromNib {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
 }
 
 @end

@@ -26,9 +26,18 @@
 	IBOutlet NSButton *PPDEMouseClickShift;
 	IBOutlet NSButton *PPDEMouseClickCommand;
 	IBOutlet NSButton *PPDEMouseClickOption;
+	
+	IBOutlet NSMatrix *PPDELineHeightMatrix;
+	IBOutlet NSMatrix *PPDEMusicTraceMatrix;
+	IBOutlet NSMatrix *PPDEPatternWrappingMatrix;
+	IBOutlet NSMatrix *PPDEDragAsMatrix;
 }
 - (IBAction)cellInformationCheckClicked:(id)sender;
 - (IBAction)markersCheckClicked:(id)sender;
 - (IBAction)mouseCheckClicked:(id)sender;
+- (IBAction)lineHeightClicked:(id)sender;
+- (IBAction)musicTraceClicked:(id)sender;
+- (IBAction)patternWrappingClicked:(id)sender;
+- (IBAction)dragAsClicked:(id)sender;
 
 @end

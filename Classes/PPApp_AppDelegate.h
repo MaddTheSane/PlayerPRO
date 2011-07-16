@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#include "PlayerPROCore/PlayerPROCore.h"
+#include <PlayerPROCore/PlayerPROCore.h>
 @class PPPreferences;
 @class PPMusicList;
 
@@ -69,7 +69,6 @@
 - (IBAction)stopButtonPressed:(id)sender;
 
 -(void)soundPreferencesDidChange:(NSNotification *)notification;
-
 
 - (void)digitalEditorPreferencesDidChange:(NSNotification *)notification;
 

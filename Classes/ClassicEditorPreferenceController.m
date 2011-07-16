@@ -7,6 +7,7 @@
 //
 
 #import "ClassicEditorPreferenceController.h"
+#import "UserDefaultKeys.h"
 
 
 @implementation ClassicEditorPreferenceController
@@ -19,6 +20,11 @@
 	}
 	[self setTitle:@"Classic Editor"];
 	return self;
+}
+
+-(void)awakeFromNib {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
 }
 
 @end

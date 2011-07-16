@@ -94,16 +94,8 @@ typedef pascal Boolean	(*MyDlgFilterUPP)		( DialogPtr, EventRecord*, short*);
 #define CallUpdateALLWindowUPP()		\
 		(* (UpdateALLWindowUPP) (thePPInfoPlug->UpdateALLWindowUPP))
 
-#define kPlayerPROFiltersPlugTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x15, 0x8F, 0xF3, 0x3B, 0x47, 0xF4, 0x44, 0x97, 0x92, 0x92, 0x1B, 0x54, 0x4E, 0x8C, 0x2B, 0x01))
-//158FF33B-47F4-4497-9292-1B544E8C2B01
 
-#define kPlayerPROFiltersPlugInterfaceID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xD2, 0x89, 0xCA, 0xFA, 0x9A, 0xF1, 0x43, 0x5F, 0xBE, 0xD6, 0x3B, 0x15, 0x1D, 0xD8, 0xF2, 0x71))
-//D289CAFA-9AF1-435F-BED6-3B151DD8F271
-
-typedef struct _PPFiltersPlugin {
-    IUNKNOWN_C_GUTS;
-	OSErr (STDMETHODCALLTYPE *FiltersMain) (sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short stereoMode);
-} PPFiltersPlugin;
+	typedef OSErr ( *FiltersMain) (sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short stereoMode);
 
 /********************						***********************/
 //
@@ -151,12 +143,6 @@ typedef struct _PPFiltersPlugin {
 //
 /********************						***********************/
 
-#define kPlayerPRODigitalPlugTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xE9, 0xAF, 0xFD, 0x6D, 0xB9, 0x8B, 0x40, 0xD2, 0x8C, 0xC2, 0xBF, 0x74, 0x04, 0xEF, 0xAA, 0x51))
-//E9AFFD6D-B98B-40D2-8CC2-BF7404EFAA51
-
-#define kPlayerPRODigitalPlugInterfaceID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xF8, 0x1F, 0x0B, 0x38, 0x54, 0x1D, 0x43, 0xAE, 0x9C, 0x86, 0xB4, 0x83, 0x27, 0xCC, 0xEF, 0x56))
-//F81F0B38-541D-43AE-9C86-B48327CCEF56
-
 typedef struct
 {
 	short			tracks;					// number of tracks in myCmd[]
@@ -167,10 +153,7 @@ typedef struct
 	Cmd				myCmd[];
 } Pcmd;
 
-typedef struct _PPDigitalPlugin {
-    IUNKNOWN_C_GUTS;
-	OSErr (STDMETHODCALLTYPE *MyProcPtr) (Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug);
-} PPDigitalPlugin;
+typedef OSErr ( *MyProcPtr) (Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug);
 
 
 #pragma mark Instruments Import/Export Plugs
@@ -215,6 +198,10 @@ typedef struct _PPDigitalPlugin {
 //
 /********************						***********************/
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //TODO: Rewrite to take advantage of UTIs
 OSErr	PPINImportFile( OSType	kindFile, short ins, short *samp, FSSpec	*AlienFile);
 OSErr	PPINTestFile( OSType	kindFile, FSSpec	*AlienFile);
@@ -223,16 +210,8 @@ OSType	PressPPINMenu( Rect	*PopUpRect, OSType curType, short, Str255);
 OSErr	PPINAvailablePlug( OSType	kindFile, OSType *plugType); // plugType == 'INST' or 'SAMP'
 OSErr	PPINGetPlugByID( OSType *type, short id, short samp);
 
-#define kPlayerPROInstrumentPlugTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x0B, 0x3A, 0x46, 0x73, 0x91, 0x18, 0x46, 0x7E, 0xA4, 0x96, 0x84, 0x6F, 0x5E, 0x1C, 0x92, 0x76))
-//0B3A4673-9118-467E-A496-846F5E1C9276
 
-#define kPlayerPROInstrumentPlugInterfaceID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xB5, 0x87, 0xB2, 0xF1, 0xC8, 0xF8, 0x40, 0xA1, 0x9D, 0xB7, 0x7B, 0x46, 0xF9, 0xF4, 0xE3, 0x41))
-//B587B2F1-C8F8-40A1-9DB7-7B46F9F4E341
-
-typedef struct _PPInstrumentPlugin {
-    IUNKNOWN_C_GUTS;
-	OSErr (STDMETHODCALLTYPE *InstrMain) (OSType,  InstrData*, sData**, short*, FSSpec*, PPInfoPlug*);
-} PPInstrumentPlugin;
+typedef OSErr (*InstrMain) (OSType,  InstrData*, sData**, short*, FSRefPtr, PPInfoPlug*);
 
 // SndUtils.c Definition :
 
@@ -254,6 +233,10 @@ OSErr	inAddSoundToMAD(	Ptr				theSound,
 						sData			**sample,					// Ptr on samples data
 						short			*sampleID);
 sData	* inMADCreateSample();
+
+#ifdef __cplusplus
+}	
+#endif
 
 
 #if PRAGMA_STRUCT_ALIGN

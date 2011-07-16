@@ -8,90 +8,6 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
-			<string>131</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Preferences</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>PREF</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>132</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Preferences</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>sTAT</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>129</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Plugin</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>PLug</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>129</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Plugin</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>EXTE</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>187</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Plugin</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>PPDG</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>236</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Plugin</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>shlb</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
 			<string>PATN</string>
 			<key>CFBundleTypeName</key>
 			<string>PlayerPRO Pattern</string>
@@ -143,20 +59,6 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>242</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Mixer Settings</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>tuni</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
 			<key>LSTypeIsPackage</key>
 			<false/>
 		</dict>
@@ -479,6 +381,8 @@
 	<string>6.0</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
+	<key>CFBundleURLTypes</key>
+	<array/>
 	<key>CFBundleVersion</key>
 	<string>6.0</string>
 	<key>LSMinimumSystemVersion</key>
@@ -487,6 +391,8 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSServices</key>
+	<array/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

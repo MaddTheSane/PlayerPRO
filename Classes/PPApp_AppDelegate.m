@@ -11,6 +11,7 @@
 #import "PPMusicList.h"
 #import "UserDefaultKeys.h"
 #import "NDAlias/NSURL+NDCarbonUtilities.h"
+#import "NSColor+PPPreferences.h"
 
 static inline UnsignedFixed GetFixedRate(int Rate)
 {
@@ -92,6 +93,27 @@ static inline UnsignedFixed GetFixedRate(int Rate)
 	[defaultPrefs setObject:[NSNumber numberWithInt:25] forKey:PPReverbSize];
 	[defaultPrefs setObject:[NSNumber numberWithInt:30] forKey:PPReverbStrength];
 	[defaultPrefs setObject:[NSNumber numberWithInt:1] forKey:PPOversamplingAmount];
+	
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowInstrument];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowNote];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowEffect];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowArgument];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowVolume];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowMarkers];
+	[defaultPrefs setObject:[NSNumber numberWithInt:0] forKey:PPDEMarkerOffset];
+	[defaultPrefs setObject:[NSNumber numberWithInt:3] forKey:PPDEMarkerLoop];
+	[defaultPrefs setObject:[[NSColor yellowColor] PPencodeColor] forKey:PPDEMarkerColor];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEMouseClickControl];
+	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPDEMouseClickShift];
+	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPDEMouseClickCommand];
+	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPDEMouseClickOption];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDELineHeightNormal];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEMusicTraceOn];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEPatternWrappingPartition];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEDragAsPcmd];
+
+
+
 	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultPrefs];
 }
@@ -219,7 +241,8 @@ enum PPMusicToolbarTypes {
 	[self MADDriverWithPreferences];
 }
 
-- (void)digitalEditorPreferencesDidChange:(NSNotification *)notification {
+- (void)digitalEditorPreferencesDidChange:(NSNotification *)notification
+{
 	
 }
 
