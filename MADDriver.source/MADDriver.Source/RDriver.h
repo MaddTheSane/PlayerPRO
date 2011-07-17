@@ -476,6 +476,7 @@ typedef struct PlugInfo PlugInfo;
 
 #if (defined( __UNIX__) && !defined (_MAC_H))
 #include <dlfcn.h>
+#include <sys/param.h>  //For PATH_MAX
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 struct PlugInfo
 {
@@ -483,7 +484,7 @@ struct PlugInfo
 	MADPLUGFUNC		IOPlug;										// Plug CODE
 	char			MenuName[ 65];								// Plug name
 	char			AuthorString[ 65];							// Plug author
-	char			file[ PATH_MAX];							// Location of plug file
+	char			file[PATH_MAX];								// Location of plug file
 	char			type[ 5];									// OSType of file support
 	OSType			mode;										// Mode support : Import +/ Export
 };
@@ -603,6 +604,10 @@ void MyDebugStr( short, char*, char*);								// Internal Debugger function, NOR
 MADLibrary* MADGetMADLibraryPtr();									// Get MADDriver structure pointer.
 
 OSErr	MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
+#ifdef _MAC_H
+OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef);
+#endif
+
 OSErr	MADDisposeLibrary( MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
 void	MADGetBestDriver( MADDriverSettings	*DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam

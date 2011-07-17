@@ -47,7 +47,7 @@ UNFILE iFileOpen(Ptr name)
 	UNFILE	temp;
 	FSRef	ref;
 	OSErr	iErr;
-	FSPathMakeRef((UInt8)name, &ref, FALSE);
+	FSPathMakeRef((UInt8*)name, &ref, FALSE);
 
 	
 	Boolean	UnusedBoolean, UnusedBoolean2;
