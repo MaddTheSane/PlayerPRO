@@ -95,13 +95,9 @@ OSErr DBSndPlay ( MADDriverRec *inMADDriver, SndChannelPtr chan)
 	inMADDriver->TheHeader.dbhPacketSize 			= 0;
 	
 #if CALL_NOT_IN_CARBON
-	
 	inMADDriver->TheHeader.dbhDoubleBack 			= NewSndDoubleBackProc( MyPPDoubleBackProc);
-	
 #else
-	
 	inMADDriver->TheHeader.dbhDoubleBack 			= (PPSndDoubleBackUPP) MyPPDoubleBackProc;
-	
 #endif
 	
 	inMADDriver->TheHeader.dbhSampleRate = inMADDriver->DriverSettings.outPutRate;

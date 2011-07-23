@@ -55,7 +55,7 @@ UNFILE iFileOpen(Ptr name)
 	FSGetDataForkName(&whythis);
 	FSResolveAliasFile(&ref, TRUE, &UnusedBoolean, &UnusedBoolean2);
 	iErr = FSOpenFork(&ref, whythis.length, whythis.unicode, fsCurPerm, &temp);
-	if(iErr != noErr) return 0;
+	if(iErr != noErr) return kFSInvalidVolumeRefNum;
 	else return temp;
 }
 
@@ -85,7 +85,6 @@ void iFileCreate(Ptr path, OSType type)
 
 	char *c;
 	strncpy(parentDir, path, sizeof(parentDir));
-	//strncpy(fileName, path, sizeof(fileName));
 
 	c = (char*)parentDir;
 	

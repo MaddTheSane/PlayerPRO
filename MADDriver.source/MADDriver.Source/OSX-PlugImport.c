@@ -128,12 +128,11 @@ static void MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		}
 		else goto badplug3;
 	}
-	CFURLRef tempURL = CFBundleCopyBundleURL(tempBundle);
+	CFURLRef tempURL = CFBundleCopyExecutableURL(tempBundle);
 	
-	CFStringRef URLString = CFURLGetString(tempURL);
-	CFRelease(tempURL);
 	char URLcString[PATH_MAX];
-	CFStringGetFileSystemRepresentation(URLString, URLcString, PATH_MAX);
+	CFURLGetFileSystemRepresentation(tempURL, true, (unsigned char*)URLcString, PATH_MAX);
+	CFRelease(tempURL);
 	FillPlug->hLibrary = dlopen(URLcString , RTLD_LAZY);
 	FillPlug->IOPlug = dlsym(FillPlug->hLibrary, "PPImpExpMain");
 	if(!FillPlug->IOPlug)
