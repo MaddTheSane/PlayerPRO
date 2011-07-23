@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 44;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -4668,9 +4668,10 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 0410;
 			};
 			buildConfigurationList = 88E0C3A90C2F21DD00D6C081 /* Build configuration list for PBXProject "PPMacho" */;
-			compatibilityVersion = "Xcode 3.0";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -6505,11 +6506,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "Game Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Game Example";
 				ZERO_LINK = NO;
 			};
@@ -6521,12 +6520,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Game Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Game Example";
 			};
 			name = Debug;
@@ -6536,7 +6533,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = "Instrument Plugs";
 				ZERO_LINK = NO;
 			};
@@ -6557,7 +6553,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
@@ -6567,7 +6562,6 @@
 				);
 				INFOPLIST_FILE = "XI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = XI;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6579,7 +6573,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -6590,7 +6583,6 @@
 				);
 				INFOPLIST_FILE = "XI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = XI;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6602,11 +6594,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PREBINDING = NO;
 				PRODUCT_NAME = "PlayerPRO Example";
 				ZERO_LINK = NO;
 			};
@@ -6618,12 +6608,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PREBINDING = NO;
 				PRODUCT_NAME = "PlayerPRO Example";
 			};
 			name = Debug;
@@ -6633,7 +6621,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
@@ -6643,7 +6630,6 @@
 				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = MINs;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6655,7 +6641,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -6666,7 +6651,6 @@
 				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = MINs;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6677,7 +6661,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
@@ -6687,7 +6670,6 @@
 				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = PAT;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6699,7 +6681,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -6710,7 +6691,6 @@
 				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = PAT;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6721,7 +6701,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = "Import-export";
 				ZERO_LINK = NO;
 			};
@@ -6743,7 +6722,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -6751,7 +6729,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MOD;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6764,7 +6741,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -6774,7 +6750,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MOD;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6787,7 +6762,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -6795,7 +6769,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = 669;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -6810,7 +6783,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -6819,7 +6791,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = 669;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6832,7 +6803,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -6840,7 +6810,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = AMF;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -6855,7 +6824,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -6864,7 +6832,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = AMF;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6877,7 +6844,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -6885,7 +6851,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = DMF;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -6900,7 +6865,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -6909,7 +6873,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = DMF;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6922,7 +6885,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "IT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -6930,7 +6892,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = IT;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -6945,7 +6906,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "IT-Info.plist";
@@ -6954,7 +6914,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = IT;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6965,13 +6924,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Fade Note-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Fade Note";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6983,14 +6940,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Fade Note-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Fade Note";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7001,13 +6956,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Fade Volume-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Fade Volume";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7019,14 +6972,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Fade Volume-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Fade Volume";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7037,13 +6988,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Note Translate-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Note Translate";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7055,14 +7004,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Note Translate-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Note Translate";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7073,13 +7020,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Propagate-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Propagate;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7091,14 +7036,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Propagate-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Propagate;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7109,13 +7052,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Revert-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Revert;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7127,14 +7068,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Revert-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Revert;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7143,8 +7082,7 @@
 		5569FF521024B44400DDDF39 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -7153,7 +7091,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -7185,7 +7123,6 @@
 					"-multiply_defined",
 					warning,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = PlayerPRO;
 			};
 			name = Release;
@@ -7194,19 +7131,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
 				FRAMEWORK_VERSION = B;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = /Library/Frameworks;
-				PREBINDING = NO;
 				PRODUCT_NAME = PlayerPROCore;
 				ZERO_LINK = NO;
 			};
@@ -7216,20 +7150,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
 				FRAMEWORK_VERSION = B;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = /Library/Frameworks;
-				PREBINDING = NO;
 				PRODUCT_NAME = PlayerPROCore;
 			};
 			name = Debug;
@@ -7239,7 +7170,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = "Filters Plugs";
 				ZERO_LINK = NO;
 			};
@@ -7260,13 +7190,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Amplitude-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Amplitude;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7278,14 +7206,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Amplitude-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Amplitude;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7296,13 +7222,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Backwards-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Backwards;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7314,14 +7238,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Backwards-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Backwards;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7332,13 +7254,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Crop-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Crop;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7350,14 +7270,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Crop-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Crop;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7368,13 +7286,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "CrossFade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = CrossFade;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7386,14 +7302,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "CrossFade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = CrossFade;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7404,13 +7318,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Depth-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Depth;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7422,14 +7334,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Depth-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Depth;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7440,13 +7350,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Echo-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Echo;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7458,14 +7366,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Echo-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Echo;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7476,13 +7382,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Fade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Fade;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7494,14 +7398,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Fade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Fade;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7512,13 +7414,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Invert;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7530,14 +7430,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Invert;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7548,13 +7446,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Length;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7566,14 +7462,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Length;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7584,13 +7478,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Mix;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7602,14 +7494,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Mix;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7620,13 +7510,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Normalize;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7638,14 +7526,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Normalize;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7656,13 +7542,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Sampling Rate";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7674,14 +7558,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Sampling Rate";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7692,13 +7574,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Silence;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7710,14 +7590,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Silence;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7728,13 +7606,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Smooth;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7746,14 +7622,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Smooth;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7764,13 +7638,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Tone Generator";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7782,14 +7654,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Tone Generator";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7802,7 +7672,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -7810,7 +7679,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MADfg;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7824,7 +7692,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -7833,7 +7700,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MADfg;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7846,7 +7712,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -7854,7 +7719,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MADH;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -7869,7 +7733,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -7878,7 +7741,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MADH;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7891,7 +7753,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -7899,7 +7760,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MADI;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -7914,7 +7774,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -7923,7 +7782,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MADI;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7936,7 +7794,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -7944,7 +7801,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MED;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -7959,7 +7815,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -7968,7 +7823,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MED;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7981,7 +7835,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -7989,7 +7842,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MTM;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -8004,7 +7856,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -8013,7 +7864,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MTM;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8026,7 +7876,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8034,7 +7883,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = Okta;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -8049,7 +7897,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -8058,7 +7905,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = Okta;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8071,7 +7917,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8079,7 +7924,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = S3M;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -8094,7 +7938,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -8103,7 +7946,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = S3M;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8116,7 +7958,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8124,7 +7965,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = ULT;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -8139,7 +7979,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -8148,7 +7987,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = ULT;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8161,7 +7999,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8169,7 +8006,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = UMX;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -8184,7 +8020,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -8193,7 +8028,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = UMX;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8206,7 +8040,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8214,7 +8047,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = XM;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -8229,7 +8061,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -8238,7 +8069,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = XM;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8251,7 +8081,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8259,7 +8088,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MIDI;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -8274,7 +8102,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -8283,7 +8110,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MIDI;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8296,7 +8122,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8304,7 +8129,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = APPL;
 				WRAPPER_EXTENSION = ppimpexp;
 				ZERO_LINK = NO;
@@ -8319,7 +8143,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
@@ -8328,7 +8151,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = APPL;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8337,10 +8159,9 @@
 		559344191002F01700F95B82 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_DEBUGGING_SYMBOLS = full;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -8350,8 +8171,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH)";
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
@@ -8382,7 +8203,6 @@
 					"-multiply_defined",
 					warning,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = PlayerPRO;
 			};
 			name = Debug;
@@ -8391,7 +8211,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				PRODUCT_NAME = "Digital Plugs";
 				ZERO_LINK = NO;
@@ -8414,13 +8233,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Complex Fade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Complex Fade";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8432,14 +8249,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Complex Fade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Complex Fade";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8452,12 +8267,10 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = Files/FileUtils.exp;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = USE_DRAW_SPROCKETS;
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PREBINDING = NO;
 				PRODUCT_NAME = "PlayerPRO Cocoa";
 				ZERO_LINK = NO;
 			};
@@ -8470,13 +8283,11 @@
 				COPY_PHASE_STRIP = NO;
 				EXPORTED_SYMBOLS_FILE = Files/FileUtils.exp;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = USE_DRAW_SPROCKETS;
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PREBINDING = NO;
 				PRODUCT_NAME = "PlayerPRO Cocoa";
 			};
 			name = Debug;
@@ -8486,13 +8297,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "QuickTime-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = QuickTime;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8504,14 +8313,12 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "QuickTime-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = QuickTime;
 				WRAPPER_EXTENSION = plugin;
 			};

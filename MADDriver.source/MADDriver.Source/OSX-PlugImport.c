@@ -27,6 +27,7 @@ extern void NSLog(CFStringRef format, ...);
 
 static inline OSErr GetFSSpecFromCFBundle(FSSpecPtr out, CFBundleRef in)
 {
+#ifndef __LP64__
 	OSErr		iErr = noErr;
 	FSRef		tempRef;
 	CFURLRef	tempURL;
@@ -41,6 +42,9 @@ static inline OSErr GetFSSpecFromCFBundle(FSSpecPtr out, CFBundleRef in)
 	}
 	
 	return FSGetCatalogInfo(&tempRef, kFSCatInfoNone, NULL, NULL, out, NULL);
+#else
+	return bdNamErr;
+#endif
 }
 
 const CFStringRef kMadPlugMenuNameKey =		CFSTR("MADPlugMenuName");
@@ -48,13 +52,13 @@ const CFStringRef kMadPlugAuthorNameKey =	CFSTR("MADPlugAuthorName");
 const CFStringRef kMadPlugUTITypesKey =		CFSTR("MADPlugUTITypes");
 const CFStringRef kMadPlugTypeKey =			CFSTR("MADPlugType");
 const CFStringRef kMadPlugModeKey =			CFSTR("MADPlugMode");
-//const CFStringRef kMadPlugModeKey =		CFSTR("");
 
 
 static void MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
 	if ((inMADDriver->TotalPlug + 1) >= MAXPLUG) {
 		MyDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
+		return;
 	}
 	CFTypeID stringtype =	CFStringGetTypeID();
 	CFTypeID numbertype =	CFNumberGetTypeID();
@@ -309,6 +313,7 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 	return iErr;
 }
 
+#ifndef __LP64__
 void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
 {
 	FSRefPtr convDir = NULL;
@@ -327,6 +332,7 @@ void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
 	MADInitImportPlug(inMADDriver, convDir);
 	if(convDir != NULL) DisposePtr((Ptr)convDir);
 }
+#endif
 
 void CloseImportPlug(MADLibrary *inMADDriver)
 {
@@ -366,7 +372,7 @@ OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInf
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			return( CallImportPlug( inMADDriver, i, 'INFO', AlienFile, &aMAD, InfoRec));
+			return CallImportPlug( inMADDriver, i, 'INFO', AlienFile, &aMAD, InfoRec);
 		}
 	}
 	return MADCannotFindPlug;
@@ -384,7 +390,7 @@ OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 			*theNewMAD = (MADMusic*) MADNewPtrClear( sizeof( MADMusic), inMADDriver);
 			if( !theNewMAD) return MADNeedMemory;
 			
-			return( CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec));
+			return CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec);
 		}
 	}
 	return MADCannotFindPlug;
@@ -474,7 +480,7 @@ OSErr PPExportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			return( CallImportPlug( inMADDriver, i, 'EXPL', AlienFile, theNewMAD, &InfoRec));
+			return CallImportPlug( inMADDriver, i, 'EXPL', AlienFile, theNewMAD, &InfoRec);
 		}
 	}
 	return MADCannotFindPlug;
@@ -490,7 +496,7 @@ OSErr PPTestFile( MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			return( CallImportPlug( inMADDriver, i, 'TEST', AlienFile, &aMAD, &InfoRec));
+			return CallImportPlug( inMADDriver, i, 'TEST', AlienFile, &aMAD, &InfoRec);
 		}
 	}
 	return MADCannotFindPlug;
