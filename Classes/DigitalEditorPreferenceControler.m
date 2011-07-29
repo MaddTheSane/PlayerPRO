@@ -8,6 +8,7 @@
 
 #import "DigitalEditorPreferenceControler.h"
 #import "UserDefaultKeys.h"
+#import "NSColor+PPPreferences.h"
 
 
 @implementation DigitalEditorPreferenceControler
@@ -22,37 +23,134 @@
 	return self;
 }
 
+-(BOOL)lineHeight {
+	id curSelected = [PPDELineHeightMatrix selectedCell];
+	if ([PPDELineHeightMatrix cellAtRow:0 column:0] == curSelected) {
+		return YES;
+	} else if ([PPDELineHeightMatrix cellAtRow:0 column:1] == curSelected) {
+		return NO;
+	} else {
+		return NO;
+	}
+}
+
+-(BOOL)musicTrace {
+	id curSelected = [PPDEMusicTraceMatrix selectedCell];
+	if ([PPDEMusicTraceMatrix cellAtRow:0 column:0] == curSelected) {
+		return YES;
+	} else if ([PPDEMusicTraceMatrix cellAtRow:0 column:1] == curSelected) {
+		return NO;
+	} else {
+		return NO;
+	}
+}
+
+-(BOOL)patternWrapping {
+	id curSelected = [PPDEPatternWrappingMatrix selectedCell];
+	if ([PPDEPatternWrappingMatrix cellAtRow:0 column:0] == curSelected) {
+		return NO;
+	} else if ([PPDEPatternWrappingMatrix cellAtRow:0 column:1] == curSelected) {
+		return YES;
+	} else {
+		return NO;
+	}
+}
+
+-(BOOL)currentRate {
+	id curSelected = [PPDEDragAsMatrix selectedCell];
+	if ([PPDEDragAsMatrix cellAtRow:0 column:0] == curSelected) {
+		return YES;
+	} else if ([PPDEDragAsMatrix cellAtRow:0 column:1] == curSelected) {
+		return NO;
+	} else {
+		return NO;
+	}
+}
+
+
 - (IBAction)cellInformationCheckClicked:(id)sender {
 	
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
 - (IBAction)markersCheckClicked:(id)sender {
 	
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
 - (IBAction)mouseCheckClicked:(id)sender {
 	
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
 - (IBAction)lineHeightClicked:(id)sender {
 	
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
 - (IBAction)musicTraceClicked:(id)sender {
 	
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
 - (IBAction)patternWrappingClicked:(id)sender {
 	
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
 - (IBAction)dragAsClicked:(id)sender {
 	
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
+}
+
+- (IBAction)changeColor:(id)sender {
+	[[NSUserDefaults standardUserDefaults] setObject:[[PPDEMarkerColor color] PPencodeColor] forKey:PPDEMarkerColorPref];
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
+
 }
 
 -(void)awakeFromNib {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[PPDEEffect setState:[defaults boolForKey:PPDEShowEffect]];
+	[PPDENote setState:[defaults boolForKey:PPDEShowNote]];
+	[PPDEInstrument setState:[defaults boolForKey:PPDEShowInstrument]];
+	[PPDEArgument setState:[defaults boolForKey:PPDEShowArgument]];
+	[PPDEVolume setState:[defaults boolForKey:PPDEShowVolume]];
 	
+	[PPDEMarkerSelect setState:[defaults boolForKey:PPDEShowMarkers]];
+	[[PPDEMarkerOffset cell] setTitle:[defaults stringForKey:PPDEMarkerOffsetPref]];
+	[[PPDEMarkerLoop cell] setTitle:[defaults stringForKey:PPDEMarkerLoopPref]];
+	[PPDEMarkerColor setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPDEMarkerColorPref]]];
+	
+	[PPDEMouseClickControl setState:[defaults boolForKey:PPDEMouseClickControlPref]];
+	[PPDEMouseClickShift setState:[defaults boolForKey:PPDEMouseClickShiftPref]];
+	[PPDEMouseClickCommand setState:[defaults boolForKey:PPDEMouseClickCommandPref]];
+	[PPDEMouseClickOption setState:[defaults boolForKey:PPDEMouseClickOptionPref]];
+	
+	if ([defaults boolForKey:PPDELineHeightNormal]) {
+		[PPDELineHeightMatrix selectCellAtRow:0 column:0];
+	}else {
+		[PPDELineHeightMatrix selectCellAtRow:0 column:1];
+	}
+	
+	if ([defaults boolForKey:PPDEMusicTraceOn]) {
+		[PPDEMusicTraceMatrix selectCellAtRow:0 column:0];
+	}else {
+		[PPDEMusicTraceMatrix selectCellAtRow:0 column:1];
+	}
+
+	if ([defaults boolForKey:PPDEPatternWrappingPartition]) {
+		[PPDEPatternWrappingMatrix selectCellAtRow:0 column:1];
+	}else {
+		[PPDEPatternWrappingMatrix selectCellAtRow:0 column:0];
+	}
+
+	if ([defaults boolForKey:PPDEDragAsPcmd]) {
+		[PPDEDragAsMatrix selectCellAtRow:0 column:0];
+	}else {
+		[PPDEDragAsMatrix selectCellAtRow:0 column:1];
+	}
+
 }
 
 @end

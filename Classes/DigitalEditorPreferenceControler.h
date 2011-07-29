@@ -39,5 +39,6 @@
 - (IBAction)musicTraceClicked:(id)sender;
 - (IBAction)patternWrappingClicked:(id)sender;
 - (IBAction)dragAsClicked:(id)sender;
+- (IBAction)changeColor:(id)sender;
 
 @end
