@@ -56,7 +56,7 @@
 	}
 }
 
--(BOOL)currentRate {
+-(BOOL)PPDEDragAs {
 	id curSelected = [PPDEDragAsMatrix selectedCell];
 	if ([PPDEDragAsMatrix cellAtRow:0 column:0] == curSelected) {
 		return YES;
@@ -69,7 +69,13 @@
 
 
 - (IBAction)cellInformationCheckClicked:(id)sender {
-	
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setBool:[PPDEEffect state] forKey:PPDEShowEffect];
+	[defaults setBool:[PPDENote state] forKey:PPDEShowNote];
+	[defaults setBool:[PPDEInstrument state] forKey:PPDEShowInstrument];
+	[defaults setBool:[PPDEArgument state] forKey:PPDEShowArgument];
+	[defaults setBool:[PPDEVolume state] forKey:PPDEShowVolume];
+
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
@@ -79,34 +85,38 @@
 }
 
 - (IBAction)mouseCheckClicked:(id)sender {
-	
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setBool:[PPDEMouseClickControl state] forKey:PPDEMouseClickControlPref];
+	[defaults setBool:[PPDEMouseClickShift state] forKey:PPDEMouseClickShiftPref];
+	[defaults setBool:[PPDEMouseClickCommand state] forKey:PPDEMouseClickCommandPref];
+	[defaults setBool:[PPDEMouseClickOption state] forKey:PPDEMouseClickOptionPref];
+
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
 - (IBAction)lineHeightClicked:(id)sender {
-	
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[self lineHeight]] forKey:PPDELineHeightNormal];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
 - (IBAction)musicTraceClicked:(id)sender {
-	
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[self musicTrace]] forKey:PPDEMusicTraceOn];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
 - (IBAction)patternWrappingClicked:(id)sender {
-	
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[self patternWrapping]] forKey:PPDEPatternWrappingPartition];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
 - (IBAction)dragAsClicked:(id)sender {
-	
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[self PPDEDragAs]] forKey:PPDEDragAsPcmd];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
 - (IBAction)changeColor:(id)sender {
 	[[NSUserDefaults standardUserDefaults] setObject:[[PPDEMarkerColor color] PPencodeColor] forKey:PPDEMarkerColorPref];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
-
 }
 
 -(void)awakeFromNib {

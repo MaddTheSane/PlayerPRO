@@ -1121,46 +1121,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<int key="connectionID">71</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">cellInformationButtonClicked:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="597950139"/>
-					</object>
-					<int key="connectionID">72</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">cellInformationButtonClicked:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="809951082"/>
-					</object>
-					<int key="connectionID">73</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">cellInformationButtonClicked:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="790502118"/>
-					</object>
-					<int key="connectionID">74</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">cellInformationButtonClicked:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="520746928"/>
-					</object>
-					<int key="connectionID">75</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">cellInformationButtonClicked:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="950714652"/>
-					</object>
-					<int key="connectionID">76</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">PPDEMarkerSelect</string>
 						<reference key="source" ref="1001"/>
@@ -1343,6 +1303,46 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="destination" ref="397235037"/>
 					</object>
 					<int key="connectionID">100</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">cellInformationCheckClicked:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="597950139"/>
+					</object>
+					<int key="connectionID">101</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">cellInformationCheckClicked:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="809951082"/>
+					</object>
+					<int key="connectionID">102</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">cellInformationCheckClicked:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="790502118"/>
+					</object>
+					<int key="connectionID">103</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">cellInformationCheckClicked:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="520746928"/>
+					</object>
+					<int key="connectionID">104</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">cellInformationCheckClicked:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="950714652"/>
+					</object>
+					<int key="connectionID">105</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1986,7 +1986,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">100</int>
+			<int key="maxID">105</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
