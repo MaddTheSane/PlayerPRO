@@ -184,7 +184,7 @@ EXP void OSType2Ptr( OSType type, Ptr str)
 	MOT32(&type);
 #endif
 	
-	memmove( &type, str, 4);
+	memmove( str, &type, 4);
 	str[ 4] = 0;
 }
 
@@ -196,7 +196,7 @@ EXP OSType Ptr2OSType( char* str)
 	i = strlen( str);
 	if( i > 4) i = 4;
 	type = '    ';
-	memmove( str, &type, i);
+	memmove( &type, str, i);
 #ifdef __LITTLE_ENDIAN__
 	MOT32(&type);
 #endif
