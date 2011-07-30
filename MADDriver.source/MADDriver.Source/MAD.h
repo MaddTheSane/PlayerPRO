@@ -118,8 +118,8 @@ static inline void BlockZero( void* a, long size)
 #define FALSE 0
 #endif
 
-typedef char	FSSpec;
-typedef char*	FSSpecPtr;
+typedef char	FSRef;
+typedef char*	FSRefPtr;
 enum {
 	noErr = 0
 };

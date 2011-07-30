@@ -1142,40 +1142,16 @@ OSErr MADInitLibraryNew( FSRefPtr PlugsFolder, MADLibrary **lib)
 	return noErr;
 }
 
-#ifndef __LP64__
-OSErr MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
+OSErr MADInitLibrary( FSRef *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
 {
-	FSRefPtr TempRef = NULL;
-	OSErr errmess = noErr;
 	if(sysMemory == TRUE) NSLog(CFSTR("sysMemory definition in MADInitLibrary is ignored"));
 	
-	if(PlugsFolderName != NULL)
-	{
-		OSErr iErr = noErr;
-		TempRef = (FSRefPtr)NewPtrClear(sizeof(FSRef));
-		iErr = FSpMakeFSRef(PlugsFolderName, TempRef);
-		if (iErr != noErr) {
-			DisposePtr((Ptr)TempRef);
-			TempRef = NULL;
-		}
-	}
-	errmess = MADInitLibraryNew(TempRef, lib);
+	return MADInitLibraryNew(PlugsFolderName, lib);
 	
-	if (TempRef == NULL) 
-	{
-		return errmess;
-	}
-	else
-	{
-		DisposePtr((Ptr)TempRef);
-		TempRef = NULL;
-	}
-	return errmess;
 }
-#endif
 #else
 
-OSErr MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
+OSErr MADInitLibrary( FSRef *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
 {
 	OSErr errmess = noErr;
 	long 	i, mytab[ 12] =

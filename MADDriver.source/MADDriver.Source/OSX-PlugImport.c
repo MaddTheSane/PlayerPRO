@@ -53,7 +53,6 @@ const CFStringRef kMadPlugUTITypesKey =		CFSTR("MADPlugUTITypes");
 const CFStringRef kMadPlugTypeKey =			CFSTR("MADPlugType");
 const CFStringRef kMadPlugModeKey =			CFSTR("MADPlugMode");
 
-
 static void MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
 	if ((inMADDriver->TotalPlug + 1) >= MAXPLUG) {
@@ -313,26 +312,10 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 	return iErr;
 }
 
-#ifndef __LP64__
-void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
+void MInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PlugsFolderName)
 {
-	FSRefPtr convDir = NULL;
-	if(PlugsFolderName != NULL)
-	{
-		convDir = (FSRefPtr)NewPtr(sizeof(FSRef));
-		OSErr iErr;
-		iErr = FSpMakeFSRef(PlugsFolderName, convDir);
-		if((iErr =! noErr))
-		{
-			DisposePtr((Ptr)convDir);
-			convDir = NULL;
-		}
-	}
-	
-	MADInitImportPlug(inMADDriver, convDir);
-	if(convDir != NULL) DisposePtr((Ptr)convDir);
+	MADInitImportPlug(inMADDriver, PlugsFolderName);
 }
-#endif
 
 void CloseImportPlug(MADLibrary *inMADDriver)
 {

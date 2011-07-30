@@ -603,7 +603,7 @@ void MyDebugStr( short, char*, char*);								// Internal Debugger function, NOR
 
 MADLibrary* MADGetMADLibraryPtr();									// Get MADDriver structure pointer.
 
-OSErr	MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
+OSErr	MADInitLibrary( FSRef *PlugsFolderName, Boolean sysMemory, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
 #ifdef _MAC_H
 OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef);
 #endif
@@ -637,11 +637,15 @@ OSErr	MADLoadMusicPtr( MADMusic **music, Ptr myPtr);								// MAD ONLY - Load a
 
 OSErr	MADLoadMusicFilePString( MADLibrary *, MADMusic **music, char *type, Str255 fName);			// Load a music file with plugs
 OSErr	MADLoadMusicFileCString( MADLibrary *, MADMusic **music, char *type, Ptr fName);			// Load a music file with plugs
+#ifndef __LP64__
 OSErr	MADLoadMusicFSpFile( MADLibrary *, MADMusic **music, char *type, FSSpec *theSpec);			// Load a music file with plugs
+#endif
 
 OSErr	MADMusicIdentifyPString( MADLibrary *, char *type, Str255 pName);			// Identify what kind of music format is pName file.
 OSErr	MADMusicIdentifyCString( MADLibrary *, char *type, Ptr cName);			// Identify what kind of music format is cName file.
+#ifndef __LP64__
 OSErr	MADMusicIdentifyFSp( MADLibrary *, char *type, FSSpec *theSpec);			// Identify what kind of music format is theSpec file.
+#endif
 
 Boolean	MADPlugAvailable( MADLibrary *, char *type);								// Is plug 'type' available?
 

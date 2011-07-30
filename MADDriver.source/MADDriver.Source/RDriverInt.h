@@ -208,7 +208,7 @@ OSErr	PPImportFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile, M
 OSErr	PPIdentifyFile( MADLibrary		*inMADDriver, char *kindFile, char	*AlienFile);
 
 OSType	GetPPPlugType( MADLibrary		*inMADDriver, short ID, OSType type);
-void	MInitImportPlug( MADLibrary		*inMADDriver, FSSpec*);
+void	MInitImportPlug( MADLibrary		*inMADDriver, FSRef*);
 #ifdef _MAC_H
 void	MADInitImportPlug( MADLibrary	*inMADDriver, FSRefPtr PluginFolder);
 #endif
