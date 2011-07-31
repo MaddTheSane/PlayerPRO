@@ -244,7 +244,7 @@ void ConvertTo64Rows( MADMusic *music)
 			newPat->header.patBytes 	= 0;
 			newPat->header.unused2 		= 0;
 			
-			memmove( music->partition[ i]->header.name, newPat->header.name, 32);
+			memmove( newPat->header.name, music->partition[ i]->header.name, 32);
 			
 			// Upgrade length to 64
 			
@@ -300,7 +300,7 @@ void ConvertTo64Rows( MADMusic *music)
 				newPat->header.patBytes 	= 0;
 				newPat->header.unused2 		= 0;
 				
-				memmove( srcPat->header.name, newPat->header.name, 32);
+				memmove( newPat->header.name, srcPat->header.name, 32);
 				
 				for( x = 0; x < 64; x++, patsize++)
 				{
@@ -1897,7 +1897,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 			
 		case MADPtrType:
 			OffSetToSample = 0;
-			memmove( MADPtr, MDriver->header, inOutCount);
+			memmove( MDriver->header, MADPtr, inOutCount);//
 			OffSetToSample += inOutCount;
 			break;
 			
@@ -1945,7 +1945,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 				break;
 				
 			case MADPtrType:
-				memmove( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
+				memmove( &tempPatHeader, MADPtr + OffSetToSample, inOutCount);
 				break;
 		}
 		
@@ -1996,7 +1996,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 				break;
 				
 			case MADPtrType:
-				memmove( MADPtr + OffSetToSample, MDriver->partition[ i], inOutCount);
+				memmove( MDriver->partition[ i], MADPtr + OffSetToSample, inOutCount);
 				OffSetToSample += inOutCount;
 				break;
 		}
@@ -2056,7 +2056,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 			break;
 			
 		case MADPtrType:
-			memmove( MADPtr + OffSetToSample, MDriver->fid, inOutCount);
+			memmove( MDriver->fid, MADPtr + OffSetToSample, inOutCount);
 			OffSetToSample += inOutCount;
 			break;
 	}
@@ -2144,7 +2144,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 					break;
 					
 				case MADPtrType:
-					memmove( MADPtr + OffSetToSample, curData, inOutCount);
+					memmove( curData, MADPtr + OffSetToSample, inOutCount);
 					OffSetToSample += inOutCount;
 					break;
 			}
@@ -2186,7 +2186,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 					break;
 					
 				case MADPtrType:
-					memmove( MADPtr + OffSetToSample, curData->data, inOutCount);
+					memmove( curData->data, MADPtr + OffSetToSample, inOutCount);
 					OffSetToSample += inOutCount;
 					break;
 			}
@@ -2231,7 +2231,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 						break;
 						
 					case MADPtrType:
-						memmove( MADPtr + OffSetToSample, &MDriver->sets[ alpha], inOutCount);
+						memmove( &MDriver->sets[ alpha], MADPtr + OffSetToSample, inOutCount);
 						OffSetToSample += inOutCount;
 						break;
 				}
@@ -2260,7 +2260,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 							break;
 							
 						case MADPtrType:
-							memmove( MADPtr + OffSetToSample, &MDriver->sets[ alpha], inOutCount);
+							memmove( &MDriver->sets[ alpha], MADPtr + OffSetToSample, inOutCount);
 							OffSetToSample += inOutCount;
 							break;
 					}
@@ -3485,7 +3485,7 @@ PatData* DecompressPartitionMAD1( MADMusic *MDriver, PatData* myPat)
 	finalPtr = ( PatData*) NewPtr( sizeof( PatHeader) + myPat->header.size * MDriver->header->numChn * sizeof( Cmd));
 	if( finalPtr == NULL) return NULL;
 	
-	memmove( myPat, finalPtr, sizeof( PatHeader));
+	memmove( finalPtr, myPat, sizeof( PatHeader));
 
 	srcPtr = (Byte*) myPat->Cmds;
 	myCmd = (Cmd*) finalPtr->Cmds;
@@ -3525,7 +3525,7 @@ PatData* CompressPartitionMAD1( MADMusic *MDriver, PatData* myPat)
 	finalPtr = ( PatData*) NewPtr( sizeof( PatHeader) + myPat->header.size * MDriver->header->numChn * 6L);
 	if( finalPtr == NULL) DebugStr("\pCompressPartitionMAD1");
 	
-	memmove( myPat, finalPtr, sizeof( PatHeader));
+	memmove( finalPtr, myPat, sizeof( PatHeader));
 	
 	dstPtr = (Byte*) finalPtr->Cmds;
 	myCmd = (Cmd*) myPat->Cmds;

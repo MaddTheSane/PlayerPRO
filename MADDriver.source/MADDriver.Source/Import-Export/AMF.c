@@ -26,12 +26,12 @@
 
 static inline void mystrcpy( Ptr a, BytePtr b)
 {
-	memmove( b + 1, a, b[ 0]);
+	memmove( a, b + 1, b[ 0]);
 }
 
 static Ptr			theAMFRead;
 
-#define READAMFFILE(dst, size)	{memmove( theAMFRead, dst, size);	theAMFRead += (long) size;}
+#define READAMFFILE(dst, size)	{memmove( dst, theAMFRead, size);	theAMFRead += (long) size;}
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
@@ -72,236 +72,236 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	Ptr				tempPtr;
 	OSType			AMFType;
 	long			finetune[16] = 
-						{
-							8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
-							7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
-						};
-
+	{
+		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
+		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
+	};
+	
 	short			pan, uusize, oldIns = 1;
-
+	
 	theAMFRead = AMFCopyPtr;
-
+	
 	READAMFFILE( &AMFType, 4);		// AMF Type
 	MOT32(&AMFType);
 	//XXXX: Byte-swapping!
 	if( AMFType >= 0x414D460C ) pan = 32;
 	else pan = 16;
-
+	
 	if( AMFType == 0x414D4601 ) uusize = 3;
 	else if( AMFType >= 0x414D460A ) oldIns = 0;
 	else if( AMFType!= 0x414D4608 && AMFType != 0x414D4609) return MADFileNotSupportedByThisPlug;
-
-// Conversion
+	
+	// Conversion
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);	
 	if( theMAD->header == NULL) return MADNeedMemory;
-
+	
 	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO AMF Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
-
+	
 	theMAD->header->MAD = 'MADK';
-
-READAMFFILE( theMAD->header->name, 32);
-READAMFFILE( &tempByte, 1);		noIns = tempByte;
-READAMFFILE( &tempByte, 1);		theMAD->header->numPat = tempByte;
-READAMFFILE( &tempShort, 2);	trackCount = Tdecode16( &tempShort);
-
-if( AMFType >= 0x414D4609 )
-{
-    READAMFFILE( &tempByte, 1);		theMAD->header->numChn = tempByte;
 	
-    READAMFFILE( &tempByte, pan);
-    if( AMFType < 0x414D460B )
-    {
-        //memcpy(&module->channelPanning,order16,16);
-    }
-}
-else theMAD->header->numChn = 4;
-if( AMFType >= 0x414D460D )
-{
-	READAMFFILE( &tempByte, 1);		theMAD->header->tempo = tempByte;
-	READAMFFILE( &tempByte, 1);		theMAD->header->speed = tempByte;
-}
-else
-{
-	theMAD->header->speed			= 6;
-	theMAD->header->tempo			= 125;
-}
-
-//theMAD->header->numPointers		= oldMAD->numPointers;
-//BlockMoveData( oldMAD->oPointers, theMAD->header->oPointers, 128);
-
-theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
-for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-/**** Patterns *******/
-
-for( i = 0; i < theMAD->header->numPat; i++ )
-{
-	long patSize;
+	READAMFFILE( theMAD->header->name, 32);
+	READAMFFILE( &tempByte, 1);		noIns = tempByte;
+	READAMFFILE( &tempByte, 1);		theMAD->header->numPat = tempByte;
+	READAMFFILE( &tempShort, 2);	trackCount = Tdecode16( &tempShort);
 	
-	if( AMFType >= 0x414D460E )
+	if( AMFType >= 0x414D4609 )
 	{
-		READAMFFILE( &tempShort, 2);	patSize = Tdecode16( &tempShort);
-	}
-    else patSize = 64;
-
-	theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear( sizeof( PatHeader) + theMAD->header->numChn * patSize * sizeof( Cmd), init);
-	if( theMAD->partition[ i] == NULL) return MADNeedMemory;
-	
-	theMAD->partition[ i]->header.size 		= patSize;
-	theMAD->partition[ i]->header.compMode 	= 'NONE';
-	
-	for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
-	
-	theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
-	
-    for( x = 0; x < theMAD->header->numChn; x++ )
-    {
-    //	fread(&(module->patterns[t].track[i]),2,1,file);
-    	READAMFFILE( &tempShort, 2);
-    }
-}
-for( i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[ i] = NULL;
-
-for( i = 0; i < MAXTRACK; i++)
-{
-	if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-	else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
-	
-	theMAD->header->chanVol[ i] = MAX_VOLUME;
-}
-
-	theMAD->header->generalVol		= 64;
-	theMAD->header->generalSpeed	= 80;
-	theMAD->header->generalPitch	= 80;
-
-
-/**** Instruments header *****/
-
-theMAD->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
-if( !theMAD->fid) return MADNeedMemory;
-
-theMAD->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
-if( !theMAD->sample) return MADNeedMemory;
-
-for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
-
-for( i = 0; i < noIns; i++)
-{
-	InstrData		*curIns = &theMAD->fid[ i];
-	
-	if( oldIns )
-	{
-		OLDINSTRUMENT	oi;
+		READAMFFILE( &tempByte, 1);		theMAD->header->numChn = tempByte;
 		
-		READAMFFILE( &oi, sizeof( OLDINSTRUMENT));
-				
-		memmove( oi.name, curIns->name, 32);
-		curIns->type = 0;
-		
-		if( oi.size > 0)
+		READAMFFILE( &tempByte, pan);
+		if( AMFType < 0x414D460B )
 		{
-			sData	*curData;
-			
-			curIns->numSamples = 1;
-			
-			curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear( sizeof( sData), init);
-			
-			curData->size		= Tdecode32( &oi.size);
-			//FIXME: were loopstart and loopend supposed to be byteswapped on PowerPC?
-			ushort oiloopstart = Tdecode16( &oi.loopstart);
-			ushort oiloopend = Tdecode16( &oi.loopend);
-			curData->loopBeg 	= oiloopstart; 
-			curData->loopSize 	= oiloopend - oiloopstart;
-			if( oiloopend == 65535)
-			{
-				curData->loopSize = curData->loopBeg = 0;
-			}
-			curData->vol		= oi.volume;
-			curData->c2spd		= Tdecode16( &oi.rate);	//finetune[ oldMAD->fid[ i].fineTune];
-			curData->loopType	= 0;
-			curData->amp		= 8;
-			
-			curData->relNote	= 0;
-			
-			curData->data 		= MADPlugNewPtr( curData->size, init);
-			if( curData->data == NULL) return MADNeedMemory;
+			//memcpy(&module->channelPanning,order16,16);
 		}
-		else curIns->numSamples = 0;
+	}
+	else theMAD->header->numChn = 4;
+	if( AMFType >= 0x414D460D )
+	{
+		READAMFFILE( &tempByte, 1);		theMAD->header->tempo = tempByte;
+		READAMFFILE( &tempByte, 1);		theMAD->header->speed = tempByte;
 	}
 	else
 	{
-		INSTRUMENT		oi;
+		theMAD->header->speed			= 6;
+		theMAD->header->tempo			= 125;
+	}
+	
+	//theMAD->header->numPointers		= oldMAD->numPointers;
+	//BlockMoveData( oldMAD->oPointers, theMAD->header->oPointers, 128);
+	
+	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
+	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	/**** Patterns *******/
+	
+	for( i = 0; i < theMAD->header->numPat; i++ )
+	{
+		long patSize;
 		
-		READAMFFILE( &oi, sizeof( INSTRUMENT));
-		theAMFRead--;
+		if( AMFType >= 0x414D460E )
+		{
+			READAMFFILE( &tempShort, 2);	patSize = Tdecode16( &tempShort);
+		}
+		else patSize = 64;
 		
-		memmove( oi.name, curIns->name, 32);
-		curIns->type = 0;
+		theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear( sizeof( PatHeader) + theMAD->header->numChn * patSize * sizeof( Cmd), init);
+		if( theMAD->partition[ i] == NULL) return MADNeedMemory;
 		
-		if( oi.size > 0)
+		theMAD->partition[ i]->header.size 		= patSize;
+		theMAD->partition[ i]->header.compMode 	= 'NONE';
+		
+		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
+		
+		theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
+		
+		for( x = 0; x < theMAD->header->numChn; x++ )
+		{
+			//	fread(&(module->patterns[t].track[i]),2,1,file);
+			READAMFFILE( &tempShort, 2);
+		}
+	}
+	for( i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[ i] = NULL;
+	
+	for( i = 0; i < MAXTRACK; i++)
+	{
+		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
+		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		
+		theMAD->header->chanVol[ i] = MAX_VOLUME;
+	}
+	
+	theMAD->header->generalVol		= 64;
+	theMAD->header->generalSpeed	= 80;
+	theMAD->header->generalPitch	= 80;
+	
+	
+	/**** Instruments header *****/
+	
+	theMAD->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
+	if( !theMAD->fid) return MADNeedMemory;
+	
+	theMAD->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
+	if( !theMAD->sample) return MADNeedMemory;
+	
+	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	
+	for( i = 0; i < noIns; i++)
+	{
+		InstrData		*curIns = &theMAD->fid[ i];
+		
+		if( oldIns )
+		{
+			OLDINSTRUMENT	oi;
+			
+			READAMFFILE( &oi, sizeof( OLDINSTRUMENT));
+			
+			memmove( curIns->name, oi.name, 32);
+			curIns->type = 0;
+			
+			if( oi.size > 0)
+			{
+				sData	*curData;
+				
+				curIns->numSamples = 1;
+				
+				curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear( sizeof( sData), init);
+				
+				curData->size		= Tdecode32( &oi.size);
+				//FIXME: were loopstart and loopend supposed to be byteswapped on PowerPC?
+				ushort oiloopstart = Tdecode16( &oi.loopstart);
+				ushort oiloopend = Tdecode16( &oi.loopend);
+				curData->loopBeg 	= oiloopstart; 
+				curData->loopSize 	= oiloopend - oiloopstart;
+				if( oiloopend == 65535)
+				{
+					curData->loopSize = curData->loopBeg = 0;
+				}
+				curData->vol		= oi.volume;
+				curData->c2spd		= Tdecode16( &oi.rate);	//finetune[ oldMAD->fid[ i].fineTune];
+				curData->loopType	= 0;
+				curData->amp		= 8;
+				
+				curData->relNote	= 0;
+				
+				curData->data 		= MADPlugNewPtr( curData->size, init);
+				if( curData->data == NULL) return MADNeedMemory;
+			}
+			else curIns->numSamples = 0;
+		}
+		else
+		{
+			INSTRUMENT		oi;
+			
+			READAMFFILE( &oi, sizeof( INSTRUMENT));
+			theAMFRead--;
+			
+			memmove( curIns->name, oi.name, 32);
+			curIns->type = 0;
+			
+			if( oi.size > 0)
+			{
+				sData	*curData;
+				
+				curIns->numSamples = 1;
+				
+				curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear( sizeof( sData), init);
+				
+				curData->size		= Tdecode32( &oi.size);
+				curData->loopBeg 	= Tdecode32( &oi.loopstart);
+				curData->loopSize 	= Tdecode32( &oi.loopend) - Tdecode32( &oi.loopstart);
+				if( oi.loopend == 65535)
+				{
+					curData->loopSize = curData->loopBeg = 0;
+				}
+				curData->vol		= oi.volume;
+				curData->c2spd		= NOFINETUNE;	//oi.rate;	//finetune[ oldMAD->fid[ i].fineTune];
+				curData->loopType	= 0;
+				curData->amp		= 8;
+				
+				curData->relNote	= 0;
+				
+				curData->data 		= MADPlugNewPtr( curData->size, init);
+				if( curData->data == NULL) return MADNeedMemory;
+			}
+			else curIns->numSamples = 0;
+		}
+	}
+	
+	trckPtr = 0;
+	for( t = 0; t < trackCount; t++ )
+	{
+		READAMFFILE( &tempShort, 2);	tempShort = Tdecode16( &tempShort);
+		if( tempShort > trckPtr) trckPtr = tempShort;
+	}
+	
+	for( t = 0; t < trckPtr; t++)
+	{
+		READAMFFILE( &tempShort, 2);		tempShort = Tdecode16( &tempShort);
+		READAMFFILE( &tempByte, 1);
+		
+		if( tempShort == 0 ) t=t;
+		else
+		{
+			Ptr tPtr = NewPtr( tempShort * 3 + size);
+			READAMFFILE( tPtr,tempShort * 3 + size);
+			DisposePtr( tPtr);
+		}
+	}
+	
+	for( i = 0; i < noIns; i++)
+	{
+		InstrData		*curIns = &theMAD->fid[ i];
+		
+		if( curIns->numSamples > 0)
 		{
 			sData	*curData;
 			
-			curIns->numSamples = 1;
+			curData = theMAD->sample[ i*MAXSAMPLE + 0];
 			
-			curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear( sizeof( sData), init);
-			
-			curData->size		= Tdecode32( &oi.size);
-			curData->loopBeg 	= Tdecode32( &oi.loopstart);
-			curData->loopSize 	= Tdecode32( &oi.loopend) - Tdecode32( &oi.loopstart);
-			if( oi.loopend == 65535)
-			{
-				curData->loopSize = curData->loopBeg = 0;
-			}
-			curData->vol		= oi.volume;
-			curData->c2spd		= NOFINETUNE;	//oi.rate;	//finetune[ oldMAD->fid[ i].fineTune];
-			curData->loopType	= 0;
-			curData->amp		= 8;
-			
-			curData->relNote	= 0;
-			
-			curData->data 		= MADPlugNewPtr( curData->size, init);
-			if( curData->data == NULL) return MADNeedMemory;
+			READAMFFILE( curData->data, curData->size);
 		}
-		else curIns->numSamples = 0;
 	}
-}
-
-trckPtr = 0;
-for( t = 0; t < trackCount; t++ )
-{
-	READAMFFILE( &tempShort, 2);	tempShort = Tdecode16( &tempShort);
-	if( tempShort > trckPtr) trckPtr = tempShort;
-}
-
-for( t = 0; t < trckPtr; t++)
-{
-	READAMFFILE( &tempShort, 2);		tempShort = Tdecode16( &tempShort);
-	READAMFFILE( &tempByte, 1);
 	
-    if( tempShort == 0 ) t=t;
-    else
-    {
-    	Ptr tPtr = NewPtr( tempShort * 3 + size);
-        READAMFFILE( tPtr,tempShort * 3 + size);
-        DisposePtr( tPtr);
-    }
-}
-
-for( i = 0; i < noIns; i++)
-{
-	InstrData		*curIns = &theMAD->fid[ i];
-	
-	if( curIns->numSamples > 0)
-	{
-		sData	*curData;
-		
-		curData = theMAD->sample[ i*MAXSAMPLE + 0];
-		
-		READAMFFILE( curData->data, curData->size);
-	}
-}
-
-return noErr;
+	return noErr;
 }
 
 static OSErr TestAMFFile( Ptr AlienFile)
