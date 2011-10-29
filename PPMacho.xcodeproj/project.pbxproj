@@ -4668,7 +4668,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 0410;
+				LastUpgradeCheck = 0420;
 			};
 			buildConfigurationList = 88E0C3A90C2F21DD00D6C081 /* Build configuration list for PBXProject "PPMacho" */;
 			compatibilityVersion = "Xcode 3.2";
