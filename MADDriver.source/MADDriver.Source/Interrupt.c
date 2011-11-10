@@ -1931,6 +1931,7 @@ short					*DASCopy8;
 		
 		switch( intDriver->DriverSettings.outPutBits)
 		{
+		//TODO: 24-bit, maybe even 20-bit
 			case 16:
 				memmove( intDriver->DASCBuffer, intDriver->DASCBuffer + intDriver->ASCBUFFER*2, realMDelay*8L);
 				bzero( (intDriver->DASCBuffer + realMDelay*2L), intDriver->ASCBUFFER*8L);
