@@ -74,6 +74,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 		ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
 		
 		info = UTGetOSTypeFromString(ostypes);
+		CFRelease(ostypes);
 		if (!info) goto fail1;
 		
 		
@@ -99,7 +100,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 		MADAttachDriverToMusic( MADDriver, MADMusic1, NULL);
 		long fT, cT;
 		MADGetMusicStatus( MADDriver, &fT, &cT);	// Some infos about current music
-		double fTd = fT / 60.0f;
+		double fTd = fT / 60.0;
 		
 		CFNumberRef duration = CFNumberCreate(kCFAllocatorDefault, kCFNumberDoubleType, &fTd);
 		CFDictionarySetValue(attributes, kMDItemDurationSeconds, duration);
