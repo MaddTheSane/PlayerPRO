@@ -442,12 +442,10 @@ typedef struct PPSndDoubleBufferHeader2 {
 typedef PPSndDoubleBufferHeader2 *        PPSndDoubleBufferHeader2Ptr;
 #endif
 
-#include <dlfcn.h>
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 
 typedef struct PlugInfo
 {
-	void*		hLibrary;										
 	MADPLUGFUNC	IOPlug;											// Plug CODE
 	CFStringRef	MenuName;										// Plug name
 	CFStringRef	AuthorString;									// Plug author

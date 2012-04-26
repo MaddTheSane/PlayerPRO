@@ -131,23 +131,16 @@ static void MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		}
 		else goto badplug3;
 	}
-	CFURLRef tempURL = CFBundleCopyExecutableURL(tempBundle);
-	
-	char URLcString[PATH_MAX];
-	CFURLGetFileSystemRepresentation(tempURL, true, (unsigned char*)URLcString, PATH_MAX);
-	CFRelease(tempURL);
-	FillPlug->hLibrary = dlopen(URLcString , RTLD_LAZY);
-	FillPlug->IOPlug = dlsym(FillPlug->hLibrary, "PPImpExpMain");
+
+	FillPlug->IOPlug = CFBundleGetFunctionPointerForName(tempBundle, CFSTR("PPImpExpMain"));
 	if(!FillPlug->IOPlug)
-		goto badplug4;
+		goto badplug3;
 	FillPlug->file = tempBundle;
 	CFRetain(FillPlug->file);
 
 	inMADDriver->TotalPlug++;
 	return;
 	
-badplug4:
-	dlclose(FillPlug->hLibrary);
 badplug3:
 	CFRelease(FillPlug->AuthorString);
 badplug2:
@@ -271,9 +264,7 @@ void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 		PlugNums = CFArrayGetCount( somePlugs );
 		if (PlugNums > 0) {
 			for (x = 0; x < PlugNums; x++) {
-				CFPlugInRef tempPlugRef = NULL;
 				CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
-				tempPlugRef = CFBundleGetPlugIn(tempBundleRef);
 				MakeMADPlug(inMADDriver, tempBundleRef);
 				
 			}
@@ -323,8 +314,6 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		dlclose(inMADDriver->ThePlug[i].hLibrary);
-
 		CFRelease(inMADDriver->ThePlug[i].file);
 		CFRelease(inMADDriver->ThePlug[i].AuthorString);
 		CFRelease(inMADDriver->ThePlug[i].UTItypes);
