@@ -19,33 +19,10 @@
 extern void NSLog(CFStringRef format, ...);
 
 #define MAXPLUG	40
-#define RSRCNAME "\pRsrc Plug Sys##"
 
 #include "PPPlug.h"
 #include "PPPrivate.h"
 #define CharlMADcheckLength 10
-
-static inline OSErr GetFSSpecFromCFBundle(FSSpecPtr out, CFBundleRef in)
-{
-#ifndef __LP64__
-	OSErr		iErr = noErr;
-	FSRef		tempRef;
-	CFURLRef	tempURL;
-	tempURL = CFBundleCopyBundleURL(in);
-	iErr = CFURLGetFSRef(tempURL, &tempRef);
-	CFRelease(tempURL);
-	if (iErr) {
-		iErr = noErr;
-	}
-	else {
-		return fnfErr;
-	}
-	
-	return FSGetCatalogInfo(&tempRef, kFSCatInfoNone, NULL, NULL, out, NULL);
-#else
-	return bdNamErr;
-#endif
-}
 
 const CFStringRef kMadPlugMenuNameKey =		CFSTR("MADPlugMenuName");
 const CFStringRef kMadPlugAuthorNameKey =	CFSTR("MADPlugAuthorName");
@@ -190,10 +167,10 @@ CFMutableArrayRef GetDefaultPluginFolderLocations()
 	return PlugFolds;
 }
 
-static inline CFMutableArrayRef GetPluginFolderLocationsWithFSRef(FSRefPtr UserAddedPlace)
+static inline CFMutableArrayRef GetPluginFolderLocationsWithFolderPath(char *UserAddedPlace)
 {
 	CFMutableArrayRef FoldLocs = GetDefaultPluginFolderLocations();
-	CFURLRef custfolder = CFURLCreateFromFSRef(kCFAllocatorDefault, UserAddedPlace);
+	CFURLRef custfolder = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (UInt8*)UserAddedPlace, strlen(UserAddedPlace), true);
 	CFArrayAppendValue(FoldLocs, custfolder);
 	CFRelease(custfolder); custfolder = NULL;
 	return FoldLocs;
@@ -203,14 +180,14 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 {
 	MADSpec		*theMAD;
 	long		fileSize;
-	short		fileID;
+	UNFILE		fileID;
 	
-	theMAD = (MADSpec*) NewPtr( sizeof( MADSpec) + 200);
+	theMAD = (MADSpec*) malloc( sizeof( MADSpec) + 200);
 	
 	fileID = iFileOpen( AlienFile);
 	if( !fileID)
 	{
-		DisposePtr( (Ptr) theMAD);
+		free( theMAD);
 		return -1;
 	}
 	fileSize = iGetEOF( fileID);
@@ -228,28 +205,24 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	InfoRec->totalInstruments = theMAD->numInstru;
 	InfoRec->fileSize = fileSize;
 	
-	DisposePtr( (Ptr) theMAD);	
+	free( theMAD);	
 	theMAD = NULL;
 	
 	return noErr;
 }
 
-void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
+void MADInitImportPlug( MADLibrary *inMADDriver, char *PluginFolder)
 {
 	CFMutableArrayRef PlugLocations = NULL;
 	CFArrayRef		somePlugs = NULL;
 	CFIndex			PlugLocNums, PlugNums, i, x;
 	
-	inMADDriver->ThePlug = (PlugInfo*) NewPtr( MAXPLUG * sizeof( PlugInfo));
+	inMADDriver->ThePlug = (PlugInfo*) malloc( MAXPLUG * sizeof( PlugInfo));
 	inMADDriver->TotalPlug = 0;
-	if (PluginFolder != NULL) {
-		Boolean UnusedBool1, isFolder;
-		FSResolveAliasFile(PluginFolder, TRUE, &isFolder, &UnusedBool1);
-	}
 	if (PluginFolder == NULL) {
 		PlugLocations = GetDefaultPluginFolderLocations();
 	} else {
-		PlugLocations = GetPluginFolderLocationsWithFSRef(PluginFolder);
+		PlugLocations = GetPluginFolderLocationsWithFolderPath(PluginFolder);
 	}
 #ifndef MAINPLAYERPRO
 	{
@@ -258,7 +231,8 @@ void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 #endif
 	PlugLocNums	= CFArrayGetCount( PlugLocations );
 	
-	for (i=0; i < PlugLocNums; i++) {
+	for (i = 0; i < PlugLocNums; i++) {
+		//TODO: version checking
 		CFURLRef aPlugLoc = CFArrayGetValueAtIndex(PlugLocations, i);
 		somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, CFSTR("ppimpexp"));
 		PlugNums = CFArrayGetCount( somePlugs );
@@ -284,26 +258,17 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 {
 	OSErr					iErr = noErr;
 	{
-#ifndef __LP64__
-		GrafPtr savedPort;
-		GetPort(&savedPort);
-#endif
-		short resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
+		CFBundleRefNum resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
 		MADDriverSettings		driverSettings;
-		
-		driverSettings.sysMemory = false;
-		
+				
 		iErr = (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);;
 		
 		CFBundleCloseBundleResourceMap(inMADDriver->ThePlug[PlugNo].file, resFileNum);
-#ifndef __LP64__
-		SetPort(savedPort);
-#endif
 	}
 	return iErr;
 }
 
-void MInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PlugsFolderName)
+void MInitImportPlug( MADLibrary *inMADDriver, char *PlugsFolderName)
 {
 	MADInitImportPlug(inMADDriver, PlugsFolderName);
 }
@@ -320,12 +285,12 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 		CFRelease(inMADDriver->ThePlug[i].MenuName);
 
 	}
-	DisposePtr( (Ptr) inMADDriver->ThePlug);		inMADDriver->ThePlug = NULL;
+	free( inMADDriver->ThePlug);		inMADDriver->ThePlug = NULL;
 }
 
 void GetPStrFromCFString(const CFStringRef source, Str255 pStrOut)
 {
-	CFStringGetPascalString(source, pStrOut, 255, CFStringGetSystemEncoding());
+	CFStringGetPascalString(source, pStrOut, 255, kCFStringEncodingMacRoman);
 }
 
 OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)
@@ -359,7 +324,7 @@ OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			*theNewMAD = (MADMusic*) MADNewPtrClear( sizeof( MADMusic), inMADDriver);
+			*theNewMAD = (MADMusic*) calloc( sizeof( MADMusic), 1);
 			if( !theNewMAD) return MADNeedMemory;
 			
 			return CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec);

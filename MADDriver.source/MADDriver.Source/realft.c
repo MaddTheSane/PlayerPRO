@@ -49,8 +49,8 @@ OSErr MADInitEqualizer( MADDriverRec *intDriver)
 {
 	long i;
 	
-	intDriver->Filter	= (double*) NewPtrClear( sizeof( double) * ((EQPACKET*2)+2));
-	intDriver->fData	= (double*) NewPtrClear( sizeof( double) * ((EQPACKET*2)+2));
+	intDriver->Filter	= (double*) calloc( sizeof( double) * ((EQPACKET*2)+2), 1);
+	intDriver->fData	= (double*) calloc( sizeof( double) * ((EQPACKET*2)+2), 1);
 	
 
 	
@@ -66,8 +66,8 @@ OSErr MADInitEqualizer( MADDriverRec *intDriver)
 
 void MADCloseEqualizer( MADDriverRec *intDriver)
 {
-	DisposePtr( (Ptr) intDriver->Filter);
-	DisposePtr( (Ptr) intDriver->fData);
+	free( (Ptr) intDriver->Filter);
+	free( (Ptr) intDriver->fData);
 }
 
 void MADfour1( double *data,int nn,int isign)
@@ -263,7 +263,7 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 		fDataCopy2 = (double*) NewPtr( sizeof( double) * (powersize+2));
 		if( fDataCopy2 == NULL) return;
 		
-		shiftAr = (long*) NewPtrClear( sizeof( long) * (powersize+2));
+		shiftAr = (long*) calloc( sizeof( long) * (powersize+2), 1);
 		if( shiftAr == NULL) return;
 	}
 	
@@ -404,12 +404,12 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 	
 	if( size != EQPACKET*2*2)
 	{
-		DisposePtr( (Ptr) fDataCopy);
+		free( (Ptr) fDataCopy);
 		fDataCopy = NULL;
 		
-		if( shift) DisposePtr( (Ptr) fDataCopy2);
+		if( shift) free( (Ptr) fDataCopy2);
 		
-		if( shift) DisposePtr( (Ptr) shiftAr);
+		if( shift) free( (Ptr) shiftAr);
 	}
 }
 
@@ -457,7 +457,7 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 		fDataCopy2 = (double*) NewPtr( sizeof( double) * (powersize+2));
 		if( fDataCopy2 == NULL) return;
 		
-		shiftAr = (long*) NewPtrClear( sizeof( long) * (powersize+2));
+		shiftAr = (long*) calloc( sizeof( long) * (powersize+2), 1);
 		if( shiftAr == NULL) return;
 	}
 	
@@ -615,11 +615,11 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 	
 	if( size != EQPACKET*2*2)
 	{
-		DisposePtr( (Ptr) fDataCopy);
+		free( (Ptr) fDataCopy);
 		fDataCopy = NULL;
 		
-		if( shift) DisposePtr( (Ptr) fDataCopy2);
-		if( shift) DisposePtr( (Ptr) shiftAr);
+		if( shift) free( (Ptr) fDataCopy2);
+		if( shift) free( (Ptr) shiftAr);
 	}
 }
 

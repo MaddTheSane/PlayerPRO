@@ -35,15 +35,10 @@ extern "C" {
 
 ////////////////////////////////////////////////////////////
 
-#ifdef _MAC_H
-#include <CoreServices/CoreServices.h>
-typedef FSIORefNum	UNFILE;
-#else
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 typedef FILE*		UNFILE;
-#endif
 	
 EXP UNFILE iFileOpen( Ptr name);
 EXP void iFileCreate(Ptr path, OSType type);
@@ -70,10 +65,10 @@ void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
 ////////////////////////////////////////////////////////////
 
 #ifdef NOINLINE
-void INT32( void *msg_buf);
-void INT16( void *msg_buf);
-void MOT32( void *msg_buf);
-void MOT16( void *msg_buf);
+EXP void INT32( void *msg_buf);
+EXP void INT16( void *msg_buf);
+EXP void MOT32( void *msg_buf);
+EXP void MOT16( void *msg_buf);
 #else
 
 static inline void MADByteSwap32(void *msg_buf)

@@ -121,7 +121,7 @@ typedef pascal Boolean	(*MyDlgFilterUPP)		( DialogPtr, EventRecord*, short*);
 //	If you want to reallocate Pcmd:
 //	
 //	if( Pcmd != 0L) DisposPtr( (Ptr) Pcmd);							// VERY IMPORTANT
-//	Pcmd = NewPtrClear( sizeof( Pcmd) + noCell * sizeof( Cmd));		// Use NewPtr ONLY to allocate memory!
+//	Pcmd = calloc( sizeof( Pcmd) + noCell * sizeof( Cmd));		// Use NewPtr ONLY to allocate memory!
 //
 //	myPcmd->structSize 	= sizeof( Pcmd) + noCell * sizeof( Cmd);
 //	

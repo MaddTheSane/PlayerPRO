@@ -59,7 +59,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 
 static inline void mystrcpy( Ptr a, BytePtr b)
 {
-	BlockMoveData( b + 1, a, b[ 0]);
+	memcpy( a, b + 1, b[ 0]);
 }
 
 static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
@@ -230,7 +230,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	/**** Header principal *****/
 	theITCopy = (Byte*) theIT;
 	
-	BlockMoveData( theITCopy, &ITinfo, sizeof( ITinfo));
+	memcpy( &ITinfo, theITCopy, sizeof( ITinfo));
 	theITCopy += 192;
 	
 	ITinfo.orderNum	= Tdecode16(  &ITinfo.orderNum);
@@ -241,15 +241,15 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	ITinfo.cwtv			= Tdecode16(  &ITinfo.cwtv);
 	
 	/**** Order Num *****/
-	ITinfo.orders = (unsigned char *) MADPlugNewPtr( ITinfo.orderNum, init);
+	ITinfo.orders = (unsigned char *) malloc( ITinfo.orderNum);
 	if( ITinfo.orders == NULL) return MADNeedMemory;
-	BlockMoveData( theITCopy, ITinfo.orders, ITinfo.orderNum);
+	memcpy( ITinfo.orders, theITCopy, ITinfo.orderNum);
 	theITCopy += ITinfo.orderNum;
 	
 	/**** Ins Num *****/
-	ITinfo.parapins = (long *) MADPlugNewPtr( ITinfo.insNum * 4L, init);
+	ITinfo.parapins = (long *) malloc( ITinfo.insNum * 4L);
 	if( ITinfo.parapins == NULL) return MADNeedMemory;
-	BlockMoveData( theITCopy, ITinfo.parapins, ITinfo.insNum * 4L);
+	memcpy( ITinfo.parapins, theITCopy, ITinfo.insNum * 4L);
 	theITCopy += ITinfo.insNum * 4L;
 	for( i = 0; i < ITinfo.insNum; i++)
 	{
@@ -257,9 +257,9 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	}
 	
 	/**** Samp Num *****/
-	ITinfo.parapsamp = (long *) MADPlugNewPtr( ITinfo.smpNum * 4L, init);
+	ITinfo.parapsamp = (long *) malloc( ITinfo.smpNum * 4L);
 	if( ITinfo.parapsamp == NULL) return MADNeedMemory;
-	BlockMoveData( theITCopy, ITinfo.parapsamp, ITinfo.smpNum * 4L);
+	memcpy( ITinfo.parapsamp, theITCopy, ITinfo.smpNum * 4L);
 	theITCopy += ITinfo.smpNum * 4L;
 	for( i = 0; i < ITinfo.smpNum; i++)
 	{
@@ -267,9 +267,9 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	}
 	
 	/**** Pat Num *****/
-	ITinfo.parappat = (long *) MADPlugNewPtr( ITinfo.patNum * 4L, init);
+	ITinfo.parappat = (long *) malloc( ITinfo.patNum * 4L);
 	if( ITinfo.parappat == NULL) return MADNeedMemory;
-	BlockMoveData( theITCopy, ITinfo.parappat, ITinfo.patNum * 4L);
+	memcpy( ITinfo.parappat, theITCopy, ITinfo.patNum * 4L);
 	theITCopy += ITinfo.patNum * 4L;
 	for( i = 0; i < ITinfo.patNum; i++)
 	{
@@ -278,14 +278,14 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	
 	/**** Ins Data ****/
 	if( ITinfo.insNum > 64) ITinfo.insNum = 64;
-	ITinfo.insdata = (ITInsForm *) MADPlugNewPtr( sizeof(ITInsForm) * ITinfo.insNum, init);
+	ITinfo.insdata = (ITInsForm *) malloc( sizeof(ITInsForm) * ITinfo.insNum);
 	if( ITinfo.insdata == NULL) return MADNeedMemory;
 	for (i = 0; i < ITinfo.insNum; i++)
 	{
 		theITCopy = (Byte*) theIT;
 		theITCopy += ITinfo.parapins[i];
 		
-		BlockMoveData( theITCopy, &ITinfo.insdata[i], sizeof( ITInsForm));
+		memcpy( &ITinfo.insdata[i], theITCopy, sizeof( ITInsForm));
 		
 		if( ITinfo.insdata[i].ID != 'IMPI') Debugger();
 		
@@ -325,14 +325,14 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	
 	/**** Samp Data ****/
 	//if( ITinfo.insNum > 64) ITinfo.insNum = 64;
-	ITinfo.sampdata = (ITSampForm *) MADPlugNewPtr( sizeof(ITSampForm) * ITinfo.smpNum, init);
+	ITinfo.sampdata = (ITSampForm *) malloc( sizeof(ITSampForm) * ITinfo.smpNum);
 	if( ITinfo.sampdata == NULL) return MADNeedMemory;
 	for (i = 0; i < ITinfo.smpNum; i++)
 	{
 		theITCopy = (Byte*) theIT;
 		theITCopy += ITinfo.parapsamp[i];
 		
-		BlockMoveData( theITCopy, &ITinfo.sampdata[i], sizeof( ITSampForm));
+		memcpy( &ITinfo.sampdata[i], theITCopy, sizeof( ITSampForm));
 		
 		if( ITinfo.sampdata[i].ID != 'IMPS') Debugger();
 		
@@ -352,7 +352,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	// ******** Le IT a été lu et analysé ***********
 	// ******** Copie des informations dans le MAD ***
 	
-	theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);
+	theMAD->header = (MADSpec*) calloc( sizeof( MADSpec), 1);
 	if( theMAD->header == NULL) return MADNeedMemory;
 		
 	theMAD->header->MAD = 'MADK';
@@ -386,17 +386,17 @@ for( i = 0; i < MAXTRACK; i++)
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
 	
-	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
+	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 
 	// ********************
 	// ***** INSTRUMENTS *****
 	// ********************
 
-	theMAD->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
+	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
 	if( !theMAD->fid) return MADNeedMemory;
 	
-	theMAD->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
+	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
 	if( !theMAD->sample) return MADNeedMemory;
 	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
@@ -429,7 +429,7 @@ for( i = 0; i < MAXTRACK; i++)
 				curIns->numSamples	= 1;
 				curIns->volFade			= DEFAULT_VOLFADE;
 				
-				curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear( sizeof( sData), init);
+				curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) calloc( sizeof( sData), 1);
 				if( curData == NULL) return MADNeedMemory;
 				
 				curData->size			= ITinfo.sampdata[i].length;
@@ -443,14 +443,14 @@ for( i = 0; i < MAXTRACK; i++)
 				curData->relNote	= 0;
 				for( x = 0; x < 28; x++) theMAD->fid[i].name[x] = ITinfo.sampdata[i].DOSName[x];
 				
-				curData->data 		= MADPlugNewPtr( curData->size, init);
+				curData->data 		= malloc( curData->size);
 				if( curData->data == NULL) return MADNeedMemory;
 				
 				if( curData->data == NULL) DebugStr("\pInstruments: I NEED MEMORY !!! NOW !");
 				
 				if( curData->data != NULL)
 				{
-					BlockMoveData( theInstrument[i], curData->data, curData->size);
+					memcpy( curData->data, theInstrument[i], curData->size);
 					
 					/*if( ITinfo.ffv != 1)
 					{
@@ -494,7 +494,7 @@ for( i = 0; i < MAXTRACK; i++)
 		curITPat->length 	= Tdecode16(  &curITPat->length);
 		curITPat->row 		= Tdecode16(  &curITPat->row);
 		
-		theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear( sizeof( PatHeader) + theMAD->header->numChn * curITPat->row * sizeof( Cmd), init);
+		theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * curITPat->row * sizeof( Cmd), 1);
 		if( theMAD->partition[ i] == NULL) return MADNeedMemory;
 		
 		theMAD->partition[ i]->header.size 			= curITPat->row;
@@ -600,9 +600,9 @@ for( i = 0; i < MAXTRACK; i++)
 		}
 	}
 	
-	DisposePtr( (Ptr) ITinfo.orders);			DisposePtr( (Ptr) ITinfo.parapins);
-	DisposePtr( (Ptr) ITinfo.parappat);		DisposePtr( (Ptr) ITinfo.insdata);
-	DisposePtr( (Ptr) ITinfo.parapsamp);
+	free( ITinfo.orders);			free( ITinfo.parapins);
+	free( ITinfo.parappat);		free( ITinfo.insdata);
+	free( ITinfo.parapsamp);
 
 	return noErr;
 }
@@ -614,7 +614,7 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 	/********************************/
 
 	/**** Header principal *****/
-	BlockMoveData( AlienFile, &ITinfo, 96);
+	memcpy( &ITinfo, AlienFile, 96);
 	
 	/*** Signature ***/
 	
@@ -622,7 +622,7 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	ITinfo.name[ 26] = '\0';
+	ITinfo.name[ 25] = '\0';
 	strcpy( info->internalFileName, ITinfo.name);
 	
 	/*** Total Patterns ***/
@@ -672,15 +672,15 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				sndSize = iGetEOF( iFileRefI);
 			
 				// ** MEMORY Test Start
-				AlienFile = MADPlugNewPtr( sndSize * 2L, init);
+				AlienFile = malloc( sndSize * 2L);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
 				else
 				{
-					DisposePtr( AlienFile);
+					free( AlienFile);
 					
-					AlienFile = MADPlugNewPtr( sndSize, init);
+					AlienFile = malloc( sndSize);
 					if( AlienFile == NULL) myErr = MADNeedMemory;
 					else
 					{
@@ -694,7 +694,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 							}
 						}
 					}
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					free( AlienFile);	AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
@@ -707,14 +707,14 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			{
 				sndSize = 1024L;
 				
-				AlienFile = MADPlugNewPtr( sndSize, init);
+				AlienFile = malloc( sndSize);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					if(myErr == noErr) myErr = TestITFile( AlienFile);
 					
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					free( AlienFile);	AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
@@ -729,7 +729,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = MADPlugNewPtr( sndSize, init);
+				AlienFile = malloc( sndSize);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
@@ -738,7 +738,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					{
 						myErr = ExtractITInfo( info, AlienFile);
 					}
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					free( AlienFile);	AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}

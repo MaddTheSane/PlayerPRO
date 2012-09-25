@@ -127,7 +127,7 @@ OSErr	PPImportFile( MADLibrary* inMADDriver, char	*kindFile, FSSpec	*AlienFile, 
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			*theNewMAD = (MADMusic*) MADNewPtrClear( sizeof( MADMusic), inMADDriver);
+			*theNewMAD = (MADMusic*) MADcalloc( sizeof( MADMusic), inMADDriver);
 			if( !*theNewMAD) return -1L;
 			
 			return( CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec));

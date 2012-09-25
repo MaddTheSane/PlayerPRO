@@ -91,15 +91,15 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 				sndSize =iGetEOF( iFileRefI);
 			
 				// ** MEMORY Test Start
-				AlienFile = MADPlugNewPtr( sndSize * 2L, init);
+				AlienFile = malloc( sndSize * 2L);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
 				else
 				{
-					DisposePtr( AlienFile);
+					free( AlienFile);
 					
-					AlienFile = MADPlugNewPtr( sndSize, init);
+					AlienFile = malloc( sndSize);
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					
 					
@@ -109,7 +109,7 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 						
 						if( myErr == noErr) ConvertMidiFile( AlienFile, MadFile, init);
 						
-						DisposePtr( AlienFile);	AlienFile = NULL;
+						free( AlienFile);	AlienFile = NULL;
 					}
 					iClose( iFileRefI);
 				}
@@ -123,14 +123,14 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 			{
 				sndSize = 1024L;
 				
-				AlienFile = MADPlugNewPtr( sndSize, init);
+				AlienFile = malloc( sndSize);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					if(myErr == noErr) myErr = TestMIDIFile( AlienFile);
 					
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					free( AlienFile);	AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
@@ -145,13 +145,13 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 			
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = MADPlugNewPtr( sndSize, init);
+				AlienFile = malloc( sndSize);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					if(myErr == noErr) myErr = ExtractMIDIInfo( info, AlienFile);
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					free( AlienFile);	AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}

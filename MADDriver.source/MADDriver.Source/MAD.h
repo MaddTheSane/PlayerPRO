@@ -88,25 +88,6 @@ typedef FourCharCode	OSType;
 typedef SInt32			Fixed;
 typedef UInt32			UnsignedFixed;
 
-#define NewPtr(x)					(Ptr) malloc(x)
-#define NewPtrClear(x) 	 			(Ptr) calloc(x, 1)
-#define NewPtrSys(x)				(Ptr) malloc(x)
-#define NewPtrSysClear(x) 			(Ptr) calloc(x, 1)
-
-//#define DisposPtr(x)				free(x)
-#define DisposePtr(x)				free(x)
-//#define BlockZero(x, y)				memset(x, y, 0)
-static inline void BlockZero( void* a, long size)
-{
-	Ptr b = (Ptr) a;
-	long i;
-	
-	for( i = 0; i < size ; i++)
-	{
-		b[ i] = 0;
-	}
-}
-
 #define MemError()					0
 
 #ifndef TRUE
@@ -117,8 +98,6 @@ static inline void BlockZero( void* a, long size)
 #define FALSE 0
 #endif
 
-typedef char	FSRef;
-typedef char*	FSRefPtr;
 enum {
 	noErr = 0
 };
@@ -127,7 +106,7 @@ static inline void DebugStr( unsigned char* x)
 {
 	char *temp;
 	
-	temp = NewPtr( (x[ 0] + 1));
+	temp = malloc( (x[ 0] + 1));
 	
 	memmove( temp, x+1, x[ 0]);
 	temp[ x[ 0]] = 0;
@@ -136,7 +115,7 @@ static inline void DebugStr( unsigned char* x)
 	debugger( temp);
 #endif
 	
-	DisposePtr( temp);
+	free( temp);
 }
 
 #endif

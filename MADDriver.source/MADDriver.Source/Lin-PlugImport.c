@@ -13,7 +13,7 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	fileID = iFileOpen( AlienFile);
 	if( !fileID)
 	{
-		DisposePtr( (Ptr) theMAD);
+		free( (Ptr) theMAD);
 		return -1;
 	}
 	fileSize = iGetEOF( fileID);
@@ -31,7 +31,7 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	InfoRec->totalInstruments = theMAD->numInstru;
 	InfoRec->fileSize = fileSize;
 	
-	DisposePtr( (Ptr) theMAD);	
+	free( (Ptr) theMAD);	
 	theMAD = NULL;
 	
 	return noErr;
@@ -108,7 +108,7 @@ OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			*theNewMAD = (MADMusic*) MADNewPtrClear( sizeof( MADMusic), inMADDriver);
+			*theNewMAD = (MADMusic*) MADcalloc( sizeof( MADMusic), inMADDriver);
 			if( !theNewMAD) return MADNeedMemory;
 			
 			return( CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec));
@@ -242,7 +242,7 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 				xx = strlen( inMADDriver->ThePlug[ i].type);
 				if( xx > 4) xx = 4;
 				type = '    ';
-				BlockMoveData( inMADDriver->ThePlug[ i].type, &type, xx);
+				memcpy( &type, inMADDriver->ThePlug[ i].type, xx);
 				
 				return type;
 			}

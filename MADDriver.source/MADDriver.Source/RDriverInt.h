@@ -208,9 +208,9 @@ OSErr	PPImportFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile, M
 OSErr	PPIdentifyFile( MADLibrary		*inMADDriver, char *kindFile, char	*AlienFile);
 
 OSType	GetPPPlugType( MADLibrary		*inMADDriver, short ID, OSType type);
-void	MInitImportPlug( MADLibrary		*inMADDriver, FSRef*);
+void	MInitImportPlug( MADLibrary		*inMADDriver, char*);
 #ifdef _MAC_H
-void	MADInitImportPlug( MADLibrary	*inMADDriver, FSRefPtr PluginFolder);
+void	MADInitImportPlug( MADLibrary	*inMADDriver, char *PluginFolder);
 #endif
 
 void	CloseImportPlug( MADLibrary		*inMADDriver);
@@ -381,7 +381,7 @@ struct __MADDriverRec
 #ifdef _MAC_H
 	VSTEffect				*masterVST[ 10];
 	VSTEffect				*chanVST[ MAXTRACK][ 4];
-	PPSndDoubleBufferHeader 	TheHeader;
+	//PPSndDoubleBufferHeader 	TheHeader;
 #endif
 	
 };

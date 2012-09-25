@@ -30,14 +30,6 @@
 
 ////////////////////////////////////////////////
 
-#ifdef _MAC_H
-#ifndef __SOUND__
-#include <Carbon/Carbon.h>
-#endif
-#endif
-
-////////////////////////////////////////////////
-
 #ifdef WIN32
 #ifndef __DSOUND_INCLUDED__
 #include <mmreg.h>
@@ -59,6 +51,7 @@
 #endif
 
 //The following aren't defined in Mac headers, but are used
+//Please note that these are depricated in PP 6
 enum{
 #if !defined(_MAC_H) || defined(__LP64__)
 	rate48khz	= (UnsignedFixed)0xBB800000,
@@ -138,9 +131,9 @@ typedef struct Channel
 		long		ID;					// Channel ID - 0 to MAXTRACK
 		long		TrackID;			// TrackID - 0 to MAXTRACK (Used in multiChannel mode)
 		
-		Ptr			begPtr;				// Sample Data Ptr - Beginning of data
-		Ptr			maxPtr;				// Sample Data Ptr - End of data
-		Ptr			curPtr;				// Sample Data Ptr - Current position
+		char		*begPtr;				// Sample Data Ptr - Beginning of data
+		char		*maxPtr;				// Sample Data Ptr - End of data
+		char		*curPtr;				// Sample Data Ptr - Current position
 		long		sizePtr;			// Sample Size in bytes
 		
 		long		amp;				// Sample amplitude: 8 or 16 bits
@@ -190,7 +183,7 @@ typedef struct Channel
 		
 		long		eventTime;
 		
-		Ptr			samplePtr;			// Used internaly by MADPlaySoundData & MADPlaySndHandle
+		char		*samplePtr;			// Used internaly by MADPlaySoundData & MADPlaySndHandle
 		
 		/**/
 		
@@ -221,7 +214,7 @@ typedef struct Channel
 		
 		long		lAC;
 		
-		Ptr			prevPtr;
+		char		*prevPtr;
 		long		lastWordL, curLastWordL;
 		long		lastWordR, curLastWordR;
 		long		curLevelL, curLevelR;
@@ -317,12 +310,12 @@ typedef struct MADDriverSettings
 {
 	short					numChn;								// Active tracks from 2 to 32, automatically setup when a new music is loaded
 	short					outPutBits;							// 8 or 16 Bits TODO: 24 Bits
-	UnsignedFixed			outPutRate;							// Fixed number, by example : rate44khz, rate22050hz, rate22khz, rate11khz, rate11025hz
+	double				outPutRate;							// Fixed number, by example : rate44khz, rate22050hz, rate22khz, rate11khz, rate11025hz
 	short					outPutMode;							// Now, only DeluxeStereoOutPut is available !
 	short					driverMode;							// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
 //	Boolean					antiAliasing;						// NOT USED anymore
 	Boolean					repeatMusic;						// If music finished, repeat it or stop.
-	Boolean					sysMemory;							// Allocate memory in Application Heap (false) or in System Heap (true)
+//	Boolean					sysMemory;							// Allocate memory in Application Heap (false) or in System Heap (true)
 //	Boolean					Interpolation;						// NOT USED anymore
 //	Boolean					MicroDelay;							// NOT USED anymore
 	long					MicroDelaySize;						// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
@@ -400,47 +393,6 @@ typedef struct PPInfoRec
 /********************						***********************/
 
 #ifdef _MAC_H
-#ifndef __LP64__
-enum {
-  PPdbBufferReady                 = 0x00000001, /*double buffer is filled*/
-  PPdbLastBuffer                  = 0x00000004 /*last double buffer to play*/
-};
-
-typedef CALLBACK_API( OSErr , PPSndDoubleBackProcPtr )(void);
-typedef STACK_UPP_TYPE(PPSndDoubleBackProcPtr)                    PPSndDoubleBackUPP;
-
-typedef struct PPSndDoubleBuffer {
-  long                dbNumFrames;
-  long                dbFlags;
-  long                dbUserInfo[2];
-  SInt8               dbSoundData[1];
-} PPSndDoubleBuffer;
-typedef PPSndDoubleBuffer *               PPSndDoubleBufferPtr;
-
-typedef struct PPSndDoubleBufferHeader {
-  short               dbhNumChannels;
-  short               dbhSampleSize;
-  short               dbhCompressionID;
-  short               dbhPacketSize;
-  UnsignedFixed       dbhSampleRate;
-  PPSndDoubleBufferPtr  dbhBufferPtr[2];
-  PPSndDoubleBackUPP    dbhDoubleBack;
-} PPSndDoubleBufferHeader;
-typedef PPSndDoubleBufferHeader *         PPSndDoubleBufferHeaderPtr;
-
-
-typedef struct PPSndDoubleBufferHeader2 {
-  short               dbhNumChannels;
-  short               dbhSampleSize;
-  short               dbhCompressionID;
-  short               dbhPacketSize;
-  UnsignedFixed       dbhSampleRate;
-  PPSndDoubleBufferPtr  dbhBufferPtr[2];
-  PPSndDoubleBackUPP    dbhDoubleBack;
-  OSType              dbhFormat;
-} PPSndDoubleBufferHeader2;
-typedef PPSndDoubleBufferHeader2 *        PPSndDoubleBufferHeader2Ptr;
-#endif
 
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 
@@ -508,7 +460,9 @@ struct MADLibrary
 };
 typedef struct MADLibrary MADLibrary;
 
+#ifndef WIN32
 #define callback
+#endif
 
 typedef struct AEffect AEffect;
 
@@ -546,6 +500,7 @@ typedef	long (*audioMasterCallback)(AEffect *effect, long opcode, long index,
 	typedef AEffect *(*VSTPlugInPtr) (audioMasterCallback  cb);
 
 #ifdef _MAC_H
+//TODO: use OS X's native VST
 typedef struct
 {
 	AEffect				*ce[ 2];
@@ -601,7 +556,7 @@ void MyDebugStr( short, char*, char*);								// Internal Debugger function, NOR
 
 MADLibrary* MADGetMADLibraryPtr();									// Get MADDriver structure pointer.
 
-OSErr	MADInitLibrary( FSRef *PlugsFolderName, Boolean sysMemory, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
+OSErr	MADInitLibrary( char *PlugsFolderName, Boolean sysMemory, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
 #ifdef _MAC_H
 OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef);
 #endif
@@ -630,20 +585,11 @@ long	MADGetHardwareVolume( void);										// Return HARDWARE volume, see MADDri
 
 OSErr	MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned char*);
 
-OSErr	MADLoadMusicRsrc( MADMusic **music, OSType IDName, short IDNo);				// MAD ONLY - Load a MAD Rsrc into memory
-OSErr	MADLoadMusicPtr( MADMusic **music, Ptr myPtr);								// MAD ONLY - Load a MAD Ptr into memory, you can DisposPtr your Ptr after this call
+OSErr	MADLoadMusicPtr( MADMusic **music, char *myPtr);								// MAD ONLY - Load a MAD Ptr into memory, you can free() your Ptr after this call
 
-OSErr	MADLoadMusicFilePString( MADLibrary *, MADMusic **music, char *type, Str255 fName);			// Load a music file with plugs
-OSErr	MADLoadMusicFileCString( MADLibrary *, MADMusic **music, char *type, Ptr fName);			// Load a music file with plugs
-#ifndef __LP64__
-OSErr	MADLoadMusicFSpFile( MADLibrary *, MADMusic **music, char *type, FSSpec *theSpec);			// Load a music file with plugs
-#endif
+OSErr	MADLoadMusicFileCString( MADLibrary *, MADMusic **music, char *type, char *fName);			// Load a music file with plugs
 
-OSErr	MADMusicIdentifyPString( MADLibrary *, char *type, Str255 pName);			// Identify what kind of music format is pName file.
 OSErr	MADMusicIdentifyCString( MADLibrary *, char *type, Ptr cName);			// Identify what kind of music format is cName file.
-#ifndef __LP64__
-OSErr	MADMusicIdentifyFSp( MADLibrary *, char *type, FSSpec *theSpec);			// Identify what kind of music format is theSpec file.
-#endif
 
 Boolean	MADPlugAvailable( MADLibrary *, char *type);								// Is plug 'type' available?
 
@@ -654,45 +600,31 @@ Cmd*	GetMADCommand(	short		position,						// Extract a Command from a PatData st
 						short		channel,
 						PatData*	aPatData);
 
-OSErr	MADPlaySndHandle( 	MADDriverRec *MDriver,
-							Handle sound,							// Handle to a 'snd ' handle, by ex: GetResource('snd ', 128);
-							long chan,								// channel ID on which to play sound
-							long note);								// note: 0 to NUMBER_NOTES or 0xFF: play sound at his normal sampleRate Khz
-
 OSErr	MADPlaySoundData(	MADDriverRec *MDriver,
-							Ptr				soundPtr,				// Sound Pointer to data
+							char			*soundPtr,				// Sound Pointer to data
 							long			size,					// Sound size in bytes
 							long			channel,				// channel ID on which to play sound
 							long			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
 							long			amplitude,				// 8 or 16 bits
 							long			loopBeg,				// loop beginning
 							long			loopSize,				// loop size in bytes
-							unsigned long	rate,					// sample rate of the sound data, by ex: rate22khz
+							double			rate,					// sample rate of the sound data, by ex: rate22khz
 							Boolean			stereo);				// sample is in stereo or in mono?
 							
 OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
-							Ptr				soundPtr,				// Sound Pointer to data
+							char			*soundPtr,				// Sound Pointer to data
 							long			size,					// Sound size in bytes
 							long			channel,				// channel ID on which to play sound
 							long			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
 							long			amplitude,				// 8 or 16 bits
 							long			loopBeg,				// loop beginning
 							long			loopSize,				// loop size in bytes
-							unsigned long	rate,					// sample rate of the sound data, by ex: rate22khz
+							double			rate,					// sample rate of the sound data, by ex: rate22khz
 							Boolean			stereo);				// sample is in stereo or in mono?
 
 Boolean MADWasReading(MADDriverRec *driver);
 void MADSetReading(MADDriverRec *driver, Boolean toSet);
-	
-	
-//Ptr MADNewPtr( long size, MADLibrary* init);
-//Ptr MADNewPtrClear( long size, MADLibrary* init);
-//Since we don't use MADLibrary any more, redefining these terms
-#define MADNewPtr(size, madlib) NewPtr(size)
-#define MADNewPtrClear(size, madlib) NewPtrClear(size)
-#define MADPlugNewPtr(size, madlib) NewPtr(size)
-#define MADPlugNewPtrClear(size, madlib) NewPtrClear(size)
-	
+
 void MyDebugStr(short, Ptr, Ptr);									// Called when a fatal error occurs.... Normally, NEVER !
 
 #ifdef __cplusplus

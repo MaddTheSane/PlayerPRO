@@ -23,7 +23,7 @@ DelayOutPut.c MainDriver.c RDriverInt.h\
 Effects.c MyDebugStr.c TickRemover.c\
 FileUtils.h \
 Interrupt.c \
-Win-FileUtils.c\
+FileUtils.c\
 MAD.h OutPut8.c\
 PPPlug.h\
 PPPrivate.h realft.c\
