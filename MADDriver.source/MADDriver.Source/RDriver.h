@@ -54,18 +54,18 @@
 //Please note that these are depricated in PP 6
 enum{
 #if !defined(_MAC_H) || defined(__LP64__)
-	rate48khz	= (UnsignedFixed)0xBB800000,
-	rate44khz	= (Fixed)0xAC440000,
-	rate32khz	= (Fixed)0x7D000000,
-	rate22050hz	= (Fixed)0x56220000,
-	rate22khz	= (Fixed)0x56EE8BA3,
-	rate16khz	= (Fixed)0x3E800000,
-	rate11khz	= (Fixed)0x2B7745D1,
-	rate11025hz	= (Fixed)0x2B110000,
-	rate8khz	= (Fixed)0x1F400000,
+	rate48khz DEPRECATED_ATTRIBUTE	= (UnsignedFixed)0xBB800000,
+	rate44khz DEPRECATED_ATTRIBUTE	= (Fixed)0xAC440000,
+	rate32khz DEPRECATED_ATTRIBUTE	= (Fixed)0x7D000000,
+	rate22050hz DEPRECATED_ATTRIBUTE	= (Fixed)0x56220000,
+	rate22khz DEPRECATED_ATTRIBUTE	= (Fixed)0x56EE8BA3,
+	rate16khz DEPRECATED_ATTRIBUTE	= (Fixed)0x3E800000,
+	rate11khz DEPRECATED_ATTRIBUTE	= (Fixed)0x2B7745D1,
+	rate11025hz DEPRECATED_ATTRIBUTE	= (Fixed)0x2B110000,
+	rate8khz DEPRECATED_ATTRIBUTE	= (Fixed)0x1F400000,
 #endif
-	rate5khz	= (UnsignedFixed)0x15BB9B5CUL,
-	rate2khz	= (UnsignedFixed)0x08000000UL
+	rate5khz DEPRECATED_ATTRIBUTE	= (UnsignedFixed)0x15BB9B5CUL,
+	rate2khz DEPRECATED_ATTRIBUTE	= (UnsignedFixed)0x08000000UL
 };
 
 ////////////////////////////////////////////////
@@ -277,12 +277,12 @@ typedef struct MADMusic
 
 enum
 {
-	oldASCSoundDriver = 1,			// MAC ONLY,	// NOT SUPPORTED anymore
-	oldAWACSoundDriver,				// MAC ONLY		// NOT SUPPORTED anymore
+	oldASCSoundDriver DEPRECATED_ATTRIBUTE = 1,			// MAC ONLY,	// NOT SUPPORTED anymore
+	oldAWACSoundDriver DEPRECATED_ATTRIBUTE,				// MAC ONLY		// NOT SUPPORTED anymore
 	MIDISoundDriver,				// MAC ONLY
-	SoundManagerDriver,				// MAC ONLY You should use only SoundManagerDriver for full compatibility !
-	QK25SoundDriver,				// MAC ONLY
-	DigiDesignSoundDriver,			// MAC ONLY
+	SoundManagerDriver DEPRECATED_ATTRIBUTE,				// MAC ONLY You should use only SoundManagerDriver for full compatibility !
+	QK25SoundDriver DEPRECATED_ATTRIBUTE,				// MAC ONLY
+	DigiDesignSoundDriver DEPRECATED_ATTRIBUTE,			// MAC ONLY
 	BeOSSoundDriver,				// BE ONLY when using with BeOS compatible systems ! - NOT FOR MAC
 	DirectSound95NT,				// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
 	Wave95NT,						// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
@@ -290,7 +290,7 @@ enum
 	ALSADriver,						// LINUX ONLY ALSA driver
 	OSSDriver,						// Open Sound System. Most Unices (NOT OS X) including Linux
 	ESDDriver,						// ESound Driver. available on most UNIX Systems
-	ASIOSoundManager,				// ASIO Sound Driver by Steinberg
+	ASIOSoundManager DEPRECATED_ATTRIBUTE,				// ASIO Sound Driver by Steinberg
 	NoHardwareDriver = SHRT_MAX		// NO HARDWARE CONNECTION, will not produce any sound
 
 };
@@ -611,6 +611,7 @@ OSErr	MADPlaySoundData(	MADDriverRec *MDriver,
 							double			rate,					// sample rate of the sound data, by ex: rate22khz
 							Boolean			stereo);				// sample is in stereo or in mono?
 							
+#if 0
 OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
 							char			*soundPtr,				// Sound Pointer to data
 							long			size,					// Sound size in bytes
@@ -621,6 +622,7 @@ OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
 							long			loopSize,				// loop size in bytes
 							double			rate,					// sample rate of the sound data, by ex: rate22khz
 							Boolean			stereo);				// sample is in stereo or in mono?
+#endif
 
 Boolean MADWasReading(MADDriverRec *driver);
 void MADSetReading(MADDriverRec *driver, Boolean toSet);

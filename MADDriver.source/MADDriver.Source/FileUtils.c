@@ -26,11 +26,7 @@
 #include "RDriver.h"
 #include "FileUtils.h"
 
-void iFileCreate( UNFILE folder, OSType)
-{
-}
-
-void iFileCreateName( UNFILE folder, Ptr name, OSType)
+void iFileCreate(Ptr path, OSType type)
 {
 }
 
@@ -97,3 +93,31 @@ int MADstrcmp( const char *dst, const char* src)
 	
 	return 0;
 }
+
+void OSType2Ptr( OSType type, Ptr str)
+{
+#ifdef __LITTLE_ENDIAN__
+	MOT32(&type);
+#endif
+	
+	memmove( str, &type, 4);
+	str[ 4] = 0;
+}
+
+OSType Ptr2OSType( char* str)
+{
+	short   i;
+	OSType  type;
+	
+	i = strlen( str);
+	if( i > 4) i = 4;
+	type = '    ';
+	memmove( &type, str, i);
+#ifdef __LITTLE_ENDIAN__
+	MOT32(&type);
+#endif
+	
+	return type;
+}
+
+

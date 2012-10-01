@@ -281,7 +281,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 		if( tempShort == 0 ) t=t;
 		else
 		{
-			Ptr tPtr = NewPtr( tempShort * 3 + size);
+			Ptr tPtr = malloc( tempShort * 3 + size);
 			READAMFFILE( tPtr,tempShort * 3 + size);
 			free( tPtr);
 		}

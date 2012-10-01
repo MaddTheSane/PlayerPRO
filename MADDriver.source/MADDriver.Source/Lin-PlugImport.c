@@ -8,7 +8,7 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	long		fileSize;
 	UNFILE		fileID;
 	
-	theMAD = (MADSpec*) NewPtr( sizeof( MADSpec) + 200);
+	theMAD = (MADSpec*) malloc( sizeof( MADSpec) + 200);
 	
 	fileID = iFileOpen( AlienFile);
 	if( !fileID)
@@ -54,7 +54,7 @@ typedef OSErr (*FILLPLUG) ( PlugInfo *);;
 
 void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
 {
-	inMADDriver->ThePlug = (PlugInfo*) MADNewPtr( MAXPLUG * sizeof( PlugInfo), inMADDriver);
+	inMADDriver->ThePlug = (PlugInfo*) malloc( MAXPLUG * sizeof( PlugInfo));
 	inMADDriver->TotalPlug = 0;
 	int i =0;
 	{

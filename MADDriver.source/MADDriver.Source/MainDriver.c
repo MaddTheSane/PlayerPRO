@@ -687,18 +687,17 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	
 	if( DriverInitParam->outPutBits != 8 && DriverInitParam->outPutBits != 16) theErr = MADParametersErr;
 	
+	//TODO: change to doubles for the bitrate
 	if( DriverInitParam->outPutRate < rate5khz) theErr = MADParametersErr;
 	if( DriverInitParam->outPutRate > rate48khz) theErr = MADParametersErr;
 	
 	if( DriverInitParam->outPutMode != DeluxeStereoOutPut &&
 		DriverInitParam->outPutMode != PolyPhonic) theErr = MADParametersErr;
 	
-	if( DriverInitParam->driverMode != SoundManagerDriver &&
-	   DriverInitParam->driverMode != MIDISoundDriver &&
+	if( DriverInitParam->driverMode != MIDISoundDriver &&
 	   DriverInitParam->driverMode != BeOSSoundDriver &&
 	   DriverInitParam->driverMode != DirectSound95NT &&
 	   DriverInitParam->driverMode != Wave95NT &&
-	   DriverInitParam->driverMode != ASIOSoundManager &&
 	   DriverInitParam->driverMode != CoreAudioDriver &&
    	   DriverInitParam->driverMode != ALSADriver &&
 	   DriverInitParam->driverMode != OSSDriver &&
@@ -794,9 +793,6 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	
 	switch( MDriver->DriverSettings.driverMode)
 	{
-		case ASIOSoundManager:
-			MDriver->ASCBUFFER = 1024L * MDriver->DriverSettings.oversampling;
-		break;
 		
 #ifdef _MAC_H
 		//case MIDISoundDriver:
@@ -857,9 +853,6 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	
 	switch( MDriver->DriverSettings.driverMode)
 	{
-		case ASIOSoundManager:
-			break;
-		
 #ifdef _MIDIHARDWARE_
 		case MIDISoundDriver:
 		
@@ -1015,7 +1008,7 @@ OSErr MADDisposeLibrary( MADLibrary *MLibrary)
 		CloseImportPlug( MLibrary);
 		MLibrary->IDType = 'XXXX';
 		
-		free( (Ptr) MLibrary);
+		free( MLibrary);
 		MLibrary = NULL;
 	}
 	return noErr;
@@ -1271,20 +1264,6 @@ OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFU
 	OSType2Ptr(type, OS);
 	return MADLoadMusicFileCString(lib, music, OS, URLcString);
 
-}
-
-OSErr MADLoadMusicFilePString( MADLibrary *lib, MADMusic **music, char *plugType, Str255 fName)
-{
-	OSErr				iErr;
-	
-	MYP2CStr( fName);
-	
-	if( !strcmp( "MADK", plugType)) 	iErr = MADLoadMADFileCString(  music, (Ptr) fName);
-	else								iErr = MADLoadMusicFileCString( lib, music, plugType, (Ptr) fName);
-	
-	MYC2PStr( (Ptr) fName);
-	
-	return iErr;
 }
 
 /*
@@ -1669,7 +1648,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 				break;
 		}
 		
-		MDriver->partition[ i] = ( PatData*) NewPtr( inOutCount);
+		MDriver->partition[ i] = ( PatData*) malloc( inOutCount);
 		if( MDriver->partition[ i] == NULL)
 		{
 			for( x = 0; x < i; x++)
@@ -1805,7 +1784,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 			
 			// ** Read Sample header **
 			
-			curData = MDriver->sample[ i*MAXSAMPLE + x] = (sData*) NewPtr( sizeof( sData));
+			curData = MDriver->sample[ i*MAXSAMPLE + x] = (sData*) malloc( sizeof( sData));
 			if( curData == NULL)
 			{
 				for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( MDriver, x);
@@ -1841,7 +1820,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 			
 			// ** Read Sample DATA
 			
-			curData->data = NewPtr( curData->size);
+			curData->data = malloc( curData->size);
 			if( curData->data == NULL)
 			{
 				for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( MDriver, x);
@@ -2132,7 +2111,7 @@ OSErr MADCleanCurrentMusic( MADMusic *MDriver, MADDriverRec *intDriver)
 				
 				if( curData->data == NULL)
 				{
-					curData->data = NewPtr( 0);
+					curData->data = malloc( 0); //FIXME: I don't think this is valid...
 					curData->size = 0;
 				}
 				
@@ -2440,19 +2419,13 @@ OSErr MADStartDriver( MADDriverRec *MDriver)
 			 
 			 case ASCSoundDriver:*/
 		case MIDISoundDriver:
-			PlayChannel( MDriver);
-			break;
-			
-		case SoundManagerDriver:
-			PlayChannel( MDriver);
+			//PlayChannel( MDriver);
 			break;
 			
 		case CoreAudioDriver:
 			PlayChannelCA( MDriver);
 			break;			
 			
-		case ASIOSoundManager:
-			break;
 #endif
 #ifdef _ESOUND
 		case ESDDriver:
@@ -2497,19 +2470,12 @@ OSErr MADStopDriver( MADDriverRec *MDriver)
 			 
 			 case ASCSoundDriver:*/
 		case MIDISoundDriver:
-			AllNoteOff( MDriver);
-			StopChannel( MDriver);
-			break;
-			
-		case SoundManagerDriver:
-			StopChannel( MDriver);
+			//AllNoteOff( MDriver);
+			//StopChannel( MDriver);
 			break;
 			
 		case CoreAudioDriver:
 			StopChannelCA(MDriver);
-			break;
-
-		case ASIOSoundManager:
 			break;
 #endif
 			
@@ -2658,7 +2624,7 @@ Boolean	MADIsPressed( unsigned char* km2, unsigned short k)
 	return( (Boolean) ((km2[k>>3] >> (k & 7)) & 1) );
 }
 
-#ifdef _MAC_H
+#if 0
 OSErr MADPlaySoundDataSYNC( MADDriverRec *MDriver, char *soundPtr, long size, long channel, long note, long amplitude, long loopBeg, long loopSize, double rate, Boolean stereo)
 {
 	OSErr		iErr;

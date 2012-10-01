@@ -35,7 +35,7 @@
 #elif PRAGMA_STRUCT_PACK
 #pragma pack(2)
 #endif
-
+//TODO: rewrite plug-in architecture for PlayerPRO 6 Mainly move away from FSSpecs to CFURLs or POSIX file commands
 #pragma mark Filters for Samples/Sounds
 /******************************************************************/
 //	*****************	FILTERS FOR SAMPLES/SOUNDS	***************/
@@ -51,8 +51,8 @@
 //
 //	If you want to reallocate theData or theData->data:
 //	
-//	if( theData->data != 0L) DisposPtr( theData->data);		// VERY IMPORTANT to free memory
-//	theData->data = NewPtr( newsize);						// Use NewPtr ONLY to allocate memory!
+//	if( theData->data != 0L) free( theData->data);		// VERY IMPORTANT to free memory
+//	theData->data = malloc( newsize);						// Use malloc ONLY to allocate memory!
 //	
 //	theData->size = newsize;								// In bytes !! Even for 16 bits !
 //	
@@ -121,7 +121,7 @@ typedef pascal Boolean	(*MyDlgFilterUPP)		( DialogPtr, EventRecord*, short*);
 //	If you want to reallocate Pcmd:
 //	
 //	if( Pcmd != 0L) DisposPtr( (Ptr) Pcmd);							// VERY IMPORTANT
-//	Pcmd = calloc( sizeof( Pcmd) + noCell * sizeof( Cmd));		// Use NewPtr ONLY to allocate memory!
+//	Pcmd = malloc( sizeof( Pcmd) + noCell * sizeof( Cmd));		// Use malloc ONLY to allocate memory!
 //
 //	myPcmd->structSize 	= sizeof( Pcmd) + noCell * sizeof( Cmd);
 //	

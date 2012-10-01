@@ -237,7 +237,7 @@ void MInitImportPlug( MADLibrary* inMADDriver, char *PlugsFolderName)
 	
 	hFind = FindFirstFile( FindFolder, &fd);
 	
-	inMADDriver->ThePlug = (PlugInfo*) MADNewPtr( MAXPLUG * sizeof( PlugInfo), inMADDriver);
+	inMADDriver->ThePlug = (PlugInfo*) malloc( MAXPLUG * sizeof( PlugInfo));
 	
 	while( hFind != INVALID_HANDLE_VALUE && bRet)
 	{

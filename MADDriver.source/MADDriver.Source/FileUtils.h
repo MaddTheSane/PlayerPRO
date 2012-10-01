@@ -42,7 +42,6 @@ typedef FILE*		UNFILE;
 	
 EXP UNFILE iFileOpen( Ptr name);
 EXP void iFileCreate(Ptr path, OSType type);
-EXP void iFileCreateName( Ptr folder, Ptr name, OSType);
 
 EXP long iGetEOF( UNFILE iFileRefI);
 EXP OSErr iRead( long size, Ptr dest, UNFILE iFileRefI);
@@ -55,11 +54,8 @@ EXP char* MADstrcpy( char*, const char*) DEPRECATED_ATTRIBUTE;
 EXP int MADstrcmp( const char *dst, const char* src) DEPRECATED_ATTRIBUTE;
 
 	
-EXP unsigned char* MYC2PStr( Ptr cStr);
-EXP void MYP2CStr( unsigned char *cStr);
 EXP OSType Ptr2OSType( Ptr str);
 EXP void OSType2Ptr( OSType type, Ptr str);
-void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
 
 
 ////////////////////////////////////////////////////////////

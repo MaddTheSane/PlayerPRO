@@ -102,7 +102,9 @@ static void MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		else if(InfoDictionaryType == stringtype)
 		{
 			CFMutableArrayRef UTIMutableArray = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
-			CFArrayAppendValue(UTIMutableArray, CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)InfoDictionaryType));
+			CFStringRef utiName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)InfoDictionaryType);
+			CFArrayAppendValue(UTIMutableArray, utiName);
+			CFRelease(utiName);
 			FillPlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, UTIMutableArray);
 			CFRelease(UTIMutableArray);
 		}
@@ -139,8 +141,6 @@ badplug:
  * Application Contents/Frameworks/PlugIns
  
  */
-//static const CFStringRef PluginFolderLocations[] = {CFSTR("/Library/Application Support/PlayerPRO/Plugins"), 
-//CFSTR("~/Library/Application Support/PlayerPRO/Plugins"),CFSTR("")};
 
 CFMutableArrayRef GetDefaultPluginFolderLocations()
 {
@@ -153,6 +153,7 @@ CFMutableArrayRef GetDefaultPluginFolderLocations()
 	temp1 = NULL;
 	
 	//Local systemwide plugins
+	//TODO: better location management
 	temp1 = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, CFSTR("/Library/Application Support/PlayerPRO/Plugins"), kCFURLPOSIXPathStyle, true);
 	CFArrayAppendValue(PlugFolds, temp1);
 	CFRelease(temp1);
@@ -257,14 +258,11 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 					 PPInfoRec				*info)
 {
 	OSErr					iErr = noErr;
-	{
-		CFBundleRefNum resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
-		MADDriverSettings		driverSettings;
-				
-		iErr = (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);;
-		
-		CFBundleCloseBundleResourceMap(inMADDriver->ThePlug[PlugNo].file, resFileNum);
-	}
+	
+	MADDriverSettings		driverSettings;
+	
+	iErr = (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);;
+	
 	return iErr;
 }
 
