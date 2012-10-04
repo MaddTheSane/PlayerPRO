@@ -20,7 +20,7 @@ extern void NSLog(CFStringRef format, ...);
 
 #define MAXPLUG	40
 
-#include "PPPlug.h"
+//#include "PPPlug.h"
 #include "PPPrivate.h"
 #define CharlMADcheckLength 10
 
@@ -142,7 +142,7 @@ badplug:
  
  */
 
-CFMutableArrayRef GetDefaultPluginFolderLocations()
+CFMutableArrayRef CreateDefaultPluginFolderLocations()
 {
 	CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 8, &kCFTypeArrayCallBacks);
 	CFURLRef temp1;
@@ -168,9 +168,9 @@ CFMutableArrayRef GetDefaultPluginFolderLocations()
 	return PlugFolds;
 }
 
-static inline CFMutableArrayRef GetPluginFolderLocationsWithFolderPath(char *UserAddedPlace)
+static inline CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(char *UserAddedPlace)
 {
-	CFMutableArrayRef FoldLocs = GetDefaultPluginFolderLocations();
+	CFMutableArrayRef FoldLocs = CreateDefaultPluginFolderLocations();
 	CFURLRef custfolder = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (UInt8*)UserAddedPlace, strlen(UserAddedPlace), true);
 	CFArrayAppendValue(FoldLocs, custfolder);
 	CFRelease(custfolder); custfolder = NULL;
@@ -221,9 +221,9 @@ void MADInitImportPlug( MADLibrary *inMADDriver, char *PluginFolder)
 	inMADDriver->ThePlug = (PlugInfo*) malloc( MAXPLUG * sizeof( PlugInfo));
 	inMADDriver->TotalPlug = 0;
 	if (PluginFolder == NULL) {
-		PlugLocations = GetDefaultPluginFolderLocations();
+		PlugLocations = CreateDefaultPluginFolderLocations();
 	} else {
-		PlugLocations = GetPluginFolderLocationsWithFolderPath(PluginFolder);
+		PlugLocations = CreatePluginFolderLocationsWithFolderPath(PluginFolder);
 	}
 #ifndef MAINPLAYERPRO
 	{
