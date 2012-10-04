@@ -247,7 +247,8 @@ static OSErr LoadMMD0Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 	}
 	
 	mmd0pat = (MMD0NOTE *) calloc( theMAD->header->numChn * (maxlines+1) * sizeof(MMD0NOTE), 1);
-	if( mmd0pat == NULL) Debugger();
+	if( mmd0pat == NULL) //Debugger();
+		return MADNeedMemory;
 	
 	/* second read: no more mr. nice guy,
 	   really read and convert patterns */
@@ -310,13 +311,14 @@ static OSErr LoadMMD1Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 
 		if( numlines > 999)
 		{
-			DebugStr("\pCan't load patterns > 999 rows");
+			//DebugStr("\pCan't load patterns > 999 rows");
 			return -1;
 		}
 	}
 	
 	mmd1pat = (MMD1NOTE *) calloc( theMAD->header->numChn * (maxlines+1) * sizeof( MMD1NOTE), 1);
-	if( mmd1pat == NULL) Debugger();
+	if( mmd1pat == NULL) //Debugger();
+		return MADNeedMemory;
 	
 	/* second read: no more mr. nice guy,
 	   really read and convert patterns */
@@ -411,7 +413,8 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	
 	inOutCount = sizeof( MADSpec);
 	theMAD->header = (MADSpec*) calloc( inOutCount, 1);
-	if( theMAD->header == NULL) DebugStr("\pHeader: I NEED MEMORY !!! NOW !");
+	if( theMAD->header == NULL) //DebugStr("\pHeader: I NEED MEMORY !!! NOW !");
+		return MADNeedMemory;
 	
 	theMAD->header->MAD = 'MADK';
 	
@@ -596,7 +599,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 						myErr = TestMEDFile( AlienFile);
 						if( myErr == noErr)
 						{
-							myErr = MED_Load( AlienFile,  GetPtrSize( AlienFile), MadFile, init);
+							myErr = MED_Load( AlienFile,  sndSize, MadFile, init);
 						}
 						
 					free( AlienFile);	AlienFile = NULL;

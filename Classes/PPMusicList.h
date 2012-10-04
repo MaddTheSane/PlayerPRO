@@ -7,11 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-@class NDAlias;
 
 @interface PPMusicList : NSObject <NSCoding> {
 	NSMutableArray *musicList;
 }
--(NSURL*)URLAtIndex:(NSUInteger)index;
--(OSErr)openOldMusicList:(NSURL *)toOpen;
+- (NSURL*)URLAtIndex:(NSUInteger)index;
 @end

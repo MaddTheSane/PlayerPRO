@@ -212,7 +212,8 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 		}
 	
 		tempPat = (struct oldPatData*) malloc( inOutCount);
-		if( tempPat == NULL) DebugStr("\pMemory Prob1");
+		if( tempPat == NULL) //DebugStr("\pMemory Prob1");
+			return MADNeedMemory;
 	
 		memcpy( tempPat, MADPtr + OffSetToSample, inOutCount);
 		MOToldPatHeader(&tempPat->header);
@@ -439,7 +440,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 						myErr = TestoldMADFile( AlienFile);
 						if( myErr == noErr)
 						{
-							myErr = MADH2Mad( AlienFile, GetPtrSize( AlienFile), MadFile, init);
+							myErr = MADH2Mad( AlienFile, sndSize, MadFile, init);
 						}
 					}
 					free( AlienFile);	AlienFile = NULL;

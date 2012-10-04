@@ -20,7 +20,7 @@ extern __attribute__((visibility("default"))) void MyDebugStr( short line, Ptr f
 		case NSAlertAlternateReturn:
 			break;
 		case NSAlertOtherReturn:
-			Debugger();
+			//Debugger();
 			break;
 		case NSAlertDefaultReturn:
 			NSLog(@"Choosing to fail!");

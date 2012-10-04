@@ -380,7 +380,8 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 				
 			memmove( curData->data, theInstrument[i], curData->size);
 			
-			if( theInstrument[i] + curData->size> MaxPtr) DebugStr("\pMax Ptr Instru");
+			if( theInstrument[i] + curData->size > MaxPtr) //DebugStr("\pMax Ptr Instru");
+				return MADIncompatibleFile;
 		}
 		else theMAD->fid[ i].numSamples = 0;
 	}
@@ -419,7 +420,8 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 										theMAD->header->numChn,
 										(Ptr) PatInt);
 				
-				if( (Ptr) n > MaxPtr) DebugStr("\pMax Ptr GetMODCommand");
+				if( (Ptr) n > MaxPtr) //DebugStr("\pMax Ptr GetMODCommand");
+					return MADIncompatibleFile;
 				
 				aCmd->ins = (n->a&0x10)|(n->c>>4);
 				
@@ -663,7 +665,8 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 				ConvertSampleC4SPD( theInstrument[ i], curData->size, curData->amp, curData->c2spd, destPtr, 8363);
 			}
 			else memmove( destPtr, theInstrument[ i], (long) (theMOD->fid[i].numWords) * 2L);
-			if( destPtr + (theMOD->fid[i].numWords) * 2L > maxMOD) DebugStr("\pOut");
+			if( destPtr + (theMOD->fid[i].numWords) * 2L > maxMOD) //DebugStr("\pOut");
+				return NULL;
 			
 			if( theMOD->fid[i].numWords > 0)
 			{
@@ -726,8 +729,8 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 												theMAD->header->numChn,
 												(Ptr) theMOD->patterns);
 				
-				if( (Ptr) n > maxMOD) DebugStr("\pOut");
-				if( (Ptr) n < (Ptr) theMOD) DebugStr("\pOut");
+				//if( (Ptr) n > maxMOD) DebugStr("\pOut");
+				//if( (Ptr) n < (Ptr) theMOD) DebugStr("\pOut");
 				
 				n->a = aCmd->ins & 0xF0;
 				n->c = (aCmd->ins & 0x0F)<<4;
@@ -785,8 +788,8 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 								theMAD->header->numChn,
 								(Ptr) theMOD->patterns);
 		
-		if( (Ptr) n > maxMOD) DebugStr("\pOut");
-		if( (Ptr) n < (Ptr) theMOD) DebugStr("\pOut");
+		//if( (Ptr) n > maxMOD) DebugStr("\pOut");
+		//if( (Ptr) n < (Ptr) theMOD) DebugStr("\pOut");
 		
 		n->a = 0;
 		n->b = 0;
@@ -800,8 +803,8 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 								theMAD->header->numChn,
 								(Ptr) theMOD->patterns);
 		
-		if( (Ptr) n > maxMOD) DebugStr("\pOut");
-		if( (Ptr) n < (Ptr) theMOD) DebugStr("\pOut");
+		//if( (Ptr) n > maxMOD) DebugStr("\pOut");
+		//if( (Ptr) n < (Ptr) theMOD) DebugStr("\pOut");
 		
 		n->a = 0;
 		n->b = 0;

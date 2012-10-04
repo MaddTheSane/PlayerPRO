@@ -56,7 +56,7 @@ static oldPatData* oldDecompressPartitionMAD1( oldMADSpec *header, oldPatData* m
 	finalPtr = ( oldPatData*) calloc( sizeof( oldPatHeader) + myPat->header.size * header->numChn * sizeof( oldCmd), 1);
 	if( finalPtr == NULL)
 	{
-		DebugStr("\pMemory3 Bug");
+		//DebugStr("\pMemory3 Bug");
 		return NULL;
 	}
 	
@@ -235,7 +235,8 @@ static OSErr MADI2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 		}
 		
 		tempPat = (struct oldPatData*) malloc( inOutCount);
-		if( tempPat == NULL) DebugStr("\pMemory Prob1");
+		if( tempPat == NULL) //DebugStr("\pMemory Prob1");
+			return MADNeedMemory;
 		
 		memcpy(tempPat, MADPtr + OffSetToSample, inOutCount);
 		OffSetToSample += inOutCount;
@@ -462,7 +463,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 						myErr = TestoldMADFile( AlienFile);
 						if( myErr == noErr)
 						{
-							myErr = MADI2Mad( AlienFile, GetPtrSize( AlienFile), MadFile, init);
+							myErr = MADI2Mad( AlienFile, sndSize, MadFile, init);
 						}
 					}
 					free( AlienFile);	AlienFile = NULL;

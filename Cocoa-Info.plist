@@ -381,8 +381,6 @@
 	<string>6.0</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
-	<key>CFBundleURLTypes</key>
-	<array/>
 	<key>CFBundleVersion</key>
 	<string>6.0</string>
 	<key>LSMinimumSystemVersion</key>
@@ -391,8 +389,6 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>NSServices</key>
-	<array/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -521,7 +517,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.apple.application-bundle</string>
+				<string>com.apple.bundle</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPImpExpBundle</string>

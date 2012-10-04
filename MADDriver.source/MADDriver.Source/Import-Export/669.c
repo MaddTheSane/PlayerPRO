@@ -62,22 +62,22 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 	
 	/**** Variables pour le MAD ****/
 	Cmd					*aCmd;
-
+	
 	/**** Variables pour le MOD ****/
 	
 	struct PatSix		*PatInt;
 	struct PatCmd		*theCommand;
 	struct SampleInfo	*SInfo;
 	/********************************/
-
+	
 	the669 = (SixSixNine*) AlienFile;
-
+	
 	theMAD->header = (MADSpec*) calloc( sizeof( MADSpec), 1);
-
+	
 	MaxPtr = (Ptr)((long) the669 + MODSize);
-
+	
 	OffSetToSample = 0x1f1L + (long)  the669->NOS * 25L + (long) the669->NOP * 0x600L;
-
+	
 	for( i = 0; i < the669->NOS ; i++)
 	{
 		temp = (long) the669;
@@ -88,14 +88,14 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 		SInfo->length =	Tdecode16( &SInfo->length);
 		SInfo->loopStart = Tdecode16( &SInfo->loopStart);
 		SInfo->loopEnd = Tdecode16( &SInfo->loopEnd);
-				
+		
 		theInstrument[i] = (Ptr) ((long) the669 + (long) OffSetToSample);
 		OffSetToSample += SInfo->length;
 	}
-
+	
 	/******** Le 669 a été lu et analysé ***********/
 	/******** Copie des informations dans le MAD ***/
-
+	
 	theMAD->header->MAD = 'MADK';
 	for(i=0; i<32; i++) theMAD->header->name[i] = the669->message[i];
 	
@@ -114,20 +114,20 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 	
 	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-
-
-	for( i = 0; i < MAXTRACK; i++)
-{
-	if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-	else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
 	
-	theMAD->header->chanVol[ i] = MAX_VOLUME;
-}
-
+	
+	for( i = 0; i < MAXTRACK; i++)
+	{
+		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
+		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		
+		theMAD->header->chanVol[ i] = MAX_VOLUME;
+	}
+	
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
-
+	
 	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
 	if( !theMAD->fid) return MADNeedMemory;
 	
@@ -142,7 +142,7 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 		temp += 0x1f1L + i*25L + 13L;
 		
 		SInfo = (SampleInfo*) temp;
-	
+		
 		if( SInfo->length > 0)
 		{
 			sData	*curData;
@@ -161,10 +161,11 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 			curData->amp		= 8;
 			
 			curData->relNote	= 0;
-		//	for( x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
+			//	for( x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
 			
 			curData->data 		= malloc( curData->size);
-			if( curData->data == NULL) DebugStr("\pInstruments: I NEED MEMORY !!! NOW !");
+			if( curData->data == NULL) //DebugStr("\pInstruments: I NEED MEMORY !!! NOW !");
+				return MADNeedMemory;
 			
 			memmove( curData->data, theInstrument[i], curData->size);
 			
@@ -184,8 +185,8 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 	/***** TEMPORAIRE ********/
 	
 	theMAD->header->numChn = 8;
-//	theMAD->header->PatMax = 1;
-
+	//	theMAD->header->PatMax = 1;
+	
 	for( i = 0; i < theMAD->header->numPat; i++)
 	{
 		theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * 64L * sizeof( Cmd), 1);
@@ -194,7 +195,7 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
 		theMAD->partition[ i]->header.patBytes = 0;
 		theMAD->partition[ i]->header.unused2 = 0;
-	
+		
 		for( x = 0 ; x < 64; x++)
 		{
 			for( z = 0; z<theMAD->header->numChn; z++)
@@ -202,8 +203,9 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 				aCmd = GetMADCommand( x, z, theMAD->partition[ i]);
 				
 				theCommand = &PatInt[ i].Cmds[ x][ z];
-				if( (Ptr) theCommand >= MaxPtr) Debugger();
-				
+				if( (Ptr) theCommand >= MaxPtr) //Debugger();
+					return MADIncompatibleFile;
+					
 				thePasByte = ( Byte*) theCommand;
 				
 				if( thePasByte[0] == 0xFF)
@@ -334,7 +336,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 						myErr = Test669File( AlienFile);
 						if( myErr == noErr)
 						{
-							myErr = Convert6692Mad( AlienFile,  GetPtrSize( AlienFile), MadFile, init);
+							myErr = Convert6692Mad( AlienFile,  sndSize, MadFile, init);
 						}
 					}
 					free( AlienFile);	AlienFile = NULL;

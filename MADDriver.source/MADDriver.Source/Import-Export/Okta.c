@@ -110,7 +110,8 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	MaxPtr		= theOkta + MODSize;
 	theOktaPos	= theOkta;
 	
-	if( (*(long*)theOkta) != 'OKTA') DebugStr("\pError in OKTA");
+	if( (*(long*)theOkta) != 'OKTA') //DebugStr("\pError in OKTA");
+		return MADIncompatibleFile;
 	
 	theOktaPos += 8L;
 	
@@ -171,7 +172,8 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 				{
 					if( theMAD->header->numChn != (aSect->length - 2L) / (Okta->pbodlen[ pbod_count] * 4L))
 					{
-						DebugStr("\pNon-standard OKTA - numChn");
+						//DebugStr("\pNon-standard OKTA - numChn");
+						return MADIncompatibleFile;
 					}
 				}
 
@@ -203,7 +205,8 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 			break;
 
 			default:
-				DebugStr("\pUnknow section");
+				//DebugStr("\pUnknow section");
+				return MADIncompatibleFile;
 			break;
 		}
 		theOktaPos += aSect->length;
@@ -311,7 +314,8 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 			for(z=0; z<theMAD->header->numChn; z++)
 			{
 				aCmd = GetMADCommand( x, z, theMAD->partition[ i]);
-				if( (Ptr) aCmd >= MaxPtr) Debugger();
+				if( (Ptr) aCmd >= MaxPtr) //Debugger();
+					return MADIncompatibleFile;
 				aCmd->note		= 0xFF;
 				aCmd->ins			= 0;
 				aCmd->cmd		= 0;
@@ -402,7 +406,8 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 	MaxPtr		= theOkta + MODSize;
 	theOktaPos	= theOkta;
 	
-	if( (*(long*)theOkta) != 'OKTA') DebugStr("\pError in OKTA");
+	if( (*(uint32_t*)theOkta) != 'OKTA') //DebugStr("\pError in OKTA");
+		return MADIncompatibleFile;
 	
 	theOktaPos += 8L;
 	
@@ -474,7 +479,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 						myErr = TestOKTAFile( AlienFile);
 						if( myErr == noErr)
 						{
-							myErr = ConvertOKTA2Mad( AlienFile,  GetPtrSize( AlienFile), MadFile, init);
+							myErr = ConvertOKTA2Mad( AlienFile,  sndSize, MadFile, init);
 						}
 					}
 					free( AlienFile);	AlienFile = NULL;

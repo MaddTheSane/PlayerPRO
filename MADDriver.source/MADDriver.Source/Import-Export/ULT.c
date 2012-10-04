@@ -97,7 +97,8 @@ static OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriv
 	
 	
 	/**** Ins Num *****/
-	if( sizeof( ULTIns) != 64) DebugStr("\pULTIns != 64");
+	if( sizeof( ULTIns) != 64) //DebugStr("\pULTIns != 64");
+		return MADIncompatibleFile;
 	ULTSuite.ins = (ULTIns*) calloc( ULTSuite.NOS * sizeof( ULTIns), 1);
 	memcpy( ULTSuite.ins, theULTCopy + sizeof( ULTinfo) + ULTinfo.reserved * 32L + 1, ULTSuite.NOS * sizeof( ULTIns));
 	
@@ -272,7 +273,8 @@ static OSErr ExtractULTInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	ULTinfo.name[ 31] = '\0';
-	pStrcpy( (unsigned char*) info->internalFileName, MYC2PStr( ULTinfo.name));
+	//pStrcpy( (unsigned char*) info->internalFileName, MYC2PStr( ULTinfo.name));
+	strcpy(info->internalFileName, ULTinfo.name);
 	
 	/*** Total Patterns ***/
 	
@@ -339,7 +341,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 							myErr = TestULTFile( AlienFile);
 							if( myErr == noErr)
 							{
-								myErr = ConvertULT2Mad( AlienFile,  GetPtrSize( AlienFile), MadFile, init);
+								myErr = ConvertULT2Mad( AlienFile,  sndSize, MadFile, init);
 							}
 						}
 					}

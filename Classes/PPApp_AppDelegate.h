@@ -68,7 +68,7 @@
 - (IBAction)sliderChanged:(id)sender;
 - (IBAction)stopButtonPressed:(id)sender;
 
--(void)soundPreferencesDidChange:(NSNotification *)notification;
+- (void)soundPreferencesDidChange:(NSNotification *)notification;
 
 - (void)digitalEditorPreferencesDidChange:(NSNotification *)notification;
 

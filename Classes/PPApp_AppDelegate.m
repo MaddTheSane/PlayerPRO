@@ -10,31 +10,7 @@
 #import "PPPreferences.h"
 #import "PPMusicList.h"
 #import "UserDefaultKeys.h"
-#import "NDAlias/NSURL+NDCarbonUtilities.h"
 #import "NSColor+PPPreferences.h"
-
-static inline UnsignedFixed GetFixedRate(int Rate)
-{
-	switch (Rate) {
-		case 11:
-			return rate11025hz;
-			break;
-		case 22:
-			return rate22050hz;
-			break;
-		case 44:
-			return rate44khz;
-			break;
-		case 48:
-			return rate48khz;
-			break;
-			
-		default:
-			return rate44khz;
-			break;
-	}
-}
-
 
 @implementation PPApp_AppDelegate
 
@@ -56,7 +32,7 @@ static inline UnsignedFixed GetFixedRate(int Rate)
 	
 	//TODO: Sanity Checking
 	init.surround = [defaults boolForKey:PPSurroundToggle];
-	init.outPutRate = GetFixedRate([defaults integerForKey:PPSoundOutRate]);
+	init.outPutRate = [defaults integerForKey:PPSoundOutRate];
 	init.outPutBits = [defaults integerForKey:PPSoundOutBits];
 	init.oversampling = [defaults integerForKey:PPOversamplingAmount];
 	init.Reverb = [defaults boolForKey:PPReverbToggle];
@@ -100,13 +76,13 @@ static inline UnsignedFixed GetFixedRate(int Rate)
 	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowArgument];
 	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowVolume];
 	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowMarkers];
-	[defaultPrefs setObject:[NSNumber numberWithInt:0] forKey:PPDEMarkerOffset];
-	[defaultPrefs setObject:[NSNumber numberWithInt:3] forKey:PPDEMarkerLoop];
-	[defaultPrefs setObject:[[NSColor yellowColor] PPencodeColor] forKey:PPDEMarkerColor];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEMouseClickControl];
-	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPDEMouseClickShift];
-	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPDEMouseClickCommand];
-	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPDEMouseClickOption];
+	[defaultPrefs setObject:[NSNumber numberWithInt:0] forKey:PPDEMarkerOffsetPref];
+	[defaultPrefs setObject:[NSNumber numberWithInt:3] forKey:PPDEMarkerLoopPref];
+	[defaultPrefs setObject:[[NSColor yellowColor] PPencodeColor] forKey:PPDEMarkerColorPref];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEMouseClickControlPref];
+	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPDEMouseClickShiftPref];
+	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPDEMouseClickCommandPref];
+	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPDEMouseClickOptionPref];
 	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDELineHeightNormal];
 	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEMusicTraceOn];
 	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEPatternWrappingPartition];
@@ -128,10 +104,8 @@ static inline UnsignedFixed GetFixedRate(int Rate)
 	MADStopMusic(MADDriver);
 	MADCleanDriver(MADDriver);
 	MADDisposeMusic(&Music, MADDriver);
-	OSType fileType, creatorType;
-	UInt16 unused1; 
-	[musicToLoad finderInfoFlags:&unused1 type:&fileType creator:&creatorType];
-	MADLoadMusicCFURLFile(MADLib, &Music, fileType, (CFURLRef)musicToLoad);
+
+	//MADLoadMusicCFURLFile(MADLib, &Music, fileType, (CFURLRef)musicToLoad);
 	
 	MADAttachDriverToMusic(MADDriver, Music, NULL);
 	MADPlayMusic(MADDriver);
@@ -167,7 +141,7 @@ static inline UnsignedFixed GetFixedRate(int Rate)
 	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
 	[defaultCenter addObserver:self selector:@selector(digitalEditorPreferencesDidChange:) name:PPDigitalEditorPrefrencesDidChange object:nil];
 	
-	MADInitLibraryNew(NULL, &MADLib);
+	MADInitLibrary(NULL, false, &MADLib);
 	[self MADDriverWithPreferences];
 
 }

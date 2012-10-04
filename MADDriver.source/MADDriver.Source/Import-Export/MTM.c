@@ -220,7 +220,8 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 		//	for( x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
 			
 			curData->data 		= malloc( curData->size);
-			if( curData->data == NULL) DebugStr("\pInstruments: I NEED MEMORY !!! NOW !");
+			if( curData->data == NULL) //DebugStr("\pInstruments: I NEED MEMORY !!! NOW !");
+				return MADNeedMemory;
 			
 			memcpy( curData->data, theInstrument[i], curData->size);
 			
@@ -304,7 +305,7 @@ static OSErr ExtractInfo( PPInfoRec *info, MTMDef *myFile)
 		info->internalFileName[ i] = myFile->songname[ i];
 	}
 	info->internalFileName[ 21] = 0;
-	MYC2PStr( (Ptr) info->internalFileName);
+	//MYC2PStr( (Ptr) info->internalFileName);
 
 	strcpy( info->formatDescription, "MTM Plug");
 
@@ -360,7 +361,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					myErr = TestFile( (MTMDef*) AlienFile);
 					if( myErr == noErr)
 					{
-						myErr = ConvertMTM2Mad( (MTMDef*) AlienFile, GetPtrSize( AlienFile), MadFile, init);
+						myErr = ConvertMTM2Mad( (MTMDef*) AlienFile, sndSize, MadFile, init);
 					}
 						
 					free( AlienFile);	AlienFile = NULL;

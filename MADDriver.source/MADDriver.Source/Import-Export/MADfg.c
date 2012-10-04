@@ -33,7 +33,8 @@ struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, sho
 	short					maxCmd;
 	
 	finalPtr = ( struct MusicPattern*) malloc( sizeof( struct oldPatHeader) + myPat->header.PatternSize * Tracks * sizeof( struct Command));
-	if( finalPtr == NULL) DebugStr("\pDecompressPartitionMAD1");
+	if( finalPtr == NULL) //DebugStr("\pDecompressPartitionMAD1");
+		return NULL;
 	
 	memcpy( finalPtr, myPat, sizeof( struct oldPatHeader));
 
@@ -90,7 +91,8 @@ struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, sho
 			break;
 			
 			default:
-				DebugStr("\pDecompress MAD1 failed.");
+				//DebugStr("\pDecompress MAD1 failed.");
+				return NULL;
 			break;
 		}
 		myCmd++;
@@ -224,7 +226,8 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoi
 		}
 	
 		tempPat = (struct MusicPattern*) malloc( inOutCount);
-		if( tempPat == NULL) DebugStr("\pMemory Prob1");
+		if( tempPat == NULL) //DebugStr("\pMemory Prob1");
+			return MADNeedMemory;
 		
 		if( MADConvert)
 		{
@@ -455,7 +458,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 						myErr = TestoldMADFile( AlienFile);
 						if( myErr == noErr)
 						{
-							myErr = MADFG2Mad( AlienFile, GetPtrSize( AlienFile), MadFile, init);
+							myErr = MADFG2Mad( AlienFile, sndSize, MadFile, init);
 						}
 					}
 					free( AlienFile);	AlienFile = NULL;

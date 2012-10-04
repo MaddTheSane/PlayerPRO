@@ -868,8 +868,8 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 								
 								if( (ITinfo.sampdata[ prevSamp].Convert & 2))
 								{
-									Str255 str;
-									NumToString( i, str);
+									//Str255 str;
+									//NumToString( i, str);
 								//	DebugStr( str);
 								}
 								
@@ -917,8 +917,8 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 								
 								if( (ITinfo.sampdata[ prevSamp].Convert & 8))
 								{
-									Str255 str;
-									NumToString( i, str); //FIXME: depricated
+									//Str255 str;
+									//NumToString( i, str); //FIXME: depricated
 								//	DebugStr( str);
 								}
 							}

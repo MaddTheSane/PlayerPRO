@@ -386,7 +386,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 						myErr = TestAMFFile( AlienFile);
 						if( myErr == noErr)
 						{
-							myErr = AMF2Mad( AlienFile, GetPtrSize( AlienFile), MadFile, init);
+							myErr = AMF2Mad( AlienFile, sndSize, MadFile, init);
 						}
 					}
 					free( AlienFile);	AlienFile = NULL;

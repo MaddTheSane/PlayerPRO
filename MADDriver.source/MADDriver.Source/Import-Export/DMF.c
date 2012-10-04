@@ -287,7 +287,8 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 		
 		memcpy( &ITinfo.insdata[i], theITCopy, sizeof( ITInsForm));
 		
-		if( ITinfo.insdata[i].ID != 'IMPI') Debugger();
+		if( ITinfo.insdata[i].ID != 'IMPI') //Debugger();
+			return MADFileNotSupportedByThisPlug;
 		
 /*	if( ITinfo.insdata[i].insflags&1)
 		{
@@ -334,7 +335,8 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 		
 		memcpy( &ITinfo.sampdata[i], theITCopy, sizeof( ITSampForm));
 		
-		if( ITinfo.sampdata[i].ID != 'IMPS') Debugger();
+		if( ITinfo.sampdata[i].ID != 'IMPS') //Debugger();
+			return MADFileNotSupportedByThisPlug;
 		
 		ITinfo.sampdata[i].length					= Tdecode32( &ITinfo.sampdata[i].length);
 		ITinfo.sampdata[i].loopBegin			= Tdecode32( &ITinfo.sampdata[i].loopBegin);
@@ -445,8 +447,6 @@ for( i = 0; i < MAXTRACK; i++)
 				
 				curData->data 		= malloc( curData->size);
 				if( curData->data == NULL) return MADNeedMemory;
-				
-				if( curData->data == NULL) DebugStr("\pInstruments: I NEED MEMORY !!! NOW !");
 				
 				if( curData->data != NULL)
 				{
@@ -690,7 +690,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 							myErr = TestITFile( AlienFile);
 							if( myErr == noErr)
 							{
-								myErr = ConvertIT2Mad( AlienFile,  GetPtrSize( AlienFile), MadFile, init);
+								myErr = ConvertIT2Mad( AlienFile,  sndSize, MadFile, init);
 							}
 						}
 					}
