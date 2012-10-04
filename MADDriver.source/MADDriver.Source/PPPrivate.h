@@ -18,7 +18,7 @@ extern "C" {
 
 #ifdef _MAC_H
 #pragma mark Core Audio Functions
-OSErr initCoreAudio( MADDriverRec *inMADDriver, long init);
+OSErr initCoreAudio( MADDriverRec *inMADDriver);
 OSErr closeCoreAudio( MADDriverRec *inMADDriver);
 void StopChannelCA(MADDriverRec *inMADDriver);
 void PlayChannelCA(MADDriverRec *inMADDriver);

@@ -8,14 +8,13 @@
  */
 
 #include <CoreAudio/CoreAudio.h>
-#include <Carbon/Carbon.h>
 #include "RDriver.h"
 #include "PPPrivate.h"
 
 //TODO: Make CoreAudio back end
 #warning Nothing implemented here yet
 
-OSErr initCoreAudio( MADDriverRec *inMADDriver, long init)
+OSErr initCoreAudio( MADDriverRec *inMADDriver)
 {
 	return MADUnknownErr;
 }

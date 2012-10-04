@@ -868,7 +868,7 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 		
 #ifdef _MAC_H		
 		case CoreAudioDriver:
-			theErr = initCoreAudio(MDriver, initStereo);
+			theErr = initCoreAudio(MDriver);
 			if (theErr != noErr) return theErr;
 			break;
 #endif
