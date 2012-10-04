@@ -36,6 +36,7 @@ struct PasByte {
 typedef struct PasByte PasByte;
 
 struct PatCmd {
+	//FIXME: is this Endian safe?
 	unsigned short AmigaPeriod : 6;
 	unsigned short Instru : 6;
 	unsigned short Volume : 4;

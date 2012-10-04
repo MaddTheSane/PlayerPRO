@@ -50,24 +50,6 @@
 //TODO: include headers
 #endif
 
-//The following aren't defined in Mac headers, but are used
-//Please note that these are depricated in PP 6
-enum{
-#if !defined(_MAC_H) || defined(__LP64__)
-	rate48khz DEPRECATED_ATTRIBUTE	= (UnsignedFixed)0xBB800000,
-	rate44khz DEPRECATED_ATTRIBUTE	= (Fixed)0xAC440000,
-	rate32khz DEPRECATED_ATTRIBUTE	= (Fixed)0x7D000000,
-	rate22050hz DEPRECATED_ATTRIBUTE	= (Fixed)0x56220000,
-	rate22khz DEPRECATED_ATTRIBUTE	= (Fixed)0x56EE8BA3,
-	rate16khz DEPRECATED_ATTRIBUTE	= (Fixed)0x3E800000,
-	rate11khz DEPRECATED_ATTRIBUTE	= (Fixed)0x2B7745D1,
-	rate11025hz DEPRECATED_ATTRIBUTE	= (Fixed)0x2B110000,
-	rate8khz DEPRECATED_ATTRIBUTE	= (Fixed)0x1F400000,
-#endif
-	rate5khz DEPRECATED_ATTRIBUTE	= (UnsignedFixed)0x15BB9B5CUL,
-	rate2khz DEPRECATED_ATTRIBUTE	= (UnsignedFixed)0x08000000UL
-};
-
 ////////////////////////////////////////////////
 
 #if PRAGMA_STRUCT_ALIGN

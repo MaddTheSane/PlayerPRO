@@ -22,6 +22,7 @@
 #ifndef __MADI__
 #define __MADI__
 
+
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #define EXP extern __attribute__((visibility("default")))
 #endif
@@ -33,8 +34,6 @@
 //////////////////////////////////////////////////////////////////////
 #if defined(__APPLE__)			// MACINTOSH
 #define _MAC_H
-
-#include <Carbon/Carbon.h>
 
 //////////////////////////////////////////////////////////////////////
 #else 			// WIN32 - 95/NT
@@ -54,39 +53,17 @@
 #endif
 //////////////////////////////////////////////////////////////////////
 
+#include "PPDefs.h"
+
 #ifdef WIN32
 #define EXP __declspec(dllexport)
 #endif
 
-#if !defined(_MAC_H) && !defined(WIN32)
+#if !defined(WIN32)
 #define pascal
 #endif
 
 #if !defined(_MAC_H)
-
-#if !defined(THINK_C)
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h>
-#include <stdbool.h>
-
-typedef unsigned char 	Byte;
-typedef char 			*Ptr;
-typedef Ptr 			*Handle;
-typedef unsigned char 	Boolean;
-typedef unsigned char 	Str255[256], Str63[64];
-typedef uint8_t			UInt8;
-typedef int8_t			SInt8;
-typedef uint16_t		UInt16;
-typedef int16_t			SInt16;
-typedef uint32_t		UInt32;
-typedef int32_t			SInt32;
-typedef SInt16			OSErr;
-typedef UInt32			FourCharCode;
-typedef FourCharCode	OSType;
-typedef SInt32			Fixed;
-typedef UInt32			UnsignedFixed;
 
 #define MemError()					0
 
@@ -110,15 +87,10 @@ static inline void DebugStr( unsigned char* x)
 	
 	memmove( temp, x+1, x[ 0]);
 	temp[ x[ 0]] = 0;
-	
-#ifdef _MAC_H
-	debugger( temp);
-#endif
-	
+		
 	free( temp);
 }
 
-#endif
 #endif
 
 //////////////////////////////////////////////////////////////////////

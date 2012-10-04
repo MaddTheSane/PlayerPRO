@@ -512,7 +512,7 @@ void MADGetBestDriver( MADDriverSettings	*Init)
 #ifdef _MAC_H
 	//Just going to use CoreAudio
 	Init->outPutBits		= 16;
-	Init->outPutRate		= rate44khz;
+	Init->outPutRate		= 44100;
 	Init->numChn			= 4;
 	Init->surround			= false;
 	Init->repeatMusic		= true;
@@ -688,8 +688,8 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	if( DriverInitParam->outPutBits != 8 && DriverInitParam->outPutBits != 16) theErr = MADParametersErr;
 	
 	//TODO: change to doubles for the bitrate
-	if( DriverInitParam->outPutRate < rate5khz) theErr = MADParametersErr;
-	if( DriverInitParam->outPutRate > rate48khz) theErr = MADParametersErr;
+	if( DriverInitParam->outPutRate < 5000.0) theErr = MADParametersErr;
+	if( DriverInitParam->outPutRate > 48000.0) theErr = MADParametersErr;
 	
 	if( DriverInitParam->outPutMode != DeluxeStereoOutPut &&
 		DriverInitParam->outPutMode != PolyPhonic) theErr = MADParametersErr;
@@ -2744,7 +2744,7 @@ void MADKeyOFF( MADDriverRec *MDriver, short track)
 	else MDriver->chan[ track].KeyOn = false;
 }
 
-#if defined (_MAC_H) && !defined (__LP64__)
+#if 0
 OSErr MADPlaySndHandle( MADDriverRec *MDriver, Handle sound, long channel, long note)
 {
 	Ptr 			soundPtr;

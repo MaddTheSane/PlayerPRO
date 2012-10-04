@@ -131,13 +131,6 @@ void 	NoteOff(short oldIns, short oldN, short oldV, MADDriverRec *intDriver);
 void 	SampleMIDI( Channel *curVoice, short channel, short curN, MADDriverRec *intDriver);
 void 	CleanDriver( MADDriverRec *intDriver);
 
-#ifdef _MAC_H
-#ifndef __LP64__
-SndChannelPtr 		CreateSndChannel( long init);
-OSErr 			DBSndPlay (MADDriverRec *inMADDriver, SndChannelPtr chan);
-#endif
-#endif
-
 /*** General Functions ***/
 
 OSErr 		MADKillInstrument( MADMusic*, short ins);
@@ -307,10 +300,6 @@ struct __MADDriverRec
 	Boolean					Equalizer;										// Is Equalizer Active?
 	
 #ifdef _MAC_H
-#ifndef __LP64__
-	SndChannelPtr 			MusicChannelPP;									// The SndChannelPtr to apply SndDoCommand, etc.
-	// ONLY available if you are using MAC SoundManager driver
-#endif
 	//TODO: CoreAudio Driver
 #endif
 	
