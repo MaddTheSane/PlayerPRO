@@ -335,7 +335,7 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 				if( shiftAr[ i] >= 0 && shiftAr[ i] < powersize) fDataCopy2[ shiftAr[ i] +1] += fDataCopy[ i +1];
 			}
 			
-			BlockMoveData( fDataCopy2, fDataCopy, sizeof( double) * (powersize+2));
+			memcpy( fDataCopy, fDataCopy2, sizeof( double) * (powersize+2));
 		}
 		else
 		{
@@ -534,7 +534,7 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 				if( shiftAr[ i] >= 0 && shiftAr[ i] < powersize) fDataCopy2[ shiftAr[ i] +1] += fDataCopy[ i +1];
 			}
 			
-			BlockMoveData( fDataCopy2, fDataCopy, sizeof( double) * (powersize+2));
+			memcpy( fDataCopy, fDataCopy2, sizeof( double) * (powersize+2));
 		}
 		else
 		{
