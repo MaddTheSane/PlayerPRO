@@ -24,7 +24,13 @@
 #ifndef __OKTA_H_
 #define __OKTA_H_
 
+#if PRAGMA_STRUCT_ALIGN
 #pragma options align=mac68k
+#elif PRAGMA_STRUCT_PACKPUSH
+#pragma pack(push, 2)
+#elif PRAGMA_STRUCT_PACK
+#pragma pack(2)
+#endif
 
 typedef struct sectheader
 {
@@ -86,6 +92,12 @@ static short FreqOktaTable[ 40] =
 			0x01AC,0x0194,0x017D,0x0168,0x0154,0x0141,0x012F,0x011E,0x010E,0x00FE,0x00F0,0x00E3,
 			0x00D6,0x00CA,0x00BF,0x00B4,0x00AA,0x00A0,0x0097,0x008F,0x0087,0x007F,0x0078,0x0071
 		};
+#if PRAGMA_STRUCT_ALIGN
 #pragma options align=reset
+#elif PRAGMA_STRUCT_PACKPUSH
+#pragma pack(pop)
+#elif PRAGMA_STRUCT_PACK
+#pragma pack()
+#endif
 
 #endif

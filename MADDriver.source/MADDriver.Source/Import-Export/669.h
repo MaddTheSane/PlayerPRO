@@ -21,9 +21,13 @@
 //
 /********************						***********************/
 
-//#if defined(powerc) || defined (__powerc)
+#if PRAGMA_STRUCT_ALIGN
 #pragma options align=mac68k
-//#endif
+#elif PRAGMA_STRUCT_PACKPUSH
+#pragma pack(push, 2)
+#elif PRAGMA_STRUCT_PACK
+#pragma pack(2)
+#endif
 
 
 struct PasByte {
@@ -72,6 +76,10 @@ struct	Partition669	{
 };
 typedef		struct Partition669	Partition669;
 
-//#if defined(powerc) || defined(__powerc)
+#if PRAGMA_STRUCT_ALIGN
 #pragma options align=reset
-//#endif
+#elif PRAGMA_STRUCT_PACKPUSH
+#pragma pack(pop)
+#elif PRAGMA_STRUCT_PACK
+#pragma pack()
+#endif

@@ -286,8 +286,12 @@
 
 #include <PlayerPROCore/PPDefs.h>
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
+#if PRAGMA_STRUCT_ALIGN
 #pragma options align=mac68k
+#elif PRAGMA_STRUCT_PACKPUSH
+#pragma pack(push, 2)
+#elif PRAGMA_STRUCT_PACK
+#pragma pack(2)
 #endif
 
 typedef struct XMHEADER{
@@ -372,6 +376,10 @@ typedef struct XMNOTE{
 	UBYTE note,ins,vol,eff,dat;
 }XMNOTE;
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
+#if PRAGMA_STRUCT_ALIGN
 #pragma options align=reset
+#elif PRAGMA_STRUCT_PACKPUSH
+#pragma pack(pop)
+#elif PRAGMA_STRUCT_PACK
+#pragma pack()
 #endif
