@@ -232,6 +232,7 @@ static OSErr INFOMADF( MADSpec* MADPtr, PPInfoRec *info)
 
 extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
+	//TODO: learn how to get resource forks using POSIX commands or CoreFoundation, but not Carbon
 	OSErr		myErr;
 	short		iFileRefI, i;
 	Handle		myRes;
