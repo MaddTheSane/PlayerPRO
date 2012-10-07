@@ -11,7 +11,7 @@
 @class PPPreferences;
 @class PPMusicList;
 
-@interface PPApp_AppDelegate : NSObject {
+@interface PPApp_AppDelegate : NSObject <NSApplicationDelegate> {
 	IBOutlet NSButton *loopButton;
     IBOutlet NSButton *playButton;
     IBOutlet NSButton *recordButton;
@@ -36,7 +36,8 @@
 	
     IBOutlet NSWindow *window;
 	
-    IBOutlet NSTableColumn *musicTable;
+	IBOutlet NSTableView *tableView;
+    
 	
 	PPMusicList		*musicList;
 	PPPreferences	*preferences;

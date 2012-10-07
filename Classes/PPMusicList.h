@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PPMusicList : NSObject <NSCoding> {
+@interface PPMusicList : NSObject <NSCoding, NSTableViewDataSource> {
 	NSMutableArray *musicList;
 }
 - (NSURL*)URLAtIndex:(NSUInteger)index;

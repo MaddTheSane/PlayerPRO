@@ -44,6 +44,10 @@
 	return [musicList objectAtIndex:index];
 }
 
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
+	return [musicList count];
+}
 
 #pragma mark Archiving
 
@@ -59,6 +63,5 @@
 - (void)encodeWithCoder:(NSCoder *)encoder {
 	[encoder encodeObject:musicList forKey:kMUSICLISTKEY];
 }
-
 
 @end

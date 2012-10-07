@@ -60,7 +60,7 @@
 	
 	[defaultPrefs setObject:[NSNumber numberWithInt:16] forKey:PPSoundOutBits];
 	[defaultPrefs setObject:[NSNumber numberWithInt:44] forKey:PPSoundOutRate];
-	[defaultPrefs setObject:[NSNumber numberWithInt:SoundManagerDriver] forKey:PPSoundDriver];
+	[defaultPrefs setObject:[NSNumber numberWithInt:CoreAudioDriver] forKey:PPSoundDriver];
 	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPStereoDelayToggle];
 	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPReverbToggle];
 	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPSurroundToggle];
@@ -142,6 +142,7 @@
 	[defaultCenter addObserver:self selector:@selector(digitalEditorPreferencesDidChange:) name:PPDigitalEditorPrefrencesDidChange object:nil];
 	
 	MADInitLibrary(NULL, false, &MADLib);
+	[tableView setDataSource:musicList];
 	[self MADDriverWithPreferences];
 
 }
@@ -197,14 +198,26 @@ enum PPMusicToolbarTypes {
 	switch ([theItem tag]) {
 		case PPToolbarSort:
 		case PPToolbarAddMusic:
-			return YES;
-			break;
-		case PPToolbarRemoveMusic:
-		case PPToolbarPlayMusic:
 		case PPToolbarFileInfo:
-			//[musicTable ]
 			return YES;
 			break;
+			
+		case PPToolbarPlayMusic:
+			if([[tableView selectedRowIndexes] count] == 1) {
+				return YES;
+			} else {
+				return NO;
+			}
+			break;
+			
+		case PPToolbarRemoveMusic:
+			if([[tableView selectedRowIndexes] count] > 0) {
+				return YES;
+			} else {
+				return NO;
+			}
+			break;
+
 		default:
 		return NO;
 		break;
