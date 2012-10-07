@@ -34,8 +34,8 @@
   
    ----------------------------------------------------------------------------- */
 
-CFStringRef kPPMDInstumentsList = CFSTR("net_sourceforge_playerpro_tracker_instumentlist");
-
+static const CFStringRef kPPMDInstumentsList = CFSTR("net_sourceforge_playerpro_tracker_instumentlist");
+static const CFStringRef kPPMDPatternList = CFSTR("net_sourcegorge_playerpro_tracker_patternlist");
 /* -----------------------------------------------------------------------------
     Get metadata attributes from file
    
@@ -99,7 +99,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 		MADAttachDriverToMusic( MADDriver, MADMusic1, NULL);
 		long fT, cT;
 		MADGetMusicStatus( MADDriver, &fT, &cT);	// Some infos about current music
-		double fTd = fT / 60.0f;
+		double fTd = fT / 60.0;
 		
 		CFNumberRef duration = CFNumberCreate(kCFAllocatorDefault, kCFNumberDoubleType, &fTd);
 		CFDictionarySetValue(attributes, kMDItemDurationSeconds, duration);
@@ -122,6 +122,25 @@ Boolean GetMetadataForFile(void* thisInterface,
 		CFDictionarySetValue(attributes, kPPMDInstumentsList, InstruArray);
 		
 		CFRelease(InstruArray);
+	}
+	
+	{
+		CFMutableArrayRef PatArray = CFArrayCreateMutable(kCFAllocatorDefault, MAXPATTERN, &kCFTypeArrayCallBacks);
+		int i;
+		for( i = 0; i < MAXPATTERN; i++)
+		{
+			if (MADMusic1->partition != NULL && MADMusic1->partition[i] != NULL)
+			{
+				CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->partition[i]->header.name, kCFStringEncodingMacRoman);//TODO: check for other encodings?
+				if (!(CFEqual(CFSTR(""), temp))) {
+					CFArrayAppendValue(PatArray, temp);
+				}
+				CFRelease(temp);
+			}
+		}
+		CFDictionarySetValue(attributes, kPPMDPatternList, PatArray);
+
+		CFRelease(PatArray);
 	}
 	
 	MADCleanDriver( MADDriver);

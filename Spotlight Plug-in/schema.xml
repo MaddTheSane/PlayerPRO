@@ -26,6 +26,7 @@
 	
 	<attributes>
 	<attribute name="net_sourceforge_playerpro_tracker_instumentlist" multivalued="true" type="CFString"/>
+	<attribute name="net_sourcegorge_playerpro_tracker_patternlist" multivalued="true" type="CFString"/>
 	</attributes>
 
     <types>
@@ -37,6 +38,7 @@
 			kMDItemTitle
 			kMDItemDurationSeconds
 			net_sourceforge_playerpro_tracker_instumentlist
+			net_sourcegorge_playerpro_tracker_patternlist
             </allattrs>
             <!-- 'displayattrs' is a whitespace separated list of the attributes that should normally be displayed when previewing files of this UTI type. -->
             <displayattrs>
