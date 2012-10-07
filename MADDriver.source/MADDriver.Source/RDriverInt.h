@@ -29,7 +29,7 @@
 #include "FileUtils.h"
 #endif
 
-#define MEM {Str255 str; NumToString( FreeMem(), str); DebugStr( str);}
+//#define MEM {Str255 str; NumToString( FreeMem(), str); DebugStr( str);}
 
 //#define NUMBER_FINETUNES 	16
 
@@ -110,6 +110,12 @@ void 	Sampler16Addin16Poly( Channel *curVoice, register short	*ASCBuffer, short 
 void 	Sample16BufferAddPoly( Channel *curVoice, register short	*ASCBuffer, short chanNo, MADDriverRec* intDriver);
 void 	Play16PolyPhonic( MADDriverRec* intDriver);
 void 	Play16Mono( MADDriverRec* intDriver);
+
+/*** 20 Bits ***/
+//TODO
+
+/*** 24 Bits ***/
+//TODO
 
 /*** Effects ***/
 

@@ -65,7 +65,7 @@ static void MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
 			short i;
-			char * tempstring = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
+			const char * tempstring = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
 			if (tempstring == NULL) goto badplug;
 			for (i=0; i < 4; i++) {
 				if (tempstring[i] == 0) {
@@ -80,10 +80,10 @@ static void MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugModeKey);
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
-			char * thecOSType = NULL;
+			const char * thecOSType = NULL;
 			thecOSType = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
 			
-			FillPlug->mode = Ptr2OSType(thecOSType);
+			FillPlug->mode = Ptr2OSType((char*)thecOSType);
 		}
 		else if(InfoDictionaryType == numbertype)
 		{
@@ -284,11 +284,6 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 
 	}
 	free( inMADDriver->ThePlug);		inMADDriver->ThePlug = NULL;
-}
-
-void GetPStrFromCFString(const CFStringRef source, Str255 pStrOut)
-{
-	CFStringGetPascalString(source, pStrOut, 255, kCFStringEncodingMacRoman);
 }
 
 OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)

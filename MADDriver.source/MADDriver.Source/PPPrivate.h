@@ -25,8 +25,6 @@ void PlayChannelCA(MADDriverRec *inMADDriver);
 
 CFMutableArrayRef GetDefaultPluginFolderLocations();
 
-void GetPStrFromCFString(const CFStringRef source, StringPtr pStrOut);
-
 const CFStringRef kMadPlugMenuNameKey;
 const CFStringRef kMadPlugAuthorNameKey;
 const CFStringRef kMadPlugUTITypesKey;

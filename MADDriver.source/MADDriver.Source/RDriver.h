@@ -259,21 +259,21 @@ typedef struct MADMusic
 
 enum
 {
-	oldASCSoundDriver DEPRECATED_ATTRIBUTE = 1,			// MAC ONLY,	// NOT SUPPORTED anymore
-	oldAWACSoundDriver DEPRECATED_ATTRIBUTE,				// MAC ONLY		// NOT SUPPORTED anymore
-	MIDISoundDriver,				// MAC ONLY
-	SoundManagerDriver DEPRECATED_ATTRIBUTE,				// MAC ONLY You should use only SoundManagerDriver for full compatibility !
-	QK25SoundDriver DEPRECATED_ATTRIBUTE,				// MAC ONLY
-	DigiDesignSoundDriver DEPRECATED_ATTRIBUTE,			// MAC ONLY
-	BeOSSoundDriver,				// BE ONLY when using with BeOS compatible systems ! - NOT FOR MAC
-	DirectSound95NT,				// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
-	Wave95NT,						// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
-	CoreAudioDriver,				// OSX ONLY Core Audio driver
-	ALSADriver,						// LINUX ONLY ALSA driver
-	OSSDriver,						// Open Sound System. Most Unices (NOT OS X) including Linux
-	ESDDriver,						// ESound Driver. available on most UNIX Systems
-	ASIOSoundManager DEPRECATED_ATTRIBUTE,				// ASIO Sound Driver by Steinberg
-	NoHardwareDriver = SHRT_MAX		// NO HARDWARE CONNECTION, will not produce any sound
+	oldASCSoundDriver DEPRECATED_ATTRIBUTE = 1,	// MAC ONLY,	// NOT Available
+	oldAWACSoundDriver DEPRECATED_ATTRIBUTE,	// MAC ONLY		// NOT Available
+	MIDISoundDriver,							// MAC ONLY		// NOT Available
+	SoundManagerDriver DEPRECATED_ATTRIBUTE,	// MAC ONLY		// NOT Available
+	QK25SoundDriver DEPRECATED_ATTRIBUTE,		// MAC ONLY		// NOT Available
+	DigiDesignSoundDriver DEPRECATED_ATTRIBUTE,	// MAC ONLY		// NOT Available
+	BeOSSoundDriver DEPRECATED_ATTRIBUTE,		// BE ONLY when using with BeOS compatible systems ! - NOT FOR MAC
+	DirectSound95NT,							// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
+	Wave95NT,									// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
+	CoreAudioDriver,							// OSX ONLY Core Audio driver
+	ALSADriver,									// LINUX ONLY ALSA driver
+	OSSDriver,									// Open Sound System. Most Unices (NOT OS X) including Linux
+	ESDDriver,									// ESound Driver. available on most UNIX Systems
+	ASIOSoundManager DEPRECATED_ATTRIBUTE,		// ASIO Sound Driver by Steinberg //NOT Available
+	NoHardwareDriver = SHRT_MAX					// NO HARDWARE CONNECTION, will not produce any sound
 
 };
 
@@ -292,12 +292,12 @@ typedef struct MADDriverSettings
 {
 	short					numChn;								// Active tracks from 2 to 32, automatically setup when a new music is loaded
 	short					outPutBits;							// 8 or 16 Bits TODO: 24 Bits
-	double				outPutRate;							// Fixed number, by example : rate44khz, rate22050hz, rate22khz, rate11khz, rate11025hz
+	double					outPutRate;							// Fixed number, by example : rate44khz, rate22050hz, rate22khz, rate11khz, rate11025hz
 	short					outPutMode;							// Now, only DeluxeStereoOutPut is available !
 	short					driverMode;							// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
 //	Boolean					antiAliasing;						// NOT USED anymore
 	Boolean					repeatMusic;						// If music finished, repeat it or stop.
-//	Boolean					sysMemory;							// Allocate memory in Application Heap (false) or in System Heap (true)
+//	Boolean					sysMemory;							// NOT USED anymore
 //	Boolean					Interpolation;						// NOT USED anymore
 //	Boolean					MicroDelay;							// NOT USED anymore
 	long					MicroDelaySize;						// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
@@ -317,11 +317,11 @@ typedef struct MADDriverSettings
 //	To use with PlayerPRO for CodeWarrior
 //
 //	Your main function have to be in this form:
-//	OSErr main( 	OSType order,
-//					Ptr AlienFileName,
-//					MADMusic *MadFile,
-//					PPInfoRec *info,
-//					MADDriverSettings *DriverParam);
+//	OSErr PPImpExpMain(	OSType order,
+//						char *AlienFileName,
+//						MADMusic *MadFile,
+//						PPInfoRec *info,
+//						MADDriverSettings *DriverParam);
 //
 //	Actual plug have to support these orders:
 //
@@ -335,20 +335,6 @@ typedef struct MADDriverSettings
 //	An EXPORT plug have to support these orders: 'EXPT'
 // 	An IMPORT/EXPORT plug have to support these orders: 'TEST', 'IMPT', 'INFO', 'EXPT'
 //
-//	About Resources:
-//
-//	Your Plug should have: Creator: 'SNPL', Type: 'IMPL' - MAC ONLY
-//
-//	Your Plug have to have these resources - MAC ONLY:
-//
-//	- One segment CODE 1000 with 68k Code
-//	- One segment PPCC 1000 with PPC Code (OPTIONAL: if PlayerPRO in PPC cannot find it, it will use the CODE 1000 resource)
-//	- One STR# resource :
-//
-//		1 string: which kind of files your plug support (OSType value!!! 4 char) By example: 'STrk', '669 ', etc...
-//		2 string: what does your Plug: EXPL : only Export files, IMPL : only Import Files, EXIM : import AND export.
-//		3 string: string that will be used in Import and Export menu of PlayerPRO
-//		4 string: Copyright string of this plug.
 //
 /********************						***********************/
 
@@ -406,7 +392,7 @@ struct PlugInfo
 typedef struct PlugInfo PlugInfo;
 #endif
 
-#if (defined( __UNIX__) && !defined (_MAC_H))
+#if (defined(__UNIX__) && !defined (_MAC_H))
 #include <dlfcn.h>
 #include <sys/param.h>  //For PATH_MAX
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
@@ -431,7 +417,6 @@ typedef struct PlugInfo PlugInfo;
 struct MADLibrary
 {
 	OSType					IDType;								// IDType = 'MADD' -- READ ONLY --
-	Boolean					sysMemory;
 	long					mytab[ 12];
 	
 	/** Plugs Import/Export variables **/
@@ -487,7 +472,7 @@ typedef struct
 {
 	AEffect				*ce[ 2];
 	short				id;
-	Str63				name;
+	CFStringRef			name;
 	Boolean				Active;
 	CFBundleRef			connID; //TODO: use something more 64-bit friendly
 	VSTPlugInPtr		vstMain;
@@ -539,9 +524,6 @@ void MyDebugStr( short, char*, char*);								// Internal Debugger function, NOR
 MADLibrary* MADGetMADLibraryPtr();									// Get MADDriver structure pointer.
 
 OSErr	MADInitLibrary( char *PlugsFolderName, Boolean sysMemory, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
-#ifdef _MAC_H
-OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef);
-#endif
 
 OSErr	MADDisposeLibrary( MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
@@ -570,8 +552,14 @@ OSErr	MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned ch
 OSErr	MADLoadMusicPtr( MADMusic **music, char *myPtr);								// MAD ONLY - Load a MAD Ptr into memory, you can free() your Ptr after this call
 
 OSErr	MADLoadMusicFileCString( MADLibrary *, MADMusic **music, char *type, char *fName);			// Load a music file with plugs
+#ifdef _MAC_H
+OSErr	MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef);
+#endif
 
 OSErr	MADMusicIdentifyCString( MADLibrary *, char *type, Ptr cName);			// Identify what kind of music format is cName file.
+
+OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, OSType *type, CFURLRef URLRef); //Identify what kind of music format is URLRef file.
+
 
 Boolean	MADPlugAvailable( MADLibrary *, char *type);								// Is plug 'type' available?
 

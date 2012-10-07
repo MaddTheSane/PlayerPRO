@@ -695,13 +695,23 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 		DriverInitParam->outPutMode != PolyPhonic) theErr = MADParametersErr;
 	
 	if( DriverInitParam->driverMode != MIDISoundDriver &&
-	   DriverInitParam->driverMode != BeOSSoundDriver &&
+	   //DriverInitParam->driverMode != BeOSSoundDriver &&
+#ifdef WIN32
 	   DriverInitParam->driverMode != DirectSound95NT &&
 	   DriverInitParam->driverMode != Wave95NT &&
+#endif
+#ifdef _MAC_H
 	   DriverInitParam->driverMode != CoreAudioDriver &&
+#endif
+#ifdef LINUX
    	   DriverInitParam->driverMode != ALSADriver &&
+#endif
+#ifdef _OSSSOUND
 	   DriverInitParam->driverMode != OSSDriver &&
+#endif
+#ifdef _ESOUND
 	   DriverInitParam->driverMode != ESDDriver &&
+#endif
 	   DriverInitParam->driverMode != NoHardwareDriver) theErr = MADParametersErr;
 	
 	if( DriverInitParam->MicroDelaySize < 0) 		theErr = MADParametersErr;
@@ -989,7 +999,6 @@ OSErr MADInitLibrary( char *PlugsFolderName, Boolean sysMemory, MADLibrary **lib
 	if( *lib == NULL) return MADNeedMemory;
 	
 	(*lib)->IDType = 'MADD';
-	(*lib)->sysMemory = FALSE;
 	
 	for( i = 0; i < 12; i++)
 	{
@@ -1258,9 +1267,9 @@ long MADGetHardwareVolume()
 
 OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef)
 {
-	char URLcString[PATH_MAX];
+	char URLcString[PATH_MAX * 4];
 	char OS[5];
-	CFURLGetFileSystemRepresentation(theRef, true, (unsigned char*)URLcString, PATH_MAX);
+	CFURLGetFileSystemRepresentation(theRef, true, (unsigned char*)URLcString, PATH_MAX * 4);
 	OSType2Ptr(type, OS);
 	return MADLoadMusicFileCString(lib, music, OS, URLcString);
 
@@ -1312,9 +1321,9 @@ OSErr MADCopyCurrentPartition( MADMusic *aPartition)
 
 OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, OSType *type, CFURLRef URLRef)
 {
-	char URLcString[PATH_MAX];
+	char URLcString[PATH_MAX * 4];
 	char OS[5];
-	CFURLGetFileSystemRepresentation(URLRef, true, (unsigned char*)URLcString, PATH_MAX);
+	CFURLGetFileSystemRepresentation(URLRef, true, (unsigned char*)URLcString, PATH_MAX * 4);
 	OSType2Ptr(*type, OS);
 	OSErr returnstatus = MADMusicIdentifyCString(lib, OS, URLcString);
 	*type = Ptr2OSType(OS);
