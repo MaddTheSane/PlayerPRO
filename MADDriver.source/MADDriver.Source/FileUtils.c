@@ -37,11 +37,12 @@ FILE* iFileOpen( Ptr name)
 
 long iGetEOF( FILE* iFileRefI)
 {
-	long curEOF;
+	long curEOF, oldPos;
 	
+	oldPos = ftell(iFileRefI);
 	fseek( iFileRefI, 0, SEEK_END);
 	curEOF = ftell( iFileRefI);
-	fseek( iFileRefI, 0, 0);
+	fseek( iFileRefI, oldPos, SEEK_SET);
 	
 	return curEOF;
 }
