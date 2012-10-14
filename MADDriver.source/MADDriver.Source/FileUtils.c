@@ -21,8 +21,6 @@
 //
 /********************						***********************/
 
-//NOTE: this file can be used on Linux as well.
-
 #include "RDriver.h"
 #include "FileUtils.h"
 
@@ -56,7 +54,7 @@ OSErr iRead( long size, Ptr dest, FILE* iFileRefI)
 
 OSErr iSeekCur( long size, FILE* iFileRefI)
 {
-	return fseek( iFileRefI , size, SEEK_CUR);
+	return fseek( iFileRefI, size, SEEK_CUR);
 }
 
 OSErr iWrite( long size, Ptr dest, FILE* iFileRefI)

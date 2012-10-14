@@ -51,7 +51,7 @@ unsigned char* MYC2PStr( Ptr cStr);
 
 enum {
 	MADFileType = 1,
-	MADRsrcType = 2,
+	MADRsrcType DEPRECATED_ATTRIBUTE = 2,
 	MADPtrType = 3
 };
 
@@ -976,11 +976,11 @@ OSErr MADDisposeDriver( MADDriverRec* MDriver)
 			
 	}
 	
-	MADDisposeDriverBuffer( MDriver);			if( MemError()) return MADUnknowErr;
-	MADDisposeVolumeTable( MDriver);			if( MemError()) return MADUnknowErr;
-	MADDisposeReverb( MDriver);					if( MemError()) return MADUnknowErr;
+	MADDisposeDriverBuffer( MDriver);			//if( MemError()) return MADUnknowErr;
+	MADDisposeVolumeTable( MDriver);			//if( MemError()) return MADUnknowErr;
+	MADDisposeReverb( MDriver);					//if( MemError()) return MADUnknowErr;
 	
-	free( (Ptr) MDriver);
+	free( MDriver);
 	
 	return noErr;
 }
@@ -1723,14 +1723,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 	
 	inOutCount = sizeof( InstrData) * (long) MDriver->header->numInstru;
 	switch( InPutType)
-	{
-#ifdef _MAC_H
-		case MADRsrcType:
-			ReadPartialResource( MADRsrc, OffSetToSample, MDriver->fid, inOutCount);
-			OffSetToSample += inOutCount;
-			break;
-#endif
-			
+	{			
 		case MADFileType:
 			if( iRead( inOutCount, (Ptr) MDriver->fid, srcFile)) theErr = MADIncompatibleFile;
 			break;
@@ -2593,7 +2586,7 @@ OSErr MADDisposeMusic( MADMusic **music, MADDriverRec *MDriver)
 		
 		for( x = (*music)->header->numPat; x < MAXPATTERN ; x++)
 		{
-			if(  (*music)->partition[ x] != NULL) DebugStr("\pMADDispose (*music) !");
+			if(  (*music)->partition[ x] != NULL) return MADUnknownErr;
 		}
 		
 		for( x = 0; x < MAXINSTRU ; x++)
@@ -2603,13 +2596,13 @@ OSErr MADDisposeMusic( MADMusic **music, MADDriverRec *MDriver)
 		
 		free( (Ptr) (*music)->header);
 		
-		if(  (*music)->fid == NULL) DebugStr("\pMADDispose (*fid) !");
+		if(  (*music)->fid == NULL) return MADUnknownErr;
 		free( (Ptr) (*music)->fid);
 		
-		if(  (*music)->sample == NULL) DebugStr("\pMADDispose (*sample) !");
+		if(  (*music)->sample == NULL) return MADUnknownErr;
 		free( (Ptr) (*music)->sample);
 		
-		if(  (*music)->sets == NULL) DebugStr("\pMADDispose (*sets) !");
+		if(  (*music)->sets == NULL) return MADUnknownErr;
 		free( (Ptr) (*music)->sets);
 	}
 	
@@ -3162,7 +3155,7 @@ PatData* CompressPartitionMAD1( MADMusic *MDriver, PatData* myPat)
 	UInt8					set;
 	
 	finalPtr = ( PatData*) malloc( sizeof( PatHeader) + myPat->header.size * MDriver->header->numChn * 6L);
-	if( finalPtr == NULL) DebugStr("\pCompressPartitionMAD1");
+	if( finalPtr == NULL) return NULL;
 	
 	memmove( finalPtr, myPat, sizeof( PatHeader));
 	

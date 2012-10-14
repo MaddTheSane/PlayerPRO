@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Carbon/Carbon.h>
 
 extern __attribute__((visibility("default"))) void MyDebugStr( short line, Ptr file, Ptr text)
 {

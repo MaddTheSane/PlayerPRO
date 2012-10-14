@@ -229,7 +229,6 @@
 		5573A36310B50DF600FF8B50 /* realft.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DA0C2F21DD00D6C081 /* realft.c */; };
 		5573A36410B50DFF00FF8B50 /* TickRemover.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */; };
 		5573A39310B50F6000FF8B50 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBC100404EB00E75E63 /* CoreAudio.framework */; };
-		5573A39410B50F6500FF8B50 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5573A39510B50F6900FF8B50 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5573A3CE10B5127800FF8B50 /* MAD.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4750C2F21E400D6C081 /* MAD.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573A3CF10B5128000FF8B50 /* RDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47B0C2F21E400D6C081 /* RDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1988,7 +1987,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5573A39310B50F6000FF8B50 /* CoreAudio.framework in Frameworks */,
-				5573A39410B50F6500FF8B50 /* Carbon.framework in Frameworks */,
 				5573A39510B50F6900FF8B50 /* CoreFoundation.framework in Frameworks */,
 				554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */,
 				554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */,
@@ -3669,7 +3667,6 @@
 			buildPhases = (
 				5533410D10BB547C005208D1 /* Resources */,
 				5533410E10BB547C005208D1 /* Sources */,
-				55868A5710BFB46100FCC24D /* Rez */,
 				5533410F10BB547C005208D1 /* Frameworks */,
 			);
 			buildRules = (
@@ -3688,7 +3685,6 @@
 			buildPhases = (
 				5533414810BB572C005208D1 /* Resources */,
 				5533414910BB572C005208D1 /* Sources */,
-				55868A6910BFB46100FCC24D /* Rez */,
 				5533414B10BB572C005208D1 /* Frameworks */,
 			);
 			buildRules = (
@@ -3707,7 +3703,6 @@
 			buildPhases = (
 				553341C810BB5FE0005208D1 /* Resources */,
 				553341C910BB5FE0005208D1 /* Sources */,
-				55868A6A10BFB46100FCC24D /* Rez */,
 				553341CB10BB5FE0005208D1 /* Frameworks */,
 			);
 			buildRules = (
@@ -3726,7 +3721,6 @@
 			buildPhases = (
 				553341DE10BB5FFA005208D1 /* Resources */,
 				553341DF10BB5FFA005208D1 /* Sources */,
-				55868A6B10BFB46100FCC24D /* Rez */,
 				553341E110BB5FFA005208D1 /* Frameworks */,
 			);
 			buildRules = (
@@ -3744,7 +3738,6 @@
 			buildConfigurationList = 553341F710BB600A005208D1 /* Build configuration list for PBXNativeTarget "IT" */;
 			buildPhases = (
 				553341F110BB600A005208D1 /* Resources */,
-				55868A6C10BFB46100FCC24D /* Rez */,
 				553341F210BB600A005208D1 /* Sources */,
 				553341F410BB600A005208D1 /* Frameworks */,
 			);
@@ -4163,7 +4156,6 @@
 			buildPhases = (
 				5586870610BF5C4700FCC24D /* Resources */,
 				5586870710BF5C4700FCC24D /* Sources */,
-				55868A6D10BFB46100FCC24D /* Rez */,
 				5586870910BF5C4700FCC24D /* Frameworks */,
 			);
 			buildRules = (
@@ -4182,7 +4174,6 @@
 			buildPhases = (
 				5586871510BF5C4A00FCC24D /* Resources */,
 				5586871610BF5C4A00FCC24D /* Sources */,
-				55868A6E10BFB46100FCC24D /* Rez */,
 				5586871810BF5C4A00FCC24D /* Frameworks */,
 			);
 			buildRules = (
@@ -4201,7 +4192,6 @@
 			buildPhases = (
 				5586872410BF5C4E00FCC24D /* Resources */,
 				5586872510BF5C4E00FCC24D /* Sources */,
-				55868A6F10BFB46100FCC24D /* Rez */,
 				5586872710BF5C4E00FCC24D /* Frameworks */,
 			);
 			buildRules = (
@@ -4220,7 +4210,6 @@
 			buildPhases = (
 				5586874410BF5D3700FCC24D /* Resources */,
 				5586874510BF5D3700FCC24D /* Sources */,
-				55868A7010BFB46100FCC24D /* Rez */,
 				5586874710BF5D3700FCC24D /* Frameworks */,
 			);
 			buildRules = (
@@ -4239,7 +4228,6 @@
 			buildPhases = (
 				5586875910BF5E4D00FCC24D /* Resources */,
 				5586875A10BF5E4D00FCC24D /* Sources */,
-				55868A7110BFB46100FCC24D /* Rez */,
 				5586875C10BF5E4D00FCC24D /* Frameworks */,
 			);
 			buildRules = (
@@ -4258,7 +4246,6 @@
 			buildPhases = (
 				558687D510BF620500FCC24D /* Resources */,
 				558687D610BF620500FCC24D /* Sources */,
-				55868A7210BFB46100FCC24D /* Rez */,
 				558687D810BF620500FCC24D /* Frameworks */,
 			);
 			buildRules = (
@@ -4277,7 +4264,6 @@
 			buildPhases = (
 				558687F110BF624E00FCC24D /* Resources */,
 				558687F210BF624E00FCC24D /* Sources */,
-				55868A7310BFB46100FCC24D /* Rez */,
 				558687F410BF624E00FCC24D /* Frameworks */,
 			);
 			buildRules = (
@@ -4296,7 +4282,6 @@
 			buildPhases = (
 				5586881210BF62F100FCC24D /* Resources */,
 				5586881310BF62F100FCC24D /* Sources */,
-				55868A7410BFB46100FCC24D /* Rez */,
 				5586881510BF62F100FCC24D /* Frameworks */,
 			);
 			buildRules = (
@@ -4315,7 +4300,6 @@
 			buildPhases = (
 				5586882010BF62F500FCC24D /* Resources */,
 				5586882110BF62F500FCC24D /* Sources */,
-				55868A7510BFB46100FCC24D /* Rez */,
 				5586882310BF62F500FCC24D /* Frameworks */,
 			);
 			buildRules = (
@@ -4334,7 +4318,6 @@
 			buildPhases = (
 				5586883410BF62FB00FCC24D /* Resources */,
 				5586883510BF62FB00FCC24D /* Sources */,
-				55868A7610BFB46100FCC24D /* Rez */,
 				5586883710BF62FB00FCC24D /* Frameworks */,
 			);
 			buildRules = (
@@ -5131,116 +5114,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		55868A5710BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		55868A5E10BFB46100FCC24D /* Rez */ = {
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				558A748313BE59F4000FD667 /* APPL_Plug.rsrc.r in Rez */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55868A6910BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55868A6A10BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55868A6B10BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55868A6C10BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55868A6D10BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55868A6E10BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55868A6F10BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55868A7010BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55868A7110BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55868A7210BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55868A7310BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55868A7410BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55868A7510BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55868A7610BFB46100FCC24D /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -89,7 +89,7 @@ static void MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		{
 			OSType theplugType;
 			CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberSInt32Type, &theplugType);
-			MOT32(&theplugType);
+			//MOT32(&theplugType);
 			FillPlug->mode = theplugType;
 		}
 		else goto badplug3;

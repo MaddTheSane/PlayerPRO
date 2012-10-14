@@ -413,7 +413,8 @@ void ProcessEnvelope( Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
 			if( (curIns->volType & EFNOTE))
 			{
 				curData = intDriver->curMusic->sample[ curIns->firstSample + ch->samp];
-				if( curData == NULL) DebugStr( "\pNote Enveloppe curData = NULL");
+				if( curData == NULL) //DebugStr( "\pNote Enveloppe curData = NULL");
+					return;
 				
 				basePeriod = GetOldPeriod( 48 + curData->relNote, ch->fineTune, intDriver);
 			}
@@ -535,7 +536,8 @@ void ProcessPanning( Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
 				sData	*curData;
 				
 				curData = intDriver->curMusic->sample[ curIns->firstSample + ch->samp];
-				if( curData == NULL) DebugStr( "\pNote Enveloppe curData = NULL");
+				if( curData == NULL) //DebugStr( "\pNote Enveloppe curData = NULL");
+					return;
 				basePeriod = GetOldPeriod( 48 + curData->relNote, ch->fineTune, intDriver);
 			}
 			

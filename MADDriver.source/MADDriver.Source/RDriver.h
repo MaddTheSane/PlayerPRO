@@ -27,6 +27,7 @@
 #ifndef __MADI__
 #include "MAD.h"
 #endif
+#include <limits.h>
 
 ////////////////////////////////////////////////
 
@@ -596,8 +597,6 @@ OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
 
 Boolean MADWasReading(MADDriverRec *driver);
 void MADSetReading(MADDriverRec *driver, Boolean toSet);
-
-void MyDebugStr(short, Ptr, Ptr);									// Called when a fatal error occurs.... Normally, NEVER !
 
 #ifdef __cplusplus
 }

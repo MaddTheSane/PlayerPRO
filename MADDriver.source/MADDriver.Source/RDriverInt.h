@@ -245,7 +245,7 @@ void ProcessEnvelope( Channel *ch, MADDriverRec *intDriver, Boolean);
 void StartEnvelope( Channel *ch);
 void NScanResource( MADLibrary *inMADDriver);
 void NScanDirImportPlug( MADLibrary		*inMADDriver, long dirID, short VRefNum, Str255	Fname);
-void LoadImportPLUG( MADLibrary		*inMADDriver, short	No, FSSpec	*theSpec);
+//void LoadImportPLUG( MADLibrary		*inMADDriver, short	No, FSSpec	*theSpec);
 void DirectSoundClose( MADDriverRec* driver);
 Boolean DirectSoundInit( MADDriverRec* driver);
 Boolean W95_Init( MADDriverRec* driver);

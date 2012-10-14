@@ -18,22 +18,6 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>2C23FDF2-61BD-47B4-8380-784AC4A1E50D</key>
-		<string>MEDFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>84F80109-2885-4E01-8FFA-88AC75F3E033</key>
-		<array>
-			<string>2C23FDF2-61BD-47B4-8380-784AC4A1E50D</string>
-		</array>
-	</dict>
-	<key>CSResourcesFileMapped</key>
-	<true/>
 	<key>MADPlugMenuName</key>
 	<string>MED</string>
 	<key>MADPlugAuthorName</key>

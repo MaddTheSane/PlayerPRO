@@ -239,7 +239,7 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 				powersize *= 2;
 			}while( powersize < size/2);
 			
-			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
+			fDataCopy = (double*) malloc( sizeof( double) * (powersize+2));
 		}
 		else powersize = EQPACKET*2;
 	}
@@ -253,14 +253,14 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 				powersize *= 2;
 			}while( powersize < size);
 			
-			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
+			fDataCopy = (double*) malloc( sizeof( double) * (powersize+2));
 		}
 		else powersize = EQPACKET*2;
 	}
 	
 	if( shift)
 	{
-		fDataCopy2 = (double*) NewPtr( sizeof( double) * (powersize+2));
+		fDataCopy2 = (double*) malloc( sizeof( double) * (powersize+2));
 		if( fDataCopy2 == NULL) return;
 		
 		shiftAr = (long*) calloc( sizeof( long) * (powersize+2), 1);
@@ -433,7 +433,7 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 				powersize *= 2;
 			}while( powersize < size/2);
 			
-			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
+			fDataCopy = (double*) malloc( sizeof( double) * (powersize+2));
 		}
 		else powersize = EQPACKET*2;
 	}
@@ -447,14 +447,14 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 				powersize *= 2;
 			}while( powersize < size);
 			
-			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
+			fDataCopy = (double*) malloc( sizeof( double) * (powersize+2));
 		}
 		else powersize = EQPACKET*2;
 	}
 	
 	if( shift)
 	{
-		fDataCopy2 = (double*) NewPtr( sizeof( double) * (powersize+2));
+		fDataCopy2 = (double*) malloc( sizeof( double) * (powersize+2));
 		if( fDataCopy2 == NULL) return;
 		
 		shiftAr = (long*) calloc( sizeof( long) * (powersize+2), 1);

@@ -10,12 +10,13 @@
  */
 
 #include "MAD.h"
+#include <CoreFoundation/CFByteOrder.h>
 
 static __inline__ void MADByteSwap32(void *theData)
 {
 	UInt32			temp = *((UInt32*) theData);
 #ifdef _MAC_H
-	*((UInt32*) theData) = Endian32_Swap(temp);
+	*((UInt32*) theData) = CFSwapInt32(temp);
 #else
 	*((UInt32*) theData) = ((((temp & 0xff000000) >> 24) | (( temp & 0x00ff0000) >> 8) | (( temp & 0x0000ff00) << 8) | (temp & 0x000000ff) << 24));
 #endif
@@ -25,7 +26,7 @@ static __inline__ void MADByteSwap16(void *theData)
 {
 	UInt16			buf = *((UInt16*) theData);
 #ifdef _MAC_H
-	*((UInt16*) theData) = Endian16_Swap(buf);
+	*((UInt16*) theData) = CFSwapInt16(buf);
 #else
 	*((UInt16*) theData) = (((((UInt16)buf)<<8) & 0xFF00) | ((((UInt16)buf)>>8) & 0x00FF));
 #endif

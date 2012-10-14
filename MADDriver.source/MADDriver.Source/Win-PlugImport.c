@@ -25,8 +25,6 @@
 #include "RDriverInt.h"
 #include "FileUtils.h"
 
-#define RSRCNAME "\pRsrc Plug Sys##"
-
 OSErr CheckMADFile( Ptr name)
 {
 	UNFILE			refNum;
@@ -216,48 +214,48 @@ void MInitImportPlug( MADLibrary* inMADDriver, char *PlugsFolderName)
 	///////////
 	
 	{
-	HANDLE				hFind;
-	WIN32_FIND_DATA		fd;
-	BOOL				bRet = TRUE;
-	char				FindFolder[ 200], inPlugsFolderName[ 200];
-	
-	if( PlugsFolderName)
-	{
-		strcpy( inPlugsFolderName, PlugsFolderName);
-		strcat( inPlugsFolderName, "/");
+		HANDLE				hFind;
+		WIN32_FIND_DATA		fd;
+		BOOL				bRet = TRUE;
+		char				FindFolder[ 200], inPlugsFolderName[ 200];
 		
-		strcpy( FindFolder, inPlugsFolderName);
-	}
-	else
-	{
-		strcpy( inPlugsFolderName, "/");
-		strcpy( FindFolder, inPlugsFolderName);
-	}
-	strcat( FindFolder, "*.PLG");
-	
-	hFind = FindFirstFile( FindFolder, &fd);
-	
-	inMADDriver->ThePlug = (PlugInfo*) malloc( MAXPLUG * sizeof( PlugInfo));
-	
-	while( hFind != INVALID_HANDLE_VALUE && bRet)
-	{
-		if( (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
+		if( PlugsFolderName)
 		{
-			if( inMADDriver->TotalPlug < MAXPLUG)
+			strcpy( inPlugsFolderName, PlugsFolderName);
+			strcat( inPlugsFolderName, "/");
+			
+			strcpy( FindFolder, inPlugsFolderName);
+		}
+		else
+		{
+			strcpy( inPlugsFolderName, "/");
+			strcpy( FindFolder, inPlugsFolderName);
+		}
+		strcat( FindFolder, "*.PLG");
+		
+		hFind = FindFirstFile( FindFolder, &fd);
+		
+		inMADDriver->ThePlug = (PlugInfo*) malloc( MAXPLUG * sizeof( PlugInfo));
+		
+		while( hFind != INVALID_HANDLE_VALUE && bRet)
+		{
+			if( (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
 			{
-				char myCompleteFilename[ 200];
-				
-				strcpy( myCompleteFilename, inPlugsFolderName);
-				strcat( myCompleteFilename, fd.cFileName);
-				
-				if( LoadPlugLib( myCompleteFilename, &inMADDriver->ThePlug[ inMADDriver->TotalPlug])) inMADDriver->TotalPlug++;
+				if( inMADDriver->TotalPlug < MAXPLUG)
+				{
+					char myCompleteFilename[ 200];
+					
+					strcpy( myCompleteFilename, inPlugsFolderName);
+					strcat( myCompleteFilename, fd.cFileName);
+					
+					if( LoadPlugLib( myCompleteFilename, &inMADDriver->ThePlug[ inMADDriver->TotalPlug])) inMADDriver->TotalPlug++;
+				}
 			}
+			
+			bRet = FindNextFile( hFind, &fd);
 		}
 		
-		bRet = FindNextFile( hFind, &fd);
-	}
-	
-	FindClose( hFind);
+		FindClose( hFind);
 	}
 	///////////
 }

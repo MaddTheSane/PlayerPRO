@@ -12,7 +12,7 @@
 #define __PPDEFS_H
 
 #ifdef _MAC_H
-#include <CoreServices/CoreServices.h>
+#include <MacTypes.h>
 #endif
 
 #include <stdio.h>
@@ -23,7 +23,6 @@
 
 typedef unsigned char 	Byte;
 typedef char 			*Ptr;
-typedef Ptr 			*Handle;
 typedef unsigned char 	Boolean;
 typedef unsigned char 	Str255[256], Str63[64];
 typedef uint8_t			UInt8;
