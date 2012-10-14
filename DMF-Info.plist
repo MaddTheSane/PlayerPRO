@@ -28,7 +28,7 @@
 	<string>DMF </string>
 	<key>MADPlugUTITypes</key>
 	<array>
-		<string>net.sourceforge.playerpro.mod</string>
+		<string>net.sourceforge.playerpro.dmf</string>
 	</array>
 </dict>
 </plist>
