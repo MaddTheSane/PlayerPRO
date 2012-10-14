@@ -28,7 +28,7 @@
 	<string>XM  </string>
 	<key>MADPlugUTITypes</key>
 	<array>
-		<string>net.sourceforge.playerpro.mod</string>
+		<string>net.sourceforge.playerpro.xm</string>
 	</array>
 </dict>
 </plist>

@@ -28,7 +28,7 @@
 	<string>UMX </string>
 	<key>MADPlugUTITypes</key>
 	<array>
-		<string>net.sourceforge.playerpro.mod</string>
+		<string>net.sourceforge.playerpro.umx</string>
 	</array>
 </dict>
 </plist>
