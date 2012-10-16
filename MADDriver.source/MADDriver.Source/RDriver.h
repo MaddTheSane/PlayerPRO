@@ -111,60 +111,60 @@ enum
 
 typedef struct Channel
 {
-		long		ID;					// Channel ID - 0 to MAXTRACK
-		long		TrackID;			// TrackID - 0 to MAXTRACK (Used in multiChannel mode)
+		SInt32		ID;					// Channel ID - 0 to MAXTRACK
+		SInt32		TrackID;			// TrackID - 0 to MAXTRACK (Used in multiChannel mode)
 		
-		char		*begPtr;				// Sample Data Ptr - Beginning of data
-		char		*maxPtr;				// Sample Data Ptr - End of data
-		char		*curPtr;				// Sample Data Ptr - Current position
-		long		sizePtr;			// Sample Size in bytes
+		char		*begPtr;			// Sample Data Ptr - Beginning of data
+		char		*maxPtr;			// Sample Data Ptr - End of data
+		char		*curPtr;			// Sample Data Ptr - Current position
+		SInt32		sizePtr;			// Sample Size in bytes
 		
-		long		amp;				// Sample amplitude: 8 or 16 bits
+		SInt32		amp;				// Sample amplitude: 8 or 16 bits
 		
-		long		loopBeg;			// Loop Beginning
-		long		loopSize;			// Loop Size
+		SInt32		loopBeg;			// Loop Beginning
+		SInt32		loopSize;			// Loop Size
 		
-		long		ins;				// Current Instrument ID
-		long		insOld;				// Previous Instrument ID played on this channel
-		long		samp;				// Current Sample ID
+		SInt32		ins;				// Current Instrument ID
+		SInt32		insOld;				// Previous Instrument ID played on this channel
+		SInt32		samp;				// Current Sample ID
 		
-		long		fineTune;			// Finetune
+		SInt32		fineTune;			// Finetune
 		
-		long		note;				// Note
-		long		noteOld;			// Previous note played on this channel
-		long		relNoteOld;			// Previous realnote
+		SInt32		note;				// Note
+		SInt32		noteOld;			// Previous note played on this channel
+		SInt32		relNoteOld;			// Previous realnote
 		
-		long 		period;				// Current period
-		long		periodOld;			// Previous period played on this channel
+		SInt32 		period;				// Current period
+		SInt32		periodOld;			// Previous period played on this channel
 		
-		long		vol;				// Channel vol (0 to 64)
-		long		pann;				// Channel pan (0 to 64)
+		SInt32		vol;				// Channel vol (0 to 64)
+		SInt32		pann;				// Channel pan (0 to 64)
 		
-		long 		cmd;				// Command
+		SInt32 		cmd;				// Command
 		Byte		arg;				// Argument of command
 		Byte		volcmd;				// Volume Command
 		
-		long 		arp[ MAX_ARP];		// Used for arpeggio command
-		long 		arpindex;			// Used for arpeggio command
+		SInt32 		arp[ MAX_ARP];		// Used for arpeggio command
+		SInt32 		arpindex;			// Used for arpeggio command
 		Boolean		arpUse;
 		
 		char		viboffset;			// Used for vibrato command
-		long 		vibdepth;			// Used for vibrato command
-		long 		vibrate;			// Used for vibrato command
-		long		vibtype;			// Used for vibrato command
+		SInt32 		vibdepth;			// Used for vibrato command
+		SInt32 		vibrate;			// Used for vibrato command
+		SInt32		vibtype;			// Used for vibrato command
 		
-		long 		slide;				// Used for slideUp and slideDown command
+		SInt32 		slide;				// Used for slideUp and slideDown command
 		
-		long 		pitchgoal;			// Used for portamento command
-		long 		pitchrate;			// Used for portamento command
+		SInt32 		pitchgoal;			// Used for portamento command
+		SInt32 		pitchrate;			// Used for portamento command
 		
-		long 		volumerate;			// Used for slideVolume command
+		SInt32 		volumerate;			// Used for slideVolume command
 		
-		long		oldArg[ 16];
-		long		oldVibrate;
-		long		oldVibdepth;
+		SInt32		oldArg[ 16];
+		SInt32		oldVibrate;
+		SInt32		oldVibdepth;
 		
-		long		eventTime;
+		SInt32		eventTime;
 		
 		char		*samplePtr;			// Used internaly by MADPlaySoundData & MADPlaySndHandle
 		
@@ -174,18 +174,18 @@ typedef struct Channel
 		short		a;
 		short		b;
 		float		p;
-		long		volEnv;
-		long		nextvolEnv;
-		long		volEnvInter;
+		SInt32		volEnv;
+		SInt32		nextvolEnv;
+		SInt32		volEnvInter;
 		
-		long		volFade;
-		long		nextvolFade;
+		SInt32		volFade;
+		SInt32		nextvolFade;
 		
 		short		aa;
 		short		bb;
 		float		pp;
-		long		pannEnv;
-		long		nextpannEnv;
+		SInt32		pannEnv;
+		SInt32		nextpannEnv;
 //		long		pannEnvInter;
 		
 		Boolean		volEnvActive, pannEnvActive;
@@ -193,19 +193,19 @@ typedef struct Channel
 		short		aaa;
 		short		bbb;
 		float		ppp;
-		long		panPitch;
+		SInt32		panPitch;
 		
 		long		lAC;
 		
 		char		*prevPtr;
-		long		lastWordL, curLastWordL;
-		long		lastWordR, curLastWordR;
-		long		curLevelL, curLevelR;
+		SInt32		lastWordL, curLastWordL;
+		SInt32		lastWordR, curLastWordR;
+		SInt32		curLevelL, curLevelR;
 		
 		Boolean		LevelDirectionL, LevelDirectionR, RemoverWorking;
 		
-		long		prevVol0;
-		long		prevVol1;
+		SInt32		prevVol0;
+		SInt32		prevVol1;
 		
 		/**/
 		
@@ -225,14 +225,14 @@ typedef struct Channel
 		
 		short		spreVal, spreVal2;
 		short		spreValR, spreVal2R;
-		long		TICKREMOVESIZE;
+		SInt32		TICKREMOVESIZE;
 		
 		
 		Boolean		PanningE8;
 		short		trig;
 		short		PatternLoopE6, PatternLoopE6Count, PatternLoopE6ID;
 		
-		long		TimeCounter;
+		SInt32		TimeCounter;
 } Channel;
 
 /********************						***********************/
@@ -249,7 +249,7 @@ typedef struct MADMusic
 	Boolean					musicUnderModification;					// Tell the driver to NOT access music data
 	Str255					musicFileName;
 	Boolean					hasChanged;
-	long					position, fullTime;
+	SInt32					position, fullTime;
 	OSType					originalFormat;
 	
 } MADMusic;
@@ -344,15 +344,15 @@ typedef struct PPInfoRec
 	char		internalFileName[ 60];
 	char		formatDescription[ 60];
 	
-	long		totalPatterns;
-	long		partitionLength;
+	SInt32		totalPatterns;
+	SInt32		partitionLength;
 	
 	short		totalTracks;
 	short		totalInstruments;
 	
 	OSType		signature;
 	
-	long		fileSize;
+	SInt32		fileSize;
 	
 } PPInfoRec;
 
@@ -380,7 +380,7 @@ typedef struct PlugInfo
 #ifdef WIN32
 #include <windows.h>
 typedef OSErr (*PLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-struct PlugInfo
+typedef struct PlugInfo
 {
 	HANDLE			hLibrary;
 	PLUGDLLFUNC		IOPlug;										// Plug CODE
@@ -389,15 +389,14 @@ struct PlugInfo
 	char			file[ 255];									// Location of plug file
 	char			type[ 5];									// OSType of file support
 	OSType			mode;										// Mode support : Import +/ Export
-};
-typedef struct PlugInfo PlugInfo;
+} PlugInfo;
 #endif
 
 #if (defined(__UNIX__) && !defined (_MAC_H))
 #include <dlfcn.h>
 #include <sys/param.h>  //For PATH_MAX
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-struct PlugInfo
+typedef struct PlugInfo
 {
 	void*			hLibrary;
 	MADPLUGFUNC		IOPlug;										// Plug CODE
@@ -406,8 +405,7 @@ struct PlugInfo
 	char			file[PATH_MAX];								// Location of plug file
 	char			type[ 5];									// OSType of file support
 	OSType			mode;										// Mode support : Import +/ Export
-};
-typedef struct PlugInfo PlugInfo;
+} PlugInfo;
 #endif
 
 
@@ -415,18 +413,17 @@ typedef struct PlugInfo PlugInfo;
 /*** 		Global structure : PlayerPRO variables				***/
 /********************						***********************/
 
-struct MADLibrary
+typedef struct MADLibrary
 {
 	OSType					IDType;								// IDType = 'MADD' -- READ ONLY --
-	long					mytab[ 12];
+	SInt32					mytab[ 12];
 	
 	/** Plugs Import/Export variables **/
 	
 	PlugInfo 				*ThePlug;							// Pointers on plugs code & infos
 	short					TotalPlug;							// no of Plugs in pointer ThePlug
 
-};
-typedef struct MADLibrary MADLibrary;
+} MADLibrary;
 
 #ifndef WIN32
 #define callback
@@ -436,43 +433,43 @@ typedef struct AEffect AEffect;
 
 struct AEffect
 {
-	long magic;
-	long (callback *dispatcher)(AEffect *effect, long opCode, long index, long value,
+	SInt32 magic;
+	SInt32 (callback *dispatcher)(AEffect *effect, SInt32 opCode, SInt32 index, SInt32 value,
 		void *ptr, float opt);
-	void (callback *process)(AEffect *effect, float **inputs, float **outputs, long sampleframes);
-	void (callback *setParameter)(AEffect *effect, long index, float parameter);
-	float (callback *getParameter)(AEffect *effect, long index);
+	void (callback *process)(AEffect *effect, float **inputs, float **outputs, SInt32 sampleframes);
+	void (callback *setParameter)(AEffect *effect, SInt32 index, float parameter);
+	float (callback *getParameter)(AEffect *effect, SInt32 index);
 
-	long numPrograms;
-	long numParams;
-	long numInputs;
-	long numOutputs;
-	long flags;
-	long resvd1;
-	long resvd2;
-	long initialDelay;
-	long realQualities;
-	long offQualities;
+	SInt32 numPrograms;
+	SInt32 numParams;
+	SInt32 numInputs;
+	SInt32 numOutputs;
+	SInt32 flags;
+	SInt32 resvd1;
+	SInt32 resvd2;
+	SInt32 initialDelay;
+	SInt32 realQualities;
+	SInt32 offQualities;
 	float ioRatio;
 	void *object;
 	void *user;
-	long uniqueID;
-	long version;
-	void (callback *processReplacing)(AEffect *effect, float **inputs, float **outputs, long sampleframes);
+	SInt32 uniqueID;
+	SInt32 version;
+	void (callback *processReplacing)(AEffect *effect, float **inputs, float **outputs, SInt32 sampleframes);
 	char future[60];
 };
 
-typedef	long (*audioMasterCallback)(AEffect *effect, long opcode, long index,
-		long value, void *ptr, float opt);
+typedef	SInt32 (*audioMasterCallback)(AEffect *effect, SInt32 opcode, SInt32 index,
+		SInt32 value, void *ptr, float opt);
 	
 	typedef AEffect *(*VSTPlugInPtr) (audioMasterCallback  cb);
 
 #ifdef _MAC_H
-//TODO: use OS X's native VST
+//TODO: use OS X's native VST?
 typedef struct
 {
 	AEffect				*ce[ 2];
-	short				id;
+	short				VSTid;
 	CFStringRef			name;
 	Boolean				Active;
 	CFBundleRef			connID; //TODO: use something more 64-bit friendly
@@ -559,7 +556,9 @@ OSErr	MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFU
 
 OSErr	MADMusicIdentifyCString( MADLibrary *, char *type, Ptr cName);			// Identify what kind of music format is cName file.
 
+#ifdef _MAC_H
 OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, OSType *type, CFURLRef URLRef); //Identify what kind of music format is URLRef file.
+#endif
 
 
 Boolean	MADPlugAvailable( MADLibrary *, char *type);								// Is plug 'type' available?
@@ -573,12 +572,12 @@ Cmd*	GetMADCommand(	short		position,						// Extract a Command from a PatData st
 
 OSErr	MADPlaySoundData(	MADDriverRec *MDriver,
 							char			*soundPtr,				// Sound Pointer to data
-							long			size,					// Sound size in bytes
-							long			channel,				// channel ID on which to play sound
-							long			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
-							long			amplitude,				// 8 or 16 bits
-							long			loopBeg,				// loop beginning
-							long			loopSize,				// loop size in bytes
+							size_t			size,					// Sound size in bytes
+							SInt32			channel,				// channel ID on which to play sound
+							SInt32			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
+							SInt32			amplitude,				// 8 or 16 bits
+							size_t			loopBeg,				// loop beginning
+							size_t			loopSize,				// loop size in bytes
 							double			rate,					// sample rate of the sound data, by ex: rate22khz
 							Boolean			stereo);				// sample is in stereo or in mono?
 							

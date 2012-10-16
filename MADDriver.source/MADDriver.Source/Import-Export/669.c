@@ -25,7 +25,7 @@
 #include "669.h"
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*msg_buf);
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*msg_buf)
 #else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
@@ -52,7 +52,7 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 {
 	SixSixNine			*the669;
 	short				i, PatMax, x, z;
-	long				sndSize, OffSetToSample, OldTicks, temp;
+	SInt32				sndSize, OffSetToSample, OldTicks, temp;
 	Ptr					MaxPtr;
 	//OSErr				theErr;
 	Ptr					theInstrument[ 64], destPtr;

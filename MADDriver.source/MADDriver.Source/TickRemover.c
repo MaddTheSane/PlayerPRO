@@ -24,7 +24,7 @@
 #include "RDriver.h"
 #include "RDriverInt.h"
 
-void MADTickLoopFill8( Channel *curVoice, long *ASCBuffer1, long *ASCBuffer2, long size, short left, short right)
+void MADTickLoopFill8( Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, size_t size, short left, short right)
 {
 	size++;
 	while( size-- > 0)
@@ -35,7 +35,7 @@ void MADTickLoopFill8( Channel *curVoice, long *ASCBuffer1, long *ASCBuffer2, lo
 	curVoice->prevPtr = NULL;
 }
 
-void MADTickLoop8( long size, Channel *curVoice, long *ASCBuffer1, long *ASCBuffer2, MADDriverRec *intDriver)
+void MADTickLoop8( size_t size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver)
 {
 	long		tLongL, tLongR;
 	long		curLevelL = curVoice->curLevelL, curLevelR = curVoice->curLevelR, curLastWordL = curVoice->curLastWordL, curLastWordR = curVoice->curLastWordR, TICKREMOVESIZE = curVoice->TICKREMOVESIZE;
@@ -84,7 +84,7 @@ void MADTickLoop8( long size, Channel *curVoice, long *ASCBuffer1, long *ASCBuff
 	curVoice->RemoverWorking = RemoverWorking;
 }
 
-void MADTickRemoverStart8( Channel *curVoice, long	*ASCBuffer1, long	*ASCBuffer2, MADDriverRec *intDriver)
+void MADTickRemoverStart8( Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver)
 {
 	long				i = intDriver->ASCBUFFER;
 	long				curDoVol0 = DoVolPanning256( 0, curVoice, intDriver, false), curDoVol1 = DoVolPanning256( 1, curVoice, intDriver, false);

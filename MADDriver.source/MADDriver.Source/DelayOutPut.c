@@ -30,7 +30,7 @@ unsigned long getfrequency(unsigned long period);
 
 Boolean IsVSTChanEffect( MADDriverRec *intDriver, short channel);
 
-static inline void PrepareInline( long *VolInter, long* rVolInter, double p2, double v1, double v2)
+static inline void PrepareInline( SInt32 *VolInter, SInt32* rVolInter, double p2, double v1, double v2)
 {
 	double temp;
 
@@ -54,14 +54,14 @@ void MADCreateOverShoot( MADDriverRec *intDriver)
 	switch( intDriver->DriverSettings.outPutBits)
 	{
 		case 16:
-			intDriver->DASCBuffer 			= (long*) calloc( ( (long) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, 1);
+			intDriver->DASCBuffer 			= (SInt32*) calloc( ( intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, 1);
 			
 			maxBuffer = (Ptr) intDriver->DASCBuffer;
 			maxBuffer = maxBuffer + ( (long) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L;
 			
 			for( i = 0; i < MAXCHANEFFECT; i++)
 			{
-				intDriver->DASCEffectBuffer[ i]	= (long*) calloc( ( (long) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, 1);
+				intDriver->DASCEffectBuffer[ i]	= (SInt32*) calloc( ( intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, 1);
 			}
 		break;
 		
@@ -112,17 +112,17 @@ void MADKillOverShoot( MADDriverRec *intDriver)
 	}
 }
 
-void Sampler16AddDelay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDriver)
+void Sampler16AddDelay( Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver)
 {
-	long				chnVol, chnVol2;
-	long				chnVolS, chnVol2S;
-	long				chnVolD, chnVol2D;
-	long				i = intDriver->ASCBUFFER;
+	SInt32				chnVol, chnVol2;
+	SInt32				chnVolS, chnVol2S;
+	SInt32				chnVolD, chnVol2D;
+	SInt32				i = intDriver->ASCBUFFER;
 	char				tByte = 0;
-	long				*ASCBuffer1, *ASCBuffer2;
+	SInt32				*ASCBuffer1, *ASCBuffer2;
 	Boolean				killSample = false;
 	Boolean				aa = true;
-	long				VolInter1, VolInter2, rVolInter1, rVolInter2;
+	SInt32				VolInter1, VolInter2, rVolInter1, rVolInter2;
 	
 	///
 	long				aDD, aCC = curVoice->lAC, off;
@@ -183,7 +183,7 @@ void Sampler16AddDelay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDri
 	
 	{
 		Ptr		SndBuffer = curVoice->curPtr;
-		long	RightWeight, LeftWeight, preOff = curVoice->preOff;
+		SInt32	RightWeight, LeftWeight, preOff = curVoice->preOff;
   		char  	preVal = curVoice->preVal, preVal2 = curVoice->preVal2;
   		
   		PrepareInline( &VolInter1, &rVolInter1, intDriver->ASCBUFFER, chnVolS, chnVolD);
@@ -264,19 +264,19 @@ void Sampler16AddDelay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDri
 	}
 }
 
-void Sampler16AddDelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDriver)
+void Sampler16AddDelayStereo( Channel *curVoice, SInt32	*ASCBuffer, MADDriverRec *intDriver)
 {
 	long				chnVol, chnVol2;
 	long				i = intDriver->ASCBUFFER;
 	long				chnVolS, chnVol2S;
 	long				chnVolD, chnVol2D;
 	char				tByteL = 0, tByteR = 0;
-	long				*ASCBuffer1, *ASCBuffer2;
+	SInt32				*ASCBuffer1, *ASCBuffer2;
 	Boolean				killSample = false;
 	Boolean				aa = true;
-	long				VolInter1, VolInter2, rVolInter1, rVolInter2;
+	SInt32				VolInter1, VolInter2, rVolInter1, rVolInter2;
 	///
-	long				aDD, aCC = curVoice->lAC, off;
+	SInt32				aDD, aCC = curVoice->lAC, off;
 	
 #if defined(powerc) || defined (__powerc) || defined(__APPLE__)
 	{
@@ -423,19 +423,19 @@ void Sampler16AddDelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverRec *
 }
 
 
-void Sampler16Addin16Delay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDriver)
+void Sampler16Addin16Delay( Channel *curVoice, SInt32	*ASCBuffer, MADDriverRec *intDriver)
 {
-	long				i = intDriver->ASCBUFFER;
-	long				chnVol, chnVol2;
-	long				chnVolS, chnVol2S;
-	long				chnVolD, chnVol2D;
-	long				off, tShort = 0;
-	long				*ASCBuffer1, *ASCBuffer2;
+	SInt32				i = intDriver->ASCBUFFER;
+	SInt32				chnVol, chnVol2;
+	SInt32				chnVolS, chnVol2S;
+	SInt32				chnVolD, chnVol2D;
+	SInt32				off, tShort = 0;
+	SInt32				*ASCBuffer1, *ASCBuffer2;
 	Boolean				killSample = false;
 	Boolean				aa = true;
 	///
-	long				aDD, aCC = curVoice->lAC;
-	long				VolInter1, VolInter2, rVolInter1, rVolInter2;
+	SInt32				aDD, aCC = curVoice->lAC;
+	SInt32				VolInter1, VolInter2, rVolInter1, rVolInter2;
 	
 	
 #if defined(powerc) || defined (__powerc) || defined(__APPLE__)
@@ -581,23 +581,23 @@ void Sampler16Addin16Delay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *in
 	}
 }
 
-void Sampler16Addin16DelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDriver)
+void Sampler16Addin16DelayStereo( Channel *curVoice, SInt32	*ASCBuffer, MADDriverRec *intDriver)
 {
-	long				chnVolS, chnVol2S;
-	long				chnVolD, chnVol2D;
-	long				i = intDriver->ASCBUFFER;
-	long				chnVol, chnVol2;
-	long				off, tShortL = 0, tShortR = 0;
-	long				*ASCBuffer1, *ASCBuffer2;
+	SInt32				chnVolS, chnVol2S;
+	SInt32				chnVolD, chnVol2D;
+	SInt32				i = intDriver->ASCBUFFER;
+	SInt32				chnVol, chnVol2;
+	SInt32				off, tShortL = 0, tShortR = 0;
+	SInt32				*ASCBuffer1, *ASCBuffer2;
 	Boolean				killSample = false;
 	Boolean				aa = true;
 	///
-	long				aDD, aCC = curVoice->lAC;
-	long				VolInter1, VolInter2, rVolInter1, rVolInter2;
+	SInt32				aDD, aCC = curVoice->lAC;
+	SInt32				VolInter1, VolInter2, rVolInter1, rVolInter2;
 	
 #if defined(__APPLE__)
 	{
-		long finalperiod;
+		SInt32 finalperiod;
 		long double	temp;
 		
 		if( intDriver->XMLinear)
@@ -739,7 +739,7 @@ void Sampler16Addin16DelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverR
 	}
 }
 
-void Sample16BufferAddDelay( Channel *curVoice, register long	*ASCBuffer, MADDriverRec *intDriver)
+void Sample16BufferAddDelay( Channel *curVoice, register SInt32	*ASCBuffer, MADDriverRec *intDriver)
 {
 //	long	i;
 

@@ -42,10 +42,10 @@ typedef struct ULTIns
 {
 	char		name[ 32];
 	char		dosname[ 12];
-	long		loopStart;
-	long		loopEnd;
-	long		sizeStart;
-	long		sizeEnd;
+	SInt32		loopStart;
+	SInt32		loopEnd;
+	SInt32		sizeStart;
+	SInt32		sizeEnd;
 	Byte		volume;
 	Byte		Bidi;
 	short	finetune;

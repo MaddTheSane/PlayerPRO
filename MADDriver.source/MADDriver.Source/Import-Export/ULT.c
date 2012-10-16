@@ -28,7 +28,7 @@
 #define HI(para) ((para) >> 4)
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*msg_buf);
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*msg_buf)
 #else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
@@ -39,7 +39,7 @@ static inline UInt16 Tdecode16( void *msg_buf)
 #endif
 
 #ifdef _MAC_H
-#define Tdecode32(msg_buf)  CFSwapInt32LittleToHost(*msg_buf);
+#define Tdecode32(msg_buf)  CFSwapInt32LittleToHost(*msg_buf)
 #else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
@@ -64,8 +64,8 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 
 static OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
-	long 				i, PatMax, x, z, channel, Row;
-	long 				sndSize, starting, RES;
+	UInt32 				i, PatMax, x, z, channel, Row;
+	UInt32 				sndSize, starting, RES;
 	Ptr					MaxPtr;
 	OSErr				theErr;
 	Ptr					theInstrument[ 64], destPtr;
@@ -252,7 +252,7 @@ for( i = 0; i < MAXTRACK; i++)
 		}
 	}
 	
-	free( (Ptr) ULTSuite.ins);
+	free( ULTSuite.ins);
 	
 	return noErr;
 }

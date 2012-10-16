@@ -42,7 +42,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 }
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*msg_buf);
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*msg_buf)
 #else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
@@ -53,7 +53,7 @@ static inline UInt16 Tdecode16( void *msg_buf)
 #endif
 
 #ifdef _MAC_H
-#define Tdecode32(msg_buf)  CFSwapInt32LittleToHost(*msg_buf);
+#define Tdecode32(msg_buf)  CFSwapInt32LittleToHost(*msg_buf)
 #else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
@@ -67,11 +67,11 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 {
 	Byte			tempByte;
 	short			i, x, noIns, tempShort, trackCount, trckPtr, t;
-	long			inOutCount, OffSetToSample = 0, z;
+	SInt32			inOutCount, OffSetToSample = 0, z;
 	OSErr			theErr = noErr;
 	Ptr				tempPtr;
 	OSType			AMFType;
-	long			finetune[16] = 
+	SInt32			finetune[16] = 
 	{
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280

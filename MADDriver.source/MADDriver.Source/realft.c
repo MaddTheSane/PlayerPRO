@@ -27,7 +27,7 @@
 
 #define SWAP(a,b) tempr=(a);(a)=(b);(b)=tempr
 
-long Interpolate(long p,long p1,long p2,long v1,long v2);
+long Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2);
 double EQInterpolate(double p,double p1,double p2,double v1,double v2);
 
 double EQInterpolate(double p,double p1,double p2,double v1,double v2)
@@ -223,7 +223,7 @@ void MADCallFFT( sData *SData, double *filter, MADDriverRec *intDriver, Boolean 
 	return v1 + ((di*dv) / dp);
 }*/
 
-void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
+void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
 	long	i, y, powersize;
 	long	*shiftAr;
@@ -416,7 +416,7 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 //static long PreviousAxe[ 2];
 //static long PreviousAxe2[ 2];
 
-void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
+void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
 	long	i, y, powersize, *shiftAr;
 	double	pente, axe, *fDataCopy2, *fDataCopy = intDriver->fData;

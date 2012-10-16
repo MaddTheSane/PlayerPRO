@@ -536,7 +536,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	theITCopy += ITinfo.orderNum;
 	
 	/**** Ins Num *****/
-	ITinfo.parapins = (long *) malloc( ITinfo.insNum * 4L);
+	ITinfo.parapins = (SInt32 *) malloc( ITinfo.insNum * 4L);
 	if( ITinfo.parapins == NULL) return MADNeedMemory;
 	memmove( ITinfo.parapins, theITCopy, ITinfo.insNum * 4L);
 	theITCopy += ITinfo.insNum * 4L;
@@ -547,7 +547,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 //	if( ITinfo.insNum > 0) DebugStr("\pInsNum");
 	
 	/**** Samp Num *****/
-	ITinfo.parapsamp = (long *) malloc( ITinfo.smpNum * 4L);
+	ITinfo.parapsamp = (SInt32 *) malloc( ITinfo.smpNum * 4L);
 	if( ITinfo.parapsamp == NULL) return MADNeedMemory;
 	memmove( ITinfo.parapsamp, theITCopy, ITinfo.smpNum * 4L);
 	theITCopy += ITinfo.smpNum * 4L;
@@ -557,7 +557,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	}
 	
 	/**** Pat Num *****/
-	ITinfo.parappat = (long *) malloc( ITinfo.patNum * 4L);
+	ITinfo.parappat = (SInt32 *) malloc( ITinfo.patNum * 4L);
 	if( ITinfo.parappat == NULL) return MADNeedMemory;
 	memmove( ITinfo.parappat,theITCopy, ITinfo.patNum * 4L);
 	theITCopy += ITinfo.patNum * 4L;

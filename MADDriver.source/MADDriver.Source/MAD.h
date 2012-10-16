@@ -122,24 +122,24 @@ typedef struct Cmd							// COMMAND
 	Byte 	arg;					// Effect argument
 	Byte	vol;					// Volume				0xFF : no volume cmd
 	Byte	unused;
-}Cmd;
+} Cmd;
 typedef Cmd MadCommand;
 
 typedef struct PatHeader					// HEADER
 {
-	long	size;					// Length of pattern: standard = 64
+	SInt32	size;					// Length of pattern: standard = 64
 	OSType	compMode;				// Compression mode, none = 'NONE'
 	char	name[ 32];
-	long	patBytes;				// Pattern Size in Bytes
-	long	unused2;
-}PatHeader;
+	SInt32	patBytes;				// Pattern Size in Bytes
+	SInt32	unused2;
+} PatHeader;
 typedef PatHeader PatternHeader;
 
 typedef struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
 {									// Pattern = 64 notes to play
 	PatHeader	header;
 	Cmd			Cmds[ 1];
-}PatData;
+} PatData;
 typedef PatData PatternData;
 
 
@@ -151,9 +151,9 @@ typedef PatData PatternData;
 
 typedef struct sData								// SAMPLE
 {
-	long 				size;				// Sample length
-	long				loopBeg;			// LoopStart
-	long				loopSize;			// LoopLength
+	SInt32 				size;				// Sample length
+	SInt32				loopBeg;			// LoopStart
+	SInt32				loopSize;			// LoopLength
 	Byte 				vol;				// Base volume
 	unsigned short		c2spd;				// c2spd
 	Byte				loopType;
@@ -162,7 +162,7 @@ typedef struct sData								// SAMPLE
 	char 				name[ 32];			// Sample name
 	Byte				stereo;				// Stereo
 	Ptr					data;				// Used only in memory, not in files
-}sData;
+} sData;
 typedef sData SampleData;
 
 enum
@@ -176,7 +176,7 @@ typedef struct EnvRec				// Volume Enveloppe
 {
 	short 	pos;				// pos
 	short	val;				// val
-}EnvRec;
+} EnvRec;
 
 typedef struct InstrData				// INSTRUMENT
 {
@@ -221,7 +221,7 @@ typedef struct InstrData				// INSTRUMENT
 	
 	Byte	vibDepth;
 	Byte	vibRate;
-}InstrData;
+} InstrData;
 typedef InstrData InstrumentData;
 
 
@@ -277,22 +277,22 @@ typedef struct MADSpec
 	Byte		chanPan[ MAXTRACK];			// Channel settings, from 0 to 256
 	Byte		chanVol[ MAXTRACK];			// Channel Volume, from 0 to 64
 	
-	long		globalEffect[ 10];			// Global Effects IDs
+	SInt32		globalEffect[ 10];			// Global Effects IDs
 	Boolean		globalFXActive;				// Global FX Active?
 	
-	long		chanEffect[ MAXTRACK][ 4];	// Channel Effect IDs
+	SInt32		chanEffect[ MAXTRACK][ 4];	// Channel Effect IDs
 	FXBus		chanBus[ MAXTRACK];
-}MADSpec;
+} MADSpec;
 
 typedef struct FXSets
 {
 	short	track;
 	short	id;
-	long	FXID;
+	SInt32	FXID;
 	short	noArg;
 	float	values[ 100];
 	Str63	name;
-}FXSets;	// and then float values
+} FXSets;	// and then float values
 
 
 #if PRAGMA_STRUCT_ALIGN

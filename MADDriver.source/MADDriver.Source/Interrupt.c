@@ -324,9 +324,9 @@ void MADCleanDriver( MADDriverRec *intDriver)
 	for( i = 0; i < MAXTRACK; i++) intDriver->TrackReading[ i] = true;
 }
 
-long Interpolate(long p,long p1,long p2,long v1,long v2)
+long Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2)
 {
-	long dp,dv,di;
+	SInt32 dp,dv,di;
 
 	if( p1 == p2) return v1;
 
@@ -334,7 +334,7 @@ long Interpolate(long p,long p1,long p2,long v1,long v2)
 	dp=p2-p1;
 	di=p-p1;
 
-	return v1 + ((long)(di*dv) / dp);
+	return v1 + ((SInt32)(di*dv) / dp);
 }
 
 long InterpolateEnv(long p, EnvRec *a,EnvRec *b)
@@ -767,7 +767,7 @@ long getlinearperiod(short note,long c2spd, MADDriverRec *intDriver)
 
 #define LOGFAC 2*16
 
-long logtab[]={
+SInt32 logtab[]={
 	LOGFAC*907,LOGFAC*900,LOGFAC*894,LOGFAC*887,LOGFAC*881,LOGFAC*875,LOGFAC*868,LOGFAC*862,
 	LOGFAC*856,LOGFAC*850,LOGFAC*844,LOGFAC*838,LOGFAC*832,LOGFAC*826,LOGFAC*820,LOGFAC*814,
 	LOGFAC*808,LOGFAC*802,LOGFAC*796,LOGFAC*791,LOGFAC*785,LOGFAC*779,LOGFAC*774,LOGFAC*768,
@@ -783,11 +783,11 @@ long logtab[]={
 	LOGFAC*453,LOGFAC*450,LOGFAC*447,LOGFAC*443,LOGFAC*440,LOGFAC*437,LOGFAC*434,LOGFAC*431
 };
 
-long getlogperiod(short note,long fine, MADDriverRec *intDriver)
+SInt32 getlogperiod(short note, SInt32 fine, MADDriverRec *intDriver)
 {
 	Byte n,o;
-	short p1,p2;
-	long i;
+	//short p1,p2;
+	SInt32 i;
 
 	n = note%12;
 	o = note/12;
@@ -800,7 +800,7 @@ long getlogperiod(short note,long fine, MADDriverRec *intDriver)
 //	return(Interpolate(fine>>4,0,15,p1,p2)>>o);
 }
 
-long GetOldPeriod( short note, long c2spd, MADDriverRec *intDriver)
+long GetOldPeriod( short note, SInt32 c2spd, MADDriverRec *intDriver)
 {
 	if( intDriver->XMLinear)
 	{
@@ -1238,11 +1238,11 @@ void ApplyVSTEffects( MADDriverRec *intDriver, Boolean ByPass)
 		{
 			if( intDriver->curMusic->header->chanBus[ intDriver->EffectBufferID[ i]].ByPass == ByPass)
 			{
-				long		*eee, *ASCBuffer, ii, x;
+				SInt32		*eee, *ASCBuffer, ii, x;
 				
 				if( intDriver->DriverSettings.oversampling > 1)
 				{
-					long	*intempLong, mul = intDriver->DriverSettings.oversampling, x, tempL, tempR;
+					SInt32	*intempLong, mul = intDriver->DriverSettings.oversampling, x, tempL, tempR;
 					
 					eee = intDriver->DASCEffectBuffer[ i];
 					
@@ -1288,11 +1288,11 @@ void ApplyVSTEffects( MADDriverRec *intDriver, Boolean ByPass)
 
 void NoteAnalyse( MADDriverRec *intDriver)
 {
-	long					InterruptBufferSize, i, ASCBUFFERCopy, ASCBUFFERRealCopy;
+	SInt32					InterruptBufferSize, i, ASCBUFFERCopy, ASCBUFFERRealCopy;
 	void					*DataPtrCopy;
-	long					tVSYNC;
+	SInt32					tVSYNC;
 	Boolean					NoteReading;
-	long					*DASCopy, *DASECopy[ MAXCHANEFFECT];
+	SInt32					*DASCopy, *DASECopy[ MAXCHANEFFECT];
 	short					*DASCopy8;
 
 	if( intDriver->curMusic != NULL)
@@ -1747,8 +1747,8 @@ void NoteAnalyse( MADDriverRec *intDriver)
 	// Sound Window Centering ! AND compute LEVELS ***** ***** ***** ***** ***** ***** *****
 	if( intDriver->DriverSettings.outPutBits == 16)
 	{
-	long		maxL, maxR, minL, minR, tempL;
-	long		*tempLong = intDriver->DASCBuffer, centerL, centerR;
+	SInt32		maxL, maxR, minL, minR, tempL;
+	SInt32		*tempLong = intDriver->DASCBuffer, centerL, centerR;
 	
 	switch( intDriver->DriverSettings.outPutBits)
 	{
@@ -1851,7 +1851,7 @@ void NoteAnalyse( MADDriverRec *intDriver)
 	else
 	{
 		short			*ASCBuffer, valP = 0x7FFFL, valN = -0x7FFFL;
-		long			*ttt;
+		SInt32			*ttt;
 		register long	tempL;
 		
 		intDriver->clipL = false;

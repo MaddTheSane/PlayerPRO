@@ -50,10 +50,10 @@ typedef struct {
     uchar       type;
     char        name[32],filename[13];
     void        *sample;
-    ulong       size;
+    UInt32      size;
     ushort      rate;
     uchar       volume;
-    ulong       loopstart,loopend;
+    UInt32      loopstart,loopend;
 } INSTRUMENT;
 
 #if PRAGMA_STRUCT_ALIGN

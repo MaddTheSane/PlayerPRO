@@ -49,11 +49,11 @@ typedef struct oldCmd oldCmd;
 
 struct oldPatHeader					// HEADER
 {
-	long	size;					// Length of pattern: standard = 64
+	SInt32	size;					// Length of pattern: standard = 64
 	OSType	compMode;				// Compression mode, none = 'NONE'
 	char	name[ 32];
-	long	patBytes;				// Pattern Size in Bytes
-	long	unused2;
+	SInt32	patBytes;				// Pattern Size in Bytes
+	SInt32	unused2;
 };
 typedef struct oldPatHeader oldPatHeader;
 
@@ -73,9 +73,9 @@ typedef struct oldPatData oldPatData;
 
 struct oldsData								// SAMPLE
 {
-	long 				size;				// Sample length
-	long				loopBeg;			// LoopStart
-	long				loopSize;			// LoopLength
+	SInt32 				size;				// Sample length
+	SInt32				loopBeg;			// LoopStart
+	SInt32				loopSize;			// LoopLength
 	Byte 				vol;				// Base volume
 	unsigned short		c2spd;				// c2spd
 	Byte				loopType;
@@ -173,8 +173,8 @@ struct oldMADSpec
 	Byte		generalPan;					// General Panning
 	Byte		MultiChanNo;				// Number of chan for multichannel
 	Byte		MultiChan;					// MultiChannel per tracks?
-	long		EPitch;						// New Pitch
-	long		ESpeed;						// New Speed
+	SInt32		EPitch;						// New Pitch
+	SInt32		ESpeed;						// New Speed
 	Byte		XMLinear;					// Linear picth table?
 	Byte		MODMode;					// Limit pitch to MOD pitch table
 	Byte		showCopyright;				// Show infos at startup? true or false
