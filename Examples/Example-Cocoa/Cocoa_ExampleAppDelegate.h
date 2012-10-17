@@ -7,10 +7,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#include <PlayerPROCore/PlayerPROCore.h>
 
-@interface Cocoa_ExampleAppDelegate : NSObject /*<NSApplicationDelegate>*/ {
+@interface Cocoa_ExampleAppDelegate : NSObject <NSApplicationDelegate> {
     NSWindow *window;
     IBOutlet NSImageView *fileIcon;
+	
+	MADDriverRec	*MADDriver;
+	MADMusic		*Music;
+	MADLibrary		*MADLib;
 }
 
 @property (assign) IBOutlet NSWindow *window;

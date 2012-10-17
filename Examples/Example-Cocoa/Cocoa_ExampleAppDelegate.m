@@ -13,7 +13,21 @@
 @synthesize window;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	// Insert code here to initialize your application 
+	// Insert code here to initialize your application
+	MADInitLibrary(NULL, false, &MADLib);
+	MADDriverSettings init;
+	MADGetBestDriver(&init);
+	MADCreateDriver(&init, MADLib, &MADDriver);
+	MADStartDriver(MADDriver);
+}
+
+- (void)dealloc
+{
+	MADStopDriver(MADDriver);
+	MADDisposeDriver(MADDriver);
+	MADDisposeLibrary(MADLib);
+	
+	[super dealloc];
 }
 
 @end
