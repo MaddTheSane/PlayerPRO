@@ -55,13 +55,24 @@
 	
 	if ((self = [super init])) 
 	{
-		musicList = [[decoder decodeObjectForKey:kMUSICLISTKEY] retain];
+		NSMutableArray *BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY];
+		NSInteger i = 0;
+		musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
+		for (i = 0; i < [BookmarkArray count]; i++) {
+			[musicList insertObject:[NSURL URLByResolvingBookmarkData:[BookmarkArray objectAtIndex:i] options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:NULL error:nil ]  atIndex:i];
+		}
 	}
 	return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
-	[encoder encodeObject:musicList forKey:kMUSICLISTKEY];
+	NSMutableArray *BookmarkArray = [NSMutableArray arrayWithCapacity:[musicList count]];
+	NSInteger i = 0;
+	for (i = 0; i < [musicList count]; i++)
+	{
+		[BookmarkArray insertObject:[[musicList objectAtIndex:i] bookmarkDataWithOptions:NSURLBookmarkCreationPreferFileIDResolution includingResourceValuesForKeys:nil relativeToURL:nil error:nil] atIndex:i];
+	}
+	[encoder encodeObject:BookmarkArray forKey:kMUSICLISTKEY];
 }
 
 @end
