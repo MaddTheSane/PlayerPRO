@@ -62,7 +62,7 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 	memcpy( a, b + 1, b[ 0]);
 }
 
-static OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
+static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	UInt32 				i, PatMax, x, z, channel, Row;
 	UInt32 				sndSize, starting, RES;

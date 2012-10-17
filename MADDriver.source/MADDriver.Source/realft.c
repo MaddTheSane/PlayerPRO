@@ -27,7 +27,7 @@
 
 #define SWAP(a,b) tempr=(a);(a)=(b);(b)=tempr
 
-long Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2);
+SInt32 Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2);
 double EQInterpolate(double p,double p1,double p2,double v1,double v2);
 
 double EQInterpolate(double p,double p1,double p2,double v1,double v2)
@@ -225,8 +225,8 @@ void MADCallFFT( sData *SData, double *filter, MADDriverRec *intDriver, Boolean 
 
 void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
-	long	i, y, powersize;
-	long	*shiftAr;
+	SInt32	i, y, powersize;
+	SInt32	*shiftAr;
 	double	pente, axe, *fDataCopy2, *fDataCopy = intDriver->fData;
 	
 	if( nochan == 2)	// STEREO
@@ -263,7 +263,7 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 		fDataCopy2 = (double*) malloc( sizeof( double) * (powersize+2));
 		if( fDataCopy2 == NULL) return;
 		
-		shiftAr = (long*) calloc( sizeof( long) * (powersize+2), 1);
+		shiftAr = (SInt32*) calloc( sizeof( SInt32) * (powersize+2), 1);
 		if( shiftAr == NULL) return;
 	}
 	
@@ -312,7 +312,7 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 		
 		if( shift)
 		{
-			long shiftval, a;//, b;
+			SInt32 shiftval, a;//, b;
 			
 			for( i = 0 ; i < powersize; i++)
 			{
@@ -418,7 +418,7 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 
 void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
-	long	i, y, powersize, *shiftAr;
+	SInt32	i, y, powersize, *shiftAr;
 	double	pente, axe, *fDataCopy2, *fDataCopy = intDriver->fData;
 	
 	size /= 2;
@@ -457,7 +457,7 @@ void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver,
 		fDataCopy2 = (double*) malloc( sizeof( double) * (powersize+2));
 		if( fDataCopy2 == NULL) return;
 		
-		shiftAr = (long*) calloc( sizeof( long) * (powersize+2), 1);
+		shiftAr = (SInt32*) calloc( sizeof( SInt32) * (powersize+2), 1);
 		if( shiftAr == NULL) return;
 	}
 	
@@ -518,7 +518,7 @@ void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver,
 		
 		if( shift)
 		{
-			long shiftval, a, b;
+			SInt32 shiftval, a, b;
 			
 			for( i = 0 ; i < powersize; i++)
 			{

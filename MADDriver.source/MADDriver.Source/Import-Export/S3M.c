@@ -216,15 +216,15 @@ static void ConvertMADEffect( Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 	}
 }
 
-static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndSize)
+static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, size_t *sndSize)
 {
-	long 				i, x, z;
+	SInt32 				i, x, z;
 	Ptr					finalS3M, finalS3MCopy, maxfinalS3M;
-	long				InstruSize;
-	long				NoIns;
+	SInt32				InstruSize;
+	SInt32				NoIns;
 	s3minsform		*ins[ 64];
 	Cmd					*aCmd;
-	long				PatternSize;
+	SInt32				PatternSize;
 	
 	s3mform			*s3minfo;
 	
@@ -450,14 +450,14 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 		if( theMAD->fid[ i].numSamples > 0)
 		{
 			sData			*curData = theMAD->sample[ i*MAXSAMPLE + 0];
-			long			tempL, dstSize;
+			SInt32			tempL, dstSize;
 			
 			tempL = (16L + finalS3MCopy - finalS3M) / 16L;
 			
 			ins[ i]->memsegl = tempL & 0x0000FFFF;
 			INT16(  &ins[ i]->memsegl);
 			
-			ins[ i]->memsegh = (long) (tempL &0x00FF0000)>>16L;
+			ins[ i]->memsegh = (SInt32) (tempL &0x00FF0000)>>16L;
 			
 			finalS3MCopy = finalS3M + tempL*16L;
 			
@@ -473,7 +473,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 				{
 					for( x = 0 ; x < dstSize; x+=2)
 					{
-						finalS3MCopy[ x / 2] = ((long) finalS3MCopy[ x] + (long) finalS3MCopy[ x + 1]) / 2L;
+						finalS3MCopy[ x / 2] = ((SInt32) finalS3MCopy[ x] + (SInt32) finalS3MCopy[ x + 1]) / 2L;
 					}
 				}
 				else
@@ -482,7 +482,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 					
 					for( x = 0 ; x < dstSize/2; x+=2)
 					{
-						short16out[ x / 2] = ((long) short16in[ x] + (long) short16in[ x + 1]) / 2L;
+						short16out[ x / 2] = ((SInt32) short16in[ x] + (SInt32) short16in[ x + 1]) / 2L;
 					}
 				}
 				dstSize /= 2;
@@ -495,7 +495,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 			else
 			{
 				short *b16 = (short*) finalS3MCopy;
-				long temp;
+				SInt32 temp;
 				
 				for( temp = 0; temp < dstSize/2; temp++)
 				{
@@ -513,7 +513,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 	
 	for (i = 0; i < theMAD->header->numPat; i++)
 	{
-		long		Row = 0, maxtrackp;
+		SInt32		Row = 0, maxtrackp;
 		short		*sizePtr;
 		Cmd			nullCmd;
 		
@@ -525,7 +525,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 		nullCmd.unused	= 0;
 		
 		parappat[ i] = (16L + finalS3MCopy - finalS3M) / 16L;
-		finalS3MCopy = finalS3M + ((long) parappat[ i])*16L;
+		finalS3MCopy = finalS3M + ((SInt32) parappat[ i])*16L;
 		INT16(  &parappat[ i]);
 		
 		sizePtr = (short*) finalS3MCopy;
@@ -645,10 +645,10 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 	return( (Ptr) finalS3M);
 }
 
-OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverSettings *init)
+OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettings *init)
 {
-	long 					i, x, z, channel, Row;
-	long 					starting;
+	SInt32 					i, x, z, channel, Row;
+	SInt32 					starting;
 	Ptr						MaxPtr;
 	Ptr						theInstrument[ MAXINSTRU];
 	Byte					tempChar, *theS3MCopy;
@@ -755,11 +755,11 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverSettings
 				s3minfo.insdata[i].inssig[ 2] == 'R' &&
 				s3minfo.insdata[i].inssig[ 3] == 'S')
 	    {
-	    	long tempL;
+	    	SInt32 tempL;
 
 	    	theS3MCopy = (Byte*) theS3M;
 	    	
-				tempL = (((long)s3minfo.insdata[i].memsegh)<<16|s3minfo.insdata[i].memsegl)<<4;
+				tempL = (((SInt32)s3minfo.insdata[i].memsegh)<<16|s3minfo.insdata[i].memsegl)<<4;
 	    	
 	    	theS3MCopy += tempL;
 	    	
@@ -901,7 +901,7 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverSettings
 					case 16:
 					{
 						short *b16 = (short*) curData->data;
-						long temp;
+						SInt32 temp;
 						
 						for( temp = 0; temp < curData->size/2; temp++)
 						{
@@ -915,7 +915,7 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverSettings
 					case 8:
 						if( s3minfo.ffv != 1)
 						{
-							long temp;
+							SInt32 temp;
 							
 							for( temp = 0; temp < curData->size; temp++) *(curData->data + temp) -= 0x80;
 						}
@@ -1188,7 +1188,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 {
 	OSErr		myErr;
 	Ptr			AlienFile;
-	long		sndSize;
+	size_t		sndSize;
 	UNFILE		iFileRefI;
 		
 	myErr = noErr;

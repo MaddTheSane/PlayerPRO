@@ -200,18 +200,18 @@ static void ConvertMADEffect( Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 	}
 }
 
-static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
+static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
-	long 				i, PatMax, x, z, channel, Row;
-	long 				sndSize, OffSetToSample, OldTicks, starting;
+	SInt32 				i, PatMax, x, z, channel, Row;
+	SInt32 				sndSize, OffSetToSample, OldTicks, starting;
 	Ptr					MaxPtr;
 	OSErr				theErr;
 	Ptr					theInstrument[ 64], destPtr;
 	Byte				tempChar, *theITCopy;
 	short				Note, Octave, maxTrack;
 	short				ITperiod[ 12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
-	long				note_st3period;
-	long				note_amigaperiod;
+	SInt32				note_st3period;
+	SInt32				note_amigaperiod;
 	Byte				*ChannelSettings;
 	
 	/**** Variables pour le MAD ****/
@@ -395,10 +395,10 @@ for( i = 0; i < MAXTRACK; i++)
 	// ***** INSTRUMENTS *****
 	// ********************
 
-	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
+	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * MAXINSTRU, 1);
 	if( !theMAD->fid) return MADNeedMemory;
 	
-	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
+	theMAD->sample = ( sData**) calloc( sizeof( sData*) * MAXINSTRU * MAXSAMPLE, 1);
 	if( !theMAD->sample) return MADNeedMemory;
 	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;

@@ -48,7 +48,7 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 	memmove( a, b + 1, b[ 0]);
 }
 
-static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDriverSettings *init)
+static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	SixSixNine			*the669;
 	short				i, PatMax, x, z;

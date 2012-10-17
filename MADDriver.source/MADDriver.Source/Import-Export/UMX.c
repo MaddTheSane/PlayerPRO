@@ -55,9 +55,9 @@ static short FoundNote( short Period)
 	return note;
 }
 
-static void Convert16to8( Ptr srcPtr, Ptr destPtr, long size)
+static void Convert16to8( Ptr srcPtr, Ptr destPtr, size_t size)
 {
-	long 	i;
+	SInt32 	i;
 
 	size /= 2;
 
@@ -77,9 +77,9 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 }
 #endif
 
-static void AnalyseSignatureMOD( long EOFo, long temp, short *maxInstru, long *PatternSize, short *tracksNo, MODDef* aMOD)
+static void AnalyseSignatureMOD( size_t EOFo, UInt32 temp, short *maxInstru, SInt32 *PatternSize, short *tracksNo, MODDef* aMOD)
 {
-	long 		test, i;
+	SInt32 		test, i;
 	Boolean		result;
 	
 	*maxInstru = 31;
@@ -142,7 +142,7 @@ static void AnalyseSignatureMOD( long EOFo, long temp, short *maxInstru, long *P
 			
 			if( EOFo != -1)
 			{
-				long 		PatMax = 0;
+				SInt32 		PatMax = 0;
 				MODDef		*MODInt;
 				
 				MODInt = (MODDef*) ( (Ptr) aMOD - (Ptr) 0x1E0);
@@ -179,13 +179,13 @@ static struct MODCom* GetMODCommand( short position, short whichTracks, short wh
 	return myMODCom;
 }
 
-static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriverSettings* init)
+static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDriverSettings* init)
 {
 	short 			i, PatMax, x, tracksNo, z, maxInstru;
-	long 			sndSize, OffSetToSample, MPatSize, temp, inOutCount;
+	SInt32 			sndSize, OffSetToSample, MPatSize, temp, inOutCount;
 	Ptr				theInstrument[ 64], MaxPtr;
-	long			lastIns[ 32], lastNote[ 32];
-	long 			finetune[16] = 
+	SInt32			lastIns[ 32], lastNote[ 32];
+	SInt32 			finetune[16] =
 	{
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
@@ -204,7 +204,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	MaxPtr = (Ptr) theMOD;
 	MaxPtr += MODSize;
 	
-	temp = *((long*)(aMOD + 0x438));		// Signature...
+	temp = *((SInt32*)(aMOD + 0x438));		// Signature...
 	
 	AnalyseSignatureMOD( -1, temp, &maxInstru, &MPatSize, &tracksNo, theMOD);
 	
@@ -230,7 +230,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	//	if( MODInt->numPointers > 64) MODInt->numPointers = 64;
 	//	for(i=64; i<128; i++) MODInt->oPointers[i] = 0;
 		
-		OffSetToSample = (long) 0x258 + PatMax * MPatSize;
+		OffSetToSample = (SInt32) 0x258 + PatMax * MPatSize;
 	}
 	else									// Mods format with 32 instruments
 	{
@@ -247,18 +247,18 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 		}
 		PatMax++;
 		
-		OffSetToSample = (long) 0x43c + PatMax * MPatSize;
+		OffSetToSample = (SInt32) 0x43c + PatMax * MPatSize;
 	}
 	
 	for( i = 0; i < maxInstru ; i++)
 	{
-		theInstrument[ i] = (Ptr) ((long) theMOD + (long) OffSetToSample);
+		theInstrument[ i] = (Ptr) ((SInt32) theMOD + (SInt32) OffSetToSample);
 		
 		MOT16( &theMOD->fid[ i].numWords);
 		MOT16( &theMOD->fid[ i].loopWord);
 		MOT16( &theMOD->fid[ i].loopWords);
 		
-		sndSize = ((long) theMOD->fid[i].numWords) * 2L;
+		sndSize = ((SInt32) theMOD->fid[i].numWords) * 2L;
 		
 		if( theInstrument[i] + sndSize > MaxPtr)
 		{
@@ -267,23 +267,23 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 			
 			if( theMOD->fid[i].numWords < 0) theMOD->fid[i].numWords = 0;
 					
-			sndSize = ((long) theMOD->fid[i].numWords) * 2L;
+			sndSize = ((SInt32) theMOD->fid[i].numWords) * 2L;
 		}
 		
 		OffSetToSample += sndSize;
 		
 		if( theMOD->fid[i].loopWords > 2 && sndSize > 0)
 		{
-			if( (long) theMOD->fid[i].loopWord +
-				(long) theMOD->fid[i].loopWords > 
-				(long) theMOD->fid[i].numWords)
+			if( (SInt32) theMOD->fid[i].loopWord +
+				(SInt32) theMOD->fid[i].loopWords > 
+				(SInt32) theMOD->fid[i].numWords)
 			{
-				theMOD->fid[ i].loopWords =	(long) theMOD->fid[i].numWords -
-											(long) theMOD->fid[i].loopWord;
+				theMOD->fid[ i].loopWords =	(SInt32) theMOD->fid[i].numWords -
+											(SInt32) theMOD->fid[i].loopWord;
 		
-				if( (long) theMOD->fid[i].loopWord +
-				(long) theMOD->fid[i].loopWords > 
-				(long) theMOD->fid[i].numWords)
+				if( (SInt32) theMOD->fid[i].loopWord +
+				(SInt32) theMOD->fid[i].loopWords > 
+				(SInt32) theMOD->fid[i].numWords)
 				{
 					theMOD->fid[i].loopWord = 0;
 					theMOD->fid[i].loopWords = 0;
@@ -467,11 +467,11 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	return noErr;
 }
 
-static long ConvertSampleC4SPD( Ptr src, long srcSize, short amp, long srcC4SPD, Ptr dst, long dstC4SPD)
+static SInt32 ConvertSampleC4SPD( Ptr src, size_t srcSize, short amp, SInt32 srcC4SPD, Ptr dst, SInt32 dstC4SPD)
 {
 	short	*src16 = (short*) src, *dst16 = (short*) dst;
 	Ptr		src8 = src, dst8 = dst;
-	long	x, dstSize;
+	SInt32	x, dstSize;
 	
 	if( dstC4SPD > srcC4SPD)
 	{
@@ -513,10 +513,10 @@ static long ConvertSampleC4SPD( Ptr src, long srcSize, short amp, long srcC4SPD,
 	return (srcSize * dstC4SPD) / srcC4SPD;
 }
 
-Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *PtrSize)
+Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize)
 {
-	long 				i, x, z, maxInstru;
-	long 				OffSetToSample, InstruSize, *alpha;
+	SInt32 				i, x, z, maxInstru;
+	SInt32 				OffSetToSample, InstruSize, *alpha;
 	Ptr					theInstrument[ 64], destPtr;
 	Boolean				CheckGoodMod;
 	char				redut[4];
@@ -591,7 +591,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *PtrSize)
 			redut[3] = 'N';
 		}
 		
-		alpha = (long*) redut;
+		alpha = (SInt32*) redut;
 		
 		theMOD->longFmtSignature = *alpha;
 	}
@@ -824,9 +824,9 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *PtrSize)
 
 static OSErr ExtractUMXInfo( PPInfoRec *info, Ptr AlienFile)
 {
-	long	PatternSize;
-	short	i;
-	short	maxInstru;
+	//long	PatternSize;
+	//short	i;
+	//short	maxInstru;
 	
 	/*** Internal name ***/
 	
@@ -855,9 +855,10 @@ static OSErr ExtractUMXInfo( PPInfoRec *info, Ptr AlienFile)
 
 static OSErr TestUMXFile( Ptr AlienFile, long EOFo)
 {
-	short		maxInstru;
-	long		PatternSize, i;
-	short		tracksNo;
+	//short		maxInstru;
+	//long		PatternSize, i;
+	//short		tracksNo;
+	int i;
 	char 		modsig[4] = "M.K.";
     char 		mod6sig[4] = "6CHN";
     char 		mod8sig[4] = "8CHN";

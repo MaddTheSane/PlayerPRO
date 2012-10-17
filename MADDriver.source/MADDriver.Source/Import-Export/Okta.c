@@ -78,12 +78,12 @@ short	NCount = 1;
 static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short 				i, PatMax, x, z, channel, TrueTracks;
-	long 				sndSize, OffSetToSample, OldTicks, temp, starting;
+	//long 				sndSize, OffSetToSample, OldTicks, temp, starting;
 	Ptr					MaxPtr, theOktaPos;
-	OSErr				theErr;
+	//OSErr				theErr;
 	Ptr					theInstrument[ 120], destPtr;
-	unsigned short		tempS;
-	char				tempChar;
+	//unsigned short		tempS;
+	//char				tempChar;
 	
 	
 	/**** Variables pour le MAD ****/
@@ -95,7 +95,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	OktaInstru			*samps, *s, instru[ 120];
 	OktaPattern 		*OktaCmd;
 	sectheader		*aSect;
-	long				SectLength;
+	//long				SectLength;
 	short			pbod_count, sbod_count;
 	/********************************/
 
@@ -372,10 +372,10 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 
 static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 {
-	long		PatternSize;
-	short	i;
-	short	maxInstru;
-	short	tracksNo;
+	//long		PatternSize;
+	//short	i;
+	//short	maxInstru;
+	//short	tracksNo;
 	
 	/*** Signature ***/
 	
@@ -386,19 +386,19 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 	mystrcpy( info->internalFileName, "\p");
 	
 	{
-	OktaInstru			*samps, *s, instru[ 120];
-	OktaPattern 		*OktaCmd;
+	//OktaInstru			*samps, *s, instru[ 120];
+	//OktaPattern 		*OktaCmd;
 	sectheader		*aSect;
-	long				SectLength;
+	//long				SectLength;
 	short			pbod_count, sbod_count;
 	
-	short 				i, PatMax, x, z, channel, TrueTracks;
-	long 					sndSize, OffSetToSample, OldTicks, temp, starting;
+	//short 				i, PatMax, x, z, channel, TrueTracks;
+	//long 					sndSize, OffSetToSample, OldTicks, temp, starting;
 	Ptr					MaxPtr, theOktaPos;
-	OSErr				theErr;
-	Ptr					theInstrument[ 120], destPtr;
-	unsigned	short		tempS;
-	char					tempChar;
+	//OSErr				theErr;
+	//Ptr					theInstrument[ 120], destPtr;
+	//unsigned	short		tempS;
+	//char					tempChar;
 	
 	
 	sbod_count = 0;	pbod_count = 0;

@@ -181,10 +181,10 @@ void WriteMADKFile( FSSpec *newFile, MADMusic	*music)
 	FSClose( fRefNum);
 }*/
 
-long MADGetMusicSize( MADMusic	*music)
+size_t MADGetMusicSize( MADMusic	*music)
 {
 	short i, x;
-	long fileSize;
+	size_t fileSize;
 	
 	if( music->header == NULL) return 0;
 	
@@ -208,9 +208,9 @@ long MADGetMusicSize( MADMusic	*music)
 #ifdef _MAC_H
 void ConvertTo64Rows( MADMusic *music)
 {
-	long		i, x, z;
+	SInt32		i, x, z;
 	Boolean		IsReading;
-	long		patID, found;
+	SInt32		patID, found;
 	
 	if( music->header == NULL) return;
 	
@@ -221,7 +221,7 @@ void ConvertTo64Rows( MADMusic *music)
 	{
 		// Resize pattern to 64 rows and put a pattern break
 		
-		long		newSize;
+		SInt32		newSize;
 		PatData		*newPat = NULL;
 		
 		patID = i;
@@ -231,7 +231,7 @@ void ConvertTo64Rows( MADMusic *music)
 		if( music->partition[ i]->header.size < 64)
 		{
 			Cmd		*srccmd, *dstcmd;
-			long	patsize;
+			SInt32	patsize;
 			
 			newPat = ( PatData*) calloc( newSize, 1);
 			
@@ -277,7 +277,7 @@ void ConvertTo64Rows( MADMusic *music)
 			
 			// Replace old pattern
 			
-			free( ( Ptr) music->partition[ i]);
+			free( music->partition[ i]);
 			music->partition[ i] = NULL;
 			
 			music->partition[ i] = newPat;
@@ -399,12 +399,12 @@ void ConvertTo64Rows( MADMusic *music)
 	music->musicUnderModification = IsReading;
 }
 
-long MADMinimize( MADMusic *music)
+SInt32 MADMinimize( MADMusic *music)
 {
 	short 		i, x, z;
 	Boolean		remove, IsReading;
 	Boolean		inst[ MAXINSTRU];
- 	long		before, after;
+ 	SInt32		before, after;
  	
  	if( music->header == NULL) return 0;
  	
@@ -542,7 +542,7 @@ void MADDisposeReverb( MADDriverRec *intDriver)
 
 OSErr MADCreateReverb( MADDriverRec *intDriver)
 {
-	long i;
+	SInt32 i;
 	
 	if( intDriver->DriverSettings.Reverb)
 	{
@@ -582,19 +582,19 @@ void MADDisposeDriverBuffer( MADDriverRec *intDriver)
 
 OSErr MADCreateDriverBuffer( MADDriverRec *intDriver)
 {
-	long	BufSize = intDriver->ASCBUFFER;
+	SInt32	BufSize = intDriver->ASCBUFFER;
 	short	i;
 	
 	switch( intDriver->DriverSettings.outPutMode)
 	{
 		case MonoOutPut:			BufSize = BufSize;			break;
-		case StereoOutPut:			BufSize = BufSize*2L;		break;
-		case DeluxeStereoOutPut:	BufSize = BufSize*2L;		break;
+		case StereoOutPut:			BufSize *= 2;		break;
+		case DeluxeStereoOutPut:	BufSize *= 2;		break;
 	}
 	
 	switch( intDriver->DriverSettings.outPutBits)
 	{
-		case 16:									BufSize = BufSize*2L;		break;
+		case 16:									BufSize *= 2;		break;
 	}
 	
 	intDriver->curDrawPtr = 0;
@@ -665,7 +665,7 @@ void OpenMIDIHardware();
 OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADDriverRec** returnDriver)
 {
 	OSErr 					theErr;
-	long					i;
+	SInt32					i;
 	MADDriverRec*			MDriver;
 	
 	*returnDriver = NULL;
@@ -1200,61 +1200,6 @@ OSErr MADLoadMADFileCString( MADMusic **music, Ptr fName)
 }
 
 #ifdef _MAC_H
-OSErr MADSetHardwareVolume( long vol)
-{
-	/*Point			tempL;
-	long			*tL;
-	NumVersion		nVers;
-	Boolean			NewSoundManager;
-
-//	if(vol > 255) vol = 255;
-//	if(vol < 1) vol = 1;
-	
-	nVers = SndSoundManagerVersion();
-//	BlockMoveData( &tt, &nVers, 4);
-	if( nVers.majorRev >= 3) NewSoundManager = true;
-	else NewSoundManager = false;
-	
-	if( vol >= 0)
-	{
-		if( NewSoundManager)
-		{
-			tempL.v = vol;
-			tempL.h = vol;
-			
-			tL = (long*) &tempL;
-			
-			SetDefaultOutputVolume( *tL);
-		}
-	}
-	*/
-	return noErr;
-}
-
-long MADGetHardwareVolume()
-{
-	//TODO: rewrite!
-	/*Point			tempL;
-	NumVersion		nVers;
-	Boolean			NewSoundManager;
-	long			vol = 0;
-	
-	nVers = SndSoundManagerVersion();
-//	BlockMoveData( &tt, &nVers, 4);
-	if( nVers.majorRev >= 3) NewSoundManager = true;
-	else NewSoundManager = false;
-	
-	if( NewSoundManager)
-	{
-		GetDefaultOutputVolume( (long*) &tempL);
-		
-		vol = tempL.h;
-	}
-	
-	return vol;*/
-	return 0;
-}
-
 OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef)
 {
 	char URLcString[PATH_MAX * 4];
@@ -1842,7 +1787,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 			
 			if( curData->amp == 16)
 			{
-				long 	ll;
+				SInt32 	ll;
 				short	*shortPtr = (short*) curData->data;
 				
 				for( ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
@@ -2903,7 +2848,7 @@ void MADDisposeVolumeTable( MADDriverRec *intDriver)
 
 OSErr MADCreateVolumeTable( MADDriverRec *intDriver)
 {
-	long		Tracks = intDriver->DriverSettings.numChn;
+	SInt32		Tracks = intDriver->DriverSettings.numChn;
 	OSErr		theErr;
 
 	theErr = MADCreateMicroDelay( intDriver);			if( theErr != noErr) return theErr;
@@ -3124,8 +3069,8 @@ PatData* CompressPartitionMAD1( MADMusic *MDriver, PatData* myPat)
 	PatData*				finalPtr;
 	UInt8 					*dstPtr, *setByte;
 	Cmd						*myCmd;
-	long					maxCmd;
-	long					NewPtrSize;
+	SInt32					maxCmd;
+	size_t					NewPtrSize;
 	UInt8					set;
 	
 	finalPtr = ( PatData*) malloc( sizeof( PatHeader) + myPat->header.size * MDriver->header->numChn * 6L);

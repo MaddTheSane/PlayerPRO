@@ -195,7 +195,7 @@ typedef struct Channel
 		float		ppp;
 		SInt32		panPitch;
 		
-		long		lAC;
+		SInt32		lAC;
 		
 		char		*prevPtr;
 		SInt32		lastWordL, curLastWordL;
@@ -219,7 +219,7 @@ typedef struct Channel
 		Byte		loopType;
 		Boolean		pingpong;
 		
-		long		preOff;
+		SInt32		preOff;
 		char		preVal, preVal2;
 		char		preValR, preVal2R;
 		
@@ -301,13 +301,13 @@ typedef struct MADDriverSettings
 //	Boolean					sysMemory;							// NOT USED anymore
 //	Boolean					Interpolation;						// NOT USED anymore
 //	Boolean					MicroDelay;							// NOT USED anymore
-	long					MicroDelaySize;						// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
+	SInt32					MicroDelaySize;						// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
 	Boolean					surround;							// Surround effect active? true/false
 	Boolean					Reverb;								// Reverb effect active? true/false
-	long					ReverbSize;							// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
-	long					ReverbStrength;						// Reverb strength in % (0 <-> 70)
+	SInt32					ReverbSize;							// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
+	SInt32					ReverbStrength;						// Reverb strength in % (0 <-> 70)
 	Boolean					TickRemover;						// Remove volume/sample/loop ticks.
-	long					oversampling;						// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
+	SInt32					oversampling;						// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
 } MADDriverSettings;
 
 /******************************************************************/
@@ -352,7 +352,7 @@ typedef struct PPInfoRec
 	
 	OSType		signature;
 	
-	SInt32		fileSize;
+	long		fileSize;
 	
 } PPInfoRec;
 
@@ -541,9 +541,6 @@ void	MADCleanDriver( MADDriverRec *intDriver);									// Clean the driver : sto
 OSErr	MADReset( MADDriverRec *MDriver);											// Reset the current music at the start position
 OSErr	MADGetMusicStatus( MADDriverRec *MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
 OSErr	MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus( 0, 100, 50) = go to the middle of the music
-
-OSErr	MADSetHardwareVolume( long);								// 0...64, Mac HARDWARE volume, see MADDriver->VolGlobal for SOFTWARE volume
-long	MADGetHardwareVolume( void);										// Return HARDWARE volume, see MADDriver->VolGlobal for SOFTWARE volume
 
 OSErr	MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned char*);
 

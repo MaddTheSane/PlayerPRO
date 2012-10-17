@@ -55,7 +55,7 @@ static short FoundNote( short Period)
 	return note;
 }
 
-static void Convert16to8( Ptr srcPtr, Ptr destPtr, long size)
+static void Convert16to8( Ptr srcPtr, Ptr destPtr, size_t size)
 {
 	long 	i;
 
@@ -77,9 +77,9 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 }
 #endif
 
-static void AnalyseSignatureMOD( long EOFo, OSType temp, short *maxInstru, long *PatternSize, short *tracksNo, MODDef* aMOD)
+static void AnalyseSignatureMOD( size_t EOFo, OSType temp, short *maxInstru, SInt32 *PatternSize, short *tracksNo, MODDef* aMOD)
 {
-	long 		test, i;
+	SInt32 		test, i;
 	Boolean		result;
 	
 	*maxInstru = 31;
@@ -182,10 +182,10 @@ static struct MODCom* GetMODCommand( short position, short whichTracks, short wh
 static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriverSettings* init)
 {
 	short 			i, PatMax, x, tracksNo, z, maxInstru;
-	long 			sndSize, OffSetToSample, MPatSize, temp, inOutCount;
+	SInt32 			sndSize, OffSetToSample, MPatSize, temp, inOutCount;
 	Ptr				theInstrument[ 64], MaxPtr;
-	long			lastIns[ 32], lastNote[ 32];
-	long 			finetune[16] = 
+	SInt32			lastIns[ 32], lastNote[ 32];
+	SInt32 			finetune[16] = 
 	{
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
@@ -204,7 +204,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	MaxPtr = (Ptr) theMOD;
 	MaxPtr += MODSize;
 	
-	temp = *((long*)(aMOD + 0x438));		// Signature...
+	temp = *((SInt32*)(aMOD + 0x438));		// Signature...
 	
 	AnalyseSignatureMOD( -1, temp, &maxInstru, &MPatSize, &tracksNo, theMOD);
 	
@@ -467,11 +467,12 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	return noErr;
 }
 
-static long ConvertSampleC4SPD( Ptr src, long srcSize, short amp, long srcC4SPD, Ptr dst, long dstC4SPD)
+static SInt32 ConvertSampleC4SPD( Ptr src, size_t srcSize, short amp, SInt32 srcC4SPD, Ptr dst, SInt32 dstC4SPD)
 {
 	short	*src16 = (short*) src, *dst16 = (short*) dst;
 	Ptr		src8 = src, dst8 = dst;
-	long	x, dstSize;
+	long	x;
+	size_t	dstSize;
 	
 	if( dstC4SPD > srcC4SPD)
 	{
@@ -515,8 +516,8 @@ static long ConvertSampleC4SPD( Ptr src, long srcSize, short amp, long srcC4SPD,
 
 static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *PtrSize)
 {
-	long 				i, x, z, maxInstru;
-	long 				OffSetToSample, InstruSize, *alpha;
+	SInt32 				i, x, z, maxInstru;
+	SInt32 				OffSetToSample, InstruSize, *alpha;
 	Ptr					theInstrument[ 64], destPtr;
 	Boolean				CheckGoodMod;
 	char				redut[4];
@@ -591,7 +592,7 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 			redut[3] = 'N';
 		}
 		
-		alpha = (long*) redut;
+		alpha = (SInt32*) redut;
 		
 		theMOD->longFmtSignature = *alpha;
 	}
@@ -819,7 +820,7 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 static OSErr ExtractMODInfo( PPInfoRec *info, Ptr AlienFile)
 {
 	MODDef	*myMOD = ( MODDef*) AlienFile;
-	long	PatternSize;
+	SInt32	PatternSize;
 	short	i;
 	short	maxInstru;
 	
@@ -874,7 +875,7 @@ static OSErr ExtractMODInfo( PPInfoRec *info, Ptr AlienFile)
 static OSErr TestMODFile( Ptr AlienFile, long EOFo)
 {
 	short		maxInstru;
-	long		PatternSize;
+	SInt32		PatternSize;
 	short		tracksNo;
 	
 	AnalyseSignatureMOD( EOFo, *((long*)(AlienFile + 0x438)), &maxInstru, &PatternSize, &tracksNo, (MODDef*) AlienFile);

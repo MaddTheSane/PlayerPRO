@@ -108,7 +108,7 @@ void CloseEffect( Channel *ch, short notUsed, MADDriverRec *intDriver)
 
 void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 {
-	long offset;
+	SInt32 offset;
 	
 	switch( ch->cmd)
 	{
@@ -479,7 +479,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			if( ch->arg == 0) ch->arpUse = false;
 			else
 			{
-				long	inNote = ch->note;
+				SInt32	inNote = ch->note;
 				
 				if( inNote == 0xFF) inNote = ch->noteOld;
 				
@@ -620,7 +620,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			
 		case portamentoE:				// OK
 		{
-			long	inNote = ch->note;
+			SInt32	inNote = ch->note;
 			
 			ch->pitchrate = ch->arg;
 			
@@ -636,7 +636,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			
 		case portaslideE:				// OK
 		{
-			long	inNote = ch->note;
+			SInt32	inNote = ch->note;
 			
 			if( inNote == 0xFF) inNote = ch->noteOld;
 			
@@ -697,7 +697,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 		case NOffSetE:
 			ch->curPtr = ch->begPtr;
 			
-			aL = ( (unsigned long) ch->arg * (unsigned long) ( ch->sizePtr)) / 255UL;
+			aL = ( (UInt32) ch->arg * (UInt32) ( ch->sizePtr)) / 255UL;
 			
 			if( ch->amp == 16) aL /= 2;
 			if( ch->stereo == true) aL /= 2;

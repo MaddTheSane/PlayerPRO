@@ -21,10 +21,10 @@ typedef struct VstEvents VstEvents;
 
 struct VstEvent			// a generic timestamped event
 {
-	long type;			// see enum below
-	long byteSize;		// of this event, excl. type and byteSize
-	long deltaFrames;	// sample frames related to the current block start sample position
-	long flags;			// generic flags, none defined yet (0)
+	SInt32 type;			// see enum below
+	SInt32 byteSize;		// of this event, excl. type and byteSize
+	SInt32 deltaFrames;	// sample frames related to the current block start sample position
+	SInt32 flags;			// generic flags, none defined yet (0)
 
 	char data[16];		// size may vary but is usually 16
 };
@@ -41,13 +41,13 @@ enum					// VstEvent types
 
 struct VstMidiEvent		// to be casted from a VstEvent
 {
-	long type;			// kVstMidiType
-	long byteSize;		// 24
-	long deltaFrames;	// sample frames related to the current block start sample position
-	long flags;			// none defined yet
+	SInt32 type;			// kVstMidiType
+	SInt32 byteSize;		// 24
+	SInt32 deltaFrames;	// sample frames related to the current block start sample position
+	SInt32 flags;			// none defined yet
 
-	long noteLength;	// (in sample frames) of entire note, if available, else 0
-	long noteOffset;	// offset into note from note start if available, else 0
+	SInt32 noteLength;	// (in sample frames) of entire note, if available, else 0
+	SInt32 noteOffset;	// offset into note from note start if available, else 0
 
 	char midiData[4];	// 1 thru 3 midi bytes; midiData[3] is reserved (zero)
 	char detune;		// -64 to +63 cents; for scales other than 'well-tempered' ('microtuning')
@@ -58,8 +58,8 @@ struct VstMidiEvent		// to be casted from a VstEvent
 
 struct VstEvents			// a block of events for the current audio block
 {
-	long numEvents;
-	long reserved;			// zero
+	SInt32 numEvents;
+	SInt32 reserved;			// zero
 	VstEvent* events[2];	// variable
 };
 
@@ -83,12 +83,12 @@ struct VstTimeInfo
 	double barStartPos;			// last bar start, in 1 ppq
 	double cycleStartPos;		// 1 ppq
 	double cycleEndPos;			// 1 ppq
-	long timeSigNumerator;		// time signature
-	long timeSigDenominator;
-	long smpteOffset;
-	long smpteFrameRate;		// 0:24, 1:25, 2:29.97, 3:30, 4:29.97 df, 5:30 df
-	long samplesToNextClock;	// midi clock resolution (24 ppq), can be negative
-	long flags;					// see below
+	SInt32 timeSigNumerator;		// time signature
+	SInt32 timeSigDenominator;
+	SInt32 smpteOffset;
+	SInt32 smpteFrameRate;		// 0:24, 1:25, 2:29.97, 3:30, 4:29.97 df, 5:30 df
+	SInt32 samplesToNextClock;	// midi clock resolution (24 ppq), can be negative
+	SInt32 flags;					// see below
 };
 
 enum
@@ -122,10 +122,10 @@ struct VstVariableIo
 {
 	float **inputs;
 	float **outputs;
-	long numSamplesInput;
-	long numSamplesOutput;
-	long *numSamplesInputProcessed;
-	long *numSamplesOutputProcessed;
+	SInt32 numSamplesInput;
+	SInt32 numSamplesOutput;
+	SInt32 *numSamplesInputProcessed;
+	SInt32 *numSamplesOutputProcessed;
 };
 
 //---------------------------------------------------------------------------------------------
@@ -278,11 +278,11 @@ struct VstParameterProperties
 	float smallStepFloat;
 	float largeStepFloat;
 	char label[64];
-	long flags;
-	long minInteger;
-	long maxInteger;
-	long stepInteger;
-	long largeStepInteger;
+	SInt32 flags;
+	SInt32 minInteger;
+	SInt32 maxInteger;
+	SInt32 stepInteger;
+	SInt32 largeStepInteger;
 	char shortLabel[8];	// recommended: 6 + delimiter
 	char future[48];
 };
@@ -299,8 +299,8 @@ enum
 struct VstPinProperties
 {
 	char label[64];
-	long flags;
-	long reserved;
+	SInt32 flags;
+	SInt32 reserved;
 	char shortLabel[8];	// recommended: 6 + delimiter
 	char future[48];
 };
@@ -367,7 +367,7 @@ struct VstSpeakerProperties
 struct VstSpeakerArrangement
 {
 	float lfeGain;			// LFE channel gain is adjusted [dB] higher than other channels
-	long numChannels;		// number of channels in this speaker arrangement
+	SInt32 numChannels;		// number of channels in this speaker arrangement
 	VstSpeakerProperties speakers[8];	// variable
 };
 
@@ -386,10 +386,10 @@ struct VstOfflineTask
 	// audio access
 	double	readPosition;		// set by plug/host
 	double	writePosition;		// set by plug/host
-	long	readCount;			// set by plug/host
-	long	writeCount;			// set by plug
-	long	sizeInputBuffer;	// set by host
-	long	sizeOutputBuffer;	// set by host
+	SInt32	readCount;			// set by plug/host
+	SInt32	writeCount;			// set by plug
+	SInt32	sizeInputBuffer;	// set by host
+	SInt32	sizeOutputBuffer;	// set by host
 	void*	inputBuffer;		// set by host
 	void*	outputBuffer;		// set by host
 	double	positionToProcessFrom;	// set by host
@@ -398,26 +398,26 @@ struct VstOfflineTask
 
 	// other data access
 	void*	extraBuffer;		// set by plug
-	long	value;				// set by host or plug
-	long	index;				// set by host or plug
+	SInt32	value;				// set by host or plug
+	SInt32	index;				// set by host or plug
 
 	// file attributes
 	double	numFramesInSourceFile;	// set by host
 	double	sourceSampleRate;		// set by host or plug
 	double	destinationSampleRate;	// set by host or plug
-	long	numSourceChannels;		// set by host or plug
-	long	numDestinationChannels;	// set by host or plug
-	long	sourceFormat;			// set by host
-	long	destinationFormat;		// set by plug
+	SInt32	numSourceChannels;		// set by host or plug
+	SInt32	numDestinationChannels;	// set by host or plug
+	SInt32	sourceFormat;			// set by host
+	SInt32	destinationFormat;		// set by plug
 	char	outputText[512];		// set by plug or host
 
 	// progress notification
 	double	progress;				// set by plug
-	long	progressMode;			// reserved for future
+	SInt32	progressMode;			// reserved for future
 	char	progressText[100];		// set by plug
 
-	long	flags;					// set by host and plug; see VstOfflineTaskFlags
-	long	returnValue;			// reserved for future
+	SInt32	flags;					// set by host and plug; see VstOfflineTaskFlags
+	SInt32	returnValue;			// reserved for future
 	void*	hostOwned;				// set by host
 	void*	plugOwned;				// set by plug
 
@@ -457,27 +457,27 @@ enum VstOfflineOption
 
 struct VstAudioFile
 {
-	long	flags;				// see enum VstAudioFileFlags
+	SInt32	flags;				// see enum VstAudioFileFlags
 	void*	hostOwned;			// any data private to host
 	void*	plugOwned;			// any data private to plugin
 	char	name[100];			// file title
-	long	uniqueId;			// uniquely identify a file during a session
+	SInt32	uniqueId;			// uniquely identify a file during a session
 	double	sampleRate;			// file sample rate
-	long	numChannels;		// number of channels (1 for mono, 2 for stereo...)
+	SInt32	numChannels;		// number of channels (1 for mono, 2 for stereo...)
 	double	numFrames;			// number of frames in the audio file
-	long	format;				// reserved for future
+	SInt32	format;				// reserved for future
 	double	editCursorPosition;	// -1 if no such cursor
 	double	selectionStart;		// frame index of first selected frame, or -1
 	double	selectionSize;		// number of frames in selection, or 0
-	long	selectedChannelsMask;	// 1 bit per channel
-	long	numMarkers;			// number of markers in the file
-	long	timeRulerUnit;		// see doc for possible values
+	SInt32	selectedChannelsMask;	// 1 bit per channel
+	SInt32	numMarkers;			// number of markers in the file
+	SInt32	timeRulerUnit;		// see doc for possible values
 	double	timeRulerOffset;	// offset in time ruler (positive or negative)
 	double	tempo;				// as bpm
-	long	timeSigNumerator;	// time signature numerator
-	long	timeSigDenominator;	// time signature denominator
-	long	ticksPerBlackNote;	// resolution
-	long	smpteFrameRate;		// smpte rate (set as in VstTimeInfo)
+	SInt32	timeSigNumerator;	// time signature numerator
+	SInt32	timeSigDenominator;	// time signature denominator
+	SInt32	ticksPerBlackNote;	// resolution
+	SInt32	smpteFrameRate;		// smpte rate (set as in VstTimeInfo)
 
 	char	future[64];
 };
@@ -503,9 +503,9 @@ struct VstAudioFileMarker
 {
 	double	position;
 	char	name[32];
-	long	type;
-	long	id;
-	long	reserved;
+	SInt32	type;
+	SInt32	vstid;
+	SInt32	reserved;
 };
 
 //---------------------------------------------------------------------------------------------
@@ -521,7 +521,7 @@ struct VstWindow
 	short yPos;
 	short width;
 	short height;
-	long  style;         // 0: with title, 1: without title
+	SInt32  style;         // 0: with title, 1: without title
 
 	void *parent;        // parent of this window
 	void *userHandle;    // reserved

@@ -33,7 +33,7 @@
 #endif
 
 struct oldPatHeader {
-	long	PatternSize;			// Length of pattern: standard = 64
+	SInt32	PatternSize;			// Length of pattern: standard = 64
 	OSType	CompressionMode;		// Compression mode, none = 'NONE'
 	char	PatternName[ 20];
 	SInt32	PatBytes;				// Pattern Size in Bytes

@@ -132,7 +132,7 @@ void ConvertInstrumentOut16( register short *tempPtr, register long sSize)
 	return temp;
 }*/
 
-long DoVolPanning256( short whichChannel, Channel *ch, MADDriverRec *intDriver, Boolean Interpol)	// MAX = 256
+SInt32 DoVolPanning256( short whichChannel, Channel *ch, MADDriverRec *intDriver, Boolean Interpol)	// MAX = 256
 {
 	// Compute Volume !
 	long	pannValue, volFade;
@@ -324,7 +324,7 @@ void MADCleanDriver( MADDriverRec *intDriver)
 	for( i = 0; i < MAXTRACK; i++) intDriver->TrackReading[ i] = true;
 }
 
-long Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2)
+SInt32 Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2)
 {
 	SInt32 dp,dv,di;
 
@@ -337,7 +337,7 @@ long Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2)
 	return v1 + ((SInt32)(di*dv) / dp);
 }
 
-long InterpolateEnv(long p, EnvRec *a,EnvRec *b)
+SInt32 InterpolateEnv(SInt32 p, EnvRec *a,EnvRec *b)
 {
 	if( p < a->pos) return a->val;
 	return(Interpolate(p,a->pos,b->pos,a->val,b->val));

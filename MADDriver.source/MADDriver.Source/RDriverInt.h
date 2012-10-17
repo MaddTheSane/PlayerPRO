@@ -35,12 +35,12 @@
 
 #define AMIGA_CLOCKFREQ2			14317456L
 
-#if defined(powerc) || defined (__powerc) || defined(__ppc__)
+//#if defined(powerc) || defined (__powerc) || defined(__ppc__)
 // Work on 64bits for much better precision
 #define BYTEDIV										16L			
-#else
-#define BYTEDIV										8L
-#endif
+//#else
+//#define BYTEDIV										8L
+//#endif
 
 #define	EXTRASMALLCOUNTER					5
 
@@ -155,7 +155,7 @@ void MADDisposeDriverBuffer( MADDriverRec *intDriver);
 OSErr MADCreateReverb( MADDriverRec *intDriver);
 void MADDisposeReverb( MADDriverRec *intDriver);
 OSErr MADCreateMicroDelay( MADDriverRec *intDriver);
-long MADGetMusicSize( MADMusic*);
+size_t MADGetMusicSize( MADMusic*);
 OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRsrc, Ptr MADPtr);
 OSErr	DBSndClose(MADDriverRec *inMADDriver);
 void	StopChannel(MADDriverRec *inMADDriver);
@@ -217,11 +217,11 @@ OSErr	CallImportPlug( 	MADLibrary		*inMADDriver,
 							char			*AlienFile,
 							MADMusic		*theNewMAD,
 							PPInfoRec		*info);
-long DoVolPanning( short, Channel *ch, MADDriverRec *intDriver);
-long DoVolPanning256( short, Channel *ch, MADDriverRec *intDriver, Boolean);
+SInt32 DoVolPanning( short, Channel *ch, MADDriverRec *intDriver);
+SInt32 DoVolPanning256( short, Channel *ch, MADDriverRec *intDriver, Boolean);
 void MADKeyOFF( MADDriverRec *MDriver, short track);
 
-long MADMinimize( MADMusic*);
+SInt32 MADMinimize( MADMusic*);
 void MADPurgeTrackIfInstru( MADDriverRec *intDriver, short instru);
 void MADTickLoopFill8( Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, size_t size, short left, short right);
 void MADTickLoop8( size_t size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver);
@@ -233,8 +233,8 @@ short MADGetNextReader( MADMusic *music, MADDriverRec *intDriver, short cur, sho
 OSErr MADCleanCurrentMusic( MADMusic *MDriver, MADDriverRec *intDriver);
 void CloseEffect( Channel *ch, short call, MADDriverRec *intDriver);
 void MADSetMADDriverPtr( MADDriverRec* driver);
-long Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2);
-long InterpolateEnv(long p, EnvRec *a,EnvRec *b);
+SInt32 Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2);
+SInt32 InterpolateEnv(SInt32 p, EnvRec *a,EnvRec *b);
 void ProcessFadeOut( Channel *ch, MADDriverRec *intDriver);
 void ProcessEnvelope( Channel *ch, MADDriverRec *intDriver, Boolean);
 void StartEnvelope( Channel *ch);
@@ -318,7 +318,7 @@ struct __MADDriverRec
 #endif
 	
 	Ptr						OscilloWavePtr;									// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
-	long					OscilloWaveSize;								// Size of previous buffer
+	size_t					OscilloWaveSize;								// Size of previous buffer
 	
 	/** Private variables - Not documented **/
 	/* DO NOT MODIFY OR USE these variables */

@@ -71,14 +71,14 @@ static struct MTMTrack* GetMTMCommand( short position, short whichTracks, Ptr Pa
 	return (struct MTMTrack*) aPtr;
 }
 
-static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MADDriverSettings *init)
+static OSErr ConvertMTM2Mad( MTMDef *MTMFile, SInt32 MTMSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short 			i, x, z;
-	long 			sndSize, OffSetToSample, MPatSize, temp, inOutCount;
+	SInt32 			sndSize, OffSetToSample, MPatSize, temp, inOutCount;
 	Ptr				MaxPtr;
 	OSErr			theErr;
 	Ptr				theInstrument[ 64], destPtr;
-	long 			finetune[16] = 
+	SInt32 			finetune[16] =
 	{
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
@@ -157,7 +157,7 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 		theMAD->header->name[i] = MTMFile->songname[i];
 	}
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MTM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, "Converted by PlayerPRO MTM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->tempo = 125;
 	theMAD->header->speed = 6;
@@ -295,10 +295,10 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 
 static OSErr ExtractInfo( PPInfoRec *info, MTMDef *myFile)
 {
-	long	PatternSize;
+	//long	PatternSize;
 	short	i;
-	short	maxInstru;
-	short	tracksNo;
+	//short	maxInstru;
+	//short	tracksNo;
 	
 	for( i = 0; i < sizeof( myFile->songname); i++)
 	{

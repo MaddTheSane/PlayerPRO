@@ -59,7 +59,7 @@ unsigned MidiVolume[128] = {
 
 #define MySignature		'SNPL'
 
-void DoPlayInstruInt( short	Note, short Instru, short effect, short arg, short vol, Channel *curVoice, long start, long end);
+void DoPlayInstruInt( short	Note, short Instru, short effect, short arg, short vol, Channel *curVoice, SInt32 start, SInt32 end);
 void NPianoRecordProcess( short i, short, short, short);
 
 static MIDIClientRef MADMIDICliRef;
@@ -104,7 +104,7 @@ void InitMIDIHarware(void)
 
 void NDoPlayInstru(short Note, short Instru, short effect, short arg, short vol);
 
-void DoMidiSpeaker( short note, short Instru, long arg)
+void DoMidiSpeaker( short note, short Instru, SInt32 arg)
 {
 	
 }
@@ -123,11 +123,6 @@ void DoMidiSpeaker( short note, short Instru, long arg)
 }*/
 
 void OpenOrCloseConnection(Boolean opening)
-{
-	
-}
-
-void SelectOMSConnections( Boolean Input)
 {
 	
 }

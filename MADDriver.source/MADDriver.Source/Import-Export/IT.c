@@ -72,7 +72,7 @@ static inline unsigned short ReadUS( Ptr *samplePtr)
 
 /* unpack a 8bit IT packed sample */
 
-static long read_itcompr8(ITPACK* status,Ptr *reader,Byte *sl_buffer,unsigned short count,unsigned short* incnt)
+static SInt32 read_itcompr8(ITPACK* status,Ptr *reader,Byte *sl_buffer,unsigned short count,unsigned short* incnt)
 {
 	Byte 				*dest=sl_buffer,*end=sl_buffer+count;
 	unsigned short 		x,y,needbits,havebits,new_count=0;
@@ -148,10 +148,10 @@ static long read_itcompr8(ITPACK* status,Ptr *reader,Byte *sl_buffer,unsigned sh
 }
 
 // unpack a 16bit IT packed sample
-static long read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,unsigned short count,unsigned short* incnt)
+static SInt32 read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,unsigned short count,unsigned short* incnt)
 {
 	short 			*dest=sl_buffer,*end=sl_buffer+ count;// (short*) ((Ptr) sl_buffer+ count);
-	long 			x,y,needbits,havebits,new_count=0;
+	SInt32 			x,y,needbits,havebits,new_count=0;
 	unsigned short 	bits = status->bits;
 	unsigned short 	bufbits = status->bufbits;
 	short 			last = status->last;
@@ -226,7 +226,7 @@ static long read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,unsigned
 
 #define SLBUFSIZE 2048
 
-static OSErr DecompressSample( short bits, Ptr reader, long length, Ptr destPtr)		// sloader.c
+static OSErr DecompressSample( short bits, Ptr reader, size_t length, Ptr destPtr)		// sloader.c
 {
 	int				stodo,t,u;
 	int				result,c_block=0;	/* compression bytes until next block */
@@ -472,9 +472,9 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 	}
 }*/
 
-static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
+static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
-	long 				i, x, z, channel, Row;
+	SInt32 				i, x, z, channel, Row;
 	Ptr					MaxPtr;
 	Ptr					theInstrument[ 256];
 	Byte				tempChar, *theITCopy;
@@ -839,7 +839,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 									
 									if( err)
 									{
-										long temp;
+										SInt32 temp;
 										
 										for( temp = 0; temp < curData->size; temp++) *(curData->data + temp) = 0;
 									}
@@ -848,7 +848,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 								
 								if( !(ITinfo.sampdata[ prevSamp].Convert & 1) && curData->amp == 8)
 								{
-									long temp;
+									SInt32 temp;
 									
 									for( temp = 0; temp < curData->size; temp++) *(curData->data + temp) -= 0x80;
 								}
@@ -856,7 +856,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 								if( curData->amp == 16 && !(ITinfo.sampdata[prevSamp].Flag&8))
 								{
 									unsigned short 	*tempShort = (unsigned short*) curData->data;
-									long 						temp;
+									SInt32 						temp;
 									
 									for( temp = 0; temp < curData->size/2; temp++)
 									{
@@ -878,14 +878,14 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 									if( curData->amp == 16)
 									{
 										short			*tt;
-										long			tL;
+										//SInt32			tL;
 										
 										tt = (short*) curData->data;
 										
 										{
 										/* Delta to Real */
-										long	oldV, newV;
-										long	xL;
+										SInt32	oldV, newV;
+										SInt32	xL;
 										
 										oldV = 0;
 										for( xL = 0; xL < curData->size/2; xL++)
@@ -901,13 +901,13 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 									else
 									{
 										/* Delta to Real */
-										long	oldV, newV;
-										long	xL;
+										SInt32	oldV, newV;
+										SInt32	xL;
 										
 										oldV = 0;
 										for( xL = 0; xL < curData->size; xL++)
 										{
-											newV = (long) curData->data[ xL] + oldV;
+											newV = curData->data[ xL] + oldV;
 											oldV = newV;
 											if( xL  % (32768) == 0) oldV = 0;
 											curData->data[ xL] = newV;
@@ -1000,7 +1000,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 						
 						if( err)
 						{
-							long temp;
+							SInt32 temp;
 							
 							for( temp = 0; temp < curData->size; temp++) *(curData->data + temp) = 0;
 						}
@@ -1031,7 +1031,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 					
 					if( !(ITinfo.sampdata[ i].Convert & 1) && curData->amp == 8)
 					{
-						long temp;
+						SInt32 temp;
 						
 						for( temp = 0; temp < curData->size; temp++) *(curData->data + temp) -= 0x80;
 					}
@@ -1039,7 +1039,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 					if( curData->amp == 16 && !(ITinfo.sampdata[i].Flag&8))
 					{
 						unsigned short 	*tempShort = (unsigned short*) curData->data;
-						long 						temp;
+						SInt32 						temp;
 						
 						for( temp = 0; temp < curData->size/2; temp++)
 						{

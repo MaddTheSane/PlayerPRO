@@ -37,8 +37,8 @@ void MADTickLoopFill8( Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2
 
 void MADTickLoop8( size_t size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver)
 {
-	long		tLongL, tLongR;
-	long		curLevelL = curVoice->curLevelL, curLevelR = curVoice->curLevelR, curLastWordL = curVoice->curLastWordL, curLastWordR = curVoice->curLastWordR, TICKREMOVESIZE = curVoice->TICKREMOVESIZE;
+	SInt32		tLongL, tLongR;
+	SInt32		curLevelL = curVoice->curLevelL, curLevelR = curVoice->curLevelR, curLastWordL = curVoice->curLastWordL, curLastWordR = curVoice->curLastWordR, TICKREMOVESIZE = curVoice->TICKREMOVESIZE;
 	Boolean	LevelDirectionL = curVoice->LevelDirectionL, LevelDirectionR = curVoice->LevelDirectionR, RemoverWorking = curVoice->RemoverWorking;
 	
 	if( TICKREMOVESIZE == 0) return;
@@ -86,8 +86,8 @@ void MADTickLoop8( size_t size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *A
 
 void MADTickRemoverStart8( Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver)
 {
-	long				i = intDriver->ASCBUFFER;
-	long				curDoVol0 = DoVolPanning256( 0, curVoice, intDriver, false), curDoVol1 = DoVolPanning256( 1, curVoice, intDriver, false);
+	SInt32				i = intDriver->ASCBUFFER;
+	SInt32				curDoVol0 = DoVolPanning256( 0, curVoice, intDriver, false), curDoVol1 = DoVolPanning256( 1, curVoice, intDriver, false);
 	
 	if(	curVoice->prevPtr	!= curVoice->begPtr ||
 			(curVoice->curPtr	>= curVoice->maxPtr && curVoice->loopSize == 0) ||
@@ -102,7 +102,7 @@ void MADTickRemoverStart8( Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuf
 		// Right Channel
 		if( curVoice->prevVol0 != curDoVol0 && curVoice->prevPtr	== curVoice->begPtr && curVoice->begPtr != NULL)
 		{
-			long diff = curVoice->prevVol0 - curDoVol0;
+			SInt32 diff = curVoice->prevVol0 - curDoVol0;
 			
 			if( diff > 0)
 			{
@@ -124,7 +124,7 @@ void MADTickRemoverStart8( Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuf
 		// Left Channel
 		if( curVoice->prevVol1 != curDoVol1 && curVoice->prevPtr	== curVoice->begPtr && curVoice->begPtr != NULL)
 		{
-			long diff = curVoice->prevVol1 - curDoVol1;
+			SInt32 diff = curVoice->prevVol1 - curDoVol1;
 			
 			if( diff > 0)
 			{

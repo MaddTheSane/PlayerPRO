@@ -258,8 +258,8 @@ typedef struct MADSpec
 	Byte		generalPan;					// General Panning
 	Byte		MultiChanNo;				// Number of chan for multichannel
 	Byte		MultiChan;					// MultiChannel per tracks?
-	long		EPitch;						// New Pitch
-	long		ESpeed;						// New Speed
+	SInt32		EPitch;						// New Pitch
+	SInt32		ESpeed;						// New Speed
 	Byte		XMLinear;					// Linear picth table?
 	Byte		MODMode;					// Limit pitch to MOD pitch table
 	Byte		showCopyright;				// Show infos at startup? true or false

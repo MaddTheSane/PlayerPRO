@@ -11,8 +11,8 @@
 	for windows, it's a .dll
 
 	the only symbol searched for is:
-	AEffect *main(float (*audioMaster)(AEffect *effect, long opcode, long index,
-		long value, void *ptr, float opt));
+	AEffect *main(float (*audioMaster)(AEffect *effect, SInt32 opcode, SInt32 index,
+		SInt32 value, void *ptr, float opt));
 */
 
 #if __GNUC__
@@ -41,47 +41,47 @@
 //---------------------------------------------------------------------------------------------
 
 //typedef struct AEffect AEffect;
-//typedef	long (VSTCALLBACK *audioMasterCallback)(AEffect *effect, long opcode, long index,
-//		long value, void *ptr, float opt);
+//typedef	SInt32 (VSTCALLBACK *audioMasterCallback)(AEffect *effect, SInt32 opcode, SInt32 index,
+//		SInt32 value, void *ptr, float opt);
 
 // prototype for plug-in main
 // AEffect *main(audioMasterCallback audioMaster);
 
-#ifdef CBUILDER
+//#ifdef CBUILDER
 	#define kEffectMagic 'PtsV'
-#else
-	#define kEffectMagic 'VstP'
-#endif
+//#else
+//	#define kEffectMagic 'VstP'
+//#endif
 
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 
 /*struct AEffect
 {
-	long magic;			// must be kEffectMagic ('VstP')
-	long (VSTCALLBACK *dispatcher)(AEffect *effect, long opCode, long index, long value,
+	SInt32 magic;			// must be kEffectMagic ('VstP')
+	SInt32 (VSTCALLBACK *dispatcher)(AEffect *effect, SInt32 opCode, SInt32 index, SInt32 value,
 		void *ptr, float opt);
-	void (VSTCALLBACK *process)(AEffect *effect, float **inputs, float **outputs, long sampleframes);
-	void (VSTCALLBACK *setParameter)(AEffect *effect, long index, float parameter);
-	float (VSTCALLBACK *getParameter)(AEffect *effect, long index);
+	void (VSTCALLBACK *process)(AEffect *effect, float **inputs, float **outputs, SInt32 sampleframes);
+	void (VSTCALLBACK *setParameter)(AEffect *effect, SInt32 index, float parameter);
+	float (VSTCALLBACK *getParameter)(AEffect *effect, SInt32 index);
 
-	long numPrograms;
-	long numParams;		// all programs are assumed to have numParams parameters
-	long numInputs;		//
-	long numOutputs;	//
-	long flags;			// see constants
-	long resvd1;		// reserved, must be 0
-	long resvd2;		// reserved, must be 0
-	long initialDelay;	// for algorithms which need input in the first place
-	long realQualities;	// number of realtime qualities (0: realtime)
-	long offQualities;	// number of offline qualities (0: realtime only)
+	SInt32 numPrograms;
+	SInt32 numParams;		// all programs are assumed to have numParams parameters
+	SInt32 numInputs;		//
+	SInt32 numOutputs;	//
+	SInt32 flags;			// see constants
+	SInt32 resvd1;		// reserved, must be 0
+	SInt32 resvd2;		// reserved, must be 0
+	SInt32 initialDelay;	// for algorithms which need input in the first place
+	SInt32 realQualities;	// number of realtime qualities (0: realtime)
+	SInt32 offQualities;	// number of offline qualities (0: realtime only)
 	float ioRatio;		// input samplerate to output samplerate ratio, not used yet
 	void *object;		// for class access (see AudioEffect.hpp), MUST be 0 else!
 	void *user;			// user access
-	long uniqueID;		// pls choose 4 character as unique as possible.
+	SInt32 uniqueID;		// pls choose 4 character as unique as possible.
 						// this is used to identify an effect for save+load
-	long version;		//
-	void (VSTCALLBACK *processReplacing)(AEffect *effect, float **inputs, float **outputs, long sampleframes);
+	SInt32 version;		//
+	void (VSTCALLBACK *processReplacing)(AEffect *effect, float **inputs, float **outputs, SInt32 sampleframes);
 	char future[60];	// pls zero
 };*/
 
