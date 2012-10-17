@@ -5,7 +5,7 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "MIDI.h"
+//#include "MIDI.h"
 #include <stdio.h>
 #include <CoreMIDI/CoreMIDI.h>
 
@@ -15,34 +15,14 @@
 #define recordingBufSize	10000	
 
 
-	extern 		Boolean				PianoRecording, PianoMIDIInput;
-	extern 		DialogPtr			InstruListDlog, EditorDlog;
-	extern		short				LastCanal;
-	extern		WindowPtr			oldWindow;
-	
-	extern 		short				TouchMem[11];
-	extern		short				TrackMem[11];
-	extern 		short				TouchIn;
-	extern		DialogPtr			PianoDlog;
 
 	Boolean					MIDIHardware, MIDIHardwareAlreadyOpen = false;
-	OSErr					CalamariErr, squidLibErr;
 
-	static	ProcPtr			CallBackFunction;
 
 /***/
 
 /* Globals */
 
-Boolean		gSignedInToMIDIMgr;		/* are we signed into MIDI Manager? */
-Boolean 	gNodesChanged;
-short		gInputPortRefNum;		/* refNum of the OMS input port */
-short		gOutputPortRefNum;		/* refNum of the OMS output port */
-short		gCompatMode;			/* current OMS compatibility mode */
-
-short 		gChosenInputID = 0;		/* uniqueID of selected input; 0 means none */
-short		gChosenOutputID = 0;	/* uniqueID of selected output; 0 means none */
-short		gOutNodeRefNum = -1;	/* node refNum of the selected output; -1 means non existant */
 
 unsigned MidiVolume[128] = {
 	 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
