@@ -78,7 +78,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 		
 		
 		OSType2Ptr( info, type);
-		//check to see if there is a
+
 		if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 		{
 			CFURLRef tempRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);

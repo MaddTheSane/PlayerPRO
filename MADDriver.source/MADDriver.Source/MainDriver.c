@@ -1204,8 +1204,11 @@ OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFU
 {
 	char URLcString[PATH_MAX * 4];
 	char OS[5];
-	CFURLGetFileSystemRepresentation(theRef, true, (unsigned char*)URLcString, PATH_MAX * 4);
+	Boolean pathOK = CFURLGetFileSystemRepresentation(theRef, true, (unsigned char*)URLcString, PATH_MAX * 4);
 	OSType2Ptr(type, OS);
+	if (pathOK == false) {
+		return MADReadingErr;
+	}
 	return MADLoadMusicFileCString(lib, music, OS, URLcString);
 
 }
@@ -1256,25 +1259,25 @@ OSErr MADCopyCurrentPartition( MADMusic *aPartition)
 
 OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, OSType *type, CFURLRef URLRef)
 {
+	if (type == NULL) {
+		return MADParametersErr;
+	}
 	char URLcString[PATH_MAX * 4];
 	char OS[5];
-	CFURLGetFileSystemRepresentation(URLRef, true, (unsigned char*)URLcString, PATH_MAX * 4);
+	Boolean pathOK = CFURLGetFileSystemRepresentation(URLRef, true, (unsigned char*)URLcString, PATH_MAX * 4);
 	OSType2Ptr(*type, OS);
+	if (pathOK == false) {
+		return MADReadingErr;
+	}
 	OSErr returnstatus = MADMusicIdentifyCString(lib, OS, URLcString);
 	*type = Ptr2OSType(OS);
 	return returnstatus;
 }
-
-
 #endif
 
 OSErr	MADMusicIdentifyCString( MADLibrary *lib, char *type, Ptr fName)
 {
-	OSErr	err;
-	
-	err = PPIdentifyFile( lib, type, fName);
-	
-	return err;
+	return PPIdentifyFile( lib, type, fName);
 }
 
 OSErr MADLoadMusicFileCString( MADLibrary *lib, MADMusic **music, char *plugType, Ptr fName)

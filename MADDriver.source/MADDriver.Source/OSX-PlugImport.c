@@ -144,7 +144,7 @@ badplug:
 
 CFMutableArrayRef CreateDefaultPluginFolderLocations()
 {
-	CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 8, &kCFTypeArrayCallBacks);
+	CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 6, &kCFTypeArrayCallBacks);
 	CFURLRef temp1;
 	//Application Main Bundle
 	temp1 = CFBundleCopyBuiltInPlugInsURL(CFBundleGetMainBundle());
