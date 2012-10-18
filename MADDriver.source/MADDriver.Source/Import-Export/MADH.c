@@ -102,29 +102,29 @@ static inline void MADHmystrcpy( Ptr a, BytePtr b)
 }
 
 static void MOToldsData(struct oldsData * s) {
-	MOT32(&s->size);
-	MOT32(&s->loopBeg);
-	MOT32(&s->loopSize);
-	MOT16(&s->c2spd);
+	PPBE32(&s->size);
+	PPBE32(&s->loopBeg);
+	PPBE32(&s->loopSize);
+	PPBE16(&s->c2spd);
   // i hope data is really not used.....
 }
 
 static void MOToldPatHeader(struct oldPatHeader * p) {
-	MOT32(&p->size);
-	MOT32(&p->compMode);
-	MOT32(&p->patBytes);
-	MOT32(&p->unused2); // this is probably superfluous, but who knows
+	PPBE32(&p->size);
+	PPBE32(&p->compMode);
+	PPBE32(&p->patBytes);
+	PPBE32(&p->unused2); // this is probably superfluous, but who knows
 }
 
 static void MOToldEnvRec(struct oldEnvRec * e) {
-	MOT16(&e->pos);
-	MOT16(&e->val);
+	PPBE16(&e->pos);
+	PPBE16(&e->val);
 }
 
 static void MOToldInstrData(struct oldInstrData * i) {
 	int j;
-	MOT16(&i->numSamples);
-	MOT16(&i->volFade);
+	PPBE16(&i->numSamples);
+	PPBE16(&i->volFade);
 	for(j = 0; j < 12; j++){
 		MOToldEnvRec(&i->volEnv[j]);
 		MOToldEnvRec(&i->pannEnv[j]);
@@ -133,9 +133,9 @@ static void MOToldInstrData(struct oldInstrData * i) {
 
 static void MOToldMADSpec(struct oldMADSpec * m){
 	int i;
-	MOT32(&m->MAD);
-	MOT16(&m->speed);
-	MOT16(&m->tempo);
+	PPBE32(&m->MAD);
+	PPBE16(&m->speed);
+	PPBE16(&m->tempo);
 	for (i = 0; i < 64; i++) {
 		MOToldInstrData(&m->fid[i]);
 	}
@@ -351,7 +351,7 @@ static OSErr MADH2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 static OSErr TestoldMADFile( Ptr AlienFile)
 {
 	OSType	myMADSign = *((OSType*) AlienFile);
-	MOT32(&myMADSign);
+	PPBE32(&myMADSign);
 
 	if(	myMADSign == 'MADH') return noErr;
 	else return  MADFileNotSupportedByThisPlug;
@@ -367,7 +367,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Signature ***/
 	
 	info->signature = myMOD->MAD;
-	MOT32(&info->signature);
+	PPBE32(&info->signature);
 	
 	/*** Internal name ***/
 	
@@ -396,7 +396,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	for( i = 0, info->totalInstruments = 0; i < 64 ; i++)
 	{
 		short numSamSwap = myMOD->fid[ i].numSamples;
-		MOT16(&numSamSwap);
+		PPBE16(&numSamSwap);
 		if( numSamSwap > 0) info->totalInstruments++;
 	}
 	

@@ -282,10 +282,10 @@ static OSErr XMReadPattern( MADMusic *theMAD, MADDriverSettings *init)
 		Ptr					theXMReadCopy;
 		
 		theXMReadCopy = theXMRead;
-		READXMFILE( &ph.size, 		4);			INT32( &ph.size);
+		READXMFILE( &ph.size, 		4);			PPLE32( &ph.size);
 		READXMFILE( &ph.packing, 	1);
-		READXMFILE( &ph.numrows, 	2);			INT16( &ph.numrows);
-		READXMFILE( &ph.packsize, 	2);			INT16( &ph.packsize);
+		READXMFILE( &ph.numrows, 	2);			PPLE16( &ph.numrows);
+		READXMFILE( &ph.packsize, 	2);			PPLE16( &ph.packsize);
 		theXMRead = theXMReadCopy + ph.size;
 		
 		/*
@@ -376,11 +376,11 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 		Ptr				theXMReadCopy;
 		
 		theXMReadCopy = theXMRead;
-		READXMFILE( &ih.size,	4);		INT32( &ih.size);
+		READXMFILE( &ih.size,	4);		PPLE32( &ih.size);
 		READXMFILE( &ih.name,	22);
 		READXMFILE( &ih.type,	1);
-		READXMFILE( &ih.numsmp,	2);	INT16( &ih.numsmp);
-		//	READXMFILE( &ih.ssize,	4);		INT32( &ih.ssize);
+		READXMFILE( &ih.numsmp,	2);	PPLE16( &ih.numsmp);
+		//	READXMFILE( &ih.ssize,	4);		PPLE32( &ih.ssize);
 		
 		
 		for( x = 0; x < 22; x++) curIns->name[ x] = ih.name[x];
@@ -390,7 +390,7 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 		{
 			XMPATCHHEADER	pth;
 			
-			READXMFILE( &ih.ssize,	4);			INT32( &ih.ssize);
+			READXMFILE( &ih.ssize,	4);			PPLE32( &ih.ssize);
 			READXMFILE( &pth.what,		96);
 			READXMFILE( &pth.volenv,	48);
 			READXMFILE( &pth.panenv,	48);
@@ -408,7 +408,7 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 			READXMFILE( &pth.vibsweep,	1);
 			READXMFILE( &pth.vibdepth,	1);
 			READXMFILE( &pth.vibrate,	1);
-			READXMFILE( &pth.volfade,	2);		INT16( &pth.volfade);
+			READXMFILE( &pth.volfade,	2);		PPLE16( &pth.volfade);
 			READXMFILE( &pth.reserved,	22);
 			
 			
@@ -420,8 +420,8 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 			memcpy( curIns->volEnv, pth.volenv, 48);
 			for( x = 0; x < 12; x++)
 			{
-				INT16( &curIns->volEnv[ x].pos);	//
-				INT16( &curIns->volEnv[ x].val);	// 00...64
+				PPLE16( &curIns->volEnv[ x].pos);	//
+				PPLE16( &curIns->volEnv[ x].val);	// 00...64
 			}
 			
 			curIns->volSize	= pth.volpts;
@@ -441,8 +441,8 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 			
 			for( x = 0; x < 12; x++)
 			{
-				INT16( &curIns->pannEnv[ x].pos);	//
-				INT16( &curIns->pannEnv[ x].val);	// 00...64
+				PPLE16( &curIns->pannEnv[ x].pos);	//
+				PPLE16( &curIns->pannEnv[ x].val);	// 00...64
 			}
 			
 			curIns->pannSize	= pth.panpts;
@@ -467,9 +467,9 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 			XMWAVHEADER		wh;
 			
 			theXMReadCopy = theXMRead;
-			READXMFILE( &wh.length,			4);			INT32( &wh.length);
-			READXMFILE( &wh.loopstart,		4);		INT32( &wh.loopstart);
-			READXMFILE( &wh.looplength,		4);		INT32( &wh.looplength);
+			READXMFILE( &wh.length,			4);			PPLE32( &wh.length);
+			READXMFILE( &wh.loopstart,		4);		PPLE32( &wh.loopstart);
+			READXMFILE( &wh.looplength,		4);		PPLE32( &wh.looplength);
 			READXMFILE( &wh.volume,			1);
 			READXMFILE( &wh.finetune,		1);
 			READXMFILE( &wh.type,			1);
@@ -548,7 +548,7 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 					
 					for( tL = 0; tL < curData->size/2; tL++)
 					{
-						INT16( (Ptr) (tt + tL));
+						PPLE16( (Ptr) (tt + tL));
 					}
 					
 					{
@@ -604,16 +604,16 @@ static OSErr XM_Load( Ptr	theXM, size_t XMSize, MADMusic *theMAD, MADDriverSetti
 	READXMFILE( mh, sizeof(XMHEADER));
 	/* BigEndian <-> LittleEndian */
 
-	INT16( &mh->version);
-	INT32( &mh->headersize);
-	INT16( &mh->songlength);
-	INT16( &mh->restart);
-	INT16( &mh->numchn);
-	INT16( &mh->numpat);
-	INT16( &mh->numins);		if( mh->numins > MAXINSTRU) { mh->numins = MAXINSTRU;	}
-	INT16( &mh->flags);
-	INT16( &mh->bpm);
-	INT16( &mh->tempo);
+	PPLE16( &mh->version);
+	PPLE32( &mh->headersize);
+	PPLE16( &mh->songlength);
+	PPLE16( &mh->restart);
+	PPLE16( &mh->numchn);
+	PPLE16( &mh->numpat);
+	PPLE16( &mh->numins);		if( mh->numins > MAXINSTRU) { mh->numins = MAXINSTRU;	}
+	PPLE16( &mh->flags);
+	PPLE16( &mh->bpm);
+	PPLE16( &mh->tempo);
 
 	/********************/
 	/** MAD ALLOCATION **/
@@ -785,19 +785,19 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 	
 	strcpy( mh->id, "Extended Module: ");
 	strcpy( mh->trackername, "FastTracker v2.00   ");
-	mh->version			= 0x104;													INT16( &mh->version);
-	mh->headersize		= HEADERSIZE;												INT32( &mh->headersize);
-	mh->songlength 		= theMAD->header->numPointers;	INT16( &mh->songlength);
-	mh->restart 		= 0;															INT16( &mh->restart);
-	mh->numchn 			= theMAD->header->numChn;					INT16( &mh->numchn);
-	mh->numpat 			= theMAD->header->numPat;					INT16( &mh->numpat);
-	mh->numins 			= NumberInstru;								INT16( &mh->numins);
+	mh->version			= 0x104;													PPLE16( &mh->version);
+	mh->headersize		= HEADERSIZE;												PPLE32( &mh->headersize);
+	mh->songlength 		= theMAD->header->numPointers;	PPLE16( &mh->songlength);
+	mh->restart 		= 0;															PPLE16( &mh->restart);
+	mh->numchn 			= theMAD->header->numChn;					PPLE16( &mh->numchn);
+	mh->numpat 			= theMAD->header->numPat;					PPLE16( &mh->numpat);
+	mh->numins 			= NumberInstru;								PPLE16( &mh->numins);
 	mh->flags 			= 0;
 	if( theMAD->header->XMLinear) mh->flags = 1;
 	else mh->flags = 0;
-	INT16( &mh->flags);
-	mh->bpm 			= theMAD->header->tempo;					INT16( &mh->bpm);
-	mh->tempo 			= theMAD->header->speed;					INT16( &mh->tempo);
+	PPLE16( &mh->flags);
+	mh->bpm 			= theMAD->header->tempo;					PPLE16( &mh->bpm);
+	mh->tempo 			= theMAD->header->speed;					PPLE16( &mh->tempo);
 	
 	for(i=0; i<21; i++) mh->songname[ i] = ' ';
 	for(i=0; i<21; i++)
@@ -825,12 +825,12 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 		XMPATHEADER 		ph;
 		Ptr					packingCopy, cc;
 		
-		ph.size = PHSIZE;						INT32( &ph.size);			WRITEXMFILE( &ph.size,	4);
+		ph.size = PHSIZE;						PPLE32( &ph.size);			WRITEXMFILE( &ph.size,	4);
 		ph.packing = 0;							WRITEXMFILE( &ph.packing,	1);
-		ph.numrows = theMAD->partition[ t]->header.size;	INT16( &ph.numrows);		WRITEXMFILE( &ph.numrows,	2);
+		ph.numrows = theMAD->partition[ t]->header.size;	PPLE16( &ph.numrows);		WRITEXMFILE( &ph.numrows,	2);
 		
 		packingCopy = theXMRead;
-		ph.packsize = 1;									INT16( &ph.packsize);		WRITEXMFILE( &ph.packsize,	2);
+		ph.packsize = 1;									PPLE16( &ph.packsize);		WRITEXMFILE( &ph.packsize,	2);
 		
 		cc = theXMRead;
 		for( u = 0 ; u < theMAD->partition[ t]->header.size ; u++)
@@ -854,7 +854,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 		
 		cc = theXMRead;
 		theXMRead = packingCopy;
-		ph.packsize = PatternSize;						INT16( &ph.packsize);		WRITEXMFILE( &ph.packsize,	2);
+		ph.packsize = PatternSize;						PPLE16( &ph.packsize);		WRITEXMFILE( &ph.packsize,	2);
 		theXMRead = cc;
 	}
 	}
@@ -884,18 +884,18 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 		else ih.size = IHSIZESMALL;
 		
 		ihsizecopy = ih.size;
-		INT32( &ih.size);
+		PPLE32( &ih.size);
 		WRITEXMFILE( &ih.size,	4);
 		
 		//************************//
 		
 		for( x = 0; x < 22; x++) 			ih.name[x] = curIns->name[ x];			WRITEXMFILE( &ih.name,	22);
 		ih.type = 0;																WRITEXMFILE( &ih.type,	1);
-		ih.numsmp = curIns->numSamples;			INT16( &ih.numsmp);					WRITEXMFILE( &ih.numsmp,	2);
+		ih.numsmp = curIns->numSamples;			PPLE16( &ih.numsmp);					WRITEXMFILE( &ih.numsmp,	2);
 		
 		ih.ssize = IHSSIZE;
 		ihssizecopy = ih.ssize;
-		INT32( &ih.ssize);
+		PPLE32( &ih.ssize);
 		
 		if( curIns->numSamples > 0)
 		{
@@ -906,7 +906,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 			memcpy( pth.what, curIns->what, 96);
 			
 			memcpy( pth.volenv, curIns->volEnv, 48);
-			for( x = 0; x < 24; x++) INT16( &pth.volenv[ x]);
+			for( x = 0; x < 24; x++) PPLE16( &pth.volenv[ x]);
 			
 			pth.volpts = curIns->volSize;
 			pth.volflg = curIns->volType;
@@ -918,7 +918,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 			
 			
 			memcpy( pth.panenv, curIns->pannEnv, 48);
-			for( x = 0; x < 24; x++) INT16( &pth.panenv[ x]);
+			for( x = 0; x < 24; x++) PPLE16( &pth.panenv[ x]);
 			
 			pth.panpts = curIns->pannSize;
 			pth.panflg = curIns->pannType;
@@ -946,7 +946,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 			WRITEXMFILE( &pth.vibsweep,	1);
 			WRITEXMFILE( &pth.vibdepth,	1);
 			WRITEXMFILE( &pth.vibrate,	1);
-			INT16( &pth.volfade);		WRITEXMFILE( &pth.volfade,	2);
+			PPLE16( &pth.volfade);		WRITEXMFILE( &pth.volfade,	2);
 			WRITEXMFILE( &pth.reserved,	22);
 		}
 		theXMRead = theXMReadCopy + ihsizecopy;
@@ -1025,9 +1025,9 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 			for( x = 0; x < 22; x++) wh.samplename[ x] = curData->name[ x];
 			
 			theXMReadCopy = theXMRead;
-			INT32( &wh.length);		WRITEXMFILE( &wh.length,		4);
-			INT32( &wh.loopstart);	WRITEXMFILE( &wh.loopstart,		4);
-			INT32( &wh.looplength);	WRITEXMFILE( &wh.looplength,	4);
+			PPLE32( &wh.length);		WRITEXMFILE( &wh.length,		4);
+			PPLE32( &wh.loopstart);	WRITEXMFILE( &wh.loopstart,		4);
+			PPLE32( &wh.looplength);	WRITEXMFILE( &wh.looplength,	4);
 			WRITEXMFILE( &wh.volume,		1);
 			WRITEXMFILE( &wh.finetune,		1);
 			WRITEXMFILE( &wh.type,			1);
@@ -1092,7 +1092,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 				
 				for( tL = 0; tL < curSize/2; tL++)
 				{
-					INT16( (Ptr) (tt + tL));
+					PPLE16( (Ptr) (tt + tL));
 				}
 			}
 			else
@@ -1145,11 +1145,11 @@ static OSErr TestXMFile( Ptr AlienFile)
 		READXMFILE( mh, sizeof(XMHEADER));
 		/* BigEndian <-> LittleEndian */
 	
-		INT16( &mh->version);
-		INT16( &mh->songlength);
-		INT16( &mh->numchn);
-		INT16( &mh->numpat);
-		INT16( &mh->numins);
+		PPLE16( &mh->version);
+		PPLE16( &mh->songlength);
+		PPLE16( &mh->numchn);
+		PPLE16( &mh->numpat);
+		PPLE16( &mh->numins);
 	
 		switch( mh->version)
 		{
@@ -1179,12 +1179,12 @@ static OSErr ExtractXMInfo( PPInfoRec *info, Ptr AlienFile)
 	READXMFILE( mh, sizeof(XMHEADER));
 	/* BigEndian <-> LittleEndian */
 
-	INT16( &mh->version);
-	INT16( &mh->songlength);
-	INT16( &mh->numchn);
-	INT16( &mh->numpat);
-	INT16( &mh->numins);
-	INT16( &mh->flags);
+	PPLE16( &mh->version);
+	PPLE16( &mh->songlength);
+	PPLE16( &mh->numchn);
+	PPLE16( &mh->numpat);
+	PPLE16( &mh->numins);
+	PPLE16( &mh->flags);
 
 	switch( mh->version)
 	{

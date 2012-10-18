@@ -83,7 +83,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	OffSetToSample += sizeof( MADSpec);
 	
 	MadHeader = MadFile->header;
-	MOT32(&MadHeader->MAD);
+	PPBE32(&MadHeader->MAD);
 	
 	if( MadHeader->MAD != 'MADK') return MADFileNotSupportedByThisPlug;
 	

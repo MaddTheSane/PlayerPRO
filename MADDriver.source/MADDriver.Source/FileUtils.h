@@ -65,10 +65,10 @@ EXP void OSType2Ptr( OSType type, Ptr str);
 ////////////////////////////////////////////////////////////
 
 #ifdef NOINLINE
-EXP void INT32( void *msg_buf);
-EXP void INT16( void *msg_buf);
-EXP void MOT32( void *msg_buf);
-EXP void MOT16( void *msg_buf);
+EXP void PPLE32( void *msg_buf);
+EXP void PPLE16( void *msg_buf);
+EXP void PPBE32( void *msg_buf);
+EXP void PPBE16( void *msg_buf);
 #else
 
 static inline void MADByteSwap32(void *msg_buf)
@@ -95,14 +95,14 @@ static inline void MADByteSwap16(void *msg_buf)
 
 /////////////////////////////////
 
-static inline void MOT32(void *msg_buf)
+static inline void PPBE32(void *msg_buf)
 {
 #ifdef __LITTLE_ENDIAN__
 	MADByteSwap32(msg_buf);
 #endif
 }
 
-static inline void MOT16(void *msg_buf)
+static inline void PPBE16(void *msg_buf)
 {
 #ifdef __LITTLE_ENDIAN__
 	MADByteSwap16(msg_buf);
@@ -111,14 +111,14 @@ static inline void MOT16(void *msg_buf)
 
 /////////////////////////////////
 
-static inline void INT32(void *msg_buf)
+static inline void PPLE32(void *msg_buf)
 {
 #ifdef __BIG_ENDIAN__
 	MADByteSwap32(msg_buf);
 #endif
 }
 
-static inline void INT16(void *msg_buf)
+static inline void PPLE16(void *msg_buf)
 {
 #ifdef __BIG_ENDIAN__
 	MADByteSwap16(msg_buf);

@@ -1540,9 +1540,9 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 			break;			
 	}
 	
-	MOT32( &MDriver->header->MAD);
-	MOT16( &MDriver->header->speed);
-	MOT16( &MDriver->header->tempo);
+	PPBE32( &MDriver->header->MAD);
+	PPBE16( &MDriver->header->speed);
+	PPBE16( &MDriver->header->tempo);
 	
 	if( MDriver->header->MAD != 'MADK' || MDriver->header->numInstru > MAXINSTRU)
 	{
@@ -1574,10 +1574,10 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 				break;
 		}
 		
-		MOT32( &tempPatHeader.size);
-		MOT32( &tempPatHeader.compMode);
-		MOT32( &tempPatHeader.patBytes);
-		MOT32( &tempPatHeader.unused2);
+		PPBE32( &tempPatHeader.size);
+		PPBE32( &tempPatHeader.compMode);
+		PPBE32( &tempPatHeader.patBytes);
+		PPBE32( &tempPatHeader.unused2);
 		
 	/*************************************************/
 	/** Lecture du header + contenu de la partition **/
@@ -1619,10 +1619,10 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 				break;
 		}
 		
-		MOT32( &MDriver->partition[ i]->header.size);
-		MOT32( &MDriver->partition[ i]->header.compMode);
-		MOT32( &MDriver->partition[ i]->header.patBytes);
-		MOT32( &MDriver->partition[ i]->header.unused2);
+		PPBE32( &MDriver->partition[ i]->header.size);
+		PPBE32( &MDriver->partition[ i]->header.compMode);
+		PPBE32( &MDriver->partition[ i]->header.patBytes);
+		PPBE32( &MDriver->partition[ i]->header.unused2);
 		
 		if( MDriver->partition[ i]->header.compMode == 'MAD1')
 		{
@@ -1676,20 +1676,20 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 	{
 		InstrData	*curIns = &MDriver->fid[ i];
 		
-		MOT16( &curIns->numSamples);
-		MOT16( &curIns->firstSample);
-		MOT16( &curIns->volFade);
+		PPBE16( &curIns->numSamples);
+		PPBE16( &curIns->firstSample);
+		PPBE16( &curIns->volFade);
 		
 		for( x = 0; x < 12; x++)
 		{
-			MOT16( &curIns->volEnv[ x].pos);
-			MOT16( &curIns->volEnv[ x].val);
+			PPBE16( &curIns->volEnv[ x].pos);
+			PPBE16( &curIns->volEnv[ x].val);
 		}
 		
 		for( x = 0; x < 12; x++)
 		{
-			MOT16( &curIns->pannEnv[ x].pos);
-			MOT16( &curIns->pannEnv[ x].val);
+			PPBE16( &curIns->pannEnv[ x].pos);
+			PPBE16( &curIns->pannEnv[ x].val);
 		}
 		
 		if( i != curIns->no)
@@ -1753,10 +1753,10 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 					break;
 			}
 			
-			MOT32( &curData->size);
-			MOT32( &curData->loopBeg);
-			MOT32( &curData->loopSize);
-			MOT16( &curData->c2spd);
+			PPBE32( &curData->size);
+			PPBE32( &curData->loopBeg);
+			PPBE32( &curData->loopSize);
+			PPBE16( &curData->c2spd);
 			
 			// ** Read Sample DATA
 			
@@ -1793,7 +1793,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 				SInt32 	ll;
 				short	*shortPtr = (short*) curData->data;
 				
-				for( ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
+				for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
 			}
 		}
 	}

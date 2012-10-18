@@ -47,7 +47,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
+	PPLE16(&toswap);
 	return toswap;
 }
 #endif
@@ -58,7 +58,7 @@ static inline UInt16 Tdecode16( void *msg_buf)
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
-	INT32(&toswap);
+	PPLE32(&toswap);
 	return toswap;
 }
 #endif
@@ -82,7 +82,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	theAMFRead = AMFCopyPtr;
 	
 	READAMFFILE( &AMFType, 4);		// AMF Type
-	MOT32(&AMFType);
+	PPBE32(&AMFType);
 	//XXXX: Byte-swapping!
 	if( AMFType >= 0x414D460C ) pan = 32;
 	else pan = 16;
@@ -307,7 +307,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 static OSErr TestAMFFile( Ptr AlienFile)
 {
 	OSType	myMADSign = *((unsigned long*) AlienFile);
-	MOT32(&myMADSign);
+	PPBE32(&myMADSign);
 	
 	if( (myMADSign & 0xFFFFFF00) == 0x414D4600) return noErr;
 	else return MADFileNotSupportedByThisPlug;

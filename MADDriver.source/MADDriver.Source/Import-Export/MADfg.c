@@ -123,22 +123,22 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 }
 
 static void MOToldPatHeader(struct oldPatHeader * p) {
-	MOT32(&p->PatternSize);
-	MOT32(&p->CompressionMode);
-	MOT32(&p->PatBytes);
-	MOT32(&p->unused2); // this is probably superfluous, but who knows
+	PPBE32(&p->PatternSize);
+	PPBE32(&p->CompressionMode);
+	PPBE32(&p->PatBytes);
+	PPBE32(&p->unused2); // this is probably superfluous, but who knows
 }
 
 static void MOToldInstrData(struct FileInstrData * i) {
 	//int j;
-	MOT16(&i->insSize);
-	MOT16(&i->loopStart);
-	MOT16(&i->loopLenght);
+	PPBE16(&i->insSize);
+	PPBE16(&i->loopStart);
+	PPBE16(&i->loopLenght);
 }
 
 static void MOToldMADSpec(struct oldMADSpec * m){
 	int i;
-	MOT32(&m->MADIdentification);
+	PPBE32(&m->MADIdentification);
 	for (i = 0; i < 64; i++) {
 		MOToldInstrData(&m->fid[i]);
 	}
@@ -169,7 +169,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 
 /**** HEADER ****/
 	OSType oldMadIdent = oldMAD->MADIdentification;
-	MOT32(&oldMadIdent);
+	PPBE32(&oldMadIdent);
 	if( oldMadIdent == 'MADF') MADConvert = true;
 	else if( oldMadIdent == 'MADG') MADConvert = false;
 	else return MADFileNotSupportedByThisPlug;
@@ -368,7 +368,7 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoi
 OSErr TestoldMADFile( Ptr AlienFile)
 {
 	OSType myMADSign = *((OSType*) AlienFile);
-	MOT32(&myMADSign);
+	PPBE32(&myMADSign);
 
 	if(	myMADSign == 'MADF' || myMADSign == 'MADG') return noErr;
 	else return  MADFileNotSupportedByThisPlug;
@@ -384,7 +384,7 @@ OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Signature ***/
 	
 	info->signature = myMOD->MADIdentification;
-	MOT32(&info->signature);
+	PPBE32(&info->signature);
 	
 	/*** Internal name ***/
 	
@@ -394,7 +394,7 @@ OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Tracks ***/
 	
 	info->totalTracks = myMOD->Tracks;
-//	MOT16(&info->totalTracks);
+//	PPBE16(&info->totalTracks);
 		
 	/*** Total Patterns ***/
 	
@@ -414,7 +414,7 @@ OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	for( i = 0, info->totalInstruments = 0; i < MAXINSTRU ; i++)
 	{
 		long insSizeSwap = myMOD->fid[ i].insSize;
-		MOT32(&insSizeSwap);
+		PPBE32(&insSizeSwap);
 		if( insSizeSwap > 5) info->totalInstruments++;
 	}
 	

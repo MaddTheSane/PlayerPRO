@@ -84,7 +84,7 @@ static void AnalyseSignatureMOD( size_t EOFo, OSType temp, short *maxInstru, SIn
 	
 	*maxInstru = 31;
 	
-	MOT32( &temp);
+	PPBE32( &temp);
 	
 	switch( temp)
 	{
@@ -254,9 +254,9 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	{
 		theInstrument[ i] = (Ptr) ((long) theMOD + (long) OffSetToSample);
 		
-		MOT16( &theMOD->fid[ i].numWords);
-		MOT16( &theMOD->fid[ i].loopWord);
-		MOT16( &theMOD->fid[ i].loopWords);
+		PPBE16( &theMOD->fid[ i].numWords);
+		PPBE16( &theMOD->fid[ i].loopWord);
+		PPBE16( &theMOD->fid[ i].loopWords);
 		
 		sndSize = ((long) theMOD->fid[i].numWords) * 2L;
 		
@@ -836,7 +836,7 @@ static OSErr ExtractMODInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Check MOD Type ***/
 	
 	AnalyseSignatureMOD( -1, info->signature, &maxInstru, &PatternSize, &info->totalTracks, myMOD);
-	MOT32(&info->signature);
+	PPBE32(&info->signature);
 	if( maxInstru == 0)
 	{
 		return MADFileNotSupportedByThisPlug;

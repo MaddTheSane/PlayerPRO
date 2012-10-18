@@ -509,13 +509,13 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	memmove( &ITinfo, theITCopy, sizeof( ITinfo));
 	theITCopy += 192;
 	
-	INT16( &ITinfo.orderNum);
-	INT16( &ITinfo.insNum);
-	INT16( &ITinfo.smpNum);
-	INT16( &ITinfo.patNum);
-	INT16( &ITinfo.flags);
-	INT16( &ITinfo.cwtv);
-	INT16( &ITinfo.cmwt);
+	PPLE16( &ITinfo.orderNum);
+	PPLE16( &ITinfo.insNum);
+	PPLE16( &ITinfo.smpNum);
+	PPLE16( &ITinfo.patNum);
+	PPLE16( &ITinfo.flags);
+	PPLE16( &ITinfo.cwtv);
+	PPLE16( &ITinfo.cmwt);
 	
 	if( ITinfo.cmwt < 0x100) return -1;
 	
@@ -542,7 +542,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	theITCopy += ITinfo.insNum * 4L;
 	for( i = 0; i < ITinfo.insNum; i++)
 	{
-		INT32(  &ITinfo.parapins[ i]);
+		PPLE32(  &ITinfo.parapins[ i]);
 	}
 //	if( ITinfo.insNum > 0) DebugStr("\pInsNum");
 	
@@ -553,7 +553,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	theITCopy += ITinfo.smpNum * 4L;
 	for( i = 0; i < ITinfo.smpNum; i++)
 	{
-		INT32(  &ITinfo.parapsamp[ i]);
+		PPLE32(  &ITinfo.parapsamp[ i]);
 	}
 	
 	/**** Pat Num *****/
@@ -563,7 +563,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	theITCopy += ITinfo.patNum * 4L;
 	for( i = 0; i < ITinfo.patNum; i++)
 	{
-		INT32(  &ITinfo.parappat[ i]);
+		PPLE32(  &ITinfo.parappat[ i]);
 	}
 	
 	if( ITinfo.flags & 4)
@@ -611,14 +611,14 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 			return MADIncompatibleFile;
 		}
 		
-			INT32( &ITinfo.sampdata[i].length);
-			INT32( &ITinfo.sampdata[i].loopBegin);
-			INT32( &ITinfo.sampdata[i].loopEnd);
-			INT32( &ITinfo.sampdata[i].C5Speed);
-			INT32( &ITinfo.sampdata[i].SusLoopBegin);
-			INT32( &ITinfo.sampdata[i].SusLoopEnd);
-			INT32( &ITinfo.sampdata[i].samplePtr);
-			INT16( &ITinfo.sampdata[i].Convert);
+			PPLE32( &ITinfo.sampdata[i].length);
+			PPLE32( &ITinfo.sampdata[i].loopBegin);
+			PPLE32( &ITinfo.sampdata[i].loopEnd);
+			PPLE32( &ITinfo.sampdata[i].C5Speed);
+			PPLE32( &ITinfo.sampdata[i].SusLoopBegin);
+			PPLE32( &ITinfo.sampdata[i].SusLoopEnd);
+			PPLE32( &ITinfo.sampdata[i].samplePtr);
+			PPLE16( &ITinfo.sampdata[i].Convert);
 		
 		if( ITinfo.sampdata[i].length > 0)
 		{
@@ -716,7 +716,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 				// Instrument conversion
 				
 				curIns->numSamples	= 0;	//ITinfo.insdata[ i].NoS;
-				INT16( &ITinfo.insdata[ i].FadeOut);
+				PPLE16( &ITinfo.insdata[ i].FadeOut);
 				
 				for( x = 0; x < 26; x++) curIns->name[ x] = ITinfo.insdata[ i].INSName[ x];
 				
@@ -860,7 +860,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 									
 									for( temp = 0; temp < curData->size/2; temp++)
 									{
-										INT16(  &( (tempShort[ temp])));
+										PPLE16(  &( (tempShort[ temp])));
 										
 										if( !(ITinfo.sampdata[ prevSamp].Convert & 1)) *(tempShort + temp) -= 0x8000;
 									}
@@ -1023,7 +1023,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 						
 						for( temp = 0; temp < curData->size/2; temp++)
 						{
-							INT16(  &( (tempShort[ temp])));
+							PPLE16(  &( (tempShort[ temp])));
 							
 							if( !(ITinfo.sampdata[ i].Convert & 1)) *(tempShort + temp) -= 0x8000;
 						}
@@ -1043,7 +1043,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 						
 						for( temp = 0; temp < curData->size/2; temp++)
 						{
-							INT16(  &( (tempShort[ temp])));
+							PPLE16(  &( (tempShort[ temp])));
 							
 							if( !(ITinfo.sampdata[ i].Convert & 1)) *(tempShort + temp) -= 0x8000;
 						}
@@ -1067,8 +1067,8 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 		{
 			curITPat = (ITPatForm*) (theIT + ITinfo.parappat[i]);
 			
-				INT16(  &curITPat->length);
-				INT16(  &curITPat->row);
+				PPLE16(  &curITPat->length);
+				PPLE16(  &curITPat->row);
 			
 			if( ITinfo.parappat[i] > 0)
 			{
@@ -1146,8 +1146,8 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 		{
 			curITPat = (ITPatForm*) (theIT + ITinfo.parappat[i]);
 			/*
-			curITPat->length 	= INT16(  &curITPat->length);
-			curITPat->row 		= INT16(  &curITPat->row);
+			curITPat->length 	= PPLE16(  &curITPat->length);
+			curITPat->row 		= PPLE16(  &curITPat->row);
 			
 			Deja fait dans la recherche du maxtrack
 			*/
@@ -1351,22 +1351,22 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Total Patterns ***/
 	
-	INT16(  &ITinfo.patNum);
+	PPLE16(  &ITinfo.patNum);
 	info->totalPatterns = ITinfo.patNum;
 	
 	/*** Partition Length ***/
 	
-	INT16( &ITinfo.orderNum);
+	PPLE16( &ITinfo.orderNum);
 	info->partitionLength = ITinfo.orderNum;
 	
 	/*** Total Instruments ***/
 	
-	INT16(  &ITinfo.insNum);
+	PPLE16(  &ITinfo.insNum);
 	info->totalInstruments = ITinfo.insNum;
 	
 	/*** Tracks ***/
 	
-	//info->totalTracks	 = INT16(  &ITinfo.insNum);
+	//info->totalTracks	 = PPLE16(  &ITinfo.insNum);
 	
 	strcpy( info->formatDescription, "IT Plug");
 	

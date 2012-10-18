@@ -96,7 +96,7 @@ int MADstrcmp( const char *dst, const char* src)
 void OSType2Ptr( OSType type, Ptr str)
 {
 #ifdef __LITTLE_ENDIAN__
-	MOT32(&type);
+	PPBE32(&type);
 #endif
 	
 	memmove( str, &type, 4);
@@ -113,7 +113,7 @@ OSType Ptr2OSType( char* str)
 	type = '    ';
 	memmove( &type, str, i);
 #ifdef __LITTLE_ENDIAN__
-	MOT32(&type);
+	PPBE32(&type);
 #endif
 	
 	return type;

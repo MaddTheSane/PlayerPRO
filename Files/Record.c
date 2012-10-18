@@ -1958,7 +1958,7 @@ Str255				str, str2;
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
+	PPLE16(&toswap);
 	return toswap;
 }
 #endif*/

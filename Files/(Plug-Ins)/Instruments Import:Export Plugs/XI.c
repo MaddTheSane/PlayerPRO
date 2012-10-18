@@ -10,7 +10,7 @@
 static OSErr TestXI( Ptr CC)
 {
 	OSType Ident = *((OSType*) CC);
-	MOT32(&Ident);
+	PPBE32(&Ident);
 	
 	if( Ident == 'Exte') return noErr;
 	else return MADFileNotSupportedByThisPlug;
@@ -85,7 +85,7 @@ OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
-	INT32(&toswap);
+	PPLE32(&toswap);
 	return toswap;
 }
 #endif
@@ -96,7 +96,7 @@ static inline UInt32 Tdecode32( void *msg_buf)
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
+	PPLE16(&toswap);
 	return toswap;
 }
 #endif
@@ -159,8 +159,8 @@ OSErr mainXI(	OSType		order,						// Order to execute
 					{
 //						InsHeader->volEnv[ x].pos = Tdecode16( &InsHeader->volEnv[ x].pos);	// 
 //						InsHeader->volEnv[ x].val = Tdecode16( &InsHeader->volEnv[ x].val);	// 00...64
-						INT16(&InsHeader->volEnv[x].pos);
-						INT16(&InsHeader->volEnv[x].val);
+						PPLE16(&InsHeader->volEnv[x].pos);
+						PPLE16(&InsHeader->volEnv[x].val);
 					}
 					
 					InsHeader->volSize	= pth->volpts;

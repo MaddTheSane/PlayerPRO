@@ -84,7 +84,7 @@ static void AnalyseSignatureMOD( size_t EOFo, UInt32 temp, short *maxInstru, SIn
 	
 	*maxInstru = 31;
 	
-	MOT32( &temp);
+	PPBE32( &temp);
 	
 	switch( temp)
 	{
@@ -254,9 +254,9 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 	{
 		theInstrument[ i] = (Ptr) ((SInt32) theMOD + (SInt32) OffSetToSample);
 		
-		MOT16( &theMOD->fid[ i].numWords);
-		MOT16( &theMOD->fid[ i].loopWord);
-		MOT16( &theMOD->fid[ i].loopWords);
+		PPBE16( &theMOD->fid[ i].numWords);
+		PPBE16( &theMOD->fid[ i].loopWord);
+		PPBE16( &theMOD->fid[ i].loopWords);
 		
 		sndSize = ((SInt32) theMOD->fid[i].numWords) * 2L;
 		

@@ -32,14 +32,14 @@ static __inline__ void MADByteSwap16(void *theData)
 #endif
 }
 
-EXP void MOT32(void *msg_buf)
+EXP void PPBE32(void *msg_buf)
 {
 #ifdef __LITTLE_ENDIAN__
 	MADByteSwap32(msg_buf);
 #endif
 }
 
-EXP void MOT16(void *msg_buf)
+EXP void PPBE16(void *msg_buf)
 {
 #ifdef __LITTLE_ENDIAN__
 	MADByteSwap16(msg_buf);
@@ -48,14 +48,14 @@ EXP void MOT16(void *msg_buf)
 
 
 /////////////////////////////////
-EXP void INT32(void *msg_buf)
+EXP void PPLE32(void *msg_buf)
 {
 #ifdef __BIG_ENDIAN__
 	MADByteSwap32(msg_buf);
 #endif
 }
 
-EXP void INT16(void *msg_buf)
+EXP void PPLE16(void *msg_buf)
 {
 #ifdef __BIG_ENDIAN__
 	MADByteSwap16(msg_buf);

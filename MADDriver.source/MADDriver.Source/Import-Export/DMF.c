@@ -33,7 +33,7 @@
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
+	PPLE16(&toswap);
 	return toswap;
 }
 #endif
@@ -44,7 +44,7 @@ static inline UInt16 Tdecode16( void *msg_buf)
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
-	INT32(&toswap);
+	PPLE32(&toswap);
 	return toswap;
 }
 #endif
@@ -650,7 +650,7 @@ static OSErr TestITFile( Ptr AlienFile)
 {
 	ITForm	*myIT = ( ITForm*) AlienFile;
 	OSType myID = myIT->ID;
-	MOT32(&myID);
+	PPBE32(&myID);
 
 	if( myID == 'IMPM') return noErr;
 	else return  MADFileNotSupportedByThisPlug;

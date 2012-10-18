@@ -1363,7 +1363,7 @@
 		550BFF2510BA01BA004FC5D7 /* Game.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; path = Game.r; sourceTree = "<group>"; };
 		55113CB813367DD10008C2AF /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		55113CBA133688D60008C2AF /* Win-DirectSound.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "Win-DirectSound.c"; sourceTree = "<group>"; };
-		55113CBB133688D60008C2AF /* FileUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = FileUtils.c; sourceTree = "<group>"; };
+		55113CBB133688D60008C2AF /* FileUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = FileUtils.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55113CBC133688D60008C2AF /* Win-PlugImport.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "Win-PlugImport.c"; sourceTree = "<group>"; };
 		5514AA6D10D017E9009A6BD3 /* Language-rez.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = "Language-rez.r"; path = "../Files/English.lproj/Language-rez.r"; sourceTree = "<group>"; };
 		5514AA6E10D01803009A6BD3 /* Language-rez.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = "Language-rez.r"; path = "../Files/French.lproj/Language-rez.r"; sourceTree = "<group>"; };
@@ -1432,11 +1432,11 @@
 		553340DF10BB5368005208D1 /* DMF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = DMF.h; sourceTree = "<group>"; };
 		553340E110BB5368005208D1 /* IT.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = IT.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		553340E210BB5368005208D1 /* IT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = IT.h; sourceTree = "<group>"; };
-		553340E310BB5368005208D1 /* MADfg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MADfg.c; sourceTree = "<group>"; };
+		553340E310BB5368005208D1 /* MADfg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MADfg.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		553340E410BB5368005208D1 /* MADfg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = MADfg.h; sourceTree = "<group>"; };
-		553340E510BB5368005208D1 /* MADH.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MADH.c; sourceTree = "<group>"; };
+		553340E510BB5368005208D1 /* MADH.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MADH.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		553340E610BB5368005208D1 /* MADH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = MADH.h; sourceTree = "<group>"; };
-		553340E710BB5368005208D1 /* MADI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MADI.c; sourceTree = "<group>"; };
+		553340E710BB5368005208D1 /* MADI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MADI.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		553340E810BB5368005208D1 /* MADI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = MADI.h; sourceTree = "<group>"; };
 		553340E910BB5368005208D1 /* MED.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MED.c; sourceTree = "<group>"; };
 		553340EA10BB5368005208D1 /* MED.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 1; path = MED.h; sourceTree = "<group>"; };
@@ -1449,7 +1449,7 @@
 		553340F210BB5368005208D1 /* PTMIDINP.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; lineEnding = 2; path = PTMIDINP.C; sourceTree = "<group>"; };
 		553340F310BB5368005208D1 /* PTMIDSAV.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; lineEnding = 2; path = PTMIDSAV.C; sourceTree = "<group>"; };
 		553340F410BB5368005208D1 /* PTMIDZAP.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; lineEnding = 2; path = PTMIDZAP.C; sourceTree = "<group>"; };
-		553340F610BB5368005208D1 /* Mod.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = Mod.c; sourceTree = "<group>"; };
+		553340F610BB5368005208D1 /* Mod.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = Mod.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		553340F710BB5368005208D1 /* MOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = MOD.h; sourceTree = "<group>"; };
 		553340F810BB5368005208D1 /* MTM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MTM.c; sourceTree = "<group>"; };
 		553340F910BB5368005208D1 /* MTM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = MTM.h; sourceTree = "<group>"; };
@@ -1459,7 +1459,7 @@
 		553340FD10BB5368005208D1 /* S3M.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = S3M.h; sourceTree = "<group>"; };
 		553340FE10BB5368005208D1 /* ULT.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = ULT.c; sourceTree = "<group>"; };
 		553340FF10BB5368005208D1 /* ULT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = ULT.h; sourceTree = "<group>"; };
-		5533410010BB5368005208D1 /* UMX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = UMX.c; sourceTree = "<group>"; };
+		5533410010BB5368005208D1 /* UMX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = UMX.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5533410110BB5368005208D1 /* UMX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = UMX.h; sourceTree = "<group>"; };
 		5533410310BB5368005208D1 /* XM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = XM.c; sourceTree = "<group>"; };
 		5533410410BB5368005208D1 /* XM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = XM.h; sourceTree = "<group>"; };
@@ -1546,7 +1546,7 @@
 		554E104510D6C79E00BB619C /* MINS.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MINS.r; sourceTree = "<group>"; };
 		554E104A10D6C79E00BB619C /* Quicktime Movie.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = "Quicktime Movie.r"; sourceTree = "<group>"; };
 		554E104C10D6C79E00BB619C /* QuicktimeGeneric.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = QuicktimeGeneric.c; sourceTree = "<group>"; };
-		554E104D10D6C79E00BB619C /* snd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = snd.c; sourceTree = "<group>"; };
+		554E104D10D6C79E00BB619C /* snd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = snd.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E104E10D6C79E00BB619C /* snd.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = snd.r; sourceTree = "<group>"; };
 		554E105010D6C79E00BB619C /* SndUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = SndUtils.c; sourceTree = "<group>"; };
 		554E105110D6C79E00BB619C /* SoundDesignerII.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = SoundDesignerII.c; sourceTree = "<group>"; };
@@ -1572,7 +1572,7 @@
 		554E122110D6F3E100BB619C /* Propagate-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Propagate-Info.plist"; path = "../../../Propagate-Info.plist"; sourceTree = "<group>"; };
 		554E123010D6F3E600BB619C /* Revert.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Revert.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E125410D6F3E600BB619C /* Revert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Revert-Info.plist"; path = "../../../Revert-Info.plist"; sourceTree = "<group>"; };
-		554E15FF10D8BD0600BB619C /* FileUtils.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; lineEnding = 0; name = FileUtils.exp; path = Files/FileUtils.exp; sourceTree = "<group>"; };
+		554E15FF10D8BD0600BB619C /* FileUtils.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; lineEnding = 0; name = FileUtils.exp; path = Files/FileUtils.exp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		555E9B491101912100986239 /* MIDI-Hardware-Mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Mac.c"; path = "Files/MIDI-Hardware-Mac.c"; sourceTree = "<group>"; };
 		555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = "MIDI-Hardware-OSX.c"; path = "Files/MIDI-Hardware-OSX.c"; sourceTree = "<group>"; };
 		555E9B4B1101912100986239 /* MIDI-Hardware-Stub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Stub.c"; path = "Files/MIDI-Hardware-Stub.c"; sourceTree = "<group>"; };
@@ -1584,7 +1584,7 @@
 		5573A3ED10B5151700FF8B50 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		5573A3EF10B5151700FF8B50 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5573A41010B5160000FF8B50 /* PPDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = PPDefs.h; path = ../../PPDefs.h; sourceTree = "<group>"; };
-		5573A46D10B51CAB00FF8B50 /* ByteSwap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = ByteSwap.c; sourceTree = "<group>"; };
+		5573A46D10B51CAB00FF8B50 /* ByteSwap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = ByteSwap.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawSprocket.framework; path = System/Library/Frameworks/DrawSprocket.framework; sourceTree = SDKROOT; };
 		5573A59F10B542F300FF8B50 /* Proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Proto.c; path = "(Proto)/Proto.c"; sourceTree = "<group>"; };
 		557B8FD910CE01BF00B9A37D /* DefaultPref.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DefaultPref.r; path = ../Files/DefaultPref.r; sourceTree = "<group>"; };
@@ -1691,7 +1691,7 @@
 		88E0C3BE0C2F21DD00D6C081 /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 1; name = Carbon.r; path = ../Files/Carbon.r; sourceTree = "<group>"; };
 		88E0C3BF0C2F21DD00D6C081 /* PlayerProCarbon.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlayerProCarbon.pch; path = Files/PlayerProCarbon.pch; sourceTree = SOURCE_ROOT; };
 		88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = AboutPlugs.c; path = Files/wds_general/AboutPlugs.c; sourceTree = SOURCE_ROOT; };
-		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = FileUtils.h; sourceTree = "<group>"; };
+		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = FileUtils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		88E0C3C50C2F21DD00D6C081 /* PlugsPPDGInit.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PlugsPPDGInit.c; path = Files/PlugsPPDGInit.c; sourceTree = SOURCE_ROOT; };
 		88E0C3C60C2F21DD00D6C081 /* PlugsPPINInit.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PlugsPPINInit.c; path = Files/PlugsPPINInit.c; sourceTree = SOURCE_ROOT; };
 		88E0C3C70C2F21DD00D6C081 /* PlugsSoundFilter.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PlugsSoundFilter.c; path = Files/PlugsSoundFilter.c; sourceTree = SOURCE_ROOT; };
@@ -1700,7 +1700,7 @@
 		88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = DelayOutPut.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C3D10C2F21DD00D6C081 /* Effects.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = Effects.c; sourceTree = "<group>"; };
 		88E0C3D20C2F21DD00D6C081 /* Interrupt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 1; path = Interrupt.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C3D60C2F21DD00D6C081 /* MainDriver.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MainDriver.c; sourceTree = "<group>"; };
+		88E0C3D60C2F21DD00D6C081 /* MainDriver.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MainDriver.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C3D90C2F21DD00D6C081 /* OutPut8.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = OutPut8.c; sourceTree = "<group>"; };
 		88E0C3DA0C2F21DD00D6C081 /* realft.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; lineEnding = 2; path = realft.c; sourceTree = "<group>"; };
 		88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = TickRemover.c; sourceTree = "<group>"; };
@@ -1742,7 +1742,7 @@
 		88E0C4000C2F21DD00D6C081 /* ProgressBar.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ProgressBar.c; sourceTree = "<group>"; };
 		88E0C4010C2F21DD00D6C081 /* PubWindow.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = PubWindow.c; sourceTree = "<group>"; };
 		88E0C4020C2F21DD00D6C081 /* QuicktimeWindow.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = QuicktimeWindow.c; sourceTree = "<group>"; };
-		88E0C4030C2F21DD00D6C081 /* Record.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Record.c; path = Files/Record.c; sourceTree = SOURCE_ROOT; };
+		88E0C4030C2F21DD00D6C081 /* Record.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Record.c; path = Files/Record.c; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C4050C2F21DD00D6C081 /* Samples.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Samples.c; sourceTree = "<group>"; };
 		88E0C4060C2F21DD00D6C081 /* SoundInput.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = SoundInput.c; path = Files/SoundInput.c; sourceTree = SOURCE_ROOT; };
 		88E0C4070C2F21DD00D6C081 /* Spectrum.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Spectrum.c; sourceTree = "<group>"; };
@@ -1756,7 +1756,7 @@
 		88E0C4100C2F21DD00D6C081 /* Navigation.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Navigation.c; path = Files/Navigation.c; sourceTree = SOURCE_ROOT; };
 		88E0C4110C2F21DD00D6C081 /* ScreenDevice.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = ScreenDevice.c; path = Files/ScreenDevice.c; sourceTree = SOURCE_ROOT; };
 		88E0C4120C2F21DD00D6C081 /* ScreenDevice.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; lineEnding = 0; name = ScreenDevice.h; path = Files/ScreenDevice.h; sourceTree = SOURCE_ROOT; };
-		88E0C4130C2F21DD00D6C081 /* Utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Utils.c; path = Files/Utils.c; sourceTree = SOURCE_ROOT; };
+		88E0C4130C2F21DD00D6C081 /* Utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Utils.c; path = Files/Utils.c; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C4150C2F21DD00D6C081 /* Command.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Command.c; sourceTree = "<group>"; };
 		88E0C4160C2F21DD00D6C081 /* Editor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Editor.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C4170C2F21DD00D6C081 /* Mozart.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Mozart.c; sourceTree = "<group>"; };

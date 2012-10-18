@@ -33,7 +33,7 @@
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
+	PPLE16(&toswap);
 	return toswap;
 }
 #endif
@@ -44,7 +44,7 @@ static inline UInt16 Tdecode16( void *msg_buf)
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
-	INT32(&toswap);
+	PPLE32(&toswap);
 	return toswap;
 }
 #endif
@@ -301,7 +301,7 @@ static OSErr TestULTFile( Ptr AlienFile)
 {
 	ULTForm	*myULT = ( ULTForm*) AlienFile;
 	OSType ultID = *((OSType *) myULT->ID);
-	MOT32(&ultID);
+	PPBE32(&ultID);
 	
 	if( ultID == 'MAS_') return noErr;
 	else return MADFileNotSupportedByThisPlug;

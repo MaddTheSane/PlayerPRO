@@ -102,45 +102,45 @@ void NNumToString( short no, Str255 aStr)
 
 void ByteSwapMADSpec(MADSpec *toSwap)
 {
-	MOT32( &toSwap->MAD);
-	MOT16( &toSwap->speed);
-	MOT16( &toSwap->tempo);
+	PPBE32( &toSwap->MAD);
+	PPBE16( &toSwap->speed);
+	PPBE16( &toSwap->tempo);
 }
 
 void ByteSwapPatHeader(PatHeader *toSwap)
 {
-	MOT32( &toSwap->size);
-	MOT32( &toSwap->compMode);
-	MOT32( &toSwap->patBytes);
-	MOT32( &toSwap->unused2);
+	PPBE32( &toSwap->size);
+	PPBE32( &toSwap->compMode);
+	PPBE32( &toSwap->patBytes);
+	PPBE32( &toSwap->unused2);
 }
 
 void ByteSwapInstrData(InstrData *toSwap)
 {
 	int x;
-	MOT16( &toSwap->numSamples);
-	MOT16( &toSwap->firstSample);
-	MOT16( &toSwap->volFade);
+	PPBE16( &toSwap->numSamples);
+	PPBE16( &toSwap->firstSample);
+	PPBE16( &toSwap->volFade);
 	
 	for( x = 0; x < 12; x++)
 	{
-		MOT16( &toSwap->volEnv[ x].pos);
-		MOT16( &toSwap->volEnv[ x].val);
+		PPBE16( &toSwap->volEnv[ x].pos);
+		PPBE16( &toSwap->volEnv[ x].val);
 	}
 	
 	for( x = 0; x < 12; x++)
 	{
-		MOT16( &toSwap->pannEnv[ x].pos);
-		MOT16( &toSwap->pannEnv[ x].val);
+		PPBE16( &toSwap->pannEnv[ x].pos);
+		PPBE16( &toSwap->pannEnv[ x].val);
 	}
 }
 
 void ByteSwapsData(sData *toSwap)
 {
-	MOT32( &toSwap->size);
-	MOT32( &toSwap->loopBeg);
-	MOT32( &toSwap->loopSize);
-	MOT16( &toSwap->c2spd);
+	PPBE32( &toSwap->size);
+	PPBE32( &toSwap->loopBeg);
+	PPBE32( &toSwap->loopSize);
+	PPBE16( &toSwap->c2spd);
 	
 }
 
@@ -800,7 +800,7 @@ void OSType2Str( OSType type, Str255 str)
 	short i;
 
 	str[ 0] = 4;
-	MOT32(&type);
+	PPBE32(&type);
 	BlockMoveData( &type, str+1, 4);
 
 	for( i = 4; i > 0; i--)
