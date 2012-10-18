@@ -529,7 +529,7 @@ void MADGetBestDriver( MADDriverSettings	*Init)
 
 OSErr MADCreateMicroDelay( MADDriverRec *intDriver)
 {
-	intDriver->MDelay = (intDriver->DriverSettings.MicroDelaySize * ( intDriver->DriverSettings.outPutRate / 1000.0)* intDriver->DriverSettings.oversampling) / 1000;
+	intDriver->MDelay = (intDriver->DriverSettings.MicroDelaySize * ( intDriver->DriverSettings.outPutRate)* intDriver->DriverSettings.oversampling) / 1000;
 	
 	return noErr;
 }
@@ -546,7 +546,7 @@ OSErr MADCreateReverb( MADDriverRec *intDriver)
 	
 	if( intDriver->DriverSettings.Reverb)
 	{
-		intDriver->RDelay = (intDriver->DriverSettings.ReverbSize * ( intDriver->DriverSettings.outPutRate / 1000.0)) / 1000;
+		intDriver->RDelay = (intDriver->DriverSettings.ReverbSize * ( intDriver->DriverSettings.outPutRate)) / 1000;
 		
 		switch( intDriver->DriverSettings.outPutBits)
 		{
@@ -621,7 +621,7 @@ OSErr MADCreateTiming( MADDriverRec *intDriver)
 	/**     Rate table      **/
 	/*************************/
 	
-	intDriver->VSYNC	= ((intDriver->DriverSettings.outPutRate / 1000.0) * 125L * intDriver->DriverSettings.oversampling) / (50);
+	intDriver->VSYNC	= ((intDriver->DriverSettings.outPutRate) * 125L * intDriver->DriverSettings.oversampling) / (50);
 	intDriver->trackDiv = intDriver->DriverSettings.numChn;
 //	if( intDriver->DriverSettings.outPutMode == StereoOutPut) intDriver->trackDiv /= 2;
 

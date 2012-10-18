@@ -293,7 +293,7 @@ typedef struct MADDriverSettings
 {
 	short					numChn;								// Active tracks from 2 to 32, automatically setup when a new music is loaded
 	short					outPutBits;							// 8 or 16 Bits TODO: 24 Bits
-	double					outPutRate;							// Fixed number, by example : rate44khz, rate22050hz, rate22khz, rate11khz, rate11025hz
+	unsigned int			outPutRate;							// Fixed number, by example : rate44khz, rate22050hz, rate22khz, rate11khz, rate11025hz
 	short					outPutMode;							// Now, only DeluxeStereoOutPut is available !
 	short					driverMode;							// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
 //	Boolean					antiAliasing;						// NOT USED anymore
@@ -425,7 +425,9 @@ typedef struct MADLibrary
 
 } MADLibrary;
 
-#ifndef WIN32
+#ifdef WIN32
+#define callback __callback
+#else
 #define callback
 #endif
 

@@ -36,6 +36,8 @@
 #pragma pack(2)
 #endif
 //TODO: rewrite plug-in architecture for PlayerPRO 6 Mainly move away from FSSpecs to CFURLs or POSIX file commands
+#warning This header is outdated! Use at your own risk!
+#warning This needs to be migrated away from Carbon functions.
 #pragma mark Filters for Samples/Sounds
 /******************************************************************/
 //	*****************	FILTERS FOR SAMPLES/SOUNDS	***************/

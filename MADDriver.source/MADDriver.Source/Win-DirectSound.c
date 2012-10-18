@@ -110,7 +110,7 @@ BOOL AppCreateWritePrimaryBuffer(
     pcmwf.wFormatTag 		= WAVE_FORMAT_PCM;
     
     pcmwf.nChannels = 2;
-    pcmwf.nSamplesPerSec		= WinMADDriver->DriverSettings.outPutRate >> 16L;
+    pcmwf.nSamplesPerSec		= WinMADDriver->DriverSettings.outPutRate;
     pcmwf.wBitsPerSample		= WinMADDriver->DriverSettings.outPutBits;
     pcmwf.nBlockAlign			= pcmwf.nChannels * (pcmwf.wBitsPerSample/8);
     pcmwf.nAvgBytesPerSec		= pcmwf.nSamplesPerSec * pcmwf.nBlockAlign;
@@ -224,7 +224,7 @@ BOOL LoadSamp(LPDIRECTSOUND lpDirectSound,
     memset(&pcmwf, 0, sizeof(PCMWAVEFORMAT));
     pcmwf.wFormatTag			= WAVE_FORMAT_PCM;
     pcmwf.nChannels = 2;
-    pcmwf.nSamplesPerSec		= WinMADDriver->DriverSettings.outPutRate >> 16L;
+    pcmwf.nSamplesPerSec		= WinMADDriver->DriverSettings.outPutRate;
     pcmwf.wBitsPerSample		= WinMADDriver->DriverSettings.outPutBits;
     pcmwf.nBlockAlign			= pcmwf.nChannels * (pcmwf.wBitsPerSample/8);
     pcmwf.nAvgBytesPerSec		= pcmwf.nSamplesPerSec * pcmwf.nBlockAlign;
