@@ -18,7 +18,7 @@ enum {
 @interface PPPreferences : NSWindowController {
 	IBOutlet NSBox *box;
 	IBOutlet NSPopUpButton *popUp;
-	NSMutableArray *viewControllers;
+	NSArray *viewControllers;
 }
 
 -(IBAction)changeViewController:(id)sender;

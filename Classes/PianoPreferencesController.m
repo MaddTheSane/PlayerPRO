@@ -14,11 +14,9 @@
 
 -(id)init
 {
-	if (![super initWithNibName:@"PianoPrefs" bundle:nil]) {
-		[self autorelease];
-		return nil;
+	if (self = [super initWithNibName:@"PianoPrefs" bundle:nil]) {
+		[self setTitle:@"Piano"];
 	}
-	[self setTitle:@"Piano"];
 	return self;
 }
 

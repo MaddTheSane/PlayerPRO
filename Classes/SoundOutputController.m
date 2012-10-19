@@ -13,15 +13,16 @@
 @implementation SoundOutputController
 
 enum {
-	rate11Khz = 0,
+	rate11Khz,
 	rate22Khz,
 	rate44Khz,
 	rate48Khz
 };
 
 enum {
-	bits8 = 0,
+	bits8,
 	bits16,
+	bits20,
 	bits24
 };
 
@@ -60,6 +61,8 @@ enum {
 	} else if ([outputBits cellAtRow:0 column:1] == curSelected) {
 		return bits16;
 	} else if ([outputBits cellAtRow:0 column:2] == curSelected) {
+		return bits20;
+	} else if ([outputBits cellAtRow:0 column:3] == curSelected) {
 		return bits24;
 	} else {
 		return -1;
@@ -74,14 +77,14 @@ enum {
 			[defaults setInteger:8 forKey:PPSoundOutBits];
 			break;
 		case bits16:
+		default:
 			[defaults setInteger:16 forKey:PPSoundOutBits];
+			break;
+		case bits20:
+			[defaults setInteger:20 forKey:PPSoundOutBits];
 			break;
 		case bits24:
 			[defaults setInteger:24 forKey:PPSoundOutBits];
-			break;
-
-		default:
-			return;
 			break;
 	}
 	
@@ -98,20 +101,17 @@ enum {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	switch (curBits) {
 		case rate11Khz:
-			[defaults setInteger:11 forKey:PPSoundOutRate];
+			[defaults setInteger:11025 forKey:PPSoundOutRate];
 			break;
 		case rate22Khz:
-			[defaults setInteger:22 forKey:PPSoundOutRate];
+			[defaults setInteger:22050 forKey:PPSoundOutRate];
 			break;
 		case rate44Khz:
-			[defaults setInteger:44 forKey:PPSoundOutRate];
+		default:
+			[defaults setInteger:44100 forKey:PPSoundOutRate];
 			break;
 		case rate48Khz:
-			[defaults setInteger:48 forKey:PPSoundOutRate];
-			break;
-			
-		default:
-			return;
+			[defaults setInteger:48000 forKey:PPSoundOutRate];
 			break;
 	}
 	
@@ -154,11 +154,9 @@ enum {
 }
 
 -(id)init {
-	if (![super initWithNibName:@"SoundOutput" bundle:nil]) {
-		[self autorelease];
-		return nil;
+	if (self = [super initWithNibName:@"SoundOutput" bundle:nil]) {
+		[self setTitle:@"Sound Output"];
 	}
-	[self setTitle:@"Sound Output"];
 	return self;
 }
 
@@ -186,14 +184,16 @@ enum {
 			[outputBits selectCellAtRow:0 column:0];
 			break;
 		case bits16:
+		default:
 			[outputBits selectCellAtRow:0 column:1];
 			break;
-		case bits24:
+		case bits20:
 			[outputBits selectCellAtRow:0 column:2];
 			break;
-
-	   default:
+		case bits24:
+			[outputBits selectCellAtRow:0 column:3];
 			break;
+
 	}
 }
 
@@ -206,13 +206,11 @@ enum {
 			[rate selectCellAtRow:0 column:1];
 			break;
 		case rate44Khz:
+		default:
 			[rate selectCellAtRow:0 column:2];
 			break;
 		case rate48Khz:
 			[rate selectCellAtRow:0 column:3];
-			break;
-
-		default:
 			break;
 	}
 }
@@ -232,6 +230,8 @@ enum {
 			ConvBits = bits8;
 		} else if (unConvBits == 16) {
 			ConvBits = bits16;
+		} else if (unConvBits == 20) {
+			ConvBits = bits20;
 		} else if (unConvBits == 24) {
 			ConvBits = bits24;
 		} else {
@@ -241,13 +241,13 @@ enum {
 	}
 	{
 		NSInteger unConvRate = [defaults integerForKey:PPSoundOutRate], convRate;
-		if (unConvRate == 11) {
+		if (unConvRate == 11025) {
 			convRate = rate11Khz;
-		} else if (unConvRate == 22) {
+		} else if (unConvRate == 22050) {
 			convRate = rate22Khz;
-		} else if (unConvRate == 44) {
+		} else if (unConvRate == 44100) {
 			convRate = rate44Khz;
-		} else if (unConvRate == 48) {
+		} else if (unConvRate == 48000) {
 			convRate = rate48Khz;
 		} else {
 			convRate = rate44Khz;

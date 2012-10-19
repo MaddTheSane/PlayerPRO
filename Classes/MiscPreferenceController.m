@@ -18,11 +18,9 @@
 
 -(id)init
 {
-	if (![super initWithNibName:@"MiscPrefs" bundle:nil]) {
-		[self autorelease];
-		return nil;
+	if (self = [super initWithNibName:@"MiscPrefs" bundle:nil]) {
+		[self setTitle:@"Misc."];
 	}
-	[self setTitle:@"Misc."];
 	return self;
 }
 

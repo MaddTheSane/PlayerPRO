@@ -14,11 +14,9 @@
 
 -(id)init
 {
-	if (![super initWithNibName:@"BoxPrefs" bundle:nil]) {
-		[self autorelease];
-		return nil;
+	if (self = [super initWithNibName:@"BoxPrefs" bundle:nil]) {
+		[self setTitle:@"Box Editor"];
 	}
-	[self setTitle:@"Box Editor"];
 	return self;
 }
 

@@ -42,11 +42,9 @@
 }
 
 -(id)init {
-	if (![super initWithNibName:@"MusicListPrefs" bundle:nil]) {
-		[self autorelease];
-		return nil;
+	if (self = [super initWithNibName:@"MusicListPrefs" bundle:nil]) {
+		[self setTitle:@"Music List"];
 	}
-	[self setTitle:@"Music List"];
 	return self;
 }
 

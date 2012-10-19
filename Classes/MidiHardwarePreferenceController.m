@@ -14,11 +14,9 @@
 
 -(id)init
 {
-	if (![super initWithNibName:@"MidiPrefs" bundle:nil]) {
-		[self autorelease];
-		return nil;
+	if (self = [super initWithNibName:@"MidiPrefs" bundle:nil]) {
+		[self setTitle:@"MIDI Hardware"];
 	}
-	[self setTitle:@"MIDI Hardware"];
 	return self;
 }
 

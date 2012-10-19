@@ -21,47 +21,19 @@
 
 - (id)init 
 {
-    self = [super initWithWindowNibName:@"Preferences"];
-    if (self != nil) {
-		viewControllers =[[NSMutableArray alloc] initWithCapacity:3];
-		
-		NSViewController *vc;
-		vc = [[SoundOutputController alloc] init];
-		[viewControllers addObject:vc];
-		[vc release], vc = nil;
-		
-		vc = [[PianoPreferencesController alloc] init];
-		[viewControllers addObject:vc];
-		[vc release], vc = nil;
-		
-		vc = [[MusicListPreferenceController alloc] init];
-		[viewControllers addObject:vc];
-		[vc release], vc = nil;
-		
-		vc = [[ColorPreferenceController alloc] init];
-		[viewControllers addObject:vc];
-		[vc release], vc = nil;
-		
-		vc = [[MiscPreferenceController alloc] init];
-		[viewControllers addObject:vc];
-		[vc release], vc = nil;
-		
-		vc = [[BoxEditorPreferenceController alloc] init];
-		[viewControllers addObject:vc];
-		[vc release], vc = nil;
-		
-		vc = [[DigitalEditorPreferenceControler alloc] init];
-		[viewControllers addObject:vc];
-		[vc release], vc = nil;
-		
-		vc = [[ClassicEditorPreferenceController alloc] init];
-		[viewControllers addObject:vc];
-		[vc release], vc = nil;
-		
-		vc = [[MidiHardwarePreferenceController alloc] init];
-		[viewControllers addObject:vc];
-		[vc release], vc = nil;
-		
+    if (self = [super initWithWindowNibName:@"Preferences"]) {
+		viewControllers = [[NSArray alloc] initWithObjects:[[[SoundOutputController alloc] init] autorelease],
+						   [[[PianoPreferencesController alloc] init] autorelease],
+						   [[[MusicListPreferenceController alloc] init] autorelease],
+						   [[[MusicListPreferenceController alloc] init] autorelease],
+						   [[[ColorPreferenceController alloc] init] autorelease],
+						   [[[BoxEditorPreferenceController alloc] init] autorelease],
+						   [[[DigitalEditorPreferenceControler alloc] init] autorelease],
+						   [[[ClassicEditorPreferenceController alloc] init] autorelease],
+						   [[[ClassicEditorPreferenceController alloc] init] autorelease],
+						   [[[MidiHardwarePreferenceController alloc] init] autorelease],
+						   [[[MiscPreferenceController alloc] init] autorelease],
+						   nil];
     }
     return self;
 }
