@@ -769,11 +769,11 @@ OSErr DoCustomOpen( FSSpec	*spec)
 	// default behavior for browser and dialog:
 	theErr = NavGetDefaultDialogOptions( &dialogOptions);
 	
-	dialogOptions.dialogOptionFlags	-=	kNavAllowPreviews;
-	dialogOptions.dialogOptionFlags	+=	kNavNoTypePopup;
-	dialogOptions.dialogOptionFlags	-=	kNavAllowStationery;
-	dialogOptions.dialogOptionFlags	+=	kNavDontAutoTranslate;
-	dialogOptions.dialogOptionFlags	-=	kNavAllowMultipleFiles;
+	dialogOptions.dialogOptionFlags	&=	~kNavAllowPreviews;
+	dialogOptions.dialogOptionFlags	|=	kNavNoTypePopup;
+	dialogOptions.dialogOptionFlags	&=	~kNavAllowStationery;
+	dialogOptions.dialogOptionFlags	|=	kNavDontAutoTranslate;
+	dialogOptions.dialogOptionFlags	&=	~kNavAllowMultipleFiles;
 	
 	pStrcpy( dialogOptions.clientName, "\pPlayerPRO");
 	
@@ -849,7 +849,7 @@ OSErr DoCustomSave( Str255 bStr, Str255 fileName, OSType theType, FSSpec *spec)
 		pStrcpy( dialogOptions.savedFileName, fileName);
 		pStrcpy( dialogOptions.windowTitle, bStr);
 		
-		dialogOptions.dialogOptionFlags -= kNavAllowStationery;
+		dialogOptions.dialogOptionFlags &= ~kNavAllowStationery;
 		
 		NavPutFile(	NULL,
 					&reply,
@@ -898,12 +898,12 @@ OSErr DoStandardOpen( FSSpec	*spec, Str255 string, OSType inType)
 	// default behavior for browser and dialog:
 	iErr = NavGetDefaultDialogOptions( &dialogOptions);
 	
-	dialogOptions.dialogOptionFlags	-=	kNavAllowPreviews;
-	dialogOptions.dialogOptionFlags	+=	kNavNoTypePopup;
-	dialogOptions.dialogOptionFlags	+=	kNavSupportPackages;
-	dialogOptions.dialogOptionFlags	-=	kNavAllowStationery;
-	dialogOptions.dialogOptionFlags	-=	kNavDontAutoTranslate;
-	dialogOptions.dialogOptionFlags	-=	kNavAllowMultipleFiles;
+	dialogOptions.dialogOptionFlags	&=	~kNavAllowPreviews;
+	dialogOptions.dialogOptionFlags	|=	kNavNoTypePopup;
+	dialogOptions.dialogOptionFlags	|=	kNavSupportPackages;
+	dialogOptions.dialogOptionFlags	&=	~kNavAllowStationery;
+	dialogOptions.dialogOptionFlags	&=	~kNavDontAutoTranslate;
+	dialogOptions.dialogOptionFlags	&=	~kNavAllowMultipleFiles;
 	
 	//dialogOptions.dialogOptionFlags -=	0x002000;
 	

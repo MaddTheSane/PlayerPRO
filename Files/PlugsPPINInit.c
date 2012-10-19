@@ -114,11 +114,11 @@ void PPINGetFileName( void)
 		// default behavior for browser and dialog:
 	iErr = NavGetDefaultDialogOptions( &dialogOptions);
 		
-	dialogOptions.dialogOptionFlags	-=	kNavAllowPreviews;
-	dialogOptions.dialogOptionFlags	+=	kNavNoTypePopup;
-	dialogOptions.dialogOptionFlags	-=	kNavAllowStationery;
-	dialogOptions.dialogOptionFlags	+=	kNavDontAutoTranslate;
-	dialogOptions.dialogOptionFlags	-=	kNavAllowMultipleFiles;
+	dialogOptions.dialogOptionFlags	&=	~kNavAllowPreviews;
+	dialogOptions.dialogOptionFlags	|=	kNavNoTypePopup;
+	dialogOptions.dialogOptionFlags	&=	~kNavAllowStationery;
+	dialogOptions.dialogOptionFlags	|=	kNavDontAutoTranslate;
+	dialogOptions.dialogOptionFlags	&=	~kNavAllowMultipleFiles;
 		
 		pStrcpy( dialogOptions.clientName, "\pPlayerPRO");
 		
