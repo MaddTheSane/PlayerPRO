@@ -1200,17 +1200,39 @@ OSErr MADLoadMADFileCString( MADMusic **music, Ptr fName)
 }
 
 #ifdef _MAC_H
+//hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
+static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
+{
+	CFURLRef toDeref = theRef;
+	if (resolveAgainstBase) {
+		toDeref = CFURLCopyAbsoluteURL(theRef);
+	}
+	CFStringRef fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
+	CFIndex strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
+	CFRelease(fileString);
+	if (resolveAgainstBase) {
+		CFRelease(toDeref);
+	}
+	return strLength;
+}
+
 OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef)
 {
-	char URLcString[PATH_MAX * 4];
+	char *URLcString = NULL;
 	char OS[5];
-	Boolean pathOK = CFURLGetFileSystemRepresentation(theRef, true, (unsigned char*)URLcString, PATH_MAX * 4);
+	CFIndex pathLen = getCFURLFilePathRepresentationLength(theRef, true);
+	URLcString = malloc(pathLen);
+	if (URLcString == NULL) {
+		return MADNeedMemory;
+	}
+	Boolean pathOK = CFURLGetFileSystemRepresentation(theRef, true, (unsigned char*)URLcString, pathLen);
 	OSType2Ptr(type, OS);
 	if (pathOK == false) {
 		return MADReadingErr;
 	}
-	return MADLoadMusicFileCString(lib, music, OS, URLcString);
-
+	OSErr theErr = MADLoadMusicFileCString(lib, music, OS, URLcString);
+	free(URLcString);
+	return theErr;
 }
 
 /*
@@ -1262,15 +1284,21 @@ OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, OSType *type, CFURLRef URLRef)
 	if (type == NULL) {
 		return MADParametersErr;
 	}
-	char URLcString[PATH_MAX * 4];
+	char *URLcString;
 	char OS[5];
-	Boolean pathOK = CFURLGetFileSystemRepresentation(URLRef, true, (unsigned char*)URLcString, PATH_MAX * 4);
+	CFIndex pathLen = getCFURLFilePathRepresentationLength(URLRef, true);
+	URLcString = malloc(pathLen);
+	if (URLcString == NULL) {
+		return MADNeedMemory;
+	}
+	Boolean pathOK = CFURLGetFileSystemRepresentation(URLRef, true, (unsigned char*)URLcString, pathLen);
 	OSType2Ptr(*type, OS);
 	if (pathOK == false) {
 		return MADReadingErr;
 	}
 	OSErr returnstatus = MADMusicIdentifyCString(lib, OS, URLcString);
 	*type = Ptr2OSType(OS);
+	free(URLcString);
 	return returnstatus;
 }
 #endif
