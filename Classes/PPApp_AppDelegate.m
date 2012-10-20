@@ -94,6 +94,10 @@
 	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPBEOctaveMarkers];
 	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPBENotesProjection];
 
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPMAddExtension];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPMMadCompression];
+	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPMNoLoadMixerFromFiles];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPMOscilloscopeDrawLines];
 	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultPrefs];
 }

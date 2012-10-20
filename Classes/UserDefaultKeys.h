@@ -11,6 +11,7 @@ extern NSString *PPListPreferencesDidChange;
 extern NSString *PPSoundPreferencesDidChange;
 extern NSString *PPDigitalEditorPrefrencesDidChange;
 extern NSString *PPBoxEditorPreferencesDidChange;
+extern NSString *PPMiscPreferencesDidChange;
 
 extern NSString *PPRememberMusicList;
 extern NSString *PPLoadMusicAtListLoad;
@@ -54,3 +55,8 @@ extern NSString *PPBEMarkersOffset;
 extern NSString *PPBEMarkersLoop;
 extern NSString *PPBEOctaveMarkers;
 extern NSString *PPBENotesProjection;
+
+extern NSString *PPMAddExtension;
+extern NSString *PPMMadCompression;
+extern NSString *PPMNoLoadMixerFromFiles;
+extern NSString *PPMOscilloscopeDrawLines;

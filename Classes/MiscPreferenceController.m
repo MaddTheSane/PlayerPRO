@@ -12,7 +12,14 @@
 
 @implementation MiscPreferenceController
 - (IBAction)changePrefs:(id)sender {
-    
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+	[defaults setBool:[addExt state] forKey:PPMAddExtension];
+	[defaults setBool:[madCompression state] forKey:PPMMadCompression];
+	[defaults setBool:[noLoadMixerFromFile state] forKey:PPMNoLoadMixerFromFiles];
+	[defaults setBool:[oscDrawLines state] forKey:PPMOscilloscopeDrawLines];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPMiscPreferencesDidChange object:self];
 }
 
 
@@ -26,7 +33,10 @@
 
 -(void)awakeFromNib {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
+	[addExt setState:[defaults boolForKey:PPMAddExtension]];
+	[madCompression setState:[defaults boolForKey:PPMMadCompression]];
+	[noLoadMixerFromFile setState:[defaults boolForKey:PPMNoLoadMixerFromFiles]];
+	[oscDrawLines setState: [defaults boolForKey:PPMOscilloscopeDrawLines]];
 }
 
 @end

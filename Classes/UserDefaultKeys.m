@@ -12,7 +12,7 @@ NSString *PPListPreferencesDidChange = @"Music List Preferences Changed";
 NSString *PPSoundPreferencesDidChange = @"Sound Preferences changed";
 NSString *PPDigitalEditorPrefrencesDidChange = @"Digital Editor Preferences changed";
 NSString *PPBoxEditorPreferencesDidChange = @"Box Editor Preferences changed";
-
+NSString *PPMiscPreferencesDidChange = @"Misc. Preferences Changed";
 
 NSString *PPRememberMusicList = @"Remember Music List";
 NSString *PPLoadMusicAtListLoad = @"Load music when loading list";
@@ -56,4 +56,9 @@ NSString *PPBEMarkersOffset = @"Box Editor Markers Offset";
 NSString *PPBEMarkersLoop = @"Box Editor Markers Loop";
 NSString *PPBEOctaveMarkers = @"Box Editor Octave Markers?";
 NSString *PPBENotesProjection = @"Box Editor Notes Projection?";
+
+NSString *PPMAddExtension = @"Add Extension";
+NSString *PPMMadCompression = @"Compress MAD?";
+NSString *PPMNoLoadMixerFromFiles = @"No load Mixer?";
+NSString *PPMOscilloscopeDrawLines = @"Oscilloscope Draw Lines";
 
