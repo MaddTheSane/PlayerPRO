@@ -521,64 +521,64 @@ extern "C" {
 void MyDebugStr( short, char*, char*);								// Internal Debugger function, NORMALLY it is never called, only when FATAL error
 																	// You NEED to provide this function, see examples!
 
-MADLibrary* MADGetMADLibraryPtr();									// Get MADDriver structure pointer.
+PPEXPORT MADLibrary* MADGetMADLibraryPtr();									// Get MADDriver structure pointer.
 
-OSErr	MADInitLibrary( char *PlugsFolderName, Boolean sysMemory, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
+PPEXPORT OSErr	MADInitLibrary( char *PlugsFolderName, Boolean sysMemory, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
 
-OSErr	MADDisposeLibrary( MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
+PPEXPORT OSErr	MADDisposeLibrary( MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
-void	MADGetBestDriver( MADDriverSettings	*DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
-OSErr	MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
-OSErr	MADDisposeDriver( MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
+PPEXPORT void	MADGetBestDriver( MADDriverSettings	*DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
+PPEXPORT OSErr	MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
+PPEXPORT OSErr	MADDisposeDriver( MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
 
-OSErr	MADChangeDriverSettings( MADDriverSettings	*DriverInitParam, MADDriverRec** returnDriver);
+PPEXPORT OSErr	MADChangeDriverSettings( MADDriverSettings	*DriverInitParam, MADDriverRec** returnDriver);
 
-OSErr	MADStartDriver( MADDriverRec *MDriver);										// NEW - Activate the sound generating procedure (interruption)
-OSErr	MADStopDriver( MADDriverRec *MDriver);										// NEW - DESActivate the sound generating procedure (interruption)
+PPEXPORT OSErr	MADStartDriver( MADDriverRec *MDriver);										// NEW - Activate the sound generating procedure (interruption)
+PPEXPORT OSErr	MADStopDriver( MADDriverRec *MDriver);										// NEW - DESActivate the sound generating procedure (interruption)
 
-OSErr	MADPlayMusic( MADDriverRec *MDriver);										// NEW - Read and play current music in memory - Call MADStartInterruption BEFORE
-OSErr	MADStopMusic( MADDriverRec *MDriver);										// NEW - Stop reading current music in memory, Use MADCleanDriver to stop sounds
-void	MADCleanDriver( MADDriverRec *intDriver);									// Clean the driver : stop playing sounds
+PPEXPORT OSErr	MADPlayMusic( MADDriverRec *MDriver);										// NEW - Read and play current music in memory - Call MADStartInterruption BEFORE
+PPEXPORT OSErr	MADStopMusic( MADDriverRec *MDriver);										// NEW - Stop reading current music in memory, Use MADCleanDriver to stop sounds
+PPEXPORT void	MADCleanDriver( MADDriverRec *intDriver);									// Clean the driver : stop playing sounds
 
-OSErr	MADReset( MADDriverRec *MDriver);											// Reset the current music at the start position
-OSErr	MADGetMusicStatus( MADDriverRec *MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
-OSErr	MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus( 0, 100, 50) = go to the middle of the music
+PPEXPORT OSErr	MADReset( MADDriverRec *MDriver);											// Reset the current music at the start position
+PPEXPORT OSErr	MADGetMusicStatus( MADDriverRec *MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
+PPEXPORT OSErr	MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus( 0, 100, 50) = go to the middle of the music
 
-OSErr	MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned char*);
+PPEXPORT OSErr	MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned char*);
 
-OSErr	MADLoadMusicPtr( MADMusic **music, char *myPtr);								// MAD ONLY - Load a MAD Ptr into memory, you can free() your Ptr after this call
+PPEXPORT OSErr	MADLoadMusicPtr( MADMusic **music, char *myPtr);								// MAD ONLY - Load a MAD Ptr into memory, you can free() your Ptr after this call
 
-OSErr	MADLoadMusicFileCString( MADLibrary *, MADMusic **music, char *type, char *fName);			// Load a music file with plugs
+PPEXPORT OSErr	MADLoadMusicFileCString( MADLibrary *, MADMusic **music, char *type, char *fName);			// Load a music file with plugs
 #ifdef _MAC_H
-OSErr	MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef);
+PPEXPORT OSErr	MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef);
 #endif
 
-OSErr	MADMusicIdentifyCString( MADLibrary *, char *type, Ptr cName);			// Identify what kind of music format is cName file.
+PPEXPORT OSErr	MADMusicIdentifyCString( MADLibrary *, char *type, Ptr cName);			// Identify what kind of music format is cName file.
 
 #ifdef _MAC_H
-OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, OSType *type, CFURLRef URLRef); //Identify what kind of music format is URLRef file.
+PPEXPORT OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, OSType *type, CFURLRef URLRef); //Identify what kind of music format is URLRef file.
 #endif
 
 
-Boolean	MADPlugAvailable( MADLibrary *, char *type);								// Is plug 'type' available?
+PPEXPORT Boolean	MADPlugAvailable( MADLibrary *, char *type);								// Is plug 'type' available?
 
-OSErr	MADDisposeMusic( MADMusic **, MADDriverRec *MDriver);								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
+PPEXPORT OSErr	MADDisposeMusic( MADMusic **, MADDriverRec *MDriver);								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
 
-void	MADChangeTracks( MADDriverRec *MDriver, short);				// Change current tracks number of the music driver
-Cmd*	GetMADCommand(	short		position,						// Extract a Command from a PatData structure
-						short		channel,
-						PatData*	aPatData);
+PPEXPORT void	MADChangeTracks( MADDriverRec *MDriver, short);				// Change current tracks number of the music driver
+PPEXPORT Cmd*	GetMADCommand(	short		position,						// Extract a Command from a PatData structure
+								short		channel,
+								PatData*	aPatData);
 
-OSErr	MADPlaySoundData(	MADDriverRec	*MDriver,
-							char			*soundPtr,				// Sound Pointer to data
-							size_t			size,					// Sound size in bytes
-							SInt32			channel,				// channel ID on which to play sound
-							SInt32			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
-							SInt32			amplitude,				// 8 or 16 bits
-							size_t			loopBeg,				// loop beginning
-							size_t			loopSize,				// loop size in bytes
-							unsigned int	rate,					// sample rate of the sound data, by ex: rate22khz
-							Boolean			stereo);				// sample is in stereo or in mono?
+PPEXPORT OSErr	MADPlaySoundData(	MADDriverRec	*MDriver,
+									char			*soundPtr,				// Sound Pointer to data
+									size_t			size,					// Sound size in bytes
+									SInt32			channel,				// channel ID on which to play sound
+									SInt32			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
+									SInt32			amplitude,				// 8 or 16 bits
+									size_t			loopBeg,				// loop beginning
+									size_t			loopSize,				// loop size in bytes
+									unsigned int	rate,					// sample rate of the sound data, by ex: rate22khz
+									Boolean			stereo);				// sample is in stereo or in mono?
 							
 #if 0
 OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
@@ -593,8 +593,8 @@ OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
 							Boolean			stereo);				// sample is in stereo or in mono?
 #endif
 
-Boolean MADWasReading(MADDriverRec *driver);
-void MADSetReading(MADDriverRec *driver, Boolean toSet);
+PPEXPORT Boolean MADWasReading(MADDriverRec *driver);
+PPEXPORT void MADSetReading(MADDriverRec *driver, Boolean toSet);
 
 #ifdef __cplusplus
 }

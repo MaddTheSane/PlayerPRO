@@ -25,6 +25,7 @@
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #define EXP extern __attribute__((visibility("default")))
+#define PPEXPORT EXP
 #endif
 
 #if !defined(__BIG_ENDIAN__) && defined(WORDS_BIGENDIAN)
@@ -47,7 +48,7 @@
 #endif
 
 #ifdef LINUX
-#define __UNIX__
+#define __UNIX__ 1
 #endif
 
 #endif
@@ -57,6 +58,11 @@
 
 #ifdef WIN32
 #define EXP __declspec(dllexport)
+#ifdef BUILDINGPPRO
+#define PPEXPORT __declspec(dllexport)
+#else
+#define PPEXPORT __declspec(dllimport)
+#endif
 #endif
 
 #if !defined(WIN32)

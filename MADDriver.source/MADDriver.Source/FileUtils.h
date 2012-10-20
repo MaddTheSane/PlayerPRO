@@ -44,31 +44,31 @@ extern "C" {
 #include <string.h>
 typedef FILE*		UNFILE;
 	
-EXP UNFILE iFileOpen( Ptr name);
-EXP void iFileCreate(Ptr path, OSType type);
+PPEXPORT UNFILE iFileOpen( Ptr name);
+PPEXPORT void iFileCreate(Ptr path, OSType type);
 
-EXP long iGetEOF( UNFILE iFileRefI);
-EXP OSErr iRead( long size, Ptr dest, UNFILE iFileRefI);
-EXP OSErr iWrite( long size, Ptr dest, UNFILE iFileRefI);
-EXP OSErr iSeekCur( long size, UNFILE iFileRefI);
+PPEXPORT long iGetEOF( UNFILE iFileRefI);
+PPEXPORT OSErr iRead( long size, Ptr dest, UNFILE iFileRefI);
+PPEXPORT OSErr iWrite( long size, Ptr dest, UNFILE iFileRefI);
+PPEXPORT OSErr iSeekCur( long size, UNFILE iFileRefI);
 
-EXP void iClose( UNFILE iFileRefI);
+PPEXPORT void iClose( UNFILE iFileRefI);
 
-EXP char* MADstrcpy( char*, const char*) DEPRECATED_ATTRIBUTE;
-EXP int MADstrcmp( const char *dst, const char* src) DEPRECATED_ATTRIBUTE;
+PPEXPORT char* MADstrcpy( char*, const char*) DEPRECATED_ATTRIBUTE;
+PPEXPORT int MADstrcmp( const char *dst, const char* src) DEPRECATED_ATTRIBUTE;
 
 	
-EXP OSType Ptr2OSType( Ptr str);
-EXP void OSType2Ptr( OSType type, Ptr str);
+PPEXPORT OSType Ptr2OSType( Ptr str);
+PPEXPORT void OSType2Ptr( OSType type, Ptr str);
 
 
 ////////////////////////////////////////////////////////////
 
 #ifdef NOINLINE
-EXP void PPLE32( void *msg_buf);
-EXP void PPLE16( void *msg_buf);
-EXP void PPBE32( void *msg_buf);
-EXP void PPBE16( void *msg_buf);
+PPEXPORT void PPLE32( void *msg_buf);
+PPEXPORT void PPLE16( void *msg_buf);
+PPEXPORT void PPBE32( void *msg_buf);
+PPEXPORT void PPBE16( void *msg_buf);
 #else
 
 static inline void MADByteSwap32(void *msg_buf)
