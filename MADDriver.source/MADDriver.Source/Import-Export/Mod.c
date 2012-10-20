@@ -142,7 +142,7 @@ static void AnalyseSignatureMOD( size_t EOFo, OSType temp, short *maxInstru, SIn
 			
 			if( EOFo != -1)
 			{
-				long 		PatMax = 0;
+				SInt32 		PatMax = 0;
 				MODDef		*MODInt;
 				
 				MODInt = (MODDef*) ( (Ptr) aMOD - (Ptr) 0x1E0);
@@ -230,7 +230,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	//	if( MODInt->numPointers > 64) MODInt->numPointers = 64;
 	//	for(i=64; i<128; i++) MODInt->oPointers[i] = 0;
 		
-		OffSetToSample = (long) 0x258 + PatMax * MPatSize;
+		OffSetToSample = (SInt32) 0x258 + PatMax * MPatSize;
 	}
 	else									// Mods format with 32 instruments
 	{
@@ -247,18 +247,18 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 		}
 		PatMax++;
 		
-		OffSetToSample = (long) 0x43c + PatMax * MPatSize;
+		OffSetToSample = (SInt32) 0x43c + PatMax * MPatSize;
 	}
 	
 	for( i = 0; i < maxInstru ; i++)
 	{
-		theInstrument[ i] = (Ptr) ((long) theMOD + (long) OffSetToSample);
+		theInstrument[ i] = (Ptr) ((SInt32) theMOD + (SInt32) OffSetToSample);
 		
 		PPBE16( &theMOD->fid[ i].numWords);
 		PPBE16( &theMOD->fid[ i].loopWord);
 		PPBE16( &theMOD->fid[ i].loopWords);
 		
-		sndSize = ((long) theMOD->fid[i].numWords) * 2L;
+		sndSize = ((SInt32) theMOD->fid[i].numWords) * 2L;
 		
 		if( theInstrument[i] + sndSize > MaxPtr)
 		{
@@ -267,23 +267,23 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 			
 			if( theMOD->fid[i].numWords < 0) theMOD->fid[i].numWords = 0;
 					
-			sndSize = ((long) theMOD->fid[i].numWords) * 2L;
+			sndSize = ((SInt32) theMOD->fid[i].numWords) * 2L;
 		}
 		
 		OffSetToSample += sndSize;
 		
 		if( theMOD->fid[i].loopWords > 2 && sndSize > 0)
 		{
-			if( (long) theMOD->fid[i].loopWord +
-				(long) theMOD->fid[i].loopWords > 
-				(long) theMOD->fid[i].numWords)
+			if( (SInt32) theMOD->fid[i].loopWord +
+				(SInt32) theMOD->fid[i].loopWords > 
+				(SInt32) theMOD->fid[i].numWords)
 			{
-				theMOD->fid[ i].loopWords =	(long) theMOD->fid[i].numWords -
-											(long) theMOD->fid[i].loopWord;
+				theMOD->fid[ i].loopWords =	(SInt32) theMOD->fid[i].numWords -
+											(SInt32) theMOD->fid[i].loopWord;
 		
-				if( (long) theMOD->fid[i].loopWord +
-				(long) theMOD->fid[i].loopWords > 
-				(long) theMOD->fid[i].numWords)
+				if( (SInt32) theMOD->fid[i].loopWord +
+				(SInt32) theMOD->fid[i].loopWords > 
+				(SInt32) theMOD->fid[i].numWords)
 				{
 					theMOD->fid[i].loopWord = 0;
 					theMOD->fid[i].loopWords = 0;

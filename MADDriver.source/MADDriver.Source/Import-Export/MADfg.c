@@ -87,7 +87,7 @@ struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, sho
 			case 0x00:
 				srcPtr ++;
 				
-				*((long*)myCmd) = 0;
+				*((SInt32*)myCmd) = 0;
 			break;
 			
 			default:
@@ -152,7 +152,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 	//OSErr			theErr = noErr;
 	Boolean			MADConvert = false;
 	//Ptr				tempPtr = NULL;
-	long			finetune[16] = 
+	SInt32			finetune[16] =
 				{
 					8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 					7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
@@ -377,9 +377,9 @@ OSErr TestoldMADFile( Ptr AlienFile)
 OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 {
 	oldMADSpec	*myMOD = ( oldMADSpec*) AlienFile;
-	long		PatternSize;
+	//long		PatternSize;
 	short		i;
-	short		tracksNo;
+	//short		tracksNo;
 	
 	/*** Signature ***/
 	
@@ -413,7 +413,7 @@ OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	for( i = 0, info->totalInstruments = 0; i < MAXINSTRU ; i++)
 	{
-		long insSizeSwap = myMOD->fid[ i].insSize;
+		SInt32 insSizeSwap = myMOD->fid[ i].insSize;
 		PPBE32(&insSizeSwap);
 		if( insSizeSwap > 5) info->totalInstruments++;
 	}

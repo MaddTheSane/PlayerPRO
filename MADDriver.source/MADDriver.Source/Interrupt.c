@@ -800,7 +800,7 @@ SInt32 getlogperiod(short note, SInt32 fine, MADDriverRec *intDriver)
 //	return(Interpolate(fine>>4,0,15,p1,p2)>>o);
 }
 
-long GetOldPeriod( short note, SInt32 c2spd, MADDriverRec *intDriver)
+SInt32 GetOldPeriod( short note, SInt32 c2spd, MADDriverRec *intDriver)
 {
 	if( intDriver->XMLinear)
 	{

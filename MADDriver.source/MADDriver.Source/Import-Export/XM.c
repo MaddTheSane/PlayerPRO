@@ -592,7 +592,7 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 static OSErr XM_Load( Ptr	theXM, size_t XMSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	int			i;
-	long		inOutCount, x;
+	SInt32		inOutCount, x;
 	OSErr		iErr = noErr;
 
 	theXMRead = theXM;
@@ -692,11 +692,11 @@ static OSErr XM_Load( Ptr	theXM, size_t XMSize, MADMusic *theMAD, MADDriverSetti
 
 //This Function isn't used right now. #if 0'ing out
 #if 0
-static long ConvertSampleC4SPDXM( Ptr src, long srcSize, short amp, long srcC4SPD, Ptr dst, long dstC4SPD)
+static SInt32 ConvertSampleC4SPDXM( Ptr src, size_t srcSize, short amp, SInt32 srcC4SPD, Ptr dst, SInt32 dstC4SPD)
 {
 	short	*src16 = (short*) src, *dst16 = (short*) dst;
 	Ptr		src8 = src, dst8 = dst;
-	long	x;
+	SInt32	x;
 	
 	if( amp == 8)
 	{
@@ -717,7 +717,7 @@ static long ConvertSampleC4SPDXM( Ptr src, long srcSize, short amp, long srcC4SP
 }
 #endif
 
-static long XMGetPeriod( short note, long c2spd)
+static long XMGetPeriod( short note, SInt32 c2spd)
 {
 	UInt32 	period, n,o, mytab[ 12] = {		1712 * 16, 1616 * 16, 1524 * 16, 1440 * 16, 1356 * 16, 1280 * 16,
 													1208 * 16, 1140 * 16, 1076 * 16, 1016 * 16, 960 * 16, 907 * 16 };
@@ -1044,7 +1044,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 		{
 			sData	*curData = theMAD->sample[ t*MAXSAMPLE + u];
 			Ptr		theXMReadCopy = theXMRead;
-			long	curSize;
+			SInt32	curSize;
 			
 			WRITEXMFILE( curData->data, curData->size);
 			curSize = curData->size;
@@ -1055,7 +1055,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 				{
 					for( x = 0 ; x < curSize; x+=2)
 					{
-						theXMReadCopy[ x / 2] = ((long) theXMReadCopy[ x] + (long) theXMReadCopy[ x + 1]) / 2L;
+						theXMReadCopy[ x / 2] = ((SInt32) theXMReadCopy[ x] + (SInt32) theXMReadCopy[ x + 1]) / 2L;
 					}
 				}
 				else
@@ -1064,7 +1064,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 					
 					for( x = 0 ; x < curSize/2; x+=2)
 					{
-						short16out[ x / 2] = ((long) short16in[ x] + (long) short16in[ x + 1]) / 2L;
+						short16out[ x / 2] = ((SInt32) short16in[ x] + (SInt32) short16in[ x + 1]) / 2L;
 					}
 				}
 				

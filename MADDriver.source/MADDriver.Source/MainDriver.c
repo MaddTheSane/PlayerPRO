@@ -34,12 +34,6 @@
 extern void NSLog(CFStringRef format, ...);
 #endif
 
-#ifdef _MIDIHARDWARE_
-#ifdef __MACH__
-#include <CoreMIDI/CoreMIDI.h>
-#endif
-#endif
-
 void debugger( Ptr a) DEPRECATED_ATTRIBUTE;
 //long MYstrlen( Ptr cStr) DEPRECATED_ATTRIBUTE;
 void MYP2CStr( unsigned char *cStr) DEPRECATED_ATTRIBUTE;
@@ -183,7 +177,7 @@ void WriteMADKFile( FSSpec *newFile, MADMusic	*music)
 
 size_t MADGetMusicSize( MADMusic	*music)
 {
-	short i, x;
+	int i, x;
 	size_t fileSize;
 	
 	if( music->header == NULL) return 0;
@@ -284,7 +278,7 @@ void ConvertTo64Rows( MADMusic *music)
 		}
 		else if( music->partition[ i]->header.size > 64)
 		{
-			long 		patsize = 0;
+			SInt32 		patsize = 0;
 			PatData*	srcPat = music->partition[ i];
 			
 			while( patsize < srcPat->header.size)
@@ -522,7 +516,6 @@ void MADGetBestDriver( MADDriverSettings	*Init)
 	Init->ReverbStrength	= 20;
 	Init->oversampling		= 1;
 	Init->driverMode		= CoreAudioDriver;
-	
 #else
 #endif
 }
@@ -595,6 +588,8 @@ OSErr MADCreateDriverBuffer( MADDriverRec *intDriver)
 	switch( intDriver->DriverSettings.outPutBits)
 	{
 		case 16:									BufSize *= 2;		break;
+		case 20:									//This is actually 2.5 more than 8, but I don't want to round
+		case 24:									BufSize *= 3;		break;
 	}
 	
 	intDriver->curDrawPtr = 0;
@@ -1687,7 +1682,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 		return MADNeedMemory;
 	}
 	
-	inOutCount = sizeof( InstrData) * (long) MDriver->header->numInstru;
+	inOutCount = sizeof( InstrData) * (SInt32) MDriver->header->numInstru;
 	switch( InPutType)
 	{			
 		case MADFileType:
@@ -2615,7 +2610,7 @@ OSErr MADPlaySoundDataSYNC( MADDriverRec *MDriver, char *soundPtr, long size, lo
 }
 #endif
 
-OSErr MADPlaySoundData( MADDriverRec *MDriver, char *soundPtr, size_t size, SInt32 channel, SInt32 note, SInt32 amplitude, size_t loopBeg, size_t loopSize, double rate, Boolean stereo)
+OSErr MADPlaySoundData( MADDriverRec *MDriver, char *soundPtr, size_t size, SInt32 channel, SInt32 note, SInt32 amplitude, size_t loopBeg, size_t loopSize, unsigned int rate, Boolean stereo)
 {
 	Channel *curVoice;
 	

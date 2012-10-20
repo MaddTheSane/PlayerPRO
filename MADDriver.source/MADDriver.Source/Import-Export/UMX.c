@@ -551,7 +551,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 	{
 		if( theMAD->fid[ i].numSamples > 0)
 		{
-			long dstSize;
+			SInt32 dstSize;
 			
 			theInstrument[ i] = theMAD->sample[ i*MAXSAMPLE + 0]->data;
 			
@@ -650,7 +650,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 	
 	InstruSize = 0;
 	
-	OffSetToSample = (long) 0x43c + theMAD->header->numPat * sizeof( struct MODCom) * 64L * theMAD->header->numChn;
+	OffSetToSample = (SInt32) 0x43c + theMAD->header->numPat * sizeof( struct MODCom) * 64L * theMAD->header->numChn;
 	
 	for(i=0; i<maxInstru; i++)
 	{
@@ -658,7 +658,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 		
 		if( theMAD->fid[ i].numSamples > 0)
 		{
-			destPtr = (Ptr) ((long) theMOD + (long) OffSetToSample + (long) InstruSize);
+			destPtr = (Ptr) ((SInt32) theMOD + (SInt32) OffSetToSample + (SInt32) InstruSize);
 			
 			if( curData->c2spd > 8757 || curData->c2spd < 7895)
 			{
@@ -674,7 +674,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 				{
 					Convert16to8(	destPtr,
 									destPtr, 
-									(long) (theMOD->fid[i].numWords) * 2L);
+									(SInt32) (theMOD->fid[i].numWords) * 2L);
 					
 					theMOD->fid[i].loopWord /=2;
 					theMOD->fid[i].loopWords /=2;
@@ -685,7 +685,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 				{
 					for( x = 0 ; x < (theMOD->fid[ i].numWords) * 2L; x+=2)
 					{
-						destPtr[ x / 2] = ((long) destPtr[ x] + (long) destPtr[ x + 1]) / 2L;
+						destPtr[ x / 2] = ((SInt32) destPtr[ x] + (SInt32) destPtr[ x + 1]) / 2L;
 					}
 					
 					theMOD->fid[i].loopWord /=2;
@@ -713,7 +713,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 		{
 			for(z=0; z < theMAD->header->numChn; z++)
 			{
-				short		note;
+				//short		note;
 				
 				if( x < theMAD->partition[ i]->header.size)
 				{

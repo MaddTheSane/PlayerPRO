@@ -167,7 +167,6 @@ void	RemoveMODVBL(MADDriverRec *MDriver);
 void	MODRelance(void);
 void	Play(void);
 void MADPurgeTrack( MADDriverRec *intDriver);
-OSErr	InitDBSoundManager( MADDriverRec *intDriver, long);
 EXP Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
 void	ChangeSpeed( void);
 void 	ClearFrequence(void);
@@ -181,7 +180,7 @@ Ptr 	DoMAC3Compress( Ptr sound, long *InOutSize);
 void 	DMAIntInstall( UInt32 refCon, Ptr handlerAddr, UInt32 vectorBit);
 void 	DMAIntRemove( UInt32 vectorBit);
 void 	GenerateSound( MADDriverRec *intDriver);
-long	GetOldPeriod( short note, SInt32 c2spd, MADDriverRec *intDriver);
+SInt32	GetOldPeriod( short note, SInt32 c2spd, MADDriverRec *intDriver);
 OSErr MADResetInstrument( InstrData		*curIns);
 void MADCheckSpeed( MADMusic *MDriver, MADDriverRec *intDriver);
 OSErr AddSoundToMAD(	Ptr				theSound,

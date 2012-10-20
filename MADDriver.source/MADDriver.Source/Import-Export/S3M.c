@@ -1024,7 +1024,7 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettin
 		if( s3minfo.parappat[ i] > 0)
 		{
 			theS3MCopy = (Byte*) theS3M;
-			theS3MCopy += ( (long) s3minfo.parappat[i] )*16L;
+			theS3MCopy += ( (SInt32) s3minfo.parappat[i] )*16;
 			theS3MCopy++;
 			theS3MCopy++;
 			

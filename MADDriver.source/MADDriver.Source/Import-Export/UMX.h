@@ -51,17 +51,16 @@ struct FileInstrDataz
 	unsigned short loopWords;
 };
 
-struct MODDef
+typedef struct MODDef
 {
 	char NameSignature[ 20];
 	struct FileInstrDataz fid[ 31];
 	Byte numPointers;
 	Byte maxPointers;
 	Byte oPointers[ MAXPTRS];
-	UInt32 longFmtSignature;
+	OSType longFmtSignature;
 	struct MODPat patterns[];
-};
-typedef struct MODDef MODDef;
+}MODDef;
 
 #if PRAGMA_STRUCT_ALIGN
 #pragma options align=reset

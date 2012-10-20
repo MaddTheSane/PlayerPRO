@@ -569,7 +569,7 @@ Cmd*	GetMADCommand(	short		position,						// Extract a Command from a PatData st
 						short		channel,
 						PatData*	aPatData);
 
-OSErr	MADPlaySoundData(	MADDriverRec *MDriver,
+OSErr	MADPlaySoundData(	MADDriverRec	*MDriver,
 							char			*soundPtr,				// Sound Pointer to data
 							size_t			size,					// Sound size in bytes
 							SInt32			channel,				// channel ID on which to play sound
@@ -577,7 +577,7 @@ OSErr	MADPlaySoundData(	MADDriverRec *MDriver,
 							SInt32			amplitude,				// 8 or 16 bits
 							size_t			loopBeg,				// loop beginning
 							size_t			loopSize,				// loop size in bytes
-							double			rate,					// sample rate of the sound data, by ex: rate22khz
+							unsigned int	rate,					// sample rate of the sound data, by ex: rate22khz
 							Boolean			stereo);				// sample is in stereo or in mono?
 							
 #if 0
