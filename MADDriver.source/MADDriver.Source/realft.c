@@ -226,8 +226,9 @@ void MADCallFFT( sData *SData, double *filter, MADDriverRec *intDriver, Boolean 
 void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
 	SInt32	i, y, powersize;
-	SInt32	*shiftAr;
-	double	pente, axe, *fDataCopy2, *fDataCopy = intDriver->fData;
+	SInt32	*shiftAr = NULL;
+	double	pente, axe, *fDataCopy2 = NULL, *fDataCopy = intDriver->fData;
+	Boolean didInitFData = 0;
 	
 	if( nochan == 2)	// STEREO
 	{
@@ -240,6 +241,7 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 			}while( powersize < size/2);
 			
 			fDataCopy = (double*) malloc( sizeof( double) * (powersize+2));
+			didInitFData = 1;
 		}
 		else powersize = EQPACKET*2;
 	}
@@ -254,6 +256,7 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 			}while( powersize < size);
 			
 			fDataCopy = (double*) malloc( sizeof( double) * (powersize+2));
+			didInitFData = 1;
 		}
 		else powersize = EQPACKET*2;
 	}
@@ -261,13 +264,30 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 	if( shift)
 	{
 		fDataCopy2 = (double*) malloc( sizeof( double) * (powersize+2));
-		if( fDataCopy2 == NULL) return;
+		if( fDataCopy2 == NULL)
+		{
+			if (didInitFData && fDataCopy) {
+				free(fDataCopy);
+			}
+			return;
+		}
 		
 		shiftAr = (SInt32*) calloc( sizeof( SInt32) * (powersize+2), 1);
-		if( shiftAr == NULL) return;
+		if( shiftAr == NULL) {
+			if (didInitFData && fDataCopy) {
+				free(fDataCopy);
+			}
+			free(fDataCopy2);
+			return;
+		}
 	}
 	
-	if( fDataCopy == NULL) return;
+	if( fDataCopy == NULL)
+	{
+		if(shiftAr) free(shiftAr);
+		if(fDataCopy2) free(fDataCopy2);
+		return;
+	}
 	
 	for( y = 0; y < nochan; y++)
 	{
@@ -418,8 +438,9 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 
 void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
-	SInt32	i, y, powersize, *shiftAr;
-	double	pente, axe, *fDataCopy2, *fDataCopy = intDriver->fData;
+	SInt32	i, y, powersize, *shiftAr = NULL;
+	double	pente, axe, *fDataCopy2 = NULL, *fDataCopy = intDriver->fData;
+	Boolean didInitFData = 0;
 	
 	size /= 2;
 	
@@ -434,8 +455,9 @@ void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver,
 			}while( powersize < size/2);
 			
 			fDataCopy = (double*) malloc( sizeof( double) * (powersize+2));
+			didInitFData = 1;
 		}
-		else powersize = EQPACKET*2;
+		else powersize = EQPACKET*2*2;
 	}
 	else
 	{
@@ -448,6 +470,7 @@ void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver,
 			}while( powersize < size);
 			
 			fDataCopy = (double*) malloc( sizeof( double) * (powersize+2));
+			didInitFData = 1;
 		}
 		else powersize = EQPACKET*2;
 	}
@@ -455,13 +478,29 @@ void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver,
 	if( shift)
 	{
 		fDataCopy2 = (double*) malloc( sizeof( double) * (powersize+2));
-		if( fDataCopy2 == NULL) return;
+		if( fDataCopy2 == NULL) {
+			if (didInitFData && fDataCopy) {
+				free(fDataCopy);
+			}
+			return;
+		}
 		
 		shiftAr = (SInt32*) calloc( sizeof( SInt32) * (powersize+2), 1);
-		if( shiftAr == NULL) return;
+		if( shiftAr == NULL) {
+			if (didInitFData && fDataCopy) {
+				free(fDataCopy);
+			}
+			free(fDataCopy2);
+			return;
+		}
 	}
 	
-	if( fDataCopy == NULL) return;
+	if( fDataCopy == NULL)
+	{
+		if(shiftAr) free(shiftAr);
+		if(fDataCopy2) free(fDataCopy2);
+		return;
+	}
 	
 	for( y = 0; y < nochan; y++)
 	{

@@ -14,8 +14,6 @@
 #include "FileUtils.h"
 #include "PPPrivate.h"
 
-#define BASERES 1000
-
 extern void NSLog(CFStringRef format, ...);
 
 #define MAXPLUG	40
@@ -261,7 +259,7 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 	
 	MADDriverSettings		driverSettings;
 	
-	iErr = (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);;
+	iErr = (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);
 	
 	return iErr;
 }

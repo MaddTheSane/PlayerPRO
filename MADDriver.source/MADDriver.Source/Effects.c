@@ -108,7 +108,7 @@ void CloseEffect( Channel *ch, short notUsed, MADDriverRec *intDriver)
 
 void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 {
-	SInt32 offset;
+	SInt32 offset = 0;
 	
 	switch( ch->cmd)
 	{

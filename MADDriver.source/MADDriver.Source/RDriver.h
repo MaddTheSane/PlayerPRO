@@ -559,6 +559,11 @@ PPEXPORT OSErr	MADMusicIdentifyCString( MADLibrary *, char *type, Ptr cName);			
 PPEXPORT OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, OSType *type, CFURLRef URLRef); //Identify what kind of music format is URLRef file.
 #endif
 
+PPEXPORT OSErr MADMusicInfoCString( MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec);
+	
+#ifdef _MAC_H
+PPEXPORT OSErr MADMusicInfoCFURL( MADLibrary *lib, OSType type, CFURLRef theRef, PPInfoRec *InfoRec);
+#endif
 
 PPEXPORT Boolean	MADPlugAvailable( MADLibrary *, char *type);								// Is plug 'type' available?
 

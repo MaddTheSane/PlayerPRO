@@ -407,7 +407,7 @@ void ProcessEnvelope( Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
 		}
 		else
 		{
-			float basePeriod;
+			float basePeriod = 0.0f;
 			sData	*curData;
 			
 			if( (curIns->volType & EFNOTE))
@@ -527,7 +527,7 @@ void ProcessPanning( Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
 		}
 		else
 		{
-			float basePeriod;
+			float basePeriod = 0.0f;
 			
 			ch->pannEnvActive = true;
 			
@@ -1185,7 +1185,7 @@ short FindAFreeChannel( MADDriverRec *intDriver)
 	short		i;
 	Channel *curVoice;
 	short		chanID = -1;
-	long		oldTick;
+	SInt32		oldTick = 1000000; //FIXME: largest SInt32 value here?
 	
 	for( i = 0; i < intDriver->MultiChanNo; i++)
 	{

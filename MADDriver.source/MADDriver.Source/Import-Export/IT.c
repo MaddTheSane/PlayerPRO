@@ -61,6 +61,7 @@ static inline Byte _mm_read_UBYTE( Ptr	*samplePtr)
 	return val;
 }
 
+//TODO: byteswapping?
 static inline unsigned short ReadUS( Ptr *samplePtr)
 {
 	unsigned short result=_mm_read_UBYTE(samplePtr);

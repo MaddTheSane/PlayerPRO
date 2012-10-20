@@ -589,7 +589,8 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	UNFILE	iFileRefI;
 	long	sndSize;
 		
-	MED_Init( init);
+	if(MED_Init( init) == 0)
+		return MADNeedMemory;
 
 	switch( order)
 	{

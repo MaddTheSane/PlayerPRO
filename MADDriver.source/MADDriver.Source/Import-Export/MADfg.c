@@ -92,6 +92,7 @@ struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, sho
 			
 			default:
 				//DebugStr("\pDecompress MAD1 failed.");
+				free(finalPtr);
 				return NULL;
 			break;
 		}

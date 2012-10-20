@@ -224,7 +224,7 @@ void ConvertTo64Rows( MADMusic *music)
 		
 		if( music->partition[ i]->header.size < 64)
 		{
-			Cmd		*srccmd, *dstcmd;
+			Cmd		*srccmd = NULL, *dstcmd = NULL;
 			SInt32	patsize;
 			
 			newPat = ( PatData*) calloc( newSize, 1);
@@ -682,9 +682,8 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	
 	if( DriverInitParam->outPutBits != 8 && DriverInitParam->outPutBits != 16) theErr = MADParametersErr;
 	
-	//TODO: change to doubles for the bitrate
-	if( DriverInitParam->outPutRate < 5000.0) theErr = MADParametersErr;
-	if( DriverInitParam->outPutRate > 48000.0) theErr = MADParametersErr;
+	if( DriverInitParam->outPutRate < 5000) theErr = MADParametersErr;
+	if( DriverInitParam->outPutRate > 48000) theErr = MADParametersErr;
 	
 	if( DriverInitParam->outPutMode != DeluxeStereoOutPut &&
 		DriverInitParam->outPutMode != PolyPhonic) theErr = MADParametersErr;
@@ -747,8 +746,8 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	theErr = MADStopDriver( MDriver);
 	if( theErr != noErr) return theErr;
 	
-	theErr = MADDisposeDriver( MDriver);
-	if( theErr != noErr) return theErr;
+	//theErr = MADDisposeDriver( MDriver);
+	//if( theErr != noErr) return theErr;
 	
 	theErr = MADCreateVibrato( MDriver);
 	if( theErr != noErr) return theErr;
@@ -1223,6 +1222,7 @@ OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFU
 	Boolean pathOK = CFURLGetFileSystemRepresentation(theRef, true, (unsigned char*)URLcString, pathLen);
 	OSType2Ptr(type, OS);
 	if (pathOK == false) {
+		free(URLcString);
 		return MADReadingErr;
 	}
 	OSErr theErr = MADLoadMusicFileCString(lib, music, OS, URLcString);
@@ -1289,6 +1289,7 @@ OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, OSType *type, CFURLRef URLRef)
 	Boolean pathOK = CFURLGetFileSystemRepresentation(URLRef, true, (unsigned char*)URLcString, pathLen);
 	OSType2Ptr(*type, OS);
 	if (pathOK == false) {
+		free(URLcString);
 		return MADReadingErr;
 	}
 	OSErr returnstatus = MADMusicIdentifyCString(lib, OS, URLcString);
@@ -1296,15 +1297,49 @@ OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, OSType *type, CFURLRef URLRef)
 	free(URLcString);
 	return returnstatus;
 }
+
+OSErr MADMusicInfoCFURL( MADLibrary *lib, OSType type, CFURLRef theRef, PPInfoRec *InfoRec)
+{
+	char *URLcString;
+	char OS[5];
+	CFIndex pathLen = getCFURLFilePathRepresentationLength(theRef, true);
+	URLcString = malloc(pathLen);
+	if (URLcString == NULL) {
+		return MADNeedMemory;
+	}
+	Boolean pathOK = CFURLGetFileSystemRepresentation(theRef, true, (unsigned char*)URLcString, pathLen);
+	OSType2Ptr(type, OS);
+	if (pathOK == false) {
+		free(URLcString);
+		return MADReadingErr;
+	}
+	OSErr status = MADMusicInfoCString(lib, OS, URLcString, InfoRec);
+	free(URLcString);
+	return status;
+}
 #endif
+
+OSErr MADMusicInfoCString( MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec)
+{
+	if (lib == NULL || cName == NULL || InfoRec == NULL || type == NULL) {
+		return MADParametersErr;
+	}
+	return PPInfoFile(lib, type, cName, InfoRec);
+}
 
 OSErr	MADMusicIdentifyCString( MADLibrary *lib, char *type, Ptr fName)
 {
+	if (lib == NULL || type == NULL || fName == NULL) {
+		return MADParametersErr;
+	}
 	return PPIdentifyFile( lib, type, fName);
 }
 
 OSErr MADLoadMusicFileCString( MADLibrary *lib, MADMusic **music, char *plugType, Ptr fName)
 {
+	if (lib == NULL || music == NULL || plugType == NULL || fName == NULL) {
+		return MADParametersErr;
+	}
 	OSErr		iErr;
 
 	if( !strcmp( "MADK", plugType)) iErr = MADLoadMADFileCString( music, fName);
@@ -1319,7 +1354,7 @@ OSErr MADLoadMusicFileCString( MADLibrary *lib, MADMusic **music, char *plugType
 OSErr MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV)
 {
 	short			i, x, y;
-	Cmd				*aCmd;
+	Cmd				*aCmd = NULL;
 
 	float			timeResult;
 	long			time;
@@ -2187,6 +2222,9 @@ OSErr MADKillInstrument( MADMusic *music, short ins)
 
 OSErr MADKillCmd( Cmd	*aCmd)
 {
+	if (aCmd == NULL) {
+		return MADParametersErr;
+	}
 	aCmd->cmd 	= 0;
 	aCmd->note 	= 0xFF;
 	aCmd->arg 	= 0;
@@ -2862,6 +2900,9 @@ OSErr MADPlaySndHandle( MADDriverRec *MDriver, Handle sound, long channel, long 
 Cmd* GetMADCommand( short PosX, short	TrackIdX, PatData*	tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;
+	if (tempMusicPat == NULL) {
+		return NULL;
+	}
 	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 	
 	return( &(tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
@@ -2869,11 +2910,17 @@ Cmd* GetMADCommand( short PosX, short	TrackIdX, PatData*	tempMusicPat)
 
 void MADDisposeVolumeTable( MADDriverRec *intDriver)
 {
+	if (intDriver == NULL) {
+		return MADParametersErr;
+	}
 	if( intDriver->DriverSettings.outPutMode == DeluxeStereoOutPut) MADKillOverShoot( intDriver);
 }
 
 OSErr MADCreateVolumeTable( MADDriverRec *intDriver)
 {
+	if (intDriver == NULL) {
+		return MADParametersErr;
+	}
 	SInt32		Tracks = intDriver->DriverSettings.numChn;
 	OSErr		theErr;
 
