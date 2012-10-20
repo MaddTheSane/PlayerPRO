@@ -59,7 +59,7 @@
 	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPLoadMusicAtMusicLoad];
 	
 	[defaultPrefs setObject:[NSNumber numberWithInt:16] forKey:PPSoundOutBits];
-	[defaultPrefs setObject:[NSNumber numberWithInt:44] forKey:PPSoundOutRate];
+	[defaultPrefs setObject:[NSNumber numberWithInt:44100] forKey:PPSoundOutRate];
 	[defaultPrefs setObject:[NSNumber numberWithInt:CoreAudioDriver] forKey:PPSoundDriver];
 	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPStereoDelayToggle];
 	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPReverbToggle];
@@ -105,7 +105,9 @@
 	MADCleanDriver(MADDriver);
 	MADDisposeMusic(&Music, MADDriver);
 
-	//MADLoadMusicCFURLFile(MADLib, &Music, fileType, (CFURLRef)musicToLoad);
+	OSType fileType = 0;
+	MADMusicIdentifyCFURL(MADLib, &fileType, (CFURLRef)musicToLoad);
+	MADLoadMusicCFURLFile(MADLib, &Music, fileType, (CFURLRef)musicToLoad);
 	
 	MADAttachDriverToMusic(MADDriver, Music, NULL);
 	MADPlayMusic(MADDriver);
