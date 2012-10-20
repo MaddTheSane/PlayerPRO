@@ -43,11 +43,6 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
-static inline void mystrcpy( Ptr a, BytePtr b)
-{
-	memmove( a, b + 1, b[ 0]);
-}
-
 static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	SixSixNine			*the669;
@@ -99,7 +94,7 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 	theMAD->header->MAD = 'MADK';
 	for(i=0; i<32; i++) theMAD->header->name[i] = the669->message[i];
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO 669 Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, "Converted by PlayerPRO 669 Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPointers = 128;	//the669->loopOrder;
 	theMAD->header->tempo = 125;
@@ -302,6 +297,22 @@ static OSErr Test669File( Ptr AlienFile)
 	if( the669->marker == 0x6669 || the669->marker == 0x6966) return   noErr;
 	else return  MADFileNotSupportedByThisPlug;
 }
+
+#ifndef _MAC_H
+
+extern "C" EXP OSErr FillPlug( PlugInfo *p);
+extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+
+EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+{
+	strcpy( p->type, 		"669");
+	strcpy( p->MenuName, 	"669 Files");
+	p->mode	=	'IMPL';
+	
+	return noErr;
+}
+#endif
+
 
 extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {

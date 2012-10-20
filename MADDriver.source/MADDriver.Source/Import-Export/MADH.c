@@ -96,11 +96,6 @@ static oldCmd* GetOldCommand( short PosX, short	TrackIdX, oldPatData*	tempMusicP
 	return( &(tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
-static inline void MADHmystrcpy( Ptr a, BytePtr b)
-{
-	memcpy(a, b + 1, b[0]);
-}
-
 static void MOToldsData(struct oldsData * s) {
 	PPBE32(&s->size);
 	PPBE32(&s->loopBeg);
@@ -183,7 +178,7 @@ static OSErr MADH2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 
 	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-	MADHmystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-H Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, "Converted by PlayerPRO MAD-H Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 
 /**** Patterns *******/
 
@@ -404,6 +399,22 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 
 	return noErr;
 }
+
+#ifndef _MAC_H
+
+extern "C" EXP OSErr FillPlug( PlugInfo *p);
+extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+
+EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+{
+	MADstrcpy( p->type, 		"MADH");
+	MADstrcpy( p->MenuName, 	"MADH Files");
+	p->mode	=	'IMPL';
+	
+	return noErr;
+}
+#endif
+
 
 /*****************/
 /* MAIN FUNCTION */

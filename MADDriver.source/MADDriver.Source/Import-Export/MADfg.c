@@ -117,11 +117,6 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
-static inline void mystrcpy( Ptr a, BytePtr b)
-{
-	memcpy(a, b + 1, b[0]);
-}
-
 static void MOToldPatHeader(struct oldPatHeader * p) {
 	PPBE32(&p->PatternSize);
 	PPBE32(&p->CompressionMode);
@@ -190,7 +185,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 	theMAD->header->speed			= 6;
 	theMAD->header->tempo			= 125;
 
-mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, "Converted by PlayerPRO MAD-F-G Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 
 
 	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
@@ -216,6 +211,7 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoi
 	/** Lecture du header + contenu de la partition **/
 	/*************************************************/
 		OSType CompMode = tempPatHeader.CompressionMode;
+		PPBE32(&CompMode);
 		if( CompMode == 'MAD1')
 		{
 			inOutCount = sizeof( struct MusicPattern) + tempPatHeader.PatBytes;
@@ -422,6 +418,22 @@ OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 
 	return noErr;
 }
+
+#ifndef _MAC_H
+
+extern "C" EXP OSErr FillPlug( PlugInfo *p);
+extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+
+EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+{
+	strcpy( p->type, 		"MADF");
+	strcpy( p->MenuName, 	"MAD-FG Files");
+	p->mode	=	'IMPL';
+	
+	return noErr;
+}
+#endif
+
 
 /*****************/
 /* MAIN FUNCTION */

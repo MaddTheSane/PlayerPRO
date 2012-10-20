@@ -418,7 +418,7 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	
 	theMAD->header->MAD = 'MADK';
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MED Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, "Converted by PlayerPRO MED Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->speed			= 	ms->tempo2;
 	theMAD->header->tempo			=	((SInt32)ms->deftempo * 125L) / 33L;
@@ -566,13 +566,28 @@ static OSErr ExtractMEDInfo( PPInfoRec *info, Ptr theMED)
 	return noErr;
 }
 
+#ifndef _MAC_H
+
+extern "C" EXP OSErr FillPlug( PlugInfo *p);
+extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+
+EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+{
+	MADstrcpy( p->type, 		"MED");
+	MADstrcpy( p->MenuName, 	"MED Files");
+	p->mode	=	'IMPL';
+	
+	return noErr;
+}
+#endif
+
+
 extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
-	short	vRefNum;
 	UNFILE	iFileRefI;
-	long	dirID, sndSize;
+	long	sndSize;
 		
 	MED_Init( init);
 

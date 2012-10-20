@@ -1241,7 +1241,7 @@ extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *Ma
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	MADstrcpy( p->type, 		".XM");
+	MADstrcpy( p->type, 		"XM");
 	MADstrcpy( p->MenuName, 	"XM Files");
 	p->mode	=	'EXIM';
 	

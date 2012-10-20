@@ -900,7 +900,7 @@ extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *Ma
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	MADstrcpy( p->type, 		".UMX");		// NEVER MORE THAN 4 CHARS !!!!!!!!
+	MADstrcpy( p->type, 		"UMX");		// NEVER MORE THAN 4 CHARS !!!!!!!!
 	MADstrcpy( p->MenuName, 	"UMX Files");
 	p->mode	=	'IMPL';
 	

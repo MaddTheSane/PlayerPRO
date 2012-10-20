@@ -1176,7 +1176,7 @@ extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *Ma
 
 EXP OSErr FillPlug( PlugInfo *p)
 {
-	MADstrcpy( p->type, ".S3M");
+	MADstrcpy( p->type, "S3M");
 	MADstrcpy( p->MenuName, "S3M Files");
 	p->mode	=	'EXIM';
 	

@@ -57,11 +57,6 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
-static inline void mystrcpy( Ptr a, BytePtr b)
-{
-	memcpy( a, b + 1, b[ 0]);
-}
-
 static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	UInt32 				i, PatMax, x, z, channel, Row;
@@ -115,7 +110,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<32; i++) theMAD->header->name[i] = ULTinfo.name[i];
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO ULT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, "Converted by PlayerPRO ULT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat			= ULTSuite.NOP;
 	theMAD->header->numPointers	= 1;					// CHANGE
@@ -306,6 +301,22 @@ static OSErr TestULTFile( Ptr AlienFile)
 	if( ultID == 'MAS_') return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
+
+#ifndef _MAC_H
+
+extern "C" EXP OSErr FillPlug( PlugInfo *p);
+extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+
+EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+{
+	strcpy( p->type, 		"ULT");
+	strcpy( p->MenuName, 	"ULT Files");
+	p->mode	=	'IMPL';
+	
+	return noErr;
+}
+#endif
+
 
 extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {

@@ -57,11 +57,6 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
-static inline void mystrcpy( Ptr a, BytePtr b)
-{
-	memcpy( a, b + 1, b[ 0]);
-}
-
 static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
 {
 	Str255	tStr;
@@ -361,7 +356,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<28; i++) theMAD->header->name[i] = ITinfo.name[i];
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO DMF Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, "Converted by PlayerPRO DMF Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat			= ITinfo.patNum;
 	theMAD->header->numPointers		= ITinfo.orderNum;
@@ -641,7 +636,7 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	//info->totalTracks	 = Tdecode16(  &ITinfo.insNum);
 	
-	mystrcpy( info->formatDescription, "\pDMF Plug");
+	strcpy( info->formatDescription, "DMF Plug");
 
 	return noErr;
 }
@@ -655,6 +650,22 @@ static OSErr TestITFile( Ptr AlienFile)
 	if( myID == 'IMPM') return noErr;
 	else return  MADFileNotSupportedByThisPlug;
 }
+
+#ifndef _MAC_H
+
+extern "C" EXP OSErr FillPlug( PlugInfo *p);
+extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+
+EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+{
+	strcpy( p->type, 		"DMF");
+	strcpy( p->MenuName, 	"DMF Files");
+	p->mode	=	'IMPL';
+	
+	return noErr;
+}
+#endif
+
 
 extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {

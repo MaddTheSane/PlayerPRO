@@ -24,11 +24,6 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include "AMF.h"
 
-static inline void mystrcpy( Ptr a, BytePtr b)
-{
-	memmove( a, b + 1, b[ 0]);
-}
-
 static Ptr			theAMFRead;
 
 #define READAMFFILE(dst, size)	{memmove( dst, theAMFRead, size);	theAMFRead += (long) size;}
@@ -67,9 +62,9 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 {
 	Byte			tempByte;
 	short			i, x, noIns, tempShort, trackCount, trckPtr, t;
-	SInt32			inOutCount, OffSetToSample = 0, z;
-	OSErr			theErr = noErr;
-	Ptr				tempPtr;
+	//SInt32			inOutCount, OffSetToSample = 0, z;
+	//OSErr			theErr = noErr;
+	//Ptr				tempPtr;
 	OSType			AMFType;
 	SInt32			finetune[16] = 
 	{
@@ -95,7 +90,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	theMAD->header = (MADSpec*) calloc( sizeof( MADSpec), 1);
 	if( theMAD->header == NULL) return MADNeedMemory;
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO AMF Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, "Converted by PlayerPRO AMF Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->MAD = 'MADK';
 	
@@ -317,9 +312,9 @@ static OSErr TestAMFFile( Ptr AlienFile)
 
 static OSErr ExtractAMFInfo( PPInfoRec *info, Ptr AlienFile)
 {
-	long		PatternSize;
-	short		i;
-	short		tracksNo;
+	//long		PatternSize;
+	//short		i;
+	//short		tracksNo;
 	
 	/*** Signature ***/
 	
@@ -348,6 +343,22 @@ static OSErr ExtractAMFInfo( PPInfoRec *info, Ptr AlienFile)
 
 	return noErr;
 }
+
+#ifndef _MAC_H
+
+extern "C" EXP OSErr FillPlug( PlugInfo *p);
+extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+
+EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+{
+	strcpy( p->type, 		"AMF");
+	strcpy( p->MenuName, 	"AMF Files");
+	p->mode	=	'IMPL';
+	
+	return noErr;
+}
+#endif
+
 
 /*****************/
 /* MAIN FUNCTION */

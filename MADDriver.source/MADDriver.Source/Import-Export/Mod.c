@@ -732,6 +732,9 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 				
 				//if( (Ptr) n > maxMOD) DebugStr("\pOut");
 				//if( (Ptr) n < (Ptr) theMOD) DebugStr("\pOut");
+				if( (Ptr) n > maxMOD) return NULL;
+				if( (Ptr) n < (Ptr) theMOD) return NULL;
+
 				
 				n->a = aCmd->ins & 0xF0;
 				n->c = (aCmd->ins & 0x0F)<<4;
@@ -878,7 +881,7 @@ static OSErr TestMODFile( Ptr AlienFile, long EOFo)
 	SInt32		PatternSize;
 	short		tracksNo;
 	
-	AnalyseSignatureMOD( EOFo, *((long*)(AlienFile + 0x438)), &maxInstru, &PatternSize, &tracksNo, (MODDef*) AlienFile);
+	AnalyseSignatureMOD( EOFo, *((SInt32*)(AlienFile + 0x438)), &maxInstru, &PatternSize, &tracksNo, (MODDef*) AlienFile);
 	
 	if( maxInstru == 0) return MADFileNotSupportedByThisPlug;
 	else return noErr;
@@ -891,7 +894,7 @@ extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *Ma
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	MADstrcpy( p->type, 		".MOD");		// NEVER MORE THAN 4 CHARS !!!!!!!!
+	MADstrcpy( p->type, 		"MOD");		// NEVER MORE THAN 4 CHARS !!!!!!!!
 	MADstrcpy( p->MenuName, 	"MOD Files");
 	p->mode	=	'EXIM';
 	

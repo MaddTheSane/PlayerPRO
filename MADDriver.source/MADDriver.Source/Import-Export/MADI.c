@@ -100,11 +100,6 @@ static oldCmd* GetOldCommand( short PosX, short	TrackIdX, oldPatData*	tempMusicP
 	return( &(tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
-static inline void MADHmystrcpy( Ptr a, BytePtr b)
-{
-	memcpy(a, b + 1, b[0]);
-}
-
 static void MOToldsData(struct oldsData * s) {
 	PPBE32(&s->size);
 	PPBE32(&s->loopBeg);
@@ -427,6 +422,22 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 
 	return noErr;
 }
+
+#ifndef _MAC_H
+
+extern "C" EXP OSErr FillPlug( PlugInfo *p);
+extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+
+EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+{
+	MADstrcpy( p->type, 		"MADI");
+	MADstrcpy( p->MenuName, 	"MADI Files");
+	p->mode	=	'IMPL';
+	
+	return noErr;
+}
+#endif
+
 
 /*****************/
 /* MAIN FUNCTION */

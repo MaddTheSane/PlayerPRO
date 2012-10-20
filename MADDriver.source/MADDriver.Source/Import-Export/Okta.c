@@ -54,12 +54,6 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
-
-static inline void mystrcpy( Ptr a, BytePtr b)
-{
-	memcpy( a, b + 1, b[ 0]);
-}
-
 /*
 short FoundNote( short Period)
 {
@@ -224,7 +218,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	theMAD->header->tempo 			= 125;
 	theMAD->header->speed 			= Okta->speed;
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO OKTA Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, "Converted by PlayerPRO OKTA Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	for( i = 0;  i < 128; i++) theMAD->header->oPointers[ i] = 0;
 	for( i = 0;  i < pbod_count; i++) theMAD->header->oPointers[ i] = Okta->patt[ i];
@@ -383,7 +377,7 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 	
 	/*** Internal name ***/
 	
-	mystrcpy( info->internalFileName, "\p");
+	strcpy( info->internalFileName, "");
 	
 	{
 	//OktaInstru			*samps, *s, instru[ 120];
@@ -447,6 +441,22 @@ static OSErr TestOKTAFile( Ptr AlienFile)
 	if( myOKTA == 'OKTA') return noErr;
 	else return  MADFileNotSupportedByThisPlug;
 }
+
+#ifndef _MAC_H
+
+extern "C" EXP OSErr FillPlug( PlugInfo *p);
+extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+
+EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+{
+	strcpy( p->type, 		"OKTA");
+	strcpy( p->MenuName, 	"OKTAmed Files");
+	p->mode	=	'IMPL';
+	
+	return noErr;
+}
+#endif
+
 
 extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {

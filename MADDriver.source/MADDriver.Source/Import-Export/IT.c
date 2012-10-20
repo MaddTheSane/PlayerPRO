@@ -283,10 +283,6 @@ static OSErr DecompressSample( short bits, Ptr reader, size_t length, Ptr destPt
 	return noErr;
 }
 
-static inline void mystrcpy( Ptr a, BytePtr b)
-{
-	memmove( a, b + 1, b[ 0]);
-}
 
 static Boolean ITcompMem( Ptr a, Ptr b, long s)
 {
@@ -639,7 +635,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<28; i++) theMAD->header->name[i] = ITinfo.name[i];
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO IT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, "Converted by PlayerPRO IT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat			= ITinfo.patNum;
 	theMAD->header->numPointers		= ITinfo.orderNum;
@@ -1333,7 +1329,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 
 static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 {
-	short			i;
+	//short			i;
 	ITForm			ITinfo;
 	/********************************/
 
@@ -1388,8 +1384,8 @@ extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *Ma
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	MADstrcpy( p->type, 		".IT");
-	MADstrcpy( p->MenuName, 	"IT Files");
+	strcpy( p->type, 		"IT");
+	strcpy( p->MenuName, 	"IT Files");
 	p->mode	=	'IMPL';
 	
 	return noErr;
