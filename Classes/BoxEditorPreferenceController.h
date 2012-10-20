@@ -10,6 +10,12 @@
 
 @interface BoxEditorPreferenceController : NSViewController {
 
+	IBOutlet NSButton *notesCheck;
+	IBOutlet NSButton *octaveCheck;
+	IBOutlet NSTextField *loopField;
+	IBOutlet NSTextField *offsetField;
+	IBOutlet NSButton *markersCheck;
 }
+- (IBAction)changeMarkerCheck:(id)sender;
 
 @end

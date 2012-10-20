@@ -88,7 +88,11 @@
 	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEPatternWrappingPartition];
 	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEDragAsPcmd];
 
-
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPBEMarkersEnabled];
+	[defaultPrefs setObject:[NSNumber numberWithInt:0] forKey:PPBEMarkersOffset];
+	[defaultPrefs setObject:[NSNumber numberWithInt:3] forKey:PPBEMarkersLoop];
+	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPBEOctaveMarkers];
+	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPBENotesProjection];
 
 	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultPrefs];

@@ -10,6 +10,7 @@
 extern NSString *PPListPreferencesDidChange;
 extern NSString *PPSoundPreferencesDidChange;
 extern NSString *PPDigitalEditorPrefrencesDidChange;
+extern NSString *PPBoxEditorPreferencesDidChange;
 
 extern NSString *PPRememberMusicList;
 extern NSString *PPLoadMusicAtListLoad;
@@ -47,3 +48,9 @@ extern NSString *PPDELineHeightNormal;
 extern NSString *PPDEMusicTraceOn;
 extern NSString *PPDEPatternWrappingPartition;
 extern NSString *PPDEDragAsPcmd;
+
+extern NSString *PPBEMarkersEnabled;
+extern NSString *PPBEMarkersOffset;
+extern NSString *PPBEMarkersLoop;
+extern NSString *PPBEOctaveMarkers;
+extern NSString *PPBENotesProjection;

@@ -49,6 +49,16 @@
 	return [musicList count];
 }
 
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+	NSTableCellView *view = [[NSTableCellView alloc] init];
+	NSTextField *field = view.textField;
+	[field setStringValue:[[musicList objectAtIndex:row] lastPathComponent]];
+	//[field setAllowsEditingTextAttributes:NO];
+	[field setEditable:NO];
+	return [view autorelease];
+}
+
 #pragma mark Archiving
 
 - (id)initWithCoder:(NSCoder *)decoder {
@@ -59,7 +69,7 @@
 		NSInteger i = 0;
 		musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
 		for (i = 0; i < [BookmarkArray count]; i++) {
-			[musicList insertObject:[NSURL URLByResolvingBookmarkData:[BookmarkArray objectAtIndex:i] options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:NULL error:nil ]  atIndex:i];
+			[musicList insertObject:[NSURL URLByResolvingBookmarkData:[BookmarkArray objectAtIndex:i] options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:NULL error:nil]  atIndex:i];
 		}
 	}
 	return self;

@@ -22,7 +22,20 @@
 
 -(void)awakeFromNib {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[notesCheck setState:[defaults boolForKey:PPBENotesProjection]];
+	[octaveCheck setState:[defaults boolForKey:PPBEOctaveMarkers]];
+	[markersCheck setState:[defaults boolForKey:PPBEMarkersEnabled]];
+	[loopField setIntegerValue:[defaults integerForKey:PPBEMarkersLoop]];
+	[offsetField setIntegerValue:[defaults integerForKey:PPBEMarkersOffset]];
+}
+
+- (IBAction)changeMarkerCheck:(id)sender {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setBool:[notesCheck state] forKey:PPBENotesProjection];
+	[defaults setBool:[octaveCheck state] forKey:PPBEOctaveMarkers];
+	[defaults setBool:[markersCheck state] forKey:PPBEMarkersEnabled];
 	
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPBoxEditorPreferencesDidChange object:self];
 }
 
 @end

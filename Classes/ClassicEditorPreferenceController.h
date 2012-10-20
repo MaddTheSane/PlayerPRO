@@ -10,6 +10,12 @@
 
 @interface ClassicEditorPreferenceController : NSViewController {
 
+	IBOutlet NSTextField *tempoUnitValue;
+	IBOutlet NSTextField *tempoNumberValue;
+	IBOutlet NSTextField *markersLoopValue;
+	IBOutlet NSTextField *markersOffsetValue;
+	IBOutlet NSButton *markersCheck;
+	IBOutlet NSButton *notesLengthCheck;
 }
 
 @end

@@ -11,6 +11,8 @@
 NSString *PPListPreferencesDidChange = @"Music List Preferences Changed";
 NSString *PPSoundPreferencesDidChange = @"Sound Preferences changed";
 NSString *PPDigitalEditorPrefrencesDidChange = @"Digital Editor Preferences changed";
+NSString *PPBoxEditorPreferencesDidChange = @"Box Editor Preferences changed";
+
 
 NSString *PPRememberMusicList = @"Remember Music List";
 NSString *PPLoadMusicAtListLoad = @"Load music when loading list";
@@ -48,3 +50,10 @@ NSString *PPDELineHeightNormal = @"Digital Editor Line Height Normal?";
 NSString *PPDEMusicTraceOn = @"Digital Editor Trace On?";
 NSString *PPDEPatternWrappingPartition = @"Digital Editor Pattern Wrapping Partition?";
 NSString *PPDEDragAsPcmd = @"Digital Editor Drag as Pcmd?";
+
+NSString *PPBEMarkersEnabled = @"Box Editor Markers On?";
+NSString *PPBEMarkersOffset = @"Box Editor Markers Offset";
+NSString *PPBEMarkersLoop = @"Box Editor Markers Loop";
+NSString *PPBEOctaveMarkers = @"Box Editor Octave Markers?";
+NSString *PPBENotesProjection = @"Box Editor Notes Projection?";
+
