@@ -58,8 +58,8 @@ OSErr CallImportPlug(	MADLibrary*				inMADDriver,
 						MADMusic				*theNewMAD,
 						PPInfoRec				*info)
 {
-OSErr				myErr;
-MADDriverSettings 	driverSettings;
+	OSErr				myErr;
+	MADDriverSettings 	driverSettings;
 
 	driverSettings.sysMemory = inMADDriver->sysMemory;
 	
@@ -197,10 +197,18 @@ Boolean LoadPlugLib( Ptr name, PlugInfo* plug)
 	if( !plug->hLibrary) return false;
 	
 	plug->IOPlug = (PLUGDLLFUNC) GetProcAddress( plug->hLibrary, "PPImpExpMain");
-	if( !plug->IOPlug) return false;
+	if( !plug->IOPlug)
+	{
+		FreeLibrary(plug->hLibrary);
+		return false;
+	}
 	
 	fpFuncAddress = (PLUGFILLDLLFUNC) GetProcAddress( plug->hLibrary, "FillPlug");
-	if( !fpFuncAddress) return false;
+	if( !fpFuncAddress)
+	{
+		FreeLibrary(plug->hLibrary);
+		return false;
+	}
 	
 	err = (*fpFuncAddress)( plug);
 	
