@@ -144,6 +144,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 			int i = 0;
 			for (i=0; i < inMADDriver->TotalPlug; i++) {
 				if (strcmp(FillPlug->type, inMADDriver->ThePlug[i].type)) {
+					NSLog(CFSTR("Plug-ins %@ and %@ are similar"), inMADDriver->ThePlug[i].file, tempBundle);
 					UInt32 prevVers = CFBundleGetVersionNumber(inMADDriver->ThePlug[i].file);
 					UInt32 otherVers = CFBundleGetVersionNumber(tempBundle);
 					if (prevVers < otherVers) {
@@ -160,11 +161,14 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 							inMADDriver->ThePlug[i].MenuName = newInfo.MenuName;
 							inMADDriver->ThePlug[i].mode = newInfo.mode;
 							inMADDriver->ThePlug[i].UTItypes = newInfo.UTItypes;
+							NSLog(CFSTR("Using %@ (Newer than previous)"), tempBundle);
 							return true;
 						} else {
-							return false;
+							NSLog(CFSTR("NOT using %@ (Newer than previous, could not initialize)"), tempBundle);
+							goto badplug;
 						}
 					} else {
+						NSLog(CFSTR("NOT using %@ (Not newer than previous)"), tempBundle);
 						return false;
 					}
 				}
@@ -176,7 +180,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 			inMADDriver->TotalPlug++;
 			return true;
 		} else {
-			return false;
+			goto badplug;
 		}
 	}
 badplug:
