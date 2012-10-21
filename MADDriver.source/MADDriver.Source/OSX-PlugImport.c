@@ -28,11 +28,11 @@ const CFStringRef kMadPlugUTITypesKey =		CFSTR("MADPlugUTITypes");
 const CFStringRef kMadPlugTypeKey =			CFSTR("MADPlugType");
 const CFStringRef kMadPlugModeKey =			CFSTR("MADPlugMode");
 
-static void MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
+static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
 	if ((inMADDriver->TotalPlug + 1) >= MAXPLUG) {
 		MyDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
-		return;
+		return false;
 	}
 	CFTypeID stringtype =	CFStringGetTypeID();
 	CFTypeID numbertype =	CFNumberGetTypeID();
@@ -41,23 +41,8 @@ static void MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 	short PlugNum = inMADDriver->TotalPlug;
 	PlugInfo *FillPlug = &(inMADDriver->ThePlug[PlugNum]);
 	{
-		//CFStringRef tStr;
 		CFTypeID InfoDictionaryType;
 		CFTypeRef OpaqueDictionaryType;
-		
-		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugMenuNameKey);
-		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
-		if (InfoDictionaryType == stringtype) {
-			FillPlug->MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
-		}
-		else goto badplug;
-		
-		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugAuthorNameKey);
-		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
-		if (InfoDictionaryType == stringtype) {
-			FillPlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
-		}
-		else goto badplug2;
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugTypeKey);
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
@@ -71,9 +56,28 @@ static void MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 				}else FillPlug->type[i] = tempstring[i];
 			}
 			FillPlug->type[4] = 0;
-			
 		}
-		else goto badplug3;
+		else if(InfoDictionaryType == numbertype)
+		{
+			OSType theplugType;
+			CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberSInt32Type, &theplugType);
+			OSType2Ptr(theplugType, FillPlug->type);
+		}
+		else goto badplug;
+
+		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugMenuNameKey);
+		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
+		if (InfoDictionaryType == stringtype) {
+			FillPlug->MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
+		}
+		else goto badplug;
+		
+		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugAuthorNameKey);
+		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
+		if (InfoDictionaryType == stringtype) {
+			FillPlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
+		}
+		else goto badplug2;
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugModeKey);
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
@@ -116,7 +120,7 @@ static void MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 	CFRetain(FillPlug->file);
 
 	inMADDriver->TotalPlug++;
-	return;
+	return true;
 	
 badplug3:
 	CFRelease(FillPlug->AuthorString);
@@ -124,7 +128,7 @@ badplug2:
 	CFRelease(FillPlug->MenuName);
 badplug:
 	NSLog(CFSTR("Error with plug-in %@"), tempBundle);
-	return;
+	return false;
 }
 
 #pragma mark Plug-in Locations
@@ -170,8 +174,10 @@ static inline CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(char *
 {
 	CFMutableArrayRef FoldLocs = CreateDefaultPluginFolderLocations();
 	CFURLRef custfolder = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (UInt8*)UserAddedPlace, strlen(UserAddedPlace), true);
-	CFArrayAppendValue(FoldLocs, custfolder);
-	CFRelease(custfolder); custfolder = NULL;
+	CFURLRef absFolder = CFURLCopyAbsoluteURL(custfolder);
+	CFRelease(custfolder);
+	CFArrayAppendValue(FoldLocs, absFolder);
+	CFRelease(absFolder);
 	return FoldLocs;
 }
 
@@ -449,7 +455,7 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 				if( xx > 4) xx = 4;
 				type = '    ';
 				memmove( inMADDriver->ThePlug[ i].type, &type, xx);
-				
+				PPBE32(&type);
 				return type;
 			}
 			x++;
