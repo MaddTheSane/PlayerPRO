@@ -99,7 +99,7 @@ void OSType2Ptr( OSType type, Ptr str)
 	PPBE32(&type);
 #endif
 	
-	memmove( str, &type, 4);
+	memcpy( str, &type, 4);
 	str[ 4] = 0;
 }
 
@@ -111,7 +111,7 @@ OSType Ptr2OSType( char* str)
 	i = strlen( str);
 	if( i > 4) i = 4;
 	type = '    ';
-	memmove( &type, str, i);
+	memcpy( &type, str, i);
 #ifdef __LITTLE_ENDIAN__
 	PPBE32(&type);
 #endif
