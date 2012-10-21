@@ -258,7 +258,7 @@ Boolean W95_Init( MADDriverRec *WinMADDriver)
 	
 	wf.wf.wFormatTag		=WAVE_FORMAT_PCM;
 	wf.wf.nChannels = 2;
-	wf.wf.nSamplesPerSec	= WinMADDriver->DriverSettings.outPutRate >> 16L;
+	wf.wf.nSamplesPerSec	= WinMADDriver->DriverSettings.outPutRate;
 	wf.wBitsPerSample		= WinMADDriver->DriverSettings.outPutBits;
 	wf.wf.nBlockAlign		= wf.wf.nChannels * (wf.wBitsPerSample/8);
 	wf.wf.nAvgBytesPerSec	= wf.wf.nSamplesPerSec * wf.wf.nBlockAlign;
