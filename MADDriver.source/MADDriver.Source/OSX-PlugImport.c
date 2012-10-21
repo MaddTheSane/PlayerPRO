@@ -28,6 +28,81 @@ const CFStringRef kMadPlugUTITypesKey =		CFSTR("MADPlugUTITypes");
 const CFStringRef kMadPlugTypeKey =			CFSTR("MADPlugType");
 const CFStringRef kMadPlugModeKey =			CFSTR("MADPlugMode");
 
+static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
+{
+	CFTypeID stringtype =	CFStringGetTypeID();
+	CFTypeID numbertype =	CFNumberGetTypeID();
+	CFTypeID arraytype =	CFArrayGetTypeID();
+
+	{
+		CFTypeID InfoDictionaryType;
+		CFTypeRef OpaqueDictionaryType;
+
+		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugMenuNameKey);
+		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
+		if (InfoDictionaryType == stringtype) {
+			thePlug->MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
+		}
+		else goto badplug;
+		
+		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugAuthorNameKey);
+		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
+		if (InfoDictionaryType == stringtype) {
+			thePlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
+		}
+		else goto badplug2;
+		
+		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugModeKey);
+		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
+		if (InfoDictionaryType == stringtype) {
+			const char * thecOSType = NULL;
+			thecOSType = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
+			
+			thePlug->mode = Ptr2OSType((char*)thecOSType);
+		}
+		else if(InfoDictionaryType == numbertype)
+		{
+			OSType theplugType;
+			CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberSInt32Type, &theplugType);
+			//PPBE32(&theplugType);
+			thePlug->mode = theplugType;
+		}
+		else goto badplug3;
+		
+		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugUTITypesKey);
+		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
+		if (InfoDictionaryType == arraytype) {
+			thePlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, (CFArrayRef)OpaqueDictionaryType);
+		}
+		else if(InfoDictionaryType == stringtype)
+		{
+			CFMutableArrayRef UTIMutableArray = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
+			CFStringRef utiName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)InfoDictionaryType);
+			CFArrayAppendValue(UTIMutableArray, utiName);
+			CFRelease(utiName);
+			thePlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, UTIMutableArray);
+			CFRelease(UTIMutableArray);
+		}
+		else goto badplug3;
+	}
+	
+	thePlug->IOPlug = CFBundleGetFunctionPointerForName(theBundle, CFSTR("PPImpExpMain"));
+	if(!thePlug->IOPlug)
+		goto badplug3;
+	thePlug->file = theBundle;
+	CFRetain(thePlug->file);
+	
+	return true;
+	
+badplug3:
+	CFRelease(thePlug->AuthorString);
+badplug2:
+	CFRelease(thePlug->MenuName);
+badplug:
+	return false;
+	
+}
+
 static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
 	if ((inMADDriver->TotalPlug + 1) >= MAXPLUG) {
@@ -36,7 +111,6 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 	}
 	CFTypeID stringtype =	CFStringGetTypeID();
 	CFTypeID numbertype =	CFNumberGetTypeID();
-	CFTypeID arraytype =	CFArrayGetTypeID();
 	
 	short PlugNum = inMADDriver->TotalPlug;
 	PlugInfo *FillPlug = &(inMADDriver->ThePlug[PlugNum]);
@@ -64,68 +138,47 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 			OSType2Ptr(theplugType, FillPlug->type);
 		}
 		else goto badplug;
-
-		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugMenuNameKey);
-		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
-		if (InfoDictionaryType == stringtype) {
-			FillPlug->MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
-		}
-		else goto badplug;
 		
-		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugAuthorNameKey);
-		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
-		if (InfoDictionaryType == stringtype) {
-			FillPlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
-		}
-		else goto badplug2;
-		
-		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugModeKey);
-		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
-		if (InfoDictionaryType == stringtype) {
-			const char * thecOSType = NULL;
-			thecOSType = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
-			
-			FillPlug->mode = Ptr2OSType((char*)thecOSType);
-		}
-		else if(InfoDictionaryType == numbertype)
 		{
-			OSType theplugType;
-			CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberSInt32Type, &theplugType);
-			//PPBE32(&theplugType);
-			FillPlug->mode = theplugType;
+			//Check to see if there's a plug-in that matches the type.
+			int i = 0;
+			for (i=0; i < inMADDriver->TotalPlug; i++) {
+				if (strcmp(FillPlug->type, inMADDriver->ThePlug[i].type)) {
+					UInt32 prevVers = CFBundleGetVersionNumber(inMADDriver->ThePlug[i].file);
+					UInt32 otherVers = CFBundleGetVersionNumber(tempBundle);
+					if (prevVers < otherVers) {
+						PlugInfo newInfo;
+						Boolean gotFilled = fillPlugFromBundle(tempBundle, &newInfo);
+						if (gotFilled) {
+							CFRelease(inMADDriver->ThePlug[i].AuthorString);
+							CFRelease(inMADDriver->ThePlug[i].file);
+							CFRelease(inMADDriver->ThePlug[i].MenuName);
+							CFRelease(inMADDriver->ThePlug[i].UTItypes);
+							inMADDriver->ThePlug[i].AuthorString = newInfo.AuthorString;
+							inMADDriver->ThePlug[i].file = newInfo.file;
+							inMADDriver->ThePlug[i].IOPlug = newInfo.IOPlug;
+							inMADDriver->ThePlug[i].MenuName = newInfo.MenuName;
+							inMADDriver->ThePlug[i].mode = newInfo.mode;
+							inMADDriver->ThePlug[i].UTItypes = newInfo.UTItypes;
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				}
+			}
 		}
-		else goto badplug3;
 		
-		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugUTITypesKey);
-		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
-		if (InfoDictionaryType == arraytype) {
-			FillPlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, (CFArrayRef)OpaqueDictionaryType);
+		Boolean filled = fillPlugFromBundle(tempBundle, FillPlug);
+		if (filled) {
+			inMADDriver->TotalPlug++;
+			return true;
+		} else {
+			return false;
 		}
-		else if(InfoDictionaryType == stringtype)
-		{
-			CFMutableArrayRef UTIMutableArray = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
-			CFStringRef utiName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)InfoDictionaryType);
-			CFArrayAppendValue(UTIMutableArray, utiName);
-			CFRelease(utiName);
-			FillPlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, UTIMutableArray);
-			CFRelease(UTIMutableArray);
-		}
-		else goto badplug3;
 	}
-
-	FillPlug->IOPlug = CFBundleGetFunctionPointerForName(tempBundle, CFSTR("PPImpExpMain"));
-	if(!FillPlug->IOPlug)
-		goto badplug3;
-	FillPlug->file = tempBundle;
-	CFRetain(FillPlug->file);
-
-	inMADDriver->TotalPlug++;
-	return true;
-	
-badplug3:
-	CFRelease(FillPlug->AuthorString);
-badplug2:
-	CFRelease(FillPlug->MenuName);
 badplug:
 	NSLog(CFSTR("Error with plug-in %@"), tempBundle);
 	return false;
