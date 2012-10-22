@@ -1928,14 +1928,16 @@ void NoteAnalyse( MADDriverRec *intDriver)
 		//TODO: 24-bit, maybe even 20-bit
 			case 16:
 				memmove( intDriver->DASCBuffer, intDriver->DASCBuffer + intDriver->ASCBUFFER*2, realMDelay*8L);
-				bzero( (intDriver->DASCBuffer + realMDelay*2L), intDriver->ASCBUFFER*8L);
+				memset(intDriver->DASCBuffer + realMDelay*2L, 0, intDriver->ASCBUFFER*8L);
+				//bzero( (intDriver->DASCBuffer + realMDelay*2L), intDriver->ASCBUFFER*8L);
 				
 				for( i = 0; i < MAXCHANEFFECT; i++)
 				{
 					if( intDriver->EffectBufferID[ i] != -1)
 					{
 						memmove( intDriver->DASCEffectBuffer[ i] + intDriver->ASCBUFFER*2, intDriver->DASCEffectBuffer[ i], realMDelay*8L);
-						bzero( (intDriver->DASCEffectBuffer[ i] + realMDelay*2L), intDriver->ASCBUFFER*8L);
+						//bzero( (intDriver->DASCEffectBuffer[ i] + realMDelay*2L), intDriver->ASCBUFFER*8L);
+					memset((intDriver->DASCEffectBuffer[ i] + realMDelay*2L), 0, intDriver->ASCBUFFER*8L);
 					}
 				}
 			break;
@@ -1945,13 +1947,15 @@ void NoteAnalyse( MADDriverRec *intDriver)
 				{
 					memmove(intDriver->DASCBuffer8, intDriver->DASCBuffer8 + intDriver->ASCBUFFER*2, 1 + realMDelay*4L);
 					
-					bzero( (intDriver->DASCBuffer8 + realMDelay*2L), (1 + intDriver->ASCBUFFER/2)*8L);
+					//bzero( (intDriver->DASCBuffer8 + realMDelay*2L), (1 + intDriver->ASCBUFFER/2)*8L);
+				memset((intDriver->DASCBuffer8 + realMDelay*2L), 0, (1 + intDriver->ASCBUFFER/2)*8L);
 				}
 				else
 				{
 					memmove( intDriver->DASCBuffer8, intDriver->DASCBuffer8 + intDriver->ASCBUFFER*2,  realMDelay*4L);
 					
-					bzero( (intDriver->DASCBuffer8 + realMDelay*2L), (intDriver->ASCBUFFER/2)*8L);
+					//bzero( (intDriver->DASCBuffer8 + realMDelay*2L), (intDriver->ASCBUFFER/2)*8L);
+					memset( (intDriver->DASCBuffer8 + realMDelay*2L), 0, (intDriver->ASCBUFFER/2)*8L);
 				}
 			break;
 		}
@@ -1963,18 +1967,19 @@ void NoteAnalyse( MADDriverRec *intDriver)
 			switch( intDriver->DriverSettings.outPutBits)
 			{
 				case 16:
-					bzero( (intDriver->DASCBuffer), intDriver->ASCBUFFER*8L);
+					//bzero( (intDriver->DASCBuffer), intDriver->ASCBUFFER*8L);
+					memset( (intDriver->DASCBuffer), 0, intDriver->ASCBUFFER*8L);
 					for( i = 0; i < MAXCHANEFFECT; i++)
 					{
 						if( intDriver->EffectBufferID[ i] != -1)
 						{
-							bzero( intDriver->DASCEffectBuffer[ i], intDriver->ASCBUFFER*8L);
+							memset( intDriver->DASCEffectBuffer[ i], 0, intDriver->ASCBUFFER*8L);
 						}
 					}
 				break;
 				
 				case 8:
-					bzero( (intDriver->DASCBuffer8), (intDriver->ASCBUFFER/2)*8L);
+					memset( (intDriver->DASCBuffer8), 0, (intDriver->ASCBUFFER/2)*8L);
 				break;
 			}
 		}

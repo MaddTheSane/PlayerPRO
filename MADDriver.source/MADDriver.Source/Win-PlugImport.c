@@ -60,8 +60,6 @@ OSErr CallImportPlug(	MADLibrary*				inMADDriver,
 {
 	OSErr				myErr;
 	MADDriverSettings 	driverSettings;
-
-	driverSettings.sysMemory = inMADDriver->sysMemory;
 	
 	myErr = noErr;
 	
@@ -86,7 +84,7 @@ OSErr	PPTestFile( MADLibrary* inMADDriver,char	*kindFile, Ptr AlienFile)
 	return MADCannotFindPlug;
 }
 
-OSErr	PPInfoFile( MADLibrary* inMADDriver, char	*kindFile, FSSpec	*AlienFile, PPInfoRec	*InfoRec)
+OSErr	PPInfoFile( MADLibrary* inMADDriver, char	*kindFile, char	*AlienFile, PPInfoRec	*InfoRec)
 {
 	short			i;
 	MADMusic	aMAD;
@@ -101,7 +99,7 @@ OSErr	PPInfoFile( MADLibrary* inMADDriver, char	*kindFile, FSSpec	*AlienFile, PP
 	return MADCannotFindPlug;
 }
 
-OSErr	PPExportFile( MADLibrary* inMADDriver, char	*kindFile, FSSpec	*AlienFile, MADMusic	*theNewMAD)
+OSErr	PPExportFile( MADLibrary* inMADDriver, char	*kindFile, char	*AlienFile, MADMusic	*theNewMAD)
 {
 	short		i;
 	PPInfoRec	InfoRec;
@@ -116,7 +114,7 @@ OSErr	PPExportFile( MADLibrary* inMADDriver, char	*kindFile, FSSpec	*AlienFile, 
 	return MADCannotFindPlug;
 }
 
-OSErr	PPImportFile( MADLibrary* inMADDriver, char	*kindFile, FSSpec	*AlienFile, MADMusic	**theNewMAD)
+OSErr	PPImportFile( MADLibrary* inMADDriver, char	*kindFile, char	*AlienFile, MADMusic	**theNewMAD)
 {
 	short		i;
 	PPInfoRec	InfoRec;
@@ -125,7 +123,7 @@ OSErr	PPImportFile( MADLibrary* inMADDriver, char	*kindFile, FSSpec	*AlienFile, 
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			*theNewMAD = (MADMusic*) MADcalloc( sizeof( MADMusic), inMADDriver);
+			*theNewMAD = (MADMusic*) calloc( sizeof( MADMusic), 1);
 			if( !*theNewMAD) return -1L;
 			
 			return( CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec));

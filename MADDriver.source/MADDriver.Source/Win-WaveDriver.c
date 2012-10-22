@@ -30,6 +30,10 @@
 //#include "mmreg.h"
 #include "mmsystem.h"
 
+#ifdef _MSC_VER
+#pragma comment(lib, "winmm.lib")
+#endif
+
 #include "RDriver.h"
 #include "RDriverInt.h"
 

@@ -25,6 +25,12 @@
 #include "RDriverInt.h"
 #include "OBJBASE.h"
 
+#ifdef _MSC_VER
+#pragma comment(lib, "user32.lib")
+#pragma comment(lib, "dsound.lib")
+#pragma comment(lib, "winmm.lib")
+#endif
+
 #include <cguid.h>
 
 //#define DEBUG
@@ -143,7 +149,7 @@ BOOL AppCreateWritePrimaryBuffer(
     return FALSE;
 }
 
-AppDetermineHardwareCaps(LPDIRECTSOUND lpDirectSound)
+void AppDetermineHardwareCaps(LPDIRECTSOUND lpDirectSound)
 {
     DSCAPS dscaps;
     HRESULT hr;

@@ -19,21 +19,29 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#ifndef WIN32
 #include <stdbool.h>
+#else
+#include <Windows.h>
+#define inline __inline
+#define true TRUE
+#define false FALSE
+#endif
 
 typedef unsigned char 	Byte;
 typedef char 			*Ptr;
+typedef Ptr				*Handle;
 typedef unsigned char 	Boolean;
 typedef unsigned char 	Str255[256], Str63[64];
 typedef uint8_t			UInt8;
 typedef int8_t			SInt8;
 typedef uint16_t		UInt16;
 typedef int16_t			SInt16;
+typedef short			OSErr;
 #ifndef __MACTYPES__
 typedef uint32_t		UInt32;
 typedef int32_t			SInt32;
 #endif
-typedef SInt16			OSErr;
 typedef UInt32			FourCharCode;
 typedef FourCharCode	OSType;
 typedef SInt32			Fixed;

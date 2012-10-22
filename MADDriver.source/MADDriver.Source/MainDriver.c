@@ -1338,10 +1338,11 @@ OSErr	MADMusicIdentifyCString( MADLibrary *lib, char *type, Ptr fName)
 
 OSErr MADLoadMusicFileCString( MADLibrary *lib, MADMusic **music, char *plugType, Ptr fName)
 {
+	OSErr iErr = noErr;
+	
 	if (lib == NULL || music == NULL || plugType == NULL || fName == NULL) {
 		return MADParametersErr;
 	}
-	OSErr		iErr;
 
 	if( !strcmp( "MADK", plugType)) iErr = MADLoadMADFileCString( music, fName);
 	else
@@ -2915,18 +2916,20 @@ Cmd* GetMADCommand( short PosX, short	TrackIdX, PatData*	tempMusicPat)
 void MADDisposeVolumeTable( MADDriverRec *intDriver)
 {
 	if (intDriver == NULL) {
-		return MADParametersErr;
+		return;
 	}
 	if( intDriver->DriverSettings.outPutMode == DeluxeStereoOutPut) MADKillOverShoot( intDriver);
 }
 
 OSErr MADCreateVolumeTable( MADDriverRec *intDriver)
 {
+	SInt32 Tracks = 0;
+	OSErr theErr;
 	if (intDriver == NULL) {
 		return MADParametersErr;
 	}
-	SInt32		Tracks = intDriver->DriverSettings.numChn;
-	OSErr		theErr;
+	Tracks = intDriver->DriverSettings.numChn;
+
 
 	theErr = MADCreateMicroDelay( intDriver);			if( theErr != noErr) return theErr;
 

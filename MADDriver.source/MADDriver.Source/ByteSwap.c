@@ -10,7 +10,13 @@
  */
 
 #include "MAD.h"
+#ifdef _MAC_H
 #include <CoreFoundation/CFByteOrder.h>
+#endif
+
+#ifdef WIN32
+#define __inline__ __inline
+#endif
 
 static __inline__ void MADByteSwap32(void *theData)
 {
