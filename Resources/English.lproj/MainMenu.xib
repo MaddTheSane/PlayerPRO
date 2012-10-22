@@ -1210,7 +1210,7 @@
 											<string key="NSFrameSize">{296, 220}</string>
 											<reference key="NSSuperview" ref="702402919"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="804373054"/>
+											<reference key="NSNextKeyView" ref="297924866"/>
 											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -1329,7 +1329,6 @@
 									<string key="NSFrame">{{224, 17}, {15, 212}}</string>
 									<reference key="NSSuperview" ref="871224933"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<reference key="NSTarget" ref="871224933"/>
 									<string key="NSAction">_doScroller:</string>
@@ -1367,7 +1366,7 @@
 							<string key="NSFrame">{{20, 20}, {298, 238}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="297924866"/>
+							<reference key="NSNextKeyView" ref="702402919"/>
 							<int key="NSsFlags">133650</int>
 							<reference key="NSVScroller" ref="804373054"/>
 							<reference key="NSHScroller" ref="297924866"/>
@@ -1401,7 +1400,6 @@
 						<string key="NSFrame">{{119, 20}, {185, 78}}</string>
 						<reference key="NSSuperview" ref="150741665"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="541108171">
 							<int key="NSCellFlags">67108864</int>
@@ -1732,7 +1730,7 @@
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="661368882">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSButton" id="22837962">
@@ -1740,6 +1738,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{0, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="555547807">
 								<int key="NSCellFlags">67108864</int>
@@ -1765,6 +1764,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{42, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="624684166">
 								<int key="NSCellFlags">67108864</int>
@@ -1790,6 +1790,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{84, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="599917958">
 								<int key="NSCellFlags">67108864</int>
@@ -1815,6 +1816,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{126, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="157059532">
 								<int key="NSCellFlags">67108864</int>
@@ -1840,6 +1842,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{168, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="32540427">
 								<int key="NSCellFlags">67108864</int>
@@ -1865,6 +1868,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{210, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="218541162">
 								<int key="NSCellFlags">67108864</int>
@@ -1887,6 +1891,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{252, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="73759491">
 								<int key="NSCellFlags">67108864</int>
@@ -1912,6 +1917,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{294, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="765363470">
 								<int key="NSCellFlags">67108864</int>
@@ -1937,6 +1943,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{-3, 29}, {41, 17}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="802875930">
 								<int key="NSCellFlags">68157504</int>
@@ -1954,6 +1961,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{40, 25}, {246, 21}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSSliderCell" key="NSCell" id="1008273220">
 								<int key="NSCellFlags">-2080374784</int>
@@ -1976,6 +1984,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{288, 27}, {41, 17}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="934528952">
 								<int key="NSCellFlags">68157504</int>
@@ -1993,6 +2002,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{-2, 4}, {331, 17}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="447678757">
 								<int key="NSCellFlags">68157504</int>
@@ -2007,6 +2017,8 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{326, 86}</string>
+					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
@@ -2510,6 +2522,38 @@
 						<reference key="destination" ref="663199765"/>
 					</object>
 					<int key="connectionID">1227</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">sortMusicList:</string>
+						<reference key="source" ref="1000799287"/>
+						<reference key="destination" ref="206981981"/>
+					</object>
+					<int key="connectionID">1230</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">playSelectedMusic:</string>
+						<reference key="source" ref="1000799287"/>
+						<reference key="destination" ref="1039101908"/>
+					</object>
+					<int key="connectionID">1232</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addMusic:</string>
+						<reference key="source" ref="1000799287"/>
+						<reference key="destination" ref="583079194"/>
+					</object>
+					<int key="connectionID">1233</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">removeSelectedMusic:</string>
+						<reference key="source" ref="1000799287"/>
+						<reference key="destination" ref="359251817"/>
+					</object>
+					<int key="connectionID">1234</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -4019,7 +4063,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1229</int>
+			<int key="maxID">1234</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4027,15 +4071,17 @@
 					<string key="className">PPApp_AppDelegate</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="addMusic:">id</string>
 						<string key="deleteInstrument:">id</string>
 						<string key="exportInstrumentAs:">id</string>
 						<string key="fastForwardButtonPressed:">id</string>
-						<string key="getMusicInfo:">id</string>
 						<string key="loopButtonPressed:">id</string>
 						<string key="nextButtonPressed:">id</string>
 						<string key="playButtonPressed:">id</string>
+						<string key="playSelectedMusic:">id</string>
 						<string key="prevButtonPressed:">id</string>
 						<string key="recordButtonPressed:">id</string>
+						<string key="removeSelectedMusic:">id</string>
 						<string key="rewindButtonPressed:">id</string>
 						<string key="showBoxEditor:">id</string>
 						<string key="showClassicEditor:">id</string>
@@ -4045,9 +4091,14 @@
 						<string key="showPreferences:">id</string>
 						<string key="showTools:">id</string>
 						<string key="sliderChanged:">id</string>
+						<string key="sortMusicList:">id</string>
 						<string key="stopButtonPressed:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="addMusic:">
+							<string key="name">addMusic:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="deleteInstrument:">
 							<string key="name">deleteInstrument:</string>
 							<string key="candidateClassName">id</string>
@@ -4058,10 +4109,6 @@
 						</object>
 						<object class="IBActionInfo" key="fastForwardButtonPressed:">
 							<string key="name">fastForwardButtonPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="getMusicInfo:">
-							<string key="name">getMusicInfo:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="loopButtonPressed:">
@@ -4076,12 +4123,20 @@
 							<string key="name">playButtonPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="playSelectedMusic:">
+							<string key="name">playSelectedMusic:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="prevButtonPressed:">
 							<string key="name">prevButtonPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="recordButtonPressed:">
 							<string key="name">recordButtonPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="removeSelectedMusic:">
+							<string key="name">removeSelectedMusic:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="rewindButtonPressed:">
@@ -4118,6 +4173,10 @@
 						</object>
 						<object class="IBActionInfo" key="sliderChanged:">
 							<string key="name">sliderChanged:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="sortMusicList:">
+							<string key="name">sortMusicList:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="stopButtonPressed:">

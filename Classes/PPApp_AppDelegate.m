@@ -15,7 +15,7 @@
 @implementation PPApp_AppDelegate
 
 - (void)MADDriverWithPreferences {
-	Boolean madWasReading = NO;
+	Boolean madWasReading = false;
 	long fullTime = 0, curTime = 0;
 	if (MADDriver) {
 		madWasReading = MADWasReading(MADDriver);
@@ -191,8 +191,20 @@
     
 }
 
-- (IBAction)getMusicInfo:(id)sender {
-    
+- (IBAction)sortMusicList:(id)sender {
+	
+}
+
+- (IBAction)playSelectedMusic:(id)sender {
+	
+}
+
+- (IBAction)addMusic:(id)sender {
+	
+}
+
+- (IBAction)removeSelectedMusic:(id)sender {
+	
 }
 
 enum PPMusicToolbarTypes {
