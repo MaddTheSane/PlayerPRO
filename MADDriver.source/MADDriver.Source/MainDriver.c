@@ -506,6 +506,7 @@ void MADGetBestDriver( MADDriverSettings	*Init)
 #ifdef _MAC_H
 	//Just going to use CoreAudio
 	Init->outPutBits		= 16;
+	Init->outPutMode		= DeluxeStereoOutPut;
 	Init->outPutRate		= 44100;
 	Init->numChn			= 4;
 	Init->surround			= false;
@@ -2392,6 +2393,9 @@ OSErr MADStopMusic( MADDriverRec *MDriver)
 
 OSErr MADStartDriver( MADDriverRec *MDriver)
 {
+	if (MDriver == NULL) {
+		return MADParametersErr;
+	}
 	MDriver->MADPlay = true;
 	MDriver->Reading = false;
 	MDriver->musicEnd = false;
