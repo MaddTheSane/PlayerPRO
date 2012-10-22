@@ -100,7 +100,6 @@ badplug2:
 	CFRelease(thePlug->MenuName);
 badplug:
 	return false;
-	
 }
 
 static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
@@ -115,6 +114,8 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 	short PlugNum = inMADDriver->TotalPlug;
 	PlugInfo *FillPlug = &(inMADDriver->ThePlug[PlugNum]);
 	{
+		FillPlug->version = CFBundleGetVersionNumber(tempBundle);
+		
 		CFTypeID InfoDictionaryType;
 		CFTypeRef OpaqueDictionaryType;
 		
@@ -142,12 +143,10 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		{
 			//Check to see if there's a plug-in that matches the type.
 			int i = 0;
-			for (i=0; i < inMADDriver->TotalPlug; i++) {
+			for (i = 0; i < inMADDriver->TotalPlug; i++) {
 				if (strcmp(FillPlug->type, inMADDriver->ThePlug[i].type)) {
 					NSLog(CFSTR("Plug-ins %@ and %@ are similar"), inMADDriver->ThePlug[i].file, tempBundle);
-					UInt32 prevVers = CFBundleGetVersionNumber(inMADDriver->ThePlug[i].file);
-					UInt32 otherVers = CFBundleGetVersionNumber(tempBundle);
-					if (prevVers < otherVers) {
+					if (inMADDriver->ThePlug[i].version < FillPlug->version) {
 						PlugInfo newInfo;
 						Boolean gotFilled = fillPlugFromBundle(tempBundle, &newInfo);
 						if (gotFilled) {
@@ -161,6 +160,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 							inMADDriver->ThePlug[i].MenuName = newInfo.MenuName;
 							inMADDriver->ThePlug[i].mode = newInfo.mode;
 							inMADDriver->ThePlug[i].UTItypes = newInfo.UTItypes;
+							inMADDriver->ThePlug[i].version = FillPlug->version;
 							NSLog(CFSTR("Using %@ (Newer than previous)"), tempBundle);
 							return true;
 						} else {
@@ -511,7 +511,7 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 				xx = strlen( inMADDriver->ThePlug[ i].type);
 				if( xx > 4) xx = 4;
 				type = '    ';
-				memmove( inMADDriver->ThePlug[ i].type, &type, xx);
+				memcpy( inMADDriver->ThePlug[ i].type, &type, xx);
 				PPBE32(&type);
 				return type;
 			}

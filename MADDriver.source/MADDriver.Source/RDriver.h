@@ -361,6 +361,14 @@ typedef struct PPInfoRec
 /*** 			Informations about Plugs: ThePlug[]				***/
 /********************						***********************/
 
+enum PPPlugModes {
+	MADPlugImport = 'IMPL',
+	MADPlugExport = 'EXPL',
+	MADPlugInfo = 'INFO',
+	MADPlugTest = 'TEST',
+	MADPlugImportExport = 'EXIM'
+};
+
 #ifdef _MAC_H
 
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
@@ -374,6 +382,7 @@ typedef struct PlugInfo
 	char		type[ 5];										// OSType of file support. Kept for legacy reasons.
 	CFArrayRef	UTItypes;										// CFStrings of supported UTIs
 	OSType		mode;											// Mode support : Import +/ Export
+	UInt32		version;										// Plug-in version
 } PlugInfo;
 #endif
 
@@ -389,6 +398,7 @@ typedef struct PlugInfo
 	char			file[ 255];									// Location of plug file
 	char			type[ 5];									// OSType of file support
 	OSType			mode;										// Mode support : Import +/ Export
+	int				version;									// Plug-in version
 } PlugInfo;
 #endif
 
@@ -405,6 +415,7 @@ typedef struct PlugInfo
 	char			file[PATH_MAX];								// Location of plug file
 	char			type[ 5];									// OSType of file support
 	OSType			mode;										// Mode support : Import +/ Export
+	int				version;									// Plug-in version
 } PlugInfo;
 #endif
 
