@@ -88,14 +88,12 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 	
 	thePlug->IOPlug = CFBundleGetFunctionPointerForName(theBundle, CFSTR("PPImpExpMain"));
 	if(!thePlug->IOPlug)
-		goto badplug4;
+		goto badplug3;
 	thePlug->file = theBundle;
 	CFRetain(thePlug->file);
 	
 	return true;
 	
-badplug4:
-	CFRelease(thePlug->UTItypes);
 badplug3:
 	CFRelease(thePlug->AuthorString);
 badplug2:
@@ -146,7 +144,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 			//Check to see if there's a plug-in that matches the type.
 			int i = 0;
 			for (i = 0; i < inMADDriver->TotalPlug; i++) {
-				if (strcmp(FillPlug->type, inMADDriver->ThePlug[i].type)) {
+				if (strcmp(FillPlug->type, inMADDriver->ThePlug[i].type) == 0) {
 					NSLog(CFSTR("Plug-ins %@ and %@ are similar"), inMADDriver->ThePlug[i].file, tempBundle);
 					if (inMADDriver->ThePlug[i].version < FillPlug->version) {
 						PlugInfo newInfo;
@@ -213,6 +211,11 @@ CFMutableArrayRef CreateDefaultPluginFolderLocations()
 	CFRelease(temp1);
 	temp1 = NULL;
 	
+	temp1 = CFBundleCopyBuiltInPlugInsURL(CFBundleGetBundleWithIdentifier(CFSTR("net.sourceforge.playerpro.PlayerPROCore")));
+	CFArrayAppendValue(PlugFolds, temp1);
+	CFRelease(temp1);
+	temp1 = NULL;
+	
 	//Local systemwide plugins
 	//TODO: better location management
 	temp1 = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, CFSTR("/Library/Application Support/PlayerPRO/Plugins"), kCFURLPOSIXPathStyle, true);
@@ -235,7 +238,7 @@ static inline CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(char *
 	CFURLRef custfolder = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (UInt8*)UserAddedPlace, strlen(UserAddedPlace), true);
 	CFURLRef absFolder = CFURLCopyAbsoluteURL(custfolder);
 	CFRelease(custfolder);
-	CFArrayInsertValueAtIndex(FoldLocs, 0, absFolder);
+	CFArrayAppendValue(FoldLocs, absFolder);
 	CFRelease(absFolder);
 	return FoldLocs;
 }
@@ -365,7 +368,7 @@ OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInf
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			return CallImportPlug( inMADDriver, i, MADPlugInfo, AlienFile, &aMAD, InfoRec);
+			return CallImportPlug( inMADDriver, i, 'INFO', AlienFile, &aMAD, InfoRec);
 		}
 	}
 	return MADCannotFindPlug;
@@ -383,7 +386,7 @@ OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 			*theNewMAD = (MADMusic*) calloc( sizeof( MADMusic), 1);
 			if( !theNewMAD) return MADNeedMemory;
 			
-			return CallImportPlug( inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
+			return CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec);
 		}
 	}
 	return MADCannotFindPlug;
@@ -441,7 +444,7 @@ OSErr PPIdentifyFile( MADLibrary *inMADDriver, char *type, char *AlienFile)
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( CallImportPlug( inMADDriver, i, MADPlugTest, AlienFile, NULL, &InfoRec) == noErr)
+		if( CallImportPlug( inMADDriver, i, 'TEST', AlienFile, NULL, &InfoRec) == noErr)
 		{
 			strcpy(type, inMADDriver->ThePlug[i].type);
 			return noErr;
@@ -473,7 +476,7 @@ OSErr PPExportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			return CallImportPlug( inMADDriver, i, MADPlugExport, AlienFile, theNewMAD, &InfoRec);
+			return CallImportPlug( inMADDriver, i, 'EXPL', AlienFile, theNewMAD, &InfoRec);
 		}
 	}
 	return MADCannotFindPlug;
@@ -489,7 +492,7 @@ OSErr PPTestFile( MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			return CallImportPlug( inMADDriver, i, MADPlugTest, AlienFile, &aMAD, &InfoRec);
+			return CallImportPlug( inMADDriver, i, 'TEST', AlienFile, &aMAD, &InfoRec);
 		}
 	}
 	return MADCannotFindPlug;
@@ -503,7 +506,7 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 	
 	for( i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == MADPlugImportExport)
+		if( inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == 'EXIM')
 		{
 			if( ID == x)
 			{
