@@ -194,18 +194,16 @@ badplug:
 //There are many places that a plug-in might be kept in OS X
 /*
  * Possible plugin places:
- - * Local Application Support/PlayerPRO/PlugIns
- - * User Application Support/PlayerPRO/PlugIns
- - * Application Contents/PlugIns
- * Local Framework PlugIns
- * User Framework PlugIns
+ * Local Application Support/PlayerPRO/PlugIns
+ * User Application Support/PlayerPRO/PlugIns
+ * Application Contents/PlugIns
+ * Framework PlugIns
  * Application Contents/Frameworks/PlugIns
- 
  */
 
 CFMutableArrayRef CreateDefaultPluginFolderLocations()
 {
-	CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 6, &kCFTypeArrayCallBacks);
+	CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 5, &kCFTypeArrayCallBacks);
 	CFURLRef temp1;
 	//Application Main Bundle
 	temp1 = CFBundleCopyBuiltInPlugInsURL(CFBundleGetMainBundle());
@@ -213,13 +211,15 @@ CFMutableArrayRef CreateDefaultPluginFolderLocations()
 	CFRelease(temp1);
 	temp1 = NULL;
 	
+#ifndef MAINPLAYERPRO
 	temp1 = CFBundleCopyBuiltInPlugInsURL(CFBundleGetBundleWithIdentifier(CFSTR("net.sourceforge.playerpro.PlayerPROCore")));
 	CFArrayAppendValue(PlugFolds, temp1);
 	CFRelease(temp1);
 	temp1 = NULL;
+#endif
 	
 	//Local systemwide plugins
-	//TODO: better location management
+	//TODO: better location discovery and management
 	temp1 = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, CFSTR("/Library/Application Support/PlayerPRO/Plugins"), kCFURLPOSIXPathStyle, true);
 	CFArrayAppendValue(PlugFolds, temp1);
 	CFRelease(temp1);
@@ -293,11 +293,6 @@ void MADInitImportPlug( MADLibrary *inMADDriver, char *PluginFolder)
 	} else {
 		PlugLocations = CreatePluginFolderLocationsWithFolderPath(PluginFolder);
 	}
-#ifndef MAINPLAYERPRO
-	{
-		//TODO: Add Framework plug-in paths. I'm thankful I made it a mutable data type.
-	}
-#endif
 	PlugLocNums	= CFArrayGetCount( PlugLocations );
 	
 	for (i = 0; i < PlugLocNums; i++) {
