@@ -77,7 +77,7 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 		else if(InfoDictionaryType == stringtype)
 		{
 			CFMutableArrayRef UTIMutableArray = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
-			CFStringRef utiName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)InfoDictionaryType);
+			CFStringRef utiName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
 			CFArrayAppendValue(UTIMutableArray, utiName);
 			CFRelease(utiName);
 			thePlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, UTIMutableArray);
