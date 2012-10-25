@@ -59,9 +59,10 @@
 #ifdef WIN32
 #define EXP __declspec(dllexport)
 #ifdef BUILDINGPPRO
-#define PPEXPORT __declspec(dllexport)
+#define PPEXPORT extern __declspec(dllexport)
 #else
-#define PPEXPORT __declspec(dllimport)
+#define PPEXPORT extern __declspec(dllimport)
+#pragma comment(lib, "PlayerPROCore.lib")
 #endif
 #endif
 

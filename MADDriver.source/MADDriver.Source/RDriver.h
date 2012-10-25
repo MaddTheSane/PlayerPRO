@@ -36,6 +36,8 @@
 #include <mmreg.h>
 #include <DSound.h>
 #endif
+
+
 #endif
 
 #ifdef LINUX
@@ -391,7 +393,7 @@ typedef struct PlugInfo
 typedef OSErr (*PLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
-	HANDLE			hLibrary;
+	HMODULE			hLibrary;
 	PLUGDLLFUNC		IOPlug;										// Plug CODE
 	char			MenuName[ 65];								// Plug name
 	char			AuthorString[ 65];							// Plug author

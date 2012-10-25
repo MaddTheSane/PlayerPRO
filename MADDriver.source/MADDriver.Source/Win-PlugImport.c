@@ -25,6 +25,8 @@
 #include "RDriverInt.h"
 #include "FileUtils.h"
 
+//TODO: Move to unicode functions
+
 OSErr CheckMADFile( Ptr name)
 {
 	UNFILE			refNum;
@@ -191,7 +193,7 @@ Boolean LoadPlugLib( Ptr name, PlugInfo* plug)
 	
 	strcpy( plug->file, name);
 	
-	plug->hLibrary = LoadLibrary( name);
+	plug->hLibrary = LoadLibraryA( name);
 	if( !plug->hLibrary) return false;
 	
 	plug->IOPlug = (PLUGDLLFUNC) GetProcAddress( plug->hLibrary, "PPImpExpMain");
@@ -221,7 +223,7 @@ void MInitImportPlug( MADLibrary* inMADDriver, char *PlugsFolderName)
 	
 	{
 		HANDLE				hFind;
-		WIN32_FIND_DATA		fd;
+		WIN32_FIND_DATAA	fd;
 		BOOL				bRet = TRUE;
 		char				FindFolder[ 200], inPlugsFolderName[ 200];
 		
@@ -239,7 +241,7 @@ void MInitImportPlug( MADLibrary* inMADDriver, char *PlugsFolderName)
 		}
 		strcat( FindFolder, "*.PLG");
 		
-		hFind = FindFirstFile( FindFolder, &fd);
+		hFind = FindFirstFileA( FindFolder, &fd);
 		
 		inMADDriver->ThePlug = (PlugInfo*) malloc( MAXPLUG * sizeof( PlugInfo));
 		
@@ -258,7 +260,7 @@ void MInitImportPlug( MADLibrary* inMADDriver, char *PlugsFolderName)
 				}
 			}
 			
-			bRet = FindNextFile( hFind, &fd);
+			bRet = FindNextFileA( hFind, &fd);
 		}
 		
 		FindClose( hFind);

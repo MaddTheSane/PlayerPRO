@@ -9,6 +9,7 @@
  *
  */
 
+#define NOINLINES
 #include "MAD.h"
 #ifdef _MAC_H
 #include <CoreFoundation/CFByteOrder.h>

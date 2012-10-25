@@ -331,7 +331,7 @@ struct __MADDriverRec
 	Boolean					newData[ MAXDRAW];
 	Boolean					useOsciBuffers;
 	short					curDrawPtr;
-	UInt32					curTime;
+	unsigned long			curTime;
 	Boolean					XMLinear, MODMode, JumpToNextPattern, endPattern, MADPlay;
 	SInt32					ASCBUFFER;
 	SInt32					BufSize;

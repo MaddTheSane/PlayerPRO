@@ -33,7 +33,9 @@
 #endif
 
 typedef unsigned char uchar;
-//typedef unsigned short ushort;
+#ifndef __APPLE__
+typedef unsigned short ushort;
+#endif
 //typedef unsigned long ulong;
 
 typedef struct {
