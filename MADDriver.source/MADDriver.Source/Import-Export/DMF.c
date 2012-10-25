@@ -21,7 +21,12 @@
 //
 /********************						***********************/
 
+#ifdef __APPLE__
 #include <PlayerPROCore/PlayerPROCore.h>
+#else
+#include "RDriver.h"
+#include "FileUtils.h"
+#endif
 #include "DMF.h"
 
 #define LOW(para) ((para) & 15)

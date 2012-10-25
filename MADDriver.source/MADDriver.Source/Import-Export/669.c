@@ -40,6 +40,7 @@ static inline UInt16 Tdecode16( void *msg_buf)
 }
 #endif
 
+#if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;
@@ -47,6 +48,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
+#endif
 
 static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {

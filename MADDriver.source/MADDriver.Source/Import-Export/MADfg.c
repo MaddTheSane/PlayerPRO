@@ -21,7 +21,12 @@
 //
 /********************						***********************/
 
+#ifdef __APPLE__
 #include <PlayerPROCore/PlayerPROCore.h>
+#else
+#include "RDriver.h"
+#include "FileUtils.h"
+#endif
 #include "MOD.h"
 #include "MADfg.h"
 
@@ -110,6 +115,7 @@ static struct Command* GetOldCommand( short PosX, short TrackIdX, struct MusicPa
 	return( & (tempMusicPat->Commands[ (tempMusicPat->header.PatternSize * TrackIdX) + PosX]));
 }
 
+#if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;
@@ -117,6 +123,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
+#endif
 
 static void MOToldPatHeader(struct oldPatHeader * p) {
 	PPBE32(&p->PatternSize);
@@ -147,6 +154,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 	long 			inOutCount = 0, OffSetToSample = 0, z = 0;
 	//OSErr			theErr = noErr;
 	Boolean			MADConvert = false;
+	OSType oldMadIdent = 0;
 	//Ptr				tempPtr = NULL;
 	SInt32			finetune[16] =
 				{
@@ -164,7 +172,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 	MOToldMADSpec(oldMAD);
 
 /**** HEADER ****/
-	OSType oldMadIdent = oldMAD->MADIdentification;
+	oldMadIdent = oldMAD->MADIdentification;
 	PPBE32(&oldMadIdent);
 	if( oldMadIdent == 'MADF') MADConvert = true;
 	else if( oldMadIdent == 'MADG') MADConvert = false;
@@ -196,6 +204,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 
 	for( i = 0; i < oldMAD->PatMax; i++)
 	{
+		OSType CompMode = 0;
 		struct MusicPattern		*tempPat, *tempPat2;
 		struct oldPatHeader		tempPatHeader;
 	
@@ -211,7 +220,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 	/*************************************************/
 	/** Lecture du header + contenu de la partition **/
 	/*************************************************/
-		OSType CompMode = tempPatHeader.CompressionMode;
+		CompMode = tempPatHeader.CompressionMode;
 		PPBE32(&CompMode);
 		if( CompMode == 'MAD1')
 		{
@@ -422,8 +431,8 @@ OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 
 #ifndef _MAC_H
 
-extern "C" EXP OSErr FillPlug( PlugInfo *p);
-extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+extern EXP OSErr FillPlug( PlugInfo *p);
+extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {

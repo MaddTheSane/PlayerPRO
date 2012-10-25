@@ -21,6 +21,7 @@
 //
 /********************						***********************/
 
+#define CINTERFACE
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "OBJBASE.h"
@@ -47,7 +48,7 @@ static 	Boolean					OnOff;
 static 	long					WIN95BUFFERSIZE;
 
 char *TranslateDSError( HRESULT hr )
-    {
+{
     switch( hr )
     {
     case DSERR_ALLOCATED:
@@ -98,7 +99,7 @@ char *TranslateDSError( HRESULT hr )
     default:
         return "Unknown HRESULT";
     }
-    }
+}
 
 
 BOOL AppCreateWritePrimaryBuffer(
@@ -227,7 +228,7 @@ BOOL LoadSamp(LPDIRECTSOUND lpDirectSound,
     WAVEFORMATEX pcmwf;
 
     // Set up wave format structure.
-    memset(&pcmwf, 0, sizeof(PCMWAVEFORMAT));
+    memset(&pcmwf, 0, sizeof(WAVEFORMATEX));
     pcmwf.wFormatTag			= WAVE_FORMAT_PCM;
     pcmwf.nChannels = 2;
     pcmwf.nSamplesPerSec		= WinMADDriver->DriverSettings.outPutRate;
@@ -346,7 +347,7 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 	WIN95BUFFERSIZE = WinMADDriver->BufSize;
 	WIN95BUFFERSIZE *= 2L;								// double buffer system
 	
-	currentBuf 		= calloc( WIN95BUFFERSIZE, 1);
+	currentBuf 		= (Ptr)calloc( WIN95BUFFERSIZE, 1);
 	
 	hwnd = GetForegroundWindow();	//GetForegroundWindow();
 	if( !hwnd) return false;

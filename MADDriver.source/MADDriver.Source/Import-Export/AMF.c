@@ -33,6 +33,7 @@ static Ptr			theAMFRead;
 
 #define READAMFFILE(dst, size)	{memmove( dst, theAMFRead, size);	theAMFRead += (long) size;}
 
+#if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;
@@ -40,6 +41,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
+#endif
 
 #ifdef _MAC_H
 #define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*msg_buf)
@@ -200,6 +202,8 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 			if( oi.size > 0)
 			{
 				sData	*curData;
+				ushort oiloopstart = 0;
+				ushort oiloopend = 0;
 				
 				curIns->numSamples = 1;
 				
@@ -207,8 +211,8 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 				
 				curData->size		= Tdecode32( &oi.size);
 				//FIXME: were loopstart and loopend supposed to be byteswapped on PowerPC?
-				ushort oiloopstart = Tdecode16( &oi.loopstart);
-				ushort oiloopend = Tdecode16( &oi.loopend);
+				oiloopstart = Tdecode16( &oi.loopstart);
+				oiloopend = Tdecode16( &oi.loopend);
 				curData->loopBeg 	= oiloopstart; 
 				curData->loopSize 	= oiloopend - oiloopstart;
 				if( oiloopend == 65535)
@@ -222,7 +226,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 				
 				curData->relNote	= 0;
 				
-				curData->data 		= malloc( curData->size);
+				curData->data 		= (Ptr)malloc( curData->size);
 				if( curData->data == NULL) return MADNeedMemory;
 			}
 			else curIns->numSamples = 0;
@@ -281,7 +285,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 		if( tempShort == 0 ) t=t;
 		else
 		{
-			Ptr tPtr = malloc( tempShort * 3 + size);
+			Ptr tPtr = (Ptr)malloc( tempShort * 3 + size);
 			READAMFFILE( tPtr,tempShort * 3 + size);
 			free( tPtr);
 		}
@@ -351,8 +355,8 @@ static OSErr ExtractAMFInfo( PPInfoRec *info, Ptr AlienFile)
 
 #ifndef _MAC_H
 
-extern "C" EXP OSErr FillPlug( PlugInfo *p);
-extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+extern EXP OSErr FillPlug( PlugInfo *p);
+extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {

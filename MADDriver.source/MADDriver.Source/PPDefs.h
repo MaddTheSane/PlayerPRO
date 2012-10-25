@@ -30,8 +30,8 @@
 #endif
 
 typedef unsigned char 	Byte;
-typedef char 			*Ptr;
-typedef Ptr				*Handle;
+typedef char 			*Ptr, **Handle;
+//typedef Ptr				*Handle;
 typedef unsigned char 	Boolean;
 typedef unsigned char 	Str255[256], Str63[64];
 typedef uint8_t			UInt8;
@@ -63,8 +63,7 @@ typedef void*			LPVOID;
 #include <CoreFoundation/CFPlugInCOM.h>
 #endif
 typedef SInt32			LONG;
-typedef UInt8			UBYTE;
-typedef SInt8			BYTE;
+
 typedef UInt16			UINT;
 #if (!defined(BOOL) && !defined(__OBJC__))
 //#define BOOL
@@ -74,8 +73,10 @@ typedef UInt32			DWORD;
 typedef UInt16			USHORT;
 typedef SInt16			SHORT;
 typedef FourCharCode	FOURCC;
+typedef SInt8			BYTE;
+#endif
+#endif
 
-#endif
-#endif
+typedef UInt8			UBYTE;
 
 #endif

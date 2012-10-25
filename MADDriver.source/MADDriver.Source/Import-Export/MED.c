@@ -21,7 +21,12 @@
 //
 /********************						***********************/
 
+#ifdef __APPLE__
 #include <PlayerPROCore/PlayerPROCore.h>
+#else
+#include "RDriver.h"
+#include "FileUtils.h"
+#endif
 #include "MED.h"
 
 static MMD0 		*mh;
@@ -39,6 +44,7 @@ static MMD1NOTE 	*mmd1pat;
 static Ptr			theMEDRead;
 #define READMEDFILE(dst, size)	{memcpy( dst, theMEDRead, size);	theMEDRead += (long) size;}
 
+#if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;
@@ -46,11 +52,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
-
-static inline void mystrcpy( Ptr a, BytePtr b)
-{
-	memcpy( a, b + 1, b[ 0]);
-}
+#endif
 
 static BOOL MED_Init( MADDriverSettings *init)
 {
@@ -568,8 +570,8 @@ static OSErr ExtractMEDInfo( PPInfoRec *info, Ptr theMED)
 
 #ifndef _MAC_H
 
-extern "C" EXP OSErr FillPlug( PlugInfo *p);
-extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+extern EXP OSErr FillPlug( PlugInfo *p);
+extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {

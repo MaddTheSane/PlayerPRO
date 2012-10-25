@@ -22,7 +22,12 @@
 /********************						***********************/
 //FIXME: There are some audio artifacts that aren't present in other tracker players.
 //play GADGET.it from MikIT for more info
+#ifdef __APPLE__
 #include <PlayerPROCore/PlayerPROCore.h>
+#else
+#include "RDriver.h"
+#include "FileUtils.h"
+#endif
 #include "IT.h"
 
 static	Byte	LastAEffect[ MAXTRACK], LastJEffect[ MAXTRACK];
@@ -765,7 +770,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 					
 					if( prevSamp == false && ITinfo.insdata[ i].keyMap[ zz].samp != 0)
 					{
-						Str32 str;
+						//Str32 str;
 						
 						prevSamp = ITinfo.insdata[ i].keyMap[ zz].samp-1;
 						if( prevSamp >= 0 && prevSamp < ITinfo.smpNum)
@@ -1380,8 +1385,8 @@ static OSErr TestITFile( Ptr AlienFile)
 
 #ifndef _MAC_H
 
-extern "C" EXP OSErr FillPlug( PlugInfo *p);
-extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+extern EXP OSErr FillPlug( PlugInfo *p);
+extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {

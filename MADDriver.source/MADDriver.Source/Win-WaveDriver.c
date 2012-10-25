@@ -47,6 +47,8 @@ static	char*			myerr;
 
 ////////////
 
+//TODO: move proper datatypes to MADDriverRec
+
 static WAVEOUTCAPS 	woc;
 static HWAVEOUT 		hWaveOut;
 static LPVOID 			mydata;
@@ -196,12 +198,12 @@ void W95_PlayStart( MADDriverRec *WinMADDriver)
 	waveOutSetVolume(0,0xffffffff);
 	
 	WaveOutHdr.lpData= (char*) mydata;
-	WaveOutHdr.dwBufferLength=WIN95BUFFERSIZE;
-	WaveOutHdr.dwFlags=WHDR_BEGINLOOP|WHDR_ENDLOOP;
-	WaveOutHdr.dwLoops=0xffffffff;
-	WaveOutHdr.dwUser=0;
-	waveOutPrepareHeader(hWaveOut,&WaveOutHdr,sizeof(WAVEHDR));
-	waveOutWrite(hWaveOut,&WaveOutHdr,sizeof(WAVEHDR));
+	WaveOutHdr.dwBufferLength = WIN95BUFFERSIZE;
+	WaveOutHdr.dwFlags = WHDR_BEGINLOOP | WHDR_ENDLOOP;
+	WaveOutHdr.dwLoops = 0xffffffff;
+	WaveOutHdr.dwUser = 0;
+	waveOutPrepareHeader(hWaveOut, &WaveOutHdr, sizeof(WAVEHDR));
+	waveOutWrite(hWaveOut, &WaveOutHdr, sizeof(WAVEHDR));
 	mydma= (char*) mydata;
 	
 	MICROBUFState = 0;
@@ -233,9 +235,9 @@ void W95_PlayStop( MADDriverRec *WinMADDriver)
 //	VC_PlayStop();
 }
 
-	#define DMODE_STEREO    1
-	#define DMODE_16BITS    2
-	#define DMODE_INTERP    4
+	//#define DMODE_STEREO    1
+	//#define DMODE_16BITS    2
+	//#define DMODE_INTERP    4
 
 
 Boolean W95_Init( MADDriverRec *WinMADDriver)
@@ -267,7 +269,7 @@ Boolean W95_Init( MADDriverRec *WinMADDriver)
 	wf.wf.nBlockAlign		= wf.wf.nChannels * (wf.wBitsPerSample/8);
 	wf.wf.nAvgBytesPerSec	= wf.wf.nSamplesPerSec * wf.wf.nBlockAlign;
 	
-	err=waveOutOpen( &hWaveOut, 0, (LPCWAVEFORMATEX)&wf, (unsigned long) 0, (unsigned long) NULL,0L);
+	err = waveOutOpen( &hWaveOut, 0, (LPCWAVEFORMATEX)&wf, (unsigned long) 0, (unsigned long) NULL,0L);
 	
 	if(err)
 	{

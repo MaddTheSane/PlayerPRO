@@ -21,7 +21,12 @@
 //
 /********************						***********************/
 
+#ifdef __APPLE__
 #include <PlayerPROCore/PlayerPROCore.h>
+#else
+#include "RDriver.h"
+#include "FileUtils.h"
+#endif
 #include "UMX.h"
 
 static short FoundNote( short Period)
@@ -67,7 +72,7 @@ static void Convert16to8( Ptr srcPtr, Ptr destPtr, size_t size)
 	}
 }
 
-#ifndef _SRC
+#if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;
@@ -859,12 +864,12 @@ static OSErr TestUMXFile( Ptr AlienFile, long EOFo)
 	//long		PatternSize, i;
 	//short		tracksNo;
 	int i;
-	char 		modsig[4] = "M.K.";
-    char 		mod6sig[4] = "6CHN";
-    char 		mod8sig[4] = "8CHN";
-    char 		s3msig[4] = "SCRM";
-    char 		itsig[4] = "IMPM";
-    char 		xmsig[16] = "Extended Module:";
+	char 		modsig[5] = "M.K.";
+    char 		mod6sig[5] = "6CHN";
+    char 		mod8sig[5] = "8CHN";
+    char 		s3msig[5] = "SCRM";
+    char 		itsig[5] = "IMPM";
+    char 		xmsig[17] = "Extended Module:";
 	
 	
 	for (i = 0; i < 5000 - 64; i++)
@@ -895,8 +900,8 @@ static OSErr TestUMXFile( Ptr AlienFile, long EOFo)
 
 #ifndef _MAC_H
 
-extern "C" EXP OSErr FillPlug( PlugInfo *p);
-extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+extern EXP OSErr FillPlug( PlugInfo *p);
+extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {

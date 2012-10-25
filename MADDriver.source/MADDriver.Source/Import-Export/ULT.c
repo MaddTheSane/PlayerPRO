@@ -21,7 +21,12 @@
 //
 /********************						***********************/
 
+#ifdef __APPLE__
 #include <PlayerPROCore/PlayerPROCore.h>
+#else
+#include "RDriver.h"
+#include "FileUtils.h"
+#endif
 #include "ULT.h"
 
 #define LOW(para) ((para) & 15)
@@ -49,6 +54,7 @@ static inline UInt32 Tdecode32( void *msg_buf)
 }
 #endif
 
+#if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;
@@ -56,6 +62,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
+#endif
 
 static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
@@ -304,8 +311,8 @@ static OSErr TestULTFile( Ptr AlienFile)
 
 #ifndef _MAC_H
 
-extern "C" EXP OSErr FillPlug( PlugInfo *p);
-extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+extern EXP OSErr FillPlug( PlugInfo *p);
+extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {

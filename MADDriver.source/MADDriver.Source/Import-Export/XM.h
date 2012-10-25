@@ -284,7 +284,7 @@
  ============================================================================
 */
 
-#include <PlayerPROCore/PPDefs.h>
+//#include <PlayerPROCore/PPDefs.h>
 
 #if PRAGMA_STRUCT_ALIGN
 #pragma options align=mac68k

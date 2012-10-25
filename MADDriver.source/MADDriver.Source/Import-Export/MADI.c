@@ -21,7 +21,12 @@
 //
 /********************						***********************/
 
+#ifdef __APPLE__
 #include <PlayerPROCore/PlayerPROCore.h>
+#else
+#include "RDriver.h"
+#include "FileUtils.h"
+#endif
 #include "MOD.h"
 #include "MADI.h"
 
@@ -145,6 +150,7 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 	long		inOutCount, OffSetToSample = 0, z;
 	OSErr		theErr = noErr;
 	Ptr			tempPtr = NULL;
+	OSType MADType = 0;
 	SInt32		finetune[16] =
 	{
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
@@ -160,7 +166,7 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 	
 	
 /**** HEADER ****/
-	OSType MADType = oldMAD->MAD;
+	MADType = oldMAD->MAD;
 	PPBE32(&MADType);
 	if( MADType != 'MADI') return MADFileNotSupportedByThisPlug;
 	OffSetToSample += sizeof( oldMADSpec);
@@ -425,8 +431,8 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 
 #ifndef _MAC_H
 
-extern "C" EXP OSErr FillPlug( PlugInfo *p);
-extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+extern EXP OSErr FillPlug( PlugInfo *p);
+extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
