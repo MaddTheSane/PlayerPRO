@@ -26,6 +26,7 @@
 #define inline __inline
 #define true TRUE
 #define false FALSE
+#define __LITTLE_ENDIAN__
 #endif
 
 typedef unsigned char 	Byte;
