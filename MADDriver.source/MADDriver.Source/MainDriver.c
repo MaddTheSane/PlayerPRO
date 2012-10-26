@@ -518,6 +518,20 @@ void MADGetBestDriver( MADDriverSettings	*Init)
 	Init->oversampling		= 1;
 	Init->driverMode		= CoreAudioDriver;
 #else
+#ifdef WIN32
+	Init->outPutBits		= 16;
+	Init->outPutMode		= DeluxeStereoOutPut;
+	Init->outPutRate		= 44100;
+	Init->numChn			= 4;
+	Init->surround			= false;
+	Init->repeatMusic		= true;
+	Init->MicroDelaySize	= 25;
+	Init->Reverb			= false;
+	Init->ReverbSize		= 100;
+	Init->ReverbStrength	= 20;
+	Init->oversampling		= 1;
+	Init->driverMode		= DirectSound95NT;
+#endif
 #endif
 }
 
@@ -545,7 +559,7 @@ OSErr MADCreateReverb( MADDriverRec *intDriver)
 		switch( intDriver->DriverSettings.outPutBits)
 		{
 			case 8:
-				intDriver->ReverbPtr = malloc( intDriver->RDelay * 2L);
+				intDriver->ReverbPtr = calloc( intDriver->RDelay * 2L, 1);
 				if( intDriver->ReverbPtr == NULL) return MADNeedMemory;
 				for( i = 0; i < intDriver->RDelay * 2L; i++) intDriver->ReverbPtr[ i] = 0x80;
 				break;
@@ -730,11 +744,11 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	}
 	
 	/*************************/
-	
-#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
-#else
-	DriverInitParam->oversampling = 1;			// We do NOT support oversampling on NON-64bits processor
-#endif
+	//Most modern compilers can do 64-bit math, so ignoring
+//#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
+//#else
+//	DriverInitParam->oversampling = 1;			// We do NOT support oversampling on NON-64bits processor
+//#endif
 	
 	MDriver = (MADDriverRec*) calloc( sizeof( MADDriverRec), 1);
 	
@@ -819,6 +833,25 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 		break;
 #endif
 		
+#ifdef _ESOUND
+		case ESDDriver:
+			MDriver->ASCBUFFER = 1024L * MDriver->DriverSettings.oversampling;
+			break;
+#endif
+			
+#ifdef LINUX
+		case ALSADriver:
+			MDriver->ASCBUFFER = 1024L * MDriver->DriverSettings.oversampling;
+			break;
+#endif
+			
+#ifdef _OSSSOUND
+		case OSSDriver:
+			MDriver->ASCBUFFER = 1024L * MDriver->DriverSettings.oversampling;
+			break;
+#endif
+
+			
 		case NoHardwareDriver:
 			MDriver->ASCBUFFER = 1024L * MDriver->DriverSettings.oversampling;
 		break;
@@ -970,9 +1003,8 @@ OSErr MADDisposeDriver( MADDriverRec* MDriver)
 	return noErr;
 }
 
-OSErr MADInitLibrary( char *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
+OSErr MADInitLibrary( char *PlugsFolderName, Boolean unused, MADLibrary **lib)
 {
-	OSErr errmess = noErr;
 	UInt32 	i, mytab[ 12] =
 	{
 		1712*16, 1616*16, 1524*16, 1440*16, 1356*16, 1280*16,
@@ -1010,7 +1042,9 @@ OSErr MADDisposeLibrary( MADLibrary *MLibrary)
 
 OSErr MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned char *MissingPlugs)
 {
+#if MAINPLAYERPRO
 	short		alpha, x, i, index;
+#endif
 	Boolean		needToReset;
 
 	if( !driver) return -1;
@@ -1567,7 +1601,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 	*music = NULL;
 	
 	MDriver = (MADMusic*) calloc( sizeof( MADMusic), 1);
-	if( !MDriver) return -1L;
+	if( !MDriver) return MADNeedMemory;
 	
 	MDriver->musicUnderModification = false;
 	

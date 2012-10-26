@@ -147,6 +147,7 @@ void			UpdateTracksNumber( MADDriverRec *);
 OSErr 		MADCreateVolumeTable( MADDriverRec *intDriver);
 void			MADDisposeVolumeTable( MADDriverRec *intDriver);
 
+	//TODO: either migrate all these functions to PlayerPROCore or remove them from the header.
 void AllNoteOff( MADDriverRec *intDriver);
 Boolean	MADIsPressed( unsigned char* km2, unsigned short k);
 OSErr MADCreateTiming( MADDriverRec *intDriver);
@@ -256,13 +257,8 @@ short FindAFreeChannel( MADDriverRec *intDriver);
 
 // Effects.c
 
-void BL32( void *msg_buf);
-void BL16( void *msg_buf);
-
 void parse_slidevol(Channel *ch, Byte Arg);
 void ConvertTo64Rows( MADMusic *music);
-//void						BL32( void *msg_buf);
-//void						BL16( void *msg_buf);
 
 struct __MADDriverRec
 {
@@ -274,7 +270,7 @@ struct __MADDriverRec
 	
 	/**  Current music in memory, loaded with RLoadMusic() by example **/
 	
-	MADMusic				*curMusic;										// Current music played by this driver, it can be 0L !!!
+	MADMusic				*curMusic;										// Current music played by this driver, it can be NULL !!!
 	MADLibrary				*lib;
 	
 	/**  Drivers variables **/
@@ -285,7 +281,7 @@ struct __MADDriverRec
 	short					PartitionReader;								// Current position in pattern (0...999)
 	short					Pat;											// Current ID Pattern, see 'Patterns list'
 	short					PL;												// Current position in partition, see 'Partition list'
-	SInt32					VolGlobal;										// Global SOFTWARE volume (This is NOT Mac hardware volume!) from 0 to 64
+	short					VolGlobal;										// Global SOFTWARE volume (This is NOT Mac hardware volume!) from 0 to 64
 	short					speed;											// Current speed, see speed Effect
 	short					finespeed;										// Current finespeed, see speed Effect
 	short					InstruTube[ MAXINSTRU];							// Used in 'Instrument View' Window - View menu
@@ -334,7 +330,7 @@ struct __MADDriverRec
 	unsigned long			curTime;
 	Boolean					XMLinear, MODMode, JumpToNextPattern, endPattern, MADPlay;
 	SInt32					ASCBUFFER;
-	SInt32					BufSize;
+	size_t					BufSize;
 	SInt32					VSYNC, BufCounter, BytesToGenerate;
 	short					vibrato_table[ 64];
 	short					SendMIDIClockData;	//gOutNodeRefNum, MIDIPortRefNum

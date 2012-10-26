@@ -329,14 +329,14 @@ typedef struct MADDriverSettings
 //	Actual plug have to support these orders:
 //
 //	order: 'TEST':	check the AlienFile to see if your Plug really supports it.
-//	order: 'IMPT':	convert the AlienFile into a MADMusic. You have to allocate MADMusic.
+//	order: 'IMPL':	convert the AlienFile into a MADMusic. You have to allocate MADMusic.
 //	order: 'INFO':	Fill PPInfoRec structure.
 //	order: 'EXPT':	Convert the MADMusic into AlienFile. You have to create the AlienFile.
 //					Don't delete the MADMusic Structure after conversion !!
 //
-//	An IMPORT plug have to support these orders: 'TEST', 'IMPT', 'INFO'
+//	An IMPORT plug have to support these orders: 'TEST', 'IMPL', 'INFO'
 //	An EXPORT plug have to support these orders: 'EXPT'
-// 	An IMPORT/EXPORT plug have to support these orders: 'TEST', 'IMPT', 'INFO', 'EXPT'
+// 	An IMPORT/EXPORT plug have to support these orders: 'TEST', 'IMPL', 'INFO', 'EXPT'
 //
 //
 /********************						***********************/
@@ -364,11 +364,11 @@ typedef struct PPInfoRec
 /********************						***********************/
 
 enum PPPlugModes {
-	MADPlugImport = 'IMPL',
-	MADPlugExport = 'EXPL',
-	MADPlugInfo = 'INFO',
-	MADPlugTest = 'TEST',
-	MADPlugImportExport = 'EXIM'
+	MADPlugImport = (OSType)'IMPL',
+	MADPlugExport = (OSType)'EXPL',
+	MADPlugInfo = (OSType)'INFO',
+	MADPlugTest = (OSType)'TEST',
+	MADPlugImportExport = (OSType)'EXIM'
 };
 
 #ifdef _MAC_H
@@ -381,7 +381,7 @@ typedef struct PlugInfo
 	CFStringRef	MenuName;										// Plug name
 	CFStringRef	AuthorString;									// Plug author
 	CFBundleRef	file;											// Location of plug file
-	char		type[ 5];										// OSType of file support. Kept for legacy reasons.
+	char		type[ 5];										// OSType of file support.
 	CFArrayRef	UTItypes;										// CFStrings of supported UTIs
 	OSType		mode;											// Mode support : Import +/ Export
 	UInt32		version;										// Plug-in version
@@ -487,7 +487,7 @@ typedef struct
 	short				VSTid;
 	CFStringRef			name;
 	Boolean				Active;
-	CFBundleRef			connID; //TODO: use something more 64-bit friendly
+	CFBundleRef			connID;
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
 
@@ -534,9 +534,7 @@ extern "C" {
 void MyDebugStr( short, char*, char*);								// Internal Debugger function, NORMALLY it is never called, only when FATAL error
 																	// You NEED to provide this function, see examples!
 
-PPEXPORT MADLibrary* MADGetMADLibraryPtr();									// Get MADDriver structure pointer.
-
-PPEXPORT OSErr	MADInitLibrary( char *PlugsFolderName, Boolean sysMemory, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
+PPEXPORT OSErr	MADInitLibrary( char *PlugsFolderName, Boolean unused, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
 
 PPEXPORT OSErr	MADDisposeLibrary( MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
