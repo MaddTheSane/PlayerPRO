@@ -439,10 +439,8 @@ typedef struct MADLibrary
 
 } MADLibrary;
 
-#ifdef WIN32
-#define callback __callback
-#else
-#define callback
+#ifndef WIN32
+#define __callback
 #endif
 
 typedef struct AEffect AEffect;
@@ -450,11 +448,11 @@ typedef struct AEffect AEffect;
 struct AEffect
 {
 	SInt32 magic;
-	SInt32 (callback *dispatcher)(AEffect *effect, SInt32 opCode, SInt32 index, SInt32 value,
+	SInt32 (__callback *dispatcher)(AEffect *effect, SInt32 opCode, SInt32 index, SInt32 value,
 		void *ptr, float opt);
-	void (callback *process)(AEffect *effect, float **inputs, float **outputs, SInt32 sampleframes);
-	void (callback *setParameter)(AEffect *effect, SInt32 index, float parameter);
-	float (callback *getParameter)(AEffect *effect, SInt32 index);
+	void (__callback *process)(AEffect *effect, float **inputs, float **outputs, SInt32 sampleframes);
+	void (__callback *setParameter)(AEffect *effect, SInt32 index, float parameter);
+	float (__callback *getParameter)(AEffect *effect, SInt32 index);
 
 	SInt32 numPrograms;
 	SInt32 numParams;
@@ -471,7 +469,7 @@ struct AEffect
 	void *user;
 	SInt32 uniqueID;
 	SInt32 version;
-	void (callback *processReplacing)(AEffect *effect, float **inputs, float **outputs, SInt32 sampleframes);
+	void (__callback *processReplacing)(AEffect *effect, float **inputs, float **outputs, SInt32 sampleframes);
 	char future[60];
 };
 
@@ -491,7 +489,6 @@ typedef struct __VSTEffect
 	CFBundleRef			connID;
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
-
 }	VSTEffect;
 #endif
 
@@ -505,7 +502,6 @@ typedef struct __VSTEffect
 	HMODULE				connID;
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
-
 }	VSTEffect;
 #endif
 
@@ -519,7 +515,6 @@ typedef struct __VSTEffect
 	void				*connID;
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
-
 }	VSTEffect;
 #endif
 
