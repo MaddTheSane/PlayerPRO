@@ -104,6 +104,7 @@ enum
 	MADCannotFindPlug				= -10,
 	MADMusicHasNoDriver				= -11,
 	MADDriverHasNoMusic				= -12,
+	MADSoundSystemUnavailable		= -13,
 	MADUnknownErr					= MADUnknowErr
 };
 

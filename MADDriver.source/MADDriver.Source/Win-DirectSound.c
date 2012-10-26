@@ -47,7 +47,7 @@ static 	Ptr 					currentBuf;
 static 	Boolean					OnOff;
 static 	long					WIN95BUFFERSIZE;
 
-char *TranslateDSError( HRESULT hr )
+static char *TranslateDSError( HRESULT hr )
 {
     switch( hr )
     {
@@ -113,7 +113,7 @@ BOOL AppCreateWritePrimaryBuffer(
     WAVEFORMATEX pcmwf;
 
     // Set up wave format structure.
-    memset(&pcmwf, 0, sizeof(PCMWAVEFORMAT));
+    memset(&pcmwf, 0, sizeof(WAVEFORMATEX));
     pcmwf.wFormatTag 		= WAVE_FORMAT_PCM;
     
     pcmwf.nChannels = 2;
@@ -290,7 +290,7 @@ static void CALLBACK TimeProc(
 		{
 			OnOff = false;
 			
-			if( !DirectSave( currentBuf, 0L, WinMADDriver))
+			if( !DirectSave( currentBuf, NULL, WinMADDriver))
 			{
 				switch( WinMADDriver->DriverSettings.outPutBits)
 				{
@@ -313,7 +313,7 @@ static void CALLBACK TimeProc(
 		{
 			OnOff = true;
 			
-			if( !DirectSave( currentBuf + WIN95BUFFERSIZE/2, 0L, WinMADDriver))
+			if( !DirectSave( currentBuf + WIN95BUFFERSIZE/2, NULL, WinMADDriver))
 			{
 				switch( WinMADDriver->DriverSettings.outPutBits)
 				{
@@ -356,7 +356,7 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 	{
 		if( !AppCreateWritePrimaryBuffer( WinMADDriver->lpDirectSound, &WinMADDriver->lpDirectSoundBuffer, hwnd, WinMADDriver))
 		{
-			WinMADDriver->lpDirectSound = 0L;
+			WinMADDriver->lpDirectSound = NULL;
 			return false;
 		}
 		if( !WinMADDriver->lpDirectSoundBuffer) return false;
@@ -364,11 +364,11 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 		// Creation succeeded.
 		WinMADDriver->lpDirectSound->lpVtbl->SetCooperativeLevel(WinMADDriver->lpDirectSound, hwnd, DSSCL_NORMAL);
 		
-		WinMADDriver->lpSwSamp = 0L;
+		WinMADDriver->lpSwSamp = NULL;
 		if( !LoadSamp(WinMADDriver->lpDirectSound, &WinMADDriver->lpSwSamp, 0L, WIN95BUFFERSIZE, DSBCAPS_LOCSOFTWARE, WinMADDriver))
 		{
 			//DEBUG debugger( "Error 2\n");		//DSBCAPS_LOCSOFTWARE
-			WinMADDriver->lpDirectSound = 0L;
+			WinMADDriver->lpDirectSound = NULL;
 			return false;
 		}
 		
@@ -396,7 +396,7 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 		else return true;
 	}
 	
-	WinMADDriver->lpDirectSound = 0L;
+	WinMADDriver->lpDirectSound = NULL;
 	
 	return false;
 }

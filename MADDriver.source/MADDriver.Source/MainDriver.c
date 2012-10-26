@@ -36,8 +36,6 @@ extern void NSLog(CFStringRef format, ...);
 
 void debugger( Ptr a) DEPRECATED_ATTRIBUTE;
 //long MYstrlen( Ptr cStr) DEPRECATED_ATTRIBUTE;
-void MYP2CStr( unsigned char *cStr) DEPRECATED_ATTRIBUTE;
-unsigned char* MYC2PStr( Ptr cStr) DEPRECATED_ATTRIBUTE;
 
 ///////////////////////////////
 
@@ -596,7 +594,7 @@ OSErr MADCreateDriverBuffer( MADDriverRec *intDriver)
 	switch( intDriver->DriverSettings.outPutMode)
 	{
 		case MonoOutPut:			BufSize = BufSize;			break;
-		case StereoOutPut:			BufSize *= 2;		break;
+		case StereoOutPut:
 		case DeluxeStereoOutPut:	BufSize *= 2;		break;
 	}
 	
@@ -641,6 +639,10 @@ OSErr MADCreateTiming( MADDriverRec *intDriver)
 
 OSErr MADChangeDriverSettings( MADDriverSettings	*DriverInitParam, MADDriverRec** returnDriver)
 {
+	if(DriverInitParam == NULL || returnDriver == NULL)
+	{
+		return MADParametersErr;
+	}
 	MADMusic	*music;
 	Boolean		playing;
 	OSErr		err;
@@ -677,7 +679,11 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	OSErr 					theErr;
 	SInt32					i;
 	MADDriverRec*			MDriver;
-	
+
+	if(DriverInitParam == NULL || lib == NULL || returnDriver == NULL)
+	{
+		return MADParametersErr;
+	}
 	*returnDriver = NULL;
 	
 	/*************************/
@@ -721,7 +727,7 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 #ifdef _ESOUND
 	   DriverInitParam->driverMode != ESDDriver &&
 #endif
-	   DriverInitParam->driverMode != NoHardwareDriver) theErr = MADParametersErr;
+	   DriverInitParam->driverMode != NoHardwareDriver) theErr = MADSoundSystemUnavailable;
 	
 	if( DriverInitParam->MicroDelaySize < 0) 		theErr = MADParametersErr;
 	if( DriverInitParam->MicroDelaySize > 1000) 	theErr = MADParametersErr;
@@ -856,6 +862,7 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 			MDriver->ASCBUFFER = 1024L * MDriver->DriverSettings.oversampling;
 		break;
 		
+#ifdef WIN32
 		case DirectSound95NT:
 			MDriver->ASCBUFFER = 7500 * MDriver->DriverSettings.oversampling;
 		break;
@@ -863,6 +870,7 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 		case Wave95NT:
 			MDriver->ASCBUFFER = 7500 * MDriver->DriverSettings.oversampling;
 		break;
+#endif
 		
 		default:
 			MDriver->DriverSettings.driverMode = NoHardwareDriver;
