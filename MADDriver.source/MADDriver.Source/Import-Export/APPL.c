@@ -70,7 +70,7 @@ static OSErr MADResetInstrument( InstrData		*curIns)
 
 static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 {
-	//TODO: ugh, yet another byteswap
+	//TODO: Better cleanup when we hit an error.
 	short 					i;
 	long 					inOutCount, OffSetToSample;
 	struct PatHeader		tempPatHeader;
@@ -89,6 +89,11 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	
 	if( MadHeader->MAD != 'MADK') return MADFileNotSupportedByThisPlug;
 	
+	PPBE16( &MadHeader->speed);
+	PPBE16( &MadHeader->tempo);
+	PPBE32( &MadHeader->ESpeed);
+	PPBE32( &MadHeader->EPitch);
+	
 	//////////////////
 	
 	MadFile->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
@@ -106,23 +111,48 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		inOutCount = sizeof( PatHeader);
 		BlockMoveData( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
 		
+		PPBE32( &tempPatHeader.size);
+		PPBE32( &tempPatHeader.compMode);
+		PPBE32( &tempPatHeader.patBytes);
+		PPBE32( &tempPatHeader.unused2);
+		
 		inOutCount = sizeof( PatHeader) + MadHeader->numChn * tempPatHeader.size * sizeof( Cmd);
 		MadFile->partition[ i] = (PatData*) malloc( inOutCount);
 		if( MadFile->partition[ i] == NULL) return MADNeedMemory;
 		
 		BlockMoveData( MADPtr + OffSetToSample, MadFile->partition[ i], inOutCount);
+		PPBE32( &MadFile->partition[ i]->header.size);
+		PPBE32( &MadFile->partition[ i]->header.compMode);
+		PPBE32( &MadFile->partition[ i]->header.patBytes);
+		PPBE32( &MadFile->partition[ i]->header.unused2);
 		OffSetToSample += inOutCount;
 	}
 	
 	/**** INSTRUMENTS ****/
 	
-	inOutCount = sizeof( InstrData) * (long) MadFile->header->numInstru;
+	inOutCount = sizeof( InstrData) * MadFile->header->numInstru;
 	BlockMoveData( MADPtr + OffSetToSample, MadFile->fid, inOutCount);
 	OffSetToSample += inOutCount;
 	
 	for( i = MadFile->header->numInstru-1; i >= 0 ; i--)
 	{
 		InstrData	*curIns = &MadFile->fid[ i];
+		int x = 0;
+		PPBE16( &curIns->numSamples);
+		PPBE16( &curIns->firstSample);
+		PPBE16( &curIns->volFade);
+		
+		for( x = 0; x < 12; x++)
+		{
+			PPBE16( &curIns->volEnv[ x].pos);
+			PPBE16( &curIns->volEnv[ x].val);
+		}
+		
+		for( x = 0; x < 12; x++)
+		{
+			PPBE16( &curIns->pannEnv[ x].pos);
+			PPBE16( &curIns->pannEnv[ x].val);
+		}
 		
 		if( i != curIns->no)
 		{
@@ -152,6 +182,11 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			
 			// ** Read Sample DATA
 			
+			PPBE32( &curData->size);
+			PPBE32( &curData->loopBeg);
+			PPBE32( &curData->loopSize);
+			PPBE16( &curData->c2spd);
+
 			inOutCount = curData->size;
 			
 			curData->data = malloc( inOutCount);
@@ -177,9 +212,17 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		{
 			if( MadFile->header->globalEffect[ i])
 			{
+				int x = 0;
 				inOutCount = sizeof( FXSets);
 				BlockMoveData( MADPtr + OffSetToSample, &MadFile->sets[ alpha], inOutCount);
 				OffSetToSample += inOutCount;
+				PPBE16(&MadFile->sets[ alpha].id);
+				PPBE16(&MadFile->sets[ alpha].noArg);
+				PPBE16(&MadFile->sets[ alpha].track);
+				PPBE32(&MadFile->sets[ alpha].FXID);
+				for (x = 0; x < 100; x++) {
+					PPBE32(&MadFile->sets[ alpha].values[x]);
+				}
 				alpha++;
 			}
 		}
@@ -190,9 +233,17 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			{
 				if( MadFile->header->chanEffect[ i][ x])
 				{
+					int y = 0;
 					inOutCount = sizeof( FXSets);
 					BlockMoveData( MADPtr + OffSetToSample, &MadFile->sets[ alpha], inOutCount);
 					OffSetToSample += inOutCount;
+					PPBE16(&MadFile->sets[ alpha].id);
+					PPBE16(&MadFile->sets[ alpha].noArg);
+					PPBE16(&MadFile->sets[ alpha].track);
+					PPBE32(&MadFile->sets[ alpha].FXID);
+					for (y = 0; y < 100; y++) {
+						PPBE32(&MadFile->sets[ alpha].values[y]);
+					}
 					alpha++;
 				}
 			}
@@ -205,7 +256,9 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 
 static OSErr TESTMADH( MADSpec* MADPtr)
 {
-	if( MADPtr->MAD == 'MADK') return noErr;
+	OSType madType = MADPtr->MAD;
+	PPBE32(&madType);
+	if( madType == 'MADK') return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -222,6 +275,7 @@ static OSErr INFOMADF( MADSpec* MADPtr, PPInfoRec *info)
 	
 	info->totalTracks		= MADPtr->numChn;
 	info->signature			= MADPtr->MAD;
+	PPBE32(&info->signature);
 	
 	info->totalInstruments	= MADPtr->numInstru;
 	
@@ -238,22 +292,18 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	OSErr			myErr;
 	FSRef			fileRef;
 	ResFileRefNum	iFileRefI;
-	short			i;
 	Handle			myRes;
 	Boolean			hasToClose = TRUE;
-	HFSUniStr255	RFName;
 	
-	FSPathMakeRef(AlienFileName, &fileRef, NULL);
-	
-	FSGetResourceForkName(&RFName);
+	if (FSPathMakeRef((UInt8*)AlienFileName, &fileRef, NULL) != noErr) return MADReadingErr;
 	
 	myErr = noErr;
 	
 	switch( order)
 	{
 		case 'IMPL':
-			FSOpenResourceFile(&fileRef, RFName.length, RFName.unicode, fsRdPerm, &iFileRefI);
-			if( iFileRefI == -1) myErr = MADUnknownErr;
+			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
+			if( iFileRefI == -1) myErr = MADReadingErr;
 			else
 			{
 				UseResFile( iFileRefI);
@@ -269,15 +319,15 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					HUnlock( myRes);
 					DisposeHandle( myRes);
 				}
-				else myErr = MADUnknowErr;
+				else myErr = MADReadingErr;
 				
 				if( hasToClose) CloseResFile( iFileRefI);
 			}
 		break;
 		
 		case 'TEST':
-			FSOpenResourceFile(&fileRef, RFName.length, RFName.unicode, fsRdPerm, &iFileRefI);
-			if( iFileRefI == -1) myErr = MADUnknowErr;
+			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
+			if( iFileRefI == -1) myErr = MADReadingErr;
 			else
 			{
 				UseResFile( iFileRefI);
@@ -294,15 +344,15 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					HUnlock( myRes);
 					DisposeHandle( myRes);
 				}
-				else myErr = MADUnknowErr;
+				else myErr = MADReadingErr;
 				
 				if( hasToClose) CloseResFile( iFileRefI);
 			}
 		break;
 		
 		case 'INFO':
-			FSOpenResourceFile(&fileRef, RFName.length, RFName.unicode, fsRdPerm, &iFileRefI);
-			if( iFileRefI == -1) myErr = MADUnknowErr;
+			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
+			if( iFileRefI == -1) myErr = MADReadingErr;
 			else
 			{
 				UseResFile( iFileRefI);
@@ -320,7 +370,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					HUnlock( myRes);
 					DisposeHandle( myRes);
 				}
-				else myErr = MADUnknowErr;
+				else myErr = MADReadingErr;
 				
 				if( hasToClose) CloseResFile( iFileRefI);
 			}
