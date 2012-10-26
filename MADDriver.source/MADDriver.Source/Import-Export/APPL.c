@@ -22,6 +22,8 @@
 /********************						***********************/
 
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <Carbon/Carbon.h>
+#define BlockMoveData(x, y, z) memmove(y, x, z)
 #include "MOD.h"
 
 static OSErr MADResetInstrument( InstrData		*curIns)
@@ -233,22 +235,24 @@ static OSErr INFOMADF( MADSpec* MADPtr, PPInfoRec *info)
 extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	//TODO: learn how to get resource forks using POSIX commands or CoreFoundation, but not Carbon
-	OSErr		myErr;
-	short		iFileRefI, i;
-	Handle		myRes;
-	Boolean		hasToClose = FALSE;
-	FSSpec		AlienFileFSSpec;
+	OSErr			myErr;
+	FSRef			fileRef;
+	ResFileRefNum	iFileRefI;
+	short			i;
+	Handle			myRes;
+	Boolean			hasToClose = TRUE;
+	HFSUniStr255	RFName;
 	
-	HGetVol( NULL, &AlienFileFSSpec.vRefNum, &AlienFileFSSpec.parID);
-	MYC2PStr( AlienFileName);
-	for( i = 0; i <= AlienFileName[ 0]; i++) AlienFileFSSpec.name[ i] = AlienFileName[ i];
+	FSPathMakeRef(AlienFileName, &fileRef, NULL);
+	
+	FSGetResourceForkName(&RFName);
 	
 	myErr = noErr;
 	
 	switch( order)
 	{
 		case 'IMPL':
-			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdPerm);
+			FSOpenResourceFile(&fileRef, RFName.length, RFName.unicode, fsRdPerm, &iFileRefI);
 			if( iFileRefI == -1) myErr = MADUnknownErr;
 			else
 			{
@@ -272,7 +276,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 		break;
 		
 		case 'TEST':
-			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);	
+			FSOpenResourceFile(&fileRef, RFName.length, RFName.unicode, fsRdPerm, &iFileRefI);
 			if( iFileRefI == -1) myErr = MADUnknowErr;
 			else
 			{
@@ -297,7 +301,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 		break;
 		
 		case 'INFO':
-			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);
+			FSOpenResourceFile(&fileRef, RFName.length, RFName.unicode, fsRdPerm, &iFileRefI);
 			if( iFileRefI == -1) myErr = MADUnknowErr;
 			else
 			{
@@ -326,8 +330,6 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			myErr = MADOrderNotImplemented;
 		break;
 	}
-	
-	MYP2CStr( (unsigned char*) AlienFileName);
 	
 	return myErr;
 }
