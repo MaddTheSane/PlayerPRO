@@ -639,15 +639,14 @@ OSErr MADCreateTiming( MADDriverRec *intDriver)
 
 OSErr MADChangeDriverSettings( MADDriverSettings	*DriverInitParam, MADDriverRec** returnDriver)
 {
-	if(DriverInitParam == NULL || returnDriver == NULL)
-	{
-		return MADParametersErr;
-	}
 	MADMusic	*music;
 	Boolean		playing;
 	OSErr		err;
 	long		fullTime, curTime;
-	
+	if(DriverInitParam == NULL || returnDriver == NULL)
+	{
+		return MADParametersErr;
+	}
 	music = (*returnDriver)->curMusic;
 	playing = (*returnDriver)->Reading;
 	
