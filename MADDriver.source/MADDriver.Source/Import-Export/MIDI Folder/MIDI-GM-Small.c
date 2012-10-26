@@ -58,7 +58,7 @@ short OpenDataFileQK( long dirID, short VRefNum);
 
 
 #ifdef __BIG_ENDIAN__
-#define GetNELong
+#define GetNELong(toget) toget
 #else
 #define	GetNELong(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
@@ -76,19 +76,19 @@ short OpenDataFileQK( long dirID, short VRefNum);
 #endif
 
 #ifdef __BIG_ENDIAN__
-#define GetNEShort
+#define GetNEShort(toget) toget
 #else
 #define GetNEShort(toget) EndianU16_BtoL(toget.bigEndianValue)
 #endif
 
 #ifdef __BIG_ENDIAN__
-#define GetNEOSType
+#define GetNEOSType(toget) toget
 #else
 #define GetNEOSType(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
 
 #ifdef __BIG_ENDIAN__
-#define GetNEUnsignedFixed
+#define GetNEUnsignedFixed(toget) toget
 #else
 #define	GetNEUnsignedFixed(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
@@ -713,7 +713,7 @@ void InitQuicktimeInstruments(void)
 	//	short					sS, qQ;
 	//	short 					i;
 	short					foundVRefNum, vRefNum;
-	UNFILE					iFileRef;
+	short					iFileRef;
 	long					foundDirID, dirID;
 	OSErr					iErr;
 	
@@ -731,7 +731,7 @@ void InitQuicktimeInstruments(void)
 		{
 			QuicktimeInstruAvailable = true;
 			
-			iClose( iFileRef);
+			FSClose( iFileRef);
 		}
 	}
 	
@@ -1059,7 +1059,6 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 						
 						switch( fmt.wBitsPerSample)
 						{
-								//TODO: Handle 24-bit sound?
 							case 8:
 								ConvertInstrumentIn( (Byte*) curData->data, dataAt.size);
 								break;
@@ -1303,7 +1302,7 @@ short GenerateDLSFromBundle()
 	FSRef 			bundleFSRef, rsrcRef;
 	FSSpec			file, tempDLS;
 	CFURLRef        rsrcURL;
-	short			refNum;
+	FSIORefNum		refNum;
 	OSErr			iErr;
 	ResType			theType;
 	short			i, ff = -1;
@@ -1323,6 +1322,7 @@ short GenerateDLSFromBundle()
 	bundleURL = CFURLCreateFromFSRef( kCFAllocatorDefault, &bundleFSRef);
 	
 	AudioBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL);
+	CFRelease(bundleURL);
 	if( AudioBundle == NULL) Debugger();
 	
 	

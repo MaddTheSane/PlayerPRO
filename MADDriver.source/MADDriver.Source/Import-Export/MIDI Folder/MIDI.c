@@ -23,12 +23,21 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
+#warning this code will only work on 32-bit mode, and needs the 10.6 SDK or older due to the use of the 'acur' resource type.
+#warning this code needs to be rewritten. 
+
 #include <string.h>
 
 /**************************************************************************
 **************************************************************************/
 
-unsigned char* MYC2PStr( Ptr cStr);
+static unsigned char* MYC2PStr( Ptr cStr)
+{
+	long length = strlen(cStr);
+	memmove(cStr + 1, cStr, length);
+	cStr[0] = length;
+	return (unsigned char*)cStr;
+}
 
 Boolean compMem( Ptr a, Ptr b, long s)
 {

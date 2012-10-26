@@ -9,6 +9,16 @@ typedef struct CrsrRec
 
 static	CrsrRec	MyCrsrRec;
 static	long		previousTime;
+#ifdef QD_HEADERS_ARE_PRIVATE
+//Workaround so it can build on 10.7 and later SDKs
+typedef struct Cursor {
+	short data[16];
+	short mask[16];
+	Point hotSpot;
+} Cursor, *CursPtr, **CursHandle;
+extern CursHandle GetCursor(short);
+extern void SetCursor(const Cursor *);
+#endif
 static	Cursor	*myCursor;
 
 void InitRollCrsr(void)

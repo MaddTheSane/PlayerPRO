@@ -11,6 +11,8 @@
 
 //#include <cmath>
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <Carbon/Carbon.h>
+#define MADPlugNewPtrClear(x, y) NewPtrClear(x)
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,6 +20,7 @@
 #include <errno.h>
 #include "PTMID.H"
 
+#if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;
@@ -25,6 +28,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
+#endif
 
 void pStrcat(register unsigned char *s1, register unsigned char *s2)
 {
@@ -648,7 +652,7 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	theMAD->header->speed			= 	6;
 	theMAD->header->tempo			=	125;
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MIDI Plug (�Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MIDI Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	for (cSamps = 0, x = 0; x < 129; x++)
 	{

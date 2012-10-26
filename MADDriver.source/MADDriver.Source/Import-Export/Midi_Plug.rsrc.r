@@ -1,5 +1,6 @@
 #include <Carbon/Carbon.r>
 
+#if 0
 resource 'STR#' (1000) {
 	{	/* array StringArray: 4 elements */
 		/* [1] */
@@ -12,6 +13,7 @@ resource 'STR#' (1000) {
 		"Written by A.ROSSET 95"
 	}
 };
+#endif
 
 resource 'vers' (1) {
 	0x1,
@@ -133,6 +135,18 @@ resource 'CURS' (207, purgeable) {
 	{8, 7}
 };
 
+#if QD_HEADERS_ARE_PRIVATE
+//Workaround if using OS X 10.7 or later for the SDK
+type 'acur' {
+	integer = $$CountOf(CursIdArray);
+	fill word;
+	array CursIdArray {
+		integer;
+		fill word;
+	};
+};
+#endif
+
 resource 'acur' (200) {
 	{	/* array CursIdArray: 8 elements */
 		/* [1] */
@@ -154,6 +168,7 @@ resource 'acur' (200) {
 	}
 };
 
+#if 0
 resource 'BNDL' (128) {
 	'SNPL',
 	0,
@@ -302,3 +317,4 @@ resource 'FREF' (128) {
 	0,
 	""
 };
+#endif
