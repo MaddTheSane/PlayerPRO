@@ -90,7 +90,7 @@
 /*** 			  		  Error messages 						***/
 /********************						***********************/
 
-enum
+enum MADErrors
 {
 	MADNeedMemory 					= -1,
 	MADReadingErr					= -2,
@@ -261,7 +261,7 @@ typedef struct MADMusic
 /*** 			     Driver Settings definition					***/
 /********************						***********************/
 
-enum
+enum MADSoundOutput
 {
 	oldASCSoundDriver DEPRECATED_ATTRIBUTE = 1,	// MAC ONLY,	// NOT Available
 	oldAWACSoundDriver DEPRECATED_ATTRIBUTE,	// MAC ONLY		// NOT Available
@@ -482,7 +482,7 @@ typedef	SInt32 (*audioMasterCallback)(AEffect *effect, SInt32 opcode, SInt32 ind
 
 #ifdef _MAC_H
 //TODO: use OS X's native VST?
-typedef struct
+typedef struct __VSTEffect
 {
 	AEffect				*ce[ 2];
 	short				VSTid;
@@ -495,13 +495,41 @@ typedef struct
 }	VSTEffect;
 #endif
 
+#ifdef WIN32
+typedef struct __VSTEffect
+{
+	AEffect				*ce[ 2];
+	short				VSTid;
+	char				name[50];
+	Boolean				Active;
+	HMODULE				connID;
+	VSTPlugInPtr		vstMain;
+	Boolean				ProcessReplacingNotAvailable;
+
+}	VSTEffect;
+#endif
+
+#if defined(__UNIX__) && !defined(_MAC_H)
+typedef struct __VSTEffect
+{
+	AEffect				*ce[ 2];
+	short				VSTid;
+	char				name[50];
+	Boolean				Active;
+	void				*connID;
+	VSTPlugInPtr		vstMain;
+	Boolean				ProcessReplacingNotAvailable;
+
+}	VSTEffect;
+#endif
+
 typedef struct __MADDriverRec MADDriverRec;
 
 /********************						***********************/
 /*** 					   EFFECTS ID							***/
 /********************						***********************/
 
-enum {
+enum MADEffectsID {
 		arpeggioE 		= 0,	//	0x00
 		downslideE 		= 1,	//	0x01
 		upslideE 		= 2,	//	0x02
