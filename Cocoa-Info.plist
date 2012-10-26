@@ -518,6 +518,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>com.apple.bundle</string>
+				<string>com.apple.package</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPImpExpBundle</string>
