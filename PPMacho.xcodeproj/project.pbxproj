@@ -202,6 +202,7 @@
 		554E126510D6F4F800BB619C /* Propagate.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FF110D6C79D00BB619C /* Propagate.r */; };
 		554E126610D6F50500BB619C /* Revert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF410D6C79D00BB619C /* Revert.c */; };
 		554E126710D6F50500BB619C /* Revert.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FF510D6C79D00BB619C /* Revert.r */; };
+		555C125116378B3500735225 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		555E9B4E110192F900986239 /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */; };
 		55672E1C10CAD641008C5C3D /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55672E1D10CAD641008C5C3D /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
@@ -1571,6 +1572,7 @@
 		554E123010D6F3E600BB619C /* Revert.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Revert.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E125410D6F3E600BB619C /* Revert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Revert-Info.plist"; path = "../../../Revert-Info.plist"; sourceTree = "<group>"; };
 		554E15FF10D8BD0600BB619C /* FileUtils.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; lineEnding = 0; name = FileUtils.exp; path = Files/FileUtils.exp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
+		555C125016378B3500735225 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		555E9B491101912100986239 /* MIDI-Hardware-Mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Mac.c"; path = "Files/MIDI-Hardware-Mac.c"; sourceTree = "<group>"; };
 		555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = "MIDI-Hardware-OSX.c"; path = "Files/MIDI-Hardware-OSX.c"; sourceTree = "<group>"; };
 		555E9B4B1101912100986239 /* MIDI-Hardware-Stub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Stub.c"; path = "Files/MIDI-Hardware-Stub.c"; sourceTree = "<group>"; };
@@ -1985,6 +1987,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				555C125116378B3500735225 /* AudioUnit.framework in Frameworks */,
 				5573A39310B50F6000FF8B50 /* CoreAudio.framework in Frameworks */,
 				5573A39510B50F6900FF8B50 /* CoreFoundation.framework in Frameworks */,
 				554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */,
@@ -3425,6 +3428,7 @@
 		88E0C4950C2F21E500D6C081 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				555C125016378B3500735225 /* AudioUnit.framework */,
 				5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */,
 				55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */,
 				55EE8EBC100404EB00E75E63 /* CoreAudio.framework */,
