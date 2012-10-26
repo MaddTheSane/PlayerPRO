@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <Carbon/Carbon.h>
 #include "PTMID.H"
 //#include <unix.h>
 

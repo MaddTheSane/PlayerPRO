@@ -1337,10 +1337,14 @@ short GenerateDLSFromBundle()
 	
 	iErr = FSOpenFork( &rsrcRef, 0, 0, fsRdPerm, &refNum);
 	CFRelease(rsrcURL);
-	CFRelease(AudioBundle);
-	if( iErr == noErr) return refNum;
+	if( iErr == noErr)
+	{
+		CFRelease(AudioBundle);
+		return refNum;
+	}
 	
 	// Look for a resource in the main bundle by name and type.
+#if 0
 	rsrcURL = 		CFBundleCopyResourceURL( AudioBundle, 
 											CFSTR("CoreAudio"), 			//CoreAudio
 											CFSTR("rsrc"), 					//rsrc
@@ -1350,7 +1354,9 @@ short GenerateDLSFromBundle()
 	
 	iErr = FSOpenResourceFile( &rsrcRef, 0, 0, fsRdPerm, &refNum);
 	CFRelease(rsrcURL);
-	if( iErr) -1;
+	if( iErr) return -1;
+#endif
+	refNum = CFBundleOpenBundleResourceMap(AudioBundle);
 	
 	for( i = 0; i < Count1Types(); i++)
 	{
@@ -1389,7 +1395,10 @@ short GenerateDLSFromBundle()
 		}
 	}
 	
-	CloseResFile( refNum);
+	CFBundleCloseBundleResourceMap(AudioBundle, refNum);
+	CFRelease(AudioBundle);
+	
+	//CloseResFile( refNum);
 	
 	return ff;
 }
