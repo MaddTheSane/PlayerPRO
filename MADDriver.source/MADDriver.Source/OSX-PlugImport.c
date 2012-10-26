@@ -238,10 +238,8 @@ static inline CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(char *
 {
 	CFMutableArrayRef FoldLocs = CreateDefaultPluginFolderLocations();
 	CFURLRef custfolder = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (UInt8*)UserAddedPlace, strlen(UserAddedPlace), true);
-	CFURLRef absFolder = CFURLCopyAbsoluteURL(custfolder);
+	CFArrayInsertValueAtIndex(FoldLocs, 0, custfolder);
 	CFRelease(custfolder);
-	CFArrayAppendValue(FoldLocs, absFolder);
-	CFRelease(absFolder);
 	return FoldLocs;
 }
 
