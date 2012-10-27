@@ -75,7 +75,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	MADSpec					*MadHeader;
 	
 	/**** HEADER ****/
-	MadFile->header = (MADSpec*) malloc( sizeof( MADSpec));
+	MadFile->header = (MADSpec*) NewPtr( sizeof( MADSpec));
 	if( MadFile->header == NULL) return MADNeedMemory;
 	
 	OffSetToSample = 0;
@@ -94,10 +94,10 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	
 	//////////////////
 	
-	MadFile->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
+	MadFile->fid = ( InstrData*) NewPtrClear( sizeof( InstrData) * (long) MAXINSTRU);
 	if( !MadFile->fid) return MADNeedMemory;
 	
-	MadFile->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
+	MadFile->sample = ( sData**) NewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE);
 	if( !MadFile->sample) return MADNeedMemory;
 	
 	
@@ -115,7 +115,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		MOT32( &tempPatHeader.unused2);
 		
 		inOutCount = sizeof( PatHeader) + MadHeader->numChn * tempPatHeader.size * sizeof( Cmd);
-		MadFile->partition[ i] = (PatData*) malloc( inOutCount);
+		MadFile->partition[ i] = (PatData*) NewPtr( inOutCount);
 		if( MadFile->partition[ i] == NULL) return MADNeedMemory;
 		
 		BlockMoveData( MADPtr + OffSetToSample, MadFile->partition[ i], inOutCount);
@@ -170,7 +170,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			
 			// ** Read Sample header **
 			
-			curData = MadFile->sample[ i*MAXSAMPLE + x] = (sData*) malloc( sizeof( sData));
+			curData = MadFile->sample[ i*MAXSAMPLE + x] = (sData*) NewPtr( sizeof( sData));
 			if( curData == NULL) return MADNeedMemory;
 			
 			inOutCount = sizeof( sData);
@@ -187,7 +187,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			
 			inOutCount = curData->size;
 			
-			curData->data = malloc( inOutCount);
+			curData->data = NewPtr( inOutCount);
 			if( curData->data == NULL) return MADNeedMemory;
 			
 			BlockMoveData( MADPtr + OffSetToSample, curData->data, inOutCount);
@@ -202,7 +202,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	{
 		short	alpha, x;
 		
-		MadFile->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
+		MadFile->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
 		
 		alpha = 0;
 		
