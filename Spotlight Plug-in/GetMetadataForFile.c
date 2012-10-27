@@ -36,6 +36,15 @@
 
 static const CFStringRef kPPMDInstumentsList = CFSTR("net_sourceforge_playerpro_tracker_instumentlist");
 static const CFStringRef kPPMDPatternList = CFSTR("net_sourcegorge_playerpro_tracker_patternlist");
+static const CFStringRef kPPMDSignature = CFSTR("net_sourcegorge_playerpro_tracker_signature");
+static const CFStringRef kPPMDTotalPatterns = CFSTR("net_sourcegorge_playerpro_tracker_totalpatterns");
+static const CFStringRef kPPMDPartitionLength = CFSTR("net_sourcegorge_playerpro_tracker_partitionlength");
+static const CFStringRef kPPMDTotalInstruments = CFSTR("net_sourceforge_playerpro_tracker_totalinstruments");
+static const CFStringRef kPPMDTotalTracks = CFSTR("net_sourceforge_playerpro_tracker_totaltracks");
+static const CFStringRef kPPMDFormatDescription = CFSTR("net_sourceforge_playerpro_tracker_formatdescription");
+
+
+
 /* -----------------------------------------------------------------------------
     Get metadata attributes from file
    
@@ -69,29 +78,66 @@ Boolean GetMetadataForFile(void* thisInterface,
 	{
 		char		type[ 5];
 		OSType		info;
+#if 0
 		CFStringRef ostypes;
 		//Try to get the OSType of the UTI.
 		ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
 		
 		info = UTGetOSTypeFromString(ostypes);
+		CFRelease(ostypes);
 		if (!info) goto fail1;
 		
-		
+#endif
+		CFURLRef tempRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
+
+		MADMusicIdentifyCFURL(MADLib, &info, tempRef);
 		OSType2Ptr( info, type);
 
 		if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 		{
-			CFURLRef tempRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
 			OSErr err = noErr;
 			err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, info, tempRef);
-			CFRelease(tempRef);
-			if(err != noErr) goto fail1;
+			if(err != noErr)
+			{
+				CFRelease(tempRef);
+				goto fail1;
+			}
 			
-		} else goto fail1;
+		} else {
+			CFRelease(tempRef);
+			goto fail1;
+		}
 		//Set the title metadata
 		CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->header->name, kCFStringEncodingMacRoman); //TODO: Check for other encodings?
 		CFDictionarySetValue(attributes, kMDItemTitle, title);
 		CFRelease(title);
+		{
+			PPInfoRec rec;
+			char sig[5];
+			MADMusicInfoCFURL(MADLib, info, tempRef, &rec);
+			OSType2Ptr(rec.signature, sig);
+			CFStringRef CFSig = CFStringCreateWithCString(kCFAllocatorDefault, sig, kCFStringEncodingMacRoman);
+			CFDictionarySetValue(attributes, kPPMDSignature, CFSig);
+			CFRelease(CFSig);
+			CFNumberRef tempNum = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &rec.totalPatterns);
+			CFDictionarySetValue(attributes, kPPMDTotalPatterns, tempNum);
+			CFRelease(tempNum); tempNum = NULL;
+			tempNum = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &rec.partitionLength);
+			CFDictionarySetValue(attributes, tempNum, kPPMDPartitionLength);
+			CFRelease(tempNum); tempNum = NULL;
+			tempNum = CFNumberCreate(kCFAllocatorDefault, kCFNumberShortType, &rec.totalInstruments);
+			CFDictionarySetValue(attributes, kPPMDTotalInstruments, tempNum);
+			CFRelease(tempNum); tempNum = NULL;
+			tempNum = CFNumberCreate(kCFAllocatorDefault, kCFNumberShortType, &rec.totalTracks);
+			CFDictionarySetValue(attributes, kPPMDTotalTracks, tempNum);
+			CFRelease(tempNum);
+			CFStringRef FormatDes = CFStringCreateWithCString(kCFAllocatorDefault, rec.formatDescription, kCFStringEncodingMacRoman);
+			CFDictionarySetValue(attributes, kPPMDFormatDescription, FormatDes);
+			CFRelease(FormatDes);
+			
+		}
+		CFRelease(tempRef);
+
 	}
 	
 	{
