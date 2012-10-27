@@ -255,7 +255,7 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	if( !fileID)
 	{
 		free( theMAD);
-		return -1;
+		return MADReadingErr;
 	}
 	fileSize = iGetEOF( fileID);
 	
@@ -294,7 +294,6 @@ void MADInitImportPlug( MADLibrary *inMADDriver, char *PluginFolder)
 	PlugLocNums	= CFArrayGetCount( PlugLocations );
 	
 	for (i = 0; i < PlugLocNums; i++) {
-		//TODO: version checking
 		CFURLRef aPlugLoc = CFArrayGetValueAtIndex(PlugLocations, i);
 		somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, CFSTR("ppimpexp"));
 		PlugNums = CFArrayGetCount( somePlugs );
