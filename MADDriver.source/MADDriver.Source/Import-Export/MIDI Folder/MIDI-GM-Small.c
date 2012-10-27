@@ -203,7 +203,7 @@ void pStrcat(register unsigned char *s1, register unsigned char *s2);
 void OctavesMIDIName(short	id, Str255	String)
 {
 	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
-									/*	{'Do','Do#','RŽ','RŽ#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
+									/*	{'Do','Do#','RÃ©','RÃ©#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
 	Str255		WorkStr;
 	
 	if( id == 0xFF)
@@ -257,7 +257,7 @@ short OpenResFileQK( long dirID, short VRefNum)
 	FSSpec			spec;
 	short			ret;
 	
-	pStrcpy( spec.name, "\pQuickTimeª Musical Instruments");
+	pStrcpy( spec.name, "\pQuickTimeâ„¢ Musical Instruments");
 	spec.vRefNum = VRefNum;
 	spec.parID = dirID;
 	
