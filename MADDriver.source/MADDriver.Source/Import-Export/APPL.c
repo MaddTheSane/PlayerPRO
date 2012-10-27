@@ -322,7 +322,7 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 		break;
 		
 		case 'TEST':
-			iFileRefI = FSOpenResFile( &AlienRef, fsRdWrPerm);	
+			iFileRefI = FSOpenResFile( &AlienRef, fsRdPerm);	
 			if( iFileRefI == -1) myErr = MADUnknowErr;
 			else
 			{
@@ -347,7 +347,7 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 		break;
 		
 		case 'INFO':
-			iFileRefI = FSOpenResFile( &AlienRef, fsRdWrPerm);
+			iFileRefI = FSOpenResFile( &AlienRef, fsRdPerm);
 			if( iFileRefI == -1) myErr = MADUnknowErr;
 			else
 			{
