@@ -1,7 +1,10 @@
 #include <Carbon/Carbon.h>
 #include <CoreFoundation/CFPlugInCOM.h>
 #include "MAD.h"
+#include "RDriver.h"
+#include "RDriverInt.h"
 #include "PPPlug.h"
+#include "PPPrivate.h"
 
 #ifdef __OBJC__
 #include <Cocoa/Cocoa.h>
