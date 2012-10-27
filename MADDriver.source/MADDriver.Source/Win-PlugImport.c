@@ -126,7 +126,7 @@ OSErr	PPImportFile( MADLibrary* inMADDriver, char	*kindFile, char	*AlienFile, MA
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
 			*theNewMAD = (MADMusic*) calloc( sizeof( MADMusic), 1);
-			if( !*theNewMAD) return -1L;
+			if( !*theNewMAD) return MADNeedMemory;
 			
 			return( CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec));
 		}
@@ -145,7 +145,7 @@ OSErr	PPIdentifyFile( MADLibrary* inMADDriver, char	*type, Ptr AlienFile)
 	
 	// Check if we have access to this file
 	refNum = iFileOpen( AlienFile);
-	if( !refNum) return -1;
+	if( !refNum) return MADReadingErr;
 	iClose( refNum);
 	
 	// Is it a MAD file?
@@ -158,7 +158,7 @@ OSErr	PPIdentifyFile( MADLibrary* inMADDriver, char	*type, Ptr AlienFile)
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( CallImportPlug( inMADDriver, i, 'TEST', AlienFile, 0L, &InfoRec) == noErr)
+		if( CallImportPlug( inMADDriver, i, 'TEST', AlienFile, NULL, &InfoRec) == noErr)
 		{
 			strcpy( type, inMADDriver->ThePlug[ i].type);
 			
@@ -276,4 +276,5 @@ void CloseImportPlug( MADLibrary* inMADDriver)
 	{
 			FreeLibrary( inMADDriver->ThePlug[ i].hLibrary);
 	}
+	free(inMADDriver->ThePlug); inMADDriver->ThePlug = NULL;
 }
