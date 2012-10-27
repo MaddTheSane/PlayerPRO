@@ -141,12 +141,6 @@ static void _deallocCFImpExpPlugType( CFImpExpPlugType *myInstance )
     }
 }
 
-//Compatibility with newer plug-in architecture
-EXP PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *madFile, PPInfoRec *info, MADDriverSettings *init)
-{
-	return PLUGMAIN(order, AlienFileName, madFile, info, init);
-}
-
 EXP void * PLUGINFACTORY( CFAllocatorRef allocator, CFUUIDRef typeID )
 {
 	
