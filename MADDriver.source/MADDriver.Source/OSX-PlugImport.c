@@ -579,6 +579,7 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 				type = '    ';
 				BlockMoveData( inMADDriver->ThePlug[ i].type, &type, xx);
 				
+				MOT32(&type);
 				return type;
 			}
 			x++;

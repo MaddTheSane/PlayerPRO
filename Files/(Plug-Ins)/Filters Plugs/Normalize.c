@@ -84,7 +84,7 @@ OSErr mainNormalize(sData					*theData,
 			
 			if( peak != 0)
 			{
-				peak = ((long)0x8000 * 0x10000) / peak;
+				peak = ((unsigned long)0x8000 * 0x10000) / peak;
 				
 				SamplePtr = (short*) theData->data + (SelectionStart / 2);
 				for( i = 0; i < (SelectionEnd - SelectionStart) / 2; i++)
