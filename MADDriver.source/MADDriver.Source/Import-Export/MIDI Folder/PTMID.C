@@ -48,6 +48,10 @@ static void Init(void)
 	}
 }
 
+#ifdef QD_HEADERS_ARE_PRIVATE
+extern void InitCursor();
+#endif
+
 void Settings()
 {
 	short		itemHit;

@@ -19,7 +19,7 @@ typedef struct Cursor {
 extern CursHandle GetCursor(short);
 extern void SetCursor(const Cursor *);
 #endif
-static	Cursor	*myCursor;
+static	Cursor	*myCursor = NULL;
 
 void InitRollCrsr(void)
 {

@@ -537,10 +537,14 @@ int PutpatternsPtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *ini
 									else
 										iT2 = 255;
 								else if (33 > iT2)
+								{
 									if (30 > iT2)
+									{
 										iT2 = 33;
-									else
+									} else {
 										iT2 = 0;
+									}
+								}
 								
 								if (0 != iT2)					/** If we can allow for ~10% bpm variance **/
 								{

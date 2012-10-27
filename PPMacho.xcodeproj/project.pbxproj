@@ -335,7 +335,6 @@
 		5586889310BF67F100FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		558688A210BF683000FCC24D /* MIDI-GM-Small.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340EC10BB5368005208D1 /* MIDI-GM-Small.c */; };
 		558688A310BF683100FCC24D /* MIDI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340ED10BB5368005208D1 /* MIDI.c */; };
-		558688A410BF683200FCC24D /* Progress.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340EF10BB5368005208D1 /* Progress.c */; };
 		558688A510BF683300FCC24D /* PTMID.C in Sources */ = {isa = PBXBuildFile; fileRef = 553340F010BB5368005208D1 /* PTMID.C */; };
 		558688A610BF683400FCC24D /* PTMIDINP.C in Sources */ = {isa = PBXBuildFile; fileRef = 553340F210BB5368005208D1 /* PTMIDINP.C */; };
 		558688A710BF683400FCC24D /* PTMIDSAV.C in Sources */ = {isa = PBXBuildFile; fileRef = 553340F310BB5368005208D1 /* PTMIDSAV.C */; };
@@ -5523,7 +5522,6 @@
 			files = (
 				558688A210BF683000FCC24D /* MIDI-GM-Small.c in Sources */,
 				558688A310BF683100FCC24D /* MIDI.c in Sources */,
-				558688A410BF683200FCC24D /* Progress.c in Sources */,
 				558688A510BF683300FCC24D /* PTMID.C in Sources */,
 				558688A610BF683400FCC24D /* PTMIDINP.C in Sources */,
 				558688A710BF683400FCC24D /* PTMIDSAV.C in Sources */,

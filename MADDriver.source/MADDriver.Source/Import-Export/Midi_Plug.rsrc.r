@@ -13,7 +13,6 @@ resource 'STR#' (1000) {
 		"Written by A.ROSSET 95"
 	}
 };
-#endif
 
 resource 'vers' (1) {
 	0x1,
@@ -24,6 +23,7 @@ resource 'vers' (1) {
 	"1.01",
 	"1.01 - ROSSET Antoine 95"
 };
+#endif
 
 resource 'DLOG' (4094, "Midi import") {
 	{154, 174, 227, 507},
@@ -71,6 +71,7 @@ resource 'DITL' (4094) {
 	}
 };
 
+#if 0
 resource 'CURS' (200, purgeable) {
 	$"0000 0000 07C0 1F30 3F08 3F08 7F04 7F04"
 	$"7FFC 41FC 41FC 21F8 21F8 19F0 07C0",
@@ -168,7 +169,6 @@ resource 'acur' (200) {
 	}
 };
 
-#if 0
 resource 'BNDL' (128) {
 	'SNPL',
 	0,

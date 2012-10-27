@@ -196,6 +196,10 @@ OSErr GetAtomDataById( MyAtom at, long type, void *data, long size);
 
 /*************************/
 
+void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
+void pStrcat(register unsigned char *s1, register unsigned char *s2);
+
+
 void OctavesMIDIName(short	id, Str255	String)
 {
 	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
