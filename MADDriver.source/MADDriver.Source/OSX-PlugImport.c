@@ -39,6 +39,9 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 		CFTypeRef OpaqueDictionaryType;
 
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugMenuNameKey);
+		if (OpaqueDictionaryType == NULL) {
+			goto badplug;
+		}
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
 			thePlug->MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
@@ -46,6 +49,9 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 		else goto badplug;
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugAuthorNameKey);
+		if (OpaqueDictionaryType == NULL) {
+			goto badplug2;
+		}
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
 			thePlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
@@ -53,6 +59,9 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 		else goto badplug2;
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugModeKey);
+		if (OpaqueDictionaryType == NULL) {
+			goto badplug3;
+		}
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
 			const char * thecOSType = NULL;
@@ -70,6 +79,9 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 		else goto badplug3;
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugUTITypesKey);
+		if (OpaqueDictionaryType == NULL) {
+			goto badplug3;
+		}
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == arraytype) {
 			thePlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, (CFArrayRef)OpaqueDictionaryType);
@@ -122,6 +134,9 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		CFTypeRef OpaqueDictionaryType;
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugTypeKey);
+		if (OpaqueDictionaryType == NULL) {
+			goto badplug;
+		}
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
 			short i;
@@ -201,7 +216,7 @@ badplug:
  * Application Contents/Frameworks/PlugIns
  */
 
-CFMutableArrayRef CreateDefaultPluginFolderLocations()
+static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 {
 	CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 5, &kCFTypeArrayCallBacks);
 	CFURLRef temp1;
