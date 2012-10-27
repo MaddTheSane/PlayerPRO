@@ -110,7 +110,7 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 		{
 			OSType theplugType;
 			CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberSInt32Type, &theplugType);
-			MOT32(&theplugType);
+			//MOT32(&theplugType);
 			FillPlug->mode = theplugType;
 		}
 		else goto badplug3;
@@ -410,7 +410,7 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 
 void GetPStrFromCFString(const CFStringRef source, Str255 pStrOut)
 {
-	CFStringGetPascalString(source, pStrOut, 255, CFStringGetSystemEncoding());
+	CFStringGetPascalString(source, pStrOut, 255, kCFStringEncodingMacRoman);
 }
 
 OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)
