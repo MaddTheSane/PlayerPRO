@@ -567,9 +567,8 @@ OSErr mainMED( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
-	short	vRefNum;
 	UNFILE	iFileRefI;
-	long	dirID, sndSize;
+	long	sndSize;
 		
 	MED_Init( init);
 
