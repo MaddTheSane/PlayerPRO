@@ -58,7 +58,7 @@ short OpenDataFileQK( long dirID, short VRefNum);
 
 
 #ifdef __BIG_ENDIAN__
-#define GetNELong
+#define GetNELong(toget) toget
 #else
 #define	GetNELong(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
@@ -1350,7 +1350,7 @@ short GenerateDLSFromBundle()
 	
 	iErr = FSOpenResourceFile( &rsrcRef, 0, 0, fsRdPerm, &refNum);
 	CFRelease(rsrcURL);
-	if( iErr) -1;
+	if( iErr) return -1;
 	
 	for( i = 0; i < Count1Types(); i++)
 	{
