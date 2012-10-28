@@ -22,10 +22,12 @@
 /********************						***********************/
 
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/RDriverInt.h>
 #include <Carbon/Carbon.h>
 #define BlockMoveData(x, y, z) memmove(y, x, z)
 #include "MOD.h"
 
+#if 0
 static OSErr MADResetInstrument( InstrData		*curIns)
 {
 	short i;
@@ -68,10 +70,46 @@ static OSErr MADResetInstrument( InstrData		*curIns)
 	return noErr;
 }
 
+static OSErr MADKillInstrument( MADMusic *music, short ins)
+{
+	short				i;
+	InstrData		*curIns;
+	Boolean			IsReading;
+	
+	if( music == NULL) return MADParametersErr;
+	
+	curIns = &music->fid[ ins];
+	
+	IsReading = music->musicUnderModification;
+	music->musicUnderModification = true;
+	
+	for( i = 0; i < curIns->numSamples; i++)
+	{
+		if( music->sample[ ins * MAXSAMPLE + i] != NULL)
+		{
+			if( music->sample[ ins * MAXSAMPLE + i]->data != NULL)
+			{
+				free( (Ptr) music->sample[ ins * MAXSAMPLE + i]->data);
+				music->sample[ ins * MAXSAMPLE + i]->data = NULL;
+			}
+			free( (Ptr) music->sample[ ins * MAXSAMPLE + i]);
+			music->sample[ ins * MAXSAMPLE + i] = NULL;
+		}
+	}
+	
+	MADResetInstrument( curIns);
+	
+	music->musicUnderModification = IsReading;
+	
+	return noErr;
+}
+#endif
+
 static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 {
 	//TODO: Better cleanup when we hit an error.
-	short 					i;
+	short 					i = 0;
+	int						x = 0;
 	long 					inOutCount, OffSetToSample;
 	struct PatHeader		tempPatHeader;
 	MADSpec					*MadHeader;
@@ -87,7 +125,11 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	MadHeader = MadFile->header;
 	PPBE32(&MadHeader->MAD);
 	
-	if( MadHeader->MAD != 'MADK') return MADFileNotSupportedByThisPlug;
+	if( MadHeader->MAD != 'MADK')
+	{
+		free(MadFile->header);
+		return MADFileNotSupportedByThisPlug;
+	}
 	
 	PPBE16( &MadHeader->speed);
 	PPBE16( &MadHeader->tempo);
@@ -97,10 +139,19 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	//////////////////
 	
 	MadFile->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
-	if( !MadFile->fid) return MADNeedMemory;
+	if( !MadFile->fid)
+	{
+		free(MadFile->header);
+		return MADNeedMemory;
+	}
 	
 	MadFile->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
-	if( !MadFile->sample) return MADNeedMemory;
+	if( !MadFile->sample)
+	{
+		free(MadFile->header);
+		free(MadFile->fid);
+		return MADNeedMemory;
+	}
 	
 	
 	/**** PARTITION ****/
@@ -118,7 +169,18 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		
 		inOutCount = sizeof( PatHeader) + MadHeader->numChn * tempPatHeader.size * sizeof( Cmd);
 		MadFile->partition[ i] = (PatData*) malloc( inOutCount);
-		if( MadFile->partition[ i] == NULL) return MADNeedMemory;
+		if( MadFile->partition[ i] == NULL)
+		{
+			for( x = 0; x < i; x++)
+			{
+				if( MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
+			}
+			free( MadFile->header);
+			free(MadFile->fid);
+			free(MadFile->sample);
+			
+			return MADNeedMemory;
+		}
 		
 		BlockMoveData( MADPtr + OffSetToSample, MadFile->partition[ i], inOutCount);
 		PPBE32( &MadFile->partition[ i]->header.size);
@@ -173,7 +235,19 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			// ** Read Sample header **
 			
 			curData = MadFile->sample[ i*MAXSAMPLE + x] = (sData*) malloc( sizeof( sData));
-			if( curData == NULL) return MADNeedMemory;
+			if( curData == NULL)
+			{
+				for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( MadFile, x);
+				
+				for( x = 0; x < MadFile->header->numPat; x++)
+				{
+					if( MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
+				}
+				free( MadFile->header);
+				
+				
+				return MADNeedMemory;
+			}
 			
 			inOutCount = sizeof( sData);
 			
@@ -190,10 +264,29 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			inOutCount = curData->size;
 			
 			curData->data = malloc( inOutCount);
-			if( curData->data == NULL) return MADNeedMemory;
+			if( curData->data == NULL)
+			{
+				for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( MadFile, x);
+				
+				for( x = 0; x < MadFile->header->numPat; x++)
+				{
+					if( MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
+				}
+				free( MadFile->header);
+				
+				return MADNeedMemory;
+			}
 			
 			BlockMoveData( MADPtr + OffSetToSample, curData->data, inOutCount);
 			OffSetToSample += inOutCount;
+			if( curData->amp == 16)
+			{
+				SInt32 	ll;
+				short	*shortPtr = (short*) curData->data;
+				
+				for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+			}
+
 		}
 	}
 	
