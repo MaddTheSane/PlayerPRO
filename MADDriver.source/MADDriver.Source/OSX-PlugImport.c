@@ -26,24 +26,6 @@ extern void NSLog(CFStringRef format, ...);
 #include "PPPrivate.h"
 #define CharlMADcheckLength 10
 
-static inline OSErr GetFSSpecFromCFBundle(FSSpecPtr out, CFBundleRef in)
-{
-	OSErr		iErr = noErr;
-	FSRef		tempRef;
-	CFURLRef	tempURL;
-	tempURL = CFBundleCopyBundleURL(in);
-	iErr = CFURLGetFSRef(tempURL, &tempRef);
-	CFRelease(tempURL);
-	if (iErr) {
-		iErr = noErr;
-	}
-	else {
-		return fnfErr;
-	}
-	
-	return FSGetCatalogInfo(&tempRef, kFSCatInfoNone, NULL, NULL, out, NULL);
-}
-
 const CFStringRef kMadPlugMenuNameKey =		CFSTR("MADPlugMenuName");
 const CFStringRef kMadPlugAuthorNameKey =	CFSTR("MADPlugAuthorName");
 const CFStringRef kMadPlugUTITypesKey =		CFSTR("MADPlugUTITypes");
@@ -87,7 +69,7 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 		if (InfoDictionaryType == stringtype) {
 			short i;
 			char * tempstring = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
-			if (tempstring == NULL) goto badplug;
+			if (tempstring == NULL) goto badplug3;
 			for (i=0; i < 4; i++) {
 				if (tempstring[i] == 0) {
 					FillPlug->type[i] = ' ';
