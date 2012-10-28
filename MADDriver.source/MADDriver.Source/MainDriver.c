@@ -2251,7 +2251,7 @@ OSErr MADKillInstrument( MADMusic *music, short ins)
 	InstrData		*curIns;
 	Boolean			IsReading;
 
-	if( music == NULL) return -1;
+	if( music == NULL) return MADParametersErr;
 	
 	curIns = &music->fid[ ins];
 	
