@@ -40,6 +40,10 @@
 
 #endif
 
+#ifdef _MAC_H
+#include <AudioUnit/AudioUnit.h>
+#endif
+
 #ifdef LINUX
 #include <alsa/asoundlib.h>
 #endif

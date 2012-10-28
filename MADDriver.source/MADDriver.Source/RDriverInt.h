@@ -29,6 +29,7 @@
 #include "FileUtils.h"
 #endif
 
+
 //#define MEM {Str255 str; NumToString( FreeMem(), str); DebugStr( str);}
 
 //#define NUMBER_FINETUNES 	16
@@ -272,6 +273,7 @@ struct __MADDriverRec
 	
 #ifdef _MAC_H
 	//TODO: CoreAudio Driver
+	AudioUnit				CAAudioUnit;
 #endif
 	
 #ifdef WIN32
