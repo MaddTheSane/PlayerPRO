@@ -138,14 +138,14 @@ void 	CleanDriver( MADDriverRec *intDriver);
 
 /*** General Functions ***/
 
-OSErr 		MADKillInstrument( MADMusic*, short ins);
-OSErr 		MADKillSample( MADMusic *, short ins, short sample);
-sData			*MADCreateSample( MADMusic *MDriver, short ins, short sample);
-OSErr 		MADKillCmd( Cmd*);
-void			UpdateTracksNumber( MADDriverRec *);
+PPEXPORT OSErr 		MADKillInstrument( MADMusic*, short ins);
+PPEXPORT OSErr 		MADKillSample( MADMusic *, short ins, short sample);
+PPEXPORT sData			*MADCreateSample( MADMusic *MDriver, short ins, short sample);
+PPEXPORT OSErr 		MADKillCmd( Cmd*);
+PPEXPORT void			UpdateTracksNumber( MADDriverRec *);
 
-OSErr 		MADCreateVolumeTable( MADDriverRec *intDriver);
-void			MADDisposeVolumeTable( MADDriverRec *intDriver);
+PPEXPORT OSErr 		MADCreateVolumeTable( MADDriverRec *intDriver);
+PPEXPORT void			MADDisposeVolumeTable( MADDriverRec *intDriver);
 
 	//TODO: either migrate all these functions to PlayerPROCore or remove them from the header.
 void AllNoteOff( MADDriverRec *intDriver);
@@ -168,23 +168,23 @@ void	RemoveMODVBL(MADDriverRec *MDriver);
 void	MODRelance(void);
 void	Play(void);
 void MADPurgeTrack( MADDriverRec *intDriver);
-EXP Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
+PPEXPORT Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
 void	ChangeSpeed( void);
 void 	ClearFrequence(void);
-void	InstallDMAVBL(MADDriverRec *MDriver);
-void	RemoveDMAVBL(void);
+//void	InstallDMAVBL(MADDriverRec *MDriver);
+//void	RemoveDMAVBL(void);
 OSErr MADCreateVibrato(MADDriverRec *MDriver);
 PatData* DecompressPartitionMAD1( MADMusic *MDriver, PatData* myPat);
 PatData* CompressPartitionMAD1( MADMusic *MDriver, PatData* myPat);
-Ptr 	DoMAC3Expand( Ptr sound, long *InOutSize);
-Ptr 	DoMAC3Compress( Ptr sound, long *InOutSize);
-void 	DMAIntInstall( UInt32 refCon, Ptr handlerAddr, UInt32 vectorBit);
-void 	DMAIntRemove( UInt32 vectorBit);
-void 	GenerateSound( MADDriverRec *intDriver);
-SInt32	GetOldPeriod( short note, SInt32 c2spd, MADDriverRec *intDriver);
-OSErr MADResetInstrument( InstrData		*curIns);
-void MADCheckSpeed( MADMusic *MDriver, MADDriverRec *intDriver);
-OSErr AddSoundToMAD(	Ptr				theSound,
+//Ptr 	DoMAC3Expand( Ptr sound, long *InOutSize);
+//Ptr 	DoMAC3Compress( Ptr sound, long *InOutSize);
+//void 	DMAIntInstall( UInt32 refCon, Ptr handlerAddr, UInt32 vectorBit);
+//void 	DMAIntRemove( UInt32 vectorBit);
+PPEXPORT void 	GenerateSound( MADDriverRec *intDriver);
+PPEXPORT SInt32	GetOldPeriod( short note, SInt32 c2spd, MADDriverRec *intDriver);
+PPEXPORT OSErr MADResetInstrument( InstrData		*curIns);
+PPEXPORT void MADCheckSpeed( MADMusic *MDriver, MADDriverRec *intDriver);
+PPEXPORT OSErr AddSoundToMAD(	Ptr				theSound,
 						SInt32			lS,
 						SInt32			lE,
 						short			sS,
@@ -195,28 +195,7 @@ OSErr AddSoundToMAD(	Ptr				theSound,
 						short			ins,
 						short			*sampleID);
 
-OSErr	PPTestFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile);
-OSErr	PPInfoFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile, PPInfoRec	*InfoRec);
-OSErr	PPExportFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile, MADMusic	*theNewMAD);
-OSErr	PPImportFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile, MADMusic	**theNewMAD);
-OSErr	PPIdentifyFile( MADLibrary		*inMADDriver, char *kindFile, char	*AlienFile);
-
-OSType	GetPPPlugType( MADLibrary		*inMADDriver, short ID, OSType type);
-void	MInitImportPlug( MADLibrary		*inMADDriver, char*);
-#ifdef _MAC_H
-void	MADInitImportPlug( MADLibrary	*inMADDriver, char *PluginFolder);
-#endif
-
-void	CloseImportPlug( MADLibrary		*inMADDriver);
-OSErr	MADLoadMADFileCString( MADMusic **, Ptr fName);
-OSErr	CheckMADFile( char *AlienFile);
 OSErr	MADCopyCurrentPartition( MADMusic	*theNewMAD);
-OSErr	CallImportPlug( 	MADLibrary		*inMADDriver,
-							short			PlugNo,			// CODE du plug
-							OSType			order,
-							char			*AlienFile,
-							MADMusic		*theNewMAD,
-							PPInfoRec		*info);
 SInt32 DoVolPanning( short, Channel *ch, MADDriverRec *intDriver);
 SInt32 DoVolPanning256( short, Channel *ch, MADDriverRec *intDriver, Boolean);
 void MADKeyOFF( MADDriverRec *MDriver, short track);
@@ -232,17 +211,13 @@ void MADTickRemoverLoop8( SInt32 size, Channel *curVoice, SInt32 *ASCBuffer1, SI
 short MADGetNextReader( MADMusic *music, MADDriverRec *intDriver, short cur, short *pat);
 OSErr MADCleanCurrentMusic( MADMusic *MDriver, MADDriverRec *intDriver);
 void CloseEffect( Channel *ch, short call, MADDriverRec *intDriver);
-void MADSetMADDriverPtr( MADDriverRec* driver);
+//void MADSetMADDriverPtr( MADDriverRec* driver);
 SInt32 Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2);
 SInt32 InterpolateEnv(SInt32 p, EnvRec *a,EnvRec *b);
 void ProcessFadeOut( Channel *ch, MADDriverRec *intDriver);
 void ProcessEnvelope( Channel *ch, MADDriverRec *intDriver, Boolean);
 void StartEnvelope( Channel *ch);
 //void LoadImportPLUG( MADLibrary		*inMADDriver, short	No, FSSpec	*theSpec);
-void DirectSoundClose( MADDriverRec* driver);
-Boolean DirectSoundInit( MADDriverRec* driver);
-Boolean W95_Init( MADDriverRec* driver);
-void W95_Exit( MADDriverRec* driver);
 void StartPanning( Channel *ch);
 void SetUpCmdEffect( Channel *ch, MADDriverRec *intDriver);
 OSErr MADInitEqualizer( MADDriverRec *intDriver);
@@ -259,6 +234,10 @@ short FindAFreeChannel( MADDriverRec *intDriver);
 
 void parse_slidevol(Channel *ch, Byte Arg);
 void ConvertTo64Rows( MADMusic *music);
+
+#ifdef __cplusplus
+}
+#endif
 
 struct __MADDriverRec
 {
@@ -359,16 +338,13 @@ struct __MADDriverRec
 	SInt32					curCenterL, curCenterR;
 	
 	
-#ifdef _MAC_H
+//#ifdef _MAC_H
 	VSTEffect				*masterVST[ 10];
 	VSTEffect				*chanVST[ MAXTRACK][ 4];
 	//PPSndDoubleBufferHeader 	TheHeader;
-#endif
+//#endif
 	
 };
 	
 
-#ifdef __cplusplus
-}
-#endif
 #endif
