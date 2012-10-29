@@ -17,6 +17,7 @@
 
 OSErr initCoreAudio( MADDriverRec *inMADDriver)
 {
+	OSStatus result = noErr;
 	AudioComponentDescription theDes;
 	theDes.componentType = kAudioUnitType_Output;
     theDes.componentSubType = kAudioUnitSubType_DefaultOutput;
@@ -28,20 +29,32 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver)
 	audDes.mFormatFlags = kLinearPCMFormatFlagIsPacked;
 	audDes.mChannelsPerFrame = inMADDriver->DriverSettings.numChn;
 	audDes.mSampleRate = inMADDriver->DriverSettings.outPutRate;
-	
-	AudioComponent theComp = AudioComponentFindNext(NULL, &theDes);
-	AudioComponentInstanceNew(theComp, &inMADDriver->CAAudioUnit);
-	
-	
-	AudioUnitSetProperty (inMADDriver->CAAudioUnit,
-						  kAudioUnitProperty_StreamFormat,
-						  kAudioUnitScope_Input,
-						  0,
-						  &audDes,
-						  sizeof (audDes));
+	audDes.mBitsPerChannel = inMADDriver->DriverSettings.outPutBits;
+	audDes.mFramesPerPacket = 1;
+    audDes.mBytesPerFrame = audDes.mBitsPerChannel * audDes.mChannelsPerFrame / 8;
+    audDes.mBytesPerPacket = audDes.mBytesPerFrame * audDes.mFramesPerPacket;
 
 	
-	AudioUnitInitialize(inMADDriver->CAAudioUnit);
+	AudioComponent theComp = AudioComponentFindNext(NULL, &theDes);
+	if (theComp == NULL) {
+		return MADUnknownErr;
+	}
+	result = AudioComponentInstanceNew(theComp, &inMADDriver->CAAudioUnit);
+	
+	
+	result = AudioUnitSetProperty (inMADDriver->CAAudioUnit,
+								   kAudioUnitProperty_StreamFormat,
+								   kAudioUnitScope_Input,
+								   0,
+								   &audDes,
+								   sizeof (audDes));
+
+	
+	result = AudioUnitInitialize(inMADDriver->CAAudioUnit);
+	
+#if 0
+	result = AudioOutputUnitStart(inMADDriver->CAAudioUnit);
+#endif
 	
 	return noErr;
 }
