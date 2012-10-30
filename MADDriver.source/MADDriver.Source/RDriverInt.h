@@ -170,6 +170,7 @@ void	MODRelance(void);
 void	Play(void);
 void MADPurgeTrack( MADDriverRec *intDriver);
 PPEXPORT Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
+PPEXPORT Boolean DirectSaveAlways( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
 void	ChangeSpeed( void);
 void 	ClearFrequence(void);
 //void	InstallDMAVBL(MADDriverRec *MDriver);

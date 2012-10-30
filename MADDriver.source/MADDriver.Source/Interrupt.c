@@ -32,14 +32,14 @@ void ApplyFilters( MADDriverRec *intDriver);
 void ApplySurround( MADDriverRec *intDriver);
 void SendMIDIClock( MADDriverRec *intDriver, Byte MIDIByte);
 void SendMIDITimingClock( MADDriverRec *intDriver);
-void 	ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
-void ConvertInstrument( register	Byte	*tempPtr,	register long sSize);
+void 	ConvertInstrumentIn( register	Byte	*tempPtr,	register size_t sSize);
+void ConvertInstrument( register	Byte	*tempPtr,	register size_t sSize);
 Boolean IsVSTChanEffect( MADDriverRec *, short channel);
 
-void ProcessVisualPlug( MADDriverRec*, short*, long);
-void ProcessVSTPlug( MADDriverRec*, long*, long, short);
+void ProcessVisualPlug( MADDriverRec*, short*, SInt32);
+void ProcessVSTPlug( MADDriverRec*, SInt32*, SInt32, SInt32);
 
-void ConvertInstrument( register	Byte	*tempPtr,	register long sSize)
+void ConvertInstrument( register	Byte	*tempPtr,	register size_t sSize)
 {
 	register	Byte			val = 0x80;
 
@@ -50,7 +50,7 @@ void ConvertInstrument( register	Byte	*tempPtr,	register long sSize)
 	}
 }
 
-void ConvertInstrumentIn( register Byte *tempPtr, register long sSize)
+void ConvertInstrumentIn( register Byte *tempPtr, register size_t sSize)
 {
 	register	Byte			val = 0x80;
 
@@ -61,7 +61,7 @@ void ConvertInstrumentIn( register Byte *tempPtr, register long sSize)
 	}
 }
 
-void ConvertInstrument16( register short *tempPtr, register long sSize)
+void ConvertInstrument16( register short *tempPtr, register size_t sSize)
 {
 	register	short			val = 0x8000;
 	
@@ -74,7 +74,7 @@ void ConvertInstrument16( register short *tempPtr, register long sSize)
 	}
 }
 
-void ConvertInstrumentIn16( register short *tempPtr, register long sSize)
+void ConvertInstrumentIn16( register short *tempPtr, register size_t sSize)
 {
 	register short val = 0x8000;
 	 
@@ -87,7 +87,7 @@ void ConvertInstrumentIn16( register short *tempPtr, register long sSize)
 	}
 }
 
-void ConvertInstrumentOut16( register short *tempPtr, register long sSize)
+void ConvertInstrumentOut16( register short *tempPtr, register size_t sSize)
 {
 	/*	register	short			val = 0x8000;
 	 
@@ -135,10 +135,10 @@ void ConvertInstrumentOut16( register short *tempPtr, register long sSize)
 SInt32 DoVolPanning256( short whichChannel, Channel *ch, MADDriverRec *intDriver, Boolean Interpol)	// MAX = 256
 {
 	// Compute Volume !
-	long	pannValue, volFade;
-	long	temp;
-	long	volEnv;
-	long 	tVSYNC;
+	SInt32	pannValue, volFade;
+	SInt32	temp;
+	SInt32	volEnv;
+	SInt32 	tVSYNC;
 	
 	if( Interpol)
 	{
@@ -153,8 +153,8 @@ SInt32 DoVolPanning256( short whichChannel, Channel *ch, MADDriverRec *intDriver
 	}
 	else
 	{
-		if( !ch->volEnvActive) volEnv = ch->nextvolEnv * 256L;
-		else volEnv = 64L * 256L;
+		if( !ch->volEnvActive) volEnv = ch->nextvolEnv * 256;
+		else volEnv = 64L * 256;
 	}
 	
 	// REMETTRE LE SOUND WINDOW CENTERING !!!!!!!!
@@ -169,14 +169,14 @@ SInt32 DoVolPanning256( short whichChannel, Channel *ch, MADDriverRec *intDriver
 		volFade = Interpolate( ch->volEnvInter, 0, tVSYNC, ch->volFade, ch->nextvolFade);
 		if( volFade < 0) volFade = 0;
 	}
-	else volFade = 32767L;
+	else volFade = 32767;
 	
 	temp = ( (float) ch->vol * (float) volEnv * (float) volFade) /((float)( 16L*32767L));
 	
 	if( !intDriver->Active[ ch->TrackID]) return 0;
 	
-	if( intDriver->curMusic != NULL) temp = (temp * (long) intDriver->curMusic->header->chanVol[ ch->TrackID]) / MAX_VOLUME;
-	else temp = 256L*256L;
+	if( intDriver->curMusic != NULL) temp = (temp * (SInt32) intDriver->curMusic->header->chanVol[ ch->TrackID]) / MAX_VOLUME;
+	else temp = 256*256;
 	
 	// Compute Panning
 	
@@ -212,7 +212,7 @@ SInt32 DoVolPanning256( short whichChannel, Channel *ch, MADDriverRec *intDriver
 
 void MADCleanDriver( MADDriverRec *intDriver)
 {
-	long		i, x, size;
+	SInt32		i, x, size;
 
 /*	switch( intDriver->DriverSettings.outPutBits)
 	{
@@ -375,7 +375,7 @@ void ProcessFadeOut( Channel *ch, MADDriverRec *intDriver)
 
 void ProcessEnvelope( Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
 {
-	long		v;
+	SInt32		v;
 	InstrData	*curIns;
 
 	ch->volEnvActive = false;
@@ -498,7 +498,7 @@ void ProcessEnvelope( Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
 
 void ProcessPanning( Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
 {
-	long		v;
+	SInt32		v;
 	InstrData	*curIns;
 	
 	ch->pannEnvActive = false;
@@ -608,7 +608,7 @@ void StartPanning( Channel *ch)
 }
 
 static
-unsigned long lineartable[ 800] = {
+UInt32 lineartable[ 800] = {
 	535232,534749,534266,533784,533303,532822,532341,531861,
 	531381,530902,530423,529944,529466,528988,528511,528034,
 	527558,527082,526607,526131,525657,525183,524709,524236,
@@ -708,14 +708,14 @@ unsigned long lineartable[ 800] = {
 };
 
 
-unsigned long getfrequency(unsigned long period)
+UInt32 getfrequency(UInt32 period)
 {
 	return lineartable[period % 768] >> (period / 768);
 }
 
-long GetOld2Period( short note, long c2spd, MADDriverRec *intDriver)
+SInt32 GetOld2Period( short note, SInt32 c2spd, MADDriverRec *intDriver)
 {
-	unsigned long 	period, n,o;
+	UInt32 	period, n,o;
 	
 	if( note == 0xFF) return 4242;
 	if( note == 0xFE) return 4242;
@@ -728,7 +728,7 @@ long GetOld2Period( short note, long c2spd, MADDriverRec *intDriver)
 	n = note%12;
 	o = note/12;
 	
-	period = (unsigned long) ((unsigned long) ( 8363UL * ((unsigned long) intDriver->lib->mytab[ n]) ) >> o ) / (unsigned long) c2spd;
+	period = (UInt32) ((UInt32) ( 8363UL * ((UInt32) intDriver->lib->mytab[ n]) ) >> o ) / (UInt32) c2spd;
 	
 	if( period == 0) period = 7242;
 	
@@ -740,7 +740,7 @@ long GetOld2Period( short note, long c2spd, MADDriverRec *intDriver)
 //	return( period);
 }
 
-long getlinearperiod(short note,long c2spd, MADDriverRec *intDriver)
+SInt32 getlinearperiod(short note, SInt32 c2spd, MADDriverRec *intDriver)
 {
 	//unsigned long 	period, n, o, i;
 	//long 			mylineartab[ 12];
@@ -804,7 +804,7 @@ SInt32 GetOldPeriod( short note, SInt32 c2spd, MADDriverRec *intDriver)
 {
 	if( intDriver->XMLinear)
 	{
-		long tempLong;
+		SInt32 tempLong;
 		
 		tempLong = getlinearperiod( note, c2spd, intDriver);
 		
@@ -2151,7 +2151,7 @@ void GenerateSound( MADDriverRec *intDriver)
 	}
 }
 
-EXP Boolean DirectSaveAlways( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
+Boolean DirectSaveAlways( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
 	Ptr						ptrCopy;
 	MADDriverSettings		driverCopy;
@@ -2186,7 +2186,7 @@ EXP Boolean DirectSaveAlways( Ptr myPtr, MADDriverSettings *driverType, MADDrive
 }
 
 
-EXP Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
+Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
 	Ptr						ptrCopy;
 	MADDriverSettings		driverCopy;
