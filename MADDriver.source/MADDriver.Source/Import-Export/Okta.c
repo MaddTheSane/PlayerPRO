@@ -51,6 +51,7 @@ static inline UInt32 decode32 (void *msg_buf)
 }
 #endif
 
+#if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;
@@ -58,6 +59,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
+#endif
 
 /*
 short FoundNote( short Period)
@@ -96,6 +98,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	sectheader		*aSect;
 	//long				SectLength;
 	short			pbod_count, sbod_count;
+	OSType OKTAHeader = 0;
 	/********************************/
 
 	for( i = 0 ; i < 64; i ++) theInstrument[ i] = NULL;
@@ -109,7 +112,9 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	MaxPtr		= theOkta + MODSize;
 	theOktaPos	= theOkta;
 	
-	if( (*(long*)theOkta) != 'OKTA') //DebugStr("\pError in OKTA");
+	OKTAHeader = (*(OSType*)theOkta);
+	PPBE32(&OKTAHeader);
+	if( OKTAHeader != 'OKTA') //DebugStr("\pError in OKTA");
 		return MADIncompatibleFile;
 	
 	theOktaPos += 8L;
@@ -121,6 +126,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 		
 		theOktaPos += 8L;
 
+		PPBE32(&aSect->name);
 		switch( aSect->name)
 		{
 			case 'CMOD':
@@ -364,7 +370,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 		}
 	}
 
-	free( (Ptr) Okta);
+	free( Okta);
 
 	return noErr;
 }
@@ -390,6 +396,7 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 	sectheader		*aSect;
 	//long				SectLength;
 	short			pbod_count, sbod_count;
+	OSType OKTAHead = 0;
 	
 	//short 				i, PatMax, x, z, channel, TrueTracks;
 	//long 					sndSize, OffSetToSample, OldTicks, temp, starting;
@@ -405,7 +412,10 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 	MaxPtr		= theOkta + MODSize;
 	theOktaPos	= theOkta;
 	
-	if( (*(uint32_t*)theOkta) != 'OKTA') //DebugStr("\pError in OKTA");
+	OKTAHead = (*(uint32_t*)theOkta);
+	PPBE32(&OKTAHead);
+
+	if( OKTAHead != 'OKTA') //DebugStr("\pError in OKTA");
 		return MADIncompatibleFile;
 	
 	theOktaPos += 8L;
@@ -416,6 +426,7 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 		aSect->length = decode32 (&aSect->length);
 		
 		theOktaPos += 8L;
+		PPBE32(&aSect->name);
 
 		switch( aSect->name)
 		{
