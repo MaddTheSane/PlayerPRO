@@ -7,11 +7,104 @@
 //
 
 #import "PPMusicList.h"
-#include "RDriver.h"
+#include <PlayerPROCore/PlayerPROCore.h>
+#include <Carbon/Carbon.h>
 
 #define kMUSICLISTKEY @"Music List Key1"
 
+// GetIndString isn't supported on 64-bit Mac OS X
+// This code is emulation for GetIndString.
+// Code taken from Mozilla's Mac Eudora importer
+static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
+{
+	if (!aResource)
+		return NULL;
+	UInt8 *data = *(UInt8**)aResource;
+	UInt16 count = *(UInt16*)data;
+	PPBE16(&count);
+	
+	// First 2 bytes are the count of string that this resource has.
+	if (count < aId)
+		return NULL;
+	// skip count
+	data += 2;
+	
+	// looking for data.  data is in order
+	while (--aId > 0)
+		data = data + (*(UInt8*)data) + 1;
+	
+	return data;
+}
+
 @implementation PPMusicList
+
+- (void)loadMusicListAtURL:(NSURL *)fromURL
+{
+	
+}
+
+- (void)loadMusicList:(NSMutableArray *)newArray
+{
+	NSMutableArray *oldList = musicList;
+	musicList = [newArray retain];
+	[oldList release];
+}
+
+-(OSErr)loadOldMusicListAtURL:(NSURL *)toOpen {
+	NSMutableArray *newArray = [NSMutableArray array];
+	ResFileRefNum refNum;
+	Handle aHandle;
+	FSRef theRef;
+	StringPtr aStr, aStr2;
+	short theNo, i;
+	CFURLGetFSRef((CFURLRef)toOpen, &theRef);
+	refNum = FSOpenResFile(&theRef, fsRdPerm);
+	//FSOpenResourceFile(&theRef, ResForkName.length, ResForkName.unicode, fsRdPerm, &refNum);
+	if (ResError()) {
+		return ResError();
+	}
+	UseResFile(refNum);
+	aHandle = Get1Resource( 'STR#', 128);
+	if( aHandle == NULL)
+	{
+		CloseResFile( refNum);
+		return ResError();
+	}
+	DetachResource( aHandle);
+	
+	
+	HLock( aHandle);
+	theNo = *((short*)(*aHandle));          // number of musics...
+	PPBE16(&theNo);
+	
+	theNo /= 2;
+	
+	for(i = 0; i > theNo * 2;i += 2) {
+		aStr = GetStringFromHandle(aHandle, i);
+		aStr2 = GetStringFromHandle(aHandle, i+1);
+		CFStringRef CFaStr = NULL, CFaStr2 = NULL;
+		CFaStr = CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman);
+		CFaStr2 = CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman);
+
+		NSString *together = [NSString stringWithFormat:@"%@:%@", CFaStr, CFaStr2];
+		CFRelease(CFaStr);
+		CFRelease(CFaStr2);
+		CFURLRef tempURLRef = NULL;
+		tempURLRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)together, kCFURLHFSPathStyle, false);
+		//GetIndString( aStr, 128, i);
+		//GetIndString(aStr2, 128, i+1);
+		//pStrcat(aStr, "\p:");
+		//pStrcat(aStr, aStr2);
+		//P2CStr(aStr);
+		//[self addMusicURL:[NSURL URLWithFileSystemPathHFSStyle:[NSString stringWithUTF8String:aStr]]];
+		[newArray addObject:(id)tempURLRef];
+		CFRelease(tempURLRef);
+	}
+	HUnlock( aHandle);
+	DisposeHandle( aHandle);
+	CloseResFile(refNum);
+	[self loadMusicList:newArray];
+}
 
 - (id)init
 {
