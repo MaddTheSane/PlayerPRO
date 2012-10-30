@@ -127,14 +127,14 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 }
 
 
-- (BOOL)loadMusicFile:(NSURL*)musicToLoad
+- (BOOL)loadMusicURL:(NSURL*)musicToLoad
 {
 	MADStopMusic(MADDriver);
 	MADCleanDriver(MADDriver);
 	MADDisposeMusic(&Music, MADDriver);
 
-	OSType fileType = 0;
-	MADMusicIdentifyCFURL(MADLib, &fileType, (CFURLRef)musicToLoad);
+	char fileType[5];
+	MADMusicIdentifyCFURL(MADLib, fileType, (CFURLRef)musicToLoad);
 	MADLoadMusicCFURLFile(MADLib, &Music, fileType, (CFURLRef)musicToLoad);
 	
 	MADAttachDriverToMusic(MADDriver, Music, NULL);
@@ -174,7 +174,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	MADInitLibrary(NULL, false, &MADLib);
 	[tableView setDataSource:musicList];
 	[self MADDriverWithPreferences];
-	RegisterDebugFunc(&CocoaDebugStr);
+	RegisterDebugFunc(CocoaDebugStr);
 
 }
 - (void)applicationWillTerminate:(NSNotification *)notification
@@ -182,11 +182,11 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 }
 
--(void)preferencesDidChange:(NSNotification *)notification {
+- (void)preferencesDidChange:(NSNotification *)notification {
 	
 }
 
--(void)dealloc
+- (void)dealloc
 {
 	if (Music != NULL) {
 		MADStopMusic(MADDriver);

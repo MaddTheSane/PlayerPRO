@@ -38,11 +38,6 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 @implementation PPMusicList
 
-- (void)loadMusicListAtURL:(NSURL *)fromURL
-{
-	
-}
-
 - (void)loadMusicList:(NSMutableArray *)newArray
 {
 	NSMutableArray *oldList = musicList;
@@ -59,7 +54,6 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	short theNo, i;
 	CFURLGetFSRef((CFURLRef)toOpen, &theRef);
 	refNum = FSOpenResFile(&theRef, fsRdPerm);
-	//FSOpenResourceFile(&theRef, ResForkName.length, ResForkName.unicode, fsRdPerm, &refNum);
 	if (ResError()) {
 		return ResError();
 	}
@@ -104,6 +98,11 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	DisposeHandle( aHandle);
 	CloseResFile(refNum);
 	[self loadMusicList:newArray];
+}
+
+- (void)loadMusicListAtURL:(NSURL *)fromURL
+{
+	
 }
 
 - (id)init

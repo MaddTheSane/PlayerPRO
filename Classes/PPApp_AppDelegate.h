@@ -56,8 +56,11 @@
 - (IBAction)addMusic:(id)sender;
 - (IBAction)removeSelectedMusic:(id)sender;
 
--(void)preferencesDidChange:(NSNotification *)notification;
+- (void)preferencesDidChange:(NSNotification *)notification;
+- (void)soundPreferencesDidChange:(NSNotification *)notification;
+- (void)digitalEditorPreferencesDidChange:(NSNotification *)notification;
 
+- (BOOL)loadMusicURL:(NSURL*)musicToLoad;
 
 @property (assign) NSWindow *window;
 
@@ -71,10 +74,5 @@
 - (IBAction)rewindButtonPressed:(id)sender;
 - (IBAction)sliderChanged:(id)sender;
 - (IBAction)stopButtonPressed:(id)sender;
-
-- (void)soundPreferencesDidChange:(NSNotification *)notification;
-
-- (void)digitalEditorPreferencesDidChange:(NSNotification *)notification;
-
 
 @end
