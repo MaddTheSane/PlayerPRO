@@ -12,6 +12,27 @@
 #import "UserDefaultKeys.h"
 #import "NSColor+PPPreferences.h"
 
+void CocoaDebugStr( short line, Ptr file, Ptr text)
+{
+	NSLog(@"%s:%u error text:%s!", file, line, text);
+	NSInteger alert = NSRunAlertPanel(NSLocalizedString(@"MyDebugStr_Error", @"Error"),
+									  [NSString stringWithFormat:NSLocalizedString(@"MyDebugStr_MainText", @"The Main text to display"), text],
+									  NSLocalizedString(@"MyDebugStr_Quit", @"Quit"), NSLocalizedString(@"MyDebugStr_Continue", @"Continue"),
+									  NSLocalizedString(@"MyDebugStr_Debug", @"Debug"));
+	switch (alert) {
+		case NSAlertAlternateReturn:
+			break;
+		case NSAlertOtherReturn:
+			//Debugger();
+			break;
+		case NSAlertDefaultReturn:
+			NSLog(@"Choosing to fail!");
+		default:
+			abort();
+			break;
+	}
+}
+
 @implementation PPApp_AppDelegate
 
 - (void)MADDriverWithPreferences {
@@ -49,57 +70,56 @@
 	}
 }
 
-+(void)initialize {
-	NSMutableDictionary *defaultPrefs = [NSMutableDictionary dictionary];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPRememberMusicList];
-	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPLoadMusicAtListLoad];
-	[defaultPrefs setObject:[NSNumber numberWithInt:PPStopPlaying] forKey:PPAfterPlayingMusic];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPGotoStartupAfterPlaying];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPSaveModList];
-	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPLoadMusicAtMusicLoad];
-	
-	[defaultPrefs setObject:[NSNumber numberWithInt:16] forKey:PPSoundOutBits];
-	[defaultPrefs setObject:[NSNumber numberWithInt:44100] forKey:PPSoundOutRate];
-	[defaultPrefs setObject:[NSNumber numberWithInt:CoreAudioDriver] forKey:PPSoundDriver];
-	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPStereoDelayToggle];
-	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPReverbToggle];
-	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPSurroundToggle];
-	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPOversamplingToggle];
-	[defaultPrefs setObject:[NSNumber numberWithInt:30] forKey:PPStereoDelayAmount];
-	[defaultPrefs setObject:[NSNumber numberWithInt:25] forKey:PPReverbSize];
-	[defaultPrefs setObject:[NSNumber numberWithInt:30] forKey:PPReverbStrength];
-	[defaultPrefs setObject:[NSNumber numberWithInt:1] forKey:PPOversamplingAmount];
-	
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowInstrument];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowNote];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowEffect];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowArgument];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowVolume];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEShowMarkers];
-	[defaultPrefs setObject:[NSNumber numberWithInt:0] forKey:PPDEMarkerOffsetPref];
-	[defaultPrefs setObject:[NSNumber numberWithInt:3] forKey:PPDEMarkerLoopPref];
-	[defaultPrefs setObject:[[NSColor yellowColor] PPencodeColor] forKey:PPDEMarkerColorPref];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEMouseClickControlPref];
-	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPDEMouseClickShiftPref];
-	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPDEMouseClickCommandPref];
-	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPDEMouseClickOptionPref];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDELineHeightNormal];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEMusicTraceOn];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEPatternWrappingPartition];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPDEDragAsPcmd];
-
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPBEMarkersEnabled];
-	[defaultPrefs setObject:[NSNumber numberWithInt:0] forKey:PPBEMarkersOffset];
-	[defaultPrefs setObject:[NSNumber numberWithInt:3] forKey:PPBEMarkersLoop];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPBEOctaveMarkers];
-	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPBENotesProjection];
-
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPMAddExtension];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPMMadCompression];
-	[defaultPrefs setObject:[NSNumber numberWithBool:NO] forKey:PPMNoLoadMixerFromFiles];
-	[defaultPrefs setObject:[NSNumber numberWithBool:YES] forKey:PPMOscilloscopeDrawLines];
-	
-	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultPrefs];
++ (void)initialize {
+	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
+															 [NSNumber numberWithBool:YES], PPRememberMusicList,
+															 [NSNumber numberWithBool:NO], PPLoadMusicAtListLoad,
+															 [NSNumber numberWithInt:PPStopPlaying], PPAfterPlayingMusic,
+															 [NSNumber numberWithBool:YES], PPGotoStartupAfterPlaying,
+															 [NSNumber numberWithBool:YES], PPSaveModList,
+															 [NSNumber numberWithBool:NO], PPLoadMusicAtMusicLoad,
+															 
+															 [NSNumber numberWithInt:16], PPSoundOutBits,
+															 [NSNumber numberWithInt:44100], PPSoundOutRate,
+															 [NSNumber numberWithInt:CoreAudioDriver], PPSoundDriver,
+															 [NSNumber numberWithBool:NO], PPStereoDelayToggle,
+															 [NSNumber numberWithBool:NO], PPReverbToggle,
+															 [NSNumber numberWithBool:NO], PPSurroundToggle,
+															 [NSNumber numberWithBool:NO], PPOversamplingToggle,
+															 [NSNumber numberWithInt:30], PPStereoDelayAmount,
+															 [NSNumber numberWithInt:25], PPReverbSize,
+															 [NSNumber numberWithInt:30], PPReverbStrength,
+															 [NSNumber numberWithInt:1], PPOversamplingAmount,
+															 
+															 [NSNumber numberWithBool:YES], PPDEShowInstrument,
+															 [NSNumber numberWithBool:YES], PPDEShowNote,
+															 [NSNumber numberWithBool:YES], PPDEShowEffect,
+															 [NSNumber numberWithBool:YES], PPDEShowArgument,
+															 [NSNumber numberWithBool:YES], PPDEShowVolume,
+															 [NSNumber numberWithBool:YES], PPDEShowMarkers,
+															 [NSNumber numberWithInt:0], PPDEMarkerOffsetPref,
+															 [NSNumber numberWithInt:3], PPDEMarkerLoopPref,
+															 [[NSColor yellowColor] PPencodeColor], PPDEMarkerColorPref,
+															 [NSNumber numberWithBool:YES], PPDEMouseClickControlPref,
+															 [NSNumber numberWithBool:NO], PPDEMouseClickShiftPref,
+															 [NSNumber numberWithBool:NO], PPDEMouseClickCommandPref,
+															 [NSNumber numberWithBool:NO], PPDEMouseClickOptionPref,
+															 [NSNumber numberWithBool:YES], PPDELineHeightNormal,
+															 [NSNumber numberWithBool:YES], PPDEMusicTraceOn,
+															 [NSNumber numberWithBool:YES], PPDEPatternWrappingPartition,
+															 [NSNumber numberWithBool:YES], PPDEDragAsPcmd,
+															 
+															 [NSNumber numberWithBool:YES], PPBEMarkersEnabled,
+															 [NSNumber numberWithInt:0], PPBEMarkersOffset,
+															 [NSNumber numberWithInt:3], PPBEMarkersLoop,
+															 [NSNumber numberWithBool:YES], PPBEOctaveMarkers,
+															 [NSNumber numberWithBool:NO], PPBENotesProjection,
+															 
+															 [NSNumber numberWithBool:YES], PPMAddExtension,
+															 [NSNumber numberWithBool:YES], PPMMadCompression,
+															 [NSNumber numberWithBool:NO], PPMNoLoadMixerFromFiles,
+															 [NSNumber numberWithBool:YES], PPMOscilloscopeDrawLines,
+															 nil]];
 }
 
 - (IBAction)showMusicList:(id)sender {
@@ -154,6 +174,7 @@
 	MADInitLibrary(NULL, false, &MADLib);
 	[tableView setDataSource:musicList];
 	[self MADDriverWithPreferences];
+	RegisterDebugFunc(&CocoaDebugStr);
 
 }
 - (void)applicationWillTerminate:(NSNotification *)notification
