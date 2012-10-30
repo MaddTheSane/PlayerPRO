@@ -27,7 +27,23 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver)
 	AudioStreamBasicDescription audDes = {0};
 	audDes.mFormatID = kAudioFormatLinearPCM;
 	audDes.mFormatFlags = kLinearPCMFormatFlagIsPacked;
-	audDes.mChannelsPerFrame = inMADDriver->DriverSettings.numChn;
+	int outChn = 0;
+	switch (inMADDriver->DriverSettings.outPutMode) {
+		case MonoOutPut:
+			outChn = 1;
+			break;
+			
+		case StereoOutPut:
+		case DeluxeStereoOutPut:
+		default:
+			outChn = 2;
+			break;
+			
+		case PolyPhonic:
+			outChn = 4;
+			break;
+	}
+	audDes.mChannelsPerFrame = outChn;
 	audDes.mSampleRate = inMADDriver->DriverSettings.outPutRate;
 	audDes.mBitsPerChannel = inMADDriver->DriverSettings.outPutBits;
 	audDes.mFramesPerPacket = 1;
