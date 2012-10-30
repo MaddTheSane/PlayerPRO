@@ -156,6 +156,10 @@
 	[self MADDriverWithPreferences];
 
 }
+- (void)applicationWillTerminate:(NSNotification *)notification
+{
+
+}
 
 -(void)preferencesDidChange:(NSNotification *)notification {
 	
@@ -163,6 +167,11 @@
 
 -(void)dealloc
 {
+	if (Music != NULL) {
+		MADStopMusic(MADDriver);
+		MADCleanDriver(MADDriver);
+		MADDisposeMusic(&Music, MADDriver);
+	}
 	MADStopDriver(MADDriver);
 	MADDisposeDriver(MADDriver);
 	MADDisposeLibrary(MADLib);
