@@ -20,9 +20,6 @@ extern "C" {
 #pragma mark Core Audio Functions
 OSErr initCoreAudio( MADDriverRec *inMADDriver);
 OSErr closeCoreAudio( MADDriverRec *inMADDriver);
-void StopChannelCA(MADDriverRec *inMADDriver);
-void PlayChannelCA(MADDriverRec *inMADDriver);
-
 CFMutableArrayRef GetDefaultPluginFolderLocations();
 
 const CFStringRef kMadPlugMenuNameKey;

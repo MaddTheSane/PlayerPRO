@@ -2464,7 +2464,7 @@ OSErr MADStartDriver( MADDriverRec *MDriver)
 			
 #ifdef _MAC_H
 		case CoreAudioDriver:
-			PlayChannelCA( MDriver);
+			//PlayChannelCA( MDriver);
 			break;			
 			
 #endif
@@ -2516,7 +2516,7 @@ OSErr MADStopDriver( MADDriverRec *MDriver)
 			break;
 			
 		case CoreAudioDriver:
-			StopChannelCA(MDriver);
+			//StopChannelCA(MDriver);
 			break;
 #endif
 			
