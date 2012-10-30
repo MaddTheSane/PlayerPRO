@@ -5,7 +5,7 @@
  *  Created by C.W. Betts on 11/18/09.
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  * 
- *  This is in case the developer(s) decideed that they didn't want the inline byteswapping functions
+ *  This is in case the developer(s) decided that they didn't want the inline byteswapping functions
  *
  */
 

@@ -201,9 +201,9 @@ BOOL WriteDataToBuffer(
     }
     if(DS_OK == hr) {
         // Write to pointers.
-        CopyMemory(lpvPtr1, lpbSoundData, dwBytes1);
+        memcpy(lpvPtr1, lpbSoundData, dwBytes1);
         if(NULL != lpvPtr2) {
-            CopyMemory(lpvPtr2, lpbSoundData+dwBytes1, dwBytes2);
+            memcpy(lpvPtr2, lpbSoundData+dwBytes1, dwBytes2);
         }
         // Release the data back to DirectSound.
         hr = lpDsb->lpVtbl->Unlock(lpDsb, lpvPtr1, dwBytes1, lpvPtr2, dwBytes2);

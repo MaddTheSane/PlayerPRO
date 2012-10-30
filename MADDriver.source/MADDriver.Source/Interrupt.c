@@ -2153,8 +2153,8 @@ void GenerateSound( MADDriverRec *intDriver)
 
 EXP Boolean DirectSaveAlways( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
-Ptr									ptrCopy;
-MADDriverSettings		driverCopy;
+	Ptr						ptrCopy;
+	MADDriverSettings		driverCopy;
 
 	if( intDriver == NULL) return false;	//intDriver = MADGetMADDriverPtr();
 	
@@ -2188,8 +2188,8 @@ MADDriverSettings		driverCopy;
 
 EXP Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
-Ptr									ptrCopy;
-MADDriverSettings		driverCopy;
+	Ptr						ptrCopy;
+	MADDriverSettings		driverCopy;
 
 	if( intDriver == NULL) return false;	//intDriver = MADGetMADDriverPtr();
 	if( !intDriver->Reading) return false;
