@@ -120,7 +120,7 @@ int main( int argc, char* argv[])
 			
 #endif
 			
-			if( MADInitLibrary( NULL, init.sysMemory, &MADLib) != noErr) DebugStr("\pSmall Problem...");
+			if( MADInitLibrary( NULL, false, &MADLib) != noErr) DebugStr("\pSmall Problem...");
 		}
 		
 		if( MADCreateDriver( &init, MADLib, &MADDriver) != noErr) DebugStr("\pSmall Problem...");
@@ -202,15 +202,24 @@ int main( int argc, char* argv[])
 		else
 		{
 			char	type[ 5];
+#if 0
 			FInfo	info;
 			
 			FSpGetFInfo( &spec, &info);
 			
 			OSType2Ptr( info.fdType, type);
+#endif
+			
+			FSRef theRef;
+			FSpMakeFSRef(&spec, &theRef);
+			char path[PATH_MAX];
+			FSRefMakePath(&theRef, (UInt8*)path, PATH_MAX);
+			
+			MADMusicIdentifyCString(MADLib, type, path);
 			
 			if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 			{
-				if( MADLoadMusicFSpFile( MADLib, &MADMusic, type, &spec) == noErr)		// Load this music with help of Plugs
+				if( MADLoadMusicFileCString( MADLib, &MADMusic, type, path) == noErr)		// Load this music with help of Plugs
 					// in application folder, in 'Plugs' folder or internal resources
 				{
 					MADAttachDriverToMusic( MADDriver, MADMusic, NULL);
