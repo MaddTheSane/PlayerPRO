@@ -29,6 +29,7 @@
 #include "FileUtils.h"
 #include <string.h>
 #include "PPPrivate.h"
+#include <CoreFoundation/CoreFoundation.h>
 
 #ifdef _MAC_H
 extern void NSLog(CFStringRef format, ...);
@@ -1252,22 +1253,20 @@ static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean res
 	return strLength;
 }
 
-OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef)
+OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef)
 {
 	char *URLcString = NULL;
-	char OS[5];
 	CFIndex pathLen = getCFURLFilePathRepresentationLength(theRef, true);
 	URLcString = malloc(pathLen);
 	if (URLcString == NULL) {
 		return MADNeedMemory;
 	}
 	Boolean pathOK = CFURLGetFileSystemRepresentation(theRef, true, (unsigned char*)URLcString, pathLen);
-	OSType2Ptr(type, OS);
 	if (pathOK == false) {
 		free(URLcString);
 		return MADReadingErr;
 	}
-	OSErr theErr = MADLoadMusicFileCString(lib, music, OS, URLcString);
+	OSErr theErr = MADLoadMusicFileCString(lib, music, type, URLcString);
 	free(URLcString);
 	return theErr;
 }
@@ -1316,46 +1315,41 @@ OSErr MADCopyCurrentPartition( MADMusic *aPartition)
 }*/
 
 
-OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, OSType *type, CFURLRef URLRef)
+OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef)
 {
 	if (type == NULL) {
 		return MADParametersErr;
 	}
 	char *URLcString;
-	char OS[5];
 	CFIndex pathLen = getCFURLFilePathRepresentationLength(URLRef, true);
 	URLcString = malloc(pathLen);
 	if (URLcString == NULL) {
 		return MADNeedMemory;
 	}
 	Boolean pathOK = CFURLGetFileSystemRepresentation(URLRef, true, (unsigned char*)URLcString, pathLen);
-	OSType2Ptr(*type, OS);
 	if (pathOK == false) {
 		free(URLcString);
 		return MADReadingErr;
 	}
-	OSErr returnstatus = MADMusicIdentifyCString(lib, OS, URLcString);
-	*type = Ptr2OSType(OS);
+	OSErr returnstatus = MADMusicIdentifyCString(lib, type, URLcString);
 	free(URLcString);
 	return returnstatus;
 }
 
-OSErr MADMusicInfoCFURL( MADLibrary *lib, OSType type, CFURLRef theRef, PPInfoRec *InfoRec)
+OSErr MADMusicInfoCFURL( MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec)
 {
 	char *URLcString;
-	char OS[5];
 	CFIndex pathLen = getCFURLFilePathRepresentationLength(theRef, true);
 	URLcString = malloc(pathLen);
 	if (URLcString == NULL) {
 		return MADNeedMemory;
 	}
 	Boolean pathOK = CFURLGetFileSystemRepresentation(theRef, true, (unsigned char*)URLcString, pathLen);
-	OSType2Ptr(type, OS);
 	if (pathOK == false) {
 		free(URLcString);
 		return MADReadingErr;
 	}
-	OSErr status = MADMusicInfoCString(lib, OS, URLcString, InfoRec);
+	OSErr status = MADMusicInfoCString(lib, type, URLcString, InfoRec);
 	free(URLcString);
 	return status;
 }

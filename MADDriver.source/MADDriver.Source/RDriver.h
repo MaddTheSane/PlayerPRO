@@ -591,19 +591,19 @@ PPEXPORT OSErr	MADLoadMusicPtr( MADMusic **music, char *myPtr);								// MAD ON
 
 PPEXPORT OSErr	MADLoadMusicFileCString( MADLibrary *, MADMusic **music, char *type, char *fName);			// Load a music file with plugs
 #ifdef _MAC_H
-PPEXPORT OSErr	MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef);
+PPEXPORT OSErr	MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef);
 #endif
 
 PPEXPORT OSErr	MADMusicIdentifyCString( MADLibrary *, char *type, Ptr cName);			// Identify what kind of music format is cName file.
 
 #ifdef _MAC_H
-PPEXPORT OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, OSType *type, CFURLRef URLRef); //Identify what kind of music format is URLRef file.
+PPEXPORT OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef); //Identify what kind of music format is URLRef file.
 #endif
 
 PPEXPORT OSErr MADMusicInfoCString( MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec);
 	
 #ifdef _MAC_H
-PPEXPORT OSErr MADMusicInfoCFURL( MADLibrary *lib, OSType type, CFURLRef theRef, PPInfoRec *InfoRec);
+PPEXPORT OSErr MADMusicInfoCFURL( MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec);
 #endif
 
 PPEXPORT Boolean	MADPlugAvailable( MADLibrary *, char *type);								// Is plug 'type' available?
