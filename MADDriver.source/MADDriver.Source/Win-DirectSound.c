@@ -43,7 +43,7 @@ static HWND hwnd;
 static LPDIRECTSOUNDBUFFER lpDirectSoundBuffer;
 static LPDIRECTSOUNDBUFFER lpSwSamp;*/
 
-static 	Ptr 					currentBuf;
+static 	Ptr 					currentBuf = NULL;
 static 	Boolean					OnOff;
 static 	long					WIN95BUFFERSIZE;
 
@@ -403,6 +403,9 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 
 void DirectSoundClose( MADDriverRec* WinMADDriver)
 {
+	if (currentBuf != NULL) {
+		free(currentBuf);
+	}
 	if( WinMADDriver->lpDirectSound)
 	{
 		/* stop the timer */
