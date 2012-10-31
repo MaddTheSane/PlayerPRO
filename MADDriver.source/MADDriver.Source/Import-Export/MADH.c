@@ -342,6 +342,14 @@ static OSErr MADH2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 			
 			memcpy(curData->data, MADPtr + OffSetToSample, curData->size);
 			OffSetToSample += curData->size;
+			if( curData->amp == 16)
+			{
+				SInt32 	ll;
+				short	*shortPtr = (short*) curData->data;
+				
+				for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+			}
+
 		}
 	}
 

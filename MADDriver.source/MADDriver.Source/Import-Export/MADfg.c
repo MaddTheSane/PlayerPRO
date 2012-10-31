@@ -134,9 +134,9 @@ static void MOToldPatHeader(struct oldPatHeader * p) {
 
 static void MOToldInstrData(struct FileInstrData * i) {
 	//int j;
-	PPBE16(&i->insSize);
-	PPBE16(&i->loopStart);
-	PPBE16(&i->loopLenght);
+	PPBE32(&i->insSize);
+	PPBE32(&i->loopStart);
+	PPBE32(&i->loopLenght);
 }
 
 static void MOToldMADSpec(struct oldMADSpec * m){
@@ -173,7 +173,6 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 
 /**** HEADER ****/
 	oldMadIdent = oldMAD->MADIdentification;
-	PPBE32(&oldMadIdent);
 	if( oldMadIdent == 'MADF') MADConvert = true;
 	else if( oldMadIdent == 'MADG') MADConvert = false;
 	else return MADFileNotSupportedByThisPlug;
@@ -364,6 +363,13 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 		
 			memcpy(curData->data, MADPtr + OffSetToSample, curData->size);
 			OffSetToSample += curData->size;
+			if( curData->amp == 16)
+			{
+				SInt32 	ll;
+				short	*shortPtr = (short*) curData->data;
+				
+				for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+			}
 		}
 		else curIns->numSamples = 0;
 	}

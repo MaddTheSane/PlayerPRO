@@ -30,7 +30,7 @@
 #include "MOD.h"
 #include "MADI.h"
 
-#ifndef _SRC
+#if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;
@@ -148,8 +148,8 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 {
 	short		i, x;
 	long		inOutCount, OffSetToSample = 0, z;
-	OSErr		theErr = noErr;
-	Ptr			tempPtr = NULL;
+	//OSErr		theErr = noErr;
+	//Ptr			tempPtr = NULL;
 	OSType MADType = 0;
 	SInt32		finetune[16] =
 	{
@@ -371,6 +371,14 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 			
 			memcpy( curData->data, MADPtr + OffSetToSample, curData->size);
 			OffSetToSample += curData->size;
+			if( curData->amp == 16)
+			{
+				SInt32 	ll;
+				short	*shortPtr = (short*) curData->data;
+				
+				for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+			}
+
 		}
 	}
 	
