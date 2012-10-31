@@ -12,12 +12,32 @@
 #include "RDriverInt.h"
 #include "PPPrivate.h"
 
-//TODO: Make CoreAudio back end
-#warning Nothing implemented here yet
+static Ptr CABuffer = NULL;
+static size_t BuffSize = 0;
+
+static OSStatus     CAAudioCallback (void                            *inRefCon,
+									 AudioUnitRenderActionFlags      *ioActionFlags,
+									 const AudioTimeStamp            *inTimeStamp,
+									 UInt32                          inBusNumber,
+									 UInt32                          inNumberFrames,
+									 AudioBufferList                 *ioData)
+{
+	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
+	//This code is inspired from the DirectSound driver
+	static volatile int timersema = 0;
+	if(++timersema == 1)
+	{
+		
+	}
+	timersema--;
+}
 
 OSErr initCoreAudio( MADDriverRec *inMADDriver)
 {
 	OSStatus result = noErr;
+	struct AURenderCallbackStruct callback;
+	callback.inputProc = CAAudioCallback;
+	callback.inputProcRefCon = inMADDriver;
 	AudioComponentDescription theDes;
 	theDes.componentType = kAudioUnitType_Output;
     theDes.componentSubType = kAudioUnitSubType_DefaultOutput;
@@ -27,6 +47,8 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver)
 	AudioStreamBasicDescription audDes = {0};
 	audDes.mFormatID = kAudioFormatLinearPCM;
 	audDes.mFormatFlags = kLinearPCMFormatFlagIsPacked;
+	audDes.mFormatFlags |= kLinearPCMFormatFlagIsSignedInteger;
+
 	int outChn = 0;
 	switch (inMADDriver->DriverSettings.outPutMode) {
 		case MonoOutPut:
@@ -64,14 +86,15 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver)
 								   0,
 								   &audDes,
 								   sizeof (audDes));
+	
+	result = AudioUnitSetProperty(inMADDriver->CAAudioUnit, kAudioUnitProperty_SetRenderCallback, kAudioUnitScope_Input, 0, &callback, sizeof(callback));
 
 	
 	result = AudioUnitInitialize(inMADDriver->CAAudioUnit);
 	
-#if 0
 	result = AudioOutputUnitStart(inMADDriver->CAAudioUnit);
-#endif
-	
+	BuffSize = inMADDriver->BufSize * 2;
+	CABuffer = calloc(BuffSize, 1);
 	return noErr;
 }
 
@@ -94,15 +117,8 @@ OSErr closeCoreAudio( MADDriverRec *inMADDriver)
 	if (result != noErr) {
 		
 	}
+	if (CABuffer) {
+		free(CABuffer);
+	}
 	return noErr;
-}
-
-void StopChannelCA(MADDriverRec *inMADDriver)
-{
-	
-}
-
-void PlayChannelCA(MADDriverRec *inMADDriver)
-{
-	
 }
