@@ -72,7 +72,7 @@ static void Convert16to8( Ptr srcPtr, Ptr destPtr, size_t size)
 	}
 }
 
-#ifndef _SRC
+#if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;

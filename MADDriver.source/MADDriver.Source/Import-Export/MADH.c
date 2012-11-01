@@ -30,7 +30,7 @@
 #include "MOD.h"
 #include "MADH.h"
 
-#ifndef _SRC
+#if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;

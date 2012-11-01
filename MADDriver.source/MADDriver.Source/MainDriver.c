@@ -1661,7 +1661,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 		{
 			case MADFileType:
 				if( iRead( inOutCount, (Ptr) &tempPatHeader, srcFile)) theErr = MADIncompatibleFile;
-				iSeekCur( -sizeof( PatHeader), srcFile);
+				iSeekCur( -(long)sizeof( PatHeader), srcFile);
 				break;
 				
 			case MADPtrType:
@@ -2383,7 +2383,7 @@ void MADCheckSpeedPattern( MADMusic *MDriver, MADDriverRec *intDriver)
 	if( !intDriver) return;
 	
 
-	//curPartitionReader = intDriver->PartitionReader;
+	curPartitionReader = intDriver->PartitionReader;
 	if( curPartitionReader >= MDriver->partition[ intDriver->Pat]->header.size) curPartitionReader--;
 	
 	for( x = curPartitionReader; x >= 0; x--)

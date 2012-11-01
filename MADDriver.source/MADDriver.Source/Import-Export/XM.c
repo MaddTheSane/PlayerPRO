@@ -45,7 +45,7 @@ static		Ptr			theXMRead, theXMMax;
 #define READXMFILE(dst, size)	{memcpy( dst, theXMRead, size);	theXMRead += (long) size;}
 #define WRITEXMFILE(src, size)	{memcpy( theXMRead, src, size);	theXMRead += (long) size;}
 
-#ifndef _SRC
+#if 0
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {

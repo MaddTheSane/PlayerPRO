@@ -36,7 +36,7 @@ static	int		old_effect;
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
 
-#ifndef _SRC
+#if 0
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
