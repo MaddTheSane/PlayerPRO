@@ -23,7 +23,7 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
-#include <Carbon/Carbon.h>
+#include <CoreServices/CoreServices.h>
 #define BlockMoveData(x, y, z) memmove(y, x, z)
 #include "MOD.h"
 
