@@ -29,7 +29,9 @@
 #include "FileUtils.h"
 #include <string.h>
 #include "PPPrivate.h"
+#ifdef _MAC_H
 #include <CoreFoundation/CoreFoundation.h>
+#endif
 
 #ifdef _MAC_H
 extern void NSLog(CFStringRef format, ...);
@@ -48,14 +50,12 @@ enum {
 	MADPtrType = 3
 };
 
-#ifdef _MAC_H
 void CheckVSTEditor( VSTEffect *ce);
 void SendMIDIClock( MADDriverRec *intDriver, Byte MIDIByte);
 void DisposeVSTEffect( VSTEffect	*myEffect);
 VSTEffect* CreateVSTEffect( short effectID);
 short ConvertUniqueIDToIndex( UInt32);
 void ApplyVSTSets( VSTEffect* myEffect, FXSets* set);
-#endif
 
 MADMusic* CreateFreeMADK( void)
 {
@@ -2502,7 +2502,6 @@ OSErr MADStopDriver( MADDriverRec *MDriver)
 
 	switch( MDriver->DriverSettings.driverMode)
 	{
-#ifdef _MAC_H
 			/*	case AWACSoundDriver:
 			 DISABLE_BUF_AND_UNDERRUN_INTS;
 			 SND_OUT_DMA_DISABLE;
@@ -2515,6 +2514,7 @@ OSErr MADStopDriver( MADDriverRec *MDriver)
 			//StopChannel( MDriver);
 			break;
 			
+#ifdef _MAC_H
 		case CoreAudioDriver:
 			//StopChannelCA(MDriver);
 			break;
