@@ -1011,7 +1011,7 @@ OSErr MADDisposeDriver( MADDriverRec* MDriver)
 	return noErr;
 }
 
-OSErr MADInitLibrary( char *PlugsFolderName, Boolean unused, MADLibrary **lib)
+OSErr MADInitLibrary( char *PlugsFolderName, MADLibrary **lib)
 {
 	UInt32 	i, mytab[ 12] =
 	{

@@ -171,7 +171,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
 	[defaultCenter addObserver:self selector:@selector(digitalEditorPreferencesDidChange:) name:PPDigitalEditorPrefrencesDidChange object:nil];
 	
-	MADInitLibrary(NULL, false, &MADLib);
+	MADInitLibrary(NULL, &MADLib);
 	[tableView setDataSource:musicList];
 	[self MADDriverWithPreferences];
 	RegisterDebugFunc(CocoaDebugStr);

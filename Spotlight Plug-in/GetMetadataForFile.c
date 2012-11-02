@@ -68,7 +68,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 	MADGetBestDriver(&init);
 	init.driverMode = NoHardwareDriver;
 	
-	if(MADInitLibrary(NULL, FALSE, &MADLib) != noErr) return FALSE;
+	if(MADInitLibrary(NULL, &MADLib) != noErr) return FALSE;
 	if( MADCreateDriver( &init, MADLib, &MADDriver) != noErr) 
 	{
 		MADDisposeLibrary(MADLib);

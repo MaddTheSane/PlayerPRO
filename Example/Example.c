@@ -43,6 +43,10 @@ OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, 
 /****** MAIN FUNCTION ********/
 /*****************************/
 
+#ifdef QD_HEADERS_ARE_PRIVATE
+extern void InitCursor();
+#endif
+
 int main( int argc, char* argv[])
 {
 	Boolean					End = false;
@@ -70,7 +74,7 @@ int main( int argc, char* argv[])
 	
 #endif
 	
-	if( NavServicesAvailable() == false) return EXIT_FAILURE;
+	//if( NavServicesAvailable() == false) return EXIT_FAILURE;
 	
 	/*******************************************************************************************/
 	/****** MAD Library Initialisation : choose the best driver for the current hardware  ******/
@@ -120,7 +124,7 @@ int main( int argc, char* argv[])
 			
 #endif
 			
-			if( MADInitLibrary( NULL, false, &MADLib) != noErr) DebugStr("\pSmall Problem...");
+			if( MADInitLibrary( NULL, &MADLib) != noErr) DebugStr("\pSmall Problem...");
 		}
 		
 		if( MADCreateDriver( &init, MADLib, &MADDriver) != noErr) DebugStr("\pSmall Problem...");
