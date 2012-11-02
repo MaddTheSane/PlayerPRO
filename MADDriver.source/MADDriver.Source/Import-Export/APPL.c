@@ -286,97 +286,102 @@ static OSErr INFOMADF( MADSpec* MADPtr, PPInfoRec *info)
 
 OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
-	OSErr			myErr;
-	ResFileRefNum	iFileRefI;
-	Handle			myRes;
-	Boolean			hasToClose = TRUE;
-	FSRef			AlienRef;
-	
-	FSPathMakeRef((UInt8*)AlienFileName, &AlienRef, NULL);
+	OSErr           myErr;
+	short           iFileRefI, i;
+	Handle          myRes;
+	Boolean         hasToClose = FALSE;
+	FSSpec          AlienFileFSSpec;
+
+	HGetVol( NULL, &AlienFileFSSpec.vRefNum, &AlienFileFSSpec.parID);
+	MYC2PStr( AlienFileName);
+	for( i = 0; i <= AlienFileName[ 0]; i++) AlienFileFSSpec.name[ i] = AlienFileName[ i];
+
 	myErr = noErr;
-	
+
 	switch( order)
 	{
-		case 'IMPL':
-			iFileRefI = FSOpenResFile( &AlienRef, fsRdPerm);
-			if( iFileRefI == -1) myErr = MADUnknownErr;
-			else
+	case 'IMPL':
+		iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdPerm);
+		if( iFileRefI == -1) myErr = MADUnknownErr;
+		else
+		{
+			UseResFile( iFileRefI);
+
+			if( Count1Resources( 'MADK') > 0)
 			{
-				UseResFile( iFileRefI);
-				
-				if( Count1Resources( 'MADK') > 0)
-				{
-					myRes = Get1IndResource( 'MADK', 1);
-					DetachResource( myRes);
-					HLock( myRes);
-					
-					myErr = LoadMADH( *myRes, MadFile, init);
-					
-					HUnlock( myRes);
-					DisposeHandle( myRes);
-				}
-				else myErr = MADUnknowErr;
-				
-				if( hasToClose) CloseResFile( iFileRefI);
+				myRes = Get1IndResource( 'MADK', 1);
+				DetachResource( myRes);
+				HLock( myRes);
+
+				myErr = LoadMADH( *myRes, MadFile, init);
+
+				HUnlock( myRes);
+				DisposeHandle( myRes);
 			}
+			else myErr = MADUnknowErr;
+
+			if( hasToClose) CloseResFile( iFileRefI);
+		}
 		break;
-		
-		case 'TEST':
-			iFileRefI = FSOpenResFile( &AlienRef, fsRdPerm);	
-			if( iFileRefI == -1) myErr = MADUnknowErr;
-			else
+
+	case 'TEST':
+		iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);      
+		if( iFileRefI == -1) myErr = MADUnknowErr;
+		else
+		{
+			UseResFile( iFileRefI);
+
+			if( Count1Resources( 'MADK') > 0)
 			{
-				UseResFile( iFileRefI);
-				
-				if( Count1Resources( 'MADK') > 0)
-				{
-					myRes = Get1IndResource( 'MADK', 1);
-					DetachResource( myRes);
-					
-					HLock( myRes);
-					
-					myErr = TESTMADH( (MADSpec*) *myRes);
-					
-					HUnlock( myRes);
-					DisposeHandle( myRes);
-				}
-				else myErr = MADUnknowErr;
-				
-				if( hasToClose) CloseResFile( iFileRefI);
+				myRes = Get1IndResource( 'MADK', 1);
+				DetachResource( myRes);
+
+				HLock( myRes);
+
+				myErr = TESTMADH( (MADSpec*) *myRes);
+
+				HUnlock( myRes);
+				DisposeHandle( myRes);
 			}
+			else myErr = MADUnknowErr;
+
+			if( hasToClose) CloseResFile( iFileRefI);
+		}
 		break;
-		
-		case 'INFO':
-			iFileRefI = FSOpenResFile( &AlienRef, fsRdPerm);
-			if( iFileRefI == -1) myErr = MADUnknowErr;
-			else
+
+	case 'INFO':
+		iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);
+		if( iFileRefI == -1) myErr = MADUnknowErr;
+		else
+		{
+			UseResFile( iFileRefI);
+
+			if( Count1Resources( 'MADK') > 0)
 			{
-				UseResFile( iFileRefI);
-				
-				if( Count1Resources( 'MADK') > 0)
-				{
-					myRes = Get1IndResource( 'MADK', 1);
-					info->fileSize = GetResourceSizeOnDisk( myRes);
-					
-					DetachResource( myRes);
-					HLock( myRes);
-					
-					myErr = INFOMADF( (MADSpec*) *myRes, info);
-					
-					HUnlock( myRes);
-					DisposeHandle( myRes);
-				}
-				else myErr = MADUnknowErr;
-				
-				if( hasToClose) CloseResFile( iFileRefI);
+				myRes = Get1IndResource( 'MADK', 1);
+				info->fileSize = GetResourceSizeOnDisk( myRes);
+
+				DetachResource( myRes);
+				HLock( myRes);
+
+				myErr = INFOMADF( (MADSpec*) *myRes, info);
+
+				HUnlock( myRes);
+				DisposeHandle( myRes);
 			}
+			else myErr = MADUnknowErr;
+
+			if( hasToClose) CloseResFile( iFileRefI);
+		}
 		break;
-		
-		default:
-			myErr = MADOrderNotImplemented;
+
+	default:
+		myErr = MADOrderNotImplemented;
 		break;
 	}
-		
+
+	MYP2CStr( (unsigned char*) AlienFileName);
+
 	return myErr;
 }
 
