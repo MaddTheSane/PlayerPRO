@@ -77,8 +77,8 @@ Boolean GetMetadataForFile(void* thisInterface,
 	
 	{
 		char		type[ 5];
-		OSType		info;
 #if 0
+		OSType info;
 		CFStringRef ostypes;
 		//Try to get the OSType of the UTI.
 		ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
@@ -90,13 +90,12 @@ Boolean GetMetadataForFile(void* thisInterface,
 #endif
 		CFURLRef tempRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
 
-		MADMusicIdentifyCFURL(MADLib, &info, tempRef);
-		OSType2Ptr( info, type);
+		MADMusicIdentifyCFURL(MADLib, type, tempRef);
 
 		if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 		{
 			OSErr err = noErr;
-			err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, info, tempRef);
+			err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, type, tempRef);
 			if(err != noErr)
 			{
 				CFRelease(tempRef);
@@ -117,7 +116,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 		{
 			PPInfoRec rec;
 			char sig[5];
-			MADMusicInfoCFURL(MADLib, info, tempRef, &rec);
+			MADMusicInfoCFURL(MADLib, type, tempRef, &rec);
 			OSType2Ptr(rec.signature, sig);
 			CFStringRef CFSig = CFStringCreateWithCString(kCFAllocatorDefault, sig, kCFStringEncodingMacRoman);
 			CFDictionarySetValue(attributes, kPPMDSignature, CFSig);
