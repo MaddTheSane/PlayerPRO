@@ -316,7 +316,11 @@ void MADInitImportPlug( MADLibrary *inMADDriver, char *PluginFolder)
 			for (x = 0; x < PlugNums; x++) {
 				CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
 				MakeMADPlug(inMADDriver, tempBundleRef);
-				
+				//We do this to prevent resource/memory leak
+				//If the plug-in creation succeeded, it will bump the ref count from one to two
+				//And we can safely release it to get the proper retain count needed
+				//If plug-in creation failed, the retain count is one and we probably don't want anything to do with the plug-in
+				CFRelease(tempBundleRef);
 			}
 		}
 		CFRelease(somePlugs);
