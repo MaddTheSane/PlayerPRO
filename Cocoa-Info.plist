@@ -49,16 +49,24 @@
 			<false/>
 		</dict>
 		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>sctf</string>
+			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>List</string>
 			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Music List</string>
+			<string>Old PlayerPRO Music List</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>STCf</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.stcfmusiclist</string>
+			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
 		</dict>
@@ -101,7 +109,7 @@
 				<string>STrk</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.mod</string>
@@ -123,7 +131,7 @@
 				<string>MTM </string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.mtm</string>
@@ -145,7 +153,7 @@
 				<string>S3M </string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.s3m</string>
@@ -408,6 +416,8 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADKFile</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madk</string>
 			<key>UTTypeTagSpecification</key>
@@ -434,6 +444,8 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADHFile</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madh</string>
 			<key>UTTypeTagSpecification</key>
@@ -455,6 +467,8 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADFGFile</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madfg</string>
 			<key>UTTypeTagSpecification</key>
@@ -478,6 +492,8 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADIFile</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madi</string>
 			<key>UTTypeTagSpecification</key>
@@ -552,6 +568,29 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>mins</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Old PlayerPRO Music list</string>
+			<key>UTTypeIconFile</key>
+			<string>List</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.stcfmusiclist</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>STCf</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>stcf</string>
 				</array>
 			</dict>
 		</dict>
