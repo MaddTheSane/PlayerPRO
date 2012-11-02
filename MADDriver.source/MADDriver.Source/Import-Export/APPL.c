@@ -107,7 +107,6 @@ static OSErr MADKillInstrument( MADMusic *music, short ins)
 
 static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 {
-	//TODO: Better cleanup when we hit an error.
 	short 					i = 0;
 	int						x = 0;
 	long 					inOutCount, OffSetToSample;
