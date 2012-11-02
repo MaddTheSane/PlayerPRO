@@ -218,7 +218,7 @@ badplug:
 
 static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 {
-	CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 5, &kCFTypeArrayCallBacks);
+	CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 4, &kCFTypeArrayCallBacks);
 	CFURLRef temp1;
 	//Application Main Bundle
 	temp1 = CFBundleCopyBuiltInPlugInsURL(CFBundleGetMainBundle());
@@ -251,10 +251,13 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 
 static inline CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(char *UserAddedPlace)
 {
+	CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 5, &kCFTypeArrayCallBacks);
 	CFMutableArrayRef FoldLocs = CreateDefaultPluginFolderLocations();
 	CFURLRef custfolder = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (UInt8*)UserAddedPlace, strlen(UserAddedPlace), true);
-	CFArrayInsertValueAtIndex(FoldLocs, 0, custfolder);
+	CFArrayAppendValue(PlugFolds, custfolder);
 	CFRelease(custfolder);
+	CFArrayAppendArray(PlugFolds, FoldLocs, CFRangeMake(0, CFArrayGetCount(FoldLocs)));
+	CFRelease(FoldLocs);
 	return FoldLocs;
 }
 
