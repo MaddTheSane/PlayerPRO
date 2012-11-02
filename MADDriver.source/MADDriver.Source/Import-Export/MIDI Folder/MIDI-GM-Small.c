@@ -713,9 +713,9 @@ BAIL:
 	;
 }
 
-#if 0
 void InitQuicktimeInstruments(void)
 {
+#if 0
 	long					lS, lE, inOutBytes, result;
 	//	short					sS, qQ;
 	//	short 					i;
@@ -768,9 +768,11 @@ void InitQuicktimeInstruments(void)
 	}
 	
 	HSetVol( NULL, vRefNum, dirID);
+#endif
+	QK50 = true;
+	QuicktimeInstruAvailable = true;
 }
 
-#endif
 
 void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 {
