@@ -66,6 +66,40 @@ static OSErr MADResetInstrument( InstrData		*curIns)
 	return noErr;
 }
 
+static OSErr MADKillInstrument( MADMusic *music, short ins)
+{
+	short				i;
+	InstrData		*curIns;
+	Boolean			IsReading;
+	
+	if( music == NULL) return MADParametersErr;
+	
+	curIns = &music->fid[ ins];
+	
+	IsReading = music->musicUnderModification;
+	music->musicUnderModification = true;
+	
+	for( i = 0; i < curIns->numSamples; i++)
+	{
+		if( music->sample[ ins * MAXSAMPLE + i] != NULL)
+		{
+			if( music->sample[ ins * MAXSAMPLE + i]->data != NULL)
+			{
+				DisposePtr( (Ptr) music->sample[ ins * MAXSAMPLE + i]->data);
+				music->sample[ ins * MAXSAMPLE + i]->data = NULL;
+			}
+			DisposePtr( (Ptr) music->sample[ ins * MAXSAMPLE + i]);
+			music->sample[ ins * MAXSAMPLE + i] = NULL;
+		}
+	}
+	
+	MADResetInstrument( curIns);
+	
+	music->musicUnderModification = IsReading;
+	
+	return noErr;
+}
+
 static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 {
 	short 					i = 0;
