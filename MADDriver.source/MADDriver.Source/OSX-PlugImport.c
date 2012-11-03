@@ -258,7 +258,7 @@ static inline CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(char *
 	CFRelease(custfolder);
 	CFArrayAppendArray(PlugFolds, FoldLocs, CFRangeMake(0, CFArrayGetCount(FoldLocs)));
 	CFRelease(FoldLocs);
-	return FoldLocs;
+	return PlugFolds;
 }
 
 OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
@@ -375,9 +375,7 @@ OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInf
 	
 	if( !strcmp( kindFile, "MADK"))
 	{
-		PPMADInfoFile( AlienFile, InfoRec);
-		
-		return noErr;
+		return PPMADInfoFile( AlienFile, InfoRec);
 	}
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
