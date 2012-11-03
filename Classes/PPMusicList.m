@@ -51,7 +51,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	Handle aHandle;
 	FSRef theRef;
 	StringPtr aStr, aStr2;
-	short theNo, i;
+	UInt16 theNo, i;
 	CFURLGetFSRef((CFURLRef)toOpen, &theRef);
 	refNum = FSOpenResFile(&theRef, fsRdPerm);
 	if (ResError()) {
@@ -68,7 +68,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	
 	HLock( aHandle);
-	theNo = *((short*)(*aHandle));          // number of musics...
+	theNo = *((UInt16*)(*aHandle));          // number of musics...
 	PPBE16(&theNo);
 	
 	theNo /= 2;
@@ -176,5 +176,33 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	}
 	[encoder encodeObject:BookmarkArray forKey:kMUSICLISTKEY];
 }
+
+#pragma mark Key-valued Coding
+
+- (NSUInteger)countOfMusicList
+{
+	return [musicList count];
+}
+
+- (id)objectInMusicListAtIndex:(NSUInteger)idx
+{
+	return [musicList objectAtIndex:idx];
+}
+
+- (void)insertObject:(id)anObj inMusicListAtIndex:(NSUInteger)idx
+{
+	[musicList insertObject:anObj atIndex:idx];
+}
+
+- (void)removeObjectInMusicListAtIndex:(NSUInteger)object
+{
+	[musicList removeObjectAtIndex:object];
+}
+
+- (void)replaceObjectInMusicListAtIndex:(NSUInteger)index withObject:(id)anObject
+{
+	[musicList replaceObjectAtIndex:index withObject:anObject];
+}
+
 
 @end
