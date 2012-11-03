@@ -221,16 +221,22 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 	CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 4, &kCFTypeArrayCallBacks);
 	CFURLRef temp1;
 	//Application Main Bundle
-	temp1 = CFBundleCopyBuiltInPlugInsURL(CFBundleGetMainBundle());
-	CFArrayAppendValue(PlugFolds, temp1);
-	CFRelease(temp1);
-	temp1 = NULL;
+	CFBundleRef mainBundle = CFBundleGetMainBundle();
+	if (mainBundle != NULL) {
+		temp1 = CFBundleCopyBuiltInPlugInsURL(mainBundle);
+		CFArrayAppendValue(PlugFolds, temp1);
+		CFRelease(temp1);
+		temp1 = NULL;
+	}
 	
 #ifndef MAINPLAYERPRO
-	temp1 = CFBundleCopyBuiltInPlugInsURL(CFBundleGetBundleWithIdentifier(CFSTR("net.sourceforge.playerpro.PlayerPROCore")));
-	CFArrayAppendValue(PlugFolds, temp1);
-	CFRelease(temp1);
-	temp1 = NULL;
+	mainBundle = CFBundleGetBundleWithIdentifier(CFSTR("net.sourceforge.playerpro.PlayerPROCore"));
+	if (mainBundle != NULL) {
+		temp1 = CFBundleCopyBuiltInPlugInsURL(mainBundle);
+		CFArrayAppendValue(PlugFolds, temp1);
+		CFRelease(temp1);
+		temp1 = NULL;
+	}
 #endif
 	
 	//Local systemwide plugins
