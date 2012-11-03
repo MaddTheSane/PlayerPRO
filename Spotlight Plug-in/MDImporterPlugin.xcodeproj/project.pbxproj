@@ -1186,6 +1186,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/Spotlight;
+				LD_RUNPATH_SEARCH_PATHS = "/Library/Frameworks  @loader_path/../Frameworks";
 				PRODUCT_NAME = PlayerPROImporter;
 				WRAPPER_EXTENSION = mdimporter;
 			};
@@ -1198,6 +1199,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/Spotlight;
+				LD_RUNPATH_SEARCH_PATHS = "/Library/Frameworks  @loader_path/../Frameworks";
 				PRODUCT_NAME = PlayerPROImporter;
 				WRAPPER_EXTENSION = mdimporter;
 			};

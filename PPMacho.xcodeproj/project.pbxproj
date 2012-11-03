@@ -6345,6 +6345,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -6375,6 +6376,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -6984,7 +6986,7 @@
 				FRAMEWORK_VERSION = B;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
-				INSTALL_PATH = /Library/Frameworks;
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = PlayerPROCore;
 			};
 			name = Release;
@@ -7002,7 +7004,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
-				INSTALL_PATH = /Library/Frameworks;
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = PlayerPROCore;
 			};
 			name = Debug;
