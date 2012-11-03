@@ -116,7 +116,7 @@ Byte	SwitchColorLV( short i)
 	CGrafPtr			oldPort;
 	GDHandle			oldGDeviceH;
 	
-	if( gGWorld == NULL) MyDebugStr( __LINE__, __FILE__, "gGWorld = NULL");
+	if( gGWorld == NULL) PPDebugStr( __LINE__, __FILE__, "gGWorld = NULL");
 	
 	GetGWorld( &oldPort, &oldGDeviceH);
 	SetGWorld( gGWorld, NULL);
@@ -276,7 +276,7 @@ Ptr	TransformationDSP( Ptr thePtr, short i)
 	register Ptr		tempPtr = thePtr;
 	register Byte		bb = 0x80;
 	
-	if( i > AUDIODSPSIZE * 4L) MyDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
+	if( i > AUDIODSPSIZE * 4L) PPDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
 	
 	do
 	{
@@ -294,7 +294,7 @@ Ptr	Transformation8( Ptr thePtr)
 	register short		i = MADDriver->ASCBUFFERReal;
 	
 	
-	if( i > AUDIODSPSIZE * 4L) MyDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
+	if( i > AUDIODSPSIZE * 4L) PPDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
 	
 	do
 	{
@@ -310,7 +310,7 @@ Ptr	Inverse8( register Ptr thePtr, long Size)
 {
 	register short		i = Size;
 	
-	if( i > AUDIODSPSIZE * 4L) MyDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
+	if( i > AUDIODSPSIZE * 4L) PPDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
 	
 	do
 	{
@@ -325,7 +325,7 @@ Ptr	Inverse16( register Ptr thePtr, long Size)
 {
 	register short		i = Size;
 	
-	if( i > AUDIODSPSIZE * 4L) MyDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
+	if( i > AUDIODSPSIZE * 4L) PPDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
 	
 	do
 	{

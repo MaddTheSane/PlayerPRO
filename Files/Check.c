@@ -159,7 +159,7 @@ Ptr ConvertCurrentMusicToPtr(void)
 		}
 	}
 	tempPtr = MyNewPtr( fileSize);
-	if( tempPtr == NULL) MyDebugStr( __LINE__, __FILE__, "Memory !!!");
+	if( tempPtr == NULL) PPDebugStr( __LINE__, __FILE__, "Memory !!!");
 	
 	tt = 0;
 	inOutCount = GetPtrSize( (Ptr) curMusic->header);
@@ -795,7 +795,7 @@ void ExportFile( OSType theType, FSSpec *newFile)
 			
 			if( iErr != noErr)
 			{
-				MyDebugStr( __LINE__, __FILE__, "");
+				PPDebugStr( __LINE__, __FILE__, "");
 			}
 			
 		case 'MADK':
@@ -992,11 +992,11 @@ void CheckInstrument(void)
 {
 	short	i, x;
 	
-	if( curMusic == NULL) MyDebugStr( __LINE__, __FILE__, "Header == NULL");
+	if( curMusic == NULL) PPDebugStr( __LINE__, __FILE__, "Header == NULL");
 	
-	if( curMusic->header->speed < 0) MyDebugStr( __LINE__, __FILE__, "curMusic->header->speed");
-	if( curMusic->header->tempo < 0) MyDebugStr( __LINE__, __FILE__, "curMusic->header->tempo");
-	if( curMusic->header->numPat < 1) MyDebugStr( __LINE__, __FILE__, "curMusic->header->numPat");
+	if( curMusic->header->speed < 0) PPDebugStr( __LINE__, __FILE__, "curMusic->header->speed");
+	if( curMusic->header->tempo < 0) PPDebugStr( __LINE__, __FILE__, "curMusic->header->tempo");
+	if( curMusic->header->numPat < 1) PPDebugStr( __LINE__, __FILE__, "curMusic->header->numPat");
 	
 	for( i = 0; i < MAXINSTRU; i++)
 	{
@@ -1015,8 +1015,8 @@ void CheckInstrument(void)
 		{
 			sData	*curData = curMusic->sample[ curMusic->fid[i].firstSample + x];
 			
-			if( curData == NULL)		MyDebugStr( __LINE__, __FILE__, "CheckIns Err");
-			if( curData->data == NULL)	MyDebugStr( __LINE__, __FILE__, "CheckIns Err");
+			if( curData == NULL)		PPDebugStr( __LINE__, __FILE__, "CheckIns Err");
+			if( curData->data == NULL)	PPDebugStr( __LINE__, __FILE__, "CheckIns Err");
 			
 			if( curData->size <= 0)
 			{
@@ -1161,7 +1161,7 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 					HUnlock( TempHandle);
 					MyDisposHandle( & TempHandle);
 				}
-				else MyDebugStr( __LINE__, __FILE__, "Fatal MEMORY ERROR 1: NEED MORE MEMORY !");
+				else PPDebugStr( __LINE__, __FILE__, "Fatal MEMORY ERROR 1: NEED MORE MEMORY !");
 			}
 			else
 			{
@@ -1176,7 +1176,7 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 					HUnlock( TempHandle);
 					MyDisposHandle( & TempHandle);
 				}
-				else MyDebugStr( __LINE__, __FILE__, "Fatal MEMORY ERROR 2: NEED MORE MEMORY !");
+				else PPDebugStr( __LINE__, __FILE__, "Fatal MEMORY ERROR 2: NEED MORE MEMORY !");
 			}
 			/***
 			 
@@ -1361,8 +1361,8 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 		MADErreur( iErr);
 	}
 	
-	if( curMusic == NULL) MyDebugStr( __LINE__, __FILE__, "curMusic == NULL");
-	if( curMusic->header->MAD != 'MADK') MyDebugStr( __LINE__, __FILE__, "ERR");
+	if( curMusic == NULL) PPDebugStr( __LINE__, __FILE__, "curMusic == NULL");
+	if( curMusic->header->MAD != 'MADK') PPDebugStr( __LINE__, __FILE__, "ERR");
 	
 	curMusic->originalFormat = theType;
 	if( curMusic->originalFormat == 'Rsrc') curMusic->originalFormat = 'MADK';

@@ -1,5 +1,5 @@
 /*
- *  MyDebugStr.c
+ *  PPDebugStr.c
  *  PPMacho
  *
  *  Created by C.W. Betts on 11/18/09.
@@ -12,7 +12,7 @@
 
 static void (__callback *MyDebugFunc)(short, Ptr, Ptr) = NULL;
 
-void RegisterDebugFunc(void (__callback *debugFunc)(short, Ptr, Ptr))
+void PPRegisterDebugFunc(void (__callback *debugFunc)(short, Ptr, Ptr))
 {
 	MyDebugFunc = debugFunc;
 }
@@ -22,7 +22,7 @@ void RegisterDebugFunc(void (__callback *debugFunc)(short, Ptr, Ptr))
 
 extern void NSLog(CFStringRef format, ...);
 
-void MyDebugStr( short line, Ptr file, Ptr text)
+void PPDebugStr( short line, Ptr file, Ptr text)
 {
 	if (MyDebugFunc != NULL) {
 		(*MyDebugFunc)(line, file, text);
@@ -35,7 +35,7 @@ void MyDebugStr( short line, Ptr file, Ptr text)
 #else
 #include <stdio.h>
 
-void MyDebugStr( short line, Ptr file, Ptr text)
+void PPDebugStr( short line, Ptr file, Ptr text)
 {
 	if (MyDebugFunc != NULL) {
 		(*MyDebugFunc)(line, file, text);

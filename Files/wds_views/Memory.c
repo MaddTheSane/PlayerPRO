@@ -141,7 +141,7 @@ void DoNullMemWindow(void)
 		{
 			for( x = 0; x < curMusic->fid[i].numSamples; x++)
 			{
-				if( curMusic->sample[ curMusic->fid[ i].firstSample + x] == NULL) MyDebugStr( __LINE__, __FILE__, "numSamples ERR");
+				if( curMusic->sample[ curMusic->fid[ i].firstSample + x] == NULL) PPDebugStr( __LINE__, __FILE__, "numSamples ERR");
 				tempLong += curMusic->sample[ curMusic->fid[ i].firstSample + x]->size;
 			}
 		}

@@ -2,7 +2,7 @@
 /* Main.c */
 void CreateTempFile(void);
 void DeleteTempFile(void);
-void MyDebugStr(short, Ptr, Ptr);
+void PPDebugStr(short, Ptr, Ptr);
 void CloseALLWindow(void);
 void TESTBugs(void);
 void SKVolume(short);

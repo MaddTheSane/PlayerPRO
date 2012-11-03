@@ -385,7 +385,7 @@ enum {
 
 unsigned char* MyC2PStr( Ptr cStr);
 void MyP2CStr( unsigned char *cStr);
-void MyDebugStr( short line, Ptr file, Ptr text);
+void PPDebugStr( short line, Ptr file, Ptr text);
 void			NNumToString( short no, Str255 aStr);
 void			GetNoteString( short note, Str255	string);
 Boolean			GetIns( short *ins, short *samp);

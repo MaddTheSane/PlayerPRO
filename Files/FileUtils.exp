@@ -17,6 +17,6 @@ _PPBE32
 _PPBE16
 _PPLE32
 _PPLE16
-_MyDebugStr
+_PPDebugStr
 _Ptr2OSType
 _OSType2Ptr

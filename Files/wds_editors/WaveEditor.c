@@ -626,7 +626,7 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 		while( ptrsize-- > 0) *alpha++ = 0x80;
 		
 		OnContinue = DirectSave( (Ptr) WavePtr, &WaveDriverType, WaveCopyDriver);
-	//	if( WaveCopyDriver->curMusic->musicUnderModification) MyDebugStr( __LINE__, __FILE__, "");
+	//	if( WaveCopyDriver->curMusic->musicUnderModification) PPDebugStr( __LINE__, __FILE__, "");
 		
 		if( OnContinue == false) ReadyToGoOut = true;
 		
@@ -685,7 +685,7 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 							MoveTo( temp, minY);	LineTo( temp, maxY);
 						}
 					}
-					else MyDebugStr( __LINE__, __FILE__, "");
+					else PPDebugStr( __LINE__, __FILE__, "");
 				}
 				
 				ForeColor( blackColor);
@@ -1474,14 +1474,14 @@ void CreateWaveWindow(void)
 	WaveDriverType.oversampling		=	1;
 	
 	WavePtr = (char*) NewPtr( 100 + WAVESIZE * MAXTRACK * 2L);
-	if( WavePtr == NULL) MyDebugStr( __LINE__, __FILE__, "Not enough memory");
+	if( WavePtr == NULL) PPDebugStr( __LINE__, __FILE__, "Not enough memory");
 	
 	WaveCopyDriver = (MADDriverRec*) NewPtrClear( sizeof( MADDriverRec));
 	
 	BlockMoveData( MADDriver, WaveCopyDriver, sizeof( MADDriverRec));
 	
 //	iErr = MADCreateDriver( &WaveDriverType, gMADLib, &WaveCopyDriver);
-//	if( iErr) MyDebugStr( __LINE__, __FILE__, "MADCreateDriver in WavePreview");
+//	if( iErr) PPDebugStr( __LINE__, __FILE__, "MADCreateDriver in WavePreview");
 	
 	WaveCopyDriver->DriverSettings	=	WaveDriverType;
 	MADCreateVolumeTable( WaveCopyDriver);	

@@ -193,7 +193,7 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 		break;
 		
 		default:					// jack says, what about 12? or 6?
-			MyDebugStr( __LINE__, __FILE__, " NSndToHandle... Burkk");
+			PPDebugStr( __LINE__, __FILE__, " NSndToHandle... Burkk");
 		break;
 	} 
 	
@@ -3005,7 +3005,7 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 				srcData = curMusic->sample[ curMusic->fid[ DragIns].firstSample +  DragSamp];
 				dstData = curMusic->sample[ curMusic->fid[ DestIns].firstSample +  DestSamp];
 				
-				if( dstData == NULL) MyDebugStr( __LINE__, __FILE__, "Arggggggg");
+				if( dstData == NULL) PPDebugStr( __LINE__, __FILE__, "Arggggggg");
 				if( dstData->data != NULL) { DisposePtr( dstData->data);	dstData->data = NULL;}
 				
 				*dstData = *srcData;
@@ -3068,15 +3068,15 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 			
 			pStrcpy( tempFile.name, QTFile.name);
 			iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tempFile.vRefNum, &tempFile.parID);
-			if( iErr) MyDebugStr( __LINE__, __FILE__, "FindFolder");
+			if( iErr) PPDebugStr( __LINE__, __FILE__, "FindFolder");
 			
 			FSpDelete( &tempFile);
 			
 			iErr = ConvertMovieToFile( aMovie, nil, &tempFile, 'WAVE', 'TVOD', 0, nil, 0, nil);
-			if( iErr) MyDebugStr( __LINE__, __FILE__, "ConvertMovieToFile");
+			if( iErr) PPDebugStr( __LINE__, __FILE__, "ConvertMovieToFile");
 			
 			iErr = NOpenSampleInt( DestIns, DestSamp, tempFile);
-			if( iErr) MyDebugStr( __LINE__, __FILE__, "NOpenSampleInt");
+			if( iErr) PPDebugStr( __LINE__, __FILE__, "NOpenSampleInt");
 			
 			FSpDelete( &tempFile);
 			
@@ -3116,7 +3116,7 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 		
 		pStrcpy( newFile.name, "\pDigital Selection");
 		iErr = FindFolder( kOnSystemDisk, kDesktopFolderType, kCreateFolder, &newFile.vRefNum, &newFile.parID);
-		if( iErr) MyDebugStr( __LINE__, __FILE__, "FindFolder");
+		if( iErr) PPDebugStr( __LINE__, __FILE__, "FindFolder");
 		
 		FSpDelete( &newFile);
 		
@@ -3329,8 +3329,8 @@ Boolean DragInstrument( RgnHandle myRgn, short no, EventRecord *theEvent)
 		short				numChan;
 		
 		curData		= curMusic->sample[ curMusic->fid[ DragIns].firstSample +  DragSamp];
-		if( curData == NULL) MyDebugStr( __LINE__, __FILE__, "Errorrr");
-		if( curData->data == NULL) MyDebugStr( __LINE__, __FILE__, "Errorrr");
+		if( curData == NULL) PPDebugStr( __LINE__, __FILE__, "Errorrr");
+		if( curData->data == NULL) PPDebugStr( __LINE__, __FILE__, "Errorrr");
 		
 		if( curData->size == 0) return false;
 		

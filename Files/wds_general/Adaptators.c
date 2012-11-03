@@ -714,7 +714,7 @@ void FillBarControl( short id, short curval, short maxval)
 	Str255		str;
 	RGBColor	color;
 	
-	if( id == -1) MyDebugStr( __LINE__, __FILE__, "");
+	if( id == -1) PPDebugStr( __LINE__, __FILE__, "");
 	
 	SetControlValue( volCntl[ id], (curval * 100) / maxval);
 	
@@ -730,7 +730,7 @@ void FillBarStereo( short id, short curval, short maxval)
 {
 	Rect	contrlRect;
 
-	if( id < 0) MyDebugStr( __LINE__, __FILE__, "");
+	if( id < 0) PPDebugStr( __LINE__, __FILE__, "");
 	
 	GetControlBounds( pannCntl[ id], &contrlRect);
 	
@@ -746,7 +746,7 @@ void FillPulseRect( short id)
 	Str255	str2;
 	Rect	itemRect;
 	
-	if( id < 0) MyDebugStr( __LINE__, __FILE__, "");
+	if( id < 0) PPDebugStr( __LINE__, __FILE__, "");
 	
 	pulseRect[ id].top = VolumeRect.top - (GetControlValue( ScrollAdap) - id)*DISVOL;
 	pulseRect[ id].bottom = pulseRect[ id].top + 14;

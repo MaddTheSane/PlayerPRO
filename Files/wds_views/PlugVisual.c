@@ -472,7 +472,7 @@ void LoadVisualPLUG( short No, StringPtr theName)
 	
 	GetIndString( tStr, 1000, 5);
 	BlockMoveData( tStr + 1, &ThePPINPlug[ No].InsSamp, 4);
-	if( ThePPINPlug[ No].InsSamp != 'SAMP' && ThePPINPlug[ No].InsSamp != 'INST') MyDebugStr( __LINE__, __FILE__, "Plug-Ins SAMP/INST Error");
+	if( ThePPINPlug[ No].InsSamp != 'SAMP' && ThePPINPlug[ No].InsSamp != 'INST') PPDebugStr( __LINE__, __FILE__, "Plug-Ins SAMP/INST Error");
 	
 	CloseResFile( fileID);*/
 	/*************************/
@@ -504,14 +504,14 @@ void ScanDirVisualPlug( long dirID, short VRefNum)
 			
 			iErr = HSetVol( NULL, info.hFileInfo.ioVRefNum, dirID);
 			
-			if( tPlug > 50) MyDebugStr( __LINE__, __FILE__, "Too many plugs");
+			if( tPlug > 50) PPDebugStr( __LINE__, __FILE__, "Too many plugs");
 			
 			LoadVisualPLUG( tPlug, info.hFileInfo.ioNamePtr);
 			
 			tPlug++;
 			
 			iErr = HSetVol( NULL, vRefNum, dirIDCopy);
-			if( iErr != noErr) MyDebugStr( __LINE__, __FILE__, "HSetVol error...");
+			if( iErr != noErr) PPDebugStr( __LINE__, __FILE__, "HSetVol error...");
 		}
 		else if((info.hFileInfo.ioFlAttrib & 16))
 		{

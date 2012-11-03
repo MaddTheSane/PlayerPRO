@@ -85,7 +85,7 @@ void InitPPDGPlug(void)
 				tempMADPlug = PPDGLoadPlug(tempPlugRef);
 				if (tempMADPlug) {
 					if( tPlug > FilterPlugMax) {
-						MyDebugStr( __LINE__, __FILE__, "Too many plugs!");
+						PPDebugStr( __LINE__, __FILE__, "Too many plugs!");
 						break;
 					}
 					

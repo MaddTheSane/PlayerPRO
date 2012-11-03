@@ -920,7 +920,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 								if( (ITinfo.sampdata[ prevSamp].Convert & 8))
 								{
 									//Str255 str;
-									//NumToString( i, str); //FIXME: depricated
+									//NumToString( i, str);
 								//	DebugStr( str);
 								}
 							}

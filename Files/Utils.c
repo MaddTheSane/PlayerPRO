@@ -55,17 +55,17 @@ pascal void NewMyDisposePtr( & Ptr myPtr)
 	long aSize;
 
 	aSize = GetPtrSize( myPtr);
-	if( aSize <= 0 || aSize >= 400000) MyDebugStr( __LINE__, __FILE__, "MyDisposePtrError");
+	if( aSize <= 0 || aSize >= 400000) PPDebugStr( __LINE__, __FILE__, "MyDisposePtrError");
 
 //	CallPascal( myPtr, oldMyDisposePtr);
 	
-	if( MemError() != noErr) MyDebugStr( __LINE__, __FILE__, "MyDisposePtrError");
+	if( MemError() != noErr) PPDebugStr( __LINE__, __FILE__, "MyDisposePtrError");
 }
 
 
 void PatchMyDisposePtr( &)
 {
-	MyDebugStr( __LINE__, __FILE__, "");
+	PPDebugStr( __LINE__, __FILE__, "");
 
 	oldMyDisposePtr = NGetTrapAddress( 0xA01F, 0);
 	NSetTrapAddress( (long) NewMyDisposePtr, 0xA01F, 0);
@@ -152,7 +152,7 @@ void oldFrameButton( DialogPtr theDlg)
 
 	GetDialogItem (theDlg, 1, &iType, &iHndl, &iRect );
 	
-	if( iHndl == NULL) MyDebugStr( __LINE__, __FILE__, "oldFrameButton itemHandle = NULL");
+	if( iHndl == NULL) PPDebugStr( __LINE__, __FILE__, "oldFrameButton itemHandle = NULL");
 	
 /*	PenSize( 3,3 );
 	InsetRect( &iRect, -4,-4);
@@ -527,10 +527,10 @@ void InverseRadio( short item, DialogPtr dlog)
 
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 
-	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "InverseRadio itemHandle = NULL");
+	if( itemHandle == NULL) PPDebugStr( __LINE__, __FILE__, "InverseRadio itemHandle = NULL");
 
 	if( itemType >= 128) itemType -= 128;
-	if( itemType != 6 && itemType != 5) MyDebugStr( __LINE__, __FILE__, "Error in InverseRadio");
+	if( itemType != 6 && itemType != 5) PPDebugStr( __LINE__, __FILE__, "Error in InverseRadio");
 
 	SetControlValue( (ControlHandle) itemHandle,!GetControlValue( (ControlHandle) itemHandle));
 }
@@ -544,10 +544,10 @@ void TurnRadio( short item, DialogPtr dlog, Boolean alors)
 
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 
-	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "TurnRadio itemHandle = NULL");
+	if( itemHandle == NULL) PPDebugStr( __LINE__, __FILE__, "TurnRadio itemHandle = NULL");
 
 	if( itemType >= 128) itemType -= 128;
-	if( itemType != 6 && itemType != 5) MyDebugStr( __LINE__, __FILE__, "Error in TurnRadio");
+	if( itemType != 6 && itemType != 5) PPDebugStr( __LINE__, __FILE__, "Error in TurnRadio");
 
 	if( alors)
 	{
@@ -568,7 +568,7 @@ void ControlSwitch(short item, DialogPtr dlog, short Switch)
 
 //	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 
-//	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "ControlSwitch itemHandle = NULL");
+//	if( itemHandle == NULL) PPDebugStr( __LINE__, __FILE__, "ControlSwitch itemHandle = NULL");
 
 	GetDialogItemAsControl( dlog, item, &control );
 	
@@ -581,7 +581,7 @@ void MyMoveControl( ControlHandle ah, short x, short y)
 {
 	Rect	rect;
 
-	if( ah == 0) MyDebugStr( __LINE__, __FILE__, "MyMoveControl ah == 0");
+	if( ah == 0) PPDebugStr( __LINE__, __FILE__, "MyMoveControl ah == 0");
 	
 	GetControlBounds( ah, &rect);
 
@@ -594,7 +594,7 @@ void MySizeControl( ControlHandle ah, short x, short y)
 {
 	Rect	rect;
 	
-	if( ah == 0) MyDebugStr( __LINE__, __FILE__, "MySizeControl ah == 0");
+	if( ah == 0) PPDebugStr( __LINE__, __FILE__, "MySizeControl ah == 0");
 	
 	GetControlBounds( ah, &rect);
 	
@@ -757,7 +757,7 @@ void SetDText (DialogPtr dlog, short item, Str255 str)
 
 	GetDialogItemAsControl( dlog, item, &control );
 	err = SetControlData( control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
-	if( err) MyDebugStr( __LINE__, __FILE__, "Error in SetDText");
+	if( err) PPDebugStr( __LINE__, __FILE__, "Error in SetDText");
 	DrawOneControl( control);
 }
 
@@ -769,7 +769,7 @@ void WriteCText (DialogPtr dlog, short item, char *str)
 
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 	
-	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "WriteCText itemHandle = NULL");
+	if( itemHandle == NULL) PPDebugStr( __LINE__, __FILE__, "WriteCText itemHandle = NULL");
 
 	MyC2PStr( str);
 	
@@ -788,9 +788,9 @@ void GetDText (DialogPtr dlog, short item, StringPtr str)
 	Rect	itemRect;
 
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
-	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "Error in SetDText");
+	if( itemHandle == NULL) PPDebugStr( __LINE__, __FILE__, "Error in SetDText");
 	if( itemType >= 128) itemType -= 128;
-	if( itemType != 8 && itemType != 16) MyDebugStr( __LINE__, __FILE__, "Error in itemType");
+	if( itemType != 8 && itemType != 16) PPDebugStr( __LINE__, __FILE__, "Error in itemType");
 	
 	GetDialogItemText (itemHandle, str);
 }
@@ -823,7 +823,7 @@ void pStrcpy(register unsigned char *s1, register const unsigned char *s2)
 			s1[ i] = s2[ i];
 		}
 	}
-	else MyDebugStr( __LINE__, __FILE__, "String to biiig !");
+	else PPDebugStr( __LINE__, __FILE__, "String to biiig !");
 }
 #endif
 
@@ -892,7 +892,7 @@ short NewOffscreenPixMap(PixMapHandle *thePixMap, Rect *picRect)
 	
 	(*offscreenPixMap)->pmTable = GetCTable( 8);
 //	DetachResource( (Handle) (*offscreenPixMap)->pmTable);
-//	if( HandToHand( (Handle*) &(*offscreenPixMap)->pmTable) != noErr) MyDebugStr( __LINE__, __FILE__, "HandToHand Error");
+//	if( HandToHand( (Handle*) &(*offscreenPixMap)->pmTable) != noErr) PPDebugStr( __LINE__, __FILE__, "HandToHand Error");
 //	DisposeHandle( (*offscreenPixMap)->pmTable);
 
 	*thePixMap = offscreenPixMap;
@@ -988,7 +988,7 @@ short PicToPix (PicHandle thePic, PixMapHandle *offscreenPixMap)
 				(GWorldFlags) 0);
 	
 	errCode = NewOffscreenPixMap( &*offscreenPixMap, &picRect);
-	if( errCode != noErr) MyDebugStr( __LINE__, __FILE__, "Error in PicToPix");
+	if( errCode != noErr) PPDebugStr( __LINE__, __FILE__, "Error in PicToPix");
 	
 	LockPixels( GetPortPixMap( theGWorld));
 	SetGWorld( theGWorld, NULL);

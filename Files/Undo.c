@@ -213,7 +213,7 @@ void SaveUndo( short UndoType, short ID, Str255 textMenu)
 		case UPattern:
 			myUndo.dataSize = sizeof( PatHeader) + curMusic->header->numChn * curMusic->partition[ ID]->header.size * sizeof( Cmd);
 		
-			if( ID < 0 || ID >= curMusic->header->numPat) MyDebugStr( __LINE__, __FILE__, "Undo Pattern error.");
+			if( ID < 0 || ID >= curMusic->header->numPat) PPDebugStr( __LINE__, __FILE__, "Undo Pattern error.");
 			else
 			{
 				myUndo.data = MyNewPtr( myUndo.dataSize);
@@ -241,11 +241,11 @@ void SaveUndo( short UndoType, short ID, Str255 textMenu)
 				{
 					sData	*curData = curMusic->sample[ curMusic->fid[ ID].firstSample +  i];
 					
-					if( curData == NULL) MyDebugStr( __LINE__, __FILE__, "BIG UNDO Error 1");
+					if( curData == NULL) PPDebugStr( __LINE__, __FILE__, "BIG UNDO Error 1");
 					if( curData->size > 0)
 					{
-						if( curData->data == NULL) MyDebugStr( __LINE__, __FILE__, "BIG UNDO Error 2A");
-						if( GetPtrSize( curData->data) != curData->size) MyDebugStr( __LINE__, __FILE__, "BIG UNDO Error 3A");
+						if( curData->data == NULL) PPDebugStr( __LINE__, __FILE__, "BIG UNDO Error 2A");
+						if( GetPtrSize( curData->data) != curData->size) PPDebugStr( __LINE__, __FILE__, "BIG UNDO Error 3A");
 					}
 					
 					BlockMoveData( curData, myUndo.data + myUndo.dataSize, sizeof( sData));
@@ -297,11 +297,11 @@ void SaveUndo( short UndoType, short ID, Str255 textMenu)
 						{
 							sData	*curData = curMusic->sample[ curMusic->fid[ i].firstSample +  x];
 							
-							if( curData == NULL) MyDebugStr( __LINE__, __FILE__, "BIG UNDO Error 1");
+							if( curData == NULL) PPDebugStr( __LINE__, __FILE__, "BIG UNDO Error 1");
 							if( curData->size > 0)
 							{
-								if( curData->data == NULL) MyDebugStr( __LINE__, __FILE__, "BIG UNDO Error 2");
-								if( GetPtrSize( curData->data) != curData->size) MyDebugStr( __LINE__, __FILE__, "BIG UNDO Error 3");
+								if( curData->data == NULL) PPDebugStr( __LINE__, __FILE__, "BIG UNDO Error 2");
+								if( GetPtrSize( curData->data) != curData->size) PPDebugStr( __LINE__, __FILE__, "BIG UNDO Error 3");
 							}
 							
 							BlockMoveData( curData, CopyAllInstruments[ i] + size, sizeof( sData));
@@ -329,13 +329,13 @@ void SaveUndo( short UndoType, short ID, Str255 textMenu)
 				{
 					CopyPartition[ i]  = NULL;
 					
-					if( i >= curMusic->header->numPat) if( curMusic->partition[ i] != NULL) MyDebugStr( __LINE__, __FILE__, "Check Partition-Partition UNDO.");
+					if( i >= curMusic->header->numPat) if( curMusic->partition[ i] != NULL) PPDebugStr( __LINE__, __FILE__, "Check Partition-Partition UNDO.");
 				
 					if( curMusic->partition[ i] != NULL)
 					{
 						tempL = sizeof( PatHeader) + curMusic->header->numChn * curMusic->partition[ i]->header.size * sizeof( Cmd);
 						
-						if( GetPtrSize( (Ptr) curMusic->partition[ i]) != tempL) MyDebugStr( __LINE__, __FILE__, "Check Create Partition SIZE");
+						if( GetPtrSize( (Ptr) curMusic->partition[ i]) != tempL) PPDebugStr( __LINE__, __FILE__, "Check Create Partition SIZE");
 						
 						CopyPartition[ i] = ( PatData*) MyNewPtr( tempL);
 						if( CopyPartition[ i] != NULL)
@@ -348,7 +348,7 @@ void SaveUndo( short UndoType, short ID, Str255 textMenu)
 		break;
 		
 		default:
-			MyDebugStr( __LINE__, __FILE__, "Unknown UNDO");
+			PPDebugStr( __LINE__, __FILE__, "Unknown UNDO");
 		break;
 	}
 	
@@ -467,7 +467,7 @@ void DoUndo(void)
 					}
 				}
 			}
-			if( size != myUndo.dataSize) MyDebugStr( __LINE__, __FILE__, "USample DoUndo() Prob");
+			if( size != myUndo.dataSize) PPDebugStr( __LINE__, __FILE__, "USample DoUndo() Prob");
 			
 			// ********
 			
@@ -495,11 +495,11 @@ void DoUndo(void)
 			
 			/** REDO **/
 			myTempUndo = MyNewPtr( myUndo.dataSize);
-			if( myTempUndo == NULL) MyDebugStr( __LINE__, __FILE__, "UndoError - MEMORY");
+			if( myTempUndo == NULL) PPDebugStr( __LINE__, __FILE__, "UndoError - MEMORY");
 			BlockMoveData( curMusic->header, myTempUndo, myUndo.dataSize);
 			
 			myTempSets = NewPtrClear( MAXTRACK * sizeof(FXSets));
-			if( myTempUndo == NULL) MyDebugStr( __LINE__, __FILE__, "UndoError - MEMORY");
+			if( myTempUndo == NULL) PPDebugStr( __LINE__, __FILE__, "UndoError - MEMORY");
 			BlockMoveData( curMusic->sets, myTempSets, MAXTRACK * sizeof(FXSets));
 			/********/
 			
@@ -631,7 +631,7 @@ void DoUndo(void)
 
 					if( CopyPartition[ i] != NULL)
 					{
-						if( i >= curMusic->header->numPat) MyDebugStr( __LINE__, __FILE__, "UNDO Partition ERROR");
+						if( i >= curMusic->header->numPat) PPDebugStr( __LINE__, __FILE__, "UNDO Partition ERROR");
 					
 						curMusic->partition[ i] = ( PatData*) MyNewPtr( GetPtrSize( (Ptr) CopyPartition[ i]));
 						if( curMusic->partition[ i] != NULL)
@@ -653,7 +653,7 @@ void DoUndo(void)
 			break;
 		
 		default:
-			MyDebugStr( __LINE__, __FILE__, "Unknown UNDO");
+			PPDebugStr( __LINE__, __FILE__, "Unknown UNDO");
 			break;
 	}
 	

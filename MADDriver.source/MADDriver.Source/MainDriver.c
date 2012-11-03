@@ -2034,7 +2034,7 @@ sData	* MADCreateSample( MADMusic *MDriver, short ins, short sample)
 		
 		// Install it
 		
-		if( sample < MDriver->fid[ ins].numSamples) MyDebugStr( __LINE__, __FILE__, "MADCreateSample");
+		if( sample < MDriver->fid[ ins].numSamples) PPDebugStr( __LINE__, __FILE__, "MADCreateSample");
 		
 		MDriver->sample[ ins * MAXSAMPLE + sample] = curData;
 		MDriver->fid[ ins].numSamples++;

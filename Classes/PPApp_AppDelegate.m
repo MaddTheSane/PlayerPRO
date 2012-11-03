@@ -174,7 +174,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	MADInitLibrary(NULL, &MADLib);
 	[tableView setDataSource:musicList];
 	[self MADDriverWithPreferences];
-	RegisterDebugFunc(CocoaDebugStr);
+	PPRegisterDebugFunc(CocoaDebugStr);
 
 }
 - (void)applicationWillTerminate:(NSNotification *)notification

@@ -261,7 +261,7 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 		break;
 		
 		case portamentoE:
-		//	if( ch->period == 0) MyDebugStr( __LINE__, __FILE__, "Goal");
+		//	if( ch->period == 0) PPDebugStr( __LINE__, __FILE__, "Goal");
 			if( ch->period != ch->pitchgoal)
 			{
 				if (ch->period < ch->pitchgoal)

@@ -360,6 +360,13 @@
 			remoteGlobalIDString = 557DE9A110E08DC100177B4C;
 			remoteInfo = "Tone Generator";
 		};
+		5598692816432693008C55FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 551292D8163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
 		55A49285162F6ECC003EBF4A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
@@ -516,6 +523,7 @@
 				5570E9B012A4C24900167E1A /* PlayerPRO Example.app */,
 				5570E9B212A4C24900167E1A /* Game Example.app */,
 				5570E9B412A4C24900167E1A /* PlayerPROCore.framework */,
+				5598692916432693008C55FC /* PlayerPROKit.framework */,
 				5570E9B612A4C24900167E1A /* MOD.ppimpexp */,
 				5570E9B812A4C24900167E1A /* 669.ppimpexp */,
 				5570E9BA12A4C24900167E1A /* AMF.ppimpexp */,
@@ -947,6 +955,13 @@
 			fileType = wrapper.cfbundle;
 			path = "Tone Generator.plugin";
 			remoteRef = 5570EA0712A4C24900167E1A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5598692916432693008C55FC /* PlayerPROKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PlayerPROKit.framework;
+			remoteRef = 5598692816432693008C55FC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

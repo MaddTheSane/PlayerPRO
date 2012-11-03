@@ -559,10 +559,10 @@ enum MADEffectsID {
 extern "C" {
 #endif
 
-PPEXPORT void MyDebugStr( short, char*, char*);								// Internal Debugger function, NORMALLY it is never called, only when FATAL error
+PPEXPORT void PPDebugStr( short, char*, char*);								// Internal Debugger function, NORMALLY it is never called, only when FATAL error
 
-PPEXPORT void RegisterDebugFunc(void (__callback *debugFunc)(short, Ptr, Ptr));	//Use this function to call your own debug function when MyDebugStr is called
-																			//Otherwise calls to MyDebugStr will crash your app
+PPEXPORT void PPRegisterDebugFunc(void (__callback *debugFunc)(short, Ptr, Ptr));	//Use this function to call your own debug function when PPDebugStr is called
+																			//Otherwise calls to PPDebugStr will crash your app
 
 PPEXPORT OSErr	MADInitLibrary( char *PlugsFolderName, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
 
