@@ -385,7 +385,6 @@
 		55CBFAD211EB77ED0028C6BB /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55CBFAD311EB77ED0028C6BB /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
 		55CBFAD411EB77ED0028C6BB /* AMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341D310BB5FE0005208D1 /* AMF.ppimpexp */; };
-		55CBFAD511EB77ED0028C6BB /* DMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341E910BB5FFA005208D1 /* DMF.ppimpexp */; };
 		55CBFAD611EB77ED0028C6BB /* IT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341FC10BB600A005208D1 /* IT.ppimpexp */; };
 		55CBFAD711EB77ED0028C6BB /* MADfg.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */; };
 		55CBFAD811EB77ED0028C6BB /* MADH.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */; };
@@ -1276,7 +1275,6 @@
 				55CBFAD211EB77ED0028C6BB /* MOD.ppimpexp in Copy PlugIns */,
 				55CBFAD311EB77ED0028C6BB /* 669.ppimpexp in Copy PlugIns */,
 				55CBFAD411EB77ED0028C6BB /* AMF.ppimpexp in Copy PlugIns */,
-				55CBFAD511EB77ED0028C6BB /* DMF.ppimpexp in Copy PlugIns */,
 				55CBFAD611EB77ED0028C6BB /* IT.ppimpexp in Copy PlugIns */,
 				55CBFAD711EB77ED0028C6BB /* MADfg.ppimpexp in Copy PlugIns */,
 				55CBFAD811EB77ED0028C6BB /* MADH.ppimpexp in Copy PlugIns */,

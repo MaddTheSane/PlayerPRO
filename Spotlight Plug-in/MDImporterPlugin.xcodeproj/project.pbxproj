@@ -15,7 +15,6 @@
 		55FD6BDA1645A4A2008AB923 /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554BB76D12FDC522001A025C /* MOD.ppimpexp */; };
 		55FD6BDB1645A4A2008AB923 /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554BB76F12FDC522001A025C /* 669.ppimpexp */; };
 		55FD6BDC1645A4A2008AB923 /* AMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554BB77112FDC522001A025C /* AMF.ppimpexp */; };
-		55FD6BDD1645A4A2008AB923 /* DMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554BB77312FDC522001A025C /* DMF.ppimpexp */; };
 		55FD6BDE1645A4A2008AB923 /* IT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554BB77512FDC522001A025C /* IT.ppimpexp */; };
 		55FD6BDF1645A4A2008AB923 /* MADfg.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554BB77712FDC522001A025C /* MADfg.ppimpexp */; };
 		55FD6BE01645A4A2008AB923 /* MADH.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554BB77912FDC522001A025C /* MADH.ppimpexp */; };
@@ -398,13 +397,6 @@
 			remoteGlobalIDString = 553341C510BB5FE0005208D1;
 			remoteInfo = AMF;
 		};
-		55FD6BEF1645A4C5008AB923 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 553341DB10BB5FFA005208D1;
-			remoteInfo = DMF;
-		};
 		55FD6BF11645A4C5008AB923 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
@@ -505,7 +497,6 @@
 				55FD6BDA1645A4A2008AB923 /* MOD.ppimpexp in Copy PlugIns */,
 				55FD6BDB1645A4A2008AB923 /* 669.ppimpexp in Copy PlugIns */,
 				55FD6BDC1645A4A2008AB923 /* AMF.ppimpexp in Copy PlugIns */,
-				55FD6BDD1645A4A2008AB923 /* DMF.ppimpexp in Copy PlugIns */,
 				55FD6BDE1645A4A2008AB923 /* IT.ppimpexp in Copy PlugIns */,
 				55FD6BDF1645A4A2008AB923 /* MADfg.ppimpexp in Copy PlugIns */,
 				55FD6BE01645A4A2008AB923 /* MADH.ppimpexp in Copy PlugIns */,
@@ -673,7 +664,6 @@
 				55FD6BEA1645A4C5008AB923 /* PBXTargetDependency */,
 				55FD6BEC1645A4C5008AB923 /* PBXTargetDependency */,
 				55FD6BEE1645A4C5008AB923 /* PBXTargetDependency */,
-				55FD6BF01645A4C5008AB923 /* PBXTargetDependency */,
 				55FD6BF21645A4C5008AB923 /* PBXTargetDependency */,
 				55FD6BF41645A4C5008AB923 /* PBXTargetDependency */,
 				55FD6BF61645A4C5008AB923 /* PBXTargetDependency */,
@@ -1110,11 +1100,6 @@
 			isa = PBXTargetDependency;
 			name = AMF;
 			targetProxy = 55FD6BED1645A4C5008AB923 /* PBXContainerItemProxy */;
-		};
-		55FD6BF01645A4C5008AB923 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = DMF;
-			targetProxy = 55FD6BEF1645A4C5008AB923 /* PBXContainerItemProxy */;
 		};
 		55FD6BF21645A4C5008AB923 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
