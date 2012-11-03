@@ -243,7 +243,7 @@ void MInitImportPlug( MADLibrary* inMADDriver, char *PlugsFolderName)
 		
 		hFind = FindFirstFileA( FindFolder, &fd);
 		
-		inMADDriver->ThePlug = (PlugInfo*) malloc( MAXPLUG * sizeof( PlugInfo));
+		inMADDriver->ThePlug = (PlugInfo*) calloc( MAXPLUG, sizeof( PlugInfo));
 		
 		while( hFind != INVALID_HANDLE_VALUE && bRet)
 		{
@@ -278,3 +278,36 @@ void CloseImportPlug( MADLibrary* inMADDriver)
 	}
 	free(inMADDriver->ThePlug); inMADDriver->ThePlug = NULL;
 }
+
+OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
+{
+	short	i, x;
+	
+	if( ID >= inMADDriver->TotalPlug) MyDebugStr( __LINE__, __FILE__, "PP-Plug ERROR. ");
+	
+	for( i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
+	{
+		if( inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == 'EXIM')
+		{
+			if( ID == x)
+			{
+				short 	xx;
+				OSType	type;
+				
+				xx = strlen( inMADDriver->ThePlug[ i].type);
+				if( xx > 4) xx = 4;
+				type = '    ';
+				memcpy( &type, inMADDriver->ThePlug[ i].type, xx);
+				PPBE32(&type);
+				
+				return type;
+			}
+			x++;
+		}
+	}
+	
+	MyDebugStr( __LINE__, __FILE__, "PP-Plug ERROR II.");
+	
+	return noErr;
+}
+

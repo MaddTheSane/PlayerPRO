@@ -302,7 +302,7 @@ void MADInitImportPlug( MADLibrary *inMADDriver, char *PluginFolder)
 	CFArrayRef		somePlugs = NULL;
 	CFIndex			PlugLocNums, PlugNums, i, x;
 	
-	inMADDriver->ThePlug = (PlugInfo*) malloc( MAXPLUG * sizeof( PlugInfo));
+	inMADDriver->ThePlug = (PlugInfo*) calloc( MAXPLUG, sizeof( PlugInfo));
 	inMADDriver->TotalPlug = 0;
 	if (PluginFolder == NULL) {
 		PlugLocations = CreateDefaultPluginFolderLocations();

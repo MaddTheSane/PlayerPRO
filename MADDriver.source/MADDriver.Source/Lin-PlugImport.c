@@ -52,10 +52,11 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 
 typedef OSErr (*FILLPLUG) ( PlugInfo *);;
 
-void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
+void MInitImportPlug( MADLibrary *inMADDriver, Ptr PlugsFolderName)
 {
-	inMADDriver->ThePlug = (PlugInfo*) malloc( MAXPLUG * sizeof( PlugInfo));
+	inMADDriver->ThePlug = (PlugInfo*) calloc( MAXPLUG, sizeof( PlugInfo));
 	inMADDriver->TotalPlug = 0;
+	//TODO: iterate plug-in paths
 	int i =0;
 	{
 		inMADDriver->ThePlug[i].hLibrary = dlopen(NULL, RTLD_LAZY);
@@ -243,6 +244,7 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 				if( xx > 4) xx = 4;
 				type = '    ';
 				memcpy( &type, inMADDriver->ThePlug[ i].type, xx);
+				PPBE32(&type);
 				
 				return type;
 			}
