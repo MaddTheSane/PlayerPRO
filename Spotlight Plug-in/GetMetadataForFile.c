@@ -67,9 +67,16 @@ Boolean GetMetadataForFile(void* thisInterface,
 	
 	MADGetBestDriver(&init);
 	init.driverMode = NoHardwareDriver;
+	{
+		char builtinPluginPath[PATH_MAX];
+		CFBundleRef metaDataBundle = CFBundleGetBundleWithIdentifier(CFSTR("net.sourceforge.playerpro.PlayerPROImporter"));
 	
-	if(MADInitLibrary(NULL, &MADLib) != noErr) return FALSE;
-	if( MADCreateDriver( &init, MADLib, &MADDriver) != noErr) 
+		CFURLRef pluginURL = CFBundleCopyBuiltInPlugInsURL(metaDataBundle);
+		CFURLGetFileSystemRepresentation(pluginURL, true, (UInt8*)builtinPluginPath, PATH_MAX);
+		CFRelease(pluginURL);
+		if(MADInitLibrary(builtinPluginPath, &MADLib) != noErr) return FALSE;
+	}
+	if( MADCreateDriver( &init, MADLib, &MADDriver) != noErr)
 	{
 		MADDisposeLibrary(MADLib);
 		return FALSE;
@@ -86,6 +93,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 		info = UTGetOSTypeFromString(ostypes);
 		CFRelease(ostypes);
 		if (!info) goto fail1;
+		OSType2Ptr(info, type);
 		
 #endif
 		CFURLRef tempRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
