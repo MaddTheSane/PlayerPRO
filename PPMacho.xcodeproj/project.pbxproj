@@ -6595,6 +6595,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MOD;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -6613,6 +6614,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MOD;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -6628,6 +6630,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = 669;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -6645,6 +6648,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = 669;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -6660,6 +6664,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = AMF;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -6677,6 +6682,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = AMF;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -6692,6 +6698,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = DMF;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -6709,6 +6716,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = DMF;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -6724,6 +6732,7 @@
 				INFOPLIST_FILE = "IT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = IT;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -6741,6 +6750,7 @@
 				INFOPLIST_FILE = "IT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = IT;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -7542,6 +7552,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MADfg;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -7559,6 +7570,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MADfg;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -7574,6 +7586,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MADH;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -7591,6 +7604,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MADH;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -7606,6 +7620,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MADI;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -7623,6 +7638,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MADI;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -7638,6 +7654,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MED;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -7655,6 +7672,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MED;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -7670,6 +7688,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MTM;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -7687,6 +7706,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MTM;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -7702,6 +7722,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Okta;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -7719,6 +7740,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Okta;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -7734,6 +7756,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = S3M;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -7751,6 +7774,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = S3M;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -7766,6 +7790,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = ULT;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -7783,6 +7808,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = ULT;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -7798,6 +7824,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = UMX;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -7815,6 +7842,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = UMX;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -7830,6 +7858,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = XM;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -7847,6 +7876,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = XM;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -7863,6 +7893,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MIDI;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -7881,6 +7912,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MIDI;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
@@ -7896,6 +7928,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = APPL;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
@@ -7913,6 +7946,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = APPL;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
