@@ -8,7 +8,7 @@
 
 #import "PPMusicList.h"
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Carbon/Carbon.h>
+#include <CoreServices/CoreServices.h>
 
 #define kMUSICLISTKEY @"Music List Key1"
 
