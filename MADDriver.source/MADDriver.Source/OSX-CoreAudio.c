@@ -15,6 +15,7 @@
 static Ptr CABuffer = NULL;
 static size_t BuffSize = 0;
 
+//TODO: we should probably do something to prevent thread contention
 static OSStatus     CAAudioCallback (void                            *inRefCon,
 									 AudioUnitRenderActionFlags      *ioActionFlags,
 									 const AudioTimeStamp            *inTimeStamp,

@@ -267,6 +267,7 @@ BOOL LoadSamp(LPDIRECTSOUND lpDirectSound,
     return 1;
 }
 
+//TODO: we should probably do something to prevent thread contention
 static void CALLBACK TimeProc(
 	 UINT  IDEvent,			/* identifies timer event */
 	 UINT  uReserved,		/* not used */

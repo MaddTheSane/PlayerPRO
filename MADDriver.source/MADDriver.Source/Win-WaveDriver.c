@@ -130,6 +130,7 @@ ULONG GetPos(void)
 	timersema--;
 }*/
 
+//TODO: we should probably do something to prevent thread contention
 void CALLBACK TimeProc(
 	 UINT  IDEvent,
 	 UINT  uReserved,
