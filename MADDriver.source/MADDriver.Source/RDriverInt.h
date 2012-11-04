@@ -29,7 +29,6 @@
 #include "FileUtils.h"
 #endif
 
-
 //#define MEM {Str255 str; NumToString( FreeMem(), str); DebugStr( str);}
 
 //#define NUMBER_FINETUNES 	16
@@ -304,7 +303,7 @@ struct __MADDriverRec
 	short					smallcounter, trackDiv;
 	SInt32					FREQBASE;
 	short					InstruActif[ MAXINSTRU];
-	Ptr						SysHeapPtr, IntDataPtr;
+	Ptr						IntDataPtr;
 	Ptr						OsciDrawPtr[ MAXDRAW];
 	Boolean					newData[ MAXDRAW];
 	Boolean					useOsciBuffers;

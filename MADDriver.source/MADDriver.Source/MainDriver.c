@@ -1018,6 +1018,9 @@ OSErr MADInitLibrary( char *PlugsFolderName, MADLibrary **lib)
 		1712*16, 1616*16, 1524*16, 1440*16, 1356*16, 1280*16,
 		1208*16, 1140*16, 1076*16, 1016*16, 960*16, 907*16
 	};
+	if (lib == NULL) {
+		return MADParametersErr;
+	}
 
 	*lib = (MADLibrary*) calloc( sizeof( MADLibrary), 1);
 	
@@ -1055,8 +1058,8 @@ OSErr MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned ch
 #endif
 	Boolean		needToReset;
 
-	if( !driver) return -1;
-	if( !music) return -1;
+	if( !driver) return MADParametersErr;
+	if( !music) return MADParametersErr;
 	
 	if( music != driver->curMusic) needToReset = true;
 	else needToReset = false;
@@ -1400,17 +1403,17 @@ OSErr MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV)
 	
 	if( MDriver == NULL)
 	{
-		return -1; 
+		return MADParametersErr;
 	}
 	
 	if( MDriver->curMusic == NULL)
 	{
-		return -1; 
+		return MADDriverHasNoMusic;
 	}
 	
 	if( MDriver->curMusic->header == NULL)
 	{
-		return -1; 
+		return MADDriverHasNoMusic;
 	}
 	
 	MADGetMusicStatus( MDriver, &fullTime, &curTime);
