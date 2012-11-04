@@ -310,7 +310,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 	theMAD->header = (MADSpec*) calloc( inOutCount, 1);
 	if( theMAD->header == NULL) return MADNeedMemory;
 	
-	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO UMX Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, "Converted by PlayerPRO UMX Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->MAD = 'MADK';
 	theMAD->header->MODMode = true;
