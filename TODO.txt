@@ -2,7 +2,7 @@ Please note that this code is still in Beta, in that many parts of the code
 doesn't work as expected or desired.
 
 * COCOA PLAYERPRO NEEDS TO BE WRITTEN!
-* The VST and Visual Plug-in architectures for Mac OS X needs to be re-written.
+* The VST and Visual Plug-in architectures for Mac OS X needs to be updated.
 * CoreAudio Output is currently a stub.
 * Hardware MIDI support needs to use CoreMIDI on OS X.
 * Maybe use OS X VSTs and Audio Unit Plugins?
