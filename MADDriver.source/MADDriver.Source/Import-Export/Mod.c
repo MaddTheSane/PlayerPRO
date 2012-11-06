@@ -187,7 +187,8 @@ static struct MODCom* GetMODCommand( short position, short whichTracks, short wh
 static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriverSettings* init)
 {
 	short 			i, PatMax, x, tracksNo, z, maxInstru;
-	SInt32 			sndSize, OffSetToSample, MPatSize, temp, inOutCount;
+	OSType temp;
+	SInt32 			sndSize, OffSetToSample, MPatSize, inOutCount;
 	Ptr				theInstrument[ 64], MaxPtr;
 	SInt32			lastIns[ 32], lastNote[ 32];
 	SInt32 			finetune[16] = 
@@ -209,7 +210,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	MaxPtr = (Ptr) theMOD;
 	MaxPtr += MODSize;
 	
-	temp = *((SInt32*)(aMOD + 0x438));		// Signature...
+	temp = *((OSType*)(aMOD + 0x438));		// Signature...
 	
 	AnalyseSignatureMOD( -1, temp, &maxInstru, &MPatSize, &tracksNo, theMOD);
 	
@@ -252,12 +253,12 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 		}
 		PatMax++;
 		
-		OffSetToSample = (SInt32) 0x43c + PatMax * MPatSize;
+		OffSetToSample = 0x43c + PatMax * MPatSize;
 	}
 	
 	for( i = 0; i < maxInstru ; i++)
 	{
-		theInstrument[ i] = (Ptr) ((SInt32) theMOD + (SInt32) OffSetToSample);
+		theInstrument[ i] = (Ptr) ((size_t) theMOD + OffSetToSample);
 		
 		PPBE16( &theMOD->fid[ i].numWords);
 		PPBE16( &theMOD->fid[ i].loopWord);

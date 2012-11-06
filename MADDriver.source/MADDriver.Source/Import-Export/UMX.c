@@ -257,7 +257,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 	
 	for( i = 0; i < maxInstru ; i++)
 	{
-		theInstrument[ i] = (Ptr) ((SInt32) theMOD + (SInt32) OffSetToSample);
+		theInstrument[ i] = (Ptr) ((size_t) theMOD + (SInt32) OffSetToSample);
 		
 		PPBE16( &theMOD->fid[ i].numWords);
 		PPBE16( &theMOD->fid[ i].loopWord);
