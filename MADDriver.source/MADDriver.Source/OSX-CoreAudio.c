@@ -13,7 +13,47 @@
 #include "PPPrivate.h"
 
 static Ptr CABuffer = NULL;
+static Boolean OnOff = false;
 static size_t BuffSize = 0;
+
+static Boolean WriteDataToBuffer(
+								 AudioBufferList *ioData,
+								 size_t bufferOffset,
+								 unsigned char* buffer,
+								 size_t bufferSize)
+{
+    UInt32 remaining, len;
+    AudioBuffer *abuf;
+    void *ptr;
+    UInt32 i;
+	for (i = 0; i < ioData->mNumberBuffers; i++) {
+        abuf = &ioData->mBuffers[i];
+        remaining = abuf->mDataByteSize;
+        ptr = abuf->mData;
+        while (remaining > 0) {
+            if (bufferOffset >= bufferSize) {
+#if 0
+                /* Generate the data */
+                SDL_memset(buffer, this->spec.silence, bufferSize);
+                SDL_mutexP(this->mixer_lock);
+                (*this->spec.callback)(this->spec.userdata,
+									   buffer, bufferSize);
+                SDL_mutexV(this->mixer_lock);
+#endif
+                bufferOffset = 0;
+            }
+			
+            len = bufferSize - bufferOffset;
+            if (len > remaining)
+                len = remaining;
+            memcpy(ptr, (char *)buffer + bufferOffset, len);
+            ptr = (char *)ptr + len;
+            remaining -= len;
+            bufferOffset += len;
+        }
+    }
+	return true;
+}
 
 //TODO: we should probably do something to prevent thread contention
 static OSStatus     CAAudioCallback (void                            *inRefCon,
@@ -24,13 +64,65 @@ static OSStatus     CAAudioCallback (void                            *inRefCon,
 									 AudioBufferList                 *ioData)
 {
 	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
-	//This code is inspired from the DirectSound driver
-	static volatile int timersema = 0;
-	if(++timersema == 1)
-	{
 		
+	//WinMADDriver->lpSwSamp->lpVtbl->GetCurrentPosition( WinMADDriver->lpSwSamp, &pos, &posp);
+	
+	//int pos = 4095;
+	
+	//pos = inTimeStamp->mSampleTime;
+	
+	int i = 0;
+	
+	//if(pos > BuffSize/2 && OnOff == true)
+	{
+		OnOff = false;
+		
+		if( !DirectSave( CABuffer, NULL, theRec))
+		{
+			switch( theRec->DriverSettings.outPutBits)
+			{
+				case 8:
+					for( i = 0; i < BuffSize/2; i++) CABuffer[ i] = 0x80;
+					break;
+					
+				case 16:
+					for( i = 0; i < BuffSize/2; i++) CABuffer[ i] = 0;
+					break;
+			}
+		}
+		
+		if( !WriteDataToBuffer( ioData, 0, (unsigned char*) CABuffer, BuffSize/2))
+		{
+			//DEBUG 	debugger("ERR");
+		}
 	}
-	timersema--;
+	/*else if( OnOff == false && (pos < BuffSize/2))
+	{
+		OnOff = true;
+		
+		if( !DirectSave( CABuffer + BuffSize/2, NULL, theRec))
+		{
+			switch( theRec->DriverSettings.outPutBits)
+			{
+				case 8:
+					for( i = BuffSize/2; i < BuffSize; i++) CABuffer[ i] = 0x80;
+					break;
+					
+				case 16:
+					for( i = BuffSize/2; i < BuffSize; i++) CABuffer[ i] = 0;
+					break;
+			}
+		}
+		
+		if( !WriteDataToBuffer( ioData, BuffSize/2, (unsigned char*) (CABuffer + BuffSize/2), BuffSize/2))
+		{
+			//DEBUG 	debugger("ERR");
+		}
+	}
+	
+	if( BuffSize - pos > 1700)	theRec->OscilloWavePtr = CABuffer + (int)pos; 
+	else */ theRec->OscilloWavePtr = CABuffer;
+	return noErr;
 }
 
 OSErr initCoreAudio( MADDriverRec *inMADDriver)
@@ -118,6 +210,7 @@ OSErr closeCoreAudio( MADDriverRec *inMADDriver)
 	if (result != noErr) {
 		
 	}
+	inMADDriver->OscilloWavePtr = NULL;
 	if (CABuffer) {
 		free(CABuffer);
 	}
