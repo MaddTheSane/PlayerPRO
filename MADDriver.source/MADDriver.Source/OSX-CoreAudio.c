@@ -23,35 +23,48 @@ static OSStatus     CAAudioCallback (void                            *inRefCon,
 									 AudioBufferList                 *ioData)
 {
 	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
-	
-	UInt32 remaining, len;
-    AudioBuffer *abuf;
-    void *ptr;
-    UInt32 i = 0;
 	int j = 0;
+	if(theRec->MADPlay == false)
+	{
+		switch( theRec->DriverSettings.outPutBits)
+		{
+			case 8:
+				for( j = 0; j < theRec->BufSize; j++) CABuffer[ j] = 0x80;
+				break;
+							
+			case 16:
+				for( j = 0; j < theRec->BufSize; j++) CABuffer[ j] = 0;
+				break;
+		}
+	}
+
+	UInt32 remaining, len;
+	AudioBuffer *abuf;
+	void *ptr;
+	UInt32 i = 0;
 	for (i = 0; i < ioData->mNumberBuffers; i++) {
         abuf = &ioData->mBuffers[i];
         remaining = abuf->mDataByteSize;
         ptr = abuf->mData;
         while (remaining > 0) {
-            if (theRec->CABufOff >= theRec->CABufLen) {
+            if (theRec->CABufOff >= inMADDriver->BufSize) {
                 if( !DirectSave( CABuffer, NULL, theRec))
 				{
 					switch( theRec->DriverSettings.outPutBits)
 					{
 						case 8:
-							for( j = 0; j < theRec->CABufLen; j++) CABuffer[ j] = 0x80;
+							for( j = 0; j < theRec->BufSize; j++) CABuffer[ j] = 0x80;
 							break;
 							
 						case 16:
-							for( j = 0; j < theRec->CABufLen; j++) CABuffer[ j] = 0;
+							for( j = 0; j < theRec->BufSize; j++) CABuffer[ j] = 0;
 							break;
 					}
 				}
 				theRec->CABufOff = 0;
             }
 			
-            len = theRec->CABufLen - theRec->CABufOff;
+            len = theRec->BufSize - theRec->CABufOff;
             if (len > remaining)
                 len = remaining;
             memcpy(ptr, (char *)CABuffer + theRec->CABufOff, len);
@@ -74,10 +87,10 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver)
 	callback.inputProcRefCon = inMADDriver;
 	AudioComponentDescription theDes;
 	theDes.componentType = kAudioUnitType_Output;
-    theDes.componentSubType = kAudioUnitSubType_DefaultOutput;
-    theDes.componentManufacturer = kAudioUnitManufacturer_Apple;
-    theDes.componentFlags = 0;
-    theDes.componentFlagsMask = 0;
+	theDes.componentSubType = kAudioUnitSubType_DefaultOutput;
+	theDes.componentManufacturer = kAudioUnitManufacturer_Apple;
+	theDes.componentFlags = 0;
+	theDes.componentFlagsMask = 0;
 	AudioStreamBasicDescription audDes = {0};
 	audDes.mFormatID = kAudioFormatLinearPCM;
 	audDes.mFormatFlags = kLinearPCMFormatFlagIsPacked;
@@ -127,8 +140,8 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver)
 	result = AudioUnitInitialize(inMADDriver->CAAudioUnit);
 	
 	result = AudioOutputUnitStart(inMADDriver->CAAudioUnit);
-	inMADDriver->CABufLen = inMADDriver->CABufOff = inMADDriver->BufSize;
-	CABuffer = calloc(inMADDriver->CABufLen, 1);
+	inMADDriver->CABufOff = inMADDriver->BufSize;
+	CABuffer = calloc(inMADDriver->BufSize, 1);
 	return noErr;
 }
 

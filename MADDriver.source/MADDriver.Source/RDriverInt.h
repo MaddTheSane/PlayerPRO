@@ -273,7 +273,6 @@ struct __MADDriverRec
 	
 #ifdef _MAC_H
 	AudioUnit				CAAudioUnit;
-	UInt32					CABufLen;
 	UInt32					CABufOff;
 #endif
 	
