@@ -1406,6 +1406,7 @@
 		5518105A10C35A2600ADA9F4 /* small MOD Music.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MOD Music.mod"; sourceTree = "<group>"; };
 		5518107210C35A4500ADA9F4 /* PlayerPRO Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5518107410C35A4500ADA9F4 /* PlayerPRO Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PlayerPRO Example-Info.plist"; path = "../PlayerPRO Example-Info.plist"; sourceTree = "<group>"; };
+		5519D3491646C5C00085589D /* Win-WaveDriver.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "Win-WaveDriver.c"; sourceTree = "<group>"; };
 		551FEA6B10E727AD00EDF2F1 /* MINs.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MINs.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		551FEAC910E727AD00EDF2F1 /* MINs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MINs-Info.plist"; path = "../../../MINs-Info.plist"; sourceTree = "<group>"; };
 		551FEADA10E727B100EDF2F1 /* PAT.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PAT.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1467,15 +1468,15 @@
 		553340E810BB5368005208D1 /* MADI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = MADI.h; sourceTree = "<group>"; };
 		553340E910BB5368005208D1 /* MED.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MED.c; sourceTree = "<group>"; };
 		553340EA10BB5368005208D1 /* MED.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = MED.h; sourceTree = "<group>"; };
-		553340EC10BB5368005208D1 /* MIDI-GM-Small.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = "MIDI-GM-Small.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		553340ED10BB5368005208D1 /* MIDI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MIDI.c; sourceTree = "<group>"; };
-		553340EE10BB5368005208D1 /* MIDI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = MIDI.h; sourceTree = "<group>"; };
-		553340EF10BB5368005208D1 /* Progress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = Progress.c; sourceTree = "<group>"; };
-		553340F010BB5368005208D1 /* PTMID.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; lineEnding = 2; path = PTMID.C; sourceTree = "<group>"; };
-		553340F110BB5368005208D1 /* PTMID.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 2; path = PTMID.H; sourceTree = "<group>"; };
-		553340F210BB5368005208D1 /* PTMIDINP.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; lineEnding = 2; path = PTMIDINP.C; sourceTree = "<group>"; };
-		553340F310BB5368005208D1 /* PTMIDSAV.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; lineEnding = 2; path = PTMIDSAV.C; sourceTree = "<group>"; };
-		553340F410BB5368005208D1 /* PTMIDZAP.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; lineEnding = 2; path = PTMIDZAP.C; sourceTree = "<group>"; };
+		553340EC10BB5368005208D1 /* MIDI-GM-Small.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "MIDI-GM-Small.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		553340ED10BB5368005208D1 /* MIDI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MIDI.c; sourceTree = "<group>"; };
+		553340EE10BB5368005208D1 /* MIDI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MIDI.h; sourceTree = "<group>"; };
+		553340EF10BB5368005208D1 /* Progress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Progress.c; sourceTree = "<group>"; };
+		553340F010BB5368005208D1 /* PTMID.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; lineEnding = 0; path = PTMID.C; sourceTree = "<group>"; };
+		553340F110BB5368005208D1 /* PTMID.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = PTMID.H; sourceTree = "<group>"; };
+		553340F210BB5368005208D1 /* PTMIDINP.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; lineEnding = 0; path = PTMIDINP.C; sourceTree = "<group>"; };
+		553340F310BB5368005208D1 /* PTMIDSAV.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; lineEnding = 0; path = PTMIDSAV.C; sourceTree = "<group>"; };
+		553340F410BB5368005208D1 /* PTMIDZAP.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; lineEnding = 0; path = PTMIDZAP.C; sourceTree = "<group>"; };
 		553340F610BB5368005208D1 /* Mod.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = Mod.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		553340F710BB5368005208D1 /* MOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = MOD.h; sourceTree = "<group>"; };
 		553340F810BB5368005208D1 /* MTM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = MTM.c; sourceTree = "<group>"; };
@@ -1486,9 +1487,9 @@
 		553340FD10BB5368005208D1 /* S3M.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = S3M.h; sourceTree = "<group>"; };
 		553340FE10BB5368005208D1 /* ULT.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = ULT.c; sourceTree = "<group>"; };
 		553340FF10BB5368005208D1 /* ULT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = ULT.h; sourceTree = "<group>"; };
-		5533410010BB5368005208D1 /* UMX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = UMX.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		5533410010BB5368005208D1 /* UMX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = UMX.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5533410110BB5368005208D1 /* UMX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = UMX.h; sourceTree = "<group>"; };
-		5533410310BB5368005208D1 /* XM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = XM.c; sourceTree = "<group>"; };
+		5533410310BB5368005208D1 /* XM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = XM.c; sourceTree = "<group>"; };
 		5533410410BB5368005208D1 /* XM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = XM.h; sourceTree = "<group>"; };
 		5533411110BB547D005208D1 /* MOD.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MOD.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5533411210BB547D005208D1 /* MOD-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MOD-Info.plist"; path = "../../../MOD-Info.plist"; sourceTree = "<group>"; };
@@ -1807,7 +1808,7 @@
 		88E0C4910C2F21E500D6C081 /* SoundJamAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SoundJamAPI.h; path = Files/wds_views/SoundJamAPI.h; sourceTree = SOURCE_ROOT; };
 		88E0C4930C2F21E500D6C081 /* aeffectx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = aeffectx.h; path = Files/VSTHeaders/aeffectx.h; sourceTree = SOURCE_ROOT; };
 		88E0C4960C2F21E500D6C081 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		88E0C4980C2F21E500D6C081 /* MIDI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = MIDI.h; path = "MADDriver.source/MADDriver.Source/Import-Export/MIDI Folder/MIDI.h"; sourceTree = SOURCE_ROOT; };
+		88E0C4980C2F21E500D6C081 /* MIDI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MIDI.h; path = "MADDriver.source/MADDriver.Source/Import-Export/MIDI Folder/MIDI.h"; sourceTree = SOURCE_ROOT; };
 		88E0C49A0C2F21E500D6C081 /* 3D.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = 3D.proto.h; path = "(Proto)/3D.proto.h"; sourceTree = "<group>"; };
 		88E0C49C0C2F21E500D6C081 /* About.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = About.proto.h; path = "(Proto)/About.proto.h"; sourceTree = "<group>"; };
 		88E0C49E0C2F21E500D6C081 /* ActiveHelp.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ActiveHelp.proto.h; path = "(Proto)/ActiveHelp.proto.h"; sourceTree = "<group>"; };
@@ -3166,6 +3167,7 @@
 			isa = PBXGroup;
 			children = (
 				55113CBA133688D60008C2AF /* Win-DirectSound.c */,
+				5519D3491646C5C00085589D /* Win-WaveDriver.c */,
 				55113CBB133688D60008C2AF /* FileUtils.c */,
 				55113CBC133688D60008C2AF /* Win-PlugImport.c */,
 				5517F7541126203E0034F90C /* Lin-PlugImport.c */,
