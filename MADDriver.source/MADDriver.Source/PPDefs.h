@@ -27,6 +27,7 @@
 #define true TRUE
 #define false FALSE
 #define __LITTLE_ENDIAN__
+#define PRAGMA_STRUCT_PACKPUSH 1
 #endif
 
 typedef unsigned char 	Byte;

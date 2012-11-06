@@ -29,6 +29,30 @@
 #include "FileUtils.h"
 #endif
 
+#ifdef WIN32
+#ifndef __DSOUND_INCLUDED__
+#include <mmreg.h>
+#include <DSound.h>
+#endif
+#endif
+
+#ifdef _MAC_H
+#include <AudioUnit/AudioUnit.h>
+#endif
+
+#ifdef LINUX
+#include <alsa/asoundlib.h>
+#endif
+
+#ifdef _ESOUND
+#include <esd.h>
+#endif
+
+#ifdef _OSSSOUND
+#warning headers not included!
+//TODO: include headers
+#endif
+
 //#define MEM {Str255 str; NumToString( FreeMem(), str); DebugStr( str);}
 
 //#define NUMBER_FINETUNES 	16
