@@ -11,10 +11,11 @@
 #include "RDriverInt.h"
 
 #include <CoreFoundation/CoreFoundation.h>
+#import <Foundation/Foundation.h>
 #include "FileUtils.h"
 #include "PPPrivate.h"
 
-extern void NSLog(CFStringRef format, ...);
+//extern void NSLog(CFStringRef format, ...);
 
 #define MAXPLUG	40
 
@@ -162,7 +163,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 			int i = 0;
 			for (i = 0; i < inMADDriver->TotalPlug; i++) {
 				if (strcmp(FillPlug->type, inMADDriver->ThePlug[i].type) == 0) {
-					NSLog(CFSTR("Plug-ins %@ and %@ are similar"), inMADDriver->ThePlug[i].file, tempBundle);
+					NSLog(@"Plug-ins %@ and %@ are similar", inMADDriver->ThePlug[i].file, tempBundle);
 					if (inMADDriver->ThePlug[i].version < FillPlug->version) {
 						PlugInfo newInfo;
 						Boolean gotFilled = fillPlugFromBundle(tempBundle, &newInfo);
@@ -178,14 +179,14 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 							inMADDriver->ThePlug[i].mode = newInfo.mode;
 							inMADDriver->ThePlug[i].UTItypes = newInfo.UTItypes;
 							inMADDriver->ThePlug[i].version = FillPlug->version;
-							NSLog(CFSTR("Using %@ (Newer than previous)"), tempBundle);
+							NSLog(@"Using %@ (Newer than previous)", tempBundle);
 							return true;
 						} else {
-							NSLog(CFSTR("NOT using %@ (Newer than previous, could not initialize)"), tempBundle);
+							NSLog(@"NOT using %@ (Newer than previous, could not initialize)", tempBundle);
 							goto badplug;
 						}
 					} else {
-						NSLog(CFSTR("NOT using %@ (Not newer than previous)"), tempBundle);
+						NSLog(@"NOT using %@ (Not newer than previous)", tempBundle);
 						return false;
 					}
 				}
@@ -201,7 +202,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		}
 	}
 badplug:
-	NSLog(CFSTR("Error with plug-in %@"), tempBundle);
+	NSLog(@"Error with plug-in %@", tempBundle);
 	return false;
 }
 
