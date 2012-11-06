@@ -272,8 +272,9 @@ struct __MADDriverRec
 	Boolean					Equalizer;										// Is Equalizer Active?
 	
 #ifdef _MAC_H
-	//TODO: CoreAudio Driver
 	AudioUnit				CAAudioUnit;
+	UInt32					CABufLen;
+	UInt32					CABufOff;
 #endif
 	
 #ifdef WIN32
