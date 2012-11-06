@@ -423,4 +423,5 @@ void DirectSoundClose( MADDriverRec* WinMADDriver)
 		WinMADDriver->lpDirectSound->lpVtbl->Release( WinMADDriver->lpDirectSound);
 		WinMADDriver->lpDirectSound = NULL;
 	}
+	WinMADDriver->OscilloWavePtr = NULL;
 }
