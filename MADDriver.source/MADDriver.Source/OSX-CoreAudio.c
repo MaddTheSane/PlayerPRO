@@ -19,7 +19,7 @@ static size_t BuffSize = 0;
 static Boolean WriteDataToBuffer(
 								 AudioBufferList *ioData,
 								 size_t bufferOffset,
-								 unsigned char* buffer,
+								 Ptr buffer,
 								 size_t bufferSize)
 {
     UInt32 remaining, len;
@@ -32,14 +32,6 @@ static Boolean WriteDataToBuffer(
         ptr = abuf->mData;
         while (remaining > 0) {
             if (bufferOffset >= bufferSize) {
-#if 0
-                /* Generate the data */
-                SDL_memset(buffer, this->spec.silence, bufferSize);
-                SDL_mutexP(this->mixer_lock);
-                (*this->spec.callback)(this->spec.userdata,
-									   buffer, bufferSize);
-                SDL_mutexV(this->mixer_lock);
-#endif
                 bufferOffset = 0;
             }
 			
@@ -66,7 +58,8 @@ static OSStatus     CAAudioCallback (void                            *inRefCon,
 	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
 		
 	//WinMADDriver->lpSwSamp->lpVtbl->GetCurrentPosition( WinMADDriver->lpSwSamp, &pos, &posp);
-	
+	static Boolean tick = false;
+	const int tickadd = 1884;
 	//int pos = 4095;
 	
 	//pos = inTimeStamp->mSampleTime;
@@ -90,12 +83,22 @@ static OSStatus     CAAudioCallback (void                            *inRefCon,
 					break;
 			}
 		}
-		
-		if( !WriteDataToBuffer( ioData, 0, (unsigned char*) CABuffer, BuffSize/2))
+		if (tick == false)
 		{
-			//DEBUG 	debugger("ERR");
+			if( !WriteDataToBuffer( ioData, 0, CABuffer, BuffSize/2))
+			{
+				//DEBUG 	debugger("ERR");
+			}
+			tick = true;
+		} else {
+			if( !WriteDataToBuffer( ioData, tickadd, CABuffer + tickadd, BuffSize/2 - tickadd))
+			{
+				//DEBUG 	debugger("ERR");
+			}
+			tick = false;
 		}
 	}
+		
 	/*else if( OnOff == false && (pos < BuffSize/2))
 	{
 		OnOff = true;
@@ -120,7 +123,7 @@ static OSStatus     CAAudioCallback (void                            *inRefCon,
 		}
 	}
 	
-	if( BuffSize - pos > 1700)	theRec->OscilloWavePtr = CABuffer + (int)pos; 
+	if( BuffSize - pos > tickadd)	theRec->OscilloWavePtr = CABuffer + (int)pos; 
 	else */ theRec->OscilloWavePtr = CABuffer;
 	return noErr;
 }
