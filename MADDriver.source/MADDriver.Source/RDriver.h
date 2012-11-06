@@ -35,6 +35,7 @@
 #include <Carbon/Carbon.h>
 #endif
 #include <CoreFoundation/CFPlugInCOM.h>
+#include <AudioUnit/AudioUnit.h>
 #endif
 
 ////////////////////////////////////////////////
@@ -602,7 +603,11 @@ typedef struct MADDriverRec
 #ifdef _MAC_H
 	SndChannelPtr 			MusicChannelPP;									// The SndChannelPtr to apply SndDoCommand, etc.
 																			// ONLY available if you are using MAC SoundManager driver
-//TODO: CoreAudio Driver
+
+	AudioUnit				CAAudioUnit;
+	UInt32					CABufLen;
+	UInt32					CABufOff;
+
 #endif
 	
 #ifdef WIN32

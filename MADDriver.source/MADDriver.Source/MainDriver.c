@@ -2782,11 +2782,7 @@ OSErr MADStartDriver( MADDriverRec *MDriver)
 		case SoundManagerDriver:
 			PlayChannel( MDriver);
 			break;
-			
-		case CoreAudioDriver:
-			PlayChannelCA( MDriver);
-			break;			
-			
+						
 		case ASIOSoundManager:
 			break;
 #endif
@@ -2841,10 +2837,6 @@ OSErr MADStopDriver( MADDriverRec *MDriver)
 			StopChannel( MDriver);
 			break;
 			
-		case CoreAudioDriver:
-			StopChannelCA(MDriver);
-			break;
-
 		case ASIOSoundManager:
 			break;
 #endif
