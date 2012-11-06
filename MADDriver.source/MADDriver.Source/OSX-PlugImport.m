@@ -221,7 +221,7 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 {
 	@autoreleasepool {
 		NSFileManager *fm = [NSFileManager defaultManager];
-		CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 4, &kCFTypeArrayCallBacks);
+		CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 5, &kCFTypeArrayCallBacks);
 		CFURLRef temp1;
 		//Application Main Bundle
 		CFBundleRef mainBundle = CFBundleGetMainBundle();
@@ -256,16 +256,13 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 	}
 }
 
-static inline CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(char *UserAddedPlace)
+static CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(char *UserAddedPlace)
 {
-	CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 5, &kCFTypeArrayCallBacks);
 	CFMutableArrayRef FoldLocs = CreateDefaultPluginFolderLocations();
 	CFURLRef custfolder = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (UInt8*)UserAddedPlace, strlen(UserAddedPlace), true);
-	CFArrayAppendValue(PlugFolds, custfolder);
+	CFArrayInsertValueAtIndex(FoldLocs, 0, custfolder);
 	CFRelease(custfolder);
-	CFArrayAppendArray(PlugFolds, FoldLocs, CFRangeMake(0, CFArrayGetCount(FoldLocs)));
-	CFRelease(FoldLocs);
-	return PlugFolds;
+	return FoldLocs;
 }
 
 OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
