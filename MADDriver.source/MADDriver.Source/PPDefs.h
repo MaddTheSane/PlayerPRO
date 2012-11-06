@@ -23,9 +23,11 @@
 #include <stdbool.h>
 #else
 #include <Windows.h>
+#ifndef __cplusplus
 #define inline __inline
 #define true TRUE
 #define false FALSE
+#endif
 #define __LITTLE_ENDIAN__
 #define PRAGMA_STRUCT_PACKPUSH 1
 #endif
