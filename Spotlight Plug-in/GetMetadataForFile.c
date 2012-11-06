@@ -133,7 +133,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 			CFDictionarySetValue(attributes, kPPMDTotalPatterns, tempNum);
 			CFRelease(tempNum); tempNum = NULL;
 			tempNum = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &rec.partitionLength);
-			CFDictionarySetValue(attributes, tempNum, kPPMDPartitionLength);
+			CFDictionarySetValue(attributes, kPPMDPartitionLength, tempNum);
 			CFRelease(tempNum); tempNum = NULL;
 			tempNum = CFNumberCreate(kCFAllocatorDefault, kCFNumberShortType, &rec.totalInstruments);
 			CFDictionarySetValue(attributes, kPPMDTotalInstruments, tempNum);
