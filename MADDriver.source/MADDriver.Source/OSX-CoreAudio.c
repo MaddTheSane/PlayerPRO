@@ -7,7 +7,6 @@
  *
  */
 
-#include <CoreAudio/CoreAudio.h>
 #include <Carbon/Carbon.h>
 #include "RDriver.h"
 #include "PPPrivate.h"
@@ -103,7 +102,7 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver, long init)
 			break;
 	}
 	audDes.mChannelsPerFrame = outChn;
-	audDes.mSampleRate = FractToFloat(inMADDriver->DriverSettings.outPutRate);
+	audDes.mSampleRate = FixedToFloat(inMADDriver->DriverSettings.outPutRate);
 	audDes.mBitsPerChannel = inMADDriver->DriverSettings.outPutBits;
 	audDes.mFramesPerPacket = 1;
     audDes.mBytesPerFrame = audDes.mBitsPerChannel * audDes.mChannelsPerFrame / 8;
@@ -132,7 +131,7 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver, long init)
 	
 	result = AudioOutputUnitStart(inMADDriver->CAAudioUnit);
 	inMADDriver->CABufLen = inMADDriver->CABufOff = inMADDriver->BufSize;
-	CABuffer = calloc(inMADDriver->CABufLen, 1);
+	CABuffer = NewPtrClear(inMADDriver->CABufLen);
 	return noErr;
 }
 
@@ -157,7 +156,7 @@ OSErr closeCoreAudio( MADDriverRec *inMADDriver)
 	}
 	inMADDriver->OscilloWavePtr = NULL;
 	if (CABuffer) {
-		free(CABuffer);
+		DisposePtr(CABuffer);
 	}
 	return noErr;
 }
