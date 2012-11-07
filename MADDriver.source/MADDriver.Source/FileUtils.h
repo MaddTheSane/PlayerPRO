@@ -95,35 +95,37 @@ static inline void MADByteSwap16(void *msg_buf)
 
 /////////////////////////////////
 
+#ifdef __LITTLE_ENDIAN__
 static inline void PPBE32(void *msg_buf)
 {
-#ifdef __LITTLE_ENDIAN__
 	MADByteSwap32(msg_buf);
-#endif
 }
 
 static inline void PPBE16(void *msg_buf)
 {
-#ifdef __LITTLE_ENDIAN__
 	MADByteSwap16(msg_buf);
-#endif
 }
+#else
+#define PPBE32(msg_buf)
+#define PPBE16(msg_buf)
+#endif
 
 /////////////////////////////////
 
+#ifdef __BIG_ENDIAN__
 static inline void PPLE32(void *msg_buf)
 {
-#ifdef __BIG_ENDIAN__
 	MADByteSwap32(msg_buf);
-#endif
 }
 
 static inline void PPLE16(void *msg_buf)
 {
-#ifdef __BIG_ENDIAN__
 	MADByteSwap16(msg_buf);
-#endif
 }
+#else
+#define PPLE32(msg_buf)
+#define PPLE16(msg_buf)
+#endif
 #endif
 
 #ifdef __cplusplus
