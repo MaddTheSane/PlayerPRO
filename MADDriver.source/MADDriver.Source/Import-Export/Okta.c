@@ -140,7 +140,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 			break;
 			
 			case 'SAMP':
-				samps = (void*) theOktaPos;
+				samps = (OktaInstru*) theOktaPos;
           		
 				for( i = 0; i * sizeof( OktaInstru) < aSect->length; i++)
 		            	{
@@ -166,7 +166,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 			break;
 
 			case 'PATT':
-				Okta->patt = (void*)theOktaPos;
+				Okta->patt = (unsigned char*)theOktaPos;
 			break;
 
 			case 'PBOD':
@@ -283,7 +283,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 			
 			curData->relNote	= 0;
 			
-			curData->data 		= malloc( curData->size);
+			curData->data 		= (Ptr)malloc( curData->size);
 			if( curData->data == NULL) return MADNeedMemory;
 				
 			memcpy( curData->data, theInstrument[i], curData->size);

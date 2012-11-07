@@ -823,13 +823,13 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 							
 							for( z = 0; z < 26; z++) curData->name[ z] = ITinfo.sampdata[ prevSamp].SampName[ z];
 							
-							curData->data 		= malloc( curData->size);
+							curData->data 		= (Ptr)malloc( curData->size);
 							if( curData->data == NULL)
 							{
 								curData->loopBeg = 0;
 								curData->loopSize = 0;
 								curData->size = 0;
-								curData->data 		= malloc( curData->size);
+								curData->data 		= (Ptr)malloc( curData->size);
 							}
 							else
 							{
@@ -989,7 +989,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 				curData->relNote	= 0;
 				for( x = 0; x < 26; x++) curIns->name[x] = ITinfo.sampdata[i].SampName[x];
 				
-				curData->data 		= malloc( curData->size);
+				curData->data 		= (Ptr)malloc( curData->size);
 				if( curData->data == NULL) return MADNeedMemory;
 				
 				if( curData->data != NULL)
