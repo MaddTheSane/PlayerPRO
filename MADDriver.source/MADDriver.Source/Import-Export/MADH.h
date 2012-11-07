@@ -83,7 +83,7 @@ struct oldsData								// SAMPLE
 	Byte				panning;
 	char				relNote;
 	char 				name[ 32];			// Sample name
-	Ptr					data;				// Used only in memory, not in files
+	UInt32				data;				// Used only in memory, not in files
 };
 typedef struct oldsData oldsData;
 

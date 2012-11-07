@@ -241,6 +241,7 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 		
 		memcpy(tempPat, MADPtr + OffSetToSample, inOutCount);
 		OffSetToSample += inOutCount;
+		MOToldPatHeader(&tempPat->header);
 		
 		if( tempPat->header.compMode == 'MAD1')
 		{
@@ -303,7 +304,7 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 	for( i = 0; i < oldMAD->numInstru; i++)
 	{
 		struct oldInstrData		oldIns;
-		InstrData	*curIns = &theMAD->fid[ i];
+		//InstrData	*curIns = &theMAD->fid[ i];
 		short		d;
 		
 		/** Lecture des instruments **/
