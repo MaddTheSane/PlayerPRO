@@ -81,6 +81,9 @@ static OSStatus     CAAudioCallback (void                            *inRefCon,
 
 OSErr initCoreAudio( MADDriverRec *inMADDriver)
 {
+	inMADDriver->CABufOff = inMADDriver->BufSize;
+	CABuffer = calloc(inMADDriver->BufSize, 1);
+	
 	OSStatus result = noErr;
 	struct AURenderCallbackStruct callback;
 	callback.inputProc = CAAudioCallback;
@@ -140,8 +143,6 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver)
 	result = AudioUnitInitialize(inMADDriver->CAAudioUnit);
 	
 	result = AudioOutputUnitStart(inMADDriver->CAAudioUnit);
-	inMADDriver->CABufOff = inMADDriver->BufSize;
-	CABuffer = calloc(inMADDriver->BufSize, 1);
 	return noErr;
 }
 
