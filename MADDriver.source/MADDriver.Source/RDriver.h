@@ -518,18 +518,20 @@ struct MADLibrary
 };
 typedef struct MADLibrary MADLibrary;
 
-#define callback
+#ifndef WIN32
+#define __callback
+#endif
 
 typedef struct AEffect AEffect;
 
 struct AEffect
 {
 	long magic;
-	long (callback *dispatcher)(AEffect *effect, long opCode, long index, long value,
+	long (__callback *dispatcher)(AEffect *effect, long opCode, long index, long value,
 		void *ptr, float opt);
-	void (callback *process)(AEffect *effect, float **inputs, float **outputs, long sampleframes);
-	void (callback *setParameter)(AEffect *effect, long index, float parameter);
-	float (callback *getParameter)(AEffect *effect, long index);
+	void (__callback *process)(AEffect *effect, float **inputs, float **outputs, long sampleframes);
+	void (__callback *setParameter)(AEffect *effect, long index, float parameter);
+	float (__callback *getParameter)(AEffect *effect, long index);
 
 	long numPrograms;
 	long numParams;
@@ -546,7 +548,7 @@ struct AEffect
 	void *user;
 	long uniqueID;
 	long version;
-	void (callback *processReplacing)(AEffect *effect, float **inputs, float **outputs, long sampleframes);
+	void (__callback *processReplacing)(AEffect *effect, float **inputs, float **outputs, long sampleframes);
 	char future[60];
 };
 

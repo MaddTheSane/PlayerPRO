@@ -569,6 +569,8 @@
 		88E0C5230C2F21E600D6C081 /* Equalizer.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5220C2F21E600D6C081 /* Equalizer.proto.h */; };
 		88E0C52B0C2F21E600D6C081 /* AtomInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C52A0C2F21E600D6C081 /* AtomInfo.h */; };
 		88E0C52D0C2F21E600D6C081 /* AEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C52C0C2F21E600D6C081 /* AEffect.h */; };
+		9EE24021164A04800046BE6F /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE24020164A04800046BE6F /* AudioUnit.framework */; };
+		9EE24022164A04800046BE6F /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE24020164A04800046BE6F /* AudioUnit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1777,6 +1779,7 @@
 		88E0C5220C2F21E600D6C081 /* Equalizer.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Equalizer.proto.h; path = "(Proto)/Equalizer.proto.h"; sourceTree = "<group>"; };
 		88E0C52A0C2F21E600D6C081 /* AtomInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = AtomInfo.h; path = Files/AtomInfo.h; sourceTree = SOURCE_ROOT; };
 		88E0C52C0C2F21E600D6C081 /* AEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = AEffect.h; path = Files/VSTHeaders/AEffect.h; sourceTree = SOURCE_ROOT; };
+		9EE24020164A04800046BE6F /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1937,6 +1940,7 @@
 				5573A39510B50F6900FF8B50 /* CoreFoundation.framework in Frameworks */,
 				554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */,
 				554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */,
+				9EE24022164A04800046BE6F /* AudioUnit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2220,6 +2224,7 @@
 				5573A51C10B52EB500FF8B50 /* DrawSprocket.framework in Frameworks */,
 				55ED547410D5F9CD00824C61 /* CoreMIDI.framework in Frameworks */,
 				554E0DAD10D619D700BB619C /* Foundation.framework in Frameworks */,
+				9EE24021164A04800046BE6F /* AudioUnit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3320,6 +3325,7 @@
 		88E0C4950C2F21E500D6C081 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9EE24020164A04800046BE6F /* AudioUnit.framework */,
 				5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */,
 				55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */,
 				55EE8EBC100404EB00E75E63 /* CoreAudio.framework */,
@@ -6841,7 +6847,6 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = PlayerPRO;
 				REZ_SCRIPT_TYPE = Roman;
-				VALID_ARCHS = i386;
 			};
 			name = Release;
 		};
@@ -8013,7 +8018,6 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = PlayerPRO;
 				REZ_SCRIPT_TYPE = Roman;
-				VALID_ARCHS = i386;
 			};
 			name = Debug;
 		};

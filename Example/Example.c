@@ -39,6 +39,8 @@ OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, 
 	return noErr;
 }
 
+extern OSErr PPIdentifyFile(MADLibrary *lib, Ptr, Ptr);
+
 /*****************************/
 /****** MAIN FUNCTION ********/
 /*****************************/
@@ -106,6 +108,8 @@ int main( int argc, char* argv[])
 		
 		/* or AUTOMATIC DRIVER CONFIGURATION FOR CURRENT MAC HARDWARE*/
 		MADGetBestDriver( &init);
+		
+		init.driverMode = CoreAudioDriver;
 		
 		{
 			FSSpec	appSpec;
@@ -196,12 +200,22 @@ int main( int argc, char* argv[])
 		else
 		{
 			char	type[ 5];
+#if 0
 			FInfo	info;
 			
 			FSpGetFInfo( &spec, &info);
 			
 			OSType2Ptr( info.fdType, type);
-			
+#else
+			Str63 filename;
+			memcpy(filename, spec.name, spec.name[0]+1);
+			FSSpec restoreSpec;
+			HGetVol(NULL, &restoreSpec.vRefNum, &restoreSpec.parID);
+			HSetVol(NULL, spec.vRefNum, spec.parID);
+			MYP2CStr(filename);
+			PPIdentifyFile(MADLib, type, filename);
+			HSetVol(NULL, restoreSpec.vRefNum, restoreSpec.parID);
+#endif
 			if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 			{
 				if( MADLoadMusicFSpFile( MADLib, &MADMusic, type, &spec) == noErr)		// Load this music with help of Plugs

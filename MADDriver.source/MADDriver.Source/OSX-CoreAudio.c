@@ -67,6 +67,9 @@ static OSStatus     CAAudioCallback (void                            *inRefCon,
 
 OSErr initCoreAudio( MADDriverRec *inMADDriver, long init)
 {
+	inMADDriver->CABufLen = inMADDriver->CABufOff = inMADDriver->BufSize;
+	CABuffer = NewPtrClear(inMADDriver->CABufLen);
+	
 	OSStatus result = noErr;
 	struct AURenderCallbackStruct callback;
 	callback.inputProc = CAAudioCallback;
@@ -109,7 +112,7 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver, long init)
     audDes.mBytesPerPacket = audDes.mBytesPerFrame * audDes.mFramesPerPacket;
 
 	
-	Component comp = FindNextComponent (NULL, &desc);
+	Component comp = FindNextComponent (NULL, &theDes);
 
 	if (comp == NULL) {
 		return MADUnknownErr;
@@ -130,8 +133,6 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver, long init)
 	result = AudioUnitInitialize(inMADDriver->CAAudioUnit);
 	
 	result = AudioOutputUnitStart(inMADDriver->CAAudioUnit);
-	inMADDriver->CABufLen = inMADDriver->CABufOff = inMADDriver->BufSize;
-	CABuffer = NewPtrClear(inMADDriver->CABufLen);
 	return noErr;
 }
 
