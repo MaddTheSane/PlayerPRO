@@ -9,6 +9,7 @@
 
 #include <Carbon/Carbon.h>
 #include "RDriver.h"
+#include "RDriverInt.h"
 #include "PPPrivate.h"
 
 static Ptr CABuffer = NULL;
