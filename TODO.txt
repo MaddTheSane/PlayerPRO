@@ -3,7 +3,6 @@ doesn't work as expected or desired.
 
 * COCOA PLAYERPRO NEEDS TO BE WRITTEN!
 * The VST and Visual Plug-in architectures for Mac OS X needs to be updated.
-* CoreAudio Output is currently a stub.
 * Hardware MIDI support needs to use CoreMIDI on OS X.
 * Maybe use OS X VSTs and Audio Unit Plugins?
 * Plug-ins need to be checked for places to byteswap. AMF and the old MAD plug 
