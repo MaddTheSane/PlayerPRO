@@ -34,7 +34,7 @@ OSErr CheckMADFile( Ptr name)
 	OSErr				err;
 	
 	refNum = iFileOpen( name);
-	if( !refNum) return -1;
+	if( !refNum) return MADReadingErr;
 	else
 	{
 		iRead( 10, charl, refNum);
@@ -43,7 +43,7 @@ OSErr CheckMADFile( Ptr name)
 				charl[ 1] == 'A' &&
 				charl[ 2] == 'D' &&
 				charl[ 3] == 'K') err = noErr;
-		else err = -1;
+		else err = MADIncompatibleFile;
 		
 		iClose( refNum);
 	}
@@ -229,17 +229,17 @@ void MInitImportPlug( MADLibrary* inMADDriver, char *PlugsFolderName)
 		
 		if( PlugsFolderName)
 		{
-			strcpy( inPlugsFolderName, PlugsFolderName);
-			strcat( inPlugsFolderName, "/");
+			strcpy_s( inPlugsFolderName, 200, PlugsFolderName);
+			strcat_s( inPlugsFolderName, 200, "/");
 			
-			strcpy( FindFolder, inPlugsFolderName);
+			strcpy_s( FindFolder, 200, inPlugsFolderName);
 		}
 		else
 		{
-			strcpy( inPlugsFolderName, "/");
-			strcpy( FindFolder, inPlugsFolderName);
+			strcpy_s( inPlugsFolderName, 200, "/");
+			strcpy_s( FindFolder, 200, inPlugsFolderName);
 		}
-		strcat( FindFolder, "*.PLG");
+		strcat_s( FindFolder, 200, "*.PLG");
 		
 		hFind = FindFirstFileA( FindFolder, &fd);
 		
@@ -253,8 +253,8 @@ void MInitImportPlug( MADLibrary* inMADDriver, char *PlugsFolderName)
 				{
 					char myCompleteFilename[ 200];
 					
-					strcpy( myCompleteFilename, inPlugsFolderName);
-					strcat( myCompleteFilename, fd.cFileName);
+					strcpy_s( myCompleteFilename, 200, inPlugsFolderName);
+					strcat_s( myCompleteFilename, 200, fd.cFileName);
 					
 					if( LoadPlugLib( myCompleteFilename, &inMADDriver->ThePlug[ inMADDriver->TotalPlug])) inMADDriver->TotalPlug++;
 				}
