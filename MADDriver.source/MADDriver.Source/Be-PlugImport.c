@@ -32,7 +32,7 @@
 static	Boolean LoadPlugLib( Ptr name, PlugInfo* plug );
 static	void	ScanPlugDir( char *name );
 
-static MADLibrary *inMADDriver;
+//static MADLibrary *inMADDriver;
 
 OSErr CheckMADFile( Ptr name)
 {
@@ -169,8 +169,8 @@ OSErr	PPImportFile( MADLibrary *MADLib, char	*kindFile, char	*AlienFile, MADMusi
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			*theNewMAD = (MADMusic*) MADNewPtrClear( sizeof( MADMusic), inMADDriver);
-			if( !*theNewMAD) return -1L;
+			*theNewMAD = (MADMusic*) calloc( sizeof( MADMusic), 1);
+			if( !*theNewMAD) return MADNeedsMemory;
 			
 			return( CallImportPlug( i, 'IMPL', AlienFile, *theNewMAD, &InfoRec));
 		}
@@ -299,7 +299,7 @@ void MInitImportPlug( MADLibrary *lib, char *PlugsFolderName)
 
 	inMADDriver = lib;
 	inMADDriver->TotalPlug = 0;
-	inMADDriver->ThePlug = (PlugInfo*) MADNewPtr( MAXPLUG * sizeof( PlugInfo), inMADDriver);
+	inMADDriver->ThePlug = (PlugInfo*) malloc( MAXPLUG * sizeof( PlugInfo));
 
 	//	Construct valid path, independent of launch mode.
 	
