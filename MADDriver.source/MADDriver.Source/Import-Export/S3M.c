@@ -300,7 +300,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, size_t *sn
 		s3minfo->ffv			=	2;																PPLE16(  &s3minfo->ffv);
 		
 		
-		strlcpy( s3minfo->s3msig, "SCRM", 4);
+		memcpy( s3minfo->s3msig, "SCRM", 4);
 		
 		s3minfo->mastervol		= 	64;
 		s3minfo->initialspeed	=	theMAD->header->speed;
@@ -426,7 +426,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, size_t *sn
 			ins[ i] = (s3minsform*) finalS3MCopy;
 			
 			ins[ i]->instype				=	0;
-			strlcpy( (Ptr) ins[ i]->insdosname, theMAD->fid[i].name, 12);
+			strlcpy( (Ptr) ins[ i]->insdosname, theMAD->fid[i].name, sizeof(ins[ i]->insdosname));
 			ins[ i]->memsegh			=	0;
 			ins[ i]->memsegl			=	0;
 			ins[ i]->inslength			=	0;
@@ -790,7 +790,7 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettin
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<28; i++) theMAD->header->name[i] = s3minfo.name[i];
 	
-	strlcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO S3M Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO S3M Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPat		= s3minfo.patnum;
 	theMAD->header->numPointers	= s3minfo.ordernum;

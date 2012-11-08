@@ -45,24 +45,28 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 
 #ifdef _MAC_H
 #define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*msg_buf)
 #else
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *msg_buf
+#define Tdecode32(msg_buf) *msg_buf
+#else
+
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
 	PPLE16(&toswap);
 	return toswap;
 }
-#endif
 
-#ifdef _MAC_H
-#define Tdecode32(msg_buf)  CFSwapInt32LittleToHost(*msg_buf)
-#else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
 	PPLE32(&toswap);
 	return toswap;
 }
+
+#endif
 #endif
 
 static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
@@ -85,7 +89,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	
 	READAMFFILE( &AMFType, 4);		// AMF Type
 	PPBE32(&AMFType);
-	//XXXX: Byte-swapping!
+
 	if( AMFType >= 0x414D460C ) pan = 32;
 	else pan = 16;
 	

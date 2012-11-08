@@ -29,6 +29,8 @@
 #endif
 #include "MTM.h"
 
+#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
+
 #if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
@@ -41,26 +43,29 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 
 #ifdef _MAC_H
 #define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*msg_buf)
 #else
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *msg_buf
+#define Tdecode32(msg_buf) *msg_buf
+#else
+
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
 	PPLE16(&toswap);
 	return toswap;
 }
-#endif
 
-#ifdef _MAC_H
-#define Tdecode32(msg_buf)  CFSwapInt32LittleToHost(*msg_buf)
-#else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
 	PPLE32(&toswap);
 	return toswap;
 }
-#endif
 
+#endif
+#endif
 
 static struct MTMTrack* GetMTMCommand( short position, short whichTracks, Ptr PatPtr)
 {
