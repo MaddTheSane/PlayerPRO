@@ -29,11 +29,18 @@
 #endif
 #include "ULT.h"
 
+#ifdef WIN32
+#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
+#endif
+
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
 
 #ifdef _MAC_H
 #define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*msg_buf)
+#else
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *msg_buf
 #else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
@@ -42,9 +49,13 @@ static inline UInt16 Tdecode16( void *msg_buf)
 	return toswap;
 }
 #endif
+#endif
 
 #ifdef _MAC_H
 #define Tdecode32(msg_buf)  CFSwapInt32LittleToHost(*msg_buf)
+#else
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode32(msg_buf) *msg_buf
 #else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
@@ -52,6 +63,7 @@ static inline UInt32 Tdecode32( void *msg_buf)
 	PPLE32(&toswap);
 	return toswap;
 }
+#endif
 #endif
 
 #if 0
@@ -117,7 +129,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<32; i++) theMAD->header->name[i] = ULTinfo.name[i];
 	
-	strcpy( theMAD->header->infos, "Converted by PlayerPRO ULT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO ULT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPat			= ULTSuite.NOP;
 	theMAD->header->numPointers	= 1;					// CHANGE
@@ -276,7 +288,7 @@ static OSErr ExtractULTInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	ULTinfo.name[ 31] = '\0';
 	//pStrcpy( (unsigned char*) info->internalFileName, MYC2PStr( ULTinfo.name));
-	strcpy(info->internalFileName, ULTinfo.name);
+	strlcpy(info->internalFileName, ULTinfo.name, sizeof(ULTinfo.name));
 	
 	/*** Total Patterns ***/
 	
@@ -294,7 +306,7 @@ static OSErr ExtractULTInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	info->totalTracks	 = 0;
 	
-	strcpy( info->formatDescription, "ULT Plug");
+	strlcpy( info->formatDescription, "ULT Plug", sizeof(info->formatDescription));
 
 	return noErr;
 }
@@ -316,8 +328,8 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strcpy( p->type, 		"ULT");
-	strcpy( p->MenuName, 	"ULT Files");
+	strlcpy( p->type, 		"ULT", sizeof(p->type));
+	strlcpy( p->MenuName, 	"ULT Files", sizeof(p->MenuName));
 	p->mode	=	'IMPL';
 	
 	return noErr;

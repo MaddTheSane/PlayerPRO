@@ -30,7 +30,7 @@
 #include "S3M.h"
 
 #ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE )
+#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
 #endif
 
 #define LOW(para) ((para) & 15)

@@ -27,6 +27,11 @@
 #include "RDriver.h"
 #include "FileUtils.h"
 #endif
+
+#ifdef WIN32
+#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
+#endif
+
 #include "XM.h"
 
 /**************************************************************************
@@ -644,7 +649,7 @@ static OSErr XM_Load( Ptr	theXM, size_t XMSize, MADMusic *theMAD, MADDriverSetti
 	
 	if( theMAD->header->numPointers > 128) theMAD->header->numPointers = 128;
 	
-	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO XM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strlcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO XM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	for( i = 0; i < mh->songlength; i++)
 	{
@@ -788,8 +793,8 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 	
 	
 	
-	strcpy( mh->id, "Extended Module: ");
-	strcpy( mh->trackername, "FastTracker v2.00   ");
+	strlcpy( mh->id, "Extended Module: ", sizeof(mh->id));
+	strlcpy( mh->trackername, "FastTracker v2.00   ", sizeof(mh->trackername));
 	mh->version			= 0x104;													PPLE16( &mh->version);
 	mh->headersize		= HEADERSIZE;												PPLE32( &mh->headersize);
 	mh->songlength 		= theMAD->header->numPointers;	PPLE16( &mh->songlength);
@@ -1233,8 +1238,8 @@ static OSErr ExtractXMInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	info->totalTracks = mh->numchn;
 	
-	if( mh->flags &1) strcpy( info->formatDescription, "XM Linear Plug");
-	else strcpy( info->formatDescription, "XM Log Plug");
+	if( mh->flags &1) strlcpy( info->formatDescription, "XM Linear Plug", sizeof(info->formatDescription));
+	else strlcpy( info->formatDescription, "XM Log Plug", sizeof(info->formatDescription));
 
 	return noErr;
 }
@@ -1246,8 +1251,8 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	MADstrcpy( p->type, 		"XM");
-	MADstrcpy( p->MenuName, 	"XM Files");
+	strlcpy( p->type, 		"XM", sizeof(p->type));
+	strlcpy( p->MenuName, 	"XM Files", sizeof(p->MenuName));
 	p->mode	=	'EXIM';
 	
 	return noErr;

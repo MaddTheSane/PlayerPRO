@@ -29,6 +29,10 @@
 #endif
 #include "UMX.h"
 
+#ifdef WIN32
+#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
+#endif
+
 static short FoundNote( short Period)
 {
 	short 			note;
@@ -310,7 +314,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 	theMAD->header = (MADSpec*) calloc( inOutCount, 1);
 	if( theMAD->header == NULL) return MADNeedMemory;
 	
-	strcpy( theMAD->header->infos, "Converted by PlayerPRO UMX Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO UMX Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->MAD = 'MADK';
 	theMAD->header->MODMode = true;
@@ -853,7 +857,7 @@ static OSErr ExtractUMXInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	info->totalInstruments = 1;
 	
-	strcpy( info->formatDescription, "UMX Plug");
+	strlcpy( info->formatDescription, "UMX Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -905,8 +909,8 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	MADstrcpy( p->type, 		"UMX");		// NEVER MORE THAN 4 CHARS !!!!!!!!
-	MADstrcpy( p->MenuName, 	"UMX Files");
+	strlcpy( p->type, 		"UMX", sizeof(p->type));		// NEVER MORE THAN 4 CHARS !!!!!!!!
+	strlcpy( p->MenuName, 	"UMX Files", sizeof(p->MenuName));
 	p->mode	=	'IMPL';
 	
 	return noErr;

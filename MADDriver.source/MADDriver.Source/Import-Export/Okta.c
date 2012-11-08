@@ -29,8 +29,15 @@
 #endif
 #include "Okta.h"
 
+#ifdef WIN32
+#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
+#endif
+
 #ifdef _MAC_H
 #define decode16(msg_buf) CFSwapInt16LittleToHost(*msg_buf)
+#else
+#ifdef __LITTLE_ENDIAN__
+#define decode16(msg_buf) *msg_buf
 #else
 static inline UInt16 decode16 (void *msg_buf)
 {
@@ -39,9 +46,13 @@ static inline UInt16 decode16 (void *msg_buf)
 	return toswap;	
 }
 #endif
+#endif
 
 #ifdef _MAC_H
 #define decode32(msg_buf) CFSwapInt32LittleToHost(*msg_buf)
+#else
+#ifdef __LITTLE_ENDIAN__
+#define decode32(msg_buf) *msg_buf
 #else
 static inline UInt32 decode32 (void *msg_buf)
 {
@@ -49,6 +60,7 @@ static inline UInt32 decode32 (void *msg_buf)
 	PPLE32(&toswap);
 	return toswap;
 }
+#endif
 #endif
 
 #if 0
@@ -229,7 +241,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	theMAD->header->tempo 			= 125;
 	theMAD->header->speed 			= Okta->speed;
 	
-	strcpy( theMAD->header->infos, "Converted by PlayerPRO OKTA Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO OKTA Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	for( i = 0;  i < 128; i++) theMAD->header->oPointers[ i] = 0;
 	for( i = 0;  i < pbod_count; i++) theMAD->header->oPointers[ i] = Okta->patt[ i];
@@ -388,7 +400,7 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 	
 	/*** Internal name ***/
 	
-	strcpy( info->internalFileName, "");
+	strlcpy( info->internalFileName, "", 1);
 	
 	{
 	//OktaInstru			*samps, *s, instru[ 120];
@@ -444,7 +456,7 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 	info->totalInstruments = sbod_count;
 	}
 	
-	strcpy( info->formatDescription, "OKTA Plug");
+	strlcpy( info->formatDescription, "OKTA Plug", sizeof(info->formatDescription));
 
 	return noErr;
 }
@@ -465,8 +477,8 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strcpy( p->type, 		"OKTA");
-	strcpy( p->MenuName, 	"OKTAmed Files");
+	strlcpy( p->type, 		"OKTA", sizeof(p->type));
+	strlcpy( p->MenuName, 	"OKTAmed Files", sizeof(p->MenuName));
 	p->mode	=	'IMPL';
 	
 	return noErr;
@@ -490,7 +502,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				sndSize = iGetEOF( iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = malloc( sndSize * 2L);
+				AlienFile = (Ptr)malloc( sndSize * 2L);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
@@ -498,7 +510,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				{
 					free( AlienFile);
 					
-					AlienFile = malloc( sndSize);
+					AlienFile = (Ptr)malloc( sndSize);
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					if( myErr == noErr)
 					{
@@ -521,7 +533,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			{
 				sndSize = 1024L;
 				
-				AlienFile = malloc( sndSize);
+				AlienFile = (Ptr)malloc( sndSize);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
@@ -541,7 +553,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			{
 				info->fileSize = iGetEOF( iFileRefI);
 				sndSize = info->fileSize;
-				AlienFile = malloc( sndSize);
+				AlienFile = (Ptr)malloc( sndSize);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
