@@ -73,6 +73,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MTM", "MADDriver.source\MAD
 		{990D6EE5-1C55-41DC-89B7-1E2E3F5D8074} = {990D6EE5-1C55-41DC-89B7-1E2E3F5D8074}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PPPlay", "Examples\PPPlay\PPPlay.vcxproj", "{319469FA-2FFC-446C-A2CC-FAC0BFDDD9E3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{990D6EE5-1C55-41DC-89B7-1E2E3F5D8074} = {990D6EE5-1C55-41DC-89B7-1E2E3F5D8074}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -139,6 +144,10 @@ Global
 		{13345541-ED7B-422A-BBC6-3005248AD9B2}.Debug|Win32.Build.0 = Debug|Win32
 		{13345541-ED7B-422A-BBC6-3005248AD9B2}.Release|Win32.ActiveCfg = Release|Win32
 		{13345541-ED7B-422A-BBC6-3005248AD9B2}.Release|Win32.Build.0 = Release|Win32
+		{319469FA-2FFC-446C-A2CC-FAC0BFDDD9E3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{319469FA-2FFC-446C-A2CC-FAC0BFDDD9E3}.Debug|Win32.Build.0 = Debug|Win32
+		{319469FA-2FFC-446C-A2CC-FAC0BFDDD9E3}.Release|Win32.ActiveCfg = Release|Win32
+		{319469FA-2FFC-446C-A2CC-FAC0BFDDD9E3}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
