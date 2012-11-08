@@ -480,6 +480,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	strlcpy( p->type, 		"OKTA", sizeof(p->type));
 	strlcpy( p->MenuName, 	"OKTAmed Files", sizeof(p->MenuName));
 	p->mode	=	'IMPL';
+	p->version = 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
 }

@@ -54,7 +54,7 @@
 #define MAXDRAW				10
 //#define MAXTRACK			32
 //#define MAXINSTRU			64
-#define MAXSAMPLE			64L
+#define MAXSAMPLE			64
 #define MAXPATTERN			200
 #define MAXPATTERNSIZE		900
 #define MAX_ARP 			3

@@ -300,7 +300,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, size_t *sn
 		s3minfo->ffv			=	2;																PPLE16(  &s3minfo->ffv);
 		
 		
-		memcpy( s3minfo->s3msig, "SCRM", 4);
+		strncpy( s3minfo->s3msig, "SCRM", 4);
 		
 		s3minfo->mastervol		= 	64;
 		s3minfo->initialspeed	=	theMAD->header->speed;
@@ -362,7 +362,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, size_t *sn
 		{
 			sData		*curData = theMAD->sample[ i*MAXSAMPLE + 0];
 			
-			parapins[ i] =  (16L + finalS3MCopy - finalS3M) / 16L;
+			parapins[ i] =  (16L + finalS3MCopy - finalS3M) / 16;
 			finalS3MCopy = finalS3M + parapins[ i]*16L;
 			PPLE16(  &parapins[ i]);
 			
@@ -417,7 +417,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, size_t *sn
 		}
 		else
 		{
-			parapins[ i] =  (16L + finalS3MCopy - finalS3M) / 16L;
+			parapins[ i] =  (16L + finalS3MCopy - finalS3M) / 16;
 			finalS3MCopy = finalS3M + parapins[ i]*16L;
 			PPLE16(  &parapins[ i]);
 			
@@ -533,8 +533,8 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, size_t *sn
 		nullCmd.vol		= 0xFF;
 		nullCmd.unused	= 0;
 		
-		parappat[ i] = (16L + finalS3MCopy - finalS3M) / 16L;
-		finalS3MCopy = finalS3M + ((SInt32) parappat[ i])*16L;
+		parappat[ i] = (16 + (size_t)finalS3MCopy - (size_t)finalS3M) / 16;
+		finalS3MCopy = finalS3M + ((SInt32) parappat[ i])*16;
 		PPLE16(  &parappat[ i]);
 		
 		sizePtr = (short*) finalS3MCopy;
@@ -1188,6 +1188,7 @@ EXP OSErr FillPlug( PlugInfo *p)
 	strlcpy( p->type, "S3M", sizeof(p->type));
 	strlcpy( p->MenuName, "S3M Files", sizeof(p->MenuName));
 	p->mode	=	'EXIM';
+	p->version = 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
 }

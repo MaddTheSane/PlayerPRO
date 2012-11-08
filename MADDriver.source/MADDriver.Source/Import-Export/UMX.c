@@ -634,14 +634,14 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 			theMOD->fid[i].fineTune		= temp;
 			
 			theMOD->fid[i].volume 		= curData->vol;
-			theMOD->fid[i].loopWord 	= curData->loopBeg / 2L;
-			theMOD->fid[i].loopWords 	= curData->loopSize / 2L;
+			theMOD->fid[i].loopWord 	= curData->loopBeg / 2;
+			theMOD->fid[i].loopWords 	= curData->loopSize / 2;
 			
 			if( curData->c2spd > 8757 || curData->c2spd < 7895)
 			{
 				theMOD->fid[i].fineTune = 0;
-				theMOD->fid[i].loopWord = ((curData->loopBeg / 2L) * 8363L) / curData->c2spd;
-				theMOD->fid[i].loopWords = ((curData->loopSize / 2L) * 8363L) / curData->c2spd;
+				theMOD->fid[i].loopWord = ((curData->loopBeg / 2L) * 8363) / curData->c2spd;
+				theMOD->fid[i].loopWords = ((curData->loopSize / 2L) * 8363) / curData->c2spd;
 				theMOD->fid[i].numWords = (theMOD->fid[i].numWords * 8363L) / curData->c2spd;
 			}
 		}
@@ -683,7 +683,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 				{
 					Convert16to8(	destPtr,
 									destPtr, 
-									(SInt32) (theMOD->fid[i].numWords) * 2L);
+									(size_t) (theMOD->fid[i].numWords) * 2);
 					
 					theMOD->fid[i].loopWord /=2;
 					theMOD->fid[i].loopWords /=2;
@@ -912,6 +912,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	strlcpy( p->type, 		"UMX", sizeof(p->type));		// NEVER MORE THAN 4 CHARS !!!!!!!!
 	strlcpy( p->MenuName, 	"UMX Files", sizeof(p->MenuName));
 	p->mode	=	'IMPL';
+	p->version = 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
 }

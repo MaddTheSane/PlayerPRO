@@ -55,6 +55,10 @@ static inline UInt32 Tdecode32( void *msg_buf)
 #endif
 #endif
 
+#ifdef WIN32
+#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
+#endif
+
 #if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
@@ -116,7 +120,7 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 	theMAD->header->MAD = 'MADK';
 	for(i=0; i<32; i++) theMAD->header->name[i] = the669->message[i];
 	
-	strcpy( theMAD->header->infos, "Converted by PlayerPRO 669 Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO 669 Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPointers = 128;	//the669->loopOrder;
 	theMAD->header->tempo = 125;
@@ -291,8 +295,8 @@ static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	the669->message[ 30] = '\0';
-	strcpy( info->internalFileName, ( the669->message));
+	//the669->message[ 30] = '\0';
+	strlcpy( info->internalFileName, ( the669->message), sizeof(info->internalFileName));
 
 	/*** Total Patterns ***/
 	
@@ -306,7 +310,7 @@ static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
 	
 	info->totalInstruments = 0;
 	
-	strcpy( info->formatDescription, "669 Plug");
+	strlcpy( info->formatDescription, "669 Plug", sizeof(info->formatDescription));
 
 	return noErr;
 }
@@ -327,10 +331,11 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strcpy( p->type, 		"669");
-	strcpy( p->MenuName, 	"669 Files");
+	strlcpy( p->type, 		"669", sizeof(p->type));
+	strlcpy( p->MenuName, 	"669 Files", sizeof(p->MenuName));
 	p->mode	=	'IMPL';
-	
+	p->version = 2 << 16 | 0 << 8 | 0;
+
 	return noErr;
 }
 #endif

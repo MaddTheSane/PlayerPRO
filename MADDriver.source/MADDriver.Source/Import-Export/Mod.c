@@ -21,6 +21,8 @@
 //
 /********************						***********************/
 
+//NOTE: your plug-in should include PlayerPROCore/PlayerPROCore.h
+//These plug-ins use RDriver and FileUtils to build without having to create subdirs for headers
 #ifdef __APPLE__
 #include <PlayerPROCore/PlayerPROCore.h>
 #else
@@ -28,6 +30,10 @@
 #include "FileUtils.h"
 #endif
 #include "MOD.h"
+
+#ifdef WIN32
+#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
+#endif
 
 static short FoundNote( short Period)
 {
@@ -311,7 +317,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	theMAD->header = (MADSpec*) calloc( inOutCount, 1);
 	if( theMAD->header == NULL) return MADNeedMemory;
 	
-	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO MOD Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MOD Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->MAD = 'MADK';
 	theMAD->header->MODMode = true;
@@ -840,7 +846,7 @@ static OSErr ExtractMODInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	myMOD->NameSignature[ 19] = '\0';
-	strcpy( info->internalFileName, myMOD->NameSignature);
+	strlcpy( info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
 	
 	/*** Check MOD Type ***/
 	
@@ -876,7 +882,7 @@ static OSErr ExtractMODInfo( PPInfoRec *info, Ptr AlienFile)
 		if( myMOD->fid[ i].numWords > 5) info->totalInstruments++;
 	}
 	
-	strcpy( info->formatDescription, "MOD Plug");
+	strlcpy( info->formatDescription, "MOD Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -900,10 +906,12 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	MADstrcpy( p->type, 		"MOD");		// NEVER MORE THAN 4 CHARS !!!!!!!!
-	MADstrcpy( p->MenuName, 	"MOD Files");
+	strlcpy( p->type, 		"MOD", sizeof(p->type));		// NEVER MORE THAN 4 CHARS !!!!!!!!
+	strlcpy( p->MenuName, 	"MOD Files", sizeof(p->MenuName));
 	p->mode	=	'EXIM';
-	
+	//2.0.0
+	p->version = 2 << 16 | 0 << 8 | 0;
+
 	return noErr;
 }
 #endif

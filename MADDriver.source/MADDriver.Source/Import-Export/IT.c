@@ -30,6 +30,10 @@
 #endif
 #include "IT.h"
 
+#ifdef WIN32
+#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
+#endif
+
 static	Byte	LastAEffect[ MAXTRACK], LastJEffect[ MAXTRACK];
 static	int		old_effect;	
 
@@ -641,7 +645,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<28; i++) theMAD->header->name[i] = ITinfo.name[i];
 	
-	strcpy( theMAD->header->infos, "Converted by PlayerPRO IT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO IT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPat			= ITinfo.patNum;
 	theMAD->header->numPointers		= ITinfo.orderNum;
@@ -1007,7 +1011,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 							for( temp = 0; temp < curData->size; temp++) *(curData->data + temp) = 0;
 						}
 					}
-					else memmove( curData->data,theInstrument[ i], curData->size);
+					else memmove( curData->data, theInstrument[ i], curData->size);
 							
 				//	BlockMoveData( theInstrument[i], curData->data, curData->size);
 					
@@ -1189,7 +1193,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 			theMAD->partition[ i]->header.size 			= DEFSIZE;
 			theMAD->partition[ i]->header.compMode 	= 'NONE';
 			
-			strcpy( theMAD->partition[ i]->header.name, "Not used pattern");
+			strlcpy( theMAD->partition[ i]->header.name, "Not used pattern", sizeof(theMAD->partition[ i]->header.name));
 			
 			for( Row = 0; Row < DEFSIZE; Row++)
 			{
@@ -1349,7 +1353,7 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	ITinfo.name[ 25] = '\0';
-	strcpy( info->internalFileName, ITinfo.name);
+	strlcpy( info->internalFileName, ITinfo.name, sizeof(ITinfo.name));
 	
 	/*** Total Patterns ***/
 	
@@ -1370,7 +1374,7 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	//info->totalTracks	 = PPLE16(  &ITinfo.insNum);
 	
-	strcpy( info->formatDescription, "IT Plug");
+	strlcpy( info->formatDescription, "IT Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -1392,9 +1396,10 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strcpy( p->type, 		"IT");
-	strcpy( p->MenuName, 	"IT Files");
+	strlcpy( p->type, 		"IT", sizeof(p->type));
+	strlcpy( p->MenuName, 	"IT Files", sizeof(p->MenuName));
 	p->mode	=	'IMPL';
+	p->version = 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
 }
@@ -1418,7 +1423,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				sndSize = iGetEOF( iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = malloc( sndSize * 2L);
+				AlienFile = (Ptr)malloc( sndSize * 2L);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
@@ -1426,7 +1431,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				{
 					free( AlienFile);
 					
-					AlienFile = malloc( sndSize);
+					AlienFile = (Ptr)malloc( sndSize);
 					if( AlienFile == NULL) myErr = MADNeedMemory;
 					else
 					{
@@ -1453,7 +1458,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			{
 				sndSize = 1024L;
 				
-				AlienFile = malloc( sndSize);
+				AlienFile = (Ptr)malloc( sndSize);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
@@ -1475,7 +1480,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = malloc( sndSize);
+				AlienFile = (Ptr)malloc( sndSize);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{

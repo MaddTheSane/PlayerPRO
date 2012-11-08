@@ -29,6 +29,10 @@
 #endif
 #include "MED.h"
 
+#ifdef WIN32
+#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
+#endif
+
 static MMD0 		*mh;
 static MMD0song 	*ms;
 static ULONG 		*ba;
@@ -420,7 +424,7 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	
 	theMAD->header->MAD = 'MADK';
 	
-	strcpy( theMAD->header->infos, "Converted by PlayerPRO MED Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MED Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->speed			= 	ms->tempo2;
 	theMAD->header->tempo			=	((SInt32)ms->deftempo * 125L) / 33L;
@@ -556,14 +560,15 @@ static OSErr ExtractMEDInfo( PPInfoRec *info, Ptr theMED)
 
 	info->signature = mh->id;
 	
-	strcpy( info->internalFileName, "");
+	//strcpy( info->internalFileName, "");
+	info->internalFileName[0] = '\0';
 	
 	info->totalPatterns = ms->numblocks;
 	info->partitionLength = ms->songlen;
 	info->totalInstruments = ms->numsamples;
 	info->totalTracks = 0;
 	
-	strcpy( info->formatDescription, "MED Plug");
+	strlcpy( info->formatDescription, "MED Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -575,10 +580,11 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	MADstrcpy( p->type, 		"MED");
-	MADstrcpy( p->MenuName, 	"MED Files");
+	strlcpy( p->type, 		"MED", sizeof(p->type));
+	strlcpy( p->MenuName, 	"MED Files", sizeof(p->type));
 	p->mode	=	'IMPL';
-	
+	p->version = 2 << 16 | 0 << 8 | 0;
+
 	return noErr;
 }
 #endif

@@ -30,6 +30,10 @@
 #include "MOD.h"
 #include "MADI.h"
 
+#ifdef WIN32
+#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
+#endif
+
 #if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
@@ -410,7 +414,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	myMOD->name[ 31] = '\0';
-	strcpy( info->internalFileName, myMOD->name);
+	strlcpy( info->internalFileName, myMOD->name, sizeof(myMOD->name));
 	
 	/*** Tracks ***/
 	
@@ -433,7 +437,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	info->totalInstruments = myMOD->numInstru;
 	
-	strcpy( info->formatDescription, "MADI Plug");
+	strlcpy( info->formatDescription, "MADI Plug", sizeof(info->formatDescription));
 
 	return noErr;
 }
@@ -445,10 +449,11 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	MADstrcpy( p->type, 		"MADI");
-	MADstrcpy( p->MenuName, 	"MADI Files");
+	strlcpy( p->type, 		"MADI", sizeof(p->type));
+	strlcpy( p->MenuName, 	"MADI Files", sizeof(p->MenuName));
 	p->mode	=	'IMPL';
-	
+	p->version = 2 << 16 | 0 << 8 | 0;
+
 	return noErr;
 }
 #endif

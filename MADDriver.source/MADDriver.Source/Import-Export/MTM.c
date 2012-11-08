@@ -29,7 +29,9 @@
 #endif
 #include "MTM.h"
 
+#ifdef WIN32
 #define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
+#endif
 
 #if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
@@ -164,7 +166,7 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, SInt32 MTMSize, MADMusic *theMAD, 
 		theMAD->header->name[i] = MTMFile->songname[i];
 	}
 	
-	strcpy( theMAD->header->infos, "Converted by PlayerPRO MTM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MTM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->tempo = 125;
 	theMAD->header->speed = 6;
@@ -226,7 +228,7 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, SInt32 MTMSize, MADMusic *theMAD, 
 			curData->relNote	= 0;
 			//	for( x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
 			
-			curData->data 		= malloc( curData->size);
+			curData->data 		= (Ptr)malloc( curData->size);
 			if( curData->data == NULL) //DebugStr("\pInstruments: I NEED MEMORY !!! NOW !");
 				return MADNeedMemory;
 			
@@ -314,7 +316,7 @@ static OSErr ExtractInfo( PPInfoRec *info, MTMDef *myFile)
 	info->internalFileName[ 21] = 0;
 	//MYC2PStr( (Ptr) info->internalFileName);
 
-	strcpy( info->formatDescription, "MTM Plug");
+	strlcpy( info->formatDescription, "MTM Plug", sizeof(info->formatDescription));
 
 	info->totalPatterns		= myFile->patNo;
 	info->partitionLength	= myFile->positionNo;
@@ -341,10 +343,11 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strcpy( p->type, 		"MTM");
-	strcpy( p->MenuName, 	"MTM Files");
+	strlcpy( p->type, 		"MTM", sizeof(p->type));
+	strlcpy( p->MenuName, 	"MTM Files", sizeof(p->MenuName));
 	p->mode	=	'IMPL';
-	
+	p->version = 2 << 16 | 0 << 8 | 0;
+
 	return noErr;
 }
 #endif

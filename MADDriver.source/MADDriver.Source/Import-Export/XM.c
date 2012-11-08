@@ -544,7 +544,7 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 		{
 			sData	*curData = theMAD->sample[ t*MAXSAMPLE + u];
 			
-			curData->data 		= malloc( curData->size);
+			curData->data 		= (Ptr)malloc( curData->size);
 			if( curData->data == NULL) return MADNeedMemory;
 			else {
 				READXMFILE( curData->data, curData->size);
@@ -783,7 +783,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 												InstruSize +
 												PatternSize;
 	
-	theXMRead = finalXMPtr = malloc( *sndSize);
+	theXMRead = finalXMPtr = (Ptr)malloc( *sndSize);
 	theXMMax = theXMRead + *sndSize;
 	if( theXMRead == NULL) return NULL;
 	
@@ -1254,6 +1254,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	strlcpy( p->type, 		"XM", sizeof(p->type));
 	strlcpy( p->MenuName, 	"XM Files", sizeof(p->MenuName));
 	p->mode	=	'EXIM';
+	p->version = 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
 }

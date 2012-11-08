@@ -30,6 +30,10 @@
 #include "MOD.h"
 #include "MADfg.h"
 
+#ifdef WIN32
+#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
+#endif
+
 struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, short Tracks, MADDriverSettings *init)
 {
 	struct MusicPattern*	finalPtr;
@@ -193,7 +197,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 	theMAD->header->speed			= 6;
 	theMAD->header->tempo			= 125;
 
-	strcpy( theMAD->header->infos, "Converted by PlayerPRO MAD-F-G Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MAD-F-G Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 
 
 	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
@@ -401,7 +405,7 @@ OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	myMOD->NameSignature[ 31] = '\0';
-	strcpy( info->internalFileName, myMOD->NameSignature);
+	strlcpy( info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
 
 	/*** Tracks ***/
 	
@@ -442,9 +446,10 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strcpy( p->type, 		"MADF");
-	strcpy( p->MenuName, 	"MAD-FG Files");
+	strlcpy( p->type, 		"MADF", sizeof(p->type));
+	strlcpy( p->MenuName, 	"MAD-FG Files", sizeof(p->MenuName));
 	p->mode	=	'IMPL';
+	p->version = 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
 }

@@ -110,10 +110,10 @@ static inline void DebugStr( unsigned char* x)
 #pragma pack(2)
 #endif
 
-#define DEFAULT_VOLFADE		300L
-#define MAXINSTRU			255L
-#define MAXPOINTER			999L
-#define MAXTRACK			256L
+#define DEFAULT_VOLFADE		300
+#define MAXINSTRU			255
+#define MAXPOINTER			999
+#define MAXTRACK			256
 //#define MAXTRACKMULTI		99
 #define MADID				'MADK'
 
