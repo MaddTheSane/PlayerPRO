@@ -314,7 +314,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 
 static OSErr TestAMFFile( Ptr AlienFile)
 {
-	OSType	myMADSign = *((unsigned long*) AlienFile);
+	OSType	myMADSign = *((OSType*) AlienFile);
 	PPBE32(&myMADSign);
 	
 	if( (myMADSign & 0xFFFFFF00) == 0x414D4600) return noErr;
