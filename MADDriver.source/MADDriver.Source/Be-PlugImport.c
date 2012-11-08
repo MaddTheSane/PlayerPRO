@@ -49,7 +49,7 @@ OSErr CheckMADFile( Ptr name)
 		if( charl[ 0] == 'M' &&
 				charl[ 1] == 'A' &&
 				charl[ 2] == 'D' &&
-				charl[ 3] == 'I') err = noErr;
+				charl[ 3] == 'K') err = noErr;
 		else err = -1;
 		
 		iClose( refNum);
@@ -69,7 +69,6 @@ OSErr CallImportPlug( 	short		PlugNo,
 	OSErr				myErr;
 	MADDriverSettings	settings;
 	
-	settings.sysMemory = inMADDriver->sysMemory;
 	myErr = (*(inMADDriver->ThePlug[ PlugNo].IOPlug)) (order, AlienFile, theNewMAD, info, &settings);
 	
 	return( myErr);
@@ -91,11 +90,51 @@ OSErr	PPTestFile( char	*kindFile, Ptr AlienFile)
 	return MADCannotFindPlug;
 }
 
+OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
+{
+	MADSpec		*theMAD;
+	long		fileSize;
+	UNFILE		fileID;
+	
+	theMAD = (MADSpec*) malloc( sizeof( MADSpec) + 200);
+	
+	fileID = iFileOpen( AlienFile);
+	if( !fileID)
+	{
+		free( theMAD);
+		return MADReadingErr;
+	}
+	fileSize = iGetEOF( fileID);
+	
+	iRead( sizeof( MADSpec), (Ptr) theMAD, fileID);
+	iClose( fileID);
+	
+	strcpy( InfoRec->internalFileName, theMAD->name);
+	
+	InfoRec->totalPatterns = theMAD->numPat;
+	InfoRec->partitionLength = theMAD->numPointers;
+	InfoRec->totalTracks = theMAD->numChn;
+	InfoRec->signature = 'MADK';
+	strcpy( InfoRec->formatDescription, "MADK");
+	InfoRec->totalInstruments = theMAD->numInstru;
+	InfoRec->fileSize = fileSize;
+	
+	free( theMAD);	
+	theMAD = NULL;
+	
+	return noErr;
+}
+
 OSErr	PPInfoFile( char	*kindFile, char	*AlienFile, PPInfoRec	*InfoRec)
 {
 	short			i;
 	MADMusic		aMAD;
 	
+	if( !strcmp( kindFile, "MADK"))
+	{
+		return PPMADInfoFile( AlienFile, InfoRec);
+	}
+
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
@@ -157,7 +196,7 @@ OSErr	PPIdentifyFile( MADLibrary *lib, char	*type, Ptr AlienFile)
 	iErr = CheckMADFile( AlienFile);
 	if( iErr == noErr)
 	{
-		strcpy( type, "MADI");
+		strcpy( type, "MADK");
 		return noErr;
 	}
 	
@@ -180,7 +219,7 @@ EXP	Boolean	MADPlugAvailable( char	*kindFile)
 {
 	short		i;
 
-	if( !strcmp( kindFile, "MADI")) return true;
+	if( !strcmp( kindFile, "MADK")) return true;
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{

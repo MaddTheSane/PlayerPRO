@@ -86,11 +86,51 @@ OSErr	PPTestFile( MADLibrary* inMADDriver,char	*kindFile, Ptr AlienFile)
 	return MADCannotFindPlug;
 }
 
+OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
+{
+	MADSpec		*theMAD;
+	long		fileSize;
+	UNFILE		fileID;
+	
+	theMAD = (MADSpec*) malloc( sizeof( MADSpec) + 200);
+	
+	fileID = iFileOpen( AlienFile);
+	if( !fileID)
+	{
+		free( theMAD);
+		return MADReadingErr;
+	}
+	fileSize = iGetEOF( fileID);
+	
+	iRead( sizeof( MADSpec), (Ptr) theMAD, fileID);
+	iClose( fileID);
+	
+	strcpy( InfoRec->internalFileName, theMAD->name);
+	
+	InfoRec->totalPatterns = theMAD->numPat;
+	InfoRec->partitionLength = theMAD->numPointers;
+	InfoRec->totalTracks = theMAD->numChn;
+	InfoRec->signature = 'MADK';
+	strcpy( InfoRec->formatDescription, "MADK");
+	InfoRec->totalInstruments = theMAD->numInstru;
+	InfoRec->fileSize = fileSize;
+	
+	free( theMAD);	
+	theMAD = NULL;
+	
+	return noErr;
+}
+
 OSErr	PPInfoFile( MADLibrary* inMADDriver, char	*kindFile, char	*AlienFile, PPInfoRec	*InfoRec)
 {
 	short			i;
 	MADMusic	aMAD;
 	
+	if( !strcmp( kindFile, "MADK"))
+	{
+		return PPMADInfoFile( AlienFile, InfoRec);
+	}
+
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
