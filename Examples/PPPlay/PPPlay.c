@@ -18,14 +18,15 @@ winspool.lib
 
 #define PPbanner \
 "=======================================================================\n" \
-"PlayerPRO Driver v 5.9  - Portable version - Programmed by A.ROSSET '02\n" \
+"PlayerPRO Driver v 6.0  - Portable version - Programmed by A.ROSSET '02\n" \
+"Maintained by Charles \"Madd the Sane \" Betts\n"\
 "=======================================================================\n" \
 "       DirectSound or Wave Version for Windows 95 or Windows NT        \n" \
 "\n" \
 "=======================================================================\n" \
 "       This program is FREEWARE - Read README.TXT for more info\n" \
 "\n" \
-"     E-Mail : rossetantoine@bluewin.ch    Phone : (+41 79) 203 74 62\n"\
+"     E-Mail : computers57@hotmail.com    "\
 "=======================================================================\n" \
 " Current settings: 44Khz-16bits-Stereo-MicroDelay 35ms-Interpolation \n" \
 "=======================================================================\n"
@@ -44,12 +45,15 @@ int main( int argc, char *argv[])
 	MADMusic 			*aMusic;
   	long				fT, cT;
   	char 				type[ 5];
-  	
-  	puts( PPbanner);
+  	int returntype = EXIT_SUCCESS;
+
+
+  	printf( PPbanner);
   	
   	if (argc < 2)
   	{
-		puts("Usage: PlayerPRO MyMusicFile\n");
+		printf("Usage: PlayerPRO MyMusicFile\n");
+		return EXIT_FAILURE;
 	}
   	else
   	{
@@ -70,16 +74,32 @@ int main( int argc, char *argv[])
 		init.TickRemover		= false;
 		init.oversampling		= 1;
 		
-		if( MADInitLibrary( "Plugins", &lib)) {debugger( "ERR MADInitLibrary\n");}
+		if( MADInitLibrary( "Plugins", &lib)) 
+		{
+			debugger( "ERR MADInitLibrary\n");
+			returntype = EXIT_FAILURE;
+		}
 		else
 		{
-			if( MADCreateDriver( &init, lib, &aDriver)) {debugger( "ERR MADCreateDriver\n");}
+			if( MADCreateDriver( &init, lib, &aDriver)) 
+			{
+				debugger( "ERR MADCreateDriver\n");
+				returntype = EXIT_FAILURE;
+			}
 			else
 			{
-				if( MADMusicIdentifyCString( lib, type, argv[ 1]))  {debugger( "ERR MADMusicIdentifyCString\n");}
+				if( MADMusicIdentifyCString( lib, type, argv[ 1]))  
+				{
+					debugger( "ERR MADMusicIdentifyCString\n");
+					returntype = EXIT_FAILURE;
+				}
 				else
 				{
-					if( MADLoadMusicFileCString( lib, &aMusic, type, argv[ 1])) {debugger( "ERR MADLoadMusicFile\n");}
+					if( MADLoadMusicFileCString( lib, &aMusic, type, argv[ 1])) 
+					{
+						debugger( "ERR MADLoadMusicFile\n");
+						returntype = EXIT_FAILURE;
+					}
 					else
 					{
 						double fTd = 0;
@@ -109,4 +129,5 @@ int main( int argc, char *argv[])
 			MADDisposeLibrary( lib);
 		}
 	}
+	return returntype;
 }
