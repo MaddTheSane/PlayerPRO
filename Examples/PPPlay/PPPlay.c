@@ -26,7 +26,7 @@ winspool.lib
 "=======================================================================\n" \
 "       This program is FREEWARE - Read README.TXT for more info\n" \
 "\n" \
-"     E-Mail : computers57@hotmail.com    "\
+"     E-Mail : computers57@hotmail.com    \n"\
 "=======================================================================\n" \
 " Current settings: 44Khz-16bits-Stereo-MicroDelay 35ms-Interpolation \n" \
 "=======================================================================\n"
