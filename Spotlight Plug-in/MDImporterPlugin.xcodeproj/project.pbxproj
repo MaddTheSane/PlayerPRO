@@ -11,6 +11,7 @@
 		553A9BC013021CC0004F002C /* schema.xml in Resources */ = {isa = PBXBuildFile; fileRef = C88FB7D7067446EC006EBB30 /* schema.xml */; };
 		553A9BC513021CD3004F002C /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = C88FB7E30674480E006EBB30 /* schema.strings */; };
 		554BB7C012FDC52B001A025C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554BB76B12FDC522001A025C /* PlayerPROCore.framework */; };
+		55E725121649FC3E0078637D /* MADI.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554BB77B12FDC522001A025C /* MADI.ppimpexp */; };
 		55FD6BD81645A47F008AB923 /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 554BB76B12FDC522001A025C /* PlayerPROCore.framework */; };
 		55FD6BDA1645A4A2008AB923 /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554BB76D12FDC522001A025C /* MOD.ppimpexp */; };
 		55FD6BDB1645A4A2008AB923 /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554BB76F12FDC522001A025C /* 669.ppimpexp */; };
@@ -493,6 +494,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				55E725121649FC3E0078637D /* MADI.ppimpexp in Copy PlugIns */,
 				55FD6BDA1645A4A2008AB923 /* MOD.ppimpexp in Copy PlugIns */,
 				55FD6BDB1645A4A2008AB923 /* 669.ppimpexp in Copy PlugIns */,
 				55FD6BDC1645A4A2008AB923 /* AMF.ppimpexp in Copy PlugIns */,
