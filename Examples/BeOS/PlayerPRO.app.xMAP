@@ -1,0 +1,551 @@
+File:    0	"/boot/apps/Metrowerks/PlayerPRO/Source/Be-DriverClass.cpp"
+File:    1	"/boot/apps/Metrowerks/PlayerPRO/Source/Be-FileUtils.c"
+File:    2	"/boot/apps/Metrowerks/PlayerPRO/Source/Be-PlugImport.c"
+File:    3	"/boot/apps/Metrowerks/PlayerPRO/MAD Simple/mainMADSimple.cpp"
+File:    5	"/src/exp/src/kit/glue/common/global_destructor_chain.c"
+File:    6	"/src/exp/src/kit/glue/ppc/runtime.c"
+File:    9	"/src/exp/src/kit/glue/common/init_term_dyn.c"
+File:   10	"/boot/develop/lib/ppc/libmedia.so"
+File:   11	"/src/exp/src/kit/glue/common/start_dyn.c"
+File:   12	"/boot/develop/lib/ppc/libbe.so"
+File:   13	"/boot/develop/lib/ppc/libroot.so"
+File:   14	"/boot/apps/Metrowerks/PlayerPRO/Source/DelayOutPut.c"
+File:   15	"/boot/apps/Metrowerks/PlayerPRO/Source/Effects.c"
+File:   16	"/boot/apps/Metrowerks/PlayerPRO/Source/Interrupt.c"
+File:   17	"/boot/apps/Metrowerks/PlayerPRO/Source/TickRemover.c"
+File:   18	"/boot/apps/Metrowerks/PlayerPRO/Source/OutPut8.c"
+File:   19	"/boot/apps/Metrowerks/PlayerPRO/Source/MainDriver.c"
+
+Code section, size = 40644 bytes
+000000	PR 	.__sinit									file = "*Linker-Generated*"
+00001C	PR 	.__ct__14MADDriverClassFv					file = "Be-DriverClass.cpp"
+0000AC	PR 	.__dt__14MADDriverClassFv
+000170	PR 	.CreateDefaultDriver__14MADDriverClassFv
+00021C	PR 	.InitLibrary__14MADDriverClassFP17MADDriverSettings
+0003E0	PR 	.LoadMusic__14MADDriverClassFP9entry_refUlb
+000568	PR 	.StartMusic__14MADDriverClassFv
+0005D8	PR 	.trackerStreamPlay__FPvPvUlRC22media_raw_audio_format
+000760	PR 	.iFileOpen									file = "Be-FileUtils.c"
+000790	PR 	.iRead
+0007D4	PR 	.iSeekCur
+00080C	PR 	.iClose
+000838	PR 	.MOT32
+000858	PR 	.MOT16
+000878	PR 	.MADstrcmp
+0008C4	PR 	.CheckMADFile								file = "Be-PlugImport.c"
+000984	PR 	.CallImportPlug__FsUlPcP8MADMusicP9PPInfoRec
+000A04	PR 	.PPImportFile
+000AE4	PR 	.PPIdentifyFile
+000C04	PR 	.MADPlugAvailable__FPc
+000CAC	PR 	.LoadPlugLib__FPcP8PlugInfo
+000DD0	PR 	.ScanPlugDir__FPc
+000EC0	PR 	.MInitImportPlug
+001044	PR 	.CloseImportPlug
+0010A4	PR 	.main										file = "mainMADSimple.cpp"
+001138	PR 	.__ct__5MyAppFUl
+0012D0	PR 	.__dt__5MyAppFv
+001348	PR 	.RefsReceived__5MyAppFP8BMessage
+0013C4	PR 	.__ct__9MADWindowF5BRectP14MADDriverClass
+001450	PR 	.MessageReceived__9MADWindowFP8BMessage
+001500	PR 	.QuitRequested__9MADWindowFv
+001538	PR 	.__ct__7MADViewF5BRectPc
+0015B8	PR 	.AttachedToWindow__7MADViewFv
+0015E8	PR 	.Draw__7MADViewF5BRect
+001644	PR 	.__dt__9MADWindowFv
+0016AC	PR 	.__dt__7MADViewFv
+001714	PR 	.__destroy_global_chain						file = "global_destructor_chain.c"
+001768	PR 	.__RTOC										file = "init_term_dyn.c"
+001770	PR 	._init_routine_
+0017C0	PR 	._term_routine_
+0017F0	PR 	.__start									file = "start_dyn.c"
+0018AC	PR 	.MADCreateOverShoot							file = "DelayOutPut.c"
+001A14	PR 	.MADKillOverShoot
+001B00	PR 	.Sampler16AddDelay
+001E8C	PR 	.Sampler16AddDelayStereo__FP7ChannelPlP12MADDriverRec
+00229C	PR 	.Sampler16Addin16Delay
+002644	PR 	.Sampler16Addin16DelayStereo__FP7ChannelPlP12MADDriverRec
+002A80	PR 	.Sample16BufferAddDelay
+002B3C	PR 	.Play16StereoDelay
+002C1C	PR 	.Sampler8in8AddDelay
+002F40	PR 	.Sampler8in16AddDelay
+003290	PR 	.Sampler8in8AddDelayStereo__FP7ChannelPsP12MADDriverRec
+003630	PR 	.Sampler8in16AddDelayStereo__FP7ChannelPsP12MADDriverRec
+003A04	PR 	.Sample8BufferAddDelay
+003AB4	PR 	.Play8StereoDelay
+003B78	PR 	.parse_slidevol								file = "Effects.c"
+003BAC	PR 	.DoEffect
+0041D8	PR 	.SetUpEffect
+0046B0	PR 	.DoVolCmd
+004820	PR 	.DoVolPanning256							file = "Interrupt.c"
+0048F8	PR 	.MADCleanDriver
+004E68	PR 	.Interpolate
+004EAC	PR 	.InterpolateEnv
+004F18	PR 	.ProcessFadeOut
+004F7C	PR 	.ProcessEnvelope
+005140	PR 	.ProcessPanning__FP7ChannelP12MADDriverRec
+0052BC	PR 	.StartEnvelope
+0052D8	PR 	.StartPanning__FP7Channel
+0052F4	PR 	.GetOldPeriod
+0053A4	PR 	.ReadNote
+005B84	PR 	.ClearDouble__FPrl
+005BA4	PR 	.ComputeReverb8__FPUcPUcll
+005C08	PR 	.ComputeReverb16__FPsPsll
+005C80	PR 	.NoteAnalyse
+00662C	PR 	.ApplySurround__FP12MADDriverRec
+0066F0	PR 	.GenerateSound
+006864	PR 	.DirectSave
+006A14	PR 	.SampleMIDI
+006A18	PR 	.NoteOff
+006A1C	PR 	.MADTickLoopFill8							file = "TickRemover.c"
+006A64	PR 	.MADTickLoop8
+006B80	PR 	.MADTickRemoverStart8
+006ED4	PR 	.Sampler8in8AddPolyStereo__FP7ChannelPcsP12MADDriverRec	file = "OutPut8.c"
+007054	PR 	.Sampler8in8AddPoly
+0071A4	PR 	.Sample8BufferAddPoly
+007240	PR 	.Play8PolyPhonic
+0072F0	PR 	.DebugStr__FPUc								file = "MainDriver.c"
+00736C	PR 	.MADNewPtr
+0073D0	PR 	.MADNewPtrClear
+007430	PR 	.MADCreateMicroDelay
+007458	PR 	.MADDisposeReverb
+0074A8	PR 	.MADCreateReverb
+0075C4	PR 	.MADDisposeDriverBuffer
+007618	PR 	.MADCreateDriverBuffer
+0076C0	PR 	.MADCreateTiming
+0076F0	PR 	.MADCreateDriver
+007C68	PR 	.MADDisposeDriver
+007CF0	PR 	.MADInitLibrary
+007E3C	PR 	.MADDisposeLibrary
+007E98	PR 	.MADAttachDriverToMusic
+007F90	PR 	.MADLoadMADFileCString
+008048	PR 	.MADMusicIdentifyCString
+008094	PR 	.MADLoadMusicFileCString
+00812C	PR 	.MADReadMAD
+008CD0	PR 	.MADResetInstrument
+008E24	PR 	.MADKillInstrument
+008F84	PR 	.MADKillCmd
+008FB4	PR 	.MADCheckSpeed
+0091B8	PR 	.MADPlayMusic
+0091F0	PR 	.MADStartDriver
+00925C	PR 	.MADStopDriver
+0092A4	PR 	.MADReset
+00936C	PR 	.MADDisposeMusic
+00953C	PR 	.GetMADCommand
+00958C	PR 	.MADDisposeVolumeTable
+0095CC	PR 	.MADCreateVolumeTable
+009660	PR 	.MADChangeTracks
+009700	PR 	.UpdateTracksNumber
+009770	PR 	.MADCreateVibrato
+0097E4	PR 	.DecompressPartitionMAD1
+009928	GL 	.__register_fragment						file = "*Linker-Generated*"
+009940	GL 	.find_thread
+009958	GL 	.memcpy
+009970	GL 	._call_init_routines_
+009988	GL 	.__nw__FUl
+0099A0	GL 	.__ct__12BApplicationFUl
+0099B8	GL 	.Stop__12BSoundPlayerFbb
+0099D0	GL 	.free
+0099E8	GL 	.unload_add_on
+009A00	GL 	.__dl__FPv
+009A18	GL 	.__dt__12BApplicationFv
+009A30	GL 	.__ct__9entry_refFv
+009A48	GL 	.FindRef__8BMessageCFPCcP9entry_ref
+009A60	GL 	.__ct__6BEntryFPC9entry_refb
+009A78	GL 	.__ct__5BPathFv
+009A90	GL 	.GetPath__6BEntryCFP5BPath
+009AA8	GL 	.Path__5BPathCFv
+009AC0	GL 	.strcpy
+009AD8	GL 	.fopen
+009AF0	GL 	.fclose
+009B08	GL 	.fread
+009B20	GL 	.calloc
+009B38	GL 	.malloc
+009B50	GL 	.fseek
+009B68	GL 	.debugger
+009B80	GL 	.strcmp
+009B98	GL 	.__dt__5BPathFv
+009BB0	GL 	.__dt__6BEntryFv
+009BC8	GL 	.__dt__9entry_refFv
+009BE0	GL 	.__ct__8app_infoFv
+009BF8	GL 	.GetAppInfo__12BApplicationCFP8app_info
+009C10	GL 	.GetParent__5BPathCFP5BPath
+009C28	GL 	.strlen
+009C40	GL 	.sprintf
+009C58	GL 	.__ct__10BDirectoryFPCc
+009C70	GL 	.load_add_on
+009C88	GL 	.get_image_symbol
+009CA0	GL 	.GetNextRef__10BDirectoryFP9entry_ref
+009CB8	GL 	.__dt__10BDirectoryFv
+009CD0	GL 	.__dt__8app_infoFv
+009CE8	GL 	.__ct__12BSoundPlayerFPC22media_raw_audio_formatPCcPFPvPvUlRC22media_raw_audio_format_vPFPvQ212BSoundPlayer25sound_player_notificatione_vPv
+009D00	GL 	.SetHasData__12BSoundPlayerFb
+009D18	GL 	.Start__12BSoundPlayerFv
+009D30	GL 	.__ct__7BWindowF5BRectPCc11window_typeUlUl
+009D48	GL 	.__dt__7BWindowFv
+009D60	GL 	.MessageReceived__7BWindowFP8BMessage
+009D78	GL 	.PostMessage__7BLooperFUl
+009D90	GL 	.OffsetTo__5BRectF6BPoint
+009DA8	GL 	.__ct__5BViewF5BRectPCcUlUl
+009DC0	GL 	.__dt__5BViewFv
+009DD8	GL 	.SetFontSize__5BViewFf
+009DF0	GL 	.MovePenTo__5BViewF6BPoint
+009E08	GL 	.DrawString__5BViewFPCcP16escapement_delta
+009E20	GL 	.AddChild__7BWindowFP5BViewP5BView
+009E38	GL 	._thread_do_exit_notification
+009E50	GL 	.exit
+009E68	GL 	.__unregister_fragment
+009E80	GL 	.__ptr_glue									file = "runtime.c"
+009E94	TI 	@7											file = "global_destructor_chain.c"
+009EA0	TI 	@2											file = "init_term_dyn.c"
+009EAC	TI 	@4
+009EB8	TI 	@15											file = "start_dyn.c"
+
+Data section, size = 1948 bytes (TOC anchor = 000000)
+000000	TC 	Stop__12BSoundPlayerFbb						file = "*Linker-Generated*"
+000004	TC 	SetHasData__12BSoundPlayerFb
+000008	TC 	__ct__12BSoundPlayerFPC22media_raw_audio_formatPCcPFPvPvUlRC22media_raw_audio_format_vPFPvQ212BSoundPlayer25sound_player_notificatione_vPv
+00000C	TC 	Start__12BSoundPlayerFv
+000010	TC 	__dt__8app_infoFv
+000014	TC 	__ct__10BDirectoryFPCc
+000018	TC 	__ct__8app_infoFv
+00001C	TC 	GetPath__6BEntryCFP5BPath
+000020	TC 	__ct__5BViewF5BRectPCcUlUl
+000024	TC 	be_app
+000028	TC 	GetNextRef__10BDirectoryFP9entry_ref
+00002C	TC 	__ct__12BApplicationFUl
+000030	TC 	SetFontSize__5BViewFf
+000034	TC 	MessageReceived__7BWindowFP8BMessage
+000038	TC 	MovePenTo__5BViewF6BPoint
+00003C	TC 	__dt__10BDirectoryFv
+000040	TC 	OffsetTo__5BRectF6BPoint
+000044	TC 	__ct__6BEntryFPC9entry_refb
+000048	TC 	PostMessage__7BLooperFUl
+00004C	TC 	AddChild__7BWindowFP5BViewP5BView
+000050	TC 	Path__5BPathCFv
+000054	TC 	DrawString__5BViewFPCcP16escapement_delta
+000058	TC 	__dt__7BWindowFv
+00005C	TC 	__ct__5BPathFv
+000060	TC 	GetAppInfo__12BApplicationCFP8app_info
+000064	TC 	__dt__5BPathFv
+000068	TC 	__ct__9entry_refFv
+00006C	TC 	__dt__9entry_refFv
+000070	TC 	__dt__5BViewFv
+000074	TC 	FindRef__8BMessageCFPCcP9entry_ref
+000078	TC 	__dt__12BApplicationFv
+00007C	TC 	__ct__7BWindowF5BRectPCc11window_typeUlUl
+000080	TC 	GetParent__5BPathCFP5BPath
+000084	TC 	__dt__6BEntryFv
+000088	TC 	sprintf
+00008C	TC 	fread
+000090	TC 	fseek
+000094	TC 	free
+000098	TC 	debugger
+00009C	TC 	exit
+0000A0	TC 	__dl__FPv
+0000A4	TC 	__register_fragment
+0000A8	TC 	memcpy
+0000AC	TC 	strcmp
+0000B0	TC 	strcpy
+0000B4	TC 	strlen
+0000B8	TC 	_call_init_routines_
+0000BC	TC 	unload_add_on
+0000C0	TC 	malloc
+0000C4	TC 	find_thread
+0000C8	TC 	fopen
+0000CC	TC 	calloc
+0000D0	TC 	__unregister_fragment
+0000D4	TC 	__nw__FUl
+0000D8	TC 	_thread_do_exit_notification
+0000DC	TC 	fclose
+0000E0	TC 	get_image_symbol
+0000E4	TC 	load_add_on
+0000E8	TC 	__vt__7MADView
+0000EC	TC 	__vt__9MADWindow
+0000F0	TC 	B_ORIGIN
+0000F4	TC 	__vt__5MyApp
+0000F8	TC 	__global_destructor_chain
+0000FC	TC 	__exception_table_end__
+000100	TC 	__exception_table_start__
+000104	TC 	__data_end__
+000108	TC 	__data_start__
+00010C	TC 	__code_end__
+000110	TC 	__code_start__
+000114	TC 	__main_thread_id
+000118	TC 	environ
+00011C	TC 	argv_save
+000120	TC 	@312										file = "Be-DriverClass.cpp"
+000124	TC 	@272
+000128	TC 	trackerStreamPlay__FPvPvUlRC22media_raw_audio_format
+00012C	TC 	@250
+000130	TC 	@248
+000134	TC 	@247
+000138	TC 	@246
+00013C	TC 	@317										file = "Be-PlugImport.c"
+000140	TC 	@307
+000144	TC 	@306
+000148	TC 	@284
+00014C	TC 	@283
+000150	TC 	@278										file = "mainMADSimple.cpp"
+000154	TC 	@262
+000158	TC 	@259
+00015C	TC 	@252
+000160	TC 	magic_template								file = "start_dyn.c"
+000164	TC 	default_environ
+000168	TC 	@470										file = "Effects.c"
+00016C	TC 	@429
+000170	TC 	@428
+000174	TC 	@427
+000178	TC 	@311
+00017C	TC 	@957										file = "MainDriver.c"
+000180	TC 	@899
+000184	TC 	@424
+000188	TC 	@385
+000190	TD 	@317										file = "Be-DriverClass.cpp"
+000198	TD 	@315
+0001A0	TD 	@314
+0001A8	TD 	@313
+0001B0	TD 	@252
+0001B8	TD 	@249
+0001BC	TD 	@228										file = "Be-FileUtils.c"
+0001C0	TD 	inMADDriver									file = "Be-PlugImport.c"
+0001C4	TD 	@277										file = "mainMADSimple.cpp"
+0001C8	TD 	@276
+0001CC	TD 	@273
+0001D0	TD 	@251
+0001D4	TD 	@250
+0001D8	TD 	@249
+0001DC	TD 	@248
+0001E0	TD 	@247
+0001E4	TD 	fragmentID									file = "init_term_dyn.c"
+0001E8	TD 	@434										file = "Interrupt.c"
+0001F0	DS 	trackerStreamPlay__FPvPvUlRC22media_raw_audio_format	file = "Be-DriverClass.cpp"
+0001F8	DS 	MADPlugAvailable__FPc						file = "Be-PlugImport.c"
+000200	DS 	__dt__9MADWindowFv							file = "mainMADSimple.cpp"
+000208	DS 	__dt__7MADViewFv
+000210	DS 	Draw__7MADViewF5BRect
+000218	DS 	AttachedToWindow__7MADViewFv
+000220	DS 	QuitRequested__9MADWindowFv
+000228	DS 	MessageReceived__9MADWindowFP8BMessage
+000230	DS 	RefsReceived__5MyAppFP8BMessage
+000238	DS 	__dt__5MyAppFv
+000240	DS 	_term_routine_								file = "init_term_dyn.c"
+000248	DS 	_init_routine_
+000250	DS 	__start										file = "start_dyn.c"
+000258	DS 	DirectSave									file = "Interrupt.c"
+000260	RW 	@246										file = "Be-DriverClass.cpp"
+000268	RW 	@247
+000283	RW 	@248
+000299	RW 	@250
+0002A3	RW 	@272
+0002BD	RW 	@312
+0002C9	RW 	@283										file = "Be-PlugImport.c"
+0002CE	RW 	@284
+0002D3	RW 	@306
+0002DC	RW 	@307
+0002E5	RW 	@317
+0002EB	RW 	@252										file = "mainMADSimple.cpp"
+0002F3	RW 	@259
+0002F8	RW 	@262
+000302	RW 	@278
+000324	RW 	__vt__7MADView
+000408	RW 	__vt__9MADWindow
+0004E0	RW 	__vt__5MyApp
+0005A4	RW 	magic_template								file = "start_dyn.c"
+0005AC	RW 	@11
+0005BC	RW 	default_environ
+0005C4	RW 	@311										file = "Effects.c"
+000600	RW 	@429
+000620	RW 	@428
+000660	RW 	@427
+0006A0	RW 	@470
+0006C8	RW 	@385										file = "MainDriver.c"
+0006F8	RW 	@424
+0006FD	RW 	@899
+000714	RW 	@957
+000794	RW 	__global_destructor_chain					file = "global_destructor_chain.c"
+
+Import container "libmedia.so"
+Current Version = 00000000, Old Implementation = 00000000
+000000	DS 	Stop__12BSoundPlayerFbb
+000001	DS 	SetHasData__12BSoundPlayerFb
+000002	DS 	__ct__12BSoundPlayerFPC22media_raw_audio_formatPCcPFPvPvUlRC22media_raw_audio_format_vPFPvQ212BSoundPlayer25sound_player_notificatione_vPv
+000003	DS 	Start__12BSoundPlayerFv
+
+Import container "libbe.so"
+Current Version = 00000000, Old Implementation = 00000000
+000004	DS 	SetHighColor__5BViewF9rgb_color
+000005	DS 	SetResizingMode__5BViewFUl
+000006	DS 	SetFont__5BViewFPC5BFontUl
+000007	DS 	__dt__8app_infoFv
+000008	DS 	__ct__10BDirectoryFPCc
+000009	DS 	__ct__8app_infoFv
+00000A	DS 	AppActivated__12BApplicationFb
+00000B	DS 	GetPath__6BEntryCFP5BPath
+00000C	DS 	__ct__5BViewF5BRectPCcUlUl
+00000D	DS 	ResolveSpecifier__5BViewFP8BMessagelP8BMessagelPCc
+00000E	RW 	be_app
+00000F	DS 	GetNextRef__10BDirectoryFP9entry_ref
+000010	DS 	Archive__12BApplicationCFP8BMessageb
+000011	DS 	Perform__7BWindowFUlPv
+000012	DS 	RemoveCommonFilter__7BLooperFP14BMessageFilter
+000013	DS 	MenusEnded__7BWindowFv
+000014	DS 	_ReservedWindow5__7BWindowFv
+000015	DS 	__ct__12BApplicationFUl
+000016	DS 	_ReservedHandler4__8BHandlerFv
+000017	DS 	_ReservedWindow4__7BWindowFv
+000018	DS 	_ReservedHandler1__8BHandlerFv
+000019	DS 	_ReservedWindow3__7BWindowFv
+00001A	DS 	QuitRequested__12BApplicationFv
+00001B	DS 	_ReservedWindow8__7BWindowFv
+00001C	DS 	_ReservedWindow2__7BWindowFv
+00001D	DS 	DrawAfterChildren__5BViewF5BRect
+00001E	DS 	_ReservedWindow7__7BWindowFv
+00001F	DS 	_ReservedWindow1__7BWindowFv
+000020	DS 	Perform__5BViewFUlPv
+000021	DS 	_ReservedWindow6__7BWindowFv
+000022	DS 	_ReservedHandler3__8BHandlerFv
+000023	DS 	WindowActivated__7BWindowFb
+000024	DS 	WorkspacesChanged__7BWindowFUlUl
+000025	DS 	_ReservedArchivable1__11BArchivableFv
+000026	DS 	Archive__5BViewCFP8BMessageb
+000027	DS 	task_looper__7BWindowFv
+000028	DS 	SetFontSize__5BViewFf
+000029	DS 	_ReservedHandler2__8BHandlerFv
+00002A	DS 	GetSupportedSuites__7BWindowFP8BMessage
+00002B	DS 	MessageReceived__7BWindowFP8BMessage
+00002C	DS 	DispatchMessage__7BWindowFP8BMessageP8BHandler
+00002D	DS 	SetPenSize__5BViewFf
+00002E	DS 	_ReservedApplication8__12BApplicationFv
+00002F	DS 	MovePenTo__5BViewF6BPoint
+000030	DS 	GetSupportedSuites__12BApplicationFP8BMessage
+000031	DS 	_ReservedApplication7__12BApplicationFv
+000032	DS 	_ReservedArchivable3__11BArchivableFv
+000033	DS 	MessageReceived__5BViewFP8BMessage
+000034	DS 	__dt__10BDirectoryFv
+000035	DS 	MenusBeginning__7BWindowFv
+000036	DS 	GetPreferredSize__5BViewFPfPf
+000037	DS 	DetachedFromWindow__5BViewFv
+000038	DS 	WindowActivated__5BViewFb
+000039	DS 	ReadyToRun__12BApplicationFv
+00003A	DS 	_ReservedApplication1__12BApplicationFv
+00003B	DS 	OffsetTo__5BRectF6BPoint
+00003C	DS 	ScreenChanged__7BWindowF5BRect11color_space
+00003D	DS 	ResolveSpecifier__7BWindowFP8BMessagelP8BMessagelPCc
+00003E	DS 	__ct__6BEntryFPC9entry_refb
+00003F	DS 	MouseDown__5BViewF6BPoint
+000040	DS 	PostMessage__7BLooperFUl
+000041	DS 	ResizeToPreferred__5BViewFv
+000042	DS 	FrameResized__7BWindowFff
+000043	DS 	MakeFocus__5BViewFb
+000044	DS 	AddChild__7BWindowFP5BViewP5BView
+000045	DS 	AddCommonFilter__7BLooperFP14BMessageFilter
+000046	DS 	Path__5BPathCFv
+000047	DS 	Minimize__7BWindowFb
+000048	DS 	DrawString__5BViewFPCcP16escapement_delta
+000049	DS 	KeyDown__5BViewFPCcl
+00004A	DS 	ScrollTo__5BViewF6BPoint
+00004B	DS 	SetCommonFilterList__7BLooperFP5BList
+00004C	DS 	Archive__7BWindowCFP8BMessageb
+00004D	DS 	_ReservedApplication4__12BApplicationFv
+00004E	DS 	__dt__7BWindowFv
+00004F	DS 	Hide__7BWindowFv
+000050	DS 	Pulse__12BApplicationFv
+000051	DS 	_ReservedApplication6__12BApplicationFv
+000052	DS 	Quit__7BWindowFv
+000053	DS 	Show__7BWindowFv
+000054	DS 	MouseUp__5BViewF6BPoint
+000055	DS 	_ReservedApplication2__12BApplicationFv
+000056	DS 	Pulse__5BViewFv
+000057	DS 	__ct__5BPathFv
+000058	DS 	_ReservedApplication5__12BApplicationFv
+000059	DS 	_ReservedApplication3__12BApplicationFv
+00005A	DS 	GetAppInfo__12BApplicationCFP8app_info
+00005B	DS 	__dt__5BPathFv
+00005C	DS 	Quit__12BApplicationFv
+00005D	DS 	__ct__9entry_refFv
+00005E	DS 	FrameMoved__7BWindowF6BPoint
+00005F	DS 	KeyUp__5BViewFPCcl
+000060	DS 	__dt__9entry_refFv
+000061	DS 	ConvertToMessage__7BLooperFPvl
+000062	DS 	__dt__5BViewFv
+000063	DS 	Hide__5BViewFv
+000064	DS 	SetFlags__5BViewFUl
+000065	DS 	Show__5BViewFv
+000066	DS 	SetDrawingMode__5BViewF12drawing_mode
+000067	DS 	_ReservedView2__5BViewFv
+000068	DS 	_ReservedView3__5BViewFv
+000069	DS 	DispatchMessage__12BApplicationFP8BMessageP8BHandler
+00006A	DS 	_ReservedLooper1__7BLooperFv
+00006B	DS 	FindRef__8BMessageCFPCcP9entry_ref
+00006C	DS 	_ReservedLooper4__7BLooperFv
+00006D	DS 	_ReservedLooper2__7BLooperFv
+00006E	DS 	Zoom__7BWindowF6BPointff
+00006F	DS 	_ReservedLooper5__7BLooperFv
+000070	DS 	ConstrainClippingRegion__5BViewFP7BRegion
+000071	DS 	_ReservedView8__5BViewFv
+000072	DS 	SetViewColor__5BViewF9rgb_color
+000073	DS 	ResolveSpecifier__12BApplicationFP8BMessagelP8BMessagelPCc
+000074	DS 	AllDetached__5BViewFv
+000075	DS 	_ReservedLooper6__7BLooperFv
+000076	DS 	_ReservedView5__5BViewFv
+000077	DS 	_ReservedView4__5BViewFv
+000078	DS 	_ReservedLooper3__7BLooperFv
+000079	DS 	_ReservedView6__5BViewFv
+00007A	DS 	_ReservedView7__5BViewFv
+00007B	DS 	Perform__12BApplicationFUlPv
+00007C	DS 	MouseMoved__5BViewF6BPointUlPC8BMessage
+00007D	DS 	FrameResized__5BViewFff
+00007E	DS 	_ReservedArchivable2__11BArchivableFv
+00007F	DS 	ScriptReceived__12BApplicationFP8BMessagelP8BMessagelPCc
+000080	DS 	TargetedByScrollView__5BViewFP11BScrollView
+000081	DS 	__dt__12BApplicationFv
+000082	RW 	B_ORIGIN
+000083	DS 	SetNextHandler__8BHandlerFP8BHandler
+000084	DS 	RemoveFilter__8BHandlerFP14BMessageFilter
+000085	DS 	ConvertToMessage__7BWindowFPvl
+000086	DS 	Run__12BApplicationFv
+000087	DS 	GetSupportedSuites__5BViewFP8BMessage
+000088	DS 	__ct__7BWindowF5BRectPCc11window_typeUlUl
+000089	DS 	task_looper__7BLooperFv
+00008A	DS 	ArgvReceived__12BApplicationFlPPc
+00008B	DS 	MessageReceived__12BApplicationFP8BMessage
+00008C	DS 	WorkspaceActivated__7BWindowFlb
+00008D	DS 	FrameMoved__5BViewF6BPoint
+00008E	DS 	GetParent__5BPathCFP5BPath
+00008F	DS 	AboutRequested__12BApplicationFv
+000090	DS 	SetFilterList__8BHandlerFP5BList
+000091	DS 	AddFilter__8BHandlerFP14BMessageFilter
+000092	DS 	SetLowColor__5BViewF9rgb_color
+000093	DS 	__dt__6BEntryFv
+000094	DS 	Run__7BWindowFv
+000095	DS 	AllAttached__5BViewFv
+
+Import container "libroot.so"
+Current Version = 00000000, Old Implementation = 00000000
+000096	DS 	sprintf
+000097	DS 	fread
+000098	DS 	fseek
+000099	DS 	free
+00009A	RW 	environ
+00009B	DS 	debugger
+00009C	DS 	exit
+00009D	DS 	__dl__FPv
+00009E	DS 	__register_fragment
+00009F	DS 	memcpy
+0000A0	DS 	strcmp
+0000A1	DS 	strcpy
+0000A2	DS 	strlen
+0000A3	DS 	_call_init_routines_
+0000A4	RW 	argv_save
+0000A5	DS 	unload_add_on
+0000A6	DS 	malloc
+0000A7	DS 	find_thread
+0000A8	DS 	fopen
+0000A9	DS 	calloc
+0000AA	DS 	__unregister_fragment
+0000AB	RW 	__main_thread_id
+0000AC	DS 	__nw__FUl
+0000AD	DS 	_thread_do_exit_notification
+0000AE	DS 	fclose
+0000AF	DS 	get_image_symbol
+0000B0	DS 	load_add_on

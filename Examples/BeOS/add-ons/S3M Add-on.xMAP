@@ -1,0 +1,139 @@
+File:    0	"/boot/apps/Metrowerks/PlayerPRO/Source/Be-FileUtils.c"
+File:    1	"/boot/apps/Metrowerks/PlayerPRO/Source/Import-Export/S3M.c"
+File:    3	"/src/exp/src/kit/glue/common/global_destructor_chain.c"
+File:    4	"/src/exp/src/kit/glue/ppc/runtime.c"
+File:    7	"/src/exp/src/kit/glue/common/init_term_dyn.c"
+File:   10	"libroot.so"
+
+Files that were not referenced:
+"start_dyn.c"
+"libbe.so"
+
+Code section, size = 11804 bytes
+000000	PR 	.__sinit									file = "*Linker-Generated*"
+00001C	PR 	.iFileCreate								file = "Be-FileUtils.c"
+000020	PR 	.iFileOpen
+000050	PR 	.iGetEOF
+0000BC	PR 	.iRead
+000100	PR 	.iWrite
+000144	PR 	.iClose
+000170	PR 	.INT32
+0001BC	PR 	.INT16
+000208	PR 	.MADstrcpy
+000238	PR 	.MADPlugNewPtr__FlP17MADDriverSettings		file = "S3M.c"
+000290	PR 	.MADPlugNewPtrClear__FlP17MADDriverSettings
+0002F0	PR 	.GetMADCommand
+000340	PR 	.ConvertS3MEffect__FUcUcPUcPUc
+000684	PR 	.ConvertMADEffect__FUcUcPUcPUc
+0008C8	PR 	.ConvertMad2S3M__FP8MADMusicP17MADDriverSettingsPl
+001864	PR 	.ConvertS3M2Mad__FPclP8MADMusicP17MADDriverSettings
+002644	PR 	.ExtractS3MInfo__FP9PPInfoRecPc
+00270C	PR 	.TestS3MFile__FPc
+002768	PR 	.FillPlug
+0027C0	PR 	.mainPLUG
+002AF8	PR 	.__destroy_global_chain						file = "global_destructor_chain.c"
+002B4C	PR 	.__RTOC										file = "init_term_dyn.c"
+002B54	PR 	._init_routine_
+002BA4	PR 	._term_routine_
+002BD4	GL 	.__register_fragment						file = "*Linker-Generated*"
+002BEC	GL 	.__unregister_fragment
+002C04	GL 	.malloc
+002C1C	GL 	.strncpy
+002C34	GL 	.__swap_int16
+002C4C	GL 	.__swap_int32
+002C64	GL 	.memcpy
+002C7C	GL 	.fopen
+002C94	GL 	.fwrite
+002CAC	GL 	.fclose
+002CC4	GL 	.free
+002CDC	GL 	.fseek
+002CF4	GL 	.ftell
+002D0C	GL 	.fread
+002D24	GL 	.calloc
+002D3C	GL 	.__ptr_glue									file = "runtime.c"
+002D50	TI 	@230										file = "Be-FileUtils.c"
+002D5C	TI 	@232
+002D68	TI 	@234
+002D74	TI 	@238
+002D80	TI 	@240
+002D8C	TI 	@244
+002D98	TI 	@246
+002DA4	TI 	@231										file = "S3M.c"
+002DB0	TI 	@236
+002DBC	TI 	@485
+002DC8	TI 	@691
+002DD4	TI 	@694
+002DE0	TI 	@705
+002DEC	TI 	@742
+002DF8	TI 	@7											file = "global_destructor_chain.c"
+002E04	TI 	@2											file = "init_term_dyn.c"
+002E10	TI 	@4
+
+Data section, size = 572 bytes (TOC anchor = 000000)
+000000	TC 	fwrite										file = "*Linker-Generated*"
+000004	TC 	__swap_int16
+000008	TC 	__swap_int32
+00000C	TC 	fread
+000010	TC 	fseek
+000014	TC 	free
+000018	TC 	ftell
+00001C	TC 	__register_fragment
+000020	TC 	memcpy
+000024	TC 	strncpy
+000028	TC 	malloc
+00002C	TC 	fopen
+000030	TC 	calloc
+000034	TC 	__unregister_fragment
+000038	TC 	fclose
+00003C	TC 	__global_destructor_chain
+000040	TC 	__exception_table_end__
+000044	TC 	__exception_table_start__
+000048	TC 	__data_end__
+00004C	TC 	__data_start__
+000050	TC 	__code_end__
+000054	TC 	__code_start__
+000058	TC 	@704										file = "S3M.c"
+00005C	TC 	@703
+000060	TC 	@693
+000064	TC 	@690
+000068	TC 	@486
+00006C	TC 	@484
+000070	TC 	@323
+000074	TC 	@322
+000078	TC 	@291
+00007C	TC 	@290
+000080	TD 	@229										file = "Be-FileUtils.c"
+000084	TD 	fragmentID									file = "init_term_dyn.c"
+000088	DS 	mainPLUG									file = "S3M.c"
+000090	DS 	FillPlug
+000098	DS 	_term_routine_								file = "init_term_dyn.c"
+0000A0	DS 	_init_routine_
+0000A8	RW 	@291										file = "S3M.c"
+0000E4	RW 	@290
+000134	RW 	@323
+000170	RW 	@322
+0001B0	RW 	@484
+0001B6	RW 	@486
+0001CE	RW 	@690
+00021B	RW 	@693
+000224	RW 	@703
+000229	RW 	@704
+000234	RW 	__global_destructor_chain					file = "global_destructor_chain.c"
+
+Import container "libroot.so"
+Current Version = 00000000, Old Implementation = 00000000
+000000	DS 	fwrite
+000001	DS 	__swap_int16
+000002	DS 	__swap_int32
+000003	DS 	fread
+000004	DS 	fseek
+000005	DS 	free
+000006	DS 	ftell
+000007	DS 	__register_fragment
+000008	DS 	memcpy
+000009	DS 	strncpy
+00000A	DS 	malloc
+00000B	DS 	fopen
+00000C	DS 	calloc
+00000D	DS 	__unregister_fragment
+00000E	DS 	fclose
