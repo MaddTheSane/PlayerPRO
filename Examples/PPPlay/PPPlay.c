@@ -35,7 +35,7 @@ winspool.lib
 
 void debugger( Ptr a)
 {
-	printf( a);
+	printf( "%s", a);
 //	getchar();
 }
 
@@ -77,7 +77,7 @@ int main( int argc, char *argv[])
 		init.TickRemover		= false;
 		init.oversampling		= 1;
 		
-		if( MADInitLibrary( "Plugins", &lib)) 
+		if( MADInitLibrary( "Plugins", &lib))
 		{
 			debugger( "ERR MADInitLibrary\n");
 			returntype = EXIT_FAILURE;
