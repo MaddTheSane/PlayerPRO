@@ -54,7 +54,7 @@ int main( int argc, char *argv[])
   	
   	if (argc < 2)
   	{
-		printf("Usage: PlayerPRO MyMusicFile\n");
+		printf("Usage: %s MyMusicFile\n", argv[0]);
 		return EXIT_FAILURE;
 	}
   	else
