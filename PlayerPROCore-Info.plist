@@ -184,7 +184,7 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>5.10.0</string>
+	<string>6.0.0</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
@@ -197,7 +197,20 @@
 				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMADKFile</string>
+			<string>Music Tracker</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.tracker</string>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PlayerPRO MADK Tracker</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madk</string>
 			<key>UTTypeTagSpecification</key>
@@ -223,7 +236,9 @@
 				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMADHFile</string>
+			<string>PlayerPRO MADH Tracker</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madh</string>
 			<key>UTTypeTagSpecification</key>
@@ -244,7 +259,9 @@
 				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMADFGFile</string>
+			<string>PlayerPRO MAD-FG Tracker</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madfg</string>
 			<key>UTTypeTagSpecification</key>
@@ -267,7 +284,9 @@
 				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMADIFile</string>
+			<string>PlayerPRO MADI Tracker</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madi</string>
 			<key>UTTypeTagSpecification</key>
@@ -285,11 +304,11 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.apple.package</string>
 				<string>com.apple.bundle</string>
+				<string>com.apple.package</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPImpExpBundle</string>
+			<string>PlayerPRO Import-Export Bundle</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.ppimpexp</string>
 			<key>UTTypeTagSpecification</key>
@@ -306,12 +325,12 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMODFile</string>
+			<string>ProTracker MOD File</string>
 			<key>UTTypeIconFile</key>
-			<string>MOD.icns</string>
+			<string>MOD</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.mod</string>
 			<key>UTTypeTagSpecification</key>
@@ -336,44 +355,12 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>MIDI File</string>
-			<key>UTTypeIdentifier</key>
-			<string>public.midi-audio</string>
-			<key>UTTypeReferenceURL</key>
-			<string>http://www.midi.org/about-midi/specinfo.shtml</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>com.apple.ostype</key>
-				<array>
-					<string>Midi</string>
-				</array>
-				<key>public.filename-extension</key>
-				<array>
-					<string>mid</string>
-					<string>kar</string>
-					<string>smf</string>
-					<string>midi</string>
-				</array>
-				<key>public.mime-type</key>
-				<array>
-					<string>audio/mid</string>
-					<string>audio/midi</string>
-					<string>audio/x-midi</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>CocoModX 669</string>
+			<string>669 Tracker</string>
 			<key>UTTypeIconFile</key>
-			<string>669.icns</string>
+			<string>669</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.669</string>
 			<key>UTTypeTagSpecification</key>
@@ -391,12 +378,12 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>CocoModX AMF</string>
+			<string>AMF Tracker</string>
 			<key>UTTypeIconFile</key>
-			<string>AMF.icns</string>
+			<string>AMF</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.amf</string>
 			<key>UTTypeTagSpecification</key>
@@ -414,12 +401,12 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPITFile</string>
+			<string>ImpulseTracker File</string>
 			<key>UTTypeIconFile</key>
-			<string>IT.icns</string>
+			<string>IT</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.it</string>
 			<key>UTTypeTagSpecification</key>
@@ -437,12 +424,12 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMTMFile</string>
+			<string>MTM Tracker</string>
 			<key>UTTypeIconFile</key>
-			<string>mtm.icns</string>
+			<string>MTM</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.mtm</string>
 			<key>UTTypeTagSpecification</key>
@@ -460,10 +447,10 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>CocoModX OKTA</string>
+			<string>OKTAmed Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>OKTA</string>
 			<key>UTTypeIdentifier</key>
@@ -484,12 +471,12 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPS3MFile</string>
+			<string>S3M Tracker</string>
 			<key>UTTypeIconFile</key>
-			<string>S3M.icns</string>
+			<string>S3M</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.s3m</string>
 			<key>UTTypeTagSpecification</key>
@@ -510,9 +497,9 @@
 				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPULTFile</string>
+			<string>ULT Tracker</string>
 			<key>UTTypeIconFile</key>
-			<string>ULT.icns</string>
+			<string>ULT</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.ult</string>
 			<key>UTTypeTagSpecification</key>
@@ -530,12 +517,12 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPXMFile</string>
+			<string>XM Tracker</string>
 			<key>UTTypeIconFile</key>
-			<string>XM.icns</string>
+			<string>XM</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.xm</string>
 			<key>UTTypeTagSpecification</key>

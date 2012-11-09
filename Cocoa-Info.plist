@@ -412,10 +412,11 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMADKFile</string>
+			<string>PlayerPRO MADK Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
@@ -443,7 +444,7 @@
 				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMADHFile</string>
+			<string>PlayerPRO MADH Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
@@ -466,7 +467,7 @@
 				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMADFGFile</string>
+			<string>PlayerPRO MAD-FG Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
@@ -491,7 +492,7 @@
 				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMADIFile</string>
+			<string>PlayerPRO MADI Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
@@ -537,7 +538,7 @@
 				<string>com.apple.package</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPImpExpBundle</string>
+			<string>PlayerPRO Import-Export Bundle</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.ppimpexp</string>
 			<key>UTTypeTagSpecification</key>
@@ -554,7 +555,7 @@
 				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMINsFile</string>
+			<string>PlayerPRO mINS file</string>
 			<key>UTTypeIconFile</key>
 			<string>INS</string>
 			<key>UTTypeIdentifier</key>
@@ -635,7 +636,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMODFile</string>
+			<string>ProTracker MOD File</string>
 			<key>UTTypeIconFile</key>
 			<string>MOD</string>
 			<key>UTTypeIdentifier</key>
@@ -665,7 +666,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PP669File</string>
+			<string>669 Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>669</string>
 			<key>UTTypeIdentifier</key>
@@ -688,7 +689,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPAMFFile</string>
+			<string>AMF Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>AMF</string>
 			<key>UTTypeIdentifier</key>
@@ -711,7 +712,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPITFile</string>
+			<string>ImpulseTracker File</string>
 			<key>UTTypeIconFile</key>
 			<string>IT</string>
 			<key>UTTypeIdentifier</key>
@@ -734,7 +735,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMTMFile</string>
+			<string>MTM Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>MTM</string>
 			<key>UTTypeIdentifier</key>
@@ -757,7 +758,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>OKTA Tracker</string>
+			<string>OKTAmed Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>OKTA</string>
 			<key>UTTypeIdentifier</key>
@@ -781,7 +782,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPS3MFile</string>
+			<string>S3M Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>S3M</string>
 			<key>UTTypeIdentifier</key>
@@ -804,7 +805,7 @@
 				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPULTFile</string>
+			<string>ULT Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>ULT</string>
 			<key>UTTypeIdentifier</key>
@@ -827,7 +828,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPXMFile</string>
+			<string>XM Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>XM</string>
 			<key>UTTypeIdentifier</key>
@@ -850,7 +851,7 @@
 				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPXIFile</string>
+			<string>XI Instrument</string>
 			<key>UTTypeIconFile</key>
 			<string>XI</string>
 			<key>UTTypeIdentifier</key>
@@ -873,7 +874,7 @@
 				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPPATFile</string>
+			<string>PAT instrument</string>
 			<key>UTTypeIconFile</key>
 			<string>INS</string>
 			<key>UTTypeIdentifier</key>
