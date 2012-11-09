@@ -24,6 +24,7 @@
 				<string>net.sourceforge.playerpro.okta</string>
 				<string>net.sourceforge.playerpro.it</string>
 				<string>net.sourceforge.playerpro.mtm</string>
+				<string>net.sourceforge.playerpro.amf</string>
 			</array>
 		</dict>
 	</array>
@@ -72,11 +73,11 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMADKFile</string>
+			<string>PlayerPRO MADK Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madk</string>
 			<key>UTTypeTagSpecification</key>
@@ -102,7 +103,7 @@
 				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMADHFile</string>
+			<string>PlayerPRO MADH Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madh</string>
 			<key>UTTypeTagSpecification</key>
@@ -123,7 +124,7 @@
 				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMADFGFile</string>
+			<string>PlayerPRO MAD-FG Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madfg</string>
 			<key>UTTypeTagSpecification</key>
@@ -146,7 +147,7 @@
 				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMADIFile</string>
+			<string>PlayerPRO MADI Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madi</string>
 			<key>UTTypeTagSpecification</key>
@@ -164,11 +165,13 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.apple.package</string>
 				<string>com.apple.bundle</string>
+				<string>com.apple.package</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPImpExpBundle</string>
+			<string>PlayerPRO Import-Export Bundle</string>
+			<key>UTTypeIconFile</key>
+			<string>Bundle</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.ppimpexp</string>
 			<key>UTTypeTagSpecification</key>
@@ -182,13 +185,10 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMODFile</string>
-			<key>UTTypeIconFile</key>
-			<string>MOD</string>
+			<string>ProTracker MOD File</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.mod</string>
 			<key>UTTypeTagSpecification</key>
@@ -213,13 +213,10 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PP669File</string>
-			<key>UTTypeIconFile</key>
-			<string>669</string>
+			<string>669 Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.669</string>
 			<key>UTTypeTagSpecification</key>
@@ -237,13 +234,10 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPAMFFile</string>
-			<key>UTTypeIconFile</key>
-			<string>AMF</string>
+			<string>AMF Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.amf</string>
 			<key>UTTypeTagSpecification</key>
@@ -261,13 +255,10 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPITFile</string>
-			<key>UTTypeIconFile</key>
-			<string>IT</string>
+			<string>ImpulseTracker File</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.it</string>
 			<key>UTTypeTagSpecification</key>
@@ -285,13 +276,10 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPMTMFile</string>
-			<key>UTTypeIconFile</key>
-			<string>MTM</string>
+			<string>MTM Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.mtm</string>
 			<key>UTTypeTagSpecification</key>
@@ -309,13 +297,10 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>OKTA Tracker</string>
-			<key>UTTypeIconFile</key>
-			<string>OKTA</string>
+			<string>OKTAmed Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.okta</string>
 			<key>UTTypeTagSpecification</key>
@@ -334,13 +319,10 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPS3MFile</string>
-			<key>UTTypeIconFile</key>
-			<string>S3M</string>
+			<string>S3M Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.s3m</string>
 			<key>UTTypeTagSpecification</key>
@@ -358,13 +340,10 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
-				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPULTFile</string>
-			<key>UTTypeIconFile</key>
-			<string>ULT</string>
+			<string>ULT Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.ult</string>
 			<key>UTTypeTagSpecification</key>
@@ -382,13 +361,10 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PPXMFile</string>
-			<key>UTTypeIconFile</key>
-			<string>XM</string>
+			<string>XM Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.xm</string>
 			<key>UTTypeTagSpecification</key>
