@@ -515,8 +515,7 @@ void MADGetBestDriver( MADDriverSettings	*Init)
 	Init->ReverbStrength	= 20;
 	Init->oversampling		= 1;
 	Init->driverMode		= CoreAudioDriver;
-#else
-#ifdef WIN32
+#elif defined(WIN32)
 	Init->outPutBits		= 16;
 	Init->outPutMode		= DeluxeStereoOutPut;
 	Init->outPutRate		= 44100;
@@ -528,8 +527,7 @@ void MADGetBestDriver( MADDriverSettings	*Init)
 	Init->ReverbSize		= 100;
 	Init->ReverbStrength	= 20;
 	Init->oversampling		= 1;
-	Init->driverMode		= DirectSound95NT;
-#endif
+	Init->driverMode		= Wave95NT;
 #endif
 }
 
