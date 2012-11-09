@@ -384,7 +384,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 		//	for( x = 0; x < 22; x++) curData->name[x] = theMOD->fid[ i].Filename[ x];
 			
 			
-			curData->data 		= malloc( curData->size);
+			curData->data 		= (Ptr)malloc( curData->size);
 			if( curData->data == NULL) return MADNeedMemory;
 				
 			memcpy( curData->data, theInstrument[i], curData->size);
@@ -397,7 +397,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
-	for( i=0; i < 64; i++)
+	for( i=0; i < 32; i++)
 	{
 		lastIns[ i] = 0;
 		lastNote[ i] = 0;

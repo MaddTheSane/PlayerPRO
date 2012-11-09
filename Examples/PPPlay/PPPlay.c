@@ -59,11 +59,12 @@ int main( int argc, char *argv[])
 	}
   	else
   	{
+		MADGetBestDriver(&init);
 		init.numChn				= 4;
 		init.outPutBits 		= 16;
 		init.outPutRate			= 44100;
 		init.outPutMode			= DeluxeStereoOutPut;
-		init.driverMode			= Wave95NT;
+		//init.driverMode			= Wave95NT;
 		
 		// You can also try: init.driverMode = Wave95NT;
 		
@@ -105,7 +106,7 @@ int main( int argc, char *argv[])
 					else
 					{
 						double fTd = 0;
-						MADAttachDriverToMusic( aDriver, aMusic, 0L);
+						MADAttachDriverToMusic( aDriver, aMusic, NULL);
 						
 						MADStartDriver( aDriver);
 						
