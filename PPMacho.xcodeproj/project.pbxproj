@@ -346,6 +346,8 @@
 		558688A910BF683C00FCC24D /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
 		55868A4510BFB44700FCC24D /* Midi_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */; };
 		55868A7C10BFB4B300FCC24D /* APPL.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DD10BB5368005208D1 /* APPL.c */; };
+		55879F8F164CA693009068D5 /* PPPlay.c in Sources */ = {isa = PBXBuildFile; fileRef = 55879F7D164CA63D009068D5 /* PPPlay.c */; };
+		55879F90164CA6A4009068D5 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		558A748313BE59F4000FD667 /* APPL_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0010BFB31500FCC24D /* APPL_Plug.rsrc.r */; };
 		559088E210E87E8800CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		559088E310E87ED100CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
@@ -1220,6 +1222,13 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
+		55879F91164CA6BB009068D5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
 		55A01A1A13BE63180049B720 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1265,6 +1274,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		55879F83164CA65D009068D5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		55CBFB3711EB780B0028C6BB /* Copy PlugIns */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1679,6 +1697,12 @@
 		55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = Midi_Plug.rsrc.r; path = "MADDriver.source/MADDriver.Source/Import-Export/Midi_Plug.rsrc.r"; sourceTree = SOURCE_ROOT; };
 		55868A6710BFB46100FCC24D /* APPL.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APPL.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		55868A6810BFB46100FCC24D /* APPL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "APPL-Info.plist"; path = "../../../APPL-Info.plist"; sourceTree = "<group>"; };
+		55879F7C164CA63D009068D5 /* MAD.MADK */ = {isa = PBXFileReference; lastKnownFileType = file; path = MAD.MADK; sourceTree = "<group>"; };
+		55879F7D164CA63D009068D5 /* PPPlay.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PPPlay.c; sourceTree = "<group>"; };
+		55879F7E164CA63D009068D5 /* PPPlay.vcxproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PPPlay.vcxproj; sourceTree = "<group>"; };
+		55879F7F164CA63D009068D5 /* PPPlay.vcxproj.filters */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PPPlay.vcxproj.filters; sourceTree = "<group>"; };
+		55879F80164CA63D009068D5 /* Read.TXT */ = {isa = PBXFileReference; lastKnownFileType = text; path = Read.TXT; sourceTree = "<group>"; };
+		55879F85164CA65D009068D5 /* PPPlay */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PPPlay; sourceTree = BUILT_PRODUCTS_DIR; };
 		558A15250FE749B400533D71 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
 		559087F410E8364F00CE70B8 /* Exemple.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Exemple.icns; sourceTree = "<group>"; };
 		5590896710E883AF00CE70B8 /* WAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WAV.h; sourceTree = "<group>"; };
@@ -2266,6 +2290,14 @@
 			files = (
 				55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */,
 				55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55879F82164CA65D009068D5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55879F90164CA6A4009068D5 /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3194,6 +3226,19 @@
 			name = "Main Driver Source";
 			sourceTree = "<group>";
 		};
+		55879F7B164CA63D009068D5 /* PPPlay */ = {
+			isa = PBXGroup;
+			children = (
+				55879F7C164CA63D009068D5 /* MAD.MADK */,
+				55879F7D164CA63D009068D5 /* PPPlay.c */,
+				55879F7E164CA63D009068D5 /* PPPlay.vcxproj */,
+				55879F7F164CA63D009068D5 /* PPPlay.vcxproj.filters */,
+				55879F80164CA63D009068D5 /* Read.TXT */,
+			);
+			name = PPPlay;
+			path = Examples/PPPlay;
+			sourceTree = "<group>";
+		};
 		55CBFC6E11EB7A7A0028C6BB /* Carbon Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -3281,6 +3326,7 @@
 			children = (
 				55CBFCD411EB7CA00028C6BB /* Classes */,
 				552C70C210CDAF8C00C0E0D4 /* Documentation */,
+				55879F7B164CA63D009068D5 /* PPPlay */,
 				5518105510C35A0100ADA9F4 /* Example */,
 				550BFF2110BA01BA004FC5D7 /* Game Example */,
 				88E0C3BD0C2F21DD00D6C081 /* Divers */,
@@ -3351,6 +3397,7 @@
 				55E898B710F17C2B004EB52B /* QuickTime.plugin */,
 				55CBF9A611EB77760028C6BB /* PlayerPRO Cocoa.app */,
 				551292D8163DD68500C2C639 /* PlayerPROKit.framework */,
+				55879F85164CA65D009068D5 /* PPPlay */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4470,6 +4517,24 @@
 			productReference = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */;
 			productType = "com.apple.product-type.bundle";
 		};
+		55879F84164CA65D009068D5 /* PPPlay */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55879F8C164CA65D009068D5 /* Build configuration list for PBXNativeTarget "PPPlay" */;
+			buildPhases = (
+				55879F81164CA65D009068D5 /* Sources */,
+				55879F82164CA65D009068D5 /* Frameworks */,
+				55879F83164CA65D009068D5 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55879F92164CA6BB009068D5 /* PBXTargetDependency */,
+			);
+			name = PPPlay;
+			productName = PPPlay;
+			productReference = 55879F85164CA65D009068D5 /* PPPlay */;
+			productType = "com.apple.product-type.tool";
+		};
 		55B797DB10D6E6C40073E379 /* Complex Fade */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55B797DE10D6E6C70073E379 /* Build configuration list for PBXNativeTarget "Complex Fade" */;
@@ -4629,6 +4694,7 @@
 				557DE90D10E08DB000177B4C /* Silence */,
 				557DE95010E08DB900177B4C /* Smooth */,
 				557DE99310E08DC100177B4C /* Tone Generator */,
+				55879F84164CA65D009068D5 /* PPPlay */,
 			);
 		};
 /* End PBXProject section */
@@ -5644,6 +5710,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55879F81164CA65D009068D5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55879F8F164CA693009068D5 /* PPPlay.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55B797D910D6E6C40073E379 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6210,6 +6284,11 @@
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 55868A5A10BFB46100FCC24D /* PBXContainerItemProxy */;
+		};
+		55879F92164CA6BB009068D5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 55879F91164CA6BB009068D5 /* PBXContainerItemProxy */;
 		};
 		55A01A1B13BE63180049B720 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7953,6 +8032,50 @@
 			};
 			name = Debug;
 		};
+		55879F8D164CA65D009068D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		55879F8E164CA65D009068D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
 		559344191002F01700F95B82 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -8550,6 +8673,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		55879F8C164CA65D009068D5 /* Build configuration list for PBXNativeTarget "PPPlay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55879F8D164CA65D009068D5 /* Release */,
+				55879F8E164CA65D009068D5 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		55B797D510D6E6A60073E379 /* Build configuration list for PBXAggregateTarget "Digital Plugs" */ = {
 			isa = XCConfigurationList;
