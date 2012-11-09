@@ -24,7 +24,7 @@ static OSStatus     CAAudioCallback (void                            *inRefCon,
 {
 	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
 	int j = 0;
-	if(theRec->MADPlay == false)
+	if(theRec->Reading == false)
 	{
 		switch( theRec->DriverSettings.outPutBits)
 		{

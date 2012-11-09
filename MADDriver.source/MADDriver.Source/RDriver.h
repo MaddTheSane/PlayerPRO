@@ -239,21 +239,21 @@ typedef struct MADMusic
 
 enum MADSoundOutput
 {
-	oldASCSoundDriver DEPRECATED_ATTRIBUTE = 1,	// MAC ONLY,	// NOT Available
-	oldAWACSoundDriver DEPRECATED_ATTRIBUTE,	// MAC ONLY		// NOT Available
-	MIDISoundDriver,							// MAC ONLY		// NOT Available
-	SoundManagerDriver DEPRECATED_ATTRIBUTE,	// MAC ONLY		// NOT Available
-	QK25SoundDriver DEPRECATED_ATTRIBUTE,		// MAC ONLY		// NOT Available
-	DigiDesignSoundDriver DEPRECATED_ATTRIBUTE,	// MAC ONLY		// NOT Available
-	BeOSSoundDriver DEPRECATED_ATTRIBUTE,		// BE ONLY when using with BeOS compatible systems ! - NOT FOR MAC
-	DirectSound95NT,							// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
-	Wave95NT,									// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
-	CoreAudioDriver,							// OSX ONLY Core Audio driver
-	ALSADriver,									// LINUX ONLY ALSA driver
-	OSSDriver,									// Open Sound System. Most Unices (NOT OS X) including Linux
-	ESDDriver,									// ESound Driver. available on most UNIX Systems
-	ASIOSoundManager DEPRECATED_ATTRIBUTE,		// ASIO Sound Driver by Steinberg //NOT Available
-	NoHardwareDriver = SHRT_MAX					// NO HARDWARE CONNECTION, will not produce any sound
+	oldASCSoundDriver = 1,				// MAC ONLY,	// NOT Available
+	oldAWACSoundDriver,					// MAC ONLY		// NOT Available
+	MIDISoundDriver,					// MAC ONLY		// Not yet Available
+	SoundManagerDriver,					// MAC ONLY		// NOT Available
+	QK25SoundDriver,					// MAC ONLY		// NOT Available
+	DigiDesignSoundDriver,				// MAC ONLY		// NOT Available
+	BeOSSoundDriver,					// BE ONLY when using with BeOS compatible systems ! - NOT FOR MAC
+	DirectSound95NT,					// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
+	Wave95NT,							// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
+	CoreAudioDriver,					// OSX ONLY Core Audio driver
+	ALSADriver,							// LINUX ONLY ALSA driver
+	OSSDriver,							// Open Sound System. Most Unices (NOT OS X) including Linux
+	ESDDriver,							// ESound Driver. available on most UNIX Systems
+	ASIOSoundManager,					// ASIO Sound Driver by Steinberg //NOT Available
+	NoHardwareDriver = SHRT_MAX			// NO HARDWARE CONNECTION, will not produce any sound
 
 };
 
@@ -272,7 +272,7 @@ typedef struct MADDriverSettings
 {
 	short					numChn;								// Active tracks from 2 to 32, automatically setup when a new music is loaded
 	short					outPutBits;							// 8 or 16 Bits TODO: 24 Bits
-	unsigned int			outPutRate;							// Fixed number, by example : rate44khz, rate22050hz, rate22khz, rate11khz, rate11025hz
+	unsigned int			outPutRate;							// Integer of audio sample rate
 	short					outPutMode;							// Now, only DeluxeStereoOutPut is available !
 	short					driverMode;							// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
 //	Boolean					antiAliasing;						// NOT USED anymore
@@ -308,12 +308,12 @@ typedef struct MADDriverSettings
 //	order: 'TEST':	check the AlienFile to see if your Plug really supports it.
 //	order: 'IMPL':	convert the AlienFile into a MADMusic. You have to allocate MADMusic.
 //	order: 'INFO':	Fill PPInfoRec structure.
-//	order: 'EXPT':	Convert the MADMusic into AlienFile. You have to create the AlienFile.
+//	order: 'EXPL':	Convert the MADMusic into AlienFile. You have to create the AlienFile.
 //					Don't delete the MADMusic Structure after conversion !!
 //
 //	An IMPORT plug have to support these orders: 'TEST', 'IMPL', 'INFO'
-//	An EXPORT plug have to support these orders: 'EXPT'
-// 	An IMPORT/EXPORT plug have to support these orders: 'TEST', 'IMPL', 'INFO', 'EXPT'
+//	An EXPORT plug have to support these orders: 'EXPL'
+// 	An IMPORT/EXPORT plug have to support these orders: 'TEST', 'IMPL', 'INFO', 'EXPL'
 //
 //
 /********************						***********************/
@@ -412,10 +412,9 @@ typedef struct MADLibrary
 	
 	PlugInfo 				*ThePlug;							// Pointers on plugs code & infos
 	short					TotalPlug;							// no of Plugs in pointer ThePlug
-
 } MADLibrary;
 
-#ifndef WIN32
+#ifndef __callback
 #define __callback
 #endif
 

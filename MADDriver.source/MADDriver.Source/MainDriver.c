@@ -46,7 +46,6 @@ void debugger( Ptr a) DEPRECATED_ATTRIBUTE;
 
 enum {
 	MADFileType = 1,
-	MADRsrcType DEPRECATED_ATTRIBUTE = 2,
 	MADPtrType = 3
 };
 
