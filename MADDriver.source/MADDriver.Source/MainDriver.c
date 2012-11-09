@@ -190,7 +190,7 @@ size_t MADGetMusicSize( MADMusic	*music)
 		{
 			sData	*curData = music->sample[ i * MAXSAMPLE + x];
 			
-			fileSize += sizeof( sData);
+			fileSize += sizeof( sData32);
 			fileSize += curData->size;
 		}
 	}
@@ -1837,7 +1837,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 				return MADNeedMemory;
 			}
 			
-			inOutCount = sizeof( sData);
+			inOutCount = sizeof( sData32);
 			
 			switch( InPutType)
 			{

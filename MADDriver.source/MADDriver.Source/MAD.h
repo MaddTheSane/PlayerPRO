@@ -172,6 +172,24 @@ typedef struct sData								// SAMPLE
 } sData;
 typedef sData SampleData;
 
+//64-bit safe sample structure
+//Used for file i/o
+typedef struct sData32								// SAMPLE
+{
+	SInt32 				size;				// Sample length
+	SInt32				loopBeg;			// LoopStart
+	SInt32				loopSize;			// LoopLength
+	Byte 				vol;				// Base volume
+	unsigned short		c2spd;				// c2spd
+	Byte				loopType;
+	Byte				amp;				// 8 or 16 bits
+	char				relNote;
+	char 				name[ 32];			// Sample name
+	Byte				stereo;				// Stereo
+	UInt32				data;				// Used only in memory, not in files
+} sData32;
+typedef sData32 SampleData32;
+
 enum
 {
 	eClassicLoop	= 0,
