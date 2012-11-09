@@ -434,7 +434,7 @@ OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 		if( insSizeSwap > 5) info->totalInstruments++;
 	}
 	
-	strcpy( info->formatDescription, "MAD-FG Plug");
+	strlcpy( info->formatDescription, "MAD-FG Plug", sizeof(info->formatDescription));
 
 	return noErr;
 }

@@ -10,6 +10,8 @@ user32.lib
 winspool.lib
 */
 
+#include <stdio.h>
+
 #ifdef __APPLE__
 #include <PlayerPROCore/PlayerPROCore.h>
 #else
@@ -61,7 +63,7 @@ int main( int argc, char *argv[])
 		init.outPutBits 		= 16;
 		init.outPutRate			= 44100;
 		init.outPutMode			= DeluxeStereoOutPut;
-		init.driverMode			= DirectSound95NT;
+		init.driverMode			= Wave95NT;
 		
 		// You can also try: init.driverMode = Wave95NT;
 		

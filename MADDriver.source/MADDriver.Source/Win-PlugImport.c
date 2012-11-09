@@ -105,13 +105,13 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	iRead( sizeof( MADSpec), (Ptr) theMAD, fileID);
 	iClose( fileID);
 	
-	strcpy( InfoRec->internalFileName, theMAD->name);
+	strcpy_s( InfoRec->internalFileName, sizeof(theMAD->name), theMAD->name);
 	
 	InfoRec->totalPatterns = theMAD->numPat;
 	InfoRec->partitionLength = theMAD->numPointers;
 	InfoRec->totalTracks = theMAD->numChn;
 	InfoRec->signature = 'MADK';
-	strcpy( InfoRec->formatDescription, "MADK");
+	strcpy_s( InfoRec->formatDescription,sizeof(InfoRec->formatDescription), "MADK");
 	InfoRec->totalInstruments = theMAD->numInstru;
 	InfoRec->fileSize = fileSize;
 	
@@ -181,7 +181,7 @@ OSErr	PPIdentifyFile( MADLibrary* inMADDriver, char	*type, Ptr AlienFile)
 	PPInfoRec		InfoRec;
 	OSErr				iErr;
 	
-	strcpy( type, "!!!!");
+	strcpy_s( type, 5, "!!!!");
 	
 	// Check if we have access to this file
 	refNum = iFileOpen( AlienFile);
@@ -192,7 +192,7 @@ OSErr	PPIdentifyFile( MADLibrary* inMADDriver, char	*type, Ptr AlienFile)
 	iErr = CheckMADFile( AlienFile);
 	if( iErr == noErr)
 	{
-		strcpy( type, "MADK");
+		strcpy_s( type, 5, "MADK");
 		return noErr;
 	}
 	
@@ -200,13 +200,13 @@ OSErr	PPIdentifyFile( MADLibrary* inMADDriver, char	*type, Ptr AlienFile)
 	{
 		if( CallImportPlug( inMADDriver, i, 'TEST', AlienFile, NULL, &InfoRec) == noErr)
 		{
-			strcpy( type, inMADDriver->ThePlug[ i].type);
+			strcpy_s( type, 5, inMADDriver->ThePlug[ i].type);
 			
 			return noErr;
 		}
 	}
 	
-	strcpy( type, "!!!!");
+	strcpy_s( type, 5, "!!!!");
 	
 	return MADCannotFindPlug;
 }
@@ -231,7 +231,7 @@ Boolean LoadPlugLib( Ptr name, PlugInfo* plug)
 	PLUGFILLDLLFUNC		fpFuncAddress;
 	OSErr							err;
 	
-	strcpy( plug->file, name);
+	strcpy_s( plug->file, sizeof(plug->file), name);
 	
 	plug->hLibrary = LoadLibraryA( name);
 	if( !plug->hLibrary) return false;
@@ -255,6 +255,9 @@ Boolean LoadPlugLib( Ptr name, PlugInfo* plug)
 	return true;
 }
 
+//FIXME: 200 seems rather small to me...
+#define MAXFOLDLEN 200
+
 void MInitImportPlug( MADLibrary* inMADDriver, char *PlugsFolderName)
 {
 	///////////
@@ -265,21 +268,21 @@ void MInitImportPlug( MADLibrary* inMADDriver, char *PlugsFolderName)
 		HANDLE				hFind;
 		WIN32_FIND_DATAA	fd;
 		BOOL				bRet = TRUE;
-		char				FindFolder[ 200], inPlugsFolderName[ 200];
+		char				FindFolder[ MAXFOLDLEN], inPlugsFolderName[ MAXFOLDLEN];
 		
 		if( PlugsFolderName)
 		{
-			strcpy_s( inPlugsFolderName, 200, PlugsFolderName);
-			strcat_s( inPlugsFolderName, 200, "/");
+			strcpy_s( inPlugsFolderName, MAXFOLDLEN, PlugsFolderName);
+			strcat_s( inPlugsFolderName, MAXFOLDLEN, "/");
 			
-			strcpy_s( FindFolder, 200, inPlugsFolderName);
+			strcpy_s( FindFolder, MAXFOLDLEN, inPlugsFolderName);
 		}
 		else
 		{
-			strcpy_s( inPlugsFolderName, 200, "/");
-			strcpy_s( FindFolder, 200, inPlugsFolderName);
+			strcpy_s( inPlugsFolderName, MAXFOLDLEN, "/");
+			strcpy_s( FindFolder, MAXFOLDLEN, inPlugsFolderName);
 		}
-		strcat_s( FindFolder, 200, "*.PLG");
+		strcat_s( FindFolder, MAXFOLDLEN, "*.PLG");
 		
 		hFind = FindFirstFileA( FindFolder, &fd);
 		
@@ -291,10 +294,10 @@ void MInitImportPlug( MADLibrary* inMADDriver, char *PlugsFolderName)
 			{
 				if( inMADDriver->TotalPlug < MAXPLUG)
 				{
-					char myCompleteFilename[ 200];
+					char myCompleteFilename[ MAXFOLDLEN];
 					
-					strcpy_s( myCompleteFilename, 200, inPlugsFolderName);
-					strcat_s( myCompleteFilename, 200, fd.cFileName);
+					strcpy_s( myCompleteFilename, MAXFOLDLEN, inPlugsFolderName);
+					strcat_s( myCompleteFilename, MAXFOLDLEN, fd.cFileName);
 					
 					if( LoadPlugLib( myCompleteFilename, &inMADDriver->ThePlug[ inMADDriver->TotalPlug])) inMADDriver->TotalPlug++;
 				}
