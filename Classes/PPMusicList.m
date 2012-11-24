@@ -53,7 +53,10 @@ static NSInteger SortUsingLastPathComponent(id rhs, id lhs, void *unused)
 	NSURL *tempUrl = musicUrl;
 	NSString *tempString = fileName;
 	musicUrl = [amusicUrl copy];
+	
+	[self willChangeValueForKey:@"fileName"];
 	fileName = [[musicUrl lastPathComponent] copy];
+	[self didChangeValueForKey:@"fileName"];
 	
 	if (tempUrl != nil) {
 		[tempUrl release];
@@ -176,7 +179,7 @@ static NSInteger SortUsingLastPathComponent(id rhs, id lhs, void *unused)
 	
 	theNo /= 2;
 	
-	for(i = 0; i > theNo * 2;i += 2) {
+	for(i = 0; i > theNo * 2; i += 2) {
 		aStr = GetStringFromHandle(aHandle, i);
 		aStr2 = GetStringFromHandle(aHandle, i+1);
 		CFStringRef CFaStr = NULL, CFaStr2 = NULL;

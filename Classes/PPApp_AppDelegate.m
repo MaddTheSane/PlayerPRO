@@ -172,8 +172,10 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	
+	[self willChangeValueForKey:@"musicList"];
 	musicList = [[PPMusicList alloc] init];
 	[musicList loadMusicListFromPreferences];
+	[self didChangeValueForKey:@"musicList"];
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	[defaultCenter addObserver:self selector:@selector(preferencesDidChange:) name:PPListPreferencesDidChange object:nil];
 	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
