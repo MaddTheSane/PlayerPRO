@@ -38,7 +38,7 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 }
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*msg_buf);
+#define Tdecode16(msg_buf) EndianU16_LtoN(*msg_buf)
 #else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
@@ -49,7 +49,7 @@ static inline UInt16 Tdecode16( void *msg_buf)
 #endif
 
 #ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*msg_buf);
+#define Tdecode32(msg_buf)  EndianU32_LtoN(*msg_buf)
 #else
 static inline UInt32 Tdecode32( void *msg_buf)
 {

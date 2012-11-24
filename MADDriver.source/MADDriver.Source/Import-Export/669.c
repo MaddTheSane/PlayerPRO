@@ -25,7 +25,7 @@
 #include "669.h"
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*msg_buf);
+#define Tdecode16(msg_buf) EndianU16_LtoN(*msg_buf)
 #else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
