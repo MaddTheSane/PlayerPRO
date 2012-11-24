@@ -24,7 +24,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	UInt16 count = *(UInt16*)data;
 	PPBE16(&count);
 	
-	// First 2 bytes are the count of string that this resource has.
+	// First 2 bytes are the count of strings that this resource has.
 	if (count < aId)
 		return NULL;
 	// skip count
@@ -38,10 +38,10 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 }
 
 /*
-static NSInteger SortUsingLastPathComponent(id rhs, id lhs, void *unused)
+static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 {
-	NSString *rhsString = [rhs lastPathComponent];
-	NSString *lhsString = [lhs lastPathComponent];
+	NSString *rhsString = [rhs fileName];
+	NSString *lhsString = [lhs fileName];
 	return [rhsString compare:lhsString];
 }
  */
@@ -72,8 +72,12 @@ static NSInteger SortUsingLastPathComponent(id rhs, id lhs, void *unused)
 - (id)initWithURL:(NSURL *)aURL
 {
 	if (self = [super init]) {
+		[self willChangeValueForKey:@"fileName"];
+		[self willChangeValueForKey:@"musicUrl"];
 		musicUrl = [aURL copy];
 		fileName = [[musicUrl lastPathComponent] copy];
+		[self didChangeValueForKey:@"fileName"];
+		[self didChangeValueForKey:@"musicUrl"];
 	}
 	return self;
 }
@@ -91,9 +95,7 @@ static NSInteger SortUsingLastPathComponent(id rhs, id lhs, void *unused)
 	return [NSString stringWithFormat:@"%@ - %@", musicUrl, fileName];
 }
 
-
 @end
-
 
 @implementation PPMusicList
 
@@ -112,18 +114,22 @@ static NSInteger SortUsingLastPathComponent(id rhs, id lhs, void *unused)
 
 - (void)sortMusicList
 {
-	//[musicList sortUsingFunction:SortUsingLastPathComponent context:NULL];
+	//[musicList sortUsingFunction:SortUsingFileName context:NULL];
+	[self willChangeValueForKey:@"musicList"];
 	[musicList sortUsingComparator:^(id rhs, id lhs) {
 		NSString *rhsString = [rhs fileName];
 		NSString *lhsString = [lhs fileName];
 		return [rhsString compare:lhsString];
 	}];
+	[self didChangeValueForKey:@"musicList"];
 }
 
 - (void)loadMusicList:(NSMutableArray *)newArray
 {
 	NSMutableArray *oldList = musicList;
+	[self willChangeValueForKey:@"musicList"];
 	musicList = [newArray retain];
+	[self didChangeValueForKey:@"musicList"];
 	[oldList release];
 }
 
@@ -151,7 +157,7 @@ static NSInteger SortUsingLastPathComponent(id rhs, id lhs, void *unused)
 	 
 }
 
--(OSErr)loadOldMusicListAtURL:(NSURL *)toOpen {
+- (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen {
 	NSMutableArray *newArray = [NSMutableArray array];
 	ResFileRefNum refNum;
 	Handle aHandle;
@@ -179,7 +185,7 @@ static NSInteger SortUsingLastPathComponent(id rhs, id lhs, void *unused)
 	
 	theNo /= 2;
 	
-	for(i = 0; i > theNo * 2; i += 2) {
+	for(i = 0; i < theNo * 2; i += 2) {
 		aStr = GetStringFromHandle(aHandle, i);
 		aStr2 = GetStringFromHandle(aHandle, i+1);
 		CFStringRef CFaStr = NULL, CFaStr2 = NULL;
@@ -244,13 +250,21 @@ static NSInteger SortUsingLastPathComponent(id rhs, id lhs, void *unused)
 - (void)addMusicURL:(NSURL *)musicToLoad
 {
 	PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:musicToLoad];
+	//[self willChangeValueForKey:@"musicList"];
+	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndex:[musicList count]];
+	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:@"musicList"];
 	[musicList addObject:obj];
+	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:@"musicList"];
+	//[self didChangeValueForKey:@"musicList"];
 	[obj release];
 }
 
 - (void)removeObjectAtIndex:(NSUInteger)object
 {
+	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndex:object];
+	[self willChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
 	[musicList removeObjectAtIndex:object];
+	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
 }
 
 - (NSURL*)URLAtIndex:(NSUInteger)index
@@ -306,7 +320,10 @@ static NSInteger SortUsingLastPathComponent(id rhs, id lhs, void *unused)
 
 - (void)removeObjectInMusicListAtIndex:(NSUInteger)object
 {
+	//NSIndexSet *theIndex = [NSIndexSet indexSetWithIndex:object];
+	//[self willChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
 	[musicList removeObjectAtIndex:object];
+	//[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
 }
 
 - (void)replaceObjectInMusicListAtIndex:(NSUInteger)index withObject:(id)anObject

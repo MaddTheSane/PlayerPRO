@@ -72,7 +72,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 }
 
 + (void)initialize {
-	PPMusicList *tempList = [[[ PPMusicList alloc] init] autorelease];
+	PPMusicList *tempList = [[[PPMusicList alloc] init] autorelease];
 	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
 															 [NSNumber numberWithBool:YES], PPRememberMusicList,
@@ -141,11 +141,14 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	}
 
 	char fileType[5];
-	MADMusicIdentifyCFURL(MADLib, fileType, (CFURLRef)musicToLoad);
-	MADLoadMusicCFURLFile(MADLib, &Music, fileType, (CFURLRef)musicToLoad);
+	if(MADMusicIdentifyCFURL(MADLib, fileType, (CFURLRef)musicToLoad) != noErr)
+		return NO;
+	if(MADLoadMusicCFURLFile(MADLib, &Music, fileType, (CFURLRef)musicToLoad)!= noErr)
+		return NO;
 	
 	MADAttachDriverToMusic(MADDriver, Music, NULL);
 	MADPlayMusic(MADDriver);
+	return YES;
 }
 
 - (IBAction)showPreferences:(id)sender {
@@ -233,7 +236,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 }
 
 - (IBAction)sortMusicList:(id)sender {
+	[self willChangeValueForKey:@"musicList"];
 	[musicList sortMusicList];
+	[self didChangeValueForKey:@"musicList"];
 }
 
 - (IBAction)playSelectedMusic:(id)sender {
@@ -335,19 +340,30 @@ enum PPMusicToolbarTypes {
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
 {
 	NSError *err = nil;
-	NSString *utiFile = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
+	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
+	NSString *utiFile = [sharedWorkspace typeOfFile:filename error:&err];
 	if (err) {
 		NSRunAlertPanel(@"Error opening file", [NSString stringWithFormat:@"Unable to open %@: %@", [filename lastPathComponent], [err localizedFailureReason]], nil, nil, nil);
 		return NO;
 	}
 	
-	if([[NSWorkspace sharedWorkspace] type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"])
+	if([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"])
 	{
+		[self willChangeValueForKey:@"musicList"];
 		[musicList addMusicURL:[NSURL fileURLWithPath:filename]];
+		[self didChangeValueForKey:@"musicList"];
 		return YES;
-	} else if ([[NSWorkspace sharedWorkspace] type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"] || [[NSWorkspace sharedWorkspace] type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"])
+	} else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"])
 	{
+		[self willChangeValueForKey:@"musicList"];
 		[musicList loadMusicListAtURL:[NSURL fileURLWithPath:filename]];
+		[self didChangeValueForKey:@"musicList"];
+		return YES;
+	} else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"])
+	{
+		[self willChangeValueForKey:@"musicList"];
+		[musicList loadOldMusicListAtURL:[NSURL fileURLWithPath:filename]];
+		[self didChangeValueForKey:@"musicList"];
 		return YES;
 	}
 	return NO;

@@ -30,6 +30,7 @@
 - (void)saveMusicListToPreferences;
 - (void)saveMusicListToURL:(NSURL *)toSave;
 - (void)loadMusicListAtURL:(NSURL *)fromURL;
+- (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen;
 
 - (NSURL*)URLAtIndex:(NSUInteger)index;
 - (void)loadMusicListAtURL:(NSURL *)fromURL;
