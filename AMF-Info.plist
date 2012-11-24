@@ -23,11 +23,11 @@
 	<key>MADPlugMenuName</key>
 	<string>AMF</string>
 	<key>MADPlugMode</key>
-	<string>EXIM</string>
+	<string>IMPL</string>
 	<key>MADCanImport</key>
 	<true/>
 	<key>MADCanExport</key>
-	<true/>
+	<false/>
 	<key>MADPlugType</key>
 	<string>AMF </string>
 	<key>MADPlugUTITypes</key>
