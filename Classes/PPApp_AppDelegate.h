@@ -40,6 +40,7 @@
     
 	
 	PPMusicList		*musicList;
+	IBOutlet NSArrayController *musicListController;
 	PPPreferences	*preferences;
 }
 - (IBAction)showMusicList:(id)sender;

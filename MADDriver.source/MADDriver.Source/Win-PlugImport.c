@@ -256,7 +256,11 @@ Boolean LoadPlugLib( Ptr name, PlugInfo* plug)
 }
 
 //FIXME: 200 seems rather small to me...
-#define MAXFOLDLEN 200
+//#define MAXFOLDLEN 200
+//PATH_MAX on Windows is also small...
+//#define MAXFOLDLEN MAX_PATH
+#define MAXFOLDLEN (MAX_PATH * 2)
+//#define MAXFOLDLEN 255
 
 void MInitImportPlug( MADLibrary* inMADDriver, char *PlugsFolderName)
 {

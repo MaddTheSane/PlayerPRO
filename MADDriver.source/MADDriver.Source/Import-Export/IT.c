@@ -82,7 +82,7 @@ static inline unsigned short ReadUS( Ptr *samplePtr)
 
 /* unpack a 8bit IT packed sample */
 
-static SInt32 read_itcompr8(ITPACK* status,Ptr *reader,Byte *sl_buffer,unsigned short count,unsigned short* incnt)
+static SInt32 read_itcompr8(ITPACK* status, Ptr *reader, Byte *sl_buffer, unsigned short count, unsigned short* incnt)
 {
 	Byte 				*dest=sl_buffer,*end=sl_buffer+count;
 	unsigned short 		x,y,needbits,havebits,new_count=0;
@@ -238,7 +238,7 @@ static SInt32 read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,unsign
 
 static OSErr DecompressSample( short bits, Ptr reader, size_t length, Ptr destPtr)		// sloader.c
 {
-	int				stodo,t,u;
+	int				stodo/*, t, u*/;
 	int				result,c_block=0;	/* compression bytes until next block */
 	ITPACK			status;
 	unsigned short	incnt;
@@ -485,7 +485,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	Ptr					theInstrument[ 256];
 	Byte				tempChar, *theITCopy;
 	short				maxTrack;
-	short				ITperiod[ 12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
+	//short				ITperiod[ 12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
 	Boolean				useLinear;
 	
 	/**** Variables pour le MAD ****/
@@ -1381,8 +1381,6 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 
 static OSErr TestITFile( Ptr AlienFile)
 {
-	//TODO: differentiate between DMF and IT files
-	
 	ITForm	*myIT = ( ITForm*) AlienFile;
 	
 	if( ITcompMem( (Ptr) &myIT->ID, "IMPM", 4)) return noErr;

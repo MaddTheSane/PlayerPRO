@@ -264,7 +264,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	
 	for( i = 0; i < maxInstru ; i++)
 	{
-		theInstrument[ i] = (Ptr) ((size_t) theMOD + OffSetToSample);
+		theInstrument[ i] = (Ptr) ((uintptr_t) theMOD + OffSetToSample);
 		
 		PPBE16( &theMOD->fid[ i].numWords);
 		PPBE16( &theMOD->fid[ i].loopWord);
@@ -387,7 +387,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 		//	for( x = 0; x < 22; x++) curData->name[x] = theMOD->fid[ i].Filename[ x];
 			
 			
-			curData->data 		= malloc( curData->size);
+			curData->data 		= (Ptr)malloc( curData->size);
 			if( curData->data == NULL) return MADNeedMemory;
 				
 			memmove( curData->data, theInstrument[i], curData->size);
@@ -638,15 +638,15 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 			theMOD->fid[i].fineTune		= temp;
 			
 			theMOD->fid[i].volume 		= curData->vol;
-			theMOD->fid[i].loopWord 	= curData->loopBeg / 2L;
-			theMOD->fid[i].loopWords 	= curData->loopSize / 2L;
+			theMOD->fid[i].loopWord 	= curData->loopBeg / 2;
+			theMOD->fid[i].loopWords 	= curData->loopSize / 2;
 			
 			if( curData->c2spd > 8757 || curData->c2spd < 7895)
 			{
 				theMOD->fid[i].fineTune = 0;
-				theMOD->fid[i].loopWord = ((curData->loopBeg / 2L) * 8363L) / curData->c2spd;
-				theMOD->fid[i].loopWords = ((curData->loopSize / 2L) * 8363L) / curData->c2spd;
-				theMOD->fid[i].numWords = (theMOD->fid[i].numWords * 8363L) / curData->c2spd;
+				theMOD->fid[i].loopWord = ((curData->loopBeg / 2) * 8363) / curData->c2spd;
+				theMOD->fid[i].loopWords = ((curData->loopSize / 2) * 8363) / curData->c2spd;
+				theMOD->fid[i].numWords = (theMOD->fid[i].numWords * 8363) / curData->c2spd;
 			}
 		}
 		else
@@ -899,17 +899,29 @@ static OSErr TestMODFile( Ptr AlienFile, long EOFo)
 	else return noErr;
 }
 
-#ifndef _MAC_H
-
-extern EXP OSErr FillPlug( PlugInfo *p);
+//These must be exported so that C can see them.
+//If your plug-in uses C++, export them using extern "C"
+#ifdef __cplusplus
+extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+#else
 extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+#endif
+#ifndef _MAC_H
+#ifdef __cplusplus
+extern "C" EXP OSErr FillPlug( PlugInfo *p);
+#else
+extern EXP OSErr FillPlug( PlugInfo *p);
+#endif
 
-EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC, BeOS, and UNIX
 {
+	//If your architecture supports it, you can get this metadata from the plug-in
+	//You can also localize it if you feel so inclined
 	strlcpy( p->type, 		"MOD", sizeof(p->type));		// NEVER MORE THAN 4 CHARS !!!!!!!!
 	strlcpy( p->MenuName, 	"MOD Files", sizeof(p->MenuName));
 	p->mode	=	'EXIM';
-	//2.0.0
+	//Version 2.0.0
+	//Increment the version when you make big changes so the newer one will be loaded
 	p->version = 2 << 16 | 0 << 8 | 0;
 
 	return noErr;
@@ -919,6 +931,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /*****************/
 /* MAIN FUNCTION */
 /*****************/
+//Every PlayerPRO import/export plug-in must have this function!
 extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;

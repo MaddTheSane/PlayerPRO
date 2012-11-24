@@ -241,7 +241,7 @@ enum MADSoundOutput
 {
 	oldASCSoundDriver = 1,				// MAC ONLY,	// NOT Available
 	oldAWACSoundDriver,					// MAC ONLY		// NOT Available
-	MIDISoundDriver,					// MAC ONLY		// Not yet Available
+	MIDISoundDriver,					// Not yet available
 	SoundManagerDriver,					// MAC ONLY		// NOT Available
 	QK25SoundDriver,					// MAC ONLY		// NOT Available
 	DigiDesignSoundDriver,				// MAC ONLY		// NOT Available
@@ -357,7 +357,9 @@ typedef struct PlugInfo
 	MADPLUGFUNC	IOPlug;											// Plug CODE
 	CFStringRef	MenuName;										// Plug name
 	CFStringRef	AuthorString;									// Plug author
+#if !TARGET_OS_IPHONE
 	CFBundleRef	file;											// Location of plug file
+#endif
 	char		type[ 5];										// OSType of file support.
 	CFArrayRef	UTItypes;										// CFStrings of supported UTIs
 	OSType		mode;											// Mode support : Import +/ Export
@@ -374,14 +376,31 @@ typedef struct PlugInfo
 	PLUGDLLFUNC		IOPlug;										// Plug CODE
 	char			MenuName[ 65];								// Plug name
 	char			AuthorString[ 65];							// Plug author
-	char			file[ 255];									// Location of plug file
+	char			file[ MAX_PATH * 2];						// Location of plug file
 	char			type[ 5];									// OSType of file support
 	OSType			mode;										// Mode support : Import +/ Export
 	int				version;									// Plug-in version
 } PlugInfo;
 #endif
 
-#if (defined(__UNIX__) && !defined (_MAC_H))
+#ifdef _BE_H
+
+typedef	OSErr (*MADPlug)( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+
+typedef struct PlugInfo
+{
+	image_id		hLibrary;
+	MADPlug			IOPlug;										// Plug CODE
+	char			MenuName[ 65];								// Plug name
+	char			AuthorString[ 65];							// Plug author
+	char			file[1024];									// Location of plug file
+	char			type[ 5];									// OSType of file support
+	OSType			mode;										// Mode support : Import +/ Export
+	int				version;									// Plug-in version
+} PlugInfo;
+#endif
+
+#if (defined(__UNIX__) && !(defined (_MAC_H) || defined (_BE_H)))
 #include <dlfcn.h>
 #include <sys/param.h>  //For PATH_MAX
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
@@ -480,7 +499,7 @@ typedef struct __VSTEffect
 }	VSTEffect;
 #endif
 
-#if defined(__UNIX__) && !defined(_MAC_H)
+#if (defined(__UNIX__) && !(defined (_MAC_H) || defined (_BE_H)))
 typedef struct __VSTEffect
 {
 	AEffect				*ce[ 2];
@@ -533,10 +552,9 @@ extern "C" {
 PPEXPORT void PPDebugStr( short, char*, char*);								// Internal Debugger function, NORMALLY it is never called, only when FATAL error
 
 PPEXPORT void PPRegisterDebugFunc(void (__callback *debugFunc)(short, Ptr, Ptr));	//Use this function to call your own debug function when PPDebugStr is called
-																			//Otherwise calls to PPDebugStr will crash your app
+																					//Otherwise calls to PPDebugStr will crash your app
 
 PPEXPORT OSErr	MADInitLibrary( char *PlugsFolderName, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
-
 PPEXPORT OSErr	MADDisposeLibrary( MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
 PPEXPORT void	MADGetBestDriver( MADDriverSettings	*DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
@@ -545,11 +563,13 @@ PPEXPORT OSErr	MADDisposeDriver( MADDriverRec *MDriver);											// Dispose th
 
 PPEXPORT OSErr	MADChangeDriverSettings( MADDriverSettings	*DriverInitParam, MADDriverRec** returnDriver);
 
-PPEXPORT OSErr	MADStartDriver( MADDriverRec *MDriver);										// NEW - Activate the sound generating procedure (interruption)
-PPEXPORT OSErr	MADStopDriver( MADDriverRec *MDriver);										// NEW - DESActivate the sound generating procedure (interruption)
+PPEXPORT OSErr	MADStartDriver( MADDriverRec *MDriver);										// NEW - Activates the sound generating procedure (interruption)
+PPEXPORT OSErr	MADStopDriver( MADDriverRec *MDriver);										// NEW - DEActivates the sound generating procedure (interruption)
 
 PPEXPORT OSErr	MADPlayMusic( MADDriverRec *MDriver);										// NEW - Read and play current music in memory - Call MADStartInterruption BEFORE
 PPEXPORT OSErr	MADStopMusic( MADDriverRec *MDriver);										// NEW - Stop reading current music in memory, Use MADCleanDriver to stop sounds
+PPEXPORT Boolean MADIsPlayingMusic(MADDriverRec *driver);									// NEW - See if PlayerPRO is playing music
+
 PPEXPORT void	MADCleanDriver( MADDriverRec *intDriver);									// Clean the driver : stop playing sounds
 
 PPEXPORT OSErr	MADReset( MADDriverRec *MDriver);											// Reset the current music at the start position
@@ -610,8 +630,8 @@ OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
 							Boolean			stereo);				// sample is in stereo or in mono?
 #endif
 
-PPEXPORT Boolean MADWasReading(MADDriverRec *driver);
-PPEXPORT void MADSetReading(MADDriverRec *driver, Boolean toSet);
+PPEXPORT Boolean MADWasReading(MADDriverRec *driver) DEPRECATED_ATTRIBUTE;
+PPEXPORT void MADSetReading(MADDriverRec *driver, Boolean toSet) DEPRECATED_ATTRIBUTE;
 
 #ifdef __cplusplus
 }

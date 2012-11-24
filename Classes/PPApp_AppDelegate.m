@@ -24,6 +24,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			break;
 		case NSAlertOtherReturn:
 			//Debugger();
+			NSCAssert(NO, @"Chose to go to debugger.");
 			break;
 		case NSAlertDefaultReturn:
 			NSLog(@"Choosing to fail!");
@@ -71,6 +72,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 }
 
 + (void)initialize {
+	PPMusicList *tempList = [[[ PPMusicList alloc] init] autorelease];
+	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
 															 [NSNumber numberWithBool:YES], PPRememberMusicList,
 															 [NSNumber numberWithBool:NO], PPLoadMusicAtListLoad,
@@ -119,6 +122,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 															 [NSNumber numberWithBool:YES], PPMMadCompression,
 															 [NSNumber numberWithBool:NO], PPMNoLoadMixerFromFiles,
 															 [NSNumber numberWithBool:YES], PPMOscilloscopeDrawLines,
+															 
+															 [NSKeyedArchiver archivedDataWithRootObject:tempList], PPMMusicList,
 															 nil]];
 }
 
@@ -129,9 +134,11 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad
 {
-	MADStopMusic(MADDriver);
-	MADCleanDriver(MADDriver);
-	MADDisposeMusic(&Music, MADDriver);
+	if (Music != NULL) {
+		MADStopMusic(MADDriver);
+		MADCleanDriver(MADDriver);
+		MADDisposeMusic(&Music, MADDriver);
+	}
 
 	char fileType[5];
 	MADMusicIdentifyCFURL(MADLib, fileType, (CFURLRef)musicToLoad);
@@ -166,27 +173,20 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	
 	musicList = [[PPMusicList alloc] init];
+	[musicList loadMusicListFromPreferences];
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	[defaultCenter addObserver:self selector:@selector(preferencesDidChange:) name:PPListPreferencesDidChange object:nil];
 	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
 	[defaultCenter addObserver:self selector:@selector(digitalEditorPreferencesDidChange:) name:PPDigitalEditorPrefrencesDidChange object:nil];
 	
 	MADInitLibrary(NULL, &MADLib);
-	[tableView setDataSource:musicList];
+	//[tableView setDataSource:musicList];
 	[self MADDriverWithPreferences];
 	PPRegisterDebugFunc(CocoaDebugStr);
 
 }
+
 - (void)applicationWillTerminate:(NSNotification *)notification
-{
-
-}
-
-- (void)preferencesDidChange:(NSNotification *)notification {
-	
-}
-
-- (void)dealloc
 {
 	if (Music != NULL) {
 		MADStopMusic(MADDriver);
@@ -197,6 +197,15 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	MADDisposeDriver(MADDriver);
 	MADDisposeLibrary(MADLib);
 	
+	[musicList saveMusicListToPreferences];
+}
+
+- (void)preferencesDidChange:(NSNotification *)notification {
+	
+}
+
+- (void)dealloc
+{
 	[preferences release];
 	[musicList release];
 	
@@ -222,7 +231,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 }
 
 - (IBAction)sortMusicList:(id)sender {
-	
+	[musicList sortMusicList];
 }
 
 - (IBAction)playSelectedMusic:(id)sender {
@@ -320,6 +329,48 @@ enum PPMusicToolbarTypes {
 - (IBAction)stopButtonPressed:(id)sender {
     
 }
+
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
+{
+	NSError *err = nil;
+	NSString *utiFile = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
+	if (err) {
+		NSRunAlertPanel(NSLocalizedString(@"Error opening file", nil), [NSString stringWithFormat:NSLocalizedString(@"Unable to open %@: %@", nil), [filename lastPathComponent], [err localizedFailureReason]], nil, nil, nil);
+		return NO;
+	}
+	
+	if([[NSWorkspace sharedWorkspace] type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"])
+	{
+		[musicList addMusicURL:[NSURL fileURLWithPath:filename]];
+	} else if ([[NSWorkspace sharedWorkspace] type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"] || [[NSWorkspace sharedWorkspace] type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"])
+	{
+		[musicList loadMusicListAtURL:[NSURL fileURLWithPath:filename]];
+	}
+	
+	/*static NSArray *handlers = nil;
+	if (handlers == nil) {
+		handlers = [[NSArray alloc] initWithObjects:[PcsxrPluginHandler class], [PcsxrMemCardHandler class], [PcsxrFreezeStateHandler class], [PcsxrDiscHandler class], nil];
+	}
+	BOOL isHandled = NO;
+	for (Class fileHandler in handlers) {
+		NSObject<PcsxrFileHandle> *hand = [[fileHandler alloc] init];
+		BOOL canHandle = NO;
+		for (NSString *uti in [fileHandler supportedUTIs]) {
+			if ([[NSWorkspace sharedWorkspace] type:utiFile  conformsToType:uti]) {
+				canHandle = YES;
+			}
+		}
+		if (canHandle) {
+			isHandled = [hand handleFile:HandleBinCue(filename)];
+			[hand release];
+			break;
+		}
+		[hand release];
+		
+	}
+	return isHandled;*/
+}
+
 
 
 @end

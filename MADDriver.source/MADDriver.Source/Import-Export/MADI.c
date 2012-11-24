@@ -155,11 +155,11 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 	//OSErr		theErr = noErr;
 	//Ptr			tempPtr = NULL;
 	OSType MADType = 0;
-	SInt32		finetune[16] =
+	/*SInt32		finetune[16] =
 	{
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
-	};
+	};*/
 	
 	
 /**** Old MADH variables ****/

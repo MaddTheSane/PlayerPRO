@@ -252,7 +252,7 @@ static	Boolean LoadPlugLib( Ptr name, PlugInfo* plug )
 		MADPlug	plugCode = NULL;
 		
 		symbolGet = get_image_symbol(	plug->hLibrary,
-										"mainPLUG",
+										"PPImpExpMain",
 										B_SYMBOL_TYPE_TEXT,
 										&plugCode );
 		if ( symbolGet == B_NO_ERROR && plugCode )
@@ -299,7 +299,7 @@ void MInitImportPlug( MADLibrary *lib, char *PlugsFolderName)
 
 	inMADDriver = lib;
 	inMADDriver->TotalPlug = 0;
-	inMADDriver->ThePlug = (PlugInfo*) malloc( MAXPLUG * sizeof( PlugInfo));
+	inMADDriver->ThePlug = (PlugInfo*) calloc( MAXPLUG, sizeof( PlugInfo));
 
 	//	Construct valid path, independent of launch mode.
 	

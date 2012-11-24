@@ -36,7 +36,7 @@ winspool.lib
 void debugger( Ptr a)
 {
 	printf( "%s", a);
-//	getchar();
+	getchar();
 }
 
 int main( int argc, char *argv[])

@@ -59,12 +59,12 @@
 
 #define AMIGA_CLOCKFREQ2			14317456L
 
-//#if defined(powerc) || defined (__powerc) || defined(__ppc__)
+#if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
 // Work on 64bits for much better precision
 #define BYTEDIV										16L			
-//#else
-//#define BYTEDIV										8L
-//#endif
+#else
+#define BYTEDIV										8L
+#endif
 
 #define	EXTRASMALLCOUNTER					5
 
@@ -298,6 +298,7 @@ struct __MADDriverRec
 #ifdef _MAC_H
 	AudioUnit				CAAudioUnit;
 	UInt32					CABufOff;
+	Ptr						CABuffer;
 #endif
 	
 #ifdef WIN32
@@ -308,6 +309,13 @@ struct __MADDriverRec
 	long					WIN95BUFFERSIZE;
 	UINT					gwID;
 	HWND					hwnd;
+	WAVEOUTCAPS				woc;
+	HWAVEOUT 				hWaveOut;
+	LPVOID 					mydata;
+	HGLOBAL 				hglobal;
+	WAVEHDR 				WaveOutHdr;
+	char 					*mydma;
+	long					MICROBUFState;
 #endif
 	
 #ifdef _OSSSOUND

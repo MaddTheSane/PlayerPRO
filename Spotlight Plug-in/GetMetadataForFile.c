@@ -84,22 +84,32 @@ Boolean GetMetadataForFile(void* thisInterface,
 	
 	{
 		char		type[ 5];
-#if 0
-		OSType info;
-		CFStringRef ostypes;
-		//Try to get the OSType of the UTI.
-		ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
-		
-		info = UTGetOSTypeFromString(ostypes);
-		CFRelease(ostypes);
-		if (!info) goto fail1;
-		OSType2Ptr(info, type);
+#ifdef DEBUG
+		char		utiType[5] = {0}
+		{
+			OSType info;
+			CFStringRef ostypes;
+			//Try to get the OSType of the UTI.
+			ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
+			
+			info = UTGetOSTypeFromString(ostypes);
+			CFRelease(ostypes);
+			if (info) {
+				OSType2Ptr(info, utiType);
+			}
+		}
 		
 #endif
 		CFURLRef tempRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
 
 		MADMusicIdentifyCFURL(MADLib, type, tempRef);
 
+#ifdef DEBUG
+		if (strcmp(utiType, type) != 0) {
+			printf("File type differ, UTI says %s, PlayerPRO says %s", utiType, type);
+		}
+#endif
+		
 		if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 		{
 			OSErr err = noErr;

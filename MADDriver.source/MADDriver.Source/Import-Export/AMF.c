@@ -81,11 +81,11 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	//OSErr			theErr = noErr;
 	//Ptr				tempPtr;
 	OSType			AMFType;
-	SInt32			finetune[16] = 
+	/*SInt32			finetune[16] =
 	{
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
-	};
+	};*/
 	
 	short			pan, uusize, oldIns = 1;
 	

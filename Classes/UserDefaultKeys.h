@@ -60,3 +60,5 @@ extern NSString *PPMAddExtension;
 extern NSString *PPMMadCompression;
 extern NSString *PPMNoLoadMixerFromFiles;
 extern NSString *PPMOscilloscopeDrawLines;
+
+extern NSString *PPMMusicList;

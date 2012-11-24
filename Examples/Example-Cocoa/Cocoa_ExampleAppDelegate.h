@@ -13,6 +13,7 @@
     NSWindow *window;
     IBOutlet NSImageView *fileIcon;
 	
+	IBOutlet NSTextField *fileName;
 	MADDriverRec	*MADDriver;
 	MADMusic		*Music;
 	MADLibrary		*MADLib;

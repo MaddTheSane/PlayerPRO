@@ -22,10 +22,20 @@
 #ifndef __MADI__
 #define __MADI__
 
+#ifdef __GNUC__
+#define HAS_LONG_LONG 1
+#define HAS_LONG_DOUBLE 1
+#endif
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #define EXP extern __attribute__((visibility("default")))
 #define PPEXPORT EXP
+#endif
+
+#ifdef _MSC_VER
+#define HAS_LONG_LONG 1
+//MSVC's long double datatype is the same size as a regular double
+#undef HAS_LONG_DOUBLE
 #endif
 
 #if !defined(__BIG_ENDIAN__) && defined(WORDS_BIGENDIAN)
@@ -85,18 +95,6 @@
 enum {
 	noErr = 0
 };
-
-static inline void DebugStr( unsigned char* x)
-{
-	char *temp;
-	
-	temp = malloc( (x[ 0] + 1));
-	
-	memmove( temp, x+1, x[ 0]);
-	temp[ x[ 0]] = 0;
-		
-	free( temp);
-}
 
 #endif
 

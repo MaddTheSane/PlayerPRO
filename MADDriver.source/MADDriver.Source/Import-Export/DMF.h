@@ -39,14 +39,14 @@ typedef struct ITPatForm
 
 typedef struct ITSampForm
 {
-	SInt32		ID;
+	OSType		ID;
 	char		DOSName[ 12];
 	char		no;
 	char		GvL;
 	char		Flag;
 	char		Vol;
 	char		SampName[ 26];
-	short	Convert;
+	short		Convert;
 	SInt32		length;
 	SInt32		loopBegin;
 	SInt32		loopEnd;
@@ -85,21 +85,21 @@ typedef struct ITInsForm
 	char		NNA;
 	char		DCT;
 	char		DCA;
-	short	FadeOut;
+	short		FadeOut;
 	char		PPS;
 	char		PPC;
 	char		GbV;
 	char		DfP;
 	char		no2[ 2];
-	short	TrkVers;
+	short		TrkVers;
 	char		NoS;
 	char		no3;
 	char		INSName[ 26];
 	char		no4[ 6];
 	char		keyMap[ 240];
-	ITEnv	volEnv;
-	ITEnv	panEnv;
-	ITEnv	pitchEnv;
+	ITEnv		volEnv;
+	ITEnv		panEnv;
+	ITEnv		pitchEnv;
 } ITInsForm;
 
 typedef struct ITForm

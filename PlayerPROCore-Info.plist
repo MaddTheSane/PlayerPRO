@@ -60,6 +60,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.data</string>
 				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -81,6 +82,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.data</string>
 				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -104,6 +106,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.data</string>
 				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -148,6 +151,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -177,6 +181,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>669 Tracker</string>
@@ -198,6 +203,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>AMF Tracker</string>
@@ -219,6 +225,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>ImpulseTracker File</string>
@@ -240,6 +247,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>MTM Tracker</string>
@@ -260,6 +268,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -282,6 +291,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -303,7 +313,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>ULT Tracker</string>
@@ -324,6 +335,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>

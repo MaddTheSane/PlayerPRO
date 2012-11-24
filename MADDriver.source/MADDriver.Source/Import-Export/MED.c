@@ -191,7 +191,7 @@ static void MED_Convert1( short col, short patID, MADMusic *theMAD)
 static void MED_Convert0( short patID, MADMusic *theMAD)
 {
 	int 		t, zz;
-	UBYTE 		a,b,c,inst,note,eff,dat, temp;
+	UBYTE 		a,b,c,inst,note,eff,dat/*, temp*/;
 	MMD0NOTE 	*n;
 	Cmd			*aCmd;
 
@@ -235,8 +235,8 @@ static void MED_Convert0( short patID, MADMusic *theMAD)
 
 static OSErr LoadMMD0Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *init)
 {
-	int 		t,row,col;
-	UWORD 		numtracks,numlines,maxlines=0;
+	int 		t, row /*,col*/;
+	UWORD 		numtracks, numlines, maxlines=0;
 	char		tC;
 	SInt32		x;
 	

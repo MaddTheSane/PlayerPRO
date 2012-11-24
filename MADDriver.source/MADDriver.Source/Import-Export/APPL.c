@@ -207,13 +207,21 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		{
 			PPBE16( &curIns->volEnv[ x].pos);
 			PPBE16( &curIns->volEnv[ x].val);
+			
+			PPBE16( &curIns->pitchEnv[ x].pos);
+			PPBE16( &curIns->pitchEnv[ x].val);
+			
+			PPBE16( &curIns->pannEnv[ x].pos);
+			PPBE16( &curIns->pannEnv[ x].val);
 		}
 		
+#if 0
 		for( x = 0; x < 12; x++)
 		{
 			PPBE16( &curIns->pannEnv[ x].pos);
 			PPBE16( &curIns->pannEnv[ x].val);
 		}
+#endif
 		
 		if( i != curIns->no)
 		{
@@ -360,7 +368,7 @@ static OSErr INFOMADF( MADSpec* MADPtr, PPInfoRec *info)
 
 	strcpy( info->internalFileName, MADPtr->name);
 	
-	strcpy( info->formatDescription, "MAD Resource (APPL)");
+	strcpy( info->formatDescription, "MADK Resource (APPL)");
 	
 	info->totalPatterns		= MADPtr->numPat;
 	info->partitionLength	= MADPtr->numPointers;

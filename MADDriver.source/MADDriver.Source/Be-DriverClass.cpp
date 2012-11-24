@@ -86,7 +86,7 @@ MADDriverSettings	MADDriverClass::CreateDefaultDriver( void )
 	MADDriverSettings	init;
 	init.numChn			= 4;
 	init.outPutBits 	= 16;
-	init.outPutRate		= 44100L << 16L;
+	init.outPutRate		= 44100;
 	init.outPutMode		= DeluxeStereoOutPut;
 	init.driverMode		= BeOSSoundDriver;
 	init.repeatMusic	= true;

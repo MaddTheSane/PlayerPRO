@@ -243,7 +243,7 @@ BOOL LoadSamp(LPDIRECTSOUND lpDirectSound,
   
 //  	dsbdesc.dwFlags =	DSBCAPS_CTRLPAN|DSBCAPS_CTRLVOLUME|DSBCAPS_CTRLFREQUENCY|flags;
   	
-  	dsbdesc.dwFlags = 0;
+  	dsbdesc.dwFlags = DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLFREQUENCY | DSBCAPS_GLOBALFOCUS;
     dsbdesc.dwBufferBytes = length;
     dsbdesc.dwReserved = 0;
     dsbdesc.lpwfxFormat = &pcmwf;
@@ -276,7 +276,7 @@ static void CALLBACK TimeProc(
 	 DWORD  dwReserved2		/* not used */
 )
 {
-	DWORD 		pos, posp, i;
+	DWORD 		pos, posp;
 	static volatile int timersema=0;
 
 	/* use semaphore to prevent entering the mixing routines twice.. do we need this ? */
@@ -296,12 +296,14 @@ static void CALLBACK TimeProc(
 				switch( WinMADDriver->DriverSettings.outPutBits)
 				{
 					case 8:
-						for( i = 0; i < WinMADDriver->WIN95BUFFERSIZE/2; i++) WinMADDriver->currentBuf[ i] = 0x80;
-					break;
+						//for( i = 0; i < WinMADDriver->WIN95BUFFERSIZE/2; i++) WinMADDriver->currentBuf[ i] = 0x80;
+						memset(WinMADDriver->currentBuf, 0x80, WinMADDriver->WIN95BUFFERSIZE/2);
+						break;
 					
 					case 16:
-						for( i = 0; i < WinMADDriver->WIN95BUFFERSIZE/2; i++) WinMADDriver->currentBuf[ i] = 0;
-					break;
+						//for( i = 0; i < WinMADDriver->WIN95BUFFERSIZE/2; i++) WinMADDriver->currentBuf[ i] = 0;
+						memset(WinMADDriver->currentBuf, 0, WinMADDriver->WIN95BUFFERSIZE/2);
+						break;
 				}
 			}
 			
@@ -319,12 +321,14 @@ static void CALLBACK TimeProc(
 				switch( WinMADDriver->DriverSettings.outPutBits)
 				{
 					case 8:
-						for( i = WinMADDriver->WIN95BUFFERSIZE/2; i < WinMADDriver->WIN95BUFFERSIZE; i++) WinMADDriver->currentBuf[ i] = 0x80;
-					break;
+						//for( i = WinMADDriver->WIN95BUFFERSIZE/2; i < WinMADDriver->WIN95BUFFERSIZE; i++) WinMADDriver->currentBuf[ i] = 0x80;
+						memset(WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, 0x80, WinMADDriver->WIN95BUFFERSIZE/2);
+						break;
 					
 					case 16:
-						for( i = WinMADDriver->WIN95BUFFERSIZE/2; i < WinMADDriver->WIN95BUFFERSIZE; i++) WinMADDriver->currentBuf[ i] = 0;
-					break;
+						//for( i = WinMADDriver->WIN95BUFFERSIZE/2; i < WinMADDriver->WIN95BUFFERSIZE; i++) WinMADDriver->currentBuf[ i] = 0;
+						memset(WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, 0, WinMADDriver->WIN95BUFFERSIZE/2);
+						break;
 				}
 			}
 			
@@ -415,7 +419,7 @@ void DirectSoundClose( MADDriverRec* WinMADDriver)
 		
 		WinMADDriver->lpSwSamp->lpVtbl->Stop( WinMADDriver->lpSwSamp);
 		WinMADDriver->lpSwSamp->lpVtbl->Release( WinMADDriver->lpSwSamp);
-		WinMADDriver->lpSwSamp = 0L;
+		WinMADDriver->lpSwSamp = NULL;
 		
 		WinMADDriver->lpDirectSoundBuffer->lpVtbl->Stop(WinMADDriver->lpDirectSoundBuffer);
   		WinMADDriver->lpDirectSoundBuffer->lpVtbl->Release(WinMADDriver->lpDirectSoundBuffer);

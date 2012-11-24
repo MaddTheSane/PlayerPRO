@@ -8,9 +8,29 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PPMusicList : NSObject <NSCoding, NSTableViewDataSource> {
+@interface PPMusicListObject : NSObject
+{
+	NSURL *musicUrl;
+	NSString *fileName;
+}
+
+@property (copy, nonatomic) NSURL *musicUrl;
+@property (readonly) NSString *fileName;
+
+- (id)initWithURL:(NSURL *)aURL;
+
+@end
+
+@interface PPMusicList : NSObject <NSCoding> {
 	NSMutableArray *musicList;
 }
+- (void)sortMusicList;
+
+- (void)loadMusicListFromPreferences;
+- (void)saveMusicListToPreferences;
+- (void)saveMusicListToURL:(NSURL *)toSave;
+- (void)loadMusicListAtURL:(NSURL *)fromURL;
+
 - (NSURL*)URLAtIndex:(NSUInteger)index;
 - (void)loadMusicListAtURL:(NSURL *)fromURL;
 - (void)addMusicURL:(NSURL *)musicToLoad;

@@ -374,6 +374,22 @@
 			<key>LSTypeIsPackage</key>
 			<true/>
 		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>pplist</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>List</string>
+			<key>CFBundleTypeName</key>
+			<string>PlayerPRO Music List</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.musiclist</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
@@ -578,7 +594,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Old PlayerPRO Music list</string>
+			<string>Old PlayerPRO Music List</string>
 			<key>UTTypeIconFile</key>
 			<string>List</string>
 			<key>UTTypeIdentifier</key>
@@ -595,6 +611,25 @@
 				</array>
 			</dict>
 		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PlayerPRO Music List</string>
+			<key>UTTypeIconFile</key>
+			<string>List</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.musiclist</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>pplist</string>
+				</array>
+			</dict>
+		</dict>
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
@@ -602,6 +637,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.audio</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>MIDI File</string>
@@ -634,6 +670,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>ProTracker MOD File</string>
@@ -664,6 +701,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>669 Tracker</string>
@@ -687,6 +725,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>AMF Tracker</string>
@@ -710,6 +749,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>ImpulseTracker File</string>
@@ -733,6 +773,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>MTM Tracker</string>
@@ -756,6 +797,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>OKTAmed Tracker</string>
@@ -780,6 +822,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>S3M Tracker</string>
@@ -802,7 +845,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>ULT Tracker</string>
@@ -826,6 +870,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>XM Tracker</string>

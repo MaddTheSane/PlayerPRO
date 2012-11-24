@@ -60,9 +60,10 @@ enum {	/* for "format" */
 //	Inline functions.
 //	Convert an OSType (MacOS) to a string.
 
-inline	char*	TypeToString( OSType type, char *string )
+static inline	char*	TypeToString( OSType type, char *string )
 {
 	OSType	*typePtr = (OSType*)string;
+	PPBE32(&type);
 	*typePtr = type;
 	string[4] = 0;
 	return	string;

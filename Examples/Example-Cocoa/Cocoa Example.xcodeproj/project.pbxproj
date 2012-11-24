@@ -10,21 +10,21 @@
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* Cocoa_ExampleAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* Cocoa_ExampleAppDelegate.m */; };
 		5570EA0B12A4C25400167E1A /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5570E9B412A4C24900167E1A /* PlayerPROCore.framework */; };
-		55A4928A162F6EEC003EBF4A /* MOD.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9B612A4C24900167E1A /* MOD.ppimpexp */; };
-		55A4928B162F6EEC003EBF4A /* 669.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9B812A4C24900167E1A /* 669.ppimpexp */; };
-		55A4928C162F6EEC003EBF4A /* AMF.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9BA12A4C24900167E1A /* AMF.ppimpexp */; };
-		55A4928D162F6EEC003EBF4A /* DMF.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9BC12A4C24900167E1A /* DMF.ppimpexp */; };
-		55A4928E162F6EEC003EBF4A /* IT.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9BE12A4C24900167E1A /* IT.ppimpexp */; };
-		55A4928F162F6EEC003EBF4A /* MADfg.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9C012A4C24900167E1A /* MADfg.ppimpexp */; };
-		55A49290162F6EEC003EBF4A /* MADH.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9C212A4C24900167E1A /* MADH.ppimpexp */; };
-		55A49291162F6EEC003EBF4A /* MADI.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9C412A4C24900167E1A /* MADI.ppimpexp */; };
-		55A49292162F6EEC003EBF4A /* MED.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9C612A4C24900167E1A /* MED.ppimpexp */; };
-		55A49293162F6EEC003EBF4A /* MTM.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9C812A4C24900167E1A /* MTM.ppimpexp */; };
-		55A49294162F6EEC003EBF4A /* Okta.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9CA12A4C24900167E1A /* Okta.ppimpexp */; };
-		55A49295162F6EEC003EBF4A /* S3M.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9CC12A4C24900167E1A /* S3M.ppimpexp */; };
-		55A49296162F6EEC003EBF4A /* ULT.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9CE12A4C24900167E1A /* ULT.ppimpexp */; };
-		55A49297162F6EEC003EBF4A /* UMX.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9D012A4C24900167E1A /* UMX.ppimpexp */; };
-		55A49298162F6EEC003EBF4A /* XM.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9D212A4C24900167E1A /* XM.ppimpexp */; };
+		558678B41659A97000BCFB70 /* PlayerPROCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5570E9B412A4C24900167E1A /* PlayerPROCore.framework */; };
+		55A4928A162F6EEC003EBF4A /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9B612A4C24900167E1A /* MOD.ppimpexp */; };
+		55A4928B162F6EEC003EBF4A /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9B812A4C24900167E1A /* 669.ppimpexp */; };
+		55A4928C162F6EEC003EBF4A /* AMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9BA12A4C24900167E1A /* AMF.ppimpexp */; };
+		55A4928D162F6EEC003EBF4A /* DMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9BC12A4C24900167E1A /* DMF.ppimpexp */; };
+		55A4928E162F6EEC003EBF4A /* IT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9BE12A4C24900167E1A /* IT.ppimpexp */; };
+		55A4928F162F6EEC003EBF4A /* MADfg.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9C012A4C24900167E1A /* MADfg.ppimpexp */; };
+		55A49290162F6EEC003EBF4A /* MADH.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9C212A4C24900167E1A /* MADH.ppimpexp */; };
+		55A49291162F6EEC003EBF4A /* MADI.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9C412A4C24900167E1A /* MADI.ppimpexp */; };
+		55A49292162F6EEC003EBF4A /* MED.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9C612A4C24900167E1A /* MED.ppimpexp */; };
+		55A49293162F6EEC003EBF4A /* MTM.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9C812A4C24900167E1A /* MTM.ppimpexp */; };
+		55A49294162F6EEC003EBF4A /* Okta.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9CA12A4C24900167E1A /* Okta.ppimpexp */; };
+		55A49295162F6EEC003EBF4A /* S3M.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9CC12A4C24900167E1A /* S3M.ppimpexp */; };
+		55A49296162F6EEC003EBF4A /* ULT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9CE12A4C24900167E1A /* ULT.ppimpexp */; };
+		55A49298162F6EEC003EBF4A /* XM.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9D212A4C24900167E1A /* XM.ppimpexp */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -360,6 +360,20 @@
 			remoteGlobalIDString = 557DE9A110E08DC100177B4C;
 			remoteInfo = "Tone Generator";
 		};
+		55835DD81650989A00FC1A7D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55879F85164CA65D009068D5;
+			remoteInfo = PPPlay;
+		};
+		558678A61659A7DD00BCFB70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5573A1031656FAF100A5AECA;
+			remoteInfo = iOSPlayerPROCore;
+		};
 		5598692816432693008C55FC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
@@ -384,28 +398,38 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		55A49289162F6ED4003EBF4A /* CopyFiles */ = {
+		558678B31659A96000BCFB70 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				558678B41659A97000BCFB70 /* PlayerPROCore.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55A49289162F6ED4003EBF4A /* Copy PlugIns */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				55A4928A162F6EEC003EBF4A /* MOD.ppimpexp in CopyFiles */,
-				55A4928B162F6EEC003EBF4A /* 669.ppimpexp in CopyFiles */,
-				55A4928C162F6EEC003EBF4A /* AMF.ppimpexp in CopyFiles */,
-				55A4928D162F6EEC003EBF4A /* DMF.ppimpexp in CopyFiles */,
-				55A4928E162F6EEC003EBF4A /* IT.ppimpexp in CopyFiles */,
-				55A4928F162F6EEC003EBF4A /* MADfg.ppimpexp in CopyFiles */,
-				55A49290162F6EEC003EBF4A /* MADH.ppimpexp in CopyFiles */,
-				55A49291162F6EEC003EBF4A /* MADI.ppimpexp in CopyFiles */,
-				55A49292162F6EEC003EBF4A /* MED.ppimpexp in CopyFiles */,
-				55A49293162F6EEC003EBF4A /* MTM.ppimpexp in CopyFiles */,
-				55A49294162F6EEC003EBF4A /* Okta.ppimpexp in CopyFiles */,
-				55A49295162F6EEC003EBF4A /* S3M.ppimpexp in CopyFiles */,
-				55A49296162F6EEC003EBF4A /* ULT.ppimpexp in CopyFiles */,
-				55A49297162F6EEC003EBF4A /* UMX.ppimpexp in CopyFiles */,
-				55A49298162F6EEC003EBF4A /* XM.ppimpexp in CopyFiles */,
+				55A4928A162F6EEC003EBF4A /* MOD.ppimpexp in Copy PlugIns */,
+				55A4928B162F6EEC003EBF4A /* 669.ppimpexp in Copy PlugIns */,
+				55A4928C162F6EEC003EBF4A /* AMF.ppimpexp in Copy PlugIns */,
+				55A4928D162F6EEC003EBF4A /* DMF.ppimpexp in Copy PlugIns */,
+				55A4928E162F6EEC003EBF4A /* IT.ppimpexp in Copy PlugIns */,
+				55A4928F162F6EEC003EBF4A /* MADfg.ppimpexp in Copy PlugIns */,
+				55A49290162F6EEC003EBF4A /* MADH.ppimpexp in Copy PlugIns */,
+				55A49291162F6EEC003EBF4A /* MADI.ppimpexp in Copy PlugIns */,
+				55A49292162F6EEC003EBF4A /* MED.ppimpexp in Copy PlugIns */,
+				55A49293162F6EEC003EBF4A /* MTM.ppimpexp in Copy PlugIns */,
+				55A49294162F6EEC003EBF4A /* Okta.ppimpexp in Copy PlugIns */,
+				55A49295162F6EEC003EBF4A /* S3M.ppimpexp in Copy PlugIns */,
+				55A49296162F6EEC003EBF4A /* ULT.ppimpexp in Copy PlugIns */,
+				55A49298162F6EEC003EBF4A /* XM.ppimpexp in Copy PlugIns */,
 			);
+			name = "Copy PlugIns";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -566,6 +590,8 @@
 				5570EA0412A4C24900167E1A /* Silence.plugin */,
 				5570EA0612A4C24900167E1A /* Smooth.plugin */,
 				5570EA0812A4C24900167E1A /* Tone Generator.plugin */,
+				55835DD91650989A00FC1A7D /* PPPlay */,
+				558678A71659A7DD00BCFB70 /* libiOSPlayerPROCore.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -580,7 +606,8 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
-				55A49289162F6ED4003EBF4A /* CopyFiles */,
+				55A49289162F6ED4003EBF4A /* Copy PlugIns */,
+				558678B31659A96000BCFB70 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -957,6 +984,20 @@
 			remoteRef = 5570EA0712A4C24900167E1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		55835DD91650989A00FC1A7D /* PPPlay */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = PPPlay;
+			remoteRef = 55835DD81650989A00FC1A7D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		558678A71659A7DD00BCFB70 /* libiOSPlayerPROCore.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libiOSPlayerPROCore.a;
+			remoteRef = 558678A61659A7DD00BCFB70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		5598692916432693008C55FC /* PlayerPROKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1035,6 +1076,7 @@
 				GCC_PREFIX_HEADER = Cocoa_Example_Prefix.pch;
 				INFOPLIST_FILE = "Cocoa_Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				PRODUCT_NAME = "Cocoa Example";
 			};
 			name = Debug;
@@ -1049,6 +1091,7 @@
 				GCC_PREFIX_HEADER = Cocoa_Example_Prefix.pch;
 				INFOPLIST_FILE = "Cocoa_Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				PRODUCT_NAME = "Cocoa Example";
 			};
 			name = Release;

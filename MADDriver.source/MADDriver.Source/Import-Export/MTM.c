@@ -85,7 +85,7 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, SInt32 MTMSize, MADMusic *theMAD, 
 	short 			i, x, z;
 	SInt32 			sndSize, OffSetToSample, MPatSize, temp, inOutCount;
 	Ptr				MaxPtr;
-	OSErr			theErr;
+	//OSErr			theErr;
 	Ptr				theInstrument[ 64], destPtr;
 	SInt32 			finetune[16] =
 	{

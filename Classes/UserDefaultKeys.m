@@ -62,3 +62,4 @@ NSString *PPMMadCompression = @"Compress MAD?";
 NSString *PPMNoLoadMixerFromFiles = @"No load Mixer?";
 NSString *PPMOscilloscopeDrawLines = @"Oscilloscope Draw Lines";
 
+NSString *PPMMusicList = @"PlayerPRO Music List";

@@ -72,11 +72,7 @@ OSErr	PPImportFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile, M
 OSErr	PPIdentifyFile( MADLibrary		*inMADDriver, char *kindFile, char	*AlienFile);
 
 OSType	GetPPPlugType( MADLibrary		*inMADDriver, short ID, OSType type);
-void	MInitImportPlug( MADLibrary		*inMADDriver, char*);
-#ifdef _MAC_H
-void	MADInitImportPlug( MADLibrary	*inMADDriver, char *PluginFolder);
-#endif
-	
+void	MInitImportPlug( MADLibrary		*inMADDriver, char*);	
 void	CloseImportPlug( MADLibrary		*inMADDriver);
 OSErr	MADLoadMADFileCString( MADMusic **, Ptr fName);
 OSErr	CheckMADFile( char *AlienFile);

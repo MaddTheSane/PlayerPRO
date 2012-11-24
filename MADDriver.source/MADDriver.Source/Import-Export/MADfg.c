@@ -153,9 +153,9 @@ static void MOToldMADSpec(struct oldMADSpec * m){
 
 OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
-//TODO: byteswap on Intel!
 	short 			i, x;
-	long 			inOutCount = 0, OffSetToSample = 0, z = 0;
+	long 			inOutCount = 0, OffSetToSample = 0; 
+	SInt32			z = 0;
 	//OSErr			theErr = noErr;
 	Boolean			MADConvert = false;
 	OSType oldMadIdent = 0;
@@ -218,7 +218,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 		
 			memcpy(&tempPatHeader, MADPtr + OffSetToSample, inOutCount);
 		}
-		else tempPatHeader.PatternSize = 64L;
+		else tempPatHeader.PatternSize = 64;
 	
 	/*************************************************/
 	/** Lecture du header + contenu de la partition **/
@@ -252,7 +252,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 		if( MADConvert)
 		{
 			tempPat = (struct MusicPattern*) ((Ptr) tempPat - sizeof( struct oldPatHeader));
-			tempPat->header.PatternSize = 64L;
+			tempPat->header.PatternSize = 64;
 			tempPat->header.CompressionMode = 'NONE';
 		
 			for( x = 0; x < 20; x++) tempPat->header.PatternName[ x] = 0;

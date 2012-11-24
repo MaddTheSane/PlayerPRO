@@ -209,11 +209,12 @@ static void ConvertMADEffect( Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 
 static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
-	SInt32 				i, PatMax, x, z, channel, Row;
-	SInt32 				sndSize, OffSetToSample, OldTicks, starting;
+	SInt32 				i, x, z, channel, Row;
+	//SInt32 				sndSize, OffSetToSample, OldTicks, PatMax;
+	SInt32				starting;
 	Ptr					MaxPtr;
 	//OSErr				theErr;
-	Ptr					theInstrument[ 64], destPtr;
+	Ptr					theInstrument[ 64]/*, destPtr*/;
 	Byte				tempChar, *theITCopy;
 	//short				Note, Octave, maxTrack;
 	//short				ITperiod[ 12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
@@ -607,7 +608,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 		}
 	}
 	
-	free( ITinfo.orders);			free( ITinfo.parapins);
+	free( ITinfo.orders);		free( ITinfo.parapins);
 	free( ITinfo.parappat);		free( ITinfo.insdata);
 	free( ITinfo.parapsamp);
 
@@ -625,7 +626,7 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Signature ***/
 	
-	info->signature = 'IT  ';
+	info->signature = 'DMF ';
 	
 	/*** Internal name ***/
 	
@@ -660,7 +661,7 @@ static OSErr TestITFile( Ptr AlienFile)
 	OSType myID = myIT->ID;
 	PPBE32(&myID);
 
-	if( myID == 'IMPM') return noErr;
+	if( myID == 'DDMF') return noErr;
 	else return  MADFileNotSupportedByThisPlug;
 }
 
@@ -674,7 +675,8 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	strcpy( p->type, 		"DMF");
 	strcpy( p->MenuName, 	"DMF Files");
 	p->mode	=	'IMPL';
-	
+	p->version = 2 << 16 | 0 << 8 | 0;
+
 	return noErr;
 }
 #endif

@@ -21,10 +21,10 @@
 //
 /********************						***********************/
 
+#define _CRT_SECURE_NO_WARNINGS 1
+
 #include "RDriver.h"
 #include "FileUtils.h"
-
-#define _CRT_SECURE_NO_WARNINGS
 
 void iFileCreate(Ptr path, OSType type)
 {
@@ -97,9 +97,7 @@ int MADstrcmp( const char *dst, const char* src)
 
 void OSType2Ptr( OSType type, Ptr str)
 {
-#ifdef __LITTLE_ENDIAN__
 	PPBE32(&type);
-#endif
 	
 	memcpy( str, &type, 4);
 	str[ 4] = 0;
@@ -114,9 +112,7 @@ OSType Ptr2OSType( char* str)
 	if( i > 4) i = 4;
 	type = '    ';
 	memcpy( &type, str, i);
-#ifdef __LITTLE_ENDIAN__
 	PPBE32(&type);
-#endif
 	
 	return type;
 }

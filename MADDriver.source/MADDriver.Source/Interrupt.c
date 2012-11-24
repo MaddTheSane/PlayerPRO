@@ -212,7 +212,7 @@ SInt32 DoVolPanning256( short whichChannel, Channel *ch, MADDriverRec *intDriver
 
 void MADCleanDriver( MADDriverRec *intDriver)
 {
-	SInt32		i, x, size;
+	SInt32		i, x/*, size*/;
 
 /*	switch( intDriver->DriverSettings.outPutBits)
 	{
@@ -1012,7 +1012,7 @@ void ReadNote( Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 						{
 							curVoice->loopBeg 	= curData->loopBeg;
 							curVoice->loopSize	= curData->loopSize;
-							curVoice->maxPtr 	= (Ptr) ((long) curData->data + curData->loopBeg + curData->loopSize);
+							curVoice->maxPtr 	= (Ptr) ((size_t) curData->data + curData->loopBeg + curData->loopSize);
 						}
 						else
 						{
@@ -1149,9 +1149,9 @@ void StartEffect(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 	SetUpEffect( curVoice, intDriver);
 }
 
-void ComputeReverb8(  Byte *orgPtr,   Byte *destPtr,  long xx, long strength)
+void ComputeReverb8(  Byte *orgPtr,   Byte *destPtr,  SInt32 xx, SInt32 strength)
 {
-	long	temp1;
+	SInt32	temp1;
 	
 	while( xx-- > 0)
 	{
@@ -1164,14 +1164,14 @@ void ComputeReverb8(  Byte *orgPtr,   Byte *destPtr,  long xx, long strength)
 	}
 }
 
-void ComputeReverb16( short *orgPtr, short *destPtr, long xx, long strength)
+void ComputeReverb16( short *orgPtr, short *destPtr, SInt32 xx, SInt32 strength)
 {
-	long	temp1;
-	long	valP = 0x7FFFL, valN = -0x7FFFL;
+	SInt32	temp1;
+	SInt32	valP = 0x7FFF, valN = -0x7FFF;
 	
 	while( xx-- > 0)
 	{
-		temp1 = *destPtr + ((strength * (long) *orgPtr++) / 100);
+		temp1 = *destPtr + ((strength * (SInt32) *orgPtr++) / 100);
 		
 		if( temp1 > valP) temp1 = valP;	// overflow ?
 		else if( temp1 < valN ) temp1 = valN;
@@ -1220,7 +1220,7 @@ short FindAFreeChannel( MADDriverRec *intDriver)
 
 void ApplyVSTEffects( MADDriverRec *intDriver, Boolean ByPass)
 {
-	long i;
+	SInt32 i;
 
 	if( intDriver->curMusic != NULL)
 	{
@@ -1264,9 +1264,9 @@ void ApplyVSTEffects( MADDriverRec *intDriver, Boolean ByPass)
 //TODO: Apply VST effects
 				if( intDriver->currentlyExporting)
 				{
-					if( intDriver->thisExport) ProcessVSTPlug( intDriver, (long*) intDriver->DASCEffectBuffer[ i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[ i]);
+					if( intDriver->thisExport) ProcessVSTPlug( intDriver, (SInt32*) intDriver->DASCEffectBuffer[ i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[ i]);
 				}
-				else ProcessVSTPlug( intDriver, (long*) intDriver->DASCEffectBuffer[ i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[ i]);
+				else ProcessVSTPlug( intDriver, (SInt32*) intDriver->DASCEffectBuffer[ i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[ i]);
 #endif
 				
 				
@@ -1299,7 +1299,7 @@ void NoteAnalyse( MADDriverRec *intDriver)
 	{
 		if( intDriver->curMusic->musicUnderModification)
 		{	// SILENCE
-			long Tracks;
+			SInt32 Tracks;
 			
 			switch( intDriver->DriverSettings.outPutMode)
 			{
@@ -1675,8 +1675,8 @@ void NoteAnalyse( MADDriverRec *intDriver)
 				case 8:
 				{
 					short		*tempShortIn = (short*) intDriver->DASCBuffer8, *intempShort;
-					long		mul = intDriver->DriverSettings.oversampling;
-					long		x, tempL, tempR;
+					SInt32		mul = intDriver->DriverSettings.oversampling;
+					SInt32		x, tempL, tempR;
 					
 					for( i = 0; i < intDriver->ASCBUFFER / mul; i++)
 					{
@@ -1692,9 +1692,9 @@ void NoteAnalyse( MADDriverRec *intDriver)
 				
 				case 16:
 				{
-					long		*tempLongIn = (long*) intDriver->DASCBuffer, *intempLong;
-					long		mul = intDriver->DriverSettings.oversampling;
-					long		x, tempL, tempR;
+					SInt32		*tempLongIn = (SInt32*) intDriver->DASCBuffer, *intempLong;
+					SInt32		mul = intDriver->DriverSettings.oversampling;
+					SInt32		x, tempL, tempR;
 					
 					for( i = 0; i < intDriver->ASCBUFFER / mul; i++)
 					{
@@ -1730,10 +1730,10 @@ void NoteAnalyse( MADDriverRec *intDriver)
 		{
 			if( intDriver->thisExport)
 			{
-				ProcessVSTPlug( intDriver, (long*) intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
+				ProcessVSTPlug( intDriver, (SInt32*) intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
 			}
 		}
-		else ProcessVSTPlug( intDriver, (long*) intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
+		else ProcessVSTPlug( intDriver, (SInt32*) intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
 	}
 #endif
 	
@@ -1782,7 +1782,7 @@ void NoteAnalyse( MADDriverRec *intDriver)
 			centerR -= intDriver->curCenterR;
 			
 			{
-				long	curL, curR, add, addR;
+				SInt32	curL, curR, add, addR;
 				double temp;
 				
 				curR = intDriver->curCenterR;
@@ -1852,7 +1852,7 @@ void NoteAnalyse( MADDriverRec *intDriver)
 	{
 		short			*ASCBuffer, valP = 0x7FFFL, valN = -0x7FFFL;
 		SInt32			*ttt;
-		register long	tempL;
+		register SInt32	tempL;
 		
 		intDriver->clipL = false;
 		intDriver->clipR = false;
@@ -1921,7 +1921,7 @@ void NoteAnalyse( MADDriverRec *intDriver)
 	
 	if( intDriver->DriverSettings.MicroDelaySize)
 	{
-		long realMDelay = intDriver->MDelay;
+		SInt32 realMDelay = intDriver->MDelay;
 		
 		switch( intDriver->DriverSettings.outPutBits)
 		{
@@ -1929,15 +1929,13 @@ void NoteAnalyse( MADDriverRec *intDriver)
 			case 16:
 				memmove( intDriver->DASCBuffer, intDriver->DASCBuffer + intDriver->ASCBUFFER*2, realMDelay*8L);
 				memset(intDriver->DASCBuffer + realMDelay*2L, 0, intDriver->ASCBUFFER*8L);
-				//bzero( (intDriver->DASCBuffer + realMDelay*2L), intDriver->ASCBUFFER*8L);
 				
 				for( i = 0; i < MAXCHANEFFECT; i++)
 				{
 					if( intDriver->EffectBufferID[ i] != -1)
 					{
 						memmove( intDriver->DASCEffectBuffer[ i] + intDriver->ASCBUFFER*2, intDriver->DASCEffectBuffer[ i], realMDelay*8L);
-						//bzero( (intDriver->DASCEffectBuffer[ i] + realMDelay*2L), intDriver->ASCBUFFER*8L);
-					memset((intDriver->DASCEffectBuffer[ i] + realMDelay*2L), 0, intDriver->ASCBUFFER*8L);
+						memset((intDriver->DASCEffectBuffer[ i] + realMDelay*2L), 0, intDriver->ASCBUFFER*8L);
 					}
 				}
 			break;
@@ -1947,14 +1945,12 @@ void NoteAnalyse( MADDriverRec *intDriver)
 				{
 					memmove(intDriver->DASCBuffer8, intDriver->DASCBuffer8 + intDriver->ASCBUFFER*2, 1 + realMDelay*4L);
 					
-					//bzero( (intDriver->DASCBuffer8 + realMDelay*2L), (1 + intDriver->ASCBUFFER/2)*8L);
-				memset((intDriver->DASCBuffer8 + realMDelay*2L), 0, (1 + intDriver->ASCBUFFER/2)*8L);
+					memset((intDriver->DASCBuffer8 + realMDelay*2L), 0, (1 + intDriver->ASCBUFFER/2)*8L);
 				}
 				else
 				{
 					memmove( intDriver->DASCBuffer8, intDriver->DASCBuffer8 + intDriver->ASCBUFFER*2,  realMDelay*4L);
 					
-					//bzero( (intDriver->DASCBuffer8 + realMDelay*2L), (intDriver->ASCBUFFER/2)*8L);
 					memset( (intDriver->DASCBuffer8 + realMDelay*2L), 0, (intDriver->ASCBUFFER/2)*8L);
 				}
 			break;
@@ -1967,7 +1963,6 @@ void NoteAnalyse( MADDriverRec *intDriver)
 			switch( intDriver->DriverSettings.outPutBits)
 			{
 				case 16:
-					//bzero( (intDriver->DASCBuffer), intDriver->ASCBUFFER*8L);
 					memset( (intDriver->DASCBuffer), 0, intDriver->ASCBUFFER*8L);
 					for( i = 0; i < MAXCHANEFFECT; i++)
 					{
@@ -2052,7 +2047,7 @@ void ApplySurround( MADDriverRec *intDriver)
 			{
 				case DeluxeStereoOutPut:
 				{
-				long	i = intDriver->ASCBUFFER;
+				SInt32	i = intDriver->ASCBUFFER;
 				char	*data = (char*) intDriver->IntDataPtr;
 					
 					while( i-- > 0)
@@ -2070,7 +2065,7 @@ void ApplySurround( MADDriverRec *intDriver)
 			{
 				case DeluxeStereoOutPut:
 				{
-				long		i = intDriver->ASCBUFFER;
+				SInt32		i = intDriver->ASCBUFFER;
 				short		*data = (short*) intDriver->IntDataPtr;
 					
 					while( i-- > 0)
@@ -2087,7 +2082,7 @@ void ApplySurround( MADDriverRec *intDriver)
 
 void GenerateSound( MADDriverRec *intDriver)
 {
-	long i;
+	SInt32 i;
 	
 	if( intDriver->DriverSettings.driverMode == MIDISoundDriver) return;
 

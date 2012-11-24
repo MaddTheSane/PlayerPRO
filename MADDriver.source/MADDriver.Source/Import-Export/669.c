@@ -77,7 +77,7 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 	Ptr					MaxPtr;
 	//OSErr				theErr;
 	Ptr					theInstrument[ 64], destPtr;
-	unsigned short		tempS;
+	//unsigned short		tempS;
 	short				Note, Octave;
 	Byte				*thePasByte;
 	

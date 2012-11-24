@@ -20,6 +20,10 @@
 	<string>2.0</string>
 	<key>MADPlugAuthorName</key>
 	<string>Written by A.ROSSET 95</string>
+	<key>MADCanImport</key>
+	<true/>
+	<key>MADCanExport</key>
+	<true/>
 	<key>MADPlugMenuName</key>
 	<string>MOD</string>
 	<key>MADPlugMode</key>

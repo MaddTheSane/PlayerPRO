@@ -149,13 +149,13 @@ static OSErr MADH2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 {
 	short		i, x;
 	SInt32		inOutCount, OffSetToSample = 0, z;
-	OSErr		theErr = noErr;
-	Ptr			tempPtr;
-	SInt32		finetune[16] =
+	//OSErr		theErr = noErr;
+	//Ptr			tempPtr;
+	/*SInt32		finetune[16] =
 				{
 					8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 					7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
-				};
+				};*/
 
 
 /**** Old MADH variables ****/
@@ -297,7 +297,7 @@ static OSErr MADH2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 
 	for( i = 0; i < 64; i++)
 	{
-		InstrData	*curIns = &theMAD->fid[ i];
+		//InstrData	*curIns = &theMAD->fid[ i];
 	
 		memcpy( theMAD->fid[ i].name, oldMAD->fid[ i].name, 32);
 	

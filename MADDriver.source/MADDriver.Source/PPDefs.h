@@ -34,7 +34,6 @@
 
 typedef unsigned char 	Byte;
 typedef char 			*Ptr, **Handle;
-//typedef Ptr				*Handle;
 typedef unsigned char 	Boolean;
 typedef unsigned char 	Str255[256], Str63[64];
 typedef uint8_t			UInt8;
