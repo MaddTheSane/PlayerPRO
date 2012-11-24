@@ -22,8 +22,12 @@
 	<string>Written by A.ROSSET 95</string>
 	<key>MADPlugMenuName</key>
 	<string>XM</string>
+	<key>MADCanImport</key>
+	<true/>
 	<key>MADPlugMode</key>
-	<string>IMPL</string>
+	<string>EXIM</string>
+	<key>MADCanExport</key>
+	<true/>
 	<key>MADPlugType</key>
 	<string>XM  </string>
 	<key>MADPlugUTITypes</key>

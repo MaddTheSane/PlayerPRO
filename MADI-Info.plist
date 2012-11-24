@@ -22,6 +22,10 @@
 	<string>Written by A.ROSSET 2000</string>
 	<key>MADPlugMenuName</key>
 	<string>MADI</string>
+	<key>MADCanImport</key>
+	<true/>
+	<key>MADCanExport</key>
+	<false/>
 	<key>MADPlugMode</key>
 	<string>IMPL</string>
 	<key>MADPlugType</key>

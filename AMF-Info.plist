@@ -24,6 +24,10 @@
 	<string>AMF</string>
 	<key>MADPlugMode</key>
 	<string>EXIM</string>
+	<key>MADCanImport</key>
+	<true/>
+	<key>MADCanExport</key>
+	<true/>
 	<key>MADPlugType</key>
 	<string>AMF </string>
 	<key>MADPlugUTITypes</key>

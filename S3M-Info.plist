@@ -24,6 +24,10 @@
 	<string>S3M</string>
 	<key>MADPlugMode</key>
 	<string>EXIM</string>
+	<key>MADCanImport</key>
+	<true/>
+	<key>MADCanExport</key>
+	<true/>
 	<key>MADPlugType</key>
 	<string>S3M </string>
 	<key>MADPlugUTITypes</key>

@@ -24,6 +24,10 @@
 	<string>DMF</string>
 	<key>MADPlugMode</key>
 	<string>IMPL</string>
+	<key>MADCanImport</key>
+	<true/>
+	<key>MADCanExport</key>
+	<false/>
 	<key>MADPlugType</key>
 	<string>DMF </string>
 	<key>MADPlugUTITypes</key>

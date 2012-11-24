@@ -24,6 +24,10 @@
 	<string>Written by A.ROSSET 95</string>
 	<key>MADPlugType</key>
 	<string>MED </string>
+	<key>MADCanExport</key>
+	<false/>
+	<key>MADCanImport</key>
+	<true/>
 	<key>MADPlugUTITypes</key>
 	<array>
 		<string>net.sourceforge.playerpro.med</string>

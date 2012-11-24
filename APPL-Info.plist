@@ -26,6 +26,10 @@
 	<string>Application</string>
 	<key>MADPlugMode</key>
 	<string>IMPL</string>
+	<key>MADCanExport</key>
+	<false/>
+	<key>MADCanImport</key>
+	<true/>
 	<key>MADPlugType</key>
 	<string>APPL</string>
 	<key>MADPlugUTITypes</key>
