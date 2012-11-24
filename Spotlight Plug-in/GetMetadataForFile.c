@@ -85,7 +85,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 	{
 		char		type[ 5];
 #ifdef DEBUG
-		char		utiType[5] = {0}
+		char		utiType[5] = {0};
 		{
 			OSType info;
 			CFStringRef ostypes;
