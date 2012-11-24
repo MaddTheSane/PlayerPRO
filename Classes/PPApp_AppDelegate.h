@@ -12,6 +12,7 @@
 @class PPMusicList;
 
 @interface PPApp_AppDelegate : NSObject <NSApplicationDelegate> {
+	IBOutlet NSPanel *toolsPanel;
 	IBOutlet NSButton *loopButton;
     IBOutlet NSButton *playButton;
     IBOutlet NSButton *recordButton;
@@ -20,6 +21,8 @@
 	IBOutlet NSTextField *songCurTime;
 	IBOutlet NSTextField *songTotalTime;
 	IBOutlet NSSlider *songPos;
+	
+	IBOutlet NSWindow *window;
 	
 	IBOutlet NSTextField *fileName;
 	IBOutlet NSTextField *internalName;
@@ -30,17 +33,13 @@
 	IBOutlet NSTextField *musicSignature;
 	IBOutlet NSTextField *fileLocation;
 	
+	IBOutlet NSTableView *tableView;
+	IBOutlet NSArrayController *musicListController;
 	MADDriverRec	*MADDriver;
 	MADMusic		*Music;
 	MADLibrary		*MADLib;	
 	
-    IBOutlet NSWindow *window;
-	
-	IBOutlet NSTableView *tableView;
-    
-	
 	PPMusicList		*musicList;
-	IBOutlet NSArrayController *musicListController;
 	PPPreferences	*preferences;
 }
 - (IBAction)showMusicList:(id)sender;

@@ -40,8 +40,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	Boolean madWasReading = false;
 	long fullTime = 0, curTime = 0;
 	if (MADDriver) {
-		madWasReading = MADWasReading(MADDriver);
-		MADSetReading( MADDriver, FALSE);
+		madWasReading = MADIsPlayingMusic(MADDriver);
+		MADStopMusic(MADDriver);
 		MADStopDriver(MADDriver);
 		MADDisposeDriver(MADDriver);
 		if (madWasReading) {
@@ -64,10 +64,12 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	
 	MADCreateDriver(&init, MADLib, &MADDriver);
 	MADStartDriver(MADDriver);
-	if (madWasReading) {
+	if (Music) {
 		MADAttachDriverToMusic(MADDriver, Music, NULL);
+	}
+	if (madWasReading) {
 		MADSetMusicStatus(MADDriver, 0, fullTime, curTime);
-		MADSetReading(MADDriver, true);
+		MADPlayMusic(MADDriver);
 	}
 }
 
@@ -131,7 +133,6 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
     [window makeKeyAndOrderFront:sender];
 }
 
-
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad
 {
 	if (Music != NULL) {
@@ -168,7 +169,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 }
 
 - (IBAction)showTools:(id)sender {
-    
+    [toolsPanel makeKeyAndOrderFront:sender];
 }
 
 @synthesize window;
