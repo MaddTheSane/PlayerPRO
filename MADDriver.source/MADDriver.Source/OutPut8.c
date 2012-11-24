@@ -266,7 +266,7 @@ void Sample8BufferAddPoly( Channel *curVoice, register Ptr ASCBuffer, short chan
 
 void Play8PolyPhonic( MADDriverRec *intDriver)
 {
-	SInt32	i, x;
+	SInt32	i;//, x;
 	//Byte	*alpha = (Byte*) intDriver->IntDataPtr;
 
 //	x = intDriver->ASCBUFFER * intDriver->DriverSettings.numChn;

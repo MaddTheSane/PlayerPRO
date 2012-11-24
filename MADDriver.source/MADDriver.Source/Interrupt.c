@@ -1238,7 +1238,7 @@ void ApplyVSTEffects( MADDriverRec *intDriver, Boolean ByPass)
 		{
 			if( intDriver->curMusic->header->chanBus[ intDriver->EffectBufferID[ i]].ByPass == ByPass)
 			{
-				SInt32		*eee, *ASCBuffer, ii, x;
+				SInt32		*eee, *ASCBuffer, ii /*, x*/;
 				
 				if( intDriver->DriverSettings.oversampling > 1)
 				{

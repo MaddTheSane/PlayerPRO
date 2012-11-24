@@ -336,7 +336,7 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 		
 		if( shift)
 		{
-			SInt32 shiftval, a;//, b;
+			SInt32 /*shiftval,*/ a;//, b;
 			
 			for( i = 0 ; i < powersize; i++)
 			{
@@ -561,7 +561,7 @@ void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver,
 		
 		if( shift)
 		{
-			SInt32 shiftval, a, b;
+			SInt32 /*shiftval,*/ a, b;
 			
 			for( i = 0 ; i < powersize; i++)
 			{
