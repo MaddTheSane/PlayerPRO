@@ -23,7 +23,7 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
-#warning this code will only work on 32-bit mode, and needs the 10.6 SDK or older due to the use of the 'acur' resource type.
+#warning this code will only work on 32-bit mode
 #warning this code needs to be rewritten. 
 
 #include <string.h>
@@ -59,11 +59,11 @@ OSErr TestMIDIFile( Ptr AlienFile)
 
 OSErr ExtractMIDIInfo( PPInfoRec *info, Ptr theMIDI)
 {
-	long	PatternSize;
+	/*long	PatternSize;
 	short	i;
 	short	maxInstru;
 	short	tracksNo;
-	long	inOutCount;
+	long	inOutCount;*/
 	
 	info->signature = 'Midi';
 	strcpy( info->internalFileName, "");

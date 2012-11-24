@@ -606,7 +606,7 @@ int PutpatternsPtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *ini
  
  extern  	short 				MIDIInstMOD[ 128];
  extern		Boolean				UseQKIns;
- extern		MADMusic			*curMusic = NULL;
+			MADMusic			*curMusic = NULL;
  
 static inline void mystrcpy( Ptr a, BytePtr b)
 {

@@ -26,6 +26,10 @@
 	<string>Written by A.ROSSET 95</string>
 	<key>MADPlugType</key>
 	<string>Midi</string>
+	<key>MADCanExport</key>
+	<false/>
+	<key>MADCanImport</key>
+	<true/>
 	<key>MADPlugUTITypes</key>
 	<array>
 		<string>public.midi-audio</string>
