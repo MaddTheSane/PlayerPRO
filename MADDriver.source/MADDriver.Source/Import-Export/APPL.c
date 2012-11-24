@@ -24,7 +24,6 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 #include <CoreServices/CoreServices.h>
-#define BlockMoveData(x, y, z) memmove(y, x, z)
 #include "MOD.h"
 
 #if 0
@@ -159,7 +158,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	for( i = 0; i < MadHeader->numPat; i++)
 	{
 		inOutCount = sizeof( PatHeader);
-		BlockMoveData( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
+		memcpy(  &tempPatHeader, MADPtr + OffSetToSample, inOutCount);
 		
 		PPBE32( &tempPatHeader.size);
 		PPBE32( &tempPatHeader.compMode);
@@ -181,7 +180,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			return MADNeedMemory;
 		}
 		
-		BlockMoveData( MADPtr + OffSetToSample, MadFile->partition[ i], inOutCount);
+		memcpy( MadFile->partition[ i], MADPtr + OffSetToSample, inOutCount);
 		PPBE32( &MadFile->partition[ i]->header.size);
 		PPBE32( &MadFile->partition[ i]->header.compMode);
 		PPBE32( &MadFile->partition[ i]->header.patBytes);
@@ -192,7 +191,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	/**** INSTRUMENTS ****/
 	
 	inOutCount = sizeof( InstrData) * MadFile->header->numInstru;
-	BlockMoveData( MADPtr + OffSetToSample, MadFile->fid, inOutCount);
+	memcpy( MadFile->fid, MADPtr + OffSetToSample, inOutCount);
 	OffSetToSample += inOutCount;
 	
 	for( i = MadFile->header->numInstru-1; i >= 0 ; i--)
@@ -256,9 +255,9 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 				return MADNeedMemory;
 			}
 			
-			inOutCount = sizeof( sData);
+			inOutCount = sizeof( sData32);
 			
-			BlockMoveData( MADPtr + OffSetToSample, curData, inOutCount);
+			memcpy( curData, MADPtr + OffSetToSample, inOutCount);
 			OffSetToSample += inOutCount;
 			
 			// ** Read Sample DATA
@@ -284,7 +283,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 				return MADNeedMemory;
 			}
 			
-			BlockMoveData( MADPtr + OffSetToSample, curData->data, inOutCount);
+			memcpy( curData->data, MADPtr + OffSetToSample, inOutCount);
 			OffSetToSample += inOutCount;
 			if( curData->amp == 16)
 			{
@@ -314,7 +313,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			{
 				int x = 0;
 				inOutCount = sizeof( FXSets);
-				BlockMoveData( MADPtr + OffSetToSample, &MadFile->sets[ alpha], inOutCount);
+				memcpy( &MadFile->sets[ alpha], MADPtr + OffSetToSample, inOutCount);
 				OffSetToSample += inOutCount;
 				PPBE16(&MadFile->sets[ alpha].id);
 				PPBE16(&MadFile->sets[ alpha].noArg);
@@ -335,7 +334,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 				{
 					int y = 0;
 					inOutCount = sizeof( FXSets);
-					BlockMoveData( MADPtr + OffSetToSample, &MadFile->sets[ alpha], inOutCount);
+					memcpy( &MadFile->sets[ alpha], MADPtr + OffSetToSample, inOutCount);
 					OffSetToSample += inOutCount;
 					PPBE16(&MadFile->sets[ alpha].id);
 					PPBE16(&MadFile->sets[ alpha].noArg);
