@@ -23,9 +23,6 @@ winspool.lib
 "PlayerPRO Driver v 6.0  - Portable version - Programmed by A.ROSSET '02\n" \
 "Maintained by Charles \"Madd the Sane \" Betts\n"\
 "=======================================================================\n" \
-"       DirectSound or Wave Version for Windows 95 or Windows NT        \n" \
-"\n" \
-"=======================================================================\n" \
 "       This program is FREEWARE - Read README.TXT for more info\n" \
 "\n" \
 "     E-Mail : computers57@hotmail.com    \n"\
