@@ -337,40 +337,20 @@ enum PPMusicToolbarTypes {
 	NSError *err = nil;
 	NSString *utiFile = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
 	if (err) {
-		NSRunAlertPanel(NSLocalizedString(@"Error opening file", nil), [NSString stringWithFormat:NSLocalizedString(@"Unable to open %@: %@", nil), [filename lastPathComponent], [err localizedFailureReason]], nil, nil, nil);
+		NSRunAlertPanel(@"Error opening file", [NSString stringWithFormat:@"Unable to open %@: %@", [filename lastPathComponent], [err localizedFailureReason]], nil, nil, nil);
 		return NO;
 	}
 	
 	if([[NSWorkspace sharedWorkspace] type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"])
 	{
 		[musicList addMusicURL:[NSURL fileURLWithPath:filename]];
+		return YES;
 	} else if ([[NSWorkspace sharedWorkspace] type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"] || [[NSWorkspace sharedWorkspace] type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"])
 	{
 		[musicList loadMusicListAtURL:[NSURL fileURLWithPath:filename]];
+		return YES;
 	}
-	
-	/*static NSArray *handlers = nil;
-	if (handlers == nil) {
-		handlers = [[NSArray alloc] initWithObjects:[PcsxrPluginHandler class], [PcsxrMemCardHandler class], [PcsxrFreezeStateHandler class], [PcsxrDiscHandler class], nil];
-	}
-	BOOL isHandled = NO;
-	for (Class fileHandler in handlers) {
-		NSObject<PcsxrFileHandle> *hand = [[fileHandler alloc] init];
-		BOOL canHandle = NO;
-		for (NSString *uti in [fileHandler supportedUTIs]) {
-			if ([[NSWorkspace sharedWorkspace] type:utiFile  conformsToType:uti]) {
-				canHandle = YES;
-			}
-		}
-		if (canHandle) {
-			isHandled = [hand handleFile:HandleBinCue(filename)];
-			[hand release];
-			break;
-		}
-		[hand release];
-		
-	}
-	return isHandled;*/
+	return NO;
 }
 
 
