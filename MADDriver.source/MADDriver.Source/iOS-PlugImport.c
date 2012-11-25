@@ -62,7 +62,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "AMF ",
 		.version = 2 << 16 | 0 << 8 | 0,
-		.mode = MADPlugImportExport,
+		.mode = MADPlugImport,
 		.UTIType = CFSTR("net.sourceforge.playerpro.amf"),
 	},
 	{
