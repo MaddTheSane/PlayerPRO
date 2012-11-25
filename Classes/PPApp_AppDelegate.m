@@ -251,7 +251,20 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 }
 
 - (IBAction)removeSelectedMusic:(id)sender {
-	
+	NSIndexSet *selMusic = [tableView selectedRowIndexes];
+	NSInteger i = 0;
+	NSInteger selIndexes = [selMusic count];
+	NSUInteger *indexArray = malloc(sizeof(NSUInteger) * selIndexes);
+	NSRange theRange;
+	theRange.location = 0;
+	theRange.length = NSUIntegerMax;
+	[selMusic getIndexes:indexArray maxCount:selIndexes inIndexRange:&theRange];
+	[self willChangeValueForKey:@"musicList"];
+	for (i = selIndexes - 1; i >= 0 ; i--) {
+		[musicList removeObjectInMusicListAtIndex:indexArray[i]];
+	}
+	[self didChangeValueForKey:@"musicList"];
+	free(indexArray);
 }
 
 enum PPMusicToolbarTypes {
