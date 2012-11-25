@@ -11,7 +11,7 @@
 #ifndef __PPDEFS_H
 #define __PPDEFS_H
 
-#ifdef _MAC_H
+#ifdef __APPLE__
 #include <MacTypes.h>
 #endif
 
@@ -28,7 +28,7 @@
 #define true TRUE
 #define false FALSE
 #endif
-#define __LITTLE_ENDIAN__
+#define __LITTLE_ENDIAN__ 1
 #define PRAGMA_STRUCT_PACKPUSH 1
 #endif
 
