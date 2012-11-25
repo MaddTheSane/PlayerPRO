@@ -799,11 +799,9 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	}
 	
 	/*************************/
-	//Most modern compilers can do 64-bit math, so ignoring
-//#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
-//#else
-//	DriverInitParam->oversampling = 1;			// We do NOT support oversampling on NON-64bits processor
-//#endif
+#if !defined(HAS_LONG_LONG) || !defined(HAS_LONG_DOUBLE)
+	DriverInitParam->oversampling = 1;// We do NOT support oversampling on compilers that don't have long longs and long doubles
+#endif
 	
 	MDriver = (MADDriverRec*) calloc( sizeof( MADDriverRec), 1);
 	

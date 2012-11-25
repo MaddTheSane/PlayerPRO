@@ -127,8 +127,7 @@ void Sampler16AddDelay( Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intD
 	///
 	SInt32				aDD, aCC = curVoice->lAC, off = 0;
 	
-//#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
-	#if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
+#if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
 	{
 		long long finalperiod;
 		long double temp;
