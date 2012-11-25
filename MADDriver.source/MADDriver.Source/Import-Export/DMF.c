@@ -64,7 +64,7 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 
 static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
 {
-	Str255	tStr;
+	//Str255	tStr;
 	Byte		LoB1 = LOW( B1);
 	Byte		HiB1 = HI( B1);
 	
@@ -202,17 +202,18 @@ static void ConvertMADEffect( Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 
 static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
-	long 				i, PatMax, x, z, channel, Row;
-	long 				sndSize, OffSetToSample, OldTicks, starting;
+	long 				i, x, z, channel, Row;
+	//long 				sndSize, OffSetToSample, OldTicks, PatMax;
+	long				starting;
 	Ptr					MaxPtr;
-	OSErr				theErr;
+	//OSErr				theErr;
 	Ptr					theInstrument[ 64], destPtr;
 	Byte				tempChar, *theITCopy;
-	short				Note, Octave, maxTrack;
-	short				ITperiod[ 12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
-	long				note_st3period;
-	long				note_amigaperiod;
-	Byte				*ChannelSettings;
+	//short				Note, Octave, maxTrack;
+	//short				ITperiod[ 12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
+	//long				note_st3period;
+	//long				note_amigaperiod;
+	//Byte				*ChannelSettings;
 	
 	/**** Variables pour le MAD ****/
 	Cmd				*aCmd;
@@ -609,7 +610,7 @@ for( i = 0; i < MAXTRACK; i++)
 
 static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 {
-	short		i, maxInstru, tracksNo;
+	//short		i, maxInstru, tracksNo;
 	ITForm		ITinfo;
 	/********************************/
 
@@ -641,7 +642,7 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	//info->totalTracks	 = Tdecode16(  &ITinfo.insNum);
 	
-	mystrcpy( info->formatDescription, "\pIT Plug");
+	mystrcpy( info->formatDescription, "\pDMF Plug");
 
 	return noErr;
 }
@@ -652,7 +653,7 @@ static OSErr TestITFile( Ptr AlienFile)
 	OSType myID = myIT->ID;
 	MOT32(&myID);
 
-	if( myID == 'IMPM') return noErr;
+	if( myID == 'DDMF') return noErr;
 	else return  MADFileNotSupportedByThisPlug;
 }
 

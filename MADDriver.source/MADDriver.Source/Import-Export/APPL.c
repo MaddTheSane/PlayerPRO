@@ -121,7 +121,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	
 	if( MadHeader->MAD != 'MADK')
 	{
-		DisposePtr(MadFile->header);
+		DisposePtr((Ptr)MadFile->header);
 		return MADFileNotSupportedByThisPlug;
 	}
 	
@@ -135,15 +135,15 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	MadFile->fid = ( InstrData*) NewPtrClear( sizeof( InstrData) * (long) MAXINSTRU);
 	if( !MadFile->fid)
 	{
-		DisposePtr(MadFile->header);
+		DisposePtr((Ptr)MadFile->header);
 		return MADNeedMemory;
 	}
 	
 	MadFile->sample = ( sData**) NewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE);
 	if( !MadFile->sample)
 	{
-		DisposePtr(MadFile->header);
-		DisposePtr(MadFile->fid);
+		DisposePtr((Ptr)MadFile->header);
+		DisposePtr((Ptr)MadFile->fid);
 		return MADNeedMemory;
 	}
 	
@@ -167,11 +167,11 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		{
 			for( x = 0; x < i; x++)
 			{
-				if( MadFile->partition[ x] != NULL)	DisposePtr( MadFile->partition[ x]);
+				if( MadFile->partition[ x] != NULL)	DisposePtr( (Ptr)MadFile->partition[ x]);
 			}
-			DisposePtr( MadFile->header);
-			DisposePtr(MadFile->fid);
-			DisposePtr(MadFile->sample);
+			DisposePtr( (Ptr)MadFile->header);
+			DisposePtr( (Ptr)MadFile->fid);
+			DisposePtr( (Ptr)MadFile->sample);
 			
 			return MADNeedMemory;
 		}
@@ -235,9 +235,9 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 				
 				for( x = 0; x < MadFile->header->numPat; x++)
 				{
-					if( MadFile->partition[ x] != NULL)	DisposePtr( MadFile->partition[ x]);
+					if( MadFile->partition[ x] != NULL)	DisposePtr( (Ptr)MadFile->partition[ x]);
 				}
-				DisposePtr( MadFile->header);
+				DisposePtr( (Ptr)MadFile->header);
 				
 				
 				return MADNeedMemory;
@@ -264,9 +264,9 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 				
 				for( x = 0; x < MadFile->header->numPat; x++)
 				{
-					if( MadFile->partition[ x] != NULL)	DisposePtr( MadFile->partition[ x]);
+					if( MadFile->partition[ x] != NULL)	DisposePtr( (Ptr)MadFile->partition[ x]);
 				}
-				DisposePtr( MadFile->header);
+				DisposePtr( (Ptr)MadFile->header);
 				
 				return MADNeedMemory;
 			}
@@ -378,99 +378,99 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	OSErr           myErr;
 	short           iFileRefI, i;
 	Handle          myRes;
-	Boolean         hasToClose = FALSE;
+	Boolean         hasToClose = TRUE;
 	FSSpec          AlienFileFSSpec;
-
+	
 	HGetVol( NULL, &AlienFileFSSpec.vRefNum, &AlienFileFSSpec.parID);
 	MYC2PStr( AlienFileName);
 	for( i = 0; i <= AlienFileName[ 0]; i++) AlienFileFSSpec.name[ i] = AlienFileName[ i];
-
+	
 	myErr = noErr;
-
+	
 	switch( order)
 	{
-	case 'IMPL':
-		iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdPerm);
-		if( iFileRefI == -1) myErr = MADUnknownErr;
-		else
-		{
-			UseResFile( iFileRefI);
-
-			if( Count1Resources( 'MADK') > 0)
+		case 'IMPL':
+			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdPerm);
+			if( iFileRefI == -1) myErr = MADUnknownErr;
+			else
 			{
-				myRes = Get1IndResource( 'MADK', 1);
-				DetachResource( myRes);
-				HLock( myRes);
-
-				myErr = LoadMADH( *myRes, MadFile, init);
-
-				HUnlock( myRes);
-				DisposeHandle( myRes);
+				UseResFile( iFileRefI);
+				
+				if( Count1Resources( 'MADK') > 0)
+				{
+					myRes = Get1IndResource( 'MADK', 1);
+					DetachResource( myRes);
+					HLock( myRes);
+					
+					myErr = LoadMADH( *myRes, MadFile, init);
+					
+					HUnlock( myRes);
+					DisposeHandle( myRes);
+				}
+				else myErr = MADUnknowErr;
+				
+				if( hasToClose) CloseResFile( iFileRefI);
 			}
-			else myErr = MADUnknowErr;
-
-			if( hasToClose) CloseResFile( iFileRefI);
-		}
-		break;
-
-	case 'TEST':
-		iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);      
-		if( iFileRefI == -1) myErr = MADUnknowErr;
-		else
-		{
-			UseResFile( iFileRefI);
-
-			if( Count1Resources( 'MADK') > 0)
+			break;
+			
+		case 'TEST':
+			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);      
+			if( iFileRefI == -1) myErr = MADUnknowErr;
+			else
 			{
-				myRes = Get1IndResource( 'MADK', 1);
-				DetachResource( myRes);
-
-				HLock( myRes);
-
-				myErr = TESTMADH( (MADSpec*) *myRes);
-
-				HUnlock( myRes);
-				DisposeHandle( myRes);
+				UseResFile( iFileRefI);
+				
+				if( Count1Resources( 'MADK') > 0)
+				{
+					myRes = Get1IndResource( 'MADK', 1);
+					DetachResource( myRes);
+					
+					HLock( myRes);
+					
+					myErr = TESTMADH( (MADSpec*) *myRes);
+					
+					HUnlock( myRes);
+					DisposeHandle( myRes);
+				}
+				else myErr = MADUnknowErr;
+				
+				if( hasToClose) CloseResFile( iFileRefI);
 			}
-			else myErr = MADUnknowErr;
-
-			if( hasToClose) CloseResFile( iFileRefI);
-		}
-		break;
-
-	case 'INFO':
-		iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);
-		if( iFileRefI == -1) myErr = MADUnknowErr;
-		else
-		{
-			UseResFile( iFileRefI);
-
-			if( Count1Resources( 'MADK') > 0)
+			break;
+			
+		case 'INFO':
+			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);
+			if( iFileRefI == -1) myErr = MADUnknowErr;
+			else
 			{
-				myRes = Get1IndResource( 'MADK', 1);
-				info->fileSize = GetResourceSizeOnDisk( myRes);
-
-				DetachResource( myRes);
-				HLock( myRes);
-
-				myErr = INFOMADF( (MADSpec*) *myRes, info);
-
-				HUnlock( myRes);
-				DisposeHandle( myRes);
+				UseResFile( iFileRefI);
+				
+				if( Count1Resources( 'MADK') > 0)
+				{
+					myRes = Get1IndResource( 'MADK', 1);
+					info->fileSize = GetResourceSizeOnDisk( myRes);
+					
+					DetachResource( myRes);
+					HLock( myRes);
+					
+					myErr = INFOMADF( (MADSpec*) *myRes, info);
+					
+					HUnlock( myRes);
+					DisposeHandle( myRes);
+				}
+				else myErr = MADUnknowErr;
+				
+				if( hasToClose) CloseResFile( iFileRefI);
 			}
-			else myErr = MADUnknowErr;
-
-			if( hasToClose) CloseResFile( iFileRefI);
-		}
-		break;
-
-	default:
-		myErr = MADOrderNotImplemented;
-		break;
+			break;
+			
+		default:
+			myErr = MADOrderNotImplemented;
+			break;
 	}
-
+	
 	MYP2CStr( (unsigned char*) AlienFileName);
-
+	
 	return myErr;
 }
 

@@ -320,8 +320,8 @@ OSErr mainToneGenerator(sData			*theData,
 						short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long				i, AudioLength, AudioFreq, AudioAmp;
-	Ptr					Sample8Ptr = theData->data, Audio8Ptr;
-	short				*Sample16Ptr = (short*) theData->data, *Audio16Ptr;
+	Ptr					/*Sample8Ptr = theData->data,*/ Audio8Ptr;
+	short				/* *Sample16Ptr = (short*) theData->data,*/ *Audio16Ptr;
 	DialogPtr			myDia;
 	short				itemHit, itemType, AudioType;
 	Handle				itemHandle;

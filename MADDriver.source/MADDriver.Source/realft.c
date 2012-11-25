@@ -43,7 +43,7 @@ double EQInterpolate(double p,double p1,double p2,double v1,double v2)
 	return v1 + ((di*dv) / dp);
 }
 
-static short *SDataInter;
+//static short *SDataInter;
 
 OSErr MADInitEqualizer( MADDriverRec *intDriver)
 {

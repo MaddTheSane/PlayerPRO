@@ -12,7 +12,7 @@ OSErr mainInvert(	sData					*theData,
 					PPInfoPlug				*thePPInfoPlug,
 					short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	long	i, peak = 0, temp;
+	long	i, /*peak = 0,*/ temp;
 
 	switch( theData->amp)
 	{

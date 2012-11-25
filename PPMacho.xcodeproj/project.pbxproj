@@ -223,7 +223,6 @@
 		55672E2610CAD641008C5C3D /* Okta.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 558687DE10BF620500FCC24D /* Okta.ppimpexp */; };
 		55672E2710CAD641008C5C3D /* S3M.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; };
 		55672E2810CAD641008C5C3D /* ULT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; };
-		55672E2910CAD641008C5C3D /* UMX.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586882910BF62F500FCC24D /* UMX.ppimpexp */; };
 		55672E2A10CAD641008C5C3D /* XM.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; };
 		55672E2B10CAD641008C5C3D /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
 		55672E9010CAD830008C5C3D /* OSX-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */; };
@@ -1288,7 +1287,6 @@
 				55672E2610CAD641008C5C3D /* Okta.ppimpexp in Copy PlugIns */,
 				55672E2710CAD641008C5C3D /* S3M.ppimpexp in Copy PlugIns */,
 				55672E2810CAD641008C5C3D /* ULT.ppimpexp in Copy PlugIns */,
-				55672E2910CAD641008C5C3D /* UMX.ppimpexp in Copy PlugIns */,
 				55672E2A10CAD641008C5C3D /* XM.ppimpexp in Copy PlugIns */,
 				55672E2B10CAD641008C5C3D /* APPL.ppimpexp in Copy PlugIns */,
 			);

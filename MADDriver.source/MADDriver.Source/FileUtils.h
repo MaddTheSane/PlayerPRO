@@ -86,8 +86,8 @@ static inline void MADByteSwap32(void *msg_buf)
 	*((UInt32*) msg_buf) = Endian32_Swap(temp);
 #else
 	*((UInt32*) msg_buf) = ((((temp & 0xff000000) >> 24) | \
-	(( temp & 0x00ff0000) >> 8) | (( temp & 0x0000ff00) << 8) | \
-	(temp & 0x000000ff) << 24));
+							 (( temp & 0x00ff0000) >> 8) | (( temp & 0x0000ff00) << 8) | \
+							 (temp & 0x000000ff) << 24));
 #endif
 }
 
@@ -100,38 +100,40 @@ static inline void MADByteSwap16(void *msg_buf)
 	*((UInt16*) msg_buf) = (((((UInt16)buf)<<8) & 0xFF00) | ((((UInt16)buf)>>8) & 0x00FF));
 #endif
 }
-
-/////////////////////////////////
-
+	
+	/////////////////////////////////
+	
+#ifdef __LITTLE_ENDIAN__
 static inline void MOT32(void *msg_buf)
 {
-#ifdef __LITTLE_ENDIAN__
 	MADByteSwap32(msg_buf);
-#endif
 }
 
 static inline void MOT16(void *msg_buf)
 {
-#ifdef __LITTLE_ENDIAN__
 	MADByteSwap16(msg_buf);
-#endif
 }
+#else
+#define MOT32(msg_buf)
+#define MOT16(msg_buf)
+#endif
 
 /////////////////////////////////
 
+#ifdef __BIG_ENDIAN__
 static inline void INT32(void *msg_buf)
 {
-#ifdef __BIG_ENDIAN__
 	MADByteSwap32(msg_buf);
-#endif
 }
 
 static inline void INT16(void *msg_buf)
 {
-#ifdef __BIG_ENDIAN__
 	MADByteSwap16(msg_buf);
-#endif
 }
+#else
+#define INT32(msg_buf)
+#define INT16(msg_buf)
+#endif
 #endif
 
 #ifdef __cplusplus

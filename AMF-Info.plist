@@ -45,6 +45,6 @@
 		<string>net.sourceforge.playerpro.amf</string>
 	</array>
 	<key>MADPlugMode</key>
-	<string>EXIM</string>
+	<string>IMPL</string>
 </dict>
 </plist>
