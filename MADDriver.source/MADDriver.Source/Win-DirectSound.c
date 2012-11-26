@@ -285,6 +285,20 @@ static void CALLBACK TimeProc(
 	{
 		MADDriverRec	*WinMADDriver = (MADDriverRec*) dwUser;
 		
+		if(WinMADDriver->Reading == false)
+		{
+			switch( WinMADDriver->DriverSettings.outPutBits)
+				{
+					case 8:
+						memset(WinMADDriver->currentBuf, 0x80, WinMADDriver->WIN95BUFFERSIZE);
+						break;
+					
+					case 16:
+						memset(WinMADDriver->currentBuf, 0, WinMADDriver->WIN95BUFFERSIZE);
+						break;
+				}
+		}
+
 		WinMADDriver->lpSwSamp->lpVtbl->GetCurrentPosition( WinMADDriver->lpSwSamp, &pos, &posp);
 		
 		if(pos > WinMADDriver->WIN95BUFFERSIZE/2 && WinMADDriver->OnOff == true)
@@ -296,12 +310,10 @@ static void CALLBACK TimeProc(
 				switch( WinMADDriver->DriverSettings.outPutBits)
 				{
 					case 8:
-						//for( i = 0; i < WinMADDriver->WIN95BUFFERSIZE/2; i++) WinMADDriver->currentBuf[ i] = 0x80;
 						memset(WinMADDriver->currentBuf, 0x80, WinMADDriver->WIN95BUFFERSIZE/2);
 						break;
 					
 					case 16:
-						//for( i = 0; i < WinMADDriver->WIN95BUFFERSIZE/2; i++) WinMADDriver->currentBuf[ i] = 0;
 						memset(WinMADDriver->currentBuf, 0, WinMADDriver->WIN95BUFFERSIZE/2);
 						break;
 				}
@@ -321,12 +333,10 @@ static void CALLBACK TimeProc(
 				switch( WinMADDriver->DriverSettings.outPutBits)
 				{
 					case 8:
-						//for( i = WinMADDriver->WIN95BUFFERSIZE/2; i < WinMADDriver->WIN95BUFFERSIZE; i++) WinMADDriver->currentBuf[ i] = 0x80;
 						memset(WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, 0x80, WinMADDriver->WIN95BUFFERSIZE/2);
 						break;
 					
 					case 16:
-						//for( i = WinMADDriver->WIN95BUFFERSIZE/2; i < WinMADDriver->WIN95BUFFERSIZE; i++) WinMADDriver->currentBuf[ i] = 0;
 						memset(WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, 0, WinMADDriver->WIN95BUFFERSIZE/2);
 						break;
 				}
@@ -391,11 +401,11 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 		 
 		// debugger( "timeSetEvent\n");
 		 
-		WinMADDriver->gwID = timeSetEvent(	  40,   												/* how often                 */
-													  40,   							/* timer resolution          */
-													  TimeProc,  						/* callback function         */
-													  (unsigned long) WinMADDriver,		/* info to pass to callback  */
-													  TIME_PERIODIC); 					/* oneshot or periodic?      */
+		WinMADDriver->gwID = timeSetEvent(	40,   								/* how often                 */
+											40,   								/* timer resolution          */
+											TimeProc,  							/* callback function         */
+											(unsigned long) WinMADDriver,		/* info to pass to callback  */
+											TIME_PERIODIC); 					/* oneshot or periodic?      */
 		
 		if( WinMADDriver->gwID == 0) return false;
 		else return true;

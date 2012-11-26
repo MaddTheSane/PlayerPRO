@@ -46,6 +46,7 @@ typedef FILE*		UNFILE;
 	
 PPEXPORT UNFILE iFileOpen( Ptr name);
 PPEXPORT void iFileCreate(Ptr path, OSType type);
+PPEXPORT UNFILE iFileOpenWrite( Ptr name);
 
 PPEXPORT long iGetEOF( UNFILE iFileRefI);
 PPEXPORT OSErr iRead( long size, Ptr dest, UNFILE iFileRefI);

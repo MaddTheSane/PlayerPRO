@@ -35,6 +35,11 @@ FILE* iFileOpen( Ptr name)
 	return fopen( name, "rb");
 }
 
+FILE* iFileOpenWrite( Ptr name)
+{
+	return fopen( name, "wb");
+}
+
 long iGetEOF( FILE* iFileRefI)
 {
 	long curEOF, oldPos;
