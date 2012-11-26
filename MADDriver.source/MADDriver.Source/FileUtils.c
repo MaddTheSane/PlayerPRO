@@ -32,6 +32,11 @@ void iFileCreate(Ptr path, OSType type)
 
 FILE* iFileOpen( Ptr name)
 {
+	return iFileOpenRead( name);
+}
+
+FILE* iFileOpenRead( Ptr name)
+{
 	return fopen( name, "rb");
 }
 

@@ -44,9 +44,10 @@ extern "C" {
 #include <string.h>
 typedef FILE*		UNFILE;
 	
-PPEXPORT UNFILE iFileOpen( Ptr name);
-PPEXPORT void iFileCreate(Ptr path, OSType type);
+PPEXPORT UNFILE iFileOpen( Ptr name) DEPRECATED_ATTRIBUTE;
+PPEXPORT UNFILE iFileOpenRead( Ptr name);
 PPEXPORT UNFILE iFileOpenWrite( Ptr name);
+PPEXPORT void iFileCreate(Ptr path, OSType type);
 
 PPEXPORT long iGetEOF( UNFILE iFileRefI);
 PPEXPORT OSErr iRead( long size, Ptr dest, UNFILE iFileRefI);
