@@ -1279,7 +1279,7 @@ OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRe
 			if( AlienFile != NULL)
 			{
 				iFileCreate( AlienFileName, 'XM  ');
-				iFileRefI = iFileOpen( AlienFileName);
+				iFileRefI = iFileOpenWrite( AlienFileName);
 				if( iFileRefI)
 				{
 					iWrite( sndSize, AlienFile, iFileRefI);
@@ -1291,7 +1291,7 @@ OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRe
 		break;
 		
 		case 'IMPL':
-			iFileRefI = iFileOpen( AlienFileName);
+			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				sndSize = iGetEOF( iFileRefI);
@@ -1325,7 +1325,7 @@ OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRe
 		break;
 		
 		case 'TEST':
-			iFileRefI = iFileOpen( AlienFileName);
+			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				sndSize = 1024L;
@@ -1346,7 +1346,7 @@ OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRe
 		break;
 
 		case 'INFO':
-			iFileRefI = iFileOpen( AlienFileName);
+			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);

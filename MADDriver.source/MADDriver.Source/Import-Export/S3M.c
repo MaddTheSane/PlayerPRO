@@ -1211,7 +1211,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			if( AlienFile != NULL)
 			{
 				iFileCreate( AlienFileName, 'S3M ');
-				iFileRefI = iFileOpen( AlienFileName);
+				iFileRefI = iFileOpenWrite( AlienFileName);
 				if( iFileRefI)
 				{
 					iWrite( sndSize, AlienFile, iFileRefI);
@@ -1223,7 +1223,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 		break;
 		
 		case 'IMPL':
-			iFileRefI = iFileOpen( AlienFileName);
+			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				sndSize = iGetEOF( iFileRefI);
@@ -1257,7 +1257,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 		break;
 		
 		case 'TEST':
-			iFileRefI = iFileOpen( AlienFileName);
+			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				sndSize = 1024L;
@@ -1278,7 +1278,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 		break;
 
 		case 'INFO':
-			iFileRefI = iFileOpen( AlienFileName);
+			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);

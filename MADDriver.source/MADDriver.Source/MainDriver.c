@@ -1370,7 +1370,7 @@ OSErr MADLoadMADFileCString( MADMusic **music, Ptr fName)
 
 //	MADDisposeMusic( music);
 	
-	srcFile = iFileOpen( fName);
+	srcFile = iFileOpenRead( fName);
 	if( srcFile == 0) return MADReadingErr;
 	
 	theErr = MADReadMAD( music, srcFile, MADFileType, NULL, NULL);
