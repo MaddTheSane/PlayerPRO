@@ -114,7 +114,6 @@ static void MOToldsData(struct oldsData * s) {
 	PPBE32(&s->loopBeg);
 	PPBE32(&s->loopSize);
 	PPBE16(&s->c2spd);
-	// i hope data is really not used.....
 }
 
 static void MOToldPatHeader(struct oldPatHeader * p) {
