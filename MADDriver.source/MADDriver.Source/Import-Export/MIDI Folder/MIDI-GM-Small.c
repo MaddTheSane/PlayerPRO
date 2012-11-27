@@ -778,14 +778,14 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 {
 	short 						foundVRefNum, iFileRef, no, ii, i, x;
 	OSErr 						iErr;
-	NoteAllocator 				na;
+	//NoteAllocator 				na;
 	Str255						aStr, bStr;
 	sData						*curData;
-	long						size, inOutBytes, foundDirID;
+	//long						size, inOutBytes, foundDirID;
 	Ptr							data;
 	CK							ck;
 	long						listType, noIns, fSize, tot;
-	MyAtom						at, sat, insAt, insHe, rgnAt, sat3, sat4, InfoAt, InfoData;
+	MyAtom						at, sat, insAt, insHe, rgnAt; /*, sat3, sat4, InfoAt, InfoData;*/
 	INSTHEADER 					curIns;
 	
 	iFileRef = GenerateDLSFromBundle();
@@ -1115,10 +1115,10 @@ void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai)
 {
 	short 						no, ii, i;
 	OSErr 						iErr;
-	OSType						synthType;
-	Str31						synthName;
-	SynthesizerDescription		sd;
-	MusicComponent 				mc;
+	//OSType						synthType;
+	//Str31						synthName;
+	//SynthesizerDescription		sd;
+	//MusicComponent 				mc;
 	
 	Str255						aStr, bStr;
 	
@@ -1130,12 +1130,12 @@ void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai)
 	QTAtom						mySampleInfoAtom = 0;
 	QTAtom						mySampleDescAtom = 0;
 	QTAtom						mySampleDataAtom = 0;
-	QTAtom						myInstInfoAtom = 0;
-	QTAtom						myToneDescAtom = 0;
-	QTAtom						myInstrumentRefAtom = 0;
+	//QTAtom						myInstInfoAtom = 0;
+	//QTAtom						myToneDescAtom = 0;
+	//QTAtom						myInstrumentRefAtom = 0;
 	QTAtomID					atomID;
 	
-	short						x;
+	//short						x;
 	
 	short						sampleIDMap[ 500];
 	

@@ -286,8 +286,8 @@ void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, s
  */
 void WritePfile( PatData *Pat, short pos, short track, unsigned bSam, unsigned wPit, unsigned wEff)
 {
-	static int 			cNote = -1, irgchPos, Buffsiz;
-	static char 		*pchBuff;
+	//static int 			cNote = -1, irgchPos, Buffsiz;
+	//static char 		*pchBuff;
 	Cmd					*aCmd;
 
 /*  if (-1 == cNote)
@@ -656,7 +656,7 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	theMAD->header->speed			= 	6;
 	theMAD->header->tempo			=	125;
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MIDI Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, "Converted by PlayerPRO MIDI Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	for (cSamps = 0, x = 0; x < 129; x++)
 	{
