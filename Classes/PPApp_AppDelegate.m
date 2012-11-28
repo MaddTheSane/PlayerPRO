@@ -36,7 +36,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 @implementation PPApp_AppDelegate
 
-- (void)MADDriverWithPreferences {
+- (void)MADDriverWithPreferences
+{
 	Boolean madWasReading = false;
 	long fullTime = 0, curTime = 0;
 	if (MADDriver) {
@@ -73,7 +74,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	}
 }
 
-+ (void)initialize {
++ (void)initialize
+{
 	PPMusicList *tempList = [[[PPMusicList alloc] init] autorelease];
 	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -129,7 +131,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 															 nil]];
 }
 
-- (IBAction)showMusicList:(id)sender {
+- (IBAction)showMusicList:(id)sender
+{
     [window makeKeyAndOrderFront:sender];
 }
 
@@ -152,7 +155,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	return YES;
 }
 
-- (IBAction)showPreferences:(id)sender {
+- (IBAction)showPreferences:(id)sender
+{
     if (!preferences) {
 		preferences = [[PPPreferences alloc] init];
 	}
@@ -174,8 +178,10 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 @synthesize window;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	PPRegisterDebugFunc(CocoaDebugStr);
+
 	[self willChangeValueForKey:@"musicList"];
 	musicList = [[PPMusicList alloc] init];
 	[musicList loadMusicListFromPreferences];
@@ -188,7 +194,6 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	MADInitLibrary(NULL, &MADLib);
 	//[tableView setDataSource:musicList];
 	[self MADDriverWithPreferences];
-	PPRegisterDebugFunc(CocoaDebugStr);
 
 }
 
@@ -220,19 +225,23 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[super dealloc];
 }
 
-- (IBAction)deleteInstrument:(id)sender {
+- (IBAction)deleteInstrument:(id)sender
+{
     
 }
 
-- (IBAction)showBoxEditor:(id)sender {
+- (IBAction)showBoxEditor:(id)sender
+{
     
 }
 
-- (IBAction)showClassicEditor:(id)sender {
+- (IBAction)showClassicEditor:(id)sender
+{
     
 }
 
-- (IBAction)showDigitalEditor:(id)sender {
+- (IBAction)showDigitalEditor:(id)sender
+{
     
 }
 
@@ -242,11 +251,13 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[self didChangeValueForKey:@"musicList"];
 }
 
-- (IBAction)playSelectedMusic:(id)sender {
+- (IBAction)playSelectedMusic:(id)sender
+{
 	
 }
 
-- (IBAction)addMusic:(id)sender {
+- (IBAction)addMusic:(id)sender
+{
 	
 }
 
@@ -306,7 +317,8 @@ enum PPMusicToolbarTypes {
 	}	
 }
 
-- (void)soundPreferencesDidChange:(NSNotification *)notification {
+- (void)soundPreferencesDidChange:(NSNotification *)notification
+{
 	[self MADDriverWithPreferences];
 }
 
@@ -315,39 +327,48 @@ enum PPMusicToolbarTypes {
 	
 }
 
-- (IBAction)fastForwardButtonPressed:(id)sender {
+- (IBAction)fastForwardButtonPressed:(id)sender
+{
     
 }
 
-- (IBAction)loopButtonPressed:(id)sender {
+- (IBAction)loopButtonPressed:(id)sender
+{
     
 }
 
-- (IBAction)nextButtonPressed:(id)sender {
+- (IBAction)nextButtonPressed:(id)sender
+{
     
 }
 
-- (IBAction)playButtonPressed:(id)sender {
+- (IBAction)playButtonPressed:(id)sender
+{
     
 }
 
-- (IBAction)prevButtonPressed:(id)sender {
+- (IBAction)prevButtonPressed:(id)sender
+{
     
 }
 
-- (IBAction)recordButtonPressed:(id)sender {
+- (IBAction)recordButtonPressed:(id)sender
+{
     
 }
 
-- (IBAction)rewindButtonPressed:(id)sender {
+- (IBAction)rewindButtonPressed:(id)sender
+{
     
 }
 
-- (IBAction)sliderChanged:(id)sender {
+- (IBAction)sliderChanged:(id)sender
+{
     
 }
 
-- (IBAction)stopButtonPressed:(id)sender {
+- (IBAction)stopButtonPressed:(id)sender
+{
     
 }
 
