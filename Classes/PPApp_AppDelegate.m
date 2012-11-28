@@ -160,7 +160,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
     if (!preferences) {
 		preferences = [[PPPreferences alloc] init];
 	}
-	[preferences showWindow:self];
+	[preferences showWindow:sender];
 }
 
 
