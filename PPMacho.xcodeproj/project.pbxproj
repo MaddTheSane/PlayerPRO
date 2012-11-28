@@ -389,6 +389,7 @@
 		55879F8F164CA693009068D5 /* PPPlay.c in Sources */ = {isa = PBXBuildFile; fileRef = 55879F7D164CA63D009068D5 /* PPPlay.c */; };
 		55879F90164CA6A4009068D5 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		558A748313BE59F4000FD667 /* APPL_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0010BFB31500FCC24D /* APPL_Plug.rsrc.r */; };
+		558D4D9D1665CFDE00A333E8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */; };
 		559088E210E87E8800CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		559088E310E87ED100CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		559088E410E87ED700CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
@@ -1785,6 +1786,7 @@
 		55879F80164CA63D009068D5 /* Read.TXT */ = {isa = PBXFileReference; lastKnownFileType = text; path = Read.TXT; sourceTree = "<group>"; };
 		55879F85164CA65D009068D5 /* PPPlay */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PPPlay; sourceTree = BUILT_PRODUCTS_DIR; };
 		558A15250FE749B400533D71 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
+		558D4D9E1665CFF700A333E8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		559087F410E8364F00CE70B8 /* Exemple.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Exemple.icns; sourceTree = "<group>"; };
 		5590896710E883AF00CE70B8 /* WAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WAV.h; sourceTree = "<group>"; };
 		55981C5111EE370D00656EE3 /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
@@ -5194,6 +5196,7 @@
 				55ABFD54125E6D4400B182F1 /* PPNextTrack.pdf in Resources */,
 				55ABFD55125E6D4400B182F1 /* PPPrevTrack.pdf in Resources */,
 				55ABFD56125E6D4400B182F1 /* PPRecord.pdf in Resources */,
+				558D4D9D1665CFDE00A333E8 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6543,6 +6546,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				550B006810BA0676004FC5D7 /* InfoPlist.strings */,
+				558D4D9E1665CFF700A333E8 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
