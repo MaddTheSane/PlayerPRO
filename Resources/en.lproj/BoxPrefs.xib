@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2843</string>
+			<string key="NS.object.0">2844</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -119,7 +119,7 @@
 									<object class="NSButton" id="940722068">
 										<reference key="NSNextResponder" ref="811408916"/>
 										<int key="NSvFlags">268</int>
-										<string key="NSFrame">{{16, 56}, {64, 18}}</string>
+										<string key="NSFrame">{{16, 42}, {64, 18}}</string>
 										<reference key="NSSuperview" ref="811408916"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="436984135"/>
@@ -259,14 +259,14 @@
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									</object>
 								</object>
-								<string key="NSFrame">{{1, 1}, {323, 82}}</string>
+								<string key="NSFrame">{{1, 1}, {323, 68}}</string>
 								<reference key="NSSuperview" ref="2903554"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="940722068"/>
 								<string key="NSReuseIdentifierKey">_NS:11</string>
 							</object>
 						</object>
-						<string key="NSFrame">{{17, 58}, {325, 98}}</string>
+						<string key="NSFrame">{{17, 58}, {325, 84}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="811408916"/>
@@ -294,7 +294,7 @@
 						<bool key="NSTransparent">NO</bool>
 					</object>
 				</object>
-				<string key="NSFrameSize">{359, 176}</string>
+				<string key="NSFrameSize">{359, 162}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="2903554"/>
