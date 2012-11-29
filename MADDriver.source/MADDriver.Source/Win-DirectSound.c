@@ -271,9 +271,9 @@ BOOL LoadSamp(LPDIRECTSOUND lpDirectSound,
 static void CALLBACK TimeProc(
 	 UINT  IDEvent,			/* identifies timer event */
 	 UINT  uReserved,		/* not used */
-	 DWORD  dwUser,			/* application-defined instance data */
-	 DWORD  dwReserved1,	/* not used */
-	 DWORD  dwReserved2		/* not used */
+	 DWORD_PTR  dwUser,			/* application-defined instance data */
+	 DWORD_PTR  dwReserved1,	/* not used */
+	 DWORD_PTR  dwReserved2		/* not used */
 )
 {
 	DWORD 		pos, posp;
@@ -371,6 +371,7 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 	{
 		if( !AppCreateWritePrimaryBuffer( WinMADDriver->lpDirectSound, &WinMADDriver->lpDirectSoundBuffer, WinMADDriver->hwnd, WinMADDriver))
 		{
+			WinMADDriver->lpDirectSound->lpVtbl->Release(WinMADDriver->lpDirectSound);
 			WinMADDriver->lpDirectSound = NULL;
 			return false;
 		}
@@ -383,12 +384,16 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 		if( !LoadSamp(WinMADDriver->lpDirectSound, &WinMADDriver->lpSwSamp, NULL, WinMADDriver->WIN95BUFFERSIZE, DSBCAPS_LOCSOFTWARE, WinMADDriver))
 		{
 			//DEBUG debugger( "Error 2\n");		//DSBCAPS_LOCSOFTWARE
+			WinMADDriver->lpDirectSound->lpVtbl->Release(WinMADDriver->lpDirectSound);
 			WinMADDriver->lpDirectSound = NULL;
 			return false;
 		}
 		
-		if( !WinMADDriver->lpSwSamp) return false;
-		
+		if( !WinMADDriver->lpSwSamp) 
+		{
+			WinMADDriver->lpDirectSound->lpVtbl->Release(WinMADDriver->lpDirectSound);
+			return false;
+		}
 		WinMADDriver->lpSwSamp->lpVtbl->Play(WinMADDriver->lpSwSamp, 0, 0, DSBPLAY_LOOPING);
 		
 		///////////
@@ -424,8 +429,8 @@ void DirectSoundClose( MADDriverRec* WinMADDriver)
 	if( WinMADDriver->lpDirectSound)
 	{
 		/* stop the timer */
-		timeKillEvent( WinMADDriver->gwID);
 		timeEndPeriod( 20);
+		timeKillEvent( WinMADDriver->gwID);
 		
 		WinMADDriver->lpSwSamp->lpVtbl->Stop( WinMADDriver->lpSwSamp);
 		WinMADDriver->lpSwSamp->lpVtbl->Release( WinMADDriver->lpSwSamp);

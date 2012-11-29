@@ -134,9 +134,9 @@ ULONG GetPos(MADDriverRec *WinMADDriver)
 void CALLBACK TimeProc(
 	 UINT  IDEvent,
 	 UINT  uReserved,
-	 DWORD  dwUser,
-	 DWORD  dwReserved1,
-	 DWORD  dwReserved2
+	 DWORD_PTR  dwUser,
+	 DWORD_PTR  dwReserved1,
+	 DWORD_PTR  dwReserved2
 )
 {
 	char	*dmaDst;
