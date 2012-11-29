@@ -33,7 +33,7 @@ OSErr CheckMADFile( Ptr name)
 	char				charl[ 20];
 	OSErr				err;
 	
-	refNum = iFileOpen( name);
+	refNum = iFileOpenRead( name);
 	if( !refNum) return MADReadingErr;
 	else
 	{
@@ -94,7 +94,7 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	
 	theMAD = (MADSpec*) malloc( sizeof( MADSpec) + 200);
 	
-	fileID = iFileOpen( AlienFile);
+	fileID = iFileOpenRead( AlienFile);
 	if( !fileID)
 	{
 		free( theMAD);
@@ -184,7 +184,7 @@ OSErr	PPIdentifyFile( MADLibrary* inMADDriver, char	*type, Ptr AlienFile)
 	strcpy_s( type, 5, "!!!!");
 	
 	// Check if we have access to this file
-	refNum = iFileOpen( AlienFile);
+	refNum = iFileOpenRead( AlienFile);
 	if( !refNum) return MADReadingErr;
 	iClose( refNum);
 	
