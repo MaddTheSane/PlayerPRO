@@ -120,7 +120,6 @@
 		550B00EB10BA17BC004FC5D7 /* WAV.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DC10BA17BC004FC5D7 /* WAV.icns */; };
 		550B00EC10BA17BC004FC5D7 /* XI.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DD10BA17BC004FC5D7 /* XI.icns */; };
 		550B00ED10BA17BC004FC5D7 /* XM.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DE10BA17BC004FC5D7 /* XM.icns */; };
-		550B00EF10BA17E6004FC5D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */; };
 		550B011410BA1E1C004FC5D7 /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
 		550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
 		550B011710BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
@@ -142,7 +141,6 @@
 		5518107B10C35A5100ADA9F4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5518109210C35A6C00ADA9F4 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5518109310C35A7500ADA9F4 /* Example.c in Sources */ = {isa = PBXBuildFile; fileRef = 5518105610C35A2600ADA9F4 /* Example.c */; };
-		551810CD10C35C3500ADA9F4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */; };
 		551E56F2102A9E8B0086C86E /* Main.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F40C2F21DD00D6C081 /* Main.c */; };
 		551E57A1102AB9A30086C86E /* Mozart.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4170C2F21DD00D6C081 /* Mozart.c */; };
 		551FEA6410E727AD00EDF2F1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
@@ -389,7 +387,24 @@
 		55879F8F164CA693009068D5 /* PPPlay.c in Sources */ = {isa = PBXBuildFile; fileRef = 55879F7D164CA63D009068D5 /* PPPlay.c */; };
 		55879F90164CA6A4009068D5 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		558A748313BE59F4000FD667 /* APPL_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0010BFB31500FCC24D /* APPL_Plug.rsrc.r */; };
-		558D4D9D1665CFDE00A333E8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */; };
+		558D4D9F1666E8D600A333E8 /* ppApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55FA5FBA102D2D6C00CB63DA /* ppApp.icns */; };
+		558D4DA01666E8D600A333E8 /* 669.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D010BA17BC004FC5D7 /* 669.icns */; };
+		558D4DA11666E8D600A333E8 /* PATN.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55E89D3A10F26A4B004EB52B /* PATN.icns */; };
+		558D4DA21666E8D600A333E8 /* INS.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55E89D3B10F26A4B004EB52B /* INS.icns */; };
+		558D4DA31666E8D600A333E8 /* IT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D110BA17BC004FC5D7 /* IT.icns */; };
+		558D4DA41666E8D600A333E8 /* List.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D210BA17BC004FC5D7 /* List.icns */; };
+		558D4DA51666E8D600A333E8 /* MAD.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D310BA17BC004FC5D7 /* MAD.icns */; };
+		558D4DA61666E8D600A333E8 /* MED.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D410BA17BC004FC5D7 /* MED.icns */; };
+		558D4DA71666E8D600A333E8 /* MIDI.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D510BA17BC004FC5D7 /* MIDI.icns */; };
+		558D4DA81666E8D600A333E8 /* MOD.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D610BA17BC004FC5D7 /* MOD.icns */; };
+		558D4DA91666E8D600A333E8 /* MTM.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D710BA17BC004FC5D7 /* MTM.icns */; };
+		558D4DAA1666E8D600A333E8 /* OKTA.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D810BA17BC004FC5D7 /* OKTA.icns */; };
+		558D4DAB1666E8D600A333E8 /* PCMD.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D910BA17BC004FC5D7 /* PCMD.icns */; };
+		558D4DAC1666E8D600A333E8 /* S3M.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DA10BA17BC004FC5D7 /* S3M.icns */; };
+		558D4DAD1666E8D600A333E8 /* UMX.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DB10BA17BC004FC5D7 /* UMX.icns */; };
+		558D4DAE1666E8D600A333E8 /* WAV.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DC10BA17BC004FC5D7 /* WAV.icns */; };
+		558D4DAF1666E8D600A333E8 /* XI.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DD10BA17BC004FC5D7 /* XI.icns */; };
+		558D4DB01666E8D600A333E8 /* XM.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DE10BA17BC004FC5D7 /* XM.icns */; };
 		559088E210E87E8800CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		559088E310E87ED100CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		559088E410E87ED700CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
@@ -1457,7 +1472,6 @@
 		5504A6EF16619E39005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MusicListPrefs.xib; sourceTree = "<group>"; };
 		550B001A10BA021A004FC5D7 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Game.h; sourceTree = "<group>"; };
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
-		550B006810BA0676004FC5D7 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = ../English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		550B00D010BA17BC004FC5D7 /* 669.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = 669.icns; sourceTree = "<group>"; };
 		550B00D110BA17BC004FC5D7 /* IT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IT.icns; sourceTree = "<group>"; };
 		550B00D210BA17BC004FC5D7 /* List.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = List.icns; sourceTree = "<group>"; };
@@ -1786,7 +1800,6 @@
 		55879F80164CA63D009068D5 /* Read.TXT */ = {isa = PBXFileReference; lastKnownFileType = text; path = Read.TXT; sourceTree = "<group>"; };
 		55879F85164CA65D009068D5 /* PPPlay */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PPPlay; sourceTree = BUILT_PRODUCTS_DIR; };
 		558A15250FE749B400533D71 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
-		558D4D9E1665CFF700A333E8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		559087F410E8364F00CE70B8 /* Exemple.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Exemple.icns; sourceTree = "<group>"; };
 		5590896710E883AF00CE70B8 /* WAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WAV.h; sourceTree = "<group>"; };
 		55981C5111EE370D00656EE3 /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
@@ -3358,7 +3371,6 @@
 				55DB45D40FEAB8CD0088C375 /* DFTB.r */,
 				88E0C3BE0C2F21DD00D6C081 /* Carbon.r */,
 				55EE8C731003E83A00E75E63 /* General-rez.r */,
-				550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */,
 				557B8FD910CE01BF00B9A37D /* DefaultPref.r */,
 				557DE1F110E0158C00177B4C /* PPMenus.r */,
 				557DE27610E04C1500177B4C /* PPResDefs.h */,
@@ -4862,7 +4874,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				551810CD10C35C3500ADA9F4 /* InfoPlist.strings in Resources */,
+				558D4D9F1666E8D600A333E8 /* ppApp.icns in Resources */,
+				558D4DA01666E8D600A333E8 /* 669.icns in Resources */,
+				558D4DA11666E8D600A333E8 /* PATN.icns in Resources */,
+				558D4DA21666E8D600A333E8 /* INS.icns in Resources */,
+				558D4DA31666E8D600A333E8 /* IT.icns in Resources */,
+				558D4DA41666E8D600A333E8 /* List.icns in Resources */,
+				558D4DA51666E8D600A333E8 /* MAD.icns in Resources */,
+				558D4DA61666E8D600A333E8 /* MED.icns in Resources */,
+				558D4DA71666E8D600A333E8 /* MIDI.icns in Resources */,
+				558D4DA81666E8D600A333E8 /* MOD.icns in Resources */,
+				558D4DA91666E8D600A333E8 /* MTM.icns in Resources */,
+				558D4DAA1666E8D600A333E8 /* OKTA.icns in Resources */,
+				558D4DAB1666E8D600A333E8 /* PCMD.icns in Resources */,
+				558D4DAC1666E8D600A333E8 /* S3M.icns in Resources */,
+				558D4DAD1666E8D600A333E8 /* UMX.icns in Resources */,
+				558D4DAE1666E8D600A333E8 /* WAV.icns in Resources */,
+				558D4DAF1666E8D600A333E8 /* XI.icns in Resources */,
+				558D4DB01666E8D600A333E8 /* XM.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5196,7 +5225,6 @@
 				55ABFD54125E6D4400B182F1 /* PPNextTrack.pdf in Resources */,
 				55ABFD55125E6D4400B182F1 /* PPPrevTrack.pdf in Resources */,
 				55ABFD56125E6D4400B182F1 /* PPRecord.pdf in Resources */,
-				558D4D9D1665CFDE00A333E8 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5212,7 +5240,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55FA5FBB102D2D6C00CB63DA /* ppApp.icns in Resources */,
-				550B00EF10BA17E6004FC5D7 /* InfoPlist.strings in Resources */,
 				550B00DF10BA17BC004FC5D7 /* 669.icns in Resources */,
 				550B00E010BA17BC004FC5D7 /* IT.icns in Resources */,
 				550B00E110BA17BC004FC5D7 /* List.icns in Resources */,
@@ -6540,15 +6567,6 @@
 				5504A6EF16619E39005BDE4B /* en */,
 			);
 			name = MusicListPrefs.xib;
-			sourceTree = "<group>";
-		};
-		550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				550B006810BA0676004FC5D7 /* InfoPlist.strings */,
-				558D4D9E1665CFF700A333E8 /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		551292E1163DD68500C2C639 /* InfoPlist.strings */ = {
