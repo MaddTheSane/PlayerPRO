@@ -389,21 +389,14 @@
 		558A748313BE59F4000FD667 /* APPL_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0010BFB31500FCC24D /* APPL_Plug.rsrc.r */; };
 		558D4D9F1666E8D600A333E8 /* ppApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55FA5FBA102D2D6C00CB63DA /* ppApp.icns */; };
 		558D4DA01666E8D600A333E8 /* 669.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D010BA17BC004FC5D7 /* 669.icns */; };
-		558D4DA11666E8D600A333E8 /* PATN.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55E89D3A10F26A4B004EB52B /* PATN.icns */; };
-		558D4DA21666E8D600A333E8 /* INS.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55E89D3B10F26A4B004EB52B /* INS.icns */; };
 		558D4DA31666E8D600A333E8 /* IT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D110BA17BC004FC5D7 /* IT.icns */; };
-		558D4DA41666E8D600A333E8 /* List.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D210BA17BC004FC5D7 /* List.icns */; };
 		558D4DA51666E8D600A333E8 /* MAD.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D310BA17BC004FC5D7 /* MAD.icns */; };
 		558D4DA61666E8D600A333E8 /* MED.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D410BA17BC004FC5D7 /* MED.icns */; };
-		558D4DA71666E8D600A333E8 /* MIDI.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D510BA17BC004FC5D7 /* MIDI.icns */; };
 		558D4DA81666E8D600A333E8 /* MOD.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D610BA17BC004FC5D7 /* MOD.icns */; };
 		558D4DA91666E8D600A333E8 /* MTM.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D710BA17BC004FC5D7 /* MTM.icns */; };
 		558D4DAA1666E8D600A333E8 /* OKTA.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D810BA17BC004FC5D7 /* OKTA.icns */; };
-		558D4DAB1666E8D600A333E8 /* PCMD.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D910BA17BC004FC5D7 /* PCMD.icns */; };
 		558D4DAC1666E8D600A333E8 /* S3M.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DA10BA17BC004FC5D7 /* S3M.icns */; };
 		558D4DAD1666E8D600A333E8 /* UMX.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DB10BA17BC004FC5D7 /* UMX.icns */; };
-		558D4DAE1666E8D600A333E8 /* WAV.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DC10BA17BC004FC5D7 /* WAV.icns */; };
-		558D4DAF1666E8D600A333E8 /* XI.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DD10BA17BC004FC5D7 /* XI.icns */; };
 		558D4DB01666E8D600A333E8 /* XM.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DE10BA17BC004FC5D7 /* XM.icns */; };
 		559088E210E87E8800CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		559088E310E87ED100CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
@@ -4876,21 +4869,14 @@
 			files = (
 				558D4D9F1666E8D600A333E8 /* ppApp.icns in Resources */,
 				558D4DA01666E8D600A333E8 /* 669.icns in Resources */,
-				558D4DA11666E8D600A333E8 /* PATN.icns in Resources */,
-				558D4DA21666E8D600A333E8 /* INS.icns in Resources */,
 				558D4DA31666E8D600A333E8 /* IT.icns in Resources */,
-				558D4DA41666E8D600A333E8 /* List.icns in Resources */,
 				558D4DA51666E8D600A333E8 /* MAD.icns in Resources */,
 				558D4DA61666E8D600A333E8 /* MED.icns in Resources */,
-				558D4DA71666E8D600A333E8 /* MIDI.icns in Resources */,
 				558D4DA81666E8D600A333E8 /* MOD.icns in Resources */,
 				558D4DA91666E8D600A333E8 /* MTM.icns in Resources */,
 				558D4DAA1666E8D600A333E8 /* OKTA.icns in Resources */,
-				558D4DAB1666E8D600A333E8 /* PCMD.icns in Resources */,
 				558D4DAC1666E8D600A333E8 /* S3M.icns in Resources */,
 				558D4DAD1666E8D600A333E8 /* UMX.icns in Resources */,
-				558D4DAE1666E8D600A333E8 /* WAV.icns in Resources */,
-				558D4DAF1666E8D600A333E8 /* XI.icns in Resources */,
 				558D4DB01666E8D600A333E8 /* XM.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
