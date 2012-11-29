@@ -263,7 +263,7 @@
 		5573A1341656FD3600A5AECA /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A1331656FD3600A5AECA /* CoreFoundation.framework */; };
 		5573A1371656FD4000A5AECA /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A1351656FD4000A5AECA /* AudioUnit.framework */; };
 		5573A1381656FD4000A5AECA /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A1361656FD4000A5AECA /* CoreAudio.framework */; };
-		5573A1621658A3E700A5AECA /* PlayerPROCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		5573A1621658A3E700A5AECA /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5573A35A10B50DCC00FF8B50 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
 		5573A35B10B50DD000FF8B50 /* Effects.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D10C2F21DD00D6C081 /* Effects.c */; };
 		5573A35C10B50DD500FF8B50 /* Interrupt.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D20C2F21DD00D6C081 /* Interrupt.c */; };
@@ -398,6 +398,9 @@
 		558D4DAC1666E8D600A333E8 /* S3M.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DA10BA17BC004FC5D7 /* S3M.icns */; };
 		558D4DAD1666E8D600A333E8 /* UMX.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DB10BA17BC004FC5D7 /* UMX.icns */; };
 		558D4DB01666E8D600A333E8 /* XM.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DE10BA17BC004FC5D7 /* XM.icns */; };
+		558D4DDA1666F14E00A333E8 /* PPDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DD81666F14E00A333E8 /* PPDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4DD91666F14E00A333E8 /* PPDriver.m */; };
+		558D4DDD1666F19600A333E8 /* PPLibrary_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */; };
 		559088E210E87E8800CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		559088E310E87ED100CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		559088E410E87ED700CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
@@ -1340,14 +1343,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5573A1611658A3B800A5AECA /* CopyFiles */ = {
+		5573A1611658A3B800A5AECA /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5573A1621658A3E700A5AECA /* PlayerPROCore.framework in CopyFiles */,
+				5573A1621658A3E700A5AECA /* PlayerPROCore.framework in Copy Frameworks */,
 			);
+			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		558678B51659AA1100BCFB70 /* Copy Frameworks */ = {
@@ -1793,6 +1797,9 @@
 		55879F80164CA63D009068D5 /* Read.TXT */ = {isa = PBXFileReference; lastKnownFileType = text; path = Read.TXT; sourceTree = "<group>"; };
 		55879F85164CA65D009068D5 /* PPPlay */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PPPlay; sourceTree = BUILT_PRODUCTS_DIR; };
 		558A15250FE749B400533D71 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
+		558D4DD81666F14E00A333E8 /* PPDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDriver.h; sourceTree = "<group>"; };
+		558D4DD91666F14E00A333E8 /* PPDriver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDriver.m; sourceTree = "<group>"; };
+		558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLibrary_PPKPrivate.h; sourceTree = "<group>"; };
 		559087F410E8364F00CE70B8 /* Exemple.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Exemple.icns; sourceTree = "<group>"; };
 		5590896710E883AF00CE70B8 /* WAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WAV.h; sourceTree = "<group>"; };
 		55981C5111EE370D00656EE3 /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
@@ -2503,6 +2510,9 @@
 				551292DF163DD68500C2C639 /* Supporting Files */,
 				551292EE163DD7CE00C2C639 /* PPLibrary.h */,
 				551292EF163DD7CE00C2C639 /* PPLibrary.m */,
+				558D4DD81666F14E00A333E8 /* PPDriver.h */,
+				558D4DD91666F14E00A333E8 /* PPDriver.m */,
+				558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */,
 			);
 			path = PlayerPROKit;
 			sourceTree = "<group>";
@@ -3692,6 +3702,8 @@
 			files = (
 				551292ED163DD74100C2C639 /* PlayerPROKit.h in Headers */,
 				551292F0163DD7CE00C2C639 /* PPLibrary.h in Headers */,
+				558D4DDA1666F14E00A333E8 /* PPDriver.h in Headers */,
+				558D4DDD1666F19600A333E8 /* PPLibrary_PPKPrivate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4701,7 +4713,7 @@
 				55CBF9A311EB77760028C6BB /* Sources */,
 				55CBF9A411EB77760028C6BB /* Frameworks */,
 				55CBFB3711EB780B0028C6BB /* Copy PlugIns */,
-				5573A1611658A3B800A5AECA /* CopyFiles */,
+				5573A1611658A3B800A5AECA /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -5501,6 +5513,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				551292F1163DD7CE00C2C639 /* PPLibrary.m in Sources */,
+				558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8464,7 +8477,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_PREPROCESSOR_DEFINITIONS = USE_DRAW_SPROCKETS;
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
@@ -8480,7 +8492,6 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = USE_DRAW_SPROCKETS;
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";

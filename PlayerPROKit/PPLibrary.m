@@ -7,10 +7,10 @@
 //
 
 #import "PPLibrary.h"
+#import "PPLibrary_PPKPrivate.h"
 
 @interface PPLibrary ()
 - (id)initWithPlugInCPath:(char*)cPath;
-@property (readonly) MADLibrary *_madLib;
 @end
 
 @implementation PPLibrary
