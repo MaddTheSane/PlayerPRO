@@ -13,8 +13,8 @@
 
 @interface PPDriver : NSObject
 {
-	MADDriverRec theRec;
-	PPLibrary theLib;
+	MADDriverRec *theRec;
+	PPLibrary *thePPLib;
 }
 
 - (id)initWithLibrary:(PPLibrary *)theLib;

@@ -12,6 +12,12 @@
 
 @implementation PPDriver
 
+- (id)init
+{
+	NSAssert(NO, @"PPDriver cannot be inited without a library");
+	return nil;
+}
+
 - (id)initWithLibrary:(PPLibrary *)theLib
 {
 	MADDriverSettings theSet;
@@ -21,7 +27,19 @@
 
 - (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings
 {
+	if (self = [super init]) {
+		thePPLib = [theLib retain];
+		MADCreateDriver(theSettings, theLib._madLib, &theRec);
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+	MADDisposeDriver(theRec);
+	[thePPLib release];
 	
+	[super dealloc];
 }
 
 @end

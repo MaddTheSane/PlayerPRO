@@ -10,7 +10,7 @@
 #import "PPLibrary_PPKPrivate.h"
 
 @interface PPLibrary ()
-- (id)initWithPlugInCPath:(char*)cPath;
+- (id)initWithPlugInCPath:(const char*)cPath;
 @end
 
 @implementation PPLibrary
@@ -22,10 +22,10 @@
 	return [self initWithPlugInCPath:NULL];
 }
 
-- (id)initWithPlugInCPath:(char*)cPath
+- (id)initWithPlugInCPath:(const char*)cPath
 {
 	if (self = [super init]) {
-		MADInitLibrary(cPath, NO, &theLibrary);
+		MADInitLibrary((char*)cPath, &theLibrary);
 	}
 	return self;
 }
