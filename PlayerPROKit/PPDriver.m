@@ -29,14 +29,19 @@
 {
 	if (self = [super init]) {
 		thePPLib = [theLib retain];
-		MADCreateDriver(theSettings, theLib._madLib, &theRec);
+		if(MADCreateDriver(theSettings, theLib._madLib, &theRec) !=noErr)
+		{
+			[self release];
+			return nil;
+		}
 	}
 	return self;
 }
 
 - (void)dealloc
 {
-	MADDisposeDriver(theRec);
+	if(theRec)
+		MADDisposeDriver(theRec);
 	[thePPLib release];
 	
 	[super dealloc];

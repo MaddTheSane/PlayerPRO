@@ -25,7 +25,11 @@
 - (id)initWithPlugInCPath:(const char*)cPath
 {
 	if (self = [super init]) {
-		MADInitLibrary((char*)cPath, &theLibrary);
+		if(MADInitLibrary((char*)cPath, &theLibrary) != noErr)
+		{
+			[self release];
+			return nil;
+		}
 	}
 	return self;
 }
@@ -42,7 +46,8 @@
 
 - (void)dealloc
 {
-	MADDisposeLibrary(theLibrary);
+	if(theLibrary)
+		MADDisposeLibrary(theLibrary);
 	
 	[super dealloc];
 }
