@@ -6,7 +6,7 @@
    Copyright 2010 __MyCompanyName__. All rights reserved.
  */
  
-//CFBundleName = "PlayerPRO";
+CFBundleName = "PlayerPRO";
 "PPMTMFile" = "MultiTracker Audio";
 "PPS3MFile" = "ScreamTracker Audio";
 "PPMODFile" = "ProTracker Audio";
