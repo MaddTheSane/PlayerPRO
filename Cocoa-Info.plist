@@ -366,7 +366,7 @@
 			<key>CFBundleTypeName</key>
 			<string>PPImpExpBundle</string>
 			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
+			<string>None</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.ppimpexp</string>
@@ -532,6 +532,8 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO Instrument List</string>
+			<key>UTTypeIconFile</key>
+			<string>INS</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.list</string>
 			<key>UTTypeTagSpecification</key>
@@ -555,6 +557,8 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO Import-Export Bundle</string>
+			<key>UTTypeIconFile</key>
+			<string>Bundle</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.ppimpexp</string>
 			<key>UTTypeTagSpecification</key>
@@ -641,6 +645,8 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>MIDI File</string>
+			<key>UTTypeIconFile</key>
+			<string>MIDI</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.midi-audio</string>
 			<key>UTTypeReferenceURL</key>
@@ -825,7 +831,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>S3M Tracker</string>
+			<string>ScreamTracker Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>S3M</string>
 			<key>UTTypeIdentifier</key>
@@ -873,7 +879,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>XM Tracker</string>
+			<string>FastTracker Tracker</string>
 			<key>UTTypeIconFile</key>
 			<string>XM</string>
 			<key>UTTypeIdentifier</key>
@@ -896,7 +902,7 @@
 				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>XI Instrument</string>
+			<string>FastTracker Instrument</string>
 			<key>UTTypeIconFile</key>
 			<string>XI</string>
 			<key>UTTypeIdentifier</key>

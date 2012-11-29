@@ -295,7 +295,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>S3M Tracker</string>
+			<string>ScreamTracker Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.s3m</string>
 			<key>UTTypeTagSpecification</key>
@@ -339,7 +339,7 @@
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>XM Tracker</string>
+			<string>FastTracker Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.xm</string>
 			<key>UTTypeTagSpecification</key>
