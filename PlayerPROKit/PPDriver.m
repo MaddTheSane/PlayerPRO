@@ -59,6 +59,7 @@
 
 - (void)dealloc
 {
+	[currentMusic release];
 	if(theRec)
 		MADDisposeDriver(theRec);
 	[thePPLib release];
@@ -66,14 +67,16 @@
 	[super dealloc];
 }
 
-- (OSErr)loadMusicFile:(NSString *)path
+- (void)loadMusicFile:(NSString *)path
 {
-	
+	PPMusicObject *theMus = [[PPMusicObject alloc] initWithPath:path driver:self setAsCurrentMusic:YES];
+	[theMus release];
 }
 
-- (OSErr)loadMusicURL:(NSURL*)url
+- (void)loadMusicURL:(NSURL*)url
 {
-	
+	PPMusicObject *theMus = [[PPMusicObject alloc] initWithURL:url driver:self setAsCurrentMusic:YES];
+	[theMus release];
 }
 
 @end

@@ -9,18 +9,9 @@
 #import "PPLibrary.h"
 #import "PPLibrary_PPKPrivate.h"
 
-@interface PPLibrary ()
-- (id)initWithPlugInCPath:(const char*)cPath;
-@end
-
 @implementation PPLibrary
 
 @synthesize _madLib = theLibrary;
-
-- (id)init
-{
-	return [self initWithPlugInCPath:NULL];
-}
 
 - (id)initWithPlugInCPath:(const char*)cPath
 {
@@ -32,6 +23,11 @@
 		}
 	}
 	return self;
+}
+
+- (id)init
+{
+	return [self initWithPlugInCPath:NULL];
 }
 
 - (id)initWithPlugInPath:(NSString *)path

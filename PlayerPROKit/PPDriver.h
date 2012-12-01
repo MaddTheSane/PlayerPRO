@@ -25,7 +25,7 @@
 - (id)initWithLibrary:(PPLibrary *)theLib;
 - (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings;
 
-- (OSErr)loadMusicFile:(NSString *)path;
-- (OSErr)loadMusicURL:(NSURL*)url;
+- (void)loadMusicFile:(NSString *)path;
+- (void)loadMusicURL:(NSURL*)url;
 
 @end
