@@ -80,7 +80,7 @@ OSErr	PPTestFile( MADLibrary* inMADDriver,char	*kindFile, Ptr AlienFile)
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			return( CallImportPlug( inMADDriver, i, 'TEST', AlienFile, &aMAD, &InfoRec));
+			return( CallImportPlug( inMADDriver, i, MADPlugTest, AlienFile, &aMAD, &InfoRec));
 		}
 	}
 	return MADCannotFindPlug;
@@ -135,7 +135,7 @@ OSErr	PPInfoFile( MADLibrary* inMADDriver, char	*kindFile, char	*AlienFile, PPIn
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			return( CallImportPlug( inMADDriver, i, 'INFO', AlienFile, &aMAD, InfoRec));
+			return( CallImportPlug( inMADDriver, i, MADPlugInfo, AlienFile, &aMAD, InfoRec));
 		}
 	}
 	return MADCannotFindPlug;
@@ -150,7 +150,7 @@ OSErr	PPExportFile( MADLibrary* inMADDriver, char	*kindFile, char	*AlienFile, MA
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			return( CallImportPlug( inMADDriver, i, 'EXPL', AlienFile, theNewMAD, &InfoRec));
+			return( CallImportPlug( inMADDriver, i, MADPlugExport, AlienFile, theNewMAD, &InfoRec));
 		}
 	}
 	return MADCannotFindPlug;
@@ -168,7 +168,7 @@ OSErr	PPImportFile( MADLibrary* inMADDriver, char	*kindFile, char	*AlienFile, MA
 			*theNewMAD = (MADMusic*) calloc( sizeof( MADMusic), 1);
 			if( !*theNewMAD) return MADNeedMemory;
 			
-			return( CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec));
+			return( CallImportPlug( inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec));
 		}
 	}
 	return MADCannotFindPlug;
@@ -198,7 +198,7 @@ OSErr	PPIdentifyFile( MADLibrary* inMADDriver, char	*type, Ptr AlienFile)
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( CallImportPlug( inMADDriver, i, 'TEST', AlienFile, NULL, &InfoRec) == noErr)
+		if( CallImportPlug( inMADDriver, i, MADPlugTest, AlienFile, NULL, &InfoRec) == noErr)
 		{
 			strcpy_s( type, 5, inMADDriver->ThePlug[ i].type);
 			
@@ -334,7 +334,7 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 	
 	for( i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == 'EXIM')
+		if( inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == MADPlugImportExport)
 		{
 			if( ID == x)
 			{
