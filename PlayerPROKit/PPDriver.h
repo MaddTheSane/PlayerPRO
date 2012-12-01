@@ -10,15 +10,22 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 
 @class PPLibrary;
+@class PPMusicObject;
 
 @interface PPDriver : NSObject
 {
 	MADDriverRec *theRec;
 	PPLibrary *thePPLib;
+	PPMusicObject *currentMusic;
 }
 
-- (id)initWithLibrary:(PPLibrary *)theLib;
+@property (readwrite, nonatomic, retain) PPMusicObject *currentMusic;
+@property (readonly) PPLibrary *theLibrary;
 
+- (id)initWithLibrary:(PPLibrary *)theLib;
 - (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings;
+
+- (OSErr)loadMusicFile:(NSString *)path;
+- (OSErr)loadMusicURL:(NSURL*)url;
 
 @end

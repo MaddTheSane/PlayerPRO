@@ -11,3 +11,4 @@
 
 #import <PlayerPROKit/PPLibrary.h>
 #import <PlayerPROKit/PPDriver.h>
+#import <PlayerPROKit/PPMusicObject.h>

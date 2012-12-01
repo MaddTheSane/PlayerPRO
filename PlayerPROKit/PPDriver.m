@@ -9,8 +9,27 @@
 #import "PPDriver.h"
 #import "PPLibrary.h"
 #import "PPLibrary_PPKPrivate.h"
+#import "PPDriver_Private.h"
+#import "PPMusicObject.h"
+#import "PPMusicObject_PPKPrivate.h"
 
 @implementation PPDriver
+
+@synthesize rec = theRec;
+@synthesize currentMusic;
+
+- (void)setCurrentMusic:(PPMusicObject *)curMusic
+{
+	if (curMusic != currentMusic) {
+		if (currentMusic) {
+			[currentMusic release];
+		}
+		currentMusic = [curMusic retain];
+		MADAttachDriverToMusic(theRec, currentMusic._currentMusic, NULL);
+	}
+}
+
+@synthesize theLibrary = thePPLib;
 
 - (id)init
 {
@@ -45,6 +64,16 @@
 	[thePPLib release];
 	
 	[super dealloc];
+}
+
+- (OSErr)loadMusicFile:(NSString *)path
+{
+	
+}
+
+- (OSErr)loadMusicURL:(NSURL*)url
+{
+	
 }
 
 @end

@@ -410,6 +410,10 @@
 		55ABFD55125E6D4400B182F1 /* PPPrevTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */; };
 		55ABFD56125E6D4400B182F1 /* PPRecord.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD53125E6D4400B182F1 /* PPRecord.pdf */; };
 		55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
+		55B1B4F3166A850E00820424 /* PPDriver_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F2166A850D00820424 /* PPDriver_Private.h */; };
+		55B1B4F7166A861900820424 /* PPMusicObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F5166A861900820424 /* PPMusicObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B1B4F6166A861900820424 /* PPMusicObject.m */; };
+		55B1B4FA166A8ED500820424 /* PPMusicObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */; };
 		55B797E310D6E6E50073E379 /* CompFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FE110D6C79D00BB619C /* CompFade.c */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
 		55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -1808,6 +1812,10 @@
 		55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPNextTrack.pdf; sourceTree = "<group>"; };
 		55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPPrevTrack.pdf; sourceTree = "<group>"; };
 		55ABFD53125E6D4400B182F1 /* PPRecord.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPRecord.pdf; sourceTree = "<group>"; };
+		55B1B4F2166A850D00820424 /* PPDriver_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDriver_Private.h; sourceTree = "<group>"; };
+		55B1B4F5166A861900820424 /* PPMusicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicObject.h; sourceTree = "<group>"; };
+		55B1B4F6166A861900820424 /* PPMusicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMusicObject.m; sourceTree = "<group>"; };
+		55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicObject_PPKPrivate.h; sourceTree = "<group>"; };
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Complex Fade-Info.plist"; path = "../../../Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55CB01A611EB82FA0028C6BB /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
@@ -2513,6 +2521,10 @@
 				558D4DD81666F14E00A333E8 /* PPDriver.h */,
 				558D4DD91666F14E00A333E8 /* PPDriver.m */,
 				558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */,
+				55B1B4F2166A850D00820424 /* PPDriver_Private.h */,
+				55B1B4F5166A861900820424 /* PPMusicObject.h */,
+				55B1B4F6166A861900820424 /* PPMusicObject.m */,
+				55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */,
 			);
 			path = PlayerPROKit;
 			sourceTree = "<group>";
@@ -3704,6 +3716,9 @@
 				551292F0163DD7CE00C2C639 /* PPLibrary.h in Headers */,
 				558D4DDA1666F14E00A333E8 /* PPDriver.h in Headers */,
 				558D4DDD1666F19600A333E8 /* PPLibrary_PPKPrivate.h in Headers */,
+				55B1B4F3166A850E00820424 /* PPDriver_Private.h in Headers */,
+				55B1B4F7166A861900820424 /* PPMusicObject.h in Headers */,
+				55B1B4FA166A8ED500820424 /* PPMusicObject_PPKPrivate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5514,6 +5529,7 @@
 			files = (
 				551292F1163DD7CE00C2C639 /* PPLibrary.m in Sources */,
 				558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */,
+				55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
