@@ -424,7 +424,7 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	
 	theMAD->header->MAD = 'MADK';
 	
-	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MED Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MED Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->speed			= 	ms->tempo2;
 	theMAD->header->tempo			=	((SInt32)ms->deftempo * 125L) / 33L;
@@ -580,9 +580,9 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy( p->type, 		"MED", sizeof(p->type));
+	strlcpy( p->type, 		"MED ", sizeof(p->type));
 	strlcpy( p->MenuName, 	"MED Files", sizeof(p->type));
-	p->mode	=	'IMPL';
+	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 
 	return noErr;
@@ -605,7 +605,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 
 	switch( order)
 	{
-		case 'IMPL':
+		case MADPlugImport:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
@@ -636,7 +636,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			else myErr = MADReadingErr;
 		break;
 		
-		case 'TEST':
+		case MADPlugTest:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{

@@ -241,7 +241,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	theMAD->header->tempo 			= 125;
 	theMAD->header->speed 			= Okta->speed;
 	
-	strlcpy( theMAD->header->infos, "Converted by PlayerPRO OKTA Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO OKTA Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	for( i = 0;  i < 128; i++) theMAD->header->oPointers[ i] = 0;
 	for( i = 0;  i < pbod_count; i++) theMAD->header->oPointers[ i] = Okta->patt[ i];
@@ -479,7 +479,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
 	strlcpy( p->type, 		"OKTA", sizeof(p->type));
 	strlcpy( p->MenuName, 	"OKTAmed Files", sizeof(p->MenuName));
-	p->mode	=	'IMPL';
+	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
@@ -496,7 +496,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	
 	switch( order)
 	{
-		case 'IMPL':
+		case MADPlugImport:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
@@ -528,7 +528,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			else myErr = MADReadingErr;
 			break;
 			
-		case 'TEST':
+		case MADPlugTest:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{

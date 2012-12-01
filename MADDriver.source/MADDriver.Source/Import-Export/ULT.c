@@ -125,7 +125,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<32; i++) theMAD->header->name[i] = ULTinfo.name[i];
 	
-	strlcpy( theMAD->header->infos, "Converted by PlayerPRO ULT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO ULT Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPat			= ULTSuite.NOP;
 	theMAD->header->numPointers	= 1;					// CHANGE
@@ -324,9 +324,9 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy( p->type, 		"ULT", sizeof(p->type));
+	strlcpy( p->type, 		"ULT ", sizeof(p->type));
 	strlcpy( p->MenuName, 	"ULT Files", sizeof(p->MenuName));
-	p->mode	=	'IMPL';
+	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
@@ -343,7 +343,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	
 	switch( order)
 	{
-		case 'IMPL':
+		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if( iFileRefI)
 			{
@@ -378,7 +378,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			} else myErr = MADReadingErr;
 			break;
 			
-		case 'TEST':
+		case MADPlugTest:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if( iFileRefI)
 			{

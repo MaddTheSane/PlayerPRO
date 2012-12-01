@@ -105,7 +105,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	theMAD->header = (MADSpec*) calloc( sizeof( MADSpec), 1);
 	if( theMAD->header == NULL) return MADNeedMemory;
 	
-	strlcpy( theMAD->header->infos, "Converted by PlayerPRO AMF Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO AMF Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->MAD = 'MADK';
 	
@@ -368,9 +368,9 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy( p->type, 		"AMF", sizeof(p->type));
+	strlcpy( p->type, 		"AMF ", sizeof(p->type));
 	strlcpy( p->MenuName, 	"AMF Files", sizeof(p->MenuName));
-	p->mode	=	'IMPL';
+	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 
 	return noErr;
@@ -393,7 +393,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 
 	switch( order)
 	{
-		case 'IMPL':
+		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if( iFileRefI )
 			{
@@ -425,7 +425,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			else myErr = MADReadingErr;
 		break;
 		
-		case 'TEST':
+		case MADPlugTest:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if( iFileRefI)
 			{
@@ -446,7 +446,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 
 		break;
 
-		case 'INFO':
+		case MADPlugInfo:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if( iFileRefI)
 			{

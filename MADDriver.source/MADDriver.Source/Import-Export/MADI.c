@@ -450,7 +450,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
 	strlcpy( p->type, 		"MADI", sizeof(p->type));
 	strlcpy( p->MenuName, 	"MADI Files", sizeof(p->MenuName));
-	p->mode	=	'IMPL';
+	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 
 	return noErr;
@@ -471,7 +471,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	
 	switch( order)
 	{
-		case 'IMPL':
+		case MADPlugImport:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
@@ -503,7 +503,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			else myErr = MADReadingErr;
 			break;
 			
-		case 'TEST':
+		case MADPlugTest:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{

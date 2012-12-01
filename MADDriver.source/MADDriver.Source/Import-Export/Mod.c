@@ -317,7 +317,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	theMAD->header = (MADSpec*) calloc( inOutCount, 1);
 	if( theMAD->header == NULL) return MADNeedMemory;
 	
-	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MOD Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MOD Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->MAD = 'MADK';
 	theMAD->header->MODMode = true;
@@ -917,9 +917,9 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC, BeOS, and UN
 {
 	//If your architecture supports it, you can get this metadata from the plug-in
 	//You can also localize it if you feel so inclined
-	strlcpy( p->type, 		"MOD", sizeof(p->type));		// NEVER MORE THAN 4 CHARS !!!!!!!!
+	strlcpy( p->type, 		"MOD ", sizeof(p->type));		// NEVER MORE THAN 4 CHARS !!!!!!!!
 	strlcpy( p->MenuName, 	"MOD Files", sizeof(p->MenuName));
-	p->mode	=	'EXIM';
+	p->mode	=	MADPlugImportExport;
 	//Version 2.0.0
 	//Increment the version when you make big changes so the newer one will be loaded
 	p->version = 2 << 16 | 0 << 8 | 0;
@@ -943,7 +943,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	
 	switch( order)
 	{
-		case 'IMPL':
+		case MADPlugImport:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
@@ -974,7 +974,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			else myErr = MADReadingErr;
 		break;
 		
-		case 'TEST':
+		case MADPlugTest:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
@@ -997,7 +997,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			else myErr = MADReadingErr;
 		break;
 		
-		case 'EXPL':
+		case MADPlugExport:
 			AlienFile = PPConvertMad2Mod( MadFile, init, &sndSize);
 			
 			if( AlienFile != NULL)

@@ -790,7 +790,7 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettin
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<28; i++) theMAD->header->name[i] = s3minfo.name[i];
 	
-	strlcpy( theMAD->header->infos, "Converted by PlayerPRO S3M Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO S3M Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPat		= s3minfo.patnum;
 	theMAD->header->numPointers	= s3minfo.ordernum;
@@ -1185,9 +1185,9 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)
 {
-	strlcpy( p->type, "S3M", sizeof(p->type));
+	strlcpy( p->type, "S3M ", sizeof(p->type));
 	strlcpy( p->MenuName, "S3M Files", sizeof(p->MenuName));
-	p->mode	=	'EXIM';
+	p->mode	=	MADPlugImportExport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
@@ -1205,7 +1205,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 
 	switch( order)
 	{
-		case 'EXPL':
+		case MADPlugExport:
 			AlienFile = ConvertMad2S3M( MadFile, init, &sndSize);
 			
 			if( AlienFile != NULL)
@@ -1222,7 +1222,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			else myErr = MADNeedMemory;
 		break;
 		
-		case 'IMPL':
+		case MADPlugImport:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
@@ -1256,7 +1256,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			else myErr = MADReadingErr;
 		break;
 		
-		case 'TEST':
+		case MADPlugTest:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{

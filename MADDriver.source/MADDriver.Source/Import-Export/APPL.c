@@ -400,7 +400,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	
 	switch( order)
 	{
-		case 'IMPL':
+		case MADPlugImport:
 			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
 			if( iFileRefI == -1) myErr = MADReadingErr;
 			else
@@ -424,7 +424,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			}
 		break;
 		
-		case 'TEST':
+		case MADPlugTest:
 			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
 			if( iFileRefI == -1) myErr = MADReadingErr;
 			else
@@ -449,7 +449,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			}
 		break;
 		
-		case 'INFO':
+		case MADPlugInfo:
 			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
 			if( iFileRefI == -1) myErr = MADReadingErr;
 			else

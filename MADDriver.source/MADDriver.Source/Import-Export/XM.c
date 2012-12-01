@@ -649,7 +649,7 @@ static OSErr XM_Load( Ptr	theXM, size_t XMSize, MADMusic *theMAD, MADDriverSetti
 	
 	if( theMAD->header->numPointers > 128) theMAD->header->numPointers = 128;
 	
-	strlcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO XM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO XM Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	for( i = 0; i < mh->songlength; i++)
 	{
@@ -1251,9 +1251,9 @@ extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFil
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy( p->type, 		"XM", sizeof(p->type));
+	strlcpy( p->type, 		"XM  ", sizeof(p->type));
 	strlcpy( p->MenuName, 	"XM Files", sizeof(p->MenuName));
-	p->mode	=	'EXIM';
+	p->mode	=	MADPlugImportExport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
@@ -1273,7 +1273,7 @@ OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRe
 	
 	switch( order)
 	{
-		case 'EXPL':
+		case MADPlugExport:
 			AlienFile = ConvertMad2XM( MadFile, init, &sndSize);
 			
 			if( AlienFile != NULL)
@@ -1290,7 +1290,7 @@ OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRe
 			else myErr = MADNeedMemory;
 		break;
 		
-		case 'IMPL':
+		case MADPlugImport:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
@@ -1324,7 +1324,7 @@ OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRe
 			else myErr = MADReadingErr;
 		break;
 		
-		case 'TEST':
+		case MADPlugTest:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{

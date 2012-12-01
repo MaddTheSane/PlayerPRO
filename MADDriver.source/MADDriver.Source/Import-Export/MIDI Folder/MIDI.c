@@ -93,7 +93,7 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 	
 	switch( order)
 	{
-		case 'IMPL':
+		case MADPlugImport:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
@@ -126,7 +126,7 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 			else myErr = MADReadingErr;
 		break;
 		
-		case 'TEST':
+		case MADPlugTest:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
