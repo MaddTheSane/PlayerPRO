@@ -169,7 +169,9 @@ PPEXPORT OSErr 		MADKillCmd( Cmd*);
 PPEXPORT void			UpdateTracksNumber( MADDriverRec *);
 
 PPEXPORT OSErr 		MADCreateVolumeTable( MADDriverRec *intDriver);
-PPEXPORT void			MADDisposeVolumeTable( MADDriverRec *intDriver);
+PPEXPORT void		MADDisposeVolumeTable( MADDriverRec *intDriver);
+PPEXPORT MADMusic*	CreateFreeMADK( void);
+
 
 	//TODO: either migrate all these functions to PlayerPROCore or remove them from the header.
 void AllNoteOff( MADDriverRec *intDriver);
