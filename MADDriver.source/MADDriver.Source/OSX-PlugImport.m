@@ -296,7 +296,7 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 {
 	@autoreleasepool {
 		NSFileManager *fm = [NSFileManager defaultManager];
-		CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 5, &kCFTypeArrayCallBacks);
+		CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 6, &kCFTypeArrayCallBacks);
 		CFURLRef temp1;
 		//Application Main Bundle
 		CFBundleRef mainBundle = CFBundleGetMainBundle();
@@ -315,15 +315,24 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 			CFRelease(temp1);
 			temp1 = NULL;
 		}
+		
+		mainBundle = CFBundleGetBundleWithIdentifier(CFSTR("net.sourceforge.playerpro.PlayerPROKit"));
+		if (mainBundle != NULL) {
+			temp1 = CFBundleCopyBuiltInPlugInsURL(mainBundle);
+			CFArrayAppendValue(PlugFolds, temp1);
+			CFRelease(temp1);
+			temp1 = NULL;
+		}
+
 #endif
 		
 		//Local systemwide plugins
-		temp1 = (CFURLRef)[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO/Plugins"];
+		temp1 = (CFURLRef)[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"];
 		CFArrayAppendValue(PlugFolds, temp1);
 		temp1 = NULL;
 		
 		//User plugins
-		temp1 = (CFURLRef)[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO/Plugins"];
+		temp1 = (CFURLRef)[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"];
 		CFArrayAppendValue(PlugFolds, temp1);
 		temp1 = NULL;
 		
