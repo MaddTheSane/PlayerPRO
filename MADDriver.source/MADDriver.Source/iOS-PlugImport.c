@@ -46,13 +46,15 @@ typedef struct iPlugInfo
 	CFStringRef UTIType;
 } iPlugInfo;
 
+#define PLUGVERS 2 << 24 | 0 << 16 | 0 << 8 | 0
+
 static const iPlugInfo iOSPlugInfo[] = {
 	{
 		.IOPlug = main669,
 		.MenuName = CFSTR("669 Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "6669",
-		.version = 2 << 16 | 0 << 8 | 0,
+		.version = PLUGVERS,
 		.mode = MADPlugImport,
 		.UTIType = CFSTR("net.sourceforge.playerpro.669"),
 	},
@@ -61,7 +63,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.MenuName = CFSTR("AMF Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "AMF ",
-		.version = 2 << 16 | 0 << 8 | 0,
+		.version = PLUGVERS,
 		.mode = MADPlugImport,
 		.UTIType = CFSTR("net.sourceforge.playerpro.amf"),
 	},
@@ -70,7 +72,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.MenuName = CFSTR("DMF Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "DMF ",
-		.version = 2 << 16 | 0 << 8 | 0,
+		.version = PLUGVERS,
 		.mode = MADPlugImport,
 		.UTIType = CFSTR("net.sourceforge.playerpro.dmf"),
 	},
@@ -80,7 +82,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 	 .MenuName = CFSTR("ImpulseTracker Files"),
 	 .AuthorString = CFSTR("Antoine Rosset"),
 	 .type = "IT  ",
-	 .version = 2 << 16 | 0 << 8 | 0,
+	 .version = PLUGVERS,
 	 .mode = MADPlugImport,
 	 .UTIType = CFSTR("net.sourceforge.playerpro.it"),
 	 },*/
@@ -89,7 +91,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.MenuName = CFSTR("MAD-fg Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "MADF",
-		.version = 2 << 16 | 0 << 8 | 0,
+		.version = PLUGVERS,
 		.mode = MADPlugImport,
 		.UTIType = CFSTR("com.quadmation.playerpro.madfg"),
 	},
@@ -98,7 +100,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.MenuName = CFSTR("MADH Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "MADH",
-		.version = 2 << 16 | 0 << 8 | 0,
+		.version = PLUGVERS,
 		.mode = MADPlugImport,
 		.UTIType = CFSTR("com.quadmation.playerpro.madh"),
 	},
@@ -107,7 +109,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.MenuName = CFSTR("MADI Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "MADI",
-		.version = 2 << 16 | 0 << 8 | 0,
+		.version = PLUGVERS,
 		.mode = MADPlugImport,
 		.UTIType = CFSTR("com.quadmation.playerpro.madi"),
 	},
@@ -116,16 +118,16 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.MenuName = CFSTR("MED Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "MED ",
-		.version = 2 << 16 | 0 << 8 | 0,
+		.version = PLUGVERS,
 		.mode = MADPlugImport,
 		.UTIType = CFSTR("net.sourceforge.playerpro.med"),
 	},
 	{
 		.IOPlug = mainMOD,
-		.MenuName = CFSTR("MOD Files"),
+		.MenuName = CFSTR("FastTracker Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "STrk",
-		.version = 2 << 16 | 0 << 8 | 0,
+		.version = PLUGVERS,
 		.mode = MADPlugImportExport,
 		.UTIType = CFSTR("net.sourceforge.playerpro.mod"),
 	},
@@ -134,7 +136,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.MenuName = CFSTR("MTM Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "MTM ",
-		.version = 2 << 16 | 0 << 8 | 0,
+		.version = PLUGVERS,
 		.mode = MADPlugImport,
 		.UTIType = CFSTR("net.sourceforge.playerpro.mtm"),
 	},
@@ -143,16 +145,16 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.MenuName = CFSTR("OktaMed Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "Okta",
-		.version = 2 << 16 | 0 << 8 | 0,
+		.version = PLUGVERS,
 		.mode = MADPlugImport,
 		.UTIType = CFSTR("net.sourceforge.playerpro.okta"),
 	},
 	{
 		.IOPlug = mainS3M,
-		.MenuName = CFSTR("S3M Files"),
+		.MenuName = CFSTR("ScreamTracker Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "S3M ",
-		.version = 2 << 16 | 0 << 8 | 0,
+		.version = PLUGVERS,
 		.mode = MADPlugImportExport,
 		.UTIType = CFSTR("net.sourceforge.playerpro.med"),
 	},
@@ -161,7 +163,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.MenuName = CFSTR("ULT Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "ULT ",
-		.version = 2 << 16 | 0 << 8 | 0,
+		.version = PLUGVERS,
 		.mode = MADPlugImport,
 		.UTIType = CFSTR("net.sourceforge.playerpro.ult"),
 	},
@@ -171,16 +173,16 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.MenuName = CFSTR("UMX Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "UMX ",
-		.version = 2 << 16 | 0 << 8 | 0,
+		.version = PLUGVERS,
 		.mode = MADPlugImport,
 		.UTIType = CFSTR("net.sourceforge.playerpro.umx"),
 	},*/
 	{
 		.IOPlug = mainXM,
-		.MenuName = CFSTR("XM Files"),
+		.MenuName = CFSTR("FastTracker Files"),
 		.AuthorString = CFSTR("Antoine Rosset"),
 		.type = "XM  ",
-		.version = 2 << 16 | 0 << 8 | 0,
+		.version = PLUGVERS,
 		.mode = MADPlugImportExport,
 		.UTIType = CFSTR("net.sourceforge.playerpro.xm"),
 	}
@@ -255,6 +257,9 @@ static void MovePluginInfoOver(const iPlugInfo *src, PlugInfo *dst)
 
 void MInitImportPlug( MADLibrary *inMADDriver, char *PlugsFolderName)
 {
+	if (PlugsFolderName) {
+		fprintf(stderr, "Custom plug-in path %s ignored: iOS cannot load custom binaries", PlugsFolderName);
+	}
 	CFIndex			i, totalInterfaces;
 	
 	inMADDriver->ThePlug = (PlugInfo*) calloc( MAXPLUG, sizeof( PlugInfo));
@@ -262,7 +267,7 @@ void MInitImportPlug( MADLibrary *inMADDriver, char *PlugsFolderName)
 	totalInterfaces = sizeof(iOSPlugInfo) / sizeof(iPlugInfo);
 	for( i = 0; i < totalInterfaces; i++)
 	{
-		if (inMADDriver->TotalPlug < MAXPLUG)
+		if (inMADDriver->TotalPlug - 1 < MAXPLUG)
 		{
 			MovePluginInfoOver(&iOSPlugInfo[i], &inMADDriver->ThePlug[inMADDriver->TotalPlug]);
 			inMADDriver->TotalPlug++;
