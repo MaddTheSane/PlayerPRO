@@ -391,6 +391,9 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	/**************************/
 	
 	theMEDRead = theMED + mh->MMD0songP;
+	if (MEDSize < (sizeof(MMD0) + mh->MMD0songP)) {
+		return MADIncompatibleFile;
+	}
 	READMEDFILE( ms, sizeof(MMD0song));
 
 	/***************************/
