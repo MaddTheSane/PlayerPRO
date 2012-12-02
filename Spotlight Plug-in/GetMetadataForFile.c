@@ -84,7 +84,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 	
 	{
 		char		type[ 5];
-#ifdef DEBUG
+//#ifdef DEBUG
 		char		utiType[5] = {0};
 		{
 			OSType info;
@@ -99,13 +99,15 @@ Boolean GetMetadataForFile(void* thisInterface,
 			}
 		}
 		
-#endif
+//#endif
 		CFURLRef tempRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
 
 		if(MADMusicIdentifyCFURL(MADLib, type, tempRef) != noErr)
 		{
-			CFRelease(tempRef);
-			goto fail1;
+			//Couldn't identify via raw file, try by UTI
+			//CFRelease(tempRef);
+			//goto fail1;
+			strcpy(type, utiType);
 		}
 
 #ifdef DEBUG
