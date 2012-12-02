@@ -102,11 +102,15 @@ Boolean GetMetadataForFile(void* thisInterface,
 #endif
 		CFURLRef tempRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
 
-		MADMusicIdentifyCFURL(MADLib, type, tempRef);
+		if(MADMusicIdentifyCFURL(MADLib, type, tempRef) != noErr)
+		{
+			CFRelease(tempRef);
+			goto fail1;
+		}
 
 #ifdef DEBUG
 		if (strcmp(utiType, type) != 0) {
-			printf("File type differ, UTI says %s, PlayerPRO says %s", utiType, type);
+			printf("File types differ, UTI says %s, PlayerPRO says %s\n", utiType, type);
 		}
 #endif
 		
@@ -126,19 +130,27 @@ Boolean GetMetadataForFile(void* thisInterface,
 		
 		{
 			//Set the title metadata
-			CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->header->name, kCFStringEncodingMacRoman); //TODO: Check for other encodings?
-			CFDictionarySetValue(attributes, kMDItemTitle, title);
-			CFRelease(title);
+			//CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->header->name, kCFStringEncodingMacRoman); //TODO: Check for other encodings?
+			//CFDictionarySetValue(attributes, kMDItemTitle, title);
+			//CFRelease(title);
 		}
 		
 		{
 			PPInfoRec rec;
-			char sig[5];
-			MADMusicInfoCFURL(MADLib, type, tempRef, &rec);
-			OSType2Ptr(rec.signature, sig);
-			CFStringRef CFSig = CFStringCreateWithCString(kCFAllocatorDefault, sig, kCFStringEncodingMacRoman);
-			CFDictionarySetValue(attributes, kPPMDSignature, CFSig);
-			CFRelease(CFSig);
+			{
+				char sig[5];
+				MADMusicInfoCFURL(MADLib, type, tempRef, &rec);
+				OSType2Ptr(rec.signature, sig);
+				CFStringRef CFSig = CFStringCreateWithCString(kCFAllocatorDefault, sig, kCFStringEncodingMacRoman);
+				CFDictionarySetValue(attributes, kPPMDSignature, CFSig);
+				CFRelease(CFSig);
+			}
+			{
+				//Set the title metadata
+				CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, rec.internalFileName, kCFStringEncodingMacRoman); //TODO: Check for other encodings?
+				CFDictionarySetValue(attributes, kMDItemTitle, title);
+				CFRelease(title);
+			}
 			CFNumberRef tempNum = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &rec.totalPatterns);
 			CFDictionarySetValue(attributes, kPPMDTotalPatterns, tempNum);
 			CFRelease(tempNum); tempNum = NULL;
@@ -151,9 +163,11 @@ Boolean GetMetadataForFile(void* thisInterface,
 			tempNum = CFNumberCreate(kCFAllocatorDefault, kCFNumberShortType, &rec.totalTracks);
 			CFDictionarySetValue(attributes, kPPMDTotalTracks, tempNum);
 			CFRelease(tempNum);
-			CFStringRef FormatDes = CFStringCreateWithCString(kCFAllocatorDefault, rec.formatDescription, kCFStringEncodingMacRoman);
-			CFDictionarySetValue(attributes, kPPMDFormatDescription, FormatDes);
-			CFRelease(FormatDes);
+			{
+				CFStringRef FormatDes = CFStringCreateWithCString(kCFAllocatorDefault, rec.formatDescription, kCFStringEncodingMacRoman);
+				CFDictionarySetValue(attributes, kPPMDFormatDescription, FormatDes);
+				CFRelease(FormatDes);
+			}
 			
 		}
 		CFRelease(tempRef);
