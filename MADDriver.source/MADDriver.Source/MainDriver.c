@@ -31,9 +31,6 @@
 #include "PPPrivate.h"
 #ifdef _MAC_H
 #include <CoreFoundation/CoreFoundation.h>
-#endif
-
-#ifdef _MAC_H
 extern void NSLog(CFStringRef format, ...);
 #endif
 
