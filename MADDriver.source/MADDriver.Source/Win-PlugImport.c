@@ -251,6 +251,12 @@ Boolean LoadPlugLib( Ptr name, PlugInfo* plug)
 	}
 	
 	err = (*fpFuncAddress)( plug);
+
+	if(err != noErr)
+	{
+		FreeLibrary(plug->hLibrary);
+		return false;
+	}
 	
 	return true;
 }
