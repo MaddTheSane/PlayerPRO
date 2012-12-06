@@ -2602,6 +2602,14 @@
 					<int key="connectionID">1123</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="663199765"/>
+						<reference key="destination" ref="1000799287"/>
+					</object>
+					<int key="connectionID">1288</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: arrangedObjects.fileName</string>
 						<reference key="source" ref="128437033"/>
@@ -4145,7 +4153,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1286</int>
+			<int key="maxID">1288</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

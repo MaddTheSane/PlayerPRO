@@ -181,7 +181,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	PPRegisterDebugFunc(CocoaDebugStr);
-
+	MADInitLibrary(NULL, &MADLib);
 	[self willChangeValueForKey:@"musicList"];
 	musicList = [[PPMusicList alloc] init];
 	[musicList loadMusicListFromPreferences];
@@ -191,7 +191,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
 	[defaultCenter addObserver:self selector:@selector(digitalEditorPreferencesDidChange:) name:PPDigitalEditorPrefrencesDidChange object:nil];
 	
-	MADInitLibrary(NULL, &MADLib);
+
 	//[tableView setDataSource:musicList];
 	[self MADDriverWithPreferences];
 
@@ -312,9 +312,9 @@ enum PPMusicToolbarTypes {
 			break;
 
 		default:
-		return NO;
-		break;
-	}	
+			return NO;
+			break;
+	}
 }
 
 - (void)soundPreferencesDidChange:(NSNotification *)notification
@@ -369,7 +369,50 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)stopButtonPressed:(id)sender
 {
-    
+    MADStopMusic(MADDriver);
+	MADCleanDriver(MADDriver);
+}
+
+static NSString * const doubleDash = @"--";
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification
+{
+
+	NSInteger selected = [tableView selectedRow];
+	if (selected < 0) {
+		goto badMus;
+	}
+	NSURL *musicURL = [musicList URLAtIndex:selected];
+	PPInfoRec theInfo;
+	char info[5] = {0};
+	if(MADMusicIdentifyCFURL(MADLib, info, (CFURLRef)musicURL) != noErr) goto badMus;
+	if(MADMusicInfoCFURL(MADLib, info, (CFURLRef)musicURL, &theInfo) != noErr) goto badMus;
+	[fileName setTitleWithMnemonic:[musicURL lastPathComponent]];
+	[internalName setTitleWithMnemonic:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
+	[fileSize setTitleWithMnemonic:[NSString stringWithFormat:@"%.2f kiB", theInfo.fileSize / 1024.0]];
+	[musicInstrument setTitleWithMnemonic:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
+	[musicPatterns setTitleWithMnemonic:[NSString stringWithFormat:@"%d", theInfo.totalPatterns]];
+	[musicPlugType setTitleWithMnemonic:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
+	{
+		char sig[5] = {0};
+		OSType2Ptr(theInfo.signature, sig);
+		[musicSignature setTitleWithMnemonic:[NSString stringWithCString:sig encoding:NSMacOSRomanStringEncoding]];
+	}
+	[fileLocation setTitleWithMnemonic:[musicURL path]];
+	return;
+	
+badMus:
+	
+	[fileName setTitleWithMnemonic:doubleDash];
+	[internalName setTitleWithMnemonic:doubleDash];
+	[fileSize setTitleWithMnemonic:doubleDash];
+	[musicInstrument setTitleWithMnemonic:doubleDash];
+	[musicPatterns setTitleWithMnemonic:doubleDash];
+	[musicPlugType setTitleWithMnemonic:doubleDash];
+	[musicSignature setTitleWithMnemonic:doubleDash];
+	[fileLocation setTitleWithMnemonic:doubleDash];
+
+	
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
@@ -403,7 +446,5 @@ enum PPMusicToolbarTypes {
 	}
 	return NO;
 }
-
-
 
 @end

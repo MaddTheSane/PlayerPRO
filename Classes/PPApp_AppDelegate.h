@@ -11,7 +11,7 @@
 @class PPPreferences;
 @class PPMusicList;
 
-@interface PPApp_AppDelegate : NSObject <NSApplicationDelegate> {
+@interface PPApp_AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate> {
 	IBOutlet NSPanel *toolsPanel;
 	IBOutlet NSButton *loopButton;
     IBOutlet NSButton *playButton;
