@@ -1464,9 +1464,6 @@ OSErr MADCopyCurrentPartition( MADMusic *aPartition)
 
 OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef)
 {
-	if (type == NULL) {
-		return MADParametersErr;
-	}
 	char *URLcString;
 	CFIndex pathLen = getCFURLFilePathRepresentationLength(URLRef, true);
 	URLcString = malloc(pathLen);
