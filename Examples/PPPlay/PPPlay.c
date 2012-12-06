@@ -1,15 +1,3 @@
-/*
-REQUIRE THESE LIBRARIES:
-
-DSOUND.LIB
-WINMM.LIB
-COMDLG32.LIB
-GDI32.lib
-kernel32.lib
-user32.lib
-winspool.lib
-*/
-
 #include <stdio.h>
 
 #ifdef __APPLE__
