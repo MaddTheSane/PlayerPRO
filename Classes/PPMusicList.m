@@ -48,26 +48,26 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 @implementation PPMusicListObject
 
+@synthesize musicUrl;
+
 - (void)setMusicUrl:(NSURL *)amusicUrl
 {
 	NSURL *tempUrl = musicUrl;
-	NSString *tempString = fileName;
 	musicUrl = [amusicUrl copy];
 	
 	[self willChangeValueForKey:@"fileName"];
-	fileName = [[musicUrl lastPathComponent] copy];
+	//fileName = [[musicUrl lastPathComponent] copy];
 	[self didChangeValueForKey:@"fileName"];
 	
 	if (tempUrl != nil) {
 		[tempUrl release];
 	}
-	if (tempString != nil) {
-		[tempString release];
-	}
 }
 
-@synthesize fileName;
-@synthesize musicUrl;
+- (NSString *)fileName
+{
+	return [musicUrl lastPathComponent];
+}
 
 - (id)initWithURL:(NSURL *)aURL
 {
@@ -75,7 +75,6 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 		[self willChangeValueForKey:@"fileName"];
 		[self willChangeValueForKey:@"musicUrl"];
 		musicUrl = [aURL copy];
-		fileName = [[musicUrl lastPathComponent] copy];
 		[self didChangeValueForKey:@"fileName"];
 		[self didChangeValueForKey:@"musicUrl"];
 	}
@@ -85,14 +84,13 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 - (void)dealloc
 {
 	[musicUrl release];
-	[fileName release];
 	
 	[super dealloc];
 }
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@ - %@", musicUrl, fileName];
+	return [NSString stringWithFormat:@"%@ - %@", [musicUrl path], self.fileName];
 }
 
 @end
@@ -154,7 +152,6 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	}
 	
 	[self loadMusicList:musicArray];
-	 
 }
 
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen {
@@ -166,8 +163,9 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	UInt16 theNo, i;
 	CFURLGetFSRef((CFURLRef)toOpen, &theRef);
 	refNum = FSOpenResFile(&theRef, fsRdPerm);
-	if (ResError()) {
-		return ResError();
+	OSErr resErr = ResError();
+	if (resErr) {
+		return resErr;
 	}
 	UseResFile(refNum);
 	aHandle = Get1Resource( 'STR#', 128);
@@ -213,14 +211,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (void)loadMusicListAtURL:(NSURL *)fromURL
 {
-	NSString *filename = [fromURL path];
-	NSError *err = nil;
-	NSString *uti = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
 	NSInteger i = 0;
-	if ([uti isEqualToString:@"net.sourceforge.playerpro.stcfmusiclist"]) {
-		[self loadOldMusicListAtURL:fromURL];
-		return;
-	}
 	NSData *listData = [NSData dataWithContentsOfURL:fromURL];
 	PPMusicList *preList= [NSKeyedUnarchiver unarchiveObjectWithData:listData];
 	//[musicList removeAllObjects];
@@ -261,10 +252,11 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (void)removeObjectAtIndex:(NSUInteger)object
 {
-	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndex:object];
+	/*NSIndexSet *theIndex = [NSIndexSet indexSetWithIndex:object];
 	[self willChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
 	[musicList removeObjectAtIndex:object];
-	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
+	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];*/
+	[self removeObjectInMusicListAtIndex:object];
 }
 
 - (NSURL*)URLAtIndex:(NSUInteger)index
@@ -296,7 +288,10 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	NSInteger i = 0;
 	for (i = 0; i < [musicList count]; i++)
 	{
-		[BookmarkArray insertObject:[[[musicList objectAtIndex:i] musicUrl] bookmarkDataWithOptions:NSURLBookmarkCreationPreferFileIDResolution includingResourceValuesForKeys:nil relativeToURL:nil error:nil] atIndex:i];
+		NSData *bookData = [[[musicList objectAtIndex:i] musicUrl] bookmarkDataWithOptions:NSURLBookmarkCreationPreferFileIDResolution includingResourceValuesForKeys:nil relativeToURL:nil error:nil];
+		if (bookData) {
+			[BookmarkArray addObject:bookData];
+		}
 	}
 	[encoder encodeObject:BookmarkArray forKey:kMUSICLISTKEY];
 }
@@ -320,16 +315,12 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (void)removeObjectInMusicListAtIndex:(NSUInteger)object
 {
-	//NSIndexSet *theIndex = [NSIndexSet indexSetWithIndex:object];
-	//[self willChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
 	[musicList removeObjectAtIndex:object];
-	//[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
 }
 
 - (void)replaceObjectInMusicListAtIndex:(NSUInteger)index withObject:(id)anObject
 {
 	[musicList replaceObjectAtIndex:index withObject:anObject];
 }
-
 
 @end

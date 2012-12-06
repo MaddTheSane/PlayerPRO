@@ -11,10 +11,10 @@
 @interface PPMusicListObject : NSObject
 {
 	NSURL *musicUrl;
-	NSString *fileName;
+	//NSString *fileName;
 }
 
-@property (copy, nonatomic) NSURL *musicUrl;
+@property (copy, nonatomic, readwrite) NSURL *musicUrl;
 @property (readonly) NSString *fileName;
 
 - (id)initWithURL:(NSURL *)aURL;
@@ -33,7 +33,6 @@
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen;
 
 - (NSURL*)URLAtIndex:(NSUInteger)index;
-- (void)loadMusicListAtURL:(NSURL *)fromURL;
 - (void)addMusicURL:(NSURL *)musicToLoad;
 - (void)removeObjectAtIndex:(NSUInteger)object;
 
