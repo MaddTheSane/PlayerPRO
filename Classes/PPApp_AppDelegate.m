@@ -11,6 +11,7 @@
 #import "PPMusicList.h"
 #import "UserDefaultKeys.h"
 #import "NSColor+PPPreferences.h"
+#import "PPErrors.h"
 
 void CocoaDebugStr( short line, Ptr file, Ptr text)
 {
@@ -136,7 +137,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
     [window makeKeyAndOrderFront:sender];
 }
 
-- (BOOL)loadMusicURL:(NSURL*)musicToLoad
+- (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(NSError **)theErr
 {
 	if (Music != NULL) {
 		MADStopMusic(MADDriver);
@@ -145,14 +146,32 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	}
 
 	char fileType[5];
-	if(MADMusicIdentifyCFURL(MADLib, fileType, (CFURLRef)musicToLoad) != noErr)
+	OSErr theOSErr = MADMusicIdentifyCFURL(MADLib, fileType, (CFURLRef)musicToLoad);
+		
+	if(theOSErr != noErr)
+	{
+		if (theErr) {
+			*theErr = CreateErrorFromMADErrorType(theOSErr);
+		}
 		return NO;
-	if(MADLoadMusicCFURLFile(MADLib, &Music, fileType, (CFURLRef)musicToLoad)!= noErr)
+	}
+	theOSErr = MADLoadMusicCFURLFile(MADLib, &Music, fileType, (CFURLRef)musicToLoad);
+	
+	if (theOSErr !=noErr) {
+		if (theErr) {
+			*theErr = CreateErrorFromMADErrorType(theOSErr);
+		}
 		return NO;
+	}
 	
 	MADAttachDriverToMusic(MADDriver, Music, NULL);
 	MADPlayMusic(MADDriver);
 	return YES;
+}
+
+- (BOOL)loadMusicURL:(NSURL*)musicToLoad
+{
+	[self loadMusicURL:musicToLoad error:NULL];
 }
 
 - (IBAction)showPreferences:(id)sender
@@ -253,12 +272,37 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 - (IBAction)playSelectedMusic:(id)sender
 {
-	
+	NSError *error = nil;
+	NSURL* musicURL = [musicList URLAtIndex:[tableView selectedRow]];
+	if ([self loadMusicURL:musicURL error:&error] == NO)
+	{
+		NSAlert *alert = [NSAlert alertWithError:error];
+		[alert runModal];
+	}
 }
 
 - (IBAction)addMusic:(id)sender
 {
-	
+	@autoreleasepool {
+		NSOpenPanel *panel = [[NSOpenPanel openPanel] retain];
+		NSMutableArray *supportedUTIs = [NSMutableArray array];
+		[supportedUTIs addObject:@"com.quadmation.playerpro.madk"];
+		int i = 0;
+		for (i = 0; i < MADLib->TotalPlug; i++) {
+			NSArray *tempArray = [NSArray arrayWithArray:(id)MADLib->ThePlug[i].UTItypes];
+			[supportedUTIs addObjectsFromArray:tempArray];
+		}
+		[panel setAllowsMultipleSelection:NO];
+		[panel setAllowedFileTypes:supportedUTIs];
+		if([panel runModal] == NSOKButton)
+		{
+			[self willChangeValueForKey:@"musicList"];
+			[musicList addMusicURL:[panel URL]];
+			[self didChangeValueForKey:@"musicList"];
+		}
+		
+		[panel release];
+	}
 }
 
 - (IBAction)removeSelectedMusic:(id)sender {
@@ -344,7 +388,9 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)playButtonPressed:(id)sender
 {
-    
+	if (Music) {
+		MADPlayMusic(MADDriver);
+	}
 }
 
 - (IBAction)prevButtonPressed:(id)sender
@@ -369,8 +415,10 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)stopButtonPressed:(id)sender
 {
-    MADStopMusic(MADDriver);
-	MADCleanDriver(MADDriver);
+    if (Music) {
+		MADStopMusic(MADDriver);
+		MADCleanDriver(MADDriver);
+	}
 }
 
 static NSString * const doubleDash = @"--";
