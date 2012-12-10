@@ -168,6 +168,7 @@
 		552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		552C6FE310CD9DAC00C0E0D4 /* ByteUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */; };
 		552C6FE410CD9DB700C0E0D4 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; };
+		5532334F16766E5700076604 /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
 		5533416210BB577F005208D1 /* Mod.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F610BB5368005208D1 /* Mod.c */; };
 		5533416310BB5787005208D1 /* 669.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340D910BB5368005208D1 /* 669.c */; };
 		5533421410BB6187005208D1 /* AMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DB10BB5368005208D1 /* AMF.c */; };
@@ -1607,6 +1608,8 @@
 		552C70C310CDAFBC00C0E0D4 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
 		552C70C610CDB07E00C0E0D4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
 		552C716210CDC11400C0E0D4 /* README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = README.rtf; sourceTree = "<group>"; };
+		5532334D16766E5700076604 /* PPErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPErrors.h; sourceTree = "<group>"; };
+		5532334E16766E5700076604 /* PPErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPErrors.m; sourceTree = "<group>"; };
 		553340D910BB5368005208D1 /* 669.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 669.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		553340DA10BB5368005208D1 /* 669.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 669.h; sourceTree = "<group>"; };
 		553340DB10BB5368005208D1 /* AMF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AMF.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -3451,6 +3454,8 @@
 				552711E4124881F4005120FC /* UserDefaultKeys.m */,
 				55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */,
 				55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */,
+				5532334D16766E5700076604 /* PPErrors.h */,
+				5532334E16766E5700076604 /* PPErrors.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -6003,6 +6008,7 @@
 				55D1BD5F120FBE51004FD083 /* PPMusicList.m in Sources */,
 				552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */,
 				55801EB113D1ED9A007E24FC /* NSColor+PPPreferences.m in Sources */,
+				5532334F16766E5700076604 /* PPErrors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
