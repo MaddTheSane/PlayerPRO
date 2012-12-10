@@ -138,6 +138,24 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
     [window makeKeyAndOrderFront:sender];
 }
 
+- (void)songIsDonePlaying
+{
+	
+}
+
+- (void)updateMusicStats:(NSTimer*)theTimer
+{
+	if (Music) {
+		long fT, cT;
+		MADGetMusicStatus(MADDriver, &fT, &cT);
+		if (fT == cT) {
+			[self songIsDonePlaying];
+		}
+		[songPos setDoubleValue:cT];
+		[songCurTime setIntegerValue:cT];
+	}
+}
+
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(NSError **)theErr
 {
 	if (Music != NULL) {
@@ -171,10 +189,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	MADGetMusicStatus(MADDriver, &fT, &cT);
 	[songPos setMaxValue:fT];
 	[songPos setMinValue:0.0];
-	[songPos setDoubleValue:cT];
 	[songLabel setTitleWithMnemonic:[NSString stringWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding]];
 	[songTotalTime setIntegerValue:fT];
-	[songCurTime setIntegerValue:cT];
+
 	return YES;
 }
 
@@ -222,11 +239,15 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 	//[tableView setDataSource:musicList];
 	[self MADDriverWithPreferences];
-
+	
+	timeChecker = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0] interval:1/4.0 target:self selector:@selector(updateMusicStats:) userInfo:nil repeats:YES];
+	[[NSRunLoop mainRunLoop] addTimer:timeChecker forMode:NSDefaultRunLoopMode];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification
 {
+	[timeChecker invalidate];
+
 	if (Music != NULL) {
 		MADStopMusic(MADDriver);
 		MADCleanDriver(MADDriver);
@@ -247,6 +268,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 {
 	[preferences release];
 	[musicList release];
+	[timeChecker release];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
@@ -426,7 +448,9 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)sliderChanged:(id)sender
 {
-    
+    if(Music){
+		MADSetMusicStatus(MADDriver, 0, [songPos maxValue], [songPos doubleValue]);
+	}
 }
 
 - (IBAction)stopButtonPressed:(id)sender

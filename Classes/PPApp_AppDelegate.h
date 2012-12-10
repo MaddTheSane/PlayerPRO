@@ -35,6 +35,7 @@
 	
 	IBOutlet NSTableView *tableView;
 	IBOutlet NSArrayController *musicListController;
+	NSTimer *timeChecker;
 	MADDriverRec	*MADDriver;
 	MADMusic		*Music;
 	MADLibrary		*MADLib;	
