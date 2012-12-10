@@ -90,11 +90,12 @@ short	NCount = 1;
 
 static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
-	short 				i, PatMax, x, z, channel, TrueTracks;
+	short 				i, x, z, TrueTracks;
+	//short				PatMax, channel;
 	//long 				sndSize, OffSetToSample, OldTicks, temp, starting;
 	Ptr					MaxPtr, theOktaPos;
 	//OSErr				theErr;
-	Ptr					theInstrument[ 120], destPtr;
+	Ptr					theInstrument[ 120] /*, destPtr*/;
 	//unsigned short		tempS;
 	//char				tempChar;
 	
