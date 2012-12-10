@@ -23,8 +23,10 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
-#warning this code will only work on 32-bit mode
-#warning this code needs to be rewritten. 
+#ifdef __LP64__
+#error this code will only work on 32-bit mode
+#error this code needs to be rewritten. 
+#endif
 
 #include <string.h>
 
