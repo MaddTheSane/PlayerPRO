@@ -81,6 +81,7 @@ enum MADErrors
 	MADMusicHasNoDriver				= -11,
 	MADDriverHasNoMusic				= -12,
 	MADSoundSystemUnavailable		= -13,
+	MADWritingErr					= -14,
 	MADUnknownErr					= MADUnknowErr
 };
 
