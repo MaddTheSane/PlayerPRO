@@ -77,7 +77,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 + (void)initialize
 {
-	PPMusicList *tempList = [[[PPMusicList alloc] init] autorelease];
+	PPMusicList *tempList = [[PPMusicList alloc] init] ;
 	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
 															 [NSNumber numberWithBool:YES], PPRememberMusicList,
@@ -130,6 +130,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 															 
 															 [NSKeyedArchiver archivedDataWithRootObject:tempList], PPMMusicList,
 															 nil]];
+	[tempList release];
 }
 
 - (IBAction)showMusicList:(id)sender
@@ -157,7 +158,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	}
 	theOSErr = MADLoadMusicCFURLFile(MADLib, &Music, fileType, (CFURLRef)musicToLoad);
 	
-	if (theOSErr !=noErr) {
+	if (theOSErr != noErr) {
 		if (theErr) {
 			*theErr = CreateErrorFromMADErrorType(theOSErr);
 		}
@@ -166,6 +167,14 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	
 	MADAttachDriverToMusic(MADDriver, Music, NULL);
 	MADPlayMusic(MADDriver);
+	long fT, cT;
+	MADGetMusicStatus(MADDriver, &fT, &cT);
+	[songPos setMaxValue:fT];
+	[songPos setMinValue:0.0];
+	[songPos setDoubleValue:cT];
+	[songLabel setTitleWithMnemonic:[NSString stringWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding]];
+	[songTotalTime setIntegerValue:fT];
+	[songCurTime setIntegerValue:cT];
 	return YES;
 }
 
@@ -278,34 +287,36 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	{
 		NSAlert *alert = [NSAlert alertWithError:error];
 		[alert runModal];
+		[error release];
 	}
 }
 
 - (IBAction)addMusic:(id)sender
 {
+	NSOpenPanel *panel = [[NSOpenPanel openPanel] retain];
+	NSMutableArray *supportedUTIs = [NSMutableArray array];
+	[supportedUTIs addObject:@"com.quadmation.playerpro.madk"];
+	int i = 0;
 	@autoreleasepool {
-		NSOpenPanel *panel = [[NSOpenPanel openPanel] retain];
-		NSMutableArray *supportedUTIs = [NSMutableArray array];
-		[supportedUTIs addObject:@"com.quadmation.playerpro.madk"];
-		int i = 0;
 		for (i = 0; i < MADLib->TotalPlug; i++) {
 			NSArray *tempArray = [NSArray arrayWithArray:(id)MADLib->ThePlug[i].UTItypes];
 			[supportedUTIs addObjectsFromArray:tempArray];
 		}
-		[panel setAllowsMultipleSelection:NO];
-		[panel setAllowedFileTypes:supportedUTIs];
-		if([panel runModal] == NSOKButton)
-		{
-			[self willChangeValueForKey:@"musicList"];
-			[musicList addMusicURL:[panel URL]];
-			[self didChangeValueForKey:@"musicList"];
-		}
-		
-		[panel release];
 	}
+	[panel setAllowsMultipleSelection:NO];
+	[panel setAllowedFileTypes:supportedUTIs];
+	if([panel runModal] == NSOKButton)
+	{
+		[self willChangeValueForKey:@"musicList"];
+		[musicList addMusicURL:[panel URL]];
+		[self didChangeValueForKey:@"musicList"];
+	}
+	
+	[panel release];
 }
 
 - (IBAction)removeSelectedMusic:(id)sender {
+#if 0
 	NSIndexSet *selMusic = [tableView selectedRowIndexes];
 	NSInteger i = 0;
 	NSInteger selIndexes = [selMusic count];
@@ -320,6 +331,11 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	}
 	[self didChangeValueForKey:@"musicList"];
 	free(indexArray);
+#else
+	[self willChangeValueForKey:@"musicList"];
+	[musicList removeObjectInMusicListAtIndex:[tableView selectedRow]];
+	[self didChangeValueForKey:@"musicList"];
+#endif
 }
 
 enum PPMusicToolbarTypes {

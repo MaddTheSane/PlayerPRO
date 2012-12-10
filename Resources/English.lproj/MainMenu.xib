@@ -11,6 +11,7 @@
 			<string key="NS.object.0">2844</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
+			<string>IBCustomFormatter</string>
 			<string>NSArrayController</string>
 			<string>NSButton</string>
 			<string>NSButtonCell</string>
@@ -1220,7 +1221,7 @@
 											<string key="NSFrameSize">{296, 220}</string>
 											<reference key="NSSuperview" ref="702402919"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="297924866"/>
+											<reference key="NSNextKeyView" ref="804373054"/>
 											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -1339,6 +1340,7 @@
 									<string key="NSFrame">{{224, 17}, {15, 212}}</string>
 									<reference key="NSSuperview" ref="871224933"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<reference key="NSTarget" ref="871224933"/>
 									<string key="NSAction">_doScroller:</string>
@@ -1376,7 +1378,7 @@
 							<string key="NSFrame">{{20, 20}, {298, 238}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="702402919"/>
+							<reference key="NSNextKeyView" ref="297924866"/>
 							<int key="NSsFlags">133650</int>
 							<reference key="NSVScroller" ref="804373054"/>
 							<reference key="NSHScroller" ref="297924866"/>
@@ -1410,6 +1412,7 @@
 						<string key="NSFrame">{{119, 20}, {185, 78}}</string>
 						<reference key="NSSuperview" ref="150741665"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="541108171">
 							<int key="NSCellFlags">67108864</int>
@@ -1958,7 +1961,7 @@
 						</object>
 						<object class="NSTextField" id="461291136">
 							<reference key="NSNextResponder" ref="661368882"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">292</int>
 							<string key="NSFrame">{{-3, 29}, {41, 17}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
 							<reference key="NSWindow"/>
@@ -1966,9 +1969,10 @@
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="802875930">
 								<int key="NSCellFlags">68157504</int>
-								<int key="NSCellFlags2">272630784</int>
+								<int key="NSCellFlags2">-1874852864</int>
 								<string key="NSContents">00:00</string>
 								<reference key="NSSupport" ref="16400357"/>
+								<object class="IBCustomFormatter" key="NSFormatter" id="1065619793"/>
 								<reference key="NSControlView" ref="461291136"/>
 								<reference key="NSBackgroundColor" ref="735664371"/>
 								<reference key="NSTextColor" ref="541349829"/>
@@ -1977,8 +1981,8 @@
 						</object>
 						<object class="NSSlider" id="781404807">
 							<reference key="NSNextResponder" ref="661368882"/>
-							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{40, 25}, {246, 21}}</string>
+							<int key="NSvFlags">290</int>
+							<string key="NSFrame">{{40, 25}, {245, 21}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="488219195"/>
@@ -2001,7 +2005,7 @@
 						</object>
 						<object class="NSTextField" id="488219195">
 							<reference key="NSNextResponder" ref="661368882"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{288, 27}, {41, 17}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
 							<reference key="NSWindow"/>
@@ -2009,9 +2013,10 @@
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="934528952">
 								<int key="NSCellFlags">68157504</int>
-								<int key="NSCellFlags2">272630784</int>
+								<int key="NSCellFlags2">-1874852864</int>
 								<string key="NSContents">00:00</string>
 								<reference key="NSSupport" ref="16400357"/>
+								<object class="IBCustomFormatter" key="NSFormatter" id="242495785"/>
 								<reference key="NSControlView" ref="488219195"/>
 								<reference key="NSBackgroundColor" ref="735664371"/>
 								<reference key="NSTextColor" ref="541349829"/>
@@ -2020,10 +2025,11 @@
 						</object>
 						<object class="NSTextField" id="703285363">
 							<reference key="NSNextResponder" ref="661368882"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">290</int>
 							<string key="NSFrame">{{-2, 4}, {331, 17}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="447678757">
 								<int key="NSCellFlags">68157504</int>
@@ -3772,8 +3778,8 @@
 							<reference ref="461291136"/>
 							<reference ref="781404807"/>
 							<reference ref="484798091"/>
-							<reference ref="488219195"/>
 							<reference ref="703285363"/>
+							<reference ref="488219195"/>
 						</array>
 						<reference key="parent" ref="810697938"/>
 					</object>
@@ -3892,6 +3898,9 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">1147</int>
 						<reference key="object" ref="802875930"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="1065619793"/>
+						</array>
 						<reference key="parent" ref="461291136"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -3918,6 +3927,9 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">1151</int>
 						<reference key="object" ref="934528952"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="242495785"/>
+						</array>
 						<reference key="parent" ref="488219195"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -3938,6 +3950,16 @@
 						<reference key="object" ref="773991083"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Music List</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1294</int>
+						<reference key="object" ref="242495785"/>
+						<reference key="parent" ref="934528952"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1295</int>
+						<reference key="object" ref="1065619793"/>
+						<reference key="parent" ref="802875930"/>
 					</object>
 				</array>
 			</object>
@@ -4048,6 +4070,10 @@
 				<string key="1152.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1153.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1240.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1294.CustomClassName">PPTimeFormatter</string>
+				<string key="1294.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1295.CustomClassName">PPTimeFormatter</string>
+				<string key="1295.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="367.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="367.IBWindowTemplateEditedContentRect">{{351, 689}, {338, 270}}</string>
 				<integer value="1" key="367.NSWindowTemplate.visibleAtLaunch"/>
@@ -4153,7 +4179,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1288</int>
+			<int key="maxID">1295</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4383,6 +4409,14 @@
 						<string key="minorKey">./Classes/PPApp_AppDelegate.h</string>
 					</object>
 				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">PPTimeFormatter</string>
+					<string key="superclassName">NSFormatter</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/PPTimeFormatter.h</string>
+					</object>
+				</object>
 			</array>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
@@ -4390,10 +4424,6 @@
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<real value="1060" key="NS.object.0"/>
-		</object>
-		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
-			<integer value="3200" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
@@ -4415,4 +4445,11 @@
 			<string key="PPStop">{26, 26}</string>
 		</dictionary>
 	</data>
+	<classes>
+		<class name="IBCustomFormatter">
+			<fallbacks>
+				<name>NSFormatter</name>
+			</fallbacks>
+		</class>
+	</classes>
 </archive>
