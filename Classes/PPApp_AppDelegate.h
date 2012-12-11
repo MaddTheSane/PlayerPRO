@@ -66,6 +66,7 @@
 
 @property (assign) NSWindow *window;
 
+- (IBAction)saveMusicList:(id)sender;
 
 - (IBAction)fastForwardButtonPressed:(id)sender;
 - (IBAction)loopButtonPressed:(id)sender;

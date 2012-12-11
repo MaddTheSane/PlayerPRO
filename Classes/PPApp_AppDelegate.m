@@ -390,7 +390,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	}
 	[panel setAllowsMultipleSelection:NO];
 	[panel setAllowedFileTypes:supportedUTIs];
-	if([panel runModal] == NSOKButton)
+	if([panel runModal] == NSFileHandlingPanelOKButton)
 	{
 		[self willChangeValueForKey:@"musicList"];
 		[musicList addMusicURL:[panel URL]];
@@ -470,6 +470,17 @@ enum PPMusicToolbarTypes {
 - (void)digitalEditorPreferencesDidChange:(NSNotification *)notification
 {
 	
+}
+
+- (IBAction)saveMusicList:(id)sender {
+	NSSavePanel *savePanel = [[NSSavePanel savePanel] retain];
+	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"net.sourceforge.playerpro.musiclist"]];
+	[savePanel setCanCreateDirectories:YES];
+	[savePanel setCanSelectHiddenExtension:YES];
+	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+		[musicList saveMusicListToURL:[savePanel URL]];
+	}
+	[savePanel release];
 }
 
 - (IBAction)fastForwardButtonPressed:(id)sender

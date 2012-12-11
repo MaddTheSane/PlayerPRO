@@ -269,8 +269,8 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 #pragma mark Archiving
 
-- (id)initWithCoder:(NSCoder *)decoder {
-	
+- (id)initWithCoder:(NSCoder *)decoder
+{
 	if ((self = [super init])) 
 	{
 		NSMutableArray *BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY];
@@ -286,7 +286,8 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)encoder {
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
 	NSMutableArray *BookmarkArray = [NSMutableArray arrayWithCapacity:[musicList count]];
 	NSInteger i = 0;
 	for (i = 0; i < [musicList count]; i++)

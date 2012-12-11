@@ -282,6 +282,14 @@
 									<reference key="NSOnImage" ref="769544733"/>
 									<reference key="NSMixedImage" ref="821451438"/>
 								</object>
+								<object class="NSMenuItem" id="372355828">
+									<reference key="NSMenu" ref="155889949"/>
+									<string key="NSTitle">Save Music List as…</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="769544733"/>
+									<reference key="NSMixedImage" ref="821451438"/>
+								</object>
 								<object class="NSMenuItem" id="718358731">
 									<reference key="NSMenu" ref="155889949"/>
 									<string key="NSTitle">Export As</string>
@@ -300,6 +308,7 @@
 												<int key="NSMnemonicLoc">2147483647</int>
 												<reference key="NSOnImage" ref="769544733"/>
 												<reference key="NSMixedImage" ref="821451438"/>
+												<int key="NSTag">-1</int>
 											</object>
 											<object class="NSMenuItem" id="699801497">
 												<reference key="NSMenu" ref="510743013"/>
@@ -308,6 +317,7 @@
 												<int key="NSMnemonicLoc">2147483647</int>
 												<reference key="NSOnImage" ref="769544733"/>
 												<reference key="NSMixedImage" ref="821451438"/>
+												<int key="NSTag">-2</int>
 											</object>
 											<object class="NSMenuItem" id="965110423">
 												<reference key="NSMenu" ref="510743013"/>
@@ -1340,7 +1350,6 @@
 									<string key="NSFrame">{{224, 17}, {15, 212}}</string>
 									<reference key="NSSuperview" ref="871224933"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<reference key="NSTarget" ref="871224933"/>
 									<string key="NSAction">_doScroller:</string>
@@ -1412,7 +1421,6 @@
 						<string key="NSFrame">{{119, 20}, {185, 78}}</string>
 						<reference key="NSSuperview" ref="150741665"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="541108171">
 							<int key="NSCellFlags">67108864</int>
@@ -2029,7 +2037,6 @@
 							<string key="NSFrame">{{-2, 4}, {331, 17}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="447678757">
 								<int key="NSCellFlags">68157504</int>
@@ -2600,6 +2607,14 @@
 					<int key="connectionID">1286</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">saveMusicList:</string>
+						<reference key="source" ref="1000799287"/>
+						<reference key="destination" ref="372355828"/>
+					</object>
+					<int key="connectionID">1297</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="842369831"/>
@@ -2963,6 +2978,7 @@
 							<reference ref="747480660"/>
 							<reference ref="759440421"/>
 							<reference ref="657667673"/>
+							<reference ref="372355828"/>
 						</array>
 						<reference key="parent" ref="660077358"/>
 					</object>
@@ -3961,6 +3977,11 @@
 						<reference key="object" ref="1065619793"/>
 						<reference key="parent" ref="802875930"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1296</int>
+						<reference key="object" ref="372355828"/>
+						<reference key="parent" ref="155889949"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -4074,6 +4095,7 @@
 				<string key="1294.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1295.CustomClassName">PPTimeFormatter</string>
 				<string key="1295.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1296.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="367.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="367.IBWindowTemplateEditedContentRect">{{351, 689}, {338, 270}}</string>
 				<integer value="1" key="367.NSWindowTemplate.visibleAtLaunch"/>
@@ -4179,7 +4201,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1295</int>
+			<int key="maxID">1297</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4199,6 +4221,7 @@
 						<string key="recordButtonPressed:">id</string>
 						<string key="removeSelectedMusic:">id</string>
 						<string key="rewindButtonPressed:">id</string>
+						<string key="saveMusicList:">id</string>
 						<string key="showBoxEditor:">id</string>
 						<string key="showClassicEditor:">id</string>
 						<string key="showDigitalEditor:">id</string>
@@ -4257,6 +4280,10 @@
 						</object>
 						<object class="IBActionInfo" key="rewindButtonPressed:">
 							<string key="name">rewindButtonPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="saveMusicList:">
+							<string key="name">saveMusicList:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showBoxEditor:">
