@@ -34,11 +34,12 @@ static CFTypeID numbertype = 0;
 static CFTypeID arraytype = 0;
 static CFTypeID booleantype = 0;
 
-enum {
+typedef enum _MADPlugCapabilities {
+	PPMADCanDoNothing = 0,
 	PPMADCanImport = 1,
 	PPMADCanExport = 2,
 	PPMADCanDoBoth = PPMADCanImport | PPMADCanExport
-};
+} MADPlugCapabilities;
 
 static Boolean GetBoolFromType(CFTypeRef theType)
 {
@@ -97,7 +98,7 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 			CFTypeRef exportValue = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugDoesExport);
 			if (importValue != NULL || exportValue != NULL) {
 				Boolean canImport = false, canExport = false;
-				int possibilities = 0;
+				MADPlugCapabilities possibilities = PPMADCanDoNothing;
 				if (importValue != NULL) {
 					canImport = GetBoolFromType(importValue);
 				}
