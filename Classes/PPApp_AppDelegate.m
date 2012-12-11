@@ -207,6 +207,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		MADGetMusicStatus(MADDriver, &fT, &cT);
 		if (fT == cT) {
 			[self songIsDonePlaying];
+			if (Music) {
+				MADGetMusicStatus(MADDriver, &fT, &cT);
+			} else return;
 		}
 		[songPos setDoubleValue:cT];
 		[songCurTime setIntegerValue:cT];
@@ -287,7 +290,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	MADInitLibrary(NULL, &MADLib);
 	[self willChangeValueForKey:@"musicList"];
 	musicList = [[PPMusicList alloc] init];
-	[musicList loadMusicListFromPreferences];
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
+		[musicList loadMusicListFromPreferences];
+	}
 	[self didChangeValueForKey:@"musicList"];
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	[defaultCenter addObserver:self selector:@selector(preferencesDidChange:) name:PPListPreferencesDidChange object:nil];
@@ -314,8 +319,11 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	MADStopDriver(MADDriver);
 	MADDisposeDriver(MADDriver);
 	MADDisposeLibrary(MADLib);
-	
-	[musicList saveMusicListToPreferences];
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
+		[musicList saveMusicListToPreferences];
+	} else {
+		[[NSUserDefaults standardUserDefaults] removeObjectForKey:PPMMusicList];
+	}
 }
 
 - (void)preferencesDidChange:(NSNotification *)notification {
