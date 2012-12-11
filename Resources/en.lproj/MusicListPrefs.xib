@@ -52,7 +52,7 @@
 								<int key="NSvFlags">274</int>
 								<object class="NSMutableArray" key="NSSubviews">
 									<bool key="EncodedWithXMLCoder">YES</bool>
-									<object class="NSMatrix" id="620775105">
+									<object class="NSMatrix" id="66048133">
 										<reference key="NSNextResponder" ref="403869875"/>
 										<int key="NSvFlags">256</int>
 										<string key="NSFrame">{{18, 14}, {332, 118}}</string>
@@ -73,7 +73,7 @@
 													<double key="NSSize">13</double>
 													<int key="NSfFlags">1044</int>
 												</object>
-												<reference key="NSControlView" ref="620775105"/>
+												<reference key="NSControlView" ref="66048133"/>
 												<int key="NSButtonFlags">1211912448</int>
 												<int key="NSButtonFlags2">2</int>
 												<object class="NSCustomResource" key="NSNormalImage" id="572600638">
@@ -93,7 +93,7 @@
 												<int key="NSCellFlags2">0</int>
 												<string key="NSContents">Load first music when opening a list</string>
 												<reference key="NSSupport" ref="279980853"/>
-												<reference key="NSControlView" ref="620775105"/>
+												<reference key="NSControlView" ref="66048133"/>
 												<int key="NSButtonFlags">1211912448</int>
 												<int key="NSButtonFlags2">2</int>
 												<reference key="NSNormalImage" ref="572600638"/>
@@ -108,7 +108,7 @@
 												<int key="NSCellFlags2">0</int>
 												<string key="NSContents">Go to startup position when done playing</string>
 												<reference key="NSSupport" ref="279980853"/>
-												<reference key="NSControlView" ref="620775105"/>
+												<reference key="NSControlView" ref="66048133"/>
 												<int key="NSButtonFlags">1211912448</int>
 												<int key="NSButtonFlags2">2</int>
 												<reference key="NSNormalImage" ref="572600638"/>
@@ -123,7 +123,7 @@
 												<int key="NSCellFlags2">0</int>
 												<string key="NSContents">Ask to save modified Music List files</string>
 												<reference key="NSSupport" ref="279980853"/>
-												<reference key="NSControlView" ref="620775105"/>
+												<reference key="NSControlView" ref="66048133"/>
 												<int key="NSButtonFlags">1211912448</int>
 												<int key="NSButtonFlags2">2</int>
 												<reference key="NSNormalImage" ref="572600638"/>
@@ -138,7 +138,7 @@
 												<int key="NSCellFlags2">0</int>
 												<string key="NSContents">Automatically play after opening a music file</string>
 												<reference key="NSSupport" ref="279980853"/>
-												<reference key="NSControlView" ref="620775105"/>
+												<reference key="NSControlView" ref="66048133"/>
 												<int key="NSButtonFlags">1211912448</int>
 												<int key="NSButtonFlags2">2</int>
 												<reference key="NSNormalImage" ref="572600638"/>
@@ -148,12 +148,12 @@
 												<int key="NSPeriodicDelay">200</int>
 												<int key="NSPeriodicInterval">25</int>
 											</object>
-											<object class="NSButtonCell" id="253502116">
+											<object class="NSButtonCell" id="493030454">
 												<int key="NSCellFlags">-2080374784</int>
 												<int key="NSCellFlags2">0</int>
 												<string key="NSContents">Loop music list</string>
 												<reference key="NSSupport" ref="279980853"/>
-												<reference key="NSControlView" ref="620775105"/>
+												<reference key="NSControlView" ref="66048133"/>
 												<int key="NSButtonFlags">1211912448</int>
 												<int key="NSButtonFlags2">2</int>
 												<reference key="NSAlternateImage" ref="112705634"/>
@@ -166,7 +166,7 @@
 										<string key="NSIntercellSpacing">{0, 2}</string>
 										<int key="NSMatrixFlags">-2080366592</int>
 										<nil key="NSCellClass"/>
-										<object class="NSButtonCell" key="NSProtoCell" id="833198308">
+										<object class="NSButtonCell" key="NSProtoCell" id="956218889">
 											<int key="NSCellFlags">-2080374784</int>
 											<int key="NSCellFlags2">0</int>
 											<string key="NSContents">Remember Music List for next startup</string>
@@ -180,7 +180,7 @@
 										</object>
 										<int key="NSSelectedRow">-1</int>
 										<int key="NSSelectedCol">-1</int>
-										<object class="NSColor" key="NSBackgroundColor" id="774087915">
+										<object class="NSColor" key="NSBackgroundColor" id="696561093">
 											<int key="NSColorSpace">6</int>
 											<string key="NSCatalogName">System</string>
 											<string key="NSColorName">controlColor</string>
@@ -189,13 +189,13 @@
 												<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 											</object>
 										</object>
-										<reference key="NSCellBackgroundColor" ref="774087915"/>
+										<reference key="NSCellBackgroundColor" ref="696561093"/>
 									</object>
 								</object>
 								<string key="NSFrame">{{1, 1}, {368, 142}}</string>
 								<reference key="NSSuperview" ref="312213295"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="620775105"/>
+								<reference key="NSNextKeyView" ref="66048133"/>
 							</object>
 						</object>
 						<string key="NSFrame">{{17, 16}, {370, 158}}</string>
@@ -462,7 +462,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 											<int key="NSPeriodicInterval">75</int>
 										</object>
 										<reference key="NSSelectedCell" ref="957724426"/>
-										<reference key="NSBackgroundColor" ref="774087915"/>
+										<reference key="NSBackgroundColor" ref="696561093"/>
 										<reference key="NSCellBackgroundColor" ref="301008994"/>
 										<reference key="NSFont" ref="279980853"/>
 									</object>
@@ -574,7 +574,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">loopMusic</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="253502116"/>
+						<reference key="destination" ref="493030454"/>
 					</object>
 					<int key="connectionID">58</int>
 				</object>
@@ -617,6 +617,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="destination" ref="357394538"/>
 					</object>
 					<int key="connectionID">63</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleButton:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="493030454"/>
+					</object>
+					<int key="connectionID">64</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -711,59 +719,59 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="object" ref="312213295"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="620775105"/>
+							<reference ref="66048133"/>
 						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">45</int>
-						<reference key="object" ref="620775105"/>
+						<reference key="object" ref="66048133"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="833198308"/>
+							<reference ref="956218889"/>
 							<reference ref="883950355"/>
 							<reference ref="669604835"/>
 							<reference ref="480081480"/>
 							<reference ref="357394538"/>
 							<reference ref="840720183"/>
-							<reference ref="253502116"/>
+							<reference ref="493030454"/>
 						</object>
 						<reference key="parent" ref="312213295"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">46</int>
-						<reference key="object" ref="833198308"/>
-						<reference key="parent" ref="620775105"/>
+						<reference key="object" ref="956218889"/>
+						<reference key="parent" ref="66048133"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">28</int>
 						<reference key="object" ref="883950355"/>
-						<reference key="parent" ref="620775105"/>
+						<reference key="parent" ref="66048133"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">26</int>
 						<reference key="object" ref="669604835"/>
-						<reference key="parent" ref="620775105"/>
+						<reference key="parent" ref="66048133"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">22</int>
 						<reference key="object" ref="480081480"/>
-						<reference key="parent" ref="620775105"/>
+						<reference key="parent" ref="66048133"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">20</int>
 						<reference key="object" ref="357394538"/>
-						<reference key="parent" ref="620775105"/>
+						<reference key="parent" ref="66048133"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">17</int>
 						<reference key="object" ref="840720183"/>
-						<reference key="parent" ref="620775105"/>
+						<reference key="parent" ref="66048133"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">57</int>
-						<reference key="object" ref="253502116"/>
-						<reference key="parent" ref="620775105"/>
+						<reference key="object" ref="493030454"/>
+						<reference key="parent" ref="66048133"/>
 					</object>
 				</object>
 			</object>
@@ -828,7 +836,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">63</int>
+			<int key="maxID">64</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
