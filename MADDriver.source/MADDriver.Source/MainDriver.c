@@ -1881,7 +1881,7 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 				return MADNeedMemory;
 			}
 			
-			free( (Ptr) MDriver->partition[ i]);
+			free( MDriver->partition[ i]);
 			MDriver->partition[ i] = tempPat;
 		}
 	}
