@@ -20,6 +20,7 @@ NSString * const PPAfterPlayingMusic = @"After playing music";
 NSString * const PPGotoStartupAfterPlaying = @"Go to startup pos. after playing";
 NSString * const PPSaveModList = @"Ask to save modified Mod list";
 NSString * const PPLoadMusicAtMusicLoad = @"Play music on Music load";
+NSString * const PPLoopMusicWhenDone = @"Loop music";
 
 NSString * const PPSoundOutBits = @"Sound output bits";
 NSString * const PPSoundOutRate = @"Sound output rate";

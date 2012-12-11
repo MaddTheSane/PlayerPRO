@@ -19,6 +19,7 @@ extern NSString * const PPAfterPlayingMusic;
 extern NSString * const PPGotoStartupAfterPlaying;
 extern NSString * const PPSaveModList;
 extern NSString * const PPLoadMusicAtMusicLoad;
+extern NSString * const PPLoopMusicWhenDone;
 
 extern NSString * const PPSoundOutBits;
 extern NSString * const PPSoundOutRate;
