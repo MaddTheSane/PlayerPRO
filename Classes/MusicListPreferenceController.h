@@ -9,12 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 @interface MusicListPreferenceController : NSViewController {
-    IBOutlet NSButton *askToSave;
-    IBOutlet NSButton *autoPlay;
-    IBOutlet NSButton *goToStartupPos;
-    IBOutlet NSButton *loadFirstMusic;
+    IBOutlet NSButtonCell *askToSave;
+    IBOutlet NSButtonCell *autoPlay;
+    IBOutlet NSButtonCell *goToStartupPos;
+    IBOutlet NSButtonCell *loadFirstMusic;
     IBOutlet NSMatrix *musicPlayingOutlet;
-    IBOutlet NSButton *rememberMusicList;
+    IBOutlet NSButtonCell *rememberMusicList;
+	IBOutlet NSButtonCell *loopMusic;
 }
 - (IBAction)changePlayedMusic:(id)sender;
 - (IBAction)toggleButton:(id)sender;

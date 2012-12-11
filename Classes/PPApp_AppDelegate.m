@@ -86,6 +86,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 															 [NSNumber numberWithBool:YES], PPGotoStartupAfterPlaying,
 															 [NSNumber numberWithBool:YES], PPSaveModList,
 															 [NSNumber numberWithBool:NO], PPLoadMusicAtMusicLoad,
+															 [NSNumber numberWithBool:NO], PPLoopMusicWhenDone,
 															 
 															 [NSNumber numberWithInt:16], PPSoundOutBits,
 															 [NSNumber numberWithInt:44100], PPSoundOutRate,
@@ -140,7 +141,63 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 - (void)songIsDonePlaying
 {
-	
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	switch ([userDefaults integerForKey:PPAfterPlayingMusic]) {
+		case PPStopPlaying:
+		default:
+			MADStopMusic(MADDriver);
+			MADCleanDriver(MADDriver);
+			MADDisposeMusic(&Music, MADDriver);
+			break;
+			
+		case PPLoopMusic:
+			MADSetMusicStatus(MADDriver, 0, 100, 0);
+			break;
+			
+		case PPLoadNext:
+		{
+			NSInteger tableCount = [musicList countOfMusicList];
+			if (tableCount > ++currentlyPlayingIndex) {
+				NSError *err;
+				if (![self loadMusicURL:[musicList URLAtIndex:currentlyPlayingIndex] error:&err])
+				{
+					NSAlert *alert = [NSAlert alertWithError:err];
+					[alert runModal];
+					[err release];
+				}
+			} else {
+				if ([userDefaults boolForKey:PPLoopMusicWhenDone]) {
+					currentlyPlayingIndex = 0;
+					NSError *err;
+					if (![self loadMusicURL:[musicList URLAtIndex:currentlyPlayingIndex] error:&err])
+					{
+						NSAlert *alert = [NSAlert alertWithError:err];
+						[alert runModal];
+						[err release];
+					}
+				} else {
+					MADStopMusic(MADDriver);
+					MADCleanDriver(MADDriver);
+					MADDisposeMusic(&Music, MADDriver);
+				}
+			}
+		}
+			break;
+			
+		case PPLoadRandom:
+		{
+			currentlyPlayingIndex = random() % [musicList countOfMusicList];
+			NSError *err;
+			if (![self loadMusicURL:[musicList URLAtIndex:currentlyPlayingIndex] error:&err])
+			{
+				NSAlert *alert = [NSAlert alertWithError:err];
+				[alert runModal];
+				[err release];
+			}
+		}
+			break;
+			
+	}
 }
 
 - (void)updateMusicStats:(NSTimer*)theTimer
@@ -225,6 +282,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+	srandom(time(NULL) & 0xffffffff);
 	PPRegisterDebugFunc(CocoaDebugStr);
 	MADInitLibrary(NULL, &MADLib);
 	[self willChangeValueForKey:@"musicList"];
@@ -304,7 +362,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 - (IBAction)playSelectedMusic:(id)sender
 {
 	NSError *error = nil;
-	NSURL* musicURL = [musicList URLAtIndex:[tableView selectedRow]];
+	currentlyPlayingIndex = [tableView selectedRow];
+	NSURL* musicURL = [musicList URLAtIndex:currentlyPlayingIndex];
 	if ([self loadMusicURL:musicURL error:&error] == NO)
 	{
 		NSAlert *alert = [NSAlert alertWithError:error];

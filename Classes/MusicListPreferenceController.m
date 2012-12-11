@@ -37,6 +37,11 @@
 - (IBAction)toggleButton:(id)sender {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setBool:[rememberMusicList state] forKey:PPRememberMusicList];
+	[defaults setBool:[loadFirstMusic state] forKey:PPLoadMusicAtListLoad];
+	[defaults setBool:[autoPlay state] forKey:PPLoadMusicAtMusicLoad];
+	[defaults setBool:[goToStartupPos state] forKey:PPGotoStartupAfterPlaying];
+	[defaults setBool:[loopMusic state] forKey:PPLoopMusicWhenDone];
+	[defaults setBool:[goToStartupPos state] forKey:PPGotoStartupAfterPlaying];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPListPreferencesDidChange object:self];
 }
@@ -78,6 +83,7 @@
 	[goToStartupPos setState:[defaults boolForKey:PPGotoStartupAfterPlaying]];
 	[askToSave setState:[defaults boolForKey:PPSaveModList]];
 	[autoPlay setState:[defaults boolForKey:PPLoadMusicAtMusicLoad]];
+	[loopMusic setState:[defaults boolForKey:PPLoopMusicWhenDone]];
 	[self setPlayedMusic:[defaults integerForKey:PPAfterPlayingMusic]];
 }
 

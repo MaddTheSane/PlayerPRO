@@ -41,6 +41,7 @@
 	MADLibrary		*MADLib;	
 	
 	PPMusicList		*musicList;
+	NSInteger		currentlyPlayingIndex;
 	PPPreferences	*preferences;
 }
 - (IBAction)showMusicList:(id)sender;
