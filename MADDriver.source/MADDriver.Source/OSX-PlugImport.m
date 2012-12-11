@@ -84,13 +84,15 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugAuthorNameKey);
 		if (OpaqueDictionaryType == NULL) {
-			goto badplug2;
+			thePlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, CFSTR("No Author"));
 		}
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
 			thePlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
 		}
-		else goto badplug2;
+		else {
+			thePlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, CFSTR("No Author"));
+		}
 		
 		//See if the plug-in uses MADCanExport and MADCanImport. 
 		{
@@ -183,7 +185,6 @@ badplug4:
 	CFRelease(thePlug->UTItypes);
 badplug3:
 	CFRelease(thePlug->AuthorString);
-badplug2:
 	CFRelease(thePlug->MenuName);
 badplug:
 	return false;
