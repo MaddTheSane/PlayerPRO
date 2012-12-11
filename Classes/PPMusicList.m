@@ -114,11 +114,14 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 {
 	//[musicList sortUsingFunction:SortUsingFileName context:NULL];
 	[self willChangeValueForKey:@"musicList"];
-	[musicList sortUsingComparator:^(id rhs, id lhs) {
-		NSString *rhsString = [rhs fileName];
-		NSString *lhsString = [lhs fileName];
-		return [rhsString compare:lhsString];
-	}];
+	@autoreleasepool {
+		[musicList sortUsingComparator:^(id rhs, id lhs) {
+			NSString *rhsString = [rhs fileName];
+			NSString *lhsString = [lhs fileName];
+			NSComparisonResult result = [rhsString localizedStandardCompare:lhsString];
+			return result;
+		}];
+	}
 	[self didChangeValueForKey:@"musicList"];
 }
 
