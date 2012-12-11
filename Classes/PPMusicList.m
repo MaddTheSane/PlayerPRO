@@ -22,7 +22,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 		return NULL;
 	UInt8 *data = *(UInt8**)aResource;
 	UInt16 count = *(UInt16*)data;
-	PPBE16(&count);
+	//PPBE16(&count);
 	
 	// First 2 bytes are the count of strings that this resource has.
 	if (count < aId)
@@ -31,7 +31,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	data += 2;
 	
 	// looking for data.  data is in order
-	while (--aId > 0)
+	while (--aId >= 0)
 		data = data + (*(UInt8*)data) + 1;
 	
 	return data;
@@ -53,7 +53,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 - (void)setMusicUrl:(NSURL *)amusicUrl
 {
 	NSURL *tempUrl = musicUrl;
-	musicUrl = [amusicUrl copy];
+	musicUrl = [amusicUrl retain];
 	
 	[self willChangeValueForKey:@"fileName"];
 	//fileName = [[musicUrl lastPathComponent] copy];
@@ -74,7 +74,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	if (self = [super init]) {
 		[self willChangeValueForKey:@"fileName"];
 		[self willChangeValueForKey:@"musicUrl"];
-		musicUrl = [aURL copy];
+		musicUrl = [aURL retain];
 		[self didChangeValueForKey:@"fileName"];
 		[self didChangeValueForKey:@"musicUrl"];
 	}
@@ -182,7 +182,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	
 	HLock( aHandle);
 	theNo = *((UInt16*)(*aHandle));          // number of musics...
-	PPBE16(&theNo);
+	//PPBE16(&theNo);
 	
 	theNo /= 2;
 	

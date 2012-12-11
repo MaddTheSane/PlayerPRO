@@ -14,7 +14,7 @@
 	//NSString *fileName;
 }
 
-@property (copy, nonatomic, readwrite) NSURL *musicUrl;
+@property (retain, nonatomic, readwrite) NSURL *musicUrl;
 @property (readonly) NSString *fileName;
 
 - (id)initWithURL:(NSURL *)aURL;
