@@ -147,7 +147,6 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		default:
 			MADStopMusic(MADDriver);
 			MADCleanDriver(MADDriver);
-			MADDisposeMusic(&Music, MADDriver);
 			break;
 			
 		case PPLoopMusic:
@@ -178,7 +177,6 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 				} else {
 					MADStopMusic(MADDriver);
 					MADCleanDriver(MADDriver);
-					MADDisposeMusic(&Music, MADDriver);
 				}
 			}
 		}
@@ -207,9 +205,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		MADGetMusicStatus(MADDriver, &fT, &cT);
 		if (fT == cT) {
 			[self songIsDonePlaying];
-			if (Music) {
-				MADGetMusicStatus(MADDriver, &fT, &cT);
-			} else return;
+			MADGetMusicStatus(MADDriver, &fT, &cT);
 		}
 		[songPos setDoubleValue:cT];
 		[songCurTime setIntegerValue:cT];
