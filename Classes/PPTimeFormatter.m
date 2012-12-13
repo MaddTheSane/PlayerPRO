@@ -41,6 +41,7 @@
 	NSInteger returnValue = (((hours * 60 + minutes) * 60) + seconds) * 60;
 	//[obj setIntegerValue:returnValue];
 	*obj = [[NSNumber alloc] initWithInteger:returnValue];
+	return YES;
 }
 
 @end
