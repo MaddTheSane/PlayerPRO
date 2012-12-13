@@ -37,6 +37,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 @implementation PPApp_AppDelegate
 
+@synthesize paused;
+
 - (void)MADDriverWithPreferences
 {
 	Boolean madWasReading = false;
@@ -244,6 +246,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	MADAttachDriverToMusic(MADDriver, Music, NULL);
 	MADPlayMusic(MADDriver);
 	long fT, cT;
+	self.paused = NO;
 	MADGetMusicStatus(MADDriver, &fT, &cT);
 	[songPos setMaxValue:fT];
 	[songPos setMinValue:0.0];
@@ -279,6 +282,27 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
     [toolsPanel makeKeyAndOrderFront:sender];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	if ([keyPath isEqualToString:@"paused"]) {
+		id boolVal = [change objectForKey:NSKeyValueChangeNewKey];
+		
+		//[pauseButton highlight:[boolVal boolValue]];
+		switch ([boolVal boolValue]) {
+			case NO:
+			default:
+				[pauseButton setState:NSOffState];
+				break;
+				
+			case YES:
+				[pauseButton setState:NSOnState];
+				break;
+		}
+	}
+	
+	//[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+}
+
 @synthesize window;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -286,6 +310,12 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	srandom(time(NULL) & 0xffffffff);
 	PPRegisterDebugFunc(CocoaDebugStr);
 	MADInitLibrary(NULL, &MADLib);
+	//the NIB won't store the value anymore, so do this hackery to make sure there's some value in it.
+	[songTotalTime setIntegerValue:0];
+	[songCurTime setIntegerValue:0];
+
+	[self addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionNew context:NULL];
+	self.paused = YES;
 	[self willChangeValueForKey:@"musicList"];
 	musicList = [[PPMusicList alloc] init];
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
@@ -309,6 +339,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 {
 	[timeChecker invalidate];
 
+	[self removeObserver:self forKeyPath:@"paused"];
+	
 	if (Music != NULL) {
 		MADStopMusic(MADDriver);
 		MADCleanDriver(MADDriver);
@@ -504,6 +536,7 @@ enum PPMusicToolbarTypes {
 {
 	if (Music) {
 		MADPlayMusic(MADDriver);
+		self.paused = NO;
 	}
 }
 
@@ -534,6 +567,20 @@ enum PPMusicToolbarTypes {
     if (Music) {
 		MADStopMusic(MADDriver);
 		MADCleanDriver(MADDriver);
+		MADSetMusicStatus(MADDriver, 0, 100, 0);
+		self.paused = YES;
+	}
+}
+
+- (IBAction)pauseButtonPressed:(id)sender {
+	if (Music) {
+		if (paused) {
+			MADPlayMusic(MADDriver);
+		} else {
+			MADStopMusic(MADDriver);
+			MADCleanDriver(MADDriver);
+		}
+		self.paused = !self.paused;
 	}
 }
 

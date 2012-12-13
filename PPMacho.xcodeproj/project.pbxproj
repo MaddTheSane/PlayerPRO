@@ -166,6 +166,7 @@
 		55232B0E11FDF2980041A4EC /* ColorPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232B0D11FDF2980041A4EC /* ColorPrefs.xib */; };
 		55232B1411FDF3090041A4EC /* PianoPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232B1311FDF3080041A4EC /* PianoPrefs.xib */; };
 		552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
+		552AFC7F167A8C8B00F32481 /* PPPause.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 552AFC7E167A8C8B00F32481 /* PPPause.pdf */; };
 		552C6FE310CD9DAC00C0E0D4 /* ByteUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */; };
 		552C6FE410CD9DB700C0E0D4 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; };
 		5532334F16766E5700076604 /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
@@ -1606,6 +1607,7 @@
 		55232B1311FDF3080041A4EC /* PianoPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PianoPrefs.xib; sourceTree = "<group>"; };
 		552711E3124881F4005120FC /* UserDefaultKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultKeys.h; sourceTree = "<group>"; };
 		552711E4124881F4005120FC /* UserDefaultKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultKeys.m; sourceTree = "<group>"; };
+		552AFC7E167A8C8B00F32481 /* PPPause.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPPause.pdf; sourceTree = "<group>"; };
 		552C70C310CDAFBC00C0E0D4 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
 		552C70C610CDB07E00C0E0D4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
 		552C716210CDC11400C0E0D4 /* README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = README.rtf; sourceTree = "<group>"; };
@@ -3631,6 +3633,7 @@
 		88E0C3CA0C2F21DD00D6C081 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				552AFC7E167A8C8B00F32481 /* PPPause.pdf */,
 				557EC3E8121711280082B80A /* PPPlay.pdf */,
 				55E52E271245640500315307 /* PPFastForward.pdf */,
 				55E52E281245640500315307 /* PPReverse.pdf */,
@@ -5293,6 +5296,7 @@
 				55ABFD54125E6D4400B182F1 /* PPNextTrack.pdf in Resources */,
 				55ABFD55125E6D4400B182F1 /* PPPrevTrack.pdf in Resources */,
 				55ABFD56125E6D4400B182F1 /* PPRecord.pdf in Resources */,
+				552AFC7F167A8C8B00F32481 /* PPPause.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

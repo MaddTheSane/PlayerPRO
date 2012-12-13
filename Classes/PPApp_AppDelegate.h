@@ -21,6 +21,8 @@
 	IBOutlet NSTextField *songCurTime;
 	IBOutlet NSTextField *songTotalTime;
 	IBOutlet NSSlider *songPos;
+	IBOutlet NSButton *pauseButton;
+	BOOL paused;
 	
 	IBOutlet NSWindow *window;
 	
@@ -44,6 +46,9 @@
 	NSInteger		currentlyPlayingIndex;
 	PPPreferences	*preferences;
 }
+
+@property (getter=isPaused, readwrite) BOOL paused;
+
 - (IBAction)showMusicList:(id)sender;
 - (IBAction)exportInstrumentAs:(id)sender;
 - (IBAction)showInstrumentsList:(id)sender;
@@ -77,5 +82,6 @@
 - (IBAction)rewindButtonPressed:(id)sender;
 - (IBAction)sliderChanged:(id)sender;
 - (IBAction)stopButtonPressed:(id)sender;
+- (IBAction)pauseButtonPressed:(id)sender;
 
 @end
