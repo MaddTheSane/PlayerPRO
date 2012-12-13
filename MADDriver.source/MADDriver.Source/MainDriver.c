@@ -1628,7 +1628,7 @@ OSErr MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV)
 		}
 	}
 	
-	return -1;
+	return MADUnknownErr;
 }
 
 OSErr MADGetMusicStatus( MADDriverRec *MDriver, long *fullTime, long *curTime)
@@ -1983,8 +1983,8 @@ OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADR
 				{
 					if( MDriver->partition[ x] != NULL)	free( (Ptr) MDriver->partition[ x]);
 				}
-				free( (Ptr) MDriver->header);
-				free( (Ptr) MDriver);
+				free( MDriver->header);
+				free( MDriver);
 				
 				return MADNeedMemory;
 			}
@@ -2136,13 +2136,13 @@ OSErr MADKillSample( MADMusic *MDriver, short ins, short sample)
 	short	i;
 	Boolean	IsReading;
 	
-	if( MDriver->header == NULL) return -1;
+	if( MDriver->header == NULL) return MADDriverHasNoMusic;
 	
 		IsReading = MDriver->musicUnderModification;
 		MDriver->musicUnderModification = true;
 	
-	if( MDriver->sample[ ins * MAXSAMPLE + sample] == NULL) return -1;
-	if( MDriver->fid[ ins].numSamples <= sample) return -1;
+	if( MDriver->sample[ ins * MAXSAMPLE + sample] == NULL) return MADParametersErr;
+	if( MDriver->fid[ ins].numSamples <= sample) return MADParametersErr;
 	
 	if( MDriver->sample[ ins * MAXSAMPLE + sample]->data) free( MDriver->sample[ ins * MAXSAMPLE + sample]->data);
 	free( MDriver->sample[ ins * MAXSAMPLE + sample]);
@@ -2351,6 +2351,10 @@ OSErr MADResetInstrument( InstrData		*curIns)
 {
 	short i;
 
+	if (curIns == NULL) {
+		return MADParametersErr;
+	}
+	
 	for( i = 0; i < 32; i++) curIns->name[ i]	= 0;
 	curIns->type		= 0;
 	curIns->numSamples	= 0;
