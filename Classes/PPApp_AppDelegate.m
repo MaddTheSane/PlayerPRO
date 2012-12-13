@@ -147,6 +147,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		default:
 			MADStopMusic(MADDriver);
 			MADCleanDriver(MADDriver);
+			MADSetMusicStatus(MADDriver, 0, 100, 0);
 			break;
 			
 		case PPLoopMusic:
@@ -177,6 +178,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 				} else {
 					MADStopMusic(MADDriver);
 					MADCleanDriver(MADDriver);
+					MADSetMusicStatus(MADDriver, 0, 100, 0);
 				}
 			}
 		}
