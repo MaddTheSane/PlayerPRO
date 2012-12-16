@@ -1403,6 +1403,9 @@ static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean res
 OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef)
 {
 	char *URLcString = NULL;
+	if (theRef == NULL) {
+		return MADParametersErr;
+	}
 	CFIndex pathLen = getCFURLFilePathRepresentationLength(theRef, true);
 	URLcString = malloc(pathLen);
 	if (URLcString == NULL) {
@@ -1465,6 +1468,9 @@ OSErr MADCopyCurrentPartition( MADMusic *aPartition)
 OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef)
 {
 	char *URLcString;
+	if (URLRef == NULL) {
+		return MADParametersErr;
+	}
 	CFIndex pathLen = getCFURLFilePathRepresentationLength(URLRef, true);
 	URLcString = malloc(pathLen);
 	if (URLcString == NULL) {
@@ -1483,6 +1489,9 @@ OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef)
 OSErr MADMusicInfoCFURL( MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec)
 {
 	char *URLcString;
+	if (theRef == NULL) {
+		return MADParametersErr;
+	}
 	CFIndex pathLen = getCFURLFilePathRepresentationLength(theRef, true);
 	URLcString = malloc(pathLen);
 	if (URLcString == NULL) {
