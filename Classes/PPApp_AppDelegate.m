@@ -47,10 +47,10 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		madWasReading = MADIsPlayingMusic(MADDriver);
 		MADStopMusic(MADDriver);
 		MADStopDriver(MADDriver);
-		MADDisposeDriver(MADDriver);
 		if (madWasReading) {
 			MADGetMusicStatus(MADDriver, &fullTime, &curTime);
 		}
+		MADDisposeDriver(MADDriver);
 	}
 	MADDriverSettings init;
 	MADGetBestDriver(&init);
