@@ -134,7 +134,7 @@ static void XM_ReadNote(XMNOTE *n)
 static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd		*aCmd, short channel)
 {
 	UBYTE 	note,ins,vol,eff,dat;
-	Str32	str;
+	//Str32	str;
 
 		note	=	xmtrack->note;
 		if( note == 0 || note == 0xFF) note = 0xFF;
@@ -348,7 +348,7 @@ static OSErr XMReadPattern( MADMusic *theMAD, MADDriverSettings *init)
 static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 {
 	int			t, u, i, x;
-	long		inOutCount = 0;
+	//long		inOutCount = 0;
 
 	/*****************/
 	/** INSTRUMENTS **/
@@ -864,7 +864,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 
 	{
 	int			t, u, x;
-	long		inOutCount = 0;
+	//long		inOutCount = 0;
 	
 	for( t = 0; t < NumberInstru; t++)
 	{

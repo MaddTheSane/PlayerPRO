@@ -391,7 +391,7 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	{
 		case 'IMPL':
 			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdPerm);
-			if( iFileRefI == -1) myErr = MADUnknownErr;
+			if( iFileRefI == -1) myErr = MADReadingErr;
 			else
 			{
 				UseResFile( iFileRefI);
@@ -407,7 +407,7 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 					HUnlock( myRes);
 					DisposeHandle( myRes);
 				}
-				else myErr = MADUnknowErr;
+				else myErr = MADIncompatibleFile;
 				
 				if( hasToClose) CloseResFile( iFileRefI);
 			}
@@ -415,7 +415,7 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 			
 		case 'TEST':
 			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);      
-			if( iFileRefI == -1) myErr = MADUnknowErr;
+			if( iFileRefI == -1) myErr = MADReadingErr;
 			else
 			{
 				UseResFile( iFileRefI);
@@ -432,7 +432,7 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 					HUnlock( myRes);
 					DisposeHandle( myRes);
 				}
-				else myErr = MADUnknowErr;
+				else myErr = MADIncompatibleFile;
 				
 				if( hasToClose) CloseResFile( iFileRefI);
 			}
@@ -440,7 +440,7 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 			
 		case 'INFO':
 			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);
-			if( iFileRefI == -1) myErr = MADUnknowErr;
+			if( iFileRefI == -1) myErr = MADReadingErr;
 			else
 			{
 				UseResFile( iFileRefI);
@@ -458,7 +458,7 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 					HUnlock( myRes);
 					DisposeHandle( myRes);
 				}
-				else myErr = MADUnknowErr;
+				else myErr = MADIncompatibleFile;
 				
 				if( hasToClose) CloseResFile( iFileRefI);
 			}
