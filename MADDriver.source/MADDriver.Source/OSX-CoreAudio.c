@@ -164,8 +164,8 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver)
 	result = AudioOutputUnitStart(inMADDriver->CAAudioUnit);
 	if (result != noErr) {
 		free(inMADDriver->CABuffer);
-		AudioComponentInstanceDispose(inMADDriver->CAAudioUnit);
 		AudioUnitSetProperty(inMADDriver->CAAudioUnit, kAudioUnitProperty_SetRenderCallback, kAudioUnitScope_Input, 0, &blankCallback, sizeof(blankCallback));
+		AudioComponentInstanceDispose(inMADDriver->CAAudioUnit);
 		return MADSoundManagerErr;
 	}
 	return noErr;
