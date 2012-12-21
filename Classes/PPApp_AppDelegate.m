@@ -431,8 +431,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 - (IBAction)addMusic:(id)sender
 {
 	NSOpenPanel *panel = [[NSOpenPanel openPanel] retain];
-	NSMutableArray *supportedUTIs = [NSMutableArray array];
-	[supportedUTIs addObject:@"com.quadmation.playerpro.madk"];
+	NSMutableArray *supportedUTIs = [NSMutableArray arrayWithObject:@"com.quadmation.playerpro.madk"];
 	int i = 0;
 	@autoreleasepool {
 		for (i = 0; i < MADLib->TotalPlug; i++) {
@@ -606,7 +605,6 @@ static NSString * const doubleDash = @"--";
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
-
 	NSInteger selected = [tableView selectedRow];
 	if (selected < 0) {
 		goto badMus;

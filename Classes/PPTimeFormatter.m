@@ -21,7 +21,6 @@
 			return [NSString stringWithFormat:@"%d:%02d:%02d", hours, minutes, seconds];
 		} else {
 			return [NSString stringWithFormat:@"%d:%02d", minutes, seconds];
-
 		}
 	} else return nil;
 }
@@ -29,6 +28,7 @@
 - (BOOL)getObjectValue:(out id *)obj forString:(NSString *)string errorDescription:(out NSString **)error
 {
 	int seconds = 0, minutes = 0, hours = 0;
+	NSInteger returnValue = 0;
 	if(sscanf([string UTF8String], "%d:%d:%d", &hours, &minutes, &seconds) != 3)
 	{
 		hours = 0;
@@ -38,7 +38,7 @@
 			return NO;
 		}
 	}
-	NSInteger returnValue = (((hours * 60 + minutes) * 60) + seconds) * 60;
+	returnValue = (((hours * 60 + minutes) * 60) + seconds) * 60;
 	//[obj setIntegerValue:returnValue];
 	*obj = [[NSNumber alloc] initWithInteger:returnValue];
 	return YES;
