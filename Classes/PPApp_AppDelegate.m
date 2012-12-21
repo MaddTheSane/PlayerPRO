@@ -65,6 +65,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	init.ReverbSize = [defaults integerForKey:PPReverbSize];
 	init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
 	init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
+	init.repeatMusic = FALSE;
 	
 	MADCreateDriver(&init, MADLib, &MADDriver);
 	MADStartDriver(MADDriver);
