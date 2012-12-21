@@ -67,7 +67,14 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
 	init.repeatMusic = FALSE;
 	
-	MADCreateDriver(&init, MADLib, &MADDriver);
+	OSErr returnerr = MADCreateDriver(&init, MADLib, &MADDriver);
+	if (returnerr != noErr) {
+		NSError *err = CreateErrorFromMADErrorType(returnerr);
+		NSAlert *alert = [NSAlert alertWithError:err];
+		[alert runModal];
+		[err release];
+		return;
+	}
 	MADStartDriver(MADDriver);
 	if (Music) {
 		MADAttachDriverToMusic(MADDriver, Music, NULL);
@@ -80,7 +87,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 + (void)initialize
 {
-	PPMusicList *tempList = [[PPMusicList alloc] init] ;
+	PPMusicList *tempList = [[PPMusicList alloc] init];
 	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
 															 [NSNumber numberWithBool:YES], PPRememberMusicList,
