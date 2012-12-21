@@ -7,8 +7,8 @@
  */
 
 "MyDebugStr_Error" = "Error!";
-"MyDebugStr_MainText" = "The program has encountered the following error:\n %s\nIt is reccomended to quit the program and send the debug report.";
-"MyDebugStr_Quit" = "Quit";
+"MyDebugStr_MainText" = "The program has encountered the following error:\n%s\nIt is recommended to quit the program and send the debug report.";
+"MyDebugStr_Quit" = "Crash";
 "MyDebugStr_Continue" = "Continue";
 "MyDebugStr_Debug" = "Debug";
 
@@ -34,7 +34,7 @@
 "order not implemented" = "Order not implemented";
 "The file is not supported by this plug-in" = "The file is not supported by this plug-in";
 "Invalid file for plug-in" = "Invalid file for plug-in";
-"Try using another plug-in, or checking to see if the file is okay." = "Try using another plug-in, or checking to see if the file is okay.";
+"Try using another plug-in, or checking to see if the file is okay." = "Try using another plug-in, or checking to see if the file is valid.";
 "Unable to locate a plug-in to play this file" = "Unable to locate a plug-in to play this file";
 "Unable to locate a plug-in" = "Unable to locate a proper plug-in";
 "The MAD music has no driver" = "The MAD music has no driver";
