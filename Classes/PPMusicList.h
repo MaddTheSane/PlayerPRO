@@ -35,6 +35,7 @@
 - (NSURL*)URLAtIndex:(NSUInteger)index;
 - (void)addMusicURL:(NSURL *)musicToLoad;
 - (void)removeObjectAtIndex:(NSUInteger)object;
+- (void)clearMusicList;
 
 //KVC functions
 - (NSUInteger)countOfMusicList;

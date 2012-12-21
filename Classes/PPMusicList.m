@@ -101,7 +101,6 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:self] forKey:PPMMusicList];
-
 }
 
 - (void)saveMusicListToURL:(NSURL *)toSave
@@ -132,6 +131,14 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	musicList = [newArray retain];
 	[self didChangeValueForKey:@"musicList"];
 	[oldList release];
+}
+
+- (void)clearMusicList
+{
+	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, ([musicList count] - 1))]; //[NSIndexSet indexSetWithIndex:[musicList count]];
+	[self willChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
+	[musicList removeAllObjects];
+	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
 }
 
 - (void)loadMusicListFromPreferences

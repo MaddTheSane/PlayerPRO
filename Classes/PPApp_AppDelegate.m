@@ -35,9 +35,37 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	}
 }
 
+@interface PPApp_AppDelegate ()
+- (void)selectCurrentlyPlayingMusic;
+- (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(NSError **)theErr;
+
+@end
+
 @implementation PPApp_AppDelegate
 
 @synthesize paused;
+
+- (BOOL)loadMusicFromCurrentlyPlayingIndexWithError:(NSError**)theErr
+{
+	return [self loadMusicURL:[musicList URLAtIndex:currentlyPlayingIndex] error:theErr];
+}
+
+- (void)addMusicToMusicList:(NSURL* )theURL
+{
+	[self willChangeValueForKey:@"musicList"];
+	[musicList addMusicURL:theURL];
+	[self didChangeValueForKey:@"musicList"];
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
+		currentlyPlayingIndex = [musicList countOfMusicList] - 1;
+		[self selectCurrentlyPlayingMusic];
+		NSError *err;
+		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
+			NSAlert *errAlert = [NSAlert alertWithError:err];
+			[errAlert runModal];
+			[err release];
+		}
+	}
+}
 
 - (void)MADDriverWithPreferences
 {
@@ -149,7 +177,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
     [window makeKeyAndOrderFront:sender];
 }
 
--(void)selectCurrentlyPlayingMusic
+- (void)selectCurrentlyPlayingMusic
 {
 	NSIndexSet *idx = [[NSIndexSet alloc] initWithIndex:currentlyPlayingIndex];
 	[tableView selectRowIndexes:idx byExtendingSelection:NO];
@@ -177,7 +205,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			if (tableCount > ++currentlyPlayingIndex) {
 				[self selectCurrentlyPlayingMusic];
 				NSError *err;
-				if (![self loadMusicURL:[musicList URLAtIndex:currentlyPlayingIndex] error:&err])
+				if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 				{
 					NSAlert *alert = [NSAlert alertWithError:err];
 					[alert runModal];
@@ -188,7 +216,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 					currentlyPlayingIndex = 0;
 					[self selectCurrentlyPlayingMusic];
 					NSError *err;
-					if (![self loadMusicURL:[musicList URLAtIndex:currentlyPlayingIndex] error:&err])
+					if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 					{
 						NSAlert *alert = [NSAlert alertWithError:err];
 						[alert runModal];
@@ -208,7 +236,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			currentlyPlayingIndex = random() % [musicList countOfMusicList];
 			[self selectCurrentlyPlayingMusic];
 			NSError *err;
-			if (![self loadMusicURL:[musicList URLAtIndex:currentlyPlayingIndex] error:&err])
+			if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 			{
 				NSAlert *alert = [NSAlert alertWithError:err];
 				[alert runModal];
@@ -419,8 +447,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 {
 	NSError *error = nil;
 	currentlyPlayingIndex = [tableView selectedRow];
-	NSURL* musicURL = [musicList URLAtIndex:currentlyPlayingIndex];
-	if ([self loadMusicURL:musicURL error:&error] == NO)
+	if ([self loadMusicFromCurrentlyPlayingIndexWithError:&error] == NO)
 	{
 		NSAlert *alert = [NSAlert alertWithError:error];
 		[alert runModal];
@@ -443,9 +470,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[panel setAllowedFileTypes:supportedUTIs];
 	if([panel runModal] == NSFileHandlingPanelOKButton)
 	{
-		[self willChangeValueForKey:@"musicList"];
-		[musicList addMusicURL:[panel URL]];
-		[self didChangeValueForKey:@"musicList"];
+		[self addMusicToMusicList:[panel URL]];
 	}
 	
 	[panel release];
@@ -472,6 +497,10 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[musicList removeObjectInMusicListAtIndex:[tableView selectedRow]];
 	[self didChangeValueForKey:@"musicList"];
 #endif
+}
+
+- (IBAction)clearMusicList:(id)sender {
+	[musicList clearMusicList];
 }
 
 enum PPMusicToolbarTypes {
@@ -654,9 +683,7 @@ badMus:
 	
 	if([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"])
 	{
-		[self willChangeValueForKey:@"musicList"];
-		[musicList addMusicURL:[NSURL fileURLWithPath:filename]];
-		[self didChangeValueForKey:@"musicList"];
+		[self addMusicToMusicList:[NSURL fileURLWithPath:filename]];
 		return YES;
 	} else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"])
 	{

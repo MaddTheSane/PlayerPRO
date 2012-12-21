@@ -62,6 +62,7 @@
 - (IBAction)playSelectedMusic:(id)sender;
 - (IBAction)addMusic:(id)sender;
 - (IBAction)removeSelectedMusic:(id)sender;
+- (IBAction)clearMusicList:(id)sender;
 
 - (void)preferencesDidChange:(NSNotification *)notification;
 - (void)soundPreferencesDidChange:(NSNotification *)notification;
