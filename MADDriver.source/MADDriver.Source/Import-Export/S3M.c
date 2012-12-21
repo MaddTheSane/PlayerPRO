@@ -695,13 +695,20 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettin
 
 	/**** Order Num *****/
 	s3minfo.orders = (unsigned char *) malloc( s3minfo.ordernum);
-	if( s3minfo.orders == NULL) return MADNeedMemory;
+	if( s3minfo.orders == NULL) {
+		
+		return MADNeedMemory;
+	}
 	memcpy( s3minfo.orders, theS3MCopy, s3minfo.ordernum);
 	theS3MCopy += s3minfo.ordernum;
 	
 	/**** Ins Num *****/
 	s3minfo.parapins = (unsigned short *) malloc( s3minfo.insnum * 2L);
-	if( s3minfo.parapins == NULL) return MADNeedMemory;
+	if( s3minfo.parapins == NULL)
+	{
+		free(s3minfo.orders);
+		return MADNeedMemory;
+	}
 	memcpy( s3minfo.parapins, theS3MCopy, s3minfo.insnum * 2L);
 	theS3MCopy += s3minfo.insnum * 2L;
 	for( i = 0; i < s3minfo.insnum; i++)
@@ -712,7 +719,11 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettin
 	
 	/**** Pat Num *****/
 	s3minfo.parappat = (unsigned short *) malloc( s3minfo.patnum * 2L);
-	if( s3minfo.parappat == NULL) return MADNeedMemory;
+	if( s3minfo.parappat == NULL) {
+		free(s3minfo.orders);
+		free(s3minfo.parapins);
+		return MADNeedMemory;
+	}
 	memcpy( s3minfo.parappat, theS3MCopy, s3minfo.patnum * 2L);
 	theS3MCopy += s3minfo.patnum * 2L;
 	for( i = 0; i < s3minfo.patnum; i++)
@@ -729,7 +740,13 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettin
 	/**** Ins Data ****/
 	if( s3minfo.insnum > MAXINSTRU) s3minfo.insnum = MAXINSTRU;
 	s3minfo.insdata = (s3minsform *) malloc( sizeof(s3minsform) * s3minfo.insnum);
-	if( s3minfo.insdata == NULL) return MADNeedMemory;
+	if( s3minfo.insdata == NULL)
+	{
+		free(s3minfo.orders);
+		free(s3minfo.parapins);
+		free(s3minfo.parappat);
+		return MADNeedMemory;
+	}
 	for (i = 0; i < s3minfo.insnum; i++)
 	{
 		theInstrument[ i] = NULL;
@@ -784,11 +801,17 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettin
 	/******** Copie des informations dans le MAD ***/
 	
 	theMAD->header = (MADSpec*) calloc( sizeof( MADSpec), 1);
-	if( theMAD->header == NULL) return MADNeedMemory;
+	if( theMAD->header == NULL) {
+		free(s3minfo.orders);
+		free(s3minfo.parapins);
+		free(s3minfo.parappat);
+		free(s3minfo.insdata);
+		return MADNeedMemory;
+	}
 		
 	theMAD->header->MAD = 'MADK';
-	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
-	for(i=0; i<28; i++) theMAD->header->name[i] = s3minfo.name[i];
+	for(i = 29; i < 32; i++) theMAD->header->name[i] = 0;
+	for(i = 0; i < 28; i++) theMAD->header->name[i] = s3minfo.name[i];
 	
 	strlcpy( theMAD->header->infos, "Converted by PlayerPRO S3M Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
@@ -845,16 +868,42 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettin
 	theMAD->header->generalPitch	= 80;
 	
 	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
+	if (!theMAD->sets) {
+		free(s3minfo.orders);
+		free(s3minfo.parapins);
+		free(s3minfo.parappat);
+		free(s3minfo.insdata);
+		free(theMAD->header);
+		return MADNeedMemory;
+	}
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 	/************************/
 	/***** INSTRUMENTS  *****/
 	/************************/
 	
 	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
-	if( !theMAD->fid) return MADNeedMemory;
+	if( !theMAD->fid) {
+		free(s3minfo.orders);
+		free(s3minfo.parapins);
+		free(s3minfo.parappat);
+		free(s3minfo.insdata);
+		free(theMAD->header);
+		free(theMAD->sets);
+		return MADNeedMemory;
+	}
 	
 	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
-	if( !theMAD->sample) return MADNeedMemory;
+	if( !theMAD->sample) {
+		free(s3minfo.orders);
+		free(s3minfo.parapins);
+		free(s3minfo.parappat);
+		free(s3minfo.insdata);
+		free(theMAD->header);
+		free(theMAD->sets);
+		free(theMAD->fid);
+		return MADNeedMemory;
+
+	}
 	
 	for(i  = 0 ; i < MAXINSTRU; i++)
 	{
@@ -879,7 +928,25 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettin
 			curIns->volFade = DEFAULT_VOLFADE;
 
 			curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) calloc( sizeof( sData), 1);
-			if( curData == NULL) return MADNeedMemory;
+			if( curData == NULL) {
+				free(s3minfo.orders);
+				free(s3minfo.parapins);
+				free(s3minfo.parappat);
+				free(s3minfo.insdata);
+				for (x = 0; x < s3minfo.insnum; x++) {
+					if (theMAD->sample[x * MAXSAMPLE + 0]) {
+						if (theMAD->sample[ x * MAXSAMPLE + 0]->data) {
+							free(theMAD->sample[ x * MAXSAMPLE + 0]->data);
+						}
+						free(theMAD->sample[x * MAXSAMPLE + 0]);
+					}
+				}
+				free(theMAD->header);
+				free(theMAD->sets);
+				free(theMAD->fid);
+				free(theMAD->sample);
+				return MADNeedMemory;
+			}
 			
 			curData->size		= s3minfo.insdata[i].inslength;
 			curData->loopBeg 	= s3minfo.insdata[i].insloopbeg;
@@ -900,7 +967,25 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettin
 			}
 			
 			curData->data 		= (Ptr)malloc( curData->size);
-			if( curData->data == NULL) return MADNeedMemory;
+			if( curData->data == NULL) {
+				free(s3minfo.orders);
+				free(s3minfo.parapins);
+				free(s3minfo.parappat);
+				free(s3minfo.insdata);
+				for (x = 0; x < s3minfo.insnum; x++) {
+					if (theMAD->sample[x * MAXSAMPLE + 0]) {
+						if (theMAD->sample[ x * MAXSAMPLE + 0]->data) {
+							free(theMAD->sample[ x * MAXSAMPLE + 0]->data);
+						}
+						free(theMAD->sample[x * MAXSAMPLE + 0]);
+					}
+				}
+				free(theMAD->header);
+				free(theMAD->sets);
+				free(theMAD->fid);
+				free(theMAD->sample);
+				return MADNeedMemory;
+			}
 			else
 			{
 				memcpy( curData->data, theInstrument [i], curData->size);
@@ -1003,7 +1088,30 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettin
 	for( i = 0; i < theMAD->header->numPat ; i++)
 	{
 		theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * 64L * sizeof( Cmd), 1);
-		if( theMAD->partition[ i] == NULL) return MADNeedMemory;
+		if( theMAD->partition[ i] == NULL) {
+			free(s3minfo.orders);
+			free(s3minfo.parapins);
+			free(s3minfo.parappat);
+			free(s3minfo.insdata);
+			for (x = 0; x < s3minfo.insnum; x++) {
+				if (theMAD->sample[x * MAXSAMPLE + 0]) {
+					if (theMAD->sample[ x * MAXSAMPLE + 0]->data) {
+						free(theMAD->sample[ x * MAXSAMPLE + 0]->data);
+					}
+					free(theMAD->sample[x * MAXSAMPLE + 0]);
+				}
+			}
+			for (x = 0; x < MAXPATTERN; x++) {
+				if (theMAD->partition[x]) {
+					free(theMAD->partition[x]);
+				}
+			}
+			free(theMAD->header);
+			free(theMAD->sets);
+			free(theMAD->fid);
+			free(theMAD->sample);
+			return MADNeedMemory;
+		}
 		
 		theMAD->partition[ i]->header.size = 64L;
 		theMAD->partition[ i]->header.compMode = 'NONE';
