@@ -141,6 +141,13 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
     [window makeKeyAndOrderFront:sender];
 }
 
+-(void)selectCurrentlyPlayingMusic
+{
+	NSIndexSet *idx = [[NSIndexSet alloc] initWithIndex:currentlyPlayingIndex];
+	[tableView selectRowIndexes:idx byExtendingSelection:NO];
+	[idx release];
+}
+
 - (void)songIsDonePlaying
 {
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -160,6 +167,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		{
 			NSInteger tableCount = [musicList countOfMusicList];
 			if (tableCount > ++currentlyPlayingIndex) {
+				[self selectCurrentlyPlayingMusic];
 				NSError *err;
 				if (![self loadMusicURL:[musicList URLAtIndex:currentlyPlayingIndex] error:&err])
 				{
@@ -170,6 +178,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			} else {
 				if ([userDefaults boolForKey:PPLoopMusicWhenDone]) {
 					currentlyPlayingIndex = 0;
+					[self selectCurrentlyPlayingMusic];
 					NSError *err;
 					if (![self loadMusicURL:[musicList URLAtIndex:currentlyPlayingIndex] error:&err])
 					{
@@ -189,6 +198,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		case PPLoadRandom:
 		{
 			currentlyPlayingIndex = random() % [musicList countOfMusicList];
+			[self selectCurrentlyPlayingMusic];
 			NSError *err;
 			if (![self loadMusicURL:[musicList URLAtIndex:currentlyPlayingIndex] error:&err])
 			{
