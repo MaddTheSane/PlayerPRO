@@ -552,6 +552,48 @@ enum PPMusicToolbarTypes {
 	
 }
 
+- (IBAction)openFile:(id)sender {
+	NSOpenPanel *panel = [[NSOpenPanel openPanel] retain];
+	NSMutableArray *supportedUTIs = [NSMutableArray arrayWithObjects:@"com.quadmation.playerpro.madk", @"net.sourceforge.playerpro.musiclist", @"net.sourceforge.playerpro.stcfmusiclist", nil];
+	int i = 0;
+	@autoreleasepool {
+		for (i = 0; i < MADLib->TotalPlug; i++) {
+			NSArray *tempArray = [NSArray arrayWithArray:(id)MADLib->ThePlug[i].UTItypes];
+			[supportedUTIs addObjectsFromArray:tempArray];
+		}
+	}
+	[panel setAllowsMultipleSelection:NO];
+	[panel setAllowedFileTypes:supportedUTIs];
+	if([panel runModal] == NSFileHandlingPanelOKButton)
+	{
+		//[self addMusicToMusicList:[panel URL]];
+		NSURL *panelURL = [panel URL];
+		NSString *filename = [panelURL path];
+		NSError *err;
+		NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
+		NSString *utiFile = [sharedWorkspace typeOfFile:filename error:&err];
+		if (err) {
+			NSRunAlertPanel(@"Error opening file", [NSString stringWithFormat:@"Unable to open %@: %@", [filename lastPathComponent], [err localizedFailureReason]], nil, nil, nil);
+			[panel release];
+			return;
+		}
+		if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"]) {
+			[self addMusicToMusicList:panelURL];
+		}else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"]){
+			[self willChangeValueForKey:@"musicList"];
+			[musicList loadMusicListAtURL:panelURL];
+			[self didChangeValueForKey:@"musicList"];
+		} else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"])
+		{
+			[self willChangeValueForKey:@"musicList"];
+			[musicList loadOldMusicListAtURL:panelURL];
+			[self didChangeValueForKey:@"musicList"];
+		}
+	}
+	
+	[panel release];
+}
+
 - (IBAction)saveMusicList:(id)sender {
 	NSSavePanel *savePanel = [[NSSavePanel savePanel] retain];
 	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"net.sourceforge.playerpro.musiclist"]];

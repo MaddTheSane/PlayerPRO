@@ -2000,7 +2000,6 @@
 							<string key="NSFrame">{{-2, 4}, {373, 17}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="447678757">
 								<int key="NSCellFlags">68157504</int>
@@ -2628,6 +2627,14 @@
 						<reference key="destination" ref="1044621893"/>
 					</object>
 					<int key="connectionID">1304</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openFile:</string>
+						<reference key="source" ref="1000799287"/>
+						<reference key="destination" ref="455490162"/>
+					</object>
+					<int key="connectionID">1305</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -4228,7 +4235,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1304</int>
+			<int key="maxID">1305</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4243,6 +4250,7 @@
 						<string key="fastForwardButtonPressed:">id</string>
 						<string key="loopButtonPressed:">id</string>
 						<string key="nextButtonPressed:">id</string>
+						<string key="openFile:">id</string>
 						<string key="pauseButtonPressed:">id</string>
 						<string key="playButtonPressed:">id</string>
 						<string key="playSelectedMusic:">id</string>
@@ -4289,6 +4297,10 @@
 						</object>
 						<object class="IBActionInfo" key="nextButtonPressed:">
 							<string key="name">nextButtonPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="openFile:">
+							<string key="name">openFile:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="pauseButtonPressed:">

@@ -71,6 +71,7 @@
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad;
 
 @property (assign) NSWindow *window;
+- (IBAction)openFile:(id)sender;
 
 - (IBAction)saveMusicList:(id)sender;
 
