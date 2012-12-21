@@ -12,6 +12,7 @@
 #import "UserDefaultKeys.h"
 #import "NSColor+PPPreferences.h"
 #import "PPErrors.h"
+#import "OpenPanelViewController.h"
 
 void CocoaDebugStr( short line, Ptr file, Ptr text)
 {
@@ -556,14 +557,21 @@ enum PPMusicToolbarTypes {
 	NSOpenPanel *panel = [[NSOpenPanel openPanel] retain];
 	NSMutableArray *supportedUTIs = [NSMutableArray arrayWithObjects:@"com.quadmation.playerpro.madk", @"net.sourceforge.playerpro.musiclist", @"net.sourceforge.playerpro.stcfmusiclist", nil];
 	int i = 0;
+	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithObject:[NSArray arrayWithObject:@"com.quadmation.playerpro.madk"] forKey:@"MADK Tracker"];
+	NSMutableDictionary *playlistDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:@"net.sourceforge.playerpro.musiclist"], @"PlayerPRO Music List", [NSArray arrayWithObject:@"net.sourceforge.playerpro.stcfmusiclist"], @"PlayerPRO Old Music List", nil];
 	@autoreleasepool {
 		for (i = 0; i < MADLib->TotalPlug; i++) {
 			NSArray *tempArray = [NSArray arrayWithArray:(id)MADLib->ThePlug[i].UTItypes];
 			[supportedUTIs addObjectsFromArray:tempArray];
+			NSString *menuName = [NSString stringWithString:(id)MADLib->ThePlug[i].MenuName];
+			[trackerDict setObject:tempArray forKey:menuName];
 		}
 	}
+	
 	[panel setAllowsMultipleSelection:NO];
 	[panel setAllowedFileTypes:supportedUTIs];
+	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:trackerDict playlistDictionary:playlistDict];
+	[panel setAccessoryView:[av view]];
 	if([panel runModal] == NSFileHandlingPanelOKButton)
 	{
 		//[self addMusicToMusicList:[panel URL]];
@@ -590,8 +598,8 @@ enum PPMusicToolbarTypes {
 			[self didChangeValueForKey:@"musicList"];
 		}
 	}
-	
 	[panel release];
+	[av release];
 }
 
 - (IBAction)saveMusicList:(id)sender {
