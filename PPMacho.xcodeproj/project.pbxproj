@@ -242,6 +242,7 @@
 		55672E2B10CAD641008C5C3D /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
 		55672E9010CAD830008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
+		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		5573A1041656FAF100A5AECA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		5573A1091656FAF100A5AECA /* iOSPlayerPROCore.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5573A1081656FAF100A5AECA /* iOSPlayerPROCore.h */; };
 		5573A10F1656FB1700A5AECA /* FileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 55113CBB133688D60008C2AF /* FileUtils.c */; };
@@ -1770,6 +1771,8 @@
 		555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-OSX.c"; path = "Files/MIDI-Hardware-OSX.c"; sourceTree = "<group>"; };
 		555E9B4B1101912100986239 /* MIDI-Hardware-Stub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Stub.c"; path = "Files/MIDI-Hardware-Stub.c"; sourceTree = "<group>"; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		557139CD1684EF7500831A5A /* PPHilightableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHilightableButton.h; sourceTree = "<group>"; };
+		557139CE1684EF7500831A5A /* PPHilightableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHilightableButton.m; sourceTree = "<group>"; };
 		5573A1031656FAF100A5AECA /* libiOSPlayerPROCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiOSPlayerPROCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5573A1081656FAF100A5AECA /* iOSPlayerPROCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSPlayerPROCore.h; sourceTree = "<group>"; };
 		5573A1301656FCC100A5AECA /* iOS-PlugImport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "iOS-PlugImport.c"; sourceTree = "<group>"; };
@@ -3463,6 +3466,8 @@
 				55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */,
 				5532334D16766E5700076604 /* PPErrors.h */,
 				5532334E16766E5700076604 /* PPErrors.m */,
+				557139CD1684EF7500831A5A /* PPHilightableButton.h */,
+				557139CE1684EF7500831A5A /* PPHilightableButton.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -6019,6 +6024,7 @@
 				55801EB113D1ED9A007E24FC /* NSColor+PPPreferences.m in Sources */,
 				5532334F16766E5700076604 /* PPErrors.m in Sources */,
 				55323353167687A200076604 /* PPTimeFormatter.m in Sources */,
+				557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
