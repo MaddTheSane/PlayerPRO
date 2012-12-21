@@ -73,12 +73,32 @@ static BOOL MED_Init( MADDriverSettings *init)
 
 static void MED_Cleanup(void)
 {
-	if(mh!=NULL) free( mh);
-	if(ms!=NULL) free( ms);
-	if(ba!=NULL) free( ba);
+	if(mh != NULL)
+	{
+		free( mh);
+		mh = NULL;
+	}
+	if(ms != NULL)
+	{
+		free( ms);
+		ms = NULL;
+	}
+	if(ba != NULL)
+	{
+		free( ba);
+		ba = NULL;
+	}
 
-	if(mmd0pat!=NULL) free( mmd0pat);
-	if(mmd1pat!=NULL) free( mmd1pat);
+	if(mmd0pat != NULL)
+	{
+		free( mmd0pat);
+		mmd0pat = NULL;
+	}
+	if(mmd1pat != NULL)
+	{
+		free( mmd1pat);
+		mmd1pat = NULL;
+	}
 }
 
 static void EffectCvt( UBYTE eff, UBYTE dat, Cmd *aCmd)

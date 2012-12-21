@@ -1252,7 +1252,7 @@ static OSErr ExtractS3MInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	myS3M->name[ 27] = '\0';
+	//myS3M->name[ 27] = '\0';
 	strlcpy( info->internalFileName, myS3M->name, sizeof(myS3M->name));
 
 	/*** Total Patterns ***/

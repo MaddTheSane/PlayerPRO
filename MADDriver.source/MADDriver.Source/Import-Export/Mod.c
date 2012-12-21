@@ -88,7 +88,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 }
 #endif
 
-static void AnalyseSignatureMOD( size_t EOFo, OSType temp, short *maxInstru, SInt32 *PatternSize, short *tracksNo, MODDef* aMOD)
+static void AnalyseSignatureMOD( long EOFo, OSType temp, short *maxInstru, SInt32 *PatternSize, short *tracksNo, MODDef* aMOD)
 {
 	SInt32 		test, i;
 	Boolean		result;
