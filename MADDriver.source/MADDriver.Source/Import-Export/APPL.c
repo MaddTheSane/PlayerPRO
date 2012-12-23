@@ -402,7 +402,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	{
 		case MADPlugImport:
 			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
-			if( iFileRefI == -1) myErr = MADReadingErr;
+			if( iFileRefI == -1) myErr = MADFileNotSupportedByThisPlug;
 			else
 			{
 				UseResFile( iFileRefI);
@@ -418,7 +418,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					HUnlock( myRes);
 					DisposeHandle( myRes);
 				}
-				else myErr = MADReadingErr;
+				else myErr = MADFileNotSupportedByThisPlug;
 				
 				if( hasToClose) CloseResFile( iFileRefI);
 			}
@@ -426,7 +426,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 		
 		case MADPlugTest:
 			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
-			if( iFileRefI == -1) myErr = MADReadingErr;
+			if( iFileRefI == -1) myErr = MADFileNotSupportedByThisPlug;
 			else
 			{
 				UseResFile( iFileRefI);
@@ -443,7 +443,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					HUnlock( myRes);
 					DisposeHandle( myRes);
 				}
-				else myErr = MADReadingErr;
+				else myErr = MADFileNotSupportedByThisPlug;
 				
 				if( hasToClose) CloseResFile( iFileRefI);
 			}
@@ -451,7 +451,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 		
 		case MADPlugInfo:
 			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
-			if( iFileRefI == -1) myErr = MADReadingErr;
+			if( iFileRefI == -1) myErr = MADFileNotSupportedByThisPlug;
 			else
 			{
 				UseResFile( iFileRefI);
@@ -469,7 +469,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					HUnlock( myRes);
 					DisposeHandle( myRes);
 				}
-				else myErr = MADReadingErr;
+				else myErr = MADFileNotSupportedByThisPlug;
 				
 				if( hasToClose) CloseResFile( iFileRefI);
 			}
