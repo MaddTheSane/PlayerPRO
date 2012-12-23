@@ -450,9 +450,13 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 {
 	OSErr					iErr = noErr;
 	
+	CFBundleRefNum resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
+	
 	MADDriverSettings		driverSettings;
 	
 	iErr = (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);
+	
+	CFBundleCloseBundleResourceMap(inMADDriver->ThePlug[PlugNo].file, resFileNum);
 	
 	return iErr;
 }
