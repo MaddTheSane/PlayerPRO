@@ -353,21 +353,16 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 
 void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
 {
-	FSRefPtr convDir = NULL;
+	FSRef convDir;
 	if(PlugsFolderName != NULL)
 	{
-		convDir = (FSRefPtr)NewPtr(sizeof(FSRef));
-		OSErr iErr;
-		iErr = FSpMakeFSRef(PlugsFolderName, convDir);
-		if(iErr =! noErr)
-		{
-			DisposePtr((Ptr)convDir);
-			convDir = NULL;
+		OSErr iErr = FSpMakeFSRef(PlugsFolderName, &convDir);
+		if (iErr == noErr) {
+			MADInitImportPlug(inMADDriver, &convDir);
+		} else {
+			MADInitImportPlug(inMADDriver, NULL);
 		}
 	}
-	
-	MADInitImportPlug(inMADDriver, convDir);
-	if(convDir != NULL) DisposePtr((Ptr)convDir);
 }
 
 void CloseImportPlug(MADLibrary *inMADDriver)
