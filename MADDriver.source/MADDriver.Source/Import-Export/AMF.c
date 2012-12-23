@@ -323,8 +323,6 @@ static OSErr TestAMFFile( Ptr AlienFile)
 	
 	if( (myMADSign & 0xFFFFFF00) == 0x414D4600) return noErr;
 	else return MADFileNotSupportedByThisPlug;
-	
-	return noErr;
 }
 
 static OSErr ExtractAMFInfo( PPInfoRec *info, Ptr AlienFile)
