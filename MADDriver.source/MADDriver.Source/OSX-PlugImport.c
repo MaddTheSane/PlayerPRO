@@ -38,6 +38,7 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 {
 	if ((inMADDriver->TotalPlug + 1) >= MAXPLUG) {
 		MyDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
+		return;
 	}
 	CFTypeID stringtype =	CFStringGetTypeID();
 	CFTypeID numbertype =	CFNumberGetTypeID();
@@ -68,7 +69,7 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
 			short i;
-			char * tempstring = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
+			const char *tempstring = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
 			if (tempstring == NULL) goto badplug3;
 			for (i=0; i < 4; i++) {
 				if (tempstring[i] == 0) {
@@ -83,8 +84,7 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugModeKey);
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
-			char * thecOSType = NULL;
-			thecOSType = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
+			char *thecOSType = (char*)CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
 			
 			FillPlug->mode = Ptr2OSType(thecOSType);
 		}
@@ -336,7 +336,7 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 		GrafPtr savedPort;
 		GetPort(&savedPort);
 #endif
-		short resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
+		ResFileRefNum resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
 		MADDriverSettings		driverSettings;
 		
 		driverSettings.sysMemory = false;
