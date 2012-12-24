@@ -12,7 +12,13 @@
 #define __PPDEFS_H
 
 #ifdef __APPLE__
+#include <TargetConditionals.h>
+#if TARGET_OS_IPHONE
 #include <MacTypes.h>
+#else
+//For MacTypes.h on older OSes
+#include <CoreServices/CoreServices.h>
+#endif
 #endif
 
 #include <stdio.h>
