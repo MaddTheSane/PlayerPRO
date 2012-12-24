@@ -10,6 +10,7 @@
 #import "UserDefaultKeys.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <CoreServices/CoreServices.h>
+#import "ARCBridge.h"
 
 #define kMUSICLISTKEY @"Music List Key1"
 
@@ -52,6 +53,13 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (void)setMusicUrl:(NSURL *)amusicUrl
 {
+#if __has_feature(objc_arc)
+	musicUrl = amusicUrl;
+	
+	[self willChangeValueForKey:@"fileName"];
+	//fileName = [[musicUrl lastPathComponent] copy];
+	[self didChangeValueForKey:@"fileName"];
+#else
 	NSURL *tempUrl = musicUrl;
 	musicUrl = [amusicUrl retain];
 	
@@ -62,6 +70,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	if (tempUrl != nil) {
 		[tempUrl release];
 	}
+#endif
 }
 
 - (NSString *)fileName
@@ -74,7 +83,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	if (self = [super init]) {
 		[self willChangeValueForKey:@"fileName"];
 		[self willChangeValueForKey:@"musicUrl"];
-		musicUrl = [aURL retain];
+		musicUrl = RETAINOBJ(aURL);
 		[self didChangeValueForKey:@"fileName"];
 		[self didChangeValueForKey:@"musicUrl"];
 	}
@@ -83,9 +92,9 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (void)dealloc
 {
-	[musicUrl release];
+	RELEASEOBJ(musicUrl);
 	
-	[super dealloc];
+	SUPERDEALLOC;
 }
 
 - (NSString*)description
@@ -126,11 +135,17 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (void)loadMusicList:(NSMutableArray *)newArray
 {
+#if __has_feature(objc_arc)
+	[self willChangeValueForKey:@"musicList"];
+	musicList = newArray;
+	[self didChangeValueForKey:@"musicList"];
+#else
 	NSMutableArray *oldList = musicList;
 	[self willChangeValueForKey:@"musicList"];
 	musicList = [newArray retain];
 	[self didChangeValueForKey:@"musicList"];
 	[oldList release];
+#endif
 }
 
 - (void)clearMusicList
@@ -206,10 +221,10 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 		CFURLRef tempURLRef = NULL;
 		tempURLRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)together, kCFURLHFSPathStyle, false);
 
-		PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:(id)tempURLRef];
+		PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:(id)CFBridgingRelease(tempURLRef)];
 		
 		[newArray addObject:obj];
-		[obj release];
+		RELEASEOBJ(obj);
 		CFRelease(tempURLRef);
 	}
 	HUnlock( aHandle);
@@ -243,9 +258,9 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (void)dealloc
 {
-	[musicList release];
+	RELEASEOBJ(musicList);
 	
-	[super dealloc];
+	SUPERDEALLOC;
 }
 
 - (void)addMusicURL:(NSURL *)musicToLoad
@@ -257,7 +272,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	[musicList addObject:obj];
 	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:@"musicList"];
 	//[self didChangeValueForKey:@"musicList"];
-	[obj release];
+	RELEASEOBJ(musicList);
 }
 
 - (void)removeObjectAtIndex:(NSUInteger)object
@@ -287,7 +302,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 			NSURL *fullURL = [NSURL URLByResolvingBookmarkData:[BookmarkArray objectAtIndex:i] options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:NULL error:nil];
 			PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullURL];
 			[musicList insertObject:obj atIndex:i];
-			[obj release];
+			RELEASEOBJ(obj);
 		}
 	}
 	return self;

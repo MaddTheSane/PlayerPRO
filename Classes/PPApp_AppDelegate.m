@@ -13,6 +13,7 @@
 #import "NSColor+PPPreferences.h"
 #import "PPErrors.h"
 #import "OpenPanelViewController.h"
+#import "ARCBridge.h"
 
 void CocoaDebugStr( short line, Ptr file, Ptr text)
 {
@@ -63,7 +64,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
 			NSAlert *errAlert = [NSAlert alertWithError:err];
 			[errAlert runModal];
-			[err release];
+			RELEASEOBJ(err);
 		}
 	}
 }
@@ -94,6 +95,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	init.ReverbSize = [defaults integerForKey:PPReverbSize];
 	init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
 	init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
+	init.driverMode = [defaults integerForKey:PPSoundDriver];
 	init.repeatMusic = FALSE;
 	
 	OSErr returnerr = MADCreateDriver(&init, MADLib, &MADDriver);
@@ -101,7 +103,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		NSError *err = CreateErrorFromMADErrorType(returnerr);
 		NSAlert *alert = [NSAlert alertWithError:err];
 		[alert runModal];
-		[err release];
+		RELEASEOBJ(err);
 		return;
 	}
 	MADStartDriver(MADDriver);
@@ -170,7 +172,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 															 
 															 [NSKeyedArchiver archivedDataWithRootObject:tempList], PPMMusicList,
 															 nil]];
-	[tempList release];
+	RELEASEOBJ(tempList);
 }
 
 - (IBAction)showMusicList:(id)sender
@@ -182,7 +184,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 {
 	NSIndexSet *idx = [[NSIndexSet alloc] initWithIndex:currentlyPlayingIndex];
 	[tableView selectRowIndexes:idx byExtendingSelection:NO];
-	[idx release];
+	RELEASEOBJ(idx);
 }
 
 - (void)songIsDonePlaying
@@ -210,7 +212,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 				{
 					NSAlert *alert = [NSAlert alertWithError:err];
 					[alert runModal];
-					[err release];
+					RELEASEOBJ(err);
 				}
 			} else {
 				if ([userDefaults boolForKey:PPLoopMusicWhenDone]) {
@@ -221,7 +223,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 					{
 						NSAlert *alert = [NSAlert alertWithError:err];
 						[alert runModal];
-						[err release];
+						RELEASEOBJ(err);
 					}
 				} else {
 					MADStopMusic(MADDriver);
@@ -241,7 +243,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			{
 				NSAlert *alert = [NSAlert alertWithError:err];
 				[alert runModal];
-				[err release];
+				RELEASEOBJ(err);
 			}
 		}
 			break;
@@ -272,7 +274,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	}
 
 	char fileType[5];
-	OSErr theOSErr = MADMusicIdentifyCFURL(MADLib, fileType, (CFURLRef)musicToLoad);
+	OSErr theOSErr = MADMusicIdentifyCFURL(MADLib, fileType, (__bridge CFURLRef)musicToLoad);
 		
 	if(theOSErr != noErr)
 	{
@@ -281,7 +283,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		}
 		return NO;
 	}
-	theOSErr = MADLoadMusicCFURLFile(MADLib, &Music, fileType, (CFURLRef)musicToLoad);
+	theOSErr = MADLoadMusicCFURLFile(MADLib, &Music, fileType, (__bridge CFURLRef)musicToLoad);
 	
 	if (theOSErr != noErr) {
 		if (theErr) {
@@ -409,13 +411,13 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 - (void)dealloc
 {
-	[preferences release];
-	[musicList release];
-	[timeChecker release];
+	RELEASEOBJ(preferences);
+	RELEASEOBJ(musicList);
+	RELEASEOBJ(timeChecker);
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
-	[super dealloc];
+	SUPERDEALLOC;
 }
 
 - (IBAction)deleteInstrument:(id)sender
@@ -452,18 +454,18 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	{
 		NSAlert *alert = [NSAlert alertWithError:error];
 		[alert runModal];
-		[error release];
+		RELEASEOBJ(error);
 	}
 }
 
 - (IBAction)addMusic:(id)sender
 {
-	NSOpenPanel *panel = [[NSOpenPanel openPanel] retain];
+	NSOpenPanel *panel = RETAINOBJ([NSOpenPanel openPanel]);
 	NSMutableArray *supportedUTIs = [NSMutableArray arrayWithObject:@"com.quadmation.playerpro.madk"];
 	int i = 0;
 	@autoreleasepool {
 		for (i = 0; i < MADLib->TotalPlug; i++) {
-			NSArray *tempArray = [NSArray arrayWithArray:(id)MADLib->ThePlug[i].UTItypes];
+			NSArray *tempArray = [NSArray arrayWithArray:(__bridge id)MADLib->ThePlug[i].UTItypes];
 			[supportedUTIs addObjectsFromArray:tempArray];
 		}
 	}
@@ -474,7 +476,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		[self addMusicToMusicList:[panel URL]];
 	}
 	
-	[panel release];
+	RELEASEOBJ(panel);
 }
 
 - (IBAction)removeSelectedMusic:(id)sender {
@@ -554,16 +556,16 @@ enum PPMusicToolbarTypes {
 }
 
 - (IBAction)openFile:(id)sender {
-	NSOpenPanel *panel = [[NSOpenPanel openPanel] retain];
+	NSOpenPanel *panel = RETAINOBJ([NSOpenPanel openPanel]);
 	NSMutableArray *supportedUTIs = [NSMutableArray arrayWithObjects:@"com.quadmation.playerpro.madk", @"net.sourceforge.playerpro.musiclist", @"net.sourceforge.playerpro.stcfmusiclist", nil];
 	int i = 0;
 	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithObject:[NSArray arrayWithObject:@"com.quadmation.playerpro.madk"] forKey:@"MADK Tracker"];
 	NSMutableDictionary *playlistDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:@"net.sourceforge.playerpro.musiclist"], @"PlayerPRO Music List", [NSArray arrayWithObject:@"net.sourceforge.playerpro.stcfmusiclist"], @"PlayerPRO Old Music List", nil];
 	@autoreleasepool {
 		for (i = 0; i < MADLib->TotalPlug; i++) {
-			NSArray *tempArray = [NSArray arrayWithArray:(id)MADLib->ThePlug[i].UTItypes];
+			NSArray *tempArray = [NSArray arrayWithArray:(__bridge id)MADLib->ThePlug[i].UTItypes];
 			[supportedUTIs addObjectsFromArray:tempArray];
-			NSString *menuName = [NSString stringWithString:(id)MADLib->ThePlug[i].MenuName];
+			NSString *menuName = [NSString stringWithString:(__bridge id)MADLib->ThePlug[i].MenuName];
 			[trackerDict setObject:tempArray forKey:menuName];
 		}
 	}
@@ -582,7 +584,7 @@ enum PPMusicToolbarTypes {
 		NSString *utiFile = [sharedWorkspace typeOfFile:filename error:&err];
 		if (err) {
 			NSRunAlertPanel(@"Error opening file", [NSString stringWithFormat:@"Unable to open %@: %@", [filename lastPathComponent], [err localizedFailureReason]], nil, nil, nil);
-			[panel release];
+			RELEASEOBJ(panel);
 			return;
 		}
 		if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"]) {
@@ -598,19 +600,19 @@ enum PPMusicToolbarTypes {
 			[self didChangeValueForKey:@"musicList"];
 		}
 	}
-	[panel release];
-	[av release];
+	RELEASEOBJ(panel);
+	RELEASEOBJ(av);
 }
 
 - (IBAction)saveMusicList:(id)sender {
-	NSSavePanel *savePanel = [[NSSavePanel savePanel] retain];
+	NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
 	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"net.sourceforge.playerpro.musiclist"]];
 	[savePanel setCanCreateDirectories:YES];
 	[savePanel setCanSelectHiddenExtension:YES];
 	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 		[musicList saveMusicListToURL:[savePanel URL]];
 	}
-	[savePanel release];
+	RELEASEOBJ(savePanel);
 }
 
 - (IBAction)fastForwardButtonPressed:(id)sender
@@ -685,27 +687,29 @@ static NSString * const doubleDash = @"--";
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
 	NSInteger selected = [tableView selectedRow];
-	if (selected < 0) {
-		goto badMus;
-	}
-	NSURL *musicURL = [musicList URLAtIndex:selected];
-	PPInfoRec theInfo;
-	char info[5] = {0};
-	if(MADMusicIdentifyCFURL(MADLib, info, (CFURLRef)musicURL) != noErr) goto badMus;
-	if(MADMusicInfoCFURL(MADLib, info, (CFURLRef)musicURL, &theInfo) != noErr) goto badMus;
-	[fileName setTitleWithMnemonic:[musicURL lastPathComponent]];
-	[internalName setTitleWithMnemonic:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
-	[fileSize setTitleWithMnemonic:[NSString stringWithFormat:@"%.2f kiB", theInfo.fileSize / 1024.0]];
-	[musicInstrument setTitleWithMnemonic:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
-	[musicPatterns setTitleWithMnemonic:[NSString stringWithFormat:@"%d", theInfo.totalPatterns]];
-	[musicPlugType setTitleWithMnemonic:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
-	{
-		char sig[5] = {0};
-		OSType2Ptr(theInfo.signature, sig);
-		[musicSignature setTitleWithMnemonic:[NSString stringWithCString:sig encoding:NSMacOSRomanStringEncoding]];
-	}
-	[fileLocation setTitleWithMnemonic:[musicURL path]];
-	return;
+	do {
+		if (selected < 0)
+			break;
+		
+		NSURL *musicURL = [musicList URLAtIndex:selected];
+		PPInfoRec theInfo;
+		char info[5] = {0};
+		if(MADMusicIdentifyCFURL(MADLib, info, (__bridge CFURLRef)musicURL) != noErr) break;
+		if(MADMusicInfoCFURL(MADLib, info, (__bridge CFURLRef)musicURL, &theInfo) != noErr) break;
+		[fileName setTitleWithMnemonic:[musicURL lastPathComponent]];
+		[internalName setTitleWithMnemonic:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
+		[fileSize setTitleWithMnemonic:[NSString stringWithFormat:@"%.2f kiB", theInfo.fileSize / 1024.0]];
+		[musicInstrument setTitleWithMnemonic:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
+		[musicPatterns setTitleWithMnemonic:[NSString stringWithFormat:@"%ld", (long)theInfo.totalPatterns]];
+		[musicPlugType setTitleWithMnemonic:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
+		{
+			char sig[5] = {0};
+			OSType2Ptr(theInfo.signature, sig);
+			[musicSignature setTitleWithMnemonic:[NSString stringWithCString:sig encoding:NSMacOSRomanStringEncoding]];
+		}
+		[fileLocation setTitleWithMnemonic:[musicURL path]];
+		return;
+	} while (0);
 	
 badMus:
 	

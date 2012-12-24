@@ -24,7 +24,7 @@
 	IBOutlet NSButton *pauseButton;
 	BOOL paused;
 	
-	IBOutlet NSWindow *window;
+	IBOutlet  __unsafe_unretained NSWindow *window;
 	
 	IBOutlet NSTextField *fileName;
 	IBOutlet NSTextField *internalName;

@@ -433,6 +433,9 @@
 		55B1B4F7166A861900820424 /* PPMusicObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F5166A861900820424 /* PPMusicObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B1B4F6166A861900820424 /* PPMusicObject.m */; };
 		55B1B4FA166A8ED500820424 /* PPMusicObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */; };
+		55B23D0F1687D1D700DCE923 /* RDriverCarbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		55B23D121687D22700DCE923 /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
+		55B23D131687D22700DCE923 /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
 		55B797E310D6E6E50073E379 /* CompFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FE110D6C79D00BB619C /* CompFade.c */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
 		55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -1877,6 +1880,9 @@
 		55B1B4F5166A861900820424 /* PPMusicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicObject.h; sourceTree = "<group>"; };
 		55B1B4F6166A861900820424 /* PPMusicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMusicObject.m; sourceTree = "<group>"; };
 		55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicObject_PPKPrivate.h; sourceTree = "<group>"; };
+		55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDriverCarbon.h; sourceTree = "<group>"; };
+		55B23D111687D22700DCE923 /* MainDriverCarbon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MainDriverCarbon.c; sourceTree = "<group>"; };
+		55B23D141687D6ED00DCE923 /* ARCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARCBridge.h; sourceTree = "<group>"; };
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Complex Fade-Info.plist"; path = "../../../Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55CB01A611EB82FA0028C6BB /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
@@ -3423,6 +3429,8 @@
 				88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */,
 				5573A3E810B5147C00FF8B50 /* MyDebugStr.c */,
 				550B001B10BA0243004FC5D7 /* PlayerPROCore.h */,
+				55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */,
+				55B23D111687D22700DCE923 /* MainDriverCarbon.c */,
 			);
 			name = "Main Driver Source";
 			sourceTree = "<group>";
@@ -3476,6 +3484,7 @@
 				557139E31685007B00831A5A /* OpenPanelViewController.h */,
 				557139E41685007B00831A5A /* OpenPanelViewController.m */,
 				557139E51685007B00831A5A /* OpenPanelViewController.xib */,
+				55B23D141687D6ED00DCE923 /* ARCBridge.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -3803,6 +3812,7 @@
 				5573A41210B5160000FF8B50 /* PPDefs.h in Headers */,
 				550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */,
 				550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */,
+				55B23D0F1687D1D700DCE923 /* RDriverCarbon.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5772,6 +5782,7 @@
 				55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */,
 				55007E9D161A552C00297A3F /* FileUtils.c in Sources */,
 				55A492DC162F72A0003EBF4A /* MIDI-Hardware-OSX.c in Sources */,
+				55B23D131687D22700DCE923 /* MainDriverCarbon.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6124,6 +6135,7 @@
 				55672E9010CAD830008C5C3D /* OSX-PlugImport.m in Sources */,
 				55E8981A10EEC5BA004EB52B /* AboutPlugs.c in Sources */,
 				555E9B4E110192F900986239 /* MIDI-Hardware-OSX.c in Sources */,
+				55B23D121687D22700DCE923 /* MainDriverCarbon.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8572,6 +8584,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				"CLANG_ENABLE_OBJC_ARC[arch=x86_64]" = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -8586,6 +8600,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				"CLANG_ENABLE_OBJC_ARC[arch=x86_64]" = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;

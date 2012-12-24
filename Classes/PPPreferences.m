@@ -16,30 +16,31 @@
 #import "DigitalEditorPreferenceControler.h"
 #import "ClassicEditorPreferenceController.h"
 #import "MidiHardwarePreferenceController.h"
+#import "ARCBridge.h"
 
 @implementation PPPreferences
 
 - (id)init 
 {
     if (self = [super initWithWindowNibName:@"Preferences"]) {
-		viewControllers = [[NSArray alloc] initWithObjects:[[[SoundOutputController alloc] init] autorelease],
-						   [[[PianoPreferencesController alloc] init] autorelease],
-						   [[[MusicListPreferenceController alloc] init] autorelease],
-						   [[[ColorPreferenceController alloc] init] autorelease],
-						   [[[BoxEditorPreferenceController alloc] init] autorelease],
-						   [[[DigitalEditorPreferenceControler alloc] init] autorelease],
-						   [[[ClassicEditorPreferenceController alloc] init] autorelease],
-						   [[[MidiHardwarePreferenceController alloc] init] autorelease],
-						   [[[MiscPreferenceController alloc] init] autorelease],
+		viewControllers = [[NSArray alloc] initWithObjects:AUTORELEASEOBJ([[SoundOutputController alloc] init]) ,
+						   AUTORELEASEOBJ([[PianoPreferencesController alloc] init]),
+						   AUTORELEASEOBJ([[MusicListPreferenceController alloc] init]),
+						   AUTORELEASEOBJ([[ColorPreferenceController alloc] init]),
+						   AUTORELEASEOBJ([[BoxEditorPreferenceController alloc] init]),
+						   AUTORELEASEOBJ([[DigitalEditorPreferenceControler alloc] init]),
+						   AUTORELEASEOBJ([[ClassicEditorPreferenceController alloc] init]),
+						   AUTORELEASEOBJ([[MidiHardwarePreferenceController alloc] init]),
+						   AUTORELEASEOBJ([[MiscPreferenceController alloc] init]),
 						   nil];
     }
     return self;
 }
 - (void)dealloc
 {
-	[viewControllers release];
+	RELEASEOBJ(viewControllers);
 	
-	[super dealloc];
+	SUPERDEALLOC;
 }
 
 - (NSString *)windowNibName 
@@ -97,7 +98,7 @@
 		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[vc title] action:@selector(changeViewController:) keyEquivalent:@""];
 		[mi setTag:i];
 		[menu addItem:mi];
-		[mi release];
+		RELEASEOBJ(mi);
 	}
 	
 	//initially show the first controller
