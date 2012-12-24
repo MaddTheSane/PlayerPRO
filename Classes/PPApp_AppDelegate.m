@@ -247,7 +247,6 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			}
 		}
 			break;
-			
 	}
 }
 
@@ -505,7 +504,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 }
 
 - (IBAction)clearMusicList:(id)sender {
+	[self willChangeValueForKey:@"musicList"];
 	[musicList clearMusicList];
+	[self didChangeValueForKey:@"musicList"];
 }
 
 enum PPMusicToolbarTypes {
