@@ -26,7 +26,33 @@ enum {
 	bits24
 };
 
--(NSInteger)currentRate {
+typedef struct _tagCoupling {
+	int amount;
+	NSInteger tag;
+} TagCoupling;
+
+static const TagCoupling StereoDelayCoupling[] = {{.amount = 1, .tag = 1}, {.amount = 10, .tag = 2},
+	{.amount = 25, .tag = 3}, {.amount = 30, .tag = 4} ,{.amount = 35, .tag = 5},
+	{.amount = 40, .tag = 6}, {.amount = 45, .tag = 7}, {.amount = 50, .tag = 8},
+	{.amount = 60, .tag = 9}, {.amount = 70, .tag = 10}, {.amount = 80, .tag = 11},
+	{.amount = 90, .tag = 12}, {.amount = 100, .tag = 13}, {.amount = 200, .tag = 14}};
+
+static const TagCoupling ReverbAmountCoupling[] = {{.amount = 25, .tag = 1}, {.amount = 30, .tag = 2},
+	{.amount = 35, .tag = 3}, {.amount = 40, .tag = 4}, {.amount = 45, .tag = 5}, {.amount = 50, .tag = 6},
+	{.amount = 60, .tag = 7}, {.amount = 70, .tag = 8}, {.amount = 80, .tag = 9}, {.amount = 90, .tag = 10},
+	{.amount = 100, .tag = 11}, {.amount = 200, .tag = 12}, {.amount = 300, .tag = 13}, {.amount = 400, .tag = 14}};
+
+static const TagCoupling ReverbPercentCoupling[] = {{.amount = 10, .tag = 1}, {.amount = 20, .tag = 2},
+	{.amount = 30, .tag = 3}, {.amount = 40, .tag = 4}, {.amount = 50, .tag = 5}, {.amount = 60, .tag = 6},
+	{.amount = 70, .tag = 7}};
+
+static const TagCoupling OversamplingCoupling[] = {{.amount = 1, .tag = 1}, {.amount = 2, .tag = 2},
+	{.amount = 3, .tag = 3}, {.amount = 4, .tag = 4}, {.amount = 6, .tag = 5}, {.amount = 8, .tag = 6},
+	{.amount = 10, .tag = 7}, {.amount = 16, .tag = 8}, {.amount = 20, .tag = 9}, {.amount = 25, .tag = 10},
+	{.amount = 30, .tag = 11}};
+
+-(NSInteger)currentRate
+{
 	id curSelected = [rate selectedCell];
 	if ([rate cellAtRow:0 column:0] == curSelected) {
 		return rate11Khz;
@@ -41,7 +67,8 @@ enum {
 	}
 }
 
--(NSInteger)currentSoundDriver {
+-(NSInteger)currentSoundDriver
+{
 	id curSelected = [soundDriver selectedCell];
 	if ([soundDriver cellAtRow:0 column:0] == curSelected) {
 		return CoreAudioDriver;
@@ -54,7 +81,8 @@ enum {
 	}
 }
 
--(NSInteger)currentBits {
+-(NSInteger)currentBits
+{
 	id curSelected = [outputBits selectedCell];
 	if ([outputBits cellAtRow:0 column:0] == curSelected) {
 		return bits8;
@@ -69,7 +97,8 @@ enum {
 	}
 }
 
-- (IBAction)changeBits:(id)sender {
+- (IBAction)changeBits:(id)sender
+{
     short currBits = [self currentBits];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	switch (currBits) {
@@ -91,12 +120,14 @@ enum {
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 
-- (IBAction)changeDriver:(id)sender {
+- (IBAction)changeDriver:(id)sender
+{
 	[[NSUserDefaults standardUserDefaults] setInteger:[self currentSoundDriver] forKey:PPSoundDriver];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 
-- (IBAction)changeRate:(id)sender {
+- (IBAction)changeRate:(id)sender
+{
     short curBits = [self currentRate];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	switch (curBits) {
@@ -118,49 +149,120 @@ enum {
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 
-- (IBAction)changeChecked:(id)sender {
+- (IBAction)changeChecked:(id)sender
+{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSInteger reverbState = [reverb state];
+	NSInteger stereoDelayState = [stereoDelay state];
+	NSInteger oversamplingState = [oversampling state];
+	
 	[defaults setBool:[surround state] forKey:PPSurroundToggle];
-	[defaults setBool:[reverb state] forKey:PPReverbToggle];
-	[defaults setBool:[stereoDelay state] forKey:PPStereoDelayToggle];
-	[defaults setBool:[oversampling state] forKey:PPOversamplingToggle];
+	[defaults setBool:reverbState forKey:PPReverbToggle];
+	[defaults setBool:stereoDelayState forKey:PPStereoDelayToggle];
+	[defaults setBool:oversamplingState forKey:PPOversamplingToggle];
 	if (![defaults boolForKey:PPOversamplingToggle]) {
-		[defaults setInteger:1 forKey:PPOversamplingAmount];
+		//[defaults setInteger:1 forKey:PPOversamplingAmount];
 	}
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
-}
-
-- (IBAction)changeOversampling:(id)sender {
-    
+	[oversamplingNum setEnabled:oversamplingState];
+	[reverbNum setEnabled:reverbState];
+	[reverbPercent setEnabled:reverbState];
+	[stereoDelayNum setEnabled:stereoDelayState];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 
-- (IBAction)changeReverbAmount:(id)sender {
-    
+- (IBAction)changeOversampling:(id)sender
+{
+	int toSet = 0;
+	NSInteger tag = [sender tag];
+	int i = 0;
+	size_t sizeofCoupling = sizeof(OversamplingCoupling) / sizeof(TagCoupling);
+	for (i = 0; i < sizeofCoupling; i++) {
+		if (OversamplingCoupling[i].tag == tag) {
+			toSet = OversamplingCoupling[i].amount;
+			break;
+		}
+	}
+	if (toSet == 0) {
+		toSet = 1;
+	}
+	[[NSUserDefaults standardUserDefaults] setInteger:toSet forKey:PPOversamplingAmount];
+
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 
-- (IBAction)changeReverbPercent:(id)sender {
-    
+- (IBAction)changeReverbAmount:(id)sender
+{
+	int toSet = 0;
+	NSInteger tag = [sender tag];
+	int i = 0;
+	size_t sizeofCoupling = sizeof(ReverbAmountCoupling) / sizeof(TagCoupling);
+	for (i = 0; i < sizeofCoupling; i++) {
+		if (ReverbAmountCoupling[i].tag == tag) {
+			toSet = ReverbAmountCoupling[i].amount;
+			break;
+		}
+	}
+	if (toSet == 0) {
+		toSet = 25;
+	}
+	[[NSUserDefaults standardUserDefaults] setInteger:toSet forKey:PPReverbAmount];
+
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 
-- (IBAction)changeStereoDelay:(id)sender {
-    
+- (IBAction)changeReverbPercent:(id)sender
+{
+	int toSet = 0;
+	NSInteger tag = [sender tag];
+	int i = 0;
+	size_t sizeofCoupling = sizeof(ReverbPercentCoupling) / sizeof(TagCoupling);
+	for (i = 0; i < sizeofCoupling; i++) {
+		if (ReverbPercentCoupling[i].tag == tag) {
+			toSet = ReverbPercentCoupling[i].amount;
+			break;
+		}
+	}
+	if (toSet == 0) {
+		toSet = 30;
+	}
+	[[NSUserDefaults standardUserDefaults] setInteger:toSet forKey:PPReverbStrength];
+
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 
--(id)init {
+- (IBAction)changeStereoDelay:(id)sender
+{
+    int toSet = 0;
+	NSInteger tag = [sender tag];
+	int i = 0;
+	size_t sizeofCoupling = sizeof(StereoDelayCoupling) / sizeof(TagCoupling);
+	for (i = 0; i < sizeofCoupling; i++) {
+		if (StereoDelayCoupling[i].tag == tag) {
+			toSet = StereoDelayCoupling[i].amount;
+			break;
+		}
+	}
+	if (toSet == 0) {
+		toSet = 30;
+	}
+	[[NSUserDefaults standardUserDefaults] setInteger:toSet forKey:PPStereoDelayAmount];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
+}
+
+-(id)init
+{
 	if (self = [super initWithNibName:@"SoundOutput" bundle:nil]) {
 		[self setTitle:@"Sound Output"];
 	}
 	return self;
 }
 
--(void)setCurrentSoundDriver:(NSInteger)theDriver {
+-(void)setCurrentSoundDriver:(NSInteger)theDriver
+{
 	switch (theDriver) {
 		case CoreAudioDriver:
 			[soundDriver selectCellAtRow:0 column:0];
@@ -178,7 +280,8 @@ enum {
 	}
 }
 
--(void)setCurrentBits:(NSInteger)bits {
+-(void)setCurrentBits:(NSInteger)bits
+{
 	switch (bits) {
 		case bits8:
 			[outputBits selectCellAtRow:0 column:0];
@@ -197,7 +300,8 @@ enum {
 	}
 }
 
--(void)setCurrentRate:(NSInteger)currRate {
+-(void)setCurrentRate:(NSInteger)currRate
+{
 	switch (currRate) {
 		case rate11Khz:
 			[rate selectCellAtRow:0 column:0];
@@ -215,45 +319,136 @@ enum {
 	}
 }
 
--(void)awakeFromNib {
+-(void)awakeFromNib
+{
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
-	[oversampling setState:[defaults boolForKey:PPOversamplingToggle]];
-	[reverb setState:[defaults boolForKey:PPReverbToggle]];
-	[stereoDelay setState:[defaults boolForKey:PPStereoDelayToggle]];
+	BOOL oversamplingState = [defaults boolForKey:PPOversamplingToggle];
+	BOOL reverbState = [defaults boolForKey:PPReverbToggle];
+	BOOL stereoDelayState = [defaults boolForKey:PPStereoDelayToggle];
+	[oversampling setState:oversamplingState];
+	[reverb setState:reverbState];
+	[stereoDelay setState:stereoDelayState];
 	[surround setState:[defaults boolForKey:PPSurroundToggle]];
+	
+	[oversamplingNum setEnabled:oversamplingState];
+	[reverbNum setEnabled:reverbState];
+	[reverbPercent setEnabled:reverbState];
+	[stereoDelayNum setEnabled:stereoDelayState];
+
+	
 	[self setCurrentSoundDriver:[defaults integerForKey:PPSoundDriver]];
 	
 	{
 		NSInteger unConvBits = [defaults integerForKey:PPSoundOutBits], ConvBits;
-		if (unConvBits == 8) {
-			ConvBits = bits8;
-		} else if (unConvBits == 16) {
-			ConvBits = bits16;
-		} else if (unConvBits == 20) {
-			ConvBits = bits20;
-		} else if (unConvBits == 24) {
-			ConvBits = bits24;
-		} else {
-			ConvBits = bits16;
+		switch (unConvBits) {
+			case 8:
+				ConvBits = bits8;
+				break;
+				
+			default:
+			case 16:
+				ConvBits = bits16;
+				break;
+				
+			case 20:
+				ConvBits = bits20;
+				break;
+				
+			case 24:
+				ConvBits = bits24;
+				break;
+				
 		}
 		[self setCurrentBits:ConvBits];
 	}
 	{
 		NSInteger unConvRate = [defaults integerForKey:PPSoundOutRate], convRate;
-		if (unConvRate == 11025) {
-			convRate = rate11Khz;
-		} else if (unConvRate == 22050) {
-			convRate = rate22Khz;
-		} else if (unConvRate == 44100) {
-			convRate = rate44Khz;
-		} else if (unConvRate == 48000) {
-			convRate = rate48Khz;
-		} else {
-			convRate = rate44Khz;
+		switch (unConvRate) {
+			case 11025:
+				convRate = rate11Khz;
+				break;
+				
+			case 22050:
+				convRate = rate22Khz;
+				break;
+				
+			default:
+			case 44100:
+				convRate = rate44Khz;
+				break;
+				
+			case 48000:
+				convRate = rate48Khz;
+				break;
 		}
 		[self setCurrentRate:convRate];
 	}
+	{
+		NSInteger theRate = [defaults integerForKey:PPStereoDelayAmount];
+		NSInteger toSet = 0;
+		int i = 0;
+		size_t sizeofCoupling = sizeof(StereoDelayCoupling) / sizeof(TagCoupling);
+		for (i = 0; i < sizeofCoupling; i++) {
+			if (StereoDelayCoupling[i].amount == theRate) {
+				toSet = StereoDelayCoupling[i].tag;
+				break;
+			}
+		}
+		if (toSet == 0) {
+			toSet = 4;
+		}
+		[stereoDelayNum selectItemAtIndex:toSet - 1];
+	}
+	{
+		NSInteger reverbAmount = [defaults integerForKey:PPReverbAmount];
+		NSInteger toSet = 0;
+		int i = 0;
+		size_t sizeofCoupling = sizeof(ReverbAmountCoupling) / sizeof(TagCoupling);
+		for (i = 0; i < sizeofCoupling; i++) {
+			if (ReverbAmountCoupling[i].amount == reverbAmount) {
+				toSet = ReverbAmountCoupling[i].tag;
+				break;
+			}
+		}
+		if (toSet == 0) {
+			toSet = 4;
+		}
+		[reverbNum selectItemAtIndex:toSet - 1];
+	}
+	{
+		NSInteger reverbPercentage = [defaults integerForKey:PPReverbStrength];
+		NSInteger toSet = 0;
+		int i = 0;
+		size_t sizeofCoupling = sizeof(ReverbPercentCoupling) / sizeof(TagCoupling);
+		for (i = 0; i < sizeofCoupling; i++) {
+			if (ReverbPercentCoupling[i].amount == reverbPercentage) {
+				toSet = ReverbPercentCoupling[i].tag;
+				break;
+			}
+		}
+		if (toSet == 0) {
+			toSet = 3;
+		}
+		[reverbPercent selectItemAtIndex:toSet - 1];
+	}
+	{
+		NSInteger oversamplingAmount = [defaults integerForKey:PPOversamplingAmount];
+		NSInteger toSet = 0;
+		int i = 0;
+		size_t sizeofCoupling = sizeof(OversamplingCoupling) / sizeof(TagCoupling);
+		for (i = 0; i < sizeofCoupling; i++) {
+			if (OversamplingCoupling[i].amount == oversamplingAmount) {
+				toSet = OversamplingCoupling[i].tag;
+				break;
+			}
+		}
+		if (toSet == 0) {
+			toSet = 1;
+		}
+		[oversamplingNum selectItemAtIndex:toSet - 1];
+	}
+
 }
 
 @end

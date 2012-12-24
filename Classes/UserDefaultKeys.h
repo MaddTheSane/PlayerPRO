@@ -29,7 +29,7 @@ extern NSString * const PPReverbToggle;
 extern NSString * const PPSurroundToggle;
 extern NSString * const PPOversamplingToggle;
 extern NSString * const PPStereoDelayAmount;
-extern NSString * const PPReverbSize;
+extern NSString * const PPReverbAmount;
 extern NSString * const PPReverbStrength;
 extern NSString * const PPOversamplingAmount;
 

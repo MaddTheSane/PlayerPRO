@@ -30,7 +30,7 @@ NSString * const PPReverbToggle = @"Reverb?";
 NSString * const PPSurroundToggle = @"Surround?";
 NSString * const PPOversamplingToggle = @"Oversampling?";
 NSString * const PPStereoDelayAmount = @"Stereo Delay amount";
-NSString * const PPReverbSize = @"Reverb Size";
+NSString * const PPReverbAmount = @"Reverb Amount";
 NSString * const PPReverbStrength = @"Reverb Strength";
 NSString * const PPOversamplingAmount = @"Oversampling Amount";
 

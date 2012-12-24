@@ -90,11 +90,20 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	init.surround = [defaults boolForKey:PPSurroundToggle];
 	init.outPutRate = [defaults integerForKey:PPSoundOutRate];
 	init.outPutBits = [defaults integerForKey:PPSoundOutBits];
-	init.oversampling = [defaults integerForKey:PPOversamplingAmount];
+	if ([defaults boolForKey:PPOversamplingToggle]) {
+		init.oversampling = [defaults integerForKey:PPOversamplingAmount];
+	} else {
+		init.oversampling = 1;
+	}
 	init.Reverb = [defaults boolForKey:PPReverbToggle];
-	init.ReverbSize = [defaults integerForKey:PPReverbSize];
+	init.ReverbSize = [defaults integerForKey:PPReverbAmount];
 	init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
-	init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
+	if ([defaults boolForKey:PPStereoDelayToggle]) {
+		init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
+	} else {
+		init.MicroDelaySize = 0;
+	}
+	
 	init.driverMode = [defaults integerForKey:PPSoundDriver];
 	init.repeatMusic = FALSE;
 	
@@ -137,7 +146,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 															 [NSNumber numberWithBool:NO], PPSurroundToggle,
 															 [NSNumber numberWithBool:NO], PPOversamplingToggle,
 															 [NSNumber numberWithInt:30], PPStereoDelayAmount,
-															 [NSNumber numberWithInt:25], PPReverbSize,
+															 [NSNumber numberWithInt:25], PPReverbAmount,
 															 [NSNumber numberWithInt:30], PPReverbStrength,
 															 [NSNumber numberWithInt:1], PPOversamplingAmount,
 															 
@@ -207,7 +216,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			NSInteger tableCount = [musicList countOfMusicList];
 			if (tableCount > ++currentlyPlayingIndex) {
 				[self selectCurrentlyPlayingMusic];
-				NSError *err;
+				NSError *err = nil;
 				if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 				{
 					NSAlert *alert = [NSAlert alertWithError:err];
@@ -218,7 +227,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 				if ([userDefaults boolForKey:PPLoopMusicWhenDone]) {
 					currentlyPlayingIndex = 0;
 					[self selectCurrentlyPlayingMusic];
-					NSError *err;
+					NSError *err = nil;
 					if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 					{
 						NSAlert *alert = [NSAlert alertWithError:err];
@@ -238,7 +247,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		{
 			currentlyPlayingIndex = random() % [musicList countOfMusicList];
 			[self selectCurrentlyPlayingMusic];
-			NSError *err;
+			NSError *err = nil;
 			if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 			{
 				NSAlert *alert = [NSAlert alertWithError:err];
@@ -318,15 +327,18 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 }
 
 
-- (IBAction)exportInstrumentAs:(id)sender {
+- (IBAction)exportInstrumentAs:(id)sender
+{
     
 }
 
-- (IBAction)showInstrumentsList:(id)sender {
+- (IBAction)showInstrumentsList:(id)sender
+{
     
 }
 
-- (IBAction)showTools:(id)sender {
+- (IBAction)showTools:(id)sender
+{
     [toolsPanel makeKeyAndOrderFront:sender];
 }
 
@@ -375,8 +387,6 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
 	[defaultCenter addObserver:self selector:@selector(digitalEditorPreferencesDidChange:) name:PPDigitalEditorPrefrencesDidChange object:nil];
 	
-
-	//[tableView setDataSource:musicList];
 	[self MADDriverWithPreferences];
 	
 	timeChecker = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0] interval:1/4.0 target:self selector:@selector(updateMusicStats:) userInfo:nil repeats:YES];
@@ -406,7 +416,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)preferencesDidChange:(NSNotification *)notification {
+- (void)preferencesDidChange:(NSNotification *)notification
+{
 	
 }
 
@@ -441,7 +452,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
     
 }
 
-- (IBAction)sortMusicList:(id)sender {
+- (IBAction)sortMusicList:(id)sender
+{
 	[self willChangeValueForKey:@"musicList"];
 	[musicList sortMusicList];
 	[self didChangeValueForKey:@"musicList"];
@@ -480,7 +492,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	RELEASEOBJ(panel);
 }
 
-- (IBAction)removeSelectedMusic:(id)sender {
+- (IBAction)removeSelectedMusic:(id)sender
+{
 #if 0
 	NSIndexSet *selMusic = [tableView selectedRowIndexes];
 	NSInteger i = 0;
@@ -503,7 +516,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 #endif
 }
 
-- (IBAction)clearMusicList:(id)sender {
+- (IBAction)clearMusicList:(id)sender
+{
 	[self willChangeValueForKey:@"musicList"];
 	[musicList clearMusicList];
 	[self didChangeValueForKey:@"musicList"];
@@ -563,7 +577,7 @@ enum PPMusicToolbarTypes {
 	NSMutableArray *supportedUTIs = [NSMutableArray arrayWithObjects:@"com.quadmation.playerpro.madk", @"net.sourceforge.playerpro.musiclist", @"net.sourceforge.playerpro.stcfmusiclist", nil];
 	int i = 0;
 	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithObject:[NSArray arrayWithObject:@"com.quadmation.playerpro.madk"] forKey:@"MADK Tracker"];
-	NSMutableDictionary *playlistDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:@"net.sourceforge.playerpro.musiclist"], @"PlayerPRO Music List", [NSArray arrayWithObject:@"net.sourceforge.playerpro.stcfmusiclist"], @"PlayerPRO Old Music List", nil];
+	NSDictionary *playlistDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:@"net.sourceforge.playerpro.musiclist"], @"PlayerPRO Music List", [NSArray arrayWithObject:@"net.sourceforge.playerpro.stcfmusiclist"], @"PlayerPRO Old Music List", nil];
 	@autoreleasepool {
 		for (i = 0; i < MADLib->TotalPlug; i++) {
 			NSArray *tempArray = [NSArray arrayWithArray:(__bridge id)MADLib->ThePlug[i].UTItypes];
