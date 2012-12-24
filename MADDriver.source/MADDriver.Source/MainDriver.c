@@ -773,7 +773,11 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 #ifdef _ESOUND
 	   DriverInitParam->driverMode != ESDDriver &&
 #endif
-	   DriverInitParam->driverMode != NoHardwareDriver) theErr = MADSoundSystemUnavailable;
+	   DriverInitParam->driverMode != NoHardwareDriver) {
+		if(theErr == noErr) {
+			theErr = MADSoundSystemUnavailable;
+		}
+	}
 	
 	if( DriverInitParam->MicroDelaySize < 0) 		theErr = MADParametersErr;
 	if( DriverInitParam->MicroDelaySize > 1000) 	theErr = MADParametersErr;
