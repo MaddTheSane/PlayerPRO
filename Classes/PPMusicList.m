@@ -221,11 +221,10 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 		CFURLRef tempURLRef = NULL;
 		tempURLRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)together, kCFURLHFSPathStyle, false);
 
-		PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:(id)CFBridgingRelease(tempURLRef)];
+		PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:CFBridgingRelease(tempURLRef)];
 		
 		[newArray addObject:obj];
 		RELEASEOBJ(obj);
-		CFRelease(tempURLRef);
 	}
 	HUnlock( aHandle);
 	DisposeHandle( aHandle);
