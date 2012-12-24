@@ -226,7 +226,14 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 		CFURLRef tempURLRef = NULL;
 		tempURLRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)together, kCFURLHFSPathStyle, false);
 
-		PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:CFBridgingRelease(tempURLRef)];
+		NSURL *fullPath = CFBridgingRelease(tempURLRef);
+		NSURL *refURL = [fullPath fileReferenceURL];
+		PPMusicListObject *obj = nil;
+		if (refURL) {
+			obj = [[PPMusicListObject alloc] initWithURL:refURL];
+		} else {
+			obj = [[PPMusicListObject alloc] initWithURL:fullPath];
+		}
 		
 		[newArray addObject:obj];
 		RELEASEOBJ(obj);
@@ -273,7 +280,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (void)addMusicURL:(NSURL *)musicToLoad
 {
-	PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:musicToLoad];
+	PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:[musicToLoad fileReferenceURL]];
 	//[self willChangeValueForKey:@"musicList"];
 	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndex:[musicList count]];
 	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:@"musicList"];
@@ -308,7 +315,13 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 		musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
 		for (i = 0; i < [BookmarkArray count]; i++) {
 			NSURL *fullURL = [NSURL URLByResolvingBookmarkData:[BookmarkArray objectAtIndex:i] options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:NULL error:nil];
-			PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullURL];
+			NSURL *refURL = [fullURL fileReferenceURL];
+			PPMusicListObject *obj = nil;
+			if (refURL) {
+				obj = [[PPMusicListObject alloc] initWithURL:refURL];
+			} else {
+				obj = [[PPMusicListObject alloc] initWithURL:fullURL];
+			}
 			[musicList insertObject:obj atIndex:i];
 			RELEASEOBJ(obj);
 		}
