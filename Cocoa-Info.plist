@@ -21,6 +21,10 @@
 			<false/>
 		</dict>
 		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>pcmd</string>
+			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>PCMD</string>
 			<key>CFBundleTypeName</key>
@@ -28,23 +32,14 @@
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>Pcmd</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>PCMD</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO PCMD File</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
 				<string>PPIN</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.quadmation.playerpro.pcmd</string>
+			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
 		</dict>
@@ -585,34 +580,6 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
-				<string>net.sourceforge.playerpro.instrumentfile</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>PlayerPRO mINS file</string>
-			<key>UTTypeIconFile</key>
-			<string>INS</string>
-			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.mins</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>com.apple.nspboard-type</key>
-				<array>
-					<string>PPMinsClipboardData</string>
-				</array>
-				<key>com.apple.ostype</key>
-				<array>
-					<string>MINs</string>
-				</array>
-				<key>public.filename-extension</key>
-				<array>
-					<string>mins</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Old PlayerPRO Music List</string>
@@ -648,6 +615,35 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>pplist</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.instrumentfile</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PlayerPRO PCMD file</string>
+			<key>UTTypeIconFile</key>
+			<string>PCMD</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.quadmation.playerpro.pcmd</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.nspboard-type</key>
+				<array>
+					<string>PPPCMDInstrumentData</string>
+				</array>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>Pcmd</string>
+					<string>PPIN</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>pcmd</string>
 				</array>
 			</dict>
 		</dict>
@@ -958,6 +954,30 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>pat</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.instrumentfile</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PlayerPRO mINS file</string>
+			<key>UTTypeIconFile</key>
+			<string>INS</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.mins</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>MINs</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mins</string>
 				</array>
 			</dict>
 		</dict>
