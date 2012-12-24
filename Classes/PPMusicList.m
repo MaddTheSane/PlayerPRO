@@ -90,12 +90,14 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	return self;
 }
 
+#if !__has_feature(objc_arc)
 - (void)dealloc
 {
-	RELEASEOBJ(musicUrl);
+	[musicUrl release];
 	
-	SUPERDEALLOC;
+	[super dealloc];
 }
+#endif
 
 - (NSString*)description
 {
@@ -255,12 +257,14 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	return self;
 }
 
+#if !__has_feature(objc_arc)
 - (void)dealloc
 {
-	RELEASEOBJ(musicList);
+	[musicList release];
 	
-	SUPERDEALLOC;
+	[super dealloc];
 }
+#endif
 
 - (void)addMusicURL:(NSURL *)musicToLoad
 {
@@ -271,7 +275,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	[musicList addObject:obj];
 	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:@"musicList"];
 	//[self didChangeValueForKey:@"musicList"];
-	RELEASEOBJ(musicList);
+	RELEASEOBJ(obj);
 }
 
 - (void)removeObjectAtIndex:(NSUInteger)object

@@ -36,12 +36,15 @@
     }
     return self;
 }
+
+#if !__has_feature(objc_arc)
 - (void)dealloc
 {
-	RELEASEOBJ(viewControllers);
+	[viewControllers release];
 	
-	SUPERDEALLOC;
+	[super dealloc];
 }
+#endif
 
 - (NSString *)windowNibName 
 {

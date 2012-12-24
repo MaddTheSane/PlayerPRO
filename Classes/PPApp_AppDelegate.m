@@ -403,22 +403,24 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	} else {
 		[[NSUserDefaults standardUserDefaults] removeObjectForKey:PPMMusicList];
 	}
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)preferencesDidChange:(NSNotification *)notification {
 	
 }
 
+#if !__has_feature(objc_arc)
 - (void)dealloc
 {
-	RELEASEOBJ(preferences);
-	RELEASEOBJ(musicList);
-	RELEASEOBJ(timeChecker);
+	[preferences release];
+	[musicList release];
+	[timeChecker release];
 	
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	SUPERDEALLOC;
+	[super dealloc];
 }
+#endif
 
 - (IBAction)deleteInstrument:(id)sender
 {
@@ -579,7 +581,7 @@ enum PPMusicToolbarTypes {
 		//[self addMusicToMusicList:[panel URL]];
 		NSURL *panelURL = [panel URL];
 		NSString *filename = [panelURL path];
-		NSError *err;
+		NSError *err = nil;
 		NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
 		NSString *utiFile = [sharedWorkspace typeOfFile:filename error:&err];
 		if (err) {
@@ -711,8 +713,6 @@ static NSString * const doubleDash = @"--";
 		return;
 	} while (0);
 	
-badMus:
-	
 	[fileName setTitleWithMnemonic:doubleDash];
 	[internalName setTitleWithMnemonic:doubleDash];
 	[fileSize setTitleWithMnemonic:doubleDash];
@@ -721,8 +721,6 @@ badMus:
 	[musicPlugType setTitleWithMnemonic:doubleDash];
 	[musicSignature setTitleWithMnemonic:doubleDash];
 	[fileLocation setTitleWithMnemonic:doubleDash];
-
-	
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename

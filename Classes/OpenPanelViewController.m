@@ -71,7 +71,9 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 				break;
 				
 			default:
-				AUTORELEASEOBJ(self);
+#if !__has_feature(objc_arc)
+				[self autorelease];
+#endif
 				return nil;
 				break;
 		}
@@ -81,13 +83,15 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	return self;
 }
 
+#if !__has_feature(objc_arc)
 - (void)dealloc
 {
-	RELEASEOBJ(utis);
-	RELEASEOBJ(name);
+	[utis release];
+	[name release];
 	
-	SUPERDEALLOC;
+	[super dealloc];
 }
+#endif
 
 - (NSString* )description
 {
@@ -201,7 +205,7 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		{
 			NSMutableArray *trackerUTIs = [NSMutableArray array];
 			for (OpenPanelViewItem *obj in utiObjects) {
-				if (obj.type.tracker == 1) {
+				if (obj.type.tracker) {
 					[trackerUTIs addObjectsFromArray:obj.utis];
 				}
 			}
@@ -213,7 +217,7 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		{
 			NSMutableArray *trackerUTIs = [NSMutableArray array];
 			for (OpenPanelViewItem *obj in utiObjects) {
-				if (obj.type.playlist == 1) {
+				if (obj.type.playlist) {
 					[trackerUTIs addObjectsFromArray:obj.utis];
 				}
 			}
@@ -223,19 +227,23 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 			
 		default:
 		{
-			OpenPanelViewItem *selObj = [utiObjects objectAtIndex:tag];
-			[openPanel setAllowedFileTypes:selObj.utis];
+			if (tag < [utiObjects count]) {
+				OpenPanelViewItem *selObj = [utiObjects objectAtIndex:tag];
+				[openPanel setAllowedFileTypes:selObj.utis];
+			}
 		}
 			break;
 	}
 }
 
+#if !__has_feature(objc_arc)
 - (void)dealloc
 {
-	RELEASEOBJ(openPanel);
-	RELEASEOBJ(utiObjects);
+	[openPanel release];
+	[utiObjects release];
 	
-	SUPERDEALLOC;
+	[super dealloc];
 }
+#endif
 
 @end
