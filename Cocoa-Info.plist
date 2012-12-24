@@ -420,10 +420,10 @@
 			<array>
 				<string>public.audio</string>
 			</array>
-			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.instrumentfile</string>
 			<key>UTTypeDescription</key>
 			<string>Tracker Instrument file</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.instrumentfile</string>
 			<key>UTTypeTagSpecification</key>
 			<dict/>
 		</dict>
@@ -595,6 +595,10 @@
 			<string>net.sourceforge.playerpro.mins</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
+				<key>com.apple.nspboard-type</key>
+				<array>
+					<string>PPMinsClipboardData</string>
+				</array>
 				<key>com.apple.ostype</key>
 				<array>
 					<string>MINs</string>
