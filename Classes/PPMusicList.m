@@ -172,17 +172,18 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	}*/
 	
 	
-	NSMutableArray *musicArray = [NSMutableArray array];
+	NSMutableArray *musicArray = [[NSMutableArray alloc] init];
 	
 	for (i = 0; i < [preList countOfMusicList]; i++) {
 		[musicArray insertObject:[preList objectInMusicListAtIndex:i] atIndex:i];
 	}
 	
 	[self loadMusicList:musicArray];
+	RELEASEOBJ(musicArray);
 }
 
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen {
-	NSMutableArray *newArray = [NSMutableArray array];
+	NSMutableArray *newArray = [[NSMutableArray alloc] init];
 	ResFileRefNum refNum;
 	Handle aHandle;
 	FSRef theRef;
@@ -192,6 +193,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	refNum = FSOpenResFile(&theRef, fsRdPerm);
 	OSErr resErr = ResError();
 	if (resErr) {
+		RELEASEOBJ(newArray);
 		return resErr;
 	}
 	UseResFile(refNum);
@@ -199,6 +201,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	if( aHandle == NULL)
 	{
 		CloseResFile( refNum);
+		RELEASEOBJ(newArray);
 		return ResError();
 	}
 	DetachResource( aHandle);
@@ -232,6 +235,8 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	DisposeHandle( aHandle);
 	CloseResFile(refNum);
 	[self loadMusicList:newArray];
+	RELEASEOBJ(newArray);
+
 	return noErr;
 }
 
@@ -241,11 +246,12 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	NSData *listData = [NSData dataWithContentsOfURL:fromURL];
 	PPMusicList *preList= [NSKeyedUnarchiver unarchiveObjectWithData:listData];
 	//[musicList removeAllObjects];
-	NSMutableArray *newArray = [NSMutableArray array];
+	NSMutableArray *newArray = [[NSMutableArray alloc] init];
 	for (i = 0; i < [preList countOfMusicList]; i++) {
 		[newArray insertObject:[preList objectInMusicListAtIndex:i] atIndex:i];
 	}
 	[self loadMusicList:newArray];
+	RELEASEOBJ(newArray);
 }
 
 - (id)init
