@@ -205,7 +205,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 		return ResError();
 	}
 	DetachResource( aHandle);
-	
+	CloseResFile(refNum);
 	
 	HLock( aHandle);
 	theNo = *((UInt16*)(*aHandle));          // number of musics...
@@ -233,7 +233,6 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	}
 	HUnlock( aHandle);
 	DisposeHandle( aHandle);
-	CloseResFile(refNum);
 	[self loadMusicList:newArray];
 	RELEASEOBJ(newArray);
 
