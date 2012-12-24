@@ -18,7 +18,7 @@
 "Try closing some applications or closing windows." = "Try closing some applications or closing windows.";
 "Error reading file" = "Error reading file";
 "Could not read file" = "Could not read file";
-"check to see if you have read permissions for the file." = "check to see if you have read permissions for the file.";
+"check to see if you have read permissions for the file." = "Check to see if the file exists and you have read permissions for the file.";
 "The file is incompatible with PlayerPRO or one of it's plug-ins" = "The file is incompatible with PlayerPRO or one of it's plug-ins";
 "The file is incompatible" = "The file is incompatible";
 "Check the file to make sure it is a valid file." = "Check the file to make sure it is a valid file.";
