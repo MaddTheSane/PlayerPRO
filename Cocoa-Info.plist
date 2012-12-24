@@ -420,6 +420,18 @@
 			<array>
 				<string>public.audio</string>
 			</array>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.instrumentfile</string>
+			<key>UTTypeDescription</key>
+			<string>Tracker Instrument file</string>
+			<key>UTTypeTagSpecification</key>
+			<dict/>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.audio</string>
+			</array>
 			<key>UTTypeDescription</key>
 			<string>Music Tracker</string>
 			<key>UTTypeIdentifier</key>
@@ -572,7 +584,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.instrumentfile</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO mINS file</string>
@@ -899,7 +912,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>net.sourceforge.playerpro.instrumentfile</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>FastTracker Instrument</string>
@@ -922,7 +936,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.instrumentfile</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PAT instrument</string>
