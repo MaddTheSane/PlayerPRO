@@ -71,9 +71,7 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 				break;
 				
 			default:
-#if !__has_feature(objc_arc)
-				[self autorelease];
-#endif
+				AUTORELEASEOBJNORETURN(self);
 				return nil;
 				break;
 		}
@@ -143,10 +141,12 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 {
 	NSMenu *fileTypeSelectionMenu = [popUp menu];
 	int i = 0;
-	NSMenuItem *mi0 = [[NSMenuItem alloc] initWithTitle:@"All Openable Files" action:@selector(selectUTI:) keyEquivalent:@""];
-	[mi0 setTag:utiAllType];
-	[fileTypeSelectionMenu addItem:mi0];
-	RELEASEOBJ(mi0);
+	{
+		NSMenuItem *mi0 = [[NSMenuItem alloc] initWithTitle:@"All Openable Files" action:@selector(selectUTI:) keyEquivalent:@""];
+		[mi0 setTag:utiAllType];
+		[fileTypeSelectionMenu addItem:mi0];
+		RELEASEOBJ(mi0);
+	}
 	[fileTypeSelectionMenu addItem:[NSMenuItem separatorItem]];
 	
 	for (OpenPanelViewItem *item in utiObjects) {

@@ -14,12 +14,14 @@
 #define RELEASEOBJ(obj) 
 #define RETAINOBJ(obj) obj
 #define AUTORELEASEOBJ(obj) obj
+#define AUTORELEASEOBJNORETURN(obj)
 
 #else
 #define SUPERDEALLOC [super dealloc]
 #define RELEASEOBJ(obj) [obj release]
 #define RETAINOBJ(obj) [obj retain]
 #define AUTORELEASEOBJ(obj) [obj autorelease]
+#define AUTORELEASEOBJNORETURN(obj) [obj autorelease]
 #endif
 
 #endif
