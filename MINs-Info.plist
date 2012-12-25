@@ -16,6 +16,10 @@
 	<string>BNDL</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
+	<key>MADCanImport</key>
+	<true/>
+	<key>MADCanExport</key>
+	<true/>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFPlugInDynamicRegistration</key>
@@ -27,7 +31,7 @@
 	</dict>
 	<key>CFPlugInTypes</key>
 	<dict>
-		<key>0B3A4673-9118-467E-A496-846F5E1C9276</key>
+		<key>FD7154D6-20BF-4007-881B-8E44970C3B0A</key>
 		<array>
 			<string>9C897935-C00B-4AAC-81D6-E43049E3A8E0</string>
 		</array>

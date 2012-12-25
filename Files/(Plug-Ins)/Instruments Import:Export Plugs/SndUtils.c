@@ -18,7 +18,7 @@
 /********************						***********************/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Carbon/Carbon.h>
+#include <PlayerPROCore/PPPlug.h>
 
 void ConvertInstrumentIn( register Byte *tempPtr, register long sSize)
 {
@@ -36,6 +36,10 @@ sData* inMADCreateSample()
 	sData	*curData;
 
 	curData = (sData*) calloc( sizeof( sData), 1);
+	
+	if (curData == NULL) {
+		return NULL;
+	}
 	
 	curData->size		= 0;
 	curData->loopBeg	= 0;

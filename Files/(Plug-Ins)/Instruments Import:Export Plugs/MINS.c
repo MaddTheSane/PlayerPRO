@@ -4,7 +4,7 @@
 /*	1996 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Carbon/Carbon.h>
+#include <PlayerPROCore/PPPlug.h>
 
 static OSErr TestMINS( InstrData *CC)
 {
@@ -23,10 +23,10 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 		{
 			if( sample[ i]->data != NULL)
 			{
-				DisposePtr( (Ptr) sample[ i]->data);
+				free( sample[ i]->data);
 				sample[ i]->data = NULL;
 			}
-			DisposePtr( (Ptr) sample[ i]);
+			free( sample[ i]);
 			sample[ i] = NULL;
 		}
 	}
@@ -75,12 +75,29 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	return noErr;
 }
 
+//hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
+static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
+{
+	CFURLRef toDeref = theRef;
+	if (resolveAgainstBase) {
+		toDeref = CFURLCopyAbsoluteURL(theRef);
+	}
+	CFStringRef fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
+	CFIndex strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
+	CFRelease(fileString);
+	if (resolveAgainstBase) {
+		CFRelease(toDeref);
+	}
+	return strLength;
+}
+
+
 OSErr mainMINs(	OSType					order,						// Order to execute
 				InstrData				*InsHeader,					// Ptr on instrument header
 				sData					**sample,					// Ptr on samples data
 				short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
 																	// If sampleID == -1 : add sample else replace selected sample.
-				FSSpec					*AlienFileFSSpec,			// IN/OUT file
+				CFURLRef					AlienFileCFURL,			// IN/OUT file
 				PPInfoPlug				*thePPInfoPlug)
 {
 	OSErr	myErr;
@@ -88,20 +105,36 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 	short	x;
 	long	inOutCount;
 	Ptr		theSound;
+	
+	char *file = NULL;
+	{
+		CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
+		file = malloc(pathLen);
+		if (!file) {
+			return MADNeedMemory;
+		}
+		Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)file, pathLen);
+		if (!pathOK) {
+			free(file);
+			return MADReadingErr;
+		}
+		
+	}
+
 
 	switch( order)
 	{
 		case 'IMPL':
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			iFileRefI = iFileOpenRead(file);
+			if( iFileRefI != NULL)
 			{
-				GetEOF( iFileRefI, &inOutCount);
+				inOutCount = iGetEOF(iFileRefI);
 				
-				theSound = NewPtr( inOutCount);
+				theSound = malloc( inOutCount);
 				if( theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					DisposePtr( theSound);
+					free( theSound);
 					
 					MAD2KillInstrument( InsHeader, sample);
 					
@@ -109,7 +142,7 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 					
 					inOutCount = sizeof( InstrData);
 					
-					myErr = FSRead( iFileRefI, &inOutCount, InsHeader);
+					iRead(inOutCount, (Ptr)InsHeader, iFileRefI);
 					
 					// READ samples headers & data
 					
@@ -117,56 +150,56 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 					{
 						sData *curData = sample[ x] = inMADCreateSample();
 						
-						inOutCount = sizeof( sData);
+						inOutCount = sizeof( sData32);
 						
-						myErr = FSRead( iFileRefI, &inOutCount, curData);
+						myErr = iRead(inOutCount, (Ptr)curData, iFileRefI);
 						
-						curData->data = NewPtr( curData->size);
+						curData->data = malloc( curData->size);
 						if( curData->data != NULL)
 						{
 							inOutCount = curData->size;
-							myErr = FSRead( iFileRefI, &inOutCount, curData->data);
+							myErr = iRead(inOutCount, (Ptr)curData->data, iFileRefI);
 						}
 					}
 				}
 				
-				FSCloseFork( iFileRefI);
+				iClose(iFileRefI);
 			}
 		
 			break;
 		
 		case 'TEST':
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			iFileRefI = iFileOpenRead(file);
+			if( iFileRefI != NULL)
 			{
 				inOutCount = 50L;
-				theSound = NewPtr( inOutCount);
+				theSound = malloc( inOutCount);
 				if( theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					FSRead( iFileRefI, &inOutCount, theSound);
+					iRead(inOutCount, theSound, iFileRefI);
 					
 					myErr = TestMINS( (InstrData*) theSound);
 				}
 				
-				DisposePtr( theSound);
+				free( theSound);
 				
-				FSCloseFork( iFileRefI);
+				iClose(iFileRefI);
 			}
 		
 			break;
 		
 		case 'EXPL':
 			
-			myErr = FSpCreate( AlienFileFSSpec, 'SNPL', 'MINs', smCurrentScript);
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			iFileCreate(file, 'MINs');
+			iFileRefI = iFileOpenWrite(file);
 			
 			if( myErr == noErr)
 			{
 				// Write instrument header
 				
 				inOutCount = sizeof( InstrData);
-				myErr = FSWrite( iFileRefI, &inOutCount, InsHeader);
+				iWrite(inOutCount, (Ptr)InsHeader, iFileRefI);
 				
 				// Write samples headers & data
 				
@@ -176,13 +209,14 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 					
 					curData = sample[ x];
 					
-					inOutCount = sizeof( sData);
-					myErr = FSWrite( iFileRefI, &inOutCount, curData);
+					inOutCount = sizeof( sData32);
+					iWrite(inOutCount, (Ptr)curData, iFileRefI);
 					
 					inOutCount = curData->size;
-					myErr = FSWrite( iFileRefI, &inOutCount, curData->data);
+					iWrite(inOutCount, curData->data, iFileRefI);
+
 				}
-				FSCloseFork( iFileRefI);
+				iClose( iFileRefI);
 			}
 			break;
 		
@@ -190,6 +224,8 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 			myErr = MADOrderNotImplemented;
 			break;
 	}
+	
+	free(file);
 	
 	return myErr;
 }
