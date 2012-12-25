@@ -1,6 +1,15 @@
-#pragma options align=mac68k
+#ifndef __PAT_H
+#define __PAT_H
 
-typedef struct
+#if PRAGMA_STRUCT_ALIGN
+#pragma options align=mac68k
+#elif PRAGMA_STRUCT_PACKPUSH
+#pragma pack(push, 2)
+#elif PRAGMA_STRUCT_PACK
+#pragma pack(2)
+#endif
+
+typedef struct _PatchHeader
 {
 	char	ID[ 12];
 	char	GravisID[ 10];
@@ -25,7 +34,7 @@ typedef struct
 	
 } PatchHeader;
 
-typedef struct
+typedef struct _PatInsHeader
 {
 	short	ID;
 	char	name[ 16];
@@ -34,16 +43,16 @@ typedef struct
 	char	reserved[ 40];
 } PatInsHeader;
 
-typedef struct
+typedef struct _LayerHeader
 {
 	Byte	dup;
 	Byte	id;
-	long	size;
+	SInt32	size;
 	Byte	SampNo;
 	char	reserved[ 40];
 } LayerHeader;
 
-typedef struct
+typedef struct _PatSampHeader
 {
 	char			name[ 7];
 	Byte			fractions;
@@ -72,7 +81,13 @@ typedef struct
 	
 } PatSampHeader;
 
+#if PRAGMA_STRUCT_ALIGN
 #pragma options align=reset
+#elif PRAGMA_STRUCT_PACKPUSH
+#pragma pack(pop)
+#elif PRAGMA_STRUCT_PACK
+#pragma pack()
+#endif
 
 /*
 Document converted to plain ASCII for inclusion in Wotsit's Format
@@ -210,3 +225,4 @@ const
   { Octave 8 }  4186073, 4434930, 4698645, 4978041, 5274051, 5587663, 5919922, 6271939, 6644889, 7040015, 7458636, 7902150 );
 */
 
+#endif

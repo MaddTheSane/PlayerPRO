@@ -35,7 +35,7 @@ sData* inMADCreateSample()
 {
 	sData	*curData;
 
-	curData = (sData*) NewPtrClear( sizeof( sData));
+	curData = (sData*) calloc( sizeof( sData), 1);
 	
 	curData->size		= 0;
 	curData->loopBeg	= 0;
@@ -51,6 +51,7 @@ sData* inMADCreateSample()
 }
 
 OSErr inAddSoundToMAD(Ptr			theSound,
+					  size_t		sndLen,
 					  long			lS,
 					  long			lE,
 					  short			sS,
@@ -69,7 +70,7 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 
 	if( *sampleID > MAXSAMPLE) return MADParametersErr;
 
-	inOutBytes = GetPtrSize( theSound);
+	inOutBytes = sndLen;
 	
 	///////
 	
@@ -85,7 +86,7 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 		curData = sample[ *sampleID] = inMADCreateSample();
 	}
 	
-	if( curData->data != NULL) DisposePtr( curData->data);
+	if( curData->data != NULL) free( curData->data);
 	curData->data = theSound;
 	
 	curData->size		= inOutBytes;

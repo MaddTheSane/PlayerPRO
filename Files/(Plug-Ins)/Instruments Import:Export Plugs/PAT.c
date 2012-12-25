@@ -4,7 +4,8 @@
 /*	1999 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Carbon/Carbon.h>
+#include <PlayerPROCore/PPPlug.h>
+//#include <Carbon/Carbon.h>
 #include "PAT.h"
 
 #ifdef _MAC_H
@@ -57,10 +58,10 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 		{
 			if( sample[ i]->data != NULL)
 			{
-				DisposePtr( (Ptr) sample[ i]->data);
+				free ( sample[ i]->data);
 				sample[ i]->data = NULL;
 			}
-			DisposePtr( (Ptr) sample[ i]);
+			free( sample[ i]);
 			sample[ i] = NULL;
 		}
 	}
@@ -116,7 +117,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 //	LayerHeader		*PATLayer;
 	PatSampHeader	*PATSamp;
 	long			i, x;
-	unsigned long	  scale_table[ 200] = {
+	unsigned int	  scale_table[ 200] = {
 	16351, 17323, 18354, 19445, 20601, 21826, 23124, 24499, 25956, 27500, 29135, 30867,
 	32703, 34647, 36708, 38890, 41203, 43653, 46249, 48999, 51913, 54999, 58270, 61735,
 	65406, 69295, 73416, 77781, 82406, 87306, 92498, 97998, 103826, 109999, 116540, 123470,
@@ -243,11 +244,12 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		// DATA
 		
-		curData->data = NewPtr( curData->size);
+		curData->data = malloc( curData->size);
 		
 		if( curData->data != NULL)
 		{
-			BlockMove( PATData, curData->data, curData->size);
+			//BlockMove( PATData, curData->data, curData->size);
+			memcpy(curData->data, PATData, curData->size);
 
 			if( curData->amp == 16)
 			{
@@ -278,44 +280,75 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 	return noErr;
 }
 
+//hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
+static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
+{
+	CFURLRef toDeref = theRef;
+	if (resolveAgainstBase) {
+		toDeref = CFURLCopyAbsoluteURL(theRef);
+	}
+	CFStringRef fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
+	CFIndex strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
+	CFRelease(fileString);
+	if (resolveAgainstBase) {
+		CFRelease(toDeref);
+	}
+	return strLength;
+}
+
+
 OSErr mainPAT(		OSType					order,						// Order to execute
 				InstrData				*InsHeader,					// Ptr on instrument header
 				sData					**sample,					// Ptr on samples data
 				short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
 																	// If sampleID == -1 : add sample else replace selected sample.
-				FSSpec					*AlienFileFSSpec,			// IN/OUT file
+				CFURLRef					AlienFileCFURL,			// IN/OUT file
 				PPInfoPlug				*thePPInfoPlug)
 {
-	OSErr	myErr;
+	OSErr	myErr = noErr;
 	UNFILE	iFileRefI;
 //	short	x;
 	long	inOutCount;
-		
+	char *file = NULL;
+	{
+		CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
+		file = malloc(pathLen);
+		if (!file) {
+			return MADNeedMemory;
+		}
+		Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)file, pathLen);
+		if (!pathOK) {
+			free(file);
+			return MADReadingErr;
+		}
+
+	}
+	
 	switch( order)
 	{
 		case 'IMPL':
 		{
 			Ptr				theSound;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			iFileRefI = iFileOpenRead(file);
+			if( iFileRefI != NULL)
 			{
-				GetEOF( iFileRefI, &inOutCount);
+				inOutCount = iGetEOF( iFileRefI);
 				
-				theSound = NewPtr( inOutCount);
+				theSound = malloc( inOutCount);
 				if( theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					FSRead( iFileRefI, &inOutCount, theSound);
+					iRead(inOutCount, theSound, iFileRefI);
 					
 					MAD2KillInstrument( InsHeader, sample);
 					
 					myErr = PATImport( InsHeader, sample, theSound);
 					
-					DisposePtr( theSound);
+					free( theSound);
 				}
 				
-				FSClose( iFileRefI);
+				iClose(iFileRefI);
 			}
 		}
 		break;
@@ -324,22 +357,22 @@ OSErr mainPAT(		OSType					order,						// Order to execute
 		{
 			Ptr	theSound;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			iFileRefI = iFileOpenRead(file);
 			if( myErr == noErr)
 			{
 				inOutCount = 50L;
-				theSound = NewPtr( inOutCount);
+				theSound = malloc( inOutCount);
 				if( theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					FSRead( iFileRefI, &inOutCount, theSound);
+					iRead(inOutCount, theSound, iFileRefI);
 					
 					myErr = TestPAT( theSound);
 				}
 				
-				DisposePtr( theSound);
+				free( theSound);
 				
-				FSClose( iFileRefI);
+				iClose( iFileRefI);
 			}
 		}
 		break;
@@ -347,6 +380,9 @@ OSErr mainPAT(		OSType					order,						// Order to execute
 		default:
 			myErr = MADOrderNotImplemented;
 		break;
+	}
+	if (file) {
+		free(file);
 	}
 	
 	return myErr;

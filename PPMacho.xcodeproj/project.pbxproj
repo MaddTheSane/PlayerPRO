@@ -436,6 +436,9 @@
 		55B23D0F1687D1D700DCE923 /* RDriverCarbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		55B23D121687D22700DCE923 /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
 		55B23D131687D22700DCE923 /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
+		55B23D1E1689314500DCE923 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55B23D1F1689314E00DCE923 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55B23D201689315500DCE923 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B797E310D6E6E50073E379 /* CompFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FE110D6C79D00BB619C /* CompFade.c */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
 		55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -2099,6 +2102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55B23D201689315500DCE923 /* PlayerPROCore.framework in Frameworks */,
 				55151F7910DEDBDB0054ABC4 /* Carbon.framework in Frameworks */,
 				55151F7A10DEDBDB0054ABC4 /* CoreFoundation.framework in Frameworks */,
 			);
@@ -2117,6 +2121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55B23D1F1689314E00DCE923 /* PlayerPROCore.framework in Frameworks */,
 				551FEA6410E727AD00EDF2F1 /* Carbon.framework in Frameworks */,
 				551FEA6510E727AD00EDF2F1 /* CoreFoundation.framework in Frameworks */,
 			);
@@ -2126,6 +2131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55B23D1E1689314500DCE923 /* PlayerPROCore.framework in Frameworks */,
 				551FEAD310E727B100EDF2F1 /* Carbon.framework in Frameworks */,
 				551FEAD410E727B100EDF2F1 /* CoreFoundation.framework in Frameworks */,
 			);

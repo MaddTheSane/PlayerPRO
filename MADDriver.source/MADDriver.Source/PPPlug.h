@@ -76,7 +76,7 @@
 //
 /********************						***********************/
 
-
+#if 0
 
 typedef struct
 {
@@ -235,11 +235,51 @@ OSErr	inAddSoundToMAD(	Ptr				theSound,
 						sData			**sample,					// Ptr on samples data
 						short			*sampleID);
 sData	* inMADCreateSample();
-
+	
 #ifdef __cplusplus
 }	
 #endif
 
+#else
+
+typedef OSErr			(*RPlaySoundUPP)		( Ptr, long, long, long, long, long, long, unsigned long, Boolean);
+
+
+OSErr inAddSoundToMAD(Ptr			theSound,
+					  size_t		sndLen,
+					  long			lS,
+					  long			lE,
+					  short			sS,
+					  short			bFreq,
+					  unsigned long	rate,
+					  Boolean		stereo,
+					  Str255		name,
+					  InstrData		*InsHeader,					// Ptr on instrument header
+					  sData			**sample,					// Ptr on samples data
+					  short			*sampleID);
+
+sData* inMADCreateSample();
+
+
+typedef struct
+{
+	RPlaySoundUPP RPlaySound;
+	OSType fileType;
+} PPInfoPlug;
+
+// FD7154D6-20BF-4007-881B-8E44970C3B0A
+#define kPlayerPROInstrumentPlugTypeID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xFD, 0x71, 0x54, 0xD6, 0x20, 0xBF, 0x40, 0x07, 0x88, 0x1B, 0x8E, 0x44, 0x97, 0x0C, 0x3B, 0x0A)
+
+// 8DC7C582-1C4B-4F3C-BEC8-05CF8323CEA4
+#define kPlayerPROInstrumentPlugInterfaceID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x8D, 0xC7, 0xC5, 0x82, 0x1C, 0x4B, 0x4F, 0x3C, 0xBE, 0xC8, 0x05, 0xCF, 0x83, 0x23, 0xCE, 0xA4)
+
+typedef struct _PPInstrumentPlugin {
+    IUNKNOWN_C_GUTS;
+	OSErr (STDMETHODCALLTYPE *InstrMain) (OSType,  InstrData*, sData**, short*, CFURLRef, PPInfoPlug*);
+} PPInstrumentPlugin;
+
+
+#endif
 
 #if PRAGMA_STRUCT_ALIGN
 #pragma options align=reset
