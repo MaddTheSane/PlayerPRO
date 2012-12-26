@@ -1471,7 +1471,7 @@ OSErr MADCopyCurrentPartition( MADMusic *aPartition)
 
 OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef)
 {
-	char *URLcString;
+	char *URLcString = NULL;
 	if (URLRef == NULL) {
 		return MADParametersErr;
 	}
@@ -1492,7 +1492,7 @@ OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef)
 
 OSErr MADMusicInfoCFURL( MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec)
 {
-	char *URLcString;
+	char *URLcString = NULL;
 	if (theRef == NULL) {
 		return MADParametersErr;
 	}
