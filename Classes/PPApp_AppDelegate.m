@@ -118,10 +118,10 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	MADStartDriver(MADDriver);
 	if (Music) {
 		MADAttachDriverToMusic(MADDriver, Music, NULL);
-	}
-	if (madWasReading) {
-		MADSetMusicStatus(MADDriver, 0, fullTime, curTime);
-		MADPlayMusic(MADDriver);
+		if (madWasReading) {
+			MADSetMusicStatus(MADDriver, 0, fullTime, curTime);
+			MADPlayMusic(MADDriver);
+		}
 	}
 }
 
