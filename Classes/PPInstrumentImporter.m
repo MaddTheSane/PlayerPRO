@@ -95,6 +95,12 @@
 	[self addPlugInFromBundle:theBund];
 }
 
+- (void)addPlugInFromPath:(NSString*)thePath
+{
+	NSBundle *theBund = [NSBundle bundleWithPath:thePath];
+	[self addPlugInFromBundle:theBund];
+}
+
 - (PPInstrumentImporterObject*)plugInAtIndex:(NSUInteger)idx
 {
 	return [instrumentIEArray objectAtIndex:idx];

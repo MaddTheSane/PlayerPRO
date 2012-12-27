@@ -8,11 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
 
 @interface PPInstrumentImporterObject : NSObject
 {
-	PPInstrumentPlugin	**xxxx;
+	void				**xxxx;
 	NSString			*menuName;
 	NSString			*authorString;
 	NSArray				*UTITypes;

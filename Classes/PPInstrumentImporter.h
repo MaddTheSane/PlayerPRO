@@ -21,6 +21,7 @@
 - (NSInteger)plugInCount;
 - (PPInstrumentImporterObject*)plugInAtIndex:(NSUInteger)idx;
 
+- (void)addPlugInFromPath:(NSString*)thePath;
 - (void)addPlugInFromURL:(NSURL *)urlpath;
 - (void)addPlugInFromBundle:(NSBundle *)theBund;
 
