@@ -10,6 +10,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 @class PPPreferences;
 @class PPMusicList;
+@class PPInstrumentImporter;
 
 @interface PPApp_AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate> {
 	IBOutlet NSPanel *toolsPanel;
@@ -45,6 +46,7 @@
 	PPMusicList		*musicList;
 	NSInteger		currentlyPlayingIndex;
 	PPPreferences	*preferences;
+	PPInstrumentImporter *instrumentImporter;
 }
 
 @property (getter=isPaused, readwrite) BOOL paused;

@@ -15,11 +15,13 @@ NSString * const kMadPlugIsSampleKey = @"MADPlugIsSample";
 
 #define PPINLoadPlug(theBundle) (PPInstrumentPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROInstrumentPlugTypeID, kPlayerPROInstrumentPlugInterfaceID)
 
-void **GetCOMPlugInterface(CFPlugInRef plugToTest, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
+void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
 {
 	CFArrayRef	factories = NULL;
 	Boolean		foundInterface = FALSE;
 	void		**formatPlugA = NULL;
+	
+	CFPlugInRef plugToTest = CFBundleGetPlugIn(tempBundleRef);
 	
 	//  See if this plug-in implements the Test type.
 	factories	= CFPlugInFindFactoriesForPlugInTypeInPlugIn( TypeUUID, plugToTest );
@@ -131,21 +133,32 @@ typedef enum _MADPlugCapabilities {
 - (id)initWithBundle:(NSBundle *)tempBundle
 {
 	if (self = [super init]) {
-		xxxx = PPINLoadPlug((__bridge CFPlugInRef)(tempBundle));
-		
-		if (!xxxx) {
-			AUTORELEASEOBJNORETURN(self);
-			return nil;
+		{
+			NSURL *tempBundleRef = [tempBundle bundleURL];
+			
+			CFBundleRef tempCFBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)(tempBundleRef));
+			
+			xxxx = PPINLoadPlug(tempCFBundle);
+			
+			if (!xxxx) {
+				CFRelease(tempCFBundle);
+				AUTORELEASEOBJNORETURN(self);
+				return nil;
+			}
+			
+			//TODO: Cocoa function of this?
+			version = CFBundleGetVersionNumber(tempCFBundle);
+			CFRelease(tempCFBundle);
+			tempCFBundle = NULL;
 		}
 		
-		//TODO: Cocoa function of this?
-		version = CFBundleGetVersionNumber((__bridge CFBundleRef)(tempBundle));
-		
-		NSDictionary *tempDict = [tempBundle localizedInfoDictionary];
+		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
+		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
 		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString *)(kMadPlugMenuNameKey)];
 		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 			menuName = [DictionaryTemp copy];
 		} else {
+			RELEASEOBJ(tempDict);
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
@@ -159,11 +172,12 @@ typedef enum _MADPlugCapabilities {
 		
 		DictionaryTemp = [tempDict valueForKey:(__bridge NSString *)(kMadPlugUTITypesKey)];
 		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
-			UTITypes = RETAINOBJ(DictionaryTemp);
+			UTITypes = [[NSArray alloc] initWithArray:DictionaryTemp];
 		} else if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 			NSString *tempStr = [NSString stringWithString:DictionaryTemp];
 			UTITypes = [[NSArray alloc] initWithObjects:tempStr, nil];
 		} else {
+			RELEASEOBJ(tempDict);
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
@@ -174,6 +188,7 @@ typedef enum _MADPlugCapabilities {
 		} else if ([DictionaryTemp isKindOfClass:[NSString class]]){
 			isSamp = [(NSString*)DictionaryTemp boolValue];
 		} else {
+			RELEASEOBJ(tempDict);
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
@@ -184,6 +199,7 @@ typedef enum _MADPlugCapabilities {
 		} else if([DictionaryTemp isKindOfClass:[NSNumber class]]) {
 			type = [(NSNumber*)DictionaryTemp unsignedIntValue];
 		} else {
+			RELEASEOBJ(tempDict);
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
@@ -221,6 +237,7 @@ typedef enum _MADPlugCapabilities {
 						break;
 						
 					default:
+						RELEASEOBJ(tempDict);
 						AUTORELEASEOBJNORETURN(self);
 						return nil;
 						break;
@@ -232,12 +249,14 @@ typedef enum _MADPlugCapabilities {
 				} else if([DictionaryTemp isKindOfClass:[NSNumber class]]) {
 					mode = [(NSNumber*)DictionaryTemp unsignedIntValue];
 				} else {
+					RELEASEOBJ(tempDict);
 					AUTORELEASEOBJNORETURN(self);
 					return nil;
 				}
 			}
 		}
 
+		RELEASEOBJ(tempDict);
 		file = RETAINOBJ(tempBundle);
 	}
 	return self;
@@ -259,11 +278,15 @@ typedef enum _MADPlugCapabilities {
 
 - (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insSamp function:(OSType)imporexp plugInfo:(PPInfoPlug*)plugInfo
 {
-	CFBundleRefNum fileID = CFBundleOpenBundleResourceMap( (__bridge CFBundleRef)(file));
+	NSURL *bundleURL = [file bundleURL];
+	CFBundleRef tempRef = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)(bundleURL));
+	
+	CFBundleRefNum fileID = CFBundleOpenBundleResourceMap(tempRef);
 
 	OSErr returnType = (*xxxx)->InstrMain(imporexp,insData,sdataref,insSamp,(__bridge CFURLRef)(fileToImport),plugInfo);
 	
-	CFBundleCloseBundleResourceMap((__bridge CFBundleRef)(file), fileID);
+	CFBundleCloseBundleResourceMap(tempRef, fileID);
+	CFRelease(tempRef);
 	
 	return returnType;
 }
@@ -276,6 +299,71 @@ typedef enum _MADPlugCapabilities {
 @end
 
 @implementation PPInstrumentImporter
+
+- (id)initWithMusic:(MADMusic**)theMus
+{
+	if (self = [super init]) {
+		curMusic = theMus;
+		instrumentIEArray = [[NSMutableArray alloc] initWithCapacity:20];
+		//[NSBundle]
+		NSMutableArray *plugLocs = [NSMutableArray arrayWithCapacity:3];
+		NSFileManager *fm = [NSFileManager defaultManager];
+		
+		[plugLocs addObject:[[NSBundle mainBundle] builtInPlugInsURL]];
+		
+		[plugLocs addObject:[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]];
+		
+		//User plugins
+		[plugLocs addObject:[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]];
+		
+		NSInteger PlugLocNums = [plugLocs count], i, x, y;
+		
+		for (i=0; i < PlugLocNums; i++) {
+			CFIndex		PlugNums;
+			CFArrayRef	somePlugs;
+			NSURL		*aPlugLoc;
+			aPlugLoc = [plugLocs objectAtIndex:i];
+			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef)(aPlugLoc), NULL);
+			PlugNums = CFArrayGetCount( somePlugs );
+			if (PlugNums > 0) {
+				for (x = 0; x < PlugNums; x++) {
+					CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
+					CFURLRef BundleURL = CFBundleCopyBundleURL(tempBundleRef);
+					NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(BundleURL)];
+					PPInstrumentImporterObject *tempObj = [[PPInstrumentImporterObject alloc] initWithBundle:tempBundle];
+					CFRelease(tempBundleRef);
+					if (tempObj) {
+						for (y = 0; y < [instrumentIEArray count]; y++) {
+							PPInstrumentImporterObject *toComp = [instrumentIEArray objectAtIndex:y];
+							if (toComp.type == tempObj.type) {
+								if (toComp.version < tempObj.version) {
+									[instrumentIEArray replaceObjectAtIndex:y withObject:tempObj];
+									RELEASEOBJ(tempObj);
+									tempObj = nil;
+									break;
+								}
+							}
+						}
+						if (tempObj) {
+							[instrumentIEArray addObject:tempObj];
+							RELEASEOBJ(tempObj);
+						}
+					}
+				}
+			}
+			CFRelease(somePlugs);
+		}
+
+
+	}
+	return self;
+}
+
+- (NSInteger)plugInCount
+{
+	return [instrumentIEArray count];
+}
+
 - (OSErr)callInstumentPlugIn:(PPInstrumentImporterObject*)thePlug order:(OSType)theOrd instrument:(short)ins sample:(short*)samp URL:(NSURL*)theURL
 {
 	return [thePlug importInstrument:theURL instrumentDataReference:&(*curMusic)->fid[ ins] sampleDataReference:&(*curMusic)->sample[ (*curMusic)->fid[ ins].firstSample] instrumentSample:samp function:theOrd];
@@ -334,14 +422,20 @@ typedef enum _MADPlugCapabilities {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		if (kind == obj.type) {
 			if (obj.isSamp) {
-				*theType = MADPlugSampleImporter;
+				if (theType) {
+					*theType = MADPlugSampleImporter;
+				}
 			} else {
-				*theType = MADPlugInstrumentImporter;
+				if (theType) {
+					*theType = MADPlugInstrumentImporter;
+				}
 			}
 			return YES;
 		}
 	}
-	*theType = MADPlugNonePlug;
+	if (theType) {
+		*theType = MADPlugNonePlug;
+	}
 	return NO;
 }
 

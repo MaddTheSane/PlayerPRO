@@ -14,6 +14,8 @@
 #import "PPErrors.h"
 #import "OpenPanelViewController.h"
 #import "ARCBridge.h"
+#import "PPInstrumentImporter.h"
+#include <PlayerPROCore/RDriverInt.h>
 
 void CocoaDebugStr( short line, Ptr file, Ptr text)
 {
@@ -388,6 +390,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[defaultCenter addObserver:self selector:@selector(digitalEditorPreferencesDidChange:) name:PPDigitalEditorPrefrencesDidChange object:nil];
 	
 	[self MADDriverWithPreferences];
+	Music = CreateFreeMADK();
+	MADAttachDriverToMusic(MADDriver, Music, NULL);
+	instrumentImporter = [[PPInstrumentImporter alloc] initWithMusic:&Music];
 	
 	timeChecker = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0] interval:1/4.0 target:self selector:@selector(updateMusicStats:) userInfo:nil repeats:YES];
 	[[NSRunLoop mainRunLoop] addTimer:timeChecker forMode:NSDefaultRunLoopMode];
@@ -398,6 +403,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[timeChecker invalidate];
 
 	[self removeObserver:self forKeyPath:@"paused"];
+	
+	RELEASEOBJ(instrumentImporter);
+	instrumentImporter = nil;
 	
 	if (Music != NULL) {
 		MADStopMusic(MADDriver);
@@ -478,7 +486,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	int i = 0;
 	@autoreleasepool {
 		for (i = 0; i < MADLib->TotalPlug; i++) {
-			NSArray *tempArray = [NSArray arrayWithArray:(__bridge id)MADLib->ThePlug[i].UTItypes];
+			NSArray *tempArray = [NSArray arrayWithArray:(__bridge NSArray*)MADLib->ThePlug[i].UTItypes];
 			[supportedUTIs addObjectsFromArray:tempArray];
 		}
 	}
@@ -580,9 +588,9 @@ enum PPMusicToolbarTypes {
 	NSDictionary *playlistDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:@"net.sourceforge.playerpro.musiclist"], @"PlayerPRO Music List", [NSArray arrayWithObject:@"net.sourceforge.playerpro.stcfmusiclist"], @"PlayerPRO Old Music List", nil];
 	@autoreleasepool {
 		for (i = 0; i < MADLib->TotalPlug; i++) {
-			NSArray *tempArray = [NSArray arrayWithArray:(__bridge id)MADLib->ThePlug[i].UTItypes];
+			NSArray *tempArray = [NSArray arrayWithArray:(__bridge NSArray*)MADLib->ThePlug[i].UTItypes];
 			[supportedUTIs addObjectsFromArray:tempArray];
-			NSString *menuName = [NSString stringWithString:(__bridge id)MADLib->ThePlug[i].MenuName];
+			NSString *menuName = [NSString stringWithString:(__bridge NSString*)MADLib->ThePlug[i].MenuName];
 			[trackerDict setObject:tempArray forKey:menuName];
 		}
 	}

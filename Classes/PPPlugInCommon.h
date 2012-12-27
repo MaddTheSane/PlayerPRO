@@ -9,6 +9,6 @@
 #ifndef PPMacho_PPPlugInCommon_h
 #define PPMacho_PPPlugInCommon_h
 
-void **GetCOMPlugInterface(CFPlugInRef plugToTest, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID);
+void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID);
 
 #endif
