@@ -117,11 +117,14 @@ OSType Ptr2OSType( char* str)
 {
 	short   i;
 	OSType  type;
+	char safetyNet[5];
+	memset(safetyNet, ' ', 4);
+	safetyNet[4] = '\0';
 	
 	i = strlen( str);
-	if( i > 4) i = 4;
+	memcpy(safetyNet, str, i);
 	type = '    ';
-	memcpy( &type, str, i);
+	memcpy( &type, safetyNet, 4);
 	PPBE32(&type);
 	
 	return type;

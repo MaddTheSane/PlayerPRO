@@ -14,11 +14,10 @@
 #import <Foundation/Foundation.h>
 #include "FileUtils.h"
 #include "PPPrivate.h"
-#include "PPPlug.h"
 
 #define MAXPLUG	40
 
-//#include "PPPlug.h"
+#include "PPPlug.h"
 #include "PPPrivate.h"
 #define CharlMADcheckLength 10
 
