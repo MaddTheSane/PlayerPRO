@@ -614,12 +614,11 @@ enum PPMusicToolbarTypes {
 		}
 		if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"]) {
 			[self addMusicToMusicList:panelURL];
-		}else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"]){
+		}else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"]) {
 			[self willChangeValueForKey:@"musicList"];
 			[musicList loadMusicListAtURL:panelURL];
 			[self didChangeValueForKey:@"musicList"];
-		} else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"])
-		{
+		} else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"]) {
 			[self willChangeValueForKey:@"musicList"];
 			[musicList loadOldMusicListAtURL:panelURL];
 			[self didChangeValueForKey:@"musicList"];

@@ -101,7 +101,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@ - %@", [musicUrl path], self.fileName];
+	return [NSString stringWithFormat:@"%@ - %@", [musicUrl description], self.fileName];
 }
 
 @end
@@ -114,10 +114,10 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	[defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:self] forKey:PPMMusicList];
 }
 
-- (void)saveMusicListToURL:(NSURL *)toSave
+- (BOOL)saveMusicListToURL:(NSURL *)toSave
 {
 	NSData *theList = [NSKeyedArchiver archivedDataWithRootObject:self];
-	[theList writeToURL:toSave atomically:YES];
+	return [theList writeToURL:toSave atomically:YES];
 }
 
 - (void)sortMusicList
@@ -152,7 +152,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (void)clearMusicList
 {
-	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, ([musicList count] - 1))]; //[NSIndexSet indexSetWithIndex:[musicList count]];
+	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, ([musicList count] - 1))];
 	[self willChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
 	[musicList removeAllObjects];
 	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
@@ -220,11 +220,10 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 		CFaStr = CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman);
 		CFaStr2 = CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman);
 
-		NSString *together = [NSString stringWithFormat:@"%@:%@", CFaStr, CFaStr2];
+		NSString *together = [NSString stringWithFormat:@"%@:%@", (__bridge NSString*)(CFaStr), (__bridge NSString*)(CFaStr2)];
 		CFRelease(CFaStr);
 		CFRelease(CFaStr2);
-		CFURLRef tempURLRef = NULL;
-		tempURLRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)together, kCFURLHFSPathStyle, false);
+		CFURLRef tempURLRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)(together), kCFURLHFSPathStyle, false);
 
 		NSURL *fullPath = CFBridgingRelease(tempURLRef);
 		NSURL *refURL = [fullPath fileReferenceURL];
@@ -246,11 +245,17 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	return noErr;
 }
 
-- (void)loadMusicListAtURL:(NSURL *)fromURL
+- (BOOL)loadMusicListAtURL:(NSURL *)fromURL
 {
 	NSInteger i = 0;
 	NSData *listData = [NSData dataWithContentsOfURL:fromURL];
+	if (!listData) {
+		return NO;
+	}
 	PPMusicList *preList= [NSKeyedUnarchiver unarchiveObjectWithData:listData];
+	if (!preList) {
+		return NO;
+	}
 	//[musicList removeAllObjects];
 	NSMutableArray *newArray = [[NSMutableArray alloc] init];
 	for (i = 0; i < [preList countOfMusicList]; i++) {
@@ -258,6 +263,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	}
 	[self loadMusicList:newArray];
 	RELEASEOBJ(newArray);
+	return YES;
 }
 
 - (id)init
@@ -292,10 +298,6 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (void)removeObjectAtIndex:(NSUInteger)object
 {
-	/*NSIndexSet *theIndex = [NSIndexSet indexSetWithIndex:object];
-	[self willChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
-	[musicList removeObjectAtIndex:object];
-	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];*/
 	[self removeObjectInMusicListAtIndex:object];
 }
 
