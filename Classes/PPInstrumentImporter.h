@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 
+@class PPInstrumentImporterObject;
+
 @interface PPInstrumentImporter : NSObject
 {
 	NSMutableArray *instrumentIEArray;
@@ -17,6 +19,10 @@
 - (id)initWithMusic:(MADMusic**)theMus;
 
 - (NSInteger)plugInCount;
+- (PPInstrumentImporterObject*)plugInAtIndex:(NSUInteger)idx;
+
+- (void)addPlugInFromURL:(NSURL *)urlpath;
+- (void)addPlugInFromBundle:(NSBundle *)theBund;
 
 - (OSErr)exportInstrumentOfType:(OSType)theType instrument:(short)ins sample:(short*)samp URL:(NSURL*)theURL;
 - (OSErr)importInstrumentOfType:(OSType)theType instrument:(short)ins sample:(short*)samp URL:(NSURL*)theURL;
