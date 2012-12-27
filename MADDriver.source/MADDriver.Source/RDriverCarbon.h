@@ -9,6 +9,9 @@
 #ifndef PPMacho_RDriverCarbon_h
 #define PPMacho_RDriverCarbon_h
 #include <PlayerPROCore/RDriver.h>
+
+#if defined(_MAC_H) && !defined(TARGET_OS_IPHONE)
+
 #include <CoreServices/CoreServices.h>
 
 OSErr MADLoadMusicFSpFile( MADLibrary *lib, MADMusic **music, char *plugType, FSSpecPtr theSpec) DEPRECATED_ATTRIBUTE;
@@ -17,4 +20,5 @@ OSErr MADLoadMusicFSRef ( MADLibrary *lib, MADMusic **music, char *plugType, FSR
 OSErr MADMusicIdentifyFSRef( MADLibrary *lib, char *type, FSRefPtr theRef) DEPRECATED_ATTRIBUTE;
 OSErr MADMusicIdentifyFSpFile (MADLibrary *lib, char *type, FSSpecPtr theSpec) DEPRECATED_ATTRIBUTE;
 
+#endif
 #endif
