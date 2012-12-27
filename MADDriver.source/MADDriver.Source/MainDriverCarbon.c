@@ -8,7 +8,7 @@
 
 #include <PlayerPROCore/RDriverCarbon.h>
 
-#if defined(_MAC_H) && !defined(TARGET_OS_IPHONE)
+#if defined(_MAC_H) && !TARGET_OS_IPHONE
 
 OSErr MADLoadMusicFSpFile( MADLibrary *lib, MADMusic **music, char *plugType, FSSpecPtr theSpec)
 {

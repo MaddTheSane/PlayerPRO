@@ -18,7 +18,8 @@
 #include <PlayerPROCore/PPPlug.h>
 #endif
 
-#if defined(_MAC_H) && !defined(TARGET_OS_IPHONE)
+
+#if defined(_MAC_H) && !TARGET_OS_IPHONE
 #include <PlayerPROCore/RDriverCarbon.h>
 #endif
 
