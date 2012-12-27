@@ -20,6 +20,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 
+#if 0
 void ConvertInstrumentIn( register Byte *tempPtr, register long sSize)
 {
 	register Byte val = 0x80;
@@ -30,6 +31,7 @@ void ConvertInstrumentIn( register Byte *tempPtr, register long sSize)
 		*(tempPtr + sSize) -= val;
 	}
 }
+#endif
 
 sData* inMADCreateSample()
 {
@@ -60,7 +62,7 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 					  long			lE,
 					  short			sS,
 					  short			bFreq,
-					  unsigned long	rate,
+					  unsigned int	rate,
 					  Boolean		stereo,
 					  Str255		name,
 					  InstrData		*InsHeader,					// Ptr on instrument header

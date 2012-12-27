@@ -383,6 +383,7 @@
 		557EC3E9121711280082B80A /* PPPlay.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 557EC3E8121711280082B80A /* PPPlay.pdf */; };
 		557EF731168BD4B5001BF077 /* PPInstrumentImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */; };
 		557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */; };
+		557EF736168D0CE4001BF077 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		55801EB113D1ED9A007E24FC /* NSColor+PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */; };
 		558678B61659AA3400BCFB70 /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5586873D10BF5D0900FCC24D /* MADfg.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E310BB5368005208D1 /* MADfg.c */; };
@@ -422,9 +423,6 @@
 		558D4DDA1666F14E00A333E8 /* PPDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DD81666F14E00A333E8 /* PPDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4DD91666F14E00A333E8 /* PPDriver.m */; };
 		558D4DDD1666F19600A333E8 /* PPLibrary_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */; };
-		559088E210E87E8800CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
-		559088E310E87ED100CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
-		559088E410E87ED700CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		55981C5311EE370D00656EE3 /* PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55981C5211EE370D00656EE3 /* PPPreferences.m */; };
 		55A492DC162F72A0003EBF4A /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */; };
 		55ABFD54125E6D4400B182F1 /* PPNextTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */; };
@@ -5669,7 +5667,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5515200E10DEDC9B0054ABC4 /* XI.c in Sources */,
-				559088E210E87E8800CE70B8 /* SndUtils.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5686,7 +5683,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				551FEB7C10E728D400EDF2F1 /* MINS.c in Sources */,
-				559088E310E87ED100CE70B8 /* SndUtils.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5695,7 +5691,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				551FEB7E10E728F100EDF2F1 /* PAT.c in Sources */,
-				559088E410E87ED700CE70B8 /* SndUtils.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5831,6 +5826,7 @@
 				55007E9D161A552C00297A3F /* FileUtils.c in Sources */,
 				55A492DC162F72A0003EBF4A /* MIDI-Hardware-OSX.c in Sources */,
 				55B23D131687D22700DCE923 /* MainDriverCarbon.c in Sources */,
+				557EF736168D0CE4001BF077 /* SndUtils.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
