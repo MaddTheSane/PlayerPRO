@@ -100,7 +100,7 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 	curData->loopSize	= lE - lS;
 	curData->vol		= 64;
 	curData->amp		= sS;
-	curData->c2spd		= rate >> 16L;
+	curData->c2spd		= rate;
 	curData->relNote	= 60 - bFreq;
 	curData->stereo		= stereo;
 	
