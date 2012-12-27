@@ -17,6 +17,7 @@
 /********************************************************/
 #include <Carbon/Carbon.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/RDriverCarbon.h>
 
 OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, ByteCount maximumSize, ByteCount *actualSize)
 {
@@ -214,16 +215,11 @@ int main( int argc, char* argv[])
 			OSType2Ptr( info.fdType, type);
 #endif
 			
-			FSRef theRef;
-			FSpMakeFSRef(&spec, &theRef);
-			char path[PATH_MAX];
-			FSRefMakePath(&theRef, (UInt8*)path, PATH_MAX);
-			
-			MADMusicIdentifyCString(MADLib, type, path);
+			MADMusicIdentifyFSpFile( MADLib, type, &spec);
 			
 			if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 			{
-				if( MADLoadMusicFileCString( MADLib, &MADMusic, type, path) == noErr)		// Load this music with help of Plugs
+				if( MADLoadMusicFSpFile( MADLib, &MADMusic, type, &spec) == noErr)		// Load this music with help of Plugs
 					// in application folder, in 'Plugs' folder or internal resources
 				{
 					MADAttachDriverToMusic( MADDriver, MADMusic, NULL);
