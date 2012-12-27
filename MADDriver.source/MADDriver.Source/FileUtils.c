@@ -118,8 +118,7 @@ OSType Ptr2OSType( char* str)
 	short   i;
 	OSType  type;
 	char safetyNet[5];
-	memset(safetyNet, ' ', 4);
-	safetyNet[4] = '\0';
+	strcpy(safetyNet, "    ");
 	
 	i = strlen( str);
 	memcpy(safetyNet, str, i);
