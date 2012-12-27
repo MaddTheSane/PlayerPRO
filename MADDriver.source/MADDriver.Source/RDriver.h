@@ -348,7 +348,8 @@ enum PPPlugModes {
 	MADPlugTest = (OSType)'TEST',
 	MADPlugImportExport = (OSType)'EXIM',
 	MADPlugSampleImporter = (OSType)'SAMP',
-	MADPlugInstrumentImporter = (OSType)'INST'
+	MADPlugInstrumentImporter = (OSType)'INST',
+	MADPlugNonePlug = (OSType)'NONE'
 };
 
 #ifdef _MAC_H

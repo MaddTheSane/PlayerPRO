@@ -13,7 +13,6 @@
 
 NSString * const kMadPlugIsSampleKey = @"MADPlugIsSample";
 
-
 #define PPINLoadPlug(theBundle) (PPInstrumentPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROInstrumentPlugTypeID, kPlayerPROInstrumentPlugInterfaceID)
 
 void **GetCOMPlugInterface(CFPlugInRef plugToTest, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
@@ -82,8 +81,6 @@ static void NSStringToOSType(NSString *CFstri, OSType *theOSType)
 	*theOSType = Ptr2OSType(thecOSType);
 }
 
-
-
 @interface PPInstrumentImporterObject : NSObject
 {
 	PPInstrumentPlugin	**xxxx;
@@ -94,6 +91,7 @@ static void NSStringToOSType(NSString *CFstri, OSType *theOSType)
 	OSType				type;
 	OSType				mode;
 	BOOL				isSamp;
+	UInt32				version;
 }
 
 @property (readonly) NSString *menuName;
@@ -103,10 +101,11 @@ static void NSStringToOSType(NSString *CFstri, OSType *theOSType)
 @property (readonly) OSType type;
 @property (readonly) OSType mode;
 @property (readonly) BOOL isSamp;
+@property (readonly) UInt32 version;
 
 - (id)initWithBundle:(NSBundle *)theBund;
-- (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentNumber:(short*)insNum function:(OSType)imporexp;
-
+- (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insNum function:(OSType)imporexp;
+- (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insSamp function:(OSType)imporexp plugInfo:(PPInfoPlug*)plugInfo;
 
 @end
 
@@ -119,6 +118,15 @@ static void NSStringToOSType(NSString *CFstri, OSType *theOSType)
 @synthesize type;
 @synthesize mode;
 @synthesize isSamp;
+@synthesize version;
+
+typedef enum _MADPlugCapabilities {
+	PPMADCanDoNothing = 0,
+	PPMADCanImport = 1,
+	PPMADCanExport = 2,
+	PPMADCanDoBoth = PPMADCanImport | PPMADCanExport
+} MADPlugCapabilities;
+
 
 - (id)initWithBundle:(NSBundle *)tempBundle
 {
@@ -129,6 +137,9 @@ static void NSStringToOSType(NSString *CFstri, OSType *theOSType)
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
+		
+		//TODO: Cocoa function of this?
+		version = CFBundleGetVersionNumber((__bridge CFBundleRef)(tempBundle));
 		
 		NSDictionary *tempDict = [tempBundle localizedInfoDictionary];
 		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString *)(kMadPlugMenuNameKey)];
@@ -142,7 +153,7 @@ static void NSStringToOSType(NSString *CFstri, OSType *theOSType)
 		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 			authorString = [DictionaryTemp copy];
 		} else {
-			authorString = @"";
+			authorString = @"No author";
 		}
 		
 		
@@ -150,7 +161,8 @@ static void NSStringToOSType(NSString *CFstri, OSType *theOSType)
 		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
 			UTITypes = RETAINOBJ(DictionaryTemp);
 		} else if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-			UTITypes = [[NSArray alloc] initWithObjects:DictionaryTemp, nil];
+			NSString *tempStr = [NSString stringWithString:DictionaryTemp];
+			UTITypes = [[NSArray alloc] initWithObjects:tempStr, nil];
 		} else {
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
@@ -175,28 +187,66 @@ static void NSStringToOSType(NSString *CFstri, OSType *theOSType)
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
-		
-		DictionaryTemp = [tempDict valueForKey:(__bridge NSString *)(kMadPlugModeKey)];
-		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-			NSStringToOSType(DictionaryTemp, &mode);
-		} else if([DictionaryTemp isKindOfClass:[NSNumber class]]) {
-			mode = [(NSNumber*)DictionaryTemp unsignedIntValue];
-		} else {
-			AUTORELEASEOBJNORETURN(self);
-			return nil;
+		{
+			id canImportValue = nil, canExportValue = nil;
+			BOOL canImport = NO, canExport = NO;
+			canImportValue = [tempDict valueForKey:(__bridge NSString *)(kMadPlugDoesImport)];
+			canExportValue = [tempDict valueForKey:(__bridge NSString *)(kMadPlugDoesExport)];
+			if (canImportValue || canExportValue) {
+				MADPlugCapabilities capabilities = PPMADCanDoNothing;
+				if (canImportValue) {
+					canImport = [canImportValue boolValue];
+				}
+				if (canExportValue) {
+					canExport = [canExportValue boolValue];
+				}
+				if (canImport) {
+					capabilities = PPMADCanImport;
+				}
+				if (canExport) {
+					capabilities |= PPMADCanExport;
+				}
+				
+				switch (capabilities) {
+					case PPMADCanImport:
+						mode = MADPlugImport;
+						break;
+						
+					case PPMADCanExport:
+						mode = MADPlugExport;
+						break;
+						
+					case PPMADCanDoBoth:
+						mode = MADPlugImportExport;
+						break;
+						
+					default:
+						AUTORELEASEOBJNORETURN(self);
+						return nil;
+						break;
+				}
+			} else {
+				DictionaryTemp = [tempDict valueForKey:(__bridge NSString *)(kMadPlugModeKey)];
+				if ([DictionaryTemp isKindOfClass:[NSString class]]) {
+					NSStringToOSType(DictionaryTemp, &mode);
+				} else if([DictionaryTemp isKindOfClass:[NSNumber class]]) {
+					mode = [(NSNumber*)DictionaryTemp unsignedIntValue];
+				} else {
+					AUTORELEASEOBJNORETURN(self);
+					return nil;
+				}
+			}
 		}
 
-		
 		file = RETAINOBJ(tempBundle);
 	}
 	return self;
-
 }
 
 - (void)dealloc
 {
-	RELEASEOBJ(MenuName);
-	RELEASEOBJ(AuthorString);
+	RELEASEOBJ(menuName);
+	RELEASEOBJ(authorString);
 	RELEASEOBJ(UTITypes);
 	RELEASEOBJ(file);
 	
@@ -207,36 +257,66 @@ static void NSStringToOSType(NSString *CFstri, OSType *theOSType)
 	SUPERDEALLOC;
 }
 
-- (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentNumber:(short*)insNum function:(OSType)imporexp;
+- (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insSamp function:(OSType)imporexp plugInfo:(PPInfoPlug*)plugInfo
 {
 	CFBundleRefNum fileID = CFBundleOpenBundleResourceMap( (__bridge CFBundleRef)(file));
 
-	OSErr returnType = (*xxxx)->InstrMain(imporexp,insData,sdataref,insNum,(__bridge CFURLRef)(fileToImport),NULL);
+	OSErr returnType = (*xxxx)->InstrMain(imporexp,insData,sdataref,insSamp,(__bridge CFURLRef)(fileToImport),plugInfo);
 	
 	CFBundleCloseBundleResourceMap((__bridge CFBundleRef)(file), fileID);
 	
 	return returnType;
 }
 
+- (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insSamp function:(OSType)imporexp
+{
+	return [self importInstrument:fileToImport instrumentDataReference:insData sampleDataReference:sdataref instrumentSample:insSamp function:imporexp plugInfo:NULL];
+}
 
 @end
 
 @implementation PPInstrumentImporter
+- (OSErr)callInstumentPlugIn:(PPInstrumentImporterObject*)thePlug order:(OSType)theOrd instrument:(short)ins sample:(short*)samp URL:(NSURL*)theURL
+{
+	return [thePlug importInstrument:theURL instrumentDataReference:&(*curMusic)->fid[ ins] sampleDataReference:&(*curMusic)->sample[ (*curMusic)->fid[ ins].firstSample] instrumentSample:samp function:theOrd];
+}
+
+- (OSErr)exportInstrumentOfType:(OSType)theType instrument:(short)ins sample:(short*)samp URL:(NSURL*)theURL
+{
+	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
+		if (theType == obj.type) {
+			return [self callInstumentPlugIn:obj order:MADPlugExport instrument:ins sample:samp URL:theURL];
+		}
+	}
+	return MADCannotFindPlug;
+}
+
+- (OSErr)importInstrumentOfType:(OSType)theType instrument:(short)ins sample:(short*)samp URL:(NSURL*)theURL
+{
+	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
+		if (theType == obj.type) {
+			return [self callInstumentPlugIn:obj order:MADPlugImport instrument:ins sample:samp URL:theURL];
+		}
+	}
+	return MADCannotFindPlug;
+}
 
 - (OSErr)testInstrumentFile:(NSURL *)toTest type:(OSType)theType
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		if (theType == obj.type) {
-			
-			return [obj importInstrument:toTest instrumentDataReference:NULL sampleDataReference:NULL instrumentNumber:NULL function:MADPlugTest];
+			short temp;
+			return [self callInstumentPlugIn:obj order:MADPlugTest instrument:0 sample:&temp URL:toTest];
 		}
 	}
+	return MADCannotFindPlug;
 }
 
 - (OSErr)identifyInstrumentFile:(NSURL*)ref type:(OSType*)outType
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
-		if ([obj importInstrument:ref instrumentDataReference:NULL sampleDataReference:NULL instrumentNumber:NULL function:MADPlugTest] == noErr) {
+		short temp;
+		if ([self callInstumentPlugIn:obj order:MADPlugTest instrument:0 sample:&temp URL:ref] == noErr) {
 			if (outType) {
 				*outType = obj.type;
 			}
@@ -249,25 +329,29 @@ static void NSStringToOSType(NSString *CFstri, OSType *theOSType)
 	return MADCannotFindPlug;
 }
 
-- (OSErr)testInstrumentFile:(NSURL *)toTest
-{
-	
-}
-
 - (BOOL)isPlugAvailable:(OSType)kind type:(OSType*)theType
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		if (kind == obj.type) {
 			if (obj.isSamp) {
-				*theType = 'SAMP';
+				*theType = MADPlugSampleImporter;
 			} else {
-				*theType = 'INST';
+				*theType = MADPlugInstrumentImporter;
 			}
 			return YES;
 		}
 	}
-	*theType = 'NONE';
+	*theType = MADPlugNonePlug;
 	return NO;
 }
+
+#if !__has_feature(objc_arc)
+- (void)dealloc
+{
+	[instrumentIEArray release];
+	
+	[super dealloc];
+}
+#endif
 
 @end
