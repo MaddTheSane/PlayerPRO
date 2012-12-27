@@ -48,5 +48,9 @@
 	<string>Copyright 2000 Antoine ROSSET</string>
 	<key>MADPlugIsSample</key>
 	<false/>
+	<key>MADCanImport</key>
+	<true/>
+	<key>MADCanExport</key>
+	<true/>
 </dict>
 </plist>
