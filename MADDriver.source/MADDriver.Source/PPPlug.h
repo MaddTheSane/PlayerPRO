@@ -245,6 +245,14 @@ sData	* inMADCreateSample();
 typedef OSErr			(*RPlaySoundUPP)		( Ptr, long, long, long, long, long, long, unsigned long, Boolean);
 
 
+//OSErr	PPINImportFile( OSType	kindFile, short ins, short *samp, CFURLRef AlienFile);
+//OSErr	PPINTestFile( OSType kindFile, CFURLRef AlienFile);
+//OSErr	PPINExportFile( OSType kindFile, short ins, short samp, CFURLRef AlienFile);
+//OSType	PressPPINMenu( Rect	*PopUpRect, OSType curType, short, Str255);
+//OSErr	PPINAvailablePlug( OSType kindFile, OSType *plugType); // plugType == 'INST' or 'SAMP'
+//OSErr	PPINGetPlugByID( OSType *type, short id, short samp);
+
+
 OSErr inAddSoundToMAD(Ptr			theSound,
 					  size_t		sndLen,
 					  long			lS,
@@ -277,6 +285,15 @@ typedef struct _PPInstrumentPlugin {
     IUNKNOWN_C_GUTS;
 	OSErr (STDMETHODCALLTYPE *InstrMain) (OSType,  InstrData*, sData**, short*, CFURLRef, PPInfoPlug*);
 } PPInstrumentPlugin;
+
+
+EXP const CFStringRef kMadPlugMenuNameKey;
+EXP const CFStringRef kMadPlugAuthorNameKey;
+EXP const CFStringRef kMadPlugUTITypesKey;
+EXP const CFStringRef kMadPlugTypeKey;
+EXP const CFStringRef kMadPlugDoesImport;
+EXP const CFStringRef kMadPlugDoesExport;
+EXP const CFStringRef kMadPlugModeKey;
 
 
 #endif

@@ -14,6 +14,7 @@
 #import <Foundation/Foundation.h>
 #include "FileUtils.h"
 #include "PPPrivate.h"
+#include "PPPlug.h"
 
 #define MAXPLUG	40
 
