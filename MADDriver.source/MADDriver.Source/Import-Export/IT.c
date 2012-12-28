@@ -89,7 +89,11 @@ static SInt32 read_itcompr8(ITPACK* status, Ptr *reader, Byte *sl_buffer, unsign
 	unsigned short 		bits = status->bits;
 	unsigned short 		bufbits = status->bufbits;
 	char 				last = status->last;
-	Byte 				buf = status->buf;
+	Byte 				buf;
+	if (!status) {
+		return 0;
+	}
+	buf = status->buf;
 
 	while (dest<end) {
 		needbits=new_count?3:bits;
@@ -165,7 +169,13 @@ static SInt32 read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,unsign
 	unsigned short 	bits = status->bits;
 	unsigned short 	bufbits = status->bufbits;
 	short 			last = status->last;
-	Byte 			buf = status->buf;
+	Byte 			buf;
+	
+	if (!status) {
+		return 0;
+	}
+	
+	buf = status->buf;
 	
 	while (dest<end) {
 		needbits=new_count?4:bits;
