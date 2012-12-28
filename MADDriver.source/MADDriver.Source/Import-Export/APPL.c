@@ -392,7 +392,6 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	FSRef			fileRef;
 	ResFileRefNum	iFileRefI;
 	Handle			myRes;
-	Boolean			hasToClose = TRUE;
 	
 	if (FSPathMakeRef((UInt8*)AlienFileName, &fileRef, NULL) != noErr) return MADReadingErr;
 	
@@ -418,7 +417,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				}
 				else myErr = MADFileNotSupportedByThisPlug;
 				
-				if( hasToClose) CloseResFile( iFileRefI);
+				CloseResFile( iFileRefI);
 			}
 		break;
 		
@@ -443,7 +442,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				}
 				else myErr = MADFileNotSupportedByThisPlug;
 				
-				if( hasToClose) CloseResFile( iFileRefI);
+				CloseResFile( iFileRefI);
 			}
 		break;
 		
@@ -469,7 +468,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				}
 				else myErr = MADFileNotSupportedByThisPlug;
 				
-				if( hasToClose) CloseResFile( iFileRefI);
+				CloseResFile( iFileRefI);
 			}
 		break;
 		
