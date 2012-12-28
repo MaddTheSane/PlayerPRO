@@ -114,7 +114,7 @@ typedef enum _MADPlugCapabilities {
 			
 			CFBundleRef tempCFBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)(tempBundleRef));
 			
-			xxxx = (void**)PPINLoadPlug(tempCFBundle);
+			xxxx = PPINLoadPlug(tempCFBundle);
 			
 			if (!xxxx) {
 				CFRelease(tempCFBundle);
@@ -246,7 +246,7 @@ typedef enum _MADPlugCapabilities {
 	RELEASEOBJ(file);
 	
 	if (xxxx) {
-		(*(PPInstrumentPlugin**)xxxx)->Release(xxxx);
+		(*xxxx)->Release(xxxx);
 	}
 	
 	SUPERDEALLOC;
@@ -259,7 +259,7 @@ typedef enum _MADPlugCapabilities {
 	
 	CFBundleRefNum fileID = CFBundleOpenBundleResourceMap(tempRef);
 	
-	OSErr returnType = (*(PPInstrumentPlugin**)xxxx)->InstrMain(imporexp,insData,sdataref,insSamp,(__bridge CFURLRef)(fileToImport),plugInfo);
+	OSErr returnType = (*xxxx)->InstrMain(imporexp,insData,sdataref,insSamp,(__bridge CFURLRef)(fileToImport),plugInfo);
 	
 	CFBundleCloseBundleResourceMap(tempRef, fileID);
 	CFRelease(tempRef);
