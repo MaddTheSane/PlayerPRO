@@ -100,19 +100,14 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 			CFTypeRef importValue = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugDoesImport);
 			CFTypeRef exportValue = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugDoesExport);
 			if (importValue != NULL || exportValue != NULL) {
-				Boolean canImport = false, canExport = false;
 				MADPlugCapabilities possibilities = PPMADCanDoNothing;
 				if (importValue != NULL) {
-					canImport = GetBoolFromType(importValue);
+					if(GetBoolFromType(importValue))
+						possibilities = PPMADCanImport;
 				}
 				if (exportValue != NULL) {
-					canExport = GetBoolFromType(exportValue);
-				}
-				if (canImport) {
-					possibilities |= PPMADCanImport;
-				}
-				if (canExport) {
-					possibilities |= PPMADCanExport;
+					if(GetBoolFromType(exportValue))
+						possibilities |= PPMADCanExport;
 				}
 				switch (possibilities) {
 					case PPMADCanImport:
@@ -485,9 +480,9 @@ void MInitImportPlug( MADLibrary *inMADDriver, char *PlugsFolderName)
 				CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
 				MakeMADPlug(inMADDriver, tempBundleRef);
 				//We do this to prevent resource/memory leak
-				//If the plug-in creation succeeded, it will bump the ref count from one to two
+				//If the plug-in creation succeeded, it will bump the ref count from two (one from the CFArray) to three
 				//And we can safely release it to get the proper retain count needed
-				//If plug-in creation failed, the retain count is one and we probably don't want anything to do with the plug-in
+				//If plug-in creation failed, the retain count is two and we probably don't want anything to do with the plug-in
 				CFRelease(tempBundleRef);
 			}
 		}
