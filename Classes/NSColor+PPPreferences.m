@@ -11,12 +11,12 @@
 
 @implementation NSColor (PPPreferences)
 
--(NSData *)PPencodeColor
+- (NSData *)PPencodeColor
 {
 	return [NSKeyedArchiver archivedDataWithRootObject:self];
 }
 
-+(NSColor *)PPDecodeColorWithData:(NSData *)theData
++ (NSColor *)PPDecodeColorWithData:(NSData *)theData
 {
 	return [NSKeyedUnarchiver unarchiveObjectWithData:theData];
 

@@ -759,13 +759,15 @@ static NSString * const doubleDash = @"--";
 	{
 		[self addMusicToMusicList:[NSURL fileURLWithPath:filename]];
 		return YES;
-	} else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"])
+	}
+	else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"])
 	{
 		[self willChangeValueForKey:@"musicList"];
 		[musicList loadMusicListAtURL:[NSURL fileURLWithPath:filename]];
 		[self didChangeValueForKey:@"musicList"];
 		return YES;
-	} else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"])
+	}
+	else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"])
 	{
 		[self willChangeValueForKey:@"musicList"];
 		[musicList loadOldMusicListAtURL:[NSURL fileURLWithPath:filename]];

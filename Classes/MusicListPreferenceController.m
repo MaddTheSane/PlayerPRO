@@ -12,7 +12,8 @@
 
 @implementation MusicListPreferenceController
 
--(NSInteger)playedMusic {
+-(NSInteger)playedMusic
+{
 	id curSelected = [musicPlayingOutlet selectedCell];
 	if ([musicPlayingOutlet cellAtRow:0 column:0] == curSelected) {
 		return PPStopPlaying;
@@ -27,14 +28,16 @@
 	}	
 }
 
-- (IBAction)changePlayedMusic:(id)sender {
+- (IBAction)changePlayedMusic:(id)sender
+{
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setInteger:[self playedMusic] forKey:PPAfterPlayingMusic];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPListPreferencesDidChange object:self];
 }
 
-- (IBAction)toggleButton:(id)sender {
+- (IBAction)toggleButton:(id)sender
+{
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setBool:[rememberMusicList state] forKey:PPRememberMusicList];
 	[defaults setBool:[loadFirstMusic state] forKey:PPLoadMusicAtListLoad];
@@ -46,16 +49,19 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPListPreferencesDidChange object:self];
 }
 
--(id)init {
+-(id)init
+{
 	if (self = [super initWithNibName:@"MusicListPrefs" bundle:nil]) {
 		[self setTitle:@"Music List"];
 	}
 	return self;
 }
 
--(void)setPlayedMusic:(NSUInteger)toSet {
+-(void)setPlayedMusic:(NSUInteger)toSet
+{
 	switch (toSet) {
 		case PPStopPlaying:
+		default:
 			[musicPlayingOutlet selectCellAtRow:0 column:0];
 			break;
 		case PPLoadNext:
@@ -67,15 +73,12 @@
 		case PPLoadRandom:
 			[musicPlayingOutlet selectCellAtRow:1 column:1];
 			break;
-
-		default:
-			[musicPlayingOutlet selectCellAtRow:0 column:0];
-			break;
 	}
 	
 }
 
--(void)awakeFromNib {
+-(void)awakeFromNib
+{
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
 	[rememberMusicList setState:[defaults boolForKey:PPRememberMusicList]];

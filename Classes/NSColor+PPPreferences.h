@@ -10,6 +10,6 @@
 
 
 @interface NSColor (PPPreferences) 
--(NSData *)PPencodeColor;
-+(NSColor *)PPDecodeColorWithData:(NSData *)theData;
+- (NSData *)PPencodeColor;
++ (NSColor *)PPDecodeColorWithData:(NSData *)theData;
 @end
