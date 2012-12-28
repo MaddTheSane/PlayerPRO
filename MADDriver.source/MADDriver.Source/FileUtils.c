@@ -115,13 +115,15 @@ void OSType2Ptr( OSType type, Ptr str)
 
 OSType Ptr2OSType( char* str)
 {
-	short   i;
+	short   len;
+	int i;
 	OSType  type;
-	char safetyNet[5];
-	strcpy(safetyNet, "    ");
+	char safetyNet[5] = "    ";
 	
-	i = strlen( str);
-	memcpy(safetyNet, str, i);
+	len = strlen( str);
+	for (i = 0; i < len; i++) {
+		safetyNet[i] = str[i];
+	}
 	type = '    ';
 	memcpy( &type, safetyNet, 4);
 	PPBE32(&type);
