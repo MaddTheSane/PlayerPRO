@@ -180,6 +180,18 @@ typedef struct
 	Cmd				myCmd[];
 } Pcmd;
 
+#if 0
+typedef struct
+{
+	short			tracks;					// number of tracks in myCmd[]
+	short			length;					// number of rows in myCmd[]
+	short			trackStart;				// track ID of first track in myCmd[]
+	short			posStart;				// row ID of first row in myCmd[]
+	SInt32			structSize;				// struct size in bytes - see Definition
+	UInt32			myCmd;
+} PcmdFile;
+#endif
+
 typedef struct _PPDigitalPlugin {
     IUNKNOWN_C_GUTS;
 	OSErr (STDMETHODCALLTYPE *MyProcPtr) (Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug);
