@@ -79,7 +79,7 @@ void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUID
 	return formatPlugA;
 }
 
-static void NSStringToOSType(NSString *CFstri, OSType *theOSType)
+static inline void NSStringToOSType(NSString *CFstri, OSType *theOSType)
 {
 	char * thecOSType = (char*)[CFstri cStringUsingEncoding:NSMacOSRomanStringEncoding];
 	
@@ -116,7 +116,7 @@ typedef enum _MADPlugCapabilities {
 		{
 			NSURL *tempBundleRef = [tempBundle bundleURL];
 			
-			CFBundleRef tempCFBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)(tempBundleRef));
+			CFBundleRef tempCFBundle = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef, tempBundleRef));
 			
 			xxxx = PPINLoadPlug(tempCFBundle);
 			
@@ -133,7 +133,7 @@ typedef enum _MADPlugCapabilities {
 		
 		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
 		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
-		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString *)(kMadPlugMenuNameKey)];
+		id DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugMenuNameKey)];
 		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 			menuName = [[NSString alloc] initWithString:DictionaryTemp];
 		} else {
@@ -141,7 +141,7 @@ typedef enum _MADPlugCapabilities {
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
-		DictionaryTemp = [tempDict valueForKey:(__bridge NSString *)(kMadPlugAuthorNameKey)];
+		DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugAuthorNameKey)];
 		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 			authorString = [[NSString alloc] initWithString:DictionaryTemp];
 		} else {
@@ -149,7 +149,7 @@ typedef enum _MADPlugCapabilities {
 		}
 		
 		
-		DictionaryTemp = [tempDict valueForKey:(__bridge NSString *)(kMadPlugUTITypesKey)];
+		DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugUTITypesKey)];
 		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
 			UTITypes = [[NSArray alloc] initWithArray:DictionaryTemp];
 		} else if ([DictionaryTemp isKindOfClass:[NSString class]]) {
@@ -172,7 +172,7 @@ typedef enum _MADPlugCapabilities {
 			return nil;
 		}
 		
-		DictionaryTemp = [tempDict valueForKey:(__bridge NSString *)(kMadPlugTypeKey)];
+		DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugTypeKey)];
 		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 			NSStringToOSType(DictionaryTemp, &type);
 		} else if([DictionaryTemp isKindOfClass:[NSNumber class]]) {
@@ -184,8 +184,8 @@ typedef enum _MADPlugCapabilities {
 		}
 		{
 			id canImportValue = nil, canExportValue = nil;
-			canImportValue = [tempDict valueForKey:(__bridge NSString *)(kMadPlugDoesImport)];
-			canExportValue = [tempDict valueForKey:(__bridge NSString *)(kMadPlugDoesExport)];
+			canImportValue = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugDoesImport)];
+			canExportValue = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugDoesExport)];
 			if (canImportValue || canExportValue) {
 				MADPlugCapabilities capabilities = PPMADCanDoNothing;
 				if (canImportValue) {
@@ -217,7 +217,7 @@ typedef enum _MADPlugCapabilities {
 						break;
 				}
 			} else {
-				DictionaryTemp = [tempDict valueForKey:(__bridge NSString *)(kMadPlugModeKey)];
+				DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugModeKey)];
 				if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 					NSStringToOSType(DictionaryTemp, &mode);
 				} else if([DictionaryTemp isKindOfClass:[NSNumber class]]) {
@@ -253,11 +253,11 @@ typedef enum _MADPlugCapabilities {
 - (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insSamp function:(OSType)imporexp plugInfo:(PPInfoPlug*)plugInfo
 {
 	NSURL *bundleURL = [file bundleURL];
-	CFBundleRef tempRef = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)(bundleURL));
+	CFBundleRef tempRef = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef, bundleURL));
 	
 	CFBundleRefNum fileID = CFBundleOpenBundleResourceMap(tempRef);
 	
-	OSErr returnType = (*xxxx)->InstrMain(imporexp, insData, sdataref, insSamp, (__bridge CFURLRef)(fileToImport), plugInfo);
+	OSErr returnType = (*xxxx)->InstrMain(imporexp, insData, sdataref, insSamp, BRIDGE(CFURLRef, fileToImport), plugInfo);
 	
 	CFBundleCloseBundleResourceMap(tempRef, fileID);
 	CFRelease(tempRef);

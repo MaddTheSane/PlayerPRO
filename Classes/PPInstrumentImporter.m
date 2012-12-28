@@ -43,7 +43,7 @@
 			CFArrayRef	somePlugs;
 			NSURL		*aPlugLoc;
 			aPlugLoc = [plugLocs objectAtIndex:i];
-			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef)(aPlugLoc), NULL);
+			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, BRIDGE(CFURLRef, aPlugLoc), NULL);
 			PlugNums = CFArrayGetCount( somePlugs );
 			if (PlugNums > 0) {
 				for (x = 0; x < PlugNums; x++) {

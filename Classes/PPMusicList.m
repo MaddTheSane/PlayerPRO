@@ -220,12 +220,13 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 		CFaStr = CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman);
 		CFaStr2 = CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman);
 
-		NSString *together = [NSString stringWithFormat:@"%@:%@", (__bridge NSString*)(CFaStr), (__bridge NSString*)(CFaStr2)];
+		NSString *together = [NSString stringWithFormat:@"%@:%@", BRIDGE(NSString*, CFaStr), BRIDGE(NSString*, CFaStr2)];
 		CFRelease(CFaStr);
 		CFRelease(CFaStr2);
-		CFURLRef tempURLRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)(together), kCFURLHFSPathStyle, false);
+		CFURLRef tempURLRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, BRIDGE(CFStringRef, together), kCFURLHFSPathStyle, false);
 
 		NSURL *fullPath = CFBridgingRelease(tempURLRef);
+		tempURLRef = NULL;
 		NSURL *refURL = [fullPath fileReferenceURL];
 		PPMusicListObject *obj = nil;
 		if (refURL) {
