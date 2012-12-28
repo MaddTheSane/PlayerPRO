@@ -7,7 +7,7 @@
  *
  */
 
-extern int NSApplicationMain(int argc, const char *argv[]);
+#import <AppKit/AppKit.h>
 
 int main(int argc, char *argv[])
 {
