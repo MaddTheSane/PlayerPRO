@@ -1930,6 +1930,7 @@
 		55D1BD58120FBAC0004FD083 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		55D1BD5D120FBE51004FD083 /* PPMusicList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicList.h; sourceTree = "<group>"; };
 		55D1BD5E120FBE51004FD083 /* PPMusicList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMusicList.m; sourceTree = "<group>"; };
+		55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO-PrefixHeader.pch"; sourceTree = "<group>"; };
 		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = DFTB.r; path = ../Files/DFTB.r; sourceTree = "<group>"; };
 		55E52E271245640500315307 /* PPFastForward.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPFastForward.pdf; sourceTree = "<group>"; };
 		55E52E281245640500315307 /* PPReverse.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPReverse.pdf; sourceTree = "<group>"; };
@@ -3528,6 +3529,7 @@
 				557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */,
 				557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */,
 				557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */,
+				55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -8650,6 +8652,8 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
@@ -8667,6 +8671,8 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
