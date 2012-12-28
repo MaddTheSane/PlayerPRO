@@ -38,6 +38,8 @@
 	<string>Copyright 99 Antoine ROSSET</string>
 	<key>MADCanImport</key>
 	<true/>
+	<key>MADCanExport</key>
+	<false/>
 	<key>MADPlugIsSample</key>
 	<false/>
 	<key>MADPlugMenuName</key>
