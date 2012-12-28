@@ -97,10 +97,10 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 				sData					**sample,					// Ptr on samples data
 				short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
 																	// If sampleID == -1 : add sample else replace selected sample.
-				CFURLRef					AlienFileCFURL,			// IN/OUT file
+				CFURLRef				AlienFileCFURL,				// IN/OUT file
 				PPInfoPlug				*thePPInfoPlug)
 {
-	OSErr	myErr;
+	OSErr	myErr = noErr;
 	UNFILE	iFileRefI;
 	short	x;
 	long	inOutCount;
@@ -194,7 +194,7 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 			iFileCreate(file, 'MINs');
 			iFileRefI = iFileOpenWrite(file);
 			
-			if( myErr == noErr)
+			if( iFileRefI != NULL)
 			{
 				// Write instrument header
 				
