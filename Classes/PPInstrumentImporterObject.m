@@ -63,6 +63,8 @@ void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUID
 			}
 		}
 		else {
+			//Clang says that we aren't supposed to release, but Apple's sample code does release
+			//Trusting the sample code until further notice
 			CFRelease(factories); factories = NULL;
 			return NULL;
 		}
@@ -70,6 +72,8 @@ void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUID
 	else {
 		return NULL;
 	}
+	//Clang says that we aren't supposed to release, but Apple's sample code does release
+	//Trusting the sample code until further notice
 	CFRelease(factories); factories = NULL;
 	
 	return formatPlugA;
@@ -125,14 +129,13 @@ typedef enum _MADPlugCapabilities {
 			//TODO: Cocoa function of this?
 			version = CFBundleGetVersionNumber(tempCFBundle);
 			CFRelease(tempCFBundle);
-			tempCFBundle = NULL;
 		}
 		
 		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
 		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
 		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString *)(kMadPlugMenuNameKey)];
 		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-			menuName = [DictionaryTemp copy];
+			menuName = [[NSString alloc] initWithString:DictionaryTemp];
 		} else {
 			RELEASEOBJ(tempDict);
 			AUTORELEASEOBJNORETURN(self);
@@ -140,7 +143,7 @@ typedef enum _MADPlugCapabilities {
 		}
 		DictionaryTemp = [tempDict valueForKey:(__bridge NSString *)(kMadPlugAuthorNameKey)];
 		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-			authorString = [DictionaryTemp copy];
+			authorString = [[NSString alloc] initWithString:DictionaryTemp];
 		} else {
 			authorString = @"No author";
 		}
@@ -181,22 +184,17 @@ typedef enum _MADPlugCapabilities {
 		}
 		{
 			id canImportValue = nil, canExportValue = nil;
-			BOOL canImport = NO, canExport = NO;
 			canImportValue = [tempDict valueForKey:(__bridge NSString *)(kMadPlugDoesImport)];
 			canExportValue = [tempDict valueForKey:(__bridge NSString *)(kMadPlugDoesExport)];
 			if (canImportValue || canExportValue) {
 				MADPlugCapabilities capabilities = PPMADCanDoNothing;
 				if (canImportValue) {
-					canImport = [canImportValue boolValue];
+					if([canImportValue boolValue])
+						capabilities = PPMADCanImport;
 				}
 				if (canExportValue) {
-					canExport = [canExportValue boolValue];
-				}
-				if (canImport) {
-					capabilities = PPMADCanImport;
-				}
-				if (canExport) {
-					capabilities |= PPMADCanExport;
+					if([canExportValue boolValue])
+						capabilities |= PPMADCanExport;
 				}
 				
 				switch (capabilities) {
@@ -259,7 +257,7 @@ typedef enum _MADPlugCapabilities {
 	
 	CFBundleRefNum fileID = CFBundleOpenBundleResourceMap(tempRef);
 	
-	OSErr returnType = (*xxxx)->InstrMain(imporexp,insData,sdataref,insSamp,(__bridge CFURLRef)(fileToImport),plugInfo);
+	OSErr returnType = (*xxxx)->InstrMain(imporexp, insData, sdataref, insSamp, (__bridge CFURLRef)(fileToImport), plugInfo);
 	
 	CFBundleCloseBundleResourceMap(tempRef, fileID);
 	CFRelease(tempRef);
