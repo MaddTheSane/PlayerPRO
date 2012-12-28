@@ -14,11 +14,19 @@
 
 #include <CoreServices/CoreServices.h>
 
-OSErr MADLoadMusicFSpFile( MADLibrary *lib, MADMusic **music, char *plugType, FSSpecPtr theSpec) DEPRECATED_ATTRIBUTE;
-OSErr MADLoadMusicFSRef ( MADLibrary *lib, MADMusic **music, char *plugType, FSRefPtr theRef) DEPRECATED_ATTRIBUTE;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-OSErr MADMusicIdentifyFSRef( MADLibrary *lib, char *type, FSRefPtr theRef) DEPRECATED_ATTRIBUTE;
-OSErr MADMusicIdentifyFSpFile (MADLibrary *lib, char *type, FSSpecPtr theSpec) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr MADLoadMusicFSpFile( MADLibrary *lib, MADMusic **music, char *plugType, FSSpecPtr theSpec) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr MADLoadMusicFSRef ( MADLibrary *lib, MADMusic **music, char *plugType, FSRefPtr theRef) DEPRECATED_ATTRIBUTE;
+
+PPEXPORT OSErr MADMusicIdentifyFSRef( MADLibrary *lib, char *type, FSRefPtr theRef) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr MADMusicIdentifyFSpFile (MADLibrary *lib, char *type, FSSpecPtr theSpec) DEPRECATED_ATTRIBUTE;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 #endif
