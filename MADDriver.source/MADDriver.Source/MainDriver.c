@@ -153,6 +153,8 @@ MADMusic* CreateFreeMADK( void)
 	}
 	for( i = music->header->numPat; i < MAXPATTERN ; i++) music->partition[ i] = NULL;
 	
+	music->sets = (FXSets*)calloc(MAXTRACK * sizeof(FXSets), 1);
+	
 	return music;
 }
 
