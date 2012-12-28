@@ -90,6 +90,10 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 		InsHeader->numSamples++;
 		
 		curData = sample[ *sampleID] = inMADCreateSample();
+		
+		if (!curData) {
+			return MADNeedMemory;
+		}
 	}
 	
 	if( curData->data != NULL) free( curData->data);
