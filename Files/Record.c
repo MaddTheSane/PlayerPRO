@@ -1953,12 +1953,12 @@ Str255				str, str2;
 }
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*msg_buf)
-#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*msg_buf)
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
 #else
 #ifdef __LITTLE_ENDIAN__
-#define Tdecode16(msg_buf) *msg_buf
-#define Tdecode32(msg_buf) *msg_buf
+#define Tdecode16(msg_buf) *(short*)msg_buf
+#define Tdecode32(msg_buf) *(int*)msg_buf
 #else
 
 static inline UInt32 Tdecode32( void *msg_buf)

@@ -9,12 +9,12 @@
 #include "PAT.h"
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*msg_buf)
-#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*msg_buf)
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
 #else
 #ifdef __LITTLE_ENDIAN__
-#define Tdecode16(msg_buf) *msg_buf
-#define Tdecode32(msg_buf) *msg_buf
+#define Tdecode16(msg_buf) *(short*)msg_buf
+#define Tdecode32(msg_buf) *(int*)msg_buf
 #else
 
 static inline UInt32 Tdecode32( void *msg_buf)
@@ -78,7 +78,14 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	{
 		curIns->volEnv[ i].pos		= 0;
 		curIns->volEnv[ i].val		= 0;
+		
+		curIns->pannEnv[ i].pos		= 0;
+		curIns->pannEnv[ i].val		= 0;
+
+		curIns->pitchEnv[ i].pos	= 0;
+		curIns->pitchEnv[ i].val	= 0;
 	}
+#if 0
 	for( i = 0; i < 12; i++)
 	{
 		curIns->pannEnv[ i].pos	= 0;
@@ -89,6 +96,7 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 		curIns->pitchEnv[ i].pos	= 0;
 		curIns->pitchEnv[ i].val	= 0;
 	}
+#endif
 	curIns->volSize		= 0;
 	curIns->pannSize	= 0;
 	
@@ -248,7 +256,6 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		if( curData->data != NULL)
 		{
-			//BlockMove( PATData, curData->data, curData->size);
 			memcpy(curData->data, PATData, curData->size);
 
 			if( curData->amp == 16)
