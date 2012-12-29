@@ -1406,23 +1406,43 @@ static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean res
 	return strLength;
 }
 
-OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef)
+static OSErr getCStringFromCFURL(CFURLRef theRef, char **cStrOut)
 {
 	char *URLcString = NULL;
+	if (cStrOut == NULL) {
+		return MADParametersErr;
+	}
 	if (theRef == NULL) {
+		*cStrOut = NULL;
 		return MADParametersErr;
 	}
 	CFIndex pathLen = getCFURLFilePathRepresentationLength(theRef, true);
 	URLcString = malloc(pathLen);
 	if (URLcString == NULL) {
+		*cStrOut = NULL;
 		return MADNeedMemory;
 	}
 	Boolean pathOK = CFURLGetFileSystemRepresentation(theRef, true, (unsigned char*)URLcString, pathLen);
 	if (pathOK == false) {
 		free(URLcString);
+		*cStrOut = NULL;
 		return MADReadingErr;
 	}
-	OSErr theErr = MADLoadMusicFileCString(lib, music, type, URLcString);
+	*cStrOut = URLcString;
+	return noErr;
+}
+
+OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef)
+{
+	char *URLcString = NULL;
+
+	OSErr theErr = getCStringFromCFURL(theRef, &URLcString);
+	
+	if (theErr != noErr) {
+		return theErr;
+	}
+	
+	theErr = MADLoadMusicFileCString(lib, music, type, URLcString);
 	free(URLcString);
 	return theErr;
 }
@@ -1474,43 +1494,31 @@ OSErr MADCopyCurrentPartition( MADMusic *aPartition)
 OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef)
 {
 	char *URLcString = NULL;
-	if (URLRef == NULL) {
-		return MADParametersErr;
+	
+	OSErr theErr = getCStringFromCFURL(URLRef, &URLcString);
+	
+	if (theErr != noErr) {
+		return theErr;
 	}
-	CFIndex pathLen = getCFURLFilePathRepresentationLength(URLRef, true);
-	URLcString = malloc(pathLen);
-	if (URLcString == NULL) {
-		return MADNeedMemory;
-	}
-	Boolean pathOK = CFURLGetFileSystemRepresentation(URLRef, true, (unsigned char*)URLcString, pathLen);
-	if (pathOK == false) {
-		free(URLcString);
-		return MADReadingErr;
-	}
-	OSErr returnstatus = MADMusicIdentifyCString(lib, type, URLcString);
+	
+	theErr = MADMusicIdentifyCString(lib, type, URLcString);
 	free(URLcString);
-	return returnstatus;
+	return theErr;
 }
 
 OSErr MADMusicInfoCFURL( MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec)
 {
 	char *URLcString = NULL;
-	if (theRef == NULL) {
-		return MADParametersErr;
+	
+	OSErr theErr = getCStringFromCFURL(theRef, &URLcString);
+	
+	if (theErr != noErr) {
+		return theErr;
 	}
-	CFIndex pathLen = getCFURLFilePathRepresentationLength(theRef, true);
-	URLcString = malloc(pathLen);
-	if (URLcString == NULL) {
-		return MADNeedMemory;
-	}
-	Boolean pathOK = CFURLGetFileSystemRepresentation(theRef, true, (unsigned char*)URLcString, pathLen);
-	if (pathOK == false) {
-		free(URLcString);
-		return MADReadingErr;
-	}
-	OSErr status = MADMusicInfoCString(lib, type, URLcString, InfoRec);
+	
+	theErr = MADMusicInfoCString(lib, type, URLcString, InfoRec);
 	free(URLcString);
-	return status;
+	return theErr;
 }
 #endif
 
@@ -2674,6 +2682,10 @@ OSErr MADStartDriver( MADDriverRec *MDriver)
 
 OSErr MADStopDriver( MADDriverRec *MDriver)
 {
+	if (!MDriver) {
+		return MADParametersErr;
+	}
+	
 	MDriver->MADPlay = false;
 	
 	MDriver->clipL	= false;
@@ -2727,7 +2739,7 @@ OSErr MADStopDriver( MADDriverRec *MDriver)
 	if( MDriver->SendMIDIClockData) SendMIDIClock( MDriver, 0xFC);
 #endif
 	
-	return( noErr);
+	return noErr;
 }
 
 OSErr MADReset( MADDriverRec *MDriver)
@@ -3160,7 +3172,7 @@ OSErr MADCreateVolumeTable( MADDriverRec *intDriver)
 		case PolyPhonic:					Tracks 	= 1;		break;
 	}
 	
-	return( noErr);
+	return noErr;
 }
 
 void MADChangeTracks( MADDriverRec *MDriver, short newVal)
