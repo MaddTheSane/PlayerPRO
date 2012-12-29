@@ -42,13 +42,7 @@
 #ifndef __ATOMINFO__
 #define __ATOMINFO__
 
-#if PRAGMA_STRUCT_ALIGN
-#pragma options align=mac68k
-#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(push, 2)
-#elif PRAGMA_STRUCT_PACK
-#pragma pack(2)
-#endif
 
 typedef struct {
 	BigEndianLong	atomSize;			// how big this structure is (big endian)
@@ -62,12 +56,6 @@ typedef struct {
 	AudioTerminatorAtom		terminatorData;
 } AudioCompressionAtom, *AudioCompressionAtomPtr, **AudioCompressionAtomHandle;
 
-#if PRAGMA_STRUCT_ALIGN
-#pragma options align=reset
-#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(pop)
-#elif PRAGMA_STRUCT_PACK
-#pragma pack()
-#endif
 
 #endif // __ATOMINFO__

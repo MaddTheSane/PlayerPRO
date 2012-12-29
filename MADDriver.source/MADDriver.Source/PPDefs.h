@@ -35,7 +35,6 @@
 #define false FALSE
 #endif
 #define __LITTLE_ENDIAN__ 1
-#define PRAGMA_STRUCT_PACKPUSH 1
 #endif
 
 typedef unsigned char 	Byte;

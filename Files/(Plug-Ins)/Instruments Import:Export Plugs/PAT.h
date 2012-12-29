@@ -1,13 +1,7 @@
 #ifndef __PAT_H
 #define __PAT_H
 
-#if PRAGMA_STRUCT_ALIGN
-#pragma options align=mac68k
-#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(push, 2)
-#elif PRAGMA_STRUCT_PACK
-#pragma pack(2)
-#endif
 
 typedef struct _PatchHeader
 {
@@ -81,13 +75,7 @@ typedef struct _PatSampHeader
 	
 } PatSampHeader;
 
-#if PRAGMA_STRUCT_ALIGN
-#pragma options align=reset
-#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(pop)
-#elif PRAGMA_STRUCT_PACK
-#pragma pack()
-#endif
 
 /*
 Document converted to plain ASCII for inclusion in Wotsit's Format

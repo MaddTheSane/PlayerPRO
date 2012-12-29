@@ -9,13 +9,7 @@
 #include <Carbon/Carbon.h>
 #include <QuickTime/QuickTime.h>
 
-#if PRAGMA_STRUCT_ALIGN
-#pragma options align=mac68k
-#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(push, 2)
-#elif PRAGMA_STRUCT_PACK
-#pragma pack(2)
-#endif
 
 #define IsCodeOK() false
 static inline OSErr CallPlug(short item)
@@ -312,13 +306,7 @@ typedef struct
 	
 }	Prefs;
 
-#if PRAGMA_STRUCT_ALIGN
-#pragma options align=reset
-#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(pop)
-#elif PRAGMA_STRUCT_PACK
-#pragma pack()
-#endif
 
 
 enum {

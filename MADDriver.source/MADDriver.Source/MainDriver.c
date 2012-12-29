@@ -2834,13 +2834,7 @@ OSErr MADDisposeMusic( MADMusic **music, MADDriverRec *MDriver)
 	return( noErr);
 }
 
-#if PRAGMA_STRUCT_ALIGN
-#pragma options align=mac68k
-#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(push, 2)
-#elif PRAGMA_STRUCT_PACK
-#pragma pack(2)
-#endif
 
 Boolean	MADIsPressed( unsigned char* km2, unsigned short k)
 {
@@ -3127,13 +3121,7 @@ OSErr MADPlaySndHandle( MADDriverRec *MDriver, Handle sound, long channel, long 
 
 #endif
 
-#if PRAGMA_STRUCT_ALIGN
-#pragma options align=reset
-#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(pop)
-#elif PRAGMA_STRUCT_PACK
-#pragma pack()
-#endif
 
 Cmd* GetMADCommand( short PosX, short	TrackIdX, PatData*	tempMusicPat)
 {
