@@ -96,6 +96,8 @@ Boolean GetMetadataForFile(void* thisInterface,
 			CFRelease(ostypes);
 			if (info) {
 				OSType2Ptr(info, utiType);
+			} else {
+				strcpy(utiType, "!!!!");
 			}
 		}
 		
@@ -112,7 +114,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 
 #ifdef DEBUG
 		if (strcmp(utiType, type) != 0) {
-			printf("File types differ, UTI says %s, PlayerPRO says %s\n", utiType, type);
+			fprintf(stderr, "File types differ, UTI says %s, PlayerPRO says %s\n", utiType, type);
 		}
 #endif
 		
