@@ -58,7 +58,6 @@ static Boolean GetBoolFromType(CFTypeRef theType)
 		//FIXME: get a CoreFoundation function here to ease the transition to ARC when that happens.
 		return [(NSString*)theType boolValue];
 	} else return false;
-
 }
 
 static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
@@ -89,8 +88,7 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 			InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 			if (InfoDictionaryType == stringtype) {
 				thePlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
-			}
-			else {
+			} else {
 				thePlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, CFSTR("No Author"));
 			}
 		}
@@ -199,8 +197,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		numbertype = CFNumberGetTypeID();
 	}
 	
-	short PlugNum = inMADDriver->TotalPlug;
-	PlugInfo *FillPlug = &(inMADDriver->ThePlug[PlugNum]);
+	PlugInfo *FillPlug = &(inMADDriver->ThePlug[inMADDriver->TotalPlug]);
 	{
 		FillPlug->version = CFBundleGetVersionNumber(tempBundle);
 		
@@ -420,7 +417,7 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	iRead( sizeof( MADSpec), (Ptr) theMAD, fileID);
 	iClose( fileID);
 	
-	strcpy( InfoRec->internalFileName, theMAD->name);
+	strlcpy( InfoRec->internalFileName, theMAD->name, sizeof(theMAD->name));
 	
 	InfoRec->totalPatterns = theMAD->numPat;
 	InfoRec->partitionLength = theMAD->numPointers;
