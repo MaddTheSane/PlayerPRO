@@ -371,6 +371,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 - (void)doubleClickMusicList
 {
 	NSError *err = nil;
+	currentlyPlayingIndex = [tableView selectedRow];
 	if ([self loadMusicFromCurrentlyPlayingIndexWithError:&err] == NO)
 	{
 		NSAlert *alert = [NSAlert alertWithError:err];
