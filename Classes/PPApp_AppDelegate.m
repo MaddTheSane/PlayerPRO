@@ -194,6 +194,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 {
 	NSIndexSet *idx = [[NSIndexSet alloc] initWithIndex:currentlyPlayingIndex];
 	[tableView selectRowIndexes:idx byExtendingSelection:NO];
+	[tableView scrollRowToVisible:currentlyPlayingIndex];
 	RELEASEOBJ(idx);
 }
 
@@ -367,6 +368,16 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 @synthesize window;
 
+- (void)doubleClickMusicList
+{
+	NSError *err = nil;
+	if ([self loadMusicFromCurrentlyPlayingIndexWithError:&err] == NO)
+	{
+		NSAlert *alert = [NSAlert alertWithError:err];
+		[alert runModal];
+	}
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	srandom(time(NULL) & 0xffffffff);
@@ -383,6 +394,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
 		[musicList loadMusicListFromPreferences];
 	}
+	
+	[tableView setDoubleAction:@selector(doubleClickMusicList)];
+	
 	[self didChangeValueForKey:@"musicList"];
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	[defaultCenter addObserver:self selector:@selector(preferencesDidChange:) name:PPListPreferencesDidChange object:nil];
