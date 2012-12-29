@@ -1199,11 +1199,11 @@ static OSErr ExtractXMInfo( PPInfoRec *info, Ptr AlienFile)
 	switch( mh->version)
 	{
 		case 0x104:
-		break;
-		
+			break;
+			
 		default:
 			return MADFileNotSupportedByThisPlug;
-		break;
+			break;
 	}
 	
 	/*** Signature ***/
