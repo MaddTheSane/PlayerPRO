@@ -38,7 +38,7 @@ typedef struct _PatInsHeader
 {
 	short	ID;
 	char	name[ 16];
-	long	size;
+	SInt32	size;
 	Byte	layer;
 	char	reserved[ 40];
 } PatInsHeader;
@@ -56,13 +56,13 @@ typedef struct _PatSampHeader
 {
 	char			name[ 7];
 	Byte			fractions;
-	long			size;
-	long			startLoop;
-	long			endLoop;
+	SInt32			size;
+	SInt32			startLoop;
+	SInt32			endLoop;
 	unsigned short	rate;
-	long			minFreq;
-	long			maxFreq;
-	long			originRate;
+	SInt32			minFreq;
+	SInt32			maxFreq;
+	SInt32			originRate;
 	short			tune;
 	Byte			balance;
 	Byte			Filter[ 6];
