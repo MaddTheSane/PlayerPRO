@@ -43,7 +43,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 {
 	NSString *rhsString = [rhs fileName];
 	NSString *lhsString = [lhs fileName];
-	return [rhsString compare:lhsString];
+	return [rhsString localizedStandardCompare:lhsString];
 }
  */
 
@@ -182,8 +182,8 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	RELEASEOBJ(musicArray);
 }
 
-- (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen {
-	NSMutableArray *newArray = [[NSMutableArray alloc] init];
+- (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen
+{
 	ResFileRefNum refNum;
 	Handle aHandle;
 	FSRef theRef;
@@ -193,7 +193,6 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	refNum = FSOpenResFile(&theRef, fsRdPerm);
 	OSErr resErr = ResError();
 	if (resErr) {
-		RELEASEOBJ(newArray);
 		return resErr;
 	}
 	UseResFile(refNum);
@@ -201,7 +200,6 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	if( aHandle == NULL)
 	{
 		CloseResFile( refNum);
-		RELEASEOBJ(newArray);
 		return ResError();
 	}
 	DetachResource( aHandle);
@@ -213,9 +211,11 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	
 	theNo /= 2;
 	
+	NSMutableArray *newArray = [[NSMutableArray alloc] init];
+	
 	for(i = 0; i < theNo * 2; i += 2) {
 		aStr = GetStringFromHandle(aHandle, i);
-		aStr2 = GetStringFromHandle(aHandle, i+1);
+		aStr2 = GetStringFromHandle(aHandle, i + 1);
 		CFStringRef CFaStr = NULL, CFaStr2 = NULL;
 		CFaStr = CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman);
 		CFaStr2 = CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman);
@@ -287,7 +287,13 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (void)addMusicURL:(NSURL *)musicToLoad
 {
-	PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:[musicToLoad fileReferenceURL]];
+	PPMusicListObject *obj = nil;
+	NSURL *fileRef = [musicToLoad fileReferenceURL];
+	if (fileRef) {
+		obj = [[PPMusicListObject alloc] initWithURL:fileRef];
+	} else {
+		obj = [[PPMusicListObject alloc] initWithURL:musicToLoad];
+	}
 	//[self willChangeValueForKey:@"musicList"];
 	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndex:[musicList count]];
 	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:@"musicList"];
