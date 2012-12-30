@@ -58,6 +58,12 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 
 @implementation OpenPanelViewItem
 
+- (id)init
+{
+	[self doesNotRecognizeSelector:_cmd];
+	return nil;
+}
+
 @synthesize name;
 @synthesize type;
 @synthesize utis;
@@ -83,7 +89,7 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 				return nil;
 				break;
 		}
-		utis = RETAINOBJ(ut);
+		utis = [[NSArray alloc] initWithArray:ut];
 		name = [nam copy];
 	}
 	return self;
@@ -101,19 +107,34 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 
 - (NSString* )description
 {
-	return [NSString stringWithFormat:@"%@ %@", [utis description], name];
+	NSString *des;
+	if (type.playlist) {
+		des = @"Playlist";
+	} else if (type.instrument) {
+		des = @"Instrument";
+	} else if (type.tracker) {
+		des = @"Tracker";
+	}
+	
+	return [NSString stringWithFormat:@"%@ %@ - %@", [utis description], name, des];
 }
 
 @end
 
 @implementation OpenPanelViewController
 
+- (id)init
+{
+	[self doesNotRecognizeSelector:_cmd];
+	return nil;
+}
+
 - (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd
 {
 	return [self initWithOpenPanel:panel trackerDictionary:td playlistDictionary:pd instrumentDictionary:nil];
 }
 
-- (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd instrumentDictionary:(NSDictionary*)insDict;
+- (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd instrumentDictionary:(NSDictionary*)insDict
 {
 	if (self = [super initWithNibName:@"OpenPanelViewController" bundle:nil]) {
 		openPanel = RETAINOBJ(panel);
@@ -176,8 +197,8 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		if (item.type.tracker) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:@"All Trackers" action:@selector(selectUTI:) keyEquivalent:@""];
 			[mi setTag:utiTrackerType];
-			[fileTypeSelectionMenu addItem:mi];
 			[mi setTarget:self];
+			[fileTypeSelectionMenu addItem:mi];
 			RELEASEOBJ(mi);
 			break;
 		}
@@ -187,8 +208,8 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		if (item.type.playlist) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:@"All Playlists" action:@selector(selectUTI:) keyEquivalent:@""];
 			[mi setTag:utiPlaylistType];
-			[fileTypeSelectionMenu addItem:mi];
 			[mi setTarget:self];
+			[fileTypeSelectionMenu addItem:mi];
 			RELEASEOBJ(mi);
 			break;
 		}
@@ -197,8 +218,8 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		if (item.type.instrument) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:@"All Instruments" action:@selector(selectUTI:) keyEquivalent:@""];
 			[mi setTag:utiInstrumentType];
-			[fileTypeSelectionMenu addItem:mi];
 			[mi setTarget:self];
+			[fileTypeSelectionMenu addItem:mi];
 			RELEASEOBJ(mi);
 			break;
 		}
@@ -217,8 +238,8 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		}
 		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:curItem.name action:@selector(selectUTI:) keyEquivalent:@""];
 		[mi setTag:i];
-		[fileTypeSelectionMenu addItem:mi];
 		[mi setTarget:self];
+		[fileTypeSelectionMenu addItem:mi];
 		RELEASEOBJ(mi);
 	}
 	
