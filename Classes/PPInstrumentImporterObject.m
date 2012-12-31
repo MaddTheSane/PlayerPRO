@@ -83,11 +83,11 @@ void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUID
 	return formatPlugA;
 }
 
-static inline void NSStringToOSType(NSString *CFstri, OSType *theOSType)
+static inline OSType NSStringToOSType(NSString *CFstri)
 {
 	char * thecOSType = (char*)[CFstri cStringUsingEncoding:NSMacOSRomanStringEncoding];
 	
-	*theOSType = Ptr2OSType(thecOSType);
+	return Ptr2OSType(thecOSType);
 }
 
 @implementation PPInstrumentImporterObject
@@ -124,6 +124,8 @@ typedef enum _MADPlugCapabilities {
 - (id)initWithBundle:(NSBundle *)tempBundle
 {
 	if (self = [super init]) {
+		Class strClass = [NSString class];
+		Class numClass = [NSNumber class];
 		{
 			NSURL *tempBundleRef = [tempBundle bundleURL];
 			
@@ -145,7 +147,7 @@ typedef enum _MADPlugCapabilities {
 		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
 		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
 		id DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugMenuNameKey)];
-		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
+		if ([DictionaryTemp isKindOfClass:strClass]) {
 			menuName = [[NSString alloc] initWithString:DictionaryTemp];
 		} else {
 			RELEASEOBJ(tempDict);
@@ -153,7 +155,7 @@ typedef enum _MADPlugCapabilities {
 			return nil;
 		}
 		DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugAuthorNameKey)];
-		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
+		if ([DictionaryTemp isKindOfClass:strClass]) {
 			authorString = [[NSString alloc] initWithString:DictionaryTemp];
 		} else {
 			authorString = @"No author";
@@ -163,7 +165,7 @@ typedef enum _MADPlugCapabilities {
 		DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugUTITypesKey)];
 		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
 			UTITypes = [[NSArray alloc] initWithArray:DictionaryTemp];
-		} else if ([DictionaryTemp isKindOfClass:[NSString class]]) {
+		} else if ([DictionaryTemp isKindOfClass:strClass]) {
 			NSString *tempStr = [NSString stringWithString:DictionaryTemp];
 			UTITypes = [[NSArray alloc] initWithObjects:tempStr, nil];
 		} else {
@@ -173,9 +175,9 @@ typedef enum _MADPlugCapabilities {
 		}
 		
 		DictionaryTemp = [tempDict valueForKey:kMadPlugIsSampleKey];
-		if ([DictionaryTemp isKindOfClass:[NSNumber class]]) {
+		if ([DictionaryTemp isKindOfClass:numClass]) {
 			isSamp = [(NSNumber*)DictionaryTemp boolValue];
-		} else if ([DictionaryTemp isKindOfClass:[NSString class]]){
+		} else if ([DictionaryTemp isKindOfClass:strClass]){
 			isSamp = [(NSString*)DictionaryTemp boolValue];
 		} else {
 			RELEASEOBJ(tempDict);
@@ -184,9 +186,9 @@ typedef enum _MADPlugCapabilities {
 		}
 		
 		DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugTypeKey)];
-		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-			NSStringToOSType(DictionaryTemp, &type);
-		} else if([DictionaryTemp isKindOfClass:[NSNumber class]]) {
+		if ([DictionaryTemp isKindOfClass:strClass]) {
+			type = NSStringToOSType(DictionaryTemp);
+		} else if([DictionaryTemp isKindOfClass:numClass]) {
 			type = [(NSNumber*)DictionaryTemp unsignedIntValue];
 		} else {
 			RELEASEOBJ(tempDict);
@@ -229,9 +231,9 @@ typedef enum _MADPlugCapabilities {
 				}
 			} else {
 				DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugModeKey)];
-				if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-					NSStringToOSType(DictionaryTemp, &mode);
-				} else if([DictionaryTemp isKindOfClass:[NSNumber class]]) {
+				if ([DictionaryTemp isKindOfClass:strClass]) {
+					mode = NSStringToOSType(DictionaryTemp);
+				} else if([DictionaryTemp isKindOfClass:numClass]) {
 					mode = [(NSNumber*)DictionaryTemp unsignedIntValue];
 				} else {
 					RELEASEOBJ(tempDict);
