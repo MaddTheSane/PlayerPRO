@@ -294,6 +294,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		if (theErr) {
 			*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(theOSErr));
 		}
+		self.paused = YES;
 		return NO;
 	}
 	theOSErr = MADLoadMusicCFURLFile(MADLib, &Music, fileType, BRIDGE(CFURLRef, musicToLoad));
@@ -302,6 +303,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		if (theErr) {
 			*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(theOSErr));
 		}
+		self.paused = YES;
 		return NO;
 	}
 	
