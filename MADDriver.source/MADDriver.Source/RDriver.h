@@ -32,6 +32,7 @@
 ////////////////////////////////////////////////
 
 #pragma pack(push, 2)
+
 ////////////////////////////////////////////////
 
 /********************						***********************/
@@ -346,6 +347,12 @@ enum PPPlugModes {
 };
 
 #ifdef _MAC_H
+
+#include <CoreFoundation/CFString.h>
+#include <CoreFoundation/CFArray.h>
+#if !TARGET_OS_IPHONE
+#include <CoreFoundation/CFBundle.h>
+#endif
 
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 

@@ -28,6 +28,26 @@
 #include "FileUtils.h"
 #endif
 
+#ifndef WIN32
+//Windows Defines
+typedef SInt16			WORD;
+typedef UInt16			UWORD;
+typedef SInt32			HRESULT;
+typedef UInt32			ULONG;
+typedef void*			LPVOID;
+typedef SInt32			LONG;
+
+typedef UInt16			UINT;
+typedef Boolean			BOOL;
+typedef UInt32			DWORD;
+typedef UInt16			USHORT;
+typedef SInt16			SHORT;
+typedef FourCharCode	FOURCC;
+typedef SInt8			BYTE;
+#endif
+
+typedef UInt8			UBYTE;
+
 #ifdef WIN32
 #define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
 #endif
