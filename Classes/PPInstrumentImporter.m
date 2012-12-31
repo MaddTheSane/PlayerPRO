@@ -89,8 +89,28 @@
 - (void)addPlugInFromBundle:(NSBundle *)theBund
 {
 	PPInstrumentImporterObject *obj = [[PPInstrumentImporterObject alloc] initWithBundle:theBund];
+	NSInteger y;
 	if (obj) {
-		[instrumentIEArray addObject:obj];
+		for (y = 0; y < [instrumentIEArray count]; y++) {
+			PPInstrumentImporterObject *toComp = [instrumentIEArray objectAtIndex:y];
+			if (toComp.type == obj.type) {
+				if (toComp.version < obj.version) {
+					[instrumentIEArray replaceObjectAtIndex:y withObject:obj];
+					RELEASEOBJ(obj);
+					obj = nil;
+					break;
+				} else {
+					RELEASEOBJ(obj);
+					obj = nil;
+					break;
+				}
+			}
+		}
+		if (obj) {
+			[instrumentIEArray addObject:obj];
+			RELEASEOBJ(obj);
+		}
+
 	}
 }
 
