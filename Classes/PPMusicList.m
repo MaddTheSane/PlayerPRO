@@ -191,7 +191,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	FSRef theRef;
 	StringPtr aStr, aStr2;
 	UInt16 theNo, i;
-	CFURLGetFSRef((CFURLRef)toOpen, &theRef);
+	CFURLGetFSRef(BRIDGE(CFURLRef, toOpen), &theRef);
 	refNum = FSOpenResFile(&theRef, fsRdPerm);
 	OSErr resErr = ResError();
 	if (resErr) {
@@ -225,11 +225,9 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 		NSString *together = [NSString stringWithFormat:@"%@:%@", BRIDGE(NSString*, CFaStr), BRIDGE(NSString*, CFaStr2)];
 		CFRelease(CFaStr);
 		CFRelease(CFaStr2);
-		CFURLRef tempURLRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, BRIDGE(CFStringRef, together), kCFURLHFSPathStyle, false);
-
-		NSURL *fullPath = CFBridgingRelease(tempURLRef);
-		tempURLRef = NULL;
+		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, BRIDGE(CFStringRef, together), kCFURLHFSPathStyle, false));
 		NSURL *refURL = [fullPath fileReferenceURL];
+		
 		PPMusicListObject *obj = nil;
 		if (refURL) {
 			obj = [[PPMusicListObject alloc] initWithURL:refURL];
@@ -322,6 +320,10 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	if ((self = [super init])) 
 	{
 		NSMutableArray *BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY];
+		if (!BookmarkArray) {
+			AUTORELEASEOBJNORETURN(self);
+			return nil;
+		}
 		NSInteger i = 0;
 		musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
 		for (i = 0; i < [BookmarkArray count]; i++) {
