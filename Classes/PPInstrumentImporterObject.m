@@ -22,6 +22,10 @@ void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUID
 	
 	CFPlugInRef plugToTest = CFBundleGetPlugIn(tempBundleRef);
 	
+	if (!plugToTest) {
+		return NULL;
+	}
+	
 	//  See if this plug-in implements the Test type.
 	factories	= CFPlugInFindFactoriesForPlugInTypeInPlugIn( TypeUUID, plugToTest );
 	
@@ -108,6 +112,13 @@ typedef enum _MADPlugCapabilities {
 {
 	[self doesNotRecognizeSelector:_cmd];
 	return nil;
+}
+
+- (NSString*)description
+{
+	char typeString[5] = {0};
+	OSType2Ptr(type, typeString);
+	return [NSString stringWithFormat:@"%@ - %@ Sample: %@ Type: %@ UTIs: %@", menuName, [file bundlePath], isSamp ? @"YES": @"NO", [NSString stringWithCString:typeString encoding:NSMacOSRomanStringEncoding] ,[UTITypes description]];
 }
 
 - (id)initWithBundle:(NSBundle *)tempBundle

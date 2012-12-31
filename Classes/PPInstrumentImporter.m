@@ -20,6 +20,11 @@
 	return nil;
 }
 
+- (NSString*)description
+{
+	return [NSString stringWithFormat:@"Music: %p Importers: %@", curMusic, [instrumentIEArray description]];
+}
+
 - (id)initWithMusic:(MADMusic**)theMus
 {
 	if (self = [super init]) {
@@ -38,7 +43,7 @@
 		
 		NSInteger PlugLocNums = [plugLocs count], i, x, y;
 		
-		for (i=0; i < PlugLocNums; i++) {
+		for (i = 0; i < PlugLocNums; i++) {
 			CFIndex		PlugNums;
 			CFArrayRef	somePlugs;
 			NSURL		*aPlugLoc;
