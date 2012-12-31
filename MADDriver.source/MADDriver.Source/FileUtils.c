@@ -121,6 +121,9 @@ OSType Ptr2OSType( char* str)
 	char safetyNet[5] = "    ";
 	
 	len = strlen( str);
+	if (len > 4) {
+		len = 4;
+	}
 	for (i = 0; i < len; i++) {
 		safetyNet[i] = str[i];
 	}
