@@ -96,7 +96,7 @@ typedef struct
 
 typedef struct _PPFiltersPlugin {
     IUNKNOWN_C_GUTS;
-	OSErr (STDMETHODCALLTYPE *FiltersMain) (sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short stereoMode);
+	OSErr (STDMETHODCALLTYPE *FiltersMain) (void* thisInterface, sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short stereoMode);
 } PPFiltersPlugin;
 
 #pragma mark Instruments Import/Export Plugs
@@ -133,7 +133,7 @@ typedef struct _PPFiltersPlugin {
 
 typedef struct _PPInstrumentPlugin {
     IUNKNOWN_C_GUTS;
-	OSErr (STDMETHODCALLTYPE *InstrMain) (OSType,  InstrData*, sData**, short*, CFURLRef, PPInfoPlug*);
+	OSErr (STDMETHODCALLTYPE *InstrMain) (void* thisInterface, OSType,  InstrData*, sData**, short*, CFURLRef, PPInfoPlug*);
 } PPInstrumentPlugin;
 
 #pragma mark Digital Editor Plugs
@@ -194,7 +194,7 @@ typedef struct
 
 typedef struct _PPDigitalPlugin {
     IUNKNOWN_C_GUTS;
-	OSErr (STDMETHODCALLTYPE *MyProcPtr) (Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug);
+	OSErr (STDMETHODCALLTYPE *MyProcPtr) (void* thisInterface, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug);
 } PPDigitalPlugin;
 
 

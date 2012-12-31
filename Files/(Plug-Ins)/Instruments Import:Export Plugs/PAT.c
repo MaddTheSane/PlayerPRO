@@ -304,13 +304,14 @@ static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean res
 }
 
 
-OSErr mainPAT(		OSType					order,						// Order to execute
-				InstrData				*InsHeader,					// Ptr on instrument header
-				sData					**sample,					// Ptr on samples data
-				short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
-																	// If sampleID == -1 : add sample else replace selected sample.
-				CFURLRef					AlienFileCFURL,			// IN/OUT file
-				PPInfoPlug				*thePPInfoPlug)
+OSErr mainPAT(void					*unused,
+			  OSType				order,						// Order to execute
+			  InstrData				*InsHeader,					// Ptr on instrument header
+			  sData					**sample,					// Ptr on samples data
+			  short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+			  // If sampleID == -1 : add sample else replace selected sample.
+			  CFURLRef				AlienFileCFURL,			// IN/OUT file
+			  PPInfoPlug			*thePPInfoPlug)
 {
 	OSErr	myErr = noErr;
 	UNFILE	iFileRefI;

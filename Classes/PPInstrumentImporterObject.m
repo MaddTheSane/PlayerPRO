@@ -268,7 +268,7 @@ typedef enum _MADPlugCapabilities {
 	
 	CFBundleRefNum fileID = CFBundleOpenBundleResourceMap(tempRef);
 	
-	OSErr returnType = (*xxxx)->InstrMain(imporexp, insData, sdataref, insSamp, BRIDGE(CFURLRef, fileToImport), plugInfo);
+	OSErr returnType = (*xxxx)->InstrMain(xxxx, imporexp, insData, sdataref, insSamp, BRIDGE(CFURLRef, fileToImport), plugInfo);
 	
 	CFBundleCloseBundleResourceMap(tempRef, fileID);
 	CFRelease(tempRef);
