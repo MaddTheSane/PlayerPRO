@@ -27,7 +27,7 @@ typedef struct _trackerType {
 	unsigned int reserved:13;
 } trackerType;
 
-static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
+static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 {
 	if (rhl.playlist != lhl.playlist) {
 		return NO;
@@ -43,13 +43,13 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 
 @interface OpenPanelViewItem : NSObject
 {
-	trackerType type;
+	trackerType utiType;
 	NSArray *utis;
 	NSString *name;
 }
 
 @property (readonly) NSString *name;
-@property (readonly) trackerType type;
+@property (readonly) trackerType utiType;
 @property (readonly) NSArray *utis;
 
 - (id)initWithType:(int)typ utis:(NSArray*)ut name:(NSString*)nam;
@@ -65,7 +65,7 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 }
 
 @synthesize name;
-@synthesize type;
+@synthesize utiType;
 @synthesize utis;
 
 - (id)initWithType:(int)typ utis:(NSArray*)ut name:(NSString*)nam;
@@ -73,15 +73,15 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	if (self = [super init]) {
 		switch (typ) {
 			case utiTrackerType:
-				type.tracker = 1;
+				utiType.tracker = 1;
 				break;
 				
 			case utiPlaylistType:
-				type.playlist = 1;
+				utiType.playlist = 1;
 				break;
 				
 			case utiInstrumentType:
-				type.instrument = 1;
+				utiType.instrument = 1;
 				break;
 				
 			default:
@@ -107,12 +107,12 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 
 - (NSString* )description
 {
-	NSString *des;
-	if (type.playlist) {
+	NSString *des = nil;
+	if (utiType.playlist) {
 		des = @"Playlist";
-	} else if (type.instrument) {
+	} else if (utiType.instrument) {
 		des = @"Instrument";
-	} else if (type.tracker) {
+	} else if (utiType.tracker) {
 		des = @"Tracker";
 	}
 	
@@ -165,6 +165,26 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 			}
 		}
 
+		[mutArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+			if ([obj1 utiType].tracker != [obj2 utiType].tracker) {
+				if ([obj1 utiType].tracker) {
+					return NSOrderedAscending;
+				} else return NSOrderedDescending;
+			} else if ([obj1 utiType].playlist != [obj2 utiType].playlist) {
+				if ([obj1 utiType].playlist) {
+					return NSOrderedAscending;
+				} else return NSOrderedDescending;
+			} else if ([obj1 utiType].instrument != [obj2 utiType].instrument) {
+				//Technically we shouldn't get here...
+				if ([obj1 utiType].instrument) {
+					return NSOrderedAscending;
+				} else return NSOrderedDescending;
+			}
+			
+			NSComparisonResult result = [[obj1 name] localizedStandardCompare:[obj2 name]];
+			return result;
+		}];
+		
 		utiObjects = [[NSArray alloc] initWithArray:mutArray];
 	}
 	return self;
@@ -194,7 +214,7 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	[fileTypeSelectionMenu addItem:[NSMenuItem separatorItem]];
 	
 	for (OpenPanelViewItem *item in utiObjects) {
-		if (item.type.tracker) {
+		if (item.utiType.tracker) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:@"All Trackers" action:@selector(selectUTI:) keyEquivalent:@""];
 			[mi setTag:utiTrackerType];
 			[mi setTarget:self];
@@ -205,7 +225,7 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	}
 	
 	for (OpenPanelViewItem *item in utiObjects) {
-		if (item.type.playlist) {
+		if (item.utiType.playlist) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:@"All Playlists" action:@selector(selectUTI:) keyEquivalent:@""];
 			[mi setTag:utiPlaylistType];
 			[mi setTarget:self];
@@ -215,7 +235,7 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		}
 	}
 	for (OpenPanelViewItem *item in utiObjects) {
-		if (item.type.instrument) {
+		if (item.utiType.instrument) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:@"All Instruments" action:@selector(selectUTI:) keyEquivalent:@""];
 			[mi setTag:utiInstrumentType];
 			[mi setTarget:self];
@@ -232,7 +252,7 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		OpenPanelViewItem *curItem = [utiObjects objectAtIndex:i];
 		if (i - 1 >= 0) {
 			OpenPanelViewItem *prevItem = [utiObjects objectAtIndex:i - 1];
-			if (!isTwoTrackerTypesEqual(curItem.type, prevItem.type)) {
+			if (!isTwoTrackerTypesEqual(curItem.utiType, prevItem.utiType)) {
 				[fileTypeSelectionMenu addItem:[NSMenuItem separatorItem]];
 			}
 		}
@@ -264,7 +284,7 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		{
 			NSMutableArray *trackerUTIs = [NSMutableArray array];
 			for (OpenPanelViewItem *obj in utiObjects) {
-				if (obj.type.tracker) {
+				if (obj.utiType.tracker) {
 					[trackerUTIs addObjectsFromArray:obj.utis];
 				}
 			}
@@ -276,7 +296,7 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		{
 			NSMutableArray *trackerUTIs = [NSMutableArray array];
 			for (OpenPanelViewItem *obj in utiObjects) {
-				if (obj.type.playlist) {
+				if (obj.utiType.playlist) {
 					[trackerUTIs addObjectsFromArray:obj.utis];
 				}
 			}
@@ -288,7 +308,7 @@ static BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		{
 			NSMutableArray *instrumentUTIs = [NSMutableArray array];
 			for (OpenPanelViewItem *obj in utiObjects) {
-				if (obj.type.instrument) {
+				if (obj.utiType.instrument) {
 					[instrumentUTIs addObjectsFromArray:obj.utis];
 				}
 			}
