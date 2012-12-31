@@ -14,6 +14,8 @@
 
 #define kMUSICLISTKEY @"Music List Key1"
 
+static NSString * const kMusicListKVO = @"musicList";
+
 // GetIndString isn't supported on 64-bit Mac OS X
 // This code is emulation for GetIndString.
 // Code taken from Mozilla's Mac Eudora importer
@@ -123,7 +125,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 - (void)sortMusicList
 {
 	//[musicList sortUsingFunction:SortUsingFileName context:NULL];
-	[self willChangeValueForKey:@"musicList"];
+	[self willChangeValueForKey:kMusicListKVO];
 	@autoreleasepool {
 		[musicList sortUsingComparator:^(id rhs, id lhs) {
 			NSString *rhsString = [rhs fileName];
@@ -132,20 +134,20 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 			return result;
 		}];
 	}
-	[self didChangeValueForKey:@"musicList"];
+	[self didChangeValueForKey:kMusicListKVO];
 }
 
 - (void)loadMusicList:(NSMutableArray *)newArray
 {
 #if __has_feature(objc_arc)
-	[self willChangeValueForKey:@"musicList"];
+	[self willChangeValueForKey:kMusicListKVO];
 	musicList = newArray;
-	[self didChangeValueForKey:@"musicList"];
+	[self didChangeValueForKey:kMusicListKVO];
 #else
 	NSMutableArray *oldList = musicList;
-	[self willChangeValueForKey:@"musicList"];
+	[self willChangeValueForKey:kMusicListKVO];
 	musicList = [newArray retain];
-	[self didChangeValueForKey:@"musicList"];
+	[self didChangeValueForKey:kMusicListKVO];
 	[oldList release];
 #endif
 }
@@ -153,9 +155,9 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 - (void)clearMusicList
 {
 	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, ([musicList count] - 1))];
-	[self willChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
+	[self willChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:kMusicListKVO];
 	[musicList removeAllObjects];
-	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:@"musicList"];
+	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:kMusicListKVO];
 }
 
 - (void)loadMusicListFromPreferences
@@ -294,12 +296,12 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	} else {
 		obj = [[PPMusicListObject alloc] initWithURL:musicToLoad];
 	}
-	//[self willChangeValueForKey:@"musicList"];
+	//[self willChangeValueForKey:kMusicListKVO];
 	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndex:[musicList count]];
-	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:@"musicList"];
+	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:kMusicListKVO];
 	[musicList addObject:obj];
-	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:@"musicList"];
-	//[self didChangeValueForKey:@"musicList"];
+	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:kMusicListKVO];
+	//[self didChangeValueForKey:kMusicListKVO];
 	RELEASEOBJ(obj);
 }
 

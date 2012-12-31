@@ -17,6 +17,8 @@
 #import "PPInstrumentImporter.h"
 #include <PlayerPROCore/RDriverInt.h>
 
+static NSString * const kMusicListKVO = @"musicList";
+
 void CocoaDebugStr( short line, Ptr file, Ptr text)
 {
 	NSLog(@"%s:%u error text:%s!", file, line, text);
@@ -56,9 +58,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 - (void)addMusicToMusicList:(NSURL* )theURL
 {
-	[self willChangeValueForKey:@"musicList"];
+	[self willChangeValueForKey:kMusicListKVO];
 	[musicList addMusicURL:theURL];
-	[self didChangeValueForKey:@"musicList"];
+	[self didChangeValueForKey:kMusicListKVO];
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
 		currentlyPlayingIndex = [musicList countOfMusicList] - 1;
 		[self selectCurrentlyPlayingMusic];
@@ -390,7 +392,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 	[self addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionNew context:NULL];
 	self.paused = YES;
-	[self willChangeValueForKey:@"musicList"];
+	[self willChangeValueForKey:kMusicListKVO];
 	musicList = [[PPMusicList alloc] init];
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
 		[musicList loadMusicListFromPreferences];
@@ -398,7 +400,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	
 	[tableView setDoubleAction:@selector(doubleClickMusicList)];
 	
-	[self didChangeValueForKey:@"musicList"];
+	[self didChangeValueForKey:kMusicListKVO];
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	[defaultCenter addObserver:self selector:@selector(preferencesDidChange:) name:PPListPreferencesDidChange object:nil];
 	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
@@ -477,9 +479,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 - (IBAction)sortMusicList:(id)sender
 {
-	[self willChangeValueForKey:@"musicList"];
+	[self willChangeValueForKey:kMusicListKVO];
 	[musicList sortMusicList];
-	[self didChangeValueForKey:@"musicList"];
+	[self didChangeValueForKey:kMusicListKVO];
 }
 
 - (IBAction)playSelectedMusic:(id)sender
@@ -525,24 +527,24 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	theRange.location = 0;
 	theRange.length = NSUIntegerMax;
 	[selMusic getIndexes:indexArray maxCount:selIndexes inIndexRange:&theRange];
-	[self willChangeValueForKey:@"musicList"];
+	[self willChangeValueForKey:kMusicListKVO];
 	for (i = selIndexes - 1; i >= 0 ; i--) {
 		[musicList removeObjectInMusicListAtIndex:indexArray[i]];
 	}
-	[self didChangeValueForKey:@"musicList"];
+	[self didChangeValueForKey:kMusicListKVO];
 	free(indexArray);
 #else
-	[self willChangeValueForKey:@"musicList"];
+	[self willChangeValueForKey:kMusicListKVO];
 	[musicList removeObjectInMusicListAtIndex:[tableView selectedRow]];
-	[self didChangeValueForKey:@"musicList"];
+	[self didChangeValueForKey:kMusicListKVO];
 #endif
 }
 
 - (IBAction)clearMusicList:(id)sender
 {
-	[self willChangeValueForKey:@"musicList"];
+	[self willChangeValueForKey:kMusicListKVO];
 	[musicList clearMusicList];
-	[self didChangeValueForKey:@"musicList"];
+	[self didChangeValueForKey:kMusicListKVO];
 }
 
 enum PPMusicToolbarTypes {
@@ -629,13 +631,13 @@ enum PPMusicToolbarTypes {
 		if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"]) {
 			[self addMusicToMusicList:panelURL];
 		}else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"]) {
-			[self willChangeValueForKey:@"musicList"];
+			[self willChangeValueForKey:kMusicListKVO];
 			[musicList loadMusicListAtURL:panelURL];
-			[self didChangeValueForKey:@"musicList"];
+			[self didChangeValueForKey:kMusicListKVO];
 		} else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"]) {
-			[self willChangeValueForKey:@"musicList"];
+			[self willChangeValueForKey:kMusicListKVO];
 			[musicList loadOldMusicListAtURL:panelURL];
-			[self didChangeValueForKey:@"musicList"];
+			[self didChangeValueForKey:kMusicListKVO];
 		}
 	}
 	RELEASEOBJ(panel);
@@ -776,16 +778,16 @@ static NSString * const doubleDash = @"--";
 	}
 	else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"])
 	{
-		[self willChangeValueForKey:@"musicList"];
+		[self willChangeValueForKey:kMusicListKVO];
 		[musicList loadMusicListAtURL:[NSURL fileURLWithPath:filename]];
-		[self didChangeValueForKey:@"musicList"];
+		[self didChangeValueForKey:kMusicListKVO];
 		return YES;
 	}
 	else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"])
 	{
-		[self willChangeValueForKey:@"musicList"];
+		[self willChangeValueForKey:kMusicListKVO];
 		[musicList loadOldMusicListAtURL:[NSURL fileURLWithPath:filename]];
-		[self didChangeValueForKey:@"musicList"];
+		[self didChangeValueForKey:kMusicListKVO];
 		return YES;
 	}
 	return NO;
