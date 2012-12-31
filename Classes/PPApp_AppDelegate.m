@@ -399,10 +399,10 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
 		[musicList loadMusicListFromPreferences];
 	}
-	
+	[self didChangeValueForKey:kMusicListKVO];
+
 	[tableView setDoubleAction:@selector(doubleClickMusicList)];
 	
-	[self didChangeValueForKey:kMusicListKVO];
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	[defaultCenter addObserver:self selector:@selector(preferencesDidChange:) name:PPListPreferencesDidChange object:nil];
 	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
