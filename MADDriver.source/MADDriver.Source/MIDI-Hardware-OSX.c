@@ -43,13 +43,20 @@ void DoPlayInstruInt( short	Note, short Instru, short effect, short arg, short v
 void NPianoRecordProcess( short i, short, short, short);
 
 static MIDIClientRef MADMIDICliRef;
-void MADMIDINotifyProc(const MIDINotification *message, void *refCon);
+static MIDIPortRef MADMIDIPortInRef;
+static MIDIPortRef MADMIDIPortOutRef;
+static MIDIEndpointRef MADMIDIKeyboardEndRef;
+static void MADMIDINotifyProc(const MIDINotification *message, void *refCon);
+static void MADMIDIPortProc(const MIDIPacketList *pktlist, void *readProcRefCon, void *srcConnRefCon);
 
 void CloseMIDIHarware(void)
 {
 	if( MIDIHardware)
 	{
-		OSStatus MIDIErr = MIDIClientDispose(MADMIDICliRef);
+		OSStatus MIDIErr = MIDIEndpointDispose(MADMIDIKeyboardEndRef);
+		MIDIErr = MIDIClientDispose(MADMIDICliRef);
+		MADMIDICliRef = NULL;
+		MADMIDIPortInRef = NULL;
 	}
 	
 	MIDIHardware = false;
@@ -64,6 +71,13 @@ void OpenMIDIHardware( MADDriverRec *rec)
 		{
 			MIDIHardware = TRUE;
 			MIDIHardwareAlreadyOpen = TRUE;
+			MIDIErr = MIDIInputPortCreate(MADMIDICliRef, CFSTR("PlayerPRO Keyboard In"), MADMIDIPortProc, rec, &MADMIDIPortInRef);
+			if (MIDIErr == noErr) {
+				MIDIErr = MIDIDestinationCreate(MADMIDICliRef, CFSTR("PlayerPRO destination"), MADMIDIPortProc, rec, &MADMIDIKeyboardEndRef);
+			}
+			if (MIDIErr == noErr) {
+				MIDIErr = MIDIPortConnectSource(MADMIDIPortInRef, MADMIDIKeyboardEndRef, rec);
+			}
 		}
 		else MIDIHardware = FALSE;
 	}
@@ -110,7 +124,12 @@ void SendMIDITimingClock( MADDriverRec *MDriver)
 	
 }
 
-void MADMIDINotifyProc(const MIDINotification *message, void *refCon)
+static void MADMIDINotifyProc(const MIDINotification *message, void *refCon)
+{
+	
+}
+
+static void MADMIDIPortProc(const MIDIPacketList *pktlist, void *readProcRefCon, void *srcConnRefCon)
 {
 	
 }
