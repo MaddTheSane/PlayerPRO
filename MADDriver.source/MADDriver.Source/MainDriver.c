@@ -3148,10 +3148,11 @@ OSErr MADPlaySndHandle( MADDriverRec *MDriver, Handle sound, long channel, long 
 
 Cmd* GetMADCommand( short PosX, short	TrackIdX, PatData*	tempMusicPat)
 {
-	if( PosX < 0) PosX = 0;
 	if (tempMusicPat == NULL) {
 		return NULL;
 	}
+	
+	if( PosX < 0) PosX = 0;
 	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 	
 	return( &(tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
