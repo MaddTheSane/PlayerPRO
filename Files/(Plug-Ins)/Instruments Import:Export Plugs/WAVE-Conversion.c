@@ -2,9 +2,13 @@
 /*  IMPORT	*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/RDriverInt.h>
 #include <Carbon/Carbon.h>
 #include "WAV.h"
 #include <QuickTime/QuickTime.h>
+
+void ConvertInstrumentIn( register Byte *tempPtr, register size_t sSize);
 
 #define WAVE_FORMAT_PCM		1
 #define kmaxVolume			7
@@ -16,7 +20,7 @@
 
 OSErr TestWAV( PCMWavePtr CC)
 {
-	if( CC->ckid =='RIFF') return noErr;
+	if( EndianU32_BtoN(CC->ckid) =='RIFF') return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -65,15 +69,15 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 			FSCloseFork(fRef); return NULL;
 		}
 		
-		if((*WAVERsrc).ckid =='RIFF')
+		if(EndianU32_BtoN((*WAVERsrc).ckid) =='RIFF')
 		{
 			(*WAVERsrc).cksize = longswap((*WAVERsrc).cksize);
 			
-			if((*WAVERsrc).fccType =='WAVE')
+			if(EndianU32_BtoN((*WAVERsrc).fccType) =='WAVE')
 			{
 				(*WAVERsrc).dwDataOffset = longswap((*WAVERsrc).dwDataOffset);
 				
-				if((*WAVERsrc).fmtType,'fmt ')
+				if(EndianU32_BtoN((*WAVERsrc).fmtType) == 'fmt ')
 				{
 					(*WAVERsrc).wFormatTag      = shrtswap((*WAVERsrc).wFormatTag);
 					(*WAVERsrc).nCannels        = shrtswap((*WAVERsrc).nCannels);
@@ -144,6 +148,18 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 	return (Ptr) WAVERsrc;
 }
 
+#ifdef QD_HEADERS_ARE_PRIVATE
+//Workaround so it can build on 10.7 and later SDKs
+typedef struct Cursor {
+	short data[16];
+	short mask[16];
+	Point hotSpot;
+} Cursor, *CursPtr, **CursHandle;
+extern CursHandle GetCursor(short);
+extern void SetCursor(const Cursor *);
+#endif
+
+
 OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 {
 	//OSType					fileType;
@@ -153,7 +169,7 @@ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug
 	//Track					usedTrack;
 	//TimeValue				addedDuration;
 	//long					outFlags;
-	short					resRefNum, /*ins, samp,*/ resId;
+	FSIORefNum				resRefNum, /*ins, samp,*/ resId;
 	//FInfo					fndrInfo;
 	Cursor					watchCrsr;
 	CursHandle				myCursH;
@@ -178,7 +194,7 @@ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug
 	resId = 0;
 	iErr = NewMovieFromFile( &theMovie, resRefNum, &resId, resName, 0, &dataRefWasChanged);
 	
-	CallUpdateALLWindowUPP();
+	//CallUpdateALLWindowUPP();
 	
 	canceled = FALSE;
 	

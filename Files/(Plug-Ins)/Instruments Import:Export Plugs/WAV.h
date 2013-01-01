@@ -16,10 +16,31 @@
 #include "PPDefs.h"
 #else
 #include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/PPDefs.h>
+//#include <PlayerPROCore/PPDefs.h>
 #endif
 
-typedef struct _infoformat_tag{
+#ifndef WIN32
+//Windows Defines
+typedef SInt16			WORD;
+typedef UInt16			UWORD;
+typedef SInt32			HRESULT;
+typedef UInt32			ULONG;
+typedef void*			LPVOID;
+typedef SInt32			LONG;
+
+typedef UInt16			UINT;
+#if !defined(BOOL) || !defined(__OBJC__)
+typedef Boolean			BOOL;
+#endif
+typedef UInt32			DWORD;
+typedef UInt16			USHORT;
+typedef SInt16			SHORT;
+typedef FourCharCode	FOURCC;
+typedef SInt8			BYTE;
+#endif
+
+
+typedef struct _infoformat_tag {
 	Str255	name;
 	Str32	smpls;
 	Str32	dataBits;
@@ -28,7 +49,7 @@ typedef struct _infoformat_tag{
 typedef InfoRec *InfoPtr;
 typedef InfoPtr *InfoHnd;
 
-typedef struct _MMCKINFO{
+typedef struct _MMCKINFO {
 	FOURCC		ckid;
 	DWORD		cksize;
 	FOURCC		fccType;
@@ -36,7 +57,7 @@ typedef struct _MMCKINFO{
 	WORD		dwFlags;
 } MMCKINFO;
 
-typedef struct waveformat_tag{
+typedef struct waveformat_tag {
 	WORD		wFormatTag;
 	WORD		nCannels;
 	DWORD		nSamplesPerSec;
@@ -45,7 +66,7 @@ typedef struct waveformat_tag{
 	WORD		wBitsPerSample;
 } WAVEFORMAT;
 
-typedef struct _pcwaveformat_tag{
+typedef struct _pcwaveformat_tag {
 	FOURCC		ckid;
 	DWORD		cksize;
 	FOURCC		fccType;
@@ -70,9 +91,9 @@ typedef struct _CK{
 } CK;
 
 typedef struct _MyAtom{
-	long		pos;
-	long		id;
-	long		size;
+	SInt32		pos;
+	SInt32		id;
+	SInt32		size;
 	short		ref;
 } MyAtom;
 
