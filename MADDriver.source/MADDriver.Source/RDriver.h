@@ -350,6 +350,7 @@ enum PPPlugModes {
 
 #include <CoreFoundation/CFString.h>
 #include <CoreFoundation/CFArray.h>
+#include <CoreFoundation/CFURL.h>
 #if !TARGET_OS_IPHONE
 #include <CoreFoundation/CFBundle.h>
 #endif
@@ -484,7 +485,9 @@ typedef struct __VSTEffect
 	short				VSTid;
 	CFStringRef			name;
 	Boolean				Active;
+#if !TARGET_OS_IPHONE
 	CFBundleRef			connID;
+#endif
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
 }	VSTEffect;
