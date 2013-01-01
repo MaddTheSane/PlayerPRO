@@ -141,6 +141,8 @@ static void MOToldInstrData(struct FileInstrData * i) {
 	PPBE32(&i->insSize);
 	PPBE32(&i->loopStart);
 	PPBE32(&i->loopLenght);
+	PPBE16(&i->CompCode);
+	PPBE16(&i->freq);
 }
 
 static void MOToldMADSpec(struct oldMADSpec * m){
@@ -217,6 +219,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 			inOutCount = sizeof( struct oldPatHeader);
 		
 			memcpy(&tempPatHeader, MADPtr + OffSetToSample, inOutCount);
+			MOToldPatHeader(&tempPatHeader);
 		}
 		else tempPatHeader.PatternSize = 64;
 	
@@ -224,7 +227,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 	/** Lecture du header + contenu de la partition **/
 	/*************************************************/
 		CompMode = tempPatHeader.CompressionMode;
-		PPBE32(&CompMode);
+		//PPBE32(&CompMode);
 		if( CompMode == 'MAD1')
 		{
 			inOutCount = sizeof( struct MusicPattern) + tempPatHeader.PatBytes;
