@@ -3158,6 +3158,19 @@
 			name = Preferences;
 			sourceTree = "<group>";
 		};
+		5523EC78169276AA0067B22A /* Instrument Code */ = {
+			isa = PBXGroup;
+			children = (
+				557EF72F168BD4B5001BF077 /* PPInstrumentImporter.h */,
+				557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */,
+				557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */,
+				557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */,
+				5523EC6716925FF80067B22A /* PPInstrumentWindowController.h */,
+				5523EC6816925FF80067B22A /* PPInstrumentWindowController.m */,
+			);
+			name = "Instrument Code";
+			sourceTree = "<group>";
+		};
 		552C70C210CDAF8C00C0E0D4 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -3536,19 +3549,11 @@
 				557139CE1684EF7500831A5A /* PPHilightableButton.m */,
 				557139E31685007B00831A5A /* OpenPanelViewController.h */,
 				557139E41685007B00831A5A /* OpenPanelViewController.m */,
-				557139E51685007B00831A5A /* OpenPanelViewController.xib */,
 				55B23D141687D6ED00DCE923 /* ARCBridge.h */,
-				557EF72F168BD4B5001BF077 /* PPInstrumentImporter.h */,
-				557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */,
-				557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */,
-				557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */,
+				5523EC78169276AA0067B22A /* Instrument Code */,
 				55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */,
-				5523EC6716925FF80067B22A /* PPInstrumentWindowController.h */,
-				5523EC6816925FF80067B22A /* PPInstrumentWindowController.m */,
-				5523EC6916925FF80067B22A /* PPInstrumentWindowController.xib */,
 				5523EC70169265AB0067B22A /* PPPlugInInfoController.h */,
 				5523EC71169265AB0067B22A /* PPPlugInInfoController.m */,
-				5523EC72169265AB0067B22A /* PPPlugInInfoController.xib */,
 				5523EC75169265C30067B22A /* PPPlugInInfo.h */,
 				5523EC76169265C30067B22A /* PPPlugInInfo.m */,
 			);
@@ -3721,6 +3726,9 @@
 		88E0C3CA0C2F21DD00D6C081 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				557139E51685007B00831A5A /* OpenPanelViewController.xib */,
+				5523EC6916925FF80067B22A /* PPInstrumentWindowController.xib */,
+				5523EC72169265AB0067B22A /* PPPlugInInfoController.xib */,
 				552AFC7E167A8C8B00F32481 /* PPPause.pdf */,
 				557EC3E8121711280082B80A /* PPPlay.pdf */,
 				55E52E271245640500315307 /* PPFastForward.pdf */,

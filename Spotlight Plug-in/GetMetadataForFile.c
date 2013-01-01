@@ -132,12 +132,12 @@ Boolean GetMetadataForFile(void* thisInterface,
 			goto fail1;
 		}
 		
-		{
+		//{
 			//Set the title metadata
 			//CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->header->name, kCFStringEncodingMacRoman); //TODO: Check for other encodings?
 			//CFDictionarySetValue(attributes, kMDItemTitle, title);
 			//CFRelease(title);
-		}
+		//}
 		
 		{
 			PPInfoRec rec;
