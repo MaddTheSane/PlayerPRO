@@ -432,6 +432,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	instrumentImporter = [[PPInstrumentImporter alloc] initWithMusic:&Music];
 	instrumentController = [[PPInstrumentWindowController alloc] init];
 	instrumentController.importer = instrumentImporter;
+	instrumentController.curMusic = &Music;
 	
 	NSInteger i;
 	for (i = 0; i < [instrumentImporter plugInCount]; i++) {

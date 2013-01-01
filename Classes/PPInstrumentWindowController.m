@@ -16,6 +16,7 @@
 @implementation PPInstrumentWindowController
 
 @synthesize importer;
+@synthesize curMusic;
 
 - (id)initWithWindow:(NSWindow *)window
 {
