@@ -262,6 +262,11 @@ short FindAFreeChannel( MADDriverRec *intDriver);
 void parse_slidevol(Channel *ch, Byte Arg);
 void ConvertTo64Rows( MADMusic *music);
 
+// MIDI
+void InitMIDIHarware(void);
+void OpenMIDIHardware( MADDriverRec *rec);
+void CloseMIDIHarware(void);
+	
 #ifdef __cplusplus
 }
 #endif

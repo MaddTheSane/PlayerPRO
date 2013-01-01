@@ -720,8 +720,6 @@ OSErr MADChangeDriverSettings( MADDriverSettings	*DriverInitParam, MADDriverRec*
 	return noErr;
 }
 
-void OpenMIDIHardware();
-
 OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADDriverRec** returnDriver)
 {
 	OSErr 					theErr;
@@ -988,14 +986,15 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	
 	switch( MDriver->DriverSettings.driverMode)
 	{
-#ifdef _MIDIHARDWARE_
+//#ifdef _MIDIHARDWARE_
 		case MIDISoundDriver:
 		
-			OpenMIDIHardware();
+			OpenMIDIHardware(MDriver);
 			
 		/*	MDriver->gOutNodeRefNum = -1;
 			OMSAddPort( 'SNPL', 'out ', omsPortTypeOutput, NULL, NULL, &MDriver->MIDIPortRefNum);*/
 			
+#if 0
 			theErr = InitDBSoundManager( MDriver, initStereo);
 			if (theErr != noErr)
 			{
@@ -1005,9 +1004,9 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 				free(MDriver);
 				return theErr;
 			}
-			break;
-		break;
 #endif
+			break;
+//#endif
 		
 #ifdef _MAC_H		
 		case CoreAudioDriver:
@@ -1116,7 +1115,11 @@ OSErr MADDisposeDriver( MADDriverRec* MDriver)
 	
 	switch( MDriver->DriverSettings.driverMode)
 	{
-#ifdef _MAC_H			
+		case MIDISoundDriver:
+			CloseMIDIHarware();
+			break;
+			
+#ifdef _MAC_H
 		case CoreAudioDriver:
 			closeCoreAudio(MDriver);
 			break;
@@ -2634,9 +2637,9 @@ OSErr MADStopMusic( MADDriverRec *MDriver)
 	if( !MDriver->curMusic) return MADDriverHasNoMusic;
 	
 	MDriver->Reading = false;
-#ifdef _MIDIHARDWARE_
+//#ifdef _MIDIHARDWARE_
 	if( MDriver->SendMIDIClockData) SendMIDIClock( MDriver, 0xFC);
-#endif
+//#endif
 	
 	return noErr;
 }
@@ -2743,9 +2746,9 @@ OSErr MADStopDriver( MADDriverRec *MDriver)
 	
 	MADCleanDriver( MDriver);
 	
-#ifdef _MIDIHARDWARE_
+//#ifdef _MIDIHARDWARE_
 	if( MDriver->SendMIDIClockData) SendMIDIClock( MDriver, 0xFC);
-#endif
+//#endif
 	
 	return noErr;
 }
