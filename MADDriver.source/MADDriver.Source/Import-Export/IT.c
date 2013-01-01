@@ -90,9 +90,8 @@ static SInt32 read_itcompr8(ITPACK* status, Ptr *reader, Byte *sl_buffer, unsign
 	unsigned short 		bufbits = status->bufbits;
 	char 				last = status->last;
 	Byte 				buf;
-	if (!status) {
-		return 0;
-	}
+	
+	//FIXME: Static analyzer says that this assignment may be garbage under certain circumstances.
 	buf = status->buf;
 
 	while (dest<end) {
@@ -171,10 +170,7 @@ static SInt32 read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,unsign
 	short 			last = status->last;
 	Byte 			buf;
 	
-	if (!status) {
-		return 0;
-	}
-	
+	//FIXME: Static analyzer says that this assignment may be garbage under certain circumstances.
 	buf = status->buf;
 	
 	while (dest<end) {
