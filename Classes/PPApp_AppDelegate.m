@@ -696,6 +696,7 @@ enum PPMusicToolbarTypes {
 		if (err) {
 			NSRunAlertPanel(@"Error opening file", [NSString stringWithFormat:@"Unable to open %@: %@", [filename lastPathComponent], [err localizedFailureReason]], nil, nil, nil);
 			RELEASEOBJ(panel);
+			RELEASEOBJ(av);
 			return;
 		}
 		if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"]) {
