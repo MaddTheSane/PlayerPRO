@@ -330,6 +330,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
     if (!preferences) {
 		preferences = [[PPPreferences alloc] init];
 	}
+	[[preferences window] center];
 	[preferences showWindow:sender];
 }
 
@@ -636,10 +637,29 @@ enum PPMusicToolbarTypes {
 			[self willChangeValueForKey:kMusicListKVO];
 			[musicList loadMusicListAtURL:panelURL];
 			[self didChangeValueForKey:kMusicListKVO];
+			if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
+				NSError *err = nil;
+				currentlyPlayingIndex = 0;
+				if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
+				{
+					NSAlert *alert = [NSAlert alertWithError:err];
+					[alert runModal];
+				}
+			}
 		} else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"]) {
 			[self willChangeValueForKey:kMusicListKVO];
 			[musicList loadOldMusicListAtURL:panelURL];
 			[self didChangeValueForKey:kMusicListKVO];
+			if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
+				NSError *err = nil;
+				currentlyPlayingIndex = 0;
+				if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
+				{
+					NSAlert *alert = [NSAlert alertWithError:err];
+					[alert runModal];
+				}
+			}
+
 		}
 	}
 	RELEASEOBJ(panel);
@@ -724,10 +744,10 @@ enum PPMusicToolbarTypes {
 	}
 }
 
-static NSString * const doubleDash = @"--";
-
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
+	static NSString * const doubleDash = @"--";
+
 	NSInteger selected = [tableView selectedRow];
 	do {
 		if (selected < 0)
@@ -783,6 +803,15 @@ static NSString * const doubleDash = @"--";
 		[self willChangeValueForKey:kMusicListKVO];
 		[musicList loadMusicListAtURL:[NSURL fileURLWithPath:filename]];
 		[self didChangeValueForKey:kMusicListKVO];
+		if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
+			NSError *err = nil;
+			currentlyPlayingIndex = 0;
+			if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
+			{
+				NSAlert *alert = [NSAlert alertWithError:err];
+				[alert runModal];
+			}
+		}
 		return YES;
 	}
 	else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"])
@@ -790,6 +819,15 @@ static NSString * const doubleDash = @"--";
 		[self willChangeValueForKey:kMusicListKVO];
 		[musicList loadOldMusicListAtURL:[NSURL fileURLWithPath:filename]];
 		[self didChangeValueForKey:kMusicListKVO];
+		if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
+			NSError *err = nil;
+			currentlyPlayingIndex = 0;
+			if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
+			{
+				NSAlert *alert = [NSAlert alertWithError:err];
+				[alert runModal];
+			}
+		}
 		return YES;
 	}
 	return NO;
