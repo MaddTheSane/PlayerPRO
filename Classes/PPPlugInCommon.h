@@ -10,5 +10,6 @@
 #define PPMacho_PPPlugInCommon_h
 
 void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID);
+NSArray *DefaultPlugInLocations();
 
 #endif

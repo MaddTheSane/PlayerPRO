@@ -12,6 +12,20 @@
 #import "PPPlugInCommon.h"
 #import "PPInstrumentImporterObject.h"
 
+NSArray *DefaultPlugInLocations()
+{
+	NSMutableArray *plugLocs = [NSMutableArray arrayWithCapacity:3];
+	NSFileManager *fm = [NSFileManager defaultManager];
+	[plugLocs addObject:[[NSBundle mainBundle] builtInPlugInsURL]];
+	
+	[plugLocs addObject:[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]];
+	
+	//User plugins
+	[plugLocs addObject:[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]];
+	
+	return [NSArray arrayWithArray:plugLocs];
+}
+
 @implementation PPInstrumentImporter
 
 - (id)init
@@ -30,16 +44,8 @@
 	if (self = [super init]) {
 		curMusic = theMus;
 		instrumentIEArray = [[NSMutableArray alloc] initWithCapacity:20];
-		//[NSBundle]
-		NSMutableArray *plugLocs = [NSMutableArray arrayWithCapacity:3];
-		NSFileManager *fm = [NSFileManager defaultManager];
-		
-		[plugLocs addObject:[[NSBundle mainBundle] builtInPlugInsURL]];
-		
-		[plugLocs addObject:[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]];
-		
-		//User plugins
-		[plugLocs addObject:[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]];
+
+		NSArray *plugLocs = DefaultPlugInLocations();
 		
 		NSInteger PlugLocNums = [plugLocs count], i, x, y;
 		

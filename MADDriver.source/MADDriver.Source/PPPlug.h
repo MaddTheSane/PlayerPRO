@@ -31,7 +31,7 @@
 #include <CoreFoundation/CFPlugInCOM.h>
 
 
-typedef OSErr			(*RPlaySoundUPP)		( Ptr, long, long, long, long, long, long, unsigned long, Boolean);
+typedef OSErr			(*RPlaySoundUPP)		(MADDriverRec *theRec, Ptr, long, SInt32, SInt32, SInt32, long, long, unsigned int, Boolean);
 
 #ifdef __cplusplus
 extern "C" {
@@ -60,6 +60,7 @@ PPEXPORT sData* inMADCreateSample();
 typedef struct
 {
 	RPlaySoundUPP RPlaySound;
+	MADDriverRec *driverRec;
 	OSType fileType;
 } PPInfoPlug;
 
