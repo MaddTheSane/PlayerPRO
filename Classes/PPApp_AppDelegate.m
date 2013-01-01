@@ -223,8 +223,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			
 		case PPLoadNext:
 		{
-			NSInteger tableCount = [musicList countOfMusicList];
-			if (tableCount > ++currentlyPlayingIndex) {
+			if ([musicList countOfMusicList] > ++currentlyPlayingIndex) {
 				[self selectCurrentlyPlayingMusic];
 				NSError *err = nil;
 				if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
@@ -313,14 +312,19 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	
 	MADAttachDriverToMusic(MADDriver, Music, NULL);
 	MADPlayMusic(MADDriver);
-	long fT, cT;
 	self.paused = NO;
-	MADGetMusicStatus(MADDriver, &fT, &cT);
-	[songPos setMaxValue:fT];
-	[songPos setMinValue:0.0];
-	[songLabel setTitleWithMnemonic:[NSString stringWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding]];
-	[songTotalTime setIntegerValue:fT];
+	{
+		long fT, cT;
+		MADGetMusicStatus(MADDriver, &fT, &cT);
+		[songPos setMaxValue:fT];
+		[songPos setMinValue:0.0];
+		[songLabel setTitleWithMnemonic:[NSString stringWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding]];
+		[songTotalTime setIntegerValue:fT];
+	}
 
+	if (theErr) {
+		*theErr = nil;
+	}
 	return YES;
 }
 
