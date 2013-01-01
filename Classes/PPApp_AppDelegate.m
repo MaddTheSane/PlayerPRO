@@ -15,6 +15,10 @@
 #import "OpenPanelViewController.h"
 #import "ARCBridge.h"
 #import "PPInstrumentImporter.h"
+#import "PPInstrumentImporterObject.h"
+#import "PPInstrumentWindowController.h"
+#import "PPPlugInInfo.h"
+#import "PPPlugInInfoController.h"
 #include <PlayerPROCore/RDriverInt.h>
 
 static NSString * const kMusicListKVO = @"musicList";
@@ -337,12 +341,12 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 - (IBAction)exportInstrumentAs:(id)sender
 {
-    
+    [instrumentController exportInstrument:sender];
 }
 
 - (IBAction)showInstrumentsList:(id)sender
 {
-    
+    [instrumentController showWindow:sender];
 }
 
 - (IBAction)showTools:(id)sender
@@ -384,6 +388,19 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	}
 }
 
+- (IBAction)showPlugInInfo:(id)sender
+{
+	PPPlugInInfo *inf = [plugInInfos objectAtIndex:[sender tag]];
+	if (!inf) {
+		return;
+	}
+	
+	PPPlugInInfoController *infoCont = [[PPPlugInInfoController alloc] initWithPlugInInfo:inf];
+	[[infoCont window] center];
+	[infoCont showWindow:sender];
+	RELEASEOBJ(infoCont);
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	srandom(time(NULL) & 0xffffffff);
@@ -413,6 +430,54 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	Music = CreateFreeMADK();
 	MADAttachDriverToMusic(MADDriver, Music, NULL);
 	instrumentImporter = [[PPInstrumentImporter alloc] initWithMusic:&Music];
+	instrumentController = [[PPInstrumentWindowController alloc] init];
+	instrumentController.importer = instrumentImporter;
+	
+	NSInteger i;
+	for (i = 0; i < [instrumentImporter plugInCount]; i++) {
+		PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
+		if ([obj mode] == MADPlugImportExport || [obj mode] == MADPlugExport) {
+			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:obj.menuName action:@selector(exportInstrumentAs:) keyEquivalent:@""];
+			[mi setTag:i];
+			[mi setTarget:self];
+			[instrumentExportMenu addItem:mi];
+			RELEASEOBJ(mi);
+		}
+	}
+	
+	{
+		NSMutableArray *tmpArray = [NSMutableArray array];
+		for (i = 0; i < MADLib->TotalPlug ; i++) {
+			//PlugInfo *tmpPlug = &MADLib->ThePlug[i];
+			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:BRIDGE(NSString*,MADLib->ThePlug[i].MenuName) author:BRIDGE(NSString*,MADLib->ThePlug[i].AuthorString)];
+			[tmpArray addObject:tmpInfo];
+			RELEASEOBJ(tmpInfo);
+		}
+		
+		for (i = 0; i < [instrumentImporter plugInCount]; i++) {
+			PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
+			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString];
+			[tmpArray addObject:tmpInfo];
+			RELEASEOBJ(tmpInfo);
+		}
+
+		[tmpArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+			NSString *menuNam1 = [obj1 plugName];
+			NSString *menuNam2 = [obj2 plugName];
+			NSComparisonResult res = [menuNam1 localizedStandardCompare:menuNam2];
+			return res;
+		}];
+		
+		plugInInfos = [[NSArray alloc] initWithArray:tmpArray];
+		for (i = 0; i < [plugInInfos count]; i++) {
+			PPPlugInInfo *pi = [plugInInfos objectAtIndex:i];
+			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:pi.plugName action:@selector(showPlugInInfo:) keyEquivalent:@""];
+			[mi setTag:i];
+			[mi setTarget:self];
+			[aboutPlugInMenu addItem:mi];
+			RELEASEOBJ(mi);
+		}
+	}
 	
 	timeChecker = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0] interval:1/4.0 target:self selector:@selector(updateMusicStats:) userInfo:nil repeats:YES];
 	[[NSRunLoop mainRunLoop] addTimer:timeChecker forMode:NSDefaultRunLoopMode];
@@ -455,6 +520,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[preferences release];
 	[musicList release];
 	[timeChecker release];
+	[plugInInfos release];
 	
 	[super dealloc];
 }

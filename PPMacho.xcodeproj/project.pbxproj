@@ -165,6 +165,11 @@
 		55232AFF11FDF1310041A4EC /* MidiPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232AFE11FDF1310041A4EC /* MidiPrefs.xib */; };
 		55232B0E11FDF2980041A4EC /* ColorPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232B0D11FDF2980041A4EC /* ColorPrefs.xib */; };
 		55232B1411FDF3090041A4EC /* PianoPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232B1311FDF3080041A4EC /* PianoPrefs.xib */; };
+		5523EC6A16925FF80067B22A /* PPInstrumentWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC6816925FF80067B22A /* PPInstrumentWindowController.m */; };
+		5523EC6B16925FF80067B22A /* PPInstrumentWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5523EC6916925FF80067B22A /* PPInstrumentWindowController.xib */; };
+		5523EC73169265AC0067B22A /* PPPlugInInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC71169265AB0067B22A /* PPPlugInInfoController.m */; };
+		5523EC74169265AC0067B22A /* PPPlugInInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5523EC72169265AB0067B22A /* PPPlugInInfoController.xib */; };
+		5523EC77169265C30067B22A /* PPPlugInInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC76169265C30067B22A /* PPPlugInInfo.m */; };
 		552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		552AFC7F167A8C8B00F32481 /* PPPause.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 552AFC7E167A8C8B00F32481 /* PPPause.pdf */; };
 		552C6FE310CD9DAC00C0E0D4 /* ByteUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */; };
@@ -1641,6 +1646,14 @@
 		55232AFE11FDF1310041A4EC /* MidiPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MidiPrefs.xib; sourceTree = "<group>"; };
 		55232B0D11FDF2980041A4EC /* ColorPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPrefs.xib; sourceTree = "<group>"; };
 		55232B1311FDF3080041A4EC /* PianoPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PianoPrefs.xib; sourceTree = "<group>"; };
+		5523EC6716925FF80067B22A /* PPInstrumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentWindowController.h; sourceTree = "<group>"; };
+		5523EC6816925FF80067B22A /* PPInstrumentWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentWindowController.m; sourceTree = "<group>"; };
+		5523EC6916925FF80067B22A /* PPInstrumentWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPInstrumentWindowController.xib; sourceTree = "<group>"; };
+		5523EC70169265AB0067B22A /* PPPlugInInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugInInfoController.h; sourceTree = "<group>"; };
+		5523EC71169265AB0067B22A /* PPPlugInInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPlugInInfoController.m; sourceTree = "<group>"; };
+		5523EC72169265AB0067B22A /* PPPlugInInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPPlugInInfoController.xib; sourceTree = "<group>"; };
+		5523EC75169265C30067B22A /* PPPlugInInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugInInfo.h; sourceTree = "<group>"; };
+		5523EC76169265C30067B22A /* PPPlugInInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPlugInInfo.m; sourceTree = "<group>"; };
 		552711E3124881F4005120FC /* UserDefaultKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultKeys.h; sourceTree = "<group>"; };
 		552711E4124881F4005120FC /* UserDefaultKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultKeys.m; sourceTree = "<group>"; };
 		552AFC7E167A8C8B00F32481 /* PPPause.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPPause.pdf; sourceTree = "<group>"; };
@@ -3530,6 +3543,14 @@
 				557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */,
 				557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */,
 				55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */,
+				5523EC6716925FF80067B22A /* PPInstrumentWindowController.h */,
+				5523EC6816925FF80067B22A /* PPInstrumentWindowController.m */,
+				5523EC6916925FF80067B22A /* PPInstrumentWindowController.xib */,
+				5523EC70169265AB0067B22A /* PPPlugInInfoController.h */,
+				5523EC71169265AB0067B22A /* PPPlugInInfoController.m */,
+				5523EC72169265AB0067B22A /* PPPlugInInfoController.xib */,
+				5523EC75169265C30067B22A /* PPPlugInInfo.h */,
+				5523EC76169265C30067B22A /* PPPlugInInfo.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -5369,6 +5390,8 @@
 				55ABFD56125E6D4400B182F1 /* PPRecord.pdf in Resources */,
 				552AFC7F167A8C8B00F32481 /* PPPause.pdf in Resources */,
 				557139E71685007B00831A5A /* OpenPanelViewController.xib in Resources */,
+				5523EC6B16925FF80067B22A /* PPInstrumentWindowController.xib in Resources */,
+				5523EC74169265AC0067B22A /* PPPlugInInfoController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6094,6 +6117,9 @@
 				557139E61685007B00831A5A /* OpenPanelViewController.m in Sources */,
 				557EF731168BD4B5001BF077 /* PPInstrumentImporter.m in Sources */,
 				557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */,
+				5523EC6A16925FF80067B22A /* PPInstrumentWindowController.m in Sources */,
+				5523EC73169265AC0067B22A /* PPPlugInInfoController.m in Sources */,
+				5523EC77169265C30067B22A /* PPPlugInInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

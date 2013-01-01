@@ -91,6 +91,19 @@
 									<reference key="NSOnImage" ref="769544733"/>
 									<reference key="NSMixedImage" ref="821451438"/>
 								</object>
+								<object class="NSMenuItem" id="641123532">
+									<reference key="NSMenu" ref="167745991"/>
+									<string key="NSTitle">About Plug-in…</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="769544733"/>
+									<reference key="NSMixedImage" ref="821451438"/>
+									<string key="NSAction">submenuAction:</string>
+									<object class="NSMenu" key="NSSubmenu" id="776125797">
+										<string key="NSTitle">About Plug-in…</string>
+										<array class="NSMutableArray" key="NSMenuItems"/>
+									</object>
+								</object>
 								<object class="NSMenuItem" id="610648683">
 									<reference key="NSMenu" ref="167745991"/>
 									<bool key="NSIsDisabled">YES</bool>
@@ -755,13 +768,27 @@
 										</array>
 									</object>
 								</object>
-								<object class="NSMenuItem" id="244312335">
+								<object class="NSMenuItem" id="1008114836">
 									<reference key="NSMenu" ref="941494385"/>
-									<string key="NSTitle">Export As...</string>
+									<string key="NSTitle">Export Instrument…</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="769544733"/>
 									<reference key="NSMixedImage" ref="821451438"/>
+									<string key="NSAction">submenuAction:</string>
+									<object class="NSMenu" key="NSSubmenu" id="1006692388">
+										<string key="NSTitle">Export Instrument…</string>
+										<array class="NSMutableArray" key="NSMenuItems">
+											<object class="NSMenuItem" id="788463170">
+												<reference key="NSMenu" ref="1006692388"/>
+												<string key="NSTitle">Item</string>
+												<string key="NSKeyEquiv"/>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="769544733"/>
+												<reference key="NSMixedImage" ref="821451438"/>
+											</object>
+										</array>
+									</object>
 								</object>
 								<object class="NSMenuItem" id="384278708">
 									<reference key="NSMenu" ref="941494385"/>
@@ -1206,7 +1233,7 @@
 				</object>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="414427165">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSScrollView" id="871224933">
@@ -1222,7 +1249,7 @@
 											<int key="NSvFlags">256</int>
 											<string key="NSFrameSize">{296, 220}</string>
 											<reference key="NSSuperview" ref="702402919"/>
-											<reference key="NSNextKeyView" ref="297924866"/>
+											<reference key="NSNextKeyView" ref="804373054"/>
 											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -1338,6 +1365,7 @@
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{224, 17}, {15, 212}}</string>
 									<reference key="NSSuperview" ref="871224933"/>
+									<reference key="NSNextKeyView"/>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<reference key="NSTarget" ref="871224933"/>
 									<string key="NSAction">_doScroller:</string>
@@ -1372,7 +1400,7 @@
 							</array>
 							<string key="NSFrame">{{20, 20}, {298, 238}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
-							<reference key="NSNextKeyView" ref="702402919"/>
+							<reference key="NSNextKeyView" ref="297924866"/>
 							<int key="NSsFlags">133650</int>
 							<reference key="NSVScroller" ref="804373054"/>
 							<reference key="NSHScroller" ref="297924866"/>
@@ -1385,6 +1413,7 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{338, 270}</string>
+					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="871224933"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
@@ -1724,7 +1753,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{0, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="279346436"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="555547807">
@@ -1751,7 +1779,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{42, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="399678301"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="624684166">
@@ -1778,7 +1805,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{84, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="95194057"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="599917958">
@@ -1805,7 +1831,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{126, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="324311961"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="157059532">
@@ -1832,7 +1857,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{168, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="787502023"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="32540427">
@@ -1859,7 +1883,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{210, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="449984152"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="218541162">
@@ -1883,7 +1906,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{294, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="484798091"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="73759491">
@@ -1910,7 +1932,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{336, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="461291136"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="765363470">
@@ -1937,7 +1958,6 @@
 							<int key="NSvFlags">292</int>
 							<string key="NSFrame">{{0, 27}, {52, 17}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="781404807"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="802875930">
@@ -1956,7 +1976,6 @@
 							<int key="NSvFlags">290</int>
 							<string key="NSFrame">{{55, 25}, {250, 21}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="488219195"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSSliderCell" key="NSCell" id="1008273220">
@@ -1980,7 +1999,6 @@
 							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{308, 27}, {63, 17}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="703285363"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="934528952">
@@ -1999,7 +2017,7 @@
 							<int key="NSvFlags">290</int>
 							<string key="NSFrame">{{-2, 4}, {373, 17}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
-							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="447678757">
 								<int key="NSCellFlags">68157504</int>
@@ -2017,7 +2035,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{252, 54}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="661368882"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="281782915"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="571216691">
@@ -2042,7 +2059,6 @@
 					</array>
 					<string key="NSFrameSize">{368, 86}</string>
 					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="22837962"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
@@ -2283,14 +2299,6 @@
 						<reference key="destination" ref="751689962"/>
 					</object>
 					<int key="connectionID">1032</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">exportInstrumentAs:</string>
-						<reference key="source" ref="1000799287"/>
-						<reference key="destination" ref="244312335"/>
-					</object>
-					<int key="connectionID">1033</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -2638,6 +2646,22 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">instrumentExportMenu</string>
+						<reference key="source" ref="1000799287"/>
+						<reference key="destination" ref="1006692388"/>
+					</object>
+					<int key="connectionID">1309</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">aboutPlugInMenu</string>
+						<reference key="source" ref="1000799287"/>
+						<reference key="destination" ref="776125797"/>
+					</object>
+					<int key="connectionID">1313</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="842369831"/>
 						<reference key="destination" ref="1000799287"/>
@@ -2901,6 +2925,7 @@
 							<reference ref="899720216"/>
 							<reference ref="550287110"/>
 							<reference ref="1055269473"/>
+							<reference ref="641123532"/>
 						</array>
 						<reference key="parent" ref="843353380"/>
 					</object>
@@ -3335,10 +3360,10 @@
 							<reference ref="742613062"/>
 							<reference ref="626370078"/>
 							<reference ref="384278708"/>
-							<reference ref="244312335"/>
 							<reference ref="865678475"/>
 							<reference ref="260659969"/>
 							<reference ref="751689962"/>
+							<reference ref="1008114836"/>
 						</array>
 						<reference key="parent" ref="916038049"/>
 					</object>
@@ -3355,11 +3380,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">995</int>
 						<reference key="object" ref="384278708"/>
-						<reference key="parent" ref="941494385"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">996</int>
-						<reference key="object" ref="244312335"/>
 						<reference key="parent" ref="941494385"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -4012,6 +4032,41 @@
 						<reference key="object" ref="571216691"/>
 						<reference key="parent" ref="449984152"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1306</int>
+						<reference key="object" ref="1008114836"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="1006692388"/>
+						</array>
+						<reference key="parent" ref="941494385"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1307</int>
+						<reference key="object" ref="1006692388"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="788463170"/>
+						</array>
+						<reference key="parent" ref="1008114836"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1308</int>
+						<reference key="object" ref="788463170"/>
+						<reference key="parent" ref="1006692388"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1310</int>
+						<reference key="object" ref="641123532"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="776125797"/>
+						</array>
+						<reference key="parent" ref="167745991"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1311</int>
+						<reference key="object" ref="776125797"/>
+						<array class="NSMutableArray" key="children"/>
+						<reference key="parent" ref="641123532"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -4130,6 +4185,11 @@
 				<string key="1298.CustomClassName">PPHilightableButton</string>
 				<string key="1298.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1299.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1306.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1307.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1308.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1310.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1311.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="367.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="367.IBWindowTemplateEditedContentRect">{{351, 689}, {338, 270}}</string>
 				<integer value="1" key="367.NSWindowTemplate.visibleAtLaunch"/>
@@ -4226,7 +4286,6 @@
 				<string key="993.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="994.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="995.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="996.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="997.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="998.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="999.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4235,279 +4294,9 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1305</int>
+			<int key="maxID">1313</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">PPApp_AppDelegate</string>
-					<string key="superclassName">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="addMusic:">id</string>
-						<string key="clearMusicList:">id</string>
-						<string key="deleteInstrument:">id</string>
-						<string key="exportInstrumentAs:">id</string>
-						<string key="fastForwardButtonPressed:">id</string>
-						<string key="loopButtonPressed:">id</string>
-						<string key="nextButtonPressed:">id</string>
-						<string key="openFile:">id</string>
-						<string key="pauseButtonPressed:">id</string>
-						<string key="playButtonPressed:">id</string>
-						<string key="playSelectedMusic:">id</string>
-						<string key="prevButtonPressed:">id</string>
-						<string key="recordButtonPressed:">id</string>
-						<string key="removeSelectedMusic:">id</string>
-						<string key="rewindButtonPressed:">id</string>
-						<string key="saveMusicList:">id</string>
-						<string key="showBoxEditor:">id</string>
-						<string key="showClassicEditor:">id</string>
-						<string key="showDigitalEditor:">id</string>
-						<string key="showInstrumentsList:">id</string>
-						<string key="showMusicList:">id</string>
-						<string key="showPreferences:">id</string>
-						<string key="showTools:">id</string>
-						<string key="sliderChanged:">id</string>
-						<string key="sortMusicList:">id</string>
-						<string key="stopButtonPressed:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="addMusic:">
-							<string key="name">addMusic:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="clearMusicList:">
-							<string key="name">clearMusicList:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="deleteInstrument:">
-							<string key="name">deleteInstrument:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="exportInstrumentAs:">
-							<string key="name">exportInstrumentAs:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="fastForwardButtonPressed:">
-							<string key="name">fastForwardButtonPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="loopButtonPressed:">
-							<string key="name">loopButtonPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="nextButtonPressed:">
-							<string key="name">nextButtonPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="openFile:">
-							<string key="name">openFile:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="pauseButtonPressed:">
-							<string key="name">pauseButtonPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="playButtonPressed:">
-							<string key="name">playButtonPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="playSelectedMusic:">
-							<string key="name">playSelectedMusic:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="prevButtonPressed:">
-							<string key="name">prevButtonPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="recordButtonPressed:">
-							<string key="name">recordButtonPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="removeSelectedMusic:">
-							<string key="name">removeSelectedMusic:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="rewindButtonPressed:">
-							<string key="name">rewindButtonPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="saveMusicList:">
-							<string key="name">saveMusicList:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showBoxEditor:">
-							<string key="name">showBoxEditor:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showClassicEditor:">
-							<string key="name">showClassicEditor:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showDigitalEditor:">
-							<string key="name">showDigitalEditor:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showInstrumentsList:">
-							<string key="name">showInstrumentsList:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showMusicList:">
-							<string key="name">showMusicList:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showPreferences:">
-							<string key="name">showPreferences:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showTools:">
-							<string key="name">showTools:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="sliderChanged:">
-							<string key="name">sliderChanged:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="sortMusicList:">
-							<string key="name">sortMusicList:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="stopButtonPressed:">
-							<string key="name">stopButtonPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="fileLocation">NSTextField</string>
-						<string key="fileName">NSTextField</string>
-						<string key="fileSize">NSTextField</string>
-						<string key="internalName">NSTextField</string>
-						<string key="loopButton">NSButton</string>
-						<string key="musicInstrument">NSTextField</string>
-						<string key="musicListController">NSArrayController</string>
-						<string key="musicPatterns">NSTextField</string>
-						<string key="musicPlugType">NSTextField</string>
-						<string key="musicSignature">NSTextField</string>
-						<string key="pauseButton">NSButton</string>
-						<string key="playButton">NSButton</string>
-						<string key="recordButton">NSButton</string>
-						<string key="songCurTime">NSTextField</string>
-						<string key="songLabel">NSTextField</string>
-						<string key="songPos">NSSlider</string>
-						<string key="songTotalTime">NSTextField</string>
-						<string key="stopButton">NSButton</string>
-						<string key="tableView">NSTableView</string>
-						<string key="toolsPanel">NSPanel</string>
-						<string key="window">NSWindow</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="fileLocation">
-							<string key="name">fileLocation</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="fileName">
-							<string key="name">fileName</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="fileSize">
-							<string key="name">fileSize</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="internalName">
-							<string key="name">internalName</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="loopButton">
-							<string key="name">loopButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="musicInstrument">
-							<string key="name">musicInstrument</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="musicListController">
-							<string key="name">musicListController</string>
-							<string key="candidateClassName">NSArrayController</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="musicPatterns">
-							<string key="name">musicPatterns</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="musicPlugType">
-							<string key="name">musicPlugType</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="musicSignature">
-							<string key="name">musicSignature</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="pauseButton">
-							<string key="name">pauseButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="playButton">
-							<string key="name">playButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="recordButton">
-							<string key="name">recordButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="songCurTime">
-							<string key="name">songCurTime</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="songLabel">
-							<string key="name">songLabel</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="songPos">
-							<string key="name">songPos</string>
-							<string key="candidateClassName">NSSlider</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="songTotalTime">
-							<string key="name">songTotalTime</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="stopButton">
-							<string key="name">stopButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="tableView">
-							<string key="name">tableView</string>
-							<string key="candidateClassName">NSTableView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="toolsPanel">
-							<string key="name">toolsPanel</string>
-							<string key="candidateClassName">NSPanel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="window">
-							<string key="name">window</string>
-							<string key="candidateClassName">NSWindow</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/PPApp_AppDelegate.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">PPHilightableButton</string>
-					<string key="superclassName">NSButton</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/PPHilightableButton.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">PPTimeFormatter</string>
-					<string key="superclassName">NSFormatter</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/PPTimeFormatter.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">

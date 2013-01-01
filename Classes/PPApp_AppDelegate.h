@@ -11,6 +11,7 @@
 @class PPPreferences;
 @class PPMusicList;
 @class PPInstrumentImporter;
+@class PPInstrumentWindowController;
 
 @interface PPApp_AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate> {
 	IBOutlet NSPanel *toolsPanel;
@@ -24,6 +25,12 @@
 	IBOutlet NSSlider *songPos;
 	IBOutlet NSButton *pauseButton;
 	BOOL paused;
+	
+	NSArray *plugInInfos;
+	IBOutlet NSMenu *aboutPlugInMenu;
+	
+	IBOutlet NSMenu *instrumentExportMenu;
+	PPInstrumentWindowController *instrumentController;
 	
 	IBOutlet  __unsafe_unretained NSWindow *window;
 	
