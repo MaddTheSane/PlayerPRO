@@ -401,7 +401,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	
 	PPPlugInInfoController *infoCont = [[PPPlugInInfoController alloc] initWithPlugInInfo:inf];
 	[[infoCont window] center];
-	[infoCont showWindow:sender];
+	[[NSApplication sharedApplication] runModalForWindow:[infoCont window]];
+	//[infoCont showWindow:sender];
 	RELEASEOBJ(infoCont);
 }
 
