@@ -477,6 +477,7 @@ void MInitImportPlug( MADLibrary *inMADDriver, char *PlugsFolderName)
 				CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
 				MakeMADPlug(inMADDriver, tempBundleRef);
 				//We do this to prevent resource/memory leak
+				//Read the documentation for CFBundleCreateBundlesFromDirectory for more info
 				//If the plug-in creation succeeded, it will bump the ref count from two (one from the CFArray) to three
 				//And we can safely release it to get the proper retain count needed
 				//If plug-in creation failed, the retain count is two and we probably don't want anything to do with the plug-in

@@ -198,7 +198,7 @@ void MADrealft(double *data,int n,int isign)
 
 void MADCallFFT( sData *SData, double *filter, MADDriverRec *intDriver, Boolean shift)
 {
-	if( filter == 0) filter = intDriver->Filter;
+	if( filter == NULL) filter = intDriver->Filter;
 
 	switch( SData->amp)
 	{

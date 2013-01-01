@@ -276,8 +276,9 @@ void ConvertTo64Rows( MADMusic *music)
 						
 						// dst
 						dstcmd = GetMADCommand( x, z, newPat);
-						
-						*dstcmd = *srccmd;
+						if (dstcmd && srccmd) {
+							*dstcmd = *srccmd;
+						}
 					}
 					else
 					{
@@ -374,9 +375,10 @@ void ConvertTo64Rows( MADMusic *music)
 				
 				dstcmd = GetMADCommand( breakpos-1, 0, newPat);
 				MADKillCmd( dstcmd);
-				
-				dstcmd->cmd = skipE;
-				dstcmd->arg = 0;
+				if (dstcmd) {
+					dstcmd->cmd = skipE;
+					dstcmd->arg = 0;
+				}
 			}
 			
 			// Update la partition list
@@ -1619,32 +1621,33 @@ OSErr MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV)
 				aCmd = GetMADCommand( x, y, MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]);
 								
 				/** SpeedE **/
-				
-				if( aCmd->cmd == speedE)
-				{
-					/** Compute time for this interval **/
-
-					timeResult += ((float) (time * 125L * speed * 60)) / ((float) (50 * finespeed));
-					time = 0;
-					
-					/************************************/
-					
-					if( aCmd->arg < 32)
+				if (aCmd) {
+					if( aCmd->cmd == speedE)
 					{
-						if( aCmd->arg != 0) speed = aCmd->arg;
+						/** Compute time for this interval **/
+						
+						timeResult += ((float) (time * 125L * speed * 60)) / ((float) (50 * finespeed));
+						time = 0;
+						
+						/************************************/
+						
+						if( aCmd->arg < 32)
+						{
+							if( aCmd->arg != 0) speed = aCmd->arg;
+						}
+						else
+						{
+							if( aCmd->arg != 0) finespeed = aCmd->arg;
+						}
 					}
-					else
+					
+					/** SkipE **/
+					
+					if( aCmd->cmd == skipE)
 					{
-						if( aCmd->arg != 0) finespeed = aCmd->arg;
-					}
-				}
-				
-				/** SkipE **/
-				
-				if( aCmd->cmd == skipE)
-				{
-					for( ; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
-					{
+						for( ; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
+						{
+						}
 					}
 				}
 			}
@@ -1658,7 +1661,7 @@ OSErr MADGetMusicStatus( MADDriverRec *MDriver, long *fullTime, long *curTime)
 {
 	short			i, x, y;
 	Cmd				*aCmd;
-
+	
 	float			timeResult;
 	long			time;
 	long			speed, finespeed;
@@ -1668,7 +1671,7 @@ OSErr MADGetMusicStatus( MADDriverRec *MDriver, long *fullTime, long *curTime)
 		*curTime = 0;
 		*fullTime = 1;
 		
-		return MADParametersErr; 
+		return MADParametersErr;
 	}
 	
 	if( MDriver->curMusic == NULL)
@@ -1676,7 +1679,7 @@ OSErr MADGetMusicStatus( MADDriverRec *MDriver, long *fullTime, long *curTime)
 		*curTime = 0;
 		*fullTime = 1;
 		
-		return MADDriverHasNoMusic; 
+		return MADDriverHasNoMusic;
 	}
 	
 	if( MDriver->curMusic->header == NULL)
@@ -1701,48 +1704,50 @@ OSErr MADGetMusicStatus( MADDriverRec *MDriver, long *fullTime, long *curTime)
 			time ++;
 			
 			if( i == MDriver->PL	&&
-				x == MDriver->PartitionReader)
-				{
-					*curTime = timeResult + ((float) (time * 125L * speed * 60)) / ((float) (50 * finespeed));
-				}
+			   x == MDriver->PartitionReader)
+			{
+				*curTime = timeResult + ((float) (time * 125L * speed * 60)) / ((float) (50 * finespeed));
+			}
 			
 			for( y = 0; y <  MDriver->curMusic->header->numChn; y++)
 			{
 				aCmd = GetMADCommand( x, y, MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]);
-								
-				/** SpeedE **/
 				
-				if( aCmd->cmd == speedE)
+				if (aCmd)
 				{
-					/** Compute time for this interval **/
-
-					timeResult += ((float) (time * 125L * speed * 60)) / ((float) (50 * finespeed));
-					time = 0;
-					
-					/************************************/
-					
-					if( aCmd->arg < 32)
+					/** SpeedE **/
+					if( aCmd->cmd == speedE)
 					{
-						if( aCmd->arg != 0) speed = aCmd->arg;
-					}
-					else
-					{
-						if( aCmd->arg != 0) finespeed = aCmd->arg;
-					}
-				} else
-				
-				/** SkipE **/
-				
-				if( aCmd->cmd == skipE)
-				{
-					for( ; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
-					{
-						if( i == MDriver->PL	&&
-								x == MDriver->PartitionReader)
+						/** Compute time for this interval **/
+						
+						timeResult += ((float) (time * 125L * speed * 60)) / ((float) (50 * finespeed));
+						time = 0;
+						
+						/************************************/
+						
+						if( aCmd->arg < 32)
 						{
-							*curTime = timeResult + ((float) (time * 125L * speed * 60)) / ((float) (50 * finespeed));
+							if( aCmd->arg != 0) speed = aCmd->arg;
 						}
-					}
+						else
+						{
+							if( aCmd->arg != 0) finespeed = aCmd->arg;
+						}
+					} else
+						
+					/** SkipE **/
+						
+						if( aCmd->cmd == skipE)
+						{
+							for( ; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
+							{
+								if( i == MDriver->PL	&&
+								   x == MDriver->PartitionReader)
+								{
+									*curTime = timeResult + ((float) (time * 125L * speed * 60)) / ((float) (50 * finespeed));
+								}
+							}
+						}
 				}
 			}
 		}
@@ -2576,22 +2581,25 @@ void MADCheckSpeedPattern( MADMusic *MDriver, MADDriverRec *intDriver)
 			
 			aCmd = GetMADCommand( x, y, MDriver->partition[ intDriver->Pat]);
 			
-			if( aCmd->cmd == speedE)
-			{					
-				if( aCmd->arg < 32)
+			if (aCmd)
+			{
+				if( aCmd->cmd == speedE)
 				{
-					if( aCmd->arg != 0)
+					if( aCmd->arg < 32)
 					{
-						if( CmdSpeed == false) intDriver->speed = aCmd->arg;
-						CmdSpeed = true;
+						if( aCmd->arg != 0)
+						{
+							if( CmdSpeed == false) intDriver->speed = aCmd->arg;
+							CmdSpeed = true;
+						}
 					}
-				}
-				else
-				{
-					if( aCmd->arg != 0)
+					else
 					{
-						if( FineFound == false) intDriver->finespeed = aCmd->arg;
-						FineFound = true;
+						if( aCmd->arg != 0)
+						{
+							if( FineFound == false) intDriver->finespeed = aCmd->arg;
+							FineFound = true;
+						}
 					}
 				}
 			}
