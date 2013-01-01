@@ -339,7 +339,13 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 		NSInteger i = 0;
 		musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
 		for (i = 0; i < [BookmarkArray count]; i++) {
-			NSURL *fullURL = [NSURL URLByResolvingBookmarkData:[BookmarkArray objectAtIndex:i] options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:NULL error:nil];
+			BOOL isStale = NO;
+			NSURL *fullURL = [NSURL URLByResolvingBookmarkData:[BookmarkArray objectAtIndex:i] options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:&isStale error:nil];
+#ifdef DEBUG
+			if (isStale) {
+				NSLog(@"Bookmark %@ is stale", [fullURL path]);
+			}
+#endif
 			NSURL *refURL = [fullURL fileReferenceURL];
 			PPMusicListObject *obj = nil;
 			if (refURL) {
