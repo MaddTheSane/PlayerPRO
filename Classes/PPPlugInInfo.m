@@ -12,12 +12,19 @@
 
 @synthesize authorName;
 @synthesize plugName;
+@synthesize plugType;
 
 - (id)initWithPlugName:(NSString*)pn author:(NSString*)aut
+{
+	return [self initWithPlugName:pn author:aut plugType:@"Unknown"];
+}
+
+- (id)initWithPlugName:(NSString*)pn author:(NSString*)aut plugType:(NSString*)pt
 {
 	if (self = [super init]) {
 		plugName = [[NSString alloc] initWithString:pn];
 		authorName = [[NSString alloc] initWithString:aut];
+		plugType = [[NSString alloc] initWithString:pt];
 	}
 	return self;
 }
@@ -32,6 +39,7 @@
 {
 	[plugName release];
 	[authorName release];
+	[plugType release];
 	
 	[super dealloc];
 }

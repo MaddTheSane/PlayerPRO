@@ -44,6 +44,7 @@
     [super windowDidLoad];
     [nameField setTitleWithMnemonic:info.plugName];
 	[authorField setTitleWithMnemonic:info.authorName];
+	[typeField setTitleWithMnemonic:info.plugType];
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 

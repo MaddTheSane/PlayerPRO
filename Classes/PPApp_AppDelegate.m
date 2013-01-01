@@ -443,9 +443,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	for (i = 0; i < [instrumentImporter plugInCount]; i++) {
 		PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
 		if ([obj mode] == MADPlugImportExport || [obj mode] == MADPlugExport) {
-			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:obj.menuName action:@selector(exportInstrumentAs:) keyEquivalent:@""];
+			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:obj.menuName action:@selector(exportInstrument:) keyEquivalent:@""];
 			[mi setTag:i];
-			[mi setTarget:self];
+			[mi setTarget:instrumentController];
 			[instrumentExportMenu addItem:mi];
 			RELEASEOBJ(mi);
 		}
@@ -455,14 +455,14 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		NSMutableArray *tmpArray = [NSMutableArray array];
 		for (i = 0; i < MADLib->TotalPlug ; i++) {
 			//PlugInfo *tmpPlug = &MADLib->ThePlug[i];
-			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:BRIDGE(NSString*,MADLib->ThePlug[i].MenuName) author:BRIDGE(NSString*,MADLib->ThePlug[i].AuthorString)];
+			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:BRIDGE(NSString*,MADLib->ThePlug[i].MenuName) author:BRIDGE(NSString*,MADLib->ThePlug[i].AuthorString) plugType:NSLocalizedString(@"Tracker", @"Tracker plug-in name")];
 			[tmpArray addObject:tmpInfo];
 			RELEASEOBJ(tmpInfo);
 		}
 		
 		for (i = 0; i < [instrumentImporter plugInCount]; i++) {
 			PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
-			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString];
+			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"Instrument", @"Instrument plug-in name")];
 			[tmpArray addObject:tmpInfo];
 			RELEASEOBJ(tmpInfo);
 		}

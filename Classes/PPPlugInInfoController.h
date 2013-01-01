@@ -14,6 +14,7 @@
 	PPPlugInInfo *info;
 	IBOutlet NSTextField *nameField;
 	IBOutlet NSTextField *authorField;
+	IBOutlet NSTextField *typeField;
 }
 - (id)initWithPlugInInfo:(PPPlugInInfo *)plugInfo;
 - (IBAction)closeWindow:(id)sender;

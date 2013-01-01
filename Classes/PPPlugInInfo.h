@@ -12,11 +12,14 @@
 {
 	NSString *plugName;
 	NSString *authorName;
+	NSString *plugType;
 	//OSType capabilities;
 }
-
 @property (readonly) NSString *plugName;
 @property (readonly) NSString *authorName;
+@property (readonly) NSString *plugType;
+
 - (id)initWithPlugName:(NSString*)pn author:(NSString*)aut;
+- (id)initWithPlugName:(NSString*)pn author:(NSString*)aut plugType:(NSString*)pt;
 
 @end

@@ -50,3 +50,7 @@
 "Make sure you have write permissions at the location you selected." = "Make sure you have write permissions at the location you selected.";
 "An unknown error occured" = "An unknown error occured";
 "Unknown reason" = "Unknown reason";
+
+//Plug-in type strings
+"Tracker" = "Tracker";
+"Instrument" = "Instrument";
