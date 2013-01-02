@@ -693,6 +693,10 @@ enum PPMusicToolbarTypes {
 	if([panel runModal] == NSFileHandlingPanelOKButton)
 	{
 		//[self addMusicToMusicList:[panel URL]];
+		BOOL hasAPPLPlug = NO;
+		if (MADPlugAvailable(MADLib, "APPL")) {
+			hasAPPLPlug = YES;
+		}
 		NSURL *panelURL = [panel URL];
 		NSString *filename = [panelURL path];
 		NSError *err = nil;
@@ -704,7 +708,7 @@ enum PPMusicToolbarTypes {
 			RELEASEOBJ(av);
 			return;
 		}
-		if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"]) {
+		if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"] || (hasAPPLPlug &&  [sharedWorkspace type:utiFile conformsToType:BRIDGE(NSString*, kUTTypeApplicationFile)])) {
 			[self addMusicToMusicList:panelURL];
 		}else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"]) {
 			[self willChangeValueForKey:kMusicListKVO];
@@ -859,6 +863,10 @@ enum PPMusicToolbarTypes {
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
 {
 	NSError *err = nil;
+	BOOL hasAPPLPlug = NO;
+	if (MADPlugAvailable(MADLib, "APPL")) {
+		hasAPPLPlug = YES;
+	}
 	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
 	NSString *utiFile = [sharedWorkspace typeOfFile:filename error:&err];
 	if (err) {
@@ -866,7 +874,7 @@ enum PPMusicToolbarTypes {
 		return NO;
 	}
 	
-	if([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"])
+	if([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"] || (hasAPPLPlug && [sharedWorkspace type:utiFile conformsToType:BRIDGE(NSString*, kUTTypeApplicationFile)]))
 	{
 		[self addMusicToMusicList:[NSURL fileURLWithPath:filename]];
 		return YES;
