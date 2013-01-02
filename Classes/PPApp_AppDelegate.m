@@ -575,11 +575,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	NSOpenPanel *panel = RETAINOBJ([NSOpenPanel openPanel]);
 	NSMutableArray *supportedUTIs = [NSMutableArray arrayWithObject:@"com.quadmation.playerpro.madk"];
 	int i = 0;
-	@autoreleasepool {
-		for (i = 0; i < MADLib->TotalPlug; i++) {
-			NSArray *tempArray = [NSArray arrayWithArray:BRIDGE(NSArray*, MADLib->ThePlug[i].UTItypes)];
-			[supportedUTIs addObjectsFromArray:tempArray];
-		}
+	for (i = 0; i < MADLib->TotalPlug; i++) {
+		[supportedUTIs addObjectsFromArray:BRIDGE(NSArray*, MADLib->ThePlug[i].UTItypes)];
 	}
 	[panel setAllowsMultipleSelection:NO];
 	[panel setAllowedFileTypes:supportedUTIs];
@@ -677,13 +674,11 @@ enum PPMusicToolbarTypes {
 	int i = 0;
 	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithObject:[NSArray arrayWithObject:@"com.quadmation.playerpro.madk"] forKey:@"MADK Tracker"];
 	NSDictionary *playlistDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:@"net.sourceforge.playerpro.musiclist"], @"PlayerPRO Music List", [NSArray arrayWithObject:@"net.sourceforge.playerpro.stcfmusiclist"], @"PlayerPRO Old Music List", nil];
-	@autoreleasepool {
-		for (i = 0; i < MADLib->TotalPlug; i++) {
-			NSArray *tempArray = [NSArray arrayWithArray:BRIDGE(NSArray*, MADLib->ThePlug[i].UTItypes)];
-			[supportedUTIs addObjectsFromArray:tempArray];
-			NSString *menuName = [NSString stringWithString:BRIDGE(NSString*, MADLib->ThePlug[i].MenuName)];
-			[trackerDict setObject:tempArray forKey:menuName];
-		}
+	for (i = 0; i < MADLib->TotalPlug; i++) {
+		NSArray *tempArray = BRIDGE(NSArray*, MADLib->ThePlug[i].UTItypes);
+		[supportedUTIs addObjectsFromArray:tempArray];
+		NSString *menuName = BRIDGE(NSString*, MADLib->ThePlug[i].MenuName);
+		[trackerDict setObject:tempArray forKey:menuName];
 	}
 	
 	[panel setAllowsMultipleSelection:NO];
