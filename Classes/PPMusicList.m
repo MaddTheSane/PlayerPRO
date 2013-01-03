@@ -132,6 +132,11 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 @implementation PPMusicList
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"Size: %ld Contents: %@", (long)[musicList count], [musicList description]];
+}
+
 - (void)saveMusicListToPreferences
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -286,7 +291,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	if (!listData) {
 		return NO;
 	}
-	PPMusicList *preList= [NSKeyedUnarchiver unarchiveObjectWithData:listData];
+	PPMusicList *preList = [NSKeyedUnarchiver unarchiveObjectWithData:listData];
 	if (!preList) {
 		return NO;
 	}
