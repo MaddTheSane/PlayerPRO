@@ -614,9 +614,17 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 - (IBAction)clearMusicList:(id)sender
 {
-	[self willChangeValueForKey:kMusicListKVO];
-	[musicList clearMusicList];
-	[self didChangeValueForKey:kMusicListKVO];
+	if ([musicList countOfMusicList]) {
+		NSInteger returnVal = NSRunAlertPanel(NSLocalizedString(@"Clear list", @"Clear Music List"), @"The music list contains %ld items. Do you really want to remove them?", NSLocalizedString(@"No", @"No"), NSLocalizedString(@"Yes", @"Yes"), nil, (long)[musicList countOfMusicList]);
+		
+		if (returnVal == NSAlertAlternateReturn) {
+			[self willChangeValueForKey:kMusicListKVO];
+			[musicList clearMusicList];
+			[self didChangeValueForKey:kMusicListKVO];
+		}
+	} else {
+		NSBeep();
+	}
 }
 
 enum PPMusicToolbarTypes {

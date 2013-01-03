@@ -181,7 +181,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (void)clearMusicList
 {
-	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, ([musicList count] - 1))];
+	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, ([musicList count]))];
 	[self willChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:kMusicListKVO];
 	[musicList removeAllObjects];
 	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:kMusicListKVO];

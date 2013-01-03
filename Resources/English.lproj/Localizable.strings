@@ -12,6 +12,11 @@
 "MyDebugStr_Continue" = "Continue";
 "MyDebugStr_Debug" = "Debug";
 
+"Clear list" = "Clear list";
+"The music list contains %ld items. Do you really want to remove them?" = "The music list contains %ld items. Do you really want to remove them?";
+"No" = "No";
+"Yes" = "Yes";
+
 //Error strings
 "Not enough memory for operation" = "Not enough memory for operation";
 "Ran out of memory" = "Ran out of memory";
