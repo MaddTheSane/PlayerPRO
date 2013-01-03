@@ -227,12 +227,10 @@
 		554E11E110D6F38200BB619C /* NoteTrans.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FEC10D6C79D00BB619C /* NoteTrans.r */; };
 		554E11F610D6F3E100BB619C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		554E11F710D6F3E100BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		554E122910D6F3E600BB619C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E126410D6F4F700BB619C /* Propagate.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF010D6C79D00BB619C /* Propagate.c */; };
 		554E126510D6F4F800BB619C /* Propagate.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FF110D6C79D00BB619C /* Propagate.r */; };
 		554E126610D6F50500BB619C /* Revert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF410D6C79D00BB619C /* Revert.c */; };
-		554E126710D6F50500BB619C /* Revert.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FF510D6C79D00BB619C /* Revert.r */; };
 		555C125116378B3500735225 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		55672E1C10CAD641008C5C3D /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55672E1D10CAD641008C5C3D /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
@@ -314,6 +312,7 @@
 		5574BCEC169634DE00CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5574BCF01696355A00CF3C37 /* DMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341E910BB5FFA005208D1 /* DMF.ppimpexp */; };
 		5574BCF11696355A00CF3C37 /* Revert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E123010D6F3E600BB619C /* Revert.plugin */; };
+		5574BCF9169645FE00CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */ = {isa = PBXBuildFile; fileRef = 557B8FD910CE01BF00B9A37D /* DefaultPref.r */; };
 		557DE1F310E0159600177B4C /* PPMenus.r in Rez */ = {isa = PBXBuildFile; fileRef = 557DE1F110E0158C00177B4C /* PPMenus.r */; };
 		557DE27710E04C1500177B4C /* PPResDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 557DE27610E04C1500177B4C /* PPResDefs.h */; };
@@ -2281,7 +2280,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5574BCEC169634DE00CF3C37 /* PlayerPROCore.framework in Frameworks */,
-				554E122910D6F3E600BB619C /* Carbon.framework in Frameworks */,
 				554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2556,6 +2554,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5574BCF9169645FE00CF3C37 /* PlayerPROCore.framework in Frameworks */,
 				554E10E010D6EF8200BB619C /* Carbon.framework in Frameworks */,
 				554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */,
 			);
@@ -4299,7 +4298,6 @@
 				554E122510D6F3E600BB619C /* Resources */,
 				554E122610D6F3E600BB619C /* Sources */,
 				554E122810D6F3E600BB619C /* Frameworks */,
-				554E122B10D6F3E600BB619C /* Rez */,
 			);
 			buildRules = (
 			);
@@ -5514,14 +5512,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				554E126510D6F4F800BB619C /* Propagate.r in Rez */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		554E122B10D6F3E600BB619C /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				554E126710D6F50500BB619C /* Revert.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
