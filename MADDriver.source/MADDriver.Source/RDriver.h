@@ -346,6 +346,8 @@ enum PPPlugModes {
 	MADPlugNonePlug = (OSType)'NONE'
 };
 
+#pragma pack(pop)
+
 #ifdef _MAC_H
 
 #include <CoreFoundation/CFString.h>
@@ -422,6 +424,7 @@ typedef struct PlugInfo
 } PlugInfo;
 #endif
 
+#pragma pack(push, 2)
 
 /********************						***********************/
 /*** 		Global structure : PlayerPRO variables				***/
