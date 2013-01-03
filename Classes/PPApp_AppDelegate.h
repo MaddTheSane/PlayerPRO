@@ -12,6 +12,7 @@
 @class PPMusicList;
 @class PPInstrumentImporter;
 @class PPInstrumentWindowController;
+@class PPDigitalPlugInHandler;
 
 @interface PPApp_AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate> {
 	IBOutlet NSPanel *toolsPanel;
@@ -54,6 +55,7 @@
 	NSInteger		currentlyPlayingIndex;
 	PPPreferences	*preferences;
 	PPInstrumentImporter *instrumentImporter;
+	PPDigitalPlugInHandler *digitalHandler;
 }
 
 @property (getter=isPaused, readwrite) BOOL paused;

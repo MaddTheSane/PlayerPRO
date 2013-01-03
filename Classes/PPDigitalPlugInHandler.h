@@ -23,9 +23,13 @@
 
 - (id)initWithMusic:(MADMusic**)theMus;
 
-- (OSErr)callDigitalPlugIn:(NSUInteger)plugNum Pcmd:(Pcmd*)myPcmd;
+- (OSErr)callDigitalPlugIn:(NSUInteger)plugNum pcmd:(Pcmd*)myPcmd;
 
 - (PPDigitalPlugInObject*)plugInAtIndex:(NSUInteger)idx;
 - (NSUInteger)plugInCount;
+
+- (void)addPlugInFromPath:(NSString*)thePath;
+- (void)addPlugInFromURL:(NSURL *)urlpath;
+- (void)addPlugInFromBundle:(NSBundle *)theBund;
 
 @end

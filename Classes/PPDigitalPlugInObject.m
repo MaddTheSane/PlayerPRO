@@ -12,6 +12,7 @@
 @implementation PPDigitalPlugInObject
 
 @synthesize file;
+@synthesize authorString;
 @synthesize menuName;
 @synthesize type;
 @synthesize version;
@@ -45,6 +46,16 @@
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
+		DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugAuthorNameKey)];
+		if (DictionaryTemp) {
+			if ([DictionaryTemp isKindOfClass:[NSString class]]) {
+				authorString = [[NSString alloc] initWithString:DictionaryTemp];
+			} else {
+				authorString = [NSLocalizedString(@"No Author", @"no author") copy];
+			}
+		} else {
+			authorString = [NSLocalizedString(@"No Author", @"no author") copy];
+		}
 		
 		type = 'PPDG';
 
@@ -57,7 +68,7 @@
 
 - (OSErr)callWithPcmd:(Pcmd*)myPcmd
 {
-	PPInfoPlug theInfo;
+	PPInfoPlug theInfo = {0};
 	
 	return [self callWithPcmd:myPcmd plugInfo:&theInfo];
 }
@@ -80,6 +91,7 @@
 - (void)dealloc
 {
 	RELEASEOBJ(menuName);
+	RELEASEOBJ(authorString);
 	RELEASEOBJ(file);
 	
 	if (plugCode) {

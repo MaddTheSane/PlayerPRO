@@ -311,6 +311,9 @@
 		5573A46E10B51CAB00FF8B50 /* ByteSwap.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A46D10B51CAB00FF8B50 /* ByteSwap.c */; };
 		5573A46F10B51CAB00FF8B50 /* ByteSwap.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A46D10B51CAB00FF8B50 /* ByteSwap.c */; };
 		5573A51C10B52EB500FF8B50 /* DrawSprocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */; };
+		5574BCEC169634DE00CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		5574BCF01696355A00CF3C37 /* DMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341E910BB5FFA005208D1 /* DMF.ppimpexp */; };
+		5574BCF11696355A00CF3C37 /* Revert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E123010D6F3E600BB619C /* Revert.plugin */; };
 		557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */ = {isa = PBXBuildFile; fileRef = 557B8FD910CE01BF00B9A37D /* DefaultPref.r */; };
 		557DE1F310E0159600177B4C /* PPMenus.r in Rez */ = {isa = PBXBuildFile; fileRef = 557DE1F110E0158C00177B4C /* PPMenus.r */; };
 		557DE27710E04C1500177B4C /* PPResDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 557DE27610E04C1500177B4C /* PPResDefs.h */; };
@@ -935,6 +938,13 @@
 			remoteGlobalIDString = 5533410810BB5460005208D1;
 			remoteInfo = "Import-export";
 		};
+		5574BCEE1696353700CF3C37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 554E122210D6F3E600BB619C;
+			remoteInfo = Revert;
+		};
 		557DE3F110E06BC500177B4C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1472,6 +1482,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				5574BCF01696355A00CF3C37 /* DMF.ppimpexp in Copy PlugIns */,
+				5574BCF11696355A00CF3C37 /* Revert.plugin in Copy PlugIns */,
 				55B23D2916893DE300DCE923 /* XI.plugin in Copy PlugIns */,
 				55B23D24168935D300DCE923 /* MINs.plugin in Copy PlugIns */,
 				55B23D231689321F00DCE923 /* PAT.plugin in Copy PlugIns */,
@@ -2268,6 +2280,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5574BCEC169634DE00CF3C37 /* PlayerPROCore.framework in Frameworks */,
 				554E122910D6F3E600BB619C /* Carbon.framework in Frameworks */,
 				554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */,
 			);
@@ -4889,6 +4902,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5574BCEF1696353700CF3C37 /* PBXTargetDependency */,
 				55B23D2816893DD700DCE923 /* PBXTargetDependency */,
 				55B23D26168935DD00DCE923 /* PBXTargetDependency */,
 				55B23D22168931F900DCE923 /* PBXTargetDependency */,
@@ -6400,6 +6414,11 @@
 			isa = PBXTargetDependency;
 			target = 5533410810BB5460005208D1 /* Import-export */;
 			targetProxy = 55672E6D10CAD650008C5C3D /* PBXContainerItemProxy */;
+		};
+		5574BCEF1696353700CF3C37 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 554E122210D6F3E600BB619C /* Revert */;
+			targetProxy = 5574BCEE1696353700CF3C37 /* PBXContainerItemProxy */;
 		};
 		557DE3F210E06BC500177B4C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8677,7 +8696,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				"CLANG_ENABLE_OBJC_ARC[arch=x86_64]" = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
@@ -8687,6 +8705,7 @@
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				PRODUCT_NAME = "PlayerPRO Cocoa";
 			};
 			name = Release;
@@ -8695,7 +8714,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				"CLANG_ENABLE_OBJC_ARC[arch=x86_64]" = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -8707,6 +8725,7 @@
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				PRODUCT_NAME = "PlayerPRO Cocoa";
 			};
 			name = Debug;

@@ -19,6 +19,8 @@
 #import "PPInstrumentWindowController.h"
 #import "PPPlugInInfo.h"
 #import "PPPlugInInfoController.h"
+#import "PPDigitalPlugInHandler.h"
+#import "PPDigitalPlugInObject.h"
 #include <PlayerPROCore/RDriverInt.h>
 
 static NSString * const kMusicListKVO = @"musicList";
@@ -441,6 +443,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	instrumentController.importer = instrumentImporter;
 	instrumentController.curMusic = &Music;
 	
+	digitalHandler = [[PPDigitalPlugInHandler alloc] initWithMusic:&Music];
+	digitalHandler.driverRec = &MADDriver;
+	
 	NSInteger i;
 	for (i = 0; i < [instrumentImporter plugInCount]; i++) {
 		PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
@@ -457,14 +462,21 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		NSMutableArray *tmpArray = [NSMutableArray array];
 		for (i = 0; i < MADLib->TotalPlug ; i++) {
 			//PlugInfo *tmpPlug = &MADLib->ThePlug[i];
-			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:BRIDGE(NSString*,MADLib->ThePlug[i].MenuName) author:BRIDGE(NSString*,MADLib->ThePlug[i].AuthorString) plugType:NSLocalizedString(@"Tracker", @"Tracker plug-in name")];
+			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:BRIDGE(NSString*,MADLib->ThePlug[i].MenuName) author:BRIDGE(NSString*,MADLib->ThePlug[i].AuthorString) plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name")];
 			[tmpArray addObject:tmpInfo];
 			RELEASEOBJ(tmpInfo);
 		}
 		
 		for (i = 0; i < [instrumentImporter plugInCount]; i++) {
 			PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
-			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"Instrument", @"Instrument plug-in name")];
+			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"InstrumentPlugName", @"Instrument plug-in name")];
+			[tmpArray addObject:tmpInfo];
+			RELEASEOBJ(tmpInfo);
+		}
+		
+		for (i = 0; i < [digitalHandler plugInCount]; i++) {
+			PPDigitalPlugInObject *obj = [digitalHandler plugInAtIndex:i];
+			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"DigitalPlugName", @"Digital plug-in name")];
 			[tmpArray addObject:tmpInfo];
 			RELEASEOBJ(tmpInfo);
 		}

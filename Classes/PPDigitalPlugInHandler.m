@@ -12,7 +12,7 @@
 //#import <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 
-OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 channel, SInt32 note, SInt32 amplitude, long loopBeg, long loopSize, unsigned int rate, Boolean stereo)
+static OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 channel, SInt32 note, SInt32 amplitude, long loopBeg, long loopSize, unsigned int rate, Boolean stereo)
 {
 	OSErr iErr = MADPlaySoundData( theRec, soundPtr, size, channel, note, amplitude, 0, 0, rate, stereo);
 	Boolean	continueLoop;
@@ -53,7 +53,7 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 	theInfo.driverRec = *driverRec;
 }
 
-- (OSErr)callDigitalPlugIn:(NSUInteger)plugNum Pcmd:(Pcmd*)myPcmd
+- (OSErr)callDigitalPlugIn:(NSUInteger)plugNum pcmd:(Pcmd*)myPcmd
 {
 	PPDigitalPlugInObject *tmp = [digitalPlugs objectAtIndex:plugNum];
 	return [tmp callWithPcmd:myPcmd plugInfo:&theInfo];
@@ -87,7 +87,8 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 		curMusic = theMus;
 		digitalPlugs = [[NSMutableArray alloc] initWithCapacity:20];
 		theInfo.RPlaySound = inMADPlaySoundData;
-		//[NSBundle]
+		theInfo.fileType = 'PPDG';
+
 		NSArray *plugLocs = DefaultPlugInLocations();
 		
 		NSInteger PlugLocNums = [plugLocs count], i, x;
@@ -116,6 +117,25 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 		}
 	}
 	return self;
+}
+
+- (void)addPlugInFromBundle:(NSBundle *)theBund
+{
+	PPDigitalPlugInObject *obj = [[PPDigitalPlugInObject alloc] initWithBundle:theBund];
+	[digitalPlugs addObject:obj];
+	RELEASEOBJ(obj);
+}
+
+- (void)addPlugInFromURL:(NSURL *)urlpath
+{
+	NSBundle *theBund = [NSBundle bundleWithURL:urlpath];
+	[self addPlugInFromBundle:theBund];
+}
+
+- (void)addPlugInFromPath:(NSString*)thePath
+{
+	NSBundle *theBund = [NSBundle bundleWithPath:thePath];
+	[self addPlugInFromBundle:theBund];
 }
 
 - (void)dealloc

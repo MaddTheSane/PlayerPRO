@@ -18,16 +18,16 @@ Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
 
-OSErr mainRevert( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+OSErr mainRevert(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
 	short				/*itemHit, mode,*/ track, row;
 //	Str255				tStr;
 	Pcmd				*srcCmd;
 	long				memSize;
 		
-	memSize = GetPtrSize( (Ptr) myPcmd);
+	memSize = myPcmd->structSize;//GetPtrSize( (Ptr) myPcmd);
 	
-	srcCmd = (Pcmd*) NewPtrClear( memSize);
+	srcCmd = (Pcmd*) calloc( memSize, 1);
 	
 	srcCmd->length = myPcmd->length;
 	srcCmd->tracks = myPcmd->tracks;
@@ -60,7 +60,7 @@ OSErr mainRevert( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		}
 	}
 	
-	DisposePtr( (Ptr) srcCmd);
+	free( srcCmd);
 		
 	return noErr;
 }

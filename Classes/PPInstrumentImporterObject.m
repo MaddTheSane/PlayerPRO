@@ -158,7 +158,7 @@ typedef enum _MADPlugCapabilities {
 		if ([DictionaryTemp isKindOfClass:strClass]) {
 			authorString = [[NSString alloc] initWithString:DictionaryTemp];
 		} else {
-			authorString = @"No author";
+			authorString = [NSLocalizedString(@"No Author", @"no author") copy];
 		}
 		
 		
