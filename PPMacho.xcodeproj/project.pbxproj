@@ -229,7 +229,6 @@
 		554E11F710D6F3E100BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E126410D6F4F700BB619C /* Propagate.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF010D6C79D00BB619C /* Propagate.c */; };
-		554E126510D6F4F800BB619C /* Propagate.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FF110D6C79D00BB619C /* Propagate.r */; };
 		554E126610D6F50500BB619C /* Revert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF410D6C79D00BB619C /* Revert.c */; };
 		555C125116378B3500735225 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		55672E1C10CAD641008C5C3D /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
@@ -313,6 +312,7 @@
 		5574BCF01696355A00CF3C37 /* DMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341E910BB5FFA005208D1 /* DMF.ppimpexp */; };
 		5574BCF11696355A00CF3C37 /* Revert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E123010D6F3E600BB619C /* Revert.plugin */; };
 		5574BCF9169645FE00CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		5574BCFC169649CB00CF3C37 /* Propagate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11FD10D6F3E100BB619C /* Propagate.plugin */; };
 		557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */ = {isa = PBXBuildFile; fileRef = 557B8FD910CE01BF00B9A37D /* DefaultPref.r */; };
 		557DE1F310E0159600177B4C /* PPMenus.r in Rez */ = {isa = PBXBuildFile; fileRef = 557DE1F110E0158C00177B4C /* PPMenus.r */; };
 		557DE27710E04C1500177B4C /* PPResDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 557DE27610E04C1500177B4C /* PPResDefs.h */; };
@@ -944,6 +944,13 @@
 			remoteGlobalIDString = 554E122210D6F3E600BB619C;
 			remoteInfo = Revert;
 		};
+		5574BCFA169649BF00CF3C37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 554E11EF10D6F3E100BB619C;
+			remoteInfo = Propagate;
+		};
 		557DE3F110E06BC500177B4C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1481,6 +1488,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				5574BCFC169649CB00CF3C37 /* Propagate.plugin in Copy PlugIns */,
 				5574BCF01696355A00CF3C37 /* DMF.ppimpexp in Copy PlugIns */,
 				5574BCF11696355A00CF3C37 /* Revert.plugin in Copy PlugIns */,
 				55B23D2916893DE300DCE923 /* XI.plugin in Copy PlugIns */,
@@ -1755,10 +1763,8 @@
 		554E0FEB10D6C79D00BB619C /* NoteTrans.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = NoteTrans.c; sourceTree = "<group>"; };
 		554E0FEC10D6C79D00BB619C /* NoteTrans.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = NoteTrans.r; sourceTree = "<group>"; };
 		554E0FF010D6C79D00BB619C /* Propagate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Propagate.c; sourceTree = "<group>"; };
-		554E0FF110D6C79D00BB619C /* Propagate.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Propagate.r; sourceTree = "<group>"; };
 		554E0FF310D6C79D00BB619C /* Read-Me */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read-Me"; sourceTree = "<group>"; };
 		554E0FF410D6C79D00BB619C /* Revert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Revert.c; sourceTree = "<group>"; };
-		554E0FF510D6C79D00BB619C /* Revert.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Revert.r; sourceTree = "<group>"; };
 		554E0FFA10D6C79D00BB619C /* Amplitude.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Amplitude.c; sourceTree = "<group>"; };
 		554E0FFB10D6C79D00BB619C /* Amplitude.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Amplitude.r; sourceTree = "<group>"; };
 		554E0FFD10D6C79E00BB619C /* Backwards.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Backwards.c; sourceTree = "<group>"; };
@@ -3450,7 +3456,6 @@
 			isa = PBXGroup;
 			children = (
 				554E0FF010D6C79D00BB619C /* Propagate.c */,
-				554E0FF110D6C79D00BB619C /* Propagate.r */,
 				554E122110D6F3E100BB619C /* Propagate-Info.plist */,
 			);
 			name = Propagate;
@@ -3460,7 +3465,6 @@
 			isa = PBXGroup;
 			children = (
 				554E0FF410D6C79D00BB619C /* Revert.c */,
-				554E0FF510D6C79D00BB619C /* Revert.r */,
 				554E125410D6F3E600BB619C /* Revert-Info.plist */,
 			);
 			name = Revert;
@@ -4900,6 +4904,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5574BCFB169649BF00CF3C37 /* PBXTargetDependency */,
 				5574BCEF1696353700CF3C37 /* PBXTargetDependency */,
 				55B23D2816893DD700DCE923 /* PBXTargetDependency */,
 				55B23D26168935DD00DCE923 /* PBXTargetDependency */,
@@ -5511,7 +5516,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554E126510D6F4F800BB619C /* Propagate.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6409,6 +6413,11 @@
 			isa = PBXTargetDependency;
 			target = 554E122210D6F3E600BB619C /* Revert */;
 			targetProxy = 5574BCEE1696353700CF3C37 /* PBXContainerItemProxy */;
+		};
+		5574BCFB169649BF00CF3C37 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 554E11EF10D6F3E100BB619C /* Propagate */;
+			targetProxy = 5574BCFA169649BF00CF3C37 /* PBXContainerItemProxy */;
 		};
 		557DE3F210E06BC500177B4C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

@@ -57,5 +57,8 @@
 "Unknown reason" = "Unknown reason";
 
 //Plug-in type strings
-"Tracker" = "Tracker";
-"Instrument" = "Instrument";
+"TrackerPlugName" = "Tracker";
+"InstrumentPlugName" = "Instrument";
+"DigitalPlugName" = "Digital";
+
+"No Author" = "No Author";
