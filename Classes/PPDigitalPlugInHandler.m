@@ -47,10 +47,10 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 
 @synthesize driverRec;
 
-- (void)setDriverRec:(MADDriverRec *)aDriverRec
+- (void)setDriverRec:(MADDriverRec **)aDriverRec
 {
 	driverRec = aDriverRec;
-	theInfo.driverRec = driverRec;
+	theInfo.driverRec = *driverRec;
 }
 
 - (OSErr)callDigitalPlugIn:(NSUInteger)plugNum Pcmd:(Pcmd*)myPcmd
@@ -64,15 +64,26 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 	return [digitalPlugs objectAtIndex:idx];
 }
 
+- (NSUInteger)plugInCount
+{
+	return [digitalPlugs count];
+}
+
 - (id)init
 {
 	[self doesNotRecognizeSelector:_cmd];
 	return nil;
 }
 
+- (void)driverRecDidChange:(NSNotification*)aNot
+{
+	theInfo.driverRec = *driverRec;
+}
+
 - (id)initWithMusic:(MADMusic**)theMus
 {
 	if (self = [super init]) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(driverRecDidChange:) name:PPDriverDidChange object:nil];
 		curMusic = theMus;
 		digitalPlugs = [[NSMutableArray alloc] initWithCapacity:20];
 		theInfo.RPlaySound = inMADPlaySoundData;
@@ -107,13 +118,13 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 	return self;
 }
 
-#if !__has_feature(objc_arc)
 - (void)dealloc
 {
-	[digitalPlugs release];
+	RELEASEOBJ(digitalPlugs);
 	
-	[super dealloc];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
+	SUPERDEALLOC;
 }
-#endif
 
 @end

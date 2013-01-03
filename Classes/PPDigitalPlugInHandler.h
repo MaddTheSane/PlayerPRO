@@ -15,16 +15,17 @@
 {
 	NSMutableArray	*digitalPlugs;
 	MADMusic		**curMusic;
-	MADDriverRec	*driverRec;
+	MADDriverRec	**driverRec;
 	PPInfoPlug		theInfo;
 }
 
-@property (readwrite, nonatomic) MADDriverRec *driverRec;
+@property (readwrite, nonatomic) MADDriverRec **driverRec;
 
 - (id)initWithMusic:(MADMusic**)theMus;
 
 - (OSErr)callDigitalPlugIn:(NSUInteger)plugNum Pcmd:(Pcmd*)myPcmd;
 
 - (PPDigitalPlugInObject*)plugInAtIndex:(NSUInteger)idx;
+- (NSUInteger)plugInCount;
 
 @end

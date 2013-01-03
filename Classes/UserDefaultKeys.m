@@ -14,6 +14,8 @@ NSString * const PPDigitalEditorPrefrencesDidChange = @"Digital Editor Preferenc
 NSString * const PPBoxEditorPreferencesDidChange = @"Box Editor Preferences changed";
 NSString * const PPMiscPreferencesDidChange = @"Misc. Preferences Changed";
 
+NSString * const PPDriverDidChange = @"PlayerPRO Driver did change";
+
 NSString * const PPRememberMusicList = @"Remember Music List";
 NSString * const PPLoadMusicAtListLoad = @"Load music when loading list";
 NSString * const PPAfterPlayingMusic = @"After playing music";

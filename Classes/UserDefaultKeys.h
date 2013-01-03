@@ -13,6 +13,8 @@ extern NSString * const PPDigitalEditorPrefrencesDidChange;
 extern NSString * const PPBoxEditorPreferencesDidChange;
 extern NSString * const PPMiscPreferencesDidChange;
 
+extern NSString * const PPDriverDidChange;
+
 extern NSString * const PPRememberMusicList;
 extern NSString * const PPLoadMusicAtListLoad;
 extern NSString * const PPAfterPlayingMusic;

@@ -88,6 +88,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			MADGetMusicStatus(MADDriver, &fullTime, &curTime);
 		}
 		MADDisposeDriver(MADDriver);
+		MADDriver = NULL;
 	}
 	MADDriverSettings init;
 	MADGetBestDriver(&init);
@@ -115,6 +116,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	init.repeatMusic = FALSE;
 	
 	OSErr returnerr = MADCreateDriver(&init, MADLib, &MADDriver);
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPDriverDidChange object:self];
 	if (returnerr != noErr) {
 		NSError *err = CreateErrorFromMADErrorType(returnerr);
 		NSAlert *alert = [NSAlert alertWithError:err];
