@@ -21,11 +21,14 @@ static NSString * const kMusicListKVO = @"musicList";
 // Code taken from Mozilla's Mac Eudora importer
 static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 {
+	long handSize = GetHandleSize(aResource);
+	long curSize = 2;
+	
 	if (!aResource)
 		return NULL;
 	UInt8 *data = *(UInt8**)aResource;
 	UInt16 count = *(UInt16*)data;
-	//PPBE16(&count);
+	PPBE16(&count);
 	
 	// First 2 bytes are the count of strings that this resource has.
 	if (count < aId)
@@ -35,7 +38,14 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	// looking for data.  data is in order
 	while (--aId >= 0)
-		data = data + (*(UInt8*)data) + 1;
+	{
+		short toAdd = (*(UInt8*)data) + 1;
+		curSize += toAdd;
+		if (curSize >= handSize) {
+			return NULL;
+		}
+		data = data + toAdd;
+	}
 	
 	return data;
 }
@@ -221,7 +231,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	
 	HLock( aHandle);
 	theNo = *((UInt16*)(*aHandle));          // number of musics...
-	//PPBE16(&theNo);
+	PPBE16(&theNo);
 	
 	theNo /= 2;
 	
@@ -230,14 +240,25 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	for(i = 0; i < theNo * 2; i += 2) {
 		aStr = GetStringFromHandle(aHandle, i);
 		aStr2 = GetStringFromHandle(aHandle, i + 1);
+		if (!aStr || !aStr2) {
+			break;
+		}
 		CFStringRef CFaStr = NULL, CFaStr2 = NULL;
 		CFaStr = CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman);
 		CFaStr2 = CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman);
 
-		NSString *together = [NSString stringWithFormat:@"%@:%@", BRIDGE(NSString*, CFaStr), BRIDGE(NSString*, CFaStr2)];
+		CFMutableArrayRef CFaStrArray = CFArrayCreateMutable(kCFAllocatorDefault, 2, &kCFTypeArrayCallBacks);
+		
+		CFArrayAppendValue(CFaStrArray, CFaStr);
 		CFRelease(CFaStr);
+		CFArrayAppendValue(CFaStrArray, CFaStr2);
 		CFRelease(CFaStr2);
-		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, BRIDGE(CFStringRef, together), kCFURLHFSPathStyle, false));
+
+		CFStringRef together = CFStringCreateByCombiningStrings(kCFAllocatorDefault, CFaStrArray, CFSTR(":"));
+		CFRelease(CFaStrArray);
+		//NSString *together = [NSString stringWithFormat:@"%@:%@", BRIDGE(NSString*, CFaStr), BRIDGE(NSString*, CFaStr2)];
+		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, together, kCFURLHFSPathStyle, false));
+		CFRelease(together);
 		NSURL *refURL = [fullPath fileReferenceURL];
 		
 		PPMusicListObject *obj = nil;
