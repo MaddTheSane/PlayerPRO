@@ -391,7 +391,7 @@ typedef struct PlugInfo
 #endif
 
 #ifdef _BE_H
-
+//TODO: BeOS headers!
 typedef	OSErr (*MADPlug)( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 typedef struct PlugInfo
