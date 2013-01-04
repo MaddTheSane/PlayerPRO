@@ -18,7 +18,6 @@
 #define MAXPLUG	40
 
 #include "PPPlug.h"
-#include "PPPrivate.h"
 #define CharlMADcheckLength 10
 
 const CFStringRef kMadPlugMenuNameKey =		CFSTR("MADPlugMenuName");

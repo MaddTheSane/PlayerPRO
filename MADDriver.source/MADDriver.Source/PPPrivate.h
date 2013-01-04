@@ -20,12 +20,6 @@ extern "C" {
 #pragma mark Core Audio Functions
 OSErr initCoreAudio( MADDriverRec *inMADDriver);
 OSErr closeCoreAudio( MADDriverRec *inMADDriver);
-
-const CFStringRef kMadPlugMenuNameKey;
-const CFStringRef kMadPlugAuthorNameKey;
-const CFStringRef kMadPlugUTITypesKey;
-const CFStringRef kMadPlugModeKey;
-const CFStringRef kMadPlugTypeKey;
 #endif
 
 #ifdef _ESOUND
