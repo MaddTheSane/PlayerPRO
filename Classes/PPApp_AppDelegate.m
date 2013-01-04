@@ -231,15 +231,17 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	switch ([userDefaults integerForKey:PPAfterPlayingMusic]) {
 		case PPStopPlaying:
 		default:
-			MADStopMusic(MADDriver);
+			//MADStopMusic(MADDriver);
 			MADCleanDriver(MADDriver);
-			if ([userDefaults boolForKey:PPLoopMusicWhenDone]) {
+			if ([userDefaults boolForKey:PPGotoStartupAfterPlaying]) {
 				MADSetMusicStatus(MADDriver, 0, 100, 0);
 			}
+			self.paused = YES;
 			break;
 			
 		case PPLoopMusic:
 			MADSetMusicStatus(MADDriver, 0, 100, 0);
+			MADPlayMusic(MADDriver);
 			break;
 			
 		case PPLoadNext:
@@ -263,9 +265,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 						[alert runModal];
 					}
 				} else {
-					MADStopMusic(MADDriver);
+					//MADStopMusic(MADDriver);
 					MADCleanDriver(MADDriver);
-					if ([userDefaults boolForKey:PPLoopMusicWhenDone]) {
+					if ([userDefaults boolForKey:PPGotoStartupAfterPlaying]) {
 						MADSetMusicStatus(MADDriver, 0, 100, 0);
 					}
 				}
@@ -293,7 +295,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	if (Music) {
 		long fT, cT;
 		MADGetMusicStatus(MADDriver, &fT, &cT);
-		if (fT == cT) {
+		if (!MADIsPlayingMusic(MADDriver) && !self.paused) {
 			[self songIsDonePlaying];
 			MADGetMusicStatus(MADDriver, &fT, &cT);
 		}
@@ -566,7 +568,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 - (IBAction)deleteInstrument:(id)sender
 {
-    
+    [instrumentController deleteInstrument:sender];
 }
 
 - (IBAction)showBoxEditor:(id)sender
@@ -801,7 +803,23 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)nextButtonPressed:(id)sender
 {
-    
+    if (currentlyPlayingIndex + 1 < [musicList countOfMusicList]) {
+		currentlyPlayingIndex++;
+		[self selectCurrentlyPlayingMusic];
+		NSError *err = nil;
+		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
+			NSAlert *ap = [NSAlert alertWithError:err];
+			[ap runModal];
+		}
+	} else if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoopMusicWhenDone]) {
+		currentlyPlayingIndex = 0;
+		[self selectCurrentlyPlayingMusic];
+		NSError *err = nil;
+		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
+			NSAlert *ap = [NSAlert alertWithError:err];
+			[ap runModal];
+		}
+	} else NSBeep();
 }
 
 - (IBAction)playButtonPressed:(id)sender
@@ -814,7 +832,15 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)prevButtonPressed:(id)sender
 {
-    
+    if (currentlyPlayingIndex > 0) {
+		currentlyPlayingIndex--;
+		[self selectCurrentlyPlayingMusic];
+		NSError *err = nil;
+		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
+			NSAlert *ap = [NSAlert alertWithError:err];
+			[ap runModal];
+		}
+	} else NSBeep();
 }
 
 - (IBAction)recordButtonPressed:(id)sender
