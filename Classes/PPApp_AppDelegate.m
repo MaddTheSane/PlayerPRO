@@ -549,6 +549,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[musicList release];
 	[timeChecker release];
 	[plugInInfos release];
+	[instrumentImporter release];
+	[digitalHandler release];
 	
 	[super dealloc];
 }

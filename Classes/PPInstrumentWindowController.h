@@ -22,5 +22,6 @@
 @property (readwrite) MADMusic **curMusic;
 
 - (IBAction)exportInstrument:(id)sender;
+- (IBAction)deleteInstrument:(id)sender;
 
 @end

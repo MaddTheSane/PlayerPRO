@@ -60,20 +60,23 @@
 
 @property (getter=isPaused, readwrite) BOOL paused;
 
+@property (assign) NSWindow *window;
 - (IBAction)showMusicList:(id)sender;
-- (IBAction)exportInstrumentAs:(id)sender;
-- (IBAction)showInstrumentsList:(id)sender;
-- (IBAction)showTools:(id)sender;
-- (IBAction)showPreferences:(id)sender;
-- (IBAction)deleteInstrument:(id)sender;
-- (IBAction)showBoxEditor:(id)sender;
-- (IBAction)showClassicEditor:(id)sender;
-- (IBAction)showDigitalEditor:(id)sender;
 - (IBAction)sortMusicList:(id)sender;
 - (IBAction)playSelectedMusic:(id)sender;
 - (IBAction)addMusic:(id)sender;
 - (IBAction)removeSelectedMusic:(id)sender;
 - (IBAction)clearMusicList:(id)sender;
+- (IBAction)saveMusicList:(id)sender;
+
+- (IBAction)showInstrumentsList:(id)sender;
+- (IBAction)exportInstrumentAs:(id)sender;
+- (IBAction)deleteInstrument:(id)sender;
+
+- (IBAction)showPreferences:(id)sender;
+- (IBAction)showBoxEditor:(id)sender;
+- (IBAction)showClassicEditor:(id)sender;
+- (IBAction)showDigitalEditor:(id)sender;
 
 - (void)preferencesDidChange:(NSNotification *)notification;
 - (void)soundPreferencesDidChange:(NSNotification *)notification;
@@ -81,11 +84,10 @@
 
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad;
 
-@property (assign) NSWindow *window;
 - (IBAction)openFile:(id)sender;
 
-- (IBAction)saveMusicList:(id)sender;
 
+- (IBAction)showTools:(id)sender;
 - (IBAction)fastForwardButtonPressed:(id)sender;
 - (IBAction)loopButtonPressed:(id)sender;
 - (IBAction)nextButtonPressed:(id)sender;

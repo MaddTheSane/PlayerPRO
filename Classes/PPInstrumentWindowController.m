@@ -18,11 +18,17 @@
 @synthesize importer;
 @synthesize curMusic;
 
+- (void)colorsDidChange:(NSNotification*)aNot
+{
+	
+}
+
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorsDidChange:) name:PPColorsDidChange object:nil];
     }
     
     return self;
@@ -39,6 +45,11 @@
 	
 }
 
+- (IBAction)deleteInstrument:(id)sender
+{
+	
+}
+
 - (void)windowDidLoad
 {
     [super windowDidLoad];
@@ -46,13 +57,13 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
-#if !__has_feature(objc_arc)
 - (void)dealloc
 {
-	[importer release];
+	RELEASEOBJ(importer);
 	
-	[super dealloc];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
+	SUPERDEALLOC;
 }
-#endif
 
 @end
