@@ -12,6 +12,7 @@ NSString * const PPListPreferencesDidChange = @"Music List Preferences Changed";
 NSString * const PPSoundPreferencesDidChange = @"Sound Preferences changed";
 NSString * const PPDigitalEditorPrefrencesDidChange = @"Digital Editor Preferences changed";
 NSString * const PPBoxEditorPreferencesDidChange = @"Box Editor Preferences changed";
+NSString * const PPClassicalEditorPreferencesDidChange = @"Classical Preferences changed";
 NSString * const PPMiscPreferencesDidChange = @"Misc. Preferences Changed";
 NSString * const PPColorsDidChange = @"PP Color Preferences changed";
 
@@ -74,5 +75,14 @@ NSString * const PPMAddExtension = @"Add Extension";
 NSString * const PPMMadCompression = @"Compress MAD?";
 NSString * const PPMNoLoadMixerFromFiles = @"No load Mixer?";
 NSString * const PPMOscilloscopeDrawLines = @"Oscilloscope Draw Lines";
+
+NSString * const PPCEShowNotesLen = @"Classical Editor Show Notes Length";
+NSString * const PPCEShowMarkers = @"Classical Editor Show Markers?";
+NSString * const PPCEMarkerOffset = @"Classical Editor Marker Offset";
+NSString * const PPCEMarkerLoop = @"Classical Editor Marker Loop";
+NSString * const PPCETempoNum = @"Classical Editor Temo Num.";
+NSString * const PPCETempoUnit = @"Classical Editor Tempo Unit";
+NSString * const PPCETrackHeight = @"Classical Editor Track Height";
+
 
 NSString * const PPMMusicList = @"PlayerPRO Music List";

@@ -11,6 +11,7 @@ extern NSString * const PPListPreferencesDidChange;
 extern NSString * const PPSoundPreferencesDidChange;
 extern NSString * const PPDigitalEditorPrefrencesDidChange;
 extern NSString * const PPBoxEditorPreferencesDidChange;
+extern NSString * const PPClassicalEditorPreferencesDidChange;
 extern NSString * const PPMiscPreferencesDidChange;
 extern NSString * const PPColorsDidChange;
 
@@ -73,5 +74,13 @@ extern NSString * const PPMAddExtension;
 extern NSString * const PPMMadCompression;
 extern NSString * const PPMNoLoadMixerFromFiles;
 extern NSString * const PPMOscilloscopeDrawLines;
+
+extern NSString * const PPCEShowNotesLen;
+extern NSString * const PPCEShowMarkers;
+extern NSString * const PPCEMarkerOffset;
+extern NSString * const PPCEMarkerLoop;
+extern NSString * const PPCETempoNum;
+extern NSString * const PPCETempoUnit;
+extern NSString * const PPCETrackHeight;
 
 extern NSString * const PPMMusicList;

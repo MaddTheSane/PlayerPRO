@@ -16,6 +16,11 @@
 	IBOutlet NSTextField *markersOffsetValue;
 	IBOutlet NSButton *markersCheck;
 	IBOutlet NSButton *notesLengthCheck;
+	IBOutlet NSPopUpButton *trackHeightButton;
 }
+
+- (IBAction)changeTrackHeight:(id)sender;
+- (IBAction)toggleNoteLength:(id)sender;
+- (IBAction)toggleMarkers:(id)sender;
 
 @end

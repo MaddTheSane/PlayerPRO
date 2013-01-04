@@ -8,7 +8,8 @@
 
 #import "SoundOutputController.h"
 #import "UserDefaultKeys.h"
-#import "RDriver.h"
+#include <PlayerPROCore/RDriver.h>
+#import "PPPreferences.h"
 
 @implementation SoundOutputController
 
@@ -25,11 +26,6 @@ enum {
 	bits20,
 	bits24
 };
-
-typedef struct _tagCoupling {
-	int amount;
-	NSInteger tag;
-} TagCoupling;
 
 static const TagCoupling StereoDelayCoupling[] = {{1, 1}, {10, 2}, {25, 3}, {30, 4} ,{35, 5},
 	{40, 6}, {45, 7}, {50, 8}, {60, 9}, {70, 10}, {80, 11}, {90, 12}, {100, 13}, {200, 14}};

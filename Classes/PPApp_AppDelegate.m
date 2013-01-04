@@ -199,6 +199,14 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 															 [NSNumber numberWithBool:NO], PPMNoLoadMixerFromFiles,
 															 [NSNumber numberWithBool:YES], PPMOscilloscopeDrawLines,
 															 
+															 @NO, PPCEShowNotesLen,
+															 @YES, PPCEShowMarkers,
+															 @0, PPCEMarkerOffset,
+															 @3, PPCEMarkerLoop,
+															 @4, PPCETempoNum,
+															 @4, PPCETempoUnit,
+															 @130, PPCETrackHeight,
+															 
 															 [NSKeyedArchiver archivedDataWithRootObject:tempList], PPMMusicList,
 															 nil]];
 	RELEASEOBJ(tempList);

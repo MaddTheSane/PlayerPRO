@@ -15,6 +15,11 @@ enum {
 	PPLoadRandom
 };
 
+typedef struct _tagCoupling {
+	int amount;
+	NSInteger tag;
+} TagCoupling;
+
 @interface PPPreferences : NSWindowController {
 	IBOutlet NSBox *box;
 	IBOutlet NSPopUpButton *popUp;
