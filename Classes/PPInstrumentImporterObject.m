@@ -90,6 +90,15 @@ static inline OSType NSStringToOSType(NSString *CFstri)
 	return Ptr2OSType(thecOSType);
 }
 
+static inline BOOL getBoolFromId(id NSType)
+{
+	if ([NSType isKindOfClass:[NSNumber class]] || [NSType isKindOfClass:[NSString class]]) {
+		return [NSType boolValue];
+	} else {
+		return NO;
+	}
+}
+
 @implementation PPInstrumentImporterObject
 
 @synthesize menuName;
@@ -166,8 +175,7 @@ typedef enum _MADPlugCapabilities {
 		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
 			UTITypes = [[NSArray alloc] initWithArray:DictionaryTemp];
 		} else if ([DictionaryTemp isKindOfClass:strClass]) {
-			NSString *tempStr = [NSString stringWithString:DictionaryTemp];
-			UTITypes = RETAINOBJ([NSArray arrayWithObject:tempStr]);
+			UTITypes = RETAINOBJ([NSArray arrayWithObject:[NSString stringWithString:DictionaryTemp]]);
 		} else {
 			RELEASEOBJ(tempDict);
 			AUTORELEASEOBJNORETURN(self);
@@ -175,10 +183,8 @@ typedef enum _MADPlugCapabilities {
 		}
 		
 		DictionaryTemp = [tempDict valueForKey:kMadPlugIsSampleKey];
-		if ([DictionaryTemp isKindOfClass:numClass]) {
-			isSamp = [(NSNumber*)DictionaryTemp boolValue];
-		} else if ([DictionaryTemp isKindOfClass:strClass]){
-			isSamp = [(NSString*)DictionaryTemp boolValue];
+		if ([DictionaryTemp isKindOfClass:numClass] || [DictionaryTemp isKindOfClass:strClass]) {
+			isSamp = [DictionaryTemp boolValue];
 		} else {
 			RELEASEOBJ(tempDict);
 			AUTORELEASEOBJNORETURN(self);
@@ -202,11 +208,11 @@ typedef enum _MADPlugCapabilities {
 			if (canImportValue || canExportValue) {
 				MADPlugCapabilities capabilities = PPMADCanDoNothing;
 				if (canImportValue) {
-					if([canImportValue boolValue])
+					if(getBoolFromId(canImportValue))
 						capabilities = PPMADCanImport;
 				}
 				if (canExportValue) {
-					if([canExportValue boolValue])
+					if(getBoolFromId(canExportValue))
 						capabilities |= PPMADCanExport;
 				}
 				

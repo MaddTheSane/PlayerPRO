@@ -210,9 +210,15 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
 			short i;
+			int strlength = 0;
 			const char * tempstring = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
 			if (tempstring == NULL) goto badplug;
-			for (i=0; i < 4; i++) {
+			strcpy(FillPlug->type, "    ");
+			strlength = strlen(tempstring);
+			if (strlength > 4) {
+				strlength = 4;
+			}
+			for (i = 0; i < strlength; i++) {
 				if (tempstring[i] == 0) {
 					FillPlug->type[i] = ' ';
 				}else FillPlug->type[i] = tempstring[i];

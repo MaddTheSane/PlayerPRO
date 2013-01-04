@@ -77,7 +77,9 @@ static OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, 
 
 - (void)driverRecDidChange:(NSNotification*)aNot
 {
-	theInfo.driverRec = *driverRec;
+	if (driverRec && *driverRec) {
+		theInfo.driverRec = *driverRec;
+	}
 }
 
 - (id)initWithMusic:(MADMusic**)theMus
