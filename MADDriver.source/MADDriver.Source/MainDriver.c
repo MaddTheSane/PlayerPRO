@@ -1213,6 +1213,8 @@ OSErr MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned ch
 	if( !driver) return MADParametersErr;
 	if( !music) return MADParametersErr;
 	
+	driver->musicEnd = false;
+	
 	if( music != driver->curMusic) needToReset = true;
 	else needToReset = false;
 	
@@ -1579,6 +1581,10 @@ OSErr MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV)
 	long			time;
 	long			speed, finespeed, fullTime, curTime;
 	long			dstTime;
+	
+	if (maxV > curV) {
+		MDriver->musicEnd = false;
+	}
 	
 	if( MDriver == NULL)
 	{
@@ -3586,5 +3592,13 @@ void MADSetReading(MADDriverRec *driver, Boolean toSet)
 	} else {
 		MADStopMusic(driver);
 	}
+}
+
+Boolean MADIsDonePlaying(MADDriverRec *MDriver)
+{
+	if (!MDriver) {
+		return false;
+	}
+	return MDriver->musicEnd;
 }
 

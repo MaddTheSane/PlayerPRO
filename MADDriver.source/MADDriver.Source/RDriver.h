@@ -617,7 +617,7 @@ PPEXPORT Cmd*	GetMADCommand(	short		position,						// Extract a Command from a P
 								PatData*	aPatData);
 
 PPEXPORT OSErr	MADPlaySoundData(	MADDriverRec	*MDriver,
-									char			*soundPtr,				// Sound Pointer to data
+									Ptr				soundPtr,				// Sound Pointer to data
 									size_t			size,					// Sound size in bytes
 									SInt32			channel,				// channel ID on which to play sound
 									SInt32			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
@@ -640,6 +640,8 @@ OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
 							Boolean			stereo);				// sample is in stereo or in mono?
 #endif
 
+PPEXPORT Boolean MADIsDonePlaying(MADDriverRec *MDriver);
+	
 PPEXPORT Boolean MADWasReading(MADDriverRec *driver) DEPRECATED_ATTRIBUTE;
 PPEXPORT void MADSetReading(MADDriverRec *driver, Boolean toSet) DEPRECATED_ATTRIBUTE;
 

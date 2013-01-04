@@ -295,7 +295,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	if (Music) {
 		long fT, cT;
 		MADGetMusicStatus(MADDriver, &fT, &cT);
-		if (!MADIsPlayingMusic(MADDriver) && !self.paused) {
+		if (MADIsDonePlaying(MADDriver) && !self.paused) {
 			[self songIsDonePlaying];
 			MADGetMusicStatus(MADDriver, &fT, &cT);
 		}
