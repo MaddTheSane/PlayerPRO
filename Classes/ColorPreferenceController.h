@@ -10,6 +10,15 @@
 
 @interface ColorPreferenceController : NSViewController {
 
+	IBOutlet NSColorWell *colorWell1;
+	IBOutlet NSColorWell *colorWell2;
+	IBOutlet NSColorWell *colorWell3;
+	IBOutlet NSColorWell *colorWell4;
+	IBOutlet NSColorWell *colorWell5;
+	IBOutlet NSColorWell *colorWell6;
+	IBOutlet NSColorWell *colorWell7;
+	IBOutlet NSColorWell *colorWell8;
 }
+- (IBAction)changeColorWell:(id)sender;
 
 @end

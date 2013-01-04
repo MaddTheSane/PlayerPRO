@@ -12,6 +12,7 @@ extern NSString * const PPSoundPreferencesDidChange;
 extern NSString * const PPDigitalEditorPrefrencesDidChange;
 extern NSString * const PPBoxEditorPreferencesDidChange;
 extern NSString * const PPMiscPreferencesDidChange;
+extern NSString * const PPColorsDidChange;
 
 extern NSString * const PPDriverDidChange;
 
@@ -52,6 +53,15 @@ extern NSString * const PPDELineHeightNormal;
 extern NSString * const PPDEMusicTraceOn;
 extern NSString * const PPDEPatternWrappingPartition;
 extern NSString * const PPDEDragAsPcmd;
+
+extern NSString * const PPCColor1;
+extern NSString * const PPCColor2;
+extern NSString * const PPCColor3;
+extern NSString * const PPCColor4;
+extern NSString * const PPCColor5;
+extern NSString * const PPCColor6;
+extern NSString * const PPCColor7;
+extern NSString * const PPCColor8;
 
 extern NSString * const PPBEMarkersEnabled;
 extern NSString * const PPBEMarkersOffset;

@@ -13,6 +13,7 @@ NSString * const PPSoundPreferencesDidChange = @"Sound Preferences changed";
 NSString * const PPDigitalEditorPrefrencesDidChange = @"Digital Editor Preferences changed";
 NSString * const PPBoxEditorPreferencesDidChange = @"Box Editor Preferences changed";
 NSString * const PPMiscPreferencesDidChange = @"Misc. Preferences Changed";
+NSString * const PPColorsDidChange = @"PP Color Preferences changed";
 
 NSString * const PPDriverDidChange = @"PlayerPRO Driver did change";
 
@@ -53,6 +54,15 @@ NSString * const PPDELineHeightNormal = @"Digital Editor Line Height Normal?";
 NSString * const PPDEMusicTraceOn = @"Digital Editor Trace On?";
 NSString * const PPDEPatternWrappingPartition = @"Digital Editor Pattern Wrapping Partition?";
 NSString * const PPDEDragAsPcmd = @"Digital Editor Drag as Pcmd?";
+
+NSString * const PPCColor1 = @"PPColor 1";
+NSString * const PPCColor2 = @"PPColor 2";
+NSString * const PPCColor3 = @"PPColor 3";
+NSString * const PPCColor4 = @"PPColor 4";
+NSString * const PPCColor5 = @"PPColor 5";
+NSString * const PPCColor6 = @"PPColor 6";
+NSString * const PPCColor7 = @"PPColor 7";
+NSString * const PPCColor8 = @"PPColor 8";
 
 NSString * const PPBEMarkersEnabled = @"Box Editor Markers On?";
 NSString * const PPBEMarkersOffset = @"Box Editor Markers Offset";

@@ -179,6 +179,15 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 															 [NSNumber numberWithBool:YES], PPDEPatternWrappingPartition,
 															 [NSNumber numberWithBool:YES], PPDEDragAsPcmd,
 															 
+															 [[NSColor redColor] PPencodeColor], PPCColor1,
+															 [[NSColor greenColor] PPencodeColor], PPCColor2,
+															 [[NSColor blueColor] PPencodeColor], PPCColor3,
+															 [[NSColor cyanColor] PPencodeColor], PPCColor4,
+															 [[NSColor yellowColor] PPencodeColor], PPCColor5,
+															 [[NSColor magentaColor] PPencodeColor], PPCColor6,
+															 [[NSColor orangeColor] PPencodeColor], PPCColor7,
+															 [[NSColor purpleColor] PPencodeColor], PPCColor8,
+															 
 															 [NSNumber numberWithBool:YES], PPBEMarkersEnabled,
 															 [NSNumber numberWithInt:0], PPBEMarkersOffset,
 															 [NSNumber numberWithInt:3], PPBEMarkersLoop,
@@ -449,7 +458,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	NSInteger i;
 	for (i = 0; i < [instrumentImporter plugInCount]; i++) {
 		PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
-		if ([obj mode] == MADPlugImportExport || [obj mode] == MADPlugExport) {
+		if (obj.mode == MADPlugImportExport || obj.mode == MADPlugExport) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:obj.menuName action:@selector(exportInstrument:) keyEquivalent:@""];
 			[mi setTag:i];
 			[mi setTarget:instrumentController];
@@ -461,7 +470,6 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	{
 		NSMutableArray *tmpArray = [NSMutableArray array];
 		for (i = 0; i < MADLib->TotalPlug ; i++) {
-			//PlugInfo *tmpPlug = &MADLib->ThePlug[i];
 			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:BRIDGE(NSString*,MADLib->ThePlug[i].MenuName) author:BRIDGE(NSString*,MADLib->ThePlug[i].AuthorString) plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name")];
 			[tmpArray addObject:tmpInfo];
 			RELEASEOBJ(tmpInfo);
