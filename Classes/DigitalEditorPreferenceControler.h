@@ -22,10 +22,10 @@
 	IBOutlet NSColorWell *PPDEMarkerColor;
 	
 	
-	IBOutlet NSButton *PPDEMouseClickControl;
-	IBOutlet NSButton *PPDEMouseClickShift;
-	IBOutlet NSButton *PPDEMouseClickCommand;
-	IBOutlet NSButton *PPDEMouseClickOption;
+	IBOutlet NSButtonCell *PPDEMouseClickControl;
+	IBOutlet NSButtonCell *PPDEMouseClickShift;
+	IBOutlet NSButtonCell *PPDEMouseClickCommand;
+	IBOutlet NSButtonCell *PPDEMouseClickOption;
 	
 	IBOutlet NSMatrix *PPDELineHeightMatrix;
 	IBOutlet NSMatrix *PPDEMusicTraceMatrix;
