@@ -31,25 +31,17 @@ typedef struct _tagCoupling {
 	NSInteger tag;
 } TagCoupling;
 
-static const TagCoupling StereoDelayCoupling[] = {{.amount = 1, .tag = 1}, {.amount = 10, .tag = 2},
-	{.amount = 25, .tag = 3}, {.amount = 30, .tag = 4} ,{.amount = 35, .tag = 5},
-	{.amount = 40, .tag = 6}, {.amount = 45, .tag = 7}, {.amount = 50, .tag = 8},
-	{.amount = 60, .tag = 9}, {.amount = 70, .tag = 10}, {.amount = 80, .tag = 11},
-	{.amount = 90, .tag = 12}, {.amount = 100, .tag = 13}, {.amount = 200, .tag = 14}};
+static const TagCoupling StereoDelayCoupling[] = {{1, 1}, {10, 2}, {25, 3}, {30, 4} ,{35, 5},
+	{40, 6}, {45, 7}, {50, 8}, {60, 9}, {70, 10}, {80, 11}, {90, 12}, {100, 13}, {200, 14}};
 
-static const TagCoupling ReverbAmountCoupling[] = {{.amount = 25, .tag = 1}, {.amount = 30, .tag = 2},
-	{.amount = 35, .tag = 3}, {.amount = 40, .tag = 4}, {.amount = 45, .tag = 5}, {.amount = 50, .tag = 6},
-	{.amount = 60, .tag = 7}, {.amount = 70, .tag = 8}, {.amount = 80, .tag = 9}, {.amount = 90, .tag = 10},
-	{.amount = 100, .tag = 11}, {.amount = 200, .tag = 12}, {.amount = 300, .tag = 13}, {.amount = 400, .tag = 14}};
+static const TagCoupling ReverbAmountCoupling[] = {{25, 1}, {30, 2}, {35, 3}, {40, 4}, {45, 5},
+	{50, 6}, {60, 7}, {70, 8}, {80, 9}, {90, 10}, {100, 11}, {200, 12}, {300, 13}, {400, 14}};
 
-static const TagCoupling ReverbPercentCoupling[] = {{.amount = 10, .tag = 1}, {.amount = 20, .tag = 2},
-	{.amount = 30, .tag = 3}, {.amount = 40, .tag = 4}, {.amount = 50, .tag = 5}, {.amount = 60, .tag = 6},
-	{.amount = 70, .tag = 7}};
+static const TagCoupling ReverbPercentCoupling[] = {{10, 1}, {20, 2}, {30, 3}, {40, 4},
+	{50, 5}, {60, 6}, {70, 7}};
 
-static const TagCoupling OversamplingCoupling[] = {{.amount = 1, .tag = 1}, {.amount = 2, .tag = 2},
-	{.amount = 3, .tag = 3}, {.amount = 4, .tag = 4}, {.amount = 6, .tag = 5}, {.amount = 8, .tag = 6},
-	{.amount = 10, .tag = 7}, {.amount = 16, .tag = 8}, {.amount = 20, .tag = 9}, {.amount = 25, .tag = 10},
-	{.amount = 30, .tag = 11}};
+static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4},
+	{6, 5}, {8, 6}, {10, 7}, {16, 8}, {20, 9}, {25, 10}, {30, 11}};
 
 -(NSInteger)currentRate
 {
@@ -267,9 +259,11 @@ static const TagCoupling OversamplingCoupling[] = {{.amount = 1, .tag = 1}, {.am
 		case CoreAudioDriver:
 			[soundDriver selectCellAtRow:0 column:0];
 			break;
+			
 		case SoundManagerDriver:
 			[soundDriver selectCellAtRow:1 column:0];
 			break;
+			
 		case MIDISoundDriver:
 			[soundDriver selectCellAtRow:2 column:0];
 			break;
@@ -286,17 +280,19 @@ static const TagCoupling OversamplingCoupling[] = {{.amount = 1, .tag = 1}, {.am
 		case bits8:
 			[outputBits selectCellAtRow:0 column:0];
 			break;
+			
 		case bits16:
 		default:
 			[outputBits selectCellAtRow:0 column:1];
 			break;
+			
 		case bits20:
 			[outputBits selectCellAtRow:0 column:2];
 			break;
+			
 		case bits24:
 			[outputBits selectCellAtRow:0 column:3];
 			break;
-
 	}
 }
 
@@ -306,13 +302,16 @@ static const TagCoupling OversamplingCoupling[] = {{.amount = 1, .tag = 1}, {.am
 		case rate11Khz:
 			[rate selectCellAtRow:0 column:0];
 			break;
+			
 		case rate22Khz:
 			[rate selectCellAtRow:0 column:1];
 			break;
+			
 		case rate44Khz:
 		default:
 			[rate selectCellAtRow:0 column:2];
 			break;
+			
 		case rate48Khz:
 			[rate selectCellAtRow:0 column:3];
 			break;
