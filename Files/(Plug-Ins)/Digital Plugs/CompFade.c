@@ -97,7 +97,7 @@ static void AutoPosition( DialogPtr aDia)
 	ShowWindow( GetDialogWindow( aDia));
 }
 
-Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
+static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 {
 	if( row < 0) row = 0;
 	else if( row >= myPcmd->length) row = myPcmd->length -1;
@@ -151,7 +151,7 @@ static void StringToHex( Str255 str, long *oct)
 	if( str[ 1] >= '0' && str[ 1] <= '9') *oct += (str[ 1] - '0')<<4;
 }
 
-Boolean PPModalDialogRep(DialogRef theDialog, EventRecord *theEvent, DialogItemIndex *itemHit)
+static Boolean PPModalDialogRep(DialogRef theDialog, EventRecord *theEvent, DialogItemIndex *itemHit)
 {
 	short			thePart;
 	WindowPtr		whichWindow;
@@ -249,7 +249,7 @@ Boolean PPModalDialogRep(DialogRef theDialog, EventRecord *theEvent, DialogItemI
 	return( false);
 }
 
-OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+static OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
 	DialogPtr			myDia;
 	short				itemHit, mode;

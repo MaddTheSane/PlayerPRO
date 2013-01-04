@@ -225,7 +225,6 @@
 		554E11B310D6F32900BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E11E010D6F37F00BB619C /* NoteTrans.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FEB10D6C79D00BB619C /* NoteTrans.c */; };
 		554E11E110D6F38200BB619C /* NoteTrans.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FEC10D6C79D00BB619C /* NoteTrans.r */; };
-		554E11F610D6F3E100BB619C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		554E11F710D6F3E100BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E126410D6F4F700BB619C /* Propagate.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF010D6C79D00BB619C /* Propagate.c */; };
@@ -313,6 +312,7 @@
 		5574BCF11696355A00CF3C37 /* Revert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E123010D6F3E600BB619C /* Revert.plugin */; };
 		5574BCF9169645FE00CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5574BCFC169649CB00CF3C37 /* Propagate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11FD10D6F3E100BB619C /* Propagate.plugin */; };
+		5574BCFD16964D1900CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */ = {isa = PBXBuildFile; fileRef = 557B8FD910CE01BF00B9A37D /* DefaultPref.r */; };
 		557DE1F310E0159600177B4C /* PPMenus.r in Rez */ = {isa = PBXBuildFile; fileRef = 557DE1F110E0158C00177B4C /* PPMenus.r */; };
 		557DE27710E04C1500177B4C /* PPResDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 557DE27610E04C1500177B4C /* PPResDefs.h */; };
@@ -2276,7 +2276,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554E11F610D6F3E100BB619C /* Carbon.framework in Frameworks */,
+				5574BCFD16964D1900CF3C37 /* PlayerPROCore.framework in Frameworks */,
 				554E11F710D6F3E100BB619C /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
