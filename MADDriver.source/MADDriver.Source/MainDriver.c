@@ -1413,7 +1413,8 @@ static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean res
 
 static OSErr getCStringFromCFURL(CFURLRef theRef, char **cStrOut)
 {
-	char *URLcString = NULL;
+	char *URLcString = NULL, *trimURLcString = NULL;
+	size_t StrLen = 0;
 	if (cStrOut == NULL) {
 		return MADParametersErr;
 	}
@@ -1433,7 +1434,16 @@ static OSErr getCStringFromCFURL(CFURLRef theRef, char **cStrOut)
 		*cStrOut = NULL;
 		return MADReadingErr;
 	}
-	*cStrOut = URLcString;
+	StrLen = strlen(URLcString);
+	trimURLcString = malloc(++StrLen);
+	if (!trimURLcString) {
+		*cStrOut = URLcString;
+		return noErr;
+	}
+	strlcpy(trimURLcString, URLcString, StrLen);
+	free(URLcString);
+	
+	*cStrOut = trimURLcString;
 	return noErr;
 }
 
