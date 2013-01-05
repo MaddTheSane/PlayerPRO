@@ -199,12 +199,10 @@ NSArray *DefaultPlugInLocations()
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		if (kind == obj.type) {
-			if (obj.isSamp) {
-				if (theType) {
+			if (theType) {
+				if (obj.isSamp) {
 					*theType = MADPlugSampleImporter;
-				}
-			} else {
-				if (theType) {
+				} else {
 					*theType = MADPlugInstrumentImporter;
 				}
 			}

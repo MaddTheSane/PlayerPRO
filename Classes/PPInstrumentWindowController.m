@@ -8,6 +8,8 @@
 
 #import "PPInstrumentWindowController.h"
 #import "PPInstrumentImporter.h"
+#include <PlayerPROCore/PPPlug.h>
+#import "ARCBridge.h"
 
 @interface PPInstrumentWindowController ()
 
@@ -17,6 +19,51 @@
 
 @synthesize importer;
 @synthesize curMusic;
+
+- (OSErr)testPcmdFileAtURL:(NSURL*)theURL
+{
+	OSErr err = noErr;
+	Pcmd thePcmd;
+	NSData *pcmdData = [[NSData alloc] initWithContentsOfURL:theURL];
+	if (!pcmdData) {
+		return MADReadingErr;
+	}
+	[pcmdData getBytes:&thePcmd length:sizeof(thePcmd)];
+	if (thePcmd.structSize != [pcmdData length]) {
+		err = MADIncompatibleFile;
+	}
+	RELEASEOBJ(pcmdData);
+	return err;
+}
+
+- (OSErr)importPcmdFromURL:(NSURL*)theURL
+{
+	OSErr theErr = noErr;
+	theErr = [self testPcmdFileAtURL:theURL];
+	if (theErr) {
+		return theErr;
+	}
+	Pcmd *thePcmd;
+	NSData *pcmdData = [[NSData alloc] initWithContentsOfURL:theURL];
+	if (!pcmdData) {
+		return MADReadingErr;
+	}
+	NSInteger pcmdLen = [pcmdData length];
+	
+	thePcmd = malloc(pcmdLen);
+	if (!thePcmd) {
+		RELEASEOBJ(pcmdData);
+		return MADNeedMemory;
+	}
+	[pcmdData getBytes:thePcmd length:pcmdLen];
+	RELEASEOBJ(pcmdData);
+	
+	//TODO: put Pcmd data onto the music file
+	
+	free(thePcmd);
+	
+	return noErr;
+}
 
 - (void)colorsDidChange:(NSNotification*)aNot
 {
