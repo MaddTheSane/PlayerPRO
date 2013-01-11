@@ -95,6 +95,9 @@ static inline void SwapPcmd(Pcmd *toswap)
 		[instruments addObject:obj];
 		RELEASEOBJ(obj);
 	}
+	if (instrumentView) {
+		[instrumentView reloadData];
+	}
 }
 
 - (void)setCurMusic:(MADMusic **)acurMusic
@@ -135,6 +138,11 @@ static inline void SwapPcmd(Pcmd *toswap)
 }
 
 - (IBAction)deleteInstrument:(id)sender
+{
+	
+}
+
+- (IBAction)deleteSample:(id)sender
 {
 	
 }

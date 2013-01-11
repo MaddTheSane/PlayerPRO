@@ -17,7 +17,7 @@
 	MADMusic **curMusic;
 	NSMutableArray *instruments;
 	IBOutlet NSImageView *waveFormImage;
-	IBOutlet NSTreeController *instrumentTreeController;
+	IBOutlet NSOutlineView *instrumentView;
 }
 
 @property (readwrite, retain) PPInstrumentImporter *importer;
@@ -25,5 +25,6 @@
 
 - (IBAction)exportInstrument:(id)sender;
 - (IBAction)deleteInstrument:(id)sender;
+- (IBAction)deleteSample:(id)sender;
 
 @end

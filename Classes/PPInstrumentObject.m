@@ -35,12 +35,13 @@
 			return nil;
 		}
 		theMus = mus;
-		if (insIdx > mus->header->numInstru) {
+		if (insIdx >= mus->header->numChn) {
 			//Create a blank Instrument info
 			samples = [[NSMutableArray alloc] init];
 			name = @"";
 			firstSample = insIdx * MAXSAMPLE;
 			sampleCount = 0;
+			soundOut = YES;
 		}else {
 			InstrData *tempData = &mus->fid[insIdx];
 			samples = [[NSMutableArray alloc] initWithCapacity:tempData->numSamples];
