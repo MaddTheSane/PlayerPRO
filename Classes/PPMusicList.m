@@ -89,16 +89,13 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 {
 	id val = nil;
 	NSError *err = nil;
-	if([musicUrl getResourceValue:&val forKey:NSURLHasHiddenExtensionKey error:&err] == NO)
+
+	if([musicUrl getResourceValue:&val forKey:NSURLLocalizedNameKey error:&err] == NO)
 	{
 		NSLog(@"PPMusicListObject: Could not find out if extension is hidden, error: %@", [err localizedDescription]);
 		return [musicUrl lastPathComponent];
 	} else {
-		if ([val boolValue]) {
-			return [[musicUrl lastPathComponent] stringByDeletingPathExtension];
-		} else {
-			return [musicUrl lastPathComponent];
-		}
+		return val;
 	}
 }
 

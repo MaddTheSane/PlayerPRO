@@ -126,6 +126,8 @@
 		550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
 		550BFF2910BA01BA004FC5D7 /* Game.c in Sources */ = {isa = PBXBuildFile; fileRef = 550BFF2410BA01BA004FC5D7 /* Game.c */; };
 		550BFF2A10BA01BA004FC5D7 /* Game.r in Rez */ = {isa = PBXBuildFile; fileRef = 550BFF2510BA01BA004FC5D7 /* Game.r */; };
+		550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */; };
+		550DBB8F169FB7A0006F5C85 /* PPSampleObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */; };
 		55105C9C13BE638D00902106 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		551292D9163DD68500C2C639 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		551292E3163DD68500C2C639 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 551292E1163DD68500C2C639 /* InfoPlist.strings */; };
@@ -1606,6 +1608,10 @@
 		550BFF2310BA01BA004FC5D7 /* chipmunks.MADK */ = {isa = PBXFileReference; lastKnownFileType = file; path = chipmunks.MADK; sourceTree = "<group>"; };
 		550BFF2410BA01BA004FC5D7 /* Game.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Game.c; sourceTree = "<group>"; };
 		550BFF2510BA01BA004FC5D7 /* Game.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Game.r; sourceTree = "<group>"; };
+		550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentCellView.h; sourceTree = "<group>"; };
+		550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentCellView.m; sourceTree = "<group>"; };
+		550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject.h; sourceTree = "<group>"; };
+		550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSampleObject.m; sourceTree = "<group>"; };
 		55113CBA133688D60008C2AF /* Win-DirectSound.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "Win-DirectSound.c"; sourceTree = "<group>"; };
 		55113CBB133688D60008C2AF /* FileUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = FileUtils.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55113CBC133688D60008C2AF /* Win-PlugImport.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "Win-PlugImport.c"; sourceTree = "<group>"; };
@@ -3191,6 +3197,8 @@
 				557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */,
 				5523EC6716925FF80067B22A /* PPInstrumentWindowController.h */,
 				5523EC6816925FF80067B22A /* PPInstrumentWindowController.m */,
+				550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */,
+				550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */,
 			);
 			name = "Instrument Code";
 			sourceTree = "<group>";
@@ -3584,6 +3592,8 @@
 				5523EC8016936F880067B22A /* PPDigitalPlugInHandler.m */,
 				5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */,
 				5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */,
+				550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */,
+				550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -6139,6 +6149,8 @@
 				5523EC77169265C30067B22A /* PPPlugInInfo.m in Sources */,
 				5523EC8116936F880067B22A /* PPDigitalPlugInHandler.m in Sources */,
 				5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */,
+				550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */,
+				550DBB8F169FB7A0006F5C85 /* PPSampleObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

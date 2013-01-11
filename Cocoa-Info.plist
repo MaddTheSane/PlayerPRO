@@ -622,7 +622,6 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
-				<string>net.sourceforge.playerpro.instrumentfile</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO PCMD file</string>
@@ -644,6 +643,30 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>pcmd</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.instrumentfile</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PlayerPRO mINS file</string>
+			<key>UTTypeIconFile</key>
+			<string>INS</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.mins</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>MINs</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mins</string>
 				</array>
 			</dict>
 		</dict>
@@ -954,30 +977,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>pat</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-				<string>net.sourceforge.playerpro.instrumentfile</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>PlayerPRO mINS file</string>
-			<key>UTTypeIconFile</key>
-			<string>INS</string>
-			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.mins</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>com.apple.ostype</key>
-				<array>
-					<string>MINs</string>
-				</array>
-				<key>public.filename-extension</key>
-				<array>
-					<string>mins</string>
 				</array>
 			</dict>
 		</dict>

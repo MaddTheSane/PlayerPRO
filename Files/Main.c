@@ -2091,116 +2091,116 @@ void DoGlobalNull(void)
 
 	GetKeys( km);
 
-//if( thePrefs.MidiKeyBoard) DoMIDIHarwareRecord();
-
-if( DebuggingMode)
-{
-	unsigned long			secs;
-	NumVersion				nVers;
-	DateTimeRec				dtrp;
-/*	if( MemError() != noErr)
+	//if( thePrefs.MidiKeyBoard) DoMIDIHarwareRecord();
+	
+	if( DebuggingMode)
 	{
-		pStrcpy( str1, "\pMemError ID:");
-		NumToString( MemError(), str2);
-		pStrcat( str1, str2);
+		unsigned long			secs;
+		NumVersion				nVers;
+		DateTimeRec				dtrp;
+		/*	if( MemError() != noErr)
+		 {
+		 pStrcpy( str1, "\pMemError ID:");
+		 NumToString( MemError(), str2);
+		 pStrcat( str1, str2);
+		 
+		 MyDebugStr( str1);
+		 }
+		 
+		 if( ResError() != noErr)
+		 {
+		 pStrcpy( str1, "\pResError ID:");
+		 NumToString( ResError(), str2);
+		 pStrcat( str1, str2);
+		 
+		 MyDebugStr( str1);
+		 }
+		 
+		 for( i = 0; i < MAXINSTRU; i++)
+		 {
+		 for( x = 0; x < curMusic->fid[ i].numSamples; x++)
+		 {
+		 if( curMusic->sample[ curMusic->fid[ i].firstSample + x] == NULL) PPDebugStr( __LINE__, __FILE__, "Sound Size not CORRECT !");
+		 
+		 
+		 if( curMusic->sample[ curMusic->fid[ i].firstSample + x]->data != NULL)
+		 {
+		 if( curMusic->sample[ curMusic->fid[ i].firstSample + x]->size != GetPtrSize( curMusic->sample[ curMusic->fid[ i].firstSample + x]->data))
+		 {
+		 PPDebugStr( __LINE__, __FILE__, "Sound Size not CORRECT !");
+		 }
+		 }
+		 }
+		 }*/
 		
-		MyDebugStr( str1);
+		/*	GetDateTime( &secs);
+		 SecondsToDate( secs, &dtrp);
+		 
+		 if( dtrp.year >= 1999)
+		 {
+		 curMusic = (MADMusic*) -1L;
+		 }*/
+		
 	}
 	
-	if( ResError() != noErr)
-	{
-		pStrcpy( str1, "\pResError ID:");
-		NumToString( ResError(), str2);
-		pStrcat( str1, str2);
-		
-		MyDebugStr( str1);
-	}	
-	
-	for( i = 0; i < MAXINSTRU; i++)
-	{
-		for( x = 0; x < curMusic->fid[ i].numSamples; x++)
-		{
-			if( curMusic->sample[ curMusic->fid[ i].firstSample + x] == NULL) PPDebugStr( __LINE__, __FILE__, "Sound Size not CORRECT !");
-			
-			
-			if( curMusic->sample[ curMusic->fid[ i].firstSample + x]->data != NULL)
-			{
-				if( curMusic->sample[ curMusic->fid[ i].firstSample + x]->size != GetPtrSize( curMusic->sample[ curMusic->fid[ i].firstSample + x]->data))
-				{
-					PPDebugStr( __LINE__, __FILE__, "Sound Size not CORRECT !");
-				}
-			}
-		}
-	}*/
-	
-/*	GetDateTime( &secs);
-	SecondsToDate( secs, &dtrp);
-	
-	if( dtrp.year >= 1999)
-	{
-		curMusic = (MADMusic*) -1L;
-	}*/
-
-}
-
 	if( MADDriver->musicEnd == true)
 	{
 		DoLoadOtherMusic( true);
 	}
-
-VSTEditorDoNull();
-DoVisualNull();
-DoNullPattern();
-DoNullSpectrum();
-DoNull();
-DoNullInstruList();
-DoNullInstrument();
-DoNullEditor();
-DoNullClassic();
-DoNullMozart();
-DoNullTools();
-DoNullDigiWindow();
-//DoNullCubeWindow();
-DoNullWave();
-DoNullMODList();
-DoNullQT();
-DoNullStaff();
-DoAIFFExporting();
-DoNullParti();
-DoNullAdap();
-DoNullInstruView();
-//DoNullTrackView();
-MyNullHook();
-
-if( checkMemory < TickCount())
-{
-	checkMemory = TickCount() + 60;
-	DoNullMemWindow();
-	//if( FreeMem() < 50000) Erreur(9, 0);
-}
-
-if( PianoDlog != NULL && MusicPlayActive == true) DoNullPiano();
-
-if( IsCodeOK()) //??ATTENTION, CA TUE LE QUITEVENT SOUS MACOS X
-{
-	if( TickCount() - StartTime > 72000)		// 20 Minutes
+	
+	VSTEditorDoNull();
+	DoVisualNull();
+	DoNullPattern();
+	DoNullSpectrum();
+	DoNull();
+	DoNullInstruList();
+	DoNullInstrument();
+	DoNullEditor();
+	DoNullClassic();
+	DoNullMozart();
+	DoNullTools();
+	DoNullDigiWindow();
+	//DoNullCubeWindow();
+	DoNullWave();
+	DoNullMODList();
+	DoNullQT();
+	DoNullStaff();
+	DoAIFFExporting();
+	DoNullParti();
+	DoNullAdap();
+	DoNullInstruView();
+	//DoNullTrackView();
+	MyNullHook();
+	
+	if( checkMemory < TickCount())
 	{
-		if( ShowIt)
-		{
-			Erreur( 32, -4);
-			ShowIt = false;
-		}
-		End = true;
+		checkMemory = TickCount() + 60;
+		DoNullMemWindow();
+		//if( FreeMem() < 50000) Erreur(9, 0);
 	}
-}
-
-/*** Active Help ***/
-
-if( thePrefs.ActiveHelp) DoAHelpInfo();
-
-/*******************/
-
-SetPort( savePort);
+	
+	if( PianoDlog != NULL && MusicPlayActive == true) DoNullPiano();
+	
+	if( IsCodeOK()) //??ATTENTION, CA TUE LE QUITEVENT SOUS MACOS X
+	{
+		if( TickCount() - StartTime > 72000)		// 20 Minutes
+		{
+			if( ShowIt)
+			{
+				Erreur( 32, -4);
+				ShowIt = false;
+			}
+			End = true;
+		}
+	}
+	
+	/*** Active Help ***/
+	
+	if( thePrefs.ActiveHelp) DoAHelpInfo();
+	
+	/*******************/
+	
+	SetPort( savePort);
 }
 
 void GlobalDoKey( WindowPtr	theWind, char theChar)

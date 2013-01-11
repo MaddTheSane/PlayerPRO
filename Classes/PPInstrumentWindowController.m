@@ -8,6 +8,7 @@
 
 #import "PPInstrumentWindowController.h"
 #import "PPInstrumentImporter.h"
+//#import "PPInstrumentObject.h"
 #include <PlayerPROCore/PPPlug.h>
 #import "ARCBridge.h"
 
@@ -29,6 +30,7 @@
 		return MADReadingErr;
 	}
 	[pcmdData getBytes:&thePcmd length:sizeof(thePcmd)];
+	PPBE32(&thePcmd.structSize);
 	if (thePcmd.structSize != [pcmdData length]) {
 		err = MADIncompatibleFile;
 	}
@@ -57,6 +59,11 @@
 	}
 	[pcmdData getBytes:thePcmd length:pcmdLen];
 	RELEASEOBJ(pcmdData);
+	PPBE32(&thePcmd->structSize);
+	PPBE16(&thePcmd->length);
+	PPBE16(&thePcmd->posStart);
+	PPBE16(&thePcmd->tracks);
+	PPBE16(&thePcmd->trackStart);
 	
 	//TODO: put Pcmd data onto the music file
 	
@@ -111,6 +118,21 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	SUPERDEALLOC;
+}
+
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+{
+	
+}
+
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
+{
+	
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
+{
+	
 }
 
 @end

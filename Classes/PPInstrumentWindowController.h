@@ -11,11 +11,12 @@
 
 @class PPInstrumentImporter;
 
-@interface PPInstrumentWindowController : NSWindowController
+@interface PPInstrumentWindowController : NSWindowController <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
 	PPInstrumentImporter *importer;
 	MADMusic **curMusic;
 	IBOutlet NSImageView *waveFormImage;
+	IBOutlet NSTreeController *instrumentTreeController;
 }
 
 @property (readwrite, retain) PPInstrumentImporter *importer;
