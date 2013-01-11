@@ -75,6 +75,35 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	return noErr;
 }
 
+static inline void ByteswapsData(sData *toswap)
+{
+	PPBE32(&toswap->size);
+	PPBE16(&toswap->c2spd);
+	PPBE32(&toswap->loopBeg);
+	PPBE32(&toswap->loopSize);
+}
+
+static inline void ByteswapInstrument(InstrData *toswap)
+{
+	int i = 0;
+	PPBE16(&toswap->MIDIType);
+	PPBE16(&toswap->MIDI);
+	PPBE16(&toswap->firstSample);
+	PPBE16(&toswap->numSamples);
+	PPBE16(&toswap->volFade);
+	
+	for (i = 0; i < 12; i++) {
+		PPBE16(&toswap->pannEnv[i].pos);
+		PPBE16(&toswap->pannEnv[i].val);
+		
+		PPBE16(&toswap->pitchEnv[i].pos);
+		PPBE16(&toswap->pitchEnv[i].val);
+		
+		PPBE16(&toswap->volEnv[i].pos);
+		PPBE16(&toswap->volEnv[i].val);
+	}
+}
+
 //hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
 static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
 {
@@ -91,14 +120,13 @@ static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean res
 	return strLength;
 }
 
-
 OSErr mainMINs(void						*unused,
 			   OSType					order,						// Order to execute
 			   InstrData				*InsHeader,					// Ptr on instrument header
 			   sData					**sample,					// Ptr on samples data
 			   short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
 			   // If sampleID == -1 : add sample else replace selected sample.
-			   CFURLRef				AlienFileCFURL,				// IN/OUT file
+			   CFURLRef					AlienFileCFURL,				// IN/OUT file
 			   PPInfoPlug				*thePPInfoPlug)
 {
 	OSErr	myErr = noErr;
@@ -108,20 +136,27 @@ OSErr mainMINs(void						*unused,
 	Ptr		theSound;
 	
 	char *file = NULL;
-	{
+	do{
+		char *longStr = NULL;
 		CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
-		file = malloc(pathLen);
-		if (!file) {
+		longStr = malloc(pathLen);
+		if (!longStr) {
 			return MADNeedMemory;
 		}
-		Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)file, pathLen);
+		Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)longStr, pathLen);
 		if (!pathOK) {
-			free(file);
+			free(longStr);
 			return MADReadingErr;
 		}
-		
-	}
-
+		size_t StrLen = strlen(longStr);
+		file = malloc(++StrLen);
+		if (!file) {
+			file = longStr;
+			break;
+		}
+		strlcpy(file, longStr, StrLen);
+		free(longStr);
+	} while (0);
 
 	switch( order)
 	{
@@ -145,6 +180,8 @@ OSErr mainMINs(void						*unused,
 					
 					iRead(inOutCount, (Ptr)InsHeader, iFileRefI);
 					
+					ByteswapInstrument(InsHeader);
+					
 					// READ samples headers & data
 					
 					for( x = 0; x < InsHeader->numSamples; x++)
@@ -155,12 +192,23 @@ OSErr mainMINs(void						*unused,
 						
 						myErr = iRead(inOutCount, (Ptr)curData, iFileRefI);
 						
+						ByteswapsData(curData);
+						
 						curData->data = malloc( curData->size);
 						if( curData->data != NULL)
 						{
 							inOutCount = curData->size;
 							myErr = iRead(inOutCount, (Ptr)curData->data, iFileRefI);
 						}
+						
+						if( curData->amp == 16)
+						{
+							SInt32 	ll;
+							short	*shortPtr = (short*) curData->data;
+							
+							for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+						}
+
 					}
 				}
 				
@@ -173,12 +221,14 @@ OSErr mainMINs(void						*unused,
 			iFileRefI = iFileOpenRead(file);
 			if( iFileRefI != NULL)
 			{
-				inOutCount = 50L;
+				inOutCount = sizeof(InstrData);
 				theSound = malloc( inOutCount);
 				if( theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
 					iRead(inOutCount, theSound, iFileRefI);
+					
+					ByteswapInstrument((InstrData*)theSound);
 					
 					myErr = TestMINS( (InstrData*) theSound);
 				}
@@ -198,23 +248,44 @@ OSErr mainMINs(void						*unused,
 			if( iFileRefI != NULL)
 			{
 				// Write instrument header
-				
 				inOutCount = sizeof( InstrData);
-				iWrite(inOutCount, (Ptr)InsHeader, iFileRefI);
+				InstrData *tempIns = malloc(inOutCount);
+				memcpy(tempIns, InsHeader, inOutCount);
+				ByteswapInstrument(tempIns);
+				iWrite(inOutCount, (Ptr)tempIns, iFileRefI);
+				free(tempIns);
 				
 				// Write samples headers & data
-				
 				for( x = 0; x < InsHeader->numSamples; x++)
 				{
 					sData	*curData;
-					
+					sData	*copyData;
+					sData32	toWrite;
+					Ptr		copydataData;
 					curData = sample[ x];
+					copyData = malloc(sizeof(sData));
+					memcpy(copyData, curData, sizeof(sData));
+					ByteswapsData(copyData);
+					copydataData = malloc(curData->size);
+					memcpy(copydataData, curData->data, curData->size);
+					if( curData->amp == 16)
+					{
+						SInt32 	ll;
+						short	*shortPtr = (short*) copydataData;
+						
+						for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+					}
+					
+					memcpy(&toWrite, copyData, sizeof(sData32));
+					toWrite.data = 0;
 					
 					inOutCount = sizeof( sData32);
-					iWrite(inOutCount, (Ptr)curData, iFileRefI);
+					iWrite(inOutCount, (Ptr)&toWrite, iFileRefI);
 					
 					inOutCount = curData->size;
-					iWrite(inOutCount, curData->data, iFileRefI);
+					iWrite(inOutCount, copydataData, iFileRefI);
+					free(copyData);
+					free(copydataData);
 
 				}
 				iClose( iFileRefI);

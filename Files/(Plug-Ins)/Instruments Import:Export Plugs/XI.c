@@ -158,24 +158,44 @@ OSErr mainXI(void						*unused,
 		
 	char *file = NULL;
 	char *fileName = NULL;
-	{
+	do{
+		char *longStr = NULL;
 		CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
-		file = malloc(pathLen);
-		if (!file) {
+		longStr = malloc(pathLen);
+		if (!longStr) {
 			return MADNeedMemory;
 		}
-		Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)file, pathLen);
+		Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)longStr, pathLen);
 		if (!pathOK) {
-			free(file);
+			free(longStr);
 			return MADReadingErr;
 		}
+		size_t StrLen = strlen(longStr);
+		file = malloc(++StrLen);
+		if (!file) {
+			file = longStr;
+			break;
+		}
+		strlcpy(file, longStr, StrLen);
+		free(longStr);
+	} while (0);
+	do {
+		char *FileNameLong = NULL;
 		CFStringRef filenam = CFURLCopyLastPathComponent(AlienFileCFURL);
 		CFIndex filenamLen = CFStringGetMaximumSizeOfFileSystemRepresentation(filenam);
-		fileName = malloc(filenamLen);
-		CFStringGetFileSystemRepresentation(filenam, fileName, filenamLen);
+		size_t filenamshortlen = 0;
+		FileNameLong = malloc(filenamLen);
+		CFStringGetFileSystemRepresentation(filenam, FileNameLong, filenamLen);
 		CFRelease(filenam);
-		
-	}
+		filenamshortlen = strlen(FileNameLong);
+		fileName = malloc(++filenamshortlen);
+		if (!fileName) {
+			fileName = FileNameLong;
+			break;
+		}
+		strlcpy(fileName, FileNameLong, filenamshortlen);
+		free(FileNameLong);
+	} while (0);
 	
 	switch( order)
 	{

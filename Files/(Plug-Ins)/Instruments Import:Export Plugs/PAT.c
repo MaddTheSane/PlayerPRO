@@ -318,19 +318,27 @@ OSErr mainPAT(void					*unused,
 //	short	x;
 	long	inOutCount;
 	char *file = NULL;
-	{
+	do{
+		char *longStr = NULL;
 		CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
-		file = malloc(pathLen);
-		if (!file) {
+		longStr = malloc(pathLen);
+		if (!longStr) {
 			return MADNeedMemory;
 		}
-		Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)file, pathLen);
+		Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)longStr, pathLen);
 		if (!pathOK) {
-			free(file);
+			free(longStr);
 			return MADReadingErr;
 		}
-
-	}
+		size_t StrLen = strlen(longStr);
+		file = malloc(++StrLen);
+		if (!file) {
+			file = longStr;
+			break;
+		}
+		strlcpy(file, longStr, StrLen);
+		free(longStr);
+	} while (0);
 	
 	switch( order)
 	{
