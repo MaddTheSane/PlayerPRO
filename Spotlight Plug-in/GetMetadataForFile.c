@@ -196,11 +196,23 @@ Boolean GetMetadataForFile(void* thisInterface,
 
 		for( i = 0; i < MAXINSTRU ; i++)
 		{
-			CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->fid[i].name, kCFStringEncodingMacRoman);//TODO: check for other encodings?
+			InstrData *tempData = &MADMusic1->fid[i];
+			
+			CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, tempData->name, kCFStringEncodingMacRoman);//TODO: check for other encodings?
 			if (!(CFEqual(CFSTR(""), temp))) {
 				CFArrayAppendValue(InstruArray, temp);
 			}
 			CFRelease(temp);
+			int sDataCount = tempData->firstSample + tempData->numSamples;
+			int x;
+			for (x = tempData->firstSample; x < sDataCount; x++) {
+				sData *tempSData = MADMusic1->sample[x];
+				temp = CFStringCreateWithCString(kCFAllocatorDefault, tempSData->name, kCFStringEncodingMacRoman);
+				if (!CFEqual(CFSTR(""), temp)) {
+					CFArrayAppendValue(InstruArray, temp);
+				}
+				CFRelease(temp);
+			}
 		}
 		
 		CFDictionarySetValue(attributes, kPPMDInstumentsList, InstruArray);
