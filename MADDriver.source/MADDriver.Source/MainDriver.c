@@ -1544,6 +1544,7 @@ OSErr MADMusicInfoCString( MADLibrary *lib, char *type, char* cName, PPInfoRec *
 	if (lib == NULL || cName == NULL || InfoRec == NULL || type == NULL) {
 		return MADParametersErr;
 	}
+	memset(InfoRec, 0, sizeof(PPInfoRec));
 	return PPInfoFile(lib, type, cName, InfoRec);
 }
 

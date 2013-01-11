@@ -1270,6 +1270,9 @@ static OSErr ExtractS3MInfo( PPInfoRec *info, Ptr AlienFile)
 	PPLE16(  &s3minfo.insnum);
 	info->totalInstruments = s3minfo.insnum;
 	
+	//TODO:
+	info->totalTracks = 0;
+	
 	strlcpy( info->formatDescription, "S3M Plug", sizeof(info->formatDescription));
 
 	return noErr;
