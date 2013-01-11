@@ -17,11 +17,10 @@
 @synthesize amplitude = amp;
 @synthesize volume = vol;
 @synthesize data;
-@synthesize loopBegin;
+@synthesize loopBegin = loopBeg;
 @synthesize loopSize;
 @synthesize relativeNote = relNote;
 @synthesize dataSize = size;
-
 
 - (id)initWithsData:(sData *)theData
 {
@@ -41,5 +40,20 @@
 	}
 	return self;
 }
+
+- (NSString*)description
+{
+	return [NSString stringWithFormat:@"%@: size: %ld stereo: %@ Loop type: %d size: %ld volume: %d amp: %d", name, (long)size, stereo ? @"Yes": @"No", loopType, (long)loopSize, vol, amp];
+}
+
+#if !__has_feature(objc_arc)
+- (void)dealloc
+{
+	[data release];
+	[name release];
+	
+	[super dealloc];
+}
+#endif
 
 @end
