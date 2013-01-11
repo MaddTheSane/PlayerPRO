@@ -2414,14 +2414,10 @@ OSErr MADResetInstrument( InstrData		*curIns)
 	{
 		curIns->volEnv[ i].pos		= 0;
 		curIns->volEnv[ i].val		= 0;
-	}
-	for( i = 0; i < 12; i++)
-	{
+		
 		curIns->pannEnv[ i].pos	= 0;
 		curIns->pannEnv[ i].val	= 0;
-	}
-	for( i = 0; i < 12; i++)
-	{
+		
 		curIns->pitchEnv[ i].pos	= 0;
 		curIns->pitchEnv[ i].val	= 0;
 	}
@@ -2465,10 +2461,10 @@ OSErr MADKillInstrument( MADMusic *music, short ins)
 		{
 			if( music->sample[ ins * MAXSAMPLE + i]->data != NULL)
 			{
-				free( (Ptr) music->sample[ ins * MAXSAMPLE + i]->data);
+				free( music->sample[ ins * MAXSAMPLE + i]->data);
 				music->sample[ ins * MAXSAMPLE + i]->data = NULL;
 			}
-			free( (Ptr) music->sample[ ins * MAXSAMPLE + i]);
+			free( music->sample[ ins * MAXSAMPLE + i]);
 			music->sample[ ins * MAXSAMPLE + i] = NULL;
 		}
 	}
@@ -2871,7 +2867,7 @@ OSErr MADDisposeMusic( MADMusic **music, MADDriverRec *MDriver)
 	free( *music);
 	*music = NULL;
 	
-	return( noErr);
+	return noErr;
 }
 
 #pragma pack(push, 2)
