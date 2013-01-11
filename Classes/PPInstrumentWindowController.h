@@ -15,12 +15,13 @@
 {
 	PPInstrumentImporter *importer;
 	MADMusic **curMusic;
+	NSMutableArray *instruments;
 	IBOutlet NSImageView *waveFormImage;
 	IBOutlet NSTreeController *instrumentTreeController;
 }
 
 @property (readwrite, retain) PPInstrumentImporter *importer;
-@property (readwrite) MADMusic **curMusic;
+@property (readwrite, nonatomic) MADMusic **curMusic;
 
 - (IBAction)exportInstrument:(id)sender;
 - (IBAction)deleteInstrument:(id)sender;

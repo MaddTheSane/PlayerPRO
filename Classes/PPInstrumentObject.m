@@ -13,6 +13,12 @@
 @implementation PPInstrumentObject
 
 @synthesize samples;
+
+- (NSArray*)samples
+{
+	return [NSArray arrayWithArray:samples];
+}
+
 @synthesize name;
 @synthesize type;
 
@@ -28,23 +34,25 @@
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
+		theMus = mus;
 		if (insIdx > mus->header->numInstru) {
 			//Create a blank Instrument info
-			samples = [[NSArray alloc] init];
+			samples = [[NSMutableArray alloc] init];
 			name = @"";
-			
+			firstSample = insIdx * MAXSAMPLE;
+			sampleCount = 0;
 		}else {
 			InstrData *tempData = &mus->fid[insIdx];
-			int sDataCount = tempData->numSamples + tempData->firstSample;
+			samples = [[NSMutableArray alloc] initWithCapacity:tempData->numSamples];
 			{
-				NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:tempData->numSamples];
+				int sDataCount = tempData->numSamples + tempData->firstSample;
+
 				int i = 0;
 				for (i = tempData->firstSample; i < sDataCount; i++) {
 					PPSampleObject *sObj = [[PPSampleObject alloc] initWithsData:mus->sample[i]];
-					[tmpArray addObject:sObj];
+					[samples addObject:sObj];
 					RELEASEOBJ(sObj);
 				}
-				samples = [[NSArray alloc] initWithArray:tmpArray];
 			}
 			name = [[NSString alloc] initWithCString:tempData->name encoding:NSMacOSRomanStringEncoding];
 			type = tempData->type;
@@ -129,6 +137,27 @@
 	return self;
 }
 
+- (void)addSamplesObject:(PPSampleObject *)object
+{
+	if (sampleCount >= MAXSAMPLE) {
+		return;
+	}
+	[samples addObject:object];
+	sampleCount++;
+}
+
+- (void)replaceObjectInSamplesAtIndex:(short)index withObject:(PPSampleObject *)object
+{
+	if (index >= MAXSAMPLE || index < 0) {
+		return;
+	}
+	[samples replaceObjectAtIndex:index withObject:object];
+}
+- (NSUInteger)countOfSamples
+{
+	return [samples count];
+}
+
 - (BOOL)isVolumeTypeOn
 {
 	return volumeType.on;
@@ -162,6 +191,16 @@
 - (NSArray *)children;
 {
 	return samples;
+}
+
+- (PPSampleObject*)childAtIndex:(NSUInteger)idx
+{
+	return [samples objectAtIndex:idx];
+}
+
+- (NSUInteger)countOfChildren
+{
+	return [samples count];
 }
 
 #if !__has_feature(objc_arc)

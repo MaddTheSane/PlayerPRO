@@ -344,6 +344,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		[songLabel setTitleWithMnemonic:[NSString stringWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding]];
 		[songTotalTime setIntegerValue:fT];
 	}
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPMusicDidChange object:self];
 
 	if (theErr) {
 		*theErr = nil;

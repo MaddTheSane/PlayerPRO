@@ -8,13 +8,26 @@
 
 #import "PPInstrumentWindowController.h"
 #import "PPInstrumentImporter.h"
-//#import "PPInstrumentObject.h"
+#import "PPInstrumentObject.h"
+#import "PPSampleObject.h"
 #include <PlayerPROCore/PPPlug.h>
 #import "ARCBridge.h"
 
 @interface PPInstrumentWindowController ()
 
 @end
+
+static inline void SwapPcmd(Pcmd *toswap)
+{
+	if (!toswap) {
+		return;
+	}
+	PPBE32(&toswap->structSize);
+	PPBE16(&toswap->length);
+	PPBE16(&toswap->posStart);
+	PPBE16(&toswap->tracks);
+	PPBE16(&toswap->trackStart);
+}
 
 @implementation PPInstrumentWindowController
 
@@ -30,7 +43,7 @@
 		return MADReadingErr;
 	}
 	[pcmdData getBytes:&thePcmd length:sizeof(thePcmd)];
-	PPBE32(&thePcmd.structSize);
+	SwapPcmd(&thePcmd);
 	if (thePcmd.structSize != [pcmdData length]) {
 		err = MADIncompatibleFile;
 	}
@@ -59,11 +72,7 @@
 	}
 	[pcmdData getBytes:thePcmd length:pcmdLen];
 	RELEASEOBJ(pcmdData);
-	PPBE32(&thePcmd->structSize);
-	PPBE16(&thePcmd->length);
-	PPBE16(&thePcmd->posStart);
-	PPBE16(&thePcmd->tracks);
-	PPBE16(&thePcmd->trackStart);
+	SwapPcmd(thePcmd);
 	
 	//TODO: put Pcmd data onto the music file
 	
@@ -77,12 +86,38 @@
 	
 }
 
+- (void)loadInstrumentsFromMusic
+{
+	int i;
+	[instruments removeAllObjects];
+	for (i = 0; i < MAXINSTRU; i++) {
+		PPInstrumentObject *obj = [[PPInstrumentObject alloc] initWithMusic:*curMusic instrumentIndex:i];
+		[instruments addObject:obj];
+		RELEASEOBJ(obj);
+	}
+}
+
+- (void)setCurMusic:(MADMusic **)acurMusic
+{
+	curMusic = acurMusic;
+	[self loadInstrumentsFromMusic];
+}
+
+- (void)musicDidChange:(NSNotification *)aNot
+{
+	[self loadInstrumentsFromMusic];
+}
+
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorsDidChange:) name:PPColorsDidChange object:nil];
+		NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+		[center addObserver:self selector:@selector(colorsDidChange:) name:PPColorsDidChange object:nil];
+		[center addObserver:self selector:@selector(musicDidChange:) name:PPMusicDidChange object:nil];
+		instruments = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU];
+		
     }
     
     return self;
@@ -122,17 +157,32 @@
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
-	
+	if (item == nil) {
+		return [instruments count];
+	}
+	if ([item isKindOfClass:[PPInstrumentObject class]]) {
+		return [item countOfChildren];
+	}
+	return 0;
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
-	
+	if (item == nil) {
+		return [instruments objectAtIndex:index];
+	}
+	if ([item isKindOfClass:[PPInstrumentObject class]]) {
+		return [item childAtIndex:index];
+	}
+	return nil;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
 {
-	
+	if ([item isKindOfClass:[PPInstrumentObject class]]) {
+		return [item countOfChildren] != 0;
+	}
+	return NO;
 }
 
 @end

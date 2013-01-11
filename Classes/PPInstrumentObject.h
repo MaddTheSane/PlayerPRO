@@ -21,7 +21,9 @@ typedef struct
 
 @interface PPInstrumentObject : NSObject
 {
-	NSArray		*samples;
+	MADMusic *theMus;
+	
+	NSMutableArray		*samples;
 	NSString  	*name;			// instrument name
 	Byte		type;				// Instrument type = 0
 	NSInteger	number;					// Instrument number
@@ -66,12 +68,12 @@ typedef struct
 	NSInteger	vibratoRate;
 }
 
-@property (readonly) NSString *name;
+@property (readwrite, retain) NSString *name;
 @property (readonly) NSArray *samples;
-@property (readonly) Byte type;
+@property (readwrite) Byte type;
 
-@property (readonly, getter = isSoundOut) BOOL soundOut;
-@property (readonly, getter = isMIDIOut) BOOL MIDIOut;
+@property (readwrite, getter = isSoundOut) BOOL soundOut;
+@property (readwrite, getter = isMIDIOut) BOOL MIDIOut;
 @property (readonly) short sampleCount;
 @property (readonly) short firstSample;
 
@@ -83,8 +85,14 @@ typedef struct
 - (BOOL)isPanningTypeSustain;
 - (BOOL)isPanningTypeLoop;
 
+- (void)addSamplesObject:(PPSampleObject *)object;
+- (void)replaceObjectInSamplesAtIndex:(short)index withObject:(PPSampleObject *)object;
+- (NSUInteger)countOfSamples;
+
 - (id)initWithMusic:(MADMusic*)mus instrumentIndex:(short)insIdx;
 
 - (NSArray *)children;
+- (PPSampleObject*)childAtIndex:(NSUInteger)idx;
+- (NSUInteger)countOfChildren;
 
 @end

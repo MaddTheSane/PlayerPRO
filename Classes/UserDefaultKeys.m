@@ -15,6 +15,7 @@ NSString * const PPBoxEditorPreferencesDidChange = @"Box Editor Preferences chan
 NSString * const PPClassicalEditorPreferencesDidChange = @"Classical Preferences changed";
 NSString * const PPMiscPreferencesDidChange = @"Misc. Preferences Changed";
 NSString * const PPColorsDidChange = @"PP Color Preferences changed";
+NSString * const PPMusicDidChange = @"PP Music changed";
 
 NSString * const PPDriverDidChange = @"PlayerPRO Driver did change";
 

@@ -14,6 +14,7 @@ extern NSString * const PPBoxEditorPreferencesDidChange;
 extern NSString * const PPClassicalEditorPreferencesDidChange;
 extern NSString * const PPMiscPreferencesDidChange;
 extern NSString * const PPColorsDidChange;
+extern NSString * const PPMusicDidChange;
 
 extern NSString * const PPDriverDidChange;
 
