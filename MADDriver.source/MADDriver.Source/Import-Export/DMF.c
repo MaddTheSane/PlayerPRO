@@ -256,7 +256,12 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	
 	/**** Ins Num *****/
 	ITinfo.parapins = (SInt32 *) malloc( ITinfo.insNum * 4L);
-	if( ITinfo.parapins == NULL) return MADNeedMemory;
+	if( ITinfo.parapins == NULL)
+	{
+		free(ITinfo.orders);
+		
+		return MADNeedMemory;
+	}
 	memcpy( ITinfo.parapins, theITCopy, ITinfo.insNum * 4L);
 	theITCopy += ITinfo.insNum * 4L;
 	for( i = 0; i < ITinfo.insNum; i++)
@@ -266,7 +271,13 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	
 	/**** Samp Num *****/
 	ITinfo.parapsamp = (SInt32 *) malloc( ITinfo.smpNum * 4L);
-	if( ITinfo.parapsamp == NULL) return MADNeedMemory;
+	if( ITinfo.parapsamp == NULL)
+	{
+		free(ITinfo.orders);
+		free(ITinfo.parapins);
+
+		return MADNeedMemory;
+	}
 	memcpy( ITinfo.parapsamp, theITCopy, ITinfo.smpNum * 4L);
 	theITCopy += ITinfo.smpNum * 4L;
 	for( i = 0; i < ITinfo.smpNum; i++)
@@ -276,7 +287,14 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	
 	/**** Pat Num *****/
 	ITinfo.parappat = (SInt32 *) malloc( ITinfo.patNum * 4L);
-	if( ITinfo.parappat == NULL) return MADNeedMemory;
+	if( ITinfo.parappat == NULL)
+	{
+		free(ITinfo.orders);
+		free(ITinfo.parapins);
+		free(ITinfo.parapsamp);
+		
+		return MADNeedMemory;
+	}
 	memcpy( ITinfo.parappat, theITCopy, ITinfo.patNum * 4L);
 	theITCopy += ITinfo.patNum * 4L;
 	for( i = 0; i < ITinfo.patNum; i++)
@@ -287,7 +305,14 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	/**** Ins Data ****/
 	if( ITinfo.insNum > 64) ITinfo.insNum = 64;
 	ITinfo.insdata = (ITInsForm *) malloc( sizeof(ITInsForm) * ITinfo.insNum);
-	if( ITinfo.insdata == NULL) return MADNeedMemory;
+	if( ITinfo.insdata == NULL) {
+		free(ITinfo.orders);
+		free(ITinfo.parapins);
+		free(ITinfo.parapsamp);
+		free(ITinfo.parappat);
+		
+		return MADNeedMemory;
+	}
 	for (i = 0; i < ITinfo.insNum; i++)
 	{
 		theITCopy = (Byte*) theIT;
@@ -296,7 +321,15 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 		memcpy( &ITinfo.insdata[i], theITCopy, sizeof( ITInsForm));
 		
 		if( ITinfo.insdata[i].ID != 'IMPI') //Debugger();
+		{
+			free(ITinfo.orders);
+			free(ITinfo.parapins);
+			free(ITinfo.parapsamp);
+			free(ITinfo.parappat);
+			free(ITinfo.insdata);
+			
 			return MADFileNotSupportedByThisPlug;
+		}
 		
 		/*	if( ITinfo.insdata[i].insflags&1)
 		 {
@@ -335,7 +368,16 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	/**** Samp Data ****/
 	//if( ITinfo.insNum > 64) ITinfo.insNum = 64;
 	ITinfo.sampdata = (ITSampForm *) malloc( sizeof(ITSampForm) * ITinfo.smpNum);
-	if( ITinfo.sampdata == NULL) return MADNeedMemory;
+	if( ITinfo.sampdata == NULL)
+	{
+		free(ITinfo.orders);
+		free(ITinfo.parapins);
+		free(ITinfo.parapsamp);
+		free(ITinfo.parappat);
+		free(ITinfo.insdata);
+		
+		return MADNeedMemory;
+	}
 	for (i = 0; i < ITinfo.smpNum; i++)
 	{
 		theITCopy = (Byte*) theIT;
@@ -344,7 +386,16 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 		memcpy( &ITinfo.sampdata[i], theITCopy, sizeof( ITSampForm));
 		
 		if( ITinfo.sampdata[i].ID != 'IMPS') //Debugger();
+		{
+			free(ITinfo.orders);
+			free(ITinfo.parapins);
+			free(ITinfo.parapsamp);
+			free(ITinfo.parappat);
+			free(ITinfo.insdata);
+			free(ITinfo.sampdata);
+			
 			return MADFileNotSupportedByThisPlug;
+		}
 		
 		ITinfo.sampdata[i].length					= Tdecode32( &ITinfo.sampdata[i].length);
 		ITinfo.sampdata[i].loopBegin			= Tdecode32( &ITinfo.sampdata[i].loopBegin);
@@ -363,7 +414,17 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	// ******** Copie des informations dans le MAD ***
 	
 	theMAD->header = (MADSpec*) calloc( sizeof( MADSpec), 1);
-	if( theMAD->header == NULL) return MADNeedMemory;
+	if( theMAD->header == NULL)
+	{
+		free(ITinfo.orders);
+		free(ITinfo.parapins);
+		free(ITinfo.parapsamp);
+		free(ITinfo.parappat);
+		free(ITinfo.insdata);
+		free(ITinfo.sampdata);
+		
+		return MADNeedMemory;
+	}
 		
 	theMAD->header->MAD = 'MADK';
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
@@ -397,6 +458,17 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	theMAD->header->generalPitch	= 80;
 	
 	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
+	if (!theMAD->sets) {
+		free(ITinfo.orders);
+		free(ITinfo.parapins);
+		free(ITinfo.parapsamp);
+		free(ITinfo.parappat);
+		free(ITinfo.insdata);
+		free(ITinfo.sampdata);
+		free(theMAD->header);
+		
+		return MADNeedMemory;
+	}
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 
 	// ********************
@@ -404,10 +476,33 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	// ********************
 
 	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * MAXINSTRU, 1);
-	if( !theMAD->fid) return MADNeedMemory;
+	if( !theMAD->fid) {
+		free(ITinfo.orders);
+		free(ITinfo.parapins);
+		free(ITinfo.parapsamp);
+		free(ITinfo.parappat);
+		free(ITinfo.insdata);
+		free(ITinfo.sampdata);
+		free(theMAD->header);
+		free(theMAD->sets);
+		
+		return MADNeedMemory;
+	}
 	
 	theMAD->sample = ( sData**) calloc( sizeof( sData*) * MAXINSTRU * MAXSAMPLE, 1);
-	if( !theMAD->sample) return MADNeedMemory;
+	if( !theMAD->sample) {
+		free(ITinfo.orders);
+		free(ITinfo.parapins);
+		free(ITinfo.parapsamp);
+		free(ITinfo.parappat);
+		free(ITinfo.insdata);
+		free(ITinfo.sampdata);
+		free(theMAD->header);
+		free(theMAD->sets);
+		free(theMAD->fid);
+		
+		return MADNeedMemory;
+	}
 	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 
@@ -440,7 +535,29 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 				curIns->volFade			= DEFAULT_VOLFADE;
 				
 				curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) calloc( sizeof( sData), 1);
-				if( curData == NULL) return MADNeedMemory;
+				if( curData == NULL) {
+					for (i = 0; i < MAXSAMPLE * MAXINSTRU; i++) {
+						if (theMAD->sample[i]) {
+							if (theMAD->sample[i]->data) {
+								free(theMAD->sample[i]->data);
+							}
+							free(theMAD->sample[i]);
+						}
+					}
+					
+					free(ITinfo.orders);
+					free(ITinfo.parapins);
+					free(ITinfo.parapsamp);
+					free(ITinfo.parappat);
+					free(ITinfo.insdata);
+					free(ITinfo.sampdata);
+
+					free(theMAD->header);
+					free(theMAD->sets);
+					free(theMAD->fid);
+					
+					return MADNeedMemory;
+				}
 				
 				curData->size			= ITinfo.sampdata[i].length;
 				curData->loopBeg 	= ITinfo.sampdata[i].loopBegin;
@@ -454,7 +571,29 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 				for( x = 0; x < 28; x++) theMAD->fid[i].name[x] = ITinfo.sampdata[i].DOSName[x];
 				
 				curData->data 		= malloc( curData->size);
-				if( curData->data == NULL) return MADNeedMemory;
+				if( curData->data == NULL) {
+					for (i = 0; i < MAXSAMPLE * MAXINSTRU; i++) {
+						if (theMAD->sample[i]) {
+							if (theMAD->sample[i]->data) {
+								free(theMAD->sample[i]->data);
+							}
+							free(theMAD->sample[i]);
+						}
+					}
+					
+					free(ITinfo.orders);
+					free(ITinfo.parapins);
+					free(ITinfo.parapsamp);
+					free(ITinfo.parappat);
+					free(ITinfo.insdata);
+					free(ITinfo.sampdata);
+
+					free(theMAD->header);
+					free(theMAD->sets);
+					free(theMAD->fid);
+					
+					return MADNeedMemory;
+				}
 				
 				if( curData->data != NULL)
 				{
@@ -503,7 +642,34 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 		curITPat->row 		= Tdecode16(  &curITPat->row);
 		
 		theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * curITPat->row * sizeof( Cmd), 1);
-		if( theMAD->partition[ i] == NULL) return MADNeedMemory;
+		if( theMAD->partition[ i] == NULL) {
+			for (i = 0; i < MAXPATTERN; i++) {
+				if (theMAD->partition[i]) {
+					free(theMAD->partition[i]);
+				}
+			}
+			for (i = 0; i < MAXSAMPLE * MAXINSTRU; i++) {
+				if (theMAD->sample[i]) {
+					if (theMAD->sample[i]->data) {
+						free(theMAD->sample[i]->data);
+					}
+					free(theMAD->sample[i]);
+				}
+			}
+			
+			free(ITinfo.orders);
+			free(ITinfo.parapins);
+			free(ITinfo.parapsamp);
+			free(ITinfo.parappat);
+			free(ITinfo.insdata);
+			free(ITinfo.sampdata);
+
+			free(theMAD->header);
+			free(theMAD->sets);
+			free(theMAD->fid);
+			
+			return MADNeedMemory;
+		}
 		
 		theMAD->partition[ i]->header.size 			= curITPat->row;
 		theMAD->partition[ i]->header.compMode 	= 'NONE';
@@ -610,7 +776,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	
 	free( ITinfo.orders);		free( ITinfo.parapins);
 	free( ITinfo.parappat);		free( ITinfo.insdata);
-	free( ITinfo.parapsamp);
+	free( ITinfo.parapsamp);	free( ITinfo.sampdata);
 
 	return noErr;
 }
@@ -656,7 +822,6 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 
 static OSErr TestITFile( Ptr AlienFile)
 {
-	//TODO: differentiate between DMF and IT files
 	ITForm	*myIT = ( ITForm*) AlienFile;
 	OSType myID = myIT->ID;
 	PPBE32(&myID);
