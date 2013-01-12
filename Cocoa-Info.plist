@@ -419,8 +419,6 @@
 			<string>Tracker Instrument file</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.instrumentfile</string>
-			<key>UTTypeTagSpecification</key>
-			<dict/>
 		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
@@ -435,8 +433,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
-				<string>net.sourceforge.playerpro.tracker</string>
+				<string>com.quadmation.playerpro.madi</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO MADK Tracker</string>
@@ -453,18 +450,13 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>madk</string>
-					<string>mad</string>
-				</array>
-				<key>public.mime-type</key>
-				<array>
-					<string>audio/x-mad</string>
 				</array>
 			</dict>
 		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.quadmation.playerpro.madk</string>
+				<string>com.quadmation.playerpro.madi</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO MADH Tracker</string>
@@ -487,7 +479,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.quadmation.playerpro.madk</string>
+				<string>com.quadmation.playerpro.madi</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO MAD-FG Tracker</string>
@@ -512,7 +504,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.quadmation.playerpro.madk</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO MADI Tracker</string>
@@ -522,12 +515,17 @@
 			<string>com.quadmation.playerpro.madi</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
+				<key>public.mime-type</key>
+				<array>
+					<string>audio/x-mad</string>
+				</array>
 				<key>com.apple.ostype</key>
 				<array>
 					<string>MADI</string>
 				</array>
 				<key>public.filename-extension</key>
 				<array>
+					<string>mad</string>
 					<string>madi</string>
 				</array>
 			</dict>

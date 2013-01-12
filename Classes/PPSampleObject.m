@@ -58,7 +58,7 @@
 	toReturn->c2spd = c2spd;
 	char theName[32] = {0};
 	strlcpy(theName, [name cStringUsingEncoding:NSMacOSRomanStringEncoding], sizeof(theName));
-	memcpy(toReturn->name,theName,sizeof(toReturn->name));
+	memcpy(toReturn->name, theName, sizeof(toReturn->name));
 	toReturn->amp = amp;
 	toReturn->stereo = stereo;
 	toReturn->relNote = relNote;

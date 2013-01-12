@@ -82,10 +82,17 @@ static OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, 
 	}
 }
 
+- (void)madMusicDidChange:(NSNotification*)aNot
+{
+	
+}
+
 - (id)initWithMusic:(MADMusic**)theMus
 {
 	if (self = [super init]) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(driverRecDidChange:) name:PPDriverDidChange object:nil];
+		NSNotificationCenter *notCen = [NSNotificationCenter defaultCenter];
+		[notCen addObserver:self selector:@selector(driverRecDidChange:) name:PPDriverDidChange object:nil];
+		[notCen addObserver:self selector:@selector(madMusicDidChange:) name:PPMusicDidChange object:nil];
 		curMusic = theMus;
 		digitalPlugs = [[NSMutableArray alloc] initWithCapacity:20];
 		theInfo.RPlaySound = inMADPlaySoundData;

@@ -53,6 +53,7 @@
 	
 	PPMusicList		*musicList;
 	NSInteger		currentlyPlayingIndex;
+	NSInteger		previouslyPlayingIndex;
 	PPPreferences	*preferences;
 	PPInstrumentImporter *instrumentImporter;
 	PPDigitalPlugInHandler *digitalHandler;
@@ -85,7 +86,9 @@
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad;
 
 - (IBAction)openFile:(id)sender;
-
+- (IBAction)saveMusic:(id)sender;
+- (IBAction)saveMusicAs:(id)sender;
+- (IBAction)exportMusicAs:(id)sender;
 
 - (IBAction)showTools:(id)sender;
 - (IBAction)fastForwardButtonPressed:(id)sender;

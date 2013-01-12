@@ -31,7 +31,7 @@
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@ %@", plugName, authorName];
+	return [NSString stringWithFormat:@"%@: %@, %@", plugName, authorName, plugType];
 }
 
 #if !__has_feature(objc_arc)

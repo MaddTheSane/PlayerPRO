@@ -163,6 +163,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 - (void)dealloc
 {
 	RELEASEOBJ(importer);
+	RELEASEOBJ(instruments);
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
