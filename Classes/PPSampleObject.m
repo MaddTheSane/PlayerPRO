@@ -21,6 +21,7 @@
 @synthesize loopBegin = loopBeg;
 @synthesize loopSize;
 @synthesize relativeNote = relNote;
+@synthesize dataSize;
 
 - (SInt32)dataSize
 {
@@ -63,9 +64,9 @@
 	toReturn->stereo = stereo;
 	toReturn->relNote = relNote;
 	toReturn->size = [data length];
-	NSInteger dataSize = [data length];
-	toReturn->data = malloc(dataSize);
-	memcpy(toReturn->data, [data bytes], dataSize);
+	NSInteger dataSize2 = [data length];
+	toReturn->data = malloc(dataSize2);
+	memcpy(toReturn->data, [data bytes], dataSize2);
 	
 	return toReturn;
 }

@@ -13,50 +13,53 @@
 @class PPInstrumentImporter;
 @class PPInstrumentWindowController;
 @class PPDigitalPlugInHandler;
+@class PPCurrentlyPlayingIndex;
 
 @interface PPApp_AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate> {
-	IBOutlet NSPanel *toolsPanel;
-	IBOutlet NSButton *loopButton;
-    IBOutlet NSButton *playButton;
-    IBOutlet NSButton *recordButton;
-    IBOutlet NSTextField *songLabel;
-    IBOutlet NSButton *stopButton;
-	IBOutlet NSTextField *songCurTime;
-	IBOutlet NSTextField *songTotalTime;
-	IBOutlet NSSlider *songPos;
-	IBOutlet NSButton *pauseButton;
-	BOOL paused;
+	IBOutlet NSPanel		*toolsPanel;
+	IBOutlet NSButton		*loopButton;
+    IBOutlet NSButton		*playButton;
+    IBOutlet NSButton		*recordButton;
+    IBOutlet NSTextField	*songLabel;
+    IBOutlet NSButton		*stopButton;
+	IBOutlet NSTextField	*songCurTime;
+	IBOutlet NSTextField	*songTotalTime;
+	IBOutlet NSSlider		*songPos;
+	IBOutlet NSButton		*pauseButton;
+	BOOL					paused;
 	
-	NSMutableArray *plugInInfos;
-	IBOutlet NSMenu *aboutPlugInMenu;
+	NSMutableArray			*plugInInfos;
+	IBOutlet NSMenu			*aboutPlugInMenu;
 	
-	IBOutlet NSMenu *instrumentExportMenu;
+	IBOutlet NSMenu			*musicExportMenu;
+	
+	IBOutlet NSMenu			*instrumentExportMenu;
 	PPInstrumentWindowController *instrumentController;
 	
 	IBOutlet  __unsafe_unretained NSWindow *window;
 	
-	IBOutlet NSTextField *fileName;
-	IBOutlet NSTextField *internalName;
-	IBOutlet NSTextField *fileSize;
-	IBOutlet NSTextField *musicInstrument;
-	IBOutlet NSTextField *musicPatterns;
-	IBOutlet NSTextField *musicPlugType;
-	IBOutlet NSTextField *musicSignature;
-	IBOutlet NSTextField *fileLocation;
+	IBOutlet NSTextField	*fileName;
+	IBOutlet NSTextField	*internalName;
+	IBOutlet NSTextField	*fileSize;
+	IBOutlet NSTextField	*musicInstrument;
+	IBOutlet NSTextField	*musicPatterns;
+	IBOutlet NSTextField	*musicPlugType;
+	IBOutlet NSTextField	*musicSignature;
+	IBOutlet NSTextField	*fileLocation;
 	
-	IBOutlet NSTableView *tableView;
+	IBOutlet NSTableView	*tableView;
 	IBOutlet NSArrayController *musicListController;
-	NSTimer *timeChecker;
-	MADDriverRec	*MADDriver;
-	MADMusic		*Music;
-	MADLibrary		*MADLib;	
+	NSTimer					*timeChecker;
+	MADDriverRec			*MADDriver;
+	MADMusic				*Music;
+	MADLibrary				*MADLib;	
 	
-	PPMusicList		*musicList;
-	NSInteger		currentlyPlayingIndex;
-	NSInteger		previouslyPlayingIndex;
-	PPPreferences	*preferences;
-	PPInstrumentImporter *instrumentImporter;
-	PPDigitalPlugInHandler *digitalHandler;
+	PPMusicList				*musicList;
+	PPCurrentlyPlayingIndex	*currentlyPlayingIndex;
+	PPCurrentlyPlayingIndex	*previouslyPlayingIndex;
+	PPPreferences			*preferences;
+	PPInstrumentImporter	*instrumentImporter;
+	PPDigitalPlugInHandler	*digitalHandler;
 }
 
 @property (getter=isPaused, readwrite) BOOL paused;

@@ -23,6 +23,8 @@
 @synthesize type;
 
 @synthesize firstSample;
+
+@synthesize soundOut;
 @synthesize MIDIOut;
 
 @synthesize sampleCount;
@@ -30,8 +32,6 @@
 {
 	return [samples count];
 }
-
-@synthesize soundOut;
 
 @synthesize panningBegin;
 @synthesize panningEnd;

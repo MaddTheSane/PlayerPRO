@@ -98,6 +98,13 @@ static inline void SwapPcmd(Pcmd *toswap)
 	
 }
 
+- (void)writeInstrumentsBackToMusic
+{
+	for (PPInstrumentObject *obj in instruments) {
+		[obj writeBackToMusic];
+	}
+}
+
 - (void)loadInstrumentsFromMusic
 {
 	int i;

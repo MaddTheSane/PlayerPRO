@@ -23,6 +23,8 @@
 @property (readwrite, retain) PPInstrumentImporter *importer;
 @property (readwrite, nonatomic) MADMusic **curMusic;
 
+- (void)writeInstrumentsBackToMusic;
+
 - (IBAction)exportInstrument:(id)sender;
 - (IBAction)deleteInstrument:(id)sender;
 - (IBAction)deleteSample:(id)sender;

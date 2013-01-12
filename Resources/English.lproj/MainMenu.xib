@@ -2674,6 +2674,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">musicExportMenu</string>
+						<reference key="source" ref="1000799287"/>
+						<reference key="destination" ref="510743013"/>
+					</object>
+					<int key="connectionID">1318</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="842369831"/>
 						<reference key="destination" ref="1000799287"/>
@@ -4306,7 +4314,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1317</int>
+			<int key="maxID">1318</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4338,7 +4346,6 @@
 						<string key="showDigitalEditor:">id</string>
 						<string key="showInstrumentsList:">id</string>
 						<string key="showMusicList:">id</string>
-						<string key="showPlugInInfo:">id</string>
 						<string key="showPreferences:">id</string>
 						<string key="showTools:">id</string>
 						<string key="sliderChanged:">id</string>
@@ -4442,10 +4449,6 @@
 							<string key="name">showMusicList:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="showPlugInInfo:">
-							<string key="name">showPlugInInfo:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="showPreferences:">
 							<string key="name">showPreferences:</string>
 							<string key="candidateClassName">id</string>
@@ -4475,6 +4478,7 @@
 						<string key="instrumentExportMenu">NSMenu</string>
 						<string key="internalName">NSTextField</string>
 						<string key="loopButton">NSButton</string>
+						<string key="musicExportMenu">NSMenu</string>
 						<string key="musicInstrument">NSTextField</string>
 						<string key="musicListController">NSArrayController</string>
 						<string key="musicPatterns">NSTextField</string>
@@ -4519,6 +4523,10 @@
 						<object class="IBToOneOutletInfo" key="loopButton">
 							<string key="name">loopButton</string>
 							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="musicExportMenu">
+							<string key="name">musicExportMenu</string>
+							<string key="candidateClassName">NSMenu</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="musicInstrument">
 							<string key="name">musicInstrument</string>
