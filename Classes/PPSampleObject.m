@@ -44,9 +44,30 @@
 		relNote = theData->relNote;
 		name = [[NSString alloc] initWithCString:theData->name encoding:NSMacOSRomanStringEncoding];
 		stereo = theData->stereo;
-		
 	}
 	return self;
+}
+
+- (sData *)createSData
+{
+	sData *toReturn = malloc(sizeof(sData));
+	toReturn->loopBeg = loopBeg;
+	toReturn->loopSize = loopSize;
+	toReturn->vol = vol;
+	toReturn->loopType = loopType;
+	toReturn->c2spd = c2spd;
+	char theName[32] = {0};
+	strlcpy(theName, [name cStringUsingEncoding:NSMacOSRomanStringEncoding], sizeof(theName));
+	memcpy(toReturn->name,theName,sizeof(toReturn->name));
+	toReturn->amp = amp;
+	toReturn->stereo = stereo;
+	toReturn->relNote = relNote;
+	toReturn->size = [data length];
+	NSInteger dataSize = [data length];
+	toReturn->data = malloc(dataSize);
+	memcpy(toReturn->data, [data bytes], dataSize);
+	
+	return toReturn;
 }
 
 - (NSString*)description

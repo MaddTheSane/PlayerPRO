@@ -25,6 +25,7 @@
 }
 
 - (id)initWithsData:(sData *)theData;
+- (sData *)createSData;
 
 @property (readonly) SInt32 dataSize;
 @property (readwrite) SInt32 loopBegin;
@@ -35,7 +36,7 @@
 @property (readwrite) unsigned char amplitude;
 @property (readwrite) char relativeNote;
 @property (readwrite, retain) NSString *name;
-@property (readonly) BOOL stereo;
+@property (readwrite) BOOL stereo;
 @property (readwrite, retain) NSData *data;
 
 @end

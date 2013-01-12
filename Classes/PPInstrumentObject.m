@@ -24,7 +24,12 @@
 
 @synthesize firstSample;
 @synthesize MIDIOut;
-@synthesize sampleCount;
+
+- (short)sampleCount
+{
+	return [samples count];
+}
+
 @synthesize soundOut;
 
 - (id)initWithMusic:(MADMusic*)mus instrumentIndex:(short)insIdx;
@@ -40,8 +45,9 @@
 			samples = [[NSMutableArray alloc] init];
 			name = @"";
 			firstSample = insIdx * MAXSAMPLE;
-			sampleCount = 0;
+			//sampleCount = 0;
 			soundOut = YES;
+			number = insIdx;
 		}else {
 			InstrData *tempData = &mus->fid[insIdx];
 			samples = [[NSMutableArray alloc] initWithCapacity:tempData->numSamples];
@@ -76,7 +82,7 @@
 					break;
 			}
 			firstSample = tempData->firstSample;
-			sampleCount = tempData->numSamples;
+			//sampleCount = tempData->numSamples;
 			memcpy(what, tempData->what, sizeof(what));
 			memcpy(volEnv, tempData->volEnv, sizeof(volEnv));
 			memcpy(pannEnv, tempData->pannEnv, sizeof(pannEnv));
@@ -138,13 +144,102 @@
 	return self;
 }
 
+- (NSString*)description
+{
+	return [NSString stringWithFormat:@"%@: Sample index %d count %d samples: %@", name, firstSample, self.sampleCount, [samples description]];
+}
+
+typedef enum {
+	PPInstruCanDoNothing = 0,
+	PPInstruCanDoSoundOut = 1,
+	PPInstruCanDoMidiOut = 2,
+	PPInstruCanDoBoth = PPInstruCanDoSoundOut | PPInstruCanDoMidiOut
+}PPInstrumentOut;
+
+- (void)writeBackToMusic
+{
+	int i;
+	int totalSamples = self.sampleCount + firstSample;
+	int totalPossibleSamples = firstSample + MAXSAMPLE;
+	for (i = firstSample; i < totalPossibleSamples; i++) {
+		if (theMus->sample[i]) {
+			//We can probably call the free of the data without the check
+			//but better safe than sorry
+			if (theMus->sample[i]->data) {
+				free(theMus->sample[i]->data);
+			}
+			free(theMus->sample[i]);
+			theMus->sample[i] = NULL;
+		}
+	}
+	
+	for (i = firstSample; i < totalSamples; i++) {
+		PPSampleObject *sampObj = [samples objectAtIndex:i];
+		theMus->sample[i] = [sampObj createSData];
+	}
+	InstrData *newData = &theMus->fid[number];
+	char tempstr[32] = {0};
+	
+	strlcpy(tempstr, [name cStringUsingEncoding:NSMacOSRomanStringEncoding], sizeof(tempstr));
+	
+	memcpy(newData->name, tempstr, sizeof(newData->name));
+		
+	newData->numSamples = self.sampleCount;
+	newData->MIDI = MIDI;
+	PPInstrumentOut insOut = PPInstruCanDoNothing;
+	if (soundOut) {
+		insOut = PPInstruCanDoSoundOut;
+	}
+	if (MIDIOut) {
+		insOut |= PPInstruCanDoMidiOut;
+	}
+	newData->MIDIType = insOut - 1;
+	
+	newData->pannBeg = panningBegin;
+	newData->pannEnd = panningEnd;
+	newData->pannSize = panningSize;
+	
+	newData->pitchBeg = pitchBegin;
+	newData->pitchSize = pitchSize;
+	newData->pitchEnd = pitchEnd;
+	
+	newData->volBeg = volumeBegin;
+	newData->volEnd = volumeEnd;
+	newData->volSize = volumeSize;
+	newData->volFade = volumeFade;
+	
+	memcpy(newData->what, what,sizeof(what));
+	if (volumeType.on) {
+		newData->volType = 0;
+	} else if (volumeType.loop) {
+		newData->volType = 2;
+	} else {
+		newData->volType = 1;
+	}
+	//newData->volType = volumeType;
+	
+	if (panningType.on) {
+		newData->pannType = 0;
+	} else if(panningType.loop) {
+		newData->pannType = 2;
+	} else {
+		newData->pannType = 1;
+	}
+	
+	memcpy(newData->pannEnv, pannEnv, sizeof(pannEnv));
+	memcpy(newData->pitchEnv, pitchEnv, sizeof(pitchEnv));
+	memcpy(newData->volEnv, volEnv, sizeof(volEnv));
+	
+	theMus->hasChanged = TRUE;
+}
+
 - (void)addSamplesObject:(PPSampleObject *)object
 {
-	if (sampleCount >= MAXSAMPLE) {
+	if (self.sampleCount >= MAXSAMPLE) {
 		return;
 	}
 	[samples addObject:object];
-	sampleCount++;
+	//sampleCount++;
 }
 
 - (void)replaceObjectInSamplesAtIndex:(short)index withObject:(PPSampleObject *)object
