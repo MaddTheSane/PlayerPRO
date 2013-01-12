@@ -522,7 +522,6 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 				break;
 		}
 	}
-	
 	//[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
@@ -598,7 +597,6 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	[defaultCenter addObserver:self selector:@selector(preferencesDidChange:) name:PPListPreferencesDidChange object:nil];
 	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
-	[defaultCenter addObserver:self selector:@selector(digitalEditorPreferencesDidChange:) name:PPDigitalEditorPrefrencesDidChange object:nil];
 	
 	[self MADDriverWithPreferences];
 	Music = CreateFreeMADK();
@@ -741,19 +739,22 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 - (void)musicListContentsDidMove
 {
 	NSInteger i;
-	for (i = 0; i < [musicList countOfMusicList]; i++) {
-		if ([currentlyPlayingIndex.playbackURL isEqual:[musicList URLAtIndex:i]]) {
-			currentlyPlayingIndex.index = i;
-			break;
+	if (currentlyPlayingIndex.index != -1) {
+		for (i = 0; i < [musicList countOfMusicList]; i++) {
+			if ([currentlyPlayingIndex.playbackURL isEqual:[musicList URLAtIndex:i]]) {
+				currentlyPlayingIndex.index = i;
+				break;
+			}
 		}
 	}
-	for (i = 0; i < [musicList countOfMusicList]; i++) {
-		if ([previouslyPlayingIndex.playbackURL isEqual:[musicList URLAtIndex:i]]) {
-			previouslyPlayingIndex.index = i;
-			break;
+	if (previouslyPlayingIndex.index != -1) {
+		for (i = 0; i < [musicList countOfMusicList]; i++) {
+			if ([previouslyPlayingIndex.playbackURL isEqual:[musicList URLAtIndex:i]]) {
+				previouslyPlayingIndex.index = i;
+				break;
+			}
 		}
 	}
-
 }
 
 - (IBAction)sortMusicList:(id)sender
@@ -876,16 +877,11 @@ enum PPMusicToolbarTypes {
 	[self MADDriverWithPreferences];
 }
 
-- (void)digitalEditorPreferencesDidChange:(NSNotification *)notification
-{
-	
-}
-
 - (IBAction)openFile:(id)sender {
 	NSOpenPanel *panel = RETAINOBJ([NSOpenPanel openPanel]);
-	NSMutableArray *supportedUTIs = [NSMutableArray arrayWithObjects:@"com.quadmation.playerpro.madk", @"net.sourceforge.playerpro.musiclist", @"net.sourceforge.playerpro.stcfmusiclist", nil];
+	NSMutableArray *supportedUTIs = [NSMutableArray arrayWithObjects:MADNativeUTI, @"net.sourceforge.playerpro.musiclist", @"net.sourceforge.playerpro.stcfmusiclist", nil];
 	int i = 0;
-	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithObject:[NSArray arrayWithObject:@"com.quadmation.playerpro.madk"] forKey:@"MADK Tracker"];
+	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithObject:[NSArray arrayWithObject:MADNativeUTI] forKey:@"MADK Tracker"];
 	NSDictionary *playlistDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:@"net.sourceforge.playerpro.musiclist"], @"PlayerPRO Music List", [NSArray arrayWithObject:@"net.sourceforge.playerpro.stcfmusiclist"], @"PlayerPRO Old Music List", nil];
 	for (i = 0; i < MADLib->TotalPlug; i++) {
 		NSArray *tempArray = BRIDGE(NSArray*, MADLib->ThePlug[i].UTItypes);

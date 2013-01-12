@@ -84,7 +84,6 @@
 
 - (void)preferencesDidChange:(NSNotification *)notification;
 - (void)soundPreferencesDidChange:(NSNotification *)notification;
-- (void)digitalEditorPreferencesDidChange:(NSNotification *)notification;
 
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad;
 
