@@ -11,7 +11,6 @@
 
 @interface PPSampleObject : NSObject
 {
-	SInt32 				size;				// Sample length
 	SInt32				loopBeg;			// LoopStart
 	SInt32				loopSize;			// LoopLength
 	unsigned char		vol;				// Base volume
@@ -28,15 +27,15 @@
 - (id)initWithsData:(sData *)theData;
 
 @property (readonly) SInt32 dataSize;
-@property (readonly) SInt32 loopBegin;
-@property (readonly) SInt32 loopSize;
-@property (readonly) unsigned char volume;
-@property (readonly) unsigned short c2spd;
-@property (readonly) unsigned char loopType;
-@property (readonly) unsigned char amplitude;
-@property (readonly) char relativeNote;
-@property (readonly) NSString *name;
+@property (readwrite) SInt32 loopBegin;
+@property (readwrite) SInt32 loopSize;
+@property (readwrite) unsigned char volume;
+@property (readwrite) unsigned short c2spd;
+@property (readwrite) unsigned char loopType;
+@property (readwrite) unsigned char amplitude;
+@property (readwrite) char relativeNote;
+@property (readwrite, retain) NSString *name;
 @property (readonly) BOOL stereo;
-@property (readonly) NSData *data;
+@property (readwrite, retain) NSData *data;
 
 @end

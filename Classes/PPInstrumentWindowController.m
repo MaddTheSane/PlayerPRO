@@ -14,6 +14,7 @@
 #import "ARCBridge.h"
 
 @interface PPInstrumentWindowController ()
+- (void)loadInstrumentsFromMusic;
 
 @end
 
@@ -33,6 +34,12 @@ static inline void SwapPcmd(Pcmd *toswap)
 
 @synthesize importer;
 @synthesize curMusic;
+
+- (void)setCurMusic:(MADMusic **)acurMusic
+{
+	curMusic = acurMusic;
+	[self loadInstrumentsFromMusic];
+}
 
 - (OSErr)testPcmdFileAtURL:(NSURL*)theURL
 {
@@ -74,6 +81,11 @@ static inline void SwapPcmd(Pcmd *toswap)
 	RELEASEOBJ(pcmdData);
 	SwapPcmd(thePcmd);
 	
+	if (thePcmd->structSize != pcmdLen) {
+		free(thePcmd);
+		return MADIncompatibleFile;
+	}
+	
 	//TODO: put Pcmd data onto the music file
 	
 	free(thePcmd);
@@ -98,12 +110,6 @@ static inline void SwapPcmd(Pcmd *toswap)
 	if (instrumentView) {
 		[instrumentView reloadData];
 	}
-}
-
-- (void)setCurMusic:(MADMusic **)acurMusic
-{
-	curMusic = acurMusic;
-	[self loadInstrumentsFromMusic];
 }
 
 - (void)musicDidChange:(NSNotification *)aNot

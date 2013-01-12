@@ -7,6 +7,7 @@
 //
 
 #import "PPSampleObject.h"
+#import "ARCBridge.h"
 
 @implementation PPSampleObject
 
@@ -20,13 +21,20 @@
 @synthesize loopBegin = loopBeg;
 @synthesize loopSize;
 @synthesize relativeNote = relNote;
-@synthesize dataSize = size;
+
+- (SInt32)dataSize
+{
+	return [data length];
+}
 
 - (id)initWithsData:(sData *)theData
 {
 	if (self = [super init]) {
+		if (!theData) {
+			AUTORELEASEOBJNORETURN(self);
+			return nil;
+		}
 		data = [[NSData alloc] initWithBytes:theData->data length:theData->size];
-		size = theData->size;
 		loopBeg = theData->loopBeg;
 		loopSize = theData->loopSize;
 		vol = theData->vol;
@@ -43,7 +51,7 @@
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@: size: %ld stereo: %@ Loop type: %d size: %ld volume: %d amp: %d", name, (long)size, stereo ? @"Yes": @"No", loopType, (long)loopSize, vol, amp];
+	return [NSString stringWithFormat:@"%@: size: %ld stereo: %@ Loop type: %d size: %ld volume: %d amp: %d", name, (long)self.dataSize, stereo ? @"Yes": @"No", loopType, (long)loopSize, vol, amp];
 }
 
 #if !__has_feature(objc_arc)
