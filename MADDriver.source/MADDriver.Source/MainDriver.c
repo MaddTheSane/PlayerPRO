@@ -1398,7 +1398,7 @@ OSErr MADLoadMADFileCString( MADMusic **music, Ptr fName)
 
 #ifdef _MAC_H
 //hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
-static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
+static inline CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
 {
 	CFURLRef toDeref = theRef;
 	if (resolveAgainstBase) {
