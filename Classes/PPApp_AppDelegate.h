@@ -27,7 +27,7 @@
 	IBOutlet NSButton *pauseButton;
 	BOOL paused;
 	
-	NSArray *plugInInfos;
+	NSMutableArray *plugInInfos;
 	IBOutlet NSMenu *aboutPlugInMenu;
 	
 	IBOutlet NSMenu *instrumentExportMenu;

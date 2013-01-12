@@ -431,6 +431,28 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	RELEASEOBJ(infoCont);
 }
 
+- (void)updatePlugInInfoMenu
+{
+	[plugInInfos sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+		NSString *menuNam1 = [obj1 plugName];
+		NSString *menuNam2 = [obj2 plugName];
+		NSComparisonResult res = [menuNam1 localizedStandardCompare:menuNam2];
+		return res;
+	}];
+	
+	[aboutPlugInMenu removeAllItems];
+	
+	int i;
+	for (i = 0; i < [plugInInfos count]; i++) {
+		PPPlugInInfo *pi = [plugInInfos objectAtIndex:i];
+		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:pi.plugName action:@selector(showPlugInInfo:) keyEquivalent:@""];
+		[mi setTag:i];
+		[mi setTarget:self];
+		[aboutPlugInMenu addItem:mi];
+		RELEASEOBJ(mi);
+	}
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	srandom(time(NULL) & 0xffffffff);
@@ -500,23 +522,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			[tmpArray addObject:tmpInfo];
 			RELEASEOBJ(tmpInfo);
 		}
-
-		[tmpArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-			NSString *menuNam1 = [obj1 plugName];
-			NSString *menuNam2 = [obj2 plugName];
-			NSComparisonResult res = [menuNam1 localizedStandardCompare:menuNam2];
-			return res;
-		}];
 		
-		plugInInfos = [[NSArray alloc] initWithArray:tmpArray];
-		for (i = 0; i < [plugInInfos count]; i++) {
-			PPPlugInInfo *pi = [plugInInfos objectAtIndex:i];
-			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:pi.plugName action:@selector(showPlugInInfo:) keyEquivalent:@""];
-			[mi setTag:i];
-			[mi setTarget:self];
-			[aboutPlugInMenu addItem:mi];
-			RELEASEOBJ(mi);
-		}
+		plugInInfos = RETAINOBJ(tmpArray);
+		[self updatePlugInInfoMenu];
 	}
 	
 	timeChecker = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0] interval:1/4.0 target:self selector:@selector(updateMusicStats:) userInfo:nil repeats:YES];
