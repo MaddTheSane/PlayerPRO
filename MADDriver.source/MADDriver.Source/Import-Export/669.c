@@ -95,6 +95,10 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 	
 	theMAD->header = (MADSpec*) calloc( sizeof( MADSpec), 1);
 	
+	if (!theMAD->header) {
+		return MADNeedMemory;
+	}
+	
 	MaxPtr = (Ptr)((long) the669 + MODSize);
 	
 	OffSetToSample = 0x1f1 +  the669->NOS * 25 + the669->NOP * 0x600L;
@@ -134,6 +138,10 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 	theMAD->header->numChn = 8;
 	
 	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
+	if (!theMAD->sets) {
+		free(theMAD->header);
+		return MADNeedMemory;
+	}
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 	
 	
@@ -150,10 +158,21 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 	theMAD->header->generalPitch	= 80;
 	
 	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
-	if( !theMAD->fid) return MADNeedMemory;
+	if( !theMAD->fid)
+	{
+		free(theMAD->sets);
+		free(theMAD->header);
+		return MADNeedMemory;
+	}
 	
 	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
-	if( !theMAD->sample) return MADNeedMemory;
+	if( !theMAD->sample)
+	{
+		free(theMAD->fid);
+		free(theMAD->sets);
+		free(theMAD->header);
+		return MADNeedMemory;
+	}
 	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
@@ -173,6 +192,22 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 			
 			curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) calloc( sizeof( sData), 1);
 			
+			if (!curData) {
+				for (i = 0; i < MAXINSTRU * MAXSAMPLE; i++) {
+					if (theMAD->sample[i]) {
+						if (theMAD->sample[i]->data) {
+							free(theMAD->sample[i]->data);
+						}
+						free(theMAD->sample[i]);
+					}
+				}
+				free(theMAD->sample);
+				free(theMAD->fid);
+				free(theMAD->sets);
+				free(theMAD->header);
+				return MADNeedMemory;
+			}
+			
 			curData->size		= SInfo->length;
 			curData->loopBeg 	= 0;
 			curData->loopSize 	= 0;
@@ -185,8 +220,22 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 			//	for( x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
 			
 			curData->data 		= malloc( curData->size);
-			if( curData->data == NULL) //DebugStr("\pInstruments: I NEED MEMORY !!! NOW !");
+			if( curData->data == NULL)
+			{
+				for (i = 0; i < MAXINSTRU * MAXSAMPLE; i++) {
+					if (theMAD->sample[i]) {
+						if (theMAD->sample[i]->data) {
+							free(theMAD->sample[i]->data);
+						}
+						free(theMAD->sample[i]);
+					}
+				}
+				free(theMAD->sample);
+				free(theMAD->fid);
+				free(theMAD->sets);
+				free(theMAD->header);
 				return MADNeedMemory;
+			}
 			
 			memmove( curData->data, theInstrument[i], curData->size);
 			
@@ -211,6 +260,26 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 	for( i = 0; i < theMAD->header->numPat; i++)
 	{
 		theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * 64L * sizeof( Cmd), 1);
+		if (!theMAD->partition[i]) {
+			for (i = 0; i < MAXPATTERN; i++) {
+				if (theMAD->partition[i]) {
+					free(theMAD->partition[i]);
+				}
+			}
+			for (i = 0; i < MAXINSTRU * MAXSAMPLE; i++) {
+				if (theMAD->sample[i]) {
+					if (theMAD->sample[i]->data) {
+						free(theMAD->sample[i]->data);
+					}
+					free(theMAD->sample[i]);
+				}
+			}
+			free(theMAD->sample);
+			free(theMAD->fid);
+			free(theMAD->sets);
+			free(theMAD->header);
+			return MADNeedMemory;
+		}
 		theMAD->partition[ i]->header.size = 64;
 		theMAD->partition[ i]->header.compMode = 'NONE';
 		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
@@ -224,8 +293,27 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 				aCmd = GetMADCommand( x, z, theMAD->partition[ i]);
 				
 				theCommand = &PatInt[ i].Cmds[ x][ z];
-				if( (Ptr) theCommand >= MaxPtr) //Debugger();
+				if( (Ptr) theCommand >= MaxPtr)
+				{
+					for (i = 0; i < MAXPATTERN; i++) {
+						if (theMAD->partition[i]) {
+							free(theMAD->partition[i]);
+						}
+					}
+					for (i = 0; i < MAXINSTRU * MAXSAMPLE; i++) {
+						if (theMAD->sample[i]) {
+							if (theMAD->sample[i]->data) {
+								free(theMAD->sample[i]->data);
+							}
+							free(theMAD->sample[i]);
+						}
+						free(theMAD->sample);
+						free(theMAD->fid);
+						free(theMAD->sets);
+						free(theMAD->header);
+					}
 					return MADIncompatibleFile;
+				}
 					
 				thePasByte = ( Byte*) theCommand;
 				
