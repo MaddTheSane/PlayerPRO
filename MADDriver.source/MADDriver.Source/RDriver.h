@@ -606,6 +606,11 @@ PPEXPORT OSErr MADMusicInfoCString( MADLibrary *lib, char *type, char* cName, PP
 #ifdef _MAC_H
 PPEXPORT OSErr MADMusicInfoCFURL( MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec);
 #endif
+	
+PPEXPORT OSErr MADMusicExportCString( MADLibrary *lib, MADMusic *music, char *type, char* cName);
+#ifdef _MAC_H
+PPEXPORT OSErr MADMusicExportCFURL( MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL);
+#endif
 
 PPEXPORT Boolean	MADPlugAvailable( MADLibrary *, char *type);								// Is plug 'type' available?
 

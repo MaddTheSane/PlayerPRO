@@ -1537,7 +1537,30 @@ OSErr MADMusicInfoCFURL( MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec
 	free(URLcString);
 	return theErr;
 }
+
+OSErr MADMusicExportCFURL( MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL)
+{
+	char *URLcString = NULL;
+	
+	OSErr theErr = getCStringFromCFURL(fileURL, &URLcString);
+	
+	if (theErr) {
+		return theErr;
+	}
+	
+	theErr = MADMusicExportCString(lib, music, type, URLcString);
+	free(URLcString);
+	return theErr;
+}
 #endif
+
+OSErr MADMusicExportCString( MADLibrary *lib, MADMusic *music, char *type, char* cName)
+{
+	if(!lib || !music || !type || !cName) {
+		return MADParametersErr;
+	}
+	return PPExportFile(lib, type, cName, music);
+}
 
 OSErr MADMusicInfoCString( MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec)
 {
