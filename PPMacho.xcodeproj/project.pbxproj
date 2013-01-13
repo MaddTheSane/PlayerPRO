@@ -317,6 +317,7 @@
 		5574BCFC169649CB00CF3C37 /* Propagate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11FD10D6F3E100BB619C /* Propagate.plugin */; };
 		5574BCFD16964D1900CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */ = {isa = PBXBuildFile; fileRef = 557B8FD910CE01BF00B9A37D /* DefaultPref.r */; };
+		557C758516A3455E00923755 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557C758416A3455D00923755 /* QTKit.framework */; };
 		557DE1F310E0159600177B4C /* PPMenus.r in Rez */ = {isa = PBXBuildFile; fileRef = 557DE1F110E0158C00177B4C /* PPMenus.r */; };
 		557DE27710E04C1500177B4C /* PPResDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 557DE27610E04C1500177B4C /* PPResDefs.h */; };
 		557DE42D10E06BF200177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
@@ -1872,6 +1873,7 @@
 		5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawSprocket.framework; path = System/Library/Frameworks/DrawSprocket.framework; sourceTree = SDKROOT; };
 		5573A59F10B542F300FF8B50 /* Proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Proto.c; path = "(Proto)/Proto.c"; sourceTree = "<group>"; };
 		557B8FD910CE01BF00B9A37D /* DefaultPref.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = DefaultPref.r; path = ../Files/DefaultPref.r; sourceTree = "<group>"; };
+		557C758416A3455D00923755 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		557DE1F110E0158C00177B4C /* PPMenus.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = PPMenus.r; path = ../Files/PPMenus.r; sourceTree = "<group>"; };
 		557DE27610E04C1500177B4C /* PPResDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPResDefs.h; path = ../Files/PPResDefs.h; sourceTree = "<group>"; };
 		557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-FilterBridge.c"; sourceTree = "<group>"; };
@@ -2579,6 +2581,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				557C758516A3455E00923755 /* QTKit.framework in Frameworks */,
 				55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */,
 				55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */,
 				55105C9C13BE638D00902106 /* PlayerPROCore.framework in Frameworks */,
@@ -3872,6 +3875,7 @@
 			isa = PBXGroup;
 			children = (
 				5573A1321656FD1700A5AECA /* iOS Frameworks */,
+				557C758416A3455D00923755 /* QTKit.framework */,
 				555C125016378B3500735225 /* AudioUnit.framework */,
 				5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */,
 				55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */,

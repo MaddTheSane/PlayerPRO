@@ -353,6 +353,44 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 - (void)saveMusicToURL:(NSURL *)tosave
 {
 	//[instrumentController writeInstrumentsBackToMusic];
+	Music->hasChanged = FALSE;
+}
+
+Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
+
+- (NSData *)getSoundData:(MADDriverSettings*)theSet
+{
+	MADDriverRec *theRec = NULL;
+	
+	MADCreateDriver( theSet, MADLib, &theRec);
+	MADCleanDriver( theRec);
+
+	MADAttachDriverToMusic( theRec, Music, NULL);
+	MADPlayMusic(theRec);
+	
+	Ptr soundPtr = NULL;
+	long full = 0;
+	if (theSet->outPutBits == 8) {
+		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd) * 2;
+	}else if (theSet->outPutBits == 16) {
+		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd) * 2 * 2;
+	}
+	
+	NSMutableData *mutData = [[NSMutableData alloc] init];
+	soundPtr = calloc(full, 1);
+	
+	while(DirectSave(soundPtr, theSet, theRec))
+	{
+		[mutData appendBytes:soundPtr length:full];
+	}
+	NSData *retData = [NSData dataWithData:mutData];
+	RELEASEOBJ(mutData);
+	
+	MADCleanDriver(theRec);
+	MADDisposeDriver(theRec);
+	free(soundPtr);
+	
+	return retData;
 }
 
 - (IBAction)exportMusicAs:(id)sender
@@ -361,10 +399,92 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	switch (tag) {
 		case -1:
 			//AIFF
+		{
+			NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
+			[savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"public.aiff-audio"]];
+			[savePanel setCanCreateDirectories:YES];
+			[savePanel setCanSelectHiddenExtension:YES];
+			[savePanel setNameFieldLabel:[NSString stringWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding]];
+			[savePanel setPrompt:@"Export"];
+			[savePanel setTitle:@"Export as AIFF audio"];
+			
+			//TODO: Pull up a window and ask the user to select the settings.
+			MADDriverSettings init;
+			MADGetBestDriver(&init);
+			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+			
+			init.surround = [defaults boolForKey:PPSurroundToggle];
+			init.outPutRate = [defaults integerForKey:PPSoundOutRate];
+			init.outPutBits = [defaults integerForKey:PPSoundOutBits];
+			if ([defaults boolForKey:PPOversamplingToggle]) {
+				init.oversampling = [defaults integerForKey:PPOversamplingAmount];
+			} else {
+				init.oversampling = 1;
+			}
+			init.Reverb = [defaults boolForKey:PPReverbToggle];
+			init.ReverbSize = [defaults integerForKey:PPReverbAmount];
+			init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
+			if ([defaults boolForKey:PPStereoDelayToggle]) {
+				init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
+			} else {
+				init.MicroDelaySize = 0;
+			}
+			
+			init.driverMode = NoHardwareDriver;
+			init.repeatMusic = FALSE;
+
+			NSData *saveData = RETAINOBJ([self getSoundData:&init]);
+			
+			RELEASEOBJ(saveData);
+			
+			RELEASEOBJ(savePanel);
+
+		}
 			break;
 			
 		case -2:
 			//MP4
+		{
+			NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
+			[savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"public.mpeg-4-audio"]];
+			[savePanel setCanCreateDirectories:YES];
+			[savePanel setCanSelectHiddenExtension:YES];
+			[savePanel setNameFieldLabel:[NSString stringWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding]];
+			[savePanel setPrompt:@"Export"];
+			[savePanel setTitle:@"Export as MPEG-4 Audio"];
+
+			
+			//TODO: Pull up a window and ask the user to select the settings.
+			MADDriverSettings init;
+			MADGetBestDriver(&init);
+			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+			
+			init.surround = [defaults boolForKey:PPSurroundToggle];
+			init.outPutRate = [defaults integerForKey:PPSoundOutRate];
+			init.outPutBits = [defaults integerForKey:PPSoundOutBits];
+			if ([defaults boolForKey:PPOversamplingToggle]) {
+				init.oversampling = [defaults integerForKey:PPOversamplingAmount];
+			} else {
+				init.oversampling = 1;
+			}
+			init.Reverb = [defaults boolForKey:PPReverbToggle];
+			init.ReverbSize = [defaults integerForKey:PPReverbAmount];
+			init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
+			if ([defaults boolForKey:PPStereoDelayToggle]) {
+				init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
+			} else {
+				init.MicroDelaySize = 0;
+			}
+			
+			init.driverMode = NoHardwareDriver;
+			init.repeatMusic = FALSE;
+			
+			NSData *saveData = RETAINOBJ([self getSoundData:&init]);
+			
+			RELEASEOBJ(saveData);
+			
+			RELEASEOBJ(savePanel);
+		}
 			break;
 			
 		default:
@@ -377,6 +497,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			[savePanel setAllowedFileTypes:BRIDGE(NSArray*, MADLib->ThePlug[tag].UTItypes)];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
+			[savePanel setNameFieldLabel:[NSString stringWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding]];
+			[savePanel setPrompt:@"Export"];
+			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", BRIDGE(NSString*, MADLib->ThePlug[tag].MenuName)]];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 				NSURL *fileURL = [savePanel URL];
 				OSErr err = MADMusicExportCFURL(MADLib, Music, MADLib->ThePlug[tag].type, BRIDGE(CFURLRef, fileURL));
