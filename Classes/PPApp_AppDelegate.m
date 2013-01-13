@@ -87,6 +87,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 - (void)selectCurrentlyPlayingMusic;
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(NSError *__autoreleasing*)theErr;
 - (void)musicListContentsDidMove;
+- (BOOL)musicListWillChange;
+- (void)musicListDidChange;
 @end
 
 @implementation PPApp_AppDelegate
@@ -389,6 +391,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 					[self didChangeValueForKey:kMusicListKVO];
 				}
 			}
+			RELEASEOBJ(savePanel);
 		}
 	}
 }
@@ -1003,32 +1006,19 @@ enum PPMusicToolbarTypes {
 		if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"] || (hasAPPLPlug &&  [sharedWorkspace type:utiFile conformsToType:BRIDGE(NSString*, kUTTypeApplicationFile)])) {
 			[self addMusicToMusicList:panelURL];
 		}else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"]) {
-			[self willChangeValueForKey:kMusicListKVO];
-			[musicList loadMusicListAtURL:panelURL];
-			[self didChangeValueForKey:kMusicListKVO];
-			if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
-				NSError *err = nil;
-				currentlyPlayingIndex = 0;
-				if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
-				{
-					NSAlert *alert = [NSAlert alertWithError:err];
-					[alert runModal];
-				}
+			if ([self musicListWillChange]) {
+				[self willChangeValueForKey:kMusicListKVO];
+				[musicList loadMusicListAtURL:panelURL];
+				[self didChangeValueForKey:kMusicListKVO];
+				[self musicListDidChange];
 			}
 		} else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"]) {
-			[self willChangeValueForKey:kMusicListKVO];
-			[musicList loadOldMusicListAtURL:panelURL];
-			[self didChangeValueForKey:kMusicListKVO];
-			if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
-				NSError *err = nil;
-				currentlyPlayingIndex = 0;
-				if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
-				{
-					NSAlert *alert = [NSAlert alertWithError:err];
-					[alert runModal];
-				}
+			if ([self musicListWillChange]) {
+				[self willChangeValueForKey:kMusicListKVO];
+				[musicList loadOldMusicListAtURL:panelURL];
+				[self didChangeValueForKey:kMusicListKVO];
+				[self musicListDidChange];
 			}
-
 		}
 	}
 	RELEASEOBJ(panel);
@@ -1176,6 +1166,45 @@ enum PPMusicToolbarTypes {
 	[fileLocation setTitleWithMnemonic:doubleDash];
 }
 
+- (void)musicListDidChange
+{
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
+		NSError *err = nil;
+		currentlyPlayingIndex.index = 0;
+		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
+		{
+			NSAlert *alert = [NSAlert alertWithError:err];
+			[alert runModal];
+		}
+	}
+}
+
+- (BOOL)musicListWillChange
+{
+	if (Music) {
+		if (Music->hasChanged) {
+			if (currentlyPlayingIndex.index == -1) {
+				return YES;
+			} else {
+				NSInteger selection = NSRunAlertPanel(@"Unsaved Changes", @"The music file \"%@\" has unsaved changes. Do you want to save?", @"Save", @"Don't Save", @"Cancel", [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
+				switch (selection) {
+					case NSAlertDefaultReturn:
+						[self saveMusic:nil];
+					case NSAlertAlternateReturn:
+					default:
+						return YES;
+						break;
+						
+					case NSAlertOtherReturn:
+						return NO;
+						break;
+				}
+			}
+		}
+	}
+	return YES;
+}
+
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
 {
 	NSError *err = nil;
@@ -1197,35 +1226,23 @@ enum PPMusicToolbarTypes {
 	}
 	else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"])
 	{
-		[self willChangeValueForKey:kMusicListKVO];
-		[musicList loadMusicListAtURL:[NSURL fileURLWithPath:filename]];
-		[self didChangeValueForKey:kMusicListKVO];
-		if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
-			NSError *err = nil;
-			currentlyPlayingIndex = 0;
-			if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
-			{
-				NSAlert *alert = [NSAlert alertWithError:err];
-				[alert runModal];
-			}
-		}
-		return YES;
+		if ([self musicListWillChange]) {
+			[self willChangeValueForKey:kMusicListKVO];
+			[musicList loadMusicListAtURL:[NSURL fileURLWithPath:filename]];
+			[self didChangeValueForKey:kMusicListKVO];
+			[self musicListDidChange];
+			return YES;
+		} else return NO;
 	}
 	else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"])
 	{
-		[self willChangeValueForKey:kMusicListKVO];
-		[musicList loadOldMusicListAtURL:[NSURL fileURLWithPath:filename]];
-		[self didChangeValueForKey:kMusicListKVO];
-		if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
-			NSError *err = nil;
-			currentlyPlayingIndex = 0;
-			if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
-			{
-				NSAlert *alert = [NSAlert alertWithError:err];
-				[alert runModal];
-			}
-		}
-		return YES;
+		if ([self musicListWillChange]) {
+			[self willChangeValueForKey:kMusicListKVO];
+			[musicList loadOldMusicListAtURL:[NSURL fileURLWithPath:filename]];
+			[self didChangeValueForKey:kMusicListKVO];
+			[self musicListDidChange];
+			return YES;
+		} else return NO;
 	}
 	return NO;
 }
