@@ -300,7 +300,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 				}
 			} else {
 				if ([userDefaults boolForKey:PPLoopMusicWhenDone]) {
-					currentlyPlayingIndex = 0;
+					currentlyPlayingIndex.index = 0;
 					[self selectCurrentlyPlayingMusic];
 					NSError *err = nil;
 					if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
@@ -350,7 +350,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 - (void)saveMusicToURL:(NSURL *)tosave
 {
-	[instrumentController writeInstrumentsBackToMusic];
+	//[instrumentController writeInstrumentsBackToMusic];
 }
 
 - (IBAction)exportMusicAs:(id)sender
@@ -373,6 +373,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			}
 			NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
 			[savePanel setAllowedFileTypes:BRIDGE(NSArray*, MADLib->ThePlug[tag].UTItypes)];
+			[savePanel setCanCreateDirectories:YES];
+			[savePanel setCanSelectHiddenExtension:YES];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 				NSURL *fileURL = [savePanel URL];
 				OSErr err = MADMusicExportCFURL(MADLib, Music, MADLib->ThePlug[tag].type, BRIDGE(CFURLRef, fileURL));
@@ -395,6 +397,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 {
 	NSSavePanel * savePanel = RETAINOBJ([NSSavePanel savePanel]);
 	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:MADNativeUTI]];
+	[savePanel setCanCreateDirectories:YES];
+	[savePanel setCanSelectHiddenExtension:YES];
 	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 		NSURL *saveURL = [savePanel URL];
 		[self saveMusicToURL:saveURL];
@@ -698,6 +702,23 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	digitalHandler = nil;
 	
 	if (Music != NULL) {
+		if (Music->hasChanged) {
+			NSInteger selection = 0;
+			if (currentlyPlayingIndex.index == -1) {
+				selection = NSRunAlertPanel(@"Unsaved Changes", @"The new music file has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", nil);
+			} else {
+				selection = NSRunAlertPanel(@"Unsaved Changes", @"The music file \"%@\" has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", nil, [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
+			}
+			switch (selection) {
+				case NSAlertDefaultReturn:
+					[self saveMusic:nil];
+					break;
+					
+				case NSAlertAlternateReturn:
+				default:
+					break;
+			}
+		}
 		MADStopMusic(MADDriver);
 		MADCleanDriver(MADDriver);
 		MADDisposeMusic(&Music, MADDriver);
