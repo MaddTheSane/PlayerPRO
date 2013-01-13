@@ -1606,10 +1606,6 @@ OSErr MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV)
 	long			speed, finespeed, fullTime, curTime;
 	long			dstTime;
 	
-	if (maxV > curV) {
-		MDriver->musicEnd = false;
-	}
-	
 	if( MDriver == NULL)
 	{
 		return MADParametersErr;
@@ -1623,6 +1619,10 @@ OSErr MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV)
 	if( MDriver->curMusic->header == NULL)
 	{
 		return MADDriverHasNoMusic;
+	}
+	
+	if (maxV > curV) {
+		MDriver->musicEnd = false;
 	}
 	
 	MADGetMusicStatus( MDriver, &fullTime, &curTime);
