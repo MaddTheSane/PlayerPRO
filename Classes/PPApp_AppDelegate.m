@@ -86,12 +86,13 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 @interface PPApp_AppDelegate ()
 - (void)selectCurrentlyPlayingMusic;
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(NSError *__autoreleasing*)theErr;
-
+- (void)musicListContentsDidMove;
 @end
 
 @implementation PPApp_AppDelegate
 
 @synthesize paused;
+@synthesize window;
 
 - (BOOL)loadMusicFromCurrentlyPlayingIndexWithError:(NSError *__autoreleasing*)theErr
 {
@@ -365,8 +366,28 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			break;
 			
 		default:
-			//Import-export plug-in
-			break;
+		{
+			if (tag > MADLib->TotalPlug || tag < 0) {
+				NSBeep();
+				return;
+			}
+			NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
+			[savePanel setAllowedFileTypes:BRIDGE(NSArray*, MADLib->ThePlug[tag].UTItypes)];
+			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+				NSURL *fileURL = [savePanel URL];
+				OSErr err = MADMusicExportCFURL(MADLib, Music, MADLib->ThePlug[tag].type, BRIDGE(CFURLRef, fileURL));
+				if (err != noErr) {
+					NSError *aerr = CreateErrorFromMADErrorType(err);
+					NSAlert *alert = [NSAlert alertWithError:aerr];
+					[alert runModal];
+					RELEASEOBJ(aerr);
+				} else {
+					[self willChangeValueForKey:kMusicListKVO];
+					[musicList addMusicURL:fileURL];
+					[self didChangeValueForKey:kMusicListKVO];
+				}
+			}
+		}
 	}
 }
 
@@ -525,8 +546,6 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	//[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
-@synthesize window;
-
 - (void)doubleClickMusicList
 {
 	NSError *err = nil;
@@ -554,6 +573,30 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 - (void)updatePlugInInfoMenu
 {
+	NSInteger i;
+
+	[plugInInfos removeAllObjects];
+	
+	for (i = 0; i < MADLib->TotalPlug ; i++) {
+		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:BRIDGE(NSString*,MADLib->ThePlug[i].MenuName) author:BRIDGE(NSString*,MADLib->ThePlug[i].AuthorString) plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name")];
+		[plugInInfos addObject:tmpInfo];
+		RELEASEOBJ(tmpInfo);
+	}
+	
+	for (i = 0; i < [instrumentImporter plugInCount]; i++) {
+		PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
+		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"InstrumentPlugName", @"Instrument plug-in name")];
+		[plugInInfos addObject:tmpInfo];
+		RELEASEOBJ(tmpInfo);
+	}
+	
+	for (i = 0; i < [digitalHandler plugInCount]; i++) {
+		PPDigitalPlugInObject *obj = [digitalHandler plugInAtIndex:i];
+		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"DigitalPlugName", @"Digital plug-in name")];
+		[plugInInfos addObject:tmpInfo];
+		RELEASEOBJ(tmpInfo);
+	}
+	
 	[plugInInfos sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
 		NSString *menuNam1 = [obj1 plugName];
 		NSString *menuNam2 = [obj2 plugName];
@@ -563,7 +606,6 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	
 	[aboutPlugInMenu removeAllItems];
 	
-	NSInteger i;
 	for (i = 0; i < [plugInInfos count]; i++) {
 		PPPlugInInfo *pi = [plugInInfos objectAtIndex:i];
 		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:pi.plugName action:@selector(showPlugInInfo:) keyEquivalent:@""];
@@ -631,31 +673,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		}
 	}
 	
-	{
-		NSMutableArray *tmpArray = [NSMutableArray array];
-		for (i = 0; i < MADLib->TotalPlug ; i++) {
-			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:BRIDGE(NSString*,MADLib->ThePlug[i].MenuName) author:BRIDGE(NSString*,MADLib->ThePlug[i].AuthorString) plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name")];
-			[tmpArray addObject:tmpInfo];
-			RELEASEOBJ(tmpInfo);
-		}
-		
-		for (i = 0; i < [instrumentImporter plugInCount]; i++) {
-			PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
-			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"InstrumentPlugName", @"Instrument plug-in name")];
-			[tmpArray addObject:tmpInfo];
-			RELEASEOBJ(tmpInfo);
-		}
-		
-		for (i = 0; i < [digitalHandler plugInCount]; i++) {
-			PPDigitalPlugInObject *obj = [digitalHandler plugInAtIndex:i];
-			PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"DigitalPlugName", @"Digital plug-in name")];
-			[tmpArray addObject:tmpInfo];
-			RELEASEOBJ(tmpInfo);
-		}
-		
-		plugInInfos = RETAINOBJ(tmpArray);
-		[self updatePlugInInfoMenu];
-	}
+	plugInInfos = [[NSMutableArray alloc] init];
+	[self updatePlugInInfoMenu];
 	
 	previouslyPlayingIndex = [[PPCurrentlyPlayingIndex alloc] init];
 	previouslyPlayingIndex.index = -1;
@@ -812,9 +831,34 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[self didChangeValueForKey:kMusicListKVO];
 	free(indexArray);
 #else
+	NSInteger selMusic = [tableView selectedRow];
+	if (currentlyPlayingIndex.index == selMusic) {
+		if (Music->hasChanged) {
+			NSInteger selection = NSRunAlertPanel(@"Unsaved Changes", @"The music file \"%@\" has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", @"Cancel", [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
+			switch (selection) {
+				case NSAlertDefaultReturn:
+					[self saveMusic:nil];
+				case NSAlertAlternateReturn:
+				default:
+					MADStopMusic(MADDriver);
+					MADCleanDriver(MADDriver);
+					MADDisposeMusic(&Music, MADDriver);
+					self.paused = YES;
+					currentlyPlayingIndex.index = -1;
+					currentlyPlayingIndex.playbackURL = nil;
+					[currentlyPlayingIndex movePlayingIndexToOtherIndex:previouslyPlayingIndex];
+					break;
+					
+				case NSAlertOtherReturn:
+					return;
+					break;
+			}
+		}
+	}
 	[self willChangeValueForKey:kMusicListKVO];
-	[musicList removeObjectInMusicListAtIndex:[tableView selectedRow]];
+	[musicList removeObjectInMusicListAtIndex:selMusic];
 	[self didChangeValueForKey:kMusicListKVO];
+	[self musicListContentsDidMove];
 #endif
 }
 
@@ -824,9 +868,32 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 		NSInteger returnVal = NSRunAlertPanel(NSLocalizedString(@"Clear list", @"Clear Music List"), @"The music list contains %ld items. Do you really want to remove them?", NSLocalizedString(@"No", @"No"), NSLocalizedString(@"Yes", @"Yes"), nil, (long)[musicList countOfMusicList]);
 		
 		if (returnVal == NSAlertAlternateReturn) {
+			if (Music->hasChanged) {
+				NSInteger selection = NSRunAlertPanel(@"Unsaved Changes", @"The music file \"%@\" has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", @"Cancel", [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
+				switch (selection) {
+					case NSAlertDefaultReturn:
+						[self saveMusic:nil];
+					case NSAlertAlternateReturn:
+					default:
+
+						break;
+						
+					case NSAlertOtherReturn:
+						return;
+						break;
+				}
+			}
+
 			[self willChangeValueForKey:kMusicListKVO];
 			[musicList clearMusicList];
 			[self didChangeValueForKey:kMusicListKVO];
+			MADStopMusic(MADDriver);
+			MADCleanDriver(MADDriver);
+			MADDisposeMusic(&Music, MADDriver);
+			currentlyPlayingIndex.index = -1;
+			currentlyPlayingIndex.playbackURL = nil;
+			[currentlyPlayingIndex movePlayingIndexToOtherIndex:previouslyPlayingIndex];
+			self.paused = YES;
 		}
 	} else {
 		NSBeep();
