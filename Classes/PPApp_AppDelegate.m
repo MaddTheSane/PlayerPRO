@@ -438,10 +438,8 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 				NSData *saveData = RETAINOBJ([self getSoundData:&init]);
 				
 				RELEASEOBJ(saveData);
-				
-				RELEASEOBJ(savePanel);
-				
 			}
+			RELEASEOBJ(savePanel);
 		}
 			break;
 			
@@ -485,8 +483,8 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 				
 				RELEASEOBJ(saveData);
 				
-				RELEASEOBJ(savePanel);
 			}
+			RELEASEOBJ(savePanel);
 		}
 			break;
 			
