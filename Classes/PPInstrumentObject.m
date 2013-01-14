@@ -27,7 +27,7 @@
 @synthesize soundOut;
 @synthesize MIDIOut;
 
-@synthesize sampleCount;
+//@synthesize sampleCount;
 - (short)sampleCount
 {
 	return [samples count];

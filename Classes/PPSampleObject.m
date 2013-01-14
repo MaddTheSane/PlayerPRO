@@ -21,7 +21,7 @@
 @synthesize loopBegin = loopBeg;
 @synthesize loopSize;
 @synthesize relativeNote = relNote;
-@synthesize dataSize;
+//@synthesize dataSize;
 
 - (SInt32)dataSize
 {
