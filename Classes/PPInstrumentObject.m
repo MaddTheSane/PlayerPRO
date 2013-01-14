@@ -110,38 +110,10 @@
 		pitchBegin = tempData->pitchBeg;
 		pitchEnd = tempData->pitchEnd;
 		
-		switch (tempData->volType) {
-			case 0:
-			default:
-				volumeType.on = 1;
-				break;
-				
-			case 1:
-				volumeType.sustain = 1;
-				break;
-				
-			case 2:
-				volumeType.loop = 1;
-				break;
-		}
+		volumeType = tempData->volType;
 		
-		switch (tempData->pannType) {
-			default:
-			case 0:
-				panningType.on = 1;
-				break;
+		panningType = tempData->pannType;
 				
-			case 1:
-				panningType.sustain = 1;
-				break;
-				
-			case 2:
-				panningType.loop = 1;
-				break;
-				
-		}
-		
-		
 		volumeFade = tempData->volFade;
 		
 		vibratoDepth = tempData->vibDepth;
@@ -215,22 +187,9 @@ typedef enum {
 	newData->volFade = volumeFade;
 	
 	memcpy(newData->what, what,sizeof(what));
-	if (volumeType.on) {
-		newData->volType = 0;
-	} else if (volumeType.loop) {
-		newData->volType = 2;
-	} else {
-		newData->volType = 1;
-	}
-	//newData->volType = volumeType;
+	newData->volType = volumeType;
 	
-	if (panningType.on) {
-		newData->pannType = 0;
-	} else if(panningType.loop) {
-		newData->pannType = 2;
-	} else {
-		newData->pannType = 1;
-	}
+	newData->pannType = panningType;
 	
 	memcpy(newData->pannEnv, pannEnv, sizeof(pannEnv));
 	memcpy(newData->pitchEnv, pitchEnv, sizeof(pitchEnv));
@@ -245,7 +204,6 @@ typedef enum {
 		return;
 	}
 	[samples addObject:object];
-	//sampleCount++;
 }
 
 - (void)replaceObjectInSamplesAtIndex:(short)index withObject:(PPSampleObject *)object
@@ -263,73 +221,67 @@ typedef enum {
 
 - (void)setVolumeTypeOn
 {
-	bzero(&volumeType, sizeof(insType));
-	volumeType.on = 1;
+	volumeType = 0;
 }
 
 - (void)setVolumeTypeSustain
 {
-	bzero(&volumeType, sizeof(insType));
-	volumeType.sustain = 1;
+	volumeType = 1;
 }
 
 - (void)setVolumeTypeLoop
 {
-	bzero(&volumeType, sizeof(insType));
-	volumeType.loop = 1;
+	volumeType = 2;
 }
 
 - (BOOL)isVolumeTypeOn
 {
-	return volumeType.on;
+	return volumeType == 0;
 }
 
 - (BOOL)isVolumeTypeSustain
 {
-	return volumeType.sustain;
+	return volumeType == 1;
 }
 
 - (BOOL)isVolumeTypeLoop
 {
-	return volumeType.loop;
+	return volumeType == 2;
 }
 
 - (void)setPanningTypeOn
 {
-	bzero(&panningType, sizeof(insType));
-	panningType.on = 1;
+	panningType = 0;
 }
 
 - (void)setPanningTypeSustain
 {
-	bzero(&panningType, sizeof(insType));
-	panningType.sustain = 1;
+	panningType = 1;
 }
 
 - (void)setPanningTypeLoop
 {
-	bzero(&panningType, sizeof(insType));
-	panningType.loop = 1;
+	panningType = 2;
 }
 
 - (BOOL)isPanningTypeOn
 {
-	return panningType.on;
+	return panningType == 0;
 }
 
 - (BOOL)isPanningTypeSustain
 {
-	return panningType.sustain;
+	return panningType == 1;
 }
 
 - (BOOL)isPanningTypeLoop
 {
-	return panningType.loop;
+	return panningType == 2;
 }
 
 - (NSArray *)children;
 {
-	return samples;
+	return [NSArray arrayWithArray:samples];
 }
 
 - (PPSampleObject*)childAtIndex:(NSUInteger)idx

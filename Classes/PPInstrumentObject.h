@@ -11,14 +11,6 @@
 
 @class PPSampleObject;
 
-typedef struct
-{
-	unsigned short on:1;
-	unsigned short sustain:1;
-	unsigned short loop:1;
-	unsigned short reserved:5;
-}insType;
-
 @interface PPInstrumentObject : NSObject
 {
 	MADMusic		*theMus;
@@ -59,8 +51,8 @@ typedef struct
 	NSInteger		pitchBegin;			// Pitch loop start point
 	NSInteger		pitchEnd;			// Pitch loop end point
 	
-	insType			volumeType;			// Volume type: bit 0: On; 1: Sustain; 2: Loop
-	insType			panningType;		// Panning type: bit 0: On; 1: Sustain; 2: Loop
+	short			volumeType;			// Volume type: bit 0: On; 1: Sustain; 2: Loop
+	short			panningType;		// Panning type: bit 0: On; 1: Sustain; 2: Loop
 	
 	unsigned short	volumeFade;			// Volume fadeout
 	
