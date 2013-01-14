@@ -9,13 +9,13 @@
 #ifndef PPMacho_PlayerPRO_PrefixHeader_pch
 #define PPMacho_PlayerPRO_PrefixHeader_pch
 
+#include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/PPPlug.h>
+
 #ifdef __OBJC__
 #import <Cocoa/Cocoa.h>
 #import "ARCBridge.h"
 #import "UserDefaultKeys.h"
 #endif
-
-#include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
 
 #endif

@@ -8,13 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 
+//@class PPSampleButton;
+
 @interface PPInstrumentCellView : NSTableCellView
 {
-	IBOutlet NSTextField *numField;
-	IBOutlet NSTextField *insNameField;
+	IBOutlet __unsafe_unretained NSTextField *numField;
+	IBOutlet __unsafe_unretained NSButton *sampleButton;
+	BOOL isSample;
 }
 
-@property (readwrite, retain) NSTextField *numField;
-@property (readwrite, retain) NSTextField *insNameField;
-
+@property (readwrite, assign) NSTextField *numField;
+@property (readwrite, assign) NSButton *sampleButton;
+@property (readwrite/*, getter = isSample, setter = setIsSample: */, nonatomic) BOOL isSample;
 @end

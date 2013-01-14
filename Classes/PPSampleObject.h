@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 
-@interface PPSampleObject : NSObject
+@interface PPSampleObject : NSObject <NSCopying>
 {
 	SInt32				loopBeg;			// LoopStart
 	SInt32				loopSize;			// LoopLength
@@ -24,6 +24,7 @@
 
 }
 
+- (id)init;
 - (id)initWithsData:(sData *)theData;
 - (sData *)createSData;
 
@@ -35,8 +36,8 @@
 @property (readwrite) unsigned char loopType;
 @property (readwrite) unsigned char amplitude;
 @property (readwrite) char relativeNote;
-@property (readwrite, retain) NSString *name;
+@property (readwrite, copy) NSString *name;
 @property (readwrite) BOOL stereo;
-@property (readwrite, retain) NSData *data;
+@property (readwrite, copy) NSData *data;
 
 @end

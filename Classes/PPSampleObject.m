@@ -28,6 +28,23 @@
 	return [data length];
 }
 
+- (id)init
+{
+	if (self = [super init]) {
+		name = @"";
+		data = [[NSData alloc] init];
+		loopType = 0;
+		c2spd = NOFINETUNE;
+		amp = 8;
+		vol = 64;
+		stereo = NO;
+		loopBeg = 0;
+		loopSize = 0;
+		relNote = 0;
+	}
+	return self;
+}
+
 - (id)initWithsData:(sData *)theData
 {
 	if (self = [super init]) {
@@ -49,6 +66,24 @@
 	return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+	PPSampleObject *obj = nil;
+	if ((obj = [[PPSampleObject allocWithZone:zone] init])) {
+		obj.name = name;
+		obj.data = data;
+		obj.amplitude = amp;
+		obj.volume = vol;
+		obj.stereo = stereo;
+		obj.c2spd = c2spd;
+		obj.loopType = loopType;
+		obj.relativeNote = relNote;
+		obj.loopBegin = loopBeg;
+		obj.loopSize = loopSize;
+	}
+	return obj;
+}
+
 - (sData *)createSData
 {
 	sData *toReturn = malloc(sizeof(sData));
@@ -58,13 +93,20 @@
 	toReturn->loopType = loopType;
 	toReturn->c2spd = c2spd;
 	char theName[32] = {0};
-	strlcpy(theName, [name cStringUsingEncoding:NSMacOSRomanStringEncoding], sizeof(theName));
+	NSData *tmpCStr = [name dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+	NSInteger cStrLen = [tmpCStr length];
+	if (cStrLen > sizeof(theName) - 1) {
+		cStrLen = sizeof(theName) - 1;
+	}
+	[tmpCStr getBytes:theName length:cStrLen];
+	tmpCStr = nil;
+	
 	memcpy(toReturn->name, theName, sizeof(toReturn->name));
 	toReturn->amp = amp;
 	toReturn->stereo = stereo;
 	toReturn->relNote = relNote;
-	toReturn->size = [data length];
 	NSInteger dataSize2 = [data length];
+	toReturn->size = dataSize2;
 	toReturn->data = malloc(dataSize2);
 	memcpy(toReturn->data, [data bytes], dataSize2);
 	

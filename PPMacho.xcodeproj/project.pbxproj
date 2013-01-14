@@ -3207,6 +3207,8 @@
 				550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */,
 				550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */,
 				550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */,
+				550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */,
+				550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */,
 			);
 			name = "Instrument Code";
 			sourceTree = "<group>";
@@ -3600,8 +3602,6 @@
 				5523EC8016936F880067B22A /* PPDigitalPlugInHandler.m */,
 				5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */,
 				5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */,
-				550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */,
-				550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -8726,7 +8726,7 @@
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "PlayerPRO Cocoa";
 			};
 			name = Release;
@@ -8746,7 +8746,7 @@
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "PlayerPRO Cocoa";
 			};
 			name = Debug;

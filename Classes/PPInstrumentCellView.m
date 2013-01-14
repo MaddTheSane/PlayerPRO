@@ -11,7 +11,8 @@
 @implementation PPInstrumentCellView
 
 @synthesize numField;
-@synthesize insNameField;
+@synthesize isSample;
+@synthesize sampleButton;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -21,6 +22,11 @@
     }
     
     return self;
+}
+
+- (void)setIsSample:(BOOL)aisSample
+{
+	isSample = aisSample;
 }
 
 - (void)drawRect:(NSRect)dirtyRect

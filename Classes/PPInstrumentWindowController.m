@@ -10,6 +10,7 @@
 #import "PPInstrumentImporter.h"
 #import "PPInstrumentObject.h"
 #import "PPSampleObject.h"
+#import "PPInstrumentCellView.h"
 #include <PlayerPROCore/PPPlug.h>
 #import "ARCBridge.h"
 
@@ -103,6 +104,17 @@ static inline void SwapPcmd(Pcmd *toswap)
 	for (PPInstrumentObject *obj in instruments) {
 		[obj writeBackToMusic];
 	}
+}
+
+- (void)writeInstrumentAtIndexBackToMusic:(short)idx
+{
+	[[instruments objectAtIndex:idx] writeBackToMusic];
+}
+
+- (void)writeSampleAtIndex:(short)sampIdx withInstrumentAtIndexBackToMusic:(short)insIdx
+{
+	PPInstrumentObject *obj = [instruments objectAtIndex:insIdx];
+	[obj writeSampleAtIndexBackToMusic:sampIdx];
 }
 
 - (void)loadInstrumentsFromMusic
@@ -205,6 +217,23 @@ static inline void SwapPcmd(Pcmd *toswap)
 		return [item countOfChildren] != 0;
 	}
 	return NO;
+}
+
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item
+{
+	PPInstrumentCellView *theView = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:nil];
+	if ([item isKindOfClass:[PPInstrumentObject class]]) {
+		theView.isSample = NO;
+		[theView.textField setTitleWithMnemonic:[item name]];
+		[theView.numField setTitleWithMnemonic:[NSString stringWithFormat:@"%ld", (long)[item number]]];
+
+	} else if ([item isKindOfClass:[PPSampleObject class]])
+	{
+		theView.isSample = YES;
+		[theView.textField setTitleWithMnemonic:[item name]];
+	}
+	
+	return theView;
 }
 
 @end

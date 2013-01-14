@@ -62,10 +62,12 @@
 
 - (id)initWithMusic:(MADMusic*)mus instrumentIndex:(short)insIdx;
 - (void)writeBackToMusic;
+- (void)writeSampleAtIndexBackToMusic:(short)idx;
 
-@property (readwrite, retain) NSString *name;
+@property (readwrite, copy) NSString *name;
 @property (readonly) NSArray *samples;
 @property (readwrite) Byte type;
+@property (readonly) NSInteger number;
 
 @property (readwrite, getter = isSoundOut) BOOL soundOut;
 @property (readwrite, getter = isMIDIOut) BOOL MIDIOut;

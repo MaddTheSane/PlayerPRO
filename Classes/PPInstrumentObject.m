@@ -45,6 +45,7 @@
 @synthesize volumeEnd;
 @synthesize volumeSize;
 @synthesize volumeSustain;
+@synthesize number;
 
 - (id)initWithMusic:(MADMusic*)mus instrumentIndex:(short)insIdx;
 {
@@ -134,9 +135,26 @@ typedef enum {
 	PPInstruCanDoBoth = PPInstruCanDoSoundOut | PPInstruCanDoMidiOut
 }PPInstrumentOut;
 
+- (void)writeSampleAtIndexBackToMusic:(short)idx
+{
+	if (idx >= MAXSAMPLE) {
+		return;
+	}
+	
+	if (theMus->sample[idx + firstSample]) {
+		if (theMus->sample[idx + firstSample]->data)
+		{
+			free(theMus->sample[idx + firstSample]->data);
+		}
+		free(theMus->sample[idx + firstSample]);
+	}
+	
+	theMus->sample[idx + firstSample] = [[samples objectAtIndex:idx] createSData];
+}
+
 - (void)writeBackToMusic
 {
-	int i;
+	int i, ii;
 	int totalSamples = self.sampleCount + firstSample;
 	int totalPossibleSamples = firstSample + MAXSAMPLE - 1;
 	for (i = firstSample; i < totalPossibleSamples; i++) {
@@ -151,14 +169,20 @@ typedef enum {
 		}
 	}
 	
-	for (i = firstSample; i < totalSamples; i++) {
-		PPSampleObject *sampObj = [samples objectAtIndex:i];
+	for (i = firstSample, ii = 0; i < totalSamples; i++, ii++) {
+		PPSampleObject *sampObj = [samples objectAtIndex:ii];
 		theMus->sample[i] = [sampObj createSData];
 	}
 	InstrData *newData = &theMus->fid[number];
 	char tempstr[32] = {0};
 	
-	strlcpy(tempstr, [name cStringUsingEncoding:NSMacOSRomanStringEncoding], sizeof(tempstr));
+	NSData *tmpCStr = [name dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+	NSInteger cStrLen = [tmpCStr length];
+	if (cStrLen > sizeof(tempstr) - 1) {
+		cStrLen = sizeof(tempstr) - 1;
+	}
+	[tmpCStr getBytes:tempstr length:cStrLen];
+	tmpCStr = nil;
 	
 	memcpy(newData->name, tempstr, sizeof(newData->name));
 		
@@ -204,6 +228,7 @@ typedef enum {
 		return;
 	}
 	[samples addObject:object];
+	theMus->hasChanged = TRUE;
 }
 
 - (void)replaceObjectInSamplesAtIndex:(short)index withObject:(PPSampleObject *)object
@@ -212,6 +237,7 @@ typedef enum {
 		return;
 	}
 	[samples replaceObjectAtIndex:index withObject:object];
+	theMus->hasChanged = TRUE;
 }
 
 - (NSUInteger)countOfSamples

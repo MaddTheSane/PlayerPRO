@@ -24,6 +24,8 @@
 @property (readwrite, nonatomic) MADMusic **curMusic;
 
 - (void)writeInstrumentsBackToMusic;
+- (void)writeInstrumentAtIndexBackToMusic:(short)idx;
+- (void)writeSampleAtIndex:(short)sampIdx withInstrumentAtIndexBackToMusic:(short)insIdx;
 
 - (IBAction)exportInstrument:(id)sender;
 - (IBAction)deleteInstrument:(id)sender;
