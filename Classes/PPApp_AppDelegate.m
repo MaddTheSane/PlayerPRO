@@ -22,6 +22,7 @@
 #import "PPDigitalPlugInHandler.h"
 #import "PPDigitalPlugInObject.h"
 #include <PlayerPROCore/RDriverInt.h>
+#import <QTKit/QTKit.h>
 
 static NSString * const kMusicListKVO = @"musicList";
 static NSString * const MADNativeUTI = @"com.quadmation.playerpro.madk";
@@ -386,6 +387,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	NSData *retData = [NSData dataWithData:mutData];
 	RELEASEOBJ(mutData);
 	
+	MADStopMusic(MADDriver);
 	MADCleanDriver(theRec);
 	MADDisposeDriver(theRec);
 	free(soundPtr);
@@ -407,38 +409,39 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			[savePanel setNameFieldLabel:[NSString stringWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding]];
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as AIFF audio"];
-			
-			//TODO: Pull up a window and ask the user to select the settings.
-			MADDriverSettings init;
-			MADGetBestDriver(&init);
-			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-			
-			init.surround = [defaults boolForKey:PPSurroundToggle];
-			init.outPutRate = [defaults integerForKey:PPSoundOutRate];
-			init.outPutBits = [defaults integerForKey:PPSoundOutBits];
-			if ([defaults boolForKey:PPOversamplingToggle]) {
-				init.oversampling = [defaults integerForKey:PPOversamplingAmount];
-			} else {
-				init.oversampling = 1;
+			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+				//TODO: Pull up a window and ask the user to select the settings.
+				MADDriverSettings init;
+				MADGetBestDriver(&init);
+				NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+				
+				init.surround = [defaults boolForKey:PPSurroundToggle];
+				init.outPutRate = [defaults integerForKey:PPSoundOutRate];
+				init.outPutBits = [defaults integerForKey:PPSoundOutBits];
+				if ([defaults boolForKey:PPOversamplingToggle]) {
+					init.oversampling = [defaults integerForKey:PPOversamplingAmount];
+				} else {
+					init.oversampling = 1;
+				}
+				init.Reverb = [defaults boolForKey:PPReverbToggle];
+				init.ReverbSize = [defaults integerForKey:PPReverbAmount];
+				init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
+				if ([defaults boolForKey:PPStereoDelayToggle]) {
+					init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
+				} else {
+					init.MicroDelaySize = 0;
+				}
+				
+				init.driverMode = NoHardwareDriver;
+				init.repeatMusic = FALSE;
+				
+				NSData *saveData = RETAINOBJ([self getSoundData:&init]);
+				
+				RELEASEOBJ(saveData);
+				
+				RELEASEOBJ(savePanel);
+				
 			}
-			init.Reverb = [defaults boolForKey:PPReverbToggle];
-			init.ReverbSize = [defaults integerForKey:PPReverbAmount];
-			init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
-			if ([defaults boolForKey:PPStereoDelayToggle]) {
-				init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
-			} else {
-				init.MicroDelaySize = 0;
-			}
-			
-			init.driverMode = NoHardwareDriver;
-			init.repeatMusic = FALSE;
-
-			NSData *saveData = RETAINOBJ([self getSoundData:&init]);
-			
-			RELEASEOBJ(saveData);
-			
-			RELEASEOBJ(savePanel);
-
 		}
 			break;
 			
@@ -452,38 +455,38 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			[savePanel setNameFieldLabel:[NSString stringWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding]];
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as MPEG-4 Audio"];
-
-			
-			//TODO: Pull up a window and ask the user to select the settings.
-			MADDriverSettings init;
-			MADGetBestDriver(&init);
-			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-			
-			init.surround = [defaults boolForKey:PPSurroundToggle];
-			init.outPutRate = [defaults integerForKey:PPSoundOutRate];
-			init.outPutBits = [defaults integerForKey:PPSoundOutBits];
-			if ([defaults boolForKey:PPOversamplingToggle]) {
-				init.oversampling = [defaults integerForKey:PPOversamplingAmount];
-			} else {
-				init.oversampling = 1;
+			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+				//TODO: Pull up a window and ask the user to select the settings.
+				MADDriverSettings init;
+				MADGetBestDriver(&init);
+				NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+				
+				init.surround = [defaults boolForKey:PPSurroundToggle];
+				init.outPutRate = [defaults integerForKey:PPSoundOutRate];
+				init.outPutBits = [defaults integerForKey:PPSoundOutBits];
+				if ([defaults boolForKey:PPOversamplingToggle]) {
+					init.oversampling = [defaults integerForKey:PPOversamplingAmount];
+				} else {
+					init.oversampling = 1;
+				}
+				init.Reverb = [defaults boolForKey:PPReverbToggle];
+				init.ReverbSize = [defaults integerForKey:PPReverbAmount];
+				init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
+				if ([defaults boolForKey:PPStereoDelayToggle]) {
+					init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
+				} else {
+					init.MicroDelaySize = 0;
+				}
+				
+				init.driverMode = NoHardwareDriver;
+				init.repeatMusic = FALSE;
+				
+				NSData *saveData = RETAINOBJ([self getSoundData:&init]);
+				
+				RELEASEOBJ(saveData);
+				
+				RELEASEOBJ(savePanel);
 			}
-			init.Reverb = [defaults boolForKey:PPReverbToggle];
-			init.ReverbSize = [defaults integerForKey:PPReverbAmount];
-			init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
-			if ([defaults boolForKey:PPStereoDelayToggle]) {
-				init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
-			} else {
-				init.MicroDelaySize = 0;
-			}
-			
-			init.driverMode = NoHardwareDriver;
-			init.repeatMusic = FALSE;
-			
-			NSData *saveData = RETAINOBJ([self getSoundData:&init]);
-			
-			RELEASEOBJ(saveData);
-			
-			RELEASEOBJ(savePanel);
 		}
 			break;
 			
