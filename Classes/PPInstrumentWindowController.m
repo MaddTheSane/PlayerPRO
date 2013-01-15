@@ -401,7 +401,7 @@ static void DataProviderReleasseCallback(void *info, const void *data,
 		[waveFormImage setImage:nil];
 		return;
 	}
-	[instrumentSize setTitleWithMnemonic:[NSString stringWithFormat:@"%f kiB", (long)[object dataSize]/ 1024.0]];
+	[instrumentSize setTitleWithMnemonic:[NSString stringWithFormat:@"%.2f kiB", (long)[object dataSize]/ 1024.0]];
 	[instrumentLoopStart setTitleWithMnemonic:[NSString stringWithFormat:@"%ld", (long)[object loopBegin]]];
 	[instrumentLoopSize setTitleWithMnemonic:[NSString stringWithFormat:@"%ld", (long)[object loopSize]]];
 	[instrumentVolume setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [(PPSampleObject*)object volume]]];
@@ -448,13 +448,13 @@ static void DataProviderReleasseCallback(void *info, const void *data,
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
 		theView.isSample = NO;
 		[theView.textField setTitleWithMnemonic:[item name]];
-		[theView.numField setTitleWithMnemonic:[NSString stringWithFormat:@"%ld", (long)[item number]]];
+		[theView.numField setTitleWithMnemonic:[NSString stringWithFormat:@"%ld", (long)[item number] + 1]];
 
 	} else if ([item isKindOfClass:[PPSampleObject class]])
 	{
 		theView.isSample = YES;
 		[theView.textField setTitleWithMnemonic:[item name]];
-		if ([item loopType]) {
+		if ([item loopBegin]) {
 			theView.isLoopingSample = YES;
 		} else {
 			theView.isLoopingSample = NO;

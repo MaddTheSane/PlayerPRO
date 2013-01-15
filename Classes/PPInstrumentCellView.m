@@ -30,7 +30,10 @@
 	isSample = aisSample;
 	if (isSample) {
 		[numField setHidden:YES];
+		[sampleButton setHidden:NO];
+		//[loopImage setHidden:NO];
 	} else {
+		[numField setHidden:NO];
 		[sampleButton setHidden:YES];
 		[loopImage setHidden:YES];
 	}
