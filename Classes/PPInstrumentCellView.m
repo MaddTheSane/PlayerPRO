@@ -12,6 +12,7 @@
 
 @synthesize numField;
 @synthesize isSample;
+@synthesize isLoopingSample;
 @synthesize sampleButton;
 
 - (id)initWithFrame:(NSRect)frame
@@ -27,6 +28,24 @@
 - (void)setIsSample:(BOOL)aisSample
 {
 	isSample = aisSample;
+	if (isSample) {
+		[numField setHidden:YES];
+	} else {
+		[sampleButton setHidden:YES];
+		[loopImage setHidden:YES];
+	}
+}
+
+- (void)setIsLoopingSample:(BOOL)IsLoopingSample
+{
+	isLoopingSample = IsLoopingSample;
+	if (isSample) {
+		if (isLoopingSample) {
+			[loopImage setHidden:NO];
+		} else {
+			[loopImage setHidden:YES];
+		}		
+	}
 }
 
 - (void)drawRect:(NSRect)dirtyRect

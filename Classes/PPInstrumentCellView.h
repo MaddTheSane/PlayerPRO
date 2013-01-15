@@ -12,12 +12,15 @@
 
 @interface PPInstrumentCellView : NSTableCellView
 {
-	IBOutlet __unsafe_unretained NSTextField *numField;
-	IBOutlet __unsafe_unretained NSButton *sampleButton;
+	IBOutlet __weak NSTextField *numField;
+	IBOutlet __weak NSButton *sampleButton;
+	IBOutlet __weak NSImageView *loopImage;
 	BOOL isSample;
+	BOOL isLoopingSample;
 }
 
-@property (readwrite, assign) NSTextField *numField;
-@property (readwrite, assign) NSButton *sampleButton;
+@property (readwrite, weak) NSTextField *numField;
+@property (readwrite, weak) NSButton *sampleButton;
 @property (readwrite/*, getter = isSample, setter = setIsSample: */, nonatomic) BOOL isSample;
+@property (readwrite, nonatomic) BOOL isLoopingSample;
 @end

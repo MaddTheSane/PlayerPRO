@@ -189,6 +189,229 @@ static inline void SwapPcmd(Pcmd *toswap)
 	SUPERDEALLOC;
 }
 
+static void DrawCGSampleInt(long	sampleSize,
+							long 	start,
+							long 	tSS,
+							long 	tSE,
+							long 	high,
+							long	larg,
+							long	trueV,
+							long	trueH,
+							short	channel,
+							PPSampleObject	*curData,
+							CGContextRef ctxRef)
+{
+	CGContextSaveGState(ctxRef);
+	
+	long long		temp, i;
+	Ptr				theSample = malloc ([curData dataSize]);
+	memcpy(theSample, [curData.data bytes], [curData dataSize]);
+	short			*theShortSample = (short*) theSample;
+	long long		BS, BE, minY, maxY, x;
+	
+	if( curData.amplitude == 16)
+	{
+		sampleSize /= 2;
+		start /= 2;
+		
+		BS = start + (tSS * sampleSize) / larg;
+		if( curData.stereo)
+		{
+			BS /= 2;	BS *=2;
+			BS += channel;
+		}
+		temp = (theShortSample[ BS]  + 0x8000);
+		temp *= high;	temp >>= 16;
+		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
+		//MoveTo( trueH + tSS, trueV + temp);
+		
+		for( i = tSS; i < tSE; i++)
+		{
+			BS = start + (i * sampleSize) / larg;
+			BE = start + ((i+1) * sampleSize) / larg;
+			
+			if( curData.stereo)
+			{
+				BS /=2;		BS *=2;
+				BE /=2;		BE *=2;
+				
+				BS += channel;
+				BE += channel;
+			}
+			
+			temp =(theShortSample[ BS]  + 0x8000);
+			minY = maxY = temp;
+			temp *= high;		temp >>= 16;
+			CGContextAddLineToPoint(ctxRef, trueH + i, temp + trueV);
+			//LineTo( trueH + i, temp + trueV);
+			
+			if( BS != BE)
+			{
+				for( x = BS; x < BE; x++)
+				{
+					temp = (theShortSample[ x]  + 0x8000);
+					
+					if( temp > maxY) maxY = temp;
+					if( temp < minY) minY = temp;
+					
+					if( curData.stereo) x++;
+				}
+				
+				maxY *= high;		maxY >>= 16;
+				minY *= high;		minY >>= 16;
+				
+				CGContextMoveToPoint(ctxRef, trueH + i, minY + trueV);
+				CGContextAddLineToPoint(ctxRef, trueH + i, maxY + trueV);
+				
+				//MoveTo( trueH + i, minY + trueV);
+				//LineTo( trueH + i, maxY + trueV);
+			}
+		}
+	}
+	else
+	{
+		BS = start + (tSS * sampleSize) / larg;
+		if( curData.stereo)
+		{
+			BS /= 2;	BS *=2;
+			BS += channel;
+		}
+		
+		temp = (unsigned char) (theSample[ BS] - 0x80);
+		temp *= high;	temp >>= 8;
+		
+		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
+		
+		//MoveTo( trueH + tSS, trueV + temp);
+		
+		for( i = tSS; i < tSE; i++)
+		{
+			BS = start + (i * sampleSize) / larg;
+			BE = start + ((i+1) * sampleSize) / larg;
+			
+			if( curData.stereo)
+			{
+				BS /=2;		BS *=2;
+				BE /=2;		BE *=2;
+				
+				BS += channel;
+				BE += channel;
+			}
+			
+			temp = (unsigned char) (theSample[ BS] - 0x80);
+			minY = maxY = temp;
+			temp *= high;		temp >>= 8;
+			CGContextAddLineToPoint(ctxRef, trueH + i, temp + trueV);
+			//LineTo( trueH + i, temp + trueV);
+			
+			if( BS != BE)
+			{
+				for( x = BS; x < BE; x++)
+				{
+					temp = (unsigned char) (theSample[ x] - 0x80);
+					
+					if( temp > maxY) maxY = temp;
+					if( temp < minY) minY = temp;
+					
+					if( curData.stereo) x++;
+				}
+				maxY *= high;		maxY >>= 8;
+				minY *= high;		minY >>= 8;
+				
+				CGContextMoveToPoint(ctxRef, trueH + i, minY + trueV);
+				CGContextAddLineToPoint(ctxRef, trueH + i, maxY + trueV);
+				
+				//MoveTo( trueH + i, minY + trueV);
+				//LineTo( trueH + i, maxY + trueV);
+			}
+		}
+	}
+	free(theSample);
+	CGContextStrokePath(ctxRef);
+	CGContextRestoreGState(ctxRef);
+}
+
+
+static void DataProviderReleasseCallback(void *info, const void *data,
+										 size_t size)
+{
+	free((void*)data);
+}
+
+- (NSImage *)waveformImageFromSample:(PPSampleObject *)theDat
+{
+	NSRect imageFrame = [waveFormImage frame];
+	CGImageRef returnType;
+	unsigned rowBytes = 4 * imageFrame.size.width;
+	void *imageBuffer = malloc(rowBytes * imageFrame.size.height);
+	static CGColorSpaceRef defaultSpace = NULL;
+	if (defaultSpace == NULL) {
+		defaultSpace = CGColorSpaceCreateDeviceRGB();
+	}
+	
+	CGContextRef bitmapContext = CGBitmapContextCreate(imageBuffer, imageFrame.size.width, imageFrame.size.height, 8, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast);
+	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageFrame.size.width, imageFrame.size.height));
+	CGContextSetLineWidth(bitmapContext, .7);
+	if (theDat.stereo){
+		CGColorRef colorRef = CGColorCreateGenericRGB(0, 0, 1, .75);
+		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
+		CGColorRelease(colorRef);
+		DrawCGSampleInt(theDat.dataSize, 0, 0, imageFrame.size.width, imageFrame.size.height, imageFrame.size.width, 0, 0, 1, theDat, bitmapContext);
+	}
+	{
+		CGColorRef colorRef = CGColorCreateGenericRGB(1, 0, 0, .75);
+		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
+		CGColorRelease(colorRef);
+		DrawCGSampleInt(theDat.dataSize, 0, 0, imageFrame.size.width, imageFrame.size.height, imageFrame.size.width, 0, 0, 0, theDat, bitmapContext);
+
+	}
+
+	CGContextRelease(bitmapContext);
+	CGDataProviderRef dataProvider = CGDataProviderCreateWithData(NULL, imageBuffer, rowBytes * imageFrame.size.height, DataProviderReleasseCallback);
+	
+	returnType = CGImageCreate(imageFrame.size.width, imageFrame.size.height, 8, 32, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast, dataProvider, NULL, false, kCGRenderingIntentDefault);
+	CGDataProviderRelease(dataProvider);
+
+	NSImage *img = [[NSImage alloc] initWithCGImage:returnType size:imageFrame.size];
+	CGImageRelease(returnType);
+
+	return AUTORELEASEOBJ(img);
+}
+
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification
+{
+	id object = [instrumentView itemAtRow:[instrumentView selectedRow]];
+	
+	if ([object isKindOfClass:[PPInstrumentObject class]]) {
+		if ([object sampleCount] > 0) {
+			object = [object childAtIndex:0];
+		}else {
+			object = nil;
+		}
+	}
+	if (!object) {
+		[instrumentSize setTitleWithMnemonic:PPDoubleDash];
+		[instrumentLoopStart setTitleWithMnemonic:PPDoubleDash];
+		[instrumentLoopSize setTitleWithMnemonic:PPDoubleDash];
+		[instrumentVolume setTitleWithMnemonic:PPDoubleDash];
+		[instrumentRate setTitleWithMnemonic:PPDoubleDash];
+		[instrumentNote setTitleWithMnemonic:PPDoubleDash];
+		[instrumentBits setTitleWithMnemonic:PPDoubleDash];
+		[instrumentMode setTitleWithMnemonic:PPDoubleDash];
+		[waveFormImage setImage:nil];
+		return;
+	}
+	[instrumentSize setTitleWithMnemonic:[NSString stringWithFormat:@"%f kiB", (long)[object dataSize]/ 1024.0]];
+	[instrumentLoopStart setTitleWithMnemonic:[NSString stringWithFormat:@"%ld", (long)[object loopBegin]]];
+	[instrumentLoopSize setTitleWithMnemonic:[NSString stringWithFormat:@"%ld", (long)[object loopSize]]];
+	[instrumentVolume setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [(PPSampleObject*)object volume]]];
+	[instrumentRate setTitleWithMnemonic:PPDoubleDash];
+	[instrumentNote setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object relativeNote]]];
+	[instrumentBits setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object amplitude]]];
+	[instrumentMode setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object loopType]]];
+	[waveFormImage setImage:[self waveformImageFromSample:object]];
+}
+
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
 	if (item == nil) {
@@ -231,6 +454,11 @@ static inline void SwapPcmd(Pcmd *toswap)
 	{
 		theView.isSample = YES;
 		[theView.textField setTitleWithMnemonic:[item name]];
+		if ([item loopType]) {
+			theView.isLoopingSample = YES;
+		} else {
+			theView.isLoopingSample = NO;
+		}
 	}
 	
 	return theView;

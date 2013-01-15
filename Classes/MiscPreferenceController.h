@@ -9,10 +9,10 @@
 #import <Cocoa/Cocoa.h>
 
 @interface MiscPreferenceController : NSViewController {
-    IBOutlet NSButton *addExt;
-    IBOutlet NSButton *madCompression;
-    IBOutlet NSButton *noLoadMixerFromFile;
-	IBOutlet NSButton *oscDrawLines;
+    IBOutlet __weak NSButton *addExt;
+    IBOutlet __weak NSButton *madCompression;
+    IBOutlet __weak NSButton *noLoadMixerFromFile;
+	IBOutlet __weak NSButton *oscDrawLines;
 }
 - (IBAction)changePrefs:(id)sender;
 @end

@@ -15,8 +15,9 @@ extern NSString * const PPClassicalEditorPreferencesDidChange;
 extern NSString * const PPMiscPreferencesDidChange;
 extern NSString * const PPColorsDidChange;
 extern NSString * const PPMusicDidChange;
-
 extern NSString * const PPDriverDidChange;
+
+extern NSString * const PPDoubleDash;
 
 extern NSString * const PPRememberMusicList;
 extern NSString * const PPLoadMusicAtListLoad;

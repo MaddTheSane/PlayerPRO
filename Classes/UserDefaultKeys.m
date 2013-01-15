@@ -16,8 +16,9 @@ NSString * const PPClassicalEditorPreferencesDidChange = @"Classical Preferences
 NSString * const PPMiscPreferencesDidChange = @"Misc. Preferences Changed";
 NSString * const PPColorsDidChange = @"PP Color Preferences changed";
 NSString * const PPMusicDidChange = @"PP Music changed";
-
 NSString * const PPDriverDidChange = @"PlayerPRO Driver did change";
+
+NSString * const PPDoubleDash = @"--";
 
 NSString * const PPRememberMusicList = @"Remember Music List";
 NSString * const PPLoadMusicAtListLoad = @"Load music when loading list";

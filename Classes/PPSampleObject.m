@@ -30,38 +30,35 @@
 
 - (id)init
 {
-	if (self = [super init]) {
-		name = @"";
-		data = [[NSData alloc] init];
-		loopType = 0;
-		c2spd = NOFINETUNE;
-		amp = 8;
-		vol = 64;
-		stereo = NO;
-		loopBeg = 0;
-		loopSize = 0;
-		relNote = 0;
-	}
-	return self;
+	return [self initWithsData:NULL];
 }
 
 - (id)initWithsData:(sData *)theData
 {
 	if (self = [super init]) {
 		if (!theData) {
-			AUTORELEASEOBJNORETURN(self);
-			return nil;
+			name = @"";
+			data = [[NSData alloc] init];
+			loopType = 0;
+			c2spd = NOFINETUNE;
+			amp = 8;
+			vol = 64;
+			stereo = NO;
+			loopBeg = 0;
+			loopSize = 0;
+			relNote = 0;
+		} else {
+			data = [[NSData alloc] initWithBytes:theData->data length:theData->size];
+			loopBeg = theData->loopBeg;
+			loopSize = theData->loopSize;
+			vol = theData->vol;
+			c2spd = theData->c2spd;
+			loopType = theData->loopType;
+			amp = theData->amp;
+			relNote = theData->relNote;
+			name = [[NSString alloc] initWithCString:theData->name encoding:NSMacOSRomanStringEncoding];
+			stereo = theData->stereo;
 		}
-		data = [[NSData alloc] initWithBytes:theData->data length:theData->size];
-		loopBeg = theData->loopBeg;
-		loopSize = theData->loopSize;
-		vol = theData->vol;
-		c2spd = theData->c2spd;
-		loopType = theData->loopType;
-		amp = theData->amp;
-		relNote = theData->relNote;
-		name = [[NSString alloc] initWithCString:theData->name encoding:NSMacOSRomanStringEncoding];
-		stereo = theData->stereo;
 	}
 	return self;
 }

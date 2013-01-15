@@ -16,8 +16,17 @@
 	PPInstrumentImporter *importer;
 	MADMusic **curMusic;
 	NSMutableArray *instruments;
-	IBOutlet NSImageView *waveFormImage;
-	IBOutlet NSOutlineView *instrumentView;
+	IBOutlet __weak NSTextField *instrumentSize;
+	IBOutlet __weak NSTextField *instrumentLoopStart;
+	IBOutlet __weak NSTextField *instrumentLoopSize;
+	IBOutlet __weak NSTextField *instrumentVolume;
+	IBOutlet __weak NSTextField *instrumentRate;
+	IBOutlet __weak NSTextField *instrumentNote;
+	IBOutlet __weak NSTextField *instrumentBits;
+	IBOutlet __weak NSTextField *instrumentMode;
+
+	IBOutlet __weak NSImageView *waveFormImage;
+	IBOutlet __weak NSOutlineView *instrumentView;
 }
 
 @property (readwrite, retain) PPInstrumentImporter *importer;

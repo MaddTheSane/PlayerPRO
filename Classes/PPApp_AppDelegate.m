@@ -1253,8 +1253,6 @@ enum PPMusicToolbarTypes {
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
-	static NSString * const doubleDash = @"--";
-
 	NSInteger selected = [tableView selectedRow];
 	do {
 		if (selected < 0)
@@ -1280,14 +1278,14 @@ enum PPMusicToolbarTypes {
 		return;
 	} while (0);
 	
-	[fileName setTitleWithMnemonic:doubleDash];
-	[internalName setTitleWithMnemonic:doubleDash];
-	[fileSize setTitleWithMnemonic:doubleDash];
-	[musicInstrument setTitleWithMnemonic:doubleDash];
-	[musicPatterns setTitleWithMnemonic:doubleDash];
-	[musicPlugType setTitleWithMnemonic:doubleDash];
-	[musicSignature setTitleWithMnemonic:doubleDash];
-	[fileLocation setTitleWithMnemonic:doubleDash];
+	[fileName setTitleWithMnemonic:PPDoubleDash];
+	[internalName setTitleWithMnemonic:PPDoubleDash];
+	[fileSize setTitleWithMnemonic:PPDoubleDash];
+	[musicInstrument setTitleWithMnemonic:PPDoubleDash];
+	[musicPatterns setTitleWithMnemonic:PPDoubleDash];
+	[musicPlugType setTitleWithMnemonic:PPDoubleDash];
+	[musicSignature setTitleWithMnemonic:PPDoubleDash];
+	[fileLocation setTitleWithMnemonic:PPDoubleDash];
 }
 
 - (void)musicListDidChange

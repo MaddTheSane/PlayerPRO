@@ -9,17 +9,17 @@
 #import <Cocoa/Cocoa.h>
 
 @interface SoundOutputController : NSViewController {
-    IBOutlet NSButton *oversampling;
-    IBOutlet NSButton *reverb;
-    IBOutlet NSButton *stereoDelay;
-    IBOutlet NSButton *surround;
-    IBOutlet NSMatrix *rate;
-    IBOutlet NSMatrix *outputBits;
-    IBOutlet NSMatrix *soundDriver;
-    IBOutlet NSPopUpButton *oversamplingNum;
-    IBOutlet NSPopUpButton *reverbNum;
-    IBOutlet NSPopUpButton *stereoDelayNum;
-    IBOutlet NSPopUpButton *reverbPercent;
+    IBOutlet __weak NSButton *oversampling;
+    IBOutlet __weak NSButton *reverb;
+    IBOutlet __weak NSButton *stereoDelay;
+    IBOutlet __weak NSButton *surround;
+    IBOutlet __weak NSMatrix *rate;
+    IBOutlet __weak NSMatrix *outputBits;
+    IBOutlet __weak NSMatrix *soundDriver;
+    IBOutlet __weak NSPopUpButton *oversamplingNum;
+    IBOutlet __weak NSPopUpButton *reverbNum;
+    IBOutlet __weak NSPopUpButton *stereoDelayNum;
+    IBOutlet __weak NSPopUpButton *reverbPercent;
 }
 - (IBAction)changeBits:(id)sender;
 - (IBAction)changeDriver:(id)sender;
