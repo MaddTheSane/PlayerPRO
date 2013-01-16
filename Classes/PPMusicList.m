@@ -122,7 +122,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@ - %@", [musicUrl description], self.fileName];
+	return [NSString stringWithFormat:@"%@:%@ - %@", [musicUrl description], [musicUrl path], self.fileName];
 }
 
 @end
@@ -150,14 +150,14 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 {
 	//[musicList sortUsingFunction:SortUsingFileName context:NULL];
 	[self willChangeValueForKey:kMusicListKVO];
-	@autoreleasepool {
-		[musicList sortUsingComparator:^(id rhs, id lhs) {
+	[musicList sortUsingComparator:^(id rhs, id lhs) {
+		@autoreleasepool {
 			NSString *rhsString = [rhs fileName];
 			NSString *lhsString = [lhs fileName];
 			NSComparisonResult result = [rhsString localizedStandardCompare:lhsString];
 			return result;
-		}];
-	}
+		}
+	}];
 	[self didChangeValueForKey:kMusicListKVO];
 }
 
@@ -258,7 +258,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 		CFStringRef together = CFStringCreateByCombiningStrings(kCFAllocatorDefault, CFaStrArray, CFSTR(":"));
 		CFRelease(CFaStrArray);
-		//NSString *together = [NSString stringWithFormat:@"%@:%@", BRIDGE(NSString*, CFaStr), BRIDGE(NSString*, CFaStr2)];
+		
 		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, together, kCFURLHFSPathStyle, false));
 		CFRelease(together);
 		NSURL *refURL = [fullPath fileReferenceURL];

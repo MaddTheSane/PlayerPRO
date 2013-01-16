@@ -60,6 +60,7 @@
 	PPPreferences			*preferences;
 	PPInstrumentImporter	*instrumentImporter;
 	PPDigitalPlugInHandler	*digitalHandler;
+	NSString *musicName;
 }
 
 @property (getter=isPaused, readwrite) BOOL paused;

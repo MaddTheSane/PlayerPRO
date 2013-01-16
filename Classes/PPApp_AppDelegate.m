@@ -86,7 +86,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 @interface PPApp_AppDelegate ()
 - (void)selectCurrentlyPlayingMusic;
-- (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(NSError *__autoreleasing*)theErr;
+- (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(out NSError *__autoreleasing*)theErr;
 - (void)musicListContentsDidMove;
 - (BOOL)musicListWillChange;
 - (void)musicListDidChange;
@@ -97,7 +97,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 @synthesize paused;
 @synthesize window;
 
-- (BOOL)loadMusicFromCurrentlyPlayingIndexWithError:(NSError *__autoreleasing*)theErr
+- (BOOL)loadMusicFromCurrentlyPlayingIndexWithError:(out NSError *__autoreleasing*)theErr
 {
 	currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
 	BOOL isGood = [self loadMusicURL:currentlyPlayingIndex.playbackURL error:theErr];
@@ -387,7 +387,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	NSData *retData = [NSData dataWithData:mutData];
 	RELEASEOBJ(mutData);
 	
-	MADStopMusic(MADDriver);
+	MADStopMusic(theRec);
 	MADCleanDriver(theRec);
 	MADDisposeDriver(theRec);
 	free(soundPtr);
@@ -406,7 +406,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			[savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"public.aiff-audio"]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
-			[savePanel setNameFieldLabel:[NSString stringWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding]];
+			[savePanel setNameFieldStringValue:musicName];
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as AIFF audio"];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
@@ -450,7 +450,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			[savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"public.mpeg-4-audio"]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
-			[savePanel setNameFieldLabel:[NSString stringWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding]];
+			[savePanel setNameFieldStringValue:musicName];
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as MPEG-4 Audio"];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
@@ -498,7 +498,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			[savePanel setAllowedFileTypes:BRIDGE(NSArray*, MADLib->ThePlug[tag].UTItypes)];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
-			[savePanel setNameFieldLabel:[NSString stringWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding]];
+			[savePanel setNameFieldStringValue:musicName];
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", BRIDGE(NSString*, MADLib->ThePlug[tag].MenuName)]];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
@@ -517,6 +517,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			}
 			RELEASEOBJ(savePanel);
 		}
+			break;
 	}
 }
 
@@ -553,7 +554,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	}
 }
 
-- (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(NSError *__autoreleasing*)theErr
+- (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(out NSError *__autoreleasing*)theErr
 {
 	if (Music != NULL) {
 		if (Music->hasChanged) {
@@ -615,7 +616,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		MADGetMusicStatus(MADDriver, &fT, &cT);
 		[songPos setMaxValue:fT];
 		[songPos setMinValue:0.0];
-		[songLabel setTitleWithMnemonic:[NSString stringWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding]];
+		[self setTitleForSongLabelBasedOnMusic];
 		[songTotalTime setIntegerValue:fT];
 	}
 	
@@ -878,6 +879,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	[digitalHandler release];
 	[previouslyPlayingIndex release];
 	[currentlyPlayingIndex release];
+	[musicName release];
 	
 	[super dealloc];
 }
@@ -961,6 +963,33 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	RELEASEOBJ(panel);
 }
 
+- (void)setTitleForSongLabelBasedOnMusic
+{
+#if __has_feature(objc_arc)
+	musicName = [[NSString alloc] initWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding];
+#else
+	NSString *tempNam = musicName;
+	musicName = [[NSString alloc] initWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding];
+	[tempNam release];
+#endif
+	
+	[songLabel setTitleWithMnemonic:musicName];
+}
+
+- (void)clearMusic
+{
+	MADStopMusic(MADDriver);
+	MADCleanDriver(MADDriver);
+	MADDisposeMusic(&Music, MADDriver);
+	self.paused = YES;
+	currentlyPlayingIndex.index = -1;
+	currentlyPlayingIndex.playbackURL = nil;
+	[currentlyPlayingIndex movePlayingIndexToOtherIndex:previouslyPlayingIndex];
+	Music = CreateFreeMADK();
+	[self setTitleForSongLabelBasedOnMusic];
+	MADAttachDriverToMusic(MADDriver, Music, NULL);
+}
+
 - (IBAction)removeSelectedMusic:(id)sender
 {
 #if 0
@@ -988,19 +1017,15 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 					[self saveMusic:nil];
 				case NSAlertAlternateReturn:
 				default:
-					MADStopMusic(MADDriver);
-					MADCleanDriver(MADDriver);
-					MADDisposeMusic(&Music, MADDriver);
-					self.paused = YES;
-					currentlyPlayingIndex.index = -1;
-					currentlyPlayingIndex.playbackURL = nil;
-					[currentlyPlayingIndex movePlayingIndexToOtherIndex:previouslyPlayingIndex];
+					[self clearMusic];
 					break;
 					
 				case NSAlertOtherReturn:
 					return;
 					break;
 			}
+		} else {
+			[self clearMusic];
 		}
 	}
 	[self willChangeValueForKey:kMusicListKVO];
@@ -1035,13 +1060,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			[self willChangeValueForKey:kMusicListKVO];
 			[musicList clearMusicList];
 			[self didChangeValueForKey:kMusicListKVO];
-			MADStopMusic(MADDriver);
-			MADCleanDriver(MADDriver);
-			MADDisposeMusic(&Music, MADDriver);
-			currentlyPlayingIndex.index = -1;
-			currentlyPlayingIndex.playbackURL = nil;
-			[currentlyPlayingIndex movePlayingIndexToOtherIndex:previouslyPlayingIndex];
-			self.paused = YES;
+			[self clearMusic];
 		}
 	} else {
 		NSBeep();
