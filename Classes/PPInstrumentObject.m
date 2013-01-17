@@ -12,40 +12,235 @@
 
 @implementation PPInstrumentObject
 
-@synthesize samples;
+@synthesize number;
+@synthesize name;
+
+- (short)firstSample
+{
+	return theInstrument.firstSample;
+}
+
+- (short)MIDI
+{
+	return theInstrument.MIDI;
+}
+
+- (void)setMIDI:(short)MIDI
+{
+	theInstrument.MIDI = MIDI;
+}
+
+- (BOOL)isSoundOut
+{
+	switch (theInstrument.MIDIType) {
+		case 0:
+		case 2:
+			return YES;
+			break;
+			
+		default:
+			return NO;
+			break;
+	}
+}
+
+- (void)setSoundOut:(BOOL)soundOut
+{
+	if (soundOut) {
+		if ([self isMIDIOut]) {
+			theInstrument.MIDIType = 2;
+		} else {
+			theInstrument.MIDIType = 0;
+		}
+	} else {
+		if ([self isMIDIOut]) {
+			theInstrument.MIDIType = 1;
+		} else {
+			theInstrument.MIDIType = 3;
+		}
+	}
+}
+
+- (BOOL)isMIDIOut
+{
+	switch (theInstrument.MIDIType) {
+		case 1:
+		case 2:
+			return YES;
+			break;
+			
+		default:
+			return NO;
+			break;
+	}
+}
+
+- (void)setMIDIOut:(BOOL)MIDIOut
+{
+	if (MIDIOut) {
+		if ([self isSoundOut]) {
+			theInstrument.MIDIType = 2;
+		} else {
+			theInstrument.MIDIType = 1;
+		}
+	} else {
+		if ([self isSoundOut]) {
+			theInstrument.MIDIType = 0;
+		} else {
+			theInstrument.MIDIType = 3;
+		}
+	}
+}
+
+- (Byte)volumeSize
+{
+	return theInstrument.volSize;
+}
+
+- (void)setVolumeSize:(Byte)volumeSize
+{
+	theInstrument.volSize = volumeSize;
+}
+
+- (Byte)panningSize
+{
+	return theInstrument.pannSize;
+}
+
+- (void)setPanningSize:(Byte)panningSize
+{
+	theInstrument.pannSize = panningSize;
+}
+
+- (Byte)pitchSize
+{
+	return theInstrument.pitchSize;
+}
+
+- (void)setPitchSize:(Byte)pitchSize
+{
+	theInstrument.pitchSize = pitchSize;
+}
+
+- (Byte)volumeSustain
+{
+	return theInstrument.volSus;
+}
+
+- (void)setVolumeSustain:(Byte)volumeSustain
+{
+	theInstrument.volSus = volumeSustain;
+}
+
+- (Byte)volumeBegin
+{
+	return theInstrument.volBeg;
+}
+
+- (void)setVolumeBegin:(Byte)volumeBegin
+{
+	theInstrument.volBeg = volumeBegin;
+}
+
+- (Byte)volumeEnd
+{
+	return theInstrument.volEnd;
+}
+
+- (void)setVolumeEnd:(Byte)volumeEnd
+{
+	theInstrument.volEnd = volumeEnd;
+}
+
+- (Byte)panningSustain
+{
+	return theInstrument.pannSus;
+}
+
+- (void)setPanningSustain:(Byte)panningSustain
+{
+	theInstrument.pannSus = panningSustain;
+}
+
+- (Byte)panningBegin
+{
+	return theInstrument.pannBeg;
+}
+
+- (void)setPanningBegin:(Byte)panningBegin
+{
+	theInstrument.pannBeg = panningBegin;
+}
+
+- (Byte)panningEnd
+{
+	return theInstrument.pannEnd;
+}
+
+- (void)setPanningEnd:(Byte)panningEnd
+{
+	theInstrument.pannEnd = panningEnd;
+}
+
+- (Byte)pitchSustain
+{
+	return theInstrument.pitchSus;
+}
+
+- (void)setPitchSustain:(Byte)pitchSustain
+{
+	theInstrument.pitchSus = pitchSustain;
+}
+
+- (Byte)pitchBegin
+{
+	return theInstrument.pitchBeg;
+}
+
+- (void)setPitchBegin:(Byte)pitchBegin
+{
+	theInstrument.pitchBeg = pitchBegin;
+}
+
+- (Byte)pitchEnd
+{
+	return theInstrument.pitchEnd;
+}
+
+- (void)setPitchEnd:(Byte)pitchEnd
+{
+	theInstrument.pitchEnd = pitchEnd;
+}
+
+- (Byte)vibratoDepth
+{
+	return theInstrument.vibDepth;
+}
+
+- (void)setVibratoDepth:(Byte)vibratoDepth
+{
+	theInstrument.vibDepth = vibratoDepth;
+}
+
+- (Byte)vibratoRate
+{
+	return theInstrument.vibRate;
+}
+
+- (void)setVibratoRate:(Byte)vibratoRate
+{
+	theInstrument.vibRate = vibratoRate;
+}
 
 - (NSArray*)samples
 {
 	return [NSArray arrayWithArray:samples];
 }
 
-@synthesize name;
-@synthesize type;
-
-@synthesize firstSample;
-
-@synthesize soundOut;
-@synthesize MIDIOut;
-
-//@synthesize sampleCount;
 - (short)sampleCount
 {
 	return [samples count];
 }
-
-@synthesize panningBegin;
-@synthesize panningEnd;
-@synthesize panningSize;
-@synthesize panningSustain;
-@synthesize pitchBegin;
-@synthesize pitchEnd;
-@synthesize pitchSize;
-@synthesize pitchSustain;
-@synthesize volumeBegin;
-@synthesize volumeEnd;
-@synthesize volumeSize;
-@synthesize volumeSustain;
-@synthesize number;
 
 - (id)initWithMusic:(MADMusic*)mus instrumentIndex:(short)insIdx;
 {
@@ -57,6 +252,7 @@
 		theMus = mus;
 		
 		InstrData *tempData = &mus->fid[insIdx];
+		memcpy(&theInstrument, tempData, sizeof(InstrData));
 		samples = [[NSMutableArray alloc] initWithCapacity:tempData->numSamples];
 		{
 			int sDataCount = tempData->numSamples + tempData->firstSample;
@@ -69,77 +265,24 @@
 			}
 		}
 		name = [[NSString alloc] initWithCString:tempData->name encoding:NSMacOSRomanStringEncoding];
-		type = tempData->type;
-		number = insIdx;/*tempData->no;*/
-		MIDI = tempData->MIDI;
-		switch (tempData->MIDIType) {
-			case 0:
-			default:
-				soundOut = YES;
-				MIDIOut = NO;
-				break;
-				
-			case 1:
-				soundOut = NO;
-				MIDIOut = YES;
-				break;
-				
-			case 2:
-				soundOut = MIDIOut = YES;
-				break;
-		}
+		theInstrument.no = number = insIdx;/*tempData->no;*/
 		//In case it's malformed, i.e. from CreateFreeMADK()
-		firstSample = MAXSAMPLE * insIdx; /*tempData->firstSample;*/
-		//sampleCount = tempData->numSamples;
-		memcpy(what, tempData->what, sizeof(what));
-		memcpy(volEnv, tempData->volEnv, sizeof(volEnv));
-		memcpy(pannEnv, tempData->pannEnv, sizeof(pannEnv));
-		memcpy(pitchEnv, tempData->pitchEnv, sizeof(pitchEnv));
-		volumeSize = tempData->volSize;
-		panningSize = tempData->pannSize;
-		pitchSize = tempData->pitchSize;
-		
-		volumeSustain = tempData->volSus;
-		volumeBegin = tempData->volBeg;
-		volumeEnd = tempData->volEnd;
-		
-		panningSustain = tempData->pannSus;
-		panningBegin = tempData->pannBeg;
-		panningEnd = tempData->pannEnd;
-		
-		pitchSustain = tempData->pitchSus;
-		pitchBegin = tempData->pitchBeg;
-		pitchEnd = tempData->pitchEnd;
-		
-		volumeType = tempData->volType;
-		
-		panningType = tempData->pannType;
-				
-		volumeFade = tempData->volFade;
-		
-		vibratoDepth = tempData->vibDepth;
-		vibratoRate = tempData->vibRate;
+		theInstrument.firstSample = MAXSAMPLE * insIdx; /*tempData->firstSample;*/
 	}
 	return self;
 }
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@: Sample index %d count %d samples: %@", name, firstSample, self.sampleCount, [samples description]];
+	return [NSString stringWithFormat:@"%@: Sample index %d count %d samples: %@", name, self.firstSample, self.sampleCount, [samples description]];
 }
-
-typedef enum {
-	PPInstruCanDoNothing = 0,
-	PPInstruCanDoSoundOut = 1,
-	PPInstruCanDoMidiOut = 2,
-	PPInstruCanDoBoth = PPInstruCanDoSoundOut | PPInstruCanDoMidiOut
-}PPInstrumentOut;
 
 - (void)writeSampleAtIndexBackToMusic:(short)idx
 {
 	if (idx >= MAXSAMPLE) {
 		return;
 	}
+	NSInteger firstSample = self.firstSample;
 	
 	if (theMus->sample[idx + firstSample]) {
 		if (theMus->sample[idx + firstSample]->data)
@@ -155,6 +298,7 @@ typedef enum {
 - (void)writeBackToMusic
 {
 	int i, ii;
+	NSInteger firstSample = self.firstSample;
 	int totalSamples = self.sampleCount + firstSample;
 	int totalPossibleSamples = firstSample + MAXSAMPLE - 1;
 	for (i = firstSample; i < totalPossibleSamples; i++) {
@@ -184,40 +328,10 @@ typedef enum {
 	[tmpCStr getBytes:tempstr length:cStrLen];
 	tmpCStr = nil;
 	
+	memcpy(newData, &theInstrument, sizeof(InstrData));
 	memcpy(newData->name, tempstr, sizeof(newData->name));
 		
 	newData->numSamples = self.sampleCount;
-	newData->MIDI = MIDI;
-	PPInstrumentOut insOut = PPInstruCanDoNothing;
-	if (soundOut) {
-		insOut = PPInstruCanDoSoundOut;
-	}
-	if (MIDIOut) {
-		insOut |= PPInstruCanDoMidiOut;
-	}
-	newData->MIDIType = insOut - 1;
-	
-	newData->pannBeg = panningBegin;
-	newData->pannEnd = panningEnd;
-	newData->pannSize = panningSize;
-	
-	newData->pitchBeg = pitchBegin;
-	newData->pitchSize = pitchSize;
-	newData->pitchEnd = pitchEnd;
-	
-	newData->volBeg = volumeBegin;
-	newData->volEnd = volumeEnd;
-	newData->volSize = volumeSize;
-	newData->volFade = volumeFade;
-	
-	memcpy(newData->what, what,sizeof(what));
-	newData->volType = volumeType;
-	
-	newData->pannType = panningType;
-	
-	memcpy(newData->pannEnv, pannEnv, sizeof(pannEnv));
-	memcpy(newData->pitchEnv, pitchEnv, sizeof(pitchEnv));
-	memcpy(newData->volEnv, volEnv, sizeof(volEnv));
 	
 	theMus->hasChanged = TRUE;
 }
@@ -228,6 +342,7 @@ typedef enum {
 		return;
 	}
 	[samples addObject:object];
+	theInstrument.numSamples++;
 	theMus->hasChanged = TRUE;
 }
 
@@ -247,62 +362,62 @@ typedef enum {
 
 - (void)setVolumeTypeOn
 {
-	volumeType = 0;
+	theInstrument.volType = 0;
 }
 
 - (void)setVolumeTypeSustain
 {
-	volumeType = 1;
+	theInstrument.volType = 1;
 }
 
 - (void)setVolumeTypeLoop
 {
-	volumeType = 2;
+	theInstrument.volType = 2;
 }
 
 - (BOOL)isVolumeTypeOn
 {
-	return volumeType == 0;
+	return theInstrument.volType == 0;
 }
 
 - (BOOL)isVolumeTypeSustain
 {
-	return volumeType == 1;
+	return theInstrument.volType == 1;
 }
 
 - (BOOL)isVolumeTypeLoop
 {
-	return volumeType == 2;
+	return theInstrument.volType == 2;
 }
 
 - (void)setPanningTypeOn
 {
-	panningType = 0;
+	theInstrument.pannType = 0;
 }
 
 - (void)setPanningTypeSustain
 {
-	panningType = 1;
+	theInstrument.pannType = 1;
 }
 
 - (void)setPanningTypeLoop
 {
-	panningType = 2;
+	theInstrument.pannType = 2;
 }
 
 - (BOOL)isPanningTypeOn
 {
-	return panningType == 0;
+	return theInstrument.pannType == 0;
 }
 
 - (BOOL)isPanningTypeSustain
 {
-	return panningType == 1;
+	return theInstrument.pannType == 1;
 }
 
 - (BOOL)isPanningTypeLoop
 {
-	return panningType == 2;
+	return theInstrument.pannType == 2;
 }
 
 - (NSArray *)children;
