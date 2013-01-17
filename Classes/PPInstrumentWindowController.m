@@ -198,8 +198,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 	SUPERDEALLOC;
 }
 
-static void DrawCGSampleInt(long	sampleSize,
-							long 	start,
+static void DrawCGSampleInt(long 	start,
 							long 	tSS,
 							long 	tSE,
 							long 	high,
@@ -213,12 +212,15 @@ static void DrawCGSampleInt(long	sampleSize,
 	CGContextSaveGState(ctxRef);
 	
 	long long		i;
+	long			sampleSize = 0;
 	CGFloat			temp;
-	Ptr				theSample = malloc ([curData dataSize]);
-	memcpy(theSample, [curData.data bytes], [curData dataSize]);
+	Ptr				theSample = NULL;
+	sampleSize = [curData dataSize];
+	theSample = malloc(sampleSize);
+	memcpy(theSample, [curData.data bytes], sampleSize);
 	short			*theShortSample = (short*) theSample;
 	long long		BS, BE, x;
-	CGFloat minY, maxY;
+	CGFloat			minY, maxY;
 	
 	if( curData.amplitude == 16)
 	{
@@ -232,9 +234,8 @@ static void DrawCGSampleInt(long	sampleSize,
 			BS += channel;
 		}
 		temp = (theShortSample[ BS]  + 0x8000);
-		temp *= high;	temp  /= (1<< 16);
+		temp *= high;	temp  /= (1 << 16);
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
-		//MoveTo( trueH + tSS, trueV + temp);
 		
 		for( i = tSS; i < tSE; i++)
 		{
@@ -252,9 +253,8 @@ static void DrawCGSampleInt(long	sampleSize,
 			
 			temp =(theShortSample[ BS]  + 0x8000);
 			minY = maxY = temp;
-			temp *= high;		temp  /= (1<< 16);
+			temp *= high;		temp  /= (1 << 16);
 			CGContextAddLineToPoint(ctxRef, trueH + i, temp + trueV);
-			//LineTo( trueH + i, temp + trueV);
 			
 			if( BS != BE)
 			{
@@ -273,9 +273,6 @@ static void DrawCGSampleInt(long	sampleSize,
 				
 				CGContextMoveToPoint(ctxRef, trueH + i, minY + trueV);
 				CGContextAddLineToPoint(ctxRef, trueH + i, maxY + trueV);
-				
-				//MoveTo( trueH + i, minY + trueV);
-				//LineTo( trueH + i, maxY + trueV);
 			}
 		}
 	}
@@ -292,8 +289,6 @@ static void DrawCGSampleInt(long	sampleSize,
 		temp *= high;	temp /= (1 << 8);
 		
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
-		
-		//MoveTo( trueH + tSS, trueV + temp);
 		
 		for( i = tSS; i < tSE; i++)
 		{
@@ -313,7 +308,6 @@ static void DrawCGSampleInt(long	sampleSize,
 			minY = maxY = temp;
 			temp *= high;		temp /= (1 << 8);
 			CGContextAddLineToPoint(ctxRef, trueH + i, temp + trueV);
-			//LineTo( trueH + i, temp + trueV);
 			
 			if( BS != BE)
 			{
@@ -331,9 +325,6 @@ static void DrawCGSampleInt(long	sampleSize,
 				
 				CGContextMoveToPoint(ctxRef, trueH + i, minY + trueV);
 				CGContextAddLineToPoint(ctxRef, trueH + i, maxY + trueV);
-				
-				//MoveTo( trueH + i, minY + trueV);
-				//LineTo( trueH + i, maxY + trueV);
 			}
 		}
 	}
@@ -351,40 +342,39 @@ static void DataProviderReleasseCallback(void *info, const void *data,
 
 - (NSImage *)waveformImageFromSample:(PPSampleObject *)theDat
 {
-	//TODO: Retina support
-	NSRect imageFrame = [waveFormImage frame];
-	CGImageRef returnType = NULL;
-	NSUInteger rowBytes = 4 * imageFrame.size.width;
-	void *imageBuffer = malloc(rowBytes * imageFrame.size.height);
+	NSSize imageSize = [waveFormImage convertSizeToBacking:[waveFormImage frame].size];
+	CGImageRef theCGimg = NULL;
+	NSUInteger rowBytes = 4 * imageSize.width;
+	void *imageBuffer = malloc(rowBytes * imageSize.height);
 	static CGColorSpaceRef defaultSpace = NULL;
 	if (defaultSpace == NULL) {
-		defaultSpace = CGColorSpaceCreateDeviceRGB();
+		defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
 	}
 	
-	CGContextRef bitmapContext = CGBitmapContextCreate(imageBuffer, imageFrame.size.width, imageFrame.size.height, 8, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast);
-	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageFrame.size.width, imageFrame.size.height));
+	CGContextRef bitmapContext = CGBitmapContextCreate(imageBuffer, imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast);
+	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
 	CGContextSetLineWidth(bitmapContext, 1);
 	if (theDat.stereo){
 		CGColorRef colorRef = CGColorCreateGenericRGB(0, 0, 1, .75);
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
 		CGColorRelease(colorRef);
-		DrawCGSampleInt(theDat.dataSize, 0, 0, imageFrame.size.width, imageFrame.size.height, imageFrame.size.width, 0, 0, 1, theDat, bitmapContext);
+		DrawCGSampleInt(0, 0, imageSize.width, imageSize.height, imageSize.width, 0, 0, 1, theDat, bitmapContext);
 	}
 	{
 		CGColorRef colorRef = CGColorCreateGenericRGB(1, 0, 0, theDat.stereo ? .75 : 1);
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
 		CGColorRelease(colorRef);
-		DrawCGSampleInt(theDat.dataSize, 0, 0, imageFrame.size.width, imageFrame.size.height, imageFrame.size.width, 0, 0, 0, theDat, bitmapContext);
+		DrawCGSampleInt(0, 0, imageSize.width, imageSize.height, imageSize.width, 0, 0, 0, theDat, bitmapContext);
 	}
 
 	CGContextRelease(bitmapContext);
-	CGDataProviderRef dataProvider = CGDataProviderCreateWithData(NULL, imageBuffer, rowBytes * imageFrame.size.height, DataProviderReleasseCallback);
+	CGDataProviderRef dataProvider = CGDataProviderCreateWithData(NULL, imageBuffer, rowBytes * imageSize.height, DataProviderReleasseCallback);
 	
-	returnType = CGImageCreate(imageFrame.size.width, imageFrame.size.height, 8, 32, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast, dataProvider, NULL, true, kCGRenderingIntentDefault);
+	theCGimg = CGImageCreate(imageSize.width, imageSize.height, 8, 32, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast, dataProvider, NULL, true, kCGRenderingIntentDefault);
 	CGDataProviderRelease(dataProvider);
 
-	NSImage *img = [[NSImage alloc] initWithCGImage:returnType size:[waveFormImage frame].size];
-	CGImageRelease(returnType);
+	NSImage *img = [[NSImage alloc] initWithCGImage:theCGimg size:[waveFormImage frame].size];
+	CGImageRelease(theCGimg);
 
 	return AUTORELEASEOBJ(img);
 }
@@ -413,10 +403,10 @@ static void DataProviderReleasseCallback(void *info, const void *data,
 		return;
 	}
 	[instrumentSize setTitleWithMnemonic:[NSString stringWithFormat:@"%.2f kiB", [object dataSize]/ 1024.0]];
-	[instrumentLoopStart setTitleWithMnemonic:[NSString stringWithFormat:@"%ld", (long)[object loopBegin]]];
-	[instrumentLoopSize setTitleWithMnemonic:[NSString stringWithFormat:@"%ld", (long)[object loopSize]]];
+	[instrumentLoopStart setTitleWithMnemonic:[NSString stringWithFormat:@"%.2f kiB", [object loopBegin] / 1024.0]];
+	[instrumentLoopSize setTitleWithMnemonic:[NSString stringWithFormat:@"%.2f kiB", [object loopSize] / 1024.0]];
 	[instrumentVolume setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [(PPSampleObject*)object volume]]];
-	[instrumentRate setTitleWithMnemonic:PPDoubleDash];
+	[instrumentRate setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object c2spd]]];
 	[instrumentNote setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object relativeNote]]];
 	[instrumentBits setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object amplitude]]];
 	[instrumentMode setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object loopType]]];
