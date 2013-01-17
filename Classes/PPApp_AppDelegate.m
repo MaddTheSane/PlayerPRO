@@ -34,7 +34,7 @@ static NSString * const MADNativeUTI = @"com.quadmation.playerpro.madk";
 }
 
 @property (readwrite) NSInteger index;
-@property (readwrite, retain)NSURL *playbackURL;
+@property (readwrite, retain) NSURL *playbackURL;
 
 - (void)movePlayingIndexToOtherIndex:(PPCurrentlyPlayingIndex *)othidx;
 
@@ -351,9 +351,200 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	}
 }
 
+static inline void ByteSwapMADSpec(MADSpec *toSwap)
+{
+	PPBE32( &toSwap->MAD);
+	PPBE16( &toSwap->speed);
+	PPBE16( &toSwap->tempo);
+	PPBE32( &toSwap->EPitch);
+	PPBE32( &toSwap->ESpeed);
+}
+
+static inline void ByteSwapPatHeader(PatHeader *toSwap)
+{
+	PPBE32( &toSwap->size);
+	PPBE32( &toSwap->compMode);
+	PPBE32( &toSwap->patBytes);
+	PPBE32( &toSwap->unused2);
+}
+
+static inline void ByteSwapInstrData(InstrData *toSwap)
+{
+	int x;
+	PPBE16( &toSwap->numSamples);
+	PPBE16( &toSwap->firstSample);
+	PPBE16( &toSwap->volFade);
+	
+	PPBE16( &toSwap->MIDI);
+	PPBE16( &toSwap->MIDIType);
+	
+	for( x = 0; x < 12; x++)
+	{
+		PPBE16( &toSwap->volEnv[ x].pos);
+		PPBE16( &toSwap->volEnv[ x].val);
+
+		PPBE16( &toSwap->pannEnv[ x].pos);
+		PPBE16( &toSwap->pannEnv[ x].val);
+		
+		PPBE16(&toSwap->pitchEnv[x].pos);
+		PPBE16(&toSwap->pitchEnv[x].val);
+	}
+}
+
+static inline void ByteSwapsData(sData *toSwap)
+{
+	PPBE32( &toSwap->size);
+	PPBE32( &toSwap->loopBeg);
+	PPBE32( &toSwap->loopSize);
+	PPBE16( &toSwap->c2spd);
+}
+
+
 - (void)saveMusicToURL:(NSURL *)tosave
 {
 	//[instrumentController writeInstrumentsBackToMusic];
+	int i, x;
+	uintptr_t inOutCount;
+	MADCleanCurrentMusic(Music, MADDriver);
+	NSMutableData *saveData = [[NSMutableData alloc] initWithCapacity:MADGetMusicSize(Music)];
+	for( i = 0, x = 0; i < MAXINSTRU; i++)
+	{
+		Music->fid[ i].no = i;
+		
+		if( Music->fid[ i].numSamples > 0 || Music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
+		{
+			x++;
+		}
+	}
+
+	Music->header->numInstru = x;
+	{
+		MADSpec aHeader;
+		aHeader = *Music->header;
+		ByteSwapMADSpec(&aHeader);
+		[saveData appendBytes:&aHeader length:sizeof(MADSpec)];
+	}
+	{
+		BOOL compressMAD = [[NSUserDefaults standardUserDefaults] boolForKey:PPMMadCompression];
+		if (compressMAD) {
+			for( i = 0; i < Music->header->numPat ; i++)
+			{
+				if (Music->partition[i]) {
+					PatData *tmpPat = CompressPartitionMAD1(Music, Music->partition[i]);
+					inOutCount = tmpPat->header.patBytes + sizeof(PatHeader);
+					tmpPat->header.compMode = 'MAD1';
+					ByteSwapPatHeader(&tmpPat->header);
+					[saveData appendBytes:tmpPat length:inOutCount];
+					free(tmpPat);
+				}
+			}
+		} else {
+			for (i = 0; i < Music->header->numPat; i++) {
+				if (Music->partition[i]) {
+					inOutCount = sizeof( PatHeader);
+					inOutCount += Music->header->numChn * Music->partition[ i]->header.size * sizeof( Cmd);
+					PatData *tmpPat = calloc(inOutCount, 1);
+					memcpy(tmpPat, Music->partition[i], inOutCount);
+					ByteSwapPatHeader(&tmpPat->header);
+					[saveData appendBytes:tmpPat length:inOutCount];
+					free(tmpPat);
+				}
+			}
+		}
+	}
+	
+	for( i = 0; i < MAXINSTRU; i++)
+	{
+		if( Music->fid[ i].numSamples > 0 || Music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
+		{
+			Music->fid[ i].no = i;
+			InstrData instData = Music->fid[i];
+			ByteSwapInstrData(&instData);
+			inOutCount = sizeof( InstrData);
+			//iErr = FSWrite( fRefNum, &inOutCount, &curMusic->fid[ i]);
+			[saveData appendBytes:&instData length:inOutCount];
+		}
+	}
+	
+	for( i = 0; i < MAXINSTRU ; i++)
+	{
+		for( x = 0; x < Music->fid[i].numSamples; x++)
+		{
+			sData	curData;
+			sData32	copyData;
+			curData = *Music->sample[ Music->fid[i].firstSample + x];
+			
+			inOutCount = sizeof( sData32);
+			ByteSwapsData(&curData);
+			memcpy(&copyData, &curData, inOutCount);
+			copyData.data = 0;
+			[saveData appendBytes:&copyData length:inOutCount];
+			
+			inOutCount = Music->sample[ Music->fid[i].firstSample + x]->size;
+			Ptr dataCopy = malloc(inOutCount);
+			memcpy(dataCopy, curData.data, inOutCount);
+			if( curData.amp == 16)
+			{
+				SInt32 	ll;
+				short	*shortPtr = (short*) dataCopy;
+				
+				for( ll = 0; ll < curData.size/2; ll++) PPBE16( &shortPtr[ ll]);
+			}
+
+			[saveData appendBytes:dataCopy length:inOutCount];
+			free(dataCopy);
+		}
+	}
+	
+	// EFFECTS *** *** *** *** *** *** *** *** *** *** *** ***
+	
+	int alpha = 0;
+	for( i = 0; i < 10 ; i++)	// Global Effects
+	{
+		if( Music->header->globalEffect[ i])
+		{
+			inOutCount = sizeof( FXSets);
+			FXSets aSet = Music->sets[alpha];
+			PPBE16(&aSet.id);
+			PPBE16(&aSet.noArg);
+			PPBE16(&aSet.track);
+			PPBE32(&aSet.FXID);
+			for (x = 0; x < 100; x++) {
+				PPBE32(&aSet.values[x]);
+			}
+
+			[saveData appendBytes:&aSet length:inOutCount];
+			alpha++;
+		}
+	}
+	
+	for( i = 0; i < Music->header->numChn ; i++)	// Channel Effects
+	{
+		for( x = 0; x < 4; x++)
+		{
+			if( Music->header->chanEffect[ i][ x])
+			{
+				inOutCount = sizeof( FXSets);
+				FXSets aSet = Music->sets[alpha];
+				PPBE16(&aSet.id);
+				PPBE16(&aSet.noArg);
+				PPBE16(&aSet.track);
+				PPBE32(&aSet.FXID);
+				for (x = 0; x < 100; x++) {
+					PPBE32(&aSet.values[x]);
+				}
+				
+				[saveData appendBytes:&aSet length:inOutCount];
+				alpha++;
+			}
+		}
+	}
+	
+	[saveData writeToURL:tosave atomically:YES];
+	RELEASEOBJ(saveData);
+	
+	Music->header->numInstru = MAXINSTRU;
+	
 	Music->hasChanged = FALSE;
 }
 
@@ -527,6 +718,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:MADNativeUTI]];
 	[savePanel setCanCreateDirectories:YES];
 	[savePanel setCanSelectHiddenExtension:YES];
+	[savePanel setNameFieldStringValue:musicName];
 	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 		NSURL *saveURL = [savePanel URL];
 		[self saveMusicToURL:saveURL];
@@ -542,7 +734,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	if (previouslyPlayingIndex.index == -1) {
 		[self saveMusicAs:sender];
 	} else {
-		NSURL *fileURL = [musicList objectInMusicListAtIndex:previouslyPlayingIndex.index];
+		NSURL *fileURL = [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] musicUrl];
 		NSString *filename = [fileURL path];
 		NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
 		NSString *utiFile = [sharedWorkspace typeOfFile:filename error:nil];
