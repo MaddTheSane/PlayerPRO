@@ -212,14 +212,13 @@ static void DrawCGSampleInt(long 	start,
 	CGContextSaveGState(ctxRef);
 	
 	long long		i;
-	long			sampleSize = 0;
+	long			sampleSize = [curData dataSize];
 	CGFloat			temp;
-	Ptr				theSample = NULL;
-	sampleSize = [curData dataSize];
-	theSample = malloc(sampleSize);
+	Ptr				theSample = malloc(sampleSize);
 	memcpy(theSample, [curData.data bytes], sampleSize);
 	short			*theShortSample = (short*) theSample;
 	long long		BS, BE, x;
+	BOOL isStereo = curData.stereo;
 	CGFloat			minY, maxY;
 	
 	if( curData.amplitude == 16)
@@ -228,7 +227,7 @@ static void DrawCGSampleInt(long 	start,
 		start /= 2;
 		
 		BS = start + (tSS * sampleSize) / larg;
-		if( curData.stereo)
+		if( isStereo)
 		{
 			BS /= 2;	BS *=2;
 			BS += channel;
@@ -242,7 +241,7 @@ static void DrawCGSampleInt(long 	start,
 			BS = start + (i * sampleSize) / larg;
 			BE = start + ((i+1) * sampleSize) / larg;
 			
-			if( curData.stereo)
+			if( isStereo)
 			{
 				BS /=2;		BS *=2;
 				BE /=2;		BE *=2;
@@ -265,7 +264,7 @@ static void DrawCGSampleInt(long 	start,
 					if( temp > maxY) maxY = temp;
 					if( temp < minY) minY = temp;
 					
-					if( curData.stereo) x++;
+					if( isStereo) x++;
 				}
 				
 				maxY *= high;		maxY /= (1 << 16);
@@ -279,7 +278,7 @@ static void DrawCGSampleInt(long 	start,
 	else
 	{
 		BS = start + (tSS * sampleSize) / larg;
-		if( curData.stereo)
+		if( isStereo)
 		{
 			BS /= 2;	BS *=2;
 			BS += channel;
@@ -295,7 +294,7 @@ static void DrawCGSampleInt(long 	start,
 			BS = start + (i * sampleSize) / larg;
 			BE = start + ((i+1) * sampleSize) / larg;
 			
-			if( curData.stereo)
+			if( isStereo)
 			{
 				BS /=2;		BS *=2;
 				BE /=2;		BE *=2;
@@ -318,7 +317,7 @@ static void DrawCGSampleInt(long 	start,
 					if( temp > maxY) maxY = temp;
 					if( temp < minY) minY = temp;
 					
-					if( curData.stereo) x++;
+					if( isStereo) x++;
 				}
 				maxY *= high;		maxY /= (1 << 8);
 				minY *= high;		minY /= (1 << 8);
@@ -334,7 +333,7 @@ static void DrawCGSampleInt(long 	start,
 }
 
 
-static void DataProviderReleasseCallback(void *info, const void *data,
+static void DataProviderReleaseCallback(void *info, const void *data,
 										 size_t size)
 {
 	free((void*)data);
@@ -343,6 +342,8 @@ static void DataProviderReleasseCallback(void *info, const void *data,
 - (NSImage *)waveformImageFromSample:(PPSampleObject *)theDat
 {
 	NSSize imageSize = [waveFormImage convertSizeToBacking:[waveFormImage frame].size];
+	imageSize.height *= 2;
+	imageSize.width *= 2;
 	CGImageRef theCGimg = NULL;
 	NSUInteger rowBytes = 4 * imageSize.width;
 	void *imageBuffer = malloc(rowBytes * imageSize.height);
@@ -368,7 +369,7 @@ static void DataProviderReleasseCallback(void *info, const void *data,
 	}
 
 	CGContextRelease(bitmapContext);
-	CGDataProviderRef dataProvider = CGDataProviderCreateWithData(NULL, imageBuffer, rowBytes * imageSize.height, DataProviderReleasseCallback);
+	CGDataProviderRef dataProvider = CGDataProviderCreateWithData(NULL, imageBuffer, rowBytes * imageSize.height, DataProviderReleaseCallback);
 	
 	theCGimg = CGImageCreate(imageSize.width, imageSize.height, 8, 32, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast, dataProvider, NULL, true, kCGRenderingIntentDefault);
 	CGDataProviderRelease(dataProvider);
@@ -377,6 +378,19 @@ static void DataProviderReleasseCallback(void *info, const void *data,
 	CGImageRelease(theCGimg);
 
 	return AUTORELEASEOBJ(img);
+}
+
++ (NSString*)getStringFromSize:(int)theSize
+{
+	//TODO: localize
+	if (theSize > 1000 * 1000) {
+		//This should never happen!
+		[NSString stringWithFormat:@"%.2f MiB", theSize / (1024.0 * 1024.0)];
+	} else if (theSize > 1000) {
+		return [NSString stringWithFormat:@"%.2f kiB", theSize / 1024.0];
+	} else {
+		return [NSString stringWithFormat:@"%d Bytes", theSize];
+	}
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification
@@ -402,9 +416,9 @@ static void DataProviderReleasseCallback(void *info, const void *data,
 		[waveFormImage setImage:nil];
 		return;
 	}
-	[instrumentSize setTitleWithMnemonic:[NSString stringWithFormat:@"%.2f kiB", [object dataSize]/ 1024.0]];
-	[instrumentLoopStart setTitleWithMnemonic:[NSString stringWithFormat:@"%.2f kiB", [object loopBegin] / 1024.0]];
-	[instrumentLoopSize setTitleWithMnemonic:[NSString stringWithFormat:@"%.2f kiB", [object loopSize] / 1024.0]];
+	[instrumentSize setTitleWithMnemonic:[PPInstrumentWindowController getStringFromSize:[object dataSize]]];
+	[instrumentLoopStart setTitleWithMnemonic:[PPInstrumentWindowController getStringFromSize:[object loopBegin]]];
+	[instrumentLoopSize setTitleWithMnemonic:[PPInstrumentWindowController getStringFromSize:[object loopSize]]];
 	[instrumentVolume setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [(PPSampleObject*)object volume]]];
 	[instrumentRate setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object c2spd]]];
 	[instrumentNote setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object relativeNote]]];

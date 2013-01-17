@@ -11,17 +11,88 @@
 
 @implementation PPSampleObject
 
-@synthesize stereo;
 @synthesize name;
-@synthesize loopType;
-@synthesize c2spd;
-@synthesize amplitude = amp;
-@synthesize volume = vol;
 @synthesize data;
-@synthesize loopBegin = loopBeg;
-@synthesize loopSize;
-@synthesize relativeNote = relNote;
-//@synthesize dataSize;
+
+- (void)setAmplitude:(unsigned char)amplitude
+{
+	theSample.amp = amplitude;
+}
+
+- (unsigned char)amplitude
+{
+	return theSample.amp;
+}
+
+- (void)setLoopSize:(SInt32)loopSize
+{
+	theSample.loopSize = loopSize;
+}
+
+- (SInt32)loopSize
+{
+	return theSample.loopSize;
+}
+
+- (void)setLoopBegin:(SInt32)loopBegin
+{
+	theSample.loopBeg = loopBegin;
+}
+
+- (SInt32)loopBegin
+{
+	return theSample.loopBeg;
+}
+
+- (void)setC2spd:(unsigned short)c2spd
+{
+	theSample.c2spd = c2spd;
+}
+
+- (unsigned short)c2spd
+{
+	return theSample.c2spd;
+}
+
+- (void)setLoopType:(unsigned char)loopType
+{
+	theSample.loopType = loopType;
+}
+
+- (unsigned char)loopType
+{
+	return theSample.loopType;
+}
+
+- (void)setRelativeNote:(char)relativeNote
+{
+	theSample.relNote = relativeNote;
+}
+
+- (char)relativeNote
+{
+	return theSample.relNote;
+}
+
+- (unsigned char)volume
+{
+	return theSample.vol;
+}
+
+- (void)setVolume:(unsigned char)avolume
+{
+	theSample.vol = avolume;
+}
+
+- (BOOL)isStereo
+{
+	return theSample.stereo ? YES : NO;
+}
+
+- (void)setStereo:(BOOL)astereo
+{
+	theSample.stereo = astereo ? TRUE : FALSE;
+}
 
 - (SInt32)dataSize
 {
@@ -39,25 +110,18 @@
 		if (!theData) {
 			name = @"";
 			data = [[NSData alloc] init];
-			loopType = 0;
-			c2spd = NOFINETUNE;
-			amp = 8;
-			vol = 64;
-			stereo = NO;
-			loopBeg = 0;
-			loopSize = 0;
-			relNote = 0;
+			theSample.loopType = 0;
+			theSample.c2spd = NOFINETUNE;
+			theSample.amp = 8;
+			theSample.vol = 64;
+			theSample.stereo = FALSE;
+			theSample.loopBeg = 0;
+			theSample.loopSize = 0;
+			theSample.relNote = 0;
 		} else {
+			memcpy(&theSample, theData, sizeof(sData));
 			data = [[NSData alloc] initWithBytes:theData->data length:theData->size];
-			loopBeg = theData->loopBeg;
-			loopSize = theData->loopSize;
-			vol = theData->vol;
-			c2spd = theData->c2spd;
-			loopType = theData->loopType;
-			amp = theData->amp;
-			relNote = theData->relNote;
 			name = [[NSString alloc] initWithCString:theData->name encoding:NSMacOSRomanStringEncoding];
-			stereo = theData->stereo;
 		}
 	}
 	return self;
@@ -69,14 +133,14 @@
 	if ((obj = [[PPSampleObject allocWithZone:zone] init])) {
 		obj.name = name;
 		obj.data = data;
-		obj.amplitude = amp;
-		obj.volume = vol;
-		obj.stereo = stereo;
-		obj.c2spd = c2spd;
-		obj.loopType = loopType;
-		obj.relativeNote = relNote;
-		obj.loopBegin = loopBeg;
-		obj.loopSize = loopSize;
+		obj.amplitude = theSample.amp;
+		obj.volume = theSample.vol;
+		obj.stereo = theSample.stereo ? YES : NO;
+		obj.c2spd = theSample.c2spd;
+		obj.loopType = theSample.loopType;
+		obj.relativeNote = theSample.relNote;
+		obj.loopBegin = theSample.loopBeg;
+		obj.loopSize = theSample.loopSize;
 	}
 	return obj;
 }
@@ -84,11 +148,7 @@
 - (sData *)createSData
 {
 	sData *toReturn = malloc(sizeof(sData));
-	toReturn->loopBeg = loopBeg;
-	toReturn->loopSize = loopSize;
-	toReturn->vol = vol;
-	toReturn->loopType = loopType;
-	toReturn->c2spd = c2spd;
+	memcpy(toReturn, &theSample, sizeof(sData));
 	char theName[32] = {0};
 	NSData *tmpCStr = [name dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 	NSInteger cStrLen = [tmpCStr length];
@@ -99,9 +159,6 @@
 	tmpCStr = nil;
 	
 	memcpy(toReturn->name, theName, sizeof(toReturn->name));
-	toReturn->amp = amp;
-	toReturn->stereo = stereo;
-	toReturn->relNote = relNote;
 	NSInteger dataSize2 = [data length];
 	toReturn->size = dataSize2;
 	toReturn->data = malloc(dataSize2);
@@ -112,7 +169,7 @@
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@: size: %ld stereo: %@ Loop type: %d size: %ld volume: %d amp: %d", name, (long)self.dataSize, stereo ? @"Yes": @"No", loopType, (long)loopSize, vol, amp];
+	return [NSString stringWithFormat:@"%@: size: %ld stereo: %@ Loop type: %d size: %ld volume: %d amp: %d", name, (long)self.dataSize, self.stereo ? @"Yes": @"No", self.loopType, (long)self.loopSize, self.volume, self.amplitude];
 }
 
 #if !__has_feature(objc_arc)

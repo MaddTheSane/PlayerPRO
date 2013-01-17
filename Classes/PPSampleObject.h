@@ -11,17 +11,9 @@
 
 @interface PPSampleObject : NSObject <NSCopying>
 {
-	SInt32				loopBeg;			// LoopStart
-	SInt32				loopSize;			// LoopLength
-	unsigned char		vol;				// Base volume
-	unsigned short		c2spd;				// c2spd
-	unsigned char		loopType;
-	unsigned char		amp;				// 8 or 16 bits
-	char				relNote;
-	NSString 			*name;				// Sample name
-	BOOL				stereo;				// Stereo
-	NSData				*data;				// Used only in memory, not in files
-
+	sData				theSample;
+	NSString 			*name;
+	NSData				*data;
 }
 
 - (id)init;
@@ -37,7 +29,7 @@
 @property (readwrite) unsigned char amplitude;
 @property (readwrite) char relativeNote;
 @property (readwrite, copy) NSString *name;
-@property (readwrite) BOOL stereo;
+@property (readwrite, getter = isStereo) BOOL stereo;
 @property (readwrite, copy) NSData *data;
 
 @end
