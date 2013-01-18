@@ -106,13 +106,18 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 	}
 }
 
-
 - (void)settingsFromDriverSettings:(MADDriverSettings*)sett
 {
+	BOOL oversamplingState = sett->oversampling > 1;
+	BOOL reverbState = sett->Reverb;
+	BOOL stereoDelayState = sett->MicroDelaySize > 0;
+
+	reverbActive = reverbState;
+	oversamplingActive = oversamplingState;
+	stereoDelayActive = stereoDelayState;
+	surroundActive = sett->surround;
+
 	if ([self view]) {
-		BOOL oversamplingState = sett->oversampling > 1;
-		BOOL reverbState = sett->Reverb;
-		BOOL stereoDelayState = sett->MicroDelaySize > 0;
 		[oversampling setState:oversamplingState];
 		[reverb setState:reverbState];
 		[stereoDelay setState:stereoDelayState];
@@ -122,11 +127,6 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 		[reverbNum setEnabled:reverbState];
 		[reverbPercent setEnabled:reverbState];
 		[stereoDelayNum setEnabled:stereoDelayState];
-		
-		reverbActive = reverbState;
-		oversamplingActive = oversamplingState;
-		stereoDelayActive = stereoDelayState;
-		surroundActive = sett->surround;
 		
 		[self setCurrentSoundDriver:sett->driverMode];
 		
@@ -239,7 +239,6 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 			}
 			[oversamplingNum selectItemAtIndex:toSet - 1];
 		}
-
 	}
 }
 

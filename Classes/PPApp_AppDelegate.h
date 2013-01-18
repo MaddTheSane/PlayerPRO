@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#import "PPSoundSettingsViewController.h"
 @class PPPreferences;
 @class PPMusicList;
 @class PPInstrumentImporter;
@@ -15,7 +16,7 @@
 @class PPDigitalPlugInHandler;
 @class PPCurrentlyPlayingIndex;
 
-@interface PPApp_AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate> {
+@interface PPApp_AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate, PPSoundSettingsViewControllerDelegate> {
 	IBOutlet NSPanel		*toolsPanel;
 	IBOutlet NSButton		*loopButton;
     IBOutlet NSButton		*playButton;
@@ -60,12 +61,20 @@
 	PPPreferences			*preferences;
 	PPInstrumentImporter	*instrumentImporter;
 	PPDigitalPlugInHandler	*digitalHandler;
-	NSString *musicName;
+	NSString				*musicName;
+	
+	MADDriverSettings		exportSettings;
+	IBOutlet __weak NSWindow *exportWindow;
+	IBOutlet NSBox			*exportSettingsBox;
+	PPSoundSettingsViewController *exportController;
+	
 }
 
 @property (getter=isPaused, readwrite) BOOL paused;
 
 @property (arcweak) NSWindow *window;
+@property (arcweak) NSWindow *exportWindow;
+
 - (IBAction)showMusicList:(id)sender;
 - (IBAction)sortMusicList:(id)sender;
 - (IBAction)playSelectedMusic:(id)sender;
@@ -91,7 +100,10 @@
 - (IBAction)openFile:(id)sender;
 - (IBAction)saveMusic:(id)sender;
 - (IBAction)saveMusicAs:(id)sender;
+
 - (IBAction)exportMusicAs:(id)sender;
+- (IBAction)okayExportSettings:(id)sender;
+- (IBAction)cancelExportSettings:(id)sender;
 
 - (IBAction)showTools:(id)sender;
 - (IBAction)fastForwardButtonPressed:(id)sender;

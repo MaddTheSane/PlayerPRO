@@ -96,6 +96,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 @synthesize paused;
 @synthesize window;
+@synthesize exportWindow;
 
 - (BOOL)loadMusicFromCurrentlyPlayingIndexWithError:(out NSError *__autoreleasing*)theErr
 {
@@ -460,9 +461,7 @@ static inline void ByteSwapsData(sData *toSwap)
 			Music->fid[ i].no = i;
 			InstrData instData = Music->fid[i];
 			ByteSwapInstrData(&instData);
-			inOutCount = sizeof( InstrData);
-			//iErr = FSWrite( fRefNum, &inOutCount, &curMusic->fid[ i]);
-			[saveData appendBytes:&instData length:inOutCount];
+			[saveData appendBytes:&instData length:sizeof( InstrData)];
 		}
 	}
 	
@@ -554,7 +553,14 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 {
 	MADDriverRec *theRec = NULL;
 	
-	MADCreateDriver( theSet, MADLib, &theRec);
+	OSErr err = MADCreateDriver( theSet, MADLib, &theRec);
+	if (err != noErr) {
+		NSError *NSerr = CreateErrorFromMADErrorType(err);
+		NSAlert *alert = [NSAlert alertWithError:NSerr];
+		[alert runModal];
+		RELEASEOBJ(NSerr);
+		return nil;
+	}
 	MADCleanDriver( theRec);
 
 	MADAttachDriverToMusic( theRec, Music, NULL);
@@ -566,6 +572,11 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd) * 2;
 	}else if (theSet->outPutBits == 16) {
 		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd) * 2 * 2;
+	} else if (theSet->outPutBits == 20 || theSet->outPutBits == 24 ) {
+		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd) * 2 * 3;
+	} else {
+		//This is just to make the Static analyzer happy
+		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd);
 	}
 	
 	NSMutableData *mutData = [[NSMutableData alloc] init];
@@ -586,9 +597,22 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	return retData;
 }
 
+- (NSInteger)showExportSettings
+{
+	MADGetBestDriver(&exportSettings);
+	exportSettings.driverMode = NoHardwareDriver;
+	exportSettings.repeatMusic = FALSE;
+	[exportController settingsFromDriverSettings:&exportSettings];
+	return [NSApp runModalForWindow:exportWindow];
+}
+
 - (IBAction)exportMusicAs:(id)sender
 {
 	NSInteger tag = [sender tag];
+	BOOL isPlayingMusic = MADIsPlayingMusic(MADDriver);
+	if (isPlayingMusic) {
+		MADStopMusic(MADDriver);
+	}
 	switch (tag) {
 		case -1:
 			//AIFF
@@ -601,34 +625,11 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as AIFF audio"];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-				//TODO: Pull up a window and ask the user to select the settings.
-				MADDriverSettings init;
-				MADGetBestDriver(&init);
-				NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-				
-				init.surround = [defaults boolForKey:PPSurroundToggle];
-				init.outPutRate = [defaults integerForKey:PPSoundOutRate];
-				init.outPutBits = [defaults integerForKey:PPSoundOutBits];
-				if ([defaults boolForKey:PPOversamplingToggle]) {
-					init.oversampling = [defaults integerForKey:PPOversamplingAmount];
-				} else {
-					init.oversampling = 1;
+				if ([self showExportSettings] == NSAlertDefaultReturn) {
+					NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
+					
+					RELEASEOBJ(saveData);
 				}
-				init.Reverb = [defaults boolForKey:PPReverbToggle];
-				init.ReverbSize = [defaults integerForKey:PPReverbAmount];
-				init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
-				if ([defaults boolForKey:PPStereoDelayToggle]) {
-					init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
-				} else {
-					init.MicroDelaySize = 0;
-				}
-				
-				init.driverMode = NoHardwareDriver;
-				init.repeatMusic = FALSE;
-				
-				NSData *saveData = RETAINOBJ([self getSoundData:&init]);
-				
-				RELEASEOBJ(saveData);
 			}
 			RELEASEOBJ(savePanel);
 		}
@@ -645,35 +646,11 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as MPEG-4 Audio"];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-				//TODO: Pull up a window and ask the user to select the settings.
-				MADDriverSettings init;
-				MADGetBestDriver(&init);
-				NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-				
-				init.surround = [defaults boolForKey:PPSurroundToggle];
-				init.outPutRate = [defaults integerForKey:PPSoundOutRate];
-				init.outPutBits = [defaults integerForKey:PPSoundOutBits];
-				if ([defaults boolForKey:PPOversamplingToggle]) {
-					init.oversampling = [defaults integerForKey:PPOversamplingAmount];
-				} else {
-					init.oversampling = 1;
+				if ([self showExportSettings] == NSAlertDefaultReturn) {					
+					NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
+					
+					RELEASEOBJ(saveData);
 				}
-				init.Reverb = [defaults boolForKey:PPReverbToggle];
-				init.ReverbSize = [defaults integerForKey:PPReverbAmount];
-				init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
-				if ([defaults boolForKey:PPStereoDelayToggle]) {
-					init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
-				} else {
-					init.MicroDelaySize = 0;
-				}
-				
-				init.driverMode = NoHardwareDriver;
-				init.repeatMusic = FALSE;
-				
-				NSData *saveData = RETAINOBJ([self getSoundData:&init]);
-				
-				RELEASEOBJ(saveData);
-				
 			}
 			RELEASEOBJ(savePanel);
 		}
@@ -710,6 +687,19 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		}
 			break;
 	}
+	if (isPlayingMusic) {
+		MADPlayMusic(MADDriver);
+	}
+}
+
+- (IBAction)okayExportSettings:(id)sender {
+	[NSApp stopModalWithCode:NSAlertDefaultReturn];
+	[exportWindow close];
+}
+
+- (IBAction)cancelExportSettings:(id)sender {
+	[NSApp stopModalWithCode:NSAlertAlternateReturn];
+	[exportWindow close];
 }
 
 - (IBAction)saveMusicAs:(id)sender
@@ -738,7 +728,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		NSString *filename = [fileURL path];
 		NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
 		NSString *utiFile = [sharedWorkspace typeOfFile:filename error:nil];
-		if ([sharedWorkspace type:utiFile conformsToType:MADNativeUTI]) {
+		if (/*[sharedWorkspace type:utiFile conformsToType:MADNativeUTI]*/ [utiFile isEqualToString:MADNativeUTI]) {
 			[self saveMusicToURL:fileURL];
 		} else {
 			[self saveMusicAs:sender];
@@ -1005,6 +995,10 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	currentlyPlayingIndex = [[PPCurrentlyPlayingIndex alloc] init];
 	[previouslyPlayingIndex movePlayingIndexToOtherIndex:currentlyPlayingIndex];
 	
+	exportController = [[PPSoundSettingsViewController alloc] init];
+	exportController.delegate = self;
+	[exportSettingsBox setContentView:[exportController view]];
+	
 	timeChecker = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0] interval:1/8.0 target:self selector:@selector(updateMusicStats:) userInfo:nil repeats:YES];
 	[[NSRunLoop mainRunLoop] addTimer:timeChecker forMode:NSDefaultRunLoopMode];
 }
@@ -1072,6 +1066,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	[previouslyPlayingIndex release];
 	[currentlyPlayingIndex release];
 	[musicName release];
+	[exportController release];
 	
 	[super dealloc];
 }
@@ -1578,6 +1573,62 @@ enum PPMusicToolbarTypes {
 		} else return NO;
 	}
 	return NO;
+}
+
+#pragma mark PPSoundSettingsViewControllerDelegate methods
+
+- (void)soundOutBitsDidChange:(short)bits
+{
+	exportSettings.outPutBits = bits;
+}
+
+- (void)soundOutRateDidChange:(unsigned int)rat
+{
+	exportSettings.outPutRate = rat;
+}
+
+- (void)soundOutReverbDidChangeActive:(BOOL)isAct
+{
+	exportSettings.Reverb = isAct;
+}
+
+- (void)soundOutOversamplingDidChangeActive:(BOOL)isAct
+{
+	if (!isAct) {
+		exportSettings.oversampling = 1;
+	}
+}
+
+- (void)soundOutStereoDelayDidChangeActive:(BOOL)isAct
+{
+	if (!isAct) {
+		exportSettings.MicroDelaySize = 0;
+	}
+}
+
+- (void)soundOutSurroundDidChangeActive:(BOOL)isAct
+{
+	exportSettings.surround = isAct;
+}
+
+- (void)soundOutReverbStrengthDidChange:(short)rev
+{
+	exportSettings.ReverbStrength = rev;
+}
+
+- (void)soundOutReverbSizeDidChange:(short)rev
+{
+	exportSettings.ReverbSize = rev;
+}
+
+- (void)soundOutOversamplingAmountDidChange:(short)ovs
+{
+	exportSettings.oversampling = ovs;
+}
+
+- (void)soundOutStereoDelayAmountDidChange:(short)std
+{
+	exportSettings.MicroDelaySize = std;
 }
 
 @end
