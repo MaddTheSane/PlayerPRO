@@ -21,8 +21,8 @@ typedef struct _tagCoupling {
 } TagCoupling;
 
 @interface PPPreferences : NSWindowController {
-	IBOutlet __weak NSBox *box;
-	IBOutlet __weak NSPopUpButton *popUp;
+	IBOutlet NSBox *box;
+	IBOutlet NSPopUpButton *popUp;
 	NSArray *viewControllers;
 }
 

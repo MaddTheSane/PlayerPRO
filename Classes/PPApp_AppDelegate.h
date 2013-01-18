@@ -16,39 +16,39 @@
 @class PPCurrentlyPlayingIndex;
 
 @interface PPApp_AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate> {
-	IBOutlet __weak NSPanel		*toolsPanel;
-	IBOutlet __weak NSButton		*loopButton;
-    IBOutlet __weak NSButton		*playButton;
-    IBOutlet __weak NSButton		*recordButton;
-    IBOutlet __weak NSTextField	*songLabel;
-    IBOutlet __weak NSButton		*stopButton;
-	IBOutlet __weak NSTextField	*songCurTime;
-	IBOutlet __weak NSTextField	*songTotalTime;
-	IBOutlet __weak NSSlider		*songPos;
-	IBOutlet __weak NSButton		*pauseButton;
+	IBOutlet NSPanel		*toolsPanel;
+	IBOutlet NSButton		*loopButton;
+    IBOutlet NSButton		*playButton;
+    IBOutlet NSButton		*recordButton;
+    IBOutlet NSTextField	*songLabel;
+    IBOutlet NSButton		*stopButton;
+	IBOutlet NSTextField	*songCurTime;
+	IBOutlet NSTextField	*songTotalTime;
+	IBOutlet NSSlider		*songPos;
+	IBOutlet NSButton		*pauseButton;
 	BOOL					paused;
 	
 	NSMutableArray			*plugInInfos;
-	IBOutlet __weak NSMenu			*aboutPlugInMenu;
+	IBOutlet NSMenu			*aboutPlugInMenu;
 	
-	IBOutlet __weak NSMenu			*musicExportMenu;
+	IBOutlet NSMenu			*musicExportMenu;
 	
-	IBOutlet __weak NSMenu			*instrumentExportMenu;
+	IBOutlet NSMenu			*instrumentExportMenu;
 	PPInstrumentWindowController *instrumentController;
 	
 	IBOutlet  __weak NSWindow *window;
 	
-	IBOutlet __weak NSTextField	*fileName;
-	IBOutlet __weak NSTextField	*internalName;
-	IBOutlet __weak NSTextField	*fileSize;
-	IBOutlet __weak NSTextField	*musicInstrument;
-	IBOutlet __weak NSTextField	*musicPatterns;
-	IBOutlet __weak NSTextField	*musicPlugType;
-	IBOutlet __weak NSTextField	*musicSignature;
-	IBOutlet __weak NSTextField	*fileLocation;
+	IBOutlet NSTextField	*fileName;
+	IBOutlet NSTextField	*internalName;
+	IBOutlet NSTextField	*fileSize;
+	IBOutlet NSTextField	*musicInstrument;
+	IBOutlet NSTextField	*musicPatterns;
+	IBOutlet NSTextField	*musicPlugType;
+	IBOutlet NSTextField	*musicSignature;
+	IBOutlet NSTextField	*fileLocation;
 	
-	IBOutlet __weak NSTableView	*tableView;
-	IBOutlet __weak NSArrayController *musicListController;
+	IBOutlet NSTableView	*tableView;
+	IBOutlet NSArrayController *musicListController;
 	NSTimer					*timeChecker;
 	MADDriverRec			*MADDriver;
 	MADMusic				*Music;
@@ -65,7 +65,7 @@
 
 @property (getter=isPaused, readwrite) BOOL paused;
 
-@property (weak) NSWindow *window;
+@property (arcweak) NSWindow *window;
 - (IBAction)showMusicList:(id)sender;
 - (IBAction)sortMusicList:(id)sender;
 - (IBAction)playSelectedMusic:(id)sender;

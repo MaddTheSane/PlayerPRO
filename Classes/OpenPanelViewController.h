@@ -13,7 +13,7 @@
 	NSOpenPanel *openPanel;
 	NSArray *utiObjects;
 	//IBOutlet NSMenu *fileTypeSelectionMenu;
-	IBOutlet __weak NSPopUpButton *popUp;
+	IBOutlet NSPopUpButton *popUp;
 }
 
 - (IBAction)selectUTI:(id)sender;
