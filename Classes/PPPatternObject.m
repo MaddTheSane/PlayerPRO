@@ -7,6 +7,7 @@
 //
 
 #import "PPPatternObject.h"
+#import "ARCBridge.h"
 
 @implementation PPPatternObject
 
@@ -31,7 +32,6 @@
 	
 	[super dealloc];
 }
-
 #endif
 
 @end

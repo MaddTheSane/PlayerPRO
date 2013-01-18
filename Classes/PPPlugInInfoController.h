@@ -12,9 +12,9 @@
 @interface PPPlugInInfoController : NSWindowController
 {
 	PPPlugInInfo *info;
-	IBOutlet __weak NSTextField *nameField;
-	IBOutlet __weak NSTextField *authorField;
-	IBOutlet __weak NSTextField *typeField;
+	IBOutlet NSTextField *nameField;
+	IBOutlet NSTextField *authorField;
+	IBOutlet NSTextField *typeField;
 }
 - (id)initWithPlugInInfo:(PPPlugInInfo *)plugInfo;
 - (IBAction)closeWindow:(id)sender;

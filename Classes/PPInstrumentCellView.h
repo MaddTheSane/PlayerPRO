@@ -19,8 +19,8 @@
 	BOOL isLoopingSample;
 }
 
-@property (readwrite, weak) NSTextField *numField;
-@property (readwrite, weak) NSButton *sampleButton;
+@property (readwrite, arcweak) NSTextField *numField;
+@property (readwrite, arcweak) NSButton *sampleButton;
 @property (readwrite/*, getter = isSample, setter = setIsSample: */, nonatomic) BOOL isSample;
 @property (readwrite, nonatomic) BOOL isLoopingSample;
 @end
