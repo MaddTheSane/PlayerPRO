@@ -40,25 +40,25 @@
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="NSBox" id="83549766">
+					<object class="NSBox" id="879014249">
 						<reference key="NSNextResponder" ref="493898735"/>
 						<int key="NSvFlags">12</int>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="NSView" id="776150674">
-								<reference key="NSNextResponder" ref="83549766"/>
+							<object class="NSView" id="495045831">
+								<reference key="NSNextResponder" ref="879014249"/>
 								<int key="NSvFlags">274</int>
 								<string key="NSFrameSize">{403, 356}</string>
-								<reference key="NSSuperview" ref="83549766"/>
+								<reference key="NSSuperview" ref="879014249"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:11</string>
 							</object>
 						</object>
-						<string key="NSFrame">{{17, 16}, {403, 356}}</string>
+						<string key="NSFrame">{{-3, -4}, {403, 356}}</string>
 						<reference key="NSSuperview" ref="493898735"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="776150674"/>
+						<reference key="NSNextKeyView" ref="495045831"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSOffsets">{0, 0}</string>
 						<object class="NSTextFieldCell" key="NSTitleCell">
@@ -84,17 +84,17 @@
 								<bytes key="NSWhite">MCAwLjgwMDAwMDAxMTkAA</bytes>
 							</object>
 						</object>
-						<reference key="NSContentView" ref="776150674"/>
+						<reference key="NSContentView" ref="495045831"/>
 						<int key="NSBorderType">0</int>
 						<int key="NSBoxType">0</int>
 						<int key="NSTitlePosition">0</int>
 						<bool key="NSTransparent">NO</bool>
 					</object>
 				</object>
-				<string key="NSFrameSize">{437, 390}</string>
+				<string key="NSFrameSize">{397, 350}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="83549766"/>
+				<reference key="NSNextKeyView" ref="879014249"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 		</object>
@@ -113,7 +113,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">subView</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="83549766"/>
+						<reference key="destination" ref="879014249"/>
 					</object>
 					<int key="connectionID">194</int>
 				</object>
@@ -152,14 +152,14 @@
 						<reference key="object" ref="493898735"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="83549766"/>
+							<reference ref="879014249"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Sound</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">193</int>
-						<reference key="object" ref="83549766"/>
+						<reference key="object" ref="879014249"/>
 						<reference key="parent" ref="493898735"/>
 					</object>
 				</object>

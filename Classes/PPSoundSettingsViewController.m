@@ -368,6 +368,42 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 	}
 }
 
+- (short)stereoDelayFromTag:(NSInteger)theTag
+{
+	int toSet = 0;
+	int i = 0;
+	size_t sizeofCoupling = sizeof(StereoDelayCoupling) / sizeof(TagCoupling);
+	for (i = 0; i < sizeofCoupling; i++) {
+		if (StereoDelayCoupling[i].tag == theTag) {
+			toSet = StereoDelayCoupling[i].amount;
+			break;
+		}
+	}
+	if (toSet == 0) {
+		toSet = 30;
+	}
+
+	return toSet;
+}
+
+- (short)oversamplingFromTag:(NSInteger)theTag
+{
+	int toSet = 0;
+	int i = 0;
+	size_t sizeofCoupling = sizeof(OversamplingCoupling) / sizeof(TagCoupling);
+	for (i = 0; i < sizeofCoupling; i++) {
+		if (OversamplingCoupling[i].tag == theTag) {
+			toSet = OversamplingCoupling[i].amount;
+			break;
+		}
+	}
+	if (toSet == 0) {
+		toSet = 1;
+	}
+
+	return toSet;
+}
+
 - (IBAction)changeChecked:(id)sender
 {
 	NSInteger reverbState = [reverb state];
@@ -386,9 +422,15 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 		}
 		if (!!stereoDelayState != stereoDelayActive) {
 			[delegate soundOutStereoDelayDidChangeActive:stereoDelayState];
+			if (stereoDelayState) {
+				[delegate soundOutStereoDelayAmountDidChange:[self stereoDelayFromTag:[[stereoDelayNum selectedItem] tag]]];
+			}
 		}
 		if (!!oversamplingState != oversamplingActive) {
 			[delegate soundOutOversamplingDidChangeActive:oversamplingState];
+			if (oversamplingState) {
+				[delegate soundOutOversamplingAmountDidChange:[self oversamplingFromTag:[[oversamplingNum selectedItem] tag]]];
+			}
 		}
 		if (surroundState != surroundActive) {
 			[delegate soundOutSurroundDidChangeActive:surroundState];
@@ -402,19 +444,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 
 - (IBAction)changeOversampling:(id)sender
 {
-	int toSet = 0;
-	NSInteger tag = [sender tag];
-	int i = 0;
-	size_t sizeofCoupling = sizeof(OversamplingCoupling) / sizeof(TagCoupling);
-	for (i = 0; i < sizeofCoupling; i++) {
-		if (OversamplingCoupling[i].tag == tag) {
-			toSet = OversamplingCoupling[i].amount;
-			break;
-		}
-	}
-	if (toSet == 0) {
-		toSet = 1;
-	}
+	int toSet = [self oversamplingFromTag:[sender tag]];
 	if (delegate) {
 		[delegate soundOutOversamplingAmountDidChange:toSet];
 	}
@@ -462,19 +492,7 @@ if (delegate) {
 
 - (IBAction)changeStereoDelay:(id)sender
 {
-	int toSet = 0;
-	NSInteger tag = [sender tag];
-	int i = 0;
-	size_t sizeofCoupling = sizeof(StereoDelayCoupling) / sizeof(TagCoupling);
-	for (i = 0; i < sizeofCoupling; i++) {
-		if (StereoDelayCoupling[i].tag == tag) {
-			toSet = StereoDelayCoupling[i].amount;
-			break;
-		}
-	}
-	if (toSet == 0) {
-		toSet = 30;
-	}
+	int toSet = [self stereoDelayFromTag:[sender tag]];
 	if (delegate) {
 		[delegate soundOutStereoDelayAmountDidChange:toSet];
 	}

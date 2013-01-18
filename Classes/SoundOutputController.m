@@ -21,6 +21,15 @@
 	return self;
 }
 
+#if !__has_feature(objc_arc)
+- (void)dealloc
+{
+	[soundSettingsView release];
+	
+	[super dealloc];
+}
+#endif
+
 -(void)awakeFromNib
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
