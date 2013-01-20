@@ -8,8 +8,6 @@
 
 #import "SoundOutputController.h"
 #import "UserDefaultKeys.h"
-#include <PlayerPROCore/RDriver.h>
-#import "PPPreferences.h"
 
 @implementation SoundOutputController
 

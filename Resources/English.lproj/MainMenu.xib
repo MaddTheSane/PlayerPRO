@@ -2084,14 +2084,12 @@
 									<int key="NSvFlags">274</int>
 									<string key="NSFrameSize">{403, 356}</string>
 									<reference key="NSSuperview" ref="192666464"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="835178107"/>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 								</object>
 							</array>
 							<string key="NSFrame">{{-3, 57}, {403, 356}}</string>
 							<reference key="NSSuperview" ref="168334980"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="374086695"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSOffsets">{0, 0}</string>
@@ -2122,7 +2120,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{311, 13}, {72, 32}}</string>
 							<reference key="NSSuperview" ref="168334980"/>
-							<reference key="NSWindow"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="491169990">
@@ -2146,7 +2143,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{229, 13}, {82, 32}}</string>
 							<reference key="NSSuperview" ref="168334980"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="537531543"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -2169,7 +2165,6 @@
 					</array>
 					<string key="NSFrameSize">{397, 413}</string>
 					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="192666464"/>
 					<string key="NSReuseIdentifierKey">_NS:20</string>
 				</object>
@@ -2827,6 +2822,14 @@
 						<reference key="destination" ref="835178107"/>
 					</object>
 					<int key="connectionID">1331</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">newMusic:</string>
+						<reference key="source" ref="1000799287"/>
+						<reference key="destination" ref="213421461"/>
+					</object>
+					<int key="connectionID">1332</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -4519,10 +4522,51 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1331</int>
+			<int key="maxID">1332</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">NSDocument</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="printDocument:">id</string>
+						<string key="revertDocumentToSaved:">id</string>
+						<string key="runPageLayout:">id</string>
+						<string key="saveDocument:">id</string>
+						<string key="saveDocumentAs:">id</string>
+						<string key="saveDocumentTo:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="printDocument:">
+							<string key="name">printDocument:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="revertDocumentToSaved:">
+							<string key="name">revertDocumentToSaved:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="runPageLayout:">
+							<string key="name">runPageLayout:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="saveDocument:">
+							<string key="name">saveDocument:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="saveDocumentAs:">
+							<string key="name">saveDocumentAs:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="saveDocumentTo:">
+							<string key="name">saveDocumentTo:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NSDocument.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">PPApp_AppDelegate</string>
 					<string key="superclassName">NSObject</string>
@@ -4535,6 +4579,7 @@
 						<string key="exportMusicAs:">id</string>
 						<string key="fastForwardButtonPressed:">id</string>
 						<string key="loopButtonPressed:">id</string>
+						<string key="newMusic:">id</string>
 						<string key="nextButtonPressed:">id</string>
 						<string key="okayExportSettings:">id</string>
 						<string key="openFile:">id</string>
@@ -4553,6 +4598,7 @@
 						<string key="showDigitalEditor:">id</string>
 						<string key="showInstrumentsList:">id</string>
 						<string key="showMusicList:">id</string>
+						<string key="showPlugInInfo:">id</string>
 						<string key="showPreferences:">id</string>
 						<string key="showTools:">id</string>
 						<string key="sliderChanged:">id</string>
@@ -4590,6 +4636,10 @@
 						</object>
 						<object class="IBActionInfo" key="loopButtonPressed:">
 							<string key="name">loopButtonPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="newMusic:">
+							<string key="name">newMusic:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="nextButtonPressed:">
@@ -4662,6 +4712,10 @@
 						</object>
 						<object class="IBActionInfo" key="showMusicList:">
 							<string key="name">showMusicList:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showPlugInInfo:">
+							<string key="name">showPlugInInfo:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showPreferences:">

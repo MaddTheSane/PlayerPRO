@@ -100,6 +100,7 @@
 - (IBAction)openFile:(id)sender;
 - (IBAction)saveMusic:(id)sender;
 - (IBAction)saveMusicAs:(id)sender;
+- (IBAction)newMusic:(id)sender;
 
 - (IBAction)exportMusicAs:(id)sender;
 - (IBAction)okayExportSettings:(id)sender;

@@ -106,12 +106,12 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	return isGood;
 }
 
-- (void)addMusicToMusicList:(NSURL* )theURL
+- (void)addMusicToMusicList:(NSURL* )theURL loadIfPreferencesAllow:(BOOL)load
 {
 	[self willChangeValueForKey:kMusicListKVO];
 	[musicList addMusicURL:theURL];
 	[self didChangeValueForKey:kMusicListKVO];
-	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
+	if (load && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
 		currentlyPlayingIndex.index = [musicList countOfMusicList] - 1;
 		currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
 		[self selectCurrentlyPlayingMusic];
@@ -121,6 +121,11 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			[errAlert runModal];
 		}
 	}
+}
+
+- (void)addMusicToMusicList:(NSURL* )theURL
+{
+	[self addMusicToMusicList:theURL loadIfPreferencesAllow:YES];
 }
 
 - (void)MADDriverWithPreferences
@@ -186,43 +191,43 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	PPMusicList *tempList = [[PPMusicList alloc] init];
 	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
-															 [NSNumber numberWithBool:YES], PPRememberMusicList,
-															 [NSNumber numberWithBool:NO], PPLoadMusicAtListLoad,
-															 [NSNumber numberWithInt:PPStopPlaying], PPAfterPlayingMusic,
-															 [NSNumber numberWithBool:YES], PPGotoStartupAfterPlaying,
-															 [NSNumber numberWithBool:YES], PPSaveModList,
-															 [NSNumber numberWithBool:NO], PPLoadMusicAtMusicLoad,
-															 [NSNumber numberWithBool:NO], PPLoopMusicWhenDone,
+															 @YES, PPRememberMusicList,
+															 @NO, PPLoadMusicAtListLoad,
+															 @(PPStopPlaying), PPAfterPlayingMusic,
+															 @YES, PPGotoStartupAfterPlaying,
+															 @YES, PPSaveModList,
+															 @NO, PPLoadMusicAtMusicLoad,
+															 @NO, PPLoopMusicWhenDone,
 															 
-															 [NSNumber numberWithInt:16], PPSoundOutBits,
-															 [NSNumber numberWithInt:44100], PPSoundOutRate,
-															 [NSNumber numberWithInt:CoreAudioDriver], PPSoundDriver,
-															 [NSNumber numberWithBool:NO], PPStereoDelayToggle,
-															 [NSNumber numberWithBool:NO], PPReverbToggle,
-															 [NSNumber numberWithBool:NO], PPSurroundToggle,
-															 [NSNumber numberWithBool:NO], PPOversamplingToggle,
-															 [NSNumber numberWithInt:30], PPStereoDelayAmount,
-															 [NSNumber numberWithInt:25], PPReverbAmount,
-															 [NSNumber numberWithInt:30], PPReverbStrength,
-															 [NSNumber numberWithInt:1], PPOversamplingAmount,
+															 @16, PPSoundOutBits,
+															 @44100, PPSoundOutRate,
+															 @(CoreAudioDriver), PPSoundDriver,
+															 @NO, PPStereoDelayToggle,
+															 @NO, PPReverbToggle,
+															 @NO, PPSurroundToggle,
+															 @NO, PPOversamplingToggle,
+															 @30, PPStereoDelayAmount,
+															 @25, PPReverbAmount,
+															 @30, PPReverbStrength,
+															 @1, PPOversamplingAmount,
 															 
-															 [NSNumber numberWithBool:YES], PPDEShowInstrument,
-															 [NSNumber numberWithBool:YES], PPDEShowNote,
-															 [NSNumber numberWithBool:YES], PPDEShowEffect,
-															 [NSNumber numberWithBool:YES], PPDEShowArgument,
-															 [NSNumber numberWithBool:YES], PPDEShowVolume,
-															 [NSNumber numberWithBool:YES], PPDEShowMarkers,
-															 [NSNumber numberWithInt:0], PPDEMarkerOffsetPref,
-															 [NSNumber numberWithInt:3], PPDEMarkerLoopPref,
+															 @YES, PPDEShowInstrument,
+															 @YES, PPDEShowNote,
+															 @YES, PPDEShowEffect,
+															 @YES, PPDEShowArgument,
+															 @YES, PPDEShowVolume,
+															 @YES, PPDEShowMarkers,
+															 @0, PPDEMarkerOffsetPref,
+															 @3, PPDEMarkerLoopPref,
 															 [[NSColor yellowColor] PPencodeColor], PPDEMarkerColorPref,
-															 [NSNumber numberWithBool:YES], PPDEMouseClickControlPref,
-															 [NSNumber numberWithBool:NO], PPDEMouseClickShiftPref,
-															 [NSNumber numberWithBool:NO], PPDEMouseClickCommandPref,
-															 [NSNumber numberWithBool:NO], PPDEMouseClickOptionPref,
-															 [NSNumber numberWithBool:YES], PPDELineHeightNormal,
-															 [NSNumber numberWithBool:YES], PPDEMusicTraceOn,
-															 [NSNumber numberWithBool:YES], PPDEPatternWrappingPartition,
-															 [NSNumber numberWithBool:YES], PPDEDragAsPcmd,
+															 @YES, PPDEMouseClickControlPref,
+															 @NO, PPDEMouseClickShiftPref,
+															 @NO, PPDEMouseClickCommandPref,
+															 @NO, PPDEMouseClickOptionPref,
+															 @YES, PPDELineHeightNormal,
+															 @YES, PPDEMusicTraceOn,
+															 @YES, PPDEPatternWrappingPartition,
+															 @YES, PPDEDragAsPcmd,
 															 
 															 [[NSColor redColor] PPencodeColor], PPCColor1,
 															 [[NSColor greenColor] PPencodeColor], PPCColor2,
@@ -233,16 +238,16 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 															 [[NSColor orangeColor] PPencodeColor], PPCColor7,
 															 [[NSColor purpleColor] PPencodeColor], PPCColor8,
 															 
-															 [NSNumber numberWithBool:YES], PPBEMarkersEnabled,
-															 [NSNumber numberWithInt:0], PPBEMarkersOffset,
-															 [NSNumber numberWithInt:3], PPBEMarkersLoop,
-															 [NSNumber numberWithBool:YES], PPBEOctaveMarkers,
-															 [NSNumber numberWithBool:NO], PPBENotesProjection,
+															 @YES, PPBEMarkersEnabled,
+															 @0, PPBEMarkersOffset,
+															 @3, PPBEMarkersLoop,
+															 @YES, PPBEOctaveMarkers,
+															 @NO, PPBENotesProjection,
 															 
-															 [NSNumber numberWithBool:YES], PPMAddExtension,
-															 [NSNumber numberWithBool:YES], PPMMadCompression,
-															 [NSNumber numberWithBool:NO], PPMNoLoadMixerFromFiles,
-															 [NSNumber numberWithBool:YES], PPMOscilloscopeDrawLines,
+															 @YES, PPMAddExtension,
+															 @YES, PPMMadCompression,
+															 @NO, PPMNoLoadMixerFromFiles,
+															 @YES, PPMOscilloscopeDrawLines,
 															 
 															 @NO, PPCEShowNotesLen,
 															 @YES, PPCEShowMarkers,
@@ -678,9 +683,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 					[alert runModal];
 					RELEASEOBJ(aerr);
 				} else {
-					[self willChangeValueForKey:kMusicListKVO];
-					[musicList addMusicURL:fileURL];
-					[self didChangeValueForKey:kMusicListKVO];
+					[self addMusicToMusicList:fileURL loadIfPreferencesAllow:NO];
 				}
 			}
 			RELEASEOBJ(savePanel);
@@ -712,9 +715,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 		NSURL *saveURL = [savePanel URL];
 		[self saveMusicToURL:saveURL];
-		[self willChangeValueForKey:kMusicListKVO];
-		[musicList addMusicURL:saveURL];
-		[self didChangeValueForKey:kMusicListKVO];
+		[self addMusicToMusicList:saveURL loadIfPreferencesAllow:NO];
 	}
 	RELEASEOBJ(savePanel);
 }
@@ -1222,13 +1223,38 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 #endif
 }
 
+- (IBAction)newMusic:(id)sender
+{
+	if (Music->hasChanged) {
+		NSInteger selection = 0;
+		if (currentlyPlayingIndex.index == -1) {
+			selection = NSRunAlertPanel(@"Unsaved Changes", @"The new music file has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", @"Cancel");
+		} else {
+			selection = NSRunAlertPanel(@"Unsaved Changes", @"The music file \"%@\" has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", @"Cancel", [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
+		}
+		switch (selection) {
+			case NSAlertDefaultReturn:
+				[self saveMusic:nil];
+				
+			case NSAlertAlternateReturn:
+			default:
+				break;
+				
+			case NSAlertOtherReturn:
+				return;
+				break;
+		}
+	}
+	[self clearMusic];
+}
+
 - (IBAction)clearMusicList:(id)sender
 {
 	if ([musicList countOfMusicList]) {
 		NSInteger returnVal = NSRunAlertPanel(NSLocalizedString(@"Clear list", @"Clear Music List"), @"The music list contains %ld items. Do you really want to remove them?", NSLocalizedString(@"No", @"No"), NSLocalizedString(@"Yes", @"Yes"), nil, (long)[musicList countOfMusicList]);
 		
 		if (returnVal == NSAlertAlternateReturn) {
-			if (Music->hasChanged) {
+			if (Music->hasChanged && currentlyPlayingIndex.index != -1) {
 				NSInteger selection = NSRunAlertPanel(@"Unsaved Changes", @"The music file \"%@\" has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", @"Cancel", [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
 				switch (selection) {
 					case NSAlertDefaultReturn:
@@ -1247,7 +1273,9 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			[self willChangeValueForKey:kMusicListKVO];
 			[musicList clearMusicList];
 			[self didChangeValueForKey:kMusicListKVO];
-			[self clearMusic];
+			if (currentlyPlayingIndex.index != -1) {
+				[self clearMusic];
+			}
 		}
 	} else {
 		NSBeep();
