@@ -23,6 +23,8 @@
 #import "PPDigitalPlugInObject.h"
 #include <PlayerPROCore/RDriverInt.h>
 #import <QTKit/QTKit.h>
+#import <QTKit/QTExportSession.h>
+#import <QTKit/QTExportOptions.h>
 
 static NSString * const kMusicListKVO = @"musicList";
 static NSString * const MADNativeUTI = @"com.quadmation.playerpro.madk";
@@ -348,7 +350,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	if (Music) {
 		long fT, cT;
 		MADGetMusicStatus(MADDriver, &fT, &cT);
-		if (MADIsDonePlaying(MADDriver) && !self.paused) {
+		if (MADIsDonePlaying(MADDriver) && !self.paused && !MADDriver->currentlyExporting) {
 			[self songIsDonePlaying];
 			MADGetMusicStatus(MADDriver, &fT, &cT);
 		}
@@ -489,10 +491,12 @@ static inline void ByteSwapsData(sData *toSwap)
 			memcpy(dataCopy, curData.data, inOutCount);
 			if( curData.amp == 16)
 			{
-				SInt32 	ll;
-				short	*shortPtr = (short*) dataCopy;
+				__block short	*shortPtr = (short*) dataCopy;
 				
-				for( ll = 0; ll < curData.size/2; ll++) PPBE16( &shortPtr[ ll]);
+				dispatch_apply(Music->sample[ Music->fid[i].firstSample + x]->size / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
+					PPBE16(&shortPtr[y]);
+				});
+
 			}
 
 			[saveData appendBytes:dataCopy length:inOutCount];
@@ -508,15 +512,14 @@ static inline void ByteSwapsData(sData *toSwap)
 		if( Music->header->globalEffect[ i])
 		{
 			inOutCount = sizeof( FXSets);
-			FXSets aSet = Music->sets[alpha];
+			__block FXSets aSet = Music->sets[alpha];
 			PPBE16(&aSet.id);
 			PPBE16(&aSet.noArg);
 			PPBE16(&aSet.track);
 			PPBE32(&aSet.FXID);
-			for (x = 0; x < 100; x++) {
-				//TODO: dispatch this
-				PPBE32(&aSet.values[x]);
-			}
+			dispatch_apply(100, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t y) {
+				PPBE32(&aSet.values[y]);
+			});
 
 			[saveData appendBytes:&aSet length:inOutCount];
 			alpha++;
@@ -530,15 +533,14 @@ static inline void ByteSwapsData(sData *toSwap)
 			if( Music->header->chanEffect[ i][ x])
 			{
 				inOutCount = sizeof( FXSets);
-				FXSets aSet = Music->sets[alpha];
+				__block FXSets aSet = Music->sets[alpha];
 				PPBE16(&aSet.id);
 				PPBE16(&aSet.noArg);
 				PPBE16(&aSet.track);
 				PPBE32(&aSet.FXID);
-				for (x = 0; x < 100; x++) {
-					//TODO: dispatch this
-					PPBE32(&aSet.values[x]);
-				}
+				dispatch_apply(100, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t y) {
+					PPBE32(&aSet.values[y]);
+				});
 				
 				[saveData appendBytes:&aSet length:inOutCount];
 				alpha++;
@@ -556,16 +558,70 @@ static inline void ByteSwapsData(sData *toSwap)
 
 Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
 
+- (NSMutableData *)createAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat
+{
+	NSInteger dataLen = [dat length];
+	
+	ChunkHeader header;
+	
+	CommonChunk container;
+
+	SoundDataChunk dataChunk;
+	
+	header.ckID = FORMID;
+	PPBE32(&header.ckID);
+	header.ckSize = dataLen + sizeof(container) + sizeof(dataChunk);
+	PPBE32(&header.ckSize);
+	NSMutableData *returnData = [[NSMutableData alloc] initWithBytes:&header length:sizeof(header)];
+	
+	container.ckID = CommonID;
+	PPBE32(&container.ckID);
+	container.ckSize = sizeof(container);
+	PPBE32(&container.ckSize);
+	short chanNums = 0;
+	switch (sett->outPutMode) {
+		case DeluxeStereoOutPut:
+		case StereoOutPut:
+		default:
+			chanNums = 2;
+			break;
+			
+		case PolyPhonic:
+			chanNums = 4;
+			break;
+			
+		case MonoOutPut:
+			chanNums = 1;
+			break;
+	}
+
+	container.numChannels = chanNums;
+	PPBE16(&container.numChannels);
+	container.numSampleFrames;
+	container.sampleSize;
+
+	
+	dataChunk.ckID = SoundDataID;
+	PPBE32(&dataChunk.ckID);
+	dataChunk.blockSize;
+
+	[returnData appendData:dat];
+	return returnData;
+}
+
 - (NSData *)getSoundData:(MADDriverSettings*)theSet
 {
 	MADDriverRec *theRec = NULL;
 	
 	OSErr err = MADCreateDriver( theSet, MADLib, &theRec);
 	if (err != noErr) {
-		NSError *NSerr = CreateErrorFromMADErrorType(err);
-		NSAlert *alert = [NSAlert alertWithError:NSerr];
-		[alert runModal];
-		RELEASEOBJ(NSerr);
+		dispatch_async(dispatch_get_main_queue(), ^{
+			NSError *NSerr = CreateErrorFromMADErrorType(err);
+			NSAlert *alert = [NSAlert alertWithError:NSerr];
+			[alert runModal];
+			RELEASEOBJ(NSerr);
+		});
+		
 		return nil;
 	}
 	MADCleanDriver( theRec);
@@ -576,14 +632,28 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	Ptr soundPtr = NULL;
 	long full = 0;
 	if (theSet->outPutBits == 8) {
-		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd) * 2;
+		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd);
 	}else if (theSet->outPutBits == 16) {
-		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd) * 2 * 2;
+		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd) * 2;
 	} else if (theSet->outPutBits == 20 || theSet->outPutBits == 24 ) {
-		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd) * 2 * 3;
+		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd) * 3;
 	} else {
 		//This is just to make the Static analyzer happy
 		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd);
+	}
+	
+	switch (theSet->outPutMode) {
+		case DeluxeStereoOutPut:
+		case StereoOutPut:
+			full *= 2;
+			break;
+			
+		case PolyPhonic:
+			full *= 4;
+			break;
+			
+		default:
+			break;
 	}
 	
 	NSMutableData *mutData = [[NSMutableData alloc] init];
@@ -593,8 +663,12 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	{
 		[mutData appendBytes:soundPtr length:full];
 	}
-	NSData *retData = [NSData dataWithData:mutData];
+	NSMutableData *tmpData = [self createAIFFDataFromSettings:theSet data:mutData];
 	RELEASEOBJ(mutData);
+	mutData = nil;
+	NSData *retData = [NSData dataWithData:tmpData];
+	RELEASEOBJ(tmpData);
+	tmpData = nil;
 	
 	MADStopMusic(theRec);
 	MADCleanDriver(theRec);
@@ -616,10 +690,8 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 - (IBAction)exportMusicAs:(id)sender
 {
 	NSInteger tag = [sender tag];
-	BOOL isPlayingMusic = MADIsPlayingMusic(MADDriver);
-	if (isPlayingMusic) {
-		MADStopMusic(MADDriver);
-	}
+	MADDriver->currentlyExporting = TRUE;
+
 	switch (tag) {
 		case -1:
 			//AIFF
@@ -633,10 +705,18 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			[savePanel setTitle:@"Export as AIFF audio"];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
-					NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
-					
-					RELEASEOBJ(saveData);
+					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+						NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
+						MADDriver->currentlyExporting = FALSE;
+
+						[saveData writeToURL:[savePanel URL] atomically:YES];
+						RELEASEOBJ(saveData);
+					});
+				} else {
+					MADDriver->currentlyExporting = FALSE;
 				}
+			} else {
+				MADDriver->currentlyExporting = FALSE;
 			}
 			RELEASEOBJ(savePanel);
 		}
@@ -653,11 +733,43 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as MPEG-4 Audio"];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-				if ([self showExportSettings] == NSAlertDefaultReturn) {					
-					NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
-					
-					RELEASEOBJ(saveData);
+				if ([self showExportSettings] == NSAlertDefaultReturn) {
+					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+						NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
+						MADDriver->currentlyExporting = FALSE;
+						NSError *expErr = nil;
+						QTMovie *exportMov = [[QTMovie alloc] initWithData:saveData error:&expErr];
+						if (!exportMov) {
+							NSLog(@"Init Failed, error: %@", [expErr localizedDescription]);
+							return;
+						}
+						[exportMov setAttribute:musicName forKey:QTMovieDisplayNameAttribute];
+
+						//We may not need to do this...
+						//dispatch_async(dispatch_get_main_queue(), ^{
+						QTExportSession *session = [[QTExportSession alloc] initWithMovie:exportMov exportOptions:[QTExportOptions exportOptionsWithIdentifier:QTExportOptionsAppleM4A] outputURL:[savePanel URL] error:&expErr];
+						if (!session) {
+							NSLog(@"Export session creation failed, error: %@", [expErr localizedDescription]);
+							return;
+						}
+						[session run];
+						
+						if (![session waitUntilFinished:&expErr])
+						{
+							NSLog(@"export failed, error: %@", [expErr localizedDescription]);
+						}
+						RELEASEOBJ(session);
+						RELEASEOBJ(QTMovie);
+						
+						
+						RELEASEOBJ(saveData);
+						//});
+					});
+				} else {
+					MADDriver->currentlyExporting = FALSE;
 				}
+			} else {
+				MADDriver->currentlyExporting = FALSE;
 			}
 			RELEASEOBJ(savePanel);
 		}
@@ -690,10 +802,8 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			}
 			RELEASEOBJ(savePanel);
 		}
+			MADDriver->currentlyExporting = FALSE;
 			break;
-	}
-	if (isPlayingMusic) {
-		MADPlayMusic(MADDriver);
 	}
 }
 
