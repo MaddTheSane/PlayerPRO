@@ -410,7 +410,7 @@ static inline void ByteSwapsData(sData *toSwap)
 {
 	//[instrumentController writeInstrumentsBackToMusic];
 	int i, x;
-	uintptr_t inOutCount;
+	size_t inOutCount;
 	MADCleanCurrentMusic(Music, MADDriver);
 	NSMutableData *saveData = [[NSMutableData alloc] initWithCapacity:MADGetMusicSize(Music)];
 	for( i = 0, x = 0; i < MAXINSTRU; i++)
@@ -514,6 +514,7 @@ static inline void ByteSwapsData(sData *toSwap)
 			PPBE16(&aSet.track);
 			PPBE32(&aSet.FXID);
 			for (x = 0; x < 100; x++) {
+				//TODO: dispatch this
 				PPBE32(&aSet.values[x]);
 			}
 
@@ -535,6 +536,7 @@ static inline void ByteSwapsData(sData *toSwap)
 				PPBE16(&aSet.track);
 				PPBE32(&aSet.FXID);
 				for (x = 0; x < 100; x++) {
+					//TODO: dispatch this
 					PPBE32(&aSet.values[x]);
 				}
 				
@@ -707,25 +709,39 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 
 - (IBAction)saveMusicAs:(id)sender
 {
+	BOOL isPlayingMusic = MADIsPlayingMusic(MADDriver);
+	if (isPlayingMusic) {
+		MADStopMusic(MADDriver);
+	}
+	
 	NSSavePanel * savePanel = RETAINOBJ([NSSavePanel savePanel]);
 	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:MADNativeUTI]];
 	[savePanel setCanCreateDirectories:YES];
 	[savePanel setCanSelectHiddenExtension:YES];
 	[savePanel setNameFieldStringValue:musicName];
 	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-		NSURL *saveURL = [savePanel URL];
+		NSURL *saveURL = RETAINOBJ([savePanel URL]);
 		[self saveMusicToURL:saveURL];
 		[self addMusicToMusicList:saveURL loadIfPreferencesAllow:NO];
+		RELEASEOBJ(saveURL);
 	}
 	RELEASEOBJ(savePanel);
+	if (isPlayingMusic) {
+		MADPlayMusic(MADDriver);
+	}
 }
 
 - (IBAction)saveMusic:(id)sender
 {
+	BOOL isPlayingMusic = MADIsPlayingMusic(MADDriver);
+	if (isPlayingMusic) {
+		MADStopMusic(MADDriver);
+	}
+	
 	if (previouslyPlayingIndex.index == -1) {
 		[self saveMusicAs:sender];
 	} else {
-		NSURL *fileURL = [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] musicUrl];
+		NSURL *fileURL = previouslyPlayingIndex.playbackURL;
 		NSString *filename = [fileURL path];
 		NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
 		NSString *utiFile = [sharedWorkspace typeOfFile:filename error:nil];
@@ -734,6 +750,9 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		} else {
 			[self saveMusicAs:sender];
 		}
+	}
+	if (isPlayingMusic) {
+		MADPlayMusic(MADDriver);
 	}
 }
 

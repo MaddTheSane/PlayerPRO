@@ -399,6 +399,11 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 #pragma mark Key-valued Coding
 
+- (void)addMusicListObject:(PPMusicListObject*)obj
+{
+	[musicList addObject:obj];
+}
+
 - (NSUInteger)countOfMusicList
 {
 	return [musicList count];
