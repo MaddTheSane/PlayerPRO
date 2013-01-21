@@ -102,6 +102,10 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 - (id)initWithURL:(NSURL *)aURL
 {
 	if (self = [super init]) {
+		if (!aURL) {
+			AUTORELEASEOBJNORETURN(self);
+			return nil;
+		}
 		[self willChangeValueForKey:@"fileName"];
 		[self willChangeValueForKey:@"musicUrl"];
 		musicUrl = RETAINOBJ(aURL);
@@ -366,9 +370,12 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 			NSURL *fullURL = [NSURL URLByResolvingBookmarkData:[BookmarkArray objectAtIndex:i] options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:&isStale error:nil];
 #ifdef DEBUG
 			if (isStale) {
-				NSLog(@"Bookmark %@ is stale", [fullURL path]);
+				NSLog(@"Bookmark pointing to %@ is stale", [fullURL path]);
 			}
 #endif
+			if (!fullURL) {
+				continue;
+			}
 			NSURL *refURL = [fullURL fileReferenceURL];
 			PPMusicListObject *obj = nil;
 			if (refURL) {
@@ -376,7 +383,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 			} else {
 				obj = [[PPMusicListObject alloc] initWithURL:fullURL];
 			}
-			[musicList insertObject:obj atIndex:i];
+			[musicList addObject:obj];
 			RELEASEOBJ(obj);
 		}
 	}

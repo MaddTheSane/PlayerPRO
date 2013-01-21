@@ -10,5 +10,5 @@
 
 extern NSString * const PPMADErrorDomain;
 
-NSError *CreateErrorFromMADErrorType(OSErr theErr);
+NSError *CreateErrorFromMADErrorType(OSErr theErr) NS_RETURNS_RETAINED;
 
