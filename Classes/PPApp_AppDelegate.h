@@ -62,6 +62,7 @@
 	PPInstrumentImporter	*instrumentImporter;
 	PPDigitalPlugInHandler	*digitalHandler;
 	NSString				*musicName;
+	NSString				*musicInfo;
 	
 	MADDriverSettings		exportSettings;
 	IBOutlet __weak NSWindow *exportWindow;

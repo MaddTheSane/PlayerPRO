@@ -32,6 +32,12 @@
 @property (readwrite, retain) PPInstrumentImporter *importer;
 @property (readwrite, nonatomic) MADMusic **curMusic;
 
+- (OSErr)testPcmdFileAtURL:(NSURL*)theURL;
+- (OSErr)importPcmdFromURL:(NSURL*)theURL;
+
+- (BOOL)importSampleFromURL:(NSURL *)sampURL;
+- (BOOL)importSampleFromURL:(NSURL *)sampURL error:(out NSError *__autoreleasing*)theErr;
+
 - (void)writeInstrumentsBackToMusic;
 - (void)writeInstrumentAtIndexBackToMusic:(short)idx;
 - (void)writeSampleAtIndex:(short)sampIdx withInstrumentAtIndexBackToMusic:(short)insIdx;

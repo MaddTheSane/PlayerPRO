@@ -12,6 +12,7 @@
 #import "PPSampleObject.h"
 #import "PPInstrumentCellView.h"
 #include <PlayerPROCore/PPPlug.h>
+#import "PPErrors.h"
 #import "ARCBridge.h"
 
 @interface PPInstrumentWindowController ()
@@ -157,6 +158,37 @@ static inline void SwapPcmd(Pcmd *toswap)
 	return self = [self initWithWindowNibName:@"PPInstrumentWindowController"];
 }
 
+
+- (BOOL)importSampleFromURL:(NSURL *)sampURL
+{
+	return [self importSampleFromURL:sampURL error:NULL];
+}
+
+- (BOOL)importSampleFromURL:(NSURL *)sampURL error:(out NSError *__autoreleasing*)theErr;
+{
+	OSType plugType = 0;
+	OSErr theOSErr = [importer identifyInstrumentFile:sampURL type:&plugType];
+	if (theOSErr != noErr)
+	{
+		if (theErr) {
+			*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(theOSErr));
+		}
+		return NO;
+	};
+	short theSamp = 0;
+	theOSErr = [importer importInstrumentOfType:plugType instrument:0 sample:&theSamp URL:sampURL];
+	if (theOSErr != noErr) {
+		if (theErr) {
+			*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(theOSErr));
+		}
+		return NO;
+	} else {
+		if (theErr) {
+			*theErr = nil;
+		}
+		return YES;
+	}
+}
 
 - (IBAction)exportInstrument:(id)sender
 {

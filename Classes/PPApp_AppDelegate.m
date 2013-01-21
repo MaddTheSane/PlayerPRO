@@ -599,11 +599,13 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	PPBE16(&container.numChannels);
 	container.numSampleFrames;
 	container.sampleSize;
-
+	[returnData appendBytes:&container length:sizeof(container)];
 	
 	dataChunk.ckID = SoundDataID;
 	PPBE32(&dataChunk.ckID);
 	dataChunk.blockSize;
+	
+	[returnData appendBytes:&dataChunk length:sizeof(dataChunk)];
 
 	[returnData appendData:dat];
 	return returnData;
@@ -819,10 +821,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 
 - (IBAction)saveMusicAs:(id)sender
 {
-	BOOL isPlayingMusic = MADIsPlayingMusic(MADDriver);
-	if (isPlayingMusic) {
-		MADStopMusic(MADDriver);
-	}
+	MADDriver->currentlyExporting = TRUE;
 	
 	NSSavePanel * savePanel = RETAINOBJ([NSSavePanel savePanel]);
 	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:MADNativeUTI]];
@@ -836,19 +835,15 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		RELEASEOBJ(saveURL);
 	}
 	RELEASEOBJ(savePanel);
-	if (isPlayingMusic) {
-		MADPlayMusic(MADDriver);
-	}
+	MADDriver->currentlyExporting = FALSE;
 }
 
 - (IBAction)saveMusic:(id)sender
 {
-	BOOL isPlayingMusic = MADIsPlayingMusic(MADDriver);
-	if (isPlayingMusic) {
-		MADStopMusic(MADDriver);
-	}
+	MADDriver->currentlyExporting = TRUE;
 	
 	if (previouslyPlayingIndex.index == -1) {
+		// saveMusicAs: will set exporting to false when it is done.
 		[self saveMusicAs:sender];
 	} else {
 		NSURL *fileURL = previouslyPlayingIndex.playbackURL;
@@ -857,12 +852,11 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		NSString *utiFile = [sharedWorkspace typeOfFile:filename error:nil];
 		if (/*[sharedWorkspace type:utiFile conformsToType:MADNativeUTI]*/ [utiFile isEqualToString:MADNativeUTI]) {
 			[self saveMusicToURL:fileURL];
+			MADDriver->currentlyExporting = FALSE;
 		} else {
+			// saveMusicAs: will set exporting to false when it is done.
 			[self saveMusicAs:sender];
 		}
-	}
-	if (isPlayingMusic) {
-		MADPlayMusic(MADDriver);
 	}
 }
 
@@ -872,9 +866,9 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		if (Music->hasChanged) {
 			NSInteger selection = 0;
 			if (previouslyPlayingIndex.index == -1) {
-				selection = NSRunAlertPanel(@"Unsaved Changes", @"The new music file has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", @"Cancel");
+				selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The new music file has unsaved changes. Do you want to save?", @"New unsaved file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"));
 			} else {
-				selection = NSRunAlertPanel(@"Unsaved Changes", @"The music file \"%@\" has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", @"Cancel", [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] fileName]);
+				selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The music file \"%@\" has unsaved changes. Do you want to save?", @"file unsaved"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"), [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] fileName]);
 			}
 			switch (selection) {
 				case NSAlertDefaultReturn:
@@ -1109,7 +1103,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	
 	for (i = 0; i < MADLib->TotalPlug; i++) {
 		if (MADLib->ThePlug[i].mode == MADPlugImportExport || MADLib->ThePlug[i].mode == MADPlugExport) {
-			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:BRIDGE(NSString*, MADLib->ThePlug[i].MenuName) action:@selector(exportMusicAs:) keyEquivalent:@""];
+			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@...",BRIDGE(NSString*, MADLib->ThePlug[i].MenuName)] action:@selector(exportMusicAs:) keyEquivalent:@""];
 			[mi setTag:i];
 			[mi setTarget:self];
 			[musicExportMenu addItem:mi];
@@ -1149,9 +1143,9 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		if (Music->hasChanged) {
 			NSInteger selection = 0;
 			if (currentlyPlayingIndex.index == -1) {
-				selection = NSRunAlertPanel(@"Unsaved Changes", @"The new music file has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", nil);
+				selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The new music file has unsaved changes. Do you want to save?", @"New unsaved file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), nil);
 			} else {
-				selection = NSRunAlertPanel(@"Unsaved Changes", @"The music file \"%@\" has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", nil, [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
+				selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The music file \"%@\" has unsaved changes. Do you want to save?", @"file unsaved"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), nil, [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
 			}
 			switch (selection) {
 				case NSAlertDefaultReturn:
@@ -1284,9 +1278,21 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 {
 #if __has_feature(objc_arc)
 	musicName = [[NSString alloc] initWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding];
+	musicInfo = [[NSString alloc] initWithCString:Music->header->infos encoding:NSMacOSRomanStringEncoding];
+	if (!musicInfo) {
+		//Just in case the copyright character is UTF-8
+		musicInfo = [[NSString alloc] initWithUTF8String:Music->header->infos];
+	}
 #else
 	NSString *tempNam = musicName;
 	musicName = [[NSString alloc] initWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding];
+	[tempNam release];
+	tempNam = musicInfo;
+	musicInfo = [[NSString alloc] initWithCString:Music->header->infos encoding:NSMacOSRomanStringEncoding];
+	if (!musicInfo) {
+		//Just in case the copyright character is UTF-8
+		musicInfo = [[NSString alloc] initWithUTF8String:Music->header->infos];
+	}
 	[tempNam release];
 #endif
 	
@@ -1357,9 +1363,9 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	if (Music->hasChanged) {
 		NSInteger selection = 0;
 		if (currentlyPlayingIndex.index == -1) {
-			selection = NSRunAlertPanel(@"Unsaved Changes", @"The new music file has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", @"Cancel");
+			selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The new music file has unsaved changes. Do you want to save?", @"New unsaved file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"));
 		} else {
-			selection = NSRunAlertPanel(@"Unsaved Changes", @"The music file \"%@\" has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", @"Cancel", [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
+			selection = NSRunAlertPanel(@"Unsaved Changes", @"The music file \"%@\" has unsaved changes. Do you want to save?", @"Save", @"Don't Save", @"Cancel", [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
 		}
 		switch (selection) {
 			case NSAlertDefaultReturn:
@@ -1380,11 +1386,11 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 - (IBAction)clearMusicList:(id)sender
 {
 	if ([musicList countOfMusicList]) {
-		NSInteger returnVal = NSRunAlertPanel(NSLocalizedString(@"Clear list", @"Clear Music List"), @"The music list contains %ld items. Do you really want to remove them?", NSLocalizedString(@"No", @"No"), NSLocalizedString(@"Yes", @"Yes"), nil, (long)[musicList countOfMusicList]);
+		NSInteger returnVal = NSRunAlertPanel(NSLocalizedString(@"Clear list", @"Clear Music List"), NSLocalizedString(@"The music list contains %ld items. Do you really want to remove them?", @"Clear Music List?"), NSLocalizedString(@"No", @"No"), NSLocalizedString(@"Yes", @"Yes"), nil, (long)[musicList countOfMusicList]);
 		
 		if (returnVal == NSAlertAlternateReturn) {
 			if (Music->hasChanged && currentlyPlayingIndex.index != -1) {
-				NSInteger selection = NSRunAlertPanel(@"Unsaved Changes", @"The music file \"%@\" has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", @"Cancel", [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
+				NSInteger selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The music file \"%@\" has unsaved changes. Do you want to save?", @"Save check with file name"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"), [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
 				switch (selection) {
 					case NSAlertDefaultReturn:
 						[self saveMusic:nil];
@@ -1455,6 +1461,60 @@ enum PPMusicToolbarTypes {
 	[self MADDriverWithPreferences];
 }
 
+- (BOOL)handleFile:(NSURL *)theURL ofType:(NSString *)theUTI
+{
+	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
+	BOOL hasAPPLPlug = NO;
+	if (MADPlugAvailable(MADLib, "APPL")) {
+		hasAPPLPlug = YES;
+	}
+
+	if ([sharedWorkspace type:theUTI conformsToType:@"net.sourceforge.playerpro.tracker"] || (hasAPPLPlug &&  [sharedWorkspace type:theUTI conformsToType:BRIDGE(NSString*, kUTTypeApplicationFile)])) {
+		[self addMusicToMusicList:theURL];
+		return YES;
+	}else if ([sharedWorkspace type:theUTI conformsToType:@"net.sourceforge.playerpro.musiclist"]) {
+		if ([self musicListWillChange]) {
+			[self willChangeValueForKey:kMusicListKVO];
+			[musicList loadMusicListAtURL:theURL];
+			[self didChangeValueForKey:kMusicListKVO];
+			[self musicListDidChange];
+			return YES;
+		}
+	} else if ([sharedWorkspace type:theUTI conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"]) {
+		if ([self musicListWillChange]) {
+			[self willChangeValueForKey:kMusicListKVO];
+			[musicList loadOldMusicListAtURL:theURL];
+			[self didChangeValueForKey:kMusicListKVO];
+			[self musicListDidChange];
+			return YES;
+		}
+	} else if([sharedWorkspace type:theUTI conformsToType:@"net.sourceforge.playerpro.instrumentfile"]) {
+		if ([instrumentController isWindowLoaded]) {
+			NSError *theErr = nil;
+			if (![instrumentController importSampleFromURL:theURL error:&theErr])
+			{
+				NSAlert *theAlert = [NSAlert alertWithError:theErr];
+				[theAlert runModal];
+				return NO;
+			}
+			return YES;
+		} else return NO;
+	} else if ([sharedWorkspace type:theUTI conformsToType:@"com.quadmation.playerpro.pcmd"]) {
+		if ([instrumentController isWindowLoaded]) {
+			OSErr theOSErr = [instrumentController importPcmdFromURL:theURL];
+			if (theOSErr != noErr) {
+				NSError *theErr = CreateErrorFromMADErrorType(theOSErr);
+				NSAlert *alert = [NSAlert alertWithError:theErr];
+				[alert runModal];
+				RELEASEOBJ(theErr);
+				return NO;
+			}
+			return YES;
+		}
+	}
+	return NO;
+}
+
 - (IBAction)openFile:(id)sender {
 	NSOpenPanel *panel = RETAINOBJ([NSOpenPanel openPanel]);
 	NSMutableArray *supportedUTIs = [NSMutableArray arrayWithObjects:MADNativeUTI, @"net.sourceforge.playerpro.musiclist", @"net.sourceforge.playerpro.stcfmusiclist", nil];
@@ -1467,46 +1527,42 @@ enum PPMusicToolbarTypes {
 		NSString *menuName = BRIDGE(NSString*, MADLib->ThePlug[i].MenuName);
 		[trackerDict setObject:tempArray forKey:menuName];
 	}
+		
+	NSMutableDictionary *samplesDict = nil;
+	if ([instrumentController isWindowLoaded]) {
+		NSInteger plugCount = [instrumentImporter plugInCount];
+		samplesDict = [[NSMutableDictionary alloc] initWithCapacity:plugCount];
+		for (i = 0; i < plugCount; i++) {
+			PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
+			NSArray *tmpArray = obj.UTITypes;
+			[supportedUTIs addObjectsFromArray:tmpArray];
+			[samplesDict setObject:tmpArray forKey:obj.menuName];
+		}
+	}
+
+	NSDictionary *otherDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:@"com.quadmation.playerpro.pcmd"], @"PCMD", nil];
+	for (NSString *key in otherDict) {
+		NSArray *tempArray = [otherDict objectForKey:key];
+		[supportedUTIs addObjectsFromArray:tempArray];
+	}
 	
 	[panel setAllowsMultipleSelection:NO];
 	[panel setAllowedFileTypes:supportedUTIs];
-	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:trackerDict playlistDictionary:playlistDict];
+	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:trackerDict playlistDictionary:playlistDict instrumentDictionary:samplesDict additionalDictionary:otherDict];
 	[panel setAccessoryView:[av view]];
 	if([panel runModal] == NSFileHandlingPanelOKButton)
 	{
-		//[self addMusicToMusicList:[panel URL]];
-		BOOL hasAPPLPlug = NO;
-		if (MADPlugAvailable(MADLib, "APPL")) {
-			hasAPPLPlug = YES;
-		}
 		NSURL *panelURL = [panel URL];
 		NSString *filename = [panelURL path];
 		NSError *err = nil;
-		NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
-		NSString *utiFile = [sharedWorkspace typeOfFile:filename error:&err];
+		NSString *utiFile = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
 		if (err) {
-			NSRunAlertPanel(@"Error opening file", [NSString stringWithFormat:@"Unable to open %@: %@", [filename lastPathComponent], [err localizedFailureReason]], nil, nil, nil);
+			NSRunAlertPanel(@"Error opening file", @"Unable to open %@: %@", nil, nil, nil, [filename lastPathComponent], [err localizedFailureReason]);
 			RELEASEOBJ(panel);
 			RELEASEOBJ(av);
 			return;
 		}
-		if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"] || (hasAPPLPlug &&  [sharedWorkspace type:utiFile conformsToType:BRIDGE(NSString*, kUTTypeApplicationFile)])) {
-			[self addMusicToMusicList:panelURL];
-		}else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"]) {
-			if ([self musicListWillChange]) {
-				[self willChangeValueForKey:kMusicListKVO];
-				[musicList loadMusicListAtURL:panelURL];
-				[self didChangeValueForKey:kMusicListKVO];
-				[self musicListDidChange];
-			}
-		} else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"]) {
-			if ([self musicListWillChange]) {
-				[self willChangeValueForKey:kMusicListKVO];
-				[musicList loadOldMusicListAtURL:panelURL];
-				[self didChangeValueForKey:kMusicListKVO];
-				[self musicListDidChange];
-			}
-		}
+		[self handleFile:panelURL ofType:utiFile];
 	}
 	RELEASEOBJ(panel);
 	RELEASEOBJ(av);
@@ -1693,43 +1749,12 @@ enum PPMusicToolbarTypes {
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
 {
 	NSError *err = nil;
-	BOOL hasAPPLPlug = NO;
-	if (MADPlugAvailable(MADLib, "APPL")) {
-		hasAPPLPlug = YES;
-	}
-	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
-	NSString *utiFile = [sharedWorkspace typeOfFile:filename error:&err];
+	NSString *utiFile = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
 	if (err) {
-		NSRunAlertPanel(@"Error opening file", [NSString stringWithFormat:@"Unable to open %@: %@", [filename lastPathComponent], [err localizedFailureReason]], nil, nil, nil);
+		NSRunAlertPanel(@"Error opening file", @"Unable to open %@: %@", nil, nil, nil, [filename lastPathComponent], [err localizedFailureReason]);
 		return NO;
 	}
-	
-	if([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.tracker"] || (hasAPPLPlug && [sharedWorkspace type:utiFile conformsToType:BRIDGE(NSString*, kUTTypeApplicationFile)]))
-	{
-		[self addMusicToMusicList:[NSURL fileURLWithPath:filename]];
-		return YES;
-	}
-	else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.musiclist"])
-	{
-		if ([self musicListWillChange]) {
-			[self willChangeValueForKey:kMusicListKVO];
-			[musicList loadMusicListAtURL:[NSURL fileURLWithPath:filename]];
-			[self didChangeValueForKey:kMusicListKVO];
-			[self musicListDidChange];
-			return YES;
-		} else return NO;
-	}
-	else if ([sharedWorkspace type:utiFile conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"])
-	{
-		if ([self musicListWillChange]) {
-			[self willChangeValueForKey:kMusicListKVO];
-			[musicList loadOldMusicListAtURL:[NSURL fileURLWithPath:filename]];
-			[self didChangeValueForKey:kMusicListKVO];
-			[self musicListDidChange];
-			return YES;
-		} else return NO;
-	}
-	return NO;
+	return [self handleFile:[NSURL fileURLWithPath:filename] ofType:utiFile];
 }
 
 #pragma mark PPSoundSettingsViewControllerDelegate methods

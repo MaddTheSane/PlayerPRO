@@ -16,6 +16,13 @@
 "The music list contains %ld items. Do you really want to remove them?" = "The music list contains %ld items. Do you really want to remove them?";
 "No" = "No";
 "Yes" = "Yes";
+"Cancel" = "Cancel";
+
+"Save" = "Save";
+"Don't Save" = "Don’t Save";
+"Unsaved Changes" = "Unsaved Changes";
+"The new music file has unsaved changes. Do you want to save?" = "The new music file has unsaved changes. Do you want to save?";
+"The music file \"%@\" has unsaved changes. Do you want to save?" = "The music file “%@” has unsaved changes. Do you want to save?";
 
 //Error strings
 "Not enough memory for operation" = "Not enough memory for operation";
