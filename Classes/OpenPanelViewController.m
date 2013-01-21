@@ -17,14 +17,16 @@ enum utiType {
 	utiAllType = -1,
 	utiTrackerType = -2,
 	utiPlaylistType = -3,
-	utiInstrumentType = -4
+	utiInstrumentType = -4,
+	utiOtherType = -5
 	};
 
 typedef struct _trackerType {
 	unsigned int tracker:1;
 	unsigned int playlist:1;
 	unsigned int instrument:1;
-	unsigned int reserved:13;
+	unsigned int other:1;
+	unsigned int reserved:12;
 } trackerType;
 
 static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
@@ -34,6 +36,8 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	}else if (rhl.tracker != lhl.tracker) {
 		return NO;
 	} else if(rhl.instrument != lhl.instrument) {
+		return NO;
+	} else if(rhl.other != lhl.other) {
 		return NO;
 		//Ignoring reserved for now.
 	} else {
@@ -84,6 +88,10 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 				utiType.instrument = 1;
 				break;
 				
+			case utiOtherType:
+				utiType.other = 1;
+				break;
+				
 			default:
 				AUTORELEASEOBJNORETURN(self);
 				return nil;
@@ -114,9 +122,11 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		des = @"Instrument";
 	} else if (utiType.tracker) {
 		des = @"Tracker";
+	} else if (utiType.other) {
+		des = @"Other";
 	}
 	
-	return [NSString stringWithFormat:@"%@ %@ - %@", [utis description], name, des];
+	return [NSString stringWithFormat:@"%@: %@ - %@", name, des, [utis description]];
 }
 
 @end
@@ -129,12 +139,22 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	return nil;
 }
 
-- (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd
+- (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd additionalDictionary:(NSDictionary *)adddict
 {
-	return [self initWithOpenPanel:panel trackerDictionary:td playlistDictionary:pd instrumentDictionary:nil];
+	return [self initWithOpenPanel:panel trackerDictionary:td playlistDictionary:pd instrumentDictionary:nil additionalDictionary:adddict];
 }
 
 - (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd instrumentDictionary:(NSDictionary*)insDict
+{
+	return [self initWithOpenPanel:panel trackerDictionary:td playlistDictionary:pd instrumentDictionary:insDict additionalDictionary:nil];
+}
+
+- (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd
+{
+	return [self initWithOpenPanel:panel trackerDictionary:td playlistDictionary:pd instrumentDictionary:nil additionalDictionary:nil];
+}
+
+- (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd instrumentDictionary:(NSDictionary*)insDict additionalDictionary:(NSDictionary *)adddict
 {
 	if (self = [super initWithNibName:@"OpenPanelViewController" bundle:nil]) {
 		openPanel = RETAINOBJ(panel);
@@ -164,6 +184,14 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 				RELEASEOBJ(obj);
 			}
 		}
+		if (adddict) {
+			for (NSString *key in adddict) {
+				NSArray *utis = [adddict objectForKey:key];
+				OpenPanelViewItem *obj = [[OpenPanelViewItem alloc] initWithType:utiOtherType utis:utis name:key];
+				[mutArray addObject:obj];
+				RELEASEOBJ(obj);
+			}
+		}
 
 		[mutArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
 			if ([obj1 utiType].tracker != [obj2 utiType].tracker) {
@@ -175,8 +203,12 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 					return NSOrderedAscending;
 				} else return NSOrderedDescending;
 			} else if ([obj1 utiType].instrument != [obj2 utiType].instrument) {
-				//Technically we shouldn't get here...
 				if ([obj1 utiType].instrument) {
+					return NSOrderedAscending;
+				} else return NSOrderedDescending;
+			} else if ([obj1 utiType].other != [obj2 utiType].other) {
+				//Technically we shouldn't get here...
+				if ([obj1 utiType].other) {
 					return NSOrderedAscending;
 				} else return NSOrderedDescending;
 			}
@@ -244,8 +276,18 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 			break;
 		}
 	}
-
 	
+	for (OpenPanelViewItem *item in utiObjects) {
+		if (item.utiType.other) {
+			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:@"All Other" action:@selector(selectUTI:) keyEquivalent:@""];
+			[mi setTag:utiOtherType];
+			[mi setTarget:self];
+			[fileTypeSelectionMenu addItem:mi];
+			RELEASEOBJ(mi);
+			break;
+		}
+	}
+
 	[fileTypeSelectionMenu addItem:[NSMenuItem separatorItem]];
 	
 	for (i = 0; i < [utiObjects count]; i++) {
@@ -314,6 +356,19 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 			}
 			[openPanel setAllowedFileTypes:instrumentUTIs];
 		}
+			break;
+			
+		case utiOtherType:
+		{
+			NSMutableArray *otherUTIs = [NSMutableArray array];
+			for (OpenPanelViewItem *obj in utiObjects) {
+				if (obj.utiType.other) {
+					[otherUTIs addObjectsFromArray:obj.utis];
+				}
+			}
+			[openPanel setAllowedFileTypes:otherUTIs];
+		}
+			break;
 			
 		default:
 		{
