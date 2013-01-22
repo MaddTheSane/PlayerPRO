@@ -55,8 +55,8 @@ void CloseMIDIHarware(void)
 	{
 		OSStatus MIDIErr = MIDIEndpointDispose(MADMIDIKeyboardEndRef);
 		MIDIErr = MIDIClientDispose(MADMIDICliRef);
-		MADMIDICliRef = NULL;
-		MADMIDIPortInRef = NULL;
+		MADMIDICliRef = 0L;
+		MADMIDIPortInRef = 0L;
 	}
 	
 	MIDIHardware = false;

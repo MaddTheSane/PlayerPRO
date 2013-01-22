@@ -94,7 +94,7 @@ static void XM_Cleanup(void)
 {
 	if( mh != NULL)
 	{
-		free( (Ptr) mh);
+		free( mh);
 		mh = NULL;
 	}
 }
@@ -1304,6 +1304,10 @@ OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRe
 				{
 					iWrite( sndSize, AlienFile, iFileRefI);
 					iClose( iFileRefI);
+				}
+				else
+				{
+					myErr = MADWritingErr;
 				}
 				free( AlienFile);	AlienFile = NULL;
 			}

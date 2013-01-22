@@ -515,10 +515,6 @@
 			<string>com.quadmation.playerpro.madi</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
-				<key>public.mime-type</key>
-				<array>
-					<string>audio/x-mad</string>
-				</array>
 				<key>com.apple.ostype</key>
 				<array>
 					<string>MADI</string>
@@ -527,6 +523,10 @@
 				<array>
 					<string>mad</string>
 					<string>madi</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>audio/x-mad</string>
 				</array>
 			</dict>
 		</dict>
@@ -975,6 +975,36 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>pat</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.audio</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Wave Audio</string>
+			<key>UTTypeIconFile</key>
+			<string>WAV</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.microsoft.waveform-audio</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>.WAV</string>
+					<string>WAVE</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>wav</string>
+					<string>wave</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>audio/wav</string>
+					<string>audio/wave</string>
 				</array>
 			</dict>
 		</dict>

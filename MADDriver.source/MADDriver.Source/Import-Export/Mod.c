@@ -1009,6 +1009,10 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					iWrite( sndSize, AlienFile, iFileRefI);
 					iClose( iFileRefI);
 				}
+				else
+				{
+					myErr = MADWritingErr;
+				}
 				free( AlienFile);	AlienFile = NULL;
 			}
 			else myErr = MADReadingErr;
