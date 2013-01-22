@@ -85,6 +85,42 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 #endif
 }
 
+- (BOOL)isEqual:(id)object
+{
+	if (self == object) {
+		return YES;
+	}
+	if ([object isKindOfClass:[PPMusicListObject class]]) {
+		id dat1, dat2;
+		BOOL bothareValid = YES;
+		BOOL theSame = NO;
+		if (![musicUrl getResourceValue:&dat1 forKey:NSURLFileResourceIdentifierKey error:NULL]) {
+			bothareValid = NO;
+		}
+		if (![[object musicUrl] getResourceValue:&dat2 forKey:NSURLFileResourceIdentifierKey error:NULL]) {
+			bothareValid = NO;
+		}
+		if (bothareValid) {
+			theSame = [dat1 isEqual:dat2];
+		}
+		return theSame;
+	} else if ([object isKindOfClass:[NSURL class]]) {
+		id dat1, dat2;
+		BOOL bothareValid = YES;
+		BOOL theSame = NO;
+		if (![musicUrl getResourceValue:&dat1 forKey:NSURLFileResourceIdentifierKey error:NULL]) {
+			bothareValid = NO;
+		}
+		if (![object getResourceValue:&dat2 forKey:NSURLFileResourceIdentifierKey error:NULL]) {
+			bothareValid = NO;
+		}
+		if (bothareValid) {
+			theSame = [dat1 isEqual:dat2];
+		}
+		return theSame;
+	} else return NO;
+}
+
 - (NSString *)fileName
 {
 	id val = nil;
