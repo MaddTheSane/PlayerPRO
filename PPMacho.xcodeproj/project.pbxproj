@@ -539,6 +539,7 @@
 		55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */; };
 		55EA019C16AF1D3900D6AEA0 /* Backwards.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE5DF10E0882800177B4C /* Backwards.plugin */; };
 		55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */; };
+		55EA01A216AF368F00D6AEA0 /* CrossFade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE66310E0885C00177B4C /* CrossFade.plugin */; };
 		55ED50AB10D40BFE00824C61 /* MOD.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55ED547410D5F9CD00824C61 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		55EE8C741003E83A00E75E63 /* General-rez.r in Rez */ = {isa = PBXBuildFile; fileRef = 55EE8C731003E83A00E75E63 /* General-rez.r */; };
@@ -1418,6 +1419,13 @@
 			remoteGlobalIDString = 557DE5D110E0882800177B4C;
 			remoteInfo = Backwards;
 		};
+		55EA01A016AF368200D6AEA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE65710E0885C00177B4C;
+			remoteInfo = CrossFade;
+		};
 		55ED50B910D40C0B00824C61 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1507,6 +1515,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				55EA01A216AF368F00D6AEA0 /* CrossFade.plugin in Copy PlugIns */,
 				55EA019C16AF1D3900D6AEA0 /* Backwards.plugin in Copy PlugIns */,
 				5574BCFC169649CB00CF3C37 /* Propagate.plugin in Copy PlugIns */,
 				5574BCF01696355A00CF3C37 /* DMF.ppimpexp in Copy PlugIns */,
@@ -4964,6 +4973,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55EA01A116AF368200D6AEA0 /* PBXTargetDependency */,
 				55EA019B16AF1D2100D6AEA0 /* PBXTargetDependency */,
 				5574BCFB169649BF00CF3C37 /* PBXTargetDependency */,
 				5574BCEF1696353700CF3C37 /* PBXTargetDependency */,
@@ -6813,6 +6823,11 @@
 			isa = PBXTargetDependency;
 			target = 557DE5D110E0882800177B4C /* Backwards */;
 			targetProxy = 55EA019A16AF1D2100D6AEA0 /* PBXContainerItemProxy */;
+		};
+		55EA01A116AF368200D6AEA0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE65710E0885C00177B4C /* CrossFade */;
+			targetProxy = 55EA01A016AF368200D6AEA0 /* PBXContainerItemProxy */;
 		};
 		55ED50BA10D40C0B00824C61 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
