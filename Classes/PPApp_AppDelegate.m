@@ -21,6 +21,8 @@
 #import "PPPlugInInfoController.h"
 #import "PPDigitalPlugInHandler.h"
 #import "PPDigitalPlugInObject.h"
+#import "PPFilterPlugHandler.h"
+#import "PPFilterPlugObject.h"
 #include <PlayerPROCore/RDriverInt.h>
 #import <QTKit/QTKit.h>
 #import <QTKit/QTExportSession.h>
@@ -378,25 +380,23 @@ static inline void ByteSwapPatHeader(PatHeader *toSwap)
 
 static inline void ByteSwapInstrData(InstrData *toSwap)
 {
-	int x;
 	PPBE16( &toSwap->numSamples);
 	PPBE16( &toSwap->firstSample);
 	PPBE16( &toSwap->volFade);
 	
 	PPBE16( &toSwap->MIDI);
 	PPBE16( &toSwap->MIDIType);
-	
-	for( x = 0; x < 12; x++)
-	{
-		PPBE16( &toSwap->volEnv[ x].pos);
-		PPBE16( &toSwap->volEnv[ x].val);
+	__block InstrData *blockHappy = toSwap;
+	dispatch_apply(12, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
+		PPBE16( &blockHappy->volEnv[ x].pos);
+		PPBE16( &blockHappy->volEnv[ x].val);
 
-		PPBE16( &toSwap->pannEnv[ x].pos);
-		PPBE16( &toSwap->pannEnv[ x].val);
+		PPBE16( &blockHappy->pannEnv[ x].pos);
+		PPBE16( &blockHappy->pannEnv[ x].val);
 		
-		PPBE16(&toSwap->pitchEnv[x].pos);
-		PPBE16(&toSwap->pitchEnv[x].val);
-	}
+		PPBE16( &blockHappy->pitchEnv[ x].pos);
+		PPBE16( &blockHappy->pitchEnv[ x].val);
+	});
 }
 
 static inline void ByteSwapsData(sData *toSwap)
@@ -570,9 +570,10 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	
 	header.ckID = FORMID;
 	PPBE32(&header.ckID);
-	header.ckSize = dataLen + sizeof(container) + sizeof(dataChunk);
+	header.ckSize = dataLen + sizeof(container) + sizeof(dataChunk) + 4;
 	PPBE32(&header.ckSize);
 	NSMutableData *returnData = [[NSMutableData alloc] initWithBytes:&header length:sizeof(header)];
+	[returnData appendBytes:"AIFF" length:4];
 	
 	container.ckID = CommonID;
 	PPBE32(&container.ckID);
@@ -1034,6 +1035,12 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		[plugInInfos addObject:tmpInfo];
 		RELEASEOBJ(tmpInfo);
 	}
+	for (i = 0; i < [filterHandler plugInCount]; i++) {
+		PPFilterPlugObject *obj = [filterHandler plugInAtIndex:i];
+		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"FilterPlugName", @"Filter plug-in name")];
+		[plugInInfos addObject:tmpInfo];
+		RELEASEOBJ(tmpInfo);
+	}
 	
 	[plugInInfos sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
 		NSString *menuNam1 = [obj1 plugName];
@@ -1082,12 +1089,17 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	Music = CreateFreeMADK();
 	MADAttachDriverToMusic(MADDriver, Music, NULL);
 	instrumentImporter = [[PPInstrumentImporter alloc] initWithMusic:&Music];
+	
+	digitalHandler = [[PPDigitalPlugInHandler alloc] initWithMusic:&Music];
+	digitalHandler.driverRec = &MADDriver;
+	
+	filterHandler = [[PPFilterPlugHandler alloc] initWithMusic:&Music];
+	filterHandler.driverRec = &MADDriver;
+	
 	instrumentController = [[PPInstrumentWindowController alloc] init];
 	instrumentController.importer = instrumentImporter;
 	instrumentController.curMusic = &Music;
 	
-	digitalHandler = [[PPDigitalPlugInHandler alloc] initWithMusic:&Music];
-	digitalHandler.driverRec = &MADDriver;
 	
 	NSInteger i;
 	for (i = 0; i < [instrumentImporter plugInCount]; i++) {

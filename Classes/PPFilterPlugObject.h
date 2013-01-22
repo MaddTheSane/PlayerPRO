@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/PPPlug.h>
 
 @interface PPFilterPlugObject : NSObject
 {

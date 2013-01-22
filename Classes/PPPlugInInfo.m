@@ -34,6 +34,23 @@
 	return [NSString stringWithFormat:@"%@: %@, %@", plugName, authorName, plugType];
 }
 
+- (BOOL)isEqual:(id)object
+{
+	if (object == self) {
+		return YES;
+	}
+	if ([object isKindOfClass:[PPPlugInInfo class]]) {
+		if (![plugName isEqualToString:[object plugName] ]) {
+			return NO;
+		} else if (![authorName isEqualToString:[object authorName]]) {
+			return NO;
+		} else if (![plugType isEqualToString:[object plugType]]) {
+			return NO;
+		} else return YES;
+	} else return NO;
+	
+}
+
 #if !__has_feature(objc_arc)
 - (void)dealloc
 {

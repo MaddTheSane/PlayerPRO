@@ -12,7 +12,7 @@
 //#import <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 
-static OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 channel, SInt32 note, SInt32 amplitude, long loopBeg, long loopSize, unsigned int rate, Boolean stereo)
+OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 channel, SInt32 note, SInt32 amplitude, long loopBeg, long loopSize, unsigned int rate, Boolean stereo)
 {
 	OSErr iErr = MADPlaySoundData( theRec, soundPtr, size, channel, note, amplitude, 0, 0, rate, stereo);
 	Boolean	continueLoop;
@@ -131,8 +131,10 @@ static OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, 
 - (void)addPlugInFromBundle:(NSBundle *)theBund
 {
 	PPDigitalPlugInObject *obj = [[PPDigitalPlugInObject alloc] initWithBundle:theBund];
-	[digitalPlugs addObject:obj];
-	RELEASEOBJ(obj);
+	if (obj) {
+		[digitalPlugs addObject:obj];
+		RELEASEOBJ(obj);
+	}
 }
 
 - (void)addPlugInFromURL:(NSURL *)urlpath
