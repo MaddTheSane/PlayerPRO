@@ -117,9 +117,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[self didChangeValueForKey:kMusicListKVO];
 	if (load && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
 		currentlyPlayingIndex.index = [musicList countOfMusicList] - 1;
-		currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
+		//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
 		[self selectCurrentlyPlayingMusic];
-		NSError *err;
+		NSError *err = nil;
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
 			NSAlert *errAlert = [NSAlert alertWithError:err];
 			[errAlert runModal];
@@ -1035,6 +1035,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		[plugInInfos addObject:tmpInfo];
 		RELEASEOBJ(tmpInfo);
 	}
+	
 	for (i = 0; i < [filterHandler plugInCount]; i++) {
 		PPFilterPlugObject *obj = [filterHandler plugInAtIndex:i];
 		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"FilterPlugName", @"Filter plug-in name")];

@@ -35,10 +35,6 @@ static const TagCoupling ReverbPercentCoupling[] = {{10, 1}, {20, 2}, {30, 3}, {
 static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4},
 	{6, 5}, {8, 6}, {10, 7}, {16, 8}, {20, 9}, {25, 10}, {30, 11}};
 
-@interface PPSoundSettingsViewController ()
-
-@end
-
 @implementation PPSoundSettingsViewController
 
 -(void)setCurrentSoundDriver:(NSInteger)theDriver
@@ -259,7 +255,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
     return self;
 }
 
--(NSInteger)currentRate
+- (NSInteger)currentRate
 {
 	id curSelected = [rate selectedCell];
 	if ([rate cellAtRow:0 column:0] == curSelected) {
@@ -275,7 +271,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 	}
 }
 
--(NSInteger)currentSoundDriver
+- (NSInteger)currentSoundDriver
 {
 	id curSelected = [soundDriver selectedCell];
 	if ([soundDriver cellAtRow:0 column:0] == curSelected) {
@@ -289,7 +285,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 	}
 }
 
--(NSInteger)currentBits
+- (NSInteger)currentBits
 {
 	id curSelected = [outputBits selectedCell];
 	if ([outputBits cellAtRow:0 column:0] == curSelected) {
@@ -304,7 +300,6 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 		return bits16;
 	}
 }
-
 
 - (IBAction)changeBits:(id)sender
 {
