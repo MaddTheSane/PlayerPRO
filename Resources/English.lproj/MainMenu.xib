@@ -1300,7 +1300,7 @@
 														</object>
 													</object>
 													<object class="NSTextFieldCell" key="NSDataCell" id="4325593">
-														<int key="NSCellFlags">69206081</int>
+														<int key="NSCellFlags">67108928</int>
 														<int key="NSCellFlags2">2048</int>
 														<string key="NSContents">Text Cell</string>
 														<object class="NSFont" key="NSSupport" id="16400357">
@@ -1372,7 +1372,6 @@
 									<string key="NSFrame">{{224, 17}, {15, 212}}</string>
 									<reference key="NSSuperview" ref="871224933"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<reference key="NSTarget" ref="871224933"/>
 									<string key="NSAction">_doScroller:</string>
