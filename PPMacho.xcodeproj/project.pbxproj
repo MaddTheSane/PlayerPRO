@@ -538,6 +538,7 @@
 		55E89D3D10F26A4B004EB52B /* INS.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55E89D3B10F26A4B004EB52B /* INS.icns */; };
 		55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */; };
 		55EA019C16AF1D3900D6AEA0 /* Backwards.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE5DF10E0882800177B4C /* Backwards.plugin */; };
+		55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */; };
 		55ED50AB10D40BFE00824C61 /* MOD.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55ED547410D5F9CD00824C61 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		55EE8C741003E83A00E75E63 /* General-rez.r in Rez */ = {isa = PBXBuildFile; fileRef = 55EE8C731003E83A00E75E63 /* General-rez.r */; };
@@ -2003,6 +2004,8 @@
 		55E89D3B10F26A4B004EB52B /* INS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = INS.icns; sourceTree = "<group>"; };
 		55EA019616AF15B500D6AEA0 /* PPFilterPlugObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPlugObject.h; sourceTree = "<group>"; };
 		55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPlugObject.m; sourceTree = "<group>"; };
+		55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPlugHandler.h; sourceTree = "<group>"; };
+		55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPlugHandler.m; sourceTree = "<group>"; };
 		55ED547310D5F9CD00824C61 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		55EE8C731003E83A00E75E63 /* General-rez.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = "General-rez.r"; path = "../Files/General-rez.r"; sourceTree = "<group>"; };
 		55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
@@ -3637,6 +3640,8 @@
 				55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */,
 				55EA019616AF15B500D6AEA0 /* PPFilterPlugObject.h */,
 				55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */,
+				55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */,
+				55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -6203,6 +6208,7 @@
 				55F4287816A89A9C009013D8 /* PPMadCommandObject.m in Sources */,
 				55F4287C16A8B1FB009013D8 /* PPSoundSettingsViewController.m in Sources */,
 				55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */,
+				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
