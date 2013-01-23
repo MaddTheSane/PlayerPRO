@@ -782,6 +782,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		{
 			if (tag > MADLib->TotalPlug || tag < 0) {
 				NSBeep();
+				MADDriver->currentlyExporting = FALSE;
 				return;
 			}
 			NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
@@ -1151,6 +1152,9 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	
 	RELEASEOBJ(digitalHandler);
 	digitalHandler = nil;
+	
+	RELEASEOBJ(filterHandler);
+	filterHandler = nil;
 	
 	if (Music != NULL) {
 		if (Music->hasChanged) {

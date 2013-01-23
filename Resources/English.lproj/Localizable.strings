@@ -67,5 +67,6 @@
 "TrackerPlugName" = "Tracker";
 "InstrumentPlugName" = "Instrument";
 "DigitalPlugName" = "Digital";
+"FilterPlugName" = "Filter";
 
 "No Author" = "No Author";
