@@ -88,7 +88,7 @@
 	CFBundleRef tempBund = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef,[file bundleURL]));
 	CFBundleRefNum refNum = CFBundleOpenBundleResourceMap(tempBund);
 	
-	OSErr iErr = (*plugData)->FiltersMain(plugData,theData,SelectionStart, SelectionEnd, thePPInfoPlug, stereoMode);
+	OSErr iErr = (*plugData)->FiltersMain(plugData, theData, SelectionStart, SelectionEnd, thePPInfoPlug, stereoMode);
 	
 	CFBundleCloseBundleResourceMap(tempBund, refNum);
 	CFRelease(tempBund);
@@ -97,7 +97,7 @@
 
 - (void)dealloc
 {
-	RELEASEOBJ(author);
+	RELEASEOBJ(authorString);
 	RELEASEOBJ(file);
 	RELEASEOBJ(menuName);
 	if (plugData) {

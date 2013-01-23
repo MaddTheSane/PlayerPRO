@@ -55,6 +55,11 @@ static NSString * const MADNativeUTI = @"com.quadmation.playerpro.madk";
 @synthesize index;
 @synthesize playbackURL;
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"Index: %ld URL: %@ URL Path: %@", (long)index, playbackURL, [playbackURL path]];
+}
+
 #if !__has_feature(objc_arc)
 - (void)dealloc
 {
@@ -352,7 +357,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	if (Music) {
 		long fT, cT;
 		MADGetMusicStatus(MADDriver, &fT, &cT);
-		if (MADIsDonePlaying(MADDriver) && !self.paused && !MADDriver->currentlyExporting) {
+		if (MADIsDonePlaying(MADDriver) && !self.paused && !MADIsExporting(MADDriver)) {
 			[self songIsDonePlaying];
 			MADGetMusicStatus(MADDriver, &fT, &cT);
 		}
@@ -493,7 +498,7 @@ static inline void ByteSwapsData(sData *toSwap)
 			{
 				__block short	*shortPtr = (short*) dataCopy;
 				
-				dispatch_apply(Music->sample[ Music->fid[i].firstSample + x]->size / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
+				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
 					PPBE16(&shortPtr[y]);
 				});
 
@@ -568,9 +573,49 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 
 	SoundDataChunk dataChunk;
 	
+	ApplicationSpecificChunk *nameChunk;
+	ApplicationSpecificChunk *infoChunk;
+	NSInteger macRomanNameLength = 0;
+	NSInteger macRomanInfoLength = 0;
+
+	{
+		NSData *macRomanNameData = [musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+		macRomanNameLength = [macRomanNameData length];
+		
+		nameChunk = calloc(sizeof(ApplicationSpecificChunk) + macRomanNameLength, 1);
+		UInt8 *firstChar;
+		nameChunk->applicationSignature = NameID;
+		PPBE32(&nameChunk->applicationSignature);
+		nameChunk->ckID = ApplicationSpecificID;
+		PPBE32(&nameChunk->ckID);
+		nameChunk->ckSize = sizeof(ApplicationSpecificChunk) + macRomanNameLength;
+		PPBE32(&nameChunk->ckSize);
+		nameChunk->data[0] = macRomanNameLength;
+		firstChar = &nameChunk->data[1];
+		memcpy(firstChar, [macRomanNameData bytes], macRomanNameLength);
+	}
+	
+	{
+		NSData *macRomanInfoData = [musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+		macRomanInfoLength = [macRomanInfoData length];
+		
+		UInt8 *firstChar;
+		infoChunk = calloc(sizeof(ApplicationSpecificChunk) + macRomanInfoLength, 0);
+		infoChunk->applicationSignature = CommentID;
+		PPBE32(&infoChunk->applicationSignature);
+		infoChunk->ckID = ApplicationSpecificID;
+		PPBE32(&infoChunk->ckID);
+		infoChunk->ckSize = sizeof(ApplicationSpecificChunk) + macRomanInfoLength;
+		PPBE32(&infoChunk->ckSize);
+		infoChunk->data[0] = macRomanInfoLength;
+		firstChar = &infoChunk->data[1];
+		memcpy(firstChar, [macRomanInfoData bytes], macRomanInfoLength);
+	}
+	
+	
 	header.ckID = FORMID;
 	PPBE32(&header.ckID);
-	header.ckSize = dataLen + sizeof(container) + sizeof(dataChunk) + 4;
+	header.ckSize = dataLen + sizeof(container) + sizeof(dataChunk) + 4 + sizeof(ApplicationSpecificChunk) * 2 + macRomanInfoLength + macRomanNameLength;
 	PPBE32(&header.ckSize);
 	NSMutableData *returnData = [[NSMutableData alloc] initWithBytes:&header length:sizeof(header)];
 	[returnData appendBytes:"AIFF" length:4];
@@ -606,6 +651,10 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	PPBE32(&dataChunk.ckID);
 	dataChunk.blockSize;
 	
+	[returnData appendBytes:nameChunk length:sizeof(ApplicationSpecificChunk) + macRomanNameLength];
+	free(nameChunk);
+	[returnData appendBytes:infoChunk length:sizeof(ApplicationSpecificChunk) + macRomanInfoLength];
+	free(infoChunk);
 	[returnData appendBytes:&dataChunk length:sizeof(dataChunk)];
 
 	[returnData appendData:dat];
@@ -693,7 +742,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 - (IBAction)exportMusicAs:(id)sender
 {
 	NSInteger tag = [sender tag];
-	MADDriver->currentlyExporting = TRUE;
+	MADBeginExport(MADDriver);
 
 	switch (tag) {
 		case -1:
@@ -710,16 +759,16 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
-						MADDriver->currentlyExporting = FALSE;
+						MADEndExport(MADDriver);
 
 						[saveData writeToURL:[savePanel URL] atomically:YES];
 						RELEASEOBJ(saveData);
 					});
 				} else {
-					MADDriver->currentlyExporting = FALSE;
+					MADEndExport(MADDriver);
 				}
 			} else {
-				MADDriver->currentlyExporting = FALSE;
+				MADEndExport(MADDriver);
 			}
 			RELEASEOBJ(savePanel);
 		}
@@ -739,40 +788,46 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
-						MADDriver->currentlyExporting = FALSE;
+						NSString *oldMusicName = RETAINOBJ(musicName);
+						MADEndExport(MADDriver);
 						NSError *expErr = nil;
 						QTMovie *exportMov = [[QTMovie alloc] initWithData:saveData error:&expErr];
 						if (!exportMov) {
-							NSLog(@"Init Failed, error: %@", [expErr localizedDescription]);
+							NSLog(@"Init Failed for %@, error: %@", oldMusicName, [expErr localizedDescription]);
+							RELEASEOBJ(saveData);
+							RELEASEOBJ(oldMusicName);
 							return;
 						}
-						[exportMov setAttribute:musicName forKey:QTMovieDisplayNameAttribute];
 
 						//We may not need to do this...
 						//dispatch_async(dispatch_get_main_queue(), ^{
 						QTExportSession *session = [[QTExportSession alloc] initWithMovie:exportMov exportOptions:[QTExportOptions exportOptionsWithIdentifier:QTExportOptionsAppleM4A] outputURL:[savePanel URL] error:&expErr];
 						if (!session) {
-							NSLog(@"Export session creation failed, error: %@", [expErr localizedDescription]);
+							NSLog(@"Export session creation for %@ failed, error: %@", oldMusicName, [expErr localizedDescription]);
+							RELEASEOBJ(saveData);
+							RELEASEOBJ(exportMov);
+							RELEASEOBJ(oldMusicName);
 							return;
 						}
 						[session run];
 						
 						if (![session waitUntilFinished:&expErr])
 						{
-							NSLog(@"export failed, error: %@", [expErr localizedDescription]);
+							NSLog(@"export of \"%@\" failed, error: %@", oldMusicName, [expErr localizedDescription]);
 						}
+						RELEASEOBJ(oldMusicName);
 						RELEASEOBJ(session);
-						RELEASEOBJ(QTMovie);
+						RELEASEOBJ(exportMov);
 						
 						
 						RELEASEOBJ(saveData);
 						//});
 					});
 				} else {
-					MADDriver->currentlyExporting = FALSE;
+					MADEndExport(MADDriver);
 				}
 			} else {
-				MADDriver->currentlyExporting = FALSE;
+				MADEndExport(MADDriver);
 			}
 			RELEASEOBJ(savePanel);
 		}
@@ -782,7 +837,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		{
 			if (tag > MADLib->TotalPlug || tag < 0) {
 				NSBeep();
-				MADDriver->currentlyExporting = FALSE;
+				MADEndExport(MADDriver);
 				return;
 			}
 			NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
@@ -806,7 +861,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			}
 			RELEASEOBJ(savePanel);
 		}
-			MADDriver->currentlyExporting = FALSE;
+			MADEndExport(MADDriver);
 			break;
 	}
 }
@@ -823,7 +878,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 
 - (IBAction)saveMusicAs:(id)sender
 {
-	MADDriver->currentlyExporting = TRUE;
+	MADBeginExport(MADDriver);
 	
 	NSSavePanel * savePanel = RETAINOBJ([NSSavePanel savePanel]);
 	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:MADNativeUTI]];
@@ -837,15 +892,15 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		RELEASEOBJ(saveURL);
 	}
 	RELEASEOBJ(savePanel);
-	MADDriver->currentlyExporting = FALSE;
+	MADEndExport(MADDriver);
 }
 
 - (IBAction)saveMusic:(id)sender
 {
-	MADDriver->currentlyExporting = TRUE;
+	MADBeginExport(MADDriver);
 	
 	if (previouslyPlayingIndex.index == -1) {
-		// saveMusicAs: will set exporting to false when it is done.
+		// saveMusicAs: will end the exporting when it is done.
 		[self saveMusicAs:sender];
 	} else {
 		NSURL *fileURL = previouslyPlayingIndex.playbackURL;
@@ -854,9 +909,9 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		NSString *utiFile = [sharedWorkspace typeOfFile:filename error:nil];
 		if (/*[sharedWorkspace type:utiFile conformsToType:MADNativeUTI]*/ [utiFile isEqualToString:MADNativeUTI]) {
 			[self saveMusicToURL:fileURL];
-			MADDriver->currentlyExporting = FALSE;
+			MADEndExport(MADDriver);
 		} else {
-			// saveMusicAs: will set exporting to false when it is done.
+			// saveMusicAs: will end the exporting when it is done.
 			[self saveMusicAs:sender];
 		}
 	}
@@ -1481,8 +1536,8 @@ enum PPMusicToolbarTypes {
 - (BOOL)handleFile:(NSURL *)theURL ofType:(NSString *)theUTI
 {
 	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
-	BOOL hasAPPLPlug = NO;
-	if (MADPlugAvailable(MADLib, "APPL")) {
+	static BOOL hasAPPLPlug = NO;
+	if (!hasAPPLPlug && MADPlugAvailable(MADLib, "APPL")) {
 		hasAPPLPlug = YES;
 	}
 
@@ -1729,6 +1784,7 @@ enum PPMusicToolbarTypes {
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
 		NSError *err = nil;
 		currentlyPlayingIndex.index = 0;
+		[self selectCurrentlyPlayingMusic];
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 		{
 			NSAlert *alert = [NSAlert alertWithError:err];
