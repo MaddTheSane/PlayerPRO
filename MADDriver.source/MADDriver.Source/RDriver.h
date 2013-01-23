@@ -647,6 +647,10 @@ OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
 
 PPEXPORT Boolean MADIsDonePlaying(MADDriverRec *MDriver);
 	
+PPEXPORT void MADBeginExport(MADDriverRec *driver);
+PPEXPORT void MADEndExport(MADDriverRec *driver);
+PPEXPORT Boolean MADIsExporting(MADDriverRec *driver);
+
 PPEXPORT Boolean MADWasReading(MADDriverRec *driver) DEPRECATED_ATTRIBUTE;
 PPEXPORT void MADSetReading(MADDriverRec *driver, Boolean toSet) DEPRECATED_ATTRIBUTE;
 

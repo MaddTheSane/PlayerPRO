@@ -3622,3 +3622,28 @@ Boolean MADIsDonePlaying(MADDriverRec *MDriver)
 	return MDriver->musicEnd;
 }
 
+void MADBeginExport(MADDriverRec *driver)
+{
+	if (driver) {
+		driver->currentlyExporting = true;
+	}
+}
+
+void MADEndExport(MADDriverRec *driver)
+{
+	if (driver) {
+		driver->currentlyExporting = false;
+	}
+
+}
+
+Boolean MADIsExporting(MADDriverRec *driver)
+{
+	if (!driver) {
+		return false;
+	} else {
+		return driver->currentlyExporting;
+	}
+}
+
+
