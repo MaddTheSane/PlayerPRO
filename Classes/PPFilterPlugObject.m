@@ -19,6 +19,22 @@
 @synthesize type;
 @synthesize version;
 
+- (BOOL)isEqual:(id)object
+{
+	if (self == object) {
+		return YES;
+	}
+	if ([object isKindOfClass:[PPFilterPlugObject class]]) {
+		if (![menuName isEqualToString:[object menuName]]) {
+			return NO;
+		} else if (![file isEqual:[object file]]) {
+			return NO;
+			//Ignore version, authorstring and type
+		} else return YES;
+	}
+	return NO;
+}
+
 - (id)initWithBundle:(NSBundle *)aBund
 {
 	if (self = [super init]) {

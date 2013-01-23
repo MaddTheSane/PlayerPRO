@@ -17,6 +17,23 @@
 @synthesize type;
 @synthesize version;
 
+- (BOOL)isEqual:(id)object
+{
+	if (self == object) {
+		return YES;
+	}
+	if ([object isKindOfClass:[PPDigitalPlugInObject class]]) {
+		if (![menuName isEqualToString:[object menuName]]) {
+			return NO;
+		} else if (![file isEqual:[object file]]) {
+			return NO;
+			//Ignore version, authorstring and type
+		} else return YES;
+	}
+	return NO;
+}
+
+
 #define PPDGLoadPlug(theBundle) (PPDigitalPlugin**)GetCOMPlugInterface(theBundle, kPlayerPRODigitalPlugTypeID, kPlayerPRODigitalPlugInterfaceID)
 
 - (id)initWithBundle:(NSBundle*)toInit
