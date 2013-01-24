@@ -28,9 +28,6 @@
 #import <QTKit/QTExportSession.h>
 #import <QTKit/QTExportOptions.h>
 
-static NSString * const kMusicListKVO = @"musicList";
-static NSString * const MADNativeUTI = @"com.quadmation.playerpro.madk";
-
 @interface PPCurrentlyPlayingIndex : NSObject
 {
 	NSInteger index;
@@ -118,9 +115,9 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 - (void)addMusicToMusicList:(NSURL* )theURL loadIfPreferencesAllow:(BOOL)load
 {
 	[self willChangeValueForKey:kMusicListKVO];
-	[musicList addMusicURL:theURL];
+	BOOL okayMusic = [musicList addMusicURL:theURL];
 	[self didChangeValueForKey:kMusicListKVO];
-	if (load && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
+	if (load && okayMusic && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
 		currentlyPlayingIndex.index = [musicList countOfMusicList] - 1;
 		//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
 		[self selectCurrentlyPlayingMusic];
@@ -597,7 +594,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
 
-- (NSMutableData *)createAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat sampleSize:(int)sampSize
+- (NSMutableData *)createAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat
 {
 	NSInteger dataLen = [dat length];
 	
@@ -622,7 +619,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		PPBE32(&nameChunk->applicationSignature);
 		nameChunk->ckID = ApplicationSpecificID;
 		PPBE32(&nameChunk->ckID);
-		nameChunk->ckSize = 1 + macRomanNameLength + 4;
+		nameChunk->ckSize = 1 + macRomanNameLength;
 		PPBE32(&nameChunk->ckSize);
 		nameChunk->data[0] = macRomanNameLength;
 		firstChar = &nameChunk->data[1];
@@ -639,7 +636,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		PPBE32(&infoChunk->applicationSignature);
 		infoChunk->ckID = ApplicationSpecificID;
 		PPBE32(&infoChunk->ckID);
-		infoChunk->ckSize = macRomanInfoLength + 1 + 4;
+		infoChunk->ckSize = macRomanInfoLength + 1;
 		PPBE32(&infoChunk->ckSize);
 		infoChunk->data[0] = macRomanInfoLength;
 		firstChar = &infoChunk->data[1];
@@ -660,7 +657,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	container.ckSize = sizeof(container);
 	PPBE32(&container.ckSize);
 	short chanNums = 0;
-	container.numSampleFrames = dataLen + (sampSize - 1) / sampSize;
+	container.numSampleFrames = (dataLen + (sett->outPutBits - 1)) / sett->outPutBits;
 
 	switch (sett->outPutMode) {
 		case DeluxeStereoOutPut:
@@ -678,18 +675,10 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			chanNums = 1;
 			break;
 	}
-	switch (sett->outPutBits) {
-		case 16:
-			//container.numSampleFrames /= 2;
-			break;
-			
-		default:
-			break;
-	}
 
 	container.numChannels = chanNums;
 	PPBE16(&container.numChannels);
-	container.sampleSize = sampSize;
+	container.sampleSize = sett->outPutBits;
 	PPBE16(&container.sampleSize);
 	PPBE32(&container.numSampleFrames);
 	
@@ -771,7 +760,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	{
 		[mutData appendBytes:soundPtr length:full];
 	}
-	NSMutableData *tmpData = [self createAIFFDataFromSettings:theSet data:mutData sampleSize:full];
+	NSMutableData *tmpData = [self createAIFFDataFromSettings:theSet data:mutData];
 	RELEASEOBJ(mutData);
 	mutData = nil;
 	NSData *retData = [NSData dataWithData:tmpData];

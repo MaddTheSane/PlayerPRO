@@ -18,6 +18,8 @@ extern NSString * const PPMusicDidChange;
 extern NSString * const PPDriverDidChange;
 
 extern NSString * const PPDoubleDash;
+extern NSString * const kMusicListKVO;
+extern NSString * const MADNativeUTI;
 
 extern NSString * const PPRememberMusicList;
 extern NSString * const PPLoadMusicAtListLoad;

@@ -14,8 +14,6 @@
 
 #define kMUSICLISTKEY @"Music List Key1"
 
-static NSString * const kMusicListKVO = @"musicList";
-
 // GetIndString isn't supported on 64-bit Mac OS X
 // This code is emulation for GetIndString.
 // Code taken from Mozilla's Mac Eudora importer
@@ -360,7 +358,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 }
 #endif
 
-- (void)addMusicURL:(NSURL *)musicToLoad
+- (BOOL)addMusicURL:(NSURL *)musicToLoad
 {
 	PPMusicListObject *obj = nil;
 	NSURL *fileRef = [musicToLoad fileReferenceURL];
@@ -369,6 +367,15 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	} else {
 		obj = [[PPMusicListObject alloc] initWithURL:musicToLoad];
 	}
+	
+	if (!obj) {
+		return NO;
+	}
+	if ([musicList containsObject:obj]) {
+		RELEASEOBJ(obj);
+		return NO;
+	}
+	
 	//[self willChangeValueForKey:kMusicListKVO];
 	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndex:[musicList count]];
 	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:kMusicListKVO];
@@ -376,6 +383,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:kMusicListKVO];
 	//[self didChangeValueForKey:kMusicListKVO];
 	RELEASEOBJ(obj);
+	return YES;
 }
 
 - (void)removeObjectAtIndex:(NSUInteger)object
@@ -444,7 +452,9 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (void)addMusicListObject:(PPMusicListObject*)obj
 {
-	[musicList addObject:obj];
+	if (![musicList containsObject:obj]) {
+		[musicList addObject:obj];
+	}
 }
 
 - (NSUInteger)countOfMusicList

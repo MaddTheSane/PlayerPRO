@@ -33,7 +33,7 @@
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen;
 
 - (NSURL*)URLAtIndex:(NSUInteger)index;
-- (void)addMusicURL:(NSURL *)musicToLoad;
+- (BOOL)addMusicURL:(NSURL *)musicToLoad;
 - (void)removeObjectAtIndex:(NSUInteger)object;
 - (void)clearMusicList;
 
