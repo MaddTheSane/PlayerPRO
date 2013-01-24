@@ -44,14 +44,16 @@
 			PlugNums = CFArrayGetCount( somePlugs );
 			if (PlugNums > 0) {
 				for (x = 0; x < PlugNums; x++) {
-					CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
-					CFURLRef BundleURL = CFBundleCopyBundleURL(tempBundleRef);
-					NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(BundleURL)];
-					PPFilterPlugObject *tempObj = [[PPFilterPlugObject alloc] initWithBundle:tempBundle];
-					CFRelease(tempBundleRef);
-					if (tempObj) {
-						[filterPlugs addObject:tempObj];
-						RELEASEOBJ(tempObj);
+					@autoreleasepool {
+						CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
+						CFURLRef BundleURL = CFBundleCopyBundleURL(tempBundleRef);
+						NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(BundleURL)];
+						PPFilterPlugObject *tempObj = [[PPFilterPlugObject alloc] initWithBundle:tempBundle];
+						CFRelease(tempBundleRef);
+						if (tempObj) {
+							[filterPlugs addObject:tempObj];
+							RELEASEOBJ(tempObj);
+						}
 					}
 				}
 			}

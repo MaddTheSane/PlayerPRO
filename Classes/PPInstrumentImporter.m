@@ -58,30 +58,32 @@ NSArray *DefaultPlugInLocations()
 			PlugNums = CFArrayGetCount( somePlugs );
 			if (PlugNums > 0) {
 				for (x = 0; x < PlugNums; x++) {
-					CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
-					CFURLRef BundleURL = CFBundleCopyBundleURL(tempBundleRef);
-					NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(BundleURL)];
-					PPInstrumentImporterObject *tempObj = [[PPInstrumentImporterObject alloc] initWithBundle:tempBundle];
-					CFRelease(tempBundleRef);
-					if (tempObj) {
-						for (y = 0; y < [instrumentIEArray count]; y++) {
-							PPInstrumentImporterObject *toComp = [instrumentIEArray objectAtIndex:y];
-							if (toComp.type == tempObj.type) {
-								if (toComp.version < tempObj.version) {
-									[instrumentIEArray replaceObjectAtIndex:y withObject:tempObj];
-									RELEASEOBJ(tempObj);
-									tempObj = nil;
-									break;
-								} else {
-									RELEASEOBJ(tempObj);
-									tempObj = nil;
-									break;
+					@autoreleasepool {
+						CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
+						CFURLRef BundleURL = CFBundleCopyBundleURL(tempBundleRef);
+						NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(BundleURL)];
+						PPInstrumentImporterObject *tempObj = [[PPInstrumentImporterObject alloc] initWithBundle:tempBundle];
+						CFRelease(tempBundleRef);
+						if (tempObj) {
+							for (y = 0; y < [instrumentIEArray count]; y++) {
+								PPInstrumentImporterObject *toComp = [instrumentIEArray objectAtIndex:y];
+								if (toComp.type == tempObj.type) {
+									if (toComp.version < tempObj.version) {
+										[instrumentIEArray replaceObjectAtIndex:y withObject:tempObj];
+										RELEASEOBJ(tempObj);
+										tempObj = nil;
+										break;
+									} else {
+										RELEASEOBJ(tempObj);
+										tempObj = nil;
+										break;
+									}
 								}
 							}
-						}
-						if (tempObj) {
-							[instrumentIEArray addObject:tempObj];
-							RELEASEOBJ(tempObj);
+							if (tempObj) {
+								[instrumentIEArray addObject:tempObj];
+								RELEASEOBJ(tempObj);
+							}
 						}
 					}
 				}

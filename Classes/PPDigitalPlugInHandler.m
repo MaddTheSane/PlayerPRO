@@ -111,14 +111,16 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 			PlugNums = CFArrayGetCount( somePlugs );
 			if (PlugNums > 0) {
 				for (x = 0; x < PlugNums; x++) {
-					CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
-					CFURLRef BundleURL = CFBundleCopyBundleURL(tempBundleRef);
-					NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(BundleURL)];
-					PPDigitalPlugInObject *tempObj = [[PPDigitalPlugInObject alloc] initWithBundle:tempBundle];
-					CFRelease(tempBundleRef);
-					if (tempObj) {
-						[digitalPlugs addObject:tempObj];
-						RELEASEOBJ(tempObj);
+					@autoreleasepool {
+						CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
+						CFURLRef BundleURL = CFBundleCopyBundleURL(tempBundleRef);
+						NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(BundleURL)];
+						PPDigitalPlugInObject *tempObj = [[PPDigitalPlugInObject alloc] initWithBundle:tempBundle];
+						CFRelease(tempBundleRef);
+						if (tempObj) {
+							[digitalPlugs addObject:tempObj];
+							RELEASEOBJ(tempObj);
+						}
 					}
 				}
 			}
