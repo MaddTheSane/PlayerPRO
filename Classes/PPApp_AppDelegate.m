@@ -601,7 +601,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 {
 	NSInteger dataLen = [dat length];
 	
-	ChunkHeader header;
+	ContainerChunk header;
 	
 	CommonChunk container;
 
@@ -622,7 +622,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		PPBE32(&nameChunk->applicationSignature);
 		nameChunk->ckID = ApplicationSpecificID;
 		PPBE32(&nameChunk->ckID);
-		nameChunk->ckSize = sizeof(ApplicationSpecificChunk) + macRomanNameLength;
+		nameChunk->ckSize = 1 + macRomanNameLength + 4;
 		PPBE32(&nameChunk->ckSize);
 		nameChunk->data[0] = macRomanNameLength;
 		firstChar = &nameChunk->data[1];
@@ -639,7 +639,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		PPBE32(&infoChunk->applicationSignature);
 		infoChunk->ckID = ApplicationSpecificID;
 		PPBE32(&infoChunk->ckID);
-		infoChunk->ckSize = sizeof(ApplicationSpecificChunk) + macRomanInfoLength;
+		infoChunk->ckSize = macRomanInfoLength + 1 + 4;
 		PPBE32(&infoChunk->ckSize);
 		infoChunk->data[0] = macRomanInfoLength;
 		firstChar = &infoChunk->data[1];
@@ -651,8 +651,9 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	PPBE32(&header.ckID);
 	header.ckSize = dataLen + sizeof(container) + sizeof(dataChunk) + 4 + sizeof(ApplicationSpecificChunk) * 2 + macRomanInfoLength + macRomanNameLength;
 	PPBE32(&header.ckSize);
+	header.formType = AIFFID;
+	PPBE32(&header.formType);
 	NSMutableData *returnData = [[NSMutableData alloc] initWithBytes:&header length:sizeof(header)];
-	[returnData appendBytes:"AIFF" length:4];
 	
 	container.ckID = CommonID;
 	PPBE32(&container.ckID);
@@ -706,13 +707,13 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	dataChunk.offset = dataOffset;
 	PPBE32(&dataChunk.offset);
 	
+	[returnData appendBytes:&dataChunk length:sizeof(dataChunk)];
+	[returnData appendData:dat];
+
 	[returnData appendBytes:nameChunk length:sizeof(ApplicationSpecificChunk) + macRomanNameLength];
 	free(nameChunk);
 	[returnData appendBytes:infoChunk length:sizeof(ApplicationSpecificChunk) + macRomanInfoLength];
 	free(infoChunk);
-	[returnData appendBytes:&dataChunk length:sizeof(dataChunk)];
-
-	[returnData appendData:dat];
 	return returnData;
 }
 
