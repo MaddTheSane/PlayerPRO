@@ -561,9 +561,43 @@ static inline void ByteSwapsData(sData *toSwap)
 	Music->hasChanged = FALSE;
 }
 
+//Yes, the pragma pack is needed
+//otherwise the parts will be improperly mapped.
+#pragma pack(push, 2)
+struct Float80i {
+	SInt16  exp;
+	UInt32  man[2];
+};
+#pragma pack(pop)
+
+static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
+{
+	
+	union {
+		extended80 shortman;
+		struct Float80i intman;
+	} toreturn;
+	unsigned int shift, exponent;
+
+	
+	for(shift = 0U; (theNum >> (31 - shift)) == 0U; ++shift)
+		;
+	theNum <<= shift;
+	exponent= 63U - (shift + 32U); /* add 32 for unused second word */
+
+	toreturn.intman.exp = (exponent+0x3FFF);
+	PPBE16(&toreturn.intman.exp);
+	toreturn.intman.man[0] = theNum;
+	PPBE32(&toreturn.intman.man[0]);
+	toreturn.intman.man[1] = 0;
+	PPBE32(&toreturn.intman.man[1]);
+	
+	return toreturn.shortman;
+}
+
 Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
 
-- (NSMutableData *)createAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat
+- (NSMutableData *)createAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat sampleSize:(int)sampSize
 {
 	NSInteger dataLen = [dat length];
 	
@@ -625,10 +659,13 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	container.ckSize = sizeof(container);
 	PPBE32(&container.ckSize);
 	short chanNums = 0;
+	container.numSampleFrames = dataLen + (sampSize - 1) / sampSize;
+
 	switch (sett->outPutMode) {
 		case DeluxeStereoOutPut:
 		case StereoOutPut:
 		default:
+			//container.numSampleFrames /= 2;
 			chanNums = 2;
 			break;
 			
@@ -640,16 +677,34 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			chanNums = 1;
 			break;
 	}
+	switch (sett->outPutBits) {
+		case 16:
+			//container.numSampleFrames /= 2;
+			break;
+			
+		default:
+			break;
+	}
 
 	container.numChannels = chanNums;
 	PPBE16(&container.numChannels);
-	container.numSampleFrames;
-	container.sampleSize;
+	container.sampleSize = sampSize;
+	PPBE16(&container.sampleSize);
+	PPBE32(&container.numSampleFrames);
+	
+	container.sampleRate = convertSampleRateToExtended80(sett->outPutRate);
 	[returnData appendBytes:&container length:sizeof(container)];
 	
+	
+	int dataOffset = 0;
 	dataChunk.ckID = SoundDataID;
 	PPBE32(&dataChunk.ckID);
-	dataChunk.blockSize;
+	dataChunk.blockSize = 0;
+	PPBE32(&dataChunk.blockSize);
+	dataChunk.ckSize = dataLen + 8 + dataOffset;
+	PPBE32(&dataChunk.ckSize);
+	dataChunk.offset = dataOffset;
+	PPBE32(&dataChunk.offset);
 	
 	[returnData appendBytes:nameChunk length:sizeof(ApplicationSpecificChunk) + macRomanNameLength];
 	free(nameChunk);
@@ -715,7 +770,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	{
 		[mutData appendBytes:soundPtr length:full];
 	}
-	NSMutableData *tmpData = [self createAIFFDataFromSettings:theSet data:mutData];
+	NSMutableData *tmpData = [self createAIFFDataFromSettings:theSet data:mutData sampleSize:full];
 	RELEASEOBJ(mutData);
 	mutData = nil;
 	NSData *retData = [NSData dataWithData:tmpData];
@@ -759,7 +814,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
-						MADEndExport(MADDriver);
+						MADDriver->currentlyExporting = NO;
 
 						[saveData writeToURL:[savePanel URL] atomically:YES];
 						RELEASEOBJ(saveData);
@@ -789,7 +844,9 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
 						NSString *oldMusicName = RETAINOBJ(musicName);
-						MADEndExport(MADDriver);
+						MADDriver->currentlyExporting = NO;
+						
+						//dispatch_async(dispatch_get_main_queue(), ^{
 						NSError *expErr = nil;
 						QTMovie *exportMov = [[QTMovie alloc] initWithData:saveData error:&expErr];
 						if (!exportMov) {
@@ -798,9 +855,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 							RELEASEOBJ(oldMusicName);
 							return;
 						}
-
-						//We may not need to do this...
-						//dispatch_async(dispatch_get_main_queue(), ^{
+						
 						QTExportSession *session = [[QTExportSession alloc] initWithMovie:exportMov exportOptions:[QTExportOptions exportOptionsWithIdentifier:QTExportOptionsAppleM4A] outputURL:[savePanel URL] error:&expErr];
 						if (!session) {
 							NSLog(@"Export session creation for %@ failed, error: %@", oldMusicName, [expErr localizedDescription]);
@@ -1157,6 +1212,8 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	instrumentController.importer = instrumentImporter;
 	instrumentController.curMusic = &Music;
 	
+	//Initialize the QTKit framework on the main thread. needed for 32-bit code.
+	[QTMovie class];
 	
 	NSInteger i;
 	for (i = 0; i < [instrumentImporter plugInCount]; i++) {
@@ -1622,6 +1679,7 @@ enum PPMusicToolbarTypes {
 	[panel setAllowedFileTypes:supportedUTIs];
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:trackerDict playlistDictionary:playlistDict instrumentDictionary:samplesDict additionalDictionary:otherDict];
 	[panel setAccessoryView:[av view]];
+	RELEASEOBJ(samplesDict);
 	if([panel runModal] == NSFileHandlingPanelOKButton)
 	{
 		NSURL *panelURL = [panel URL];
@@ -1749,12 +1807,14 @@ enum PPMusicToolbarTypes {
 		if (selected < 0)
 			break;
 		
-		NSURL *musicURL = [musicList URLAtIndex:selected];
+		PPMusicListObject *obj = [musicList objectInMusicListAtIndex:selected];
+		
+		NSURL *musicURL = obj.musicUrl;
 		PPInfoRec theInfo;
 		char info[5] = {0};
 		if(MADMusicIdentifyCFURL(MADLib, info, BRIDGE(CFURLRef, musicURL)) != noErr) break;
 		if(MADMusicInfoCFURL(MADLib, info, BRIDGE(CFURLRef, musicURL), &theInfo) != noErr) break;
-		[fileName setTitleWithMnemonic:[musicURL lastPathComponent]];
+		[fileName setTitleWithMnemonic:obj.fileName];
 		[internalName setTitleWithMnemonic:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
 		[fileSize setTitleWithMnemonic:[NSString stringWithFormat:@"%.2f kiB", theInfo.fileSize / 1024.0]];
 		[musicInstrument setTitleWithMnemonic:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
@@ -1781,6 +1841,11 @@ enum PPMusicToolbarTypes {
 
 - (void)musicListDidChange
 {
+	if (currentlyPlayingIndex.index != -1) {
+		MADStopMusic(MADDriver);
+		MADCleanDriver(MADDriver);
+		MADDisposeMusic(&Music, MADDriver);
+	}
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
 		NSError *err = nil;
 		currentlyPlayingIndex.index = 0;
