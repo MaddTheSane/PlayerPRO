@@ -569,18 +569,18 @@ struct Float80i {
 
 static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 {
-	
 	union {
 		extended80 shortman;
 		struct Float80i intman;
 	} toreturn;
+
 	unsigned int shift, exponent;
 
 	
 	for(shift = 0U; (theNum >> (31 - shift)) == 0U; ++shift)
 		;
 	theNum <<= shift;
-	exponent= 63U - (shift + 32U); /* add 32 for unused second word */
+	exponent = 63U - (shift + 32U); /* add 32 for unused second word */
 
 	toreturn.intman.exp = (exponent+0x3FFF);
 	PPBE16(&toreturn.intman.exp);
@@ -604,12 +604,12 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 
 	SoundDataChunk dataChunk;
 	
-	ApplicationSpecificChunk *nameChunk;
-	ApplicationSpecificChunk *infoChunk;
-	NSInteger macRomanNameLength = 0;
-	NSInteger macRomanInfoLength = 0;
+	NSData *nameData;
+	NSData *infoData;
 
 	{
+		ApplicationSpecificChunk *nameChunk;
+		NSInteger macRomanNameLength = 0;
 		NSData *macRomanNameData = [musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 		macRomanNameLength = [macRomanNameData length];
 		
@@ -624,9 +624,13 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		nameChunk->data[0] = macRomanNameLength;
 		firstChar = &nameChunk->data[1];
 		memcpy(firstChar, [macRomanNameData bytes], macRomanNameLength);
+		nameData = [NSData dataWithBytes:nameChunk length:sizeof(ApplicationSpecificChunk) + macRomanNameLength];
+		free(nameChunk);
 	}
 	
 	{
+		ApplicationSpecificChunk *infoChunk;
+		NSInteger macRomanInfoLength = 0;
 		NSData *macRomanInfoData = [musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 		macRomanInfoLength = [macRomanInfoData length];
 		
@@ -641,12 +645,14 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		infoChunk->data[0] = macRomanInfoLength;
 		firstChar = &infoChunk->data[1];
 		memcpy(firstChar, [macRomanInfoData bytes], macRomanInfoLength);
+		infoData = [NSData dataWithBytes:infoChunk length:sizeof(ApplicationSpecificChunk) + macRomanInfoLength];
+		free(infoChunk);
 	}
 	
 	
 	header.ckID = FORMID;
 	PPBE32(&header.ckID);
-	header.ckSize = dataLen + sizeof(container) + sizeof(dataChunk) + 4 + sizeof(ApplicationSpecificChunk) * 2 + macRomanInfoLength + macRomanNameLength;
+	header.ckSize = dataLen + sizeof(container) + sizeof(dataChunk) + 4 + [nameData length] + [infoData length];
 	PPBE32(&header.ckSize);
 	header.formType = AIFFID;
 	PPBE32(&header.formType);
@@ -657,17 +663,18 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	container.ckSize = sizeof(container);
 	PPBE32(&container.ckSize);
 	short chanNums = 0;
-	container.numSampleFrames = (dataLen + (sett->outPutBits - 1)) / sett->outPutBits;
+	container.numSampleFrames = dataLen / (sett->outPutBits / 8);
 
 	switch (sett->outPutMode) {
 		case DeluxeStereoOutPut:
 		case StereoOutPut:
 		default:
-			//container.numSampleFrames /= 2;
+			container.numSampleFrames /= 2;
 			chanNums = 2;
 			break;
 			
 		case PolyPhonic:
+			container.numSampleFrames /= 4;
 			chanNums = 4;
 			break;
 			
@@ -685,7 +692,6 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	container.sampleRate = convertSampleRateToExtended80(sett->outPutRate);
 	[returnData appendBytes:&container length:sizeof(container)];
 	
-	
 	int dataOffset = 0;
 	dataChunk.ckID = SoundDataID;
 	PPBE32(&dataChunk.ckID);
@@ -697,12 +703,21 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	PPBE32(&dataChunk.offset);
 	
 	[returnData appendBytes:&dataChunk length:sizeof(dataChunk)];
-	[returnData appendData:dat];
-
-	[returnData appendBytes:nameChunk length:sizeof(ApplicationSpecificChunk) + macRomanNameLength];
-	free(nameChunk);
-	[returnData appendBytes:infoChunk length:sizeof(ApplicationSpecificChunk) + macRomanInfoLength];
-	free(infoChunk);
+	if (sett->outPutBits == 16) {
+		short swapdata;
+		int i;
+		for (i = 0; i < dataLen; i += 2) {
+			[dat getBytes:&swapdata range:NSMakeRange(i, 2)];
+			PPBE16(&swapdata);
+			[returnData appendBytes:&swapdata length:2];
+		}
+	} else {
+		[returnData appendData:dat];
+	}
+	
+	[returnData appendData:nameData];
+	[returnData appendData:infoData];
+	
 	return returnData;
 }
 
