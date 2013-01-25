@@ -608,59 +608,110 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	NSData *infoData;
 
 	{
-		ApplicationSpecificChunk *nameChunk;
+#if 0
+		TextChunk *nameChunk;
 		NSInteger macRomanNameLength = 0;
 		NSData *macRomanNameData = [musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 		macRomanNameLength = [macRomanNameData length];
+		BOOL isPadded = (macRomanNameLength & 1);
+		NSInteger nameChunkLen = sizeof(TextChunk) + macRomanNameLength;
+
+		if (!isPadded) {
+			nameChunkLen--;
+		}
 		
-		nameChunk = calloc(sizeof(ApplicationSpecificChunk) + macRomanNameLength, 1);
-		UInt8 *firstChar;
-		nameChunk->applicationSignature = NameID;
-		PPBE32(&nameChunk->applicationSignature);
-		nameChunk->ckID = ApplicationSpecificID;
+		nameChunk = calloc(nameChunkLen, 1);
+		char *firstChar;
+		nameChunk->ckID = NameID;
 		PPBE32(&nameChunk->ckID);
 		nameChunk->ckSize = 1 + macRomanNameLength;
 		PPBE32(&nameChunk->ckSize);
-		nameChunk->data[0] = macRomanNameLength;
-		firstChar = &nameChunk->data[1];
+		nameChunk->text[0] = macRomanNameLength;
+		firstChar = &nameChunk->text[1];
 		memcpy(firstChar, [macRomanNameData bytes], macRomanNameLength);
-		nameData = [NSData dataWithBytes:nameChunk length:sizeof(ApplicationSpecificChunk) + macRomanNameLength];
+		nameData = [NSData dataWithBytes:nameChunk length:nameChunkLen];
 		free(nameChunk);
+#else
+		ChunkHeader nameChunk;
+		NSInteger macRomanNameLength = 0;
+		NSData *macRomanNameData = [musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+		macRomanNameLength = [macRomanNameData length];
+		BOOL isPadded = (macRomanNameLength & 1);
+		
+		nameChunk.ckSize = macRomanNameLength;
+		//char pStrLen = macRomanNameLength;
+		PPBE32(&nameChunk.ckSize);
+		
+		nameChunk.ckID = NameID;
+		PPBE32(&nameChunk.ckID);
+		
+		NSMutableData *tmpNameDat = [NSMutableData dataWithBytes:&nameChunk length:sizeof(ChunkHeader)];
+		//[tmpNameDat appendBytes:&pStrLen length:1];
+		[tmpNameDat appendData:macRomanNameData];
+		if (isPadded) {
+			[tmpNameDat appendBytes:(char)0 length:1];
+		}
+		nameData = tmpNameDat;
+#endif
 	}
 	
 	{
+#if 0
 		ApplicationSpecificChunk *infoChunk;
 		NSInteger macRomanInfoLength = 0;
 		NSData *macRomanInfoData = [musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 		macRomanInfoLength = [macRomanInfoData length];
+		BOOL isPadded = (macRomanInfoLength & 1);
+		NSInteger infoChunkLen = sizeof(ApplicationSpecificChunk) + macRomanInfoLength;
 		
-		UInt8 *firstChar;
-		infoChunk = calloc(sizeof(ApplicationSpecificChunk) + macRomanInfoLength, 0);
+		if (!isPadded) {
+			infoChunkLen--;
+		}
+		
+		infoChunk = calloc(infoChunkLen, 0);
 		infoChunk->applicationSignature = CommentID;
 		PPBE32(&infoChunk->applicationSignature);
 		infoChunk->ckID = ApplicationSpecificID;
 		PPBE32(&infoChunk->ckID);
 		infoChunk->ckSize = macRomanInfoLength + 1;
 		PPBE32(&infoChunk->ckSize);
-		infoChunk->data[0] = macRomanInfoLength;
-		firstChar = &infoChunk->data[1];
-		memcpy(firstChar, [macRomanInfoData bytes], macRomanInfoLength);
-		infoData = [NSData dataWithBytes:infoChunk length:sizeof(ApplicationSpecificChunk) + macRomanInfoLength];
+		memcpy(infoChunk->data, [macRomanInfoData bytes], macRomanInfoLength);
+		infoData = [NSData dataWithBytes:infoChunk length:infoChunkLen];
 		free(infoChunk);
+#else
+		ChunkHeader infoChunk;
+		NSInteger macRomanInfoLength = 0;
+		NSData *macRomanInfoData = [musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+		macRomanInfoLength = [macRomanInfoData length];
+		BOOL isPadded = (macRomanInfoLength & 1);
+		infoChunk.ckSize = macRomanInfoLength;
+		PPBE32(&infoChunk.ckSize);
+		
+		infoChunk.ckID = CommentID;
+		PPBE32(&infoChunk.ckID);
+		NSMutableData *tmpInfoDat = [NSMutableData dataWithBytes:&infoChunk length:sizeof(ChunkHeader)];
+		[tmpInfoDat appendData:macRomanInfoData];
+		
+		if (isPadded) {
+			[tmpInfoDat appendBytes:(char)0 length:1];
+		}
+
+		infoData = tmpInfoDat;
+#endif
 	}
 	
 	
 	header.ckID = FORMID;
 	PPBE32(&header.ckID);
-	header.ckSize = dataLen + sizeof(container) + sizeof(dataChunk) + 4 + [nameData length] + [infoData length];
+	header.ckSize = dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + 4 + [nameData length] + [infoData length];
 	PPBE32(&header.ckSize);
 	header.formType = AIFFID;
 	PPBE32(&header.formType);
-	NSMutableData *returnData = [[NSMutableData alloc] initWithBytes:&header length:sizeof(header)];
+	NSMutableData *returnData = [[NSMutableData alloc] initWithBytes:&header length:sizeof(ContainerChunk)];
 	
 	container.ckID = CommonID;
 	PPBE32(&container.ckID);
-	container.ckSize = sizeof(container);
+	container.ckSize = sizeof(CommonChunk);
 	PPBE32(&container.ckSize);
 	short chanNums = 0;
 	container.numSampleFrames = dataLen / (sett->outPutBits / 8);
@@ -690,7 +741,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	PPBE32(&container.numSampleFrames);
 	
 	container.sampleRate = convertSampleRateToExtended80(sett->outPutRate);
-	[returnData appendBytes:&container length:sizeof(container)];
+	[returnData appendBytes:&container length:sizeof(CommonChunk)];
 	
 	int dataOffset = 0;
 	dataChunk.ckID = SoundDataID;
@@ -702,7 +753,8 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	dataChunk.offset = dataOffset;
 	PPBE32(&dataChunk.offset);
 	
-	[returnData appendBytes:&dataChunk length:sizeof(dataChunk)];
+
+	[returnData appendBytes:&dataChunk length:sizeof(SoundDataChunk)];
 	if (sett->outPutBits == 16) {
 		short swapdata;
 		int i;
@@ -823,6 +875,12 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 
 						[saveData writeToURL:[savePanel URL] atomically:YES];
 						RELEASEOBJ(saveData);
+						dispatch_async(dispatch_get_main_queue(), ^{
+							NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
+							if (retVal == NSAlertAlternateReturn) {
+								//TODO: show file in finder
+							}
+						});
 					});
 				} else {
 					MADEndExport(MADDriver);
@@ -879,6 +937,13 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 						RELEASEOBJ(session);
 						RELEASEOBJ(exportMov);
 						
+						dispatch_async(dispatch_get_main_queue(), ^{
+							NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
+							if (retVal == NSAlertAlternateReturn) {
+								//TODO: show file in finder
+							}
+						});
+
 						
 						RELEASEOBJ(saveData);
 						//});
