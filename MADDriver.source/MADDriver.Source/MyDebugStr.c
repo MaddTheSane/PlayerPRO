@@ -27,7 +27,7 @@ void PPDebugStr( short line, Ptr file, Ptr text)
 	if (MyDebugFunc != NULL) {
 		(*MyDebugFunc)(line, file, text);
 	} else {
-		NSLog(CFSTR("%s:%u error text: %s!"), file, line, text);
+		NSLog(CFSTR("PlayerPROCore: %s:%u error text: %s!"), file, line, text);
 		
 		abort();
 	}
@@ -40,7 +40,7 @@ void PPDebugStr( short line, Ptr file, Ptr text)
 	if (MyDebugFunc != NULL) {
 		(*MyDebugFunc)(line, file, text);
 	} else {
-		fprintf(stderr, "%s:%u error text: %s!", file, line, text);
+		fprintf(stderr, "PlayerPROCore: %s:%u error text: %s!", file, line, text);
 		
 		abort();
 	}
