@@ -638,18 +638,20 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		macRomanNameLength = [macRomanNameData length];
 		BOOL isPadded = (macRomanNameLength & 1);
 		
-		nameChunk.ckSize = macRomanNameLength;
-		//char pStrLen = macRomanNameLength;
+		nameChunk.ckSize = macRomanNameLength + 1;
+		char pStrLen = macRomanNameLength;
 		PPBE32(&nameChunk.ckSize);
 		
 		nameChunk.ckID = NameID;
 		PPBE32(&nameChunk.ckID);
 		
 		NSMutableData *tmpNameDat = [NSMutableData dataWithBytes:&nameChunk length:sizeof(ChunkHeader)];
-		//[tmpNameDat appendBytes:&pStrLen length:1];
+		[tmpNameDat appendBytes:&pStrLen length:1];
 		[tmpNameDat appendData:macRomanNameData];
-		if (isPadded) {
-			[tmpNameDat appendBytes:(char)0 length:1];
+		
+		if (!isPadded) {
+			char padbyte = 0;
+			[tmpNameDat appendBytes:&padbyte length:1];
 		}
 		nameData = tmpNameDat;
 #endif
@@ -684,16 +686,19 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		NSData *macRomanInfoData = [musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 		macRomanInfoLength = [macRomanInfoData length];
 		BOOL isPadded = (macRomanInfoLength & 1);
-		infoChunk.ckSize = macRomanInfoLength;
+		infoChunk.ckSize = macRomanInfoLength + 1;
+		char pStrLen = macRomanInfoLength;
 		PPBE32(&infoChunk.ckSize);
 		
 		infoChunk.ckID = CommentID;
 		PPBE32(&infoChunk.ckID);
 		NSMutableData *tmpInfoDat = [NSMutableData dataWithBytes:&infoChunk length:sizeof(ChunkHeader)];
+		[tmpInfoDat appendBytes:&pStrLen length:1];
 		[tmpInfoDat appendData:macRomanInfoData];
 		
-		if (isPadded) {
-			[tmpInfoDat appendBytes:(char)0 length:1];
+		if (!isPadded) {
+			char padbyte = 0;
+			[tmpInfoDat appendBytes:&padbyte length:1];
 		}
 
 		infoData = tmpInfoDat;
@@ -714,24 +719,27 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	container.ckSize = sizeof(CommonChunk);
 	PPBE32(&container.ckSize);
 	short chanNums = 0;
-	container.numSampleFrames = dataLen / (sett->outPutBits / 8);
+	{
+		int todiv = sett->outPutBits / 8;
 
-	switch (sett->outPutMode) {
-		case DeluxeStereoOutPut:
-		case StereoOutPut:
-		default:
-			container.numSampleFrames /= 2;
-			chanNums = 2;
-			break;
-			
-		case PolyPhonic:
-			container.numSampleFrames /= 4;
-			chanNums = 4;
-			break;
-			
-		case MonoOutPut:
-			chanNums = 1;
-			break;
+		switch (sett->outPutMode) {
+			case DeluxeStereoOutPut:
+			case StereoOutPut:
+			default:
+				todiv *= 2;
+				chanNums = 2;
+				break;
+				
+			case PolyPhonic:
+				todiv *= 4;
+				chanNums = 4;
+				break;
+				
+			case MonoOutPut:
+				chanNums = 1;
+				break;
+		}
+		container.numSampleFrames = (dataLen + (todiv - 1)) / todiv;
 	}
 
 	container.numChannels = chanNums;
