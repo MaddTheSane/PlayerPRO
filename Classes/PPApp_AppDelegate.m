@@ -92,6 +92,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 
 @interface PPApp_AppDelegate ()
 - (void)selectCurrentlyPlayingMusic;
+- (void)selectMusicAtIndex:(NSInteger)anIdx;
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(out NSError *__autoreleasing*)theErr;
 - (void)musicListContentsDidMove;
 - (BOOL)musicListWillChange;
@@ -117,7 +118,23 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[self willChangeValueForKey:kMusicListKVO];
 	BOOL okayMusic = [musicList addMusicURL:theURL];
 	[self didChangeValueForKey:kMusicListKVO];
-	if (load && okayMusic && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
+	if (!okayMusic) {
+		NSInteger similarMusicIndex = [musicList indexOfObjectSimilarToURL:theURL];
+		if (similarMusicIndex == NSNotFound) {
+			return;
+		}
+		if (load && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
+			currentlyPlayingIndex.index = similarMusicIndex;
+			[self selectCurrentlyPlayingMusic];
+			NSError *err = nil;
+			if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
+				NSAlert *errAlert = [NSAlert alertWithError:err];
+				[errAlert runModal];
+			}
+		} else {
+			[self selectMusicAtIndex:similarMusicIndex];
+		}
+	} else if (load && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
 		currentlyPlayingIndex.index = [musicList countOfMusicList] - 1;
 		//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
 		[self selectCurrentlyPlayingMusic];
@@ -126,6 +143,8 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 			NSAlert *errAlert = [NSAlert alertWithError:err];
 			[errAlert runModal];
 		}
+	} else {
+		[self selectMusicAtIndex:[musicList countOfMusicList] - 1];
 	}
 }
 
@@ -273,14 +292,23 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
     [window makeKeyAndOrderFront:sender];
 }
 
+- (void)selectMusicAtIndex:(NSInteger)anIdx
+{
+	if (anIdx < 0 || anIdx >= [musicList countOfMusicList]) {
+		NSBeep();
+		return;
+	}
+	NSIndexSet *idx = [[NSIndexSet alloc] initWithIndex:anIdx];
+	[tableView selectRowIndexes:idx byExtendingSelection:NO];
+	[tableView scrollRowToVisible:anIdx];
+	RELEASEOBJ(idx);
+}
+
 - (void)selectCurrentlyPlayingMusic
 {
 	if (currentlyPlayingIndex.index >= 0) {
-		currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
-		NSIndexSet *idx = [[NSIndexSet alloc] initWithIndex:currentlyPlayingIndex.index];
-		[tableView selectRowIndexes:idx byExtendingSelection:NO];
-		[tableView scrollRowToVisible:currentlyPlayingIndex.index];
-		RELEASEOBJ(idx);
+		//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
+		[self selectMusicAtIndex:currentlyPlayingIndex.index];
 	}
 }
 
@@ -591,8 +619,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	
 	return toreturn.shortman;
 }
-
-Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
 
 - (NSMutableData *)createAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat
 {
@@ -1353,7 +1379,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	
 	for (i = 0; i < MADLib->TotalPlug; i++) {
 		if (MADLib->ThePlug[i].mode == MADPlugImportExport || MADLib->ThePlug[i].mode == MADPlugExport) {
-			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@...",BRIDGE(NSString*, MADLib->ThePlug[i].MenuName)] action:@selector(exportMusicAs:) keyEquivalent:@""];
+			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@...", BRIDGE(NSString*, MADLib->ThePlug[i].MenuName)] action:@selector(exportMusicAs:) keyEquivalent:@""];
 			[mi setTag:i];
 			[mi setTarget:self];
 			[musicExportMenu addItem:mi];
@@ -1375,6 +1401,10 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	
 	timeChecker = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0] interval:1/8.0 target:self selector:@selector(updateMusicStats:) userInfo:nil repeats:YES];
 	[[NSRunLoop mainRunLoop] addTimer:timeChecker forMode:NSDefaultRunLoopMode];
+	NSUInteger lostCount = musicList.lostMusicCount;
+	if (lostCount) {
+		NSRunAlertPanel(@"Unresolvable files", @"There were %lu file(s) that were unable to be resolved.", nil, nil, nil, (unsigned long)lostCount);
+	}
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification
@@ -1618,7 +1648,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 		if (currentlyPlayingIndex.index == -1) {
 			selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The new music file has unsaved changes. Do you want to save?", @"New unsaved file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"));
 		} else {
-			selection = NSRunAlertPanel(@"Unsaved Changes", @"The music file \"%@\" has unsaved changes. Do you want to save?", @"Save", @"Don't Save", @"Cancel", [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
+			selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes",@"Unsaved Changes"), NSLocalizedString(@"The music file \"%@\" has unsaved changes. Do you want to save?", @"Open unsaved file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"), [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
 		}
 		switch (selection) {
 			case NSAlertDefaultReturn:
@@ -1649,7 +1679,6 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 						[self saveMusic:nil];
 					case NSAlertAlternateReturn:
 					default:
-
 						break;
 						
 					case NSAlertOtherReturn:
@@ -1794,6 +1823,7 @@ enum PPMusicToolbarTypes {
 	}
 
 	NSDictionary *otherDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:@"com.quadmation.playerpro.pcmd"], @"PCMD", nil];
+	
 	for (NSString *key in otherDict) {
 		NSArray *tempArray = [otherDict objectForKey:key];
 		[supportedUTIs addObjectsFromArray:tempArray];
@@ -1979,6 +2009,10 @@ enum PPMusicToolbarTypes {
 			NSAlert *alert = [NSAlert alertWithError:err];
 			[alert runModal];
 		}
+	}
+	NSUInteger lostCount = musicList.lostMusicCount;
+	if (lostCount) {
+		NSRunAlertPanel(@"Unresolvable files", @"There were %lu file(s) that were unable to be resolved.", nil, nil, nil, (unsigned long)lostCount);
 	}
 }
 

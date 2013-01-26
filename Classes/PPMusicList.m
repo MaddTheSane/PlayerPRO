@@ -399,14 +399,14 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (NSInteger)indexOfObjectSimilarToURL:(NSURL*)theURL
 {
-	NSInteger retIdx = -1, i;
+	NSUInteger i;
 	for (i = 0; i < [musicList count]; i++) {
 		if ([[musicList objectAtIndex:i] isEqual:theURL]) {
-			retIdx = i;
+			return i;
 			break;
 		}
 	}
-	return retIdx;
+	return NSNotFound;
 }
 
 - (void)removeObjectAtIndex:(NSUInteger)object
