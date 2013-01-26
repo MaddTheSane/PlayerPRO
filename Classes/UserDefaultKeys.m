@@ -20,7 +20,13 @@ NSString * const PPDriverDidChange = @"PlayerPRO Driver did change";
 
 NSString * const PPDoubleDash = @"--";
 NSString * const kMusicListKVO = @"musicList";
+
 NSString * const MADNativeUTI = @"com.quadmation.playerpro.madk";
+NSString * const PPMusicListUTI = @"net.sourceforge.playerpro.musiclist";
+NSString * const PPOldMusicListUTI = @"net.sourceforge.playerpro.stcfmusiclist";
+NSString * const PPPCMDUTI = @"com.quadmation.playerpro.pcmd";
+NSString * const PPGenericTrackerUTI = @"net.sourceforge.playerpro.tracker";
+NSString * const PPGenericInstrumentUTI = @"net.sourceforge.playerpro.instrumentfile";
 
 NSString * const PPRememberMusicList = @"Remember Music List";
 NSString * const PPLoadMusicAtListLoad = @"Load music when loading list";

@@ -1617,7 +1617,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	NSInteger selMusic = [tableView selectedRow];
 	if (currentlyPlayingIndex.index == selMusic) {
 		if (Music->hasChanged) {
-			NSInteger selection = NSRunAlertPanel(@"Unsaved Changes", @"The music file \"%@\" has unsaved changes. Do you want to save?", @"Yes", @"Don't Save", @"Cancel", [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
+			NSInteger selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes",@"Unsaved Changes"), NSLocalizedString(@"The music file \"%@\" has unsaved changes. Do you want to save?", @"edited file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"), [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
 			switch (selection) {
 				case NSAlertDefaultReturn:
 					[self saveMusic:nil];
@@ -1751,10 +1751,10 @@ enum PPMusicToolbarTypes {
 		hasAPPLPlug = YES;
 	}
 
-	if ([sharedWorkspace type:theUTI conformsToType:@"net.sourceforge.playerpro.tracker"] || (hasAPPLPlug &&  [sharedWorkspace type:theUTI conformsToType:BRIDGE(NSString*, kUTTypeApplicationFile)])) {
+	if ([sharedWorkspace type:theUTI conformsToType:PPGenericTrackerUTI] || (hasAPPLPlug &&  [sharedWorkspace type:theUTI conformsToType:BRIDGE(NSString*, kUTTypeApplicationFile)])) {
 		[self addMusicToMusicList:theURL];
 		return YES;
-	}else if ([sharedWorkspace type:theUTI conformsToType:@"net.sourceforge.playerpro.musiclist"]) {
+	}else if ([sharedWorkspace type:theUTI conformsToType:PPMusicListUTI]) {
 		if ([self musicListWillChange]) {
 			[self willChangeValueForKey:kMusicListKVO];
 			[musicList loadMusicListAtURL:theURL];
@@ -1762,7 +1762,7 @@ enum PPMusicToolbarTypes {
 			[self musicListDidChange];
 			return YES;
 		}
-	} else if ([sharedWorkspace type:theUTI conformsToType:@"net.sourceforge.playerpro.stcfmusiclist"]) {
+	} else if ([sharedWorkspace type:theUTI conformsToType:PPOldMusicListUTI]) {
 		if ([self musicListWillChange]) {
 			[self willChangeValueForKey:kMusicListKVO];
 			[musicList loadOldMusicListAtURL:theURL];
@@ -1770,7 +1770,7 @@ enum PPMusicToolbarTypes {
 			[self musicListDidChange];
 			return YES;
 		}
-	} else if([sharedWorkspace type:theUTI conformsToType:@"net.sourceforge.playerpro.instrumentfile"]) {
+	} else if([sharedWorkspace type:theUTI conformsToType:PPGenericInstrumentUTI]) {
 		if ([instrumentController isWindowLoaded]) {
 			NSError *theErr = nil;
 			if (![instrumentController importSampleFromURL:theURL error:&theErr])
@@ -1781,7 +1781,7 @@ enum PPMusicToolbarTypes {
 			}
 			return YES;
 		} else return NO;
-	} else if ([sharedWorkspace type:theUTI conformsToType:@"com.quadmation.playerpro.pcmd"]) {
+	} else if ([sharedWorkspace type:theUTI conformsToType:PPPCMDUTI]) {
 		if ([instrumentController isWindowLoaded]) {
 			OSErr theOSErr = [instrumentController importPcmdFromURL:theURL];
 			if (theOSErr != noErr) {
@@ -1793,16 +1793,33 @@ enum PPMusicToolbarTypes {
 			}
 			return YES;
 		}
+	} else if ([instrumentController isWindowLoaded]) {
+		NSInteger i;
+		for (i = 0; i < [instrumentImporter plugInCount]; i++) {
+			PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
+			for (NSString *uti in [obj UTITypes]) {
+				if ([sharedWorkspace type:theUTI conformsToType:uti]) {
+					NSError *theErr;
+					if (![instrumentController importSampleFromURL:theURL error:&theErr]) {
+						NSAlert *theAlert = [NSAlert alertWithError:theErr];
+						[theAlert runModal];
+						return NO;
+					}
+					return YES;
+				}
+			}
+			
+		}
 	}
 	return NO;
 }
 
 - (IBAction)openFile:(id)sender {
 	NSOpenPanel *panel = RETAINOBJ([NSOpenPanel openPanel]);
-	NSMutableArray *supportedUTIs = [NSMutableArray arrayWithObjects:MADNativeUTI, @"net.sourceforge.playerpro.musiclist", @"net.sourceforge.playerpro.stcfmusiclist", nil];
+	NSMutableArray *supportedUTIs = [NSMutableArray arrayWithObjects:MADNativeUTI, PPMusicListUTI, PPOldMusicListUTI, nil];
 	int i = 0;
 	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithObject:[NSArray arrayWithObject:MADNativeUTI] forKey:@"MADK Tracker"];
-	NSDictionary *playlistDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:@"net.sourceforge.playerpro.musiclist"], @"PlayerPRO Music List", [NSArray arrayWithObject:@"net.sourceforge.playerpro.stcfmusiclist"], @"PlayerPRO Old Music List", nil];
+	NSDictionary *playlistDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:PPMusicListUTI], @"PlayerPRO Music List", [NSArray arrayWithObject:PPOldMusicListUTI], @"PlayerPRO Old Music List", nil];
 	for (i = 0; i < MADLib->TotalPlug; i++) {
 		NSArray *tempArray = BRIDGE(NSArray*, MADLib->ThePlug[i].UTItypes);
 		[supportedUTIs addObjectsFromArray:tempArray];
@@ -1822,7 +1839,7 @@ enum PPMusicToolbarTypes {
 		}
 	}
 
-	NSDictionary *otherDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:@"com.quadmation.playerpro.pcmd"], @"PCMD", nil];
+	NSDictionary *otherDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:PPPCMDUTI], @"PCMD", nil];
 	
 	for (NSString *key in otherDict) {
 		NSArray *tempArray = [otherDict objectForKey:key];
@@ -1854,7 +1871,7 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)saveMusicList:(id)sender {
 	NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
-	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"net.sourceforge.playerpro.musiclist"]];
+	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:PPMusicListUTI]];
 	[savePanel setCanCreateDirectories:YES];
 	[savePanel setCanSelectHiddenExtension:YES];
 	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
@@ -2023,7 +2040,7 @@ enum PPMusicToolbarTypes {
 			if (currentlyPlayingIndex.index == -1) {
 				return YES;
 			} else {
-				NSInteger selection = NSRunAlertPanel(@"Unsaved Changes", @"The music file \"%@\" has unsaved changes. Do you want to save?", @"Save", @"Don't Save", @"Cancel", [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
+				NSInteger selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The music file \"%@\" has unsaved changes. Do you want to save?", @"file is unsaved"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't save"), NSLocalizedString(@"Cancel", @"Cancel"), [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
 				switch (selection) {
 					case NSAlertDefaultReturn:
 						[self saveMusic:nil];
