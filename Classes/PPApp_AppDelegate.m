@@ -859,6 +859,10 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	return [NSApp runModalForWindow:exportWindow];
 }
 
+#ifndef PPEXPORT_CREATE_TMP_AIFF
+#define PPEXPORT_CREATE_TMP_AIFF 1
+#endif
+
 - (IBAction)exportMusicAs:(id)sender
 {
 	NSInteger tag = [sender tag];
@@ -879,7 +883,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
-						MADDriver->currentlyExporting = NO;
+						MADEndExport(MADDriver);
 
 						[saveData writeToURL:[savePanel URL] atomically:YES];
 						RELEASEOBJ(saveData);
@@ -904,7 +908,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 			//MP4
 		{
 			NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
-			[savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"public.mpeg-4-audio"]];
+			[savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"com.apple.m4a-audio"]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
 			[savePanel setNameFieldStringValue:musicName];
@@ -915,24 +919,51 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
 						NSString *oldMusicName = RETAINOBJ(musicName);
-						MADDriver->currentlyExporting = NO;
+						MADEndExport(MADDriver);
+						NSError *expErr = nil;
+						dispatch_block_t errBlock = ^{
+							NSRunAlertPanel(@"Export failed", @"Export of the music file failed.", nil, nil, nil);
+						};
+#if PPEXPORT_CREATE_TMP_AIFF
+						NSURL *tmpURL = [[NSURL fileURLWithPath:NSTemporaryDirectory()] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
+						
+						[saveData writeToURL:tmpURL atomically:NO];
+						QTMovie *exportMov = [[QTMovie alloc] initWithURL:tmpURL error:&expErr];
+						[exportMov setAttribute:oldMusicName forKey:QTMovieDisplayNameAttribute];
+#else
+						//Attempts of using data directly have resulted in internal assertion failures
+						QTDataReference *dataRef = [[QTDataReference alloc] initWithReferenceToData:saveData name:nil MIMEType:@"audio/aiff"];
 						
 						//dispatch_async(dispatch_get_main_queue(), ^{
-						NSError *expErr = nil;
-						QTMovie *exportMov = [[QTMovie alloc] initWithData:saveData error:&expErr];
+						QTMovie *exportMov = [[QTMovie alloc] initWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:dataRef, QTMovieDataReferenceAttribute, @NO, QTMovieOpenAsyncOKAttribute, @YES, QTMovieDontInteractWithUserAttribute, @NO, QTMovieOpenForPlaybackAttribute, oldMusicName, QTMovieDisplayNameAttribute, nil] error:&expErr];
+#endif
 						if (!exportMov) {
 							NSLog(@"Init Failed for %@, error: %@", oldMusicName, [expErr localizedDescription]);
+#if !PPEXPORT_CREATE_TMP_AIFF
+							RELEASEOBJ(dataRef);
+#endif
 							RELEASEOBJ(saveData);
 							RELEASEOBJ(oldMusicName);
+							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
+
+							dispatch_async(dispatch_get_main_queue(), errBlock);
+							
 							return;
 						}
 						
 						QTExportSession *session = [[QTExportSession alloc] initWithMovie:exportMov exportOptions:[QTExportOptions exportOptionsWithIdentifier:QTExportOptionsAppleM4A] outputURL:[savePanel URL] error:&expErr];
 						if (!session) {
 							NSLog(@"Export session creation for %@ failed, error: %@", oldMusicName, [expErr localizedDescription]);
+#if !PPEXPORT_CREATE_TMP_AIFF
+							RELEASEOBJ(dataRef);
+#endif
 							RELEASEOBJ(saveData);
 							RELEASEOBJ(exportMov);
 							RELEASEOBJ(oldMusicName);
+							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
+
+							dispatch_async(dispatch_get_main_queue(), errBlock);
+							
 							return;
 						}
 						[session run];
@@ -940,7 +971,11 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 						if (![session waitUntilFinished:&expErr])
 						{
 							NSLog(@"export of \"%@\" failed, error: %@", oldMusicName, [expErr localizedDescription]);
+							dispatch_async(dispatch_get_main_queue(), errBlock);
 						}
+#if !PPEXPORT_CREATE_TMP_AIFF
+						RELEASEOBJ(dataRef);
+#endif
 						RELEASEOBJ(oldMusicName);
 						RELEASEOBJ(session);
 						RELEASEOBJ(exportMov);
@@ -952,7 +987,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 							}
 						});
 
-						
+						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 						RELEASEOBJ(saveData);
 						//});
 					});
