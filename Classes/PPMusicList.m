@@ -63,6 +63,10 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (void)setMusicUrl:(NSURL *)amusicUrl
 {
+	if (amusicUrl == nil) {
+		return;
+	}
+
 #if __has_feature(objc_arc)
 	musicUrl = amusicUrl;
 	
@@ -77,9 +81,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	//fileName = [[musicUrl lastPathComponent] copy];
 	[self didChangeValueForKey:@"fileName"];
 	
-	if (tempUrl != nil) {
-		[tempUrl release];
-	}
+	[tempUrl release];
 #endif
 }
 
@@ -167,6 +169,8 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 @implementation PPMusicList
 
+@synthesize lostMusicCount;
+
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"Size: %ld Contents: %@", (long)[musicList count], [musicList description]];
@@ -227,6 +231,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSData *listData = [defaults dataForKey:PPMMusicList];
 	PPMusicList *preList = [NSKeyedUnarchiver unarchiveObjectWithData:listData];
+	lostMusicCount = preList.lostMusicCount;
 	NSInteger i = 0;
 	NSAssert([self countOfMusicList] == 0, @"Music list should be empty!");
 	//[musicList removeAllObjects];
@@ -248,6 +253,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen
 {
+	lostMusicCount = 0;
 	ResFileRefNum refNum;
 	Handle aHandle;
 	FSRef theRef;
@@ -298,18 +304,21 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 		CFRelease(CFaStrArray);
 		
 		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, together, kCFURLHFSPathStyle, false));
+		BOOL validPath = [[NSFileManager defaultManager] fileExistsAtPath:[fullPath path]];
 		CFRelease(together);
 		NSURL *refURL = [fullPath fileReferenceURL];
+		if (validPath) {
+			PPMusicListObject *obj = nil;
+			if (refURL) {
+				obj = [[PPMusicListObject alloc] initWithURL:refURL];
+			} else {
+				obj = [[PPMusicListObject alloc] initWithURL:fullPath];
+			}
+			
+			[newArray addObject:obj];
+			RELEASEOBJ(obj);
+		} else lostMusicCount++;
 		
-		PPMusicListObject *obj = nil;
-		if (refURL) {
-			obj = [[PPMusicListObject alloc] initWithURL:refURL];
-		} else {
-			obj = [[PPMusicListObject alloc] initWithURL:fullPath];
-		}
-		
-		[newArray addObject:obj];
-		RELEASEOBJ(obj);
 	}
 	HUnlock( aHandle);
 	DisposeHandle( aHandle);
@@ -331,6 +340,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 		return NO;
 	}
 	//[musicList removeAllObjects];
+	lostMusicCount = preList.lostMusicCount;
 	NSMutableArray *newArray = [[NSMutableArray alloc] init];
 	for (i = 0; i < [preList countOfMusicList]; i++) {
 		[newArray insertObject:[preList objectInMusicListAtIndex:i] atIndex:i];
@@ -345,6 +355,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	self = [super init];
 	if (self) {
 		musicList = [[NSMutableArray alloc] init];
+		lostMusicCount = 0;
 	}
 	return self;
 }
@@ -386,6 +397,18 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	return YES;
 }
 
+- (NSInteger)indexOfObjectSimilarToURL:(NSURL*)theURL
+{
+	NSInteger retIdx = -1, i;
+	for (i = 0; i < [musicList count]; i++) {
+		if ([[musicList objectAtIndex:i] isEqual:theURL]) {
+			retIdx = i;
+			break;
+		}
+	}
+	return retIdx;
+}
+
 - (void)removeObjectAtIndex:(NSUInteger)object
 {
 	[self removeObjectInMusicListAtIndex:object];
@@ -402,6 +425,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 {
 	if ((self = [super init])) 
 	{
+		lostMusicCount = 0;
 		NSMutableArray *BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY];
 		if (!BookmarkArray) {
 			AUTORELEASEOBJNORETURN(self);
@@ -418,6 +442,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 			}
 #endif
 			if (!fullURL) {
+				lostMusicCount++;
 				continue;
 			}
 			NSURL *refURL = [fullURL fileReferenceURL];

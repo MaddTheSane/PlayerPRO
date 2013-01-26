@@ -22,8 +22,12 @@
 @end
 
 @interface PPMusicList : NSObject <NSCoding> {
-	NSMutableArray *musicList;
+	NSMutableArray	*musicList;
+	NSUInteger		lostMusicCount;
 }
+
+@property (readonly) NSUInteger lostMusicCount;
+
 - (void)sortMusicList;
 
 - (void)loadMusicListFromPreferences;
@@ -36,6 +40,8 @@
 - (BOOL)addMusicURL:(NSURL *)musicToLoad;
 - (void)removeObjectAtIndex:(NSUInteger)object;
 - (void)clearMusicList;
+
+- (NSInteger)indexOfObjectSimilarToURL:(NSURL*)theURL;
 
 //KVC functions
 - (NSUInteger)countOfMusicList;
