@@ -126,7 +126,7 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 
 	if([musicUrl getResourceValue:&val forKey:NSURLLocalizedNameKey error:&err] == NO)
 	{
-		NSLog(@"PPMusicListObject: Could not find out if extension is hidden, error: %@", [err localizedDescription]);
+		NSLog(@"PPMusicListObject: Could not find out if extension is hidden in file \"%@\", error: %@", [musicUrl path], [err localizedDescription]);
 		return [musicUrl lastPathComponent];
 	} else {
 		return val;

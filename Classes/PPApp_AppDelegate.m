@@ -716,7 +716,7 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 	
 	container.ckID = CommonID;
 	PPBE32(&container.ckID);
-	container.ckSize = sizeof(CommonChunk);
+	container.ckSize = /*sizeof(CommonChunk)*/ 18;
 	PPBE32(&container.ckSize);
 	short chanNums = 0;
 	{
