@@ -89,6 +89,8 @@
 {
 	if (driverRec && *driverRec) {
 		theInfo.driverRec = *driverRec;
+	} else {
+		theInfo.driverRec = NULL;
 	}
 }
 

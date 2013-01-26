@@ -48,15 +48,6 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	return data;
 }
 
-/*
-static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
-{
-	NSString *rhsString = [rhs fileName];
-	NSString *lhsString = [lhs fileName];
-	return [rhsString localizedStandardCompare:lhsString];
-}
- */
-
 @implementation PPMusicListObject
 
 @synthesize musicUrl;
@@ -133,6 +124,11 @@ static NSInteger SortUsingFileName(id rhs, id lhs, void *unused)
 	} else {
 		return val;
 	}
+}
+
+- (NSUInteger)hash
+{
+	return [[[musicUrl absoluteURL] path] hash];
 }
 
 - (id)initWithURL:(NSURL *)aURL

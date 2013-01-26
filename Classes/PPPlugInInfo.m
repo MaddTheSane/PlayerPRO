@@ -48,7 +48,11 @@
 			return NO;
 		} else return YES;
 	} else return NO;
-	
+}
+
+- (NSUInteger)hash
+{
+	return [plugName hash] ^ [plugType hash];
 }
 
 #if !__has_feature(objc_arc)

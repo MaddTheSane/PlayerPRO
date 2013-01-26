@@ -35,6 +35,11 @@
 	return NO;
 }
 
+- (NSUInteger)hash
+{
+	return [menuName hash];
+}
+
 - (id)initWithBundle:(NSBundle *)aBund
 {
 	if (self = [super init]) {

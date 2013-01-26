@@ -79,6 +79,8 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 {
 	if (driverRec && *driverRec) {
 		theInfo.driverRec = *driverRec;
+	} else {
+		theInfo.driverRec = NULL;
 	}
 }
 

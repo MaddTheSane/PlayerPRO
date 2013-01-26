@@ -33,6 +33,11 @@
 	return NO;
 }
 
+- (NSUInteger)hash
+{
+	return [menuName hash];
+}
+
 
 #define PPDGLoadPlug(theBundle) (PPDigitalPlugin**)GetCOMPlugInterface(theBundle, kPlayerPRODigitalPlugTypeID, kPlayerPRODigitalPlugInterfaceID)
 
