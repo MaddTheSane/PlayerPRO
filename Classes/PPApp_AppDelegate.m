@@ -931,8 +931,8 @@ Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intD
 						QTMovie *exportMov = [[QTMovie alloc] initWithURL:tmpURL error:&expErr];
 						[exportMov setAttribute:oldMusicName forKey:QTMovieDisplayNameAttribute];
 #else
-						//Attempts of using data directly have resulted in internal assertion failures
-						QTDataReference *dataRef = [[QTDataReference alloc] initWithReferenceToData:saveData name:nil MIMEType:@"audio/aiff"];
+						//Attempts of using data directly have resulted in internal assertion failures in the export session initialization code
+						QTDataReference *dataRef = [[QTDataReference alloc] initWithReferenceToData:saveData name:oldMusicName MIMEType:@"audio/aiff"];
 						
 						//dispatch_async(dispatch_get_main_queue(), ^{
 						QTMovie *exportMov = [[QTMovie alloc] initWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:dataRef, QTMovieDataReferenceAttribute, @NO, QTMovieOpenAsyncOKAttribute, @YES, QTMovieDontInteractWithUserAttribute, @NO, QTMovieOpenForPlaybackAttribute, oldMusicName, QTMovieDisplayNameAttribute, nil] error:&expErr];
