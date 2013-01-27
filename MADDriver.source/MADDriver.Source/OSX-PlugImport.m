@@ -185,6 +185,10 @@ badplug:
 
 static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
+	if (!tempBundle) {
+		return FALSE;
+	}
+
 	if ((inMADDriver->TotalPlug + 1) >= MAXPLUG) {
 		PPDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
 		return false;
@@ -198,9 +202,6 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 	
 	PlugInfo *FillPlug = &(inMADDriver->ThePlug[inMADDriver->TotalPlug]);
 	{
-		if (!tempBundle) {
-			return FALSE;
-		}
 		FillPlug->version = CFBundleGetVersionNumber(tempBundle);
 		
 		CFTypeID InfoDictionaryType;
@@ -251,7 +252,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 							CFRelease(inMADDriver->ThePlug[i].MenuName);
 							CFRelease(inMADDriver->ThePlug[i].UTItypes);
 							inMADDriver->ThePlug[i] = newInfo;
-							inMADDriver->ThePlug[i].version = FillPlug->version;
+							inMADDriver->ThePlug[i].version = CFBundleGetVersionNumber(tempBundle);
 							strcpy(inMADDriver->ThePlug[i].type, FillPlug->type);
 							bzero(FillPlug, sizeof(PlugInfo));
 							//NSLog(@"Using %@ (Newer than previous)", tempBundle);
@@ -262,6 +263,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 						}
 					} else {
 						//NSLog(@"NOT using %@ (Not newer than previous)", tempBundle);
+						bzero(FillPlug, sizeof(PlugInfo));
 						return false;
 					}
 				}
@@ -278,6 +280,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 	}
 badplug:
 	NSLog(@"Error with plug-in %@", tempBundle);
+	bzero(FillPlug, sizeof(PlugInfo));
 	return false;
 }
 
@@ -289,7 +292,6 @@ badplug:
  * User Application Support/PlayerPRO/PlugIns
  * Application Contents/PlugIns
  * Framework PlugIns
- * Application Contents/Frameworks/PlugIns
  */
 
 static CFMutableArrayRef CreateDefaultPluginFolderLocations()
