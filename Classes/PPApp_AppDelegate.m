@@ -620,7 +620,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	return toreturn.shortman;
 }
 
-- (NSMutableData *)createAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat
+- (NSMutableData *)newAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat
 {
 	NSInteger dataLen = [dat length];
 	
@@ -861,7 +861,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	{
 		[mutData appendBytes:soundPtr length:full];
 	}
-	NSMutableData *tmpData = [self createAIFFDataFromSettings:theSet data:mutData];
+	NSMutableData *tmpData = [self newAIFFDataFromSettings:theSet data:mutData];
 	RELEASEOBJ(mutData);
 	mutData = nil;
 	NSData *retData = [NSData dataWithData:tmpData];

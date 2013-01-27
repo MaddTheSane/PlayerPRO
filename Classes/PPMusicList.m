@@ -395,7 +395,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (NSInteger)indexOfObjectSimilarToURL:(NSURL*)theURL
 {
-	NSUInteger i;
+	NSInteger i;
 	for (i = 0; i < [musicList count]; i++) {
 		if ([[musicList objectAtIndex:i] isEqual:theURL]) {
 			return i;
