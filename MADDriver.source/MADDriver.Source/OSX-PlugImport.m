@@ -198,6 +198,9 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 	
 	PlugInfo *FillPlug = &(inMADDriver->ThePlug[inMADDriver->TotalPlug]);
 	{
+		if (!tempBundle) {
+			return FALSE;
+		}
 		FillPlug->version = CFBundleGetVersionNumber(tempBundle);
 		
 		CFTypeID InfoDictionaryType;
@@ -250,6 +253,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 							inMADDriver->ThePlug[i] = newInfo;
 							inMADDriver->ThePlug[i].version = FillPlug->version;
 							strcpy(inMADDriver->ThePlug[i].type, FillPlug->type);
+							bzero(FillPlug, sizeof(PlugInfo));
 							//NSLog(@"Using %@ (Newer than previous)", tempBundle);
 							return true;
 						} else {
