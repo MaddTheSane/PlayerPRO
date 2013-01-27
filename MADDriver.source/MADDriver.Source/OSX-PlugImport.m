@@ -251,9 +251,10 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 							CFRelease(inMADDriver->ThePlug[i].file);
 							CFRelease(inMADDriver->ThePlug[i].MenuName);
 							CFRelease(inMADDriver->ThePlug[i].UTItypes);
+							strcpy(newInfo.type, inMADDriver->ThePlug[i].type);
 							inMADDriver->ThePlug[i] = newInfo;
 							inMADDriver->ThePlug[i].version = CFBundleGetVersionNumber(tempBundle);
-							strcpy(inMADDriver->ThePlug[i].type, FillPlug->type);
+							//strcpy(inMADDriver->ThePlug[i].type, FillPlug->type);
 							bzero(FillPlug, sizeof(PlugInfo));
 							//NSLog(@"Using %@ (Newer than previous)", tempBundle);
 							return true;
