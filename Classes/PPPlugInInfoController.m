@@ -26,7 +26,7 @@
 
 - (IBAction)closeWindow:(id)sender {
 	[[NSApplication sharedApplication] stopModal];
-	//[self closeWindow:sender];
+	[self closeWindow:sender];
 }
 
 - (id)initWithWindow:(NSWindow *)window
