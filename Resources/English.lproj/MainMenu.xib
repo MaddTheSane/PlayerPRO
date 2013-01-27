@@ -2195,7 +2195,7 @@
 				<array class="NSMutableArray" key="NSMenuItems">
 					<object class="NSMenuItem" id="707694493">
 						<reference key="NSMenu" ref="184511397"/>
-						<string key="NSTitle">Play/Pause</string>
+						<string key="NSTitle">Play</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="769544733"/>
@@ -2986,6 +2986,26 @@
 						</object>
 					</object>
 					<int key="connectionID">1285</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: self.paused</string>
+						<reference key="source" ref="707694493"/>
+						<reference key="destination" ref="1000799287"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="707694493"/>
+							<reference key="NSDestination" ref="1000799287"/>
+							<string key="NSLabel">value: self.paused</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">self.paused</string>
+							<dictionary key="NSOptions">
+								<boolean value="NO" key="NSConditionallySetsEnabled"/>
+								<string key="NSValueTransformerName">NSNegateBoolean</string>
+							</dictionary>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1345</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4631,7 +4651,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1342</int>
+			<int key="maxID">1345</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4666,7 +4686,6 @@
 						<string key="showDigitalEditor:">id</string>
 						<string key="showInstrumentsList:">id</string>
 						<string key="showMusicList:">id</string>
-						<string key="showPlugInInfo:">id</string>
 						<string key="showPreferences:">id</string>
 						<string key="showTools:">id</string>
 						<string key="sliderChanged:">id</string>
@@ -4780,10 +4799,6 @@
 						</object>
 						<object class="IBActionInfo" key="showMusicList:">
 							<string key="name">showMusicList:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showPlugInInfo:">
-							<string key="name">showPlugInInfo:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showPreferences:">
