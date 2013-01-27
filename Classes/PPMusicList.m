@@ -52,6 +52,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 @synthesize musicUrl;
 
+#if 0
 - (void)setMusicUrl:(NSURL *)amusicUrl
 {
 	if (amusicUrl == nil) {
@@ -75,6 +76,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	[tempUrl release];
 #endif
 }
+#endif
 
 - (BOOL)isEqual:(id)object
 {
@@ -112,6 +114,13 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	} else return NO;
 }
 
+- (NSUInteger)hash
+{
+	@autoreleasepool {
+		return [[[[musicUrl filePathURL] absoluteURL] path] hash];
+	}
+}
+
 - (NSString *)fileName
 {
 	id val = nil;
@@ -124,11 +133,6 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	} else {
 		return val;
 	}
-}
-
-- (NSUInteger)hash
-{
-	return [[[musicUrl absoluteURL] path] hash];
 }
 
 - (id)initWithURL:(NSURL *)aURL

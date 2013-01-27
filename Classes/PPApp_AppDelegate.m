@@ -437,7 +437,6 @@ static inline void ByteSwapsData(sData *toSwap)
 	PPBE16( &toSwap->c2spd);
 }
 
-
 - (void)saveMusicToURL:(NSURL *)tosave
 {
 	//[instrumentController writeInstrumentsBackToMusic];
@@ -974,11 +973,12 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 							NSLog(@"Init Failed for %@, error: %@", oldMusicName, [expErr localizedDescription]);
 #if !PPEXPORT_CREATE_TMP_AIFF
 							RELEASEOBJ(dataRef);
+#else
+							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 #endif
 							RELEASEOBJ(saveData);
 							RELEASEOBJ(oldMusicName);
 							
-							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 							dispatch_async(dispatch_get_main_queue(), errBlock);
 							return;
 						}
@@ -988,12 +988,14 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 							NSLog(@"Export session creation for %@ failed, error: %@", oldMusicName, [expErr localizedDescription]);
 #if !PPEXPORT_CREATE_TMP_AIFF
 							RELEASEOBJ(dataRef);
+#else
+							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
+
 #endif
 							RELEASEOBJ(saveData);
 							RELEASEOBJ(exportMov);
 							RELEASEOBJ(oldMusicName);
 
-							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 							dispatch_async(dispatch_get_main_queue(), errBlock);
 							return;
 						}
@@ -1006,6 +1008,8 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						}
 #if !PPEXPORT_CREATE_TMP_AIFF
 						RELEASEOBJ(dataRef);
+#else
+						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 #endif
 						RELEASEOBJ(oldMusicName);
 						RELEASEOBJ(session);
@@ -1018,7 +1022,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 							}
 						});
 
-						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 						RELEASEOBJ(saveData);
 					});
 				} else {
@@ -1089,7 +1092,9 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:MADNativeUTI]];
 	[savePanel setCanCreateDirectories:YES];
 	[savePanel setCanSelectHiddenExtension:YES];
-	[savePanel setNameFieldStringValue:musicName];
+	if (![musicName isEqualToString:@""]) {
+		[savePanel setNameFieldStringValue:musicName];
+	}
 	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 		NSURL *saveURL = RETAINOBJ([savePanel URL]);
 		[self saveMusicToURL:saveURL];

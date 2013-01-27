@@ -14,7 +14,7 @@
 	//NSString *fileName;
 }
 
-@property (retain, nonatomic, readwrite) NSURL *musicUrl;
+@property (retain, nonatomic, readonly) NSURL *musicUrl;
 @property (unsafe_unretained, readonly) NSString *fileName;
 
 - (id)initWithURL:(NSURL *)aURL;
