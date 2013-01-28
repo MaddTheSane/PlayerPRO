@@ -2912,6 +2912,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">pauseDockMenuItem</string>
+						<reference key="source" ref="1000799287"/>
+						<reference key="destination" ref="707694493"/>
+					</object>
+					<int key="connectionID">1348</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="842369831"/>
 						<reference key="destination" ref="1000799287"/>
@@ -2986,26 +2994,6 @@
 						</object>
 					</object>
 					<int key="connectionID">1285</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: self.paused</string>
-						<reference key="source" ref="707694493"/>
-						<reference key="destination" ref="1000799287"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="707694493"/>
-							<reference key="NSDestination" ref="1000799287"/>
-							<string key="NSLabel">value: self.paused</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">self.paused</string>
-							<dictionary key="NSOptions">
-								<boolean value="NO" key="NSConditionallySetsEnabled"/>
-								<string key="NSValueTransformerName">NSNegateBoolean</string>
-							</dictionary>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">1345</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4651,7 +4639,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1345</int>
+			<int key="maxID">1348</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4686,6 +4674,7 @@
 						<string key="showDigitalEditor:">id</string>
 						<string key="showInstrumentsList:">id</string>
 						<string key="showMusicList:">id</string>
+						<string key="showPlugInInfo:">id</string>
 						<string key="showPreferences:">id</string>
 						<string key="showTools:">id</string>
 						<string key="sliderChanged:">id</string>
@@ -4801,6 +4790,10 @@
 							<string key="name">showMusicList:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="showPlugInInfo:">
+							<string key="name">showPlugInInfo:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="showPreferences:">
 							<string key="name">showPreferences:</string>
 							<string key="candidateClassName">id</string>
@@ -4839,6 +4832,7 @@
 						<string key="musicPlugType">NSTextField</string>
 						<string key="musicSignature">NSTextField</string>
 						<string key="pauseButton">NSButton</string>
+						<string key="pauseDockMenuItem">NSMenuItem</string>
 						<string key="playButton">NSButton</string>
 						<string key="recordButton">NSButton</string>
 						<string key="songCurTime">NSTextField</string>
@@ -4914,6 +4908,10 @@
 						<object class="IBToOneOutletInfo" key="pauseButton">
 							<string key="name">pauseButton</string>
 							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="pauseDockMenuItem">
+							<string key="name">pauseDockMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="playButton">
 							<string key="name">playButton</string>

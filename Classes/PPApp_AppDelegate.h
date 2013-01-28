@@ -72,7 +72,7 @@
 	IBOutlet __weak NSWindow *exportWindow;
 	IBOutlet NSBox			*exportSettingsBox;
 	PPSoundSettingsViewController *exportController;
-	
+	IBOutlet NSMenuItem *pauseDockMenuItem;
 }
 
 @property (getter=isPaused, readwrite) BOOL paused;

@@ -1241,10 +1241,12 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			case NO:
 			default:
 				[pauseButton setState:NSOffState];
+				[pauseDockMenuItem setState:NSOnState];
 				break;
 				
 			case YES:
 				[pauseButton setState:NSOnState];
+				[pauseDockMenuItem setState:NSOffState];
 				break;
 		}
 	}
