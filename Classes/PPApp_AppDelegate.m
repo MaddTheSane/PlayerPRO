@@ -1273,7 +1273,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	
 	PPPlugInInfoController *infoCont = [[PPPlugInInfoController alloc] initWithPlugInInfo:inf];
 	[[infoCont window] center];
-	[[NSApplication sharedApplication] runModalForWindow:[infoCont window]];
+	[NSApp runModalForWindow:[infoCont window]];
 	//[infoCont showWindow:sender];
 	RELEASEOBJ(infoCont);
 }
@@ -1282,32 +1282,40 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 {
 	NSInteger i;
 
-	[plugInInfos removeAllObjects];
+	//[plugInInfos removeAllObjects];
 	
 	for (i = 0; i < MADLib->TotalPlug ; i++) {
 		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:BRIDGE(NSString*,MADLib->ThePlug[i].MenuName) author:BRIDGE(NSString*,MADLib->ThePlug[i].AuthorString) plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name")];
-		[plugInInfos addObject:tmpInfo];
+		if (![plugInInfos containsObject:tmpInfo]) {
+			[plugInInfos addObject:tmpInfo];
+		}
 		RELEASEOBJ(tmpInfo);
 	}
 	
 	for (i = 0; i < [instrumentImporter plugInCount]; i++) {
 		PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
 		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"InstrumentPlugName", @"Instrument plug-in name")];
-		[plugInInfos addObject:tmpInfo];
+		if (![plugInInfos containsObject:tmpInfo]) {
+			[plugInInfos addObject:tmpInfo];
+		}
 		RELEASEOBJ(tmpInfo);
 	}
 	
 	for (i = 0; i < [digitalHandler plugInCount]; i++) {
 		PPDigitalPlugInObject *obj = [digitalHandler plugInAtIndex:i];
 		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"DigitalPlugName", @"Digital plug-in name")];
-		[plugInInfos addObject:tmpInfo];
+		if (![plugInInfos containsObject:tmpInfo]) {
+			[plugInInfos addObject:tmpInfo];
+		}
 		RELEASEOBJ(tmpInfo);
 	}
 	
 	for (i = 0; i < [filterHandler plugInCount]; i++) {
 		PPFilterPlugObject *obj = [filterHandler plugInAtIndex:i];
 		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"FilterPlugName", @"Filter plug-in name")];
-		[plugInInfos addObject:tmpInfo];
+		if (![plugInInfos containsObject:tmpInfo]) {
+			[plugInInfos addObject:tmpInfo];
+		}
 		RELEASEOBJ(tmpInfo);
 	}
 	

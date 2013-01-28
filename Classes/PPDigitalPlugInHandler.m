@@ -85,8 +85,7 @@
 				for (x = 0; x < PlugNums; x++) {
 					@autoreleasepool {
 						CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
-						CFURLRef BundleURL = CFBundleCopyBundleURL(tempBundleRef);
-						NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(BundleURL)];
+						NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(tempBundleRef))];
 						PPDigitalPlugInObject *tempObj = [[PPDigitalPlugInObject alloc] initWithBundle:tempBundle];
 						CFRelease(tempBundleRef);
 						if (tempObj) {

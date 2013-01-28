@@ -52,7 +52,7 @@
 
 - (NSUInteger)hash
 {
-	return [plugName hash] ^ [plugType hash];
+	return [plugName hash] ^ [plugType hash] ^ [authorName hash];
 }
 
 #if !__has_feature(objc_arc)

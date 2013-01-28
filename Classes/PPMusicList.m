@@ -167,8 +167,15 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 @end
 
+@interface PPMusicList ()
+
+@property (readonly) NSMutableArray *theMusicList;
+
+@end
+
 @implementation PPMusicList
 
+@synthesize theMusicList = musicList;
 @synthesize lostMusicCount;
 
 - (NSString *)description
@@ -226,29 +233,24 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:kMusicListKVO];
 }
 
+- (BOOL)loadMusicListFromData:(NSData *)theDat
+{
+	PPMusicList *preList = [NSKeyedUnarchiver unarchiveObjectWithData:theDat];
+	if (!preList) {
+		return NO;
+	}
+	
+	lostMusicCount = preList.lostMusicCount;
+	[self loadMusicList:preList.theMusicList];
+	return YES;
+}
+
 - (void)loadMusicListFromPreferences
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSData *listData = [defaults dataForKey:PPMMusicList];
-	PPMusicList *preList = [NSKeyedUnarchiver unarchiveObjectWithData:listData];
-	lostMusicCount = preList.lostMusicCount;
-	NSInteger i = 0;
 	NSAssert([self countOfMusicList] == 0, @"Music list should be empty!");
-	//[musicList removeAllObjects];
-
-	/*for (i = 0; i < [preList countOfMusicList]; i++) {
-		[self insertObject:[preList objectInMusicListAtIndex:i] inMusicListAtIndex:i];
-	}*/
-	
-	
-	NSMutableArray *musicArray = [[NSMutableArray alloc] init];
-	
-	for (i = 0; i < [preList countOfMusicList]; i++) {
-		[musicArray insertObject:[preList objectInMusicListAtIndex:i] atIndex:i];
-	}
-	
-	[self loadMusicList:musicArray];
-	RELEASEOBJ(musicArray);
+	[self loadMusicListFromData:listData];
 }
 
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen
@@ -330,24 +332,11 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (BOOL)loadMusicListAtURL:(NSURL *)fromURL
 {
-	NSInteger i = 0;
 	NSData *listData = [NSData dataWithContentsOfURL:fromURL];
 	if (!listData) {
 		return NO;
 	}
-	PPMusicList *preList = [NSKeyedUnarchiver unarchiveObjectWithData:listData];
-	if (!preList) {
-		return NO;
-	}
-	//[musicList removeAllObjects];
-	lostMusicCount = preList.lostMusicCount;
-	NSMutableArray *newArray = [[NSMutableArray alloc] init];
-	for (i = 0; i < [preList countOfMusicList]; i++) {
-		[newArray insertObject:[preList objectInMusicListAtIndex:i] atIndex:i];
-	}
-	[self loadMusicList:newArray];
-	RELEASEOBJ(newArray);
-	return YES;
+	return [self loadMusicListFromData:listData];
 }
 
 - (id)init
