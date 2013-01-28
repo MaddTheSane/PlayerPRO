@@ -9,6 +9,7 @@
 #import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
 #import "PPPlugInCommon.h"
+#import "ARCBridge.h"
 
 @implementation PPFilterPlugHandler
 
@@ -82,6 +83,7 @@
 - (id)init
 {
 	[self doesNotRecognizeSelector:_cmd];
+	AUTORELEASEOBJNORETURN(self);
 	return nil;
 }
 

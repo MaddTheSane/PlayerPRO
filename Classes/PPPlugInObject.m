@@ -9,6 +9,7 @@
 #import "PPPlugInObject.h"
 #import "PPPlugInCommon.h"
 #include <PlayerPROCore/RDriverInt.h>
+#import "ARCBridge.h"
 
 void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
 {

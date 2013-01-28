@@ -49,8 +49,6 @@
 		}
 		CFRelease(cfBundle);
 		type = 'PLug';
-		
-		RELEASEOBJ(tempDict);
 	}
 	return self;
 }
