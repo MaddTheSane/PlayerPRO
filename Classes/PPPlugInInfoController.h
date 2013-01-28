@@ -15,6 +15,7 @@
 	IBOutlet NSTextField *nameField;
 	IBOutlet NSTextField *authorField;
 	IBOutlet NSTextField *typeField;
+	IBOutlet NSImageView *pluginImage;
 }
 - (id)initWithPlugInInfo:(PPPlugInInfo *)plugInfo;
 - (IBAction)closeWindow:(id)sender;

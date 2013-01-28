@@ -1285,7 +1285,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	//[plugInInfos removeAllObjects];
 	
 	for (i = 0; i < MADLib->TotalPlug ; i++) {
-		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:BRIDGE(NSString*,MADLib->ThePlug[i].MenuName) author:BRIDGE(NSString*,MADLib->ThePlug[i].AuthorString) plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name")];
+		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:BRIDGE(NSString*, MADLib->ThePlug[i].MenuName) author:BRIDGE(NSString*, MADLib->ThePlug[i].AuthorString) plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name") plugURL:CFBridgingRelease(CFBundleCopyBundleURL(MADLib->ThePlug[i].file))];
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
 		}
@@ -1294,7 +1294,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	
 	for (i = 0; i < [instrumentImporter plugInCount]; i++) {
 		PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
-		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"InstrumentPlugName", @"Instrument plug-in name")];
+		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"InstrumentPlugName", @"Instrument plug-in name") plugURL:[[obj file] bundleURL]];
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
 		}
@@ -1303,7 +1303,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	
 	for (i = 0; i < [digitalHandler plugInCount]; i++) {
 		PPDigitalPlugInObject *obj = [digitalHandler plugInAtIndex:i];
-		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"DigitalPlugName", @"Digital plug-in name")];
+		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"DigitalPlugName", @"Digital plug-in name") plugURL:[[obj file] bundleURL]];
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
 		}
@@ -1312,7 +1312,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	
 	for (i = 0; i < [filterHandler plugInCount]; i++) {
 		PPFilterPlugObject *obj = [filterHandler plugInAtIndex:i];
-		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"FilterPlugName", @"Filter plug-in name")];
+		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"FilterPlugName", @"Filter plug-in name") plugURL:[[obj file] bundleURL]];
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
 		}

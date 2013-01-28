@@ -13,18 +13,25 @@
 @synthesize authorName;
 @synthesize plugName;
 @synthesize plugType;
+@synthesize plugURL;
 
 - (id)initWithPlugName:(NSString*)pn author:(NSString*)aut
 {
-	return [self initWithPlugName:pn author:aut plugType:@"Unknown"];
+	return [self initWithPlugName:pn author:aut plugType:@"Unknown" plugURL:[[NSBundle mainBundle] bundleURL]];
 }
 
 - (id)initWithPlugName:(NSString*)pn author:(NSString*)aut plugType:(NSString*)pt
 {
+	return [self initWithPlugName:pn author:aut plugType:pt plugURL:[[NSBundle mainBundle] bundleURL]];
+}
+
+- (id)initWithPlugName:(NSString*)pn author:(NSString*)aut plugType:(NSString*)pt plugURL:(NSURL*)pu;
+{
 	if (self = [super init]) {
-		plugName = [[NSString alloc] initWithString:pn];
-		authorName = [[NSString alloc] initWithString:aut];
-		plugType = [[NSString alloc] initWithString:pt];
+		plugName = [pn copy];
+		authorName = [aut copy];
+		plugType = [pt copy];
+		plugURL = [pu copy];
 	}
 	return self;
 }
@@ -61,6 +68,7 @@
 	[plugName release];
 	[authorName release];
 	[plugType release];
+	[plugURL release];
 	
 	[super dealloc];
 }
