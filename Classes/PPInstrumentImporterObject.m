@@ -9,79 +9,11 @@
 #define ISUSINGPPPLUG 1
 #import "PPInstrumentImporterObject.h"
 #import "ARCBridge.h"
+#import "PPPlugInCommon.h"
 
 NSString * const kMadPlugIsSampleKey = @"MADPlugIsSample";
 
 #define PPINLoadPlug(theBundle) (PPInstrumentPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROInstrumentPlugTypeID, kPlayerPROInstrumentPlugInterfaceID)
-
-void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
-{
-	CFArrayRef	factories = NULL;
-	Boolean		foundInterface = FALSE;
-	void		**formatPlugA = NULL;
-	
-	CFPlugInRef plugToTest = CFBundleGetPlugIn(tempBundleRef);
-	
-	if (!plugToTest) {
-		return NULL;
-	}
-	
-	//  See if this plug-in implements the Test type.
-	factories	= CFPlugInFindFactoriesForPlugInTypeInPlugIn( TypeUUID, plugToTest );
-	
-	if ( factories != NULL )
-	{
-		CFIndex	factoryCount, index;
-		
-		factoryCount	= CFArrayGetCount( factories );
-		if ( factoryCount > 0 )
-		{
-			for ( index = 0 ; (index < factoryCount) && (foundInterface == false) ; index++ )
-			{
-				CFUUIDRef	factoryID;
-				
-				//  Get the factory ID for the first location in the array of IDs.
-				factoryID = (CFUUIDRef) CFArrayGetValueAtIndex( factories, index );
-				if ( factoryID )
-				{
-					IUnknownVTbl **iunknown = NULL;
-					
-					//  Use the factory ID to get an IUnknown interface. Here the plug-in code is loaded.
-					iunknown	= (IUnknownVTbl **) CFPlugInInstanceCreate( kCFAllocatorDefault, factoryID, TypeUUID );
-					
-					if ( iunknown )
-					{
-						//  If this is an IUnknown interface, query for the test interface.
-						(*iunknown)->QueryInterface( iunknown, CFUUIDGetUUIDBytes( InterfaceUUID ), (LPVOID *)( &formatPlugA ) );
-						
-						// Now we are done with IUnknown
-						(*iunknown)->Release( iunknown );
-						
-						if ( formatPlugA )
-						{
-							//	We found the interface we need
-							foundInterface	= true;
-						}
-					}
-				}
-			}
-		}
-		else {
-			//Clang says that we aren't supposed to release, but Apple's sample code does release
-			//Trusting the sample code until further notice
-			CFRelease(factories); factories = NULL;
-			return NULL;
-		}
-	}
-	else {
-		return NULL;
-	}
-	//Clang says that we aren't supposed to release, but Apple's sample code does release
-	//Trusting the sample code until further notice
-	CFRelease(factories); factories = NULL;
-	
-	return formatPlugA;
-}
 
 static inline OSType NSStringToOSType(NSString *CFstri)
 {
@@ -101,14 +33,9 @@ static inline BOOL getBoolFromId(id NSType)
 
 @implementation PPInstrumentImporterObject
 
-@synthesize menuName;
-@synthesize authorString;
 @synthesize UTITypes;
-@synthesize file;
-@synthesize type;
 @synthesize mode;
 @synthesize isSamp;
-@synthesize version;
 
 typedef enum _MADPlugCapabilities {
 	PPMADCanDoNothing = 0,
@@ -116,12 +43,6 @@ typedef enum _MADPlugCapabilities {
 	PPMADCanExport = 2,
 	PPMADCanDoBoth = PPMADCanImport | PPMADCanExport
 } MADPlugCapabilities;
-
-- (id)init
-{
-	[self doesNotRecognizeSelector:_cmd];
-	return nil;
-}
 
 - (NSString*)description
 {
@@ -132,7 +53,7 @@ typedef enum _MADPlugCapabilities {
 
 - (id)initWithBundle:(NSBundle *)tempBundle
 {
-	if (self = [super init]) {
+	if (self = [super initWithBundle:tempBundle]) {
 		Class strClass = [NSString class];
 		Class numClass = [NSNumber class];
 		{
@@ -148,30 +69,12 @@ typedef enum _MADPlugCapabilities {
 				return nil;
 			}
 			
-			//TODO: Cocoa function of this?
-			version = CFBundleGetVersionNumber(tempCFBundle);
 			CFRelease(tempCFBundle);
 		}
 		
 		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
 		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
-		id DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugMenuNameKey)];
-		if ([DictionaryTemp isKindOfClass:strClass]) {
-			menuName = [[NSString alloc] initWithString:DictionaryTemp];
-		} else {
-			RELEASEOBJ(tempDict);
-			AUTORELEASEOBJNORETURN(self);
-			return nil;
-		}
-		DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugAuthorNameKey)];
-		if ([DictionaryTemp isKindOfClass:strClass]) {
-			authorString = [[NSString alloc] initWithString:DictionaryTemp];
-		} else {
-			authorString = [NSLocalizedString(@"No Author", @"no author") copy];
-		}
-		
-		
-		DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugUTITypesKey)];
+		id DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugUTITypesKey)];
 		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
 			UTITypes = [[NSArray alloc] initWithArray:DictionaryTemp];
 		} else if ([DictionaryTemp isKindOfClass:strClass]) {
@@ -250,17 +153,13 @@ typedef enum _MADPlugCapabilities {
 		}
 		
 		RELEASEOBJ(tempDict);
-		file = RETAINOBJ(tempBundle);
 	}
 	return self;
 }
 
 - (void)dealloc
 {
-	RELEASEOBJ(menuName);
-	RELEASEOBJ(authorString);
 	RELEASEOBJ(UTITypes);
-	RELEASEOBJ(file);
 	
 	if (xxxx) {
 		(*xxxx)->Release(xxxx);

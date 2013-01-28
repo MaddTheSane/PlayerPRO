@@ -12,25 +12,12 @@
 #import "PPPlugInCommon.h"
 #import "PPInstrumentImporterObject.h"
 
-NSArray *DefaultPlugInLocations()
-{
-	NSMutableArray *plugLocs = [NSMutableArray arrayWithCapacity:3];
-	NSFileManager *fm = [NSFileManager defaultManager];
-	[plugLocs addObject:[[NSBundle mainBundle] builtInPlugInsURL]];
-	
-	[plugLocs addObject:[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]];
-	
-	//User plugins
-	[plugLocs addObject:[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]];
-	
-	return [NSArray arrayWithArray:plugLocs];
-}
-
 @implementation PPInstrumentImporter
 
 - (id)init
 {
 	[self doesNotRecognizeSelector:_cmd];
+	AUTORELEASEOBJNORETURN(self);
 	return nil;
 }
 

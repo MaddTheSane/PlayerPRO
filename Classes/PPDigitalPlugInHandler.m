@@ -12,37 +12,6 @@
 //#import <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 
-OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 channel, SInt32 note, SInt32 amplitude, long loopBeg, long loopSize, unsigned int rate, Boolean stereo)
-{
-	OSErr iErr = MADPlaySoundData( theRec, soundPtr, size, channel, note, amplitude, 0, 0, rate, stereo);
-	Boolean	continueLoop;
-	
-	if( iErr == noErr)
-	{
-		continueLoop = true;
-		while( continueLoop)
-		{
-			//GetKeys( km);
-			
-			if( theRec->chan[ channel].samplePtr == NULL) continueLoop = false;
-			//if( MADIsPressed( (unsigned char*) km, 0x37) && MADIsPressed( (unsigned char*) km, 0x2F)) continueLoop = false;
-			//if( Button()) continueLoop = false;
-			//DoGlobalNull();
-		}
-		
-		if( theRec->chan[ channel].samplePtr != NULL)
-		{
-			theRec->chan[ channel].curPtr 		= theRec->chan[ channel].maxPtr;
-			theRec->chan[ channel].samplePtr	= NULL;
-			theRec->chan[ channel].lAC			= 0;
-			theRec->chan[ channel].loopBeg		= 0;
-			theRec->chan[ channel].loopSize 	= 0;
-		}
-	}
-	
-	return iErr;
-}
-
 @implementation PPDigitalPlugInHandler
 
 @synthesize driverRec;
@@ -72,6 +41,7 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 - (id)init
 {
 	[self doesNotRecognizeSelector:_cmd];
+	AUTORELEASEOBJNORETURN(self);
 	return nil;
 }
 
