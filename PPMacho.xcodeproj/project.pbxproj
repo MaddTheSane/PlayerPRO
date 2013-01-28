@@ -179,6 +179,7 @@
 		5523EC8116936F880067B22A /* PPDigitalPlugInHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8016936F880067B22A /* PPDigitalPlugInHandler.m */; };
 		5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */; };
 		552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
+		552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 552A662816B5EBEB007C63F7 /* PPPlugInObject.m */; };
 		552AFC7F167A8C8B00F32481 /* PPPause.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 552AFC7E167A8C8B00F32481 /* PPPause.pdf */; };
 		552C6FE310CD9DAC00C0E0D4 /* ByteUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */; };
 		552C6FE410CD9DB700C0E0D4 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; };
@@ -1718,6 +1719,8 @@
 		5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPlugInObject.m; sourceTree = "<group>"; };
 		552711E3124881F4005120FC /* UserDefaultKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultKeys.h; sourceTree = "<group>"; };
 		552711E4124881F4005120FC /* UserDefaultKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultKeys.m; sourceTree = "<group>"; };
+		552A662716B5EBEA007C63F7 /* PPPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugInObject.h; sourceTree = "<group>"; };
+		552A662816B5EBEB007C63F7 /* PPPlugInObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPlugInObject.m; sourceTree = "<group>"; };
 		552AFC7E167A8C8B00F32481 /* PPPause.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPPause.pdf; sourceTree = "<group>"; };
 		552C70C310CDAFBC00C0E0D4 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
 		552C70C610CDB07E00C0E0D4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
@@ -3651,6 +3654,8 @@
 				55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */,
 				55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */,
 				55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */,
+				552A662716B5EBEA007C63F7 /* PPPlugInObject.h */,
+				552A662816B5EBEB007C63F7 /* PPPlugInObject.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -6219,6 +6224,7 @@
 				55F4287C16A8B1FB009013D8 /* PPSoundSettingsViewController.m in Sources */,
 				55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */,
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
+				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,12 +11,6 @@
 
 @implementation PPDigitalPlugInObject
 
-@synthesize file;
-@synthesize authorString;
-@synthesize menuName;
-@synthesize type;
-@synthesize version;
-
 - (BOOL)isEqual:(id)object
 {
 	if (self == object) {
@@ -38,52 +32,23 @@
 	return [menuName hash];
 }
 
-
 #define PPDGLoadPlug(theBundle) (PPDigitalPlugin**)GetCOMPlugInterface(theBundle, kPlayerPRODigitalPlugTypeID, kPlayerPRODigitalPlugInterfaceID)
 
 - (id)initWithBundle:(NSBundle*)toInit
 {
-	if (self = [super init]) {
-		{
-			NSURL *bundleURL = [toInit bundleURL];
-			CFBundleRef tempBundle = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef, bundleURL));
-			
-			plugCode = PPDGLoadPlug(tempBundle);
-			if (!plugCode) {
-				CFRelease(tempBundle);
-				AUTORELEASEOBJNORETURN(self);
-				return nil;
-			}
-			
-			version = CFBundleGetVersionNumber(tempBundle);
+	if (self = [super initWithBundle:toInit]) {
+		NSURL *bundleURL = [toInit bundleURL];
+		CFBundleRef tempBundle = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef, bundleURL));
+		
+		plugCode = PPDGLoadPlug(tempBundle);
+		if (!plugCode) {
 			CFRelease(tempBundle);
-		}
-		NSMutableDictionary *tempDict = [[toInit infoDictionary] mutableCopy];
-		[tempDict addEntriesFromDictionary:[toInit localizedInfoDictionary]];
-		id DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugMenuNameKey)];
-		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-			menuName = [[NSString alloc] initWithString:DictionaryTemp];
-		} else {
-			RELEASEOBJ(tempDict);
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
-		DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugAuthorNameKey)];
-		if (DictionaryTemp) {
-			if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-				authorString = [[NSString alloc] initWithString:DictionaryTemp];
-			} else {
-				authorString = [NSLocalizedString(@"No Author", @"no author") copy];
-			}
-		} else {
-			authorString = [NSLocalizedString(@"No Author", @"no author") copy];
-		}
 		
+		CFRelease(tempBundle);
 		type = 'PPDG';
-
-		RELEASEOBJ(tempDict);
-		
-		file = RETAINOBJ(toInit);
 	}
 	return self;
 }
@@ -112,10 +77,6 @@
 
 - (void)dealloc
 {
-	RELEASEOBJ(menuName);
-	RELEASEOBJ(authorString);
-	RELEASEOBJ(file);
-	
 	if (plugCode) {
 		(*plugCode)->Release(plugCode);
 	}

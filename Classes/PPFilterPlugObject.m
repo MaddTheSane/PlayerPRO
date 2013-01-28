@@ -13,11 +13,6 @@
 
 @implementation PPFilterPlugObject
 
-@synthesize authorString;
-@synthesize file;
-@synthesize menuName;
-@synthesize type;
-@synthesize version;
 
 - (BOOL)isEqual:(id)object
 {
@@ -42,48 +37,20 @@
 
 - (id)initWithBundle:(NSBundle *)aBund
 {
-	if (self = [super init]) {
-		{
-			NSURL *bundleURL = [aBund bundleURL];
-			CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef, bundleURL));
-			
-			plugData = PPFilterLoadPlug(cfBundle);
-			if (!plugData) {
-				CFRelease(cfBundle);
-				AUTORELEASEOBJNORETURN(self);
-				return nil;
-			}
-			version = CFBundleGetVersionNumber(cfBundle);
-			CFRelease(cfBundle);
-		}
+	if (self = [super initWithBundle:aBund]) {
+		NSURL *bundleURL = [aBund bundleURL];
+		CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef, bundleURL));
 		
-		NSMutableDictionary *tempDict = [[aBund infoDictionary] mutableCopy];
-		[tempDict addEntriesFromDictionary:[aBund localizedInfoDictionary]];
-		id DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugMenuNameKey)];
-		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-			menuName = [[NSString alloc] initWithString:DictionaryTemp];
-		} else {
-			RELEASEOBJ(tempDict);
+		plugData = PPFilterLoadPlug(cfBundle);
+		if (!plugData) {
+			CFRelease(cfBundle);
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
-		DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugAuthorNameKey)];
-		if (DictionaryTemp) {
-			if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-				authorString = [[NSString alloc] initWithString:DictionaryTemp];
-			} else {
-				authorString = [NSLocalizedString(@"No Author", @"no author") copy];
-			}
-		} else {
-			authorString = [NSLocalizedString(@"No Author", @"no author") copy];
-		}
-		
+		CFRelease(cfBundle);
 		type = 'PLug';
 		
 		RELEASEOBJ(tempDict);
-		
-		file = RETAINOBJ(aBund);
-
 	}
 	return self;
 }
@@ -102,9 +69,6 @@
 
 - (void)dealloc
 {
-	RELEASEOBJ(authorString);
-	RELEASEOBJ(file);
-	RELEASEOBJ(menuName);
 	if (plugData) {
 		(*plugData)->Release(plugData);
 	}
