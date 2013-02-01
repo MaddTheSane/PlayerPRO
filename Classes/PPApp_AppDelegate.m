@@ -97,6 +97,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 - (void)musicListContentsDidMove;
 - (BOOL)musicListWillChange;
 - (void)musicListDidChange;
+- (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to;
 @end
 
 @implementation PPApp_AppDelegate
@@ -2023,6 +2024,18 @@ enum PPMusicToolbarTypes {
 	[musicPlugType setTitleWithMnemonic:PPDoubleDash];
 	[musicSignature setTitleWithMnemonic:PPDoubleDash];
 	[fileLocation setTitleWithMnemonic:PPDoubleDash];
+}
+
+- (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to
+{
+	PPMusicListObject *obj = RETAINOBJ([musicList objectInMusicListAtIndex:from]);
+	[musicList removeObjectInMusicListAtIndex:from];
+	if (to > from) {
+		to--;
+	}
+	[musicList insertObject:obj inMusicListAtIndex:to];
+	RELEASEOBJ(obj);
+	[self musicListContentsDidMove];
 }
 
 - (void)musicListDidChange
