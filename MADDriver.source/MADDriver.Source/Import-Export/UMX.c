@@ -904,8 +904,8 @@ static OSErr TestUMXFile( Ptr AlienFile, long EOFo)
 
 #ifndef _MAC_H
 
-extern EXP OSErr FillPlug( PlugInfo *p);
-extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP OSErr FillPlug( PlugInfo *p);
+EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {

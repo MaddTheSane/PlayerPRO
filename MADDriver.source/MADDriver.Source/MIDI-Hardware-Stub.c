@@ -4,7 +4,6 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "MIDI.h"
 #include <stdio.h>
 
 #define MySignature		'SNPL'
@@ -29,8 +28,8 @@ void OpenMIDIHardware( void)
 
 void InitMIDIHarware(void)
 {
-	MIDIHardware = false;
-	MIDIHardwareAlreadyOpen = false;
+	//MIDIHardware = false;
+	//MIDIHardwareAlreadyOpen = false;
 }
 
 void NDoPlayInstru(short Note, short Instru, short effect, short arg, short vol);

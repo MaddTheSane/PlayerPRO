@@ -901,17 +901,13 @@ static OSErr TestMODFile( Ptr AlienFile, long EOFo)
 
 //These must be exported so that C can see them.
 //If your plug-in uses C++, export them using extern "C"
-#ifdef __cplusplus
-extern "C" EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
-#else
-extern EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
-#endif
+
+EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+
 #ifndef _MAC_H
-#ifdef __cplusplus
-extern "C" EXP OSErr FillPlug( PlugInfo *p);
-#else
-extern EXP OSErr FillPlug( PlugInfo *p);
-#endif
+
+EXP OSErr FillPlug( PlugInfo *p);
+
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC, BeOS, and UNIX
 {

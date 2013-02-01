@@ -67,11 +67,19 @@
 #include "PPDefs.h"
 
 #ifdef WIN32
+#ifdef __cplusplus
+#define EXP extern "c" _declspec(dllexport)
+#else
 #define EXP extern __declspec(dllexport)
+#endif
 #ifdef BUILDINGPPRO
 #define PPEXPORT extern __declspec(dllexport)
 #else
+#ifdef __cplusplus
+#define PPEXPORT extern "c" __declspec(dllimport)
+#else
 #define PPEXPORT extern __declspec(dllimport)
+#endif
 #ifdef _MSC_VER
 #pragma comment(lib, "PlayerPROCore.lib")
 #endif

@@ -107,6 +107,7 @@
     <ClCompile Include="FileUtils.c" />
     <ClCompile Include="Interrupt.c" />
     <ClCompile Include="MainDriver.c" />
+    <ClCompile Include="MIDI-Hardware-Stub.c" />
     <ClCompile Include="MyDebugStr.c" />
     <ClCompile Include="OutPut8.c" />
     <ClCompile Include="realft.c" />
