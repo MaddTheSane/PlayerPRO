@@ -43,6 +43,9 @@
 
 - (BOOL)isEqual:(id)object
 {
+	if (!object) {
+		return NO;
+	}
 	if (object == self) {
 		return YES;
 	}

@@ -80,6 +80,9 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (BOOL)isEqual:(id)object
 {
+	if (!object) {
+		return NO;
+	}
 	if (self == object) {
 		return YES;
 	}
