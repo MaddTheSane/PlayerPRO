@@ -423,11 +423,10 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
-		NSInteger i = 0;
 		musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
-		for (i = 0; i < [BookmarkArray count]; i++) {
+		for (NSData *bookData in BookmarkArray) {
 			BOOL isStale = NO;
-			NSURL *fullURL = [NSURL URLByResolvingBookmarkData:[BookmarkArray objectAtIndex:i] options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:&isStale error:nil];
+			NSURL *fullURL = [NSURL URLByResolvingBookmarkData:bookData options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:&isStale error:nil];
 #ifdef DEBUG
 			if (isStale) {
 				NSLog(@"Bookmark pointing to %@ is stale", [fullURL path]);
