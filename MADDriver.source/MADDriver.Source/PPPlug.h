@@ -30,7 +30,6 @@
 
 #include <CoreFoundation/CFPlugInCOM.h>
 
-
 typedef OSErr			(*RPlaySoundUPP)		(MADDriverRec *theRec, Ptr, long, SInt32, SInt32, SInt32, long, long, unsigned int, Boolean);
 
 #ifdef __cplusplus
@@ -55,7 +54,6 @@ PPEXPORT sData* inMADCreateSample();
 #ifdef __cplusplus
 }
 #endif
-
 
 typedef struct
 {
@@ -170,7 +168,6 @@ typedef struct _PPInstrumentPlugin {
 // 34BA675D-3ED8-49F9-8D06-28A7436A0E4D
 #define kPlayerPRODigitalPlugInterfaceID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x34, 0xBA, 0x67, 0x5D, 0x3E, 0xD8, 0x49, 0xF9, 0x8D, 0x06, 0x28, 0xA7, 0x43, 0x6A, 0x0E, 0x4D)
 
-
 typedef struct
 {
 	short			tracks;					// number of tracks in myCmd[]
@@ -181,24 +178,10 @@ typedef struct
 	Cmd				myCmd[];
 } Pcmd;
 
-#if 0
-typedef struct
-{
-	short			tracks;					// number of tracks in myCmd[]
-	short			length;					// number of rows in myCmd[]
-	short			trackStart;				// track ID of first track in myCmd[]
-	short			posStart;				// row ID of first row in myCmd[]
-	SInt32			structSize;				// struct size in bytes - see Definition
-	UInt32			myCmd;
-} PcmdFile;
-#endif
-
 typedef struct _PPDigitalPlugin {
     IUNKNOWN_C_GUTS;
 	OSErr (STDMETHODCALLTYPE *MyProcPtr) (void* thisInterface, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug);
 } PPDigitalPlugin;
-
-
 
 EXP const CFStringRef kMadPlugMenuNameKey;
 EXP const CFStringRef kMadPlugAuthorNameKey;

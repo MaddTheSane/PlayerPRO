@@ -68,7 +68,7 @@
 
 #ifdef WIN32
 #ifdef __cplusplus
-#define EXP extern "c" _declspec(dllexport)
+#define EXP extern "c" __declspec(dllexport)
 #else
 #define EXP extern __declspec(dllexport)
 #endif
@@ -84,6 +84,11 @@
 #pragma comment(lib, "PlayerPROCore.lib")
 #endif
 #endif
+#endif
+
+#ifndef EXP
+#define EXP extern
+#define PPEXPORT EXP
 #endif
 
 #if !defined(WIN32)
@@ -150,7 +155,6 @@ typedef struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
 	Cmd			Cmds[ 1];
 } PatData;
 typedef PatData PatternData;
-
 
 
 // ***	
