@@ -34,13 +34,11 @@
 
 		NSArray *plugLocs = DefaultPlugInLocations();
 		
-		NSInteger PlugLocNums = [plugLocs count], i, x, y;
+		NSInteger x, y;
 		
-		for (i = 0; i < PlugLocNums; i++) {
+		for (NSURL *aPlugLoc in plugLocs) {
 			CFIndex		PlugNums;
 			CFArrayRef	somePlugs;
-			NSURL		*aPlugLoc;
-			aPlugLoc = [plugLocs objectAtIndex:i];
 			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, BRIDGE(CFURLRef, aPlugLoc), NULL);
 			PlugNums = CFArrayGetCount( somePlugs );
 			if (PlugNums > 0) {

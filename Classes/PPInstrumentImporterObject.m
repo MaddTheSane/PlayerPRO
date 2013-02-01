@@ -63,13 +63,12 @@ typedef enum _MADPlugCapabilities {
 			
 			xxxx = PPINLoadPlug(tempCFBundle);
 			
+			CFRelease(tempCFBundle);
+
 			if (!xxxx) {
-				CFRelease(tempCFBundle);
 				AUTORELEASEOBJNORETURN(self);
 				return nil;
 			}
-			
-			CFRelease(tempCFBundle);
 		}
 		
 		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];

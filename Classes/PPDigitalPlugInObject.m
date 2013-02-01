@@ -44,13 +44,13 @@
 		CFBundleRef tempBundle = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef, bundleURL));
 		
 		plugCode = PPDGLoadPlug(tempBundle);
+		CFRelease(tempBundle);
+
 		if (!plugCode) {
-			CFRelease(tempBundle);
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
 		
-		CFRelease(tempBundle);
 		type = 'PPDG';
 	}
 	return self;

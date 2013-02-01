@@ -45,12 +45,12 @@
 		CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef, bundleURL));
 		
 		plugData = PPFilterLoadPlug(cfBundle);
+		CFRelease(cfBundle);
+
 		if (!plugData) {
-			CFRelease(cfBundle);
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
-		CFRelease(cfBundle);
 		type = 'PLug';
 	}
 	return self;
