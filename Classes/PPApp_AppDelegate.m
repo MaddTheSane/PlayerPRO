@@ -1789,7 +1789,7 @@ enum PPMusicToolbarTypes {
 	} else if([sharedWorkspace type:theUTI conformsToType:PPGenericInstrumentUTI]) {
 		if ([instrumentController isWindowLoaded]) {
 			NSError *theErr = nil;
-			if (![instrumentController importSampleFromURL:theURL error:&theErr])
+			if (![instrumentController importSampleFromURL:theURL makeUserSelectInstrument:YES error:&theErr])
 			{
 				NSAlert *theAlert = [NSAlert alertWithError:theErr];
 				[theAlert runModal];
@@ -1816,7 +1816,7 @@ enum PPMusicToolbarTypes {
 			for (NSString *uti in [obj UTITypes]) {
 				if ([sharedWorkspace type:theUTI conformsToType:uti]) {
 					NSError *theErr;
-					if (![instrumentController importSampleFromURL:theURL error:&theErr]) {
+					if (![instrumentController importSampleFromURL:theURL makeUserSelectInstrument:YES error:&theErr]) {
 						NSAlert *theAlert = [NSAlert alertWithError:theErr];
 						[theAlert runModal];
 						return NO;

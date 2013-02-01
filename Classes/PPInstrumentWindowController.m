@@ -166,6 +166,11 @@ static inline void SwapPcmd(Pcmd *toswap)
 
 - (BOOL)importSampleFromURL:(NSURL *)sampURL error:(out NSError *__autoreleasing*)theErr;
 {
+	return [self importSampleFromURL:sampURL makeUserSelectInstrument:NO error:theErr];
+}
+- (BOOL)importSampleFromURL:(NSURL *)sampURL makeUserSelectInstrument:(BOOL)selIns error:(out NSError *__autoreleasing*)theErr;
+{
+	//TODO: handle selIns
 	OSType plugType = 0;
 	OSErr theOSErr = [importer identifyInstrumentFile:sampURL type:&plugType];
 	if (theOSErr != noErr)
