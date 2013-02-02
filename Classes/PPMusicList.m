@@ -460,14 +460,13 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 					lostMusicCount++;
 					continue;
 				}
-				//It seems that the URL returned from the bookmarks services is already a file reference URL.
-				//NSURL *refURL = [fullURL fileReferenceURL];
+				NSURL *refURL = [fullURL fileReferenceURL];
 				PPMusicListObject *obj = nil;
-				//if (refURL) {
-				//	obj = [[PPMusicListObject alloc] initWithURL:refURL];
-				//} else {
-				obj = [[PPMusicListObject alloc] initWithURL:fullURL];
-				//}
+				if (refURL) {
+					obj = [[PPMusicListObject alloc] initWithURL:refURL];
+				} else {
+					obj = [[PPMusicListObject alloc] initWithURL:fullURL];
+				}
 				[musicList addObject:obj];
 				RELEASEOBJ(obj);
 			}
@@ -479,10 +478,9 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
 	NSMutableArray *BookmarkArray = [NSMutableArray arrayWithCapacity:[musicList count]];
-	NSInteger i = 0;
-	for (i = 0; i < [musicList count]; i++)
+	for (PPMusicListObject *obj in musicList)
 	{
-		NSData *bookData = [[[musicList objectAtIndex:i] musicUrl] bookmarkDataWithOptions:NSURLBookmarkCreationPreferFileIDResolution includingResourceValuesForKeys:nil relativeToURL:[NSURL fileURLWithPath:NSHomeDirectory()] error:nil];
+		NSData *bookData = [obj.musicUrl bookmarkDataWithOptions:NSURLBookmarkCreationPreferFileIDResolution includingResourceValuesForKeys:nil relativeToURL:[NSURL fileURLWithPath:NSHomeDirectory()] error:nil];
 		if (bookData) {
 			[BookmarkArray addObject:bookData];
 		}

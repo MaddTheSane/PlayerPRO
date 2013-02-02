@@ -228,7 +228,7 @@ void CocoaDebugStr( short line, Ptr file, Ptr text)
 															 @16, PPSoundOutBits,
 															 @44100, PPSoundOutRate,
 															 @(CoreAudioDriver), PPSoundDriver,
-															 @NO, PPStereoDelayToggle,
+															 @YES, PPStereoDelayToggle,
 															 @NO, PPReverbToggle,
 															 @NO, PPSurroundToggle,
 															 @NO, PPOversamplingToggle,
@@ -950,13 +950,17 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
 						NSString *oldMusicName = RETAINOBJ(musicName);
 						NSString *oldMusicInfo = RETAINOBJ(musicInfo);
+						NSURL *oldURL = [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] musicUrl];
 						MADEndExport(MADDriver);
 						NSError *expErr = nil;
 						dispatch_block_t errBlock = ^{
 							NSRunAlertPanel(@"Export failed", @"Export/coversion of the music file failed.\n%@", nil, nil, nil, [expErr localizedDescription]);
 						};
 #if PPEXPORT_CREATE_TMP_AIFF
-						NSURL *tmpURL = [[NSURL fileURLWithPath:NSTemporaryDirectory()] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
+						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
+						if (!tmpURL) {
+							tmpURL = [[NSURL fileURLWithPath:NSTemporaryDirectory()] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
+						}
 						
 						[saveData writeToURL:tmpURL atomically:NO];
 						QTMovie *exportMov = [[QTMovie alloc] initWithURL:tmpURL error:&expErr];
@@ -991,7 +995,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 							RELEASEOBJ(dataRef);
 #else
 							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-
 #endif
 							RELEASEOBJ(saveData);
 							RELEASEOBJ(exportMov);
