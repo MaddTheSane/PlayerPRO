@@ -36,6 +36,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 
 @synthesize importer;
 @synthesize curMusic;
+@synthesize theDriver;
 
 - (void)setCurMusic:(MADMusic **)acurMusic
 {

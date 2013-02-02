@@ -31,6 +31,7 @@
 
 @property (readwrite, retain) PPInstrumentImporter *importer;
 @property (readwrite, nonatomic) MADMusic **curMusic;
+@property (readwrite) MADDriverRec **theDriver;
 
 - (OSErr)testPcmdFileAtURL:(NSURL*)theURL;
 - (OSErr)importPcmdFromURL:(NSURL*)theURL;

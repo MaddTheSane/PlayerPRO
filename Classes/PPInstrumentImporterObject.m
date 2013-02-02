@@ -103,6 +103,7 @@ typedef enum _MADPlugCapabilities {
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
+		
 		{
 			id canImportValue = nil, canExportValue = nil;
 			canImportValue = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugDoesImport)];

@@ -13,10 +13,11 @@
 #import "ARCBridge.h"
 
 #define kMUSICLISTKEY @"Music List Key1"
+#define kMUSICLISTKEY2 @"Music List Key2"
 
 // GetIndString isn't supported on 64-bit Mac OS X
 // This code is emulation for GetIndString.
-// Code taken from Mozilla's Mac Eudora importer
+// Code based on Mozilla's Mac Eudora importer
 static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 {
 	long handSize = GetHandleSize(aResource);
@@ -145,11 +146,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
-		[self willChangeValueForKey:@"fileName"];
-		[self willChangeValueForKey:@"musicUrl"];
 		musicUrl = RETAINOBJ(aURL);
-		[self didChangeValueForKey:@"fileName"];
-		[self didChangeValueForKey:@"musicUrl"];
 	}
 	return self;
 }
@@ -418,33 +415,62 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	if ((self = [super init])) 
 	{
 		lostMusicCount = 0;
-		NSMutableArray *BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY];
+		NSMutableArray *BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY2];
 		if (!BookmarkArray) {
-			AUTORELEASEOBJNORETURN(self);
-			return nil;
-		}
-		musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
-		for (NSData *bookData in BookmarkArray) {
-			BOOL isStale = NO;
-			NSURL *fullURL = [NSURL URLByResolvingBookmarkData:bookData options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:&isStale error:nil];
+			BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY];
+			if (!BookmarkArray) {
+				AUTORELEASEOBJNORETURN(self);
+				return nil;
+			}
+			musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
+			for (NSData *bookData in BookmarkArray) {
+				BOOL isStale = NO;
+				NSURL *fullURL = [NSURL URLByResolvingBookmarkData:bookData options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:&isStale error:nil];
 #ifdef DEBUG
-			if (isStale) {
-				NSLog(@"Bookmark pointing to %@ is stale", [fullURL path]);
-			}
+				if (isStale) {
+					NSLog(@"Bookmark pointing to %@ is stale", [fullURL path]);
+				}
 #endif
-			if (!fullURL) {
-				lostMusicCount++;
-				continue;
-			}
-			NSURL *refURL = [fullURL fileReferenceURL];
-			PPMusicListObject *obj = nil;
-			if (refURL) {
-				obj = [[PPMusicListObject alloc] initWithURL:refURL];
-			} else {
+				if (!fullURL) {
+					lostMusicCount++;
+					continue;
+				}
+				//It seems that the URL returned from the bookmarks services is already a file reference URL.
+				//NSURL *refURL = [fullURL fileReferenceURL];
+				PPMusicListObject *obj = nil;
+				//if (refURL) {
+				//	obj = [[PPMusicListObject alloc] initWithURL:refURL];
+				//} else {
 				obj = [[PPMusicListObject alloc] initWithURL:fullURL];
+				//}
+				[musicList addObject:obj];
+				RELEASEOBJ(obj);
 			}
-			[musicList addObject:obj];
-			RELEASEOBJ(obj);
+		} else {
+			musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
+			for (NSData *bookData in BookmarkArray) {
+				BOOL isStale = NO;
+				NSURL *fullURL = [NSURL URLByResolvingBookmarkData:bookData options:NSURLBookmarkResolutionWithoutUI relativeToURL:[NSURL fileURLWithPath:NSHomeDirectory()] bookmarkDataIsStale:&isStale error:nil];
+#ifdef DEBUG
+				if (isStale) {
+					NSLog(@"Bookmark pointing to %@ is stale", [fullURL path]);
+				}
+#endif
+				if (!fullURL) {
+					lostMusicCount++;
+					continue;
+				}
+				//It seems that the URL returned from the bookmarks services is already a file reference URL.
+				//NSURL *refURL = [fullURL fileReferenceURL];
+				PPMusicListObject *obj = nil;
+				//if (refURL) {
+				//	obj = [[PPMusicListObject alloc] initWithURL:refURL];
+				//} else {
+				obj = [[PPMusicListObject alloc] initWithURL:fullURL];
+				//}
+				[musicList addObject:obj];
+				RELEASEOBJ(obj);
+			}
 		}
 	}
 	return self;
@@ -456,12 +482,12 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	NSInteger i = 0;
 	for (i = 0; i < [musicList count]; i++)
 	{
-		NSData *bookData = [[[musicList objectAtIndex:i] musicUrl] bookmarkDataWithOptions:NSURLBookmarkCreationPreferFileIDResolution includingResourceValuesForKeys:nil relativeToURL:nil error:nil];
+		NSData *bookData = [[[musicList objectAtIndex:i] musicUrl] bookmarkDataWithOptions:NSURLBookmarkCreationPreferFileIDResolution includingResourceValuesForKeys:nil relativeToURL:[NSURL fileURLWithPath:NSHomeDirectory()] error:nil];
 		if (bookData) {
 			[BookmarkArray addObject:bookData];
 		}
 	}
-	[encoder encodeObject:BookmarkArray forKey:kMUSICLISTKEY];
+	[encoder encodeObject:BookmarkArray forKey:kMUSICLISTKEY2];
 }
 
 #pragma mark Key-valued Coding

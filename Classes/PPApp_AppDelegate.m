@@ -1377,6 +1377,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	instrumentController = [[PPInstrumentWindowController alloc] init];
 	instrumentController.importer = instrumentImporter;
 	instrumentController.curMusic = &Music;
+	instrumentController.theDriver = &MADDriver;
 	
 	//Initialize the QTKit framework on the main thread. needed for 32-bit code.
 	[QTMovie class];
