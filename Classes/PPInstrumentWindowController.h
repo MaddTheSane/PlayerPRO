@@ -15,6 +15,7 @@
 {
 	PPInstrumentImporter *importer;
 	MADMusic **curMusic;
+	MADDriverRec **theDriver;
 	NSMutableArray *instruments;
 	IBOutlet NSTextField *instrumentSize;
 	IBOutlet NSTextField *instrumentLoopStart;
