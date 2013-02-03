@@ -620,7 +620,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	return toreturn.shortman;
 }
 
-- (NSMutableData *)newAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat
+- (NSData *)newAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat
 {
 	NSInteger dataLen = [dat length];
 	
@@ -731,14 +731,14 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 #endif
 	}
 	
-	
+	NSMutableData *returnData = [[NSMutableData alloc] initWithCapacity:dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + sizeof(ContainerChunk) + [nameData length] + [infoData length]];
 	header.ckID = FORMID;
 	PPBE32(&header.ckID);
 	header.ckSize = dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + 4 + [nameData length] + [infoData length];
 	PPBE32(&header.ckSize);
 	header.formType = AIFFID;
 	PPBE32(&header.formType);
-	NSMutableData *returnData = [[NSMutableData alloc] initWithBytes:&header length:sizeof(ContainerChunk)];
+	[returnData appendBytes:&header length:sizeof(ContainerChunk)];
 	
 	container.ckID = CommonID;
 	PPBE32(&container.ckID);
@@ -861,19 +861,16 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	{
 		[mutData appendBytes:soundPtr length:full];
 	}
-	NSMutableData *tmpData = [self newAIFFDataFromSettings:theSet data:mutData];
+	NSData *retData = [self newAIFFDataFromSettings:theSet data:mutData];
 	RELEASEOBJ(mutData);
 	mutData = nil;
-	NSData *retData = [NSData dataWithData:tmpData];
-	RELEASEOBJ(tmpData);
-	tmpData = nil;
 	
 	MADStopMusic(theRec);
 	MADCleanDriver(theRec);
 	MADDisposeDriver(theRec);
 	free(soundPtr);
 	
-	return retData;
+	return AUTORELEASEOBJ(retData);
 }
 
 - (NSInteger)showExportSettings
@@ -1004,8 +1001,8 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 							return;
 						}
 						[session run];
-						
-						if (![session waitUntilFinished:&expErr])
+						BOOL didFinish = [session waitUntilFinished:&expErr];
+						if (!didFinish)
 						{
 							NSLog(@"export of \"%@\" failed, error: %@", oldMusicName, [expErr localizedDescription]);
 							dispatch_async(dispatch_get_main_queue(), errBlock);
@@ -1019,12 +1016,14 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						RELEASEOBJ(session);
 						RELEASEOBJ(exportMov);
 						
-						dispatch_async(dispatch_get_main_queue(), ^{
-							NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
-							if (retVal == NSAlertAlternateReturn) {
-								[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:[NSArray arrayWithObject:[savePanel URL]]];
-							}
-						});
+						if (didFinish) {
+							dispatch_async(dispatch_get_main_queue(), ^{
+								NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
+								if (retVal == NSAlertAlternateReturn) {
+									[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:[NSArray arrayWithObject:[savePanel URL]]];
+								}
+							});
+						}
 
 						RELEASEOBJ(saveData);
 					});
