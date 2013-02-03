@@ -40,6 +40,8 @@
 #define __LITTLE_ENDIAN__ 1
 #endif
 
+#ifndef __MACTYPES__
+#define __MACTYPES__
 typedef unsigned char 	Byte;
 typedef char 			*Ptr, **Handle;
 typedef unsigned char 	Boolean;
@@ -49,13 +51,12 @@ typedef int8_t			SInt8;
 typedef uint16_t		UInt16;
 typedef int16_t			SInt16;
 typedef short			OSErr;
-#ifndef __MACTYPES__
 typedef uint32_t		UInt32;
 typedef int32_t			SInt32;
-#endif
 typedef UInt32			FourCharCode;
 typedef FourCharCode	OSType;
 typedef SInt32			Fixed;
 typedef UInt32			UnsignedFixed;
+#endif
 
 #endif

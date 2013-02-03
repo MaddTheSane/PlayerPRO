@@ -28,8 +28,12 @@
 #endif
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#define EXP extern __attribute__((visibility("default")))
-#define PPEXPORT EXP
+#define PPEXPORT extern __attribute__((visibility("default")))
+#ifdef __cplusplus
+#define EXP extern "c" __attribute__((visibility("default")))
+#else
+#define EXP PPEXPORT
+#endif
 #endif
 
 #ifdef _MSC_VER
@@ -75,11 +79,7 @@
 #ifdef BUILDINGPPRO
 #define PPEXPORT extern __declspec(dllexport)
 #else
-#ifdef __cplusplus
-#define PPEXPORT extern "c" __declspec(dllimport)
-#else
 #define PPEXPORT extern __declspec(dllimport)
-#endif
 #ifdef _MSC_VER
 #pragma comment(lib, "PlayerPROCore.lib")
 #endif
@@ -87,8 +87,12 @@
 #endif
 
 #ifndef EXP
-#define EXP extern
-#define PPEXPORT EXP
+#define PPEXPORT extern
+#ifdef __cplusplus
+#define EXP extern "c"
+#else
+#define EXP PPEXPORT
+#endif
 #endif
 
 #if !defined(WIN32)
