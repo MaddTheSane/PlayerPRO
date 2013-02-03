@@ -7,6 +7,7 @@
 //
 
 #import "PPTimeFormatter.h"
+#import "ARCBridge.h"
 
 @implementation PPTimeFormatter
 
@@ -16,7 +17,7 @@
 		NSInteger theVal = [obj integerValue];
 		int seconds = (theVal/60) % 60;
 		int minutes = (theVal/(60 * 60)) % 60;
-		if (theVal / (60*60*60) > 1) {
+		if (theVal / (60*60*60) > 0) {
 			int hours = (theVal/(60 * 60 * 60));
 			return [NSString stringWithFormat:@"%d:%02d:%02d", hours, minutes, seconds];
 		} else {
@@ -40,7 +41,7 @@
 	}
 	returnValue = (((hours * 60 + minutes) * 60) + seconds) * 60;
 	//[obj setIntegerValue:returnValue];
-	*obj = [[NSNumber alloc] initWithInteger:returnValue];
+	*obj = AUTORELEASEOBJ([[NSNumber alloc] initWithInteger:returnValue]);
 	return YES;
 }
 
