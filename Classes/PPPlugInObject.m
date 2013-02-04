@@ -133,7 +133,6 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 	return iErr;
 }
 
-
 @implementation PPPlugInObject
 
 @synthesize type;

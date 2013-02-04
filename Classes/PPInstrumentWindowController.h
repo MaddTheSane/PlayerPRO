@@ -34,9 +34,6 @@
 @property (readwrite, nonatomic) MADMusic **curMusic;
 @property (readwrite) MADDriverRec **theDriver;
 
-- (OSErr)testPcmdFileAtURL:(NSURL*)theURL;
-- (OSErr)importPcmdFromURL:(NSURL*)theURL;
-
 - (BOOL)importSampleFromURL:(NSURL *)sampURL;
 - (BOOL)importSampleFromURL:(NSURL *)sampURL error:(out NSError *__autoreleasing*)theErr;
 - (BOOL)importSampleFromURL:(NSURL *)sampURL makeUserSelectInstrument:(BOOL)selIns error:(out NSError *__autoreleasing*)theErr;

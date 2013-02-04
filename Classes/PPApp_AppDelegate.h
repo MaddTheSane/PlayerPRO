@@ -16,6 +16,7 @@
 @class PPDigitalPlugInHandler;
 @class PPCurrentlyPlayingIndex;
 @class PPFilterPlugHandler;
+@class PatternHandler;
 
 @interface PPApp_AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate, PPSoundSettingsViewControllerDelegate> {
 	IBOutlet NSPanel		*toolsPanel;
@@ -64,6 +65,8 @@
 	PPDigitalPlugInHandler	*digitalHandler;
 	
 	PPFilterPlugHandler		*filterHandler;
+	
+	PatternHandler			*patternHandler;
 	
 	NSString				*musicName;
 	NSString				*musicInfo;

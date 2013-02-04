@@ -23,6 +23,7 @@
 #import "PPDigitalPlugInObject.h"
 #import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
+#import "PatternHandler.h"
 #include <PlayerPROCore/RDriverInt.h>
 #import <QTKit/QTKit.h>
 #import <QTKit/QTExportSession.h>
@@ -1381,6 +1382,9 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	instrumentController.curMusic = &Music;
 	instrumentController.theDriver = &MADDriver;
 	
+	patternHandler = [[PatternHandler alloc] initWithMusic:&Music];
+	patternHandler.theRec = &MADDriver;
+	
 	//Initialize the QTKit framework on the main thread. needed for 32-bit code.
 	[QTMovie class];
 	
@@ -1440,6 +1444,9 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	
 	RELEASEOBJ(filterHandler);
 	filterHandler = nil;
+	
+	RELEASEOBJ(patternHandler);
+	patternHandler = nil;
 	
 	if (Music != NULL) {
 		if (Music->hasChanged) {
@@ -1801,17 +1808,15 @@ enum PPMusicToolbarTypes {
 			return YES;
 		} else return NO;
 	} else if ([sharedWorkspace type:theUTI conformsToType:PPPCMDUTI]) {
-		if ([instrumentController isWindowLoaded]) {
-			OSErr theOSErr = [instrumentController importPcmdFromURL:theURL];
-			if (theOSErr != noErr) {
-				NSError *theErr = CreateErrorFromMADErrorType(theOSErr);
-				NSAlert *alert = [NSAlert alertWithError:theErr];
-				[alert runModal];
-				RELEASEOBJ(theErr);
-				return NO;
-			}
-			return YES;
+		OSErr theOSErr = [patternHandler importPcmdFromURL:theURL];
+		if (theOSErr != noErr) {
+			NSError *theErr = CreateErrorFromMADErrorType(theOSErr);
+			NSAlert *alert = [NSAlert alertWithError:theErr];
+			[alert runModal];
+			RELEASEOBJ(theErr);
+			return NO;
 		}
+		return YES;
 	} else if ([instrumentController isWindowLoaded]) {
 		NSInteger i;
 		for (i = 0; i < [instrumentImporter plugInCount]; i++) {

@@ -197,6 +197,7 @@
 		55356A1E102C06550093F21D /* MIDI-GM.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F60C2F21DD00D6C081 /* MIDI-GM.c */; };
 		55356A97102C08650093F21D /* PlugsPPINInit.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C60C2F21DD00D6C081 /* PlugsPPINInit.c */; };
 		5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
+		55469C2716BF34D200175A1F /* PatternHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55469C2616BF34D200175A1F /* PatternHandler.m */; };
 		5547CE5F10C6E5490041DEF6 /* ByteUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 5547CE5E10C6E5490041DEF6 /* ByteUtils.c */; };
 		554916C3166A9F9900187555 /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		554916C4166A9F9900187555 /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
@@ -1790,6 +1791,8 @@
 		5542404310DB602D00C08864 /* AVI.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = AVI.r; sourceTree = "<group>"; };
 		554240C810DBF91300C08864 /* CFPlugin-DigitalBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-DigitalBridge.c"; sourceTree = "<group>"; };
 		5546217D163A345F0005F491 /* PlugExports-Mac.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; path = "PlugExports-Mac.exp"; sourceTree = "<group>"; };
+		55469C2516BF34D200175A1F /* PatternHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternHandler.h; sourceTree = "<group>"; };
+		55469C2616BF34D200175A1F /* PatternHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternHandler.m; sourceTree = "<group>"; };
 		5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ByteUtils.h; path = Files/ByteUtils.h; sourceTree = "<group>"; };
 		5547CE5E10C6E5490041DEF6 /* ByteUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ByteUtils.c; path = Files/ByteUtils.c; sourceTree = "<group>"; };
 		554E0FE010D6C79D00BB619C /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Carbon.r; sourceTree = "<group>"; };
@@ -3384,6 +3387,19 @@
 			path = "MIDI Folder";
 			sourceTree = "<group>";
 		};
+		55469C2416BF341500175A1F /* Pattern Code */ = {
+			isa = PBXGroup;
+			children = (
+				55F4287216A8968C009013D8 /* PPPatternObject.h */,
+				55F4287316A8968C009013D8 /* PPPatternObject.m */,
+				55F4287616A89A9C009013D8 /* PPMadCommandObject.h */,
+				55F4287716A89A9C009013D8 /* PPMadCommandObject.m */,
+				55469C2516BF34D200175A1F /* PatternHandler.h */,
+				55469C2616BF34D200175A1F /* PatternHandler.m */,
+			);
+			name = "Pattern Code";
+			sourceTree = "<group>";
+		};
 		554E0FDD10D6C79D00BB619C /* (Plug-Ins) */ = {
 			isa = PBXGroup;
 			children = (
@@ -3634,6 +3650,7 @@
 				557139E41685007B00831A5A /* OpenPanelViewController.m */,
 				55B23D141687D6ED00DCE923 /* ARCBridge.h */,
 				5523EC78169276AA0067B22A /* Instrument Code */,
+				55469C2416BF341500175A1F /* Pattern Code */,
 				55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */,
 				5523EC70169265AB0067B22A /* PPPlugInInfoController.h */,
 				5523EC71169265AB0067B22A /* PPPlugInInfoController.m */,
@@ -3643,10 +3660,6 @@
 				5523EC8016936F880067B22A /* PPDigitalPlugInHandler.m */,
 				5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */,
 				5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */,
-				55F4287216A8968C009013D8 /* PPPatternObject.h */,
-				55F4287316A8968C009013D8 /* PPPatternObject.m */,
-				55F4287616A89A9C009013D8 /* PPMadCommandObject.h */,
-				55F4287716A89A9C009013D8 /* PPMadCommandObject.m */,
 				55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */,
 				55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */,
 				55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */,
@@ -6225,6 +6238,7 @@
 				55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */,
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
 				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,
+				55469C2716BF34D200175A1F /* PatternHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
