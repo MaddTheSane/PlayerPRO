@@ -43,7 +43,10 @@
 - (void)writeSampleAtIndex:(short)sampIdx withInstrumentAtIndexBackToMusic:(short)insIdx;
 
 - (IBAction)exportInstrument:(id)sender;
+- (IBAction)importInstrument:(id)sender;
 - (IBAction)deleteInstrument:(id)sender;
 - (IBAction)deleteSample:(id)sender;
+
+- (IBAction)playSample:(id)sender;
 
 @end

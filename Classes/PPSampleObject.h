@@ -11,10 +11,15 @@
 
 @interface PPSampleObject : NSObject <NSCopying>
 {
-	sData				theSample;
-	NSString 			*name;
-	NSData				*data;
+	sData		theSample;
+	NSString	*name;
+	NSData		*data;
+	short		sampleIndex;
+	short		instrumentIndex;
 }
+
+@property (readwrite) short sampleIndex;
+@property (readwrite) short instrumentIndex;
 
 - (id)init;
 - (id)initWithsData:(sData *)theData;

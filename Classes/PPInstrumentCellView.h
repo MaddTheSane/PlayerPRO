@@ -7,14 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "ARCBridge.h"
 
 //@class PPSampleButton;
+@class PPInstrumentWindowController;
 
 @interface PPInstrumentCellView : NSTableCellView
 {
 	IBOutlet __weak NSTextField *numField;
 	IBOutlet __weak NSButton *sampleButton;
 	IBOutlet __weak NSImageView *loopImage;
+	__weak PPInstrumentWindowController *controller;
 	BOOL isSample;
 	BOOL isLoopingSample;
 }
@@ -23,4 +26,8 @@
 @property (readwrite, arcweak) NSButton *sampleButton;
 @property (readwrite/*, getter = isSample, setter = setIsSample: */, nonatomic) BOOL isSample;
 @property (readwrite, nonatomic) BOOL isLoopingSample;
+@property (readwrite, arcweak) PPInstrumentWindowController *controller;
+
+- (IBAction)playSample:(id)sender;
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "PPInstrumentCellView.h"
+#import "PPInstrumentWindowController.h"
 
 @implementation PPInstrumentCellView
 
@@ -14,6 +15,7 @@
 @synthesize isSample;
 @synthesize isLoopingSample;
 @synthesize sampleButton;
+@synthesize controller;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -54,6 +56,11 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
+}
+
+- (IBAction)playSample:(id)sender
+{
+	[controller playSample:sender];
 }
 
 @end

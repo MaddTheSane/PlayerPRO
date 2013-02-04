@@ -67,6 +67,7 @@
 	if (instrumentView) {
 		[instrumentView reloadData];
 		[instrumentView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+		[instrumentView scrollToBeginningOfDocument:nil];
 	}
 }
 
@@ -95,7 +96,6 @@
 	return self = [self initWithWindowNibName:@"PPInstrumentWindowController"];
 }
 
-
 - (BOOL)importSampleFromURL:(NSURL *)sampURL
 {
 	return [self importSampleFromURL:sampURL error:NULL];
@@ -105,6 +105,7 @@
 {
 	return [self importSampleFromURL:sampURL makeUserSelectInstrument:NO error:theErr];
 }
+
 - (BOOL)importSampleFromURL:(NSURL *)sampURL makeUserSelectInstrument:(BOOL)selIns error:(out NSError *__autoreleasing*)theErr;
 {
 	//TODO: handle selIns
@@ -132,6 +133,11 @@
 	}
 }
 
+- (IBAction)importInstrument:(id)sender
+{
+	
+}
+
 - (IBAction)exportInstrument:(id)sender
 {
 	
@@ -147,19 +153,20 @@
 	
 }
 
+- (IBAction)playSample:(id)sender
+{
+	NSInteger tag = [sender tag];
+	short sampNum = tag % MAXSAMPLE;
+	short instrNum = tag / MAXSAMPLE;
+}
+
 - (void)windowDidLoad
 {
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-	[instrumentSize setTitleWithMnemonic:PPDoubleDash];
-	[instrumentLoopStart setTitleWithMnemonic:PPDoubleDash];
-	[instrumentLoopSize setTitleWithMnemonic:PPDoubleDash];
-	[instrumentVolume setTitleWithMnemonic:PPDoubleDash];
-	[instrumentRate setTitleWithMnemonic:PPDoubleDash];
-	[instrumentNote setTitleWithMnemonic:PPDoubleDash];
-	[instrumentBits setTitleWithMnemonic:PPDoubleDash];
-	[instrumentMode setTitleWithMnemonic:PPDoubleDash];
+	[instrumentView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+
 }
 
 - (void)dealloc
@@ -306,51 +313,51 @@ static void DrawCGSampleInt(long 	start,
 	CGContextRestoreGState(ctxRef);
 }
 
-
-static void DataProviderReleaseCallback(void *info, const void *data,
-										 size_t size)
-{
-	free((void*)data);
-}
-
 - (NSImage *)waveformImageFromSample:(PPSampleObject *)theDat
 {
 	NSSize imageSize = [waveFormImage convertSizeToBacking:[waveFormImage frame].size];
+	static CGBitmapInfo bitmapInfo = kCGImageAlphaPremultipliedLast;
+	BOOL datIsStereo = theDat.stereo;
 	imageSize.height *= 2;
 	imageSize.width *= 2;
 	CGImageRef theCGimg = NULL;
 	NSUInteger rowBytes = 4 * imageSize.width;
-	void *imageBuffer = malloc(rowBytes * imageSize.height);
+	NSMutableData *theData = [[NSMutableData alloc] initWithLength:rowBytes * imageSize.height];
 	static CGColorSpaceRef defaultSpace = NULL;
 	if (defaultSpace == NULL) {
 		defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
 	}
 	
-	CGContextRef bitmapContext = CGBitmapContextCreate(imageBuffer, imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast);
+	CGContextRef bitmapContext = CGBitmapContextCreate([theData mutableBytes], imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, bitmapInfo);
 	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
-	CGContextSetLineWidth(bitmapContext, 1);
-	if (theDat.stereo){
+	{
+		NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
+		CGContextSetLineWidth(bitmapContext, lineSize.height);
+	}
+	if (datIsStereo){
 		CGColorRef colorRef = CGColorCreateGenericRGB(0, 0, 1, .75);
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
 		CGColorRelease(colorRef);
 		DrawCGSampleInt(0, 0, imageSize.width, imageSize.height, imageSize.width, 0, 0, 1, theDat, bitmapContext);
 	}
 	{
-		CGColorRef colorRef = CGColorCreateGenericRGB(1, 0, 0, theDat.stereo ? .75 : 1);
+		CGColorRef colorRef = CGColorCreateGenericRGB(1, 0, 0, datIsStereo ? .75 : 1);
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
 		CGColorRelease(colorRef);
 		DrawCGSampleInt(0, 0, imageSize.width, imageSize.height, imageSize.width, 0, 0, 0, theDat, bitmapContext);
 	}
 
 	CGContextRelease(bitmapContext);
-	CGDataProviderRef dataProvider = CGDataProviderCreateWithData(NULL, imageBuffer, rowBytes * imageSize.height, DataProviderReleaseCallback);
+	CGDataProviderRef imageDataProvider = CGDataProviderCreateWithCFData(BRIDGE(CFDataRef, theData));
 	
-	theCGimg = CGImageCreate(imageSize.width, imageSize.height, 8, 32, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast, dataProvider, NULL, true, kCGRenderingIntentDefault);
-	CGDataProviderRelease(dataProvider);
+	theCGimg = CGImageCreate(imageSize.width, imageSize.height, 8, 32, rowBytes, defaultSpace, bitmapInfo, imageDataProvider, NULL, true, kCGRenderingIntentDefault);
+	CGDataProviderRelease(imageDataProvider);
 
 	NSImage *img = [[NSImage alloc] initWithCGImage:theCGimg size:[waveFormImage frame].size];
 	CGImageRelease(theCGimg);
 
+	RELEASEOBJ(theData);
+	
 	return AUTORELEASEOBJ(img);
 }
 
@@ -434,6 +441,7 @@ static void DataProviderReleaseCallback(void *info, const void *data,
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
 	PPInstrumentCellView *theView = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:nil];
+	theView.controller = self;
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
 		theView.isSample = NO;
 		[theView.textField setTitleWithMnemonic:[item name]];
@@ -448,6 +456,7 @@ static void DataProviderReleaseCallback(void *info, const void *data,
 		} else {
 			theView.isLoopingSample = NO;
 		}
+		[theView.sampleButton setTag:[item instrumentIndex] * MAXSAMPLE + [item sampleIndex]];
 	}
 	
 	return theView;

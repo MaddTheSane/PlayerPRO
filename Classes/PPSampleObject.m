@@ -13,6 +13,8 @@
 
 @synthesize name;
 @synthesize data;
+@synthesize instrumentIndex;
+@synthesize sampleIndex;
 
 - (void)setAmplitude:(unsigned char)amplitude
 {

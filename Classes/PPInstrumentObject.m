@@ -260,6 +260,8 @@
 			int i = 0;
 			for (i = tempData->firstSample; i < sDataCount; i++) {
 				PPSampleObject *sObj = [[PPSampleObject alloc] initWithsData:mus->sample[i]];
+				sObj.sampleIndex = i % MAXSAMPLE;
+				sObj.instrumentIndex = insIdx;
 				[samples addObject:sObj];
 				RELEASEOBJ(sObj);
 			}

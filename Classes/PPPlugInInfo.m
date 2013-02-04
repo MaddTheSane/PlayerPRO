@@ -31,7 +31,7 @@
 		plugName = [pn copy];
 		authorName = [aut copy];
 		plugType = [pt copy];
-		plugURL = [pu copy];
+		plugURL = RETAINOBJ(pu);
 	}
 	return self;
 }
