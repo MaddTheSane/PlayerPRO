@@ -359,7 +359,7 @@ static void DataProviderReleaseCallback(void *info, const void *data,
 	//TODO: localize
 	if (theSize > 1000 * 1000) {
 		//This should never happen!
-		[NSString stringWithFormat:@"%.2f MiB", theSize / (1024.0 * 1024.0)];
+		return [NSString stringWithFormat:@"%.2f MiB", theSize / (1024.0 * 1024.0)];
 	} else if (theSize > 1000) {
 		return [NSString stringWithFormat:@"%.2f kiB", theSize / 1024.0];
 	} else {

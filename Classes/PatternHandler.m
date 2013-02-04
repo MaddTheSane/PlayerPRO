@@ -8,6 +8,7 @@
 
 #import "PatternHandler.h"
 #import "UserDefaultKeys.h"
+#import "ARCBridge.h"
 
 static inline void SwapPcmd(Pcmd *toswap)
 {
@@ -29,6 +30,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 - (void)musicDidChange:(NSNotification *)aNot
 {
 	//TODO: load patterns into pattern list
+	[patternList removeAllObjects];
 }
 
 - (id)initWithMusic:(MADMusic **)mus
@@ -39,6 +41,15 @@ static inline void SwapPcmd(Pcmd *toswap)
 		patternList = [[NSMutableArray alloc] init];
 	}
 	return self;
+}
+
+- (void)dealloc
+{
+	RELEASEOBJ(patternList);
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
+	SUPERDEALLOC;
 }
 
 - (OSErr)testPcmdFileAtURL:(NSURL*)theURL
@@ -92,4 +103,5 @@ static inline void SwapPcmd(Pcmd *toswap)
 	
 	return noErr;
 }
+
 @end
