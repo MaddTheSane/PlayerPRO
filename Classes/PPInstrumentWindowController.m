@@ -342,19 +342,20 @@ static void DrawCGSampleInt(long 	start,
 - (NSImage *)waveformImageFromSample:(PPSampleObject *)theDat
 {
 	NSSize imageSize = [waveFormImage convertSizeToBacking:[waveFormImage frame].size];
-	static CGBitmapInfo bitmapInfo = kCGImageAlphaPremultipliedLast;
+	static const CGBitmapInfo bitmapInfo = kCGImageAlphaPremultipliedLast;
 	BOOL datIsStereo = theDat.stereo;
 	imageSize.height *= 2;
 	imageSize.width *= 2;
 	CGImageRef theCGimg = NULL;
 	NSUInteger rowBytes = 4 * imageSize.width;
-	NSMutableData *theData = [[NSMutableData alloc] initWithLength:rowBytes * imageSize.height];
+	CFMutableDataRef dataRef = CFDataCreateMutable(kCFAllocatorDefault, rowBytes * imageSize.height);
+	CFDataSetLength(dataRef, rowBytes * imageSize.height);
 	static CGColorSpaceRef defaultSpace = NULL;
 	if (defaultSpace == NULL) {
 		defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
 	}
 	
-	CGContextRef bitmapContext = CGBitmapContextCreate([theData mutableBytes], imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, bitmapInfo);
+	CGContextRef bitmapContext = CGBitmapContextCreate(CFDataGetMutableBytePtr(dataRef), imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, bitmapInfo);
 	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
 	{
 		NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
@@ -374,7 +375,8 @@ static void DrawCGSampleInt(long 	start,
 	}
 
 	CGContextRelease(bitmapContext);
-	CGDataProviderRef imageDataProvider = CGDataProviderCreateWithCFData(BRIDGE(CFDataRef, theData));
+	CGDataProviderRef imageDataProvider = CGDataProviderCreateWithCFData(dataRef);
+	CFRelease(dataRef);
 	
 	theCGimg = CGImageCreate(imageSize.width, imageSize.height, 8, 32, rowBytes, defaultSpace, bitmapInfo, imageDataProvider, NULL, true, kCGRenderingIntentDefault);
 	CGDataProviderRelease(imageDataProvider);
@@ -382,8 +384,6 @@ static void DrawCGSampleInt(long 	start,
 	NSImage *img = [[NSImage alloc] initWithCGImage:theCGimg size:[waveFormImage frame].size];
 	CGImageRelease(theCGimg);
 
-	RELEASEOBJ(theData);
-	
 	return AUTORELEASEOBJ(img);
 }
 
