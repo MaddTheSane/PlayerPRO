@@ -232,18 +232,37 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
     return self;
 }*/
 
+- (BOOL)hasMoreThanTwoTypes
+{
+	NSInteger i;
+	NSUInteger utiCount = [utiObjects count];
+	if (utiCount < 2) {
+		return NO;
+	}
+	
+	for (i = 1; i < utiCount; i++) {
+		OpenPanelViewItem *obj1 = [utiObjects objectAtIndex:i - 1];
+		OpenPanelViewItem *obj2 = [utiObjects objectAtIndex:i];
+		if (!isTwoTrackerTypesEqual(obj1.utiType, obj2.utiType)) {
+			return YES;
+		}
+	}
+	return NO;
+}
+
 - (void)awakeFromNib
 {
 	NSMenu *fileTypeSelectionMenu = [popUp menu];
 	int i = 0;
-	{
+	BOOL moreThanTwoTypes = [self hasMoreThanTwoTypes];
+	if (moreThanTwoTypes) {
 		NSMenuItem *mi0 = [[NSMenuItem alloc] initWithTitle:@"All Openable Files" action:@selector(selectUTI:) keyEquivalent:@""];
 		[mi0 setTag:utiAllType];
 		[mi0 setTarget:self];
 		[fileTypeSelectionMenu addItem:mi0];
 		RELEASEOBJ(mi0);
+		[fileTypeSelectionMenu addItem:[NSMenuItem separatorItem]];
 	}
-	[fileTypeSelectionMenu addItem:[NSMenuItem separatorItem]];
 	
 	for (OpenPanelViewItem *item in utiObjects) {
 		if (item.utiType.tracker) {
@@ -292,10 +311,12 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	
 	for (i = 0; i < [utiObjects count]; i++) {
 		OpenPanelViewItem *curItem = [utiObjects objectAtIndex:i];
-		if (i - 1 >= 0) {
-			OpenPanelViewItem *prevItem = [utiObjects objectAtIndex:i - 1];
-			if (!isTwoTrackerTypesEqual(curItem.utiType, prevItem.utiType)) {
-				[fileTypeSelectionMenu addItem:[NSMenuItem separatorItem]];
+		if (moreThanTwoTypes) {
+			if (i - 1 >= 0) {
+				OpenPanelViewItem *prevItem = [utiObjects objectAtIndex:i - 1];
+				if (!isTwoTrackerTypesEqual(curItem.utiType, prevItem.utiType)) {
+					[fileTypeSelectionMenu addItem:[NSMenuItem separatorItem]];
+				}
 			}
 		}
 		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:curItem.name action:@selector(selectUTI:) keyEquivalent:@""];
