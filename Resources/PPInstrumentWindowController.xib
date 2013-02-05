@@ -315,10 +315,10 @@
 											<reference key="NSNextResponder" ref="446707464"/>
 											<int key="NSvFlags">256</int>
 											<array class="NSMutableArray" key="NSSubviews"/>
-											<string key="NSFrameSize">{301, 361}</string>
+											<string key="NSFrameSize">{302, 361}</string>
 											<reference key="NSSuperview" ref="446707464"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="432287775"/>
+											<reference key="NSNextKeyView" ref="186397618"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -326,7 +326,7 @@
 											<object class="NSTableHeaderView" key="NSHeaderView" id="63592937">
 												<reference key="NSNextResponder" ref="186397618"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrameSize">{301, 17}</string>
+												<string key="NSFrameSize">{302, 17}</string>
 												<reference key="NSSuperview" ref="186397618"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="446707464"/>
@@ -342,7 +342,7 @@
 											</object>
 											<array class="NSMutableArray" key="NSTableColumns">
 												<object class="NSTableColumn" id="732622097">
-													<double key="NSWidth">282.16015625</double>
+													<double key="NSWidth">299.0859375</double>
 													<double key="NSMinWidth">16</double>
 													<double key="NSMaxWidth">1000</double>
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -417,7 +417,7 @@
 												</object>
 											</object>
 											<double key="NSRowHeight">25</double>
-											<int key="NSTvFlags">-232783872</int>
+											<int key="NSTvFlags">-228589568</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
 											<int key="NSGridStyleMask">2</int>
@@ -460,16 +460,17 @@
 								</object>
 								<object class="NSScroller" id="823431679">
 									<reference key="NSNextResponder" ref="765438735"/>
-									<int key="NSvFlags">-2147483392</int>
+									<int key="NSvFlags">256</int>
 									<string key="NSFrame">{{1, 362}, {301, 16}}</string>
 									<reference key="NSSuperview" ref="765438735"/>
 									<reference key="NSWindow"/>
 									<string key="NSReuseIdentifierKey">_NS:60</string>
+									<bool key="NSEnabled">YES</bool>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="765438735"/>
 									<string key="NSAction">_doScroller:</string>
-									<double key="NSPercent">0.74504950495049505</double>
+									<double key="NSPercent">0.99668874172185429</double>
 								</object>
 								<object class="NSClipView" id="186397618">
 									<reference key="NSNextResponder" ref="765438735"/>
@@ -490,9 +491,9 @@
 							<string key="NSFrame">{{20, 14}, {303, 379}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="186397618"/>
+							<reference key="NSNextKeyView" ref="446707464"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
-							<int key="NSsFlags">133682</int>
+							<int key="NSsFlags">133810</int>
 							<reference key="NSVScroller" ref="798159441"/>
 							<reference key="NSHScroller" ref="823431679"/>
 							<reference key="NSContentView" ref="446707464"/>
@@ -1027,6 +1028,14 @@
 					<int key="connectionID">133</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">importInstrument:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="309013653"/>
+					</object>
+					<int key="connectionID">138</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="1005"/>
@@ -1084,7 +1093,7 @@
 								<object class="NSTextField" id="58327646">
 									<reference key="NSNextResponder" ref="432287775"/>
 									<int key="NSvFlags">266</int>
-									<string key="NSFrame">{{0, 8}, {50, 17}}</string>
+									<string key="NSFrame">{{0, 8}, {67, 17}}</string>
 									<reference key="NSSuperview" ref="432287775"/>
 									<reference key="NSNextKeyView" ref="545391136"/>
 									<string key="NSAntiCompressionPriority">{250, 750}</string>
@@ -1177,7 +1186,7 @@
 									<bool key="NSEditable">YES</bool>
 								</object>
 							</array>
-							<string key="NSFrame">{{1, 1}, {282, 25}}</string>
+							<string key="NSFrame">{{1, 1}, {299, 25}}</string>
 							<reference key="NSNextKeyView" ref="58327646"/>
 						</object>
 						<reference key="destination" ref="58327646"/>
@@ -1789,7 +1798,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">137</int>
+			<int key="maxID">138</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1838,6 +1847,7 @@
 						<string key="deleteInstrument:">id</string>
 						<string key="deleteSample:">id</string>
 						<string key="exportInstrument:">id</string>
+						<string key="importInstrument:">id</string>
 						<string key="playSample:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -1851,6 +1861,10 @@
 						</object>
 						<object class="IBActionInfo" key="exportInstrument:">
 							<string key="name">exportInstrument:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="importInstrument:">
+							<string key="name">importInstrument:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="playSample:">

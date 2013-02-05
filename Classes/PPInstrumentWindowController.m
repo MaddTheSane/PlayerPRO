@@ -8,9 +8,11 @@
 
 #import "PPInstrumentWindowController.h"
 #import "PPInstrumentImporter.h"
+#import "PPInstrumentImporterObject.h"
 #import "PPInstrumentObject.h"
 #import "PPSampleObject.h"
 #import "PPInstrumentCellView.h"
+#import "OpenPanelViewController.h"
 #include <PlayerPROCore/PPPlug.h>
 #import "PPErrors.h"
 #import "ARCBridge.h"
@@ -135,7 +137,32 @@
 
 - (IBAction)importInstrument:(id)sender
 {
+	NSInteger plugCount = [importer plugInCount];
+	NSMutableArray *fileUTIs = [NSMutableArray arrayWithCapacity:plugCount];
+	NSMutableDictionary *fileDict = [NSMutableDictionary dictionaryWithCapacity:plugCount];
+	NSInteger i;
+	for (i = 0; i < plugCount; i++) {
+		PPInstrumentImporterObject *obj = [importer plugInAtIndex:i];
+		NSArray *utiList = obj.UTITypes;
+		[fileUTIs addObjectsFromArray:utiList];
+		[fileDict setObject:utiList forKey:obj.menuName];
+	}
+	NSOpenPanel *openPanel = RETAINOBJ([NSOpenPanel openPanel]);
+	OpenPanelViewController *vc = [[OpenPanelViewController alloc] initWithOpenPanel:openPanel trackerDictionary:nil playlistDictionary:nil instrumentDictionary:fileDict additionalDictionary:nil];
+	[openPanel setAllowsMultipleSelection:NO];
+	[openPanel setAllowedFileTypes:fileUTIs];
+	[openPanel setAccessoryView:[vc view]];
+	if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
+		NSError *err = nil;
+		if ([self importSampleFromURL:[openPanel URL] makeUserSelectInstrument:NO error:&err] == NO)
+		{
+			NSAlert *alert = [NSAlert alertWithError:err];
+			[alert runModal];
+		}
+	}
 	
+	RELEASEOBJ(vc);
+	RELEASEOBJ(openPanel);
 }
 
 - (IBAction)exportInstrument:(id)sender
@@ -166,7 +193,6 @@
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 	[instrumentView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-
 }
 
 - (void)dealloc
