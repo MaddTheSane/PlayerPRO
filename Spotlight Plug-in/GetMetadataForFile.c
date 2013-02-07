@@ -67,6 +67,22 @@ Boolean GetMetadataForFile(void* thisInterface,
 	
 	MADGetBestDriver(&init);
 	init.driverMode = NoHardwareDriver;
+	char *path = NULL;
+	{
+		char *fullPath = NULL, *trimPath = NULL;
+		CFIndex maxLen = CFStringGetMaximumSizeOfFileSystemRepresentation(pathToFile);
+		fullPath = malloc(maxLen);
+		if (CFStringGetFileSystemRepresentation(pathToFile, fullPath, maxLen) == FALSE)
+		{
+			free(fullPath);
+			return FALSE;
+		}
+		size_t shortLen = strlen(fullPath);
+		trimPath = malloc(++shortLen);
+		strlcpy(trimPath, fullPath, shortLen);
+		free(fullPath);
+		path = trimPath;
+	}
 #if 0
 	{
 		char builtinPluginPath[PATH_MAX];
@@ -78,10 +94,15 @@ Boolean GetMetadataForFile(void* thisInterface,
 		if(MADInitLibrary(builtinPluginPath, &MADLib) != noErr) return FALSE;
 	}
 #else
-	if(MADInitLibrary(NULL, &MADLib) != noErr) return FALSE;
+	if(MADInitLibrary(NULL, &MADLib) != noErr)
+	{
+		free(path);
+		return FALSE;
+	}
 #endif
 	if( MADCreateDriver( &init, MADLib, &MADDriver) != noErr)
 	{
+		free(path);
 		MADDisposeLibrary(MADLib);
 		return FALSE;
 	}
@@ -106,9 +127,8 @@ Boolean GetMetadataForFile(void* thisInterface,
 		}
 		
 //#endif
-		CFURLRef tempRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
 
-		if(MADMusicIdentifyCFURL(MADLib, type, tempRef) != noErr)
+		if(MADMusicIdentifyCString(MADLib, type, path) != noErr)
 		{
 			//Couldn't identify via raw file, try by UTI
 			//CFRelease(tempRef);
@@ -125,14 +145,12 @@ Boolean GetMetadataForFile(void* thisInterface,
 		if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 		{
 			OSErr err = noErr;
-			err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, type, tempRef);
+			err = MADLoadMusicFileCString(MADLib, &MADMusic1, type, path);
 			if(err != noErr)
 			{
-				CFRelease(tempRef);
 				goto fail1;
 			}
 		} else {
-			CFRelease(tempRef);
 			goto fail1;
 		}
 		
@@ -147,7 +165,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 			PPInfoRec rec;
 			{
 				char sig[5];
-				MADMusicInfoCFURL(MADLib, type, tempRef, &rec);
+				if(MADMusicInfoCString(MADLib, type, path, &rec) != noErr) goto skipInfo;
 				OSType2Ptr(rec.signature, sig);
 				CFStringRef CFSig = CFStringCreateWithCString(kCFAllocatorDefault, sig, kCFStringEncodingMacRoman);
 				CFDictionarySetValue(attributes, kPPMDSignature, CFSig);
@@ -176,12 +194,10 @@ Boolean GetMetadataForFile(void* thisInterface,
 				CFDictionarySetValue(attributes, kPPMDFormatDescription, FormatDes);
 				CFRelease(FormatDes);
 			}
-			
 		}
-		CFRelease(tempRef);
-
 	}
 	
+	skipInfo:
 	{
 		//Set duration metadata
 		MADAttachDriverToMusic( MADDriver, MADMusic1, NULL);
@@ -248,12 +264,14 @@ Boolean GetMetadataForFile(void* thisInterface,
 	MADStopDriver(MADDriver);					// Stop driver interrupt function
 	MADDisposeDriver(MADDriver);				// Dispose music driver
 	MADDisposeLibrary(MADLib);					// Close music library
+	free(path);
 	return TRUE;
 	
 fail1:
 	MADStopDriver(MADDriver);				// Stop driver interrupt function
 	MADDisposeDriver(MADDriver);			// Dispose music driver
 	MADDisposeLibrary(MADLib);				// Close music library
+	free(path);
 	
     return FALSE;
 }
