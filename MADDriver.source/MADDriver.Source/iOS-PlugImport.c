@@ -76,16 +76,18 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.mode = MADPlugImport,
 		.UTIType = CFSTR("net.sourceforge.playerpro.dmf"),
 	},
-	//Disabled because it isn't playing correctly
-	/*{
-	 .IOPlug = mainIT,
-	 .MenuName = CFSTR("ImpulseTracker Files"),
-	 .AuthorString = CFSTR("Antoine Rosset"),
-	 .type = "IT  ",
-	 .version = PLUGVERS,
-	 .mode = MADPlugImport,
-	 .UTIType = CFSTR("net.sourceforge.playerpro.it"),
-	 },*/
+	//Disabled on iOS because it isn't playing correctly
+#if !TARGET_OS_IPHONE
+	{
+		.IOPlug = mainIT,
+		.MenuName = CFSTR("ImpulseTracker Files"),
+		.AuthorString = CFSTR("Antoine Rosset"),
+		.type = "IT  ",
+		.version = PLUGVERS,
+		.mode = MADPlugImport,
+		.UTIType = CFSTR("net.sourceforge.playerpro.it"),
+	},
+#endif
 	{
 		.IOPlug = mainMADfg,
 		.MenuName = CFSTR("MAD-fg Files"),
@@ -253,6 +255,10 @@ static void MovePluginInfoOver(const iPlugInfo *src, PlugInfo *dst)
 	CFRelease(tmpStr);
 	dst->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, tmpArray);
 	CFRelease(tmpArray);
+#if !TARGET_OS_IPHONE
+	dst->file = CFBundleGetMainBundle();
+	CFRetain(dst->file);
+#endif
 }
 
 void MInitImportPlug( MADLibrary *inMADDriver, char *PlugsFolderName)
@@ -284,6 +290,9 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 		CFRelease(inMADDriver->ThePlug[i].AuthorString);
 		CFRelease(inMADDriver->ThePlug[i].UTItypes);
 		CFRelease(inMADDriver->ThePlug[i].MenuName);
+#if !TARGET_OS_IPHONE
+		CFRelease(inMADDriver->ThePlug[i].file);
+#endif
 	}
 	free( inMADDriver->ThePlug);		inMADDriver->ThePlug = NULL;
 }
