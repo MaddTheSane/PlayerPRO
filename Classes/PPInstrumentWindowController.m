@@ -374,12 +374,14 @@ static void DrawCGSampleInt(long 	start,
 		DrawCGSampleInt(0, 0, imageSize.width, imageSize.height, imageSize.width, 0, 0, 0, theDat, bitmapContext);
 	}
 
+	theCGimg = CGBitmapContextCreateImage(bitmapContext);
+	
 	CGContextRelease(bitmapContext);
-	CGDataProviderRef imageDataProvider = CGDataProviderCreateWithCFData(dataRef);
+	//CGDataProviderRef imageDataProvider = CGDataProviderCreateWithCFData(dataRef);
 	CFRelease(dataRef);
 	
-	theCGimg = CGImageCreate(imageSize.width, imageSize.height, 8, 32, rowBytes, defaultSpace, bitmapInfo, imageDataProvider, NULL, true, kCGRenderingIntentDefault);
-	CGDataProviderRelease(imageDataProvider);
+	//theCGimg = CGImageCreate(imageSize.width, imageSize.height, 8, 32, rowBytes, defaultSpace, bitmapInfo, imageDataProvider, NULL, true, kCGRenderingIntentDefault);
+	//CGDataProviderRelease(imageDataProvider);
 
 	NSImage *img = [[NSImage alloc] initWithCGImage:theCGimg size:[waveFormImage frame].size];
 	CGImageRelease(theCGimg);
