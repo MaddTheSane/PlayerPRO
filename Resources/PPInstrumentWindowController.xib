@@ -315,7 +315,7 @@
 											<reference key="NSNextResponder" ref="446707464"/>
 											<int key="NSvFlags">256</int>
 											<array class="NSMutableArray" key="NSSubviews"/>
-											<string key="NSFrameSize">{302, 361}</string>
+											<string key="NSFrameSize">{301, 361}</string>
 											<reference key="NSSuperview" ref="446707464"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="186397618"/>
@@ -326,7 +326,7 @@
 											<object class="NSTableHeaderView" key="NSHeaderView" id="63592937">
 												<reference key="NSNextResponder" ref="186397618"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrameSize">{302, 17}</string>
+												<string key="NSFrameSize">{301, 17}</string>
 												<reference key="NSSuperview" ref="186397618"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="446707464"/>
@@ -342,7 +342,7 @@
 											</object>
 											<array class="NSMutableArray" key="NSTableColumns">
 												<object class="NSTableColumn" id="732622097">
-													<double key="NSWidth">299.0859375</double>
+													<double key="NSWidth">298.0859375</double>
 													<double key="NSMinWidth">16</double>
 													<double key="NSMaxWidth">1000</double>
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -417,7 +417,7 @@
 												</object>
 											</object>
 											<double key="NSRowHeight">25</double>
-											<int key="NSTvFlags">-228589568</int>
+											<int key="NSTvFlags">-230686720</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
 											<int key="NSGridStyleMask">2</int>
@@ -460,12 +460,11 @@
 								</object>
 								<object class="NSScroller" id="823431679">
 									<reference key="NSNextResponder" ref="765438735"/>
-									<int key="NSvFlags">256</int>
+									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{1, 362}, {301, 16}}</string>
 									<reference key="NSSuperview" ref="765438735"/>
 									<reference key="NSWindow"/>
 									<string key="NSReuseIdentifierKey">_NS:60</string>
-									<bool key="NSEnabled">YES</bool>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="765438735"/>
@@ -493,7 +492,7 @@
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="446707464"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
-							<int key="NSsFlags">133810</int>
+							<int key="NSsFlags">133682</int>
 							<reference key="NSVScroller" ref="798159441"/>
 							<reference key="NSHScroller" ref="823431679"/>
 							<reference key="NSContentView" ref="446707464"/>
@@ -1093,7 +1092,7 @@
 								<object class="NSTextField" id="58327646">
 									<reference key="NSNextResponder" ref="432287775"/>
 									<int key="NSvFlags">266</int>
-									<string key="NSFrame">{{0, 8}, {67, 17}}</string>
+									<string key="NSFrame">{{0, 8}, {66, 17}}</string>
 									<reference key="NSSuperview" ref="432287775"/>
 									<reference key="NSNextKeyView" ref="545391136"/>
 									<string key="NSAntiCompressionPriority">{250, 750}</string>
@@ -1186,7 +1185,7 @@
 									<bool key="NSEditable">YES</bool>
 								</object>
 							</array>
-							<string key="NSFrame">{{1, 1}, {299, 25}}</string>
+							<string key="NSFrame">{{1, 1}, {298, 25}}</string>
 							<reference key="NSNextKeyView" ref="58327646"/>
 						</object>
 						<reference key="destination" ref="58327646"/>
