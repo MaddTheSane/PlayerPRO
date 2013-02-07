@@ -1999,7 +1999,7 @@
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Complex Fade-Info.plist"; path = "../../../Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55CB01A611EB82FA0028C6BB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		55CBF9A611EB77760028C6BB /* PlayerPRO Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO 6.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CBF9A811EB77760028C6BB /* Cocoa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Cocoa-Info.plist"; sourceTree = "<group>"; };
 		55CBFC7011EB7BC90028C6BB /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		55CBFC7911EB7C4E0028C6BB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -3795,7 +3795,7 @@
 				551FEA6B10E727AD00EDF2F1 /* MINs.plugin */,
 				551FEADA10E727B100EDF2F1 /* PAT.plugin */,
 				55E898B710F17C2B004EB52B /* QuickTime.plugin */,
-				55CBF9A611EB77760028C6BB /* PlayerPRO Cocoa.app */,
+				55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */,
 				551292D8163DD68500C2C639 /* PlayerPROKit.framework */,
 				55879F85164CA65D009068D5 /* PPPlay */,
 				5573A1031656FAF100A5AECA /* libiOSPlayerPROCore.a */,
@@ -5003,7 +5003,7 @@
 			);
 			name = Cocoa;
 			productName = Cocoa;
-			productReference = 55CBF9A611EB77760028C6BB /* PlayerPRO Cocoa.app */;
+			productReference = 55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */;
 			productType = "com.apple.product-type.application";
 		};
 		55E898A810F17C2B004EB52B /* QuickTime */ = {
@@ -8827,7 +8827,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				PRODUCT_NAME = "PlayerPRO Cocoa";
+				PRODUCT_NAME = "PlayerPRO 6";
 			};
 			name = Release;
 		};
@@ -8847,7 +8847,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				PRODUCT_NAME = "PlayerPRO Cocoa";
+				PRODUCT_NAME = "PlayerPRO 6";
 			};
 			name = Debug;
 		};
