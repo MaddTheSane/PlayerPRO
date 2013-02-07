@@ -257,7 +257,9 @@ static void MovePluginInfoOver(const iPlugInfo *src, PlugInfo *dst)
 	CFRelease(tmpArray);
 #if !TARGET_OS_IPHONE
 	dst->file = CFBundleGetMainBundle();
-	CFRetain(dst->file);
+	if (dst->file) {
+		CFRetain(dst->file);
+	}
 #endif
 }
 
@@ -291,7 +293,9 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 		CFRelease(inMADDriver->ThePlug[i].UTItypes);
 		CFRelease(inMADDriver->ThePlug[i].MenuName);
 #if !TARGET_OS_IPHONE
-		CFRelease(inMADDriver->ThePlug[i].file);
+		if (inMADDriver->ThePlug[i].file) {
+			CFRelease(inMADDriver->ThePlug[i].file);
+		}
 #endif
 	}
 	free( inMADDriver->ThePlug);		inMADDriver->ThePlug = NULL;
