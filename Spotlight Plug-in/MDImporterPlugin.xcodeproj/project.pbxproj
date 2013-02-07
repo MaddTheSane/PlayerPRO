@@ -1024,6 +1024,8 @@
 				INSTALL_PATH = /Library/Spotlight;
 				LD_RUNPATH_SEARCH_PATHS = "/Library/Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = PlayerPROImporter;
+				STRIP_INSTALLED_PRODUCT = YES;
+				STRIP_STYLE = debugging;
 				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Release;
