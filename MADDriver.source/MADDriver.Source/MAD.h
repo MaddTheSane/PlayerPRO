@@ -28,11 +28,20 @@
 #endif
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#define PPEXPORT extern
+#ifdef __cplusplus
+#define EXP extern "c"
+#else
+#define EXP extern
+#endif
+#else
 #define PPEXPORT extern __attribute__((visibility("default")))
 #ifdef __cplusplus
 #define EXP extern "c" __attribute__((visibility("default")))
 #else
 #define EXP PPEXPORT
+#endif
 #endif
 #endif
 
@@ -71,6 +80,14 @@
 #include "PPDefs.h"
 
 #ifdef WIN32
+#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#define PPEXPORT extern
+#ifdef __cplusplus
+#define EXP extern "c"
+#else
+#define EXP extern
+#endif
+#else
 #ifdef __cplusplus
 #define EXP extern "c" __declspec(dllexport)
 #else
@@ -85,7 +102,9 @@
 #endif
 #endif
 #endif
+#endif
 
+//Final checks
 #ifndef EXP
 #define PPEXPORT extern
 #ifdef __cplusplus
