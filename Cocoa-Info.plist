@@ -174,7 +174,7 @@
 				<string>MADI</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madi</string>
@@ -202,7 +202,7 @@
 				<string>MADF</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madfg</string>
@@ -228,7 +228,7 @@
 				<string>MADH</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madh</string>
@@ -277,7 +277,7 @@
 				<string>XM  </string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.xm</string>
@@ -299,7 +299,7 @@
 				<string>XI  </string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.xi</string>
@@ -321,7 +321,7 @@
 				<string>PAT </string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.pat</string>
@@ -357,11 +357,11 @@
 				<string>ppimpexp</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>Bundle</string>
+			<string></string>
 			<key>CFBundleTypeName</key>
 			<string>PPImpExpBundle</string>
 			<key>CFBundleTypeRole</key>
-			<string>None</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.ppimpexp</string>
@@ -563,7 +563,7 @@
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO Import-Export Bundle</string>
 			<key>UTTypeIconFile</key>
-			<string>Bundle</string>
+			<string></string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.ppimpexp</string>
 			<key>UTTypeTagSpecification</key>
