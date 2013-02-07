@@ -2067,6 +2067,9 @@ enum PPMusicToolbarTypes {
 	if (lostCount) {
 		NSRunAlertPanel(@"Unresolvable files", @"There were %lu file(s) that were unable to be resolved.", nil, nil, nil, (unsigned long)lostCount);
 	}
+	if ([musicList countOfMusicList] > 0) {
+		[self selectMusicAtIndex:0];
+	}
 }
 
 - (BOOL)musicListWillChange

@@ -194,21 +194,22 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		}
 
 		[mutArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-			if ([obj1 utiType].tracker != [obj2 utiType].tracker) {
-				if ([obj1 utiType].tracker) {
+			trackerType obj1Type = [obj1 utiType], obj2Type = [obj2 utiType];
+			if (obj1Type.tracker != obj2Type.tracker) {
+				if (obj1Type.tracker) {
 					return NSOrderedAscending;
 				} else return NSOrderedDescending;
-			} else if ([obj1 utiType].playlist != [obj2 utiType].playlist) {
-				if ([obj1 utiType].playlist) {
+			} else if (obj1Type.playlist != obj2Type.playlist) {
+				if (obj1Type.playlist) {
 					return NSOrderedAscending;
 				} else return NSOrderedDescending;
-			} else if ([obj1 utiType].instrument != [obj2 utiType].instrument) {
-				if ([obj1 utiType].instrument) {
+			} else if (obj1Type.instrument != obj2Type.instrument) {
+				if (obj1Type.instrument) {
 					return NSOrderedAscending;
 				} else return NSOrderedDescending;
-			} else if ([obj1 utiType].other != [obj2 utiType].other) {
+			} else if (obj1Type.other != obj2Type.other) {
 				//Technically we shouldn't get here...
-				if ([obj1 utiType].other) {
+				if (obj1Type.other) {
 					return NSOrderedAscending;
 				} else return NSOrderedDescending;
 			}
