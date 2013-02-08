@@ -342,20 +342,18 @@ static void DrawCGSampleInt(long 	start,
 - (NSImage *)waveformImageFromSample:(PPSampleObject *)theDat
 {
 	NSSize imageSize = [waveFormImage convertSizeToBacking:[waveFormImage frame].size];
-	static const CGBitmapInfo bitmapInfo = kCGImageAlphaPremultipliedLast;
 	BOOL datIsStereo = theDat.stereo;
 	imageSize.height *= 2;
 	imageSize.width *= 2;
 	CGImageRef theCGimg = NULL;
 	NSUInteger rowBytes = 4 * imageSize.width;
-	CFMutableDataRef dataRef = CFDataCreateMutable(kCFAllocatorDefault, rowBytes * imageSize.height);
-	CFDataSetLength(dataRef, rowBytes * imageSize.height);
+	void *imageBytes = malloc(rowBytes * imageSize.height);
 	static CGColorSpaceRef defaultSpace = NULL;
 	if (defaultSpace == NULL) {
 		defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
 	}
 	
-	CGContextRef bitmapContext = CGBitmapContextCreate(CFDataGetMutableBytePtr(dataRef), imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, bitmapInfo);
+	CGContextRef bitmapContext = CGBitmapContextCreate(imageBytes, imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast);
 	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
 	{
 		NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
@@ -377,12 +375,8 @@ static void DrawCGSampleInt(long 	start,
 	theCGimg = CGBitmapContextCreateImage(bitmapContext);
 	
 	CGContextRelease(bitmapContext);
-	//CGDataProviderRef imageDataProvider = CGDataProviderCreateWithCFData(dataRef);
-	CFRelease(dataRef);
+	free(imageBytes);
 	
-	//theCGimg = CGImageCreate(imageSize.width, imageSize.height, 8, 32, rowBytes, defaultSpace, bitmapInfo, imageDataProvider, NULL, true, kCGRenderingIntentDefault);
-	//CGDataProviderRelease(imageDataProvider);
-
 	NSImage *img = [[NSImage alloc] initWithCGImage:theCGimg size:[waveFormImage frame].size];
 	CGImageRelease(theCGimg);
 
@@ -409,7 +403,7 @@ static void DrawCGSampleInt(long 	start,
 	if ([object isKindOfClass:[PPInstrumentObject class]]) {
 		if ([object sampleCount] > 0) {
 			object = [object childAtIndex:0];
-		}else {
+		} else {
 			object = nil;
 		}
 	}
@@ -428,11 +422,11 @@ static void DrawCGSampleInt(long 	start,
 	[instrumentSize setTitleWithMnemonic:[PPInstrumentWindowController getStringFromSize:[object dataSize]]];
 	[instrumentLoopStart setTitleWithMnemonic:[PPInstrumentWindowController getStringFromSize:[object loopBegin]]];
 	[instrumentLoopSize setTitleWithMnemonic:[PPInstrumentWindowController getStringFromSize:[object loopSize]]];
-	[instrumentVolume setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [(PPSampleObject*)object volume]]];
-	[instrumentRate setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object c2spd]]];
+	[instrumentVolume setTitleWithMnemonic:[NSString stringWithFormat:@"%u", [(PPSampleObject*)object volume]]];
+	[instrumentRate setTitleWithMnemonic:[NSString stringWithFormat:@"%u", [object c2spd]]];
 	[instrumentNote setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object relativeNote]]];
-	[instrumentBits setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object amplitude]]];
-	[instrumentMode setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object loopType]]];
+	[instrumentBits setTitleWithMnemonic:[NSString stringWithFormat:@"%u", [object amplitude]]];
+	[instrumentMode setTitleWithMnemonic:[NSString stringWithFormat:@"%u", [object loopType]]];
 	[waveFormImage setImage:[self waveformImageFromSample:object]];
 }
 
