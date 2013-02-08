@@ -1035,6 +1035,14 @@
 					<int key="connectionID">138</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">playInstrument:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="538551540"/>
+					</object>
+					<int key="connectionID">139</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="1005"/>
@@ -1797,7 +1805,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">138</int>
+			<int key="maxID">139</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1847,6 +1855,7 @@
 						<string key="deleteSample:">id</string>
 						<string key="exportInstrument:">id</string>
 						<string key="importInstrument:">id</string>
+						<string key="playInstrument:">id</string>
 						<string key="playSample:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -1864,6 +1873,10 @@
 						</object>
 						<object class="IBActionInfo" key="importInstrument:">
 							<string key="name">importInstrument:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="playInstrument:">
+							<string key="name">playInstrument:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="playSample:">

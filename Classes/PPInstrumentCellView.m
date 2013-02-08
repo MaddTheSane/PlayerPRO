@@ -16,6 +16,7 @@
 @synthesize isLoopingSample;
 @synthesize sampleButton;
 @synthesize controller;
+@synthesize isBlank;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -53,9 +54,21 @@
 	}
 }
 
+- (void)setIsBlank:(BOOL)aisBlank
+{
+	isBlank = aisBlank;
+	[self setNeedsDisplay:YES];
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
+	if (isBlank) {
+		NSColor *grayOverlay = [NSColor colorWithDeviceWhite:0.65 alpha:1];
+		[grayOverlay set];
+		//[grayOverlay drawSwatchInRect:dirtyRect];
+		[[NSBezierPath bezierPathWithRect:dirtyRect] fill];
+	}
 }
 
 - (IBAction)playSample:(id)sender

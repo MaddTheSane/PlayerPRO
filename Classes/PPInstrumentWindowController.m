@@ -180,6 +180,30 @@
 	
 }
 
+- (IBAction)playInstrument:(id)sender
+{
+	NSControl *tmpCtrl = [[NSControl alloc] initWithFrame:NSZeroRect];
+	
+	id object = [instrumentView itemAtRow:[instrumentView selectedRow]];
+	
+	if ([object isKindOfClass:[PPInstrumentObject class]]) {
+		if ([object sampleCount] > 0) {
+			object = [object childAtIndex:0];
+		} else {
+			object = nil;
+		}
+	}
+
+	if (object == nil) {
+		RELEASEOBJ(tmpCtrl);
+		return;
+	}
+	
+	[tmpCtrl setTag:[object instrumentIndex] * MAXSAMPLE + [object sampleIndex]];
+	[self playSample:tmpCtrl];
+	RELEASEOBJ(tmpCtrl);
+}
+
 - (IBAction)playSample:(id)sender
 {
 	NSInteger tag = [sender tag];
@@ -468,9 +492,8 @@ static void DrawCGSampleInt(long 	start,
 		theView.isSample = NO;
 		[theView.textField setTitleWithMnemonic:[item name]];
 		[theView.numField setTitleWithMnemonic:[NSString stringWithFormat:@"%03ld", (long)[item number] + 1]];
-
-	} else if ([item isKindOfClass:[PPSampleObject class]])
-	{
+		theView.isBlank = [item countOfChildren] <= 0;
+	} else if ([item isKindOfClass:[PPSampleObject class]]) {
 		theView.isSample = YES;
 		[theView.textField setTitleWithMnemonic:[item name]];
 		if ([item loopSize]) {
@@ -479,6 +502,7 @@ static void DrawCGSampleInt(long 	start,
 			theView.isLoopingSample = NO;
 		}
 		[theView.sampleButton setTag:[item instrumentIndex] * MAXSAMPLE + [item sampleIndex]];
+		theView.isBlank = NO;
 	}
 	
 	return theView;
