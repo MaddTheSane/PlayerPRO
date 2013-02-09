@@ -157,6 +157,10 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 - (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd instrumentDictionary:(NSDictionary*)insDict additionalDictionary:(NSDictionary *)adddict
 {
 	if (self = [super initWithNibName:@"OpenPanelViewController" bundle:nil]) {
+		if (!panel) {
+			AUTORELEASEOBJNORETURN(self);
+			return nil;
+		}
 		openPanel = RETAINOBJ(panel);
 		
 		NSMutableArray *mutArray = [NSMutableArray array];
