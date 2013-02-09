@@ -195,6 +195,7 @@
 	}
 
 	if (object == nil) {
+		NSBeep();
 		RELEASEOBJ(tmpCtrl);
 		return;
 	}
