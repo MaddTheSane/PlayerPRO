@@ -433,7 +433,25 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.quadmation.playerpro.madi</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PlayerPRO MAD tracker</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.quadmation.playerpro.mad</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.mime-type</key>
+				<array>
+					<string>audio/x-mad</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.quadmation.playerpro.mad</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO MADK Tracker</string>
@@ -449,6 +467,7 @@
 				</array>
 				<key>public.filename-extension</key>
 				<array>
+					<string>mad</string>
 					<string>madk</string>
 				</array>
 			</dict>
@@ -456,7 +475,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.quadmation.playerpro.madi</string>
+				<string>com.quadmation.playerpro.mad</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO MADH Tracker</string>
@@ -479,7 +499,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.quadmation.playerpro.madi</string>
+				<string>com.quadmation.playerpro.mad</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO MAD-FG Tracker</string>
@@ -505,7 +526,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
-				<string>net.sourceforge.playerpro.tracker</string>
+				<string>com.quadmation.playerpro.mad</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO MADI Tracker</string>
@@ -521,7 +542,6 @@
 				</array>
 				<key>public.filename-extension</key>
 				<array>
-					<string>mad</string>
 					<string>madi</string>
 				</array>
 				<key>public.mime-type</key>
@@ -549,8 +569,8 @@
 				</array>
 				<key>public.filename-extension</key>
 				<array>
-					<string>list</string>
 					<string>inslist</string>
+					<string>list</string>
 				</array>
 			</dict>
 		</dict>
