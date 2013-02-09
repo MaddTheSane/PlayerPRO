@@ -418,9 +418,9 @@ OSErr mainXI(void						*unused,
 			{
 				// Write instrument header
 				
-				short			u, v, p, i, x;
+				short			u, /*v, p,*/ i, x;
 				long			inOutCount = 0;
-				long			ihsizecopy, ihssizecopy;
+				//long			ihsizecopy, ihssizecopy;
 				XMPATCHHEADER	pth;
 				char			start[ 0x42];
 				
