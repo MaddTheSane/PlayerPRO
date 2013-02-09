@@ -11,7 +11,7 @@
 
 @class PPSampleObject;
 
-@interface PPInstrumentObject : NSObject
+@interface PPInstrumentObject : NSObject <NSCopying>
 {
 	MADMusic		*theMus;
 	InstrData		theInstrument;

@@ -242,6 +242,11 @@
 	return [samples count];
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+	return [[PPInstrumentObject alloc] initWithMusic:theMus instrumentIndex:theInstrument.no];
+}
+
 - (id)initWithMusic:(MADMusic*)mus instrumentIndex:(short)insIdx;
 {
 	if (self = [super init]) {

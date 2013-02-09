@@ -10,6 +10,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 
 @class PPInstrumentImporter;
+@class InstrumentInfoController;
 
 @interface PPInstrumentWindowController : NSWindowController <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
@@ -28,6 +29,7 @@
 
 	IBOutlet NSImageView *waveFormImage;
 	IBOutlet NSOutlineView *instrumentView;
+	InstrumentInfoController *instrumentInfo;
 }
 
 @property (readwrite, retain) PPInstrumentImporter *importer;
@@ -42,13 +44,17 @@
 - (void)writeInstrumentAtIndexBackToMusic:(short)idx;
 - (void)writeSampleAtIndex:(short)sampIdx withInstrumentAtIndexBackToMusic:(short)insIdx;
 
+//Toolbar functions
 - (IBAction)exportInstrument:(id)sender;
 - (IBAction)importInstrument:(id)sender;
 - (IBAction)deleteInstrument:(id)sender;
 - (IBAction)playInstrument:(id)sender;
+- (IBAction)showInstrumentInfo:(id)sender;
 
 - (IBAction)deleteSample:(id)sender;
 
 - (IBAction)playSample:(id)sender;
+
+- (void)replaceObjectInInstrumentsAtIndex:(NSUInteger)index withObject:(id)object;
 
 @end

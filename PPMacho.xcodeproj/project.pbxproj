@@ -178,6 +178,8 @@
 		5523EC7E169361A70067B22A /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */; };
 		5523EC8116936F880067B22A /* PPDigitalPlugInHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8016936F880067B22A /* PPDigitalPlugInHandler.m */; };
 		5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */; };
+		552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552581FC16C6FC350016A31C /* InstrumentInfoController.m */; };
+		552581FF16C6FC350016A31C /* InstrumentInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552581FD16C6FC350016A31C /* InstrumentInfoController.xib */; };
 		552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 552A662816B5EBEB007C63F7 /* PPPlugInObject.m */; };
 		552AFC7F167A8C8B00F32481 /* PPPause.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 552AFC7E167A8C8B00F32481 /* PPPause.pdf */; };
@@ -1775,6 +1777,9 @@
 		5523EC8016936F880067B22A /* PPDigitalPlugInHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPlugInHandler.m; sourceTree = "<group>"; };
 		5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPlugInObject.h; sourceTree = "<group>"; };
 		5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPlugInObject.m; sourceTree = "<group>"; };
+		552581FB16C6FC350016A31C /* InstrumentInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstrumentInfoController.h; sourceTree = "<group>"; };
+		552581FC16C6FC350016A31C /* InstrumentInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstrumentInfoController.m; sourceTree = "<group>"; };
+		552581FD16C6FC350016A31C /* InstrumentInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstrumentInfoController.xib; sourceTree = "<group>"; };
 		552711E3124881F4005120FC /* UserDefaultKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultKeys.h; sourceTree = "<group>"; };
 		552711E4124881F4005120FC /* UserDefaultKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultKeys.m; sourceTree = "<group>"; };
 		552A662716B5EBEA007C63F7 /* PPPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugInObject.h; sourceTree = "<group>"; };
@@ -3321,6 +3326,9 @@
 				550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */,
 				550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */,
 				550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */,
+				552581FB16C6FC350016A31C /* InstrumentInfoController.h */,
+				552581FC16C6FC350016A31C /* InstrumentInfoController.m */,
+				552581FD16C6FC350016A31C /* InstrumentInfoController.xib */,
 			);
 			name = "Instrument Code";
 			sourceTree = "<group>";
@@ -5595,6 +5603,7 @@
 				5523EC6B16925FF80067B22A /* PPInstrumentWindowController.xib in Resources */,
 				5523EC74169265AC0067B22A /* PPPlugInInfoController.xib in Resources */,
 				55F4287D16A8B1FB009013D8 /* PPSoundSettingsViewController.xib in Resources */,
+				552581FF16C6FC350016A31C /* InstrumentInfoController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6362,6 +6371,7 @@
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
 				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,
 				55469C2716BF34D200175A1F /* PatternHandler.m in Sources */,
+				552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,7 @@
 #import "PPSampleObject.h"
 #import "PPInstrumentCellView.h"
 #import "OpenPanelViewController.h"
+#import "InstrumentInfoController.h"
 #include <PlayerPROCore/PPPlug.h>
 #import "PPErrors.h"
 #import "ARCBridge.h"
@@ -87,7 +88,8 @@
 		[center addObserver:self selector:@selector(colorsDidChange:) name:PPColorsDidChange object:nil];
 		[center addObserver:self selector:@selector(musicDidChange:) name:PPMusicDidChange object:nil];
 		instruments = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU];
-		
+		instrumentInfo = [[InstrumentInfoController alloc] init];
+		instrumentInfo.delegate = self;
     }
     
     return self;
@@ -205,6 +207,21 @@
 	RELEASEOBJ(tmpCtrl);
 }
 
+
+- (IBAction)showInstrumentInfo:(id)sender
+{
+	PPInstrumentObject *ctxt = nil;
+	id object = [instrumentView itemAtRow:[instrumentView selectedRow]];
+	if ([object isKindOfClass:[PPInstrumentObject class]]) {
+		ctxt = object;
+	} else if ([object isKindOfClass:[PPSampleObject class]]) {
+		ctxt = [instruments objectAtIndex:[object instrumentIndex]];
+	}
+	instrumentInfo.instrument = ctxt;
+	
+	[NSApp beginSheet:[instrumentInfo window] modalForWindow:[self window] modalDelegate:instrumentInfo didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+}
+
 - (IBAction)playSample:(id)sender
 {
 	NSInteger tag = [sender tag];
@@ -224,6 +241,7 @@
 {
 	RELEASEOBJ(importer);
 	RELEASEOBJ(instruments);
+	RELEASEOBJ(instrumentInfo);
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
@@ -507,6 +525,12 @@ static void DrawCGSampleInt(long 	start,
 	}
 	
 	return theView;
+}
+
+- (void)replaceObjectInInstrumentsAtIndex:(NSUInteger)index withObject:(id)object
+{
+	[instruments replaceObjectAtIndex:index withObject:object];
+	(*curMusic)->hasChanged = TRUE;
 }
 
 @end
