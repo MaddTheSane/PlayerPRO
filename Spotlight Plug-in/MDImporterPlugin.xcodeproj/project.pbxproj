@@ -1006,6 +1006,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/../MADDriver.source/MADDriver.Source";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/Spotlight;
 				LD_RUNPATH_SEARCH_PATHS = "/Library/Frameworks @loader_path/../Frameworks";
@@ -1020,6 +1021,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/../MADDriver.source/MADDriver.Source";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/Spotlight;
 				LD_RUNPATH_SEARCH_PATHS = "/Library/Frameworks @loader_path/../Frameworks";

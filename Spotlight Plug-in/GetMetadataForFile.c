@@ -1,6 +1,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h>
-#include <PlayerPROCore/PlayerPROCore.h>
+#include "RDriver.h"
+#include "FileUtils.h"
 
 /* -----------------------------------------------------------------------------
    Step 1
