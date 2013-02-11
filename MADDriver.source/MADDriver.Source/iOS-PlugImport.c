@@ -333,7 +333,12 @@ OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 			*theNewMAD = (MADMusic*) calloc( sizeof( MADMusic), 1);
 			if( !theNewMAD) return MADNeedMemory;
 			
-			return CallImportPlug( inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
+			OSErr err = CallImportPlug( inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
+			if (err != noErr) {
+				free(*theNewMAD);
+				*theNewMAD = NULL;
+			}
+			return err;
 		}
 	}
 	return MADCannotFindPlug;

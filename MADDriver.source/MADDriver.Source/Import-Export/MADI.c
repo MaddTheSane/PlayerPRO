@@ -412,7 +412,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	myMOD->name[ 31] = '\0';
+	//myMOD->name[ 31] = '\0';
 	strlcpy( info->internalFileName, myMOD->name, sizeof(myMOD->name));
 	
 	/*** Tracks ***/

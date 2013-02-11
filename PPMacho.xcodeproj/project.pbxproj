@@ -444,6 +444,8 @@
 		558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4DD91666F14E00A333E8 /* PPDriver.m */; };
 		558D4DDD1666F19600A333E8 /* PPLibrary_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */; };
 		55981C5311EE370D00656EE3 /* PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55981C5211EE370D00656EE3 /* PPPreferences.m */; };
+		5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
+		5599F13316C82100008DDAFB /* RDriverCarbon.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; };
 		55ABFD54125E6D4400B182F1 /* PPNextTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */; };
 		55ABFD55125E6D4400B182F1 /* PPPrevTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */; };
 		55ABFD56125E6D4400B182F1 /* PPRecord.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD53125E6D4400B182F1 /* PPRecord.pdf */; };
@@ -1555,10 +1557,11 @@
 		};
 		55C358B616C42D1800FB9FA6 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				5599F13316C82100008DDAFB /* RDriverCarbon.h in CopyFiles */,
 				55C358B716C42D1800FB9FA6 /* iOSPlayerPROCore.h in CopyFiles */,
 				55C358B816C42D1800FB9FA6 /* PlayerPROCore.h in CopyFiles */,
 				55C358B916C42D1800FB9FA6 /* MAD.h in CopyFiles */,
@@ -1568,7 +1571,7 @@
 				55C358BD16C42D1800FB9FA6 /* PPDefs.h in CopyFiles */,
 				55C358BE16C42D1800FB9FA6 /* FileUtils.h in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 		55CBFB3711EB780B0028C6BB /* Copy PlugIns */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -6328,6 +6331,7 @@
 				55C358B016C42D1800FB9FA6 /* AMF.c in Sources */,
 				55C358B116C42D1800FB9FA6 /* iOS-PlugImport.c in Sources */,
 				55C358F716C42F7100FB9FA6 /* MIDI-Hardware-OSX.c in Sources */,
+				5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
