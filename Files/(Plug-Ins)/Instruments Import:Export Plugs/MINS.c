@@ -4,7 +4,7 @@
 /*	1996 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Carbon/Carbon.h>
+#include <PlayerPROCore/PPPlug.h>
 
 static OSErr TestMINS( InstrData *CC)
 {
@@ -23,10 +23,10 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 		{
 			if( sample[ i]->data != NULL)
 			{
-				DisposePtr( (Ptr) sample[ i]->data);
+				free( sample[ i]->data);
 				sample[ i]->data = NULL;
 			}
-			DisposePtr( (Ptr) sample[ i]);
+			free( sample[ i]);
 			sample[ i] = NULL;
 		}
 	}
@@ -75,33 +75,102 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	return noErr;
 }
 
-OSErr mainMINs(	OSType					order,						// Order to execute
-				InstrData				*InsHeader,					// Ptr on instrument header
-				sData					**sample,					// Ptr on samples data
-				short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
-																	// If sampleID == -1 : add sample else replace selected sample.
-				FSSpec					*AlienFileFSSpec,			// IN/OUT file
-				PPInfoPlug				*thePPInfoPlug)
+static inline void ByteswapsData(sData *toswap)
 {
-	OSErr	myErr;
+	PPBE32(&toswap->size);
+	PPBE16(&toswap->c2spd);
+	PPBE32(&toswap->loopBeg);
+	PPBE32(&toswap->loopSize);
+}
+
+static inline void ByteswapInstrument(InstrData *toswap)
+{
+	int i = 0;
+	PPBE16(&toswap->MIDIType);
+	PPBE16(&toswap->MIDI);
+	PPBE16(&toswap->firstSample);
+	PPBE16(&toswap->numSamples);
+	PPBE16(&toswap->volFade);
+	
+	for (i = 0; i < 12; i++) {
+		PPBE16(&toswap->pannEnv[i].pos);
+		PPBE16(&toswap->pannEnv[i].val);
+		
+		PPBE16(&toswap->pitchEnv[i].pos);
+		PPBE16(&toswap->pitchEnv[i].val);
+		
+		PPBE16(&toswap->volEnv[i].pos);
+		PPBE16(&toswap->volEnv[i].val);
+	}
+}
+
+//hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
+static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
+{
+	CFURLRef toDeref = theRef;
+	if (resolveAgainstBase) {
+		toDeref = CFURLCopyAbsoluteURL(theRef);
+	}
+	CFStringRef fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
+	CFIndex strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
+	CFRelease(fileString);
+	if (resolveAgainstBase) {
+		CFRelease(toDeref);
+	}
+	return strLength;
+}
+
+OSErr mainMINs(void						*unused,
+			   OSType					order,						// Order to execute
+			   InstrData				*InsHeader,					// Ptr on instrument header
+			   sData					**sample,					// Ptr on samples data
+			   short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+			   // If sampleID == -1 : add sample else replace selected sample.
+			   CFURLRef					AlienFileCFURL,				// IN/OUT file
+			   PPInfoPlug				*thePPInfoPlug)
+{
+	OSErr	myErr = noErr;
 	UNFILE	iFileRefI;
 	short	x;
 	long	inOutCount;
 	Ptr		theSound;
+	
+	char *file = NULL;
+	do{
+		char *longStr = NULL;
+		CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
+		longStr = malloc(pathLen);
+		if (!longStr) {
+			return MADNeedMemory;
+		}
+		Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)longStr, pathLen);
+		if (!pathOK) {
+			free(longStr);
+			return MADReadingErr;
+		}
+		size_t StrLen = strlen(longStr);
+		file = malloc(++StrLen);
+		if (!file) {
+			file = longStr;
+			break;
+		}
+		strlcpy(file, longStr, StrLen);
+		free(longStr);
+	} while (0);
 
 	switch( order)
 	{
 		case 'IMPL':
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			iFileRefI = iFileOpenRead(file);
+			if( iFileRefI != NULL)
 			{
-				GetEOF( iFileRefI, &inOutCount);
+				inOutCount = iGetEOF(iFileRefI);
 				
-				theSound = NewPtr( inOutCount);
+				theSound = malloc( inOutCount);
 				if( theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					DisposePtr( theSound);
+					free( theSound);
 					
 					MAD2KillInstrument( InsHeader, sample);
 					
@@ -109,7 +178,9 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 					
 					inOutCount = sizeof( InstrData);
 					
-					myErr = FSRead( iFileRefI, &inOutCount, InsHeader);
+					iRead(inOutCount, (Ptr)InsHeader, iFileRefI);
+					
+					ByteswapInstrument(InsHeader);
 					
 					// READ samples headers & data
 					
@@ -117,72 +188,107 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 					{
 						sData *curData = sample[ x] = inMADCreateSample();
 						
-						inOutCount = sizeof( sData);
+						inOutCount = sizeof( sData32);
 						
-						myErr = FSRead( iFileRefI, &inOutCount, curData);
+						myErr = iRead(inOutCount, (Ptr)curData, iFileRefI);
 						
-						curData->data = NewPtr( curData->size);
+						ByteswapsData(curData);
+						
+						curData->data = malloc( curData->size);
 						if( curData->data != NULL)
 						{
 							inOutCount = curData->size;
-							myErr = FSRead( iFileRefI, &inOutCount, curData->data);
+							myErr = iRead(inOutCount, (Ptr)curData->data, iFileRefI);
 						}
+						
+						if( curData->amp == 16)
+						{
+							SInt32 	ll;
+							short	*shortPtr = (short*) curData->data;
+							
+							for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+						}
+
 					}
 				}
 				
-				FSCloseFork( iFileRefI);
+				iClose(iFileRefI);
 			}
 		
 			break;
 		
 		case 'TEST':
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			iFileRefI = iFileOpenRead(file);
+			if( iFileRefI != NULL)
 			{
-				inOutCount = 50L;
-				theSound = NewPtr( inOutCount);
+				inOutCount = sizeof(InstrData);
+				theSound = malloc( inOutCount);
 				if( theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					FSRead( iFileRefI, &inOutCount, theSound);
+					iRead(inOutCount, theSound, iFileRefI);
+					
+					ByteswapInstrument((InstrData*)theSound);
 					
 					myErr = TestMINS( (InstrData*) theSound);
 				}
 				
-				DisposePtr( theSound);
+				free( theSound);
 				
-				FSCloseFork( iFileRefI);
+				iClose(iFileRefI);
 			}
 		
 			break;
 		
 		case 'EXPL':
 			
-			myErr = FSpCreate( AlienFileFSSpec, 'SNPL', 'MINs', smCurrentScript);
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			iFileCreate(file, 'MINs');
+			iFileRefI = iFileOpenWrite(file);
 			
-			if( myErr == noErr)
+			if( iFileRefI != NULL)
 			{
 				// Write instrument header
-				
 				inOutCount = sizeof( InstrData);
-				myErr = FSWrite( iFileRefI, &inOutCount, InsHeader);
+				InstrData *tempIns = malloc(inOutCount);
+				memcpy(tempIns, InsHeader, inOutCount);
+				ByteswapInstrument(tempIns);
+				iWrite(inOutCount, (Ptr)tempIns, iFileRefI);
+				free(tempIns);
 				
 				// Write samples headers & data
-				
 				for( x = 0; x < InsHeader->numSamples; x++)
 				{
 					sData	*curData;
-					
+					sData	*copyData;
+					sData32	toWrite;
+					Ptr		copydataData;
 					curData = sample[ x];
+					copyData = malloc(sizeof(sData));
+					memcpy(copyData, curData, sizeof(sData));
+					ByteswapsData(copyData);
+					copydataData = malloc(curData->size);
+					memcpy(copydataData, curData->data, curData->size);
+					if( curData->amp == 16)
+					{
+						SInt32 	ll;
+						short	*shortPtr = (short*) copydataData;
+						
+						for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+					}
 					
-					inOutCount = sizeof( sData);
-					myErr = FSWrite( iFileRefI, &inOutCount, curData);
+					memcpy(&toWrite, copyData, sizeof(sData32));
+					toWrite.data = 0;
+					
+					inOutCount = sizeof( sData32);
+					iWrite(inOutCount, (Ptr)&toWrite, iFileRefI);
 					
 					inOutCount = curData->size;
-					myErr = FSWrite( iFileRefI, &inOutCount, curData->data);
+					iWrite(inOutCount, copydataData, iFileRefI);
+					free(copyData);
+					free(copydataData);
+
 				}
-				FSCloseFork( iFileRefI);
+				iClose( iFileRefI);
 			}
 			break;
 		
@@ -191,11 +297,13 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 			break;
 	}
 	
+	free(file);
+	
 	return myErr;
 }
 
 // 9C897935-C00B-4AAC-81D6-E43049E3A8E0
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x9C, 0x89, 0x79, 0x35, 0xC0, 0x0B, 0x4A, 0xAC, 0x81, 0xD6, 0xE4, 0x30, 0x49, 0xE3, 0xA8, 0xE0)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x9C, 0x89, 0x79, 0x35, 0xC0, 0x0B, 0x4A, 0xAC, 0x81, 0xD6, 0xE4, 0x30, 0x49, 0xE3, 0xA8, 0xE0)
 #define PLUGINFACTORY MINsFactory //The factory name as defined in the Info.plist file
 #define PLUGMAIN mainMINs //The old main function, renamed please
 

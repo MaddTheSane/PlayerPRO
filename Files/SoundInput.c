@@ -59,7 +59,7 @@ pascal void CompletionRoutine (SPBPtr inParamPtr)
 	{
 		if( RecordingPtr - StartRecordingPtr + SOUNDINPUTMUL*deviceBufferSize < maxSndSize)
 		{
-			BlockMoveData( SoundInputPtr, RecordingPtr, SOUNDINPUTMUL*deviceBufferSize);
+			memmove( SoundInputPtr, RecordingPtr, SOUNDINPUTMUL*deviceBufferSize);
 			
 			if( SoundInputStereo == false && baseChan > 1)
 			{
@@ -245,7 +245,7 @@ void SetUpDeviceInfo()
 	MyC2PStr( (Ptr) str); 			SetDText( deviceDialog, 35, str);
 	
 	//	SPBGetDeviceInfo( myInRefNum, siDeviceBufferInfo, (Ptr) &deviceBufferSize);
-	//	MyDebugStr( deviceBufferSize, __FILE__, "");
+	//	PPDebugStr( deviceBufferSize, __FILE__, "");
 	
 	myErr = SPBSetDeviceInfo (myInRefNum, siContinuous, (Ptr) &on);
 	
@@ -481,7 +481,7 @@ void DrawSmallOscillo()
 
 	audioPtr = (Byte*) GetAudioInPut( false, hSize*2);
 	
-	if( hSize >= 200) MyDebugStr( __LINE__, __FILE__, "");
+	if( hSize >= 200) PPDebugStr( __LINE__, __FILE__, "");
 	
 	for( i = 0; i < hSize; i++)
 	{
@@ -1162,9 +1162,9 @@ onrecommence:
 			
 			HLock( *RecordedSound);
 			HLock( tHandle);
-			BlockMoveData( **RecordedSound, (**RecordedSound) + headerLen, sndSize);
+			memmove( **RecordedSound, (**RecordedSound) + headerLen, sndSize);
 			if( SoundInputBits == 16) ConvertInstrument16LL( (short*) ((**RecordedSound) + headerLen), sndSize);
-			BlockMoveData( *tHandle, **RecordedSound, headerLen);
+			memmove( *tHandle, **RecordedSound, headerLen);
 			HUnlock( *RecordedSound);
 			HUnlock( tHandle);
 			DisposeHandle( tHandle);
@@ -1191,26 +1191,26 @@ OSErr NOpenMicroDevice( Str255 myDeviceName)
 	OSErr			myErr;
 	Handle			aHdl;
 	
-//	MyDebugStr( myErr, __FILE__, (char*) myDeviceName);
+//	PPDebugStr( myErr, __FILE__, (char*) myDeviceName);
 	
 	myInRefNum = 0;
 	myErr = SPBOpenDevice( myDeviceName, siWritePermission, &myInRefNum);
-//	if( myErr) MyDebugStr( myErr, __FILE__, (char*) myDeviceName);
+//	if( myErr) PPDebugStr( myErr, __FILE__, (char*) myDeviceName);
 	
 	if( myErr == noErr)
 	{
 		myErr = SPBGetDeviceInfo( myInRefNum, siDeviceName, (Ptr) &InPutName);
-	//	if( myErr) MyDebugStr( __LINE__, __FILE__, "2");
+	//	if( myErr) PPDebugStr( __LINE__, __FILE__, "2");
 		
 		myErr = SPBGetDeviceInfo( myInRefNum, siDeviceBufferInfo, (Ptr) &deviceBufferSize);
-	//	if( myErr) MyDebugStr( __LINE__, __FILE__, "3");
+	//	if( myErr) PPDebugStr( __LINE__, __FILE__, "3");
 		
 		myErr = SPBGetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &previousSoundVolume);
-	//	if( myErr) MyDebugStr( __LINE__, __FILE__, "4");
+	//	if( myErr) PPDebugStr( __LINE__, __FILE__, "4");
 		myErr = noErr;
 		
 		myErr = SPBSetDeviceInfo( myInRefNum, siOSTypeInputSource, &lastOSTypeInput);
-	//	if( myErr) MyDebugStr( __LINE__, __FILE__, "5");
+	//	if( myErr) PPDebugStr( __LINE__, __FILE__, "5");
 		myErr = noErr;
 		
 		mySPB.interruptRoutine 	= NULL;	//NewSIInterruptUPP( InterruptRoutine);
@@ -1235,7 +1235,7 @@ OSErr NOpenMicroDevice( Str255 myDeviceName)
 			{ short a;
 			a = 0;
 			myErr = SPBSetDeviceInfo( myInRefNum, siTwosComplementOnOff, &a);
-		//	if( myErr) MyDebugStr( __LINE__, __FILE__, "6");
+		//	if( myErr) PPDebugStr( __LINE__, __FILE__, "6");
 			myErr = noErr;
 			
 			a = 1;
@@ -1267,16 +1267,16 @@ void MicroOff(void)
 	if( MicroPhone == false) return;
 	MicroPhone = false;
 	
-//	MyDebugStr( myErr, __FILE__, (char*) "off");
+//	PPDebugStr( myErr, __FILE__, (char*) "off");
 	
 	myErr = SPBSetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &previousSoundVolume);
-//	if( myErr) MyDebugStr( myErr, __FILE__, "1");
+//	if( myErr) PPDebugStr( myErr, __FILE__, "1");
 	
 	myErr = SPBStopRecording( myInRefNum);
-//	if( myErr) MyDebugStr( myErr, __FILE__, "2");
+//	if( myErr) PPDebugStr( myErr, __FILE__, "2");
 	
 	myErr = SPBGetDeviceInfo( myInRefNum, siOSTypeInputSource, &lastOSTypeInput);
-//	if( myErr) MyDebugStr( myErr, __FILE__, "3");
+//	if( myErr) PPDebugStr( myErr, __FILE__, "3");
 	
 	fourchar = kNoSource;
 	myErr = SPBSetDeviceInfo( myInRefNum, siOSTypeInputSource, &fourchar);
@@ -1284,10 +1284,10 @@ void MicroOff(void)
 	// Set Max Rate !!!
 	maxRate = (*RateList.l)[ RateList.no-1];
 	myErr = SPBSetDeviceInfo( myInRefNum, siSampleRate, &maxRate);
-//	if( myErr) MyDebugStr( myErr, __FILE__, "5");
+//	if( myErr) PPDebugStr( myErr, __FILE__, "5");
 	
 	myErr = SPBCloseDevice( myInRefNum);
-//	if( myErr) MyDebugStr( myErr, __FILE__, "6");
+//	if( myErr) PPDebugStr( myErr, __FILE__, "6");
 	
 	DisposeSICompletionUPP( mySPB.completionRoutine);
 	mySPB.completionRoutine = NULL;

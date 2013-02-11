@@ -23,12 +23,23 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
+#ifdef __LP64__
+#error this code will only work on 32-bit mode
+#error this code needs to be rewritten. 
+#endif
+
 #include <string.h>
 
 /**************************************************************************
 **************************************************************************/
 
-unsigned char* MYC2PStr( Ptr cStr);
+static unsigned char* MYC2PStr( Ptr cStr)
+{
+	long length = strlen(cStr);
+	memmove(cStr + 1, cStr, length);
+	cStr[0] = length;
+	return (unsigned char*)cStr;
+}
 
 Boolean compMem( Ptr a, Ptr b, long s)
 {
@@ -50,11 +61,11 @@ OSErr TestMIDIFile( Ptr AlienFile)
 
 OSErr ExtractMIDIInfo( PPInfoRec *info, Ptr theMIDI)
 {
-	long	PatternSize;
+	/*long	PatternSize;
 	short	i;
 	short	maxInstru;
 	short	tracksNo;
-	long	inOutCount;
+	long	inOutCount;*/
 	
 	info->signature = 'Midi';
 	strcpy( info->internalFileName, "");
@@ -75,7 +86,7 @@ void CreateResult( Ptr aPtr)
 
 void  ConvertMidiFile( char	*src, MADMusic *theMAD, MADDriverSettings *init);
 
-OSErr mainMIDI( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
@@ -84,22 +95,22 @@ OSErr mainMIDI( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec 
 	
 	switch( order)
 	{
-		case 'IMPL':
-			iFileRefI = iFileOpen( AlienFileName);
+		case MADPlugImport:
+			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				sndSize =iGetEOF( iFileRefI);
 			
 				// ** MEMORY Test Start
-				AlienFile = MADPlugNewPtr( sndSize * 2L, init);
+				AlienFile = malloc( sndSize * 2L);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
 				else
 				{
-					DisposePtr( AlienFile);
+					free( AlienFile);
 					
-					AlienFile = MADPlugNewPtr( sndSize, init);
+					AlienFile = malloc( sndSize);
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					
 					
@@ -109,7 +120,7 @@ OSErr mainMIDI( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec 
 						
 						if( myErr == noErr) ConvertMidiFile( AlienFile, MadFile, init);
 						
-						DisposePtr( AlienFile);	AlienFile = NULL;
+						free( AlienFile);	AlienFile = NULL;
 					}
 					iClose( iFileRefI);
 				}
@@ -117,20 +128,20 @@ OSErr mainMIDI( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec 
 			else myErr = MADReadingErr;
 		break;
 		
-		case 'TEST':
-			iFileRefI = iFileOpen( AlienFileName);
+		case MADPlugTest:
+			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				sndSize = 1024L;
 				
-				AlienFile = MADPlugNewPtr( sndSize, init);
+				AlienFile = malloc( sndSize);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					if(myErr == noErr) myErr = TestMIDIFile( AlienFile);
 					
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					free( AlienFile);	AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
@@ -138,20 +149,20 @@ OSErr mainMIDI( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec 
 		break;
 
 		case 'INFO':
-			iFileRefI = iFileOpen( AlienFileName);
+			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);
 			
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = MADPlugNewPtr( sndSize, init);
+				AlienFile = malloc( sndSize);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					if(myErr == noErr) myErr = ExtractMIDIInfo( info, AlienFile);
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					free( AlienFile);	AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
@@ -165,11 +176,3 @@ OSErr mainMIDI( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec 
 		
 	return myErr;
 }
-
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x87, 0x3A, 0xA7, 0x91, 0xE9, 0xE5, 0x42, 0xEB, 0x8F, 0xE0, 0x35, 0x1A, 0x99, 0xCF, 0x9A, 0x3A))
-//873AA791-E9E5-42EB-8FE0-351A99CF9A3A
-
-#define PLUGMAIN mainMIDI
-#define PLUGINFACTORY PPMIDIFactory
-#include "../CFPlugin-bridge.c"
-

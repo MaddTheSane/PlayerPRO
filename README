@@ -1,8 +1,8 @@
-To install this on Unix, Linux, or Windows, follow the instructions in
-`INSTALL'. 
+To install this on Unix deriviatives like Linux, follow the instructions in `INSTALL'. Note that Unix support is lacking at the moment.
 
 To build the PlayerPRO application and library on OS X, either type `make'
-in Terminal or open the PPMacho project.
+in Terminal or open the PPMacho project or PlayerPRO Workspace.
 
-A Windows Visual C project files should be coming soon.
+A Microsoft Visual C++ is available for those building on Windows.
 
+See also README.rtf.

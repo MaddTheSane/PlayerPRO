@@ -1,0 +1,82 @@
+3Player PRO 5.9 Dev.Kit.
+©Copyright 1994-2002 Antoine ROSSET (rossetantoine@bluewin.ch)
+
+Where to find the last version of PP Dev.Kit?
+(It's a 100% FREE USE (even in commercial products) library. Available for CodeWarrior.
+It includes: Music drivers, Instruments plugs dev.toolkit, Import/Export plugs dev.toolkit.
+
+On internet:
+    • http://www.quadmation.com/pphome.htm
+    • On major sites.
+
+You are looking for a music for your software?
+You can contact these musicians, if you want musics for your games, demo, tools, etc:
+(You want your name in this list? Simply send me your name & complete address to rosset@dial.eunet.ch. Many games companies are looking for good musicians !)
+
+Aaron Macks
+3203 northbrook rd
+Balto. MD 21208-4526
+USA
+EMail: AMacks@wabama.com
+
+Tom Chenhall
+9038 Waddell Cr. Rd. SW
+Olympia, WA 98512
+USA
+EMail: emperorx@aol.com
+
+Petteri Lajunen (Pest / TranZe)
+Soutajantie 24
+FIN-90560 Oulu, Finland
+EMail: pest@lyseo.otol.fi
+
+Brett Neely
+160 Winding Way
+Camillus, NY  13031-1436  USA
+(315) 488-1055
+
+Michel Donais
+870 Gohier
+Saint-Laurent (Qc)
+Canada H4L 3J2
+EMail: tcompact@interlink.net
+
+Stéphane JOSE & Michel-Georges DEMERS
+SMG Productions
+7459 Rue de l'Épée
+Montréal, Québec
+H3N 2E4 CANADA
+
+Timothy J. Davy
+2 Ruth Drive
+Lenah Valley
+Tasmania 7008
+Australia
+EMail: tj_davy@postoffice.utas.edu.au
+tj_davy@bruny.cc.utas.edu.au
+
+Daniel Falk
+Torkelstorp
+S-563 93 Granna
+Sweden
+EMail: bertil.skoglund@s-data.se
+
+Aleksi Asikainen
+Kalervonkatu 12 c 20
+00610 Helsinki
+EMail: Aleksi_Asikainen@fimug.fi
+
+Richhair
+EMail:  richhair@haven.ios.com
+
+Gaudin Frederic
+La maladrerie
+14220 ESSON Thury-Harcourt
+France
+Email : gaudin@ensibull.imag.fr
+
+Keith Cruickshank
+The NetExpo/Internet Business Conferences
+P.O. Box 608076
+San Diego, California  92160-8076 USA
+EMail: ktc@netexpo.com

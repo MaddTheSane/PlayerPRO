@@ -24,9 +24,7 @@
 #ifndef __MADH__
 #define __MADH__
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#endif
+#pragma pack(push, 2)
 
 // ***	
 // ***	PATTERN DESCRIPTION
@@ -45,11 +43,11 @@ typedef struct oldCmd oldCmd;
 
 struct oldPatHeader					// HEADER
 {
-	long	size;					// Length of pattern: standard = 64
+	SInt32	size;					// Length of pattern: standard = 64
 	OSType	compMode;				// Compression mode, none = 'NONE'
 	char	name[ 32];
-	long	patBytes;				// Pattern Size in Bytes
-	long	unused2;
+	SInt32	patBytes;				// Pattern Size in Bytes
+	SInt32	unused2;
 };
 typedef struct oldPatHeader oldPatHeader;
 
@@ -69,9 +67,9 @@ typedef struct oldPatData oldPatData;
 
 struct oldsData								// SAMPLE
 {
-	long 				size;				// Sample length
-	long				loopBeg;			// LoopStart
-	long				loopSize;			// LoopLength
+	SInt32 				size;				// Sample length
+	SInt32				loopBeg;			// LoopStart
+	SInt32				loopSize;			// LoopLength
 	Byte 				vol;				// Base volume
 	unsigned short		c2spd;				// c2spd
 	Byte				loopType;
@@ -79,7 +77,7 @@ struct oldsData								// SAMPLE
 	char				relNote;
 	char 				name[ 32];			// Sample name
 	Byte				stereo;				// Stereo
-	Ptr					data;				// Used only in memory, not in files
+	UInt32				data;				// Used only in memory, not in files
 };
 typedef struct oldsData oldsData;
 
@@ -169,8 +167,8 @@ struct oldMADSpec
 	Byte		generalPan;					// General Panning
 	Byte		MultiChanNo;				// Number of chan for multichannel
 	Byte		MultiChan;					// MultiChannel per tracks?
-	long		EPitch;						// New Pitch
-	long		ESpeed;						// New Speed
+	SInt32		EPitch;						// New Pitch
+	SInt32		ESpeed;						// New Speed
 	Byte		XMLinear;					// Linear picth table?
 	Byte		MODMode;					// Limit pitch to MOD pitch table
 	Byte		showCopyright;				// Show infos at startup? true or false
@@ -190,7 +188,6 @@ struct oldMADSpec
 };
 typedef struct oldMADSpec oldMADSpec;
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=reset
-#endif
+#pragma pack(pop)
+
 #endif

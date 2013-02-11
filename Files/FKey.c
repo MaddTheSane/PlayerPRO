@@ -1,6 +1,7 @@
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
+#include "RDriverInt.h"
 
 #define MAXPKEY	200
 
@@ -23,7 +24,7 @@ void InitFKeyMenu( void)
 	Ptr		tempPtr;
 	
 	PKEYRes = GetResource( 'PKEY', 128);
-	if( PKEYRes == NULL) MyDebugStr( __LINE__, __FILE__, "Error loading PKEY Resource");
+	if( PKEYRes == NULL) PPDebugStr( __LINE__, __FILE__, "Error loading PKEY Resource");
 	
 	DetachResource( PKEYRes);
 	HLock( PKEYRes);

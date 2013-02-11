@@ -682,7 +682,7 @@ pascal Boolean MyCustomFilter( AEDesc *theItem, void *info, NavCallBackUserData 
 				break;
 				
 				case allReadable:
-					//if( EqualString("\pIcon", spec.name, false, false)) MyDebugStr( __LINE__, __FILE__, "");
+					//if( EqualString("\pIcon", spec.name, false, false)) PPDebugStr( __LINE__, __FILE__, "");
 					
 					if( fndrInfo.fdType == 'sTAT') return true;
 					if( fndrInfo.fdType == 'STCf') return true;

@@ -21,9 +21,19 @@
 //
 /********************						***********************/
 
+#ifdef __APPLE__
 #include <PlayerPROCore/PlayerPROCore.h>
+#else
+#include "RDriver.h"
+#include "FileUtils.h"
+#endif
 #include "MTM.h"
 
+#ifdef WIN32
+#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
+#endif
+
+#if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;
@@ -31,34 +41,33 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
-
-static inline void mystrcpy( Ptr a, BytePtr b)
-{
-	BlockMoveData( b + 1, a, b[ 0]);
-}
+#endif
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*msg_buf);
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
 #else
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *(short*)msg_buf
+#define Tdecode32(msg_buf) *(int*)msg_buf
+#else
+
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
+	PPLE16(&toswap);
 	return toswap;
 }
-#endif
 
-#ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*msg_buf);
-#else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
-	INT32(&toswap);
+	PPLE32(&toswap);
 	return toswap;
 }
-#endif
 
+#endif
+#endif
 
 static struct MTMTrack* GetMTMCommand( short position, short whichTracks, Ptr PatPtr)
 {
@@ -71,14 +80,14 @@ static struct MTMTrack* GetMTMCommand( short position, short whichTracks, Ptr Pa
 	return (struct MTMTrack*) aPtr;
 }
 
-static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MADDriverSettings *init)
+static OSErr ConvertMTM2Mad( MTMDef *MTMFile, SInt32 MTMSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short 			i, x, z;
-	long 			sndSize, OffSetToSample, MPatSize, temp, inOutCount;
+	SInt32 			sndSize, OffSetToSample, MPatSize, temp, inOutCount;
 	Ptr				MaxPtr;
-	OSErr			theErr;
+	//OSErr			theErr;
 	Ptr				theInstrument[ 64], destPtr;
-	long 			finetune[16] = 
+	SInt32 			finetune[16] =
 	{
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
@@ -86,17 +95,17 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 	
 	/**** Variables pour le MAD ****/
 	Cmd				*aCmd;
-
+	
 	/**** Variables pour le MTM ****/
 	
 	struct Instru		*instru[ 64];
 	struct MTMTrack		*theCom;
 	Ptr					samplePtr, patPtr, positionPtr;
-	short				*patTracks; 
+	short				*patTracks;
 	/********************************/
-
+	
 	/**** Calcul de divers offsets *****/
-
+	
 	MTMFile->tracks = Tdecode16( &MTMFile->tracks);
 	MTMFile->comments = Tdecode16( &MTMFile->comments);
 	
@@ -106,7 +115,7 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 	destPtr		= (Ptr) ( (long)	MTMFile + 194L + MTMFile->NOS*37L + MTMFile->tracks*192L);
 	patTracks	= (short*) destPtr;
 	samplePtr 	= (Ptr) ( (long)	MTMFile + 194L + MTMFile->NOS*37L + MTMFile->tracks*192L +
-									(MTMFile->patNo + 1L)*32L*2L + MTMFile->comments);
+						 (MTMFile->patNo + 1L)*32L*2L + MTMFile->comments);
 	
 	/**** Analyse des instruments ****/
 	if( MTMFile->NOS > 64) return MADUnknowErr;
@@ -114,14 +123,14 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 	for( i = 0, OffSetToSample = 0; i < MTMFile->NOS ; i++)
 	{
 		theInstrument[ i] = samplePtr + OffSetToSample;
-
+		
 		instru[ i] = (struct Instru*) ((long) MTMFile + 66L + i*37L);
-
+		
 		instru[ i]->size = Tdecode32( &instru[ i]->size);
 		instru[ i]->loopBegin = Tdecode32( &instru[ i]->loopBegin);
 		instru[ i]->loopEnd = Tdecode32( &instru[ i]->loopEnd);
-
-
+		
+		
 		sndSize = instru[ i]->size;
 		if( theInstrument[i] + sndSize > MaxPtr)
 		{
@@ -130,8 +139,8 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 		}
 		OffSetToSample += sndSize;
 	}
-
-
+	
+	
 	/***********************************************/
 	/******** Le MTM a été lu et analysé ***********/
 	/***** Copie des informations dans le MAD ******/
@@ -144,7 +153,7 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 	/**************************/
 	
 	inOutCount = sizeof( MADSpec);
-	theMAD->header = (MADSpec*) MADPlugNewPtrClear( inOutCount, init);	
+	theMAD->header = (MADSpec*) calloc( inOutCount, 1);
 	if( theMAD->header == NULL) return MADNeedMemory;
 	theMAD->header->MAD = 'MADK';
 	
@@ -157,7 +166,7 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 		theMAD->header->name[i] = MTMFile->songname[i];
 	}
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MTM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MTM Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->tempo = 125;
 	theMAD->header->speed = 6;
@@ -168,28 +177,28 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 		theMAD->header->oPointers[ i] 	= positionPtr[ i];
 	}
 	theMAD->header->numChn 				= MTMFile->trackback;
-
-	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
-	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-
-	for( i = 0; i < MAXTRACK; i++)
-{
-	if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-	else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
 	
-	theMAD->header->chanVol[ i] = MAX_VOLUME;
-}
+	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
+	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	
+	for( i = 0; i < MAXTRACK; i++)
+	{
+		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
+		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		
+		theMAD->header->chanVol[ i] = MAX_VOLUME;
+	}
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
-
+	
 	
 	// INSTRUMENTS
 	
-	theMAD->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
+	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
 	if( !theMAD->fid) return MADNeedMemory;
 	
-	theMAD->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
+	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
 	if( !theMAD->sample) return MADNeedMemory;
 	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
@@ -206,7 +215,7 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 			theMAD->fid[i].numSamples = 1;
 			theMAD->fid[i].volFade = DEFAULT_VOLFADE;
 			
-			curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear( sizeof( sData), init);
+			curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) calloc( sizeof( sData), 1);
 			
 			curData->size		= instru[ i]->size;
 			curData->loopBeg 	= instru[ i]->loopBegin;
@@ -217,12 +226,13 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 			curData->amp		= 8;
 			
 			curData->relNote	= 0;
-		//	for( x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
+			//	for( x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
 			
-			curData->data 		= MADPlugNewPtr( curData->size, init);
-			if( curData->data == NULL) DebugStr("\pInstruments: I NEED MEMORY !!! NOW !");
+			curData->data 		= (Ptr)malloc( curData->size);
+			if( curData->data == NULL) //DebugStr("\pInstruments: I NEED MEMORY !!! NOW !");
+				return MADNeedMemory;
 			
-			BlockMoveData( theInstrument[i], curData->data, curData->size);
+			memcpy( curData->data, theInstrument[i], curData->size);
 			
 			destPtr = curData->data;
 			for( temp = 0; temp < curData->size; temp++) *(destPtr + temp) -= 0x80;
@@ -233,22 +243,22 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 	for(i=0; i<theMAD->header->numPat; i++)
 	{
 		
-		theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear( sizeof( PatHeader) + theMAD->header->numChn * 64L * sizeof( Cmd), init);
+		theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * 64L * sizeof( Cmd), 1);
 		if( theMAD->partition[ i] == NULL) return MADNeedMemory;
-
+		
 		theMAD->partition[ i]->header.size = 64L;
 		theMAD->partition[ i]->header.compMode = 'NONE';
-
+		
 		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
-
+		
 		theMAD->partition[ i]->header.patBytes = 0;
 		theMAD->partition[ i]->header.unused2 = 0;
-
+		
 		MaxPtr = (Ptr) theMAD->partition[ i];
 		MaxPtr += sizeof( PatHeader) + theMAD->header->numChn * 64L * sizeof( Cmd);
-
+		
 		for( z = 0; z < 32; z++) patTracks[ z] = Tdecode16( &patTracks[ z]);
-
+		
 		for(x=0; x<64; x++)
 		{
 			for(z=0; z<theMAD->header->numChn; z++)
@@ -267,8 +277,8 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 				else
 				{
 					theCom 		= GetMTMCommand(	x,
-													patTracks[ z],
-													(Ptr) patPtr);
+												patTracks[ z],
+												(Ptr) patPtr);
 					
 					aCmd->ins 	= theCom->instru;
 					
@@ -294,19 +304,19 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 
 static OSErr ExtractInfo( PPInfoRec *info, MTMDef *myFile)
 {
-	long	PatternSize;
+	//long	PatternSize;
 	short	i;
-	short	maxInstru;
-	short	tracksNo;
+	//short	maxInstru;
+	//short	tracksNo;
 	
 	for( i = 0; i < sizeof( myFile->songname); i++)
 	{
 		info->internalFileName[ i] = myFile->songname[ i];
 	}
 	info->internalFileName[ 21] = 0;
-	MYC2PStr( (Ptr) info->internalFileName);
+	//MYC2PStr( (Ptr) info->internalFileName);
 
-	strcpy( info->formatDescription, "MTM Plug");
+	strlcpy( info->formatDescription, "MTM Plug", sizeof(info->formatDescription));
 
 	info->totalPatterns		= myFile->patNo;
 	info->partitionLength	= myFile->positionNo;
@@ -326,57 +336,74 @@ static OSErr TestFile( MTMDef *myFile)
 	else return MADFileNotSupportedByThisPlug;
 }
 
+#ifndef _MAC_H
+
+EXP OSErr FillPlug( PlugInfo *p);
+EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+
+EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+{
+	strlcpy( p->type, 		"MTM ", sizeof(p->type));
+	strlcpy( p->MenuName, 	"MTM Files", sizeof(p->MenuName));
+	p->mode	=	MADPlugImport;
+	p->version = 2 << 16 | 0 << 8 | 0;
+
+	return noErr;
+}
+#endif
+
+
 /*****************/
 /* MAIN FUNCTION */
 /*****************/
 
-OSErr mainMTM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
-	short	iFileRefI;
+	UNFILE	iFileRefI;
 	long	sndSize;
 		
 	switch( order)
 	{
-		case 'IMPL':
-			iFileRefI = iFileOpen( AlienFileName);
+		case MADPlugImport:
+			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				sndSize = iGetEOF( iFileRefI);
 			
 				// ** TEST MEMOIRE :  Environ 2 fois la taille du fichier**
-				AlienFile = MADPlugNewPtr( sndSize * 2L, init);
+				AlienFile = (Ptr)malloc( sndSize * 2L);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				// ** 
 				
 				else
 				{
-					DisposePtr( AlienFile);
+					free( AlienFile);
 					
-					AlienFile = MADPlugNewPtr( sndSize, init);
+					AlienFile = (Ptr)malloc( sndSize);
 					iRead( sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestFile( (MTMDef*) AlienFile);
 					if( myErr == noErr)
 					{
-						myErr = ConvertMTM2Mad( (MTMDef*) AlienFile, GetPtrSize( AlienFile), MadFile, init);
+						myErr = ConvertMTM2Mad( (MTMDef*) AlienFile, sndSize, MadFile, init);
 					}
 						
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					free( AlienFile);	AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
 		break;
 		
-		case 'TEST':
-			iFileRefI = iFileOpen( AlienFileName);
+		case MADPlugTest:
+			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = MADPlugNewPtr( sndSize, init);
+				AlienFile = (Ptr)malloc( sndSize);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
@@ -384,26 +411,26 @@ OSErr mainMTM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 					
 					myErr = TestFile( (MTMDef*) AlienFile);
 					
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					free( AlienFile);	AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
 		break;
 		
-		case 'EXPL':
+		case MADPlugExport:
 			myErr = MADOrderNotImplemented;
 		break;
 
 		case 'INFO':
-			iFileRefI = iFileOpen( AlienFileName);
+			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);
 			
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = MADPlugNewPtr( sndSize, init);
+				AlienFile = (Ptr)malloc( sndSize);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
@@ -411,7 +438,7 @@ OSErr mainMTM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 					
 					myErr = ExtractInfo( info, (MTMDef*) AlienFile);
 					
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					free( AlienFile);	AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
@@ -425,17 +452,3 @@ OSErr mainMTM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	
 	return myErr;
 }
-
-#ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x73, 0xCB, 0x5A, 0x1C, 0x87, 0xA8, 0x47, 0xBE, 0x91, 0xC8, 0x78, 0xD3, 0xD2, 0xD5, 0x2B, 0x66))
-//73CB5A1C-87A8-47BE-91C8-78D3D2D52B66
-
-#define PLUGMAIN mainMTM
-#define PLUGINFACTORY MTMFactory
-#include "CFPlugin-bridge.c"
-#else
-OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-{
-	return mainMTM(order, AlienFileName, MadFile, info, init);
-}
-#endif

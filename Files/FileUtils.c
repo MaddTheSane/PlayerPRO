@@ -15,7 +15,7 @@ void DrawNumberMusic();
 void pstrcat(StringPtr dst, StringPtr src)
 {
 	/* copy string in */
-	BlockMoveData(src + 1, dst + *dst + 1, *src);
+	memmove(src + 1, dst + *dst + 1, *src);
 	/* adjust length byte */
 	*dst += *src;
 }
@@ -26,9 +26,9 @@ void pstrcat(StringPtr dst, StringPtr src)
 void pstrinsert(StringPtr dst, StringPtr src)
 {
 	/* make room for new string */
-	BlockMoveData(dst + 1, dst + *src + 1, *dst);
+	memmove(dst + 1, dst + *src + 1, *dst);
 	/* copy new string in */
-	BlockMoveData(src + 1, dst + 1, *src);
+	memmove(src + 1, dst + 1, *src);
 	/* adjust length byte */
 	*dst += *src;
 }

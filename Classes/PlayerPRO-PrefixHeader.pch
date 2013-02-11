@@ -1,0 +1,21 @@
+//
+//  PlayerPRO-PrefixHeader.pch
+//  PPMacho
+//
+//  Created by C.W. Betts on 12/28/12.
+//
+//
+
+#ifndef PPMacho_PlayerPRO_PrefixHeader_pch
+#define PPMacho_PlayerPRO_PrefixHeader_pch
+
+#include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/PPPlug.h>
+
+#ifdef __OBJC__
+#import <Cocoa/Cocoa.h>
+#import "ARCBridge.h"
+#import "UserDefaultKeys.h"
+#endif
+
+#endif

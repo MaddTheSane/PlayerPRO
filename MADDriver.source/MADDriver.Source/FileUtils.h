@@ -28,6 +28,10 @@
 #include "MAD.h"
 #endif
 
+#ifdef _MAC_H
+#include <CoreFoundation/CFByteOrder.h>
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -35,55 +39,45 @@ extern "C" {
 
 ////////////////////////////////////////////////////////////
 
-#ifdef _MAC_H
-#include <CoreServices/CoreServices.h>
-#if defined(__LP64__)
-typedef FSIORefNum	UNFILE;
-#else
-typedef SInt16		UNFILE;
-#endif
-#else
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 typedef FILE*		UNFILE;
-#endif
 	
-EXP UNFILE iFileOpen( Ptr name);
-EXP void iFileCreate( Ptr name, OSType);
+PPEXPORT UNFILE iFileOpen( Ptr name) DEPRECATED_ATTRIBUTE;
+PPEXPORT UNFILE iFileOpenRead( Ptr name);
+PPEXPORT UNFILE iFileOpenWrite( Ptr name);
+PPEXPORT void iFileCreate(Ptr path, OSType type);
 
-EXP long iGetEOF( UNFILE iFileRefI);
-EXP OSErr iRead( long size, Ptr dest, UNFILE iFileRefI);
-EXP OSErr iWrite( long size, Ptr dest, UNFILE iFileRefI);
-EXP OSErr iSeekCur( long size, UNFILE iFileRefI);
+PPEXPORT long iGetEOF( UNFILE iFileRefI);
+PPEXPORT OSErr iRead( long size, Ptr dest, UNFILE iFileRefI);
+PPEXPORT OSErr iWrite( long size, Ptr dest, UNFILE iFileRefI);
+PPEXPORT OSErr iSeekCur( long size, UNFILE iFileRefI);
 
-EXP void iClose( UNFILE iFileRefI);
+PPEXPORT void iClose( UNFILE iFileRefI);
 
-EXP char* MADstrcpy( char*, const char*) DEPRECATED_ATTRIBUTE;
-EXP int MADstrcmp( const char *dst, const char* src);
+PPEXPORT char* MADstrcpy( char*, const char*) DEPRECATED_ATTRIBUTE;
+PPEXPORT int MADstrcmp( const char *dst, const char* src) DEPRECATED_ATTRIBUTE;
 
 	
-EXP unsigned char* MYC2PStr( Ptr cStr);
-EXP void MYP2CStr( unsigned char *cStr);
-EXP OSType Ptr2OSType( Ptr str);
-EXP void OSType2Ptr( OSType type, Ptr str);
-void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
+PPEXPORT OSType Ptr2OSType( Ptr str);
+PPEXPORT void OSType2Ptr( OSType type, Ptr str);
 
 
 ////////////////////////////////////////////////////////////
 
 #ifdef NOINLINE
-void INT32( void *msg_buf);
-void INT16( void *msg_buf);
-void MOT32( void *msg_buf);
-void MOT16( void *msg_buf);
+PPEXPORT void PPLE32( void *msg_buf);
+PPEXPORT void PPLE16( void *msg_buf);
+PPEXPORT void PPBE32( void *msg_buf);
+PPEXPORT void PPBE16( void *msg_buf);
 #else
 
 static inline void MADByteSwap32(void *msg_buf)
 {
 	UInt32			temp = *((UInt32*) msg_buf);
 #ifdef _MAC_H
-	*((UInt32*) msg_buf) = Endian32_Swap(temp);
+	*((UInt32*) msg_buf) = CFSwapInt32(temp);
 #else
 	*((UInt32*) msg_buf) = ((((temp & 0xff000000) >> 24) | \
 	(( temp & 0x00ff0000) >> 8) | (( temp & 0x0000ff00) << 8) | \
@@ -95,7 +89,7 @@ static inline void MADByteSwap16(void *msg_buf)
 {
 	UInt16			buf = *((UInt16*) msg_buf);
 #ifdef _MAC_H
-	*((UInt16*) msg_buf) = Endian16_Swap(buf);
+	*((UInt16*) msg_buf) = CFSwapInt16(buf);
 #else
 	*((UInt16*) msg_buf) = (((((UInt16)buf)<<8) & 0xFF00) | ((((UInt16)buf)>>8) & 0x00FF));
 #endif
@@ -103,35 +97,37 @@ static inline void MADByteSwap16(void *msg_buf)
 
 /////////////////////////////////
 
-static inline void MOT32(void *msg_buf)
-{
 #ifdef __LITTLE_ENDIAN__
+static inline void PPBE32(void *msg_buf)
+{
 	MADByteSwap32(msg_buf);
-#endif
 }
 
-static inline void MOT16(void *msg_buf)
+static inline void PPBE16(void *msg_buf)
 {
-#ifdef __LITTLE_ENDIAN__
 	MADByteSwap16(msg_buf);
-#endif
 }
+#else
+#define PPBE32(msg_buf)
+#define PPBE16(msg_buf)
+#endif
 
 /////////////////////////////////
 
-static inline void INT32(void *msg_buf)
-{
 #ifdef __BIG_ENDIAN__
+static inline void PPLE32(void *msg_buf)
+{
 	MADByteSwap32(msg_buf);
-#endif
 }
 
-static inline void INT16(void *msg_buf)
+static inline void PPLE16(void *msg_buf)
 {
-#ifdef __BIG_ENDIAN__
 	MADByteSwap16(msg_buf);
-#endif
 }
+#else
+#define PPLE32(msg_buf)
+#define PPLE16(msg_buf)
+#endif
 #endif
 
 #ifdef __cplusplus

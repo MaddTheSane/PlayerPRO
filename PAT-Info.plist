@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -17,7 +17,7 @@
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFPlugInDynamicRegistration</key>
 	<false/>
 	<key>CFPlugInFactories</key>
@@ -27,7 +27,7 @@
 	</dict>
 	<key>CFPlugInTypes</key>
 	<dict>
-		<key>0B3A4673-9118-467E-A496-846F5E1C9276</key>
+		<key>FD7154D6-20BF-4007-881B-8E44970C3B0A</key>
 		<array>
 			<string>D54EE3CC-B94C-4245-9E82-2F1D65C0009D</string>
 		</array>
@@ -36,6 +36,10 @@
 	<string>yes</string>
 	<key>MADPlugAuthorName</key>
 	<string>Copyright 99 Antoine ROSSET</string>
+	<key>MADCanImport</key>
+	<true/>
+	<key>MADCanExport</key>
+	<false/>
 	<key>MADPlugIsSample</key>
 	<false/>
 	<key>MADPlugMenuName</key>

@@ -24,13 +24,7 @@
 #ifndef __MADH__
 #define __MADH__
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#else
-#if !defined(THINK_C)
-#pragma options align=mac68k
-#endif
-#endif
+#pragma pack(push, 2)
 
 // ***	
 // ***	PATTERN DESCRIPTION
@@ -49,11 +43,11 @@ typedef struct oldCmd oldCmd;
 
 struct oldPatHeader					// HEADER
 {
-	long	size;					// Length of pattern: standard = 64
+	SInt32	size;					// Length of pattern: standard = 64
 	OSType	compMode;				// Compression mode, none = 'NONE'
 	char	name[ 32];
-	long	patBytes;				// Pattern Size in Bytes
-	long	unused2;
+	SInt32	patBytes;				// Pattern Size in Bytes
+	SInt32	unused2;
 };
 typedef struct oldPatHeader oldPatHeader;
 
@@ -73,9 +67,9 @@ typedef struct oldPatData oldPatData;
 
 struct oldsData								// SAMPLE
 {
-	long 				size;				// Sample length
-	long				loopBeg;			// LoopStart
-	long				loopSize;			// LoopLength
+	SInt32 				size;				// Sample length
+	SInt32				loopBeg;			// LoopStart
+	SInt32				loopSize;			// LoopLength
 	Byte 				vol;				// Base volume
 	unsigned short		c2spd;				// c2spd
 	Byte				loopType;
@@ -83,7 +77,7 @@ struct oldsData								// SAMPLE
 	Byte				panning;
 	char				relNote;
 	char 				name[ 32];			// Sample name
-	Ptr					data;				// Used only in memory, not in files
+	UInt32				data;				// Used only in memory, not in files
 };
 typedef struct oldsData oldsData;
 
@@ -150,11 +144,6 @@ struct oldMADSpec
 };
 typedef struct oldMADSpec oldMADSpec;
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=reset
-#else
-#if !defined(THINK_C)
-#pragma options align=reset
-#endif
-#endif
+#pragma pack(pop)
+
 #endif

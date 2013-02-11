@@ -390,7 +390,7 @@ Ptr		aNewPtr;
 	else
 	{
 		aNewPtr = MyNewPtr( curData->size*2L);
-		if( aNewPtr == NULL) MyDebugStr( __LINE__, __FILE__, "Need more memory");
+		if( aNewPtr == NULL) PPDebugStr( __LINE__, __FILE__, "Need more memory");
 		else
 		{
 			curData->stereo = true;
@@ -402,7 +402,7 @@ Ptr		aNewPtr;
 			{
 				for( i = 0 ; i < curData->size; i++)
 				{
-					if( 1 + i * 2 >= curData->size*2L) MyDebugStr( __LINE__, __FILE__, "");
+					if( 1 + i * 2 >= curData->size*2L) PPDebugStr( __LINE__, __FILE__, "");
 					
 					aNewPtr[ i * 2] = aNewPtr[ 1 + i * 2] = curData->data[ i];
 				}
@@ -455,7 +455,7 @@ Ptr		aNewPtr;
 		break;
 		
 		default:
-			MyDebugStr( __LINE__, __FILE__, "Unknown amplitude");
+			PPDebugStr( __LINE__, __FILE__, "Unknown amplitude");
 		break;
 		}
 	}
@@ -479,7 +479,7 @@ Ptr		aNewPtr;
 		break;
 		
 		default:
-			MyDebugStr( __LINE__, __FILE__, "Unknown amplitude");
+			PPDebugStr( __LINE__, __FILE__, "Unknown amplitude");
 		break;
 		}
 	}
@@ -511,7 +511,7 @@ void SetUpPartition( short newVal)
 	for(i = 0; i< curMusic->header->numPat; i++)
 	{
 		theNewPartition = (PatData*) NewPtrClear( sizeof( PatHeader) + newVal * curMusic->partition[ i]->header.size * sizeof( Cmd));
-		if( theNewPartition == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error");
+		if( theNewPartition == NULL) PPDebugStr( __LINE__, __FILE__, "Memory Error");
 		theNewPartition->header = curMusic->partition[ i]->header;
 		
 		for(x = 0; x < curMusic->partition[ i]->header.size; x++)
@@ -537,7 +537,7 @@ void SetUpPartition( short newVal)
 		curMusic->partition[ i] = theNewPartition;
 	}
 	
-	if( MemError()) MyDebugStr( __LINE__, __FILE__, "Error in SetUp Partition...");
+	if( MemError()) PPDebugStr( __LINE__, __FILE__, "Error in SetUp Partition...");
 	
 	curMusic->header->numChn = newVal;
 	
@@ -606,7 +606,7 @@ Str255	theString;
 			{
 				Append = true;
 				theDITL = GetResource('DITL', 150);
-				if( theDITL == nil) MyDebugStr( __LINE__, __FILE__, " DITL 150 !!!!!!");
+				if( theDITL == nil) PPDebugStr( __LINE__, __FILE__, " DITL 150 !!!!!!");
 				base = CountDITL( theDialog);
 				
 				AppendDITL( theDialog, theDITL, appendDITLBottom);
@@ -847,7 +847,7 @@ Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short *sample
 	Boolean			change = false;
 	Str255			aStr;
 	
-	if( !sound) MyDebugStr( __LINE__, __FILE__, "NSndToHandle");
+	if( !sound) PPDebugStr( __LINE__, __FILE__, "NSndToHandle");
 	
 	*loopStart = 0;
 	*loopEnd = 0;
@@ -875,7 +875,7 @@ Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short *sample
 		break;
 		
 		default:					// jack says, what about 12? or 6?
-			MyDebugStr( __LINE__, __FILE__, " NSndToHandle... Burkk");
+			PPDebugStr( __LINE__, __FILE__, " NSndToHandle... Burkk");
 		break;
 	} 
 
@@ -1319,15 +1319,15 @@ ScrapFlavorFlags	flags;
 		
 		pStrcpy( newFile.name, "\pPasted sound");
 		iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newFile.vRefNum, &newFile.parID);
-		if( iErr) MyDebugStr( __LINE__, __FILE__, "FindFolder");
+		if( iErr) PPDebugStr( __LINE__, __FILE__, "FindFolder");
 		
 		FSpDelete( &newFile);
 		
 		iErr = ConvertMovieToFile( aMovie, nil, &newFile, 'WAVE', 'TVOD', 0, nil, 0, nil);
-		if( iErr) MyDebugStr( __LINE__, __FILE__, "ConvertMovieToFile");
+		if( iErr) PPDebugStr( __LINE__, __FILE__, "ConvertMovieToFile");
 		
 		iErr = NOpenSampleInt( ins, samp, newFile);
-		if( iErr) MyDebugStr( __LINE__, __FILE__, "NOpenSampleInt");
+		if( iErr) PPDebugStr( __LINE__, __FILE__, "NOpenSampleInt");
 		
 		FSpDelete( &newFile);
 		
@@ -1539,7 +1539,7 @@ ScrapFlavorFlags	flags;
 										{
 											for( i = inOutBytes-1 ; i >= 0; i--)
 											{
-												if( 1 + i * 2 >= inOutBytes*2L) MyDebugStr( __LINE__, __FILE__, "");
+												if( 1 + i * 2 >= inOutBytes*2L) PPDebugStr( __LINE__, __FILE__, "");
 												
 												(*newSound)[ i * 2] = (*newSound)[ 1 + i * 2] = (*newSound)[ i];
 											}
@@ -1841,7 +1841,7 @@ void AddLoopToSndHandle( Handle sound, long Start, long End)
 		break;
 		
 		default:					/* jack says, what about 12? or 6? */
-			MyDebugStr( __LINE__, __FILE__, " NSndToHandle... Burkk");
+			PPDebugStr( __LINE__, __FILE__, " NSndToHandle... Burkk");
 	} 
 
 	/* compute address of sound header. */
@@ -1952,16 +1952,31 @@ Str255				str, str2;
 	ImportFile( spec.name, spec.vRefNum, spec.parID, 'MADK');
 }
 
-//#ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*(UInt16*)msg_buf);
-/*#else
+#ifdef _MAC_H
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
+#else
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *(short*)msg_buf
+#define Tdecode32(msg_buf) *(int*)msg_buf
+#else
+
+static inline UInt32 Tdecode32( void *msg_buf)
+{
+	UInt32 toswap = *((UInt32*) msg_buf);
+	PPLE32(&toswap);
+	return toswap;
+}
+
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
+	PPLE16(&toswap);
 	return toswap;
 }
-#endif*/
+
+#endif
+#endif
 
 sData* ComputeRAWSound( Ptr srcSound, long length)
 {

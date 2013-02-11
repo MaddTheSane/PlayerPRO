@@ -838,7 +838,7 @@ static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *TheP
 {
 	if( tPlug > MAXINSTRPLUG) 
 	{
-		MyDebugStr( __LINE__, __FILE__, "Too many plugs");
+		PPDebugStr( __LINE__, __FILE__, "Too many plugs");
 		return;
 	}
 	//TODO: There's got to be a cleaner way...

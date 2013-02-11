@@ -13,38 +13,26 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>9DC5E4B1-F2E1-4D6E-963F-700B9CC245FB</key>
-		<string>MADIFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>84F80109-2885-4E01-8FFA-88AC75F3E033</key>
-		<array>
-			<string>9DC5E4B1-F2E1-4D6E-963F-700B9CC245FB</string>
-		</array>
-	</dict>
-	<key>CSResourcesFileMapped</key>
-	<true/>
-	<key>MADPlugMenuName</key>
-	<string>MADI</string>
+	<string>2.0</string>
 	<key>MADPlugAuthorName</key>
 	<string>Written by A.ROSSET 2000</string>
+	<key>MADPlugMenuName</key>
+	<string>MADI</string>
+	<key>MADCanImport</key>
+	<true/>
+	<key>MADCanExport</key>
+	<false/>
+	<key>MADPlugMode</key>
+	<string>IMPL</string>
 	<key>MADPlugType</key>
 	<string>MADI</string>
 	<key>MADPlugUTITypes</key>
 	<array>
 		<string>com.quadmation.playerpro.madi</string>
 	</array>
-	<key>MADPlugMode</key>
-	<string>IMPL</string>
 </dict>
 </plist>

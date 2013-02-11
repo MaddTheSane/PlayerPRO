@@ -21,9 +21,7 @@
 //
 /********************						***********************/
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#endif
+#pragma pack(push, 2)
 
 #define MAXPTRS 128
 
@@ -47,18 +45,15 @@ struct FileInstrDataz
 	unsigned short loopWords;
 };
 
-struct MODDef
+typedef struct MODDef
 {
 	char NameSignature[ 20];
 	struct FileInstrDataz fid[ 31];
 	Byte numPointers;
 	Byte maxPointers;
 	Byte oPointers[ MAXPTRS];
-	long longFmtSignature;
+	OSType longFmtSignature;
 	struct MODPat patterns[];
-};
-typedef struct MODDef MODDef;
+}MODDef;
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=reset
-#endif
+#pragma pack(pop)

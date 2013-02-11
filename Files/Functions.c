@@ -1,5 +1,6 @@
 #include "Shuddup.h"
 #include "RDriver.h"
+#include "RDriverInt.h"
 #include "Undo.h"
 	
 		DialogPtr		FindDlog;
@@ -220,7 +221,7 @@ Boolean FindInternal( short FindType)
 					{
 						NReplaceInt( cmd, FTrack, FPos, false);
 					}
-					else MyDebugStr( __LINE__, __FILE__, "ReplaceInt ERROR");
+					else PPDebugStr( __LINE__, __FILE__, "ReplaceInt ERROR");
 					
 					/***********************/
 				}
@@ -567,7 +568,7 @@ Boolean SetUpFind(void)
 			FStartPos = 0;		FEndPos = curMusic->partition[ FStartPat]->header.size;
 			FStartTrack = 0;	FEndTrack = curMusic->header->numChn;
 		}
-		else MyDebugStr( __LINE__, __FILE__, "Find ERROR");
+		else PPDebugStr( __LINE__, __FILE__, "Find ERROR");
 	}
 	
 	return true;

@@ -21,7 +21,7 @@
 //
 /********************						***********************/
 
-#pragma options align=mac68k
+#pragma pack(push, 2)
 
 struct	MTMTrack
 {
@@ -35,9 +35,9 @@ struct	MTMTrack
 struct Instru
 {
 	char	name[22];
-	long	size;
-	long	loopBegin;
-	long	loopEnd;
+	SInt32	size;
+	SInt32	loopBegin;
+	SInt32	loopEnd;
 	char	fineTune;
 	char	volume;
 	char	sampleSize;
@@ -60,4 +60,4 @@ struct MTMDef
 };
 typedef struct MTMDef MTMDef;
 
-#pragma options align=reset
+#pragma pack(pop)

@@ -29,13 +29,37 @@
 #include "FileUtils.h"
 #endif
 
-#define MEM {Str255 str; NumToString( FreeMem(), str); DebugStr( str);}
+#ifdef WIN32
+#ifndef __DSOUND_INCLUDED__
+#include <mmreg.h>
+#include <DSound.h>
+#endif
+#endif
+
+#ifdef _MAC_H
+#include <AudioUnit/AudioUnit.h>
+#endif
+
+#ifdef LINUX
+#include <alsa/asoundlib.h>
+#endif
+
+#ifdef _ESOUND
+#include <esd.h>
+#endif
+
+#ifdef _OSSSOUND
+#warning headers not included!
+//TODO: include headers
+#endif
+
+//#define MEM {Str255 str; NumToString( FreeMem(), str); DebugStr( str);}
 
 //#define NUMBER_FINETUNES 	16
 
 #define AMIGA_CLOCKFREQ2			14317456L
 
-#if defined(powerc) || defined (__powerc) || defined(__ppc__)
+#if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
 // Work on 64bits for much better precision
 #define BYTEDIV										16L			
 #else
@@ -67,9 +91,9 @@ extern "C" {
 
 void	MADCreateOverShoot( MADDriverRec *intDriver);
 void	MADKillOverShoot( MADDriverRec *intDriver);
-void 	Sampler16AddDeluxe( Channel *curVoice, register long	*ASCBuffer, MADDriverRec *intDriver);
-void 	Sampler16Addin16Deluxe( Channel *curVoice, register long	*ASCBuffer, MADDriverRec *intDriver);
-void 	Sample16BufferAddDeluxe( Channel *curVoice, register long	*ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler16AddDeluxe( Channel *curVoice, register SInt32	*ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler16Addin16Deluxe( Channel *curVoice, register SInt32	*ASCBuffer, MADDriverRec *intDriver);
+void 	Sample16BufferAddDeluxe( Channel *curVoice, register SInt32	*ASCBuffer, MADDriverRec *intDriver);
 void 	Play16StereoDeluxe( MADDriverRec *intDriver);
 void 	Sampler8in8AddDeluxe( Channel *curVoice, register short	*ASCBuffer, MADDriverRec *intDriver);
 void 	Sampler8in16AddDeluxe( Channel *curVoice, register short	*ASCBuffer, MADDriverRec *intDriver);
@@ -78,9 +102,9 @@ void 	Play8StereoDeluxe( MADDriverRec *intDriver);
 
 /*** Delay ***/
 
-void Sampler16AddDelay( Channel *curVoice, register long	*ASCBuffer, MADDriverRec *intDriver);
-void Sampler16Addin16Delay( Channel *curVoice, register long	*ASCBuffer, MADDriverRec *intDriver);
-void Sample16BufferAddDelay( Channel *curVoice, register long	*ASCBuffer, MADDriverRec *intDriver);
+void Sampler16AddDelay( Channel *curVoice, register SInt32	*ASCBuffer, MADDriverRec *intDriver);
+void Sampler16Addin16Delay( Channel *curVoice, register SInt32	*ASCBuffer, MADDriverRec *intDriver);
+void Sample16BufferAddDelay( Channel *curVoice, register SInt32	*ASCBuffer, MADDriverRec *intDriver);
 void Play16StereoDelay( MADDriverRec *intDriver);
 void Sampler8in8AddDelay( Channel *curVoice, register short	*ASCBuffer, MADDriverRec *intDriver);
 void Sampler8in16AddDelay( Channel *curVoice, register short	*ASCBuffer, MADDriverRec *intDriver);
@@ -111,6 +135,12 @@ void 	Sample16BufferAddPoly( Channel *curVoice, register short	*ASCBuffer, short
 void 	Play16PolyPhonic( MADDriverRec* intDriver);
 void 	Play16Mono( MADDriverRec* intDriver);
 
+/*** 20 Bits ***/
+//TODO
+
+/*** 24 Bits ***/
+//TODO
+
 /*** Effects ***/
 
 void 	DoEffect( Channel *ch, short call, MADDriverRec *intDriver);
@@ -120,7 +150,6 @@ void DoVolCmd( Channel *ch, short call, MADDriverRec *intDriver);
 /*** Interruption Functions ***/
 
 void 	NoteAnalyse( MADDriverRec *intDriver);
-pascal 	void DMAPlay ( void);
 void 	ReadNote( Channel *curVoice, Cmd		*theCommand, MADDriverRec *intDriver);
 void 	Filter8Bit( register Byte *myPtr, MADDriverRec *intDriver);
 void 	Filter8BitX( register Byte *myPtr, MADDriverRec *intDriver);
@@ -131,23 +160,20 @@ void 	NoteOff(short oldIns, short oldN, short oldV, MADDriverRec *intDriver);
 void 	SampleMIDI( Channel *curVoice, short channel, short curN, MADDriverRec *intDriver);
 void 	CleanDriver( MADDriverRec *intDriver);
 
-#ifdef _MAC_H
-
-SndChannelPtr 		CreateSndChannel( long init);
-OSErr 			DBSndPlay (MADDriverRec *inMADDriver, SndChannelPtr chan);
-#endif
-
 /*** General Functions ***/
 
-OSErr 		MADKillInstrument( MADMusic*, short ins);
-OSErr 		MADKillSample( MADMusic *, short ins, short sample);
-sData			*MADCreateSample( MADMusic *MDriver, short ins, short sample);
-OSErr 		MADKillCmd( Cmd*);
-void			UpdateTracksNumber( MADDriverRec *);
+PPEXPORT OSErr 		MADKillInstrument( MADMusic*, short ins);
+PPEXPORT OSErr 		MADKillSample( MADMusic *, short ins, short sample);
+PPEXPORT sData			*MADCreateSample( MADMusic *MDriver, short ins, short sample);
+PPEXPORT OSErr 		MADKillCmd( Cmd*);
+PPEXPORT void			UpdateTracksNumber( MADDriverRec *);
 
-OSErr 		MADCreateVolumeTable( MADDriverRec *intDriver);
-void			MADDisposeVolumeTable( MADDriverRec *intDriver);
+PPEXPORT OSErr 		MADCreateVolumeTable( MADDriverRec *intDriver);
+PPEXPORT void		MADDisposeVolumeTable( MADDriverRec *intDriver);
+PPEXPORT MADMusic*	CreateFreeMADK( void);
 
+
+	//TODO: either migrate all these functions to PlayerPROCore or remove them from the header.
 void AllNoteOff( MADDriverRec *intDriver);
 Boolean	MADIsPressed( unsigned char* km2, unsigned short k);
 OSErr MADCreateTiming( MADDriverRec *intDriver);
@@ -156,132 +182,215 @@ void MADDisposeDriverBuffer( MADDriverRec *intDriver);
 OSErr MADCreateReverb( MADDriverRec *intDriver);
 void MADDisposeReverb( MADDriverRec *intDriver);
 OSErr MADCreateMicroDelay( MADDriverRec *intDriver);
-long MADGetMusicSize( MADMusic*);
+size_t MADGetMusicSize( MADMusic*);
 OSErr MADReadMAD( MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRsrc, Ptr MADPtr);
 OSErr	DBSndClose(MADDriverRec *inMADDriver);
 void	StopChannel(MADDriverRec *inMADDriver);
 void	PlayChannel(MADDriverRec *inMADDriver);
+#if 0
 void	InstallMODVBL(MADDriverRec *MDriver);
 void	RemoveMODVBL(MADDriverRec *MDriver);
+#endif
 void	MODRelance(void);
 void	Play(void);
-void	VIAOn(void);
-void 	SndOff(void);
-void 	SndOn(void);
-void	VIAOn2(void);
-void 	VIAOn3(void);
 void MADPurgeTrack( MADDriverRec *intDriver);
-OSErr	InitDBSoundManager( MADDriverRec *intDriver, long);
-EXP Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
+PPEXPORT Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
+PPEXPORT Boolean DirectSaveAlways( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
 void	ChangeSpeed( void);
 void 	ClearFrequence(void);
-void	InstallDMAVBL(MADDriverRec *MDriver);
-void	RemoveDMAVBL(void);
+//void	InstallDMAVBL(MADDriverRec *MDriver);
+//void	RemoveDMAVBL(void);
 OSErr MADCreateVibrato(MADDriverRec *MDriver);
-void 	ActiveDMA(void);
 PatData* DecompressPartitionMAD1( MADMusic *MDriver, PatData* myPat);
 PatData* CompressPartitionMAD1( MADMusic *MDriver, PatData* myPat);
-Ptr 	DoMAC3Expand( Ptr sound, long *InOutSize);
-Ptr 	DoMAC3Compress( Ptr sound, long *InOutSize);
-void 	DMAIntInstall( unsigned long refCon, Ptr handlerAddr, unsigned long vectorBit);
-void 	DMAIntRemove( unsigned long vectorBit);
-void 	GenerateSound( MADDriverRec *intDriver);
-long	GetOldPeriod( short note, long c2spd, MADDriverRec *intDriver);
-OSErr MADResetInstrument( InstrData		*curIns);
-void MADCheckSpeed( MADMusic *MDriver, MADDriverRec *intDriver);
-OSErr AddSoundToMAD(	Ptr				theSound,
-						long			lS,
-						long			lE,
+//Ptr 	DoMAC3Expand( Ptr sound, long *InOutSize);
+//Ptr 	DoMAC3Compress( Ptr sound, long *InOutSize);
+//void 	DMAIntInstall( UInt32 refCon, Ptr handlerAddr, UInt32 vectorBit);
+//void 	DMAIntRemove( UInt32 vectorBit);
+PPEXPORT void 	GenerateSound( MADDriverRec *intDriver);
+PPEXPORT SInt32	GetOldPeriod( short note, SInt32 c2spd, MADDriverRec *intDriver);
+PPEXPORT OSErr MADResetInstrument( InstrData		*curIns);
+PPEXPORT void MADCheckSpeed( MADMusic *MDriver, MADDriverRec *intDriver);
+PPEXPORT OSErr AddSoundToMAD(	Ptr				theSound,
+						SInt32			lS,
+						SInt32			lE,
 						short			sS,
 						short			bFreq,
-						unsigned long	rate,
+						UInt32			rate,
 						Boolean			stereo,
 						Str255			name,
 						short			ins,
 						short			*sampleID);
 
-OSErr	PPTestFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile);
-OSErr	PPInfoFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile, PPInfoRec	*InfoRec);
-OSErr	PPExportFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile, MADMusic	*theNewMAD);
-OSErr	PPImportFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile, MADMusic	**theNewMAD);
-OSErr	PPIdentifyFile( MADLibrary		*inMADDriver, char *kindFile, char	*AlienFile);
-
-OSType	GetPPPlugType( MADLibrary		*inMADDriver, short ID, OSType type);
-void	MInitImportPlug( MADLibrary		*inMADDriver, FSSpec*);
-#ifdef _MAC_H
-void	MADInitImportPlug( MADLibrary	*inMADDriver, FSRefPtr PluginFolder);
-#endif
-
-void	CloseImportPlug( MADLibrary		*inMADDriver);
-OSErr	MADLoadMADFileCString( MADMusic **, Ptr fName);
-OSErr	CheckMADFile( char *AlienFile);
 OSErr	MADCopyCurrentPartition( MADMusic	*theNewMAD);
-OSErr	CallImportPlug( 	MADLibrary		*inMADDriver,
-							short			PlugNo,			// CODE du plug
-							OSType			order,
-							char			*AlienFile,
-							MADMusic		*theNewMAD,
-							PPInfoRec		*info);
-long DoVolPanning( short, Channel *ch, MADDriverRec *intDriver);
-long DoVolPanning256( short, Channel *ch, MADDriverRec *intDriver, Boolean);
+SInt32 DoVolPanning( short, Channel *ch, MADDriverRec *intDriver);
+SInt32 DoVolPanning256( short, Channel *ch, MADDriverRec *intDriver, Boolean);
 void MADKeyOFF( MADDriverRec *MDriver, short track);
 
-long MADMinimize( MADMusic*);
+SInt32 MADMinimize( MADMusic*);
 void MADPurgeTrackIfInstru( MADDriverRec *intDriver, short instru);
-void MADTickLoopFill8( Channel *curVoice, long *ASCBuffer1, long *ASCBuffer2, long size, short left, short right);
-void MADTickLoop8( long size, Channel *curVoice, long *ASCBuffer1, long *ASCBuffer2, MADDriverRec *intDriver);
-void MADTickRemoverStart8( Channel *curVoice, long	*ASCBuffer1, long	*ASCBuffer2, MADDriverRec *intDriver);
-void MADTickRemoverLoop16( long size, Channel *curVoice, long	*ASCBuffer1, long	*ASCBuffer2, MADDriverRec *intDriver, long diffL, long diffR);
-void MADTickRemoverLoop8( long size, Channel *curVoice, long *ASCBuffer1, long *ASCBuffer2, MADDriverRec *intDriver, long diff);
+void MADTickLoopFill8( Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, size_t size, short left, short right);
+void MADTickLoop8( size_t size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver);
+void MADTickRemoverStart8( Channel *curVoice, SInt32	*ASCBuffer1, SInt32	*ASCBuffer2, MADDriverRec *intDriver);
+void MADTickRemoverLoop16( SInt32 size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver, SInt32 diffL, SInt32 diffR);
+void MADTickRemoverLoop8( SInt32 size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver, SInt32 diff);
 
 short MADGetNextReader( MADMusic *music, MADDriverRec *intDriver, short cur, short *pat);
 OSErr MADCleanCurrentMusic( MADMusic *MDriver, MADDriverRec *intDriver);
 void CloseEffect( Channel *ch, short call, MADDriverRec *intDriver);
-void MADSetMADDriverPtr( MADDriverRec* driver);
-long Interpolate(long p,long p1,long p2,long v1,long v2);
-long InterpolateEnv(long p, EnvRec *a,EnvRec *b);
+//void MADSetMADDriverPtr( MADDriverRec* driver);
+SInt32 Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2);
+SInt32 InterpolateEnv(SInt32 p, EnvRec *a,EnvRec *b);
 void ProcessFadeOut( Channel *ch, MADDriverRec *intDriver);
 void ProcessEnvelope( Channel *ch, MADDriverRec *intDriver, Boolean);
 void StartEnvelope( Channel *ch);
-void NScanResource( MADLibrary *inMADDriver);
-void NScanDirImportPlug( MADLibrary		*inMADDriver, long dirID, short VRefNum, Str255	Fname);
-void LoadImportPLUG( MADLibrary		*inMADDriver, short	No, FSSpec	*theSpec);
-void DirectSoundClose( MADDriverRec* driver);
-Boolean DirectSoundInit( MADDriverRec* driver);
-Boolean W95_Init( MADDriverRec* driver);
-void W95_Exit( MADDriverRec* driver);
+//void LoadImportPLUG( MADLibrary		*inMADDriver, short	No, FSSpec	*theSpec);
 void StartPanning( Channel *ch);
 void SetUpCmdEffect( Channel *ch, MADDriverRec *intDriver);
 OSErr MADInitEqualizer( MADDriverRec *intDriver);
 void MADCloseEqualizer( MADDriverRec *intDriver);
 void MADrealft(double *data,int n,int isign);
 void MADCallFFT( sData *SData, double *filter, MADDriverRec *intDriver, Boolean);
-void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, short nochan, Boolean);
-void FFT8S( char	*SData, long size, double *filter, MADDriverRec *intDriver, short nochan, Boolean);
+void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean);
+void FFT8S( char	*SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean);
 void IntNoteOff( Channel *curVoice, MADDriverRec *intDriver);
 Boolean NewMADCommand( Cmd *theNoteCmd);
 short FindAFreeChannel( MADDriverRec *intDriver);
-OSErr	ASIOSndClose( MADDriverRec *inMADDriver);
-OSErr	InitASIOManager( MADDriverRec *inMADDriver, long init);
-
-#ifdef _MAC_H
-OSErr ASIOSndPlay ( MADDriverRec *inMADDriver, SndChannelPtr chan);
-void ASIOStopChannel( MADDriverRec *inMADDriver);
-void ASIOPlayChannel( MADDriverRec *inMADDriver);
-#endif
 
 // Effects.c
 
-void BL32( void *msg_buf);
-void BL16( void *msg_buf);
-
 void parse_slidevol(Channel *ch, Byte Arg);
 void ConvertTo64Rows( MADMusic *music);
-//void						BL32( void *msg_buf);
-//void						BL16( void *msg_buf);
 
-
+// MIDI
+void InitMIDIHarware(void);
+void OpenMIDIHardware( MADDriverRec *rec);
+void CloseMIDIHarware(void);
+	
 #ifdef __cplusplus
 }
 #endif
+
+struct __MADDriverRec
+{
+	/**********************/
+	/** Public variables **/
+	/**********************/
+	
+	MADDriverSettings		DriverSettings;									// Driver SetUp -- READ ONLY --
+	
+	/**  Current music in memory, loaded with RLoadMusic() by example **/
+	
+	MADMusic				*curMusic;										// Current music played by this driver, it can be NULL !!!
+	MADLibrary				*lib;
+	
+	/**  Drivers variables **/
+	
+	Channel					chan[ MAXTRACK];								// Current driver channels -- READ ONLY --
+	Boolean					musicEnd;										// Is music playing finished? -- READ ONLY --
+	short					Tube[ MAXTRACK];								// Used in 'Tracks View' Window - View menu 
+	short					PartitionReader;								// Current position in pattern (0...999)
+	short					Pat;											// Current ID Pattern, see 'Patterns list'
+	short					PL;												// Current position in partition, see 'Partition list'
+	short					VolGlobal;										// Global SOFTWARE volume (This is NOT Mac hardware volume!) from 0 to 64
+	short					speed;											// Current speed, see speed Effect
+	short					finespeed;										// Current finespeed, see speed Effect
+	short					InstruTube[ MAXINSTRU];							// Used in 'Instrument View' Window - View menu
+	short					VExt;											// External music speed, see 'Adaptators' window. 80 = normal
+	short					FreqExt;										// External music pitch, see 'Adaptators' window. 80 = normal
+	Boolean					Reading;										// Reading indicator
+	Boolean					Active[ MAXTRACK];								// Channel Active?
+	Boolean					Equalizer;										// Is Equalizer Active?
+	
+#ifdef _MAC_H
+	AudioUnit				CAAudioUnit;
+	UInt32					CABufOff;
+	Ptr						CABuffer;
+#endif
+	
+#ifdef WIN32
+	LPDIRECTSOUND			lpDirectSound;									// The LPDIRECTSOUND to apply & get informations, etc.
+	LPDIRECTSOUNDBUFFER		lpDirectSoundBuffer, lpSwSamp;					// ONLY available if you are using Win95 DirectSound driver
+	Ptr 					currentBuf;
+	Boolean					OnOff;
+	long					WIN95BUFFERSIZE;
+	UINT					gwID;
+	HWND					hwnd;
+	WAVEOUTCAPS				woc;
+	HWAVEOUT 				hWaveOut;
+	LPVOID 					mydata;
+	HGLOBAL 				hglobal;
+	WAVEHDR 				WaveOutHdr;
+	char 					*mydma;
+	long					MICROBUFState;
+#endif
+	
+#ifdef _OSSSOUND
+	//TODO: OSS Sound Driver
+#endif
+	
+#ifdef LINUX
+	//TODO: ALSA Sound Driver
+#endif
+	
+#ifdef _ESOUND
+	//TODO: EsounD driver
+#endif
+	
+	Ptr						OscilloWavePtr;									// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
+	size_t					OscilloWaveSize;								// Size of previous buffer
+	
+	/** Private variables - Not documented **/
+	/* DO NOT MODIFY OR USE these variables */
+	
+	SInt32					BytesToRemoveAtEnd, MIN_PITCH, MAX_PITCH, MOD_MIN_PITCH, MOD_MAX_PITCH, ASCBUFFERReal;
+	short					smallcounter, trackDiv;
+	SInt32					FREQBASE;
+	short					InstruActif[ MAXINSTRU];
+	Ptr						IntDataPtr;
+	Ptr						OsciDrawPtr[ MAXDRAW];
+	Boolean					newData[ MAXDRAW];
+	Boolean					useOsciBuffers;
+	short					curDrawPtr;
+	unsigned long			curTime;
+	Boolean					XMLinear, MODMode, JumpToNextPattern, endPattern, MADPlay;
+	SInt32					ASCBUFFER;
+	size_t					BufSize;
+	SInt32					VSYNC, BufCounter, BytesToGenerate;
+	short					vibrato_table[ 64];
+	short					SendMIDIClockData;	//gOutNodeRefNum, MIDIPortRefNum
+	short					InstuNoOld[ MAXTRACK];
+	short					NoteOld[ MAXTRACK];
+	short					VelocityOld[ MAXTRACK];
+	Boolean					TrackLineReading[ MAXTRACK], TrackReading[ MAXTRACK], wasReading;
+	Ptr						OverShoot;
+	SInt32					*DASCBuffer;//, *DASCBufferOut;
+	SInt32					*DASCEffectBuffer[ MAXCHANEFFECT];
+	SInt32					EffectBufferID[ MAXCHANEFFECT];
+	SInt32					EffectBufferRealID[ MAXCHANEFFECT];
+	short					*DASCBuffer8;//, *DASCBuffer8Out;
+	double					*Filter, *fData;
+	SInt32					MDelay;
+	SInt32					RDelay;
+	Ptr						ReverbPtr;
+	short					PatDelay;
+	short					lastChannelUsed[ MAXTRACK];
+	SInt32					MultiChanNo, globPan;
+	Boolean					currentlyExporting;
+	Boolean					thisExport;
+	Boolean					OneMoreBeforeEnd;
+	Boolean					clipL, clipR;
+	SInt32					levelL, levelR;
+	SInt32					curCenterL, curCenterR;
+	
+	
+//#ifdef _MAC_H
+	VSTEffect				*masterVST[ 10];
+	VSTEffect				*chanVST[ MAXTRACK][ 4];
+	//PPSndDoubleBufferHeader 	TheHeader;
+//#endif
+	
+};
+	
+
 #endif

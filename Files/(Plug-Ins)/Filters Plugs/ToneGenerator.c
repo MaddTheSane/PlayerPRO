@@ -482,12 +482,12 @@ OSErr mainToneGenerator(sData			*theData,
 		
 		resultPtr = NewPtr( theData->size - (SelectionEnd - SelectionStart) + AudioLength);
 		
-		BlockMoveData( theData->data, resultPtr, SelectionStart);
+		memmove( theData->data, resultPtr, SelectionStart);
 		
-		if( theData->amp == 8) BlockMoveData( Audio8Ptr, resultPtr + SelectionStart, AudioLength);
-		else BlockMoveData( Audio16Ptr, resultPtr + SelectionStart, AudioLength);
+		if( theData->amp == 8) memmove( Audio8Ptr, resultPtr + SelectionStart, AudioLength);
+		else memmove( Audio16Ptr, resultPtr + SelectionStart, AudioLength);
 		
-		BlockMoveData( theData->data + SelectionEnd, resultPtr + SelectionStart + AudioLength, theData->size - SelectionEnd);
+		memmove( theData->data + SelectionEnd, resultPtr + SelectionStart + AudioLength, theData->size - SelectionEnd);
 		
 		DisposePtr( theData->data);		DisposePtr( Audio8Ptr);
 		theData->data = resultPtr;

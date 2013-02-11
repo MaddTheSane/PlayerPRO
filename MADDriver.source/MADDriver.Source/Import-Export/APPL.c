@@ -22,8 +22,11 @@
 /********************						***********************/
 
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/RDriverInt.h>
+#include <CoreServices/CoreServices.h>
 #include "MOD.h"
 
+#if 0
 static OSErr MADResetInstrument( InstrData		*curIns)
 {
 	short i;
@@ -66,34 +69,87 @@ static OSErr MADResetInstrument( InstrData		*curIns)
 	return noErr;
 }
 
+static OSErr MADKillInstrument( MADMusic *music, short ins)
+{
+	short				i;
+	InstrData		*curIns;
+	Boolean			IsReading;
+	
+	if( music == NULL) return MADParametersErr;
+	
+	curIns = &music->fid[ ins];
+	
+	IsReading = music->musicUnderModification;
+	music->musicUnderModification = true;
+	
+	for( i = 0; i < curIns->numSamples; i++)
+	{
+		if( music->sample[ ins * MAXSAMPLE + i] != NULL)
+		{
+			if( music->sample[ ins * MAXSAMPLE + i]->data != NULL)
+			{
+				free( (Ptr) music->sample[ ins * MAXSAMPLE + i]->data);
+				music->sample[ ins * MAXSAMPLE + i]->data = NULL;
+			}
+			free( (Ptr) music->sample[ ins * MAXSAMPLE + i]);
+			music->sample[ ins * MAXSAMPLE + i] = NULL;
+		}
+	}
+	
+	MADResetInstrument( curIns);
+	
+	music->musicUnderModification = IsReading;
+	
+	return noErr;
+}
+#endif
+
 static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 {
-	//TODO: ugh, yet another byteswap
-	short 					i;
+	short 					i = 0;
+	int						x = 0;
 	long 					inOutCount, OffSetToSample;
 	struct PatHeader		tempPatHeader;
 	MADSpec					*MadHeader;
 	
 	/**** HEADER ****/
-	MadFile->header = (MADSpec*) MADPlugNewPtr( sizeof( MADSpec), init);
+	MadFile->header = (MADSpec*) malloc( sizeof( MADSpec));
 	if( MadFile->header == NULL) return MADNeedMemory;
 	
 	OffSetToSample = 0;
-	BlockMoveData( MADPtr, MadFile->header, sizeof( MADSpec));
+	memmove( MadFile->header, MADPtr, sizeof( MADSpec));
 	OffSetToSample += sizeof( MADSpec);
 	
 	MadHeader = MadFile->header;
-	MOT32(&MadHeader->MAD);
+	PPBE32(&MadHeader->MAD);
 	
-	if( MadHeader->MAD != 'MADK') return MADFileNotSupportedByThisPlug;
+	if( MadHeader->MAD != 'MADK')
+	{
+		free(MadFile->header);
+		return MADFileNotSupportedByThisPlug;
+	}
+	
+	PPBE16( &MadHeader->speed);
+	PPBE16( &MadHeader->tempo);
+	PPBE32( &MadHeader->ESpeed);
+	PPBE32( &MadHeader->EPitch);
 	
 	//////////////////
 	
-	MadFile->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
-	if( !MadFile->fid) return MADNeedMemory;
+	MadFile->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
+	if( !MadFile->fid)
+	{
+		free(MadFile->header);
+		return MADNeedMemory;
+	}
 	
-	MadFile->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
-	if( !MadFile->sample) return MADNeedMemory;
+	MadFile->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
+	if( !MadFile->sample)
+	{
+		free(MadFile->header);
+		free(MadFile->fid);
+		return MADNeedMemory;
+	}
 	
 	
 	/**** PARTITION ****/
@@ -102,25 +158,69 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	for( i = 0; i < MadHeader->numPat; i++)
 	{
 		inOutCount = sizeof( PatHeader);
-		BlockMoveData( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
+		memcpy(  &tempPatHeader, MADPtr + OffSetToSample, inOutCount);
+		
+		PPBE32( &tempPatHeader.size);
+		PPBE32( &tempPatHeader.compMode);
+		PPBE32( &tempPatHeader.patBytes);
+		PPBE32( &tempPatHeader.unused2);
 		
 		inOutCount = sizeof( PatHeader) + MadHeader->numChn * tempPatHeader.size * sizeof( Cmd);
-		MadFile->partition[ i] = (PatData*) MADPlugNewPtr( inOutCount, init);
-		if( MadFile->partition[ i] == NULL) return MADNeedMemory;
+		MadFile->partition[ i] = (PatData*) malloc( inOutCount);
+		if( MadFile->partition[ i] == NULL)
+		{
+			for( x = 0; x < i; x++)
+			{
+				if( MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
+			}
+			free( MadFile->header);
+			free(MadFile->fid);
+			free(MadFile->sample);
+			
+			return MADNeedMemory;
+		}
 		
-		BlockMoveData( MADPtr + OffSetToSample, MadFile->partition[ i], inOutCount);
+		memcpy( MadFile->partition[ i], MADPtr + OffSetToSample, inOutCount);
+		PPBE32( &MadFile->partition[ i]->header.size);
+		PPBE32( &MadFile->partition[ i]->header.compMode);
+		PPBE32( &MadFile->partition[ i]->header.patBytes);
+		PPBE32( &MadFile->partition[ i]->header.unused2);
 		OffSetToSample += inOutCount;
 	}
 	
 	/**** INSTRUMENTS ****/
 	
-	inOutCount = sizeof( InstrData) * (long) MadFile->header->numInstru;
-	BlockMoveData( MADPtr + OffSetToSample, MadFile->fid, inOutCount);
+	inOutCount = sizeof( InstrData) * MadFile->header->numInstru;
+	memcpy( MadFile->fid, MADPtr + OffSetToSample, inOutCount);
 	OffSetToSample += inOutCount;
 	
 	for( i = MadFile->header->numInstru-1; i >= 0 ; i--)
 	{
 		InstrData	*curIns = &MadFile->fid[ i];
+		int x = 0;
+		PPBE16( &curIns->numSamples);
+		PPBE16( &curIns->firstSample);
+		PPBE16( &curIns->volFade);
+		
+		for( x = 0; x < 12; x++)
+		{
+			PPBE16( &curIns->volEnv[ x].pos);
+			PPBE16( &curIns->volEnv[ x].val);
+			
+			PPBE16( &curIns->pitchEnv[ x].pos);
+			PPBE16( &curIns->pitchEnv[ x].val);
+			
+			PPBE16( &curIns->pannEnv[ x].pos);
+			PPBE16( &curIns->pannEnv[ x].val);
+		}
+		
+#if 0
+		for( x = 0; x < 12; x++)
+		{
+			PPBE16( &curIns->pannEnv[ x].pos);
+			PPBE16( &curIns->pannEnv[ x].val);
+		}
+#endif
 		
 		if( i != curIns->no)
 		{
@@ -140,23 +240,59 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			
 			// ** Read Sample header **
 			
-			curData = MadFile->sample[ i*MAXSAMPLE + x] = (sData*) MADPlugNewPtr( sizeof( sData), init);
-			if( curData == NULL) return MADNeedMemory;
+			curData = MadFile->sample[ i*MAXSAMPLE + x] = (sData*) malloc( sizeof( sData));
+			if( curData == NULL)
+			{
+				for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( MadFile, x);
+				
+				for( x = 0; x < MadFile->header->numPat; x++)
+				{
+					if( MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
+				}
+				free( MadFile->header);
+				
+				
+				return MADNeedMemory;
+			}
 			
-			inOutCount = sizeof( sData);
+			inOutCount = sizeof( sData32);
 			
-			BlockMoveData( MADPtr + OffSetToSample, curData, inOutCount);
+			memcpy( curData, MADPtr + OffSetToSample, inOutCount);
 			OffSetToSample += inOutCount;
 			
 			// ** Read Sample DATA
 			
+			PPBE32( &curData->size);
+			PPBE32( &curData->loopBeg);
+			PPBE32( &curData->loopSize);
+			PPBE16( &curData->c2spd);
+
 			inOutCount = curData->size;
 			
-			curData->data = MADPlugNewPtr( inOutCount, init);
-			if( curData->data == NULL) return MADNeedMemory;
+			curData->data = malloc( inOutCount);
+			if( curData->data == NULL)
+			{
+				for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( MadFile, x);
+				
+				for( x = 0; x < MadFile->header->numPat; x++)
+				{
+					if( MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
+				}
+				free( MadFile->header);
+				
+				return MADNeedMemory;
+			}
 			
-			BlockMoveData( MADPtr + OffSetToSample, curData->data, inOutCount);
+			memcpy( curData->data, MADPtr + OffSetToSample, inOutCount);
 			OffSetToSample += inOutCount;
+			if( curData->amp == 16)
+			{
+				SInt32 	ll;
+				short	*shortPtr = (short*) curData->data;
+				
+				for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+			}
+
 		}
 	}
 	
@@ -167,7 +303,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	{
 		short	alpha, x;
 		
-		MadFile->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
+		MadFile->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
 		
 		alpha = 0;
 		
@@ -175,9 +311,17 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		{
 			if( MadFile->header->globalEffect[ i])
 			{
+				int x = 0;
 				inOutCount = sizeof( FXSets);
-				BlockMoveData( MADPtr + OffSetToSample, &MadFile->sets[ alpha], inOutCount);
+				memcpy( &MadFile->sets[ alpha], MADPtr + OffSetToSample, inOutCount);
 				OffSetToSample += inOutCount;
+				PPBE16(&MadFile->sets[ alpha].id);
+				PPBE16(&MadFile->sets[ alpha].noArg);
+				PPBE16(&MadFile->sets[ alpha].track);
+				PPBE32(&MadFile->sets[ alpha].FXID);
+				for (x = 0; x < 100; x++) {
+					PPBE32(&MadFile->sets[ alpha].values[x]);
+				}
 				alpha++;
 			}
 		}
@@ -188,9 +332,17 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			{
 				if( MadFile->header->chanEffect[ i][ x])
 				{
+					int y = 0;
 					inOutCount = sizeof( FXSets);
-					BlockMoveData( MADPtr + OffSetToSample, &MadFile->sets[ alpha], inOutCount);
+					memcpy( &MadFile->sets[ alpha], MADPtr + OffSetToSample, inOutCount);
 					OffSetToSample += inOutCount;
+					PPBE16(&MadFile->sets[ alpha].id);
+					PPBE16(&MadFile->sets[ alpha].noArg);
+					PPBE16(&MadFile->sets[ alpha].track);
+					PPBE32(&MadFile->sets[ alpha].FXID);
+					for (y = 0; y < 100; y++) {
+						PPBE32(&MadFile->sets[ alpha].values[y]);
+					}
 					alpha++;
 				}
 			}
@@ -203,7 +355,9 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 
 static OSErr TESTMADH( MADSpec* MADPtr)
 {
-	if( MADPtr->MAD == 'MADK') return noErr;
+	OSType madType = MADPtr->MAD;
+	PPBE32(&madType);
+	if( madType == 'MADK') return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -213,13 +367,14 @@ static OSErr INFOMADF( MADSpec* MADPtr, PPInfoRec *info)
 
 	strcpy( info->internalFileName, MADPtr->name);
 	
-	strcpy( info->formatDescription, "MAD Resource (APPL)");
+	strcpy( info->formatDescription, "MADK Resource (APPL)");
 	
 	info->totalPatterns		= MADPtr->numPat;
 	info->partitionLength	= MADPtr->numPointers;
 	
 	info->totalTracks		= MADPtr->numChn;
 	info->signature			= MADPtr->MAD;
+	PPBE32(&info->signature);
 	
 	info->totalInstruments	= MADPtr->numInstru;
 	
@@ -230,25 +385,21 @@ static OSErr INFOMADF( MADSpec* MADPtr, PPInfoRec *info)
 /* MAIN FUNCTION */
 /*****************/
 
-OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
-	OSErr		myErr;
-	short		iFileRefI, i;
-	Handle		myRes;
-	Boolean		hasToClose = FALSE;
-	FSSpec		AlienFileFSSpec;
+	//TODO: learn how to get resource forks using POSIX commands or CoreFoundation, but not Carbon
+	OSErr			myErr = noErr;
+	FSRef			fileRef;
+	ResFileRefNum	iFileRefI;
+	Handle			myRes;
 	
-	HGetVol( NULL, &AlienFileFSSpec.vRefNum, &AlienFileFSSpec.parID);
-	MYC2PStr( AlienFileName);
-	for( i = 0; i <= AlienFileName[ 0]; i++) AlienFileFSSpec.name[ i] = AlienFileName[ i];
-	
-	myErr = noErr;
+	if (FSPathMakeRef((UInt8*)AlienFileName, &fileRef, NULL) != noErr) return MADReadingErr;
 	
 	switch( order)
 	{
-		case 'IMPL':
-			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdPerm);
-			if( iFileRefI == -1) myErr = MADUnknownErr;
+		case MADPlugImport:
+			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
+			if( iFileRefI == -1) myErr = MADFileNotSupportedByThisPlug;
 			else
 			{
 				UseResFile( iFileRefI);
@@ -264,15 +415,15 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 					HUnlock( myRes);
 					DisposeHandle( myRes);
 				}
-				else myErr = MADUnknowErr;
+				else myErr = MADFileNotSupportedByThisPlug;
 				
-				if( hasToClose) CloseResFile( iFileRefI);
+				CloseResFile( iFileRefI);
 			}
 		break;
 		
-		case 'TEST':
-			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);	
-			if( iFileRefI == -1) myErr = MADUnknowErr;
+		case MADPlugTest:
+			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
+			if( iFileRefI == -1) myErr = MADFileNotSupportedByThisPlug;
 			else
 			{
 				UseResFile( iFileRefI);
@@ -289,15 +440,15 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 					HUnlock( myRes);
 					DisposeHandle( myRes);
 				}
-				else myErr = MADUnknowErr;
+				else myErr = MADFileNotSupportedByThisPlug;
 				
-				if( hasToClose) CloseResFile( iFileRefI);
+				CloseResFile( iFileRefI);
 			}
 		break;
 		
-		case 'INFO':
-			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);
-			if( iFileRefI == -1) myErr = MADUnknowErr;
+		case MADPlugInfo:
+			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
+			if( iFileRefI == -1) myErr = MADFileNotSupportedByThisPlug;
 			else
 			{
 				UseResFile( iFileRefI);
@@ -315,9 +466,9 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 					HUnlock( myRes);
 					DisposeHandle( myRes);
 				}
-				else myErr = MADUnknowErr;
+				else myErr = MADFileNotSupportedByThisPlug;
 				
-				if( hasToClose) CloseResFile( iFileRefI);
+				CloseResFile( iFileRefI);
 			}
 		break;
 		
@@ -326,14 +477,6 @@ OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 		break;
 	}
 	
-	MYP2CStr( (unsigned char*) AlienFileName);
-	
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xD1, 0x2A, 0xD7, 0x05, 0x31, 0x38, 0x4C, 0x80, 0xA8, 0xE1, 0xC0, 0x6F, 0x48, 0x75, 0x20, 0x08))
-//D12AD705-3138-4C80-A8E1-C06F48752008
-
-#define PLUGMAIN mainAPPL
-#define PLUGINFACTORY APPLFactory
-#include "CFPlugin-bridge.c"

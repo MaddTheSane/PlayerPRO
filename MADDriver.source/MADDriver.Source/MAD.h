@@ -22,8 +22,33 @@
 #ifndef __MADI__
 #define __MADI__
 
+#ifdef __GNUC__
+#define HAS_LONG_LONG 1
+#define HAS_LONG_DOUBLE 1
+#endif
+
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#define EXP extern __attribute__((visibility("default")))
+#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#define PPEXPORT extern
+#ifdef __cplusplus
+#define EXP extern "c"
+#else
+#define EXP extern
+#endif
+#else
+#define PPEXPORT extern __attribute__((visibility("default")))
+#ifdef __cplusplus
+#define EXP extern "c" __attribute__((visibility("default")))
+#else
+#define EXP PPEXPORT
+#endif
+#endif
+#endif
+
+#ifdef _MSC_VER
+#define HAS_LONG_LONG 1
+//MSVC's long double datatype is the same size as a regular double
+#undef HAS_LONG_DOUBLE
 #endif
 
 #if !defined(__BIG_ENDIAN__) && defined(WORDS_BIGENDIAN)
@@ -33,8 +58,6 @@
 //////////////////////////////////////////////////////////////////////
 #if defined(__APPLE__)			// MACINTOSH
 #define _MAC_H
-
-#include <Carbon/Carbon.h>
 
 //////////////////////////////////////////////////////////////////////
 #else 			// WIN32 - 95/NT
@@ -48,65 +71,54 @@
 #endif
 
 #ifdef LINUX
-#define __UNIX__
+#define __UNIX__ 1
 #endif
 
 #endif
 //////////////////////////////////////////////////////////////////////
 
+#include "PPDefs.h"
+
 #ifdef WIN32
-#define EXP __declspec(dllexport)
+#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#define PPEXPORT extern
+#ifdef __cplusplus
+#define EXP extern "c"
+#else
+#define EXP extern
+#endif
+#else
+#ifdef __cplusplus
+#define EXP extern "c" __declspec(dllexport)
+#else
+#define EXP extern __declspec(dllexport)
+#endif
+#ifdef BUILDINGPPRO
+#define PPEXPORT extern __declspec(dllexport)
+#else
+#define PPEXPORT extern __declspec(dllimport)
+#ifdef _MSC_VER
+#pragma comment(lib, "PlayerPROCore.lib")
+#endif
+#endif
+#endif
 #endif
 
-#if !defined(_MAC_H) && !defined(WIN32)
+//Final checks
+#ifndef EXP
+#define PPEXPORT extern
+#ifdef __cplusplus
+#define EXP extern "c"
+#else
+#define EXP PPEXPORT
+#endif
+#endif
+
+#if !defined(WIN32)
 #define pascal
 #endif
 
 #if !defined(_MAC_H)
-
-#if !defined(THINK_C)
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h>
-#include <stdbool.h>
-
-typedef unsigned char 	Byte;
-typedef char 			*Ptr;
-typedef Ptr 			*Handle;
-typedef unsigned char 	Boolean;
-typedef unsigned char 	Str255[256], Str63[64];
-typedef uint8_t			UInt8;
-typedef int8_t			SInt8;
-typedef uint16_t		UInt16;
-typedef int16_t			SInt16;
-typedef uint32_t		UInt32;
-typedef int32_t			SInt32;
-typedef SInt16			OSErr;
-typedef UInt32			FourCharCode;
-typedef FourCharCode	OSType;
-typedef SInt32			Fixed;
-typedef UInt32			UnsignedFixed;
-
-#define NewPtr(x)					(Ptr) malloc(x)
-#define NewPtrClear(x) 	 			(Ptr) calloc(x, 1)
-#define NewPtrSys(x)				(Ptr) malloc(x)
-#define NewPtrSysClear(x) 			(Ptr) calloc(x, 1)
-
-//#define DisposPtr(x)				free(x)
-#define DisposePtr(x)				free(x)
-#define BlockMoveData(x,y,z)		memcpy(y,x,z)
-//#define BlockZero(x, y)				memset(x, y, 0)
-static inline void BlockZero( void* a, long size)
-{
-	Ptr b = (Ptr) a;
-	long i;
-	
-	for( i = 0; i < size ; i++)
-	{
-		b[ i] = 0;
-	}
-}
 
 #define MemError()					0
 
@@ -118,45 +130,20 @@ static inline void BlockZero( void* a, long size)
 #define FALSE 0
 #endif
 
-typedef char	FSSpec;
-typedef char*	FSSpecPtr;
 enum {
 	noErr = 0
 };
 
-static inline void DebugStr( unsigned char* x)
-{
-	char *temp;
-	
-	temp = NewPtr( (x[ 0] + 1));
-	
-	BlockMoveData( x+1, temp, x[ 0]);
-	temp[ x[ 0]] = 0;
-	
-#ifdef _MAC_H
-	debugger( temp);
-#endif
-	
-	DisposePtr( temp);
-}
-
-#endif
 #endif
 
 //////////////////////////////////////////////////////////////////////
 
-#if PRAGMA_STRUCT_ALIGN
-#pragma options align=mac68k
-#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(push, 2)
-#elif PRAGMA_STRUCT_PACK
-#pragma pack(2)
-#endif
 
-#define DEFAULT_VOLFADE		300L
-#define MAXINSTRU			255L
-#define MAXPOINTER			999L
-#define MAXTRACK			256L
+#define DEFAULT_VOLFADE		300
+#define MAXINSTRU			255
+#define MAXPOINTER			999
+#define MAXTRACK			256
 //#define MAXTRACKMULTI		99
 #define MADID				'MADK'
 
@@ -172,26 +159,25 @@ typedef struct Cmd							// COMMAND
 	Byte 	arg;					// Effect argument
 	Byte	vol;					// Volume				0xFF : no volume cmd
 	Byte	unused;
-}Cmd;
+} Cmd;
 typedef Cmd MadCommand;
 
 typedef struct PatHeader					// HEADER
 {
-	long	size;					// Length of pattern: standard = 64
+	SInt32	size;					// Length of pattern: standard = 64
 	OSType	compMode;				// Compression mode, none = 'NONE'
 	char	name[ 32];
-	long	patBytes;				// Pattern Size in Bytes
-	long	unused2;
-}PatHeader;
+	SInt32	patBytes;				// Pattern Size in Bytes
+	SInt32	unused2;
+} PatHeader;
 typedef PatHeader PatternHeader;
 
 typedef struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
 {									// Pattern = 64 notes to play
 	PatHeader	header;
 	Cmd			Cmds[ 1];
-}PatData;
+} PatData;
 typedef PatData PatternData;
-
 
 
 // ***	
@@ -201,9 +187,9 @@ typedef PatData PatternData;
 
 typedef struct sData								// SAMPLE
 {
-	long 				size;				// Sample length
-	long				loopBeg;			// LoopStart
-	long				loopSize;			// LoopLength
+	SInt32 				size;				// Sample length
+	SInt32				loopBeg;			// LoopStart
+	SInt32				loopSize;			// LoopLength
 	Byte 				vol;				// Base volume
 	unsigned short		c2spd;				// c2spd
 	Byte				loopType;
@@ -212,8 +198,26 @@ typedef struct sData								// SAMPLE
 	char 				name[ 32];			// Sample name
 	Byte				stereo;				// Stereo
 	Ptr					data;				// Used only in memory, not in files
-}sData;
+} sData;
 typedef sData SampleData;
+
+//64-bit safe sample structure
+//Used for file i/o
+typedef struct sData32								// SAMPLE
+{
+	SInt32 				size;				// Sample length
+	SInt32				loopBeg;			// LoopStart
+	SInt32				loopSize;			// LoopLength
+	Byte 				vol;				// Base volume
+	unsigned short		c2spd;				// c2spd
+	Byte				loopType;
+	Byte				amp;				// 8 or 16 bits
+	char				relNote;
+	char 				name[ 32];			// Sample name
+	Byte				stereo;				// Stereo
+	UInt32				data;				// Used only in memory, not in files
+} sData32;
+typedef sData32 SampleData32;
 
 enum
 {
@@ -226,7 +230,7 @@ typedef struct EnvRec				// Volume Enveloppe
 {
 	short 	pos;				// pos
 	short	val;				// val
-}EnvRec;
+} EnvRec;
 
 typedef struct InstrData				// INSTRUMENT
 {
@@ -271,7 +275,7 @@ typedef struct InstrData				// INSTRUMENT
 	
 	Byte	vibDepth;
 	Byte	vibRate;
-}InstrData;
+} InstrData;
 typedef InstrData InstrumentData;
 
 
@@ -308,8 +312,8 @@ typedef struct MADSpec
 	Byte		generalPan;					// General Panning
 	Byte		MultiChanNo;				// Number of chan for multichannel
 	Byte		MultiChan;					// MultiChannel per tracks?
-	long		EPitch;						// New Pitch
-	long		ESpeed;						// New Speed
+	SInt32		EPitch;						// New Pitch
+	SInt32		ESpeed;						// New Speed
 	Byte		XMLinear;					// Linear picth table?
 	Byte		MODMode;					// Limit pitch to MOD pitch table
 	Byte		showCopyright;				// Show infos at startup? true or false
@@ -327,29 +331,24 @@ typedef struct MADSpec
 	Byte		chanPan[ MAXTRACK];			// Channel settings, from 0 to 256
 	Byte		chanVol[ MAXTRACK];			// Channel Volume, from 0 to 64
 	
-	long		globalEffect[ 10];			// Global Effects IDs
+	SInt32		globalEffect[ 10];			// Global Effects IDs
 	Boolean		globalFXActive;				// Global FX Active?
 	
-	long		chanEffect[ MAXTRACK][ 4];	// Channel Effect IDs
+	SInt32		chanEffect[ MAXTRACK][ 4];	// Channel Effect IDs
 	FXBus		chanBus[ MAXTRACK];
-}MADSpec;
+} MADSpec;
 
 typedef struct FXSets
 {
 	short	track;
 	short	id;
-	long	FXID;
+	SInt32	FXID;
 	short	noArg;
 	float	values[ 100];
 	Str63	name;
-}FXSets;	// and then float values
+} FXSets;	// and then float values
 
 
-#if PRAGMA_STRUCT_ALIGN
-#pragma options align=reset
-#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(pop)
-#elif PRAGMA_STRUCT_PACK
-#pragma pack()
-#endif
+
 #endif

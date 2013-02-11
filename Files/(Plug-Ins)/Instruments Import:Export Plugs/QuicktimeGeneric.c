@@ -2,21 +2,30 @@
 /*	1999 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/PPPlug.h>
 #include <Carbon/Carbon.h>
 #include <QuickTime/QuickTime.h>
 
-static OSErr mainQTInst(OSType					order,				// Order to execute
+OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug);
+Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo);
+
+static OSErr mainQTInst(void					*unused,
+						OSType					order,				// Order to execute
 						InstrData				*InsHeader,			// Ptr on instrument header
 						sData					**sample,			// Ptr on samples data
 						short					*sampleID,			// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
 																	// If sampleID == -1 : add sample else replace selected sample.
-						FSSpec					*AlienFileFSSpec,	// IN/OUT file
+						CFURLRef				AlienFileURLRef,	// IN/OUT file
 						PPInfoPlug				*thePPInfoPlug)
 {
 	OSErr	myErr = noErr;
 //	Ptr		AlienFile;
 	short	iFileRefI;
 	long	inOutBytes;
+	FSRef tmpRef;
+	FSSpec tmpSpec;
+	CFURLGetFSRef(AlienFileURLRef, &tmpRef);
+	FSGetCatalogInfo(&tmpRef, kFSCatInfoNone, NULL, NULL, &tmpSpec, NULL);
 		
 	switch( order)
 	{
@@ -32,12 +41,12 @@ static OSErr mainQTInst(OSType					order,				// Order to execute
 			Boolean			stereo;
 			FSSpec			newFile;
 			
-			myErr = ConvertDataToWAVE( *AlienFileFSSpec, &newFile, thePPInfoPlug);
+			myErr = ConvertDataToWAVE( tmpSpec, &newFile, thePPInfoPlug);
 			if( myErr == noErr)
 			{
 				theSound = ConvertWAV( &newFile, &lS, &lE, &sS, &rate, &stereo);
 				
-				if( theSound) inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, newFile.name, InsHeader, sample, sampleID);
+				if( theSound) inAddSoundToMAD( theSound, GetPtrSize(theSound), lS, lE, sS, 60, rate, stereo, newFile.name, InsHeader, sample, sampleID);
 				else
 				{
 					myErr = MADNeedMemory;
@@ -52,7 +61,7 @@ static OSErr mainQTInst(OSType					order,				// Order to execute
 		{
 			FInfo fInfo;
 			
-			FSpGetFInfo( AlienFileFSSpec, &fInfo);
+			FSpGetFInfo( &tmpSpec, &fInfo);
 			
 			if( fInfo.fdType == thePPInfoPlug->fileType) myErr = noErr;
 			else myErr = MADFileNotSupportedByThisPlug;
@@ -67,8 +76,8 @@ static OSErr mainQTInst(OSType					order,				// Order to execute
 				sData 				*curData = sample[ *sampleID];
 				short				numChan;
 				
-				myErr = FSpCreate( AlienFileFSSpec, 'TVOD', 'AIFF', smCurrentScript);
-				if(myErr == noErr) myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+				myErr = FSpCreate( &tmpSpec, 'TVOD', 'AIFF', smCurrentScript);
+				if(myErr == noErr) myErr = FSpOpenDF( &tmpSpec, fsCurPerm, &iFileRefI);
 				
 				if( myErr == noErr)
 				{

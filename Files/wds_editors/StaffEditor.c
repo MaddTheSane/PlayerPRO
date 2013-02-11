@@ -1050,7 +1050,7 @@ void DrawStaffNotes()
 						else	if( silenceLength >=  4) { silIcon = silence[ 2];	remove = 4;  }
 						else	if( silenceLength >=  2) { silIcon = silence[ 3];	remove = 2;  }
 						else	if( silenceLength >=  1) { silIcon = silence[ 4];	remove = 1;  }
-						else	MyDebugStr( __LINE__, __FILE__, "");
+						else	PPDebugStr( __LINE__, __FILE__, "");
 						
 						tRect.right		= tRect.left + (*silIcon)->iconPMap.bounds.right;
 						tRect.top		= StaffRect.top + 1 + (x - GetControlValue( yScroll)) * YSize;
@@ -1058,7 +1058,7 @@ void DrawStaffNotes()
 						tRect.bottom	= tRect.top + (*silIcon)->iconPMap.bounds.bottom;
 						
 						if( silIcon) PlotCIcon( &tRect, silIcon);
-						else MyDebugStr( __LINE__, __FILE__, "");
+						else PPDebugStr( __LINE__, __FILE__, "");
 						
 						silenceLengthCopy	-= remove;
 						silenceLength		-= remove;
@@ -1113,7 +1113,7 @@ void DrawStaffNotes()
 							else	if( silenceLength >=  3) { silIcon = noteIcn[ 3]; P1 = true;	remove = 3;  }
 							else	if( silenceLength >=  2) { silIcon = noteIcn[ 3];				remove = 2;  }
 							else	if( silenceLength >=  1) { silIcon = noteIcn[ 4];				remove = 1;  }
-							else	MyDebugStr( __LINE__, __FILE__, "");
+							else	PPDebugStr( __LINE__, __FILE__, "");
 							
 							prevleft 		= tRect.right;
 							tRect.right		= tRect.left + (*demitonIcon[ 1])->iconPMap.bounds.right;
@@ -1177,14 +1177,14 @@ void DrawStaffNotes()
 								
 									PlotCIcon( &tRect, demitonIcon[ 1]);
 								}
-								else MyDebugStr( __LINE__, __FILE__, "Your are in BIG troubles...");
+								else PPDebugStr( __LINE__, __FILE__, "Your are in BIG troubles...");
 								
 								tRect.left += BEMOLSIZE;
 							}
 							else tRect.left += BEMOLSIZE/2;
 							
-							if( silIcon == NULL) MyDebugStr( __LINE__, __FILE__, "");
-							if( ptIcon == NULL) MyDebugStr( __LINE__, __FILE__, "");
+							if( silIcon == NULL) PPDebugStr( __LINE__, __FILE__, "");
+							if( ptIcon == NULL) PPDebugStr( __LINE__, __FILE__, "");
 							
 							tRect.right = tRect.left + (*silIcon)->iconPMap.bounds.right;
 							
@@ -1392,7 +1392,7 @@ Pcmd* CreatePcmdFromSelectionStaff(void)
 	if( count <= 0) return NULL;
 	
 	myPcmd = (Pcmd*) NewPtrClear( sizeof( Pcmd) + count * sizeof( Cmd));
-	if( myPcmd == NULL) MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
+	if( myPcmd == NULL) PPDebugStr( __LINE__, __FILE__, "Memory WARNING");
 	
 	myPcmd->structSize 	= sizeof( Pcmd) + count * sizeof( Cmd);
 	myPcmd->tracks 		= endYSelec - startYSelec + 1;
@@ -1424,7 +1424,7 @@ Pcmd* CreatePcmdFromNoteStaff( Point myPt)
 		short	pos, track, note;
 		
 		myPcmd = (Pcmd*) NewPtrClear( sizeof( Pcmd) + sizeof( Cmd));
-		if( myPcmd == NULL) MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
+		if( myPcmd == NULL) PPDebugStr( __LINE__, __FILE__, "Memory WARNING");
 		
 		ConvertPt2Note( myPt, &pos, &track, NULL);
 		
@@ -3030,7 +3030,7 @@ void COPYStaff(void)
 	myPcmd = CreatePcmdFromSelectionStaff();
 	if( myPcmd == NULL)
 	{
-		MyDebugStr( __LINE__, __FILE__, "CopyStaff Internal ERROR");
+		PPDebugStr( __LINE__, __FILE__, "CopyStaff Internal ERROR");
 		SetPort( SavePort);
 		return;
 	}

@@ -24,13 +24,13 @@
 #ifndef __AMFH__
 #define __AMFH__
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#endif
+#pragma pack(push, 2)
 
 typedef unsigned char uchar;
-//typedef unsigned short ushort;
-typedef unsigned long ulong;
+#ifndef __APPLE__
+typedef unsigned short ushort;
+#endif
+//typedef unsigned long ulong;
 
 typedef struct {
     uchar       type;
@@ -46,14 +46,12 @@ typedef struct {
     uchar       type;
     char        name[32],filename[13];
     void        *sample;
-    ulong       size;
+    UInt32      size;
     ushort      rate;
     uchar       volume;
-    ulong       loopstart,loopend;
+    UInt32      loopstart,loopend;
 } INSTRUMENT;
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=reset
-#endif
+#pragma pack(pop)
 
 #endif

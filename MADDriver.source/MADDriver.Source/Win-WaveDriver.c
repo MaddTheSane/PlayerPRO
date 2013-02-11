@@ -30,6 +30,10 @@
 //#include "mmreg.h"
 #include "mmsystem.h"
 
+#ifdef _MSC_VER
+#pragma comment(lib, "winmm.lib")
+#endif
+
 #include "RDriver.h"
 #include "RDriverInt.h"
 
@@ -43,6 +47,8 @@ static	char*			myerr;
 
 ////////////
 
+//TODO: move proper datatypes to MADDriverRec
+/*
 static WAVEOUTCAPS 	woc;
 static HWAVEOUT 		hWaveOut;
 static LPVOID 			mydata;
@@ -53,7 +59,7 @@ static char 				*mydma;
 static Boolean 			OnOff;
 static long 				WIN95BUFFERSIZE;
 static long					MICROBUFState;
-
+*/
 
 void W95_PlayStop( MADDriverRec*);
 
@@ -68,17 +74,17 @@ void W95_Exit( MADDriverRec *WinMADDriver)
 {
 	W95_PlayStop( WinMADDriver);
 
-	while(waveOutClose(hWaveOut)==WAVERR_STILLPLAYING) Sleep(20);
-	GlobalUnlock(hglobal);
-	GlobalFree(hglobal);
+	while(waveOutClose(WinMADDriver->hWaveOut)==WAVERR_STILLPLAYING) Sleep(20);
+	GlobalUnlock(WinMADDriver->hglobal);
+	GlobalFree(WinMADDriver->hglobal);
 }
 
-ULONG GetPos(void)
+ULONG GetPos(MADDriverRec *WinMADDriver)
 {
 	MMTIME mmt;
 	mmt.wType = TIME_BYTES;
 	
-	waveOutGetPosition( hWaveOut, &mmt,sizeof(MMTIME));
+	waveOutGetPosition( WinMADDriver->hWaveOut, &mmt,sizeof(MMTIME));
 	
 	return( mmt.u.cb & 0xfffffff0);		// A cause du 16 bits??
 }
@@ -124,16 +130,17 @@ ULONG GetPos(void)
 	timersema--;
 }*/
 
+//TODO: we should probably do something to prevent thread contention
 void CALLBACK TimeProc(
 	 UINT  IDEvent,
 	 UINT  uReserved,
-	 DWORD  dwUser,
-	 DWORD  dwReserved1,
-	 DWORD  dwReserved2
+	 DWORD_PTR  dwUser,
+	 DWORD_PTR  dwReserved1,
+	 DWORD_PTR  dwReserved2
 )
 {
 	char	*dmaDst;
-	long	todo, pos, i;
+	long	pos /*, todo*/;
 	static volatile int timersema=0;
 
 	/* use semaphore to prevent entering
@@ -143,44 +150,44 @@ void CALLBACK TimeProc(
 	{
 		MADDriverRec	*WinMADDriver = (MADDriverRec*) dwUser;
 		
-		pos = GetPos() % WIN95BUFFERSIZE;
+		pos = GetPos(WinMADDriver) % WinMADDriver->WIN95BUFFERSIZE;
 		
-		if(pos > WIN95BUFFERSIZE/2L && OnOff == true)
+		if(pos > WinMADDriver->WIN95BUFFERSIZE/2L && WinMADDriver->OnOff == true)
 		{
-			if( MICROBUFState < MICROBUF)
+			if( WinMADDriver->MICROBUFState < MICROBUF)
 			{
-				dmaDst = mydma + MICROBUFState*WinMADDriver->BufSize;
+				dmaDst = WinMADDriver->mydma + WinMADDriver->MICROBUFState*WinMADDriver->BufSize;
 				
 				if( !DirectSave( dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
 				{
-					for( i = 0; i < WinMADDriver->BufSize; i++) dmaDst[ i] = 0;
+					memset(dmaDst, 0, WinMADDriver->BufSize);
 				}
 				
-				MICROBUFState++;
+				WinMADDriver->MICROBUFState++;
 			}
 			else
 			{
-				OnOff = false;
-				MICROBUFState = 0;
+				WinMADDriver->OnOff = false;
+				WinMADDriver->MICROBUFState = 0;
 			}
 		}
-		else if( OnOff == false && (pos < WIN95BUFFERSIZE/2L))
+		else if( WinMADDriver->OnOff == false && (pos < WinMADDriver->WIN95BUFFERSIZE/2L))
 		{
-			if( MICROBUFState < MICROBUF)
+			if( WinMADDriver->MICROBUFState < MICROBUF)
 			{
-				dmaDst = mydma + WIN95BUFFERSIZE/2L + MICROBUFState*WinMADDriver->BufSize;
+				dmaDst = WinMADDriver->mydma + WinMADDriver->WIN95BUFFERSIZE/2L + WinMADDriver->MICROBUFState*WinMADDriver->BufSize;
 				
 				if( !DirectSave( dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
 				{
-					for( i = 0; i < WinMADDriver->BufSize; i++) dmaDst[ i] = 0;
+					memset(dmaDst, 0, WinMADDriver->BufSize);
 				}
 				
-				MICROBUFState++;
+				WinMADDriver->MICROBUFState++;
 			}
 			else
 			{
-				OnOff = true;
-				MICROBUFState = 0;
+				WinMADDriver->OnOff = true;
+				WinMADDriver->MICROBUFState = 0;
 			}
 		}
 	}
@@ -191,24 +198,24 @@ void W95_PlayStart( MADDriverRec *WinMADDriver)
 {
 	waveOutSetVolume(0,0xffffffff);
 	
-	WaveOutHdr.lpData= (char*) mydata;
-	WaveOutHdr.dwBufferLength=WIN95BUFFERSIZE;
-	WaveOutHdr.dwFlags=WHDR_BEGINLOOP|WHDR_ENDLOOP;
-	WaveOutHdr.dwLoops=0xffffffff;
-	WaveOutHdr.dwUser=0;
-	waveOutPrepareHeader(hWaveOut,&WaveOutHdr,sizeof(WAVEHDR));
-	waveOutWrite(hWaveOut,&WaveOutHdr,sizeof(WAVEHDR));
-	mydma= (char*) mydata;
+	WinMADDriver->WaveOutHdr.lpData= (char*) WinMADDriver->mydata;
+	WinMADDriver->WaveOutHdr.dwBufferLength = WinMADDriver->WIN95BUFFERSIZE;
+	WinMADDriver->WaveOutHdr.dwFlags = WHDR_BEGINLOOP | WHDR_ENDLOOP;
+	WinMADDriver->WaveOutHdr.dwLoops = 0xffffffff;
+	WinMADDriver->WaveOutHdr.dwUser = 0;
+	waveOutPrepareHeader(WinMADDriver->hWaveOut, &WinMADDriver->WaveOutHdr, sizeof(WAVEHDR));
+	waveOutWrite(WinMADDriver->hWaveOut, &WinMADDriver->WaveOutHdr, sizeof(WAVEHDR));
+	WinMADDriver->mydma = (char*) WinMADDriver->mydata;
 	
-	MICROBUFState = 0;
+	WinMADDriver->MICROBUFState = 0;
 	
 	timeBeginPeriod( 20);      /* set the minimum resolution */
 	
-	gwID = timeSetEvent(	  40,   											/* how often                 */
-							  40,   																/* timer resolution          */
-							  TimeProc,  														/* callback function         */
-							 (unsigned long)  WinMADDriver,    			/* info to pass to callback  */
-							  TIME_PERIODIC); 											/* oneshot or periodic?      */
+	WinMADDriver->gwID = timeSetEvent(	40,   											/* how often                 */
+										40,   																/* timer resolution          */
+										TimeProc,  														/* callback function         */
+										(unsigned long)  WinMADDriver,    			/* info to pass to callback  */
+										TIME_PERIODIC); 											/* oneshot or periodic?      */
 							  
 							  
 	//////
@@ -221,49 +228,49 @@ void W95_PlayStop( MADDriverRec *WinMADDriver)
 	
 	
 	/* stop the timer */
-	timeKillEvent(gwID);
+	timeKillEvent(WinMADDriver->gwID);
 	timeEndPeriod(20);
 	/* stop playing the wave */
-	waveOutReset(hWaveOut);
-	waveOutUnprepareHeader(hWaveOut,&WaveOutHdr,sizeof(WAVEHDR));
+	waveOutReset(WinMADDriver->hWaveOut);
+	waveOutUnprepareHeader(WinMADDriver->hWaveOut,&WinMADDriver->WaveOutHdr,sizeof(WAVEHDR));
 //	VC_PlayStop();
 }
 
-	#define DMODE_STEREO    1
-	#define DMODE_16BITS    2
-	#define DMODE_INTERP    4
+	//#define DMODE_STEREO    1
+	//#define DMODE_16BITS    2
+	//#define DMODE_INTERP    4
 
 
 Boolean W95_Init( MADDriverRec *WinMADDriver)
 {
 	MMRESULT err;
 	PCMWAVEFORMAT wf;
-	long	i;
+	//long	i;
 	
-	WIN95BUFFERSIZE = WinMADDriver->BufSize;
-	WIN95BUFFERSIZE *= 2L;								// double buffer system
-	WIN95BUFFERSIZE *= MICROBUF;					// multi internal buffer system
+	WinMADDriver->WIN95BUFFERSIZE = WinMADDriver->BufSize;
+	WinMADDriver->WIN95BUFFERSIZE *= 2L;								// double buffer system
+	WinMADDriver->WIN95BUFFERSIZE *= MICROBUF;					// multi internal buffer system
 	
-	MICROBUFState = 0;
+	WinMADDriver->MICROBUFState = 0;
 	
-	if( WIN95BUFFERSIZE < 0) return false;
+	if( WinMADDriver->WIN95BUFFERSIZE < 0) return false;
 	
-	hglobal= GlobalAlloc( GMEM_FIXED, WIN95BUFFERSIZE);	//GMEM_MOVEABLE | GMEM_SHARE
-	if( hglobal == NULL) return false;
+	WinMADDriver->hglobal= GlobalAlloc( GMEM_FIXED, WinMADDriver->WIN95BUFFERSIZE);	//GMEM_MOVEABLE | GMEM_SHARE
+	if( WinMADDriver->hglobal == NULL) return false;
 	
-	mydata = GlobalLock(hglobal);
+	WinMADDriver->mydata = GlobalLock(WinMADDriver->hglobal);
 	
 	/* get audio device name and put it into the driver structure: */
-	waveOutGetDevCaps( 0, &woc, sizeof(WAVEOUTCAPS));
+	waveOutGetDevCaps( 0, &WinMADDriver->woc, sizeof(WAVEOUTCAPS));
 	
 	wf.wf.wFormatTag		=WAVE_FORMAT_PCM;
 	wf.wf.nChannels = 2;
-	wf.wf.nSamplesPerSec	= WinMADDriver->DriverSettings.outPutRate >> 16L;
+	wf.wf.nSamplesPerSec	= WinMADDriver->DriverSettings.outPutRate;
 	wf.wBitsPerSample		= WinMADDriver->DriverSettings.outPutBits;
 	wf.wf.nBlockAlign		= wf.wf.nChannels * (wf.wBitsPerSample/8);
 	wf.wf.nAvgBytesPerSec	= wf.wf.nSamplesPerSec * wf.wf.nBlockAlign;
 	
-	err=waveOutOpen( &hWaveOut, 0, (LPCWAVEFORMATEX)&wf, (unsigned long) 0, (unsigned long) NULL,0L);
+	err = waveOutOpen( &WinMADDriver->hWaveOut, 0, (LPCWAVEFORMATEX)&wf, (unsigned long) 0, (unsigned long) NULL,0L);
 	
 	if(err)
 	{
@@ -273,8 +280,8 @@ Boolean W95_Init( MADDriverRec *WinMADDriver)
 			myerr="Audio device already in use";
 		else
 			myerr="Can't open audio device";
-		GlobalUnlock(hglobal);
-		GlobalFree(hglobal);
+		GlobalUnlock(WinMADDriver->hglobal);
+		GlobalFree(WinMADDriver->hglobal);
 		return false;
 	}
 	

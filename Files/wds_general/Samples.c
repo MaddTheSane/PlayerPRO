@@ -806,7 +806,7 @@ void GetSampleRect( DialogPtr theDia)
 {
 	Rect caRect;
 	
-	if( theDia == NULL) MyDebugStr( __LINE__, __FILE__, "Big big ERROR");
+	if( theDia == NULL) PPDebugStr( __LINE__, __FILE__, "Big big ERROR");
 	
 	GetPortBounds( GetDialogPort( theDia), &caRect);
 	
@@ -1696,7 +1696,7 @@ short	i;
 		if( SampleDlog[i] == theDia) return( i);
 	}
 	
-	MyDebugStr( __LINE__, __FILE__, "FIND Sample ERROR");
+	PPDebugStr( __LINE__, __FILE__, "FIND Sample ERROR");
 	
 	return 0;
 }
@@ -2764,7 +2764,7 @@ void DrawSample( short	tSS, short tSE, short InstruNo, DialogPtr	theDia)
 	if( samp >= curMusic->fid[ InstruNo].numSamples) goto RENVOI;
 	
 	curData = curMusic->sample[ curMusic->fid[ InstruNo].firstSample +  samp];
-	if( curData == NULL) MyDebugStr( __LINE__, __FILE__, "Samp ERR");
+	if( curData == NULL) PPDebugStr( __LINE__, __FILE__, "Samp ERR");
 	theSample = curData->data;
 	theShortSample = (short*) theSample;
 	
@@ -4638,7 +4638,7 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 						{
 							BlockMoveData( SampleDataD( CurWin)->data, newSnd, Start);
 							
-							if( reste < 0) MyDebugStr( __LINE__, __FILE__, "Error in Sample Delete");
+							if( reste < 0) PPDebugStr( __LINE__, __FILE__, "Error in Sample Delete");
 							BlockMoveData( SampleDataD( CurWin)->data + End, newSnd + Start, reste);
 							
 							MyDisposePtr( & SampleDataD( CurWin)->data);

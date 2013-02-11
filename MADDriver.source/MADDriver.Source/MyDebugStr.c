@@ -1,5 +1,5 @@
 /*
- *  MyDebugStr.c
+ *  PPDebugStr.c
  *  PPMacho
  *
  *  Created by C.W. Betts on 11/18/09.
@@ -8,25 +8,41 @@
  */
 
 #include "MAD.h"
+#include "RDriver.h"
+
+static void (__callback *MyDebugFunc)(short, Ptr, Ptr) = NULL;
+
+void PPRegisterDebugFunc(void (__callback *debugFunc)(short, Ptr, Ptr))
+{
+	MyDebugFunc = debugFunc;
+}
+
 #ifdef _MAC_H
 #include <CoreFoundation/CFBase.h>
-#include <CoreServices/CoreServices.h>
 
 extern void NSLog(CFStringRef format, ...);
 
-extern void MyDebugStr( short line, Ptr file, Ptr text)
+void PPDebugStr( short line, Ptr file, Ptr text)
 {
-	NSLog(CFSTR("%s:%u error text:%s!"), file, line, text);
-	
-	Debugger();
+	if (MyDebugFunc != NULL) {
+		(*MyDebugFunc)(line, file, text);
+	} else {
+		NSLog(CFSTR("PlayerPROCore: %s:%u error text: %s!"), file, line, text);
+		
+		abort();
+	}
 }
 #else
 #include <stdio.h>
 
-extern void MyDebugStr( short line, Ptr file, Ptr text)
+void PPDebugStr( short line, Ptr file, Ptr text)
 {
-	fprintf(stderr, "%s:%u error text:%s!", file, line, text);
-	//TODO: call a debug function?
-	exit(EXIT_FAILURE);
+	if (MyDebugFunc != NULL) {
+		(*MyDebugFunc)(line, file, text);
+	} else {
+		fprintf(stderr, "PlayerPROCore: %s:%u error text: %s!", file, line, text);
+		
+		abort();
+	}
 }
 #endif

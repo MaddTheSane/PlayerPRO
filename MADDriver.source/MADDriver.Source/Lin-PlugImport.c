@@ -1,26 +1,3 @@
-/********************						***********************/
-//
-//	Player PRO 5.0 - DRIVER SOURCE CODE -
-//
-//	Library Version 5.0
-//
-//	To use with MAD Library for Mac: Symantec, CodeWarrior and MPW
-//
-//	Antoine ROSSET
-//	16 Tranchees
-//	1206 GENEVA
-//	SWITZERLAND
-//
-//	COPYRIGHT ANTOINE ROSSET 1996, 1997, 1998
-//
-//	Thank you for your interest in PlayerPRO !
-//
-//	FAX:				(+41 22) 346 11 97
-//	PHONE: 			(+41 79) 203 74 62
-//	Internet: 	RossetAntoine@bluewin.ch
-//
-/********************						***********************/
-
 #include "RDriver.h"
 #include "FileUtils.h"
 #include <dlfcn.h>
@@ -31,12 +8,12 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	long		fileSize;
 	UNFILE		fileID;
 	
-	theMAD = (MADSpec*) NewPtr( sizeof( MADSpec) + 200);
+	theMAD = (MADSpec*) malloc( sizeof( MADSpec) + 200);
 	
 	fileID = iFileOpen( AlienFile);
 	if( !fileID)
 	{
-		DisposePtr( (Ptr) theMAD);
+		free( (Ptr) theMAD);
 		return -1;
 	}
 	fileSize = iGetEOF( fileID);
@@ -54,7 +31,7 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	InfoRec->totalInstruments = theMAD->numInstru;
 	InfoRec->fileSize = fileSize;
 	
-	DisposePtr( (Ptr) theMAD);	
+	free( (Ptr) theMAD);	
 	theMAD = NULL;
 	
 	return noErr;
@@ -75,15 +52,16 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 
 typedef OSErr (*FILLPLUG) ( PlugInfo *);;
 
-void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
+void MInitImportPlug( MADLibrary *inMADDriver, Ptr PlugsFolderName)
 {
-	inMADDriver->ThePlug = (PlugInfo*) MADNewPtr( MAXPLUG * sizeof( PlugInfo), inMADDriver);
+	inMADDriver->ThePlug = (PlugInfo*) calloc( MAXPLUG, sizeof( PlugInfo));
 	inMADDriver->TotalPlug = 0;
+	//TODO: iterate plug-in paths
 	int i =0;
 	{
 		inMADDriver->ThePlug[i].hLibrary = dlopen(NULL, RTLD_LAZY);
 		FILLPLUG plugFill = (FILLPLUG)dlsym(inMADDriver->ThePlug[i].hLibrary, "FillPlug");
-		inMADDriver->ThePlug[i].IOPlug = (MADPLUGFUNC)dlsym(inMADDriver->ThePlug[i].hLibrary, "mainPLUG");
+		inMADDriver->ThePlug[i].IOPlug = (MADPLUGFUNC)dlsym(inMADDriver->ThePlug[i].hLibrary, "PPImpExpMain");
 		if(plugFill && inMADDriver->ThePlug[i].IOPlug)
 		{
 			(*plugFill)(&inMADDriver->ThePlug[i]);
@@ -131,7 +109,7 @@ OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			*theNewMAD = (MADMusic*) MADNewPtrClear( sizeof( MADMusic), inMADDriver);
+			*theNewMAD = (MADMusic*) MADcalloc( sizeof( MADMusic), inMADDriver);
 			if( !theNewMAD) return MADNeedMemory;
 			
 			return( CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec));
@@ -251,7 +229,7 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 {
 	short	i, x;
 	
-	if( ID >= inMADDriver->TotalPlug) MyDebugStr( __LINE__, __FILE__, "PP-Plug ERROR. ");
+	if( ID >= inMADDriver->TotalPlug) PPDebugStr( __LINE__, __FILE__, "PP-Plug ERROR. ");
 	
 	for( i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
 	{
@@ -265,7 +243,8 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 				xx = strlen( inMADDriver->ThePlug[ i].type);
 				if( xx > 4) xx = 4;
 				type = '    ';
-				BlockMoveData( inMADDriver->ThePlug[ i].type, &type, xx);
+				memcpy( &type, inMADDriver->ThePlug[ i].type, xx);
+				PPBE32(&type);
 				
 				return type;
 			}
@@ -273,7 +252,7 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 		}
 	}
 	
-	MyDebugStr( __LINE__, __FILE__, "PP-Plug ERROR II.");
+	PPDebugStr( __LINE__, __FILE__, "PP-Plug ERROR II.");
 	
 	return noErr;
 }

@@ -21,27 +21,34 @@
 //
 /********************						***********************/
 
+#define CINTERFACE
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "OBJBASE.h"
+
+#ifdef _MSC_VER
+#pragma comment(lib, "user32.lib")
+#pragma comment(lib, "dsound.lib")
+#pragma comment(lib, "winmm.lib")
+#endif
 
 #include <cguid.h>
 
 //#define DEBUG
 
-static UINT gwID;
+/*static UINT gwID;
 static HWND hwnd;
 
-/*static LPDIRECTSOUND lpDirectSound;
+static LPDIRECTSOUND lpDirectSound;
 static LPDIRECTSOUNDBUFFER lpDirectSoundBuffer;
-static LPDIRECTSOUNDBUFFER lpSwSamp;*/
+static LPDIRECTSOUNDBUFFER lpSwSamp;
 
-static 	Ptr 					currentBuf;
+static 	Ptr 					currentBuf = NULL;
 static 	Boolean					OnOff;
-static 	long					WIN95BUFFERSIZE;
+static 	long					WIN95BUFFERSIZE;*/
 
-char *TranslateDSError( HRESULT hr )
-    {
+static char *TranslateDSError( HRESULT hr )
+{
     switch( hr )
     {
     case DSERR_ALLOCATED:
@@ -92,7 +99,7 @@ char *TranslateDSError( HRESULT hr )
     default:
         return "Unknown HRESULT";
     }
-    }
+}
 
 
 BOOL AppCreateWritePrimaryBuffer(
@@ -106,11 +113,11 @@ BOOL AppCreateWritePrimaryBuffer(
     WAVEFORMATEX pcmwf;
 
     // Set up wave format structure.
-    memset(&pcmwf, 0, sizeof(PCMWAVEFORMAT));
+    memset(&pcmwf, 0, sizeof(WAVEFORMATEX));
     pcmwf.wFormatTag 		= WAVE_FORMAT_PCM;
     
     pcmwf.nChannels = 2;
-    pcmwf.nSamplesPerSec		= WinMADDriver->DriverSettings.outPutRate >> 16L;
+    pcmwf.nSamplesPerSec		= WinMADDriver->DriverSettings.outPutRate;
     pcmwf.wBitsPerSample		= WinMADDriver->DriverSettings.outPutBits;
     pcmwf.nBlockAlign			= pcmwf.nChannels * (pcmwf.wBitsPerSample/8);
     pcmwf.nAvgBytesPerSec		= pcmwf.nSamplesPerSec * pcmwf.nBlockAlign;
@@ -143,7 +150,7 @@ BOOL AppCreateWritePrimaryBuffer(
     return FALSE;
 }
 
-AppDetermineHardwareCaps(LPDIRECTSOUND lpDirectSound)
+void AppDetermineHardwareCaps(LPDIRECTSOUND lpDirectSound)
 {
     DSCAPS dscaps;
     HRESULT hr;
@@ -194,9 +201,9 @@ BOOL WriteDataToBuffer(
     }
     if(DS_OK == hr) {
         // Write to pointers.
-        CopyMemory(lpvPtr1, lpbSoundData, dwBytes1);
+        memcpy(lpvPtr1, lpbSoundData, dwBytes1);
         if(NULL != lpvPtr2) {
-            CopyMemory(lpvPtr2, lpbSoundData+dwBytes1, dwBytes2);
+            memcpy(lpvPtr2, lpbSoundData+dwBytes1, dwBytes2);
         }
         // Release the data back to DirectSound.
         hr = lpDsb->lpVtbl->Unlock(lpDsb, lpvPtr1, dwBytes1, lpvPtr2, dwBytes2);
@@ -221,10 +228,10 @@ BOOL LoadSamp(LPDIRECTSOUND lpDirectSound,
     WAVEFORMATEX pcmwf;
 
     // Set up wave format structure.
-    memset(&pcmwf, 0, sizeof(PCMWAVEFORMAT));
+    memset(&pcmwf, 0, sizeof(WAVEFORMATEX));
     pcmwf.wFormatTag			= WAVE_FORMAT_PCM;
     pcmwf.nChannels = 2;
-    pcmwf.nSamplesPerSec		= WinMADDriver->DriverSettings.outPutRate >> 16L;
+    pcmwf.nSamplesPerSec		= WinMADDriver->DriverSettings.outPutRate;
     pcmwf.wBitsPerSample		= WinMADDriver->DriverSettings.outPutBits;
     pcmwf.nBlockAlign			= pcmwf.nChannels * (pcmwf.wBitsPerSample/8);
     pcmwf.nAvgBytesPerSec		= pcmwf.nSamplesPerSec * pcmwf.nBlockAlign;
@@ -236,7 +243,7 @@ BOOL LoadSamp(LPDIRECTSOUND lpDirectSound,
   
 //  	dsbdesc.dwFlags =	DSBCAPS_CTRLPAN|DSBCAPS_CTRLVOLUME|DSBCAPS_CTRLFREQUENCY|flags;
   	
-  	dsbdesc.dwFlags = 0;
+  	dsbdesc.dwFlags = DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLFREQUENCY | DSBCAPS_GLOBALFOCUS;
     dsbdesc.dwBufferBytes = length;
     dsbdesc.dwReserved = 0;
     dsbdesc.lpwfxFormat = &pcmwf;
@@ -260,15 +267,16 @@ BOOL LoadSamp(LPDIRECTSOUND lpDirectSound,
     return 1;
 }
 
+//TODO: we should probably do something to prevent thread contention
 static void CALLBACK TimeProc(
 	 UINT  IDEvent,			/* identifies timer event */
 	 UINT  uReserved,		/* not used */
-	 DWORD  dwUser,			/* application-defined instance data */
-	 DWORD  dwReserved1,	/* not used */
-	 DWORD  dwReserved2		/* not used */
+	 DWORD_PTR  dwUser,			/* application-defined instance data */
+	 DWORD_PTR  dwReserved1,	/* not used */
+	 DWORD_PTR  dwReserved2		/* not used */
 )
 {
-	DWORD 		pos, posp, i;
+	DWORD 		pos, posp;
 	static volatile int timersema=0;
 
 	/* use semaphore to prevent entering the mixing routines twice.. do we need this ? */
@@ -277,57 +285,71 @@ static void CALLBACK TimeProc(
 	{
 		MADDriverRec	*WinMADDriver = (MADDriverRec*) dwUser;
 		
+		if(WinMADDriver->Reading == false)
+		{
+			switch( WinMADDriver->DriverSettings.outPutBits)
+				{
+					case 8:
+						memset(WinMADDriver->currentBuf, 0x80, WinMADDriver->WIN95BUFFERSIZE);
+						break;
+					
+					case 16:
+						memset(WinMADDriver->currentBuf, 0, WinMADDriver->WIN95BUFFERSIZE);
+						break;
+				}
+		}
+
 		WinMADDriver->lpSwSamp->lpVtbl->GetCurrentPosition( WinMADDriver->lpSwSamp, &pos, &posp);
 		
-		if(pos > WIN95BUFFERSIZE/2 && OnOff == true)
+		if(pos > WinMADDriver->WIN95BUFFERSIZE/2 && WinMADDriver->OnOff == true)
 		{
-			OnOff = false;
+			WinMADDriver->OnOff = false;
 			
-			if( !DirectSave( currentBuf, 0L, WinMADDriver))
+			if( !DirectSave( WinMADDriver->currentBuf, NULL, WinMADDriver))
 			{
 				switch( WinMADDriver->DriverSettings.outPutBits)
 				{
 					case 8:
-						for( i = 0; i < WIN95BUFFERSIZE/2; i++) currentBuf[ i] = 0x80;
-					break;
+						memset(WinMADDriver->currentBuf, 0x80, WinMADDriver->WIN95BUFFERSIZE/2);
+						break;
 					
 					case 16:
-						for( i = 0; i < WIN95BUFFERSIZE/2; i++) currentBuf[ i] = 0;
-					break;
+						memset(WinMADDriver->currentBuf, 0, WinMADDriver->WIN95BUFFERSIZE/2);
+						break;
 				}
 			}
 			
-			if( !WriteDataToBuffer( WinMADDriver->lpSwSamp, 0, (unsigned char*) currentBuf, WIN95BUFFERSIZE/2))
+			if( !WriteDataToBuffer( WinMADDriver->lpSwSamp, 0, (unsigned char*) WinMADDriver->currentBuf, WinMADDriver->WIN95BUFFERSIZE/2))
 			{
 				//DEBUG 	debugger("ERR");
 			}
 		}
-		else if( OnOff == false && (pos < WIN95BUFFERSIZE/2))
+		else if( WinMADDriver->OnOff == false && (pos < WinMADDriver->WIN95BUFFERSIZE/2))
 		{
-			OnOff = true;
+			WinMADDriver->OnOff = true;
 			
-			if( !DirectSave( currentBuf + WIN95BUFFERSIZE/2, 0L, WinMADDriver))
+			if( !DirectSave( WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, NULL, WinMADDriver))
 			{
 				switch( WinMADDriver->DriverSettings.outPutBits)
 				{
 					case 8:
-						for( i = WIN95BUFFERSIZE/2; i < WIN95BUFFERSIZE; i++) currentBuf[ i] = 0x80;
-					break;
+						memset(WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, 0x80, WinMADDriver->WIN95BUFFERSIZE/2);
+						break;
 					
 					case 16:
-						for( i = WIN95BUFFERSIZE/2; i < WIN95BUFFERSIZE; i++) currentBuf[ i] = 0;
-					break;
+						memset(WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, 0, WinMADDriver->WIN95BUFFERSIZE/2);
+						break;
 				}
 			}
 			
-			if( !WriteDataToBuffer( WinMADDriver->lpSwSamp, WIN95BUFFERSIZE/2, (unsigned char*) (currentBuf + WIN95BUFFERSIZE/2), WIN95BUFFERSIZE/2))
+			if( !WriteDataToBuffer( WinMADDriver->lpSwSamp, WinMADDriver->WIN95BUFFERSIZE/2, (unsigned char*) (WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2), WinMADDriver->WIN95BUFFERSIZE/2))
 			{
 				//DEBUG 	debugger("ERR");
 			}
 		}
 		
-		if( WIN95BUFFERSIZE - pos > 1700)	WinMADDriver->OscilloWavePtr = currentBuf + pos;
-		else WinMADDriver->OscilloWavePtr = currentBuf;
+		if( WinMADDriver->WIN95BUFFERSIZE - pos > 1700)	WinMADDriver->OscilloWavePtr = WinMADDriver->currentBuf + pos;
+		else WinMADDriver->OscilloWavePtr = WinMADDriver->currentBuf;
 	}
 	timersema--;
 }
@@ -335,38 +357,43 @@ static void CALLBACK TimeProc(
 
 Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 {
-	OnOff					= false;
+	WinMADDriver->OnOff					= false;
 	
-	WIN95BUFFERSIZE = WinMADDriver->BufSize;
-	WIN95BUFFERSIZE *= 2L;								// double buffer system
+	WinMADDriver->WIN95BUFFERSIZE = WinMADDriver->BufSize;
+	WinMADDriver->WIN95BUFFERSIZE *= 2L;								// double buffer system
 	
-	currentBuf 		= calloc( WIN95BUFFERSIZE, 1);
+	WinMADDriver->currentBuf 		= (Ptr)calloc( WinMADDriver->WIN95BUFFERSIZE, 1);
 	
-	hwnd = GetForegroundWindow();	//GetForegroundWindow();
-	if( !hwnd) return false;
+	WinMADDriver->hwnd = GetForegroundWindow();	//GetForegroundWindow();
+	if( !WinMADDriver->hwnd) return false;
 	
 	if(DS_OK == DirectSoundCreate(NULL, &WinMADDriver->lpDirectSound, NULL))
 	{
-		if( !AppCreateWritePrimaryBuffer( WinMADDriver->lpDirectSound, &WinMADDriver->lpDirectSoundBuffer, hwnd, WinMADDriver))
+		if( !AppCreateWritePrimaryBuffer( WinMADDriver->lpDirectSound, &WinMADDriver->lpDirectSoundBuffer, WinMADDriver->hwnd, WinMADDriver))
 		{
-			WinMADDriver->lpDirectSound = 0L;
+			WinMADDriver->lpDirectSound->lpVtbl->Release(WinMADDriver->lpDirectSound);
+			WinMADDriver->lpDirectSound = NULL;
 			return false;
 		}
 		if( !WinMADDriver->lpDirectSoundBuffer) return false;
 		
 		// Creation succeeded.
-		WinMADDriver->lpDirectSound->lpVtbl->SetCooperativeLevel(WinMADDriver->lpDirectSound, hwnd, DSSCL_NORMAL);
+		WinMADDriver->lpDirectSound->lpVtbl->SetCooperativeLevel(WinMADDriver->lpDirectSound, WinMADDriver->hwnd, DSSCL_NORMAL);
 		
-		WinMADDriver->lpSwSamp = 0L;
-		if( !LoadSamp(WinMADDriver->lpDirectSound, &WinMADDriver->lpSwSamp, 0L, WIN95BUFFERSIZE, DSBCAPS_LOCSOFTWARE, WinMADDriver))
+		WinMADDriver->lpSwSamp = NULL;
+		if( !LoadSamp(WinMADDriver->lpDirectSound, &WinMADDriver->lpSwSamp, NULL, WinMADDriver->WIN95BUFFERSIZE, DSBCAPS_LOCSOFTWARE, WinMADDriver))
 		{
 			//DEBUG debugger( "Error 2\n");		//DSBCAPS_LOCSOFTWARE
-			WinMADDriver->lpDirectSound = 0L;
+			WinMADDriver->lpDirectSound->lpVtbl->Release(WinMADDriver->lpDirectSound);
+			WinMADDriver->lpDirectSound = NULL;
 			return false;
 		}
 		
-		if( !WinMADDriver->lpSwSamp) return false;
-		
+		if( !WinMADDriver->lpSwSamp) 
+		{
+			WinMADDriver->lpDirectSound->lpVtbl->Release(WinMADDriver->lpDirectSound);
+			return false;
+		}
 		WinMADDriver->lpSwSamp->lpVtbl->Play(WinMADDriver->lpSwSamp, 0, 0, DSBPLAY_LOOPING);
 		
 		///////////
@@ -379,32 +406,35 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 		 
 		// debugger( "timeSetEvent\n");
 		 
-		gwID = timeSetEvent(	  40,   												/* how often                 */
-													  40,   							/* timer resolution          */
-													  TimeProc,  						/* callback function         */
-													  (unsigned long) WinMADDriver,		/* info to pass to callback  */
-													  TIME_PERIODIC); 					/* oneshot or periodic?      */
+		WinMADDriver->gwID = timeSetEvent(	40,   								/* how often                 */
+											40,   								/* timer resolution          */
+											TimeProc,  							/* callback function         */
+											(unsigned long) WinMADDriver,		/* info to pass to callback  */
+											TIME_PERIODIC); 					/* oneshot or periodic?      */
 		
-		if( gwID == 0) return false;
+		if( WinMADDriver->gwID == 0) return false;
 		else return true;
 	}
 	
-	WinMADDriver->lpDirectSound = 0L;
+	WinMADDriver->lpDirectSound = NULL;
 	
 	return false;
 }
 
 void DirectSoundClose( MADDriverRec* WinMADDriver)
 {
+	if (WinMADDriver->currentBuf != NULL) {
+		free(WinMADDriver->currentBuf);
+	}
 	if( WinMADDriver->lpDirectSound)
 	{
 		/* stop the timer */
-		timeKillEvent( gwID);
 		timeEndPeriod( 20);
+		timeKillEvent( WinMADDriver->gwID);
 		
 		WinMADDriver->lpSwSamp->lpVtbl->Stop( WinMADDriver->lpSwSamp);
 		WinMADDriver->lpSwSamp->lpVtbl->Release( WinMADDriver->lpSwSamp);
-		WinMADDriver->lpSwSamp = 0L;
+		WinMADDriver->lpSwSamp = NULL;
 		
 		WinMADDriver->lpDirectSoundBuffer->lpVtbl->Stop(WinMADDriver->lpDirectSoundBuffer);
   		WinMADDriver->lpDirectSoundBuffer->lpVtbl->Release(WinMADDriver->lpDirectSoundBuffer);
@@ -412,4 +442,5 @@ void DirectSoundClose( MADDriverRec* WinMADDriver)
 		WinMADDriver->lpDirectSound->lpVtbl->Release( WinMADDriver->lpDirectSound);
 		WinMADDriver->lpDirectSound = NULL;
 	}
+	WinMADDriver->OscilloWavePtr = NULL;
 }

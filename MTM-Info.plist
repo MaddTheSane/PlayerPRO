@@ -13,38 +13,26 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>73CB5A1C-87A8-47BE-91C8-78D3D2D52B66</key>
-		<string>MTMFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>84F80109-2885-4E01-8FFA-88AC75F3E033</key>
-		<array>
-			<string>73CB5A1C-87A8-47BE-91C8-78D3D2D52B66</string>
-		</array>
-	</dict>
-	<key>CSResourcesFileMapped</key>
-	<true/>
-	<key>MADPlugMenuName</key>
-	<string>MTM</string>
+	<string>2.0</string>
 	<key>MADPlugAuthorName</key>
 	<string>Written by A.ROSSET 95</string>
+	<key>MADCanImport</key>
+	<true/>
+	<key>MADCanExport</key>
+	<false/>
+	<key>MADPlugMenuName</key>
+	<string>MTM</string>
+	<key>MADPlugMode</key>
+	<string>IMPL</string>
 	<key>MADPlugType</key>
 	<string>MTM </string>
 	<key>MADPlugUTITypes</key>
 	<array>
 		<string>net.sourceforge.playerpro.mtm</string>
 	</array>
-	<key>MADPlugMode</key>
-	<string>IMPL</string>
 </dict>
 </plist>

@@ -6,6 +6,7 @@
 //	A small example of to use Digital Editor Plugs with a MODAL DIALOG
 
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <Carbon/Carbon.h>
 
 static void GetDText (DialogPtr dlog, short item, StringPtr str)
 {
@@ -96,7 +97,7 @@ static void AutoPosition( DialogPtr aDia)
 	ShowWindow( GetDialogWindow( aDia));
 }
 
-Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
+static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 {
 	if( row < 0) row = 0;
 	else if( row >= myPcmd->length) row = myPcmd->length -1;
@@ -150,7 +151,105 @@ static void StringToHex( Str255 str, long *oct)
 	if( str[ 1] >= '0' && str[ 1] <= '9') *oct += (str[ 1] - '0')<<4;
 }
 
-OSErr mainCompFade( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+static Boolean PPModalDialogRep(DialogRef theDialog, EventRecord *theEvent, DialogItemIndex *itemHit)
+{
+	short			thePart;
+	WindowPtr		whichWindow;
+	short			LoopSet;
+	GrafPtr			savePort;
+	
+	short dialogModifiers = theEvent->modifiers;
+	*itemHit = 0;
+	
+	if( theEvent->what == updateEvt)
+	{
+		if( (WindowPtr) theEvent->message == GetDialogWindow( theDialog))
+		{
+			switch( GetWRefCon( GetDialogWindow( theDialog)))
+			{
+				//case 0:		oldFrameButton( theDialog);					break;
+				//case 96:	oldFrameButton( theDialog);					break;
+				//case 9996:	oldFrameButton( theDialog);					break;
+				//case 9987:	DrawChooseColorWindow();					break;
+				//case 9467:	UpdateEditInstruWindow( theDialog);			break;
+				//case 7311:	UpdateSoundQualityExportSndWindow( theDialog);	break;
+				//case 966:	UpdateFileInformations( theDialog);			break;
+				//case 99802:	UpdatePlugsAbout( theDialog);					break;
+			}
+			
+			return false;
+		}
+		//DoUpdateEvent( theEvt);
+		
+		*itemHit = -updateEvt;
+		
+		return( true);
+	}
+	else if(theEvent->what == mouseDown)
+	{
+		thePart = FindWindow( theEvent->where, &whichWindow);
+		
+		if( thePart == inDrag)
+		{
+			BitMap		screenBits;
+			
+			if( whichWindow != GetDialogWindow( theDialog)) return( false);
+			
+			GetQDGlobalsScreenBits( &screenBits);
+			
+			DragWindow( whichWindow, theEvent->where, &screenBits.bounds);
+			return( true);
+		}
+		else return( false);
+	}
+	else if( theEvent->what == keyDown)
+	{
+		switch ( (theEvent->message) & charCodeMask )
+		{
+			case 0x0d:
+			case 0x03:
+				*itemHit = 1;
+				return( true );
+			case 0x1b:
+				*itemHit = 2;
+				return( true );
+			default:
+				return( false );
+		}
+	}
+	else if( theEvent->what == nullEvent)
+	{
+		//ProcessSerialNumber	PSN;
+		
+		//LoopSet = thePrefs.LoopType;
+		//thePrefs.LoopType = 4;
+		
+		//if( GetWRefCon( GetDialogWindow( theDlg)) != 9996) DoGlobalNull();
+		
+		//thePrefs.LoopType = LoopSet;
+		
+		/*GetCurrentProcess( &PSN);
+		 if(	PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
+		 PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN)
+		 {
+		 SetFrontProcess( &playerPROPSN);
+		 }*/
+		
+		*itemHit = -5;
+		return( true );
+	}
+	/*	else if( theEvt->what == activateEvt)
+	 {
+	 if( AHelpDlog != NULL)
+	 {
+	 if( MacIsWindowVisible( GetDialogWindow( AHelpDlog))) ActivateProcedure( true);
+	 }
+	 }	*/
+	
+	return( false);
+}
+
+static OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
 	DialogPtr			myDia;
 	short				itemHit, mode;
@@ -166,11 +265,13 @@ OSErr mainCompFade( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	SetDText( myDia, 3, "\p1");	SetDText( myDia, 4, "\p64");
 	SelectDialogItemText( myDia, 3, 0, 200);
 	
+	ModalFilterUPP PPModalFilter = NewModalFilterUPP(PPModalDialogRep);
+	
 	do
 	{
 	RESTART:
 	
-		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+		ModalDialog( PPModalFilter, &itemHit);
 		
 		switch( itemHit)
 		{
@@ -270,7 +371,7 @@ OSErr mainCompFade( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	return noErr;
 }
 
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x2C, 0xE9, 0x02, 0x81, 0xE2, 0xC2, 0x47, 0x5A, 0xA0, 0xF0, 0xB9, 0x0C, 0x64, 0x1E, 0xAE, 0xB1)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x2C, 0xE9, 0x02, 0x81, 0xE2, 0xC2, 0x47, 0x5A, 0xA0, 0xF0, 0xB9, 0x0C, 0x64, 0x1E, 0xAE, 0xB1)
 //2CE90281-E2C2-475A-A0F0-B90C641EAEB1
 #define PLUGINFACTORY CompFadeFactory //The factory name as defined in the Info.plist file
 #define PLUGMAIN mainCompFade //The old main function, renamed please

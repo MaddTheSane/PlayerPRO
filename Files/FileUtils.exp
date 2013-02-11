@@ -13,10 +13,10 @@ _iWrite
 _iSeekCur
 _MYC2PStr
 _MYP2CStr
-_MOT32
-_MOT16
-_INT32
-_INT16
-_MyDebugStr
+_PPBE32
+_PPBE16
+_PPLE32
+_PPLE16
+_PPDebugStr
 _Ptr2OSType
 _OSType2Ptr

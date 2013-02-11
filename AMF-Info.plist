@@ -13,38 +13,26 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>E993EFD8-0C3F-46F6-9063-6E340C179D88</key>
-		<string>AMFFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>84F80109-2885-4E01-8FFA-88AC75F3E033</key>
-		<array>
-			<string>E993EFD8-0C3F-46F6-9063-6E340C179D88</string>
-		</array>
-	</dict>
-	<key>CSResourcesFileMapped</key>
-	<true/>
-	<key>MADPlugMenuName</key>
-	<string>AMF</string>
+	<string>2.0</string>
 	<key>MADPlugAuthorName</key>
 	<string>Written by A.ROSSET 96</string>
+	<key>MADPlugMenuName</key>
+	<string>AMF</string>
+	<key>MADPlugMode</key>
+	<string>IMPL</string>
+	<key>MADCanImport</key>
+	<true/>
+	<key>MADCanExport</key>
+	<false/>
 	<key>MADPlugType</key>
 	<string>AMF </string>
 	<key>MADPlugUTITypes</key>
 	<array>
 		<string>net.sourceforge.playerpro.amf</string>
 	</array>
-	<key>MADPlugMode</key>
-	<string>EXIM</string>
 </dict>
 </plist>

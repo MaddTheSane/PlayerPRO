@@ -8,8 +8,6 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
-	<key>CFBundleShortVersionString - 2</key>
-	<string>1.0</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -17,7 +15,7 @@
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFPlugInDynamicRegistration</key>
 	<false/>
 	<key>CFPlugInFactories</key>
@@ -26,10 +24,10 @@
 		<string>BackwardsFactory</string>
 	</dict>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFPlugInTypes</key>
 	<dict>
-		<key>158FF33B-47F4-4497-9292-1B544E8C2B01</key>
+		<key>79EA82AD-5A53-46AF-82A9-4A0685B4588C</key>
 		<array>
 			<string>AF640451-90E8-4511-837B-58A8F35024F0</string>
 		</array>

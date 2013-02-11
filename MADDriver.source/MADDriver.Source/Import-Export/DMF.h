@@ -21,9 +21,7 @@
 //
 /********************						***********************/
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#endif
+#pragma pack(push, 2)
 
 typedef struct ITPatForm
 {
@@ -35,21 +33,21 @@ typedef struct ITPatForm
 
 typedef struct ITSampForm
 {
-	long		ID;
+	OSType		ID;
 	char		DOSName[ 12];
 	char		no;
 	char		GvL;
 	char		Flag;
 	char		Vol;
 	char		SampName[ 26];
-	short	Convert;
-	long		length;
-	long		loopBegin;
-	long		loopEnd;
-	long		C5Speed;
-	long		SusLoopBegin;
-	long		SusLoopEnd;
-	long		samplePtr;
+	short		Convert;
+	SInt32		length;
+	SInt32		loopBegin;
+	SInt32		loopEnd;
+	SInt32		C5Speed;
+	SInt32		SusLoopBegin;
+	SInt32		SusLoopEnd;
+	SInt32		samplePtr;
 	char		ViS;
 	char		ViD;
 	char		ViR;
@@ -59,7 +57,7 @@ typedef struct ITSampForm
 typedef struct ITNode
 {
 	char		y;
-	short	x;
+	short		x;
 } ITNode;
 
 typedef struct ITEnv
@@ -75,43 +73,43 @@ typedef struct ITEnv
 
 typedef struct ITInsForm
 {
-	long		ID;
+	SInt32		ID;
 	char		DOSName[ 12];
 	char		no;
 	char		NNA;
 	char		DCT;
 	char		DCA;
-	short	FadeOut;
+	short		FadeOut;
 	char		PPS;
 	char		PPC;
 	char		GbV;
 	char		DfP;
 	char		no2[ 2];
-	short	TrkVers;
+	short		TrkVers;
 	char		NoS;
 	char		no3;
 	char		INSName[ 26];
 	char		no4[ 6];
 	char		keyMap[ 240];
-	ITEnv	volEnv;
-	ITEnv	panEnv;
-	ITEnv	pitchEnv;
+	ITEnv		volEnv;
+	ITEnv		panEnv;
+	ITEnv		pitchEnv;
 } ITInsForm;
 
 typedef struct ITForm
 {
-	long				ID;
-	char             		name[26];
-	char             		no[ 2];
+	SInt32				ID;
+	char             	name[26];
+	char             	no[ 2];
 	
-	short  			orderNum;
-	short   			insNum;
-	short   			smpNum;
-	short      			patNum;
+	short				orderNum;
+	short				insNum;
+	short				smpNum;
+	short				patNum;
 	short     			cwtv;
-	short			Cmwt;
+	short				Cmwt;
 	short      			flags;
-	short			special;
+	short				special;
 	
 	char				globalVol;
 	char				mixVol;
@@ -119,21 +117,20 @@ typedef struct ITForm
 	char				iTempo;
 	char				panSeparation;
 	char				null;
-	short			MsgLgth;
-	long				MsgOffset;
+	short				MsgLgth;
+	SInt32				MsgOffset;
 	char				no2[ 4];
 	
 	char				chanPan[ 64];
 	char				chanVol[ 64];
 	
 	unsigned char  		*orders;
-	long				*parapins;
-	long				*parapsamp;
-	long				*parappat;
+	SInt32				*parapins;
+	SInt32				*parapsamp;
+	SInt32				*parappat;
 	
 	ITInsForm			*insdata;
-	ITSampForm		*sampdata;
+	ITSampForm			*sampdata;
 } ITForm;
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=reset
-#endif
+
+#pragma pack(pop)

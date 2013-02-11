@@ -4,13 +4,34 @@
 /*	1996 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Carbon/Carbon.h>
+#include <PlayerPROCore/PPPlug.h>
+
+#ifndef WIN32
+//Windows Defines
+typedef SInt16			WORD;
+typedef UInt16			UWORD;
+typedef SInt32			HRESULT;
+typedef UInt32			ULONG;
+typedef void*			LPVOID;
+typedef SInt32			LONG;
+
+typedef UInt16			UINT;
+typedef Boolean			BOOL;
+typedef UInt32			DWORD;
+typedef UInt16			USHORT;
+typedef SInt16			SHORT;
+typedef FourCharCode	FOURCC;
+typedef SInt8			BYTE;
+#endif
+
+typedef UInt8			UBYTE;
+
 #include "XM.h"
 
 static OSErr TestXI( Ptr CC)
 {
 	OSType Ident = *((OSType*) CC);
-	MOT32(&Ident);
+	PPBE32(&Ident);
 	
 	if( Ident == 'Exte') return noErr;
 	else return MADFileNotSupportedByThisPlug;
@@ -27,10 +48,10 @@ OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 		{
 			if( sample[ i]->data != NULL)
 			{
-				DisposePtr( (Ptr) sample[ i]->data);
+				free( sample[ i]->data);
 				sample[ i]->data = NULL;
 			}
-			DisposePtr( (Ptr) sample[ i]);
+			free( sample[ i]);
 			sample[ i] = NULL;
 		}
 	}
@@ -80,40 +101,102 @@ OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 }
 
 #ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*(UInt32*)msg_buf);
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
 #else
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *(short*)msg_buf
+#define Tdecode32(msg_buf) *(int*)msg_buf
+#else
+
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
-	INT32(&toswap);
+	PPLE32(&toswap);
 	return toswap;
 }
-#endif
 
-#ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*(UInt16*)msg_buf);
-#else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
+	PPLE16(&toswap);
 	return toswap;
 }
+
+#endif
 #endif
 
-OSErr mainXI(	OSType		order,						// Order to execute
-				InstrData	*InsHeader,					// Ptr on instrument header
-				sData		**sample,					// Ptr on samples data
-				short		*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
-																	// If sampleID == -1 : add sample else replace selected sample.
-				FSSpec		*AlienFileFSSpec,			// IN/OUT file
-				PPInfoPlug	*thePPInfoPlug)
+//hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
+static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
 {
-	OSErr	myErr;
+	CFURLRef toDeref = theRef;
+	if (resolveAgainstBase) {
+		toDeref = CFURLCopyAbsoluteURL(theRef);
+	}
+	CFStringRef fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
+	CFIndex strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
+	CFRelease(fileString);
+	if (resolveAgainstBase) {
+		CFRelease(toDeref);
+	}
+	return strLength;
+}
+
+OSErr mainXI(void						*unused,
+			 OSType		order,						// Order to execute
+			 InstrData	*InsHeader,					// Ptr on instrument header
+			 sData		**sample,					// Ptr on samples data
+			 short		*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+			 // If sampleID == -1 : add sample else replace selected sample.
+			 CFURLRef	AlienFileCFURL,			// IN/OUT file
+			 PPInfoPlug	*thePPInfoPlug)
+{
+	OSErr	myErr = noErr;
 	UNFILE	iFileRefI;
 	short	x;
 	long	inOutCount;
 		
+	char *file = NULL;
+	char *fileName = NULL;
+	do{
+		char *longStr = NULL;
+		CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
+		longStr = malloc(pathLen);
+		if (!longStr) {
+			return MADNeedMemory;
+		}
+		Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)longStr, pathLen);
+		if (!pathOK) {
+			free(longStr);
+			return MADReadingErr;
+		}
+		size_t StrLen = strlen(longStr);
+		file = malloc(++StrLen);
+		if (!file) {
+			file = longStr;
+			break;
+		}
+		strlcpy(file, longStr, StrLen);
+		free(longStr);
+	} while (0);
+	do {
+		char *FileNameLong = NULL;
+		CFStringRef filenam = CFURLCopyLastPathComponent(AlienFileCFURL);
+		CFIndex filenamLen = CFStringGetMaximumSizeOfFileSystemRepresentation(filenam);
+		size_t filenamshortlen = 0;
+		FileNameLong = malloc(filenamLen);
+		CFStringGetFileSystemRepresentation(filenam, FileNameLong, filenamLen);
+		CFRelease(filenam);
+		filenamshortlen = strlen(FileNameLong);
+		fileName = malloc(++filenamshortlen);
+		if (!fileName) {
+			fileName = FileNameLong;
+			break;
+		}
+		strlcpy(fileName, FileNameLong, filenamshortlen);
+		free(FileNameLong);
+	} while (0);
+	
 	switch( order)
 	{
 		case 'IMPL':
@@ -123,26 +206,32 @@ OSErr mainXI(	OSType		order,						// Order to execute
 			XMWAVHEADER		*wh;
 			short			numSamples;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			iFileRefI = iFileOpenRead(file);
+			if( iFileRefI != NULL)
 			{
-				GetEOF( iFileRefI, &inOutCount);
 				
-				theXI = NewPtr( inOutCount);
+				inOutCount = iGetEOF(iFileRefI);
+				
+				theXI = malloc( inOutCount);
 				if( theXI == NULL) myErr = MADNeedMemory;
 				else
 				{
 					MAD2KillInstrument( InsHeader, sample);
 					
+					memset(InsHeader->name, '\0', 32);
+					
 					for( x = 0; x < 32; x++)
 					{
-						if( x < AlienFileFSSpec->name[ 0]) InsHeader->name[ x] = AlienFileFSSpec->name[ x + 1];
-						else InsHeader->name[ x] = '\0';
+						if (fileName[x] == '\0') {
+							break;
+						}
+						InsHeader->name[x] = fileName[x];
+						
 					}
 					
-					GetEOF( iFileRefI, &inOutCount);
+					inOutCount = iGetEOF(iFileRefI);
 					
-					myErr = FSRead( iFileRefI, &inOutCount, theXI);
+					iRead(inOutCount, theXI, iFileRefI);
 					
 					// READ instrument header
 					
@@ -153,14 +242,14 @@ OSErr mainXI(	OSType		order,						// Order to execute
 					
 					pth->volfade 	= Tdecode16( &pth->volfade);
 					
-					BlockMoveData( pth->what, 		InsHeader->what, 	96);
-					BlockMoveData( pth->volenv, 	InsHeader->volEnv, 	48);
+					memcpy(InsHeader->what, pth->what, 96);
+					memcpy(InsHeader->volEnv, pth->volenv, 48);
 					for( x = 0; x < 12; x++)
 					{
 //						InsHeader->volEnv[ x].pos = Tdecode16( &InsHeader->volEnv[ x].pos);	// 
 //						InsHeader->volEnv[ x].val = Tdecode16( &InsHeader->volEnv[ x].val);	// 00...64
-						INT16(&InsHeader->volEnv[x].pos);
-						INT16(&InsHeader->volEnv[x].val);
+						PPLE16(&InsHeader->volEnv[x].pos);
+						PPLE16(&InsHeader->volEnv[x].val);
 					}
 					
 					InsHeader->volSize	= pth->volpts;
@@ -170,7 +259,7 @@ OSErr mainXI(	OSType		order,						// Order to execute
 					InsHeader->volEnd	= pth->volend;
 					InsHeader->volFade	= pth->volfade;
 					
-					BlockMoveData( pth->panenv, InsHeader->pannEnv, 	48);
+					memcpy(InsHeader->pannEnv, pth->panenv, 48);
 					for( x = 0; x < 12; x++)
 					{
 						InsHeader->pannEnv[ x].pos = Tdecode16( &InsHeader->pannEnv[ x].pos);	// 
@@ -188,8 +277,8 @@ OSErr mainXI(	OSType		order,						// Order to execute
 					for( x = 0; x < InsHeader->numSamples; x++)
 					{
 						sData	*curData;
-						long	size, i;
-						long 	finetune[ 16] = 
+						long	i;
+						int 	finetune[ 16] =
 						{
 							7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280,
 							8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
@@ -238,10 +327,10 @@ OSErr mainXI(	OSType		order,						// Order to execute
 						{
 							sData *curData = sample[ x];
 							
-							curData->data = NewPtr( curData->size);
+							curData->data = malloc( curData->size);
 							if( curData->data != NULL)
 							{
-								BlockMoveData( reader, curData->data, curData->size);
+								memcpy(curData->data, reader, curData->size);
 								
 								if( curData->amp == 16)
 								{
@@ -292,7 +381,7 @@ OSErr mainXI(	OSType		order,						// Order to execute
 					}
 				}
 				
-				FSCloseFork( iFileRefI);
+				iClose( iFileRefI);
 			}
 		}
 		break;
@@ -301,47 +390,50 @@ OSErr mainXI(	OSType		order,						// Order to execute
 		{
 			Ptr	theSound;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			iFileRefI = iFileOpenRead( file);
+			if( iFileRefI != NULL)
 			{
 				inOutCount = 50L;
-				theSound = NewPtr( inOutCount);
+				theSound = malloc( inOutCount);
 				if( theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					FSRead( iFileRefI, &inOutCount, theSound);
+					iRead( inOutCount, theSound, iFileRefI);
 					
 					myErr = TestXI( (Ptr) theSound);
 				}
 				
-				DisposePtr( theSound);
+				free( theSound);
 				
-				FSCloseFork( iFileRefI);
+				iClose( iFileRefI);
 			}
 		}
 		break;
 		
 		case 'EXPL':
-			myErr = FSpCreate( AlienFileFSSpec, 'SNPL', 'XI  ', smCurrentScript);
-			if(myErr == noErr) myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			iFileCreate( file, 'XI  ');
+			iFileRefI = iFileOpenWrite( file);
 			
-			if( myErr == noErr)
+			if( iFileRefI != NULL)
 			{
 				// Write instrument header
 				
-				short			u, v, p, i, x;
+				short			u, /*v, p,*/ i, x;
 				long			inOutCount = 0;
-				long			ihsizecopy, ihssizecopy;
+				//long			ihsizecopy, ihssizecopy;
 				XMPATCHHEADER	pth;
 				char			start[ 0x42];
 				
-				BlockMoveData( "Extended Instrument:                       FastTracker v2.00   ", start, 0x42);
+				//FIXME: get the proper escape sequences
+				//BlockMoveData( "Extended Instrument:                       FastTracker v2.00   ", start, 0x42);
+				
+				memcpy(start, "Extended Instrument:                       FastTracker v2.00   ", 0x42);
 				
 				inOutCount = 0x42;
-				FSWrite( iFileRefI, &inOutCount, start);
+				iWrite(inOutCount, start, iFileRefI);
 				
-				BlockMoveData( InsHeader->what, pth.what, 96);
-				BlockMoveData( InsHeader->volEnv, pth.volenv, 48);
+				memcpy(pth.what, InsHeader->what, 96);
+				memcpy(pth.volenv, InsHeader->volEnv, 48);
 				for( x = 0; x < 24; x++)
 				{
 					pth.volenv[ x] = Tdecode16( &pth.volenv[ x]);
@@ -355,7 +447,7 @@ OSErr mainXI(	OSType		order,						// Order to execute
 				pth.volfade = InsHeader->volFade;
 				pth.volfade 	= Tdecode16( &pth.volfade);
 				
-				BlockMoveData( InsHeader->pannEnv, pth.panenv, 48);
+				memcpy(pth.panenv, InsHeader->pannEnv, 48);
 				for( x = 0; x < 24; x++)
 				{
 					pth.panenv[ x] = Tdecode16( &pth.panenv[ x]);
@@ -368,12 +460,12 @@ OSErr mainXI(	OSType		order,						// Order to execute
 				pth.panend = InsHeader->pannEnd;
 				
 				inOutCount = sizeof( XMPATCHHEADER);
-				FSWrite( iFileRefI, &inOutCount, &pth);
+				iWrite(inOutCount, (Ptr)&pth, iFileRefI);
 				
 				inOutCount = 2;
 				x = InsHeader->numSamples;
 				x = Tdecode16( &x);
-				FSWrite( iFileRefI, &inOutCount, &x);
+				iWrite(inOutCount, (Ptr)&x, iFileRefI);
 				
 				/** WRITE samples */
 				
@@ -381,7 +473,7 @@ OSErr mainXI(	OSType		order,						// Order to execute
 				{
 					XMWAVHEADER		wh;
 					sData			*curData;
-					long 	finetune[ 16] = 
+					int 	finetune[ 16] =
 					{
 						7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280,
 						8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
@@ -427,7 +519,7 @@ OSErr mainXI(	OSType		order,						// Order to execute
 					wh.looplength 	= Tdecode32( &wh.looplength);
 					
 					inOutCount = sizeof( wh);
-					FSWrite( iFileRefI, &inOutCount, &wh);
+					iWrite(inOutCount, (Ptr)&wh, iFileRefI);
 				}
 				
 				for( u = 0 ; u < InsHeader->numSamples ; u++)
@@ -436,12 +528,12 @@ OSErr mainXI(	OSType		order,						// Order to execute
 					Ptr		tempPtr;
 					long	dstSize;
 					
-					tempPtr = NewPtr( curData->size);
+					tempPtr = malloc( curData->size);
 						
 					/// WriteData
 					if( tempPtr != NULL)
 					{
-						BlockMoveData( curData->data, tempPtr, curData->size);
+						memcpy(tempPtr, curData->data, curData->size);
 						
 						dstSize = curData->size;
 						
@@ -498,13 +590,14 @@ OSErr mainXI(	OSType		order,						// Order to execute
 						}
 						
 						inOutCount = dstSize;
-						FSWrite( iFileRefI, &inOutCount, tempPtr);
+						iWrite( inOutCount, tempPtr, iFileRefI);
 						
-						DisposePtr( tempPtr);
+						
+						free( tempPtr);
 					}
 				}
 				
-				FSCloseFork( iFileRefI);
+				iClose( iFileRefI);
 			}
 		break;
 		
@@ -512,11 +605,14 @@ OSErr mainXI(	OSType		order,						// Order to execute
 			myErr = MADOrderNotImplemented;
 		break;
 	}
+	
+	free(file);
+	free(fileName);
 		
 	return myErr;
 }
 
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x62, 0x08, 0x75, 0xF5, 0x1E, 0x38, 0x45, 0xEF, 0x9F, 0xBA, 0xAA, 0xE9, 0x29, 0x50, 0x2D, 0x63)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x62, 0x08, 0x75, 0xF5, 0x1E, 0x38, 0x45, 0xEF, 0x9F, 0xBA, 0xAA, 0xE9, 0x29, 0x50, 0x2D, 0x63)
 //620875F5-1E38-45EF-9FBA-AAE929502D63
 #define PLUGINFACTORY XIFactory //The factory name as defined in the Info.plist file
 #define PLUGMAIN mainXI //The old main function, renamed please

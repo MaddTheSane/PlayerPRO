@@ -1,0 +1,140 @@
+File:    0	"/boot/apps/Metrowerks/PlayerPRO/Source/Import-Export/Mod.c"
+File:    1	"/boot/apps/Metrowerks/PlayerPRO/Source/Be-FileUtils.c"
+File:    3	"/src/exp/src/kit/glue/common/global_destructor_chain.c"
+File:    4	"/src/exp/src/kit/glue/ppc/runtime.c"
+File:    7	"/src/exp/src/kit/glue/common/init_term_dyn.c"
+File:   10	"libroot.so"
+
+Files that were not referenced:
+"start_dyn.c"
+"libbe.so"
+
+Code section, size = 10744 bytes
+000000	PR 	.__sinit									file = "*Linker-Generated*"
+00001C	PR 	.DebugStr__FPUc								file = "Mod.c"
+000098	PR 	.FoundNote__Fs
+00013C	PR 	.Convert16to8__FPcPcl
+000174	PR 	.GetMADCommand
+0001C4	PR 	.MADPlugNewPtr__FlP17MADDriverSettings
+00021C	PR 	.MADPlugNewPtrClear__FlP17MADDriverSettings
+00027C	PR 	.AnalyseSignatureMOD__FllPsPlPsP6MODDef
+0008D4	PR 	.GetMODCommand__FssssPc
+00091C	PR 	.PPConvertMod2Mad__FPclP8MADMusicP17MADDriverSettings
+001420	PR 	.ConvertSampleC4SPD__FPclslPcl
+0014EC	PR 	.PPConvertMad2Mod__FP8MADMusicP17MADDriverSettingsPl
+001FC0	PR 	.ExtractMODInfo__FP9PPInfoRecPc
+002128	PR 	.TestMODFile__FPcl
+002188	PR 	.FillPlug
+0021E0	PR 	.mainPLUG
+002528	PR 	.iFileCreate								file = "Be-FileUtils.c"
+00252C	PR 	.iFileOpen
+00255C	PR 	.iGetEOF
+0025C8	PR 	.iRead
+00260C	PR 	.iWrite
+002650	PR 	.iClose
+00267C	PR 	.MOT32
+00269C	PR 	.MOT16
+0026BC	PR 	.MADstrcpy
+0026EC	PR 	.__destroy_global_chain						file = "global_destructor_chain.c"
+002740	PR 	.__RTOC										file = "init_term_dyn.c"
+002748	PR 	._init_routine_
+002798	PR 	._term_routine_
+0027C8	GL 	.__register_fragment						file = "*Linker-Generated*"
+0027E0	GL 	.__unregister_fragment
+0027F8	GL 	.fopen
+002810	GL 	.fseek
+002828	GL 	.ftell
+002840	GL 	.malloc
+002858	GL 	.free
+002870	GL 	.fread
+002888	GL 	.calloc
+0028A0	GL 	.memcpy
+0028B8	GL 	.debugger
+0028D0	GL 	.fclose
+0028E8	GL 	.fwrite
+002900	GL 	.__ptr_glue									file = "runtime.c"
+002914	TI 	@220										file = "Mod.c"
+002920	TI 	@258
+00292C	TI 	@263
+002938	TI 	@327
+002944	TI 	@461
+002950	TI 	@479
+00295C	TI 	@618
+002968	TI 	@640
+002974	TI 	@645
+002980	TI 	@649
+00298C	TI 	@684
+002998	TI 	@230										file = "Be-FileUtils.c"
+0029A4	TI 	@232
+0029B0	TI 	@234
+0029BC	TI 	@238
+0029C8	TI 	@240
+0029D4	TI 	@7											file = "global_destructor_chain.c"
+0029E0	TI 	@2											file = "init_term_dyn.c"
+0029EC	TI 	@4
+
+Data section, size = 688 bytes (TOC anchor = 000000)
+000000	TC 	fwrite										file = "*Linker-Generated*"
+000004	TC 	fread
+000008	TC 	fseek
+00000C	TC 	free
+000010	TC 	debugger
+000014	TC 	ftell
+000018	TC 	__register_fragment
+00001C	TC 	memcpy
+000020	TC 	malloc
+000024	TC 	fopen
+000028	TC 	calloc
+00002C	TC 	__unregister_fragment
+000030	TC 	fclose
+000034	TC 	__global_destructor_chain
+000038	TC 	__exception_table_end__
+00003C	TC 	__exception_table_start__
+000040	TC 	__data_end__
+000044	TC 	__data_start__
+000048	TC 	__code_end__
+00004C	TC 	__code_start__
+000050	TC 	@648										file = "Mod.c"
+000054	TC 	@647
+000058	TC 	@639
+00005C	TC 	@480
+000060	TC 	@478
+000064	TC 	@460
+000068	TC 	@459
+00006C	TC 	@458
+000070	TC 	@329
+000074	TC 	@227
+000078	TD 	@617										file = "Mod.c"
+00007C	TD 	@229										file = "Be-FileUtils.c"
+000080	TD 	fragmentID									file = "init_term_dyn.c"
+000084	DS 	mainPLUG									file = "Mod.c"
+00008C	DS 	FillPlug
+000094	DS 	_term_routine_								file = "init_term_dyn.c"
+00009C	DS 	_init_routine_
+0000A4	RW 	@227										file = "Mod.c"
+000130	RW 	@329
+000170	RW 	@458
+0001BD	RW 	@459
+0001CC	RW 	@460
+0001E2	RW 	@478
+0001F8	RW 	@480
+00028E	RW 	@639
+000297	RW 	@647
+00029C	RW 	@648
+0002A8	RW 	__global_destructor_chain					file = "global_destructor_chain.c"
+
+Import container "libroot.so"
+Current Version = 00000000, Old Implementation = 00000000
+000000	DS 	fwrite
+000001	DS 	fread
+000002	DS 	fseek
+000003	DS 	free
+000004	DS 	debugger
+000005	DS 	ftell
+000006	DS 	__register_fragment
+000007	DS 	memcpy
+000008	DS 	malloc
+000009	DS 	fopen
+00000A	DS 	calloc
+00000B	DS 	__unregister_fragment
+00000C	DS 	fclose

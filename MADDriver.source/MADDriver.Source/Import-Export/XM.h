@@ -284,11 +284,12 @@
  ============================================================================
 */
 
-#include <PlayerPROCore/PPDefs.h>
+//#include <PlayerPROCore/PPDefs.h>
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#endif
+#ifndef __XM_H
+#define __XM_H
+
+#pragma pack(push, 2)
 
 typedef struct XMHEADER{
 	char  id[17];                   // ID text: 'Extended module: '
@@ -372,6 +373,6 @@ typedef struct XMNOTE{
 	UBYTE note,ins,vol,eff,dat;
 }XMNOTE;
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=reset
+#pragma pack(pop)
+
 #endif

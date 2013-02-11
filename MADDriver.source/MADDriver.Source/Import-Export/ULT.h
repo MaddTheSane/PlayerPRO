@@ -21,9 +21,7 @@
 //
 /********************						***********************/
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#endif
+#pragma pack(push, 2)
 
 typedef struct ULTEvt
 {
@@ -38,10 +36,10 @@ typedef struct ULTIns
 {
 	char		name[ 32];
 	char		dosname[ 12];
-	long		loopStart;
-	long		loopEnd;
-	long		sizeStart;
-	long		sizeEnd;
+	SInt32		loopStart;
+	SInt32		loopEnd;
+	SInt32		sizeStart;
+	SInt32		sizeEnd;
 	Byte		volume;
 	Byte		Bidi;
 	short	finetune;
@@ -65,6 +63,5 @@ typedef struct ULTSuite
 	Byte				NOC;
 	Byte				NOP;
 } ULTSuite;
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=reset
-#endif
+
+#pragma pack(pop)

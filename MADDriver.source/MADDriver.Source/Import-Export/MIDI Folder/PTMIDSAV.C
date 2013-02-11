@@ -11,6 +11,8 @@
 
 //#include <cmath>
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <Carbon/Carbon.h>
+#define MADPlugNewPtrClear(x, y) NewPtrClear(x)
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,6 +20,7 @@
 #include <errno.h>
 #include "PTMID.H"
 
+#if 0
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
 	if( PosX < 0) PosX = 0;
@@ -25,6 +28,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
+#endif
 
 void pStrcat(register unsigned char *s1, register unsigned char *s2)
 {
@@ -282,8 +286,8 @@ void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, s
  */
 void WritePfile( PatData *Pat, short pos, short track, unsigned bSam, unsigned wPit, unsigned wEff)
 {
-	static int 			cNote = -1, irgchPos, Buffsiz;
-	static char 		*pchBuff;
+	//static int 			cNote = -1, irgchPos, Buffsiz;
+	//static char 		*pchBuff;
 	Cmd					*aCmd;
 
 /*  if (-1 == cNote)
@@ -533,10 +537,14 @@ int PutpatternsPtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *ini
 									else
 										iT2 = 255;
 								else if (33 > iT2)
+								{
 									if (30 > iT2)
+									{
 										iT2 = 33;
-									else
+									} else {
 										iT2 = 0;
+									}
+								}
 								
 								if (0 != iT2)					/** If we can allow for ~10% bpm variance **/
 								{
@@ -598,7 +606,7 @@ int PutpatternsPtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *ini
  
  extern  	short 				MIDIInstMOD[ 128];
  extern		Boolean				UseQKIns;
- extern		MADMusic			*curMusic = NULL;
+			MADMusic			*curMusic = NULL;
  
 static inline void mystrcpy( Ptr a, BytePtr b)
 {
@@ -648,7 +656,7 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	theMAD->header->speed			= 	6;
 	theMAD->header->tempo			=	125;
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MIDI Plug (�Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, "Converted by PlayerPRO MIDI Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	for (cSamps = 0, x = 0; x < 129; x++)
 	{

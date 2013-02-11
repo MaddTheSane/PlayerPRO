@@ -300,12 +300,12 @@ void TESTBugs(void)
 	do
 	{
 		ttHdl = NewHandleClear( 5410);
-		if( ttHdl == NULL) MyDebugStr( __LINE__, __FILE__, "");
+		if( ttHdl == NULL) PPDebugStr( __LINE__, __FILE__, "");
 		SetHandleSize( ttHdl, FreeMem() - 5000);
 		if( ttHdl != NULL) MyDisposHandle( & ttHdl);
 		
 	}while( Button() == false);
-	if( MemError() != noErr) MyDebugStr( __LINE__, __FILE__, "");
+	if( MemError() != noErr) PPDebugStr( __LINE__, __FILE__, "");
 }
 
 void	SKVolume( short vol)
@@ -821,7 +821,7 @@ else init.repeatMusic = true;
 //if( init.driverMode == ASCSoundDriver || init.driverMode == AWACSoundDriver) Switch();
 
 iErr = MADCreateDriver( &init, gMADLib, &MADDriver);
-if( iErr) MyDebugStr( __LINE__, __FILE__, "MusicDriver ERROR !");
+if( iErr) PPDebugStr( __LINE__, __FILE__, "MusicDriver ERROR !");
 
 MADDriver->VolGlobal = thePrefs.softVolumeLevel;
 MADDriver->SendMIDIClockData = thePrefs.SendMIDIClockData;
@@ -832,7 +832,7 @@ Handle MyNewHandle( long	size)
 	long		aL;
 	Handle		aPtr;
 
-	if( size < 0) MyDebugStr( __LINE__, __FILE__, "MyNewHandle 1");
+	if( size < 0) PPDebugStr( __LINE__, __FILE__, "MyNewHandle 1");
 	
 	aPtr = NewHandle( size);
 	if( aPtr == NULL) return NULL;
@@ -841,7 +841,7 @@ Handle MyNewHandle( long	size)
 	for( aL = 0; aL < size; aL++) (*aPtr)[ aL] = 0xEE;
 	HUnlock( aPtr);*/
 	
-	if( MemError()) MyDebugStr( __LINE__, __FILE__, "MyNewHandle 4");
+	if( MemError()) PPDebugStr( __LINE__, __FILE__, "MyNewHandle 4");
 	
 	return aPtr;
 }
@@ -855,12 +855,12 @@ void MyDisposHandle( Handle *aHandle)
 	long	aL, size;
 	char	cMemTags;
 
-	if( *aHandle == NULL) MyDebugStr( __LINE__, __FILE__, "*aHandle2");
+	if( *aHandle == NULL) PPDebugStr( __LINE__, __FILE__, "*aHandle2");
 	
 	cMemTags = HGetState( *aHandle);
 	
 	size = GetHandleSize( *aHandle);
-	if( size < 0) MyDebugStr( __LINE__, __FILE__, "aHandle33");
+	if( size < 0) PPDebugStr( __LINE__, __FILE__, "aHandle33");
 	else
 	{
 	/*	HLock( *aHandle);
@@ -872,7 +872,7 @@ void MyDisposHandle( Handle *aHandle)
 	
 	*aHandle = (Handle) NULL;
 
-	if( MemError()) MyDebugStr( __LINE__, __FILE__, "aHandle55");
+	if( MemError()) PPDebugStr( __LINE__, __FILE__, "aHandle55");
 }
 
 Ptr MyNewPtr( long	size)
@@ -880,12 +880,12 @@ Ptr MyNewPtr( long	size)
 	long	aL;
 	Ptr		aPtr;
 
-	if( size < 0) MyDebugStr( __LINE__, __FILE__, "MyNewPtr 1");
+	if( size < 0) PPDebugStr( __LINE__, __FILE__, "MyNewPtr 1");
 	
 	aPtr = NewPtr( size);
 	if( aPtr == NULL) return NULL;
 	
-	if( MemError()) MyDebugStr( __LINE__, __FILE__, "MyNewPtr 1");
+	if( MemError()) PPDebugStr( __LINE__, __FILE__, "MyNewPtr 1");
 	
 	return aPtr;
 }
@@ -894,10 +894,10 @@ void MyDisposePtr( Ptr	*aPtr)
 {
 	long	aL, size;
 
-	if( *aPtr == NULL) MyDebugStr( __LINE__, __FILE__, "pCodeMyDisposePtr == NULL");
+	if( *aPtr == NULL) PPDebugStr( __LINE__, __FILE__, "pCodeMyDisposePtr == NULL");
 	
 	size = GetPtrSize( *aPtr);
-	if( size < 0) MyDebugStr( __LINE__, __FILE__, "pCodeMyDisposePtr : size < 0");
+	if( size < 0) PPDebugStr( __LINE__, __FILE__, "pCodeMyDisposePtr : size < 0");
 	
 	DisposePtr( *aPtr);
 	
@@ -905,7 +905,7 @@ void MyDisposePtr( Ptr	*aPtr)
 	
 	if( MemError())
 	{
-		MyDebugStr( __LINE__, __FILE__, "DisposePtr");
+		PPDebugStr( __LINE__, __FILE__, "DisposePtr");
 	}
 }
 
@@ -1440,7 +1440,7 @@ int main( int argc, char* argv[])
 	MenuDefSpec				defSpec;
 	MenuDefSpec				defSpec2;
 	Str255					str;
-	
+	PPRegisterDebugFunc(MyDebugStr);
 	WindowStateNOW = -1;
 	ShowIt = true;
 	UseAEErreur = false;
@@ -1514,7 +1514,7 @@ int main( int argc, char* argv[])
 			HUnlock( TempHandle);
 			DisposeHandle( TempHandle);
 		}
-		else MyDebugStr( __LINE__, __FILE__, "Fatal MEMORY ERROR 35: NEED MORE MEMORY !");
+		else PPDebugStr( __LINE__, __FILE__, "Fatal MEMORY ERROR 35: NEED MORE MEMORY !");
 	}
 	
 	////////
@@ -1610,56 +1610,56 @@ int main( int argc, char* argv[])
 	{
 		CursHandle				myCursH;
 		
-		myCursH = GetCursor( 357);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
+		myCursH = GetCursor( 357);				if( myCursH == NULL) PPDebugStr( __LINE__, __FILE__, "");
 		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 		watchCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 		
-		myCursH = GetCursor( iBeamCursor);		if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
+		myCursH = GetCursor( iBeamCursor);		if( myCursH == NULL) PPDebugStr( __LINE__, __FILE__, "");
 		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 		beamCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 		
-		myCursH = GetCursor( 300);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
+		myCursH = GetCursor( 300);				if( myCursH == NULL) PPDebugStr( __LINE__, __FILE__, "");
 		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 		pencilCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 		
-		myCursH = GetCursor( 137);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
+		myCursH = GetCursor( 137);				if( myCursH == NULL) PPDebugStr( __LINE__, __FILE__, "");
 		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 		pencilCrsrStereo = **myCursH;			HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 		
-		myCursH = GetCursor( 135);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
+		myCursH = GetCursor( 135);				if( myCursH == NULL) PPDebugStr( __LINE__, __FILE__, "");
 		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 		HelpCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 		
-		myCursH = GetCursor( 134);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
+		myCursH = GetCursor( 134);				if( myCursH == NULL) PPDebugStr( __LINE__, __FILE__, "");
 		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 		DelCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 		
-		myCursH = GetCursor( 130);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
+		myCursH = GetCursor( 130);				if( myCursH == NULL) PPDebugStr( __LINE__, __FILE__, "");
 		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 		NoteCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 		
 		
-		myCursH = GetCursor( 133);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");	
+		myCursH = GetCursor( 133);				if( myCursH == NULL) PPDebugStr( __LINE__, __FILE__, "");	
 		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 		PlayCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 		
-		myCursH = GetCursor( 132);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");	
+		myCursH = GetCursor( 132);				if( myCursH == NULL) PPDebugStr( __LINE__, __FILE__, "");	
 		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 		CHandCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 		
-		myCursH = GetCursor( 131);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
+		myCursH = GetCursor( 131);				if( myCursH == NULL) PPDebugStr( __LINE__, __FILE__, "");
 		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 		HandCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 		
-		myCursH = GetCursor( 128);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
+		myCursH = GetCursor( 128);				if( myCursH == NULL) PPDebugStr( __LINE__, __FILE__, "");
 		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 		ZoomInCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 		
-		myCursH = GetCursor( 129);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
+		myCursH = GetCursor( 129);				if( myCursH == NULL) PPDebugStr( __LINE__, __FILE__, "");
 		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 		ZoomOutCrsr = **myCursH;				HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 		
-		myCursH = GetCursor( 138);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
+		myCursH = GetCursor( 138);				if( myCursH == NULL) PPDebugStr( __LINE__, __FILE__, "");
 		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 		ContextCrsr = **myCursH;				HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 	}
@@ -2091,116 +2091,116 @@ void DoGlobalNull(void)
 
 	GetKeys( km);
 
-//if( thePrefs.MidiKeyBoard) DoMIDIHarwareRecord();
-
-if( DebuggingMode)
-{
-	unsigned long			secs;
-	NumVersion				nVers;
-	DateTimeRec				dtrp;
-/*	if( MemError() != noErr)
+	//if( thePrefs.MidiKeyBoard) DoMIDIHarwareRecord();
+	
+	if( DebuggingMode)
 	{
-		pStrcpy( str1, "\pMemError ID:");
-		NumToString( MemError(), str2);
-		pStrcat( str1, str2);
+		unsigned long			secs;
+		NumVersion				nVers;
+		DateTimeRec				dtrp;
+		/*	if( MemError() != noErr)
+		 {
+		 pStrcpy( str1, "\pMemError ID:");
+		 NumToString( MemError(), str2);
+		 pStrcat( str1, str2);
+		 
+		 MyDebugStr( str1);
+		 }
+		 
+		 if( ResError() != noErr)
+		 {
+		 pStrcpy( str1, "\pResError ID:");
+		 NumToString( ResError(), str2);
+		 pStrcat( str1, str2);
+		 
+		 MyDebugStr( str1);
+		 }
+		 
+		 for( i = 0; i < MAXINSTRU; i++)
+		 {
+		 for( x = 0; x < curMusic->fid[ i].numSamples; x++)
+		 {
+		 if( curMusic->sample[ curMusic->fid[ i].firstSample + x] == NULL) PPDebugStr( __LINE__, __FILE__, "Sound Size not CORRECT !");
+		 
+		 
+		 if( curMusic->sample[ curMusic->fid[ i].firstSample + x]->data != NULL)
+		 {
+		 if( curMusic->sample[ curMusic->fid[ i].firstSample + x]->size != GetPtrSize( curMusic->sample[ curMusic->fid[ i].firstSample + x]->data))
+		 {
+		 PPDebugStr( __LINE__, __FILE__, "Sound Size not CORRECT !");
+		 }
+		 }
+		 }
+		 }*/
 		
-		MyDebugStr( str1);
+		/*	GetDateTime( &secs);
+		 SecondsToDate( secs, &dtrp);
+		 
+		 if( dtrp.year >= 1999)
+		 {
+		 curMusic = (MADMusic*) -1L;
+		 }*/
+		
 	}
 	
-	if( ResError() != noErr)
-	{
-		pStrcpy( str1, "\pResError ID:");
-		NumToString( ResError(), str2);
-		pStrcat( str1, str2);
-		
-		MyDebugStr( str1);
-	}	
-	
-	for( i = 0; i < MAXINSTRU; i++)
-	{
-		for( x = 0; x < curMusic->fid[ i].numSamples; x++)
-		{
-			if( curMusic->sample[ curMusic->fid[ i].firstSample + x] == NULL) MyDebugStr( __LINE__, __FILE__, "Sound Size not CORRECT !");
-			
-			
-			if( curMusic->sample[ curMusic->fid[ i].firstSample + x]->data != NULL)
-			{
-				if( curMusic->sample[ curMusic->fid[ i].firstSample + x]->size != GetPtrSize( curMusic->sample[ curMusic->fid[ i].firstSample + x]->data))
-				{
-					MyDebugStr( __LINE__, __FILE__, "Sound Size not CORRECT !");
-				}
-			}
-		}
-	}*/
-	
-/*	GetDateTime( &secs);
-	SecondsToDate( secs, &dtrp);
-	
-	if( dtrp.year >= 1999)
-	{
-		curMusic = (MADMusic*) -1L;
-	}*/
-
-}
-
 	if( MADDriver->musicEnd == true)
 	{
 		DoLoadOtherMusic( true);
 	}
-
-VSTEditorDoNull();
-DoVisualNull();
-DoNullPattern();
-DoNullSpectrum();
-DoNull();
-DoNullInstruList();
-DoNullInstrument();
-DoNullEditor();
-DoNullClassic();
-DoNullMozart();
-DoNullTools();
-DoNullDigiWindow();
-//DoNullCubeWindow();
-DoNullWave();
-DoNullMODList();
-DoNullQT();
-DoNullStaff();
-DoAIFFExporting();
-DoNullParti();
-DoNullAdap();
-DoNullInstruView();
-//DoNullTrackView();
-MyNullHook();
-
-if( checkMemory < TickCount())
-{
-	checkMemory = TickCount() + 60;
-	DoNullMemWindow();
-	//if( FreeMem() < 50000) Erreur(9, 0);
-}
-
-if( PianoDlog != NULL && MusicPlayActive == true) DoNullPiano();
-
-if( IsCodeOK()) //??ATTENTION, CA TUE LE QUITEVENT SOUS MACOS X
-{
-	if( TickCount() - StartTime > 72000)		// 20 Minutes
+	
+	VSTEditorDoNull();
+	DoVisualNull();
+	DoNullPattern();
+	DoNullSpectrum();
+	DoNull();
+	DoNullInstruList();
+	DoNullInstrument();
+	DoNullEditor();
+	DoNullClassic();
+	DoNullMozart();
+	DoNullTools();
+	DoNullDigiWindow();
+	//DoNullCubeWindow();
+	DoNullWave();
+	DoNullMODList();
+	DoNullQT();
+	DoNullStaff();
+	DoAIFFExporting();
+	DoNullParti();
+	DoNullAdap();
+	DoNullInstruView();
+	//DoNullTrackView();
+	MyNullHook();
+	
+	if( checkMemory < TickCount())
 	{
-		if( ShowIt)
-		{
-			Erreur( 32, -4);
-			ShowIt = false;
-		}
-		End = true;
+		checkMemory = TickCount() + 60;
+		DoNullMemWindow();
+		//if( FreeMem() < 50000) Erreur(9, 0);
 	}
-}
-
-/*** Active Help ***/
-
-if( thePrefs.ActiveHelp) DoAHelpInfo();
-
-/*******************/
-
-SetPort( savePort);
+	
+	if( PianoDlog != NULL && MusicPlayActive == true) DoNullPiano();
+	
+	if( IsCodeOK()) //??ATTENTION, CA TUE LE QUITEVENT SOUS MACOS X
+	{
+		if( TickCount() - StartTime > 72000)		// 20 Minutes
+		{
+			if( ShowIt)
+			{
+				Erreur( 32, -4);
+				ShowIt = false;
+			}
+			End = true;
+		}
+	}
+	
+	/*** Active Help ***/
+	
+	if( thePrefs.ActiveHelp) DoAHelpInfo();
+	
+	/*******************/
+	
+	SetPort( savePort);
 }
 
 void GlobalDoKey( WindowPtr	theWind, char theChar)
@@ -3375,7 +3375,7 @@ switch( thePart)
 
 void DoUpdateEvent(EventRecord *theEventI)
 {
-	if( theEventI->message == 0) MyDebugStr( __LINE__, __FILE__, "Err DoUpdateEvent");
+	if( theEventI->message == 0) PPDebugStr( __LINE__, __FILE__, "Err DoUpdateEvent");
 	
 //	if( EmptyRgn( ((WindowPeek) theEventI->message)->updateRgn)) return;
 	
@@ -3699,7 +3699,7 @@ pascal Boolean MyCustomFileFilter2( CInfoPBRec	*pb, void *myDataPtr)
 	OSType		type;
 	char		tempC[ 5];
 
-	if( pb == NULL) MyDebugStr( __LINE__, __FILE__, "");
+	if( pb == NULL) PPDebugStr( __LINE__, __FILE__, "");
 	
 	if( pb->hFileInfo.ioFlAttrib & 16) return false;
 	
@@ -3721,7 +3721,7 @@ pascal Boolean MyCustomFileFilter2( CInfoPBRec	*pb, void *myDataPtr)
 		case allReadable:
 			RollCursor();
 			
-			if( EqualString("\pIcon", pb->hFileInfo.ioNamePtr, false, false)) MyDebugStr( __LINE__, __FILE__, "");
+			if( EqualString("\pIcon", pb->hFileInfo.ioNamePtr, false, false)) PPDebugStr( __LINE__, __FILE__, "");
 	
 			
 			if( pb->hFileInfo.ioFlFndrInfo.fdType == 'sTAT') return false;
@@ -3782,7 +3782,7 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 	GetPort( &savePort);
 	SetPortDialogPort( theDialog);
 	
-	if( myDataPtr == NULL) MyDebugStr( __LINE__, __FILE__, "");
+	if( myDataPtr == NULL) PPDebugStr( __LINE__, __FILE__, "");
 
 	IntReply = (StandardFileReply*) myDataPtr;
 	
@@ -5467,7 +5467,7 @@ ReLoadPrefs:
 	{
 		iErr = FSpCreate( &spec, 'SNPL', 'PREF', smSystemScript);
 		iErr = FSpOpenDF( &spec, fsCurPerm, &fRefNum);
-		if( iErr != noErr) MyDebugStr( __LINE__, __FILE__, "PlayerPREF ERROR 32");
+		if( iErr != noErr) PPDebugStr( __LINE__, __FILE__, "PlayerPREF ERROR 32");
 		aHandle = GetResource( 'AGGA', 128);
 		if( aHandle != NULL)
 		{
@@ -5734,7 +5734,7 @@ ReLoadPrefs:
 	
 		goto ReLoadPrefs;
 }
-else if( iErr != noErr) MyDebugStr( __LINE__, __FILE__, "ERROR PLAYER PREFS");
+else if( iErr != noErr) PPDebugStr( __LINE__, __FILE__, "ERROR PLAYER PREFS");
 else if( iErr == noErr)
 {
 	iErr = GetEOF( fRefNum, &inOutBytes);
@@ -7268,7 +7268,7 @@ void HandleNewSound( short theItem)
 				
 				pStrcpy( newFile.name, "\pSelectionDigital.AIFF");
 				iErr = FindFolder( kOnSystemDisk, kDesktopFolderType, kCreateFolder, &newFile.vRefNum, &newFile.parID);
-				if( iErr) MyDebugStr( __LINE__, __FILE__, "FindFolder");
+				if( iErr) PPDebugStr( __LINE__, __FILE__, "FindFolder");
 				
 				FSpDelete( &newFile);
 				

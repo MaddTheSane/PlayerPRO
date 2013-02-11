@@ -24,15 +24,14 @@
 #ifndef __MADFG__
 #define __MADFG__
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#endif
+#pragma pack(push, 2)
+
 struct oldPatHeader {
-	long	PatternSize;			// Length of pattern: standard = 64
+	SInt32	PatternSize;			// Length of pattern: standard = 64
 	OSType	CompressionMode;		// Compression mode, none = 'NONE'
 	char	PatternName[ 20];
-	long	PatBytes;				// Pattern Size in Bytes
-	long	unused2;
+	SInt32	PatBytes;				// Pattern Size in Bytes
+	SInt32	unused2;
 };
 
 struct Command {
@@ -50,14 +49,14 @@ struct MusicPattern
 
 struct FileInstrData {
 	char 	Filename[ 32];		// Instrument's filename
-	long 	insSize;			// Sample length
+	SInt32 	insSize;			// Sample length
 	Byte 	fineTune;
 	Byte 	volume;				// Base volume
 	short	CompCode;			// Compression Code, 0 = nothing, M3 = MAC3, M6 = MAC6
 	short	freq;				// Base frequence, simple, double, quadruple
 	Byte	amplitude;			// 8 or 16 bits
-	long	loopStart;			// LoopStart
-	long	loopLenght;			// LoopLength
+	SInt32	loopStart;			// LoopStart
+	SInt32	loopLenght;			// LoopLength
 };
 
 struct oldMADSpec
@@ -72,8 +71,6 @@ struct oldMADSpec
 };
 typedef struct oldMADSpec oldMADSpec;
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=reset
-#endif
+#pragma pack(pop)
 
 #endif

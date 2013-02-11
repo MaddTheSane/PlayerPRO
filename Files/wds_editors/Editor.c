@@ -1,6 +1,7 @@
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
+#include "RDriverInt.h"
 #include "Undo.h"
 #include "PPPlug.h"
 #include "PrivateList.h"
@@ -235,7 +236,7 @@ void CreateEditorPixMap( short PatID)
 	
 	NewGWorld(	&theGWorld, 0, &aRect, nil, nil, (GWorldFlags) 0);
 	
-	if( NewOffscreenPixMap( &EditorPix, &aRect) != noErr) MyDebugStr( __LINE__, __FILE__, "");
+	if( NewOffscreenPixMap( &EditorPix, &aRect) != noErr) PPDebugStr( __LINE__, __FILE__, "");
 
 	LockPixels( theGWorld->portPixMap);
 	SetGWorld( theGWorld, NULL);
@@ -491,7 +492,7 @@ void NTStr( short	NoDigi, short		val, Ptr	theText)
 	break;
 	
 	default:
-		MyDebugStr( __LINE__, __FILE__, "NStr Error !!");
+		PPDebugStr( __LINE__, __FILE__, "NStr Error !!");
 	break;
 	}
 }
@@ -602,7 +603,7 @@ void ConvertTEH( unsigned char *dst, short length)
 		if( length >= 2) dst[ 1] = (*cHdle)[ 1];
 		if( length >= 3) dst[ 2] = (*cHdle)[ 2];
 	}
-	else MyDebugStr( __LINE__, __FILE__, "Major ERROR");
+	else PPDebugStr( __LINE__, __FILE__, "Major ERROR");
 }
 
 Boolean CreateNoteString( Cmd *theCommand, Str255 mainStr, Boolean AllStr)
@@ -3715,7 +3716,7 @@ Ptr ConvertPcmd2Text( Pcmd *myPcmd)
 
 	mSize = (long) 5 + myPcmd->tracks * (long) myPcmd->length * 16L;
 	myText = NewPtrClear( mSize);
-	if( myText == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error");
+	if( myText == NULL) PPDebugStr( __LINE__, __FILE__, "Memory Error");
 	strcpy( myText, "");
 	
 	for( i = 0; i < myPcmd->length; i++)
@@ -3736,7 +3737,7 @@ Ptr ConvertPcmd2Text( Pcmd *myPcmd)
 		}
 	}
 	
-	if( strlen( myText) >= mSize) MyDebugStr( __LINE__, __FILE__, "ZZZ");
+	if( strlen( myText) >= mSize) PPDebugStr( __LINE__, __FILE__, "ZZZ");
 	
 	return myText;
 }
@@ -3755,7 +3756,7 @@ Pcmd* CreatePcmdFromSelection(void)
 	if( count <= 0) return NULL;
 
 	myPcmd = (Pcmd*) NewPtrClear( sizeof( Pcmd) + count * sizeof( Cmd));
-	if( myPcmd == NULL) MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
+	if( myPcmd == NULL) PPDebugStr( __LINE__, __FILE__, "Memory WARNING");
 	
 	myPcmd->structSize 	= sizeof( Pcmd) + count * sizeof( Cmd);
 	myPcmd->tracks 		= myList.select.right - myList.select.left + 1;
@@ -3881,7 +3882,7 @@ void COPYEditor(void)
 	myPcmd = CreatePcmdFromSelection();
 	if( myPcmd == NULL)
 	{
-		MyDebugStr( __LINE__, __FILE__, "CopyEditor Internal ERROR");
+		PPDebugStr( __LINE__, __FILE__, "CopyEditor Internal ERROR");
 		SetPort( SavePort);
 		return;
 	}

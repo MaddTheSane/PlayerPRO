@@ -1,0 +1,155 @@
+File:    0	"/boot/apps/Metrowerks/PlayerPRO/Source/Be-FileUtils.c"
+File:    1	"/boot/apps/Metrowerks/PlayerPRO/Source/Import-Export/XM.c"
+File:    3	"/src/exp/src/kit/glue/common/global_destructor_chain.c"
+File:    4	"/src/exp/src/kit/glue/ppc/runtime.c"
+File:    7	"/src/exp/src/kit/glue/common/init_term_dyn.c"
+File:   10	"libroot.so"
+
+Files that were not referenced:
+"start_dyn.c"
+"libbe.so"
+
+Code section, size = 13980 bytes
+000000	PR 	.__sinit									file = "*Linker-Generated*"
+00001C	PR 	.iFileCreate								file = "Be-FileUtils.c"
+000020	PR 	.iFileOpen
+000050	PR 	.iGetEOF
+0000BC	PR 	.iRead
+000100	PR 	.iWrite
+000144	PR 	.iClose
+000170	PR 	.INT32
+0001BC	PR 	.INT16
+000208	PR 	.MADstrcpy
+000238	PR 	.GetMADCommand								file = "XM.c"
+000288	PR 	.MADPlugNewPtr__FlP17MADDriverSettings
+0002E0	PR 	.MADPlugNewPtrClear__FlP17MADDriverSettings
+000340	PR 	.XM_Init__FP17MADDriverSettings
+000388	PR 	.XM_Cleanup__Fv
+0003BC	PR 	.XM_WriteNote__FP3Cmd
+000610	PR 	.XM_ReadNote__FP6XMNOTE
+000828	PR 	.XM_Convert2MAD__FP6XMNOTEP3Cmd
+000914	PR 	.XM_Convert2XM__FP3Cmd
+00097C	PR 	.XMReadPattern__FP8MADMusicP17MADDriverSettings
+000C64	PR 	.XMReadInstruments__FP8MADMusicP17MADDriverSettings
+001710	PR 	.XM_Load__FPclP8MADMusicP17MADDriverSettings
+001A54	PR 	.XMGetPeriod__Fsl
+001B1C	PR 	.ConvertMad2XM__FP8MADMusicP17MADDriverSettingsPl
+002CB0	PR 	.compMem__FPcPcl
+002CF4	PR 	.TestXMFile__FPc
+002DD4	PR 	.ExtractXMInfo__FP9PPInfoRecPc
+002F8C	PR 	.FillPlug
+002FE4	PR 	.mainPLUG
+00333C	PR 	.__destroy_global_chain						file = "global_destructor_chain.c"
+003390	PR 	.__RTOC										file = "init_term_dyn.c"
+003398	PR 	._init_routine_
+0033E8	PR 	._term_routine_
+003418	GL 	.__register_fragment						file = "*Linker-Generated*"
+003430	GL 	.__unregister_fragment
+003448	GL 	.malloc
+003460	GL 	.__swap_int16
+003478	GL 	.__swap_int32
+003490	GL 	.memcpy
+0034A8	GL 	.fopen
+0034C0	GL 	.fwrite
+0034D8	GL 	.fclose
+0034F0	GL 	.free
+003508	GL 	.fseek
+003520	GL 	.ftell
+003538	GL 	.fread
+003550	GL 	.calloc
+003568	GL 	.__ptr_glue									file = "runtime.c"
+00357C	TI 	@230										file = "Be-FileUtils.c"
+003588	TI 	@232
+003594	TI 	@234
+0035A0	TI 	@238
+0035AC	TI 	@240
+0035B8	TI 	@244
+0035C4	TI 	@246
+0035D0	TI 	@243										file = "XM.c"
+0035DC	TI 	@248
+0035E8	TI 	@253
+0035F4	TI 	@257
+003600	TI 	@282
+00360C	TI 	@302
+003618	TI 	@378
+003624	TI 	@474
+003630	TI 	@510
+00363C	TI 	@685
+003648	TI 	@700
+003654	TI 	@718
+003660	TI 	@722
+00366C	TI 	@761
+003678	TI 	@7											file = "global_destructor_chain.c"
+003684	TI 	@2											file = "init_term_dyn.c"
+003690	TI 	@4
+
+Data section, size = 588 bytes (TOC anchor = 000000)
+000000	TC 	fwrite										file = "*Linker-Generated*"
+000004	TC 	__swap_int16
+000008	TC 	__swap_int32
+00000C	TC 	fread
+000010	TC 	fseek
+000014	TC 	free
+000018	TC 	ftell
+00001C	TC 	__register_fragment
+000020	TC 	memcpy
+000024	TC 	malloc
+000028	TC 	fopen
+00002C	TC 	calloc
+000030	TC 	__unregister_fragment
+000034	TC 	fclose
+000038	TC 	__global_destructor_chain
+00003C	TC 	__exception_table_end__
+000040	TC 	__exception_table_start__
+000044	TC 	__data_end__
+000048	TC 	__data_start__
+00004C	TC 	__code_end__
+000050	TC 	__code_start__
+000054	TC 	@721										file = "XM.c"
+000058	TC 	@717
+00005C	TC 	@716
+000060	TC 	@614
+000064	TC 	@684
+000068	TC 	@683
+00006C	TC 	@525
+000070	TC 	@509
+000074	TC 	@431
+000078	TC 	@328
+00007C	TD 	@229										file = "Be-FileUtils.c"
+00007F	TD 	@720										file = "XM.c"
+000084	TD 	theXMMax
+000088	TD 	theXMRead
+00008C	TD 	mh
+000090	TD 	fragmentID									file = "init_term_dyn.c"
+000094	DS 	mainPLUG									file = "XM.c"
+00009C	DS 	FillPlug
+0000A4	DS 	_term_routine_								file = "init_term_dyn.c"
+0000AC	DS 	_init_routine_
+0000B4	RW 	@328										file = "XM.c"
+0000FC	RW 	@431
+00013C	RW 	@509
+000188	RW 	@525
+0001B8	RW 	@614
+0001F8	RW 	@683
+00020A	RW 	@684
+00021F	RW 	@716
+00022E	RW 	@717
+00023A	RW 	@721
+000244	RW 	__global_destructor_chain					file = "global_destructor_chain.c"
+
+Import container "libroot.so"
+Current Version = 00000000, Old Implementation = 00000000
+000000	DS 	fwrite
+000001	DS 	__swap_int16
+000002	DS 	__swap_int32
+000003	DS 	fread
+000004	DS 	fseek
+000005	DS 	free
+000006	DS 	ftell
+000007	DS 	__register_fragment
+000008	DS 	memcpy
+000009	DS 	malloc
+00000A	DS 	fopen
+00000B	DS 	calloc
+00000C	DS 	__unregister_fragment
+00000D	DS 	fclose

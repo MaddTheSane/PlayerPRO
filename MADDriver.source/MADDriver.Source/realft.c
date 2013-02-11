@@ -21,13 +21,12 @@
 //
 /********************						***********************/
 
+#define _USE_MATH_DEFINES
 #include <math.h>
 #include "RDriver.h"
 #include "RDriverInt.h"
 
-#define SWAP(a,b) tempr=(a);(a)=(b);(b)=tempr
-
-long Interpolate(long p,long p1,long p2,long v1,long v2);
+SInt32 Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2);
 double EQInterpolate(double p,double p1,double p2,double v1,double v2);
 
 double EQInterpolate(double p,double p1,double p2,double v1,double v2)
@@ -43,18 +42,22 @@ double EQInterpolate(double p,double p1,double p2,double v1,double v2)
 	return v1 + ((di*dv) / dp);
 }
 
-static short *SDataInter;
+//static short *SDataInter;
 
 OSErr MADInitEqualizer( MADDriverRec *intDriver)
 {
-	long i;
+	int i;
 	
-	intDriver->Filter	= (double*) NewPtrClear( sizeof( double) * ((EQPACKET*2)+2));
-	intDriver->fData	= (double*) NewPtrClear( sizeof( double) * ((EQPACKET*2)+2));
+	intDriver->Filter	= (double*) calloc( sizeof( double) * ((EQPACKET*2)+2), 1);
+	intDriver->fData	= (double*) calloc( sizeof( double) * ((EQPACKET*2)+2), 1);
 	
 
 	
-	if( intDriver->Filter == NULL) return -1;
+	if( intDriver->Filter == NULL) return MADNeedMemory;
+	if (intDriver->fData == NULL) {
+		free(intDriver->Filter);
+		return MADNeedMemory;
+	}
 	
 	for( i = 0; i <= EQPACKET*2; i++)
 	{
@@ -66,100 +69,101 @@ OSErr MADInitEqualizer( MADDriverRec *intDriver)
 
 void MADCloseEqualizer( MADDriverRec *intDriver)
 {
-	DisposePtr( (Ptr) intDriver->Filter);
-	DisposePtr( (Ptr) intDriver->fData);
+	free( intDriver->Filter);
+	free( intDriver->fData);
 }
+
+#define SWAP(a,b) tempr=(a);(a)=(b);(b)=tempr
 
 void MADfour1( double *data,int nn,int isign)
 {
-	int 		n,mmax,m,j,istep,i;
-	double 		wtemp,wr,wpr,wpi,wi,theta;
-	double 		tempr,tempi;
+	int 		n, mmax, m, j, istep, i;
+	double 		wtemp, wr, wpr, wpi, wi, theta;
+	double 		tempr, tempi;
 
-	n=nn << 1;
-	j=1;
-	for (i=1;i<n;i+=2) {
+	n = nn << 1;
+	j = 1;
+	for (i = 1; i < n; i += 2) {
 		if (j > i) {
-			SWAP(data[j],data[i]);
-			SWAP(data[j+1],data[i+1]);
+			SWAP(data[j], data[i]);
+			SWAP(data[j+1], data[i+1]);
 		}
-		m=n >> 1;
+		m = n >> 1;
 		while (m >= 2 && j > m) {
 			j -= m;
 			m >>= 1;
 		}
 		j += m;
 	}
-	mmax=2;
+	mmax = 2;
 	while (n > mmax) {
-		istep=2*mmax;
+		istep = 2 * mmax;
 		
-		theta=M_PI/(isign*mmax);
-		wtemp=sin(theta);
-		wpr = -2.0*wtemp*wtemp;
-		wpi=sin(2.0*theta);
-		wr=1.0;
-		wi=0.0;
-		for (m=1;m<mmax;m+=2) {
-			for (i=m;i<=n;i+=istep) {
-				j=i+mmax;
-				tempr=wr*data[j]-wi*data[j+1];
-				tempi=wr*data[j+1]+wi*data[j];
-				data[j]=data[i]-tempr;
-				data[j+1]=data[i+1]-tempi;
+		theta = M_PI / (isign * mmax);
+		wtemp = sin(theta);
+		wpr = -2.0 * wtemp * wtemp;
+		wpi = sin( 2.0 * theta);
+		wr = 1.0;
+		wi = 0.0;
+		for (m = 1; m < mmax; m += 2) {
+			for ( i = m; i <= n; i += istep) {
+				j = i + mmax;
+				tempr = wr * data[j] - wi*data[j + 1];
+				tempi = wr * data[j + 1] + wi * data[j];
+				data[j] = data[i] - tempr;
+				data[j + 1] = data[i + 1] - tempi;
 				data[i] += tempr;
 				data[i+1] += tempi;
 			}
-			wr=(wtemp=wr)*wpr-wi*wpi+wr;
-			wi=wi*wpr+wtemp*wpi+wi;
+			wr = (wtemp = wr) * wpr - wi * wpi + wr;
+			wi = wi * wpr + wtemp * wpi + wi;
 		}
-		mmax=istep;
+		mmax = istep;
 	}
 }
 
 #undef SWAP
 
-
 void MADrealft(double *data,int n,int isign)
 {
-	int 		i,i1,i2,i3,i4,n2p3;
-	double 		c1=0.5,c2,h1r,h1i,h2r,h2i;
-	double 		wr,wi,wpr,wpi,wtemp,theta;
+	int 		i, i1, i2, i3, i4, n2p3;
+	double 		c1 = 0.5, c2, h1r, h1i, h2r, h2i;
+	double 		wr, wi, wpr, wpi, wtemp, theta;
 
-	theta=M_PI/(double) n;
+	theta = M_PI / (double) n;
 	if (isign == 1) {
 		c2 = -0.5;
-		MADfour1(data,n,1);
+		MADfour1(data, n, 1);
 	} else {
-		c2=0.5;
+		c2 = 0.5;
 		theta = -theta;
 	}
-	wtemp=sin(0.5*theta);
-	wpr = -2.0*wtemp*wtemp;
-	wpi=sin(theta);
-	wr=1.0+wpr;
-	wi=wpi;
-	n2p3=2*n+3;
-	for (i=2;i<=n/2;i++) {
-		i4=1+(i3=n2p3-(i2=1+(i1=i+i-1)));
-		h1r=c1*(data[i1]+data[i3]);
-		h1i=c1*(data[i2]-data[i4]);
-		h2r = -c2*(data[i2]+data[i4]);
-		h2i=c2*(data[i1]-data[i3]);
-		data[i1]=h1r+wr*h2r-wi*h2i;
-		data[i2]=h1i+wr*h2i+wi*h2r;
-		data[i3]=h1r-wr*h2r+wi*h2i;
-		data[i4] = -h1i+wr*h2i+wi*h2r;
-		wr=(wtemp=wr)*wpr-wi*wpi+wr;
-		wi=wi*wpr+wtemp*wpi+wi;
+	wtemp = sin(0.5 * theta);
+	wpr = -2.0 * wtemp * wtemp;
+	wpi = sin(theta);
+	wr = 1.0 + wpr;
+	wi = wpi;
+	n2p3 = 2 * n + 3;
+	for (i = 2; i <= n / 2; i++) {
+		i4 = 1 + (i3 = n2p3 - (i2 = 1 + (i1 = i + i - 1)));
+		h1r = c1 * (data[i1] + data[i3]);
+		h1i = c1 * (data[i2] - data[i4]);
+		h2r = -c2 * (data[i2] + data[i4]);
+		h2i= c2 * (data[i1] - data[i3]);
+		data[i1] = h1r + wr * h2r - wi * h2i;
+		data[i2] = h1i + wr * h2i + wi * h2r;
+		data[i3] = h1r - wr * h2r + wi * h2i;
+		data[i4] = -h1i + wr * h2i + wi * h2r;
+		wr = (wtemp = wr) * wpr - wi * wpi + wr;
+		wi = wi * wpr + wtemp * wpi + wi;
 	}
 	if (isign == 1) {
-		data[1] = (h1r=data[1])+data[2];
-		data[2] = h1r-data[2];
+		data[1] = (h1r = data[1]) + data[2];
+		data[2] = h1r - data[2];
 	} else {
-		data[1]=c1*((h1r=data[1])+data[2]);
-		data[2]=c1*(h1r-data[2]);
-		MADfour1(data,n,-1);
+		data[1] = c1 * ((h1r = data[1]) + data[2]);
+		data[2] = c1 * (h1r - data[2]);
+		MADfour1(data, n, -1);
 	}
 }
 
@@ -194,7 +198,7 @@ void MADrealft(double *data,int n,int isign)
 
 void MADCallFFT( sData *SData, double *filter, MADDriverRec *intDriver, Boolean shift)
 {
-	if( filter == 0) filter = intDriver->Filter;
+	if( filter == NULL) filter = intDriver->Filter;
 
 	switch( SData->amp)
 	{
@@ -223,11 +227,12 @@ void MADCallFFT( sData *SData, double *filter, MADDriverRec *intDriver, Boolean 
 	return v1 + ((di*dv) / dp);
 }*/
 
-void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
+void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
-	long	i, y, powersize;
-	long	*shiftAr;
-	double	pente, axe, *fDataCopy2, *fDataCopy = intDriver->fData;
+	SInt32	i, y, powersize;
+	SInt32	*shiftAr = NULL;
+	double	pente, axe, *fDataCopy2 = NULL, *fDataCopy = intDriver->fData;
+	Boolean didInitFData = 0;
 	
 	if( nochan == 2)	// STEREO
 	{
@@ -239,7 +244,8 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 				powersize *= 2;
 			}while( powersize < size/2);
 			
-			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
+			fDataCopy = (double*) malloc( sizeof( double) * (powersize+2));
+			didInitFData = 1;
 		}
 		else powersize = EQPACKET*2;
 	}
@@ -253,21 +259,39 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 				powersize *= 2;
 			}while( powersize < size);
 			
-			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
+			fDataCopy = (double*) malloc( sizeof( double) * (powersize+2));
+			didInitFData = 1;
 		}
 		else powersize = EQPACKET*2;
 	}
 	
 	if( shift)
 	{
-		fDataCopy2 = (double*) NewPtr( sizeof( double) * (powersize+2));
-		if( fDataCopy2 == NULL) return;
+		fDataCopy2 = (double*) malloc( sizeof( double) * (powersize+2));
+		if( fDataCopy2 == NULL)
+		{
+			if (didInitFData && fDataCopy) {
+				free(fDataCopy);
+			}
+			return;
+		}
 		
-		shiftAr = (long*) NewPtrClear( sizeof( long) * (powersize+2));
-		if( shiftAr == NULL) return;
+		shiftAr = (SInt32*) calloc( sizeof( SInt32) * (powersize+2), 1);
+		if( shiftAr == NULL) {
+			if (didInitFData && fDataCopy) {
+				free(fDataCopy);
+			}
+			free(fDataCopy2);
+			return;
+		}
 	}
 	
-	if( fDataCopy == NULL) return;
+	if( fDataCopy == NULL)
+	{
+		if(shiftAr) free(shiftAr);
+		if(fDataCopy2) free(fDataCopy2);
+		return;
+	}
 	
 	for( y = 0; y < nochan; y++)
 	{
@@ -312,7 +336,7 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 		
 		if( shift)
 		{
-			long shiftval, a;//, b;
+			SInt32 /*shiftval,*/ a;//, b;
 			
 			for( i = 0 ; i < powersize; i++)
 			{
@@ -335,7 +359,7 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 				if( shiftAr[ i] >= 0 && shiftAr[ i] < powersize) fDataCopy2[ shiftAr[ i] +1] += fDataCopy[ i +1];
 			}
 			
-			BlockMoveData( fDataCopy2, fDataCopy, sizeof( double) * (powersize+2));
+			memcpy( fDataCopy, fDataCopy2, sizeof( double) * (powersize+2));
 		}
 		else
 		{
@@ -404,22 +428,23 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 	
 	if( size != EQPACKET*2*2)
 	{
-		DisposePtr( (Ptr) fDataCopy);
+		free( (Ptr) fDataCopy);
 		fDataCopy = NULL;
 		
-		if( shift) DisposePtr( (Ptr) fDataCopy2);
+		if( shift) free( (Ptr) fDataCopy2);
 		
-		if( shift) DisposePtr( (Ptr) shiftAr);
+		if( shift) free( (Ptr) shiftAr);
 	}
 }
 
 //static long PreviousAxe[ 2];
 //static long PreviousAxe2[ 2];
 
-void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
+void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
-	long	i, y, powersize, *shiftAr;
-	double	pente, axe, *fDataCopy2, *fDataCopy = intDriver->fData;
+	SInt32	i, y, powersize, *shiftAr = NULL;
+	double	pente, axe, *fDataCopy2 = NULL, *fDataCopy = intDriver->fData;
+	Boolean didInitFData = 0;
 	
 	size /= 2;
 	
@@ -433,9 +458,10 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 				powersize *= 2;
 			}while( powersize < size/2);
 			
-			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
+			fDataCopy = (double*) malloc( sizeof( double) * (powersize+2));
+			didInitFData = 1;
 		}
-		else powersize = EQPACKET*2;
+		else powersize = EQPACKET*2*2;
 	}
 	else
 	{
@@ -447,21 +473,38 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 				powersize *= 2;
 			}while( powersize < size);
 			
-			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
+			fDataCopy = (double*) malloc( sizeof( double) * (powersize+2));
+			didInitFData = 1;
 		}
 		else powersize = EQPACKET*2;
 	}
 	
 	if( shift)
 	{
-		fDataCopy2 = (double*) NewPtr( sizeof( double) * (powersize+2));
-		if( fDataCopy2 == NULL) return;
+		fDataCopy2 = (double*) malloc( sizeof( double) * (powersize+2));
+		if( fDataCopy2 == NULL) {
+			if (didInitFData && fDataCopy) {
+				free(fDataCopy);
+			}
+			return;
+		}
 		
-		shiftAr = (long*) NewPtrClear( sizeof( long) * (powersize+2));
-		if( shiftAr == NULL) return;
+		shiftAr = (SInt32*) calloc( sizeof( SInt32) * (powersize+2), 1);
+		if( shiftAr == NULL) {
+			if (didInitFData && fDataCopy) {
+				free(fDataCopy);
+			}
+			free(fDataCopy2);
+			return;
+		}
 	}
 	
-	if( fDataCopy == NULL) return;
+	if( fDataCopy == NULL)
+	{
+		if(shiftAr) free(shiftAr);
+		if(fDataCopy2) free(fDataCopy2);
+		return;
+	}
 	
 	for( y = 0; y < nochan; y++)
 	{
@@ -518,7 +561,7 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 		
 		if( shift)
 		{
-			long shiftval, a, b;
+			SInt32 /*shiftval,*/ a, b;
 			
 			for( i = 0 ; i < powersize; i++)
 			{
@@ -534,7 +577,7 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 				if( shiftAr[ i] >= 0 && shiftAr[ i] < powersize) fDataCopy2[ shiftAr[ i] +1] += fDataCopy[ i +1];
 			}
 			
-			BlockMoveData( fDataCopy2, fDataCopy, sizeof( double) * (powersize+2));
+			memcpy( fDataCopy, fDataCopy2, sizeof( double) * (powersize+2));
 		}
 		else
 		{
@@ -615,11 +658,11 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 	
 	if( size != EQPACKET*2*2)
 	{
-		DisposePtr( (Ptr) fDataCopy);
+		free( (Ptr) fDataCopy);
 		fDataCopy = NULL;
 		
-		if( shift) DisposePtr( (Ptr) fDataCopy2);
-		if( shift) DisposePtr( (Ptr) shiftAr);
+		if( shift) free( (Ptr) fDataCopy2);
+		if( shift) free( (Ptr) shiftAr);
 	}
 }
 

@@ -101,7 +101,7 @@ Boolean DragCommand( RgnHandle myRgn, Cmd myCmd, EventRecord *theEvent)
 	NewDrag( &theDrag);
 	
 	myPcmd = (Pcmd*) NewPtrClear( sizeof( Pcmd) + 1 * sizeof( Cmd));
-	if( myPcmd == NULL) MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
+	if( myPcmd == NULL) PPDebugStr( __LINE__, __FILE__, "Memory WARNING");
 	
 	myPcmd->structSize = sizeof( Pcmd) + 1 * sizeof( Cmd);
 	myPcmd->tracks = 1;
@@ -160,7 +160,7 @@ void CreatePianoPixMap(void)
 
 	NewGWorld(	&theGWorld, 8, &aRect, nil, nil, (GWorldFlags) 0);
 	
-	if( NewOffscreenPixMap( &PianoPix, &aRect) != noErr) MyDebugStr( __LINE__, __FILE__, "Memory Error !!!");
+	if( NewOffscreenPixMap( &PianoPix, &aRect) != noErr) PPDebugStr( __LINE__, __FILE__, "Memory Error !!!");
 
 	LockPixels( GetPortPixMap( theGWorld));
 	SetGWorld( theGWorld, NULL);

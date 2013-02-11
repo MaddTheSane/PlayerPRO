@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'Cocoa Example' target in the 'Cocoa Example' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
+#include <PlayerPROCore/PlayerPROCore.h>

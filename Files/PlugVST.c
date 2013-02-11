@@ -6,6 +6,7 @@
 
 #include "aeffectx.h"
 #include "RDriver.h"
+#include "RDriverInt.h"
 
 #include <Carbon/Carbon.h>
 
@@ -861,7 +862,7 @@ void CloseVSTPlug( void)
 				
 				tempPref.ID = ce->ce[ 0]->uniqueID;
 				
-				if( ce->ce[ 0]->numParams >= MAXVSTITEM) MyDebugStr( __LINE__, __FILE__, "Too many VSTITEM, press continue.");
+				if( ce->ce[ 0]->numParams >= MAXVSTITEM) PPDebugStr( __LINE__, __FILE__, "Too many VSTITEM, press continue.");
 				
 				for( x = 0; x < ce->ce[ 0]->numParams && x < MAXVSTITEM; x++)
 				{
@@ -988,14 +989,14 @@ void ScanDirVSTPlug( long dirID, short VRefNum)
 			
 			iErr = HSetVol( NULL, info.hFileInfo.ioVRefNum, dirID);
 			
-			if( tPlug > MAXVST) MyDebugStr( __LINE__, __FILE__, "Too many plugs");
+			if( tPlug > MAXVST) PPDebugStr( __LINE__, __FILE__, "Too many plugs");
 			
 			LoadVSTPLUG( tPlug, info.hFileInfo.ioNamePtr);
 			
 			tPlug++;
 			
 			iErr = HSetVol( NULL, vRefNum, dirIDCopy);
-			if( iErr != noErr) MyDebugStr( __LINE__, __FILE__, "HSetVol error...");
+			if( iErr != noErr) PPDebugStr( __LINE__, __FILE__, "HSetVol error...");
 		}
 		else if((info.hFileInfo.ioFlAttrib & 16))
 		{
@@ -1565,7 +1566,7 @@ void VSTEditorDoItemPress( short itemHit, DialogPtr aDia)
 							
 							pStrcpy( VSTPref[ i]->name, theString);
 							
-							if( CurrentDialogCE->ce[ 0]->numParams >= MAXVSTITEM) MyDebugStr( __LINE__, __FILE__, "MAXVST TOO SMALL, Press continue.");
+							if( CurrentDialogCE->ce[ 0]->numParams >= MAXVSTITEM) PPDebugStr( __LINE__, __FILE__, "MAXVST TOO SMALL, Press continue.");
 								
 							for( x = 0; x < CurrentDialogCE->ce[ 0]->numParams && x < MAXVSTITEM; x++)
 							{

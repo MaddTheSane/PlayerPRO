@@ -548,7 +548,7 @@ void SelectQTFile( FSSpec	*file)
 	
 	if( QTMovie != NULL)
 	{
-		MyDebugStr(__LINE__, __FILE__, "QTMovie != NULL");
+		PPDebugStr(__LINE__, __FILE__, "QTMovie != NULL");
 	}
 
 	QTFile = *file;
@@ -581,7 +581,7 @@ void SelectQTFile( FSSpec	*file)
 	RETRY:
 	
 	iErr = OpenMovieFile( &QTFile, &QTresRefNum, fsCurPerm);
-	if( iErr) MyDebugStr(__LINE__, __FILE__, "OpenMovieFile");
+	if( iErr) PPDebugStr(__LINE__, __FILE__, "OpenMovieFile");
 	
 	resId = 0;
 	iErr = NewMovieFromFile( &QTMovie, QTresRefNum, &resId, NULL, 0, &dataRefWasChanged);

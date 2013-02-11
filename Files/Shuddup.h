@@ -2,19 +2,15 @@
 #define __SHUDDUPH__
 
 
-#if PRAGMA_STRUCT_ALIGN
-#pragma options align=mac68k
-#elif PRAGMA_STRUCT_PACKPUSH
-#pragma pack(push, 2)
-#elif PRAGMA_STRUCT_PACK
-#pragma pack(2)
-#endif
 
 #define MAXVST 300
 
 #include "RDriver.h"
 #include <Carbon/Carbon.h>
 #include <QuickTime/QuickTime.h>
+
+#pragma pack(push, 2)
+
 #define IsCodeOK() false
 static inline OSErr CallPlug(short item)
 {
@@ -310,13 +306,7 @@ typedef struct
 	
 }	Prefs;
 
-#if PRAGMA_STRUCT_ALIGN
-#pragma options align=reset
-#elif PRAGMA_STRUCT_PACKPUSH
 #pragma pack(pop)
-#elif PRAGMA_STRUCT_PACK
-#pragma pack()
-#endif
 
 
 enum {
@@ -383,7 +373,7 @@ enum {
 
 unsigned char* MyC2PStr( Ptr cStr);
 void MyP2CStr( unsigned char *cStr);
-void MyDebugStr( short line, Ptr file, Ptr text);
+void PPDebugStr( short line, Ptr file, Ptr text);
 void			NNumToString( short no, Str255 aStr);
 void			GetNoteString( short note, Str255	string);
 Boolean			GetIns( short *ins, short *samp);

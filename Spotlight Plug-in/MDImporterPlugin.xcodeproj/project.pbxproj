@@ -3,14 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2C05A19C06CAA52B00D84F6F /* GetMetadataForFile.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C05A19B06CAA52B00D84F6F /* GetMetadataForFile.c */; };
 		553A9BC013021CC0004F002C /* schema.xml in Resources */ = {isa = PBXBuildFile; fileRef = C88FB7D7067446EC006EBB30 /* schema.xml */; };
 		553A9BC513021CD3004F002C /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = C88FB7E30674480E006EBB30 /* schema.strings */; };
-		554BB7C012FDC52B001A025C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554BB76B12FDC522001A025C /* PlayerPROCore.framework */; };
+		55C358EE16C42E0800FB9FA6 /* libPlayerPROCompact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C358ED16C42DF500FB9FA6 /* libPlayerPROCompact.a */; };
+		55C358F216C42F4200FB9FA6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C358F116C42F4200FB9FA6 /* Foundation.framework */; };
+		55C358F416C42F4F00FB9FA6 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C358F316C42F4F00FB9FA6 /* AudioUnit.framework */; };
+		55C358F616C42F5500FB9FA6 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C358F516C42F5500FB9FA6 /* CoreMIDI.framework */; };
 		8D576312048677EA00EA77CD /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 08FB77B6FE84183AC02AAC07 /* main.c */; settings = {ATTRIBUTES = (); }; };
 		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
 		8D5B49A804867FD3000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D5B49A704867FD3000E48DA /* InfoPlist.strings */; };
@@ -18,13 +21,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		553A9CDB13024D60004F002C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 5533410810BB5460005208D1;
-			remoteInfo = "Import-export";
-		};
 		554BB76212FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
@@ -45,13 +41,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 550BFF1010BA0179004FC5D7;
 			remoteInfo = "Game Example";
-		};
-		554BB76812FDC522001A025C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 551FECC510E7354900EDF2F1;
-			remoteInfo = AutoExec;
 		};
 		554BB76A12FDC522001A025C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -354,12 +343,47 @@
 			remoteGlobalIDString = 557DE9A110E08DC100177B4C;
 			remoteInfo = "Tone Generator";
 		};
-		554BB7C512FDC5EB001A025C /* PBXContainerItemProxy */ = {
+		5573A15F165831E000A5AECA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5573A1031656FAF100A5AECA;
+			remoteInfo = iOSPlayerPROCore;
+		};
+		55801EF913D21DCF007E24FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55CBF9A611EB77760028C6BB;
+			remoteInfo = Cocoa;
+		};
+		55C358C316C42DF500FB9FA6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
-			remoteInfo = PlayerPROCore;
+			remoteGlobalIDString = 55C3589516C42D1800FB9FA6;
+			remoteInfo = PlayerPROCompact;
+		};
+		55C358EC16C42DF500FB9FA6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55C358C216C42D1800FB9FA6;
+			remoteInfo = PlayerPROCompact;
+		};
+		55F60E7A1640AB93007A76BA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 551292D8163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		55FBD1B3165483ED00B1259F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 554BB6F712FDC521001A025C /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55879F85164CA65D009068D5;
+			remoteInfo = PPPlay;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -369,6 +393,9 @@
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		2C05A19B06CAA52B00D84F6F /* GetMetadataForFile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GetMetadataForFile.c; sourceTree = "<group>"; };
 		554BB6F712FDC521001A025C /* PPMacho.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PPMacho.xcodeproj; path = ../PPMacho.xcodeproj; sourceTree = SOURCE_ROOT; };
+		55C358F116C42F4200FB9FA6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		55C358F316C42F4F00FB9FA6 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		55C358F516C42F5500FB9FA6 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		8D576316048677EA00EA77CD /* PlayerPROImporter.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlayerPROImporter.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C86B05260671AA6E00DD9006 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -381,9 +408,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55C358F616C42F5500FB9FA6 /* CoreMIDI.framework in Frameworks */,
+				55C358F416C42F4F00FB9FA6 /* AudioUnit.framework in Frameworks */,
+				55C358F216C42F4200FB9FA6 /* Foundation.framework in Frameworks */,
+				55C358EE16C42E0800FB9FA6 /* libPlayerPROCompact.a in Frameworks */,
 				8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */,
 				C86B05270671AA6E00DD9006 /* CoreServices.framework in Frameworks */,
-				554BB7C012FDC52B001A025C /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +435,9 @@
 		089C1671FE841209C02AAC07 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				55C358F516C42F5500FB9FA6 /* CoreMIDI.framework */,
+				55C358F316C42F4F00FB9FA6 /* AudioUnit.framework */,
+				55C358F116C42F4200FB9FA6 /* Foundation.framework */,
 				C86B05260671AA6E00DD9006 /* CoreServices.framework */,
 				0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */,
 			);
@@ -443,10 +476,11 @@
 			isa = PBXGroup;
 			children = (
 				554BB76312FDC522001A025C /* PlayerPRO.app */,
+				55801EFA13D21DCF007E24FC /* PlayerPRO 6.app */,
 				554BB76512FDC522001A025C /* PlayerPRO Example.app */,
 				554BB76712FDC522001A025C /* Game Example.app */,
-				554BB76912FDC522001A025C /* AutoExec.app */,
 				554BB76B12FDC522001A025C /* PlayerPROCore.framework */,
+				55F60E7B1640AB93007A76BA /* PlayerPROKit.framework */,
 				554BB76D12FDC522001A025C /* MOD.ppimpexp */,
 				554BB76F12FDC522001A025C /* 669.ppimpexp */,
 				554BB77112FDC522001A025C /* AMF.ppimpexp */,
@@ -489,6 +523,9 @@
 				554BB7BB12FDC522001A025C /* Silence.plugin */,
 				554BB7BD12FDC522001A025C /* Smooth.plugin */,
 				554BB7BF12FDC522001A025C /* Tone Generator.plugin */,
+				55FBD1B4165483ED00B1259F /* PPPlay */,
+				5573A160165831E000A5AECA /* libiOSPlayerPROCore.a */,
+				55C358ED16C42DF500FB9FA6 /* libPlayerPROCompact.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -507,8 +544,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				554BB7C612FDC5EB001A025C /* PBXTargetDependency */,
-				553A9CDC13024D60004F002C /* PBXTargetDependency */,
+				55C358C416C42DF500FB9FA6 /* PBXTargetDependency */,
 			);
 			name = PlayerPROImporter;
 			productInstallPath = /Library/Spotlight;
@@ -521,8 +557,11 @@
 /* Begin PBXProject section */
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+			};
 			buildConfigurationList = 70138C880896BE9A00968C2F /* Build configuration list for PBXProject "MDImporterPlugin" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -566,13 +605,6 @@
 			fileType = wrapper.application;
 			path = "Game Example.app";
 			remoteRef = 554BB76612FDC522001A025C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		554BB76912FDC522001A025C /* AutoExec.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = AutoExec.app;
-			remoteRef = 554BB76812FDC522001A025C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		554BB76B12FDC522001A025C /* PlayerPROCore.framework */ = {
@@ -876,6 +908,41 @@
 			remoteRef = 554BB7BE12FDC522001A025C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		5573A160165831E000A5AECA /* libiOSPlayerPROCore.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libiOSPlayerPROCore.a;
+			remoteRef = 5573A15F165831E000A5AECA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55801EFA13D21DCF007E24FC /* PlayerPRO 6.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "PlayerPRO 6.app";
+			remoteRef = 55801EF913D21DCF007E24FC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55C358ED16C42DF500FB9FA6 /* libPlayerPROCompact.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPlayerPROCompact.a;
+			remoteRef = 55C358EC16C42DF500FB9FA6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55F60E7B1640AB93007A76BA /* PlayerPROKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PlayerPROKit.framework;
+			remoteRef = 55F60E7A1640AB93007A76BA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55FBD1B4165483ED00B1259F /* PPPlay */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = PPPlay;
+			remoteRef = 55FBD1B3165483ED00B1259F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -904,15 +971,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		553A9CDC13024D60004F002C /* PBXTargetDependency */ = {
+		55C358C416C42DF500FB9FA6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = "Import-export";
-			targetProxy = 553A9CDB13024D60004F002C /* PBXContainerItemProxy */;
-		};
-		554BB7C612FDC5EB001A025C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PlayerPROCore;
-			targetProxy = 554BB7C512FDC5EB001A025C /* PBXContainerItemProxy */;
+			name = PlayerPROCompact;
+			targetProxy = 55C358C316C42DF500FB9FA6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -939,12 +1001,14 @@
 		70138C850896BE9A00968C2F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "../build/${BUILD_STYLE}/";
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				DEAD_CODE_STRIPPING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/Spotlight;
+				LD_RUNPATH_SEARCH_PATHS = "/Library/Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = PlayerPROImporter;
 				WRAPPER_EXTENSION = mdimporter;
 			};
@@ -953,11 +1017,15 @@
 		70138C860896BE9A00968C2F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "../build/${BUILD_STYLE}/";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/Spotlight;
+				LD_RUNPATH_SEARCH_PATHS = "/Library/Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = PlayerPROImporter;
+				STRIP_INSTALLED_PRODUCT = YES;
+				STRIP_STYLE = debugging;
 				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Release;
@@ -965,26 +1033,28 @@
 		70138C890896BE9A00968C2F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		70138C8A0896BE9A00968C2F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				SDKROOT = macosx10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};

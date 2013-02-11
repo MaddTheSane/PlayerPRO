@@ -18,8 +18,9 @@
 /********************						***********************/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Carbon/Carbon.h>
+#include <PlayerPROCore/PPPlug.h>
 
+#if 0
 void ConvertInstrumentIn( register Byte *tempPtr, register long sSize)
 {
 	register Byte val = 0x80;
@@ -30,12 +31,17 @@ void ConvertInstrumentIn( register Byte *tempPtr, register long sSize)
 		*(tempPtr + sSize) -= val;
 	}
 }
+#endif
 
 sData* inMADCreateSample()
 {
 	sData	*curData;
 
-	curData = (sData*) NewPtrClear( sizeof( sData));
+	curData = (sData*) calloc( sizeof( sData), 1);
+	
+	if (curData == NULL) {
+		return NULL;
+	}
 	
 	curData->size		= 0;
 	curData->loopBeg	= 0;
@@ -51,11 +57,12 @@ sData* inMADCreateSample()
 }
 
 OSErr inAddSoundToMAD(Ptr			theSound,
+					  size_t		sndLen,
 					  long			lS,
 					  long			lE,
 					  short			sS,
 					  short			bFreq,
-					  unsigned long	rate,
+					  unsigned int	rate,
 					  Boolean		stereo,
 					  Str255		name,
 					  InstrData		*InsHeader,					// Ptr on instrument header
@@ -69,7 +76,7 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 
 	if( *sampleID > MAXSAMPLE) return MADParametersErr;
 
-	inOutBytes = GetPtrSize( theSound);
+	inOutBytes = sndLen;
 	
 	///////
 	
@@ -83,9 +90,13 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 		InsHeader->numSamples++;
 		
 		curData = sample[ *sampleID] = inMADCreateSample();
+		
+		if (!curData) {
+			return MADNeedMemory;
+		}
 	}
 	
-	if( curData->data != NULL) DisposePtr( curData->data);
+	if( curData->data != NULL) free( curData->data);
 	curData->data = theSound;
 	
 	curData->size		= inOutBytes;
@@ -93,7 +104,7 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 	curData->loopSize	= lE - lS;
 	curData->vol		= 64;
 	curData->amp		= sS;
-	curData->c2spd		= rate >> 16L;
+	curData->c2spd		= rate;
 	curData->relNote	= 60 - bFreq;
 	curData->stereo		= stereo;
 	

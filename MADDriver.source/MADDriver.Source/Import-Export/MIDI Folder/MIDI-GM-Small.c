@@ -25,11 +25,10 @@ void DrawSmallPianoKey( short i, short color, Rect aRect);
 void NDoPlayInstru(short	Note, short Instru, short effect, short arg, short vol);
 void ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
 
-void DeleteDLSFile();
 short GenerateDLSFromBundle();
 void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai);
 void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst);
-short OpenDataFileQK( long dirID, short VRefNum);
+//short OpenDataFileQK( long dirID, short VRefNum);
 
 
 /**** Resource Format QK25 ****/
@@ -39,18 +38,18 @@ short OpenDataFileQK( long dirID, short VRefNum);
 //long GetNELong(BigEndianLong toget)
 //{
 //#ifdef __BIG_ENDIAN__
-//return toget;
+//	return toget;
 //#else
-//return EndianU32_BtoL(toget.bigEndianValue);
+//	return EndianS32_BtoL(toget.bigEndianValue);
 //#endif
 //}
 //
 //void SetNEOSType(BigEndianOSType *toset, OSType theval)
 //{
 //#ifdef __BIG_ENDIAN__
-//*toset = theval;
+//	*toset = theval;
 //#else
-//toset->bigEndianValue = EndianU32_LtoB(theval);
+//	toset->bigEndianValue = EndianU32_LtoB(theval);
 //#endif
 //}
 //As such, you can substitute in your mind what the function would have
@@ -58,15 +57,15 @@ short OpenDataFileQK( long dirID, short VRefNum);
 
 
 #ifdef __BIG_ENDIAN__
-#define GetNELong
+#define GetNELong(toget) toget
 #else
-#define	GetNELong(toget) EndianU32_BtoL(toget.bigEndianValue)
+#define	GetNELong(toget) EndianS32_BtoL(toget.bigEndianValue)
 #endif
 
 #ifdef __BIG_ENDIAN__
 #define SetNELong(toset, theval)	*toset = theval
 #else
-#define SetNELong(toset, theval)	(toset)->bigEndianValue = EndianU32_LtoB(theval)	
+#define SetNELong(toset, theval)	(toset)->bigEndianValue = EndianS32_LtoB(theval)	
 #endif
 
 #ifdef __BIG_ENDIAN__
@@ -76,30 +75,33 @@ short OpenDataFileQK( long dirID, short VRefNum);
 #endif
 
 #ifdef __BIG_ENDIAN__
-#define GetNEShort
+#define GetNEShort(toget) toget
 #else
-#define GetNEShort(toget) EndianU16_BtoL(toget.bigEndianValue)
+#define GetNEShort(toget) EndianS16_BtoL(toget.bigEndianValue)
 #endif
 
 #ifdef __BIG_ENDIAN__
-#define GetNEOSType
+#define GetNEOSType(toget) toget
 #else
 #define GetNEOSType(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
 
 #ifdef __BIG_ENDIAN__
-#define GetNEUnsignedFixed
+#define GetNEUnsignedFixed(toget) toget
 #else
 #define	GetNEUnsignedFixed(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
 
 static Boolean TestRunningOnCarbonX(void)
 {
-    UInt32 response;
+#if 0
+	UInt32 response;
     
     return (Gestalt(gestaltSystemVersion, 
                     (SInt32 *) &response) == noErr)
 	&& (response >= 0x01000);
+#endif
+	return true;
 }
 
 static void ConvertInstrument16( register	short	*tempPtr,	register long sSize)
@@ -196,10 +198,14 @@ OSErr GetAtomDataById( MyAtom at, long type, void *data, long size);
 
 /*************************/
 
+void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
+void pStrcat(register unsigned char *s1, register unsigned char *s2);
+
+
 void OctavesMIDIName(short	id, Str255	String)
 {
 	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
-									/*	{'Do','Do#','RŽ','RŽ#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
+									/*	{'Do','Do#','RÃ©','RÃ©#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
 	Str255		WorkStr;
 	
 	if( id == 0xFF)
@@ -216,8 +222,8 @@ void OctavesMIDIName(short	id, Str255	String)
 
 void SetInstruNameM( short	theNo, Str255 theNewName, short MIDIgm, Ptr destName)
 {
-short	i;
-Str255	aStr, bStr;
+	short	i;
+	Str255	aStr, bStr;
 
 	pStrcpy( aStr, "\p(");
 	NumToString( MIDIgm, bStr);
@@ -234,7 +240,7 @@ Str255	aStr, bStr;
 
 void SetSampNameM( Str255 theNewName, Ptr destName)
 {
-short	i;
+	short	i;
 
 	for(i=0; i<32; i++)
 	{
@@ -243,6 +249,7 @@ short	i;
 	}
 }
 
+#if 0
 short OpenResFileQK( long dirID, short VRefNum)
 {
 	CInfoPBRec		info;
@@ -253,7 +260,7 @@ short OpenResFileQK( long dirID, short VRefNum)
 	FSSpec			spec;
 	short			ret;
 	
-	pStrcpy( spec.name, "\pQuickTimeª Musical Instruments");
+	pStrcpy( spec.name, "\pQuickTimeâ„¢ Musical Instruments");
 	spec.vRefNum = VRefNum;
 	spec.parID = dirID;
 	
@@ -287,14 +294,13 @@ short OpenResFileQK( long dirID, short VRefNum)
 			ret = FSpOpenResFile( &spec, fsCurPerm);
 			
 			//	iErr = HSetVol( NULL, vRefNum, dirIDCopy);
-			//	if( iErr != noErr) MyDebugStr( __LINE__, __FILE__, "HSetVol error...");
+			//	if( iErr != noErr) PPDebugStr( __LINE__, __FILE__, "HSetVol error...");
 		}
 	}
 	
 	return ret;
 }
 
-#if 0
 void ComputeQuicktimeSound25( short GMInstruID, sData **sample, InstrData* inst, short ins)
 {
 	long					lS, lE, inOutBytes;
@@ -633,13 +639,13 @@ void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, s
 	/*********/
 	
 	{
-		short 						synthCount, foundVRefNum, iFileRef, no, ii, i;
+		short 						synthCount/*, foundVRefNum, iFileRef, no, ii, i*/;
 		OSErr 						iErr;
 		NoteAllocator 				na;
 		OSType						synthType;
 		Str31						synthName;
 		AtomicInstrument			ai;
-		SynthesizerDescription		sd;
+		//SynthesizerDescription		sd;
 		MusicComponent 				mc;
 		
 		na = OpenDefaultComponent(kNoteAllocatorComponentType,0);
@@ -680,7 +686,7 @@ void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, s
 		if (iErr != noErr)
 		{
 			iErr = NAStuffToneDescription( na, 1, &myNoteRequest.tone);
-			if(iErr != noErr) MyDebugStr(__LINE__, __FILE__, "NAStuff ComputeQTSound");
+			if(iErr != noErr) PPDebugStr(__LINE__, __FILE__, "NAStuff ComputeQTSound");
 		}
 		
 		SetNEOSType(&myNoteRequest.tone.synthesizerType, synthType);
@@ -696,7 +702,7 @@ void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, s
 		iErr = MusicGetPartAtomicInstrument(mc, 1, &ai, 0);
 		if( iErr) goto BAIL;
 		
-		if( QK50) Quicktime5( &myNoteRequest, sample, inst);
+		/*if( QK50)*/ Quicktime5( &myNoteRequest, sample, inst);
 //		else TESTNEWSYSTEM( sample, inst, ai);
 		
 		CloseComponent( na);
@@ -709,11 +715,12 @@ BAIL:
 
 void InitQuicktimeInstruments(void)
 {
+#if 0
 	long					lS, lE, inOutBytes, result;
 	//	short					sS, qQ;
 	//	short 					i;
 	short					foundVRefNum, vRefNum;
-	UNFILE					iFileRef;
+	short					iFileRef;
 	long					foundDirID, dirID;
 	OSErr					iErr;
 	
@@ -731,7 +738,7 @@ void InitQuicktimeInstruments(void)
 		{
 			QuicktimeInstruAvailable = true;
 			
-			iClose( iFileRef);
+			FSClose( iFileRef);
 		}
 	}
 	
@@ -755,43 +762,34 @@ void InitQuicktimeInstruments(void)
 		na = OpenDefaultComponent(kNoteAllocatorComponentType,0);
 		
 		iErr = NAStuffToneDescription( na, 1, &myNoteRequest.tone);
-		if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "NAStuff");
+		if (iErr != noErr) PPDebugStr(__LINE__, __FILE__, "NAStuff");
 		
 		CloseComponent( na);
 	}
 	
 	HSetVol( NULL, vRefNum, dirID);
+#endif
+	QK50 = true;
+	QuicktimeInstruAvailable = true;
 }
+
 
 void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 {
 	short 						foundVRefNum, iFileRef, no, ii, i, x;
 	OSErr 						iErr;
-	NoteAllocator 				na;
+	//NoteAllocator 				na;
 	Str255						aStr, bStr;
 	sData						*curData;
-	long						size, inOutBytes, foundDirID;
+	//long						size, inOutBytes, foundDirID;
 	Ptr							data;
 	CK							ck;
 	long						listType, noIns, fSize, tot;
-	MyAtom						at, sat, insAt, insHe, rgnAt, sat3, sat4, InfoAt, InfoData;
+	MyAtom						at, sat, insAt, insHe, rgnAt; /*, sat3, sat4, InfoAt, InfoData;*/
 	INSTHEADER 					curIns;
 	
-	if( TestRunningOnCarbonX())
-	{
-		iFileRef = GenerateDLSFromBundle();
-		iErr = noErr;
-	}
-	else
-	{
-		iErr = FindFolder( kOnSystemDisk, kExtensionFolderType, kDontCreateFolder, &foundVRefNum, &foundDirID);
-		
-		if( iErr == noErr)
-		{
-			HSetVol( NULL, foundVRefNum, foundDirID);	
-			iFileRef = OpenDataFileQK( foundDirID, foundVRefNum);
-		}
-	}
+	iFileRef = GenerateDLSFromBundle();
+	iErr = noErr;
 	
 	if( iErr == noErr)
 	{
@@ -1027,8 +1025,8 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					if( curMusic != NULL) curData = MADCreateSample( curMusic, inst->no, inst->numSamples);
 					else
 					{
-						curData = (sData*) NewPtrClear( sizeof( sData));
-						if( curData == NULL) MyDebugStr( __LINE__, __FILE__, "");
+						curData = (sData*) calloc( sizeof( sData), 1);
+						if( curData == NULL) PPDebugStr( __LINE__, __FILE__, "");
 						sample[ inst->no * MAXSAMPLE + inst->numSamples] = curData;
 						
 						inst->numSamples++;
@@ -1044,7 +1042,7 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					
 					// curData->name
 					
-					curData->data = NewPtr( dataAt.size);
+					curData->data = malloc( dataAt.size);
 					
 					if( curData->data == NULL)
 					{
@@ -1059,7 +1057,6 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 						
 						switch( fmt.wBitsPerSample)
 						{
-								//TODO: Handle 24-bit sound?
 							case 8:
 								ConvertInstrumentIn( (Byte*) curData->data, dataAt.size);
 								break;
@@ -1079,7 +1076,7 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 						{
 							curData->stereo = true;
 						}
-						if( fmt.nCannels > 2) MyDebugStr( __LINE__, __FILE__, "More than 2 channels");
+						if( fmt.nCannels > 2) PPDebugStr( __LINE__, __FILE__, "More than 2 channels");
 						
 						// **
 						curData->c2spd		= fmt.nSamplesPerSec;
@@ -1111,11 +1108,6 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 	
 BAIL:
 	
-	if( TestRunningOnCarbonX())
-	{
-		DeleteDLSFile();
-	}
-	
 	return;
 }
 
@@ -1123,10 +1115,10 @@ void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai)
 {
 	short 						no, ii, i;
 	OSErr 						iErr;
-	OSType						synthType;
-	Str31						synthName;
-	SynthesizerDescription		sd;
-	MusicComponent 				mc;
+	//OSType						synthType;
+	//Str31						synthName;
+	//SynthesizerDescription		sd;
+	//MusicComponent 				mc;
 	
 	Str255						aStr, bStr;
 	
@@ -1138,12 +1130,12 @@ void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai)
 	QTAtom						mySampleInfoAtom = 0;
 	QTAtom						mySampleDescAtom = 0;
 	QTAtom						mySampleDataAtom = 0;
-	QTAtom						myInstInfoAtom = 0;
-	QTAtom						myToneDescAtom = 0;
-	QTAtom						myInstrumentRefAtom = 0;
+	//QTAtom						myInstInfoAtom = 0;
+	//QTAtom						myToneDescAtom = 0;
+	//QTAtom						myInstrumentRefAtom = 0;
 	QTAtomID					atomID;
 	
-	short						x;
+	//short						x;
 	
 	short						sampleIDMap[ 500];
 	
@@ -1185,14 +1177,14 @@ void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai)
 			if( mySampleInfoAtom != 0)
 			{
 				no = QTCountChildrenOfType( ai, mySampleInfoAtom, kaiSampleDataType);
-				if( no != 1) MyDebugStr(__LINE__, __FILE__, "kaiSampleDataType");
+				if( no != 1) PPDebugStr(__LINE__, __FILE__, "kaiSampleDataType");
 				
 				mySampleDataAtom = QTFindChildByIndex( ai, mySampleInfoAtom, kaiSampleDataType, 1, &atomID);
-				if( mySampleDataAtom == 0) MyDebugStr(__LINE__, __FILE__, "kaiSampleDataType");
+				if( mySampleDataAtom == 0) PPDebugStr(__LINE__, __FILE__, "kaiSampleDataType");
 				
 				size = 0;
 				iErr = QTGetAtomDataPtr( ai, mySampleDataAtom, &size, &data);
-				if( iErr) MyDebugStr(__LINE__, __FILE__, "QTGetAtomDataPtr");
+				if( iErr) PPDebugStr(__LINE__, __FILE__, "QTGetAtomDataPtr");
 				
 				inOutBytes = (GetNEShort(sdesc->sampleSize) * GetNELong(sdesc->numSamples)) / 8L;
 				
@@ -1204,8 +1196,8 @@ void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai)
 					if( curMusic != NULL) curData = MADCreateSample( curMusic, inst->no, inst->numSamples);
 					else
 					{
-						curData = (sData*) NewPtrClear( sizeof( sData));
-						if( curData == NULL) MyDebugStr( __LINE__, __FILE__, "");
+						curData = (sData*) calloc( sizeof( sData), 1);
+						if( curData == NULL) PPDebugStr( __LINE__, __FILE__, "");
 						sample[ inst->no * MAXSAMPLE + inst->numSamples] = curData;
 						
 						inst->numSamples++;
@@ -1220,7 +1212,7 @@ void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai)
 					curData->amp		= 8;
 					// curData->name
 					
-					curData->data = NewPtr( inOutBytes);
+					curData->data = malloc( inOutBytes);
 					
 					if( curData->data == NULL)
 					{
@@ -1259,7 +1251,7 @@ void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai)
 						{
 							curData->stereo = true;
 						}
-						if( GetNEShort(sdesc->numChannels) > 2) MyDebugStr( __LINE__, __FILE__, "More than 2 channels");
+						if( GetNEShort(sdesc->numChannels) > 2) PPDebugStr( __LINE__, __FILE__, "More than 2 channels");
 						
 						// **
 						curData->c2spd		= GetNEUnsignedFixed(sdesc->sampleRate) >> 16;
@@ -1296,18 +1288,15 @@ BAIL:
 	;
 }
 
-short GenerateDLSFromBundle()
+FSIORefNum GenerateDLSFromBundle()
 {
 	CFBundleRef		AudioBundle;
 	CFURLRef		bundleURL;
 	FSRef 			bundleFSRef, rsrcRef;
-	FSSpec			file, tempDLS;
+	FSSpec			file;
 	CFURLRef        rsrcURL;
-	short			refNum;
+	FSIORefNum		refNum;
 	OSErr			iErr;
-	ResType			theType;
-	short			i, ff = -1;
-	
 	
 	//DoStandardOpen( &file, "\pHello", 'ANYK');
 	
@@ -1323,6 +1312,7 @@ short GenerateDLSFromBundle()
 	bundleURL = CFURLCreateFromFSRef( kCFAllocatorDefault, &bundleFSRef);
 	
 	AudioBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL);
+	CFRelease(bundleURL);
 	if( AudioBundle == NULL) Debugger();
 	
 	
@@ -1337,11 +1327,17 @@ short GenerateDLSFromBundle()
 	
 	iErr = FSOpenFork( &rsrcRef, 0, 0, fsRdPerm, &refNum);
 	CFRelease(rsrcURL);
+	if( iErr != noErr)
+	{
+		refNum = -1;
+	}
 	CFRelease(AudioBundle);
-	if( iErr == noErr) return refNum;
+	return refNum;
+	
 	
 	// Look for a resource in the main bundle by name and type.
-	rsrcURL = 		CFBundleCopyResourceURL( AudioBundle, 
+#if 0
+	/*rsrcURL = 		CFBundleCopyResourceURL( AudioBundle,
 											CFSTR("CoreAudio"), 			//CoreAudio
 											CFSTR("rsrc"), 					//rsrc
 											NULL);
@@ -1350,7 +1346,8 @@ short GenerateDLSFromBundle()
 	
 	iErr = FSOpenResourceFile( &rsrcRef, 0, 0, fsRdPerm, &refNum);
 	CFRelease(rsrcURL);
-	if( iErr) -1;
+	if( iErr) return -1;*/
+	refNum = CFBundleOpenBundleResourceMap(AudioBundle);
 	
 	for( i = 0; i < Count1Types(); i++)
 	{
@@ -1389,9 +1386,14 @@ short GenerateDLSFromBundle()
 		}
 	}
 	
-	CloseResFile( refNum);
+	CFBundleCloseBundleResourceMap(AudioBundle, refNum);
+	CFRelease(AudioBundle);
+	
+	//CloseResFile( refNum);
 	
 	return ff;
+#endif
+
 }
 
 void DeleteDLSFile()
@@ -1407,7 +1409,7 @@ void DeleteDLSFile()
 		FSpDelete( &tempDLS);
 	}
 }
-
+#if 0
 short OpenDataFileQK( long dirID, short VRefNum)
 {
 	CInfoPBRec		info;
@@ -1442,20 +1444,22 @@ short OpenDataFileQK( long dirID, short VRefNum)
 			if( iErr != noErr) iRefNum = -1;
 			
 			//	iErr = HSetVol( NULL, vRefNum, dirIDCopy);
-			//	if( iErr != noErr) MyDebugStr( __LINE__, __FILE__, "HSetVol error...");
+			//	if( iErr != noErr) PPDebugStr( __LINE__, __FILE__, "HSetVol error...");
 		}
 	}
 	
 	return iRefNum;
 }
+#endif
 
 #pragma mark Atom functions
 OSErr GetAtomData( MyAtom at, void* data, long size)
 {
-	long 	prePos, fSize, ilistType, nlistType, index, listSize;
+	//long 	prePos, fSize, ilistType, nlistType, index, listSize;
+	long	fSize;
 	CK		sck;
 	OSErr	iErr;
-	MyAtom	retat;
+	//MyAtom	retat;
 	
 	iErr = SetFPos( at.ref, fsFromStart, at.pos -4);
 	
@@ -1475,7 +1479,7 @@ OSErr GetAtomData( MyAtom at, void* data, long size)
 
 long CountAtomById( MyAtom at, long type)
 {
-	long 	prePos, fSize, ilistType, nlistType, index, listSize;
+	long 	prePos, fSize, ilistType, /*nlistType,*/ index, listSize;
 	CK		sck;
 	OSErr	iErr;
 	
@@ -1527,7 +1531,7 @@ long CountAtomById( MyAtom at, long type)
 
 OSErr FindAtomById( MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 {
-	long 	prePos, fSize, ilistType, nlistType, index, listSize;
+	long 	prePos, fSize, ilistType, /*nlistType,*/ index, listSize;
 	CK		sck;
 	OSErr	iErr;
 	

@@ -4,29 +4,34 @@
 /*	1999 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Carbon/Carbon.h>
+#include <PlayerPROCore/PPPlug.h>
+//#include <Carbon/Carbon.h>
 #include "PAT.h"
 
 #ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*msg_buf);
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
 #else
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *(short*)msg_buf
+#define Tdecode32(msg_buf) *(int*)msg_buf
+#else
+
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
-	INT32(&toswap);
+	PPLE32(&toswap);
 	return toswap;
 }
-#endif
 
-#ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*msg_buf);
-#else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
+	PPLE16(&toswap);
 	return toswap;
 }
+
+#endif
 #endif
 
 static OSErr TestPAT( Ptr CC)
@@ -53,10 +58,10 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 		{
 			if( sample[ i]->data != NULL)
 			{
-				DisposePtr( (Ptr) sample[ i]->data);
+				free ( sample[ i]->data);
 				sample[ i]->data = NULL;
 			}
-			DisposePtr( (Ptr) sample[ i]);
+			free( sample[ i]);
 			sample[ i] = NULL;
 		}
 	}
@@ -73,7 +78,14 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	{
 		curIns->volEnv[ i].pos		= 0;
 		curIns->volEnv[ i].val		= 0;
+		
+		curIns->pannEnv[ i].pos		= 0;
+		curIns->pannEnv[ i].val		= 0;
+
+		curIns->pitchEnv[ i].pos	= 0;
+		curIns->pitchEnv[ i].val	= 0;
 	}
+#if 0
 	for( i = 0; i < 12; i++)
 	{
 		curIns->pannEnv[ i].pos	= 0;
@@ -84,6 +96,7 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 		curIns->pitchEnv[ i].pos	= 0;
 		curIns->pitchEnv[ i].val	= 0;
 	}
+#endif
 	curIns->volSize		= 0;
 	curIns->pannSize	= 0;
 	
@@ -112,7 +125,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 //	LayerHeader		*PATLayer;
 	PatSampHeader	*PATSamp;
 	long			i, x;
-	unsigned long	  scale_table[ 200] = {
+	unsigned int	  scale_table[ 200] = {
 	16351, 17323, 18354, 19445, 20601, 21826, 23124, 24499, 25956, 27500, 29135, 30867,
 	32703, 34647, 36708, 38890, 41203, 43653, 46249, 48999, 51913, 54999, 58270, 61735,
 	65406, 69295, 73416, 77781, 82406, 87306, 92498, 97998, 103826, 109999, 116540, 123470,
@@ -239,11 +252,11 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		// DATA
 		
-		curData->data = NewPtr( curData->size);
+		curData->data = malloc( curData->size);
 		
 		if( curData->data != NULL)
 		{
-			BlockMove( PATData, curData->data, curData->size);
+			memcpy(curData->data, PATData, curData->size);
 
 			if( curData->amp == 16)
 			{
@@ -274,44 +287,84 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 	return noErr;
 }
 
-OSErr mainPAT(		OSType					order,						// Order to execute
-				InstrData				*InsHeader,					// Ptr on instrument header
-				sData					**sample,					// Ptr on samples data
-				short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
-																	// If sampleID == -1 : add sample else replace selected sample.
-				FSSpec					*AlienFileFSSpec,			// IN/OUT file
-				PPInfoPlug				*thePPInfoPlug)
+//hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
+static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
 {
-	OSErr	myErr;
+	CFURLRef toDeref = theRef;
+	if (resolveAgainstBase) {
+		toDeref = CFURLCopyAbsoluteURL(theRef);
+	}
+	CFStringRef fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
+	CFIndex strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
+	CFRelease(fileString);
+	if (resolveAgainstBase) {
+		CFRelease(toDeref);
+	}
+	return strLength;
+}
+
+
+OSErr mainPAT(void					*unused,
+			  OSType				order,						// Order to execute
+			  InstrData				*InsHeader,					// Ptr on instrument header
+			  sData					**sample,					// Ptr on samples data
+			  short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+			  // If sampleID == -1 : add sample else replace selected sample.
+			  CFURLRef				AlienFileCFURL,			// IN/OUT file
+			  PPInfoPlug			*thePPInfoPlug)
+{
+	OSErr	myErr = noErr;
 	UNFILE	iFileRefI;
 //	short	x;
 	long	inOutCount;
-		
+	char *file = NULL;
+	do{
+		char *longStr = NULL;
+		CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
+		longStr = malloc(pathLen);
+		if (!longStr) {
+			return MADNeedMemory;
+		}
+		Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)longStr, pathLen);
+		if (!pathOK) {
+			free(longStr);
+			return MADReadingErr;
+		}
+		size_t StrLen = strlen(longStr);
+		file = malloc(++StrLen);
+		if (!file) {
+			file = longStr;
+			break;
+		}
+		strlcpy(file, longStr, StrLen);
+		free(longStr);
+	} while (0);
+	
 	switch( order)
 	{
 		case 'IMPL':
 		{
 			Ptr				theSound;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			iFileRefI = iFileOpenRead(file);
+			if( iFileRefI != NULL)
 			{
-				GetEOF( iFileRefI, &inOutCount);
+				inOutCount = iGetEOF( iFileRefI);
 				
-				theSound = NewPtr( inOutCount);
+				theSound = malloc( inOutCount);
 				if( theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					FSRead( iFileRefI, &inOutCount, theSound);
+					iRead(inOutCount, theSound, iFileRefI);
 					
 					MAD2KillInstrument( InsHeader, sample);
 					
 					myErr = PATImport( InsHeader, sample, theSound);
 					
-					DisposePtr( theSound);
+					free( theSound);
 				}
 				
-				FSClose( iFileRefI);
+				iClose(iFileRefI);
 			}
 		}
 		break;
@@ -320,22 +373,22 @@ OSErr mainPAT(		OSType					order,						// Order to execute
 		{
 			Ptr	theSound;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			iFileRefI = iFileOpenRead(file);
 			if( myErr == noErr)
 			{
 				inOutCount = 50L;
-				theSound = NewPtr( inOutCount);
+				theSound = malloc( inOutCount);
 				if( theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					FSRead( iFileRefI, &inOutCount, theSound);
+					iRead(inOutCount, theSound, iFileRefI);
 					
 					myErr = TestPAT( theSound);
 				}
 				
-				DisposePtr( theSound);
+				free( theSound);
 				
-				FSClose( iFileRefI);
+				iClose( iFileRefI);
 			}
 		}
 		break;
@@ -344,12 +397,15 @@ OSErr mainPAT(		OSType					order,						// Order to execute
 			myErr = MADOrderNotImplemented;
 		break;
 	}
+	if (file) {
+		free(file);
+	}
 	
 	return myErr;
 }
 
 // D54EE3CC-B94C-4245-9E82-2F1D65C0009D
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xD5, 0x4E, 0xE3, 0xCC, 0xB9, 0x4C, 0x42, 0x45, 0x9E, 0x82, 0x2F, 0x1D, 0x65, 0xC0, 0x00, 0x9D)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xD5, 0x4E, 0xE3, 0xCC, 0xB9, 0x4C, 0x42, 0x45, 0x9E, 0x82, 0x2F, 0x1D, 0x65, 0xC0, 0x00, 0x9D)
 #define PLUGINFACTORY PATFactory //The factory name as defined in the Info.plist file
 #define PLUGMAIN mainPAT //The old main function, renamed please
 

@@ -21,9 +21,7 @@
 //
 /********************						***********************/
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#endif
+#pragma pack(push, 2)
 
 typedef struct s3mform
 {
@@ -67,22 +65,20 @@ typedef struct s3minsform
 	unsigned char		insdosname[12];
 	unsigned char		memsegh;
 	unsigned short		memsegl;
-	unsigned long		inslength;
-	unsigned long		insloopbeg;
-	unsigned long		insloopend;
+	UInt32				inslength;
+	UInt32				insloopbeg;
+	UInt32				insloopend;
 	unsigned char		insvol;
 	unsigned char		insdsk;
 	unsigned char		inspack;
 	unsigned char		insflags;
-	unsigned long		c2spd;
+	UInt32				c2spd;
 	unsigned char		inssig2[4];
 	unsigned short		insgvspos;
 	unsigned short		insint512;
-	unsigned long		insintlastused;
+	UInt32				insintlastused;
 	unsigned char		insname[28];
 	unsigned char		inssig[ 4];
 } s3minsform;
                
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=reset
-#endif
+#pragma pack(pop)

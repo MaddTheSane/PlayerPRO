@@ -17,6 +17,7 @@
 /********************************************************/
 #include <Carbon/Carbon.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/RDriverCarbon.h>
 
 OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, ByteCount maximumSize, ByteCount *actualSize)
 {
@@ -42,6 +43,10 @@ OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, 
 /*****************************/
 /****** MAIN FUNCTION ********/
 /*****************************/
+
+#ifdef QD_HEADERS_ARE_PRIVATE
+extern void InitCursor();
+#endif
 
 int main( int argc, char* argv[])
 {
@@ -70,7 +75,7 @@ int main( int argc, char* argv[])
 	
 #endif
 	
-	if( NavServicesAvailable() == false) return EXIT_FAILURE;
+	//if( NavServicesAvailable() == false) return EXIT_FAILURE;
 	
 	/*******************************************************************************************/
 	/****** MAD Library Initialisation : choose the best driver for the current hardware  ******/
@@ -108,13 +113,19 @@ int main( int argc, char* argv[])
 		MADGetBestDriver( &init);
 		
 		{
+#if 0
 			FSSpec	appSpec;
 			
 			HGetVol( NULL, &appSpec.vRefNum, &appSpec.parID);
 			
 			pStrcpy(appSpec.name, "\pPlugs");
+			FSRef tempRef;
+			FSpMakeFSRef(&appSpec, &tempRef);
+#else
 			
-			if( MADInitLibrary( &appSpec, init.sysMemory, &MADLib) != noErr) DebugStr("\pSmall Problem...");
+#endif
+			
+			if( MADInitLibrary( NULL, &MADLib) != noErr) DebugStr("\pSmall Problem...");
 		}
 		
 		if( MADCreateDriver( &init, MADLib, &MADDriver) != noErr) DebugStr("\pSmall Problem...");
@@ -196,11 +207,15 @@ int main( int argc, char* argv[])
 		else
 		{
 			char	type[ 5];
+#if 0
 			FInfo	info;
 			
 			FSpGetFInfo( &spec, &info);
 			
 			OSType2Ptr( info.fdType, type);
+#endif
+			
+			MADMusicIdentifyFSpFile( MADLib, type, &spec);
 			
 			if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 			{
