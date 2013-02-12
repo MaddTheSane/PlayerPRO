@@ -207,7 +207,6 @@
 	RELEASEOBJ(tmpCtrl);
 }
 
-
 - (IBAction)showInstrumentInfo:(id)sender
 {
 	PPInstrumentObject *ctxt = nil;

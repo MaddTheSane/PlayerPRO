@@ -40,7 +40,6 @@
 - (IBAction)volumeEditButtonPressed:(id)sender;
 - (IBAction)volumeCheckClicked:(id)sender;
 
-
 - (IBAction)panningCheckClicked:(id)sender;
 - (IBAction)panningEditButtonPressed:(id)sender;
 

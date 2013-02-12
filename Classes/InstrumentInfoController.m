@@ -56,6 +56,7 @@
 	if (returnCode == NSOKButton) {
 		[delegate replaceObjectInInstrumentsAtIndex:[instrument number] withObject:instrument];
 	}
+	[sheet orderOut:nil];
 }
 
 - (id)init
@@ -75,13 +76,11 @@
 }
 
 - (IBAction)okayButton:(id)sender {
-	[NSApp stopModalWithCode:NSOKButton];
-	[[self window] close];
+	[NSApp endSheet:[self window] returnCode:NSOKButton];
 }
 
 - (IBAction)cancelButton:(id)sender {
-	[NSApp stopModalWithCode:NSCancelButton];
-	[[self window] close];
+	[NSApp endSheet:[self window] returnCode:NSCancelButton];
 }
 
 - (IBAction)volumeEditButtonPressed:(id)sender {
