@@ -214,12 +214,12 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 {
 #if __has_feature(objc_arc)
 	[self willChangeValueForKey:kMusicListKVO];
-	musicList = newArray;
+	musicList = [newArray mutableCopy];
 	[self didChangeValueForKey:kMusicListKVO];
 #else
 	NSMutableArray *oldList = musicList;
 	[self willChangeValueForKey:kMusicListKVO];
-	musicList = [newArray retain];
+	musicList = [newArray mutableCopy];
 	[self didChangeValueForKey:kMusicListKVO];
 	[oldList release];
 #endif
