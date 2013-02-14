@@ -53,7 +53,7 @@ static const CFStringRef kPPMDFormatDescription = CFSTR("net_sourceforge_playerp
    and return it as a dictionary
    ----------------------------------------------------------------------------- */
 
-Boolean GetMetadataForFile(void* thisInterface, 
+__private_extern__  Boolean GetMetadataForFile(void* thisInterface,
 			   CFMutableDictionaryRef attributes, 
 			   CFStringRef contentTypeUTI,
 			   CFStringRef pathToFile)
@@ -72,7 +72,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 	{
 		char builtinPluginPath[PATH_MAX];
 		CFBundleRef metaDataBundle = CFBundleGetBundleWithIdentifier(CFSTR("net.sourceforge.playerpro.PlayerPROImporter"));
-	
+		
 		CFURLRef pluginURL = CFBundleCopyBuiltInPlugInsURL(metaDataBundle);
 		CFURLGetFileSystemRepresentation(pluginURL, true, (UInt8*)builtinPluginPath, PATH_MAX);
 		CFRelease(pluginURL);

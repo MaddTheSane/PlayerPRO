@@ -34,7 +34,7 @@
 #define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
 #endif
 
-struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, short Tracks, MADDriverSettings *init)
+static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, short Tracks, MADDriverSettings *init)
 {
 	struct MusicPattern*	finalPtr;
 	Byte 					*srcPtr;
@@ -153,7 +153,7 @@ static void MOToldMADSpec(struct oldMADSpec * m){
 	}
 }
 
-OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
+static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short 			i, x;
 	long 			inOutCount = 0, OffSetToSample = 0; 
@@ -384,7 +384,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 	return noErr;
 }
 
-OSErr TestoldMADFile( Ptr AlienFile)
+static OSErr TestoldMADFile( Ptr AlienFile)
 {
 	OSType myMADSign = *((OSType*) AlienFile);
 	PPBE32(&myMADSign);
@@ -393,7 +393,7 @@ OSErr TestoldMADFile( Ptr AlienFile)
 	else return  MADFileNotSupportedByThisPlug;
 }
 
-OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
+static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 {
 	oldMADSpec	*myMOD = ( oldMADSpec*) AlienFile;
 	//long		PatternSize;

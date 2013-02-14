@@ -36,7 +36,7 @@
 // -----------------------------------------------------------------------------
 
 // The import function to be implemented in GetMetadataForFile.c
-Boolean GetMetadataForFile(void *thisInterface, 
+__private_extern__ Boolean GetMetadataForFile(void *thisInterface, 
 			   CFMutableDictionaryRef attributes, 
 			   CFStringRef contentTypeUTI,
 			   CFStringRef pathToFile);

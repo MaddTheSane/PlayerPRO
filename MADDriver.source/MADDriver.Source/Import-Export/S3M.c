@@ -654,7 +654,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, size_t *sn
 	return( (Ptr) finalS3M);
 }
 
-OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettings *init)
+static OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettings *init)
 {
 	SInt32 					i, x, z, channel, Row;
 	SInt32 					starting;
