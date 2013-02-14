@@ -69,7 +69,7 @@
 
 @end
 
-void CocoaDebugStr( short line, Ptr file, Ptr text)
+static void CocoaDebugStr( short line, Ptr file, Ptr text)
 {
 	NSLog(@"%s:%u error text:%s!", file, line, text);
 	NSInteger alert = NSRunAlertPanel(NSLocalizedString(@"MyDebugStr_Error", @"Error"),
@@ -1363,7 +1363,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	[tableView setDoubleAction:@selector(doubleClickMusicList)];
 	
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-	[defaultCenter addObserver:self selector:@selector(preferencesDidChange:) name:PPListPreferencesDidChange object:nil];
 	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
 	
 	[self MADDriverWithPreferences];
@@ -1480,11 +1479,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	}
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)preferencesDidChange:(NSNotification *)notification
-{
-	
 }
 
 #if !__has_feature(objc_arc)
@@ -1674,7 +1668,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		if (currentlyPlayingIndex.index == -1) {
 			selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The new music file has unsaved changes. Do you want to save?", @"New unsaved file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"));
 		} else {
-			selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes",@"Unsaved Changes"), NSLocalizedString(@"The music file \"%@\" has unsaved changes. Do you want to save?", @"Open unsaved file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"), [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
+			selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The music file \"%@\" has unsaved changes. Do you want to save?", @"Open unsaved file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"), [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
 		}
 		switch (selection) {
 			case NSAlertDefaultReturn:
@@ -2037,11 +2031,13 @@ enum PPMusicToolbarTypes {
 - (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to
 {
 	PPMusicListObject *obj = RETAINOBJ([musicList objectInMusicListAtIndex:from]);
+	[self willChangeValueForKey:kMusicListKVO];
 	[musicList removeObjectInMusicListAtIndex:from];
 	if (to > from) {
 		to--;
 	}
 	[musicList insertObject:obj inMusicListAtIndex:to];
+	[self didChangeValueForKey:kMusicListKVO];
 	RELEASEOBJ(obj);
 	[self musicListContentsDidMove];
 }

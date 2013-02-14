@@ -259,7 +259,6 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	ResFileRefNum refNum;
 	Handle aHandle;
 	FSRef theRef;
-	StringPtr aStr, aStr2;
 	UInt16 theNo, i;
 	CFURLGetFSRef(BRIDGE(CFURLRef, toOpen), &theRef);
 	refNum = FSOpenResFile(&theRef, fsRdPerm);
@@ -286,6 +285,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	NSMutableArray *newArray = [[NSMutableArray alloc] init];
 	
 	for(i = 0; i < theNo * 2; i += 2) {
+		StringPtr aStr, aStr2;
 		aStr = GetStringFromHandle(aHandle, i);
 		aStr2 = GetStringFromHandle(aHandle, i + 1);
 		if (!aStr || !aStr2) {

@@ -100,7 +100,6 @@
 - (IBAction)showClassicEditor:(id)sender;
 - (IBAction)showDigitalEditor:(id)sender;
 
-- (void)preferencesDidChange:(NSNotification *)notification;
 - (void)soundPreferencesDidChange:(NSNotification *)notification;
 
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad;

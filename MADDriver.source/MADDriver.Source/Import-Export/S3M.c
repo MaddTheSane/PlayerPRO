@@ -902,7 +902,6 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDrive
 		free(theMAD->sets);
 		free(theMAD->fid);
 		return MADNeedMemory;
-
 	}
 	
 	for(i  = 0 ; i < MAXINSTRU; i++)

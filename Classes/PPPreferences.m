@@ -23,7 +23,7 @@
 - (id)init 
 {
     if (self = [super initWithWindowNibName:@"Preferences"]) {
-		viewControllers = [[NSArray alloc] initWithObjects:AUTORELEASEOBJ([[SoundOutputController alloc] init]) ,
+		viewControllers = [[NSArray alloc] initWithObjects:AUTORELEASEOBJ([[SoundOutputController alloc] init]),
 						   AUTORELEASEOBJ([[PianoPreferencesController alloc] init]),
 						   AUTORELEASEOBJ([[MusicListPreferenceController alloc] init]),
 						   AUTORELEASEOBJ([[ColorPreferenceController alloc] init]),
