@@ -1009,7 +1009,6 @@
 				HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/../MADDriver.source/MADDriver.Source";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/Spotlight;
-				LD_RUNPATH_SEARCH_PATHS = "/Library/Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = PlayerPROImporter;
 				WRAPPER_EXTENSION = mdimporter;
 			};
@@ -1024,7 +1023,6 @@
 				HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/../MADDriver.source/MADDriver.Source";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/Spotlight;
-				LD_RUNPATH_SEARCH_PATHS = "/Library/Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = PlayerPROImporter;
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = debugging;
