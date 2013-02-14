@@ -913,6 +913,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 						[saveData writeToURL:[savePanel URL] atomically:YES];
 						RELEASEOBJ(saveData);
+						saveData = nil;
 						dispatch_async(dispatch_get_main_queue(), ^{
 							NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
 							if (retVal == NSAlertAlternateReturn) {
@@ -1344,6 +1345,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+	undoManager = [[NSUndoManager alloc] init];
 	srandom(time(NULL) & 0xffffffff);
 	PPRegisterDebugFunc(CocoaDebugStr);
 	MADInitLibrary(NULL, &MADLib);
@@ -1380,9 +1382,11 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	instrumentController.importer = instrumentImporter;
 	instrumentController.curMusic = &Music;
 	instrumentController.theDriver = &MADDriver;
+	instrumentController.undoManager = undoManager;
 	
 	patternHandler = [[PatternHandler alloc] initWithMusic:&Music];
 	patternHandler.theRec = &MADDriver;
+	patternHandler.undoManager = undoManager;
 	
 	//Initialize the QTKit framework on the main thread. needed for 32-bit code.
 	[QTMovie class];
@@ -1447,6 +1451,9 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	RELEASEOBJ(patternHandler);
 	patternHandler = nil;
 	
+	RELEASEOBJ(undoManager);
+	undoManager = nil;
+	
 	if (Music != NULL) {
 		if (Music->hasChanged) {
 			NSInteger selection = 0;
@@ -1488,12 +1495,11 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	[musicList release];
 	[timeChecker release];
 	[plugInInfos release];
-	[instrumentImporter release];
-	[digitalHandler release];
 	[previouslyPlayingIndex release];
 	[currentlyPlayingIndex release];
 	[musicName release];
 	[exportController release];
+	[instrumentController release];
 	
 	[super dealloc];
 }

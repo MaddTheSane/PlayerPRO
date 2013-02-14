@@ -26,6 +26,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 
 @synthesize theMus;
 @synthesize theRec;
+@synthesize undoManager;
 
 - (void)musicDidChange:(NSNotification *)aNot
 {
@@ -46,6 +47,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 - (void)dealloc
 {
 	RELEASEOBJ(patternList);
+	RELEASEOBJ(undoManager);
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	

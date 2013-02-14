@@ -30,11 +30,14 @@
 	IBOutlet NSImageView *waveFormImage;
 	IBOutlet NSOutlineView *instrumentView;
 	InstrumentInfoController *instrumentInfo;
+	
+	NSUndoManager *undoManager;
 }
 
 @property (readwrite, retain) PPInstrumentImporter *importer;
 @property (readwrite, nonatomic) MADMusic **curMusic;
 @property (readwrite) MADDriverRec **theDriver;
+@property (readwrite, retain) NSUndoManager *undoManager;
 
 - (BOOL)importSampleFromURL:(NSURL *)sampURL;
 - (BOOL)importSampleFromURL:(NSURL *)sampURL error:(out NSError *__autoreleasing*)theErr;

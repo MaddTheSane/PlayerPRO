@@ -28,6 +28,7 @@
 @synthesize importer;
 @synthesize curMusic;
 @synthesize theDriver;
+@synthesize undoManager;
 
 - (void)setCurMusic:(MADMusic **)acurMusic
 {
@@ -241,6 +242,7 @@
 	RELEASEOBJ(importer);
 	RELEASEOBJ(instruments);
 	RELEASEOBJ(instrumentInfo);
+	RELEASEOBJ(undoManager);
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	

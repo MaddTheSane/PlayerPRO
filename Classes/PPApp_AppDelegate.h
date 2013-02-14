@@ -76,6 +76,8 @@
 	IBOutlet NSBox			*exportSettingsBox;
 	PPSoundSettingsViewController *exportController;
 	IBOutlet NSMenuItem *pauseDockMenuItem;
+	
+	NSUndoManager *undoManager;
 }
 
 @property (getter=isPaused, readwrite) BOOL paused;
