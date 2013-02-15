@@ -36,6 +36,7 @@
 	
 	IBOutlet NSMenu			*musicExportMenu;
 	
+	IBOutlet NSMenu			*newInstrumentMenu;
 	IBOutlet NSMenu			*instrumentExportMenu;
 	PPInstrumentWindowController *instrumentController;
 	
@@ -75,6 +76,7 @@
 	IBOutlet __weak NSWindow *exportWindow;
 	IBOutlet NSBox			*exportSettingsBox;
 	PPSoundSettingsViewController *exportController;
+	
 	IBOutlet NSMenuItem *pauseDockMenuItem;
 	
 	NSUndoManager *undoManager;
@@ -96,6 +98,7 @@
 - (IBAction)showInstrumentsList:(id)sender;
 - (IBAction)exportInstrumentAs:(id)sender;
 - (IBAction)deleteInstrument:(id)sender;
+- (IBAction)saveInstrumentList:(id)sender;
 
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)showBoxEditor:(id)sender;

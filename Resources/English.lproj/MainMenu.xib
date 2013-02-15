@@ -756,16 +756,7 @@
 									<string key="NSAction">submenuAction:</string>
 									<object class="NSMenu" key="NSSubmenu" id="872544793">
 										<string key="NSTitle">New Instrument</string>
-										<array class="NSMutableArray" key="NSMenuItems">
-											<object class="NSMenuItem" id="119542509">
-												<reference key="NSMenu" ref="872544793"/>
-												<string key="NSTitle">Item</string>
-												<string key="NSKeyEquiv"/>
-												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="769544733"/>
-												<reference key="NSMixedImage" ref="821451438"/>
-											</object>
-										</array>
+										<array class="NSMutableArray" key="NSMenuItems"/>
 									</object>
 								</object>
 								<object class="NSMenuItem" id="1008114836">
@@ -778,16 +769,7 @@
 									<string key="NSAction">submenuAction:</string>
 									<object class="NSMenu" key="NSSubmenu" id="1006692388">
 										<string key="NSTitle">Export Instrument…</string>
-										<array class="NSMutableArray" key="NSMenuItems">
-											<object class="NSMenuItem" id="788463170">
-												<reference key="NSMenu" ref="1006692388"/>
-												<string key="NSTitle">Item</string>
-												<string key="NSKeyEquiv"/>
-												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="769544733"/>
-												<reference key="NSMixedImage" ref="821451438"/>
-											</object>
-										</array>
+										<array class="NSMutableArray" key="NSMenuItems"/>
 									</object>
 								</object>
 								<object class="NSMenuItem" id="384278708">
@@ -2883,6 +2865,22 @@
 					<int key="connectionID">1348</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">saveInstrumentList:</string>
+						<reference key="source" ref="1000799287"/>
+						<reference key="destination" ref="742613062"/>
+					</object>
+					<int key="connectionID">1349</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">newInstrumentMenu</string>
+						<reference key="source" ref="1000799287"/>
+						<reference key="destination" ref="872544793"/>
+					</object>
+					<int key="connectionID">1351</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="842369831"/>
@@ -3625,15 +3623,8 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">1000</int>
 						<reference key="object" ref="872544793"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="119542509"/>
-						</array>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="865678475"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1001</int>
-						<reference key="object" ref="119542509"/>
-						<reference key="parent" ref="872544793"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1002</int>
@@ -4259,15 +4250,8 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">1307</int>
 						<reference key="object" ref="1006692388"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="788463170"/>
-						</array>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="1008114836"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1308</int>
-						<reference key="object" ref="788463170"/>
-						<reference key="parent" ref="1006692388"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1310</int>
@@ -4365,7 +4349,6 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1000.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1001.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1002.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1003.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1004.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4477,7 +4460,6 @@
 				<string key="1299.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1306.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1307.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1308.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1310.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1311.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1321.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4596,7 +4578,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1348</int>
+			<int key="maxID">1351</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4623,6 +4605,7 @@
 						<string key="recordButtonPressed:">id</string>
 						<string key="removeSelectedMusic:">id</string>
 						<string key="rewindButtonPressed:">id</string>
+						<string key="saveInstrumentList:">id</string>
 						<string key="saveMusic:">id</string>
 						<string key="saveMusicAs:">id</string>
 						<string key="saveMusicList:">id</string>
@@ -4631,6 +4614,7 @@
 						<string key="showDigitalEditor:">id</string>
 						<string key="showInstrumentsList:">id</string>
 						<string key="showMusicList:">id</string>
+						<string key="showPlugInInfo:">id</string>
 						<string key="showPreferences:">id</string>
 						<string key="showTools:">id</string>
 						<string key="sliderChanged:">id</string>
@@ -4714,6 +4698,10 @@
 							<string key="name">rewindButtonPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="saveInstrumentList:">
+							<string key="name">saveInstrumentList:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="saveMusic:">
 							<string key="name">saveMusic:</string>
 							<string key="candidateClassName">id</string>
@@ -4744,6 +4732,10 @@
 						</object>
 						<object class="IBActionInfo" key="showMusicList:">
 							<string key="name">showMusicList:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showPlugInInfo:">
+							<string key="name">showPlugInInfo:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showPreferences:">
@@ -4783,6 +4775,7 @@
 						<string key="musicPatterns">NSTextField</string>
 						<string key="musicPlugType">NSTextField</string>
 						<string key="musicSignature">NSTextField</string>
+						<string key="newInstrumentMenu">NSMenu</string>
 						<string key="pauseButton">NSButton</string>
 						<string key="pauseDockMenuItem">NSMenuItem</string>
 						<string key="playButton">NSButton</string>
@@ -4856,6 +4849,10 @@
 						<object class="IBToOneOutletInfo" key="musicSignature">
 							<string key="name">musicSignature</string>
 							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="newInstrumentMenu">
+							<string key="name">newInstrumentMenu</string>
+							<string key="candidateClassName">NSMenu</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="pauseButton">
 							<string key="name">pauseButton</string>

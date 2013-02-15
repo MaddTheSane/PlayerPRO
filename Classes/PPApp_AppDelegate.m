@@ -1510,6 +1510,9 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
     [instrumentController deleteInstrument:sender];
 }
 
+- (IBAction)saveInstrumentList:(id)sender {
+}
+
 - (IBAction)showBoxEditor:(id)sender
 {
     
