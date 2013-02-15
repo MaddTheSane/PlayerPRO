@@ -65,6 +65,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 - (id)init
 {
 	[self doesNotRecognizeSelector:_cmd];
+	AUTORELEASEOBJNORETURN(self);
 	return nil;
 }
 
@@ -136,6 +137,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 - (id)init
 {
 	[self doesNotRecognizeSelector:_cmd];
+	AUTORELEASEOBJNORETURN(self);
 	return nil;
 }
 
