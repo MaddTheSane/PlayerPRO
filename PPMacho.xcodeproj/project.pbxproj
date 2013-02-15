@@ -99,6 +99,7 @@
 		5504A6E816619E25005BDE4B /* BoxPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6EA16619E25005BDE4B /* BoxPrefs.xib */; };
 		5504A6EB16619E2E005BDE4B /* MiscPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6ED16619E2E005BDE4B /* MiscPrefs.xib */; };
 		5504A6EE16619E39005BDE4B /* MusicListPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6F016619E39005BDE4B /* MusicListPrefs.xib */; };
+		5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508C3ED16CEB33B007CA458 /* SampleCellView.m */; };
 		55096A3210E0A6EF000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		55096A3C10E0A74A000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
@@ -1674,6 +1675,8 @@
 		5504A6E916619E25005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BoxPrefs.xib; sourceTree = "<group>"; };
 		5504A6EC16619E2E005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MiscPrefs.xib; sourceTree = "<group>"; };
 		5504A6EF16619E39005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MusicListPrefs.xib; sourceTree = "<group>"; };
+		5508C3EC16CEB33B007CA458 /* SampleCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleCellView.h; sourceTree = "<group>"; };
+		5508C3ED16CEB33B007CA458 /* SampleCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleCellView.m; sourceTree = "<group>"; };
 		550B001A10BA021A004FC5D7 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
 		550B00D010BA17BC004FC5D7 /* 669.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = 669.icns; sourceTree = "<group>"; };
@@ -3332,6 +3335,8 @@
 				552581FB16C6FC350016A31C /* InstrumentInfoController.h */,
 				552581FC16C6FC350016A31C /* InstrumentInfoController.m */,
 				552581FD16C6FC350016A31C /* InstrumentInfoController.xib */,
+				5508C3EC16CEB33B007CA458 /* SampleCellView.h */,
+				5508C3ED16CEB33B007CA458 /* SampleCellView.m */,
 			);
 			name = "Instrument Code";
 			sourceTree = "<group>";
@@ -6376,6 +6381,7 @@
 				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,
 				55469C2716BF34D200175A1F /* PatternHandler.m in Sources */,
 				552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */,
+				5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

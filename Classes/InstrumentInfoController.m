@@ -53,8 +53,10 @@
 
 - (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-	if (returnCode == NSOKButton) {
-		[delegate replaceObjectInInstrumentsAtIndex:[instrument number] withObject:instrument];
+	if (sheet == [self window]) {
+		if (returnCode == NSOKButton) {
+			[delegate replaceObjectInInstrumentsAtIndex:[instrument number] withObject:instrument];
+		}
 	}
 	[sheet orderOut:nil];
 }
@@ -98,4 +100,15 @@
 - (IBAction)panningEditButtonPressed:(id)sender {
 	
 }
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
+	return [instrument sampleCount];
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+	return [[[instrument samples] objectAtIndex:row] name];
+}
+
 @end
