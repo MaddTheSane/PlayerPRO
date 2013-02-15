@@ -182,10 +182,11 @@ OSErr mainXI(void						*unused,
 	do {
 		char *FileNameLong = NULL;
 		CFStringRef filenam = CFURLCopyLastPathComponent(AlienFileCFURL);
-		CFIndex filenamLen = CFStringGetMaximumSizeOfFileSystemRepresentation(filenam);
+		CFIndex filenamLen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(filenam), kCFStringEncodingMacRoman);
+		filenamLen *= 2;
 		size_t filenamshortlen = 0;
 		FileNameLong = malloc(filenamLen);
-		CFStringGetFileSystemRepresentation(filenam, FileNameLong, filenamLen);
+		CFStringGetCString(filenam, FileNameLong, filenamLen, kCFStringEncodingMacRoman);
 		CFRelease(filenam);
 		filenamshortlen = strlen(FileNameLong);
 		fileName = malloc(++filenamshortlen);
@@ -229,7 +230,7 @@ OSErr mainXI(void						*unused,
 						
 					}
 					
-					inOutCount = iGetEOF(iFileRefI);
+					//inOutCount = iGetEOF(iFileRefI);
 					
 					iRead(inOutCount, theXI, iFileRefI);
 					
