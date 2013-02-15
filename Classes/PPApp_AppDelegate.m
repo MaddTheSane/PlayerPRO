@@ -1370,7 +1370,9 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	[self MADDriverWithPreferences];
 	Music = CreateFreeMADK();
 	MADAttachDriverToMusic(MADDriver, Music, NULL);
+	[self setTitleForSongLabelBasedOnMusic];
 	instrumentImporter = [[PPInstrumentImporter alloc] initWithMusic:&Music];
+	instrumentImporter.driverRec = &MADDriver;
 	
 	digitalHandler = [[PPDigitalPlugInHandler alloc] initWithMusic:&Music];
 	digitalHandler.driverRec = &MADDriver;

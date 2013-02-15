@@ -14,6 +14,13 @@
 
 @implementation PPInstrumentImporter
 
+@synthesize driverRec;
+- (void)setDriverRec:(MADDriverRec **)aTheDriver
+{
+	driverRec = aTheDriver;
+	plugInfo.driverRec = *driverRec;
+}
+
 - (id)init
 {
 	[self doesNotRecognizeSelector:_cmd];
@@ -26,11 +33,30 @@
 	return [NSString stringWithFormat:@"Music: %p Importers: %@", curMusic, [instrumentIEArray description]];
 }
 
+- (void)driverRecDidChange:(NSNotification *)aNot
+{
+	if (driverRec && *driverRec) {
+		plugInfo.driverRec = *driverRec;
+	} else {
+		plugInfo.driverRec = NULL;
+	}
+}
+
+- (void)musicDidChange:(NSNotification *)aNot
+{
+	
+}
+
 - (id)initWithMusic:(MADMusic**)theMus
 {
 	if (self = [super init]) {
 		curMusic = theMus;
-		instrumentIEArray = [[NSMutableArray alloc] initWithCapacity:20];
+		plugInfo.RPlaySound = inMADPlaySoundData;
+		instrumentIEArray = [[NSMutableArray alloc] initWithCapacity:10];
+		
+		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+		[defaultCenter addObserver:self selector:@selector(driverRecDidChange:) name:PPDriverDidChange object:nil];
+		[defaultCenter addObserver:self selector:@selector(musicDidChange:) name:PPMusicDidChange object:nil];
 
 		NSArray *plugLocs = DefaultPlugInLocations();
 		
@@ -130,7 +156,8 @@
 
 - (OSErr)callInstumentPlugIn:(PPInstrumentImporterObject*)thePlug order:(OSType)theOrd instrument:(short)ins sample:(short*)samp URL:(NSURL*)theURL
 {
-	return [thePlug importInstrument:theURL instrumentDataReference:&(*curMusic)->fid[ ins] sampleDataReference:&(*curMusic)->sample[ (*curMusic)->fid[ ins].firstSample] instrumentSample:samp function:theOrd];
+	plugInfo.fileType = [thePlug type];
+	return [thePlug importInstrument:theURL instrumentDataReference:&(*curMusic)->fid[ ins] sampleDataReference:&(*curMusic)->sample[ (*curMusic)->fid[ ins].firstSample] instrumentSample:samp function:theOrd plugInfo:&plugInfo];
 }
 
 - (OSErr)exportInstrumentOfType:(OSType)theType instrument:(short)ins sample:(short*)samp URL:(NSURL*)theURL
@@ -201,13 +228,14 @@
 	return NO;
 }
 
-#if !__has_feature(objc_arc)
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+#if !__has_feature(objc_arc)
 	[instrumentIEArray release];
 	
 	[super dealloc];
-}
 #endif
+}
 
 @end

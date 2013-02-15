@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/PPPlug.h>
 
 @class PPInstrumentImporterObject;
 
@@ -15,7 +16,12 @@
 {
 	NSMutableArray *instrumentIEArray;
 	MADMusic **curMusic;
+	MADDriverRec **driverRec;
+	PPInfoPlug plugInfo;
 }
+
+@property (readwrite, nonatomic) MADDriverRec **driverRec;
+
 - (id)initWithMusic:(MADMusic**)theMus;
 
 - (NSInteger)plugInCount;

@@ -124,7 +124,8 @@
 		return NO;
 	};
 	short theSamp = 0;
-	theOSErr = [importer importInstrumentOfType:plugType instrument:0 sample:&theSamp URL:sampURL];
+	short theIns = 0;
+	theOSErr = [importer importInstrumentOfType:plugType instrument:theIns sample:&theSamp URL:sampURL];
 	if (theOSErr != noErr) {
 		if (theErr) {
 			*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(theOSErr));
@@ -134,6 +135,11 @@
 		if (theErr) {
 			*theErr = nil;
 		}
+		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:*curMusic instrumentIndex:theIns];
+		[self replaceObjectInInstrumentsAtIndex:theIns withObject:insObj];
+		RELEASEOBJ(insObj);
+		[instrumentView reloadData];
+		(*curMusic)->hasChanged = TRUE;
 		return YES;
 	}
 }
