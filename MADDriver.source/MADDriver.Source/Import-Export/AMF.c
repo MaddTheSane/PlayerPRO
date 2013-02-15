@@ -42,7 +42,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 }
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*msg_buf)
+#define Tdecode16(msg_buf) EndianU16_LtoN(*(short*)msg_buf)
 #else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
@@ -53,7 +53,7 @@ static inline UInt16 Tdecode16( void *msg_buf)
 #endif
 
 #ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*msg_buf)
+#define Tdecode32(msg_buf)  EndianU32_LtoN(*(int*)msg_buf)
 #else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
@@ -71,11 +71,11 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	OSErr			theErr = noErr;
 	Ptr				tempPtr;
 	OSType			AMFType;
-	long			finetune[16] = 
+	/*SInt32			finetune[16] =
 	{
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
-	};
+	};*/
 	
 	short			pan, uusize, oldIns = 1;
 	
@@ -200,6 +200,8 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 			if( oi.size > 0)
 			{
 				sData	*curData;
+				ushort oiloopstart = 0;
+				ushort oiloopend = 0;
 				
 				curIns->numSamples = 1;
 				
@@ -207,8 +209,8 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 				
 				curData->size		= Tdecode32( &oi.size);
 				//FIXME: were loopstart and loopend supposed to be byteswapped on PowerPC?
-				ushort oiloopstart = Tdecode16( &oi.loopstart);
-				ushort oiloopend = Tdecode16( &oi.loopend);
+				oiloopstart = Tdecode16( &oi.loopstart);
+				oiloopend = Tdecode16( &oi.loopend);
 				curData->loopBeg 	= oiloopstart; 
 				curData->loopSize 	= oiloopend - oiloopstart;
 				if( oiloopend == 65535)
@@ -311,15 +313,13 @@ static OSErr TestAMFFile( Ptr AlienFile)
 	
 	if( (myMADSign & 0xFFFFFF00) == 0x414D4600) return noErr;
 	else return MADFileNotSupportedByThisPlug;
-	
-	return noErr;
 }
 
 static OSErr ExtractAMFInfo( PPInfoRec *info, Ptr AlienFile)
 {
-	long		PatternSize;
-	short		i;
-	short		tracksNo;
+	//long		PatternSize;
+	//short		i;
+	//short		tracksNo;
 	
 	/*** Signature ***/
 	

@@ -31,12 +31,12 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	long		fileSize;
 	UNFILE		fileID;
 	
-	theMAD = (MADSpec*) NewPtr( sizeof( MADSpec) + 200);
+	theMAD = (MADSpec*) malloc( sizeof( MADSpec) + 200);
 	
 	fileID = iFileOpen( AlienFile);
 	if( !fileID)
 	{
-		DisposePtr( (Ptr) theMAD);
+		free( (Ptr) theMAD);
 		return -1;
 	}
 	fileSize = iGetEOF( fileID);
@@ -54,7 +54,7 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	InfoRec->totalInstruments = theMAD->numInstru;
 	InfoRec->fileSize = fileSize;
 	
-	DisposePtr( (Ptr) theMAD);	
+	free( (Ptr) theMAD);	
 	theMAD = NULL;
 	
 	return noErr;
@@ -75,10 +75,11 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 
 typedef OSErr (*FILLPLUG) ( PlugInfo *);;
 
-void MInitImportPlug( MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
+void MInitImportPlug( MADLibrary *inMADDriver, Ptr PlugsFolderName)
 {
-	inMADDriver->ThePlug = (PlugInfo*) MADNewPtr( MAXPLUG * sizeof( PlugInfo), inMADDriver);
+	inMADDriver->ThePlug = (PlugInfo*) calloc( MAXPLUG, sizeof( PlugInfo));
 	inMADDriver->TotalPlug = 0;
+	//TODO: iterate plug-in paths
 	int i =0;
 	{
 		inMADDriver->ThePlug[i].hLibrary = dlopen(NULL, RTLD_LAZY);
@@ -131,7 +132,7 @@ OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			*theNewMAD = (MADMusic*) MADNewPtrClear( sizeof( MADMusic), inMADDriver);
+			*theNewMAD = (MADMusic*) calloc( sizeof( MADMusic), 1);
 			if( !theNewMAD) return MADNeedMemory;
 			
 			return( CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec));
@@ -265,7 +266,8 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 				xx = strlen( inMADDriver->ThePlug[ i].type);
 				if( xx > 4) xx = 4;
 				type = '    ';
-				BlockMoveData( inMADDriver->ThePlug[ i].type, &type, xx);
+				memcpy( &type, inMADDriver->ThePlug[ i].type, xx);
+				PPBE32(&type);
 				
 				return type;
 			}

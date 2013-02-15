@@ -21,17 +21,14 @@
 //
 /********************						***********************/
 
-//#if defined(powerc) || defined (__powerc)
-#pragma options align=mac68k
-//#endif
+#pragma pack(push, 2)
 
-
-struct PasByte {
+typedef struct PasByte {
 	Byte	aByte[ 3];
-};
-typedef struct PasByte PasByte;
+} PasByte;
 
 struct PatCmd {
+	//FIXME: is this Endian safe?
 	unsigned short AmigaPeriod : 6;
 	unsigned short Instru : 6;
 	unsigned short Volume : 4;
@@ -43,15 +40,14 @@ struct PatSix {
 		struct PatCmd Cmds[ 64][ 8];
 };
 
-struct	SampleInfo	{
+typedef struct	SampleInfo	{
 	//	char	InstruFilename[ 13];
 		unsigned	short	length;
 		unsigned	short	loopStart;
 		unsigned	short	loopEnd;
-};
-typedef		struct SampleInfo	SampleInfo;
+} SampleInfo;
 
-struct	SixSixNine	{
+typedef struct SixSixNine	{
 		short		marker;
 		char		message[ 108];
 		Byte		NOS;
@@ -61,17 +57,13 @@ struct	SixSixNine	{
 		Byte		tempoList[ 0x80];
 		Byte		breakList[ 0x80];
 		SampleInfo	fid[];
-};
-typedef		struct SixSixNine	SixSixNine;
+} SixSixNine;
 
-struct	Partition669	{
+typedef struct Partition669	{
 		SixSixNine		*theFile;
 		SampleInfo		*sampleInfo;
 		Ptr				samplePtr[ 128];
 		Ptr				patternPtr[ 128];
-};
-typedef		struct Partition669	Partition669;
+} Partition669;
 
-//#if defined(powerc) || defined(__powerc)
-#pragma options align=reset
-//#endif
+#pragma pack(pop)

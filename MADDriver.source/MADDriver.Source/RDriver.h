@@ -27,6 +27,7 @@
 #ifndef __MADI__
 #include "MAD.h"
 #endif
+#include <limits.h>
 
 ////////////////////////////////////////////////
 
@@ -114,7 +115,7 @@ enum{
 /*** 			  		  Error messages 						***/
 /********************						***********************/
 
-enum
+enum MADErrors
 {
 	MADNeedMemory 					= -1,
 	MADReadingErr					= -2,
@@ -284,7 +285,7 @@ typedef struct MADMusic
 /*** 			     Driver Settings definition					***/
 /********************						***********************/
 
-enum
+enum MADSoundOutput
 {
 	oldASCSoundDriver = 1,			// MAC ONLY,	// NOT SUPPORTED anymore
 	oldAWACSoundDriver,				// MAC ONLY		// NOT SUPPORTED anymore
@@ -353,14 +354,14 @@ typedef struct MADDriverSettings
 //	Actual plug have to support these orders:
 //
 //	order: 'TEST':	check the AlienFile to see if your Plug really supports it.
-//	order: 'IMPT':	convert the AlienFile into a MADMusic. You have to allocate MADMusic.
+//	order: 'IMPL':	convert the AlienFile into a MADMusic. You have to allocate MADMusic.
 //	order: 'INFO':	Fill PPInfoRec structure.
-//	order: 'EXPT':	Convert the MADMusic into AlienFile. You have to create the AlienFile.
+//	order: 'EXPL':	Convert the MADMusic into AlienFile. You have to create the AlienFile.
 //					Don't delete the MADMusic Structure after conversion !!
 //
-//	An IMPORT plug have to support these orders: 'TEST', 'IMPT', 'INFO'
-//	An EXPORT plug have to support these orders: 'EXPT'
-// 	An IMPORT/EXPORT plug have to support these orders: 'TEST', 'IMPT', 'INFO', 'EXPT'
+//	An IMPORT plug have to support these orders: 'TEST', 'IMPL', 'INFO'
+//	An EXPORT plug have to support these orders: 'EXPL'
+// 	An IMPORT/EXPORT plug have to support these orders: 'TEST', 'IMPL', 'INFO', 'EXPL'
 //
 //	About Resources:
 //
@@ -471,11 +472,11 @@ typedef struct PlugInfo
 typedef OSErr (*PLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 struct PlugInfo
 {
-	HANDLE			hLibrary;
+	HMODULE			hLibrary;
 	PLUGDLLFUNC		IOPlug;										// Plug CODE
 	char			MenuName[ 65];								// Plug name
 	char			AuthorString[ 65];							// Plug author
-	char			file[ 255];									// Location of plug file
+	char			file[ MAX_PATH * 2];						// Location of plug file
 	char			type[ 5];									// OSType of file support
 	OSType			mode;										// Mode support : Import +/ Export
 };
@@ -484,7 +485,7 @@ typedef struct PlugInfo PlugInfo;
 
 #ifdef __UNIX__
 #include <dlfcn.h>
-#include <limits.h>
+#include <sys/param.h>  //For PATH_MAX
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 struct PlugInfo
 {
@@ -518,7 +519,7 @@ struct MADLibrary
 };
 typedef struct MADLibrary MADLibrary;
 
-#ifndef WIN32
+#ifndef __callback
 #define __callback
 #endif
 
@@ -567,7 +568,6 @@ typedef struct
 	CFragConnectionID	connID; //TODO: use something more 64-bit friendly
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
-
 }	VSTEffect;
 #endif
 
@@ -609,7 +609,7 @@ typedef struct MADDriverRec
 	AudioUnit				CAAudioUnit;
 	UInt32					CABufLen;
 	UInt32					CABufOff;
-
+	Ptr 					CABuffer;
 #endif
 	
 #ifdef WIN32
@@ -688,7 +688,7 @@ typedef struct MADDriverRec
 /*** 					   EFFECTS ID							***/
 /********************						***********************/
 
-enum {
+enum MADEffectsID {
 		arpeggioE 		= 0,	//	0x00
 		downslideE 		= 1,	//	0x01
 		upslideE 		= 2,	//	0x02

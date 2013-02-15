@@ -12,6 +12,10 @@
 
 #include "RDriver.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifdef _MAC_H
 #pragma mark Core Audio Functions
 OSErr initCoreAudio( MADDriverRec *inMADDriver, long init);
@@ -53,5 +57,8 @@ void StopChannelALSA(MADDriverRec *inMADDriver);
 void PlayChannelALSA(MADDriverRec *inMADDriver);
 #endif
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif

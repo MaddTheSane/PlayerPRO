@@ -90,9 +90,9 @@ void MADTickRemoverStart8( Channel *curVoice, long	*ASCBuffer1, long	*ASCBuffer2
 	long				curDoVol0 = DoVolPanning256( 0, curVoice, intDriver, false), curDoVol1 = DoVolPanning256( 1, curVoice, intDriver, false);
 	
 	if(	curVoice->prevPtr	!= curVoice->begPtr ||
-			(curVoice->curPtr	>= curVoice->maxPtr && curVoice->loopSize == 0) ||
-			curVoice->prevVol0 	!= curDoVol0 ||
-			curVoice->prevVol1 	!= curDoVol1)
+	   (curVoice->curPtr	>= curVoice->maxPtr && curVoice->loopSize == 0) ||
+	   curVoice->prevVol0 	!= curDoVol0 ||
+	   curVoice->prevVol1 	!= curDoVol1)
 	{
 		Boolean	DoIT = false;
 		

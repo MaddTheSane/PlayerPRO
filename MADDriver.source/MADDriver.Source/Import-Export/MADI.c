@@ -241,6 +241,7 @@ static OSErr MADI2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 		
 		BlockMoveData( MADPtr + OffSetToSample, tempPat, inOutCount);
 		OffSetToSample += inOutCount;
+		MOToldPatHeader(&tempPat->header);
 		
 		if( tempPat->header.compMode == 'MAD1')
 		{
@@ -303,7 +304,7 @@ static OSErr MADI2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 	for( i = 0; i < oldMAD->numInstru; i++)
 	{
 		struct oldInstrData		oldIns;
-		InstrData	*curIns = &theMAD->fid[ i];
+		//InstrData	*curIns = &theMAD->fid[ i];
 		short		d;
 		
 		/** Lecture des instruments **/
@@ -371,6 +372,14 @@ static OSErr MADI2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 			
 			BlockMoveData( MADPtr + OffSetToSample, curData->data, curData->size);
 			OffSetToSample += curData->size;
+			if( curData->amp == 16)
+			{
+				SInt32 	ll;
+				short	*shortPtr = (short*) curData->data;
+				
+				for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+			}
+
 		}
 	}
 	

@@ -35,7 +35,7 @@ typedef struct ITPatForm
 
 typedef struct ITSampForm
 {
-	long		ID;
+	OSType		ID;
 	char		DOSName[ 12];
 	char		no;
 	char		GvL;
@@ -59,7 +59,7 @@ typedef struct ITSampForm
 typedef struct ITNode
 {
 	char		y;
-	short	x;
+	short		x;
 } ITNode;
 
 typedef struct ITEnv
@@ -81,21 +81,21 @@ typedef struct ITInsForm
 	char		NNA;
 	char		DCT;
 	char		DCA;
-	short	FadeOut;
+	short		FadeOut;
 	char		PPS;
 	char		PPC;
 	char		GbV;
 	char		DfP;
 	char		no2[ 2];
-	short	TrkVers;
+	short		TrkVers;
 	char		NoS;
 	char		no3;
 	char		INSName[ 26];
 	char		no4[ 6];
 	char		keyMap[ 240];
-	ITEnv	volEnv;
-	ITEnv	panEnv;
-	ITEnv	pitchEnv;
+	ITEnv		volEnv;
+	ITEnv		panEnv;
+	ITEnv		pitchEnv;
 } ITInsForm;
 
 typedef struct ITForm
@@ -104,14 +104,14 @@ typedef struct ITForm
 	char             		name[26];
 	char             		no[ 2];
 	
-	short  			orderNum;
-	short   			insNum;
-	short   			smpNum;
-	short      			patNum;
+	short				orderNum;
+	short				insNum;
+	short				smpNum;
+	short				patNum;
 	short     			cwtv;
-	short			Cmwt;
+	short				Cmwt;
 	short      			flags;
-	short			special;
+	short				special;
 	
 	char				globalVol;
 	char				mixVol;
@@ -132,7 +132,7 @@ typedef struct ITForm
 	long				*parappat;
 	
 	ITInsForm			*insdata;
-	ITSampForm		*sampdata;
+	ITSampForm			*sampdata;
 } ITForm;
 #if defined(powerc) || defined(__powerc) || defined(__APPLE__)
 #pragma options align=reset

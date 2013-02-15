@@ -12,8 +12,6 @@
 #include "RDriverInt.h"
 #include "PPPrivate.h"
 
-static Ptr CABuffer = NULL;
-
 //TODO: we should probably do something to prevent thread contention
 static OSStatus     CAAudioCallback (void                            *inRefCon,
 									 AudioUnitRenderActionFlags      *ioActionFlags,
@@ -23,59 +21,73 @@ static OSStatus     CAAudioCallback (void                            *inRefCon,
 									 AudioBufferList                 *ioData)
 {
 	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
-	
+	//int j = 0;
+	if(theRec->Reading == false)
+	{
+		switch( theRec->DriverSettings.outPutBits)
+		{
+			case 8:
+				memset(theRec->CABuffer, 0x80, theRec->BufSize);
+				break;
+							
+			case 16:
+				memset(theRec->CABuffer, 0, theRec->BufSize);
+				break;
+		}
+	}
+
 	UInt32 remaining, len;
-    AudioBuffer *abuf;
-    void *ptr;
-    UInt32 i = 0;
-	int j = 0;
+	AudioBuffer *abuf;
+	void *ptr;
+	UInt32 i = 0;
 	for (i = 0; i < ioData->mNumberBuffers; i++) {
         abuf = &ioData->mBuffers[i];
         remaining = abuf->mDataByteSize;
         ptr = abuf->mData;
         while (remaining > 0) {
-            if (theRec->CABufOff >= theRec->CABufLen) {
-                if( !DirectSave( CABuffer, NULL, theRec))
+            if (theRec->CABufOff >= theRec->BufSize) {
+                if( !DirectSave( theRec->CABuffer, NULL, theRec))
 				{
 					switch( theRec->DriverSettings.outPutBits)
 					{
 						case 8:
-							for( j = 0; j < theRec->CABufLen; j++) CABuffer[ j] = 0x80;
+							memset(theRec->CABuffer, 0x80, theRec->BufSize);
 							break;
 							
 						case 16:
-							for( j = 0; j < theRec->CABufLen; j++) CABuffer[ j] = 0;
+							memset(theRec->CABuffer, 0, theRec->BufSize);
 							break;
 					}
 				}
 				theRec->CABufOff = 0;
             }
 			
-            len = theRec->CABufLen - theRec->CABufOff;
+            len = theRec->BufSize - theRec->CABufOff;
             if (len > remaining)
                 len = remaining;
-            memcpy(ptr, (char *)CABuffer + theRec->CABufOff, len);
+            memcpy(ptr, (char *)theRec->CABuffer + theRec->CABufOff, len);
             ptr = (char *)ptr + len;
             remaining -= len;
             theRec->CABufOff += len;
         }
     }
 	
-	/*if( BuffSize - pos > tickadd)	theRec->OscilloWavePtr = CABuffer + (int)pos;
-	else */ theRec->OscilloWavePtr = CABuffer;
+	/*if( BuffSize - pos > tickadd)	theRec->OscilloWavePtr = theRec->CABuffer + (int)pos;
+	else */ theRec->OscilloWavePtr = theRec->CABuffer;
 	return noErr;
 }
 
 OSErr initCoreAudio( MADDriverRec *inMADDriver, long init)
 {
-	inMADDriver->CABufLen = inMADDriver->CABufOff = inMADDriver->BufSize;
-	CABuffer = NewPtrClear(inMADDriver->CABufLen);
-	
 	OSStatus result = noErr;
-	struct AURenderCallbackStruct callback;
+	struct AURenderCallbackStruct callback, blankCallback;
 	callback.inputProc = CAAudioCallback;
 	callback.inputProcRefCon = inMADDriver;
-    ComponentDescription theDes;
+	
+	blankCallback.inputProc = NULL;
+	blankCallback.inputProcRefCon = NULL;
+
+	ComponentDescription theDes;
 	theDes.componentType = kAudioUnitType_Output;
     theDes.componentSubType = kAudioUnitSubType_DefaultOutput;
     theDes.componentManufacturer = kAudioUnitManufacturer_Apple;
@@ -113,13 +125,14 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver, long init)
     audDes.mBytesPerPacket = audDes.mBytesPerFrame * audDes.mFramesPerPacket;
 
 	
-	Component comp = FindNextComponent (NULL, &theDes);
-
-	if (comp == NULL) {
-		return MADUnknownErr;
+	Component theComp = FindNextComponent(NULL, &theDes);
+	if (theComp == NULL) {
+		return MADSoundManagerErr;
 	}
-	result = OpenAComponent(comp, &inMADDriver->CAAudioUnit);
-	
+	result = OpenAComponent(theComp, &inMADDriver->CAAudioUnit);
+	if (result != noErr) {
+		return MADSoundManagerErr;
+	}
 	
 	result = AudioUnitSetProperty (inMADDriver->CAAudioUnit,
 								   kAudioUnitProperty_StreamFormat,
@@ -127,13 +140,34 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver, long init)
 								   0,
 								   &audDes,
 								   sizeof (audDes));
+	if (result != noErr) {
+		CloseComponent(inMADDriver->CAAudioUnit);
+		return MADSoundManagerErr;
+	}
 	
 	result = AudioUnitSetProperty(inMADDriver->CAAudioUnit, kAudioUnitProperty_SetRenderCallback, kAudioUnitScope_Input, 0, &callback, sizeof(callback));
-
+	if (result != noErr) {
+		CloseComponent(inMADDriver->CAAudioUnit);
+		return MADSoundManagerErr;
+	}
 	
 	result = AudioUnitInitialize(inMADDriver->CAAudioUnit);
+	if (result != noErr) {
+		CloseComponent(inMADDriver->CAAudioUnit);
+		AudioUnitSetProperty(inMADDriver->CAAudioUnit, kAudioUnitProperty_SetRenderCallback, kAudioUnitScope_Input, 0, &blankCallback, sizeof(blankCallback));
+		return MADSoundManagerErr;
+	}
+	
+	inMADDriver->CABufOff = inMADDriver->BufSize;
+	inMADDriver->CABuffer = NewPtrClear(inMADDriver->BufSize);
 	
 	result = AudioOutputUnitStart(inMADDriver->CAAudioUnit);
+	if (result != noErr) {
+		DisposePtr(inMADDriver->CABuffer);
+		AudioUnitSetProperty(inMADDriver->CAAudioUnit, kAudioUnitProperty_SetRenderCallback, kAudioUnitScope_Input, 0, &blankCallback, sizeof(blankCallback));
+		CloseComponent(inMADDriver->CAAudioUnit);
+		return MADSoundManagerErr;
+	}
 	return noErr;
 }
 
@@ -157,8 +191,8 @@ OSErr closeCoreAudio( MADDriverRec *inMADDriver)
 		
 	}
 	inMADDriver->OscilloWavePtr = NULL;
-	if (CABuffer) {
-		DisposePtr(CABuffer);
+	if (inMADDriver->CABuffer) {
+		DisposePtr(inMADDriver->CABuffer);
 	}
 	return noErr;
 }

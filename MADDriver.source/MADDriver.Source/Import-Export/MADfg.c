@@ -132,6 +132,8 @@ static void MOToldInstrData(struct FileInstrData * i) {
 	MOT16(&i->insSize);
 	MOT16(&i->loopStart);
 	MOT16(&i->loopLenght);
+	MOT16(&i->CompCode);
+	MOT16(&i->freq);
 }
 
 static void MOToldMADSpec(struct oldMADSpec * m){
@@ -144,9 +146,9 @@ static void MOToldMADSpec(struct oldMADSpec * m){
 
 OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
-//TODO: byteswap on Intel!
 	short 			i, x;
 	long 			inOutCount = 0, OffSetToSample = 0, z = 0;
+	OSType			oldMadIdent, CompMode;
 	OSErr			theErr = noErr;
 	Boolean			MADConvert = false;
 	Ptr				tempPtr = NULL;
@@ -166,8 +168,7 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 	MOToldMADSpec(oldMAD);
 
 /**** HEADER ****/
-	OSType oldMadIdent = oldMAD->MADIdentification;
-	MOT32(&oldMadIdent);
+	oldMadIdent = oldMAD->MADIdentification;
 	if( oldMadIdent == 'MADF') MADConvert = true;
 	else if( oldMadIdent == 'MADG') MADConvert = false;
 	else return MADFileNotSupportedByThisPlug;
@@ -206,14 +207,16 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoi
 		{
 			inOutCount = sizeof( struct oldPatHeader);
 		
-			BlockMoveData( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
+			memcpy(&tempPatHeader, MADPtr + OffSetToSample, inOutCount);
+			MOToldPatHeader(&tempPatHeader);
 		}
-		else tempPatHeader.PatternSize = 64L;
+		else tempPatHeader.PatternSize = 64;
 	
 	/*************************************************/
 	/** Lecture du header + contenu de la partition **/
 	/*************************************************/
-		OSType CompMode = tempPatHeader.CompressionMode;
+		CompMode = tempPatHeader.CompressionMode;
+		//PPBE32(&CompMode);
 		if( CompMode == 'MAD1')
 		{
 			inOutCount = sizeof( struct MusicPattern) + tempPatHeader.PatBytes;
@@ -355,6 +358,13 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoi
 		
 			BlockMoveData( MADPtr + OffSetToSample, curData->data, curData->size);
 			OffSetToSample += curData->size;
+			if( curData->amp == 16)
+			{
+				SInt32 	ll;
+				short	*shortPtr = (short*) curData->data;
+				
+				for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+			}
 		}
 		else curIns->numSamples = 0;
 	}

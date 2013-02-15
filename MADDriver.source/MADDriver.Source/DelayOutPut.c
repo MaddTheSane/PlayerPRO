@@ -32,7 +32,7 @@ Boolean IsVSTChanEffect( MADDriverRec *intDriver, short channel);
 
 static inline void PrepareInline( long *VolInter, long* rVolInter, double p2, double v1, double v2)
 {
-double temp;
+	double temp;
 
 	temp = (v2-v1) / p2;
 	*VolInter = temp * (1 << BYTEDIV);
@@ -82,7 +82,7 @@ void MADCreateOverShoot( MADDriverRec *intDriver)
 
 void MADKillOverShoot( MADDriverRec *intDriver)
 {
-short	i;
+	short	i;
 
 	switch( intDriver->DriverSettings.outPutBits)
 	{
@@ -774,6 +774,7 @@ void Play16StereoDelay( MADDriverRec *intDriver)
 	for( i = 0 ; i < intDriver->MultiChanNo; i++)	//intDriver->DriverSettings.numChn
 	{
 #if defined( MAINPLAYERPRO)
+#warning VST Channel effect
 		if( IsVSTChanEffect( intDriver, i) && chanCounter < MAXCHANEFFECT)
 		{
 			trackID = intDriver->curMusic->header->chanBus[ intDriver->chan[ i].TrackID].copyId;
@@ -806,7 +807,7 @@ void Sampler8in8AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *int
 {
 	char			tByte;
 	long 			i = intDriver->ASCBUFFER;
-	long			chnVol, chnVol2, off;
+	long			chnVol, chnVol2, off = 0;
 	short			*ASCBuffer1, *ASCBuffer2;
 	Boolean		killSample = false;
 	
@@ -860,7 +861,7 @@ void Sampler8in8AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *int
 	{
 		Ptr			SndBuffer = curVoice->curPtr;
 		long		RightWeight, LeftWeight, preOff = curVoice->preOff;
-  	char  	preVal = curVoice->preVal, preVal2 = curVoice->preVal2;
+  	    char  	preVal = curVoice->preVal, preVal2 = curVoice->preVal2;
 		
 		while( i-- > 0)
 		{

@@ -36,8 +36,8 @@ void Sampler8in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short 
 	
 #if defined(powerc) || defined (__powerc) || defined(__APPLE__)
 	{
-	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
-	aDD = temp * ( 1 << BYTEDIV);
+		long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
+		aDD = temp * ( 1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -95,8 +95,8 @@ void Sampler8in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanNo
 	
 #if defined(powerc) || defined (__powerc) || defined(__APPLE__)
 	{
-	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
-	aDD = temp * ( 1 << BYTEDIV);
+		long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
+		aDD = temp * ( 1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -108,32 +108,32 @@ void Sampler8in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanNo
 	SndBuffer		= (char*) 	curVoice->curPtr;
 	volChn			= DoVolPanning256( 3, curVoice, intDriver, true)/256;
 	
-		while( i-- > 0)
+	while( i-- > 0)
+	{
+		off = (aCC>>BYTEDIV);
+		if( (Ptr) SndBuffer + off >= curVoice->maxPtr)
 		{
-			off = (aCC>>BYTEDIV);
-			if( (Ptr) SndBuffer + off >= curVoice->maxPtr)
+			if( curVoice->loopSize > 0) 
 			{
-				if( curVoice->loopSize > 0) 
-				{
-					SndBuffer -= curVoice->loopSize;
-					if( SndBuffer + off < curVoice->begPtr) SndBuffer = curVoice->begPtr - off;
-				}
-				else
-				{
-					killSample = true;
-					break;
-				}
+				SndBuffer -= curVoice->loopSize;
+				if( SndBuffer + off < curVoice->begPtr) SndBuffer = curVoice->begPtr - off;
 			}
-			*ASCBuffer	+= (volChn * *(SndBuffer + off)) >> 8;	aCC += aDD;
-			ASCBuffer	+= chanNo;
+			else
+			{
+				killSample = true;
+				break;
+			}
 		}
-		
-		if( !killSample) curVoice->curPtr = (Ptr) (SndBuffer + (long) (aCC>>BYTEDIV));
-		else
-		{
-			curVoice->samplePtr	= NULL;	curVoice->curPtr	= curVoice->maxPtr;
-		}
-
+		*ASCBuffer	+= (volChn * *(SndBuffer + off)) >> 8;	aCC += aDD;
+		ASCBuffer	+= chanNo;
+	}
+	
+	if( !killSample) curVoice->curPtr = (Ptr) (SndBuffer + (long) (aCC>>BYTEDIV));
+	else
+	{
+		curVoice->samplePtr	= NULL;	curVoice->curPtr	= curVoice->maxPtr;
+	}
+	
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);
 }
 
@@ -149,8 +149,8 @@ void Sampler16in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short
 	
 #if defined(powerc) || defined (__powerc) || defined(__APPLE__)
 	{
-	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
-	aDD = temp * ( 1 << BYTEDIV);
+		long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
+		aDD = temp * ( 1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -208,8 +208,8 @@ void Sampler16in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanN
 	
 #if defined(powerc) || defined (__powerc) || defined(__APPLE__)
 	{
-	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
-	aDD = temp * ( 1 << BYTEDIV);
+		long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
+		aDD = temp * ( 1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -221,32 +221,32 @@ void Sampler16in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanN
 	SndBuffer		= (char*) 	curVoice->curPtr;
 	volChn			= DoVolPanning256( 3, curVoice, intDriver, true)/256;
 	
-		while( i-- > 0)
+	while( i-- > 0)
+	{
+		off = 2*(aCC>>BYTEDIV);
+		if( (Ptr) SndBuffer + off >= curVoice->maxPtr)
 		{
-			off = 2*(aCC>>BYTEDIV);
-			if( (Ptr) SndBuffer + off >= curVoice->maxPtr)
+			if( curVoice->loopSize > 0) 
 			{
-				if( curVoice->loopSize > 0) 
-				{
-					SndBuffer -= curVoice->loopSize;
-					if( SndBuffer + off < curVoice->begPtr) SndBuffer = curVoice->begPtr - off;
-				}
-				else
-				{
-					killSample = true;
-					break;
-				}
+				SndBuffer -= curVoice->loopSize;
+				if( SndBuffer + off < curVoice->begPtr) SndBuffer = curVoice->begPtr - off;
 			}
-			*ASCBuffer	+= (volChn * *(SndBuffer + off)) >> 8;			 aCC += aDD;
-			ASCBuffer	+= chanNo;
+			else
+			{
+				killSample = true;
+				break;
+			}
 		}
-		
-		if( !killSample) curVoice->curPtr = (Ptr) (SndBuffer + (long) 2*(aCC>>BYTEDIV));
-		else
-		{
-			curVoice->samplePtr	= NULL;	curVoice->curPtr	= curVoice->maxPtr;
-		}
-
+		*ASCBuffer	+= (volChn * *(SndBuffer + off)) >> 8;			 aCC += aDD;
+		ASCBuffer	+= chanNo;
+	}
+	
+	if( !killSample) curVoice->curPtr = (Ptr) (SndBuffer + (long) 2*(aCC>>BYTEDIV));
+	else
+	{
+		curVoice->samplePtr	= NULL;	curVoice->curPtr	= curVoice->maxPtr;
+	}
+	
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);
 }
 
@@ -268,9 +268,9 @@ void Play8PolyPhonic( MADDriverRec *intDriver)
 {
 	long	i, x;
 	Byte	*alpha = (Byte*) intDriver->IntDataPtr;
-
-//	x = intDriver->ASCBUFFER * intDriver->DriverSettings.numChn;
-//	while( x-- > 0) *alpha++ = 0x80;
+	
+	//	x = intDriver->ASCBUFFER * intDriver->DriverSettings.numChn;
+	//	while( x-- > 0) *alpha++ = 0x80;
 	
 	for( i = 0 ; i < intDriver->DriverSettings.numChn; i++)	//
 	{

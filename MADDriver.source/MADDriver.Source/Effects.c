@@ -38,36 +38,36 @@ void CloseEffect( Channel *ch, short notUsed, MADDriverRec *intDriver)
 	switch( ch->cmd)
 	{
 		case arpeggioE:
-			if( ch->arpUse) 
+			if( ch->arpUse)
 			{
 				ch->period = ch->arp[ 0];
 				ch->arpUse = false;
 			}
-		break;
-	
+			break;
+			
 		case skipE:
-		break;
-		
+			break;
+			
 		case fastskipE:
-		break;
-		
+			break;
+			
 		case downslideE:
-		break;
-		
+			break;
+			
 		case upslideE:
-		break;
-		
+			break;
+			
 		case vibratoE:
-		//	DebugStr("\pClose Vibrato");
+			//	DebugStr("\pClose Vibrato");
 			ch->period = ch->periodOld;
-		break;
-		
+			break;
+			
 		case slidevolE:
-		break;
-		
+			break;
+			
 		case portamentoE:
-		break;
-		
+			break;
+			
 		case portaslideE:
 			ch->cmd = portamentoE;
 			CloseEffect( ch, 0, intDriver);
@@ -76,8 +76,8 @@ void CloseEffect( Channel *ch, short notUsed, MADDriverRec *intDriver)
 			CloseEffect( ch, 0, intDriver);
 			
 			ch->cmd = portaslideE;
-		break;
-		
+			break;
+			
 		case vibratoslideE:
 			ch->cmd = vibratoE;
 			CloseEffect( ch, 0, intDriver);
@@ -86,15 +86,15 @@ void CloseEffect( Channel *ch, short notUsed, MADDriverRec *intDriver)
 			CloseEffect( ch, 0, intDriver);
 			
 			ch->cmd = vibratoslideE;
-		break;
-		
+			break;
+			
 		case extendedE:
 			switch( HI( ch->arg))
-      		{
+		{
 			case 6:
 				
-			break;
-			}
+				break;
+		}
 			break;
 			
 		default:
@@ -108,7 +108,7 @@ void CloseEffect( Channel *ch, short notUsed, MADDriverRec *intDriver)
 
 void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 {
-	long offset;
+	long offset = 0;
 	
 	switch( ch->cmd)
 	{
@@ -120,8 +120,8 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 				
 				ch->period = ch->arp[ ch->arpindex];
 			}
-		break;
-	
+			break;
+			
 		case skipE:							// OK
 			if( call == intDriver->speed - 1)
 			{
@@ -155,8 +155,8 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 				ch->cmd = 0;
 				ch->arg = 0;
 			}
-		break;
-		
+			break;
+			
 		case fastskipE:						// OK
 			if( call == intDriver->speed - 1)
 			{
@@ -173,7 +173,7 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 					
 					intDriver->PL = ch->arg;
 					intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
-				
+					
 					if( intDriver->PL >= intDriver->curMusic->header->numPointers)
 					{
 						intDriver->PL = 0;
@@ -189,13 +189,13 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 				ch->cmd = 0;
 				ch->arg = 0;
 			}
-		break;
-		
+			break;
+			
 		case downslideE:						// OK
 			if( intDriver->MODMode)
 			{
-			/*	if( ch->period > intDriver->MOD_MIN_PITCH)
-					ch->period -= ch->slide*4;*/
+				/*	if( ch->period > intDriver->MOD_MIN_PITCH)
+				 ch->period -= ch->slide*4;*/
 				ch->period -= ch->slide*4;
 				if( ch->period < intDriver->MOD_MIN_PITCH) ch->period = intDriver->MOD_MIN_PITCH;
 			}
@@ -204,13 +204,13 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 				if( ch->period > intDriver->MIN_PITCH)
 					ch->period -= ch->slide*4;
 			}
-		break;
-		
+			break;
+			
 		case upslideE:							// OK
 			if( intDriver->MODMode)
 			{
-			/*	if( ch->period < intDriver->MOD_MAX_PITCH)
-					ch->period += ch->slide*4;*/
+				/*	if( ch->period < intDriver->MOD_MAX_PITCH)
+				 ch->period += ch->slide*4;*/
 				ch->period += ch->slide*4;
 				if( ch->period > intDriver->MOD_MAX_PITCH) ch->period = intDriver->MOD_MAX_PITCH;
 			}
@@ -219,27 +219,27 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 				if( ch->period < intDriver->MAX_PITCH)
 					ch->period += ch->slide*4;
 			}
-		break;
-		
+			break;
+			
 		case vibratoE:
 		{
 			Byte q = (ch->viboffset>>2)&0x1f;
 			
 			switch( ch->vibtype)
 			{
-			case 0:
-				offset = intDriver->vibrato_table[ q];
-			break;
-			
-			case 1:
-				q<<=3;
-				if(ch->viboffset<0) q=255-q;
-				offset = q;
-			break;
-			
-			case 2:
-				offset = 255;
-			break;
+				case 0:
+					offset = intDriver->vibrato_table[ q];
+					break;
+					
+				case 1:
+					q<<=3;
+					if(ch->viboffset<0) q=255-q;
+					offset = q;
+					break;
+					
+				case 2:
+					offset = 255;
+					break;
 			}
 			
 			offset *= ch->vibdepth;
@@ -251,17 +251,17 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 			
 			ch->viboffset += ch->vibrate;
 		}
-		break;
-		
+			break;
+			
 		case slidevolE:						// OK
 			ch->vol += ch->volumerate;
 			
 			if( ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
 			else if( ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
-		break;
-		
+			break;
+			
 		case portamentoE:
-		//	if( ch->period == 0) MyDebugStr( __LINE__, __FILE__, "Goal");
+			//	if( ch->period == 0) MyDebugStr( __LINE__, __FILE__, "Goal");
 			if( ch->period != ch->pitchgoal)
 			{
 				if (ch->period < ch->pitchgoal)
@@ -285,8 +285,8 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 	        		}
 	        	}
 			}
-		break;
-		
+			break;
+			
 		case portaslideE:
 			ch->cmd = portamentoE;
 			DoEffect( ch, call, intDriver);
@@ -295,8 +295,8 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 			DoEffect( ch, call, intDriver);
 			
 			ch->cmd = portaslideE;
-		break;
-		
+			break;
+			
 		case vibratoslideE:
 			ch->cmd = vibratoE;
 			DoEffect( ch, call, intDriver);
@@ -305,54 +305,54 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 			DoEffect( ch, call, intDriver);
 			
 			ch->cmd = vibratoslideE;
-		break;
-
+			break;
+			
 		case extendedE:
 			switch( HI( ch->arg))
-      		{
-				case 12:
-					if( call >= LOW( ch->arg)) ch->vol = 0;
+		{
+			case 12:
+				if( call >= LOW( ch->arg)) ch->vol = 0;
 				break;
 				
-				case 9:
-					if(LOW( ch->arg))
+			case 9:
+				if(LOW( ch->arg))
+				{
+					if( ch->trig == 0)
 					{
-						if( ch->trig == 0)
-						{
-							ch->curPtr	= ch->begPtr;
-							StartPanning( ch);
-							StartEnvelope( ch);
-							
-							ch->trig	= LOW( ch->arg);
-						}
-						ch->trig--;
+						ch->curPtr	= ch->begPtr;
+						StartPanning( ch);
+						StartEnvelope( ch);
+						
+						ch->trig	= LOW( ch->arg);
 					}
+					ch->trig--;
+				}
 				break;
 				
-				case 6:
-					if( call == intDriver->speed - 1)
+			case 6:
+				if( call == intDriver->speed - 1)
+				{
+					if( LOW( ch->arg) == 0)		// Set Pattern loop
 					{
-						if( LOW( ch->arg) == 0)		// Set Pattern loop
+						ch->PatternLoopE6 = intDriver->PartitionReader;
+						ch->PatternLoopE6ID = intDriver->PL;
+					}
+					else
+					{
+						if( ch->PatternLoopE6Count == 0) ch->PatternLoopE6Count = LOW( ch->arg);
+						else ch->PatternLoopE6Count--;
+						
+						if( ch->PatternLoopE6Count > 0)
 						{
-							ch->PatternLoopE6 = intDriver->PartitionReader;
-							ch->PatternLoopE6ID = intDriver->PL;
-						}
-						else
-						{
-							if( ch->PatternLoopE6Count == 0) ch->PatternLoopE6Count = LOW( ch->arg);
-							else ch->PatternLoopE6Count--;
-							
-							if( ch->PatternLoopE6Count > 0)
-							{
-								intDriver->PartitionReader = ch->PatternLoopE6-1;
-								intDriver->PL = ch->PatternLoopE6ID;
-								intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
-							}
+							intDriver->PartitionReader = ch->PatternLoopE6-1;
+							intDriver->PL = ch->PatternLoopE6ID;
+							intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
 						}
 					}
+				}
 				break;
-			}
-		break;
+		}
+			break;
 			
 		default:
 			ch->cmd = 0;
@@ -361,11 +361,11 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 			break;
 	}
 	
-/*	if( call == intDriver->speed - 1)
-	{
-		ch->arg = 0;
-		ch->cmd = 0;
-	}*/
+	/*	if( call == intDriver->speed - 1)
+	 {
+	 ch->arg = 0;
+	 ch->cmd = 0;
+	 }*/
 }
 
 void SetUpCmdEffect( Channel *ch, MADDriverRec *intDriver)
@@ -374,50 +374,50 @@ void SetUpCmdEffect( Channel *ch, MADDriverRec *intDriver)
 	short	volLO = vol & 0xf;
 	short	cmdCopy = ch->cmd;
 	short	argCopy = ch->arg;
-
+	
 	switch( vol >> 4)
 	{
 		case 0x8:
 			ch->cmd		= extendedE;
 			ch->arg		= 0xb0|volLO;
-
+			
 			SetUpEffect( ch, intDriver);
-		break;
-		
+			break;
+			
 		case 0x9:
 			ch->cmd		= extendedE;
 			ch->arg		= 0xa0|volLO;
-
+			
 			SetUpEffect( ch, intDriver);
-		break;
-		
+			break;
+			
 		case 0xa:                       // set vibrato speed
 			ch->cmd		= vibratoE;
 			ch->arg		= vol<<4;
-
+			
 			SetUpEffect( ch, intDriver);
-		break;
-
+			break;
+			
 		case 0xb:                       // vibrato
 			ch->cmd		= vibratoE;
 			ch->arg		= volLO;
-
+			
 			SetUpEffect( ch, intDriver);
-		break;
-		
+			break;
+			
 		case 0xc:                       // panning
 			ch->cmd		= panningE;
 			ch->arg		= vol<<4;
-
+			
 			SetUpEffect( ch, intDriver);
-		break;
-		
+			break;
+			
 		case 0xf:                       // tone porta
 			ch->cmd		= portamentoE;
 			ch->arg		= vol<<4;
-
+			
 			SetUpEffect( ch, intDriver);
-		break;
+			break;
 	}
 	
 	ch->cmd = cmdCopy;
@@ -426,142 +426,142 @@ void SetUpCmdEffect( Channel *ch, MADDriverRec *intDriver)
 
 void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 {
-short 	temp, note;
-long	aL;
-
-if( ch->arg == 0)
-{
+	short 	temp, note;
+	long	aL;
+	
+	if( ch->arg == 0)
+	{
+		switch( ch->cmd)
+		{
+			case arpeggioE:
+			case nothingE:
+			case fastskipE:
+			case volumeE:
+			case panningE:
+			case skipE:
+			case extendedE:
+			case speedE:
+				//case slidevolE:
+				break;
+				
+			default:
+				ch->arg = ch->oldArg[ ch->cmd];
+				break;
+		}
+	}
+	else ch->oldArg[ ch->cmd] = ch->arg;
+	
 	switch( ch->cmd)
 	{
-		case arpeggioE:
-		case nothingE:
-		case fastskipE:
-		case volumeE:
-		case panningE:
-		case skipE:
-		case extendedE:
-		case speedE:
-	//	case slidevolE:
-		break;
-		
-		default:
-			ch->arg = ch->oldArg[ ch->cmd];
-		break;
-	}
-}
-else ch->oldArg[ ch->cmd] = ch->arg;
-
-switch( ch->cmd)
-{
-	case upslideE:							// OK
-    	if( ch->arg) ch->slide = ch->arg;
-	break;
-	
-	case downslideE:						// OK
-    	if( ch->arg) ch->slide = ch->arg;
-	break;
-
-	case vibratoE:							// OK
-		if( HI( ch->arg)) ch->vibrate = (ch->arg & 0xf0)>>2;	//HI( ch->arg);
-		else ch->vibrate = ch->oldVibrate;
-		
-		if( LOW( ch->arg)) ch->vibdepth = LOW( ch->arg);
-		else ch->vibdepth = ch->oldVibdepth;
-		
-		ch->oldVibdepth = ch->vibdepth;
-		ch->oldVibrate = ch->vibrate;
-		
-	//	ch->viboffset = 0;
-		ch->periodOld = ch->period;
-	break;
-	
-	case arpeggioE:						// OK
-		if( ch->arg == 0) ch->arpUse = false;
-		else
-		{
-			long	inNote = ch->note;
-			
-			if( inNote == 0xFF) inNote = ch->noteOld;
-			
-			if( inNote != 0xFF)
-			{
-				note = inNote + HI( ch->arg);
-				if (note < NUMBER_NOTES) ch->arp[ 1] = GetOldPeriod( note, ch->fineTune, intDriver);
-            	
-				note = inNote + LOW( ch->arg);
-				if (note < NUMBER_NOTES) ch->arp[ 2] = GetOldPeriod( note, ch->fineTune, intDriver);
-       			
-				ch->arpindex = 0;
-				ch->arp[ 0] = ch->period;
-				
-				ch->arpUse = true;
-			}
-			else ch->arpUse = false;
-		}
-	break;
-	
-	case slidevolE:						// OK
-    	parse_slidevol( ch, ch->arg);
-	break;
-	
-	case extendedE:
-		switch( HI( ch->arg))
-        {
-			case 0:		// Turn On/Off filter
+		case upslideE:							// OK
+			if( ch->arg) ch->slide = ch->arg;
 			break;
 			
+		case downslideE:						// OK
+			if( ch->arg) ch->slide = ch->arg;
+			break;
+			
+		case vibratoE:							// OK
+			if( HI( ch->arg)) ch->vibrate = (ch->arg & 0xf0)>>2;	//HI( ch->arg);
+			else ch->vibrate = ch->oldVibrate;
+			
+			if( LOW( ch->arg)) ch->vibdepth = LOW( ch->arg);
+			else ch->vibdepth = ch->oldVibdepth;
+			
+			ch->oldVibdepth = ch->vibdepth;
+			ch->oldVibrate = ch->vibrate;
+			
+			//	ch->viboffset = 0;
+			ch->periodOld = ch->period;
+			break;
+			
+		case arpeggioE:						// OK
+			if( ch->arg == 0) ch->arpUse = false;
+			else
+			{
+				long	inNote = ch->note;
+				
+				if( inNote == 0xFF) inNote = ch->noteOld;
+				
+				if( inNote != 0xFF)
+				{
+					note = inNote + HI( ch->arg);
+					if (note < NUMBER_NOTES) ch->arp[ 1] = GetOldPeriod( note, ch->fineTune, intDriver);
+					
+					note = inNote + LOW( ch->arg);
+					if (note < NUMBER_NOTES) ch->arp[ 2] = GetOldPeriod( note, ch->fineTune, intDriver);
+					
+					ch->arpindex = 0;
+					ch->arp[ 0] = ch->period;
+					
+					ch->arpUse = true;
+				}
+				else ch->arpUse = false;
+			}
+			break;
+			
+		case slidevolE:						// OK
+			parse_slidevol( ch, ch->arg);
+			break;
+			
+		case extendedE:
+			switch( HI( ch->arg))
+        {
+			case 0:		// Turn On/Off filter
+				break;
+				
 			case 1:		// Fineslide up
 				temp = LOW( ch->arg);
 				ch->period -= temp*4;
-			//	ch->slide = temp;
-			break;
-			
+				//	ch->slide = temp;
+				break;
+				
     		case 2:		// Fineslide down
     			temp = LOW( ch->arg);
 				ch->period += temp*4;
-			//	ch->slide = temp;
-			break;
-			
+				//	ch->slide = temp;
+				break;
+				
 			case 3:		// Set glissando on/off
 				
-			break;
-			
+				break;
+				
 			case 4:		// Set vibrato waveform
 				switch( LOW( ch->arg))
-				{
-					case 0:
-					case 4:
-						ch->vibtype = 0;
+			{
+				case 0:
+				case 4:
+					ch->vibtype = 0;
 					break;
 					
-					case 1:
-					case 5:
-						ch->vibtype = 1;
+				case 1:
+				case 5:
+					ch->vibtype = 1;
 					break;
 					
-					case 2:
-					case 6:
-						ch->vibtype = 2;
+				case 2:
+				case 6:
+					ch->vibtype = 2;
 					break;
 					
-					case 3:
-					case 7:
-						ch->vibtype = 0;
+				case 3:
+				case 7:
+					ch->vibtype = 0;
 					break;
-				}
-			break;
-			
+			}
+				break;
+				
 			case 5:		// Set finetune value
-			//	ch->fineTune	= finetune[ LOW( ch->arg)];
-			//	ch->period	= GetOldPeriod( ch->Amiga, ch->fineTune);
-			break;
-			
+				//	ch->fineTune	= finetune[ LOW( ch->arg)];
+				//	ch->period	= GetOldPeriod( ch->Amiga, ch->fineTune);
+				break;
+				
 			case 6:		// Loop pattern
-			break;
-			
+				break;
+				
 			case 7:		// Set tremolo waveform
-			break;
-			
+				break;
+				
 			case 8:		// Set Panning
 				ch->pann = LOW( ch->arg);
 				
@@ -574,8 +574,8 @@ switch( ch->cmd)
 				else if( ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
 				
 				ch->PanningE8 = true;
-			break;
-			
+				break;
+				
 			case 9:
 				if(LOW( ch->arg))
 				{
@@ -586,208 +586,208 @@ switch( ch->cmd)
 					}
 					ch->trig--;
 				}
-			break;
-
+				break;
+				
 			case 10:	// Fine volume slide up
 				ch->vol += LOW( ch->arg);
 				
 				if( ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
 				else if( ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
-			break;
-			
+				break;
+				
 			case 11:	// Fine volume slide down
 				ch->vol -= LOW( ch->arg);
 				
 				if( ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
 				else if( ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
-			break;
-			
+				break;
+				
 			case 12:	// Cut sample
-			break;
-			
+				break;
+				
 			case 13:	// Delay sample
-			break;
-			
+				break;
+				
 			case 14:	// Delay pattern
 				intDriver->PatDelay = LOW( ch->arg) + 1;
-			break;
-			
+				break;
+				
 			case 15:	// Invert loop
-			break;
+				break;
         }
-
-	break;
-	
-	case portamentoE:				// OK
-	{
-		long	inNote = ch->note;
-		
-		ch->pitchrate = ch->arg;
-		
-		if( inNote == 0xFF) inNote = ch->noteOld;
-		
-		if( inNote != 0xFF)
+			
+			break;
+			
+		case portamentoE:				// OK
 		{
-			ch->pitchgoal = GetOldPeriod( inNote, ch->fineTune, intDriver);
+			long	inNote = ch->note;
+			
+			ch->pitchrate = ch->arg;
+			
+			if( inNote == 0xFF) inNote = ch->noteOld;
+			
+			if( inNote != 0xFF)
+			{
+				ch->pitchgoal = GetOldPeriod( inNote, ch->fineTune, intDriver);
+			}
+			else if( ch->pitchgoal == 0) ch->pitchgoal = ch->period;
 		}
-		else if( ch->pitchgoal == 0) ch->pitchgoal = ch->period;
-	}
-	break;
-	
-	case portaslideE:				// OK
-	{
-		long	inNote = ch->note;
-		
-		if( inNote == 0xFF) inNote = ch->noteOld;
-		
-		if( inNote != 0xFF)
+			break;
+			
+		case portaslideE:				// OK
 		{
-			ch->pitchgoal = GetOldPeriod( inNote, ch->fineTune, intDriver);
+			long	inNote = ch->note;
+			
+			if( inNote == 0xFF) inNote = ch->noteOld;
+			
+			if( inNote != 0xFF)
+			{
+				ch->pitchgoal = GetOldPeriod( inNote, ch->fineTune, intDriver);
+			}
+			else if( ch->pitchgoal == 0) ch->pitchgoal = ch->period;
+			
+			parse_slidevol(ch, ch->arg);
 		}
-		else if( ch->pitchgoal == 0) ch->pitchgoal = ch->period;
-		
-    	parse_slidevol(ch, ch->arg);
-    }
-	break;
-	
-	case vibratoslideE:
-		ch->periodOld = ch->period;
-
-	   	parse_slidevol(ch, ch->arg);
-	break;
-	
-	case speedE:
-		if( ch->arg < 32)		/** Setting de la speed + reset de la finespeed **/
-		{
-			if( ch->arg != 0) intDriver->speed = ch->arg;
-		}
-		else		/** Setting de finespeed **/
-		{
-			intDriver->finespeed = ch->arg;
-		}
-	break;
+			break;
 			
-	case skipE:
-	break;
-	
-	case fastskipE:
-	break;
-	
-	case LoopE:
-		if( ch->loopSize > 2)
-		{
-			short direction = (char) ch->arg;
+		case vibratoslideE:
+			ch->periodOld = ch->period;
 			
-			if( ch->amp == 16) direction *= 2;
-			if( ch->stereo == true) direction *= 2;
+			parse_slidevol(ch, ch->arg);
+			break;
 			
-			ch->loopBeg 	+= direction;
+		case speedE:
+			if( ch->arg < 32)		/** Setting de la speed + reset de la finespeed **/
+			{
+				if( ch->arg != 0) intDriver->speed = ch->arg;
+			}
+			else		/** Setting de finespeed **/
+			{
+				intDriver->finespeed = ch->arg;
+			}
+			break;
 			
-			if( ch->loopBeg >= ch->sizePtr) ch->loopBeg = ch->sizePtr;
+		case skipE:
+			break;
 			
-			ch->maxPtr 	= (Ptr) ((long) ch->begPtr + ch->loopBeg + ch->loopSize);
+		case fastskipE:
+			break;
 			
-			if( ch->maxPtr < ch->begPtr) ch->maxPtr = ch->begPtr;
-			if( ch->maxPtr > ch->begPtr + ch->sizePtr) ch->maxPtr = ch->begPtr + ch->sizePtr;
-			
-			if( ch->loopBeg < 0) ch->loopBeg = 0;
-		}
-	break;
-	
-	case NOffSetE:
-		ch->curPtr = ch->begPtr;
-		
-		aL = ( (unsigned long) ch->arg * (unsigned long) ( ch->sizePtr)) / 255UL;
-		
-		if( ch->amp == 16) aL /= 2;
-		if( ch->stereo == true) aL /= 2;
-		
-		if( ch->amp == 16) aL *= 2;
-		if( ch->stereo == true) aL *= 2;
-		
-		ch->curPtr += aL;
-		
-		if( ch->curPtr > ch->maxPtr) ch->maxPtr = ch->begPtr + ch->sizePtr;
-		else
-		{
+		case LoopE:
 			if( ch->loopSize > 2)
 			{
+				short direction = (char) ch->arg;
+				
+				if( ch->amp == 16) direction *= 2;
+				if( ch->stereo == true) direction *= 2;
+				
+				ch->loopBeg 	+= direction;
+				
+				if( ch->loopBeg >= ch->sizePtr) ch->loopBeg = ch->sizePtr;
+				
 				ch->maxPtr 	= (Ptr) ((long) ch->begPtr + ch->loopBeg + ch->loopSize);
+				
+				if( ch->maxPtr < ch->begPtr) ch->maxPtr = ch->begPtr;
+				if( ch->maxPtr > ch->begPtr + ch->sizePtr) ch->maxPtr = ch->begPtr + ch->sizePtr;
+				
+				if( ch->loopBeg < 0) ch->loopBeg = 0;
 			}
-		}
-	break;
-	
-	case offsetE:
-		ch->curPtr = ch->begPtr;
-		
-		aL = ch->arg;
-		aL *= 256L;
-		
-		if( ch->amp == 16) aL *= 2;
-		if( ch->stereo == true) aL *= 2;
-		
-		ch->curPtr += aL;
-	break;
-	
-	case panningE:
-		ch->pann = ch->arg;
-		
-		ch->pann = ( (long) ch->pann * (long)  MAX_PANNING) / (long) 0xFF;
-		
-		if( ch->pann < 0) ch->pann = 0;
-		else if( ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
-	break;
-	
-	case volumeE:
-		ch->vol = ch->arg;
-		
-		if( ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
-		else if( ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
-	break;
+			break;
+			
+		case NOffSetE:
+			ch->curPtr = ch->begPtr;
+			
+			aL = ( (unsigned long) ch->arg * (unsigned long) ( ch->sizePtr)) / 255UL;
+			
+			if( ch->amp == 16) aL /= 2;
+			if( ch->stereo == true) aL /= 2;
+			
+			if( ch->amp == 16) aL *= 2;
+			if( ch->stereo == true) aL *= 2;
+			
+			ch->curPtr += aL;
+			
+			if( ch->curPtr > ch->maxPtr) ch->maxPtr = ch->begPtr + ch->sizePtr;
+			else
+			{
+				if( ch->loopSize > 2)
+				{
+					ch->maxPtr 	= (Ptr) ((long) ch->begPtr + ch->loopBeg + ch->loopSize);
+				}
+			}
+			break;
+			
+		case offsetE:
+			ch->curPtr = ch->begPtr;
+			
+			aL = ch->arg;
+			aL *= 256L;
+			
+			if( ch->amp == 16) aL *= 2;
+			if( ch->stereo == true) aL *= 2;
+			
+			ch->curPtr += aL;
+			break;
+			
+		case panningE:
+			ch->pann = ch->arg;
+			
+			ch->pann = ( (long) ch->pann * (long)  MAX_PANNING) / (long) 0xFF;
+			
+			if( ch->pann < 0) ch->pann = 0;
+			else if( ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
+			break;
+			
+		case volumeE:
+			ch->vol = ch->arg;
+			
+			if( ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
+			else if( ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
+			break;
 	}
 }
 
 void DoVolCmd( Channel *ch, short call, MADDriverRec *intDriver)
 {
-short	vol = ch->volcmd;
-short	volLO = vol & 0xf;
-
+	short	vol = ch->volcmd;
+	short	volLO = vol & 0xf;
+	
 	switch( vol >> 4)
 	{
 		case 0x6:					// volslide down
 			ch->vol -= volLO;
-		
+			
 			if( ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
 			else if( ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
-		break;
-
+			break;
+			
 		case 0x7:					// volslide up
 			ch->vol += volLO;
-		
+			
 			if( ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
 			else if( ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
-		break;
-
-		// volume-row fine volume slide is compatible with protracker
-		//   EBx and EAx effects i.e. a zero nibble means DO NOT SLIDE, as
-		//  opposed to 'take the last sliding value'.
-		//
-
+			break;
+			
+			// volume-row fine volume slide is compatible with protracker
+			//   EBx and EAx effects i.e. a zero nibble means DO NOT SLIDE, as
+			//  opposed to 'take the last sliding value'.
+			//
+			
 		case 0x8:						// finevol down
-		break;
-
+			break;
+			
 		case 0x9:                       // finevol up
-		break;
-		
+			break;
+			
 		case 0xa:                       // set vibrato speed
-		break;
-
+			break;
+			
 		case 0xb:                       // vibrato
-		break;
-
+			break;
+			
 		case 0xc:                       // set panning
-		break;
-
+			break;
+			
 		case 0xd:                       // pann slide left
 			if(vol&0xf)
 			{
@@ -797,7 +797,7 @@ short	volLO = vol & 0xf;
 				else if( ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
 			}
 			break;
-
+			
 		case 0xe:                       // pann slide right
 			if(vol&0xf)
 			{
@@ -806,9 +806,9 @@ short	volLO = vol & 0xf;
 				if( ch->pann < 0) ch->pann = 0;
 				else if( ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
 			}
-		break;
-
+			break;
+			
 		case 0xf:                       // tone porta
-		break;
+			break;
 	}
 }

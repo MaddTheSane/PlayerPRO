@@ -48,7 +48,7 @@
 #endif
 
 #ifdef LINUX
-#define __UNIX__
+#define __UNIX__ 1
 #endif
 
 #endif
@@ -172,7 +172,7 @@ typedef struct Cmd							// COMMAND
 	Byte 	arg;					// Effect argument
 	Byte	vol;					// Volume				0xFF : no volume cmd
 	Byte	unused;
-}Cmd;
+} Cmd;
 typedef Cmd MadCommand;
 
 typedef struct PatHeader					// HEADER
@@ -189,9 +189,8 @@ typedef struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
 {									// Pattern = 64 notes to play
 	PatHeader	header;
 	Cmd			Cmds[ 1];
-}PatData;
+} PatData;
 typedef PatData PatternData;
-
 
 
 // ***	
@@ -212,7 +211,7 @@ typedef struct sData								// SAMPLE
 	char 				name[ 32];			// Sample name
 	Byte				stereo;				// Stereo
 	Ptr					data;				// Used only in memory, not in files
-}sData;
+} sData;
 typedef sData SampleData;
 
 enum
@@ -226,7 +225,7 @@ typedef struct EnvRec				// Volume Enveloppe
 {
 	short 	pos;				// pos
 	short	val;				// val
-}EnvRec;
+} EnvRec;
 
 typedef struct InstrData				// INSTRUMENT
 {
@@ -271,7 +270,7 @@ typedef struct InstrData				// INSTRUMENT
 	
 	Byte	vibDepth;
 	Byte	vibRate;
-}InstrData;
+} InstrData;
 typedef InstrData InstrumentData;
 
 
@@ -332,7 +331,7 @@ typedef struct MADSpec
 	
 	long		chanEffect[ MAXTRACK][ 4];	// Channel Effect IDs
 	FXBus		chanBus[ MAXTRACK];
-}MADSpec;
+} MADSpec;
 
 typedef struct FXSets
 {
@@ -342,7 +341,7 @@ typedef struct FXSets
 	short	noArg;
 	float	values[ 100];
 	Str63	name;
-}FXSets;	// and then float values
+} FXSets;	// and then float values
 
 
 #if PRAGMA_STRUCT_ALIGN
