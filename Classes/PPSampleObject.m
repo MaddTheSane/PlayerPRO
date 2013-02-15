@@ -9,6 +9,20 @@
 #import "PPSampleObject.h"
 #import "ARCBridge.h"
 
+#define LOOPBEGINKEY @"Loop Begin"
+#define LOOPSIZEKEY @"Loop Size"
+#define VOLUMEKEY @"Volume"
+#define C2SPDKEY @"c2spd"
+#define LOOPTYPEKEY @"Loop Type"
+#define AMPLITUDEKEY @"Amplitude"
+#define RELATIVENOTEKEY @"Relative Note"
+#define NAMEKEY @"Name"
+#define STEREOKEY @"Stereo"
+#define DATAKEY @"Data"
+
+#define SAMPLEINDEXKEY @"Sample Index"
+#define INSTRUMENTINDEXKEY @"Instrument Index"
+
 @implementation PPSampleObject
 
 @synthesize name;
@@ -183,5 +197,43 @@
 	[super dealloc];
 }
 #endif
+
+#pragma mark NSCoding implementation
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+	[aCoder encodeObject:name forKey:NAMEKEY];
+	[aCoder encodeObject:data forKey:DATAKEY];
+	[aCoder encodeObject:@(theSample.loopBeg) forKey:LOOPBEGINKEY];
+	[aCoder encodeObject:@(theSample.loopSize) forKey:LOOPSIZEKEY];
+	[aCoder encodeObject:@(theSample.vol) forKey:VOLUMEKEY];
+	[aCoder encodeObject:@(theSample.c2spd) forKey:C2SPDKEY];
+	[aCoder encodeObject:@(theSample.loopType) forKey:LOOPTYPEKEY];
+	[aCoder encodeObject:@(theSample.amp) forKey:AMPLITUDEKEY];
+	[aCoder encodeObject:@(theSample.relNote) forKey:RELATIVENOTEKEY];
+	[aCoder encodeObject:@(self.stereo) forKey:STEREOKEY];
+	
+	[aCoder encodeObject:@(sampleIndex) forKey:SAMPLEINDEXKEY];
+	[aCoder encodeObject:@(instrumentIndex) forKey:INSTRUMENTINDEXKEY];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	if (self = [super init]) {
+		name = RETAINOBJ([aDecoder decodeObjectForKey:NAMEKEY]);
+		data = RETAINOBJ([aDecoder decodeObjectForKey:DATAKEY]);
+		theSample.loopBeg = [[aDecoder decodeObjectForKey:LOOPBEGINKEY] int32Value];
+		theSample.loopSize = [[aDecoder decodeObjectForKey:LOOPSIZEKEY] int32Value];
+		theSample.vol = [[aDecoder decodeObjectForKey:VOLUMEKEY] unsignedCharValue];
+		theSample.c2spd = [[aDecoder decodeObjectForKey:C2SPDKEY] unsignedShortValue];
+		theSample.loopType = [[aDecoder decodeObjectForKey:LOOPTYPEKEY] unsignedCharValue];
+		theSample.amp = [[aDecoder decodeObjectForKey:AMPLITUDEKEY] unsignedCharValue];
+		theSample.relNote = [[aDecoder decodeObjectForKey:RELATIVENOTEKEY] charValue];
+		self.stereo = [[aDecoder decodeObjectForKey:STEREOKEY] boolValue];
+		
+		sampleIndex = [[aDecoder decodeObjectForKey:SAMPLEINDEXKEY] shortValue];
+		instrumentIndex = [[aDecoder decodeObjectForKey:INSTRUMENTINDEXKEY] shortValue];
+	}
+	return self;
+}
 
 @end

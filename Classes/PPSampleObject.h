@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 
-@interface PPSampleObject : NSObject <NSCopying>
+@interface PPSampleObject : NSObject <NSCopying, NSCoding>
 {
 	sData		theSample;
 	NSString	*name;
