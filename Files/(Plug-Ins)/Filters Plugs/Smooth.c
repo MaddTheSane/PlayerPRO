@@ -13,11 +13,12 @@
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
 
-OSErr mainSmooth(sData			*theData,
-				 long			SelectionStart,
-				 long			SelectionEnd,
-				 PPInfoPlug		*thePPInfoPlug,
-				 short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainSmooth(void			*unused,
+						sData			*theData,
+						long			SelectionStart,
+						long			SelectionEnd,
+						PPInfoPlug		*thePPInfoPlug,
+						short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long	i, length, temp, prevtemp, nexttemp, work;
 

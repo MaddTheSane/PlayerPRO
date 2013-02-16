@@ -15,11 +15,12 @@
 #define max(a,b) (((a) > (b)) ? (a) : (b))
 #define labs(a) (((a) < 0) ? (-a) : (a))
 
-OSErr mainNormalize(sData					*theData,
-					long					SelectionStart,
-					long					SelectionEnd,
-					PPInfoPlug				*thePPInfoPlug,
-					short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainNormalize(void					*unused,
+						   sData				*theData,
+						   long					SelectionStart,
+						   long					SelectionEnd,
+						   PPInfoPlug			*thePPInfoPlug,
+						   short				StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long	i, peak = 0, temp;
 

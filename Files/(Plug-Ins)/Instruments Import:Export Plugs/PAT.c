@@ -5,7 +5,6 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
-//#include <Carbon/Carbon.h>
 #include "PAT.h"
 
 #ifdef _MAC_H
@@ -304,7 +303,7 @@ static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean res
 }
 
 
-OSErr mainPAT(void					*unused,
+static OSErr mainPAT(void					*unused,
 			  OSType				order,						// Order to execute
 			  InstrData				*InsHeader,					// Ptr on instrument header
 			  sData					**sample,					// Ptr on samples data

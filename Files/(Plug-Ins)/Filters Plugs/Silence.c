@@ -15,11 +15,12 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
-OSErr mainSilence(	sData			*theData,				// Sample Informations
-					long			SelectionStart,			// SelectionStart in bytes ! Even for 16bits audio and stereo
-					long			SelectionEnd,			// SelectionEnd in bytes ! Even for 16bits audio and stereo
-					PPInfoPlug		*thePPInfoPlug,
-					short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainSilence(void			*unused,
+						 sData			*theData,				// Sample Informations
+						 long			SelectionStart,			// SelectionStart in bytes ! Even for 16bits audio and stereo
+						 long			SelectionEnd,			// SelectionEnd in bytes ! Even for 16bits audio and stereo
+						 PPInfoPlug		*thePPInfoPlug,
+						 short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long	i;
 	Ptr		Sample8Ptr = theData->data;

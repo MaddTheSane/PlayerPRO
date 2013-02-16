@@ -120,7 +120,7 @@ static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean res
 	return strLength;
 }
 
-OSErr mainMINs(void						*unused,
+static OSErr mainMINs(void						*unused,
 			   OSType					order,						// Order to execute
 			   InstrData				*InsHeader,					// Ptr on instrument header
 			   sData					**sample,					// Ptr on samples data

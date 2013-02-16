@@ -37,7 +37,7 @@ static OSErr TestXI( Ptr CC)
 	else return MADFileNotSupportedByThisPlug;
 }
 
-OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
+static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 {
 	short			i;
 //	Boolean			IsReading;
@@ -146,7 +146,7 @@ static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean res
 	return strLength;
 }
 
-OSErr mainXI(void						*unused,
+static OSErr mainXI(void						*unused,
 			 OSType		order,						// Order to execute
 			 InstrData	*InsHeader,					// Ptr on instrument header
 			 sData		**sample,					// Ptr on samples data
