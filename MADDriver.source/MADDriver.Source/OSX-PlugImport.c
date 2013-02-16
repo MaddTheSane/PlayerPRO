@@ -315,7 +315,6 @@ void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 				}
 				//Prevent memory leaks
 				CFRelease(tempBundleRef);
-				
 			}
 		}
 		CFRelease(somePlugs);

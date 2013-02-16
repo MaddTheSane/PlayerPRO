@@ -377,7 +377,7 @@ static OSErr MADI2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 				SInt32 	ll;
 				short	*shortPtr = (short*) curData->data;
 				
-				for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+				for( ll = 0; ll < curData->size/2; ll++) INT16( &shortPtr[ ll]);
 			}
 
 		}

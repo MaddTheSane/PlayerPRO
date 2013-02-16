@@ -267,7 +267,7 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 				if( xx > 4) xx = 4;
 				type = '    ';
 				memcpy( &type, inMADDriver->ThePlug[ i].type, xx);
-				PPBE32(&type);
+				MOT32(&type);
 				
 				return type;
 			}
