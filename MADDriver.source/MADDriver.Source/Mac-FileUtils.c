@@ -208,9 +208,7 @@ int MADstrcmp( const char *dst, const char* src)
 
 EXP void OSType2Ptr( OSType type, Ptr str)
 {
-#ifdef __LITTLE_ENDIAN__
 	MOT32(&type);
-#endif
 	
 	BlockMoveData( &type, str, 4);
 	str[ 4] = 0;
@@ -225,9 +223,7 @@ EXP OSType Ptr2OSType( char* str)
 	if( i > 4) i = 4;
 	type = '    ';
 	BlockMoveData( str, &type, i);
-#ifdef __LITTLE_ENDIAN__
 	MOT32(&type);
-#endif
 	
 	return type;
 }
