@@ -62,23 +62,27 @@ OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	curIns->numSamples	= 0;
 	
 	/**/
-	
+#if 1
+	memset(curIns->what, 0, sizeof(curIns->what));
+	memset(curIns->volEnv, 0, sizeof(curIns->volEnv));
+	memset(curIns->pannEnv, 0, sizeof(curIns->pannEnv));
+	memset(curIns->pitchEnv, 0, sizeof(curIns->pitchEnv));
+#else
 	for( i = 0; i < 96; i++) curIns->what[ i]		= 0;
+
 	for( i = 0; i < 12; i++)
 	{
 		curIns->volEnv[ i].pos		= 0;
 		curIns->volEnv[ i].val		= 0;
-	}
-	for( i = 0; i < 12; i++)
-	{
+		
 		curIns->pannEnv[ i].pos	= 0;
 		curIns->pannEnv[ i].val	= 0;
-	}
-	for( i = 0; i < 12; i++)
-	{
+		
 		curIns->pitchEnv[ i].pos	= 0;
 		curIns->pitchEnv[ i].val	= 0;
+
 	}
+#endif
 	curIns->volSize		= 0;
 	curIns->pannSize	= 0;
 	
@@ -245,6 +249,7 @@ OSErr mainXI(void						*unused,
 					
 					memcpy(InsHeader->what, pth->what, 96);
 					memcpy(InsHeader->volEnv, pth->volenv, 48);
+#ifdef __BIG_ENDIAN__
 					for( x = 0; x < 12; x++)
 					{
 //						InsHeader->volEnv[ x].pos = Tdecode16( &InsHeader->volEnv[ x].pos);	// 
@@ -252,6 +257,7 @@ OSErr mainXI(void						*unused,
 						PPLE16(&InsHeader->volEnv[x].pos);
 						PPLE16(&InsHeader->volEnv[x].val);
 					}
+#endif
 					
 					InsHeader->volSize	= pth->volpts;
 					InsHeader->volType	= pth->volflg;
@@ -261,11 +267,15 @@ OSErr mainXI(void						*unused,
 					InsHeader->volFade	= pth->volfade;
 					
 					memcpy(InsHeader->pannEnv, pth->panenv, 48);
+#ifdef __BIG_ENDIAN__
 					for( x = 0; x < 12; x++)
 					{
-						InsHeader->pannEnv[ x].pos = Tdecode16( &InsHeader->pannEnv[ x].pos);	// 
-						InsHeader->pannEnv[ x].val = Tdecode16( &InsHeader->pannEnv[ x].val);	// 00...64
+						//InsHeader->pannEnv[ x].pos = Tdecode16( &InsHeader->pannEnv[ x].pos);	//
+						//InsHeader->pannEnv[ x].val = Tdecode16( &InsHeader->pannEnv[ x].val);	// 00...64
+						PPLE16(&InsHeader->pannEnv[x].pos);
+						PPLE16(&InsHeader->pannEnv[x].val);
 					}
+#endif
 					
 					InsHeader->pannSize	= pth->panpts;
 					InsHeader->pannType	= pth->panflg;
