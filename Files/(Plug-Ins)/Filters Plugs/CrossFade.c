@@ -14,7 +14,7 @@
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
-OSErr mainCrossFade( 	sData					*theData,
+static OSErr mainCrossFade( 	sData					*theData,
 				long					SelectionStart,
 				long					SelectionEnd,
 				PPInfoPlug				*thePPInfoPlug,

@@ -7,7 +7,7 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
-Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
+static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 {
 	if( row < 0) row = 0;
 	else if( row >= myPcmd->length) row = myPcmd->length -1;
@@ -18,7 +18,7 @@ Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
 
-OSErr mainRevert( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+static OSErr mainRevert( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
 	short				/*itemHit, mode,*/ track, row;
 //	Str255				tStr;

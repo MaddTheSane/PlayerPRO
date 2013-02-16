@@ -16,7 +16,7 @@ static OSErr TestXI( Ptr CC)
 	else return MADFileNotSupportedByThisPlug;
 }
 
-OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
+static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 {
 	short			i;
 //	Boolean			IsReading;
@@ -101,7 +101,7 @@ static inline UInt16 Tdecode16( void *msg_buf)
 }
 #endif
 
-OSErr mainXI(	OSType		order,						// Order to execute
+static OSErr mainXI(	OSType		order,						// Order to execute
 				InstrData	*InsHeader,					// Ptr on instrument header
 				sData		**sample,					// Ptr on samples data
 				short		*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)

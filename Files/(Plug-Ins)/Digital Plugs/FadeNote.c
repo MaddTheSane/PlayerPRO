@@ -246,7 +246,7 @@ static void AutoPosition( DialogPtr aDia)
 	ShowWindow( GetDialogWindow( aDia));
 }
 
-Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
+static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 {
 	if( row < 0) row = 0;
 	else if( row >= myPcmd->length) row = myPcmd->length -1;
@@ -325,7 +325,7 @@ static short Text2Note( Str255 myTT)
 	return( Oct);
 }
 
-OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+static OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
 	DialogPtr			myDia;
 	short				itemHit, itemType;

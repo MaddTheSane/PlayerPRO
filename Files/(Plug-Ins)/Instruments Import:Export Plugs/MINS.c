@@ -6,6 +6,8 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <Carbon/Carbon.h>
 
+//TODO: byteswap on Intel.
+//PP6 does this, so we just need to move it over
 static OSErr TestMINS( InstrData *CC)
 {
 	if( CC->type == 0 && CC->numSamples >= 0 && CC->numSamples < MAXSAMPLE) return noErr;
@@ -75,13 +77,13 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	return noErr;
 }
 
-OSErr mainMINs(	OSType					order,						// Order to execute
-				InstrData				*InsHeader,					// Ptr on instrument header
-				sData					**sample,					// Ptr on samples data
-				short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
-																	// If sampleID == -1 : add sample else replace selected sample.
-				FSSpec					*AlienFileFSSpec,			// IN/OUT file
-				PPInfoPlug				*thePPInfoPlug)
+static OSErr mainMINs(OSType				order,						// Order to execute
+					  InstrData				*InsHeader,					// Ptr on instrument header
+					  sData					**sample,					// Ptr on samples data
+					  short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+					  // If sampleID == -1 : add sample else replace selected sample.
+					  FSSpec				*AlienFileFSSpec,			// IN/OUT file
+					  PPInfoPlug			*thePPInfoPlug)
 {
 	OSErr	myErr;
 	UNFILE	iFileRefI;

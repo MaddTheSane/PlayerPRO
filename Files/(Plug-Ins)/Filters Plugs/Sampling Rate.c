@@ -181,7 +181,7 @@ static Ptr ConvertSampleC4SPD( Ptr src, long srcSize, short amp, long srcC4SPD, 
 	return dst;
 }
 
-OSErr mainSampRate(	sData			*theData,
+static OSErr mainSampRate(	sData			*theData,
 					long			SelectionStart,
 					long			SelectionEnd,
 					PPInfoPlug		*thePPInfoPlug,

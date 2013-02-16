@@ -161,7 +161,7 @@ static int checkMax (int v)
 }
 #endif
 
-OSErr mainEcho(	sData			*theData,
+static OSErr mainEcho(	sData			*theData,
 				long			SelectionStart,
 				long			SelectionEnd,
 				PPInfoPlug		*thePPInfoPlug,

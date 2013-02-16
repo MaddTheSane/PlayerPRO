@@ -247,7 +247,7 @@ static void alertUser ( short errString)
 	StopAlert(5011, NULL);
 }
 
-OSErr mainMix( 	sData					*theData,
+static OSErr mainMix( 	sData					*theData,
 				long					SelectionStart,
 				long					SelectionEnd,
 				PPInfoPlug				*thePPInfoPlug,

@@ -11,7 +11,7 @@
 #include <PlayerPROCore/PPPlug.h>
 #include <Carbon/Carbon.h>
 
-OSErr mainBackwards(	sData					*theData,
+static OSErr mainBackwards(	sData					*theData,
 						long					SelectionStart,
 						long					SelectionEnd,
 						PPInfoPlug				*thePPInfoPlug,

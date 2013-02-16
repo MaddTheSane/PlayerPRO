@@ -6,7 +6,7 @@
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
 
-OSErr mainInvert(	sData					*theData,
+static OSErr mainInvert(	sData					*theData,
 					long					SelectionStart,
 					long					SelectionEnd,
 					PPInfoPlug				*thePPInfoPlug,

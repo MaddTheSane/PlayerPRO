@@ -121,7 +121,7 @@ static Boolean getParams ( long *p1, long *p2, PPInfoPlug *thePPInfoPlug)
 	return theResult;
 }
 
-OSErr mainFade(	sData					*theData,
+static OSErr mainFade(	sData					*theData,
 				long					SelectionStart,
 				long					SelectionEnd,
 				PPInfoPlug				*thePPInfoPlug,

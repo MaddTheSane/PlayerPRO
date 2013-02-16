@@ -193,7 +193,7 @@ static Ptr ConvertSampleSize( Ptr src, long srcSize, short amp, long dstSize, Bo
 	return dst;
 }
 
-OSErr mainLength(			sData					*theData,
+static OSErr mainLength(			sData					*theData,
 							long					SelectionStart,
 							long					SelectionEnd,
 							PPInfoPlug				*thePPInfoPlug,

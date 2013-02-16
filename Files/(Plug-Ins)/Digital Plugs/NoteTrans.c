@@ -10,7 +10,7 @@
 
 /** Utils Functions **/
 
-void GetDText (DialogPtr dlog, short item, StringPtr str)
+static void GetDText (DialogPtr dlog, short item, StringPtr str)
 {
 	Handle	itemHandle;
 	short	itemType;
@@ -20,7 +20,7 @@ void GetDText (DialogPtr dlog, short item, StringPtr str)
 	GetDialogItemText (itemHandle, str);
 }
 
-void SetDText (DialogPtr dlog, short item, Str255 str)
+static void SetDText (DialogPtr dlog, short item, Str255 str)
 {
 	ControlHandle	control;
 	OSErr			err;
@@ -30,9 +30,9 @@ void SetDText (DialogPtr dlog, short item, Str255 str)
 	DrawOneControl( control);
 }
 
-GDHandle	TheGDevice/*:0xCC8*/;
+static GDHandle	TheGDevice/*:0xCC8*/;
 
-void AutoPosition( DialogPtr aDia)
+static void AutoPosition( DialogPtr aDia)
 {
 	Point		Position, mouse;
 	Rect		ViewRect, caRect;
@@ -86,7 +86,7 @@ void AutoPosition( DialogPtr aDia)
 	ShowWindow( GetDialogWindow( aDia));
 }
 
-Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
+static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 {
 	if( row < 0) row = 0;
 	else if( row >= myPcmd->length) row = myPcmd->length -1;
@@ -99,7 +99,7 @@ Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 
 /** Main function **/
 
-OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+static OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
 	DialogPtr			myDia;
 	short				itemHit;

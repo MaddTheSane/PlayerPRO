@@ -15,7 +15,7 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
-OSErr mainSilence(	sData			*theData,				// Sample Informations
+static OSErr mainSilence(	sData			*theData,				// Sample Informations
 					long			SelectionStart,			// SelectionStart in bytes ! Even for 16bits audio and stereo
 					long			SelectionEnd,			// SelectionEnd in bytes ! Even for 16bits audio and stereo
 					PPInfoPlug		*thePPInfoPlug,

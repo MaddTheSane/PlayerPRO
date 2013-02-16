@@ -13,7 +13,7 @@
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
 
-OSErr mainSmooth(sData			*theData,
+static OSErr mainSmooth(sData			*theData,
 				 long			SelectionStart,
 				 long			SelectionEnd,
 				 PPInfoPlug		*thePPInfoPlug,

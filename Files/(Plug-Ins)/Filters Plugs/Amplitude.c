@@ -105,7 +105,7 @@ static Boolean getParams ( long *p1, PPInfoPlug *thePPInfoPlug)
 	return theResult;
 }
 
-OSErr mainAmplitude(	sData					*theData,
+static OSErr mainAmplitude(	sData					*theData,
 						long					SelectionStart,
 						long					SelectionEnd,
 						PPInfoPlug				*thePPInfoPlug,

@@ -15,7 +15,7 @@
 #define max(a,b) (((a) > (b)) ? (a) : (b))
 #define labs(a) (((a) < 0) ? (-a) : (a))
 
-OSErr mainNormalize(sData					*theData,
+static OSErr mainNormalize(sData					*theData,
 					long					SelectionStart,
 					long					SelectionEnd,
 					PPInfoPlug				*thePPInfoPlug,
