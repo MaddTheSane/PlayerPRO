@@ -31,7 +31,7 @@
 	instrument = [ainstrument copy];
 #else
 	PPInstrumentObject *tmpObj = instrument;
-	instrument = [aistrument copy];
+	instrument = [ainstrument copy];
 	[tmpObj release];
 #endif
 	if ([self isWindowLoaded]) {
