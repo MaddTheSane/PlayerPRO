@@ -25,7 +25,7 @@
 #include "Okta.h"
 
 #ifdef _MAC_H
-#define decode16(msg_buf) EndianU16_LtoN(*msg_buf)
+#define decode16(msg_buf) EndianU16_LtoN(*(UInt16*)msg_buf)
 #else
 static inline UInt16 decode16 (void *msg_buf)
 {
@@ -36,7 +36,7 @@ static inline UInt16 decode16 (void *msg_buf)
 #endif
 
 #ifdef _MAC_H
-#define decode32(msg_buf) EndianU32_LtoN(*msg_buf)
+#define decode32(msg_buf) EndianU32_LtoN(*(UInt32*)msg_buf)
 #else
 static inline UInt32 decode32 (void *msg_buf)
 {
