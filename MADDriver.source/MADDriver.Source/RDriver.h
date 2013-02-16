@@ -249,7 +249,25 @@ enum MADSoundOutput
 	ESDDriver,							// ESound Driver. available on most UNIX Systems
 	ASIOSoundManager,					// ASIO Sound Driver by Steinberg //NOT Available
 	NoHardwareDriver = SHRT_MAX			// NO HARDWARE CONNECTION, will not produce any sound
+};
 
+//Used for MADSoundDriverList()
+enum MADSoundDriverAvailable
+{
+	oldASCSoundDriverBit		= 1 << oldASCSoundDriver,
+	oldAWACSoundDriverBit		= 1 << oldAWACSoundDriver,
+	MIDISoundDriverBit			= 1 << MIDISoundDriver,
+	SoundManagerDriverBit		= 1 << SoundManagerDriver,
+	QK25SoundDriverBit			= 1 << QK25SoundDriver,
+	DigiDesignSoundDriverBit	= 1 << DigiDesignSoundDriver,
+	BeOSSoundDriverBit			= 1 << BeOSSoundDriver,
+	DirectSound95NTBit			= 1 << DirectSound95NT,
+	Wave95NTBit					= 1 << Wave95NT,
+	CoreAudioDriverBit			= 1 << CoreAudioDriver,
+	ALSADriverBit				= 1 << ALSADriver,
+	OSSDriverBit				= 1 << OSSDriver,
+	ESDDriverBit				= 1 << ESDDriver,
+	ASIOSoundManagerBit			= 1 << ASIOSoundManager
 };
 
 enum
@@ -568,6 +586,9 @@ PPEXPORT OSErr	MADInitLibrary( char *PlugsFolderName, MADLibrary **MADLib);	// L
 PPEXPORT OSErr	MADDisposeLibrary( MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
 PPEXPORT void	MADGetBestDriver( MADDriverSettings	*DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
+PPEXPORT Boolean MADSoundDriverIsAvalable(short theDriver);
+PPEXPORT int MADSoundDriverList();
+
 PPEXPORT OSErr	MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
 PPEXPORT OSErr	MADDisposeDriver( MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
 

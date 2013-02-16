@@ -529,6 +529,53 @@ SInt32 MADMinimize( MADMusic *music)
 	return before - after;
 }
 
+static int driverList = 0;
+
+static void BuildAvailableDriverList()
+{
+	if (driverList == 0) {
+		driverList =   1 << MIDISoundDriver |
+#ifdef _BE_H
+		1 << BeOSSoundDriver |
+#endif
+#ifdef WIN32
+		1 << DirectSound95NT |
+		1 << Wave95NT |
+#endif
+#ifdef _MAC_H
+		1 << CoreAudioDriver |
+#endif
+#ifdef LINUX
+		1 << ALSADriver |
+#endif
+#ifdef _OSSSOUND
+		1 << OSSDriver |
+#endif
+#ifdef _ESOUND
+		1 << ESDDriver |
+#endif
+		0;
+	}
+}
+
+Boolean MADSoundDriverIsAvalable(short theDriver)
+{
+	if (theDriver == NoHardwareDriver) {
+		return TRUE;
+	}
+	BuildAvailableDriverList();
+	if (driverList & 1 << theDriver)
+		return TRUE;
+	else
+		return FALSE;
+}
+
+int MADSoundDriverList()
+{
+	BuildAvailableDriverList();
+	return driverList;
+}
+
 void MADGetBestDriver( MADDriverSettings	*Init)
 {
 	Init->outPutBits		= 16;

@@ -381,7 +381,7 @@ OSErr PPIdentifyFile( MADLibrary *inMADDriver, char *type, char *AlienFile)
 	if( !refNum) return MADReadingErr;
 	else
 	{
-		if( iGetEOF( refNum) < 100) iErr = -36;
+		if( iGetEOF( refNum) < 100) iErr = MADIncompatibleFile;
 		iClose( refNum);
 		if( iErr) return iErr;
 	}
