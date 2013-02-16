@@ -77,7 +77,7 @@
 		for (NSURL *aPlugLoc in plugLocs) {
 			CFIndex		PlugNums;
 			CFArrayRef	somePlugs;
-			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, BRIDGE(CFURLRef, aPlugLoc), NULL);
+			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, BRIDGE(CFURLRef, aPlugLoc), CFSTR("plugin"));
 			PlugNums = CFArrayGetCount( somePlugs );
 			if (PlugNums > 0) {
 				for (x = 0; x < PlugNums; x++) {

@@ -9,9 +9,8 @@
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
-#include <Carbon/Carbon.h>
 
-OSErr mainBackwards(void					*unused,
+static OSErr mainBackwards(void					*unused,
 					sData					*theData,
 					long					SelectionStart,
 					long					SelectionEnd,

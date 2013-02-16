@@ -342,9 +342,7 @@
 		557DE6DF10E0886A00177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE6E010E0886A00177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE77B10E08A0200177B4C /* Backwards.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FFD10D6C79E00BB619C /* Backwards.c */; };
-		557DE77C10E08A0300177B4C /* Backwards.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FFE10D6C79E00BB619C /* Backwards.r */; };
 		557DE77D10E08A0B00177B4C /* Crop.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100010D6C79E00BB619C /* Crop.c */; };
-		557DE77E10E08A0C00177B4C /* Crop.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E100110D6C79E00BB619C /* Crop.r */; };
 		557DE77F10E08A1500177B4C /* CrossFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100310D6C79E00BB619C /* CrossFade.c */; };
 		557DE78010E08A1600177B4C /* CrossFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E100410D6C79E00BB619C /* CrossFade.r */; };
 		557DE78110E08A2000177B4C /* Depth.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100610D6C79E00BB619C /* Depth.c */; };
@@ -406,6 +404,7 @@
 		5583C5FA16D016700078ACE8 /* Normalize.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE8C810E08DA800177B4C /* Normalize.plugin */; };
 		5583C5FB16D0172F0078ACE8 /* Silence.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE91B10E08DB000177B4C /* Silence.plugin */; };
 		5583C5FC16D017380078ACE8 /* Smooth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE95E10E08DB900177B4C /* Smooth.plugin */; };
+		5583C60316D01DDE0078ACE8 /* Crop.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE62210E0884100177B4C /* Crop.plugin */; };
 		558678B61659AA3400BCFB70 /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5586873D10BF5D0900FCC24D /* MADfg.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E310BB5368005208D1 /* MADfg.c */; };
 		5586873E10BF5D2700FCC24D /* MADI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E710BB5368005208D1 /* MADI.c */; };
@@ -1270,6 +1269,13 @@
 			remoteGlobalIDString = 557DE95010E08DB900177B4C;
 			remoteInfo = Smooth;
 		};
+		5583C60116D01DD40078ACE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE61410E0884100177B4C;
+			remoteInfo = Crop;
+		};
 		5586870510BF5C4700FCC24D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1608,6 +1614,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				5583C60316D01DDE0078ACE8 /* Crop.plugin in Copy PlugIns */,
 				5583C5FC16D017380078ACE8 /* Smooth.plugin in Copy PlugIns */,
 				5583C5FB16D0172F0078ACE8 /* Silence.plugin in Copy PlugIns */,
 				5583C5FA16D016700078ACE8 /* Normalize.plugin in Copy PlugIns */,
@@ -1911,9 +1918,7 @@
 		554E0FFA10D6C79D00BB619C /* Amplitude.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Amplitude.c; sourceTree = "<group>"; };
 		554E0FFB10D6C79D00BB619C /* Amplitude.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Amplitude.r; sourceTree = "<group>"; };
 		554E0FFD10D6C79E00BB619C /* Backwards.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Backwards.c; sourceTree = "<group>"; };
-		554E0FFE10D6C79E00BB619C /* Backwards.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Backwards.r; sourceTree = "<group>"; };
 		554E100010D6C79E00BB619C /* Crop.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Crop.c; sourceTree = "<group>"; };
-		554E100110D6C79E00BB619C /* Crop.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Crop.r; sourceTree = "<group>"; };
 		554E100310D6C79E00BB619C /* CrossFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CrossFade.c; sourceTree = "<group>"; };
 		554E100410D6C79E00BB619C /* CrossFade.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = CrossFade.r; sourceTree = "<group>"; };
 		554E100610D6C79E00BB619C /* Depth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Depth.c; sourceTree = "<group>"; };
@@ -2980,7 +2985,6 @@
 			children = (
 				557DE5C310E0876E00177B4C /* Backwards-Info.plist */,
 				554E0FFD10D6C79E00BB619C /* Backwards.c */,
-				554E0FFE10D6C79E00BB619C /* Backwards.r */,
 			);
 			name = Backwards;
 			sourceTree = "<group>";
@@ -2990,7 +2994,6 @@
 			children = (
 				557DE5C410E0877900177B4C /* Crop-Info.plist */,
 				554E100010D6C79E00BB619C /* Crop.c */,
-				554E100110D6C79E00BB619C /* Crop.r */,
 			);
 			name = Crop;
 			sourceTree = "<group>";
@@ -5118,6 +5121,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5583C60216D01DD40078ACE8 /* PBXTargetDependency */,
 				5583C5FE16D017410078ACE8 /* PBXTargetDependency */,
 				5583C60016D017410078ACE8 /* PBXTargetDependency */,
 				5583C5F916D016600078ACE8 /* PBXTargetDependency */,
@@ -5755,7 +5759,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DE77C10E08A0300177B4C /* Backwards.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5763,7 +5766,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DE77E10E08A0C00177B4C /* Crop.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6872,6 +6874,11 @@
 			isa = PBXTargetDependency;
 			target = 557DE95010E08DB900177B4C /* Smooth */;
 			targetProxy = 5583C5FF16D017410078ACE8 /* PBXContainerItemProxy */;
+		};
+		5583C60216D01DD40078ACE8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE61410E0884100177B4C /* Crop */;
+			targetProxy = 5583C60116D01DD40078ACE8 /* PBXContainerItemProxy */;
 		};
 		5586870410BF5C4700FCC24D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
