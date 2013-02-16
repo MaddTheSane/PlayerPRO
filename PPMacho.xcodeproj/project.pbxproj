@@ -344,7 +344,6 @@
 		557DE77B10E08A0200177B4C /* Backwards.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FFD10D6C79E00BB619C /* Backwards.c */; };
 		557DE77D10E08A0B00177B4C /* Crop.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100010D6C79E00BB619C /* Crop.c */; };
 		557DE77F10E08A1500177B4C /* CrossFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100310D6C79E00BB619C /* CrossFade.c */; };
-		557DE78010E08A1600177B4C /* CrossFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E100410D6C79E00BB619C /* CrossFade.r */; };
 		557DE78110E08A2000177B4C /* Depth.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100610D6C79E00BB619C /* Depth.c */; };
 		557DE78210E08A2000177B4C /* Depth.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E100710D6C79E00BB619C /* Depth.r */; };
 		557DE78310E08A2C00177B4C /* Echo.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100910D6C79E00BB619C /* Echo.c */; };
@@ -1920,7 +1919,6 @@
 		554E0FFD10D6C79E00BB619C /* Backwards.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Backwards.c; sourceTree = "<group>"; };
 		554E100010D6C79E00BB619C /* Crop.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Crop.c; sourceTree = "<group>"; };
 		554E100310D6C79E00BB619C /* CrossFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CrossFade.c; sourceTree = "<group>"; };
-		554E100410D6C79E00BB619C /* CrossFade.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = CrossFade.r; sourceTree = "<group>"; };
 		554E100610D6C79E00BB619C /* Depth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Depth.c; sourceTree = "<group>"; };
 		554E100710D6C79E00BB619C /* Depth.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Depth.r; sourceTree = "<group>"; };
 		554E100910D6C79E00BB619C /* Echo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Echo.c; sourceTree = "<group>"; };
@@ -3003,7 +3001,6 @@
 			children = (
 				557DE5C510E0878100177B4C /* CrossFade-Info.plist */,
 				554E100310D6C79E00BB619C /* CrossFade.c */,
-				554E100410D6C79E00BB619C /* CrossFade.r */,
 			);
 			name = CrossFade;
 			sourceTree = "<group>";
@@ -5773,7 +5770,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DE78010E08A1600177B4C /* CrossFade.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

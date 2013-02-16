@@ -514,7 +514,7 @@ SInt32 MADMinimize( MADMusic *music)
 			{
 				if( curData->size > curData->loopBeg + curData->loopSize)
 				{
-					realloc( curData->data, curData->loopBeg + curData->loopSize);
+					curData->data = realloc( curData->data, curData->loopBeg + curData->loopSize);
 					
 					curData->size = curData->loopBeg + curData->loopSize;
 				}
