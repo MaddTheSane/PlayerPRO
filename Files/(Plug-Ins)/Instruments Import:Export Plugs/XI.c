@@ -155,13 +155,6 @@ OSErr mainXI(	OSType		order,						// Order to execute
 					
 					BlockMoveData( pth->what, 		InsHeader->what, 	96);
 					BlockMoveData( pth->volenv, 	InsHeader->volEnv, 	48);
-					for( x = 0; x < 12; x++)
-					{
-//						InsHeader->volEnv[ x].pos = Tdecode16( &InsHeader->volEnv[ x].pos);	// 
-//						InsHeader->volEnv[ x].val = Tdecode16( &InsHeader->volEnv[ x].val);	// 00...64
-						INT16(&InsHeader->volEnv[x].pos);
-						INT16(&InsHeader->volEnv[x].val);
-					}
 					
 					InsHeader->volSize	= pth->volpts;
 					InsHeader->volType	= pth->volflg;
@@ -173,8 +166,11 @@ OSErr mainXI(	OSType		order,						// Order to execute
 					BlockMoveData( pth->panenv, InsHeader->pannEnv, 	48);
 					for( x = 0; x < 12; x++)
 					{
-						InsHeader->pannEnv[ x].pos = Tdecode16( &InsHeader->pannEnv[ x].pos);	// 
-						InsHeader->pannEnv[ x].val = Tdecode16( &InsHeader->pannEnv[ x].val);	// 00...64
+						INT16(&InsHeader->volEnv[x].pos);
+						INT16(&InsHeader->volEnv[x].val);
+
+						INT16( &InsHeader->pannEnv[ x].pos);
+						INT16( &InsHeader->pannEnv[ x].val);
 					}
 					
 					InsHeader->pannSize	= pth->panpts;
@@ -331,7 +327,7 @@ OSErr mainXI(	OSType		order,						// Order to execute
 				
 				short			u, v, p, i, x;
 				long			inOutCount = 0;
-				long			ihsizecopy, ihssizecopy;
+				//long			ihsizecopy, ihssizecopy;
 				XMPATCHHEADER	pth;
 				char			start[ 0x42];
 				
