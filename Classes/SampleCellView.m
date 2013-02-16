@@ -45,5 +45,30 @@
 	
 }
 
+- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox
+{
+	return 22;
+}
+
+- (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index
+{
+	switch (index) {
+		case 0:
+			return @"11025 Hz";
+			break;
+			
+		case 1:
+			return @"11127 Hz";
+			break;
+			
+		case 5:
+			return @"--";
+			break;
+			
+		default:
+			return @"";
+			break;
+	}
+}
 
 @end
