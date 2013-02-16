@@ -313,6 +313,8 @@ void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 				if (tempMADPlug) {
 					MakeMADPlug(tempMADPlug, inMADDriver, tempBundleRef);
 				}
+				//Prevent memory leaks
+				CFRelease(tempBundleRef);
 				
 			}
 		}
