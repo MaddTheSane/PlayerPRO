@@ -1275,12 +1275,10 @@ OSErr MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **l
 		OSErr iErr = noErr;
 		iErr = FSpMakeFSRef(PlugsFolderName, &TempRef);
 		if (iErr != noErr) {
-			return iErr;
+			return MADInitLibraryNew(NULL, lib);
 		}
 	}
-	errmess = MADInitLibraryNew(&TempRef, lib);
-	
-	return errmess;
+	return MADInitLibraryNew(&TempRef, lib);
 }
 #else
 
