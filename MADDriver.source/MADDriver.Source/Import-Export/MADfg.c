@@ -363,7 +363,7 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoi
 				SInt32 	ll;
 				short	*shortPtr = (short*) curData->data;
 				
-				for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+				for( ll = 0; ll < curData->size/2; ll++) INT16( &shortPtr[ ll]);
 			}
 		}
 		else curIns->numSamples = 0;
