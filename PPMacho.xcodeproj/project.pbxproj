@@ -99,6 +99,7 @@
 		5504A6E816619E25005BDE4B /* BoxPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6EA16619E25005BDE4B /* BoxPrefs.xib */; };
 		5504A6EB16619E2E005BDE4B /* MiscPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6ED16619E2E005BDE4B /* MiscPrefs.xib */; };
 		5504A6EE16619E39005BDE4B /* MusicListPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6F016619E39005BDE4B /* MusicListPrefs.xib */; };
+		5505CA7F16CF1CC80090AB31 /* icon1.icns in Resources */ = {isa = PBXBuildFile; fileRef = 5505CA7E16CF1CC80090AB31 /* icon1.icns */; };
 		5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508C3ED16CEB33B007CA458 /* SampleCellView.m */; };
 		55096A3210E0A6EF000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
@@ -186,7 +187,6 @@
 		552AFC7F167A8C8B00F32481 /* PPPause.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 552AFC7E167A8C8B00F32481 /* PPPause.pdf */; };
 		552C6FE310CD9DAC00C0E0D4 /* ByteUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */; };
 		552C6FE410CD9DB700C0E0D4 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; };
-		552F12E216AE08B000394143 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552F12E116AE08AF00394143 /* AVFoundation.framework */; };
 		5532334F16766E5700076604 /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
 		55323353167687A200076604 /* PPTimeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55323352167687A200076604 /* PPTimeFormatter.m */; };
 		5533416210BB577F005208D1 /* Mod.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F610BB5368005208D1 /* Mod.c */; };
@@ -1675,6 +1675,7 @@
 		5504A6E916619E25005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BoxPrefs.xib; sourceTree = "<group>"; };
 		5504A6EC16619E2E005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MiscPrefs.xib; sourceTree = "<group>"; };
 		5504A6EF16619E39005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MusicListPrefs.xib; sourceTree = "<group>"; };
+		5505CA7E16CF1CC80090AB31 /* icon1.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon1.icns; path = Files/icon1.icns; sourceTree = SOURCE_ROOT; };
 		5508C3EC16CEB33B007CA458 /* SampleCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleCellView.h; sourceTree = "<group>"; };
 		5508C3ED16CEB33B007CA458 /* SampleCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleCellView.m; sourceTree = "<group>"; };
 		550B001A10BA021A004FC5D7 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
@@ -2703,7 +2704,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				552F12E216AE08B000394143 /* AVFoundation.framework in Frameworks */,
 				557C758516A3455E00923755 /* QTKit.framework in Frameworks */,
 				55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */,
 				55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */,
@@ -2741,6 +2741,7 @@
 		550B00CF10BA17BC004FC5D7 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				5505CA7E16CF1CC80090AB31 /* icon1.icns */,
 				55FA5FBA102D2D6C00CB63DA /* ppApp.icns */,
 				550B00D010BA17BC004FC5D7 /* 669.icns */,
 				55E89D3A10F26A4B004EB52B /* PATN.icns */,
@@ -5612,6 +5613,7 @@
 				5523EC74169265AC0067B22A /* PPPlugInInfoController.xib in Resources */,
 				55F4287D16A8B1FB009013D8 /* PPSoundSettingsViewController.xib in Resources */,
 				552581FF16C6FC350016A31C /* InstrumentInfoController.xib in Resources */,
+				5505CA7F16CF1CC80090AB31 /* icon1.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
