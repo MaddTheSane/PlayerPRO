@@ -2420,18 +2420,25 @@ OSErr MADCleanCurrentMusic( MADMusic *MDriver, MADDriverRec *intDriver)
 
 OSErr MADResetInstrument( InstrData		*curIns)
 {
-	short i;
+	//short i;
 
 	if (curIns == NULL) {
 		return MADParametersErr;
 	}
 	
-	for( i = 0; i < 32; i++) curIns->name[ i]	= 0;
+	//for( i = 0; i < 32; i++) curIns->name[ i]	= 0;
+	memset(curIns->name, 0, sizeof(curIns->name));
 	curIns->type		= 0;
 	curIns->numSamples	= 0;
 	
 	/**/
 	
+#if 1
+	memset(curIns->what, 0, sizeof(curIns->what));
+	memset(curIns->volEnv, 0, sizeof(curIns->volEnv));
+	memset(curIns->pannEnv, 0, sizeof(curIns->pannEnv));
+	memset(curIns->pitchEnv, 0, sizeof(curIns->pitchEnv));
+#else
 	for( i = 0; i < 96; i++) curIns->what[ i]		= 0;
 	for( i = 0; i < 12; i++)
 	{
@@ -2444,6 +2451,7 @@ OSErr MADResetInstrument( InstrData		*curIns)
 		curIns->pitchEnv[ i].pos	= 0;
 		curIns->pitchEnv[ i].val	= 0;
 	}
+#endif
 	curIns->volSize		= 0;
 	curIns->pannSize	= 0;
 	
@@ -3634,7 +3642,6 @@ void MADEndExport(MADDriverRec *driver)
 	if (driver) {
 		driver->currentlyExporting = false;
 	}
-
 }
 
 Boolean MADIsExporting(MADDriverRec *driver)
