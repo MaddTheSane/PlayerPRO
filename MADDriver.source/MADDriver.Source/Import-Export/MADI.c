@@ -107,27 +107,30 @@ static inline void MADHmystrcpy( Ptr a, BytePtr b)
 	BlockMoveData( b + 1, a, b[ 0]);
 }
 
-static void MOToldsData(struct oldsData * s) {
+static void MOToldsData(struct oldsData * s)
+{
 	MOT32(&s->size);
 	MOT32(&s->loopBeg);
 	MOT32(&s->loopSize);
 	MOT16(&s->c2spd);
-	// i hope data is really not used.....
 }
 
-static void MOToldPatHeader(struct oldPatHeader * p) {
+static void MOToldPatHeader(struct oldPatHeader * p)
+{
 	MOT32(&p->size);
 	MOT32(&p->compMode);
 	MOT32(&p->patBytes);
 	MOT32(&p->unused2); // this is probably superfluous, but who knows
 }
 
-static void MOToldEnvRec(struct oldEnvRec * e) {
+static void MOToldEnvRec(struct oldEnvRec * e)
+{
 	MOT16(&e->pos);
 	MOT16(&e->val);
 }
 
-static void MOToldInstrData(struct oldInstrData * i) {
+static void MOToldInstrData(struct oldInstrData * i)
+{
 	int j;
 	MOT16(&i->firstSample);
 	MOT16(&i->numSamples);
@@ -138,7 +141,8 @@ static void MOToldInstrData(struct oldInstrData * i) {
 	}
 }
 
-static void MOToldMADSpec(oldMADSpec * m){
+static void MOToldMADSpec(oldMADSpec * m)
+{
 	MOT32(&m->MAD);
 	MOT16(&m->speed);
 	MOT16(&m->tempo);
@@ -159,23 +163,23 @@ static OSErr MADI2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 	};
 	
 	
-/**** Old MADH variables ****/
+	/**** Old MADH variables ****/
 	
 	oldMADSpec				*oldMAD;
 	
 	oldMAD = (oldMADSpec*) MADPtr;
 	
 	
-/**** HEADER ****/
+	/**** HEADER ****/
 	OSType MADType = oldMAD->MAD;
 	MOT32(&MADType);
 	if( MADType != 'MADI') return MADFileNotSupportedByThisPlug;
 	OffSetToSample += sizeof( oldMADSpec);
 	MOT32(&MADType);
 	MOToldMADSpec(oldMAD);
-
 	
-// Conversion
+	
+	// Conversion
 	inOutCount = sizeof( MADSpec);
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( inOutCount, init);
 	if( theMAD->header == NULL) return MADNeedMemory;
@@ -210,7 +214,7 @@ static OSErr MADI2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
 	
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-/**** Patterns *******/
+	/**** Patterns *******/
 	
 	for( i = 0; i < oldMAD->numPat; i++)
 	{
@@ -379,7 +383,7 @@ static OSErr MADI2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 				
 				for( ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
 			}
-
+			
 		}
 	}
 	
@@ -390,7 +394,7 @@ static OSErr TestoldMADFile( Ptr AlienFile)
 {
 	OSType myMADSign = *((OSType*) AlienFile);
 	MOT32(&myMADSign);
-
+	
 	if(	myMADSign == 'MADI') return   noErr;
 	else return  MADFileNotSupportedByThisPlug;
 }
@@ -442,7 +446,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 /* MAIN FUNCTION */
 /*****************/
 
-OSErr mainMADI( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+static OSErr mainMADI( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;

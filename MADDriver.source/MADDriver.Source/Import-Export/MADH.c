@@ -25,8 +25,6 @@
 #include "MOD.h"
 #include "MADH.h"
 
-//TODO: Byteswap on Intel!
-
 #ifndef _SRC
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
@@ -103,27 +101,30 @@ static inline void MADHmystrcpy( Ptr a, BytePtr b)
 	BlockMoveData( b + 1, a, b[ 0]);
 }
 
-static void MOToldsData(struct oldsData * s) {
+static void MOToldsData(struct oldsData * s)
+{
 	MOT32(&s->size);
 	MOT32(&s->loopBeg);
 	MOT32(&s->loopSize);
 	MOT16(&s->c2spd);
-  // i hope data is really not used.....
 }
 
-static void MOToldPatHeader(struct oldPatHeader * p) {
+static void MOToldPatHeader(struct oldPatHeader * p)
+{
 	MOT32(&p->size);
 	MOT32(&p->compMode);
 	MOT32(&p->patBytes);
 	MOT32(&p->unused2); // this is probably superfluous, but who knows
 }
 
-static void MOToldEnvRec(struct oldEnvRec * e) {
+static void MOToldEnvRec(struct oldEnvRec * e)
+{
 	MOT16(&e->pos);
 	MOT16(&e->val);
 }
 
-static void MOToldInstrData(struct oldInstrData * i) {
+static void MOToldInstrData(struct oldInstrData * i)
+{
 	int j;
 	MOT16(&i->numSamples);
 	MOT16(&i->volFade);
@@ -133,7 +134,8 @@ static void MOToldInstrData(struct oldInstrData * i) {
 	}
 }
 
-static void MOToldMADSpec(struct oldMADSpec * m){
+static void MOToldMADSpec(struct oldMADSpec * m)
+{
 	int i;
 	MOT32(&m->MAD);
 	MOT16(&m->speed);
@@ -150,31 +152,31 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 	OSErr		theErr = noErr;
 	Ptr			tempPtr;
 	long		finetune[16] = 
-				{
-					8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
-					7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
-				};
-
-
-/**** Old MADH variables ****/
-
+	{
+		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
+		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
+	};
+	
+	
+	/**** Old MADH variables ****/
+	
 	oldMADSpec				*oldMAD;
-
+	
 	oldMAD = (oldMADSpec*) MADPtr;
-  
+	
 	MOToldMADSpec(oldMAD);
-  
-/**** HEADER ****/
+	
+	/**** HEADER ****/
 	if( oldMAD->MAD != 'MADH') return MADFileNotSupportedByThisPlug;
 	OffSetToSample += sizeof( oldMADSpec);
-
-// Conversion
+	
+	// Conversion
 	inOutCount = sizeof( MADSpec);
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( inOutCount, init);	
 	if( theMAD->header == NULL) return MADNeedMemory;
-
+	
 	theMAD->header->MAD = 'MADK';
-
+	
 	BlockMoveData( oldMAD->name, theMAD->header->name, 32);
 	theMAD->header->numPat			= oldMAD->numPat;
 	theMAD->header->numChn			= oldMAD->numChn;
@@ -182,28 +184,28 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 	BlockMoveData( oldMAD->oPointers, theMAD->header->oPointers, 256);
 	theMAD->header->speed			= oldMAD->speed;
 	theMAD->header->tempo			= oldMAD->tempo;
-
+	
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 	MADHmystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-H Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
-
-/**** Patterns *******/
-
+	
+	/**** Patterns *******/
+	
 	for( i = 0; i < oldMAD->numPat; i++)
 	{
 		struct oldPatData		*tempPat, *tempPat2;
 		struct oldPatHeader		tempPatHeader;
-	
-	/** Lecture du header de la partition **/
+		
+		/** Lecture du header de la partition **/
 		inOutCount = sizeof( struct oldPatHeader);
 		BlockMoveData( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
-	
+		
 		MOToldPatHeader(&tempPatHeader);
-  
-	/*************************************************/
-	/** Lecture du header + contenu de la partition **/
-	/*************************************************/
-	
+		
+		/*************************************************/
+		/** Lecture du header + contenu de la partition **/
+		/*************************************************/
+		
 		if( tempPatHeader.compMode == 'MAD1')
 		{
 			inOutCount = sizeof( oldPatData) + tempPatHeader.patBytes;
@@ -212,50 +214,50 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 		{
 			inOutCount = sizeof( oldPatData) + oldMAD->numChn * tempPatHeader.size * sizeof( oldCmd);
 		}
-	
+		
 		tempPat = (struct oldPatData*) MADPlugNewPtr( inOutCount, init);
 		if( tempPat == NULL) DebugStr("\pMemory Prob1");
-	
+		
 		BlockMoveData( MADPtr + OffSetToSample, tempPat, inOutCount);
 		MOToldPatHeader(&tempPat->header);
 		OffSetToSample += inOutCount;
-	
+		
 		if( tempPat->header.compMode == 'MAD1')
 		{
 			tempPat2 = oldDecompressPartitionMAD1( oldMAD, tempPat);
-		
+			
 			DisposePtr( (Ptr) tempPat);
-		
+			
 			tempPat = tempPat2;
 		}
-	
-	/**************/
-	/* CONVERSION */
-	/**************/
-	
+		
+		/**************/
+		/* CONVERSION */
+		/**************/
+		
 		theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear( sizeof( PatHeader) + theMAD->header->numChn * tempPat->header.size * sizeof( Cmd), init);
 		if( theMAD->partition[ i] == NULL) return MADNeedMemory;
-	
+		
 		theMAD->partition[ i]->header.size 		= tempPat->header.size;
 		theMAD->partition[ i]->header.compMode 	= 'NONE';
-	
+		
 		BlockMoveData( tempPat->header.name, theMAD->partition[ i]->header.name, 20);
-	
+		
 		theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
-	
+		
 		for( x = 0; x < theMAD->partition[ i]->header.size; x++)
 		{
 			for( z = 0; z < theMAD->header->numChn; z++)
 			{
 				struct oldCmd *oldCmd;
 				Cmd	*aCmd;
-			
+				
 				aCmd = GetMADCommand(  x,  z, theMAD->partition[ i]);
-			
+				
 				oldCmd 	= GetOldCommand(	x,
 										z,
 										tempPat);
-			
+				
 				aCmd->ins 		= oldCmd->ins;
 				aCmd->note 		= oldCmd->note;
 				aCmd->cmd 		= oldCmd->cmd;
@@ -264,40 +266,40 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 				aCmd->unused 	= oldCmd->unused;
 			}
 		}
-	
+		
 		DisposePtr( (Ptr) tempPat);
 		tempPat = NULL;
 	}
 	for( i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[ i] = NULL;
-
+	
 	for( i = 0; i < MAXTRACK; i++)
 	{
 		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
-	
+		
 		theMAD->header->chanVol[ i] = MAX_VOLUME;
 	}
-
+	
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
-
-/**** Instruments header *****/
-
+	
+	/**** Instruments header *****/
+	
 	theMAD->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
 	if( !theMAD->fid) return MADNeedMemory;
-
+	
 	theMAD->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
 	if( !theMAD->sample) return MADNeedMemory;
-
+	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
-
+	
 	for( i = 0; i < 64; i++)
 	{
 		InstrData	*curIns = &theMAD->fid[ i];
-	
+		
 		BlockMoveData( oldMAD->fid[ i].name, theMAD->fid[ i].name, 32);
-	
+		
 		theMAD->fid[ i].type = oldMAD->fid[ i].type;
 		theMAD->fid[ i].numSamples = oldMAD->fid[ i].numSamples;
 		BlockMoveData( oldMAD->fid[ i].what, theMAD->fid[ i].what, 96);
@@ -316,18 +318,18 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 		theMAD->fid[ i].volFade = oldMAD->fid[ i].volFade;
 		theMAD->fid[ i].vibDepth = oldMAD->fid[ i].vibDepth;
 		theMAD->fid[ i].vibRate = oldMAD->fid[ i].vibRate;
-	
+		
 		for( x = 0; x < oldMAD->fid[ i].numSamples ; x++)
 		{
 			oldsData	 *oldcurData;
 			sData		 *curData;
-		
+			
 			oldcurData = (oldsData*) (MADPtr + OffSetToSample);
 			MOToldsData(oldcurData);
 			OffSetToSample += sizeof( oldsData);
-		
+			
 			curData = theMAD->sample[ i*MAXSAMPLE + x] = (sData*) MADPlugNewPtrClear( sizeof( sData), init);
-		
+			
 			curData->size		= oldcurData->size;
 			curData->loopBeg 	= oldcurData->loopBeg;
 			curData->loopSize 	= oldcurData->loopSize;
@@ -335,9 +337,9 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 			curData->c2spd		= oldcurData->c2spd;
 			curData->loopType	= oldcurData->loopType;
 			curData->amp		= oldcurData->amp;
-	//	curData->panning	= oldcurData->panning;
+			//	curData->panning	= oldcurData->panning;
 			curData->relNote	= oldcurData->relNote;
-		
+			
 			curData->data 		= MADPlugNewPtr( curData->size, init);
 			if( curData->data == NULL) return MADNeedMemory;
 			
@@ -345,7 +347,7 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 			OffSetToSample += curData->size;
 		}
 	}
-
+	
 	return noErr;
 }
 
@@ -410,7 +412,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 /* MAIN FUNCTION */
 /*****************/
 
-OSErr mainMADH( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+static OSErr mainMADH( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;

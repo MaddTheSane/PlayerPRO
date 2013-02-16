@@ -30,7 +30,7 @@
 
 unsigned char* MYC2PStr( Ptr cStr);
 
-Boolean compMem( Ptr a, Ptr b, long s)
+static Boolean compMem( Ptr a, Ptr b, long s)
 {
 	long 	i;
 
@@ -42,13 +42,13 @@ Boolean compMem( Ptr a, Ptr b, long s)
 	return true;
 }
 
-OSErr TestMIDIFile( Ptr AlienFile)
+static OSErr TestMIDIFile( Ptr AlienFile)
 {
 	if( compMem( AlienFile, "MThd", 4)) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
-OSErr ExtractMIDIInfo( PPInfoRec *info, Ptr theMIDI)
+static OSErr ExtractMIDIInfo( PPInfoRec *info, Ptr theMIDI)
 {
 	long	PatternSize;
 	short	i;
@@ -75,7 +75,7 @@ void CreateResult( Ptr aPtr)
 
 void  ConvertMidiFile( char	*src, MADMusic *theMAD, MADDriverSettings *init);
 
-OSErr mainMIDI( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+static OSErr mainMIDI( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;

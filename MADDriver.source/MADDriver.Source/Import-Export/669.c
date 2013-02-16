@@ -79,9 +79,9 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 	}
 	
 	MaxPtr = (Ptr)((long) the669 + MODSize);
-
+	
 	OffSetToSample = 0x1f1L + (long)  the669->NOS * 25L + (long) the669->NOP * 0x600L;
-
+	
 	for( i = 0; i < the669->NOS ; i++)
 	{
 		temp = (long) the669;
@@ -125,13 +125,13 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 	
 	
 	for( i = 0; i < MAXTRACK; i++)
-{
-	if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-	else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+	{
+		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
+		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		
+		theMAD->header->chanVol[ i] = MAX_VOLUME;
+	}
 	
-	theMAD->header->chanVol[ i] = MAX_VOLUME;
-}
-
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
@@ -196,7 +196,7 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 			curData->amp		= 8;
 			
 			curData->relNote	= 0;
-		//	for( x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
+			//	for( x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
 			
 			curData->data 		= MADPlugNewPtr( curData->size, init);
 			if( curData->data == NULL)
@@ -293,7 +293,7 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 					}
 					return MADIncompatibleFile;
 				}
-					
+				
 				thePasByte = ( Byte*) theCommand;
 				
 				if( thePasByte[0] == 0xFF)
@@ -391,7 +391,7 @@ static OSErr Test669File( Ptr AlienFile)
 	else return  MADFileNotSupportedByThisPlug;
 }
 
-OSErr main669( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+static OSErr main669( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;

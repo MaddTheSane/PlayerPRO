@@ -89,11 +89,6 @@ static ULONG CFImpExpPlugRelease( void *myInstance )
         return ( (CFImpExpPlugType *) myInstance )->_refCount;
 }
 
-OSErr CFImpExpGetType(PPInfoRec *info, FSRefPtr AlienFile)
-{
-	
-}
-
 static MADFileFormatPlugin CFImpExpPlugFormat =
 {
 	NULL,

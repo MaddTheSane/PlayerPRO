@@ -305,7 +305,7 @@ static OSErr TestULTFile( Ptr AlienFile)
 	else return MADFileNotSupportedByThisPlug;
 }
 
-OSErr mainULT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+static OSErr mainULT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;

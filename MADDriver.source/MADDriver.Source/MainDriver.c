@@ -878,7 +878,7 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	theErr = MADStopDriver( MDriver);
 	if( theErr != noErr) 
 	{
-		DisposePtr(MDriver);
+		DisposePtr((Ptr)MDriver);
 		return theErr;
 	}
 	
@@ -992,7 +992,7 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	theErr = MADCreateDriverBuffer( MDriver);		
 	if( theErr != noErr)
 	{
-		DisposePtr(MDriver);
+		DisposePtr((Ptr)MDriver);
 		return theErr;
 	}
 	theErr = MADCreateTiming( MDriver);				

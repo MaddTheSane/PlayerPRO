@@ -232,54 +232,54 @@ static OSErr DecompressSample( short bits, Ptr reader, long length, Ptr destPtr)
 	int				result,c_block=0;	/* compression bytes until next block */
 	ITPACK			status;
 	unsigned short	incnt;
-
+	
 	if( bits == 16) length/=2;
-
-while( length)
-{
-	stodo=(length<SLBUFSIZE)?length:SLBUFSIZE;
 	
-	if (!c_block)
+	while( length)
 	{
-		if( bits == 16) status.bits = 17;
-		else status.bits = 9;
+		stodo=(length<SLBUFSIZE)?length:SLBUFSIZE;
 		
-		status.last = status.bufbits = 0;
+		if (!c_block)
+		{
+			if( bits == 16) status.bits = 17;
+			else status.bits = 9;
+			
+			status.last = status.bufbits = 0;
+			
+			incnt = ReadUS( &reader);
+			
+			if( bits == 16) c_block = 0x4000;
+			else c_block = 0x8000;
+		}
 		
-		incnt = ReadUS( &reader);
+		if( bits == 16)
+		{
+			if(!(result=read_itcompr16( &status, &reader, (short*) destPtr, stodo, &incnt)))
+				return 1;
+		}
+		else
+		{
+			if(!(result=read_itcompr8( &status, &reader, (Byte*) destPtr, stodo, &incnt)))
+				return 1;
+		}
 		
-		if( bits == 16) c_block = 0x4000;
-		else c_block = 0x8000;
-	}
-	
-	if( bits == 16)
-	{
-		if(!(result=read_itcompr16( &status, &reader, (short*) destPtr, stodo, &incnt)))
+		if(result!=stodo)
+		{
+			//_mm_errno=MMERR_ITPACK_INVALID_DATA;
+			
 			return 1;
-	}
-	else
-	{
-		if(!(result=read_itcompr8( &status, &reader, (Byte*) destPtr, stodo, &incnt)))
-			return 1;
-	}
-	
-	if(result!=stodo)
-	{
-		//_mm_errno=MMERR_ITPACK_INVALID_DATA;
+		}
 		
-		return 1;
+		if( bits == 16)
+		{
+			result *= 2;
+		}
+		length -= stodo;
+		c_block -= stodo;
+		
+		destPtr += result;
 	}
 	
-	if( bits == 16)
-	{
-		result *= 2;
-	}
-	length -= stodo;
-	c_block -= stodo;
-	
-	destPtr += result;
-}
-
 	return noErr;
 }
 
@@ -308,25 +308,25 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 	
 	switch( B0X40)
 	{
-		// Speed
+			// Speed
 		case 'A':	*Cmd = speedE;		*Arg = B1;	break;
-		// Tempo
+			// Tempo
 		case 'T':	*Cmd = speedE;		*Arg = B1;	break;
-
+			
 		case 'B':	*Cmd = fastskipE;		*Arg = B1;	break;
-
+			
 		case 'C':	*Cmd = skipE;			*Arg = B1;	break;
-
+			
 		case 'D':
 			if( LoB1 == 0 || HiB1 == 0)		// Slide volume
 			{
 				*Cmd = slidevolE;		*Arg = B1;
 				
-			/*	if( *Arg == 0)				// Use last command
-				{
-					*Arg = LastAEffect[ channel];
-				}
-				else LastAEffect[ channel] = *Arg;*/
+				/*	if( *Arg == 0)				// Use last command
+				 {
+				 *Arg = LastAEffect[ channel];
+				 }
+				 else LastAEffect[ channel] = *Arg;*/
 			}
 			else if( HiB1 == 0x0F)		// Fine Slide volume DOWN
 			{
@@ -340,8 +340,8 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 				*Arg = 10 << 4;
 				*Arg += HiB1;
 			}
-		break;
-		
+			break;
+			
 		case 'E':
 			if( HiB1 == 0x0F)		// FineSlide DOWN
 			{
@@ -357,8 +357,8 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 			{
 				*Cmd = upslideE;		*Arg = B1;
 			}
-		break;
-
+			break;
+			
 		case 'F':
 			if( HiB1 == 0x0F)		// FineSlide UP
 			{
@@ -374,11 +374,11 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 			{
 				*Cmd = downslideE;		*Arg = B1;
 			}
-		break;
-
+			break;
+			
 		case 'G':	*Cmd = portamentoE;		*Arg = B1;	break;
 		case 'H':	*Cmd = vibratoE;		*Arg = B1;	break;
-		
+			
 		case 'J':
 			*Cmd = arpeggioE;
 			*Arg = B1;
@@ -389,26 +389,26 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 			}
 			else LastJEffect[ channel] = *Arg;
 			
-		break;
+			break;
 		case 'K':	*Cmd = vibratoslideE;	*Arg = B1;	break;
 		case 'L':	*Cmd = portaslideE;		*Arg = B1;	break;
 		case 'O':	*Cmd = offsetE;			*Arg = B1;	break;
-		
+			
 		case 'S':		// Special Effects
 			switch( HiB1)
-			{
-				case 2:		*Cmd = extendedE;	*Arg = 5 << 4;		*Arg += LoB1;		break;	// FineTune
-				case 3:		*Cmd = extendedE;	*Arg = 4 << 4;		*Arg += LoB1;		break;	// Set Vibrato WaveForm
-				case 4:		*Cmd = extendedE;	*Arg = 7 << 4;		*Arg += LoB1;		break;	// Set Tremolo WaveForm
-				case 8:		*Cmd = extendedE;	*Arg = 8 << 4;		*Arg += LoB1;		break;	// Set Panning
-				case 0xB:	*Cmd = extendedE;	*Arg = 6 << 4;		*Arg += LoB1;		break;	// Loop pattern
-				case 0xC:	*Cmd = extendedE;	*Arg = 12 << 4;		*Arg += LoB1;		break;	// Cut sample
-				case 0xD:	*Cmd = extendedE;	*Arg = 13 << 4;		*Arg += LoB1;		break;	// Delay sample
-				case 0xE:	*Cmd = extendedE;	*Arg = 14 << 4;		*Arg += LoB1;		break;	// Delay pattern
-				default:	*Cmd = 0;			*Arg = 0;								break;
-			}
-		break;
-		
+		{
+			case 2:		*Cmd = extendedE;	*Arg = 5 << 4;		*Arg += LoB1;		break;	// FineTune
+			case 3:		*Cmd = extendedE;	*Arg = 4 << 4;		*Arg += LoB1;		break;	// Set Vibrato WaveForm
+			case 4:		*Cmd = extendedE;	*Arg = 7 << 4;		*Arg += LoB1;		break;	// Set Tremolo WaveForm
+			case 8:		*Cmd = extendedE;	*Arg = 8 << 4;		*Arg += LoB1;		break;	// Set Panning
+			case 0xB:	*Cmd = extendedE;	*Arg = 6 << 4;		*Arg += LoB1;		break;	// Loop pattern
+			case 0xC:	*Cmd = extendedE;	*Arg = 12 << 4;		*Arg += LoB1;		break;	// Cut sample
+			case 0xD:	*Cmd = extendedE;	*Arg = 13 << 4;		*Arg += LoB1;		break;	// Delay sample
+			case 0xE:	*Cmd = extendedE;	*Arg = 14 << 4;		*Arg += LoB1;		break;	// Delay pattern
+			default:	*Cmd = 0;			*Arg = 0;								break;
+		}
+			break;
+			
 		case 'X':
 			if(old_effect & 1)
 			{
@@ -424,7 +424,7 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 				*Cmd = panningE;
 				*Arg = B1;
 			}
-		break;
+			break;
 		default:	*Cmd = 0;			*Arg = 0;		break;
 	}
 }
@@ -1396,7 +1396,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 }
 #endif
 
-OSErr mainIT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+static OSErr mainIT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr		myErr;
 	Ptr			AlienFile;

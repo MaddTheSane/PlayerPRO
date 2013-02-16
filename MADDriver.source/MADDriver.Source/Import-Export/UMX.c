@@ -29,14 +29,14 @@ static short FoundNote( short Period)
 	short 			note;
 	short				MODTuning[ 70] =
 	{
-
-// -> Tuning 0
-
-	1712,1616,1524,1440,1356,1280,1208,1140,1076,1016,960,906,
-	856,808,762,720,678,640,604,570,538,508,480,453,
-	428,404,381,360,339,320,302,285,269,254,240,226,
-	214,202,190,180,170,160,151,143,135,127,120,113,
-	107,101,95,90,85,80,75,71,67,63,60,56
+		
+		// -> Tuning 0
+		
+		1712,1616,1524,1440,1356,1280,1208,1140,1076,1016,960,906,
+		856,808,762,720,678,640,604,570,538,508,480,453,
+		428,404,381,360,339,320,302,285,269,254,240,226,
+		214,202,190,180,170,160,151,143,135,127,120,113,
+		107,101,95,90,85,80,75,71,67,63,60,56
 	};
 	note = 0xFF;
 	
@@ -511,7 +511,7 @@ static long ConvertSampleC4SPD( Ptr src, long srcSize, short amp, long srcC4SPD,
 	return (srcSize * dstC4SPD) / srcC4SPD;
 }
 
-Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *PtrSize)
+static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *PtrSize)
 {
 	long 				i, x, z, maxInstru;
 	long 				OffSetToSample, InstruSize, *alpha;
@@ -902,7 +902,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /* MAIN FUNCTION */
 /*****************/
 
-OSErr mainUMX( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+static OSErr mainUMX( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr		myErr = noErr;
 	Ptr			AlienFile;
