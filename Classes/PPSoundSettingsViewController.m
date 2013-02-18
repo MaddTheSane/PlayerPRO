@@ -483,9 +483,9 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 	if (toSet == 0) {
 		toSet = 30;
 	}
-if (delegate) {
-	[delegate soundOutReverbStrengthDidChange:toSet];
-}
+	if (delegate) {
+		[delegate soundOutReverbStrengthDidChange:toSet];
+	}
 }
 
 - (IBAction)changeStereoDelay:(id)sender

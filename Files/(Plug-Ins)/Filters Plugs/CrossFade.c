@@ -14,7 +14,7 @@
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
-OSErr mainCrossFade(void				*unused,
+static OSErr mainCrossFade(void				*unused,
 					sData					*theData,
 					long					SelectionStart,
 					long					SelectionEnd,
