@@ -74,24 +74,24 @@ static OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriv
 	
 	/**** Variables pour le MAD ****/
 	Cmd				*aCmd;
-
+	
 	/**** Variables pour le ULT ****/
 	
 	ULTForm			ULTinfo;
 	ULTSuite		ULTSuite;
 	/********************************/
-
+	
 	for( i = 0 ; i < 64; i ++)
 	{
 		theInstrument[ i] = NULL;
 	}
-
+	
 	/**** Header principal *****/
 	theULTCopy = (Byte*) theULT;
 	
 	BlockMoveData( theULTCopy, &ULTinfo, sizeof( ULTinfo));
 	
-//	if( ULTinfo.reserved != 0) return MADFileNotSupportedByThisPlug;	// RES in v.1.4 see doc
+	//	if( ULTinfo.reserved != 0) return MADFileNotSupportedByThisPlug;	// RES in v.1.4 see doc
 	
 	ULTSuite.NOS = *(theULTCopy + sizeof( ULTinfo) + ULTinfo.reserved * 32L);
 	
@@ -109,21 +109,21 @@ static OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriv
 	
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);
 	if( theMAD->header == NULL) return MADNeedMemory;
-		
+	
 	theMAD->header->MAD = 'MADK';
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<32; i++) theMAD->header->name[i] = ULTinfo.name[i];
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO ULT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO ULT Plug (\xA9 Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat			= ULTSuite.NOP;
 	theMAD->header->numPointers	= 1;					// CHANGE
 	theMAD->header->speed				= 6;
 	theMAD->header->tempo				= 125;
-
+	
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-
+	
 	for(i=0; i<128; i++) theMAD->header->oPointers[ i] = 0;
 	for(i=0; i<128; i++)
 	{
@@ -131,19 +131,19 @@ static OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriv
 		
 		if( theMAD->header->oPointers[ i] < 0 || theMAD->header->oPointers[ i] >= 128) theMAD->header->oPointers[ i] = 0;
 	}
-
-for( i = 0; i < MAXTRACK; i++)
-{
-	if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-	else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
 	
-	theMAD->header->chanVol[ i] = MAX_VOLUME;
-}
-
+	for( i = 0; i < MAXTRACK; i++)
+	{
+		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
+		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		
+		theMAD->header->chanVol[ i] = MAX_VOLUME;
+	}
+	
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
-
+	
 	// ********************
 	// ***** INSTRUMENTS *****
 	// ********************
@@ -197,12 +197,12 @@ for( i = 0; i < MAXTRACK; i++)
 				case 12:
 				case 28:
 					curData->amp = 16;
-				break;
-				
+					break;
+					
 				default:
 					curData->amp			= 8;
-				break;
-				
+					break;
+					
 			}
 			
 			
@@ -217,7 +217,7 @@ for( i = 0; i < MAXTRACK; i++)
 				BlockMoveData( theULT + ULTSuite.ins[i].sizeStart, curData->data, curData->size);
 			}
 		}
-	//	else curIns->numSamples = 0;
+		//	else curIns->numSamples = 0;
 	}
 	
 	theMAD->header->numChn = ULTSuite.NOC;

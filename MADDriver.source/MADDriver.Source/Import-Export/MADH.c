@@ -187,7 +187,7 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 	
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-	MADHmystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-H Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	MADHmystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-H Plug (\xA9 Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	/**** Patterns *******/
 	

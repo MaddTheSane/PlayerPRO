@@ -781,7 +781,7 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverSettings
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<28; i++) theMAD->header->name[i] = s3minfo.name[i];
 	
-	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO S3M Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO S3M Plug (\xA9 Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat		= s3minfo.patnum;
 	theMAD->header->numPointers	= s3minfo.ordernum;

@@ -639,7 +639,7 @@ static OSErr XM_Load( Ptr	theXM, long XMSize, MADMusic *theMAD, MADDriverSetting
 	
 	if( theMAD->header->numPointers > 128) theMAD->header->numPointers = 128;
 	
-	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO XM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO XM Plug (\xA9 Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	for( i = 0; i < mh->songlength; i++)
 	{

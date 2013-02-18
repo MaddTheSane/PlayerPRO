@@ -189,7 +189,7 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 	theMAD->header->speed			= 6;
 	theMAD->header->tempo			= 125;
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (\xA9 Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
