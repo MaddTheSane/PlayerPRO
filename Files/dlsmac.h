@@ -37,7 +37,6 @@
 #define	FAR
 #endif
 
-#if 0
 #ifndef DWORD
 typedef UInt32		DWORD;
 #endif
@@ -61,11 +60,6 @@ typedef SInt16		SHORT;
 #ifndef BYTE
 typedef UInt8		BYTE;
 #endif
-
-#else
-#include "PPDefs.h"
-#endif
-
 
 /*
 	mmioFOURCC and MAKEFOURCC
