@@ -38,7 +38,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 {
 	if( PosX < 0) PosX = 0;
 	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-		
+	
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 #endif
@@ -72,11 +72,11 @@ static inline UInt32 Tdecode32( void *msg_buf)
 static struct MTMTrack* GetMTMCommand( short position, short whichTracks, Ptr PatPtr)
 {
 	Ptr					aPtr;
-
-	aPtr =	 (	PatPtr +
-				whichTracks * 192L +
-				position * 3L);
-
+	
+	aPtr =	 (PatPtr +
+			  whichTracks * 192L +
+			  position * 3L);
+	
 	return (struct MTMTrack*) aPtr;
 }
 
@@ -315,24 +315,24 @@ static OSErr ExtractInfo( PPInfoRec *info, MTMDef *myFile)
 	}
 	info->internalFileName[ 21] = 0;
 	//MYC2PStr( (Ptr) info->internalFileName);
-
+	
 	strlcpy( info->formatDescription, "MTM Plug", sizeof(info->formatDescription));
-
+	
 	info->totalPatterns		= myFile->patNo;
 	info->partitionLength	= myFile->positionNo;
 	info->totalTracks		= myFile->tracks;
 	info->totalInstruments	= myFile->NOS;
 	info->signature			= 'MTM ';
-
+	
 	return noErr;
 }
 
 static OSErr TestFile( MTMDef *myFile)
-{	
-	if(	myFile->Id[ 0] == 'M' &&
-		myFile->Id[ 1] == 'T' &&
-		myFile->Id[ 2] == 'M') return noErr;
-		
+{
+	if(myFile->Id[ 0] == 'M' &&
+	   myFile->Id[ 1] == 'T' &&
+	   myFile->Id[ 2] == 'M') return noErr;
+	
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -347,7 +347,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	strlcpy( p->MenuName, 	"MTM Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
-
+	
 	return noErr;
 }
 #endif
@@ -363,7 +363,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	Ptr		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
-		
+	
 	switch( order)
 	{
 		case MADPlugImport:
@@ -371,11 +371,11 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			if( iFileRefI)
 			{
 				sndSize = iGetEOF( iFileRefI);
-			
+				
 				// ** TEST MEMOIRE :  Environ 2 fois la taille du fichier**
 				AlienFile = (Ptr)malloc( sndSize * 2L);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
-				// ** 
+				// **
 				
 				else
 				{
@@ -389,14 +389,14 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					{
 						myErr = ConvertMTM2Mad( (MTMDef*) AlienFile, sndSize, MadFile, init);
 					}
-						
+					
 					free( AlienFile);	AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
-		
+			break;
+			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
@@ -416,18 +416,18 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
-		
+			break;
+			
 		case MADPlugExport:
 			myErr = MADOrderNotImplemented;
-		break;
-
+			break;
+			
 		case 'INFO':
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);
-			
+				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = (Ptr)malloc( sndSize);
@@ -443,11 +443,11 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
-		
+			break;
+			
 		default:
 			myErr = MADOrderNotImplemented;
-		break;
+			break;
 	}
 	
 	return myErr;

@@ -39,7 +39,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 {
 	if( PosX < 0) PosX = 0;
 	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-		
+	
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 #endif
@@ -70,7 +70,7 @@ static oldPatData* oldDecompressPartitionMAD1( oldMADSpec *header, oldPatData* m
 	}
 	
 	memcpy(finalPtr, myPat, sizeof( oldPatHeader));
-
+	
 	srcPtr = (Byte*) myPat->Cmds;
 	myCmd = (oldCmd*) finalPtr->Cmds;
 	maxCmd = finalPtr->header.size * header->numChn;
@@ -155,29 +155,29 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 	//Ptr			tempPtr = NULL;
 	OSType MADType = 0;
 	/*SInt32		finetune[16] =
-	{
-		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
-		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
-	};*/
+	 {
+	 8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
+	 7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
+	 };*/
 	
 	
-/**** Old MADH variables ****/
+	/**** Old MADH variables ****/
 	
 	oldMADSpec				*oldMAD;
 	
 	oldMAD = (oldMADSpec*) MADPtr;
 	
 	
-/**** HEADER ****/
+	/**** HEADER ****/
 	MADType = oldMAD->MAD;
 	PPBE32(&MADType);
 	if( MADType != 'MADI') return MADFileNotSupportedByThisPlug;
 	OffSetToSample += sizeof( oldMADSpec);
 	PPBE32(&MADType);
 	MOToldMADSpec(oldMAD);
-
 	
-// Conversion
+	
+	// Conversion
 	inOutCount = sizeof( MADSpec);
 	theMAD->header = (MADSpec*) calloc( inOutCount, 1);
 	if( theMAD->header == NULL) return MADNeedMemory;
@@ -212,7 +212,7 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
 	
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-/**** Patterns *******/
+	/**** Patterns *******/
 	
 	for( i = 0; i < oldMAD->numPat; i++)
 	{
@@ -233,7 +233,7 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 		{
 			inOutCount = sizeof( oldPatHeader) + tempPatHeader.patBytes;
 		}
-		else 
+		else
 		{
 			inOutCount = sizeof( oldPatHeader) + oldMAD->numChn * tempPatHeader.size * sizeof( oldCmd);
 		}
@@ -382,7 +382,7 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 				
 				for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
 			}
-
+			
 		}
 	}
 	
@@ -393,7 +393,7 @@ static OSErr TestoldMADFile( Ptr AlienFile)
 {
 	OSType myMADSign = *((OSType*) AlienFile);
 	PPBE32(&myMADSign);
-
+	
 	if(	myMADSign == 'MADI') return   noErr;
 	else return  MADFileNotSupportedByThisPlug;
 }
@@ -418,7 +418,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Tracks ***/
 	
 	info->totalTracks = myMOD->numChn;
-		
+	
 	/*** Total Patterns ***/
 	
 	info->totalPatterns = 0;
@@ -437,7 +437,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	info->totalInstruments = myMOD->numInstru;
 	
 	strlcpy( info->formatDescription, "MADI Plug", sizeof(info->formatDescription));
-
+	
 	return noErr;
 }
 
@@ -452,7 +452,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	strlcpy( p->MenuName, 	"MADI Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
-
+	
 	return noErr;
 }
 #endif

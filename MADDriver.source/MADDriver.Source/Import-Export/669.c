@@ -64,7 +64,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 {
 	if( PosX < 0) PosX = 0;
 	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-		
+	
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 #endif
@@ -314,7 +314,7 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 					}
 					return MADIncompatibleFile;
 				}
-					
+				
 				thePasByte = ( Byte*) theCommand;
 				
 				if( thePasByte[0] == 0xFF)
@@ -372,10 +372,10 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
 {
 	SixSixNine	*the669 = (SixSixNine*) AlienFile;
-//	long			PatternSize;
-//	short		i;
-//	short		maxInstru;
-//	short		tracksNo;
+	//long			PatternSize;
+	//short		i;
+	//short		maxInstru;
+	//short		tracksNo;
 	
 	/*** Signature ***/
 	
@@ -385,7 +385,7 @@ static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
 	
 	//the669->message[ 30] = '\0';
 	strlcpy( info->internalFileName, ( the669->message), sizeof(info->internalFileName));
-
+	
 	/*** Total Patterns ***/
 	
 	info->totalPatterns = 0;
@@ -399,14 +399,14 @@ static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
 	info->totalInstruments = 0;
 	
 	strlcpy( info->formatDescription, "669 Plug", sizeof(info->formatDescription));
-
+	
 	return noErr;
 }
 
 static OSErr Test669File( Ptr AlienFile)
 {
 	SixSixNine	*the669 = (SixSixNine*) AlienFile;
-
+	
 	//This seems to be endian-safe...
 	if( the669->marker == 0x6669 || the669->marker == 0x6966) return   noErr;
 	else return  MADFileNotSupportedByThisPlug;
@@ -423,7 +423,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	strlcpy( p->MenuName, 	"669 Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
-
+	
 	return noErr;
 }
 #endif
@@ -437,7 +437,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	long	sndSize;
 	
 	myErr = noErr;
-
+	
 	switch( order)
 	{
 		case MADPlugImport:
@@ -445,7 +445,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			if( iFileRefI)
 			{
 				sndSize = iGetEOF( iFileRefI );
-			
+				
 				// ** MEMORY Test Start
 				AlienFile = (Ptr)malloc( sndSize * 2L);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
@@ -471,7 +471,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			}
 			else myErr = MADReadingErr;
 			break;
-		
+			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
@@ -492,13 +492,13 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			}
 			else myErr = MADReadingErr;
 			break;
-
+			
 		case MADPlugInfo:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);
-			
+				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = (Ptr)malloc( sndSize);
@@ -516,11 +516,11 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			}
 			else myErr = MADReadingErr;
 			break;
-		
+			
 		default:
 			myErr = MADOrderNotImplemented;
 			break;
 	}
-
+	
 	return myErr;
 }

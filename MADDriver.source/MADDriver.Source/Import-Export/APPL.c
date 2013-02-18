@@ -30,7 +30,7 @@
 static OSErr MADResetInstrument( InstrData		*curIns)
 {
 	short i;
-
+	
 	for( i = 0; i < 32; i++) curIns->name[ i]	= 0;
 	curIns->type		= 0;
 	curIns->numSamples	= 0;
@@ -58,14 +58,14 @@ static OSErr MADResetInstrument( InstrData		*curIns)
 	curIns->pannSus		= 0;
 	curIns->pannBeg		= 0;
 	curIns->pannEnd		= 0;
-
+	
 	curIns->volType		= 0;
 	curIns->pannType	= 0;
 	
 	curIns->volFade		= DEFAULT_VOLFADE;
 	curIns->vibDepth	= 0;
 	curIns->vibRate		= 0;
-
+	
 	return noErr;
 }
 
@@ -266,7 +266,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			PPBE32( &curData->loopBeg);
 			PPBE32( &curData->loopSize);
 			PPBE16( &curData->c2spd);
-
+			
 			inOutCount = curData->size;
 			
 			curData->data = malloc( inOutCount);
@@ -292,7 +292,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 				
 				for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
 			}
-
+			
 		}
 	}
 	
@@ -363,8 +363,8 @@ static OSErr TESTMADH( MADSpec* MADPtr)
 
 static OSErr INFOMADF( MADSpec* MADPtr, PPInfoRec *info)
 {
-//	short	i;
-
+	//short	i;
+	
 	strcpy( info->internalFileName, MADPtr->name);
 	
 	strcpy( info->formatDescription, "MADK Resource (APPL)");
@@ -419,8 +419,8 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				
 				CloseResFile( iFileRefI);
 			}
-		break;
-		
+			break;
+			
 		case MADPlugTest:
 			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
 			if( iFileRefI == -1) myErr = MADFileNotSupportedByThisPlug;
@@ -444,8 +444,8 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				
 				CloseResFile( iFileRefI);
 			}
-		break;
-		
+			break;
+			
 		case MADPlugInfo:
 			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
 			if( iFileRefI == -1) myErr = MADFileNotSupportedByThisPlug;
@@ -470,11 +470,11 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				
 				CloseResFile( iFileRefI);
 			}
-		break;
-		
+			break;
+			
 		default:
 			myErr = MADOrderNotImplemented;
-		break;
+			break;
 	}
 	
 	return myErr;

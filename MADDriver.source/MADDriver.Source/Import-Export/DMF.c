@@ -63,7 +63,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 {
 	if( PosX < 0) PosX = 0;
 	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-		
+	
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 #endif
@@ -76,15 +76,15 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
 	
 	switch( B0 + 0x40)
 	{
-		// Speed
+			// Speed
 		case 'A':	*Cmd = speedE;		*Arg = B1;	break;
-		// Tempo
+			// Tempo
 		case 'T':	*Cmd = speedE;		*Arg = B1;	break;
-
+			
 		case 'B':	*Cmd = fastskipE;		*Arg = B1;	break;
-
+			
 		case 'C':	*Cmd = skipE;			*Arg = B1;	break;
-
+			
 		case 'D':
 			if( LoB1 == 0 || HiB1 == 0)		// Slide volume
 			{
@@ -102,8 +102,8 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
 				*Arg = 10 << 4;
 				*Arg += HiB1;
 			}
-		break;
-		
+			break;
+			
 		case 'E':
 			if( HiB1 == 0x0F)		// FineSlide DOWN
 			{
@@ -119,8 +119,8 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
 			{
 				*Cmd = upslideE;		*Arg = B1;
 			}
-		break;
-
+			break;
+			
 		case 'F':
 			if( HiB1 == 0x0F)		// FineSlide UP
 			{
@@ -136,29 +136,29 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
 			{
 				*Cmd = downslideE;		*Arg = B1;
 			}
-		break;
-
+			break;
+			
 		case 'G':	*Cmd = portamentoE;	*Arg = B1;	break;
 		case 'H':	*Cmd = vibratoE;		*Arg = B1;	break;
-		
+			
 		case 'J':	*Cmd = arpeggioE;		*Arg = B1;	break;
 		case 'K':	*Cmd = vibratoslideE;	*Arg = B1;	break;
 		case 'L':	*Cmd = portaslideE;		*Arg = B1;	break;
 		case 'O':	*Cmd = offsetE;		*Arg = B1;	break;
-
+			
 		case 'S':		// Special Effects
 			switch( HiB1)
-			{
-				case 2:	*Cmd = extendedE;	*Arg = 5 << 4;		*Arg += LoB1;		break;	// FineTune
-				case 3:	*Cmd = extendedE;	*Arg = 4 << 4;		*Arg += LoB1;		break;	// Set Vibrato WaveForm
-				case 4:	*Cmd = extendedE;	*Arg = 7 << 4;		*Arg += LoB1;		break;	// Set Tremolo WaveForm
-				case 0xB:	*Cmd = extendedE;	*Arg = 6 << 4;		*Arg += LoB1;		break;	// Loop pattern
-				case 0xC:	*Cmd = extendedE;	*Arg = 12 << 4;	*Arg += LoB1;		break;	// Cut sample
-				case 0xD:	*Cmd = extendedE;	*Arg = 13 << 4;	*Arg += LoB1;		break;	// Delay sample
-				case 0xE:	*Cmd = extendedE;	*Arg = 14 << 4;	*Arg += LoB1;		break;	// Delay pattern
-				default:	*Cmd = 0;		*Arg = 0;							break;
-			}
-		break;
+		{
+			case 2:	*Cmd = extendedE;	*Arg = 5 << 4;		*Arg += LoB1;		break;	// FineTune
+			case 3:	*Cmd = extendedE;	*Arg = 4 << 4;		*Arg += LoB1;		break;	// Set Vibrato WaveForm
+			case 4:	*Cmd = extendedE;	*Arg = 7 << 4;		*Arg += LoB1;		break;	// Set Tremolo WaveForm
+			case 0xB:	*Cmd = extendedE;	*Arg = 6 << 4;		*Arg += LoB1;		break;	// Loop pattern
+			case 0xC:	*Cmd = extendedE;	*Arg = 12 << 4;	*Arg += LoB1;		break;	// Cut sample
+			case 0xD:	*Cmd = extendedE;	*Arg = 13 << 4;	*Arg += LoB1;		break;	// Delay sample
+			case 0xE:	*Cmd = extendedE;	*Arg = 14 << 4;	*Arg += LoB1;		break;	// Delay pattern
+			default:	*Cmd = 0;		*Arg = 0;							break;
+		}
+			break;
 		default:	*Cmd = 0;			*Arg = 0;		break;
 	}
 }
@@ -167,7 +167,7 @@ static void ConvertMADEffect( Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 {
 	*B0 = 0;
 	*B1 = 0;
-
+	
 	switch( Cmd)
 	{
 		case speedE:		*B0 = 'A' - 0x40;	*B1 = Arg;	break;
@@ -178,31 +178,31 @@ static void ConvertMADEffect( Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 		case downslideE:	*B0 = 'F' - 0x40;	*B1 = Arg;	break;
 		case portamentoE:	*B0 = 'G' - 0x40;	*B1 = Arg;	break;
 		case vibratoE:		*B0 = 'H' - 0x40;	*B1 = Arg;	break;
-		
+			
 		case arpeggioE:		*B0 = 'J' - 0x40;	*B1 = Arg;	break;
 		case vibratoslideE:	*B0 = 'K' - 0x40;	*B1 = Arg;	break;
 		case portaslideE:	*B0 = 'L' - 0x40;	*B1 = Arg;	break;
 		case offsetE:		*B0 = 'O' - 0x40;	*B1 = Arg;	break;
-		
+			
 		case extendedE:
 			switch( (Arg & 0xF0) >> 4)
-			{
-				case 1:	*B0 = 'F' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
-				case 2:	*B0 = 'E' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
+		{
+			case 1:	*B0 = 'F' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
+			case 2:	*B0 = 'E' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
 				
-				case 5:	*B0 = 'S' - 0x40;	*B1 = 0x20 + (Arg & 0x0F);		break;
+			case 5:	*B0 = 'S' - 0x40;	*B1 = 0x20 + (Arg & 0x0F);		break;
 				
-				case 4:	*B0 = 'S' - 0x40;	*B1 = 0x30 + (Arg & 0x0F);		break;
-				case 7:	*B0 = 'S' - 0x40;	*B1 = 0x40 + (Arg & 0x0F);		break;
-				case 6:	*B0 = 'S' - 0x40;	*B1 = 0xb0 + (Arg & 0x0F);		break;
-				case 12:	*B0 = 'S' - 0x40;	*B1 = 0xc0 + (Arg & 0x0F);		break;
-				case 13:	*B0 = 'S' - 0x40;	*B1 = 0xd0 + (Arg & 0x0F);		break;
-				case 14:	*B0 = 'S' - 0x40;	*B1 = 0xe0 + (Arg & 0x0F);		break;
+			case 4:	*B0 = 'S' - 0x40;	*B1 = 0x30 + (Arg & 0x0F);		break;
+			case 7:	*B0 = 'S' - 0x40;	*B1 = 0x40 + (Arg & 0x0F);		break;
+			case 6:	*B0 = 'S' - 0x40;	*B1 = 0xb0 + (Arg & 0x0F);		break;
+			case 12:	*B0 = 'S' - 0x40;	*B1 = 0xc0 + (Arg & 0x0F);		break;
+			case 13:	*B0 = 'S' - 0x40;	*B1 = 0xd0 + (Arg & 0x0F);		break;
+			case 14:	*B0 = 'S' - 0x40;	*B1 = 0xe0 + (Arg & 0x0F);		break;
 				
-				case 11:	*B0 = 'D' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
-				case 10:	*B0 = 'D' - 0x40;	*B1 = 0x0f + ((Arg & 0x0F)<<4);	break;
-			}
-		break;
+			case 11:	*B0 = 'D' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
+			case 10:	*B0 = 'D' - 0x40;	*B1 = 0x0f + ((Arg & 0x0F)<<4);	break;
+		}
+			break;
 	}
 }
 #endif
@@ -224,17 +224,17 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	
 	/**** Variables pour le MAD ****/
 	Cmd				*aCmd;
-
+	
 	/**** Variables pour le IT ****/
 	
 	ITForm			ITinfo;
 	/********************************/
-
+	
 	for( i = 0 ; i < 64; i ++)
 	{
 		theInstrument[ i] = NULL;
 	}
-
+	
 	/**** Header principal *****/
 	theITCopy = (Byte*) theIT;
 	
@@ -275,7 +275,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	{
 		free(ITinfo.orders);
 		free(ITinfo.parapins);
-
+		
 		return MADNeedMemory;
 	}
 	memcpy( ITinfo.parapsamp, theITCopy, ITinfo.smpNum * 4L);
@@ -425,7 +425,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 		
 		return MADNeedMemory;
 	}
-		
+	
 	theMAD->header->MAD = 'MADK';
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<28; i++) theMAD->header->name[i] = ITinfo.name[i];
@@ -444,7 +444,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 		
 		if( theMAD->header->oPointers[ i] < 0 || theMAD->header->oPointers[ i] >= ITinfo.patNum) theMAD->header->oPointers[ i] = 0;
 	}
-
+	
 	for( i = 0; i < MAXTRACK; i++)
 	{
 		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
@@ -452,7 +452,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 		
 		theMAD->header->chanVol[ i] = MAX_VOLUME;
 	}
-
+	
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
@@ -470,11 +470,11 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 		return MADNeedMemory;
 	}
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-
+	
 	// ********************
 	// ***** INSTRUMENTS *****
 	// ********************
-
+	
 	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * MAXINSTRU, 1);
 	if( !theMAD->fid) {
 		free(ITinfo.orders);
@@ -505,7 +505,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	}
 	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
-
+	
 	for(i  = 0 ; i < MAXINSTRU; i++)
 	{
 		for( x = 0; x < MAXSAMPLE; x++) theMAD->sample[ i*MAXSAMPLE + x] = NULL;
@@ -513,7 +513,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 		theMAD->fid[i].numSamples	= 0;
 	}
 	
-
+	
 	
 	if( ITinfo.flags & 2)		// USE INSTRUMENTS
 	{
@@ -551,7 +551,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 					free(ITinfo.parappat);
 					free(ITinfo.insdata);
 					free(ITinfo.sampdata);
-
+					
 					free(theMAD->header);
 					free(theMAD->sets);
 					free(theMAD->fid);
@@ -587,7 +587,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 					free(ITinfo.parappat);
 					free(ITinfo.insdata);
 					free(ITinfo.sampdata);
-
+					
 					free(theMAD->header);
 					free(theMAD->sets);
 					free(theMAD->fid);
@@ -630,7 +630,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	theMAD->header->numChn = 32;
 	
 	starting = 0;
-
+	
 	for( i = 0; i < MAXPATTERN; i++) theMAD->partition[ i] = NULL;
 	for( i = 0; i < theMAD->header->numPat ; i++)
 	{
@@ -663,7 +663,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 			free(ITinfo.parappat);
 			free(ITinfo.insdata);
 			free(ITinfo.sampdata);
-
+			
 			free(theMAD->header);
 			free(theMAD->sets);
 			free(theMAD->fid);
@@ -777,7 +777,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 	free( ITinfo.orders);		free( ITinfo.parapins);
 	free( ITinfo.parappat);		free( ITinfo.insdata);
 	free( ITinfo.parapsamp);	free( ITinfo.sampdata);
-
+	
 	return noErr;
 }
 
@@ -786,7 +786,7 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 	//short		i, maxInstru, tracksNo;
 	ITForm		ITinfo;
 	/********************************/
-
+	
 	/**** Header principal *****/
 	memcpy( &ITinfo, AlienFile, 96);
 	
@@ -816,7 +816,7 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 	//info->totalTracks	 = Tdecode16(  &ITinfo.insNum);
 	
 	strcpy( info->formatDescription, "DMF Plug");
-
+	
 	return noErr;
 }
 
@@ -825,7 +825,7 @@ static OSErr TestITFile( Ptr AlienFile)
 	ITForm	*myIT = ( ITForm*) AlienFile;
 	OSType myID = myIT->ID;
 	PPBE32(&myID);
-
+	
 	if( myID == 'DDMF') return noErr;
 	else return  MADFileNotSupportedByThisPlug;
 }
@@ -841,7 +841,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	strcpy( p->MenuName, 	"DMF Files");
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
-
+	
 	return noErr;
 }
 #endif
@@ -861,7 +861,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			if( iFileRefI)
 			{
 				sndSize = iGetEOF( iFileRefI);
-			
+				
 				// ** MEMORY Test Start
 				AlienFile = malloc( sndSize * 2L);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
@@ -891,7 +891,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			}
 			else myErr = MADReadingErr;
 			break;
-		
+			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if( iFileRefI)
@@ -911,13 +911,13 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			}
 			else myErr = MADReadingErr;
 			break;
-
+			
 		case MADPlugInfo:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if( iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);
-			
+				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = malloc( sndSize);
@@ -935,12 +935,12 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			}
 			else myErr = MADReadingErr;
 			break;
-		
+			
 		default:
 			myErr = MADOrderNotImplemented;
 			break;
 	}
-
+	
 	return myErr;
 }
 

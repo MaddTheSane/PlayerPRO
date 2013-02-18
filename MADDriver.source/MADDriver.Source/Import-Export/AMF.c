@@ -42,7 +42,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 {
 	if( PosX < 0) PosX = 0;
 	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-		
+	
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 #endif
@@ -82,10 +82,10 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	//Ptr				tempPtr;
 	OSType			AMFType;
 	/*SInt32			finetune[16] =
-	{
-		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
-		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
-	};*/
+	 {
+	 8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
+	 7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
+	 };*/
 	
 	short			pan, uusize, oldIns = 1;
 	
@@ -93,7 +93,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	
 	READAMFFILE( &AMFType, 4);		// AMF Type
 	PPBE32(&AMFType);
-
+	
 	if( AMFType >= 0x414D460C ) pan = 32;
 	else pan = 16;
 	
@@ -221,7 +221,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 				//FIXME: were loopstart and loopend supposed to be byteswapped on PowerPC?
 				oiloopstart = Tdecode16( &oi.loopstart);
 				oiloopend = Tdecode16( &oi.loopend);
-				curData->loopBeg 	= oiloopstart; 
+				curData->loopBeg 	= oiloopstart;
 				curData->loopSize 	= oiloopend - oiloopstart;
 				if( oiloopend == 65535)
 				{
@@ -338,11 +338,11 @@ static OSErr ExtractAMFInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	info->internalFileName[ 31] = '\0';
-
+	
 	/*** Tracks ***/
 	
 	info->totalTracks = 0;
-		
+	
 	/*** Total Patterns ***/
 	
 	info->totalPatterns = 0;
@@ -355,7 +355,7 @@ static OSErr ExtractAMFInfo( PPInfoRec *info, Ptr AlienFile)
 	info->totalInstruments = 0;
 	
 	strlcpy( info->formatDescription, "AMF Plug", sizeof(info->formatDescription));
-
+	
 	return noErr;
 }
 
@@ -370,7 +370,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	strlcpy( p->MenuName, 	"AMF Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
-
+	
 	return noErr;
 }
 #endif
@@ -386,9 +386,9 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	Ptr		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
-		
+	
 	myErr = noErr;
-
+	
 	switch( order)
 	{
 		case MADPlugImport:
@@ -396,7 +396,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			if( iFileRefI )
 			{
 				sndSize = iGetEOF( iFileRefI);
-			
+				
 				// ** MEMORY Test Start
 				AlienFile = malloc( sndSize * 2L);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
@@ -421,8 +421,8 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
-		
+			break;
+			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if( iFileRefI)
@@ -441,15 +441,15 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-
-		break;
-
+			
+			break;
+			
 		case MADPlugInfo:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if( iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);
-			
+				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = malloc( sndSize);
@@ -466,14 +466,14 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-
-		break;
-		
+			
+			break;
+			
 		default:
 			myErr = MADOrderNotImplemented;
-		break;
+			break;
 	}
-
+	
 	return myErr;
 }
 

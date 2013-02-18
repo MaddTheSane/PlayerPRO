@@ -55,7 +55,7 @@ typedef UInt8			UBYTE;
 #include "XM.h"
 
 /**************************************************************************
-**************************************************************************/
+ **************************************************************************/
 
 #define HEADERSIZE 	276
 #define PHSIZE		9
@@ -76,7 +76,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 {
 	if( PosX < 0) PosX = 0;
 	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-		
+	
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
@@ -122,7 +122,7 @@ static void XM_WriteNote( Cmd *cmd)
 	else
 	{
 		UBYTE	ccmp = cmp + 0x80;
-	
+		
 		WRITEXMFILE( &ccmp, 1);
 		
 		r = cmp & 1L;	if( r) 	WRITEXMFILE( &cmd->note, 1);
@@ -139,9 +139,9 @@ static void XM_ReadNote(XMNOTE *n)
 {
 	UBYTE	cmp;
 	SInt32	r;
-
+	
 	READXMFILE( &cmp, 1);
-
+	
 	r = cmp & 0x80;
 	if( r)
 	{
@@ -165,121 +165,121 @@ static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd		*aCmd, short channel)
 {
 	UBYTE 	note,ins,vol,eff,dat;
 	//Str32	str;
-
-		note	=	xmtrack->note;
-		if( note == 0 || note == 0xFF) note = 0xFF;
-		else note--;
-		
-		ins		=	xmtrack->ins;
-		vol		=	xmtrack->vol;
-		eff		=	xmtrack->eff;
-		dat		=	xmtrack->dat;
-
-		aCmd->ins		= ins;
-		aCmd->note		= note;
-		aCmd->vol		= vol;
-		if( note == 96)						// KEY OFF
-		{
-			aCmd->note		= 0xFE;
-		}
-		
-		
+	
+	note	=	xmtrack->note;
+	if( note == 0 || note == 0xFF) note = 0xFF;
+	else note--;
+	
+	ins		=	xmtrack->ins;
+	vol		=	xmtrack->vol;
+	eff		=	xmtrack->eff;
+	dat		=	xmtrack->dat;
+	
+	aCmd->ins		= ins;
+	aCmd->note		= note;
+	aCmd->vol		= vol;
+	if( note == 96)						// KEY OFF
+	{
+		aCmd->note		= 0xFE;
+	}
+	
+	
 	//	if( eff == 0 && dat != 0) Debugger();
+	
+	if( eff <= 0x0F)
+	{
+		aCmd->cmd		= eff;
+		aCmd->arg		= dat;
 		
-		if( eff <= 0x0F)
+		if( aCmd->arg == 0xFF)
 		{
-			aCmd->cmd		= eff;	
-			aCmd->arg		= dat;
-			
-			if( aCmd->arg == 0xFF)
+			switch( aCmd->cmd)
 			{
-				switch( aCmd->cmd)
-				{
-					case portamentoE:	break;
-				
-					default:	aCmd->arg = 0;	break;
-				}
+				case portamentoE:	break;
+					
+				default:	aCmd->arg = 0;	break;
 			}
-			
-			if( aCmd->cmd == slidevolE)
-			{
+		}
+		
+		if( aCmd->cmd == slidevolE)
+		{
 			/*	if( aCmd->arg == 0) aCmd->arg = LastAEffect[ channel];
-				else LastAEffect[ channel] = aCmd->arg;*/
-			}
+			 else LastAEffect[ channel] = aCmd->arg;*/
 		}
-		else
+	}
+	else
+	{
+		aCmd->cmd		= 0;
+		aCmd->arg		= dat;	if( aCmd->arg == 0xFF) aCmd->arg = 0;
+		
+		switch(eff)
 		{
-			aCmd->cmd		= 0;
-			aCmd->arg		= dat;	if( aCmd->arg == 0xFF) aCmd->arg = 0;
-			
-			switch(eff)
-			{
-				case 255:
-					aCmd->cmd		= 0;
-				break;	
-				
-				case 'G'-55:                    // G - set global volume
-					aCmd->arg = 0;
-				break;
-	
-				case 'H'-55:                    // H - global volume slide
-					aCmd->arg = 0;
-				break;
-	
-				case 'K'-55:                    // K - keyoff
-					aCmd->ins		= 00;
-					aCmd->note		= 0xFE;
+			case 255:
+				aCmd->cmd		= 0;
 				break;
 				
-				case 'L'-55:                    // L - set envelope position
-					aCmd->arg = 0;
+			case 'G'-55:                    // G - set global volume
+				aCmd->arg = 0;
 				break;
 				
-				case 'P'-55:                    // P - panning slide
+			case 'H'-55:                    // H - global volume slide
+				aCmd->arg = 0;
+				break;
+				
+			case 'K'-55:                    // K - keyoff
+				aCmd->ins		= 00;
+				aCmd->note		= 0xFE;
+				break;
+				
+			case 'L'-55:                    // L - set envelope position
+				aCmd->arg = 0;
+				break;
+				
+			case 'P'-55:                    // P - panning slide
 				//	Convert en slide panning (volume cmd !)
-					aCmd->cmd		= 0;
-					aCmd->arg		= 0;
-					
-					{
-					Byte	lo, hi;
-					
-					lo = dat & 0xf;
-					hi = dat >> 4;
+				aCmd->cmd		= 0;
+				aCmd->arg		= 0;
 				
-					/* slide right has absolute priority */
-					if(hi) lo = 0;
-					
-					if( hi) aCmd->vol = 0xE0 + hi;
-					else aCmd->vol = 0xD0 + lo;
-					}
-				break;
+			{
+				Byte	lo, hi;
 				
-				case 'R'-55:                    // R - multi retrig note
-					aCmd->arg = 0;
-				break;
-	
-				case 'T'-55:
-					aCmd->arg = 0;
-				break;
-	
-				case 'X'-55:
-					if((dat>>4)==1)
-					{    						// X1 extra fine porta up
-						aCmd->arg = 0;
-					}
-					else
-					{							// X2 extra fine porta down
-						aCmd->arg = 0;
-					}
-				break;
+				lo = dat & 0xf;
+				hi = dat >> 4;
 				
-				default:
-				/*	NumToString( eff, str);
-					DebugStr( str);*/
-					aCmd->arg = 0;
-				break;
+				/* slide right has absolute priority */
+				if(hi) lo = 0;
+				
+				if( hi) aCmd->vol = 0xE0 + hi;
+				else aCmd->vol = 0xD0 + lo;
 			}
+				break;
+				
+			case 'R'-55:                    // R - multi retrig note
+				aCmd->arg = 0;
+				break;
+				
+			case 'T'-55:
+				aCmd->arg = 0;
+				break;
+				
+			case 'X'-55:
+				if((dat>>4)==1)
+				{    						// X1 extra fine porta up
+					aCmd->arg = 0;
+				}
+				else
+				{							// X2 extra fine porta down
+					aCmd->arg = 0;
+				}
+				break;
+				
+			default:
+				/*	NumToString( eff, str);
+				 DebugStr( str);*/
+				aCmd->arg = 0;
+				break;
 		}
+	}
 }
 
 static void XM_Convert2XM( Cmd		*aCmd)
@@ -295,11 +295,11 @@ static void XM_Convert2XM( Cmd		*aCmd)
 static OSErr XMReadPattern( MADMusic *theMAD, MADDriverSettings *init)
 {
 	int			t, u, v, i;
-
+	
 	/*****************/
 	/** PATTERNS **/
 	/*****************/
-
+	
 	for( i = 0; i < MAXPATTERN; i++) theMAD->partition[ i] = NULL;
 	for( i = 0; i < MAXTRACK; i++) LastAEffect[ i] = 0;
 	
@@ -319,10 +319,10 @@ static OSErr XMReadPattern( MADMusic *theMAD, MADDriverSettings *init)
 		theXMRead = theXMReadCopy + ph.size;
 		
 		/*
-			Gr8.. when packsize is 0, don't try to load a pattern.. it's empty.
-			This bug was discovered thanks to Khyron's module..
-		*/
-
+		 Gr8.. when packsize is 0, don't try to load a pattern.. it's empty.
+		 This bug was discovered thanks to Khyron's module..
+		 */
+		
 		if( ph.packsize > 0)
 		{
 			PatternSize = ph.numrows;
@@ -337,7 +337,7 @@ static OSErr XMReadPattern( MADMusic *theMAD, MADDriverSettings *init)
 				for( v = 0 ; v < theMAD->header->numChn ; v++)
 				{
 					XM_ReadNote( &xmpat);
-
+					
 					aCmd = GetMADCommand(  u,  v, theMAD->partition[ t]);
 					
 					XM_Convert2MAD( &xmpat, aCmd, v);
@@ -624,16 +624,16 @@ static OSErr XM_Load( Ptr	theXM, size_t XMSize, MADMusic *theMAD, MADDriverSetti
 	int			i;
 	SInt32		inOutCount, x;
 	OSErr		iErr = noErr;
-
+	
 	theXMRead = theXM;
-
+	
 	/********************/
 	/** READ XM HEADER **/
 	/********************/
 	
 	READXMFILE( mh, sizeof(XMHEADER));
 	/* BigEndian <-> LittleEndian */
-
+	
 	PPLE16( &mh->version);
 	PPLE32( &mh->headersize);
 	PPLE16( &mh->songlength);
@@ -644,7 +644,7 @@ static OSErr XM_Load( Ptr	theXM, size_t XMSize, MADMusic *theMAD, MADDriverSetti
 	PPLE16( &mh->flags);
 	PPLE16( &mh->bpm);
 	PPLE16( &mh->tempo);
-
+	
 	/********************/
 	/** MAD ALLOCATION **/
 	/********************/
@@ -683,38 +683,38 @@ static OSErr XM_Load( Ptr	theXM, size_t XMSize, MADMusic *theMAD, MADDriverSetti
 	x = 1;
 	for( i = 0; i < MAXTRACK; i++)
 	{
-	/*	if( x > 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
-		x--;
-		
-		if( x == -2) x = 2;*/
+		/*	if( x > 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
+		 else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		 x--;
+		 
+		 if( x == -2) x = 2;*/
 		
 		theMAD->header->chanVol[ i] = MAX_VOLUME;
 		theMAD->header->chanPan[ i] = MAX_PANNING/2;
 	}
-
+	
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
-
+	
 	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-
+	
 	switch( mh->version)
 	{
 		case 0x104:
 			XMReadPattern( theMAD, init);
 			iErr = XMReadInstruments( theMAD, init);
-		break;
-		
-	/*	case 0x103:
-			XMReadInstruments( theMAD);
-			XMReadPattern( theMAD);
-		break;*/
-		
+			break;
+			
+			/*	case 0x103:
+			 XMReadInstruments( theMAD);
+			 XMReadPattern( theMAD);
+			 break;*/
+			
 		default:
 			return MADFileNotSupportedByThisPlug;
-		break;
+			break;
 	}
 	
 	return iErr;
@@ -750,7 +750,7 @@ static SInt32 ConvertSampleC4SPDXM( Ptr src, size_t srcSize, short amp, SInt32 s
 static long XMGetPeriod( short note, SInt32 c2spd)
 {
 	UInt32 	period, n,o, mytab[ 12] = {		1712 * 16, 1616 * 16, 1524 * 16, 1440 * 16, 1356 * 16, 1280 * 16,
-													1208 * 16, 1140 * 16, 1076 * 16, 1016 * 16, 960 * 16, 907 * 16 };
+		1208 * 16, 1140 * 16, 1076 * 16, 1016 * 16, 960 * 16, 907 * 16 };
 	
 	n = note%12;		o = note/12;
 	
@@ -800,8 +800,8 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 	/********************************/
 	
 	*sndSize = 						sizeof(XMHEADER) +
-												InstruSize +
-												PatternSize;
+	InstruSize +
+	PatternSize;
 	
 	theXMRead = finalXMPtr = (Ptr)malloc( *sndSize);
 	theXMMax = theXMRead + *sndSize;
@@ -847,302 +847,302 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 	/*****************/
 	
 	{
-	int			t, u, v;
-	
-	for(t=0;t<theMAD->header->numPat;t++)
-	{
-		short				PatternSize;
-		XMPATHEADER 		ph;
-		Ptr					packingCopy, cc;
+		int			t, u, v;
 		
-		ph.size = PHSIZE;						PPLE32( &ph.size);			WRITEXMFILE( &ph.size,	4);
-		ph.packing = 0;							WRITEXMFILE( &ph.packing,	1);
-		ph.numrows = theMAD->partition[ t]->header.size;	PPLE16( &ph.numrows);		WRITEXMFILE( &ph.numrows,	2);
-		
-		packingCopy = theXMRead;
-		ph.packsize = 1;									PPLE16( &ph.packsize);		WRITEXMFILE( &ph.packsize,	2);
-		
-		cc = theXMRead;
-		for( u = 0 ; u < theMAD->partition[ t]->header.size ; u++)
+		for(t=0;t<theMAD->header->numPat;t++)
 		{
-			for( v = 0 ; v < theMAD->header->numChn ; v++)
+			short				PatternSize;
+			XMPATHEADER 		ph;
+			Ptr					packingCopy, cc;
+			
+			ph.size = PHSIZE;						PPLE32( &ph.size);			WRITEXMFILE( &ph.size,	4);
+			ph.packing = 0;							WRITEXMFILE( &ph.packing,	1);
+			ph.numrows = theMAD->partition[ t]->header.size;	PPLE16( &ph.numrows);		WRITEXMFILE( &ph.numrows,	2);
+			
+			packingCopy = theXMRead;
+			ph.packsize = 1;									PPLE16( &ph.packsize);		WRITEXMFILE( &ph.packsize,	2);
+			
+			cc = theXMRead;
+			for( u = 0 ; u < theMAD->partition[ t]->header.size ; u++)
 			{
-				Cmd		*aCmd;
-				Cmd		bCmd;
-				
-				aCmd = GetMADCommand(  u,  v, theMAD->partition[ t]);
-				
-				bCmd = *aCmd;
-				
-				XM_Convert2XM( &bCmd);
-				
-				XM_WriteNote( &bCmd);
+				for( v = 0 ; v < theMAD->header->numChn ; v++)
+				{
+					Cmd		*aCmd;
+					Cmd		bCmd;
+					
+					aCmd = GetMADCommand(  u,  v, theMAD->partition[ t]);
+					
+					bCmd = *aCmd;
+					
+					XM_Convert2XM( &bCmd);
+					
+					XM_WriteNote( &bCmd);
+				}
 			}
+			
+			PatternSize = theXMRead - cc;
+			
+			cc = theXMRead;
+			theXMRead = packingCopy;
+			ph.packsize = PatternSize;						PPLE16( &ph.packsize);		WRITEXMFILE( &ph.packsize,	2);
+			theXMRead = cc;
 		}
-		
-		PatternSize = theXMRead - cc;
-		
-		cc = theXMRead;
-		theXMRead = packingCopy;
-		ph.packsize = PatternSize;						PPLE16( &ph.packsize);		WRITEXMFILE( &ph.packsize,	2);
-		theXMRead = cc;
-	}
 	}
 	
 	/*****************/
 	/** INSTRUMENTS **/
 	/*****************/
-
-	{
-	int			t, u, x;
-	//long		inOutCount = 0;
 	
-	for( t = 0; t < NumberInstru; t++)
 	{
-		XMINSTHEADER 	ih;
-		size_t			ihsizecopy, ihssizecopy;
+		int			t, u, x;
+		//long		inOutCount = 0;
 		
-		InstrData		*curIns = &theMAD->fid[ t];
-		Ptr				theXMReadCopy;
-
-		theXMReadCopy = theXMRead;
-		
-		//************************//
-		// Instrument header size //
-		
-		if( curIns->numSamples > 0) ih.size = IHSIZE;
-		else ih.size = IHSIZESMALL;
-		
-		ihsizecopy = ih.size;
-		PPLE32( &ih.size);
-		WRITEXMFILE( &ih.size,	4);
-		
-		//************************//
-		
-		for( x = 0; x < 22; x++) 			ih.name[x] = curIns->name[ x];			WRITEXMFILE( &ih.name,	22);
-		ih.type = 0;																WRITEXMFILE( &ih.type,	1);
-		ih.numsmp = curIns->numSamples;			PPLE16( &ih.numsmp);					WRITEXMFILE( &ih.numsmp,	2);
-		
-		ih.ssize = IHSSIZE;
-		ihssizecopy = ih.ssize;
-		PPLE32( &ih.ssize);
-		
-		if( curIns->numSamples > 0)
+		for( t = 0; t < NumberInstru; t++)
 		{
-			XMPATCHHEADER	pth;
+			XMINSTHEADER 	ih;
+			size_t			ihsizecopy, ihssizecopy;
 			
-			for( x = 0; x < sizeof( pth); x++) ((char*) &pth)[ x] = 0;
+			InstrData		*curIns = &theMAD->fid[ t];
+			Ptr				theXMReadCopy;
 			
-			memcpy( pth.what, curIns->what, 96);
+			theXMReadCopy = theXMRead;
 			
-			memcpy( pth.volenv, curIns->volEnv, 48);
-			for( x = 0; x < 24; x++) PPLE16( &pth.volenv[ x]);
+			//************************//
+			// Instrument header size //
 			
-			pth.volpts = curIns->volSize;
-			pth.volflg = curIns->volType;
-			pth.volsus = curIns->volSus;
-			pth.volbeg = curIns->volBeg;
-			pth.volend = curIns->volEnd;
-			pth.volfade = curIns->volFade;
+			if( curIns->numSamples > 0) ih.size = IHSIZE;
+			else ih.size = IHSIZESMALL;
 			
+			ihsizecopy = ih.size;
+			PPLE32( &ih.size);
+			WRITEXMFILE( &ih.size,	4);
 			
+			//************************//
 			
-			memcpy( pth.panenv, curIns->pannEnv, 48);
-			for( x = 0; x < 24; x++) PPLE16( &pth.panenv[ x]);
+			for( x = 0; x < 22; x++) 			ih.name[x] = curIns->name[ x];			WRITEXMFILE( &ih.name,	22);
+			ih.type = 0;																WRITEXMFILE( &ih.type,	1);
+			ih.numsmp = curIns->numSamples;			PPLE16( &ih.numsmp);					WRITEXMFILE( &ih.numsmp,	2);
 			
-			pth.panpts = curIns->pannSize;
-			pth.panflg = curIns->pannType;
-			pth.pansus = curIns->pannSus;
-			pth.panbeg = curIns->pannBeg;
-			pth.panend = curIns->pannEnd;
+			ih.ssize = IHSSIZE;
+			ihssizecopy = ih.ssize;
+			PPLE32( &ih.ssize);
 			
-			
-			
-			WRITEXMFILE( &ih.ssize,		4);
-			WRITEXMFILE( &pth.what,		96);
-			WRITEXMFILE( &pth.volenv,	48);
-			WRITEXMFILE( &pth.panenv,	48);
-			WRITEXMFILE( &pth.volpts,	1);
-			WRITEXMFILE( &pth.panpts,	1);
-			WRITEXMFILE( &pth.volsus,	1);
-			WRITEXMFILE( &pth.volbeg,	1);
-			WRITEXMFILE( &pth.volend,	1);
-			WRITEXMFILE( &pth.pansus,	1);
-			WRITEXMFILE( &pth.panbeg,	1);
-			WRITEXMFILE( &pth.panend,	1);
-			WRITEXMFILE( &pth.volflg,	1);
-			WRITEXMFILE( &pth.panflg,	1);
-			WRITEXMFILE( &pth.vibflg,	1);
-			WRITEXMFILE( &pth.vibsweep,	1);
-			WRITEXMFILE( &pth.vibdepth,	1);
-			WRITEXMFILE( &pth.vibrate,	1);
-			PPLE16( &pth.volfade);		WRITEXMFILE( &pth.volfade,	2);
-			WRITEXMFILE( &pth.reserved,	22);
-		}
-		theXMRead = theXMReadCopy + ihsizecopy;
-		
-		/** WRITE samples */
-		
-		for( u = 0 ; u < curIns->numSamples ; u++)
-		{
-			XMWAVHEADER		wh;
-			sData			*curData;
-			short			modifc2spd = 0;
-			SInt32			copyc2spd;
-			
-			SInt32 	finetune[ 16] = 
+			if( curIns->numSamples > 0)
 			{
-				7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280,
-				8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
-			};
+				XMPATCHHEADER	pth;
+				
+				for( x = 0; x < sizeof( pth); x++) ((char*) &pth)[ x] = 0;
+				
+				memcpy( pth.what, curIns->what, 96);
+				
+				memcpy( pth.volenv, curIns->volEnv, 48);
+				for( x = 0; x < 24; x++) PPLE16( &pth.volenv[ x]);
+				
+				pth.volpts = curIns->volSize;
+				pth.volflg = curIns->volType;
+				pth.volsus = curIns->volSus;
+				pth.volbeg = curIns->volBeg;
+				pth.volend = curIns->volEnd;
+				pth.volfade = curIns->volFade;
+				
+				
+				
+				memcpy( pth.panenv, curIns->pannEnv, 48);
+				for( x = 0; x < 24; x++) PPLE16( &pth.panenv[ x]);
+				
+				pth.panpts = curIns->pannSize;
+				pth.panflg = curIns->pannType;
+				pth.pansus = curIns->pannSus;
+				pth.panbeg = curIns->pannBeg;
+				pth.panend = curIns->pannEnd;
+				
+				
+				
+				WRITEXMFILE( &ih.ssize,		4);
+				WRITEXMFILE( &pth.what,		96);
+				WRITEXMFILE( &pth.volenv,	48);
+				WRITEXMFILE( &pth.panenv,	48);
+				WRITEXMFILE( &pth.volpts,	1);
+				WRITEXMFILE( &pth.panpts,	1);
+				WRITEXMFILE( &pth.volsus,	1);
+				WRITEXMFILE( &pth.volbeg,	1);
+				WRITEXMFILE( &pth.volend,	1);
+				WRITEXMFILE( &pth.pansus,	1);
+				WRITEXMFILE( &pth.panbeg,	1);
+				WRITEXMFILE( &pth.panend,	1);
+				WRITEXMFILE( &pth.volflg,	1);
+				WRITEXMFILE( &pth.panflg,	1);
+				WRITEXMFILE( &pth.vibflg,	1);
+				WRITEXMFILE( &pth.vibsweep,	1);
+				WRITEXMFILE( &pth.vibdepth,	1);
+				WRITEXMFILE( &pth.vibrate,	1);
+				PPLE16( &pth.volfade);		WRITEXMFILE( &pth.volfade,	2);
+				WRITEXMFILE( &pth.reserved,	22);
+			}
+			theXMRead = theXMReadCopy + ihsizecopy;
 			
-			curData = theMAD->sample[ t*MAXSAMPLE + u];
+			/** WRITE samples */
 			
-			wh.volume		= curData->vol;
-			
-			copyc2spd = curData->c2spd;
-			
-			if( curData->c2spd > 8757 || curData->c2spd < 7895)
+			for( u = 0 ; u < curIns->numSamples ; u++)
 			{
-#define BASECALC	45
+				XMWAVHEADER		wh;
+				sData			*curData;
+				short			modifc2spd = 0;
+				SInt32			copyc2spd;
 				
-				wh.finetune = 0;			// <- 8363 Hz
-				
-				while( XMGetPeriod( BASECALC, curData->c2spd) < XMGetPeriod( BASECALC + modifc2spd, 8363))
+				SInt32 	finetune[ 16] =
 				{
-					modifc2spd++;
+					7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280,
+					8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
+				};
+				
+				curData = theMAD->sample[ t*MAXSAMPLE + u];
+				
+				wh.volume		= curData->vol;
+				
+				copyc2spd = curData->c2spd;
+				
+				if( curData->c2spd > 8757 || curData->c2spd < 7895)
+				{
+#define BASECALC	45
+					
+					wh.finetune = 0;			// <- 8363 Hz
+					
+					while( XMGetPeriod( BASECALC, curData->c2spd) < XMGetPeriod( BASECALC + modifc2spd, 8363))
+					{
+						modifc2spd++;
+					}
+					
+					curData->c2spd = 8363;
 				}
 				
-				curData->c2spd = 8363;
+				
+				{
+					wh.length 		= curData->size;
+					wh.loopstart	= curData->loopBeg;
+					wh.looplength	= curData->loopSize;
+					
+					if( curData->stereo)
+					{
+						wh.length /= 2;
+						wh.loopstart /= 2;
+						wh.looplength /= 2;
+					}
+					
+					wh.finetune = -128;
+					if( curData->c2spd > 8757) wh.finetune = 127;
+					else
+					{
+						while( finetune[ (wh.finetune + 128)/16] < curData->c2spd)
+						{
+							wh.finetune += 16;
+						}
+					}
+				}
+				
+				curData->c2spd = copyc2spd;
+				
+				wh.type = 0;
+				if( curData->amp == 16) wh.type += 0x10;
+				if( curData->loopSize > 0)
+				{
+					if( curData->loopType == ePingPongLoop) wh.type += 0x2;
+					else wh.type += 0x1;
+				}
+				
+				wh.panning = 128;	//curData->panning;
+				wh.relnote = curData->relNote + modifc2spd;
+				for( x = 0; x < 22; x++) wh.samplename[ x] = curData->name[ x];
+				
+				theXMReadCopy = theXMRead;
+				PPLE32( &wh.length);		WRITEXMFILE( &wh.length,		4);
+				PPLE32( &wh.loopstart);	WRITEXMFILE( &wh.loopstart,		4);
+				PPLE32( &wh.looplength);	WRITEXMFILE( &wh.looplength,	4);
+				WRITEXMFILE( &wh.volume,		1);
+				WRITEXMFILE( &wh.finetune,		1);
+				WRITEXMFILE( &wh.type,			1);
+				wh.panning		= 128;							WRITEXMFILE( &wh.panning,		1);
+				WRITEXMFILE( &wh.relnote,		1);
+				WRITEXMFILE( &wh.reserved,		1);
+				WRITEXMFILE( &wh.samplename,		22);
+				theXMRead = theXMReadCopy + ihssizecopy;
 			}
 			
+			/** WRITE samples data **/
 			
+			for( u = 0 ; u < curIns->numSamples ; u++)
 			{
-				wh.length 		= curData->size;
-				wh.loopstart	= curData->loopBeg;
-				wh.looplength	= curData->loopSize;
+				sData	*curData = theMAD->sample[ t*MAXSAMPLE + u];
+				Ptr		theXMReadCopy = theXMRead;
+				SInt32	curSize;
+				
+				WRITEXMFILE( curData->data, curData->size);
+				curSize = curData->size;
 				
 				if( curData->stereo)
 				{
-					wh.length /= 2;
-					wh.loopstart /= 2;
-					wh.looplength /= 2;
-				}
-				
-				wh.finetune = -128;
-				if( curData->c2spd > 8757) wh.finetune = 127;
-				else
-				{
-					while( finetune[ (wh.finetune + 128)/16] < curData->c2spd)
+					if( curData->amp == 8)
 					{
-						wh.finetune += 16;
+						for( x = 0 ; x < curSize; x+=2)
+						{
+							theXMReadCopy[ x / 2] = ((SInt32) theXMReadCopy[ x] + (SInt32) theXMReadCopy[ x + 1]) / 2L;
+						}
 					}
-				}
-			}
-			
-			curData->c2spd = copyc2spd;
-			
-			wh.type = 0;
-			if( curData->amp == 16) wh.type += 0x10;
-			if( curData->loopSize > 0)
-			{
-				if( curData->loopType == ePingPongLoop) wh.type += 0x2;
-				else wh.type += 0x1;
-			}
-			
-			wh.panning = 128;	//curData->panning;
-			wh.relnote = curData->relNote + modifc2spd;
-			for( x = 0; x < 22; x++) wh.samplename[ x] = curData->name[ x];
-			
-			theXMReadCopy = theXMRead;
-			PPLE32( &wh.length);		WRITEXMFILE( &wh.length,		4);
-			PPLE32( &wh.loopstart);	WRITEXMFILE( &wh.loopstart,		4);
-			PPLE32( &wh.looplength);	WRITEXMFILE( &wh.looplength,	4);
-			WRITEXMFILE( &wh.volume,		1);
-			WRITEXMFILE( &wh.finetune,		1);
-			WRITEXMFILE( &wh.type,			1);
-			wh.panning		= 128;							WRITEXMFILE( &wh.panning,		1);
-			WRITEXMFILE( &wh.relnote,		1);
-			WRITEXMFILE( &wh.reserved,		1);
-			WRITEXMFILE( &wh.samplename,		22);
-			theXMRead = theXMReadCopy + ihssizecopy;
-		}
-		
-		/** WRITE samples data **/
-		
-		for( u = 0 ; u < curIns->numSamples ; u++)
-		{
-			sData	*curData = theMAD->sample[ t*MAXSAMPLE + u];
-			Ptr		theXMReadCopy = theXMRead;
-			SInt32	curSize;
-			
-			WRITEXMFILE( curData->data, curData->size);
-			curSize = curData->size;
-			
-			if( curData->stereo)
-			{
-				if( curData->amp == 8)
-				{
-					for( x = 0 ; x < curSize; x+=2)
+					else
 					{
-						theXMReadCopy[ x / 2] = ((SInt32) theXMReadCopy[ x] + (SInt32) theXMReadCopy[ x + 1]) / 2L;
+						short *short16out = (short*) theXMReadCopy, *short16in = (short*) theXMReadCopy;
+						
+						for( x = 0 ; x < curSize/2; x+=2)
+						{
+							short16out[ x / 2] = ((SInt32) short16in[ x] + (SInt32) short16in[ x + 1]) / 2L;
+						}
 					}
-				}
-				else
-				{
-					short *short16out = (short*) theXMReadCopy, *short16in = (short*) theXMReadCopy;
 					
-					for( x = 0 ; x < curSize/2; x+=2)
+					curSize /= 2;
+					theXMRead -= curSize;
+				}
+				
+				if( curData->amp == 16)
+				{
+					short	*tt = (short*) theXMReadCopy;
+					SInt32	tL;
+					
+					/* Real to Delta */
+					SInt32	oldV, newV;
+					SInt32	xL;
+					
+					oldV = 0;
+					
+					for( xL = 0; xL < curSize/2; xL++)
 					{
-						short16out[ x / 2] = ((SInt32) short16in[ x] + (SInt32) short16in[ x + 1]) / 2L;
+						newV = tt[ xL];
+						tt[ xL] -= oldV;
+						oldV = newV;
+					}
+					
+					for( tL = 0; tL < curSize/2; tL++)
+					{
+						PPLE16( (Ptr) (tt + tL));
 					}
 				}
-				
-				curSize /= 2;
-				theXMRead -= curSize;
-			}
-			
-			if( curData->amp == 16)
-			{
-				short	*tt = (short*) theXMReadCopy;
-				SInt32	tL;
-				
-				/* Real to Delta */
-				SInt32	oldV, newV;
-				SInt32	xL;
-				
-				oldV = 0;
-				
-				for( xL = 0; xL < curSize/2; xL++)
+				else
 				{
-					newV = tt[ xL];
-					tt[ xL] -= oldV;
-					oldV = newV;
-				}
-				
-				for( tL = 0; tL < curSize/2; tL++)
-				{
-					PPLE16( (Ptr) (tt + tL));
-				}
-			}
-			else
-			{
-				/* Real to Delta */
-				SInt32	oldV, newV;
-				SInt32	xL;
-			//	Byte	*tempByte = (Byte*) theXMReadCopy;
-				
-				oldV = 0;
-				
-				for( xL = 0; xL < curSize; xL++)
-				{
-					newV = theXMReadCopy[ xL];
-					theXMReadCopy[ xL] -= oldV;
-					oldV = newV;
+					/* Real to Delta */
+					SInt32	oldV, newV;
+					SInt32	xL;
+					//	Byte	*tempByte = (Byte*) theXMReadCopy;
+					
+					oldV = 0;
+					
+					for( xL = 0; xL < curSize; xL++)
+					{
+						newV = theXMReadCopy[ xL];
+						theXMReadCopy[ xL] -= oldV;
+						oldV = newV;
+					}
 				}
 			}
 		}
-	}
 	}
 	
 	*sndSize = theXMRead - finalXMPtr;
@@ -1153,7 +1153,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 static inline Boolean compMem( Ptr a, Ptr b, long s)
 {
 	long 	i;
-
+	
 	for( i = 0; i < s; i++)
 	{
 		if( a[ i] != b[ i]) return false;
@@ -1167,28 +1167,28 @@ static OSErr TestXMFile( Ptr AlienFile)
 	if( compMem( AlienFile, "Extended Module: ", 17))
 	{
 		theXMRead = AlienFile;
-	
+		
 		/********************/
 		/** READ XM HEADER **/
 		/********************/
 		
 		READXMFILE( mh, sizeof(XMHEADER));
 		/* BigEndian <-> LittleEndian */
-	
+		
 		PPLE16( &mh->version);
 		PPLE16( &mh->songlength);
 		PPLE16( &mh->numchn);
 		PPLE16( &mh->numpat);
 		PPLE16( &mh->numins);
-	
+		
 		switch( mh->version)
 		{
 			case 0x104:
-			break;
-			
+				break;
+				
 			default:
 				return MADFileNotSupportedByThisPlug;
-			break;
+				break;
 		}
 		return noErr;
 	}
@@ -1199,23 +1199,23 @@ static OSErr ExtractXMInfo( PPInfoRec *info, Ptr AlienFile)
 {
 	short	i;
 	
-
+	
 	theXMRead = AlienFile;
-
+	
 	/********************/
 	/** READ XM HEADER **/
 	/********************/
 	
 	READXMFILE( mh, sizeof(XMHEADER));
 	/* BigEndian <-> LittleEndian */
-
+	
 	PPLE16( &mh->version);
 	PPLE16( &mh->songlength);
 	PPLE16( &mh->numchn);
 	PPLE16( &mh->numpat);
 	PPLE16( &mh->numins);
 	PPLE16( &mh->flags);
-
+	
 	switch( mh->version)
 	{
 		case 0x104:
@@ -1241,7 +1241,7 @@ static OSErr ExtractXMInfo( PPInfoRec *info, Ptr AlienFile)
 			i = 21;
 		}
 	}
-
+	
 	/*** Total Patterns ***/
 	
 	info->totalPatterns = mh->numpat;
@@ -1260,7 +1260,7 @@ static OSErr ExtractXMInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	if( mh->flags &1) strlcpy( info->formatDescription, "XM Linear Plug", sizeof(info->formatDescription));
 	else strlcpy( info->formatDescription, "XM Log Plug", sizeof(info->formatDescription));
-
+	
 	return noErr;
 }
 
@@ -1312,8 +1312,8 @@ OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRe
 				free( AlienFile);	AlienFile = NULL;
 			}
 			else myErr = MADNeedMemory;
-		break;
-		
+			break;
+			
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
@@ -1346,8 +1346,8 @@ OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRe
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
-		
+			break;
+			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
@@ -1367,14 +1367,14 @@ OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRe
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
-
+			break;
+			
 		case 'INFO':
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);
-			
+				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = (Ptr)malloc( sndSize);
@@ -1392,13 +1392,13 @@ OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRe
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
-		
+			break;
+			
 		default:
 			myErr = MADOrderNotImplemented;
-		break;
+			break;
 	}
-
+	
 	XM_Cleanup();
 	
 	return myErr;
