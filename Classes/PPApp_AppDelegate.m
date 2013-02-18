@@ -1174,6 +1174,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(theOSErr));
 		}
 		self.paused = YES;
+		[self clearMusic];
 		return NO;
 	}
 	theOSErr = MADLoadMusicCFURLFile(MADLib, &Music, fileType, BRIDGE(CFURLRef, musicToLoad));
@@ -1183,6 +1184,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(theOSErr));
 		}
 		self.paused = YES;
+		[self clearMusic];
 		return NO;
 	}
 	
@@ -1385,6 +1387,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	instrumentController.curMusic = &Music;
 	instrumentController.theDriver = &MADDriver;
 	instrumentController.undoManager = undoManager;
+	instrumentController.filterHandler = filterHandler;
 	
 	patternHandler = [[PatternHandler alloc] initWithMusic:&Music];
 	patternHandler.theRec = &MADDriver;
@@ -1615,15 +1618,19 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (void)clearMusic
 {
-	MADStopMusic(MADDriver);
-	MADCleanDriver(MADDriver);
-	MADDisposeMusic(&Music, MADDriver);
+	if (Music) {
+		MADStopMusic(MADDriver);
+		MADCleanDriver(MADDriver);
+		MADDisposeMusic(&Music, MADDriver);
+	}
+	
 	self.paused = YES;
 	currentlyPlayingIndex.index = -1;
 	currentlyPlayingIndex.playbackURL = nil;
 	[currentlyPlayingIndex movePlayingIndexToOtherIndex:previouslyPlayingIndex];
 	Music = CreateFreeMADK();
 	[self setTitleForSongLabelBasedOnMusic];
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPMusicDidChange object:self];
 	MADAttachDriverToMusic(MADDriver, Music, NULL);
 }
 

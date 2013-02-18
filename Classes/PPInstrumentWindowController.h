@@ -11,6 +11,7 @@
 
 @class PPInstrumentImporter;
 @class InstrumentInfoController;
+@class PPFilterPlugHandler;
 
 @interface PPInstrumentWindowController : NSWindowController <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
@@ -30,6 +31,7 @@
 	IBOutlet NSImageView *waveFormImage;
 	IBOutlet NSOutlineView *instrumentView;
 	InstrumentInfoController *instrumentInfo;
+	PPFilterPlugHandler *filterHandler;
 	
 	NSUndoManager *undoManager;
 }
@@ -38,6 +40,7 @@
 @property (readwrite, nonatomic) MADMusic **curMusic;
 @property (readwrite) MADDriverRec **theDriver;
 @property (readwrite, retain) NSUndoManager *undoManager;
+@property (readwrite, retain) PPFilterPlugHandler *filterHandler;
 
 - (BOOL)importSampleFromURL:(NSURL *)sampURL;
 - (BOOL)importSampleFromURL:(NSURL *)sampURL error:(out NSError *__autoreleasing*)theErr;

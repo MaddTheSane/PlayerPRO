@@ -14,6 +14,8 @@
 #import "PPInstrumentCellView.h"
 #import "OpenPanelViewController.h"
 #import "InstrumentInfoController.h"
+#import "PPFilterPlugHandler.h"
+#import "PPFilterPlugObject.h"
 #include <PlayerPROCore/PPPlug.h>
 #import "PPErrors.h"
 #import "ARCBridge.h"
@@ -29,6 +31,7 @@
 @synthesize curMusic;
 @synthesize theDriver;
 @synthesize undoManager;
+@synthesize filterHandler;
 
 - (void)setCurMusic:(MADMusic **)acurMusic
 {
@@ -249,6 +252,7 @@
 	RELEASEOBJ(instruments);
 	RELEASEOBJ(instrumentInfo);
 	RELEASEOBJ(undoManager);
+	RELEASEOBJ(filterHandler);
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
