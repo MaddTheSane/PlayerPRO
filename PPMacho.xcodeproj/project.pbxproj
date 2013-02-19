@@ -564,6 +564,7 @@
 		55CBFC7311EB7BD90028C6BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7211EB7BD90028C6BB /* InfoPlist.strings */; };
 		55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7B11EB7C950028C6BB /* MainMenu.xib */; };
 		55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */; };
+		55D1826A16D2FD9000F63FA3 /* shiney.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55D1826916D2FD9000F63FA3 /* shiney.icns */; };
 		55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55D1BD58120FBAC0004FD083 /* Credits.rtf */; };
 		55D1BD5F120FBE51004FD083 /* PPMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1BD5E120FBE51004FD083 /* PPMusicList.m */; };
 		55DB45D50FEAB8CD0088C375 /* DFTB.r in Rez */ = {isa = PBXBuildFile; fileRef = 55DB45D40FEAB8CD0088C375 /* DFTB.r */; };
@@ -2106,6 +2107,7 @@
 		55CBFC7911EB7C4E0028C6BB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPApp_AppDelegate.h; sourceTree = "<group>"; };
 		55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPApp_AppDelegate.m; sourceTree = "<group>"; };
+		55D1826916D2FD9000F63FA3 /* shiney.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = shiney.icns; path = Files/shiney.icns; sourceTree = SOURCE_ROOT; };
 		55D1BD58120FBAC0004FD083 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		55D1BD5D120FBE51004FD083 /* PPMusicList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicList.h; sourceTree = "<group>"; };
 		55D1BD5E120FBE51004FD083 /* PPMusicList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMusicList.m; sourceTree = "<group>"; };
@@ -2772,6 +2774,7 @@
 		550B00CF10BA17BC004FC5D7 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				55D1826916D2FD9000F63FA3 /* shiney.icns */,
 				5505CA7E16CF1CC80090AB31 /* icon1.icns */,
 				55FA5FBA102D2D6C00CB63DA /* ppApp.icns */,
 				550B00D010BA17BC004FC5D7 /* 669.icns */,
@@ -5643,6 +5646,7 @@
 				55F4287D16A8B1FB009013D8 /* PPSoundSettingsViewController.xib in Resources */,
 				552581FF16C6FC350016A31C /* InstrumentInfoController.xib in Resources */,
 				5505CA7F16CF1CC80090AB31 /* icon1.icns in Resources */,
+				55D1826A16D2FD9000F63FA3 /* shiney.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

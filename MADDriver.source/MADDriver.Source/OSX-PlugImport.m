@@ -474,8 +474,8 @@ void MInitImportPlug( MADLibrary *inMADDriver, char *PlugsFolderName)
 	} else {
 		PlugLocations = CreatePluginFolderLocationsWithFolderPath(PlugsFolderName);
 	}
-	PlugLocNums	= CFArrayGetCount( PlugLocations );
 	
+	PlugLocNums	= CFArrayGetCount( PlugLocations );
 	for (i = 0; i < PlugLocNums; i++) {
 		CFURLRef aPlugLoc = CFArrayGetValueAtIndex(PlugLocations, i);
 		somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, CFSTR("ppimpexp"));
