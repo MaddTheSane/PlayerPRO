@@ -2,6 +2,7 @@
 #include <CoreServices/CoreServices.h>
 #include "RDriver.h"
 #include "FileUtils.h"
+#include "GetMetadataForFile.h"
 
 /* -----------------------------------------------------------------------------
    Step 1
@@ -53,7 +54,7 @@ static const CFStringRef kPPMDFormatDescription = CFSTR("net_sourceforge_playerp
    and return it as a dictionary
    ----------------------------------------------------------------------------- */
 
-__private_extern__  Boolean GetMetadataForFile(void* thisInterface,
+Boolean GetMetadataForFile(void* thisInterface,
 			   CFMutableDictionaryRef attributes, 
 			   CFStringRef contentTypeUTI,
 			   CFStringRef pathToFile)

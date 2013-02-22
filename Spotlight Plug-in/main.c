@@ -15,6 +15,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreFoundation/CFPlugInCOM.h>
 #include <CoreServices/CoreServices.h>
+#include "GetMetadataForFile.h"
 
 // -----------------------------------------------------------------------------
 //	constants
@@ -34,12 +35,6 @@
 // -----------------------------------------------------------------------------
 //	typedefs
 // -----------------------------------------------------------------------------
-
-// The import function to be implemented in GetMetadataForFile.c
-__private_extern__ Boolean GetMetadataForFile(void *thisInterface, 
-			   CFMutableDictionaryRef attributes, 
-			   CFStringRef contentTypeUTI,
-			   CFStringRef pathToFile);
 			   
 // The layout for an instance of MetaDataImporterPlugIn 
 typedef struct __MetadataImporterPluginType
@@ -58,7 +53,7 @@ typedef struct __MetadataImporterPluginType
 static MetadataImporterPluginType  *AllocMetadataImporterPluginType(CFUUIDRef inFactoryID);
 static void                      DeallocMetadataImporterPluginType(MetadataImporterPluginType *thisInstance);
 static HRESULT                   MetadataImporterQueryInterface(void *thisInstance,REFIID iid,LPVOID *ppv);
-void                     *MetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID);
+void                     *PPMetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID);
 static ULONG                     MetadataImporterPluginAddRef(void *thisInstance);
 static ULONG                     MetadataImporterPluginRelease(void *thisInstance);
 // -----------------------------------------------------------------------------
@@ -193,7 +188,7 @@ static ULONG MetadataImporterPluginRelease(void *thisInstance)
 // -----------------------------------------------------------------------------
 //	Implementation of the factory function for this type.
 //
-extern void *MetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID)
+extern void *PPMetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID)
 {
     MetadataImporterPluginType *result;
     CFUUIDRef                 uuid;

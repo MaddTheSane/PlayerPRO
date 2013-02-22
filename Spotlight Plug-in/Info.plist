@@ -47,7 +47,7 @@
 	<key>CFPlugInFactories</key>
 	<dict>
 		<key>DF098C69-8463-40CD-BD50-A964BBCEFDFE</key>
-		<string>MetadataImporterPluginFactory</string>
+		<string>PPMetadataImporterPluginFactory</string>
 	</dict>
 	<key>CFPlugInTypes</key>
 	<dict>
