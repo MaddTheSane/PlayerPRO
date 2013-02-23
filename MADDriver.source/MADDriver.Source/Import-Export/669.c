@@ -124,7 +124,7 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 	theMAD->header->MAD = 'MADK';
 	for(i=0; i<32; i++) theMAD->header->name[i] = the669->message[i];
 	
-	strlcpy( theMAD->header->infos, "Converted by PlayerPRO 669 Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO 669 Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPointers = 128;	//the669->loopOrder;
 	theMAD->header->tempo = 125;

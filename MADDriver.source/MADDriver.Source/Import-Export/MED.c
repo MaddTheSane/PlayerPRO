@@ -468,7 +468,7 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	
 	theMAD->header->MAD = 'MADK';
 	
-	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MED Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MED Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->speed			= 	ms->tempo2;
 	theMAD->header->tempo			=	((SInt32)ms->deftempo * 125L) / 33L;

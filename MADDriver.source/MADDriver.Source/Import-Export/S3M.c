@@ -813,7 +813,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDrive
 	for(i = 29; i < 32; i++) theMAD->header->name[i] = 0;
 	for(i = 0; i < 28; i++) theMAD->header->name[i] = s3minfo.name[i];
 	
-	strlcpy( theMAD->header->infos, "Converted by PlayerPRO S3M Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO S3M Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPat		= s3minfo.patnum;
 	theMAD->header->numPointers	= s3minfo.ordernum;

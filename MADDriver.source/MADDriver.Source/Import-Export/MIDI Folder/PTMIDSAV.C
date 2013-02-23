@@ -656,7 +656,7 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	theMAD->header->speed			= 	6;
 	theMAD->header->tempo			=	125;
 	
-	strcpy( theMAD->header->infos, "Converted by PlayerPRO MIDI Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, "Converted by PlayerPRO MIDI Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	for (cSamps = 0, x = 0; x < 129; x++)
 	{

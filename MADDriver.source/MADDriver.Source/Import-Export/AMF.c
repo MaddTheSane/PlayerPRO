@@ -105,7 +105,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	theMAD->header = (MADSpec*) calloc( sizeof( MADSpec), 1);
 	if( theMAD->header == NULL) return MADNeedMemory;
 	
-	strlcpy( theMAD->header->infos, "Converted by PlayerPRO AMF Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO AMF Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->MAD = 'MADK';
 	

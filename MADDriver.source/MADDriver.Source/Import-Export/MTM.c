@@ -166,7 +166,7 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, SInt32 MTMSize, MADMusic *theMAD, 
 		theMAD->header->name[i] = MTMFile->songname[i];
 	}
 	
-	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MTM Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MTM Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->tempo = 125;
 	theMAD->header->speed = 6;

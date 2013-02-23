@@ -237,7 +237,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	theMAD->header->tempo 			= 125;
 	theMAD->header->speed 			= Okta->speed;
 	
-	strlcpy( theMAD->header->infos, "Converted by PlayerPRO OKTA Plug ((C)Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy( theMAD->header->infos, "Converted by PlayerPRO OKTA Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	for( i = 0;  i < 128; i++) theMAD->header->oPointers[ i] = 0;
 	for( i = 0;  i < pbod_count; i++) theMAD->header->oPointers[ i] = Okta->patt[ i];
