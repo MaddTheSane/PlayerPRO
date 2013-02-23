@@ -55,8 +55,11 @@ OSErr MADInitEqualizer( MADDriverRec *intDriver)
 	
 
 	
-	
-	if( intDriver->Filter == NULL) return -1;
+	if( intDriver->Filter == NULL) return MADNeedMemory;
+	if (intDriver->fData == NULL) {
+		DisposePtr((Ptr)intDriver->Filter);
+		return MADNeedMemory;
+	}
 	
 	for( i = 0; i <= EQPACKET*2; i++)
 	{
@@ -227,8 +230,9 @@ void MADCallFFT( sData *SData, double *filter, MADDriverRec *intDriver, Boolean 
 void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
 	long	i, y, powersize;
-	long	*shiftAr;
-	double	pente, axe, *fDataCopy2, *fDataCopy = intDriver->fData;
+	long	*shiftAr = NULL;
+	double	pente, axe, *fDataCopy2 = NULL, *fDataCopy = intDriver->fData;
+	Boolean didInitFData = 0;
 	
 	if( nochan == 2)	// STEREO
 	{
@@ -241,6 +245,7 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 			}while( powersize < size/2);
 			
 			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
+			didInitFData = 1;
 		}
 		else powersize = EQPACKET*2;
 	}
@@ -255,6 +260,7 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 			}while( powersize < size);
 			
 			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
+			didInitFData = 1;
 		}
 		else powersize = EQPACKET*2;
 	}
@@ -262,13 +268,30 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 	if( shift)
 	{
 		fDataCopy2 = (double*) NewPtr( sizeof( double) * (powersize+2));
-		if( fDataCopy2 == NULL) return;
+		if( fDataCopy2 == NULL)
+		{
+			if (didInitFData && fDataCopy) {
+				DisposePtr((Ptr)fDataCopy);
+			}
+			return;
+		}
 		
 		shiftAr = (long*) NewPtrClear( sizeof( long) * (powersize+2));
-		if( shiftAr == NULL) return;
+		if( shiftAr == NULL) {
+			if (didInitFData && fDataCopy) {
+				DisposePtr((Ptr)fDataCopy);
+			}
+			DisposePtr((Ptr)fDataCopy2);
+			return;
+		}
 	}
 	
-	if( fDataCopy == NULL) return;
+	if( fDataCopy == NULL)
+	{
+		if(shiftAr) DisposePtr((Ptr)shiftAr);
+		if(fDataCopy2) DisposePtr((Ptr)fDataCopy2);
+		return;
+	}
 	
 	for( y = 0; y < nochan; y++)
 	{
@@ -419,8 +442,9 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 
 void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
-	long	i, y, powersize, *shiftAr;
-	double	pente, axe, *fDataCopy2, *fDataCopy = intDriver->fData;
+	long	i, y, powersize, *shiftAr = NULL;
+	double	pente, axe, *fDataCopy2 = NULL, *fDataCopy = intDriver->fData;
+	Boolean didInitFData = 0;
 	
 	size /= 2;
 	
@@ -435,8 +459,9 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 			}while( powersize < size/2);
 			
 			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
+			didInitFData = 1;
 		}
-		else powersize = EQPACKET*2;
+		else powersize = EQPACKET*2*2;
 	}
 	else
 	{
@@ -449,6 +474,7 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 			}while( powersize < size);
 			
 			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
+			didInitFData = 1;
 		}
 		else powersize = EQPACKET*2;
 	}
@@ -456,13 +482,29 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 	if( shift)
 	{
 		fDataCopy2 = (double*) NewPtr( sizeof( double) * (powersize+2));
-		if( fDataCopy2 == NULL) return;
+		if( fDataCopy2 == NULL) {
+			if (didInitFData && fDataCopy) {
+				DisposePtr((Ptr)fDataCopy);
+			}
+			return;
+		}
 		
-		shiftAr = (long*) NewPtrClear( sizeof( long) * (powersize+2));
-		if( shiftAr == NULL) return;
+		shiftAr = (SInt32*) NewPtrClear( sizeof( long) * (powersize+2));
+		if( shiftAr == NULL) {
+			if (didInitFData && fDataCopy) {
+				DisposePtr((Ptr)fDataCopy);
+			}
+			DisposePtr((Ptr)fDataCopy2);
+			return;
+		}
 	}
 	
-	if( fDataCopy == NULL) return;
+	if( fDataCopy == NULL)
+	{
+		if(shiftAr) DisposePtr((Ptr)shiftAr);
+		if(fDataCopy2) DisposePtr((Ptr)fDataCopy2);
+		return;
+	}
 	
 	for( y = 0; y < nochan; y++)
 	{

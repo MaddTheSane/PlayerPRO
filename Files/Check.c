@@ -342,7 +342,7 @@ void InitSoundQualityExport( 	DialogPtr				aDialog,
 	NumToString( drive->ReverbSize, str);		pStrcat( str, "\p ms");	SetDText( aDialog, 28, str);
 	NumToString( drive->ReverbStrength, str);	pStrcat( str, "\p %");	SetDText( aDialog, 18, str);
 	
-#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
+#if defined(HAS_LONG_LONG) && defined (HAS_LONG_DOUBLE)
 	// OverSampling
 	if( drive->oversampling > 1)
 	{
@@ -588,7 +588,7 @@ Boolean SoundQualityExport( 	Boolean OnlyCurrent,
 				InitSoundQualityExport( aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver, OnlyCurrent);
 				break;
 				
-#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
+#if defined(HAS_LONG_LONG) && defined (HAS_LONG_DOUBLE)
 			case 23:
 				if( driver->oversampling > 1) driver->oversampling = 1;
 				else driver->oversampling = 4;

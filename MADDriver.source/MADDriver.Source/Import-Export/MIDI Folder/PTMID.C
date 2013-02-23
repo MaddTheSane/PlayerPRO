@@ -48,15 +48,19 @@ static void Init(void)
 	}
 }
 
+#ifdef QD_HEADERS_ARE_PRIVATE
+extern void InitCursor();
+#endif
+
 void Settings()
 {
-short		itemHit;
-DialogPtr	aDialog;
-Handle		itemHandle;
-short		itemType;
-Rect		itemRect;
-Str255		str;
-long		r;
+	short		itemHit;
+	DialogPtr	aDialog;
+	Handle		itemHandle;
+	short		itemType;
+	Rect		itemRect;
+	Str255		str;
+	long		r;
 
 	
 	InitCursor();
@@ -121,11 +125,11 @@ long		r;
  */
 void  ConvertMidiFile( char	*src, MADMusic *theMAD, MADDriverSettings *init)
 {
-	int 		cNames = 0;
+	//int 		cNames = 0;
 	short		channels;
-	Sz 			fnDef;
+	//Sz 			fnDef;
 	Tune 		*ptuneMusic;
-	FInfo		fndrInfo;
+	//FInfo		fndrInfo;
 
 	Init();
 	

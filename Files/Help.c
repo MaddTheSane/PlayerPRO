@@ -697,7 +697,7 @@ long			nVersLong;
 		case rate44khz:				TurnRadio( base + 8, prefDlog, true);	break;
 	}
 	
-#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
+#if defined(HAS_LONG_LONG) && defined (HAS_LONG_DOUBLE)
 	if( thePrefs.oversampling > 1)
 	{
 		long	tempLong;
@@ -2497,7 +2497,7 @@ void DoDRIVER(short	itemHit)
 			SwitchDriverTo( 0);
 			break;
 			
-#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
+#if defined(HAS_LONG_LONG) && defined (HAS_LONG_DOUBLE)
 		case 12:
 			InverseRadio( base + 12, prefDlog);
 			if( thePrefs.oversampling > 1)

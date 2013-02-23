@@ -60,13 +60,13 @@ short OpenDataFileQK( long dirID, short VRefNum);
 #ifdef __BIG_ENDIAN__
 #define GetNELong(toget) toget
 #else
-#define	GetNELong(toget) EndianU32_BtoL(toget.bigEndianValue)
+#define	GetNELong(toget) EndianS32_BtoL(toget.bigEndianValue)
 #endif
 
 #ifdef __BIG_ENDIAN__
 #define SetNELong(toset, theval)	*toset = theval
 #else
-#define SetNELong(toset, theval)	(toset)->bigEndianValue = EndianU32_LtoB(theval)	
+#define SetNELong(toset, theval)	(toset)->bigEndianValue = EndianS32_LtoB(theval)	
 #endif
 
 #ifdef __BIG_ENDIAN__
@@ -78,17 +78,17 @@ short OpenDataFileQK( long dirID, short VRefNum);
 #ifdef __BIG_ENDIAN__
 #define GetNEShort
 #else
-#define GetNEShort(toget) EndianU16_BtoL(toget.bigEndianValue)
+#define GetNEShort(toget) EndianS16_BtoL(toget.bigEndianValue)
 #endif
 
 #ifdef __BIG_ENDIAN__
-#define GetNEOSType
+#define GetNEOSType(toget) toget
 #else
 #define GetNEOSType(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
 
 #ifdef __BIG_ENDIAN__
-#define GetNEUnsignedFixed
+#define GetNEUnsignedFixed(toget) toget
 #else
 #define	GetNEUnsignedFixed(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
@@ -216,8 +216,8 @@ void OctavesMIDIName(short	id, Str255	String)
 
 void SetInstruNameM( short	theNo, Str255 theNewName, short MIDIgm, Ptr destName)
 {
-short	i;
-Str255	aStr, bStr;
+	short	i;
+	Str255	aStr, bStr;
 
 	pStrcpy( aStr, "\p(");
 	NumToString( MIDIgm, bStr);
@@ -234,7 +234,7 @@ Str255	aStr, bStr;
 
 void SetSampNameM( Str255 theNewName, Ptr destName)
 {
-short	i;
+	short	i;
 
 	for(i=0; i<32; i++)
 	{
@@ -1308,7 +1308,6 @@ short GenerateDLSFromBundle()
 	ResType			theType;
 	short			i, ff = -1;
 	
-	
 	//DoStandardOpen( &file, "\pHello", 'ANYK');
 	
 	iErr = FindFolder( kOnSystemDisk, kComponentsFolderType, kDontCreateFolder, &file.vRefNum, &file.parID);
@@ -1323,6 +1322,7 @@ short GenerateDLSFromBundle()
 	bundleURL = CFURLCreateFromFSRef( kCFAllocatorDefault, &bundleFSRef);
 	
 	AudioBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL);
+	CFRelease(bundleURL);
 	if( AudioBundle == NULL) Debugger();
 	
 	
@@ -1337,11 +1337,16 @@ short GenerateDLSFromBundle()
 	
 	iErr = FSOpenFork( &rsrcRef, 0, 0, fsRdPerm, &refNum);
 	CFRelease(rsrcURL);
-	CFRelease(AudioBundle);
-	if( iErr == noErr) return refNum;
+	
+	if( iErr == noErr) 
+	{
+		CFRelease(AudioBundle);
+		return refNum;
+	}
+	
 	
 	// Look for a resource in the main bundle by name and type.
-	rsrcURL = 		CFBundleCopyResourceURL( AudioBundle, 
+	/*rsrcURL = 		CFBundleCopyResourceURL( AudioBundle, 
 											CFSTR("CoreAudio"), 			//CoreAudio
 											CFSTR("rsrc"), 					//rsrc
 											NULL);
@@ -1350,7 +1355,8 @@ short GenerateDLSFromBundle()
 	
 	iErr = FSOpenResourceFile( &rsrcRef, 0, 0, fsRdPerm, &refNum);
 	CFRelease(rsrcURL);
-	if( iErr) return -1;
+	if( iErr) return -1;*/
+	refNum = CFBundleOpenBundleResourceMap(AudioBundle);
 	
 	for( i = 0; i < Count1Types(); i++)
 	{
@@ -1389,7 +1395,8 @@ short GenerateDLSFromBundle()
 		}
 	}
 	
-	CloseResFile( refNum);
+	CFBundleCloseBundleResourceMap(AudioBundle, refNum);
+	CFRelease(AudioBundle);
 	
 	return ff;
 }
@@ -1475,7 +1482,7 @@ OSErr GetAtomData( MyAtom at, void* data, long size)
 
 long CountAtomById( MyAtom at, long type)
 {
-	long 	prePos, fSize, ilistType, nlistType, index, listSize;
+	long 	prePos, fSize, ilistType, /*nlistType,*/ index, listSize;
 	CK		sck;
 	OSErr	iErr;
 	
@@ -1527,7 +1534,7 @@ long CountAtomById( MyAtom at, long type)
 
 OSErr FindAtomById( MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 {
-	long 	prePos, fSize, ilistType, nlistType, index, listSize;
+	long 	prePos, fSize, ilistType, /*nlistType,*/ index, listSize;
 	CK		sck;
 	OSErr	iErr;
 	

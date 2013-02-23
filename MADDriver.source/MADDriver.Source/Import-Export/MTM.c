@@ -38,36 +38,40 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 }
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*(UInt16*)msg_buf)
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
 #else
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *(short*)msg_buf
+#define Tdecode32(msg_buf) *(int*)msg_buf
+#else
+
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
 	INT16(&toswap);
 	return toswap;
 }
-#endif
 
-#ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*(UInt32*)msg_buf)
-#else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
 	INT32(&toswap);
 	return toswap;
 }
+
+#endif
 #endif
 
 
 static struct MTMTrack* GetMTMCommand( short position, short whichTracks, Ptr PatPtr)
 {
 	Ptr					aPtr;
-
-	aPtr =	 (	PatPtr +
-				whichTracks * 192L +
-				position * 3L);
-
+	
+	aPtr =	 (PatPtr +
+			  whichTracks * 192L +
+			  position * 3L);
+	
 	return (struct MTMTrack*) aPtr;
 }
 
@@ -76,7 +80,7 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 	short 			i, x, z;
 	long 			sndSize, OffSetToSample, MPatSize, temp, inOutCount;
 	Ptr				MaxPtr;
-	OSErr			theErr;
+	//OSErr			theErr;
 	Ptr				theInstrument[ 64], destPtr;
 	long 			finetune[16] = 
 	{
@@ -173,12 +177,12 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 
 	for( i = 0; i < MAXTRACK; i++)
-{
-	if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-	else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
-	
-	theMAD->header->chanVol[ i] = MAX_VOLUME;
-}
+	{
+		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
+		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		
+		theMAD->header->chanVol[ i] = MAX_VOLUME;
+	}
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
@@ -267,8 +271,8 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 				else
 				{
 					theCom 		= GetMTMCommand(	x,
-													patTracks[ z],
-													(Ptr) patPtr);
+												patTracks[ z],
+												(Ptr) patPtr);
 					
 					aCmd->ins 	= theCom->instru;
 					
@@ -294,10 +298,10 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 
 static OSErr ExtractInfo( PPInfoRec *info, MTMDef *myFile)
 {
-	long	PatternSize;
+	//long	PatternSize;
 	short	i;
-	short	maxInstru;
-	short	tracksNo;
+	//short	maxInstru;
+	//short	tracksNo;
 	
 	for( i = 0; i < sizeof( myFile->songname); i++)
 	{
@@ -318,11 +322,11 @@ static OSErr ExtractInfo( PPInfoRec *info, MTMDef *myFile)
 }
 
 static OSErr TestFile( MTMDef *myFile)
-{	
-	if(	myFile->Id[ 0] == 'M' &&
-		myFile->Id[ 1] == 'T' &&
-		myFile->Id[ 2] == 'M') return noErr;
-		
+{
+	if(myFile->Id[ 0] == 'M' &&
+	   myFile->Id[ 1] == 'T' &&
+	   myFile->Id[ 2] == 'M') return noErr;
+	
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -334,9 +338,9 @@ static OSErr mainMTM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
-	short	iFileRefI;
+	UNFILE	iFileRefI;
 	long	sndSize;
-		
+	
 	switch( order)
 	{
 		case 'IMPL':
@@ -427,7 +431,7 @@ static OSErr mainMTM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 }
 
 #ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x73, 0xCB, 0x5A, 0x1C, 0x87, 0xA8, 0x47, 0xBE, 0x91, 0xC8, 0x78, 0xD3, 0xD2, 0xD5, 0x2B, 0x66))
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x73, 0xCB, 0x5A, 0x1C, 0x87, 0xA8, 0x47, 0xBE, 0x91, 0xC8, 0x78, 0xD3, 0xD2, 0xD5, 0x2B, 0x66))
 //73CB5A1C-87A8-47BE-91C8-78D3D2D52B66
 
 #define PLUGMAIN mainMTM

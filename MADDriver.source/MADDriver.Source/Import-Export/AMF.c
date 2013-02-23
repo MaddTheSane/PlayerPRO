@@ -42,25 +42,29 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 }
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*(UInt16*)msg_buf)
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
 #else
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *(short*)msg_buf
+#define Tdecode32(msg_buf) *(int*)msg_buf
+#else
+
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
 	INT16(&toswap);
 	return toswap;
 }
-#endif
 
-#ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*(UInt32*)msg_buf)
-#else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
 	INT32(&toswap);
 	return toswap;
 }
+
+#endif
 #endif
 
 static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
@@ -83,7 +87,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	
 	READAMFFILE( &AMFType, 4);		// AMF Type
 	MOT32(&AMFType);
-	//XXXX: Byte-swapping!
+
 	if( AMFType >= 0x414D460C ) pan = 32;
 	else pan = 16;
 	
@@ -211,7 +215,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 				//FIXME: were loopstart and loopend supposed to be byteswapped on PowerPC?
 				oiloopstart = Tdecode16( &oi.loopstart);
 				oiloopend = Tdecode16( &oi.loopend);
-				curData->loopBeg 	= oiloopstart; 
+				curData->loopBeg 	= oiloopstart;
 				curData->loopSize 	= oiloopend - oiloopstart;
 				if( oiloopend == 65535)
 				{
@@ -308,7 +312,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 
 static OSErr TestAMFFile( Ptr AlienFile)
 {
-	OSType	myMADSign = *((unsigned long*) AlienFile);
+	OSType	myMADSign = *((OSType*) AlienFile);
 	MOT32(&myMADSign);
 	
 	if( (myMADSign & 0xFFFFFF00) == 0x414D4600) return noErr;
@@ -451,7 +455,7 @@ static OSErr mainAMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 }
 
 #ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xE9, 0x93, 0xEF, 0xD8, 0x0C, 0x3F, 0x46, 0xF6, 0x90, 0x63, 0x6E, 0x34, 0x0C, 0x17, 0x9D, 0x88))
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xE9, 0x93, 0xEF, 0xD8, 0x0C, 0x3F, 0x46, 0xF6, 0x90, 0x63, 0x6E, 0x34, 0x0C, 0x17, 0x9D, 0x88))
 //E993EFD8-0C3F-46F6-9063-6E340C179D88
 
 #define PLUGMAIN mainAMF

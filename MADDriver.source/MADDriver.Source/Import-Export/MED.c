@@ -185,7 +185,7 @@ static void MED_Convert1( short col, short patID, MADMusic *theMAD)
 static void MED_Convert0( short patID, MADMusic *theMAD)
 {
 	int 		t, zz;
-	UBYTE 		a,b,c,inst,note,eff,dat, temp;
+	UBYTE 		a,b,c,inst,note,eff,dat/*, temp*/;
 	MMD0NOTE 	*n;
 	Cmd			*aCmd;
 	
@@ -383,6 +383,9 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	/**************************/
 	
 	theMEDRead = theMED + mh->MMD0songP;
+	if (MEDSize < (sizeof(MMD0) + mh->MMD0songP)) {
+		return MADIncompatibleFile;
+	}
 	READMEDFILE( ms, sizeof(MMD0song));
 	
 	/***************************/
@@ -551,7 +554,8 @@ static OSErr ExtractMEDInfo( PPInfoRec *info, Ptr theMED)
 
 	info->signature = mh->id;
 	
-	strcpy( info->internalFileName, "");
+	//strcpy( info->internalFileName, "");
+	info->internalFileName[0] = '\0';
 	
 	info->totalPatterns = ms->numblocks;
 	info->partitionLength = ms->songlen;
@@ -659,7 +663,7 @@ static OSErr mainMED( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 }
 
 #ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x2C, 0x23, 0xFD, 0xF2, 0x61, 0xBD, 0x47, 0xB4, 0x83, 0x80, 0x78, 0x4A, 0xC4, 0xA1, 0xE5, 0x0D))
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x2C, 0x23, 0xFD, 0xF2, 0x61, 0xBD, 0x47, 0xB4, 0x83, 0x80, 0x78, 0x4A, 0xC4, 0xA1, 0xE5, 0x0D))
 //2C23FDF2-61BD-47B4-8380-784AC4A1E50D
 
 #define PLUGMAIN mainMED

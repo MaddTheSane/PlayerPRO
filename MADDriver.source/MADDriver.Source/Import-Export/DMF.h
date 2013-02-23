@@ -21,9 +21,7 @@
 //
 /********************						***********************/
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#endif
+#pragma pack(push, 2)
 
 typedef struct ITPatForm
 {
@@ -134,6 +132,5 @@ typedef struct ITForm
 	ITInsForm			*insdata;
 	ITSampForm			*sampdata;
 } ITForm;
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=reset
-#endif
+
+#pragma pack(pop)

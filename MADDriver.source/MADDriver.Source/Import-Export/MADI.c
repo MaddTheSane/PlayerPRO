@@ -25,8 +25,6 @@
 #include "MOD.h"
 #include "MADI.h"
 
-//TODO: Byteswap on Intel!
-
 #ifndef _SRC
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
@@ -235,7 +233,7 @@ static OSErr MADI2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 		{
 			inOutCount = sizeof( oldPatHeader) + tempPatHeader.patBytes;
 		}
-		else 
+		else
 		{
 			inOutCount = sizeof( oldPatHeader) + oldMAD->numChn * tempPatHeader.size * sizeof( oldCmd);
 		}
@@ -413,13 +411,13 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	myMOD->name[ 31] = '\0';
-	strcpy( info->internalFileName, myMOD->name);
+	//myMOD->name[ 31] = '\0';
+	strlcpy( info->internalFileName, myMOD->name, sizeof(myMOD->name));
 	
 	/*** Tracks ***/
 	
 	info->totalTracks = myMOD->numChn;
-		
+	
 	/*** Total Patterns ***/
 	
 	info->totalPatterns = 0;
@@ -540,7 +538,7 @@ static OSErr mainMADI( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 }
 
 #ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x9D, 0xC5, 0xE4, 0xB1, 0xF2, 0xE1, 0x4D, 0x6E, 0x96, 0x3F, 0x70, 0x0B, 0x9C, 0xC2, 0x45, 0xFB))
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x9D, 0xC5, 0xE4, 0xB1, 0xF2, 0xE1, 0x4D, 0x6E, 0x96, 0x3F, 0x70, 0x0B, 0x9C, 0xC2, 0x45, 0xFB))
 //9DC5E4B1-F2E1-4D6E-963F-700B9CC245FB
 
 #define PLUGMAIN mainMADI

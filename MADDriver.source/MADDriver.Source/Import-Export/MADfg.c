@@ -63,8 +63,8 @@ static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myP
 				((short*)myCmd)[ 1] = ((short*) srcPtr)[ 1];
 				
 				srcPtr += 4;
-			break;
-			
+				break;
+				
 			case 0x02:
 				srcPtr++;
 								
@@ -72,8 +72,8 @@ static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myP
 				((short*)myCmd)[ 1] = 0L;
 				
 				srcPtr += 2;
-			break;
-			
+				break;
+				
 			case 0x01:
 				srcPtr++;
 				
@@ -81,17 +81,19 @@ static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myP
 				((short*)myCmd)[ 1] = *((short*) srcPtr);
 				
 				srcPtr += 2;
-			break;
-			
+				break;
+				
 			case 0x00:
 				srcPtr ++;
 				
-				*((long*)myCmd) = 0;
-			break;
-			
+				*((SInt32*)myCmd) = 0;
+				break;
+				
 			default:
-				DebugStr("\pDecompress MAD1 failed.");
-			break;
+				//DebugStr("\pDecompress MAD1 failed.");
+				DisposePtr((Ptr)finalPtr);
+				return NULL;
+				break;
 		}
 		myCmd++;
 	}
@@ -199,6 +201,7 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 	
 	for( i = 0; i < oldMAD->PatMax; i++)
 	{
+		OSType CompMode = 0;
 		struct MusicPattern		*tempPat, *tempPat2;
 		struct oldPatHeader		tempPatHeader;
 		
@@ -396,8 +399,8 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	myMOD->NameSignature[ 31] = '\0';
-	strcpy( info->internalFileName, myMOD->NameSignature);
-
+	strlcpy( info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
+	
 	/*** Tracks ***/
 	
 	info->totalTracks = myMOD->Tracks;
@@ -528,7 +531,7 @@ static OSErr mainMADfg( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPIn
 }
 
 #ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x27, 0x63, 0x70, 0x58, 0x26, 0x88, 0x45, 0x4A, 0x9C, 0x44, 0xEB, 0x4F, 0x61, 0xCD, 0xF0, 0xF3))
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x27, 0x63, 0x70, 0x58, 0x26, 0x88, 0x45, 0x4A, 0x9C, 0x44, 0xEB, 0x4F, 0x61, 0xCD, 0xF0, 0xF3))
 //27637058-2688-454A-9C44-EB4F61CDF0F3
 
 #define PLUGMAIN mainMADfg

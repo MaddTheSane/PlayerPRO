@@ -29,7 +29,7 @@
  #define BYTE char
  #define BOOL Boolean */
 
-#pragma options align=mac68k
+#pragma pack(push, 2)
 
 typedef struct MMD0 {
 	ULONG   id;
@@ -94,5 +94,6 @@ typedef struct InstrHdr {
 	/* Followed by actual data */
 } InstrHdr;
 
-#pragma options align=reset
+#pragma pack(pop)
+
 #endif

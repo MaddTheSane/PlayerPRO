@@ -23,6 +23,11 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
+#ifdef __LP64__
+#error this code will only work on 32-bit mode
+#error this code needs to be rewritten. 
+#endif
+
 #include <string.h>
 
 /**************************************************************************
@@ -30,7 +35,7 @@
 
 unsigned char* MYC2PStr( Ptr cStr);
 
-static Boolean compMem( Ptr a, Ptr b, long s)
+Boolean compMem( Ptr a, Ptr b, long s)
 {
 	long 	i;
 
@@ -42,19 +47,19 @@ static Boolean compMem( Ptr a, Ptr b, long s)
 	return true;
 }
 
-static OSErr TestMIDIFile( Ptr AlienFile)
+OSErr TestMIDIFile( Ptr AlienFile)
 {
 	if( compMem( AlienFile, "MThd", 4)) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
-static OSErr ExtractMIDIInfo( PPInfoRec *info, Ptr theMIDI)
+OSErr ExtractMIDIInfo( PPInfoRec *info, Ptr theMIDI)
 {
-	long	PatternSize;
+	/*long	PatternSize;
 	short	i;
 	short	maxInstru;
 	short	tracksNo;
-	long	inOutCount;
+	long	inOutCount;*/
 	
 	info->signature = 'Midi';
 	strcpy( info->internalFileName, "");
@@ -166,10 +171,9 @@ static OSErr mainMIDI( OSType order, char *AlienFileName, MADMusic *MadFile, PPI
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x87, 0x3A, 0xA7, 0x91, 0xE9, 0xE5, 0x42, 0xEB, 0x8F, 0xE0, 0x35, 0x1A, 0x99, 0xCF, 0x9A, 0x3A))
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x87, 0x3A, 0xA7, 0x91, 0xE9, 0xE5, 0x42, 0xEB, 0x8F, 0xE0, 0x35, 0x1A, 0x99, 0xCF, 0x9A, 0x3A))
 //873AA791-E9E5-42EB-8FE0-351A99CF9A3A
 
 #define PLUGMAIN mainMIDI
 #define PLUGINFACTORY PPMIDIFactory
 #include "../CFPlugin-bridge.c"
-

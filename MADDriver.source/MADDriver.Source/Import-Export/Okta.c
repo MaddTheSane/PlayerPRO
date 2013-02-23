@@ -25,7 +25,12 @@
 #include "Okta.h"
 
 #ifdef _MAC_H
-#define decode16(msg_buf) EndianU16_LtoN(*(UInt16*)msg_buf)
+#define decode16(msg_buf) CFSwapInt16LittleToHost(*(UInt16*)msg_buf)
+#define decode32(msg_buf) CFSwapInt32LittleToHost(*(UInt32*)msg_buf)
+#else
+#ifdef __LITTLE_ENDIAN__
+#define decode16(msg_buf) *(UInt16*)msg_buf
+#define decode32(msg_buf) *(UInt32*)msg_buf
 #else
 static inline UInt16 decode16 (void *msg_buf)
 {
@@ -33,17 +38,15 @@ static inline UInt16 decode16 (void *msg_buf)
 	INT16(&toswap);
 	return toswap;	
 }
-#endif
 
-#ifdef _MAC_H
-#define decode32(msg_buf) EndianU32_LtoN(*(UInt32*)msg_buf)
-#else
 static inline UInt32 decode32 (void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
 	INT32(&toswap);
 	return toswap;
 }
+
+#endif
 #endif
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
@@ -97,6 +100,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	sectheader		*aSect;
 	long				SectLength;
 	short			pbod_count, sbod_count;
+	OSType OKTAHeader = 0;
 	/********************************/
 	
 	for( i = 0 ; i < 64; i ++) theInstrument[ i] = NULL;
@@ -110,7 +114,10 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	MaxPtr		= theOkta + MODSize;
 	theOktaPos	= theOkta;
 	
-	if( (*(long*)theOkta) != 'OKTA') DebugStr("\pError in OKTA");
+	OKTAHeader = (*(OSType*)theOkta);
+	MOT32(&OKTAHeader);
+	if( OKTAHeader != 'OKTA') //DebugStr("\pError in OKTA");
+		return MADIncompatibleFile;
 	
 	theOktaPos += 8L;
 	
@@ -121,6 +128,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 		
 		theOktaPos += 8L;
 		
+		MOT32(&aSect->name);
 		switch( aSect->name)
 		{
 			case 'CMOD':
@@ -134,7 +142,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 				break;
 				
 			case 'SAMP':
-				samps = (void*) theOktaPos;
+				samps = (OktaInstru*) theOktaPos;
           		
 				for( i = 0; i * sizeof( OktaInstru) < aSect->length; i++)
 				{
@@ -160,7 +168,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 				break;
 				
 			case 'PATT':
-				Okta->patt = (void*)theOktaPos;
+				Okta->patt = (unsigned char*)theOktaPos;
 				break;
 				
 			case 'PBOD':
@@ -171,7 +179,8 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 				{
 					if( theMAD->header->numChn != (aSect->length - 2L) / (Okta->pbodlen[ pbod_count] * 4L))
 					{
-						DebugStr("\pNon-standard OKTA - numChn");
+						//DebugStr("\pNon-standard OKTA - numChn");
+						return MADIncompatibleFile;
 					}
 				}
 				
@@ -185,7 +194,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 				{
 				}
 				
-				s->length = aSect->length;		//if (s->length < aSect->length) 
+				s->length = aSect->length;		//if (s->length < aSect->length)
 				
 				theInstrument[ sbod_count] = theOktaPos;
 				
@@ -203,7 +212,8 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 				break;
 				
 			default:
-				DebugStr("\pUnknow section");
+				//DebugStr("\pUnknow section");
+				return MADIncompatibleFile;
 				break;
 		}
 		theOktaPos += aSect->length;
@@ -311,7 +321,8 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 			for(z=0; z<theMAD->header->numChn; z++)
 			{
 				aCmd = GetMADCommand( x, z, theMAD->partition[ i]);
-				if( (Ptr) aCmd >= MaxPtr) Debugger();
+				if( (Ptr) aCmd >= MaxPtr) //Debugger();
+					return MADIncompatibleFile;
 				aCmd->note		= 0xFF;
 				aCmd->ins			= 0;
 				aCmd->cmd		= 0;
@@ -368,10 +379,10 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 
 static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 {
-	long		PatternSize;
-	short	i;
-	short	maxInstru;
-	short	tracksNo;
+	//long		PatternSize;
+	//short	i;
+	//short	maxInstru;
+	//short	tracksNo;
 	
 	/*** Signature ***/
 	
@@ -382,19 +393,20 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 	mystrcpy( info->internalFileName, "\p");
 	
 	{
-		OktaInstru			*samps, *s, instru[ 120];
-		OktaPattern 		*OktaCmd;
+		//OktaInstru			*samps, *s, instru[ 120];
+		//OktaPattern 		*OktaCmd;
 		sectheader		*aSect;
-		long				SectLength;
+		//long				SectLength;
 		short			pbod_count, sbod_count;
+		OSType OKTAHead = 0;
 		
-		short 				i, PatMax, x, z, channel, TrueTracks;
-		long 					sndSize, OffSetToSample, OldTicks, temp, starting;
+		//short 				i, PatMax, x, z, channel, TrueTracks;
+		//long 					sndSize, OffSetToSample, OldTicks, temp, starting;
 		Ptr					MaxPtr, theOktaPos;
-		OSErr				theErr;
-		Ptr					theInstrument[ 120], destPtr;
-		unsigned	short		tempS;
-		char					tempChar;
+		//OSErr				theErr;
+		//Ptr					theInstrument[ 120], destPtr;
+		//unsigned	short		tempS;
+		//char					tempChar;
 		
 		
 		sbod_count = 0;	pbod_count = 0;
@@ -402,7 +414,11 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 		MaxPtr		= theOkta + MODSize;
 		theOktaPos	= theOkta;
 		
-		if( (*(long*)theOkta) != 'OKTA') DebugStr("\pError in OKTA");
+		OKTAHead = (*(uint32_t*)theOkta);
+		MOT32(&OKTAHead);
+		
+		if( OKTAHead != 'OKTA') //DebugStr("\pError in OKTA");
+			return MADIncompatibleFile;
 		
 		theOktaPos += 8L;
 		
@@ -412,6 +428,7 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 			aSect->length = decode32 (&aSect->length);
 			
 			theOktaPos += 8L;
+			MOT32(&aSect->name);
 			
 			switch( aSect->name)
 			{
@@ -535,7 +552,7 @@ static OSErr mainOKTA( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 }
 
 #ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x08, 0xD9, 0x62, 0x6A, 0xF3, 0xD9, 0x45, 0x36, 0xA2, 0x9B, 0x78, 0x22, 0x2D, 0xFD, 0x8F, 0x32))
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x08, 0xD9, 0x62, 0x6A, 0xF3, 0xD9, 0x45, 0x36, 0xA2, 0x9B, 0x78, 0x22, 0x2D, 0xFD, 0x8F, 0x32))
 //08D9626A-F3D9-4536-A29B-78222DFD8F32
 
 #define PLUGMAIN mainOKTA

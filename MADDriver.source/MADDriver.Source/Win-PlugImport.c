@@ -25,7 +25,7 @@
 #include "RDriverInt.h"
 #include "FileUtils.h"
 
-#define RSRCNAME "\pRsrc Plug Sys##"
+//TODO: Move to unicode functions
 
 OSErr CheckMADFile( Ptr name)
 {
@@ -43,7 +43,7 @@ OSErr CheckMADFile( Ptr name)
 				charl[ 1] == 'A' &&
 				charl[ 2] == 'D' &&
 				charl[ 3] == 'K') err = noErr;
-		else err = -1;
+		else err = MADIncompatibleFile;
 		
 		iClose( refNum);
 	}
@@ -60,8 +60,8 @@ OSErr CallImportPlug(	MADLibrary*				inMADDriver,
 						MADMusic				*theNewMAD,
 						PPInfoRec				*info)
 {
-OSErr				myErr;
-MADDriverSettings 	driverSettings;
+	OSErr				myErr;
+	MADDriverSettings 	driverSettings;
 
 	driverSettings.sysMemory = inMADDriver->sysMemory;
 	
@@ -88,11 +88,51 @@ OSErr	PPTestFile( MADLibrary* inMADDriver,char	*kindFile, Ptr AlienFile)
 	return MADCannotFindPlug;
 }
 
+OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
+{
+	MADSpec		*theMAD;
+	long		fileSize;
+	UNFILE		fileID;
+	
+	theMAD = (MADSpec*) malloc( sizeof( MADSpec) + 200);
+	
+	fileID = iFileOpen( AlienFile);
+	if( !fileID)
+	{
+		free( theMAD);
+		return MADReadingErr;
+	}
+	fileSize = iGetEOF( fileID);
+	
+	iRead( sizeof( MADSpec), (Ptr) theMAD, fileID);
+	iClose( fileID);
+	
+	strcpy_s( InfoRec->internalFileName, sizeof(theMAD->name), theMAD->name);
+	
+	InfoRec->totalPatterns = theMAD->numPat;
+	InfoRec->partitionLength = theMAD->numPointers;
+	InfoRec->totalTracks = theMAD->numChn;
+	InfoRec->signature = 'MADK';
+	strcpy_s( InfoRec->formatDescription,sizeof(InfoRec->formatDescription), "MADK");
+	InfoRec->totalInstruments = theMAD->numInstru;
+	InfoRec->fileSize = fileSize;
+	
+	free( theMAD);	
+	theMAD = NULL;
+	
+	return noErr;
+}
+
 OSErr	PPInfoFile( MADLibrary* inMADDriver, char	*kindFile, FSSpec	*AlienFile, PPInfoRec	*InfoRec)
 {
 	short			i;
 	MADMusic	aMAD;
 	
+	if( !strcmp( kindFile, "MADK"))
+	{
+		return PPMADInfoFile( AlienFile, InfoRec);
+	}
+
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
@@ -127,8 +167,8 @@ OSErr	PPImportFile( MADLibrary* inMADDriver, char	*kindFile, FSSpec	*AlienFile, 
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
-			*theNewMAD = (MADMusic*) MADNewPtrClear( sizeof( MADMusic), inMADDriver);
-			if( !*theNewMAD) return -1L;
+			*theNewMAD = (MADMusic*) calloc( sizeof( MADMusic), 1);
+			if( !*theNewMAD) return MADNeedMemory;
 			
 			return( CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec));
 		}
@@ -143,18 +183,18 @@ OSErr	PPIdentifyFile( MADLibrary* inMADDriver, char	*type, Ptr AlienFile)
 	PPInfoRec		InfoRec;
 	OSErr				iErr;
 	
-	strcpy( type, "!!!!");
+	strcpy_s( type, 5, "!!!!");
 	
 	// Check if we have access to this file
 	refNum = iFileOpen( AlienFile);
-	if( !refNum) return -1;
+	if( !refNum) return MADReadingErr;
 	iClose( refNum);
 	
 	// Is it a MAD file?
 	iErr = CheckMADFile( AlienFile);
 	if( iErr == noErr)
 	{
-		strcpy( type, "MADK");
+		strcpy_s( type, 5, "MADK");
 		return noErr;
 	}
 	
@@ -162,13 +202,13 @@ OSErr	PPIdentifyFile( MADLibrary* inMADDriver, char	*type, Ptr AlienFile)
 	{
 		if( CallImportPlug( inMADDriver, i, 'TEST', AlienFile, 0L, &InfoRec) == noErr)
 		{
-			strcpy( type, inMADDriver->ThePlug[ i].type);
+			strcpy_s( type, 5, inMADDriver->ThePlug[ i].type);
 			
 			return noErr;
 		}
 	}
 	
-	strcpy( type, "!!!!");
+	strcpy_s( type, 5, "!!!!");
 	
 	return MADCannotFindPlug;
 }
@@ -193,21 +233,42 @@ Boolean LoadPlugLib( Ptr name, PlugInfo* plug)
 	PLUGFILLDLLFUNC		fpFuncAddress;
 	OSErr							err;
 	
-	strcpy( plug->file, name);
+	strcpy_s( plug->file, sizeof(plug->file), name);
 	
-	plug->hLibrary = LoadLibrary( name);
+	plug->hLibrary = LoadLibraryA( name);
 	if( !plug->hLibrary) return false;
 	
 	plug->IOPlug = (PLUGDLLFUNC) GetProcAddress( plug->hLibrary, "mainPLUG");
-	if( !plug->IOPlug) return false;
+	if( !plug->IOPlug)
+	{
+		FreeLibrary(plug->hLibrary);
+		return false;
+	}
 	
 	fpFuncAddress = (PLUGFILLDLLFUNC) GetProcAddress( plug->hLibrary, "FillPlug");
-	if( !fpFuncAddress) return false;
+	if( !fpFuncAddress)
+	{
+		FreeLibrary(plug->hLibrary);
+		return false;
+	}
 	
 	err = (*fpFuncAddress)( plug);
+
+	if(err != noErr)
+	{
+		FreeLibrary(plug->hLibrary);
+		return false;
+	}
 	
 	return true;
 }
+
+//FIXME: 200 seems rather small to me...
+//#define MAXFOLDLEN 200
+//PATH_MAX on Windows is also small...
+//#define MAXFOLDLEN MAX_PATH
+#define MAXFOLDLEN (MAX_PATH * 2)
+//#define MAXFOLDLEN 255
 
 void MInitImportPlug( MADLibrary* inMADDriver, char *PlugsFolderName)
 {
@@ -216,48 +277,48 @@ void MInitImportPlug( MADLibrary* inMADDriver, char *PlugsFolderName)
 	///////////
 	
 	{
-	HANDLE				hFind;
-	WIN32_FIND_DATA		fd;
-	BOOL				bRet = TRUE;
-	char				FindFolder[ 200], inPlugsFolderName[ 200];
-	
-	if( PlugsFolderName)
-	{
-		strcpy( inPlugsFolderName, PlugsFolderName);
-		strcat( inPlugsFolderName, "/");
+		HANDLE				hFind;
+		WIN32_FIND_DATAA	fd;
+		BOOL				bRet = TRUE;
+		char				FindFolder[ MAXFOLDLEN], inPlugsFolderName[ MAXFOLDLEN];
 		
-		strcpy( FindFolder, inPlugsFolderName);
-	}
-	else
-	{
-		strcpy( inPlugsFolderName, "/");
-		strcpy( FindFolder, inPlugsFolderName);
-	}
-	strcat( FindFolder, "*.PLG");
-	
-	hFind = FindFirstFile( FindFolder, &fd);
-	
-	inMADDriver->ThePlug = (PlugInfo*) MADNewPtr( MAXPLUG * sizeof( PlugInfo), inMADDriver);
-	
-	while( hFind != INVALID_HANDLE_VALUE && bRet)
-	{
-		if( (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
+		if( PlugsFolderName)
 		{
-			if( inMADDriver->TotalPlug < MAXPLUG)
+			strcpy_s( inPlugsFolderName, MAXFOLDLEN, PlugsFolderName);
+			strcat_s( inPlugsFolderName, MAXFOLDLEN, "/");
+			
+			strcpy_s( FindFolder, MAXFOLDLEN, inPlugsFolderName);
+		}
+		else
+		{
+			strcpy_s( inPlugsFolderName, MAXFOLDLEN, "/");
+			strcpy_s( FindFolder, MAXFOLDLEN, inPlugsFolderName);
+		}
+		strcat_s( FindFolder, MAXFOLDLEN, "*.PLG");
+		
+		hFind = FindFirstFileA( FindFolder, &fd);
+		
+		inMADDriver->ThePlug = (PlugInfo*) calloc( MAXPLUG, sizeof( PlugInfo));
+		
+		while( hFind != INVALID_HANDLE_VALUE && bRet)
+		{
+			if( (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
 			{
-				char myCompleteFilename[ 200];
-				
-				strcpy( myCompleteFilename, inPlugsFolderName);
-				strcat( myCompleteFilename, fd.cFileName);
-				
-				if( LoadPlugLib( myCompleteFilename, &inMADDriver->ThePlug[ inMADDriver->TotalPlug])) inMADDriver->TotalPlug++;
+				if( inMADDriver->TotalPlug < MAXPLUG)
+				{
+					char myCompleteFilename[ MAXFOLDLEN];
+					
+					strcpy_s( myCompleteFilename, MAXFOLDLEN, inPlugsFolderName);
+					strcat_s( myCompleteFilename, MAXFOLDLEN, fd.cFileName);
+					
+					if( LoadPlugLib( myCompleteFilename, &inMADDriver->ThePlug[ inMADDriver->TotalPlug])) inMADDriver->TotalPlug++;
+				}
 			}
+			
+			bRet = FindNextFileA( hFind, &fd);
 		}
 		
-		bRet = FindNextFile( hFind, &fd);
-	}
-	
-	FindClose( hFind);
+		FindClose( hFind);
 	}
 	///////////
 }
@@ -270,4 +331,38 @@ void CloseImportPlug( MADLibrary* inMADDriver)
 	{
 			FreeLibrary( inMADDriver->ThePlug[ i].hLibrary);
 	}
+	free(inMADDriver->ThePlug); inMADDriver->ThePlug = NULL;
 }
+
+OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
+{
+	short	i, x;
+	
+	if( ID >= inMADDriver->TotalPlug) PPDebugStr( __LINE__, __FILE__, "PP-Plug ERROR. ");
+	
+	for( i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
+	{
+		if( inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == MADPlugImportExport)
+		{
+			if( ID == x)
+			{
+				short 	xx;
+				OSType	type;
+				
+				xx = strlen( inMADDriver->ThePlug[ i].type);
+				if( xx > 4) xx = 4;
+				type = '    ';
+				memcpy( &type, inMADDriver->ThePlug[ i].type, xx);
+				PPBE32(&type);
+				
+				return type;
+			}
+			x++;
+		}
+	}
+	
+	PPDebugStr( __LINE__, __FILE__, "PP-Plug ERROR II.");
+	
+	return noErr;
+}
+

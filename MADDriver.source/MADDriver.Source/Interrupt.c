@@ -528,7 +528,7 @@ void ProcessPanning( Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
 		}
 		else
 		{
-			float basePeriod;
+			float basePeriod = 0.0f;
 			
 			ch->pannEnvActive = true;
 			
@@ -2031,6 +2031,7 @@ void NoteAnalyse( MADDriverRec *intDriver)
 	}
 	
 #if defined( MAINPLAYERPRO)
+//TODO: Process visual Plug-in
 	if( intDriver->DriverSettings.outPutBits == 16)
 	{
 		if( intDriver->currentlyExporting)

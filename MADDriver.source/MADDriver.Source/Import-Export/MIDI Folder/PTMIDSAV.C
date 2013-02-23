@@ -282,8 +282,8 @@ void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, s
  */
 void WritePfile( PatData *Pat, short pos, short track, unsigned bSam, unsigned wPit, unsigned wEff)
 {
-	static int 			cNote = -1, irgchPos, Buffsiz;
-	static char 		*pchBuff;
+	//static int 			cNote = -1, irgchPos, Buffsiz;
+	//static char 		*pchBuff;
 	Cmd					*aCmd;
 
 /*  if (-1 == cNote)
@@ -533,10 +533,14 @@ int PutpatternsPtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *ini
 									else
 										iT2 = 255;
 								else if (33 > iT2)
+								{
 									if (30 > iT2)
+									{
 										iT2 = 33;
-									else
+									} else {
 										iT2 = 0;
+									}
+								}
 								
 								if (0 != iT2)					/** If we can allow for ~10% bpm variance **/
 								{
@@ -598,7 +602,7 @@ int PutpatternsPtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *ini
  
  extern  	short 				MIDIInstMOD[ 128];
  extern		Boolean				UseQKIns;
- extern		MADMusic			*curMusic = NULL;
+			MADMusic			*curMusic = NULL;
  
 static inline void mystrcpy( Ptr a, BytePtr b)
 {
@@ -648,7 +652,7 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	theMAD->header->speed			= 	6;
 	theMAD->header->tempo			=	125;
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MIDI Plug (�Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MIDI Plug (\xA9 Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	for (cSamps = 0, x = 0; x < 129; x++)
 	{

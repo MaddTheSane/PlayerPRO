@@ -105,6 +105,8 @@ void ByteSwapMADSpec(MADSpec *toSwap)
 	MOT32( &toSwap->MAD);
 	MOT16( &toSwap->speed);
 	MOT16( &toSwap->tempo);
+	MOT32( &toSwap->EPitch);
+	MOT32( &toSwap->ESpeed);
 }
 
 void ByteSwapPatHeader(PatHeader *toSwap)
@@ -121,17 +123,19 @@ void ByteSwapInstrData(InstrData *toSwap)
 	MOT16( &toSwap->numSamples);
 	MOT16( &toSwap->firstSample);
 	MOT16( &toSwap->volFade);
+	MOT16( &toSwap->MIDI);
+	MOT16( &toSwap->MIDIType);
 	
 	for( x = 0; x < 12; x++)
 	{
 		MOT16( &toSwap->volEnv[ x].pos);
 		MOT16( &toSwap->volEnv[ x].val);
-	}
-	
-	for( x = 0; x < 12; x++)
-	{
+
 		MOT16( &toSwap->pannEnv[ x].pos);
 		MOT16( &toSwap->pannEnv[ x].val);
+		
+		MOT16( &toSwap->pitchEnv[ x].pos);
+		MOT16( &toSwap->pitchEnv[ x].val);
 	}
 }
 

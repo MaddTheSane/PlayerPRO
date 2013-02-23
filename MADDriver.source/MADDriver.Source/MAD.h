@@ -22,8 +22,19 @@
 #ifndef __MADI__
 #define __MADI__
 
+#ifdef __GNUC__
+#define HAS_LONG_LONG 1
+#define HAS_LONG_DOUBLE 1
+#endif
+
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #define EXP extern __attribute__((visibility("default")))
+#endif
+
+#ifdef _MSC_VER
+#define HAS_LONG_LONG 1
+//MSVC's long double datatype is the same size as a regular double
+#undef HAS_LONG_DOUBLE
 #endif
 
 #if !defined(__BIG_ENDIAN__) && defined(WORDS_BIGENDIAN)

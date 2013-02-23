@@ -163,7 +163,7 @@ static void AnalyseSignatureMOD( long EOFo, OSType temp, short *maxInstru, long 
 						
 			if( result) *maxInstru 		= 15;
 			else *maxInstru				= 0;
-		break;
+			break;
 	}
 }
 
@@ -714,17 +714,17 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 				
 				if( x < theMAD->partition[ i]->header.size)
 				{
-					aCmd 	= GetMADCommand( 	x,
-												z,
-												theMAD->partition[ i]);
+					aCmd 	= GetMADCommand(x,
+											z,
+											theMAD->partition[ i]);
 				}
 				else aCmd = &nullCmd;
 				
-				n 			= GetMODCommand(	x,
-												z,
-												i,
-												theMAD->header->numChn,
-												(Ptr) theMOD->patterns);
+				n 			= GetMODCommand(x,
+											z,
+											i,
+											theMAD->header->numChn,
+											(Ptr) theMOD->patterns);
 				
 				if( (Ptr) n > maxMOD) DebugStr("\pOut");
 				if( (Ptr) n < (Ptr) theMOD) DebugStr("\pOut");
@@ -739,7 +739,7 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 					if( aCmd->ins != 0)
 					{
 						if( theMAD->fid[ aCmd->ins-1].numSamples > 0)
-								curNote = aCmd->note + theMAD->sample[ (aCmd->ins-1)*MAXSAMPLE + 0]->relNote;
+							curNote = aCmd->note + theMAD->sample[ (aCmd->ins-1)*MAXSAMPLE + 0]->relNote;
 						else 	curNote = aCmd->note;
 					}
 					else curNote = aCmd->note;
@@ -779,11 +779,11 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 	
 	if( theMAD->header->tempo != 125 || theMAD->header->speed != 6)
 	{
-		n 	= GetMODCommand(	0,
-								theMAD->header->numChn-1,
-								theMAD->header->oPointers[ 0],
-								theMAD->header->numChn,
-								(Ptr) theMOD->patterns);
+		n 	= GetMODCommand(0,
+							theMAD->header->numChn-1,
+							theMAD->header->oPointers[ 0],
+							theMAD->header->numChn,
+							(Ptr) theMOD->patterns);
 		
 		if( (Ptr) n > maxMOD) DebugStr("\pOut");
 		if( (Ptr) n < (Ptr) theMOD) DebugStr("\pOut");
@@ -794,11 +794,11 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 		n->c = n->c + 0x0F;			// speed
 		n->d = theMAD->header->speed;
 		
-		n 	= GetMODCommand(	0,
-								theMAD->header->numChn-2,
-								theMAD->header->oPointers[ 0],
-								theMAD->header->numChn,
-								(Ptr) theMOD->patterns);
+		n 	= GetMODCommand(0,
+							theMAD->header->numChn-2,
+							theMAD->header->oPointers[ 0],
+							theMAD->header->numChn,
+							(Ptr) theMOD->patterns);
 		
 		if( (Ptr) n > maxMOD) DebugStr("\pOut");
 		if( (Ptr) n < (Ptr) theMOD) DebugStr("\pOut");
@@ -827,7 +827,7 @@ static OSErr ExtractMODInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	myMOD->NameSignature[ 19] = '\0';
-	strcpy( info->internalFileName, myMOD->NameSignature);
+	strlcpy( info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
 	
 	/*** Check MOD Type ***/
 	
@@ -1014,7 +1014,7 @@ static OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 }
 
 #ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x86, 0xC7, 0x43, 0x00, 0x93, 0x96, 0x4E, 0x68, 0x9B, 0x3F, 0x02, 0xCE, 0x56,0x26, 0xA7, 0xC6)) 
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x86, 0xC7, 0x43, 0x00, 0x93, 0x96, 0x4E, 0x68, 0x9B, 0x3F, 0x02, 0xCE, 0x56,0x26, 0xA7, 0xC6)) 
 //86C74300-9396-4E68-9B3F-02CE5626A7C6
 #define PLUGMAIN mainMOD
 #define PLUGINFACTORY ModFactory

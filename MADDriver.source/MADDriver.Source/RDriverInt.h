@@ -35,7 +35,7 @@
 
 #define AMIGA_CLOCKFREQ2			14317456L
 
-#if defined(powerc) || defined (__powerc) || defined(__ppc__)
+#if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
 // Work on 64bits for much better precision
 #define BYTEDIV										16L			
 #else

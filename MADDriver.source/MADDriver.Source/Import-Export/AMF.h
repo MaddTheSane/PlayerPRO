@@ -24,9 +24,7 @@
 #ifndef __AMFH__
 #define __AMFH__
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#endif
+#pragma pack(push, 2)
 
 typedef unsigned char uchar;
 #ifndef __APPLE__
@@ -54,8 +52,6 @@ typedef struct {
     ulong       loopstart,loopend;
 } INSTRUMENT;
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=reset
-#endif
+#pragma pack(pop)
 
 #endif

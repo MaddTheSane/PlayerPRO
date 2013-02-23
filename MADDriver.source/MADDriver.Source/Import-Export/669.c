@@ -25,14 +25,29 @@
 #include "669.h"
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*(UInt16*)msg_buf)
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
 #else
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *(short*)msg_buf
+#define Tdecode32(msg_buf) *(int*)msg_buf
+#else
+
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
 	INT16(&toswap);
 	return toswap;
 }
+
+static inline UInt32 Tdecode32( void *msg_buf)
+{
+	UInt32 toswap = *((UInt32*) msg_buf);
+	INT32(&toswap);
+	return toswap;
+}
+
+#endif
 #endif
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
@@ -351,10 +366,10 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
 {
 	SixSixNine	*the669 = (SixSixNine*) AlienFile;
-//	long			PatternSize;
-//	short		i;
-//	short		maxInstru;
-//	short		tracksNo;
+	//long			PatternSize;
+	//short		i;
+	//short		maxInstru;
+	//short		tracksNo;
 	
 	/*** Signature ***/
 	
@@ -362,9 +377,9 @@ static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	the669->message[ 30] = '\0';
-	strcpy( info->internalFileName, ( the669->message));
-
+	//the669->message[ 30] = '\0';
+	strlcpy( info->internalFileName, ( the669->message), sizeof(info->internalFileName));
+	
 	/*** Total Patterns ***/
 	
 	info->totalPatterns = 0;
@@ -488,7 +503,7 @@ static OSErr main669( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 }
 
 #ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xF4, 0x42, 0xE8, 0xED, 0x0F, 0xDE, 0x48, 0x53, 0xA8, 0x75, 0xA1, 0x95, 0xE8, 0xF5, 0x10, 0x0E))
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xF4, 0x42, 0xE8, 0xED, 0x0F, 0xDE, 0x48, 0x53, 0xA8, 0x75, 0xA1, 0x95, 0xE8, 0xF5, 0x10, 0x0E))
 //F442E8ED-0FDE-4853-A875-A195E8F5100E
 
 #define PLUGMAIN main669

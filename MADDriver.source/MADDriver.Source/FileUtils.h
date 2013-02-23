@@ -28,6 +28,10 @@
 #include "MAD.h"
 #endif
 
+#ifdef _MAC_H
+#include <CoreFoundation/CFByteOrder.h>
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -83,7 +87,7 @@ static inline void MADByteSwap32(void *msg_buf)
 {
 	UInt32			temp = *((UInt32*) msg_buf);
 #ifdef _MAC_H
-	*((UInt32*) msg_buf) = Endian32_Swap(temp);
+	*((UInt32*) msg_buf) = CFSwapInt32(temp);
 #else
 	*((UInt32*) msg_buf) = ((((temp & 0xff000000) >> 24) | \
 							 (( temp & 0x00ff0000) >> 8) | (( temp & 0x0000ff00) << 8) | \
@@ -95,7 +99,7 @@ static inline void MADByteSwap16(void *msg_buf)
 {
 	UInt16			buf = *((UInt16*) msg_buf);
 #ifdef _MAC_H
-	*((UInt16*) msg_buf) = Endian16_Swap(buf);
+	*((UInt16*) msg_buf) = CFSwapInt16(buf);
 #else
 	*((UInt16*) msg_buf) = (((((UInt16)buf)<<8) & 0xFF00) | ((((UInt16)buf)>>8) & 0x00FF));
 #endif

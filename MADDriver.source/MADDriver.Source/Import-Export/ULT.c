@@ -28,25 +28,29 @@
 #define HI(para) ((para) >> 4)
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*(UInt16*)msg_buf)
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
 #else
-static inline UInt16 Tdecode16( void *msg_buf)
-{
-	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
-	return toswap;
-}
-#endif
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *(short*)msg_buf
+#define Tdecode32(msg_buf) *(int*)msg_buf
+#else
 
-#ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*(UInt32*)msg_buf)
-#else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
 	INT32(&toswap);
 	return toswap;
 }
+
+static inline UInt16 Tdecode16( void *msg_buf)
+{
+	UInt16 toswap = *((UInt16*) msg_buf);
+	INT16(&toswap);
+	return toswap;
+}
+
+#endif
 #endif
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
@@ -91,13 +95,14 @@ static OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriv
 	
 	BlockMoveData( theULTCopy, &ULTinfo, sizeof( ULTinfo));
 	
-	//	if( ULTinfo.reserved != 0) return MADFileNotSupportedByThisPlug;	// RES in v.1.4 see doc
+	//if( ULTinfo.reserved != 0) return MADFileNotSupportedByThisPlug;	// RES in v.1.4 see doc
 	
 	ULTSuite.NOS = *(theULTCopy + sizeof( ULTinfo) + ULTinfo.reserved * 32L);
 	
 	
 	/**** Ins Num *****/
-	if( sizeof( ULTIns) != 64) DebugStr("\pULTIns != 64");
+	if( sizeof( ULTIns) != 64) //DebugStr("\pULTIns != 64");
+		return MADIncompatibleFile;
 	ULTSuite.ins = (ULTIns*) NewPtrClear( ULTSuite.NOS * sizeof( ULTIns));
 	BlockMoveData( theULTCopy + sizeof( ULTinfo) + ULTinfo.reserved * 32L + 1, ULTSuite.ins, ULTSuite.NOS * sizeof( ULTIns));
 	
@@ -217,7 +222,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriv
 				BlockMoveData( theULT + ULTSuite.ins[i].sizeStart, curData->data, curData->size);
 			}
 		}
-		//	else curIns->numSamples = 0;
+		//else curIns->numSamples = 0;
 	}
 	
 	theMAD->header->numChn = ULTSuite.NOC;
@@ -261,7 +266,7 @@ static OSErr ExtractULTInfo( PPInfoRec *info, Ptr AlienFile)
 	short		i, maxInstru, tracksNo;
 	ULTForm		ULTinfo;
 	/********************************/
-
+	
 	/**** Header principal *****/
 	BlockMoveData( AlienFile, &ULTinfo, 49);
 	
@@ -272,7 +277,8 @@ static OSErr ExtractULTInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	ULTinfo.name[ 31] = '\0';
-	pStrcpy( (unsigned char*) info->internalFileName, MYC2PStr( ULTinfo.name));
+	//pStrcpy( (unsigned char*) info->internalFileName, MYC2PStr( ULTinfo.name));
+	strlcpy(info->internalFileName, ULTinfo.name, sizeof(ULTinfo.name));
 	
 	/*** Total Patterns ***/
 	
@@ -401,7 +407,7 @@ static OSErr mainULT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 }
 
 #ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xC6, 0x59, 0x34, 0xC3, 0x9B, 0x3B, 0x44, 0x84, 0xA0, 0xBF, 0xF0, 0x24, 0x44, 0xE4, 0xD3, 0xFD))
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xC6, 0x59, 0x34, 0xC3, 0x9B, 0x3B, 0x44, 0x84, 0xA0, 0xBF, 0xF0, 0x24, 0x44, 0xE4, 0xD3, 0xFD))
 //C65934C3-9B3B-4484-A0BF-F02444E4D3FD
 
 #define PLUGMAIN mainULT

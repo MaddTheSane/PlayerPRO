@@ -8,25 +8,29 @@
 #include "PAT.h"
 
 #ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*(UInt32*)msg_buf);
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
 #else
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *(short*)msg_buf
+#define Tdecode32(msg_buf) *(int*)msg_buf
+#else
+
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
 	INT32(&toswap);
 	return toswap;
 }
-#endif
 
-#ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*(UInt16*)msg_buf);
-#else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
 	INT16(&toswap);
 	return toswap;
 }
+
+#endif
 #endif
 
 static OSErr TestPAT( Ptr CC)
@@ -73,7 +77,14 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	{
 		curIns->volEnv[ i].pos		= 0;
 		curIns->volEnv[ i].val		= 0;
+		
+		curIns->pannEnv[ i].pos		= 0;
+		curIns->pannEnv[ i].val		= 0;
+
+		curIns->pitchEnv[ i].pos	= 0;
+		curIns->pitchEnv[ i].val	= 0;
 	}
+#if 0
 	for( i = 0; i < 12; i++)
 	{
 		curIns->pannEnv[ i].pos	= 0;
@@ -84,6 +95,7 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 		curIns->pitchEnv[ i].pos	= 0;
 		curIns->pitchEnv[ i].val	= 0;
 	}
+#endif
 	curIns->volSize		= 0;
 	curIns->pannSize	= 0;
 	
@@ -122,7 +134,6 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		1046503, 1108731, 1174660, 1244509, 1318511, 1396914, 1479979, 1567983, 1661220, 1760002, 1864657, 1975536,
 		2093007, 2217464, 2349321, 2489019, 2637024, 2793830, 2959960, 3135968, 3322443, 3520006, 3729316, 3951073,
 		4186073, 4434930, 4698645, 4978041, 5274051, 5587663, 5919922, 6271939, 6644889, 7040015, 7458636, 7902150};
-	
 	
 	
 	// PATCH HEADER
@@ -251,7 +262,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 				long	tL;
 				
 				tt = (short*) curData->data;
-				
+
 				for( tL = 0; tL < curData->size/2; tL++)
 				{
 					*(tt + tL) = Tdecode16( (Ptr) (tt + tL));
@@ -349,7 +360,7 @@ static OSErr mainPAT(		OSType					order,						// Order to execute
 }
 
 // D54EE3CC-B94C-4245-9E82-2F1D65C0009D
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xD5, 0x4E, 0xE3, 0xCC, 0xB9, 0x4C, 0x42, 0x45, 0x9E, 0x82, 0x2F, 0x1D, 0x65, 0xC0, 0x00, 0x9D)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xD5, 0x4E, 0xE3, 0xCC, 0xB9, 0x4C, 0x42, 0x45, 0x9E, 0x82, 0x2F, 0x1D, 0x65, 0xC0, 0x00, 0x9D)
 #define PLUGINFACTORY PATFactory //The factory name as defined in the Info.plist file
 #define PLUGMAIN mainPAT //The old main function, renamed please
 

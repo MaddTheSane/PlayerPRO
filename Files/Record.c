@@ -1952,16 +1952,31 @@ Str255				str, str2;
 	ImportFile( spec.name, spec.vRefNum, spec.parID, 'MADK');
 }
 
-//#ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*(UInt16*)msg_buf);
-/*#else
+#ifdef _MAC_H
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
+#else
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *(short*)msg_buf
+#define Tdecode32(msg_buf) *(int*)msg_buf
+#else
+
+static inline UInt32 Tdecode32( void *msg_buf)
+{
+	UInt32 toswap = *((UInt32*) msg_buf);
+	INT32(&toswap);
+	return toswap;
+}
+
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
 	INT16(&toswap);
 	return toswap;
 }
-#endif*/
+
+#endif
+#endif
 
 sData* ComputeRAWSound( Ptr srcSound, long length)
 {

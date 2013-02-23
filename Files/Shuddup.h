@@ -1,6 +1,11 @@
 #ifndef __SHUDDUPH__
 #define __SHUDDUPH__
 
+#define MAXVST 300
+
+#include "RDriver.h"
+#include <Carbon/Carbon.h>
+#include <QuickTime/QuickTime.h>
 
 #if PRAGMA_STRUCT_ALIGN
 #pragma options align=mac68k
@@ -10,11 +15,6 @@
 #pragma pack(2)
 #endif
 
-#define MAXVST 300
-
-#include "RDriver.h"
-#include <Carbon/Carbon.h>
-#include <QuickTime/QuickTime.h>
 #define IsCodeOK() false
 static inline OSErr CallPlug(short item)
 {

@@ -363,7 +363,7 @@ static OSErr INFOMADF( MADSpec* MADPtr, PPInfoRec *info)
 
 	strcpy( info->internalFileName, MADPtr->name);
 	
-	strcpy( info->formatDescription, "MAD Resource (APPL)");
+	strcpy( info->formatDescription, "MADK Resource (APPL)");
 	
 	info->totalPatterns		= MADPtr->numPat;
 	info->partitionLength	= MADPtr->numPointers;
@@ -482,7 +482,7 @@ static OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xD1, 0x2A, 0xD7, 0x05, 0x31, 0x38, 0x4C, 0x80, 0xA8, 0xE1, 0xC0, 0x6F, 0x48, 0x75, 0x20, 0x08))
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xD1, 0x2A, 0xD7, 0x05, 0x31, 0x38, 0x4C, 0x80, 0xA8, 0xE1, 0xC0, 0x6F, 0x48, 0x75, 0x20, 0x08))
 //D12AD705-3138-4C80-A8E1-C06F48752008
 
 #define PLUGMAIN mainAPPL

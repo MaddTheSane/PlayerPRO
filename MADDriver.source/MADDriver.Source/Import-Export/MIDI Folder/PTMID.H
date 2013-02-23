@@ -97,6 +97,8 @@ void PrintPro( Ptr	myStr);
 
 void Error(Sz, ...);
 
+void Erreur( short a, short b);
+
 void CreateResult( Ptr);
 
 #endif

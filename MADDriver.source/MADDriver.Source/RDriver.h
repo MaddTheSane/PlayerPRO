@@ -302,7 +302,25 @@ enum MADSoundOutput
 	ESDDriver,						// ESound Driver. available on most UNIX Systems
 	ASIOSoundManager,				// ASIO Sound Driver by Steinberg
 	NoHardwareDriver				// NO HARDWARE CONNECTION, will not produce any sound
+};
 
+//Used for MADSoundDriverList()
+enum MADSoundDriverAvailable
+{
+	oldASCSoundDriverBit		= 1 << oldASCSoundDriver,
+	oldAWACSoundDriverBit		= 1 << oldAWACSoundDriver,
+	MIDISoundDriverBit			= 1 << MIDISoundDriver,
+	SoundManagerDriverBit		= 1 << SoundManagerDriver,
+	QK25SoundDriverBit			= 1 << QK25SoundDriver,
+	DigiDesignSoundDriverBit	= 1 << DigiDesignSoundDriver,
+	BeOSSoundDriverBit			= 1 << BeOSSoundDriver,
+	DirectSound95NTBit			= 1 << DirectSound95NT,
+	Wave95NTBit					= 1 << Wave95NT,
+	CoreAudioDriverBit			= 1 << CoreAudioDriver,
+	ALSADriverBit				= 1 << ALSADriver,
+	OSSDriverBit				= 1 << OSSDriver,
+	ESDDriverBit				= 1 << ESDDriver,
+	ASIOSoundManagerBit			= 1 << ASIOSoundManager
 };
 
 enum
@@ -444,10 +462,10 @@ typedef struct PPSndDoubleBufferHeader2 {
 } PPSndDoubleBufferHeader2;
 typedef PPSndDoubleBufferHeader2 *        PPSndDoubleBufferHeader2Ptr;
 
-#define kPlayerPROModFormatTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x84, 0xF8, 0x01, 0x09, 0x28, 0x85, 0x4E, 0x01, 0x8F, 0xFA, 0x88, 0xAC, 0x75, 0xF3, 0xE0, 0x33))
+#define kPlayerPROModFormatTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x84, 0xF8, 0x01, 0x09, 0x28, 0x85, 0x4E, 0x01, 0x8F, 0xFA, 0x88, 0xAC, 0x75, 0xF3, 0xE0, 0x33))
 //84F80109-2885-4E01-8FFA-88AC75F3E033
 
-#define kPlayerPROModFormatInterfaceID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x94, 0x15, 0xE3, 0x57, 0x0E, 0xD2, 0x4F, 0x9F, 0x9C, 0xA1, 0xB7, 0x28, 0x0C, 0x27, 0xF5, 0x9B))
+#define kPlayerPROModFormatInterfaceID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x94, 0x15, 0xE3, 0x57, 0x0E, 0xD2, 0x4F, 0x9F, 0x9C, 0xA1, 0xB7, 0x28, 0x0C, 0x27, 0xF5, 0x9B))
 //9415E357-0ED2-4F9F-9CA1-B7280C27F59B
 
 typedef struct _MADFileFormatPlugin {
@@ -728,6 +746,8 @@ OSErr	MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **M
 OSErr	MADDisposeLibrary( MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
 void	MADGetBestDriver( MADDriverSettings	*DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
+Boolean MADSoundDriverIsAvalable(short theDriver);
+int MADSoundDriverList();
 OSErr	MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
 OSErr	MADDisposeDriver( MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
 
@@ -805,7 +825,14 @@ OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
 #define MADPlugNewPtr(size, madlib) NewPtr(size)
 #define MADPlugNewPtrClear(size, madlib) NewPtrClear(size)
 	
-void MyDebugStr(short, Ptr, Ptr);									// Called when a fatal error occurs.... Normally, NEVER !
+Boolean MADIsDonePlaying(MADDriverRec *MDriver);
+
+void MADBeginExport(MADDriverRec *driver);
+void MADEndExport(MADDriverRec *driver);
+Boolean MADIsExporting(MADDriverRec *driver);
+
+Boolean MADWasReading(MADDriverRec *driver) DEPRECATED_ATTRIBUTE;
+void MADSetReading(MADDriverRec *driver, Boolean toSet) DEPRECATED_ATTRIBUTE;
 
 #ifdef __cplusplus
 }

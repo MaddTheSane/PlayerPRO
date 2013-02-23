@@ -345,6 +345,14 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 			
 			BlockMoveData( MADPtr + OffSetToSample, curData->data, curData->size);
 			OffSetToSample += curData->size;
+			if( curData->amp == 16)
+			{
+				SInt32 	ll;
+				short	*shortPtr = (short*) curData->data;
+				
+				for( ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
+			}
+			
 		}
 	}
 	
@@ -374,8 +382,8 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	myMOD->name[ 31] = '\0';
-	strcpy( info->internalFileName, myMOD->name);
+	//myMOD->name[ 31] = '\0';
+	strlcpy( info->internalFileName, myMOD->name, sizeof(myMOD->name));
 	
 	/*** Tracks ***/
 	
@@ -506,7 +514,7 @@ static OSErr mainMADH( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 }
 
 #ifdef _MAC_H
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x16, 0x94, 0x9F, 0x32, 0x8E, 0x4F, 0x4D, 0x37, 0xAC, 0x8C, 0xE1, 0xD3, 0x83, 0x59, 0x6C, 0x51))
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x16, 0x94, 0x9F, 0x32, 0x8E, 0x4F, 0x4D, 0x37, 0xAC, 0x8C, 0xE1, 0xD3, 0x83, 0x59, 0x6C, 0x51))
 //16949F32-8E4F-4D37-AC8C-E1D383596C51
 
 #define PLUGMAIN mainMADH
