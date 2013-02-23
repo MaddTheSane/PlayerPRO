@@ -151,9 +151,9 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 	short 			i, x;
 	long 			inOutCount = 0, OffSetToSample = 0, z = 0;
 	OSType			oldMadIdent, CompMode;
-	OSErr			theErr = noErr;
+	//OSErr			theErr = noErr;
 	Boolean			MADConvert = false;
-	Ptr				tempPtr = NULL;
+	//Ptr				tempPtr = NULL;
 	long			finetune[16] = 
 	{
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
@@ -191,7 +191,7 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 	theMAD->header->speed			= 6;
 	theMAD->header->tempo			= 125;
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (\xA9 Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug ((\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
@@ -389,9 +389,9 @@ static OSErr TestoldMADFile( Ptr AlienFile)
 static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 {
 	oldMADSpec	*myMOD = ( oldMADSpec*) AlienFile;
-	long		PatternSize;
+	//long		PatternSize;
 	short		i;
-	short		tracksNo;
+	//short		tracksNo;
 	
 	/*** Signature ***/
 	
@@ -400,7 +400,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	myMOD->NameSignature[ 31] = '\0';
+	//myMOD->NameSignature[ 31] = '\0';
 	strlcpy( info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
 	
 	/*** Tracks ***/
