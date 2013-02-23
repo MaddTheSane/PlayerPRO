@@ -129,25 +129,25 @@ void Sampler16AddDelay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDri
 	
 #if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
 	{
-	long long finalperiod;
-	long double temp;
-	
-	if( intDriver->XMLinear)
-	{
-		finalperiod = getfrequency( curVoice->period);
-		finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
+		long long finalperiod;
+		long double temp;
 		
-		finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
-	}
-	else finalperiod = curVoice->period;
-	
-	finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
-	
-	temp = ( (long double) AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-	
-	if( temp >= 1) aa = false;
-	
-	aDD = temp * (1 << BYTEDIV);
+		if( intDriver->XMLinear)
+		{
+			finalperiod = getfrequency( curVoice->period);
+			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
+			
+			finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
+		}
+		else finalperiod = curVoice->period;
+		
+		finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
+		
+		temp = ( (long double) AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		
+		if( temp >= 1) aa = false;
+		
+		aDD = temp * (1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -280,27 +280,27 @@ void Sampler16AddDelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverRec *
 	
 #if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
 	{
-	long long finalperiod;
-	long double	temp;
-	
-	if( intDriver->XMLinear)
-	{
-		finalperiod = getfrequency( curVoice->period);
-		finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
+		long long finalperiod;
+		long double	temp;
 		
-		finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
-	}
-	else finalperiod = curVoice->period;
-	
-	finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
-	
-	temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-
-//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-	
-	if( temp >= 1) aa = false;
-	
-	aDD = temp * (1 << BYTEDIV);
+		if( intDriver->XMLinear)
+		{
+			finalperiod = getfrequency( curVoice->period);
+			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
+			
+			finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
+		}
+		else finalperiod = curVoice->period;
+		
+		finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
+		
+		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		
+		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		
+		if( temp >= 1) aa = false;
+		
+		aDD = temp * (1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -440,28 +440,28 @@ void Sampler16Addin16Delay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *in
 	
 #if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
 	{
-	long long finalperiod;
-	long double	temp;
-	
-	if( intDriver->XMLinear)
-	{
-		finalperiod = getfrequency( curVoice->period);
-		finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
+		long long finalperiod;
+		long double	temp;
 		
-		finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
-	}
-	else finalperiod = curVoice->period;
-	
-	finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
-	
-	temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-
-
-//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-	
-	if( temp >= 1) aa = false;
-	
-	aDD = temp * (1 << BYTEDIV);
+		if( intDriver->XMLinear)
+		{
+			finalperiod = getfrequency( curVoice->period);
+			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
+			
+			finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
+		}
+		else finalperiod = curVoice->period;
+		
+		finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
+		
+		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		
+		
+		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		
+		if( temp >= 1) aa = false;
+		
+		aDD = temp * (1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -597,26 +597,26 @@ void Sampler16Addin16DelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverR
 	
 #if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
 	{
-	long long finalperiod;
-	long double	temp;
-	
-	if( intDriver->XMLinear)
-	{
-		finalperiod = getfrequency( curVoice->period);
-		finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
+		long long finalperiod;
+		long double	temp;
 		
-		finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
-	}
-	else finalperiod = curVoice->period;
-	
-	finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
-	
-	temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-	
-	if( temp >= 1) aa = false;
-	
-	aDD = temp * (1 << BYTEDIV);
+		if( intDriver->XMLinear)
+		{
+			finalperiod = getfrequency( curVoice->period);
+			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
+			
+			finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
+		}
+		else finalperiod = curVoice->period;
+		
+		finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
+		
+		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		
+		if( temp >= 1) aa = false;
+		
+		aDD = temp * (1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -1197,23 +1197,23 @@ void Sampler8in16AddDelayStereo( Channel *curVoice, short	*ASCBuffer, MADDriverR
 	
 #if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
 	{
-	long long finalperiod;
-	long double	temp;
-	
-	if( intDriver->XMLinear)
-	{
-		finalperiod = getfrequency( curVoice->period);
-		finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
+		long long finalperiod;
+		long double	temp;
 		
-		finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
-	}
-	else finalperiod = curVoice->period;
-	
-	finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
-	
-	temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-	aDD = temp * ( 1 << BYTEDIV);
+		if( intDriver->XMLinear)
+		{
+			finalperiod = getfrequency( curVoice->period);
+			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
+			
+			finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
+		}
+		else finalperiod = curVoice->period;
+		
+		finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
+		
+		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		aDD = temp * ( 1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);

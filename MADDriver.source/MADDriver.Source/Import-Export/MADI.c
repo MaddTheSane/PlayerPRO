@@ -374,14 +374,15 @@ static OSErr MADI2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 			
 			BlockMoveData( MADPtr + OffSetToSample, curData->data, curData->size);
 			OffSetToSample += curData->size;
+#ifdef __LITTLE_ENDIAN__
 			if( curData->amp == 16)
 			{
-				SInt32 	ll;
+				long 	ll;
 				short	*shortPtr = (short*) curData->data;
 				
 				for( ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
 			}
-			
+#endif
 		}
 	}
 	

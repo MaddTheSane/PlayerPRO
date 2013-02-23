@@ -211,10 +211,10 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 				// Write instrument header
 				
 				inOutCount = sizeof( InstrData);
-				InstrData *tempIns = NewPtr(inOutCount);
-				memcpy(tempIns, InsHeader, inOutCount);
+				InstrData *tempIns = (InstrData*)NewPtr(inOutCount);
+				BlockMoveData(InsHeader, tempIns, inOutCount);
 				ByteswapInstrument(tempIns);
-				myErr = FSWrite( iFileRefI, &inOutCount, InsHeader);
+				myErr = FSWrite( iFileRefI, &inOutCount, (Ptr)tempIns);
 				DisposePtr(tempIns);
 				
 				// Write samples headers & data
@@ -230,6 +230,7 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 					ByteswapsData(copyData);
 					copydataData = NewPtr(curData->size);
 					BlockMoveData(curData->data, copydataData, curData->size);
+#ifdef __LITTLE_ENDIAN__
 					if( curData->amp == 16)
 					{
 						SInt32 	ll;
@@ -237,6 +238,7 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 						
 						for( ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
 					}
+#endif
 					
 					copyData->data = 0;
 					
