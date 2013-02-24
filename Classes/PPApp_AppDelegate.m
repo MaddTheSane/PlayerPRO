@@ -1516,6 +1516,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 }
 
 - (IBAction)saveInstrumentList:(id)sender {
+	
 }
 
 - (IBAction)showBoxEditor:(id)sender
@@ -1596,20 +1597,12 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 #if __has_feature(objc_arc)
 	musicName = [[NSString alloc] initWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding];
 	musicInfo = [[NSString alloc] initWithCString:Music->header->infos encoding:NSMacOSRomanStringEncoding];
-	if (!musicInfo) {
-		//Just in case the copyright character is UTF-8
-		musicInfo = [[NSString alloc] initWithUTF8String:Music->header->infos];
-	}
 #else
 	NSString *tempNam = musicName;
 	musicName = [[NSString alloc] initWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding];
 	[tempNam release];
 	tempNam = musicInfo;
 	musicInfo = [[NSString alloc] initWithCString:Music->header->infos encoding:NSMacOSRomanStringEncoding];
-	if (!musicInfo) {
-		//Just in case the copyright character is UTF-8
-		musicInfo = [[NSString alloc] initWithUTF8String:Music->header->infos];
-	}
 	[tempNam release];
 #endif
 	
@@ -2023,7 +2016,7 @@ enum PPMusicToolbarTypes {
 		if(MADMusicInfoCFURL(MADLib, info, BRIDGE(CFURLRef, musicURL), &theInfo) != noErr) break;
 		[fileName setTitleWithMnemonic:obj.fileName];
 		[internalName setTitleWithMnemonic:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
-		[fileSize setTitleWithMnemonic:[NSString stringWithFormat:@"%.2f kiB", theInfo.fileSize / 1024.0]];
+		[fileSize setIntegerValue:theInfo.fileSize];
 		[musicInstrument setTitleWithMnemonic:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
 		[musicPatterns setTitleWithMnemonic:[NSString stringWithFormat:@"%ld", (long)theInfo.totalPatterns]];
 		[musicPlugType setTitleWithMnemonic:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];

@@ -425,6 +425,21 @@ static void DrawCGSampleInt(long 	start,
 		CGColorRelease(colorRef);
 		DrawCGSampleInt(0, 0, imageSize.width, imageSize.height, imageSize.width, 0, 0, 0, theDat, bitmapContext);
 	}
+	if ([theDat loopSize])
+	{
+		CGColorRef colorRef = CGColorCreateGenericRGB(1, 0.1, .5, 0.8);
+		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
+		CGColorRelease(colorRef);
+		CGRect loopRect = CGRectMake(0, 0, imageSize.width, imageSize.height);
+		NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(2, 2)];
+		NSSize padSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
+		CGContextSetLineWidth(bitmapContext, lineSize.height);
+		loopRect.origin.x =  ([theDat loopBegin] * imageSize.width / (double)[theDat dataSize]);
+		loopRect.origin.y += padSize.width;
+		loopRect.size.width = [theDat loopSize] * imageSize.width / (double)[theDat dataSize];
+		loopRect.size.height -= padSize.width * 2;
+		CGContextStrokeRect(bitmapContext, loopRect);
+	}
 
 	theCGimg = CGBitmapContextCreateImage(bitmapContext);
 	
@@ -435,19 +450,6 @@ static void DrawCGSampleInt(long 	start,
 	CGImageRelease(theCGimg);
 
 	return AUTORELEASEOBJ(img);
-}
-
-+ (NSString*)getStringFromSize:(int)theSize
-{
-	//TODO: localize
-	if (theSize > 1000 * 1000) {
-		//This should never happen!
-		return [NSString stringWithFormat:@"%.2f MiB", theSize / (1024.0 * 1024.0)];
-	} else if (theSize > 1000) {
-		return [NSString stringWithFormat:@"%.2f kiB", theSize / 1024.0];
-	} else {
-		return [NSString stringWithFormat:@"%d Bytes", theSize];
-	}
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification
@@ -473,9 +475,9 @@ static void DrawCGSampleInt(long 	start,
 		[waveFormImage setImage:nil];
 		return;
 	}
-	[instrumentSize setTitleWithMnemonic:[PPInstrumentWindowController getStringFromSize:[object dataSize]]];
-	[instrumentLoopStart setTitleWithMnemonic:[PPInstrumentWindowController getStringFromSize:[object loopBegin]]];
-	[instrumentLoopSize setTitleWithMnemonic:[PPInstrumentWindowController getStringFromSize:[object loopSize]]];
+	[instrumentSize setIntegerValue:[object dataSize]];
+	[instrumentLoopStart setIntegerValue:[object loopBegin]];
+	[instrumentLoopSize setIntegerValue:[object loopSize]];
 	[instrumentVolume setTitleWithMnemonic:[NSString stringWithFormat:@"%u", [(PPSampleObject*)object volume]]];
 	[instrumentRate setTitleWithMnemonic:[NSString stringWithFormat:@"%u", [object c2spd]]];
 	[instrumentNote setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object relativeNote]]];
