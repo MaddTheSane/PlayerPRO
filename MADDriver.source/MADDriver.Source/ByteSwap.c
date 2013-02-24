@@ -69,3 +69,26 @@ EXP void PPLE16(void *msg_buf)
 #endif
 }
 
+void OSType2Ptr( OSType type, Ptr str)
+{
+	PPBE32(&type);
+	
+	memcpy( str, &type, 4);
+	str[ 4] = 0;
+}
+
+OSType Ptr2OSType( char* str)
+{
+	short   i;
+	OSType  type;
+	
+	i = strlen( str);
+	if( i > 4) i = 4;
+	type = '    ';
+	memcpy( &type, str, i);
+	PPBE32(&type);
+	
+	return type;
+}
+
+

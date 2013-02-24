@@ -56,13 +56,12 @@ PPEXPORT OSErr iSeekCur( long size, UNFILE iFileRefI);
 
 PPEXPORT void iClose( UNFILE iFileRefI);
 	
-PPEXPORT OSType Ptr2OSType( Ptr str);
-PPEXPORT void OSType2Ptr( OSType type, Ptr str);
-
-
 ////////////////////////////////////////////////////////////
 
 #ifdef NOINLINE
+PPEXPORT OSType Ptr2OSType( Ptr str);
+PPEXPORT void OSType2Ptr( OSType type, Ptr str);
+
 PPEXPORT void PPLE32( void *msg_buf);
 PPEXPORT void PPLE16( void *msg_buf);
 PPEXPORT void PPBE32( void *msg_buf);
@@ -125,6 +124,29 @@ static inline void PPLE16(void *msg_buf)
 #define PPLE16(msg_buf)
 #endif
 #endif
+
+
+static inline void OSType2Ptr( OSType type, Ptr str)
+{
+	PPBE32(&type);
+	
+	memcpy( str, &type, 4);
+	str[ 4] = 0;
+}
+
+static inline OSType Ptr2OSType( char* str)
+{
+	short   i;
+	OSType  type;
+	
+	i = strlen( str);
+	if( i > 4) i = 4;
+	type = '    ';
+	memcpy( &type, str, i);
+	PPBE32(&type);
+	
+	return type;
+}
 
 #ifdef __cplusplus
 }
