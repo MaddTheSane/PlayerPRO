@@ -55,10 +55,6 @@ PPEXPORT OSErr iWrite( long size, Ptr dest, UNFILE iFileRefI);
 PPEXPORT OSErr iSeekCur( long size, UNFILE iFileRefI);
 
 PPEXPORT void iClose( UNFILE iFileRefI);
-
-PPEXPORT char* MADstrcpy( char*, const char*) DEPRECATED_ATTRIBUTE;
-PPEXPORT int MADstrcmp( const char *dst, const char* src) DEPRECATED_ATTRIBUTE;
-
 	
 PPEXPORT OSType Ptr2OSType( Ptr str);
 PPEXPORT void OSType2Ptr( OSType type, Ptr str);

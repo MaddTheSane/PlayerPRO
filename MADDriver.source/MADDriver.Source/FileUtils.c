@@ -81,30 +81,6 @@ void iClose( FILE* iFileRefI)
 	fclose( iFileRefI);
 }
 
-Ptr MADstrcpy( Ptr dst, const char* src)
-{
-	long i = 0;
-	
-	do
-	{
-		dst[ i] = src[ i];
-	}while( src[ i++]);
-	
-	return dst;
-}
-
-int MADstrcmp( const char *dst, const char* src)
-{
-	long i = 0;
-	
-	do
-	{
-		if( dst[ i] != src[ i]) return -1;
-	}while( src[ i++]);
-	
-	return 0;
-}
-
 void OSType2Ptr( OSType type, Ptr str)
 {
 	PPBE32(&type);
