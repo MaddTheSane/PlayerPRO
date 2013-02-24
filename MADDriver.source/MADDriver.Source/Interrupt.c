@@ -23,6 +23,7 @@
 
 #include "RDriver.h"
 #include "RDriverInt.h"
+#include "PPPrivate.h"
 #ifdef _MIDIHARDWARE_
 extern short		gOutNodeRefNum, gOutputPortRefNum;
 #endif
