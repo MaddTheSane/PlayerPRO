@@ -1,6 +1,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#include "GetMetadataForFile.h"
 
 /* -----------------------------------------------------------------------------
    Step 1
@@ -34,7 +35,8 @@
   
    ----------------------------------------------------------------------------- */
 
-CFStringRef kPPMDInstumentsList = CFSTR("net_sourceforge_playerpro_tracker_instumentlist");
+static const CFStringRef kPPMDInstumentsList = CFSTR("net_sourceforge_playerpro_tracker_instumentlist");
+static const CFStringRef kPPMDPatternList = CFSTR("net_sourcegorge_playerpro_tracker_patternlist");
 
 /* -----------------------------------------------------------------------------
     Get metadata attributes from file
@@ -43,7 +45,7 @@ CFStringRef kPPMDInstumentsList = CFSTR("net_sourceforge_playerpro_tracker_instu
    and return it as a dictionary
    ----------------------------------------------------------------------------- */
 
-Boolean GetMetadataForFile(void* thisInterface, 
+Boolean GetMetadataForFile(void* thisInterface,
 			   CFMutableDictionaryRef attributes, 
 			   CFStringRef contentTypeUTI,
 			   CFStringRef pathToFile)
@@ -108,21 +110,52 @@ Boolean GetMetadataForFile(void* thisInterface,
 	}
 	
 	{
-		CFMutableArrayRef InstruArray = CFArrayCreateMutable(kCFAllocatorDefault, MAXINSTRU, &kCFTypeArrayCallBacks);
+		CFMutableArrayRef InstruArray = CFArrayCreateMutable(kCFAllocatorDefault, MAXINSTRU * MAXSAMPLE, &kCFTypeArrayCallBacks);
 		int	i;
 
 		for( i = 0; i < MAXINSTRU ; i++)
 		{
-			CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->fid[i].name, kCFStringEncodingMacRoman);//TODO: check for other encodings?
+			InstrData *tempData = &MADMusic1->fid[i];
+			
+			CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, tempData->name, kCFStringEncodingMacRoman);//TODO: check for other encodings?
 			if (!(CFEqual(CFSTR(""), temp))) {
 				CFArrayAppendValue(InstruArray, temp);
 			}
 			CFRelease(temp);
+			int sDataCount = tempData->firstSample + tempData->numSamples;
+			int x;
+			for (x = tempData->firstSample; x < sDataCount; x++) {
+				sData *tempSData = MADMusic1->sample[x];
+				temp = CFStringCreateWithCString(kCFAllocatorDefault, tempSData->name, kCFStringEncodingMacRoman);
+				if (!CFEqual(CFSTR(""), temp)) {
+					CFArrayAppendValue(InstruArray, temp);
+				}
+				CFRelease(temp);
+			}
 		}
 		
 		CFDictionarySetValue(attributes, kPPMDInstumentsList, InstruArray);
 		
 		CFRelease(InstruArray);
+	}
+	
+	{
+		CFMutableArrayRef PatArray = CFArrayCreateMutable(kCFAllocatorDefault, MAXPATTERN, &kCFTypeArrayCallBacks);
+		int i;
+		for( i = 0; i < MAXPATTERN; i++)
+		{
+			if (MADMusic1->partition != NULL && MADMusic1->partition[i] != NULL)
+			{
+				CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->partition[i]->header.name, kCFStringEncodingMacRoman);//TODO: check for other encodings?
+				if (!(CFEqual(CFSTR(""), temp))) {
+					CFArrayAppendValue(PatArray, temp);
+				}
+				CFRelease(temp);
+			}
+		}
+		CFDictionarySetValue(attributes, kPPMDPatternList, PatArray);
+
+		CFRelease(PatArray);
 	}
 	
 	MADCleanDriver( MADDriver);
