@@ -123,8 +123,6 @@ static inline void PPLE16(void *msg_buf)
 #define PPLE32(msg_buf)
 #define PPLE16(msg_buf)
 #endif
-#endif
-
 
 static inline void OSType2Ptr( OSType type, Ptr str)
 {
@@ -147,6 +145,8 @@ static inline OSType Ptr2OSType( char* str)
 	
 	return type;
 }
+
+#endif
 
 #ifdef __cplusplus
 }
