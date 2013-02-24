@@ -9,8 +9,9 @@
  *
  */
 
-#define NOINLINES
+#define NOINLINE 1
 #include "MAD.h"
+#include "FileUtils.h"
 #ifdef _MAC_H
 #include <CoreFoundation/CFByteOrder.h>
 #endif
@@ -39,14 +40,14 @@ static __inline__ void MADByteSwap16(void *theData)
 #endif
 }
 
-EXP void PPBE32(void *msg_buf)
+void PPBE32(void *msg_buf)
 {
 #ifdef __LITTLE_ENDIAN__
 	MADByteSwap32(msg_buf);
 #endif
 }
 
-EXP void PPBE16(void *msg_buf)
+void PPBE16(void *msg_buf)
 {
 #ifdef __LITTLE_ENDIAN__
 	MADByteSwap16(msg_buf);
@@ -55,14 +56,14 @@ EXP void PPBE16(void *msg_buf)
 
 
 /////////////////////////////////
-EXP void PPLE32(void *msg_buf)
+void PPLE32(void *msg_buf)
 {
 #ifdef __BIG_ENDIAN__
 	MADByteSwap32(msg_buf);
 #endif
 }
 
-EXP void PPLE16(void *msg_buf)
+void PPLE16(void *msg_buf)
 {
 #ifdef __BIG_ENDIAN__
 	MADByteSwap16(msg_buf);
