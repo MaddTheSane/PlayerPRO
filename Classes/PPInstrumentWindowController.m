@@ -401,13 +401,12 @@ static void DrawCGSampleInt(long 	start,
 	imageSize.width *= 2;
 	CGImageRef theCGimg = NULL;
 	NSUInteger rowBytes = 4 * imageSize.width;
-	void *imageBytes = malloc(rowBytes * imageSize.height);
 	static CGColorSpaceRef defaultSpace = NULL;
 	if (defaultSpace == NULL) {
 		defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
 	}
 	
-	CGContextRef bitmapContext = CGBitmapContextCreate(imageBytes, imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast);
+	CGContextRef bitmapContext = CGBitmapContextCreateWithData(NULL, imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast, NULL, NULL);
 	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
 	{
 		NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
@@ -444,7 +443,6 @@ static void DrawCGSampleInt(long 	start,
 	theCGimg = CGBitmapContextCreateImage(bitmapContext);
 	
 	CGContextRelease(bitmapContext);
-	free(imageBytes);
 	
 	NSImage *img = [[NSImage alloc] initWithCGImage:theCGimg size:[waveFormImage frame].size];
 	CGImageRelease(theCGimg);
