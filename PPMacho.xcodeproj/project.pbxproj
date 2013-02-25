@@ -6864,7 +6864,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				INSTALL_PATH = /Library/Frameworks;
 				PREBINDING = NO;
 				PRODUCT_NAME = PlayerPROCore;
 				ZERO_LINK = NO;
@@ -6885,7 +6885,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
-				INSTALL_PATH = /Library/Frameworks;
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				PREBINDING = NO;
 				PRODUCT_NAME = PlayerPROCore;
 			};
