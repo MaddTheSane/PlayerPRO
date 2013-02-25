@@ -276,7 +276,7 @@ static OSErr ExtractULTInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	ULTinfo.name[ 31] = '\0';
+	//ULTinfo.name[ 31] = '\0';
 	//pStrcpy( (unsigned char*) info->internalFileName, MYC2PStr( ULTinfo.name));
 	strlcpy(info->internalFileName, ULTinfo.name, sizeof(ULTinfo.name));
 	
