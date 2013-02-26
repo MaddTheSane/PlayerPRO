@@ -44,7 +44,7 @@ static long		MADpos[ MAXFILES];
 static short	MADcur = 0;
 static Ptr		MIDIGenPtr = NULL;
 
-short MADopen( void)
+static short MADopen( void)
 {
 	MADpos[ MADcur] = 0;
 	MADcur++;
@@ -54,7 +54,7 @@ short MADopen( void)
 	return MADcur-1;
 }
 
-short MADread( short id, Ptr dst, long size)
+static short MADread( short id, Ptr dst, long size)
 {
 	if( MADpos[ id] >= GetPtrSize( MIDIGenPtr)) return 0;
 	
@@ -67,7 +67,7 @@ short MADread( short id, Ptr dst, long size)
 	return size;
 }
 
-short MADseek( short id, long size, short mode)
+static short MADseek( short id, long size, short mode)
 {
 	switch( mode)
 	{
@@ -85,12 +85,12 @@ short MADseek( short id, long size, short mode)
 	return 0;
 }
 
-long MADtell( short id)
+static long MADtell( short id)
 {
 	return MADpos[ id];
 }
 
-short MADclose(int b)
+static short MADclose(int b)
 {
 	
 	return 0;
@@ -119,7 +119,7 @@ static void Init(void)
 /*
  * ChGetFd: Given a file, returns next character from it.
  */
-int ChGetFd(int fd)
+static int ChGetFd(int fd)
 {
 	unsigned char b;
 
@@ -131,7 +131,7 @@ int ChGetFd(int fd)
  * ChGetIrf: Given an index, returns next character from corresponding
  * file record.
  */
-unsigned char ChGetIrf(unsigned irf)
+static unsigned char ChGetIrf(unsigned irf)
 {
 	if (prf[irf].ib == BUFSIZE)
 	{
@@ -152,7 +152,7 @@ unsigned char ChGetIrf(unsigned irf)
  *
  * date: 4/7/1994 - fixed longstanding bug: wouldn't read in new buffer
  */
-void SkipIrf(unsigned irf, long cb)
+static void SkipIrf(unsigned irf, long cb)
 {
 	if (BUFSIZE - prf[irf].ib >= cb) prf[irf].ib += (int) cb;
 	else
@@ -187,7 +187,7 @@ int ValidquantSz(Sz szQuant)
  * VlqFromFd: Reads bytes from given file until a variable length
  * quantity is decoded. Returns that vlq.
  */
-VLQ VlqFromFd(int fd)
+static VLQ VlqFromFd(int fd)
 {
 	VLQ vlqRead = 0;
 	unsigned char b = 0;
@@ -201,7 +201,7 @@ VLQ VlqFromFd(int fd)
  * VlqFromIrf: Reads bytes from file corresponding to given index until
  * a variable length quantity is decoded. Returns that vlq.
  */
-VLQ VlqFromIrf(unsigned irf)
+static VLQ VlqFromIrf(unsigned irf)
 {
 	VLQ vlqRead = 0;
 	unsigned char b = 0;
@@ -214,7 +214,7 @@ VLQ VlqFromIrf(unsigned irf)
 /*
  * LongFromFd: Reads number of bytes from Fd until number is in.
  */
-unsigned long LongFromFd(int fd, unsigned cb)
+static unsigned long LongFromFd(int fd, unsigned cb)
 {
 	unsigned char rgb[4];
 	unsigned long longT = 0;
@@ -232,7 +232,7 @@ unsigned long LongFromFd(int fd, unsigned cb)
  *
  * date: 30/6/1994 - added chan as well as pfx init
  */
-void Addnote(int chan, int pitch, int inst, int vol)
+static void Addnote(int chan, int pitch, int inst, int vol)
 {
 	NRL *pnrlT;
 
@@ -251,7 +251,7 @@ void Addnote(int chan, int pitch, int inst, int vol)
  * PeiRequestPtune: Returns a pointer to a new event structure at the
  * position in the tune specified.
  */
-EI *PeiRequestPtune(Tune *ptune)
+static EI *PeiRequestPtune(Tune *ptune)
 {
 	EI *pei;
 
@@ -267,7 +267,7 @@ EI *PeiRequestPtune(Tune *ptune)
  *
  * date: 30/6/1994 - added support for effects, 16 chans, min. perc. durat.
  */
-void Endnote(int chan, int pitch, int inst)
+static void Endnote(int chan, int pitch, int inst)
 {
   NRL *pnrlT, *pnrlOld = NULL;
 	unsigned long durat;
@@ -309,7 +309,7 @@ void Endnote(int chan, int pitch, int inst)
  *
  * date: 30/6/1994 - added effect support
  */
-VLQ VlqInterpIrf(unsigned irf, unsigned *pbStat)
+static VLQ VlqInterpIrf(unsigned irf, unsigned *pbStat)
 {
 	unsigned bEvent;
 	VLQ vlqT;
@@ -418,7 +418,7 @@ VLQ VlqInterpIrf(unsigned irf, unsigned *pbStat)
  *
  * date: 30/6/1994 - now frees remaining fx too
  */
-void Freearray(void)
+static void Freearray(void)
 {
 	int 	i, j = 16;
 	NRL 	*pnrlT, *pnrlT2;

@@ -90,7 +90,7 @@ sData	* MADCreateSample( MADMusic *MDriver, short ins, short sample)
 	return curData;		
 }
 
-Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, Boolean *stereo)
+static Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, Boolean *stereo)
 {
 	Ptr 			soundPtr;
 	short 			soundFormat, numChannels;
@@ -271,8 +271,6 @@ Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short *sample
 	return( sound);
 }
 
-Ptr LenOutPfileFn( long *Ssize,  Ptr fnSample);
-void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, short ins);
 /*
  * WritePfile: Writes division information (sample, pitch, effect) to
  * given file in the format specified by wModfmt.
@@ -280,7 +278,7 @@ void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, s
  * date: 2/7/1994 - added multi-format support
  *       3/7/1994 - now aborts on write error
  */
-void WritePfile( PatData *Pat, short pos, short track, unsigned bSam, unsigned wPit, unsigned wEff)
+static void WritePfile( PatData *Pat, short pos, short track, unsigned bSam, unsigned wPit, unsigned wEff)
 {
 	//static int 			cNote = -1, irgchPos, Buffsiz;
 	//static char 		*pchBuff;
@@ -323,7 +321,7 @@ void WritePfile( PatData *Pat, short pos, short track, unsigned bSam, unsigned w
  * If it gets to the end of the tune, will set flag to false and will
  * wait to be given a new tune.
  */
-EI *PeiNextPtune(Tune *ptuneMain, int *pf)
+static EI *PeiNextPtune(Tune *ptuneMain, int *pf)
 {
 	static Tune *ptune = NULL;
 	static unsigned long quant;
@@ -349,7 +347,7 @@ EI *PeiNextPtune(Tune *ptuneMain, int *pf)
 /*
  * Convqpm: Converts a given qpm number into a double tempo thingy.
  */
-void Convqpm(unsigned qpm, int rgbTempo[2], int ticks)
+static void Convqpm(unsigned qpm, int rgbTempo[2], int ticks)
 {
 	if (792 / ticks <= qpm && 6144 / ticks - 1 >= qpm) {
 		rgbTempo[0] = ticks; /** If can use current ticks/div, do so **/
@@ -396,7 +394,7 @@ void Convqpm(unsigned qpm, int rgbTempo[2], int ticks)
  * date: 3/7/1994 - quiet samples now play sample 0 rather than sample 31
  */
  
-int PutpatternsPtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
+static int PutpatternsPtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 {
 	int 				iT, iT2, wPat = 0, cDiv, ipw, ipwMax, fGoing;
 	unsigned 			*pwLen, pwNote[3 * MAXCHANS], rgbTempo[2] = {6,125};
@@ -600,7 +598,6 @@ int PutpatternsPtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *ini
  *       2/7/1994 - added MTM saving
  */
  
- extern  	short 				MIDIInstMOD[ 128];
  extern		Boolean				UseQKIns;
 			MADMusic			*curMusic = NULL;
  

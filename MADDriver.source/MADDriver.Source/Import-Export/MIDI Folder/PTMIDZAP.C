@@ -21,7 +21,7 @@ int cmsDecided, wMinpitch, wMaxpitch;
  ** The midivolume array holds Protracker equivants of MIDI velocities.
  ** It allows fast velocity-volume conversion.
  **/
-unsigned midivolume[128] = {
+static const unsigned midivolume[128] = {
 	 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
 	16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
 	32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
@@ -68,7 +68,7 @@ static void Init(void)
  * and prepend given number, ensuring that it doesn't overflow the
  * 22 character array.
  */
-void FitSzBFn(Sz szName, int bPos, Sz fnSample)
+static void FitSzBFn(Sz szName, int bPos, Sz fnSample)
 {
 	int iT = 18;
 
@@ -85,7 +85,7 @@ void FitSzBFn(Sz szName, int bPos, Sz fnSample)
  *
  * date: 1/7/1994
  */
-int WConvertMidipitch(int pitch, unsigned long *cDev)
+static int WConvertMidipitch(int pitch, unsigned long *cDev)
 {
   switch (wRgmode) {
     case 0:
@@ -130,9 +130,9 @@ int WConvertMidipitch(int pitch, unsigned long *cDev)
  * date: 1/7/1994 - added calls to WConvertMidipitch
  */
  
- short 				MIDIInstMOD[ 129];
+short 				MIDIInstMOD[ 129];
  
-void AnalyzePtune(Tune *ptune)
+static void AnalyzePtune(Tune *ptune)
 {
 	unsigned long			cDev = 0;
 	EI						*pei;
@@ -174,7 +174,7 @@ void AnalyzePtune(Tune *ptune)
 /*
  * UnitifyPtune: Given a tune, will convert lengths into division multiples.
  */
-void UnitifyPtune(Tune *ptune)
+static void UnitifyPtune(Tune *ptune)
 {
 	EI *pei;
 

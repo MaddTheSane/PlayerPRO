@@ -101,4 +101,13 @@ void Erreur( short a, short b);
 
 void CreateResult( Ptr);
 
+Ptr LenOutPfileFn( long *Ssize,  Ptr fnSample);
+void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, short ins);
+
+extern  	short 				MIDIInstMOD[ 129];
+
+void pStrcat(register unsigned char *s1, register unsigned char *s2);
+
+void InitQuicktimeInstruments(void);
+
 #endif

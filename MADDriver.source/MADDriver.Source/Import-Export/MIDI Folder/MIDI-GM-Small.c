@@ -25,11 +25,11 @@ void DrawSmallPianoKey( short i, short color, Rect aRect);
 void NDoPlayInstru(short	Note, short Instru, short effect, short arg, short vol);
 void ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
 
-void DeleteDLSFile();
-short GenerateDLSFromBundle();
-void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai);
-void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst);
-short OpenDataFileQK( long dirID, short VRefNum);
+static void DeleteDLSFile();
+static short GenerateDLSFromBundle();
+static void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai);
+static void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst);
+static short OpenDataFileQK( long dirID, short VRefNum);
 
 
 /**** Resource Format QK25 ****/
@@ -189,14 +189,14 @@ typedef struct
 /*************************/
 
 #pragma mark Atom functions prototypes
-OSErr GetAtomData( MyAtom at, void* data, long size);
-long CountAtomById( MyAtom at, long type);
-OSErr FindAtomById( MyAtom at, MyAtom *retat, Boolean LIST, long type, short id);
-OSErr GetAtomDataById( MyAtom at, long type, void *data, long size);
+static OSErr GetAtomData( MyAtom at, void* data, long size);
+static long CountAtomById( MyAtom at, long type);
+static OSErr FindAtomById( MyAtom at, MyAtom *retat, Boolean LIST, long type, short id);
+static OSErr GetAtomDataById( MyAtom at, long type, void *data, long size);
 
 /*************************/
 
-void OctavesMIDIName(short	id, Str255	String)
+static void OctavesMIDIName(short	id, Str255	String)
 {
 	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
 									/*	{'Do','Do#','RŽ','RŽ#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
@@ -214,7 +214,7 @@ void OctavesMIDIName(short	id, Str255	String)
   	pStrcat( String, WorkStr);	
 }
 
-void SetInstruNameM( short	theNo, Str255 theNewName, short MIDIgm, Ptr destName)
+static void SetInstruNameM( short	theNo, Str255 theNewName, short MIDIgm, Ptr destName)
 {
 	short	i;
 	Str255	aStr, bStr;
@@ -232,7 +232,7 @@ void SetInstruNameM( short	theNo, Str255 theNewName, short MIDIgm, Ptr destName)
 	}
 }
 
-void SetSampNameM( Str255 theNewName, Ptr destName)
+static void SetSampNameM( Str255 theNewName, Ptr destName)
 {
 	short	i;
 
@@ -243,7 +243,7 @@ void SetSampNameM( Str255 theNewName, Ptr destName)
 	}
 }
 
-short OpenResFileQK( long dirID, short VRefNum)
+static short OpenResFileQK( long dirID, short VRefNum)
 {
 	CInfoPBRec		info;
 	Str255			tempStr;
@@ -763,7 +763,7 @@ void InitQuicktimeInstruments(void)
 	HSetVol( NULL, vRefNum, dirID);
 }
 
-void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
+static void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 {
 	short 						foundVRefNum, iFileRef, no, ii, i, x;
 	OSErr 						iErr;
@@ -1119,7 +1119,7 @@ BAIL:
 	return;
 }
 
-void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai)
+static void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai)
 {
 	short 						no, ii, i;
 	OSErr 						iErr;
@@ -1296,7 +1296,7 @@ BAIL:
 	;
 }
 
-short GenerateDLSFromBundle()
+static short GenerateDLSFromBundle()
 {
 	CFBundleRef		AudioBundle;
 	CFURLRef		bundleURL;
@@ -1401,7 +1401,7 @@ short GenerateDLSFromBundle()
 	return ff;
 }
 
-void DeleteDLSFile()
+static void DeleteDLSFile()
 {
 	OSErr	iErr;
 	FSSpec	tempDLS;
@@ -1415,7 +1415,7 @@ void DeleteDLSFile()
 	}
 }
 
-short OpenDataFileQK( long dirID, short VRefNum)
+static short OpenDataFileQK( long dirID, short VRefNum)
 {
 	CInfoPBRec		info;
 	Str255			tempStr;
@@ -1457,7 +1457,7 @@ short OpenDataFileQK( long dirID, short VRefNum)
 }
 
 #pragma mark Atom functions
-OSErr GetAtomData( MyAtom at, void* data, long size)
+static OSErr GetAtomData( MyAtom at, void* data, long size)
 {
 	long 	prePos, fSize, ilistType, nlistType, index, listSize;
 	CK		sck;
@@ -1480,7 +1480,7 @@ OSErr GetAtomData( MyAtom at, void* data, long size)
 	return noErr;
 }
 
-long CountAtomById( MyAtom at, long type)
+static long CountAtomById( MyAtom at, long type)
 {
 	long 	prePos, fSize, ilistType, /*nlistType,*/ index, listSize;
 	CK		sck;
@@ -1532,7 +1532,7 @@ long CountAtomById( MyAtom at, long type)
 	return index;
 }
 
-OSErr FindAtomById( MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
+static OSErr FindAtomById( MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 {
 	long 	prePos, fSize, ilistType, /*nlistType,*/ index, listSize;
 	CK		sck;
@@ -1612,7 +1612,7 @@ OSErr FindAtomById( MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 	return -1;
 }
 
-OSErr GetAtomDataById( MyAtom at, long type, void *data, long size)
+static OSErr GetAtomDataById( MyAtom at, long type, void *data, long size)
 {
 	MyAtom 	tempAt;
 	OSErr	iErr;

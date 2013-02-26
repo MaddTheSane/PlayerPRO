@@ -10,8 +10,6 @@
  *       29/6/1994  ver 0.3 - second release
  */
 
-void InitQuicktimeInstruments(void);
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -52,7 +50,7 @@ static void Init(void)
 extern void InitCursor();
 #endif
 
-void Settings()
+static void Settings()
 {
 	short		itemHit;
 	DialogPtr	aDialog;
