@@ -1577,18 +1577,22 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 - (IBAction)addMusic:(id)sender
 {
 	NSOpenPanel *panel = RETAINOBJ([NSOpenPanel openPanel]);
-	NSMutableArray *supportedUTIs = [NSMutableArray arrayWithObject:MADNativeUTI];
+	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithCapacity:MADLib->TotalPlug + 1];
+	[trackerDict setObject:[NSArray arrayWithObject:MADNativeUTI] forKey:@"MADK Tracker"];
+	
 	int i = 0;
 	for (i = 0; i < MADLib->TotalPlug; i++) {
-		[supportedUTIs addObjectsFromArray:BRIDGE(NSArray*, MADLib->ThePlug[i].UTItypes)];
+		[trackerDict setObject:BRIDGE(NSArray*, MADLib->ThePlug[i].UTItypes) forKey:BRIDGE(NSString*, MADLib->ThePlug[i].MenuName)];
 	}
-	[panel setAllowsMultipleSelection:NO];
-	[panel setAllowedFileTypes:supportedUTIs];
+	
+	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:trackerDict playlistDictionary:nil instrumentDictionary:nil additionalDictionary:nil];
+	[av setupDefaults];
 	if([panel runModal] == NSFileHandlingPanelOKButton)
 	{
 		[self addMusicToMusicList:[panel URL]];
 	}
 	
+	RELEASEOBJ(av);
 	RELEASEOBJ(panel);
 }
 
@@ -1822,6 +1826,11 @@ enum PPMusicToolbarTypes {
 			return NO;
 		}
 		return YES;
+	} else if([sharedWorkspace type:theUTI conformsToType:PPInstrumentListUTI]) {
+		NSError *err = nil;
+		if (![instrumentController importInstrumentListFromURL:theURL error:&err]) {
+			[[NSAlert alertWithError:err] runModal];
+		}
 	} else if ([instrumentController isWindowLoaded]) {
 		NSInteger i;
 		for (i = 0; i < [instrumentImporter plugInCount]; i++) {
@@ -1845,15 +1854,11 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)openFile:(id)sender {
 	NSOpenPanel *panel = RETAINOBJ([NSOpenPanel openPanel]);
-	NSMutableArray *supportedUTIs = [NSMutableArray arrayWithObjects:MADNativeUTI, PPMusicListUTI, PPOldMusicListUTI, nil];
 	int i = 0;
 	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithObject:[NSArray arrayWithObject:MADNativeUTI] forKey:@"MADK Tracker"];
 	NSDictionary *playlistDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:PPMusicListUTI], @"PlayerPRO Music List", [NSArray arrayWithObject:PPOldMusicListUTI], @"PlayerPRO Old Music List", nil];
 	for (i = 0; i < MADLib->TotalPlug; i++) {
-		NSArray *tempArray = BRIDGE(NSArray*, MADLib->ThePlug[i].UTItypes);
-		[supportedUTIs addObjectsFromArray:tempArray];
-		NSString *menuName = BRIDGE(NSString*, MADLib->ThePlug[i].MenuName);
-		[trackerDict setObject:tempArray forKey:menuName];
+		[trackerDict setObject:BRIDGE(NSArray*, MADLib->ThePlug[i].UTItypes) forKey:BRIDGE(NSString*, MADLib->ThePlug[i].MenuName)];
 	}
 		
 	NSMutableDictionary *samplesDict = nil;
@@ -1863,22 +1868,14 @@ enum PPMusicToolbarTypes {
 		for (i = 0; i < plugCount; i++) {
 			PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
 			NSArray *tmpArray = obj.UTITypes;
-			[supportedUTIs addObjectsFromArray:tmpArray];
 			[samplesDict setObject:tmpArray forKey:obj.menuName];
 		}
 	}
 
-	NSDictionary *otherDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:PPPCMDUTI], @"PCMD", nil];
-	
-	for (NSString *key in otherDict) {
-		NSArray *tempArray = [otherDict objectForKey:key];
-		[supportedUTIs addObjectsFromArray:tempArray];
-	}
-	
-	[panel setAllowsMultipleSelection:NO];
-	[panel setAllowedFileTypes:supportedUTIs];
+	NSDictionary *otherDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:PPPCMDUTI], @"PCMD", [NSArray arrayWithObject:PPInstrumentListUTI], @"Instrument List", nil];
+		
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:trackerDict playlistDictionary:playlistDict instrumentDictionary:samplesDict additionalDictionary:otherDict];
-	[panel setAccessoryView:[av view]];
+	[av setupDefaults];
 	RELEASEOBJ(samplesDict);
 	if([panel runModal] == NSFileHandlingPanelOKButton)
 	{

@@ -48,7 +48,7 @@ typedef enum _MADPlugCapabilities {
 {
 	char typeString[5] = {0};
 	OSType2Ptr(type, typeString);
-	return [NSString stringWithFormat:@"%@ - %@ Sample: %@ Type: %@ UTIs: %@", menuName, [file bundlePath], isSamp ? @"YES": @"NO", [NSString stringWithCString:typeString encoding:NSMacOSRomanStringEncoding] ,[UTITypes description]];
+	return [NSString stringWithFormat:@"%@ - %@ Sample: %@ Type: %@ UTIs: %@", menuName, [file bundlePath], isSamp ? @"YES": @"NO", [NSString stringWithCString:typeString encoding:NSMacOSRomanStringEncoding], [UTITypes description]];
 }
 
 - (id)initWithBundle:(NSBundle *)tempBundle

@@ -66,6 +66,10 @@
 			<false/>
 		</dict>
 		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>inslist</string>
+			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>List</string>
 			<key>CFBundleTypeName</key>
@@ -78,7 +82,7 @@
 			<string>Editor</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>net.sourceforge.playerpro.list</string>
+				<string>net.sorceforge.playerpro.inslist</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -686,6 +690,29 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>mins</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PlayerPRO Instrument List</string>
+			<key>UTTypeIconFile</key>
+			<string>List</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sorceforge.playerpro.inslist</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>INso</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>inslist</string>
 				</array>
 			</dict>
 		</dict>

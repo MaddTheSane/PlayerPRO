@@ -27,6 +27,7 @@ NSString * const PPOldMusicListUTI = @"net.sourceforge.playerpro.stcfmusiclist";
 NSString * const PPPCMDUTI = @"com.quadmation.playerpro.pcmd";
 NSString * const PPGenericTrackerUTI = @"net.sourceforge.playerpro.tracker";
 NSString * const PPGenericInstrumentUTI = @"net.sourceforge.playerpro.instrumentfile";
+NSString * const PPInstrumentListUTI = @"net.sorceforge.playerpro.inslist";
 
 NSString * const PPRememberMusicList = @"Remember Music List";
 NSString * const PPLoadMusicAtListLoad = @"Load music when loading list";

@@ -229,6 +229,20 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	return self;
 }
 
+- (void)setupDefaults
+{
+	NSMutableArray *fileUTIs = [NSMutableArray array];
+	
+	for (OpenPanelViewItem *obj in utiObjects) {
+		[fileUTIs addObjectsFromArray:obj.utis];
+	}
+	
+	[openPanel setAllowsMultipleSelection:NO];
+	[openPanel setAllowedFileTypes:fileUTIs];
+	[openPanel setAccessoryView:[self view]];
+
+}
+
 /*- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

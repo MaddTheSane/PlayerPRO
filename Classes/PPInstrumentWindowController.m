@@ -147,23 +147,23 @@
 	}
 }
 
+- (BOOL)importInstrumentListFromURL:(NSURL *)insURL error:(out NSError *__autoreleasing*)theErr
+{
+	
+}
+
 - (IBAction)importInstrument:(id)sender
 {
 	NSInteger plugCount = [importer plugInCount];
-	NSMutableArray *fileUTIs = [NSMutableArray arrayWithCapacity:plugCount];
 	NSMutableDictionary *fileDict = [NSMutableDictionary dictionaryWithCapacity:plugCount];
 	NSInteger i;
 	for (i = 0; i < plugCount; i++) {
 		PPInstrumentImporterObject *obj = [importer plugInAtIndex:i];
-		NSArray *utiList = obj.UTITypes;
-		[fileUTIs addObjectsFromArray:utiList];
-		[fileDict setObject:utiList forKey:obj.menuName];
+		[fileDict setObject:obj.UTITypes forKey:obj.menuName];
 	}
 	NSOpenPanel *openPanel = RETAINOBJ([NSOpenPanel openPanel]);
 	OpenPanelViewController *vc = [[OpenPanelViewController alloc] initWithOpenPanel:openPanel trackerDictionary:nil playlistDictionary:nil instrumentDictionary:fileDict additionalDictionary:nil];
-	[openPanel setAllowsMultipleSelection:NO];
-	[openPanel setAllowedFileTypes:fileUTIs];
-	[openPanel setAccessoryView:[vc view]];
+	[vc setupDefaults];
 	if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
 		NSError *err = nil;
 		if ([self importSampleFromURL:[openPanel URL] makeUserSelectInstrument:NO error:&err] == NO)
@@ -275,8 +275,7 @@ static void DrawCGSampleInt(long 	start,
 	long long		i;
 	long			sampleSize = [curData dataSize];
 	CGFloat			temp;
-	Ptr				theSample = malloc(sampleSize);
-	memcpy(theSample, [curData.data bytes], sampleSize);
+	const char*		theSample = [curData.data bytes];
 	short			*theShortSample = (short*) theSample;
 	long long		BS, BE, x;
 	BOOL isStereo = curData.stereo;
@@ -388,7 +387,6 @@ static void DrawCGSampleInt(long 	start,
 			}
 		}
 	}
-	free(theSample);
 	CGContextStrokePath(ctxRef);
 	CGContextRestoreGState(ctxRef);
 }

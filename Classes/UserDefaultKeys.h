@@ -25,6 +25,7 @@ extern NSString * const PPOldMusicListUTI;
 extern NSString * const PPPCMDUTI;
 extern NSString * const PPGenericTrackerUTI;
 extern NSString * const PPGenericInstrumentUTI;
+extern NSString * const PPInstrumentListUTI;
 
 //Music list preference keys
 extern NSString * const PPRememberMusicList;
