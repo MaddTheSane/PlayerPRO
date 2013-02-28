@@ -244,7 +244,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	return [[PPInstrumentObject alloc] initWithMusic:theMus instrumentIndex:theInstrument.no];
+	return [[PPInstrumentObject allocWithZone:zone] initWithMusic:theMus instrumentIndex:theInstrument.no];
 }
 
 - (id)initWithMusic:(MADMusic*)mus instrumentIndex:(short)insIdx;

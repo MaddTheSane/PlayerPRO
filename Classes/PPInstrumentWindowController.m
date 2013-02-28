@@ -448,7 +448,7 @@ static void DrawCGSampleInt(long 	start,
 	long			sampleSize = [curData dataSize];
 	CGFloat			temp;
 	const char*		theSample = [curData.data bytes];
-	short			*theShortSample = (short*) theSample;
+	const short		*theShortSample = (const short*) theSample;
 	long long		BS, BE, x;
 	BOOL isStereo = curData.stereo;
 	CGFloat			minY, maxY;

@@ -178,7 +178,7 @@
 	NSInteger dataSize2 = [data length];
 	toReturn->size = dataSize2;
 	toReturn->data = malloc(dataSize2);
-	memcpy(toReturn->data, [data bytes], dataSize2);
+	[data getBytes:toReturn->data length:dataSize2];
 	
 	return toReturn;
 }
