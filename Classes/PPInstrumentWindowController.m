@@ -274,6 +274,10 @@ static inline void ByteSwapsData(sData *toSwap)
 	if (theErr) {
 		*theErr = nil;
 	}
+	(*curMusic)->hasChanged = TRUE;
+	[instrumentView reloadData];
+	[instrumentView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+	[instrumentView scrollToBeginningOfDocument:nil];
 	
 	return YES;
 }
