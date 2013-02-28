@@ -17,6 +17,7 @@
 #import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
 #include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/RDriverInt.h>
 #import "PPErrors.h"
 #import "ARCBridge.h"
 
@@ -147,9 +148,134 @@
 	}
 }
 
+static inline void ByteSwapInstrData(InstrData *toSwap)
+{
+	PPBE16( &toSwap->numSamples);
+	PPBE16( &toSwap->firstSample);
+	PPBE16( &toSwap->volFade);
+	
+	PPBE16( &toSwap->MIDI);
+	PPBE16( &toSwap->MIDIType);
+	__block InstrData *blockHappy = toSwap;
+	dispatch_apply(12, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
+		PPBE16( &blockHappy->volEnv[ x].pos);
+		PPBE16( &blockHappy->volEnv[ x].val);
+		
+		PPBE16( &blockHappy->pannEnv[ x].pos);
+		PPBE16( &blockHappy->pannEnv[ x].val);
+		
+		PPBE16( &blockHappy->pitchEnv[ x].pos);
+		PPBE16( &blockHappy->pitchEnv[ x].val);
+	});
+}
+
+static inline void ByteSwapsData(sData *toSwap)
+{
+	PPBE32( &toSwap->size);
+	PPBE32( &toSwap->loopBeg);
+	PPBE32( &toSwap->loopSize);
+	PPBE16( &toSwap->c2spd);
+}
+
 - (BOOL)importInstrumentListFromURL:(NSURL *)insURL error:(out NSError *__autoreleasing*)theErr
 {
+	NSData *fileData = [NSData dataWithContentsOfURL:insURL];
+	if (!fileData) {
+		if (theErr) {
+			*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADReadingErr));
+		}
+		return NO;
+	}
+	short		x, i;
+	long		inOutCount, filePos = 0;
 	
+	__block InstrData *tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
+	
+	// **** HEADER ***
+	inOutCount = sizeof( InstrData) * MAXINSTRU;
+	if ([fileData length] <= inOutCount) {
+		if (theErr) {
+			*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADIncompatibleFile));
+		}
+		return NO;
+	}
+	[fileData getBytes:tempInstrData range:NSMakeRange(filePos, inOutCount)];
+	
+	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
+		ByteSwapInstrData(&tempInstrData[x]);
+	});
+			
+	for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( *curMusic, x);
+
+	memcpy((*curMusic)->fid, tempInstrData, inOutCount);
+	filePos += inOutCount;
+	free(tempInstrData);
+	
+	//Clean up old instruments
+	dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
+		if ((*curMusic)->sample[x]) {
+			if ((*curMusic)->sample[x]->data) {
+				free((*curMusic)->sample[x]->data);
+			}
+			free((*curMusic)->sample[x]);
+		}
+	});
+	
+	// **** INSTRUMENTS ***
+	for( i = 0; i < MAXINSTRU ; i++)
+	{
+		for( x = 0; x < (*curMusic)->fid[ i].numSamples ; x++)
+		{
+			sData	*curData;
+			
+			// ** Read Sample header **
+			
+			curData = (*curMusic)->sample[ i * MAXSAMPLE +  x] = (sData*) malloc( sizeof( sData));
+			if( curData == NULL)
+			{
+				if (theErr) {
+					*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADNeedMemory));
+				}
+				return NO;
+			}
+			
+			inOutCount = sizeof( sData32);
+			[fileData getBytes:curData range:NSMakeRange(filePos, inOutCount)];
+			ByteSwapsData(curData);
+			filePos += inOutCount;
+			//theErr = FSRead( srcFile, &inOutCount, curData);
+			
+			// ** Read Sample DATA
+			
+			curData->data = malloc( curData->size);
+			if( curData->data == NULL)
+			{
+				if (theErr) {
+					*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADNeedMemory));
+				}
+				return NO;
+			}
+
+			inOutCount = curData->size;
+			[fileData getBytes:curData->data range:NSMakeRange(filePos, inOutCount)];
+			filePos += inOutCount;
+			if (curData->amp == 16) {
+				__block short	*shortPtr = (short*) curData->data;
+				
+				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
+					PPBE16(&shortPtr[y]);
+				});
+
+			}
+		}
+	}
+	// *********************
+		
+	if (theErr) {
+		*theErr = nil;
+	}
+	
+	return YES;
 }
 
 - (IBAction)importInstrument:(id)sender

@@ -231,7 +231,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 
 - (void)setupDefaults
 {
-	NSMutableArray *fileUTIs = [NSMutableArray array];
+	NSMutableArray *fileUTIs = [[NSMutableArray alloc] init];
 	
 	for (OpenPanelViewItem *obj in utiObjects) {
 		[fileUTIs addObjectsFromArray:obj.utis];
@@ -241,6 +241,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	[openPanel setAllowedFileTypes:fileUTIs];
 	[openPanel setAccessoryView:[self view]];
 
+	RELEASEOBJ(fileUTIs);
 }
 
 /*- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -282,6 +283,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		[mi0 setTarget:self];
 		[fileTypeSelectionMenu addItem:mi0];
 		RELEASEOBJ(mi0);
+		
 		[fileTypeSelectionMenu addItem:[NSMenuItem separatorItem]];
 	}
 	
