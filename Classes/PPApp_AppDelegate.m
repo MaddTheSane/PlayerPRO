@@ -1515,8 +1515,29 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
     [instrumentController deleteInstrument:sender];
 }
 
-- (IBAction)saveInstrumentList:(id)sender {
+- (IBAction)saveInstrumentList:(id)sender
+{
+	MADBeginExport(MADDriver);
+	NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
+	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:PPMusicListUTI]];
+	[savePanel setCanCreateDirectories:YES];
+	[savePanel setCanSelectHiddenExtension:YES];
+	if (![musicName isEqualToString:@""]) {
+		[savePanel setNameFieldStringValue:[NSString stringWithFormat:@"%@'s instruments", musicName]];
+	} else {
+		[savePanel setNameFieldStringValue:@"Tracker Instruments"];
+	}
+
+	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+		OSErr fileErr = [instrumentController exportInstrumentListToURL:[savePanel URL]];
+		if (fileErr) {
+			NSError *theErr = CreateErrorFromMADErrorType(fileErr);
+			[[NSAlert alertWithError:theErr] runModal];
+		}
+	}
 	
+	MADEndExport(MADDriver);
+	RELEASEOBJ(savePanel);
 }
 
 - (IBAction)showBoxEditor:(id)sender

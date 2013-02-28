@@ -180,20 +180,34 @@ static inline void ByteSwapsData(sData *toSwap)
 - (OSErr)exportInstrumentListToURL:(NSURL*)outURL
 {
 	NSMutableData *outData = [[NSMutableData alloc] init];
-	int i, x;
-	__block InstrData *tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
-	memcpy(tempInstrData, (*curMusic)->fid, sizeof(InstrData) * MAXINSTRU);
+	if (!outData) {
+		return MADNeedMemory;
+	}
 	
-	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
-		ByteSwapInstrData(&tempInstrData[x]);
-	});
-	[outData appendBytes:tempInstrData length:sizeof(InstrData)* MAXINSTRU];
-	free(tempInstrData);
+	int i, x;
+	{
+		__block InstrData *tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
+		if (!tempInstrData) {
+			RELEASEOBJ(outData);
+			return MADNeedMemory;
+		}
+		memcpy(tempInstrData, (*curMusic)->fid, sizeof(InstrData) * MAXINSTRU);
+		
+		dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
+			ByteSwapInstrData(&tempInstrData[x]);
+		});
+		[outData appendBytes:tempInstrData length:sizeof(InstrData) * MAXINSTRU];
+		free(tempInstrData);
+	}
 	for( i = 0; i < MAXINSTRU ; i++)
 	{
 		for( x = 0; x < (*curMusic)->fid[ i].numSamples ; x++)
 		{
 			sData *tempData = malloc(sizeof(sData)), *curData = (*curMusic)->sample[ i * MAXSAMPLE +  x];
+			if (!tempData) {
+				RELEASEOBJ(outData);
+				return MADNeedMemory;
+			}
 			sData32 writeData;
 			memcpy(tempData, curData, sizeof(sData));
 			ByteSwapsData(tempData);
@@ -203,6 +217,10 @@ static inline void ByteSwapsData(sData *toSwap)
 			free(tempData);
 			{
 				Ptr dataData = malloc(curData->size);
+				if (!dataData) {
+					RELEASEOBJ(outData);
+					return MADNeedMemory;
+				}
 				memcpy(dataData, curData->data, curData->size);
 				if (curData->amp == 16) {
 					__block short	*shortPtr = (short*) dataData;
