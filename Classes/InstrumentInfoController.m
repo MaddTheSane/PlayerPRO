@@ -21,6 +21,8 @@
 - (void)updateInstrumentInfo
 {
 	[sampleTable reloadData];
+	[instrumentName setTitleWithMnemonic:instrument.name];
+	[instrumentNumber setTitleWithMnemonic:[NSString stringWithFormat:@"Instrument %ld", (long)instrument.number + 1]];
 }
 
 @synthesize instrument;
