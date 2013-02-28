@@ -203,18 +203,13 @@ static inline void ByteSwapsData(sData *toSwap)
 	{
 		for( x = 0; x < (*curMusic)->fid[ i].numSamples ; x++)
 		{
-			sData *tempData = malloc(sizeof(sData)), *curData = (*curMusic)->sample[ i * MAXSAMPLE +  x];
-			if (!tempData) {
-				RELEASEOBJ(outData);
-				return MADNeedMemory;
-			}
+			sData tempData, *curData = (*curMusic)->sample[ i * MAXSAMPLE +  x];
 			sData32 writeData;
-			memcpy(tempData, curData, sizeof(sData));
-			ByteSwapsData(tempData);
-			memcpy(&writeData, tempData, sizeof(sData32));
+			memcpy(&tempData, curData, sizeof(sData));
+			ByteSwapsData(&tempData);
+			memcpy(&writeData, &tempData, sizeof(sData32));
 			writeData.data = 0;
 			[outData appendBytes:&writeData length:sizeof(sData32)];
-			free(tempData);
 			{
 				Ptr dataData = malloc(curData->size);
 				if (!dataData) {
@@ -250,28 +245,29 @@ static inline void ByteSwapsData(sData *toSwap)
 	}
 	short		x, i;
 	long		inOutCount, filePos = 0;
-	
-	__block InstrData *tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
-	
-	// **** HEADER ***
-	inOutCount = sizeof( InstrData) * MAXINSTRU;
-	if ([fileData length] <= inOutCount) {
-		if (theErr) {
-			*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADIncompatibleFile));
+	{
+		__block InstrData *tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
+		
+		// **** HEADER ***
+		inOutCount = sizeof( InstrData) * MAXINSTRU;
+		if ([fileData length] <= inOutCount) {
+			if (theErr) {
+				*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADIncompatibleFile));
+			}
+			return NO;
 		}
-		return NO;
+		[fileData getBytes:tempInstrData range:NSMakeRange(filePos, inOutCount)];
+		
+		dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
+			ByteSwapInstrData(&tempInstrData[x]);
+		});
+		
+		for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( *curMusic, x);
+		
+		memcpy((*curMusic)->fid, tempInstrData, inOutCount);
+		filePos += inOutCount;
+		free(tempInstrData);
 	}
-	[fileData getBytes:tempInstrData range:NSMakeRange(filePos, inOutCount)];
-	
-	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
-		ByteSwapInstrData(&tempInstrData[x]);
-	});
-			
-	for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( *curMusic, x);
-
-	memcpy((*curMusic)->fid, tempInstrData, inOutCount);
-	filePos += inOutCount;
-	free(tempInstrData);
 	
 	//Clean up old instruments
 	dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {

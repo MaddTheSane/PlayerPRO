@@ -1851,7 +1851,7 @@ enum PPMusicToolbarTypes {
 		NSError *err = nil;
 		if (![instrumentController importInstrumentListFromURL:theURL error:&err]) {
 			[[NSAlert alertWithError:err] runModal];
-		}
+		} else return YES;
 	} else if ([instrumentController isWindowLoaded]) {
 		NSInteger i;
 		for (i = 0; i < [instrumentImporter plugInCount]; i++) {
