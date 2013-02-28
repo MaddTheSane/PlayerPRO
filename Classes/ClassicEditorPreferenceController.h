@@ -10,13 +10,13 @@
 
 @interface ClassicEditorPreferenceController : NSViewController {
 
-	IBOutlet __weak NSTextField *tempoUnitValue;
-	IBOutlet __weak NSTextField *tempoNumberValue;
-	IBOutlet __weak NSTextField *markersLoopValue;
-	IBOutlet __weak NSTextField *markersOffsetValue;
-	IBOutlet __weak NSButton *markersCheck;
-	IBOutlet __weak NSButton *notesLengthCheck;
-	IBOutlet __weak NSPopUpButton *trackHeightButton;
+	IBOutlet NSTextField *tempoUnitValue;
+	IBOutlet NSTextField *tempoNumberValue;
+	IBOutlet NSTextField *markersLoopValue;
+	IBOutlet NSTextField *markersOffsetValue;
+	IBOutlet NSButton *markersCheck;
+	IBOutlet NSButton *notesLengthCheck;
+	IBOutlet NSPopUpButton *trackHeightButton;
 }
 
 - (IBAction)changeTrackHeight:(id)sender;

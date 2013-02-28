@@ -10,27 +10,27 @@
 
 @interface DigitalEditorPreferenceControler : NSViewController {
 
-	IBOutlet __weak NSButton *PPDEEffect;
-	IBOutlet __weak NSButton *PPDENote;
-	IBOutlet __weak NSButton *PPDEInstrument;
-	IBOutlet __weak NSButton *PPDEArgument;
-	IBOutlet __weak NSButton *PPDEVolume;
+	IBOutlet NSButton *PPDEEffect;
+	IBOutlet NSButton *PPDENote;
+	IBOutlet NSButton *PPDEInstrument;
+	IBOutlet NSButton *PPDEArgument;
+	IBOutlet NSButton *PPDEVolume;
 	
-	IBOutlet __weak NSButton *PPDEMarkerSelect;
-	IBOutlet __weak NSTextField *PPDEMarkerOffset;
-	IBOutlet __weak NSTextField *PPDEMarkerLoop;
-	IBOutlet __weak NSColorWell *PPDEMarkerColor;
+	IBOutlet NSButton *PPDEMarkerSelect;
+	IBOutlet NSTextField *PPDEMarkerOffset;
+	IBOutlet NSTextField *PPDEMarkerLoop;
+	IBOutlet NSColorWell *PPDEMarkerColor;
 	
 	
-	IBOutlet __weak NSButtonCell *PPDEMouseClickControl;
-	IBOutlet __weak NSButtonCell *PPDEMouseClickShift;
-	IBOutlet __weak NSButtonCell *PPDEMouseClickCommand;
-	IBOutlet __weak NSButtonCell *PPDEMouseClickOption;
+	IBOutlet NSButtonCell *PPDEMouseClickControl;
+	IBOutlet NSButtonCell *PPDEMouseClickShift;
+	IBOutlet NSButtonCell *PPDEMouseClickCommand;
+	IBOutlet NSButtonCell *PPDEMouseClickOption;
 	
-	IBOutlet __weak NSMatrix *PPDELineHeightMatrix;
-	IBOutlet __weak NSMatrix *PPDEMusicTraceMatrix;
-	IBOutlet __weak NSMatrix *PPDEPatternWrappingMatrix;
-	IBOutlet __weak NSMatrix *PPDEDragAsMatrix;
+	IBOutlet NSMatrix *PPDELineHeightMatrix;
+	IBOutlet NSMatrix *PPDEMusicTraceMatrix;
+	IBOutlet NSMatrix *PPDEPatternWrappingMatrix;
+	IBOutlet NSMatrix *PPDEDragAsMatrix;
 }
 - (IBAction)cellInformationCheckClicked:(id)sender;
 - (IBAction)markersCheckClicked:(id)sender;
