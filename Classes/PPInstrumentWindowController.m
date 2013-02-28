@@ -177,6 +177,50 @@ static inline void ByteSwapsData(sData *toSwap)
 	PPBE16( &toSwap->c2spd);
 }
 
+- (OSErr)exportInstrumentListToURL:(NSURL*)outURL
+{
+	NSMutableData *outData = [[NSMutableData alloc] init];
+	int i, x;
+	__block InstrData *tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
+	memcpy(tempInstrData, (*curMusic)->fid, sizeof(InstrData) * MAXINSTRU);
+	
+	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
+		ByteSwapInstrData(&tempInstrData[x]);
+	});
+	[outData appendBytes:tempInstrData length:sizeof(InstrData)* MAXINSTRU];
+	free(tempInstrData);
+	for( i = 0; i < MAXINSTRU ; i++)
+	{
+		for( x = 0; x < (*curMusic)->fid[ i].numSamples ; x++)
+		{
+			sData *tempData = malloc(sizeof(sData)), *curData = (*curMusic)->sample[ i * MAXSAMPLE +  x];
+			sData32 writeData;
+			memcpy(tempData, curData, sizeof(sData));
+			ByteSwapsData(tempData);
+			memcpy(&writeData, tempData, sizeof(sData32));
+			writeData.data = 0;
+			[outData appendBytes:&writeData length:sizeof(sData32)];
+			free(tempData);
+			{
+				Ptr dataData = malloc(curData->size);
+				memcpy(dataData, curData->data, curData->size);
+				if (curData->amp == 16) {
+					__block short	*shortPtr = (short*) dataData;
+					
+					dispatch_apply(curData->size / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
+						PPBE16(&shortPtr[y]);
+					});
+				}
+				[outData appendBytes:dataData length:curData->size];
+				free(dataData);
+			}
+		}
+	}
+	BOOL successful = [outData writeToURL:outURL atomically:YES];
+	RELEASEOBJ(outData);
+	return successful ? noErr : MADWritingErr;
+}
+
 - (BOOL)importInstrumentListFromURL:(NSURL *)insURL error:(out NSError *__autoreleasing*)theErr
 {
 	NSData *fileData = [NSData dataWithContentsOfURL:insURL];
@@ -243,7 +287,6 @@ static inline void ByteSwapsData(sData *toSwap)
 			[fileData getBytes:curData range:NSMakeRange(filePos, inOutCount)];
 			ByteSwapsData(curData);
 			filePos += inOutCount;
-			//theErr = FSRead( srcFile, &inOutCount, curData);
 			
 			// ** Read Sample DATA
 			
@@ -265,7 +308,6 @@ static inline void ByteSwapsData(sData *toSwap)
 				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
 					PPBE16(&shortPtr[y]);
 				});
-
 			}
 		}
 	}

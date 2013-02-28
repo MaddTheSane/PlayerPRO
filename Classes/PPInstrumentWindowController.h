@@ -46,6 +46,7 @@
 - (BOOL)importSampleFromURL:(NSURL *)sampURL error:(out NSError *__autoreleasing*)theErr;
 - (BOOL)importSampleFromURL:(NSURL *)sampURL makeUserSelectInstrument:(BOOL)selIns error:(out NSError *__autoreleasing*)theErr;
 - (BOOL)importInstrumentListFromURL:(NSURL *)insURL error:(out NSError *__autoreleasing*)theErr;
+- (OSErr)exportInstrumentListToURL:(NSURL*)outURL;
 
 
 - (void)writeInstrumentsBackToMusic;
