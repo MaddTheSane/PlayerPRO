@@ -82,7 +82,7 @@
 			<string>Editor</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>net.sorceforge.playerpro.inslist</string>
+				<string>com.quadmation.playerpro.list</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -703,7 +703,7 @@
 			<key>UTTypeIconFile</key>
 			<string>List</string>
 			<key>UTTypeIdentifier</key>
-			<string>net.sorceforge.playerpro.inslist</string>
+			<string>com.quadmation.playerpro.list</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.ostype</key>
