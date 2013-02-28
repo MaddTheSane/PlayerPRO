@@ -1519,7 +1519,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 {
 	MADBeginExport(MADDriver);
 	NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
-	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:PPMusicListUTI]];
+	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:PPInstrumentListUTI]];
 	[savePanel setCanCreateDirectories:YES];
 	[savePanel setCanSelectHiddenExtension:YES];
 	if (![musicName isEqualToString:@""]) {
