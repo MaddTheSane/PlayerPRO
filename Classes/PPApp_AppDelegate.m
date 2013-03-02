@@ -441,7 +441,7 @@ static inline void ByteSwapsData(sData *toSwap)
 
 - (void)saveMusicToURL:(NSURL *)tosave
 {
-	//[instrumentController writeInstrumentsBackToMusic];
+	[instrumentController writeInstrumentsBackToMusic];
 	int i, x;
 	size_t inOutCount;
 	MADCleanCurrentMusic(Music, MADDriver);
@@ -623,6 +623,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (NSData *)newAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat
 {
+	//TODO: Write a little-endian AIFF exporter
 	NSInteger dataLen = [dat length];
 	
 	ContainerChunk header;
@@ -766,7 +767,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 				chanNums = 1;
 				break;
 		}
-		container.numSampleFrames = (dataLen + (todiv - 1)) / todiv;
+		container.numSampleFrames = dataLen / todiv;
 	}
 
 	container.numChannels = chanNums;
@@ -957,14 +958,13 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						};
 #if PPEXPORT_CREATE_TMP_AIFF
 						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
-						if (!tmpURL) {
-							tmpURL = [[NSURL fileURLWithPath:NSTemporaryDirectory()] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
-						}
 						
 						[saveData writeToURL:tmpURL atomically:NO];
 						QTMovie *exportMov = [[QTMovie alloc] initWithURL:tmpURL error:&expErr];
-						[exportMov setAttribute:oldMusicName forKey:QTMovieDisplayNameAttribute];
-						[exportMov setAttribute:oldMusicInfo forKey:QTMovieCopyrightAttribute];
+						if (exportMov) {
+							[exportMov setAttribute:oldMusicName forKey:QTMovieDisplayNameAttribute];
+							[exportMov setAttribute:oldMusicInfo forKey:QTMovieCopyrightAttribute];
+						}
 #else
 						//Attempts of using data directly have resulted in internal assertion failures in the export session initialization code
 						QTDataReference *dataRef = [[QTDataReference alloc] initWithReferenceToData:saveData name:oldMusicName MIMEType:@"audio/aiff"];
@@ -973,6 +973,8 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 #endif
 						RELEASEOBJ(oldMusicInfo);
 						oldMusicInfo = nil;
+						RELEASEOBJ(saveData);
+						saveData = nil;
 						if (!exportMov) {
 							NSLog(@"Init Failed for %@, error: %@", oldMusicName, [expErr localizedDescription]);
 #if !PPEXPORT_CREATE_TMP_AIFF
@@ -1027,7 +1029,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 							});
 						}
 
-						RELEASEOBJ(saveData);
 					});
 				} else {
 					MADEndExport(MADDriver);
