@@ -12,7 +12,7 @@
 //NOTE: A lot of code was copied from MIDI-GM.c.  This file needs to be checked
 //to see if it still works like it did.
 
-Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, MADDriverSettings *init);
+//Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, MADDriverSettings *init);
 static NoteRequest		myNoteRequest;
 static Boolean			QK50;
 Boolean					QuicktimeInstruAvailable;
@@ -34,7 +34,6 @@ static short OpenDataFileQK( long dirID, short VRefNum);
 
 /**** Resource Format QK25 ****/
 
-//FIXME: Is this the proper way to do this?
 //Tip: the original code was written thus:
 //long GetNELong(BigEndianLong toget)
 //{
