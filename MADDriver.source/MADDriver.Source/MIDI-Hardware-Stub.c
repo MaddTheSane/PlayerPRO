@@ -21,7 +21,7 @@ void CloseMIDIHarware(void)
 
 }
 
-void OpenMIDIHardware( void)	
+void OpenMIDIHardware( MADDriverRec *rec)
 {
 
 }
