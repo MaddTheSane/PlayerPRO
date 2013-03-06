@@ -108,11 +108,12 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 	curData->relNote	= 60 - bFreq;
 	curData->stereo		= stereo;
 	
-	for(i=0; i<32; i++)
+	for(i = 0; i < 31; i++)
 	{
 		if( i < name[ 0]) curData->name[i] = name[i+1];
 		else curData->name[i] = '\0';
 	}
+	curData->name[31] = '\0';
 	
 	return noErr;
 }
