@@ -47,7 +47,20 @@ PPEXPORT OSErr inAddSoundToMAD(Ptr			theSound,
 							   Str255		name,
 							   InstrData	*InsHeader,					// Ptr on instrument header
 							   sData		**sample,					// Ptr on samples data
-							   short		*sampleID);
+							   short		*sampleID) DEPRECATED_ATTRIBUTE;
+
+PPEXPORT OSErr inAddSoundToMADCString(Ptr			theSound,
+								   size_t		sndLen,
+								   long			lS,
+								   long			lE,
+								   short		sS,
+								   short		bFreq,
+								   unsigned int	rate,
+								   Boolean		stereo,
+								   char			*name,
+								   InstrData	*InsHeader,					// Ptr on instrument header
+								   sData		**sample,					// Ptr on samples data
+								   short		*sampleID);
 
 PPEXPORT sData* inMADCreateSample();
 

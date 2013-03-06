@@ -69,7 +69,32 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 					  sData			**sample,					// Ptr on samples data
 					  short			*sampleID)
 {
-	long 	inOutBytes, i;
+	OSErr theErr = noErr;
+	char *cName = malloc(name[0] + 1);
+	memcpy(cName, &name[1], name[0]);
+	cName[name[0]] = '\0';
+	
+	theErr = inAddSoundToMADCString(theSound, sndLen, lS, lE, sS, bFreq, rate, stereo, cName, InsHeader, sample, sampleID);
+	
+	free(cName);
+	return theErr;
+}
+
+
+OSErr inAddSoundToMADCString(Ptr			theSound,
+							 size_t			sndLen,
+							 long			lS,
+							 long			lE,
+							 short			sS,
+							 short			bFreq,
+							 unsigned int	rate,
+							 Boolean		stereo,
+							 char			*name,
+							 InstrData		*InsHeader,					// Ptr on instrument header
+							 sData			**sample,					// Ptr on samples data
+							 short			*sampleID)
+{
+	long 	inOutBytes;
 	sData	*curData;
 
 	if( theSound == NULL) return MADParametersErr;
@@ -108,12 +133,7 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 	curData->relNote	= 60 - bFreq;
 	curData->stereo		= stereo;
 	
-	for(i = 0; i < 31; i++)
-	{
-		if( i < name[ 0]) curData->name[i] = name[i+1];
-		else curData->name[i] = '\0';
-	}
-	curData->name[31] = '\0';
+	strlcpy(curData->name, name, 32);
 	
 	return noErr;
 }
