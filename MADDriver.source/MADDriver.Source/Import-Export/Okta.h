@@ -60,24 +60,25 @@ typedef struct OktaHeader
 	long		SampleLen;
 	int			splitted[4];
 	
-	int		samp_count;
-	int		linesize;
-	int		speed;
-  	int		slen;
-  	int		plen;
+	int samp_count;
+	int linesize;
+	int speed;
+  	int slen;
+  	int plen;
 
-	Ptr		pbod[128];
-	int		pbodlen[128];
+  Ptr	pbod[128];
+  int	pbodlen[128];
        
-	unsigned char *patt;
-	int		pointer;
-	int		patty;
-	int		nextpt;
-	int		actspeed;
+  unsigned char *patt;
+  int pointer;
+  int patty;
+  int nextpt;
+  int actspeed;
 
-	int		note[8];
-	int		vol[8];
-	int		per;
+  int note[8];
+  int vol[8];
+  int per;
+
 } OktaHeader;
 
 static short FreqOktaTable[ 40] =

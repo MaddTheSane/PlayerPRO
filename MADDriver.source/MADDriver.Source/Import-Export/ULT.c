@@ -21,31 +21,48 @@
 //
 /********************						***********************/
 
-#include <PlayerPROCore/PlayerPROCore.h>
 #include "ULT.h"
+#include "MAD.h"
+#include "RDriver.h"
+
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE(sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( Ptr)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( MADMusic*)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoRec*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( MADDriverSettings*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
 
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*msg_buf);
+#define Tdecode16(msg_buf) EndianU16_LtoN(*(short*)msg_buf);
 #else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
-	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
-	return toswap;
+  unsigned char *buf = msg_buf;
+  
+  return( (unsigned long) buf[3] << 24) | ( (unsigned long) buf[2] << 16) | ( (unsigned long) buf[ 1] << 8) | ( (unsigned long) buf[0]);
 }
 #endif
 
 #ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*msg_buf);
+#define Tdecode32(msg_buf)  EndianU32_LtoN(*(int*)msg_buf);
 #else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
-	UInt32 toswap = *((UInt32*) msg_buf);
-	INT32(&toswap);
-	return toswap;
+  unsigned char *buf = msg_buf;
+  
+  return ( (short) buf[1] << 8) | ( (short) buf[0]);
 }
 #endif
 
@@ -57,7 +74,33 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
-static inline void mystrcpy( Ptr a, BytePtr b)
+Ptr MADPlugNewPtr( long size, MADDriverSettings* init)
+{
+	if( init->sysMemory) return NewPtrSys( size);
+	else return NewPtr( size);
+}
+
+Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init)
+{
+	if( init->sysMemory) return NewPtrSysClear( size);
+	else return NewPtrClear( size);
+}
+
+void pStrcpy(register unsigned char *s1, register unsigned char *s2)
+{
+	register short len, i;
+	
+	len = *s2;
+	for ( i = 0; i <= len; i++) s1[ i] = s2[ i];
+}
+
+void strncpy( Ptr dst, Ptr str, long size)
+{
+	BlockMoveData( str, dst, size);
+}
+
+
+void mystrcpy( Ptr a, Ptr b)
 {
 	BlockMoveData( b + 1, a, b[ 0]);
 }
@@ -114,7 +157,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriv
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<32; i++) theMAD->header->name[i] = ULTinfo.name[i];
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO ULT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO ULT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat			= ULTSuite.NOP;
 	theMAD->header->numPointers	= 1;					// CHANGE
@@ -298,28 +341,42 @@ static OSErr ExtractULTInfo( PPInfoRec *info, Ptr AlienFile)
 static OSErr TestULTFile( Ptr AlienFile)
 {
 	ULTForm	*myULT = ( ULTForm*) AlienFile;
-	OSType ultID = *((OSType *) myULT->ID);
-	MOT32(&ultID);
-	
-	if( ultID == 'MAS_') return noErr;
-	else return MADFileNotSupportedByThisPlug;
+
+	if( *((long *) myULT->ID) == 'MAS_') return   noErr;
+	else return  MADFileNotSupportedByThisPlug;
 }
 
-OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#ifdef _SRC
+OSErr mainULT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
+EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif
+
+
+//OSErr TEST2main( OSType order, char *AlienFileFSSpec, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
-	OSErr	myErr = noErr;
+	OSErr	myErr;
 	Ptr		AlienFile;
-	UNFILE	iFileRefI;
-	long	sndSize;
+	short	vRefNum, iFileRefI;
+	long		dirID, sndSize;
 	
+#ifndef powerc
+	long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+#endif
+
+	HGetVol( 0L, &vRefNum, &dirID);
+	HSetVol( 0L, AlienFileFSSpec->vRefNum, AlienFileFSSpec->parID);
+
+	myErr = noErr;
+
 	switch( order)
 	{
 		case 'IMPL':
-			iFileRefI = iFileOpen(AlienFileName);
-			if( iFileRefI)
+			myErr = FSOpen( AlienFileFSSpec->name, 0, &iFileRefI);
+			if( myErr == noErr)
 			{
-				sndSize = iGetEOF( iFileRefI);
-				
+				GetEOF( iFileRefI, &sndSize);
+			
 				// ** MEMORY Test Start
 				AlienFile = MADPlugNewPtr( sndSize * 2, init);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
@@ -333,7 +390,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 					if( AlienFile == NULL) myErr = MADNeedMemory;
 					else
 					{
-						myErr = iRead(sndSize, AlienFile, iFileRefI);
+						myErr = FSRead( iFileRefI, &sndSize, AlienFile);
 						if( myErr == noErr)
 						{
 							myErr = TestULTFile( AlienFile);
@@ -345,13 +402,13 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 					}
 					DisposePtr( AlienFile);	AlienFile = NULL;
 				}
-				iClose( iFileRefI);
-			} else myErr = MADReadingErr;
-			break;
-			
+				FSClose( iFileRefI);
+			}
+		break;
+		
 		case 'TEST':
-			iFileRefI = iFileOpen(AlienFileName);
-			if( iFileRefI)
+			myErr = FSOpen( AlienFileFSSpec->name, 0, &iFileRefI);
+			if( myErr == noErr)
 			{
 				sndSize = 1024L;
 				
@@ -359,43 +416,47 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
-					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr)
-						myErr = TestULTFile( AlienFile);
+					myErr = FSRead( iFileRefI, &sndSize, AlienFile);
+					myErr = TestULTFile( AlienFile);
 					
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr( AlienFile);	AlienFile = 0L;
 				}
-				iClose( iFileRefI);
-			} else myErr = MADReadingErr;
-			break;
-			
+				FSClose( iFileRefI);
+			}
+		break;
+
 		case 'INFO':
-			iFileRefI = iFileOpen(AlienFileName);
-			if( iFileRefI)
+			myErr = FSOpen( AlienFileFSSpec->name, 0, &iFileRefI);
+			if( myErr == noErr)
 			{
-				info->fileSize = iGetEOF( iFileRefI);
-				
+				GetEOF( iFileRefI, &info->fileSize);
+			
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
-					myErr = iRead(sndSize, AlienFile, iFileRefI);
+					myErr = FSRead( iFileRefI, &sndSize, AlienFile);
 					if( myErr == noErr)
 					{
 						myErr = ExtractULTInfo( info, AlienFile);
 					}
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr( AlienFile);	AlienFile = 0L;
 				}
-				iClose( iFileRefI);
-			} else myErr = MADReadingErr;
-			break;
-			
+				FSClose( iFileRefI);
+			}
+		break;
+		
 		default:
 			myErr = MADOrderNotImplemented;
-			break;
+		break;
 	}
-	
+
+	HSetVol( 0L, vRefNum, dirID);
+
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
 	return myErr;
 }

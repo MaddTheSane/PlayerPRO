@@ -52,7 +52,6 @@ OSErr MADInitEqualizer( MADDriverRec *intDriver)
 	intDriver->Filter	= (double*) NewPtrClear( sizeof( double) * ((EQPACKET*2)+2));
 	intDriver->fData	= (double*) NewPtrClear( sizeof( double) * ((EQPACKET*2)+2));
 	
-
 	
 	if( intDriver->Filter == NULL) return -1;
 	

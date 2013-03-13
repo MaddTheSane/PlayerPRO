@@ -5,7 +5,7 @@
 
 	Written by:	Jeff Robbin
 
-	Copyright:	Copyright Â©1998 Jeff Robbin
+	Copyright:	Copyright ©1998 Jeff Robbin
 
 */
 
@@ -21,13 +21,6 @@
 #if PRAGMA_STRUCT_ALIGN
 #pragma options align=power
 #endif
-
-struct PlayerMessageInfo;
-struct PlayerPluginMessageInfo;
-struct VisualPluginMessageInfo;
-struct EncoderPluginMessageInfo;
-struct SkinPluginMessageInfo;
-struct DevicePluginMessageInfo;
 
 #ifdef __cplusplus
 extern "C" {
@@ -55,7 +48,7 @@ enum {
 	kTrackSupportsID3Tags	= (1L << 0)			/* Can have ID3 information tags. */
 };
 
-typedef struct SJTrackHeader {
+struct TrackHeader {
 	Str63			name;
 	Str63			artist;
 	Str63			album;
@@ -77,8 +70,8 @@ typedef struct SJTrackHeader {
 	SInt16			year;
 	
 	UInt8			reserved[62];
-}SJTrackHeader;
-//typedef struct TrackHeader TrackHeader;
+};
+typedef struct TrackHeader TrackHeader;
 
 struct FileLocation {
 	FSSpec				spec;

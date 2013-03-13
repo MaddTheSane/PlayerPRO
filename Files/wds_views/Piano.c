@@ -1,11 +1,9 @@
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
-#include "RDriverInt.h"
 #include <QDOffscreen.h>
 #include <Drag.h>
 #include "PPPlug.h"
-#include "PrivateList.h"
 	
 	/******** HELP MODULE ********/
 	enum
@@ -736,7 +734,7 @@ InvertRect( itemRect);
 while( Button())
 {
 	DoGlobalNull();
-	WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+	WaitNextEvent( everyEvent, &theEvent, 1, 0L);
 }
 InvertRect( itemRect);
 }*/
@@ -1309,7 +1307,7 @@ void NPianoRecordProcess( short i, short curSelecInstru, short volume, short tra
 	GrafPtr				myPort;
 	Cmd					*theCommand;
 
-//	if( PianoDlog == NULL) return;
+//	if( PianoDlog == 0L) return;
 
 	if( curSelecInstru == -1)
 	{

@@ -17,12 +17,29 @@
 //	Internet: 		rosset@dial.eunet.ch
 /********************						***********************/
 
-#include <PlayerPROCore/PlayerPROCore.h>
-#include <Sound.h>
+#include "RDriver.h"
+#include "MAD.h"
+#include "PPPlug.h"
+#include "sound.h"
 
-void ConvertInstrumentIn( register Byte *tempPtr, register long sSize)
+
+void pStrcpy(register unsigned char *s1, register unsigned char *s2)
 {
-	register Byte val = 0x80;
+	register short len, i;
+	
+	if (*s2 <= 220) 
+	{
+		len = *s2;
+		for ( i = 0; i <= len; i++)
+		{
+			s1[ i] = s2[ i];
+		}
+	}
+}
+
+void ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize)
+{
+	register	Byte			val = 0x80;
 
 	while( sSize > 0)
 	{
@@ -31,36 +48,36 @@ void ConvertInstrumentIn( register Byte *tempPtr, register long sSize)
 	}
 }
 
-sData* inMADCreateSample()
+sData	* inMADCreateSample()
 {
 	sData	*curData;
 
 	curData = (sData*) NewPtrClear( sizeof( sData));
 	
-	curData->size		= 0;
-	curData->loopBeg	= 0;
-	curData->loopSize	= 0;
+	curData->size		= 0L;
+	curData->loopBeg	= 0L;
+	curData->loopSize	= 0L;
 	curData->vol		= MAX_VOLUME;
 	curData->c2spd		= NOFINETUNE;
 	curData->loopType	= 0;
 	curData->amp		= 8;
 	curData->relNote	= 0;
-	curData->data		= NULL;
+	curData->data		= 0L;
 	
 	return curData;		
 }
 
-OSErr inAddSoundToMAD(Ptr			theSound,
-					  long			lS,
-					  long			lE,
-					  short			sS,
-					  short			bFreq,
-					  unsigned long	rate,
-					  Boolean		stereo,
-					  Str255		name,
-					  InstrData		*InsHeader,					// Ptr on instrument header
-					  sData			**sample,					// Ptr on samples data
-					  short			*sampleID)
+OSErr inAddSoundToMAD(	Ptr				theSound,
+						long			lS,
+						long			lE,
+						short			sS,
+						short			bFreq,
+						unsigned long	rate,
+						Boolean			stereo,
+						Str255			name,
+						InstrData		*InsHeader,					// Ptr on instrument header
+						sData			**sample,					// Ptr on samples data
+						short			*sampleID)
 {
 	long 	inOutBytes, i;
 	sData	*curData;

@@ -225,7 +225,7 @@ void SaveUndo( short UndoType, short ID, Str255 textMenu)
 		case USample:
 			CopyFid			= curMusic->fid[ ID];
 			
-			myUndo.dataSize = 0;
+			myUndo.dataSize = 0L;
 			for( i = 0; i < CopyFid.numSamples; i++)
 			{
 				sData	*curData = curMusic->sample[ curMusic->fid[ ID].firstSample + i];
@@ -236,7 +236,7 @@ void SaveUndo( short UndoType, short ID, Str255 textMenu)
 			if( myUndo.data == NULL) ResetUndo();
 			else
 			{
-				myUndo.dataSize = 0;
+				myUndo.dataSize = 0L;
 				for( i = 0; i < CopyFid.numSamples; i++)
 				{
 					sData	*curData = curMusic->sample[ curMusic->fid[ ID].firstSample +  i];
@@ -403,7 +403,7 @@ Boolean				IsReading;
 		case USample:
 			// ** REDO **
 			myTempFid 	= curMusic->fid[ myUndo.ID];
-			myTempSize 	= 0;
+			myTempSize 	= 0L;
 			for( i = 0; i < myTempFid.numSamples; i++)
 			{
 				sData	*curData = curMusic->sample[ curMusic->fid[ myUndo.ID].firstSample +  i];
@@ -418,7 +418,7 @@ Boolean				IsReading;
 			}
 			else
 			{
-				myTempSize = 0;
+				myTempSize = 0L;
 				for( i = 0; i < myTempFid.numSamples; i++)
 				{
 					sData	*curData = curMusic->sample[ curMusic->fid[ myUndo.ID].firstSample +  i];
@@ -446,7 +446,7 @@ Boolean				IsReading;
 			curMusic->fid[ myUndo.ID].firstSample = x;
 			curMusic->fid[ myUndo.ID].numSamples = 0;
 			
-			size = 0;
+			size = 0L;
 			for( i = 0; i < CopyFid.numSamples; i++)
 			{
 				sData	*curData;
@@ -536,7 +536,7 @@ Boolean				IsReading;
 					myTempInstru 	= MyNewPtr( myTempSize);
 					if( myTempInstru != NULL)
 					{
-						myTempSize = 0;
+						myTempSize = 0L;
 						BlockMoveData( &curMusic->fid[ i], myTempInstru + myTempSize, sizeof( InstrData));
 						myTempSize	+= sizeof( InstrData);
 						
@@ -569,7 +569,7 @@ Boolean				IsReading;
 						
 						firstSample = curMusic->fid[ i].firstSample;
 						
-						size = 0;
+						size = 0L;
 						BlockMoveData( CopyAllInstruments[ i] + size, &curMusic->fid[ i], sizeof( InstrData));
 						size += sizeof( InstrData);
 						

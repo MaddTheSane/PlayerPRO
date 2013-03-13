@@ -8,17 +8,33 @@
 //	appear at the end of the loop, and also linearize
 //	the harmonic content in it.
 
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include "MAD.h"
+#include "PPPlug.h"
+
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( sData*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoPlug*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( long)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
-OSErr mainCrossFade( 	sData					*theData,
+OSErr main( 	sData					*theData,
 				long					SelectionStart,
 				long					SelectionEnd,
 				PPInfoPlug				*thePPInfoPlug,
-				short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+				long					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	switch( theData->amp)
 	{
@@ -89,12 +105,3 @@ OSErr mainCrossFade( 	sData					*theData,
 	
 	return noErr;
 }
-
-// C3D9EA39-A386-4636-B115-6B517215F095
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xC3, 0xD9, 0xEA, 0x39, 0xA3, 0x86, 0x46, 0x36, 0xB1, 0x15, 0x6B, 0x51, 0x72, 0x15, 0xF0, 0x95)
-
-#define PLUGMAIN mainCrossFade
-#define PLUGINFACTORY CrossFadeFactory
-
-#include "CFPlugin-FilterBridge.c"
-

@@ -24,7 +24,7 @@
 #ifndef __AMFH__
 #define __AMFH__
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
+#if defined(powerc) || defined (__powerc)
 #pragma options align=mac68k
 #endif
 
@@ -51,8 +51,7 @@ typedef struct {
     uchar       volume;
     ulong       loopstart,loopend;
 } INSTRUMENT;
-
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
+#if defined(powerc) || defined(__powerc)
 #pragma options align=reset
 #endif
 

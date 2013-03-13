@@ -37,6 +37,9 @@ void CloseEffect( Channel *ch, short notUsed, MADDriverRec *intDriver)
 {
 	switch( ch->cmd)
 	{
+		default:
+		break;
+	
 		case arpeggioE:
 			if( ch->arpUse) 
 			{
@@ -95,11 +98,7 @@ void CloseEffect( Channel *ch, short notUsed, MADDriverRec *intDriver)
 				
 			break;
 			}
-			break;
-			
-		default:
-			break;
-			
+		break;
 	}
 	
 	ch->arg = 0;
@@ -112,6 +111,12 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 	
 	switch( ch->cmd)
 	{
+		default:
+			ch->cmd = 0;
+			ch->arg = 0;
+			return;
+		break;
+	
 		case arpeggioE:						// OK
 			if( ch->arg != 0 && ch->arpUse == true)
 			{
@@ -353,12 +358,6 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 				break;
 			}
 		break;
-			
-		default:
-			ch->cmd = 0;
-			ch->arg = 0;
-			return;
-			break;
 	}
 	
 /*	if( call == intDriver->speed - 1)

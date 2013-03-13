@@ -21,8 +21,35 @@
 //
 /********************						***********************/
 
-#include <PlayerPROCore/PlayerPROCore.h>
 #include "MTM.h"
+#include "MAD.h"
+#include "RDriver.h"
+
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE(sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( Ptr)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( MADMusic*)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoRec*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( MADDriverSettings*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
+Ptr MADPlugNewPtr( long size, MADDriverSettings* init)
+{
+	return NewPtr( size);
+}
+
+Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init)
+{
+	return NewPtrClear( size);
+}
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
@@ -32,30 +59,30 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
-static inline void mystrcpy( Ptr a, BytePtr b)
+void mystrcpy( Ptr a, Ptr b)
 {
 	BlockMoveData( b + 1, a, b[ 0]);
 }
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*msg_buf);
+#define Tdecode16(msg_buf) EndianU16_LtoN(*(short*)msg_buf);
 #else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
-	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
-	return toswap;
+  unsigned char *buf = msg_buf;
+  
+  return( (unsigned long) buf[3] << 24) | ( (unsigned long) buf[2] << 16) | ( (unsigned long) buf[ 1] << 8) | ( (unsigned long) buf[0]);
 }
 #endif
 
 #ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*msg_buf);
+#define Tdecode32(msg_buf)  EndianU32_LtoN(*(int*)msg_buf);
 #else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
-	UInt32 toswap = *((UInt32*) msg_buf);
-	INT32(&toswap);
-	return toswap;
+  unsigned char *buf = msg_buf;
+  
+  return ( (short) buf[1] << 8) | ( (short) buf[0]);
 }
 #endif
 
@@ -111,7 +138,7 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 	/**** Analyse des instruments ****/
 	if( MTMFile->NOS > 64) return MADUnknowErr;
 	
-	for( i = 0, OffSetToSample = 0; i < MTMFile->NOS ; i++)
+	for( i = 0, OffSetToSample = 0L; i < MTMFile->NOS ; i++)
 	{
 		theInstrument[ i] = samplePtr + OffSetToSample;
 
@@ -157,7 +184,7 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 		theMAD->header->name[i] = MTMFile->songname[i];
 	}
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MTM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO MTM Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->tempo = 125;
 	theMAD->header->speed = 6;
@@ -241,8 +268,8 @@ static OSErr ConvertMTM2Mad( MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MA
 
 		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
 
-		theMAD->partition[ i]->header.patBytes = 0;
-		theMAD->partition[ i]->header.unused2 = 0;
+		theMAD->partition[ i]->header.patBytes = 0L;
+		theMAD->partition[ i]->header.unused2 = 0L;
 
 		MaxPtr = (Ptr) theMAD->partition[ i];
 		MaxPtr += sizeof( PatHeader) + theMAD->header->numChn * 64L * sizeof( Cmd);
@@ -330,13 +357,26 @@ static OSErr TestFile( MTMDef *myFile)
 /* MAIN FUNCTION */
 /*****************/
 
-OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#ifdef _SRC
+OSErr mainMTM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
+EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif
+
+
+//OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
 	short	iFileRefI;
 	long	sndSize;
-		
+	
+#ifndef powerc
+	long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+#endif
+	
+//	MYC2PStr( AlienFileName);
+	
 	myErr = noErr;
 	
 	switch( order)
@@ -349,7 +389,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 			
 				// ** TEST MEMOIRE :  Environ 2 fois la taille du fichier**
 				AlienFile = MADPlugNewPtr( sndSize * 2L, init);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if( AlienFile == 0L) myErr = MADNeedMemory;
 				// ** 
 				
 				else
@@ -365,7 +405,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 						myErr = ConvertMTM2Mad( (MTMDef*) AlienFile, GetPtrSize( AlienFile), MadFile, init);
 					}
 						
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr( AlienFile);	AlienFile = 0L;
 				}
 				iClose( iFileRefI);
 			}
@@ -379,14 +419,14 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if( AlienFile == 0L) myErr = MADNeedMemory;
 				else
 				{
 					iRead( sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestFile( (MTMDef*) AlienFile);
 					
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr( AlienFile);	AlienFile = 0L;
 				}
 				iClose( iFileRefI);
 			}
@@ -406,14 +446,14 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if( AlienFile == 0L) myErr = MADNeedMemory;
 				else
 				{
 					iRead( sndSize, AlienFile, iFileRefI);
 					
 					myErr = ExtractInfo( info, (MTMDef*) AlienFile);
 					
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr( AlienFile);	AlienFile = 0L;
 				}
 				iClose( iFileRefI);
 			}
@@ -425,5 +465,10 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 		break;
 	}
 	
+//	MYP2CStr( (unsigned char*) AlienFileName);
+	
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
 	return myErr;
 }

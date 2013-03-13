@@ -1,6 +1,5 @@
 #ifndef __UNDOH__
 #define __UNDOH__
-#include <Carbon/Carbon.h>
 
 enum
 {

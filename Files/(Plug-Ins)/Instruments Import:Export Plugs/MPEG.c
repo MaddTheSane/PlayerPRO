@@ -8,6 +8,23 @@
 #include <Sound.h>
 #include <Movies.h>
 
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( InstrData*)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( sData**)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( short*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( FSSpec*)))
+		| STACK_ROUTINE_PARAMETER(6, SIZE_CODE(sizeof( PPInfoPlug*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
 OSErr main(		OSType					order,						// Order to execute
 				InstrData				*InsHeader,					// Ptr on instrument header
 				sData					**sample,					// Ptr on samples data
@@ -18,9 +35,13 @@ OSErr main(		OSType					order,						// Order to execute
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
-	UNFILE	iFileRefI;
+	short	iFileRefI;
 	long	inOutBytes;
-		
+	
+	#ifndef powerc
+		long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+	#endif
+	
 	switch( order)
 	{
 		case 'PLAY':
@@ -66,6 +87,10 @@ OSErr main(		OSType					order,						// Order to execute
 			myErr = MADOrderNotImplemented;
 		break;
 	}
-		
+	
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+	
 	return myErr;
 }

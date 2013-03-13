@@ -7,13 +7,29 @@
 	SWITZERLAND
 */
 
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include "MAD.h"
+#include "PPPlug.h"
 
-static GDHandle	TheGDevice/*:0xCC8*/;
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( sData*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoPlug*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( long)))
+};
 
-static void SetDText (DialogPtr dlog, short item, Str255 str)
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
+
+GDHandle	TheGDevice:0xCC8;
+
+void SetDText (DialogPtr dlog, short item, Str255 str)
 {
 	ControlHandle	control;
 
@@ -99,11 +115,11 @@ static Boolean getParams ( long *p1, PPInfoPlug *thePPInfoPlug)
 		{
 			RESTART:
 			
-//			#if defined(powerc) || defined(__powerc)
+			#if defined(powerc) || defined(__powerc)
 			ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
-//			#else
-//			ModalDialog( (ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
-//			#endif
+			#else
+			ModalDialog( (ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+			#endif
 		}
 		while ((itemHit != ok) && (itemHit != cancel));
 		
@@ -130,11 +146,11 @@ static Boolean getParams ( long *p1, PPInfoPlug *thePPInfoPlug)
 	return theResult;
 }
 
-OSErr mainDepth( 	sData					*theData,
-					long					SelectionStart,
-					long					SelectionEnd,
-					PPInfoPlug				*thePPInfoPlug,
-					short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+OSErr main( 	sData					*theData,
+				long					SelectionStart,
+				long					SelectionEnd,
+				PPInfoPlug				*thePPInfoPlug,
+				long					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long			i, temp, Inc;
 	Byte			*Sample8Ptr = (Byte*) theData->data;
@@ -199,11 +215,3 @@ OSErr mainDepth( 	sData					*theData,
 	}
 	return noErr;
 }
-
-// D7F6D8C0-FC86-48E4-A2B8-61BB681DE071
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xD7, 0xF6, 0xD8, 0xC0, 0xFC, 0x86, 0x48, 0xE4, 0xA2, 0xB8, 0x61, 0xBB, 0x68, 0x1D, 0xE0, 0x71)
-
-#define PLUGMAIN mainDepth
-#define PLUGINFACTORY DepthFactory
-
-#include "CFPlugin-FilterBridge.c"

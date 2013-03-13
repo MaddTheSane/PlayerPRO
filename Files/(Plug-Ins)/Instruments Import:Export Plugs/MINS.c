@@ -3,10 +3,27 @@
 /*	v 1.0			*/
 /*	1996 by ANR		*/
 
-#include <PlayerPROCore/PlayerPROCore.h>
-#include <Sound.h>
+#include "PPPlug.h"
+#include "sound.h"
 
-static OSErr TestMINS( InstrData *CC)
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( InstrData*)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( sData**)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( short*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( FSSpec*)))
+		| STACK_ROUTINE_PARAMETER(6, SIZE_CODE(sizeof( PPInfoPlug*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
+OSErr TestMINS( InstrData *CC)
 {
 	if( CC->type == 0 && CC->numSamples >= 0 && CC->numSamples < MAXSAMPLE) return noErr;
 	else return MADFileNotSupportedByThisPlug;
@@ -14,8 +31,8 @@ static OSErr TestMINS( InstrData *CC)
 
 static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 {
-	short		i;
-	Boolean		IsReading;
+short			i;
+Boolean			IsReading;
 
 	for( i = 0; i < curIns->numSamples; i++)
 	{
@@ -75,7 +92,7 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	return noErr;
 }
 
-OSErr mainMINs(	OSType					order,						// Order to execute
+OSErr main(		OSType					order,						// Order to execute
 				InstrData				*InsHeader,					// Ptr on instrument header
 				sData					**sample,					// Ptr on samples data
 				short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
@@ -84,14 +101,19 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 				PPInfoPlug				*thePPInfoPlug)
 {
 	OSErr	myErr;
-	UNFILE	iFileRefI;
-	short	x;
+	short	iFileRefI, x;
 	long	inOutCount;
-	Ptr		theSound;
-
+	
+	#ifndef powerc
+		long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+	#endif
+	
 	switch( order)
 	{
 		case 'IMPL':
+		{
+			Ptr				theSound;
+			
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if( myErr == noErr)
 			{
@@ -132,10 +154,13 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 				
 				FSClose( iFileRefI);
 			}
-		
-			break;
+		}
+		break;
 		
 		case 'TEST':
+		{
+			Ptr	theSound;
+			
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if( myErr == noErr)
 			{
@@ -153,8 +178,8 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 				
 				FSClose( iFileRefI);
 			}
-		
-			break;
+		}
+		break;
 		
 		case 'EXPL':
 			
@@ -184,20 +209,16 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 				}
 				FSClose( iFileRefI);
 			}
-			break;
+		break;
 		
 		default:
 			myErr = MADOrderNotImplemented;
-			break;
+		break;
 	}
+	
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
 	
 	return myErr;
 }
-
-// 9C897935-C00B-4AAC-81D6-E43049E3A8E0
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x9C, 0x89, 0x79, 0x35, 0xC0, 0x0B, 0x4A, 0xAC, 0x81, 0xD6, 0xE4, 0x30, 0x49, 0xE3, 0xA8, 0xE0)
-#define PLUGINFACTORY MINsFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainMINs //The old main function, renamed please
-
-#include "CFPlugin-InstrBridge.c"
-

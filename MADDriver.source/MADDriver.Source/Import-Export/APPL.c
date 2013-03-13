@@ -21,10 +21,40 @@
 //
 /********************						***********************/
 
-#include <PlayerPROCore/PlayerPROCore.h>
 #include "MOD.h"
+#include "MAD.h"
+#include "RDriver.h"
 
-static OSErr MADResetInstrument( InstrData		*curIns)
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE(sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( Ptr)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( MADMusic*)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoRec*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( MADDriverSettings*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
+
+Ptr MADPlugNewPtr( long size, MADDriverSettings* init)
+{
+	if( init->sysMemory) return NewPtrSys( size);
+	else return NewPtr( size);
+}
+
+Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init)
+{
+	if( init->sysMemory) return NewPtrSysClear( size);
+	else return NewPtrClear( size);
+}
+
+OSErr MADResetInstrument( InstrData		*curIns)
 {
 	short i;
 
@@ -228,7 +258,7 @@ static OSErr TESTMADH( MADSpec* MADPtr)
 
 static OSErr INFOMADF( MADSpec* MADPtr, PPInfoRec *info)
 {
-	short	i;
+short	i;
 
 	strcpy( info->internalFileName, MADPtr->name);
 	
@@ -324,11 +354,11 @@ static OSErr SaveAPPL( short APPLType, short fRefNum, MADMusic *MadFile, MADDriv
 		}
 	}
 	
-	/*if( init->sysMemory) hRsrc = NewHandleSys( fileSize);
-	else */hRsrc =  NewHandle( fileSize);
-	if( hRsrc == NULL) return MADNeedMemory;
+	if( init->sysMemory) hRsrc = NewHandleSys( fileSize);
+	else hRsrc =  NewHandle( fileSize);
+	if( hRsrc == 0L) return MADNeedMemory;
 	
-	tt = 0;
+	tt = 0L;
 	HLock( hRsrc);
 	
 	/********* Write File *********/
@@ -489,7 +519,7 @@ static Boolean HasToClose( FSSpec *spec)
 	pb.hFileInfo.ioDirID 		= spec->parID;
 	pb.hFileInfo.ioFDirIndex 	= 0;
 	
-	rc = PBGetCatInfoSync( &pb);
+	rc = PBGetCatInfo( &pb, false);
 	if( rc != noErr) return false;
 	
 	if ( fpb->ioFlAttrib & 16)
@@ -509,16 +539,26 @@ static Boolean HasToClose( FSSpec *spec)
 /* MAIN FUNCTION */
 /*****************/
 
-OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#ifdef _SRC
+OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
+EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif
+
+
+//OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr		myErr;
-	UNFILE		iFileRefI;
-	short		i;
+	short		iFileRefI, i;
 	Handle		myRes;
 	Boolean		hasToClose;
 	FSSpec		AlienFileFSSpec;
 	
-	HGetVol( NULL, &AlienFileFSSpec.vRefNum, &AlienFileFSSpec.parID);
+#ifndef powerc
+	long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+#endif
+
+	HGetVol( 0L, &AlienFileFSSpec.vRefNum, &AlienFileFSSpec.parID);
 	MYC2PStr( AlienFileName);
 	for( i = 0; i <= AlienFileName[ 0]; i++) AlienFileFSSpec.name[ i] = AlienFileName[ i];
 	
@@ -584,12 +624,13 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 				
 				APPLType = 1;	//ChooseCompilation();
 				if( APPLType == -1) break;
-				FSpDelete( &AlienFileFSSpec);
-				FSpCreate( &AlienFileFSSpec, 'Prou', 'APPL', 0);
-				myErr = FSpOpenDF( &AlienFileFSSpec, fsRdWrPerm, &fRefNum);
+				
+				FSDelete( AlienFileFSSpec.name, 0);
+				Create( AlienFileFSSpec.name, 0, 'Prou', 'APPL');
+				myErr = FSOpen( AlienFileFSSpec.name, 0, &fRefNum);
 				if( myErr == noErr)
 				{
-					FSpCreateResFile( &AlienFileFSSpec, 'Prou', 'APPL', 0);
+					CreateResFile( AlienFileFSSpec.name);
 					iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);
 					if( iFileRefI == -1) myErr = MADUnknowErr;
 					else
@@ -600,7 +641,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 						
 						CloseResFile( iFileRefI);
 					}
-					FSCloseFork( fRefNum);
+					FSClose( fRefNum);
 				}
 			}
 		break;
@@ -638,5 +679,8 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 	
 	MYP2CStr( (unsigned char*) AlienFileName);
 	
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
 	return myErr;
 }

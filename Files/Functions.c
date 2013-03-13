@@ -2,7 +2,7 @@
 #include "RDriver.h"
 #include "Undo.h"
 
-/*void TurnRadio( short	item, DialogPtr	dlog, Boolean alors);
+void TurnRadio( short	item, DialogPtr	dlog, Boolean alors);
 void SetDText (DialogPtr dlog, short item, Str255 str);
 void ControlSwitch(short	item, DialogPtr	dlog, short	Switch);
 void OutPutHexShort( Str255 outch, short column, short shortNumber);
@@ -15,7 +15,7 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog);
 void GetDigitalSelection( short *XStart, short *YStart, short *XEnd, short *YEnd, short*);
 void SetDigitalSelection( short XStart, short YStart, short XEnd, short YEnd);
 void GetDText (DialogPtr dlog, short item, StringPtr str);
-void Erreur( short ID, OSErr	theErr);*/
+void Erreur( short ID, OSErr	theErr);
 	
 		DialogPtr		FindDlog;
 extern	DialogPtr		MozartDlog, EditorDlog;
@@ -267,7 +267,7 @@ void  UpdateFind(DialogPtr GetSelection)
 
 		BeginUpdate( GetDialogWindow( FindDlog));
 	
- 		UpdateDialog( FindDlog, FindDlog->visRgn);
+ 		UpdtDialog( FindDlog, FindDlog->visRgn);
 		
 		oldFrameButton( FindDlog);
 		
@@ -378,7 +378,7 @@ void CreateFind(void)
 	Point					myPt;
 	Rect					itemRect;
 /*
-	if( FindDlog != NULL)
+	if( FindDlog != 0L)
 	{
 		SelectWindow2( FindDlog);
 		SetPortDialogPort( FindDlog);
@@ -474,8 +474,8 @@ void CreateFind(void)
 
 /*void CloseFind()
 {
-	if( FindDlog != NULL) DisposeDialog( FindDlog);
-	FindDlog = NULL;
+	if( FindDlog != 0L) DisposDialog( FindDlog);
+	FindDlog = 0L;
 }
 */
 

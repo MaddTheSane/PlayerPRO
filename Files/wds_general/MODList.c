@@ -4,7 +4,7 @@
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include <Aliases.h>
-//#include <Packages.h>
+#include <Packages.h>
 #include "PrivateList.h"
 #include "GetFileIcon.h"
 #include <Navigation.h>
@@ -86,8 +86,6 @@ OSErr GereMusicListChanged();
 		*items = AHelp;
 	//	UpdateAHelpInfo( AHelp, AHELPSIZE, MODListDlog);
 	}
-OSErr DoShowInfo( Point	theCell);
-void DoKeyPressMODList( short theChar);
 
 short MLAddRow( short no, short pos)
 {
@@ -415,7 +413,7 @@ Str255					tempStr;
 short					*shortPtr;
 FInfo					fndrInfo;
 
-#define MAXSTCSIZE	400000	// 400 Kb
+#define MAXSTCSIZE	400000L	// 400 Kb
 
 	iErr = FSpDelete( &spec);
 	iErr = FSpCreate( &spec, 'SNPL', 'STCf', smSystemScript);
@@ -592,7 +590,7 @@ GetPort( &myPort);
 	
 //	MLindex++;
 	
-//	iErr = HSetVol( NULL, spec.vRefNum, spec.parID);
+//	iErr = HSetVol( 0L, spec.vRefNum, spec.parID);
 	
 	SaveMyMODListSTCf( spec);
 	
@@ -837,7 +835,7 @@ InvalWindowRect( GetDialogWindow( MODListDlog), &itemRect);
 {
 Str255	aStr;
 pStrcpy( curMusicList.name, fName);
-HGetVol( NULL, &curMusicList.vRefNum, &curMusicList.parID);
+HGetVol( 0L, &curMusicList.vRefNum, &curMusicList.parID);
 
 pStrcpy( aStr, curMusicList.name);
 SetWTitle( GetDialogWindow( MODListDlog), aStr);
@@ -910,7 +908,7 @@ Str255	myPath[ 200];
 	
 	if( noCell > 200) noCell = 200;
 	
-	myFSS = (FSSpec*) NewPtr( sizeof( FSSpec) * 100);
+	myFSS = (FSSpec*) NewPtr( sizeof( FSSpec) * 100L);
 	
 	for( i = 0; i < noCell; i++)
 	{
@@ -1186,7 +1184,7 @@ Boolean IsMyTypeMODList( DragReference theDrag)
 	
 		GetFlavorDataSize( theDrag, theItem, flavorTypeHFS, &textSize);
 		
-		GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+		GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 
 		ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		
@@ -1428,7 +1426,7 @@ pascal OSErr MyReceiveMODList(WindowPtr theWindow, void* handlerRefCon, DragRefe
 		{
 			Boolean			targetIsFolder, wasAliased;
 			
-			GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+			GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 			
 			iErr = ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 			
@@ -1917,7 +1915,7 @@ void ShowMusicInfo( Str255 name, short VRef, long parID, short id)
 		fss.parID	= parID;
 		pStrcpy( fss.name, name);
 	
-	//	iErr = HSetVol( NULL, VRef, parID);
+	//	iErr = HSetVol( 0L, VRef, parID);
 		iErr = FSpGetFInfo( &fss, &fndrInfo);
 		if( iErr == fnfErr || iErr == fLckdErr)
 		{
@@ -1944,7 +1942,7 @@ void ShowMusicInfo( Str255 name, short VRef, long parID, short id)
 		if( iErr == noErr)
 		{
 			iErr = GetEOF( QTRes, &fileSize);
-			FSCloseFork( QTRes);
+			FSClose( QTRes);
 			
 			if( fileSize == 0)
 			{
@@ -1952,7 +1950,7 @@ void ShowMusicInfo( Str255 name, short VRef, long parID, short id)
 				if( iErr == noErr)
 				{
 					iErr = GetEOF( QTRes, &fileSize);
-					FSCloseFork( QTRes);
+					FSClose( QTRes);
 				}
 			}
 		}
@@ -2033,7 +2031,7 @@ void ShowMusicInfo( Str255 name, short VRef, long parID, short id)
 					SetDText( MODListDlog, 17, StrTemp);
 					
 					StrTemp[ 0] = 4;
-					((UInt32*) (StrTemp + 1 ))[ 0] = EndianU32_NtoB(info.signature);
+					((long*) (StrTemp + 1 ))[ 0] = info.signature;
 					SetDText( MODListDlog, 15, StrTemp);
 				}
 				else
@@ -2607,7 +2605,7 @@ void FileInformations( short whichItem)
 	do
 	{
 		EncoreEncore:
-	//	ModalDialog( NULL, &itemHit);
+	//	ModalDialog( 0L, &itemHit);
 		MyModalDialog( TheDia, &itemHit);
 		
 		switch( itemHit)
@@ -2744,7 +2742,7 @@ void FileInformations( short whichItem)
 		GetDText( TheDia, 4, aStr);
 		if( aStr[ 0] > 31) aStr[ 0] = 31;
 		
-	//	HSetVol( NULL, myFSS.vRefNum, myFSS.parID);
+	//	HSetVol( 0L, myFSS.vRefNum, myFSS.parID);
 		if( FSpRename( &myFSS, aStr) == noErr)
 		{
 			pStrcpy( myFSS.name, aStr);
@@ -2779,9 +2777,9 @@ void FileInformations( short whichItem)
 	SetPort( myPort);
 }
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+	#include <stdio.h>
+	#include <stdlib.h>
+//	#include <string.h>
 
 #define NUM_ARRAY_ELEMS	5
 #define STRING_LENGTH	3
@@ -2838,7 +2836,7 @@ void SortMusicList(void)
 			PLSetSelect( -1, -1, -1, -1, &myList);
 			
 			selecCell.h = 0;	selecCell.v = 0;
-		/*	if( LSearch( &selectDat, sizeof( FSSpec), NULL, &selecCell, MODList))
+		/*	if( LSearch( &selectDat, sizeof( FSSpec), 0L, &selecCell, MODList))
 			{
 				PLSetSelect( selecCell.h, selecCell.v, selecCell.h, selecCell.v, &myList);
 				PLAutoScroll( &myList);
@@ -2865,7 +2863,7 @@ void DoItemPressMODList( short whichItem, DialogPtr whichDialog)
 		Handle				itemHandle;
 		Rect				caRect, itemRect, cellRect;
 		OSErr				iErr;
-//		StandardFileReply	reply;
+		StandardFileReply	reply;
 		Point				myPt;
 		long				tempLong;
 		FInfo				fndrInfo;
@@ -2948,7 +2946,7 @@ void DoItemPressMODList( short whichItem, DialogPtr whichDialog)
 	switch( whichItem)
 	{	
 	case 27:
-	//	if( GetControlHilite( InfoBut) == 0 && MyTrackControl( InfoBut, theEvent.where, NULL))
+	//	if( GetControlHilite( InfoBut) == 0 && MyTrackControl( InfoBut, theEvent.where, 0L))
 		{
 			theCell.v = 0;	theCell.h = 0;
 			if( PLGetSelect( &theCell, &myList)) FileInformations( theCell.v);
@@ -2956,35 +2954,35 @@ void DoItemPressMODList( short whichItem, DialogPtr whichDialog)
 	break;
 	
 	case 32:
-	//	if( GetControlHilite( AZBut) == 0 && MyTrackControl( AZBut, theEvent.where, NULL))
+	//	if( GetControlHilite( AZBut) == 0 && MyTrackControl( AZBut, theEvent.where, 0L))
 		{
 			SortMusicList();
 		}
 	break;
 
 	case 31:
-	//	if( GetControlHilite( DelBut) == 0 && MyTrackControl( DelBut, theEvent.where, NULL))
+	//	if( GetControlHilite( DelBut) == 0 && MyTrackControl( DelBut, theEvent.where, 0L))
 		{
 			DoKeyPressMODList( 8);
 		}
 	break;
 
 	case 28:
-	//	if( GetControlHilite( OpenBut) == 0 && MyTrackControl( OpenBut, theEvent.where, NULL))
+	//	if( GetControlHilite( OpenBut) == 0 && MyTrackControl( OpenBut, theEvent.where, 0L))
 		{
 			DoKeyPressMODList( 0x0D);
 		}
 	break;
 	
 	case 29:
-	//	if( GetControlHilite( LoadBut) == 0 && MyTrackControl( LoadBut, theEvent.where, NULL))
+	//	if( GetControlHilite( LoadBut) == 0 && MyTrackControl( LoadBut, theEvent.where, 0L))
 		{
 			HandleFileChoice( 2);
 		}
 	break;
 
 	case 19:
-	//	if( GetControlHilite( prefBut) == 0 && MyTrackControl( prefBut, theEvent.where, NULL))
+	//	if( GetControlHilite( prefBut) == 0 && MyTrackControl( prefBut, theEvent.where, 0L))
 		{
 #include "Help.h"
 			
@@ -2993,7 +2991,7 @@ void DoItemPressMODList( short whichItem, DialogPtr whichDialog)
 	break;
 
 	case 30:
-	//	if( GetControlHilite( FlipBut) == 0 && MyTrackControl( FlipBut, theEvent.where, NULL))
+	//	if( GetControlHilite( FlipBut) == 0 && MyTrackControl( FlipBut, theEvent.where, 0L))
 		{
 			EraseGrowIcon( whichDialog);
 			
@@ -3414,7 +3412,7 @@ OSErr GereMusicListChanged()
 			
 			if( curMusicListFile)
 			{
-				//HSetVol( NULL, curMusicList.vRefNum, curMusicList.parID);
+				//HSetVol( 0L, curMusicList.vRefNum, curMusicList.parID);
 				SaveMyMODListSTCf( curMusicList);
 			}
 			else SaveMODList();
@@ -3444,7 +3442,7 @@ void DoNullMODList()
 Point		pt;
 GrafPtr		savedPort;
 
-if( MODListDlog == NULL) return;
+if( MODListDlog == 0L) return;
 
 	GetPort( &savedPort);
 	SetPortDialogPort( MODListDlog);
@@ -3527,7 +3525,7 @@ void COPYMODList()		// Create a rsrc from a file
 					
 					DisposePtr( file);
 				}
-				FSCloseFork( refNum);
+				FSClose( refNum);
 			}
 		}
 	}
@@ -3546,7 +3544,7 @@ void PASTEMODList()		// Create a file from a handle -
 		
 		if( pScrpInf->scrapSize > 0)
 		{
-			lCntOrErr = GetScrap( NULL, *((OSType*)*pScrpInf->scrapHandle), &scrapOffset);
+			lCntOrErr = GetScrap( 0L, *((OSType*)*pScrpInf->scrapHandle), &scrapOffset);
 			
 			if( lCntOrErr > 0)
 			{
@@ -3558,7 +3556,7 @@ void PASTEMODList()		// Create a file from a handle -
 				OSErr				iErr;
 				
 				theHandle = MyNewHandle( lCntOrErr);
-				if( theHandle != NULL)
+				if( theHandle != 0L)
 				{
 					GetScrap( theHandle, *((OSType*)*pScrpInf->scrapHandle), &scrapOffset);
 					HLock( theHandle);

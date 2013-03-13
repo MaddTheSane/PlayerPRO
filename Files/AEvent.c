@@ -47,7 +47,6 @@ pascal OSErr	AEStopMusic( const AppleEvent *theAppleEvent, AppleEvent *reply, lo
 pascal OSErr	AESetVolume( const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
 pascal OSErr	AESetSpeed(  const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
 pascal OSErr	AESetDriver( const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
-OSErr MyGotRequiredParams (const AppleEvent *theAppleEvent);
 
 /********************************/
 
@@ -196,7 +195,11 @@ static pascal OSErr  ANEQApp (const AppleEvent *theAppleEvent, AppleEvent *reply
 	OSErr		err;
 	long		itemsInList;
 
+	#if MACOS9VERSION
 	End = true;
+	#else
+	End = true;
+	#endif
 /*	// get the direct parameter--a descriptor list--and put it into a docList
 	err = AEGetParamDesc (theAppleEvent, keyDirectObject, typeAEList, &docList);
 	if (err) return err;
@@ -398,18 +401,18 @@ short InstallAE(void)
 			AEGotoPercentDesc	= NewAEEventHandlerUPP( AEGotoPercent);
 			AEErreurDesc		= NewAEEventHandlerUPP( AEErreur);
 			
-			err = AEInstallEventHandler (kCoreEventClass, kAEOpenDocuments, AEODocDesc, 0, false);
-			err = AEInstallEventHandler (kCoreEventClass, kAEQuitApplication, AEQAppDesc, 0, false);
+			err = AEInstallEventHandler (kCoreEventClass, kAEOpenDocuments, AEODocDesc, 0L, false);
+			err = AEInstallEventHandler (kCoreEventClass, kAEQuitApplication, AEQAppDesc, 0L, false);
 			
-			err = AEInstallEventHandler (kPlayerPROClass, kErreurID			, AEErreurDesc, 0, false);
-			err = AEInstallEventHandler (kPlayerPROClass, kPlayMusicID		, AEPlayMusicDesc, 0, false);
-			err = AEInstallEventHandler (kPlayerPROClass, kStopMusicID		, AEStopMusicDesc, 0, false);
-			err = AEInstallEventHandler (kPlayerPROClass, kSetSpeedID		, AESetSpeedDesc, 0, false);
-			err = AEInstallEventHandler (kPlayerPROClass, kSetVolumeID		, AESetVolumeDesc, 0, false);
-			err = AEInstallEventHandler (kPlayerPROClass, kSetPitchID		, AESetPitchDesc, 0, false);
-			err = AEInstallEventHandler (kPlayerPROClass, kGotoPatternID	, AEGotoPatternDesc, 0, false);
-			err = AEInstallEventHandler (kPlayerPROClass, kGotoPositionID	, AEGotoPositionDesc, 0, false);
-			err = AEInstallEventHandler (kPlayerPROClass, kGotoPercentID	, AEGotoPercentDesc, 0, false);
+			err = AEInstallEventHandler (kPlayerPROClass, kErreurID			, AEErreurDesc, 0L, false);
+			err = AEInstallEventHandler (kPlayerPROClass, kPlayMusicID		, AEPlayMusicDesc, 0L, false);
+			err = AEInstallEventHandler (kPlayerPROClass, kStopMusicID		, AEStopMusicDesc, 0L, false);
+			err = AEInstallEventHandler (kPlayerPROClass, kSetSpeedID		, AESetSpeedDesc, 0L, false);
+			err = AEInstallEventHandler (kPlayerPROClass, kSetVolumeID		, AESetVolumeDesc, 0L, false);
+			err = AEInstallEventHandler (kPlayerPROClass, kSetPitchID		, AESetPitchDesc, 0L, false);
+			err = AEInstallEventHandler (kPlayerPROClass, kGotoPatternID	, AEGotoPatternDesc, 0L, false);
+			err = AEInstallEventHandler (kPlayerPROClass, kGotoPositionID	, AEGotoPositionDesc, 0L, false);
+			err = AEInstallEventHandler (kPlayerPROClass, kGotoPercentID	, AEGotoPercentDesc, 0L, false);
 	}
 	else
 	{

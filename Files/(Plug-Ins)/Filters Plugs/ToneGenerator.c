@@ -3,11 +3,26 @@
 /*	1995 by ANR 	*/
 
 
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
-#include <MixedMode.h>
-#include <math.h>
+#include "MAD.h"
+#include "PPPlug.h"
+#include "mixedmode.h"
+#include "math.h"
+
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( sData*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoPlug*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( long)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
 
 enum
 {
@@ -316,11 +331,11 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 	return Audio16Ptr;
 }
 
-OSErr mainToneGenerator(sData			*theData,
-						long			SelectionStart,
-						long			SelectionEnd,
-						PPInfoPlug		*thePPInfoPlug,
-						short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+OSErr main( 	sData					*theData,
+				long					SelectionStart,
+				long					SelectionEnd,
+				PPInfoPlug				*thePPInfoPlug,
+				long					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long				i, AudioLength, AudioFreq, AudioAmp;
 	Ptr					Sample8Ptr = theData->data, Audio8Ptr;
@@ -332,7 +347,11 @@ OSErr mainToneGenerator(sData			*theData,
 	Str255				tStr;
 	OSErr				iErr;
 
-	myDia = GetNewDialog( 128, NULL, (WindowPtr) -1L);
+#ifndef powerc
+	long	oldA4 = SetCurrentA4();			//this call is necessary for strings in 68k code resources
+#endif
+
+	myDia = GetNewDialog( 128, 0L, (WindowPtr) -1L);
 	SetPortDialogPort( myDia);
 	AutoPosition( myDia);
 	
@@ -500,13 +519,9 @@ OSErr mainToneGenerator(sData			*theData,
 	
 	DisposeDialog( myDia);
 
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+
 	return noErr;
 }
-
-// 25FA16EC-75FF-4514-9C84-7202360044B9
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x25, 0xFA, 0x16, 0xEC, 0x75, 0xFF, 0x45, 0x14, 0x9C, 0x84, 0x72, 0x02, 0x36, 0x00, 0x44, 0xB9)
-
-#define PLUGMAIN mainToneGenerator
-#define PLUGINFACTORY ToneGeneratorFactory
-
-#include "CFPlugin-FilterBridge.c"

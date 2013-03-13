@@ -2,15 +2,30 @@
 /*	v 1.0			*/
 /*	1999 by ROSSET	*/
 
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include "MAD.h"
+#include "PPPlug.h"
 
-OSErr mainInvert(	sData					*theData,
-					long					SelectionStart,
-					long					SelectionEnd,
-					PPInfoPlug				*thePPInfoPlug,
-					short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( sData*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoPlug*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( long)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
+OSErr main( 	sData					*theData,
+				long					SelectionStart,
+				long					SelectionEnd,
+				PPInfoPlug				*thePPInfoPlug,
+				long					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long	i, peak = 0, temp;
 
@@ -58,11 +73,3 @@ OSErr mainInvert(	sData					*theData,
 	
 	return noErr;
 }
-
-// E81B53F4-8CEE-4D32-98F2-780ADB447EB1
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xE8, 0x1B, 0x53, 0xF4, 0x8C, 0xEE, 0x4D, 0x32, 0x98, 0xF2, 0x78, 0x0A, 0xDB, 0x44, 0x7E, 0xB1)
-
-#define PLUGMAIN mainInvert
-#define PLUGINFACTORY InvertFactory
-
-#include "CFPlugin-FilterBridge.c"

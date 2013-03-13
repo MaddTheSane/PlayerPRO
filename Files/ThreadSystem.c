@@ -1,11 +1,13 @@
-#include <Threads.h>
+//#include <threads.h>
 #include <stdio.h>
 #include <Gestalt.h>
 
+#if defined(powerc) || defined (__powerc)
 #include <CodeFragments.h>
+#endif
 
 pascal void *MyThread_A( void *refCon);
-
+/*
 void	InitThreadSystem( void)
 {
 	OSErr		errWhatErr;
@@ -15,8 +17,10 @@ void	InitThreadSystem( void)
 
 
 	if( Gestalt( gestaltThreadMgrAttr, &threadGestaltInfo) != noErr ||
+#if defined(powerc) || defined (__powerc)
 		threadGestaltInfo & (1<<gestaltThreadsLibraryPresent) == 0 ||
-		(Ptr) NewThread == kUnresolvedCFragSymbolAddress ||
+		(Ptr) NewThread == kUnresolvedSymbolAddress ||
+#endif
 		threadGestaltInfo & (1<<gestaltThreadMgrPresent) == 0)
 	{
 		printf( "The Threads Mgr isn't present... Can't run the test.\n");
@@ -28,11 +32,11 @@ void	InitThreadSystem( void)
 							(void**)nil, &threadID_A);
 }
 
-pascal void *MyThread_A( void * notused)
+pascal void *MyThread_A( void *)
 {
 	int			i;
 	
 	DoGlobalNull();
 	
-	return NULL;
-}
+	return nil;
+}*/

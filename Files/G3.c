@@ -2,10 +2,10 @@
 
 Boolean TestProcessorChip()
 {
-//	OSErr		iErr;
-//	Boolean		result;
-//	short		myBit;
-//	long		gestaltAnswer;
+	OSErr		iErr;
+	Boolean		result;
+	short		myBit;
+	long		gestaltAnswer;
 	
 	return true;
 }

@@ -21,8 +21,104 @@
 //
 /********************						***********************/
 
-#include <PlayerPROCore/PlayerPROCore.h>
-#include "MED.h"
+
+#include "RDriver.h"
+
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE(sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( Ptr)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( MADMusic*)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoRec*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( MADDriverSettings*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
+/**************************************************************************
+**************************************************************************/
+
+#define WORD  short
+#define UWORD unsigned short
+#define ULONG unsigned long
+#define UBYTE Byte
+#define BYTE char
+#define BOOL Boolean 
+
+#pragma options align=mac68k
+
+typedef struct MMD0 {
+	ULONG   id;
+	ULONG   modlen;
+	ULONG   MMD0songP;              // struct MMD0song *song;
+	UWORD   psecnum;        /* for the player routine, MMD2 only */
+	UWORD   pseq;           /*  "   "   "   "    */
+	ULONG   MMD0BlockPP;    // struct MMD0Block **blockarr;
+	ULONG   reserved1;
+	ULONG   InstrHdrPP;             // struct InstrHdr **smplarr;
+	ULONG   reserved2;
+	ULONG   MMD0expP;               // struct MMD0exp *expdata;
+	ULONG   reserved3;
+	UWORD   pstate;                 // some data for the player routine */
+	UWORD   pblock;
+	UWORD   pline;
+	UWORD   pseqnum;
+	WORD    actplayline;
+	UBYTE   counter;
+	UBYTE   extra_songs;    /* number of songs - 1 */
+} MMD0;                                         /* length = 52 bytes */
+
+
+typedef struct MMD0sample {
+	UWORD rep,replen;       /* offs: 0(s), 2(s) */
+	UBYTE midich;           /* offs: 4(s) */
+	UBYTE midipreset;       /* offs: 5(s) */
+	UBYTE svol;                     /* offs: 6(s) */
+	BYTE strans;            /* offs: 7(s) */
+} MMD0sample;
+
+
+typedef struct MMD0song {
+	MMD0sample sample[63];  /* 63 * 8 bytes = 504 bytes */
+	UWORD   numblocks;      /* offs: 504 */
+	UWORD   songlen;        /* offs: 506 */
+	UBYTE   playseq[256];   /* offs: 508 */
+	UWORD   deftempo;       /* offs: 764 */
+	BYTE    playtransp;     /* offs: 766 */
+	UBYTE   flags;          /* offs: 767 */
+	UBYTE   flags2;         /* offs: 768 */
+	UBYTE   tempo2;         /* offs: 769 */
+	UBYTE   trkvol[16];     /* offs: 770 */
+	UBYTE   mastervol;      /* offs: 786 */
+	UBYTE   numsamples;     /* offs: 787 */
+} MMD0song;                             /* length = 788 bytes */
+
+
+typedef struct MMD0NOTE{
+	UBYTE a,b,c;
+} MMD0NOTE;
+
+
+typedef struct MMD1NOTE{
+	UBYTE a,b,c,d;
+} MMD1NOTE;
+
+
+typedef struct InstrHdr {
+		ULONG   length;
+		WORD    type;
+		/* Followed by actual data */
+} InstrHdr;
+
+#pragma options align=reset
+
+/**************************************************************************
+**************************************************************************/
 
 static MMD0 		*mh;
 static MMD0song 	*ms;
@@ -38,6 +134,16 @@ static MMD1NOTE 	*mmd1pat;
 
 static Ptr			theMEDRead;
 #define READMEDFILE(dst, size)	{BlockMoveData( theMEDRead, dst, size);	theMEDRead += (long) size;}
+
+Ptr MADPlugNewPtr( long size, MADDriverSettings* init)
+{
+	return NewPtr( size);
+}
+
+Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init)
+{
+	return NewPtrClear( size);
+}
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
@@ -268,7 +374,7 @@ static OSErr LoadMMD0Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 		
 		for( x = 0; x < 20; x++) theMAD->partition[ t]->header.name[ x] = 0;
 		
-		theMAD->partition[ t]->header.patBytes = 0;		theMAD->partition[ t]->header.unused2 = 0;
+		theMAD->partition[ t]->header.patBytes = 0L;		theMAD->partition[ t]->header.unused2 = 0L;
 	
 		//memset( mmd0pat, 0, of.numchn * maxlines * sizeof(MMD0NOTE));
 		
@@ -339,7 +445,7 @@ static OSErr LoadMMD1Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 		
 		for( x = 0; x < 20; x++) theMAD->partition[ t]->header.name[ x] = 0;
 		
-		theMAD->partition[ t]->header.patBytes = 0;		theMAD->partition[ t]->header.unused2 = 0;
+		theMAD->partition[ t]->header.patBytes = 0L;		theMAD->partition[ t]->header.unused2 = 0L;
 
 
 
@@ -415,7 +521,7 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	
 	theMAD->header->MAD = 'MADK';
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MED Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO MED Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->speed			= 	ms->tempo2;
 	theMAD->header->tempo			=	((long)ms->deftempo * 125L) / 33L;
@@ -563,14 +669,26 @@ static OSErr ExtractMEDInfo( PPInfoRec *info, Ptr theMED)
 	return noErr;
 }
 
-OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#ifdef _SRC
+OSErr mainMED( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
+EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif
+
+
+//OSErr main( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
-	short	vRefNum;
-	UNFILE	iFileRefI;
+	short	vRefNum, iFileRefI;
 	long	dirID, sndSize;
-		
+	
+#ifndef powerc
+	long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+#endif
+
+//	MYC2PStr( AlienFileName);
+	
 	myErr = noErr;
 
 	MED_Init( init);
@@ -585,7 +703,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 			
 				// ** MEMORY Test Start
 				AlienFile = MADPlugNewPtr( sndSize * 2L, init);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if( AlienFile == 0L) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
 				else
@@ -601,7 +719,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 							myErr = MED_Load( AlienFile,  GetPtrSize( AlienFile), MadFile, init);
 						}
 						
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr( AlienFile);	AlienFile = 0L;
 				}
 				iClose( iFileRefI);
 			}
@@ -615,13 +733,13 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 				sndSize = 1024L;
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if( AlienFile == 0L) myErr = MADNeedMemory;
 				else
 				{
 					iRead( sndSize, AlienFile, iFileRefI);
 					myErr = TestMEDFile( AlienFile);
 					
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr( AlienFile);	AlienFile = 0L;
 				}
 				iClose( iFileRefI);
 			}
@@ -637,14 +755,14 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if( AlienFile == 0L) myErr = MADNeedMemory;
 				else
 				{
 					iRead( sndSize, AlienFile, iFileRefI);
 					
 						myErr = ExtractMEDInfo( info, AlienFile);
 					
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr( AlienFile);	AlienFile = 0L;
 				}
 				iClose( iFileRefI);
 			}
@@ -658,5 +776,10 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 
 	MED_Cleanup();
 
+//	MYP2CStr( (unsigned char*) AlienFileName);
+	
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
 	return myErr;
 }

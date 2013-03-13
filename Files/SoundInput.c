@@ -8,8 +8,6 @@ OSErr NOpenMicroDevice( Str255 myDeviceName);
 void ChangeDialogFont( DialogPtr aDia);
 Ptr GetAudioInPut( Boolean LeftChannel, long Size);
 void DrawFillFree( Rect *rect);
-void MicroOff(void);
-
 
 #define			SOUNDINPUTMUL	2
 
@@ -48,7 +46,7 @@ static OSType lastOSTypeInput;
 		
 		Boolean			POKPOK;
 		
-//#if defined(powerc) || defined (__powerc)
+#if defined(powerc) || defined (__powerc)
 pascal void CompletionRoutine (SPBPtr inParamPtr)
 {
 	OSErr			err;
@@ -105,18 +103,11 @@ pascal void InterruptRoutine(SPBPtr inParamPtr, Ptr dataBuffer,short peakAmplitu
 }
 */
 
-//#else
+#else
 
-//#endif
-
-#if PRAGMA_STRUCT_ALIGN
-#pragma options align=mac68k
-#elif PRAGMA_STRUCT_PACKPUSH
-#pragma pack(push, 2)
-#elif PRAGMA_STRUCT_PACK
-#pragma pack(2)
 #endif
 
+#pragma options align=mac68k
 typedef struct
 {
 	short	no;
@@ -134,14 +125,7 @@ typedef struct
 	short		no;
 	unsigned long	**l;
 } SPListChannels;
-
-#if PRAGMA_STRUCT_ALIGN
 #pragma options align=reset
-#elif PRAGMA_STRUCT_PACKPUSH
-#pragma pack(pop)
-#elif PRAGMA_STRUCT_PACK
-#pragma pack()
-#endif
 
 static	SPListBits		BitsList;
 static	SPListRate		RateList;
@@ -612,7 +596,7 @@ else
 	
 	if(  totalSizeSys > totalSizeApp )
 	{
-		maxSndSize = totalSizeSys - 2NULL*1024L;
+		maxSndSize = totalSizeSys - 20L*1024L;
 		*RecordedSound = NewHandleSys( maxSndSize);
 	}
 	else
@@ -768,7 +752,7 @@ do
 {
 	//ModalDialog( MyPrefFilterDesc, &itemHit);
 	MyModalDialog( deviceDialog, &itemHit);
-    //ModalDialog( NULL, &itemHit);
+    //ModalDialog( 0L, &itemHit);
     
     GetPort( &savePort);
 	SetPortDialogPort( deviceDialog);
@@ -1017,7 +1001,7 @@ do
 	/*	myErr = SPBGetDeviceInfo( myInRefNum, siOptionsDialog, (Ptr) &infoData);
 		if( infoData == 1)
 		{
-			myErr = SPBSetDeviceInfo( myInRefNum, siOptionsDialog, NULL);
+			myErr = SPBSetDeviceInfo( myInRefNum, siOptionsDialog, 0L);
 			
 			SPBGetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
 			if( infoData != 0) NumToString( (long) infoData, aStr);
@@ -1155,7 +1139,7 @@ if( itemHit == 1 || itemHit == 46)
 		
 		sndSize = RecordingPtr - **RecordedSound;
 		
-		if( sndSize <= 0)
+		if( sndSize <= 0L)
 		{
 			HUnlock( *RecordedSound);
 			DisposeHandle( *RecordedSound);
@@ -1243,7 +1227,7 @@ OSErr NOpenMicroDevice( Str255 myDeviceName)
 			
 			mySPB.inRefNum 			= 	myInRefNum;
 			mySPB.count 			= 	SOUNDINPUTMUL*deviceBufferSize;				//SOUNDINPUTSIZE;
-			mySPB.milliseconds		= 	0;
+			mySPB.milliseconds		= 	0L;
 			mySPB.bufferLength		= 	SOUNDINPUTMUL*deviceBufferSize;
 			mySPB.bufferPtr 		=	SoundInputPtr;
 			
@@ -1318,7 +1302,7 @@ void InitSoundInput()
 {
 	outPutPtr = (Ptr) -1L;
 	
-	SoundInputPtr = NewPtrClear( 40*2048L);
+	SoundInputPtr = NewPtrClear( 40L*2048L);
 	lastOSTypeInput = kNoSource;
 	MicroPhone = false;
 	RecordingVBL = false;

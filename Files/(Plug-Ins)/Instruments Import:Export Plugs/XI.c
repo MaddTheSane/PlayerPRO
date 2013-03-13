@@ -3,20 +3,92 @@
 /*	v 1.0			*/
 /*	1996 by ANR		*/
 
-#include <PlayerPROCore/PlayerPROCore.h>
-#include <Sound.h>
-#include "XM.h"
+#include "PPPlug.h"
+#include "sound.h"
+
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( InstrData*)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( sData**)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( short*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( FSSpec*)))
+		| STACK_ROUTINE_PARAMETER(6, SIZE_CODE(sizeof( PPInfoPlug*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
+#if defined(powerc) || defined(__powerc)
+#pragma options align=mac68k
+#endif
+
+#define UWORD unsigned short
+#define ULONG unsigned long
+#define UBYTE Byte
+#define BYTE char
+#define BOOL Boolean
+
+#define HEADERSIZE 	276
+#define PHSIZE		9
+#define IHSIZE		263
+#define IHSIZESMALL	33
+#define IHSSIZE		40
+
+typedef struct XMPATCHHEADER{
+	
+	UBYTE what[96];         // (byte) Sample number for all notes
+	UWORD volenv[24];       // (byte) Points for volume envelope
+	UBYTE panenv[48];       // (byte) Points for panning envelope
+	UBYTE volpts;           // (byte) Number of volume points
+	UBYTE panpts;           // (byte) Number of panning points
+	UBYTE volsus;           // (byte) Volume sustain point
+	UBYTE volbeg;           // (byte) Volume loop start point
+	UBYTE volend;           // (byte) Volume loop end point
+	UBYTE pansus;           // (byte) Panning sustain point
+	UBYTE panbeg;           // (byte) Panning loop start point
+	UBYTE panend;           // (byte) Panning loop end point
+	UBYTE volflg;           // (byte) Volume type: bit 0: On; 1: Sustain; 2: Loop
+	UBYTE panflg;           // (byte) Panning type: bit 0: On; 1: Sustain; 2: Loop
+	UBYTE vibflg;           // (byte) Vibrato type
+	UBYTE vibsweep;         // (byte) Vibrato sweep
+	UBYTE vibdepth;         // (byte) Vibrato depth
+	UBYTE vibrate;          // (byte) Vibrato rate
+	UWORD volfade;          // (word) Volume fadeout
+	UWORD reserved[11];     // (word) Reserved
+} XMPATCHHEADER;
+
+
+typedef struct XMWAVHEADER{
+	ULONG length;           // (dword) Sample length
+	ULONG loopstart;        // (dword) Sample loop start
+	ULONG looplength;       // (dword) Sample loop length
+	UBYTE volume;           // (byte) Volume
+	BYTE finetune;          // (byte) Finetune (signed byte -128..+127)
+	UBYTE type;                     // (byte) Type: Bit 0-1: 0 = No loop, 1 = Forward loop,
+									// 2 = Ping-pong loop;
+									// 4: 16-bit sampledata
+	UBYTE panning;          // (byte) Panning (0-255)
+	BYTE  relnote;          // (byte) Relative note number (signed byte)
+	UBYTE reserved;         // (byte) Reserved
+	char  samplename[22];   // (char) Sample name
+} XMWAVHEADER;
+
+#if defined(powerc) || defined(__powerc)
+#pragma options align=reset
+#endif
 
 static OSErr TestXI( Ptr CC)
 {
-	OSType Ident = *((OSType*) CC);
-	MOT32(&Ident);
-	
-	if( Ident == 'Exte') return noErr;
+	if( *((OSType*) CC) == 'Exte') return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
-OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
+static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 {
 	short			i;
 	Boolean			IsReading;
@@ -84,9 +156,9 @@ OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 #else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
-	UInt32 toswap = *((UInt32*) msg_buf);
-	INT32(&toswap);
-	return toswap;
+  unsigned char *buf = msg_buf;
+  
+  return( (unsigned long) buf[3] << 24) | ( (unsigned long) buf[2] << 16) | ( (unsigned long) buf[ 1] << 8) | ( (unsigned long) buf[0]);
 }
 #endif
 
@@ -95,25 +167,28 @@ static inline UInt32 Tdecode32( void *msg_buf)
 #else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
-	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
-	return toswap;
+  unsigned char *buf = msg_buf;
+  
+  return ( (short) buf[1] << 8) | ( (short) buf[0]);
 }
 #endif
 
-OSErr mainXI(	OSType		order,						// Order to execute
-				InstrData	*InsHeader,					// Ptr on instrument header
-				sData		**sample,					// Ptr on samples data
-				short		*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+OSErr main(		OSType					order,						// Order to execute
+				InstrData				*InsHeader,					// Ptr on instrument header
+				sData					**sample,					// Ptr on samples data
+				short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
 																	// If sampleID == -1 : add sample else replace selected sample.
-				FSSpec		*AlienFileFSSpec,			// IN/OUT file
-				PPInfoPlug	*thePPInfoPlug)
+				FSSpec					*AlienFileFSSpec,			// IN/OUT file
+				PPInfoPlug				*thePPInfoPlug)
 {
 	OSErr	myErr;
-	UNFILE	iFileRefI;
-	short	x;
+	short	iFileRefI, x;
 	long	inOutCount;
-		
+	
+	#ifndef powerc
+		long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+	#endif
+	
 	switch( order)
 	{
 		case 'IMPL':
@@ -129,7 +204,7 @@ OSErr mainXI(	OSType		order,						// Order to execute
 				GetEOF( iFileRefI, &inOutCount);
 				
 				theXI = NewPtr( inOutCount);
-				if( theXI == NULL) myErr = MADNeedMemory;
+				if( theXI == 0L) myErr = MADNeedMemory;
 				else
 				{
 					MAD2KillInstrument( InsHeader, sample);
@@ -512,13 +587,10 @@ OSErr mainXI(	OSType		order,						// Order to execute
 			myErr = MADOrderNotImplemented;
 		break;
 	}
-		
+	
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+	
 	return myErr;
 }
-
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x62, 0x08, 0x75, 0xF5, 0x1E, 0x38, 0x45, 0xEF, 0x9F, 0xBA, 0xAA, 0xE9, 0x29, 0x50, 0x2D, 0x63)
-//620875F5-1E38-45EF-9FBA-AAE929502D63
-#define PLUGINFACTORY XIFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainXI //The old main function, renamed please
-
-#include "CFPlugin-InstrBridge.c"

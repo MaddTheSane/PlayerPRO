@@ -1,14 +1,13 @@
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
-#include "FileUtils.h"
 #include <stdio.h>
 #include <QuicktimeComponents.h>
 #include <Sound.h>
 #include <Movies.h>
 #include <Drag.h>
 #include <MediaHandlers.h>
-//#include "MP3Player.h"
+#include "MP3Player.h"
 
 //quicktimewindow.proto.h
 
@@ -29,7 +28,7 @@
 	static	Rect						QTMovieRect;
 	static	long						lastSeconds;
 	static	Str63						durationString;
-	static	UNFILE						QTresRefNum;
+	static	short						QTresRefNum;
 	static	Boolean						QTCheckLoop, QTTemporaryFile;
 	static	Str255						QTFileName;
 	static	Boolean						canAcceptDrag;
@@ -69,11 +68,6 @@ pascal OSErr MyTrackingQuicktime(short message, WindowPtr theWindow, void *handl
 pascal OSErr MyReceiveQuicktime(WindowPtr theWindow, void* handlerRefCon, DragReference theDrag);
 Boolean DragQTFile( RgnHandle myRgn, EventRecord *theEvent);
 OSErr ConvertMovieToAIFF(FSSpec *inputFile, FSSpec *outputFile);
-void QTDoAction( Boolean play);
-Boolean QTTestConversion( FSSpec	*file, OSType fileType);
-void CloseQT(void);
-
-
 
 /*
 // * ----------------------------
@@ -590,7 +584,7 @@ void SelectQTFile( FSSpec	*file)
 	if( iErr == noErr)
 	{
 		iErr = GetEOF( QTresRefNum, &fileSize);
-		FSCloseFork( QTresRefNum);
+		FSClose( QTresRefNum);
 		
 		if( fileSize == 0)
 		{
@@ -598,7 +592,7 @@ void SelectQTFile( FSSpec	*file)
 			if( iErr == noErr)
 			{
 				iErr = GetEOF( QTresRefNum, &fileSize);
-				FSCloseFork( QTresRefNum);
+				FSClose( QTresRefNum);
 			}
 		}
 	}
@@ -994,7 +988,7 @@ void SelectQTFile( FSSpec	*file)
 	//QTMovieRect.left++;
 	//QTMovieRect.right--;
 	
-	//ShowMovieInformation( QTMovie, NULL, 0);
+	//ShowMovieInformation( QTMovie, 0L, 0);
 	
 	boolVal = true;
 	MCDoAction( gMovieController, mcActionSetKeysEnabled, &boolVal);
@@ -1209,6 +1203,20 @@ Boolean QTTestConversion( FSSpec	*file, OSType fileType)
 	OSErr	iErr;
 	short	QTresRefNum;
 	
+/*	MovieImportComponent	ci;
+	
+	ci = OpenDefaultComponent (MovieImportType, fileType);
+	
+	if( ci)
+	{
+		CloseComponent( ci);
+		
+		return true;
+	}
+	
+	return false;*/
+	
+	
 	iErr = OpenMovieFile( file, &QTresRefNum, fsCurPerm);
 	if( iErr) return false;
 	
@@ -1238,7 +1246,7 @@ Boolean QTTypeConversion( OSType fileType)
 		case 'MP3 ':
 		case 'mpg4':
 		case 'PLAY':
-		//case '????':
+		case '\?\?\?\?':
 			return true;
 		break;
 	}
@@ -1475,7 +1483,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 			
 			/*	case 2:
 					GetDialogItem( QuicktimeDlog , 2, &itemType, &itemHandle, &itemRect);
-					DrawQTItem( true, &itemRect, QTFileName, &QTFile, NULL);
+					DrawQTItem( true, &itemRect, QTFileName, &QTFile, 0L);
 					
 					if( WaitMouseMoved( theEvent.where))
 					{
@@ -1489,7 +1497,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 						
 						GetDialogItem( QuicktimeDlog , 2, &itemType, &itemHandle, &itemRect);
 						
-#if MACOS9VERSION
+						#if MACOS9VERSION
 						if( GetFileIcon( &QTFile, svAllLargeData, &gTheSuite) == noErr)
 						{
 							IconSuiteToRgn( dstRgn, &itemRect, 0,gTheSuite);
@@ -1500,7 +1508,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 						{
 							IconIDToRgn( dstRgn, &itemRect, 0, 133);
 						}
-#else
+						#else
 						iErr = GetIconRefFromFile( &QTFile, &iconref, &label);
 						if( iErr == noErr)
 						{
@@ -1508,7 +1516,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 							
 							ReleaseIconRef( iconref);
 						}
-#endif
+						#endif
 						
 						//	srcRgnB = NewRgn();
 						//	OpenRgn();
@@ -1524,7 +1532,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 					}
 					
 					GetDialogItem( QuicktimeDlog , 2, &itemType, &itemHandle, &itemRect);
-					DrawQTItem( false, &itemRect, QTFileName, &QTFile, NULL);
+					DrawQTItem( false, &itemRect, QTFileName, &QTFile, 0L);
 				break;*/
 			}
 		}
@@ -1635,7 +1643,7 @@ Boolean IsQTDrag( DragReference theDrag)
 	
 		GetFlavorDataSize( theDrag, theItem, flavorTypeHFS, &textSize);
 		
-		GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+		GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 
 		ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		
@@ -2044,7 +2052,7 @@ pascal OSErr MyReceiveQuicktime(WindowPtr theWindow, void* handlerRefCon, DragRe
 		{
 			Boolean		targetIsFolder, wasAliased;
 		
-			GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+			GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 			
 			ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		

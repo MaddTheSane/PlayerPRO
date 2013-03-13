@@ -5,9 +5,23 @@
 //	Usage:
 //	A small example of to use Digital Editor Plugs with a MODAL DIALOG
 
-#include <PlayerPROCore/PlayerPROCore.h>
+#include "MAD.h"
+#include "PPPlug.h"
 
-static void GetDText (DialogPtr dlog, short item, StringPtr str)
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( Pcmd*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( PPInfoPlug*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
+void GetDText (DialogPtr dlog, short item, StringPtr str)
 {
 	Handle	itemHandle;
 	short	itemType;
@@ -30,9 +44,9 @@ static void SetDText (DialogPtr dlog, short item, Str255 str)
 
 static void TurnRadio( short item, DialogPtr dlog, Boolean alors)
 {
-	Handle		itemHandle;
-	short		itemType;
-	Rect		itemRect;
+Handle		itemHandle;
+short		itemType;
+Rect		itemRect;
 
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 
@@ -150,13 +164,18 @@ static void StringToHex( Str255 str, long *oct)
 	if( str[ 1] >= '0' && str[ 1] <= '9') *oct += (str[ 1] - '0')<<4;
 }
 
-OSErr mainCompFade( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+OSErr main( 	Pcmd					*myPcmd,
+				PPInfoPlug				*thePPInfoPlug)
 {
 	DialogPtr			myDia;
 	short				itemHit, mode;
 	Str255				tStr;
 	
-	myDia = GetNewDialog( 128, NULL, (WindowPtr) -1L);
+#ifndef powerc
+	long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+#endif
+
+	myDia = GetNewDialog( 128, 0L, (WindowPtr) -1L);
 	SetPortDialogPort( myDia);
 	AutoPosition( myDia);
 	
@@ -266,13 +285,11 @@ OSErr mainCompFade( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	}
 	
 	DisposeDialog( myDia);
-		
+	
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+
+	
 	return noErr;
 }
-
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x2C, 0xE9, 0x02, 0x81, 0xE2, 0xC2, 0x47, 0x5A, 0xA0, 0xF0, 0xB9, 0x0C, 0x64, 0x1E, 0xAE, 0xB1)
-//2CE90281-E2C2-475A-A0F0-B90C641EAEB1
-#define PLUGINFACTORY CompFadeFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainCompFade //The old main function, renamed please
-
-#include "CFPlugin-DigitalBridge.c"

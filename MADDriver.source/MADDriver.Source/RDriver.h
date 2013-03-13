@@ -32,14 +32,13 @@
 
 #ifdef _MAC_H
 #ifndef __SOUND__
-#include <Carbon/Carbon.h>
+#include <Sound.h>
 #endif
-#include <CoreFoundation/CFPlugInCOM.h>
 #endif
 
 ////////////////////////////////////////////////
 
-#ifdef WIN32
+#ifdef _INTEL_H
 #ifndef __DSOUND_INCLUDED__
 #include <mmreg.h>
 #include <DSound.h>
@@ -121,7 +120,7 @@ enum
 /*** 			   Channel structure definition					***/
 /********************						***********************/
 
-typedef struct Channel
+struct Channel
 {
 		long		ID;					// Channel ID - 0 to MAXTRACK
 		long		TrackID;			// TrackID - 0 to MAXTRACK (Used in multiChannel mode)
@@ -245,13 +244,14 @@ typedef struct Channel
 		short		PatternLoopE6, PatternLoopE6Count, PatternLoopE6ID;
 		
 		long		TimeCounter;
-} Channel;
+};
+typedef		struct Channel	Channel;
 
 /********************						***********************/
 /*** 		Music description - used in Import/Export filter	***/
 /********************						***********************/
 
-typedef struct MADMusic
+struct	MADMusic
 {
 	MADSpec					*header;								// Music Header - See 'MAD.h'
 	PatData					*partition[ MAXPATTERN];				// Patterns
@@ -264,7 +264,8 @@ typedef struct MADMusic
 	long					position, fullTime;
 	OSType					originalFormat;
 	
-} MADMusic;
+};
+typedef		struct MADMusic	MADMusic;
 
 /********************						***********************/
 /*** 			     Driver Settings definition					***/
@@ -282,7 +283,6 @@ enum
 	DirectSound95NT,				// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
 	Wave95NT,						// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
 	NoHardwareDriver,				// NO HARDWARE CONNECTION, will not produce any sound
-	CoreAudioDriver,				// OSX ONLY Core Audio driver
 	ASIOSoundManager				// ASIO Sound Driver by Steinberg
 };
 
@@ -297,7 +297,7 @@ enum
 	MonoOutPut = oldMonoOutPut
 };
 
-typedef struct MADDriverSettings
+struct MADDriverSettings
 {
 	short					numChn;								// Active tracks from 2 to 32, automatically setup when a new music is loaded
 	short					outPutBits;							// 8 or 16 Bits TODO: 24 Bits
@@ -316,7 +316,8 @@ typedef struct MADDriverSettings
 	long					ReverbStrength;						// Reverb strength in % (0 <-> 70)
 	Boolean					TickRemover;						// Remove volume/sample/loop ticks.
 	long					oversampling;						// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
-} MADDriverSettings;
+};
+typedef struct MADDriverSettings MADDriverSettings;
 
 /******************************************************************/
 //******************* MUSICS IMPORT/EXPORT PLUGS  *****************/
@@ -361,7 +362,7 @@ typedef struct MADDriverSettings
 //
 /********************						***********************/
 
-typedef struct PPInfoRec
+struct PPInfoRec
 {
 	char		internalFileName[ 60];
 	char		formatDescription[ 60];
@@ -376,7 +377,8 @@ typedef struct PPInfoRec
 	
 	long		fileSize;
 	
-} PPInfoRec;
+};
+typedef struct PPInfoRec PPInfoRec;
 
 
 /********************						***********************/
@@ -393,15 +395,16 @@ enum {
 typedef CALLBACK_API( OSErr , PPSndDoubleBackProcPtr )(void);
 typedef STACK_UPP_TYPE(PPSndDoubleBackProcPtr)                    PPSndDoubleBackUPP;
 
-typedef struct PPSndDoubleBuffer {
+struct PPSndDoubleBuffer {
   long                dbNumFrames;
   long                dbFlags;
   long                dbUserInfo[2];
   SInt8               dbSoundData[1];
-} PPSndDoubleBuffer;
+};
+typedef struct PPSndDoubleBuffer          PPSndDoubleBuffer;
 typedef PPSndDoubleBuffer *               PPSndDoubleBufferPtr;
 
-typedef struct PPSndDoubleBufferHeader {
+struct PPSndDoubleBufferHeader {
   short               dbhNumChannels;
   short               dbhSampleSize;
   short               dbhCompressionID;
@@ -409,11 +412,12 @@ typedef struct PPSndDoubleBufferHeader {
   UnsignedFixed       dbhSampleRate;
   PPSndDoubleBufferPtr  dbhBufferPtr[2];
   PPSndDoubleBackUPP    dbhDoubleBack;
-} PPSndDoubleBufferHeader;
+};
+typedef struct PPSndDoubleBufferHeader    PPSndDoubleBufferHeader;
 typedef PPSndDoubleBufferHeader *         PPSndDoubleBufferHeaderPtr;
 
 
-typedef struct PPSndDoubleBufferHeader2 {
+struct PPSndDoubleBufferHeader2 {
   short               dbhNumChannels;
   short               dbhSampleSize;
   short               dbhCompressionID;
@@ -422,46 +426,25 @@ typedef struct PPSndDoubleBufferHeader2 {
   PPSndDoubleBufferPtr  dbhBufferPtr[2];
   PPSndDoubleBackUPP    dbhDoubleBack;
   OSType              dbhFormat;
-} PPSndDoubleBufferHeader2;
+};
+typedef struct PPSndDoubleBufferHeader2   PPSndDoubleBufferHeader2;
 typedef PPSndDoubleBufferHeader2 *        PPSndDoubleBufferHeader2Ptr;
-
-#define kPlayerPROModFormatTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x84, 0xF8, 0x01, 0x09, 0x28, 0x85, 0x4E, 0x01, 0x8F, 0xFA, 0x88, 0xAC, 0x75, 0xF3, 0xE0, 0x33))
-//84F80109-2885-4E01-8FFA-88AC75F3E033
-
-#define kPlayerPROModFormatInterfaceID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x94, 0x15, 0xE3, 0x57, 0x0E, 0xD2, 0x4F, 0x9F, 0x9C, 0xA1, 0xB7, 0x28, 0x0C, 0x27, 0xF5, 0x9B))
-//9415E357-0ED2-4F9F-9CA1-B7280C27F59B
-
-typedef struct _MADFileFormatPlugin {
-    IUNKNOWN_C_GUTS;
-	OSErr (STDMETHODCALLTYPE *ThePlugMain)(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
-} MADFileFormatPlugin;
-
-
-typedef struct PlugInfo
+struct PlugInfo
 {
-#ifndef TARGET_API_MAC_CARBON
-//	Handle		IOPlug;											// Plug CODE
-#else
-	MADFileFormatPlugin **IOPlug;								// Plug CODE
-#endif
+	//Handle		IOPlug;										// Plug CODE
 	Str63		MenuName;										// Plug name
 	Str63		AuthorString;									// Plug author
 	FSSpec		file;											// Location of plug file
-#ifndef TARGET_API_MAC_CARBON
 	Str255		filename;										// Complete filename from application
-#else
-	CFBundleRef	filename;
-#endif
 	char		type[ 5];										// OSType of file support
 	OSType		mode;											// Mode support : Import +/ Export
-#ifndef TARGET_API_MAC_CARBON
 	Boolean		hasPPCCode;										// Is Plug FAT?
-#endif
-} PlugInfo;
+};
+typedef struct PlugInfo PlugInfo;
 #endif
 
-#ifdef WIN32
-#include <windows.h>
+#ifdef _INTEL_H
+//#include "windows.h"
 typedef OSErr (*PLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 struct PlugInfo
 {
@@ -538,7 +521,7 @@ typedef struct
 	short				id;
 	Str63				name;
 	Boolean				Active;
-	CFragConnectionID	connID; //TODO: use something more 64-bit friendly
+	CFragConnectionID	connID;
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
 
@@ -580,7 +563,7 @@ struct MADDriverRec
 	SndChannelPtr 			MusicChannelPP;									// The SndChannelPtr to apply SndDoCommand, etc.
 #endif																		// ONLY available if you are using MAC SoundManager driver
 	
-#ifdef WIN32
+	#ifdef _INTEL_H
 	LPDIRECTSOUND			lpDirectSound;									// The LPDIRECTSOUND to apply & get informations, etc.
 	LPDIRECTSOUNDBUFFER		lpDirectSoundBuffer, lpSwSamp;					// ONLY available if you are using Win95 DirectSound driver
 #endif	
@@ -757,14 +740,9 @@ OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
 							unsigned long	rate,					// sample rate of the sound data, by ex: rate22khz
 							Boolean			stereo);				// sample is in stereo or in mono?
 
-//Ptr MADNewPtr( long size, MADLibrary* init);
-//Ptr MADNewPtrClear( long size, MADLibrary* init);
-//Since we don't use MADLibrary anyway, redefining these terms
-#define MADNewPtr(size, madlib) NewPtr(size)
-#define MADNewPtrClear(size, madlib) NewPtrClear(size)
-#define MADPlugNewPtr(size, init) NewPtr(size)
-#define MADPlugNewPtrClear(size, init) NewPtrClear(size)
-	
+Ptr MADNewPtr( long size, MADLibrary* init);
+Ptr MADNewPtrClear( long size, MADLibrary* init);
+
 void MyDebugStr(short, Ptr, Ptr);									// Called when a fatal error occurs.... Normally, NEVER !
 
 #ifdef __cplusplus

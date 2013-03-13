@@ -6,7 +6,7 @@ files except Luminance.c, which has its own header file, Luminance.h.
 Any C file that might be used as a MATLAB file should #include <VideoToolbox.h>
 as it's first C statement.
 
-Copyright 1989-1993 Â© Denis G. Pelli
+Copyright 1989-1993 © Denis G. Pelli
 
 HISTORY: (omitting changes documented in *.c files)
 2/20/93 dhb	Added various commonly used headers.  
@@ -54,13 +54,13 @@ project, but without modifying the source files. dhb & dgp.
 #include <Palettes.h>	// formerly Palette.h
 #include <QDOffscreen.h>// formerly QuickDraw32Bit.h
 #include <QuickDraw.h>	// required
-//#include <Retrace.h>	// required
-//#include <Slots.h>
+#include <Retrace.h>	// required
+#include <Slots.h>
 #include <Sound.h>
 #if THINK_C				// c2pstr(),CtoPStr()
 	#include <pascal.h>
 #else
-//	#include <Strings.h>// MPW C
+	#include <Strings.h>// MPW C
 #endif
 #include <Timer.h>		// required
 #include <ToolUtils.h>
@@ -127,7 +127,7 @@ course most applications would never notice a loss of two bits precision out of
 the total double precision given by the 64 bits in the mantissa.
 */
 #if !defined(PI)
-	#define PI		M_PI	/* available in math.h  Far more accurate */
+	#define PI		3.1415926535897932385	/* computed in Mathematica */
 #endif
 #if !defined(LOGPI)
 	#define LOGPI	1.14472988584940017414	/* computed in Mathematica */
@@ -157,18 +157,10 @@ unit is to be used. The Apple-provided routines for doing type conversion to and
 from Fixed are only appropriate if you are NOT using the floating point unit.
 The ones defined below are faster and work with or without the FPU.
 */
-
-#ifdef _MAC_H
-#define LongToFix(x) IntToFixed(x)
-#define FixToLong(x) FixedToInt(x)
-#define DoubleToFix(x) FloatToFixed(x)
-#define FixToDouble(x) FixedToFloat(x)
-#else
 #define LongToFix(x) ((long)(x)<<16)
 #define FixToLong(x) ((x)>>16)
 #define DoubleToFix(x) ((Fixed)((x)*65536.+0.5))
 #define FixToDouble(x) ((double)(x)*(1./65536.))
-#endif
 
 /*
 STACK
@@ -341,7 +333,7 @@ char *IdentifyCompiler(void);
 int IsNan(double x);
 int IsInf(double x);
 #ifndef IsFinite
-	#define IsFinite(x) ((*(short *)&(x) & 32767)!=32767)	/* neither NAN nor Â±INF */
+	#define IsFinite(x) ((*(short *)&(x) & 32767)!=32767)	/* neither NAN nor ±INF */
 #endif
 
 /* kbhit.c */
@@ -529,8 +521,8 @@ struct Timer{
 	TMTask time;
 	long ourA5;
 	long interval,elapsed,elapsedIntervals;
-	long timeToStartTimer;			// minimum time in Âµs
-	long stopDelay;					// Âµs from call to stop, re from call to start
+	long timeToStartTimer;			// minimum time in µs
+	long stopDelay;					// µs from call to stop, re from call to start
 	long timeManagerVersion;
 	struct Timer *next,*previous;	// doubly linked list of Timers
 };
@@ -539,7 +531,7 @@ typedef struct Timer Timer;
 Timer *NewTimer(void);
 void DisposeTimer(Timer *t);
 void StartTimer(Timer *t);
-long StopTimer(Timer *t);					// Âµs
+long StopTimer(Timer *t);					// µs
 double StopTimerSecs(Timer *t);				// s
 
 /* TitleBarHeight.c */
@@ -556,7 +548,7 @@ double UniformSample(void);
 
 /* VBLInterruptServiceRoutine */
 struct VBLTaskAndA5 {
-//    volatile VBLTask vbl;
+    volatile VBLTask vbl;
     long ourA5;
     void (*subroutine)(struct VBLTaskAndA5 *vblData);
     GDHandle device;

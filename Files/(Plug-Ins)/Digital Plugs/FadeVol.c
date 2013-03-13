@@ -5,13 +5,27 @@
 //	Usage:
 //	A small example of to use Digital Editor Plugs with a MODAL DIALOG
 
-#include <PlayerPROCore/PlayerPROCore.h>
+#include "MAD.h"
+#include "PPPlug.h"
 
-static void GetDText (DialogPtr dlog, short item, StringPtr str)
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( Pcmd*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( PPInfoPlug*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
+void GetDText (DialogPtr dlog, short item, StringPtr str)
 {
-	Handle	itemHandle;
-	short	itemType;
-	Rect	itemRect;
+Handle	itemHandle;
+short	itemType;
+Rect	itemRect;
 
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 	GetDialogItemText (itemHandle, str);
@@ -19,12 +33,12 @@ static void GetDText (DialogPtr dlog, short item, StringPtr str)
 
 static void SetDText (DialogPtr dlog, short item, Str255 str)
 {
-	Handle			itemHandle;
-	short			itemType;
-	Rect			itemRect;
-	Str255			myStr;
-	ControlHandle	control;
-	OSErr			err;
+Handle			itemHandle;
+short			itemType;
+Rect			itemRect;
+Str255			myStr;
+ControlHandle	control;
+OSErr			err;
 
 	GetDialogItemAsControl( dlog, item, &control );
 	err = SetControlData( control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
@@ -98,13 +112,18 @@ Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
 
-OSErr mainFadeVol( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+OSErr main( 	Pcmd					*myPcmd,
+				PPInfoPlug				*thePPInfoPlug)
 {
 	DialogPtr			myDia;
 	short				itemHit;
 	Str255				tStr;
 	
-	myDia = GetNewDialog( 128, NULL, (WindowPtr) -1L);
+#ifndef powerc
+	long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+#endif
+
+	myDia = GetNewDialog( 128, 0L, (WindowPtr) -1L);
 	SetPortDialogPort( myDia);
 	AutoPosition( myDia);
 
@@ -116,7 +135,11 @@ OSErr mainFadeVol( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	{
 		RESTART:
 	
+		#if defined(powerc) || defined(__powerc)
 		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+		#else
+		ModalDialog( (ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+		#endif
 		
 	}while( itemHit != 1 && itemHit != 2);
 	
@@ -172,13 +195,10 @@ OSErr mainFadeVol( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	
 	DisposeDialog( myDia);
 	
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+
+	
 	return noErr;
 }
-
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x02, 0xB1, 0x55, 0x4B, 0xDE, 0x52, 0x47, 0x45, 0x93, 0x2C, 0x29, 0x87, 0xAA, 0x19, 0xD4, 0xEF)
-//02B1554B-DE52-4745-932C-2987AA19D4EF
-#define PLUGINFACTORY FadeVolFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainFadeVol //The old main function, renamed please
-
-#include "CFPlugin-DigitalBridge.c"
-

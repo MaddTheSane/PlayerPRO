@@ -208,13 +208,13 @@ void DoNullDigiWindow(void)
 				break;
 				
 				case 6:
-					if( MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].curPtr < 0) val = 0;
+					if( MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].curPtr < 0L) val = 0;
 					else val = MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].curPtr;
 					NumToString( val, tempStr);
 				break;
 				
 				case 7:
-					if( MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].begPtr < 0) val = 0;
+					if( MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].begPtr < 0L) val = 0;
 					else val = MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].begPtr;
 					NumToString( val, tempStr);
 				break;
@@ -230,7 +230,7 @@ void DoNullDigiWindow(void)
 				break;
 				
 				case 10:
-					if( MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].begPtr > 0 &&
+					if( MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].begPtr > 0L &&
 						MADDriver->chan[ i].curPtr > MADDriver->chan[ i].begPtr + MADDriver->chan[ i].loopBeg &&
 						MADDriver->chan[ i].loopSize > 2) val = 1;
 					else val = 0;

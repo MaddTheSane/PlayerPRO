@@ -106,8 +106,10 @@ OSErr DBSndPlay ( MADDriverRec *inMADDriver, SndChannelPtr chan)
 	inMADDriver->TheHeader.dbhSampleRate = inMADDriver->DriverSettings.outPutRate;
 	inMADDriver->TheHeader.dbhSampleSize = inMADDriver->DriverSettings.outPutBits;
 	
-	if( inMADDriver->DriverSettings.outPutMode == MonoOutPut) inMADDriver->TheHeader.dbhNumChannels = 1;
-	else inMADDriver->TheHeader.dbhNumChannels = 2;
+//	if( inMADDriver->DriverSettings.outPutMode == MonoOutPut) inMADDriver->TheHeader.dbhNumChannels = 1;
+//	else
+	
+	inMADDriver->TheHeader.dbhNumChannels = 2;
 	
 	for (i = 0; i <= 1; i++)
 	{

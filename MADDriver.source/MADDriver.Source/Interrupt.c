@@ -754,15 +754,15 @@ long getlinearperiod(short note,long c2spd, MADDriverRec *intDriver)
 	
 //	if( period == NULL) period = 7242;
 	
-//	return c2spd * ((1NULL*12L-note)*64L) / (unsigned long) 8363UL;
+//	return c2spd * ((10L*12L-note)*64L) / (unsigned long) 8363UL;
 	
 	return ((10*12L-note)*64L);
 	
 //	return period;
 
-//	return((1NULL*12*16*4)-((long)note*16*4)-(fine/2)+64);
+//	return((10L*12*16*4)-((long)note*16*4)-(fine/2)+64);
 
-//	return (1NULL*12L+1-note)*64L;
+//	return (10L*12L+1-note)*64L;
 }
 
 #define LOGFAC 2*16
@@ -887,7 +887,7 @@ if( curVoice->samplePtr != NULL) return;
 else if( intCmd.ins != 0 || (intCmd.note != 0xFF && intCmd.note != 0xFE))
 {
 	/********************************/
-	/* PrÃ©pare les notes manquantes */
+	/* PrŽpare les notes manquantes */
 	/********************************/
 	
 	/********************************/
@@ -1155,7 +1155,7 @@ void ComputeReverb8(  Byte *orgPtr,   Byte *destPtr,  long xx, long strength)
 	
 	while( xx-- > 0)
 	{
-		temp1 = (*destPtr) + ((strength * (*orgPtr++ - 0x80)) / 100);		// - 0x8NULL
+		temp1 = (*destPtr) + ((strength * (*orgPtr++ - 0x80)) / 100L);		// - 0x80L
 		
 		if( temp1 > 0xFF) temp1 = 0xFF;	// overflow ?
 		else if( temp1 < 0 ) temp1 = 0;
@@ -1171,7 +1171,7 @@ void ComputeReverb16( short *orgPtr, short *destPtr, long xx, long strength)
 	
 	while( xx-- > 0)
 	{
-		temp1 = *destPtr + ((strength * (long) *orgPtr++) / 100);
+		temp1 = *destPtr + ((strength * (long) *orgPtr++) / 100L);
 		
 		if( temp1 > valP) temp1 = valP;	// overflow ?
 		else if( temp1 < valN ) temp1 = valN;
@@ -1423,7 +1423,7 @@ short					*DASCopy8;
 							
 							tVSYNC 		= intDriver->VSYNC;
 							tVSYNC 		/= intDriver->finespeed;
-							tVSYNC 		*= 8000;
+							tVSYNC 		*= 8000L;
 							tVSYNC 		/= intDriver->VExt;
 							
 							intDriver->BytesToRemoveAtEnd = (InterruptBufferSize) / intDriver->DriverSettings.oversampling;
@@ -1565,7 +1565,7 @@ short					*DASCopy8;
 										
 										tVSYNC 		= intDriver->VSYNC;
 										tVSYNC 		/= intDriver->finespeed;
-										tVSYNC 		*= 800NULL;
+										tVSYNC 		*= 8000L;
 										tVSYNC 		/= intDriver->VExt;
 										
 										intDriver->BytesToRemoveAtEnd = (InterruptBufferSize - tVSYNC) / intDriver->DriverSettings.oversampling;	// 
@@ -2217,7 +2217,7 @@ MADDriverSettings		driverCopy;
 	
 	if( intDriver->musicEnd == true) return false;
 	
-/*	if( intDriver->curMusic != NULL)
+/*	if( intDriver->curMusic != 0L)
 	{
 		if( intDriver->PL >= intDriver->curMusic->header->numPointers) return false;
 	}*/

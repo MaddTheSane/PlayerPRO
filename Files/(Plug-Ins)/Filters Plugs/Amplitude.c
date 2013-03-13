@@ -1,8 +1,24 @@
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include "MAD.h"
+#include "PPPlug.h"
 
-static GDHandle	TheGDevice/*:0xCC8*/;
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( sData*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoPlug*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( long)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
+
+GDHandle	TheGDevice:0xCC8;
 
 static void AutoPosition( DialogPtr aDia)
 {
@@ -90,7 +106,11 @@ static Boolean getParams ( long *p1, PPInfoPlug *thePPInfoPlug)
 
 		do
 		{
+			#if defined(powerc) || defined(__powerc)
 			ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+			#else
+			ModalDialog( (ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+			#endif
 		}
 		while ((itemHit != ok) && (itemHit != cancel));
 		
@@ -106,11 +126,11 @@ static Boolean getParams ( long *p1, PPInfoPlug *thePPInfoPlug)
 	return theResult;
 }
 
-OSErr mainAmplitude(	sData					*theData,
-						long					SelectionStart,
-						long					SelectionEnd,
-						PPInfoPlug				*thePPInfoPlug,
-						short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+OSErr main( 	sData					*theData,
+				long					SelectionStart,
+				long					SelectionEnd,
+				PPInfoPlug				*thePPInfoPlug,
+				long					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long	i, temp, Inc;
 	Ptr		Sample8Ptr = theData->data;
@@ -174,11 +194,3 @@ OSErr mainAmplitude(	sData					*theData,
 	}
 	return noErr;
 }
-
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xF1, 0xE5, 0xEA, 0x0B, 0x1A, 0xBC, 0x4D, 0x5F, 0x89, 0xDF, 0x3C, 0x89, 0x75, 0x8E, 0xAC, 0x0E))
-//F1E5EA0B-1ABC-4D5F-89DF-3C89758EAC0E
-
-#define PLUGMAIN mainAmplitude
-#define PLUGINFACTORY AmplitudeFactory
-
-#include "CFPlugin-FilterBridge.c"

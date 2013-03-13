@@ -22,7 +22,6 @@
 #include "Shuddup.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <QuickTime/QuickTime.h>
 
 #ifndef __NAVIGATION__
 #include <Navigation.h>
@@ -780,9 +779,6 @@ OSErr DoCustomOpen( FSSpec	*spec)
 	
 //	typeList = (NavTypeListHandle) GetResource( 'open', 300);
 	
-	//TODO: Open based on UTI, not Mac OS filetype.
-	//Mac OS X does NOT set filetype or creator based on file extention on any version I know of.
-	//TODO: Use a more Quartz UI-friendly way of selecting what filetype to use.
 	theErr = NavGetFile(	NULL,	// use system's default location
 							&theReply,
 							&dialogOptions,
@@ -954,27 +950,25 @@ OSErr DoStandardOpen( FSSpec	*spec, Str255 string, OSType inType)
 			(*openList)->osType[ 0]				= inType;*/
 		}
 		
-//#if MACOS9VERSION
-		//TODO: Open based on UTI, not Mac OS filetype.
-		//Mac OS X does NOT set filetype or creator based on file extention on any version I know of.
+	//	#if MACOS9VERSION
 		iErr = NavGetFile(		NULL,	// use system's default location
 								&theReply,
 								&dialogOptions,
 								MyDlgFilterNavDesc,
 								NULL,	// no custom previews
 								filterProcUPP,
-								NULL, //,
+								0L, //,
 								(NavCallBackUserData) 2L);
-/*#else
+	/*	#else
 		iErr = NavGetFile(		NULL,	// use system's default location
 								&theReply,
 								&dialogOptions,
 								NULL,
 								NULL,	// no custom previews
 								filterProcUPP,
-								NULL, //,
+								0L, //,
 								(NavCallBackUserData) 2L);
-#endif*/
+		#endif*/
 		
 		if( filterProcUPP != NULL) DisposeNavObjectFilterUPP( filterProcUPP);
 		

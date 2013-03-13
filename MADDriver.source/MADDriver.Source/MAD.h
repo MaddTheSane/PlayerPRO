@@ -22,69 +22,52 @@
 #ifndef __MADI__
 #define __MADI__
 
-
 //////////////////////////////////////////////////////////////////////
-#if defined(__APPLE__)			// MACINTOSH
-#ifndef _MAC_H
+#if defined(THINK_C)			// MACINTOSH
 #define _MAC_H
-#endif
-#define EXP extern __attribute__((visibility("default")))
+#define EXP
 
-#include <Carbon/Carbon.h>
+#elif macintosh					// MACINTOSH - CODEWARRIOR				
+
+#define _MAC_H
+
+//#define _MIDIHARDWARE_			// DONT DEFINE IT, IF YOU DONT WANT TO SUPPORT OMS !!!!
+
+#define EXP
 
 //////////////////////////////////////////////////////////////////////
 #else 			// WIN32 - 95/NT
 
-#ifndef DEPRECATED_ATTRIBUTE
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#define DEPRECATED_ATTRIBUTE __attribute__((deprecated))
-#else
-#define DEPRECATED_ATTRIBUTE
-#endif
-#endif
+#define _INTEL_H
+#define EXP __declspec(dllexport)
 
 #endif
 //////////////////////////////////////////////////////////////////////
 
-#ifdef WIN32
-#define EXP __declspec(dllexport)
-#endif
-
-#if defined(WIN32) || defined (_BE_H)
+#if defined(_INTEL_H) || defined (_BE_H)
 
 #if !defined(THINK_C)
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h>
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
 
 typedef unsigned char 	Byte;
 typedef char 			*Ptr;
 typedef Ptr 			*Handle;
 typedef unsigned char 	Boolean;
+typedef short 			OSErr;
 typedef unsigned char 	Str255[256], Str63[64];
-typedef uint8_t			UInt8;
-typedef int8_t			SInt8;
-typedef uint16_t		UInt16;
-typedef int16_t			SInt16;
-typedef uint32_t		UInt32;
-typedef int32_t			SInt32;
-typedef SInt16			OSErr;
-typedef UInt32			FourCharCode;
-typedef FourCharCode	OSType;
-typedef UInt8			Byte;
-typedef SInt32			Fixed;
-typedef UInt32			UnsignedFixed;
+typedef unsigned long 	OSType;
 
 #define NewPtr(x)					(Ptr) malloc(x)
 #define NewPtrClear(x) 	 			(Ptr) calloc(x, 1)
 #define NewPtrSys(x)				(Ptr) malloc(x)
 #define NewPtrSysClear(x) 			(Ptr) calloc(x, 1)
 
-//#define DisposPtr(x)				free(x)
+#define DisposPtr(x)				free(x)
 #define DisposePtr(x)				free(x)
 #define BlockMoveData(x,y,z)		memcpy(y,x,z)
-//#define BlockMoveData(x,y,z)			memcpy(y,x,z)
+#define BlockMoveData(x,y,z)			memcpy(y,x,z)
 //#define BlockZero(x, y)				memset(x, y, 0)
 static inline void BlockZero( void* a, long size)
 {
@@ -153,7 +136,7 @@ static void DebugStr( unsigned char* x)
 // ***	PATTERN DESCRIPTION
 // ***	
 
-typedef struct Cmd							// COMMAND
+struct Cmd							// COMMAND
 {
 	Byte	ins;					// Instrument no		0x00: no ins cmd
 	Byte 	note;					// Note, see table		0xFF : no note cmd
@@ -161,25 +144,25 @@ typedef struct Cmd							// COMMAND
 	Byte 	arg;					// Effect argument
 	Byte	vol;					// Volume				0xFF : no volume cmd
 	Byte	unused;
-}Cmd;
-typedef Cmd MadCommand;
+};
+typedef struct Cmd Cmd;
 
-typedef struct PatHeader					// HEADER
+struct PatHeader					// HEADER
 {
 	long	size;					// Length of pattern: standard = 64
 	OSType	compMode;				// Compression mode, none = 'NONE'
 	char	name[ 32];
 	long	patBytes;				// Pattern Size in Bytes
 	long	unused2;
-}PatHeader;
-typedef PatHeader PatternHeader;
+};
+typedef struct PatHeader PatHeader;
 
-typedef struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
+struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
 {									// Pattern = 64 notes to play
 	PatHeader	header;
 	Cmd			Cmds[ 1];
-}PatData;
-typedef PatData PatternData;
+};
+typedef struct PatData PatData;
 
 
 
@@ -188,7 +171,7 @@ typedef PatData PatternData;
 // ***	
 
 
-typedef struct sData								// SAMPLE
+struct sData								// SAMPLE
 {
 	long 				size;				// Sample length
 	long				loopBeg;			// LoopStart
@@ -201,8 +184,8 @@ typedef struct sData								// SAMPLE
 	char 				name[ 32];			// Sample name
 	Byte				stereo;				// Stereo
 	Ptr					data;				// Used only in memory, not in files
-}sData;
-typedef sData SampleData;
+};
+typedef struct sData sData;
 
 enum
 {
@@ -211,13 +194,14 @@ enum
 };
 
 
-typedef struct EnvRec				// Volume Enveloppe
+struct EnvRec				// Volume Enveloppe
 {
 	short 	pos;				// pos
 	short	val;				// val
-}EnvRec;
+};
+typedef struct EnvRec EnvRec;
 
-typedef struct InstrData				// INSTRUMENT
+struct InstrData				// INSTRUMENT
 {
 	char 	name[ 32];			// instrument name
 	Byte 	type;				// Instrument type = 0
@@ -260,8 +244,8 @@ typedef struct InstrData				// INSTRUMENT
 	
 	Byte	vibDepth;
 	Byte	vibRate;
-}InstrData;
-typedef InstrData InstrumentData;
+};
+typedef struct InstrData InstrData;
 
 
 enum
@@ -289,7 +273,7 @@ typedef struct
 	
 }	FXBus;
 
-typedef struct MADSpec
+struct MADSpec
 {
 	OSType		MAD;						// Mad Identification
 	char 		name[ 32];					// Music's name
@@ -321,9 +305,10 @@ typedef struct MADSpec
 	
 	long		chanEffect[ MAXTRACK][ 4];	// Channel Effect IDs
 	FXBus		chanBus[ MAXTRACK];
-}MADSpec;
+};
+typedef struct MADSpec MADSpec;
 
-typedef struct FXSets
+struct FXSets
 {
 	short	track;
 	short	id;
@@ -331,7 +316,8 @@ typedef struct FXSets
 	short	noArg;
 	float	values[ 100];
 	Str63	name;
-}FXSets;	// and then float values
+};	// and then float values
+typedef struct FXSets FXSets;
 
 
 #if PRAGMA_STRUCT_ALIGN
@@ -340,5 +326,6 @@ typedef struct FXSets
 #pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
 #pragma pack()
+#endif
 #endif
 #endif

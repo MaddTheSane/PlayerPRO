@@ -13,10 +13,28 @@
 //	WARNING
 //	This plug does work ONLY with 8 bits data
 
+#include <A4Stuff.h>
+#include <SetUpA4.h>
 #include <Sound.h>
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include "MAD.h"
+#include "PPPlug.h"
+
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( sData*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoPlug*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( long)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
 
 typedef short	*shortPtr;
 typedef long	*longPtr;
@@ -112,11 +130,15 @@ static pascal void sliderProc (DialogPtr	theWindow,
 	Rect	iRect;
 	long	v;
 
+	long oldA4 = SetUpA4 ();
+
 	if (theItem == slider1) v = gp1;
 	else v = gp2;
 
 	GetDialogItem(theWindow,theItem,&iType,&iHandle,&iRect);
 	drawSlider( iRect, v);
+
+	RestoreA4(oldA4);
 }
 
 static GDHandle		TheGDevice/*:0xCC8*/;
@@ -249,11 +271,11 @@ static void alertUser ( short errString)
 	StopAlert(5011, NULL);
 }
 
-OSErr mainMix( 	sData					*theData,
+OSErr main( 	sData					*theData,
 				long					SelectionStart,
 				long					SelectionEnd,
 				PPInfoPlug				*thePPInfoPlug,
-				short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+				long					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long				oldA4, scrapOffset, lCntOrErr;
 	Handle				aHandle;
@@ -261,6 +283,9 @@ OSErr mainMix( 	sData					*theData,
 	ScrapRef			scrap;
 	ScrapFlavorFlags	flags;
 	
+	
+	oldA4 = SetCurrentA4();
+	RememberA4();
 	aHandle = nil;
 	
 #if TARGET_API_MAC_CARBON
@@ -391,13 +416,6 @@ OSErr mainMix( 	sData					*theData,
 		
 	} else alertUser (1);
 
+	SetA4(oldA4);
 	return noErr;
 }
-
-// AE796F78-C31E-47B2-B86D-42EA6474B674
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xAE, 0x79, 0x6F, 0x78, 0xC3, 0x1E, 0x47, 0xB2, 0xB8, 0x6D, 0x42, 0xEA, 0x64, 0x74, 0xB6, 0x74)
-
-#define PLUGMAIN mainMix
-#define PLUGINFACTORY MixFactory
-
-#include "CFPlugin-FilterBridge.c"

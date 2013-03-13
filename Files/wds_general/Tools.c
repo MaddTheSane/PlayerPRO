@@ -1,7 +1,6 @@
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
-#include "RDriverInt.h"
 #include <Drag.h>
 #if MACOS9VERSION
 #include "OMS.h"
@@ -63,10 +62,6 @@
 	void PurgeVSTEffects( void);
 	DragTrackingHandlerUPP	MyTrackingToolsUPP;
 	DragReceiveHandlerUPP	MyReceiveToolsUPP;
-pascal void myForeAction( ControlHandle theCntl, short ctlPart);
-pascal void myBackAction( ControlHandle theCntl, short ctlPart);
-void SetCurrentMOD( Str255 theMODName);
-
 
 pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
 {	short				result, offset, i;
@@ -203,7 +198,7 @@ pascal OSErr MyReceiveTools(WindowPtr theWindow, void* handlerRefCon, DragRefere
 		{
 			Boolean		targetIsFolder, wasAliased;
 		
-			GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+			GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 			
 			ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		
@@ -819,7 +814,7 @@ void ScanTime()
 		{
 			time ++;
 			
-			(TimeScanPtr[ i])[ x] = timeResult + (time * 125L * speed * 60) / (50 * finespeed);
+			(TimeScanPtr[ i])[ x] = timeResult + (time * 125L * speed * 60L) / (50L * finespeed);
 			
 			for( y = 0; y <  curMusic->header->numChn; y++)
 			{
@@ -831,7 +826,7 @@ void ScanTime()
 				{
 					/** Compute time for this interval **/
 
-					timeResult += ((float) (time * 125L * speed * 60)) / ((float) (50 * finespeed));
+					timeResult += ((float) (time * 125L * speed * 60L)) / ((float) (50L * finespeed));
 					time = 0;
 					
 					/************************************/
@@ -852,7 +847,7 @@ void ScanTime()
 				{
 					for( ; x < curMusic->partition[ curMusic->header->oPointers[ i]]->header.size; x++)
 					{
-						(TimeScanPtr[ i])[ x] = timeResult + (time * 125L * speed * 60) / (50 * finespeed);
+						(TimeScanPtr[ i])[ x] = timeResult + (time * 125L * speed * 60L) / (50L * finespeed);
 					}
 				}
 
@@ -860,7 +855,7 @@ void ScanTime()
 		}
 	}
 	
-	timeResult += ((float) (time * 125L * speed * 60)) / ((float) (50 * finespeed));
+	timeResult += ((float) (time * 125L * speed * 60L)) / ((float) (50L * finespeed));
 	{
 		DateTimeRec	dtrp;
 		Str255		aStr, bStr;
@@ -879,7 +874,7 @@ void ScanTime()
 		SetDText( ToolsDlog, 9, aStr);
 		
 
-	/*	SecondsToDate( curTimeResult, &dtrp);
+	/*	Secs2Date( curTimeResult, &dtrp);
 		
 		NTStr( 2, dtrp.minute, (Ptr) aStr);		MyC2PStr( (Ptr) aStr);
 		NTStr( 2, dtrp.second, (Ptr) bStr);		MyC2PStr( (Ptr) bStr);

@@ -1,11 +1,11 @@
 /*	WAV		*/
 /*  IMPORT	*/
 
-#include <PlayerPROCore/PlayerPROCore.h>
-#include <Sound.h>
-#include "WAV.h"
+#include "PPPlug.h"
+#include "sound.h"
 
 #define WAVE_FORMAT_PCM		1
+#define	NIL 				0L
 #define kmaxVolume			7
  
 #define ksysFailed 			"\pSorry, This software requires system 7.0.0 or greater."
@@ -13,53 +13,95 @@
 #define kStereoStr 			"\pStereo"
 #define kMonoStr 			"\pMonaural"
 
+typedef unsigned short	WORD;
+typedef unsigned long	DWORD;
+typedef long			FOURCC;
+
+typedef struct{
+	Str255	name;
+	Str32	smpls;
+	Str32	dataBits;
+	Str32	stereo;
+}InfoRec,*InfoPtr,**InfoHnd;
+
+typedef struct _MMCKINFO{
+	FOURCC		ckid;
+	DWORD		cksize;
+	FOURCC		fccType;
+	DWORD		dwDataOffset;
+	WORD		dwFlags;
+}MMCKINFO;
+
+typedef struct waveformat_tag{
+	WORD		wFormatTag;
+	WORD		nCannels;
+	DWORD		nSamplesPerSec;
+	DWORD		nAvgBytesPerSec;
+	WORD		nBlockAlign;
+}WAVEFORMAT;
+
+typedef struct _pcwaveformat_tag{
+	FOURCC		ckid;
+	DWORD		cksize;
+	FOURCC		fccType;
+	FOURCC		fmtType;
+	DWORD		dwDataOffset;
+	WORD		wFormatTag;
+	WORD		nCannels;
+	DWORD		nSamplesPerSec;
+	DWORD		nAvgBytesPerSec;
+	WORD		nBlockAlign;
+	WORD		wBitsPerSample;
+	FOURCC		dataType;
+	DWORD		dataSize;
+	char		theData[];
+}PCMWaveRec,*PCMWavePtr,**PCMWaveHnd;
+
 OSErr TestWAV( PCMWavePtr CC)
 {
 	if( CC->ckid =='RIFF') return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
-/*___________________ long byte swap for Intel <-> Motorola Conversions*/
-//The following will only byteswap on a Big-endian machine
+/*___________________ long byte swap for Intell <-> Motorola Conversions*/
 
-static inline UInt32 longswap(UInt32 ul)
+inline unsigned long longswap(unsigned long ul)
 {
-	return EndianS32_LtoN(ul);
+	return (ul >> 24) | ((ul >> 8) & 0xff00) | ((ul << 8) & 0xff0000) | (ul << 24);
 }
 
-/*___________________ word byte swap for Intel <-> Motorola Conversions*/
-//The following will only byteswap on a Big-endian machine
+/*___________________ word byte swap for Intell <-> Motorola Conversions*/
 
-static inline UInt16 shrtswap(UInt16 us)
+inline unsigned short shrtswap(unsigned int us)
 {
-	return EndianS16_LtoN(us);
+	return ((us >> 8) | (us << 8)) & 0xffff;
 }
 
 /*_______________________________________________________________________*/
 
 Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo)
 {
-	PCMWavePtr	WAVERsrc;
-	short		fRef,tempResRef,x;
-	long		fSize;
-	int			theHit;
-	char		test;
- 	short		gRefNum;
- 	short		gVolSet;
+	PCMWavePtr			WAVERsrc;
+	short				fRef,tempResRef,x;
+	long				fSize;
+	int					theHit;
+	char				test;
+ 	short				gRefNum;
+ 	short				gVolSet;
 	
 	*stereo = false;
 	
-	if(!FSpOpenDF(fileSpec, fsRdWrPerm, &fRef))
+	if(!FSpOpenDF(fileSpec,fsRdWrPerm,&fRef))
 	{
-		GetEOF(fRef, &fSize);
+		GetEOF(fRef,&fSize);
 		if(!(WAVERsrc = (PCMWavePtr) NewPtr(fSize))) 
 		{
-			FSClose(fRef); return NULL;
+			FSClose(fRef); return 0L;
 		}
 		
-		if(FSRead(fRef, &fSize, &(*WAVERsrc)))
+		if(FSRead(fRef,&fSize,&(*WAVERsrc)))
 		{
-			FSClose(fRef); return NULL;
+			FSClose(fRef); return 0L;
 		}
 		
 		if((*WAVERsrc).ckid =='RIFF')

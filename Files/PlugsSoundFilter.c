@@ -2,35 +2,24 @@
 
 #include "MAD.h"
 #include "RDriver.h"
-#include "Shuddup.h"
-#include <MixedMode.h>
+#include "shuddup.h"
+#include "mixedmode.h"
 
 #include "PPPlug.h"
-#include "PPPrivate.h"
 
-#define MAXFILTERSPLUGS 100
-
-typedef struct FilterInfo
+typedef struct
 {
-	Str63			MenuName;
-#ifdef MACOS9VERSION
-	FSSpec			file;
-#else
-	CFBundleRef		file;
-#endif
-	OSType			Type;
-#ifdef MACOS9VERSION
-	Boolean			hasPPCCode;
-#else
-	PPFiltersPlugin	**PlugData;
-#endif
-} FilterInfo;
+	Str63		MenuName;
+	FSSpec		file;
+	OSType		Type;
+	Boolean		hasPPCCode;
+}	FilterInfo;
 
-		short		ToneGenerator;
+short		ToneGenerator;
 static	PPInfoPlug	thePPInfoPlug;
-static	FilterInfo 	*ThePlug;
+static	FilterInfo 		*ThePlug;
 static	short		tPlug;
-		MenuHandle	SampleMenu;
+			MenuHandle	SampleMenu;
 extern	WindowPtr	oldWindow;
 
 OSErr TESTmain(	Ptr,
@@ -40,71 +29,8 @@ OSErr TESTmain(	Ptr,
 				PPInfoPlug*,
 				long);
 
-#ifndef MACOS9VERSION
-static PPFiltersPlugin** PPFilterLoadPlug(CFBundleRef theBundle)
-{
-	CFPlugInRef			plugToTest = CFBundleGetPlugIn(theBundle);
-	CFArrayRef			factories = NULL;
-	Boolean				foundInterface = FALSE;
-	PPFiltersPlugin		**formatPlugA = NULL;
-	
-	//  See if this plug-in implements the Test type.
-	factories	= CFPlugInFindFactoriesForPlugInTypeInPlugIn( kPlayerPROFiltersPlugTypeID, plugToTest );
-	
-	if ( factories != NULL )
-	{
-		CFIndex	factoryCount, index;
-		
-		factoryCount	= CFArrayGetCount( factories );
-		if ( factoryCount > 0 )
-		{
-			for ( index = 0 ; (index < factoryCount) && (foundInterface == false) ; index++ )
-			{
-				CFUUIDRef	factoryID;
-				
-				//  Get the factory ID for the first location in the array of IDs.
-				factoryID = (CFUUIDRef) CFArrayGetValueAtIndex( factories, index );
-				if ( factoryID )
-				{
-					IUnknownVTbl **iunknown = NULL;
-					
-					//  Use the factory ID to get an IUnknown interface. Here the plug-in code is loaded.
-					iunknown	= (IUnknownVTbl **) CFPlugInInstanceCreate( kCFAllocatorDefault, factoryID, kPlayerPROFiltersPlugTypeID );
-					
-					if ( iunknown )
-					{
-						//  If this is an IUnknown interface, query for the test interface.
-						(*iunknown)->QueryInterface( iunknown, CFUUIDGetUUIDBytes( kPlayerPROFiltersPlugInterfaceID ), (LPVOID *)( &formatPlugA ) );
-						
-						// Now we are done with IUnknown
-						(*iunknown)->Release( iunknown );
-						
-						if ( formatPlugA )
-						{
-							//	We found the interface we need
-							foundInterface	= true;
-						}
-					}
-				}
-			}
-		}
-		else {
-			CFRelease(factories); factories = NULL;
-			return NULL;
-		}
-	}
-	else {
-		return NULL;
-	}
-	CFRelease(factories); factories = NULL;
-	
-	return formatPlugA;
-}
-#endif
-
 typedef OSErr (*MyProcPtr) ( sData*, long , long , PPInfoPlug*, long);
 OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
-extern void NSLog(CFStringRef format, ...);
 
 OSErr NCallPlugIns( 		short						PlugNo,					// CODE du plug
 												sData						*theInsData,
@@ -112,14 +38,13 @@ OSErr NCallPlugIns( 		short						PlugNo,					// CODE du plug
 												long 						end,
 												long						stereoMode)
 {
-	OSErr				myErr;
-	short				fileID;
-	GrafPtr				savedPort;
-#ifdef MACOS9VERSION
-	CFragConnectionID	connID;
-	Ptr					mainAddr;
-	Str255				errName;
-	static OSErr		(*mainPLUG)( sData*, long , long , PPInfoPlug*, long);
+OSErr						myErr;
+short						fileID;
+GrafPtr					savedPort;
+ConnectionID		connID;
+Ptr							mainAddr;
+Str255					errName;
+static OSErr		(*mainPLUG)( sData*, long , long , PPInfoPlug*, long);
 
 	if( ThePlug[ PlugNo].Type != 'PLug')
 	{
@@ -128,13 +53,13 @@ OSErr NCallPlugIns( 		short						PlugNo,					// CODE du plug
 	
 	GetPort( &savedPort);
 	
-//	HGetVol( NULL, &vRefNum, &dirIDCopy);
-//	HSetVol( NULL, ThePlug[ PlugNo].file.vRefNum, ThePlug[ PlugNo].file.parID);
+//	HGetVol( 0L, &vRefNum, &dirIDCopy);
+//	HSetVol( 0L, ThePlug[ PlugNo].file.vRefNum, ThePlug[ PlugNo].file.parID);
 	fileID = FSpOpenResFile( &ThePlug[ PlugNo].file, fsCurPerm);
 	
 //	myErr = TEST3main( theInsData, start, end, &thePPInfoPlug, stereoMode);
 	
-	myErr = GetDiskFragment( &ThePlug[ PlugNo].file, 0, kCFragGoesToEOF, ThePlug[ PlugNo].file.name, kLoadCFrag, &connID, (Ptr *) &mainPLUG, errName);
+	myErr = GetDiskFragment( &ThePlug[ PlugNo].file, 0, kWholeFork, ThePlug[ PlugNo].file.name, kLoadLib, &connID, (Ptr *) &mainPLUG, errName);
 
 	if( myErr == noErr)
 	{
@@ -146,21 +71,6 @@ OSErr NCallPlugIns( 		short						PlugNo,					// CODE du plug
 	}
 	
 	CloseResFile( fileID);	
-	
-#else
-	PPFiltersPlugin	**InstrPlugA = ThePlug[PlugNo].PlugData;
-	
-	GetPort( &savedPort);
-	
-	fileID = CFBundleOpenBundleResourceMap(ThePlug[ PlugNo].file);
-	
-	
-	myErr = (*InstrPlugA)->FiltersMain( theInsData, start, end, &thePPInfoPlug, stereoMode);
-	
-		
-	CFBundleCloseBundleResourceMap(ThePlug[ PlugNo].file, fileID);	
-	
-#endif
 	
 	SetPort( savedPort);
 
@@ -174,25 +84,24 @@ OSErr NCallPlugIns( 		short						PlugNo,					// CODE du plug
 
 void LoadPLUGSE(	short	No, StringPtr	theName)
 {
-	NSLog(CFSTR("Umm... what is this?"));
+
 }
 
 void LoadPLUG(	short	No, StringPtr	theName)
 {
-#if MACOS9VERSION
-	Handle		theRes;
-	short		fileID, i, temp;
-	Str255		tStr;
+Handle		theRes;
+short		fileID, i, temp;
+Str255		tStr;
 
 	/***********************/
 
-	HGetVol( NULL, &ThePlug[ No].file.vRefNum, &ThePlug[ No].file.parID);
+	HGetVol( 0L, &ThePlug[ No].file.vRefNum, &ThePlug[ No].file.parID);
 	pStrcpy( ThePlug[ No].file.name, theName);
 
 	{
-		Boolean		targetIsFolder, wasAliased;
+	Boolean		targetIsFolder, wasAliased;
 		
-		ResolveAliasFile( &ThePlug[ No].file, true, &targetIsFolder, &wasAliased);
+	ResolveAliasFile( &ThePlug[ No].file, true, &targetIsFolder, &wasAliased);
 	}
 
 
@@ -206,19 +115,17 @@ void LoadPLUG(	short	No, StringPtr	theName)
 
 	CloseResFile( fileID);
 	/*************************/
-#endif
 }
 
 static long PlugsFolderOK;
 
 void ScanDirPlug( long dirID, short VRefNum)
 {
-#if MACOS9VERSION
-	CInfoPBRec		info;
-	Str255			tempStr, volName;
-	long				dirIDCopy;
-	short			i, vRefNum;
-	OSErr			iErr;
+		CInfoPBRec		info;
+		Str255			tempStr, volName;
+		long				dirIDCopy;
+		short			i, vRefNum;
+		OSErr			iErr;
 
 	info.hFileInfo.ioNamePtr = tempStr;
 	info.hFileInfo.ioVRefNum = VRefNum;
@@ -230,17 +137,17 @@ void ScanDirPlug( long dirID, short VRefNum)
 		
 		if (PBGetCatInfo(&info, false) != noErr) break;
 		
-#if MACOS9VERSION
+		#if MACOS9VERSION
 		if( info.hFileInfo.ioFlFndrInfo.fdType == 'PLug')
-#else
+		#else
 		if( info.hFileInfo.ioFlFndrInfo.fdType == 'plug')
-#endif
+		#endif
 		{	
-			HGetVol( NULL, &vRefNum, &dirIDCopy);
+			HGetVol( 0L, &vRefNum, &dirIDCopy);
 			
-			iErr = HSetVol( NULL, info.hFileInfo.ioVRefNum, dirID);
+			iErr = HSetVol( 0L, info.hFileInfo.ioVRefNum, dirID);
 			
-			if( tPlug > MAXFILTERSPLUGS) MyDebugStr( __LINE__, __FILE__, "Too many plugs");
+			if( tPlug > 50) MyDebugStr( __LINE__, __FILE__, "Too many plugs");
 			
 				LoadPLUG( tPlug, info.hFileInfo.ioNamePtr);
 			
@@ -249,7 +156,7 @@ void ScanDirPlug( long dirID, short VRefNum)
 			
 			tPlug++;
 			
-			iErr = HSetVol( NULL, vRefNum, dirIDCopy);
+			iErr = HSetVol( 0L, vRefNum, dirIDCopy);
 			if( iErr != noErr) MyDebugStr( __LINE__, __FILE__, "HSetVol error...");
 		}
 		else if((info.hFileInfo.ioFlAttrib & 16))
@@ -262,12 +169,11 @@ void ScanDirPlug( long dirID, short VRefNum)
 			}
 		}
 	}
-#endif
 }
 
 void InitSampleMenu(void)
 {
-	short	i;
+short	i;
 
 	SampleMenu = GetMenu( 136);
 
@@ -306,73 +212,35 @@ short PressSampleMenu( Rect	*PopUpRect)
 
 void InitPlug(void)
 {
-	thePPInfoPlug.RPlaySoundUPP					= inMADPlaySoundData;
-	thePPInfoPlug.UpdateALLWindowUPP			= UpdateALLWindow;
-
-	thePPInfoPlug.MyDlgFilterUPP				= MyDlgFilterDesc;	
+	short			vRefNum;
+	long			dirID;
+	FSSpec		spec;
 	
-	ThePlug = (FilterInfo*) MyNewPtr( MAXFILTERSPLUGS * sizeof( FilterInfo));
-	
-	tPlug			= 0;
-	ToneGenerator	= -1;
-	PlugsFolderOK	= 0;
-
-#if MACOS9VERSION
-	short	vRefNum;
-	long	dirID;
-	FSSpec	spec;
-	
+/*	#if MACOS9VERSION
 	thePPInfoPlug.RPlaySoundUPP			= NewRoutineDescriptor( (ProcPtr) inMADPlaySoundData, RPlaySoundCallMode, GetCurrentArchitecture());
 	thePPInfoPlug.UpdateALLWindowUPP 		= NewRoutineDescriptor( (ProcPtr) UpdateALLWindow, UpdateALLWindowCallMode, GetCurrentArchitecture());
+	#endif*/
 	
-	HGetVol( NULL, &vRefNum, &dirID);
-		
+		thePPInfoPlug.RPlaySoundUPP					= inMADPlaySoundData;
+		thePPInfoPlug.UpdateALLWindowUPP 		= UpdateALLWindow;
+
+	
+		thePPInfoPlug.MyDlgFilterUPP			= MyDlgFilterDesc;	
+	
+	ThePlug = (FilterInfo*) MyNewPtr( 100 * sizeof( FilterInfo));
+
+	HGetVol( 0L, &vRefNum, &dirID);
+	
+	tPlug		= 0;
+	ToneGenerator	= -1;
+	PlugsFolderOK = 0L;
+	
 	GetApplicationPackageFSSpecFromBundle( &spec);
 	ScanDirPlug( spec.parID, spec.vRefNum);
 	
-	HSetVol( NULL, vRefNum, dirID);
-#else
-	
-	CFArrayRef  PlugLocsDigital = GetDefaultPluginFolderLocations();
-	CFIndex		i, x, PlugLocNums;
-
-	PPFiltersPlugin** tempMADPlug = NULL;
-	PlugLocNums = CFArrayGetCount(PlugLocsDigital);
-	for (i=0; i < PlugLocNums; i++) {
-		CFIndex		PlugNums;
-		CFArrayRef	somePlugs;
-		CFURLRef	aPlugLoc;
-		aPlugLoc = CFArrayGetValueAtIndex(PlugLocsDigital, i);
-		somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, NULL);
-		PlugNums = CFArrayGetCount( somePlugs );
-		if (PlugNums > 0) {
-			for (x = 0; x < PlugNums; x++) {
-				CFPlugInRef tempPlugRef = NULL;
-				CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
-				tempPlugRef = CFBundleGetPlugIn(tempBundleRef);
-				tempMADPlug = PPFilterLoadPlug(tempPlugRef);
-				if (tempMADPlug) {
-					if( tPlug > MAXFILTERSPLUGS) MyDebugStr( __LINE__, __FILE__, "Too many plugs");
-					
-#pragma mark This is where we add the plug to the plug library.
-					short		resFileNum = CFBundleOpenBundleResourceMap(tempBundleRef);
-					CFRetain(tempBundleRef);
-					
-					ThePlug[tPlug].PlugData = tempMADPlug;
-					ThePlug[tPlug].file = tempBundleRef;
-					GetIndString( ThePlug[tPlug].MenuName, 1000, 1);
-					ThePlug[tPlug].Type = 'PLug';
-					
-					CFBundleCloseBundleResourceMap(tempBundleRef, resFileNum);
-					tPlug++;
-				}
-			}
-		}
-	}	
-	
-#endif
-	
 	InitSampleMenu();
+
+	HSetVol( 0L, vRefNum, dirID);
 }
 
 short GetMaxSoundFilterPlugs( void)

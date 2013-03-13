@@ -30,7 +30,7 @@ void InitFKeyMenu( void)
 	
 	tempPtr = *PKEYRes;
 	
-	FKeymaxItems = EndianS16_BtoN(*((short*)tempPtr));
+	FKeymaxItems = *((short*)tempPtr);
 	tempPtr +=2;
 	
 	FKeymaxItems++;

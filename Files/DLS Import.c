@@ -10,7 +10,36 @@
 #include "dlsmac.h"
 #include "dls.h"
 #include "dls2.h"
-#include "WAV.h"
+
+typedef unsigned short	WORD;
+typedef unsigned long	DWORD;
+typedef long			FOURCC;
+
+typedef struct{
+	Str255	name;
+	Str32	smpls;
+	Str32	dataBits;
+	Str32	stereo;
+}InfoRec,*InfoPtr,**InfoHnd;
+
+typedef struct _MMCKINFO{
+	FOURCC		ckid;
+	DWORD		cksize;
+	FOURCC		fccType;
+	DWORD		dwDataOffset;
+	WORD		dwFlags;
+}MMCKINFO;
+
+typedef struct waveformat_tag{
+
+	WORD		wFormatTag;
+	WORD		nCannels;
+	DWORD		nSamplesPerSec;
+	DWORD		nAvgBytesPerSec;
+	WORD		nBlockAlign;
+	WORD		wBitsPerSample;
+	
+}WAVEFORMAT;
 
 void ConvertInstrument( register	Byte	*tempPtr,	register long sSize);
 void NInitSmallPiano( Rect mainRect, Rect *listRect);
@@ -22,6 +51,20 @@ Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short *sample
 void InitMapQK25();
 
 static NoteRequest					myNoteRequest;
+
+
+typedef struct _CK{
+	FOURCC		ckid;
+	DWORD		cksize;
+}CK;
+
+typedef struct _MyAtom{
+	long		pos;
+	long		id;
+	long		size;
+	short		ref;
+}MyAtom;
+
 
 /**** Resource Format ****/
 typedef struct

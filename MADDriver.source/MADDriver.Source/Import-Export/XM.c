@@ -21,8 +21,32 @@
 //
 /********************						***********************/
 
-#include <PlayerPROCore/PlayerPROCore.h>
+
+#include "RDriver.h"
 #include "XM.h"
+#include "FileUtils.h"
+
+#ifdef _SRC
+#elif defined(_MAC_H)
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE(sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( Ptr)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( MADMusic*)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoRec*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( MADDriverSettings*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+#endif
+
+Ptr MADPlugNewPtr( long size, MADDriverSettings* init);
+Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init);
 
 /**************************************************************************
 **************************************************************************/
@@ -33,9 +57,9 @@
 #define IHSIZESMALL	33
 #define IHSSIZE		40
 
-static		Byte		LastAEffect[ MAXTRACK];
-static		XMHEADER	*mh;
-static		Ptr			theXMRead, theXMMax;
+static	Byte		LastAEffect[ MAXTRACK];
+static XMHEADER 	*mh;
+static Ptr			theXMRead, theXMMax;
 
 #define READXMFILE(dst, size)	{BlockMoveData( theXMRead, dst, size);	theXMRead += (long) size;}
 #define WRITEXMFILE(src, size)	{BlockMoveData( src, theXMRead, size);	theXMRead += (long) size;}
@@ -48,6 +72,18 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
+}
+
+
+
+Ptr MADPlugNewPtr( long size, MADDriverSettings* init)
+{
+	return NewPtr( size);
+}
+
+Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init)
+{
+	return NewPtrClear( size);
 }
 
 #endif
@@ -723,7 +759,7 @@ static long XMGetPeriod( short note, long c2spd)
 	
 	period = (( 8363UL * ( mytab[ n]) ) >> o ) / c2spd;
 	
-	if( period == 0) period = 7242;
+	if( period == 0L) period = 7242;
 	
 	return period;
 }
@@ -779,8 +815,8 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 	
 	
 	
-	strcpy( mh->id, "Extended Module: ");
-	strcpy( mh->trackername, "FastTracker v2.00   ");
+	MADstrcpy( mh->id, (Ptr) "Extended Module: ");
+	MADstrcpy( mh->trackername, (Ptr) "FastTracker v2.00   ");
 	mh->version			= 0x104;													INT16( &mh->version);
 	mh->headersize		= HEADERSIZE;												INT32( &mh->headersize);
 	mh->songlength 		= theMAD->header->numPointers;	INT16( &mh->songlength);
@@ -970,7 +1006,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 			
 			if( curData->c2spd > 8757 || curData->c2spd < 7895)
 			{
-#define BASECALC	45
+				#define BASECALC	45
 				
 				wh.finetune = 0;			// <- 8363 Hz
 				
@@ -1245,11 +1281,16 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 }
 #endif
 
-OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#ifdef _SRC
+OSErr mainXM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
+EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif
+
 {
-	OSErr		myErr;
-	Ptr			AlienFile;
-	long		sndSize;
+	OSErr			myErr;
+	Ptr				AlienFile;
+	long			sndSize;
 	UNFILE		iFileRefI;
 	
 	myErr = noErr;

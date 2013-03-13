@@ -9,6 +9,23 @@
 #include <Sound.h>
 #include <SoundInput.h>
 
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( InstrData*)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( sData**)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( short*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( FSSpec*)))
+		| STACK_ROUTINE_PARAMETER(6, SIZE_CODE(sizeof( PPInfoPlug*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
 void AddLoopToSndHandle( Handle sound, long Start, long End)
 {
 	Ptr 			soundPtr;
@@ -122,7 +139,7 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 	switch( header->encode)
 	{
 		case cmpSH:
-		
+		{
 			CompressionInfo 		cp;
 			OSType					format;
 			
@@ -149,65 +166,65 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 			BlockMoveData( (*CmpHeader).sampleArea, soundPtr, (*CmpHeader).numFrames * cp.bytesPerFrame);
 			
 			{
-				SoundConverter			sc;
-				SoundComponentData		inputFormat, outputFormat;
-				unsigned long			inputFrames, outputFrames;
-				unsigned long			inputBytes, outputBytes;
-				Ptr						inputPtr, outputPtr;
-				OSErr					err;
-				Ptr						dstPtr;
+			SoundConverter			sc;
+			SoundComponentData		inputFormat, outputFormat;
+			unsigned long			inputFrames, outputFrames;
+			unsigned long			inputBytes, outputBytes;
+			Ptr						inputPtr, outputPtr;
+			OSErr					err;
+			Ptr						dstPtr;
 			
-				inputFormat.flags = 0;
-				inputFormat.format = format;
-				inputFormat.numChannels = numChannels;
-				inputFormat.sampleSize = *sampleSize;
-				inputFormat.sampleRate = *sampleRate;
-				inputFormat.sampleCount = 0;
-				inputFormat.buffer = nil;
-				inputFormat.reserved = 0;
+			inputFormat.flags = 0;
+			inputFormat.format = format;
+			inputFormat.numChannels = numChannels;
+			inputFormat.sampleSize = *sampleSize;
+			inputFormat.sampleRate = *sampleRate;
+			inputFormat.sampleCount = 0;
+			inputFormat.buffer = nil;
+			inputFormat.reserved = 0;
 			
-				outputFormat = inputFormat;
-				if( *sampleSize == 8) outputFormat.format = kOffsetBinary;
-				else outputFormat.format = k16BitBigEndianFormat;
+			outputFormat = inputFormat;
+			if( *sampleSize == 8) outputFormat.format = kOffsetBinary;
+			else outputFormat.format = k16BitBigEndianFormat;
 			
-				err = SoundConverterOpen(&inputFormat, &outputFormat, &sc);
-				if (err != noErr)
-					DebugStr("\pOpen failed");
+			err = SoundConverterOpen(&inputFormat, &outputFormat, &sc);
+			if (err != noErr)
+			DebugStr("\pOpen failed");
 			
-				err = SoundConverterBeginConversion(sc);
-				if (err != noErr)
-					DebugStr("\pBegin Conversion failed");
+			err = SoundConverterBeginConversion(sc);
+			if (err != noErr)
+			DebugStr("\pBegin Conversion failed");
 			
-				inputFrames = MusSize;
+			inputFrames = MusSize;
 			
-				dstPtr = NewPtr( inputFrames * numChannels * (*sampleSize/8) * cp.samplesPerPacket);
-				if( dstPtr == NULL)
-				{
-					DisposePtr( soundPtr);
-					return NULL;
-				}
-			
-				err = SoundConverterConvertBuffer(sc, soundPtr, inputFrames, dstPtr, &outputFrames, &outputBytes);
-				if (err != noErr)
-					DebugStr("\pConversion failed");
-			
-				MusSize = outputBytes;
-			
-				err = SoundConverterEndConversion(sc, dstPtr, &outputFrames, &outputBytes);
-				if (err != noErr)
-					DebugStr("\pEnd Conversion failed");
-			
-				if( outputBytes != 0) Debugger();
-			
-				err = SoundConverterClose(sc);
-				if (err != noErr)
-					DebugStr("\pClose failed");
-			
+			dstPtr = NewPtr( inputFrames * numChannels * (*sampleSize/8) * cp.samplesPerPacket);
+			if( dstPtr == 0L)
+			{
 				DisposePtr( soundPtr);
-				soundPtr = dstPtr;
+				return 0L;
 			}
-		
-			break;
+			
+			err = SoundConverterConvertBuffer(sc, soundPtr, inputFrames, dstPtr, &outputFrames, &outputBytes);
+			if (err != noErr)
+			DebugStr("\pConversion failed");
+			
+			MusSize = outputBytes;
+			
+			err = SoundConverterEndConversion(sc, dstPtr, &outputFrames, &outputBytes);
+			if (err != noErr)
+			DebugStr("\pEnd Conversion failed");
+			
+			if( outputBytes != 0) Debugger();
+			
+			err = SoundConverterClose(sc);
+			if (err != noErr)
+			DebugStr("\pClose failed");
+			
+			DisposePtr( soundPtr);
+			soundPtr = dstPtr;
+			}
+		}
+		break;
 		
 		case extSH:
 			ExtHeader = (ExtSoundHeader*) header;
@@ -256,7 +273,7 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 				}
 			}
 			
-			break;
+		break;
 		
 		default:
 		
@@ -269,7 +286,7 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 			
 			MusSize = header->length;
 			BlockMoveData( (*header).sampleArea, soundPtr, MusSize);
-			break;
+		break;
 	}
 	
 	if( *sampleSize == 8)
@@ -286,9 +303,7 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 
 OSErr TestSND( short *soundPtr)
 {
-	short oldSound = *soundPtr;
-	MOT16(&oldSound);
-	if( oldSound == 1 || oldSound == 2) return noErr;
+	if( *soundPtr == 1 || *soundPtr == 2) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -304,7 +319,11 @@ OSErr main(		OSType					order,						// Order to execute
 	Ptr		AlienFile;
 	short	iFileRefI;
 	long	inOutBytes;
-		
+	
+	#ifndef powerc
+		long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+	#endif
+	
 	switch( order)
 	{
 		case 'IMPL':
@@ -411,6 +430,10 @@ OSErr main(		OSType					order,						// Order to execute
 			myErr = MADOrderNotImplemented;
 		break;
 	}
-		
+	
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+	
 	return myErr;
 }

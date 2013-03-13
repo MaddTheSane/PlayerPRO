@@ -36,103 +36,82 @@ extern "C" {
 ////////////////////////////////////////////////////////////
 
 #ifdef _MAC_H
-#include <CoreServices/CoreServices.h>
-#if !defined(__LP64__) && (__MAC_OS_X_VERSION_MIN_REQUIRED < 1050)
-typedef SInt16 UNFILE;
-#else
-typedef FSIORefNum UNFILE;
+short iFileOpen( Ptr name);
+void iFileCreate( Ptr name, long);
+
+long iGetEOF( short iFileRefI);
+OSErr iRead( long size, Ptr dest, short iFileRefI);
+OSErr iWrite( long size, Ptr dest, short iFileRefI);
+OSErr iSeekCur( long size, short iFileRefI);
+
+void iClose( short iFileRefI);
+
+char* MADstrcpy( char*, const char*);
+int MADstrcmp( const char *dst, const char* src);
+
+#define UNFILE	short
+
+unsigned char* MYC2PStr( Ptr cStr);
+void MYP2CStr( unsigned char *cStr);
 #endif
-#else
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-typedef FILE* UNFILE;
-#endif
-	
-EXP UNFILE iFileOpen( Ptr name);
-EXP void iFileCreate( Ptr name, OSType);
-
-EXP long iGetEOF( UNFILE iFileRefI);
-EXP OSErr iRead( long size, Ptr dest, UNFILE iFileRefI);
-EXP OSErr iWrite( long size, Ptr dest, UNFILE iFileRefI);
-EXP OSErr iSeekCur( long size, UNFILE iFileRefI);
-
-EXP void iClose( UNFILE iFileRefI);
-
-EXP char* MADstrcpy( char*, const char*) DEPRECATED_ATTRIBUTE;
-EXP int MADstrcmp( const char *dst, const char* src);
-
-	
-EXP unsigned char* MYC2PStr( Ptr cStr);
-EXP void MYP2CStr( unsigned char *cStr);
-EXP OSType Ptr2OSType( Ptr str);
-EXP void OSType2Ptr( OSType type, Ptr str);
-void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
 
 
 ////////////////////////////////////////////////////////////
 
-#ifdef NOINLINE
-void INT32( void *msg_buf);
+#ifdef _INTEL_H
+FILE* iFileOpen( Ptr name);
+void iFileCreate( Ptr name, long);
+
+long iGetEOF( FILE* iFileRefI);
+OSErr iRead( long size, Ptr dest, FILE* iFileRefI);
+OSErr iWrite( long size, Ptr dest, FILE* iFileRefI);
+OSErr iSeekCur( long size, FILE* iFileRefI);
+
+void iClose( FILE* iFileRefI);
+
+char* MADstrcpy( char*, const char*);
+int MADstrcmp( const char *dst, const char* src);
+
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+
+#define UNFILE	FILE*
+
+#endif
+
+////////////////////////////////////////////////////////////
+
+#ifdef _BE_H
+FILE* iFileOpen( Ptr name);
+void iFileCreate( Ptr name, long);
+
+long iGetEOF( FILE* iFileRefI);
+OSErr iRead( long size, Ptr dest, FILE* iFileRefI);
+OSErr iWrite( long size, Ptr dest, FILE* iFileRefI);
+OSErr iSeekCur( long size, FILE* iFileRefI);
+
+void iClose( FILE* iFileRefI);
+
+char* MADstrcpy( char*, const char*);
+int MADstrcmp( const char *dst, const char* src);
+
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+
+#define UNFILE	FILE*
+
+#endif
+
+////////////////////////////////////////////////////////////
+
+
+void xINT32( void *msg_buf);
 void INT16( void *msg_buf);
 void MOT32( void *msg_buf);
 void MOT16( void *msg_buf);
-#else
 
-static inline void MADByteSwap32(void *msg_buf)
-{
-	UInt32			temp = *((UInt32*) msg_buf);
-#ifdef _MAC_H
-	*((UInt32*) msg_buf) = Endian32_Swap(temp);
-#else
-	*((UInt32*) msg_buf) = ((((temp & 0xff000000) >> 24) | \
-	(( temp & 0x00ff0000) >> 8) | (( temp & 0x0000ff00) << 8) | \
-	(temp & 0x000000ff) << 24));
-#endif
-}
-
-static inline void MADByteSwap16(void *msg_buf)
-{
-	UInt16			buf = *((UInt16*) msg_buf);
-#ifdef _MAC_H
-	*((UInt16*) msg_buf) = Endian16_Swap(buf);
-#else
-	*((UInt16*) msg_buf) = (((((UInt16)buf)<<8) & 0xFF00) | ((((UInt16)buf)>>8) & 0x00FF));
-#endif
-}
-
-/////////////////////////////////
-
-static inline void MOT32(void *msg_buf)
-{
-#ifdef __LITTLE_ENDIAN__
-	MADByteSwap32(msg_buf);
-#endif
-}
-
-static inline void MOT16(void *msg_buf)
-{
-#ifdef __LITTLE_ENDIAN__
-	MADByteSwap16(msg_buf);
-#endif
-}
-
-/////////////////////////////////
-
-static inline void INT32(void *msg_buf)
-{
-#ifdef __BIG_ENDIAN__
-	MADByteSwap32(msg_buf);
-#endif
-}
-
-static inline void INT16(void *msg_buf)
-{
-#ifdef __BIG_ENDIAN__
-	MADByteSwap16(msg_buf);
-#endif
-}
-#endif
 
 #ifdef __cplusplus
 }

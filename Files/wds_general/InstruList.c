@@ -85,7 +85,6 @@ void			OctavesName(short	id, Ptr	String);
 void			HandleNewSound( short theItem);
 void			ConvertInstrumentMode( sData	*curData, short);
 void			SetInstruEditor( short instru);
-OSErr CloseInstruData( DialogPtr	TheDia);
 
 /*
 #if defined(powerc) || defined (__powerc)
@@ -98,9 +97,9 @@ pascal OSErr IconIDToRgn (RgnHandle theRgn, const Rect *iconRect, short alignmen
 {
 	CInfoPBRec tempPB;
 	
-	if( theFile != NULL)
+	if( theFile != 0L)
 	{
-		tempPB.dirInfo.ioNamePtr = NULL;
+		tempPB.dirInfo.ioNamePtr = 0L;
 		tempPB.dirInfo.ioVRefNum = theFile->vRefNum;
 		tempPB.dirInfo.ioFDirIndex = -1;
 		tempPB.dirInfo.ioDrDirID = theFile->parID;
@@ -998,8 +997,8 @@ curVal = sVal = GetControlValue( theControl);
 					itemRect.right -= 16;
 					itemRect.top++;		itemRect.bottom--;
 					
-					if( curVal < sVal) ScrollRect( &itemRect, 0, (itemRect.bottom - itemRect.top) / STEP, NULL);
-					else ScrollRect( &itemRect, 0, - (itemRect.bottom - itemRect.top) / STEP, NULL);
+					if( curVal < sVal) ScrollRect( &itemRect, 0, (itemRect.bottom - itemRect.top) / STEP, 0L);
+					else ScrollRect( &itemRect, 0, - (itemRect.bottom - itemRect.top) / STEP, 0L);
 					
 					Delay( 1, &tL);
 				}
@@ -1118,7 +1117,7 @@ OSErr CloseSampleData( DialogPtr	TheDia)
 	curEData->vol = res;
 
 	GetDText( TheDia, 6, theStr);	StringToNum( theStr, &res);
-	if( res < 1 || res >= 50000)
+	if( res < 1 || res >= 50000L)
 	{
 		Erreur( 66, -1);
 		SelectDialogItemText( TheDia, 6, 0, 32767);
@@ -1479,7 +1478,7 @@ void NEditInstruInfo( short ins, short samp)
 		//	ctlPart = FindControl( myPt, GetDialogWindow( TheDia), &theControl);
 		/*	if( ctlPart == kControlIndicatorPart)
 			{
-				bogus = TrackControl( theControl, myPt, NULL);
+				bogus = TrackControl( theControl, myPt, 0L);
 				if( bogus != 0)
 				{
 					actionProcInstru( theControl, kControlIndicatorPart);
@@ -2673,11 +2672,11 @@ Boolean IsMyTypeAvailable( DragReference theDrag)
 	
 		GetFlavorDataSize( theDrag, theItem, flavorTypeHFS, &textSize);
 		
-		GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+		GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 
 		ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 
-	//	HSetVol( NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
+	//	HSetVol( 0L, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
 		FSpGetFInfo( &myFlavor.fileSpec, &fndrInfo);
 		
 		if( fndrInfo.fdType == 'INso')
@@ -2903,11 +2902,11 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 
 	curMusic->hasChanged = true;
 	
-	//  Un instrument & sample d√©plac√© √† l'int√©rieur de la fen√™tre
+	//  Un instrument & sample déplacé à l'intérieur de la fenêtre
 	
 	if((attributes & kDragInsideSenderWindow) && (DragIns != DestIns || DragSamp != DestSamp))		// Delete the source, if moving without option key.
 	{
-		if( DragSamp < 0)			// D√©placement d'un instrument
+		if( DragSamp < 0)			// Déplacement d'un instrument
 		{
 			InstrData	*srcIns, *dstIns;
 			sData		*srcData, *dstData;
@@ -2949,9 +2948,9 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 				MADKillInstrument( curMusic, DragIns);
 			}
 		}
-		else							// D√©placement d'un sample
+		else							// Déplacement d'un sample
 		{
-			if( DestSamp < 0)			// Rajout d'un sample √† un instrument
+			if( DestSamp < 0)			// Rajout d'un sample à un instrument
 			{
 				sData		*srcData, *dstData;
 				
@@ -3075,7 +3074,7 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 		}
 		else
 		{
-			GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+			GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 			
 			ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 			
@@ -3187,7 +3186,7 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 		result = GetFlavorDataSize(theDrag, theItem, 'STR ', &textSize);
 		if( result == noErr)
 		{
-			GetFlavorData(theDrag, theItem, 'STR ', &myStr, &textSize, 0);
+			GetFlavorData(theDrag, theItem, 'STR ', &myStr, &textSize, 0L);
 			SetSampName( DestIns, DestSamp, myStr);
 		}
 		
@@ -3245,11 +3244,11 @@ pascal OSErr MySendDataProc(FlavorType theFlavor,  void *refCon, ItemReference t
 		
 			ReEXPORT:
 			
-		//	HSetVol( NULL, target.vRefNum, target.parID);
+		//	HSetVol( 0L, target.vRefNum, target.parID);
 			err = FSpOpenDF( &target, fsCurPerm, &fRefNum);
 			if( err == noErr)
 			{
-				FSCloseFork( fRefNum);
+				FSClose( fRefNum);
 				beginNumber++;
 				
 				pStrcpy( target.name, sName);
@@ -3270,7 +3269,7 @@ pascal OSErr MySendDataProc(FlavorType theFlavor,  void *refCon, ItemReference t
 			{
 				NSaveSampleInt( DragIns, DragSamp, SoundType, &target);
 				
-				err = SetDragItemFlavorData( theDrag, theItem, theFlavor, &target, sizeof( target), 0);
+				err = SetDragItemFlavorData( theDrag, theItem, theFlavor, &target, sizeof( target), 0L);
 				if (err) return (err);
 			}
 			else
@@ -3495,8 +3494,8 @@ void CreateInstruListWindow(void)
 		return;
 	}
 
-	SAButState = (Boolean*) NewPtrClear( sizeof( Boolean) * 32000);
-	InstrUsed = (Boolean*) NewPtrClear( sizeof( Boolean) * 32000);
+	SAButState = (Boolean*) NewPtrClear( sizeof( Boolean) * 32000L);
+	InstrUsed = (Boolean*) NewPtrClear( sizeof( Boolean) * 32000L);
 
 	InstruListDlog = GetNewDialog( 140, NULL, GetDialogWindow( ToolsDlog));
 
@@ -3904,7 +3903,7 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 	switch( whichItem)
 	{
 		case 18:
-		if( GetControlHilite( PlayBut) == 0)// && MyTrackControl( PlayBut, theEvent.where, NULL))
+		if( GetControlHilite( PlayBut) == 0)// && MyTrackControl( PlayBut, theEvent.where, 0L))
 		{
 			HiliteControl( PlayBut, kControlButtonPart);
 		
@@ -4036,12 +4035,12 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 				if( caRect.right == 300)
 				{
 					MySizeWindow( whichDialog, 200, caRect.bottom, true);
-				//	SetControlValue( FlipBut, 161);
+				//	SetCtlValue( FlipBut, 161);
 				}
 				else
 				{
 					MySizeWindow( whichDialog, 300, caRect.bottom, true);
-				//	SetControlValue( FlipBut, 162);
+				//	SetCtlValue( FlipBut, 162);
 				}
 				
 				GetPortBounds( GetDialogPort( whichDialog), &caRect);
@@ -4146,7 +4145,7 @@ Boolean		Delete;
 				}
 				else
 				{
-					if( curData->c2spd < 60000)
+					if( curData->c2spd < 60000L)
 						curData->c2spd += 5;
 						
 					curMusic->hasChanged = true;
@@ -4168,11 +4167,11 @@ void PASTEInstruList()
 {
 	if( GetIns( &DestIns, &DestSamp))
 	{
-		if( DestSamp < 0)			// Rajout d'un sample √† un instrument
+		if( DestSamp < 0)			// Rajout d'un sample à un instrument
 		{
 			SaveUndo( UAllSamples, 0, "\pUndo 'Paste sample'");
 			
-			NPASTESample( 0, DestIns, DestSamp);
+			NPASTESample( 0L, DestIns, DestSamp);
 		}
 		else						// Remplacement d'un sample
 		{
@@ -4191,9 +4190,9 @@ void PASTEInstruList()
 			
 			// Create the new sample
 			dstData = (sData*) NewPtrClear( sizeof( sData));
-			dstData->size		= 0;
-			dstData->loopBeg	= 0;
-			dstData->loopSize	= 0;
+			dstData->size		= 0L;
+			dstData->loopBeg	= 0L;
+			dstData->loopSize	= 0L;
 			dstData->vol		= MAX_VOLUME;
 			dstData->c2spd		= NOFINETUNE;
 			dstData->loopType	= eClassicLoop;
@@ -4207,7 +4206,7 @@ void PASTEInstruList()
 			dstData->data = NewPtr( 0);
 			if( dstData->data)
 			{
-				NPASTESample( 0, DestIns, DestSamp);
+				NPASTESample( 0L, DestIns, DestSamp);
 			}
 		}
 	}
@@ -4262,7 +4261,7 @@ void SaveInstrumentsList()
 				}
 			}
 		}
-		iErr = FSCloseFork( refNum);
+		iErr = FSClose( refNum);
 	}
 }
 
@@ -4309,7 +4308,7 @@ OSErr OpenInstrumentsList( FSSpec *file)
 	}
 	// *********************
 	
-	theErr = FSCloseFork( srcFile);
+	theErr = FSClose( srcFile);
 	
 	return noErr;
 }

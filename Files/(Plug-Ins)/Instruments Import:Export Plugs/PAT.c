@@ -3,31 +3,59 @@
 /*	v 1.0			*/
 /*	1999 by ANR		*/
 
-#include <PlayerPROCore/PlayerPROCore.h>
-#include <Sound.h>
+#include "PPPlug.h"
+#include "sound.h"
 #include "PAT.h"
 
-#ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*(UInt32*)msg_buf);
-#else
-static inline UInt32 Tdecode32( void *msg_buf)
-{
-	UInt32 toswap = *((UInt32*) msg_buf);
-	INT32(&toswap);
-	return toswap;
-}
-#endif
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( InstrData*)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( sData**)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( short*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( FSSpec*)))
+		| STACK_ROUTINE_PARAMETER(6, SIZE_CODE(sizeof( PPInfoPlug*)))
+};
 
-#ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*(UInt16*)msg_buf);
+ProcInfoType __procinfo = PlayerPROPlug;
 #else
-static inline UInt16 Tdecode16( void *msg_buf)
-{
-	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
-	return toswap;
-}
+#include <A4Stuff.h>
 #endif
+/*
+sData	* inMADCreateSample()
+{
+	sData	*curData;
+
+	curData = (sData*) NewPtrClear( sizeof( sData));
+	
+	curData->size		= 0L;
+	curData->loopBeg	= 0L;
+	curData->loopSize	= 0L;
+	curData->vol		= MAX_VOLUME;
+	curData->c2spd		= NOFINETUNE;
+	curData->loopType	= 0;
+	curData->amp		= 8;
+	curData->relNote	= 0;
+	curData->data		= 0L;
+	
+	return curData;		
+}*/
+
+unsigned long Tdecode32( void *msg_buf)
+{
+  unsigned char *buf = msg_buf;
+  
+  return( (unsigned long) buf[3] << 24) | ( (unsigned long) buf[2] << 16) | ( (unsigned long) buf[ 1] << 8) | ( (unsigned long) buf[0]);
+}
+
+short Tdecode16( void *msg_buf)
+{
+  unsigned char *buf = msg_buf;
+  
+  return ( (short) buf[1] << 8) | ( (short) buf[0]);
+}
 
 static OSErr TestPAT( Ptr CC)
 {
@@ -274,7 +302,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 	return noErr;
 }
 
-OSErr mainPAT(		OSType					order,						// Order to execute
+OSErr main(		OSType					order,						// Order to execute
 				InstrData				*InsHeader,					// Ptr on instrument header
 				sData					**sample,					// Ptr on samples data
 				short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
@@ -283,10 +311,13 @@ OSErr mainPAT(		OSType					order,						// Order to execute
 				PPInfoPlug				*thePPInfoPlug)
 {
 	OSErr	myErr;
-	UNFILE	iFileRefI;
-	short	x;
+	short	iFileRefI, x;
 	long	inOutCount;
-		
+	
+	#ifndef powerc
+		long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+	#endif
+	
 	switch( order)
 	{
 		case 'IMPL':
@@ -345,13 +376,9 @@ OSErr mainPAT(		OSType					order,						// Order to execute
 		break;
 	}
 	
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+	
 	return myErr;
 }
-
-// D54EE3CC-B94C-4245-9E82-2F1D65C0009D
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xD5, 0x4E, 0xE3, 0xCC, 0xB9, 0x4C, 0x42, 0x45, 0x9E, 0x82, 0x2F, 0x1D, 0x65, 0xC0, 0x00, 0x9D)
-#define PLUGINFACTORY PATFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainPAT //The old main function, renamed please
-
-#include "CFPlugin-InstrBridge.c"
-

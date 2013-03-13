@@ -214,7 +214,7 @@ pascal void main(short msg, MenuHandle whichMenu, Rect *menuRect, Point hitPt, s
 		aH = GetDeviceList();
 		do
 		{
-			if( aH != NULL)
+			if( aH != 0L)
 			{
 				if( PtInRect( hitPt, &(*(*aH)->gdPMap)->bounds))
 				{
@@ -229,7 +229,7 @@ pascal void main(short msg, MenuHandle whichMenu, Rect *menuRect, Point hitPt, s
 			
 			aH = GetNextDevice( aH);
 		}
-		while( aH != NULL);
+		while( aH != 0L);
 	}
 	break;
 	}

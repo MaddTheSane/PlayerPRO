@@ -24,7 +24,7 @@
 #ifndef __MADFG__
 #define __MADFG__
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
+#if defined(powerc) || defined (__powerc)
 #pragma options align=mac68k
 #endif
 struct oldPatHeader {
@@ -52,7 +52,7 @@ struct FileInstrData {
 	char 	Filename[ 32];		// Instrument's filename
 	long 	insSize;			// Sample length
 	Byte 	fineTune;
-	Byte 	volume;				// Base volume
+	Byte 	volume;			// Base volume
 	short	CompCode;			// Compression Code, 0 = nothing, M3 = MAC3, M6 = MAC6
 	short	freq;				// Base frequence, simple, double, quadruple
 	Byte	amplitude;			// 8 or 16 bits
@@ -67,13 +67,13 @@ struct oldMADSpec
 	struct 	FileInstrData fid[ 64];	// 64 instruments descriptor
 	Byte	PatMax;
 	Byte 	numPointers;			// Patterns number
-	Byte	oPointers[128];		// Patterns list
+	Byte	oPointers[ 128];		// Patterns list
 	Byte	Tracks;					// Tracks number
 };
-typedef struct oldMADSpec oldMADSpec;
-
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
+#if defined(powerc) || defined(__powerc)
 #pragma options align=reset
 #endif
+
+typedef struct oldMADSpec oldMADSpec;
 
 #endif

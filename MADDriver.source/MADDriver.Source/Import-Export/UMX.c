@@ -21,14 +21,40 @@
 //
 /********************						***********************/
 
-#include <PlayerPROCore/PlayerPROCore.h>
-#include "UMX.h"
+#include "RDriver.h"
+#include "umx.h"
+#include "FileUtils.h"
 
-static short FoundNote( short Period)
+#ifdef _SRC
+#elif defined(_MAC_H)
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE(sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( Ptr)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( MADMusic*)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoRec*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( MADDriverSettings*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+#endif
+
+Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init);
+Ptr MADPlugNewPtr( long size, MADDriverSettings* init);
+
+
+//debugger(Ptr);
+
+short FoundNote( short Period)
 {
-	short 			note;
-	short				MODTuning[ 70] =
-	{
+short 			note;
+short				MODTuning[ 70] =
+{
 
 // -> Tuning 0
 
@@ -37,7 +63,7 @@ static short FoundNote( short Period)
 	428,404,381,360,339,320,302,285,269,254,240,226,
 	214,202,190,180,170,160,151,143,135,127,120,113,
 	107,101,95,90,85,80,75,71,67,63,60,56
-	};
+};
 	note = 0xFF;
 	
 	
@@ -74,6 +100,17 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
+}
+
+
+Ptr MADPlugNewPtr( long size, MADDriverSettings* init)
+{
+	return NewPtr( size);
+}
+
+Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init)
+{
+	return NewPtrClear( size);
 }
 #endif
 
@@ -403,7 +440,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 		
 		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
 		
-		theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
+		theMAD->partition[ i]->header.patBytes = 0L;		theMAD->partition[ i]->header.unused2 = 0L;
 				
 		for(x=0; x<64; x++)
 		{
@@ -646,7 +683,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *PtrSize)
 		}
 	}
 	
-	InstruSize = 0;
+	InstruSize = 0L;
 	
 	OffSetToSample = (long) 0x43c + theMAD->header->numPat * sizeof( struct MODCom) * 64L * theMAD->header->numChn;
 	
@@ -821,7 +858,7 @@ static OSErr ExtractUMXInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-//	myMOD->NameSignature[ 0] = '\0';
+	myMOD->NameSignature[ 0] = '\0';
 	
 	/*** Check MOD Type ***/
 	
@@ -901,13 +938,23 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /*****************/
 /* MAIN FUNCTION */
 /*****************/
-
+/*#ifdef _SRC
+OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#elif defined(_MAC_H)
 OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
+EXP OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif*/
+#ifdef _SRC
+OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
+EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif
 {
 	OSErr		myErr;
 	Ptr			AlienFile;
 	long		sndSize;
-	UNFILE		iFileRefI;
+	UNFILE	iFileRefI;
 	
 	myErr = noErr;
 	
@@ -966,6 +1013,23 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 			}
 			else myErr = MADReadingErr;
 		break;
+		
+		/*case 'EXPL':
+			AlienFile = PPConvertMad2Mod( MadFile, init, &sndSize);
+			
+			if( AlienFile != 0L)
+			{
+				iFileCreate( AlienFileName, 'STrk');
+				iFileRefI = iFileOpen( AlienFileName);
+				if( iFileRefI)
+				{
+					iWrite( sndSize, AlienFile, iFileRefI);
+					iClose( iFileRefI);
+				}
+				DisposePtr( AlienFile);	AlienFile = 0L;
+			}
+			else myErr = MADReadingErr;
+		break;*/
 		
 		case 'INFO':
 			iFileRefI = iFileOpen( AlienFileName);

@@ -9,9 +9,9 @@
 #endif
 #include <Appearance.h>
 
-//#include "asiodrivers.h"
+#include "asiodrivers.h"
 
-//extern	AsioDrivers*	asioDrivers;
+extern	AsioDrivers*	asioDrivers;
 extern	char 			ASIO_DRIVER_NAME[ 255];
 
 extern	Boolean		Stereo, StereoMixing, NewSoundManager, MIDIHardware, MIDIHardwareAlreadyOpen;
@@ -42,7 +42,6 @@ void OpenMIDIHardware();
 void VSTFilter( DialogPtr theDialog, EventRecord *theEventI, short *itemHit);
 void MyTETextBox( RGBColor *backColor, Rect *rect, Str255 str, Boolean black);
 Boolean	IsPressed(unsigned short k);
-
 
 short GetWhichTrackPlay()
 {
@@ -657,7 +656,7 @@ long			nVersLong;
 			
 			ControlSwitch( base + 6, prefDlog, 0);
 			ControlSwitch( base + 7, prefDlog, 0);
-			ControlSwitch( base + 12, prefDlog, 0);
+		//	ControlSwitch( base + 12, prefDlog, 0);
 			
 			if( NewSoundManager31)
 			{
@@ -706,7 +705,7 @@ long			nVersLong;
 		case rate44khz:				TurnRadio( base + 8, prefDlog, true);	break;
 	}
 	
-#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
+	#if defined(powerc) || defined (__powerc)
 	if( thePrefs.oversampling > 1)
 	{
 		long	tempLong;
@@ -1111,7 +1110,7 @@ void DrawChooseColorWindow(void)
 	}
 	while( Button());
 		
-	DisposeDialog( TheDia);
+	DisposDialog( TheDia);
 }*/
 
 void DoCOLOR( short	itemHit)
@@ -1874,7 +1873,7 @@ void InitKEY()
 	
 	if( thePrefs.FKeyTracks)
 	{
-//		TurnRadio( base + 42, prefDlog, true);
+		TurnRadio( base + 42, prefDlog, true);
 		TurnRadio( base + 1, prefDlog, false);
 		
 		for( i = 0; i < 13; i++)
@@ -2213,16 +2212,16 @@ short GetTracksMenuVal( short Noni)
 	return curSelec;
 }
 
-short GetRateMenuPos( unsigned long Noni)
+/*short GetRateMenuPos( unsigned long Noni)
 {
 	switch( Noni)
 	{
-	case rate5khz:			return 1;		break;
+	case 0x15BB9B5C:		return 1;		break;
 	case rate11khz:			return 2;		break;
-	case rate16khz:			return 3;		break;
+	case 0x4132DDF2:		return 3;		break;
 	case rate22khz:			return 4;		break;
 	case rate44khz:			return 5;		break;
-	case rate48khz:			return 6;		break;
+	case 0xBB800000:		return 6;		break;
 	
 	default:	return 4;	break;
 	}
@@ -2241,7 +2240,7 @@ unsigned long GetRateMenuVal( short Noni)
 	
 	default:	return 1;	break;
 	}
-}	
+}	*/
 
 
 #define CSTTEST	4000L
@@ -2506,7 +2505,7 @@ switch( itemHit - base)
 		SwitchDriverTo( 0);
 	break;
 	
-#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
+	#if defined(powerc) || defined (__powerc)
 	case 12:
 		InverseRadio( base + 12, prefDlog);
 		if( thePrefs.oversampling > 1)
@@ -2545,7 +2544,7 @@ switch( itemHit - base)
 	
 	case 17:
 	case 25:
-	if( /*asioDrivers != NULL*/ 1)
+	if( asioDrivers != 0L)
 	{
 #if MACOS9VERSION
 		long		mresult, whichDrive;

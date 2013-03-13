@@ -93,8 +93,8 @@ void WriteLineList(void)
 	OSType	rType;
 	Str255	rName;
 
-	HGetVol( NULL, &cVRef, &cParID);
-	HSetVol( NULL, mainVRefNum, mainParID);
+	HGetVol( 0L, &cVRef, &cParID);
+	HSetVol( 0L, mainVRefNum, mainParID);
 
 	if( iHelpPP != -1)
 	{
@@ -102,7 +102,7 @@ void WriteLineList(void)
 		for( i = 0; i < CountMenuItems( sectMenu); i++)
 		{
 			myRes = GetResource( 'SECT', i + 128);
-			if( myRes != NULL)
+			if( myRes != 0L)
 			{
 				RemoveResource( myRes);
 				MyDisposHandle( & myRes);
@@ -110,7 +110,7 @@ void WriteLineList(void)
 			
 			myRes = MyNewHandle( 4L);
 			*((long*) (*myRes)) = lineList[ i];
-			GetMenuItemText( sectMenu,  i + 1, rName);
+			GetItem( sectMenu,  i + 1, rName);
 			
 			UseResFile( iHelpPP);
 			AddResource( myRes, 'SECT', i + 128, rName);
@@ -118,7 +118,7 @@ void WriteLineList(void)
 		}
 	}
 	
-	HSetVol( NULL, cVRef, cParID);*/
+	HSetVol( 0L, cVRef, cParID);*/
 }
 
 void CreateMenuHelp(void)
@@ -177,12 +177,12 @@ SetItemMark( ViewsMenu, 1, checkMark);
 
 curSect = whichSection;
 
-lineList = (long*) MyNewPtr( 8000);
+lineList = (long*) MyNewPtr( 8000L);
 
 /** Lecture du fichier Help **/
 
-//HGetVol( NULL, &cVRef, &cParID);
-//HSetVol( NULL, mainVRefNum, mainParID);
+//HGetVol( 0L, &cVRef, &cParID);
+//HSetVol( 0L, mainVRefNum, mainParID);
 
 pStrcpy( spec.name, "\pHelp PP");
 spec.vRefNum = mainVRefNum;
@@ -197,7 +197,7 @@ if( iErr)
 GetEOF( iFileRefI, &inOutBytes);
 Text = MyNewPtr( inOutBytes);
 FSRead( iFileRefI, &inOutBytes, Text);			
-FSCloseFork( iFileRefI);
+FSClose( iFileRefI);
 
 /*******************/
 
@@ -205,12 +205,12 @@ FSCloseFork( iFileRefI);
 if( iHelpPP != -1)
 {
 	theStyle = (StScrpHandle) Get1Resource( 'styl', 128);
-	if( theStyle != NULL) DetachResource( (Handle) theStyle);
+	if( theStyle != 0L) DetachResource( (Handle) theStyle);
 	
 	CreateMenuHelp();
 }*/
 
-//HSetVol( NULL, cVRef, cParID);
+//HSetVol( 0L, cVRef, cParID);
 
 GetPort( &myPort);
 

@@ -158,7 +158,7 @@ pascal OSErr MyPATTrackingHandler(short message, WindowPtr theWindow, void *hand
 			
 				GetFlavorDataSize( theDrag, theItem, flavorTypeHFS, &textSize);
 				
-				GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+				GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 		
 				ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		
@@ -311,7 +311,7 @@ pascal OSErr MyPATReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, D
 	{
 		Boolean		targetIsFolder, wasAliased;
 	
-		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 		
 		ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		
@@ -391,7 +391,7 @@ pascal OSErr MyPATSendDataProc(FlavorType theFlavor,  void *refCon, ItemReferenc
 		
 		SaveAPatternInt( target, DragPatSource);
 
-		err = SetDragItemFlavorData( theDrag, theItem, theFlavor, &target, sizeof(target), 0);
+		err = SetDragItemFlavorData( theDrag, theItem, theFlavor, &target, sizeof(target), 0L);
 		if (err) return (err);
 	}
 
@@ -588,7 +588,7 @@ void SaveAPatternInt( FSSpec	sFile, short theID)
 		
 		inOutBytes = GetPtrSize( (Ptr) curMusic->partition[ theID]);
 		iErr = FSWrite( fRefNum, &inOutBytes, curMusic->partition[ theID]);
-		iErr = FSCloseFork( fRefNum);
+		iErr = FSClose( fRefNum);
 	}
 
 	UpdatePatListInfo();
@@ -635,7 +635,7 @@ Boolean					readingActif = MADDriver->Reading;
 
 	MADDriver->Reading = false;
 
-//	HSetVol( NULL, sFile.vRefNum, sFile.parID);
+//	HSetVol( 0L, sFile.vRefNum, sFile.parID);
 
 	FSpOpenDF( &sFile, fsCurPerm, &iFileRefI);
 	GetEOF( iFileRefI, &inOutBytes);
@@ -645,7 +645,7 @@ Boolean					readingActif = MADDriver->Reading;
 	theNewPattern = ( PatData*) MyNewPtr( inOutBytes);
 	
 	FSRead( iFileRefI, &inOutBytes, theNewPattern);
-	FSCloseFork( iFileRefI);
+	FSClose( iFileRefI);
 
 	/****/
 	
@@ -821,7 +821,7 @@ Point					theCell = { 0, 0};
 	curMusic->partition[ curMusic->header->numPat]->header.size = 64L;
 	curMusic->partition[ curMusic->header->numPat]->header.compMode = 'NONE';
 	strcpy( (Ptr) curMusic->partition[ curMusic->header->numPat]->header.name, "New pattern");
-	curMusic->partition[ curMusic->header->numPat]->header.patBytes = 0;
+	curMusic->partition[ curMusic->header->numPat]->header.patBytes = 0L;
 	curMusic->partition[ curMusic->header->numPat]->header.unused2 = 0;
 	
 	for( u = 0; u < curMusic->header->numChn; u++)
@@ -1751,7 +1751,7 @@ void DoItemPressPatList( short whichItem, DialogPtr whichDialog)    			/* Item h
 					MADDriver->PartitionReader = 0;
 					MADPurgeTrack( MADDriver);
 					
-					if( ClassicDlog != NULL) SelectWindow2( ClassicDlog);
+					if( ClassicDlog != 0L) SelectWindow2( ClassicDlog);
 					else CreateClassicWindow();*/
 					
 					OpenSelectedPattern( theCell.v);
@@ -2136,7 +2136,7 @@ void DoKeyPressPatList( short theChar)
 	
 		if( theChar == 0x03 || theChar == 0x0D)
 		{
-		/*	if( ClassicDlog != NULL)
+		/*	if( ClassicDlog != 0L)
 			{
 				LRect( &cellRect, theCell, PatList2);
 				SelectWindow2( ClassicDlog);

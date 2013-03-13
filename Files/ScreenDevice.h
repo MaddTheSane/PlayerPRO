@@ -106,8 +106,8 @@ class ScreenDevice {
 		
 #if USE_DRAW_SPROCKETS
 		DSpContextReference		mContextRef;
-		DSpContextAttributes	mContext;
-#elif USE_DISP_MGR
+//		DSpContextAttributes	mContext;
+		#elif USE_DISP_MGR
 		GrafPtr					mContextRef;
 		RgnHandle				mMenuBarRgn;
 		long					mMenuBarHeight;

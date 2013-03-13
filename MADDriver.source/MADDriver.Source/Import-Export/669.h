@@ -21,9 +21,9 @@
 //
 /********************						***********************/
 
-//#if defined(powerc) || defined (__powerc)
+#if defined(powerc) || defined (__powerc)
 #pragma options align=mac68k
-//#endif
+#endif
 
 
 struct PasByte {
@@ -72,6 +72,6 @@ struct	Partition669	{
 };
 typedef		struct Partition669	Partition669;
 
-//#if defined(powerc) || defined(__powerc)
+#if defined(powerc) || defined(__powerc)
 #pragma options align=reset
-//#endif
+#endif

@@ -21,7 +21,7 @@
 //
 /********************						***********************/
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
+#if defined(powerc) || defined(__powerc)
 #pragma options align=mac68k
 #endif
 
@@ -65,6 +65,6 @@ typedef struct ULTSuite
 	Byte				NOC;
 	Byte				NOP;
 } ULTSuite;
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
+#if defined(powerc) || defined(__powerc)
 #pragma options align=reset
 #endif

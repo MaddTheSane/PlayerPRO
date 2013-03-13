@@ -5,8 +5,6 @@
 #include "PPPlug.h"
 #include "Undo.h"
 
-void UpdateMozartInfoInternal(void);
-
 	/******** HELP MODULE ********/
 	enum
 	{
@@ -108,7 +106,6 @@ pascal OSErr 	MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefe
 Boolean DragBox( RgnHandle myRgn, Pcmd	*myPcmd, EventRecord *theEvent);
 void		UPDATE_TrackActive( void);
 
-Pcmd* CreatePcmdFromSelectionMozart(void);
 #define	TICKDELAY	2
 
 short GetMaxYBox()
@@ -575,22 +572,6 @@ void SetMobiusRect(Rect *rect, short left, short top, short right, short bottom)
 		rect->top = top;
 		rect->bottom = bottom;
 	}
-}
-
-Point topLeft(Rect theRect)
-{
-	Point toReturn;
-	toReturn.h = theRect.top;
-	toReturn.v = theRect.left;
-	return toReturn;
-}
-
-Point botRight(Rect theRect)
-{
-	Point toReturn;
-	toReturn.h = theRect.bottom;
-	toReturn.v = theRect.right;
-	return toReturn;
 }
 
 short TrackMarquee(Point start, Rect *resultRect, Rect *maxRect)
@@ -1077,7 +1058,7 @@ long ComputeRight( short note, short ins)
 		/* Compute ins bytes */
 		
 		curData			= curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
-		if( curData->loopSize > 0) return 25000;
+		if( curData->loopSize > 0) return 25000L;
 		
 		note			+= curData->relNote;
 		
@@ -1087,7 +1068,7 @@ long ComputeRight( short note, short ins)
 		
 		/* Compute cell size in bytes */
 		
-		cellBytes		=  (( rate22khz >> 16) * 125L) / (50);
+		cellBytes		=  (( rate22khz >> 16) * 125L) / (50L);
 		cellBytes 		/= MADDriver->finespeed;
 		cellBytes		*= MADDriver->speed;
 		
@@ -1286,11 +1267,11 @@ void UpdateMozartInfoInternal(void)
 	
 	// Tracks
 	
-/*	for( tI = GetControlValue( c3h); tI < curMusic->header->numChn; tI++)
+/*	for( tI = GetCtlValue( c3h); tI < curMusic->header->numChn; tI++)
 	{
 		// Position des controls gauches
 		
-		(*c1h[ tI])->contrlRect.top		= MozartRect.top + ( tI - GetControlValue( c3h))*YSize;
+		(*c1h[ tI])->contrlRect.top		= MozartRect.top + ( tI - GetCtlValue( c3h))*YSize;
 		(*c1h[ tI])->contrlRect.bottom	= (*c1h[ tI])->contrlRect.top + YSize + 1;
 	}	*/
 	
@@ -1382,7 +1363,7 @@ void UpdateMozartInfoInternal(void)
  					
  		ForeColor( blackColor);
  		}
-	//	TraceGrille2( -xTr + LegendeLa, -yTr + MozartRect.top + (tI - GetControlValue( c3h))*YSize, &theClipRect);
+	//	TraceGrille2( -xTr + LegendeLa, -yTr + MozartRect.top + (tI - GetCtlValue( c3h))*YSize, &theClipRect);
 		
 	//	calculer une grille pixmap et la modifier que si zoom ou change size
 		
@@ -2371,7 +2352,7 @@ void DoItemPressMozart( short whichItem, DialogPtr whichDialog)
 					
 					GetClip( saveClipRgn);
 					
-					if( GetControlReference( theControl) == 1)
+					if( GetCRefCon( theControl) == 1)
 					{
 						Rect tempRect;
 						
@@ -2381,7 +2362,7 @@ void DoItemPressMozart( short whichItem, DialogPtr whichDialog)
 						ClipRect( &tempRect);
 					}
 					
-					bogus = TrackControl( theControl, myPt, NULL);
+					bogus = TrackControl( theControl, myPt, 0L);
 					
 					SetClip( saveClipRgn);
 					DisposeRgn( saveClipRgn);
@@ -2658,7 +2639,7 @@ void DoItemPressMozart( short whichItem, DialogPtr whichDialog)
 			break;
 						
 		/*	case SeeAllM:
-				if( MyTrackControl( SeeAll, theEvent.where, NULL))
+				if( MyTrackControl( SeeAll, theEvent.where, 0L))
 				{
 					if( showAllNotes == false)
 					{
@@ -3321,7 +3302,7 @@ OSErr				anErr;
 
 void OpenPcmdMozart( FSSpec	*mySpec)
 {
-//	StandardFileReply	reply;
+	StandardFileReply	reply;
 	Str255				defaultname;
 	OSErr				iErr;
 	long				inOutBytes;
@@ -3338,7 +3319,7 @@ void OpenPcmdMozart( FSSpec	*mySpec)
 		if( iErr) return;
 	}
 	
-//	HSetVol( NULL, mySpec->vRefNum, mySpec->parID);
+//	HSetVol( 0L, mySpec->vRefNum, mySpec->parID);
 	
 	if( FSpOpenDF( mySpec, fsCurPerm, &fRefNum) == noErr)
 	{
@@ -3350,7 +3331,7 @@ void OpenPcmdMozart( FSSpec	*mySpec)
 		
 		curMusic->hasChanged = true;
 		
-		iErr = FSCloseFork( fRefNum);
+		iErr = FSClose( fRefNum);
 	}
 }
 ////
@@ -3483,7 +3464,7 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 					
 					////////////
 					myPcmd = (Pcmd*) MyNewPtr( textSize);
-					GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
+					GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0L);
 					PcmdTracks = myPcmd->tracks;
 					if( PcmdTracks <= 0) PcmdTracks = 1;
 					PcmdLength = myPcmd->length;
@@ -3512,11 +3493,11 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 				Boolean	targetIsFolder, wasAliased;
 			
 				GetFlavorDataSize( theDrag, theItem, flavorTypeHFS, &textSize);
-				GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+				GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 				
 				ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 				
-			//	HSetVol( NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
+			//	HSetVol( 0L, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
 				FSpGetFInfo( &myFlavor.fileSpec, &fndrInfo);
 				
 				switch( fndrInfo.fdType)
@@ -3544,7 +3525,7 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 							{
 								PcmdHigh = maxNote - minNote + 1;
 							}
-							FSCloseFork( fRefNum);
+							FSClose( fRefNum);
 							MyDisposePtr( (Ptr*) &myPcmd);
 						}
 						///////////////
@@ -3766,7 +3747,7 @@ pascal OSErr MyReceiveDropBox(WindowPtr theWindow, void *handlerRefCon, DragRefe
 		myPcmd = (Pcmd*) MyNewPtr( textSize);
 		if( myPcmd != NULL)
 		{
-			GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
+			GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0L);
 	
 			if( movePcmd)		// Delete source
 			{
@@ -3810,7 +3791,7 @@ pascal OSErr MyReceiveDropBox(WindowPtr theWindow, void *handlerRefCon, DragRefe
 	
 		SaveUndo( UPattern, PatCopy, "\pUndo 'Drop Pcmd File'");
 		
-		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 		
 		ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		

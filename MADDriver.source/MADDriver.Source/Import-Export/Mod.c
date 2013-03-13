@@ -21,14 +21,40 @@
 //
 /********************						***********************/
 
-#include <PlayerPROCore/PlayerPROCore.h>
+#include "RDriver.h"
 #include "MOD.h"
+#include "FileUtils.h"
 
-static short FoundNote( short Period)
+#ifdef _SRC
+#elif defined(_MAC_H)
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE(sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( Ptr)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( MADMusic*)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoRec*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( MADDriverSettings*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+#endif
+
+Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init);
+Ptr MADPlugNewPtr( long size, MADDriverSettings* init);
+
+
+//debugger(Ptr);
+
+short FoundNote( short Period)
 {
-	short 			note;
-	short			MODTuning[ 70] =
-	{
+short 			note;
+short				MODTuning[ 70] =
+{
 
 // -> Tuning 0
 
@@ -37,7 +63,7 @@ static short FoundNote( short Period)
 	428,404,381,360,339,320,302,285,269,254,240,226,
 	214,202,190,180,170,160,151,143,135,127,120,113,
 	107,101,95,90,85,80,75,71,67,63,60,56
-	};
+};
 	note = 0xFF;
 	
 	
@@ -57,9 +83,9 @@ static short FoundNote( short Period)
 
 static void Convert16to8( Ptr srcPtr, Ptr destPtr, long size)
 {
-	long 	i;
+long 	i;
 
-	size /= 2;
+size /= 2;
 
 	for( i = 0; i < size; i ++)
 	{
@@ -74,6 +100,17 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
+}
+
+
+Ptr MADPlugNewPtr( long size, MADDriverSettings* init)
+{
+	return NewPtr( size);
+}
+
+Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init)
+{
+	return NewPtrClear( size);
 }
 #endif
 
@@ -162,7 +199,7 @@ static void AnalyseSignatureMOD( long EOFo, OSType temp, short *maxInstru, long 
 			if( test == 0) result = false;
 						
 			if( result) *maxInstru 		= 15;
-			else *maxInstru				= 0;
+			else *maxInstru 			= 0;
 		break;
 	}
 }
@@ -403,7 +440,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 		
 		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
 		
-		theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
+		theMAD->partition[ i]->header.patBytes = 0L;		theMAD->partition[ i]->header.unused2 = 0L;
 				
 		for(x=0; x<64; x++)
 		{
@@ -646,7 +683,7 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 		}
 	}
 	
-	InstruSize = 0;
+	InstruSize = 0L;
 	
 	OffSetToSample = (long) 0x43c + theMAD->header->numPat * sizeof( struct MODCom) * 64L * theMAD->header->numChn;
 	
@@ -832,7 +869,6 @@ static OSErr ExtractMODInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Check MOD Type ***/
 	
 	AnalyseSignatureMOD( -1, info->signature, &maxInstru, &PatternSize, &info->totalTracks, myMOD);
-	MOT32(&info->signature);
 	if( maxInstru == 0)
 	{
 		return MADFileNotSupportedByThisPlug;
@@ -898,11 +934,22 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /*****************/
 /* MAIN FUNCTION */
 /*****************/
+/*#ifdef _SRC
+OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#elif defined(_MAC_H)
 OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
+EXP OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif*/
+#ifdef _SRC
+OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
+EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif
 {
-	OSErr	myErr;
-	Ptr		AlienFile;
-	long	sndSize;
+	OSErr		myErr;
+	Ptr			AlienFile;
+	long		sndSize;
 	UNFILE	iFileRefI;
 	
 	myErr = noErr;
@@ -944,7 +991,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 			iFileRefI = iFileOpen( AlienFileName);
 			if( iFileRefI)
 			{
-				sndSize = 5000;	// Read only 5000 first bytes for optimisation
+				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
@@ -986,7 +1033,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 			{
 				info->fileSize = iGetEOF( iFileRefI);
 				
-				sndSize = 5000;	// Read only 5000 first bytes for optimisation
+				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
 				if( AlienFile == NULL) myErr = MADNeedMemory;

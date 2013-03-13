@@ -16,6 +16,8 @@ void DoInternetMenu( short theItem);
 
 //pascal Boolean AboutFilter(DialogPtr, EventRecord *, short *);
 
+pascal Boolean AboutFilter(DialogPtr, EventRecord *, short *);
+
 static	TEHandle 		hTE;
 static	long			curPosT;
 static	Rect			scrollRect, textRect;
@@ -57,14 +59,7 @@ void MegaPurge(void)
 		contigSize -= 2;
 	}
 	
-	//for( i = 0; i < contigSize/4; i++) aPtr[ i] = 0x12344321; //FIXME: Overflow in implicit constant conversion
-	//XXX: what is the point of this, again?
-	for( i = 0; i < contigSize/4; i + 4)
-	{
-		UInt32 *toconv = (UInt32*)(&aPtr[ i]);
-		*toconv = 0x12344321;
-	}
-	
+	for( i = 0; i < contigSize/4; i++) aPtr[ i] = 0x12344321;
 	
 	MyDisposePtr( & aPtr);
 }
@@ -92,20 +87,20 @@ void MegaPurge(void)
 
 void DoScrollText( DialogPtr aDia)
 {
-	Str255		tempStr;
-	GDHandle	oldGDeviceH;
-	CGrafPtr	oldPort;
-	PicHandle	tempPict;
-	short		itemType;
-	Rect		itemRect;
-	Handle		itemHandle;
-	RGBColor	color;
+Str255		tempStr;
+GDHandle	oldGDeviceH;
+CGrafPtr	oldPort;
+PicHandle	tempPict;
+short		itemType;
+Rect		itemRect;
+Handle		itemHandle;
+RGBColor	color;
 
-	GetGWorld( &oldPort, &oldGDeviceH);
+GetGWorld( &oldPort, &oldGDeviceH);
 
-	SetGWorld( gGWorldAbout, NULL);
+SetGWorld( gGWorldAbout, 0L);
 
-	ScrollRect( &(*GetPortPixMap( gGWorldAbout))->bounds, 0, -1, NULL);
+	ScrollRect( &(*GetPortPixMap( gGWorldAbout))->bounds, 0, -1, 0L);
 
 	if( (curPosT % 60) == 0)
 	{
@@ -136,10 +131,10 @@ void DoScrollText( DialogPtr aDia)
 	curPosT++;
 	
 
-	SetGWorld( oldPort, oldGDeviceH);
+SetGWorld( oldPort, oldGDeviceH);
 
-	ForeColor( blackColor);
-	BackColor( whiteColor);
+ForeColor( blackColor);
+BackColor( whiteColor);
 
 /*CopyDeepMask(	(BitMap*)	*GetPortPixMap( gGWorldAbout),
 				(BitMap*) 	*GetPortPixMap( gMaskWorld),
@@ -148,32 +143,41 @@ void DoScrollText( DialogPtr aDia)
 							&scrollRect,
 							&scrollRect,
 							srcCopy,
-							NULL);*/
+							0L);*/
 
 //CopyDeepMask(srcBits, maskBits, dstBits, srcRect, maskRect, dstRect, mode, maskRgn);
 
 
-	CopyBits(	(BitMap*) 	*GetPortPixMap( gMaskWorld),
-				(BitMap*)	*GetPortPixMap( gResultWorld),
-							&scrollRect,
-							&scrollRect,
-							srcCopy,
-							NULL);
+CopyBits(	(BitMap*) 	*GetPortPixMap( gMaskWorld),
+ 			(BitMap*)	*GetPortPixMap( gResultWorld),
+ 						&scrollRect,
+ 						&scrollRect,
+ 						srcCopy,
+ 						0L);
 
-	CopyBits(	(BitMap*) 	*GetPortPixMap( gGWorldAbout),
-				(BitMap*)	*GetPortPixMap( gResultWorld),
-							&scrollRect,
-							&scrollRect,
-							addMax,
-							NULL);
+CopyBits(	(BitMap*) 	*GetPortPixMap( gGWorldAbout),
+ 			(BitMap*)	*GetPortPixMap( gResultWorld),
+ 						&scrollRect,
+ 						&scrollRect,
+ 						addMax,
+ 						0L);
 
 
-	CopyBits(	(BitMap*) 	*GetPortPixMap( gResultWorld),
+#ifdef DEMO
+CopyBits(	(BitMap*) 	*GetPortPixMap( gFreePict),
+ 			(BitMap*)	*GetPortPixMap( gResultWorld),
+ 						&(*GetPortPixMap( gFreePict))->bounds,
+ 						&(*GetPortPixMap( gFreePict))->bounds,
+ 						srcCopy,
+ 						0L);
+#endif
+
+CopyBits(	(BitMap*) 	*GetPortPixMap( gResultWorld),
  						(BitMap*) *GetPortPixMap(GetDialogPort( aDia)),
  						&scrollRect,
  						&scrollRect,
  						srcCopy,
- 						NULL);
+ 						0L);
 
 
 }
@@ -195,7 +199,7 @@ void ShowPerformance(void)
 	aDialog = GetNewDialog( 158, NULL, (WindowPtr) -1L);
 	SetPortDialogPort( aDialog);
 	
-#define CSTTEST	4000
+	#define CSTTEST	4000L
 	
 	do
 	{
@@ -245,7 +249,7 @@ void ShowPerformance(void)
 			NumToString( i, aStr);
 			SetDText( aDialog, 4, aStr);
 			
-			i *= 100;
+			i *= 100L;
 			sprintf( (Ptr) aStr, "%.2f", (double) i / (double) CSTTEST);
 			MyC2PStr( (Ptr) aStr);
 			pStrcat(aStr, "\p %");
@@ -293,6 +297,7 @@ void DoAbout(void)
 	aDialog = GetNewDialog( 131, NULL, (WindowPtr) -1L);
 	SetPortDialogPort( aDialog);
 	
+//	#ifndef DEMO
 	{
 	short				i;
 	Str255				text;
@@ -301,6 +306,7 @@ void DoAbout(void)
 	OffsetRect( &itemRect, 0, -300);
 	SetDialogItem( aDialog, 8, itemType, itemHandle, &itemRect);
 	}
+//	#endif
 	
 	DrawDialog( aDialog);
 	
@@ -480,101 +486,104 @@ void ShowMenuBar2(void)
 
 Boolean DoHelp(void)
 {
-	short			itemType,itemHit;
-	DialogPtr		theDialog;
-	GrafPtr			myPort;
-	Handle			itemHandle,Text;
-	Rect			itemRect;
-	StScrpHandle	theStyle;
-	ControlHandle	vScroll;
+short			itemType,itemHit;
+DialogPtr		theDialog;
+GrafPtr			myPort;
+Handle			itemHandle,Text;
+Rect			itemRect;
+StScrpHandle	theStyle;
+ControlHandle	vScroll;
 //Boolean			ScrollBasActive;
-	long			GestaltResponse, StartupWait;
-	ModalFilterUPP	AboutFilterDesc = NewModalFilterUPP( AboutFilter);
-	Str255			str, str2;
+long			GestaltResponse, StartupWait;
+ModalFilterUPP	AboutFilterDesc = NewModalFilterUPP( AboutFilter);
+Str255			str, str2;
 
-	GetPort( &myPort);
+GetPort( &myPort);
 
-	Gestalt( gestaltProcessorType, &GestaltResponse);
+Gestalt( gestaltProcessorType, &GestaltResponse);
 
 	theDialog = GetNewDialog( 130, NULL, (WindowPtr) -1L);
 	SetPortDialogPort( theDialog);
 	DrawDialog( theDialog);
 
-	GetDialogItem ( theDialog, 2, &itemType, &itemHandle, &itemRect);
-	itemRect.left++;  itemRect.right; itemRect.top++; itemRect.bottom--;
-	hTE = TEStyleNew( &itemRect, &itemRect);
+GetDialogItem ( theDialog, 2, &itemType, &itemHandle, &itemRect);
+itemRect.left++;  itemRect.right; itemRect.top++; itemRect.bottom--;
+hTE = TEStyleNew( &itemRect, &itemRect);
 
-	GetDialogItem ( theDialog, 2, &itemType, &itemHandle, &itemRect);
-	itemRect.left = itemRect.right;
-	itemRect.right = itemRect.left + 16;
+GetDialogItem ( theDialog, 2, &itemType, &itemHandle, &itemRect);
+itemRect.left = itemRect.right;
+itemRect.right = itemRect.left + 16;
 
 	vScroll = NewControl( GetDialogWindow( theDialog), &itemRect, "\p", true, 0, 0, 0, gScrollBarID, 0);
 	SetControlReference( vScroll, 1);
 
-	Text = GetResource( 'TEXT', 5632);
-	DetachResource( Text);
-	HLock( Text);
+Text = GetResource( 'TEXT', 5632);
+DetachResource( Text);
+HLock( Text);
 
-	theStyle = (StScrpHandle) GetResource( 'styl', 5632);
-	DetachResource( (Handle) theStyle);
+theStyle = (StScrpHandle) GetResource( 'styl', 5632);
+DetachResource( (Handle) theStyle);
 
-	TESetAlignment( teCenter, hTE);
-	TEStyleInsert( *Text, GetHandleSize( Text), theStyle, hTE);
+TESetAlignment( teCenter, hTE);
+TEStyleInsert( *Text, GetHandleSize( Text), theStyle, hTE);
 
 //TECalText( hTE);
 
-	SetScroll( vScroll, hTE);
+SetScroll( vScroll, hTE);
 
-	AboutFirstCall = true;
+AboutFirstCall = true;
 
-	GetDialogItem ( theDialog, 2, &itemType, &itemHandle, &itemRect);
-	itemRect.right++;
-	FrameRect( &itemRect);
+GetDialogItem ( theDialog, 2, &itemType, &itemHandle, &itemRect);
+itemRect.right++;
+FrameRect( &itemRect);
 
-	SetDialogDefaultItem( theDialog, 1);
+SetDialogDefaultItem( theDialog, 1);
 
-	SetDText( theDialog, 4, "\p");
-	StartupWait = 0;
+SetDText( theDialog, 4, "\p");
+StartupWait = 0;
+//#ifdef DEMO
+if( thePrefs.Registred == false) StartupWait = TickCount() + 60*10;
+//#endif
 //ControlSwitch( 1, theDialog, 255);
 //ControlSwitch( 5, theDialog, 255);
-	ControlSwitch( 7, theDialog, 255);
-	do
+ControlSwitch( 7, theDialog, 255);
+do
+{
+	ModalDialog( AboutFilterDesc, &itemHit);
+	
+	switch( itemHit)
 	{
-		ModalDialog( AboutFilterDesc, &itemHit);
+	case 1:
+		if( StartupWait != 0) itemHit = 0;
+	break;
 	
-		switch( itemHit)
-		{
-			case 1:
-				if( StartupWait != 0) itemHit = 0;
-				break;
-	
-			case -5:
-				DoGlobalNull();
+	case -5:
+		DoGlobalNull();
 		
-				if( StartupWait != 0)
-				{
-					if( TickCount() >= StartupWait)
-					{
-						ControlSwitch( 7, theDialog, 0);
+		if( StartupWait != 0)
+		{
+			if( TickCount() >= StartupWait)
+			{
+				ControlSwitch( 7, theDialog, 0);
 				
-						StartupWait = 0;
+				StartupWait = 0;
 				
-						SetDText( theDialog, 4, "\p");
-					}
-					else
-					{
-						NumToString( 1 + ((StartupWait - TickCount())/60), str);
+				SetDText( theDialog, 4, "\p");
+			}
+			else
+			{
+				NumToString( 1 + ((StartupWait - TickCount())/60), str);
 				
-						pStrcpy( str2, "\pWait ");
-						pStrcat( str2, str);
-						pStrcat( str2, "\p s");
-						SetDText( theDialog, 4, str2);
-					}
-				}
-				break;
+				pStrcpy( str2, "\pWait ");
+				pStrcat( str2, str);
+				pStrcat( str2, "\p s");
+				SetDText( theDialog, 4, str2);
+			}
 		}
+	break;
+	}
 
-	}while( itemHit != 1 && itemHit != 6 && itemHit != 7);
+}while( itemHit != 1 && itemHit != 6 && itemHit != 7);
 
 	DisposeDialog( theDialog);
 	TEDispose( hTE);
@@ -582,20 +591,21 @@ Boolean DoHelp(void)
 	MyDisposHandle( & Text);
 	MyDisposHandle( (Handle*) &theStyle);
 
-	UpdateALLWindow();
+UpdateALLWindow();
 
-	DisposeModalFilterUPP( AboutFilterDesc);
+DisposeModalFilterUPP( AboutFilterDesc);
 
-	switch( itemHit)
-	{
-		case 6:
-			DoInternetMenu( 1);
-			break;
+switch( itemHit)
+{
+	case 6:
+		DoInternetMenu( 1);
+	break;
 	
-		case 7:
-			break;
-	}
-	return false;
+	case 7:
+		Registration();
+	break;
+}
+return false;
 }
 
 void MyAdjustText ( ControlHandle vScroll)

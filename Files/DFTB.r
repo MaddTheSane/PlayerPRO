@@ -1,9 +1,9 @@
-#include <Menus.r>
-#include <Dialogs.r>
-#include <Controls.r>
-#include <ControlDefinitions.r>
+#include "Menus.r"
+#include "Dialogs.r"
+#include "Controls.r"
+#include "ControlDefinitions.r"
 
-
+/*
 resource 'dftb' (317, purgeable)
 {
 	versionZero
@@ -36,4 +36,4 @@ resource 'dftb' (146, purgeable)
 			dataItem { kDialogFontUseFontMask, kControlFontSmallSystemFont, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "" },
 		}
 	};
-};
+};*/

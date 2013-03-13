@@ -2,7 +2,6 @@
 #include <Finder.h>
 #include "GetFileIcon.h"
 
-//TODO: rewrite to handle icns icons?
 typedef struct getIconData { OSType		fileCreator;
                              OSType		fileType;
                              short		DTRefNum;

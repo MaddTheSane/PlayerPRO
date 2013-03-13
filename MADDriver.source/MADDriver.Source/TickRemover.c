@@ -147,7 +147,7 @@ void MADTickRemoverStart8( Channel *curVoice, long	*ASCBuffer1, long	*ASCBuffer2
 		{
 			curVoice->TICKREMOVESIZE 		= intDriver->VSYNC;
 			curVoice->TICKREMOVESIZE 		/= intDriver->finespeed;
-			curVoice->TICKREMOVESIZE 		*= 8000;
+			curVoice->TICKREMOVESIZE 		*= 8000L;
 			curVoice->TICKREMOVESIZE 		/= intDriver->VExt;
 			
 			if( curVoice->LevelDirectionR) curVoice->curLevelR		= curVoice->TICKREMOVESIZE;

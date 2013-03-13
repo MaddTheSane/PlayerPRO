@@ -3,9 +3,7 @@
 #include "RDriver.h"
 #include <stdio.h>
 #include "VA.h"
-//#include "start.h"
-void SetWindowEnviron(void);
-void ResetOscilloscope(void);
+#include "start.h"
 
 	/******** HELP MODULE ********/
 	enum
@@ -94,13 +92,13 @@ enum
 			Boolean					OscilloMicrophone;
 			DialogPtr				OscilloDlog;
 
-#define CourbeColor		0x90
-#define RawMouse 		0x82C
-#define InterText		12
-#define	VALSIZE			300000
-#define	OSCILLODEF		10
-#define TRACKSIZE		740
-#define	AUDIODSPSIZE	4096L
+	#define CourbeColor		0x90
+	#define RawMouse 		0x82C
+	#define InterText		12
+	#define	VALSIZE			300000L
+	#define	OSCILLODEF		10L
+	#define TRACKSIZE		740L
+	#define	AUDIODSPSIZE	4096L
 
 	long 	GetAudioSize();
 	Ptr 	GetAudioSource( short);
@@ -348,8 +346,8 @@ Ptr GetAudioChannel( Boolean LeftChannel, long Size)
 			/*	case MonoOutPut:
 					return Inverse16( MADDriver->OscilloWavePtr, Size);
 				break;
-				*/
-				case StereoOutPut:
+				
+				case StereoOutPut:*/
 				case DeluxeStereoOutPut:
 				
 				/*	if( MADDriver->DriverSettings.driverMode == SoundManagerDriver && VMMode == true)
@@ -419,8 +417,8 @@ Ptr GetAudioChannel( Boolean LeftChannel, long Size)
 			/*	case MonoOutPut:
 					return MADDriver->OscilloWavePtr;
 				break;
-				*/
-				case StereoOutPut:
+				
+				case StereoOutPut:*/
 				case DeluxeStereoOutPut:
 					if( LeftChannel) return Transformation8( MADDriver->OscilloWavePtr + 1);
 					else return Transformation8( MADDriver->OscilloWavePtr);
@@ -681,7 +679,7 @@ void C8BitOsciPixMap( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 	}
 }
 
-void  Bresenham(long x1, long y1, long x2, long y2, long row, Byte color, Ptr src)
+static inline void  Bresenham(long x1, long y1, long x2, long y2, long row, Byte color, Ptr src)
 {
 
 register	long			deltaX, deltaY;
@@ -1281,7 +1279,7 @@ OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
 			GetWorkingZone( &aRect);
 			EraseRect( &aRect);
 			InvalWindowRect( GetDialogWindow( theDialogControl), &aRect);
-			UpdateOscilloWindow( theDialogControl);			/* Important pour la mise Ã  jour des VPos !!! */
+			UpdateOscilloWindow( theDialogControl);			/* Important pour la mise ˆ jour des VPos !!! */
 		}
 		else
 		{
@@ -1321,7 +1319,7 @@ void DoItemPressOscillo( short whichItem, DialogPtr whichDialog)	/* Item hit ID 
 			{
 			/*	if( ctlPart == kControlIndicatorPart && gUseControlSize == false)
 				{
-					bogus = TrackControl( theControl, myPt, NULL);
+					bogus = TrackControl( theControl, myPt, 0L);
 					if( bogus != 0)
 					{
 						Rect aRect;
@@ -1677,7 +1675,7 @@ void InitOscillo(void)
 				nil,
 				(GWorldFlags) 0);
 	
-	PseudoSilence = MyNewPtr( 750);
+	PseudoSilence = MyNewPtr( 750L);
 	for( i = 0; i < 740; i++) PseudoSilence[ i] = 0x80;
 	
 	AudioDSPPtr = (Ptr) MyNewPtr( AUDIODSPSIZE * 4L);
@@ -1724,7 +1722,7 @@ long GetAudioSize(void)
 		break;
 	}
 	
-	return 0;
+	return 0L;
 }
 
 Ptr GetAudioSource( short item)

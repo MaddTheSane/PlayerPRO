@@ -1,6 +1,5 @@
 #ifndef __PRIVATELISTH__
 #define __PRIVATELISTH__
-#include <Carbon/Carbon.h>
 
 enum
 {
@@ -18,8 +17,8 @@ struct PrivateList
 {
 	Rect			rect;			// display rect
 	Rect			select;		// selection rect
-	short			LCell;
-	short			HCell;
+	short		LCell;
+	short		HCell;
 	ControlHandle	xScroll;
 	ControlHandle	yScroll;
 	

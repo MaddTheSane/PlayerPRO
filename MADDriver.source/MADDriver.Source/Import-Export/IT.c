@@ -20,10 +20,33 @@
 //	Internet: 	RossetAntoine@bluewin.ch
 //
 /********************						***********************/
-//FIXME: There are some audio artifacts that aren't present in other tracker players.
-//play GADGET.it from MikIT for more info
-#include <PlayerPROCore/PlayerPROCore.h>
+
+
+#include "RDriver.h"
+#include "FileUtils.h"
 #include "IT.h"
+
+#ifdef _SRC
+#elif defined(_MAC_H)
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE(sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( Ptr)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( MADMusic*)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoRec*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( MADDriverSettings*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+#endif
+
+Ptr MADPlugNewPtr( long size, MADDriverSettings* init);
+Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init);
 
 static	Byte	LastAEffect[ MAXTRACK], LastJEffect[ MAXTRACK];
 static	int		old_effect;	
@@ -39,6 +62,16 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
+}
+
+Ptr MADPlugNewPtr( long size, MADDriverSettings* init)
+{
+	return NewPtr( size);
+}
+
+Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init)
+{
+	return NewPtrClear( size);
 }
 
 #endif
@@ -308,6 +341,7 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 	
 	switch( B0X40)
 	{
+		default:	*Cmd = 0;			*Arg = 0;		break;
 		// Speed
 		case 'A':	*Cmd = speedE;		*Arg = B1;	break;
 		// Tempo
@@ -376,7 +410,7 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 			}
 		break;
 
-		case 'G':	*Cmd = portamentoE;		*Arg = B1;	break;
+		case 'G':	*Cmd = portamentoE;	*Arg = B1;	break;
 		case 'H':	*Cmd = vibratoE;		*Arg = B1;	break;
 		
 		case 'J':
@@ -392,20 +426,20 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 		break;
 		case 'K':	*Cmd = vibratoslideE;	*Arg = B1;	break;
 		case 'L':	*Cmd = portaslideE;		*Arg = B1;	break;
-		case 'O':	*Cmd = offsetE;			*Arg = B1;	break;
+		case 'O':	*Cmd = offsetE;		*Arg = B1;	break;
 		
 		case 'S':		// Special Effects
 			switch( HiB1)
 			{
-				case 2:		*Cmd = extendedE;	*Arg = 5 << 4;		*Arg += LoB1;		break;	// FineTune
-				case 3:		*Cmd = extendedE;	*Arg = 4 << 4;		*Arg += LoB1;		break;	// Set Vibrato WaveForm
-				case 4:		*Cmd = extendedE;	*Arg = 7 << 4;		*Arg += LoB1;		break;	// Set Tremolo WaveForm
-				case 8:		*Cmd = extendedE;	*Arg = 8 << 4;		*Arg += LoB1;		break;	// Set Panning
+				default:	*Cmd = 0;		*Arg = 0;							break;
+				case 2:	*Cmd = extendedE;	*Arg = 5 << 4;		*Arg += LoB1;		break;	// FineTune
+				case 3:	*Cmd = extendedE;	*Arg = 4 << 4;		*Arg += LoB1;		break;	// Set Vibrato WaveForm
+				case 4:	*Cmd = extendedE;	*Arg = 7 << 4;		*Arg += LoB1;		break;	// Set Tremolo WaveForm
+				case 8:	*Cmd = extendedE;	*Arg = 8 << 4;		*Arg += LoB1;		break;	// Set Panning
 				case 0xB:	*Cmd = extendedE;	*Arg = 6 << 4;		*Arg += LoB1;		break;	// Loop pattern
-				case 0xC:	*Cmd = extendedE;	*Arg = 12 << 4;		*Arg += LoB1;		break;	// Cut sample
-				case 0xD:	*Cmd = extendedE;	*Arg = 13 << 4;		*Arg += LoB1;		break;	// Delay sample
-				case 0xE:	*Cmd = extendedE;	*Arg = 14 << 4;		*Arg += LoB1;		break;	// Delay pattern
-				default:	*Cmd = 0;			*Arg = 0;								break;
+				case 0xC:	*Cmd = extendedE;	*Arg = 12 << 4;	*Arg += LoB1;		break;	// Cut sample
+				case 0xD:	*Cmd = extendedE;	*Arg = 13 << 4;	*Arg += LoB1;		break;	// Delay sample
+				case 0xE:	*Cmd = extendedE;	*Arg = 14 << 4;	*Arg += LoB1;		break;	// Delay pattern
 			}
 		break;
 		
@@ -422,10 +456,9 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 			else
 			{
 				*Cmd = panningE;
-				*Arg = B1;
+				 *Arg = B1;
 			}
 		break;
-		default:	*Cmd = 0;			*Arg = 0;		break;
 	}
 }
 
@@ -509,13 +542,13 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	BlockMoveData( theITCopy, &ITinfo, sizeof( ITinfo));
 	theITCopy += 192;
 	
-	INT16( &ITinfo.orderNum);
-	INT16( &ITinfo.insNum);
-	INT16( &ITinfo.smpNum);
-	INT16( &ITinfo.patNum);
-	INT16( &ITinfo.flags);
-	INT16( &ITinfo.cwtv);
-	INT16( &ITinfo.cmwt);
+	INT16(  &ITinfo.orderNum);
+	INT16(  &ITinfo.insNum);
+	INT16(  &ITinfo.smpNum);
+	INT16(  &ITinfo.patNum);
+	INT16(  &ITinfo.flags);
+	INT16(  &ITinfo.cwtv);
+	INT16(  &ITinfo.cmwt);
 	
 	if( ITinfo.cmwt < 0x100) return -1;
 	
@@ -639,13 +672,13 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<28; i++) theMAD->header->name[i] = ITinfo.name[i];
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO IT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO IT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat			= ITinfo.patNum;
-	theMAD->header->numPointers		= ITinfo.orderNum;
-	theMAD->header->speed			= ITinfo.iSpeed;
-	theMAD->header->tempo			= ITinfo.iTempo;
-	theMAD->header->XMLinear		= useLinear;
+	theMAD->header->numPointers	= ITinfo.orderNum;
+	theMAD->header->speed				= ITinfo.iSpeed;
+	theMAD->header->tempo				= ITinfo.iTempo;
+	theMAD->header->XMLinear			= useLinear;
 	
 	//for(i=0; i<256; i++) theMAD->header->oPointers[ i] = 0;
 	for(i=0; i<ITinfo.orderNum; i++)
@@ -826,7 +859,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 							{
 								curData->loopBeg = 0;
 								curData->loopSize = 0;
-								curData->size = 0;
+								curData->size = 0L;
 								curData->data 		= MADPlugNewPtr( curData->size, init);
 							}
 							else
@@ -1179,7 +1212,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 		}
 		else	// No Data for this pattern - Clear Pattern
 		{
-#define DEFSIZE 10
+			#define DEFSIZE 10L
 		
 			theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear( sizeof( PatHeader) + theMAD->header->numChn * DEFSIZE * sizeof( Cmd), init);
 			if( theMAD->partition[ i] == NULL) return MADNeedMemory;
@@ -1373,7 +1406,7 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 	return noErr;
 }
 
-static OSErr TestITFile( Ptr AlienFile)
+OSErr TestITFile( Ptr AlienFile)
 {
 	ITForm	*myIT = ( ITForm*) AlienFile;
 	
@@ -1396,13 +1429,26 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 }
 #endif
 
-OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#ifdef _SRC
+OSErr mainIT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
+EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif
+
+
+//OSErr TESTmain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr		myErr;
 	Ptr			AlienFile;
 	long		sndSize;
-	UNFILE		iFileRefI;
-		
+	UNFILE	iFileRefI;
+	
+	#ifdef _MAC_H
+	#ifndef powerc
+		long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+	#endif
+	#endif
+	
 	myErr = noErr;
 
 	switch( order)
@@ -1415,7 +1461,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 				
 				// ** MEMORY Test Start
 				AlienFile = MADPlugNewPtr( sndSize * 2L, init);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if( AlienFile == 0L) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
 				else
@@ -1423,7 +1469,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 					DisposePtr( AlienFile);
 					
 					AlienFile = MADPlugNewPtr( sndSize, init);
-					if( AlienFile == NULL) myErr = MADNeedMemory;
+					if( AlienFile == 0L) myErr = MADNeedMemory;
 					else
 					{
 						myErr = iRead( sndSize, AlienFile, iFileRefI);
@@ -1437,7 +1483,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 							}
 						}
 					}
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr( AlienFile);	AlienFile = 0L;
 				}
 				iClose( iFileRefI);
 			}
@@ -1450,14 +1496,14 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 				sndSize = 1024L;
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if( AlienFile == 0L) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestITFile( AlienFile);
 					
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr( AlienFile);	AlienFile = 0L;
 				}
 				iClose( iFileRefI);
 			}
@@ -1472,7 +1518,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if( AlienFile == 0L) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
@@ -1481,7 +1527,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 						myErr = TestITFile( AlienFile);
 						if( !myErr) myErr = ExtractITInfo( info, AlienFile);
 					}
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr( AlienFile);	AlienFile = 0L;
 				}
 				iClose( iFileRefI);
 			}
@@ -1492,5 +1538,11 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 		break;
 	}
 	
+	#ifdef _MAC_H
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+	#endif
+
 	return myErr;
 }

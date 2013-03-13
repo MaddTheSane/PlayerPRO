@@ -212,19 +212,17 @@ OSErr	PPImportFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile, M
 OSErr	PPIdentifyFile( MADLibrary		*inMADDriver, char *kindFile, char	*AlienFile);
 
 OSType	GetPPPlugType( MADLibrary		*inMADDriver, short ID, OSType type);
-void	MInitImportPlug( MADLibrary		*inMADDriver, FSSpec*);
-void	MADInitImportPlug( MADLibrary	*inMADDriver, FSRefPtr PluginFolder);
-
-void	CloseImportPlug( MADLibrary		*inMADDriver);
-OSErr	MADLoadMADFileCString( MADMusic **, Ptr fName);
-OSErr	CheckMADFile( char *AlienFile);
+void		MInitImportPlug( MADLibrary		*inMADDriver, FSSpec*);
+void		CloseImportPlug( MADLibrary		*inMADDriver);
+OSErr MADLoadMADFileCString( MADMusic **, Ptr fName);
+OSErr CheckMADFile( char	*AlienFile);
 OSErr	MADCopyCurrentPartition( MADMusic	*theNewMAD);
-OSErr	CallImportPlug( 	MADLibrary		*inMADDriver,
-							short			PlugNo,			// CODE du plug
-							OSType			order,
-							char			*AlienFile,
-							MADMusic		*theNewMAD,
-							PPInfoRec		*info);
+OSErr CallImportPlug( 	MADLibrary		*inMADDriver,
+												short					PlugNo,			// CODE du plug
+												OSType				order,
+												char					*AlienFile,
+												MADMusic	*theNewMAD,
+												PPInfoRec			*info);
 long DoVolPanning( short, Channel *ch, MADDriverRec *intDriver);
 long DoVolPanning256( short, Channel *ch, MADDriverRec *intDriver, Boolean);
 void MADKeyOFF( MADDriverRec *MDriver, short track);
@@ -280,8 +278,8 @@ void BL16( void *msg_buf);
 
 void parse_slidevol(Channel *ch, Byte Arg);
 void ConvertTo64Rows( MADMusic *music);
-//void						BL32( void *msg_buf);
-//void						BL16( void *msg_buf);
+void						BL32( void *msg_buf);
+void						BL16( void *msg_buf);
 
 
 #ifdef __cplusplus

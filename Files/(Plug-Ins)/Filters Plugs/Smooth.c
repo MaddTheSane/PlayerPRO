@@ -9,15 +9,30 @@
 //	if there is no selection.
 //	Not very accurate, but pretty fast to write !!!
 
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include "MAD.h"
+#include "PPPlug.h"
 
-OSErr mainSmooth(sData			*theData,
-				 long			SelectionStart,
-				 long			SelectionEnd,
-				 PPInfoPlug		*thePPInfoPlug,
-				 short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( sData*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoPlug*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( long)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
+OSErr main( 	sData					*theData,
+				long					SelectionStart,
+				long					SelectionEnd,
+				PPInfoPlug				*thePPInfoPlug,
+				long					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long	i, length, temp, prevtemp, nexttemp, work;
 
@@ -66,11 +81,3 @@ OSErr mainSmooth(sData			*theData,
 
 	return noErr;
 }
-
-// CC5BCE43-E362-4260-BB51-555A5CD4008C
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xCC, 0x5B, 0xCE, 0x43, 0xE3, 0x62, 0x42, 0x60, 0xBB, 0x51, 0x55, 0x5A, 0x5C, 0xD4, 0x00, 0x8C)
-
-#define PLUGMAIN mainSmooth
-#define PLUGINFACTORY SmoothFactory
-
-#include "CFPlugin-FilterBridge.c"

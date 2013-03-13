@@ -1,12 +1,25 @@
 /*	WAV		*/
 /*  IMPORT	*/
 
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/PPDefs.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
-#include <Sound.h>
-#include "WAV.h"
+#include "PPPlug.h"
+#include "sound.h"
+
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( InstrData*)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( sData**)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( short*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( FSSpec*)))
+		| STACK_ROUTINE_PARAMETER(6, SIZE_CODE(sizeof( PPInfoPlug*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
 
 /*______________________________________________________________________
  | _|_																	|
@@ -23,6 +36,7 @@
  _______________________________________________________________________*/
 
 #define WAVE_FORMAT_PCM		1
+#define	NIL 				0L
 #define kmaxVolume			7
  
 #define ksysFailed 			"\pSorry, This software requires system 7.0.0 or greater."
@@ -30,9 +44,49 @@
 #define kStereoStr 			"\pStereo"
 #define kMonoStr 			"\pMonaural"
 
-//typedef unsigned short	WORD;
-//typedef unsigned long	DWORD;
-//typedef long			FOURCC;
+typedef unsigned short	WORD;
+typedef unsigned long	DWORD;
+typedef long			FOURCC;
+
+typedef struct{
+	Str255	name;
+	Str32	smpls;
+	Str32	dataBits;
+	Str32	stereo;
+}InfoRec,*InfoPtr,**InfoHnd;
+
+typedef struct _MMCKINFO{
+	FOURCC		ckid;
+	DWORD		cksize;
+	FOURCC		fccType;
+	DWORD		dwDataOffset;
+	WORD		dwFlags;
+}MMCKINFO;
+
+typedef struct waveformat_tag{
+	WORD		wFormatTag;
+	WORD		nCannels;
+	DWORD		nSamplesPerSec;
+	DWORD		nAvgBytesPerSec;
+	WORD		nBlockAlign;
+}WAVEFORMAT;
+
+typedef struct _pcwaveformat_tag{
+	FOURCC		ckid;
+	DWORD		cksize;
+	FOURCC		fccType;
+	FOURCC		fmtType;
+	DWORD		dwDataOffset;
+	WORD		wFormatTag;
+	WORD		nCannels;
+	DWORD		nSamplesPerSec;
+	DWORD		nAvgBytesPerSec;
+	WORD		nBlockAlign;
+	WORD		wBitsPerSample;
+	FOURCC		dataType;
+	DWORD		dataSize;
+	char		theData[];
+}PCMWaveRec,*PCMWavePtr,**PCMWaveHnd;
 
 OSErr TestWAV( PCMWavePtr CC)
 {
@@ -40,20 +94,18 @@ OSErr TestWAV( PCMWavePtr CC)
 	else return MADFileNotSupportedByThisPlug;
 }
 
-/*___________________ long byte swap for Intel <-> Motorola Conversions*/
-//Just going to byteswap on big-endian platforms
+/*___________________ long byte swap for Intell <-> Motorola Conversions*/
+
 unsigned long longswap(unsigned long ul)
 {
-//	return (ul >> 24) | ((ul >> 8) & 0xff00) | ((ul << 8) & 0xff0000) | (ul << 24);
-	return EndianU32_LtoN(ul);
+	return (ul >> 24) | ((ul >> 8) & 0xff00) | ((ul << 8) & 0xff0000) | (ul << 24);
 }
 
-/*___________________ word byte swap for Intel <-> Motorola Conversions*/
+/*___________________ word byte swap for Intell <-> Motorola Conversions*/
 
 unsigned short shrtswap(unsigned int us)
 {
-//	return ((us >> 8) | (us << 8)) & 0xffff;
-	return EndianU16_LtoN(us);
+	return ((us >> 8) | (us << 8)) & 0xffff;
 }
 
 /*_______________________________________________________________________*/
@@ -173,7 +225,11 @@ EXP OSErr main(		OSType					order,						// Order to execute
 	Ptr		AlienFile;
 	short	iFileRefI;
 	long	inOutBytes;
-		
+	
+	#ifndef powerc
+		long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+	#endif
+	
 	switch( order)
 	{
 	/*	case 'PLAY':
@@ -239,6 +295,10 @@ EXP OSErr main(		OSType					order,						// Order to execute
 			myErr = MADOrderNotImplemented;
 		break;
 	}
-		
+	
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+	
 	return myErr;
 }

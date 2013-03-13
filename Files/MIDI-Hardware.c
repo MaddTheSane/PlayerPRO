@@ -1,7 +1,4 @@
-//TODO: CoreMIDI back-end
-#ifdef MAINPLAYERPRO
 #include "Shuddup.h"
-#endif
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
@@ -9,8 +6,6 @@
 #include <stdio.h>
 #if MACOS9VERSION
 #include "OMS.h"
-#elif __MACH__
-#include <CoreMIDI/CoreMIDI.h>
 #endif
 
 #define refConTime			1L
@@ -69,11 +64,6 @@ unsigned MidiVolume[128] = {
 
 void DoPlayInstruInt( short	Note, short Instru, short effect, short arg, short vol, Channel *curVoice, long start, long end);
 void NPianoRecordProcess( short i, short, short, short);
-
-#ifdef __MACH__
-static MIDIClientRef MADMIDICliRef;
-void MADMIDINotifyProc(const MIDINotification *message, void *refCon);
-#endif
 
 #if MACOS9VERSION
 pascal void MyAppHook(OMSAppHookMsg *pkt, long myRefCon);
@@ -255,8 +245,6 @@ void CloseMIDIHarware(void)
 	}
 	
 	MIDIHardware = false;
-#elif __MACH__
-	
 #endif
 }
 
@@ -323,8 +311,6 @@ void OpenMIDIHardware( void)
 		MIDIHardware = true;
 		MIDIHardwareAlreadyOpen = true;
 	}
-#elif __MACH__
-	
 #endif
 }
 
@@ -345,8 +331,6 @@ void InitMIDIHarware(void)
 //	if( thePrefs.SendMIDIClockData) OpenMIDIHardware();
 	
 	return;
-#elif __MACH__
-	
 #else
 	MIDIHardware = false;
 	MIDIHardwareAlreadyOpen = false;
@@ -380,8 +364,6 @@ short	vol, chan;
 	}
 	
 	DoPlayInstruInt( note, Instru, 0, 0, vol, &MADDriver->chan[ chan], 0, 0);
-#elif __MACH__
-	
 #endif
 }
 
@@ -412,8 +394,6 @@ void	OpenOrCloseConnection(Boolean opening)
 	if (opening)
 		err = OMSOpenConnections(MySignature, 'in  ', 1, &conn, FALSE);
 	else OMSCloseConnections(MySignature, 'in  ', 1, &conn);
-#elif __MACH__
-
 #endif
 }
 
@@ -481,8 +461,6 @@ void SendMIDIClock( MADDriverRec *intDriver, Byte MIDIByte)
 	pack.data[ 0] = MIDIByte;
 	
 	OMSWritePacket2( &pack, gOutNodeRefNum, gOutputPortRefNum);
-#elif __MACH__
-	
 #endif
 }
 
@@ -535,7 +513,7 @@ void SendMIDITimingClock( MADDriverRec *MDriver)
 				{
 					// Compute time for this interval
 
-					timeResult += ((float) (time * 125L * speed * 6NULL)) / ((float) (5NULL * finespeed));
+					timeResult += ((float) (time * 125L * speed * 60L)) / ((float) (50L * finespeed));
 					time = 0;
 					
 					//
@@ -581,14 +559,5 @@ void SendMIDITimingClock( MADDriverRec *MDriver)
 	pack.data[ 2] = low;
 	
 	OMSWritePacket2( &pack, gOutNodeRefNum, gOutputPortRefNum);
-#elif __MACH__
-	
 #endif
 }
-
-#ifdef __MACH__
-void MADMIDINotifyProc(const MIDINotification *message, void *refCon)
-{
-	
-}
-#endif

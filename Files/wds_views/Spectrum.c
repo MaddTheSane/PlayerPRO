@@ -3,7 +3,7 @@
 #include "RDriver.h"
 #include <stdio.h>
 #include "VA.h"
-//#include <Start.h>
+#include <Start.h>
 
 	/******** HELP MODULE ********/
 	enum
@@ -959,7 +959,7 @@ void DoItemPressSpectrum( short whichItem, DialogPtr whichDialog)
 			{
 			/*	if( ctlPart == kControlIndicatorPart && gUseControlSize == false)
 				{
-					bogus = TrackControl( theControl, myPt, NULL);
+					bogus = TrackControl( theControl, myPt, 0L);
 					if( bogus != 0)
 					{
 					}

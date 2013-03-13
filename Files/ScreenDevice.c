@@ -38,8 +38,8 @@ long		sMinDepth 			= 16;
 		
 #if USE_DRAW_SPROCKETS
 		DSpContextReference		mContextRef = 0;
-		DSpContextAttributes	mContext;
-#elif USE_DISP_MGR
+//		DSpContextAttributes	mContext;
+		#elif USE_DISP_MGR
 		GrafPtr					mContextRef;
 		RgnHandle				mMenuBarRgn;
 		long					mMenuBarHeight;
@@ -68,8 +68,7 @@ short GetCurrentID( void);
 void ExitFullscreen();
 void EndFrame();
 
-//#if MACOS9VERSION
-#if 1
+#if MACOS9VERSION
 Boolean IsFullscreen()									{ return mContextRef != 0; }
 
 void ScreenDevice() {
@@ -88,8 +87,8 @@ void ScreenDevice() {
 	mFS_DC		= NULL;
 #endif
 	
-//TODO: is this needed?
-#if 0	
+
+	/*
 	GDHandle gDevice = GetMainDevice();
 	if ( gDevice ) {
 		PixMapHandle pixMap = (**gDevice).gdPMap;
@@ -99,7 +98,7 @@ void ScreenDevice() {
 		} }
 	else
 		sOSDepth = 16;
-#endif	
+	*/
 
 }
 
@@ -436,15 +435,15 @@ GrafPtr BeginFrame() {
 
 #if USE_DRAW_SPROCKETS
 		OSErr err;
-		err = DSpContext_GetBackBuffer( mContextRef, kDSpBufferKind_Normal, (CGrafPtr*) &mFS_DC );
-		if ( ! mFS_DC ) {
+	//	err = DSpContext_GetBackBuffer( mContextRef, kDSpBufferKind_Normal, (CGrafPtr*) &mFS_DC );
+		//if ( ! mFS_DC ) {
 			err = DSpContext_GetFrontBuffer( mContextRef, (CGrafPtr*) &mFS_DC );
 			if ( mFS_DC )
 				SetPort( mFS_DC );
 			else
 				ExitFullscreen();
-		}
-#endif
+		//}
+		#endif
 		
 		
 #if USE_DISP_MGR
@@ -469,8 +468,8 @@ void EndFrame() {
 
 	if ( IsFullscreen() ) {
 
-#if USE_DRAW_SPROCKETS
-		DSpContext_SwapBuffers( mContextRef, NULL, 0 );
+		#if USE_DRAW_SPROCKETS
+		//DSpContext_SwapBuffers( mContextRef, NULL, 0 );
 		mFS_DC = NULL;
 #endif 
 		
@@ -484,7 +483,7 @@ void EndFrame() {
 }
 
 
-#if 0
+
 long GetDisplayID( long inDeviceNum ) {
 
 
@@ -511,7 +510,6 @@ long GetDisplayID( long inDeviceNum ) {
 	return 0;
 #endif
 }
-#endif
 	
 
 long GetDisplayID( long inX, long inY ) {
@@ -547,12 +545,11 @@ long GetDisplayID( long inX, long inY ) {
 		/* next device */
 		theGDevice = DMGetNextScreenDevice( theGDevice, false );
 	}	
-
-	//TODO: is THIS needed?
-//	err = DSpFindContextFromPoint( inPt, &ref );	
-//	if ( ! err )
-//		err = DSpContext_GetDisplayID( ref, &id );
-
+/*
+	err = DSpFindContextFromPoint( inPt, &ref );	
+	if ( ! err )
+		err = DSpContext_GetDisplayID( ref, &id );
+*/
 	return ( err ) ? 0 : id;
 #endif
 	
@@ -563,7 +560,7 @@ long GetDisplayID( long inX, long inY ) {
 }
 #else
 long GetDisplayID( long inX, long inY ) {};
-//long GetDisplayID( long inDeviceNum ) {};
+long GetDisplayID( long inDeviceNum ) {};
 void EndFrame() {};
 GrafPtr BeginFrame() {};
 void ExitFullscreen() {};

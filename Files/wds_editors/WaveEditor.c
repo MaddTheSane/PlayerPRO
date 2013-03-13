@@ -7,7 +7,6 @@
 #include "PPPlug.h"
 #include <QDOffscreen.h>
 #include "PrivateList.h"
-//#include "WaveEditor.proto.h"
 
 	/******** HELP MODULE ********/
 	enum
@@ -65,8 +64,6 @@ enum
 
 pascal void actionProcWave(ControlHandle theControl, short ctlPart);
 void UPDATE_TrackActive(void);
-OSErr ComputeWave( short fromX, short toX, short chan);
-void UpdateWaveInfo();
 
 short GetMaxXWave()
 {
@@ -543,13 +540,13 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 	WaveCopyDriver->Reading				=	true;
 	WaveCopyDriver->ASCBUFFER			=	WAVESIZE;
 	WaveCopyDriver->ASCBUFFERReal		=	WAVESIZE;
-	WaveCopyDriver->VSYNC				= 	((WaveDriverType.outPutRate>>16) * 125L) / (50);
+	WaveCopyDriver->VSYNC				= 	((WaveDriverType.outPutRate>>16) * 125L) / (50L);
 	
 	WaveCopyDriver->FREQBASE = AMIGA_CLOCKFREQ2 / ((WaveDriverType.outPutRate>>16));
 	WaveCopyDriver->FREQBASE ++;
 	
-	WaveCopyDriver->BytesToGenerate		= 	0;
-	WaveCopyDriver->BufCounter			= 	0;
+	WaveCopyDriver->BytesToGenerate		= 	0L;
+	WaveCopyDriver->BufCounter			= 	0L;
 	WaveCopyDriver->JumpToNextPattern	= 	false;
 	
 	WaveCopyDriver->smallcounter			= 128;
@@ -586,7 +583,7 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 	*/
 	
 	destReader 					= toX;
-	dataX 						= 0;
+	dataX 						= 0L;
 	
 	CellXBytes 		= WaveCopyDriver->VSYNC;
 	CellXBytes 		/= WaveCopyDriver->finespeed;
@@ -611,9 +608,9 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 			
 			WaveCopyDriver->smallcounter		= 128;
 			WaveCopyDriver->PartitionReader	= prevReader;
-			WaveCopyDriver->BytesToGenerate	= 0;
-			WaveCopyDriver->BufCounter		= 0;
-			dataX 						= 0;
+			WaveCopyDriver->BytesToGenerate	= 0L;
+			WaveCopyDriver->BufCounter		= 0L;
+			dataX 						= 0L;
 			
 			XOffSet = WaveRect.left	- GetControlValue( xScroll)*XSize + prevReader * XSize;
 		}
@@ -1139,7 +1136,7 @@ void DoItemPressWave( short whichItem, DialogPtr whichDialog)
 				{
 				/*	if( ctlPart == kControlIndicatorPart)
 					{
-						bogus = TrackControl( theControl, myPt, NULL);
+						bogus = TrackControl( theControl, myPt, 0L);
 						if( bogus != 0)
 						{
 							GetPortBounds( GetDialogPort( WaveDlog), &caRect);

@@ -8,13 +8,26 @@
 #include "MAD.h"
 #include "PPPlug.h"
 
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( Pcmd*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( PPInfoPlug*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
 /** Utils Functions **/
 
 void GetDText (DialogPtr dlog, short item, StringPtr str)
 {
-	Handle	itemHandle;
-	short	itemType;
-	Rect	itemRect;
+Handle	itemHandle;
+short	itemType;
+Rect	itemRect;
 
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 	GetDialogItemText (itemHandle, str);
@@ -22,8 +35,8 @@ void GetDText (DialogPtr dlog, short item, StringPtr str)
 
 void SetDText (DialogPtr dlog, short item, Str255 str)
 {
-	ControlHandle	control;
-	OSErr			err;
+ControlHandle	control;
+OSErr			err;
 
 	GetDialogItemAsControl( dlog, item, &control );
 	err = SetControlData( control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
@@ -99,13 +112,18 @@ Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 
 /** Main function **/
 
-OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+OSErr main( 	Pcmd					*myPcmd,
+				PPInfoPlug				*thePPInfoPlug)
 {
 	DialogPtr			myDia;
 	short				itemHit;
 	Str255				tStr;
 	
-	myDia = GetNewDialog( 128, NULL, (WindowPtr) -1L);
+#ifndef powerc
+	long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+#endif
+
+	myDia = GetNewDialog( 128, 0L, (WindowPtr) -1L);
 	SetPortDialogPort( myDia);
 	AutoPosition( myDia);
 
@@ -116,7 +134,11 @@ OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	{
 		RESTART:
 	
+		#if defined(powerc) || defined(__powerc)
 		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+		#else
+		ModalDialog( (ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+		#endif
 		
 	}while( itemHit != 1 && itemHit != 2);
 	
@@ -154,13 +176,10 @@ OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	}
 	
 	DisposeDialog( myDia);
-		
+	
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+	
 	return noErr;
 }
-
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xF9, 0x97, 0xDE, 0x0A, 0xC9, 0x56, 0x4A, 0x71, 0x93, 0x78, 0x14, 0x20, 0x50, 0x83, 0x94, 0xCC)
-//F997DE0A-C956-4A71-9378-1420508394CC
-#define PLUGINFACTORY NoteTransFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainNoteTrans //The old main function, renamed please
-
-#include "CFPlugin-DigitalBridge.c"

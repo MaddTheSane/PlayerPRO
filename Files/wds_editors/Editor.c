@@ -105,13 +105,6 @@ void			InternalEditorInit();
 OSErr		CallPPDGPlugIns( short PlugNo, Pcmd *myPcmd);
 Cmd* 		GetCmdDlogActif();
 void UPDATE_TrackActive( void);
-void DoNullEditor(void);
-void MyLUpdate();
-void MyLUpdateSpecific( short startY, short endY);
-void CreatePartitionWindow(void);
-void ClosePartitionWindow(void);
-void DoKeyPressEditor( short theChar);
-
 
 Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 {
@@ -219,13 +212,13 @@ void CreateEditorPixMap( short PatID)
 	GDHandle			oldGDeviceH;
 	OSErr				errCode;
 	CGrafPtr			oldPort;
-	GWorldPtr			theGWorld = NULL;
+	GWorldPtr			theGWorld = 0L;
 	Rect				aRect, nRect;
 	short				i;
 	Str32				aStr;
 	Boolean				BigNumber;
 	
-	if( EditorPix != NULL) ZapPixMap( &EditorPix);
+	if( EditorPix != 0L) ZapPixMap( &EditorPix);
 
 	GetGWorld( &oldPort, &oldGDeviceH);
 
@@ -240,7 +233,7 @@ void CreateEditorPixMap( short PatID)
 	if( NewOffscreenPixMap( &EditorPix, &aRect) != noErr) MyDebugStr( __LINE__, __FILE__, "");
 
 	LockPixels( theGWorld->portPixMap);
-	SetGWorld( theGWorld, NULL);
+	SetGWorld( theGWorld, 0L);
 
 	ForeColor( blackColor);
 	
@@ -261,7 +254,7 @@ void CreateEditorPixMap( short PatID)
  				&(*EditorPix)->bounds,
  				&(*EditorPix)->bounds,
  				srcCopy,
- 				NULL);
+ 				0L);
 
 	SetGWorld( oldPort, oldGDeviceH);
 
@@ -294,7 +287,7 @@ void SetMaxWindow( short maxRight, short maxBottom, DialogPtr	whichDialog)
 /*	localPt.v = localPt.h = 1;
 	FindControl( localPt,whichDialog,&aCtl);
 	
-	if( aCtl == NULL)
+	if( aCtl == 0L)
 	{
 		long tL = ((long) maxRight<<16L) + (long) maxBottom;
 		
@@ -305,7 +298,7 @@ void SetMaxWindow( short maxRight, short maxBottom, DialogPtr	whichDialog)
 	{
 		long tL = ((long) maxRight<<16L) + (long) maxBottom;
 		
-		SetControlReference( aCtl, tL);
+		SetCRefCon( aCtl, tL);
 	}*/
 	
 /*	wPeek = (WindowPeek) whichWindow;
@@ -354,7 +347,7 @@ Cell	theCell = { 0, 0};
 void OctavesName(short	id, Ptr	String)
 {
 	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
-							/*	{'Do','Do#','R√©','R√©#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
+							/*	{'Do','Do#','Ré','Ré#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
 	Str255		WorkStr;
 	
 	if( id == 0xFF)
@@ -1071,20 +1064,20 @@ void DoNullEditor(void)
 				
 				/* Continuous scrolling */
 				
-			/*	if( ReaderCopy != GetControlValue( myList.yScroll) && ReaderCopy <= GetControlMaximum( myList.yScroll))
+			/*	if( ReaderCopy != GetCtlValue( myList.yScroll) && ReaderCopy <= GetCtlMax( myList.yScroll))
 				{
-					short	curVal = GetControlValue( myList.yScroll);
+					short	curVal = GetCtlValue( myList.yScroll);
 					Rect	aRect = myList.rect;
 					
 					aRect.left = 0;
 				
-					SetControlValue( myList.yScroll, ReaderCopy);
+					SetCtlValue( myList.yScroll, ReaderCopy);
 				
-					ScrollRect( &aRect, 0, (curVal - ReaderCopy) * myList.HCell, NULL);
+					ScrollRect( &aRect, 0, (curVal - ReaderCopy) * myList.HCell, 0L);
 				
 					MyLUpdateSpecific( PLGetMaxYValue( &myList) - (ReaderCopy - curVal) - 1, PLGetMaxYValue( &myList));
 					
-					PLGetSelectRect( &SelectRect, NULL);
+					PLGetSelectRect( &SelectRect, 0L);
 				}*/
 		}
 		
@@ -1747,7 +1740,7 @@ void SavePcmdFile( Pcmd *myPcmd)
 	iErr = DoCustomSave( "\pSave Pcmd file", defaultname, 'Pcmd', &reply);
 	if( iErr) return;
 	
-//	HSetVol( NULL, reply.vRefNum, reply.parID);
+//	HSetVol( 0L, reply.vRefNum, reply.parID);
 	
 	if( FSpOpenDF( &reply, fsCurPerm, &fRefNum) != noErr)
 	{
@@ -1761,7 +1754,7 @@ void SavePcmdFile( Pcmd *myPcmd)
 	inOutBytes = GetPtrSize( (Ptr) myPcmd);
 	iErr = FSWrite( fRefNum, &inOutBytes, myPcmd);
 	
-	iErr = FSCloseFork( fRefNum);
+	iErr = FSClose( fRefNum);
 
 	EndPcmd:
 
@@ -1785,7 +1778,7 @@ void OpenPcmdFile( FSSpec	*mySpec)
 		if( iErr) return;
 	}
 	
-//	HSetVol( NULL, mySpec->vRefNum, mySpec->parID);
+//	HSetVol( 0L, mySpec->vRefNum, mySpec->parID);
 	
 	if( FSpOpenDF( mySpec, fsCurPerm, &fRefNum) == noErr)
 	{
@@ -1800,7 +1793,7 @@ void OpenPcmdFile( FSSpec	*mySpec)
 			
 			curMusic->hasChanged = true;
 		}
-		iErr = FSCloseFork( fRefNum);
+		iErr = FSClose( fRefNum);
 	}
 }
 
@@ -3275,7 +3268,7 @@ void InternalEditorInit()
 	GetPort( &SavePort);
  	SetPortDialogPort( EditorDlog);
 	
-	/*** D√©termine la longueur d'une cell ***/
+	/*** Détermine la longueur d'une cell ***/
 
 	aCmd.ins	=	33;		aCmd.note			=	20;
 	aCmd.cmd	=	4;		aCmd.arg			=	23;
@@ -3382,10 +3375,10 @@ void DigitalEditorProcess( short whichNote, short *eff, short *arg, short *volCm
 	{
 		theCommand = GetMADCommand( theCell.v, theCell.h, curMusic->partition[ CurrentPat]);
 		
-	//	if( InstruListDlog != NULL)
+	//	if( InstruListDlog != 0L)
 	//	{
 		//	aCell.v = 0;	aCell.h = 0;
-		//	if( GetIns( &aCell.v, NULL))
+		//	if( GetIns( &aCell.v, 0L))
 			{
 			//	if( whichNote == 0) aCell.v = -1;
 				
@@ -3590,7 +3583,7 @@ void DoKeyPressEditor( short theChar)
 			
 			DoGlobalNull();
 			
-		//	WaitNextEvent( everyEvent, &theEvent, 1, NULL);	// ne pas le mettre... a cause du PLSetSelect! et du update
+		//	WaitNextEvent( everyEvent, &theEvent, 1, 0L);	// ne pas le mettre... a cause du PLSetSelect! et du update
 			
 			PLAutoScroll( &myList);
 	 	}
@@ -3860,7 +3853,7 @@ GrafPtr			SavePort;
 		
 	UPDATE_NoteFINISH();
 	
-	/*** Update de la r√©gion ***/
+	/*** Update de la région ***/
 	
 	PLGetSelectRect( &eRect, &myList);
 	InvalWindowRect( GetDialogWindow( EditorDlog), &eRect);
@@ -4074,7 +4067,7 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 				{
 					/****************/
 					myPcmd = (Pcmd*) MyNewPtr( textSize);
-					GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
+					GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0L);
 					PcmdTracks = myPcmd->tracks;
 					if( PcmdTracks <= 0) PcmdTracks = 1;
 					PcmdLength = myPcmd->length;
@@ -4093,11 +4086,11 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 				Boolean	targetIsFolder, wasAliased;
 			
 				GetFlavorDataSize( theDrag, theItem, flavorTypeHFS, &textSize);
-				GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+				GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 		
 				ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		
-			//	HSetVol( NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
+			//	HSetVol( 0L, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
 				FSpGetFInfo( &myFlavor.fileSpec, &fndrInfo);
 				
 				switch( fndrInfo.fdType)
@@ -4113,7 +4106,7 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 							FSRead( fRefNum, &inOutBytes, (Ptr) myPcmd);
 							PcmdTracks = myPcmd->tracks;
 							PcmdLength = myPcmd->length;
-							FSCloseFork( fRefNum);
+							FSClose( fRefNum);
 							MyDisposePtr( (Ptr*) &myPcmd);
 						}
 						/****************/
@@ -4149,7 +4142,7 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 				if( PtInRect( localMouse, &contrlRect) && selectedControl == NULL) { HiliteControl( SaveBut, kControlButtonPart);		selectedControl = SaveBut;}
 				else HiliteControl( SaveBut, 0);
 				
-			/*	if( PtInRect( localMouse, &(*PoubBut)->contrlRect) && selectedControl == NULL)	{ HiliteControl( PoubBut, kControlButtonPart);		selectedControl = PoubBut;}
+			/*	if( PtInRect( localMouse, &(*PoubBut)->contrlRect) && selectedControl == 0L)	{ HiliteControl( PoubBut, kControlButtonPart);		selectedControl = PoubBut;}
 				else HiliteControl( PoubBut, 0);*/
 			}
 			
@@ -4320,11 +4313,11 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 		ReGiveName:
 		
 		pStrcpy( target.name, sName);
-	//	HSetVol( NULL, target.vRefNum, target.parID);
+	//	HSetVol( 0L, target.vRefNum, target.parID);
 		err = FSpOpenDF( &target, fsCurPerm, &fRefNum);
 		if( err != fnfErr)
 		{
-			FSCloseFork( fRefNum);
+			FSClose( fRefNum);
 			
 			beginNumber++;
 			NumToString( beginNumber, tempStr);
@@ -4344,7 +4337,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 		
 				if( CreateAIFFExporting( true, fRefNum, &target, 'AIFF', NULL))
 				{
-					while( theProgressDia != NULL) DoAIFFExporting();
+					while( theProgressDia != 0L) DoAIFFExporting();
 				}
 			}
 			else
@@ -4352,12 +4345,12 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 				FSpCreate( &target, 'SNPL', 'Pcmd', smSystemScript);
 				FSpOpenDF( &target, fsCurPerm, &fRefNum);
 				FSWrite( fRefNum, &textSize, myPcmd);
-				FSCloseFork( fRefNum);
+				FSClose( fRefNum);
 			}
 			
 			MyDisposePtr( (Ptr*) &myPcmd);
 			
-			err = SetDragItemFlavorData( theDrag, theItem, theFlavor, &target, sizeof( target), 0);
+			err = SetDragItemFlavorData( theDrag, theItem, theFlavor, &target, sizeof( target), 0L);
 			if (err) return (err);
 		}
 	}
@@ -4493,7 +4486,7 @@ pascal OSErr MyReceiveDropEditor(WindowPtr theWindow, void* handlerRefCon, DragR
 	
 			if( movePcmd)		// Delete source
 			{
-				// La source est d√©j√† selectionn√©e...
+				// La source est déjà selectionnée...
 				
 				DoKeyPressEditor( 8);
 			}
@@ -4523,7 +4516,7 @@ pascal OSErr MyReceiveDropEditor(WindowPtr theWindow, void* handlerRefCon, DragR
 		
 		PLSetSelect( CellSelec.h, CellSelec.v, CellSelec.h, CellSelec.v, &myList);
 
-		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 	
 		ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 	

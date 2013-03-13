@@ -125,12 +125,6 @@ enum
 
 
 void PrintPixMap( PixMapHandle aPix);
-short		ByteToPos( long bytePosi, short InstruNo);
-long PosToByte( short Pos, short InstruNo);
-short FindSample( DialogPtr	theDia);
-Boolean	IsPressed(unsigned short k);
-void ResetSelectionSample( short CurWin);
-
 
 long GetStartSampleValue( long val, short InstruNo)
 {
@@ -599,7 +593,7 @@ long	FindByteStart( short InstruNo)
 {
 	long	tempL;
 	
-//	if( curSample[ InstruNo] < 0) return NULL;
+//	if( curSample[ InstruNo] < 0) return 0L;
 	
 	tempL = SelecRect[ InstruNo].start;
 	
@@ -668,8 +662,8 @@ short		ByteToPos( long bytePosi, short InstruNo)
 	if( sampleSize == 0) bytePos = 0;
 	else bytePos /= sampleSize;
 	
-	if( bytePos > 30000) tempInt = 30000;
-	else if( bytePos < -30000) tempInt = -30000;
+	if( bytePos > 30000L) tempInt = 30000L;
+	else if( bytePos < -30000L) tempInt = -30000L;
 	else tempInt = bytePos;
 	
 //	if( curSample[ InstruNo] >= 0) if( SampleDataD( InstruNo)->stereo) tempInt *= 2;
@@ -823,7 +817,7 @@ long	FindByteEnd( short InstruNo)
 {
 	long	tempL;
 	
-//	if( curSample[ InstruNo] < 0) return NULL;
+//	if( curSample[ InstruNo] < 0) return 0L;
 	
 	tempL = SelecRect[ InstruNo].end;
 	
@@ -2094,7 +2088,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 							/************/
 							
 							GetGWorld( &oldPort, &oldGDeviceH);
-						//	theGWorld = NULL;
+						//	theGWorld = 0L;
 						//	NewGWorld( &theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
 						//	if( theGWorld)
 						//	{
@@ -2138,7 +2132,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 									if( curIns->pannSize < 12)
 									{
 										short ww;
-										// dÃ©place les pts aprÃ¨s ce pt
+										// dŽplace les pts aprs ce pt
 										
 										for( ww = 11; ww >= i; ww--) curIns->pannEnv[ ww] = curIns->pannEnv[ ww-1];
 										
@@ -2196,7 +2190,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 							/************/
 							
 							GetGWorld( &oldPort, &oldGDeviceH);
-						/*	theGWorld = NULL;
+						/*	theGWorld = 0L;
 							NewGWorld( &theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
 							if( theGWorld)
 							{
@@ -2274,7 +2268,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 							/************/
 							
 							GetGWorld( &oldPort, &oldGDeviceH);
-						/*	theGWorld = NULL;
+						/*	theGWorld = 0L;
 							NewGWorld( &theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
 							if( theGWorld)
 							{
@@ -2318,7 +2312,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 									if( curIns->volSize < 12)
 									{
 										short ww;
-										// dÃ©place les pts aprÃ¨s ce pt
+										// dŽplace les pts aprs ce pt
 										
 										for( ww = 11; ww >= i; ww--) curIns->volEnv[ ww] = curIns->volEnv[ ww-1];
 										
@@ -2376,7 +2370,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 							/************/
 							
 							GetGWorld( &oldPort, &oldGDeviceH);
-						/*	theGWorld = NULL;
+						/*	theGWorld = 0L;
 							NewGWorld( &theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
 							if( theGWorld)
 							{
@@ -3107,7 +3101,7 @@ void InternalUpdate( short InstruNo)
 			/************/
 			
 			GetGWorld( &oldPort, &oldGDeviceH);
-		/*	theGWorld = NULL;
+		/*	theGWorld = 0L;
 			NewGWorld( &theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
 			if( theGWorld)
 			{
@@ -3324,8 +3318,8 @@ void NCreateSampleWindow( short ins, short samp)
 		//	MyReceiveDropHandlerUPP 	= NewDragReceiveHandlerUPP( MyReceiveDropHandler);
 		//	mySendDataUPP 				= NewDragSendDataUPP( MySendSampleProc);
 			
-		//	InstallTrackingHandler( (DragTrackingHandlerUPP) MyTrackingHandlerUPP, SampleDlog[ ins], (void *) NULL);
-		//	InstallReceiveHandler( (DragReceiveHandlerUPP) MyReceiveDropHandlerUPP, SampleDlog[ ins], (void *) NULL);
+		//	InstallTrackingHandler( (DragTrackingHandlerUPP) MyTrackingHandlerUPP, SampleDlog[ ins], (void *) 0L);
+		//	InstallReceiveHandler( (DragReceiveHandlerUPP) MyReceiveDropHandlerUPP, SampleDlog[ ins], (void *) 0L);
 		}
 	}
 	
@@ -3340,6 +3334,7 @@ void NCreateSampleWindow( short ins, short samp)
 	SetPort( SavePort);
 }
 
+Boolean	IsPressed(unsigned short k);
 extern	KeyMap	km;
 
 void CloseSampleWindow( DialogPtr	theDia)
@@ -3731,7 +3726,7 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 		{
 		/*	if( ctlPart == kControlIndicatorPart && gUseControlSize == false)
 			{
-				bogus = TrackControl( theControl, myPt, NULL);
+				bogus = TrackControl( theControl, myPt, 0L);
 				if( bogus != 0)
 				{
 					CurWin = FindSample( whichDialog);
@@ -3922,7 +3917,7 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 					tempRect.top = SampleRect.top;
 					tempRect.bottom = SampleRect.bottom;
 				
-					/** AU Cas oÃ¹ on tire dans les bords **/
+					/** AU Cas o on tire dans les bords **/
 				
 					theDialogControl = SampleDlog[ InstruNo];
 					
@@ -4666,11 +4661,11 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 					
 					newSize = reste + Start;
 					
-					if( newSize == 0)
+					if( newSize == 0L)
 					{
-						SampleDataD( CurWin)->loopBeg	= 0;
-						SampleDataD( CurWin)->loopSize	= 0;
-						SampleDataD( CurWin)->size		= 0;
+						SampleDataD( CurWin)->loopBeg	= 0L;
+						SampleDataD( CurWin)->loopSize	= 0L;
+						SampleDataD( CurWin)->size		= 0L;
 						MyDisposePtr( (Ptr*) &SampleDataD( CurWin)->data);
 						SampleDataD( CurWin)->data		= NewPtr( 0);
 						
@@ -4692,7 +4687,7 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 							
 							SampleDataD( CurWin)->size = newSize;
 							
-							/*** RÃ©ajuste la loop ***/
+							/*** RŽajuste la loop ***/
 							
 							if( SampleDataD( CurWin)->loopBeg > Start)
 							{
@@ -4724,7 +4719,7 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 							InternalUpdate( CurWin);
 							if( thePrefs.ClassicalProjection) UpdateMozartInfo();
 							
-							// RÃ©duction de la sÃ©lection Ã  une barre de clignotement:
+							// RŽduction de la sŽlection ˆ une barre de clignotement:
 							
 							Clignote[ CurWin] = true;
 							TokTak[ CurWin] = false;
@@ -4754,7 +4749,7 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 			}
 			else
 			{
-				if( curData->c2spd < 60000)
+				if( curData->c2spd < 60000L)
 					curData->c2spd ++;
 					
 				curMusic->hasChanged = true;
@@ -4781,7 +4776,7 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 	else if( theEvent.what == keyDown)
 	{
 		str1[0] = 1;	str1[1] = theChar;
-	//	UpperString( str1, true);
+	//	UprString( str1, true);
 		theChar = str1[1];
 		
 		if( (short) theChar >= 0 && (short) theChar < 300)
@@ -4939,13 +4934,13 @@ pascal OSErr MyReceiveSampleHandler(WindowPtr theWindow, unsigned long handlerRe
 	if( !mainSystemDrag) return dragNotAcceptedErr;
 
 	SetPortWindowPort(theWindow);
-	if( CurInstruDrag == -1 && selectedControl == NULL) return( dragNotAcceptedErr);
+	if( CurInstruDrag == -1 && selectedControl == 0L) return( dragNotAcceptedErr);
 	if( !canAcceptDrag) return( dragNotAcceptedErr);
 
 	GetDragAttributes(theDrag, &attributes);
-	GetDragModifiers(theDrag, NULL, &mouseDownModifiers, &mouseUpModifiers);
+	GetDragModifiers(theDrag, 0L, &mouseDownModifiers, &mouseUpModifiers);
 
-	if( selectedControl != NULL)	// Drag sur un bouton !!!!
+	if( selectedControl != 0L)	// Drag sur un bouton !!!!
 	{
 		HiliteControl( selectedControl, 0);
 		
@@ -4957,7 +4952,7 @@ pascal OSErr MyReceiveSampleHandler(WindowPtr theWindow, unsigned long handlerRe
 		if( selectedControl == OpenBut)
 		{
 			theCell.v = 0;
-			if( GetIns( &theCell.v, NULL))
+			if( GetIns( &theCell.v, 0L))
 			{
 				short	ins, samp;
 			
@@ -4967,7 +4962,7 @@ pascal OSErr MyReceiveSampleHandler(WindowPtr theWindow, unsigned long handlerRe
 			}
 		}
 
-		selectedControl = NULL;
+		selectedControl = 0L;
 		
 		return noErr;
 	}
@@ -4997,11 +4992,11 @@ pascal OSErr MyReceiveSampleHandler(WindowPtr theWindow, unsigned long handlerRe
 	{
 		SaveUndo( UAllSamples, 0, "\pUndo 'Drop instrument file'");
 	
-		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, NULL);
+		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 		
 		ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		
-		OpenSampleInt( CurInstruDrag, myFlavor.fileSpec, NULL);
+		OpenSampleInt( CurInstruDrag, myFlavor.fileSpec, 0L);
 		
 		TextFont( 4);	TextSize( 9);
 		CreateInstruList();
@@ -5026,7 +5021,7 @@ pascal OSErr MyReceiveSampleHandler(WindowPtr theWindow, unsigned long handlerRe
 		
 		HLock( mySnd);
 		
-		GetFlavorData(theDrag, theItem, 'snd ', *mySnd, &textSize, NULL);
+		GetFlavorData(theDrag, theItem, 'snd ', *mySnd, &textSize, 0L);
 		
 		OpenSampleInt( CurInstruDrag, pseudoFF, mySnd);
 		
@@ -5041,8 +5036,8 @@ pascal OSErr MyReceiveSampleHandler(WindowPtr theWindow, unsigned long handlerRe
 		//	SampleDataD( DragInstruSource)->freq 		= 1;
 			SampleDataD( DragInstruSource)->amp 		= 8;
 	
-			if( SampleDataD( DragInstruSource)->data != NULL) MyDisposePtr( &SampleDataD( DragInstruSource)->data);
-			SampleDataD( DragInstruSource)->data = NULL;
+			if( SampleDataD( DragInstruSource)->data != 0L) MyDisposePtr( &SampleDataD( DragInstruSource)->data);
+			SampleDataD( DragInstruSource)->data = 0L;
 
 			DragInstruSource = -1;
 		}
@@ -5050,7 +5045,7 @@ pascal OSErr MyReceiveSampleHandler(WindowPtr theWindow, unsigned long handlerRe
 		result = GetFlavorDataSize(theDrag, theItem, 'STR ', &textSize);
 		if( result == noErr)
 		{
-			GetFlavorData(theDrag, theItem, 'STR ', &myStr, &textSize, NULL);
+			GetFlavorData(theDrag, theItem, 'STR ', &myStr, &textSize, 0L);
 			
 			SetInstruName( CurInstruDrag, myStr);
 		}
@@ -5089,17 +5084,17 @@ pascal OSErr MySendSampleProc(FlavorType theFlavor,  void *refCon, ItemReference
 		if (err) return (err);
 		
 		theSound = SoundQualityExportSnd( DragInstruSource, &compressionType, &SoundType, &SoundSize);
-		if( theSound == NULL) return noErr;
+		if( theSound == 0L) return noErr;
 
 		strcpy( (Ptr) target.name, SampleDataD( DragInstruSource)->name);
 		for( i=0; i<strlen( (Ptr) target.name); i++) if( target.name[i] == ':') target.name[i] = '-';
 		MyC2PStr( (Ptr) target.name);
 
-		HSetVol( NULL, target.vRefNum, target.parID);
+		HSetVol( 0L, target.vRefNum, target.parID);
 		
 		SaveSampleInt( theSound, DragInstruSource, SoundType, compressionType, &target);
 
-		err = SetDragItemFlavorData( theDrag, theItem, theFlavor, &target, sizeof( target), NULL);
+		err = SetDragItemFlavorData( theDrag, theItem, theFlavor, &target, sizeof( target), 0L);
 		if (err) return (err);
 	}
 
@@ -5145,7 +5140,7 @@ Boolean DragSample( RgnHandle myRgn, short theNo, EventRecord *theEvent)
 	if( SampleDataD( theNo)->stereo) numChan = 2;
 	else numChan = 1;
 	
-	theSound = MyNewHandle( 10000);
+	theSound = MyNewHandle( 10000L);
 	SetupSndHeader(		(SndListHandle) theSound,
 						numChan,
 						((unsigned long) SampleDataD( theNo)->c2spd)<<16L,
@@ -5180,7 +5175,7 @@ Boolean DragSample( RgnHandle myRgn, short theNo, EventRecord *theEvent)
 	myNewFile.fdFlags			=	0;
 	myNewFile.promisedFlavor	=	0;	//'VCT1';
 //	AddDragItemFlavor( theDrag, 1, flavorTypePromiseHFS, &myNewFile, sizeof( myNewFile), flavorNotSaved);
-//	AddDragItemFlavor( theDrag, 1, 'VCT1', NULL, 0, 0);
+//	AddDragItemFlavor( theDrag, 1, 'VCT1', 0L, 0, 0);
 	AddDragItemFlavor( theDrag, 1, 'snd ', *theSound, GetHandleSize( theSound), 0);
 
 /*	strcpy( (Ptr) theStr, SampleDataD( theNo)->name);
@@ -5188,7 +5183,7 @@ Boolean DragSample( RgnHandle myRgn, short theNo, EventRecord *theEvent)
 	AddDragItemFlavor( theDrag, 1, 'STR ', &theStr, sizeof( theStr), 0);
 */
 /*	
-	result = SetDragSendProc( theDrag, mySendDataUPP, NULL);
+	result = SetDragSendProc( theDrag, mySendDataUPP, 0L);
 */
 	SetDragItemBounds(theDrag, 1, GetRegionBounds( dragRegion, &dragRegionRect));
 

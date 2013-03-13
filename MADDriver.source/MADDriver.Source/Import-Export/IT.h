@@ -141,14 +141,14 @@ typedef struct ITForm
 	char				name[26];
 	char				no[ 2];
 	
-	short				orderNum;
-	short				insNum;
-	short				smpNum;
-	short				patNum;
-	short				cwtv;
-	short				cmwt;
-	short				flags;
-	short				special;
+	short  			orderNum;
+	short   			insNum;
+	short   			smpNum;
+	short      			patNum;
+	short     			cwtv;
+	short			cmwt;
+	short      			flags;
+	short			special;
 	
 	Byte				globalVol;
 	Byte				mixVol;

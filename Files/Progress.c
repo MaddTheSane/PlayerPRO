@@ -1,4 +1,3 @@
-#include <Carbon/Carbon.h>
 
 typedef struct CrsrRec
 {

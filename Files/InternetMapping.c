@@ -53,8 +53,8 @@ void SetInternetMapping( void)
     
     if (err == noErr)
     {
-//    	err = 1;
-#if MACOS9VERSION
+    	err = 1;
+   		#if MACOS9VERSION
     	err = ICGeneralFindConfigFile(inst, true, true, 0, nil);
 #endif
         if (err == noErr)
@@ -133,7 +133,7 @@ void SetInternetMapping( void)
                 }
                 
                 if( xm == false) 	ChangeMapping( inst, prefh, pos, 'XM  ', "\p.xm", &entry, true);
-                if( mad == false) 	ChangeMapping( inst, prefh, pos, 'MADK', "\p.mad", &entry, true);
+                if( mad == false) 	ChangeMapping( inst, prefh, pos, 'MADK', "\p.madk", &entry, true);
                 if( madi == false) 	ChangeMapping( inst, prefh, pos, 'MADI', "\p.madi", &entry, true);
                 if( madk == false) 	ChangeMapping( inst, prefh, pos, 'MADK', "\p.madk", &entry, true);
                 if( madh == false) 	ChangeMapping( inst, prefh, pos, 'MADH', "\p.madh", &entry, true);

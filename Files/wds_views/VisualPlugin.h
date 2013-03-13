@@ -5,7 +5,7 @@
 
 	Written by:	Jeff Robbin
 
-	Copyright:	Copyright Â©1999 Jeff Robbin
+	Copyright:	Copyright ©1999 Jeff Robbin
 
 */
 

@@ -1,4 +1,3 @@
-//TODO: rewrite this plug-in architecture!
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
@@ -25,7 +24,7 @@ long GetDisplayID( long inDeviceNum );
 
 typedef struct
 {
-	CFragConnectionID				connID;
+	ConnectionID				connID;
 	Str63						MenuName;
 	FSSpec						file;
 	PluginMessageInfo			msgInfo;
@@ -48,7 +47,7 @@ void MySizeWindow( DialogPtr dlg, short right, short bottom, Boolean v);
 Ptr GetAudioSourceSpectrum( short item);
 Ptr GetAudioChannel( Boolean LeftChannel, long Size);
 Ptr MakeCalculusSpectrum( Ptr srcPtr, Boolean logScale);
-void ProcessVisualPlug( MADDriverRec *intDriver, short* in, long inNum);
+void ProcessVisualPlug( short* in, long inNum);
 void DoFullScreenNow( WindowPtr mWind);
 Boolean EnterFullscreen( long inDispID, Point ioSize, int inBitDepth, WindowPtr inWin, long inFreq );
 GrafPtr BeginFrame();
@@ -227,7 +226,7 @@ OSStatus PlayerPROProc(void *appCookie, OSType message, struct PlayerMessageInfo
 	return noErr;
 }
 
-void CallVisualMain( long PlugNo, OSType msg)
+void CallVisualMain( short PlugNo, OSType msg)
 {
 	PluginProcPtr		mainPLUG;
 	OSStatus			myErr;
@@ -236,7 +235,7 @@ void CallVisualMain( long PlugNo, OSType msg)
 
 	fileID = FSpOpenResFile( &VisualPlug[ PlugNo].file, fsCurPerm);
 	
-	myErr = GetDiskFragment( &VisualPlug[ PlugNo].file, 0, kCFragGoesToEOF, VisualPlug[ PlugNo].file.name, kLoadCFrag, &VisualPlug[ PlugNo].connID, (Ptr *) &mainPLUG, errName);
+	myErr = GetDiskFragment( &VisualPlug[ PlugNo].file, 0, kWholeFork, VisualPlug[ PlugNo].file.name, kLoadLib, &VisualPlug[ PlugNo].connID, (Ptr *) &mainPLUG, errName);
 
 	if( myErr == noErr)
 	{
@@ -269,7 +268,7 @@ void CallVisualFonction( MADDriverRec *intDriver, short PlugNo, OSType msg, CGra
 	{
 		if( port)
 		{
-			//port = NULL;
+			//port = 0L;
 			options = kWindowIsFullScreen;
 		}
 		else port = GetDialogPort( VisualDlog);
@@ -419,7 +418,7 @@ void DoVisualNull()
 	
 	CallVisualFonction( MADDriver, currentID, kVisualPluginRenderMessage, 0, NULL, 0);
 	
-//	CallVisualFonction( MADDriver, currentID, kVisualPluginEventMessage, 0, NULL, 0);
+//	CallVisualFonction( MADDriver, currentID, kVisualPluginEventMessage, 0, 0L, 0);
 }
 
 void  UpdateVisualWindow(DialogPtr GetSelection)
@@ -495,9 +494,13 @@ void ScanDirVisualPlug( long dirID, short VRefNum)
 		info.hFileInfo.ioDirID = dirID;
 		info.hFileInfo.ioFDirIndex = i;
 		
-		if (PBGetCatInfoSync(&info) != noErr) break;
+		if (PBGetCatInfo(&info, false) != noErr) break;
 		
+		#if MACOS9VERSION
 		if( info.hFileInfo.ioFlFndrInfo.fdType == 'PLUG')
+		#else
+		if( info.hFileInfo.ioFlFndrInfo.fdType == 'PLUG')
+		#endif
 		{	
 			HGetVol( NULL, &vRefNum, &dirIDCopy);
 			
@@ -710,8 +713,8 @@ void InitVisual(void)
 	
 	HGetVol( NULL, &vRefNum, &dirID);
 	
-	tPlug			= 0;
-	PlugsFolderOK	= 0;
+	tPlug		= 0;
+	PlugsFolderOK = 0L;
 	GetApplicationPackageFSSpecFromBundle( &spec);
 	ScanDirVisualPlug( spec.parID, spec.vRefNum);
 	

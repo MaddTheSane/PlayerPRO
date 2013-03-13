@@ -15,10 +15,8 @@
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
-#include "FileUtils.h"
-#include <QDOffscreen.h>
-#include <Navigation.h>
-void SetFontStyle( DialogPtr dialog, SInt16 item, ControlFontStyleRec *style );
+#include "QDOffscreen.h"
+#include "Navigation.h"
 
 void				PrefFilterPiano( DialogPtr theDialog, EventRecord *theEventI, short *itemHit);
 void				ZapBitMap();
@@ -27,7 +25,7 @@ void				LigneGO();
 void 				FrameRectRelief( Rect *theRect);
 short				NewOffscreenPixMap();
 short				NewOffscreenBitMap();
-//void				pStrcpy();
+void				pStrcpy();
 short				IclToPix (Handle , PixMapHandle *);
 void				CopyBitsFast( PixMapHandle, Rect);
 void				ScrollFast();
@@ -84,20 +82,18 @@ void DePatchMyDisposePtr( &)
 
 unsigned char* MyC2PStr( Ptr cStr)
 {
-/*	long size = strlen( cStr);
+	long size = strlen( cStr);
 	BlockMoveData( cStr, cStr + 1, strlen( cStr));
 	cStr[ 0] = size;
 
-	return (unsigned char*) cStr;*/
-	return MYC2PStr(cStr);
+	return (unsigned char*) cStr;
 }
 
 void MyP2CStr( unsigned char *cStr)
 {
-/*	long size = cStr[ 0];
+	long size = cStr[ 0];
 	BlockMoveData( cStr + 1, cStr, size);
-	cStr[ size] = 0;*/
-	MYP2CStr(cStr);
+	cStr[ size] = 0;
 }
 
 
@@ -302,7 +298,7 @@ pascal Boolean MyDlgFilter( DialogPtr theDlg, EventRecord *theEvt, short *itemHi
 	}
 /*	else if( theEvt->what == activateEvt)
 	{
-		if( AHelpDlog != NULL)
+		if( AHelpDlog != 0L)
 		{
 			if( MacIsWindowVisible( GetDialogWindow( AHelpDlog))) ActivateProcedure( true);
 		}
@@ -450,7 +446,7 @@ DialogPtr		whichDialog;
 	/*	textEdit = GetDialogTextEditHandle( theDlg);
 		if( textEdit) TEIdle( textEdit);*/
 
-		//if( aDiaPeek->textH != NULL && aDiaPeek->editField != -1) TEIdle( aDiaPeek->textH);
+		//if( aDiaPeek->textH != 0L && aDiaPeek->editField != -1) TEIdle( aDiaPeek->textH);
 		
 		///////
 		
@@ -587,16 +583,16 @@ void	ToolBoxInit(void)
 
 void InverseRadio( short	item, DialogPtr	dlog)
 {
-	Handle		itemHandle;
-	short		itemType;
-	Rect		itemRect;
+Handle		itemHandle;
+short		itemType;
+Rect		itemRect;
 
-	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
+GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 
 	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "InverseRadio itemHandle = NULL");
 
-	if( itemType >= 128) itemType -= 128;
-	if( itemType != 6 && itemType != 5) MyDebugStr( __LINE__, __FILE__, "Error in InverseRadio");
+if( itemType >= 128) itemType -= 128;
+if( itemType != 6 && itemType != 5) MyDebugStr( __LINE__, __FILE__, "Error in InverseRadio");
 
 	SetControlValue( (ControlHandle) itemHandle,!GetControlValue( (ControlHandle) itemHandle));
 }
@@ -608,12 +604,12 @@ void TurnRadio( short	item, DialogPtr	dlog, Boolean alors)
 	short		itemType = 0;
 	Rect		itemRect = {0,0,0,0};
 
-	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
+GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 
-	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "TurnRadio itemHandle = NULL");
+if( itemHandle == 0L) MyDebugStr( __LINE__, __FILE__, "TurnRadio itemHandle = 0L");
 
-	if( itemType >= 128) itemType -= 128;
-	if( itemType != 6 && itemType != 5) MyDebugStr( __LINE__, __FILE__, "Error in TurnRadio");
+if( itemType >= 128) itemType -= 128;
+if( itemType != 6 && itemType != 5) MyDebugStr( __LINE__, __FILE__, "Error in TurnRadio");
 
 	if( alors)
 	{
@@ -634,7 +630,7 @@ void	ControlSwitch(short	item, DialogPtr	dlog, short	Switch)
 
 //	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 
-//	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "ControlSwitch itemHandle = NULL");
+//	if( itemHandle == 0L) MyDebugStr( __LINE__, __FILE__, "ControlSwitch itemHandle = 0L");
 
 	GetDialogItemAsControl( dlog, item, &control );
 	
@@ -693,7 +689,7 @@ void SetFKeyMode( Boolean v)
 
 pascal void myTrackAction( ControlHandle theCntl, short ctlPart)
 {
-//	WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+//	WaitNextEvent( everyEvent, &theEvent, 1, 0L);
 	
 //	#if MACOS9VERSION
 	DoGlobalNull();
@@ -881,14 +877,14 @@ short					pic_SIZE;
 	for ( inc = 0; inc <= 9; inc++ )  {
 		aRect.top = aRect.bottom;
 		aRect.bottom+= part;
-		CopyBits(&LeDessin,&LeDessin,&aRect,&aRect,srcCopy,NULL);
+		CopyBits(&LeDessin,&LeDessin,&aRect,&aRect,srcCopy,0L);
 		}
 		
 	if (part* 10 != pic_SIZE ) {
 		aRect.top = part * 10;
 		aRect.bottom = pic_SIZE;
 
-		CopyBits(&LeDessin,&LeDessin,&aRect,&aRect,srcCopy,NULL);
+		CopyBits(&LeDessin,&LeDessin,&aRect,&aRect,srcCopy,0L);
 		}
 	ClosePicture();
 	SetPort(currentPort);
@@ -948,7 +944,6 @@ void OSType2Str( OSType type, Str255 str)
 	short i;
 
 	str[ 0] = 4;
-	MOT32(&type);
 	BlockMoveData( &type, str+1, 4);
 
 	for( i = 4; i > 0; i--)
@@ -958,8 +953,28 @@ void OSType2Str( OSType type, Str255 str)
 	}
 }
 
-#if 0
-void pStrcpy(register unsigned char *s1, register const unsigned char *s2)
+void OSType2Ptr( OSType type, Ptr str)
+{
+	short i;
+	
+	BlockMoveData( &type, str, 4);
+	str[ 4] = 0;
+}
+
+OSType Ptr2OSType( Ptr str)
+{
+	short 	i;
+	OSType	type;
+	
+	i = strlen( str);
+	if( i > 4) i = 4;
+	type = '    ';
+	BlockMoveData( str, &type, i);
+	
+	return type;
+}
+
+/*void pStrcpy(register unsigned char *s1, register unsigned char *s2)
 {
 	register short len, i;
 	
@@ -972,8 +987,7 @@ void pStrcpy(register unsigned char *s1, register const unsigned char *s2)
 		}
 	}
 	else MyDebugStr( __LINE__, __FILE__, "String to biiig !");
-}
-#endif
+}*/
 
 void pStrcat(register unsigned char *s1, register unsigned char *s2)
 {
@@ -1103,7 +1117,7 @@ OSErr					errCode;
 	
 	*thepict = OpenPicture(&aRect);
 		
-	CopyBits( (BitMap*) *theDocument,(BitMap*) *offscreenPixMap, &imageRect, &aRect, srcCopy, NULL);
+	CopyBits( (BitMap*) *theDocument,(BitMap*) *offscreenPixMap, &imageRect, &aRect, srcCopy, 0L);
 	
 	ClosePicture();
 	
@@ -1288,7 +1302,6 @@ LineTo( theRect->left, theRect->top);
 
 
 ForeColor( blackColor);
-	return;
 }
 
 

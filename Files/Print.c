@@ -1,8 +1,6 @@
 #include "Shuddup.h"
-//#include "Packages.h"
-//#include "Printing.h"
-#include <Carbon/Carbon.h>
-//FIXME: Make this work with OS X.  Currently non-OS X compatible bits are commented out.
+#include "Packages.h"
+#include "Printing.h"
 
 void		PrintPicture (PicHandle whichPic, Rect *whichDestRect);
 TEHandle	GetTEHelp();
@@ -10,8 +8,8 @@ void		PrintEditor();
 
 extern	WindowPtr	oldWindow;
 
-//static	THPrint		hPrint;
-//static	TPPrPort	printPort;
+static	THPrint		hPrint;
+static	TPPrPort	printPort;
 
 		Str255		versString;
 
@@ -108,7 +106,7 @@ void InitPrinting(void)
 {
 #if MACOS9VERSION
 	
-	hPrint = (THPrint) MyNewHandle( sizeof( TPrint) + 5NULL);
+	hPrint = (THPrint) MyNewHandle( sizeof( TPrint) + 50L);
 	
 	PrOpen();
 	
@@ -125,7 +123,7 @@ void Print(void)
 	Point		theCell;
 	short		WindType;
 	GrafPtr		savePort;
-//	TPrStatus	prStatus;
+	TPrStatus	prStatus;
 	OSErr		err;
 	Rect		destRect;
 	
@@ -233,18 +231,18 @@ void PrintTEHandle( TEHandle hTE)
 {
 #define Margins 20
 
-	short 		totalLines;			//{ number of lines in text }
-	Rect		rView;				//{ viewRect for TERect }
-	GrafPtr		oldPort;			//{ hold original grafPtr }
-	Rect		oldView;			//{ hold original viewRect }
-	Rect		oldDest;			//{ hold original destRect }
-	short		totalHeight;		//{ lineHeight for TERec }
-	short 		currentLine;		//{ what line are we on }
-	short		scrollAmount;		//{ how much we scroll by }
-	Rect		zeroRect;			//{ 0,0,0,0 rect used in clipRect }
-	short		viewHeight;			//{ temp that has the viewRect height+1 to test conditions }	
-	Boolean		OpenPrintManager;	//{ flag if print manager can be opened okay }
-	Boolean		abort;				//{ flag if cmd-period is hit to exit routine }
+short 		totalLines;			//{ number of lines in text }
+Rect		rView;				//{ viewRect for TERect }
+GrafPtr		oldPort;			//{ hold original grafPtr }
+Rect		oldView;			//{ hold original viewRect }
+Rect		oldDest;			//{ hold original destRect }
+short		totalHeight;		//{ lineHeight for TERec }
+short 		currentLine;		//{ what line are we on }
+short		scrollAmount;		//{ how much we scroll by }
+Rect		zeroRect;			//{ 0,0,0,0 rect used in clipRect }
+short		viewHeight;			//{ temp that has the viewRect height+1 to test conditions }	
+Boolean		OpenPrintManager;	//{ flag if print manager can be opened okay }
+Boolean		abort;				//{ flag if cmd-period is hit to exit routine }
 
 #if MACOS9VERSION
 
@@ -270,7 +268,7 @@ void PrintTEHandle( TEHandle hTE)
 	
 	while( abort != true && currentLine <= totalLines)
 	{
-		PrOpenPage( printPort, NULL );
+		PrOpenPage( printPort, 0L );
 		scrollAmount = 0;
 		ClipRect( &(*hPrint)->prInfo.rPage );
 		

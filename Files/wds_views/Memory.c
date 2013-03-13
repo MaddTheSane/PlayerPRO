@@ -9,8 +9,6 @@
 	static	ControlHandle			progCntl;
 	
 			DialogPtr				MemoryDlog;
-void PaintMemory( Rect	*theRect);
-
 
 void DoGrowMem( DialogPtr theDialog)
 {
@@ -124,7 +122,7 @@ void DoNullMemWindow(void)
 		
 	/*	for( i = 0; i < MAX_PITCH; i++)
 		{
-			if( MADDriver->FreqHandle[ i] != NULL) tempLong += GetPtrSize( (Ptr) MADDriver->FreqHandle[ i]);
+			if( MADDriver->FreqHandle[ i] != 0L) tempLong += GetPtrSize( (Ptr) MADDriver->FreqHandle[ i]);
 		}*/
 		tempLong /= 1024;
 		NumToString( tempLong, tempStr);
@@ -223,50 +221,50 @@ void DoNullMemWindow(void)
 
 void PaintMemory( Rect	*theRect)
 {
-	long	FreeMe, TotalMem;
-	short		longRec, temp;
-	Rect	CopyRect;
-	
-	if( AppearanceManager)
-	{
-		Draw1Control( progCntl);
-		return;
-	}
-	
-	CopyRect = *theRect;
-	
-	theRect->left ++;
-	theRect->top ++;
-	
-	FreeMe 		= FreeMem();
-	
+long	FreeMe, TotalMem;
+short		longRec, temp;
+Rect	CopyRect;
+
+if( AppearanceManager)
+{
+	Draw1Control( progCntl);
+	return;
+}
+
+CopyRect = *theRect;
+
+theRect->left ++;
+theRect->top ++;
+
+FreeMe 		= FreeMem();
+
 #if MACOS9VERSION
-	
-	TotalMem	= (long) LMGetApplLimit() - (long) LMGetApplZone();
-	
+
+TotalMem	= (long) LMGetApplLimit() - (long) LMGetApplZone();
+
 #else
-	
-	TotalMem = 1;
-	
+
+TotalMem = 1;
+
 #endif
-	
-	longRec 	= theRect->right - theRect->left;
-	
-	temp 		= theRect->right;
-	
-	theRect->right = theRect->left + ( (TotalMem - FreeMe)*longRec) / TotalMem;
-	
-	ForeColor( redColor);
-	PaintRect( theRect);
-	
-	theRect->left = theRect->right;
-	theRect->right = temp;
-	
-	ForeColor( greenColor);
-	PaintRect( theRect);
-	
-	ForeColor( blackColor);
-	*theRect = CopyRect;
+
+longRec 	= theRect->right - theRect->left;
+
+temp 		= theRect->right;
+
+theRect->right = theRect->left + ( (TotalMem - FreeMe)*longRec) / TotalMem;
+
+ForeColor( redColor);
+PaintRect( theRect);
+
+theRect->left = theRect->right;
+theRect->right = temp;
+
+ForeColor( greenColor);
+PaintRect( theRect);
+
+ForeColor( blackColor);
+*theRect = CopyRect;
 }
 
 void  UpdateMemWindow(DialogPtr GetSelection)

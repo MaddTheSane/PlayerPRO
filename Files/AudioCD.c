@@ -7,7 +7,7 @@
 #include <Movies.h>
 #include "Undo.h"
 
-//OSErr DoStandardOpen( FSSpec	*spec, Str255 string, OSType inType);
+OSErr DoStandardOpen( FSSpec	*spec, Str255 string, OSType inType);
 
 pascal OSErr MyProgressUPP(Movie theMovie, short message, short whatOperation, Fixed percentDone, long refcon)
 {
@@ -186,7 +186,7 @@ void ImportAudioCD()
 									 	'AIFF',
 									 	'SNPL',
 									 	smCurrentScript,
-									 	NULL,
+									 	0L,
 									 	0,
 									 	0);
 						
@@ -244,7 +244,7 @@ void ImportAudioCD()
 	
 	myCursH = GetCursor( 357);
 	
-	if( myCursH == NULL) Debugger();
+	if( myCursH == 0L) Debugger();
 	DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 	watchCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 	
@@ -285,7 +285,7 @@ void ImportAudioCD()
 						 	'AIFF',
 						 	'SNPL',
 						 	smCurrentScript,
-						 	NULL,
+						 	0L,
 						 	0,
 						 	0);
 				

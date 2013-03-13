@@ -3,13 +3,28 @@
 /*	1996 by ANR 	*/
 
 
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include "MAD.h"
+#include "PPPlug.h"
 
-static GDHandle	TheGDevice/*:0xCC8*/;
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( sData*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoPlug*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( long)))
+};
 
-static void AutoPosition( DialogPtr aDia)
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
+GDHandle	TheGDevice:0xCC8;
+
+void AutoPosition( DialogPtr aDia)
 {
 	Point		Position, mouse;
 	Rect		ViewRect, caRect;
@@ -183,17 +198,21 @@ static Ptr ConvertSampleC4SPD( Ptr src, long srcSize, short amp, long srcC4SPD, 
 	return dst;
 }
 
-OSErr mainSampRate(	sData			*theData,
-					long			SelectionStart,
-					long			SelectionEnd,
-					PPInfoPlug		*thePPInfoPlug,
-					short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+OSErr main( 	sData					*theData,
+							long					SelectionStart,
+							long					SelectionEnd,
+							PPInfoPlug				*thePPInfoPlug,
+							long					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	DialogPtr		myDia;
 	short			itemHit;
 	Str255			tStr;
 
-	myDia = GetNewDialog( 128, NULL, (WindowPtr) -1L);
+#ifndef powerc
+	long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+#endif
+
+	myDia = GetNewDialog( 128, 0L, (WindowPtr) -1L);
 	SetPortDialogPort( myDia);
 	AutoPosition( myDia);
 	
@@ -209,7 +228,11 @@ OSErr mainSampRate(	sData			*theData,
 	
 	do
 	{
+		#if defined(powerc) || defined(__powerc)
 		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+		#else
+		ModalDialog( (ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+		#endif
 	}
 	while( itemHit != 1 && itemHit != 2);
 	
@@ -253,13 +276,9 @@ OSErr mainSampRate(	sData			*theData,
 	
 	DisposeDialog( myDia);
 
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+
 	return noErr;
 }
-
-// 81D156A0-6737-4D5F-BE63-5BA48F527276
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x81, 0xD1, 0x56, 0xA0, 0x67, 0x37, 0x4D, 0x5F, 0xBE, 0x63, 0x5B, 0xA4, 0x8F, 0x52, 0x72, 0x76)
-
-#define PLUGMAIN mainSampRate
-#define PLUGINFACTORY SampRateFactory
-
-#include "CFPlugin-FilterBridge.c"

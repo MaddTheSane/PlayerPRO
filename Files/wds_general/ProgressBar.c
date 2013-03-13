@@ -396,7 +396,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	
 	if( !SoundQualityExport( OnlyCurrent, &thePrefs.channelNumber, &thePrefs.Compressor, &thePrefs.FrequenceSpeed, &thePrefs.amplitude, &patternID, &thePrefs.DirectDriverType, MPG4))
 	{
-		FSCloseFork( fRefNum);
+		FSClose( fRefNum);
 		FSpDelete( newFile);
 		return false;
 	}
@@ -428,8 +428,8 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	
 	copyDriver->DriverSettings		=	thePrefs.DirectDriverType;
 	
-	copyDriver->BytesToGenerate		= 	0;
-	copyDriver->BufCounter			= 	0;
+	copyDriver->BytesToGenerate		= 	0L;
+	copyDriver->BufCounter			= 	0L;
 	copyDriver->JumpToNextPattern	= 	true;
 
 	copyDriver->smallcounter		= 128;
@@ -490,7 +490,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 			copyMusic->partition[ copyMusic->header->numPat]->header.size = DEndPos;
 			copyMusic->partition[ copyMusic->header->numPat]->header.compMode = 'NONE';
 			strcpy( (Ptr) copyMusic->partition[ copyMusic->header->numPat]->header.name, "New pattern");
-			copyMusic->partition[ copyMusic->header->numPat]->header.patBytes = 0;
+			copyMusic->partition[ copyMusic->header->numPat]->header.patBytes = 0L;
 			copyMusic->partition[ copyMusic->header->numPat]->header.unused2 = 0;
 			
 			for( u = 0; u < copyMusic->header->numChn; u++)
@@ -547,7 +547,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	Packet = MaxBlock()/ (copyDriver->ASCBUFFERReal *thePrefs.amplitude/8);
 	Packet /= ( 2L*2L + 1L);
 	
-	if( Packet > 20) Packet = 20;
+	if( Packet > 20L) Packet = 20L;
 	if( Packet <= 0) MyDebugStr( __LINE__, __FILE__, "Memory Error, Increase Memory");
 	
 	
@@ -617,7 +617,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 		short	headerLen;
 		FInfo		fndrInfo;
 		
-		FSCloseFork( fRefNum);
+		FSClose( fRefNum);
 		
 		iErr = FSpGetFInfo( newFile, &fndrInfo);
 		if( iErr != noErr)
@@ -647,7 +647,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 										thePrefs.amplitude,
 										thePrefs.Compressor,
 										60,
-										50000,
+										50000L,
 										&headerLen);
 			
 			AddResource( sndHandle, 'snd ', 7438, newFile->name);
@@ -717,7 +717,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 		long 	fullTime, curTime;
 		MADGetMusicStatus( copyDriver, &fullTime, &curTime);
 		
-		finalSize		*= (fullTime+1) / 60;
+		finalSize		*= (fullTime+1) / 60L;
 	}
 	if( patternID != -1 || patternID == -2) finalSize = 1;
 	
@@ -727,7 +727,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 		case 'MAC6':		finalSize /= 6L;		break;
 	}
 	
-	totalSize 			= 	0;
+	totalSize 			= 	0L;
 	iErr 				= 	noErr;
 	copyDriver->musicEnd = 	false;
 	copyDriver->Reading	=	true;
@@ -988,7 +988,7 @@ void StopAIFFExporting( void)
 			for( i = 0; i < thePrefs.channelNumber; i++)
 			{
 				GetFPos( MultiRef[ i], &filePos);
-				SetFPos( MultiRef[ i], fsFromStart, NULL);
+				SetFPos( MultiRef[ i], fsFromStart, 0L);
 				
 				SetupAIFFHeader(		MultiRef[ i],
 										1, 
@@ -1006,7 +1006,7 @@ void StopAIFFExporting( void)
 		else*/
 		{
 			GetFPos( fRefNum, &filePos);
-			SetFPos( fRefNum, fsFromStart, 0);
+			SetFPos( fRefNum, fsFromStart, 0L);
 			
 			SetupAIFFHeader(		fRefNum,
 									thePrefs.channelNumber, 
@@ -1018,7 +1018,7 @@ void StopAIFFExporting( void)
 			
 			SetFPos( fRefNum, fsFromStart, filePos);
 			SetEOF( fRefNum, filePos);
-			FSCloseFork( fRefNum);
+			FSClose( fRefNum);
 			
 			if( theType == 'MPG4')
 			{

@@ -25,7 +25,6 @@
 
 struct	MTMTrack
 {
-	//FIXME: is this little-endian safe?
 	unsigned short pitch : 6;
 	unsigned short instru : 6;
 	unsigned short EffectCmd : 4;

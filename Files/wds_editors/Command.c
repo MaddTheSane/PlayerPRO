@@ -1092,7 +1092,7 @@ void CreateCmdDlog(void)
 
 	thePatternMenu = GetMenu( 146);
 
-/*	ToolsDlog = GetNewDialog( 153, NULL, (WindowPtr) ToolsDlog);
+/*	ToolsDlog = GetNewDialog( 153, 0L, (WindowPtr) ToolsDlog);
 	SetWindEtat( ToolsDlog);
 	MySizeWindow( ToolsDlog, WLarg, WHaut, false);
 	ShowWindow( ToolsDlog);

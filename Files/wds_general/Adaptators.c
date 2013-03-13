@@ -78,10 +78,10 @@ void CreateControlAdap( void);
 void FillVSTEffects( void);
 #if defined(powerc) || defined(__powerc)
 #else
-//pascal void SetControlViewSize( ControlHandle, SInt32)
-//{
-//
-//}
+pascal void SetControlViewSize( ControlHandle, SInt32)
+{
+
+}
 #endif
 
 void DrawValueIndicator( double val, Boolean percent, Str255 text)
@@ -272,6 +272,12 @@ void DoNullAdap( void)
 	RgnHandle	visibleRegion;
 	Str255		TextVal;
 
+
+/*#if MACOS9VERSION
+#else
+return;
+#endif*/
+
 	if( !AdapDlog) return;
 
 	GetPort( &SavePort);
@@ -437,11 +443,11 @@ void DoNullAdap( void)
 			}
 			GetControlBounds( hardvolCntl, &contrlRect);
 			
-			if( PtInRect( pt, &contrlRect)) { found = true;	val = (100 * thePrefs.volumeLevel)/256L; percent = true;}
+			if( PtInRect( pt, &contrlRect)) { found = true;	val = (100L * thePrefs.volumeLevel)/256L; percent = true;}
 			
 			GetControlBounds( softvolCntl, &contrlRect);
 			
-			if( PtInRect( pt, &contrlRect)) { found = true;	val = (100 * MADDriver->VolGlobal)/64L; percent = true;}
+			if( PtInRect( pt, &contrlRect)) { found = true;	val = (100L * MADDriver->VolGlobal)/64L; percent = true;}
 			
 			GetControlBounds( speedCntl, &contrlRect);
 			
@@ -676,7 +682,7 @@ void FillFxDestControl( short id)
 	MyMoveControl( VSTDest[ id], contrlRect.left, VolumeRect.top - (GetControlValue( ScrollAdap) - id)*DISVOL);
 	SetControlVisibility( VSTDest[ id], true, false);
 	
-/*	if( MADDriver->chanVST[ id][ x] != NULL) HiliteControl( VSTDest[ id], kControlButtonPart);
+/*	if( MADDriver->chanVST[ id][ x] != 0L) HiliteControl( VSTDest[ id], kControlButtonPart);
 	else HiliteControl( VSTDest[ id], 0);	*/
 	
 	Draw1Control( VSTDest[ id]);
@@ -695,7 +701,7 @@ void FillMonoControl( short id)
 	}
 	else
 	{
-		if( GetControlValue( OnOff[ id])) HiliteControl( pannCntl[ id], 0);
+		if( GetCtlValue( OnOff[ id])) HiliteControl( pannCntl[ id], 0);
 		HiliteControl( Mono[ id], 0);
 	}*/
 	
@@ -1590,7 +1596,7 @@ Rect		caRect;
 		}
 	}
 	
-	iErr = FSCloseFork( fRefNum);
+	iErr = FSClose( fRefNum);
 	
 	MADAttachDriverToMusic( MADDriver, curMusic, NULL);
 	
@@ -1722,7 +1728,7 @@ void LoadAdaptators(void)
 		Handle rsrc;
 		
 		rsrc = Get1Resource( 'ADAP', 452);
-		if( rsrc != NULL)
+		if( rsrc != 0L)
 		{
 			Ptr 	tempPtr;
 			GrafPtr	myPort;
@@ -1789,7 +1795,7 @@ void SaveAdaptatorsRsrc( FSSpec *file)
 		// Remove previous one
 		
 		rsrc = Get1Resource( 'ADAP', 452);
-		if( rsrc != NULL)
+		if( rsrc != 0L)
 		{
 			RmveResource( rsrc);
 			DisposeHandle( rsrc);
@@ -1911,7 +1917,7 @@ Str255				theStr, str2;
 			}
 		}
 		
-		iErr = FSCloseFork( fRefNum);
+		iErr = FSClose( fRefNum);
 	}
 }
 
@@ -1945,7 +1951,7 @@ pascal void myTrackVolumeAction( ControlHandle theCntl, short ctlPart)
 	thePrefs.volumeLevel = GetControlValue( theCntl);
 	MADSetHardwareVolume( thePrefs.volumeLevel);
 	
-	DrawValueIndicator( (100*thePrefs.volumeLevel) / 256L, true, NULL);
+	DrawValueIndicator( (100L*thePrefs.volumeLevel) / 256L, true, 0L);
 }
 
 void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
@@ -1976,7 +1982,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 		{
 			/*if( ctlPart == kControlIndicatorPart && gUseControlSize == false)
 			{
-				bogus = TrackControl( theControl, myPt, NULL);
+				bogus = TrackControl( theControl, myPt, 0L);
 				if( bogus != 0)
 				{
 					EraseRect( &viewRect);
@@ -1996,19 +2002,19 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 	switch( whichItem)
 	{
 /*	case 18:
-		if( GetControlHilite( MaxBut) == 0 && MyTrackControl( MaxBut, theEvent.where, NULL))
+		if( GetControlHilite( MaxBut) == 0 && MyTrackControl( MaxBut, theEvent.where, 0L))
 		{
 			EraseGrowIcon( whichDialog);
 
 			if( whichDialog->portRect.right == 300)
 			{
 				MySizeWindow( whichDialog, 200, whichDialog->portRect.bottom, true);
-				SetControlValue( MaxBut, 203);
+				SetCtlValue( MaxBut, 203);
 			}
 			else
 			{
 				MySizeWindow( whichDialog, 300, whichDialog->portRect.bottom, true);
-				SetControlValue( MaxBut, 204);
+				SetCtlValue( MaxBut, 204);
 			}
 
 			EraseGrowIcon( whichDialog);
@@ -2284,9 +2290,9 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 	break;
 	
 /*	case 23:
-		if( GetControlHilite( PrefBut)	 == 0 && MyTrackControl( PrefBut, theEvent.where, NULL))
+		if( GetControlHilite( PrefBut)	 == 0 && MyTrackControl( PrefBut, theEvent.where, 0L))
 		{
-#include "Help.h"
+			#include "Help.h"
 			
 			ShowPrefs( COMPRESSION);
 		}
@@ -2326,7 +2332,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 					
 					SetControlValue( hardvolCntl, thePrefs.volumeLevel);
 					
-					DrawValueIndicator( (100*thePrefs.volumeLevel) / 256L, true, NULL);
+					DrawValueIndicator( (100L*thePrefs.volumeLevel) / 256L, true, 0L);
 				}
 			}
 			
@@ -2742,7 +2748,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 					{
 					/*	if( !AppearanceManager)
 						{
-							 if( MyTrackControl( volCntl[ i], theEvent.where, NULL))
+							 if( MyTrackControl( volCntl[ i], theEvent.where, 0L))
 							 {
 							 
 							 }
@@ -2797,7 +2803,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 					{
 					/*	if( !AppearanceManager) 
 						{
-							if( MyTrackControl( pannCntl[ i], theEvent.where, NULL))
+							if( MyTrackControl( pannCntl[ i], theEvent.where, 0L))
 							{
 								
 							}
@@ -2990,7 +2996,7 @@ pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRef
 				
 				GetFlavorDataSize( theDrag, theItem, flavorTypeHFS, &textSize);
 				
-				GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+				GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 				
 				ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 				
@@ -3108,7 +3114,7 @@ pascal OSErr MyReceiveAdap(WindowPtr theWindow, void* handlerRefCon, DragReferen
 		{
 			Boolean		targetIsFolder, wasAliased;
 		
-			GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+			GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 			
 			ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 			

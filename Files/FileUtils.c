@@ -1,4 +1,3 @@
-#include <Carbon/Carbon.h>
 
 /* CODE EXAMPLE #1 */
 #define haveAUX() 0
@@ -74,7 +73,7 @@ void ScanDir( long dirID, short VRefNum, Boolean recurse)
 	{
 		info.hFileInfo.ioDirID = dirID;
 		info.hFileInfo.ioFDirIndex = i;
-		if (PBGetCatInfoSync(&info) != noErr)
+		if (PBGetCatInfo(&info, false) != noErr)
 			break;
 		
 		pStrcpy( spec.name, info.hFileInfo.ioNamePtr);
@@ -117,7 +116,7 @@ void PathNameFromDirID(long dirID, short vRefNum, StringPtr fullPathName)
 			block.dirInfo.ioVRefNum = vRefNum;
 			block.dirInfo.ioFDirIndex = -1;
 			block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
-			err = PBGetCatInfoSync(&block);
+			err = PBGetCatInfo(&block, false);
 			if( fullPathName[ 0] < 200)
 			{
 				pstrcat(directoryName, (StringPtr)"\p: ");//\r

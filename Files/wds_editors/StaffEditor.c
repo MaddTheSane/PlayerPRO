@@ -1,12 +1,8 @@
 #include "Undo.h"
 #include <Drag.h>
 #include "PPPlug.h"
-#include "RDriverInt.h"
 #include <QDOffscreen.h>
 #include "PrivateList.h"
-#include "Shuddup.h"
-void UpdateStaffInfo();
-void  UpdateStaffWindow(DialogPtr GetSelection);
 
 	/******** HELP MODULE ********/
 	enum
@@ -144,7 +140,7 @@ Rect	caRect;
 
 	// XScroll
 	
-	if( xScroll != 0)
+	if( xScroll != 0L)
 	{
 		GetPortBounds( GetDialogPort( StaffDlog), &caRect);
 		
@@ -161,7 +157,7 @@ Rect	caRect;
 	
 	// YScroll
 	
-	if( yScroll != 0)
+	if( yScroll != 0L)
 	{
 		GetPortBounds( GetDialogPort( StaffDlog), &caRect);
 		
@@ -541,7 +537,7 @@ void DrawStaffReader()
 	NTStr( temp, ReaderCopy , (Ptr) String);
 	tRect.top++;	tRect.right--;
 	
-	MyTETextBox2( MYC2PStr( String), &tRect);
+	MyTETextBox2( C2PStr( String), &tRect);
 	
 //	TETextBox( String, strlen( String), &tRect, teCenter);
 	RGBBackColor( &theColor);
@@ -593,7 +589,7 @@ void EraseStaffReader()
 	NTStr( temp, ReaderCopy , (Ptr) String);
 	tRect.top++;	tRect.right--;
 //	TETextBox( String, strlen( String), &tRect, teCenter);
-	MyTETextBox2( MYC2PStr( String), &tRect);
+	MyTETextBox2( C2PStr( String), &tRect);
 	RGBBackColor( &theColor);
 	
 	SetClip( savedClip);
@@ -682,7 +678,7 @@ void DrawStaffFrame()
 		}
 		else ForeColor( whiteColor);
 	//	TETextBox( String, strlen( String), &tRect, teCenter);
-		MyTETextBox2( MYC2PStr( String), &tRect);
+		MyTETextBox2( C2PStr( String), &tRect);
 		
 		RGBBackColor( &theColor);
 		tRect.right++;
@@ -935,7 +931,7 @@ void DrawStaffNotes()
 		LineTo( tRect.right, tRect.bottom-1);
  		
  		/////
- 		for( i = GetControlValue( xScroll); i < GetMaxXStaff() ; i++)
+ 		for( i = GetCtlValue( xScroll); i < GetMaxXStaff() ; i++)
  		{
  			tRect.left	= StaffRect.left + (i - GetControlValue( xScroll)) * XSize;
 			
@@ -1446,7 +1442,7 @@ Pcmd* CreatePcmdFromNoteStaff( Point myPt)
 
 void OpenPcmdStaff( FSSpec	*mySpec)
 {
-	//StandardFileReply	reply;
+	StandardFileReply	reply;
 	Str255				defaultname;
 	OSErr				iErr;
 	long				inOutBytes;
@@ -1463,7 +1459,7 @@ void OpenPcmdStaff( FSSpec	*mySpec)
 		if( iErr) return;
 	}
 	
-//	HSetVol( NULL, mySpec->vRefNum, mySpec->parID);
+//	HSetVol( 0L, mySpec->vRefNum, mySpec->parID);
 	
 	if( FSpOpenDF( mySpec, fsCurPerm, &fRefNum) == noErr)
 	{
@@ -1475,7 +1471,7 @@ void OpenPcmdStaff( FSSpec	*mySpec)
 		
 		curMusic->hasChanged = true;
 		
-		iErr = FSCloseFork( fRefNum);
+		iErr = FSClose( fRefNum);
 	}
 }
 
@@ -2664,7 +2660,7 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 				
 				ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 				
-			//	HSetVol( NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
+			//	HSetVol( 0L, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
 				FSpGetFInfo( &myFlavor.fileSpec, &fndrInfo);
 				
 				switch( fndrInfo.fdType)
@@ -2680,7 +2676,7 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 							FSRead( fRefNum, &inOutBytes, (Ptr) myPcmd);
 							PcmdTracks = myPcmd->tracks;
 							PcmdLength = myPcmd->length;
-							FSCloseFork( fRefNum);
+							FSClose( fRefNum);
 							MyDisposePtr( (Ptr*) &myPcmd);
 						}
 						/****************/
@@ -2717,7 +2713,7 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 				if( PtInRect( localMouse, &coRect) && selectedControl == NULL) { HiliteControl( saveBut, kControlButtonPart);		selectedControl = saveBut;}
 				else HiliteControl( saveBut, 0);
 				
-			/*	if( PtInRect( localMouse, &(*poubBut)->contrlRect) && selectedControl == NULL)	{ HiliteControl( poubBut, kControlButtonPart);		selectedControl = poubBut;}
+			/*	if( PtInRect( localMouse, &(*poubBut)->contrlRect) && selectedControl == 0L)	{ HiliteControl( poubBut, kControlButtonPart);		selectedControl = poubBut;}
 				else HiliteControl( poubBut, 0);	*/
 			}
 			
@@ -2907,11 +2903,11 @@ pascal OSErr MyReceiveDropStaff(WindowPtr theWindow, void* handlerRefCon, DragRe
 		myPcmd = (Pcmd*) MyNewPtr( textSize);
 		if( myPcmd != NULL)
 		{
-			GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
+			GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0L);
 			
 			if( movePcmd)		// Delete source
 			{
-				// La source est d√©j√† selectionn√©e...
+				// La source est déjà selectionnée...
 				
 				DoKeyPressStaff( 8);
 			}
@@ -2945,7 +2941,7 @@ pascal OSErr MyReceiveDropStaff(WindowPtr theWindow, void* handlerRefCon, DragRe
 	
 		SaveUndo( UPattern, CurrentPat, "\pUndo 'Drop Pcmd File'");
 		
-		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 		
 		ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		
@@ -3008,7 +3004,7 @@ GrafPtr			SavePort;
 	if( startYSelec < 0) startYSelec = 0;
 	if( endYSelec >= curMusic->header->numChn) endYSelec = curMusic->header->numChn-1;
 	
-	/*** Update de la r√©gion ***/
+	/*** Update de la région ***/
 	
 	CreateCurStaffRect();
 	InvalWindowRect( GetDialogWindow( StaffDlog), &CurRect);

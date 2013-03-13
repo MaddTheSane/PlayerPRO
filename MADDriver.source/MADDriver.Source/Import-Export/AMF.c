@@ -21,17 +21,42 @@
 //
 /********************						***********************/
 
-#include <PlayerPROCore/PlayerPROCore.h>
+#include "MAD.h"
 #include "AMF.h"
+#include "RDriver.h"
 
-static inline void mystrcpy( Ptr a, BytePtr b)
-{
-	BlockMoveData( b + 1, a, b[ 0]);
-}
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE(sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( Ptr)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( MADMusic*)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoRec*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( MADDriverSettings*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
 
 static Ptr			theAMFRead;
 
 #define READAMFFILE(dst, size)	{BlockMoveData( theAMFRead, dst, size);	theAMFRead += (long) size;}
+
+
+Ptr MADPlugNewPtr( long size, MADDriverSettings* init)
+{
+	if( init->sysMemory) return NewPtrSys( size);
+	else return NewPtr( size);
+}
+
+Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init)
+{
+	if( init->sysMemory) return NewPtrSysClear( size);
+	else return NewPtrClear( size);
+}
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
@@ -41,63 +66,61 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
-#ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*msg_buf);
-#else
-static inline UInt16 Tdecode16( void *msg_buf)
+void pStrcpy(register unsigned char *s1, register unsigned char *s2)
 {
-	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
-	return toswap;
+	register short len, i;
+	
+	len = *s2;
+	for ( i = 0; i <= len; i++) s1[ i] = s2[ i];
 }
-#endif
 
-#ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*msg_buf);
-#else
-static inline UInt32 Tdecode32( void *msg_buf)
+short Tdecode16( void *msg_buf)
 {
-	UInt32 toswap = *((UInt32*) msg_buf);
-	INT32(&toswap);
-	return toswap;
+  unsigned char *buf = msg_buf;
+  
+  return ( (short) buf[1] << 8) | ( (short) buf[0]);
 }
-#endif
 
-static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
+unsigned long Tdecode32( void *msg_buf)
 {
-	Byte			tempByte;
-	short			i, x, noIns, tempShort, trackCount, trckPtr, t;
-	long			inOutCount, OffSetToSample = 0, z;
-	OSErr			theErr = noErr;
-	Ptr				tempPtr;
-	OSType			AMFType;
-	long			finetune[16] = 
+  unsigned char *buf = msg_buf;
+  
+  return( (unsigned long) buf[3] << 24) | ( (unsigned long) buf[2] << 16) | ( (unsigned long) buf[ 1] << 8) | ( (unsigned long) buf[0]);
+}
+
+OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
+{
+Byte					tempByte;
+short 					i, x, noIns, tempShort, trackCount, trckPtr, t;
+long 					inOutCount, OffSetToSample = 0L, z;
+OSErr					theErr = noErr;
+Ptr						tempPtr;
+OSType					AMFType;
+long		 			finetune[16] = 
 						{
 							8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 							7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
 						};
 
-	short			pan, uusize, oldIns = 1;
+short					pan, uusize, oldIns = 1;
 
-	theAMFRead = AMFCopyPtr;
+theAMFRead = AMFCopyPtr;
 
-	READAMFFILE( &AMFType, 4);		// AMF Type
-	MOT32(&AMFType);
-	//XXXX: Byte-swapping!
-	if( AMFType >= 0x414D460C ) pan = 32;
-	else pan = 16;
+READAMFFILE( &AMFType, 4);		// AMF Type
+if( AMFType >= 0x414D460C ) pan = 32;
+else pan = 16;
 
-	if( AMFType == 0x414D4601 ) uusize = 3;
-	else if( AMFType >= 0x414D460A ) oldIns = 0;
-	else if( AMFType!= 0x414D4608 && AMFType != 0x414D4609) return MADFileNotSupportedByThisPlug;
+if( AMFType == 0x414D4601 ) uusize = 3;
+else if( AMFType >= 0x414D460A ) oldIns = 0;
+else if( AMFType!= 0x414D4608 && AMFType != 0x414D4609) return MADFileNotSupportedByThisPlug;
 
 // Conversion
-	theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);	
-	if( theMAD->header == NULL) return MADNeedMemory;
+theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);	
+if( theMAD->header == 0L) return MADNeedMemory;
 
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO AMF Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+mystrcpy( theMAD->header->infos, (Ptr) "\pConverted by PlayerPRO AMF Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
 
-	theMAD->header->MAD = 'MADK';
+theMAD->header->MAD = 'MADK';
 
 READAMFFILE( theMAD->header->name, 32);
 READAMFFILE( &tempByte, 1);		noIns = tempByte;
@@ -151,7 +174,7 @@ for( i = 0; i < theMAD->header->numPat; i++ )
 	
 	for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
 	
-	theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
+	theMAD->partition[ i]->header.patBytes = 0L;		theMAD->partition[ i]->header.unused2 = 0L;
 	
     for( x = 0; x < theMAD->header->numChn; x++ )
     {
@@ -193,7 +216,8 @@ for( i = 0; i < noIns; i++)
 		OLDINSTRUMENT	oi;
 		
 		READAMFFILE( &oi, sizeof( OLDINSTRUMENT));
-				
+		
+		
 		BlockMoveData( oi.name, curIns->name, 32);
 		curIns->type = 0;
 		
@@ -206,17 +230,14 @@ for( i = 0; i < noIns; i++)
 			curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear( sizeof( sData), init);
 			
 			curData->size		= Tdecode32( &oi.size);
-			//FIXME: were loopstart and loopend supposed to be byteswapped on PowerPC?
-			ushort oiloopstart = Tdecode16( &oi.loopstart);
-			ushort oiloopend = Tdecode16( &oi.loopend);
-			curData->loopBeg 	= oiloopstart; 
-			curData->loopSize 	= oiloopend - oiloopstart;
-			if( oiloopend == 65535)
+			curData->loopBeg 	= oi.loopstart;
+			curData->loopSize 	= oi.loopend - oi.loopstart;
+			if( oi.loopend == 65535)
 			{
 				curData->loopSize = curData->loopBeg = 0;
 			}
 			curData->vol		= oi.volume;
-			curData->c2spd		= Tdecode16( &oi.rate);	//finetune[ oldMAD->fid[ i].fineTune];
+			curData->c2spd		= oi.rate;	//finetune[ oldMAD->fid[ i].fineTune];
 			curData->loopType	= 0;
 			curData->amp		= 8;
 			
@@ -306,10 +327,9 @@ return noErr;
 
 static OSErr TestAMFFile( Ptr AlienFile)
 {
-	OSType	myMADSign = *((unsigned long*) AlienFile);
-	MOT32(&myMADSign);
+	unsigned long	*myMADSign = (unsigned long*) AlienFile;
 	
-	if( (myMADSign & 0xFFFFFF00) == 0x414D4600) return noErr;
+	if( (*myMADSign & 0xFFFFFF00) == 0x414D4600) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 	
 	return noErr;
@@ -353,22 +373,32 @@ static OSErr ExtractAMFInfo( PPInfoRec *info, Ptr AlienFile)
 /* MAIN FUNCTION */
 /*****************/
 
-OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#ifdef _SRC
+OSErr mainAMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
+EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif
+
+//OSErr main( OSType order, char *AlienFileFSSpec, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
-	UNFILE	iFileRefI;
+	short	iFileRefI;
 	long	sndSize;
-		
+	
+#ifndef powerc
+	long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+#endif
+	
 	myErr = noErr;
 
 	switch( order)
 	{
 		case 'IMPL':
-			iFileRefI = iFileOpen(AlienFileName);
-			if( iFileRefI )
+			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			if( myErr == noErr)
 			{
-				sndSize = iGetEOF( iFileRefI);
+				GetEOF( iFileRefI, &sndSize);
 			
 				// ** MEMORY Test Start
 				AlienFile = MADPlugNewPtr( sndSize * 2L, init);
@@ -380,7 +410,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 					DisposePtr( AlienFile);
 					
 					AlienFile = MADPlugNewPtr( sndSize, init);
-					myErr = iRead( sndSize, AlienFile,iFileRefI);
+					myErr = FSRead( iFileRefI, &sndSize, AlienFile);
 					if( myErr == noErr)
 					{
 						myErr = TestAMFFile( AlienFile);
@@ -391,52 +421,52 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 					}
 					DisposePtr( AlienFile);	AlienFile = NULL;
 				}
-				iClose( iFileRefI);
+				FSClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
 		break;
 		
 		case 'TEST':
-			iFileRefI = iFileOpen(AlienFileName);
-			if( iFileRefI)
+			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			if( myErr == noErr)
 			{
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if( AlienFile == 0L) myErr = MADNeedMemory;
 				else
 				{
-					myErr = iRead( sndSize, AlienFile, iFileRefI);
+					myErr = FSRead( iFileRefI, &sndSize, AlienFile);
 					myErr = TestAMFFile( AlienFile);
 					
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr( AlienFile);	AlienFile = 0L;
 				}
-				iClose( iFileRefI);
+				FSClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
 
 		break;
 
 		case 'INFO':
-			iFileRefI = iFileOpen(AlienFileName);
-			if( iFileRefI)
+			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			if( myErr == noErr)
 			{
-				info->fileSize = iGetEOF( iFileRefI);
+				GetEOF( iFileRefI, &info->fileSize);
 			
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if( AlienFile == 0L) myErr = MADNeedMemory;
 				else
 				{
-					myErr = iRead( sndSize, AlienFile, iFileRefI);
+					myErr = FSRead( iFileRefI, &sndSize, AlienFile);
 					if( myErr == noErr)
 					{
 						myErr = ExtractAMFInfo( info, AlienFile);
 					}
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr( AlienFile);	AlienFile = 0L;
 				}
-				iClose( iFileRefI);
+				FSClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
 
@@ -447,5 +477,8 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 		break;
 	}
 
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
 	return myErr;
 }

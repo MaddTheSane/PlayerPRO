@@ -5,7 +5,21 @@
 //	Usage:
 //	A small example of to use Digital Editor Plugs with a MODAL DIALOG
 
-#include <PlayerPROCore/PlayerPROCore.h>
+#include "MAD.h"
+#include "PPPlug.h"
+
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( Pcmd*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( PPInfoPlug*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
 
 Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 {
@@ -18,13 +32,18 @@ Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
 
-OSErr mainRevert( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+OSErr main( 	Pcmd					*myPcmd,
+				PPInfoPlug				*thePPInfoPlug)
 {
 	short				itemHit, mode, track, row;
 	Str255				tStr;
 	Pcmd				*srcCmd;
 	long				memSize;
-		
+	
+#ifndef powerc
+	long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+#endif
+	
 	memSize = GetPtrSize( (Ptr) myPcmd);
 	
 	srcCmd = (Pcmd*) NewPtrClear( memSize);
@@ -60,14 +79,11 @@ OSErr mainRevert( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		}
 	}
 	
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+	
 	DisposePtr( (Ptr) srcCmd);
 		
 	return noErr;
 }
-
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x33, 0x7A, 0xC1, 0x07, 0x22, 0xD8, 0x44, 0x1F, 0x86, 0x39, 0xE2, 0xEE, 0xE8, 0xE3, 0x45, 0x92)
-//337AC107-22D8-441F-8639-E2EEE8E34592
-#define PLUGINFACTORY RevertFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainRevert //The old main function, renamed please
-
-#include "CFPlugin-DigitalBridge.c"

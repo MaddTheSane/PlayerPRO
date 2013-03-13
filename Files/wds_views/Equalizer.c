@@ -208,7 +208,7 @@ void LoadEQ( void)
 		inOutBytes = sizeof( double) * EQPACKET*2;
 		iErr = FSRead( fRefNum, &inOutBytes, MADDriver->Filter);
 		
-		iErr = FSCloseFork( fRefNum);
+		iErr = FSClose( fRefNum);
 		
 		for( i = 0; i < MAXBAR; i++)
 		{
@@ -251,7 +251,7 @@ void SaveEQ( void)
 		inOutBytes = sizeof( double) * EQPACKET*2;
 		iErr = FSWrite( fRefNum, &inOutBytes, MADDriver->Filter);
 		
-		iErr = FSCloseFork( fRefNum);
+		iErr = FSClose( fRefNum);
 	}
 }
 

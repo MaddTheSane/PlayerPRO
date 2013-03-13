@@ -9,9 +9,8 @@
 #include <math.h>
 #include "PPPlug.h"
 #include <Navigation.h>
-#include <QuickTime/QuickTime.h>
 
-/*void 	SaveMODAPPL( short APPLType, short fRefNum);
+void 	SaveMODAPPL( short APPLType, short fRefNum);
 //pascal Boolean MyFilterPro();
 void 	TurnRadio( short	item, DialogPtr	dlog, Boolean alors);
 void 	ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
@@ -22,9 +21,7 @@ void 	ExportFile( OSType theType, FSSpec *newFile);
 OSErr	ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 name);
 OSErr	OpenInstrumentsList( FSSpec *file);
 void	ConvertInstrumentMode( sData	*curData, short menuItem);
-void ConvertInstrument( register	Byte	*tempPtr,	register long sSize);*/
-
-void ConvertInstrumentOut16( register	short	*tempPtr,	register long sSize);
+void ConvertInstrument( register	Byte	*tempPtr,	register long sSize);
 
 extern	Boolean			PatchSave;
 extern	Boolean			PianoRecording, PianoRecordingShift, OscilloMicrophone, SpectrumMicrophone;
@@ -215,7 +212,7 @@ OSErr NSoundQualityExportSnd( short ins, short samp, OSType *fileType, Str255 sN
 		}
 		
 		/*sndHandle = MyNewHandle( curData->size);
-		if( sndHandle == NULL)
+		if( sndHandle == 0L)
 		{
 			Erreur( 63, -3);
 			goto ENDDialog;
@@ -493,59 +490,100 @@ Ptr		aNewPtr;
 //	ResetSelectionSample( whichInstru);
 }
 
-/*static inline void CopyInstruInFile(Ptr theSource, Ptr theDest, long	theSize)
+
+void ConvertInstrument16( register	short	*tempPtr,	register long sSize)
+{
+	register	short			val = 0x8000;
+
+	sSize /= 2;
+
+	while( sSize > 0)
+	{
+		sSize--;
+		*(tempPtr++) += val;
+	}
+}
+
+
+void ConvertInstrumentIn16( register	short	*tempPtr,	register long sSize)
+{
+/*	register	short			val = 0x8000;
+
+	sSize /= 2;
+
+	while( sSize > 0)
+	{
+		sSize--;
+		*tempPtr++ -= val;
+	}*/
+}
+
+void ConvertInstrumentOut16( register	short	*tempPtr,	register long sSize)
+{
+/*	register	short			val = 0x8000;
+
+	sSize /= 2;
+
+	while( sSize > 0)
+	{
+		sSize--;
+		*tempPtr++ += val;
+	}*/
+}
+
+void CopyInstruInFile(Ptr theSource, Ptr theDest, long	theSize)
 {
 	BlockMoveData( theSource, theDest, theSize);
-}*/
+}
 
 void SetUpPartition( short newVal)
 {
-	short						i, x, z;
-	long					OffSetToSample,sndSize, fileSize, lByteCnt, numPat;
-	Ptr						tempPtr;
-	Boolean					MusiqueOn = false;
-	Cmd			 			*aCmd, *aCmdSource;
-	PatData					*theNewPartition;
-	
-	curMusic->hasChanged = true;
-	if( MADDriver->Reading == true) MusiqueOn = true;
-	MADDriver->Reading = false;
-	
-	/****** PARTITION ********/
-	for(i = 0; i< curMusic->header->numPat; i++)
-	{
-		theNewPartition = (PatData*) NewPtrClear( sizeof( PatHeader) + newVal * curMusic->partition[ i]->header.size * sizeof( Cmd));
-		if( theNewPartition == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error");
-		theNewPartition->header = curMusic->partition[ i]->header;
-		
-		for(x = 0; x < curMusic->partition[ i]->header.size; x++)
+short						i, x, z;
+long					OffSetToSample,sndSize, fileSize, lByteCnt, numPat;
+Ptr						tempPtr;
+Boolean					MusiqueOn = false;
+Cmd			 			*aCmd, *aCmdSource;
+PatData					*theNewPartition;
+
+		curMusic->hasChanged = true;
+		if( MADDriver->Reading == true) MusiqueOn = true;
+		MADDriver->Reading = false;
+
+		/****** PARTITION ********/
+		for(i = 0; i< curMusic->header->numPat; i++)
 		{
-			for( z = 0; z < curMusic->header->numChn; z++)
+			theNewPartition = (PatData*) NewPtrClear( sizeof( PatHeader) + newVal * curMusic->partition[ i]->header.size * sizeof( Cmd));
+			if( theNewPartition == 0L) MyDebugStr( __LINE__, __FILE__, "Memory Error");
+			theNewPartition->header = curMusic->partition[ i]->header;
+
+			for(x = 0; x < curMusic->partition[ i]->header.size; x++)
 			{
-				if( z < newVal)
+				for( z = 0; z < curMusic->header->numChn; z++)
+				{
+					if( z < newVal)
+					{
+						aCmd =  &(theNewPartition->Cmds[ ( curMusic->partition[ i]->header.size * z) + x]);
+						aCmdSource = GetMADCommand( x, z, curMusic->partition[ i]);
+					
+						*aCmd = *aCmdSource;
+					}
+				}
+				
+				for( z = curMusic->header->numChn; z < newVal; z++)
 				{
 					aCmd =  &(theNewPartition->Cmds[ ( curMusic->partition[ i]->header.size * z) + x]);
-					aCmdSource = GetMADCommand( x, z, curMusic->partition[ i]);
-					
-					*aCmd = *aCmdSource;
+					MADKillCmd( aCmd);
 				}
 			}
-			
-			for( z = curMusic->header->numChn; z < newVal; z++)
-			{
-				aCmd =  &(theNewPartition->Cmds[ ( curMusic->partition[ i]->header.size * z) + x]);
-				MADKillCmd( aCmd);
-			}
+			MyDisposePtr( (Ptr*) &curMusic->partition[ i]);
+			curMusic->partition[ i] = theNewPartition;
 		}
-		MyDisposePtr( (Ptr*) &curMusic->partition[ i]);
-		curMusic->partition[ i] = theNewPartition;
-	}
-	
-	if( MemError()) MyDebugStr( __LINE__, __FILE__, "Error in SetUp Partition...");
-	
-	curMusic->header->numChn = newVal;
-	
-	if( MusiqueOn) MADDriver->Reading = true;
+
+		if( MemError()) MyDebugStr( __LINE__, __FILE__, "Error in SetUp Partition...");
+
+		curMusic->header->numChn = newVal;
+		
+		if( MusiqueOn) MADDriver->Reading = true;
 }
 
 //#include "CTBUtilities.h"
@@ -1185,6 +1223,7 @@ FSSpec					spec;
 
 	if( theType != 'MADK' && theType != 'MADC') if( CallPlug( 0)) return;
 	
+	#ifndef DEMO
 	if( SaveAS == true || PatchSave == true)
 	{
 		pStrcpy( fileName, curMusic->musicFileName);
@@ -1256,6 +1295,8 @@ FSSpec					spec;
 	}
 	
 	PatchSave = false;
+	
+	#endif
 }
 
 OSErr NOpenSampleInt( short ins, short samp, FSSpec sfFile)
@@ -1645,7 +1686,7 @@ ScrapFlavorFlags	flags;
 				curMusic->hasChanged = true;
 				
 				// ***********INSTRU NAME, 'STR '
-				if( Pos == 0)
+				if( Pos == 0L)
 				{
 					newSound = MyNewHandle( 60);
 					if( newSound)
@@ -1685,15 +1726,15 @@ ScrapFlavorFlags	flags;
 
 void NCOPYSample( long start, long length, short ins, short samp)
 {
-	short		itemType,i,fRefNum, numPat;
-	long		inOutBytes, iL, OffSetToSample;
-	OSErr		iErr;
-	Boolean		Info;
-	Handle 		theSound;
-	short		temp;
-	sData		*curData;
-	ScrapRef	scrap;
-	OSErr		anErr;
+short		itemType,i,fRefNum, numPat;
+long		inOutBytes, iL, OffSetToSample;
+OSErr		iErr;
+Boolean		Info;
+Handle 		theSound;
+short		temp;
+sData		*curData;
+ScrapRef	scrap;
+OSErr		anErr;
 
 	SetCursor( &watchCrsr);
 	
@@ -1819,7 +1860,7 @@ void NCOPYSample( long start, long length, short ins, short samp)
 		}
 		// COPY 'snd '
 		
-		theSound = MyNewHandle( length + 5000);
+		theSound = MyNewHandle( length + 5000L);
 		if( theSound)
 		{
 			short	numChan;
@@ -2025,9 +2066,9 @@ Str255				str, str2;
 /*#else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
-	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
-	return toswap;
+  unsigned char *buf = (unsigned char*) msg_buf;
+  
+  return ( (short) buf[1] << 8) | ( (short) buf[0]);
 }
 #endif*/
 
@@ -2098,8 +2139,8 @@ sData* ComputeRAWSound( Ptr srcSound, long length)
 	if( curData)
 	{
 		curData->size		= size;
-		curData->loopBeg	= 0;
-		curData->loopSize	= 0;
+		curData->loopBeg	= 0L;
+		curData->loopSize	= 0L;
 		curData->vol		= MAX_VOLUME;
 		curData->c2spd		= thePrefs.RAWRate;
 		curData->loopType	= eClassicLoop;
@@ -2529,7 +2570,7 @@ OSErr RAWImportFile( FSSpec	*file)
 	
 	SetPort( thePort);
 	
-	iErr = FSCloseFork( fRefNum);
+	iErr = FSClose( fRefNum);
 	
 	if( itemHit == 1) return noErr;
 	else return -1;

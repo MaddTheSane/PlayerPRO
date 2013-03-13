@@ -1,4 +1,3 @@
-#include <Carbon/Carbon.h>
 #include "PrivateList.h"
 #include "Shuddup.h"
 
@@ -277,7 +276,7 @@ curVal = sVal = GetControlValue( theControl);
 
 short PLGetCtlValue( ControlHandle	aH)
 {
-	if( aH == NULL) return 0;
+	if( aH == 0L) return 0L;
 	else
 	{
 		return GetControlValue( aH);
@@ -286,7 +285,7 @@ short PLGetCtlValue( ControlHandle	aH)
 
 void PLSetCtlValue( ControlHandle	aH, short val)
 {
-	if( aH != NULL)
+	if( aH != 0L)
 	{
 		SetControlValue( aH, val);
 	}
@@ -691,14 +690,14 @@ void PLScroll( Point myPt, PrivateList *aL)
 		{
 			/*if( ctlPart == kControlIndicatorPart)
 			{
-				bogus = TrackControl( theCtl, myPt, NULL);
+				bogus = TrackControl( theCtl, myPt, 0L);
 				if( bogus != 0)
 				{
 					InvalWindowRect( GetDialogWindow( aL->aDia), &aL->rect);
 					
 					if(GetWRefCon( GetDialogWindow( aL->aDia)) == RefPartition)
 					{
-						DrawLeft( NULL, true);
+						DrawLeft( 0L, true);
 						DrawEditorUp();
 						InvalWindowRect( GetDialogWindow( EditorDlog), &aL->rect);
 					}

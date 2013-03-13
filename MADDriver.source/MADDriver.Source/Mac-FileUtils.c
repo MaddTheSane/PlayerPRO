@@ -24,17 +24,22 @@
 #include "FileUtils.h"
 #include <Script.h>
 
-extern void NSLog(CFStringRef format, ...);
-
-//TODO: migrate PlayerPRO away from FSSpec!
-//TODO: HSetVol isn't available in 64-bit code :(
-//TODO: Also, FSSpec is defined as UInt8 hidden[70]
- 
-//TODO: use system native strlen?
-static long MYstrlen( Ptr cStr)
+void pStrcpy(register unsigned char *s1, register unsigned char *s2)
 {
-	NSLog(CFSTR("MYstrlen is depricated; just use strlen"));
+	register short len, i;
+	
+	if (*s2 <= 220) 
+	{
+		len = *s2;
+		for ( i = 0; i <= len; i++)
+		{
+			s1[ i] = s2[ i];
+		}
+	}
+}
 
+long MYstrlen( Ptr cStr)
+{
 	long i = 0;
 	
 	while( cStr[ i] != 0)
@@ -62,116 +67,49 @@ void MYP2CStr( unsigned char *cStr)
 	cStr[ size] = 0;
 }
 
-UNFILE iFileOpen(Ptr name)
+short iFileOpen( Ptr name)
 {
-	UNFILE	temp;
-	OSErr	iErr;
-	FSRef	Ref;
+	short 	temp;
+	OSErr		iErr;
 	FSSpec	spec;
 	
-	HGetVol( NULL, &spec.vRefNum, &spec.parID);
+	HGetVol( 0L, &spec.vRefNum, &spec.parID);
 	
 	MYC2PStr( name);
 	
 	pStrcpy( spec.name, (unsigned char*) name);
-
-	MYP2CStr((unsigned char*)name);
 	
-	iErr = FSpMakeFSRef(&spec, &Ref);
-	if(iErr != noErr) return 0;
-	Boolean	UnusedBoolean, UnusedBoolean2;
-	HFSUniStr255 whythis;
-	FSGetDataForkName(&whythis);
-	FSResolveAliasFile(&Ref, TRUE, &UnusedBoolean, &UnusedBoolean2);
-	iErr = FSOpenFork(&Ref, whythis.length, whythis.unicode, fsCurPerm, &temp);
-	if(iErr != noErr) return 0;
+	iErr = FSpOpenDF( &spec, fsCurPerm, &temp);
+	MYP2CStr( (unsigned char*) name);
+	
+	if( iErr) return 0;
 	else return temp;
 }
 
-long iGetEOF(UNFILE iFileRefI)
+long iGetEOF( short iFileRefI)
 {
-	SInt64 curEOF;
+	long curEOF;
 	
-	FSGetForkSize(iFileRefI, &curEOF);
+	GetEOF( iFileRefI, &curEOF);
 	
 	return curEOF;
 }
 
-OSErr iRead(long size, Ptr dest, UNFILE iFileRefI)
+OSErr iRead( long size, Ptr dest, short iFileRefI)
 {
-	return FSReadFork(iFileRefI, fsAtMark, 0, size, dest, NULL);
+	return FSRead( iFileRefI, &size, dest);
 }
 
-OSErr iSeekCur(long size, UNFILE iFileRefI)
+OSErr iSeekCur( long size, short iFileRefI)
 {
-	return FSSetForkPosition( iFileRefI, fsFromMark, size);
+	return SetFPos( iFileRefI, fsFromMark, size);
 }
 
-void iFileCreate(Ptr name, OSType type)
+void iFileCreate( Ptr name, long type)
 {
-/*
-	char			*folderPath, *FileName;
-	Boolean			isFolder, unusedBool;
-	OSStatus		iErr; 
-	FSRef			Ref;
-	int				slashCharPos = 0, nameLen, i, ii;
-	FSCatalogInfo	fileCat;
-	FileInfo		*fInfo = (FileInfo*)&fileCat.finderInfo;
-	if(FSPathMakeRef((UInt8*)name, &Ref, NULL) == noErr)
-	{
-		FSDeleteObject(&Ref);
-	}
-	nameLen = strlen(name);
-	for(i = 0; i > (nameLen); i++)
-	{
-		if(name[i] == '/') slashCharPos = i;
-	}
-	//TODO: use a better function
-	folderPath = calloc((slashCharPos + 2), sizeof(char)); 
-	FileName = calloc((nameLen - slashCharPos + 2), sizeof(char));
-	for(i = 0; i == slashCharPos;i++)
-	{
-		folderPath[i] = name[i];
-	}
-	for(i=slashCharPos+1, ii=0;i == nameLen;i++, ii++)
-	{
-		FileName[ii] = name[i];
-		FileName[ii+1] = '\0';
-	}
-	//	folderPath[slashCharPos+1] = '\0';
-	iErr = FSPathMakeRef((UInt8*)folderPath, &Ref, &isFolder);
-	if(iErr != noErr) MyDebugStr(__LINE__, __FILE__, "Error creating FSRef");
-	if(isFolder == FALSE) NSLog(CFSTR("FSRef wasn't a folder. Ignoring, hoping it is an alias."));
-	iErr= FSResolveAliasFile(&Ref, TRUE, &isFolder, &unusedBool);
-	if(iErr != noErr) MyDebugStr(__LINE__, __FILE__, "Error resolving Alias");
-	if(isFolder == FALSE) MyDebugStr(__LINE__, __FILE__, "FSRef wasn't a folder!");
+FSSpec	spec;
 	
-	//TODO: do NOT use CFString!
-	CFStringRef		UniCFSTR = CFStringCreateWithCString(kCFAllocatorDefault, FileName, CFStringGetSystemEncoding());
-	CFIndex			UNIcharLen = CFStringGetLength(UniCFSTR);
-	UniChar*		UNICHARThing = calloc(UNIcharLen, sizeof(UniChar));
-	CFRange			UNIRange;
-	UNIRange.location	= 0;
-	UNIRange.length		= UNIcharLen;
-	CFStringGetCharacters(UniCFSTR, UNIRange, UNICHARThing);
-	
-	fInfo->fileType		 = type;
-	fInfo->fileCreator	 = 'SNPL';
-	fInfo->finderFlags	 = 0;
-	fInfo->location.h	 = 0;
-	fInfo->location.v	 = 0;
-	fInfo->reservedField = 0;
-	
-	FSCreateFileUnicode(&Ref, UNIcharLen, UNICHARThing, kFSCatInfoFinderInfo, &fileCat, NULL, NULL);
-	
-	CFRelease(UniCFSTR);
-	free(folderPath);
-	free(FileName);
-	free(UNICHARThing);
- */
-	FSSpec	spec;
-	
-	HGetVol( NULL, &spec.vRefNum, &spec.parID);
+	HGetVol( 0L, &spec.vRefNum, &spec.parID);
 	
 	MYC2PStr( name);
 	
@@ -181,24 +119,50 @@ void iFileCreate(Ptr name, OSType type)
 	FSpCreate( &spec, 'SNPL', type, smSystemScript);
 	
 	MYP2CStr( (unsigned char*) name);
-	
 }
 
-OSErr iWrite(long size, Ptr dest, UNFILE iFileRefI)
+OSErr iWrite( long size, Ptr dest, short iFileRefI)
 {
-	return FSWriteFork(iFileRefI, fsAtMark, 0, size, dest, NULL);
+	return FSWrite( iFileRefI, &size, dest);
 }
 
-void iClose(UNFILE iFileRefI)
+void iClose( short iFileRefI)
 {
-	FSCloseFork(iFileRefI);
+	FSClose( iFileRefI);
 }
 
 /////////////////////////////////
 
+void MOT32( void *msg_buf)
+{
+}
+
+void MOT16( void *msg_buf)
+{
+}
+
+/////////////////////////////////
+void INT32( void *msg_buf)
+{
+  unsigned char 	*buf = (unsigned char*) msg_buf;
+  unsigned long		out;
+  
+  out = ( (unsigned long) buf[3] << 24) | ( (unsigned long) buf[2] << 16) | ( (unsigned long) buf[ 1] << 8) | ( (unsigned long) buf[0]);
+	*((unsigned long*) msg_buf) = out;
+}
+
+void INT16( void *msg_buf)
+{
+  unsigned char 	*buf = (unsigned char*) msg_buf;
+  short						out;
+  
+  out =  ( (short) buf[1] << 8) | ( (short) buf[0]);
+  *((short*) msg_buf) = out;
+}
+/////////////////////////////////
+
 Ptr MADstrcpy( Ptr dst, const char* src)
 {
-	NSLog(CFSTR("MADstrcpy is depricated; just use strcpy"));
 	long i = 0;
 	
 	do
@@ -209,7 +173,6 @@ Ptr MADstrcpy( Ptr dst, const char* src)
 	return dst;
 }
 
-//TODO: use system native strcmp?
 int MADstrcmp( const char *dst, const char* src)
 {
 	long i = 0;
@@ -222,7 +185,7 @@ int MADstrcmp( const char *dst, const char* src)
 	return 0;
 }
 
-EXP void OSType2Ptr( OSType type, Ptr str)
+void OSType2Ptr( OSType type, Ptr str)
 {
 	short i;
 	
@@ -234,7 +197,7 @@ EXP void OSType2Ptr( OSType type, Ptr str)
 	str[ 4] = 0;
 }
 
-EXP OSType Ptr2OSType( Ptr str)
+OSType Ptr2OSType( Ptr str)
 {
 	short 	i;
 	OSType	type;

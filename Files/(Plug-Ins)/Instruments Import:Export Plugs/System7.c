@@ -5,12 +5,30 @@
 
 //	Usage:
 
-#include <PlayerPROCore/PlayerPROCore.h>
-#include <Sound.h>
-#include <SoundInput.h>
+#include "PPPlug.h"
+#include "sound.h"
+#include "soundinput.h"
 
 Ptr MyExp1to3( Ptr sound, unsigned long numSampleFrames);
 Ptr MyExp1to6( Ptr sound, unsigned long numSampleFrames);
+
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( InstrData*)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( sData**)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( short*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( FSSpec*)))
+		| STACK_ROUTINE_PARAMETER(6, SIZE_CODE(sizeof( PPInfoPlug*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
 
 void AddLoopToSndHandle( Handle sound, long Start, long End)
 {
@@ -307,8 +325,8 @@ OSErr TestSND( short *soundPtr)
 Ptr IMPL( long *lS, long *lE, long *bFreq, short *sS, unsigned long *rate, FSSpec *AlienFileFSSpec, Boolean *stereo)
 {
 	Handle			tempHandle;
-	Ptr 			theSound = NULL;
-	UNFILE			iFileRefI;
+	Ptr 			theSound = 0L;
+	short			iFileRefI;
 	OSErr			myErr = noErr;	
 	
 	iFileRefI = FSpOpenResFile( AlienFileFSSpec, fsCurPerm);
@@ -441,7 +459,7 @@ OSErr main(		OSType					order,						// Order to execute
 			if( Count1Resources( 'snd ') == 0) myErr = MADFileNotSupportedByThisPlug;
 			
 			CloseResFile( iFileRefI);
-			break;
+		break;
 		
 		case 'EXPL':
 			if( *sampleID >= 0)
@@ -491,11 +509,11 @@ OSErr main(		OSType					order,						// Order to execute
 				
 				CloseResFile( fRefNum);
 			}
-			break;
+		break;
 		
 		default:
 			myErr = MADOrderNotImplemented;
-			break;
+		break;
 	}
 	
 	End:

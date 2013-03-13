@@ -47,17 +47,18 @@ struct FileInstrDataz
 	unsigned short loopWords;
 };
 
-typedef struct MODDef
+struct MODDef
 {
 	char NameSignature[ 20];
 	struct FileInstrDataz fid[ 31];
 	Byte numPointers;
 	Byte maxPointers;
 	Byte oPointers[ MAXPTRS];
-	OSType longFmtSignature;
+	long longFmtSignature;
 	struct MODPat patterns[];
-} MODDef;
+};
+typedef struct MODDef MODDef;
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
+#if defined(powerc) || defined(__powerc)
 #pragma options align=reset
 #endif

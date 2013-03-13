@@ -10,9 +10,25 @@
 //	if there is no selection.
 
 #include <Dialogs.h>
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include "MAD.h"
+#include "PPPlug.h"
+
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( sData*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoPlug*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( long)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
 
 #define tdelay		3
 #define tstrength	4
@@ -161,11 +177,11 @@ static int checkMax (int v)
 	else return v;
 }
 
-OSErr mainEcho(	sData			*theData,
-				long			SelectionStart,
-				long			SelectionEnd,
-				PPInfoPlug		*thePPInfoPlug,
-				short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+OSErr main( 	sData					*theData,
+				long					SelectionStart,
+				long					SelectionEnd,
+				PPInfoPlug				*thePPInfoPlug,
+				long					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long	i, length,
 		temp1, temp2,
@@ -226,11 +242,3 @@ OSErr mainEcho(	sData			*theData,
 	
 	return noErr;
 }
-
-// DA609751-C4B0-4814-BAE7-2B82CA59E64E
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xDA, 0x60, 0x97, 0x51, 0xC4, 0xB0, 0x48, 0x14, 0xBA, 0xE7, 0x2B, 0x82, 0xCA, 0x59, 0xE6, 0x4E)
-
-#define PLUGMAIN mainEcho
-#define PLUGINFACTORY EchoFactory
-
-#include "CFPlugin-FilterBridge.c"

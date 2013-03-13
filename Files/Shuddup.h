@@ -1,6 +1,7 @@
 #ifndef __SHUDDUPH__
 #define __SHUDDUPH__
 
+//#define DEMO
 
 #if PRAGMA_STRUCT_ALIGN
 #pragma options align=mac68k
@@ -13,21 +14,17 @@
 #define MAXVST 300
 
 #include "RDriver.h"
-#include <Carbon/Carbon.h>
-#include <QuickTime/QuickTime.h>
-#define IsCodeOK() false
-static inline OSErr CallPlug(short item)
-{
-	return 0;
-}
+#include "navigation.h"
 
-typedef struct MIDISettings
+/*
+typedef struct
 {
 	Boolean		MIDIVelocity;
 	long		Factor;
 	Boolean		MIDIChannel;
 	Boolean		MIDINoteOff;
 } MIDISettings;
+*/
 
 enum
 {
@@ -68,7 +65,6 @@ struct OLDMADSpec
 	Byte		chanVol[ MAXTRACK];			// Channel Volume, from 0 to 64
 };
 
-//TODO: Make this 64-bit safe?
 typedef struct
 {
 	short			Version;
@@ -327,17 +323,18 @@ enum {
 
 enum
 {
-	mTools = 1,
-	mOscilloV = 3,
-	mSpectrumV = 4,
-	mAdap = 6,
-	mEqualizer = 7,
-	mPatternV = 9,
-	mPiano = 10,
-	mVisual = 12,
-	mMemory = 18,
-	mDigitalV = 20,
-	mInsV = 22
+	mOnlineHelp = 1,
+	mTools = 3,
+	mOscilloV = 5,
+	mSpectrumV = 6,
+	mAdap = 8,
+	mEqualizer = 9,
+	mPatternV = 10,
+	mPiano = 11,
+	mVisual = 13,
+	mMemory = 20,
+	mDigitalV = 22,
+	mInsV = 23
 //	mMusic = 24 - FileMenu ID 9
 };
 
@@ -384,6 +381,8 @@ enum {
 unsigned char* MyC2PStr( Ptr cStr);
 void MyP2CStr( unsigned char *cStr);
 void MyDebugStr( short line, Ptr file, Ptr text);
+OSType Ptr2OSType( Ptr str);
+void OSType2Ptr( OSType type, Ptr str);
 void			NNumToString( short no, Str255 aStr);
 void			GetNoteString( short note, Str255	string);
 Boolean			GetIns( short *ins, short *samp);
@@ -392,6 +391,7 @@ void			Erreur( short ID, OSErr theErr);
 Handle			MyNewHandle( long);
 Ptr 			MyNewPtr( long);
 void			UpdateAHelpInfo( short *, short , DialogPtr );
+void			pStrcpy(register unsigned char *s1, register unsigned char *s2);
 void			pStrcat(register unsigned char *s1, register unsigned char *s2);
 Boolean			ImportFile( Str255	, short , long , OSType );
 void			AddMODList( Boolean, Str255 , short , long );
@@ -480,11 +480,11 @@ pascal OSStatus CarbonWindowEventHandler(EventHandlerCallRef myHandler, EventRef
 				Cursor		watchCrsr, qdarrow;
 		
 				Boolean		mainSystemDrag, Direct, Stereo, StereoMixing, NewSoundManager, NewSoundManager31, Audio16;
-				short		theDepth, RowBytes;
+			//	short		theDepth, RowBytes;
 				Prefs		thePrefs;
 			//	Rect		ScreenBounds;
 				MenuHandle 	InternetMenu, AppleMenu, NoteMenu, InstruMenu, EffectMenu, TracksNumberMenu, BaseNote, InstruEditMenu, PatternEditMenu;
-				MenuHandle	ExportMenu, EditorMenu, FileMenu, VSTMenu, ViewsMenu, EditMenu, WindowMenu, HelpMenu;
+				MenuHandle	ExportMenu, EditorMenu, FileMenu, VSTMenu, ViewsMenu, EditMenu;
 				EventRecord	theEvent;
 		
 				char		ENote[ 257][ 3];
@@ -518,19 +518,16 @@ pascal OSStatus CarbonWindowEventHandler(EventHandlerCallRef myHandler, EventRef
 		extern	Cursor		watchCrsr, qdarrow;
 		
 		extern	Boolean		mainSystemDrag, Direct, Stereo, StereoMixing, NewSoundManager, NewSoundManager31, Audio16;
-		extern	short		theDepth, RowBytes;
+	//	extern	short		theDepth, RowBytes;
 		extern	Prefs		thePrefs;
 	//	extern	Rect		ScreenBounds;
 		extern	MenuHandle 	InternetMenu, AppleMenu, NoteMenu, InstruMenu, EffectMenu, TracksNumberMenu, BaseNote, InstruEditMenu, PatternEditMenu;
-		extern	MenuHandle	ExportMenu, EditorMenu, FileMenu, VSTMenu, ViewsMenu, EditMenu, WindowMenu, HelpMenu;
+		extern	MenuHandle	ExportMenu, EditorMenu, FileMenu, VSTMenu, ViewsMenu, EditMenu;
 		extern	EventRecord	theEvent;
 		
 		extern	char		ENote[ 257][ 3];
 		extern	char		EInstru[ MAXINSTRU + 2][ 3], EArgu[ 257][ 2];
 		extern	char		EEffect[ 30];
-void RollCursor(void);
-Boolean QTTypeConversion( OSType fileType);
-Boolean CheckFileType( FSSpec theSpec, OSType theType);
 
 #endif
 

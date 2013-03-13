@@ -24,7 +24,7 @@
 #ifndef __MADH__
 #define __MADH__
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
+#if defined(powerc) || defined (__powerc)
 #pragma options align=mac68k
 #else
 #if !defined(THINK_C)
@@ -194,7 +194,7 @@ struct oldMADSpec
 };
 typedef struct oldMADSpec oldMADSpec;
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
+#if defined(powerc) || defined (__powerc)
 #pragma options align=reset
 #else
 #if !defined(THINK_C)

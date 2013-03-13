@@ -21,7 +21,7 @@
 //
 /********************						***********************/
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
+#if defined(powerc) || defined(__powerc)
 #pragma options align=mac68k
 #endif
 
@@ -83,6 +83,6 @@ typedef struct s3minsform
 	unsigned char		inssig[ 4];
 } s3minsform;
                
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
+#if defined(powerc) || defined(__powerc)
 #pragma options align=reset
 #endif

@@ -21,8 +21,28 @@
 //
 /********************						***********************/
 
-#include <PlayerPROCore/PlayerPROCore.h>
+#include "RDriver.h"
 #include "S3M.h"
+#include "FileUtils.h"
+
+#ifdef _SRC
+#elif defined(_MAC_H)
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE(sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( OSType)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( Ptr)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( MADMusic*)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoRec*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( MADDriverSettings*)))
+};
+
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+#endif
 
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
@@ -41,13 +61,31 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 
 #endif
 
-static void ConvertS3MEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short channel)
+Ptr MADPlugNewPtr( long size, MADDriverSettings* init)
+{
+	return NewPtr( size);
+}
+
+Ptr MADPlugNewPtrClear( long size, MADDriverSettings* init)
+{
+	return NewPtrClear( size);
+}
+
+#ifdef _MAC_H
+void strncpy( Ptr dst, Ptr str, long size)
+{
+	BlockMoveData( str, dst, size);
+}
+#endif
+
+void ConvertS3MEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short channel)
 {
 	Byte		LoB1 = LOW( B1);
 	Byte		HiB1 = HI( B1);
 	
 	switch( B0 + 0x40)
 	{
+		default:	*Cmd = 0;			*Arg = 0;		break;
 		// Speed
 		case 'A':	*Cmd = speedE;		*Arg = B1;	break;
 		// Tempo
@@ -137,6 +175,7 @@ static void ConvertS3MEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chan
 		case 'S':		// Special Effects
 			switch( HiB1)
 			{
+				default:	*Cmd = 0;		*Arg = 0;							break;
 				case 2:	*Cmd = extendedE;	*Arg = 5 << 4;		*Arg += LoB1;		break;	// FineTune
 				case 3:	*Cmd = extendedE;	*Arg = 4 << 4;		*Arg += LoB1;		break;	// Set Vibrato WaveForm
 				case 4:	*Cmd = extendedE;	*Arg = 7 << 4;		*Arg += LoB1;		break;	// Set Tremolo WaveForm
@@ -145,8 +184,6 @@ static void ConvertS3MEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chan
 				case 0xC:	*Cmd = extendedE;	*Arg = 12 << 4;	*Arg += LoB1;		break;	// Cut sample
 				case 0xD:	*Cmd = extendedE;	*Arg = 13 << 4;	*Arg += LoB1;		break;	// Delay sample
 				case 0xE:	*Cmd = extendedE;	*Arg = 14 << 4;	*Arg += LoB1;		break;	// Delay pattern
-				default:	*Cmd = 0;		*Arg = 0;							break;
-
 			}
 		break;
 		
@@ -159,8 +196,6 @@ static void ConvertS3MEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chan
 				else *Arg = B1<<1;
 			}
 		break;
-		default:	*Cmd = 0;			*Arg = 0;		break;
-
 	}
 }
 
@@ -1001,8 +1036,8 @@ OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverSettings
 		
 		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
 	
-		theMAD->partition[ i]->header.patBytes = 0;
-		theMAD->partition[ i]->header.unused2 = 0;
+		theMAD->partition[ i]->header.patBytes = 0L;
+		theMAD->partition[ i]->header.unused2 = 0L;
 	
 		MaxPtr = (Ptr) theMAD->partition[ i];
 		MaxPtr += sizeof( PatHeader) + theMAD->header->numChn * 64L * sizeof( Cmd);
@@ -1160,13 +1195,13 @@ static OSErr ExtractS3MInfo( PPInfoRec *info, Ptr AlienFile)
 
 static OSErr TestS3MFile( Ptr AlienFile)
 {
-	s3mform	*myS3M = ( s3mform*) AlienFile;
+s3mform	*myS3M = ( s3mform*) AlienFile;
 
-	if(	myS3M->s3msig[ 0] == 'S' &&
-		myS3M->s3msig[ 1] == 'C' &&
-		myS3M->s3msig[ 2] == 'R' &&
-		myS3M->s3msig[ 3] == 'M') return noErr;
-		else return  MADFileNotSupportedByThisPlug;
+if(	myS3M->s3msig[ 0] == 'S' &&
+	myS3M->s3msig[ 1] == 'C' &&
+	myS3M->s3msig[ 2] == 'R' &&
+	myS3M->s3msig[ 3] == 'M') return   noErr;
+	else return  MADFileNotSupportedByThisPlug;
 }
 
 #ifndef _MAC_H
@@ -1184,13 +1219,32 @@ EXP OSErr FillPlug( PlugInfo *p)
 }
 #endif
 
-OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#ifdef _SRC
+OSErr mainS3M( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
+EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif
+
+
+/*#ifdef _SRC
+OSErr mainS3M( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#elif defined(_MAC_H)
+EXP OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
+OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif*/
 {
 	OSErr		myErr;
 	Ptr			AlienFile;
 	long		sndSize;
-	UNFILE		iFileRefI;
-		
+	UNFILE	iFileRefI;
+	
+	#ifdef _MAC_H
+	#ifndef powerc
+		long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+	#endif
+	#endif
+	
 	myErr = noErr;
 
 	switch( order)
@@ -1239,7 +1293,7 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 							myErr = ConvertS3M2Mad( AlienFile,  sndSize, MadFile, init);
 						}
 					}
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr( AlienFile);	AlienFile = 0L;
 				}
 				iClose( iFileRefI);
 			}
@@ -1296,6 +1350,12 @@ OSErr main( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info,
 			myErr = MADOrderNotImplemented;
 		break;
 	}
+
+	#ifdef _MAC_H
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+	#endif
 	
 	return myErr;
 }

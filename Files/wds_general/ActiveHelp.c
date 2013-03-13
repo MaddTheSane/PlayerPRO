@@ -272,7 +272,7 @@ void  UpdateAHelpWindow(DialogPtr GetSelection)
 
 	*myCtl = 0;
 	
-	while( aCtl != NULL)
+	while( aCtl != 0L)
 	{
 		if( PtInRect( localPt, &(*aCtl)->contrlRect))
 		{
@@ -337,9 +337,9 @@ void AdjustZoomIn( WindowPtr	wind)
 	
 	GetWindowStandardState( wind, &stdRect);
 	
-/*	if( aCtl != NULL)
+/*	if( aCtl != 0L)
 	{
-		long lRefCon = GetControlReference( aCtl);
+		long lRefCon = GetCRefCon( aCtl);
 		
 		h = lRefCon>>16L;
 		v = lRefCon & 0x0000FFFF;
@@ -427,7 +427,7 @@ void CreateAHelpWindow(void)
 	
 	
 
-	SetItemMark( HelpMenu, 1, checkMark);
+	SetItemMark( ViewsMenu, 1, checkMark);
 
 	if( !HelpAvalaible) return;
 	if( AHelpDlog != NULL) return;
@@ -447,7 +447,7 @@ void CreateAHelpWindow(void)
 	SelectWindow2( GetDialogWindow( AHelpDlog));
 	HiliteWindow( GetDialogWindow( AHelpDlog), true);
 	
-//	SetMenuItemText( HelpMenu, 1, "\pHide Online Help");
+	SetItem( ViewsMenu, 1, "\pHide Online Help");
 	
 	InitWindowBar();
 	
@@ -458,11 +458,12 @@ void CloseAHelp(void)
 {
 	if( AHelpDlog != NULL)
 	{
-//		SetMenuItemText( HelpMenu, 1, "\pShow Online Help");
+		SetItem( ViewsMenu, 1, "\pShow Online Help");
+		
 		RemoveWindowBar();
-		DisposeDialog( AHelpDlog);
+		DisposDialog( AHelpDlog);
 	}
 	AHelpDlog = NULL;
 	
-	SetItemMark( HelpMenu, 1, noMark);
+	SetItemMark( ViewsMenu, 1, noMark);
 }

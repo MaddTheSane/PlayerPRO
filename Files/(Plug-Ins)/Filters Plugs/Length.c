@@ -3,13 +3,28 @@
 /*	1999 by ANR 	*/
 
 
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include "MAD.h"
+#include "PPPlug.h"
 
-static GDHandle	TheGDevice/*:0xCC8*/;
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( sData*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(3, SIZE_CODE(sizeof( long)))
+		| STACK_ROUTINE_PARAMETER(4, SIZE_CODE(sizeof( PPInfoPlug*)))
+		| STACK_ROUTINE_PARAMETER(5, SIZE_CODE(sizeof( long)))
+};
 
-static void ControlSwitch(short item, DialogPtr dlog, short Switch)
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
+
+GDHandle	TheGDevice:0xCC8;
+
+void	ControlSwitch(short	item, DialogPtr	dlog, short	Switch)
 {
 	Handle		itemHandle;
 	short		itemType;
@@ -195,11 +210,11 @@ static Ptr ConvertSampleSize( Ptr src, long srcSize, short amp, long dstSize, Bo
 	return dst;
 }
 
-OSErr mainLength(			sData					*theData,
+OSErr main( 	sData					*theData,
 							long					SelectionStart,
 							long					SelectionEnd,
 							PPInfoPlug				*thePPInfoPlug,
-							short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+							long					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	DialogPtr		myDia;
 	short			itemHit, itemType, changeMode;
@@ -209,7 +224,11 @@ OSErr mainLength(			sData					*theData,
 	Rect			itemRect;
 	Boolean			ChangeRate;
 
-	myDia = GetNewDialog( 128, NULL, (WindowPtr) -1L);
+#ifndef powerc
+	long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+#endif
+
+	myDia = GetNewDialog( 128, 0L, (WindowPtr) -1L);
 	SetPortDialogPort( myDia);
 	AutoPosition( myDia);
 	
@@ -239,11 +258,11 @@ OSErr mainLength(			sData					*theData,
 	
 	do
 	{
-//		#if defined(powerc) || defined(__powerc)
+		#if defined(powerc) || defined(__powerc)
 		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
-//		#else
-//		ModalDialog( (ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
-//		#endif
+		#else
+		ModalDialog( (ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+		#endif
 		
 		switch( itemHit)
 		{
@@ -359,13 +378,9 @@ OSErr mainLength(			sData					*theData,
 	
 	DisposeDialog( myDia);
 
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+
 	return noErr;
 }
-
-// CC42BFBF-419A-4CCB-9DC7-49A0A702FD0B
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xCC, 0x42, 0xBF, 0xBF, 0x41, 0x9A, 0x4C, 0xCB, 0x9D, 0xC7, 0x49, 0xA0, 0xA7, 0x02, 0xFD, 0x0B)
-
-#define PLUGMAIN mainLength
-#define PLUGINFACTORY LengthFactory
-
-#include "CFPlugin-FilterBridge.c"

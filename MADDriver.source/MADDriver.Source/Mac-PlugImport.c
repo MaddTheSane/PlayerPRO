@@ -131,7 +131,7 @@ OSErr CallImportPlug( 		MADLibrary		*inMADDriver,
 	if( !EqualString( RSRCNAME, inMADDriver->ThePlug[ PlugNo].file.name, false, false))
 		CloseResFile( fileID);
 	
-//	theNewMAD->currentDriver = NULL;
+//	theNewMAD->currentDriver = 0L;
 	
 	return( myErr);
 }
@@ -540,25 +540,6 @@ void NScanResource( MADLibrary *inMADDriver)
 			
 			inMADDriver->TotalPlug++;
 		}
-	}
-}
-
-void MADInitImportPlug( MADLibrary *inMADDriver, FSRefPtr PluginFolder)
-{
-	FSSpecPtr spec2;
-	if(PluginFolder != NULL)
-	{
-		spec2 = (FSSpecPtr)NewPtr(sizeof(FSSpec));
-		FSGetCatalogInfo(PluginFolder, kFSCatInfoNone, NULL, NULL, spec2, NULL);
-	}
-	else {
-		spec2 = NULL;
-	}
-
-	MInitImportPlug(inMADDriver, spec2);
-	
-	if (spec2 != NULL) {
-		DisposePtr((Ptr)spec2);
 	}
 }
 

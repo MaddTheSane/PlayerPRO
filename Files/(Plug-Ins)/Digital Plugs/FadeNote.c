@@ -8,11 +8,23 @@
 #include "MAD.h"
 #include "PPPlug.h"
 
+#if defined(powerc) || defined(__powerc)
+enum {
+		PlayerPROPlug = kCStackBased
+		| RESULT_SIZE(SIZE_CODE( sizeof(OSErr)))
+		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof( Pcmd*)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof( PPInfoPlug*)))
+};
 
-#define HIM		14
-#define WIM		27
+ProcInfoType __procinfo = PlayerPROPlug;
+#else
+#include <A4Stuff.h>
+#endif
 
-static void GetMDEFRect( Rect *aRect, Rect *menuRect, short whichItem)
+	#define HIM		14
+	#define WIM		27
+
+void GetMDEFRect( Rect *aRect, Rect *menuRect, short whichItem)
 {
 	short	Xpos, Ypos;
 	
@@ -259,7 +271,15 @@ Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
 
-static void OctavesName(short	id, Str255	String)
+void pStrcpy(register unsigned char *s1, register unsigned char *s2)
+{
+	register short len, i;
+	
+	len = *s2;
+	for ( i = 0; i <= len; i++) s1[ i] = s2[ i];
+}
+
+void OctavesName(short	id, Str255	String)
 {
 	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
 	Str255			WorkStr;
@@ -327,7 +347,8 @@ static short Text2Note( Str255 myTT)
 	return( Oct);
 }
 
-OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+OSErr main( 	Pcmd					*myPcmd,
+				PPInfoPlug				*thePPInfoPlug)
 {
 	DialogPtr			myDia;
 	short				itemHit, itemType;
@@ -339,6 +360,10 @@ OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	long				Result;
 	MenuDefSpec			defSpec2;
 	
+#ifndef powerc
+	long	oldA4 = SetCurrentA4(); 			//this call is necessary for strings in 68k code resources
+#endif
+
 #if CALL_NOT_IN_CARBON
 #else
 	defSpec2.defType = kMenuDefProcPtr;
@@ -346,7 +371,7 @@ OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	RegisterMenuDefinition( 1972, &defSpec2);
 #endif
 
-	myDia = GetNewDialog( 128, NULL, (WindowPtr) -1L);
+	myDia = GetNewDialog( 128, 0L, (WindowPtr) -1L);
 	SetPortDialogPort( myDia);
 	AutoPosition( myDia);
 
@@ -360,11 +385,11 @@ OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	{
 		RESTART:
 	
-//		#if defined(powerc) || defined(__powerc)
+		#if defined(powerc) || defined(__powerc)
 		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
-//		#else
-//		ModalDialog( (ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
-//		#endif
+		#else
+		ModalDialog( (ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+		#endif
 		
 		switch( itemHit)
 		{
@@ -441,15 +466,12 @@ OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	}
 	
 	DisposeDialog( myDia);
-		
+	
+	#ifndef powerc
+		SetA4( oldA4);
+	#endif
+	
 	DisposeMenu( noteMenu);
 	
 	return noErr;
 }
-
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x95, 0x45, 0xDB, 0x21, 0x5A, 0xDE, 0x49, 0xDC, 0x97, 0x17, 0x09, 0x3D, 0x09, 0xEC, 0x4D, 0x39)
-//9545DB21-5ADE-49DC-9717-093D09EC4D39
-#define PLUGINFACTORY FadeNoteFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainFadeNote //The old main function, renamed please
-
-#include "CFPlugin-DigitalBridge.c"

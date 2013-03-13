@@ -44,15 +44,15 @@ void DrawPlugInfo( short iD)
 		
 		case eSoundFilePlug:
 		
-			break;
+		break;
 		
 		case eDigitalEditorPlug:
 		
-			break;
+		break;
 		
 		case eSoundFilterPlug:
 		
-			break;
+		break;
 	}
 	
 	MoveTo( myList.rect.left + POSINS, myList.rect.top + 10 + myList.HCell*pos);
@@ -121,7 +121,7 @@ void AboutPlugs()
 									gScrollBarID,
 									0);
 							
-	myList.xScroll = 0;
+	myList.xScroll = 0L;
 	myList.maxX = 1;
 	myList.maxY = MADDriver->lib->TotalPlug + GetNoPPDG();
 	myList.aDia = aDialog;
