@@ -99,6 +99,9 @@ OSErr inAddSoundToMADCString(Ptr			theSound,
 
 	if( theSound == NULL) return MADParametersErr;
 
+	if (!sampleID || !InsHeader || !sample) {
+		return MADParametersErr;
+	}
 	if( *sampleID > MAXSAMPLE) return MADParametersErr;
 
 	inOutBytes = sndLen;
