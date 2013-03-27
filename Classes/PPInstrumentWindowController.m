@@ -21,6 +21,7 @@
 #include "PPByteswap.h"
 #import "PPErrors.h"
 #import "ARCBridge.h"
+#import "UserDefaultKeys.h"
 
 @interface PPInstrumentWindowController ()
 - (void)loadInstrumentsFromMusic;
@@ -326,8 +327,7 @@
 		NSError *err = nil;
 		if ([self importSampleFromURL:[openPanel URL] makeUserSelectInstrument:NO error:&err] == NO)
 		{
-			NSAlert *alert = [NSAlert alertWithError:err];
-			[alert runModal];
+			[[NSAlert alertWithError:err] runModal];
 		}
 	}
 	

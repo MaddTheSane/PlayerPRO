@@ -11,6 +11,7 @@
 #import "PPPlugInCommon.h"
 //#import <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
+#import "UserDefaultKeys.h"
 
 @implementation PPDigitalPlugInHandler
 

@@ -11,6 +11,7 @@
 #import "ARCBridge.h"
 #import "PPPlugInCommon.h"
 #import "PPInstrumentImporterObject.h"
+#import "UserDefaultKeys.h"
 
 @implementation PPInstrumentImporter
 

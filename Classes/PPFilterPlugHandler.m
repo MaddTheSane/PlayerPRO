@@ -10,6 +10,7 @@
 #import "PPFilterPlugObject.h"
 #import "PPPlugInCommon.h"
 #import "ARCBridge.h"
+#import "UserDefaultKeys.h"
 
 @implementation PPFilterPlugHandler
 
