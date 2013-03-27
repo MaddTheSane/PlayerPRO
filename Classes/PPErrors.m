@@ -101,14 +101,15 @@ NSError *CreateErrorFromMADErrorType(OSErr theErr)
 			break;
 			
 		case MADUnknownErr:
-		default:
 			ErrorDescription = NSLocalizedString(@"An unknown error occured", @"Unknown error");
 			errorReason = NSLocalizedString(@"Unknown reason", @"unknown reason");
 			recoverySuggestion = NSLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
-			if (theErr != MADUnknownErr) {
-				return [[NSError alloc] initWithDomain:NSOSStatusErrorDomain code:theErr userInfo:[NSDictionary dictionaryWithObjectsAndKeys:ErrorDescription, NSLocalizedDescriptionKey, errorReason, NSLocalizedFailureReasonErrorKey, recoverySuggestion, NSLocalizedRecoverySuggestionErrorKey, nil]];
-			}
 			break;
+			
+		default:
+			return [[NSError alloc] initWithDomain:NSOSStatusErrorDomain code:theErr userInfo:nil];
+			break;
+
 	}
 	
 	return [[NSError alloc] initWithDomain:PPMADErrorDomain code:theErr userInfo:[NSDictionary dictionaryWithObjectsAndKeys:ErrorDescription, NSLocalizedDescriptionKey, errorReason, NSLocalizedFailureReasonErrorKey, recoverySuggestion, NSLocalizedRecoverySuggestionErrorKey, nil]];
