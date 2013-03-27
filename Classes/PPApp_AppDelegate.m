@@ -131,8 +131,7 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 			[self selectCurrentlyPlayingMusic];
 			NSError *err = nil;
 			if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
-				NSAlert *errAlert = [NSAlert alertWithError:err];
-				[errAlert runModal];
+				[[NSAlert alertWithError:err] runModal];
 			}
 		} else {
 			[self selectMusicAtIndex:similarMusicIndex];
@@ -143,8 +142,7 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 		[self selectCurrentlyPlayingMusic];
 		NSError *err = nil;
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
-			NSAlert *errAlert = [NSAlert alertWithError:err];
-			[errAlert runModal];
+			[[NSAlert alertWithError:err] runModal];
 		}
 	} else {
 		[self selectMusicAtIndex:[musicList countOfMusicList] - 1];
@@ -199,8 +197,7 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDriverDidChange object:self];
 	if (returnerr != noErr) {
 		NSError *err = CreateErrorFromMADErrorType(returnerr);
-		NSAlert *alert = [NSAlert alertWithError:err];
-		[alert runModal];
+		[[NSAlert alertWithError:err] runModal];
 		RELEASEOBJ(err);
 		return;
 	}
@@ -341,8 +338,7 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 				NSError *err = nil;
 				if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 				{
-					NSAlert *alert = [NSAlert alertWithError:err];
-					[alert runModal];
+					[[NSAlert alertWithError:err] runModal];
 				}
 			} else {
 				if ([userDefaults boolForKey:PPLoopMusicWhenDone]) {
@@ -351,8 +347,7 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 					NSError *err = nil;
 					if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 					{
-						NSAlert *alert = [NSAlert alertWithError:err];
-						[alert runModal];
+						[[NSAlert alertWithError:err] runModal];
 					}
 				} else {
 					MADStopMusic(MADDriver);
@@ -372,8 +367,7 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 			NSError *err = nil;
 			if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 			{
-				NSAlert *alert = [NSAlert alertWithError:err];
-				[alert runModal];
+				[[NSAlert alertWithError:err] runModal];
 			}
 		}
 			break;
@@ -772,8 +766,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	if (err != noErr) {
 		dispatch_async(dispatch_get_main_queue(), ^{
 			NSError *NSerr = CreateErrorFromMADErrorType(err);
-			NSAlert *alert = [NSAlert alertWithError:NSerr];
-			[alert runModal];
+			[[NSAlert alertWithError:NSerr] runModal];
 			RELEASEOBJ(NSerr);
 		});
 		
@@ -1016,8 +1009,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 				OSErr err = MADMusicExportCFURL(MADLib, Music, MADLib->ThePlug[tag].type, BRIDGE(CFURLRef, fileURL));
 				if (err != noErr) {
 					NSError *aerr = CreateErrorFromMADErrorType(err);
-					NSAlert *alert = [NSAlert alertWithError:aerr];
-					[alert runModal];
+					[[NSAlert alertWithError:aerr] runModal];
 					RELEASEOBJ(aerr);
 				} else {
 					[self addMusicToMusicList:fileURL loadIfPreferencesAllow:NO];
@@ -1222,8 +1214,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	currentlyPlayingIndex.index = [tableView selectedRow];
 	if ([self loadMusicFromCurrentlyPlayingIndexWithError:&err] == NO)
 	{
-		NSAlert *alert = [NSAlert alertWithError:err];
-		[alert runModal];
+		[[NSAlert alertWithError:err] runModal];
 	}
 }
 
@@ -1546,8 +1537,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	currentlyPlayingIndex.index = [tableView selectedRow];
 	if ([self loadMusicFromCurrentlyPlayingIndexWithError:&error] == NO)
 	{
-		NSAlert *alert = [NSAlert alertWithError:error];
-		[alert runModal];
+		[[NSAlert alertWithError:error] runModal];
 	}
 }
 
@@ -1787,8 +1777,7 @@ enum PPMusicToolbarTypes {
 			NSError *theErr = nil;
 			if (![instrumentController importSampleFromURL:theURL makeUserSelectInstrument:YES error:&theErr])
 			{
-				NSAlert *theAlert = [NSAlert alertWithError:theErr];
-				[theAlert runModal];
+				[[NSAlert alertWithError:theErr] runModal];
 				return NO;
 			}
 			return YES;
@@ -1797,8 +1786,7 @@ enum PPMusicToolbarTypes {
 		OSErr theOSErr = [patternHandler importPcmdFromURL:theURL];
 		if (theOSErr != noErr) {
 			NSError *theErr = CreateErrorFromMADErrorType(theOSErr);
-			NSAlert *alert = [NSAlert alertWithError:theErr];
-			[alert runModal];
+			[[NSAlert alertWithError:theErr] runModal];
 			RELEASEOBJ(theErr);
 			return NO;
 		}
@@ -1816,8 +1804,7 @@ enum PPMusicToolbarTypes {
 				if ([sharedWorkspace type:theUTI conformsToType:uti]) {
 					NSError *theErr;
 					if (![instrumentController importSampleFromURL:theURL makeUserSelectInstrument:YES error:&theErr]) {
-						NSAlert *theAlert = [NSAlert alertWithError:theErr];
-						[theAlert runModal];
+						[[NSAlert alertWithError:theErr] runModal];
 						return NO;
 					}
 					return YES;
@@ -1900,16 +1887,14 @@ enum PPMusicToolbarTypes {
 		[self selectCurrentlyPlayingMusic];
 		NSError *err = nil;
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
-			NSAlert *ap = [NSAlert alertWithError:err];
-			[ap runModal];
+			[[NSAlert alertWithError:err] runModal];
 		}
 	} else if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoopMusicWhenDone]) {
 		currentlyPlayingIndex.index = 0;
 		[self selectCurrentlyPlayingMusic];
 		NSError *err = nil;
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
-			NSAlert *ap = [NSAlert alertWithError:err];
-			[ap runModal];
+			[[NSAlert alertWithError:err] runModal];
 		}
 	} else NSBeep();
 }
@@ -1929,8 +1914,7 @@ enum PPMusicToolbarTypes {
 		[self selectCurrentlyPlayingMusic];
 		NSError *err = nil;
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
-			NSAlert *ap = [NSAlert alertWithError:err];
-			[ap runModal];
+			[[NSAlert alertWithError:err] runModal];
 		}
 	} else NSBeep();
 }
@@ -2040,8 +2024,7 @@ enum PPMusicToolbarTypes {
 		[self selectCurrentlyPlayingMusic];
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 		{
-			NSAlert *alert = [NSAlert alertWithError:err];
-			[alert runModal];
+			[[NSAlert alertWithError:err] runModal];
 		}
 	}
 	NSUInteger lostCount = musicList.lostMusicCount;
