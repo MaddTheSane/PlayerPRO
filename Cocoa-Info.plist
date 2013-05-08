@@ -244,7 +244,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>madk</string>
-				<string>mad</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>MAD</string>
@@ -389,6 +388,22 @@
 				<string>net.sourceforge.playerpro.musiclist</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>mad</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>MAD</string>
+			<key>CFBundleTypeName</key>
+			<string>MAD tracker</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.quadmation.playerpro.mad</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
@@ -443,6 +458,8 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO MAD tracker</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.mad</string>
 			<key>UTTypeTagSpecification</key>
