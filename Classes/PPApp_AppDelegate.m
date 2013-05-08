@@ -864,9 +864,13 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						RELEASEOBJ(saveData);
 						saveData = nil;
 						dispatch_async(dispatch_get_main_queue(), ^{
-							NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
-							if (retVal == NSAlertAlternateReturn) {
-								[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:[NSArray arrayWithObject:[savePanel URL]]];
+							if (isQuitting) {
+								[NSApp replyToApplicationShouldTerminate:YES];
+							} else {
+								NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
+								if (retVal == NSAlertAlternateReturn) {
+									[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:[NSArray arrayWithObject:[savePanel URL]]];
+								}
 							}
 						});
 					});
@@ -902,7 +906,11 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						MADEndExport(MADDriver);
 						NSError *expErr = nil;
 						dispatch_block_t errBlock = ^{
-							NSRunAlertPanel(@"Export failed", @"Export/coversion of the music file failed.\n%@", nil, nil, nil, [expErr localizedDescription]);
+							if (isQuitting) {
+								[NSApp replyToApplicationShouldTerminate:YES];
+							}else {
+								NSRunAlertPanel(@"Export failed", @"Export/coversion of the music file failed.\n%@", nil, nil, nil, [expErr localizedDescription]);
+							}
 						};
 #if PPEXPORT_CREATE_TMP_AIFF
 						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
@@ -970,9 +978,13 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						
 						if (didFinish) {
 							dispatch_async(dispatch_get_main_queue(), ^{
-								NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
-								if (retVal == NSAlertAlternateReturn) {
-									[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:[NSArray arrayWithObject:[savePanel URL]]];
+								if (isQuitting) {
+									[NSApp replyToApplicationShouldTerminate:YES];
+								} else {
+									NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
+									if (retVal == NSAlertAlternateReturn) {
+										[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:[NSArray arrayWithObject:[savePanel URL]]];
+									}
 								}
 							});
 						}
@@ -993,6 +1005,10 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			if (tag > MADLib->TotalPlug || tag < 0) {
 				NSBeep();
 				MADEndExport(MADDriver);
+				if (isQuitting) {
+					[NSApp replyToApplicationShouldTerminate:YES];
+				}
+				
 				return;
 			}
 			NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
@@ -1008,14 +1024,22 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 				NSURL *fileURL = RETAINOBJ([savePanel URL]);
 				OSErr err = MADMusicExportCFURL(MADLib, Music, MADLib->ThePlug[tag].type, BRIDGE(CFURLRef, fileURL));
 				if (err != noErr) {
-					NSError *aerr = CreateErrorFromMADErrorType(err);
-					[[NSAlert alertWithError:aerr] runModal];
-					RELEASEOBJ(aerr);
+					if (isQuitting) {
+						[NSApp replyToApplicationShouldTerminate:YES];
+					} else {
+						NSError *aerr = CreateErrorFromMADErrorType(err);
+						[[NSAlert alertWithError:aerr] runModal];
+						RELEASEOBJ(aerr);
+					}
 				} else {
 					[self addMusicToMusicList:fileURL loadIfPreferencesAllow:NO];
-					NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
-					if (retVal == NSAlertAlternateReturn) {
-						[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:[NSArray arrayWithObject:fileURL]];
+					if (isQuitting) {
+						[NSApp replyToApplicationShouldTerminate:YES];
+					} else {
+						NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
+						if (retVal == NSAlertAlternateReturn) {
+							[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:[NSArray arrayWithObject:fileURL]];
+						}
 					}
 				}
 				RELEASEOBJ(fileURL);
@@ -1294,6 +1318,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+	isQuitting = NO;
 	undoManager = [[NSUndoManager alloc] init];
 	srandom(time(NULL) & 0xffffffff);
 	PPRegisterDebugFunc(CocoaDebugStr);
@@ -1383,6 +1408,35 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	if (lostCount) {
 		NSRunAlertPanel(@"Unresolvable files", @"There were %lu file(s) that were unable to be resolved.", nil, nil, nil, (unsigned long)lostCount);
 	}
+}
+
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
+{
+	if (MADIsExporting(MADDriver)) {
+		NSInteger selection = NSRunAlertPanel(@"Exporting", @"PlayerPRO is currently exporting a tracker file.\nQuitting will stop this. Do you really wish to quit?", @"Wait", @"Quit", @"Cancel");
+		switch (selection) {
+			default:
+			case NSAlertOtherReturn:
+				return NSTerminateCancel;
+				break;
+				
+			case NSAlertAlternateReturn:
+				return NSTerminateNow;
+				break;
+				
+			case NSAlertDefaultReturn:
+				//Double-check to make sure we're still exporting
+				if (MADIsExporting(MADDriver)) {
+					isQuitting = YES;
+					return NSTerminateLater;
+				} else {
+					return NSTerminateNow;
+				}
+				
+				break;
+		}
+	}
+	return NSTerminateNow;
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification

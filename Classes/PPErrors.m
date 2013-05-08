@@ -109,7 +109,6 @@ NSError *CreateErrorFromMADErrorType(OSErr theErr)
 		default:
 			return [[NSError alloc] initWithDomain:NSOSStatusErrorDomain code:theErr userInfo:nil];
 			break;
-
 	}
 	
 	return [[NSError alloc] initWithDomain:PPMADErrorDomain code:theErr userInfo:[NSDictionary dictionaryWithObjectsAndKeys:ErrorDescription, NSLocalizedDescriptionKey, errorReason, NSLocalizedFailureReasonErrorKey, recoverySuggestion, NSLocalizedRecoverySuggestionErrorKey, nil]];

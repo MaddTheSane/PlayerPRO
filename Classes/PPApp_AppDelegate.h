@@ -80,6 +80,8 @@
 	IBOutlet NSMenuItem *pauseDockMenuItem;
 	
 	NSUndoManager *undoManager;
+	
+	BOOL isQuitting;
 }
 
 @property (getter=isPaused, readwrite) BOOL paused;
