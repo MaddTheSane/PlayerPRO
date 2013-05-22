@@ -128,7 +128,7 @@ static HRESULT MetadataImporterQueryInterface(void *thisInstance,REFIID iid,LPVO
 
     interfaceID = CFUUIDCreateFromUUIDBytes(kCFAllocatorDefault,iid);
 
-    if (CFEqual(interfaceID,kMDImporterInterfaceID)){
+    if (CFEqual(interfaceID, kMDImporterInterfaceID)){
             /* If the Right interface was requested, bump the ref count,
              * set the ppv parameter equal to the instance, and
              * return good status.
@@ -138,7 +138,7 @@ static HRESULT MetadataImporterQueryInterface(void *thisInstance,REFIID iid,LPVO
         CFRelease(interfaceID);
         return S_OK;
     }else{
-        if (CFEqual(interfaceID,IUnknownUUID)){
+        if (CFEqual(interfaceID, IUnknownUUID)){
                 /* If the IUnknown interface was requested, same as above. */
             ((MetadataImporterPluginType*)thisInstance )->conduitInterface->AddRef(thisInstance);
             *ppv = thisInstance;
@@ -196,8 +196,8 @@ extern void *PPMetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef 
         /* If correct type is being requested, allocate an
          * instance of TestType and return the IUnknown interface.
          */
-    if (CFEqual(typeID,kMDImporterTypeID)){
-        uuid = CFUUIDCreateFromString(kCFAllocatorDefault,CFSTR(PLUGIN_ID));
+    if (CFEqual(typeID, kMDImporterTypeID)){
+        uuid = CFUUIDCreateFromString(kCFAllocatorDefault, CFSTR(PLUGIN_ID));
         result = AllocMetadataImporterPluginType(uuid);
         CFRelease(uuid);
         return result;
