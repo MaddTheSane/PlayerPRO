@@ -48,36 +48,33 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	return data;
 }
+@interface PPMusicListObject ()
+@property (retain, nonatomic, readwrite, setter = setTheMusicUrl:) NSURL *musicUrl;
+@end
 
 @implementation PPMusicListObject
 
 @synthesize musicUrl;
 
-#if 0
-- (void)setMusicUrl:(NSURL *)amusicUrl
+- (void)setTheMusicUrl:(NSURL *)amusicUrl
 {
-	if (amusicUrl == nil) {
-		return;
-	}
-
 #if __has_feature(objc_arc)
 	musicUrl = amusicUrl;
 	
-	[self willChangeValueForKey:@"fileName"];
+	//[self willChangeValueForKey:@"fileName"];
 	//fileName = [[musicUrl lastPathComponent] copy];
-	[self didChangeValueForKey:@"fileName"];
+	//[self didChangeValueForKey:@"fileName"];
 #else
 	NSURL *tempUrl = musicUrl;
 	musicUrl = [amusicUrl retain];
 	
-	[self willChangeValueForKey:@"fileName"];
+	//[self willChangeValueForKey:@"fileName"];
 	//fileName = [[musicUrl lastPathComponent] copy];
-	[self didChangeValueForKey:@"fileName"];
+	//[self didChangeValueForKey:@"fileName"];
 	
 	[tempUrl release];
 #endif
 }
-#endif
 
 - (BOOL)isEqual:(id)object
 {
@@ -127,7 +124,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (NSString *)fileName
 {
-	id val = nil;
+	NSString *val = nil;
 	NSError *err = nil;
 
 	if([musicUrl getResourceValue:&val forKey:NSURLLocalizedNameKey error:&err] == NO)
@@ -146,7 +143,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
-		musicUrl = RETAINOBJ(aURL);
+		self.musicUrl = aURL;
 	}
 	return self;
 }
@@ -154,7 +151,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 #if !__has_feature(objc_arc)
 - (void)dealloc
 {
-	[musicUrl release];
+	self.musicUrl = nil;
 	
 	[super dealloc];
 }
@@ -162,7 +159,12 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@:%@ - %@", [musicUrl description], [musicUrl path], self.fileName];
+	NSString *tmpStr = nil;
+	@autoreleasepool {
+		tmpStr = [[NSString alloc] initWithFormat:@"%@:%@ - %@", [musicUrl description], [musicUrl path], self.fileName];
+	}
+	
+	return AUTORELEASEOBJ(tmpStr);
 }
 
 @end
@@ -210,7 +212,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	[self didChangeValueForKey:kMusicListKVO];
 }
 
-- (void)loadMusicList:(NSMutableArray *)newArray
+- (void)loadMusicList:(NSArray *)newArray
 {
 #if __has_feature(objc_arc)
 	[self willChangeValueForKey:kMusicListKVO];
@@ -253,6 +255,16 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	[self loadMusicListFromData:listData];
 }
 
+static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
+{
+	if ([otherURL isFileReferenceURL]) {
+		return otherURL;
+	}
+	NSURL *tmpURL = [otherURL fileReferenceURL];
+	return tmpURL ? tmpURL : otherURL;
+}
+
+
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen
 {
 	lostMusicCount = 0;
@@ -282,7 +294,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	theNo /= 2;
 	
-	NSMutableArray *newArray = [[NSMutableArray alloc] init];
+	NSMutableArray *newArray = [NSMutableArray array];
 	
 	for(i = 0; i < theNo * 2; i += 2) {
 		StringPtr aStr, aStr2;
@@ -308,15 +320,8 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, together, kCFURLHFSPathStyle, false));
 		BOOL validPath = [[NSFileManager defaultManager] fileExistsAtPath:[fullPath path]];
 		CFRelease(together);
-		NSURL *refURL = [fullPath fileReferenceURL];
 		if (validPath) {
-			PPMusicListObject *obj = nil;
-			if (refURL) {
-				obj = [[PPMusicListObject alloc] initWithURL:refURL];
-			} else {
-				obj = [[PPMusicListObject alloc] initWithURL:fullPath];
-			}
-			
+			PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullPath)];
 			[newArray addObject:obj];
 			RELEASEOBJ(obj);
 		} else lostMusicCount++;
@@ -325,7 +330,6 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	HUnlock( aHandle);
 	DisposeHandle( aHandle);
 	[self loadMusicList:newArray];
-	RELEASEOBJ(newArray);
 
 	return noErr;
 }
@@ -360,13 +364,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (BOOL)addMusicURL:(NSURL *)musicToLoad
 {
-	PPMusicListObject *obj = nil;
-	NSURL *fileRef = [musicToLoad fileReferenceURL];
-	if (fileRef) {
-		obj = [[PPMusicListObject alloc] initWithURL:fileRef];
-	} else {
-		obj = [[PPMusicListObject alloc] initWithURL:musicToLoad];
-	}
+	PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(musicToLoad)];
 	
 	if (!obj) {
 		return NO;
@@ -376,12 +374,10 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 		return NO;
 	}
 	
-	//[self willChangeValueForKey:kMusicListKVO];
 	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndex:[musicList count]];
 	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:kMusicListKVO];
 	[musicList addObject:obj];
 	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:kMusicListKVO];
-	//[self didChangeValueForKey:kMusicListKVO];
 	RELEASEOBJ(obj);
 	return YES;
 }
@@ -410,6 +406,15 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 #pragma mark Archiving
 
+static NSURL *PPHomeURL()
+{
+	static NSURL *homeURL = nil;
+	if (homeURL == nil) {
+		homeURL = RETAINOBJ([NSURL fileURLWithPath:NSHomeDirectory() isDirectory:YES]);
+	}
+	return homeURL;
+}
+
 - (id)initWithCoder:(NSCoder *)decoder
 {
 	if ((self = [super init])) 
@@ -435,14 +440,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 					lostMusicCount++;
 					continue;
 				}
-				//It seems that the URL returned from the bookmarks services is already a file reference URL.
-				//NSURL *refURL = [fullURL fileReferenceURL];
-				PPMusicListObject *obj = nil;
-				//if (refURL) {
-				//	obj = [[PPMusicListObject alloc] initWithURL:refURL];
-				//} else {
-				obj = [[PPMusicListObject alloc] initWithURL:fullURL];
-				//}
+				PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullURL)];
 				[musicList addObject:obj];
 				RELEASEOBJ(obj);
 			}
@@ -450,23 +448,17 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 			musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
 			for (NSData *bookData in BookmarkArray) {
 				BOOL isStale = NO;
-				NSURL *fullURL = [NSURL URLByResolvingBookmarkData:bookData options:NSURLBookmarkResolutionWithoutUI relativeToURL:[NSURL fileURLWithPath:NSHomeDirectory()] bookmarkDataIsStale:&isStale error:nil];
+				NSURL *fullURL = [NSURL URLByResolvingBookmarkData:bookData options:NSURLBookmarkResolutionWithoutUI relativeToURL:PPHomeURL() bookmarkDataIsStale:&isStale error:nil];
 #ifdef DEBUG
 				if (isStale) {
-					NSLog(@"Bookmark pointing to %@ is stale", [fullURL path]);
+					NSLog(@"Bookmark pointing to %@ is stale.", [fullURL path]);
 				}
 #endif
 				if (!fullURL) {
 					lostMusicCount++;
 					continue;
 				}
-				NSURL *refURL = [fullURL fileReferenceURL];
-				PPMusicListObject *obj = nil;
-				if (refURL) {
-					obj = [[PPMusicListObject alloc] initWithURL:refURL];
-				} else {
-					obj = [[PPMusicListObject alloc] initWithURL:fullURL];
-				}
+				PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullURL)];
 				[musicList addObject:obj];
 				RELEASEOBJ(obj);
 			}
@@ -480,7 +472,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	NSMutableArray *BookmarkArray = [NSMutableArray arrayWithCapacity:[musicList count]];
 	for (PPMusicListObject *obj in musicList)
 	{
-		NSData *bookData = [obj.musicUrl bookmarkDataWithOptions:NSURLBookmarkCreationPreferFileIDResolution includingResourceValuesForKeys:nil relativeToURL:[NSURL fileURLWithPath:NSHomeDirectory()] error:nil];
+		NSData *bookData = [obj.musicUrl bookmarkDataWithOptions:NSURLBookmarkCreationPreferFileIDResolution includingResourceValuesForKeys:nil relativeToURL:PPHomeURL() error:nil];
 		if (bookData) {
 			[BookmarkArray addObject:bookData];
 		}
