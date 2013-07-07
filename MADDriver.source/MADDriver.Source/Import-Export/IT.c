@@ -1163,7 +1163,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 			 Deja fait dans la recherche du maxtrack
 			 */
 			
-			theMAD->partition[ i] = (PatData*) MADPlubNewPtrClear( sizeof( PatHeader) + theMAD->header->numChn * curITPat->row * sizeof( Cmd), init);
+			theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear( sizeof( PatHeader) + theMAD->header->numChn * curITPat->row * sizeof( Cmd), init);
 			if( theMAD->partition[ i] == NULL) return MADNeedMemory;
 			
 			theMAD->partition[ i]->header.size 			= curITPat->row;
