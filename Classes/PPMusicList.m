@@ -194,7 +194,6 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (void)sortMusicList
 {
-	//[musicList sortUsingFunction:SortUsingFileName context:NULL];
 	[self willChangeValueForKey:kMusicListKVO];
 	[musicList sortWithOptions:(NSSortConcurrent | NSSortStable) usingComparator:^(id rhs, id lhs) {
 		@autoreleasepool {

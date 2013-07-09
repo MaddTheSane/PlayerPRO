@@ -1297,7 +1297,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		RELEASEOBJ(tmpInfo);
 	}
 	
-	[plugInInfos sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+	[plugInInfos sortWithOptions:NSSortConcurrent usingComparator:^NSComparisonResult(id obj1, id obj2) {
 		NSString *menuNam1 = [obj1 plugName];
 		NSString *menuNam2 = [obj2 plugName];
 		NSComparisonResult res = [menuNam1 localizedStandardCompare:menuNam2];
