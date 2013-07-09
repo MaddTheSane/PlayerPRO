@@ -159,12 +159,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (NSString*)description
 {
-	NSString *tmpStr = nil;
-	@autoreleasepool {
-		tmpStr = [[NSString alloc] initWithFormat:@"%@:%@ - %@", [musicUrl description], [musicUrl path], self.fileName];
-	}
-	
-	return AUTORELEASEOBJ(tmpStr);
+	return [NSString stringWithFormat:@"%@:%@ - %@", [musicUrl description], [musicUrl path], self.fileName];
 }
 
 @end
@@ -201,7 +196,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 {
 	//[musicList sortUsingFunction:SortUsingFileName context:NULL];
 	[self willChangeValueForKey:kMusicListKVO];
-	[musicList sortUsingComparator:^(id rhs, id lhs) {
+	[musicList sortWithOptions:(NSSortConcurrent | NSSortStable) usingComparator:^(id rhs, id lhs) {
 		@autoreleasepool {
 			NSString *rhsString = [rhs fileName];
 			NSString *lhsString = [lhs fileName];
