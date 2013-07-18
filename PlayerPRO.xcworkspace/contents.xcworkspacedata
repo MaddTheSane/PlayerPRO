@@ -5,9 +5,6 @@
       location = "group:PPMacho.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Spotlight Plug-in/MDImporterPlugin.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Examples/Example-Cocoa/Cocoa Example.xcodeproj">
    </FileRef>
 </Workspace>
