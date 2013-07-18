@@ -529,8 +529,6 @@
 		55C358AF16C42D1800FB9FA6 /* 669.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340D910BB5368005208D1 /* 669.c */; settings = {COMPILER_FLAGS = "-DPPImpExpMain=main669"; }; };
 		55C358B016C42D1800FB9FA6 /* AMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DB10BB5368005208D1 /* AMF.c */; settings = {COMPILER_FLAGS = "-DPPImpExpMain=mainAMF"; }; };
 		55C358B116C42D1800FB9FA6 /* iOS-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A1301656FCC100A5AECA /* iOS-PlugImport.c */; };
-		55C358B316C42D1800FB9FA6 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A1351656FD4000A5AECA /* AudioUnit.framework */; };
-		55C358B416C42D1800FB9FA6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A1331656FD3600A5AECA /* CoreFoundation.framework */; };
 		55C358B516C42D1800FB9FA6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55C358B716C42D1800FB9FA6 /* iOSPlayerPROCore.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5573A1081656FAF100A5AECA /* iOSPlayerPROCore.h */; };
 		55C358B816C42D1800FB9FA6 /* PlayerPROCore.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; };
@@ -2791,8 +2789,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55C358B316C42D1800FB9FA6 /* AudioUnit.framework in Frameworks */,
-				55C358B416C42D1800FB9FA6 /* CoreFoundation.framework in Frameworks */,
 				55C358B516C42D1800FB9FA6 /* Foundation.framework in Frameworks */,
 				55BE999D17978C7D00D6DECC /* AudioUnit.framework in Frameworks */,
 				55BE999E17978C7D00D6DECC /* CoreMIDI.framework in Frameworks */,
@@ -7995,7 +7991,6 @@
 					"NOEXPORTFUNCS=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GENERATE_MASTER_OBJECT_FILE = YES;
@@ -8023,7 +8018,6 @@
 					"NOEXPORTFUNCS=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -9220,7 +9214,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
@@ -9229,13 +9222,10 @@
 					"NOEXPORTFUNCS=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GENERATE_MASTER_OBJECT_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = PlayerPROCompact;
-				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -9244,7 +9234,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
@@ -9254,12 +9243,9 @@
 					"NOEXPORTFUNCS=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = PlayerPROCompact;
-				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
