@@ -1799,8 +1799,6 @@
 		551292E5163DD68500C2C639 /* PlayerPROKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerPROKit.h; sourceTree = "<group>"; };
 		551292EE163DD7CE00C2C639 /* PPLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLibrary.h; sourceTree = "<group>"; };
 		551292EF163DD7CE00C2C639 /* PPLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLibrary.m; sourceTree = "<group>"; };
-		5514AA6D10D017E9009A6BD3 /* Language-rez.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = "Language-rez.r"; path = "../Files/English.lproj/Language-rez.r"; sourceTree = "<group>"; };
-		5514AA6E10D01803009A6BD3 /* Language-rez.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = "Language-rez.r"; path = "../Files/French.lproj/Language-rez.r"; sourceTree = "<group>"; };
 		55151E7410DD4F400054ABC4 /* CFPlugin-InstrBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-InstrBridge.c"; sourceTree = "<group>"; };
 		55151F8010DEDBDB0054ABC4 /* XI.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XI.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55151F8110DEDBDB0054ABC4 /* XI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "XI-Info.plist"; path = "../../../XI-Info.plist"; sourceTree = "<group>"; };
@@ -3801,7 +3799,6 @@
 		55CBFC6E11EB7A7A0028C6BB /* Carbon Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5514AA6C10D017E9009A6BD3 /* Language-rez.r */,
 				55DB45D40FEAB8CD0088C375 /* DFTB.r */,
 				88E0C3BE0C2F21DD00D6C081 /* Carbon.r */,
 				55EE8C731003E83A00E75E63 /* General-rez.r */,
@@ -7241,15 +7238,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		5514AA6C10D017E9009A6BD3 /* Language-rez.r */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5514AA6D10D017E9009A6BD3 /* Language-rez.r */,
-				5514AA6E10D01803009A6BD3 /* Language-rez.r */,
-			);
-			name = "Language-rez.r";
-			sourceTree = "<group>";
-		};
 		5533600311EBC66400525CAF /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -9791,6 +9779,7 @@
 				55BE998217978AF000D6DECC /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		55C358BF16C42D1800FB9FA6 /* Build configuration list for PBXNativeTarget "PlayerPROCompact" */ = {
 			isa = XCConfigurationList;
