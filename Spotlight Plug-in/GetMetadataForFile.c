@@ -127,9 +127,9 @@ Boolean GetMetadataForFile(void* thisInterface,
 
 #ifdef DEBUG
 		if (strcmp(utiType, "!!!!") == 0) {
-			fprintf(stderr, "Unable to determine file type based on UTI");
+			fprintf(stderr, "Unable to determine file type based on UTI.\n");
 		}else if (strcmp(utiType, type) != 0) {
-			fprintf(stderr, "File types differ, UTI says %s, PlayerPRO says %s\n", utiType, type);
+			fprintf(stderr, "File types differ, UTI says %s, PlayerPRO says %s.\n", utiType, type);
 		}
 #endif
 		
