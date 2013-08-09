@@ -473,6 +473,10 @@ static NSURL *PPHomeURL()
 			}
 			selectedMusic = -1;
 		} else {
+			NSNumber *curSel = nil;
+			if ((curSel = [decoder decodeObjectForKey:kMusicListLocation2])) {
+				selectedMusic = [curSel integerValue];
+			} else selectedMusic = -1;
 			musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
 			for (NSData *bookData in BookmarkArray) {
 				BOOL isStale = NO;
@@ -483,6 +487,13 @@ static NSURL *PPHomeURL()
 				}
 #endif
 				if (!fullURL) {
+					if (selectedMusic == -1) {
+						//Do nothing
+					} else if(selectedMusic == [musicList count] + 1) {
+						selectedMusic = -1;
+					} else if(selectedMusic > [musicList count] + 1) {
+						selectedMusic--;
+					}
 					lostMusicCount++;
 					continue;
 				}
@@ -490,10 +501,6 @@ static NSURL *PPHomeURL()
 				[musicList addObject:obj];
 				RELEASEOBJ(obj);
 			}
-			NSNumber *curSel = nil;
-			if ((curSel = [decoder decodeObjectForKey:kMusicListLocation2])) {
-				selectedMusic = [curSel integerValue];
-			} else selectedMusic = -1;
 		}
 	}
 	return self;
