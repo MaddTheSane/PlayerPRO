@@ -95,6 +95,8 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 	}
 }
 
+static NSInteger selMusFromList = -1;
+
 @interface PPApp_AppDelegate ()
 - (void)selectCurrentlyPlayingMusic;
 - (void)selectMusicAtIndex:(NSInteger)anIdx;
@@ -1810,6 +1812,7 @@ enum PPMusicToolbarTypes {
 		if ([self musicListWillChange]) {
 			[self willChangeValueForKey:kMusicListKVO];
 			[musicList loadMusicListAtURL:theURL];
+			selMusFromList = musicList.selectedMusic;
 			[self didChangeValueForKey:kMusicListKVO];
 			[self musicListDidChange];
 			return YES;
@@ -1818,6 +1821,7 @@ enum PPMusicToolbarTypes {
 		if ([self musicListWillChange]) {
 			[self willChangeValueForKey:kMusicListKVO];
 			[musicList loadOldMusicListAtURL:theURL];
+			selMusFromList = musicList.selectedMusic;
 			[self didChangeValueForKey:kMusicListKVO];
 			[self musicListDidChange];
 			return YES;
@@ -2083,22 +2087,18 @@ enum PPMusicToolbarTypes {
 	}
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
 		NSError *err = nil;
-		currentlyPlayingIndex.index = 0;
+		currentlyPlayingIndex.index = selMusFromList != -1 ? selMusFromList : 0;
 		[self selectCurrentlyPlayingMusic];
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 		{
 			[[NSAlert alertWithError:err] runModal];
 		}
-	}
+	} else if (selMusFromList != -1)
+		[self selectMusicAtIndex:selMusFromList];
 	NSUInteger lostCount = musicList.lostMusicCount;
 	if (lostCount) {
 		NSRunAlertPanel(kUnresolvableFile, kUnresolvableFileDescription, nil, nil, nil, (unsigned long)lostCount);
 	}
-	NSInteger selMus = musicList.selectedMusic;
-	if (selMus != -1) {
-		[self selectMusicAtIndex:selMus];
-	}
-
 }
 
 - (BOOL)musicListWillChange
