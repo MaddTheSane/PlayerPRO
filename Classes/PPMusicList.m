@@ -398,11 +398,16 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	return [[musicList objectAtIndex:index] musicUrl];
 }
 
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len
+{
+	return [musicList countByEnumeratingWithState:state objects:buffer count:len];
+}
+
 #pragma mark Archiving
 
 static NSURL *PPHomeURL()
 {
-	static NSURL *homeURL = nil;
+	static NSURL *homeURL;
 	if (homeURL == nil) {
 		homeURL = RETAINOBJ([NSURL fileURLWithPath:NSHomeDirectory() isDirectory:YES]);
 	}

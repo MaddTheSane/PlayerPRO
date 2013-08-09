@@ -21,7 +21,7 @@
 
 @end
 
-@interface PPMusicList : NSObject <NSCoding> {
+@interface PPMusicList : NSObject <NSCoding, NSFastEnumeration> {
 	NSMutableArray	*musicList;
 	NSUInteger		lostMusicCount;
 }
