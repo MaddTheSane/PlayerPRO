@@ -1334,6 +1334,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
 		[musicList loadMusicListFromPreferences];
 	}
+	NSInteger selMus = musicList.selectedMusic;
 	[self didChangeValueForKey:kMusicListKVO];
 
 	[tableView setDoubleAction:@selector(doubleClickMusicList)];
@@ -1408,7 +1409,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	if (lostCount) {
 		NSRunAlertPanel(kUnresolvableFile, kUnresolvableFileDescription, nil, nil, nil, (unsigned long)lostCount);
 	}
-	NSInteger selMus = musicList.selectedMusic;
 	if (selMus != -1) {
 		[self selectMusicAtIndex:selMus];
 	}
