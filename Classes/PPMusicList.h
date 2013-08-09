@@ -23,10 +23,12 @@
 
 @interface PPMusicList : NSObject <NSCoding, NSFastEnumeration> {
 	NSMutableArray	*musicList;
+	NSInteger		selectedMusic;
 	NSUInteger		lostMusicCount;
 }
 
 @property (readonly) NSUInteger lostMusicCount;
+@property (readwrite) NSInteger selectedMusic;
 
 - (void)sortMusicList;
 

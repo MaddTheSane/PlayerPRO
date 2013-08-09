@@ -14,6 +14,7 @@
 
 #define kMUSICLISTKEY @"Music List Key1"
 #define kMUSICLISTKEY2 @"Music List Key2"
+#define kMusicListLocation2 @"Music Key Location2"
 
 // GetIndString isn't supported on 64-bit Mac OS X
 // This code is emulation for GetIndString.
@@ -56,6 +57,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 @synthesize musicUrl;
 
+#if 0
 - (void)setTheMusicUrl:(NSURL *)amusicUrl
 {
 #if __has_feature(objc_arc)
@@ -75,6 +77,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	[tempUrl release];
 #endif
 }
+#endif
 
 - (BOOL)isEqual:(id)object
 {
@@ -174,6 +177,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 @synthesize theMusicList = musicList;
 @synthesize lostMusicCount;
+@synthesize selectedMusic;
 
 - (NSString *)description
 {
@@ -238,6 +242,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	lostMusicCount = preList.lostMusicCount;
 	[self loadMusicList:preList.theMusicList];
+	self.selectedMusic = preList.selectedMusic;
 	return YES;
 }
 
@@ -263,7 +268,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 {
 	lostMusicCount = 0;
 	ResFileRefNum refNum;
-	Handle aHandle;
+	Handle aHandle, locHand;
 	FSRef theRef;
 	UInt16 theNo, i;
 	CFURLGetFSRef(BRIDGE(CFURLRef, toOpen), &theRef);
@@ -273,13 +278,19 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 		return resErr;
 	}
 	UseResFile(refNum);
-	aHandle = Get1Resource( 'STR#', 128);
+	aHandle = Get1Resource('STR#', 128);
 	if( aHandle == NULL)
 	{
-		CloseResFile( refNum);
+		CloseResFile(refNum);
 		return ResError();
 	}
-	DetachResource( aHandle);
+	locHand = Get1Resource('selc', 128);
+	if (locHand == NULL) {
+		CloseResFile(refNum);
+		return ResError();
+	}
+	DetachResource(aHandle);
+	DetachResource(locHand);
 	CloseResFile(refNum);
 	
 	HLock( aHandle);
@@ -287,6 +298,12 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	PPBE16(&theNo);
 	
 	theNo /= 2;
+	
+	HLock(locHand);
+	short location = **((short**)locHand);
+	PPBE16(&location);
+	HUnlock(locHand);
+	DisposeHandle(locHand);
 	
 	NSMutableArray *newArray = [NSMutableArray array];
 	
@@ -318,11 +335,21 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 			PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullPath)];
 			[newArray addObject:obj];
 			RELEASEOBJ(obj);
-		} else lostMusicCount++;
+		} else {
+			if (location != -1 && location == (i / 2)) {
+				location = -1;
+			} else if (location != -1 && location > (i / 2)) {
+				location--;
+			}
+			lostMusicCount++;
+		}
 		
 	}
 	HUnlock( aHandle);
 	DisposeHandle( aHandle);
+	
+	self.selectedMusic = (location >= [newArray count]) ? location : -1;
+	
 	[self loadMusicList:newArray];
 
 	return noErr;
@@ -343,6 +370,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	if (self) {
 		musicList = [[NSMutableArray alloc] init];
 		lostMusicCount = 0;
+		selectedMusic = -1;
 	}
 	return self;
 }
@@ -443,6 +471,7 @@ static NSURL *PPHomeURL()
 				[musicList addObject:obj];
 				RELEASEOBJ(obj);
 			}
+			selectedMusic = -1;
 		} else {
 			musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
 			for (NSData *bookData in BookmarkArray) {
@@ -461,6 +490,10 @@ static NSURL *PPHomeURL()
 				[musicList addObject:obj];
 				RELEASEOBJ(obj);
 			}
+			NSNumber *curSel = nil;
+			if ((curSel = [decoder decodeObjectForKey:kMusicListLocation2])) {
+				selectedMusic = [curSel integerValue];
+			} else selectedMusic = -1;
 		}
 	}
 	return self;
@@ -476,6 +509,7 @@ static NSURL *PPHomeURL()
 			[BookmarkArray addObject:bookData];
 		}
 	}
+	[encoder encodeObject:@(selectedMusic) forKey:kMusicListLocation2];
 	[encoder encodeObject:BookmarkArray forKey:kMUSICLISTKEY2];
 }
 

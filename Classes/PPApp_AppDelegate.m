@@ -30,6 +30,9 @@
 #import <QTKit/QTExportSession.h>
 #import <QTKit/QTExportOptions.h>
 
+#define kUnresolvableFile @"Unresolvable files"
+#define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."
+
 @interface PPCurrentlyPlayingIndex : NSObject
 {
 	NSInteger index;
@@ -1400,10 +1403,14 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	[exportSettingsBox setContentView:[exportController view]];
 	
 	timeChecker = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0] interval:1/8.0 target:self selector:@selector(updateMusicStats:) userInfo:nil repeats:YES];
-	[[NSRunLoop mainRunLoop] addTimer:timeChecker forMode:NSDefaultRunLoopMode];
+	[[NSRunLoop mainRunLoop] addTimer:timeChecker forMode:NSRunLoopCommonModes];
 	NSUInteger lostCount = musicList.lostMusicCount;
 	if (lostCount) {
-		NSRunAlertPanel(@"Unresolvable files", @"There were %lu file(s) that were unable to be resolved.", nil, nil, nil, (unsigned long)lostCount);
+		NSRunAlertPanel(kUnresolvableFile, kUnresolvableFileDescription, nil, nil, nil, (unsigned long)lostCount);
+	}
+	NSInteger selMus = musicList.selectedMusic;
+	if (selMus != -1) {
+		[self selectMusicAtIndex:selMus];
 	}
 }
 
@@ -2015,6 +2022,8 @@ enum PPMusicToolbarTypes {
 		if (selected < 0)
 			break;
 		
+		musicList.selectedMusic = selected;
+		
 		PPMusicListObject *obj = [musicList objectInMusicListAtIndex:selected];
 		
 		NSURL *musicURL = obj.musicUrl;
@@ -2031,7 +2040,11 @@ enum PPMusicToolbarTypes {
 		{
 			char sig[5] = {0};
 			OSType2Ptr(theInfo.signature, sig);
-			[musicSignature setTitleWithMnemonic:[NSString stringWithCString:sig encoding:NSMacOSRomanStringEncoding]];
+			NSString *NSSig = [NSString stringWithCString:sig encoding:NSMacOSRomanStringEncoding];
+			if (!NSSig) {
+				NSSig = [NSString stringWithFormat:@"0x%x", (unsigned int)theInfo.signature];
+			}
+			[musicSignature setTitleWithMnemonic:NSSig];
 		}
 		[fileLocation setTitleWithMnemonic:[musicURL path]];
 		return;
@@ -2079,11 +2092,13 @@ enum PPMusicToolbarTypes {
 	}
 	NSUInteger lostCount = musicList.lostMusicCount;
 	if (lostCount) {
-		NSRunAlertPanel(@"Unresolvable files", @"There were %lu file(s) that were unable to be resolved.", nil, nil, nil, (unsigned long)lostCount);
+		NSRunAlertPanel(kUnresolvableFile, kUnresolvableFileDescription, nil, nil, nil, (unsigned long)lostCount);
 	}
-	if ([musicList countOfMusicList] > 0) {
-		[self selectMusicAtIndex:0];
+	NSInteger selMus = musicList.selectedMusic;
+	if (selMus != -1) {
+		[self selectMusicAtIndex:selMus];
 	}
+
 }
 
 - (BOOL)musicListWillChange
