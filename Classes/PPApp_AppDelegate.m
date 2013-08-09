@@ -1802,15 +1802,7 @@ enum PPMusicToolbarTypes {
 - (BOOL)handleFile:(NSURL *)theURL ofType:(NSString *)theUTI
 {
 	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
-	static BOOL hasAPPLPlug = NO;
-	if (!hasAPPLPlug && MADPlugAvailable(MADLib, "APPL")) {
-		hasAPPLPlug = YES;
-	}
-
-	if ([sharedWorkspace type:theUTI conformsToType:PPGenericTrackerUTI] || (hasAPPLPlug &&  [sharedWorkspace type:theUTI conformsToType:BRIDGE(NSString*, kUTTypeApplicationFile)])) {
-		[self addMusicToMusicList:theURL];
-		return YES;
-	}else if ([sharedWorkspace type:theUTI conformsToType:PPMusicListUTI]) {
+	if ([sharedWorkspace type:theUTI conformsToType:PPMusicListUTI]) {
 		if ([self musicListWillChange]) {
 			[self willChangeValueForKey:kMusicListKVO];
 			[musicList loadMusicListAtURL:theURL];
@@ -1826,16 +1818,6 @@ enum PPMusicToolbarTypes {
 			[self musicListDidChange];
 			return YES;
 		}
-	} else if([sharedWorkspace type:theUTI conformsToType:PPGenericInstrumentUTI]) {
-		if ([instrumentController isWindowLoaded]) {
-			NSError *theErr = nil;
-			if (![instrumentController importSampleFromURL:theURL makeUserSelectInstrument:YES error:&theErr])
-			{
-				[[NSAlert alertWithError:theErr] runModal];
-				return NO;
-			}
-			return YES;
-		} else return NO;
 	} else if ([sharedWorkspace type:theUTI conformsToType:PPPCMDUTI]) {
 		OSErr theOSErr = [patternHandler importPcmdFromURL:theURL];
 		if (theOSErr != noErr) {
@@ -1850,21 +1832,40 @@ enum PPMusicToolbarTypes {
 		if (![instrumentController importInstrumentListFromURL:theURL error:&err]) {
 			[[NSAlert alertWithError:err] runModal];
 		} else return YES;
-	} else if ([instrumentController isWindowLoaded]) {
-		NSInteger i;
-		for (i = 0; i < [instrumentImporter plugInCount]; i++) {
-			PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
-			for (NSString *uti in [obj UTITypes]) {
-				if ([sharedWorkspace type:theUTI conformsToType:uti]) {
-					NSError *theErr;
-					if (![instrumentController importSampleFromURL:theURL makeUserSelectInstrument:YES error:&theErr]) {
-						[[NSAlert alertWithError:theErr] runModal];
-						return NO;
-					}
+	} else {
+		{
+			NSMutableArray *trackerUTIs = [NSMutableArray array];
+			for (int i = 0; i < MADLib->TotalPlug; i++) {
+				[trackerUTIs addObjectsFromArray:BRIDGE(NSArray *, MADLib->ThePlug[i].UTItypes)];
+			}
+			for (NSString *aUTI in trackerUTIs) {
+				if([sharedWorkspace type:theUTI conformsToType:aUTI])
+				{
+					[self addMusicToMusicList:theURL];
 					return YES;
 				}
 			}
+		}
+		{
+			NSMutableArray *instrumentArray = [NSMutableArray array];
+			for (int i = 0; i < [instrumentImporter plugInCount]; i++) {
+				PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
+				[instrumentArray addObjectsFromArray:obj.UTITypes];
+			}
 			
+			for (NSString *aUTI in instrumentArray) {
+				if ([sharedWorkspace type:theUTI conformsToType:aUTI]) {
+					if ([instrumentController isWindowLoaded]) {
+						NSError *theErr = nil;
+						if (![instrumentController importSampleFromURL:theURL makeUserSelectInstrument:YES error:&theErr])
+						{
+							[[NSAlert alertWithError:theErr] runModal];
+							return NO;
+						}
+						return YES;
+					} else return NO;
+				}
+			}
 		}
 	}
 	return NO;
