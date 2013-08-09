@@ -239,4 +239,9 @@
 #endif
 }
 
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len
+{
+	return [instrumentIEArray countByEnumeratingWithState:state objects:buffer count:len];
+}
+
 @end

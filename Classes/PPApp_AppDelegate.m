@@ -1270,8 +1270,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		RELEASEOBJ(tmpInfo);
 	}
 	
-	for (i = 0; i < [instrumentImporter plugInCount]; i++) {
-		PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
+	for (PPInstrumentImporterObject *obj in instrumentImporter) {
 		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"InstrumentPlugName", @"Instrument plug-in name") plugURL:[[obj file] bundleURL]];
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
@@ -1279,8 +1278,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		RELEASEOBJ(tmpInfo);
 	}
 	
-	for (i = 0; i < [digitalHandler plugInCount]; i++) {
-		PPDigitalPlugInObject *obj = [digitalHandler plugInAtIndex:i];
+	for (PPDigitalPlugInObject *obj in digitalHandler) {
 		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"DigitalPlugName", @"Digital plug-in name") plugURL:[[obj file] bundleURL]];
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
@@ -1288,8 +1286,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		RELEASEOBJ(tmpInfo);
 	}
 	
-	for (i = 0; i < [filterHandler plugInCount]; i++) {
-		PPFilterPlugObject *obj = [filterHandler plugInAtIndex:i];
+	for (PPFilterPlugObject *obj in filterHandler) {
 		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"FilterPlugName", @"Filter plug-in name") plugURL:[[obj file] bundleURL]];
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
@@ -1848,8 +1845,7 @@ enum PPMusicToolbarTypes {
 		}
 		{
 			NSMutableArray *instrumentArray = [NSMutableArray array];
-			for (int i = 0; i < [instrumentImporter plugInCount]; i++) {
-				PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
+			for (PPInstrumentImporterObject *obj in instrumentImporter) {
 				[instrumentArray addObjectsFromArray:obj.UTITypes];
 			}
 			
@@ -1884,8 +1880,7 @@ enum PPMusicToolbarTypes {
 	if ([instrumentController isWindowLoaded]) {
 		NSInteger plugCount = [instrumentImporter plugInCount];
 		samplesDict = [[NSMutableDictionary alloc] initWithCapacity:plugCount];
-		for (i = 0; i < plugCount; i++) {
-			PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
+		for (PPInstrumentImporterObject *obj in instrumentImporter) {
 			NSArray *tmpArray = obj.UTITypes;
 			[samplesDict setObject:tmpArray forKey:obj.menuName];
 		}

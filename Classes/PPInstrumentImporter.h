@@ -12,7 +12,7 @@
 
 @class PPInstrumentImporterObject;
 
-@interface PPInstrumentImporter : NSObject
+@interface PPInstrumentImporter : NSObject <NSFastEnumeration>
 {
 	NSMutableArray *instrumentIEArray;
 	MADMusic **curMusic;

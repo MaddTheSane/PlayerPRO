@@ -10,7 +10,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 @class PPFilterPlugObject;
 
-@interface PPFilterPlugHandler : NSObject
+@interface PPFilterPlugHandler : NSObject <NSFastEnumeration>
 {
 	NSMutableArray	*filterPlugs;
 	MADMusic		**curMusic;

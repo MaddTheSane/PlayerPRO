@@ -11,7 +11,7 @@
 #include <PlayerPROCore/PPPlug.h>
 @class PPDigitalPlugInObject;
 
-@interface PPDigitalPlugInHandler : NSObject
+@interface PPDigitalPlugInHandler : NSObject <NSFastEnumeration>
 {
 	NSMutableArray	*digitalPlugs;
 	MADMusic		**curMusic;

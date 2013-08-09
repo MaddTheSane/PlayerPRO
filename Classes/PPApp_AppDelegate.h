@@ -64,7 +64,6 @@
 	PPPreferences			*preferences;
 	PPInstrumentImporter	*instrumentImporter;
 	PPDigitalPlugInHandler	*digitalHandler;
-	
 	PPFilterPlugHandler		*filterHandler;
 	
 	PatternHandler			*patternHandler;

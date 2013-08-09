@@ -315,9 +315,7 @@
 {
 	NSInteger plugCount = [importer plugInCount];
 	NSMutableDictionary *fileDict = [NSMutableDictionary dictionaryWithCapacity:plugCount];
-	NSInteger i;
-	for (i = 0; i < plugCount; i++) {
-		PPInstrumentImporterObject *obj = [importer plugInAtIndex:i];
+	for (PPInstrumentImporterObject *obj in importer) {
 		[fileDict setObject:obj.UTITypes forKey:obj.menuName];
 	}
 	NSOpenPanel *openPanel = RETAINOBJ([NSOpenPanel openPanel]);
