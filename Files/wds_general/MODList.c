@@ -1,4 +1,5 @@
 #include "Shuddup.h"
+#include "FileUtils.h"
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
@@ -430,7 +431,8 @@ void SaveMyMODListSTCf( FSSpec spec)
 		shortPtr[ 0] = theCell.v;
 	}
 	else shortPtr[ 0] = -1;
-	
+	MOT16( &shortPtr[ 0]);
+
 	HUnlock( aHandle);
 	
 	inOutBytes = 10;
@@ -455,6 +457,7 @@ void SaveMyMODListSTCf( FSSpec spec)
 	HLock( aHandle);
 	aCopy = *aHandle;
 	*(short*) aCopy = myList.maxY*2;
+	MOT16((short*)aCopy);
 	aCopy += 2;
 	
 	theCell.v = 0;	theCell.h = 0;
@@ -661,6 +664,7 @@ void OpenMODListSTCf( FSSpec spec)
 	
 	HLock( aHandle);
 	theNo = *((short*)(*aHandle));		// number of musics...
+	MOT16(&theNo);
 	HUnlock( aHandle);
 	
 	theNo /= 2;
@@ -709,7 +713,7 @@ void OpenMODListSTCf( FSSpec spec)
 		
 		HLock( aHandle);
 		shortPtr = ((short*)(*aHandle));		// number of musics...
-		
+		MOT16(shortPtr);
 		if( shortPtr[ 0] != -1)
 		{
 			PLSetSelect( 0, shortPtr[ 0], 0, shortPtr[ 0], &myList);

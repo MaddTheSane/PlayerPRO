@@ -219,7 +219,7 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 		/** Lecture du header + contenu de la partition **/
 		/*************************************************/
 		CompMode = tempPatHeader.CompressionMode;
-		//PPBE32(&CompMode);
+		
 		if( CompMode == 'MAD1')
 		{
 			inOutCount = sizeof( struct MusicPattern) + tempPatHeader.PatBytes;
