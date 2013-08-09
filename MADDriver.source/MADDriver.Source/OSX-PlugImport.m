@@ -343,7 +343,7 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 	}
 }
 
-static Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
+static inline Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
 {
 	// Check if we're running Lion or later
 	if (&kCFURLFileResourceIdentifierKey == NULL) {

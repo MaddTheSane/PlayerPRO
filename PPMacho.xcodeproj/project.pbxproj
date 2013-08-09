@@ -7328,6 +7328,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -7354,10 +7355,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -7398,7 +7396,10 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
@@ -7419,7 +7420,10 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
@@ -7472,7 +7476,10 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
@@ -7493,7 +7500,10 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
@@ -7512,7 +7522,10 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
@@ -7533,7 +7546,10 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
@@ -7575,6 +7591,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MOD;
@@ -7594,6 +7611,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MOD;
@@ -7610,6 +7628,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = 669;
@@ -7628,6 +7647,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = 669;
@@ -7644,6 +7664,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = AMF;
@@ -7662,6 +7683,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = AMF;
@@ -7678,6 +7700,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = DMF;
@@ -7696,6 +7719,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = DMF;
@@ -7712,6 +7736,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "IT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = IT;
@@ -7730,6 +7755,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "IT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = IT;
@@ -7746,7 +7772,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Fade Note-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Fade Note";
@@ -7764,7 +7793,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Fade Note-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Fade Note";
@@ -7780,7 +7812,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Fade Volume-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Fade Volume";
@@ -7798,7 +7833,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Fade Volume-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Fade Volume";
@@ -7814,7 +7852,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Note Translate-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Note Translate";
@@ -7832,7 +7873,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Note Translate-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Note Translate";
@@ -7848,7 +7892,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Propagate-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Propagate;
@@ -7866,7 +7913,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Propagate-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Propagate;
@@ -7882,7 +7932,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Revert-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Revert;
@@ -7900,7 +7953,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Revert-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Revert;
@@ -7950,6 +8006,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_DRAW_SPROCKETS,
 					MAINPLAYERPRO,
+					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
@@ -8081,7 +8138,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Amplitude-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Amplitude;
@@ -8099,7 +8159,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Amplitude-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Amplitude;
@@ -8115,7 +8178,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Backwards-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Backwards;
@@ -8133,7 +8199,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Backwards-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Backwards;
@@ -8149,7 +8218,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Crop-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Crop;
@@ -8167,7 +8239,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Crop-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Crop;
@@ -8183,7 +8258,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "CrossFade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = CrossFade;
@@ -8201,7 +8279,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "CrossFade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = CrossFade;
@@ -8217,7 +8298,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Depth-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Depth;
@@ -8235,7 +8319,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Depth-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Depth;
@@ -8251,7 +8338,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Echo-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Echo;
@@ -8269,7 +8359,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Echo-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Echo;
@@ -8285,7 +8378,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Fade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Fade;
@@ -8303,7 +8399,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Fade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Fade;
@@ -8319,7 +8418,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Invert;
@@ -8337,7 +8439,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Invert;
@@ -8353,7 +8458,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Length;
@@ -8371,7 +8479,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Length;
@@ -8387,7 +8498,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Mix;
@@ -8405,7 +8519,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Mix;
@@ -8421,7 +8538,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Normalize;
@@ -8439,7 +8559,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Normalize;
@@ -8455,7 +8578,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Sampling Rate";
@@ -8473,7 +8599,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Sampling Rate";
@@ -8489,7 +8618,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Silence;
@@ -8507,7 +8639,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Silence;
@@ -8523,7 +8658,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Smooth;
@@ -8541,7 +8679,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Smooth;
@@ -8557,7 +8698,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Tone Generator";
@@ -8575,7 +8719,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Tone Generator";
@@ -8591,6 +8738,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MADfg;
@@ -8609,6 +8757,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MADfg;
@@ -8625,6 +8774,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MADH;
@@ -8643,6 +8793,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MADH;
@@ -8659,6 +8810,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MADI;
@@ -8677,6 +8829,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MADI;
@@ -8693,6 +8846,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MED;
@@ -8711,6 +8865,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MED;
@@ -8727,6 +8882,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MTM;
@@ -8745,6 +8901,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MTM;
@@ -8761,6 +8918,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Okta;
@@ -8779,6 +8937,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Okta;
@@ -8795,6 +8954,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = S3M;
@@ -8813,6 +8973,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = S3M;
@@ -8829,6 +8990,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = ULT;
@@ -8847,6 +9009,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = ULT;
@@ -8863,6 +9026,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = UMX;
@@ -8881,6 +9045,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = UMX;
@@ -8897,6 +9062,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = XM;
@@ -8915,6 +9081,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = XM;
@@ -8932,6 +9099,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MIDI;
@@ -8951,6 +9119,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = MIDI;
@@ -8967,6 +9136,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = APPL;
@@ -8985,6 +9155,7 @@
 				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = APPL;
@@ -9002,6 +9173,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -9022,10 +9194,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -9082,6 +9251,7 @@
 					DEBUG_MODE,
 					USE_DRAW_SPROCKETS,
 					MAINPLAYERPRO,
+					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
@@ -9128,7 +9298,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Complex Fade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Complex Fade";
@@ -9146,7 +9319,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "Complex Fade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Complex Fade";
@@ -9248,6 +9424,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
@@ -9267,7 +9444,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
@@ -9284,7 +9461,10 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "QuickTime-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = QuickTime;
@@ -9302,7 +9482,10 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "QuickTime-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = QuickTime;

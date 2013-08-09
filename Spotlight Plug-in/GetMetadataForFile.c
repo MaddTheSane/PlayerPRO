@@ -79,7 +79,6 @@ Boolean GetMetadataForFile(void* thisInterface,
 	
 	{
 		char		type[5];
-//#ifdef DEBUG
 		char		utiType[5] = {0};
 		{
 			OSType info;
@@ -97,8 +96,6 @@ Boolean GetMetadataForFile(void* thisInterface,
 				strcpy(utiType, "!!!!");
 			}
 		}
-		
-//#endif
 
 		char *path = NULL;
 		{
@@ -230,7 +227,6 @@ Boolean GetMetadataForFile(void* thisInterface,
 		}
 		
 		CFDictionarySetValue(attributes, kPPMDInstumentsList, InstruArray);
-		
 		CFRelease(InstruArray);
 	}
 	
@@ -249,7 +245,6 @@ Boolean GetMetadataForFile(void* thisInterface,
 			}
 		}
 		CFDictionarySetValue(attributes, kPPMDPatternList, PatArray);
-
 		CFRelease(PatArray);
 	}
 	

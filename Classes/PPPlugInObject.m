@@ -84,19 +84,18 @@ NSArray *DefaultPlugInLocations()
 {
 	static NSArray *immPlugLocs = nil;
 	if (immPlugLocs == nil) {
-		@autoreleasepool {
-			NSMutableArray *plugLocs = [NSMutableArray arrayWithCapacity:3];
-
-			NSFileManager *fm = [NSFileManager defaultManager];
-			[plugLocs addObject:[[NSBundle mainBundle] builtInPlugInsURL]];
-			
-			[plugLocs addObject:[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]];
-			
-			//User plugins
-			[plugLocs addObject:[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]];
-			
-			immPlugLocs = [[NSArray alloc] initWithArray:plugLocs];
-		}
+		NSMutableArray *plugLocs = [[NSMutableArray alloc] initWithCapacity:3];
+		
+		NSFileManager *fm = [NSFileManager defaultManager];
+		[plugLocs addObject:[[NSBundle mainBundle] builtInPlugInsURL]];
+		
+		[plugLocs addObject:[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]];
+		
+		//User plugins
+		[plugLocs addObject:[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]];
+		
+		immPlugLocs = [[NSArray alloc] initWithArray:plugLocs];
+		RELEASEOBJ(plugLocs);
 	}
 	
 	return immPlugLocs;
