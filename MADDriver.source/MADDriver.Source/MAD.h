@@ -114,10 +114,6 @@
 #endif
 #endif
 
-#if !defined(WIN32)
-#define pascal
-#endif
-
 #if !defined(_MAC_H)
 
 #define MemError()					0
