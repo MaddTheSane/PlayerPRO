@@ -31,14 +31,14 @@
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
 #define PPEXPORT extern
 #ifdef __cplusplus
-#define EXP extern "c"
+#define EXP extern "C"
 #else
 #define EXP extern
 #endif
 #else
 #define PPEXPORT extern __attribute__((visibility("default")))
 #ifdef __cplusplus
-#define EXP extern "c" __attribute__((visibility("default")))
+#define EXP extern "C" __attribute__((visibility("default")))
 #else
 #define EXP PPEXPORT
 #endif
@@ -83,13 +83,13 @@
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
 #define PPEXPORT extern
 #ifdef __cplusplus
-#define EXP extern "c"
+#define EXP extern "C"
 #else
 #define EXP extern
 #endif
 #else
 #ifdef __cplusplus
-#define EXP extern "c" __declspec(dllexport)
+#define EXP extern "C" __declspec(dllexport)
 #else
 #define EXP extern __declspec(dllexport)
 #endif
@@ -108,7 +108,7 @@
 #ifndef EXP
 #define PPEXPORT extern
 #ifdef __cplusplus
-#define EXP extern "c"
+#define EXP extern "C"
 #else
 #define EXP PPEXPORT
 #endif
