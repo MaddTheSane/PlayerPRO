@@ -2751,13 +2751,12 @@ void FileInformations( short whichItem)
 #define NUM_ARRAY_ELEMS	5
 #define STRING_LENGTH	3
 
-struct QSort {
+typedef struct QSort {
 	FSSpec	 		*spec;
 	unsigned char	*tt;
-};
-typedef struct QSort QSort;
+} QSort;
 
-int CompareFSSpec(const void *s1, const void *s2);
+int CompareFSSpec (const void *s1, const void *s2);
 int CompareFSSpec (const void *s1, const void *s2)
 {
 	return( RelString( ((QSort*) s1)->spec->name, ((QSort*) s2)->spec->name, false, false));
@@ -2771,7 +2770,7 @@ void SortMusicList(void)
 	Point			theCell, selecCell;
 	Str255			tempStr;
 
-	myFSS = (QSort*) MyNewPtr( myList.maxY * sizeof( FSSpec));
+	myFSS = (QSort*) MyNewPtr( myList.maxY * sizeof( QSort));
 	if( myFSS != NULL)
 	{
 		selecCell.h = 0;	selecCell.v = 0;
@@ -2802,8 +2801,10 @@ void SortMusicList(void)
 		{
 			PLSetSelect( -1, -1, -1, -1, &myList);
 			
+			//ListHandle MODList;
+			
 			selecCell.h = 0;	selecCell.v = 0;
-		/*	if( LSearch( &selectDat, sizeof( FSSpec), NULL, &selecCell, MODList))
+			/*if( LSearch( &selectDat, sizeof( FSSpec), NULL, &selecCell, MODList))
 			{
 				PLSetSelect( selecCell.h, selecCell.v, selecCell.h, selecCell.v, &myList);
 				PLAutoScroll( &myList);

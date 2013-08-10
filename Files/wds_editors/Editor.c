@@ -32,7 +32,7 @@
 	};
 #define	AHELPSIZE	21
 
-static pascal Boolean myDragClickLoop(void);
+//static pascal Boolean myDragClickLoop(void);
 	static	short		AHelp[ AHELPSIZE] =
 	{ HPref, HLoad, HSave, HUp, HInfo, HPlay, HRec, HOpenA, HTrack, HPos, HPatt, HFX, HLoop, HFind, HDown, HFill, HD1, HD2, HD3, HD4, HStep};
 	

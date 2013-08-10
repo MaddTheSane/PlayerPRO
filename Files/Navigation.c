@@ -44,7 +44,7 @@ static MenuHandle	showWhatMenu;
 static OSType		plugListO[ 25];
 static OSType		specificType;
 extern short		showWhat;
-static MADMusic		*previewPartition;
+static MADMusic		*previewPartition = NULL;
 static Boolean		gEraseAdd, gEraseAddCurrent, gUpdateCurrentFile;
 
 Boolean QTTestConversion( FSSpec *file, OSType fileType);

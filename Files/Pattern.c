@@ -25,50 +25,49 @@ pascal OSErr MyPATTrackingHandler(short, WindowPtr, void *, DragReference);
 pascal OSErr MyPATReceiveDropHandler(WindowPtr, void*, DragReference);
 pascal OSErr MyPATSendDataProc(FlavorType, void *, ItemReference, DragReference);
 
-pascal Boolean myDragClickLoop(void);
 pascal OSErr MyPATTrackingHandler(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag);
 pascal OSErr MyPATReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, DragReference theDrag);
 pascal OSErr MyPATSendDataProc(FlavorType theFlavor, void *refCon, ItemReference theItem, DragReference theDrag);
 static short  AHelp[ AHELPSIZE] = { HNew, HLoad, HSave, HDel, HInfo, HOpenA, HList};
 
-	void DoHelpPatList( short **items, short *lsize)
-	{
-		*lsize = AHELPSIZE;
-		*items = AHelp;
-	}
+void DoHelpPatList( short **items, short *lsize)
+{
+	*lsize = AHELPSIZE;
+	*items = AHelp;
+}
 
-	/*****************************/
+/*****************************/
 
 
-	extern	EventRecord				theEvent;
-	extern	DialogPtr				EditorDlog, ClassicDlog;
-	extern	RGBColor				theColor;
-	extern	Boolean					DragManagerUse;
+extern	EventRecord				theEvent;
+extern	DialogPtr				EditorDlog, ClassicDlog;
+extern	RGBColor				theColor;
+extern	Boolean					DragManagerUse;
 
-			DialogPtr				PatListDlog;
-			
-	static 	ListHandle				PatList2;
-	static	Rect					PatRectList2, CurRect, CurChar;
-	static	short					PatCopy, ReaderCopy, HCell, LChar;
-	static	short					CurrentPat, CharNo;
-	static	short					DragPatSource;
-	static	long 					lastWhen = 0;
-	static	ControlHandle			myListControl, InfoBut, LoadBut, DelBut, SaveBut, NewBut, OpenBut;
-	static	Boolean					canAcceptDrag;
+		DialogPtr				PatListDlog;
+		
+static 	ListHandle				PatList2;
+static	Rect					PatRectList2, CurRect, CurChar;
+static	short					PatCopy, ReaderCopy, HCell, LChar;
+static	short					CurrentPat, CharNo;
+static	short					DragPatSource;
+static	long 					lastWhen = 0;
+static	ControlHandle			myListControl, InfoBut, LoadBut, DelBut, SaveBut, NewBut, OpenBut;
+static	Boolean					canAcceptDrag;
 
-	static	DragSendDataUPP			mySendDataUPP;
-	static	DragTrackingHandlerUPP	MyTrackingHandlerUPP;
-	static	DragReceiveHandlerUPP	MyReceiveDropHandlerUPP;
+static	DragSendDataUPP			mySendDataUPP;
+static	DragTrackingHandlerUPP	MyTrackingHandlerUPP;
+static	DragReceiveHandlerUPP	MyReceiveDropHandlerUPP;
 
-	void TurnRadio( short	item, DialogPtr	dlog, Boolean alors);
-	void SetPatList2( ListHandle	theList);
-	Boolean DialogPatternInfo( short);
-	Boolean DragPatternFunction( RgnHandle myRgn, short theNo, EventRecord *theEvent);
-	void LoadAPatternInt( FSSpec sFile, short selectedPos);
-	void SaveAPatternInt( FSSpec	sFile, short theID);
-	void DeleteAPattern( Boolean AskDelete);
-	void DuplicatePattern( short);
-	short GetPatternSelect();
+void TurnRadio( short	item, DialogPtr	dlog, Boolean alors);
+void SetPatList2( ListHandle	theList);
+Boolean DialogPatternInfo( short);
+Boolean DragPatternFunction( RgnHandle myRgn, short theNo, EventRecord *theEvent);
+void LoadAPatternInt( FSSpec sFile, short selectedPos);
+void SaveAPatternInt( FSSpec	sFile, short theID);
+void DeleteAPattern( Boolean AskDelete);
+void DuplicatePattern( short);
+short GetPatternSelect();
 
 static Boolean firstCall;
 
@@ -231,7 +230,6 @@ pascal OSErr MyPATTrackingHandler(short message, WindowPtr theWindow, void *hand
 		case kDragTrackingLeaveHandler:
 		
 			break;
-
 	}
 	RGBBackColor( &theColor);
 
