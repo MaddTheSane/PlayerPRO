@@ -2801,10 +2801,8 @@ void SortMusicList(void)
 		{
 			PLSetSelect( -1, -1, -1, -1, &myList);
 			
-			//ListHandle MODList;
-			
 			selecCell.h = 0;	selecCell.v = 0;
-			/*if( LSearch( &selectDat, sizeof( FSSpec), NULL, &selecCell, MODList))
+		/*	if( LSearch( &selectDat, sizeof( FSSpec), NULL, &selecCell, MODList))
 			{
 				PLSetSelect( selecCell.h, selecCell.v, selecCell.h, selecCell.v, &myList);
 				PLAutoScroll( &myList);
