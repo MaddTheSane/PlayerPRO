@@ -381,6 +381,7 @@
 		559088E210E87E8800CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		559088E310E87ED100CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		559088E410E87ED700CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
+		55A290BA17B6A0C200764F80 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
 		55B797E310D6E6E50073E379 /* CompFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FE110D6C79D00BB619C /* CompFade.c */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
@@ -2215,6 +2216,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55A290BA17B6A0C200764F80 /* CoreFoundation.framework in Frameworks */,
 				88E0C4970C2F21E500D6C081 /* Carbon.framework in Frameworks */,
 				55EE8EC2100404EB00E75E63 /* CoreAudio.framework in Frameworks */,
 				55EE8EC6100404EB00E75E63 /* QuickTime.framework in Frameworks */,
@@ -6809,8 +6811,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.3.9][arch=ppc]" = 10.2;
+				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.4][arch=ppc]" = 10.3;
 				SDKROOT = macosx10.4;
-				"SDKROOT[arch=ppc]" = macosx10.3.9;
 			};
 			name = Release;
 		};
@@ -7983,9 +7985,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.3.9][arch=ppc]" = 10.2;
+				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.4][arch=ppc]" = 10.3;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx10.4;
-				"SDKROOT[arch=ppc]" = macosx10.3.9;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;

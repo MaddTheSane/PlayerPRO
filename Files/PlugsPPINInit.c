@@ -827,7 +827,7 @@ void HandleCustomMouseNAVDown(NavCBRecPtr callBackParms)
 
 static void CFStringToOSType(CFStringRef CFstri, OSType *theOSType)
 {
-	char * thecOSType = CFStringGetCStringPtr(CFstri, kCFStringEncodingMacRoman);
+	char * thecOSType = (char*)CFStringGetCStringPtr(CFstri, kCFStringEncodingMacRoman);
 	
 	*theOSType = Ptr2OSType(thecOSType);
 }
