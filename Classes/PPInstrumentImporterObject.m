@@ -77,7 +77,7 @@ typedef enum _MADPlugCapabilities {
 		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
 			UTITypes = [[NSArray alloc] initWithArray:DictionaryTemp];
 		} else if ([DictionaryTemp isKindOfClass:strClass]) {
-			UTITypes = RETAINOBJ([NSArray arrayWithObject:[NSString stringWithString:DictionaryTemp]]);
+			UTITypes = RETAINOBJ(@[[NSString stringWithString:DictionaryTemp]]);
 		} else {
 			RELEASEOBJ(tempDict);
 			AUTORELEASEOBJNORETURN(self);

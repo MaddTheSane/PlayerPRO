@@ -851,7 +851,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			//AIFF
 		{
 			NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
-			[savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"public.aiff-audio"]];
+			[savePanel setAllowedFileTypes:@[@"public.aiff-audio"]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
 			if (![musicName isEqualToString:@""]) {
@@ -874,7 +874,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 							} else {
 								NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
 								if (retVal == NSAlertAlternateReturn) {
-									[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:[NSArray arrayWithObject:[savePanel URL]]];
+									[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[[savePanel URL]]];
 								}
 							}
 						});
@@ -893,7 +893,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			//MP4
 		{
 			NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
-			[savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"com.apple.m4a-audio"]];
+			[savePanel setAllowedFileTypes:@[@"com.apple.m4a-audio"]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
 			if (![musicName isEqualToString:@""]) {
@@ -988,7 +988,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 								} else {
 									NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
 									if (retVal == NSAlertAlternateReturn) {
-										[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:[NSArray arrayWithObject:[savePanel URL]]];
+										[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[[savePanel URL]]];
 									}
 								}
 							});
@@ -1043,7 +1043,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 					} else {
 						NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
 						if (retVal == NSAlertAlternateReturn) {
-							[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:[NSArray arrayWithObject:fileURL]];
+							[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[fileURL]];
 						}
 					}
 				}
@@ -1071,7 +1071,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	MADBeginExport(MADDriver);
 	
 	NSSavePanel * savePanel = RETAINOBJ([NSSavePanel savePanel]);
-	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:MADNativeUTI]];
+	[savePanel setAllowedFileTypes:@[MADNativeUTI]];
 	[savePanel setCanCreateDirectories:YES];
 	[savePanel setCanSelectHiddenExtension:YES];
 	if (![musicName isEqualToString:@""]) {
@@ -1526,7 +1526,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 {
 	MADBeginExport(MADDriver);
 	NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
-	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:PPInstrumentListUTI]];
+	[savePanel setAllowedFileTypes:@[PPInstrumentListUTI]];
 	[savePanel setCanCreateDirectories:YES];
 	[savePanel setCanSelectHiddenExtension:YES];
 	if (![musicName isEqualToString:@""]) {
@@ -1605,7 +1605,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 {
 	NSOpenPanel *panel = RETAINOBJ([NSOpenPanel openPanel]);
 	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithCapacity:MADLib->TotalPlug + 1];
-	[trackerDict setObject:[NSArray arrayWithObject:MADNativeUTI] forKey:@"MADK Tracker"];
+	[trackerDict setObject:@[MADNativeUTI] forKey:@"MADK Tracker"];
 	
 	int i = 0;
 	for (i = 0; i < MADLib->TotalPlug; i++) {
@@ -1881,8 +1881,8 @@ enum PPMusicToolbarTypes {
 - (IBAction)openFile:(id)sender {
 	NSOpenPanel *panel = RETAINOBJ([NSOpenPanel openPanel]);
 	int i = 0;
-	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithObject:[NSArray arrayWithObject:MADNativeUTI] forKey:@"MADK Tracker"];
-	NSDictionary *playlistDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:PPMusicListUTI], @"PlayerPRO Music List", [NSArray arrayWithObject:PPOldMusicListUTI], @"PlayerPRO Old Music List", nil];
+	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithObject:@[MADNativeUTI] forKey:@"MADK Tracker"];
+	NSDictionary *playlistDict = [NSDictionary dictionaryWithObjectsAndKeys:@[PPMusicListUTI], @"PlayerPRO Music List", @[PPOldMusicListUTI], @"PlayerPRO Old Music List", nil];
 	for (i = 0; i < MADLib->TotalPlug; i++) {
 		[trackerDict setObject:BRIDGE(NSArray*, MADLib->ThePlug[i].UTItypes) forKey:BRIDGE(NSString*, MADLib->ThePlug[i].MenuName)];
 	}
@@ -1897,7 +1897,7 @@ enum PPMusicToolbarTypes {
 		}
 	}
 
-	NSDictionary *otherDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:PPPCMDUTI], @"PCMD", [NSArray arrayWithObject:PPInstrumentListUTI], @"Instrument List", nil];
+	NSDictionary *otherDict = [NSDictionary dictionaryWithObjectsAndKeys:@[PPPCMDUTI], @"PCMD", @[PPInstrumentListUTI], @"Instrument List", nil];
 		
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:trackerDict playlistDictionary:playlistDict instrumentDictionary:samplesDict additionalDictionary:otherDict];
 	[av setupDefaults];
@@ -1922,7 +1922,7 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)saveMusicList:(id)sender {
 	NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
-	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:PPMusicListUTI]];
+	[savePanel setAllowedFileTypes:@[PPMusicListUTI]];
 	[savePanel setCanCreateDirectories:YES];
 	[savePanel setCanSelectHiddenExtension:YES];
 	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
