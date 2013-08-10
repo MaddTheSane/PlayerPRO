@@ -19,7 +19,6 @@
 + (NSColor *)PPDecodeColorWithData:(NSData *)theData
 {
 	return [NSKeyedUnarchiver unarchiveObjectWithData:theData];
-
 }
 
 @end

@@ -25,7 +25,6 @@
 
 @interface PPInstrumentWindowController ()
 - (void)loadInstrumentsFromMusic;
-
 @end
 
 @implementation PPInstrumentWindowController
@@ -191,7 +190,7 @@
 				}
 				memcpy(dataData, curData->data, curData->size);
 				if (curData->amp == 16) {
-					__block short	*shortPtr = (short*) dataData;
+					__block short *shortPtr = (short*) dataData;
 					
 					dispatch_apply(curData->size / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
 						PPBE16(&shortPtr[y]);
@@ -222,7 +221,7 @@
 		__block InstrData *tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
 		
 		// **** HEADER ***
-		inOutCount = sizeof( InstrData) * MAXINSTRU;
+		inOutCount = sizeof(InstrData) * MAXINSTRU;
 		if ([fileData length] <= inOutCount) {
 			if (theErr) {
 				*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADIncompatibleFile));
@@ -235,7 +234,7 @@
 			ByteSwapInstrData(&tempInstrData[x]);
 		});
 		
-		for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( *curMusic, x);
+		for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument(*curMusic, x);
 		
 		memcpy((*curMusic)->fid, tempInstrData, inOutCount);
 		filePos += inOutCount;
@@ -261,7 +260,7 @@
 			
 			// ** Read Sample header **
 			
-			curData = (*curMusic)->sample[ i * MAXSAMPLE +  x] = (sData*) malloc( sizeof( sData));
+			curData = (*curMusic)->sample[ i * MAXSAMPLE +  x] = (sData*)malloc( sizeof( sData));
 			if( curData == NULL)
 			{
 				if (theErr) {
@@ -277,7 +276,7 @@
 			
 			// ** Read Sample DATA
 			
-			curData->data = malloc( curData->size);
+			curData->data = malloc(curData->size);
 			if( curData->data == NULL)
 			{
 				if (theErr) {
@@ -290,7 +289,7 @@
 			[fileData getBytes:curData->data range:NSMakeRange(filePos, inOutCount)];
 			filePos += inOutCount;
 			if (curData->amp == 16) {
-				__block short	*shortPtr = (short*) curData->data;
+				__block short *shortPtr = (short*)curData->data;
 				
 				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
 					PPBE16(&shortPtr[y]);
@@ -414,6 +413,8 @@
 	
 	SUPERDEALLOC;
 }
+
+#pragma mark NSOutlineView delegates and data ref calls
 
 static void DrawCGSampleInt(long 	start,
 							long 	tSS,

@@ -12,7 +12,6 @@
 {
 	NSOpenPanel *openPanel;
 	NSArray *utiObjects;
-	//IBOutlet NSMenu *fileTypeSelectionMenu;
 	IBOutlet NSPopUpButton *popUp;
 }
 

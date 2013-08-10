@@ -22,19 +22,19 @@
 
 - (id)init 
 {
-    if (self = [super initWithWindowNibName:@"Preferences"]) {
+	if (self = [super initWithWindowNibName:@"Preferences"]) {
 		viewControllers = @[AUTORELEASEOBJ([[SoundOutputController alloc] init]),
-						   AUTORELEASEOBJ([[PianoPreferencesController alloc] init]),
-						   AUTORELEASEOBJ([[MusicListPreferenceController alloc] init]),
-						   AUTORELEASEOBJ([[ColorPreferenceController alloc] init]),
-						   AUTORELEASEOBJ([[BoxEditorPreferenceController alloc] init]),
-						   AUTORELEASEOBJ([[DigitalEditorPreferenceControler alloc] init]),
-						   AUTORELEASEOBJ([[ClassicEditorPreferenceController alloc] init]),
-						   AUTORELEASEOBJ([[MidiHardwarePreferenceController alloc] init]),
-						   AUTORELEASEOBJ([[MiscPreferenceController alloc] init])];
+					  AUTORELEASEOBJ([[PianoPreferencesController alloc] init]),
+					  AUTORELEASEOBJ([[MusicListPreferenceController alloc] init]),
+					  AUTORELEASEOBJ([[ColorPreferenceController alloc] init]),
+					  AUTORELEASEOBJ([[BoxEditorPreferenceController alloc] init]),
+					  AUTORELEASEOBJ([[DigitalEditorPreferenceControler alloc] init]),
+					  AUTORELEASEOBJ([[ClassicEditorPreferenceController alloc] init]),
+					  AUTORELEASEOBJ([[MidiHardwarePreferenceController alloc] init]),
+					  AUTORELEASEOBJ([[MiscPreferenceController alloc] init])];
 		RETAINOBJ(viewControllers);
-    }
-    return self;
+	}
+	return self;
 }
 
 #if !__has_feature(objc_arc)
