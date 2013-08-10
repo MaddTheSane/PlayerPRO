@@ -23,7 +23,7 @@
 - (id)init 
 {
     if (self = [super initWithWindowNibName:@"Preferences"]) {
-		viewControllers = [[NSArray alloc] initWithObjects:AUTORELEASEOBJ([[SoundOutputController alloc] init]),
+		viewControllers = @[AUTORELEASEOBJ([[SoundOutputController alloc] init]),
 						   AUTORELEASEOBJ([[PianoPreferencesController alloc] init]),
 						   AUTORELEASEOBJ([[MusicListPreferenceController alloc] init]),
 						   AUTORELEASEOBJ([[ColorPreferenceController alloc] init]),
@@ -31,8 +31,8 @@
 						   AUTORELEASEOBJ([[DigitalEditorPreferenceControler alloc] init]),
 						   AUTORELEASEOBJ([[ClassicEditorPreferenceController alloc] init]),
 						   AUTORELEASEOBJ([[MidiHardwarePreferenceController alloc] init]),
-						   AUTORELEASEOBJ([[MiscPreferenceController alloc] init]),
-						   nil];
+						   AUTORELEASEOBJ([[MiscPreferenceController alloc] init])];
+		RETAINOBJ(viewControllers);
     }
     return self;
 }

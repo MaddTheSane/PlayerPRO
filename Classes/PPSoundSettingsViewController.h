@@ -30,16 +30,16 @@
 {
 	__arcweak id<PPSoundSettingsViewControllerDelegate> delegate;
 	IBOutlet NSButton *oversampling;
-    IBOutlet NSButton *reverb;
-    IBOutlet NSButton *stereoDelay;
-    IBOutlet NSButton *surround;
-    IBOutlet NSMatrix *rate;
-    IBOutlet NSMatrix *outputBits;
-    IBOutlet NSMatrix *soundDriver;
-    IBOutlet NSPopUpButton *oversamplingNum;
-    IBOutlet NSPopUpButton *reverbNum;
-    IBOutlet NSPopUpButton *stereoDelayNum;
-    IBOutlet NSPopUpButton *reverbPercent;
+	IBOutlet NSButton *reverb;
+	IBOutlet NSButton *stereoDelay;
+	IBOutlet NSButton *surround;
+	IBOutlet NSMatrix *rate;
+	IBOutlet NSMatrix *outputBits;
+	IBOutlet NSMatrix *soundDriver;
+	IBOutlet NSPopUpButton *oversamplingNum;
+	IBOutlet NSPopUpButton *reverbNum;
+	IBOutlet NSPopUpButton *stereoDelayNum;
+	IBOutlet NSPopUpButton *reverbPercent;
 	BOOL reverbActive;
 	BOOL surroundActive;
 	BOOL stereoDelayActive;
