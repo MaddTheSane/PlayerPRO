@@ -239,6 +239,8 @@
 		554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E126410D6F4F700BB619C /* Propagate.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF010D6C79D00BB619C /* Propagate.c */; };
 		554E126610D6F50500BB619C /* Revert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF410D6C79D00BB619C /* Revert.c */; };
+		555143CA17B6EDCF00252657 /* PPToneGeneratorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555143C817B6EDCF00252657 /* PPToneGeneratorController.m */; };
+		555143CB17B6EDCF00252657 /* PPToneGeneratorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 555143C917B6EDCF00252657 /* PPToneGeneratorController.xib */; };
 		555C125116378B3500735225 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		55672E1C10CAD641008C5C3D /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55672E1D10CAD641008C5C3D /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
@@ -365,7 +367,6 @@
 		557DE91510E08DB000177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE95710E08DB900177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE95810E08DB900177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		557DE99A10E08DC100177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE99B10E08DC100177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DEA3710E0900A00177B4C /* Fade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100C10D6C79E00BB619C /* Fade.c */; };
 		557DEA3810E0900A00177B4C /* Fade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E100D10D6C79E00BB619C /* Fade.r */; };
@@ -379,7 +380,6 @@
 		557DEA5610E092D800177B4C /* Sampling Rate.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E101E10D6C79E00BB619C /* Sampling Rate.r */; };
 		557DEA5710E092E000177B4C /* Silence.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102010D6C79E00BB619C /* Silence.c */; };
 		557DEA5B10E092F300177B4C /* ToneGenerator.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102610D6C79E00BB619C /* ToneGenerator.c */; };
-		557DEA5C10E092F400177B4C /* ToneGenerator.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E102710D6C79E00BB619C /* ToneGenerator.r */; };
 		557DEA5D10E0930100177B4C /* Smooth.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102310D6C79E00BB619C /* Smooth.c */; };
 		557DEB2A10E0944100177B4C /* Backwards.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE5DF10E0882800177B4C /* Backwards.plugin */; };
 		557DEB2B10E0944100177B4C /* Crop.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE62210E0884100177B4C /* Crop.plugin */; };
@@ -608,6 +608,12 @@
 		55F4287816A89A9C009013D8 /* PPMadCommandObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287716A89A9C009013D8 /* PPMadCommandObject.m */; };
 		55F4287C16A8B1FB009013D8 /* PPSoundSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */; };
 		55F4287D16A8B1FB009013D8 /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */; };
+		55F8C3D917B9927A00DFE937 /* JigsawWave.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 55F8C3D517B9927A00DFE937 /* JigsawWave.tiff */; };
+		55F8C3DA17B9927A00DFE937 /* SilentWave.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 55F8C3D617B9927A00DFE937 /* SilentWave.tiff */; };
+		55F8C3DB17B9927A00DFE937 /* SineWave.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 55F8C3D717B9927A00DFE937 /* SineWave.tiff */; };
+		55F8C3DC17B9927A00DFE937 /* SquareWave.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 55F8C3D817B9927A00DFE937 /* SquareWave.tiff */; };
+		55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; };
 		55FA5FBB102D2D6C00CB63DA /* ppApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55FA5FBA102D2D6C00CB63DA /* ppApp.icns */; };
 		55FA5FCA102D31BA00CB63DA /* PlayerHeaders.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4770C2F21E400D6C081 /* PlayerHeaders.c */; };
 		55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
@@ -1541,6 +1547,13 @@
 			remoteGlobalIDString = 5533411010BB547C005208D1;
 			remoteInfo = MOD;
 		};
+		55F8C3DF17B9974100DFE937 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557DE99310E08DC100177B4C;
+			remoteInfo = "Tone Generator";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1652,6 +1665,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */,
 				5583C60316D01DDE0078ACE8 /* Crop.plugin in Copy PlugIns */,
 				5583C5FC16D017380078ACE8 /* Smooth.plugin in Copy PlugIns */,
 				5583C5FB16D0172F0078ACE8 /* Silence.plugin in Copy PlugIns */,
@@ -1975,7 +1989,6 @@
 		554E102010D6C79E00BB619C /* Silence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Silence.c; sourceTree = "<group>"; };
 		554E102310D6C79E00BB619C /* Smooth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Smooth.c; sourceTree = "<group>"; };
 		554E102610D6C79E00BB619C /* ToneGenerator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ToneGenerator.c; sourceTree = "<group>"; };
-		554E102710D6C79E00BB619C /* ToneGenerator.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = ToneGenerator.r; sourceTree = "<group>"; };
 		554E102A10D6C79E00BB619C /* AIFC.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = AIFC.r; sourceTree = "<group>"; };
 		554E102C10D6C79E00BB619C /* AIFF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AIFF.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E102D10D6C79E00BB619C /* AIFF.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = AIFF.r; sourceTree = "<group>"; };
@@ -2020,6 +2033,9 @@
 		554E123010D6F3E600BB619C /* Revert.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Revert.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E125410D6F3E600BB619C /* Revert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Revert-Info.plist"; path = "../../../Revert-Info.plist"; sourceTree = "<group>"; };
 		554E15FF10D8BD0600BB619C /* FileUtils.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; name = FileUtils.exp; path = Files/FileUtils.exp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
+		555143C717B6EDCF00252657 /* PPToneGeneratorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPToneGeneratorController.h; sourceTree = "<group>"; };
+		555143C817B6EDCF00252657 /* PPToneGeneratorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPToneGeneratorController.m; sourceTree = "<group>"; };
+		555143C917B6EDCF00252657 /* PPToneGeneratorController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPToneGeneratorController.xib; sourceTree = "<group>"; };
 		555C125016378B3500735225 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		556AE4BB16E290650074BBF9 /* PPByteswap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPByteswap.h; sourceTree = "<group>"; };
@@ -2185,6 +2201,11 @@
 		55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSoundSettingsViewController.h; sourceTree = "<group>"; };
 		55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSoundSettingsViewController.m; sourceTree = "<group>"; };
 		55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPSoundSettingsViewController.xib; sourceTree = "<group>"; };
+		55F8C3D417B977E700DFE937 /* ToneGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToneGenerator.h; sourceTree = "<group>"; };
+		55F8C3D517B9927A00DFE937 /* JigsawWave.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = JigsawWave.tiff; sourceTree = "<group>"; };
+		55F8C3D617B9927A00DFE937 /* SilentWave.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SilentWave.tiff; sourceTree = "<group>"; };
+		55F8C3D717B9927A00DFE937 /* SineWave.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SineWave.tiff; sourceTree = "<group>"; };
+		55F8C3D817B9927A00DFE937 /* SquareWave.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SquareWave.tiff; sourceTree = "<group>"; };
 		55FA5FBA102D2D6C00CB63DA /* ppApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ppApp.icns; path = ../ppApp.icns; sourceTree = "<group>"; };
 		88E0C3B50C2F21DD00D6C081 /* PlayerPRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayerPRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88E0C3BE0C2F21DD00D6C081 /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = Carbon.r; path = ../Files/Carbon.r; sourceTree = "<group>"; };
@@ -2646,8 +2667,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DE99A10E08DC100177B4C /* Carbon.framework in Frameworks */,
 				557DE99B10E08DC100177B4C /* CoreFoundation.framework in Frameworks */,
+				55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3169,7 +3190,11 @@
 			children = (
 				557DE5D010E0880800177B4C /* Tone Generator-Info.plist */,
 				554E102610D6C79E00BB619C /* ToneGenerator.c */,
-				554E102710D6C79E00BB619C /* ToneGenerator.r */,
+				55F8C3D417B977E700DFE937 /* ToneGenerator.h */,
+				555143C717B6EDCF00252657 /* PPToneGeneratorController.h */,
+				555143C817B6EDCF00252657 /* PPToneGeneratorController.m */,
+				555143C917B6EDCF00252657 /* PPToneGeneratorController.xib */,
+				55F8C3E117B998E200DFE937 /* Resources */,
 			);
 			name = "Tone Generator";
 			sourceTree = "<group>";
@@ -3908,6 +3933,17 @@
 			name = wds_views;
 			path = Files/wds_views;
 			sourceTree = SOURCE_ROOT;
+		};
+		55F8C3E117B998E200DFE937 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				55F8C3D517B9927A00DFE937 /* JigsawWave.tiff */,
+				55F8C3D617B9927A00DFE937 /* SilentWave.tiff */,
+				55F8C3D717B9927A00DFE937 /* SineWave.tiff */,
+				55F8C3D817B9927A00DFE937 /* SquareWave.tiff */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
 		};
 		88E0C3A60C2F21DD00D6C081 = {
 			isa = PBXGroup;
@@ -4900,7 +4936,6 @@
 				557DE99610E08DC100177B4C /* Resources */,
 				557DE99710E08DC100177B4C /* Sources */,
 				557DE99910E08DC100177B4C /* Frameworks */,
-				557DE99C10E08DC100177B4C /* Rez */,
 			);
 			buildRules = (
 			);
@@ -5218,6 +5253,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55F8C3E017B9974100DFE937 /* PBXTargetDependency */,
 				55BE99DD17978E3C00D6DECC /* PBXTargetDependency */,
 				5583C60216D01DD40078ACE8 /* PBXTargetDependency */,
 				5583C5FE16D017410078ACE8 /* PBXTargetDependency */,
@@ -5601,6 +5637,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				555143CB17B6EDCF00252657 /* PPToneGeneratorController.xib in Resources */,
+				55F8C3D917B9927A00DFE937 /* JigsawWave.tiff in Resources */,
+				55F8C3DA17B9927A00DFE937 /* SilentWave.tiff in Resources */,
+				55F8C3DB17B9927A00DFE937 /* SineWave.tiff in Resources */,
+				55F8C3DC17B9927A00DFE937 /* SquareWave.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5962,14 +6003,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		557DE99C10E08DC100177B4C /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				557DEA5C10E092F400177B4C /* ToneGenerator.r in Rez */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		55868A5E10BFB46100FCC24D /* Rez */ = {
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
@@ -6321,6 +6354,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				557DEA5B10E092F300177B4C /* ToneGenerator.c in Sources */,
+				555143CA17B6EDCF00252657 /* PPToneGeneratorController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7178,6 +7212,11 @@
 			isa = PBXTargetDependency;
 			target = 5533411010BB547C005208D1 /* MOD */;
 			targetProxy = 55ED50B910D40C0B00824C61 /* PBXContainerItemProxy */;
+		};
+		55F8C3E017B9974100DFE937 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 557DE99310E08DC100177B4C /* Tone Generator */;
+			targetProxy = 55F8C3DF17B9974100DFE937 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -8698,7 +8737,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -8718,7 +8756,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
