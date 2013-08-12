@@ -19,11 +19,12 @@
 #import "ARCBridge.h"
 
 @implementation PPPreferences
+@synthesize viewControllers;
 
 - (id)init 
 {
 	if (self = [super initWithWindowNibName:@"Preferences"]) {
-		viewControllers = @[AUTORELEASEOBJ([[SoundOutputController alloc] init]),
+		self.viewControllers = @[AUTORELEASEOBJ([[SoundOutputController alloc] init]),
 					  AUTORELEASEOBJ([[PianoPreferencesController alloc] init]),
 					  AUTORELEASEOBJ([[MusicListPreferenceController alloc] init]),
 					  AUTORELEASEOBJ([[ColorPreferenceController alloc] init]),
@@ -32,7 +33,6 @@
 					  AUTORELEASEOBJ([[ClassicEditorPreferenceController alloc] init]),
 					  AUTORELEASEOBJ([[MidiHardwarePreferenceController alloc] init]),
 					  AUTORELEASEOBJ([[MiscPreferenceController alloc] init])];
-		RETAINOBJ(viewControllers);
 	}
 	return self;
 }

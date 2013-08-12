@@ -25,6 +25,7 @@ typedef struct _tagCoupling {
 	IBOutlet NSPopUpButton *popUp;
 	NSArray *viewControllers;
 }
+@property (readwrite, retain) NSArray *viewControllers;
 
 -(IBAction)changeViewController:(id)sender;
 -(void)displayViewController:(NSViewController *)vc;
