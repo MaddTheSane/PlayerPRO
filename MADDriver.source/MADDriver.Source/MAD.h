@@ -116,7 +116,7 @@
 
 #if !defined(_MAC_H)
 
-#define MemError()					0
+#define MemError() 0
 
 #ifndef TRUE
 #define TRUE 1
