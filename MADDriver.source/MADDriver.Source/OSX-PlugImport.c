@@ -333,10 +333,8 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 	OSErr					iErr = noErr;
 	MADFileFormatPlugin		**formatPlugA = inMADDriver->ThePlug[PlugNo].IOPlug;
 	{
-#ifndef __LP64__
 		GrafPtr savedPort;
 		GetPort(&savedPort);
-#endif
 		ResFileRefNum resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
 		MADDriverSettings		driverSettings;
 		
@@ -345,9 +343,7 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 		iErr = (*formatPlugA)->ThePlugMain(order, AlienFile, theNewMAD, info, &driverSettings);
 		
 		CFBundleCloseBundleResourceMap(inMADDriver->ThePlug[PlugNo].file, resFileNum);
-#ifndef __LP64__
 		SetPort(savedPort);
-#endif
 	}
 	return iErr;
 }

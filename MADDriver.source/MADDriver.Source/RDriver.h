@@ -63,7 +63,7 @@
 
 //The following aren't defined in Mac headers, but are used
 enum{
-#if !defined(_MAC_H) || defined(__LP64__)
+#if !defined(_MAC_H)
 	rate48khz	= (UnsignedFixed)0xBB800000,
 	rate44khz	= (Fixed)0xAC440000,
 	rate32khz	= (Fixed)0x7D000000,

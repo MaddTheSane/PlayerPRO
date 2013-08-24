@@ -215,7 +215,7 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 				BlockMoveData(InsHeader, tempIns, inOutCount);
 				ByteswapInstrument(tempIns);
 				myErr = FSWrite( iFileRefI, &inOutCount, (Ptr)tempIns);
-				DisposePtr(tempIns);
+				DisposePtr((Ptr)tempIns);
 				
 				// Write samples headers & data
 				

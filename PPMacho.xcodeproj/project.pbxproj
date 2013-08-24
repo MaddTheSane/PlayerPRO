@@ -6812,6 +6812,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.3.9][arch=ppc]" = 10.2;
 				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.4][arch=ppc]" = 10.3;
+				PREBINDING = NO;
 				SDKROOT = macosx10.4;
 			};
 			name = Release;
@@ -7987,6 +7988,7 @@
 				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.3.9][arch=ppc]" = 10.2;
 				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.4][arch=ppc]" = 10.3;
 				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
 				SDKROOT = macosx10.4;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};

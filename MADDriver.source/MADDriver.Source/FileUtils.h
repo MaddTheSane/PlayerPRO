@@ -41,11 +41,7 @@ extern "C" {
 
 #ifdef _MAC_H
 #include <CoreServices/CoreServices.h>
-#if defined(__LP64__)
-typedef FSIORefNum	UNFILE;
-#else
 typedef SInt16		UNFILE;
-#endif
 #else
 #include <stdio.h>
 #include <stdlib.h>
