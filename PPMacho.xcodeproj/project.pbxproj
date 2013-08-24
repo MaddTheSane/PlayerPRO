@@ -2145,6 +2145,7 @@
 		55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPNextTrack.pdf; sourceTree = "<group>"; };
 		55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPPrevTrack.pdf; sourceTree = "<group>"; };
 		55ABFD53125E6D4400B182F1 /* PPRecord.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPRecord.pdf; sourceTree = "<group>"; };
+		55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPROCore-OSX.pch"; sourceTree = "<group>"; };
 		55B1B4F2166A850D00820424 /* PPDriver_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDriver_Private.h; sourceTree = "<group>"; };
 		55B1B4F5166A861900820424 /* PPMusicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicObject.h; sourceTree = "<group>"; };
 		55B1B4F6166A861900820424 /* PPMusicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMusicObject.m; sourceTree = "<group>"; };
@@ -3763,6 +3764,7 @@
 		55868B1810BFC0BB00FCC24D /* Main Driver Source */ = {
 			isa = PBXGroup;
 			children = (
+				55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */,
 				5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */,
 				5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */,
 				55113CBA133688D60008C2AF /* Win-DirectSound.c */,
@@ -8124,6 +8126,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
 				FRAMEWORK_VERSION = B;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MADDriver.source/MADDriver.Source/PlayerPROCore-OSX.pch";
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "@rpath";
@@ -8143,6 +8147,8 @@
 				FRAMEWORK_VERSION = B;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MADDriver.source/MADDriver.Source/PlayerPROCore-OSX.pch";
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "@rpath";
@@ -9423,6 +9429,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MADDriver.source/MADDriver.Source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NOEXPORTFUNCS=1",
 					"$(inherited)",
@@ -9444,6 +9452,8 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MADDriver.source/MADDriver.Source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NOEXPORTFUNCS=1",
 					"$(inherited)",
