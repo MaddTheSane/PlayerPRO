@@ -49,6 +49,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	return data;
 }
+
 @interface PPMusicListObject ()
 @property (retain, nonatomic, readwrite, setter = setTheMusicUrl:) NSURL *musicUrl;
 @end
@@ -56,28 +57,6 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 @implementation PPMusicListObject
 
 @synthesize musicUrl;
-
-#if 0
-- (void)setTheMusicUrl:(NSURL *)amusicUrl
-{
-#if __has_feature(objc_arc)
-	musicUrl = amusicUrl;
-	
-	//[self willChangeValueForKey:@"fileName"];
-	//fileName = [[musicUrl lastPathComponent] copy];
-	//[self didChangeValueForKey:@"fileName"];
-#else
-	NSURL *tempUrl = musicUrl;
-	musicUrl = [amusicUrl retain];
-	
-	//[self willChangeValueForKey:@"fileName"];
-	//fileName = [[musicUrl lastPathComponent] copy];
-	//[self didChangeValueForKey:@"fileName"];
-	
-	[tempUrl release];
-#endif
-}
-#endif
 
 - (BOOL)isEqual:(id)object
 {
@@ -181,7 +160,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"Size: %ld Contents: %@", (long)[musicList count], [musicList description]];
+	return [NSString stringWithFormat:@"Size: %ld, selection: %ld, Contents: %@", (long)[musicList count], (long)selectedMusic, [musicList description]];
 }
 
 - (void)saveMusicListToPreferences

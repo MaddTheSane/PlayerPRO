@@ -35,8 +35,8 @@ static CFTypeID booleantype = 0;
 
 typedef enum _MADPlugCapabilities {
 	PPMADCanDoNothing = 0,
-	PPMADCanImport = 1,
-	PPMADCanExport = 2,
+	PPMADCanImport = 1 << 0,
+	PPMADCanExport = 1 << 1,
 	PPMADCanDoBoth = PPMADCanImport | PPMADCanExport
 } MADPlugCapabilities;
 
@@ -55,7 +55,7 @@ static Boolean GetBoolFromType(CFTypeRef theType)
 		return theVal != 0;
 	} else if (theID == stringtype) {
 		//FIXME: get a CoreFoundation function here to ease the transition to ARC when that happens.
-		return [(NSString*)theType boolValue];
+		return [(__bridge NSString*)theType boolValue];
 	} else return false;
 }
 
@@ -330,13 +330,15 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 #endif
 		
 		//Local systemwide plugins
-		temp1 = (CFURLRef)[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"];
+		temp1 = CFBridgingRetain([[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]);
 		CFArrayAppendValue(PlugFolds, temp1);
+		CFRelease(temp1);
 		temp1 = NULL;
 		
 		//User plugins
-		temp1 = (CFURLRef)[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"];
+		temp1 = CFBridgingRetain([[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]);
 		CFArrayAppendValue(PlugFolds, temp1);
+		CFRelease(temp1);
 		temp1 = NULL;
 		
 		return PlugFolds;

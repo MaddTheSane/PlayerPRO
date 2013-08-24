@@ -542,7 +542,7 @@ static NSInteger selMusFromList = -1;
 }
 
 //Yes, the pragma pack is needed
-//otherwise the parts will be improperly mapped.
+//otherwise the data will be improperly mapped.
 #pragma pack(push, 2)
 struct Float80i {
 	SInt16  exp;
@@ -914,7 +914,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 							if (isQuitting) {
 								[NSApp replyToApplicationShouldTerminate:YES];
 							}else {
-								NSRunAlertPanel(@"Export failed", @"Export/coversion of the music file failed.\n%@", nil, nil, nil, [expErr localizedDescription]);
+								NSRunAlertPanel(@"Export failed", @"Export/coversion of the music file failed:\n%@", nil, nil, nil, [expErr localizedDescription]);
 							}
 						};
 #if PPEXPORT_CREATE_TMP_AIFF

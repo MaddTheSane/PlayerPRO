@@ -204,5 +204,4 @@ EXP const CFStringRef kMadPlugDoesImport;
 EXP const CFStringRef kMadPlugDoesExport;
 EXP const CFStringRef kMadPlugModeKey;
 
-
 #endif
