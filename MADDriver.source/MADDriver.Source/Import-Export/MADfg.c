@@ -131,9 +131,9 @@ static void MOToldPatHeader(struct oldPatHeader * p) {
 
 static void MOToldInstrData(struct FileInstrData * i) {
 	//int j;
-	MOT16(&i->insSize);
-	MOT16(&i->loopStart);
-	MOT16(&i->loopLenght);
+	MOT32(&i->insSize);
+	MOT32(&i->loopStart);
+	MOT32(&i->loopLenght);
 	MOT16(&i->CompCode);
 	MOT16(&i->freq);
 }
