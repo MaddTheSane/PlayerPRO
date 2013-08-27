@@ -64,6 +64,14 @@ PPEXPORT OSErr inAddSoundToMADCString(Ptr			theSound,
 
 PPEXPORT sData* inMADCreateSample();
 
+PPEXPORT const CFStringRef kMadPlugMenuNameKey;
+PPEXPORT const CFStringRef kMadPlugAuthorNameKey;
+PPEXPORT const CFStringRef kMadPlugUTITypesKey;
+PPEXPORT const CFStringRef kMadPlugTypeKey;
+PPEXPORT const CFStringRef kMadPlugDoesImport;
+PPEXPORT const CFStringRef kMadPlugDoesExport;
+PPEXPORT const CFStringRef kMadPlugModeKey;
+	
 #ifdef __cplusplus
 }
 #endif
@@ -195,13 +203,5 @@ typedef struct _PPDigitalPlugin {
     IUNKNOWN_C_GUTS;
 	OSErr (STDMETHODCALLTYPE *MyProcPtr) (void* thisInterface, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug);
 } PPDigitalPlugin;
-
-EXP const CFStringRef kMadPlugMenuNameKey;
-EXP const CFStringRef kMadPlugAuthorNameKey;
-EXP const CFStringRef kMadPlugUTITypesKey;
-EXP const CFStringRef kMadPlugTypeKey;
-EXP const CFStringRef kMadPlugDoesImport;
-EXP const CFStringRef kMadPlugDoesExport;
-EXP const CFStringRef kMadPlugModeKey;
 
 #endif
