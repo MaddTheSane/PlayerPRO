@@ -35,7 +35,9 @@
 		hours = 0;
 		if(sscanf([string UTF8String], "%d:%d", &minutes, &seconds) != 2)
 		{
-			*error = @"Invalid format";
+			if (error) {
+				*error = @"Invalid format";
+			}
 			return NO;
 		}
 	}

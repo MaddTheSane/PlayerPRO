@@ -10,24 +10,11 @@
 #import "PPInstrumentWindowController.h"
 
 @implementation PPInstrumentCellView
-
 @synthesize numField;
-@synthesize isSample;
-@synthesize isLoopingSample;
 @synthesize sampleButton;
 @synthesize controller;
-@synthesize isBlank;
 
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
-}
-
+@synthesize isSample;
 - (void)setIsSample:(BOOL)aisSample
 {
 	isSample = aisSample;
@@ -42,6 +29,7 @@
 	}
 }
 
+@synthesize isLoopingSample;
 - (void)setIsLoopingSample:(BOOL)IsLoopingSample
 {
 	isLoopingSample = IsLoopingSample;
@@ -54,10 +42,21 @@
 	}
 }
 
+@synthesize isBlank;
 - (void)setIsBlank:(BOOL)aisBlank
 {
 	isBlank = aisBlank;
 	[self setNeedsDisplay:YES];
+}
+
+- (id)initWithFrame:(NSRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        // Initialization code here.
+    }
+    
+    return self;
 }
 
 - (void)drawRect:(NSRect)dirtyRect

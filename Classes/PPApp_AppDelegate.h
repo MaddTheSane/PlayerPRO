@@ -100,6 +100,8 @@
 - (IBAction)clearMusicList:(id)sender;
 - (IBAction)saveMusicList:(id)sender;
 
+- (IBAction)toggleInfo:(id)sender;
+
 - (IBAction)showInstrumentsList:(id)sender;
 - (IBAction)exportInstrumentAs:(id)sender;
 - (IBAction)deleteInstrument:(id)sender;

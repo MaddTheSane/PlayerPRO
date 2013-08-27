@@ -19,6 +19,7 @@
 	MADMusic **curMusic;
 	MADDriverRec **theDriver;
 	NSMutableArray *instruments;
+	IBOutlet NSDrawer *infoDrawer;
 	IBOutlet NSTextField *instrumentSize;
 	IBOutlet NSTextField *instrumentLoopStart;
 	IBOutlet NSTextField *instrumentLoopSize;
@@ -63,6 +64,8 @@
 - (IBAction)deleteSample:(id)sender;
 
 - (IBAction)playSample:(id)sender;
+
+- (IBAction)toggleInfo:(id)sender;
 
 - (void)replaceObjectInInstrumentsAtIndex:(NSUInteger)index withObject:(id)object;
 

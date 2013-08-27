@@ -1625,6 +1625,11 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	RELEASEOBJ(panel);
 }
 
+- (IBAction)toggleInfo:(id)sender
+{
+	[infoDrawer toggle:sender];
+}
+
 - (void)setTitleForSongLabelBasedOnMusic
 {
 	self.musicName = AUTORELEASEOBJ([[NSString alloc] initWithCString:music->header->name encoding:NSMacOSRomanStringEncoding]);
@@ -1740,7 +1745,7 @@ enum PPMusicToolbarTypes {
 	PPToolbarAddMusic,
 	PPToolbarRemoveMusic,
 	PPToolbarPlayMusic,
-	PPToolbarFileInfo
+	PPToolbarFileInfo = 1005
 };
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem

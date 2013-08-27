@@ -271,7 +271,7 @@
 				RELEASEOBJ(sObj);
 			}
 		}
-		name = [[NSString alloc] initWithCString:tempData->name encoding:NSMacOSRomanStringEncoding];
+		self.name = AUTORELEASEOBJ([[NSString alloc] initWithCString:tempData->name encoding:NSMacOSRomanStringEncoding]);
 		theInstrument.no = number = insIdx;/*tempData->no;*/
 		//In case it's malformed, i.e. from CreateFreeMADK()
 		theInstrument.firstSample = MAXSAMPLE * insIdx; /*tempData->firstSample;*/
@@ -336,7 +336,7 @@
 	tmpCStr = nil;
 	
 	memcpy(newData, &theInstrument, sizeof(InstrData));
-	memcpy(newData->name, tempstr, sizeof(newData->name));
+	strlcpy(newData->name, tempstr, sizeof(newData->name));
 		
 	newData->numSamples = self.sampleCount;
 	
@@ -446,7 +446,7 @@
 - (void)dealloc
 {
 	[samples release];
-	[name release];
+	self.name = nil;
 	
 	[super dealloc];
 }

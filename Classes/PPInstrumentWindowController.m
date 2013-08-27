@@ -101,6 +101,11 @@
     return self;
 }
 
+- (IBAction)toggleInfo:(id)sender
+{
+	[infoDrawer toggle:sender];
+}
+
 - (id)init
 {
 	return self = [self initWithWindowNibName:@"PPInstrumentWindowController"];

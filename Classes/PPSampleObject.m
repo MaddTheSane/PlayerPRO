@@ -24,7 +24,6 @@
 #define INSTRUMENTINDEXKEY @"Instrument Index"
 
 @implementation PPSampleObject
-
 @synthesize name;
 @synthesize data;
 @synthesize instrumentIndex;
@@ -174,7 +173,7 @@
 	[tmpCStr getBytes:theName length:cStrLen];
 	tmpCStr = nil;
 	
-	memcpy(toReturn->name, theName, sizeof(toReturn->name));
+	strlcpy(toReturn->name, theName, sizeof(toReturn->name));
 	NSInteger dataSize2 = [data length];
 	toReturn->size = dataSize2;
 	toReturn->data = malloc(dataSize2);
@@ -191,8 +190,8 @@
 #if !__has_feature(objc_arc)
 - (void)dealloc
 {
-	[data release];
-	[name release];
+	self.data = nil;
+	self.name = nil;
 	
 	[super dealloc];
 }
@@ -219,8 +218,8 @@
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
-		name = RETAINOBJ([aDecoder decodeObjectForKey:NAMEKEY]);
-		data = RETAINOBJ([aDecoder decodeObjectForKey:DATAKEY]);
+		self.name = [aDecoder decodeObjectForKey:NAMEKEY];
+		self.data = [aDecoder decodeObjectForKey:DATAKEY];
 		theSample.loopBeg = [[aDecoder decodeObjectForKey:LOOPBEGINKEY] int32Value];
 		theSample.loopSize = [[aDecoder decodeObjectForKey:LOOPSIZEKEY] int32Value];
 		theSample.vol = [[aDecoder decodeObjectForKey:VOLUMEKEY] unsignedCharValue];
