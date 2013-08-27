@@ -176,7 +176,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 	}
 };
 
-OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
+static OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 {
 	MADSpec		*theMAD;
 	long		fileSize;

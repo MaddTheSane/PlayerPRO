@@ -40,6 +40,10 @@ typedef enum _MADPlugCapabilities {
 	PPMADCanDoBoth = PPMADCanImport | PPMADCanExport
 } MADPlugCapabilities;
 
+#if !__has_feature(objc_arc)
+#define __bridge
+#endif
+
 static Boolean GetBoolFromType(CFTypeRef theType)
 {
 	//We don't need to test for the other CFTypeIDs because they should already be set up
@@ -326,7 +330,6 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 			CFRelease(temp1);
 			temp1 = NULL;
 		}
-
 #endif
 		
 		//Local systemwide plugins
@@ -345,7 +348,7 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 	}
 }
 
-static inline Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
+static Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
 {
 	// Check if we're running Lion or later
 	if (&kCFURLFileResourceIdentifierKey == NULL) {
@@ -408,7 +411,7 @@ static CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(char *UserAdd
 	return FoldLocs;
 }
 
-OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
+static OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 {
 	MADSpec		*theMAD;
 	long		fileSize;
