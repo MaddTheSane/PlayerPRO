@@ -31,6 +31,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		550FFADB17CD341A0003A2F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55BE997817978AEF00D6DECC;
+			remoteInfo = PPImport;
+		};
+		550FFADD17CD341A0003A2F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55C358C216C42D1800FB9FA6;
+			remoteInfo = PlayerPROCompact;
+		};
 		5570E9AB12A4C24900167E1A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
@@ -439,8 +453,8 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		256AC3D80F4B6AC300CF3369 /* Cocoa_ExampleAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocoa_ExampleAppDelegate.h; sourceTree = "<group>"; };
-		256AC3D90F4B6AC300CF3369 /* Cocoa_ExampleAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cocoa_ExampleAppDelegate.m; sourceTree = "<group>"; };
+		256AC3D80F4B6AC300CF3369 /* Cocoa_ExampleAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Cocoa_ExampleAppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		256AC3D90F4B6AC300CF3369 /* Cocoa_ExampleAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Cocoa_ExampleAppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		256AC3F00F4B6AF500CF3369 /* Cocoa_Example_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocoa_Example_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -543,11 +557,15 @@
 			isa = PBXGroup;
 			children = (
 				5570E9AC12A4C24900167E1A /* PlayerPRO.app */,
-				5570E9AE12A4C24900167E1A /* PlayerPRO Cocoa.app */,
+				5570E9AE12A4C24900167E1A /* PlayerPRO 6.app */,
 				5570E9B012A4C24900167E1A /* PlayerPRO Example.app */,
 				5570E9B212A4C24900167E1A /* Game Example.app */,
+				550FFADC17CD341A0003A2F3 /* PlayerPROImporter.mdimporter */,
 				5570E9B412A4C24900167E1A /* PlayerPROCore.framework */,
 				5598692916432693008C55FC /* PlayerPROKit.framework */,
+				55835DD91650989A00FC1A7D /* PPPlay */,
+				558678A71659A7DD00BCFB70 /* libiOSPlayerPROCore.a */,
+				550FFADE17CD341A0003A2F3 /* libPlayerPROCompact.a */,
 				5570E9B612A4C24900167E1A /* MOD.ppimpexp */,
 				5570E9B812A4C24900167E1A /* 669.ppimpexp */,
 				5570E9BA12A4C24900167E1A /* AMF.ppimpexp */,
@@ -590,8 +608,6 @@
 				5570EA0412A4C24900167E1A /* Silence.plugin */,
 				5570EA0612A4C24900167E1A /* Smooth.plugin */,
 				5570EA0812A4C24900167E1A /* Tone Generator.plugin */,
-				55835DD91650989A00FC1A7D /* PPPlay */,
-				558678A71659A7DD00BCFB70 /* libiOSPlayerPROCore.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -655,6 +671,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		550FFADC17CD341A0003A2F3 /* PlayerPROImporter.mdimporter */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PlayerPROImporter.mdimporter;
+			remoteRef = 550FFADB17CD341A0003A2F3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		550FFADE17CD341A0003A2F3 /* libPlayerPROCompact.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPlayerPROCompact.a;
+			remoteRef = 550FFADD17CD341A0003A2F3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		5570E9AC12A4C24900167E1A /* PlayerPRO.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
@@ -662,10 +692,10 @@
 			remoteRef = 5570E9AB12A4C24900167E1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		5570E9AE12A4C24900167E1A /* PlayerPRO Cocoa.app */ = {
+		5570E9AE12A4C24900167E1A /* PlayerPRO 6.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
-			path = "PlayerPRO Cocoa.app";
+			path = "PlayerPRO 6.app";
 			remoteRef = 5570E9AD12A4C24900167E1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};

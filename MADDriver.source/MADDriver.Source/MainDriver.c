@@ -1202,9 +1202,9 @@ OSErr MADDisposeDriver( MADDriverRec* MDriver)
 			
 	}
 	
-	MADDisposeDriverBuffer( MDriver);			//if( MemError()) return MADUnknowErr;
-	MADDisposeVolumeTable( MDriver);			//if( MemError()) return MADUnknowErr;
-	MADDisposeReverb( MDriver);					//if( MemError()) return MADUnknowErr;
+	MADDisposeDriverBuffer( MDriver);
+	MADDisposeVolumeTable( MDriver);
+	MADDisposeReverb( MDriver);
 	
 	free( MDriver);
 	

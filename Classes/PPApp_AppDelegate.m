@@ -105,13 +105,16 @@ static NSInteger selMusFromList = -1;
 - (BOOL)musicListWillChange;
 - (void)musicListDidChange;
 - (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to;
+@property (readwrite, retain) NSString *musicName;
+@property (readwrite, retain) NSString *musicInfo;
 @end
 
 @implementation PPApp_AppDelegate
-
 @synthesize paused;
 @synthesize window;
 @synthesize exportWindow;
+@synthesize musicInfo;
+@synthesize musicName;
 
 - (BOOL)loadMusicFromCurrentlyPlayingIndexWithError:(out NSError *__autoreleasing*)theErr
 {
@@ -163,15 +166,15 @@ static NSInteger selMusFromList = -1;
 {
 	Boolean madWasReading = false;
 	long fullTime = 0, curTime = 0;
-	if (MADDriver) {
-		madWasReading = MADIsPlayingMusic(MADDriver);
-		MADStopMusic(MADDriver);
-		MADStopDriver(MADDriver);
+	if (madDriver) {
+		madWasReading = MADIsPlayingMusic(madDriver);
+		MADStopMusic(madDriver);
+		MADStopDriver(madDriver);
 		if (madWasReading) {
-			MADGetMusicStatus(MADDriver, &fullTime, &curTime);
+			MADGetMusicStatus(madDriver, &fullTime, &curTime);
 		}
-		MADDisposeDriver(MADDriver);
-		MADDriver = NULL;
+		MADDisposeDriver(madDriver);
+		madDriver = NULL;
 	}
 	MADDriverSettings init;
 	MADGetBestDriver(&init);
@@ -198,7 +201,7 @@ static NSInteger selMusFromList = -1;
 	init.driverMode = [defaults integerForKey:PPSoundDriver];
 	init.repeatMusic = FALSE;
 	
-	OSErr returnerr = MADCreateDriver(&init, MADLib, &MADDriver);
+	OSErr returnerr = MADCreateDriver(&init, madLib, &madDriver);
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDriverDidChange object:self];
 	if (returnerr != noErr) {
 		NSError *err = CreateErrorFromMADErrorType(returnerr);
@@ -206,12 +209,12 @@ static NSInteger selMusFromList = -1;
 		RELEASEOBJ(err);
 		return;
 	}
-	MADStartDriver(MADDriver);
-	if (Music) {
-		MADAttachDriverToMusic(MADDriver, Music, NULL);
+	MADStartDriver(madDriver);
+	if (music) {
+		MADAttachDriverToMusic(madDriver, music, NULL);
 		if (madWasReading) {
-			MADSetMusicStatus(MADDriver, 0, fullTime, curTime);
-			MADPlayMusic(MADDriver);
+			MADSetMusicStatus(madDriver, 0, fullTime, curTime);
+			MADPlayMusic(madDriver);
 		}
 	}
 }
@@ -323,17 +326,17 @@ static NSInteger selMusFromList = -1;
 	switch ([userDefaults integerForKey:PPAfterPlayingMusic]) {
 		case PPStopPlaying:
 		default:
-			MADStopMusic(MADDriver);
-			MADCleanDriver(MADDriver);
+			MADStopMusic(madDriver);
+			MADCleanDriver(madDriver);
 			if ([userDefaults boolForKey:PPGotoStartupAfterPlaying]) {
-				MADSetMusicStatus(MADDriver, 0, 100, 0);
+				MADSetMusicStatus(madDriver, 0, 100, 0);
 			}
 			self.paused = YES;
 			break;
 			
 		case PPLoopMusic:
-			MADSetMusicStatus(MADDriver, 0, 100, 0);
-			MADPlayMusic(MADDriver);
+			MADSetMusicStatus(madDriver, 0, 100, 0);
+			MADPlayMusic(madDriver);
 			break;
 			
 		case PPLoadNext:
@@ -355,10 +358,10 @@ static NSInteger selMusFromList = -1;
 						[[NSAlert alertWithError:err] runModal];
 					}
 				} else {
-					MADStopMusic(MADDriver);
-					MADCleanDriver(MADDriver);
+					MADStopMusic(madDriver);
+					MADCleanDriver(madDriver);
 					if ([userDefaults boolForKey:PPGotoStartupAfterPlaying]) {
-						MADSetMusicStatus(MADDriver, 0, 100, 0);
+						MADSetMusicStatus(madDriver, 0, 100, 0);
 					}
 				}
 			}
@@ -381,12 +384,12 @@ static NSInteger selMusFromList = -1;
 
 - (void)updateMusicStats:(NSTimer*)theTimer
 {
-	if (Music) {
+	if (music) {
 		long fT, cT;
-		MADGetMusicStatus(MADDriver, &fT, &cT);
-		if (MADIsDonePlaying(MADDriver) && !self.paused && !MADIsExporting(MADDriver)) {
+		MADGetMusicStatus(madDriver, &fT, &cT);
+		if (MADIsDonePlaying(madDriver) && !self.paused && !MADIsExporting(madDriver)) {
 			[self songIsDonePlaying];
-			MADGetMusicStatus(MADDriver, &fT, &cT);
+			MADGetMusicStatus(madDriver, &fT, &cT);
 		}
 		[songPos setDoubleValue:cT];
 		[songCurTime setIntegerValue:cT];
@@ -398,32 +401,32 @@ static NSInteger selMusFromList = -1;
 	[instrumentController writeInstrumentsBackToMusic];
 	int i, x;
 	size_t inOutCount;
-	MADCleanCurrentMusic(Music, MADDriver);
-	NSMutableData *saveData = [[NSMutableData alloc] initWithCapacity:MADGetMusicSize(Music)];
+	MADCleanCurrentMusic(music, madDriver);
+	NSMutableData *saveData = [[NSMutableData alloc] initWithCapacity:MADGetMusicSize(music)];
 	for( i = 0, x = 0; i < MAXINSTRU; i++)
 	{
-		Music->fid[ i].no = i;
+		music->fid[ i].no = i;
 		
-		if( Music->fid[ i].numSamples > 0 || Music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
+		if( music->fid[ i].numSamples > 0 || music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
 		{
 			x++;
 		}
 	}
 
-	Music->header->numInstru = x;
+	music->header->numInstru = x;
 	{
 		MADSpec aHeader;
-		aHeader = *Music->header;
+		aHeader = *music->header;
 		ByteSwapMADSpec(&aHeader);
 		[saveData appendBytes:&aHeader length:sizeof(MADSpec)];
 	}
 	{
 		BOOL compressMAD = [[NSUserDefaults standardUserDefaults] boolForKey:PPMMadCompression];
 		if (compressMAD) {
-			for( i = 0; i < Music->header->numPat ; i++)
+			for( i = 0; i < music->header->numPat ; i++)
 			{
-				if (Music->partition[i]) {
-					PatData *tmpPat = CompressPartitionMAD1(Music, Music->partition[i]);
+				if (music->partition[i]) {
+					PatData *tmpPat = CompressPartitionMAD1(music, music->partition[i]);
 					inOutCount = tmpPat->header.patBytes + sizeof(PatHeader);
 					tmpPat->header.compMode = 'MAD1';
 					ByteSwapPatHeader(&tmpPat->header);
@@ -432,12 +435,12 @@ static NSInteger selMusFromList = -1;
 				}
 			}
 		} else {
-			for (i = 0; i < Music->header->numPat; i++) {
-				if (Music->partition[i]) {
+			for (i = 0; i < music->header->numPat; i++) {
+				if (music->partition[i]) {
 					inOutCount = sizeof( PatHeader);
-					inOutCount += Music->header->numChn * Music->partition[ i]->header.size * sizeof( Cmd);
+					inOutCount += music->header->numChn * music->partition[ i]->header.size * sizeof( Cmd);
 					PatData *tmpPat = calloc(inOutCount, 1);
-					memcpy(tmpPat, Music->partition[i], inOutCount);
+					memcpy(tmpPat, music->partition[i], inOutCount);
 					ByteSwapPatHeader(&tmpPat->header);
 					[saveData appendBytes:tmpPat length:inOutCount];
 					free(tmpPat);
@@ -448,10 +451,10 @@ static NSInteger selMusFromList = -1;
 	
 	for( i = 0; i < MAXINSTRU; i++)
 	{
-		if( Music->fid[ i].numSamples > 0 || Music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
+		if( music->fid[ i].numSamples > 0 || music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
 		{
-			Music->fid[ i].no = i;
-			InstrData instData = Music->fid[i];
+			music->fid[ i].no = i;
+			InstrData instData = music->fid[i];
 			ByteSwapInstrData(&instData);
 			[saveData appendBytes:&instData length:sizeof( InstrData)];
 		}
@@ -459,11 +462,11 @@ static NSInteger selMusFromList = -1;
 	
 	for( i = 0; i < MAXINSTRU ; i++)
 	{
-		for( x = 0; x < Music->fid[i].numSamples; x++)
+		for( x = 0; x < music->fid[i].numSamples; x++)
 		{
 			sData	curData;
 			sData32	copyData;
-			curData = *Music->sample[ Music->fid[i].firstSample + x];
+			curData = *music->sample[ music->fid[i].firstSample + x];
 			
 			inOutCount = sizeof( sData32);
 			ByteSwapsData(&curData);
@@ -471,7 +474,7 @@ static NSInteger selMusFromList = -1;
 			copyData.data = 0;
 			[saveData appendBytes:&copyData length:inOutCount];
 			
-			inOutCount = Music->sample[ Music->fid[i].firstSample + x]->size;
+			inOutCount = music->sample[ music->fid[i].firstSample + x]->size;
 			Ptr dataCopy = malloc(inOutCount);
 			memcpy(dataCopy, curData.data, inOutCount);
 			if( curData.amp == 16)
@@ -494,10 +497,10 @@ static NSInteger selMusFromList = -1;
 	int alpha = 0;
 	for( i = 0; i < 10 ; i++)	// Global Effects
 	{
-		if( Music->header->globalEffect[ i])
+		if( music->header->globalEffect[ i])
 		{
 			inOutCount = sizeof( FXSets);
-			__block FXSets aSet = Music->sets[alpha];
+			__block FXSets aSet = music->sets[alpha];
 			PPBE16(&aSet.id);
 			PPBE16(&aSet.noArg);
 			PPBE16(&aSet.track);
@@ -511,14 +514,14 @@ static NSInteger selMusFromList = -1;
 		}
 	}
 	
-	for( i = 0; i < Music->header->numChn ; i++)	// Channel Effects
+	for( i = 0; i < music->header->numChn ; i++)	// Channel Effects
 	{
 		for( x = 0; x < 4; x++)
 		{
-			if( Music->header->chanEffect[ i][ x])
+			if( music->header->chanEffect[ i][ x])
 			{
 				inOutCount = sizeof( FXSets);
-				__block FXSets aSet = Music->sets[alpha];
+				__block FXSets aSet = music->sets[alpha];
 				PPBE16(&aSet.id);
 				PPBE16(&aSet.noArg);
 				PPBE16(&aSet.track);
@@ -536,9 +539,9 @@ static NSInteger selMusFromList = -1;
 	[saveData writeToURL:tosave atomically:YES];
 	RELEASEOBJ(saveData);
 	
-	Music->header->numInstru = MAXINSTRU;
+	music->header->numInstru = MAXINSTRU;
 	
-	Music->hasChanged = FALSE;
+	music->hasChanged = FALSE;
 }
 
 //Yes, the pragma pack is needed
@@ -767,7 +770,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 {
 	MADDriverRec *theRec = NULL;
 	
-	OSErr err = MADCreateDriver( theSet, MADLib, &theRec);
+	OSErr err = MADCreateDriver( theSet, madLib, &theRec);
 	if (err != noErr) {
 		dispatch_async(dispatch_get_main_queue(), ^{
 			NSError *NSerr = CreateErrorFromMADErrorType(err);
@@ -779,7 +782,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	}
 	MADCleanDriver( theRec);
 
-	MADAttachDriverToMusic( theRec, Music, NULL);
+	MADAttachDriverToMusic( theRec, music, NULL);
 	MADPlayMusic(theRec);
 	
 	Ptr soundPtr = NULL;
@@ -844,7 +847,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 - (IBAction)exportMusicAs:(id)sender
 {
 	NSInteger tag = [sender tag];
-	MADBeginExport(MADDriver);
+	MADBeginExport(madDriver);
 
 	switch (tag) {
 		case -1:
@@ -863,7 +866,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
-						MADEndExport(MADDriver);
+						MADEndExport(madDriver);
 
 						[saveData writeToURL:[savePanel URL] atomically:YES];
 						RELEASEOBJ(saveData);
@@ -880,10 +883,10 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						});
 					});
 				} else {
-					MADEndExport(MADDriver);
+					MADEndExport(madDriver);
 				}
 			} else {
-				MADEndExport(MADDriver);
+				MADEndExport(madDriver);
 			}
 			RELEASEOBJ(savePanel);
 		}
@@ -908,7 +911,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						NSString *oldMusicName = RETAINOBJ(musicName);
 						NSString *oldMusicInfo = RETAINOBJ(musicInfo);
 						NSURL *oldURL = [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] musicUrl];
-						MADEndExport(MADDriver);
+						MADEndExport(madDriver);
 						NSError *expErr = nil;
 						dispatch_block_t errBlock = ^{
 							if (isQuitting) {
@@ -996,10 +999,10 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 					});
 				} else {
-					MADEndExport(MADDriver);
+					MADEndExport(madDriver);
 				}
 			} else {
-				MADEndExport(MADDriver);
+				MADEndExport(madDriver);
 			}
 			RELEASEOBJ(savePanel);
 		}
@@ -1007,9 +1010,9 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			
 		default:
 		{
-			if (tag > MADLib->TotalPlug || tag < 0) {
+			if (tag > madLib->TotalPlug || tag < 0) {
 				NSBeep();
-				MADEndExport(MADDriver);
+				MADEndExport(madDriver);
 				if (isQuitting) {
 					[NSApp replyToApplicationShouldTerminate:YES];
 				}
@@ -1017,17 +1020,17 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 				return;
 			}
 			NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
-			[savePanel setAllowedFileTypes:BRIDGE(NSArray*, MADLib->ThePlug[tag].UTItypes)];
+			[savePanel setAllowedFileTypes:BRIDGE(NSArray*, madLib->ThePlug[tag].UTItypes)];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
 			if (![musicName isEqualToString:@""]) {
 				[savePanel setNameFieldStringValue:musicName];
 			}
 			[savePanel setPrompt:@"Export"];
-			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", BRIDGE(NSString*, MADLib->ThePlug[tag].MenuName)]];
+			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", BRIDGE(NSString*, madLib->ThePlug[tag].MenuName)]];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 				NSURL *fileURL = RETAINOBJ([savePanel URL]);
-				OSErr err = MADMusicExportCFURL(MADLib, Music, MADLib->ThePlug[tag].type, BRIDGE(CFURLRef, fileURL));
+				OSErr err = MADMusicExportCFURL(madLib, music, madLib->ThePlug[tag].type, BRIDGE(CFURLRef, fileURL));
 				if (err != noErr) {
 					if (isQuitting) {
 						[NSApp replyToApplicationShouldTerminate:YES];
@@ -1051,7 +1054,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			}
 			RELEASEOBJ(savePanel);
 		}
-			MADEndExport(MADDriver);
+			MADEndExport(madDriver);
 			break;
 	}
 }
@@ -1068,7 +1071,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (IBAction)saveMusicAs:(id)sender
 {
-	MADBeginExport(MADDriver);
+	MADBeginExport(madDriver);
 	
 	NSSavePanel * savePanel = RETAINOBJ([NSSavePanel savePanel]);
 	[savePanel setAllowedFileTypes:@[MADNativeUTI]];
@@ -1084,12 +1087,12 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		RELEASEOBJ(saveURL);
 	}
 	RELEASEOBJ(savePanel);
-	MADEndExport(MADDriver);
+	MADEndExport(madDriver);
 }
 
 - (IBAction)saveMusic:(id)sender
 {
-	MADBeginExport(MADDriver);
+	MADBeginExport(madDriver);
 	
 	if (previouslyPlayingIndex.index == -1) {
 		// saveMusicAs: will end the exporting when it is done.
@@ -1101,7 +1104,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		NSString *utiFile = [sharedWorkspace typeOfFile:filename error:nil];
 		if (/*[sharedWorkspace type:utiFile conformsToType:MADNativeUTI]*/ [utiFile isEqualToString:MADNativeUTI]) {
 			[self saveMusicToURL:fileURL];
-			MADEndExport(MADDriver);
+			MADEndExport(madDriver);
 		} else {
 			// saveMusicAs: will end the exporting when it is done.
 			[self saveMusicAs:sender];
@@ -1111,8 +1114,8 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(out NSError *__autoreleasing*)theErr
 {
-	if (Music != NULL) {
-		if (Music->hasChanged) {
+	if (music != NULL) {
+		if (music->hasChanged) {
 			NSInteger selection = 0;
 			if (previouslyPlayingIndex.index == -1) {
 				selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The new music file has unsaved changes. Do you want to save?", @"New unsaved file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"));
@@ -1137,13 +1140,13 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 					break;
 			}
 		}
-		MADStopMusic(MADDriver);
-		MADCleanDriver(MADDriver);
-		MADDisposeMusic(&Music, MADDriver);
+		MADStopMusic(madDriver);
+		MADCleanDriver(madDriver);
+		MADDisposeMusic(&music, madDriver);
 	}
 
 	char fileType[5];
-	OSErr theOSErr = MADMusicIdentifyCFURL(MADLib, fileType, BRIDGE(CFURLRef, musicToLoad));
+	OSErr theOSErr = MADMusicIdentifyCFURL(madLib, fileType, BRIDGE(CFURLRef, musicToLoad));
 		
 	if(theOSErr != noErr)
 	{
@@ -1154,7 +1157,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		[self clearMusic];
 		return NO;
 	}
-	theOSErr = MADLoadMusicCFURLFile(MADLib, &Music, fileType, BRIDGE(CFURLRef, musicToLoad));
+	theOSErr = MADLoadMusicCFURLFile(madLib, &music, fileType, BRIDGE(CFURLRef, musicToLoad));
 	
 	if (theOSErr != noErr) {
 		if (theErr) {
@@ -1165,12 +1168,12 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		return NO;
 	}
 	
-	MADAttachDriverToMusic(MADDriver, Music, NULL);
-	MADPlayMusic(MADDriver);
+	MADAttachDriverToMusic(madDriver, music, NULL);
+	MADPlayMusic(madDriver);
 	self.paused = NO;
 	{
 		long fT, cT;
-		MADGetMusicStatus(MADDriver, &fT, &cT);
+		MADGetMusicStatus(madDriver, &fT, &cT);
 		[songPos setMaxValue:fT];
 		[songPos setMinValue:0.0];
 		[self setTitleForSongLabelBasedOnMusic];
@@ -1267,8 +1270,8 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 	//[plugInInfos removeAllObjects];
 	
-	for (i = 0; i < MADLib->TotalPlug ; i++) {
-		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:BRIDGE(NSString*, MADLib->ThePlug[i].MenuName) author:BRIDGE(NSString*, MADLib->ThePlug[i].AuthorString) plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name") plugURL:CFBridgingRelease(CFBundleCopyBundleURL(MADLib->ThePlug[i].file))];
+	for (i = 0; i < madLib->TotalPlug ; i++) {
+		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:BRIDGE(NSString*, madLib->ThePlug[i].MenuName) author:BRIDGE(NSString*, madLib->ThePlug[i].AuthorString) plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name") plugURL:CFBridgingRelease(CFBundleCopyBundleURL(madLib->ThePlug[i].file))];
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
 		}
@@ -1324,7 +1327,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	undoManager = [[NSUndoManager alloc] init];
 	srandom(time(NULL) & 0xffffffff);
 	PPRegisterDebugFunc(CocoaDebugStr);
-	MADInitLibrary(NULL, &MADLib);
+	MADInitLibrary(NULL, &madLib);
 	//the NIB won't store the value anymore, so do this hackery to make sure there's some value in it.
 	[songTotalTime setIntegerValue:0];
 	[songCurTime setIntegerValue:0];
@@ -1345,27 +1348,27 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
 	
 	[self MADDriverWithPreferences];
-	Music = CreateFreeMADK();
-	MADAttachDriverToMusic(MADDriver, Music, NULL);
+	music = CreateFreeMADK();
+	MADAttachDriverToMusic(madDriver, music, NULL);
 	[self setTitleForSongLabelBasedOnMusic];
-	instrumentImporter = [[PPInstrumentImporter alloc] initWithMusic:&Music];
-	instrumentImporter.driverRec = &MADDriver;
+	instrumentImporter = [[PPInstrumentImporter alloc] initWithMusic:&music];
+	instrumentImporter.driverRec = &madDriver;
 	
-	digitalHandler = [[PPDigitalPlugInHandler alloc] initWithMusic:&Music];
-	digitalHandler.driverRec = &MADDriver;
+	digitalHandler = [[PPDigitalPlugInHandler alloc] initWithMusic:&music];
+	digitalHandler.driverRec = &madDriver;
 	
-	filterHandler = [[PPFilterPlugHandler alloc] initWithMusic:&Music];
-	filterHandler.driverRec = &MADDriver;
+	filterHandler = [[PPFilterPlugHandler alloc] initWithMusic:&music];
+	filterHandler.driverRec = &madDriver;
 	
 	instrumentController = [[PPInstrumentWindowController alloc] init];
 	instrumentController.importer = instrumentImporter;
-	instrumentController.curMusic = &Music;
-	instrumentController.theDriver = &MADDriver;
+	instrumentController.curMusic = &music;
+	instrumentController.theDriver = &madDriver;
 	instrumentController.undoManager = undoManager;
 	instrumentController.filterHandler = filterHandler;
 	
-	patternHandler = [[PatternHandler alloc] initWithMusic:&Music];
-	patternHandler.theRec = &MADDriver;
+	patternHandler = [[PatternHandler alloc] initWithMusic:&music];
+	patternHandler.theRec = &madDriver;
 	patternHandler.undoManager = undoManager;
 	
 	//Initialize the QTKit framework on the main thread. needed for 32-bit code.
@@ -1383,9 +1386,9 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		}
 	}
 	
-	for (i = 0; i < MADLib->TotalPlug; i++) {
-		if (MADLib->ThePlug[i].mode == MADPlugImportExport || MADLib->ThePlug[i].mode == MADPlugExport) {
-			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@...", BRIDGE(NSString*, MADLib->ThePlug[i].MenuName)] action:@selector(exportMusicAs:) keyEquivalent:@""];
+	for (i = 0; i < madLib->TotalPlug; i++) {
+		if (madLib->ThePlug[i].mode == MADPlugImportExport || madLib->ThePlug[i].mode == MADPlugExport) {
+			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@...", BRIDGE(NSString*, madLib->ThePlug[i].MenuName)] action:@selector(exportMusicAs:) keyEquivalent:@""];
 			[mi setTag:i];
 			[mi setTarget:self];
 			[musicExportMenu addItem:mi];
@@ -1418,7 +1421,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
-	if (MADIsExporting(MADDriver)) {
+	if (MADIsExporting(madDriver)) {
 		NSInteger selection = NSRunAlertPanel(@"Exporting", @"PlayerPRO is currently exporting a tracker file.\nQuitting will stop this. Do you really wish to quit?", @"Wait", @"Quit", @"Cancel");
 		switch (selection) {
 			default:
@@ -1432,7 +1435,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 				
 			case NSAlertDefaultReturn:
 				//Double-check to make sure we're still exporting
-				if (MADIsExporting(MADDriver)) {
+				if (MADIsExporting(madDriver)) {
 					isQuitting = YES;
 					return NSTerminateLater;
 				} else {
@@ -1466,8 +1469,8 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	RELEASEOBJ(undoManager);
 	undoManager = nil;
 	
-	if (Music != NULL) {
-		if (Music->hasChanged) {
+	if (music != NULL) {
+		if (music->hasChanged) {
 			NSInteger selection = 0;
 			if (currentlyPlayingIndex.index == -1) {
 				selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The new music file has unsaved changes. Do you want to save?", @"New unsaved file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), nil);
@@ -1484,13 +1487,13 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 					break;
 			}
 		}
-		MADStopMusic(MADDriver);
-		MADCleanDriver(MADDriver);
-		MADDisposeMusic(&Music, MADDriver);
+		MADStopMusic(madDriver);
+		MADCleanDriver(madDriver);
+		MADDisposeMusic(&music, madDriver);
 	}
-	MADStopDriver(MADDriver);
-	MADDisposeDriver(MADDriver);
-	MADDisposeLibrary(MADLib);
+	MADStopDriver(madDriver);
+	MADDisposeDriver(madDriver);
+	MADDisposeLibrary(madLib);
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
 		[musicList saveMusicListToPreferences];
 	} else {
@@ -1509,7 +1512,8 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	[plugInInfos release];
 	[previouslyPlayingIndex release];
 	[currentlyPlayingIndex release];
-	[musicName release];
+	self.musicName = nil;
+	self.musicInfo = nil;
 	[exportController release];
 	[instrumentController release];
 	
@@ -1524,7 +1528,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (IBAction)saveInstrumentList:(id)sender
 {
-	MADBeginExport(MADDriver);
+	MADBeginExport(madDriver);
 	NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
 	[savePanel setAllowedFileTypes:@[PPInstrumentListUTI]];
 	[savePanel setCanCreateDirectories:YES];
@@ -1543,7 +1547,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		}
 	}
 	
-	MADEndExport(MADDriver);
+	MADEndExport(madDriver);
 	RELEASEOBJ(savePanel);
 }
 
@@ -1604,12 +1608,10 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 - (IBAction)addMusic:(id)sender
 {
 	NSOpenPanel *panel = RETAINOBJ([NSOpenPanel openPanel]);
-	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithCapacity:MADLib->TotalPlug + 1];
-	[trackerDict setObject:@[MADNativeUTI] forKey:@"MADK Tracker"];
+	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithObject:@[MADNativeUTI] forKey:@"MADK Tracker"];
 	
-	int i = 0;
-	for (i = 0; i < MADLib->TotalPlug; i++) {
-		[trackerDict setObject:BRIDGE(NSArray*, MADLib->ThePlug[i].UTItypes) forKey:BRIDGE(NSString*, MADLib->ThePlug[i].MenuName)];
+	for (int i = 0; i < madLib->TotalPlug; i++) {
+		[trackerDict setObject:BRIDGE(NSArray*, madLib->ThePlug[i].UTItypes) forKey:BRIDGE(NSString*, madLib->ThePlug[i].MenuName)];
 	}
 	
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:trackerDict playlistDictionary:nil instrumentDictionary:nil additionalDictionary:nil];
@@ -1625,64 +1627,37 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (void)setTitleForSongLabelBasedOnMusic
 {
-#if __has_feature(objc_arc)
-	musicName = [[NSString alloc] initWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding];
-	musicInfo = [[NSString alloc] initWithCString:Music->header->infos encoding:NSMacOSRomanStringEncoding];
-#else
-	NSString *tempNam = musicName;
-	musicName = [[NSString alloc] initWithCString:Music->header->name encoding:NSMacOSRomanStringEncoding];
-	[tempNam release];
-	tempNam = musicInfo;
-	musicInfo = [[NSString alloc] initWithCString:Music->header->infos encoding:NSMacOSRomanStringEncoding];
-	[tempNam release];
-#endif
-	
-	[songLabel setTitleWithMnemonic:musicName];
+	self.musicName = AUTORELEASEOBJ([[NSString alloc] initWithCString:music->header->name encoding:NSMacOSRomanStringEncoding]);
+	self.musicInfo = AUTORELEASEOBJ([[NSString alloc] initWithCString:music->header->infos encoding:NSMacOSRomanStringEncoding]);
 }
 
 - (void)clearMusic
 {
-	if (Music) {
-		MADStopMusic(MADDriver);
-		MADCleanDriver(MADDriver);
-		MADDisposeMusic(&Music, MADDriver);
+	if (music) {
+		MADStopMusic(madDriver);
+		MADCleanDriver(madDriver);
+		MADDisposeMusic(&music, madDriver);
 	}
 	
 	self.paused = YES;
 	currentlyPlayingIndex.index = -1;
 	currentlyPlayingIndex.playbackURL = nil;
 	[currentlyPlayingIndex movePlayingIndexToOtherIndex:previouslyPlayingIndex];
-	Music = CreateFreeMADK();
+	music = CreateFreeMADK();
 	[self setTitleForSongLabelBasedOnMusic];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPMusicDidChange object:self];
-	MADAttachDriverToMusic(MADDriver, Music, NULL);
+	MADAttachDriverToMusic(madDriver, music, NULL);
 }
 
 - (IBAction)removeSelectedMusic:(id)sender
 {
-#if 0
 	NSIndexSet *selMusic = [tableView selectedRowIndexes];
-	NSInteger i = 0;
-	NSInteger selIndexes = [selMusic count];
-	NSUInteger *indexArray = malloc(sizeof(NSUInteger) * selIndexes);
-	NSRange theRange;
-	theRange.location = 0;
-	theRange.length = NSUIntegerMax;
-	[selMusic getIndexes:indexArray maxCount:selIndexes inIndexRange:&theRange];
-	[self willChangeValueForKey:kMusicListKVO];
-	for (i = selIndexes - 1; i >= 0 ; i--) {
-		[musicList removeObjectInMusicListAtIndex:indexArray[i]];
-	}
-	[self didChangeValueForKey:kMusicListKVO];
-	free(indexArray);
-#else
-	NSInteger selMusic = [tableView selectedRow];
-	if (currentlyPlayingIndex.index == selMusic) {
-		if (Music->hasChanged) {
-			NSInteger selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes",@"Unsaved Changes"), NSLocalizedString(@"The music file \"%@\" has unsaved changes. Do you want to save?", @"edited file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"), [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
+	if ([selMusic containsIndex:currentlyPlayingIndex.index]) {
+		if (music->hasChanged) {
+			NSInteger selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The music file \"%@\" has unsaved changes. Do you want to save?", @"edited file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"), [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
 			switch (selection) {
 				case NSAlertDefaultReturn:
-					[self saveMusic:nil];
+					[self saveMusic:sender];
 				case NSAlertAlternateReturn:
 				default:
 					[self clearMusic];
@@ -1697,15 +1672,14 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		}
 	}
 	[self willChangeValueForKey:kMusicListKVO];
-	[musicList removeObjectInMusicListAtIndex:selMusic];
+	[musicList removeObjectsInMusicListAtIndexes:selMusic];
 	[self didChangeValueForKey:kMusicListKVO];
 	[self musicListContentsDidMove];
-#endif
 }
 
 - (IBAction)newMusic:(id)sender
 {
-	if (Music->hasChanged) {
+	if (music->hasChanged) {
 		NSInteger selection = 0;
 		if (currentlyPlayingIndex.index == -1) {
 			selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The new music file has unsaved changes. Do you want to save?", @"New unsaved file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"));
@@ -1734,7 +1708,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		NSInteger returnVal = NSRunAlertPanel(NSLocalizedString(@"Clear list", @"Clear Music List"), NSLocalizedString(@"The music list contains %ld items. Do you really want to remove them?", @"Clear Music List?"), NSLocalizedString(@"No", @"No"), NSLocalizedString(@"Yes", @"Yes"), nil, (long)[musicList countOfMusicList]);
 		
 		if (returnVal == NSAlertAlternateReturn) {
-			if (Music->hasChanged && currentlyPlayingIndex.index != -1) {
+			if (music->hasChanged && currentlyPlayingIndex.index != -1) {
 				NSInteger selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The music file \"%@\" has unsaved changes. Do you want to save?", @"Save check with file name"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"), [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
 				switch (selection) {
 					case NSAlertDefaultReturn:
@@ -1774,10 +1748,13 @@ enum PPMusicToolbarTypes {
 	switch ([theItem tag]) {
 		case PPToolbarSort:
 		case PPToolbarAddMusic:
-		case PPToolbarFileInfo:
 			return YES;
 			break;
 			
+		case PPToolbarFileInfo:
+			if ([infoDrawer state] == NSDrawerOpeningState || [infoDrawer state] == NSDrawerOpenState) {
+				return YES;
+			}
 		case PPToolbarPlayMusic:
 			if([[tableView selectedRowIndexes] count] == 1) {
 				return YES;
@@ -1843,8 +1820,8 @@ enum PPMusicToolbarTypes {
 	} else {
 		{
 			NSMutableArray *trackerUTIs = [NSMutableArray array];
-			for (int i = 0; i < MADLib->TotalPlug; i++) {
-				[trackerUTIs addObjectsFromArray:BRIDGE(NSArray *, MADLib->ThePlug[i].UTItypes)];
+			for (int i = 0; i < madLib->TotalPlug; i++) {
+				[trackerUTIs addObjectsFromArray:BRIDGE(NSArray *, madLib->ThePlug[i].UTItypes)];
 			}
 			for (NSString *aUTI in trackerUTIs) {
 				if([sharedWorkspace type:theUTI conformsToType:aUTI])
@@ -1883,8 +1860,8 @@ enum PPMusicToolbarTypes {
 	int i = 0;
 	NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithObject:@[MADNativeUTI] forKey:@"MADK Tracker"];
 	NSDictionary *playlistDict = [NSDictionary dictionaryWithObjectsAndKeys:@[PPMusicListUTI], @"PlayerPRO Music List", @[PPOldMusicListUTI], @"PlayerPRO Old Music List", nil];
-	for (i = 0; i < MADLib->TotalPlug; i++) {
-		[trackerDict setObject:BRIDGE(NSArray*, MADLib->ThePlug[i].UTItypes) forKey:BRIDGE(NSString*, MADLib->ThePlug[i].MenuName)];
+	for (i = 0; i < madLib->TotalPlug; i++) {
+		[trackerDict setObject:BRIDGE(NSArray*, madLib->ThePlug[i].UTItypes) forKey:BRIDGE(NSString*, madLib->ThePlug[i].MenuName)];
 	}
 		
 	NSMutableDictionary *samplesDict = nil;
@@ -1962,8 +1939,8 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)playButtonPressed:(id)sender
 {
-	if (Music) {
-		MADPlayMusic(MADDriver);
+	if (music) {
+		MADPlayMusic(madDriver);
 		self.paused = NO;
 	}
 }
@@ -1992,49 +1969,51 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)sliderChanged:(id)sender
 {
-    if(Music){
-		MADSetMusicStatus(MADDriver, 0, [songPos maxValue], [songPos doubleValue]);
+    if(music){
+		MADSetMusicStatus(madDriver, 0, [songPos maxValue], [songPos doubleValue]);
 	}
 }
 
 - (IBAction)stopButtonPressed:(id)sender
 {
-    if (Music) {
-		MADStopMusic(MADDriver);
-		MADCleanDriver(MADDriver);
-		MADSetMusicStatus(MADDriver, 0, 100, 0);
+    if (music) {
+		MADStopMusic(madDriver);
+		MADCleanDriver(madDriver);
+		MADSetMusicStatus(madDriver, 0, 100, 0);
 		self.paused = YES;
 	}
 }
 
 - (IBAction)pauseButtonPressed:(id)sender {
-	if (Music) {
+	if (music) {
 		if (paused) {
-			MADPlayMusic(MADDriver);
+			MADPlayMusic(madDriver);
 		} else {
-			MADStopMusic(MADDriver);
-			MADCleanDriver(MADDriver);
+			MADStopMusic(madDriver);
+			MADCleanDriver(madDriver);
 		}
-		self.paused = !self.paused;
+		self.paused = !paused;
 	}
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
-	NSInteger selected = [tableView selectedRow];
+	NSIndexSet *selected = [tableView selectedRowIndexes];
 	do {
-		if (selected < 0)
+		if ([selected count] > 0) {
+			musicList.selectedMusic = [selected firstIndex];
+		}
+		
+		if ([selected count] != 1)
 			break;
-		
-		musicList.selectedMusic = selected;
-		
-		PPMusicListObject *obj = [musicList objectInMusicListAtIndex:selected];
+
+		PPMusicListObject *obj = [musicList objectInMusicListAtIndex:[selected lastIndex]];
 		
 		NSURL *musicURL = obj.musicUrl;
 		PPInfoRec theInfo;
 		char info[5] = {0};
-		if(MADMusicIdentifyCFURL(MADLib, info, BRIDGE(CFURLRef, musicURL)) != noErr) break;
-		if(MADMusicInfoCFURL(MADLib, info, BRIDGE(CFURLRef, musicURL), &theInfo) != noErr) break;
+		if(MADMusicIdentifyCFURL(madLib, info, BRIDGE(CFURLRef, musicURL)) != noErr) break;
+		if(MADMusicInfoCFURL(madLib, info, BRIDGE(CFURLRef, musicURL), &theInfo) != noErr) break;
 		[fileName setTitleWithMnemonic:obj.fileName];
 		[internalName setTitleWithMnemonic:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
 		[fileSize setIntegerValue:theInfo.fileSize];
@@ -2046,7 +2025,7 @@ enum PPMusicToolbarTypes {
 			OSType2Ptr(theInfo.signature, sig);
 			NSString *NSSig = [NSString stringWithCString:sig encoding:NSMacOSRomanStringEncoding];
 			if (!NSSig) {
-				NSSig = [NSString stringWithFormat:@"0x%x", (unsigned int)theInfo.signature];
+				NSSig = [NSString stringWithFormat:@"0x%04X", (unsigned int)theInfo.signature];
 			}
 			[musicSignature setTitleWithMnemonic:NSSig];
 		}
@@ -2081,9 +2060,9 @@ enum PPMusicToolbarTypes {
 - (void)musicListDidChange
 {
 	if (currentlyPlayingIndex.index != -1) {
-		MADStopMusic(MADDriver);
-		MADCleanDriver(MADDriver);
-		MADDisposeMusic(&Music, MADDriver);
+		MADStopMusic(madDriver);
+		MADCleanDriver(madDriver);
+		MADDisposeMusic(&music, madDriver);
 	}
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
 		NSError *err = nil;
@@ -2103,8 +2082,8 @@ enum PPMusicToolbarTypes {
 
 - (BOOL)musicListWillChange
 {
-	if (Music) {
-		if (Music->hasChanged) {
+	if (music) {
+		if (music->hasChanged) {
 			if (currentlyPlayingIndex.index == -1) {
 				return YES;
 			} else {

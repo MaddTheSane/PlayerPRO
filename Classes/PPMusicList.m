@@ -509,6 +509,16 @@ static inline NSURL *PPHomeURL()
 	return [musicList count];
 }
 
+- (void)removeObjectsInMusicListAtIndexes:(NSIndexSet *)set
+{
+	if ([set containsIndex:selectedMusic]) {
+		self.selectedMusic = -1;
+	}
+	[self willChange:NSKeyValueChangeRemoval valuesAtIndexes:set forKey:kMusicListKVO];
+	[musicList removeObjectsAtIndexes:set];
+	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:set forKey:kMusicListKVO];
+}
+
 - (id)objectInMusicListAtIndex:(NSUInteger)idx
 {
 	return [musicList objectAtIndex:idx];

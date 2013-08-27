@@ -42,6 +42,7 @@
 	
 	IBOutlet  __weak NSWindow *window;
 	
+	IBOutlet NSDrawer		*infoDrawer;
 	IBOutlet NSTextField	*fileName;
 	IBOutlet NSTextField	*internalName;
 	IBOutlet NSTextField	*fileSize;
@@ -54,9 +55,9 @@
 	IBOutlet NSTableView	*tableView;
 	IBOutlet NSArrayController *musicListController;
 	NSTimer					*timeChecker;
-	MADDriverRec			*MADDriver;
-	MADMusic				*Music;
-	MADLibrary				*MADLib;	
+	MADDriverRec			*madDriver;
+	MADMusic				*music;
+	MADLibrary				*madLib;
 	
 	PPMusicList				*musicList;
 	PPCurrentlyPlayingIndex	*currentlyPlayingIndex;
@@ -84,6 +85,9 @@
 }
 
 @property (getter=isPaused, readwrite) BOOL paused;
+
+@property (readonly, retain) NSString *musicName;
+@property (readonly, retain) NSString *musicInfo;
 
 @property (arcweak) NSWindow *window;
 @property (arcweak) NSWindow *exportWindow;

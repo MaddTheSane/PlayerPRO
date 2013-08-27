@@ -45,6 +45,8 @@
 
 - (NSInteger)indexOfObjectSimilarToURL:(NSURL*)theURL;
 
+- (void)removeObjectsInMusicListAtIndexes:(NSIndexSet *)set;
+
 //KVC functions
 - (NSUInteger)countOfMusicList;
 - (id)objectInMusicListAtIndex:(NSUInteger)idx;

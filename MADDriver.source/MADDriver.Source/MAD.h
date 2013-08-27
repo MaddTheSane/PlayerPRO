@@ -58,6 +58,7 @@
 //////////////////////////////////////////////////////////////////////
 #if defined(__APPLE__)			// MACINTOSH
 #define _MAC_H
+#include <CoreFoundation/CFString.h>
 
 //////////////////////////////////////////////////////////////////////
 #else 			// WIN32 - 95/NT
@@ -115,8 +116,6 @@
 #endif
 
 #if !defined(_MAC_H)
-
-#define MemError() 0
 
 #ifndef TRUE
 #define TRUE 1
@@ -341,7 +340,11 @@ typedef struct FXSets
 	SInt32	FXID;
 	short	noArg;
 	float	values[ 100];
+#ifdef _MAC_H
+	CFStringRef *name;
+#else
 	Str63	name;
+#endif
 } FXSets;	// and then float values
 
 

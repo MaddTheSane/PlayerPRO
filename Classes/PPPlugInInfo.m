@@ -8,6 +8,13 @@
 
 #import "PPPlugInInfo.h"
 
+@interface PPPlugInInfo ()
+@property (readwrite, copy)		NSString *plugName;
+@property (readwrite, copy)		NSString *authorName;
+@property (readwrite, copy)		NSString *plugType;
+@property (readwrite, retain)	NSURL    *plugURL;
+@end
+
 @implementation PPPlugInInfo
 
 @synthesize authorName;
@@ -28,10 +35,10 @@
 - (id)initWithPlugName:(NSString*)pn author:(NSString*)aut plugType:(NSString*)pt plugURL:(NSURL*)pu;
 {
 	if (self = [super init]) {
-		plugName = [pn copy];
-		authorName = [aut copy];
-		plugType = [pt copy];
-		plugURL = RETAINOBJ(pu);
+		self.plugName = pn;
+		self.authorName = aut;
+		self.plugType = pt;
+		self.plugURL = pu;
 	}
 	return self;
 }
@@ -68,10 +75,10 @@
 #if !__has_feature(objc_arc)
 - (void)dealloc
 {
-	[plugName release];
-	[authorName release];
-	[plugType release];
-	[plugURL release];
+	self.plugName = nil;
+	self.authorName = nil;
+	self.plugType = nil;
+	self.plugURL = nil;
 	
 	[super dealloc];
 }
