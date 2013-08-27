@@ -29,6 +29,10 @@
 #endif
 #include "MTM.h"
 
+#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#include "embeddedPlugs.h"
+#endif
+
 #ifdef WIN32
 #define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
 #endif
@@ -357,7 +361,11 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /* MAIN FUNCTION */
 /*****************/
 
+#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+OSErr mainMTM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
 extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;

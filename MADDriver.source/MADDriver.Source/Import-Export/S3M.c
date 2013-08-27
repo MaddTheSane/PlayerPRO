@@ -29,6 +29,10 @@
 #endif
 #include "S3M.h"
 
+#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#include "embeddedPlugs.h"
+#endif
+
 #ifdef WIN32
 #define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
 #endif
@@ -1304,7 +1308,11 @@ EXP OSErr FillPlug( PlugInfo *p)
 }
 #endif
 
+#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+OSErr mainS3M( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
 extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif
 {
 	OSErr		myErr;
 	Ptr			AlienFile;

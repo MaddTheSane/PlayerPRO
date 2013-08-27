@@ -19,21 +19,7 @@
 
 #define MAXPLUG	40
 
-extern OSErr main669( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-extern OSErr mainAMF( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-extern OSErr mainDMF( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-extern OSErr mainIT( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-extern OSErr mainMADfg( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-extern OSErr mainMADH( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-extern OSErr mainMADI( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-extern OSErr mainMED( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-extern OSErr mainMOD( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-extern OSErr mainMTM( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-extern OSErr mainOkta( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-extern OSErr mainS3M( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-extern OSErr mainULT( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-extern OSErr mainUMX( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-extern OSErr mainXM( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
+#include "embeddedPlugs.h"
 
 typedef struct iPlugInfo
 {

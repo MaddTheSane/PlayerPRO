@@ -29,6 +29,10 @@
 #endif
 #include "DMF.h"
 
+#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#include "embeddedPlugs.h"
+#endif
+
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
 
@@ -847,7 +851,11 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 #endif
 
 
+#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+OSErr mainDMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
 extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;

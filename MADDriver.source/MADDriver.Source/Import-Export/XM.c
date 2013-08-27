@@ -28,6 +28,10 @@
 #include "FileUtils.h"
 #endif
 
+#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#include "embeddedPlugs.h"
+#endif
+
 #ifndef WIN32
 //Windows Defines
 typedef SInt16			WORD;
@@ -1280,7 +1284,11 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 }
 #endif
 
-OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+OSErr mainXM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#else
+extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+#endif
 {
 	OSErr		myErr;
 	Ptr			AlienFile;
