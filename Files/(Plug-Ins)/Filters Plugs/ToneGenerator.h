@@ -11,6 +11,9 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
+extern char *Audio8Ptr __attribute__((visibility ("hidden")));
+extern short *Audio16Ptr __attribute__((visibility ("hidden")));
+
 typedef enum _ToneGenerator
 {
 	cancelTone,

@@ -7,11 +7,8 @@
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
 #include "ToneGenerator.h"
-#include <Carbon/Carbon.h>
 #include <math.h>
 
-
-#define		PI      		M_PI
 #define		KHZ				22254.54545
 
 Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, long AudioType, Boolean stereo)
@@ -30,7 +27,7 @@ Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, long Audio
 		case wave:
 			for( i = 0, x = 0; i < AudioLength; i++, x++)
 			{
-				temp = 127.0 * sin( ( ((double) x * (double) AudioFreq * PI * 2.0) / KHZ));
+				temp = 127.0 * sin( ( ((double) x * (double) AudioFreq * M_PI * 2.0) / KHZ));
 				
 				/** Amplitude resizing **/
 				temp *= AudioAmp;
@@ -140,7 +137,7 @@ short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp, long A
 		case wave:
 			for( i = 0, x = 0; i < AudioLength; i++, x++)
 			{
-				temp = 32767.0 * sin( ( ((double) x * (double) AudioFreq * PI * 2.0) / KHZ));
+				temp = 32767.0 * sin( ( ((double) x * (double) AudioFreq * M_PI * 2.0) / KHZ));
 				
 				/** Amplitude resizing **/
 				temp *= AudioAmp;
@@ -242,8 +239,6 @@ static OSErr mainToneGenerator(void				*unused,
 							   short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long				AudioLength, AudioFreq, AudioAmp;
-	Ptr					Audio8Ptr;
-	short				*Audio16Ptr;
 	short				itemHit;
 	
 	itemHit = silence;
@@ -261,7 +256,7 @@ static OSErr mainToneGenerator(void				*unused,
 
 	itemHit = RunToneGeneratorPlug(theData, thePPInfoPlug, &AudioLength, StereoMode, &AudioAmp, &AudioFreq);
 	
-	if( itemHit != 0)
+	if( itemHit != cancelTone)
 	{
 		Ptr		resultPtr;
 		

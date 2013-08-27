@@ -9,12 +9,12 @@
 #import "PPToneGeneratorController.h"
 
 @interface PPToneGeneratorController ()
-@property NSArray *toneRadios;
+@property (retain) NSArray *toneRadios;
 @property BOOL disabledData;
 @end
 
-static char *Audio8Ptr = NULL;
-static short *Audio16Ptr = NULL;
+char *Audio8Ptr = NULL;
+short *Audio16Ptr = NULL;
 
 int RunToneGeneratorPlug(sData *theData, PPInfoPlug *thePPInfoPlug, long *audioLen, int stereoMode, long *audioAmp, long *audioFreq)
 {
