@@ -51,11 +51,10 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 }
 
 @interface PPMusicListObject ()
-@property (retain, nonatomic, readwrite, setter = setTheMusicUrl:) NSURL *musicUrl;
+@property (retain, readwrite, setter = setTheMusicUrl:) NSURL *musicUrl;
 @end
 
 @implementation PPMusicListObject
-
 @synthesize musicUrl;
 
 - (BOOL)isEqual:(id)object
@@ -144,12 +143,15 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	return [NSString stringWithFormat:@"%@:%@ - %@", [musicUrl description], [musicUrl path], self.fileName];
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+	return RETAINOBJ(self);
+}
+
 @end
 
 @interface PPMusicList ()
-
 @property (readonly) NSMutableArray *theMusicList;
-
 @end
 
 @implementation PPMusicList
@@ -206,7 +208,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (void)clearMusicList
 {
-	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, ([musicList count]))];
+	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [musicList count])];
 	[self willChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:kMusicListKVO];
 	[musicList removeAllObjects];
 	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:theIndex forKey:kMusicListKVO];
@@ -284,7 +286,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	HUnlock(locHand);
 	DisposeHandle(locHand);
 	
-	NSMutableArray *newArray = [NSMutableArray array];
+	NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:theNo];
 	
 	for(i = 0; i < theNo * 2; i += 2) {
 		StringPtr aStr, aStr2;
@@ -293,23 +295,15 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 		if (!aStr || !aStr2) {
 			break;
 		}
-		CFStringRef CFaStr = NULL, CFaStr2 = NULL;
-		CFaStr = CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman);
-		CFaStr2 = CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman);
+		NSString *CFaStr = nil, *CFaStr2 = nil;
+		CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman));
+		CFaStr2 = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman));
 
-		CFMutableArrayRef CFaStrArray = CFArrayCreateMutable(kCFAllocatorDefault, 2, &kCFTypeArrayCallBacks);
+		NSString *together = [@[CFaStr, CFaStr2] componentsJoinedByString:@":"];
 		
-		CFArrayAppendValue(CFaStrArray, CFaStr);
-		CFRelease(CFaStr);
-		CFArrayAppendValue(CFaStrArray, CFaStr2);
-		CFRelease(CFaStr2);
-
-		CFStringRef together = CFStringCreateByCombiningStrings(kCFAllocatorDefault, CFaStrArray, CFSTR(":"));
-		CFRelease(CFaStrArray);
-		
-		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, together, kCFURLHFSPathStyle, false));
+		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, BRIDGE(CFStringRef, together), kCFURLHFSPathStyle, false));
+		together = nil;
 		BOOL validPath = [[NSFileManager defaultManager] fileExistsAtPath:[fullPath path]];
-		CFRelease(together);
 		if (validPath) {
 			PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullPath)];
 			[newArray addObject:obj];
@@ -322,7 +316,6 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 			}
 			lostMusicCount++;
 		}
-		
 	}
 	HUnlock( aHandle);
 	DisposeHandle( aHandle);
@@ -330,6 +323,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	self.selectedMusic = (location >= [newArray count]) ? location : -1;
 	
 	[self loadMusicList:newArray];
+	RELEASEOBJ(newArray);
 
 	return noErr;
 }
@@ -412,7 +406,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 
 #pragma mark Archiving
 
-static NSURL *PPHomeURL()
+static inline NSURL *PPHomeURL()
 {
 	static NSURL *homeURL;
 	if (homeURL == nil) {
@@ -488,6 +482,7 @@ static NSURL *PPHomeURL()
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
 	NSMutableArray *BookmarkArray = [NSMutableArray arrayWithCapacity:[musicList count]];
+	NSInteger changedIndex = selectedMusic;
 	for (PPMusicListObject *obj in musicList)
 	{
 		NSData *bookData = [obj.musicUrl bookmarkDataWithOptions:NSURLBookmarkCreationPreferFileIDResolution includingResourceValuesForKeys:nil relativeToURL:PPHomeURL() error:nil];
@@ -495,7 +490,8 @@ static NSURL *PPHomeURL()
 			[BookmarkArray addObject:bookData];
 		}
 	}
-	[encoder encodeObject:@(selectedMusic) forKey:kMusicListLocation2];
+	//TODO, check for failed data initialization
+	[encoder encodeObject:@(changedIndex) forKey:kMusicListLocation2];
 	[encoder encodeObject:BookmarkArray forKey:kMUSICLISTKEY2];
 }
 

@@ -8,13 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PPMusicListObject : NSObject
+@interface PPMusicListObject : NSObject <NSCopying>
 {
 	NSURL *musicUrl;
 	//NSString *fileName;
 }
 
-@property (retain, nonatomic, readonly) NSURL *musicUrl;
+@property (retain, readonly) NSURL *musicUrl;
 @property (unsafe_unretained, readonly) NSString *fileName;
 
 - (id)initWithURL:(NSURL *)aURL;
