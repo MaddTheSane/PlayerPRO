@@ -83,8 +83,8 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 
 OSErr inAddSoundToMADCString(Ptr			theSound,
 							 size_t			sndLen,
-							 long			lS,
-							 long			lE,
+							 long			loopStart,
+							 long			loopEnd,
 							 short			sS,
 							 short			bFreq,
 							 unsigned int	rate,
@@ -128,8 +128,8 @@ OSErr inAddSoundToMADCString(Ptr			theSound,
 	curData->data = theSound;
 	
 	curData->size		= inOutBytes;
-	curData->loopBeg	= lS;
-	curData->loopSize	= lE - lS;
+	curData->loopBeg	= loopStart;
+	curData->loopSize	= loopEnd - loopStart;
 	curData->vol		= 64;
 	curData->amp		= sS;
 	curData->c2spd		= rate;

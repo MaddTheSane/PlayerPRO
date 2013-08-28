@@ -22,33 +22,32 @@
 	<false/>
 	<key>CFPlugInFactories</key>
 	<dict>
-		<key>D54EE3CC-B94C-4245-9E82-2F1D65C0009D</key>
-		<string>PATFactory</string>
+		<key>C4B85FAC-BD58-4661-9004-CBBF84BA4EDD</key>
+		<string>AIFFFactory</string>
 	</dict>
 	<key>CFPlugInTypes</key>
 	<dict>
 		<key>FD7154D6-20BF-4007-881B-8E44970C3B0A</key>
 		<array>
-			<string>D54EE3CC-B94C-4245-9E82-2F1D65C0009D</string>
+			<string>C4B85FAC-BD58-4661-9004-CBBF84BA4EDD</string>
 		</array>
 	</dict>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>public.aiff-audio</string>
+		<string>public.aifc-audio</string>
+	</array>
+	<key>MADPlugMenuName</key>
+	<string>AIFF</string>
+	<key>MADPlugType</key>
+	<string>AIFF</string>
 	<key>MADPlugAuthorName</key>
-	<string>Copyright 99 Antoine ROSSET</string>
+	<string>Copyright 96 Antoine ROSSET</string>
+	<key>MADPlugIsSample</key>
+	<true/>
 	<key>MADCanImport</key>
 	<true/>
 	<key>MADCanExport</key>
-	<false/>
-	<key>MADPlugIsSample</key>
-	<false/>
-	<key>MADPlugMenuName</key>
-	<string>PAT</string>
-	<key>MADPlugMode</key>
-	<string>IMPL</string>
-	<key>MADPlugType</key>
-	<string>PAT </string>
-	<key>MADPlugUTITypes</key>
-	<array>
-		<string>net.sourceforge.playerpro.pat</string>
-	</array>
+	<true/>
 </dict>
 </plist>

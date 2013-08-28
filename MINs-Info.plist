@@ -36,8 +36,6 @@
 			<string>9C897935-C00B-4AAC-81D6-E43049E3A8E0</string>
 		</array>
 	</dict>
-	<key>CSResourcesFileMapped</key>
-	<string>yes</string>
 	<key>MADPlugUTITypes</key>
 	<array>
 		<string>net.sourceforge.playerpro.mins</string>

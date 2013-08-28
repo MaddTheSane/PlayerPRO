@@ -4,217 +4,25 @@
 /*	1996 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Carbon/Carbon.h>
-
-/*Ptr		 AIFFtoSnd(	Ptr				sound,
-					long			*loopStart,
-					long			*loopEnd,
-					short			*sampleSize,
-					unsigned long	*rate,
-					Boolean			*stereo)
-{
-long				i, SizeH, numSampleFrames, StartId, numChannels;
-ContainerChunk		*CC;
-ChunkHeader			*CH;
-static	ExtCommonChunk		*CommC;
-SoundDataChunk		*SData;
-MarkerChunk			*marker;
-Marker				*mm;
-unsigned long		theFixed, soundSize;
-Boolean				Compression = false;
-ID					compType;
-OSErr				result;
-
-	CC = (ContainerChunk*) sound;
-
-	*loopStart = *loopEnd = 0;
-	*sampleSize = 8;
-	*rate = rate22khz;
-	*stereo = false;
-	numChannels = 1;
-	soundSize = 0;
-	
-	if( CC->formType == AIFCID) Compression = true;
-	else if( CC->formType == AIFFID) Compression = false;
-
-	for( i = sizeof( ContainerChunk); i < CC->ckSize;)
-	{
-		CH = (ChunkHeader*) (sound + i);
-		if( CH->ckID == CommonID)
-		{
-			CommC = (ExtCommonChunk*) CH;			
-			numChannels = CommC->numChannels;
-			numSampleFrames = CommC->numSampleFrames;
-			compType = CommC->compressionType;
-			
-			{
-				struct myFloat80
-				{
-					SInt16 	exp;
-					UInt16 	man[4];
-				};
-			
-				struct myFloat80		*too;
-				
-				too = (struct myFloat80* ) &CommC->sampleRate;
-				
-				*rate = *((unsigned long*) too->man);
-				*rate >>= (15L - (too->exp - 0x3FFFL));
-			}
-			
-			*sampleSize = CommC->sampleSize;
-			
-			soundSize = numSampleFrames;
-			
-			if( *sampleSize == 16) soundSize *= 2;
-			if( numChannels == 2) soundSize *= 2;
-
-		}
-		else if( CH->ckID == SoundDataID)
-		{
-			SData = (SoundDataChunk*) CH;
-			StartId = i;
-		}
-		else if( CH->ckID == MarkerID)
-		{
-			marker = (MarkerChunk*) CH;
-			if( marker->numMarkers == 2)
-			{
-				*loopStart = marker->Markers[ 0].position;
-				mm = (Marker*) marker->Markers;
-				mm = (Marker*) ((Ptr) mm + 8L);
-				mm = (Marker*) ((Ptr) mm + marker->Markers[ 0].markerName[0]);
-				*loopEnd = mm->position;
-				
-				if( *sampleSize == 16)
-				{
-					*loopStart *= 2;
-					*loopEnd *= 2;
-				}
-			}
-		}
-		
-		i += CH->ckSize;
-		i += 8;
-	}
-
-	StartId += 16;
-	
-	SizeH = GetPtrSize( sound);
-	if( numChannels == 1)
-	{
-		BlockMoveData( sound + StartId, sound, SizeH - StartId);
-	}
-	else if( numChannels == 2)
-	{
-		BlockMoveData( sound + StartId, sound, SizeH - StartId);
-		*stereo = true;
-	}
-	else
-	{
-		if( *sampleSize == 8)
-		{
-			for( i = 0; i < SizeH - StartId; i++)
-			{
-				(sound)[ i] = (sound + StartId)[ i * numChannels];
-			}
-		}
-		else
-		{
-			for( i = 0; i < (SizeH - StartId)/2; i++)
-			{
-				((short*) sound)[ i] = ((short*) (sound + StartId))[ i * numChannels];
-			}
-		}
-	}
-	
-	if( Compression)
-	{
-			CompressionInfo 		cp;
-			
-			result = GetCompressionInfo( -1, compType, numChannels, *sampleSize, &cp);
-			if (result != noErr) DebugStr("\pGetCompressionInfo");
-			
-			{
-			SoundConverter			sc;
-			SoundComponentData		inputFormat, outputFormat;
-			unsigned long			inputFrames, outputFrames;
-			unsigned long			inputBytes, outputBytes;
-			Ptr						inputPtr, outputPtr;
-			OSErr					err;
-			Ptr						dstPtr;
-			Str63					str;
-			
-			inputFormat.flags = 0;
-			inputFormat.format = compType;
-			inputFormat.numChannels = numChannels;
-			inputFormat.sampleSize = *sampleSize;
-			inputFormat.sampleRate = *rate;
-			inputFormat.sampleCount = 0;
-			inputFormat.buffer = nil;
-			inputFormat.reserved = 0;
-			
-			outputFormat = inputFormat;
-			if( *sampleSize == 8) outputFormat.format = kOffsetBinary;
-			else outputFormat.format = k16BitBigEndianFormat;
-			
-			err = SoundConverterOpen(&inputFormat, &outputFormat, &sc);
-			if (err != noErr)
-			DebugStr("\pOpen failed");
-			
-			err = SoundConverterBeginConversion(sc);
-			if (err != noErr)
-			DebugStr("\pBegin Conversion failed");
-			
-			inputFrames = (SizeH - StartId) / cp.bytesPerFrame;
-			
-			dstPtr = NewPtr( inputFrames * numChannels * (*sampleSize/8) * cp.samplesPerPacket);
-			if( dstPtr == 0L)
-			{
-				DisposePtr( sound);
-				return 0L;
-			}
-			
-			err = SoundConverterConvertBuffer(sc, sound, numSampleFrames, dstPtr, &outputFrames, &outputBytes);
-			if (err != noErr)	DebugStr("\pConversion failed");
-			
-			soundSize = outputBytes;
-			
-			err = SoundConverterEndConversion(sc, dstPtr, &outputFrames, &outputBytes);
-			if (err != noErr)
-			DebugStr("\pEnd Conversion failed");
-			
-			if( outputFrames != 0) Debugger();
-			if( outputBytes != 0) Debugger();
-			
-			err = SoundConverterClose(sc);
-			if (err != noErr)
-			DebugStr("\pClose failed");
-			
-			DisposePtr( sound);
-			sound = dstPtr;
-			}
-	}
-	
-	SetPtrSize( sound, soundSize);
-	
-	return sound;
-}*/
+#include <CoreFoundation/CoreFoundation.h>
 
 static OSErr TestAIFF( ContainerChunk* CC)
 {
 	if( CC->formType == AIFCID) return noErr;
 	else if( CC->formType == AIFFID) return noErr;
+	else if (CFSwapInt32(CC->formType) == AIFCID) return noErr;
+	else if (CFSwapInt32(CC->formType) == AIFFID) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
-EXP OSErr main(		OSType					order,						// Order to execute
-				InstrData				*InsHeader,					// Ptr on instrument header
-				sData					**sample,					// Ptr on samples data
-				short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
-																	// If sampleID == -1 : add sample else replace selected sample.
-				FSSpec					*AlienFileFSSpec,			// IN/OUT file
-				PPInfoPlug				*thePPInfoPlug)
+static OSErr mainAIFF(void					*unused,
+					  OSType				order,						// Order to execute
+					  InstrData				*InsHeader,					// Ptr on instrument header
+					  sData					**sample,					// Ptr on samples data
+					  short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+					  // If sampleID == -1 : add sample else replace selected sample.
+					  CFURLRef				AlienFileURL,				// IN/OUT file
+					  PPInfoPlug			*thePPInfoPlug)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
@@ -330,3 +138,11 @@ EXP OSErr main(		OSType					order,						// Order to execute
 		
 	return myErr;
 }
+
+// C4B85FAC-BD58-4661-9004-CBBF84BA4EDD
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xC4, 0xB8, 0x5F, 0xAC, 0xBD, 0x58, 0x46, 0x61, 0x90, 0x04, 0xCB, 0xBF, 0x84, 0xBA, 0x4E, 0xDD)
+#define PLUGINFACTORY AIFFFactory //The factory name as defined in the Info.plist file
+#define PLUGMAIN mainAIFF //The old main function, renamed please
+
+#include "CFPlugin-InstrBridge.c"
+
