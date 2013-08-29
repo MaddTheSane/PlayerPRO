@@ -11,8 +11,8 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
-extern char *Audio8Ptr __attribute__((visibility ("hidden")));
-extern short *Audio16Ptr __attribute__((visibility ("hidden")));
+extern char *Audio8Ptr;
+extern short *Audio16Ptr;
 
 typedef enum _ToneGenerator
 {
@@ -23,8 +23,8 @@ typedef enum _ToneGenerator
 	wave = 6
 } ToneGenerator;
 
-__private_extern__ int RunToneGeneratorPlug(sData *theData, PPInfoPlug *thePPInfoPlug, long *audioLen, int stereoMode, long *audioAmp, long *audioFreq);
-__private_extern__ short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp, long AudioType, Boolean stereo);
-__private_extern__ Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, long AudioType, Boolean stereo);
+extern int RunToneGeneratorPlug(sData *theData, PPInfoPlug *thePPInfoPlug, long *audioLen, int stereoMode, long *audioAmp, long *audioFreq);
+extern short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp, long AudioType, Boolean stereo);
+extern Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, long AudioType, Boolean stereo);
 
 #endif

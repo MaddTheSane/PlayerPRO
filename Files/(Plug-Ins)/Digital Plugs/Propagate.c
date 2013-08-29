@@ -20,20 +20,15 @@ static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 
 static OSErr mainPropagate(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
-//	DialogPtr			myDia;
-	short				/*itemHit, mode,*/ track, row;
-//	Str255				tStr;
+	short track, row;
 		
 	for( track = 0; track < myPcmd->tracks; track ++)
 	{
 		for( row = 0; row < myPcmd->length; row ++)
 		{
 			Cmd		*myCmd, *myCmdsrc;
-			
 			myCmdsrc = GetCmd( 0, 0, myPcmd);
-			
 			myCmd	 = GetCmd( row, track, myPcmd);
-			
 			*myCmd = *myCmdsrc;
 		}
 	}
@@ -47,4 +42,3 @@ static OSErr mainPropagate(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug
 #define PLUGMAIN mainPropagate //The old main function, renamed please
 
 #include "CFPlugin-DigitalBridge.c"
-

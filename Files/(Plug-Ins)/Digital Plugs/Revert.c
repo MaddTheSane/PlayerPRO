@@ -20,12 +20,11 @@ static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 
 static OSErr mainRevert(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
-	short				/*itemHit, mode,*/ track, row;
-//	Str255				tStr;
+	short				 track, row;
 	Pcmd				*srcCmd;
 	long				memSize;
 		
-	memSize = myPcmd->structSize;//GetPtrSize( (Ptr) myPcmd);
+	memSize = myPcmd->structSize;
 	
 	srcCmd = (Pcmd*) calloc( memSize, 1);
 	
@@ -37,11 +36,8 @@ static OSErr mainRevert(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		for( row = 0; row < myPcmd->length; row ++)
 		{
 			Cmd		*myCmd, *myCmdsrc;
-			
 			myCmdsrc = GetCmd( row, track, srcCmd);
-			
 			myCmd	 = GetCmd( row, track, myPcmd);
-			
 			*myCmdsrc = *myCmd;
 		}
 	}
@@ -51,11 +47,8 @@ static OSErr mainRevert(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		for( row = 0; row < myPcmd->length; row ++)
 		{
 			Cmd		*myCmd, *myCmdsrc;
-			
 			myCmdsrc = GetCmd( myPcmd->length - 1 - row, track, srcCmd);
-			
 			myCmd	 = GetCmd( row, track, myPcmd);
-			
 			*myCmd = *myCmdsrc;
 		}
 	}

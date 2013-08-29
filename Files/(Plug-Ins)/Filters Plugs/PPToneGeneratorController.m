@@ -130,7 +130,6 @@ int RunToneGeneratorPlug(sData *theData, PPInfoPlug *thePPInfoPlug, long *audioL
 - (IBAction)playSample:(id)sender
 {
 	static RPlaySoundUPP mPlay;
-	
 	mPlay = ppInfoPlug->RPlaySound;
 		
 	switch( theData->amp)

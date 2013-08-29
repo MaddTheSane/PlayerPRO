@@ -55,6 +55,7 @@ static OSErr mainCrossFade(void				*unused,
 			}
 		} break;
 
+		default:
 		case 16:
 		{
 			long	i, j, length = (SelectionEnd - SelectionStart) / 2;
@@ -93,7 +94,6 @@ static OSErr mainCrossFade(void				*unused,
 
 // C3D9EA39-A386-4636-B115-6B517215F095
 #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xC3, 0xD9, 0xEA, 0x39, 0xA3, 0x86, 0x46, 0x36, 0xB1, 0x15, 0x6B, 0x51, 0x72, 0x15, 0xF0, 0x95)
-
 #define PLUGMAIN mainCrossFade
 #define PLUGINFACTORY CrossFadeFactory
 

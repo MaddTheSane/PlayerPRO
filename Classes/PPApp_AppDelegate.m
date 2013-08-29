@@ -1544,6 +1544,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		if (fileErr) {
 			NSError *theErr = CreateErrorFromMADErrorType(fileErr);
 			[[NSAlert alertWithError:theErr] runModal];
+			RELEASEOBJ(theErr);
 		}
 	}
 	

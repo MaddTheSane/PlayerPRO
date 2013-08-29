@@ -300,6 +300,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 		CFaStr2 = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman));
 
 		NSString *together = [@[CFaStr, CFaStr2] componentsJoinedByString:@":"];
+		CFaStr = CFaStr2 = nil;
 		
 		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, BRIDGE(CFStringRef, together), kCFURLHFSPathStyle, false));
 		together = nil;
@@ -379,14 +380,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 
 - (NSInteger)indexOfObjectSimilarToURL:(NSURL*)theURL
 {
-	NSInteger i;
-	for (i = 0; i < [musicList count]; i++) {
-		if ([[musicList objectAtIndex:i] isEqual:theURL]) {
-			return i;
-			break;
-		}
-	}
-	return NSNotFound;
+	return [musicList indexOfObject:theURL];
 }
 
 - (void)removeObjectAtIndex:(NSUInteger)object

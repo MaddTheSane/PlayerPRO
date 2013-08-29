@@ -111,7 +111,6 @@ static OSErr mainNormalize(void					*unused,
 
 // 9AAC8E6C-DAD4-453A-8A90-17D27CF2FFBC
 #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x9A, 0xAC, 0x8E, 0x6C, 0xDA, 0xD4, 0x45, 0x3A, 0x8A, 0x90, 0x17, 0xD2, 0x7C, 0xF2, 0xFF, 0xBC)
-
 #define PLUGMAIN mainNormalize
 #define PLUGINFACTORY NormalizeFactory
 

@@ -14,7 +14,7 @@
 Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, long AudioType, Boolean stereo)
 {
 	Ptr		Audio8Ptr;
-	long	i, temp, inter, x, dest;
+	SInt32	i, temp, inter = 0, x, dest;
 	Boolean	UpDown;
 	
 	if( stereo) AudioLength *= 2L;
@@ -124,7 +124,7 @@ Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, long Audio
 short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp, long AudioType, Boolean stereo)
 {
 	short	*Audio16Ptr;
-	long	i, temp, inter, x, dest;
+	SInt32	i, temp, inter = 0, x, dest;
 	Boolean	UpDown;
 
 	if( stereo) AudioLength *= 2L;
@@ -168,8 +168,8 @@ short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp, long A
 					x++;
 					dest = (x * KHZ) / (AudioFreq * 2);
 					if( stereo) dest *= 2;
-					if( inter == -32767L) inter = 32767L;
-					else inter = -32767L;
+					if( inter == -32767) inter = 32767;
+					else inter = -32767;
 				}
 				
 				temp = inter;
@@ -205,10 +205,10 @@ short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp, long A
 					UpDown = !UpDown;
 				}
 				
-				if( UpDown) temp = (65535L * (dest - i)) / inter;
-				else temp = (65535L * (inter - (dest - i))) / inter;
+				if( UpDown) temp = (65535 * (dest - i)) / inter;
+				else temp = (65535 * (inter - (dest - i))) / inter;
 				
-				temp -= 32767L;
+				temp -= 32767;
 				
 				/** Amplitude resizing **/
 				temp *= AudioAmp;
@@ -265,8 +265,11 @@ static OSErr mainToneGenerator(void				*unused,
 		
 		switch( theData->amp)
 		{
-			case 8:		Audio8Ptr	= CreateAudio8Ptr( AudioLength, AudioFreq, AudioAmp, itemHit, theData->stereo);	break;
+			case 8:		Audio8Ptr	= CreateAudio8Ptr( AudioLength, AudioFreq, AudioAmp, itemHit, theData->stereo);
+				break;
+				
 			case 16:
+			default:
 				Audio16Ptr	= CreateAudio16Ptr( AudioLength, AudioFreq, AudioAmp, itemHit, theData->stereo);
 				AudioLength *= 2;
 			break;
@@ -294,7 +297,6 @@ static OSErr mainToneGenerator(void				*unused,
 
 // 25FA16EC-75FF-4514-9C84-7202360044B9
 #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x25, 0xFA, 0x16, 0xEC, 0x75, 0xFF, 0x45, 0x14, 0x9C, 0x84, 0x72, 0x02, 0x36, 0x00, 0x44, 0xB9)
-
 #define PLUGMAIN mainToneGenerator
 #define PLUGINFACTORY ToneGeneratorFactory
 

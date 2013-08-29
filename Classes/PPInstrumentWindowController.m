@@ -222,8 +222,15 @@
 	}
 	short		x, i;
 	long		inOutCount, filePos = 0;
+	__block InstrData *tempInstrData;
 	{
-		__block InstrData *tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
+		tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
+		if (tempInstrData == NULL) {
+			if (theErr) {
+				*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADIncompatibleFile));
+			}
+			return NO;
+		}
 		
 		// **** HEADER ***
 		inOutCount = sizeof(InstrData) * MAXINSTRU;
@@ -231,6 +238,7 @@
 			if (theErr) {
 				*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADIncompatibleFile));
 			}
+			free(tempInstrData);
 			return NO;
 		}
 		[fileData getBytes:tempInstrData range:NSMakeRange(filePos, inOutCount)];
@@ -238,39 +246,39 @@
 		dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
 			ByteSwapInstrData(&tempInstrData[x]);
 		});
-		
-		for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument(*curMusic, x);
-		
-		memcpy((*curMusic)->fid, tempInstrData, inOutCount);
 		filePos += inOutCount;
-		free(tempInstrData);
 	}
 	
 	//Clean up old instruments
-	dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
-		if ((*curMusic)->sample[x]) {
-			if ((*curMusic)->sample[x]->data) {
-				free((*curMusic)->sample[x]->data);
-			}
-			free((*curMusic)->sample[x]);
-		}
-	});
+	
+	sData **tmpsData = calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
 	
 	// **** INSTRUMENTS ***
 	for( i = 0; i < MAXINSTRU ; i++)
 	{
-		for( x = 0; x < (*curMusic)->fid[ i].numSamples ; x++)
+		for( x = 0; x < tempInstrData[ i].numSamples ; x++)
 		{
 			sData	*curData;
 			
 			// ** Read Sample header **
 			
-			curData = (*curMusic)->sample[ i * MAXSAMPLE +  x] = (sData*)malloc( sizeof( sData));
+			curData = tmpsData[ i * MAXSAMPLE +  x] = (sData*)malloc( sizeof( sData));
 			if( curData == NULL)
 			{
 				if (theErr) {
 					*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADNeedMemory));
 				}
+				free(tempInstrData);
+				dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
+					if (tmpsData[x]) {
+						if (tmpsData[x]->data) {
+							free(tmpsData[x]->data);
+						}
+						free(tmpsData[x]);
+					}
+				});
+
+				free(tmpsData);
 				return NO;
 			}
 			
@@ -287,6 +295,18 @@
 				if (theErr) {
 					*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADNeedMemory));
 				}
+				
+				free(tempInstrData);
+				dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
+					if (tmpsData[x]) {
+						if (tmpsData[x]->data) {
+							free(tmpsData[x]->data);
+						}
+						free(tmpsData[x]);
+					}
+				});
+				
+				free(tmpsData);
 				return NO;
 			}
 
@@ -307,6 +327,22 @@
 	if (theErr) {
 		*theErr = nil;
 	}
+	
+	for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument(*curMusic, x);
+	memcpy((*curMusic)->fid, tempInstrData, inOutCount);
+	free(tempInstrData);
+
+	dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
+		if ((*curMusic)->sample[x]) {
+			if ((*curMusic)->sample[x]->data) {
+				free((*curMusic)->sample[x]->data);
+			}
+			free((*curMusic)->sample[x]);
+		}
+	});
+	free((*curMusic)->sample);
+	(*curMusic)->sample = tmpsData;
+	
 	(*curMusic)->hasChanged = TRUE;
 	[instrumentView reloadData];
 	[instrumentView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
