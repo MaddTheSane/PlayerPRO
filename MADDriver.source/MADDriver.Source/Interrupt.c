@@ -33,7 +33,7 @@ void ApplyFilters( MADDriverRec *intDriver);
 void ApplySurround( MADDriverRec *intDriver);
 void SendMIDIClock( MADDriverRec *intDriver, Byte MIDIByte);
 void SendMIDITimingClock( MADDriverRec *intDriver);
-void 	ConvertInstrumentIn( register	Byte	*tempPtr,	register size_t sSize);
+void ConvertInstrumentIn( register	Byte	*tempPtr,	register size_t sSize);
 void ConvertInstrument( register	Byte	*tempPtr,	register size_t sSize);
 Boolean IsVSTChanEffect( MADDriverRec *, short channel);
 
