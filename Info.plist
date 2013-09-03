@@ -8,90 +8,6 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
-			<string>131</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Preferences</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>PREF</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>132</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Preferences</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>sTAT</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>129</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Plugin</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>PLug</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>129</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Plugin</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>EXTE</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>187</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Plugin</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>PPDG</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>236</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Plugin</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>shlb</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
 			<string>PATN</string>
 			<key>CFBundleTypeName</key>
 			<string>PlayerPRO Pattern</string>
@@ -120,26 +36,12 @@
 		</dict>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
-			<string>132</string>
+			<string>List</string>
 			<key>CFBundleTypeName</key>
 			<string>PlayerPRO Music List</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>STCf</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>242</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Mixer Settings</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>tuni</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
@@ -463,8 +365,6 @@
 			<array>
 				<string>ppimpexp</string>
 			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>Bundle</string>
 			<key>CFBundleTypeName</key>
 			<string>PPImpExpBundle</string>
 			<key>CFBundleTypeRole</key>
@@ -480,7 +380,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>5.10.0 - Copyright © 1990-2002 Antoine ROSSET</string>
+	<string>5.10.0, © 1990-2002 Antoine ROSSET</string>
 	<key>CFBundleIconFile</key>
 	<string>ppApp</string>
 	<key>CFBundleIdentifier</key>
@@ -488,7 +388,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleLongVersionString</key>
-	<string>5.10.0, ©1990-2002 Antoine ROSSET</string>
+	<string>5.10.0 - Copyright © 1990-2002 Antoine ROSSET</string>
 	<key>CFBundleName</key>
 	<string>PlayerPRO</string>
 	<key>CFBundlePackageType</key>
@@ -501,8 +401,13 @@
 	<string>5.10.0</string>
 	<key>CSResourcesFileMapped</key>
 	<string>yes</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
+	<key>LSMinimumSystemVersionByArchitecture</key>
+	<dict>
+		<key>i386</key>
+		<string>10.4.0</string>
+		<key>ppc</key>
+		<string>10.3.9</string>
+	</dict>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

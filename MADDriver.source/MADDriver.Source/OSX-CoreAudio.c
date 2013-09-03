@@ -13,12 +13,12 @@
 #include "PPPrivate.h"
 
 //TODO: we should probably do something to prevent thread contention
-static OSStatus     CAAudioCallback (void                            *inRefCon,
-									 AudioUnitRenderActionFlags      *ioActionFlags,
-									 const AudioTimeStamp            *inTimeStamp,
-									 UInt32                          inBusNumber,
-									 UInt32                          inNumberFrames,
-									 AudioBufferList                 *ioData)
+static OSStatus CAAudioCallback (void                            *inRefCon,
+								 AudioUnitRenderActionFlags      *ioActionFlags,
+								 const AudioTimeStamp            *inTimeStamp,
+								 UInt32                          inBusNumber,
+								 UInt32                          inNumberFrames,
+								 AudioBufferList                 *ioData)
 {
 	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
 	//int j = 0;
@@ -153,8 +153,8 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver, long init)
 	
 	result = AudioUnitInitialize(inMADDriver->CAAudioUnit);
 	if (result != noErr) {
-		CloseComponent(inMADDriver->CAAudioUnit);
 		AudioUnitSetProperty(inMADDriver->CAAudioUnit, kAudioUnitProperty_SetRenderCallback, kAudioUnitScope_Input, 0, &blankCallback, sizeof(blankCallback));
+		CloseComponent(inMADDriver->CAAudioUnit);
 		return MADSoundManagerErr;
 	}
 	

@@ -42,7 +42,6 @@ short FindTYPE(Str255, MenuHandle);
 OSType GetTYPE(short, MenuHandle);
 void FileInfoIcon(DialogPtr);
 void FileInformations(short);
-int CompareFSSpec(const void *, const void *);
 void SortMusicList(void);
 void DoItemPressMODList(short, DialogPtr);
 void ClearMODList(void);

@@ -431,7 +431,7 @@ void SaveMyMODListSTCf( FSSpec spec)
 		shortPtr[ 0] = theCell.v;
 	}
 	else shortPtr[ 0] = -1;
-	MOT16( &shortPtr[ 0]);
+	MOT16( shortPtr);
 
 	HUnlock( aHandle);
 	
@@ -1552,13 +1552,13 @@ Boolean NDragMusicFile( RgnHandle myRgn, EventRecord *theEvent, Point theCell, s
 static Boolean firstCall;
 void DragMODSelect()
 {
-Point		aPt, theCell;
-short		dataLen, i;
-Rect		cellRect;
-RgnHandle	tempRgn, srcRgnB, dstRgn;
-FSSpec		myFSS;
-Handle		gTheSuite;
-
+	Point		aPt, theCell;
+	short		dataLen, i;
+	Rect		cellRect;
+	RgnHandle	tempRgn, srcRgnB, dstRgn;
+	FSSpec		myFSS;
+	Handle		gTheSuite;
+	
 	if( DragManagerUse)
 	{
 	//	SetCursor( &CHandCrsr);
@@ -2756,8 +2756,8 @@ typedef struct QSort {
 	unsigned char	*tt;
 } QSort;
 
-int CompareFSSpec (const void *s1, const void *s2);
-int CompareFSSpec (const void *s1, const void *s2)
+static int CompareFSSpec (const void *s1, const void *s2);
+static int CompareFSSpec (const void *s1, const void *s2)
 {
 	return( RelString( ((QSort*) s1)->spec->name, ((QSort*) s2)->spec->name, false, false));
 }
