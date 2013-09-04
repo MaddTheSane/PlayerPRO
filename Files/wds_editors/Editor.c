@@ -4264,7 +4264,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 					}
 				}
 				
-				if( theFlavor == 'VCT5') pStrcat( str, "\p.aiff");
+				if( CFSwapInt32BigToHost(theFlavor) == 'VCT5') pStrcat( str, "\p.aiff");
 				else
 				{
 					if( str[ 0] < 20)
@@ -4289,7 +4289,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 		
 		ReGiveName:
 		
-		pStrcpy( target.name, sName);
+		FSMakeFSSpec(target.vRefNum, target.vRefNum, sName, &target);
 	//	HSetVol( NULL, target.vRefNum, target.parID);
 		err = FSpOpenDF( &target, fsCurPerm, &fRefNum);
 		if( err != fnfErr)

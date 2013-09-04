@@ -3250,7 +3250,7 @@ pascal OSErr MySendDataProc(FlavorType theFlavor,  void *refCon, ItemReference t
 		
 		if( NSoundQualityExportSnd( DragIns, DragSamp, &SoundType, sName) == noErr)
 		{
-			pStrcpy( target.name, sName);
+			FSMakeFSSpec(target.vRefNum, target.parID, sName, &target);
 			beginNumber = 1;
 		
 			ReEXPORT:

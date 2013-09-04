@@ -742,8 +742,9 @@ void OpenMODListSTCf( FSSpec spec)
 	////////
 	{
 		Str255	aStr;
-		pStrcpy( curMusicList.name, spec.name);
 		HGetVol( NULL, &curMusicList.vRefNum, &curMusicList.parID);
+		FSMakeFSSpec(curMusicList.vRefNum, curMusicList.parID, spec.name, &curMusicList);
+		
 		
 		pStrcpy( aStr, curMusicList.name);
 		SetWTitle( GetDialogWindow( MODListDlog), aStr);
@@ -1890,9 +1891,7 @@ void ShowMusicInfo( Str255 name, short VRef, long parID, short id)
 	
  	if( caRect.right == BIGMUSICLIST)
 	{
-		fss.vRefNum = VRef;
-		fss.parID	= parID;
-		pStrcpy( fss.name, name);
+		FSMakeFSSpec(VRef, parID, name, &fss);
 	
 	//	iErr = HSetVol( NULL, VRef, parID);
 		iErr = FSpGetFInfo( &fss, &fndrInfo);
@@ -1906,9 +1905,7 @@ void ShowMusicInfo( Str255 name, short VRef, long parID, short id)
 			else {VRef	= 0;	parID	= 0;}
 		}
 		
-		fss.vRefNum = VRef;
-		fss.parID	= parID;
-		
+		FSMakeFSSpec(VRef, parID, name, &fss);
 		iErr = HSetVol( NULL, VRef, parID);
 		iErr = FSpGetFInfo( &fss, &fndrInfo);
 		if( iErr)

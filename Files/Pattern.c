@@ -349,6 +349,7 @@ pascal OSErr MyPATSendDataProc(FlavorType theFlavor,  void *refCon, ItemReferenc
 	Handle			theSound;
 	long			SoundSize;
 	Str255			aStr;
+	Str255			bStr;
 	WDPBRec			wdpb;
 
 	if (theFlavor == 'VCT2')
@@ -373,16 +374,17 @@ pascal OSErr MyPATSendDataProc(FlavorType theFlavor,  void *refCon, ItemReferenc
 		PBHSetVol( &wdpb, false);
 		HGetVol( NULL, &target.vRefNum, &target.parID);
 		
-		target.name[ 0] = 20;
-		for( x = 0; x < 20; x++) target.name[ x + 1] = curMusic->partition[ DragPatSource]->header.name[ x];
-		for( x = 1; x < 20; x++) if( target.name[ x] == 0) { target.name[ 0] = x - 1; break;}
+		bStr[ 0] = 20;
+		for( x = 0; x < 20; x++) bStr[ x + 1] = curMusic->partition[ DragPatSource]->header.name[ x];
+		for( x = 1; x < 20; x++) if( bStr[ x] == 0) { bStr[ 0] = x - 1; break;}
 
-		if( target.name[ 0] == 0)
+		if( bStr[ 0] == 0)
 		{
 			NumToString( DragPatSource, aStr);
-			pStrcpy( target.name, "\pPattern #");
-			pStrcat( target.name, aStr);
+			pStrcpy( bStr, "\pPattern #");
+			pStrcat( bStr, aStr);
 		}
+		FSMakeFSSpec(target.vRefNum, target.parID, bStr, &target);
 
 		HSetVol( NULL, target.vRefNum, target.parID);
 		

@@ -389,17 +389,29 @@ static OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 	Handle          myRes;
 	Boolean         hasToClose = TRUE;
 	FSSpec          AlienFileFSSpec;
+	FSRef			AlienFileFSRef;
 	
-	HGetVol( NULL, &AlienFileFSSpec.vRefNum, &AlienFileFSSpec.parID);
-	MYC2PStr( AlienFileName);
-	for( i = 0; i <= AlienFileName[ 0]; i++) AlienFileFSSpec.name[ i] = AlienFileName[ i];
+	{
+		short	vRefNumCur;
+		long	parIDCur;
+
+		HGetVol( NULL, &vRefNumCur, &parIDCur);
+		MYC2PStr( AlienFileName);	
+		if (FSMakeFSSpec(vRefNumCur, parIDCur, AlienFileName, &AlienFileFSSpec) != noErr)
+		{
+			AlienFileFSSpec.parID = parIDCur;
+			AlienFileFSSpec.vRefNum = vRefNumCur;
+			for( i = 0; i <= AlienFileName[ 0]; i++) AlienFileFSSpec.name[ i] = AlienFileName[ i];
+		}
+	}
+	FSpMakeFSRef(&AlienFileFSSpec, &AlienFileFSRef);	
 	
 	myErr = noErr;
 	
 	switch( order)
 	{
 		case 'IMPL':
-			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdPerm);
+			iFileRefI = FSOpenResFile( &AlienFileFSRef, fsRdPerm);
 			if( iFileRefI == -1) myErr = MADReadingErr;
 			else
 			{
@@ -423,7 +435,7 @@ static OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 			break;
 			
 		case 'TEST':
-			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);      
+			iFileRefI = FSOpenResFile( &AlienFileFSRef, fsRdPerm);
 			if( iFileRefI == -1) myErr = MADReadingErr;
 			else
 			{
@@ -448,7 +460,7 @@ static OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 			break;
 			
 		case 'INFO':
-			iFileRefI = FSpOpenResFile( &AlienFileFSSpec, fsRdWrPerm);
+			iFileRefI = FSOpenResFile( &AlienFileFSRef, fsRdPerm);
 			if( iFileRefI == -1) myErr = MADReadingErr;
 			else
 			{
