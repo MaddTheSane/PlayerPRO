@@ -333,13 +333,13 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 #endif
 		
 		//Local systemwide plugins
-		temp1 = CFBridgingRetain([[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]);
+		temp1 = CFBridgingRetain([NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]);
 		CFArrayAppendValue(PlugFolds, temp1);
 		CFRelease(temp1);
 		temp1 = NULL;
 		
 		//User plugins
-		temp1 = CFBridgingRetain([[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]);
+		temp1 = CFBridgingRetain([NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]);
 		CFArrayAppendValue(PlugFolds, temp1);
 		CFRelease(temp1);
 		temp1 = NULL;

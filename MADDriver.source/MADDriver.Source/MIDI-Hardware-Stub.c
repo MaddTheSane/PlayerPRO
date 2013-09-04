@@ -4,6 +4,8 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
+#include "PPPrivate.h"
+
 #include <stdio.h>
 
 #define MySignature		'SNPL'

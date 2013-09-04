@@ -2192,7 +2192,6 @@ Boolean DirectSaveAlways( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec
 	return true;
 }
 
-
 Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
 	Ptr						ptrCopy;

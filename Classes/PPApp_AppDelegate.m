@@ -788,14 +788,14 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	Ptr soundPtr = NULL;
 	long full = 0;
 	if (theSet->outPutBits == 8) {
-		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd);
+		full = MADAudioLength(theRec);
 	}else if (theSet->outPutBits == 16) {
-		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd) * 2;
+		full = MADAudioLength(theRec) * 2;
 	} else if (theSet->outPutBits == 20 || theSet->outPutBits == 24 ) {
-		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd) * 3;
+		full = MADAudioLength(theRec) * 3;
 	} else {
 		//This is just to make the Static analyzer happy
-		full = (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd);
+		full = MADAudioLength(theRec);
 	}
 	
 	switch (theSet->outPutMode) {

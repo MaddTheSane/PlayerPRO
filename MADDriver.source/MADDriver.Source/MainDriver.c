@@ -3484,3 +3484,9 @@ Boolean MADIsExporting(MADDriverRec *driver)
 		return driver->currentlyExporting;
 	}
 }
+
+SInt32 MADAudioLength(MADDriverRec *theRec)
+{
+	if (!theRec) return 0;
+	return (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd);
+}

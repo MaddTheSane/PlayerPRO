@@ -5,12 +5,6 @@ doesn't work as expected or desired.
 * The VST and Visual Plug-in architectures for Mac OS X needs to be updated.
 * Hardware MIDI support needs to use CoreMIDI on OS X.
 * Maybe use OS X VSTs and Audio Unit Plugins?
-* Plug-ins need to be checked for places to byteswap. AMF and the old MAD plug 
-    importers are those I know need this.
-* Determine if a file is openable by determining its UTI, not its old Mac OS 9
-    filetype. Mac OS X doesn't write a file's filetype based on extension on OS 
-    X.
-* The file icons need to be redrawn: they're still 8-bit color and 32*32.
 * The banner on the source files needs to be updated.
 * Linux support is currently a stub.
 * The Linux Makefile is bare-bones and the plug-ins aren't being built.

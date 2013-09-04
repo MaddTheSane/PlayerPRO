@@ -8,7 +8,7 @@
 
 #import "PPPlugInObject.h"
 #import "PPPlugInCommon.h"
-#include <PlayerPROCore/RDriverInt.h>
+#include <PlayerPROCore/MADDriver.h>
 #import "ARCBridge.h"
 
 void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
@@ -89,10 +89,10 @@ NSArray *DefaultPlugInLocations()
 		NSFileManager *fm = [NSFileManager defaultManager];
 		[plugLocs addObject:[[NSBundle mainBundle] builtInPlugInsURL]];
 		
-		[plugLocs addObject:[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]];
+		[plugLocs addObject:[NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
 		
 		//User plugins
-		[plugLocs addObject:[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Plugins"]];
+		[plugLocs addObject:[NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
 		
 		immPlugLocs = [[NSArray alloc] initWithArray:plugLocs];
 		RELEASEOBJ(plugLocs);

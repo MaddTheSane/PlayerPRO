@@ -37,16 +37,15 @@ static inline void ByteSwapInstrData(InstrData *toSwap)
 	
 	PPBE16( &toSwap->MIDI);
 	PPBE16( &toSwap->MIDIType);
-	__block InstrData *blockHappy = toSwap;
 	dispatch_apply(12, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
-		PPBE16( &blockHappy->volEnv[ x].pos);
-		PPBE16( &blockHappy->volEnv[ x].val);
+		PPBE16( &toSwap->volEnv[ x].pos);
+		PPBE16( &toSwap->volEnv[ x].val);
 		
-		PPBE16( &blockHappy->pannEnv[ x].pos);
-		PPBE16( &blockHappy->pannEnv[ x].val);
+		PPBE16( &toSwap->pannEnv[ x].pos);
+		PPBE16( &toSwap->pannEnv[ x].val);
 		
-		PPBE16( &blockHappy->pitchEnv[ x].pos);
-		PPBE16( &blockHappy->pitchEnv[ x].val);
+		PPBE16( &toSwap->pitchEnv[ x].pos);
+		PPBE16( &toSwap->pitchEnv[ x].val);
 	});
 }
 

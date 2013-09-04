@@ -25,6 +25,7 @@
 #include <math.h>
 #include "RDriver.h"
 #include "RDriverInt.h"
+#include "PPPrivate.h"
 
 SInt32 Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2);
 double EQInterpolate(double p,double p1,double p2,double v1,double v2);

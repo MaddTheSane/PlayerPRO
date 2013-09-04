@@ -23,6 +23,7 @@
 
 #include "RDriver.h"
 #include "RDriverInt.h"
+#include "PPPrivate.h"
 
 void MADTickLoopFill8( Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, size_t size, short left, short right)
 {

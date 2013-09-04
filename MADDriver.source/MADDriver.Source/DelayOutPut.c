@@ -23,6 +23,7 @@
 
 #include "RDriver.h"
 #include "RDriverInt.h"
+#include "PPPrivate.h"
 
 static Ptr	maxBuffer;
 

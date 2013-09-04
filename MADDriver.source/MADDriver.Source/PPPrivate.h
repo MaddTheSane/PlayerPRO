@@ -11,7 +11,7 @@
 #define __PLAYERPROCORE_PPPRIVATE__
 
 #include "RDriver.h"
-
+#include "MADDriver.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -155,6 +155,5 @@ PPEXPORT void ConvertInstrumentIn( register	Byte *tempPtr, register size_t sSize
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif

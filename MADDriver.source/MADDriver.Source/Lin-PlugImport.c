@@ -1,5 +1,6 @@
 #include "RDriver.h"
 #include "FileUtils.h"
+#include "PPPrivate.h"
 #include <dlfcn.h>
 
 OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)

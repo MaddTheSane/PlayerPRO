@@ -63,7 +63,9 @@ PPEXPORT OSErr inAddSoundToMADCString(Ptr			theSound,
 									  short			*sampleID);
 
 PPEXPORT sData* inMADCreateSample();
+#ifndef __PLAYERPROCORE_PPPRIVATE__
 PPEXPORT void ConvertInstrumentIn(register Byte *tempPtr, register size_t sSize);
+#endif
 
 PPEXPORT const CFStringRef kMadPlugMenuNameKey;
 PPEXPORT const CFStringRef kMadPlugAuthorNameKey;

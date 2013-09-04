@@ -24,6 +24,7 @@
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "FileUtils.h"
+#include "PPPrivate.h"
 
 //TODO: Move to unicode functions
 

@@ -7,6 +7,8 @@
 #include "RDriverInt.h"
 //#include "MIDI.h"
 #include <stdio.h>
+#include "PPPrivate.h"
+
 #include <CoreMIDI/CoreMIDI.h>
 
 #define refConTime			1L

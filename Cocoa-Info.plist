@@ -7,6 +7,10 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>pppatn</string>
+			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>PATN</string>
 			<key>CFBundleTypeName</key>

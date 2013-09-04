@@ -676,6 +676,8 @@ PPEXPORT Boolean MADIsExporting(MADDriverRec *driver);
 PPEXPORT Boolean MADWasReading(MADDriverRec *driver) DEPRECATED_ATTRIBUTE;
 PPEXPORT void MADSetReading(MADDriverRec *driver, Boolean toSet) DEPRECATED_ATTRIBUTE;
 
+PPEXPORT SInt32 MADAudioLength(MADDriverRec *theRec);
+
 #ifdef __cplusplus
 }
 #endif

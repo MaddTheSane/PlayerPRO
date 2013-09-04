@@ -451,6 +451,9 @@
 		55ADC3DD17D6F43F001F27D4 /* WAV.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105610D6C79E00BB619C /* WAV.c */; };
 		55ADC3DE17D7A51B001F27D4 /* WAVE-Conversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105710D6C79E00BB619C /* WAVE-Conversion.c */; };
 		55ADC3E217D7B484001F27D4 /* Wave.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55ADC3DB17D6F390001F27D4 /* Wave.plugin */; };
+		55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55ADC3E817D7E4DE001F27D4 /* MADDriver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; };
+		55ADC3E917D7E4E5001F27D4 /* MADDriver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; };
 		55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
 		55B1B4F3166A850E00820424 /* PPDriver_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F2166A850D00820424 /* PPDriver_Private.h */; };
 		55B1B4F7166A861900820424 /* PPMusicObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F5166A861900820424 /* PPMusicObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1618,6 +1621,7 @@
 				5573A1151656FB2E00A5AECA /* PPPlug.h in CopyFiles */,
 				5573A1101656FB1C00A5AECA /* PPDefs.h in CopyFiles */,
 				5573A1111656FB2000A5AECA /* FileUtils.h in CopyFiles */,
+				55ADC3E817D7E4DE001F27D4 /* MADDriver.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1677,6 +1681,7 @@
 				55C358BB16C42D1800FB9FA6 /* RDriverInt.h in CopyFiles */,
 				55C358BC16C42D1800FB9FA6 /* PPPlug.h in CopyFiles */,
 				55C358BD16C42D1800FB9FA6 /* PPDefs.h in CopyFiles */,
+				55ADC3E917D7E4E5001F27D4 /* MADDriver.h in CopyFiles */,
 				55C358BE16C42D1800FB9FA6 /* FileUtils.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
@@ -2168,6 +2173,7 @@
 		55ADC3DB17D6F390001F27D4 /* Wave.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Wave.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55ADC3DC17D6F411001F27D4 /* Wave-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Wave-Info.plist"; sourceTree = SOURCE_ROOT; };
 		55ADC3E517D7CBF8001F27D4 /* Midi-rsrc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Midi-rsrc.h"; sourceTree = "<group>"; };
+		55ADC3E617D7E4A4001F27D4 /* MADDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MADDriver.h; sourceTree = "<group>"; };
 		55B1B4F2166A850D00820424 /* PPDriver_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDriver_Private.h; sourceTree = "<group>"; };
 		55B1B4F5166A861900820424 /* PPMusicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicObject.h; sourceTree = "<group>"; };
 		55B1B4F6166A861900820424 /* PPMusicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPMusicObject.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -2232,7 +2238,6 @@
 		55FA5FBA102D2D6C00CB63DA /* ppApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ppApp.icns; path = ../ppApp.icns; sourceTree = "<group>"; };
 		88E0C3B50C2F21DD00D6C081 /* PlayerPRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayerPRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88E0C3BE0C2F21DD00D6C081 /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = Carbon.r; path = ../Files/Carbon.r; sourceTree = "<group>"; };
-		88E0C3BF0C2F21DD00D6C081 /* PlayerProCarbon.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlayerProCarbon.pch; path = Files/PlayerProCarbon.pch; sourceTree = SOURCE_ROOT; };
 		88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = AboutPlugs.c; path = Files/wds_general/AboutPlugs.c; sourceTree = SOURCE_ROOT; };
 		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileUtils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		88E0C3C50C2F21DD00D6C081 /* PlugsPPDGInit.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = PlugsPPDGInit.c; path = Files/PlugsPPDGInit.c; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -3798,6 +3803,7 @@
 			isa = PBXGroup;
 			children = (
 				55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */,
+				55ADC3E617D7E4A4001F27D4 /* MADDriver.h */,
 				5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */,
 				5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */,
 				55113CBA133688D60008C2AF /* Win-DirectSound.c */,
@@ -3989,7 +3995,6 @@
 				55879F7B164CA63D009068D5 /* PPPlay */,
 				5518105510C35A0100ADA9F4 /* Example */,
 				550BFF2110BA01BA004FC5D7 /* Game Example */,
-				88E0C3BD0C2F21DD00D6C081 /* Divers */,
 				88E0C3C20C2F21DD00D6C081 /* Plugs */,
 				88E0C3CA0C2F21DD00D6C081 /* Resources */,
 				88E0C3CE0C2F21DD00D6C081 /* MADDriver.Source */,
@@ -4066,14 +4071,6 @@
 				55ADC3DB17D6F390001F27D4 /* Wave.plugin */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		88E0C3BD0C2F21DD00D6C081 /* Divers */ = {
-			isa = PBXGroup;
-			children = (
-				88E0C3BF0C2F21DD00D6C081 /* PlayerProCarbon.pch */,
-			);
-			name = Divers;
 			sourceTree = "<group>";
 		};
 		88E0C3C20C2F21DD00D6C081 /* Plugs */ = {
@@ -4256,6 +4253,7 @@
 				550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */,
 				550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */,
 				55B23D0F1687D1D700DCE923 /* RDriverCarbon.h in Headers */,
+				55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
