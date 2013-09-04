@@ -155,22 +155,16 @@ typedef struct Cursor {
 	short mask[16];
 	Point hotSpot;
 } Cursor, *CursPtr, **CursHandle;
-extern CursHandle GetCursor(short);
-extern void SetCursor(const Cursor *);
+extern CursHandle GetCursor(short) DEPRECATED_ATTRIBUTE;
+extern void SetCursor(const Cursor *) DEPRECATED_ATTRIBUTE;
 #endif
-
 
 OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 {
-	//OSType					fileType;
 	OSErr					iErr;
 	Boolean					canceled;
 	Movie 					theMovie;
-	//Track					usedTrack;
-	//TimeValue				addedDuration;
-	//long					outFlags;
-	FSIORefNum				resRefNum, /*ins, samp,*/ resId;
-	//FInfo					fndrInfo;
+	FSIORefNum				resRefNum, resId;
 	Cursor					watchCrsr;
 	CursHandle				myCursH;
 	Str255					resName;
@@ -200,8 +194,6 @@ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug
 	
 	if( !canceled && iErr == noErr)
 	{
-		pStrcpy( newfile->name, file.name);
-		
 		iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newfile->vRefNum, &newfile->parID);
 		if( iErr == noErr)
 		{
@@ -209,6 +201,7 @@ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug
 			//		WAVE CONVERSION
 			/////////////////////////////////////////////////
 			
+			FSMakeFSSpec(newfile->vRefNum, newfile->parID, file.name, newfile);
 			
 			SetCursor( &watchCrsr);
 			

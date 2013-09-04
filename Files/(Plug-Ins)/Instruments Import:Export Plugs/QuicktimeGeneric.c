@@ -5,9 +5,91 @@
 #include <PlayerPROCore/PPPlug.h>
 #include <Carbon/Carbon.h>
 #include <QuickTime/QuickTime.h>
+#include "WAV.h"
 
-OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug);
-Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo);
+
+//Taken from OS X's Kerberos source code file FSpUtils.c, as found ot:
+// http://www.opensource.apple.com/source/Kerberos/Kerberos-47/KerberosFramework/Common/Sources/FSpUtils.c
+//Note that the URL might change.
+static OSStatus CFURLToFSSpec (CFURLRef pathURL, FSSpec *outSpec)
+{
+    OSStatus err = noErr;
+    FSRef ref;
+    FSCatalogInfo info;
+	Boolean isDirectory = false;
+    CFStringRef pathString = NULL;
+    CFURLRef parentURL = NULL;
+    CFStringRef nameString = NULL;
+    	
+    // First, try to create an FSRef for the full path
+    if (err == noErr) {
+		UInt8 aPath[PATH_MAX] = {0};
+		CFURLGetFileSystemRepresentation(pathURL, false, aPath, PATH_MAX);
+		err = FSPathMakeRef(aPath, &ref, &isDirectory);
+    }
+    
+    if (err == noErr) {
+        // It's a directory or a file that exists; convert directly into an FSSpec:
+        err = FSGetCatalogInfo (&ref, kFSCatInfoNone, NULL, NULL, outSpec, NULL);
+    } else {
+		Str255 fileName;
+        // The suck case.  The file doesn't exist.
+        err = noErr;
+		
+        // Get a CFString for the path
+        if (err == noErr) {
+            pathString = CFURLCopyFileSystemPath(pathURL, kCFURLPOSIXPathStyle);
+            if (pathString == NULL) { err = memFullErr; }
+        }
+		        
+        // Get a CFURL for the parent
+        if (err == noErr) {
+            parentURL = CFURLCreateCopyDeletingLastPathComponent (CFAllocatorGetDefault (), pathURL);
+            if (parentURL == NULL) { err = memFullErr; }
+        }
+        
+        // Build an FSRef for the parent directory, which must be valid to make an FSSpec
+        if (err == noErr) {
+            Boolean converted = CFURLGetFSRef (parentURL, &ref);
+            if (!converted) { err = fnfErr; }
+        }
+        
+        // Get the node ID of the parent directory
+        if (err == noErr) {
+            err = FSGetCatalogInfo(&ref, kFSCatInfoNodeFlags|kFSCatInfoNodeID|kFSCatInfoVolume, &info, NULL, outSpec, NULL);
+        }
+        
+        // Get a CFString for the file name
+        if (err == noErr) {
+            nameString = CFURLCopyLastPathComponent (pathURL);
+            if (nameString == NULL) { err = memFullErr; }
+        }
+        
+        // Copy the string into the FSSpec
+        if (err == noErr) {
+            Boolean converted = CFStringGetPascalString (pathString, fileName, sizeof (fileName),
+														 kCFStringEncodingMacRoman);
+			if (!converted) {
+				converted = CFStringGetPascalString (pathString, fileName, sizeof (fileName),
+													 CFStringGetSystemEncoding ());
+			}
+
+			if (!converted) { err = fnfErr; }
+        }
+		
+        // Set the node ID in the FSSpec
+        if (err == noErr) {
+            err = FSMakeFSSpec(info.volume, info.nodeID, fileName, outSpec);
+        }
+    }
+        
+    // Free allocated memory
+    if (pathString != NULL) { CFRelease (pathString); }
+    if (parentURL != NULL)  { CFRelease (parentURL);  }
+    if (nameString != NULL) { CFRelease (nameString); }
+    
+    return err;
+}
 
 static OSErr mainQTInst(void					*unused,
 						OSType					order,				// Order to execute
@@ -18,15 +100,13 @@ static OSErr mainQTInst(void					*unused,
 						CFURLRef				AlienFileURLRef,	// IN/OUT file
 						PPInfoPlug				*thePPInfoPlug)
 {
-	OSErr	myErr = noErr;
-//	Ptr		AlienFile;
-	short	iFileRefI;
-	long	inOutBytes;
-	FSRef tmpRef;
-	FSSpec tmpSpec;
-	CFURLGetFSRef(AlienFileURLRef, &tmpRef);
-	FSGetCatalogInfo(&tmpRef, kFSCatInfoNone, NULL, NULL, &tmpSpec, NULL);
-		
+	OSErr		myErr = noErr;
+	FSIORefNum	iFileRefI;
+	long		inOutBytes;
+	FSSpec		tmpSpec;
+
+	CFURLToFSSpec(AlienFileURLRef, &tmpSpec);
+	
 	switch( order)
 	{
 		case 'PLAY':
@@ -76,6 +156,7 @@ static OSErr mainQTInst(void					*unused,
 				sData 				*curData = sample[ *sampleID];
 				short				numChan;
 				
+				FSpDelete(&tmpSpec);
 				myErr = FSpCreate( &tmpSpec, 'TVOD', 'AIFF', smCurrentScript);
 				if(myErr == noErr) myErr = FSpOpenDF( &tmpSpec, fsCurPerm, &iFileRefI);
 				
