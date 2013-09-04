@@ -44,7 +44,7 @@ static unsigned char* MYC2PStr( Ptr cStr)
 Boolean compMem( Ptr a, Ptr b, long s)
 {
 	long 	i;
-
+	
 	for( i = 0; i < s; i++)
 	{
 		if( a[ i] != b[ i]) return false;
@@ -61,12 +61,6 @@ OSErr TestMIDIFile( Ptr AlienFile)
 
 OSErr ExtractMIDIInfo( PPInfoRec *info, Ptr theMIDI)
 {
-	/*long	PatternSize;
-	short	i;
-	short	maxInstru;
-	short	tracksNo;
-	long	inOutCount;*/
-	
 	info->signature = 'Midi';
 	strcpy( info->internalFileName, "");
 	info->totalPatterns = 0;
@@ -100,7 +94,7 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 			if( iFileRefI)
 			{
 				sndSize =iGetEOF( iFileRefI);
-			
+				
 				// ** MEMORY Test Start
 				AlienFile = malloc( sndSize * 2L);
 				if( AlienFile == NULL) myErr = MADNeedMemory;
@@ -126,8 +120,8 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 				}
 			}
 			else myErr = MADReadingErr;
-		break;
-		
+			break;
+			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
@@ -146,14 +140,14 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
-
+			break;
+			
 		case 'INFO':
 			iFileRefI = iFileOpenRead( AlienFileName);
 			if( iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);
-			
+				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = malloc( sndSize);
@@ -167,12 +161,12 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 				iClose( iFileRefI);
 			}
 			else myErr = MADReadingErr;
-		break;
-		
+			break;
+			
 		default:
 			myErr = MADOrderNotImplemented;
-		break;
+			break;
 	}
-		
+	
 	return myErr;
 }

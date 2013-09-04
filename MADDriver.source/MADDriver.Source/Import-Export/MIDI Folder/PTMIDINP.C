@@ -26,7 +26,7 @@
 typedef unsigned long VLQ; /** VLQ is a variable length quantity **/
 
 typedef struct { /** RF is a record of a file **/
-  int fd, ib;
+	int fd, ib;
 	unsigned char rgb[BUFSIZE];
 } RF;
 
@@ -74,10 +74,10 @@ short MADseek( short id, long size, short mode)
 	{
 		case SEEK_CUR:	MADpos[ id] += size;	break;
 		case SEEK_SET:	MADpos[ id]  = size;	break;
-		
+			
 		default:
 			DebugStr("\pMADseek");
-		break;
+			break;
 	}
 	
 	if( MADpos[ id] < 0) return -1;
@@ -108,13 +108,13 @@ short MADclose(int b)
  */
 static void Init(void)
 {
-  int i, j;
-
-  for (i = 16; i--; ) { 			/** Clear current instrument array **/
+	int i, j;
+	
+	for (i = 16; i--; ) { 			/** Clear current instrument array **/
 		rgbPatch[i] = 0;
-    for (j = 128; j--; ) 			/** Clear hanging-note arrays **/
-      rgpnrl[i][j] = NULL;
-  }
+		for (j = 128; j--; ) 			/** Clear hanging-note arrays **/
+			rgpnrl[i][j] = NULL;
+	}
 }
 
 /*
@@ -123,7 +123,7 @@ static void Init(void)
 int ChGetFd(int fd)
 {
 	unsigned char b;
-
+	
 	if (MADread(fd, (Ptr) &b, 1) < 1) return EOF;
 	return b;
 }
@@ -139,7 +139,7 @@ unsigned char ChGetIrf(unsigned irf)
 		if (MADread(prf[irf].fd, (Ptr) prf[irf].rgb, BUFSIZE) == -1)
 		{
 			ERROR;
-		//	exit(1);
+			//	exit(1);
 		}
 		prf[irf].ib = 1;
 		return prf[irf].rgb[0];
@@ -162,7 +162,7 @@ void SkipIrf(unsigned irf, long cb)
 		if (MADseek(prf[irf].fd, cb, SEEK_CUR) == -1)
 		{
 			ERROR;
-		//	exit(1);
+			//	exit(1);
 		}
 		prf[irf].ib = BUFSIZE;
 	}
@@ -177,8 +177,8 @@ int ValidquantSz(Sz szQuant)
 {
 	int bFrac;
 	Sz szEnd;
-
-  if ((bFrac = (int) strtol(szQuant, &szEnd, 10))) /** If a number **/
+	
+	if ((bFrac = (int) strtol(szQuant, &szEnd, 10))) /** If a number **/
 		if ('t' == *szEnd || 'T' == *szEnd) /** possibly followed by a 't' **/
 			bFrac++;
 	return bFrac; /** return valid **/
@@ -192,7 +192,7 @@ VLQ VlqFromFd(int fd)
 {
 	VLQ vlqRead = 0;
 	unsigned char b = 0;
-
+	
 	while (MADread(fd, (Ptr) &b, 1) == 1 && (b & 0x80))
 		vlqRead = (vlqRead << 7) | (b & 0x7F);
 	return (vlqRead << 7) | b;
@@ -206,7 +206,7 @@ VLQ VlqFromIrf(unsigned irf)
 {
 	VLQ vlqRead = 0;
 	unsigned char b = 0;
-
+	
 	while ((b = ChGetIrf(irf)) & 0x80)
 		vlqRead = (vlqRead << 7) | (b & 0x7F);
 	return (vlqRead << 7) | b;
@@ -220,7 +220,7 @@ unsigned long LongFromFd(int fd, unsigned cb)
 	unsigned char rgb[4];
 	unsigned long longT = 0;
 	unsigned ib = 0;
-
+	
 	MADread(fd, (Ptr) rgb, cb);
 	for (; ib < cb; ib++)
 		longT = (longT << 8) + rgb[ib];
@@ -236,15 +236,15 @@ unsigned long LongFromFd(int fd, unsigned cb)
 void Addnote(int chan, int pitch, int inst, int vol)
 {
 	NRL *pnrlT;
-
-  if (0 > pitch || 127 < pitch || 0 > chan || 15 < chan)
+	
+	if (0 > pitch || 127 < pitch || 0 > chan || 15 < chan)
 		return;
 	pnrlT = (NRL *) malloc(sizeof(NRL)); /** Allocate space **/
-  pnrlT->pnrl = rgpnrl[chan][pitch];
-  rgpnrl[chan][pitch] = pnrlT; /** Attach to front of list in array **/
+	pnrlT->pnrl = rgpnrl[chan][pitch];
+	rgpnrl[chan][pitch] = pnrlT; /** Attach to front of list in array **/
 	pnrlT->inst = inst;
 	pnrlT->vol = vol;
-  pnrlT->pfxTail = NULL;
+	pnrlT->pfxTail = NULL;
 	pnrlT->ptuneNow = ptuneCurr;
 }
 
@@ -255,10 +255,10 @@ void Addnote(int chan, int pitch, int inst, int vol)
 EI *PeiRequestPtune(Tune *ptune)
 {
 	EI *pei;
-
+	
 	pei = (EI *) malloc(sizeof(EI)); /** Allocate space for event **/
-  pei->pei = ptune->pei;
-  ptune->pei = pei; /** Attach to front of event list at tune position **/
+	pei->pei = ptune->pei;
+	ptune->pei = pei; /** Attach to front of event list at tune position **/
 	return pei;
 }
 
@@ -270,34 +270,34 @@ EI *PeiRequestPtune(Tune *ptune)
  */
 void Endnote(int chan, int pitch, int inst)
 {
-  NRL *pnrlT, *pnrlOld = NULL;
+	NRL *pnrlT, *pnrlOld = NULL;
 	unsigned long durat;
 	EI *peiT;
-
-  if (0 > pitch || 127 < pitch || 0 > chan || 15 < chan)
+	
+	if (0 > pitch || 127 < pitch || 0 > chan || 15 < chan)
 		return;
-  for (pnrlT = rgpnrl[chan][pitch]; NULL != pnrlT && pnrlT->inst != inst; ) {
+	for (pnrlT = rgpnrl[chan][pitch]; NULL != pnrlT && pnrlT->inst != inst; ) {
 		pnrlOld = pnrlT;
 		pnrlT = pnrlT->pnrl;
 	} /** Find instrument in hanging-note array **/
 	if (NULL == pnrlT)
 		return;
-
-  durat = ptuneCurr->count - pnrlT->ptuneNow->count; /** Calc. duration **/
-  if (0 > inst && wDivision / 2 > durat)
-    durat = wDivision / 2; /** Percussion sounds have a min. duration **/
-  if (durat < wQuant)
-    durat = wQuant; /** All sounds have a min. duration **/
-
-  peiT = PeiRequestPtune(pnrlT->ptuneNow); /** Get an event **/
-  peiT->effect = durat;
-  peiT->inst = inst; /** Store the note in it **/
-  peiT->pitch = pitch;
-  peiT->vol = pnrlT->vol;
-  peiT->pfxTail = pnrlT->pfxTail;
-
-  if (NULL == pnrlOld) /** Remove note from hanging-note array **/
-    rgpnrl[chan][pitch] = pnrlT->pnrl;
+	
+	durat = ptuneCurr->count - pnrlT->ptuneNow->count; /** Calc. duration **/
+	if (0 > inst && wDivision / 2 > durat)
+		durat = wDivision / 2; /** Percussion sounds have a min. duration **/
+	if (durat < wQuant)
+		durat = wQuant; /** All sounds have a min. duration **/
+	
+	peiT = PeiRequestPtune(pnrlT->ptuneNow); /** Get an event **/
+	peiT->effect = durat;
+	peiT->inst = inst; /** Store the note in it **/
+	peiT->pitch = pitch;
+	peiT->vol = pnrlT->vol;
+	peiT->pfxTail = pnrlT->pfxTail;
+	
+	if (NULL == pnrlOld) /** Remove note from hanging-note array **/
+		rgpnrl[chan][pitch] = pnrlT->pnrl;
 	else
 		pnrlOld->pnrl = pnrlT->pnrl;
 	free(pnrlT);
@@ -315,10 +315,10 @@ VLQ VlqInterpIrf(unsigned irf, unsigned *pbStat)
 	unsigned bEvent;
 	VLQ vlqT;
 	FX *pfx;
-
+	
 	do
 	{ /** Loop.. **/
-	
+		
 		bEvent = ChGetIrf(irf); /** Get first data byte **/
 		
 		if (0x80 <= bEvent && 0xEF >= bEvent)
@@ -340,14 +340,14 @@ VLQ VlqInterpIrf(unsigned irf, unsigned *pbStat)
 			if (0x51 == bEvent) { 					/*** Else if tempo event ***/
 				unsigned long t;
 				EI *pei;
-
+				
 				t = (unsigned long) ChGetIrf(irf) << 16; /*** get value ***/
 				t += (unsigned long) ChGetIrf(irf) << 8;
 				t += ChGetIrf(irf);
 				pei = PeiRequestPtune(ptuneCurr);
 				pei->effect = 60000000L / wQuant * wDivision / t; /*** and convert ***/
-        		pei->pitch = -1;
-        		
+				pei->pitch = -1;
+				
 			} else
 				SkipIrf(irf, vlqT); 			/*** Else skip event ***/
 		} else
@@ -355,49 +355,49 @@ VLQ VlqInterpIrf(unsigned irf, unsigned *pbStat)
 				case 0x80:
 				case 0x90: { 					/** Note on/off **/
 					unsigned bVol, bChan;
-
+					
 					bVol = ChGetIrf(irf);
 					bChan = *pbStat & 0x0F;
 					if (0 < bVol && 0x90 <= *pbStat)		// ON
 					{
 						if (bChan != bDrumch)
-              					Addnote(bChan, bEvent, rgbPatch[bChan], bVol);
+							Addnote(bChan, bEvent, rgbPatch[bChan], bVol);
 						else
-              					Addnote(bChan, bEvent, -1 - bEvent, bVol);
-              		}
+							Addnote(bChan, bEvent, -1 - bEvent, bVol);
+					}
 					else									// OFF
 					{
 						if (bChan != bDrumch)
-              				Endnote(bChan, bEvent, rgbPatch[bChan]);
+							Endnote(bChan, bEvent, rgbPatch[bChan]);
 						else
-             				Endnote(bChan, bEvent, -1 - bEvent);
-             		}
+							Endnote(bChan, bEvent, -1 - bEvent);
+					}
 					break;
 				}
-        case 0xA0: { 				/** Polyphonic Key Pressure **/
-          NRL *pnrlT;
-          unsigned bChan;
-
-          bChan = *pbStat & 0x0F;
-          pnrlT = rgpnrl[bChan][bEvent];
-          while (NULL != pnrlT && pnrlT->inst != rgbPatch[bChan])
-            pnrlT = pnrlT->pnrl;
-          if (NULL != pnrlT) {
-            pfx = (FX *) malloc(sizeof(FX));
-            pfx->delay = ptuneCurr->count - pnrlT->ptuneNow->count;
-            pfx->eff = 1;
-            pfx->param = ChGetIrf(irf);
-            if (NULL == pnrlT->pfxTail)
-              pfx->pfx = pfx;
-            else {
-              pfx->pfx = pnrlT->pfxTail->pfx;
-              pnrlT->pfxTail->pfx = pfx;
-            }
-            pnrlT->pfxTail = pfx;
-          } else
-            ChGetIrf(irf);
-          break;
-        }
+				case 0xA0: { 				/** Polyphonic Key Pressure **/
+					NRL *pnrlT;
+					unsigned bChan;
+					
+					bChan = *pbStat & 0x0F;
+					pnrlT = rgpnrl[bChan][bEvent];
+					while (NULL != pnrlT && pnrlT->inst != rgbPatch[bChan])
+						pnrlT = pnrlT->pnrl;
+					if (NULL != pnrlT) {
+						pfx = (FX *) malloc(sizeof(FX));
+						pfx->delay = ptuneCurr->count - pnrlT->ptuneNow->count;
+						pfx->eff = 1;
+						pfx->param = ChGetIrf(irf);
+						if (NULL == pnrlT->pfxTail)
+							pfx->pfx = pfx;
+						else {
+							pfx->pfx = pnrlT->pfxTail->pfx;
+							pnrlT->pfxTail->pfx = pfx;
+						}
+						pnrlT->pfxTail = pfx;
+					} else
+						ChGetIrf(irf);
+					break;
+				}
 				case 0xB0: /** Controller change **/
 				case 0xE0: /** Pitch Wheel change **/
 					ChGetIrf(irf);
@@ -424,13 +424,13 @@ void Freearray(void)
 	int 	i, j = 16;
 	NRL 	*pnrlT, *pnrlT2;
 	FX 		*pfxT, *pfxT2;
-
+	
 	while (j--) /** Go through hanging-note array **/
 	{
 		for (i = 128; i--; )
 		{
 			for (pnrlT = rgpnrl[j][i]; NULL != pnrlT; )		/** freeing each list **/
-			{ 
+			{
 				pnrlT2 = pnrlT->pnrl;
 				
 				if( pnrlT->pfxTail != NULL)
@@ -443,13 +443,13 @@ void Freearray(void)
 							pfxT2 = pfxT;
 							pfxT = pfxT->pfx;
 							free(pfxT2);
-	          			}
-	          			free(pfxT);
-	        		}
-        		}
-        		free(pnrlT);
-        		pnrlT = pnrlT2;
-      		}
+						}
+						free(pfxT);
+					}
+				}
+				free(pnrlT);
+				pnrlT = pnrlT2;
+			}
 		}
 	}
 }
@@ -465,9 +465,9 @@ Tune *PtuneLoadFn( Ptr MIDIptr, short *channels)
 	unsigned long 	cb, *pvlqWait, vlqMin = -1, vlqT, wCount, wNcount, cDev = 0;
 	unsigned 		irf, irfMax, *pbStatus, wQuant2, wDev, wMaxdev = 0, cMaxdev = 0;
 	char 			rgbHeader[9] = {'M', 'T', 'h', 'd', 0, 0, 0, 6, 0}, rgbTest[9];
-
+	
 	MIDIGenPtr = MIDIptr;
-
+	
 	Init();
 	MADfd = MADopen();
 	MADread( MADfd, rgbTest, 9);
@@ -477,9 +477,9 @@ Tune *PtuneLoadFn( Ptr MIDIptr, short *channels)
 		return NULL; /** Only process type 0 or type 1 general MIDI files **/
 	}
 	
-  irfMax = (unsigned) LongFromFd(MADfd, 2); /** Get # tracks **/
-  wDivision = (int) LongFromFd(MADfd, 2); /** Get ticks for a beat **/
-
+	irfMax = (unsigned) LongFromFd(MADfd, 2); /** Get # tracks **/
+	wDivision = (int) LongFromFd(MADfd, 2); /** Get ticks for a beat **/
+	
 	if (-1 == MADseek(MADfd, 23, SEEK_SET)) {
 		MADclose(MADfd);
 		return NULL; /** Error if MIDI file is smaller than 23 bytes **/
@@ -493,7 +493,7 @@ Tune *PtuneLoadFn( Ptr MIDIptr, short *channels)
 		MADclose(MADfd);
 		return NULL;
 	}
-
+	
 	if (ODD(wQuantval)) /** Calculate quantize ticks from quantize fraction **/
 		wQuant = wDivision * 8 / (3 * (wQuantval - 1));
 	else
@@ -516,7 +516,7 @@ Tune *PtuneLoadFn( Ptr MIDIptr, short *channels)
 		if ((prf[irf].fd = MADopen()) == -1)
 		{
 			ERROR;
-		//	exit(1);
+			//	exit(1);
 		}
 		MADseek(prf[irf].fd, MADtell(MADfd), SEEK_SET);
 		MADread(prf[irf].fd, (Ptr) prf[irf].rgb, BUFSIZE);
@@ -529,21 +529,21 @@ Tune *PtuneLoadFn( Ptr MIDIptr, short *channels)
 	MADclose(MADfd);
 	
 	if (irf != irfMax)	/** If things look a bit suspicious **/
-	{ 
+	{
 		CreateResult("MIDI file ends prematurely **");
 		free(prf); /** Free prf - NB. not closed **/
 		free(pvlqWait);
 		free(pbStatus);
 		return NULL;
 	}
-
+	
 	ptuneMain = ptuneCurr = (Tune *) malloc(sizeof(Tune));
 	wCount = vlqMin; /** Start from first event **/
 	wNcount = (wCount + wQuant2) % wQuant;
 	if (fStats)
 	{
-    	wDev = abs(wQuant2 - (int) wNcount);
-    	
+		wDev = abs(wQuant2 - (int) wNcount);
+		
 		if (wDev > 2) cDev++;
 		
 		if (wDev > wMaxdev)
@@ -583,13 +583,13 @@ Tune *PtuneLoadFn( Ptr MIDIptr, short *channels)
 		{ /** If need to advance to new quanta **/
 			if ((ptuneCurr->ptune = (Tune *) malloc(sizeof(Tune))) == NULL) {
 				ERROR;
-			//	exit(1);
+				//	exit(1);
 			} /** allocate **/
 			ptuneCurr = ptuneCurr->ptune; /** and initialize **/
 			wNcount = (wCount + wQuant2) % wQuant;
 			if (fStats)
 			{
-        		wDev = abs(wQuant2 - (int) wNcount);
+				wDev = abs(wQuant2 - (int) wNcount);
 				if (wDev > 2)
 					cDev++;
 				if (wDev > wMaxdev)
@@ -605,7 +605,7 @@ Tune *PtuneLoadFn( Ptr MIDIptr, short *channels)
 		}
 		else wNcount -= vlqMin; /** Else decrememnt "new quanta" count **/
 	}
-
+	
 	Freearray();
 	free(pvlqWait);
 	free(pbStatus);

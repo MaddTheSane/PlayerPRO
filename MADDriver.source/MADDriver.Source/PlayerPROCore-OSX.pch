@@ -3,8 +3,8 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include "MAD.h"
 #include "RDriver.h"
-#include "PPPrivate.h"
 #include "PPPlug.h"
+#include "PPPrivate.h"
 #ifdef __OBJC__
 #import <Foundation/Foundation.h>
 #endif

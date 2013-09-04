@@ -148,7 +148,10 @@ void	CloseImportPlug( MADLibrary *inMADDriver);
 OSErr	MADLoadMADFileCString( MADMusic **, Ptr fName);
 OSErr	CheckMADFile( char *AlienFile);
 
-	
+#ifndef __PPPLUGH__
+PPEXPORT void ConvertInstrumentIn( register	Byte *tempPtr, register size_t sSize);
+#endif
+
 #ifdef __cplusplus
 }
 #endif

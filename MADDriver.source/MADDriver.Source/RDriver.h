@@ -358,6 +358,7 @@ enum PPPlugModes {
 	MADPlugExport = (OSType)'EXPL',
 	MADPlugInfo = (OSType)'INFO',
 	MADPlugTest = (OSType)'TEST',
+	MADPlugPlay = (OSType)'PLAY',
 	MADPlugImportExport = (OSType)'EXIM',
 	MADPlugSampleImporter = (OSType)'SAMP',
 	MADPlugInstrumentImporter = (OSType)'INST',
@@ -642,16 +643,16 @@ PPEXPORT Cmd*	GetMADCommand(	short		position,						// Extract a Command from a P
 								short		channel,
 								PatData*	aPatData);
 
-PPEXPORT OSErr	MADPlaySoundData(	MADDriverRec	*MDriver,
-									Ptr				soundPtr,				// Sound Pointer to data
-									size_t			size,					// Sound size in bytes
-									SInt32			channel,				// channel ID on which to play sound
-									SInt32			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
-									SInt32			amplitude,				// 8 or 16 bits
-									size_t			loopBeg,				// loop beginning
-									size_t			loopSize,				// loop size in bytes
-									unsigned int	rate,					// sample rate of the sound data, by ex: rate22khz
-									Boolean			stereo);				// sample is in stereo or in mono?
+PPEXPORT OSErr	MADPlaySoundData(MADDriverRec	*MDriver,
+								 Ptr			soundPtr,				// Sound Pointer to data
+								 size_t			size,					// Sound size in bytes
+								 SInt32			channel,				// channel ID on which to play sound
+								 SInt32			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
+								 SInt32			amplitude,				// 8 or 16 bits
+								 size_t			loopBeg,				// loop beginning
+								 size_t			loopSize,				// loop size in bytes
+								 unsigned int	rate,					// sample rate of the sound data, by ex: rate22khz
+								 Boolean		stereo);				// sample is in stereo or in mono?
 							
 #if 0
 OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,

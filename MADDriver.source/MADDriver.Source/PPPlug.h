@@ -30,7 +30,7 @@
 
 #include <CoreFoundation/CFPlugInCOM.h>
 
-typedef OSErr			(*RPlaySoundUPP)		(MADDriverRec *theRec, Ptr, long, SInt32, SInt32, SInt32, long, long, unsigned int, Boolean);
+typedef OSErr (*RPlaySoundUPP) (MADDriverRec *theRec, Ptr, long, SInt32, SInt32, SInt32, long, long, unsigned int, Boolean);
 
 #ifdef __cplusplus
 extern "C" {
@@ -50,19 +50,20 @@ PPEXPORT OSErr inAddSoundToMAD(Ptr			theSound,
 							   short		*sampleID) DEPRECATED_ATTRIBUTE;
 
 PPEXPORT OSErr inAddSoundToMADCString(Ptr			theSound,
-								   size_t		sndLen,
-								   long			loopStart,
-								   long			loopEnd,
-								   short		sS,
-								   short		bFreq,
-								   unsigned int	rate,
-								   Boolean		stereo,
-								   char			*name,
-								   InstrData	*InsHeader,					// Ptr on instrument header
-								   sData		**sample,					// Ptr on samples data
-								   short		*sampleID);
+									  size_t		sndLen,
+									  long			loopStart,
+									  long			loopEnd,
+									  short			sS,
+									  short			bFreq,
+									  unsigned int	rate,
+									  Boolean		stereo,
+									  char			*name,
+									  InstrData		*InsHeader,				// Ptr on instrument header
+									  sData			**sample,				// Ptr on samples data
+									  short			*sampleID);
 
 PPEXPORT sData* inMADCreateSample();
+PPEXPORT void ConvertInstrumentIn(register Byte *tempPtr, register size_t sSize);
 
 PPEXPORT const CFStringRef kMadPlugMenuNameKey;
 PPEXPORT const CFStringRef kMadPlugAuthorNameKey;

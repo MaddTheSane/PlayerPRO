@@ -16,8 +16,8 @@ void InitQuicktimeInstruments(void);
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include "Midi-rsrc.h"
 #include <PlayerPROCore/PlayerPROCore.h>
-//#include <stdarg.h>
 #include "PTMID.H"
 #include <Carbon/Carbon.h>
 
@@ -40,7 +40,7 @@ extern int	cmsDecided, wVolfract;
 static void Init(void)
 {
 	int i;
-
+	
 	rgppsiIns[128] = NULL; /** Make sure sample-info arrays are clear **/
 	for (i = 128; i--; ) {
 		rgpsiDrum[i] = NULL;
@@ -61,18 +61,18 @@ void Settings()
 	Rect		itemRect;
 	Str255		str;
 	long		r;
-
+	
 	
 	InitCursor();
-
-	aDialog = GetNewDialog( 4094, NULL, (WindowPtr) -1L);
+	
+	aDialog = GetNewDialog( MIDIImpDlog, NULL, (WindowPtr) -1L);
 	
 	SetPortDialogPort( aDialog);
 	
 	SetDialogDefaultItem( aDialog, 1);
 	
-	ShowWindow( GetDialogWindow( aDialog));	
-
+	ShowWindow( GetDialogWindow( aDialog));
+	
 	GetDialogItem( aDialog, 5, &itemType, &itemHandle, &itemRect);
 	SetControlValue( (ControlHandle) itemHandle, 1);
 	
@@ -84,7 +84,7 @@ void Settings()
 	
 	do
 	{
-		reZo:
+	reZo:
 		
 		ModalDialog( NULL, &itemHit);
 		
@@ -93,9 +93,8 @@ void Settings()
 			case 5:
 				GetDialogItem( aDialog, 5, &itemType, &itemHandle, &itemRect);
 				SetControlValue( (ControlHandle) itemHandle,!GetControlValue( (ControlHandle) itemHandle));
-			break;
+				break;
 		}
-	
 	}while( itemHit != 1);
 	
 	GetDialogItem( aDialog, 4, &itemType, &itemHandle, &itemRect);
@@ -130,7 +129,7 @@ void  ConvertMidiFile( char	*src, MADMusic *theMAD, MADDriverSettings *init)
 	//Sz 			fnDef;
 	Tune 		*ptuneMusic;
 	//FInfo		fndrInfo;
-
+	
 	Init();
 	
 	if( (ptuneMusic = PtuneLoadFn( src, &channels)) == NULL)
@@ -140,13 +139,13 @@ void  ConvertMidiFile( char	*src, MADMusic *theMAD, MADDriverSettings *init)
 	}
 	
 	InitQuicktimeInstruments();
-		
+	
 	channels++;
 	channels /= 2;
 	channels *= 2;
 	
 	wMaxchan = channels;
-
+	
 	Settings();
 	
 	ResolvePtune(ptuneMusic);

@@ -1,5 +1,6 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
+#include <PlayerPROCore/PPPlug.h>
 #include <Carbon/Carbon.h>
 #include "PTMID.H"
 #include "dlsmac.h"
@@ -16,14 +17,13 @@ Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short *sample
 static NoteRequest		myNoteRequest;
 static Boolean			QK50;
 Boolean					QuicktimeInstruAvailable;
-extern		MADMusic			*curMusic;
+extern MADMusic			*curMusic;
 
 
 void ConvertInstrument( register	Byte	*tempPtr,	register long sSize);
 void NInitSmallPiano( Rect mainRect, Rect *listRect);
 void DrawSmallPianoKey( short i, short color, Rect aRect);
 void NDoPlayInstru(short	Note, short Instru, short effect, short arg, short vol);
-void ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
 
 short GenerateDLSFromBundle();
 void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai);
@@ -65,13 +65,13 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst);
 #ifdef __BIG_ENDIAN__
 #define SetNELong(toset, theval)	*toset = theval
 #else
-#define SetNELong(toset, theval)	(toset)->bigEndianValue = EndianS32_LtoB(theval)	
+#define SetNELong(toset, theval)	(toset)->bigEndianValue = EndianS32_LtoB(theval)
 #endif
 
 #ifdef __BIG_ENDIAN__
 #define SetNEOSType(toset, theval)	*toset = theval
 #else
-#define SetNEOSType(toset, theval)	(toset)->bigEndianValue = EndianU32_LtoB(theval)	
+#define SetNEOSType(toset, theval)	(toset)->bigEndianValue = EndianU32_LtoB(theval)
 #endif
 
 #ifdef __BIG_ENDIAN__
@@ -92,21 +92,9 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst);
 #define	GetNEUnsignedFixed(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
 
-static Boolean TestRunningOnCarbonX(void)
-{
-#if 0
-	UInt32 response;
-    
-    return (Gestalt(gestaltSystemVersion, 
-                    (SInt32 *) &response) == noErr)
-	&& (response >= 0x01000);
-#endif
-	return true;
-}
-
 static void ConvertInstrument16( register	short	*tempPtr,	register long sSize)
 {
-	register	short			val = 0x8000;
+	register short val = 0x8000;
 	
 	sSize /= 2;
 	
@@ -132,20 +120,17 @@ static void DebugLong( long type)
 	DebugStr( str);
 }
 
-typedef struct
-{
+typedef struct {
 	long	size;
 	OSType	type;
 	long	id;
 	long	a[ 2];
 	
 	Byte	data[];
-	
 } QuictimeRsrc25;
 
 
-typedef struct
-{
+typedef struct {
 	long	from;
 	long	to;
 	
@@ -153,23 +138,19 @@ typedef struct
 	long	resID;
 	long	e;
 	long	f;
-	
 } QuictimeSs25;
 
-typedef struct
-{
+typedef struct {
 	char			unused[ 0x58];
 	Str31			name;
 	QuictimeSs25	Ss[];
-	
 } QuicktimeInst25;
 
 /*************************/
 
 
 /**** Resource Format ****/
-typedef struct
-{
+typedef struct {
 	long	from;
 	long	to;
 	
@@ -177,15 +158,12 @@ typedef struct
 	long	resID;
 	long	e;
 	long	f;
-	
 } QuictimeSs;
 
-typedef struct
-{
+typedef struct {
 	char			unused[ 0x62];
 	short			no;
 	QuictimeSs		Ss[];
-	
 } QuicktimeInst;
 
 /*************************/
@@ -205,7 +183,7 @@ void pStrcat(register unsigned char *s1, register unsigned char *s2);
 void OctavesMIDIName(short	id, Str255	String)
 {
 	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
-									/*	{'Do','Do#','Ré','Ré#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
+	/*	{'Do','Do#','Ré','Ré#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
 	Str255		WorkStr;
 	
 	if( id == 0xFF)
@@ -215,16 +193,16 @@ void OctavesMIDIName(short	id, Str255	String)
 	}
 	
 	NumToString( (id / 12), WorkStr);
-  	String[ 1] = NNames[ (id) % 12]>>8;			String[ 2] = NNames[ (id) % 12];
+	String[ 1] = NNames[ (id) % 12]>>8;			String[ 2] = NNames[ (id) % 12];
 	String[ 0] = 2;
-  	pStrcat( String, WorkStr);	
+	pStrcat( String, WorkStr);
 }
 
 void SetInstruNameM( short	theNo, Str255 theNewName, short MIDIgm, Ptr destName)
 {
 	short	i;
 	Str255	aStr, bStr;
-
+	
 	pStrcpy( aStr, "\p(");
 	NumToString( MIDIgm, bStr);
 	pStrcat( aStr, bStr);
@@ -241,7 +219,7 @@ void SetInstruNameM( short	theNo, Str255 theNewName, short MIDIgm, Ptr destName)
 void SetSampNameM( Str255 theNewName, Ptr destName)
 {
 	short	i;
-
+	
 	for(i=0; i<32; i++)
 	{
 		if( i < theNewName[ 0]) destName[i] = theNewName[i+1];
@@ -282,7 +260,7 @@ short OpenResFileQK( long dirID, short VRefNum)
 		if (PBGetCatInfoSync(&info) != noErr) break;
 		
 		if( info.hFileInfo.ioFlFndrInfo.fdType == 'INIT' && info.hFileInfo.ioFlFndrInfo.fdCreator == 'dvb ')
-		{	
+		{
 			//	HGetVol( NULL, &vRefNum, &dirIDCopy);
 			
 			//	iErr = HSetVol( NULL, info.hFileInfo.ioVRefNum, dirID);
@@ -314,10 +292,10 @@ void ComputeQuicktimeSound25( short GMInstruID, sData **sample, InstrData* inst,
 	short					foundVRefNum, iFileRef;
 	long					foundDirID;
 	OSErr					iErr;
-//	QuicktimeInst25			*QuickInst;
+	//	QuicktimeInst25			*QuickInst;
 	Ptr						tPtr;
 	Str255					aStr, bStr;
-		
+	
 	/***************/
 	
 	for( i = 0; i < inst->numSamples; i++)
@@ -361,27 +339,27 @@ void ComputeQuicktimeSound25( short GMInstruID, sData **sample, InstrData* inst,
 	inst->pannSus		= 0;
 	inst->pannBeg		= 0;
 	inst->pannEnd		= 0;
-
+	
 	inst->volType		= 0;
 	inst->pannType		= 0;
 	
 	inst->volFade		= 900;
 	inst->vibDepth		= 0;
 	inst->vibRate		= 0;
-
+	
 	/***************/
 	
 	iErr = FindFolder( kOnSystemDisk, kExtensionFolderType, kDontCreateFolder, &foundVRefNum, &foundDirID);
 	if( iErr == noErr)
 	{
-		HSetVol( NULL, foundVRefNum, foundDirID);	
+		HSetVol( NULL, foundVRefNum, foundDirID);
 		
 		iFileRef = OpenResFileQK( foundDirID, foundVRefNum);
 		if( iFileRef != -1)
 		{
 			UseResFile( iFileRef);
 			
-			ENCORE:
+		ENCORE:
 			
 			while( (hRsrc = GetResource( 'ssai', GMInstruID)) == NULL) GMInstruID++;
 			if( SizeResource( hRsrc) < 600) goto ENCORE;
@@ -476,7 +454,7 @@ void ComputeQuicktimeSound25( short GMInstruID, sData **sample, InstrData* inst,
 							if( Founded)
 							{
 								ptr2delete = NULL;
-								rsrc2 = rsrc3;			// go to  
+								rsrc2 = rsrc3;			// go to
 								inOutBytes = (GetNEShort(sdesc->sampleSize) * GetNELong(sdesc->numSamples)) / 8L;
 							}
 							else
@@ -525,11 +503,11 @@ void ComputeQuicktimeSound25( short GMInstruID, sData **sample, InstrData* inst,
 									{
 										case 8:
 											ConvertInstrumentIn( (Byte*) curData->data, inOutBytes);
-										break;
-										
+											break;
+											
 										case 16:
 											ConvertInstrument16( (short*) curData->data, inOutBytes);
-										break;
+											break;
 									}
 								}
 								curData->size 		= inOutBytes;
@@ -565,7 +543,7 @@ void ComputeQuicktimeSound25( short GMInstruID, sData **sample, InstrData* inst,
 					}
 					else Debugger();
 					
-					NEXTSAMP:
+				NEXTSAMP:
 					
 					rsrc = (QuictimeRsrc25*) (((Ptr) rsrcCopy) + rsrcCopy->size);
 				}
@@ -575,17 +553,17 @@ void ComputeQuicktimeSound25( short GMInstruID, sData **sample, InstrData* inst,
 			}
 			CloseResFile( iFileRef);
 		}
-	//	else Erreur( 72, iFileRef);
+		//	else Erreur( 72, iFileRef);
 	}
 	else Erreur( 72, 0);
 	
-//	SetCursor( &qd.arrow);
+	//	SetCursor( &qd.arrow);
 }
 #endif
 
 void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, short ins)
 {
-	short 		samp, i;
+	short i;
 	
 	for( i = 0; i < inst->numSamples; i++)
 	{
@@ -703,7 +681,7 @@ void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, s
 		if( iErr) goto BAIL;
 		
 		/*if( QK50)*/ Quicktime5( &myNoteRequest, sample, inst);
-//		else TESTNEWSYSTEM( sample, inst, ai);
+		//		else TESTNEWSYSTEM( sample, inst, ai);
 		
 		CloseComponent( na);
 	}
@@ -731,7 +709,7 @@ void InitQuicktimeInstruments(void)
 	iErr = FindFolder( kOnSystemDisk, kExtensionFolderType, kDontCreateFolder, &foundVRefNum, &foundDirID);
 	if( iErr == noErr)
 	{
-		HSetVol( NULL, foundVRefNum, foundDirID);	
+		HSetVol( NULL, foundVRefNum, foundDirID);
 		
 		iFileRef = OpenDataFileQK( foundDirID, foundVRefNum);
 		if( iFileRef != -1)
@@ -776,7 +754,7 @@ void InitQuicktimeInstruments(void)
 
 void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 {
-	short 						foundVRefNum, iFileRef, no, ii, i, x;
+	short 						iFileRef, ii, i, x;
 	OSErr 						iErr;
 	//NoteAllocator 				na;
 	Str255						aStr, bStr;
@@ -849,7 +827,7 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 				{
 					if( BitTst( &curIns.Locale.ulBank, 31-31))
 					{
-						long	valeurQT, gmID, valeurBank;
+						long	gmID;
 						
 						gmID = GetNELong(NoteRequest->tone.instrumentNumber);
 						gmID = gmID & 0x000000FF;
@@ -1038,7 +1016,7 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					curData->vol		= MAX_VOLUME;
 					curData->loopType	= eClassicLoop;
 					curData->amp		= 8;
-					curData->relNote	= 60 - wsmp.usUnityNote;// + wsmp.sFineTune;	//(60 - ) - 
+					curData->relNote	= 60 - wsmp.usUnityNote;// + wsmp.sFineTune;	//(60 - ) -
 					
 					// curData->name
 					
@@ -1114,12 +1092,7 @@ BAIL:
 void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai)
 {
 	short 						no, ii, i;
-	OSErr 						iErr;
-	//OSType						synthType;
-	//Str31						synthName;
-	//SynthesizerDescription		sd;
-	//MusicComponent 				mc;
-	
+	OSErr 						iErr;	
 	Str255						aStr, bStr;
 	
 	sData						*curData;
@@ -1130,13 +1103,8 @@ void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai)
 	QTAtom						mySampleInfoAtom = 0;
 	QTAtom						mySampleDescAtom = 0;
 	QTAtom						mySampleDataAtom = 0;
-	//QTAtom						myInstInfoAtom = 0;
-	//QTAtom						myToneDescAtom = 0;
-	//QTAtom						myInstrumentRefAtom = 0;
 	QTAtomID					atomID;
-	
-	//short						x;
-	
+		
 	short						sampleIDMap[ 500];
 	
 	for( i = 0; i < 500; i++) sampleIDMap[ i] = -1;
@@ -1298,12 +1266,9 @@ FSIORefNum GenerateDLSFromBundle()
 	FSIORefNum		refNum;
 	OSErr			iErr;
 	
-	//DoStandardOpen( &file, "\pHello", 'ANYK');
-	
 	iErr = FindFolder( kOnSystemDisk, kComponentsFolderType, kDontCreateFolder, &file.vRefNum, &file.parID);
-	if( iErr == noErr)
-	{
-		pStrcpy( file.name, "\pCoreAudio.component");
+	if( iErr == noErr) {
+		FSMakeFSSpec(file.vRefNum, file.parID, "\pCoreAudio.component", &file);
 	}
 	else return -1;
 	
@@ -1318,7 +1283,7 @@ FSIORefNum GenerateDLSFromBundle()
 	
 	// MacOS X 10.2
 	
-	rsrcURL = 		CFBundleCopyResourceURL( AudioBundle, 
+	rsrcURL = 		CFBundleCopyResourceURL( AudioBundle,
 											CFSTR("gs_instruments"), 			//CoreAudio
 											CFSTR("dls"),	 					//rsrc
 											NULL);
@@ -1333,67 +1298,6 @@ FSIORefNum GenerateDLSFromBundle()
 	}
 	CFRelease(AudioBundle);
 	return refNum;
-	
-	
-	// Look for a resource in the main bundle by name and type.
-#if 0
-	/*rsrcURL = 		CFBundleCopyResourceURL( AudioBundle,
-											CFSTR("CoreAudio"), 			//CoreAudio
-											CFSTR("rsrc"), 					//rsrc
-											NULL);
-	
-	CFURLGetFSRef( rsrcURL, &rsrcRef);
-	
-	iErr = FSOpenResourceFile( &rsrcRef, 0, 0, fsRdPerm, &refNum);
-	CFRelease(rsrcURL);
-	if( iErr) return -1;*/
-	refNum = CFBundleOpenBundleResourceMap(AudioBundle);
-	
-	for( i = 0; i < Count1Types(); i++)
-	{
-		Get1IndType( &theType, i+1);
-		
-		if( theType == 'dls2')
-		{
-			Handle	rsrc = Get1IndResource( 'dls2', 1);
-			DetachResource( rsrc);
-			
-			// Write a temp DLS2 File on the hard drive...
-			
-			iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tempDLS.vRefNum, &tempDLS.parID);
-			if( iErr == noErr)
-			{
-				pStrcpy( tempDLS.name, "\pTempDLS2.dls");
-				
-				FSpDelete( &tempDLS);
-				iErr = FSpCreate( &tempDLS, 'INIT', 'dvb ', smSystemScript);
-				if( iErr == noErr)
-				{
-					long	count;
-					
-					FSpOpenDF( &tempDLS, fsCurPerm, &ff);
-					
-					HLock( rsrc);
-					count = GetHandleSize( rsrc);
-					FSWrite( ff, &count, *rsrc);
-					HUnlock( rsrc);
-					
-					SetFPos( ff, fsFromStart, 0);
-				}
-			}
-			
-			DisposeHandle( rsrc);
-		}
-	}
-	
-	CFBundleCloseBundleResourceMap(AudioBundle, refNum);
-	CFRelease(AudioBundle);
-	
-	//CloseResFile( refNum);
-	
-	return ff;
-#endif
-
 }
 
 void DeleteDLSFile()
@@ -1409,48 +1313,6 @@ void DeleteDLSFile()
 		FSpDelete( &tempDLS);
 	}
 }
-#if 0
-short OpenDataFileQK( long dirID, short VRefNum)
-{
-	CInfoPBRec		info;
-	Str255			tempStr;
-	//	long			dirIDCopy;
-	short			i, vRefNum;
-	OSErr			iErr;
-	FSSpec			spec;
-	short			iRefNum = -1;
-	
-	info.hFileInfo.ioNamePtr = tempStr;
-	info.hFileInfo.ioVRefNum = VRefNum;
-	
-	for (i = 1; true; i ++)
-	{
-		info.hFileInfo.ioDirID = dirID;
-		info.hFileInfo.ioFDirIndex = i;
-		
-		if (PBGetCatInfoSync(&info) != noErr) break;
-		
-		if( info.hFileInfo.ioFlFndrInfo.fdType == 'INIT' && info.hFileInfo.ioFlFndrInfo.fdCreator == 'dvb ')
-		{	
-			//	HGetVol( NULL, &vRefNum, &dirIDCopy);
-			
-			//	iErr = HSetVol( NULL, info.hFileInfo.ioVRefNum, dirID);
-			
-			pStrcpy( spec.name, info.hFileInfo.ioNamePtr);
-			spec.vRefNum = info.hFileInfo.ioVRefNum;
-			spec.parID = dirID;
-			
-			iErr = FSpOpenDF( &spec, fsCurPerm, &iRefNum);
-			if( iErr != noErr) iRefNum = -1;
-			
-			//	iErr = HSetVol( NULL, vRefNum, dirIDCopy);
-			//	if( iErr != noErr) PPDebugStr( __LINE__, __FILE__, "HSetVol error...");
-		}
-	}
-	
-	return iRefNum;
-}
-#endif
 
 #pragma mark Atom functions
 OSErr GetAtomData( MyAtom at, void* data, long size)
@@ -1601,8 +1463,7 @@ OSErr FindAtomById( MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 		
 		listSize /= 2;
 		listSize *= 2;
-		
-	}while( iErr == noErr && listSize > 0);
+	} while( iErr == noErr && listSize > 0);
 	
 	if( listSize < 0 ) Debugger();
 	

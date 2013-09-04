@@ -340,11 +340,7 @@ typedef struct FXSets
 	SInt32	FXID;
 	short	noArg;
 	float	values[ 100];
-#ifdef _MAC_H
-	CFStringRef *name;
-#else
 	Str63	name;
-#endif
 } FXSets;	// and then float values
 
 
