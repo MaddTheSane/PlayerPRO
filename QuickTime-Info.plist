@@ -11,13 +11,13 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFPlugInDynamicRegistration</key>
 	<false/>
 	<key>CFPlugInFactories</key>
@@ -27,7 +27,7 @@
 	</dict>
 	<key>CFPlugInTypes</key>
 	<dict>
-		<key>0B3A4673-9118-467E-A496-846F5E1C9276</key>
+		<key>FD7154D6-20BF-4007-881B-8E44970C3B0A</key>
 		<array>
 			<string>26E9A321-0E15-48E3-8A94-062C46FDB875</string>
 		</array>

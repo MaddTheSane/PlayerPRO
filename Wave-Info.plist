@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0</string>
+	<key>CFBundleIdentifier</key>
+	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleSignature</key>
+	<string>SNPL</string>
+	<key>CFBundleVersion</key>
+	<string>2.0</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<false/>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>E93F89D6-1126-4F7C-8319-1955A92CC6DD</key>
+		<string>WaveFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>FD7154D6-20BF-4007-881B-8E44970C3B0A</key>
+		<array>
+			<string>E93F89D6-1126-4F7C-8319-1955A92CC6DD</string>
+		</array>
+	</dict>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>com.microsoft.waveform-audio</string>
+	</array>
+	<key>MADPlugMenuName</key>
+	<string>PC Wave</string>
+	<key>MADPlugType</key>
+	<string>WAVE</string>
+	<key>MADPlugAuthorName</key>
+	<string>Copyright 96 Antoine ROSSET</string>
+	<key>MADPlugIsSample</key>
+	<true/>
+	<key>MADCanImport</key>
+	<true/>
+	<key>MADCanExport</key>
+	<false/>
+</dict>
+</plist>

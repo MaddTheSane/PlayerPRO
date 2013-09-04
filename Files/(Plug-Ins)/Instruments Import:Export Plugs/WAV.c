@@ -5,7 +5,6 @@
 #include <PlayerPROCore/PPDefs.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
-#include <Carbon/Carbon.h>
 #include "WAV.h"
 
 /*______________________________________________________________________
@@ -24,21 +23,6 @@
 
 #define WAVE_FORMAT_PCM		1
 #define kmaxVolume			7
- 
-#define ksysFailed 			"\pSorry, This software requires system 7.0.0 or greater."
-
-#define kStereoStr 			"\pStereo"
-#define kMonoStr 			"\pMonaural"
-
-//typedef unsigned short	WORD;
-//typedef unsigned long	DWORD;
-//typedef long			FOURCC;
-
-OSErr TestWAV( PCMWavePtr CC)
-{
-	if( CC->ckid =='RIFF') return noErr;
-	else return MADFileNotSupportedByThisPlug;
-}
 
 /*___________________ long byte swap for Intel <-> Motorola Conversions*/
 //Just going to byteswap on big-endian platforms
@@ -60,132 +44,28 @@ OSErr TestWAV( PCMWavePtr CC)
 
 /*_______________________________________________________________________*/
 
-Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo)
-{
-	PCMWavePtr			WAVERsrc;
-	short				fRef,tempResRef,x;
-	long				fSize;
-	int					theHit;
-	char				test;
- 	short				gRefNum;
- 	short				gVolSet;
-	
-	*stereo = false;
-	
-	if(!FSpOpenDF(fileSpec,fsRdWrPerm,&fRef))
-	{
-		GetEOF(fRef,&fSize);
-		if(!(WAVERsrc = (PCMWavePtr) NewPtr(fSize))) 
-		{
-			FSCloseFork(fRef); return NULL;
-		}
-		
-		if(FSRead(fRef,&fSize,&(*WAVERsrc)))
-		{
-			FSCloseFork(fRef); return NULL;
-		}
-		
-		if((*WAVERsrc).ckid =='RIFF')
-		{
-			(*WAVERsrc).cksize = longswap((*WAVERsrc).cksize);
-			
-			if((*WAVERsrc).fccType =='WAVE')
-			{
-				(*WAVERsrc).dwDataOffset = longswap((*WAVERsrc).dwDataOffset);
-				
-				if((*WAVERsrc).fmtType,'fmt ')
-				{
-					(*WAVERsrc).wFormatTag      = shrtswap((*WAVERsrc).wFormatTag);
-					(*WAVERsrc).nCannels        = shrtswap((*WAVERsrc).nCannels);
-					(*WAVERsrc).nSamplesPerSec  = longswap((*WAVERsrc).nSamplesPerSec);
-					(*WAVERsrc).nSamplesPerSec  = (*WAVERsrc).nSamplesPerSec << 16;
-					(*WAVERsrc).nAvgBytesPerSec = longswap((*WAVERsrc).nAvgBytesPerSec);
-					(*WAVERsrc).nBlockAlign     = shrtswap((*WAVERsrc).nBlockAlign);
-					(*WAVERsrc).wBitsPerSample  = shrtswap((*WAVERsrc).wBitsPerSample);
-					(*WAVERsrc).dataSize        = longswap((*WAVERsrc).dataSize);
-					
-					*loopStart	= 0;
-					*loopEnd 	= 0;
-					*sampleSize = (*WAVERsrc).wBitsPerSample;
-					*rate		= (*WAVERsrc).nSamplesPerSec;
-					
-					if( (*WAVERsrc).nCannels == 2) *stereo = true;
-					else *stereo = false;
-					
-					if((*WAVERsrc).wFormatTag != 1)
-					{
-						return NULL;
-					}
-				}
-				else
-				{
-					DisposePtr( (Ptr) WAVERsrc);
-					return NULL;
-				}	
-			}
-			else
-			{
-				DisposePtr( (Ptr) WAVERsrc);
-				return NULL;
-			}
-		}
-		else
-		{
-			DisposePtr( (Ptr) WAVERsrc);
-			return NULL;
-		}
-		FSClose(fRef);
-	}
-	
-	{
-		long sndSize = WAVERsrc->dataSize;
-		
-		BlockMoveData( (Ptr)(long) (WAVERsrc->theData), (Ptr) WAVERsrc , sndSize);
-		
-		SetPtrSize( (Ptr) WAVERsrc, sndSize);
-		
-		switch( *sampleSize)
-		{
-			case 8:
-				ConvertInstrumentIn( (Byte*) WAVERsrc, sndSize);
-			break;
-			
-			case 16:
-				{
-					long			i;
-					unsigned short	*tt = (unsigned short*) WAVERsrc;
-					
-					for( i = 0; i < sndSize/2; i++) tt[ i] = shrtswap( tt[ i]);
-				}
-			break;
-		}
-	}
-	return (Ptr) WAVERsrc;
-}
-
-EXP OSErr mainWave(OSType					order,						// Order to execute
-				   InstrData				*InsHeader,					// Ptr on instrument header
-				   sData					**sample,					// Ptr on samples data
-				   short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
-																	// If sampleID == -1 : add sample else replace selected sample.
-				   FSSpec					*AlienFileFSSpec,			// IN/OUT file
-				   PPInfoPlug				*thePPInfoPlug)
+static OSErr mainWave(void					*unused,
+					  OSType				order,						// Order to execute
+					  InstrData				*InsHeader,					// Ptr on instrument header
+					  sData					**sample,					// Ptr on samples data
+					  short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+					  // If sampleID == -1 : add sample else replace selected sample.
+					  CFURLRef				AlienFileRef,			// IN/OUT file
+					  PPInfoPlug			*thePPInfoPlug)
 {
 	OSErr	myErr = noErr;
-	Ptr		AlienFile;
-	short	iFileRefI;
-	long	inOutBytes;
 		
 	switch( order)
 	{
-	/*	case 'PLAY':
+#if 0
+		case 'PLAY':
 		{
 			Ptr				theSound;
 			long			lS, lE;
 			short			sS;
 			unsigned long	rate;
 			Boolean			stereo;
-		
+			
 			theSound = ConvertWAV( AlienFileFSSpec, &lS, &lE, &sS, &rate, &stereo);
 			
 			if( theSound != 0L)
@@ -196,8 +76,9 @@ EXP OSErr mainWave(OSType					order,						// Order to execute
 				theSound = 0L;
 			}
 		}
-		break;*/
-	
+			break;
+#endif
+			
 		case 'IMPL':
 		{
 			Ptr				theSound;
@@ -205,42 +86,58 @@ EXP OSErr mainWave(OSType					order,						// Order to execute
 			short			sS;
 			unsigned long	rate;
 			Boolean			stereo;
-		
-			theSound = ConvertWAV( AlienFileFSSpec, &lS, &lE, &sS, &rate, &stereo);
+			size_t sndLen;
 			
-			if( theSound != NULL)
-				inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
-		}
-		break;
-		
-		case 'TEST':
-		{
-			Ptr	theSound;
+			theSound = ConvertWAVCFURL( AlienFileRef, &sndLen, &lS, &lE, &sS, &rate, &stereo);
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
-			{
-				inOutBytes = 100L;
-				theSound = NewPtr( inOutBytes);
-				if( theSound == NULL) myErr = MADNeedMemory;
-				else
-				{
-					FSRead( iFileRefI, &inOutBytes, theSound);
-					
-					myErr = TestWAV( (PCMWavePtr) theSound);
+			if( theSound != NULL) {
+				char longName[PATH_MAX] = {0};
+				char *shortName = NULL;
+				CFStringRef lastPath = CFURLCopyLastPathComponent(AlienFileRef);
+				if(CFStringGetCString(lastPath, longName, PATH_MAX, kCFStringEncodingMacRoman)) {
+					long thelen = strlen(longName);
+					shortName = malloc(++thelen);
+					strlcpy(shortName, longName, thelen);
+				} else {
+					shortName = strdup("Wave Sound");
 				}
 				
-				DisposePtr( theSound);
-				
-				FSClose( iFileRefI);
+				inAddSoundToMADCString(theSound, sndLen, lS, lE, sS, 60, rate, stereo, shortName, InsHeader, sample, sampleID);
+				free(shortName);
 			}
 		}
-		break;
-		
+			break;
+			
+		case 'TEST':
+		{
+			char cPath[PATH_MAX] = {0};
+			CFURLGetFileSystemRepresentation(AlienFileRef, true, (unsigned char*)cPath, PATH_MAX);
+			UNFILE iFileRef = iFileOpenRead(cPath);
+			long inOutBytes = 100L;
+			Ptr AlienPtr = malloc(inOutBytes);
+			if (AlienPtr == NULL) {
+				myErr = MADNeedMemory;
+			} else {
+				iRead(inOutBytes, AlienPtr, iFileRef);
+				myErr = TestWAV( (PCMWavePtr) AlienPtr);
+				free(AlienPtr);
+			}
+			iClose(iFileRef);
+		}
+			break;
+			
 		default:
 			myErr = MADOrderNotImplemented;
-		break;
+			break;
 	}
 		
 	return myErr;
 }
+
+// E93F89D6-1126-4F7C-8319-1955A92CC6DD
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xE9, 0x3F, 0x89, 0xD6, 0x11, 0x26, 0x4F, 0x7C, 0x83, 0x19, 0x19, 0x55, 0xA9, 0x2C, 0xC6, 0xDD)
+#define PLUGINFACTORY WaveFactory //The factory name as defined in the Info.plist file
+#define PLUGMAIN mainWave //The old main function, renamed please
+
+#include "CFPlugin-InstrBridge.c"
+

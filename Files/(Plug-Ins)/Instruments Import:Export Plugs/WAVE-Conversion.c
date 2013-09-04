@@ -4,19 +4,18 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 #include <PlayerPROCore/RDriverInt.h>
-#include <Carbon/Carbon.h>
 #include "WAV.h"
-#include <QuickTime/QuickTime.h>
 
-void ConvertInstrumentIn( register Byte *tempPtr, register size_t sSize);
+#ifndef __LP64__
+#include <QuickTime/QuickTime.h>
+#endif
 
 #define WAVE_FORMAT_PCM		1
 #define kmaxVolume			7
- 
-#define ksysFailed 			"\pSorry, This software requires system 7.0.0 or greater."
 
-#define kStereoStr 			"\pStereo"
-#define kMonoStr 			"\pMonaural"
+#ifndef USEDEPRECATEDFUNCS
+#define USEDEPRECATEDFUNCS 1
+#endif
 
 OSErr TestWAV( PCMWavePtr CC)
 {
@@ -44,29 +43,62 @@ OSErr TestWAV( PCMWavePtr CC)
 
 /*_______________________________________________________________________*/
 
-Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo)
+
+static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
+{
+	CFURLRef toDeref = theRef;
+	if (resolveAgainstBase) {
+		toDeref = CFURLCopyAbsoluteURL(theRef);
+	}
+	CFStringRef fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
+	CFIndex strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
+	CFRelease(fileString);
+	if (resolveAgainstBase) {
+		CFRelease(toDeref);
+	}
+	return strLength;
+}
+
+
+Ptr ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *rate, Boolean *stereo)
 {
 	PCMWavePtr	WAVERsrc = NULL;
-	short		fRef;//, tempResRef, x;
+	UNFILE		fRef;//, tempResRef, x;
 	long		fSize;
 	//int			theHit;
 	//char		test;
  	//short		gRefNum;
  	//short		gVolSet;
+
+	{
+		CFIndex theLen = getCFURLFilePathRepresentationLength(theURL, true);
+		char *cfPath = calloc(theLen, 1), *file;
+		CFURLGetFileSystemRepresentation(theURL, true, (unsigned char*)cfPath, theLen);
+		size_t StrLen = strlen(cfPath);
+		file = malloc(++StrLen);
+		if (!file) {
+			file = cfPath;
+		} else {
+			strlcpy(file, cfPath, StrLen);
+			free(cfPath);
+		}
+		fRef = iFileOpenRead(file);
+		free(file);
+	}
+	
 	
 	*stereo = false;
 	
-	if(!FSpOpenDF(fileSpec, fsRdWrPerm, &fRef))
 	{
-		GetEOF(fRef, &fSize);
-		if(!(WAVERsrc = (PCMWavePtr) NewPtr(fSize))) 
+		fSize = iGetEOF(fRef);
+		if(!(WAVERsrc = (PCMWavePtr) malloc(fSize)))
 		{
-			FSCloseFork(fRef); return NULL;
+			iClose(fRef); return NULL;
 		}
 		
-		if(FSRead(fRef, &fSize, &(*WAVERsrc)))
+		if(iRead(fSize, (Ptr)WAVERsrc, fRef))
 		{
-			FSCloseFork(fRef); return NULL;
+			iClose(fRef); return NULL;
 		}
 		
 		if(EndianU32_BtoN((*WAVERsrc).ckid) =='RIFF')
@@ -103,35 +135,34 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 				}
 				else
 				{
-					DisposePtr( (Ptr) WAVERsrc);
+					free( WAVERsrc);
 					return NULL;
 				}	
 			}
 			else
 			{
-				DisposePtr( (Ptr) WAVERsrc);
+				free(WAVERsrc);
 				return NULL;
 			}
 		}
 		else
 		{
-			DisposePtr( (Ptr) WAVERsrc);
+			free(WAVERsrc);
 			return NULL;
 		}
-		FSCloseFork(fRef);
+		iClose(fRef);
 	}
 	
 	{
-		long sndSize = WAVERsrc->dataSize;
+		*sndSize = WAVERsrc->dataSize;
 		
-		BlockMoveData( (Ptr)(long) (WAVERsrc->theData), (Ptr) WAVERsrc , sndSize);
-		
-		SetPtrSize( (Ptr) WAVERsrc, sndSize);
+		memmove(WAVERsrc, WAVERsrc->theData, *sndSize);		
+		WAVERsrc = realloc( WAVERsrc, *sndSize);
 		
 		switch( *sampleSize)
 		{
 			case 8:
-				ConvertInstrumentIn( (Byte*) WAVERsrc, sndSize);
+				ConvertInstrumentIn( (Byte*) WAVERsrc, *sndSize);
 			break;
 			
 			case 16:
@@ -139,7 +170,7 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 					long			i;
 					unsigned short	*tt = (unsigned short*) WAVERsrc;
 					
-					i = sndSize/2;
+					i = (*sndSize)/2;
 					while( i-- > 0) tt[ i] = shrtswap( tt[ i]);
 				}
 			break;
@@ -147,7 +178,7 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 	}
 	return (Ptr) WAVERsrc;
 }
-
+#if !defined(__LP64__) && USEDEPRECATEDFUNCS
 #ifdef QD_HEADERS_ARE_PRIVATE
 //Workaround so it can build on 10.7 and later SDKs
 typedef struct Cursor {
@@ -158,6 +189,28 @@ typedef struct Cursor {
 extern CursHandle GetCursor(short) DEPRECATED_ATTRIBUTE;
 extern void SetCursor(const Cursor *) DEPRECATED_ATTRIBUTE;
 #endif
+
+Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo)
+{
+	Ptr ptrReturn = NULL;
+	Ptr tmpPtr = NULL;
+	FSRef tmpRef;
+	CFURLRef tmpURL;
+	
+	FSpMakeFSRef(fileSpec, &tmpRef);
+	tmpURL = CFURLCreateFromFSRef(kCFAllocatorDefault, &tmpRef);
+	size_t ptrLen = 0;
+	
+	tmpPtr = ConvertWAVCFURL(tmpURL, &ptrLen, loopStart, loopEnd, sampleSize, rate, stereo);
+	
+	//We need this to match old behavior
+	ptrReturn = NewPtr(ptrLen);
+	memcpy(ptrReturn, tmpPtr, ptrLen);
+	free(tmpPtr);
+	CFRelease(tmpURL);
+	
+	return ptrReturn;
+}
 
 OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 {
@@ -227,3 +280,4 @@ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug
 	
 	return iErr;
 }
+#endif

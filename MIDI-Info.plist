@@ -13,15 +13,15 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.9.1</string>
+	<string>2.0</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>0.9.1</string>
+	<string>2.0</string>
 	<key>CSResourcesFileMapped</key>
 	<true/>
 	<key>MADPlugMenuName</key>
-	<string>Midi</string>
+	<string>MIDI</string>
 	<key>MADPlugAuthorName</key>
 	<string>Written by A.ROSSET 95</string>
 	<key>MADPlugType</key>
