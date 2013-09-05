@@ -237,7 +237,6 @@
 		554E126410D6F4F700BB619C /* Propagate.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF010D6C79D00BB619C /* Propagate.c */; };
 		554E126610D6F50500BB619C /* Revert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF410D6C79D00BB619C /* Revert.c */; };
 		555143CA17B6EDCF00252657 /* PPToneGeneratorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555143C817B6EDCF00252657 /* PPToneGeneratorController.m */; };
-		555143CB17B6EDCF00252657 /* PPToneGeneratorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 555143C917B6EDCF00252657 /* PPToneGeneratorController.xib */; };
 		555C125116378B3500735225 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		55672E1C10CAD641008C5C3D /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55672E1D10CAD641008C5C3D /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
@@ -396,6 +395,7 @@
 		557EF731168BD4B5001BF077 /* PPInstrumentImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */; };
 		557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */; };
 		557EF736168D0CE4001BF077 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
+		557F9AF117D927DB00325C78 /* PPToneGeneratorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557F9AF317D927DB00325C78 /* PPToneGeneratorController.xib */; };
 		55801EB113D1ED9A007E24FC /* NSColor+PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */; };
 		5583C5F716D015D70078ACE8 /* Invert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE7FF10E08D8900177B4C /* Invert.plugin */; };
 		5583C5FA16D016700078ACE8 /* Normalize.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE8C810E08DA800177B4C /* Normalize.plugin */; };
@@ -2043,7 +2043,6 @@
 		554E15FF10D8BD0600BB619C /* FileUtils.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; name = FileUtils.exp; path = Files/FileUtils.exp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		555143C717B6EDCF00252657 /* PPToneGeneratorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPToneGeneratorController.h; sourceTree = "<group>"; };
 		555143C817B6EDCF00252657 /* PPToneGeneratorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPToneGeneratorController.m; sourceTree = "<group>"; };
-		555143C917B6EDCF00252657 /* PPToneGeneratorController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPToneGeneratorController.xib; sourceTree = "<group>"; };
 		555C125016378B3500735225 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		556AE4BB16E290650074BBF9 /* PPByteswap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPByteswap.h; sourceTree = "<group>"; };
@@ -2109,6 +2108,7 @@
 		557EF732168BDE95001BF077 /* PPPlugInCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPlugInCommon.h; sourceTree = "<group>"; };
 		557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporterObject.h; sourceTree = "<group>"; };
 		557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentImporterObject.m; sourceTree = "<group>"; };
+		557F9AF217D927DB00325C78 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/PPToneGeneratorController.xib; sourceTree = "<group>"; };
 		55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+PPPreferences.h"; sourceTree = "<group>"; };
 		55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+PPPreferences.m"; sourceTree = "<group>"; };
 		5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADfg.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3965,7 +3965,7 @@
 		55F8C3E117B998E200DFE937 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				555143C917B6EDCF00252657 /* PPToneGeneratorController.xib */,
+				557F9AF317D927DB00325C78 /* PPToneGeneratorController.xib */,
 				55F8C3D517B9927A00DFE937 /* JigsawWave.tiff */,
 				55F8C3D617B9927A00DFE937 /* SilentWave.tiff */,
 				55F8C3D717B9927A00DFE937 /* SineWave.tiff */,
@@ -5697,7 +5697,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				555143CB17B6EDCF00252657 /* PPToneGeneratorController.xib in Resources */,
+				557F9AF117D927DB00325C78 /* PPToneGeneratorController.xib in Resources */,
 				55F8C3D917B9927A00DFE937 /* JigsawWave.tiff in Resources */,
 				55F8C3DA17B9927A00DFE937 /* SilentWave.tiff in Resources */,
 				55F8C3DB17B9927A00DFE937 /* SineWave.tiff in Resources */,
@@ -7324,6 +7324,14 @@
 				5533600111EBC65600525CAF /* English */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		557F9AF317D927DB00325C78 /* PPToneGeneratorController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				557F9AF217D927DB00325C78 /* en */,
+			);
+			name = PPToneGeneratorController.xib;
 			sourceTree = "<group>";
 		};
 		55BE998617978BB100D6DECC /* InfoPlist.strings */ = {
