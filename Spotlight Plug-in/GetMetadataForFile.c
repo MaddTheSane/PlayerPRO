@@ -38,7 +38,6 @@
 
 static const CFStringRef kPPMDInstumentsList = CFSTR("net_sourceforge_playerpro_tracker_instumentlist");
 static const CFStringRef kPPMDPatternList = CFSTR("net_sourcegorge_playerpro_tracker_patternlist");
-static const CFStringRef kPPMDSignature = CFSTR("net_sourcegorge_playerpro_tracker_signature");
 static const CFStringRef kPPMDTotalPatterns = CFSTR("net_sourcegorge_playerpro_tracker_totalpatterns");
 static const CFStringRef kPPMDPartitionLength = CFSTR("net_sourcegorge_playerpro_tracker_partitionlength");
 static const CFStringRef kPPMDTotalInstruments = CFSTR("net_sourceforge_playerpro_tracker_totalinstruments");
@@ -105,6 +104,8 @@ Boolean GetMetadataForFile(void* thisInterface,
 			if (CFStringGetFileSystemRepresentation(pathToFile, fullPath, maxLen) == FALSE)
 			{
 				free(fullPath);
+				MADDisposeDriver(MADDriver);
+				MADDisposeLibrary(MADLib);
 				return FALSE;
 			}
 			size_t shortLen = strlen(fullPath);
@@ -158,8 +159,15 @@ Boolean GetMetadataForFile(void* thisInterface,
 				if(MADMusicInfoCString(MADLib, type, path, &rec) != noErr) goto skipInfo;
 				OSType2Ptr(rec.signature, sig);
 				CFStringRef CFSig = CFStringCreateWithCString(kCFAllocatorDefault, sig, kCFStringEncodingMacRoman);
-				CFDictionarySetValue(attributes, kPPMDSignature, CFSig);
+				if (!CFSig) {
+					CFSig = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%04x"), (unsigned int)rec.signature);
+				}
+				CFStringRef stuff[] = {CFSig};
+				CFArrayRef codecArray = CFArrayCreate(kCFAllocatorDefault, (const void **)stuff, 1, &kCFTypeArrayCallBacks);
+				
+				CFDictionarySetValue(attributes, kMDItemCodecs, codecArray);
 				CFRelease(CFSig);
+				CFRelease(codecArray);
 			}
 			{
 				//Set the title metadata

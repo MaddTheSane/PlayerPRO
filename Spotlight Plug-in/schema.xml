@@ -27,7 +27,6 @@
 	<attributes>
 		<attribute name="net_sourceforge_playerpro_tracker_instumentlist" multivalued="true" type="CFString"/>
 		<attribute name="net_sourcegorge_playerpro_tracker_patternlist" multivalued="true" type="CFString"/>
-		<attribute name="net_sourcegorge_playerpro_tracker_signature" multivalued="false" type="CFString"/>
 		<attribute name="net_sourcegorge_playerpro_tracker_totalpatterns" multivalued="false" type="CFNumber"/>
 		<attribute name="net_sourcegorge_playerpro_tracker_partitionlength" multivalued="false" type="CFNumber"/>
 		<attribute name="net_sourceforge_playerpro_tracker_totalinstruments" multivalued="false" type="CFNumber"/>
@@ -43,9 +42,9 @@
             <allattrs> 
 				kMDItemTitle
 				kMDItemDurationSeconds
+				kMDItemCodecs
 				net_sourceforge_playerpro_tracker_instumentlist
 				net_sourcegorge_playerpro_tracker_patternlist
-				net_sourcegorge_playerpro_tracker_signature
 				net_sourcegorge_playerpro_tracker_totalpatterns
 				net_sourcegorge_playerpro_tracker_partitionlength
 				net_sourceforge_playerpro_tracker_totalinstruments
@@ -56,11 +55,11 @@
             <displayattrs>
 				kMDItemTitle
 				kMDItemDurationSeconds
+				kMDItemCodecs
 				net_sourcegorge_playerpro_tracker_partitionlength
 				net_sourcegorge_playerpro_tracker_totalpatterns
 				net_sourceforge_playerpro_tracker_totalinstruments
 				net_sourceforge_playerpro_tracker_totaltracks
-				net_sourcegorge_playerpro_tracker_signature
 				net_sourceforge_playerpro_tracker_formatdescription
             </displayattrs>
             

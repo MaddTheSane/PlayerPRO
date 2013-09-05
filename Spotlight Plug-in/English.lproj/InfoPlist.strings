@@ -1,8 +1,8 @@
 ﻿/* Localized versions of Info.plist keys */
 
-CFBundleShortVersionString = "1.4.1";
-CFBundleGetInfoString = "PlayerPRO Importer version 1.4.1, Copyright (c) 2013 SourceForge.";
-NSHumanReadableCopyright = "Copyright (c) 2013 SourceForge.";
+CFBundleShortVersionString = "1.5.0";
+CFBundleGetInfoString = "PlayerPRO Importer version 1.5.0, Copyright © 2013 SourceForge.";
+NSHumanReadableCopyright = "Copyright © 2013 SourceForge.";
 
 "PPMTMFile" = "MultiTracker Audio";
 "PPS3MFile" = "ScreamTracker Audio";
