@@ -12,6 +12,7 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madk</string>
+				<string>com.quadmation.playerpro.mad</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 				<string>com.quadmation.playerpro.madh</string>
 				<string>com.quadmation.playerpro.madi</string>
