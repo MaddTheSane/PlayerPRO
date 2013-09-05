@@ -2074,21 +2074,21 @@
 		557DE27610E04C1500177B4C /* PPResDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPResDefs.h; path = ../Files/PPResDefs.h; sourceTree = "<group>"; };
 		557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-FilterBridge.c"; sourceTree = "<group>"; };
 		557DE43410E06BF200177B4C /* Amplitude.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amplitude.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
-		557DE43510E06BF200177B4C /* Amplitude-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Amplitude-Info.plist"; path = "../../../Amplitude-Info.plist"; sourceTree = "<group>"; };
-		557DE5C310E0876E00177B4C /* Backwards-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Backwards-Info.plist"; sourceTree = SOURCE_ROOT; };
-		557DE5C410E0877900177B4C /* Crop-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Crop-Info.plist"; sourceTree = SOURCE_ROOT; };
-		557DE5C510E0878100177B4C /* CrossFade-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CrossFade-Info.plist"; sourceTree = SOURCE_ROOT; };
-		557DE5C610E0878E00177B4C /* Depth-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Depth-Info.plist"; sourceTree = SOURCE_ROOT; };
-		557DE5C710E0879D00177B4C /* Echo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Echo-Info.plist"; sourceTree = SOURCE_ROOT; };
-		557DE5C810E087A600177B4C /* Fade-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Fade-Info.plist"; sourceTree = SOURCE_ROOT; };
-		557DE5C910E087BA00177B4C /* Invert-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Invert-Info.plist"; sourceTree = SOURCE_ROOT; };
-		557DE5CA10E087C300177B4C /* Length-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Length-Info.plist"; sourceTree = SOURCE_ROOT; };
-		557DE5CB10E087CD00177B4C /* Mix-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Mix-Info.plist"; sourceTree = SOURCE_ROOT; };
-		557DE5CC10E087E100177B4C /* Normalize-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Normalize-Info.plist"; sourceTree = SOURCE_ROOT; };
-		557DE5CD10E087EB00177B4C /* Sampling Rate-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Sampling Rate-Info.plist"; sourceTree = SOURCE_ROOT; };
-		557DE5CE10E087F500177B4C /* Silence-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Silence-Info.plist"; sourceTree = SOURCE_ROOT; };
-		557DE5CF10E087FE00177B4C /* Smooth-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Smooth-Info.plist"; sourceTree = SOURCE_ROOT; };
-		557DE5D010E0880800177B4C /* Tone Generator-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Tone Generator-Info.plist"; sourceTree = SOURCE_ROOT; };
+		557DE43510E06BF200177B4C /* Amplitude-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Amplitude-Info.plist"; sourceTree = "<group>"; };
+		557DE5C310E0876E00177B4C /* Backwards-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Backwards-Info.plist"; sourceTree = "<group>"; };
+		557DE5C410E0877900177B4C /* Crop-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Crop-Info.plist"; sourceTree = "<group>"; };
+		557DE5C510E0878100177B4C /* CrossFade-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CrossFade-Info.plist"; sourceTree = "<group>"; };
+		557DE5C610E0878E00177B4C /* Depth-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Depth-Info.plist"; sourceTree = "<group>"; };
+		557DE5C710E0879D00177B4C /* Echo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Echo-Info.plist"; sourceTree = "<group>"; };
+		557DE5C810E087A600177B4C /* Fade-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Fade-Info.plist"; sourceTree = "<group>"; };
+		557DE5C910E087BA00177B4C /* Invert-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Invert-Info.plist"; sourceTree = "<group>"; };
+		557DE5CA10E087C300177B4C /* Length-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Length-Info.plist"; sourceTree = "<group>"; };
+		557DE5CB10E087CD00177B4C /* Mix-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Mix-Info.plist"; sourceTree = "<group>"; };
+		557DE5CC10E087E100177B4C /* Normalize-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Normalize-Info.plist"; sourceTree = "<group>"; };
+		557DE5CD10E087EB00177B4C /* Sampling Rate-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Sampling Rate-Info.plist"; sourceTree = "<group>"; };
+		557DE5CE10E087F500177B4C /* Silence-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Silence-Info.plist"; sourceTree = "<group>"; };
+		557DE5CF10E087FE00177B4C /* Smooth-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Smooth-Info.plist"; sourceTree = "<group>"; };
+		557DE5D010E0880800177B4C /* Tone Generator-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Tone Generator-Info.plist"; sourceTree = "<group>"; };
 		557DE5DF10E0882800177B4C /* Backwards.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Backwards.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE62210E0884100177B4C /* Crop.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Crop.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE66310E0885C00177B4C /* CrossFade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrossFade.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3085,7 +3085,7 @@
 				554E0FFA10D6C79D00BB619C /* Amplitude.c */,
 				554E0FFB10D6C79D00BB619C /* Amplitude.r */,
 			);
-			name = Amplitude;
+			path = Amplitude;
 			sourceTree = "<group>";
 		};
 		551520C610DEEFFC0054ABC4 /* Backwards */ = {
@@ -3094,7 +3094,7 @@
 				557DE5C310E0876E00177B4C /* Backwards-Info.plist */,
 				554E0FFD10D6C79E00BB619C /* Backwards.c */,
 			);
-			name = Backwards;
+			path = Backwards;
 			sourceTree = "<group>";
 		};
 		551520C710DEF0060054ABC4 /* Crop */ = {
@@ -3103,7 +3103,7 @@
 				557DE5C410E0877900177B4C /* Crop-Info.plist */,
 				554E100010D6C79E00BB619C /* Crop.c */,
 			);
-			name = Crop;
+			path = Crop;
 			sourceTree = "<group>";
 		};
 		551520D910DEF0350054ABC4 /* CrossFade */ = {
@@ -3112,7 +3112,7 @@
 				557DE5C510E0878100177B4C /* CrossFade-Info.plist */,
 				554E100310D6C79E00BB619C /* CrossFade.c */,
 			);
-			name = CrossFade;
+			path = CrossFade;
 			sourceTree = "<group>";
 		};
 		551520DA10DEF03F0054ABC4 /* Depth */ = {
@@ -3122,7 +3122,7 @@
 				554E100610D6C79E00BB619C /* Depth.c */,
 				554E100710D6C79E00BB619C /* Depth.r */,
 			);
-			name = Depth;
+			path = Depth;
 			sourceTree = "<group>";
 		};
 		551520DB10DEF0480054ABC4 /* Echo */ = {
@@ -3132,7 +3132,7 @@
 				554E100910D6C79E00BB619C /* Echo.c */,
 				554E100A10D6C79E00BB619C /* Echo.r */,
 			);
-			name = Echo;
+			path = Echo;
 			sourceTree = "<group>";
 		};
 		551520DC10DEF0500054ABC4 /* Fade */ = {
@@ -3142,7 +3142,7 @@
 				554E100C10D6C79E00BB619C /* Fade.c */,
 				554E100D10D6C79E00BB619C /* Fade.r */,
 			);
-			name = Fade;
+			path = Fade;
 			sourceTree = "<group>";
 		};
 		551520DD10DEF0590054ABC4 /* Invert */ = {
@@ -3151,7 +3151,7 @@
 				557DE5C910E087BA00177B4C /* Invert-Info.plist */,
 				554E100F10D6C79E00BB619C /* Invert.c */,
 			);
-			name = Invert;
+			path = Invert;
 			sourceTree = "<group>";
 		};
 		551520DE10DEF0600054ABC4 /* Length */ = {
@@ -3161,7 +3161,7 @@
 				554E101210D6C79E00BB619C /* Length.c */,
 				554E101310D6C79E00BB619C /* Length.r */,
 			);
-			name = Length;
+			path = Length;
 			sourceTree = "<group>";
 		};
 		551520DF10DEF06B0054ABC4 /* Mix */ = {
@@ -3171,7 +3171,7 @@
 				554E101510D6C79E00BB619C /* Mix.c */,
 				554E101610D6C79E00BB619C /* Mix.r */,
 			);
-			name = Mix;
+			path = Mix;
 			sourceTree = "<group>";
 		};
 		551520E010DEF0750054ABC4 /* Normalize */ = {
@@ -3180,7 +3180,7 @@
 				557DE5CC10E087E100177B4C /* Normalize-Info.plist */,
 				554E101810D6C79E00BB619C /* Normalize.c */,
 			);
-			name = Normalize;
+			path = Normalize;
 			sourceTree = "<group>";
 		};
 		551520E110DEF07F0054ABC4 /* Sampling Rate */ = {
@@ -3190,7 +3190,7 @@
 				554E101D10D6C79E00BB619C /* Sampling Rate.c */,
 				554E101E10D6C79E00BB619C /* Sampling Rate.r */,
 			);
-			name = "Sampling Rate";
+			path = "Sampling Rate";
 			sourceTree = "<group>";
 		};
 		551520E210DEF08B0054ABC4 /* Silence */ = {
@@ -3199,7 +3199,7 @@
 				557DE5CE10E087F500177B4C /* Silence-Info.plist */,
 				554E102010D6C79E00BB619C /* Silence.c */,
 			);
-			name = Silence;
+			path = Silence;
 			sourceTree = "<group>";
 		};
 		551520E310DEF0950054ABC4 /* Smooth */ = {
@@ -3208,7 +3208,7 @@
 				557DE5CF10E087FE00177B4C /* Smooth-Info.plist */,
 				554E102310D6C79E00BB619C /* Smooth.c */,
 			);
-			name = Smooth;
+			path = Smooth;
 			sourceTree = "<group>";
 		};
 		551520E410DEF09D0054ABC4 /* Tone Generator */ = {
@@ -3219,10 +3219,9 @@
 				55F8C3D417B977E700DFE937 /* ToneGenerator.h */,
 				555143C717B6EDCF00252657 /* PPToneGeneratorController.h */,
 				555143C817B6EDCF00252657 /* PPToneGeneratorController.m */,
-				555143C917B6EDCF00252657 /* PPToneGeneratorController.xib */,
 				55F8C3E117B998E200DFE937 /* Resources */,
 			);
-			name = "Tone Generator";
+			path = "Tone Generator";
 			sourceTree = "<group>";
 		};
 		5518105510C35A0100ADA9F4 /* Example */ = {
@@ -3966,6 +3965,7 @@
 		55F8C3E117B998E200DFE937 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				555143C917B6EDCF00252657 /* PPToneGeneratorController.xib */,
 				55F8C3D517B9927A00DFE937 /* JigsawWave.tiff */,
 				55F8C3D617B9927A00DFE937 /* SilentWave.tiff */,
 				55F8C3D717B9927A00DFE937 /* SineWave.tiff */,
@@ -8264,6 +8264,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -8287,6 +8288,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -8306,6 +8308,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SKIP_INSTALL = YES;
@@ -8327,6 +8330,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
@@ -8346,6 +8350,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SKIP_INSTALL = YES;
@@ -8368,6 +8373,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
@@ -8387,6 +8393,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SKIP_INSTALL = YES;
@@ -8409,6 +8416,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
@@ -8429,6 +8437,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -8453,6 +8462,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -8474,6 +8484,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -8498,6 +8509,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -8519,6 +8531,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -8543,6 +8556,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -8563,6 +8577,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SKIP_INSTALL = YES;
@@ -8585,6 +8600,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
@@ -8605,6 +8621,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -8629,6 +8646,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -8650,6 +8668,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -8674,6 +8693,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -8694,6 +8714,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SKIP_INSTALL = YES;
@@ -8716,6 +8737,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
@@ -8736,6 +8758,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -8760,6 +8783,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -8780,6 +8804,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SKIP_INSTALL = YES;
@@ -8802,6 +8827,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
@@ -8821,6 +8847,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SKIP_INSTALL = YES;
@@ -8843,6 +8870,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
@@ -8861,6 +8889,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SKIP_INSTALL = YES;
@@ -8882,6 +8911,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";

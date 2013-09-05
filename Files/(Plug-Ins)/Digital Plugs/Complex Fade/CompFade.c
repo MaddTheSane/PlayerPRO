@@ -29,7 +29,6 @@ static void SetDText (DialogPtr dlog, short item, Str255 str)
 	DrawOneControl( control);
 }
 
-
 static void TurnRadio( short item, DialogPtr dlog, Boolean alors)
 {
 	Handle		itemHandle;
