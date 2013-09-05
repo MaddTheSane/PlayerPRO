@@ -1844,9 +1844,7 @@
 		551520A910DEEA670054ABC4 /* MuLaw.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MuLaw.r; sourceTree = "<group>"; };
 		5517F7541126203E0034F90C /* Lin-PlugImport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "Lin-PlugImport.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5518105610C35A2600ADA9F4 /* Example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Example.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		5518105710C35A2600ADA9F4 /* small MAD Music */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music"; sourceTree = "<group>"; };
 		5518105810C35A2600ADA9F4 /* small MAD Music.mad */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music.mad"; sourceTree = "<group>"; };
-		5518105910C35A2600ADA9F4 /* small MOD Music */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MOD Music"; sourceTree = "<group>"; };
 		5518105A10C35A2600ADA9F4 /* small MOD Music.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MOD Music.mod"; sourceTree = "<group>"; };
 		5518107210C35A4500ADA9F4 /* PlayerPRO Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5518107410C35A4500ADA9F4 /* PlayerPRO Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PlayerPRO Example-Info.plist"; path = "../PlayerPRO Example-Info.plist"; sourceTree = "<group>"; };
@@ -3236,9 +3234,7 @@
 			isa = PBXGroup;
 			children = (
 				5518105610C35A2600ADA9F4 /* Example.c */,
-				5518105710C35A2600ADA9F4 /* small MAD Music */,
 				5518105810C35A2600ADA9F4 /* small MAD Music.mad */,
-				5518105910C35A2600ADA9F4 /* small MOD Music */,
 				5518105A10C35A2600ADA9F4 /* small MOD Music.mod */,
 				5518107410C35A4500ADA9F4 /* PlayerPRO Example-Info.plist */,
 			);

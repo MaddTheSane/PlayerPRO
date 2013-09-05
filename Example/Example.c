@@ -113,18 +113,6 @@ int main( int argc, char* argv[])
 		MADGetBestDriver( &init);
 		
 		{
-#if 0
-			FSSpec	appSpec;
-			
-			HGetVol( NULL, &appSpec.vRefNum, &appSpec.parID);
-			
-			pStrcpy(appSpec.name, "\pPlugs");
-			FSRef tempRef;
-			FSpMakeFSRef(&appSpec, &tempRef);
-#else
-			
-#endif
-			
 			if( MADInitLibrary( NULL, &MADLib) != noErr) DebugStr("\pSmall Problem...");
 		}
 		

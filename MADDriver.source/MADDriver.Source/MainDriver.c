@@ -779,9 +779,7 @@ OSErr MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADD
 	MADDriverRec*			MDriver;
 	
 	if(DriverInitParam == NULL || lib == NULL || returnDriver == NULL)
-	{
 		return MADParametersErr;
-	}
 	*returnDriver = NULL;
 	
 	/*************************/
