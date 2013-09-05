@@ -397,7 +397,7 @@ static OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 
 		HGetVol( NULL, &vRefNumCur, &parIDCur);
 		MYC2PStr( AlienFileName);	
-		if (FSMakeFSSpec(vRefNumCur, parIDCur, AlienFileName, &AlienFileFSSpec) != noErr)
+		if (FSMakeFSSpec(vRefNumCur, parIDCur, (unsigned char*)AlienFileName, &AlienFileFSSpec) != noErr)
 		{
 			AlienFileFSSpec.parID = parIDCur;
 			AlienFileFSSpec.vRefNum = vRefNumCur;
