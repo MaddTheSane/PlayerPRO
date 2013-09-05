@@ -80,16 +80,6 @@ static void Convert16to8( Ptr srcPtr, Ptr destPtr, size_t size)
 	}
 }
 
-#if 0
-Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
-{
-	if( PosX < 0) PosX = 0;
-	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-	
-	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
-}
-#endif
-
 static void AnalyseSignatureMOD( size_t EOFo, UInt32 temp, short *maxInstru, SInt32 *PatternSize, short *tracksNo, MODDef* aMOD)
 {
 	SInt32 		test, i;

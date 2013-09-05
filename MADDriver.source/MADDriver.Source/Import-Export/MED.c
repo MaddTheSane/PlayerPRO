@@ -73,16 +73,6 @@ static MMD1NOTE 	*mmd1pat;
 static Ptr			theMEDRead;
 #define READMEDFILE(dst, size)	{memcpy( dst, theMEDRead, size);	theMEDRead += (long) size;}
 
-#if 0
-Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
-{
-	if( PosX < 0) PosX = 0;
-	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-	
-	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
-}
-#endif
-
 static BOOL MED_Init( MADDriverSettings *init)
 {
 	mh=NULL;

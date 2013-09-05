@@ -740,7 +740,7 @@ void Sampler16Addin16DelayStereo( Channel *curVoice, SInt32	*ASCBuffer, MADDrive
 	}
 }
 
-void Sample16BufferAddDelay( Channel *curVoice, register SInt32	*ASCBuffer, MADDriverRec *intDriver)
+void Sample16BufferAddDelay( Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver)
 {
 //	long	i;
 
@@ -1315,7 +1315,7 @@ void Sampler8in16AddDelayStereo( Channel *curVoice, short	*ASCBuffer, MADDriverR
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);
 }
 
-void Sample8BufferAddDelay( Channel *curVoice, register short *ASCBuffer, MADDriverRec *intDriver)
+void Sample8BufferAddDelay( Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver)
 {
 	if( curVoice->stereo)
 	{

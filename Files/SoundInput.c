@@ -492,9 +492,9 @@ void DrawSmallOscillo()
 	ForeColor( blackColor);
 }
 
-void ConvertInstrument16LL( register short *tempPtr, register long sSize)
+void ConvertInstrument16LL(  short *tempPtr,  long sSize)
 {
-	register	short			val = 0x8000;
+		short			val = 0x8000;
 
 	sSize /= 2;
 

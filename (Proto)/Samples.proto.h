@@ -20,7 +20,7 @@ void Loop2Selection(short);
 void UpdateDisplaySelec(short);
 void COPYSampleInt(DialogPtr);
 void PASTESampleInt(DialogPtr);
-void AfficheOldPoint(register short);
+void AfficheOldPoint( short);
 void DoNullInstrument(void);
 short FindSample(DialogPtr);
 void DrawLoop(short);

@@ -63,16 +63,6 @@ static inline UInt32 Tdecode32( void *msg_buf)
 #endif
 
 #if 0
-Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
-{
-	if( PosX < 0) PosX = 0;
-	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-	
-	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
-}
-#endif
-
-#if 0
 static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
 {
 	Byte		LoB1 = LOW( B1);

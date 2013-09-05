@@ -74,7 +74,7 @@ PPEXPORT OSErr inAddSoundToMADCString(Ptr			theSound,
 
 PPEXPORT sData* inMADCreateSample();
 #ifndef __PLAYERPROCORE_PPPRIVATE__
-PPEXPORT void ConvertInstrumentIn(register Byte *tempPtr, register size_t sSize);
+PPEXPORT void ConvertInstrumentIn(Byte *tempPtr, size_t sSize);
 #endif
 PPEXPORT Cmd* GetCmd( short row, short track, Pcmd* myPcmd);
 

@@ -21,10 +21,10 @@
 #include <errno.h>
 #include "PTMID.H"
 
-void pStrcat(register unsigned char *s1, register unsigned char *s2)
+void pStrcat( unsigned char *s1,  unsigned char *s2)
 {
-	register unsigned char *p;
-	register short len, i;
+	 unsigned char *p;
+	 short len, i;
 	
 	if (*s1+*s2<=255)
 	{

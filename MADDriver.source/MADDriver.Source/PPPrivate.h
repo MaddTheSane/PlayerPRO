@@ -25,47 +25,47 @@ extern "C" {
 
 void	MADCreateOverShoot( MADDriverRec *intDriver);
 void	MADKillOverShoot( MADDriverRec *intDriver);
-void 	Sampler16AddDeluxe( Channel *curVoice, register SInt32	*ASCBuffer, MADDriverRec *intDriver);
-void 	Sampler16Addin16Deluxe( Channel *curVoice, register SInt32	*ASCBuffer, MADDriverRec *intDriver);
-void 	Sample16BufferAddDeluxe( Channel *curVoice, register SInt32	*ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler16AddDeluxe( Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler16Addin16Deluxe( Channel *curVoice, SInt32	*ASCBuffer, MADDriverRec *intDriver);
+void 	Sample16BufferAddDeluxe( Channel *curVoice, SInt32	*ASCBuffer, MADDriverRec *intDriver);
 void 	Play16StereoDeluxe( MADDriverRec *intDriver);
-void 	Sampler8in8AddDeluxe( Channel *curVoice, register short	*ASCBuffer, MADDriverRec *intDriver);
-void 	Sampler8in16AddDeluxe( Channel *curVoice, register short	*ASCBuffer, MADDriverRec *intDriver);
-void 	Sample8BufferAddDeluxe( Channel *curVoice, register short *ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler8in8AddDeluxe( Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler8in16AddDeluxe( Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver);
+void 	Sample8BufferAddDeluxe( Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver);
 void 	Play8StereoDeluxe( MADDriverRec *intDriver);
 
 /*** Delay ***/
 
-void Sampler16AddDelay( Channel *curVoice, register SInt32	*ASCBuffer, MADDriverRec *intDriver);
-void Sampler16Addin16Delay( Channel *curVoice, register SInt32	*ASCBuffer, MADDriverRec *intDriver);
-void Sample16BufferAddDelay( Channel *curVoice, register SInt32	*ASCBuffer, MADDriverRec *intDriver);
+void Sampler16AddDelay( Channel *curVoice, SInt32	*ASCBuffer, MADDriverRec *intDriver);
+void Sampler16Addin16Delay( Channel *curVoice, SInt32	*ASCBuffer, MADDriverRec *intDriver);
+void Sample16BufferAddDelay( Channel *curVoice, SInt32	*ASCBuffer, MADDriverRec *intDriver);
 void Play16StereoDelay( MADDriverRec *intDriver);
-void Sampler8in8AddDelay( Channel *curVoice, register short	*ASCBuffer, MADDriverRec *intDriver);
-void Sampler8in16AddDelay( Channel *curVoice, register short	*ASCBuffer, MADDriverRec *intDriver);
-void Sample8BufferAddDelay( Channel *curVoice, register short *ASCBuffer, MADDriverRec *intDriver);
+void Sampler8in8AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver);
+void Sampler8in16AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver);
+void Sample8BufferAddDelay( Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver);
 void Play8StereoDelay( MADDriverRec *intDriver);
 
 /*** 8 Bits ***/
 
-void 	Sampler8in8Add( Channel *curVoice, register Ptr	ASCBuffer, MADDriverRec *intDriver);
-void 	Sampler8in16Add( Channel *curVoice, register Ptr	ASCBuffer, MADDriverRec *intDriver);
-void 	Sampler8in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver);
-void 	Sampler8in16AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver);
-void 	Sample8BufferAdd( Channel *curVoice, register Ptr ASCBuffer, MADDriverRec *intDriver);
-void 	Sample8BufferAddPoly( Channel *curVoice, register Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver);
+void 	Sampler8in8Add( Channel *curVoice, Ptr ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler8in16Add( Channel *curVoice, Ptr	ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler8in8AddPoly( Channel *curVoice, Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver);
+void 	Sampler8in16AddPoly( Channel *curVoice, Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver);
+void 	Sample8BufferAdd( Channel *curVoice, Ptr ASCBuffer, MADDriverRec *intDriver);
+void 	Sample8BufferAddPoly( Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver);
 void	Play8Mono( MADDriverRec *intDriver);
 void 	Play8Stereo( MADDriverRec *intDriver);
 void 	Play8PolyPhonic( MADDriverRec *intDriver);
 
 /*** 16 Bits ***/
 
-void 	Sampler16Add( Channel *curVoice, register short	*ASCBuffer, MADDriverRec* intDriver);
-void 	Sampler16Addin16( Channel *curVoice, register short	*ASCBuffer, MADDriverRec* intDriver);
-void 	Sample16BufferAdd( Channel *curVoice, register short	*ASCBuffer, MADDriverRec* intDriver);
+void 	Sampler16Add( Channel *curVoice,  short	*ASCBuffer, MADDriverRec* intDriver);
+void 	Sampler16Addin16( Channel *curVoice,  short	*ASCBuffer, MADDriverRec* intDriver);
+void 	Sample16BufferAdd( Channel *curVoice,  short	*ASCBuffer, MADDriverRec* intDriver);
 void 	Play16Stereo( MADDriverRec* intDriver);
-void 	Sampler16AddPoly( Channel *curVoice, register short	*ASCBuffer, short chanNo, MADDriverRec* intDriver);
-void 	Sampler16Addin16Poly( Channel *curVoice, register short	*ASCBuffer, short chanNo, MADDriverRec* intDriver);
-void 	Sample16BufferAddPoly( Channel *curVoice, register short	*ASCBuffer, short chanNo, MADDriverRec* intDriver);
+void 	Sampler16AddPoly( Channel *curVoice,  short	*ASCBuffer, short chanNo, MADDriverRec* intDriver);
+void 	Sampler16Addin16Poly( Channel *curVoice,  short	*ASCBuffer, short chanNo, MADDriverRec* intDriver);
+void 	Sample16BufferAddPoly( Channel *curVoice,  short	*ASCBuffer, short chanNo, MADDriverRec* intDriver);
 void 	Play16PolyPhonic( MADDriverRec* intDriver);
 void 	Play16Mono( MADDriverRec* intDriver);
 
@@ -85,9 +85,9 @@ void DoVolCmd( Channel *ch, short call, MADDriverRec *intDriver);
 
 void 	NoteAnalyse( MADDriverRec *intDriver);
 void 	ReadNote( Channel *curVoice, Cmd		*theCommand, MADDriverRec *intDriver);
-void 	Filter8Bit( register Byte *myPtr, MADDriverRec *intDriver);
-void 	Filter8BitX( register Byte *myPtr, MADDriverRec *intDriver);
-void 	Filter16BitX( register short *myPtr, MADDriverRec *intDriver);
+void 	Filter8Bit(  Byte *myPtr, MADDriverRec *intDriver);
+void 	Filter8BitX(  Byte *myPtr, MADDriverRec *intDriver);
+void 	Filter16BitX(  short *myPtr, MADDriverRec *intDriver);
 void 	BufferCopyM( MADDriverRec *intDriver);
 void 	BufferCopyS( MADDriverRec *intDriver);
 void 	NoteOff(short oldIns, short oldN, short oldV, MADDriverRec *intDriver);
@@ -149,7 +149,7 @@ OSErr	MADLoadMADFileCString( MADMusic **, Ptr fName);
 OSErr	CheckMADFile( char *AlienFile);
 
 #ifndef __PPPLUGH__
-PPEXPORT void ConvertInstrumentIn( register	Byte *tempPtr, register size_t sSize);
+PPEXPORT void ConvertInstrumentIn( 	Byte *tempPtr,  size_t sSize);
 #endif
 
 #ifdef __cplusplus

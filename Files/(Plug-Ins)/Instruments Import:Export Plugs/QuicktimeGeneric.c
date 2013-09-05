@@ -133,7 +133,7 @@ static OSErr mainQTInst(void					*unused,
 					Ptr newSound = malloc(sndSize);
 					memcpy(newSound, theSound, sndSize);
 					DisposePtr(theSound);
-					inAddSoundToMAD( newSound, sndSize, lS, lE, sS, 60, rate, stereo, newFile.name, InsHeader, sample, sampleID);
+					myErr = inAddSoundToMAD( newSound, sndSize, lS, lE, sS, 60, rate, stereo, newFile.name, InsHeader, sample, sampleID);
 				}
 				else
 				{

@@ -8,7 +8,7 @@ void DeviceFilterUpdate(void);
 void DrawLevelRect(short);
 void DrawFillFree(Rect *);
 void DrawSmallOscillo(void);
-void ConvertInstrument16LL(register short *, register long);
+void ConvertInstrument16LL( short *,  long);
 OSErr ActiveSoundInput(Boolean, Handle *, Str255);
 OSErr NOpenMicroDevice(Str255);
 void MicroOff(void);

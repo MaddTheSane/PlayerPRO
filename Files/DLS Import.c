@@ -11,11 +11,11 @@
 #include "dls2.h"
 #include "WAV.h"
 
-void ConvertInstrument( register	Byte	*tempPtr,	register long sSize);
+void ConvertInstrument( 	Byte	*tempPtr,	 long sSize);
 void NInitSmallPiano( Rect mainRect, Rect *listRect);
 void DrawSmallPianoKey( short i, short color, Rect aRect);
 void NDoPlayInstru(short	Note, short Instru, short effect, short arg, short vol);
-void ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
+void ConvertInstrumentIn( 	Byte	*tempPtr,	 long sSize);
 short OpenResFileQK( long dirID, short VRefNum);
 Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, Boolean *stereo);
 void InitMapQK25();

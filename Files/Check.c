@@ -21,7 +21,7 @@ void KillOverShoot( short ACdriver);
 //Boolean IsCodeOK();
 void ReconstructShowInfo();
 Boolean PressMenuItem( short menuID, short itemID, DialogPtr dia, long *curVal, short remove, Str255	str);
-void ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
+void ConvertInstrumentIn( 	Byte	*tempPtr,	 long sSize);
 void GetDigitalSelection( short *XStart, short *YStart, short *XEnd, short *YEnd, short *currentPat);
 void FillVSTEffects( void);
 void CheckVSTEditor( VSTEffect *ce);

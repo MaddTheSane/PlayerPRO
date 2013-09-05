@@ -36,15 +36,15 @@ void ApplyFilters( MADDriverRec *intDriver);
 void ApplySurround( MADDriverRec *intDriver);
 void SendMIDIClock( MADDriverRec *intDriver, Byte MIDIByte);
 void SendMIDITimingClock( MADDriverRec *intDriver);
-void ConvertInstrument( register	Byte	*tempPtr,	register size_t sSize);
+void ConvertInstrument( Byte *tempPtr, size_t sSize);
 Boolean IsVSTChanEffect( MADDriverRec *, short channel);
 
 void ProcessVisualPlug( MADDriverRec*, short*, SInt32);
 void ProcessVSTPlug( MADDriverRec*, SInt32*, SInt32, SInt32);
 
-void ConvertInstrument(register Byte *tempPtr, register size_t sSize)
+void ConvertInstrument(Byte *tempPtr, size_t sSize)
 {
-	register Byte val = 0x80;
+	Byte val = 0x80;
 
 	while( sSize > 0)
 	{
@@ -53,9 +53,9 @@ void ConvertInstrument(register Byte *tempPtr, register size_t sSize)
 	}
 }
 
-void ConvertInstrumentIn(register Byte *tempPtr, register size_t sSize)
+void ConvertInstrumentIn(Byte *tempPtr, size_t sSize)
 {
-	register Byte val = 0x80;
+	Byte val = 0x80;
 
 	while( sSize > 0)
 	{
@@ -64,9 +64,9 @@ void ConvertInstrumentIn(register Byte *tempPtr, register size_t sSize)
 	}
 }
 
-void ConvertInstrument16( register short *tempPtr, register size_t sSize)
+void ConvertInstrument16( short *tempPtr, size_t sSize)
 {
-	register short val = 0x8000;
+	short val = 0x8000;
 	
 	sSize /= 2;
 	
@@ -77,9 +77,9 @@ void ConvertInstrument16( register short *tempPtr, register size_t sSize)
 	}
 }
 
-void ConvertInstrumentIn16( register short *tempPtr, register size_t sSize)
+void ConvertInstrumentIn16( short *tempPtr, size_t sSize)
 {
-	register short val = 0x8000;
+	short val = 0x8000;
 	 
 	sSize /= 2;
 	 
@@ -90,7 +90,7 @@ void ConvertInstrumentIn16( register short *tempPtr, register size_t sSize)
 	}
 }
 
-void ConvertInstrumentOut16(register short *tempPtr, register size_t sSize)
+void ConvertInstrumentOut16(short *tempPtr, size_t sSize)
 {
 	ConvertInstrument16(tempPtr, sSize);
 }
@@ -1861,7 +1861,7 @@ void NoteAnalyse( MADDriverRec *intDriver)
 	{
 		short			*ASCBuffer, valP = 0x7FFFL, valN = -0x7FFFL;
 		SInt32			*ttt;
-		register SInt32	tempL;
+		SInt32			tempL;
 		
 		intDriver->clipL = false;
 		intDriver->clipR = false;

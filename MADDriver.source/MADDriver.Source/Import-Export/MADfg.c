@@ -123,16 +123,6 @@ static struct Command* GetOldCommand( short PosX, short TrackIdX, struct MusicPa
 	return( & (tempMusicPat->Commands[ (tempMusicPat->header.PatternSize * TrackIdX) + PosX]));
 }
 
-#if 0
-Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
-{
-	if( PosX < 0) PosX = 0;
-	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-	
-	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
-}
-#endif
-
 static void MOToldPatHeader(struct oldPatHeader * p) {
 	PPBE32(&p->PatternSize);
 	PPBE32(&p->CompressionMode);

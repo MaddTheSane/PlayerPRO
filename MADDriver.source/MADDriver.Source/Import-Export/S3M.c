@@ -40,19 +40,7 @@
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
 
-static	Byte	LastAEffect[ MAXTRACK], LastJEffect[ MAXTRACK];
-
-#if 0
-
-Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
-{
-	if( PosX < 0) PosX = 0;
-	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-	
-	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
-}
-
-#endif
+static Byte LastAEffect[ MAXTRACK], LastJEffect[ MAXTRACK];
 
 static void ConvertS3MEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short channel)
 {

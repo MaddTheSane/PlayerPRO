@@ -382,7 +382,7 @@ void			Erreur( short ID, OSErr theErr);
 Handle			MyNewHandle( long);
 Ptr 			MyNewPtr( long);
 void			UpdateAHelpInfo( short *, short , DialogPtr );
-void			pStrcat(register unsigned char *s1, register unsigned char *s2);
+void			pStrcat( unsigned char *s1,  unsigned char *s2);
 Boolean			ImportFile( Str255	, short , long , OSType );
 void			AddMODList( Boolean, Str255 , short , long );
 pascal Boolean 	MyDlgFilter( DialogPtr, EventRecord *, short * );

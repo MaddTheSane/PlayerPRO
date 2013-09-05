@@ -53,7 +53,7 @@ void			DrawSample( short pSt, short pEn, short Instru, DialogPtr theDia);
 pascal OSErr 	MyTrackingSample(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag);
 void			NSelectInstruList( short , short);
 long			AmpToByte( short Pos, short InstruNo);
-void			ConvertInstrumentOut16( register	short	*tempPtr,	register long sSize);
+void			ConvertInstrumentOut16( 	short	*tempPtr,	 long sSize);
 void			FFTSampleFilter( sData *SData, short instru, Boolean filter);
 void			SampleUpdateNow( void);
 
@@ -1330,9 +1330,9 @@ OSErr				anErr;
 	}
 }
 
-void AfficheOldPoint(register	short	i)
+void AfficheOldPoint(	short	i)
 {
-	register	short	 theInstru;
+		short	 theInstru;
 	Rect		UptRect, selRect;
 	GrafPtr		SavePort;
 	long		SS, EE;

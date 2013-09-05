@@ -73,8 +73,8 @@
 #define	GetNEUnsignedFixed(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
 
-void ConvertInstrument( register	Byte	*tempPtr,	register long sSize);
-void ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
+void ConvertInstrument( 	Byte	*tempPtr,	 long sSize);
+void ConvertInstrumentIn( 	Byte	*tempPtr,	 long sSize);
 short OpenDataFileQK( long dirID, short VRefNum);
 
 static NoteRequest	myNoteRequest;

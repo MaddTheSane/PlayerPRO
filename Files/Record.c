@@ -10,17 +10,17 @@
 /*void 	SaveMODAPPL( short APPLType, short fRefNum);
 //pascal Boolean MyFilterPro();
 void 	TurnRadio( short	item, DialogPtr	dlog, Boolean alors);
-void 	ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
+void 	ConvertInstrumentIn( 	Byte	*tempPtr,	 long sSize);
 //Handle 	ConvertWAV(FSSpec*, long*, long*, short*, short*);
 void 	TurnRadio( short	item, DialogPtr	dlog, Boolean alors);
-void 	ConvertInstrumentIn16( register	short	*tempPtr,	register long sSize);
+void 	ConvertInstrumentIn16( 	short	*tempPtr,	 long sSize);
 void 	ExportFile( OSType theType, FSSpec *newFile);
 OSErr	ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 name);
 OSErr	OpenInstrumentsList( FSSpec *file);
 void	ConvertInstrumentMode( sData	*curData, short menuItem);
-void ConvertInstrument( register	Byte	*tempPtr,	register long sSize);*/
+void ConvertInstrument( 	Byte	*tempPtr,	 long sSize);*/
 
-void ConvertInstrumentOut16( register	short	*tempPtr,	register long sSize);
+void ConvertInstrumentOut16( 	short	*tempPtr,	 long sSize);
 
 extern	Boolean			PatchSave;
 extern	Boolean			PianoRecording, PianoRecordingShift, OscilloMicrophone, SpectrumMicrophone;

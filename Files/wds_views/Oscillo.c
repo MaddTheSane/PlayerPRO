@@ -273,8 +273,8 @@ void DoGrowOscillo(void)
 
 Ptr	TransformationDSP( Ptr thePtr, short i)
 {
-	register Ptr		tempPtr = thePtr;
-	register Byte		bb = 0x80;
+	 Ptr		tempPtr = thePtr;
+	 Byte		bb = 0x80;
 	
 	if( i > AUDIODSPSIZE * 4L) PPDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
 	
@@ -290,8 +290,8 @@ Ptr	TransformationDSP( Ptr thePtr, short i)
 
 Ptr	Transformation8( Ptr thePtr)
 {
-	register Ptr		tempPtr = thePtr;
-	register short		i = MADDriver->ASCBUFFERReal;
+	 Ptr		tempPtr = thePtr;
+	 short		i = MADDriver->ASCBUFFERReal;
 	
 	
 	if( i > AUDIODSPSIZE * 4L) PPDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
@@ -306,9 +306,9 @@ Ptr	Transformation8( Ptr thePtr)
 	return( AudioDSPPtr);
 }
 
-Ptr	Inverse8( register Ptr thePtr, long Size)
+Ptr	Inverse8(  Ptr thePtr, long Size)
 {
-	register short		i = Size;
+	 short		i = Size;
 	
 	if( i > AUDIODSPSIZE * 4L) PPDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
 	
@@ -321,9 +321,9 @@ Ptr	Inverse8( register Ptr thePtr, long Size)
 	return( AudioDSPPtr);
 }
 
-Ptr	Inverse16( register Ptr thePtr, long Size)
+Ptr	Inverse16(  Ptr thePtr, long Size)
 {
-	register short		i = Size;
+	 short		i = Size;
 	
 	if( i > AUDIODSPSIZE * 4L) PPDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
 	
@@ -685,10 +685,10 @@ void C8BitOsciPixMap( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 void  Bresenham(long x1, long y1, long x2, long y2, long row, Byte color, Ptr src)
 {
 
-register	long			deltaX, deltaY;
-register 	long			loopD3, loopD2;
-register 	Ptr				outPtr, oPtr;
-register	unsigned short	dColor = (color << 8) + color;
+	long			deltaX, deltaY;
+ 	long			loopD3, loopD2;
+ 	Ptr				outPtr, oPtr;
+	unsigned short	dColor = (color << 8) + color;
 
 if( x1 < x2)
 {

@@ -69,6 +69,7 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 {
 	OSErr theErr = noErr;
 	char *cName = malloc(name[0] + 1);
+	if (!cName) return MADNeedMemory;
 	memcpy(cName, &name[1], name[0]);
 	cName[name[0]] = '\0';
 	

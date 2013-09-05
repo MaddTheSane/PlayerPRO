@@ -25,7 +25,7 @@
 #include "RDriverInt.h"
 #include "PPPrivate.h"
 
-void Sampler8in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver)
+void Sampler8in8AddPolyStereo( Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver)
 {
 	char 			*SndBuffer;
 	SInt32 			i = intDriver->ASCBUFFER, volChn;
@@ -86,7 +86,7 @@ void Sampler8in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short 
 }
 
 
-void Sampler8in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver)
+void Sampler8in8AddPoly( Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver)
 {
 	char 			*SndBuffer;
 	SInt32 			i = intDriver->ASCBUFFER, volChn;
@@ -138,7 +138,7 @@ void Sampler8in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanNo
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);
 }
 
-void Sampler16in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver)
+void Sampler16in8AddPolyStereo( Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver)
 {
 	char 			*SndBuffer;
 	SInt32 			i = intDriver->ASCBUFFER, volChn;
@@ -199,7 +199,7 @@ void Sampler16in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short
 }
 
 
-void Sampler16in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver)
+void Sampler16in8AddPoly( Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver)
 {
 	char 			*SndBuffer;
 	SInt32 			i = intDriver->ASCBUFFER, volChn;
@@ -251,7 +251,7 @@ void Sampler16in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanN
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);
 }
 
-void Sample8BufferAddPoly( Channel *curVoice, register Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver)
+void Sample8BufferAddPoly( Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver)
 {
 	if( curVoice->stereo)
 	{

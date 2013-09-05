@@ -20,7 +20,7 @@ Boolean					QuicktimeInstruAvailable;
 extern MADMusic			*curMusic;
 
 
-void ConvertInstrument( register	Byte	*tempPtr,	register long sSize);
+void ConvertInstrument( 	Byte	*tempPtr,	 long sSize);
 void NInitSmallPiano( Rect mainRect, Rect *listRect);
 void DrawSmallPianoKey( short i, short color, Rect aRect);
 void NDoPlayInstru(short	Note, short Instru, short effect, short arg, short vol);
@@ -92,9 +92,9 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst);
 #define	GetNEUnsignedFixed(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
 
-static void ConvertInstrument16( register	short	*tempPtr,	register long sSize)
+static void ConvertInstrument16( 	short	*tempPtr,	 long sSize)
 {
-	register short val = 0x8000;
+	 short val = 0x8000;
 	
 	sSize /= 2;
 	
@@ -105,7 +105,7 @@ static void ConvertInstrument16( register	short	*tempPtr,	register long sSize)
 	}
 }
 
-static inline void ConvertInstrumentIn16( register short *tempPtr, register long sSize)
+static inline void ConvertInstrumentIn16(  short *tempPtr,  long sSize)
 {
 	ConvertInstrument16( tempPtr, sSize);
 }
@@ -176,8 +176,8 @@ OSErr GetAtomDataById( MyAtom at, long type, void *data, long size);
 
 /*************************/
 
-void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
-void pStrcat(register unsigned char *s1, register unsigned char *s2);
+void pStrcpy( unsigned char *s1,  const unsigned char *s2);
+void pStrcat( unsigned char *s1,  unsigned char *s2);
 
 
 void OctavesMIDIName(short	id, Str255	String)

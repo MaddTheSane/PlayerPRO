@@ -813,7 +813,7 @@ void OSType2Str( OSType type, Str255 str)
 #if 0
 void pStrcpy(register unsigned char *s1, register const unsigned char *s2)
 {
-	register short len, i;
+	 short len, i;
 	
 	if (*s2 <= 220) 
 	{
@@ -829,8 +829,8 @@ void pStrcpy(register unsigned char *s1, register const unsigned char *s2)
 
 void pStrcat(register unsigned char *s1, register unsigned char *s2)
 {
-	register unsigned char *p;
-	register short len, i;
+	 unsigned char *p;
+	 short len, i;
 	
 	if (*s1+*s2<=255) 
 	{
@@ -1081,7 +1081,7 @@ void FrameButton(DialogPtr theDia, short whichButton, Boolean drawIt)
 
 short SetScroll(ControlHandle vScroll, TEHandle TEH)
 {
-	register short	n;
+	 short	n;
 	double			height;
 	
 	height = TEGetHeight( 0, (*TEH)->nLines, TEH);

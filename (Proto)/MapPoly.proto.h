@@ -17,4 +17,4 @@ void Init3DMapping(void);
 void Recalc(void);
 void InitBresenham(void);
 void ComputeOPY(short);
-void Fill_In(long, register long, long);
+void Fill_In(long,  long, long);

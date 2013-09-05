@@ -8,7 +8,7 @@ void Set(long *, short, short, short, short);
 void Analyse3D(short);
 void ScreenSaver(void);
 void DoDrawGQD(short, short);
-void DoDrawG(register short, register short);
+void DoDrawG( short,  short);
 void DoEffaceCODE(Handle, long);
 void WORK(void);
 void TubeMOD(short);
