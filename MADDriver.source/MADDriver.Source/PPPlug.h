@@ -32,6 +32,16 @@
 
 typedef OSErr (*RPlaySoundUPP) (MADDriverRec *theRec, Ptr, long, SInt32, SInt32, SInt32, long, long, unsigned int, Boolean);
 
+typedef struct _Pcmd
+{
+	short			tracks;					// number of tracks in myCmd[]
+	short			length;					// number of rows in myCmd[]
+	short			trackStart;				// track ID of first track in myCmd[]
+	short			posStart;				// row ID of first row in myCmd[]
+	SInt32			structSize;				// struct size in bytes - see Definition
+	Cmd				myCmd[];
+} Pcmd;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -66,6 +76,7 @@ PPEXPORT sData* inMADCreateSample();
 #ifndef __PLAYERPROCORE_PPPRIVATE__
 PPEXPORT void ConvertInstrumentIn(register Byte *tempPtr, register size_t sSize);
 #endif
+PPEXPORT Cmd* GetCmd( short row, short track, Pcmd* myPcmd);
 
 PPEXPORT const CFStringRef kMadPlugMenuNameKey;
 PPEXPORT const CFStringRef kMadPlugAuthorNameKey;
@@ -191,16 +202,6 @@ typedef struct _PPInstrumentPlugin {
 
 // 34BA675D-3ED8-49F9-8D06-28A7436A0E4D
 #define kPlayerPRODigitalPlugInterfaceID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x34, 0xBA, 0x67, 0x5D, 0x3E, 0xD8, 0x49, 0xF9, 0x8D, 0x06, 0x28, 0xA7, 0x43, 0x6A, 0x0E, 0x4D)
-
-typedef struct
-{
-	short			tracks;					// number of tracks in myCmd[]
-	short			length;					// number of rows in myCmd[]
-	short			trackStart;				// track ID of first track in myCmd[]
-	short			posStart;				// row ID of first row in myCmd[]
-	SInt32			structSize;				// struct size in bytes - see Definition
-	Cmd				myCmd[];
-} Pcmd;
 
 typedef struct _PPDigitalPlugin {
     IUNKNOWN_C_GUTS;

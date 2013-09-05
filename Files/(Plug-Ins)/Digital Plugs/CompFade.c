@@ -6,7 +6,8 @@
 //	A small example of to use Digital Editor Plugs with a MODAL DIALOG
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Carbon/Carbon.h>
+#include <PlayerPROCore/PPPlug.h>
+#include "OldCarbHeaders.h"
 
 static void GetDText (DialogPtr dlog, short item, StringPtr str)
 {
@@ -95,17 +96,6 @@ static void AutoPosition( DialogPtr aDia)
 	MoveWindow( GetDialogWindow( aDia), Position.h, Position.v, false);
 
 	ShowWindow( GetDialogWindow( aDia));
-}
-
-static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
-{
-	if( row < 0) row = 0;
-	else if( row >= myPcmd->length) row = myPcmd->length -1;
-
-	if( track < 0) track = 0;
-	else if( track >= myPcmd->tracks) track = myPcmd->tracks -1;
-	
-	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
 
 static short Text2Note( Str255 myTT)

@@ -17,8 +17,8 @@
 //	Internet: 		rosset@dial.eunet.ch
 /********************						***********************/
 
-#include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
+#include "PlayerPROCore.h"
+#include "PPPlug.h"
 
 sData* inMADCreateSample()
 {
@@ -41,6 +41,17 @@ sData* inMADCreateSample()
 	curData->data		= NULL;
 	
 	return curData;		
+}
+
+Cmd* GetCmd( short row, short track, Pcmd* myPcmd)
+{
+	if( row < 0) row = 0;
+	else if( row >= myPcmd->length) row = myPcmd->length -1;
+	
+	if( track < 0) track = 0;
+	else if( track >= myPcmd->tracks) track = myPcmd->tracks -1;
+	
+	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
 
 OSErr inAddSoundToMAD(Ptr			theSound,

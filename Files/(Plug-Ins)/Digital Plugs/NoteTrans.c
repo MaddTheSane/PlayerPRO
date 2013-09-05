@@ -5,8 +5,9 @@
 //	Usage:
 //	A small example of to use Digital Editor Plugs with a MODAL DIALOG
 
-#include "MAD.h"
-#include "PPPlug.h"
+#include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/PPPlug.h>
+#include "OldCarbHeaders.h"
 
 /** Utils Functions **/
 
@@ -86,20 +87,108 @@ void AutoPosition( DialogPtr aDia)
 	ShowWindow( GetDialogWindow( aDia));
 }
 
-Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
+static Boolean PPModalDialogRep(DialogRef theDialog, EventRecord *theEvent, DialogItemIndex *itemHit)
 {
-	if( row < 0) row = 0;
-	else if( row >= myPcmd->length) row = myPcmd->length -1;
-
-	if( track < 0) track = 0;
-	else if( track >= myPcmd->tracks) track = myPcmd->tracks -1;
+	short			thePart;
+	WindowPtr		whichWindow;
+	short			LoopSet;
+	GrafPtr			savePort;
 	
-	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
+	short dialogModifiers = theEvent->modifiers;
+	*itemHit = 0;
+	
+	if( theEvent->what == updateEvt)
+	{
+		if( (WindowPtr) theEvent->message == GetDialogWindow( theDialog))
+		{
+			switch( GetWRefCon( GetDialogWindow( theDialog)))
+			{
+					//case 0:		oldFrameButton( theDialog);					break;
+					//case 96:	oldFrameButton( theDialog);					break;
+					//case 9996:	oldFrameButton( theDialog);					break;
+					//case 9987:	DrawChooseColorWindow();					break;
+					//case 9467:	UpdateEditInstruWindow( theDialog);			break;
+					//case 7311:	UpdateSoundQualityExportSndWindow( theDialog);	break;
+					//case 966:	UpdateFileInformations( theDialog);			break;
+					//case 99802:	UpdatePlugsAbout( theDialog);					break;
+			}
+			
+			return false;
+		}
+		//DoUpdateEvent( theEvt);
+		
+		*itemHit = -updateEvt;
+		
+		return( true);
+	}
+	else if(theEvent->what == mouseDown)
+	{
+		thePart = FindWindow( theEvent->where, &whichWindow);
+		
+		if( thePart == inDrag)
+		{
+			BitMap		screenBits;
+			
+			if( whichWindow != GetDialogWindow( theDialog)) return( false);
+			
+			GetQDGlobalsScreenBits( &screenBits);
+			
+			DragWindow( whichWindow, theEvent->where, &screenBits.bounds);
+			return( true);
+		}
+		else return( false);
+	}
+	else if( theEvent->what == keyDown)
+	{
+		switch ( (theEvent->message) & charCodeMask )
+		{
+			case 0x0d:
+			case 0x03:
+				*itemHit = 1;
+				return( true );
+			case 0x1b:
+				*itemHit = 2;
+				return( true );
+			default:
+				return( false );
+		}
+	}
+	else if( theEvent->what == nullEvent)
+	{
+		//ProcessSerialNumber	PSN;
+		
+		//LoopSet = thePrefs.LoopType;
+		//thePrefs.LoopType = 4;
+		
+		//if( GetWRefCon( GetDialogWindow( theDlg)) != 9996) DoGlobalNull();
+		
+		//thePrefs.LoopType = LoopSet;
+		
+		/*GetCurrentProcess( &PSN);
+		 if(	PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
+		 PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN)
+		 {
+		 SetFrontProcess( &playerPROPSN);
+		 }*/
+		
+		*itemHit = -5;
+		return( true );
+	}
+	/*	else if( theEvt->what == activateEvt)
+	 {
+	 if( AHelpDlog != NULL)
+	 {
+	 if( MacIsWindowVisible( GetDialogWindow( AHelpDlog))) ActivateProcedure( true);
+	 }
+	 }	*/
+	
+	return( false);
 }
+
 
 /** Main function **/
 
-OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+static OSErr mainNoteTrans(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
 	DialogPtr			myDia;
 	short				itemHit;
@@ -108,14 +197,16 @@ OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	myDia = GetNewDialog( 128, NULL, (WindowPtr) -1L);
 	SetPortDialogPort( myDia);
 	AutoPosition( myDia);
-
+	
 	SetDText( myDia, 3, "\p0");
 	SelectDialogItemText( myDia, 3, 0, 200);
 	
+	ModalFilterUPP PPModalFilter = NewModalFilterUPP(PPModalDialogRep);
+	
 	do {
 	RESTART:
-	
-		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+		
+		ModalDialog( PPModalFilter, &itemHit);
 		
 	} while( itemHit != 1 && itemHit != 2);
 	
@@ -124,7 +215,7 @@ OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		short	track, row;
 		long	trans;
 		Cmd		*myCmd;
-	
+		
 		GetDText( myDia, 3, tStr);		StringToNum( tStr, &trans);
 		
 		// Check values
@@ -153,7 +244,7 @@ OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	}
 	
 	DisposeDialog( myDia);
-		
+	
 	return noErr;
 }
 
