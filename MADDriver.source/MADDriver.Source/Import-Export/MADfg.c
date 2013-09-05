@@ -150,7 +150,7 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 {
 	short 			i, x;
 	long 			inOutCount = 0, OffSetToSample = 0, z = 0;
-	OSType			oldMadIdent, CompMode;
+	OSType			oldMadIdent;
 	//OSErr			theErr = noErr;
 	Boolean			MADConvert = false;
 	//Ptr				tempPtr = NULL;

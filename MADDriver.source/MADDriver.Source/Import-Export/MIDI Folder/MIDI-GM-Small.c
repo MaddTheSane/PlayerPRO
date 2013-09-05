@@ -252,9 +252,7 @@ static short OpenResFileQK( long dirID, short VRefNum)
 	FSSpec			spec;
 	short			ret;
 	
-	pStrcpy( spec.name, "\pQuickTimeª Musical Instruments");
-	spec.vRefNum = VRefNum;
-	spec.parID = dirID;
+	FSMakeFSSpec(VRefNum, dirID, "\pQuickTime\xAA Musical Instruments", &spec);
 	
 	ret = FSpOpenResFile( &spec, fsCurPerm);
 	if( ret != -1) return ret;

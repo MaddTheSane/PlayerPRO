@@ -149,6 +149,7 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 {
 	short		i, x;
 	long		inOutCount, OffSetToSample = 0, z;
+#if 0
 	OSErr		theErr = noErr;
 	Ptr			tempPtr;
 	long		finetune[16] = 
@@ -156,6 +157,7 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
 	};
+#endif
 	
 	
 	/**** Old MADH variables ****/
@@ -296,7 +298,7 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 	
 	for( i = 0; i < 64; i++)
 	{
-		InstrData	*curIns = &theMAD->fid[ i];
+		//InstrData	*curIns = &theMAD->fid[ i];
 		
 		BlockMoveData( oldMAD->fid[ i].name, theMAD->fid[ i].name, 32);
 		

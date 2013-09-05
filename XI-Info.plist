@@ -36,8 +36,6 @@
 	<array>
 		<string>net.sourceforge.playerpro.xi</string>
 	</array>
-	<key>CSResourcesFileMapped</key>
-	<string>yes</string>
 	<key>MADPlugMode</key>
 	<string>EXIM</string>
 	<key>MADPlugMenuName</key>

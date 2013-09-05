@@ -32,8 +32,6 @@
 			<string>E81B53F4-8CEE-4D32-98F2-780ADB447EB1</string>
 		</array>
 	</dict>
-	<key>CSResourcesFileMapped</key>
-	<string>yes</string>
 	<key>MADPlugMenuName</key>
 	<string>Invert</string>
 </dict>
