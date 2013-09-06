@@ -1791,6 +1791,42 @@ enum PPMusicToolbarTypes {
 - (BOOL)handleFile:(NSURL *)theURL ofType:(NSString *)theUTI
 {
 	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
+	if ([theUTI isEqualToString:@"com.quadmation.playerpro.mad"]) {
+		NSInteger retVal = NSRunInformationalAlertPanel(NSLocalizedString(@"Invalid Extension", @"Invalid extension"), NSLocalizedString(@"The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", @"Invalid extension description"), NSLocalizedString(@"Rename", @"rename file"), NSLocalizedString(@"Open", @"Open a file"), NSLocalizedString(@"Cancel", @"Cancel"), [theURL lastPathComponent]);
+		switch (retVal) {
+			case NSAlertDefaultReturn:
+			{
+				PPInfoRec rec;
+				char ostype[5] = {0};
+				//theURL = [theURL fileReferenceURL];
+				if (MADMusicIdentifyCFURL(madLib, ostype, BRIDGE(CFURLRef, theURL)) != noErr || MADMusicInfoCFURL(madLib, ostype, BRIDGE(CFURLRef, theURL), &rec) != noErr) {
+					NSRunCriticalAlertPanel(NSLocalizedString(@"Unknown File", @"unknown file"), NSLocalizedString(@"The file type could not be identified.", @"Unidentified file"), nil, nil, nil);
+					return NO;
+				}
+				OSType2Ptr(rec.signature, ostype);
+
+				NSURL *tmpURL = [theURL URLByDeletingPathExtension];
+				tmpURL = [tmpURL URLByAppendingPathExtension:[[NSString stringWithCString:ostype encoding:NSMacOSRomanStringEncoding] lowercaseString]];
+				NSError *err = nil;
+				if (![[NSFileManager defaultManager] moveItemAtURL:theURL toURL:tmpURL error:&err]) {
+					NSLog(@"Could not move file, error: %@", err);
+					NSRunInformationalAlertPanel(NSLocalizedString(@"Rename Error", @"Rename Error"), NSLocalizedString(@"The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", @"Could not rename file"), nil, nil, nil, [tmpURL lastPathComponent], [theURL lastPathComponent]);
+				} else {
+					theURL = tmpURL;
+					//TODO: regenerate the UTI
+				}
+			}
+				break;
+				
+			case NSAlertAlternateReturn:
+				break;
+				
+			case NSAlertOtherReturn:
+			default:
+				return NO;
+				break;
+		}
+	}
 	if ([sharedWorkspace type:theUTI conformsToType:PPMusicListUTI]) {
 		if ([self musicListWillChange]) {
 			[self willChangeValueForKey:kMusicListKVO];
@@ -1825,10 +1861,12 @@ enum PPMusicToolbarTypes {
 		} else return YES;
 	} else {
 		{
+			//TODO: check for valid extension.
 			NSMutableArray *trackerUTIs = [NSMutableArray array];
 			for (int i = 0; i < madLib->TotalPlug; i++) {
 				[trackerUTIs addObjectsFromArray:BRIDGE(NSArray *, madLib->ThePlug[i].UTItypes)];
 			}
+			[trackerUTIs addObjectsFromArray:@[MADNativeUTI, @"com.quadmation.playerpro.mad"]];
 			for (NSString *aUTI in trackerUTIs) {
 				if([sharedWorkspace type:theUTI conformsToType:aUTI])
 				{
