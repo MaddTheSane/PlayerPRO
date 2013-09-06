@@ -135,9 +135,9 @@ Boolean GetMetadataForFile(void* thisInterface,
 		
 #ifdef DEBUG
 		if (strcmp(utiType, "!!!!") == 0) {
-			fprintf(stderr, "Unable to determine file type based on UTI.\n");
+			printf("PPImporter: Unable to determine file type based on UTI.\n");
 		}else if (strcmp(utiType, type) != 0) {
-			fprintf(stderr, "File types differ, UTI says %s, PlayerPRO says %s.\n", utiType, type);
+			printf("PPImporter: File types differ, UTI says %s, PlayerPRO says %s.\n", utiType, type);
 		}
 #endif
 		
@@ -154,13 +154,6 @@ Boolean GetMetadataForFile(void* thisInterface,
 			free(path);
 			goto fail1;
 		}
-		
-		//{
-		//Set the title metadata
-		//CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->header->name, kCFStringEncodingMacRoman); //TODO: Check for other encodings?
-		//CFDictionarySetValue(attributes, kMDItemTitle, title);
-		//CFRelease(title);
-		//}
 		
 		{
 			PPInfoRec rec;
@@ -179,12 +172,10 @@ Boolean GetMetadataForFile(void* thisInterface,
 				CFDictionarySetValue(attributes, kMDItemCodecs, codecArray);
 				CFRelease(codecArray);
 			}
-			{
-				//Set the title metadata
-				CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, rec.internalFileName, kCFStringEncodingMacRoman); //TODO: Check for other encodings?
-				CFDictionarySetValue(attributes, kMDItemTitle, title);
-				CFRelease(title);
-			}
+			//Set the title metadata
+			CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, rec.internalFileName, kCFStringEncodingMacRoman); //TODO: Check for other encodings?
+			CFDictionarySetValue(attributes, kMDItemTitle, title);
+			CFRelease(title);
 			CFNumberRef tempNum = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &rec.totalPatterns);
 			CFDictionarySetValue(attributes, kPPMDTotalPatterns, tempNum);
 			CFRelease(tempNum); tempNum = NULL;
