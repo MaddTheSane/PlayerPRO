@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#import "ARCBridge.h"
 
 @protocol PPSoundSettingsViewControllerDelegate <NSObject>
 @optional

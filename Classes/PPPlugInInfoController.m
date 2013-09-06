@@ -8,6 +8,7 @@
 
 #import "PPPlugInInfoController.h"
 #import "PPPlugInInfo.h"
+#import "ARCBridge.h"
 
 @interface PPPlugInInfoController ()
 

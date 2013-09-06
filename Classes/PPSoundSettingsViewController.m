@@ -342,7 +342,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 - (IBAction)changeRate:(id)sender
 {
 	NSInteger rate1 = [self currentRate];
-	NSInteger returnRate;
+	unsigned int returnRate;
 	switch (rate1) {
 		case rate11Khz:
 			returnRate = 11025;

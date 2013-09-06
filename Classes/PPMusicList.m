@@ -117,6 +117,13 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	}
 }
 
+- (NSImage *)fileIcon
+{
+	NSImage *image = [[NSWorkspace sharedWorkspace] iconForFile:[musicUrl path]];
+	[image setSize:NSMakeSize(16, 16)];
+	return image;
+}
+
 - (id)initWithURL:(NSURL *)aURL
 {
 	if (self = [super init]) {

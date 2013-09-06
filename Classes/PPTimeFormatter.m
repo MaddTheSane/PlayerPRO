@@ -18,7 +18,7 @@
 		int seconds = (theVal/60) % 60;
 		int minutes = (theVal/(60 * 60)) % 60;
 		if (theVal / (60*60*60) > 0) {
-			int hours = (theVal/(60 * 60 * 60));
+			int hours = (int)(theVal/(60 * 60 * 60));
 			return [NSString stringWithFormat:@"%d:%02d:%02d", hours, minutes, seconds];
 		} else {
 			return [NSString stringWithFormat:@"%d:%02d", minutes, seconds];

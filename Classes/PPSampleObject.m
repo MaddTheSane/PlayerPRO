@@ -111,7 +111,7 @@
 
 - (SInt32)dataSize
 {
-	return [data length];
+	return (SInt32)[data length];
 }
 
 - (id)init
@@ -175,7 +175,7 @@
 	
 	strlcpy(toReturn->name, theName, sizeof(toReturn->name));
 	NSInteger dataSize2 = [data length];
-	toReturn->size = dataSize2;
+	toReturn->size = (SInt32)dataSize2;
 	toReturn->data = malloc(dataSize2);
 	[data getBytes:toReturn->data length:dataSize2];
 	

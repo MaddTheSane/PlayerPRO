@@ -16,6 +16,7 @@
 
 @property (retain, readonly) NSURL *musicUrl;
 @property (unsafe_unretained, readonly) NSString *fileName;
+@property (unsafe_unretained, readonly) NSImage *fileIcon;
 
 - (id)initWithURL:(NSURL *)aURL;
 
