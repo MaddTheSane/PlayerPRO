@@ -4289,7 +4289,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 		
 		ReGiveName:
 		
-		FSMakeFSSpec(target.vRefNum, target.vRefNum, sName, &target);
+		FSMakeFSSpec(target.vRefNum, target.parID, sName, &target);
 	//	HSetVol( NULL, target.vRefNum, target.parID);
 		err = FSpOpenDF( &target, fsCurPerm, &fRefNum);
 		if( err != fnfErr)
