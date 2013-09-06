@@ -58,7 +58,6 @@ static Boolean GetBoolFromType(CFTypeRef theType)
 		CFNumberGetValue(theType, kCFNumberIntType, &theVal);
 		return theVal != 0;
 	} else if (theID == stringtype) {
-		//FIXME: get a CoreFoundation function here to ease the transition to ARC when that happens.
 		return [(__bridge NSString*)theType boolValue];
 	} else return false;
 }
@@ -218,7 +217,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
 			short i;
-			int strlength = 0;
+			size_t strlength = 0;
 			const char * tempstring = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
 			if (tempstring == NULL) goto badplug;
 			strcpy(FillPlug->type, "    ");
@@ -303,48 +302,32 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 {
 	@autoreleasepool {
 		NSFileManager *fm = [NSFileManager defaultManager];
-		CFMutableArrayRef PlugFolds = CFArrayCreateMutable(kCFAllocatorDefault, 6, &kCFTypeArrayCallBacks);
-		CFURLRef temp1;
+		NSMutableArray *PlugFolds = [NSMutableArray arrayWithCapacity:6];
 		//Application Main Bundle
-		CFBundleRef mainBundle = CFBundleGetMainBundle();
+		NSBundle *mainBundle = [NSBundle mainBundle];
 		if (mainBundle != NULL) {
-			temp1 = CFBundleCopyBuiltInPlugInsURL(mainBundle);
-			CFArrayAppendValue(PlugFolds, temp1);
-			CFRelease(temp1);
-			temp1 = NULL;
+			[PlugFolds addObject:[mainBundle bundleURL]];
 		}
 		
 #ifndef MAINPLAYERPRO
-		mainBundle = CFBundleGetBundleWithIdentifier(CFSTR("net.sourceforge.playerpro.PlayerPROCore"));
+		mainBundle = [NSBundle bundleWithIdentifier:@"net.sourceforge.playerpro.PlayerPROCore"];
 		if (mainBundle != NULL) {
-			temp1 = CFBundleCopyBuiltInPlugInsURL(mainBundle);
-			CFArrayAppendValue(PlugFolds, temp1);
-			CFRelease(temp1);
-			temp1 = NULL;
+			[PlugFolds addObject:[mainBundle bundleURL]];
 		}
 		
-		mainBundle = CFBundleGetBundleWithIdentifier(CFSTR("net.sourceforge.playerpro.PlayerPROKit"));
+		mainBundle = [NSBundle bundleWithIdentifier:@"net.sourceforge.playerpro.PlayerPROKit"];
 		if (mainBundle != NULL) {
-			temp1 = CFBundleCopyBuiltInPlugInsURL(mainBundle);
-			CFArrayAppendValue(PlugFolds, temp1);
-			CFRelease(temp1);
-			temp1 = NULL;
+			[PlugFolds addObject:[mainBundle bundleURL]];
 		}
 #endif
 		
 		//Local systemwide plugins
-		temp1 = CFBridgingRetain([NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]);
-		CFArrayAppendValue(PlugFolds, temp1);
-		CFRelease(temp1);
-		temp1 = NULL;
+		[PlugFolds addObject:[NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
 		
 		//User plugins
-		temp1 = CFBridgingRetain([NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]);
-		CFArrayAppendValue(PlugFolds, temp1);
-		CFRelease(temp1);
-		temp1 = NULL;
+		[PlugFolds addObject:[NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
 		
-		return PlugFolds;
+		return (CFMutableArrayRef)CFBridgingRetain(PlugFolds);
 	}
 }
 

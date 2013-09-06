@@ -69,7 +69,7 @@ struct __MADDriverRec {
 	
 #ifdef _MAC_H
 	AudioUnit				CAAudioUnit;
-	UInt32					CABufOff;
+	size_t					CABufOff;
 	Ptr						CABuffer;
 #endif
 	

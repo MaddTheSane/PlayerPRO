@@ -35,7 +35,7 @@ static OSStatus     CAAudioCallback (void                            *inRefCon,
 		}
 	}
 
-	UInt32 remaining, len;
+	size_t remaining, len;
 	AudioBuffer *abuf;
 	void *ptr;
 	UInt32 i = 0;

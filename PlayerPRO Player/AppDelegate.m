@@ -1618,7 +1618,6 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)openFile:(id)sender {
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
-	int i = 0;
 	NSDictionary *playlistDict = @{@"PlayerPRO Music List" : @[PPMusicListUTI], @"PlayerPRO Old Music List" : @[PPOldMusicListUTI]};
 	
 	NSMutableDictionary *samplesDict = nil;

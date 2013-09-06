@@ -382,7 +382,6 @@
 		5578C4D917DA95BC0057D11B /* SoundOutput.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6E016619DFA005BDE4B /* SoundOutput.xib */; };
 		5578C4DA17DA95C20057D11B /* MiscPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6ED16619E2E005BDE4B /* MiscPrefs.xib */; };
 		5578C4DB17DA96400057D11B /* shiney.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55D1826916D2FD9000F63FA3 /* shiney.icns */; };
-		5578C4DC17DA96400057D11B /* icon1.icns in Resources */ = {isa = PBXBuildFile; fileRef = 5505CA7E16CF1CC80090AB31 /* icon1.icns */; };
 		5578C4DE17DA96400057D11B /* 669.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D010BA17BC004FC5D7 /* 669.icns */; };
 		5578C4DF17DA96400057D11B /* PATN.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55E89D3A10F26A4B004EB52B /* PATN.icns */; };
 		5578C4E017DA96400057D11B /* INS.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55E89D3B10F26A4B004EB52B /* INS.icns */; };
@@ -401,6 +400,7 @@
 		5578C4ED17DA96400057D11B /* XI.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DD10BA17BC004FC5D7 /* XI.icns */; };
 		5578C4EE17DA96400057D11B /* XM.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DE10BA17BC004FC5D7 /* XM.icns */; };
 		5578C4EF17DA97020057D11B /* InstrumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5578C4F117DA97020057D11B /* InstrumentWindow.xib */; };
+		5578C4F517DA998F0057D11B /* PlayerPROImporter.mdimporter in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55BE997817978AEF00D6DECC /* PlayerPROImporter.mdimporter */; };
 		557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */ = {isa = PBXBuildFile; fileRef = 557B8FD910CE01BF00B9A37D /* DefaultPref.r */; };
 		557C758516A3455E00923755 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557C758416A3455D00923755 /* QTKit.framework */; };
 		557DE1F310E0159600177B4C /* PPMenus.r in Rez */ = {isa = PBXBuildFile; fileRef = 557DE1F110E0158C00177B4C /* PPMenus.r */; };
@@ -1128,6 +1128,13 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
+		5578C4F217DA99650057D11B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55BE997717978AEF00D6DECC;
+			remoteInfo = PPImport;
+		};
 		557DE3F510E06BE300177B4C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1753,6 +1760,16 @@
 				5578C4B017D9E8B50057D11B /* APPL.ppimpexp in Copy Plug-ins */,
 			);
 			name = "Copy Plug-ins";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5578C4F417DA996C0057D11B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/Spotlight;
+			dstSubfolderSpec = 1;
+			files = (
+				5578C4F517DA998F0057D11B /* PlayerPROImporter.mdimporter in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		558678B51659AA1100BCFB70 /* Copy Frameworks */ = {
@@ -4896,10 +4913,12 @@
 				5578C47F17D9E8560057D11B /* Resources */,
 				5578C49C17D9E8840057D11B /* Copy Frameworks */,
 				5578C49F17D9E8A30057D11B /* Copy Plug-ins */,
+				5578C4F417DA996C0057D11B /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5578C4F317DA99650057D11B /* PBXTargetDependency */,
 				5578C49B17D9E8730057D11B /* PBXTargetDependency */,
 				5578C49917D9E86D0057D11B /* PBXTargetDependency */,
 			);
@@ -5828,7 +5847,6 @@
 				5578C4D917DA95BC0057D11B /* SoundOutput.xib in Resources */,
 				5578C4DA17DA95C20057D11B /* MiscPrefs.xib in Resources */,
 				5578C4DB17DA96400057D11B /* shiney.icns in Resources */,
-				5578C4DC17DA96400057D11B /* icon1.icns in Resources */,
 				5578C4DE17DA96400057D11B /* 669.icns in Resources */,
 				5578C4DF17DA96400057D11B /* PATN.icns in Resources */,
 				5578C4E017DA96400057D11B /* INS.icns in Resources */,
@@ -7173,6 +7191,11 @@
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 5578C49A17D9E8730057D11B /* PBXContainerItemProxy */;
 		};
+		5578C4F317DA99650057D11B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55BE997717978AEF00D6DECC /* PPImport */;
+			targetProxy = 5578C4F217DA99650057D11B /* PBXContainerItemProxy */;
+		};
 		557DE3F610E06BE300177B4C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 557DE3BD10E06BB500177B4C /* Filters Plugs */;
@@ -8415,11 +8438,14 @@
 				APPLY_RULES_IN_COPY_FILES = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -8577,7 +8603,6 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -8601,7 +8626,6 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
-				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -9714,6 +9738,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -9722,6 +9748,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -9981,8 +10008,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				"CLANG_ENABLE_OBJC_ARC[arch=x86_64]" = YES;
 				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -9998,9 +10029,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				"CLANG_ENABLE_OBJC_ARC[arch=x86_64]" = YES;
 				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
