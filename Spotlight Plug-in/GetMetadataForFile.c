@@ -44,8 +44,6 @@ static const CFStringRef kPPMDTotalInstruments = CFSTR("net_sourceforge_playerpr
 static const CFStringRef kPPMDTotalTracks = CFSTR("net_sourceforge_playerpro_tracker_totaltracks");
 static const CFStringRef kPPMDFormatDescription = CFSTR("net_sourceforge_playerpro_tracker_formatdescription");
 
-
-
 /* -----------------------------------------------------------------------------
     Get metadata attributes from file
    
@@ -58,10 +56,22 @@ Boolean GetMetadataForFile(void* thisInterface,
 			   CFStringRef contentTypeUTI,
 			   CFStringRef pathToFile)
 {
-    /* Pull any available metadata from the file at the specified path */
-    /* Return the attribute keys and attribute values in the dict */
-    /* Return TRUE if successful, FALSE if there was no data provided */
-    MADDriverRec			*MADDriver;
+	//Before we do anything else, check to make sure it's not the Windows file winoldap.mod
+	//This file seems to crash the metadata importer, even though the proper plug-in should
+	//Say that it can't open it.
+	{
+		CFURLRef theRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
+		CFStringRef lastPathName = CFURLCopyLastPathComponent(theRef);
+		CFRelease(theRef);
+		CFComparisonResult result = CFStringCompare(lastPathName, CFSTR("winoldap.mod"), kCFCompareCaseInsensitive | kCFCompareWidthInsensitive);
+		CFRelease(lastPathName);
+		if (result == kCFCompareEqualTo) return FALSE;
+	}
+	
+	/* Pull any available metadata from the file at the specified path */
+	/* Return the attribute keys and attribute values in the dict */
+	/* Return TRUE if successful, FALSE if there was no data provided */
+	MADDriverRec			*MADDriver;
 	MADMusic				*MADMusic1;
 	MADLibrary				*MADLib;
 	MADDriverSettings		init;
@@ -95,7 +105,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 				strcpy(utiType, "!!!!");
 			}
 		}
-
+		
 		char *path = NULL;
 		{
 			char *fullPath = NULL;
@@ -113,7 +123,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 			strlcpy(path, fullPath, shortLen);
 			free(fullPath);
 		}
-
+		
 		
 		if(MADMusicIdentifyCString(MADLib, type, path) != noErr)
 		{
@@ -122,7 +132,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 			//goto fail1;
 			strcpy(type, utiType);
 		}
-
+		
 #ifdef DEBUG
 		if (strcmp(utiType, "!!!!") == 0) {
 			fprintf(stderr, "Unable to determine file type based on UTI.\n");
@@ -146,10 +156,10 @@ Boolean GetMetadataForFile(void* thisInterface,
 		}
 		
 		//{
-			//Set the title metadata
-			//CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->header->name, kCFStringEncodingMacRoman); //TODO: Check for other encodings?
-			//CFDictionarySetValue(attributes, kMDItemTitle, title);
-			//CFRelease(title);
+		//Set the title metadata
+		//CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->header->name, kCFStringEncodingMacRoman); //TODO: Check for other encodings?
+		//CFDictionarySetValue(attributes, kMDItemTitle, title);
+		//CFRelease(title);
 		//}
 		
 		{
@@ -160,13 +170,13 @@ Boolean GetMetadataForFile(void* thisInterface,
 				OSType2Ptr(rec.signature, sig);
 				CFStringRef CFSig = CFStringCreateWithCString(kCFAllocatorDefault, sig, kCFStringEncodingMacRoman);
 				if (!CFSig) {
-					CFSig = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%04x"), (unsigned int)rec.signature);
+					CFSig = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%08x"), (unsigned int)rec.signature);
 				}
-				CFStringRef stuff[] = {CFSig};
-				CFArrayRef codecArray = CFArrayCreate(kCFAllocatorDefault, (const void **)stuff, 1, &kCFTypeArrayCallBacks);
+				CFMutableArrayRef codecArray = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
+				CFArrayAppendValue(codecArray, CFSig);
+				CFRelease(CFSig);
 				
 				CFDictionarySetValue(attributes, kMDItemCodecs, codecArray);
-				CFRelease(CFSig);
 				CFRelease(codecArray);
 			}
 			{
@@ -212,7 +222,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 	{
 		CFMutableArrayRef InstruArray = CFArrayCreateMutable(kCFAllocatorDefault, MAXINSTRU * MAXSAMPLE, &kCFTypeArrayCallBacks);
 		int	i;
-
+		
 		for( i = 0; i < MAXINSTRU ; i++)
 		{
 			InstrData *tempData = &MADMusic1->fid[i];
@@ -268,5 +278,5 @@ fail1:
 	MADDisposeDriver(MADDriver);			// Dispose music driver
 	MADDisposeLibrary(MADLib);				// Close music library
 	
-    return FALSE;
+	return FALSE;
 }
