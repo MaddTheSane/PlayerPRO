@@ -400,7 +400,7 @@
 			<key>CFBundleTypeIconFile</key>
 			<string>MAD</string>
 			<key>CFBundleTypeName</key>
-			<string>MAD tracker</string>
+			<string>PPMADFile</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
