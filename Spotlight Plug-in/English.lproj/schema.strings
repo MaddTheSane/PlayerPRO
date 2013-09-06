@@ -15,7 +15,7 @@
 /* The name on the right is what the user will see */
 "net_sourceforge_playerpro_tracker_instumentlist" = "Tracker Instrument list";
 "net_sourcegorge_playerpro_tracker_patternlist" = "Tracker Pattern list";
-"kMDItemCodecs" = "Tracker Signature";
+kMDItemCodecs = "Tracker Signature";
 "net_sourcegorge_playerpro_tracker_totalpatterns" = "Total Patterns";
 "net_sourcegorge_playerpro_tracker_partitionlength" = "Partition Length";
 "net_sourceforge_playerpro_tracker_totalinstruments" = "Total Instruments";
