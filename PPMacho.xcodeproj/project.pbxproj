@@ -376,7 +376,6 @@
 		5578C4CF17DA6D2C0057D11B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5578C4D017DA715D0057D11B /* OpenPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139E41685007B00831A5A /* OpenPanelViewController.m */; };
 		5578C4D117DA71650057D11B /* OpenPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557139E51685007B00831A5A /* OpenPanelViewController.xib */; };
-		5578C4D517DA88460057D11B /* InstrumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5578C4D217DA88460057D11B /* InstrumentWindow.xib */; };
 		5578C4D617DA88460057D11B /* PPInstrumentWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */; };
 		5578C4D717DA89110057D11B /* PPSampleObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */; };
 		5578C4D817DA89110057D11B /* PPInstrumentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */; };
@@ -401,6 +400,7 @@
 		5578C4EC17DA96400057D11B /* WAV.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DC10BA17BC004FC5D7 /* WAV.icns */; };
 		5578C4ED17DA96400057D11B /* XI.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DD10BA17BC004FC5D7 /* XI.icns */; };
 		5578C4EE17DA96400057D11B /* XM.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DE10BA17BC004FC5D7 /* XM.icns */; };
+		5578C4EF17DA97020057D11B /* InstrumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5578C4F117DA97020057D11B /* InstrumentWindow.xib */; };
 		557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */ = {isa = PBXBuildFile; fileRef = 557B8FD910CE01BF00B9A37D /* DefaultPref.r */; };
 		557C758516A3455E00923755 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557C758416A3455D00923755 /* QTKit.framework */; };
 		557DE1F310E0159600177B4C /* PPMenus.r in Rez */ = {isa = PBXBuildFile; fileRef = 557DE1F110E0158C00177B4C /* PPMenus.r */; };
@@ -2213,9 +2213,9 @@
 		5578C49317D9E8570057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		5578C4CA17DA6AAB0057D11B /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
 		5578C4CB17DA6AAB0057D11B /* PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPreferences.m; sourceTree = "<group>"; };
-		5578C4D217DA88460057D11B /* InstrumentWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstrumentWindow.xib; sourceTree = "<group>"; };
 		5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentWindowController.h; sourceTree = "<group>"; };
 		5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentWindowController.m; sourceTree = "<group>"; };
+		5578C4F017DA97020057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/InstrumentWindow.xib; sourceTree = "<group>"; };
 		557B8FD910CE01BF00B9A37D /* DefaultPref.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = DefaultPref.r; path = ../Files/DefaultPref.r; sourceTree = "<group>"; };
 		557C758416A3455D00923755 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		557DE1F110E0158C00177B4C /* PPMenus.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = PPMenus.r; path = ../Files/PPMenus.r; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -3955,7 +3955,7 @@
 				5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */,
 				5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */,
 				5578C49217D9E8570057D11B /* MainMenu.xib */,
-				5578C4D217DA88460057D11B /* InstrumentWindow.xib */,
+				5578C4F117DA97020057D11B /* InstrumentWindow.xib */,
 				5578C48417D9E8560057D11B /* Supporting Files */,
 			);
 			path = "PlayerPRO Player";
@@ -5824,7 +5824,7 @@
 				5578C4C917DA4C6D0057D11B /* PPPrevTrack.pdf in Resources */,
 				5578C4CD17DA6B170057D11B /* Localizable.strings in Resources */,
 				5578C4D117DA71650057D11B /* OpenPanelViewController.xib in Resources */,
-				5578C4D517DA88460057D11B /* InstrumentWindow.xib in Resources */,
+				5578C4EF17DA97020057D11B /* InstrumentWindow.xib in Resources */,
 				5578C4D917DA95BC0057D11B /* SoundOutput.xib in Resources */,
 				5578C4DA17DA95C20057D11B /* MiscPrefs.xib in Resources */,
 				5578C4DB17DA96400057D11B /* shiney.icns in Resources */,
@@ -7642,6 +7642,14 @@
 				5578C49317D9E8570057D11B /* en */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		5578C4F117DA97020057D11B /* InstrumentWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5578C4F017DA97020057D11B /* en */,
+			);
+			name = InstrumentWindow.xib;
 			sourceTree = "<group>";
 		};
 		557F9AF317D927DB00325C78 /* PPToneGeneratorController.xib */ = {
