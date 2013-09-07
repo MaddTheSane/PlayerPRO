@@ -36,13 +36,13 @@
   
    ----------------------------------------------------------------------------- */
 
-static const CFStringRef kPPMDInstumentsList = CFSTR("net_sourceforge_playerpro_tracker_instumentlist");
-static const CFStringRef kPPMDPatternList = CFSTR("net_sourcegorge_playerpro_tracker_patternlist");
-static const CFStringRef kPPMDTotalPatterns = CFSTR("net_sourcegorge_playerpro_tracker_totalpatterns");
-static const CFStringRef kPPMDPartitionLength = CFSTR("net_sourcegorge_playerpro_tracker_partitionlength");
-static const CFStringRef kPPMDTotalInstruments = CFSTR("net_sourceforge_playerpro_tracker_totalinstruments");
-static const CFStringRef kPPMDTotalTracks = CFSTR("net_sourceforge_playerpro_tracker_totaltracks");
-static const CFStringRef kPPMDFormatDescription = CFSTR("net_sourceforge_playerpro_tracker_formatdescription");
+const CFStringRef kPPMDInstumentsList = CFSTR("net_sourceforge_playerpro_tracker_instumentlist");
+const CFStringRef kPPMDPatternList = CFSTR("net_sourcegorge_playerpro_tracker_patternlist");
+const CFStringRef kPPMDTotalPatterns = CFSTR("net_sourcegorge_playerpro_tracker_totalpatterns");
+const CFStringRef kPPMDPartitionLength = CFSTR("net_sourcegorge_playerpro_tracker_partitionlength");
+const CFStringRef kPPMDTotalInstruments = CFSTR("net_sourceforge_playerpro_tracker_totalinstruments");
+const CFStringRef kPPMDTotalTracks = CFSTR("net_sourceforge_playerpro_tracker_totaltracks");
+const CFStringRef kPPMDFormatDescription = CFSTR("net_sourceforge_playerpro_tracker_formatdescription");
 
 /* -----------------------------------------------------------------------------
     Get metadata attributes from file
@@ -71,6 +71,11 @@ Boolean GetMetadataForFile(void* thisInterface,
 	/* Pull any available metadata from the file at the specified path */
 	/* Return the attribute keys and attribute values in the dict */
 	/* Return TRUE if successful, FALSE if there was no data provided */
+#ifdef IMPORT_COCOA_BUNDLE
+	if (UTTypeConformsTo(contentTypeUTI, CFSTR("net.sourceforge.playerpro.mad-bundle"))) {
+		return GetMetadataForPackage(attributes, pathToFile);
+	}
+#endif
 	MADDriverRec			*MADDriver;
 	MADMusic				*MADMusic1;
 	MADLibrary				*MADLib;

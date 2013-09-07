@@ -53,7 +53,7 @@ typedef struct __MetadataImporterPluginType
 static MetadataImporterPluginType  *AllocMetadataImporterPluginType(CFUUIDRef inFactoryID);
 static void                      DeallocMetadataImporterPluginType(MetadataImporterPluginType *thisInstance);
 static HRESULT                   MetadataImporterQueryInterface(void *thisInstance,REFIID iid,LPVOID *ppv);
-void                     *PPMetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID);
+extern void                     *PPMetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID) __attribute__ ((visibility ("default")));
 static ULONG                     MetadataImporterPluginAddRef(void *thisInstance);
 static ULONG                     MetadataImporterPluginRelease(void *thisInstance);
 // -----------------------------------------------------------------------------
@@ -188,7 +188,7 @@ static ULONG MetadataImporterPluginRelease(void *thisInstance)
 // -----------------------------------------------------------------------------
 //	Implementation of the factory function for this type.
 //
-extern void *PPMetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID)
+void *PPMetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID)
 {
     MetadataImporterPluginType *result;
     CFUUIDRef                 uuid;

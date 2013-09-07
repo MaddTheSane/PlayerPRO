@@ -81,7 +81,7 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 											NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
 																			  [NSBundle mainBundle],
 																			  @"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
-											NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[@"com.quadmation.playerpro.mad"],
+											NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI],
 											NSLocalizedString(@"MAD Package", @"MAD Package"):@[MADPackageUTI]}];
 		for (PPLibraryObject *obj in madLib) {
 			trackerDict[obj.menuName] = obj.UTItypes;
@@ -1348,7 +1348,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	if ([sharedWorkspace type:theUTI conformsToType:MADPackageUTI]) {
 		// Do nothing right now
 		return NO;
-	} else if ([theUTI isEqualToString:@"com.quadmation.playerpro.mad"]) {
+	} else if ([theUTI isEqualToString:MADGenericUTI]) {
 		NSInteger retVal = NSRunInformationalAlertPanel(NSLocalizedString(@"Invalid Extension", @"Invalid extension"), NSLocalizedString(@"The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", @"Invalid extension description"), NSLocalizedString(@"Rename", @"rename file"), NSLocalizedString(@"Open", @"Open a file"), NSLocalizedString(@"Cancel", @"Cancel"), [theURL lastPathComponent]);
 		switch (retVal) {
 			case NSAlertDefaultReturn:
@@ -1409,7 +1409,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			for (NSString *key in tracDict) {
 				[trackerUTIs addObjectsFromArray:tracDict[key]];
 			}
-			[trackerUTIs addObjectsFromArray:@[@"com.quadmation.playerpro.mad"]];
 			for (NSString *aUTI in trackerUTIs) {
 				if([sharedWorkspace type:theUTI conformsToType:aUTI])
 				{

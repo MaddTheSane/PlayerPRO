@@ -20,7 +20,7 @@
 @class PatternHandler;
 @class PPInstrumentPlugHandler;
 
-@interface PPApp_AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate> {	
+@interface PPApp_AppDelegate : NSDocumentController <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate> {	
 	NSMutableArray			*plugInInfos;
 	IBOutlet NSMenu			*aboutPlugInMenu;
 	

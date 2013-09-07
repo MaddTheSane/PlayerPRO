@@ -100,7 +100,7 @@ static NSInteger selMusFromList = -1;
 											NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
 																				[NSBundle mainBundle],
 																				@"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
-											NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[@"com.quadmation.playerpro.mad"],
+											NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI],
 											NSLocalizedString(@"MAD Package", @"MAD Package"):@[MADPackageUTI]}];
 		for (int i = 0; i < madLib->TotalPlug; i++) {
 			trackerDict[(__bridge NSString*)madLib->ThePlug[i].MenuName] = (__bridge NSArray*)madLib->ThePlug[i].UTItypes;
@@ -1543,7 +1543,7 @@ enum PPMusicToolbarTypes {
 	if ([sharedWorkspace type:theUTI conformsToType:MADPackageUTI]) {
 		// Do nothing right now
 		return NO;
-	} else if ([theUTI isEqualToString:@"com.quadmation.playerpro.mad"]) {
+	} else if ([theUTI isEqualToString:MADGenericUTI]) {
 		NSInteger retVal = NSRunInformationalAlertPanel(NSLocalizedString(@"Invalid Extension", @"Invalid extension"), NSLocalizedString(@"The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", @"Invalid extension description"), NSLocalizedString(@"Rename", @"rename file"), NSLocalizedString(@"Open", @"Open a file"), NSLocalizedString(@"Cancel", @"Cancel"), [theURL lastPathComponent]);
 		switch (retVal) {
 			case NSAlertDefaultReturn:
@@ -1605,7 +1605,6 @@ enum PPMusicToolbarTypes {
 				[trackerUTIs addObjectsFromArray:tracDic[key]];
 			}
 
-			[trackerUTIs addObject:@"com.quadmation.playerpro.mad"];
 			for (NSString *aUTI in trackerUTIs) {
 				if([sharedWorkspace type:theUTI conformsToType:aUTI])
 				{
