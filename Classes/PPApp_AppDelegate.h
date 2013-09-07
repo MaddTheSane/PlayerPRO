@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #import "PPSoundSettingsViewController.h"
+@class PPLibrary;
 @class PPPreferences;
 @class PPMusicList;
 @class PPInstrumentImporter;
@@ -30,7 +31,6 @@
 	PPInstrumentWindowController *instrumentController;
 	
 	NSTimer					*timeChecker;
-	MADLibrary				*madLib;
 	
 	PPPreferences			*preferences;
 	PPInstrumentPlugHandler	*instrumentImporter;
@@ -47,6 +47,8 @@
 	
 	BOOL isQuitting;
 }
+
+@property (readonly) PPLibrary *madLib;
 
 @property (weak) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSWindow *exportWindow;

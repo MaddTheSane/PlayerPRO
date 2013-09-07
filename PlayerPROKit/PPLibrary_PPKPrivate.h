@@ -10,4 +10,5 @@
 
 @interface PPLibrary ()
 @property (readonly) MADLibrary *_madLib;
+@property (readonly) NSArray *trackerLibs;
 @end

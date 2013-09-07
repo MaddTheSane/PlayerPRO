@@ -20,6 +20,7 @@
 #import "PPDigitalPlugInObject.h"
 #import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
+#import <PlayerPROKit/PlayerPROKit.h>
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
 #import <QTKit/QTKit.h>
@@ -64,6 +65,7 @@ static NSInteger selMusFromList = -1;
 @property (readwrite, retain) NSString *musicName;
 @property (readwrite, retain) NSString *musicInfo;
 @property (readonly, strong) NSDictionary *trackerDict;
+@property (readwrite, strong) PPLibrary *madLib;
 @end
 
 @implementation PPApp_AppDelegate
@@ -71,19 +73,21 @@ static NSInteger selMusFromList = -1;
 @synthesize exportWindow;
 @synthesize musicInfo;
 @synthesize musicName;
+@synthesize madLib;
 
 @synthesize trackerDict = _trackerDict;
 - (NSDictionary *)trackerDict
 {
-	if (!_trackerDict || [_trackerDict count] != madLib->TotalPlug - 1) {
+	if (!_trackerDict) {
 		NSMutableDictionary *trackerDict = [NSMutableDictionary
 											dictionaryWithObject:@[MADNativeUTI] forKey:
 											NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
 																			  [NSBundle mainBundle],
 																			  @"MADK Tracker", @"MADK Tracker")];
-		for (int i = 0; i < madLib->TotalPlug; i++) {
-			trackerDict[(__bridge NSString*)madLib->ThePlug[i].MenuName] = (__bridge NSArray*)madLib->ThePlug[i].UTItypes;
+		for (PPLibraryObject *obj in madLib) {
+			trackerDict[obj.menuName] = obj.UTItypes;
 		}
+		
 		_trackerDict = [[NSDictionary alloc] initWithDictionary:trackerDict];
 	}
 	
@@ -1089,12 +1093,11 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 	//[plugInInfos removeAllObjects];
 	
-	for (i = 0; i < madLib->TotalPlug ; i++) {
-		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:BRIDGE(NSString*, madLib->ThePlug[i].MenuName) author:BRIDGE(NSString*, madLib->ThePlug[i].AuthorString) plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name") plugURL:CFBridgingRelease(CFBundleCopyBundleURL(madLib->ThePlug[i].file))];
+	for (PPLibraryObject *obj in madLib) {
+		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name") plugURL:[obj.plugFile bundleURL]];
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
 		}
-		RELEASEOBJ(tmpInfo);
 	}
 	
 	for (PPInstrumentImporterObject *obj in instrumentImporter) {
@@ -1102,7 +1105,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
 		}
-		RELEASEOBJ(tmpInfo);
 	}
 	
 #if 0
@@ -1138,7 +1140,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		[mi setTag:i];
 		[mi setTarget:self];
 		[aboutPlugInMenu addItem:mi];
-		RELEASEOBJ(mi);
 	}
 }
 
@@ -1148,7 +1149,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	undoManager = [[NSUndoManager alloc] init];
 	srandom(time(NULL) & 0xffffffff);
 	PPRegisterDebugFunc(CocoaDebugStr);
-	MADInitLibrary(NULL, &madLib);
+	self.madLib = [[PPLibrary alloc] init];
 
 	[self addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionNew context:NULL];
 	//self.paused = YES;
@@ -1163,15 +1164,16 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		if (obj.mode == MADPlugImportExport || obj.mode == MADPlugExport) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:obj.menuName action:@selector(exportInstrument:) keyEquivalent:@""];
 			[mi setTag:i];
-			[mi setTarget:instrumentController];
+			[mi setTarget:self];
 			[instrumentExportMenu addItem:mi];
 			RELEASEOBJ(mi);
 		}
 	}
 	
-	for (i = 0; i < madLib->TotalPlug; i++) {
-		if (madLib->ThePlug[i].mode == MADPlugImportExport || madLib->ThePlug[i].mode == MADPlugExport) {
-			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@...", BRIDGE(NSString*, madLib->ThePlug[i].MenuName)] action:@selector(exportMusicAs:) keyEquivalent:@""];
+	for (i = 0; i < [madLib pluginCount]; i++) {
+		PPLibraryObject *obj = [madLib pluginAtIndex:i];
+		if (obj.canExport) {
+			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@...", obj.menuName] action:@selector(exportMusicAs:) keyEquivalent:@""];
 			[mi setTag:i];
 			[mi setTarget:self];
 			[musicExportMenu addItem:mi];
@@ -1351,7 +1353,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 				PPInfoRec rec;
 				char ostype[5] = {0};
 				//theURL = [theURL fileReferenceURL];
-				if (MADMusicIdentifyCFURL(madLib, ostype, BRIDGE(CFURLRef, theURL)) != noErr || MADMusicInfoCFURL(madLib, ostype, BRIDGE(CFURLRef, theURL), &rec) != noErr) {
+				if ([madLib identifyFileAtURL:theURL type:ostype] != noErr || [madLib getInformationFromFileAtURL:theURL type:ostype info:&rec] != noErr) {
 					NSRunCriticalAlertPanel(NSLocalizedString(@"Unknown File", @"unknown file"), NSLocalizedString(@"The file type could not be identified.", @"Unidentified file"), nil, nil, nil);
 					return NO;
 				}
@@ -1399,11 +1401,12 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	{
 		{
 			//TODO: check for valid extension.
+			NSDictionary *tracDict = self.trackerDict;
 			NSMutableArray *trackerUTIs = [NSMutableArray array];
-			for (int i = 0; i < madLib->TotalPlug; i++) {
-				[trackerUTIs addObjectsFromArray:BRIDGE(NSArray *, madLib->ThePlug[i].UTItypes)];
+			for (NSString *key in tracDict) {
+				[trackerUTIs addObjectsFromArray:tracDict[key]];
 			}
-			[trackerUTIs addObjectsFromArray:@[MADNativeUTI, @"com.quadmation.playerpro.mad"]];
+			[trackerUTIs addObjectsFromArray:@[@"com.quadmation.playerpro.mad"]];
 			for (NSString *aUTI in trackerUTIs) {
 				if([sharedWorkspace type:theUTI conformsToType:aUTI])
 				{

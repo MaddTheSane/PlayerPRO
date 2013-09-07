@@ -428,6 +428,8 @@
 		5578C53617DB956D0057D11B /* PPImport Cocoa.mdimporter in Copy Spotlight Importer */ = {isa = PBXBuildFile; fileRef = 5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */; };
 		5578C53717DB957A0057D11B /* PPImport Cocoa.mdimporter in Copy Spotlight */ = {isa = PBXBuildFile; fileRef = 5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */; };
 		5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */; };
+		5578C54017DBABC50057D11B /* PPDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C53E17DBABBF0057D11B /* PPDocument.m */; };
+		5578C54117DBABC50057D11B /* PPDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5578C53F17DBABC20057D11B /* PPDocument.xib */; };
 		557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */ = {isa = PBXBuildFile; fileRef = 557B8FD910CE01BF00B9A37D /* DefaultPref.r */; };
 		557C758516A3455E00923755 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557C758416A3455D00923755 /* QTKit.framework */; };
 		557DE1F310E0159600177B4C /* PPMenus.r in Rez */ = {isa = PBXBuildFile; fileRef = 557DE1F110E0158C00177B4C /* PPMenus.r */; };
@@ -2287,6 +2289,9 @@
 		5578C53017DB94A60057D11B /* PPImport copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PPImport copy-Info.plist"; path = "/Users/cwbetts/makestuff/playerpro-all/trunk/PPImport copy-Info.plist"; sourceTree = "<absolute>"; };
 		5578C53A17DB9F630057D11B /* PPInstrumentPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPlugHandler.h; sourceTree = "<group>"; };
 		5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentPlugHandler.m; sourceTree = "<group>"; };
+		5578C53D17DBABBE0057D11B /* PPDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPDocument.h; path = "Document-based code/PPDocument.h"; sourceTree = "<group>"; };
+		5578C53E17DBABBF0057D11B /* PPDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPDocument.m; path = "Document-based code/PPDocument.m"; sourceTree = "<group>"; };
+		5578C53F17DBABC20057D11B /* PPDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PPDocument.xib; path = "Document-based code/PPDocument.xib"; sourceTree = "<group>"; };
 		557B8FD910CE01BF00B9A37D /* DefaultPref.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = DefaultPref.r; path = ../Files/DefaultPref.r; sourceTree = "<group>"; };
 		557C758416A3455D00923755 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		557DE1F110E0158C00177B4C /* PPMenus.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = PPMenus.r; path = ../Files/PPMenus.r; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -4195,6 +4200,9 @@
 				5547C9DC16D97FC700C36FEA /* PPFileSizeFormatter.h */,
 				5547C9DD16D97FC700C36FEA /* PPFileSizeFormatter.m */,
 				556AE4BB16E290650074BBF9 /* PPByteswap.h */,
+				5578C53D17DBABBE0057D11B /* PPDocument.h */,
+				5578C53E17DBABBF0057D11B /* PPDocument.m */,
+				5578C53F17DBABC20057D11B /* PPDocument.xib */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -6276,6 +6284,7 @@
 				55F4287D16A8B1FB009013D8 /* PPSoundSettingsViewController.xib in Resources */,
 				552581FF16C6FC350016A31C /* InstrumentInfoController.xib in Resources */,
 				55D1826A16D2FD9000F63FA3 /* shiney.icns in Resources */,
+				5578C54117DBABC50057D11B /* PPDocument.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7013,6 +7022,7 @@
 				5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */,
 				5547C9DE16D97FC700C36FEA /* PPFileSizeFormatter.m in Sources */,
 				5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */,
+				5578C54017DBABC50057D11B /* PPDocument.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
