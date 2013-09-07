@@ -11,4 +11,5 @@
 @interface PPMusicObject ()
 @property (readonly) MADMusic *_currentMusic;
 @property (readwrite, weak) PPDriver *attachedDriver;
+@property (strong) PPLibrary *currentLibrary;
 @end

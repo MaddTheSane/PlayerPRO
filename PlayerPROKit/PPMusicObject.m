@@ -18,40 +18,30 @@
 @synthesize attachedDriver;
 @synthesize _currentMusic = currentMusic;
 
-- (id)initWithCPath:(const char*)path library:(PPLibrary*)theLib
-{
-	if (self = [super init]) {
-		MADLibrary *tempLib = theLib._madLib;
-		char type[5];
-		if (MADMusicIdentifyCString(tempLib, type, (char*)path) != noErr) {
-			return nil;
-		}
-		if (MADLoadMusicFileCString(tempLib, &currentMusic, type, (char*)path) != noErr) {
-			return nil;
-		}
-	}
-	return self;
-}
-
 - (id)initWithURL:(NSURL *)url library:(PPLibrary *)theLib
 {
-	return [self initWithCPath:[[url path] fileSystemRepresentation] library:theLib];
+	if (self = [super init]) {
+		self.currentLibrary = theLib;
+		char type[5];
+		CFURLRef tmpURL = CFBridgingRetain(url);
+		if (MADMusicIdentifyCFURL(theLib._madLib, type, tmpURL) != noErr) {
+			CFRelease(tmpURL);
+			return nil;
+		}
+		if (MADLoadMusicCFURLFile(theLib._madLib, &currentMusic, type, tmpURL) != noErr) {
+			CFRelease(tmpURL);
+			return nil;
+		}
+		
+		
+		CFRelease(tmpURL);
+	}
+	return self;
 }
 
 - (id)initWithPath:(NSString *)url library:(PPLibrary *)theLib
 {
-	return [self initWithCPath:[url fileSystemRepresentation] library:theLib];
-}
-
-- (id)initWithCPath:(const char*)path driver:(PPDriver *)theDriv setAsCurrentMusic:(BOOL)toSet
-{
-	if (self = [self initWithCPath:path library:theDriv.theLibrary]) {
-		self.attachedDriver = theDriv;
-		if (toSet) {
-			[attachedDriver setCurrentMusic:self];
-		}
-	}
-	return self;
+	return [self initWithURL:[NSURL fileURLWithPath:url] library:theLib];
 }
 
 - (id)init
@@ -64,12 +54,18 @@
 
 - (id)initWithURL:(NSURL *)url driver:(PPDriver *)theLib setAsCurrentMusic:(BOOL)toSet
 {
-	return [self initWithCPath:[[url path] fileSystemRepresentation] driver:theLib setAsCurrentMusic:toSet];
+	if (self = [self initWithURL:url library:theLib.theLibrary]) {
+		self.attachedDriver = theLib;
+		if (toSet) {
+			[attachedDriver setCurrentMusic:self];
+		}
+	}
+	return nil;
 }
 
 - (id)initWithPath:(NSString *)url driver:(PPDriver *)theLib setAsCurrentMusic:(BOOL)toSet
 {
-	return [self initWithCPath:[url fileSystemRepresentation] driver:theLib setAsCurrentMusic:toSet];
+	return [self initWithURL:[NSURL fileURLWithPath:url] driver:theLib setAsCurrentMusic:toSet];
 }
 
 - (id)initWithURL:(NSURL *)url driver:(PPDriver *)theLib

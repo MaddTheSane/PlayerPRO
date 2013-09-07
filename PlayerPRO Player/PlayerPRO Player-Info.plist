@@ -501,6 +501,26 @@
 				</array>
 			</dict>
 		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.quadmation.playerpro.mad</string>
+				<string>com.apple.package</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PlayerPRO Tracker (Bundle)</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.mad-bundle</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>madbundle</string>
+				</array>
+			</dict>
+		</dict>
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>

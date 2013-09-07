@@ -52,8 +52,6 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 	}
 }
 
-static NSInteger selMusFromList = -1;
-
 @interface PPApp_AppDelegate ()
 - (void)selectCurrentlyPlayingMusic;
 - (void)selectMusicAtIndex:(NSInteger)anIdx;
@@ -79,11 +77,12 @@ static NSInteger selMusFromList = -1;
 - (NSDictionary *)trackerDict
 {
 	if (!_trackerDict) {
-		NSMutableDictionary *trackerDict = [NSMutableDictionary
-											dictionaryWithObject:@[MADNativeUTI] forKey:
+		NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithDictionary:@{
 											NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
 																			  [NSBundle mainBundle],
-																			  @"MADK Tracker", @"MADK Tracker")];
+																			  @"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
+											NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[@"com.quadmation.playerpro.mad"],
+											NSLocalizedString(@"MAD Package", @"MAD Package"):@[MADPackageUTI]}];
 		for (PPLibraryObject *obj in madLib) {
 			trackerDict[obj.menuName] = obj.UTItypes;
 		}
@@ -1345,7 +1344,11 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 - (BOOL)handleFile:(NSURL *)theURL ofType:(NSString *)theUTI
 {
 	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
-	if ([theUTI isEqualToString:@"com.quadmation.playerpro.mad"]) {
+	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
+	if ([sharedWorkspace type:theUTI conformsToType:MADPackageUTI]) {
+		// Do nothing right now
+		return NO;
+	} else if ([theUTI isEqualToString:@"com.quadmation.playerpro.mad"]) {
 		NSInteger retVal = NSRunInformationalAlertPanel(NSLocalizedString(@"Invalid Extension", @"Invalid extension"), NSLocalizedString(@"The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", @"Invalid extension description"), NSLocalizedString(@"Rename", @"rename file"), NSLocalizedString(@"Open", @"Open a file"), NSLocalizedString(@"Cancel", @"Cancel"), [theURL lastPathComponent]);
 		switch (retVal) {
 			case NSAlertDefaultReturn:

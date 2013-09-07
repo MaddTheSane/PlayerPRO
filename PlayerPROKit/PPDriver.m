@@ -32,6 +32,7 @@
 - (id)init
 {
 	NSAssert(NO, @"PPDriver cannot be inited without a library");
+	[self doesNotRecognizeSelector:_cmd];
 	return nil;
 }
 

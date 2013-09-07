@@ -240,7 +240,7 @@
 				<string>MADK</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madk</string>
