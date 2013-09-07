@@ -10,11 +10,7 @@
 #import <PlayerPROCore/PlayerPROCore.h>
 
 @interface PPLibrary : NSObject
-{
-	MADLibrary *theLibrary;
-}
 - (id)init;
 - (id)initWithPlugInPath:(NSString *)path;
 - (id)initWithPlugInURL:(NSURL *)URL;
-
 @end

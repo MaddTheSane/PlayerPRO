@@ -299,12 +299,12 @@
 		free(theMus->sample[idx + firstSample]);
 	}
 	
-	theMus->sample[idx + firstSample] = [[samples objectAtIndex:idx] createSData];
+	theMus->sample[idx + firstSample] = [samples[idx] createSData];
 }
 
 - (void)writeBackToMusic
 {
-	int i, ii;
+	NSInteger i, ii;
 	NSInteger firstSample = self.firstSample;
 	int totalSamples = self.sampleCount + firstSample;
 	int totalPossibleSamples = firstSample + MAXSAMPLE - 1;
@@ -321,7 +321,7 @@
 	}
 	
 	for (i = firstSample, ii = 0; i < totalSamples; i++, ii++) {
-		PPSampleObject *sampObj = [samples objectAtIndex:ii];
+		PPSampleObject *sampObj = samples[ii];
 		theMus->sample[i] = [sampObj createSData];
 	}
 	InstrData *newData = &theMus->fid[number];
@@ -358,7 +358,7 @@
 	if (index >= MAXSAMPLE || index < 0) {
 		return;
 	}
-	[samples replaceObjectAtIndex:index withObject:object];
+	samples[index] = object;
 	theMus->hasChanged = TRUE;
 }
 
@@ -434,7 +434,7 @@
 
 - (PPSampleObject*)childAtIndex:(NSUInteger)idx
 {
-	return [samples objectAtIndex:idx];
+	return samples[idx];
 }
 
 - (NSUInteger)countOfChildren

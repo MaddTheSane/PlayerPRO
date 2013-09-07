@@ -132,6 +132,14 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 	return iErr;
 }
 
+@interface PPPlugInObject ()
+@property (readwrite, copy) NSString *menuName;
+@property (readwrite, copy) NSString *authorString;
+@property (readwrite, retain) NSBundle *file;
+@property (readwrite) OSType type;
+@property (readwrite) UInt32 version;
+@end
+
 @implementation PPPlugInObject
 
 @synthesize type;
@@ -154,7 +162,7 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 			NSURL *bundleURL = [aBund bundleURL];
 			CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef, bundleURL));
 			
-			version = CFBundleGetVersionNumber(cfBundle);
+			self.version = CFBundleGetVersionNumber(cfBundle);
 			CFRelease(cfBundle);
 		}
 		
@@ -162,7 +170,7 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 		[tempDict addEntriesFromDictionary:[aBund localizedInfoDictionary]];
 		id DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugMenuNameKey)];
 		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-			menuName = [[NSString alloc] initWithString:DictionaryTemp];
+			self.menuName = DictionaryTemp;
 		} else {
 			RELEASEOBJ(tempDict);
 			AUTORELEASEOBJNORETURN(self);
@@ -171,17 +179,17 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 		DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugAuthorNameKey)];
 		if (DictionaryTemp) {
 			if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-				authorString = [[NSString alloc] initWithString:DictionaryTemp];
+				self.authorString = DictionaryTemp;
 			} else {
-				authorString = [NSLocalizedString(@"No Author", @"no author") copy];
+				self.authorString = NSLocalizedString(@"No Author", @"no author");
 			}
 		} else {
-			authorString = [NSLocalizedString(@"No Author", @"no author") copy];
+			self.authorString = NSLocalizedString(@"No Author", @"no author");
 		}
 		
 		RELEASEOBJ(tempDict);
 		
-		file = RETAINOBJ(aBund);
+		self.file = aBund;
 	}
 	return self;
 }
@@ -196,9 +204,9 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 #if !__has_feature(objc_arc)
 - (void)dealloc
 {
-	[authorString release];
-	[file release];
-	[menuName release];
+	self.authorString = nil;
+	self.file = nil;
+	self.menuName = nil;
 	
 	[super dealloc];
 }

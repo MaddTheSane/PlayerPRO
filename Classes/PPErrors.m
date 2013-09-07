@@ -111,6 +111,6 @@ NSError *CreateErrorFromMADErrorType(OSErr theErr)
 			break;
 	}
 	
-	return [[NSError alloc] initWithDomain:PPMADErrorDomain code:theErr userInfo:[NSDictionary dictionaryWithObjectsAndKeys:ErrorDescription, NSLocalizedDescriptionKey, errorReason, NSLocalizedFailureReasonErrorKey, recoverySuggestion, NSLocalizedRecoverySuggestionErrorKey, nil]];
+	return [[NSError alloc] initWithDomain:PPMADErrorDomain code:theErr userInfo:@{NSLocalizedDescriptionKey: ErrorDescription, NSLocalizedFailureReasonErrorKey: errorReason, NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion}];
 }
 

@@ -60,7 +60,7 @@ static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean res
 }
 
 
-Ptr ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *rate, Boolean *stereo)
+Ptr ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loopEnd, short *sampleSize, unsigned int *rate, Boolean *stereo)
 {
 	PCMWavePtr	WAVERsrc = NULL;
 	UNFILE		fRef;//, tempResRef, x;
@@ -200,14 +200,14 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 	FSpMakeFSRef(fileSpec, &tmpRef);
 	tmpURL = CFURLCreateFromFSRef(kCFAllocatorDefault, &tmpRef);
 	size_t ptrLen = 0;
-	
-	tmpPtr = ConvertWAVCFURL(tmpURL, &ptrLen, loopStart, loopEnd, sampleSize, rate, stereo);
-	
+	unsigned int tmpVal = *rate;
+	tmpPtr = ConvertWAVCFURL(tmpURL, &ptrLen, loopStart, loopEnd, sampleSize, &tmpVal, stereo);
+	*rate = tmpVal;
+	CFRelease(tmpURL);
 	//We need this to match old behavior
 	ptrReturn = NewPtr(ptrLen);
 	memcpy(ptrReturn, tmpPtr, ptrLen);
 	free(tmpPtr);
-	CFRelease(tmpURL);
 	
 	return ptrReturn;
 }

@@ -15,8 +15,8 @@
 @interface PPMusicObject : NSObject
 {
 	PPDriver *attachedDriver;
-	MADMusic *currentMusic;
 }
+@property (readonly) PPDriver *attachedDriver;
 //The following three functions must be attached to a driver before deallocating or memory will leak!
 - (id)init;
 - (id)initWithURL:(NSURL *)url library:(PPLibrary *)theLib;

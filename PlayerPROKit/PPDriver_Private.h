@@ -11,5 +11,6 @@
 @interface PPDriver ()
 
 @property (readonly) MADDriverRec *rec;
+@property (readwrite, strong) PPLibrary *theLibrary;
 
 @end

@@ -14,12 +14,10 @@
 
 @interface PPDriver : NSObject
 {
-	MADDriverRec *theRec;
-	PPLibrary *thePPLib;
 	PPMusicObject *currentMusic;
 }
 
-@property (readwrite, nonatomic, retain) PPMusicObject *currentMusic;
+@property (readwrite, nonatomic, strong) PPMusicObject *currentMusic;
 @property (readonly) PPLibrary *theLibrary;
 
 - (id)initWithLibrary:(PPLibrary *)theLib;

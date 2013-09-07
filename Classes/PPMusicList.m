@@ -397,7 +397,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 
 - (NSURL*)URLAtIndex:(NSUInteger)index
 {
-	return [[musicList objectAtIndex:index] musicUrl];
+	return [musicList[index] musicUrl];
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len
@@ -522,7 +522,7 @@ static inline NSURL *PPHomeURL()
 
 - (id)objectInMusicListAtIndex:(NSUInteger)idx
 {
-	return [musicList objectAtIndex:idx];
+	return musicList[idx];
 }
 
 - (void)insertObject:(id)anObj inMusicListAtIndex:(NSUInteger)idx
@@ -537,7 +537,7 @@ static inline NSURL *PPHomeURL()
 
 - (void)replaceObjectInMusicListAtIndex:(NSUInteger)index withObject:(id)anObject
 {
-	[musicList replaceObjectAtIndex:index withObject:anObject];
+	musicList[index] = anObject;
 }
 
 @end

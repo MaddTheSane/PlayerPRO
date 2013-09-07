@@ -32,14 +32,14 @@ int RunToneGeneratorPlug(sData *theData, PPInfoPlug *thePPInfoPlug, long *audioL
 		*audioAmp = controller.audioAmplitude;
 		*audioFreq = controller.audioFrequency;
 	}
-	[controller release];
+	controller = nil;
 	if (Audio16Ptr) {
 		free(Audio16Ptr); Audio16Ptr = NULL;
 	}
 	if (Audio8Ptr) {
 		free(Audio8Ptr); Audio8Ptr = NULL;
 	}
-	return retVal;
+	return (int)retVal;
 }
 
 @implementation PPToneGeneratorController
@@ -93,13 +93,6 @@ int RunToneGeneratorPlug(sData *theData, PPInfoPlug *thePPInfoPlug, long *audioL
 	self.toneRadios = @[silentRadio, triangleRadio, squareRadio, waveRadio];
 }
 
-- (void)dealloc
-{
-	self.toneRadios = nil;
-	
-	[super dealloc];
-}
-
 - (IBAction)okayOrCancel:(id)sender
 {
 	if ([sender tag] != 1 && !disabledData) {
@@ -121,7 +114,7 @@ int RunToneGeneratorPlug(sData *theData, PPInfoPlug *thePPInfoPlug, long *audioL
 
 - (IBAction)toggleToneType:(id)sender
 {
-	generator = [sender tag];
+	generator = (int)[sender tag];
 	for (NSButton *radio in toneRadios) {
 		[radio setIntegerValue:(generator == [radio tag]) ? NSOnState : NSOffState];
 	}

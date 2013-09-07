@@ -15,7 +15,7 @@
 #include <PlayerPROCore/RDriverInt.h>
 
 @implementation PPMusicObject
-
+@synthesize attachedDriver;
 @synthesize _currentMusic = currentMusic;
 
 - (id)initWithCPath:(const char*)path library:(PPLibrary*)theLib
@@ -24,11 +24,9 @@
 		MADLibrary *tempLib = theLib._madLib;
 		char type[5];
 		if (MADMusicIdentifyCString(tempLib, type, (char*)path) != noErr) {
-			[self release];
 			return nil;
 		}
 		if (MADLoadMusicFileCString(tempLib, &currentMusic, type, (char*)path) != noErr) {
-			[self release];
 			return nil;
 		}
 	}
@@ -48,7 +46,7 @@
 - (id)initWithCPath:(const char*)path driver:(PPDriver *)theDriv setAsCurrentMusic:(BOOL)toSet
 {
 	if (self = [self initWithCPath:path library:theDriv.theLibrary]) {
-		attachedDriver = [theDriv retain];
+		self.attachedDriver = theDriv;
 		if (toSet) {
 			[attachedDriver setCurrentMusic:self];
 		}
@@ -91,13 +89,7 @@
 
 - (void)attachToDriver:(PPDriver *)theDriv setAsCurrentMusic:(BOOL)toSet
 {
-	if (attachedDriver != theDriv)
-	{
-		if (attachedDriver) {
-			[attachedDriver release];
-		}
-		attachedDriver = [theDriv retain];
-	}
+	self.attachedDriver = theDriv;
 	if (toSet) {
 		[attachedDriver setCurrentMusic:self];
 	}
@@ -105,18 +97,9 @@
 
 - (void)dealloc
 {
-	if (!attachedDriver) {
-		if (currentMusic) {
-			NSAssert(attachedDriver || !currentMusic, @"Music released without driver!");
-		}
-	}else{
-		if (currentMusic) {
-			MADDisposeMusic(&currentMusic, attachedDriver.rec);
-		}
-		[attachedDriver release];
+	if (currentMusic) {
+		MADDisposeMusic(&currentMusic, attachedDriver ? attachedDriver.rec : NULL);
 	}
-	
-	[super dealloc];
 }
 
 @end

@@ -14,7 +14,6 @@
 #import "PPMusicObject_PPKPrivate.h"
 
 @implementation PPDriver
-
 @synthesize rec = theRec;
 @synthesize currentMusic;
 
@@ -22,9 +21,8 @@
 {
 	if (curMusic != currentMusic) {
 		if (currentMusic) {
-			[currentMusic release];
 		}
-		currentMusic = [curMusic retain];
+		currentMusic = curMusic;
 		MADAttachDriverToMusic(theRec, currentMusic._currentMusic, NULL);
 	}
 }
@@ -47,10 +45,9 @@
 - (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings
 {
 	if (self = [super init]) {
-		thePPLib = [theLib retain];
+		thePPLib = theLib;
 		if(MADCreateDriver(theSettings, theLib._madLib, &theRec) !=noErr)
 		{
-			[self release];
 			return nil;
 		}
 	}
@@ -59,24 +56,20 @@
 
 - (void)dealloc
 {
-	[currentMusic release];
 	if(theRec)
 		MADDisposeDriver(theRec);
-	[thePPLib release];
-	
-	[super dealloc];
 }
 
 - (void)loadMusicFile:(NSString *)path
 {
 	PPMusicObject *theMus = [[PPMusicObject alloc] initWithPath:path driver:self setAsCurrentMusic:YES];
-	[theMus release];
+	theMus = nil;
 }
 
 - (void)loadMusicURL:(NSURL*)url
 {
 	PPMusicObject *theMus = [[PPMusicObject alloc] initWithURL:url driver:self setAsCurrentMusic:YES];
-	[theMus release];
+	theMus = nil;
 }
 
 @end

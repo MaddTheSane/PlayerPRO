@@ -84,7 +84,7 @@ static OSErr mainWave(void					*unused,
 			Ptr				theSound;
 			long			lS, lE;
 			short			sS;
-			unsigned long	rate;
+			unsigned int	rate;
 			Boolean			stereo;
 			size_t sndLen;
 			

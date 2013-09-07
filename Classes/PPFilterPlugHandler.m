@@ -64,13 +64,13 @@
 
 - (OSErr)callDigitalPlugAtIndex:(NSInteger)idx sampleData:(sData*)theInsData startLength:(long)start endLength:(long)end stereoMode:(short)stereo
 {
-	PPFilterPlugObject *tmp = [filterPlugs objectAtIndex:idx];
+	PPFilterPlugObject *tmp = filterPlugs[idx];
 	return [tmp callPluginWithData:theInsData selectionStart:start selectionEnd:end plugInInfo:&theInfo stereoMode:stereo];
 }
 
 - (PPFilterPlugObject*)plugInAtIndex:(NSUInteger)idx
 {
-	return [filterPlugs objectAtIndex:idx];
+	return filterPlugs[idx];
 }
 
 - (NSUInteger)plugInCount

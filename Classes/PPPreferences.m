@@ -26,7 +26,6 @@
 	if (self = [super initWithWindowNibName:@"Preferences"]) {
 		self.viewControllers = @[AUTORELEASEOBJ([[SoundOutputController alloc] init]),
 					  AUTORELEASEOBJ([[PianoPreferencesController alloc] init]),
-					  AUTORELEASEOBJ([[MusicListPreferenceController alloc] init]),
 					  AUTORELEASEOBJ([[ColorPreferenceController alloc] init]),
 					  AUTORELEASEOBJ([[BoxEditorPreferenceController alloc] init]),
 					  AUTORELEASEOBJ([[DigitalEditorPreferenceControler alloc] init]),
@@ -85,7 +84,7 @@
 -(IBAction)changeViewController:(id)sender
 {
 	NSInteger i = [sender tag];
-	NSViewController *vc = [viewControllers objectAtIndex:i];
+	NSViewController *vc = viewControllers[i];
 	[self displayViewController:vc];
 }
 
@@ -97,7 +96,7 @@
 	
 	for(i = 0; i < itemCount; i++)
 	{
-		NSViewController *vc = [viewControllers objectAtIndex:i];
+		NSViewController *vc = viewControllers[i];
 		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[vc title] action:@selector(changeViewController:) keyEquivalent:@""];
 		[mi setTag:i];
 		[menu addItem:mi];
@@ -105,7 +104,7 @@
 	}
 	
 	//initially show the first controller
-	[self displayViewController:[viewControllers objectAtIndex:0]];
+	[self displayViewController:viewControllers[0]];
 	[popUp selectItemAtIndex:0];
 }
 

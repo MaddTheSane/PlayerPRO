@@ -42,8 +42,7 @@
 		}
 	}
 	returnValue = (((hours * 60 + minutes) * 60) + seconds) * 60;
-	//[obj setIntegerValue:returnValue];
-	*obj = AUTORELEASEOBJ([[NSNumber alloc] initWithInteger:returnValue]);
+	*obj = @(returnValue);
 	return YES;
 }
 

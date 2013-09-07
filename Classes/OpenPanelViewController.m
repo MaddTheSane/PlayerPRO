@@ -168,7 +168,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		NSMutableArray *mutArray = [NSMutableArray array];
 		if (td) {
 			for (NSString *key in td) {
-				NSArray *utis = [td objectForKey:key];
+				NSArray *utis = td[key];
 				OpenPanelViewItem *obj = [[OpenPanelViewItem alloc] initWithType:utiTrackerType utis:utis name:key];
 				[mutArray addObject:obj];
 				RELEASEOBJ(obj);
@@ -176,7 +176,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		}
 		if (pd) {
 			for (NSString *key in pd) {
-				NSArray *utis = [pd objectForKey:key];
+				NSArray *utis = pd[key];
 				OpenPanelViewItem *obj = [[OpenPanelViewItem alloc] initWithType:utiPlaylistType utis:utis name:key];
 				[mutArray addObject:obj];
 				RELEASEOBJ(obj);
@@ -184,7 +184,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		}
 		if (insDict) {
 			for (NSString *key in insDict) {
-				NSArray *utis = [insDict objectForKey:key];
+				NSArray *utis = insDict[key];
 				OpenPanelViewItem *obj = [[OpenPanelViewItem alloc] initWithType:utiInstrumentType utis:utis name:key];
 				[mutArray addObject:obj];
 				RELEASEOBJ(obj);
@@ -192,7 +192,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		}
 		if (adddict) {
 			for (NSString *key in adddict) {
-				NSArray *utis = [adddict objectForKey:key];
+				NSArray *utis = adddict[key];
 				OpenPanelViewItem *obj = [[OpenPanelViewItem alloc] initWithType:utiOtherType utis:utis name:key];
 				[mutArray addObject:obj];
 				RELEASEOBJ(obj);
@@ -263,8 +263,8 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	}
 	
 	for (i = 1; i < utiCount; i++) {
-		OpenPanelViewItem *obj1 = [utiObjects objectAtIndex:i - 1];
-		OpenPanelViewItem *obj2 = [utiObjects objectAtIndex:i];
+		OpenPanelViewItem *obj1 = utiObjects[i - 1];
+		OpenPanelViewItem *obj2 = utiObjects[i];
 		if (!isTwoTrackerTypesEqual(obj1.utiType, obj2.utiType)) {
 			return YES;
 		}
@@ -333,10 +333,10 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	[fileTypeSelectionMenu addItem:[NSMenuItem separatorItem]];
 	
 	for (i = 0; i < [utiObjects count]; i++) {
-		OpenPanelViewItem *curItem = [utiObjects objectAtIndex:i];
+		OpenPanelViewItem *curItem = utiObjects[i];
 		if (moreThanTwoTypes) {
 			if (i - 1 >= 0) {
-				OpenPanelViewItem *prevItem = [utiObjects objectAtIndex:i - 1];
+				OpenPanelViewItem *prevItem = utiObjects[i - 1];
 				if (!isTwoTrackerTypesEqual(curItem.utiType, prevItem.utiType)) {
 					[fileTypeSelectionMenu addItem:[NSMenuItem separatorItem]];
 				}
@@ -417,7 +417,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		default:
 		{
 			if (tag < [utiObjects count] && tag >= 0) {
-				OpenPanelViewItem *selObj = [utiObjects objectAtIndex:tag];
+				OpenPanelViewItem *selObj = utiObjects[tag];
 				[openPanel setAllowedFileTypes:selObj.utis];
 			}
 		}

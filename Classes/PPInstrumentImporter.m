@@ -77,10 +77,10 @@
 						CFRelease(tempBundleRef);
 						if (tempObj) {
 							for (y = 0; y < [instrumentIEArray count]; y++) {
-								PPInstrumentImporterObject *toComp = [instrumentIEArray objectAtIndex:y];
+								PPInstrumentImporterObject *toComp = instrumentIEArray[y];
 								if (toComp.type == tempObj.type) {
 									if (toComp.version < tempObj.version) {
-										[instrumentIEArray replaceObjectAtIndex:y withObject:tempObj];
+										instrumentIEArray[y] = tempObj;
 										RELEASEOBJ(tempObj);
 										tempObj = nil;
 										break;
@@ -111,10 +111,10 @@
 	NSInteger y;
 	if (obj) {
 		for (y = 0; y < [instrumentIEArray count]; y++) {
-			PPInstrumentImporterObject *toComp = [instrumentIEArray objectAtIndex:y];
+			PPInstrumentImporterObject *toComp = instrumentIEArray[y];
 			if (toComp.type == obj.type) {
 				if (toComp.version < obj.version) {
-					[instrumentIEArray replaceObjectAtIndex:y withObject:obj];
+					instrumentIEArray[y] = obj;
 					RELEASEOBJ(obj);
 					obj = nil;
 					break;
@@ -147,7 +147,7 @@
 
 - (PPInstrumentImporterObject*)plugInAtIndex:(NSUInteger)idx
 {
-	return [instrumentIEArray objectAtIndex:idx];
+	return instrumentIEArray[idx];
 }
 
 - (NSInteger)plugInCount

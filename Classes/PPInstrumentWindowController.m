@@ -55,12 +55,12 @@
 
 - (void)writeInstrumentAtIndexBackToMusic:(short)idx
 {
-	[[instruments objectAtIndex:idx] writeBackToMusic];
+	[instruments[idx] writeBackToMusic];
 }
 
 - (void)writeSampleAtIndex:(short)sampIdx withInstrumentAtIndexBackToMusic:(short)insIdx
 {
-	PPInstrumentObject *obj = [instruments objectAtIndex:insIdx];
+	PPInstrumentObject *obj = instruments[insIdx];
 	[obj writeSampleAtIndexBackToMusic:sampIdx];
 }
 
@@ -356,7 +356,7 @@
 	NSInteger plugCount = [importer plugInCount];
 	NSMutableDictionary *fileDict = [NSMutableDictionary dictionaryWithCapacity:plugCount];
 	for (PPInstrumentImporterObject *obj in importer) {
-		[fileDict setObject:obj.UTITypes forKey:obj.menuName];
+		fileDict[obj.menuName] = obj.UTITypes;
 	}
 	NSOpenPanel *openPanel = RETAINOBJ([NSOpenPanel openPanel]);
 	OpenPanelViewController *vc = [[OpenPanelViewController alloc] initWithOpenPanel:openPanel trackerDictionary:nil playlistDictionary:nil instrumentDictionary:fileDict additionalDictionary:nil];
@@ -420,7 +420,7 @@
 	if ([object isKindOfClass:[PPInstrumentObject class]]) {
 		ctxt = object;
 	} else if ([object isKindOfClass:[PPSampleObject class]]) {
-		ctxt = [instruments objectAtIndex:[object instrumentIndex]];
+		ctxt = instruments[[object instrumentIndex]];
 	}
 	instrumentInfo.instrument = ctxt;
 	
@@ -694,7 +694,7 @@ static void DrawCGSampleInt(long 	start,
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	if (item == nil) {
-		return [instruments objectAtIndex:index];
+		return instruments[index];
 	}
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
 		return [item childAtIndex:index];
@@ -736,7 +736,7 @@ static void DrawCGSampleInt(long 	start,
 
 - (void)replaceObjectInInstrumentsAtIndex:(NSUInteger)index withObject:(id)object
 {
-	[instruments replaceObjectAtIndex:index withObject:object];
+	instruments[index] = object;
 	(*curMusic)->hasChanged = TRUE;
 }
 

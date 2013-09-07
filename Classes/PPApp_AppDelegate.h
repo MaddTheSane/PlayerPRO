@@ -17,20 +17,9 @@
 @class PPCurrentlyPlayingIndex;
 @class PPFilterPlugHandler;
 @class PatternHandler;
+@class PPInstrumentPlugHandler;
 
-@interface PPApp_AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate, PPSoundSettingsViewControllerDelegate> {
-	IBOutlet NSPanel		*toolsPanel;
-	IBOutlet NSButton		*loopButton;
-    IBOutlet NSButton		*playButton;
-    IBOutlet NSButton		*recordButton;
-    IBOutlet NSTextField	*songLabel;
-    IBOutlet NSButton		*stopButton;
-	IBOutlet NSTextField	*songCurTime;
-	IBOutlet NSTextField	*songTotalTime;
-	IBOutlet NSSlider		*songPos;
-	IBOutlet NSButton		*pauseButton;
-	BOOL					paused;
-	
+@interface PPApp_AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate> {	
 	NSMutableArray			*plugInInfos;
 	IBOutlet NSMenu			*aboutPlugInMenu;
 	
@@ -40,40 +29,15 @@
 	IBOutlet NSMenu			*instrumentExportMenu;
 	PPInstrumentWindowController *instrumentController;
 	
-	IBOutlet  __weak NSWindow *window;
-	
-	IBOutlet NSDrawer		*infoDrawer;
-	IBOutlet NSTextField	*fileName;
-	IBOutlet NSTextField	*internalName;
-	IBOutlet NSTextField	*fileSize;
-	IBOutlet NSTextField	*musicInstrument;
-	IBOutlet NSTextField	*musicPatterns;
-	IBOutlet NSTextField	*musicPlugType;
-	IBOutlet NSTextField	*musicSignature;
-	IBOutlet NSTextField	*fileLocation;
-	
-	IBOutlet NSTableView	*tableView;
-	IBOutlet NSArrayController *musicListController;
 	NSTimer					*timeChecker;
-	MADDriverRec			*madDriver;
-	MADMusic				*music;
 	MADLibrary				*madLib;
 	
-	PPMusicList				*musicList;
-	PPCurrentlyPlayingIndex	*currentlyPlayingIndex;
-	PPCurrentlyPlayingIndex	*previouslyPlayingIndex;
 	PPPreferences			*preferences;
-	PPInstrumentImporter	*instrumentImporter;
-	PPDigitalPlugInHandler	*digitalHandler;
-	PPFilterPlugHandler		*filterHandler;
-	
-	PatternHandler			*patternHandler;
-	
-	NSString				*musicName;
-	NSString				*musicInfo;
+	PPInstrumentPlugHandler	*instrumentImporter;
+	//PPDigitalPlugInHandler	*digitalHandler;
+	//PPFilterPlugHandler		*filterHandler;
 	
 	MADDriverSettings		exportSettings;
-	IBOutlet __weak NSWindow *exportWindow;
 	IBOutlet NSBox			*exportSettingsBox;
 	PPSoundSettingsViewController *exportController;
 	
@@ -84,21 +48,8 @@
 	BOOL isQuitting;
 }
 
-@property (getter=isPaused, readwrite) BOOL paused;
-
-@property (readonly, retain) NSString *musicName;
-@property (readonly, retain) NSString *musicInfo;
-
-@property (arcweak) NSWindow *window;
-@property (arcweak) NSWindow *exportWindow;
-
-- (IBAction)showMusicList:(id)sender;
-- (IBAction)sortMusicList:(id)sender;
-- (IBAction)playSelectedMusic:(id)sender;
-- (IBAction)addMusic:(id)sender;
-- (IBAction)removeSelectedMusic:(id)sender;
-- (IBAction)clearMusicList:(id)sender;
-- (IBAction)saveMusicList:(id)sender;
+@property (weak) IBOutlet NSWindow *window;
+@property (weak) IBOutlet NSWindow *exportWindow;
 
 - (IBAction)toggleInfo:(id)sender;
 
@@ -112,10 +63,6 @@
 - (IBAction)showClassicEditor:(id)sender;
 - (IBAction)showDigitalEditor:(id)sender;
 
-- (void)soundPreferencesDidChange:(NSNotification *)notification;
-
-- (BOOL)loadMusicURL:(NSURL*)musicToLoad;
-
 - (IBAction)openFile:(id)sender;
 - (IBAction)saveMusic:(id)sender;
 - (IBAction)saveMusicAs:(id)sender;
@@ -124,17 +71,5 @@
 - (IBAction)exportMusicAs:(id)sender;
 - (IBAction)okayExportSettings:(id)sender;
 - (IBAction)cancelExportSettings:(id)sender;
-
-- (IBAction)showTools:(id)sender;
-- (IBAction)fastForwardButtonPressed:(id)sender;
-- (IBAction)loopButtonPressed:(id)sender;
-- (IBAction)nextButtonPressed:(id)sender;
-- (IBAction)playButtonPressed:(id)sender;
-- (IBAction)prevButtonPressed:(id)sender;
-- (IBAction)recordButtonPressed:(id)sender;
-- (IBAction)rewindButtonPressed:(id)sender;
-- (IBAction)sliderChanged:(id)sender;
-- (IBAction)stopButtonPressed:(id)sender;
-- (IBAction)pauseButtonPressed:(id)sender;
 
 @end

@@ -336,7 +336,7 @@ static void DrawCGSampleInt(long 	start,
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	if (item == nil) {
-		return [instruments objectAtIndex:index];
+		return instruments[index];
 	}
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
 		return [item childAtIndex:index];

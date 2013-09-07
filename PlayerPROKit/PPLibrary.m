@@ -10,7 +10,6 @@
 #import "PPLibrary_PPKPrivate.h"
 
 @implementation PPLibrary
-
 @synthesize _madLib = theLibrary;
 
 - (id)initWithPlugInCPath:(const char*)cPath
@@ -18,7 +17,6 @@
 	if (self = [super init]) {
 		if(MADInitLibrary((char*)cPath, &theLibrary) != noErr)
 		{
-			[self release];
 			return nil;
 		}
 	}
@@ -44,8 +42,6 @@
 {
 	if(theLibrary)
 		MADDisposeLibrary(theLibrary);
-	
-	[super dealloc];
 }
 
 @end

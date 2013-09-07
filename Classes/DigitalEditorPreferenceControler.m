@@ -93,22 +93,22 @@
 }
 
 - (IBAction)lineHeightClicked:(id)sender {
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[self lineHeight]] forKey:PPDELineHeightNormal];
+	[[NSUserDefaults standardUserDefaults] setBool:[self lineHeight] forKey:PPDELineHeightNormal];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
 - (IBAction)musicTraceClicked:(id)sender {
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[self musicTrace]] forKey:PPDEMusicTraceOn];
+	[[NSUserDefaults standardUserDefaults] setBool:[self musicTrace] forKey:PPDEMusicTraceOn];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
 - (IBAction)patternWrappingClicked:(id)sender {
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[self patternWrapping]] forKey:PPDEPatternWrappingPartition];
+	[[NSUserDefaults standardUserDefaults] setBool:[self patternWrapping] forKey:PPDEPatternWrappingPartition];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
 - (IBAction)dragAsClicked:(id)sender {
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[self PPDEDragAs]] forKey:PPDEDragAsPcmd];
+	[[NSUserDefaults standardUserDefaults] setBool:[self PPDEDragAs] forKey:PPDEDragAsPcmd];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 

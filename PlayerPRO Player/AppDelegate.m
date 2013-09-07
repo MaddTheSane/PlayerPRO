@@ -216,35 +216,33 @@ static NSInteger selMusFromList = -1;
 {
 	PPMusicList *tempList = [[PPMusicList alloc] init];
 	
-	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
-															 @YES, PPRememberMusicList,
-															 @NO, PPLoadMusicAtListLoad,
-															 @(PPStopPlaying), PPAfterPlayingMusic,
-															 @YES, PPGotoStartupAfterPlaying,
-															 @YES, PPSaveModList,
-															 @NO, PPLoadMusicAtMusicLoad,
-															 @NO, PPLoopMusicWhenDone,
+	[[NSUserDefaults standardUserDefaults] registerDefaults:@{PPRememberMusicList: @YES,
+															 PPLoadMusicAtListLoad: @NO,
+															 PPAfterPlayingMusic: @(PPStopPlaying),
+															 PPGotoStartupAfterPlaying: @YES,
+															 PPSaveModList: @YES,
+															 PPLoadMusicAtMusicLoad: @NO,
+															 PPLoopMusicWhenDone: @NO,
 															 
-															 @16, PPSoundOutBits,
-															 @44100, PPSoundOutRate,
-															 @(CoreAudioDriver), PPSoundDriver,
-															 @YES, PPStereoDelayToggle,
-															 @NO, PPReverbToggle,
-															 @NO, PPSurroundToggle,
-															 @NO, PPOversamplingToggle,
-															 @30, PPStereoDelayAmount,
-															 @25, PPReverbAmount,
-															 @30, PPReverbStrength,
-															 @1, PPOversamplingAmount,
+															 PPSoundOutBits: @16,
+															 PPSoundOutRate: @44100,
+															 PPSoundDriver: @(CoreAudioDriver),
+															 PPStereoDelayToggle: @YES,
+															 PPReverbToggle: @NO,
+															 PPSurroundToggle: @NO,
+															 PPOversamplingToggle: @NO,
+															 PPStereoDelayAmount: @30,
+															 PPReverbAmount: @25,
+															 PPReverbStrength: @30,
+															 PPOversamplingAmount: @1,
 															 
 															 
-															 @YES, PPMAddExtension,
-															 @YES, PPMMadCompression,
-															 @NO, PPMNoLoadMixerFromFiles,
-															 @YES, PPMOscilloscopeDrawLines,
+															 PPMAddExtension: @YES,
+															 PPMMadCompression: @YES,
+															 PPMNoLoadMixerFromFiles: @NO,
+															 PPMOscilloscopeDrawLines: @YES,
 															 															 
-															 [NSKeyedArchiver archivedDataWithRootObject:tempList], PPMMusicList,
-															 nil]];
+															 PPMMusicList: [NSKeyedArchiver archivedDataWithRootObject:tempList]}];
 }
 
 - (IBAction)showMusicList:(id)sender
@@ -1113,7 +1111,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ([keyPath isEqualToString:@"paused"]) {
-		id boolVal = [change objectForKey:NSKeyValueChangeNewKey];
+		id boolVal = change[NSKeyValueChangeNewKey];
 		
 		//[pauseButton highlight:[boolVal boolValue]];
 		switch ([boolVal boolValue]) {
@@ -1144,7 +1142,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (IBAction)showPlugInInfo:(id)sender
 {
-	PPPlugInInfo *inf = [plugInInfos objectAtIndex:[sender tag]];
+	PPPlugInInfo *inf = plugInInfos[[sender tag]];
 	if (!inf) {
 		return;
 	}
@@ -1178,7 +1176,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	[aboutPlugInMenu removeAllItems];
 	
 	for (i = 0; i < [plugInInfos count]; i++) {
-		PPPlugInInfo *pi = [plugInInfos objectAtIndex:i];
+		PPPlugInInfo *pi = plugInInfos[i];
 		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:pi.plugName action:@selector(showPlugInInfo:) keyEquivalent:@""];
 		[mi setTag:i];
 		[mi setTarget:self];
@@ -1599,8 +1597,8 @@ enum PPMusicToolbarTypes {
 			//TODO: check for valid extension.
 			NSDictionary *tracDic = self.trackerDict;
 			NSMutableArray *trackerUTIs = [NSMutableArray array];
-			for (NSString *key in self.trackerDict) {
-				[trackerUTIs addObjectsFromArray:[tracDic objectForKey:key]];
+			for (NSString *key in tracDic) {
+				[trackerUTIs addObjectsFromArray:tracDic[key]];
 			}
 
 			[trackerUTIs addObject:@"com.quadmation.playerpro.mad"];

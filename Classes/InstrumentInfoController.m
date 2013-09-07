@@ -110,7 +110,7 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-	return [[[instrument samples] objectAtIndex:row] name];
+	return [[instrument samples][row] name];
 }
 
 @end

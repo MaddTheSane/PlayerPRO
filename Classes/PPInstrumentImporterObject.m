@@ -31,16 +31,21 @@ static inline BOOL getBoolFromId(id NSType)
 	}
 }
 
-@implementation PPInstrumentImporterObject
+@interface PPInstrumentImporterObject ()
+@property (readwrite, copy) NSArray *UTITypes;
+@property (readwrite) OSType mode;
+@property (readwrite) BOOL isSamp;
+@end
 
+@implementation PPInstrumentImporterObject
 @synthesize UTITypes;
 @synthesize mode;
 @synthesize isSamp;
 
 typedef enum _MADPlugCapabilities {
 	PPMADCanDoNothing = 0,
-	PPMADCanImport = 1,
-	PPMADCanExport = 2,
+	PPMADCanImport = 1 << 0,
+	PPMADCanExport = 1 << 1,
 	PPMADCanDoBoth = PPMADCanImport | PPMADCanExport
 } MADPlugCapabilities;
 
@@ -75,9 +80,9 @@ typedef enum _MADPlugCapabilities {
 		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
 		id DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugUTITypesKey)];
 		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
-			UTITypes = [[NSArray alloc] initWithArray:DictionaryTemp];
+			self.UTITypes = DictionaryTemp;
 		} else if ([DictionaryTemp isKindOfClass:strClass]) {
-			UTITypes = RETAINOBJ(@[[NSString stringWithString:DictionaryTemp]]);
+			self.UTITypes = @[[NSString stringWithString:DictionaryTemp]];
 		} else {
 			RELEASEOBJ(tempDict);
 			AUTORELEASEOBJNORETURN(self);
@@ -86,7 +91,7 @@ typedef enum _MADPlugCapabilities {
 		
 		DictionaryTemp = [tempDict valueForKey:kMadPlugIsSampleKey];
 		if ([DictionaryTemp isKindOfClass:numClass] || [DictionaryTemp isKindOfClass:strClass]) {
-			isSamp = [DictionaryTemp boolValue];
+			self.isSamp = [DictionaryTemp boolValue];
 		} else {
 			RELEASEOBJ(tempDict);
 			AUTORELEASEOBJNORETURN(self);
@@ -121,15 +126,15 @@ typedef enum _MADPlugCapabilities {
 				
 				switch (capabilities) {
 					case PPMADCanImport:
-						mode = MADPlugImport;
+						self.mode = MADPlugImport;
 						break;
 						
 					case PPMADCanExport:
-						mode = MADPlugExport;
+						self.mode = MADPlugExport;
 						break;
 						
 					case PPMADCanDoBoth:
-						mode = MADPlugImportExport;
+						self.mode = MADPlugImportExport;
 						break;
 						
 					default:
@@ -141,9 +146,9 @@ typedef enum _MADPlugCapabilities {
 			} else {
 				DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugModeKey)];
 				if ([DictionaryTemp isKindOfClass:strClass]) {
-					mode = NSStringToOSType(DictionaryTemp);
+					self.mode = NSStringToOSType(DictionaryTemp);
 				} else if([DictionaryTemp isKindOfClass:numClass]) {
-					mode = [(NSNumber*)DictionaryTemp unsignedIntValue];
+					self.mode = [(NSNumber*)DictionaryTemp unsignedIntValue];
 				} else {
 					RELEASEOBJ(tempDict);
 					AUTORELEASEOBJNORETURN(self);
@@ -159,13 +164,16 @@ typedef enum _MADPlugCapabilities {
 
 - (void)dealloc
 {
-	RELEASEOBJ(UTITypes);
-	
 	if (xxxx) {
 		(*xxxx)->Release(xxxx);
 	}
 	
-	SUPERDEALLOC;
+#if !__has_feature(objc_arc)
+	self.UTITypes = nil;
+	
+	
+	[super dealloc];
+#endif
 }
 
 - (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insSamp function:(OSType)imporexp plugInfo:(PPInfoPlug*)plugInfo

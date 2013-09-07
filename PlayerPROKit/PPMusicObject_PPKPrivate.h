@@ -9,7 +9,6 @@
 #import "PPMusicObject.h"
 
 @interface PPMusicObject ()
-
 @property (readonly) MADMusic *_currentMusic;
-
+@property (readwrite, weak) PPDriver *attachedDriver;
 @end

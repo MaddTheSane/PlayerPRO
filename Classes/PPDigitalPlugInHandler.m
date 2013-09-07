@@ -25,13 +25,13 @@
 
 - (OSErr)callDigitalPlugIn:(NSUInteger)plugNum pcmd:(Pcmd*)myPcmd
 {
-	PPDigitalPlugInObject *tmp = [digitalPlugs objectAtIndex:plugNum];
+	PPDigitalPlugInObject *tmp = digitalPlugs[plugNum];
 	return [tmp callWithPcmd:myPcmd plugInfo:&theInfo];
 }
 
 - (PPDigitalPlugInObject*)plugInAtIndex:(NSUInteger)idx
 {
-	return [digitalPlugs objectAtIndex:idx];
+	return digitalPlugs[idx];
 }
 
 - (NSUInteger)plugInCount
