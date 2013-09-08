@@ -1,19 +1,97 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf320
-{\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf390
+{\fonttbl\f0\fnil\fcharset0 LucidaGrande;\f1\fmodern\fcharset0 CourierNewPSMT;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\viewkind0
+\deftab720
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\pardirnatural
 
-\f0\b\fs22 \cf0 PlayerPRO
-\b0 \
+\f0\b\fs22 \cf0 \expnd0\expndtw0\kerning0
+PlayerPRO
+\b0 \expnd0\expndtw0\kerning0
+\
 \
 PlayerPRO is a SoundTracker player and creator for the Mac. It should be able to play XM, IT, MOD, S3M, and other formats. \
 \
 The PlayerPROCore Framework is the main playback mechanism of PlayerPRO (Previously known as MADDriver) that allows developers to play SoundTracker audio in their applications.\
 \
 
-\b PlayerPRO 6\
+\b \expnd0\expndtw0\kerning0
+PlayerPRO 6\
 
-\b0 \
+\b0 \expnd0\expndtw0\kerning0
+\
 PlayerPRO 6 is a rewrite of the PlayerPRO to help make it work better with different operating systems, as well as update the program to use Cocoa.  Please note that this is not a stable branch and 
-\b will
-\b0  break backwards compatibility.}
+\b \expnd0\expndtw0\kerning0
+will
+\b0 \expnd0\expndtw0\kerning0
+ break backwards compatibility. The framework itself runs on 10.6.8 and later, but needs Xcode 4.2 with OS X SDK 10.7 or later to build.\
+\
+There is a new framework, PlayerPROKit, that wraps many PlayerPROCore functions and data types as methods of Objective-C classes. It is 64-bit on OS X and requires 10.7 or later.\
+\
+The application has been split into two different apps: PlayerPRO Player and PlayerPRO 6. PlayerPRO Player allows playback of tracker files, as well as having a playlist. PlayerPRO 6 allows editing of tracker files. Both require 10.7 or later. There is also a new tracker "format" that is an OS X package that will be used for iCloud syncing with an iOS version. The default tracker of PlayerPROCore is still MADK, so you will need to export the packaged tracker if you want it to play back on other OSes.\
+\
+Plug-ins now depend on the PlayerPROCore library instead of having the PlayerPRO functions looked up when loading. This was needed for the Carbon app, but will not needed for the Cocoa re-write.\
+\
+Most Carbon APIs usage has been removed. Most notably, the memory functions have been moved from Carbon's to POSIX. The Carbon File APIs have been replaced with POSIX. 
+\f1 \expnd0\expndtw0\kerning0
+iFileOpen
+\f0 \expnd0\expndtw0\kerning0
+ has been deprecated, and the replacements 
+\f1 \expnd0\expndtw0\kerning0
+iFileOpenRead
+\f0 \expnd0\expndtw0\kerning0
+ and 
+\f1 \expnd0\expndtw0\kerning0
+iFileOpenWrite
+\f0 \expnd0\expndtw0\kerning0
+ must be sent either a full path or a path relative to the current working directory: using 
+\f1 \expnd0\expndtw0\kerning0
+HSetVol
+\f0 \expnd0\expndtw0\kerning0
+ will no longer affect the directory that 
+\f1 \expnd0\expndtw0\kerning0
+iFileOpenRead
+\f0 \expnd0\expndtw0\kerning0
+ uses as its base. There are still functions to open a file using 
+\f1 \expnd0\expndtw0\kerning0
+FSSpec
+\f0 \expnd0\expndtw0\kerning0
+s, as well as using 
+\f1 \expnd0\expndtw0\kerning0
+FSRef
+\f0 \expnd0\expndtw0\kerning0
+s, but these are deprecated, with the 
+\f1 \expnd0\expndtw0\kerning0
+FSSpec
+\f0 \expnd0\expndtw0\kerning0
+ functions not working on 64-bit code. Functions that use 
+\f1 \expnd0\expndtw0\kerning0
+CFURL
+\f0 \expnd0\expndtw0\kerning0
+s are available on OS X and iOS. Sound Manager support has been removed: use the CoreAudio implementation instead. The instrument plug-ins must use 
+\f1 \expnd0\expndtw0\kerning0
+CFURL
+\f0 \expnd0\expndtw0\kerning0
+s instead of FSSpecs. OS X tracker plug-ins no longer uses the CFPlugIn code: instead, they must export a function with the C symbol 
+\f1 \expnd0\expndtw0\kerning0
+PPImpExpMain
+\f0 \expnd0\expndtw0\kerning0
+. The other plug-in architectures also use this symbol instead of 
+\f1 \expnd0\expndtw0\kerning0
+mainPLUG
+\f0 \expnd0\expndtw0\kerning0
+.\
+\
+iOS support has been added, but due to limitations in the iOS SDK, plug-ins are not supported: instead the default plug-ins are built-into the static library. \
+\
+MSVC project files are available for the Windows version of the library. They were generated with Visual Studio 2010 Pro.\
+\
+BeOS code has been recovered, but has not been tested.\
+\
+Linux support has been added, but the makefile is bare-bones and plug-ins are currently not being built.\
+\
+Refrain from accessing 
+\f1 \expnd0\expndtw0\kerning0
+MADDriverRec
+\f0 \expnd0\expndtw0\kerning0
+ directly: the size may differ from the compiled version due to differences in preprocessor macros. This is most likely to be an issue on Linux/UNIX platforms.}
