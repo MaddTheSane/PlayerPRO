@@ -343,7 +343,6 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 		return NO;
 	}
 	if ([musicList containsObject:obj]) {
-		RELEASEOBJ(obj);
 		return NO;
 	}
 	
@@ -351,7 +350,6 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:kMusicListKVO];
 	[musicList addObject:obj];
 	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:kMusicListKVO];
-	RELEASEOBJ(obj);
 	return YES;
 }
 
@@ -412,7 +410,6 @@ static inline NSURL *PPHomeURL()
 				}
 				PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullURL)];
 				[musicList addObject:obj];
-				RELEASEOBJ(obj);
 			}
 			selectedMusic = -1;
 		} else {
