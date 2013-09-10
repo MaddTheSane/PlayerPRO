@@ -187,16 +187,6 @@
 	return [NSString stringWithFormat:@"%@: size: %ld stereo: %@ Loop type: %d size: %ld volume: %d amp: %d", name, (long)self.dataSize, self.stereo ? @"Yes": @"No", self.loopType, (long)self.loopSize, self.volume, self.amplitude];
 }
 
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-	self.data = nil;
-	self.name = nil;
-	
-	[super dealloc];
-}
-#endif
-
 #pragma mark NSCoding implementation
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
@@ -220,8 +210,8 @@
 	if (self = [super init]) {
 		self.name = [aDecoder decodeObjectForKey:NAMEKEY];
 		self.data = [aDecoder decodeObjectForKey:DATAKEY];
-		theSample.loopBeg = [[aDecoder decodeObjectForKey:LOOPBEGINKEY] int32Value];
-		theSample.loopSize = [[aDecoder decodeObjectForKey:LOOPSIZEKEY] int32Value];
+		theSample.loopBeg = [[aDecoder decodeObjectForKey:LOOPBEGINKEY] intValue];
+		theSample.loopSize = [[aDecoder decodeObjectForKey:LOOPSIZEKEY] intValue];
 		theSample.vol = [[aDecoder decodeObjectForKey:VOLUMEKEY] unsignedCharValue];
 		theSample.c2spd = [[aDecoder decodeObjectForKey:C2SPDKEY] unsignedShortValue];
 		theSample.loopType = [[aDecoder decodeObjectForKey:LOOPTYPEKEY] unsignedCharValue];

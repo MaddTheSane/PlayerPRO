@@ -12,7 +12,9 @@
 @interface PPLibraryObject : NSObject
 @property (readonly, copy) NSString *menuName;
 @property (readonly, copy) NSString *authorString;
+#if !TARGET_OS_IPHONE
 @property (readonly, strong) NSBundle *plugFile;
+#endif
 @property (readonly, strong) NSString *plugType;
 @property (readonly, copy) NSArray* UTItypes;
 @property (readonly) OSType plugMode;
