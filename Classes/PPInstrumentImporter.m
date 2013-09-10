@@ -232,11 +232,6 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-#if !__has_feature(objc_arc)
-	[instrumentIEArray release];
-	
-	[super dealloc];
-#endif
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len

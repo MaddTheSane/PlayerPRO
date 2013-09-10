@@ -7,7 +7,6 @@
 //
 
 #import "PPSampleObject.h"
-#import "ARCBridge.h"
 
 #define LOOPBEGINKEY @"Loop Begin"
 #define LOOPSIZEKEY @"Loop Size"

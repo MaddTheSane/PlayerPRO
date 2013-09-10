@@ -8,7 +8,6 @@
 
 #import "PatternHandler.h"
 #import "UserDefaultKeys.h"
-#import "ARCBridge.h"
 
 static inline void SwapPcmd(Pcmd *toswap)
 {
@@ -62,7 +61,6 @@ static inline void SwapPcmd(Pcmd *toswap)
 	if (thePcmd.structSize != [pcmdData length]) {
 		err = MADIncompatibleFile;
 	}
-	RELEASEOBJ(pcmdData);
 	return err;
 }
 
@@ -82,11 +80,9 @@ static inline void SwapPcmd(Pcmd *toswap)
 	
 	thePcmd = malloc(pcmdLen);
 	if (!thePcmd) {
-		RELEASEOBJ(pcmdData);
 		return MADNeedMemory;
 	}
 	[pcmdData getBytes:thePcmd length:pcmdLen];
-	RELEASEOBJ(pcmdData);
 	SwapPcmd(thePcmd);
 	
 	if (thePcmd->structSize != pcmdLen) {

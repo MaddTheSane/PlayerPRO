@@ -72,17 +72,4 @@
 	return [plugName hash] ^ [plugType hash] ^ [authorName hash];
 }
 
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-	self.plugName = nil;
-	self.authorName = nil;
-	self.plugType = nil;
-	self.plugURL = nil;
-	
-	[super dealloc];
-}
-#endif
-
-
 @end

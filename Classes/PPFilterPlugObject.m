@@ -13,7 +13,6 @@
 
 @implementation PPFilterPlugObject
 
-
 - (BOOL)isEqual:(id)object
 {
 	if (!object) {
@@ -42,13 +41,12 @@
 {
 	if (self = [super initWithBundle:aBund]) {
 		NSURL *bundleURL = [aBund bundleURL];
-		CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef, bundleURL));
+		CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef) bundleURL);
 		
 		plugData = PPFilterLoadPlug(cfBundle);
 		CFRelease(cfBundle);
 
 		if (!plugData) {
-			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
 		type = 'PLug';
@@ -58,7 +56,7 @@
 
 - (OSErr)callPluginWithData:(sData *)theData selectionStart:(long) SelectionStart selectionEnd:(long) SelectionEnd plugInInfo:(PPInfoPlug *)thePPInfoPlug stereoMode:(short)stereoMode
 {
-	CFBundleRef tempBund = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef,[file bundleURL]));
+	CFBundleRef tempBund = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)[file bundleURL]);
 	CFBundleRefNum refNum = CFBundleOpenBundleResourceMap(tempBund);
 	
 	OSErr iErr = (*plugData)->FiltersMain(plugData, theData, SelectionStart, SelectionEnd, thePPInfoPlug, stereoMode);
@@ -73,8 +71,6 @@
 	if (plugData) {
 		(*plugData)->Release(plugData);
 	}
-	
-	SUPERDEALLOC;
 }
 
 @end

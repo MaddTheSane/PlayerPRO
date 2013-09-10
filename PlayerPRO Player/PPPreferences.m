@@ -16,7 +16,6 @@
 #import "DigitalEditorPreferenceControler.h"
 #import "ClassicEditorPreferenceController.h"
 #import "MidiHardwarePreferenceController.h"
-#import "ARCBridge.h"
 
 @implementation PPPreferences
 @synthesize viewControllers;

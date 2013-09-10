@@ -1072,7 +1072,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	[[infoCont window] center];
 	[NSApp runModalForWindow:[infoCont window]];
 	//[infoCont showWindow:sender];
-	RELEASEOBJ(infoCont);
 }
 
 - (void)updatePlugInInfoMenu
@@ -1232,24 +1231,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-	[preferences release];
-	[musicList release];
-	[timeChecker release];
-	[plugInInfos release];
-	[previouslyPlayingIndex release];
-	[currentlyPlayingIndex release];
-	self.musicName = nil;
-	self.musicInfo = nil;
-	[exportController release];
-	[instrumentController release];
-	
-	[super dealloc];
-}
-#endif
-
 - (IBAction)deleteInstrument:(id)sender
 {
     [instrumentController deleteInstrument:sender];
@@ -1400,7 +1381,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (IBAction)openFile:(id)sender {
 	
-	NSOpenPanel *panel = RETAINOBJ([NSOpenPanel openPanel]);
+	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	NSDictionary *trackerDict = self.trackerDict;
 		
 	NSMutableDictionary *samplesDict = nil;
@@ -1415,7 +1396,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:trackerDict playlistDictionary:nil instrumentDictionary:samplesDict additionalDictionary:otherDict];
 	[av setupDefaults];
-	RELEASEOBJ(samplesDict);
 	if([panel runModal] == NSFileHandlingPanelOKButton)
 	{
 		NSURL *panelURL = [panel URL];
@@ -1424,14 +1404,10 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		NSString *utiFile = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
 		if (err) {
 			NSRunAlertPanel(@"Error opening file", @"Unable to open %@: %@", nil, nil, nil, [filename lastPathComponent], [err localizedFailureReason]);
-			RELEASEOBJ(panel);
-			RELEASEOBJ(av);
 			return;
 		}
 		[self handleFile:panelURL ofType:utiFile];
 	}
-	RELEASEOBJ(panel);
-	RELEASEOBJ(av);
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename

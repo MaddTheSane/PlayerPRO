@@ -16,7 +16,6 @@
 #import "DigitalEditorPreferenceControler.h"
 #import "ClassicEditorPreferenceController.h"
 #import "MidiHardwarePreferenceController.h"
-#import "ARCBridge.h"
 
 @implementation PPPreferences
 @synthesize viewControllers;
@@ -24,26 +23,17 @@
 - (id)init 
 {
 	if (self = [super initWithWindowNibName:@"Preferences"]) {
-		self.viewControllers = @[AUTORELEASEOBJ([[SoundOutputController alloc] init]),
-					  AUTORELEASEOBJ([[PianoPreferencesController alloc] init]),
-					  AUTORELEASEOBJ([[ColorPreferenceController alloc] init]),
-					  AUTORELEASEOBJ([[BoxEditorPreferenceController alloc] init]),
-					  AUTORELEASEOBJ([[DigitalEditorPreferenceControler alloc] init]),
-					  AUTORELEASEOBJ([[ClassicEditorPreferenceController alloc] init]),
-					  AUTORELEASEOBJ([[MidiHardwarePreferenceController alloc] init]),
-					  AUTORELEASEOBJ([[MiscPreferenceController alloc] init])];
+		self.viewControllers = @[[[SoundOutputController alloc] init],
+					  [[PianoPreferencesController alloc] init],
+					  [[ColorPreferenceController alloc] init],
+					  [[BoxEditorPreferenceController alloc] init],
+					  [[DigitalEditorPreferenceControler alloc] init],
+					  [[ClassicEditorPreferenceController alloc] init],
+					  [[MidiHardwarePreferenceController alloc] init],
+					  [[MiscPreferenceController alloc] init]];
 	}
 	return self;
 }
-
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-	[viewControllers release];
-	
-	[super dealloc];
-}
-#endif
 
 - (NSString *)windowNibName 
 {
@@ -100,7 +90,6 @@
 		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[vc title] action:@selector(changeViewController:) keyEquivalent:@""];
 		[mi setTag:i];
 		[menu addItem:mi];
-		RELEASEOBJ(mi);
 	}
 	
 	//initially show the first controller

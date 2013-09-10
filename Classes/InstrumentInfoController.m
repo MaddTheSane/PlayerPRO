@@ -10,7 +10,6 @@
 #import "PPInstrumentObject.h"
 #import "PPSampleObject.h"
 #import "PPInstrumentWindowController.h"
-#import "ARCBridge.h"
 
 @interface InstrumentInfoController ()
 

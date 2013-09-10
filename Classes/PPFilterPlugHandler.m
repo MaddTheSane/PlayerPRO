@@ -9,7 +9,6 @@
 #import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
 #import "PPPlugInCommon.h"
-#import "ARCBridge.h"
 #import "UserDefaultKeys.h"
 
 @implementation PPFilterPlugHandler
@@ -40,7 +39,7 @@
 		for (NSURL *aPlugLoc in plugLocs) {
 			CFIndex		PlugNums;
 			CFArrayRef	somePlugs;
-			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, BRIDGE(CFURLRef, aPlugLoc), CFSTR("plugin"));
+			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef)aPlugLoc, CFSTR("plugin"));
 			PlugNums = CFArrayGetCount( somePlugs );
 			if (PlugNums > 0) {
 				for (x = 0; x < PlugNums; x++) {
@@ -51,7 +50,6 @@
 						CFRelease(tempBundleRef);
 						if (tempObj) {
 							[filterPlugs addObject:tempObj];
-							RELEASEOBJ(tempObj);
 						}
 					}
 				}
@@ -81,7 +79,6 @@
 - (id)init
 {
 	[self doesNotRecognizeSelector:_cmd];
-	AUTORELEASEOBJNORETURN(self);
 	return nil;
 }
 
@@ -104,7 +101,6 @@
 	PPFilterPlugObject *obj = [[PPFilterPlugObject alloc] initWithBundle:theBund];
 	if (obj) {
 		[filterPlugs addObject:obj];
-		RELEASEOBJ(obj);
 	}
 }
 
@@ -122,11 +118,7 @@
 
 - (void)dealloc
 {
-	RELEASEOBJ(filterPlugs);
-	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	SUPERDEALLOC;
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len

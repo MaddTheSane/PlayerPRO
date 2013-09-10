@@ -24,7 +24,7 @@
 	for (NSURL *aPlugLoc in plugLocs) {
 		CFIndex		PlugNums;
 		CFArrayRef	somePlugs;
-		somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, BRIDGE(CFURLRef, aPlugLoc), CFSTR("plugin"));
+		somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef)aPlugLoc, CFSTR("plugin"));
 		PlugNums = CFArrayGetCount( somePlugs );
 		if (PlugNums > 0) {
 			for (x = 0; x < PlugNums; x++) {
@@ -39,11 +39,9 @@
 							if (toComp.type == tempObj.type) {
 								if (toComp.version < tempObj.version) {
 									instrumentIEArray[y] = tempObj;
-									RELEASEOBJ(tempObj);
 									tempObj = nil;
 									break;
 								} else {
-									RELEASEOBJ(tempObj);
 									tempObj = nil;
 									break;
 								}
@@ -51,7 +49,6 @@
 						}
 						if (tempObj) {
 							[instrumentIEArray addObject:tempObj];
-							RELEASEOBJ(tempObj);
 						}
 					}
 				}
@@ -74,11 +71,9 @@ return self;
 			if (toComp.type == obj.type) {
 				if (toComp.version < obj.version) {
 					instrumentIEArray[y] = obj;
-					RELEASEOBJ(obj);
 					obj = nil;
 					break;
 				} else {
-					RELEASEOBJ(obj);
 					obj = nil;
 					break;
 				}
@@ -86,7 +81,6 @@ return self;
 		}
 		if (obj) {
 			[instrumentIEArray addObject:obj];
-			RELEASEOBJ(obj);
 		}
 		
 	}

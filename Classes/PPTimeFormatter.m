@@ -7,7 +7,6 @@
 //
 
 #import "PPTimeFormatter.h"
-#import "ARCBridge.h"
 
 @implementation PPTimeFormatter
 

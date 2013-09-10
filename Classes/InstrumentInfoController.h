@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ARCBridge.h"
 
 @class PPInstrumentObject;
 @class PPInstrumentWindowController;
@@ -15,7 +14,6 @@
 @interface InstrumentInfoController : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
 {
 	PPInstrumentObject *instrument;
-	__weak PPInstrumentWindowController *delegate;
 	IBOutlet NSView *pianoView;
 	IBOutlet NSTextField *instrumentNumber;
 	IBOutlet NSTextField *instrumentName;
@@ -34,7 +32,7 @@
 }
 
 @property (readwrite, copy, nonatomic) PPInstrumentObject *instrument;
-@property (readwrite, arcweak) PPInstrumentWindowController *delegate;
+@property (readwrite, weak) PPInstrumentWindowController *delegate;
 - (IBAction)okayButton:(id)sender;
 - (IBAction)cancelButton:(id)sender;
 - (IBAction)volumeEditButtonPressed:(id)sender;

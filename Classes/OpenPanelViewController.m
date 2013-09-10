@@ -7,7 +7,6 @@
 //
 
 #import "OpenPanelViewController.h"
-#import "ARCBridge.h"
 
 @interface OpenPanelViewController ()
 
@@ -65,7 +64,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 - (id)init
 {
 	[self doesNotRecognizeSelector:_cmd];
-	AUTORELEASEOBJNORETURN(self);
 	return nil;
 }
 
@@ -94,7 +92,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 				break;
 				
 			default:
-				AUTORELEASEOBJNORETURN(self);
 				return nil;
 				break;
 		}
@@ -103,16 +100,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	}
 	return self;
 }
-
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-	[utis release];
-	[name release];
-	
-	[super dealloc];
-}
-#endif
 
 - (NSString* )description
 {
@@ -137,7 +124,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 - (id)init
 {
 	[self doesNotRecognizeSelector:_cmd];
-	AUTORELEASEOBJNORETURN(self);
 	return nil;
 }
 
@@ -160,10 +146,9 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 {
 	if (self = [super initWithNibName:@"OpenPanelViewController" bundle:nil]) {
 		if (!panel) {
-			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
-		openPanel = RETAINOBJ(panel);
+		openPanel = panel;
 		
 		NSMutableArray *mutArray = [NSMutableArray array];
 		if (td) {
@@ -171,7 +156,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 				NSArray *utis = td[key];
 				OpenPanelViewItem *obj = [[OpenPanelViewItem alloc] initWithType:utiTrackerType utis:utis name:key];
 				[mutArray addObject:obj];
-				RELEASEOBJ(obj);
 			}
 		}
 		if (pd) {
@@ -179,7 +163,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 				NSArray *utis = pd[key];
 				OpenPanelViewItem *obj = [[OpenPanelViewItem alloc] initWithType:utiPlaylistType utis:utis name:key];
 				[mutArray addObject:obj];
-				RELEASEOBJ(obj);
 			}
 		}
 		if (insDict) {
@@ -187,7 +170,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 				NSArray *utis = insDict[key];
 				OpenPanelViewItem *obj = [[OpenPanelViewItem alloc] initWithType:utiInstrumentType utis:utis name:key];
 				[mutArray addObject:obj];
-				RELEASEOBJ(obj);
 			}
 		}
 		if (adddict) {
@@ -195,7 +177,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 				NSArray *utis = adddict[key];
 				OpenPanelViewItem *obj = [[OpenPanelViewItem alloc] initWithType:utiOtherType utis:utis name:key];
 				[mutArray addObject:obj];
-				RELEASEOBJ(obj);
 			}
 		}
 
@@ -240,8 +221,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	[openPanel setAllowsMultipleSelection:NO];
 	[openPanel setAllowedFileTypes:fileUTIs];
 	[openPanel setAccessoryView:[self view]];
-
-	RELEASEOBJ(fileUTIs);
 }
 
 /*- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -292,7 +271,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 			[mi setTag:utiTrackerType];
 			[mi setTarget:self];
 			[fileTypeSelectionMenu addItem:mi];
-			RELEASEOBJ(mi);
 			break;
 		}
 	}
@@ -303,7 +281,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 			[mi setTag:utiPlaylistType];
 			[mi setTarget:self];
 			[fileTypeSelectionMenu addItem:mi];
-			RELEASEOBJ(mi);
 			break;
 		}
 	}
@@ -313,7 +290,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 			[mi setTag:utiInstrumentType];
 			[mi setTarget:self];
 			[fileTypeSelectionMenu addItem:mi];
-			RELEASEOBJ(mi);
 			break;
 		}
 	}
@@ -324,7 +300,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 			[mi setTag:utiOtherType];
 			[mi setTarget:self];
 			[fileTypeSelectionMenu addItem:mi];
-			RELEASEOBJ(mi);
 			break;
 		}
 	}
@@ -345,7 +320,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		[mi setTag:i];
 		[mi setTarget:self];
 		[fileTypeSelectionMenu addItem:mi];
-		RELEASEOBJ(mi);
 	}
 	
 	[popUp selectItemAtIndex:0];

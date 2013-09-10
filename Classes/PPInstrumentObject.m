@@ -8,7 +8,6 @@
 
 #import "PPInstrumentObject.h"
 #import "PPSampleObject.h"
-#import "ARCBridge.h"
 
 @implementation PPInstrumentObject
 
@@ -251,7 +250,6 @@
 {
 	if (self = [super init]) {
 		if (!mus) {
-			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
 		theMus = mus;
@@ -268,10 +266,9 @@
 				sObj.sampleIndex = i % MAXSAMPLE;
 				sObj.instrumentIndex = insIdx;
 				[samples addObject:sObj];
-				RELEASEOBJ(sObj);
 			}
 		}
-		self.name = AUTORELEASEOBJ([[NSString alloc] initWithCString:tempData->name encoding:NSMacOSRomanStringEncoding]);
+		self.name = [[NSString alloc] initWithCString:tempData->name encoding:NSMacOSRomanStringEncoding];
 		theInstrument.no = number = insIdx;/*tempData->no;*/
 		//In case it's malformed, i.e. from CreateFreeMADK()
 		theInstrument.firstSample = MAXSAMPLE * insIdx; /*tempData->firstSample;*/
@@ -441,15 +438,5 @@
 {
 	return [samples count];
 }
-
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-	[samples release];
-	self.name = nil;
-	
-	[super dealloc];
-}
-#endif
 
 @end

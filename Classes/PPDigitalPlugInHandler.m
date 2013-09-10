@@ -42,7 +42,6 @@
 - (id)init
 {
 	[self doesNotRecognizeSelector:_cmd];
-	AUTORELEASEOBJNORETURN(self);
 	return nil;
 }
 
@@ -78,7 +77,7 @@
 		for (NSURL *aPlugLoc in plugLocs) {
 			CFIndex		PlugNums;
 			CFArrayRef	somePlugs;
-			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, BRIDGE(CFURLRef, aPlugLoc), CFSTR("plugin"));
+			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef) aPlugLoc, CFSTR("plugin"));
 			PlugNums = CFArrayGetCount( somePlugs );
 			if (PlugNums > 0) {
 				for (x = 0; x < PlugNums; x++) {
@@ -89,7 +88,6 @@
 						CFRelease(tempBundleRef);
 						if (tempObj) {
 							[digitalPlugs addObject:tempObj];
-							RELEASEOBJ(tempObj);
 						}
 					}
 				}
@@ -105,7 +103,6 @@
 	PPDigitalPlugInObject *obj = [[PPDigitalPlugInObject alloc] initWithBundle:theBund];
 	if (obj) {
 		[digitalPlugs addObject:obj];
-		RELEASEOBJ(obj);
 	}
 }
 
@@ -123,11 +120,7 @@
 
 - (void)dealloc
 {
-	RELEASEOBJ(digitalPlugs);
-	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	SUPERDEALLOC;
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len
