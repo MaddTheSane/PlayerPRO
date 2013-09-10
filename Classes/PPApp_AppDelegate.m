@@ -1344,7 +1344,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 - (BOOL)handleFile:(NSURL *)theURL ofType:(NSString *)theUTI
 {
 	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
-	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
 	if ([sharedWorkspace type:theUTI conformsToType:MADPackageUTI]) {
 		// Do nothing right now
 		return NO;
