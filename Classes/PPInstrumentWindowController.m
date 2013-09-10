@@ -20,7 +20,6 @@
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
 #import "PPErrors.h"
-#import "ARCBridge.h"
 #import "UserDefaultKeys.h"
 
 @interface PPInstrumentWindowController ()
@@ -71,7 +70,6 @@
 	for (i = 0; i < MAXINSTRU; i++) {
 		PPInstrumentObject *obj = [[PPInstrumentObject alloc] initWithMusic:*curMusic instrumentIndex:i];
 		[instruments addObject:obj];
-		RELEASEOBJ(obj);
 	}
 	if (instrumentView) {
 		[instrumentView reloadData];
@@ -129,7 +127,7 @@
 	if (theOSErr != noErr)
 	{
 		if (theErr) {
-			*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(theOSErr));
+			*theErr = CreateErrorFromMADErrorType(theOSErr);
 		}
 		return NO;
 	};
@@ -138,7 +136,7 @@
 	theOSErr = [importer importInstrumentOfType:plugType instrument:theIns sample:&theSamp URL:sampURL];
 	if (theOSErr != noErr) {
 		if (theErr) {
-			*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(theOSErr));
+			*theErr = CreateErrorFromMADErrorType(theOSErr);
 		}
 		return NO;
 	} else {
@@ -147,7 +145,6 @@
 		}
 		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:*curMusic instrumentIndex:theIns];
 		[self replaceObjectInInstrumentsAtIndex:theIns withObject:insObj];
-		RELEASEOBJ(insObj);
 		[instrumentView reloadData];
 		(*curMusic)->hasChanged = TRUE;
 		return YES;
@@ -165,7 +162,6 @@
 	{
 		__block InstrData *tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
 		if (!tempInstrData) {
-			RELEASEOBJ(outData);
 			return MADNeedMemory;
 		}
 		memcpy(tempInstrData, (*curMusic)->fid, sizeof(InstrData) * MAXINSTRU);
@@ -190,7 +186,6 @@
 			{
 				Ptr dataData = malloc(curData->size);
 				if (!dataData) {
-					RELEASEOBJ(outData);
 					return MADNeedMemory;
 				}
 				memcpy(dataData, curData->data, curData->size);
@@ -207,7 +202,6 @@
 		}
 	}
 	BOOL successful = [outData writeToURL:outURL atomically:YES];
-	RELEASEOBJ(outData);
 	return successful ? noErr : MADWritingErr;
 }
 
@@ -216,7 +210,7 @@
 	NSData *fileData = [NSData dataWithContentsOfURL:insURL];
 	if (!fileData) {
 		if (theErr) {
-			*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADReadingErr));
+			*theErr = CreateErrorFromMADErrorType(MADReadingErr);
 		}
 		return NO;
 	}
@@ -227,7 +221,7 @@
 		tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
 		if (tempInstrData == NULL) {
 			if (theErr) {
-				*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADIncompatibleFile));
+				*theErr = CreateErrorFromMADErrorType(MADIncompatibleFile);
 			}
 			return NO;
 		}
@@ -236,7 +230,7 @@
 		inOutCount = sizeof(InstrData) * MAXINSTRU;
 		if ([fileData length] <= inOutCount) {
 			if (theErr) {
-				*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADIncompatibleFile));
+				*theErr = CreateErrorFromMADErrorType(MADIncompatibleFile);
 			}
 			free(tempInstrData);
 			return NO;
@@ -266,7 +260,7 @@
 			if( curData == NULL)
 			{
 				if (theErr) {
-					*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADNeedMemory));
+					*theErr = CreateErrorFromMADErrorType(MADNeedMemory);
 				}
 				free(tempInstrData);
 				dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
@@ -293,7 +287,7 @@
 			if( curData->data == NULL)
 			{
 				if (theErr) {
-					*theErr = AUTORELEASEOBJ(CreateErrorFromMADErrorType(MADNeedMemory));
+					*theErr = CreateErrorFromMADErrorType(MADNeedMemory);
 				}
 				
 				free(tempInstrData);
@@ -358,7 +352,7 @@
 	for (PPInstrumentImporterObject *obj in importer) {
 		fileDict[obj.menuName] = obj.UTITypes;
 	}
-	NSOpenPanel *openPanel = RETAINOBJ([NSOpenPanel openPanel]);
+	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 	OpenPanelViewController *vc = [[OpenPanelViewController alloc] initWithOpenPanel:openPanel trackerDictionary:nil playlistDictionary:nil instrumentDictionary:fileDict additionalDictionary:nil];
 	[vc setupDefaults];
 	if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
@@ -368,9 +362,6 @@
 			[[NSAlert alertWithError:err] runModal];
 		}
 	}
-	
-	RELEASEOBJ(vc);
-	RELEASEOBJ(openPanel);
 }
 
 - (IBAction)exportInstrument:(id)sender
@@ -404,13 +395,11 @@
 
 	if (object == nil) {
 		NSBeep();
-		RELEASEOBJ(tmpCtrl);
 		return;
 	}
 	
 	[tmpCtrl setTag:[object instrumentIndex] * MAXSAMPLE + [object sampleIndex]];
 	[self playSample:tmpCtrl];
-	RELEASEOBJ(tmpCtrl);
 }
 
 - (IBAction)showInstrumentInfo:(id)sender
@@ -635,7 +624,7 @@ static void DrawCGSampleInt(long 	start,
 	NSImage *img = [[NSImage alloc] initWithCGImage:theCGimg size:[waveFormImage frame].size];
 	CGImageRelease(theCGimg);
 
-	return AUTORELEASEOBJ(img);
+	return img;
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification

@@ -8,7 +8,6 @@
 
 #import "PPPlugInInfoController.h"
 #import "PPPlugInInfo.h"
-#import "ARCBridge.h"
 
 @interface PPPlugInInfoController ()
 
@@ -20,7 +19,7 @@
 {
 	if(self = [self initWithWindowNibName:@"PPPlugInInfoController"])
 	{
-		info = RETAINOBJ(plugInfo);
+		info = plugInfo;
 	}
 	return self;
 }
@@ -51,15 +50,5 @@
 	[plugImage setSize:NSMakeSize(64, 64)];
 	[pluginImage setImage:plugImage];
 }
-
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-	[info release];
-	
-	[super dealloc];
-}
-#endif
-
 
 @end

@@ -90,11 +90,13 @@ PPEXPORT const CFStringRef kMadPlugModeKey;
 }
 #endif
 
-typedef struct
+typedef struct _PPInfoPlug
 {
 	RPlaySoundUPP RPlaySound;
 	MADDriverRec *driverRec;
 	OSType fileType;
+	CFStringRef fileUTI;
+	CFTypeRef nsWindow;
 } PPInfoPlug;
 
 #pragma mark Filters for Samples/Sounds
@@ -198,7 +200,6 @@ typedef struct _PPInstrumentPlugin {
 
 // E9E5574F-50B4-43E0-948D-8B7C80D47261
 #define kPlayerPRODigitalPlugTypeID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xE9, 0xE5, 0x57, 0x4F, 0x50, 0xB4, 0x43, 0xE0, 0x94, 0x8D, 0x8B, 0x7C, 0x80, 0xD4, 0x72, 0x61)
-
 
 // 34BA675D-3ED8-49F9-8D06-28A7436A0E4D
 #define kPlayerPRODigitalPlugInterfaceID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x34, 0xBA, 0x67, 0x5D, 0x3E, 0xD8, 0x49, 0xF9, 0x8D, 0x06, 0x28, 0xA7, 0x43, 0x6A, 0x0E, 0x4D)

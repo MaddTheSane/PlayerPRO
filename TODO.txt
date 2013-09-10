@@ -4,7 +4,6 @@ doesn't work as expected or desired.
 * COCOA PLAYERPRO NEEDS TO BE WRITTEN!
 * The VST and Visual Plug-in architectures for Mac OS X needs to be updated.
 * Hardware MIDI support needs to use CoreMIDI on OS X.
-* Maybe use OS X VSTs and Audio Unit Plugins?
 * The banner on the source files needs to be updated.
 * Linux support is currently a stub.
 * The Linux Makefile is bare-bones and the plug-ins aren't being built.

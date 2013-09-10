@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PlayerPROCore.h>
-#import "ARCBridge.h"
 
 @protocol PPSoundSettingsViewControllerDelegate <NSObject>
 @optional
@@ -29,7 +28,6 @@
 
 @interface PPSoundSettingsViewController : NSViewController
 {
-	__arcweak id<PPSoundSettingsViewControllerDelegate> delegate;
 	IBOutlet NSButton *oversampling;
 	IBOutlet NSButton *reverb;
 	IBOutlet NSButton *stereoDelay;
@@ -60,6 +58,6 @@
 - (IBAction)changeReverbPercent:(id)sender;
 - (IBAction)changeStereoDelay:(id)sender;
 
-@property (readwrite, arcweak) id<PPSoundSettingsViewControllerDelegate> delegate;
+@property (readwrite, weak) id<PPSoundSettingsViewControllerDelegate> delegate;
 
 @end

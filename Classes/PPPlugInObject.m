@@ -9,7 +9,6 @@
 #import "PPPlugInObject.h"
 #import "PPPlugInCommon.h"
 #include <PlayerPROCore/MADDriver.h>
-#import "ARCBridge.h"
 
 void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
 {
@@ -95,7 +94,6 @@ NSArray *DefaultPlugInLocations()
 		[plugLocs addObject:[NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
 		
 		immPlugLocs = [[NSArray alloc] initWithArray:plugLocs];
-		RELEASEOBJ(plugLocs);
 	}
 	
 	return immPlugLocs;
@@ -151,7 +149,6 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 - (id)init
 {
 	[self doesNotRecognizeSelector:_cmd];
-	AUTORELEASEOBJNORETURN(self);
 	return nil;
 }
 
@@ -160,7 +157,7 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 	if (self = [super init]) {
 		{
 			NSURL *bundleURL = [aBund bundleURL];
-			CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef, bundleURL));
+			CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef) bundleURL);
 			
 			self.version = CFBundleGetVersionNumber(cfBundle);
 			CFRelease(cfBundle);
@@ -168,15 +165,13 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 		
 		NSMutableDictionary *tempDict = [[aBund infoDictionary] mutableCopy];
 		[tempDict addEntriesFromDictionary:[aBund localizedInfoDictionary]];
-		id DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugMenuNameKey)];
+		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*) kMadPlugMenuNameKey];
 		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 			self.menuName = DictionaryTemp;
 		} else {
-			RELEASEOBJ(tempDict);
-			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
-		DictionaryTemp = [tempDict valueForKey:BRIDGE(NSString*, kMadPlugAuthorNameKey)];
+		DictionaryTemp = [tempDict valueForKey:(__bridge NSString*) kMadPlugAuthorNameKey];
 		if (DictionaryTemp) {
 			if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 				self.authorString = DictionaryTemp;
@@ -186,8 +181,6 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 		} else {
 			self.authorString = NSLocalizedString(@"No Author", @"no author");
 		}
-		
-		RELEASEOBJ(tempDict);
 		
 		self.file = aBund;
 	}
@@ -200,17 +193,5 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 	OSType2Ptr(type, typ);
 	return [NSString stringWithFormat:@"%@ - type \"%@\" Location: %@", menuName, [NSString stringWithCString:typ encoding:NSMacOSRomanStringEncoding], [file bundlePath]];
 }
-
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-	self.authorString = nil;
-	self.file = nil;
-	self.menuName = nil;
-	
-	[super dealloc];
-}
-#endif
-
 
 @end

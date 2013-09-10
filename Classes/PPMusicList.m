@@ -10,7 +10,6 @@
 #import "UserDefaultKeys.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <CoreServices/CoreServices.h>
-#import "ARCBridge.h"
 
 #define kMUSICLISTKEY @"Music List Key1"
 #define kMUSICLISTKEY2 @"Music List Key2"
@@ -128,7 +127,6 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 {
 	if (self = [super init]) {
 		if (!aURL) {
-			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
 		self.musicUrl = aURL;
@@ -143,7 +141,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	return RETAINOBJ(self);
+	return self;
 }
 
 @end
@@ -191,17 +189,9 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (void)loadMusicList:(NSArray *)newArray
 {
-#if __has_feature(objc_arc)
 	[self willChangeValueForKey:kMusicListKVO];
 	musicList = [newArray mutableCopy];
 	[self didChangeValueForKey:kMusicListKVO];
-#else
-	NSMutableArray *oldList = musicList;
-	[self willChangeValueForKey:kMusicListKVO];
-	musicList = [newArray mutableCopy];
-	[self didChangeValueForKey:kMusicListKVO];
-	[oldList release];
-#endif
 }
 
 - (void)clearMusicList
@@ -250,7 +240,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	Handle aHandle, locHand;
 	FSRef theRef;
 	UInt16 theNo, i;
-	CFURLGetFSRef(BRIDGE(CFURLRef, toOpen), &theRef);
+	CFURLGetFSRef((__bridge CFURLRef)toOpen, &theRef);
 	refNum = FSOpenResFile(&theRef, fsRdPerm);
 	OSErr resErr = ResError();
 	if (resErr) {
@@ -300,13 +290,12 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 		NSString *together = [@[CFaStr, CFaStr2] componentsJoinedByString:@":"];
 		CFaStr = CFaStr2 = nil;
 		
-		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, BRIDGE(CFStringRef, together), kCFURLHFSPathStyle, false));
+		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef) together, kCFURLHFSPathStyle, false));
 		together = nil;
 		BOOL validPath = [[NSFileManager defaultManager] fileExistsAtPath:[fullPath path]];
 		if (validPath) {
 			PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullPath)];
 			[newArray addObject:obj];
-			RELEASEOBJ(obj);
 		} else {
 			if (location != -1 && location == (i / 2)) {
 				location = -1;
@@ -322,7 +311,6 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	self.selectedMusic = (location >= [newArray count]) ? location : -1;
 	
 	[self loadMusicList:newArray];
-	RELEASEOBJ(newArray);
 
 	return noErr;
 }
@@ -347,15 +335,6 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	return self;
 }
 
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-	[musicList release];
-	
-	[super dealloc];
-}
-#endif
-
 - (BOOL)addMusicURL:(NSURL *)musicToLoad
 {
 	PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(musicToLoad)];
@@ -364,7 +343,6 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 		return NO;
 	}
 	if ([musicList containsObject:obj]) {
-		RELEASEOBJ(obj);
 		return NO;
 	}
 	
@@ -372,7 +350,6 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:kMusicListKVO];
 	[musicList addObject:obj];
 	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:kMusicListKVO];
-	RELEASEOBJ(obj);
 	return YES;
 }
 
@@ -402,7 +379,7 @@ static inline NSURL *PPHomeURL()
 {
 	static NSURL *homeURL;
 	if (homeURL == nil) {
-		homeURL = RETAINOBJ([NSURL fileURLWithPath:NSHomeDirectory() isDirectory:YES]);
+		homeURL = [NSURL fileURLWithPath:NSHomeDirectory() isDirectory:YES];
 	}
 	return homeURL;
 }
@@ -416,7 +393,6 @@ static inline NSURL *PPHomeURL()
 		if (!BookmarkArray) {
 			BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY];
 			if (!BookmarkArray) {
-				AUTORELEASEOBJNORETURN(self);
 				return nil;
 			}
 			musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
@@ -434,7 +410,6 @@ static inline NSURL *PPHomeURL()
 				}
 				PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullURL)];
 				[musicList addObject:obj];
-				RELEASEOBJ(obj);
 			}
 			selectedMusic = -1;
 		} else {

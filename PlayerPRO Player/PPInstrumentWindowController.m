@@ -20,7 +20,6 @@
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
 #import "PPErrors.h"
-#import "ARCBridge.h"
 #import "UserDefaultKeys.h"
 
 @interface PPInstrumentWindowController ()

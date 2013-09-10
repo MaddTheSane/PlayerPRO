@@ -7,7 +7,6 @@
 //
 
 #import "PPPatternObject.h"
-#import "ARCBridge.h"
 
 @implementation PPPatternObject
 
@@ -15,7 +14,6 @@
 {
 	if (self = [super init]) {
 		if (!mus) {
-			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
 		curMusic = mus;
@@ -24,14 +22,5 @@
 	}
 	return self;
 }
-
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-	[commands release];
-	
-	[super dealloc];
-}
-#endif
 
 @end

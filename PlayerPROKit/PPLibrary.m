@@ -12,7 +12,9 @@
 @interface PPLibraryObject ()
 @property (readwrite, copy) NSString *menuName;
 @property (readwrite, copy) NSString *authorString;
+#if !TARGET_OS_IPHONE
 @property (readwrite, strong) NSBundle *plugFile;
+#endif
 @property (readwrite, strong) NSString *plugType;
 @property (readwrite, copy) NSArray* UTItypes;
 @property (readwrite) BOOL canExport;
@@ -51,7 +53,9 @@
 			PPLibraryObject *tmp = [[PPLibraryObject alloc] init];
 			tmp.menuName = (__bridge NSString *)theLibrary->ThePlug[i].MenuName;
 			tmp.authorString = (__bridge NSString *)theLibrary->ThePlug[i].AuthorString;
+#if !TARGET_OS_IPHONE
 			tmp.plugFile = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(theLibrary->ThePlug[i].file))];
+#endif
 			tmp.plugType = [NSString stringWithCString:theLibrary->ThePlug[i].type encoding:NSMacOSRomanStringEncoding];
 			tmp.UTItypes = (__bridge NSArray *)theLibrary->ThePlug[i].UTItypes;
 			tmp.plugVersion = theLibrary->ThePlug[i].version;

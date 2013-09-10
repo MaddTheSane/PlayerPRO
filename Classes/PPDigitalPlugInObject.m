@@ -41,13 +41,12 @@
 {
 	if (self = [super initWithBundle:toInit]) {
 		NSURL *bundleURL = [toInit bundleURL];
-		CFBundleRef tempBundle = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef, bundleURL));
+		CFBundleRef tempBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef) bundleURL);
 		
 		plugCode = PPDGLoadPlug(tempBundle);
 		CFRelease(tempBundle);
 
 		if (!plugCode) {
-			AUTORELEASEOBJNORETURN(self);
 			return nil;
 		}
 		
@@ -66,7 +65,7 @@
 - (OSErr)callWithPcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug*)pi
 {
 	NSURL *tempURL = [file bundleURL];
-	CFBundleRef tempBundle = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef, tempURL));
+	CFBundleRef tempBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef) tempURL);
 	
 	CFBundleRefNum resFileNum = CFBundleOpenBundleResourceMap(tempBundle);
 	
@@ -83,8 +82,6 @@
 	if (plugCode) {
 		(*plugCode)->Release(plugCode);
 	}
-	
-	SUPERDEALLOC;
 }
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "PPFileSizeFormatter.h"
-#import "ARCBridge.h"
 
 @implementation PPFileSizeFormatter
 
@@ -83,15 +82,5 @@
 	*obj = [NSNumber numberWithInteger:fileSize];
 	return YES;
 }
-
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-	[cocoaFilesizeFormatter release];
-	
-	[super dealloc];
-}
-
-#endif
 
 @end
