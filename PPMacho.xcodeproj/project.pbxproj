@@ -338,7 +338,6 @@
 		5578C4A917D9E8B50057D11B /* MTM.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586876210BF5E4D00FCC24D /* MTM.ppimpexp */; };
 		5578C4AA17D9E8B50057D11B /* Okta.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 558687DE10BF620500FCC24D /* Okta.ppimpexp */; };
 		5578C4AB17D9E8B50057D11B /* S3M.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; };
-		5578C4AC17D9E8B50057D11B /* ULT.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; };
 		5578C4AD17D9E8B50057D11B /* UMX.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586882910BF62F500FCC24D /* UMX.ppimpexp */; };
 		5578C4AE17D9E8B50057D11B /* XM.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; };
 		5578C4AF17D9E8B50057D11B /* MIDI.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppimpexp */; };
@@ -1611,6 +1610,13 @@
 			remoteGlobalIDString = 5533410810BB5460005208D1;
 			remoteInfo = "Import-export";
 		};
+		55886F7217DEDAA200021A82 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
 		55A01A1A13BE63180049B720 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1804,7 +1810,6 @@
 				5578C4A917D9E8B50057D11B /* MTM.ppimpexp in Copy Plug-ins */,
 				5578C4AA17D9E8B50057D11B /* Okta.ppimpexp in Copy Plug-ins */,
 				5578C4AB17D9E8B50057D11B /* S3M.ppimpexp in Copy Plug-ins */,
-				5578C4AC17D9E8B50057D11B /* ULT.ppimpexp in Copy Plug-ins */,
 				5578C4AD17D9E8B50057D11B /* UMX.ppimpexp in Copy Plug-ins */,
 				5578C4AE17D9E8B50057D11B /* XM.ppimpexp in Copy Plug-ins */,
 				5578C4AF17D9E8B50057D11B /* MIDI.ppimpexp in Copy Plug-ins */,
@@ -5028,9 +5033,10 @@
 			buildRules = (
 			);
 			dependencies = (
-				5578C53917DB959B0057D11B /* PBXTargetDependency */,
-				5578C49B17D9E8730057D11B /* PBXTargetDependency */,
 				5578C49917D9E86D0057D11B /* PBXTargetDependency */,
+				5578C49B17D9E8730057D11B /* PBXTargetDependency */,
+				55886F7317DEDAA200021A82 /* PBXTargetDependency */,
+				5578C53917DB959B0057D11B /* PBXTargetDependency */,
 			);
 			name = "PlayerPRO Player";
 			productName = "PlayerPRO Player";
@@ -5761,7 +5767,6 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				88E0C3B20C2F21DD00D6C081 /* Carbon */,
 				55CBF9A511EB77760028C6BB /* Cocoa */,
 				5578C48017D9E8560057D11B /* PlayerPRO Player */,
 				5518107110C35A4500ADA9F4 /* PlayerPRO Example */,
@@ -5774,6 +5779,7 @@
 				5573A1021656FAF100A5AECA /* iOSPlayerPROCore */,
 				55C3589516C42D1800FB9FA6 /* PlayerPROCompact */,
 				5578C50517DB8F9E0057D11B /* libPlayerPROKit */,
+				88E0C3B20C2F21DD00D6C081 /* Carbon */,
 				5533410810BB5460005208D1 /* Import-export */,
 				5533411010BB547C005208D1 /* MOD */,
 				5533414510BB572C005208D1 /* 669 */,
@@ -7636,6 +7642,11 @@
 			isa = PBXTargetDependency;
 			target = 5533410810BB5460005208D1 /* Import-export */;
 			targetProxy = 55879F93164CA8B4009068D5 /* PBXContainerItemProxy */;
+		};
+		55886F7317DEDAA200021A82 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55886F7217DEDAA200021A82 /* PBXContainerItemProxy */;
 		};
 		55A01A1B13BE63180049B720 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
