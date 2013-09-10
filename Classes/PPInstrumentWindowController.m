@@ -443,16 +443,8 @@
 }
 
 - (void)dealloc
-{
-	RELEASEOBJ(importer);
-	RELEASEOBJ(instruments);
-	RELEASEOBJ(instrumentInfo);
-	RELEASEOBJ(undoManager);
-	RELEASEOBJ(filterHandler);
-	
+{	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	SUPERDEALLOC;
 }
 
 #pragma mark NSOutlineView delegates and data ref calls

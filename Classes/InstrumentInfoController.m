@@ -29,13 +29,7 @@
 
 - (void)setInstrument:(PPInstrumentObject *)ainstrument
 {
-#if __has_feature(objc_arc)
 	instrument = [ainstrument copy];
-#else
-	PPInstrumentObject *tmpObj = instrument;
-	instrument = [ainstrument copy];
-	[tmpObj release];
-#endif
 	if ([self isWindowLoaded]) {
 		[self updateInstrumentInfo];
 	}

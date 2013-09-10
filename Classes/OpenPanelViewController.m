@@ -282,7 +282,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		[mi0 setTag:utiAllType];
 		[mi0 setTarget:self];
 		[fileTypeSelectionMenu addItem:mi0];
-		RELEASEOBJ(mi0);
 		
 		[fileTypeSelectionMenu addItem:[NSMenuItem separatorItem]];
 	}
@@ -424,15 +423,5 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 			break;
 	}
 }
-
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-	[openPanel release];
-	[utiObjects release];
-	
-	[super dealloc];
-}
-#endif
 
 @end

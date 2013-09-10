@@ -14,18 +14,18 @@
 
 @interface PPInstrumentCellView : NSTableCellView
 {
-	IBOutlet __arcweak NSTextField *numField;
-	IBOutlet __arcweak NSButton *sampleButton;
-	IBOutlet NSImageView *loopImage;
-	__arcweak PPInstrumentWindowController *controller;
+	IBOutlet __weak NSTextField *numField;
+	IBOutlet __weak NSButton *sampleButton;
+	IBOutlet __weak NSImageView *loopImage;
+	__weak PPInstrumentWindowController *controller;
 	BOOL isSample;
 	BOOL isLoopingSample;
 	BOOL isBlank;
 }
 
-@property (readwrite, arcweak) NSTextField *numField;
-@property (readwrite, arcweak) NSButton *sampleButton;
-@property (readwrite, arcweak) PPInstrumentWindowController *controller;
+@property (readwrite, weak) NSTextField *numField;
+@property (readwrite, weak) NSButton *sampleButton;
+@property (readwrite, weak) PPInstrumentWindowController *controller;
 @property (readwrite, nonatomic) BOOL isSample;
 @property (readwrite, nonatomic) BOOL isLoopingSample;
 @property (readwrite, nonatomic) BOOL isBlank;
