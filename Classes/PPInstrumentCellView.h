@@ -14,7 +14,6 @@
 @interface PPInstrumentCellView : NSTableCellView
 {
 	IBOutlet NSImageView *loopImage;
-	__weak PPInstrumentWindowController *controller;
 	BOOL isSample;
 	BOOL isLoopingSample;
 	BOOL isBlank;
