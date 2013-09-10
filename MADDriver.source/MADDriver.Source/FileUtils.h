@@ -72,13 +72,6 @@ void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
 
 ////////////////////////////////////////////////////////////
 
-#ifdef NOINLINE
-void INT32( void *msg_buf);
-void INT16( void *msg_buf);
-void MOT32( void *msg_buf);
-void MOT16( void *msg_buf);
-#else
-
 static inline void MADByteSwap32(void *msg_buf)
 {
 	UInt32			temp = *((UInt32*) msg_buf);
@@ -133,7 +126,6 @@ static inline void INT16(void *msg_buf)
 #else
 #define INT32(msg_buf)
 #define INT16(msg_buf)
-#endif
 #endif
 
 #ifdef __cplusplus

@@ -1689,11 +1689,11 @@ void CalculDiffStart(void)
 
 void DragSelect( void)
 {
-Point		theCell, aPt;
-Rect		bRect;
-RgnHandle	tempRgn;
-Pcmd		*myPcmd;
-
+	Point		theCell, aPt;
+	Rect		bRect;
+	RgnHandle	tempRgn;
+	Pcmd		*myPcmd;
+	
 	
 	if( DragManagerUse)
 	{
@@ -1757,8 +1757,8 @@ void SavePcmdFile( Pcmd *myPcmd)
 	iErr = SetFPos( fRefNum, fsFromStart, 0);
 
 	inOutBytes = GetPtrSize( (Ptr) myPcmd);
+	SwapPcmd(myPcmd);
 	iErr = FSWrite( fRefNum, &inOutBytes, myPcmd);
-	
 	iErr = FSCloseFork( fRefNum);
 
 	EndPcmd:

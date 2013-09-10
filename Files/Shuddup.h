@@ -4,6 +4,7 @@
 #define MAXVST 300
 
 #include "RDriver.h"
+#include "FileUtils.h"
 #include <Carbon/Carbon.h>
 #include <QuickTime/QuickTime.h>
 
@@ -528,6 +529,18 @@ pascal OSStatus CarbonWindowEventHandler(EventHandlerCallRef myHandler, EventRef
 void RollCursor(void);
 Boolean QTTypeConversion( OSType fileType);
 Boolean CheckFileType( FSSpec theSpec, OSType theType);
+
+static inline void SwapPcmd(Pcmd *toswap)
+{
+	if (!toswap) {
+		return;
+	}
+	MOT32(&toswap->structSize);
+	MOT16(&toswap->length);
+	MOT16(&toswap->posStart);
+	MOT16(&toswap->tracks);
+	MOT16(&toswap->trackStart);
+}
 
 #endif
 
