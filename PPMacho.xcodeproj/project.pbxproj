@@ -297,6 +297,8 @@
 		5573A46E10B51CAB00FF8B50 /* ByteSwap.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A46D10B51CAB00FF8B50 /* ByteSwap.c */; };
 		5573A46F10B51CAB00FF8B50 /* ByteSwap.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A46D10B51CAB00FF8B50 /* ByteSwap.c */; };
 		5573A51C10B52EB500FF8B50 /* DrawSprocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */; };
+		5573AF0817DF8FD400B68127 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 552C716210CDC11400C0E0D4 /* README.rtf */; };
+		5573AF0917DF8FD500B68127 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 552C716210CDC11400C0E0D4 /* README.rtf */; };
 		5574BCEC169634DE00CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5574BCF01696355A00CF3C37 /* DMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341E910BB5FFA005208D1 /* DMF.ppimpexp */; };
 		5574BCF11696355A00CF3C37 /* Revert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E123010D6F3E600BB619C /* Revert.plugin */; };
@@ -2251,6 +2253,7 @@
 		5573A46D10B51CAB00FF8B50 /* ByteSwap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ByteSwap.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawSprocket.framework; path = System/Library/Frameworks/DrawSprocket.framework; sourceTree = SDKROOT; };
 		5573A59F10B542F300FF8B50 /* Proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Proto.c; path = "(Proto)/Proto.c"; sourceTree = "<group>"; };
+		5573AF0717DF8F5500B68127 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		5578C48117D9E8560057D11B /* PlayerPRO Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5578C48517D9E8560057D11B /* PlayerPRO Player-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPRO Player-Info.plist"; sourceTree = "<group>"; };
 		5578C48717D9E8560057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3717,6 +3720,7 @@
 			children = (
 				552C70C310CDAFBC00C0E0D4 /* TODO.txt */,
 				552C70C610CDB07E00C0E0D4 /* LICENSE.txt */,
+				5573AF0717DF8F5500B68127 /* README */,
 				552C716210CDC11400C0E0D4 /* README.rtf */,
 				55D1BD58120FBAC0004FD083 /* Credits.rtf */,
 			);
@@ -5993,6 +5997,7 @@
 				5578C4EC17DA96400057D11B /* WAV.icns in Resources */,
 				5578C4ED17DA96400057D11B /* XI.icns in Resources */,
 				5578C4EE17DA96400057D11B /* XM.icns in Resources */,
+				5573AF0917DF8FD500B68127 /* README.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6275,6 +6280,7 @@
 				552581FF16C6FC350016A31C /* InstrumentInfoController.xib in Resources */,
 				55D1826A16D2FD9000F63FA3 /* shiney.icns in Resources */,
 				5578C54117DBABC50057D11B /* PPDocument.xib in Resources */,
+				5573AF0817DF8FD400B68127 /* README.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11017,6 +11023,7 @@
 				55B0F5A917DF0F0600653BCD /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		55B797D510D6E6A60073E379 /* Build configuration list for PBXAggregateTarget "Digital Plugs" */ = {
 			isa = XCConfigurationList;
