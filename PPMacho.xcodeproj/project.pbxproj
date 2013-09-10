@@ -2253,7 +2253,7 @@
 		5573A46D10B51CAB00FF8B50 /* ByteSwap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ByteSwap.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawSprocket.framework; path = System/Library/Frameworks/DrawSprocket.framework; sourceTree = SDKROOT; };
 		5573A59F10B542F300FF8B50 /* Proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Proto.c; path = "(Proto)/Proto.c"; sourceTree = "<group>"; };
-		5573AF0717DF8F5500B68127 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		5573AF0717DF8F5500B68127 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; lineEnding = 0; path = README; sourceTree = "<group>"; };
 		5578C48117D9E8560057D11B /* PlayerPRO Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5578C48517D9E8560057D11B /* PlayerPRO Player-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPRO Player-Info.plist"; sourceTree = "<group>"; };
 		5578C48717D9E8560057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
