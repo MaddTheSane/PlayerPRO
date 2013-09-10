@@ -1,8 +1,7 @@
 #include "Undo.h"
-#include <Drag.h>
+#include <Carbon/Carbon.h>
 #include "PPPlug.h"
 #include "RDriverInt.h"
-#include <QDOffscreen.h>
 #include "PrivateList.h"
 #include "Shuddup.h"
 void UpdateStaffInfo();
@@ -1898,8 +1897,8 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 					
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 				
-				//	if (QDIsPortBuffered( GetDialogPort( StaffDlog)))
-				//			QDFlushPortBuffer( GetDialogPort( StaffDlog), NULL);
+					if (QDIsPortBuffered( GetDialogPort( StaffDlog)))
+							QDFlushPortBuffer( GetDialogPort( StaffDlog), NULL);
 					
 				}while( Button());
 				

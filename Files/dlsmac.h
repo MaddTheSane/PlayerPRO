@@ -25,8 +25,8 @@
 	and includes the required <MacTypes.h>
 */
 
-#include <AIFF.h>
-
+//#include <AIFF.h>
+#include <Carbon/Carbon.h>
 
 /*
 	Data Type defs for compatibility with Windows headers

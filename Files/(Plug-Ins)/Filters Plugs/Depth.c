@@ -128,7 +128,7 @@ static Boolean getParams ( long *p1, PPInfoPlug *thePPInfoPlug)
 	return theResult;
 }
 
-OSErr mainDepth( 	sData					*theData,
+static OSErr mainDepth( 	sData					*theData,
 					long					SelectionStart,
 					long					SelectionEnd,
 					PPInfoPlug				*thePPInfoPlug,
@@ -199,7 +199,7 @@ OSErr mainDepth( 	sData					*theData,
 }
 
 // D7F6D8C0-FC86-48E4-A2B8-61BB681DE071
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xD7, 0xF6, 0xD8, 0xC0, 0xFC, 0x86, 0x48, 0xE4, 0xA2, 0xB8, 0x61, 0xBB, 0x68, 0x1D, 0xE0, 0x71)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xD7, 0xF6, 0xD8, 0xC0, 0xFC, 0x86, 0x48, 0xE4, 0xA2, 0xB8, 0x61, 0xBB, 0x68, 0x1D, 0xE0, 0x71)
 
 #define PLUGMAIN mainDepth
 #define PLUGINFACTORY DepthFactory

@@ -22,7 +22,8 @@
 /********************						***********************/
 
 #include "FileUtils.h"
-#include <Script.h>
+#include <Carbon/Carbon.h>
+#include <CoreFoundation/CoreFoundation.h>
 
 extern void NSLog(CFStringRef format, ...);
 
@@ -56,18 +57,21 @@ UNFILE iFileOpen(Ptr name)
 	HGetVol( NULL, &spec.vRefNum, &spec.parID);
 	
 	MYC2PStr( name);
-	
-	pStrcpy( spec.name, (unsigned char*) name);
-
+	FSMakeFSSpec(spec.vRefNum, spec.parID, (unsigned char*)name, &spec);
 	MYP2CStr((unsigned char*)name);
 	
 	iErr = FSpMakeFSRef(&spec, &Ref);
 	if(iErr != noErr) return 0;
 	Boolean	UnusedBoolean, UnusedBoolean2;
+#if CHECKDATAFORKNAME
 	HFSUniStr255 whythis;
 	FSGetDataForkName(&whythis);
 	FSResolveAliasFile(&Ref, TRUE, &UnusedBoolean, &UnusedBoolean2);
 	iErr = FSOpenFork(&Ref, whythis.length, whythis.unicode, fsCurPerm, &temp);
+#else
+	FSResolveAliasFile(&Ref, TRUE, &UnusedBoolean, &UnusedBoolean2);
+	iErr = FSOpenFork(&Ref, 0, 0, fsCurPerm, &temp);
+#endif
 	if(iErr != noErr) return 0;
 	else return temp;
 }
@@ -93,51 +97,39 @@ OSErr iSeekCur(long size, UNFILE iFileRefI)
 
 void iFileCreate(Ptr name, OSType type)
 {
-/*
-	char			*folderPath, *FileName;
-	Boolean			isFolder, unusedBool;
-	OSStatus		iErr; 
-	FSRef			Ref;
-	int				slashCharPos = 0, nameLen, i, ii;
+	FSRef	ref;
 	FSCatalogInfo	fileCat;
 	FileInfo		*fInfo = (FileInfo*)&fileCat.finderInfo;
-	if(FSPathMakeRef((UInt8*)name, &Ref, NULL) == noErr)
-	{
-		FSDeleteObject(&Ref);
-	}
-	nameLen = strlen(name);
-	for(i = 0; i > (nameLen); i++)
-	{
-		if(name[i] == '/') slashCharPos = i;
-	}
-	//TODO: use a better function
-	folderPath = calloc((slashCharPos + 2), sizeof(char)); 
-	FileName = calloc((nameLen - slashCharPos + 2), sizeof(char));
-	for(i = 0; i == slashCharPos;i++)
-	{
-		folderPath[i] = name[i];
-	}
-	for(i=slashCharPos+1, ii=0;i == nameLen;i++, ii++)
-	{
-		FileName[ii] = name[i];
-		FileName[ii+1] = '\0';
-	}
-	//	folderPath[slashCharPos+1] = '\0';
-	iErr = FSPathMakeRef((UInt8*)folderPath, &Ref, &isFolder);
-	if(iErr != noErr) MyDebugStr(__LINE__, __FILE__, "Error creating FSRef");
-	if(isFolder == FALSE) NSLog(CFSTR("FSRef wasn't a folder. Ignoring, hoping it is an alias."));
-	iErr= FSResolveAliasFile(&Ref, TRUE, &isFolder, &unusedBool);
-	if(iErr != noErr) MyDebugStr(__LINE__, __FILE__, "Error resolving Alias");
-	if(isFolder == FALSE) MyDebugStr(__LINE__, __FILE__, "FSRef wasn't a folder!");
+	memset(&fileCat, 0, sizeof(fileCat));
 	
-	//TODO: do NOT use CFString!
-	CFStringRef		UniCFSTR = CFStringCreateWithCString(kCFAllocatorDefault, FileName, CFStringGetSystemEncoding());
-	CFIndex			UNIcharLen = CFStringGetLength(UniCFSTR);
-	UniChar*		UNICHARThing = calloc(UNIcharLen, sizeof(UniChar));
+	MYC2PStr( name);
+	{
+		FSSpec	spec;
+		HGetVol( NULL, &spec.vRefNum, &spec.parID);
+		Str31 blankName = {0};
+		
+		FSMakeFSSpec(spec.vRefNum, spec.parID, (unsigned char*)name, &spec);
+		if (FSpMakeFSRef(&spec, &ref) == noErr)
+		{
+			FSDeleteObject(&ref);
+		}
+		FSMakeFSSpec(spec.vRefNum, spec.parID, blankName, &spec);
+		FSpMakeFSRef(&spec, &ref);
+	}
+	CFStringRef fileName = CFStringCreateWithPascalString(kCFAllocatorDefault, (unsigned char*)name, kCFStringEncodingMacRoman);
+	if (!fileName)
+	{
+		fileName = CFStringCreateWithPascalString(kCFAllocatorDefault, (unsigned char*)name, CFStringGetSystemEncoding());
+	}
+	
+	long uniLen = CFStringGetLength(fileName);
+	
+	UniChar*		UNICHARThing = calloc(uniLen, sizeof(UniChar));
 	CFRange			UNIRange;
 	UNIRange.location	= 0;
-	UNIRange.length		= UNIcharLen;
-	CFStringGetCharacters(UniCFSTR, UNIRange, UNICHARThing);
+	UNIRange.length		= uniLen;
+	CFStringGetCharacters(fileName, UNIRange, UNICHARThing);
+	CFRelease(fileName);
 	
 	fInfo->fileType		 = type;
 	fInfo->fileCreator	 = 'SNPL';
@@ -146,26 +138,10 @@ void iFileCreate(Ptr name, OSType type)
 	fInfo->location.v	 = 0;
 	fInfo->reservedField = 0;
 	
-	FSCreateFileUnicode(&Ref, UNIcharLen, UNICHARThing, kFSCatInfoFinderInfo, &fileCat, NULL, NULL);
-	
-	CFRelease(UniCFSTR);
-	free(folderPath);
-	free(FileName);
+	FSCreateFileUnicode(&ref, uniLen, UNICHARThing, kFSCatInfoFinderInfo, &fileCat, NULL, NULL);
 	free(UNICHARThing);
- */
-	FSSpec	spec;
-	
-	HGetVol( NULL, &spec.vRefNum, &spec.parID);
-	
-	MYC2PStr( name);
-	
-	pStrcpy( spec.name, (unsigned char*) name);
-	
-	FSpDelete( &spec);
-	FSpCreate( &spec, 'SNPL', type, smSystemScript);
 	
 	MYP2CStr( (unsigned char*) name);
-	
 }
 
 OSErr iWrite(long size, Ptr dest, UNFILE iFileRefI)
@@ -208,9 +184,7 @@ int MADstrcmp( const char *dst, const char* src)
 
 EXP void OSType2Ptr( OSType type, Ptr str)
 {
-#ifdef __LITTLE_ENDIAN__
 	MOT32(&type);
-#endif
 	
 	BlockMoveData( &type, str, 4);
 	str[ 4] = 0;
@@ -225,9 +199,7 @@ EXP OSType Ptr2OSType( char* str)
 	if( i > 4) i = 4;
 	type = '    ';
 	BlockMoveData( str, &type, i);
-#ifdef __LITTLE_ENDIAN__
 	MOT32(&type);
-#endif
 	
 	return type;
 }

@@ -2,9 +2,9 @@
 /*  IMPORT	*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Sound.h>
+#include <Carbon/Carbon.h>
 #include "WAV.h"
-#include <Movies.h>
+#include <QuickTime/QuickTime.h>
 
 #define WAVE_FORMAT_PCM		1
 #define kmaxVolume			7

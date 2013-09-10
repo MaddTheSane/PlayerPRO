@@ -33,9 +33,7 @@ typedef long LPDIRECTDRAWPALETTE;
 
 
 #if EG_MAC
-#include <QuickDraw.h>
-#include <QDOffscreen.h>
-#include <LowMem.h>
+#include <Carbon/Carbon.h>
 
 typedef ColorSpec PixPalEntry;
 
@@ -44,7 +42,7 @@ typedef ColorSpec PixPalEntry;
 #undef USE_DRAW_SPROCKETS
 #include "RequestVideo.h"
 #elif USE_DRAW_SPROCKETS
-#include <DrawSprocket.h>
+#include <DrawSprocket/DrawSprocket.h>
 #else
 	typedef long DSpContextReference;
 	struct DSpContextAttributes	{ };

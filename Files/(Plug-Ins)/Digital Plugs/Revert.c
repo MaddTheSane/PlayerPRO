@@ -7,7 +7,7 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
-Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
+static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 {
 	if( row < 0) row = 0;
 	else if( row >= myPcmd->length) row = myPcmd->length -1;
@@ -18,10 +18,10 @@ Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
 
-OSErr mainRevert( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+static OSErr mainRevert( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
-	short				itemHit, mode, track, row;
-	Str255				tStr;
+	short				/*itemHit, mode,*/ track, row;
+//	Str255				tStr;
 	Pcmd				*srcCmd;
 	long				memSize;
 		
@@ -65,7 +65,7 @@ OSErr mainRevert( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	return noErr;
 }
 
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x33, 0x7A, 0xC1, 0x07, 0x22, 0xD8, 0x44, 0x1F, 0x86, 0x39, 0xE2, 0xEE, 0xE8, 0xE3, 0x45, 0x92)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x33, 0x7A, 0xC1, 0x07, 0x22, 0xD8, 0x44, 0x1F, 0x86, 0x39, 0xE2, 0xEE, 0xE8, 0xE3, 0x45, 0x92)
 //337AC107-22D8-441F-8639-E2EEE8E34592
 #define PLUGINFACTORY RevertFactory //The factory name as defined in the Info.plist file
 #define PLUGMAIN mainRevert //The old main function, renamed please

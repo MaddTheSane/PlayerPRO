@@ -4,9 +4,7 @@
 /*	1996 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <AIFF.h>
-#include <Sound.h>
-#include <SoundInput.h>
+#include <Carbon/Carbon.h>
 
 /*Ptr		 AIFFtoSnd(	Ptr				sound,
 					long			*loopStart,

@@ -2,11 +2,8 @@
 /*	1999 by ANR		*/
 
 #include "PPPlug.h"
-#include <AIFF.h>
-#include <SoundInput.h>
-#include <QuicktimeComponents.h>
-#include <Sound.h>
-#include <Movies.h>
+#include <Carbon/Carbon.h>
+#include <QuickTime/QuickTime.h>
 
 OSErr main(		OSType					order,						// Order to execute
 				InstrData				*InsHeader,					// Ptr on instrument header

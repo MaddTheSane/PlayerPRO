@@ -2,8 +2,7 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Sound.h>
-#include <Finder.h>
+#include <Carbon/Carbon.h>
 #include <QuickTime/QuickTime.h>
 
 extern	DialogPtr		MODListDlog;
@@ -30,9 +29,9 @@ void OtherIntErreur( short ID, OSErr theErr, Str255 otherstr);
 OSErr ConvertMovieToMPEG4(FSSpec *inputFile, FSSpec *outputFile);
 Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, OSType type, FSSpec *dstFile);
 
-static	long	gCompressionID = 0;
-extern MenuHandle				thePatternMenu;
-extern DialogPtr					EditorDlog;
+static long				gCompressionID = 0;
+extern MenuHandle		thePatternMenu;
+extern DialogPtr		EditorDlog;
 
 /*long OpenHeaderMOD( Ptr outPtr, Str255 name, long bytesToRead)
 {
@@ -343,7 +342,7 @@ void InitSoundQualityExport( 	DialogPtr				aDialog,
 	NumToString( drive->ReverbSize, str);		pStrcat( str, "\p ms");	SetDText( aDialog, 28, str);
 	NumToString( drive->ReverbStrength, str);	pStrcat( str, "\p %");	SetDText( aDialog, 18, str);
 	
-#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
+#if defined(HAS_LONG_LONG) && defined (HAS_LONG_DOUBLE)
 	// OverSampling
 	if( drive->oversampling > 1)
 	{
@@ -589,7 +588,7 @@ Boolean SoundQualityExport( 	Boolean OnlyCurrent,
 				InitSoundQualityExport( aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver, OnlyCurrent);
 				break;
 				
-#if defined(powerc) || defined (__powerc) || defined(__APPLE__)
+#if defined(HAS_LONG_LONG) && defined (HAS_LONG_DOUBLE)
 			case 23:
 				if( driver->oversampling > 1) driver->oversampling = 1;
 				else driver->oversampling = 4;

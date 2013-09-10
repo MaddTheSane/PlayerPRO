@@ -21,7 +21,7 @@
 //
 /********************						***********************/
 
-#pragma options align=mac68k
+#pragma pack(push, 2)
 
 struct	MTMTrack
 {
@@ -60,4 +60,4 @@ struct MTMDef
 };
 typedef struct MTMDef MTMDef;
 
-#pragma options align=reset
+#pragma pack(pop)

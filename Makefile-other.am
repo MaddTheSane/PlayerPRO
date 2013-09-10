@@ -1,0 +1,12 @@
+AUTOMAKE_OPTIONS = 1.7.2 foreign
+
+# Additional files to distribute
+EXTRA_DIST = autogen.sh README.rtf LICENSE.txt AUTHORS COPYING NEWS ChangeLog
+SUBDIRS = MADDriver.source
+
+PACKAGE_NAME = @PACKAGE_NAME@
+PACKAGE_VERSION = @PACKAGE_VERSION@
+
+ACLOCAL_AMFLAGS = `-I m4'
+
+# Directories containing Makefiles to 'make'

@@ -1,7 +1,4 @@
-#include <Menus.r>
-#include <Dialogs.r>
-#include <Controls.r>
-#include <ControlDefinitions.r>
+#include <Carbon/Carbon.r>
 
 
 resource 'dftb' (317, purgeable)

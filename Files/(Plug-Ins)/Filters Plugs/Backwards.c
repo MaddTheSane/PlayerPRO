@@ -9,8 +9,9 @@
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
+#include <Carbon/Carbon.h>
 
-OSErr mainBackwards(	sData					*theData,
+static OSErr mainBackwards(	sData					*theData,
 						long					SelectionStart,
 						long					SelectionEnd,
 						PPInfoPlug				*thePPInfoPlug,
@@ -72,7 +73,7 @@ OSErr mainBackwards(	sData					*theData,
 	return noErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xAF, 0x64, 0x04, 0x51, 0x90, 0xE8, 0x45, 0x11, 0x83, 0x7B, 0x58, 0xA8, 0xF3, 0x50, 0x24, 0xF0))
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xAF, 0x64, 0x04, 0x51, 0x90, 0xE8, 0x45, 0x11, 0x83, 0x7B, 0x58, 0xA8, 0xF3, 0x50, 0x24, 0xF0))
 //AF640451-90E8-4511-837B-58A8F35024F0
 
 #define PLUGMAIN mainBackwards

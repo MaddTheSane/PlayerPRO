@@ -78,19 +78,19 @@ static void MED_Cleanup(void)
 static void EffectCvt( UBYTE eff, UBYTE dat, Cmd *aCmd)
 {
 	switch(eff){
-
-		// 0x0 0x1 0x2 0x3 0x4      // PT effects
-
+			
+			// 0x0 0x1 0x2 0x3 0x4      // PT effects
+			
 		case 0x5:       // PT vibrato with speed/depth nibbles swapped
 			aCmd->cmd = 4;
 			aCmd->arg = (dat>>4) | ((dat&0xf)<<4);
 			break;
-
+			
 		case 0x6:       // not used
 		case 0x7:       // not used
 		case 0x8:       // midi hold/decay
 			break;
-
+			
 		case 0x9:
 			if(dat<=0x20)
 			{
@@ -98,21 +98,21 @@ static void EffectCvt( UBYTE eff, UBYTE dat, Cmd *aCmd)
 				aCmd->arg = dat;
 			}
 			break;
-
-		// 0xa 0xb 0xc all PT effects
-
+			
+			// 0xa 0xb 0xc all PT effects
+			
 		case 0xd:       // same as PT volslide
 			aCmd->cmd = 0xa;
 			aCmd->arg = dat;
 			break;
-
+			
 		case 0xe:       // synth jmp - midi
 			break;
-
+			
 		case 0xf:
-
+			
 			// F00 does patternbreak with med
-
+			
 			if(dat==0)
 			{
 				aCmd->cmd = 0xd;
@@ -134,7 +134,7 @@ static void EffectCvt( UBYTE eff, UBYTE dat, Cmd *aCmd)
 				aCmd->note = 0xFE;
 			}
 			break;
-
+			
 		default:        // all normal PT effects are handled here :)
 			aCmd->cmd = eff;
 			aCmd->arg = dat;
@@ -148,34 +148,34 @@ static void MED_Convert1( short col, short patID, MADMusic *theMAD)
 	UBYTE a,b,c,d,inst,note,eff,dat;
 	MMD1NOTE *n;
 	Cmd	*aCmd;
-
+	
 	for(t=0;t<theMAD->partition[ patID]->header.size;t++){
-
+		
 		n= &d1note(t,col);
-
+		
 		a = n->a;
 		b = n->b;
 		c = n->c;
 		d = n->d;
-
+		
 		note=a&0x7f;
 		inst=b&0x3f;
 		eff=c&0xf;
 		dat=d;
-
+		
 		aCmd = GetMADCommand( t, col, theMAD->partition[ patID]);
-
+		
 		aCmd->ins 	= inst;
 		if(note != 0)
 		{
 			aCmd->note = note+35;
 		}
 		else aCmd->note = 0xFF;
-
+		
 		aCmd->cmd 	= 0;
 		aCmd->arg 	= 0;
 		aCmd->vol	= 0xFF;
-
+		
 		EffectCvt( eff, dat, aCmd);
 	}
 }
@@ -185,10 +185,10 @@ static void MED_Convert1( short col, short patID, MADMusic *theMAD)
 static void MED_Convert0( short patID, MADMusic *theMAD)
 {
 	int 		t, zz;
-	UBYTE 		a,b,c,inst,note,eff,dat, temp;
+	UBYTE 		a,b,c,inst,note,eff,dat/*, temp*/;
 	MMD0NOTE 	*n;
 	Cmd			*aCmd;
-
+	
 	for( t = 0 ; t < theMAD->partition[ patID]->header.size; t++)
 	{
 		for( zz = 0 ; zz < theMAD->header->numChn; zz++)
@@ -235,7 +235,7 @@ static OSErr LoadMMD0Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 	long		x;
 	
 	// first, scan patterns to see how many channels are used
-
+	
 	for( t = 0; t < theMAD->header->numPat; t++)
 	{
 		theMEDRead = theMED + ba[ t];
@@ -250,8 +250,8 @@ static OSErr LoadMMD0Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 	if( mmd0pat == NULL) Debugger();
 	
 	/* second read: no more mr. nice guy,
-	   really read and convert patterns */
-
+	 really read and convert patterns */
+	
 	for( t = 0 ; t < theMAD->header->numPat; t++)
 	{
 		theMEDRead = theMED + ba[ t];
@@ -269,7 +269,7 @@ static OSErr LoadMMD0Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 		for( x = 0; x < 20; x++) theMAD->partition[ t]->header.name[ x] = 0;
 		
 		theMAD->partition[ t]->header.patBytes = 0;		theMAD->partition[ t]->header.unused2 = 0;
-	
+		
 		//memset( mmd0pat, 0, of.numchn * maxlines * sizeof(MMD0NOTE));
 		
 		for( x = 0; x < theMAD->header->numChn * maxlines * sizeof(MMD0NOTE); x++)
@@ -296,9 +296,9 @@ static OSErr LoadMMD1Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 	int t,row,col;
 	UWORD numtracks,numlines,maxlines=0,track=0;
 	long	x;
-
+	
 	// first, scan patterns to see how many channels are used
-
+	
 	for( t = 0 ; t < theMAD->header->numPat; t++)
 	{
 		theMEDRead = theMED + ba[ t];
@@ -307,7 +307,7 @@ static OSErr LoadMMD1Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 		
 		if( numtracks > theMAD->header->numChn) theMAD->header->numChn = numtracks;
 		if( numlines  > maxlines) maxlines = numlines;
-
+		
 		if( numlines > 999)
 		{
 			DebugStr("\pCan't load patterns > 999 rows");
@@ -319,10 +319,10 @@ static OSErr LoadMMD1Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 	if( mmd1pat == NULL) Debugger();
 	
 	/* second read: no more mr. nice guy,
-	   really read and convert patterns */
-
+	 really read and convert patterns */
+	
 	for(t=0;t<theMAD->header->numPat;t++){
-
+		
 		theMEDRead = theMED + ba[ t];
 		READMEDFILE( &numtracks, sizeof( short));
 		READMEDFILE( &numlines, sizeof( short));
@@ -340,26 +340,26 @@ static OSErr LoadMMD1Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 		for( x = 0; x < 20; x++) theMAD->partition[ t]->header.name[ x] = 0;
 		
 		theMAD->partition[ t]->header.patBytes = 0;		theMAD->partition[ t]->header.unused2 = 0;
-
-
-
+		
+		
+		
 		for( x = 0; x < theMAD->header->numChn * maxlines * sizeof(MMD0NOTE); x++)
 		{
 			((Ptr) mmd1pat)[ x] = 0;
 		}
-
+		
 		for( row = 0 ; row < numlines ; row++)
 		{
 			READMEDFILE( &d1note( row, 0), sizeof(MMD1NOTE) * numtracks);
 		}
-
+		
 		for(col=0;col< theMAD->header->numChn;col++)
 		{
 			MED_Convert1( col, t, theMAD);
 			track++;
 		}
 	}
-
+	
 	return noErr;
 }
 
@@ -369,33 +369,36 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	ULONG 		sa[64];
 	InstrHdr 	s;
 	long		inOutCount;
-
+	
 	theMEDRead = theMED;
-
+	
 	/*********************/
 	/** READ MED HEADER **/
 	/*********************/
 	
 	READMEDFILE( mh, sizeof(MMD0));
-
+	
 	/**************************/
 	/** READ MMD0song struct **/
 	/**************************/
 	
 	theMEDRead = theMED + mh->MMD0songP;
+	if (MEDSize < (sizeof(MMD0) + mh->MMD0songP)) {
+		return MADIncompatibleFile;
+	}
 	READMEDFILE( ms, sizeof(MMD0song));
-
+	
 	/***************************/
 	/** READ SamplePtr struct **/
 	/***************************/
 	
 	theMEDRead = theMED + mh->InstrHdrPP;
 	READMEDFILE( sa, sizeof(ULONG)*ms->numsamples);
-
+	
 	/***************************/
 	/**    BLOCK PTR ARRAY    **/
 	/***************************/
-
+	
 	ba = (ULONG*) MADPlugNewPtrClear( ms->numblocks * sizeof(ULONG), init);
 	if( ba == NULL) return MADNeedMemory;
 	
@@ -415,7 +418,7 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	
 	theMAD->header->MAD = 'MADK';
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MED Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MED Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->speed			= 	ms->tempo2;
 	theMAD->header->tempo			=	((long)ms->deftempo * 125L) / 33L;
@@ -432,26 +435,26 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 		if( theMAD->header->oPointers[ i] >= theMAD->header->numPat)
 			theMAD->header->oPointers[ i] = theMAD->header->numPat-1;
 	}
-
+	
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-
-for( i = 0; i < MAXTRACK; i++)
-{
-	if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-	else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
 	
-	theMAD->header->chanVol[ i] = MAX_VOLUME;
-}
-
+	for( i = 0; i < MAXTRACK; i++)
+	{
+		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
+		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		
+		theMAD->header->chanVol[ i] = MAX_VOLUME;
+	}
+	
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
-
+	
 	/***************************/
 	/**      SAMPLES INS      **/
 	/***************************/
-
+	
 	theMAD->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
 	if( !theMAD->fid) return MADNeedMemory;
 	
@@ -506,11 +509,11 @@ for( i = 0; i < MAXTRACK; i++)
 	{
 		case 'MMD0':
 			if( LoadMMD0Patterns( theMAD, theMED, init) != noErr) return MADUnknowErr;
-		break;
-		
+			break;
+			
 		case 'MMD1':
 			if( LoadMMD1Patterns( theMAD, theMED, init) != noErr) return MADUnknowErr;
-		break;
+			break;
 	}
 	
 	return noErr;
@@ -551,7 +554,8 @@ static OSErr ExtractMEDInfo( PPInfoRec *info, Ptr theMED)
 
 	info->signature = mh->id;
 	
-	strcpy( info->internalFileName, "");
+	//strcpy( info->internalFileName, "");
+	info->internalFileName[0] = '\0';
 	
 	info->totalPatterns = ms->numblocks;
 	info->partitionLength = ms->songlen;
@@ -563,13 +567,12 @@ static OSErr ExtractMEDInfo( PPInfoRec *info, Ptr theMED)
 	return noErr;
 }
 
-OSErr mainMED( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+static OSErr mainMED( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
-	short	vRefNum;
 	UNFILE	iFileRefI;
-	long	dirID, sndSize;
+	long	sndSize;
 		
 	MED_Init( init);
 
@@ -659,9 +662,16 @@ OSErr mainMED( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x2C, 0x23, 0xFD, 0xF2, 0x61, 0xBD, 0x47, 0xB4, 0x83, 0x80, 0x78, 0x4A, 0xC4, 0xA1, 0xE5, 0x0D))
+#ifdef _MAC_H
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x2C, 0x23, 0xFD, 0xF2, 0x61, 0xBD, 0x47, 0xB4, 0x83, 0x80, 0x78, 0x4A, 0xC4, 0xA1, 0xE5, 0x0D))
 //2C23FDF2-61BD-47B4-8380-784AC4A1E50D
 
 #define PLUGMAIN mainMED
 #define PLUGINFACTORY MEDFactory
 #include "CFPlugin-bridge.c"
+#else
+OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+{
+	return mainMED(order, AlienFileName, MadFile, info, init);
+}
+#endif

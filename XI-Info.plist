@@ -6,6 +6,8 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -34,8 +36,6 @@
 	<array>
 		<string>net.sourceforge.playerpro.xi</string>
 	</array>
-	<key>CSResourcesFileMapped</key>
-	<string>yes</string>
 	<key>MADPlugMode</key>
 	<string>EXIM</string>
 	<key>MADPlugMenuName</key>

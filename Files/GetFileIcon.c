@@ -1,5 +1,4 @@
-#include <Icons.h>
-#include <Finder.h>
+#include <Carbon/Carbon.h>
 #include "GetFileIcon.h"
 
 //TODO: rewrite to handle icns icons?
@@ -299,7 +298,7 @@ void GetFinderFilename(
 			
 			default:
 				// The desktop database does not have "mini" icons
-				deskRec.ioIconType = 1000;
+				deskRec.ioIconType = 1000u;
 				break;
 		}
 

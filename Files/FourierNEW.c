@@ -166,64 +166,64 @@ void realft( float *data, unsigned long n, int isign)
 
 Ptr MakeCalculusSpectrum( Ptr srcPtr, Boolean logScale)
 {
-short				i, xx, lastLog, temp;
-
-for(i=0; i<256; i++) x[ i + 1] = *((Byte*)srcPtr++);
-
-realft( x, 256, 1);
-
-for(i= 1; i<=256; i++)
-{
-	temp = x[ i];
-	temp >>= 3;
+	short				i, xx, lastLog, temp;
 	
-	if( temp < 0) temp = -temp;
+	for(i=0; i<256; i++) x[ i + 1] = *((Byte*)srcPtr++);
 	
-	if( temp > 255) temp = 255;
-//	else temp = logoScale[ temp];
+	realft( x, 256, 1);
 	
-	xInt[ i-1] = temp;
-}
-xInt[ 0] = 0;
-
-if( logScale)
-{
-	long	sumL;
-	
-	lastLog = logoScale[ 255];
-	
-	for(i= 255; i >= 0; i--)
+	for(i= 1; i<=256; i++)
 	{
+		temp = x[ i];
+		temp >>= 3;
 		
-		if( logoScale[ i] == lastLog) temp = xInt[ logoScale[ i]];
-		else for( xx = logoScale[ i], temp = 0; xx < lastLog; xx++) temp += xInt[ xx];
+		if( temp < 0) temp = -temp;
 		
-	//	FINIR ICI
+		if( temp > 255) temp = 255;
+		//	else temp = logoScale[ temp];
 		
-		xInt[ i]  = temp;
-		
-		lastLog = logoScale[ i];
+		xInt[ i-1] = temp;
 	}
+	xInt[ 0] = 0;
 	
-/*	for( xx = 0, sumL = 0, i = 0; i < 256; i++)
+	if( logScale)
 	{
-		if( xx == 16)
+		long	sumL;
+		
+		lastLog = logoScale[ 255];
+		
+		for(i= 255; i >= 0; i--)
 		{
-			sumL /= 16;
 			
-			for( xx = i - 16; xx < i; xx++)
-			{
-				xInt[ xx] = sumL;
-			}
+			if( logoScale[ i] == lastLog) temp = xInt[ logoScale[ i]];
+			else for( xx = logoScale[ i], temp = 0; xx < lastLog; xx++) temp += xInt[ xx];
 			
-			xx = 0;
-			sumL = 0;
+			//	FINIR ICI
+			
+			xInt[ i]  = temp;
+			
+			lastLog = logoScale[ i];
 		}
 		
-		xx++;
-		sumL += xInt[ i];
-	}*/
-}
-
-return (Ptr) xInt;
+		/*	for( xx = 0, sumL = 0, i = 0; i < 256; i++)
+		 {
+		 if( xx == 16)
+		 {
+		 sumL /= 16;
+		 
+		 for( xx = i - 16; xx < i; xx++)
+		 {
+		 xInt[ xx] = sumL;
+		 }
+		 
+		 xx = 0;
+		 sumL = 0;
+		 }
+		 
+		 xx++;
+		 sumL += xInt[ i];
+		 }*/
+	}
+	
+	return (Ptr) xInt;
 }

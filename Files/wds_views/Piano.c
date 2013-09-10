@@ -2,8 +2,6 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <QDOffscreen.h>
-#include <Drag.h>
 #include "PPPlug.h"
 #include "PrivateList.h"
 	

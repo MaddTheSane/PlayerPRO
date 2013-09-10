@@ -2,10 +2,9 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Folders.h>
+#include <Carbon/Carbon.h>
 #include "Undo.h"
-#include <QuickTimeMusic.h>
-#include <Movies.h>
+#include <QuickTime/QuickTime.h>
 
 #include "dlsmac.h"
 #include "dls.h"

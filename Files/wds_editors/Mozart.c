@@ -1,5 +1,4 @@
 #include "Shuddup.h"
-#include <QDOffscreen.h>
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "PPPlug.h"
@@ -1517,10 +1516,10 @@ void DoNullMozart( void)
 	Str255		String;
 	GrafPtr		SavePort;
 	short		temp, itemType, track;
- 	Rect		tempRect, clipRect, itemRect;
- 	Point		pt, pt2, pt3;
- 	Handle		itemHandle;
- 
+	Rect		tempRect, clipRect, itemRect;
+	Point		pt, pt2, pt3;
+	Handle		itemHandle;
+
  	if( MozartDlog == NULL) return;
   
  	GetPort( &SavePort);
@@ -2167,8 +2166,8 @@ void PressPartition( Point myPt)
 				
 				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 			
-			//	if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
-    		//			QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
+				if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
+    					QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
 			}
 			while( Button());
 		break;
@@ -2192,8 +2191,8 @@ void PressPartition( Point myPt)
 				
 				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 			
-			//	if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
-    		//			QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
+				if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
+    					QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
 			}
 			while( Button());
 			
@@ -2563,8 +2562,8 @@ void DoItemPressMozart( short whichItem, DialogPtr whichDialog)
 						
 						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 					
-				//		if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
-    			//		QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
+						if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
+    					QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
 						
 					}while( Button());
 	
@@ -2597,8 +2596,8 @@ void DoItemPressMozart( short whichItem, DialogPtr whichDialog)
 					
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 				
-				//	if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
-    			//		QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
+					if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
+    					QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
 				}
 				while( Button());
 				

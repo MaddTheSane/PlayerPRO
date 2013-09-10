@@ -24,13 +24,7 @@
 #ifndef __MADH__
 #define __MADH__
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#else
-#if !defined(THINK_C)
-#pragma options align=mac68k
-#endif
-#endif
+#pragma pack(push, 2)
 
 // ***	
 // ***	PATTERN DESCRIPTION
@@ -194,11 +188,6 @@ struct oldMADSpec
 };
 typedef struct oldMADSpec oldMADSpec;
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=reset
-#else
-#if !defined(THINK_C)
-#pragma options align=reset
-#endif
-#endif
+#pragma pack(pop)
+
 #endif

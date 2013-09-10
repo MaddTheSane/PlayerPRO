@@ -13,7 +13,7 @@
 //	WARNING
 //	This plug does work ONLY with 8 bits data
 
-#include <Sound.h>
+#include <Carbon/Carbon.h>
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
@@ -247,7 +247,7 @@ static void alertUser ( short errString)
 	StopAlert(5011, NULL);
 }
 
-OSErr mainMix( 	sData					*theData,
+static OSErr mainMix( 	sData					*theData,
 				long					SelectionStart,
 				long					SelectionEnd,
 				PPInfoPlug				*thePPInfoPlug,
@@ -376,7 +376,7 @@ OSErr mainMix( 	sData					*theData,
 }
 
 // AE796F78-C31E-47B2-B86D-42EA6474B674
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xAE, 0x79, 0x6F, 0x78, 0xC3, 0x1E, 0x47, 0xB2, 0xB8, 0x6D, 0x42, 0xEA, 0x64, 0x74, 0xB6, 0x74)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xAE, 0x79, 0x6F, 0x78, 0xC3, 0x1E, 0x47, 0xB2, 0xB8, 0x6D, 0x42, 0xEA, 0x64, 0x74, 0xB6, 0x74)
 
 #define PLUGMAIN mainMix
 #define PLUGINFACTORY MixFactory

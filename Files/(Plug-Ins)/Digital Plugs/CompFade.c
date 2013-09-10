@@ -96,7 +96,7 @@ static void AutoPosition( DialogPtr aDia)
 	ShowWindow( GetDialogWindow( aDia));
 }
 
-Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
+static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 {
 	if( row < 0) row = 0;
 	else if( row >= myPcmd->length) row = myPcmd->length -1;
@@ -150,7 +150,7 @@ static void StringToHex( Str255 str, long *oct)
 	if( str[ 1] >= '0' && str[ 1] <= '9') *oct += (str[ 1] - '0')<<4;
 }
 
-OSErr mainCompFade( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+static OSErr mainCompFade( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
 	DialogPtr			myDia;
 	short				itemHit, mode;
@@ -168,7 +168,7 @@ OSErr mainCompFade( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	
 	do
 	{
-		RESTART:
+	RESTART:
 	
 		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 		
@@ -270,7 +270,7 @@ OSErr mainCompFade( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	return noErr;
 }
 
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x2C, 0xE9, 0x02, 0x81, 0xE2, 0xC2, 0x47, 0x5A, 0xA0, 0xF0, 0xB9, 0x0C, 0x64, 0x1E, 0xAE, 0xB1)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x2C, 0xE9, 0x02, 0x81, 0xE2, 0xC2, 0x47, 0x5A, 0xA0, 0xF0, 0xB9, 0x0C, 0x64, 0x1E, 0xAE, 0xB1)
 //2CE90281-E2C2-475A-A0F0-B90C641EAEB1
 #define PLUGINFACTORY CompFadeFactory //The factory name as defined in the Info.plist file
 #define PLUGMAIN mainCompFade //The old main function, renamed please

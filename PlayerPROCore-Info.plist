@@ -178,7 +178,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -195,6 +195,17 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.audio</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PPTracker</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.tracker</string>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>net.sourceforge.playerpro.tracker</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADKFile</string>
@@ -285,6 +296,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>com.apple.plugin</string>
 				<string>com.apple.package</string>
 				<string>com.apple.bundle</string>
 			</array>
@@ -303,36 +315,6 @@
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>PPMODFile</string>
-			<key>UTTypeIconFile</key>
-			<string>MOD.icns</string>
-			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.mod</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>com.apple.ostype</key>
-				<array>
-					<string>STrk</string>
-				</array>
-				<key>public.filename-extension</key>
-				<array>
-					<string>mod</string>
-					<string>strk</string>
-				</array>
-				<key>public.mime-type</key>
-				<array>
-					<string>audio/mod</string>
-					<string>audio/x-mod</string>
-					<string>audio/module-mod</string>
-				</array>
-			</dict>
-		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
@@ -366,14 +348,46 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>PPMODFile</string>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
-			<key>UTTypeDescription</key>
-			<string>CocoModX 669</string>
 			<key>UTTypeIconFile</key>
-			<string>669.icns</string>
+			<string>MOD</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.mod</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>STrk</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mod</string>
+					<string>strk</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>audio/mod</string>
+					<string>audio/x-mod</string>
+					<string>audio/module-mod</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeDescription</key>
+			<string>PP669File</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
+			<key>UTTypeIconFile</key>
+			<string>669</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.669</string>
 			<key>UTTypeTagSpecification</key>
@@ -389,14 +403,15 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>PPAMFFile</string>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
-			<key>UTTypeDescription</key>
-			<string>CocoModX AMF</string>
 			<key>UTTypeIconFile</key>
-			<string>AMF.icns</string>
+			<string>AMF</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.amf</string>
 			<key>UTTypeTagSpecification</key>
@@ -412,14 +427,15 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPITFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
-			<string>IT.icns</string>
+			<string>IT</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.it</string>
 			<key>UTTypeTagSpecification</key>
@@ -435,14 +451,15 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMTMFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
-			<string>mtm.icns</string>
+			<string>MTM</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.mtm</string>
 			<key>UTTypeTagSpecification</key>
@@ -458,12 +475,13 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>OKTA Tracker</string>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
-			<key>UTTypeDescription</key>
-			<string>CocoModX OKTA</string>
 			<key>UTTypeIconFile</key>
 			<string>OKTA</string>
 			<key>UTTypeIdentifier</key>
@@ -482,14 +500,15 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPS3MFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
-			<string>S3M.icns</string>
+			<string>S3M</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.s3m</string>
 			<key>UTTypeTagSpecification</key>
@@ -505,14 +524,15 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPULTFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
-			<string>ULT.icns</string>
+			<string>ULT</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.ult</string>
 			<key>UTTypeTagSpecification</key>
@@ -528,14 +548,15 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-			</array>
 			<key>UTTypeDescription</key>
 			<string>PPXMFile</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
 			<key>UTTypeIconFile</key>
-			<string>XM.icns</string>
+			<string>XM</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.xm</string>
 			<key>UTTypeTagSpecification</key>

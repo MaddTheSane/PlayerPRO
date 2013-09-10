@@ -4,7 +4,7 @@
 /*	1996 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Sound.h>
+#include <Carbon/Carbon.h>
 #include "XM.h"
 
 static OSErr TestXI( Ptr CC)
@@ -16,7 +16,7 @@ static OSErr TestXI( Ptr CC)
 	else return MADFileNotSupportedByThisPlug;
 }
 
-OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
+static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 {
 	short			i;
 //	Boolean			IsReading;
@@ -41,23 +41,27 @@ OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	curIns->numSamples	= 0;
 	
 	/**/
-	
+#if 1
+	memset(curIns->what, 0, sizeof(curIns->what));
+	memset(curIns->volEnv, 0, sizeof(curIns->volEnv));
+	memset(curIns->pannEnv, 0, sizeof(curIns->pannEnv));
+	memset(curIns->pitchEnv, 0, sizeof(curIns->pitchEnv));
+#else
 	for( i = 0; i < 96; i++) curIns->what[ i]		= 0;
+
 	for( i = 0; i < 12; i++)
 	{
 		curIns->volEnv[ i].pos		= 0;
 		curIns->volEnv[ i].val		= 0;
-	}
-	for( i = 0; i < 12; i++)
-	{
+		
 		curIns->pannEnv[ i].pos	= 0;
 		curIns->pannEnv[ i].val	= 0;
-	}
-	for( i = 0; i < 12; i++)
-	{
+		
 		curIns->pitchEnv[ i].pos	= 0;
 		curIns->pitchEnv[ i].val	= 0;
+
 	}
+#endif
 	curIns->volSize		= 0;
 	curIns->pannSize	= 0;
 	
@@ -80,28 +84,32 @@ OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 }
 
 #ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*(UInt32*)msg_buf);
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
 #else
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *(short*)msg_buf
+#define Tdecode32(msg_buf) *(int*)msg_buf
+#else
+
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
 	INT32(&toswap);
 	return toswap;
 }
-#endif
 
-#ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*(UInt16*)msg_buf);
-#else
 static inline UInt16 Tdecode16( void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
 	INT16(&toswap);
 	return toswap;
 }
+
+#endif
 #endif
 
-OSErr mainXI(	OSType		order,						// Order to execute
+static OSErr mainXI(	OSType		order,						// Order to execute
 				InstrData	*InsHeader,					// Ptr on instrument header
 				sData		**sample,					// Ptr on samples data
 				short		*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
@@ -155,13 +163,6 @@ OSErr mainXI(	OSType		order,						// Order to execute
 					
 					BlockMoveData( pth->what, 		InsHeader->what, 	96);
 					BlockMoveData( pth->volenv, 	InsHeader->volEnv, 	48);
-					for( x = 0; x < 12; x++)
-					{
-//						InsHeader->volEnv[ x].pos = Tdecode16( &InsHeader->volEnv[ x].pos);	// 
-//						InsHeader->volEnv[ x].val = Tdecode16( &InsHeader->volEnv[ x].val);	// 00...64
-						INT16(&InsHeader->volEnv[x].pos);
-						INT16(&InsHeader->volEnv[x].val);
-					}
 					
 					InsHeader->volSize	= pth->volpts;
 					InsHeader->volType	= pth->volflg;
@@ -173,8 +174,11 @@ OSErr mainXI(	OSType		order,						// Order to execute
 					BlockMoveData( pth->panenv, InsHeader->pannEnv, 	48);
 					for( x = 0; x < 12; x++)
 					{
-						InsHeader->pannEnv[ x].pos = Tdecode16( &InsHeader->pannEnv[ x].pos);	// 
-						InsHeader->pannEnv[ x].val = Tdecode16( &InsHeader->pannEnv[ x].val);	// 00...64
+						INT16(&InsHeader->volEnv[x].pos);
+						INT16(&InsHeader->volEnv[x].val);
+
+						INT16( &InsHeader->pannEnv[ x].pos);
+						INT16( &InsHeader->pannEnv[ x].val);
 					}
 					
 					InsHeader->pannSize	= pth->panpts;
@@ -331,7 +335,7 @@ OSErr mainXI(	OSType		order,						// Order to execute
 				
 				short			u, v, p, i, x;
 				long			inOutCount = 0;
-				long			ihsizecopy, ihssizecopy;
+				//long			ihsizecopy, ihssizecopy;
 				XMPATCHHEADER	pth;
 				char			start[ 0x42];
 				
@@ -516,7 +520,7 @@ OSErr mainXI(	OSType		order,						// Order to execute
 	return myErr;
 }
 
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x62, 0x08, 0x75, 0xF5, 0x1E, 0x38, 0x45, 0xEF, 0x9F, 0xBA, 0xAA, 0xE9, 0x29, 0x50, 0x2D, 0x63)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x62, 0x08, 0x75, 0xF5, 0x1E, 0x38, 0x45, 0xEF, 0x9F, 0xBA, 0xAA, 0xE9, 0x29, 0x50, 0x2D, 0x63)
 //620875F5-1E38-45EF-9FBA-AAE929502D63
 #define PLUGINFACTORY XIFactory //The factory name as defined in the Info.plist file
 #define PLUGMAIN mainXI //The old main function, renamed please

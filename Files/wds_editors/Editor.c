@@ -2,9 +2,7 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "Undo.h"
-#include <Drag.h>
 #include "PPPlug.h"
-#include <QDOffscreen.h>
 #include "PrivateList.h"
 
 	/******** HELP MODULE ********/
@@ -34,7 +32,7 @@
 	};
 #define	AHELPSIZE	21
 
-static pascal Boolean myDragClickLoop(void);
+//static pascal Boolean myDragClickLoop(void);
 	static	short		AHelp[ AHELPSIZE] =
 	{ HPref, HLoad, HSave, HUp, HInfo, HPlay, HRec, HOpenA, HTrack, HPos, HPatt, HFX, HLoop, HFind, HDown, HFill, HD1, HD2, HD3, HD4, HStep};
 	
@@ -2063,8 +2061,8 @@ MenuHandle	tMenu;
 			
 				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 			
-		//		if (QDIsPortBuffered( GetDialogPort( EditorDlog)))
-    	//				QDFlushPortBuffer( GetDialogPort( EditorDlog), NULL);
+				if (QDIsPortBuffered( GetDialogPort( EditorDlog)))
+    					QDFlushPortBuffer( GetDialogPort( EditorDlog), NULL);
 			
 			}
 			while( Button());
@@ -4206,8 +4204,6 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 	return(noErr);
 }
 
-#include <Aliases.h>
-
 pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemReference theItem,  DragReference theDrag)
 {
 	AEDesc			dropLoc;
@@ -4268,7 +4264,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 					}
 				}
 				
-				if( theFlavor == 'VCT5') pStrcat( str, "\p.aiff");
+				if( CFSwapInt32BigToHost(theFlavor) == 'VCT5') pStrcat( str, "\p.aiff");
 				else
 				{
 					if( str[ 0] < 20)
@@ -4293,7 +4289,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 		
 		ReGiveName:
 		
-		pStrcpy( target.name, sName);
+		FSMakeFSSpec(target.vRefNum, target.parID, sName, &target);
 	//	HSetVol( NULL, target.vRefNum, target.parID);
 		err = FSpOpenDF( &target, fsCurPerm, &fRefNum);
 		if( err != fnfErr)

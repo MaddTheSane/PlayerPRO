@@ -8,90 +8,6 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
-			<string>131</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Preferences</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>PREF</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>132</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Preferences</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>sTAT</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>129</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Plugin</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>PLug</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>129</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Plugin</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>EXTE</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>187</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Plugin</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>PPDG</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>236</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Plugin</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>shlb</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
 			<string>PATN</string>
 			<key>CFBundleTypeName</key>
 			<string>PlayerPRO Pattern</string>
@@ -120,21 +36,7 @@
 		</dict>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
-			<string>PCMD</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO PCMD File</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>PPIN</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>132</string>
+			<string>List</string>
 			<key>CFBundleTypeName</key>
 			<string>PlayerPRO Music List</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -147,20 +49,10 @@
 			<false/>
 		</dict>
 		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>242</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Mixer Settings</string>
-			<key>CFBundleTypeOSTypes</key>
+			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>tuni</string>
+				<string>inslist</string>
 			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
 			<key>CFBundleTypeIconFile</key>
 			<string>List</string>
 			<key>CFBundleTypeName</key>
@@ -405,6 +297,28 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>it</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>IT</string>
+			<key>CFBundleTypeName</key>
+			<string>PPITFile</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>IT  </string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.it</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>pat</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -451,8 +365,6 @@
 			<array>
 				<string>ppimpexp</string>
 			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>Bundle</string>
 			<key>CFBundleTypeName</key>
 			<string>PPImpExpBundle</string>
 			<key>CFBundleTypeRole</key>
@@ -468,7 +380,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>5.10.0 - Copyright © 1990-2002 Antoine ROSSET</string>
+	<string>5.10.0, © 1990-2002 Antoine ROSSET</string>
 	<key>CFBundleIconFile</key>
 	<string>ppApp</string>
 	<key>CFBundleIdentifier</key>
@@ -476,7 +388,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleLongVersionString</key>
-	<string>5.10.0, ©1990-2002 Antoine ROSSET</string>
+	<string>5.10.0 - Copyright © 1990-2002 Antoine ROSSET</string>
 	<key>CFBundleName</key>
 	<string>PlayerPRO</string>
 	<key>CFBundlePackageType</key>
@@ -489,14 +401,30 @@
 	<string>5.10.0</string>
 	<key>CSResourcesFileMapped</key>
 	<string>yes</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
+	<key>LSMinimumSystemVersionByArchitecture</key>
+	<dict>
+		<key>i386</key>
+		<string>10.4.0</string>
+		<key>ppc</key>
+		<string>10.3.9</string>
+	</dict>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.audio</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PPTracker</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.tracker</string>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADKFile</string>
@@ -601,26 +529,7 @@
 				</array>
 				<key>public.filename-extension</key>
 				<array>
-					<string>list</string>
 					<string>inslist</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>com.apple.package</string>
-				<string>com.apple.bundle</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>PPImpExpBundle</string>
-			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.ppimpexp</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>ppimpexp</string>
 				</array>
 			</dict>
 		</dict>
@@ -644,6 +553,25 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>mins</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.plugin</string>
+				<string>com.apple.package</string>
+				<string>com.apple.bundle</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PPImpExpBundle</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.ppimpexp</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ppimpexp</string>
 				</array>
 			</dict>
 		</dict>
@@ -685,7 +613,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMODFile</string>
@@ -715,7 +644,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PP669File</string>
@@ -738,7 +668,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPAMFFile</string>
@@ -761,7 +692,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPITFile</string>
@@ -784,7 +716,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMTMFile</string>
@@ -807,7 +740,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>OKTA Tracker</string>
@@ -831,7 +765,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPS3MFile</string>
@@ -854,7 +789,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPULTFile</string>
@@ -877,7 +813,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPXMFile</string>
@@ -900,7 +837,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPXIFile</string>
@@ -923,7 +861,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
+				<string>public.data</string>
+				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPPATFile</string>

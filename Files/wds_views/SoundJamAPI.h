@@ -12,11 +12,7 @@
 
 #pragma once
 
-#include <Types.h>
-#include <Files.h>
-#include <OSUtils.h>
-#include <Quickdraw.h>
-#include <Sound.h>
+#include <Carbon/Carbon.h>
 
 #if PRAGMA_STRUCT_ALIGN
 #pragma options align=power

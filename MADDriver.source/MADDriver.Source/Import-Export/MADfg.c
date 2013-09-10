@@ -25,7 +25,7 @@
 #include "MOD.h"
 #include "MADfg.h"
 
-struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, short Tracks, MADDriverSettings *init)
+static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, short Tracks, MADDriverSettings *init)
 {
 	struct MusicPattern*	finalPtr;
 	Byte 					*srcPtr;
@@ -63,8 +63,8 @@ struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, sho
 				((short*)myCmd)[ 1] = ((short*) srcPtr)[ 1];
 				
 				srcPtr += 4;
-			break;
-			
+				break;
+				
 			case 0x02:
 				srcPtr++;
 								
@@ -72,8 +72,8 @@ struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, sho
 				((short*)myCmd)[ 1] = 0L;
 				
 				srcPtr += 2;
-			break;
-			
+				break;
+				
 			case 0x01:
 				srcPtr++;
 				
@@ -81,17 +81,19 @@ struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, sho
 				((short*)myCmd)[ 1] = *((short*) srcPtr);
 				
 				srcPtr += 2;
-			break;
-			
+				break;
+				
 			case 0x00:
 				srcPtr ++;
 				
-				*((long*)myCmd) = 0;
-			break;
-			
+				*((SInt32*)myCmd) = 0;
+				break;
+				
 			default:
-				DebugStr("\pDecompress MAD1 failed.");
-			break;
+				//DebugStr("\pDecompress MAD1 failed.");
+				DisposePtr((Ptr)finalPtr);
+				return NULL;
+				break;
 		}
 		myCmd++;
 	}
@@ -120,43 +122,67 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 	BlockMoveData( b + 1, a, b[ 0]);
 }
 
-OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
+static void MOToldPatHeader(struct oldPatHeader * p) {
+	MOT32(&p->PatternSize);
+	MOT32(&p->CompressionMode);
+	MOT32(&p->PatBytes);
+	MOT32(&p->unused2); // this is probably superfluous, but who knows
+}
+
+static void MOToldInstrData(struct FileInstrData * i) {
+	//int j;
+	MOT32(&i->insSize);
+	MOT32(&i->loopStart);
+	MOT32(&i->loopLenght);
+	MOT16(&i->CompCode);
+	MOT16(&i->freq);
+}
+
+static void MOToldMADSpec(struct oldMADSpec * m){
+	int i;
+	MOT32(&m->MADIdentification);
+	for (i = 0; i < 64; i++) {
+		MOToldInstrData(&m->fid[i]);
+	}
+}
+
+static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
-//TODO: byteswap on Intel!
 	short 			i, x;
 	long 			inOutCount = 0, OffSetToSample = 0, z = 0;
-	OSErr			theErr = noErr;
+	OSType			oldMadIdent;
+	//OSErr			theErr = noErr;
 	Boolean			MADConvert = false;
-	Ptr				tempPtr = NULL;
+	//Ptr				tempPtr = NULL;
 	long			finetune[16] = 
-				{
-					8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
-					7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
-				};
-
-
-/**** Old MADFG variables ****/
-
+	{
+		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
+		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
+	};
+	
+	
+	/**** Old MADFG variables ****/
+	
 	oldMADSpec				*oldMAD;
-
+	
 	oldMAD = (oldMADSpec*) MADPtr;
-
-
-/**** HEADER ****/
-	OSType oldMadIdent = oldMAD->MADIdentification;
-	MOT32(&oldMadIdent);
+	
+	MOToldMADSpec(oldMAD);
+	
+	/**** HEADER ****/
+	oldMadIdent = oldMAD->MADIdentification;
 	if( oldMadIdent == 'MADF') MADConvert = true;
 	else if( oldMadIdent == 'MADG') MADConvert = false;
 	else return MADFileNotSupportedByThisPlug;
 	OffSetToSample += sizeof( oldMADSpec);
-
-// Conversion
+	
+	// Conversion
 	inOutCount = sizeof( MADSpec);
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( inOutCount, init);	
 	if( theMAD->header == NULL) return MADNeedMemory;
-
+	
 	theMAD->header->MAD = 'MADK';
-
+	
 	BlockMoveData( oldMAD->NameSignature, theMAD->header->name, 32);
 	theMAD->header->numPat			= oldMAD->PatMax;
 	theMAD->header->numChn			= oldMAD->Tracks;
@@ -164,35 +190,36 @@ OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *ini
 	BlockMoveData( oldMAD->oPointers, theMAD->header->oPointers, 128);
 	theMAD->header->speed			= 6;
 	theMAD->header->tempo			= 125;
-
-mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
-
-
+	
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug ((\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)");
+	
+	
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-
-/**** Patterns *******/
-
+	
+	/**** Patterns *******/
+	
 	for( i = 0; i < oldMAD->PatMax; i++)
 	{
+		OSType CompMode = 0;
 		struct MusicPattern		*tempPat, *tempPat2;
 		struct oldPatHeader		tempPatHeader;
-	
-	/** Lecture du header de la partition **/
+		
+		/** Lecture du header de la partition **/
 		if( !MADConvert)
 		{
 			inOutCount = sizeof( struct oldPatHeader);
-		
-			BlockMoveData( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
-			MOT32(&tempPatHeader.PatternSize);
+			
+			memcpy(&tempPatHeader, MADPtr + OffSetToSample, inOutCount);
+			MOToldPatHeader(&tempPatHeader);
 		}
-		else tempPatHeader.PatternSize = 64L;
-	
-	/*************************************************/
-	/** Lecture du header + contenu de la partition **/
-	/*************************************************/
-		OSType CompMode = tempPatHeader.CompressionMode;
-		MOT32(&CompMode);
+		else tempPatHeader.PatternSize = 64;
+		
+		/*************************************************/
+		/** Lecture du header + contenu de la partition **/
+		/*************************************************/
+		CompMode = tempPatHeader.CompressionMode;
+		
 		if( CompMode == 'MAD1')
 		{
 			inOutCount = sizeof( struct MusicPattern) + tempPatHeader.PatBytes;
@@ -201,76 +228,75 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoin
 		{
 			inOutCount = sizeof( struct MusicPattern) + oldMAD->Tracks * tempPatHeader.PatternSize * sizeof( struct Command);
 		}
-	
+		
 		tempPat = (struct MusicPattern*) MADPlugNewPtr( inOutCount, init);
 		if( tempPat == NULL) DebugStr("\pMemory Prob1");
-	
+		
 		if( MADConvert)
 		{
 			tempPat = (struct MusicPattern*) ((Ptr) tempPat + sizeof( struct oldPatHeader));
 			inOutCount -= sizeof( struct oldPatHeader);
 		}
-	
+		
 		BlockMoveData( MADPtr + OffSetToSample, tempPat, inOutCount);
 		OffSetToSample += inOutCount;
-		MOT32(&tempPat->header.PatternSize);
-		MOT32(&tempPat->header.CompressionMode);
-
-	
+		MOToldPatHeader(&tempPat->header);
+		
+		
 		if( MADConvert)
 		{
 			tempPat = (struct MusicPattern*) ((Ptr) tempPat - sizeof( struct oldPatHeader));
 			tempPat->header.PatternSize = 64L;
 			tempPat->header.CompressionMode = 'NONE';
-		
+			
 			for( x = 0; x < 20; x++) tempPat->header.PatternName[ x] = 0;
-		
+			
 			tempPat->header.unused2 = 0;
 		}
-	
+		
 		if( tempPat->header.CompressionMode == 'MAD1')
 		{
 			tempPat2 = oldDecompressPartitionMAD1( tempPat, oldMAD->Tracks, init);
-		
+			
 			DisposePtr( (Ptr) tempPat);
-		
+			
 			tempPat = tempPat2;
 		}
-	
-	/**************/
-	/* CONVERSION */
-	/**************/
-	
+		
+		/**************/
+		/* CONVERSION */
+		/**************/
+		
 		theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear( sizeof( PatHeader) + theMAD->header->numChn * tempPat->header.PatternSize * sizeof( Cmd), init);
 		if( theMAD->partition[ i] == NULL) return MADNeedMemory;
-	
+		
 		theMAD->partition[ i]->header.size 		= tempPat->header.PatternSize;
 		theMAD->partition[ i]->header.compMode 	= 'NONE';
-	
+		
 		BlockMoveData( tempPat->header.PatternName, theMAD->partition[ i]->header.name, 20);
-	
+		
 		theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
-	
+		
 		for( x = 0; x < theMAD->partition[ i]->header.size; x++)
 		{
 			for( z = 0; z < theMAD->header->numChn; z++)
 			{
 				struct Command *oldCmd;
 				Cmd	*aCmd;
-			
+				
 				aCmd = GetMADCommand(  x,  z, theMAD->partition[ i]);
-			
+				
 				oldCmd 	= GetOldCommand(	x,
 										z,
 										tempPat);
-			
+				
 				aCmd->ins 	= oldCmd->InstrumentNo;
 				if( oldCmd->AmigaPeriod == 0) aCmd->note = 0xFF;
 				else aCmd->note 	= oldCmd->AmigaPeriod + 22;
 				aCmd->cmd 	= oldCmd->EffectCmd;
 				aCmd->arg 	= oldCmd->EffectArg;
 				aCmd->vol	= 0xFF;
-			
+				
 				if( aCmd->cmd == 0x0C)
 				{
 					aCmd->vol	= 0x10 + (aCmd->arg & 0x00FF);
@@ -281,45 +307,45 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoin
 		}
 	}
 	for( i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[ i] = NULL;
-
+	
 	for( i = 0; i < MAXTRACK; i++)
 	{
 		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
-	
+		
 		theMAD->header->chanVol[ i] = MAX_VOLUME;
 	}
-
+	
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
-
-/**** Instruments header *****/
-
+	
+	/**** Instruments header *****/
+	
 	theMAD->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
 	if( !theMAD->fid) return MADNeedMemory;
-
+	
 	theMAD->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
 	if( !theMAD->sample) return MADNeedMemory;
-
+	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
-
+	
 	for( i = 0; i < 64; i++)
 	{
 		InstrData	*curIns = &theMAD->fid[ i];
-	
+		
 		BlockMoveData( oldMAD->fid[ i].Filename, curIns->name, 32);
 		curIns->type = 0;
-	
+		
 		if( oldMAD->fid[ i].insSize > 0)
 		{
 			sData	*curData;
-		
+			
 			curIns->numSamples = 1;
 			curIns->volFade = DEFAULT_VOLFADE;
-		
+			
 			curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear( sizeof( sData), init);
-		
+			
 			curData->size		= oldMAD->fid[ i].insSize;
 			curData->loopBeg 	= oldMAD->fid[ i].loopStart;
 			curData->loopSize 	= oldMAD->fid[ i].loopLenght;
@@ -327,22 +353,31 @@ mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug (©Antoin
 			curData->c2spd		= finetune[ oldMAD->fid[ i].fineTune];
 			curData->loopType	= 0;
 			curData->amp		= oldMAD->fid[ i].amplitude;
-		
+			
 			curData->relNote	= 0;
-		
+			
 			curData->data 		= MADPlugNewPtr( curData->size, init);
 			if( curData->data == NULL) return MADNeedMemory;
-		
+			
 			BlockMoveData( MADPtr + OffSetToSample, curData->data, curData->size);
 			OffSetToSample += curData->size;
+#ifdef __LITTLE_ENDIAN__
+			if( curData->amp == 16)
+			{
+				long 	ll;
+				short	*shortPtr = (short*) curData->data;
+				
+				for( ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
+			}
+#endif
 		}
 		else curIns->numSamples = 0;
 	}
-
+	
 	return noErr;
 }
 
-OSErr TestoldMADFile( Ptr AlienFile)
+static OSErr TestoldMADFile( Ptr AlienFile)
 {
 	OSType myMADSign = *((OSType*) AlienFile);
 	MOT32(&myMADSign);
@@ -351,12 +386,12 @@ OSErr TestoldMADFile( Ptr AlienFile)
 	else return  MADFileNotSupportedByThisPlug;
 }
 
-OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
+static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 {
 	oldMADSpec	*myMOD = ( oldMADSpec*) AlienFile;
-	long		PatternSize;
+	//long		PatternSize;
 	short		i;
-	short		tracksNo;
+	//short		tracksNo;
 	
 	/*** Signature ***/
 	
@@ -365,9 +400,9 @@ OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	myMOD->NameSignature[ 31] = '\0';
-	strcpy( info->internalFileName, myMOD->NameSignature);
-
+	//myMOD->NameSignature[ 31] = '\0';
+	strlcpy( info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
+	
 	/*** Tracks ***/
 	
 	info->totalTracks = myMOD->Tracks;
@@ -404,7 +439,7 @@ OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 /* MAIN FUNCTION */
 /*****************/
 
-OSErr mainMADfg( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+static OSErr mainMADfg( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
@@ -497,9 +532,17 @@ OSErr mainMADfg( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x27, 0x63, 0x70, 0x58, 0x26, 0x88, 0x45, 0x4A, 0x9C, 0x44, 0xEB, 0x4F, 0x61, 0xCD, 0xF0, 0xF3))
+#ifdef _MAC_H
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x27, 0x63, 0x70, 0x58, 0x26, 0x88, 0x45, 0x4A, 0x9C, 0x44, 0xEB, 0x4F, 0x61, 0xCD, 0xF0, 0xF3))
 //27637058-2688-454A-9C44-EB4F61CDF0F3
 
 #define PLUGMAIN mainMADfg
 #define PLUGINFACTORY MADfgFactory
 #include "CFPlugin-bridge.c"
+#else
+OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+{
+	return mainMADfg(order, AlienFileName, MadFile, info, init);
+}
+#endif
+

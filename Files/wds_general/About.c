@@ -3,7 +3,6 @@
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include <stdio.h>
-#include <Gestalt.h>
 #include <VideoToolbox.h>
 #include "VA.h"
 
@@ -409,8 +408,8 @@ void DoAbout(void)
 		
 		WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 	
-	//	if (QDIsPortBuffered( GetDialogPort( aDialog)))
-    //					QDFlushPortBuffer( GetDialogPort( aDialog), NULL);
+		if (QDIsPortBuffered( GetDialogPort( aDialog)))
+    					QDFlushPortBuffer( GetDialogPort( aDialog), NULL);
 
 	}
 //	if( theDepth == 8) CloseBounceBall();

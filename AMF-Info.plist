@@ -32,12 +32,10 @@
 			<string>E993EFD8-0C3F-46F6-9063-6E340C179D88</string>
 		</array>
 	</dict>
-	<key>CSResourcesFileMapped</key>
-	<true/>
 	<key>MADPlugMenuName</key>
 	<string>AMF</string>
 	<key>MADPlugAuthorName</key>
-	<string>Written by A.ROSSET 96</string>
+	<string>ROSSET Antoine 96, Thanks to Mark Thomas</string>
 	<key>MADPlugType</key>
 	<string>AMF </string>
 	<key>MADPlugUTITypes</key>
@@ -45,6 +43,6 @@
 		<string>net.sourceforge.playerpro.amf</string>
 	</array>
 	<key>MADPlugMode</key>
-	<string>EXIM</string>
+	<string>IMPL</string>
 </dict>
 </plist>

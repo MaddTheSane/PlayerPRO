@@ -119,6 +119,16 @@ void SwapPrefs(Prefs *swapPrefs)
 	swapPrefs->previousSpec.speed = EndianS16_BtoN(swapPrefs->previousSpec.speed);
 	swapPrefs->previousSpec.tempo = EndianS16_BtoN(swapPrefs->previousSpec.tempo);
 	
+	for (x = 0; x < EQPACKET*2; x++)
+		{
+			union {
+				UInt64 inte;
+				double doub;
+			} v;
+			v.doub = swapPrefs->Filter[x];
+			v.inte = EndianU64_BtoN(v.inte);
+			swapPrefs->Filter[x] = v.doub;
+		}
 	for (i=0; i < MAXWINDOWS; i++) {
 		swapPrefs->WinPos[i].v = EndianS16_BtoN(swapPrefs->WinPos[i].v);
 		swapPrefs->WinPos[i].h = EndianS16_BtoN(swapPrefs->WinPos[i].h);
@@ -126,6 +136,7 @@ void SwapPrefs(Prefs *swapPrefs)
 		swapPrefs->WinHi[i] = EndianS16_BtoN(swapPrefs->WinHi[i]);
 		swapPrefs->WinLarg[i] = EndianS16_BtoN(swapPrefs->WinLarg[i]);
 		swapPrefs->WinID[i] = EndianS32_BtoN(swapPrefs->WinID[i]);
+		
 		for (x = 0; x < 3; x++) {
 			swapPrefs->WinPosO[x][i].v = EndianS16_BtoN(swapPrefs->WinPosO[x][i].v);
 			swapPrefs->WinPosO[x][i].h = EndianS16_BtoN(swapPrefs->WinPosO[x][i].h);

@@ -15,7 +15,7 @@
 #define max(a,b) (((a) > (b)) ? (a) : (b))
 #define labs(a) (((a) < 0) ? (-a) : (a))
 
-OSErr mainNormalize(sData					*theData,
+static OSErr mainNormalize(sData					*theData,
 					long					SelectionStart,
 					long					SelectionEnd,
 					PPInfoPlug				*thePPInfoPlug,
@@ -84,7 +84,7 @@ OSErr mainNormalize(sData					*theData,
 			
 			if( peak != 0)
 			{
-				peak = ((long)0x8000 * 0x10000) / peak;
+				peak = ((unsigned long)0x8000 * 0x10000) / peak;
 				
 				SamplePtr = (short*) theData->data + (SelectionStart / 2);
 				for( i = 0; i < (SelectionEnd - SelectionStart) / 2; i++)
@@ -109,7 +109,7 @@ OSErr mainNormalize(sData					*theData,
 }
 
 // 9AAC8E6C-DAD4-453A-8A90-17D27CF2FFBC
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x9A, 0xAC, 0x8E, 0x6C, 0xDA, 0xD4, 0x45, 0x3A, 0x8A, 0x90, 0x17, 0xD2, 0x7C, 0xF2, 0xFF, 0xBC)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x9A, 0xAC, 0x8E, 0x6C, 0xDA, 0xD4, 0x45, 0x3A, 0x8A, 0x90, 0x17, 0xD2, 0x7C, 0xF2, 0xFF, 0xBC)
 
 #define PLUGMAIN mainNormalize
 #define PLUGINFACTORY NormalizeFactory

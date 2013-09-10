@@ -19,10 +19,10 @@ static void GetDText (DialogPtr dlog, short item, StringPtr str)
 
 static void SetDText (DialogPtr dlog, short item, Str255 str)
 {
-	Handle			itemHandle;
-	short			itemType;
-	Rect			itemRect;
-	Str255			myStr;
+	//Handle			itemHandle;
+	//short			itemType;
+	//Rect			itemRect;
+	//Str255			myStr;
 	ControlHandle	control;
 	OSErr			err;
 
@@ -85,7 +85,7 @@ static void AutoPosition( DialogPtr aDia)
 	ShowWindow( GetDialogWindow( aDia));
 }
 
-Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
+static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 {
 	if( row < 0) row = 0;
 	else if( row >= myPcmd->length) row = myPcmd->length -1;
@@ -96,7 +96,7 @@ Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
 
-OSErr mainFadeVol( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+static OSErr mainFadeVol( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
 	DialogPtr			myDia;
 	short				itemHit;
@@ -173,7 +173,7 @@ OSErr mainFadeVol( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	return noErr;
 }
 
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x02, 0xB1, 0x55, 0x4B, 0xDE, 0x52, 0x47, 0x45, 0x93, 0x2C, 0x29, 0x87, 0xAA, 0x19, 0xD4, 0xEF)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x02, 0xB1, 0x55, 0x4B, 0xDE, 0x52, 0x47, 0x45, 0x93, 0x2C, 0x29, 0x87, 0xAA, 0x19, 0xD4, 0xEF)
 //02B1554B-DE52-4745-932C-2987AA19D4EF
 #define PLUGINFACTORY FadeVolFactory //The factory name as defined in the Info.plist file
 #define PLUGMAIN mainFadeVol //The old main function, renamed please

@@ -29,14 +29,14 @@ static short FoundNote( short Period)
 	short 			note;
 	short			MODTuning[ 70] =
 	{
-
-// -> Tuning 0
-
-	1712,1616,1524,1440,1356,1280,1208,1140,1076,1016,960,906,
-	856,808,762,720,678,640,604,570,538,508,480,453,
-	428,404,381,360,339,320,302,285,269,254,240,226,
-	214,202,190,180,170,160,151,143,135,127,120,113,
-	107,101,95,90,85,80,75,71,67,63,60,56
+		
+		// -> Tuning 0
+		
+		1712,1616,1524,1440,1356,1280,1208,1140,1076,1016,960,906,
+		856,808,762,720,678,640,604,570,538,508,480,453,
+		428,404,381,360,339,320,302,285,269,254,240,226,
+		214,202,190,180,170,160,151,143,135,127,120,113,
+		107,101,95,90,85,80,75,71,67,63,60,56
 	};
 	note = 0xFF;
 	
@@ -163,7 +163,7 @@ static void AnalyseSignatureMOD( long EOFo, OSType temp, short *maxInstru, long 
 						
 			if( result) *maxInstru 		= 15;
 			else *maxInstru				= 0;
-		break;
+			break;
 	}
 }
 
@@ -305,7 +305,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( inOutCount, init);
 	if( theMAD->header == NULL) return MADNeedMemory;
 	
-	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO MOD Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	strcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO MOD Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->MAD = 'MADK';
 	theMAD->header->MODMode = true;
@@ -387,7 +387,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
-	for( i=0; i < 64; i++)
+	for( i=0; i < 32; i++)
 	{
 		lastIns[ i] = 0;
 		lastNote[ i] = 0;
@@ -714,17 +714,17 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 				
 				if( x < theMAD->partition[ i]->header.size)
 				{
-					aCmd 	= GetMADCommand( 	x,
-												z,
-												theMAD->partition[ i]);
+					aCmd 	= GetMADCommand(x,
+											z,
+											theMAD->partition[ i]);
 				}
 				else aCmd = &nullCmd;
 				
-				n 			= GetMODCommand(	x,
-												z,
-												i,
-												theMAD->header->numChn,
-												(Ptr) theMOD->patterns);
+				n 			= GetMODCommand(x,
+											z,
+											i,
+											theMAD->header->numChn,
+											(Ptr) theMOD->patterns);
 				
 				if( (Ptr) n > maxMOD) DebugStr("\pOut");
 				if( (Ptr) n < (Ptr) theMOD) DebugStr("\pOut");
@@ -739,7 +739,7 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 					if( aCmd->ins != 0)
 					{
 						if( theMAD->fid[ aCmd->ins-1].numSamples > 0)
-								curNote = aCmd->note + theMAD->sample[ (aCmd->ins-1)*MAXSAMPLE + 0]->relNote;
+							curNote = aCmd->note + theMAD->sample[ (aCmd->ins-1)*MAXSAMPLE + 0]->relNote;
 						else 	curNote = aCmd->note;
 					}
 					else curNote = aCmd->note;
@@ -779,11 +779,11 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 	
 	if( theMAD->header->tempo != 125 || theMAD->header->speed != 6)
 	{
-		n 	= GetMODCommand(	0,
-								theMAD->header->numChn-1,
-								theMAD->header->oPointers[ 0],
-								theMAD->header->numChn,
-								(Ptr) theMOD->patterns);
+		n 	= GetMODCommand(0,
+							theMAD->header->numChn-1,
+							theMAD->header->oPointers[ 0],
+							theMAD->header->numChn,
+							(Ptr) theMOD->patterns);
 		
 		if( (Ptr) n > maxMOD) DebugStr("\pOut");
 		if( (Ptr) n < (Ptr) theMOD) DebugStr("\pOut");
@@ -794,11 +794,11 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 		n->c = n->c + 0x0F;			// speed
 		n->d = theMAD->header->speed;
 		
-		n 	= GetMODCommand(	0,
-								theMAD->header->numChn-2,
-								theMAD->header->oPointers[ 0],
-								theMAD->header->numChn,
-								(Ptr) theMOD->patterns);
+		n 	= GetMODCommand(0,
+							theMAD->header->numChn-2,
+							theMAD->header->oPointers[ 0],
+							theMAD->header->numChn,
+							(Ptr) theMOD->patterns);
 		
 		if( (Ptr) n > maxMOD) DebugStr("\pOut");
 		if( (Ptr) n < (Ptr) theMOD) DebugStr("\pOut");
@@ -827,7 +827,7 @@ static OSErr ExtractMODInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	myMOD->NameSignature[ 19] = '\0';
-	strcpy( info->internalFileName, myMOD->NameSignature);
+	strlcpy( info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
 	
 	/*** Check MOD Type ***/
 	
@@ -898,7 +898,7 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /*****************/
 /* MAIN FUNCTION */
 /*****************/
-OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+static OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;
@@ -1013,9 +1013,16 @@ OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x86, 0xC7, 0x43, 0x00, 0x93, 0x96, 0x4E, 0x68, 0x9B, 0x3F, 0x02, 0xCE, 0x56,0x26, 0xA7, 0xC6)) 
+#ifdef _MAC_H
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x86, 0xC7, 0x43, 0x00, 0x93, 0x96, 0x4E, 0x68, 0x9B, 0x3F, 0x02, 0xCE, 0x56,0x26, 0xA7, 0xC6)) 
 //86C74300-9396-4E68-9B3F-02CE5626A7C6
 #define PLUGMAIN mainMOD
 #define PLUGINFACTORY ModFactory
 
 #include "CFPlugin-bridge.c"
+#else
+OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+{
+	return mainMOD(order, AlienFileName, MadFile, info, init);
+}
+#endif

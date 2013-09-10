@@ -18,7 +18,7 @@
 /********************						***********************/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Sound.h>
+#include <Carbon/Carbon.h>
 
 void ConvertInstrumentIn( register Byte *tempPtr, register long sSize)
 {

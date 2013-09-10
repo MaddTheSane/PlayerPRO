@@ -1,19 +1,13 @@
 #define MAINSYSTEM2
 
-#include <Sound.h>
+#include <Carbon/Carbon.h>
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Gestalt.h>
-#include <Folders.h>
 #include "Undo.h"
 #include "Help.h"
-#include <QDOffscreen.h>
-#include <Processes.h>
-#include <Navigation.h>
-#include <Appearance.h>
-#include <QuicktimeComponents.h>
+#include <QuickTime/QuickTime.h>
 #include "PPResDefs.h"
 #include "ByteUtils.h"
 #include "PPPrivate.h"
@@ -3391,9 +3385,9 @@ void DoUpdateEvent(EventRecord *theEventI)
 			VSTEditorUpdate( GetDialogFromWindow( (WindowPtr) theEventI->message));
 		break;
 		
-		case RefCube:
-			UpdateCubeWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
+		//case RefCube:
+			//UpdateCubeWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
+			//break;
 	
 		case RefPref:
 			UpdatePrefWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
@@ -3413,11 +3407,11 @@ void DoUpdateEvent(EventRecord *theEventI)
 		
 		case RefInstruList:
 			UpdateInstruListWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
+			break;
 		
 		case RefInstruView:
 			UpdateInstruView(GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
+			break;
 		
 	/*	case RefTrackView:
 			UpdateTrackView(GetDialogFromWindow( (WindowPtr) theEventI->message));
@@ -3531,8 +3525,8 @@ void UpdateALLWindow(void)
 			
 			DisposeRgn( updateRgn);
 		}	
-		if (QDIsPortBuffered( GetWindowPort( aWind)))
-		QDFlushPortBuffer( GetWindowPort( aWind), NULL);
+		//if (QDIsPortBuffered( GetWindowPort( aWind)))
+		//QDFlushPortBuffer( GetWindowPort( aWind), NULL);
 
 		aWind = GetNextWindow( aWind);
 	}
@@ -3644,8 +3638,8 @@ void StartDialog(void)
 	DrawDialog( myStartUpDlog);
 	WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 	
-	if (QDIsPortBuffered( GetDialogPort( myStartUpDlog)))
-		QDFlushPortBuffer( GetDialogPort( myStartUpDlog), NULL);
+//	if (QDIsPortBuffered( GetDialogPort( myStartUpDlog)))
+//		QDFlushPortBuffer( GetDialogPort( myStartUpDlog), NULL);
 	
 	if( DebuggingMode)
 	{
@@ -5359,9 +5353,7 @@ ReLoadPrefs:
 	iErr = FindFolder( kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &vRefNum, &DirID);
 	if( iErr == noErr)
 	{
-		pStrcpy( spec.name, PLAYERPREF);
-		spec.vRefNum = vRefNum;
-		spec.parID = DirID;
+		FSMakeFSSpec(vRefNum, DirID, PLAYERPREF, &spec);
 	
 		Prefs *outPrefs = (Prefs*)NewPtr(sizeof(Prefs));
 		*outPrefs = thePrefs;
@@ -5401,9 +5393,7 @@ ReLoadPrefs:
 	iErr = FindFolder( kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &vRefNum, &DirID);
 	if( iErr == noErr)
 	{
-		pStrcpy( spec.name, PLAYERPREF);
-		spec.vRefNum = vRefNum;
-		spec.parID = DirID;
+		FSMakeFSSpec(vRefNum, DirID, PLAYERPREF, &spec);
 		iErr = HSetVol( NULL, vRefNum, DirID);
 		if( iErr == noErr)
 		{
@@ -5412,8 +5402,6 @@ ReLoadPrefs:
 	}
 	HSetVol(NULL, vRefNumOld, DirIDOld);
 }
-
-#include <SoundComponents.h>
 
 void DoPreferences()
 {
@@ -5425,51 +5413,49 @@ void DoPreferences()
 	Point			tempL;
 	Prefs			*tempPrefs = NULL;
 	FSSpec			spec;
-
-/*Gestalt( kSoundOutputDeviceType, &gestaltAnswer);
-if( gestaltAnswer == kASCSubType) hasASC = true;
-else hasASC = false;
-*/
-
+	
+	/*Gestalt( kSoundOutputDeviceType, &gestaltAnswer);
+	 if( gestaltAnswer == kASCSubType) hasASC = true;
+	 else hasASC = false;
+	 */
+	
 	Gestalt( gestaltHardwareAttr, &gestaltAnswer);
 	myBit = gestaltHasASC;
-
+	
 #if defined(powerc) || defined (__powerc) || defined(TARGET_RT_MAC_MACHO)
 	hasASC = false;
 #else
 	if( BitTst( &gestaltAnswer, 31-myBit) == false) hasASC = false;
 	else hasASC = true;
 #endif
-
+	
 	Gestalt( gestaltSoundAttr, &gestaltAnswer);
 	gestaltAnswer = EndianS32_BtoN(gestaltAnswer);
-
+	
 	myBit = gestaltStereoCapability;
 	Stereo = BitTst( &gestaltAnswer, 31-myBit);
-
+	
 	myBit = gestaltStereoMixing;
 	StereoMixing = BitTst( &gestaltAnswer, 31-myBit);
-
+	
 	myBit = gestalt16BitSoundIO;
 	Audio16 = BitTst( &gestaltAnswer, 31-myBit);
-
+	
 	if( NewSoundManager31)
 	{
 		short sSize;
 		GetSoundOutputInfo( NULL, siSampleSize, &sSize);
 		if( sSize >= 16) Audio16 = true;
 	}
-
+	
 ReLoadPrefs:
-
+	
 	iErr = FindFolder( kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &vRefNum, &DirID);
-
-//iErr = HSetVol( NULL, vRefNum, DirID);
-
-	pStrcpy( spec.name, PLAYERPREF);
-	spec.vRefNum = vRefNum;
-	spec.parID = DirID;
-
+	
+	//iErr = HSetVol( NULL, vRefNum, DirID);
+	
+	FSMakeFSSpec(vRefNum, DirID, PLAYERPREF, &spec);
+	
 	iErr = FSpOpenDF( &spec, fsCurPerm, &fRefNum);
 	if( iErr == fnfErr)
 	{
@@ -5491,7 +5477,7 @@ ReLoadPrefs:
 			Erreur( 87, 87);
 			ExitToShell();
 		}
-	
+		
 		thePrefs.Version = VERSION;
 		thePrefs.NoStart = 0;
 		thePrefs.checkSum = 0;
@@ -5502,29 +5488,29 @@ ReLoadPrefs:
 		thePrefs.PPCMachine = false;
 #endif
 		thePrefs.MADCompression	= true;
-	
+		
 		thePrefs.KeyUpMode 			= eNoteOFF;
 		thePrefs.MacKeyBoard 		= true;
 		thePrefs.MidiKeyBoard 		= false;
 		thePrefs.QKMidiKeyBoard		= false;
-	
+		
 		thePrefs.MIDIVelocity		= true;
 		thePrefs.MIDIChanInsTrack	= false;
-	
+		
 		thePrefs.AutoCreator = true;
 		thePrefs.MicroRecording = false;
 		thePrefs.AffichageDIGI = false;
-//	thePrefs.PianoPos = 0;
-//	GetSoundVol( (void *)&thePrefs.volumeLevel);
-//	thePrefs.volumeLevel++;
-//	thePrefs.volumeLevel *= 8;
+		//thePrefs.PianoPos = 0;
+		//GetSoundVol( (void *)&thePrefs.volumeLevel);
+		//thePrefs.volumeLevel++;
+		//thePrefs.volumeLevel *= 8;
 		GetDefaultOutputVolume( (long*) &tempL);
 		thePrefs.volumeLevel = tempL.v;
 		thePrefs.TextS = 0;
 		thePrefs.ThreadUse = false;
-//		thePrefs.ThreadUse = true;
-
-	
+		//thePrefs.ThreadUse = true;
+		
+		
 		thePrefs.FSinScroll = true;
 		thePrefs.SSText = true;
 		thePrefs.SSStars = true;
@@ -5535,14 +5521,14 @@ ReLoadPrefs:
 		thePrefs.MADC = false;
 		thePrefs.OscilloSize = 128;
 		thePrefs.OscilloType = 0;	// OutPutAudio
-
+		
 		thePrefs.SpectrumSize = 128;
 		thePrefs.SpectrumType = 0;	// OutPutAudio
-	
+		
 		thePrefs.fileTypeExportSND = 1;
 		thePrefs.CompressionExportSND = 'NONE';
 		thePrefs.ActiveHelp = true;
-	
+		
 		thePrefs.UseOctaveMarkers = true;
 		thePrefs.UseMarkers = true;
 		thePrefs.MarkersSize = 3;
@@ -5561,9 +5547,9 @@ ReLoadPrefs:
 		thePrefs.DigitalVol = true;
 		thePrefs.MozartC2h = 0;
 		thePrefs.MozartC1h = 0;
-	
+		
 		GetDateTime( &thePrefs.firstStart);
-	
+		
 		thePrefs.WinHi[ RefTools] = 0;
 		thePrefs.WinPos[ RefTools].h = 0;
 		thePrefs.SoundTypeSamp = '\?\?\?\?';
@@ -5571,36 +5557,36 @@ ReLoadPrefs:
 		thePrefs.LinesHeight = 0;
 		thePrefs.SaveMusicList = false;
 		thePrefs.softVolumeLevel = 64;
-	
+		
 		thePrefs.oADAPremember = false;
 		thePrefs.oADAPsave = false;
 		thePrefs.oADAPuse = false;
-	
+		
 		thePrefs.osciTile = true;
-	
+		
 		thePrefs.addExtension = true;
 		thePrefs.clickSound = false;
 		thePrefs.patternWrapping = false;
 		thePrefs.AutoPlayWhenOpen = true;
 		thePrefs.OscilloLine = true;
-	//TODO: fix i386 code
+		//TODO: implement i386 code
 		if( thePrefs.PPCMachine) thePrefs.Interpolation = true;
 		else thePrefs.Interpolation = false;
 		thePrefs.MicroDelay = false;
 		thePrefs.MicroDelaySize = 30;	
-	
+		
 		thePrefs.Reverb = false;
 		thePrefs.ReverbStrength = 60;
 		thePrefs.ReverbSize = 25;
-//	thePrefs.DirectVideo = true;
+		//thePrefs.DirectVideo = true;
 		thePrefs.FinePositioning = true;
-	
+		
 		thePrefs.ChannelType		= DeluxeStereoOutPut;
 		thePrefs.amplitude			= 16;
 		thePrefs.Compressor			= 'NONE';
 		thePrefs.FrequenceSpeed		= rate44khz;
 		thePrefs.channelNumber		= 2;
-	
+		
 		thePrefs.DirectDriverType.numChn			= 4;
 		thePrefs.DirectDriverType.outPutBits		= 16;
 		thePrefs.DirectDriverType.outPutRate		= rate44khz;
@@ -5614,25 +5600,25 @@ ReLoadPrefs:
 		thePrefs.DirectDriverType.sysMemory			= false;
 		thePrefs.DirectDriverType.TickRemover		= true;
 		thePrefs.DirectDriverType.oversampling		= 4;
-	
+		
 		thePrefs.RecordAllTrack		= 1;	// all tracks !
-
+		
 		thePrefs.StaffShowAllNotes	= false;
 		thePrefs.StaffShowLength	= false;
 		thePrefs.TempsNum			= 4;
 		thePrefs.TempsUnit			= 4;
 		thePrefs.TrackHeight		= 130;
-	
+		
 		thePrefs.NewPrefSystem		= false;
 		pStrcpy( thePrefs.NewPrefsCode, "\p");
-	
+		
 		thePrefs.yellC.red 			= 65535;
 		thePrefs.yellC.green 		= 65535;
 		thePrefs.yellC.blue 		= 39321;
 		thePrefs.whichEditorPatterns= RefPartition;
-	
+		
 		thePrefs.numChn			= 4;					// Active tracks from 2 to 32, automatically setup when a new music is loaded
-	
+		
 		if( Audio16)
 		{
 			thePrefs.outPutBits		= 16;					// 8 or 16 Bits
@@ -5664,28 +5650,28 @@ ReLoadPrefs:
 		thePrefs.SendMIDIClockData	= false;
 		thePrefs.pianoOffset	= 0;
 		thePrefs.DontUseFilesMix = false;
-	
+		
 		thePrefs.previousSpec.generalPitch = 252;
 		thePrefs.previousSpec.generalSpeed = 252;
 		thePrefs.previousSpec.generalPan = 64;
 		thePrefs.previousSpec.EPitch = 8000;
 		thePrefs.previousSpec.ESpeed = 8000;
 		thePrefs.previousSpec.generalVol = 64;
-	
+		
 		for( i = 0 ; i < MAXTRACK; i++) thePrefs.previousSpec.chanPan[ i] = 256;
 		for( i = 0 ; i < MAXTRACK; i++) thePrefs.previousSpec.chanVol[ i] = 64;
-	
+		
 		for( i = 0; i < 20; i++)
 		{
 			thePrefs.FKeyActive[ i]		= false;
 			thePrefs.FKeyItem[ i] 		= 0;
 			thePrefs.FKeyWind[ i]		= 0;
 		}
-	
+		
 		pStrcpy( thePrefs.WinNames[ 0], "\pState 1");
 		pStrcpy( thePrefs.WinNames[ 1], "\pState 2");
 		pStrcpy( thePrefs.WinNames[ 2], "\pState 3");
-	
+		
 		for( x = 0; x < 3; x++)
 		{
 			for( i = 0; i < MAXWINDOWS; i++)
@@ -5697,9 +5683,9 @@ ReLoadPrefs:
 				thePrefs.WinIDO[ x][ i] = thePrefs.WinID[ i];
 			}
 		}
-	
+		
 		for( i = 0; i < MAXINSTRU; i++) thePrefs.OCArrow[ i] = true;
-	
+		
 		thePrefs.outPutMode = DeluxeStereoOutPut;
 		thePrefs.driverMode = SoundManagerDriver;
 		thePrefs.useEQ = false;
@@ -5707,26 +5693,26 @@ ReLoadPrefs:
 		thePrefs.editorSoundDrag = false;
 		thePrefs.channelNumber = 2;
 		thePrefs.FKeyTracks = true;
-	
+		
 		for( i = 0; i < EQPACKET*2; i++)	thePrefs.Filter[ i] = 1.0;
-	
+		
 		for( i = 0; i < MAXTRACK; i++) thePrefs.SelectedTracks[ i] = false;
-	
+		
 		pStrcpy( thePrefs.ASIODriverName, "\pApple Sound Manager");
-	
-	// Ecrasement par les vieilles preferences
+		
+		// Ecrasement par les vieilles preferences
 		if( tempPrefs != NULL)
 		{
 			BlockMoveData( tempPrefs, &thePrefs, GetPtrSize( (Ptr) tempPrefs));
-		
+			
 			DisposePtr( (Ptr) tempPrefs);
 			tempPrefs = NULL;
 		}
-	
+		
 		thePrefs.Version = VERSION;
-	
-	// Ecriture sur disque des preferences
-	
+		
+		// Ecriture sur disque des preferences
+		
 		inOutBytes = sizeof( Prefs);
 		iErr = SetFPos( fRefNum, fsFromStart, 0);
 #ifdef __LITTLE_ENDIAN__
@@ -5739,83 +5725,83 @@ ReLoadPrefs:
 		iErr = FSWrite( fRefNum, &inOutBytes, &thePrefs);
 #endif
 		iErr = FSCloseFork( fRefNum);
-	
+		
 		goto ReLoadPrefs;
-}
-else if( iErr != noErr) MyDebugStr( __LINE__, __FILE__, "ERROR PLAYER PREFS");
-else if( iErr == noErr)
-{
-	iErr = GetEOF( fRefNum, &inOutBytes);
-	
-	tempPrefs = (Prefs*) NewPtr( inOutBytes);
-	
-	iErr = FSRead( fRefNum, &inOutBytes, tempPrefs);
-	iErr = FSCloseFork( fRefNum);
-	SwapPrefs(tempPrefs);
-	
-	if( tempPrefs->Version != VERSION || inOutBytes != sizeof( Prefs))
+	}
+	else if( iErr != noErr) MyDebugStr( __LINE__, __FILE__, "ERROR PLAYER PREFS");
+	else if( iErr == noErr)
 	{
+		iErr = GetEOF( fRefNum, &inOutBytes);
 		
-	//	iErr = RstFLock( PLAYERPREF, 0);
-		iErr = FSpDelete( &spec);
+		tempPrefs = (Prefs*) NewPtr( inOutBytes);
 		
-		if( tempPrefs->Version >= 0x0500)
+		iErr = FSRead( fRefNum, &inOutBytes, tempPrefs);
+		iErr = FSCloseFork( fRefNum);
+		SwapPrefs(tempPrefs);
+		
+		if( tempPrefs->Version != VERSION || inOutBytes != sizeof( Prefs))
 		{
-			// RECUPERATION DES VIEILLES PREFS
+			
+			//iErr = RstFLock( PLAYERPREF, 0);
+			iErr = FSpDelete( &spec);
+			
+			if( tempPrefs->Version >= 0x0500)
+			{
+				// RECUPERATION DES VIEILLES PREFS
+			}
+			else
+			{
+				// DESTRUCTION TOTALE DES VIEILLES PREFS
+				
+				DisposePtr( (Ptr) tempPrefs);
+				tempPrefs = NULL;
+			}
+			
+			goto ReLoadPrefs;
 		}
 		else
 		{
-			// DESTRUCTION TOTALE DES VIEILLES PREFS
+			// SUCCES
 			
+			thePrefs = *tempPrefs;
 			DisposePtr( (Ptr) tempPrefs);
 			tempPrefs = NULL;
 		}
-		
-		goto ReLoadPrefs;
 	}
-	else
-	{
-		// SUCCES
-		
-		thePrefs = *tempPrefs;
-		DisposePtr( (Ptr) tempPrefs);
-		tempPrefs = NULL;
-	}
-}
-
-if( !HelpAvalaible) thePrefs.ActiveHelp = false;
-
-/*for( i = 0; i < 7; i++)
-{
-	BlockMoveData( &thePrefs.tracksColor[ i * 32], &thePrefs.tracksColor[ 32 + i * 32], 32 * 6);
-}*/
-
-/////////
-
-//SAUVEGARDER LES NOUVELLES PREFS !!!
-/*
-thePrefs.Registred	= false;
-thePrefs.SNumber	= 0;
-thePrefs.Decode		= 0;
-thePrefs.Version 	= VERSION;
-thePrefs.NoStart 	= 0;
-thePrefs.NewPrefSystem = false;
-for( i = 0; i < 30; i++) thePrefs.NewPrefsCode[ i] = 0;
-
-UseResFile( MainResFile);
-
-aHandle = Get1Resource( 'AGGA', 128);
-if( aHandle != NULL)
-{
-	RemoveResource( aHandle);
-	MyDisposHandle( & aHandle);
-}
-aHandle = MyNewHandle( sizeof( Prefs));
-BlockMoveData( &thePrefs, *aHandle, sizeof( Prefs));
-AddResource( aHandle, 'AGGA', 128, "\p");
-WriteResource( aHandle);
-ReleaseResource( aHandle);*/
-/////////
+	
+	if( !HelpAvalaible) thePrefs.ActiveHelp = false;
+	
+	/*for( i = 0; i < 7; i++)
+	 {
+	 BlockMoveData( &thePrefs.tracksColor[ i * 32], &thePrefs.tracksColor[ 32 + i * 32], 32 * 6);
+	 }*/
+	
+	/////////
+	
+	//SAUVEGARDER LES NOUVELLES PREFS !!!
+	/*
+	 thePrefs.Registred	= false;
+	 thePrefs.SNumber	= 0;
+	 thePrefs.Decode		= 0;
+	 thePrefs.Version 	= VERSION;
+	 thePrefs.NoStart 	= 0;
+	 thePrefs.NewPrefSystem = false;
+	 for( i = 0; i < 30; i++) thePrefs.NewPrefsCode[ i] = 0;
+	 
+	 UseResFile( MainResFile);
+	 
+	 aHandle = Get1Resource( 'AGGA', 128);
+	 if( aHandle != NULL)
+	 {
+	 RemoveResource( aHandle);
+	 MyDisposHandle( & aHandle);
+	 }
+	 aHandle = MyNewHandle( sizeof( Prefs));
+	 BlockMoveData( &thePrefs, *aHandle, sizeof( Prefs));
+	 AddResource( aHandle, 'AGGA', 128, "\p");
+	 WriteResource( aHandle);
+	 ReleaseResource( aHandle);*/
+	/////////
 }
 
 void HandleEdit(short item)

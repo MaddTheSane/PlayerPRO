@@ -10,7 +10,7 @@
 
 /** Utils Functions **/
 
-void GetDText (DialogPtr dlog, short item, StringPtr str)
+static void GetDText (DialogPtr dlog, short item, StringPtr str)
 {
 	Handle	itemHandle;
 	short	itemType;
@@ -20,7 +20,7 @@ void GetDText (DialogPtr dlog, short item, StringPtr str)
 	GetDialogItemText (itemHandle, str);
 }
 
-void SetDText (DialogPtr dlog, short item, Str255 str)
+static void SetDText (DialogPtr dlog, short item, Str255 str)
 {
 	ControlHandle	control;
 	OSErr			err;
@@ -30,9 +30,9 @@ void SetDText (DialogPtr dlog, short item, Str255 str)
 	DrawOneControl( control);
 }
 
-GDHandle	TheGDevice/*:0xCC8*/;
+static GDHandle	TheGDevice/*:0xCC8*/;
 
-void AutoPosition( DialogPtr aDia)
+static void AutoPosition( DialogPtr aDia)
 {
 	Point		Position, mouse;
 	Rect		ViewRect, caRect;
@@ -86,7 +86,7 @@ void AutoPosition( DialogPtr aDia)
 	ShowWindow( GetDialogWindow( aDia));
 }
 
-Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
+static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 {
 	if( row < 0) row = 0;
 	else if( row >= myPcmd->length) row = myPcmd->length -1;
@@ -99,7 +99,7 @@ Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 
 /** Main function **/
 
-OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+static OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
 	DialogPtr			myDia;
 	short				itemHit;
@@ -112,13 +112,12 @@ OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	SetDText( myDia, 3, "\p0");
 	SelectDialogItemText( myDia, 3, 0, 200);
 	
-	do
-	{
-		RESTART:
+	do {
+	RESTART:
 	
 		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 		
-	}while( itemHit != 1 && itemHit != 2);
+	} while( itemHit != 1 && itemHit != 2);
 	
 	if( itemHit == 1)
 	{
@@ -158,7 +157,7 @@ OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	return noErr;
 }
 
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xF9, 0x97, 0xDE, 0x0A, 0xC9, 0x56, 0x4A, 0x71, 0x93, 0x78, 0x14, 0x20, 0x50, 0x83, 0x94, 0xCC)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xF9, 0x97, 0xDE, 0x0A, 0xC9, 0x56, 0x4A, 0x71, 0x93, 0x78, 0x14, 0x20, 0x50, 0x83, 0x94, 0xCC)
 //F997DE0A-C956-4A71-9378-1420508394CC
 #define PLUGINFACTORY NoteTransFactory //The factory name as defined in the Info.plist file
 #define PLUGMAIN mainNoteTrans //The old main function, renamed please

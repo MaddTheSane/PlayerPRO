@@ -27,6 +27,7 @@
 #ifndef __MADI__
 #include "MAD.h"
 #endif
+#include <limits.h>
 
 ////////////////////////////////////////////////
 
@@ -35,6 +36,7 @@
 #include <Carbon/Carbon.h>
 #endif
 #include <CoreFoundation/CFPlugInCOM.h>
+#include <AudioUnit/AudioUnit.h>
 #endif
 
 ////////////////////////////////////////////////
@@ -46,9 +48,22 @@
 #endif
 #endif
 
+#ifdef LINUX
+#include <alsa/asoundlib.h>
+#endif
+
+#ifdef _ESOUND
+#include <esd.h>
+#endif
+
+#ifdef _OSSSOUND
+#warning headers not included!
+//TODO: include headers
+#endif
+
 //The following aren't defined in Mac headers, but are used
 enum{
-#if !defined(_MAC_H) || defined(__LP64__)
+#if !defined(_MAC_H)
 	rate48khz	= (UnsignedFixed)0xBB800000,
 	rate44khz	= (Fixed)0xAC440000,
 	rate32khz	= (Fixed)0x7D000000,
@@ -100,7 +115,7 @@ enum{
 /*** 			  		  Error messages 						***/
 /********************						***********************/
 
-enum
+enum MADErrors
 {
 	MADNeedMemory 					= -1,
 	MADReadingErr					= -2,
@@ -270,7 +285,7 @@ typedef struct MADMusic
 /*** 			     Driver Settings definition					***/
 /********************						***********************/
 
-enum
+enum MADSoundOutput
 {
 	oldASCSoundDriver = 1,			// MAC ONLY,	// NOT SUPPORTED anymore
 	oldAWACSoundDriver,				// MAC ONLY		// NOT SUPPORTED anymore
@@ -281,9 +296,31 @@ enum
 	BeOSSoundDriver,				// BE ONLY when using with BeOS compatible systems ! - NOT FOR MAC
 	DirectSound95NT,				// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
 	Wave95NT,						// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
-	NoHardwareDriver,				// NO HARDWARE CONNECTION, will not produce any sound
 	CoreAudioDriver,				// OSX ONLY Core Audio driver
-	ASIOSoundManager				// ASIO Sound Driver by Steinberg
+	ALSADriver,						// LINUX ONLY ALSA driver
+	OSSDriver,						// Open Sound System. Most Unices (NOT OS X) including Linux
+	ESDDriver,						// ESound Driver. available on most UNIX Systems
+	ASIOSoundManager,				// ASIO Sound Driver by Steinberg
+	NoHardwareDriver				// NO HARDWARE CONNECTION, will not produce any sound
+};
+
+//Used for MADSoundDriverList()
+enum MADSoundDriverAvailable
+{
+	oldASCSoundDriverBit		= 1 << oldASCSoundDriver,
+	oldAWACSoundDriverBit		= 1 << oldAWACSoundDriver,
+	MIDISoundDriverBit			= 1 << MIDISoundDriver,
+	SoundManagerDriverBit		= 1 << SoundManagerDriver,
+	QK25SoundDriverBit			= 1 << QK25SoundDriver,
+	DigiDesignSoundDriverBit	= 1 << DigiDesignSoundDriver,
+	BeOSSoundDriverBit			= 1 << BeOSSoundDriver,
+	DirectSound95NTBit			= 1 << DirectSound95NT,
+	Wave95NTBit					= 1 << Wave95NT,
+	CoreAudioDriverBit			= 1 << CoreAudioDriver,
+	ALSADriverBit				= 1 << ALSADriver,
+	OSSDriverBit				= 1 << OSSDriver,
+	ESDDriverBit				= 1 << ESDDriver,
+	ASIOSoundManagerBit			= 1 << ASIOSoundManager
 };
 
 enum
@@ -335,14 +372,14 @@ typedef struct MADDriverSettings
 //	Actual plug have to support these orders:
 //
 //	order: 'TEST':	check the AlienFile to see if your Plug really supports it.
-//	order: 'IMPT':	convert the AlienFile into a MADMusic. You have to allocate MADMusic.
+//	order: 'IMPL':	convert the AlienFile into a MADMusic. You have to allocate MADMusic.
 //	order: 'INFO':	Fill PPInfoRec structure.
-//	order: 'EXPT':	Convert the MADMusic into AlienFile. You have to create the AlienFile.
+//	order: 'EXPL':	Convert the MADMusic into AlienFile. You have to create the AlienFile.
 //					Don't delete the MADMusic Structure after conversion !!
 //
-//	An IMPORT plug have to support these orders: 'TEST', 'IMPT', 'INFO'
-//	An EXPORT plug have to support these orders: 'EXPT'
-// 	An IMPORT/EXPORT plug have to support these orders: 'TEST', 'IMPT', 'INFO', 'EXPT'
+//	An IMPORT plug have to support these orders: 'TEST', 'IMPL', 'INFO'
+//	An EXPORT plug have to support these orders: 'EXPL'
+// 	An IMPORT/EXPORT plug have to support these orders: 'TEST', 'IMPL', 'INFO', 'EXPL'
 //
 //	About Resources:
 //
@@ -425,17 +462,16 @@ typedef struct PPSndDoubleBufferHeader2 {
 } PPSndDoubleBufferHeader2;
 typedef PPSndDoubleBufferHeader2 *        PPSndDoubleBufferHeader2Ptr;
 
-#define kPlayerPROModFormatTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x84, 0xF8, 0x01, 0x09, 0x28, 0x85, 0x4E, 0x01, 0x8F, 0xFA, 0x88, 0xAC, 0x75, 0xF3, 0xE0, 0x33))
+#define kPlayerPROModFormatTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x84, 0xF8, 0x01, 0x09, 0x28, 0x85, 0x4E, 0x01, 0x8F, 0xFA, 0x88, 0xAC, 0x75, 0xF3, 0xE0, 0x33))
 //84F80109-2885-4E01-8FFA-88AC75F3E033
 
-#define kPlayerPROModFormatInterfaceID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x94, 0x15, 0xE3, 0x57, 0x0E, 0xD2, 0x4F, 0x9F, 0x9C, 0xA1, 0xB7, 0x28, 0x0C, 0x27, 0xF5, 0x9B))
+#define kPlayerPROModFormatInterfaceID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x94, 0x15, 0xE3, 0x57, 0x0E, 0xD2, 0x4F, 0x9F, 0x9C, 0xA1, 0xB7, 0x28, 0x0C, 0x27, 0xF5, 0x9B))
 //9415E357-0ED2-4F9F-9CA1-B7280C27F59B
 
 typedef struct _MADFileFormatPlugin {
     IUNKNOWN_C_GUTS;
 	OSErr (STDMETHODCALLTYPE *ThePlugMain)(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 } MADFileFormatPlugin;
-
 
 typedef struct PlugInfo
 {
@@ -454,16 +490,34 @@ typedef struct PlugInfo
 typedef OSErr (*PLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 struct PlugInfo
 {
-	HANDLE			hLibrary;
+	HMODULE			hLibrary;
 	PLUGDLLFUNC		IOPlug;										// Plug CODE
 	char			MenuName[ 65];								// Plug name
 	char			AuthorString[ 65];							// Plug author
-	char			file[ 255];									// Location of plug file
+	char			file[ MAX_PATH * 2];						// Location of plug file
 	char			type[ 5];									// OSType of file support
 	OSType			mode;										// Mode support : Import +/ Export
 };
 typedef struct PlugInfo PlugInfo;
 #endif
+
+#ifdef __UNIX__
+#include <dlfcn.h>
+#include <sys/param.h>  //For PATH_MAX
+typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
+struct PlugInfo
+{
+	void*			hLibrary;
+	MADPLUGFUNC		IOPlug;										// Plug CODE
+	char			MenuName[ 65];								// Plug name
+	char			AuthorString[ 65];							// Plug author
+	char			file[ PATH_MAX];							// Location of plug file
+	char			type[ 5];									// OSType of file support
+	OSType			mode;										// Mode support : Import +/ Export
+};
+typedef struct PlugInfo PlugInfo;
+#endif
+
 
 /********************						***********************/
 /*** 		Global structure : PlayerPRO variables				***/
@@ -483,18 +537,20 @@ struct MADLibrary
 };
 typedef struct MADLibrary MADLibrary;
 
-#define callback
+#ifndef __callback
+#define __callback
+#endif
 
 typedef struct AEffect AEffect;
 
 struct AEffect
 {
 	long magic;
-	long (callback *dispatcher)(AEffect *effect, long opCode, long index, long value,
+	long (__callback *dispatcher)(AEffect *effect, long opCode, long index, long value,
 		void *ptr, float opt);
-	void (callback *process)(AEffect *effect, float **inputs, float **outputs, long sampleframes);
-	void (callback *setParameter)(AEffect *effect, long index, float parameter);
-	float (callback *getParameter)(AEffect *effect, long index);
+	void (__callback *process)(AEffect *effect, float **inputs, float **outputs, long sampleframes);
+	void (__callback *setParameter)(AEffect *effect, long index, float parameter);
+	float (__callback *getParameter)(AEffect *effect, long index);
 
 	long numPrograms;
 	long numParams;
@@ -511,7 +567,7 @@ struct AEffect
 	void *user;
 	long uniqueID;
 	long version;
-	void (callback *processReplacing)(AEffect *effect, float **inputs, float **outputs, long sampleframes);
+	void (__callback *processReplacing)(AEffect *effect, float **inputs, float **outputs, long sampleframes);
 	char future[60];
 };
 
@@ -530,7 +586,6 @@ typedef struct
 	CFragConnectionID	connID; //TODO: use something more 64-bit friendly
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
-
 }	VSTEffect;
 #endif
 
@@ -567,12 +622,30 @@ typedef struct MADDriverRec
 	
 #ifdef _MAC_H
 	SndChannelPtr 			MusicChannelPP;									// The SndChannelPtr to apply SndDoCommand, etc.
-#endif																		// ONLY available if you are using MAC SoundManager driver
+																			// ONLY available if you are using MAC SoundManager driver
+
+	AudioUnit				CAAudioUnit;
+	UInt32					CABufLen;
+	UInt32					CABufOff;
+	Ptr 					CABuffer;
+#endif
 	
 #ifdef WIN32
 	LPDIRECTSOUND			lpDirectSound;									// The LPDIRECTSOUND to apply & get informations, etc.
 	LPDIRECTSOUNDBUFFER		lpDirectSoundBuffer, lpSwSamp;					// ONLY available if you are using Win95 DirectSound driver
-#endif	
+#endif
+
+#ifdef _OSSSOUND
+//TODO: OSS Sound Driver
+#endif
+
+#ifdef LINUX
+//TODO: ALSA Sound Driver
+#endif
+
+#ifdef _ESOUND
+	//TODO: EsounD driver
+#endif
 	
 	Ptr						OscilloWavePtr;									// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
 	long					OscilloWaveSize;								// Size of previous buffer
@@ -624,11 +697,7 @@ typedef struct MADDriverRec
 #ifdef _MAC_H
 	VSTEffect				*masterVST[ 10];
 	VSTEffect				*chanVST[ MAXTRACK][ 4];
-#if CALL_NOT_IN_CARBON
-	SndDoubleBufferHeader 	TheHeader;
-#else
 	PPSndDoubleBufferHeader 	TheHeader;
-#endif
 #endif
 
 } MADDriverRec;
@@ -637,7 +706,7 @@ typedef struct MADDriverRec
 /*** 					   EFFECTS ID							***/
 /********************						***********************/
 
-enum {
+enum MADEffectsID {
 		arpeggioE 		= 0,	//	0x00
 		downslideE 		= 1,	//	0x01
 		upslideE 		= 2,	//	0x02
@@ -677,6 +746,8 @@ OSErr	MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **M
 OSErr	MADDisposeLibrary( MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
 void	MADGetBestDriver( MADDriverSettings	*DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
+Boolean MADSoundDriverIsAvalable(short theDriver);
+int MADSoundDriverList();
 OSErr	MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
 OSErr	MADDisposeDriver( MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
 
@@ -701,6 +772,7 @@ OSErr	MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned ch
 OSErr	MADLoadMusicRsrc( MADMusic **music, OSType IDName, short IDNo);				// MAD ONLY - Load a MAD Rsrc into memory
 OSErr	MADLoadMusicPtr( MADMusic **music, Ptr myPtr);								// MAD ONLY - Load a MAD Ptr into memory, you can DisposPtr your Ptr after this call
 
+OSErr	MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef);	// Load a music file with plugs
 OSErr	MADLoadMusicFilePString( MADLibrary *, MADMusic **music, char *type, Str255 fName);			// Load a music file with plugs
 OSErr	MADLoadMusicFileCString( MADLibrary *, MADMusic **music, char *type, Ptr fName);			// Load a music file with plugs
 OSErr	MADLoadMusicFSpFile( MADLibrary *, MADMusic **music, char *type, FSSpec *theSpec);			// Load a music file with plugs
@@ -747,13 +819,20 @@ OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
 
 //Ptr MADNewPtr( long size, MADLibrary* init);
 //Ptr MADNewPtrClear( long size, MADLibrary* init);
-//Since we don't use MADLibrary anyway, redefining these terms
+//Since we don't use MADLibrary any more, redefining these terms
 #define MADNewPtr(size, madlib) NewPtr(size)
 #define MADNewPtrClear(size, madlib) NewPtrClear(size)
-#define MADPlugNewPtr(size, init) NewPtr(size)
-#define MADPlugNewPtrClear(size, init) NewPtrClear(size)
+#define MADPlugNewPtr(size, madlib) NewPtr(size)
+#define MADPlugNewPtrClear(size, madlib) NewPtrClear(size)
 	
-void MyDebugStr(short, Ptr, Ptr);									// Called when a fatal error occurs.... Normally, NEVER !
+Boolean MADIsDonePlaying(MADDriverRec *MDriver);
+
+void MADBeginExport(MADDriverRec *driver);
+void MADEndExport(MADDriverRec *driver);
+Boolean MADIsExporting(MADDriverRec *driver);
+
+Boolean MADWasReading(MADDriverRec *driver) DEPRECATED_ATTRIBUTE;
+void MADSetReading(MADDriverRec *driver, Boolean toSet) DEPRECATED_ATTRIBUTE;
 
 #ifdef __cplusplus
 }

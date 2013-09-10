@@ -28,25 +28,29 @@
 #define HI(para) ((para) >> 4)
 
 #ifdef _MAC_H
-#define Tdecode16(msg_buf) EndianU16_LtoN(*msg_buf);
+#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
+#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
 #else
-static inline UInt16 Tdecode16( void *msg_buf)
-{
-	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
-	return toswap;
-}
-#endif
+#ifdef __LITTLE_ENDIAN__
+#define Tdecode16(msg_buf) *(short*)msg_buf
+#define Tdecode32(msg_buf) *(int*)msg_buf
+#else
 
-#ifdef _MAC_H
-#define Tdecode32(msg_buf)  EndianU32_LtoN(*msg_buf);
-#else
 static inline UInt32 Tdecode32( void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
 	INT32(&toswap);
 	return toswap;
 }
+
+static inline UInt16 Tdecode16( void *msg_buf)
+{
+	UInt16 toswap = *((UInt16*) msg_buf);
+	INT16(&toswap);
+	return toswap;
+}
+
+#endif
 #endif
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
@@ -74,56 +78,57 @@ static OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriv
 	
 	/**** Variables pour le MAD ****/
 	Cmd				*aCmd;
-
+	
 	/**** Variables pour le ULT ****/
 	
 	ULTForm			ULTinfo;
 	ULTSuite		ULTSuite;
 	/********************************/
-
+	
 	for( i = 0 ; i < 64; i ++)
 	{
 		theInstrument[ i] = NULL;
 	}
-
+	
 	/**** Header principal *****/
 	theULTCopy = (Byte*) theULT;
 	
 	BlockMoveData( theULTCopy, &ULTinfo, sizeof( ULTinfo));
 	
-//	if( ULTinfo.reserved != 0) return MADFileNotSupportedByThisPlug;	// RES in v.1.4 see doc
+	//if( ULTinfo.reserved != 0) return MADFileNotSupportedByThisPlug;	// RES in v.1.4 see doc
 	
 	ULTSuite.NOS = *(theULTCopy + sizeof( ULTinfo) + ULTinfo.reserved * 32L);
 	
 	
 	/**** Ins Num *****/
-	if( sizeof( ULTIns) != 64) DebugStr("\pULTIns != 64");
+	if( sizeof( ULTIns) != 64) //DebugStr("\pULTIns != 64");
+		return MADIncompatibleFile;
 	ULTSuite.ins = (ULTIns*) NewPtrClear( ULTSuite.NOS * sizeof( ULTIns));
 	BlockMoveData( theULTCopy + sizeof( ULTinfo) + ULTinfo.reserved * 32L + 1, ULTSuite.ins, ULTSuite.NOS * sizeof( ULTIns));
 	
 	/**** Copy last infos *****/
 	BlockMoveData( theULTCopy + sizeof( ULTinfo) + ULTinfo.reserved * 32L + 1 + (ULTSuite.NOS * sizeof( ULTIns)), &ULTSuite.pattSeq, 256 + 2);
 	
-	// ******** Le ULT a ŽtŽ lu et analysŽ ***********
+	// ******** Le ULT a Ã©tÃ© lu et analysÃ© ***********
 	// ******** Copie des informations dans le MAD ***
 	
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);
 	if( theMAD->header == NULL) return MADNeedMemory;
-		
+	
 	theMAD->header->MAD = 'MADK';
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
 	for(i=0; i<32; i++) theMAD->header->name[i] = ULTinfo.name[i];
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO ULT Plug (©Antoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO ULT Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	theMAD->header->numPat			= ULTSuite.NOP;
 	theMAD->header->numPointers	= 1;					// CHANGE
 	theMAD->header->speed				= 6;
 	theMAD->header->tempo				= 125;
-
+	
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-
+	
 	for(i=0; i<128; i++) theMAD->header->oPointers[ i] = 0;
 	for(i=0; i<128; i++)
 	{
@@ -131,19 +136,19 @@ static OSErr ConvertULT2Mad( Ptr theULT, long MODSize, MADMusic *theMAD, MADDriv
 		
 		if( theMAD->header->oPointers[ i] < 0 || theMAD->header->oPointers[ i] >= 128) theMAD->header->oPointers[ i] = 0;
 	}
-
-for( i = 0; i < MAXTRACK; i++)
-{
-	if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-	else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
 	
-	theMAD->header->chanVol[ i] = MAX_VOLUME;
-}
-
+	for( i = 0; i < MAXTRACK; i++)
+	{
+		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
+		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		
+		theMAD->header->chanVol[ i] = MAX_VOLUME;
+	}
+	
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
-
+	
 	// ********************
 	// ***** INSTRUMENTS *****
 	// ********************
@@ -197,12 +202,12 @@ for( i = 0; i < MAXTRACK; i++)
 				case 12:
 				case 28:
 					curData->amp = 16;
-				break;
-				
+					break;
+					
 				default:
 					curData->amp			= 8;
-				break;
-				
+					break;
+					
 			}
 			
 			
@@ -217,7 +222,7 @@ for( i = 0; i < MAXTRACK; i++)
 				BlockMoveData( theULT + ULTSuite.ins[i].sizeStart, curData->data, curData->size);
 			}
 		}
-	//	else curIns->numSamples = 0;
+		//else curIns->numSamples = 0;
 	}
 	
 	theMAD->header->numChn = ULTSuite.NOC;
@@ -261,7 +266,7 @@ static OSErr ExtractULTInfo( PPInfoRec *info, Ptr AlienFile)
 	short		i, maxInstru, tracksNo;
 	ULTForm		ULTinfo;
 	/********************************/
-
+	
 	/**** Header principal *****/
 	BlockMoveData( AlienFile, &ULTinfo, 49);
 	
@@ -271,8 +276,9 @@ static OSErr ExtractULTInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	ULTinfo.name[ 31] = '\0';
-	pStrcpy( (unsigned char*) info->internalFileName, MYC2PStr( ULTinfo.name));
+	//ULTinfo.name[ 31] = '\0';
+	//pStrcpy( (unsigned char*) info->internalFileName, MYC2PStr( ULTinfo.name));
+	strlcpy(info->internalFileName, ULTinfo.name, sizeof(ULTinfo.name));
 	
 	/*** Total Patterns ***/
 	
@@ -305,7 +311,7 @@ static OSErr TestULTFile( Ptr AlienFile)
 	else return MADFileNotSupportedByThisPlug;
 }
 
-OSErr mainULT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+static OSErr mainULT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
@@ -400,10 +406,17 @@ OSErr mainULT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xC6, 0x59, 0x34, 0xC3, 0x9B, 0x3B, 0x44, 0x84, 0xA0, 0xBF, 0xF0, 0x24, 0x44, 0xE4, 0xD3, 0xFD))
+#ifdef _MAC_H
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xC6, 0x59, 0x34, 0xC3, 0x9B, 0x3B, 0x44, 0x84, 0xA0, 0xBF, 0xF0, 0x24, 0x44, 0xE4, 0xD3, 0xFD))
 //C65934C3-9B3B-4484-A0BF-F02444E4D3FD
 
 #define PLUGMAIN mainULT
 #define PLUGINFACTORY ULTFactory
 #include "CFPlugin-bridge.c"
+#else
+OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+{
+	return mainULT(order, AlienFileName, MadFile, info, init);
+}
+#endif
 

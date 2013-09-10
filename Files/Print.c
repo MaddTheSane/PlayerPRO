@@ -108,7 +108,7 @@ void InitPrinting(void)
 {
 #if MACOS9VERSION
 	
-	hPrint = (THPrint) MyNewHandle( sizeof( TPrint) + 5NULL);
+	hPrint = (THPrint) MyNewHandle( sizeof( TPrint) + 50L);
 	
 	PrOpen();
 	

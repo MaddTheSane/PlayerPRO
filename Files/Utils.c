@@ -16,8 +16,7 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "FileUtils.h"
-#include <QDOffscreen.h>
-#include <Navigation.h>
+#include <Carbon/Carbon.h>
 void SetFontStyle( DialogPtr dialog, SInt16 item, ControlFontStyleRec *style );
 
 void				PrefFilterPiano( DialogPtr theDialog, EventRecord *theEventI, short *itemHit);
@@ -46,9 +45,6 @@ extern	WindowPtr				oldWindow;
 extern	ProcessSerialNumber		playerPROPSN;
 extern	DialogPtr				AHelpDlog;
 extern	SndListHandle			InSound, OutSound;
-
-#include "Sound.h"
-#include "mixedmode.h"
 
 /************************************************************/
 /*static	long	oldMyDisposePtr;
@@ -84,22 +80,13 @@ void DePatchMyDisposePtr( &)
 
 unsigned char* MyC2PStr( Ptr cStr)
 {
-/*	long size = strlen( cStr);
-	BlockMoveData( cStr, cStr + 1, strlen( cStr));
-	cStr[ 0] = size;
-
-	return (unsigned char*) cStr;*/
 	return MYC2PStr(cStr);
 }
 
 void MyP2CStr( unsigned char *cStr)
 {
-/*	long size = cStr[ 0];
-	BlockMoveData( cStr + 1, cStr, size);
-	cStr[ size] = 0;*/
 	MYP2CStr(cStr);
 }
-
 
 void NNumToString( short no, Str255 aStr)
 {
@@ -118,6 +105,8 @@ void ByteSwapMADSpec(MADSpec *toSwap)
 	MOT32( &toSwap->MAD);
 	MOT16( &toSwap->speed);
 	MOT16( &toSwap->tempo);
+	MOT32( &toSwap->EPitch);
+	MOT32( &toSwap->ESpeed);
 }
 
 void ByteSwapPatHeader(PatHeader *toSwap)
@@ -134,17 +123,19 @@ void ByteSwapInstrData(InstrData *toSwap)
 	MOT16( &toSwap->numSamples);
 	MOT16( &toSwap->firstSample);
 	MOT16( &toSwap->volFade);
+	MOT16( &toSwap->MIDI);
+	MOT16( &toSwap->MIDIType);
 	
 	for( x = 0; x < 12; x++)
 	{
 		MOT16( &toSwap->volEnv[ x].pos);
 		MOT16( &toSwap->volEnv[ x].val);
-	}
-	
-	for( x = 0; x < 12; x++)
-	{
+
 		MOT16( &toSwap->pannEnv[ x].pos);
 		MOT16( &toSwap->pannEnv[ x].val);
+		
+		MOT16( &toSwap->pitchEnv[ x].pos);
+		MOT16( &toSwap->pitchEnv[ x].val);
 	}
 }
 
@@ -403,31 +394,31 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 		
 		switch ( (myIntEvent->message) & charCodeMask )
 		{
-		case 0x03:
-			*itemHit = 1;
-			return true;
-		break;
-		
-		case 0x0d:
-			if( GetWRefCon( GetDialogWindow( theDlg)) != 8775)
-			{
+			case 0x03:
 				*itemHit = 1;
 				return true;
-			}
-		break;
-
-		case 0x1b:
-			*itemHit = 2;
-			return true;
-		break;
-
-		default:
-		{
-			DialogSelect( myIntEvent, &whichDialog, itemHit);
+				break;
 			
-			return false;
-		}
-		break;
+			case 0x0d:
+				if( GetWRefCon( GetDialogWindow( theDlg)) != 8775)
+				{
+					*itemHit = 1;
+					return true;
+				}
+				break;
+
+				case 0x1b:
+					*itemHit = 2;
+					return true;
+					break;
+
+			default:
+			{
+				DialogSelect( myIntEvent, &whichDialog, itemHit);
+				
+				return false;
+			}
+			break;
 		}
 	}
 	else if( myIntEvent->what == nullEvent)

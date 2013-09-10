@@ -4,7 +4,7 @@
 /*	1996 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <Sound.h>
+#include <Carbon/Carbon.h>
 
 static OSErr TestMINS( InstrData *CC)
 {
@@ -75,13 +75,43 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	return noErr;
 }
 
-OSErr mainMINs(	OSType					order,						// Order to execute
-				InstrData				*InsHeader,					// Ptr on instrument header
-				sData					**sample,					// Ptr on samples data
-				short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
-																	// If sampleID == -1 : add sample else replace selected sample.
-				FSSpec					*AlienFileFSSpec,			// IN/OUT file
-				PPInfoPlug				*thePPInfoPlug)
+static inline void ByteswapsData(sData *toswap)
+{
+	MOT32(&toswap->size);
+	MOT16(&toswap->c2spd);
+	MOT32(&toswap->loopBeg);
+	MOT32(&toswap->loopSize);
+}
+
+static inline void ByteswapInstrument(InstrData *toswap)
+{
+	int i = 0;
+	MOT16(&toswap->MIDIType);
+	MOT16(&toswap->MIDI);
+	MOT16(&toswap->firstSample);
+	MOT16(&toswap->numSamples);
+	MOT16(&toswap->volFade);
+	
+	for (i = 0; i < 12; i++) {
+		MOT16(&toswap->pannEnv[i].pos);
+		MOT16(&toswap->pannEnv[i].val);
+		
+		MOT16(&toswap->pitchEnv[i].pos);
+		MOT16(&toswap->pitchEnv[i].val);
+		
+		MOT16(&toswap->volEnv[i].pos);
+		MOT16(&toswap->volEnv[i].val);
+	}
+}
+
+
+static OSErr mainMINs(OSType				order,						// Order to execute
+					  InstrData				*InsHeader,					// Ptr on instrument header
+					  sData					**sample,					// Ptr on samples data
+					  short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+					  // If sampleID == -1 : add sample else replace selected sample.
+					  FSSpec				*AlienFileFSSpec,			// IN/OUT file
+					  PPInfoPlug			*thePPInfoPlug)
 {
 	OSErr	myErr;
 	UNFILE	iFileRefI;
@@ -111,6 +141,8 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 					
 					myErr = FSRead( iFileRefI, &inOutCount, InsHeader);
 					
+					ByteswapInstrument(InsHeader);
+					
 					// READ samples headers & data
 					
 					for( x = 0; x < InsHeader->numSamples; x++)
@@ -121,12 +153,23 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 						
 						myErr = FSRead( iFileRefI, &inOutCount, curData);
 						
+						ByteswapsData(curData);
+						
 						curData->data = NewPtr( curData->size);
 						if( curData->data != NULL)
 						{
 							inOutCount = curData->size;
 							myErr = FSRead( iFileRefI, &inOutCount, curData->data);
 						}
+						
+						if( curData->amp == 16)
+						{
+							SInt32 	ll;
+							short	*shortPtr = (short*) curData->data;
+							
+							for( ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
+						}
+
 					}
 				}
 				
@@ -145,6 +188,8 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 				else
 				{
 					FSRead( iFileRefI, &inOutCount, theSound);
+					
+					ByteswapInstrument((InstrData*)theSound);
 					
 					myErr = TestMINS( (InstrData*) theSound);
 				}
@@ -166,21 +211,45 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 				// Write instrument header
 				
 				inOutCount = sizeof( InstrData);
-				myErr = FSWrite( iFileRefI, &inOutCount, InsHeader);
+				InstrData *tempIns = (InstrData*)NewPtr(inOutCount);
+				BlockMoveData(InsHeader, tempIns, inOutCount);
+				ByteswapInstrument(tempIns);
+				myErr = FSWrite( iFileRefI, &inOutCount, (Ptr)tempIns);
+				DisposePtr((Ptr)tempIns);
 				
 				// Write samples headers & data
 				
 				for( x = 0; x < InsHeader->numSamples; x++)
 				{
 					sData	*curData;
-					
+					sData	*copyData;
+					Ptr		copydataData;
 					curData = sample[ x];
+					copyData = (sData*)NewPtr(sizeof(sData));
+					BlockMoveData(curData, copyData, sizeof(sData));
+					ByteswapsData(copyData);
+					copydataData = NewPtr(curData->size);
+					BlockMoveData(curData->data, copydataData, curData->size);
+#ifdef __LITTLE_ENDIAN__
+					if( curData->amp == 16)
+					{
+						SInt32 	ll;
+						short	*shortPtr = (short*) copydataData;
+						
+						for( ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
+					}
+#endif
+					
+					copyData->data = 0;
 					
 					inOutCount = sizeof( sData);
-					myErr = FSWrite( iFileRefI, &inOutCount, curData);
+					FSWrite(iFileRefI, &inOutCount, copyData);
 					
 					inOutCount = curData->size;
-					myErr = FSWrite( iFileRefI, &inOutCount, curData->data);
+					FSWrite(iFileRefI, &inOutCount, copydataData);
+					DisposePtr((Ptr)copyData);
+					DisposePtr(copydataData);
+
 				}
 				FSCloseFork( iFileRefI);
 			}
@@ -195,7 +264,7 @@ OSErr mainMINs(	OSType					order,						// Order to execute
 }
 
 // 9C897935-C00B-4AAC-81D6-E43049E3A8E0
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x9C, 0x89, 0x79, 0x35, 0xC0, 0x0B, 0x4A, 0xAC, 0x81, 0xD6, 0xE4, 0x30, 0x49, 0xE3, 0xA8, 0xE0)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x9C, 0x89, 0x79, 0x35, 0xC0, 0x0B, 0x4A, 0xAC, 0x81, 0xD6, 0xE4, 0x30, 0x49, 0xE3, 0xA8, 0xE0)
 #define PLUGINFACTORY MINsFactory //The factory name as defined in the Info.plist file
 #define PLUGMAIN mainMINs //The old main function, renamed please
 

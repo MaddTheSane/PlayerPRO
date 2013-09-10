@@ -22,13 +22,28 @@
 #ifndef __MADI__
 #define __MADI__
 
+#ifdef __GNUC__
+#define HAS_LONG_LONG 1
+#define HAS_LONG_DOUBLE 1
+#endif
+
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#define EXP extern __attribute__((visibility("default")))
+#endif
+
+#ifdef _MSC_VER
+#define HAS_LONG_LONG 1
+//MSVC's long double datatype is the same size as a regular double
+#undef HAS_LONG_DOUBLE
+#endif
+
+#if !defined(__BIG_ENDIAN__) && defined(WORDS_BIGENDIAN)
+#define __BIG_ENDIAN__ 1
+#endif
 
 //////////////////////////////////////////////////////////////////////
 #if defined(__APPLE__)			// MACINTOSH
-#ifndef _MAC_H
 #define _MAC_H
-#endif
-#define EXP extern __attribute__((visibility("default")))
 
 #include <Carbon/Carbon.h>
 
@@ -43,6 +58,10 @@
 #endif
 #endif
 
+#ifdef LINUX
+#define __UNIX__ 1
+#endif
+
 #endif
 //////////////////////////////////////////////////////////////////////
 
@@ -50,13 +69,18 @@
 #define EXP __declspec(dllexport)
 #endif
 
-#if defined(WIN32) || defined (_BE_H)
+#if !defined(_MAC_H) && !defined(WIN32)
+#define pascal
+#endif
+
+#if !defined(_MAC_H)
 
 #if !defined(THINK_C)
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 typedef unsigned char 	Byte;
 typedef char 			*Ptr;
@@ -72,7 +96,6 @@ typedef int32_t			SInt32;
 typedef SInt16			OSErr;
 typedef UInt32			FourCharCode;
 typedef FourCharCode	OSType;
-typedef UInt8			Byte;
 typedef SInt32			Fixed;
 typedef UInt32			UnsignedFixed;
 
@@ -84,7 +107,6 @@ typedef UInt32			UnsignedFixed;
 //#define DisposPtr(x)				free(x)
 #define DisposePtr(x)				free(x)
 #define BlockMoveData(x,y,z)		memcpy(y,x,z)
-//#define BlockMoveData(x,y,z)			memcpy(y,x,z)
 //#define BlockZero(x, y)				memset(x, y, 0)
 static inline void BlockZero( void* a, long size)
 {
@@ -99,21 +121,21 @@ static inline void BlockZero( void* a, long size)
 
 #define MemError()					0
 
-#ifndef true
-#define true 	TRUE
+#ifndef TRUE
+#define TRUE 1
 #endif
 
-#ifndef false
-#define false	FALSE
+#ifndef FALSE
+#define FALSE 0
 #endif
 
-
-#define FSSpec	char
+typedef char	FSSpec;
+typedef char*	FSSpecPtr;
 enum {
 	noErr = 0
 };
 
-static void DebugStr( unsigned char* x)
+static inline void DebugStr( unsigned char* x)
 {
 	char *temp;
 	
@@ -161,7 +183,7 @@ typedef struct Cmd							// COMMAND
 	Byte 	arg;					// Effect argument
 	Byte	vol;					// Volume				0xFF : no volume cmd
 	Byte	unused;
-}Cmd;
+} Cmd;
 typedef Cmd MadCommand;
 
 typedef struct PatHeader					// HEADER
@@ -178,9 +200,8 @@ typedef struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
 {									// Pattern = 64 notes to play
 	PatHeader	header;
 	Cmd			Cmds[ 1];
-}PatData;
+} PatData;
 typedef PatData PatternData;
-
 
 
 // ***	
@@ -201,7 +222,7 @@ typedef struct sData								// SAMPLE
 	char 				name[ 32];			// Sample name
 	Byte				stereo;				// Stereo
 	Ptr					data;				// Used only in memory, not in files
-}sData;
+} sData;
 typedef sData SampleData;
 
 enum
@@ -215,7 +236,7 @@ typedef struct EnvRec				// Volume Enveloppe
 {
 	short 	pos;				// pos
 	short	val;				// val
-}EnvRec;
+} EnvRec;
 
 typedef struct InstrData				// INSTRUMENT
 {
@@ -260,7 +281,7 @@ typedef struct InstrData				// INSTRUMENT
 	
 	Byte	vibDepth;
 	Byte	vibRate;
-}InstrData;
+} InstrData;
 typedef InstrData InstrumentData;
 
 
@@ -321,7 +342,7 @@ typedef struct MADSpec
 	
 	long		chanEffect[ MAXTRACK][ 4];	// Channel Effect IDs
 	FXBus		chanBus[ MAXTRACK];
-}MADSpec;
+} MADSpec;
 
 typedef struct FXSets
 {
@@ -331,7 +352,7 @@ typedef struct FXSets
 	short	noArg;
 	float	values[ 100];
 	Str63	name;
-}FXSets;	// and then float values
+} FXSets;	// and then float values
 
 
 #if PRAGMA_STRUCT_ALIGN

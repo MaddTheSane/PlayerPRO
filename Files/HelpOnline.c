@@ -1,4 +1,3 @@
-
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
@@ -32,8 +31,8 @@ void					PrintTEHandle( TEHandle hTE);
 
 void ShowSection( short selectionID)
 {
-short		i;
-double		height;
+	short		i;
+	double		height;
 
 	if( HelpDlog == NULL)
 	{
@@ -160,96 +159,96 @@ void CreateHelpOnline( short whichSection)
 	long			GestaltResponse, inOutBytes, cParID;
 	OSErr			iErr;
 	FSSpec			spec;
-
-if( HelpDlog != NULL)
-{
-	SelectWindow2( GetDialogWindow( HelpDlog));
-	SetPortDialogPort( HelpDlog);
-	if( curSect != whichSection)
-	{
-		curSect = whichSection;
-		UpdateSection();
-	}
-	return;
-}
-
-SetItemMark( HelpMenu, 1, checkMark);
-
-curSect = whichSection;
-
-lineList = (long*) MyNewPtr( 8000);
-
-/** Lecture du fichier Help **/
-
-//HGetVol( NULL, &cVRef, &cParID);
-//HSetVol( NULL, mainVRefNum, mainParID);
-
-pStrcpy( spec.name, "\pHelp PP");
-spec.vRefNum = mainVRefNum;
-spec.parID = mainParID;
-
-iErr = FSpOpenDF( &spec, fsCurPerm, &iFileRefI);
-if( iErr)
-{
-	Erreur(56 , iErr);
-	return;
-}
-GetEOF( iFileRefI, &inOutBytes);
-Text = MyNewPtr( inOutBytes);
-FSRead( iFileRefI, &inOutBytes, Text);			
-FSCloseFork( iFileRefI);
-
-/*******************/
-
-/*
-if( iHelpPP != -1)
-{
-	theStyle = (StScrpHandle) Get1Resource( 'styl', 128);
-	if( theStyle != NULL) DetachResource( (Handle) theStyle);
 	
-	CreateMenuHelp();
-}*/
-
-//HSetVol( NULL, cVRef, cParID);
-
-GetPort( &myPort);
-
-HelpDlog = GetNewDialog( 169,NULL, (WindowPtr) -1L);
-SetPortDialogPort( HelpDlog);
-TextFont( 4);		TextSize( 9);
-
-SetWindEtat( GetDialogWindow(HelpDlog));
-
-/*** Zone Texte ***/
-
-GetPortBounds( GetDialogPort( HelpDlog), &itemRect);
-
-itemRect.bottom -=15;
-itemRect.right -=16;
-itemRect.left ++;
-
-hTE = TEStyleNew( &itemRect, &itemRect);
-
-/*** Zone Scroll ***/
-
-GetPortBounds( GetDialogPort( HelpDlog), &itemRect);
-
-itemRect.right++;
-itemRect.top--;
-itemRect.left = itemRect.right - 16;
-itemRect.bottom -= 14;
-
-vScroll = NewControl( GetDialogWindow( HelpDlog), &itemRect, "\p", true, 0, 0, 0, scrollBarProc, 0);
-SetControlReference( vScroll, 1);
-
-TESetAlignment( teCenter, hTE);
-if( theStyle != NULL) TEStyleInsert( Text, GetPtrSize( Text), theStyle, hTE);
-TEAutoView( true, hTE);
-TECalText( hTE);
-SetScroll( vScroll, hTE);
-
-SelectWindow2( GetDialogWindow( HelpDlog));
-ShowWindow( GetDialogWindow( HelpDlog));
+	if( HelpDlog != NULL)
+	{
+		SelectWindow2( GetDialogWindow( HelpDlog));
+		SetPortDialogPort( HelpDlog);
+		if( curSect != whichSection)
+		{
+			curSect = whichSection;
+			UpdateSection();
+		}
+		return;
+	}
+	
+	SetItemMark( HelpMenu, 1, checkMark);
+	
+	curSect = whichSection;
+	
+	lineList = (long*) MyNewPtr( 8000);
+	
+	/** Lecture du fichier Help **/
+	
+	//HGetVol( NULL, &cVRef, &cParID);
+	//HSetVol( NULL, mainVRefNum, mainParID);
+	
+	pStrcpy( spec.name, "\pHelp PP");
+	spec.vRefNum = mainVRefNum;
+	spec.parID = mainParID;
+	
+	iErr = FSpOpenDF( &spec, fsCurPerm, &iFileRefI);
+	if( iErr)
+	{
+		Erreur(56 , iErr);
+		return;
+	}
+	GetEOF( iFileRefI, &inOutBytes);
+	Text = MyNewPtr( inOutBytes);
+	FSRead( iFileRefI, &inOutBytes, Text);			
+	FSCloseFork( iFileRefI);
+	
+	/*******************/
+	
+	/*
+	 if( iHelpPP != -1)
+	 {
+	 theStyle = (StScrpHandle) Get1Resource( 'styl', 128);
+	 if( theStyle != NULL) DetachResource( (Handle) theStyle);
+	 
+	 CreateMenuHelp();
+	 }*/
+	
+	//HSetVol( NULL, cVRef, cParID);
+	
+	GetPort( &myPort);
+	
+	HelpDlog = GetNewDialog( 169,NULL, (WindowPtr) -1L);
+	SetPortDialogPort( HelpDlog);
+	TextFont( 4);		TextSize( 9);
+	
+	SetWindEtat( GetDialogWindow(HelpDlog));
+	
+	/*** Zone Texte ***/
+	
+	GetPortBounds( GetDialogPort( HelpDlog), &itemRect);
+	
+	itemRect.bottom -=15;
+	itemRect.right -=16;
+	itemRect.left ++;
+	
+	hTE = TEStyleNew( &itemRect, &itemRect);
+	
+	/*** Zone Scroll ***/
+	
+	GetPortBounds( GetDialogPort( HelpDlog), &itemRect);
+	
+	itemRect.right++;
+	itemRect.top--;
+	itemRect.left = itemRect.right - 16;
+	itemRect.bottom -= 14;
+	
+	vScroll = NewControl( GetDialogWindow( HelpDlog), &itemRect, "\p", true, 0, 0, 0, scrollBarProc, 0);
+	SetControlReference( vScroll, 1);
+	
+	TESetAlignment( teCenter, hTE);
+	if( theStyle != NULL) TEStyleInsert( Text, GetPtrSize( Text), theStyle, hTE);
+	TEAutoView( true, hTE);
+	TECalText( hTE);
+	SetScroll( vScroll, hTE);
+	
+	SelectWindow2( GetDialogWindow( HelpDlog));
+	ShowWindow( GetDialogWindow( HelpDlog));
 }
 
 void CloseHelpOnline(void)
@@ -270,11 +269,11 @@ void CloseHelpOnline(void)
 
 void DoGrowHelpOnline(void)
 {
-long		lSizeVH;
-GrafPtr	SavePort;
-Rect		caRect, temp, cellRect, tempRect;
-short	cur, tempB, tempA, itemType, avant;
-Handle	itemHandle;
+	long		lSizeVH;
+	GrafPtr		SavePort;
+	Rect		caRect, temp, cellRect, tempRect;
+	short		cur, tempB, tempA, itemType, avant;
+	Handle		itemHandle;
 
 	GetPort( &SavePort);
  	SetPortDialogPort( HelpDlog);
@@ -329,15 +328,15 @@ Handle	itemHandle;
 
 void DoItemPressHelpOnline( short whichItem, DialogPtr whichDialog)
 {
- 		short		bogus,itemType, ctlPart, i;
-		Point			Location, myPt;
-		Handle		itemHandle;
-		Rect			caRect, itemRect;
-		ControlHandle	theControl;
-		RgnHandle		saveClip;
-		GrafPtr		savePort;
-		long			mresult;
-		Str255		rName;
+	short		bogus,itemType, ctlPart, i;
+	Point			Location, myPt;
+	Handle		itemHandle;
+	Rect			caRect, itemRect;
+	ControlHandle	theControl;
+	RgnHandle		saveClip;
+	GrafPtr		savePort;
+	long			mresult;
+	Str255		rName;
 	
 	GetPort( &savePort);
 	SetPortDialogPort( whichDialog);
@@ -456,21 +455,20 @@ void DoContentHelp(WindowPtr theWindow, EventRecord *theEventI)
 	cntlCode = FindControl(theEventI->where, theWindow, &theControl);
 	switch( cntlCode)
 	{
-	case kControlIndicatorPart:
-		TrackControl(theControl, theEventI->where, NULL);
-		AdjustTextHelp( theControl);
-	break;
+		case kControlIndicatorPart:
+			TrackControl(theControl, theEventI->where, NULL);
+			AdjustTextHelp( theControl);
+			break;
 	
-	case kControlUpButtonPart:
-	case kControlDownButtonPart:
-	case kControlPageUpPart:
-	case kControlPageDownPart:
+		case kControlUpButtonPart:
+		case kControlDownButtonPart:
+		case kControlPageUpPart:
+		case kControlPageDownPart:
    
-		MyControlUPP = NewControlActionUPP( ScrollProcHelp);
-		TrackControl(theControl, theEventI->where, MyControlUPP);
-		DisposeControlActionUPP( MyControlUPP);
-	
-	break;
+			MyControlUPP = NewControlActionUPP( ScrollProcHelp);
+			TrackControl(theControl, theEventI->where, MyControlUPP);
+			DisposeControlActionUPP( MyControlUPP);
+			break;
 	}
 	
 	LocalToGlobal(&theEventI->where);

@@ -2,8 +2,6 @@ pascal void main(short msg, MenuHandle whichMenu, Rect *menuRect, Point hitPt, s
 	#define HIM		14
 	#define WIM		27
 
-void GetMDEFRect( Rect *aRect, Rect *menuRect, short whichItem);
-
 void GetMDEFRect( Rect *aRect, Rect *menuRect, short whichItem)
 {
 	short	Xpos, Ypos;

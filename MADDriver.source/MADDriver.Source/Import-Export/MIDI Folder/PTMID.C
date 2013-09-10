@@ -10,8 +10,6 @@
  *       29/6/1994  ver 0.3 - second release
  */
 
-void InitQuicktimeInstruments(void);
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,7 +17,7 @@ void InitQuicktimeInstruments(void);
 #include <PlayerPROCore/PlayerPROCore.h>
 //#include <stdarg.h>
 #include "PTMID.H"
-#include <dialogs.h>
+#include <Carbon/Carbon.h>
 
 #ifndef R_OK
 #define R_OK 4
@@ -48,15 +46,19 @@ static void Init(void)
 	}
 }
 
-void Settings()
+#ifdef QD_HEADERS_ARE_PRIVATE
+extern void InitCursor();
+#endif
+
+static void Settings()
 {
-short		itemHit;
-DialogPtr	aDialog;
-Handle		itemHandle;
-short		itemType;
-Rect		itemRect;
-Str255		str;
-long		r;
+	short		itemHit;
+	DialogPtr	aDialog;
+	Handle		itemHandle;
+	short		itemType;
+	Rect		itemRect;
+	Str255		str;
+	long		r;
 
 	
 	InitCursor();
@@ -121,11 +123,11 @@ long		r;
  */
 void  ConvertMidiFile( char	*src, MADMusic *theMAD, MADDriverSettings *init)
 {
-	int 		cNames = 0;
+	//int 		cNames = 0;
 	short		channels;
-	Sz 			fnDef;
+	//Sz 			fnDef;
 	Tune 		*ptuneMusic;
-	FInfo		fndrInfo;
+	//FInfo		fndrInfo;
 
 	Init();
 	

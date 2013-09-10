@@ -2,12 +2,7 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include <stdio.h>
-#include <QuicktimeComponents.h>
-#include <Sound.h>
-#include <Movies.h>
-#include <Drag.h>
-#include <MediaHandlers.h>
-#include <Controls.h>
+#include <QuickTime/QuickTime.h>
 
 #define MAXBAR 8
 

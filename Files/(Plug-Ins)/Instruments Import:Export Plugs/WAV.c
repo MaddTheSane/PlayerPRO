@@ -5,7 +5,7 @@
 #include <PlayerPROCore/PPDefs.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
-#include <Sound.h>
+#include <Carbon/Carbon.h>
 #include "WAV.h"
 
 /*______________________________________________________________________

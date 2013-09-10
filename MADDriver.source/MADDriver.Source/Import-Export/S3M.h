@@ -21,9 +21,7 @@
 //
 /********************						***********************/
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#endif
+#pragma pack(push, 2)
 
 typedef struct s3mform
 {
@@ -83,6 +81,4 @@ typedef struct s3minsform
 	unsigned char		inssig[ 4];
 } s3minsform;
                
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=reset
-#endif
+#pragma pack(pop)

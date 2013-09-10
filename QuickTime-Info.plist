@@ -10,6 +10,8 @@
 	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleSignature</key>
@@ -30,8 +32,6 @@
 			<string>26E9A321-0E15-48E3-8A94-062C46FDB875</string>
 		</array>
 	</dict>
-	<key>CSResourcesFileMapped</key>
-	<string>yes</string>
 	<key>MADPlugAuthorName</key>
 	<string>Copyright 99 Antoine ROSSET</string>
 	<key>MADPlugIsSample</key>

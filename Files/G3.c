@@ -1,4 +1,4 @@
-#include <Gestalt.h>
+#include <CoreServices/CoreServices.h>
 
 Boolean TestProcessorChip()
 {

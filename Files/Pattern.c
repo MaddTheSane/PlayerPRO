@@ -1,8 +1,7 @@
 #include "Shuddup.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Drag.h>
-#include <Aliases.h>
+#include <Carbon/Carbon.h>
 #include "Undo.h"
 
 #define ON	true
@@ -26,58 +25,57 @@ pascal OSErr MyPATTrackingHandler(short, WindowPtr, void *, DragReference);
 pascal OSErr MyPATReceiveDropHandler(WindowPtr, void*, DragReference);
 pascal OSErr MyPATSendDataProc(FlavorType, void *, ItemReference, DragReference);
 
-pascal Boolean myDragClickLoop(void);
 pascal OSErr MyPATTrackingHandler(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag);
 pascal OSErr MyPATReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, DragReference theDrag);
 pascal OSErr MyPATSendDataProc(FlavorType theFlavor, void *refCon, ItemReference theItem, DragReference theDrag);
 static short  AHelp[ AHELPSIZE] = { HNew, HLoad, HSave, HDel, HInfo, HOpenA, HList};
 
-	void DoHelpPatList( short **items, short *lsize)
-	{
-		*lsize = AHELPSIZE;
-		*items = AHelp;
-	}
+void DoHelpPatList( short **items, short *lsize)
+{
+	*lsize = AHELPSIZE;
+	*items = AHelp;
+}
 
-	/*****************************/
+/*****************************/
 
 
-	extern	EventRecord				theEvent;
-	extern	DialogPtr				EditorDlog, ClassicDlog;
-	extern	RGBColor				theColor;
-	extern	Boolean					DragManagerUse;
+extern	EventRecord				theEvent;
+extern	DialogPtr				EditorDlog, ClassicDlog;
+extern	RGBColor				theColor;
+extern	Boolean					DragManagerUse;
 
-			DialogPtr				PatListDlog;
-			
-	static 	ListHandle				PatList2;
-	static	Rect					PatRectList2, CurRect, CurChar;
-	static	short					PatCopy, ReaderCopy, HCell, LChar;
-	static	short					CurrentPat, CharNo;
-	static	short					DragPatSource;
-	static	long 					lastWhen = 0;
-	static	ControlHandle			myListControl, InfoBut, LoadBut, DelBut, SaveBut, NewBut, OpenBut;
-	static	Boolean					canAcceptDrag;
+		DialogPtr				PatListDlog;
+		
+static 	ListHandle				PatList2;
+static	Rect					PatRectList2, CurRect, CurChar;
+static	short					PatCopy, ReaderCopy, HCell, LChar;
+static	short					CurrentPat, CharNo;
+static	short					DragPatSource;
+static	long 					lastWhen = 0;
+static	ControlHandle			myListControl, InfoBut, LoadBut, DelBut, SaveBut, NewBut, OpenBut;
+static	Boolean					canAcceptDrag;
 
-	static	DragSendDataUPP			mySendDataUPP;
-	static	DragTrackingHandlerUPP	MyTrackingHandlerUPP;
-	static	DragReceiveHandlerUPP	MyReceiveDropHandlerUPP;
+static	DragSendDataUPP			mySendDataUPP;
+static	DragTrackingHandlerUPP	MyTrackingHandlerUPP;
+static	DragReceiveHandlerUPP	MyReceiveDropHandlerUPP;
 
-	void TurnRadio( short	item, DialogPtr	dlog, Boolean alors);
-	void SetPatList2( ListHandle	theList);
-	Boolean DialogPatternInfo( short);
-	Boolean DragPatternFunction( RgnHandle myRgn, short theNo, EventRecord *theEvent);
-	void LoadAPatternInt( FSSpec sFile, short selectedPos);
-	void SaveAPatternInt( FSSpec	sFile, short theID);
-	void DeleteAPattern( Boolean AskDelete);
-	void DuplicatePattern( short);
-	short GetPatternSelect();
+void TurnRadio( short	item, DialogPtr	dlog, Boolean alors);
+void SetPatList2( ListHandle	theList);
+Boolean DialogPatternInfo( short);
+Boolean DragPatternFunction( RgnHandle myRgn, short theNo, EventRecord *theEvent);
+void LoadAPatternInt( FSSpec sFile, short selectedPos);
+void SaveAPatternInt( FSSpec	sFile, short theID);
+void DeleteAPattern( Boolean AskDelete);
+void DuplicatePattern( short);
+short GetPatternSelect();
 
 static Boolean firstCall;
 
 static pascal Boolean myDragClickLoop( void)
 {
-Point		aPt, theCell;
-Rect		cellRect;
-RgnHandle	tempRgn;
+	Point		aPt, theCell;
+	Rect		cellRect;
+	RgnHandle	tempRgn;
 
 	if( DragManagerUse)
 	{
@@ -120,8 +118,8 @@ RgnHandle	tempRgn;
 static	ControlHandle	selectedControl;
 
 pascal OSErr MyPATTrackingHandler(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
-
-{	short				offset, i;
+{	
+	short				offset, i;
 	long				theTime = TickCount();
 	unsigned short		count, index;
 	unsigned long		flavorFlags, attributes;
@@ -169,11 +167,11 @@ pascal OSErr MyPATTrackingHandler(short message, WindowPtr theWindow, void *hand
 		    }
 		    
 		    if (attributes & kDragInsideSenderWindow) canAcceptDrag = true;
-		break;
+			break;
 
 		case kDragTrackingEnterWindow:
 		
-		break;
+			break;
 
 		case kDragTrackingInWindow:
 			GetDragMouse(theDrag, &theMouse, NULL);
@@ -223,16 +221,15 @@ pascal OSErr MyPATTrackingHandler(short message, WindowPtr theWindow, void *hand
 				
 				PatRectList2.right += 15;
 			}
-		break;
+			break;
 
 		case kDragTrackingLeaveWindow:
 			HideDragHilite( theDrag);
-		break;
+			break;
 
 		case kDragTrackingLeaveHandler:
 		
-		break;
-
+			break;
 	}
 	RGBBackColor( &theColor);
 
@@ -352,6 +349,7 @@ pascal OSErr MyPATSendDataProc(FlavorType theFlavor,  void *refCon, ItemReferenc
 	Handle			theSound;
 	long			SoundSize;
 	Str255			aStr;
+	Str255			bStr;
 	WDPBRec			wdpb;
 
 	if (theFlavor == 'VCT2')
@@ -376,16 +374,17 @@ pascal OSErr MyPATSendDataProc(FlavorType theFlavor,  void *refCon, ItemReferenc
 		PBHSetVol( &wdpb, false);
 		HGetVol( NULL, &target.vRefNum, &target.parID);
 		
-		target.name[ 0] = 20;
-		for( x = 0; x < 20; x++) target.name[ x + 1] = curMusic->partition[ DragPatSource]->header.name[ x];
-		for( x = 1; x < 20; x++) if( target.name[ x] == 0) { target.name[ 0] = x - 1; break;}
+		bStr[ 0] = 20;
+		for( x = 0; x < 20; x++) bStr[ x + 1] = curMusic->partition[ DragPatSource]->header.name[ x];
+		for( x = 1; x < 20; x++) if( bStr[ x] == 0) { bStr[ 0] = x - 1; break;}
 
-		if( target.name[ 0] == 0)
+		if( bStr[ 0] == 0)
 		{
 			NumToString( DragPatSource, aStr);
-			pStrcpy( target.name, "\pPattern #");
-			pStrcat( target.name, aStr);
+			pStrcpy( bStr, "\pPattern #");
+			pStrcat( bStr, aStr);
 		}
+		FSMakeFSSpec(target.vRefNum, target.parID, bStr, &target);
 
 		HSetVol( NULL, target.vRefNum, target.parID);
 		
@@ -1227,13 +1226,13 @@ void UpdatePartitionWindow( DialogPtr);
 
 void DoGrowPatList( DialogPtr theDialog)
 {
-long		lSizeVH;
-GrafPtr		SavePort;
-Rect		caRect, temp, cellRect, tempRect;
-short			cur, tempB, tempA, itemType, avant;
-Handle		itemHandle;
-Point		theCell = { 0, 0}, aPt = { 0, 0};
-BitMap		screenBits;
+	long		lSizeVH;
+	GrafPtr		SavePort;
+	Rect		caRect, temp, cellRect, tempRect;
+	short		cur, tempB, tempA, itemType, avant;
+	Handle		itemHandle;
+	Point		theCell = { 0, 0}, aPt = { 0, 0};
+	BitMap		screenBits;
 
 
 	GetPort( &SavePort);
@@ -1356,9 +1355,9 @@ void  UpdatePatListWindow(DialogPtr GetSelection)  	/* Pointer to this dialog */
 
 void DoNullPattern(void)
 {
-Cell		theCell;
-GrafPtr		SavePort;
-Rect		caRect;
+	Cell		theCell;
+	GrafPtr		SavePort;
+	Rect		caRect;
 
 	if( PatListDlog == NULL) return;
 	
@@ -1614,229 +1613,229 @@ void OpenSelectedPattern( short no)
 
 void DoItemPressPatList( short whichItem, DialogPtr whichDialog)    			/* Item hit ID to pass to Dialog function */
 {
-		Cell			theCell, destCell;
-		long			tempLong, lDistVH;
- 		short			temp, temp2;
- 		RgnHandle		theRgn;
- 		Rect			cellRect, itemRect;
- 		GrafPtr			SavePort;
- 		Cmd				theCommand;
- 		Point			myPt;
- 		Boolean			DoubleClick;
- 		ControlHandle	control;
- 		
- 		GetPort( &SavePort);
- 		SetPortDialogPort( PatListDlog);
- 		
- 		TextFont(4);
- 		TextSize(9);
- 		
-		if (theEvent.what == mouseDown)
-		{
-				myPt = theEvent.where;
-				GlobalToLocal(&myPt);
-				
-				DoubleClick = false;
-				
-			//	FindControl( myPt, GetDialogWindow( whichDialog), &control);
-				
-				if (PtInRect( myPt, &PatRectList2) == true)
-				{
-					firstCall = true;
-					
-					if( TrackControl( myListControl, myPt, (ControlActionUPP)-1L) == 25) DoubleClick = true;
-					
-					theCell.v = theCell.h = 0;
-					if( LGetSelect( true, &theCell, PatList2))
-					{
-						HiliteControl( InfoBut, 0);
-						HiliteControl( DelBut, 0);
-						HiliteControl( SaveBut, 0);
-						HiliteControl( OpenBut, 0);
-						
-						if( DoubleClick)
-						{
-							OpenSelectedPattern( theCell.v);
-						}
-					}
-					else
-					{
-						HiliteControl( InfoBut, 255);
-						HiliteControl( DelBut, 255);
-						HiliteControl( SaveBut, 255);
-						HiliteControl( OpenBut, 255);
-					}
-				}
-		}
+	Cell			theCell, destCell;
+	long			tempLong, lDistVH;
+	short			temp, temp2;
+	RgnHandle		theRgn;
+	Rect			cellRect, itemRect;
+	GrafPtr			SavePort;
+	Cmd				theCommand;
+	Point			myPt;
+	Boolean			DoubleClick;
+	ControlHandle	control;
+	
+	GetPort( &SavePort);
+	SetPortDialogPort( PatListDlog);
+	
+	TextFont(4);
+	TextSize(9);
+	
+	if (theEvent.what == mouseDown)
+	{
+		myPt = theEvent.where;
+		GlobalToLocal(&myPt);
 		
-		switch( whichItem)
+		DoubleClick = false;
+		
+		//	FindControl( myPt, GetDialogWindow( whichDialog), &control);
+		
+		if (PtInRect( myPt, &PatRectList2) == true)
 		{
-		/*	case 1:
-				itemRect = PatRectList2;
-				itemRect.right -= 16;
-					myPt = theEvent.where;
-					GlobalToLocal(&myPt);
-				
-				if (PtInRect( myPt, &itemRect) == true)
-				{
-					firstCall = true;
-					
-					
-					DoubleClick = false;
-					if( TrackControl( myListControl, myPt, (ControlActionUPP)-1L) == 25) DoubleClick = true;
-					
-					theCell.v = theCell.h = 0;
-					if( LGetSelect( true, &theCell, PatList2))
-					{
-						HiliteControl( InfoBut, 0);
-						HiliteControl( DelBut, 0);
-						HiliteControl( SaveBut, 0);
-						HiliteControl( OpenBut, 0);
-						
-						if( DoubleClick)
-						{
-							OpenSelectedPattern( theCell.v);
-						}
-					}
-					else
-					{
-						HiliteControl( InfoBut, 255);
-						HiliteControl( DelBut, 255);
-						HiliteControl( SaveBut, 255);
-						HiliteControl( OpenBut, 255);
-					}
-				}
-			break;*/
+			firstCall = true;
 			
-			case 3:
+			if( TrackControl( myListControl, myPt, (ControlActionUPP)-1L) == 25) DoubleClick = true;
+			
+			theCell.v = theCell.h = 0;
+			if( LGetSelect( true, &theCell, PatList2))
+			{
+				HiliteControl( InfoBut, 0);
+				HiliteControl( DelBut, 0);
+				HiliteControl( SaveBut, 0);
+				HiliteControl( OpenBut, 0);
+				
+				if( DoubleClick)
+				{
+					OpenSelectedPattern( theCell.v);
+				}
+			}
+			else
+			{
+				HiliteControl( InfoBut, 255);
+				HiliteControl( DelBut, 255);
+				HiliteControl( SaveBut, 255);
+				HiliteControl( OpenBut, 255);
+			}
+		}
+	}
+	
+	switch( whichItem)
+	{
+			/*	case 1:
+			 itemRect = PatRectList2;
+			 itemRect.right -= 16;
+			 myPt = theEvent.where;
+			 GlobalToLocal(&myPt);
+			 
+			 if (PtInRect( myPt, &itemRect) == true)
+			 {
+			 firstCall = true;
+			 
+			 
+			 DoubleClick = false;
+			 if( TrackControl( myListControl, myPt, (ControlActionUPP)-1L) == 25) DoubleClick = true;
+			 
+			 theCell.v = theCell.h = 0;
+			 if( LGetSelect( true, &theCell, PatList2))
+			 {
+			 HiliteControl( InfoBut, 0);
+			 HiliteControl( DelBut, 0);
+			 HiliteControl( SaveBut, 0);
+			 HiliteControl( OpenBut, 0);
+			 
+			 if( DoubleClick)
+			 {
+			 OpenSelectedPattern( theCell.v);
+			 }
+			 }
+			 else
+			 {
+			 HiliteControl( InfoBut, 255);
+			 HiliteControl( DelBut, 255);
+			 HiliteControl( SaveBut, 255);
+			 HiliteControl( OpenBut, 255);
+			 }
+			 }
+			 break;*/
+			
+		case 3:
 			if( MyTrackControl( LoadBut, theEvent.where, NULL))
 			{
 				HandlePatternChoice( 5);
 			}
 			break;
 			
-			case 4:
+		case 4:
 			if( GetControlHilite( SaveBut) == 0 && MyTrackControl( SaveBut, theEvent.where, NULL))
 			{
 				HandlePatternChoice( 6);
 			}
 			break;
 			
-			case 5:
+		case 5:
 			if( GetControlHilite( DelBut) == 0 && MyTrackControl( DelBut, theEvent.where, NULL))
 			{
 				HandlePatternChoice( 8);
 			}
 			break;
 			
-			case 6:
+		case 6:
 			if( GetControlHilite( InfoBut) == 0 && MyTrackControl( InfoBut, theEvent.where, NULL))
 			{
 				DialogPatternInfo( GetPatternSelect());
 			}
 			break;
-			case 7:
+		case 7:
 			if( MyTrackControl( NewBut, theEvent.where, NULL))
 			{
 				HandlePatternChoice( 4);
 			}
 			break;
-			case 8:
+		case 8:
 			if(  GetControlHilite( OpenBut) == 0 && MyTrackControl( OpenBut, theEvent.where, NULL))
 			{
 				theCell.v = theCell.h = 0;
 				if( LGetSelect( true, &theCell, PatList2))
 				{
-				/*	MADDriver->Pat = theCell.v;
-					MADDriver->PartitionReader = 0;
-					MADPurgeTrack( MADDriver);
-					
-					if( ClassicDlog != NULL) SelectWindow2( ClassicDlog);
-					else CreateClassicWindow();*/
+					/*	MADDriver->Pat = theCell.v;
+					 MADDriver->PartitionReader = 0;
+					 MADPurgeTrack( MADDriver);
+					 
+					 if( ClassicDlog != NULL) SelectWindow2( ClassicDlog);
+					 else CreateClassicWindow();*/
 					
 					OpenSelectedPattern( theCell.v);
 				}
 			}
 			break;
-		}
-		
-		SetPort( SavePort);
+	}
+	
+	SetPort( SavePort);
 }
 
 void SetPatList2( ListHandle	theList)
 {
-		short   			theRow; 				/* The Row that we are adding */
-		Point   			cSize;  				/*  Pointer to a cell in a list  */
- 		Str255				String;
- 		short				i, tt, val, temp, dataLen;
- 		Ptr					stemp, mainStr;
-		short				tFont, tSize;		
-		GrafPtr				SavePort;
- 
- 		GetPort( &SavePort);
- 		SetPortDialogPort( PatListDlog);
+	short   			theRow; 				/* The Row that we are adding */
+	Point   			cSize;  				/*  Pointer to a cell in a list  */
+	Str255				String;
+	short				i, tt, val, temp, dataLen;
+	Ptr					stemp, mainStr;
+	short				tFont, tSize;		
+	GrafPtr				SavePort;
 
-		TextFont( 4);
-		TextSize( 9);
+	GetPort( &SavePort);
+	SetPortDialogPort( PatListDlog);
 
-		stemp = MyNewPtr(300);
- 		mainStr = MyNewPtr(300);
- 		
- 		if( curMusic->header->numPat - (*theList)->dataBounds.bottom > 0)
-		{
-			LAddRow( curMusic->header->numPat - (*theList)->dataBounds.bottom, 0, theList);
-		}
-		else if( curMusic->header->numPat - (*theList)->dataBounds.bottom < 0)
-		{
-			LDelRow( (*theList)->dataBounds.bottom - curMusic->header->numPat, 0, theList);
-		}
-		 		
-		for(tt = 0; tt < curMusic->header->numPat; tt++)
-		{
-			cSize.v = tt;
-			
-			// ID
-			
-			NumToString( (long) tt, (unsigned char*) stemp);
-			MyP2CStr( (unsigned char*) stemp);
-			strcpy( mainStr, "");
-			if( tt< 10) strcat( mainStr, " ");
-			if( tt< 100) strcat( mainStr, " ");
-			strcat( mainStr, stemp);
+	TextFont( 4);
+	TextSize( 9);
 
-			// SIZE
+	stemp = MyNewPtr(300);
+	mainStr = MyNewPtr(300);
+	
+	if( curMusic->header->numPat - (*theList)->dataBounds.bottom > 0)
+	{
+		LAddRow( curMusic->header->numPat - (*theList)->dataBounds.bottom, 0, theList);
+	}
+	else if( curMusic->header->numPat - (*theList)->dataBounds.bottom < 0)
+	{
+		LDelRow( (*theList)->dataBounds.bottom - curMusic->header->numPat, 0, theList);
+	}
 			
-			strcat( mainStr, " - ");
-			NumToString( (long) curMusic->partition[ tt]->header.size, (unsigned char*) stemp);
-			MyP2CStr( (unsigned char*) stemp);
-			if( curMusic->partition[ tt]->header.size< 100) strcat( mainStr, " ");
-			strcat( mainStr, stemp);
-			strcat( mainStr, "x");
-			NumToString( (long) curMusic->header->numChn, (unsigned char*) stemp);
-			MyP2CStr( (unsigned char*) stemp);
-			if( curMusic->header->numChn< 10) strcat( mainStr, " ");
-			strcat( mainStr, stemp);
-			
-			// NAME
-			
-			strcat( mainStr, " - ");
-			strncpy( stemp, curMusic->partition[ tt]->header.name, 20);
-			strcat( mainStr, stemp);
-
-			cSize.h = 0;
-			
-			dataLen = 200;
-			LGetCell( stemp, &dataLen, cSize, PatList2);
-			stemp[ dataLen] = '\0';
-			
-			if( strcmp( stemp, mainStr) != 0)
-				LSetCell( mainStr, strlen( mainStr), cSize, theList);
-		}
+	for(tt = 0; tt < curMusic->header->numPat; tt++)
+	{
+		cSize.v = tt;
 		
-		MyDisposePtr( & mainStr);	mainStr = NULL;
-		MyDisposePtr( & stemp);		stemp = NULL;
+		// ID
+		
+		NumToString( (long) tt, (unsigned char*) stemp);
+		MyP2CStr( (unsigned char*) stemp);
+		strcpy( mainStr, "");
+		if( tt< 10) strcat( mainStr, " ");
+		if( tt< 100) strcat( mainStr, " ");
+		strcat( mainStr, stemp);
 
-		SetPort( SavePort);
+		// SIZE
+		
+		strcat( mainStr, " - ");
+		NumToString( (long) curMusic->partition[ tt]->header.size, (unsigned char*) stemp);
+		MyP2CStr( (unsigned char*) stemp);
+		if( curMusic->partition[ tt]->header.size< 100) strcat( mainStr, " ");
+		strcat( mainStr, stemp);
+		strcat( mainStr, "x");
+		NumToString( (long) curMusic->header->numChn, (unsigned char*) stemp);
+		MyP2CStr( (unsigned char*) stemp);
+		if( curMusic->header->numChn< 10) strcat( mainStr, " ");
+		strcat( mainStr, stemp);
+		
+		// NAME
+		
+		strcat( mainStr, " - ");
+		strncpy( stemp, curMusic->partition[ tt]->header.name, 20);
+		strcat( mainStr, stemp);
+
+		cSize.h = 0;
+		
+		dataLen = 200;
+		LGetCell( stemp, &dataLen, cSize, PatList2);
+		stemp[ dataLen] = '\0';
+		
+		if( strcmp( stemp, mainStr) != 0)
+			LSetCell( mainStr, strlen( mainStr), cSize, theList);
+	}
+	
+	MyDisposePtr( & mainStr);	mainStr = NULL;
+	MyDisposePtr( & stemp);		stemp = NULL;
+
+	SetPort( SavePort);
 }
 
 void CreatePatListWindow(void)
@@ -1847,13 +1846,13 @@ void CreatePatListWindow(void)
 	Point		cSize, theCell = { 0, 0};
 	FontInfo	ThisFontInfo;
 	Str255		String;
-
+	
 	if( PatListDlog != NULL)
 	{
 		SetWindEtat( GetDialogWindow(PatListDlog));
 		return;
 	}
-
+	
 	PatListDlog = GetNewDialog( 144, NULL, GetDialogWindow( ToolsDlog));
 	
 	SetWindEtat( GetDialogWindow(PatListDlog));
@@ -1866,7 +1865,7 @@ void CreatePatListWindow(void)
 	GetFontInfo(&ThisFontInfo);			/* Get the current font sizes */
 	LChar = ThisFontInfo.widMax;
 	HCell = cSize.v = ThisFontInfo.ascent + ThisFontInfo.descent + ThisFontInfo.leading;/* Height of a cell */
-
+	
 	/* Activable pattern list */
 	
 	GetPortBounds( GetDialogPort( PatListDlog), &caRect);
@@ -1875,9 +1874,9 @@ void CreatePatListWindow(void)
 	
 	PatRectList2.right = 200;
 	PatRectList2.bottom = 2000;
-
+	
 	MySizeWindow( PatListDlog, PatRectList2.right, caRect.bottom, false);
-
+	
 	tempRect = PatRectList2;
 	SetRect( &dataBounds, 0, 0, 1, curMusic->header->numPointers);
 	cSize.h = (tempRect.right - tempRect.left);	/* Width of the list */
@@ -1918,81 +1917,81 @@ void CreatePatListWindow(void)
 	GetDialogItem( PatListDlog , 6, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	InfoBut = NewControl( 	GetDialogWindow( PatListDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							149,
-							kControlBevelButtonNormalBevelProc,
-							0);
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 149,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
 	GetDialogItem( PatListDlog , 3, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	LoadBut = NewControl( 	GetDialogWindow( PatListDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							152,
-							kControlBevelButtonNormalBevelProc,
-							0);
-
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 152,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
+	
 	GetDialogItem( PatListDlog , 5, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	DelBut = NewControl( 	GetDialogWindow( PatListDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							150,
-							kControlBevelButtonNormalBevelProc,
-							0);
+						&itemRect,
+						"\p",
+						true,
+						0,
+						kControlContentIconSuiteRes,
+						150,
+						kControlBevelButtonNormalBevelProc,
+						0);
 	GetDialogItem( PatListDlog , 4, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	SaveBut = NewControl( 	GetDialogWindow( PatListDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							151,
-							kControlBevelButtonNormalBevelProc,
-							0);
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 151,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
 	GetDialogItem( PatListDlog , 7, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	NewBut = NewControl( 	GetDialogWindow( PatListDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							154,
-							kControlBevelButtonNormalBevelProc,
-							0);
+						&itemRect,
+						"\p",
+						true,
+						0,
+						kControlContentIconSuiteRes,
+						154,
+						kControlBevelButtonNormalBevelProc,
+						0);
 	GetDialogItem( PatListDlog , 8, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	OpenBut = NewControl( 	GetDialogWindow( PatListDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							159,
-							kControlBevelButtonNormalBevelProc,
-							0);
-							
-if( DragManagerUse)
-{
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 159,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
+	
+	if( DragManagerUse)
+	{
 		MyTrackingHandlerUPP 		= NewDragTrackingHandlerUPP( MyPATTrackingHandler);
 		MyReceiveDropHandlerUPP 	= NewDragReceiveHandlerUPP( MyPATReceiveDropHandler);
 		mySendDataUPP 				= NewDragSendDataUPP( MyPATSendDataProc);
 		
 		InstallTrackingHandler( (DragTrackingHandlerUPP) MyTrackingHandlerUPP, GetDialogWindow( PatListDlog), (void *) NULL);
 		InstallReceiveHandler( (DragReceiveHandlerUPP) MyReceiveDropHandlerUPP, GetDialogWindow( PatListDlog), (void *) NULL);
-}
-
+	}
+	
 }
 
 void ClosePatList(void)
@@ -2019,9 +2018,9 @@ void ClosePatList(void)
 
 void DuplicatePattern( short PatID)
 {
-long					oldSize, newSize;
-Boolean					MusiqueOn = false;
-Point					theCell = { 0, 0};
+	long			oldSize, newSize;
+	Boolean			MusiqueOn = false;
+	Point			theCell = { 0, 0};
 
 	/****** ALLOCATION *********/
 	
@@ -2036,34 +2035,34 @@ Point					theCell = { 0, 0};
 
 void DoUpDown( short theChar, ListHandle	theList)
 {
-Point	theCell;
-
-TextFont( 4);	TextSize( 9);
-theCell.v = 0;	theCell.h = 0;
-
-if( LGetSelect( true, &theCell, theList))
-{
-	if( theChar == 0x1E)
+	Point	theCell;
+	
+	TextFont( 4);	TextSize( 9);
+	theCell.v = 0;	theCell.h = 0;
+	
+	if( LGetSelect( true, &theCell, theList))
 	{
-		if( theCell.v > 0)
+		if( theChar == 0x1E)
 		{
-			LSetSelect( false, theCell, theList);
-			theCell.v--;
-			LSetSelect( true, theCell, theList);
-			LAutoScroll( theList);
+			if( theCell.v > 0)
+			{
+				LSetSelect( false, theCell, theList);
+				theCell.v--;
+				LSetSelect( true, theCell, theList);
+				LAutoScroll( theList);
+			}
+		}
+		else if( theChar == 0x1F) 
+		{
+			if( theCell.v < (*theList)->dataBounds.bottom -1)
+			{
+				LSetSelect( false, theCell, theList);
+				theCell.v++;
+				LSetSelect( true, theCell, theList);
+				LAutoScroll( theList);
+			}
 		}
 	}
-	else if( theChar == 0x1F) 
-	{
-		if( theCell.v < (*theList)->dataBounds.bottom -1)
-		{
-			LSetSelect( false, theCell, theList);
-			theCell.v++;
-			LSetSelect( true, theCell, theList);
-			LAutoScroll( theList);
-		}
-	}
-}
 }
 
 void DoKeyPressPatList( short theChar)

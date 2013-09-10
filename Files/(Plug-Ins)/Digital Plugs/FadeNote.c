@@ -246,7 +246,7 @@ static void AutoPosition( DialogPtr aDia)
 	ShowWindow( GetDialogWindow( aDia));
 }
 
-Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
+static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 {
 	if( row < 0) row = 0;
 	else if( row >= myPcmd->length) row = myPcmd->length -1;
@@ -325,7 +325,7 @@ static short Text2Note( Str255 myTT)
 	return( Oct);
 }
 
-OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+static OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
 	DialogPtr			myDia;
 	short				itemHit, itemType;
@@ -337,12 +337,9 @@ OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	long				Result;
 	MenuDefSpec			defSpec2;
 	
-#if CALL_NOT_IN_CARBON
-#else
 	defSpec2.defType = kMenuDefProcPtr;
 	defSpec2.u.defProc = NewMenuDefUPP( MyMenuNoteDefProc );
 	RegisterMenuDefinition( 1972, &defSpec2);
-#endif
 
 	myDia = GetNewDialog( 128, NULL, (WindowPtr) -1L);
 	SetPortDialogPort( myDia);
@@ -356,13 +353,9 @@ OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	
 	do
 	{
-		RESTART:
+	RESTART:
 	
-//		#if defined(powerc) || defined(__powerc)
 		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
-//		#else
-//		ModalDialog( (ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
-//		#endif
 		
 		switch( itemHit)
 		{
@@ -386,8 +379,6 @@ OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 				
 				if ( HiWord( Result ) != 0 )
 				{
-					OSErr	iErr;
-				
 					OctavesName( LoWord( Result)-1, aStr);
 					SetDText( myDia, itemHit-4, aStr);
 					SelectDialogItemText( myDia, 3, 0, 200);
@@ -445,7 +436,7 @@ OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	return noErr;
 }
 
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x95, 0x45, 0xDB, 0x21, 0x5A, 0xDE, 0x49, 0xDC, 0x97, 0x17, 0x09, 0x3D, 0x09, 0xEC, 0x4D, 0x39)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x95, 0x45, 0xDB, 0x21, 0x5A, 0xDE, 0x49, 0xDC, 0x97, 0x17, 0x09, 0x3D, 0x09, 0xEC, 0x4D, 0x39)
 //9545DB21-5ADE-49DC-9717-093D09EC4D39
 #define PLUGINFACTORY FadeNoteFactory //The factory name as defined in the Info.plist file
 #define PLUGMAIN mainFadeNote //The old main function, renamed please

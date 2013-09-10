@@ -1,7 +1,6 @@
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
-#include <Appearance.h>
 #include <math.h>
 #include "PrivateList.h"
 #include "Undo.h"
@@ -2022,8 +2021,8 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 				{
 					
 					
-					//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-					//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+							if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+								QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 					DoGlobalNull();
 					SetPortDialogPort( whichDialog);
@@ -2084,8 +2083,8 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 				while( Button())
 				{
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-					//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-					//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+							if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+								QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
     				
 					DoGlobalNull();
 					SetPortDialogPort( whichDialog);
@@ -2131,8 +2130,8 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 				{
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 					
-					//	if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-					//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+						if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+								QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
     				
 					DoGlobalNull();
 					SetPortDialogPort( whichDialog);
@@ -2297,8 +2296,8 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 				{
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 					
-					//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-					//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+							if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+								QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
     				
 					//	DoGlobalNull();
 					SetPortDialogPort( whichDialog);
@@ -2341,8 +2340,8 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 				{
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 					
-					//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-					//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+							if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+								QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
     				
 					DoGlobalNull();
 					SetPortDialogPort( whichDialog);
@@ -2744,8 +2743,8 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 							{
 								WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 								
-								//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-								//			QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+								if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+									QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
 								
 								DoGlobalNull();
 								SetPortDialogPort( whichDialog);
@@ -2835,8 +2834,8 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 								}
 								WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 								
-								//		if (QDIsPortBuffered( GetDialogPort( whichDialog)))
-								//		QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
+								if (QDIsPortBuffered( GetDialogPort( whichDialog)))
+									QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
 								
 							}while( Button());
 							

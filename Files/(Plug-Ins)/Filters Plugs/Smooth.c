@@ -13,7 +13,7 @@
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
 
-OSErr mainSmooth(sData			*theData,
+static OSErr mainSmooth(sData			*theData,
 				 long			SelectionStart,
 				 long			SelectionEnd,
 				 PPInfoPlug		*thePPInfoPlug,
@@ -68,7 +68,7 @@ OSErr mainSmooth(sData			*theData,
 }
 
 // CC5BCE43-E362-4260-BB51-555A5CD4008C
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xCC, 0x5B, 0xCE, 0x43, 0xE3, 0x62, 0x42, 0x60, 0xBB, 0x51, 0x55, 0x5A, 0x5C, 0xD4, 0x00, 0x8C)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xCC, 0x5B, 0xCE, 0x43, 0xE3, 0x62, 0x42, 0x60, 0xBB, 0x51, 0x55, 0x5A, 0x5C, 0xD4, 0x00, 0x8C)
 
 #define PLUGMAIN mainSmooth
 #define PLUGINFACTORY SmoothFactory

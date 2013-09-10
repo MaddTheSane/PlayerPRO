@@ -1,6 +1,7 @@
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
+#include <Carbon/Carbon.h>
 
 static void AutoPosition( DialogPtr aDia)
 {
@@ -104,7 +105,7 @@ static Boolean getParams ( long *p1, PPInfoPlug *thePPInfoPlug)
 	return theResult;
 }
 
-OSErr mainAmplitude(	sData					*theData,
+static OSErr mainAmplitude(	sData					*theData,
 						long					SelectionStart,
 						long					SelectionEnd,
 						PPInfoPlug				*thePPInfoPlug,
@@ -173,7 +174,7 @@ OSErr mainAmplitude(	sData					*theData,
 	return noErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xF1, 0xE5, 0xEA, 0x0B, 0x1A, 0xBC, 0x4D, 0x5F, 0x89, 0xDF, 0x3C, 0x89, 0x75, 0x8E, 0xAC, 0x0E))
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xF1, 0xE5, 0xEA, 0x0B, 0x1A, 0xBC, 0x4D, 0x5F, 0x89, 0xDF, 0x3C, 0x89, 0x75, 0x8E, 0xAC, 0x0E))
 //F1E5EA0B-1ABC-4D5F-89DF-3C89758EAC0E
 
 #define PLUGMAIN mainAmplitude

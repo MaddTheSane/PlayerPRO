@@ -26,7 +26,7 @@
 #include "RDriver.h"
 #include "FileUtils.h"
 
-void iFileCreate( Ptr AlienFileName, long)
+void iFileCreate( Ptr AlienFileName, OSType unused)
 {
 }
 

@@ -8,6 +8,8 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -30,8 +32,6 @@
 			<string>109FB942-4203-4A66-AB04-FB2AF0B2969F</string>
 		</array>
 	</dict>
-	<key>CSResourcesFileMapped</key>
-	<string>yes</string>
 	<key>MADPlugMenuName</key>
 	<string>Crop</string>
 </dict>

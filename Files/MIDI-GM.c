@@ -5,6 +5,7 @@
 #include <Carbon/Carbon.h>
 #include "Undo.h"
 #include <QuickTime/QuickTime.h>
+#include <CoreFoundation/CoreFoundation.h>
 
 #include "PPDefs.h"
 #include "WAV.h"
@@ -192,14 +193,8 @@ void SetSampNameM( Str255 theNewName, Ptr destName)
 	}
 }
 
-#include <CFBundle.h>
-
 short GenerateDLSFromBundle()
 {
-#if CALL_NOT_IN_CARBON
-	//#if 0
-	return -1;
-#else
 	CFBundleRef		AudioBundle;
 	CFURLRef		bundleURL;
 	FSRef 			bundleFSRef, rsrcRef;
@@ -294,7 +289,6 @@ short GenerateDLSFromBundle()
 	CloseResFile( refNum);
 	
 	return ff;
-#endif
 }
 
 void DeleteDLSFile()
@@ -1387,9 +1381,7 @@ short OpenResFileQK( long dirID, short VRefNum)
 	FSSpec			spec;
 	short			ret;
 	
-	pStrcpy( spec.name, "\pQuickTimeª Musical Instruments");
-	spec.vRefNum = VRefNum;
-	spec.parID = dirID;
+	FSMakeFSSpec(VRefNum, dirID, "\pQuickTime\xAA Musical Instruments", &spec);
 	
 	ret = FSpOpenResFile( &spec, fsCurPerm);
 	if( ret != -1) return ret;

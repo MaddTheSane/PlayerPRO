@@ -3,9 +3,7 @@
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "Undo.h"
-#include <Drag.h>
 #include "PPPlug.h"
-#include <QDOffscreen.h>
 #include "PrivateList.h"
 //#include "WaveEditor.proto.h"
 

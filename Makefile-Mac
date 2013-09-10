@@ -1,0 +1,33 @@
+PREFIX?=
+BUILD_DIR?=$(shell defaults read com.apple.Xcode PBXProductDirectory 2> /dev/null)
+
+ifeq ($(strip $(BUILD_DIR)),)
+	BUILD_DIR=build
+endif
+
+DEFAULT_BUILDCONFIGURATION=Release
+DEFAULT_TARGET=Carbon
+BUILDCONFIGURATION?=$(DEFAULT_BUILDCONFIGURATION)
+
+CP=ditto --rsrc
+RM=rm
+
+.PHONY: all playerpro clean latest
+
+playerpro:
+	xcodebuild -project PPMacho.xcodeproj -target $(DEFAULT_TARGET) -configuration $(BUILDCONFIGURATION) build
+
+
+#install:
+#	    cp -R build/Adium.app ~/Applications/
+#	    cp -R build/AIUtilities.framework ~/Library/Frameworks/
+
+clean:
+	xcodebuild -project PPMacho.xcodeproj -target $(DEFAULT_TARGET) -configuration $(BUILDCONFIGURATION) clean
+
+
+
+latest:
+	svn up
+	make playerpro
+

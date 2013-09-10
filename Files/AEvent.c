@@ -1,6 +1,5 @@
 #include "Shuddup.h"
-#include <Gestalt.h>
-#include <AppleEvents.h>
+#include <Carbon/Carbon.h>
 
 extern 	Boolean 	End;
 extern	DialogPtr	MODListDlog;
@@ -410,8 +409,6 @@ short InstallAE(void)
 	}
 	return 0;
 }
-
-#include "InternetConfig.h"
 
 OSStatus LaunchURLC(ConstStr255Param urlStr)
 {

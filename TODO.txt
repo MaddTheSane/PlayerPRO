@@ -6,20 +6,18 @@ doesn't work as expected or desired.
     resources.
 * The localization Rez files are outdated and are disabled.
 * The VST and Visual Plug-in architectures for Mac OS X needs to be re-written.
-* CoreAudio Output is currently a stub.
 * Hardware MIDI support needs to use CoreMIDI on OS X.
 * Printing needs to be re-written.
 * It would be great if PlayerPROCore was 64-bit.
 * Migrate away from QuickDraw. Maybe use Carbon NIBs? Or port GUI to Cocoa?
 * Maybe use OS X VSTs and Audio Unit Plugins?
-* Make a MODList that stores file references as Aliases.
+* Make a MODList that stores file references as Aliases and not paths.
 * The windows don't support a scroll wheel.  Need to look into why.
-* Plug-ins need to be checked for places to byteswap. AMF and the old MAD plug 
-    importers are those I know need this.
 * Determine if a file is openable by determining its UTI, not its old Mac OS 9
     filetype. Mac OS X doesn't write a file's filetype based on extension on OS 
     X.
-* The file icons need to be redrawn: they're still 8-bit color and 32*32.
 * The banner on the source files needs to be updated.
+* Linux support is currently a stub.
+* Make a Linux Makefile, maybe by using a configure script?
 
 Also note that there are TODOs scattered across the source files.

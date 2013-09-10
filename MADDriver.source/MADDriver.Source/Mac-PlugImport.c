@@ -434,17 +434,7 @@ void NScanDirImportPlug( MADLibrary		*inMADDriver, long dirID, short VRefNum, St
 				}
 			}
 		}
-		
-#if CALL_NOT_IN_CARBON
-		
 		else if( fndrInfo.fdType == 'IMPL')
-		
-#else
-		
-		else if( fndrInfo.fdType == 'shlb')
-		
-#endif
-		
 		{
 			if( inMADDriver->TotalPlug < MAXPLUG)
 			{

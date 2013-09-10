@@ -23,6 +23,8 @@
 		<key>AF640451-90E8-4511-837B-58A8F35024F0</key>
 		<string>BackwardsFactory</string>
 	</dict>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
 	<key>CFPlugInTypes</key>
 	<dict>
 		<key>158FF33B-47F4-4497-9292-1B544E8C2B01</key>
@@ -30,8 +32,6 @@
 			<string>AF640451-90E8-4511-837B-58A8F35024F0</string>
 		</array>
 	</dict>
-	<key>CSResourcesFileMapped</key>
-	<string>yes</string>
 	<key>MADPlugMenuName</key>
 	<string>Backwards</string>
 </dict>

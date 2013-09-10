@@ -6,7 +6,7 @@
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
-#include <MixedMode.h>
+#include <Carbon/Carbon.h>
 #include <math.h>
 
 enum
@@ -126,12 +126,12 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 					Audio8Ptr[ i] = temp;
 				}
 			}
-		break;
+			break;
 			
 		case silence:
 			for( i = 0; i < AudioLength; i++) Audio8Ptr[ i] = 0x00;
-		break;
-		
+			break;
+			
 		case square:
 			for( i = 0, x = 0, dest = -1; i < AudioLength; i++)
 			{
@@ -149,7 +149,7 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 				/** Amplitude resizing **/
 				temp *= AudioAmp;
 				temp /= 100;
-
+				
 				/** Overshoot **/
 				if( temp >= 127) temp = 127;
 				else if( temp <= -127 ) temp = -127;
@@ -161,8 +161,8 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 					Audio8Ptr[ i] = temp;
 				}
 			}
-		break;
-		
+			break;
+			
 		case triangle:
 			UpDown = true;
 			for( i = 0, x = 0, dest = -1; i < AudioLength; i++)
@@ -185,7 +185,7 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 				/** Amplitude resizing **/
 				temp *= AudioAmp;
 				temp /= 100;
-
+				
 				/** Overshoot **/
 				if( temp >= 127) temp = 127;
 				else if( temp <= -127 ) temp = -127;
@@ -197,7 +197,7 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 					Audio8Ptr[ i] = temp;
 				}
 			}
-		break;
+			break;
 	}
 	
 	return Audio8Ptr;
@@ -208,12 +208,12 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 	short	*Audio16Ptr;
 	long	i, temp, inter, x, dest;
 	Boolean	UpDown;
-
+	
 	if( stereo) AudioLength *= 2L;
 	
 	Audio16Ptr = (short*) NewPtr( AudioLength*2);
 	if( Audio16Ptr == NULL) return NULL;
-
+	
 	switch( AudioType)
 	{
 		case wave:
@@ -236,12 +236,12 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 					Audio16Ptr[ i] = temp;
 				}
 			}
-		break;
+			break;
 			
 		case silence:
 			for( i = 0; i < AudioLength; i++) Audio16Ptr[ i] = 0x00;
-		break;
-		
+			break;
+			
 		case square:
 			for( i = 0, x = 0, dest = -1; i < AudioLength; i++)
 			{
@@ -271,8 +271,8 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 					Audio16Ptr[ i] = temp;
 				}
 			}
-		break;
-		
+			break;
+			
 		case triangle:
 			UpDown = true;
 			for( i = 0, x = 0, dest = -1; i < AudioLength; i++)
@@ -295,7 +295,7 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 				/** Amplitude resizing **/
 				temp *= AudioAmp;
 				temp /= 100;
-
+				
 				/** Overshoot **/
 				if( temp >= (short) 0x7FFF) temp = 0x7FFF;
 				else if( temp <= (short) 0x8000 ) temp = (short) 0x8000;
@@ -307,21 +307,21 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 					Audio16Ptr[ i] = temp;
 				}
 			}
-		break;
+			break;
 	}
-
+	
 	return Audio16Ptr;
 }
 
-OSErr mainToneGenerator(sData			*theData,
+static OSErr mainToneGenerator(sData			*theData,
 						long			SelectionStart,
 						long			SelectionEnd,
 						PPInfoPlug		*thePPInfoPlug,
 						short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long				i, AudioLength, AudioFreq, AudioAmp;
-	Ptr					Sample8Ptr = theData->data, Audio8Ptr;
-	short				*Sample16Ptr = (short*) theData->data, *Audio16Ptr;
+	Ptr					/*Sample8Ptr = theData->data,*/ Audio8Ptr;
+	short				/* *Sample16Ptr = (short*) theData->data,*/ *Audio16Ptr;
 	DialogPtr			myDia;
 	short				itemHit, itemType, AudioType;
 	Handle				itemHandle;
@@ -500,7 +500,7 @@ OSErr mainToneGenerator(sData			*theData,
 }
 
 // 25FA16EC-75FF-4514-9C84-7202360044B9
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0x25, 0xFA, 0x16, 0xEC, 0x75, 0xFF, 0x45, 0x14, 0x9C, 0x84, 0x72, 0x02, 0x36, 0x00, 0x44, 0xB9)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x25, 0xFA, 0x16, 0xEC, 0x75, 0xFF, 0x45, 0x14, 0x9C, 0x84, 0x72, 0x02, 0x36, 0x00, 0x44, 0xB9)
 
 #define PLUGMAIN mainToneGenerator
 #define PLUGINFACTORY ToneGeneratorFactory

@@ -177,7 +177,7 @@ void AdjustZoomOscillo2( Rect	*vRect)
 
 void ComputeCurrentQuickPixMap()
 {
-	long	i, rowBytes = (*osciPixMap[ 0])->rowBytes + 0x8000;
+	long	i, rowBytes = (*osciPixMap[ 0])->rowBytes &0xFFF;
 	
 	if( CurrentQuickPixMap != NULL) DisposePtr( (Ptr) CurrentQuickPixMap);
 	
@@ -272,7 +272,11 @@ void DoGrowOscillo(void)
 
 Ptr	TransformationDSP( Ptr thePtr, short i)
 {
-	register Ptr		tempPtr = thePtr;
+#ifdef __LITTLE_ENDIAN__
+	register Ptr		tempPtr = thePtr+1;
+#else
+    register Ptr		tempPtr = thePtr;
+#endif
 	register Byte		bb = 0x80;
 	
 	if( i > AUDIODSPSIZE * 4L) MyDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
@@ -853,9 +857,9 @@ Rect		caRect, inRect;
 	
 	GetPortBounds( GetDialogPort( OscilloDlog), &caRect);
 	
-	if( OsciType == OutPutAudio) tempRect.left	= 15;
+	if( OsciType == OutPutAudio) tempRect.left	= 16;
 	else tempRect.left = 0;
-	tempRect.right	=  caRect.right-15;
+	tempRect.right	=  caRect.right-16;
 	
 	tempRect.top	= osci[ no].VPos;
 	tempRect.bottom	= tempRect.top + OsciH;

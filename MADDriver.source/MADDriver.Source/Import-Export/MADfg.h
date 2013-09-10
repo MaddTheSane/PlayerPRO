@@ -24,9 +24,8 @@
 #ifndef __MADFG__
 #define __MADFG__
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=mac68k
-#endif
+#pragma pack(push, 2)
+
 struct oldPatHeader {
 	long	PatternSize;			// Length of pattern: standard = 64
 	OSType	CompressionMode;		// Compression mode, none = 'NONE'
@@ -63,17 +62,15 @@ struct FileInstrData {
 struct oldMADSpec
 {
 	OSType	MADIdentification;		// Mad Identification: MADG in version 2.0
-	char 	NameSignature[ 32];	// Music's name
+	char 	NameSignature[ 32];		// Music's name
 	struct 	FileInstrData fid[ 64];	// 64 instruments descriptor
 	Byte	PatMax;
 	Byte 	numPointers;			// Patterns number
-	Byte	oPointers[128];		// Patterns list
+	Byte	oPointers[128];			// Patterns list
 	Byte	Tracks;					// Tracks number
 };
 typedef struct oldMADSpec oldMADSpec;
 
-#if defined(powerc) || defined(__powerc) || defined(__APPLE__)
-#pragma options align=reset
-#endif
+#pragma pack(pop)
 
 #endif

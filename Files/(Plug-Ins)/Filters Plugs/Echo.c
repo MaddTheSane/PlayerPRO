@@ -9,7 +9,7 @@
 //	Works on the selected part or all the waveform
 //	if there is no selection.
 
-#include <Dialogs.h>
+#include <Carbon/Carbon.h>
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
@@ -161,7 +161,7 @@ static int checkMax (int v)
 }
 #endif
 
-OSErr mainEcho(	sData			*theData,
+static OSErr mainEcho(	sData			*theData,
 				long			SelectionStart,
 				long			SelectionEnd,
 				PPInfoPlug		*thePPInfoPlug,
@@ -228,7 +228,7 @@ OSErr mainEcho(	sData			*theData,
 }
 
 // DA609751-C4B0-4814-BAE7-2B82CA59E64E
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorDefault, 0xDA, 0x60, 0x97, 0x51, 0xC4, 0xB0, 0x48, 0x14, 0xBA, 0xE7, 0x2B, 0x82, 0xCA, 0x59, 0xE6, 0x4E)
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xDA, 0x60, 0x97, 0x51, 0xC4, 0xB0, 0x48, 0x14, 0xBA, 0xE7, 0x2B, 0x82, 0xCA, 0x59, 0xE6, 0x4E)
 
 #define PLUGMAIN mainEcho
 #define PLUGINFACTORY EchoFactory
