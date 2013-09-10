@@ -1857,7 +1857,7 @@
 		};
 		55C358B616C42D1800FB9FA6 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
@@ -1872,7 +1872,7 @@
 				55ADC3E917D7E4E5001F27D4 /* MADDriver.h in CopyFiles */,
 				55C358BE16C42D1800FB9FA6 /* FileUtils.h in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		55CBFB3711EB780B0028C6BB /* Copy PlugIns */ = {
 			isa = PBXCopyFilesBuildPhase;

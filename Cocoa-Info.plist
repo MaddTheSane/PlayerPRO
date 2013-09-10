@@ -378,7 +378,7 @@
 			<key>CFBundleTypeIconFile</key>
 			<string>MAD</string>
 			<key>CFBundleTypeName</key>
-			<string>PPMADFile</string>
+			<string>PPMADBundle</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSItemContentTypes</key>

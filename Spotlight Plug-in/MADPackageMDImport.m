@@ -7,6 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <PlayerPROKit/PlayerPROKit.h>
+#include <CoreFoundation/CoreFoundation.h>
+#include <CoreServices/CoreServices.h>
+
 #include "GetMetadataForFile.h"
 
 Boolean GetMetadataForPackage(CFMutableDictionaryRef attributes, CFStringRef pathToFile)
