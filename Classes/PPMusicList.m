@@ -136,15 +136,6 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	return self;
 }
 
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-	self.musicUrl = nil;
-	
-	[super dealloc];
-}
-#endif
-
 - (NSString*)description
 {
 	return [NSString stringWithFormat:@"%@:%@ - %@", [musicUrl description], [musicUrl path], self.fileName];
@@ -473,7 +464,6 @@ static inline NSURL *PPHomeURL()
 				}
 				PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullURL)];
 				[musicList addObject:obj];
-				RELEASEOBJ(obj);
 			}
 		}
 	}

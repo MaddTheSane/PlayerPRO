@@ -21,6 +21,7 @@
 #import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
 #import <PlayerPROKit/PlayerPROKit.h>
+#import "PatternHandler.h"
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
 #import <QTKit/QTKit.h>
@@ -755,8 +756,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 							}
 						};
 #if PPEXPORT_CREATE_TMP_AIFF
-						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
-						
+						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];						
 						[saveData writeToURL:tmpURL atomically:NO];
 						QTMovie *exportMov = [[QTMovie alloc] initWithURL:tmpURL error:&expErr];
 						if (exportMov) {
@@ -776,12 +776,9 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						if (!exportMov) {
 							NSLog(@"Init Failed for %@, error: %@", oldMusicName, [expErr localizedDescription]);
 #if !PPEXPORT_CREATE_TMP_AIFF
-							RELEASEOBJ(dataRef);
 #else
 							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 #endif
-							RELEASEOBJ(saveData);
-							RELEASEOBJ(oldMusicName);
 							
 							dispatch_async(dispatch_get_main_queue(), errBlock);
 							return;
@@ -791,13 +788,9 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						if (!session) {
 							NSLog(@"Export session creation for %@ failed, error: %@", oldMusicName, [expErr localizedDescription]);
 #if !PPEXPORT_CREATE_TMP_AIFF
-							RELEASEOBJ(dataRef);
 #else
 							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 #endif
-							RELEASEOBJ(saveData);
-							RELEASEOBJ(exportMov);
-							RELEASEOBJ(oldMusicName);
 
 							dispatch_async(dispatch_get_main_queue(), errBlock);
 							return;
@@ -810,13 +803,9 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 							dispatch_async(dispatch_get_main_queue(), errBlock);
 						}
 #if !PPEXPORT_CREATE_TMP_AIFF
-						RELEASEOBJ(dataRef);
 #else
 						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 #endif
-						RELEASEOBJ(oldMusicName);
-						RELEASEOBJ(session);
-						RELEASEOBJ(exportMov);
 						
 						if (didFinish) {
 							dispatch_async(dispatch_get_main_queue(), ^{
@@ -1156,7 +1145,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
 	instrumentImporter = [[PPInstrumentPlugHandler alloc] init];
-		
 	NSInteger i;
 	for (i = 0; i < [instrumentImporter plugInCount]; i++) {
 		PPInstrumentImporterObject *obj = [instrumentImporter plugInAtIndex:i];
@@ -1165,7 +1153,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			[mi setTag:i];
 			[mi setTarget:self];
 			[instrumentExportMenu addItem:mi];
-			RELEASEOBJ(mi);
 		}
 	}
 	
@@ -1176,7 +1163,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			[mi setTag:i];
 			[mi setTarget:self];
 			[musicExportMenu addItem:mi];
-			RELEASEOBJ(mi);
 		}
 	}
 	
@@ -1242,37 +1228,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	RELEASEOBJ(undoManager);
 	undoManager = nil;
 	
-	if (music != NULL) {
-		if (music->hasChanged) {
-			NSInteger selection = 0;
-			if (currentlyPlayingIndex.index == -1) {
-				selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The new music file has unsaved changes. Do you want to save?", @"New unsaved file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), nil);
-			} else {
-				selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The music file \"%@\" has unsaved changes. Do you want to save?", @"file unsaved"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), nil, [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
-			}
-			switch (selection) {
-				case NSAlertDefaultReturn:
-					[self saveMusic:nil];
-					break;
-					
-				case NSAlertAlternateReturn:
-				default:
-					break;
-			}
-		}
-		MADStopMusic(madDriver);
-		MADCleanDriver(madDriver);
-		MADDisposeMusic(&music, madDriver);
-	}
-	MADStopDriver(madDriver);
-	MADDisposeDriver(madDriver);
-	MADDisposeLibrary(madLib);
-	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
-		[musicList saveMusicListToPreferences];
-	} else {
-		[[NSUserDefaults standardUserDefaults] removeObjectForKey:PPMMusicList];
-	}
-	
+	MADDisposeLibrary(madLib);	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -1343,7 +1299,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (BOOL)handleFile:(NSURL *)theURL ofType:(NSString *)theUTI
 {
-	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
 	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
 	if ([sharedWorkspace type:theUTI conformsToType:MADPackageUTI]) {
 		// Do nothing right now

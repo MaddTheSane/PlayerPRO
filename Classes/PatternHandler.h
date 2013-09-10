@@ -14,14 +14,13 @@
 	MADMusic **theMus;
 	MADDriverRec **theRec;
 	NSMutableArray *patternList;
-	NSUndoManager *undoManager;
 }
 
 - (id)initWithMusic:(MADMusic **)mus;
 
 @property (readwrite) MADMusic **theMus;
 @property (readwrite) MADDriverRec **theRec;
-@property (readwrite, retain) NSUndoManager *undoManager;
+@property (readwrite, strong) NSUndoManager *undoManager;
 
 - (OSErr)testPcmdFileAtURL:(NSURL*)theURL;
 - (OSErr)importPcmdFromURL:(NSURL*)theURL;

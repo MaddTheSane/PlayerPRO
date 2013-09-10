@@ -15,7 +15,7 @@
 @interface InstrumentInfoController : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
 {
 	PPInstrumentObject *instrument;
-	__arcweak PPInstrumentWindowController *delegate;
+	__weak PPInstrumentWindowController *delegate;
 	IBOutlet NSView *pianoView;
 	IBOutlet NSTextField *instrumentNumber;
 	IBOutlet NSTextField *instrumentName;

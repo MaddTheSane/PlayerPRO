@@ -46,12 +46,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 
 - (void)dealloc
 {
-	RELEASEOBJ(patternList);
-	RELEASEOBJ(undoManager);
-	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	SUPERDEALLOC;
 }
 
 - (OSErr)testPcmdFileAtURL:(NSURL*)theURL

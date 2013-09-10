@@ -44,7 +44,7 @@
 	<key>CFPlugInDynamicRegisterFunction</key>
 	<string></string>
 	<key>CFPlugInDynamicRegistration</key>
-	<string>NO</string>
+	<false/>
 	<key>CFPlugInFactories</key>
 	<dict>
 		<key>DF098C69-8463-40CD-BD50-A964BBCEFDFE</key>

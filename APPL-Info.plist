@@ -18,7 +18,9 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
-	<key>CSResourcesFileMapped</key>
+	<key>MADCanExport</key>
+	<false/>
+	<key>MADCanImport</key>
 	<true/>
 	<key>MADPlugAuthorName</key>
 	<string>Written by A.ROSSET 95</string>
@@ -26,10 +28,6 @@
 	<string>Application</string>
 	<key>MADPlugMode</key>
 	<string>IMPL</string>
-	<key>MADCanExport</key>
-	<false/>
-	<key>MADCanImport</key>
-	<true/>
 	<key>MADPlugType</key>
 	<string>APPL</string>
 	<key>MADPlugUTITypes</key>
