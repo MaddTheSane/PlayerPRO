@@ -1,117 +1,16 @@
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
-#include <Carbon/Carbon.h>
+#include "Amplitude.h"
 
-static void AutoPosition( DialogPtr aDia)
+OSErr mainAmplitude(void					*unused,
+					sData					*theData,
+					long					SelectionStart,
+					long					SelectionEnd,
+					PPInfoPlug				*thePPInfoPlug,
+					short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	Point		Position, mouse;
-	Rect		ViewRect, caRect;
-	short		XSize, YSize;
-	GDHandle	aH;
-	BitMap		screenBits;
-	
-	GetMouse( &mouse);
-	LocalToGlobal( &mouse);
-	
-	GetPortBounds( GetDialogPort( aDia), &caRect);
-	
-	XSize = (caRect.right - caRect.left);
-	YSize = (caRect.bottom - caRect.top);
-	
-	GetQDGlobalsScreenBits( &screenBits);
-	
-	SetRect( &ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
-						screenBits.bounds.right - 8, screenBits.bounds.bottom - 8);
-	
-	aH = GetDeviceList();
-	do
-	{
-		aH = GetNextDevice( aH);
-		if( aH != NULL)
-		{
-			if( PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
-			{
-				Rect	ar = (*(*aH)->gdPMap)->bounds;
-			
-				SetRect( &ViewRect, ar.left + 8, ar.top + 43,
-									ar.right - 8, ar.bottom - 8);
-			}
-		}
-	}
-	while( aH != NULL);
-	
-	Position.h = mouse.h - XSize/2;
-	if( Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
-	else if( Position.h <= ViewRect.left) Position.h = ViewRect.left;
-
-	Position.v = mouse.v - YSize/2;
-	if( Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
-	else if( Position.v <= ViewRect.top) Position.v = ViewRect.top;
-
-	SetDialogDefaultItem( aDia, 1 );
-	SetDialogCancelItem( aDia, 2 );
-
-	MoveWindow( GetDialogWindow( aDia), Position.h, Position.v, false);
-
-	ShowWindow( GetDialogWindow( aDia));
-}
-
-static void SetDText (DialogPtr dlog, short item, Str255 str)
-{
-	ControlHandle	control;
-
-	GetDialogItemAsControl( dlog, item, &control );
-	SetControlData( control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
-	DrawOneControl( control);
-}
-
-
-static Boolean getParams ( long *p1, PPInfoPlug *thePPInfoPlug)
-{
-	DialogPtr	theDialog;
-	Boolean		theResult = false;
-
-	theDialog = GetNewDialog( 128,nil,(WindowPtr)-1);
-	if (theDialog) {
-		short	iType, itemHit;
-		Handle	iHandle;
-		Rect	iRect;
-		Str255	textStr;
-		
-		SetPortDialogPort( theDialog);
-		AutoPosition( theDialog);
-		NumToString( *p1, textStr);
-		
-		SetDText( theDialog, 3, textStr);
-		
-		SelectDialogItemText( theDialog, 3, 0, 32767);
-
-		do
-		{
-			ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
-		}
-		while ((itemHit != ok) && (itemHit != cancel));
-		
-		if (itemHit == ok)
-		{
-			theResult = true;
-			GetDialogItem( theDialog, 3,&iType,&iHandle,&iRect);
-			GetDialogItemText( iHandle, textStr);
-			StringToNum( textStr, p1);
-		}
-		DisposeDialog(theDialog);
-	}
-	return theResult;
-}
-
-OSErr mainAmplitude(	sData					*theData,
-						long					SelectionStart,
-						long					SelectionEnd,
-						PPInfoPlug				*thePPInfoPlug,
-						short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
-{
-	long	i, temp, Inc;
+	SInt32	i, temp, Inc;
 	Ptr		Sample8Ptr = theData->data;
 	short	*Sample16Ptr = (short*) theData->data;
 

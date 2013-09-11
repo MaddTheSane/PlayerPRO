@@ -32,7 +32,6 @@ int RunToneGeneratorPlug(sData *theData, PPInfoPlug *thePPInfoPlug, long *audioL
 		*audioAmp = controller.audioAmplitude * 100;
 		*audioFreq = controller.audioFrequency;
 	}
-	controller = nil;
 	if (Audio16Ptr) {
 		free(Audio16Ptr); Audio16Ptr = NULL;
 	}
