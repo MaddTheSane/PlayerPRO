@@ -155,7 +155,6 @@ typedef struct Cmd							// COMMAND
 	Byte	vol;					// Volume				0xFF : no volume cmd
 	Byte	unused;
 } Cmd;
-typedef Cmd MadCommand;
 
 typedef struct PatHeader					// HEADER
 {
@@ -165,14 +164,12 @@ typedef struct PatHeader					// HEADER
 	SInt32	patBytes;				// Pattern Size in Bytes
 	SInt32	unused2;
 } PatHeader;
-typedef PatHeader PatternHeader;
 
 typedef struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
 {									// Pattern = 64 notes to play
 	PatHeader	header;
 	Cmd			Cmds[ 1];
 } PatData;
-typedef PatData PatternData;
 
 
 // ***	
@@ -194,7 +191,6 @@ typedef struct sData								// SAMPLE
 	Byte				stereo;				// Stereo
 	Ptr					data;				// Used only in memory, not in files
 } sData;
-typedef sData SampleData;
 
 //64-bit safe sample structure
 //Used for file i/o
@@ -212,7 +208,6 @@ typedef struct sData32								// SAMPLE
 	Byte				stereo;				// Stereo
 	UInt32				data;				// Used only in memory, not in files
 } sData32;
-typedef sData32 SampleData32;
 
 enum
 {
@@ -271,7 +266,6 @@ typedef struct InstrData				// INSTRUMENT
 	Byte	vibDepth;
 	Byte	vibRate;
 } InstrData;
-typedef InstrData InstrumentData;
 
 
 enum
@@ -291,13 +285,13 @@ enum
 #define INFOSSIZE 239
 
 
-typedef struct
+typedef struct FXBus
 {
 	Boolean		ByPass;
 	short		copyId;
 	Boolean		Active;
 	
-}	FXBus;
+} FXBus;
 
 typedef struct MADSpec
 {
