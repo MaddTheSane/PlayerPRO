@@ -51,6 +51,11 @@
 #undef HAS_LONG_DOUBLE
 #endif
 
+#if TARGET_OS_IPHONE
+//iOS also has long double the same size as double
+#undef HAS_LONG_DOUBLE
+#endif
+
 #if !defined(__BIG_ENDIAN__) && defined(WORDS_BIGENDIAN)
 #define __BIG_ENDIAN__ 1
 #endif
