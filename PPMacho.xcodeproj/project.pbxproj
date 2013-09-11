@@ -187,6 +187,22 @@
 		552C440D17DFE00000AFCB5C /* FadeVolumeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C440B17DFE00000AFCB5C /* FadeVolumeController.xib */; };
 		552C441117DFE08700AFCB5C /* NoteTranslateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C440F17DFE08700AFCB5C /* NoteTranslateController.m */; };
 		552C441217DFE08700AFCB5C /* NoteTranslateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C441017DFE08700AFCB5C /* NoteTranslateController.xib */; };
+		552C441617DFE24200AFCB5C /* AmplitudeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C441417DFE24200AFCB5C /* AmplitudeController.m */; };
+		552C441717DFE24200AFCB5C /* AmplitudeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C441517DFE24200AFCB5C /* AmplitudeController.xib */; };
+		552C441B17DFE2DE00AFCB5C /* DepthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C441917DFE2DE00AFCB5C /* DepthController.m */; };
+		552C441C17DFE2DE00AFCB5C /* DepthController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C441A17DFE2DE00AFCB5C /* DepthController.xib */; };
+		552C442017DFE35700AFCB5C /* EchoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C441E17DFE35700AFCB5C /* EchoWindowController.m */; };
+		552C442117DFE35700AFCB5C /* EchoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C441F17DFE35700AFCB5C /* EchoWindowController.xib */; };
+		552C442517DFE3EF00AFCB5C /* FadeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C442317DFE3EF00AFCB5C /* FadeWindowController.m */; };
+		552C442617DFE3EF00AFCB5C /* FadeWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C442417DFE3EF00AFCB5C /* FadeWindowController.xib */; };
+		552C442A17DFE48A00AFCB5C /* LengthWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C442817DFE48A00AFCB5C /* LengthWindowController.m */; };
+		552C442B17DFE48A00AFCB5C /* LengthWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C442917DFE48A00AFCB5C /* LengthWindowController.xib */; };
+		552C442F17DFE4B800AFCB5C /* LengthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C442D17DFE4B800AFCB5C /* LengthViewController.m */; };
+		552C443017DFE4B800AFCB5C /* LengthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C442E17DFE4B800AFCB5C /* LengthViewController.xib */; };
+		552C443417DFE84700AFCB5C /* MixWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C443217DFE84700AFCB5C /* MixWindowController.m */; };
+		552C443517DFE84700AFCB5C /* MixWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C443317DFE84700AFCB5C /* MixWindowController.xib */; };
+		552C443917DFE9D600AFCB5C /* SamplingRateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C443717DFE9D600AFCB5C /* SamplingRateWindowController.m */; };
+		552C443A17DFE9D600AFCB5C /* SamplingRateWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C443817DFE9D600AFCB5C /* SamplingRateWindowController.xib */; };
 		552C6FE310CD9DAC00C0E0D4 /* ByteUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */; };
 		552C6FE410CD9DB700C0E0D4 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; };
 		5532334F16766E5700076604 /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
@@ -2105,6 +2121,30 @@
 		552C440E17DFE08700AFCB5C /* NoteTranslateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteTranslateController.h; sourceTree = "<group>"; };
 		552C440F17DFE08700AFCB5C /* NoteTranslateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteTranslateController.m; sourceTree = "<group>"; };
 		552C441017DFE08700AFCB5C /* NoteTranslateController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteTranslateController.xib; sourceTree = "<group>"; };
+		552C441317DFE24200AFCB5C /* AmplitudeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmplitudeController.h; sourceTree = "<group>"; };
+		552C441417DFE24200AFCB5C /* AmplitudeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmplitudeController.m; sourceTree = "<group>"; };
+		552C441517DFE24200AFCB5C /* AmplitudeController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AmplitudeController.xib; sourceTree = "<group>"; };
+		552C441817DFE2DE00AFCB5C /* DepthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepthController.h; sourceTree = "<group>"; };
+		552C441917DFE2DE00AFCB5C /* DepthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DepthController.m; sourceTree = "<group>"; };
+		552C441A17DFE2DE00AFCB5C /* DepthController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DepthController.xib; sourceTree = "<group>"; };
+		552C441D17DFE35700AFCB5C /* EchoWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EchoWindowController.h; sourceTree = "<group>"; };
+		552C441E17DFE35700AFCB5C /* EchoWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EchoWindowController.m; sourceTree = "<group>"; };
+		552C441F17DFE35700AFCB5C /* EchoWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EchoWindowController.xib; sourceTree = "<group>"; };
+		552C442217DFE3EF00AFCB5C /* FadeWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FadeWindowController.h; sourceTree = "<group>"; };
+		552C442317DFE3EF00AFCB5C /* FadeWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FadeWindowController.m; sourceTree = "<group>"; };
+		552C442417DFE3EF00AFCB5C /* FadeWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FadeWindowController.xib; sourceTree = "<group>"; };
+		552C442717DFE48A00AFCB5C /* LengthWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LengthWindowController.h; sourceTree = "<group>"; };
+		552C442817DFE48A00AFCB5C /* LengthWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LengthWindowController.m; sourceTree = "<group>"; };
+		552C442917DFE48A00AFCB5C /* LengthWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LengthWindowController.xib; sourceTree = "<group>"; };
+		552C442C17DFE4B800AFCB5C /* LengthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LengthViewController.h; sourceTree = "<group>"; };
+		552C442D17DFE4B800AFCB5C /* LengthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LengthViewController.m; sourceTree = "<group>"; };
+		552C442E17DFE4B800AFCB5C /* LengthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LengthViewController.xib; sourceTree = "<group>"; };
+		552C443117DFE84700AFCB5C /* MixWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixWindowController.h; sourceTree = "<group>"; };
+		552C443217DFE84700AFCB5C /* MixWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixWindowController.m; sourceTree = "<group>"; };
+		552C443317DFE84700AFCB5C /* MixWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixWindowController.xib; sourceTree = "<group>"; };
+		552C443617DFE9D600AFCB5C /* SamplingRateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamplingRateWindowController.h; sourceTree = "<group>"; };
+		552C443717DFE9D600AFCB5C /* SamplingRateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamplingRateWindowController.m; sourceTree = "<group>"; };
+		552C443817DFE9D600AFCB5C /* SamplingRateWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamplingRateWindowController.xib; sourceTree = "<group>"; };
 		552C70C310CDAFBC00C0E0D4 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
 		552C70C610CDB07E00C0E0D4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
 		552C716210CDC11400C0E0D4 /* README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = README.rtf; sourceTree = "<group>"; };
@@ -3357,6 +3397,9 @@
 				557DE43510E06BF200177B4C /* Amplitude-Info.plist */,
 				554E0FFA10D6C79D00BB619C /* Amplitude.c */,
 				554E0FFB10D6C79D00BB619C /* Amplitude.r */,
+				552C441317DFE24200AFCB5C /* AmplitudeController.h */,
+				552C441417DFE24200AFCB5C /* AmplitudeController.m */,
+				552C441517DFE24200AFCB5C /* AmplitudeController.xib */,
 			);
 			path = Amplitude;
 			sourceTree = "<group>";
@@ -3394,6 +3437,9 @@
 				557DE5C610E0878E00177B4C /* Depth-Info.plist */,
 				554E100610D6C79E00BB619C /* Depth.c */,
 				554E100710D6C79E00BB619C /* Depth.r */,
+				552C441817DFE2DE00AFCB5C /* DepthController.h */,
+				552C441917DFE2DE00AFCB5C /* DepthController.m */,
+				552C441A17DFE2DE00AFCB5C /* DepthController.xib */,
 			);
 			path = Depth;
 			sourceTree = "<group>";
@@ -3404,6 +3450,9 @@
 				557DE5C710E0879D00177B4C /* Echo-Info.plist */,
 				554E100910D6C79E00BB619C /* Echo.c */,
 				554E100A10D6C79E00BB619C /* Echo.r */,
+				552C441D17DFE35700AFCB5C /* EchoWindowController.h */,
+				552C441E17DFE35700AFCB5C /* EchoWindowController.m */,
+				552C441F17DFE35700AFCB5C /* EchoWindowController.xib */,
 			);
 			path = Echo;
 			sourceTree = "<group>";
@@ -3414,6 +3463,9 @@
 				557DE5C810E087A600177B4C /* Fade-Info.plist */,
 				554E100C10D6C79E00BB619C /* Fade.c */,
 				554E100D10D6C79E00BB619C /* Fade.r */,
+				552C442217DFE3EF00AFCB5C /* FadeWindowController.h */,
+				552C442317DFE3EF00AFCB5C /* FadeWindowController.m */,
+				552C442417DFE3EF00AFCB5C /* FadeWindowController.xib */,
 			);
 			path = Fade;
 			sourceTree = "<group>";
@@ -3433,6 +3485,12 @@
 				557DE5CA10E087C300177B4C /* Length-Info.plist */,
 				554E101210D6C79E00BB619C /* Length.c */,
 				554E101310D6C79E00BB619C /* Length.r */,
+				552C442717DFE48A00AFCB5C /* LengthWindowController.h */,
+				552C442817DFE48A00AFCB5C /* LengthWindowController.m */,
+				552C442917DFE48A00AFCB5C /* LengthWindowController.xib */,
+				552C442C17DFE4B800AFCB5C /* LengthViewController.h */,
+				552C442D17DFE4B800AFCB5C /* LengthViewController.m */,
+				552C442E17DFE4B800AFCB5C /* LengthViewController.xib */,
 			);
 			path = Length;
 			sourceTree = "<group>";
@@ -3443,6 +3501,9 @@
 				557DE5CB10E087CD00177B4C /* Mix-Info.plist */,
 				554E101510D6C79E00BB619C /* Mix.c */,
 				554E101610D6C79E00BB619C /* Mix.r */,
+				552C443117DFE84700AFCB5C /* MixWindowController.h */,
+				552C443217DFE84700AFCB5C /* MixWindowController.m */,
+				552C443317DFE84700AFCB5C /* MixWindowController.xib */,
 			);
 			path = Mix;
 			sourceTree = "<group>";
@@ -3462,6 +3523,9 @@
 				557DE5CD10E087EB00177B4C /* Sampling Rate-Info.plist */,
 				554E101D10D6C79E00BB619C /* Sampling Rate.c */,
 				554E101E10D6C79E00BB619C /* Sampling Rate.r */,
+				552C443617DFE9D600AFCB5C /* SamplingRateWindowController.h */,
+				552C443717DFE9D600AFCB5C /* SamplingRateWindowController.m */,
+				552C443817DFE9D600AFCB5C /* SamplingRateWindowController.xib */,
 			);
 			path = "Sampling Rate";
 			sourceTree = "<group>";
@@ -6048,6 +6112,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				552C441717DFE24200AFCB5C /* AmplitudeController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6076,6 +6141,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				552C441C17DFE2DE00AFCB5C /* DepthController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6083,6 +6149,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				552C442117DFE35700AFCB5C /* EchoWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6090,6 +6157,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				552C442617DFE3EF00AFCB5C /* FadeWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6104,6 +6172,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				552C442B17DFE48A00AFCB5C /* LengthWindowController.xib in Resources */,
+				552C443017DFE4B800AFCB5C /* LengthViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6111,6 +6181,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				552C443517DFE84700AFCB5C /* MixWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6125,6 +6196,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				552C443A17DFE9D600AFCB5C /* SamplingRateWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6723,6 +6795,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				557DE44A10E06CE700177B4C /* Amplitude.c in Sources */,
+				552C441617DFE24200AFCB5C /* AmplitudeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6755,6 +6828,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				557DE78110E08A2000177B4C /* Depth.c in Sources */,
+				552C441B17DFE2DE00AFCB5C /* DepthController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6763,6 +6837,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				557DE78310E08A2C00177B4C /* Echo.c in Sources */,
+				552C442017DFE35700AFCB5C /* EchoWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6771,6 +6846,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				557DEA3710E0900A00177B4C /* Fade.c in Sources */,
+				552C442517DFE3EF00AFCB5C /* FadeWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6787,6 +6863,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				557DEA4610E091E100177B4C /* Length.c in Sources */,
+				552C442A17DFE48A00AFCB5C /* LengthWindowController.m in Sources */,
+				552C442F17DFE4B800AFCB5C /* LengthViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6795,6 +6873,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				557DEA4E10E0921D00177B4C /* Mix.c in Sources */,
+				552C443417DFE84700AFCB5C /* MixWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6811,6 +6890,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				557DEA5510E092D700177B4C /* Sampling Rate.c in Sources */,
+				552C443917DFE9D600AFCB5C /* SamplingRateWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
