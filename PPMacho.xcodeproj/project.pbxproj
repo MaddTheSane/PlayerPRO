@@ -722,6 +722,13 @@
 		55EA01A216AF368F00D6AEA0 /* CrossFade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE66310E0885C00177B4C /* CrossFade.plugin */; };
 		55ED50AB10D40BFE00824C61 /* MOD.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55ED547410D5F9CD00824C61 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
+		55EE2D7D17E110DA00FED42A /* MADTypeConversions.h in Headers */ = {isa = PBXBuildFile; fileRef = 55EE2D7C17E110DA00FED42A /* MADTypeConversions.h */; };
+		55EE2D7F17E11DEB00FED42A /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE2D7E17E11DEB00FED42A /* libiconv.dylib */; };
+		55EE2D8017E11EB300FED42A /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE2D7E17E11DEB00FED42A /* libiconv.dylib */; };
+		55EE2D8117E11EB400FED42A /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE2D7E17E11DEB00FED42A /* libiconv.dylib */; };
+		55EE2D8317E12A0F00FED42A /* MADTypeConversions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EE2D8217E12A0F00FED42A /* MADTypeConversions.m */; };
+		55EE2D8417E12A0F00FED42A /* MADTypeConversions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EE2D8217E12A0F00FED42A /* MADTypeConversions.m */; };
+		55EE2D8517E12A0F00FED42A /* MADTypeConversions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EE2D8217E12A0F00FED42A /* MADTypeConversions.m */; };
 		55EE8C741003E83A00E75E63 /* General-rez.r in Rez */ = {isa = PBXBuildFile; fileRef = 55EE8C731003E83A00E75E63 /* General-rez.r */; };
 		55EE8EC2100404EB00E75E63 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBC100404EB00E75E63 /* CoreAudio.framework */; };
 		55EE8EC6100404EB00E75E63 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
@@ -2410,6 +2417,10 @@
 		55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPlugHandler.h; sourceTree = "<group>"; };
 		55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPlugHandler.m; sourceTree = "<group>"; };
 		55ED547310D5F9CD00824C61 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		55EE2D7817E1107800FED42A /* MADTypeConversions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MADTypeConversions.c; sourceTree = "<group>"; };
+		55EE2D7C17E110DA00FED42A /* MADTypeConversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MADTypeConversions.h; sourceTree = "<group>"; };
+		55EE2D7E17E11DEB00FED42A /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		55EE2D8217E12A0F00FED42A /* MADTypeConversions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MADTypeConversions.m; sourceTree = "<group>"; };
 		55EE8C731003E83A00E75E63 /* General-rez.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = "General-rez.r"; path = "../Files/General-rez.r"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		55EE8EBC100404EB00E75E63 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -2759,6 +2770,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55EE2D7F17E11DEB00FED42A /* libiconv.dylib in Frameworks */,
 				555C125116378B3500735225 /* AudioUnit.framework in Frameworks */,
 				5573A39510B50F6900FF8B50 /* CoreFoundation.framework in Frameworks */,
 				554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */,
@@ -2798,6 +2810,7 @@
 				5578C52517DB94A50057D11B /* Foundation.framework in Frameworks */,
 				5578C52617DB94A50057D11B /* AudioUnit.framework in Frameworks */,
 				5578C52717DB94A50057D11B /* CoreMIDI.framework in Frameworks */,
+				55EE2D8117E11EB400FED42A /* libiconv.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3082,6 +3095,7 @@
 				55BE99DA17978DB200D6DECC /* Foundation.framework in Frameworks */,
 				55BE999F17978C7F00D6DECC /* AudioUnit.framework in Frameworks */,
 				55BE99A017978C7F00D6DECC /* CoreMIDI.framework in Frameworks */,
+				55EE2D8017E11EB300FED42A /* libiconv.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4074,6 +4088,9 @@
 				88E0C3D20C2F21DD00D6C081 /* Interrupt.c */,
 				88E0C3D60C2F21DD00D6C081 /* MainDriver.c */,
 				550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */,
+				55EE2D7C17E110DA00FED42A /* MADTypeConversions.h */,
+				55EE2D7817E1107800FED42A /* MADTypeConversions.c */,
+				55EE2D8217E12A0F00FED42A /* MADTypeConversions.m */,
 				55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */,
 				5573A1301656FCC100A5AECA /* iOS-PlugImport.c */,
 				88E0C3D90C2F21DD00D6C081 /* OutPut8.c */,
@@ -4463,6 +4480,7 @@
 			isa = PBXGroup;
 			children = (
 				5573A1321656FD1700A5AECA /* iOS Frameworks */,
+				55EE2D7E17E11DEB00FED42A /* libiconv.dylib */,
 				557C758416A3455D00923755 /* QTKit.framework */,
 				552F12E116AE08AF00394143 /* AVFoundation.framework */,
 				555C125016378B3500735225 /* AudioUnit.framework */,
@@ -4512,6 +4530,7 @@
 				550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */,
 				55B23D0F1687D1D700DCE923 /* RDriverCarbon.h in Headers */,
 				55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */,
+				55EE2D7D17E110DA00FED42A /* MADTypeConversions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6608,6 +6627,7 @@
 				5573A12F1656FC0700A5AECA /* AMF.c in Sources */,
 				5573A1311656FCC200A5AECA /* iOS-PlugImport.c in Sources */,
 				55C358F816C42F7600FB9FA6 /* MIDI-Hardware-Stub.c in Sources */,
+				55EE2D8417E12A0F00FED42A /* MADTypeConversions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6630,6 +6650,7 @@
 				55B23D131687D22700DCE923 /* MainDriverCarbon.c in Sources */,
 				557EF736168D0CE4001BF077 /* SndUtils.c in Sources */,
 				5523EC7C169361A00067B22A /* MIDI-Hardware-OSX.c in Sources */,
+				55EE2D8317E12A0F00FED42A /* MADTypeConversions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6981,6 +7002,7 @@
 				55C358F716C42F7100FB9FA6 /* MIDI-Hardware-OSX.c in Sources */,
 				5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */,
 				55ADC3F917D7FF93001F27D4 /* SndUtils.c in Sources */,
+				55EE2D8517E12A0F00FED42A /* MADTypeConversions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

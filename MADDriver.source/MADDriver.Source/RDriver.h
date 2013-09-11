@@ -76,6 +76,7 @@ enum MADErrors
 	MADDriverHasNoMusic				= -12,
 	MADSoundSystemUnavailable		= -13,
 	MADWritingErr					= -14,
+	MADTextConversionErr			= -15,
 	MADUnknownErr					= MADUnknowErr
 };
 
@@ -264,7 +265,6 @@ enum MADSoundOutput
 enum MADSoundDriverAvailable
 {
 	MIDISoundDriverBit			= 1 << MIDISoundDriver,
-	SoundManagerDriverBit		= 1 << SoundManagerDriver,
 	BeOSSoundDriverBit			= 1 << BeOSSoundDriver,
 	DirectSound95NTBit			= 1 << DirectSound95NT,
 	Wave95NTBit					= 1 << Wave95NT,
@@ -402,7 +402,7 @@ enum PPPlugModes {
 #endif
 
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-typedef OSErr (*MADPLUGFUNCUTF16) ( OSType , unsigned char * , MADMusicUnicode* , PPInfoRecU *);
+typedef OSErr (*MADPLUGFUNCUTF16) ( OSType , char * , MADMusicUnicode* , PPInfoRecU *);
 
 typedef struct PlugInfo
 {
@@ -425,7 +425,7 @@ typedef PlugInfo PlugInfoInternal;
 #ifdef WIN32
 #include <windows.h>
 typedef OSErr (*PLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-typedef OSErr (*MADPLUGFUNCUTF) ( OSType , unsigned char * , MADMusicUnicode* , PPInfoRecU *);
+typedef OSErr (*MADPLUGFUNCUTF) ( OSType , char * , MADMusicUnicode* , PPInfoRecU *);
 typedef struct PlugInfo
 {
 	HMODULE			hLibrary;
@@ -456,7 +456,7 @@ typedef struct PlugInfoInternal
 #ifdef _BE_H
 //TODO: BeOS headers!
 typedef	OSErr (*MADPlug)( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
-typedef OSErr (*MADPLUGFUNCUTF) ( OSType , unsigned char * , MADMusicUnicode* , PPInfoRecU *);
+typedef OSErr (*MADPLUGFUNCUTF) ( OSType , char * , MADMusicUnicode* , PPInfoRecU *);
 
 typedef struct PlugInfo
 {
@@ -490,7 +490,7 @@ typedef struct PlugInfoInternal
 #include <dlfcn.h>
 #include <sys/param.h>  //For PATH_MAX
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-typedef OSErr (*MADPLUGFUNCUTF) ( OSType , unsigned char * , MADMusicUnicode* , PPInfoRecU *);
+typedef OSErr (*MADPLUGFUNCUTF) ( OSType , char * , MADMusicUnicode* , PPInfoRecU *);
 typedef struct PlugInfo
 {
 	void*			hLibrary;
@@ -684,40 +684,40 @@ PPEXPORT OSErr	MADReset( MADDriverRec *MDriver);											// Reset the current 
 PPEXPORT OSErr	MADGetMusicStatus( MADDriverRec *MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
 PPEXPORT OSErr	MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus( 0, 100, 50) = go to the middle of the music
 
-PPEXPORT OSErr	MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned char*);
+PPEXPORT OSErr	MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned char*) DEPRECATED_ATTRIBUTE;
 
-PPEXPORT OSErr	MADLoadMusicPtr( MADMusic **music, char *myPtr);								// MAD ONLY - Load a MAD Ptr into memory, you can free() your Ptr after this call
+PPEXPORT OSErr	MADLoadMusicPtr( MADMusic **music, char *myPtr) DEPRECATED_ATTRIBUTE;								// MAD ONLY - Load a MAD Ptr into memory, you can free() your Ptr after this call
 
-PPEXPORT OSErr	MADLoadMusicFileCString( MADLibrary *, MADMusic **music, char *type, char *fName);			// Load a music file with plugs
+PPEXPORT OSErr	MADLoadMusicFileCString( MADLibrary *, MADMusic **music, char *type, char *fName) DEPRECATED_ATTRIBUTE;			// Load a music file with plugs
 #ifdef _MAC_H
-PPEXPORT OSErr	MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef);
+PPEXPORT OSErr	MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef) DEPRECATED_ATTRIBUTE;
 #endif
 
-PPEXPORT OSErr	MADMusicIdentifyCString( MADLibrary *, char *type, Ptr cName);			// Identify what kind of music format is cName file.
+PPEXPORT OSErr	MADMusicIdentifyCString( MADLibrary *, char *type, Ptr cName) DEPRECATED_ATTRIBUTE;			// Identify what kind of music format is cName file.
 
 #ifdef _MAC_H
-PPEXPORT OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef); //Identify what kind of music format is URLRef file.
+PPEXPORT OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef) DEPRECATED_ATTRIBUTE; //Identify what kind of music format is URLRef file.
 #endif
 
-PPEXPORT OSErr MADMusicInfoCString( MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec);
+PPEXPORT OSErr MADMusicInfoCString( MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec) DEPRECATED_ATTRIBUTE;
 	
 #ifdef _MAC_H
-PPEXPORT OSErr MADMusicInfoCFURL( MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec);
+PPEXPORT OSErr MADMusicInfoCFURL( MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec) DEPRECATED_ATTRIBUTE;
 #endif
 	
-PPEXPORT OSErr MADMusicExportCString( MADLibrary *lib, MADMusic *music, char *type, char* cName);
+PPEXPORT OSErr MADMusicExportCString( MADLibrary *lib, MADMusic *music, char *type, char* cName) DEPRECATED_ATTRIBUTE;
 #ifdef _MAC_H
-PPEXPORT OSErr MADMusicExportCFURL( MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL);
+PPEXPORT OSErr MADMusicExportCFURL( MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL) DEPRECATED_ATTRIBUTE;
 #endif
 
 PPEXPORT Boolean	MADPlugAvailable( MADLibrary *, char *type);								// Is plug 'type' available?
 
-PPEXPORT OSErr	MADDisposeMusic( MADMusic **, MADDriverRec *MDriver);								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
+PPEXPORT OSErr	MADDisposeMusic( MADMusic **, MADDriverRec *MDriver) DEPRECATED_ATTRIBUTE;								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
 
 PPEXPORT void	MADChangeTracks( MADDriverRec *MDriver, short);				// Change current tracks number of the music driver
 PPEXPORT Cmd*	GetMADCommand(	short		position,						// Extract a Command from a PatData structure
 								short		channel,
-								PatData*	aPatData);
+								PatData*	aPatData) DEPRECATED_ATTRIBUTE;
 
 PPEXPORT OSErr	MADPlaySoundData(MADDriverRec	*MDriver,
 								 Ptr			soundPtr,				// Sound Pointer to data

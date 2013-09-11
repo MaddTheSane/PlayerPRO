@@ -128,24 +128,29 @@ Boolean W95_Init( MADDriverRec* driver);
 void W95_Exit( MADDriverRec* driver);
 #endif
 	
+#if 0
 OSErr	CallImportPlug( 	MADLibrary		*inMADDriver,
 							short			PlugNo,			// CODE du plug
 							OSType			order,
 							char			*AlienFile,
 							MADMusic		*theNewMAD,
 							PPInfoRec		*info);
-
+#endif
 
 OSErr	PPTestFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile);
-OSErr	PPInfoFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec	*InfoRec);
+OSErr	PPInfoFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec);
 OSErr	PPExportFile( MADLibrary *inMADDriver, char	*kindFile, char *AlienFile, MADMusic *theNewMAD);
 OSErr	PPImportFile( MADLibrary *inMADDriver, char	*kindFile, char *AlienFile, MADMusic **theNewMAD);
 OSErr	PPIdentifyFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile);
 
+OSErr	PPInfoFileU( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRecU *InfoRec);
+OSErr	PPExportFileU( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusicUnicode *theNewMAD);
+OSErr	PPImportFileU( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusicUnicode **theNewMAD);
+	
 OSType	GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType type);
 void	MInitImportPlug( MADLibrary *inMADDriver, char*);	
 void	CloseImportPlug( MADLibrary *inMADDriver);
-OSErr	MADLoadMADFileCString( MADMusic **, Ptr fName);
+OSErr	MADLoadMADFileCString( MADMusic **, Ptr fName) DEPRECATED_ATTRIBUTE;
 OSErr	CheckMADFile( char *AlienFile);
 
 #ifndef __PPPLUGH__

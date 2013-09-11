@@ -45,16 +45,16 @@ extern "C" {
 typedef FILE*		UNFILE;
 	
 PPEXPORT UNFILE iFileOpen( Ptr name) DEPRECATED_ATTRIBUTE;
-PPEXPORT UNFILE iFileOpenRead( Ptr name);
-PPEXPORT UNFILE iFileOpenWrite( Ptr name);
-PPEXPORT void iFileCreate(Ptr path, OSType type);
+PPEXPORT UNFILE iFileOpenRead( Ptr name) DEPRECATED_ATTRIBUTE;
+PPEXPORT UNFILE iFileOpenWrite( Ptr name) DEPRECATED_ATTRIBUTE;
+PPEXPORT void iFileCreate(Ptr path, OSType type) DEPRECATED_ATTRIBUTE;
 
 PPEXPORT long iGetEOF( UNFILE iFileRefI);
-PPEXPORT OSErr iRead( long size, Ptr dest, UNFILE iFileRefI);
-PPEXPORT OSErr iWrite( long size, Ptr dest, UNFILE iFileRefI);
-PPEXPORT OSErr iSeekCur( long size, UNFILE iFileRefI);
+PPEXPORT OSErr iRead( long size, Ptr dest, UNFILE iFileRefI) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr iWrite( long size, Ptr dest, UNFILE iFileRefI) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr iSeekCur( long size, UNFILE iFileRefI) DEPRECATED_ATTRIBUTE;
 
-PPEXPORT void iClose( UNFILE iFileRefI);
+PPEXPORT void iClose( UNFILE iFileRefI) DEPRECATED_ATTRIBUTE;
 	
 ////////////////////////////////////////////////////////////
 

@@ -14,6 +14,7 @@
 #import <Foundation/Foundation.h>
 #include "FileUtils.h"
 #include "PPPrivate.h"
+#include "MADTypeConversions.h"
 
 #define MAXPLUG	40
 
@@ -437,41 +438,37 @@ static OSErr PPMADKInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 
 static OSErr PPMADuInfoFile( char *AlienFile, PPInfoRecU *InfoRec)
 {
-	MADSpecUni	*theMAD;
-	long		fileSize;
-	UNFILE		fileID;
-	
-	theMAD = (MADSpecUni*) malloc( sizeof( MADSpecUni) + 200);
-	
-	fileID = iFileOpenRead( AlienFile);
-	if( !fileID)
-	{
+	@autoreleasepool {
+		MADSpecUni	*theMAD;
+		
+		NSData *fileData = [NSData dataWithContentsOfFile:[[NSFileManager defaultManager] stringWithFileSystemRepresentation:AlienFile length:strlen(AlienFile)]];
+		if (!fileData) {
+			return MADReadingErr;
+		}
+		
+		theMAD = (MADSpecUni*) malloc( sizeof( MADSpecUni) + 200);
+		
+		[fileData getBytes:theMAD length:sizeof(MADSpecUni)];
+		
+		wcscpy(InfoRec->internalFileName, theMAD->name);
+		
+		InfoRec->totalPatterns = theMAD->numPat;
+		InfoRec->partitionLength = theMAD->numPointers;
+		InfoRec->totalTracks = theMAD->numChn;
+		InfoRec->signature = 'MADu';
+		wchar_t madu[] = {'M', 'A', 'D', 'u', 0};
+		wcscpy(InfoRec->formatDescription, madu);
+		InfoRec->totalInstruments = theMAD->numInstru;
+		InfoRec->fileSize = [fileData length];
+		
 		free( theMAD);
-		return MADReadingErr;
+		theMAD = NULL;
+		
+		return noErr;
 	}
-	fileSize = iGetEOF( fileID);
-	
-	iRead( sizeof( MADSpec), (Ptr) theMAD, fileID);
-	iClose( fileID);
-	
-	wcscpy(InfoRec->internalFileName, theMAD->name);
-	
-	InfoRec->totalPatterns = theMAD->numPat;
-	InfoRec->partitionLength = theMAD->numPointers;
-	InfoRec->totalTracks = theMAD->numChn;
-	InfoRec->signature = 'MADK';
-	wchar_t madu[] = {'M', 'A', 'D', 'u', 0};
-	wcscpy(InfoRec->formatDescription, madu);
-	InfoRec->totalInstruments = theMAD->numInstru;
-	InfoRec->fileSize = fileSize;
-	
-	free( theMAD);
-	theMAD = NULL;
-	
-	return noErr;
 }
 
-OSErr CallImportPlug(MADLibrary				*inMADDriver,
+static OSErr CallImportPlug(MADLibrary				*inMADDriver,
 					 short					PlugNo,			// CODE du plug
 					 OSType					order,
 					 char					*AlienFile,
@@ -479,6 +476,10 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 					 PPInfoRec				*info)
 {
 	OSErr					iErr = noErr;
+	
+	if (!(inMADDriver->ThePlug[PlugNo].IOPlug)) {
+		return MADOrderNotImplemented;
+	}
 	
 	CFBundleRefNum resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
 	
@@ -490,6 +491,61 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 	
 	return iErr;
 }
+
+static OSErr CallImportPlugUnicode(MADLibrary				*inMADDriver,
+					 short					PlugNo,			// CODE du plug
+					 OSType					order,
+					 char					*AlienFile,
+					 MADMusicUnicode		*theNewMAD,
+					 PPInfoRecU				*info)
+{
+	OSErr iErr = noErr;
+	
+	CFBundleRefNum resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
+	
+	
+	if (inMADDriver->ThePlug[PlugNo].hasUnicode) {
+		iErr = (*inMADDriver->ThePlug[PlugNo].IOPlugU)(order, AlienFile, theNewMAD, info);
+	} else {
+		MADDriverSettings driverSettings = {0};
+		PPInfoRec oldInfo = {0};
+
+		MADMusic *oldMus = calloc( sizeof( MADMusic), 1);
+		if (!oldMus) {
+			CFBundleCloseBundleResourceMap(inMADDriver->ThePlug[PlugNo].file, resFileNum);
+			return MADNeedMemory;
+		};
+		
+		if (order == MADPlugExport) {
+			iErr = ConvertMusicFromUnicode(theNewMAD, oldMus);
+		}
+		if (iErr) {
+			CFBundleCloseBundleResourceMap(inMADDriver->ThePlug[PlugNo].file, resFileNum);
+			free(oldMus);
+			return iErr;
+		}
+		iErr = (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, (char*)AlienFile, oldMus, &oldInfo, &driverSettings);
+		if (iErr == noErr) {
+			switch (order) {
+				case MADPlugInfo:
+					iErr = ConvertPlugInfoToUnicode(oldInfo, info);
+					break;
+					
+				case MADPlugImport:
+					iErr = ConvertMusicToUnicode(oldMus, theNewMAD);
+					break;
+					
+				default:
+					break;
+			}
+		}
+		free(oldMus);
+	}
+	CFBundleCloseBundleResourceMap(inMADDriver->ThePlug[PlugNo].file, resFileNum);
+	
+	return iErr;
+}
+
 
 void MInitImportPlug( MADLibrary *inMADDriver, char *PlugsFolderName)
 {
@@ -563,6 +619,32 @@ OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInf
 	return MADCannotFindPlug;
 }
 
+OSErr PPInfoFileU(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRecU *InfoRec)
+{
+	short		i;
+	MADMusicUnicode	aMAD;
+	
+	
+	if( !strcmp( kindFile, "MADK"))
+	{
+		PPInfoRec oldRec;
+		OSErr ierr = PPMADKInfoFile( AlienFile, &oldRec);
+		ConvertPlugInfoToUnicode(oldRec, InfoRec);
+		return ierr;
+	} else if (!strcmp("MADu", kindFile)) {
+		return PPMADuInfoFile(AlienFile, InfoRec);
+	}
+	
+	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	{
+		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		{
+			return CallImportPlugUnicode( inMADDriver, i, MADPlugInfo, AlienFile, &aMAD, InfoRec);
+		}
+	}
+	return MADCannotFindPlug;
+}
+
 OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD)
 {
 	short		i;
@@ -576,6 +658,29 @@ OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 			if( !theNewMAD) return MADNeedMemory;
 			
 			OSErr iErr = CallImportPlug( inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
+			if (iErr != noErr) {
+				free(*theNewMAD);
+				*theNewMAD = NULL;
+			}
+			return iErr;
+		}
+	}
+	return MADCannotFindPlug;
+}
+
+OSErr PPImportFileU( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusicUnicode **theNewMAD)
+{
+	short		i;
+	PPInfoRecU	InfoRec;
+	
+	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	{
+		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		{
+			*theNewMAD = (MADMusicUnicode*) calloc( sizeof( MADMusicUnicode), 1);
+			if( !theNewMAD) return MADNeedMemory;
+			
+			OSErr iErr = CallImportPlugUnicode( inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
 			if (iErr != noErr) {
 				free(*theNewMAD);
 				*theNewMAD = NULL;
@@ -609,11 +714,34 @@ OSErr CheckMADFile(char* name)
 	return err;
 }
 
+OSErr CheckMADuFile(char* name)
+{
+	UNFILE				refNum;
+	char				charl[CharlMADcheckLength];
+	OSErr				err;
+	
+	refNum = iFileOpenRead( name);
+	if( !refNum) return MADReadingErr;
+	else
+	{
+		iRead(CharlMADcheckLength, charl, refNum);
+		
+		if( charl[ 0] == 'M' &&							// MADK
+		   charl[ 1] == 'A' &&
+		   charl[ 2] == 'D' &&
+		   charl[ 3] == 'u') err = noErr;
+		else err = MADIncompatibleFile;
+		
+		iClose( refNum);
+	}
+	return err;
+}
+
 OSErr PPIdentifyFile( MADLibrary *inMADDriver, char *type, char *AlienFile)
 {
 	UNFILE				refNum;
 	short				i;
-	PPInfoRec			InfoRec;
+	PPInfoRecU			InfoRec;
 	OSErr				iErr = noErr;
 	
 	strcpy( type, "!!!!");
@@ -635,10 +763,15 @@ OSErr PPIdentifyFile( MADLibrary *inMADDriver, char *type, char *AlienFile)
 		strcpy( type, "MADK");
 		return noErr;
 	}
+	iErr = CheckMADuFile(AlienFile);
+	if (iErr == noErr) {
+		strcpy(type, "MADu");
+		return noErr;
+	}
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( CallImportPlug( inMADDriver, i, MADPlugTest, AlienFile, NULL, &InfoRec) == noErr)
+		if( CallImportPlugUnicode(inMADDriver, i, MADPlugTest, AlienFile, NULL, &InfoRec) == noErr)
 		{
 			strcpy(type, inMADDriver->ThePlug[i].type);
 			return noErr;
@@ -654,6 +787,7 @@ Boolean	MADPlugAvailable( MADLibrary *inMADDriver, char* kindFile)
 	short		i;
 	
 	if( !strcmp( kindFile, "MADK")) return TRUE;
+	if (!strcmp(kindFile, "MADu")) return TRUE;
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type)) return TRUE;
@@ -722,3 +856,4 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 	
 	return noErr;
 }
+
