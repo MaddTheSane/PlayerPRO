@@ -46,7 +46,7 @@ struct __MADDriverRec {
 	
 	/**  Current music in memory, loaded with RLoadMusic() by example **/
 	
-	MADMusic				*curMusic;										// Current music played by this driver, it can be NULL !!!
+	MADMusicUnicode			*curMusic;										// Current music played by this driver, it can be NULL !!!
 	MADLibrary				*lib;
 	
 	/**  Drivers variables **/
@@ -66,7 +66,10 @@ struct __MADDriverRec {
 	Boolean					Reading;										// Reading indicator
 	Boolean					Active[ MAXTRACK];								// Channel Active?
 	Boolean					Equalizer;										// Is Equalizer Active?
-	
+		
+	Ptr						OscilloWavePtr;									// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
+	size_t					OscilloWaveSize;								// Size of previous buffer
+
 #ifdef _MAC_H
 	AudioUnit				CAAudioUnit;
 	size_t					CABufOff;
@@ -101,9 +104,6 @@ struct __MADDriverRec {
 #ifdef _ESOUND
 	//TODO: EsounD driver
 #endif
-	
-	Ptr						OscilloWavePtr;									// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
-	size_t					OscilloWaveSize;								// Size of previous buffer
 	
 	/** Private variables - Not documented **/
 	/* DO NOT MODIFY OR USE these variables */

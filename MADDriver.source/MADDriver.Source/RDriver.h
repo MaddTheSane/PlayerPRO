@@ -228,38 +228,43 @@ typedef struct MADMusic
 	
 } MADMusic;
 
+typedef struct MADMusicUnicode
+{
+	MADSpecUni				*header;								// Music Header - See 'MAD.h'
+	PatternDataUnicode		*partition[ MAXPATTERN];				// Patterns
+	InstrumentDataUnicode	*fid;									// Instruments
+	SampleDataUnicode		**sample;								// Samples
+	FXSetsUnicode			*sets;									// FXSettings
+	Boolean					musicUnderModification;					// Tell the driver to NOT access music data
+	Str255					musicFileName;
+	Boolean					hasChanged;
+	SInt32					position, fullTime;
+	OSType					originalFormat;
+} MADMusicUnicode;
+
+
 /********************						***********************/
 /*** 			     Driver Settings definition					***/
 /********************						***********************/
 
 enum MADSoundOutput
 {
-	oldASCSoundDriver = 1,				// MAC ONLY,	// NOT Available
-	oldAWACSoundDriver,					// MAC ONLY		// NOT Available
-	MIDISoundDriver,					// Not yet available
-	SoundManagerDriver,					// MAC ONLY		// NOT Available
-	QK25SoundDriver,					// MAC ONLY		// NOT Available
-	DigiDesignSoundDriver,				// MAC ONLY		// NOT Available
-	BeOSSoundDriver,					// BE ONLY when using with BeOS compatible systems ! - NOT FOR MAC
+	MIDISoundDriver = 3,					// Not yet available
+	BeOSSoundDriver = 6,					// BE ONLY when using with BeOS compatible systems ! - NOT FOR MAC
 	DirectSound95NT,					// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
 	Wave95NT,							// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
 	CoreAudioDriver,					// OSX ONLY Core Audio driver
 	ALSADriver,							// LINUX ONLY ALSA driver
 	OSSDriver,							// Open Sound System. Most Unices (NOT OS X) including Linux
 	ESDDriver,							// ESound Driver. available on most UNIX Systems
-	ASIOSoundManager,					// ASIO Sound Driver by Steinberg //NOT Available
 	NoHardwareDriver = SHRT_MAX			// NO HARDWARE CONNECTION, will not produce any sound
 };
 
 //Used for MADSoundDriverList()
 enum MADSoundDriverAvailable
 {
-	oldASCSoundDriverBit		= 1 << oldASCSoundDriver,
-	oldAWACSoundDriverBit		= 1 << oldAWACSoundDriver,
 	MIDISoundDriverBit			= 1 << MIDISoundDriver,
 	SoundManagerDriverBit		= 1 << SoundManagerDriver,
-	QK25SoundDriverBit			= 1 << QK25SoundDriver,
-	DigiDesignSoundDriverBit	= 1 << DigiDesignSoundDriver,
 	BeOSSoundDriverBit			= 1 << BeOSSoundDriver,
 	DirectSound95NTBit			= 1 << DirectSound95NT,
 	Wave95NTBit					= 1 << Wave95NT,
@@ -267,7 +272,6 @@ enum MADSoundDriverAvailable
 	ALSADriverBit				= 1 << ALSADriver,
 	OSSDriverBit				= 1 << OSSDriver,
 	ESDDriverBit				= 1 << ESDDriver,
-	ASIOSoundManagerBit			= 1 << ASIOSoundManager
 };
 
 enum
@@ -348,6 +352,24 @@ typedef struct PPInfoRec
 	
 } PPInfoRec;
 
+typedef struct PPInfoRecU
+{
+	wchar_t		internalFileName[ 60];
+	wchar_t		formatDescription[ 60];
+	
+	SInt32		totalPatterns;
+	SInt32		partitionLength;
+	
+	short		totalTracks;
+	short		totalInstruments;
+	
+	OSType		signature;
+	
+	UInt64		fileSize;
+	
+} PPInfoRecU;
+
+
 
 /********************						***********************/
 /*** 			Informations about Plugs: ThePlug[]				***/
@@ -367,6 +389,9 @@ enum PPPlugModes {
 
 #pragma pack(pop)
 
+#define PPIMPEXPNAME "PPImpExpMain"
+#define PPIMPEXPNAMEUTF "PPImpExpMainU"
+
 #ifdef _MAC_H
 
 #include <CoreFoundation/CFString.h>
@@ -377,25 +402,30 @@ enum PPPlugModes {
 #endif
 
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
+typedef OSErr (*MADPLUGFUNCUTF16) ( OSType , unsigned char * , MADMusicUnicode* , PPInfoRecU *);
 
 typedef struct PlugInfo
 {
-	MADPLUGFUNC	IOPlug;											// Plug CODE
-	CFStringRef	MenuName;										// Plug name
-	CFStringRef	AuthorString;									// Plug author
+	MADPLUGFUNC			IOPlug;											// Plug CODE
+	MADPLUGFUNCUTF16	IOPlugU;
+	CFStringRef			MenuName;										// Plug name
+	CFStringRef			AuthorString;									// Plug author
 #if !TARGET_OS_IPHONE
-	CFBundleRef	file;											// Location of plug file
+	CFBundleRef			file;											// Location of plug file
 #endif
-	char		type[ 5];										// OSType of file support.
-	CFArrayRef	UTItypes;										// CFStrings of supported UTIs
-	OSType		mode;											// Mode support : Import +/ Export
-	UInt32		version;										// Plug-in version
+	char				type[ 5];										// OSType of file support.
+	CFArrayRef			UTItypes;										// CFStrings of supported UTIs
+	OSType				mode;											// Mode support : Import +/ Export
+	UInt32				version;										// Plug-in version
+	Boolean				hasUnicode;
 } PlugInfo;
+typedef PlugInfo PlugInfoInternal;
 #endif
 
 #ifdef WIN32
 #include <windows.h>
 typedef OSErr (*PLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
+typedef OSErr (*MADPLUGFUNCUTF) ( OSType , unsigned char * , MADMusicUnicode* , PPInfoRecU *);
 typedef struct PlugInfo
 {
 	HMODULE			hLibrary;
@@ -407,11 +437,26 @@ typedef struct PlugInfo
 	OSType			mode;										// Mode support : Import +/ Export
 	int				version;									// Plug-in version
 } PlugInfo;
+
+typedef struct PlugInfoInternal
+{
+	HMODULE			hLibrary;
+	PLUGDLLFUNC		IOPlug;										// Plug CODE
+	MADPLUGFUNCUTF	IOPlugU;
+	wchar_t			MenuName[ 65];								// Plug name
+	wchar_t			AuthorString[ 65];							// Plug author
+	char			file[ MAX_PATH * 2];						// Location of plug file
+	char			type[ 5];									// OSType of file support
+	OSType			mode;										// Mode support : Import +/ Export
+	int				version;									// Plug-in version
+	Boolean			hasUnicode;
+} PlugInfoInternal;
 #endif
 
 #ifdef _BE_H
 //TODO: BeOS headers!
 typedef	OSErr (*MADPlug)( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+typedef OSErr (*MADPLUGFUNCUTF) ( OSType , unsigned char * , MADMusicUnicode* , PPInfoRecU *);
 
 typedef struct PlugInfo
 {
@@ -424,12 +469,28 @@ typedef struct PlugInfo
 	OSType			mode;										// Mode support : Import +/ Export
 	int				version;									// Plug-in version
 } PlugInfo;
+
+typedef struct PlugInfoInternal
+{
+	image_id		hLibrary;
+	MADPlug			IOPlug;										// Plug CODE
+	MADPLUGFUNCUTF	IOPlugU;
+	wchar_t			MenuName[ 65];								// Plug name
+	wchar_t			AuthorString[ 65];							// Plug author
+	char			file[ MAX_PATH * 2];						// Location of plug file
+	char			type[ 5];									// OSType of file support
+	OSType			mode;										// Mode support : Import +/ Export
+	int				version;									// Plug-in version
+	Boolean			hasUnicode;
+} PlugInfoInternal;
+
 #endif
 
 #if (defined(__UNIX__) && !(defined (_MAC_H) || defined (_BE_H)))
 #include <dlfcn.h>
 #include <sys/param.h>  //For PATH_MAX
 typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
+typedef OSErr (*MADPLUGFUNCUTF) ( OSType , unsigned char * , MADMusicUnicode* , PPInfoRecU *);
 typedef struct PlugInfo
 {
 	void*			hLibrary;
@@ -441,6 +502,21 @@ typedef struct PlugInfo
 	OSType			mode;										// Mode support : Import +/ Export
 	int				version;									// Plug-in version
 } PlugInfo;
+
+typedef struct PlugInfoInternal
+{
+	void*			hLibrary;
+	MADPLUGFUNC		IOPlug;										// Plug CODE
+	MADPLUGFUNCUTF	IOPlugU;
+	wchar_t			MenuName[ 65];								// Plug name
+	wchar_t			AuthorString[ 65];							// Plug author
+	char			file[ MAX_PATH * 2];						// Location of plug file
+	char			type[ 5];									// OSType of file support
+	OSType			mode;										// Mode support : Import +/ Export
+	int				version;									// Plug-in version
+	Boolean			hasUnicode;
+} PlugInfoInternal;
+
 #endif
 
 #pragma pack(push, 2)
@@ -456,7 +532,7 @@ typedef struct MADLibrary
 	
 	/** Plugs Import/Export variables **/
 	
-	PlugInfo 				*ThePlug;							// Pointers on plugs code & infos
+	PlugInfoInternal		*ThePlug;							// Pointers on plugs code & infos
 	short					TotalPlug;							// no of Plugs in pointer ThePlug
 } MADLibrary;
 

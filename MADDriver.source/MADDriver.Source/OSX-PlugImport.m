@@ -169,9 +169,15 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 		else goto badplug3;
 	}
 	
-	thePlug->IOPlug = CFBundleGetFunctionPointerForName(theBundle, CFSTR("PPImpExpMain"));
-	if(!thePlug->IOPlug)
+	thePlug->IOPlug = CFBundleGetFunctionPointerForName(theBundle, CFSTR(PPIMPEXPNAME));
+	thePlug->IOPlugU = CFBundleGetFunctionPointerForName(theBundle, CFSTR(PPIMPEXPNAMEUTF));
+	if(!(thePlug->IOPlug || thePlug->IOPlugU))
 		goto badplug4;
+	if (thePlug->IOPlugU) {
+		thePlug->hasUnicode = true;
+	} else {
+		thePlug->hasUnicode = false;
+	}
 	thePlug->file = theBundle;
 	CFRetain(thePlug->file);
 	
@@ -394,7 +400,7 @@ static CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(char *UserAdd
 	return FoldLocs;
 }
 
-static OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
+static OSErr PPMADKInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 {
 	MADSpec		*theMAD;
 	long		fileSize;
@@ -424,6 +430,42 @@ static OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	InfoRec->fileSize = fileSize;
 	
 	free( theMAD);	
+	theMAD = NULL;
+	
+	return noErr;
+}
+
+static OSErr PPMADuInfoFile( char *AlienFile, PPInfoRecU *InfoRec)
+{
+	MADSpecUni	*theMAD;
+	long		fileSize;
+	UNFILE		fileID;
+	
+	theMAD = (MADSpecUni*) malloc( sizeof( MADSpecUni) + 200);
+	
+	fileID = iFileOpenRead( AlienFile);
+	if( !fileID)
+	{
+		free( theMAD);
+		return MADReadingErr;
+	}
+	fileSize = iGetEOF( fileID);
+	
+	iRead( sizeof( MADSpec), (Ptr) theMAD, fileID);
+	iClose( fileID);
+	
+	wcscpy(InfoRec->internalFileName, theMAD->name);
+	
+	InfoRec->totalPatterns = theMAD->numPat;
+	InfoRec->partitionLength = theMAD->numPointers;
+	InfoRec->totalTracks = theMAD->numChn;
+	InfoRec->signature = 'MADK';
+	wchar_t madu[] = {'M', 'A', 'D', 'u', 0};
+	wcscpy(InfoRec->formatDescription, madu);
+	InfoRec->totalInstruments = theMAD->numInstru;
+	InfoRec->fileSize = fileSize;
+	
+	free( theMAD);
 	theMAD = NULL;
 	
 	return noErr;
@@ -508,7 +550,7 @@ OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInf
 	
 	if( !strcmp( kindFile, "MADK"))
 	{
-		return PPMADInfoFile( AlienFile, InfoRec);
+		return PPMADKInfoFile( AlienFile, InfoRec);
 	}
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
