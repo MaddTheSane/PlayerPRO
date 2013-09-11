@@ -23,7 +23,7 @@ typedef enum _ToneGenerator
 	wave = 6
 } ToneGenerator;
 
-extern int RunToneGeneratorPlug(sData *theData, PPInfoPlug *thePPInfoPlug, long *audioLen, int stereoMode, long *audioAmp, long *audioFreq);
+extern int RunToneGeneratorPlug(sData *theData, PPInfoPlug *thePPInfoPlug, long *audioLen, int stereoMode, int *audioAmp, int *audioFreq);
 extern short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp, long AudioType, Boolean stereo);
 extern Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, long AudioType, Boolean stereo);
 

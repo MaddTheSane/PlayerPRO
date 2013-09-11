@@ -238,8 +238,9 @@ static OSErr mainToneGenerator(void				*unused,
 							   PPInfoPlug		*thePPInfoPlug,
 							   short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	long				AudioLength, AudioFreq, AudioAmp;
-	short				itemHit;
+	long		AudioLength;
+	int			AudioFreq, AudioAmp;
+	short		itemHit;
 	
 	itemHit = silence;
 	

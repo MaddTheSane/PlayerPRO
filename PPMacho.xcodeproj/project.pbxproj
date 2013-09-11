@@ -203,6 +203,19 @@
 		552C443517DFE84700AFCB5C /* MixWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C443317DFE84700AFCB5C /* MixWindowController.xib */; };
 		552C443917DFE9D600AFCB5C /* SamplingRateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C443717DFE9D600AFCB5C /* SamplingRateWindowController.m */; };
 		552C443A17DFE9D600AFCB5C /* SamplingRateWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C443817DFE9D600AFCB5C /* SamplingRateWindowController.xib */; };
+		552C443B17DFEF6400AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		552C443C17DFEF7D00AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		552C443D17DFEF7E00AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		552C443E17DFEF8200AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		552C443F17DFEF8700AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		552C444117DFEF8E00AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		552C444217DFEF9500AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		552C444317DFEF9600AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		552C444417DFEF9800AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		552C444517DFEF9B00AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		552C444617DFEF9F00AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		552C444717DFEFEF00AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		552C444817DFEFF300AFCB5C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		552C6FE310CD9DAC00C0E0D4 /* ByteUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */; };
 		552C6FE410CD9DB700C0E0D4 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; };
 		5532334F16766E5700076604 /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
@@ -450,9 +463,7 @@
 		557DE44A10E06CE700177B4C /* Amplitude.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FFA10D6C79D00BB619C /* Amplitude.c */; };
 		557DE44B10E06CE900177B4C /* Amplitude.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FFB10D6C79D00BB619C /* Amplitude.r */; };
 		557DE49410E0738000177B4C /* Amplitude.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE43410E06BF200177B4C /* Amplitude.plugin */; };
-		557DE5D810E0882800177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE5D910E0882800177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		557DE61B10E0884100177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE61C10E0884100177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE65D10E0885C00177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE65E10E0885C00177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -469,19 +480,14 @@
 		557DE78410E08A2D00177B4C /* Echo.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E100A10D6C79E00BB619C /* Echo.r */; };
 		557DE7B510E08D8300177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE7B610E08D8300177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		557DE7F810E08D8900177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE7F910E08D8900177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		557DE83B10E08D9E00177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE83C10E08D9E00177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE87E10E08DA300177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE87F10E08DA300177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		557DE8C110E08DA800177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE8C210E08DA800177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE90410E08DAC00177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE90510E08DAC00177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		557DE91410E08DB000177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE91510E08DB000177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		557DE95710E08DB900177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE95810E08DB900177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE99B10E08DC100177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DEA3710E0900A00177B4C /* Fade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100C10D6C79E00BB619C /* Fade.c */; };
@@ -2764,6 +2770,7 @@
 				55ADC3FA17D7FFAA001F27D4 /* PlayerPROCore.framework in Frameworks */,
 				554E10FE10D6F09F00BB619C /* Carbon.framework in Frameworks */,
 				554E10FF10D6F09F00BB619C /* CoreFoundation.framework in Frameworks */,
+				552C443C17DFEF7D00AFCB5C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2774,6 +2781,7 @@
 				55ADC3FB17D8004B001F27D4 /* PlayerPROCore.framework in Frameworks */,
 				554E114510D6F1BF00BB619C /* Carbon.framework in Frameworks */,
 				554E114610D6F1BF00BB619C /* CoreFoundation.framework in Frameworks */,
+				552C443D17DFEF7E00AFCB5C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2784,6 +2792,7 @@
 				55ADC3FC17D80052001F27D4 /* PlayerPROCore.framework in Frameworks */,
 				554E11B210D6F32900BB619C /* Carbon.framework in Frameworks */,
 				554E11B310D6F32900BB619C /* CoreFoundation.framework in Frameworks */,
+				552C443E17DFEF8200AFCB5C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2867,6 +2876,7 @@
 			files = (
 				557DE42D10E06BF200177B4C /* Carbon.framework in Frameworks */,
 				557DE42E10E06BF200177B4C /* CoreFoundation.framework in Frameworks */,
+				552C443F17DFEF8700AFCB5C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2874,7 +2884,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DE5D810E0882800177B4C /* Carbon.framework in Frameworks */,
 				557DE5D910E0882800177B4C /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2883,7 +2892,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DE61B10E0884100177B4C /* Carbon.framework in Frameworks */,
 				557DE61C10E0884100177B4C /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2894,6 +2902,7 @@
 			files = (
 				557DE65D10E0885C00177B4C /* Carbon.framework in Frameworks */,
 				557DE65E10E0885C00177B4C /* CoreFoundation.framework in Frameworks */,
+				552C444117DFEF8E00AFCB5C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2903,6 +2912,7 @@
 			files = (
 				557DE69E10E0886400177B4C /* Carbon.framework in Frameworks */,
 				557DE69F10E0886400177B4C /* CoreFoundation.framework in Frameworks */,
+				552C444217DFEF9500AFCB5C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2912,6 +2922,7 @@
 			files = (
 				557DE6DF10E0886A00177B4C /* Carbon.framework in Frameworks */,
 				557DE6E010E0886A00177B4C /* CoreFoundation.framework in Frameworks */,
+				552C444317DFEF9600AFCB5C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2921,6 +2932,7 @@
 			files = (
 				557DE7B510E08D8300177B4C /* Carbon.framework in Frameworks */,
 				557DE7B610E08D8300177B4C /* CoreFoundation.framework in Frameworks */,
+				552C444417DFEF9800AFCB5C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2928,7 +2940,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DE7F810E08D8900177B4C /* Carbon.framework in Frameworks */,
 				557DE7F910E08D8900177B4C /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2937,8 +2948,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DE83B10E08D9E00177B4C /* Carbon.framework in Frameworks */,
 				557DE83C10E08D9E00177B4C /* CoreFoundation.framework in Frameworks */,
+				552C444717DFEFEF00AFCB5C /* Cocoa.framework in Frameworks */,
+				552C444817DFEFF300AFCB5C /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2948,6 +2960,7 @@
 			files = (
 				557DE87E10E08DA300177B4C /* Carbon.framework in Frameworks */,
 				557DE87F10E08DA300177B4C /* CoreFoundation.framework in Frameworks */,
+				552C444517DFEF9B00AFCB5C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2955,7 +2968,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DE8C110E08DA800177B4C /* Carbon.framework in Frameworks */,
 				557DE8C210E08DA800177B4C /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2966,6 +2978,7 @@
 			files = (
 				557DE90410E08DAC00177B4C /* Carbon.framework in Frameworks */,
 				557DE90510E08DAC00177B4C /* CoreFoundation.framework in Frameworks */,
+				552C444617DFEF9F00AFCB5C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2973,7 +2986,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DE91410E08DB000177B4C /* Carbon.framework in Frameworks */,
 				557DE91510E08DB000177B4C /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2982,7 +2994,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DE95710E08DB900177B4C /* Carbon.framework in Frameworks */,
 				557DE95810E08DB900177B4C /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3126,6 +3137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				552C443B17DFEF6400AFCB5C /* Cocoa.framework in Frameworks */,
 				5574BCF9169645FE00CF3C37 /* PlayerPROCore.framework in Frameworks */,
 				554E10E010D6EF8200BB619C /* Carbon.framework in Frameworks */,
 				554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */,

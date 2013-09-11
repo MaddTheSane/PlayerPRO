@@ -16,20 +16,20 @@
 char *Audio8Ptr = NULL;
 short *Audio16Ptr = NULL;
 
-int RunToneGeneratorPlug(sData *theData, PPInfoPlug *thePPInfoPlug, long *audioLen, int stereoMode, long *audioAmp, long *audioFreq)
+int RunToneGeneratorPlug(sData *theData, PPInfoPlug *thePPInfoPlug, long *audioLen, int stereoMode, int *audioAmp, int *audioFreq)
 {
 	PPToneGeneratorController *controller = [[PPToneGeneratorController alloc] initWithWindowNibName:@"PPToneGeneratorController"];
 	controller.theData = theData;
 	controller.ppInfoPlug = thePPInfoPlug;
 	controller.audioLength = *audioLen;
-	controller.audioAmplitude = *audioAmp;
+	controller.audioAmplitude = (double)(*audioAmp) / 100.0;
 	controller.audioFrequency = *audioFreq;
 	
 	NSInteger retVal = [NSApp runModalForWindow:controller.window];
 	[controller close];
 	if (retVal !=  cancelTone) {
 		*audioLen = controller.audioLength;
-		*audioAmp = controller.audioAmplitude;
+		*audioAmp = controller.audioAmplitude * 100;
 		*audioFreq = controller.audioFrequency;
 	}
 	controller = nil;

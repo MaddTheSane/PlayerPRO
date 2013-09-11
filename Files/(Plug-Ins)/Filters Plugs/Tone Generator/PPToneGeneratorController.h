@@ -14,8 +14,6 @@
 	sData *theData;
 	PPInfoPlug *ppInfoPlug;
 	long audioLength;
-	long audioAmplitude;
-	long audioFrequency;
 	ToneGenerator generator;
 	
 	IBOutlet NSMatrix *stereoOrMono;
@@ -31,8 +29,8 @@
 @property (readwrite) sData *theData;
 @property (readwrite) PPInfoPlug *ppInfoPlug;
 @property (readwrite) long audioLength;
-@property (readwrite) long audioAmplitude;
-@property (readwrite) long audioFrequency;
+@property (readwrite) double audioAmplitude;
+@property (readwrite) int audioFrequency;
 @property (readwrite) ToneGenerator generator;
 
 - (IBAction)okayOrCancel:(id)sender;
