@@ -66,6 +66,7 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 	BlockMoveData( b + 1, a, b[ 0]);
 }
 
+#if 0
 static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
 {
 	//Str255	tStr;
@@ -203,6 +204,7 @@ static void ConvertMADEffect( Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 			break;
 	}
 }
+#endif
 
 static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {

@@ -66,12 +66,10 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDriverSettings *init)
 {
 	SixSixNine			*the669;
-	short				i, PatMax, x, z;
-	long				sndSize, OffSetToSample, OldTicks, temp;
+	short				i, x, z;
+	long				OffSetToSample, temp;
 	Ptr					MaxPtr;
-	//OSErr				theErr;
 	Ptr					theInstrument[ 64], destPtr;
-	//unsigned short		tempS;
 	short				Note, Octave;
 	Byte				*thePasByte;
 	
