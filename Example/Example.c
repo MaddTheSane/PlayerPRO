@@ -194,15 +194,7 @@ int main( int argc, char* argv[])
 		if( iErr != noErr) End = true;
 		else
 		{
-			char	type[ 5];
-#if 0
-			FInfo	info;
-			
-			FSpGetFInfo( &spec, &info);
-			
-			OSType2Ptr( info.fdType, type);
-#endif
-			
+			char	type[ 5];			
 			MADMusicIdentifyFSpFile( MADLib, type, &spec);
 			
 			if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?

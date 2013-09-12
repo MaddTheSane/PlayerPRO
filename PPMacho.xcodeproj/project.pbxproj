@@ -104,8 +104,6 @@
 		55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		55096A3C10E0A74A000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		550B001F10BA0293004FC5D7 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
-		550B002310BA02A0004FC5D7 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		550B00DF10BA17BC004FC5D7 /* 669.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D010BA17BC004FC5D7 /* 669.icns */; };
 		550B00E010BA17BC004FC5D7 /* IT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D110BA17BC004FC5D7 /* IT.icns */; };
 		550B00E110BA17BC004FC5D7 /* List.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D210BA17BC004FC5D7 /* List.icns */; };
@@ -125,8 +123,6 @@
 		550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
 		550B011710BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
 		550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
-		550BFF2910BA01BA004FC5D7 /* Game.c in Sources */ = {isa = PBXBuildFile; fileRef = 550BFF2410BA01BA004FC5D7 /* Game.c */; };
-		550BFF2A10BA01BA004FC5D7 /* Game.r in Rez */ = {isa = PBXBuildFile; fileRef = 550BFF2510BA01BA004FC5D7 /* Game.r */; };
 		550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */; };
 		550FFAE617CEA4570003A2F3 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		550FFAE717CEA4570003A2F3 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -903,13 +899,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		550B001D10BA0285004FC5D7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
-			remoteInfo = PlayerPROCore;
-		};
 		550FFAE117CEA4570003A2F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1998,7 +1987,6 @@
 		5505CA7E16CF1CC80090AB31 /* icon1.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon1.icns; path = Files/icon1.icns; sourceTree = SOURCE_ROOT; };
 		5508C3EC16CEB33B007CA458 /* SampleCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleCellView.h; sourceTree = "<group>"; };
 		5508C3ED16CEB33B007CA458 /* SampleCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleCellView.m; sourceTree = "<group>"; };
-		550B001A10BA021A004FC5D7 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
 		550B00D010BA17BC004FC5D7 /* 669.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = 669.icns; sourceTree = "<group>"; };
 		550B00D110BA17BC004FC5D7 /* IT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IT.icns; sourceTree = "<group>"; };
@@ -2017,12 +2005,6 @@
 		550B00DE10BA17BC004FC5D7 /* XM.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = XM.icns; sourceTree = "<group>"; };
 		550B011310BA1E1C004FC5D7 /* PPPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPrivate.h; sourceTree = "<group>"; };
 		550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "OSX-CoreAudio.c"; sourceTree = "<group>"; };
-		550BFF1010BA0179004FC5D7 /* Game Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		550BFF1210BA0179004FC5D7 /* Game Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Game Example-Info.plist"; sourceTree = SOURCE_ROOT; };
-		550BFF2210BA01BA004FC5D7 /* chipmunks.madi */ = {isa = PBXFileReference; lastKnownFileType = file; path = chipmunks.madi; sourceTree = "<group>"; };
-		550BFF2310BA01BA004FC5D7 /* chipmunks.MADK */ = {isa = PBXFileReference; lastKnownFileType = file; path = chipmunks.MADK; sourceTree = "<group>"; };
-		550BFF2410BA01BA004FC5D7 /* Game.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Game.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		550BFF2510BA01BA004FC5D7 /* Game.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; path = Game.r; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentCellView.h; sourceTree = "<group>"; };
 		550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentCellView.m; sourceTree = "<group>"; };
 		550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject.h; sourceTree = "<group>"; };
@@ -2636,15 +2618,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		550BFF0E10BA0178004FC5D7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				550B001F10BA0293004FC5D7 /* Carbon.framework in Frameworks */,
-				550B002310BA02A0004FC5D7 /* PlayerPROCore.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		550FFAE517CEA4570003A2F3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -3200,19 +3173,6 @@
 			);
 			name = Icons;
 			path = ../Files/Icons;
-			sourceTree = "<group>";
-		};
-		550BFF2110BA01BA004FC5D7 /* Game Example */ = {
-			isa = PBXGroup;
-			children = (
-				550BFF1210BA0179004FC5D7 /* Game Example-Info.plist */,
-				550B001A10BA021A004FC5D7 /* Game.h */,
-				550BFF2210BA01BA004FC5D7 /* chipmunks.madi */,
-				550BFF2310BA01BA004FC5D7 /* chipmunks.MADK */,
-				550BFF2410BA01BA004FC5D7 /* Game.c */,
-				550BFF2510BA01BA004FC5D7 /* Game.r */,
-			);
-			path = "Game Example";
 			sourceTree = "<group>";
 		};
 		551292DA163DD68500C2C639 /* Other Frameworks */ = {
@@ -4312,7 +4272,6 @@
 				552C70C210CDAF8C00C0E0D4 /* Documentation */,
 				55879F7B164CA63D009068D5 /* PPPlay */,
 				5518105510C35A0100ADA9F4 /* Example */,
-				550BFF2110BA01BA004FC5D7 /* Game Example */,
 				88E0C3C20C2F21DD00D6C081 /* Plugs */,
 				88E0C3CA0C2F21DD00D6C081 /* Resources */,
 				88E0C3CE0C2F21DD00D6C081 /* MADDriver.Source */,
@@ -4336,7 +4295,6 @@
 			children = (
 				5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */,
 				88E0C3B50C2F21DD00D6C081 /* PlayerPRO.app */,
-				550BFF1010BA0179004FC5D7 /* Game Example.app */,
 				5533411110BB547D005208D1 /* MOD.ppimpexp */,
 				5533415310BB572C005208D1 /* 669.ppimpexp */,
 				553341D310BB5FE0005208D1 /* AMF.ppimpexp */,
@@ -4699,25 +4657,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		550BFF0F10BA0178004FC5D7 /* Game Example */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 550BFF1710BA017A004FC5D7 /* Build configuration list for PBXNativeTarget "Game Example" */;
-			buildPhases = (
-				550BFF0C10BA0178004FC5D7 /* Resources */,
-				550BFF0D10BA0178004FC5D7 /* Sources */,
-				550BFF2010BA01AF004FC5D7 /* Rez */,
-				550BFF0E10BA0178004FC5D7 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				550B001E10BA0285004FC5D7 /* PBXTargetDependency */,
-			);
-			name = "Game Example";
-			productName = "Game Example";
-			productReference = 550BFF1010BA0179004FC5D7 /* Game Example.app */;
-			productType = "com.apple.product-type.application";
-		};
 		550FFADF17CEA4570003A2F3 /* AIFF */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 550FFAE817CEA4570003A2F3 /* Build configuration list for PBXNativeTarget "AIFF" */;
@@ -5810,7 +5749,6 @@
 				55CBF9A511EB77760028C6BB /* Cocoa */,
 				5578C48017D9E8560057D11B /* PlayerPRO Player */,
 				5518107110C35A4500ADA9F4 /* PlayerPRO Example */,
-				550BFF0F10BA0178004FC5D7 /* Game Example */,
 				55BE997717978AEF00D6DECC /* PPImport */,
 				5578C51B17DB94A50057D11B /* PPImport-app */,
 				5573A33E10B50D2600FF8B50 /* PlayerPROCore */,
@@ -5874,13 +5812,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		550BFF0C10BA0178004FC5D7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		550FFAE217CEA4570003A2F3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6387,14 +6318,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXRezBuildPhase section */
-		550BFF2010BA01AF004FC5D7 /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				550BFF2A10BA01BA004FC5D7 /* Game.r in Rez */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		554E110010D6F09F00BB619C /* Rez */ = {
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
@@ -6450,14 +6373,6 @@
 /* End PBXRezBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		550BFF0D10BA0178004FC5D7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				550BFF2910BA01BA004FC5D7 /* Game.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		550FFAE317CEA4570003A2F3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -7137,11 +7052,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		550B001E10BA0285004FC5D7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
-			targetProxy = 550B001D10BA0285004FC5D7 /* PBXContainerItemProxy */;
-		};
 		550FFAE017CEA4570003A2F3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
@@ -7869,36 +7779,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		550BFF1410BA017A004FC5D7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = "Game Example-Info.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = "Game Example";
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		550BFF1510BA017A004FC5D7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = "Game Example-Info.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = "Game Example";
-			};
-			name = Debug;
-		};
 		550FFAE917CEA4570003A2F3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -10572,15 +10452,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		550BFF1710BA017A004FC5D7 /* Build configuration list for PBXNativeTarget "Game Example" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				550BFF1410BA017A004FC5D7 /* Release */,
-				550BFF1510BA017A004FC5D7 /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		550FFAE817CEA4570003A2F3 /* Build configuration list for PBXNativeTarget "AIFF" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
