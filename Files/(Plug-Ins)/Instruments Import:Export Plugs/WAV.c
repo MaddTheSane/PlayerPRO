@@ -39,7 +39,6 @@ static OSErr mainWave(OSType					order,						// Order to execute
 					  PPInfoPlug				*thePPInfoPlug)
 {
 	OSErr	myErr = noErr;
-	Ptr		AlienFile;
 	short	iFileRefI;
 	long	inOutBytes;
 	
