@@ -5,43 +5,43 @@
 #include "PPPlug.h"
 #include "PrivateList.h"
 
-	/******** HELP MODULE ********/
-	enum
-	{
-		HPref	= 6,		// 1
-		HLoad	= 3,		// 2
-		HSave	= 4,		// 3
-		HUp		= 10,	// 4
-		HInfo		= 2,		// 5
-		HPlay	= 7,		// 6
-		HRec		= 11,	// 7
-		HOpenA	= 8,		// 8
-		HTrack	= 5,		// 9
-		HPos		= 9,		// 10
-		HPatt	= 1,		// 11
-		HFX		= 12,	// 12
-		HLoop	= 13,	// 13
-		HFind	= 14,	// 14
-		HDown	= 23,	// 15
-		HFill		= 18,
-		HD1		= 37,
-		HD2		= 38,
-		HD3		= 39,
-		HD4		= 40,
-		HStep	= 21
-	};
+/******** HELP MODULE ********/
+enum
+{
+	HPref	= 6,		// 1
+	HLoad	= 3,		// 2
+	HSave	= 4,		// 3
+	HUp		= 10,	// 4
+	HInfo		= 2,		// 5
+	HPlay	= 7,		// 6
+	HRec		= 11,	// 7
+	HOpenA	= 8,		// 8
+	HTrack	= 5,		// 9
+	HPos		= 9,		// 10
+	HPatt	= 1,		// 11
+	HFX		= 12,	// 12
+	HLoop	= 13,	// 13
+	HFind	= 14,	// 14
+	HDown	= 23,	// 15
+	HFill		= 18,
+	HD1		= 37,
+	HD2		= 38,
+	HD3		= 39,
+	HD4		= 40,
+	HStep	= 21
+};
 #define	AHELPSIZE	21
 
 //static pascal Boolean myDragClickLoop(void);
-	static	short		AHelp[ AHELPSIZE] =
-	{ HPref, HLoad, HSave, HUp, HInfo, HPlay, HRec, HOpenA, HTrack, HPos, HPatt, HFX, HLoop, HFind, HDown, HFill, HD1, HD2, HD3, HD4, HStep};
-	
-	void DoHelpEditor( short **items, short *lsize)
-	{
-		*lsize = AHELPSIZE;
-		*items = AHelp;
-	}
-	
+static	short		AHelp[ AHELPSIZE] =
+{ HPref, HLoad, HSave, HUp, HInfo, HPlay, HRec, HOpenA, HTrack, HPos, HPatt, HFX, HLoop, HFind, HDown, HFill, HD1, HD2, HD3, HD4, HStep};
+
+void DoHelpEditor( short **items, short *lsize)
+{
+	*lsize = AHELPSIZE;
+	*items = AHelp;
+}
+
 	/*****************************/
 
 extern	WindowPtr				oldWindow;
@@ -67,10 +67,6 @@ static	Boolean						DidTryToDrag;
 static	RGBColor					Gray[ 5];
 static	RGBColor					yellC, greenC, blueC, redC, redC2;
 		Boolean					EditorKeyRecording;
-		
-//static	Rect					selecZone, PatRectList;
-//static	ControlHandle			xScroll, yScroll;
-//static	short					HCell, LCell;
 
 static	PrivateList				myList;
 
@@ -168,8 +164,8 @@ void ConvertPointAndType( Point *cPt, short *Type)
 
 Cmd * GetEditorSelectCmd( short *track, short *position)
 {
-GrafPtr	savePort;
-Cell	theCell = { 0, 0};
+	GrafPtr	savePort;
+	Cell	theCell = { 0, 0};
 
 	if( EditorDlog != NULL)
 	{
@@ -185,10 +181,10 @@ Cell	theCell = { 0, 0};
 
 void SetSelectionEditor( short FPat, short FPos, short FTrack)
 {
-GrafPtr	savePort;
-Cell	theCell = { 0, 0};
-unsigned long	ttt;
-
+	GrafPtr	savePort;
+	Cell	theCell = { 0, 0};
+	unsigned long	ttt;
+	
 	if( EditorDlog == NULL) CreatePartitionWindow();
 	
 	MADDriver->Pat = FPat;
@@ -326,8 +322,8 @@ void SetMaxWindow( short maxRight, short maxBottom, DialogPtr	whichDialog)
 
 void SelectCurrentActif(void)
 {
-GrafPtr	savePort;
-Cell	theCell = { 0, 0};
+	GrafPtr	savePort;
+	Cell	theCell = { 0, 0};
 
 	if( EditorDlog != NULL)
 	{
@@ -369,11 +365,10 @@ void OctavesName(short	id, Ptr	String)
 
 short ConvertNote2No(	Str32 	myTT)
 {
-long	ThZ;
-short		Oct;
+	long	ThZ;
+	short	Oct;
 
 	Oct = myTT[3] - 48;
-	
 	Oct *= 12;
 	
 	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
@@ -448,58 +443,58 @@ void NTStr( short	NoDigi, short		val, Ptr	theText)
 	
 	switch( NoDigi)
 	{
-	case 1:
-		theText[ 0] = 0x30 + val;
-		theText[ 1] = 0;
-	break;
-	
-	case 2:
-		temp = val/10;
-	
-		theText[ 0] = 0x30 + temp;
-		theText[ 1] = 0x30 + val - temp*10;
-		theText[ 2] = 0;
-	break;
-	
-	case 3:
-		if( val < 10)
-		{
-			theText[ 0] = 0x30;
-			theText[ 1] = 0x30;
-			theText[ 2] = 0x30 + val;
-		}
-		else if( val < 100)
-		{
+		case 1:
+			theText[ 0] = 0x30 + val;
+			theText[ 1] = 0;
+			break;
+			
+		case 2:
 			temp = val/10;
-		
-			theText[ 0] = 0x30;
-			theText[ 1] = 0x30 + temp;
-			theText[ 2] = 0x30 + val - temp*10;
-		}
-		else
-		{
-			temp = val/100;
 			
 			theText[ 0] = 0x30 + temp;
-			val -= temp*100;
+			theText[ 1] = 0x30 + val - temp*10;
+			theText[ 2] = 0;
+			break;
 			
-			temp = val/10;
-			theText[ 1] = 0x30 + temp;
-			theText[ 2] = 0x30 + val - temp*10;
-		}
-		theText[ 3] = 0;
-	break;
-	
-	default:
-		MyDebugStr( __LINE__, __FILE__, "NStr Error !!");
-	break;
+		case 3:
+			if( val < 10)
+			{
+				theText[ 0] = 0x30;
+				theText[ 1] = 0x30;
+				theText[ 2] = 0x30 + val;
+			}
+			else if( val < 100)
+			{
+				temp = val/10;
+				
+				theText[ 0] = 0x30;
+				theText[ 1] = 0x30 + temp;
+				theText[ 2] = 0x30 + val - temp*10;
+			}
+			else
+			{
+				temp = val/100;
+				
+				theText[ 0] = 0x30 + temp;
+				val -= temp*100;
+				
+				temp = val/10;
+				theText[ 1] = 0x30 + temp;
+				theText[ 2] = 0x30 + val - temp*10;
+			}
+			theText[ 3] = 0;
+			break;
+			
+		default:
+			MyDebugStr( __LINE__, __FILE__, "NStr Error !!");
+			break;
 	}
 }
 
 void SetPatternCell( short pos, short track)
 {
-GrafPtr		SavePort;
-Rect			aR;
+	GrafPtr		SavePort;
+	Rect			aR;
 	
 	if( EditorDlog == NULL) return;
 	
@@ -525,8 +520,8 @@ void GetNoteString( short note, Str255	string)
 
 void InitStringEditor(void)
 {
-Str255		stemp;
-short		i, x;
+	Str255		stemp;
+	short		i, x;
 
 	for( i = 1; i <= MAXINSTRU; i++)
 	{
@@ -725,8 +720,6 @@ void SetNewPat()
 	short	x;
 	Str255	String, aStr, theStr;
 	Rect		caRect;
-	
-	
 
 	myList.maxY = curMusic->partition[ CurrentPat]->header.size;
 	if( myList.maxX != curMusic->header->numChn)
@@ -779,8 +772,6 @@ void UpdateEditorInfo(void)
 	Point		theCell = {0,0};
 	FontInfo	ThisFontInfo;
 	Rect		caRect;
-	
-	
 
 	if( EditorDlog == NULL) return;
 	
@@ -820,7 +811,7 @@ void UpdatePartitionWindow( DialogPtr);
 
 void CreateCurRect()
 {
-short	temp;
+	short	temp;
 
 	temp = ReaderCopy - GetControlValue( myList.yScroll);
 
@@ -844,11 +835,11 @@ short	temp;
 
 void DrawLeft( RgnHandle	clipRgn, Boolean Update)
 {
-Rect		nRect;
-Str255		aStr, tempStr;
-short		i, xO;
-RgnHandle	saveClipRgn;
-
+	Rect		nRect;
+	Str255		aStr, tempStr;
+	short		i, xO;
+	RgnHandle	saveClipRgn;
+	
 	saveClipRgn = NewRgn();
  	GetClip( saveClipRgn);
  	
@@ -945,14 +936,13 @@ void MyTETextBox( RGBColor *backColor, Rect *rect, Str255 str, Boolean black)
 
 void DrawEditorUp(void)
 {
-short				i, itemType;
-Handle				itemHandle;
-Point				theCell;
-Rect				tempRect, bRect, itemRect;
-Str255				tempStr, aStr;
-Rect				caRect;
-ThemeDrawingState	state;
-	
+	short				i, itemType;
+	Handle				itemHandle;
+	Point				theCell;
+	Rect				tempRect, bRect, itemRect;
+	Str255				tempStr, aStr;
+	Rect				caRect;
+	ThemeDrawingState	state;
 
 	GetDialogItem( EditorDlog, 5, &itemType, &itemHandle, &bRect);
 	bRect.top++;
@@ -1151,14 +1141,14 @@ void DoNullEditor(void)
 
 void DoGrowPartition(void)
 {
-long		lSizeVH;
-GrafPtr		SavePort;
-Rect		temp, cellRect;
-Point		theCell = { 0, 0}, aPt = { 0, 0};
-short			tempA, tempB;
-Handle		itemHandle;
-short		itemType;
-Rect			caRect;
+	long	lSizeVH;
+	GrafPtr	SavePort;
+	Rect	temp, cellRect;
+	Point	theCell = { 0, 0}, aPt = { 0, 0};
+	short	tempA, tempB;
+	Handle	itemHandle;
+	short	itemType;
+	Rect	caRect;
 	BitMap	screenBits;
 	
 	GetPort( &SavePort);
@@ -1216,40 +1206,38 @@ Rect			caRect;
 
 void DrawGrowIconP( DialogPtr	GetSelection)
 {
-Rect   		tempRect;
-RgnHandle		savedClip;
-GrafPtr		SavePort;
-Rect			caRect;
+	Rect   		tempRect;
+	RgnHandle		savedClip;
+	GrafPtr		SavePort;
+	Rect			caRect;
 	
+	GetPort( &SavePort);
+	SetPortDialogPort( GetSelection);
 	
-
- 		GetPort( &SavePort);
- 		SetPortDialogPort( GetSelection);
-
-		savedClip = NewRgn();
-		GetClip( savedClip);
-		
-		GetPortBounds( GetDialogPort( GetSelection), &caRect);
-		
-		tempRect.right = caRect.right;
-		tempRect.bottom = caRect.bottom;
-		tempRect.left = tempRect.right - 15;
-		tempRect.top = tempRect.bottom - 15;
-		
-		ClipRect( &tempRect);
-		
-		DrawGrowIcon( GetDialogWindow( GetSelection));
-		
-		SetClip( savedClip);
-		DisposeRgn( savedClip);
-		
-		SetPort( SavePort);
+	savedClip = NewRgn();
+	GetClip( savedClip);
+	
+	GetPortBounds( GetDialogPort( GetSelection), &caRect);
+	
+	tempRect.right = caRect.right;
+	tempRect.bottom = caRect.bottom;
+	tempRect.left = tempRect.right - 15;
+	tempRect.top = tempRect.bottom - 15;
+	
+	ClipRect( &tempRect);
+	
+	DrawGrowIcon( GetDialogWindow( GetSelection));
+	
+	SetClip( savedClip);
+	DisposeRgn( savedClip);
+	
+	SetPort( SavePort);
 }
 
 void DrawEditorLegende(void)
 {
-short		i;
-Str255	aStr;
+	short	i;
+	Str255	aStr;
 
 	for( i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++)
 	{
@@ -1263,8 +1251,8 @@ Str255	aStr;
 
 void DrawGrayLines( short xPos)
 {
-short	xx = 0, t;
-short	tot = 0;
+	short	xx = 0, t;
+	short	tot = 0;
 	
 	RGBForeColor( &theColor);
 	
@@ -1331,8 +1319,8 @@ short	tot = 0;
 
 void DrawMarkers( short y1, short y2)
 {
-Rect	tRect;
-short	i, temp, off;
+	Rect	tRect;
+	short	i, temp, off;
 	
 	tRect = myList.rect;
 	if( tRect.right > tRect.left + ( myList.maxX - GetControlValue( myList.xScroll)) * myList.LCell)
@@ -1429,13 +1417,13 @@ void DrawSelectionZone( Rect *inRect)
 
 void MyLUpdate()
 {
-short		i, x;
-short		xPos, yPos;
-Str255		aStr;
-Cmd			*CmdPtr;
-RgnHandle		saveClip;
-Rect			tRect;
-Rect			caRect;
+	short		i, x;
+	short		xPos, yPos;
+	Str255		aStr;
+	Cmd			*CmdPtr;
+	RgnHandle		saveClip;
+	Rect			tRect;
+	Rect			caRect;
 	
 	GetPortBounds( GetDialogPort( EditorDlog), &caRect);
 
@@ -1499,13 +1487,13 @@ Rect			caRect;
 
 void MyLUpdateSpecific( short startY, short endY)
 {
-short		i, x;
-short		xPos, yPos;
-Str255		aStr;
-Cmd			*CmdPtr;
-RgnHandle	saveClip;
-Rect		eraseRect, tRect;
-
+	short		i, x;
+	short		xPos, yPos;
+	Str255		aStr;
+	Cmd			*CmdPtr;
+	RgnHandle	saveClip;
+	Rect		eraseRect, tRect;
+	
 	saveClip = NewRgn();
 	GetClip( saveClip);
 	
@@ -1569,80 +1557,80 @@ Rect		eraseRect, tRect;
 
 void  UpdatePartitionWindow(DialogPtr GetSelection)
 { 
-		Rect   		tempRect, itemRect;
- 		GrafPtr		SavePort;
- 		Point		theCell;
- 		Ptr			theStr;
- 		Str255		tempStr, aStr;
- 		short		i, itemType;
-		Handle		itemHandle;
- 		Rect			caRect;
-		RgnHandle	visibleRegion;
-		
- 		GetPort( &SavePort);
- 		SetPortDialogPort( EditorDlog);
-		
-		BeginUpdate( GetDialogWindow( EditorDlog));
-		
-		yellC			= thePrefs.yellC;
-		
-		GetDialogItem( EditorDlog, 5, &itemType, &itemHandle, &tempRect);
-		
-		GetPortBounds( GetDialogPort( EditorDlog), &caRect);
-		
-		itemRect.top = 0;
-		itemRect.bottom = tempRect.top;
-		itemRect.left = 0;
-		itemRect.right = caRect.right;
+	Rect   		tempRect, itemRect;
+	GrafPtr		SavePort;
+	Point		theCell;
+	Ptr			theStr;
+	Str255		tempStr, aStr;
+	short		i, itemType;
+	Handle		itemHandle;
+	Rect			caRect;
+	RgnHandle	visibleRegion;
+	
+	GetPort( &SavePort);
+	SetPortDialogPort( EditorDlog);
+	
+	BeginUpdate( GetDialogWindow( EditorDlog));
+	
+	yellC			= thePrefs.yellC;
+	
+	GetDialogItem( EditorDlog, 5, &itemType, &itemHandle, &tempRect);
+	
+	GetPortBounds( GetDialogPort( EditorDlog), &caRect);
+	
+	itemRect.top = 0;
+	itemRect.bottom = tempRect.top;
+	itemRect.left = 0;
+	itemRect.right = caRect.right;
 	//	RGBForeColor( &theColor);
 	//	PaintRect( &itemRect);
-		
-		SetRect( &itemRect, 0, caRect.bottom, LEFTBORD, caRect.bottom);
+	
+	SetRect( &itemRect, 0, caRect.bottom, LEFTBORD, caRect.bottom);
 	//	PaintRect( &itemRect);
-		ForeColor( blackColor);
-		
-		TextFont( 0);	TextSize( 12);
-		
-//		RGBBackColor( &theColor);
-		
-		visibleRegion = NewRgn();
-		
-		GetPortVisibleRegion( GetDialogPort( EditorDlog), visibleRegion);
-		
- 		UpdateDialog( EditorDlog, visibleRegion);
-		
-		DisposeRgn( visibleRegion);
-		
-//		BackColor( whiteColor);
-		
-		TextFont( 4);	TextSize( 9);
-		
-		MyLUpdate();
-		
-		DrawLeft( NULL, true);
-		
-		DrawGrowIconP( EditorDlog);
-		
-		DrawEditorUp();
-		
-		MoveTo( 0, myList.rect.bottom);
-		LineTo( LEFTBORD, myList.rect.bottom);
-		
-		GetPortBounds( GetDialogPort( EditorDlog), &caRect);
-		
-		MoveTo( 0, myList.rect.top - 1);
-		LineTo( caRect.right, myList.rect.top - 1);
-		
-		GetDialogItem( EditorDlog, 5, &itemType, &itemHandle, &tempRect);
-		
-		GetPortBounds( GetDialogPort( EditorDlog), &caRect);
-		
-		MoveTo( 0, tempRect.top);
-		LineTo( caRect.right, tempRect.top);
-		
-		EndUpdate( GetDialogWindow( EditorDlog));
-		
-		SetPort( SavePort);
+	ForeColor( blackColor);
+	
+	TextFont( 0);	TextSize( 12);
+	
+	//		RGBBackColor( &theColor);
+	
+	visibleRegion = NewRgn();
+	
+	GetPortVisibleRegion( GetDialogPort( EditorDlog), visibleRegion);
+	
+	UpdateDialog( EditorDlog, visibleRegion);
+	
+	DisposeRgn( visibleRegion);
+	
+	//		BackColor( whiteColor);
+	
+	TextFont( 4);	TextSize( 9);
+	
+	MyLUpdate();
+	
+	DrawLeft( NULL, true);
+	
+	DrawGrowIconP( EditorDlog);
+	
+	DrawEditorUp();
+	
+	MoveTo( 0, myList.rect.bottom);
+	LineTo( LEFTBORD, myList.rect.bottom);
+	
+	GetPortBounds( GetDialogPort( EditorDlog), &caRect);
+	
+	MoveTo( 0, myList.rect.top - 1);
+	LineTo( caRect.right, myList.rect.top - 1);
+	
+	GetDialogItem( EditorDlog, 5, &itemType, &itemHandle, &tempRect);
+	
+	GetPortBounds( GetDialogPort( EditorDlog), &caRect);
+	
+	MoveTo( 0, tempRect.top);
+	LineTo( caRect.right, tempRect.top);
+	
+	EndUpdate( GetDialogWindow( EditorDlog));
+	
+	SetPort( SavePort);
 } 
 
 void GetDigitalSelection( short *XStart, short *YStart, short *XEnd, short *YEnd, short *currentPat)
@@ -1689,11 +1677,10 @@ void CalculDiffStart(void)
 
 void DragSelect( void)
 {
-Point		theCell, aPt;
-Rect		bRect;
-RgnHandle	tempRgn;
-Pcmd		*myPcmd;
-
+	Point		theCell, aPt;
+	Rect		bRect;
+	RgnHandle	tempRgn;
+	Pcmd		*myPcmd;
 	
 	if( DragManagerUse)
 	{
@@ -1757,8 +1744,8 @@ void SavePcmdFile( Pcmd *myPcmd)
 	iErr = SetFPos( fRefNum, fsFromStart, 0);
 
 	inOutBytes = GetPtrSize( (Ptr) myPcmd);
+	SwapPcmd(myPcmd);
 	iErr = FSWrite( fRefNum, &inOutBytes, myPcmd);
-	
 	iErr = FSCloseFork( fRefNum);
 
 	EndPcmd:
@@ -1783,8 +1770,6 @@ void OpenPcmdFile( FSSpec	*mySpec)
 		if( iErr) return;
 	}
 	
-//	HSetVol( NULL, mySpec->vRefNum, mySpec->parID);
-	
 	if( FSpOpenDF( mySpec, fsCurPerm, &fRefNum) == noErr)
 	{
 		CellSelec.v = 0;	CellSelec.h = 0;
@@ -1807,13 +1792,13 @@ static 	Point		lastCellMLClick;
 
 Boolean MLClick( Point pt, short modifiers)
 {
-Rect		tRect, oldRect, uRect;
-Point		cPt, bPt, theCell;
-Point		curPt, oldPt = { 0, 0};
-Cmd			*theCmd;
-MenuHandle	tMenu;
-
-//	if( (modifiers & cmdKey) != 0 && (modifiers & optionKey) != 0)
+	Rect		tRect, oldRect, uRect;
+	Point		cPt, bPt, theCell;
+	Point		curPt, oldPt = { 0, 0};
+	Cmd			*theCmd;
+	MenuHandle	tMenu;
+	
+	//	if( (modifiers & cmdKey) != 0 && (modifiers & optionKey) != 0)
 	
 	if( modifiers == thePrefs.FastDigitalEdition)	//& thePrefs.FastDigitalEdition
 	{
@@ -1841,14 +1826,14 @@ MenuHandle	tMenu;
 				myPt = pt;
 				LocalToGlobal( &myPt);
 				
-			//	SetItemMark( tMenu, curSelec+1, 0xa5);
+				//	SetItemMark( tMenu, curSelec+1, 0xa5);
 				
 				mresult = PopUpMenuSelect(	tMenu,
-											myPt.v,
-											myPt.h,
-											curSelec+1);
+										  myPt.v,
+										  myPt.h,
+										  curSelec+1);
 				
-			//	SetItemMark( tMenu, curSelec+1, 0);
+				//	SetItemMark( tMenu, curSelec+1, 0);
 				
 				if ( HiWord(mresult ) != 0 )
 				{
@@ -1862,8 +1847,8 @@ MenuHandle	tMenu;
 				}
 				DeleteMenu( GetMenuID( tMenu));
 				DisposeMenu( tMenu);
-			break;
-		
+				break;
+				
 			case ArguTE:
 				tMenu = GetMenu( 161);
 				InsertMenu( tMenu, hierMenu );
@@ -1873,14 +1858,14 @@ MenuHandle	tMenu;
 				myPt = pt;
 				LocalToGlobal( &myPt);
 				
-			//	SetItemMark( tMenu, curSelec+1, 0xa5);
+				//	SetItemMark( tMenu, curSelec+1, 0xa5);
 				
 				mresult = PopUpMenuSelect(	tMenu,
-											myPt.v,
-											myPt.h,
-											curSelec+1);
+										  myPt.v,
+										  myPt.h,
+										  curSelec+1);
 				
-			//	SetItemMark( tMenu, curSelec+1, 0);
+				//	SetItemMark( tMenu, curSelec+1, 0);
 				
 				if ( HiWord(mresult ) != 0 )
 				{
@@ -1892,8 +1877,8 @@ MenuHandle	tMenu;
 				}
 				DeleteMenu( GetMenuID( tMenu));
 				DisposeMenu(  tMenu);
-			break;
-		
+				break;
+				
 			case InstruTE:
 				InsertMenuItem( InstruMenu, "\p --", 0);
  				
@@ -1906,9 +1891,9 @@ MenuHandle	tMenu;
 				SetItemMark( InstruMenu, curSelec + 1, 0xa5);
 				
 				mresult = PopUpMenuSelect(	InstruMenu,
-											myPt.v - 6,
-											myPt.h - 3,
-											curSelec + 1);
+										  myPt.v - 6,
+										  myPt.h - 3,
+										  curSelec + 1);
 				
 				
 				SetItemMark( InstruMenu, curSelec + 1, 0);
@@ -1924,12 +1909,12 @@ MenuHandle	tMenu;
 				DeleteMenu( GetMenuID( InstruMenu));
 				
 				DeleteMenuItem( InstruMenu, 1);
-			break;
-			
+				break;
+				
 			case NoteTE:
 				InsertMenuItem( NoteMenu, "\p000", NUMBER_NOTES);
 				InsertMenuItem( NoteMenu, "\pOFF", NUMBER_NOTES+1);
- 			
+				
  				InsertMenu( NoteMenu, hierMenu );
 				curSelec = theCmd->note;
 				if( curSelec == 0xFF) curSelec = NUMBER_NOTES;
@@ -1938,9 +1923,9 @@ MenuHandle	tMenu;
 				myPt = pt;	LocalToGlobal( &myPt);
 				
 				mresult = PopUpMenuSelect(	NoteMenu,
-											myPt.v - 6,
-											myPt.h - 3,
-											curSelec + 1);
+										  myPt.v - 6,
+										  myPt.h - 3,
+										  curSelec + 1);
 				
 				if( HiWord( mresult) != 0 )
 				{
@@ -1956,8 +1941,8 @@ MenuHandle	tMenu;
 				
 				DeleteMenuItem( NoteMenu, NUMBER_NOTES + 1);
 				DeleteMenuItem( NoteMenu, NUMBER_NOTES + 1);
-			break;
-			
+				break;
+				
 			case EffectTE:
 				InsertMenu( EffectMenu, hierMenu);
 				curSelec = theCmd->cmd + 1;
@@ -1968,9 +1953,9 @@ MenuHandle	tMenu;
 				SetItemMark( EffectMenu, curSelec, 0xa5);
 				
 				mresult = PopUpMenuSelect(	EffectMenu,
-											myPt.v - 6,
-											myPt.h - 3,
-											curSelec);
+										  myPt.v - 6,
+										  myPt.h - 3,
+										  curSelec);
 				
 				SetItemMark( EffectMenu, curSelec, 0);
 				
@@ -1983,7 +1968,7 @@ MenuHandle	tMenu;
 					UPDATE_Note( tP.v, tP.h);
 				}
 				DeleteMenu( GetMenuID( EffectMenu));
-			break;
+				break;
 		}
 	}
 	else
@@ -1997,7 +1982,7 @@ MenuHandle	tMenu;
 		{
 			cPt = pt;
 			PLConvertPoint( &cPt, &myList);
-		
+			
 			if( modifiers & shiftKey)
 			{
 				theCell.v = theCell.h = 0;
@@ -2017,7 +2002,7 @@ MenuHandle	tMenu;
 				Boolean	Moved;
 				
 				Moved = false;
-			
+				
 				GetMouse( &curPt);
 				
 				if( !PtInRect( curPt, &myList.rect))
@@ -2026,13 +2011,13 @@ MenuHandle	tMenu;
 					
 					if( curPt.v < myList.rect.top)		PLactionProcPartition( myList.yScroll, kControlUpButtonPart);
 					if( curPt.v > myList.rect.bottom)	PLactionProcPartition( myList.yScroll, kControlDownButtonPart);
-	
+					
 					if( curPt.h < myList.rect.left)		PLactionProcPartition( myList.xScroll, kControlUpButtonPart);
 					if( curPt.h > myList.rect.right)		PLactionProcPartition( myList.xScroll, kControlDownButtonPart);
 					
 					Moved = true;
 				}
-	
+				
 				if( curPt.v != oldPt.v || curPt.h != oldPt.h || Moved == true)
 				{
 					oldPt = curPt;
@@ -2058,12 +2043,12 @@ MenuHandle	tMenu;
 					
 					UpdatePartitionWindow( EditorDlog);
 				}
-			
+				
 				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-			
+				
 				if (QDIsPortBuffered( GetDialogPort( EditorDlog)))
-    					QDFlushPortBuffer( GetDialogPort( EditorDlog), NULL);
-			
+					QDFlushPortBuffer( GetDialogPort( EditorDlog), NULL);
+				
 			}
 			while( Button());
 		}
@@ -2115,761 +2100,761 @@ void SetInstruEditor( short instru)
 
 void DoItemPressPartition( short whichItem, DialogPtr whichDialog)    			/* Item hit ID to pass to Dialog function */
 {
-		Cell				theCell;
-		long				tempLong;
- 		short			temp, temp2, i, bogus, ctlPart, type;
- 		Rect				cellRect;
- 		GrafPtr			SavePort;
- 		Cmd				*theCommand;
- 		Boolean			DoubleClick;
- 		Point				myPt, lastCell = { -1, -1};
- 		ControlHandle		theControl;
- 		ControlActionUPP	MyControlUPP;
- 		Str255			aStr;
- 		
- 		GetPort( &SavePort);
- 		SetPortDialogPort( EditorDlog);
- 		
+	Cell				theCell;
+	long				tempLong;
+	short			temp, temp2, i, bogus, ctlPart, type;
+	Rect				cellRect;
+	GrafPtr			SavePort;
+	Cmd				*theCommand;
+	Boolean			DoubleClick;
+	Point				myPt, lastCell = { -1, -1};
+	ControlHandle		theControl;
+	ControlActionUPP	MyControlUPP;
+	Str255			aStr;
+	
+	GetPort( &SavePort);
+	SetPortDialogPort( EditorDlog);
+	
  	//	TextFont(4);
  	//	TextSize(9);
- 		
-		if (theEvent.what == mouseDown)
+	
+	if (theEvent.what == mouseDown)
+	{
+		myPt = theEvent.where;
+		GlobalToLocal( &myPt);
+		
+		PLScroll( myPt, &myList);
+		
+		
+		lastCell.v = lastCell.h = 0;
+		PLGetSelect( &lastCell, &myList);
+		
+		DoubleClick = false;
+		
+		if (PtInRect( myPt, &myList.rect))
 		{
-			myPt = theEvent.where;
-			GlobalToLocal( &myPt);
+			UpdateCurrentCmd();
 			
-			PLScroll( myPt, &myList);
-			
-			
-			lastCell.v = lastCell.h = 0;
-			PLGetSelect( &lastCell, &myList);
-			
-			DoubleClick = false;
-			
-			if (PtInRect( myPt, &myList.rect))
+			if( (theEvent.modifiers & cmdKey) != 0 && (theEvent.modifiers & optionKey) == 0)
 			{
-				UpdateCurrentCmd();
-				
-				if( (theEvent.modifiers & cmdKey) != 0 && (theEvent.modifiers & optionKey) == 0)
+				PLGetSelectRect( &cellRect, &myList);
+				if( !PtInRect( myPt, &cellRect))
 				{
-					PLGetSelectRect( &cellRect, &myList);
-					if( !PtInRect( myPt, &cellRect))
-					{
-						
-						
-						theCell.v = theCell.h = 0;
+					
+					
+					theCell.v = theCell.h = 0;
 					//	PLSetSelect( -1, -1, -1, -1, &myList);
 					
-						theCell = myPt;
-						PLConvertPoint( &theCell, &myList);
-						
-						PLSetSelect( theCell.h, theCell.v, theCell.h, theCell.v, &myList);
-						
-						
-						
+					theCell = myPt;
+					PLConvertPoint( &theCell, &myList);
+					
+					PLSetSelect( theCell.h, theCell.v, theCell.h, theCell.v, &myList);
+					
+					
+					
 					//	Convert click + Find ins, cmd et allume le, sauf si keyboard piano!!!
-					}
 				}
-				else
-				{
-					DoubleClick = MLClick(myPt, theEvent.modifiers);
-				}
-				
-				theCell.v = theCell.h = 0;
-				if( PLGetSelect( &theCell, &myList))
-				{
-					Point	aCell;
-					
-					if( theEvent.modifiers == thePrefs.FastDigitalEdition)	//& thePrefs.FastDigitalEdition
-					{
-						myPt = theEvent.where;
-						GlobalToLocal( &myPt);
-					}
-					else GetMouse( &myPt);
-					
-					HiliteControl( OpenBut, 0);	HiliteControl( SaveBut, 0);
-					HiliteControl( ShowBut, 0);	HiliteControl( PlayBut, 0);
-					HiliteControl( UpBut, 0); 		HiliteControl( FXBut, 0);
-					HiliteControl( DownBut, 0);
-					
-					if( OnOffInstru == false && OnOffFX == false && OnOffArg == false && OnOffVolume == false) ControlSwitch( 18, EditorDlog, 255);
-					else ControlSwitch( 18, EditorDlog, 0);
-					
-					aCell = myPt;
-					PLConvertPoint( &aCell, &myList);
-					
-					if (PtInRect( myPt, &myList.rect))
-					{
-						if( aCell.v != lastCell.v || aCell.h != lastCell.h || MADDriver->Reading == false)
-						{
-							MADDriver->Pat = CurrentPat;
-							if( thePrefs.MusicTrace) MADDriver->PartitionReader = aCell.v;
-							SetCommandTrack( aCell.h, aCell.v);
-						}
-					}
-					
-					if( MADDriver->Reading == false)
-					{
-						GetKeys( km);
-						if( IsPressed( 0x37))	// On joue la note = PlayCrsr
-						{
-							short		VolExtCopy[ MAXTRACK];
-							long		rePat;
-							long		reReader;
-							long		rePL;
-							
-							PlaySelection:
-							
-							rePat = MADDriver->Pat;
-							reReader = MADDriver->PartitionReader;
-							rePL = MADDriver->PL;
-							
-							MADDriver->PartitionReader = theCell.v;
-							SetCommandTrack( theCell.h, theCell.v);
-							
-							HiliteControl( PlayBut, kControlButtonPart);
-							
-							DoRemember();
-							
-							for( i = 0; i < myList.select.left; i++)			MADDriver->TrackReading[ i] = false;
-							for( i = myList.select.right+1; i < MAXTRACK; i++)	MADDriver->TrackReading[ i] = false;
-							
-							MADDriver->Reading = true;
-							while( Button() == true  && MADDriver->PartitionReader <= myList.select.bottom && MADDriver->PartitionReader >= myList.select.top && rePat == MADDriver->Pat)
-							{
-								DoGlobalNull();
-								WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-							}
-							MADDriver->Reading = false;
-							while( Button() == true)
-							{
-								DoGlobalNull();
-								WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-							}
-							DoPause();
-							
-							MADDriver->Pat = rePat;
-							MADDriver->PartitionReader = reReader;
-							MADDriver->PL = rePL;
-							
-							for( i = 0; i < MAXTRACK; i++)					MADDriver->TrackReading[ i] = true;		// Restore
-							
-							HiliteControl( PlayBut, 0);
-						}
-					/*	else if( DoubleClick)
-						{
-							
-							
-						}*/
-						else if( DidTryToDrag == false)
-						{
-							if( DoubleClick)
-							{
-								ShowCurrentCmdNote();
-								SetCommandTrack( aCell.h, aCell.v);
-							}
-							
-							theCell.v = theCell.h = 0;
-							if( PLGetSelect( &theCell, &myList))
-							{
-								if( EditorKeyRecording == false && lastCell.h == theCell.h &&  lastCell.v==theCell.v)
-								{
-									ConvertPointAndType( &myPt, &type);
-									DoNullCmdWindow();
-									ActiveCmdWindow( type);
-								}
-							}
-						}
-						
-						DidTryToDrag = false;
-					}
-				}
-				else
-				{
-					HiliteControl( OpenBut, 255);
-					HiliteControl( SaveBut, 255);
-					HiliteControl( ShowBut, 255);
-					HiliteControl( PlayBut, 255);
-					HiliteControl( UpBut, 255);
-					HiliteControl( DownBut, 255);
-					HiliteControl( FXBut, 255);
-					
-					ControlSwitch( 18, EditorDlog, 255);
-				}
-			}
-		}
-		
-switch( whichItem)
-{
-	case 18:
-	if( GetControlHilite( FillBut) == 0)	// && )
-	{
-		short X, Y;
-		
-		MyTrackControl( FillBut, theEvent.where, NULL);
-		
-		curMusic->hasChanged = true;
-		
- 		SaveUndo( UPattern, CurrentPat, "\pUndo 'Fill Digital Editor'");
-		
-		for( X = myList.select.left; X <= myList.select.right; X++)
-		{
-			for( Y = myList.select.top; Y <= myList.select.bottom; Y++)
-			{
-				theCommand = GetMADCommand( Y, X, curMusic->partition[ CurrentPat]);
-				
-				if( OnOffInstru)		theCommand->ins 	= curInstru;		//else theCommand->ins = 0;
-				if( OnOffFX)		theCommand->cmd 	= DefaultFX;		//else theCommand->cmd = 0;
-				if( OnOffArg)		theCommand->arg 	= DefaultArg;		//else theCommand->arg = 0;
-				if( OnOffVolume)
-				{
-					if( DefaultVol == 0)	theCommand->vol	= 0xFF;
-					else theCommand->vol = DefaultVol;
-				}
-				
-				UPDATE_NoteBOUCLE( Y, X);
-			}
-		}
-		
-		UPDATE_NoteFINISH();
-		
-		UpdatePartitionWindow( EditorDlog);
-	}
-	break;
-
-	case 40:
-	case 37:
-	case 38:
-	case 39:
-	//	RGBBackColor( &theColor);
-		if(MyTrackControl( (ControlHandle) CheckBut[ whichItem - 37], theEvent.where, NULL))
-		{
-			SetControlValue( (ControlHandle) CheckBut[ whichItem - 37], !GetControlValue( (ControlHandle) CheckBut[ whichItem - 37]));
-			
-			switch( whichItem)
-			{
-				case 40:	OnOffInstru = !OnOffInstru;	break;	//Instru
-				case 37:	OnOffFX = !OnOffFX;			break;	// FX
-				case 38:	OnOffArg = !OnOffArg;		break;	// Arg
-				case 39:	OnOffVolume= !OnOffVolume;	break;	// Volume
-			}
-			
-			if( OnOffInstru == false && OnOffFX == false && OnOffArg == false && OnOffVolume == false)
-			{
-				ControlSwitch( 18, EditorDlog, 255);
 			}
 			else
 			{
-				ControlSwitch( 18, EditorDlog, 0);
-			}
-		}
-	//	BackColor( whiteColor);
-	break;
-
-	case 30:
-	{
-		short 		itemType;
-		Handle		itemHandle;
-		Rect			itemRect;
-		long			mresult;
-		MenuHandle	curMenu;
-		
-		curMenu = GetMenu( 161);
-		
-		InsertMenu( curMenu, hierMenu );
-		GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
-		
-		myPt.v = itemRect.top;	myPt.h = itemRect.left;
-		LocalToGlobal( &myPt);
-		
-		SetItemMark( curMenu, DefaultVol +1, 0xa5);
-		
-		mresult = PopUpMenuSelect(	curMenu,
-								myPt.v,
-								myPt.h,
-								DefaultVol+1);
-		
-		SetItemMark( curMenu, DefaultVol +1, 0);
-		
-		if ( HiWord(mresult ) != 0 )
-		{
-			DefaultVol = LoWord( mresult)-1;
-			
-			pStrcpy( aStr, "\pVol: ");
-			
-			aStr[ 6] = EArgu[ DefaultVol][ 0];
-			aStr[ 7] = EArgu[ DefaultVol][ 1];
-			aStr[ 0] += 2;
-			
-			TextFont( 0);	TextSize( 0);
-		//	RGBBackColor( &theColor);
-			SetControlTitle( CheckBut[ 2], aStr);
-		//	BackColor( whiteColor);
-			TextFont( 4);	TextSize( 9);
-			
-			OnOffVolume = true;
-			SetControlValue( (ControlHandle) CheckBut[ 2], OnOffVolume);
-		}
-		DeleteMenu( GetMenuID( curMenu));
-		DisposeMenu( curMenu);
-	}
-	break;
-	
-	case 31:
-	{
-		short 		itemType;
-		Handle		itemHandle;
-		Rect			itemRect;
-		long			mresult;
-		MenuHandle	curMenu;
-		
-		curMenu = GetMenu( 161);
-		
-		InsertMenu( curMenu, hierMenu );
-		GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
-		
-		myPt.v = itemRect.top;	myPt.h = itemRect.left;
-		LocalToGlobal( &myPt);
-		
-		SetItemMark( curMenu, DefaultArg + 1, 0xa5);
-		
-		mresult = PopUpMenuSelect(	curMenu,
-								myPt.v,
-								myPt.h,
-								DefaultArg+1);
-		
-		
-		
-		SetItemMark( curMenu, DefaultArg + 1, 0);
-		
-		if ( HiWord(mresult ) != 0 )
-		{
-			DefaultArg = LoWord( mresult) -1;
-			
-			pStrcpy( aStr, "\pArg: ");
-			
-			aStr[ 6] = EArgu[ DefaultArg][ 0];
-			aStr[ 7] = EArgu[ DefaultArg][ 1];
-			aStr[ 0] += 2;
-			
-			TextFont( 0);	TextSize( 0);
-		//	RGBBackColor( &theColor);
-			SetControlTitle( CheckBut[ 1], aStr);
-		//	BackColor( whiteColor);
-			TextFont( 4);	TextSize( 9);
-			
-			OnOffArg = true;
-			SetControlValue( (ControlHandle) CheckBut[ 1], OnOffArg);
-		}
-		DeleteMenu( GetMenuID( curMenu));
-		DisposeMenu( curMenu);
-	}
-	break;
-	
-	case 32:
-	{
-		short 		itemType;
-		Handle		itemHandle;
-		Rect			itemRect;
-		long			mresult;
-		
-		InsertMenu( EffectMenu, hierMenu );
-		GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
-		
-		myPt.v = itemRect.top;	myPt.h = itemRect.left;
-		LocalToGlobal( &myPt);
-		
-		SetItemMark( EffectMenu, DefaultFX+1, 0xa5);
-		
-		mresult = PopUpMenuSelect(	EffectMenu,
-								myPt.v,
-								myPt.h,
-								DefaultFX+1);
-		
-		SetItemMark( EffectMenu, DefaultFX+1, 0);
-		
-		if ( HiWord(mresult ) != 0 )
-		{
-			DefaultFX = LoWord( mresult)-1;
-			
-			pStrcpy( aStr, "\pFX: ");
-			
-			aStr[ 5] = EEffect[ DefaultFX];
-			aStr[ 0] ++;
-			
-			TextFont( 0);	TextSize( 0);
-		//	RGBBackColor( &theColor);
-			SetControlTitle( CheckBut[ 0], aStr);
-		//	BackColor( whiteColor);
-			TextFont( 4);	TextSize( 9);
-			
-			OnOffFX = true;
-			SetControlValue( (ControlHandle) CheckBut[ 0], OnOffFX);
-		}
-		DeleteMenu( GetMenuID( EffectMenu));
-	}
-	break;
-	
-	case 21:	// Step
-	case 20:
-	{
-		short 		itemType;
-		Handle		itemHandle;
-		Rect			itemRect;
-		long			mresult;
-		char			text[ 10];
-		MenuHandle	curMenu;
-		
-		curMenu = GetMenu( 178);
-		
-		InsertMenu( curMenu, hierMenu );
-		GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
-		
-		myPt.v = itemRect.top;	myPt.h = itemRect.left;
-		LocalToGlobal( &myPt);
-		
-		SetItemMark( curMenu, curStep, 0xa5);
-		
-		mresult = PopUpMenuSelect(	curMenu,
-								myPt.v,
-								myPt.h,
-								curStep);
-		
-		SetItemMark( curMenu, curStep, 0);
-		
-		if ( HiWord(mresult ) != 0 )
-		{
-			curStep = LoWord( mresult);
-			
-			NTStr( 1, curStep, text);
-			
-			TextFont( 0);	TextSize( 0);
-		//	RGBBackColor( &theColor);
-			SetDText( whichDialog, 20, MyC2PStr( text));
-		//	BackColor( whiteColor);
-			TextFont( 4);	TextSize( 9);
-		}
-		DeleteMenu( GetMenuID( curMenu));
-		DisposeMenu(  curMenu);
-	}
-	break;
-
-	case 17:
-	{
-		short 	itemType;
-		Handle	itemHandle;
-		Rect		itemRect;
-		long		mresult;
-		char		text[ 10];
-		
-		InsertMenuItem( InstruMenu, "\pNo Ins", 0);
-		
-		InsertMenu( InstruMenu, hierMenu );
-		GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
-		
-		myPt.v = itemRect.top;	myPt.h = itemRect.left;
-		LocalToGlobal( &myPt);
-		
-		SetItemMark( InstruMenu, curInstru + 1, 0xa5);
-		
-		mresult = PopUpMenuSelect(	InstruMenu,
-								myPt.v,
-								myPt.h,
-								curInstru + 1);
-		
-		SetItemMark( InstruMenu, curInstru + 1, 0);
-		
-		if ( HiWord(mresult ) != 0 )
-		{
-			curInstru = LoWord( mresult) - 1;
-			
-			NTStr( 3, curInstru, text);
-			
-			pStrcpy( aStr, "\pIns: ");
-			pStrcat( aStr, MyC2PStr( text));
-			
-			TextFont( 0);	TextSize( 0);
-		//	RGBBackColor( &theColor);
-			SetControlTitle( CheckBut[ 3], aStr);
-			
-		//	strcpy( (Ptr) aStr, curMusic->fid[ curInstru-1].name);
-		//	MyC2PStr( (Ptr) aStr);
-		//	SetDText( whichDialog, 18, aStr);
-			
-			TextFont( 4);	TextSize( 9);
-			
-		//	BackColor( whiteColor);
-			
-			NSelectInstruList( curInstru - 1, -1);
-			
-			OnOffInstru = true;
-			SetControlValue( (ControlHandle) CheckBut[ 3], OnOffInstru);
-		}
-		DeleteMenu( GetMenuID( InstruMenu));
-		DeleteMenuItem( InstruMenu, 1);
-	}
-	break;
-	
-	case 13:
-		if(MyTrackControl( TraceBut, theEvent.where, NULL))
-		{
-			thePrefs.MusicTrace = !thePrefs.MusicTrace;
-			
-			if( thePrefs.MusicTrace) HiliteControl( TraceBut, kControlButtonPart);
-			else HiliteControl( TraceBut, 0);
-		}
-	break;
-	
-	case 14:
-		if(MyTrackControl( FindBut, theEvent.where, NULL))
-		{
-			HandleOtherChoice( 6);
-		}
-	break;
-
-	case 2:
-		if( GetControlHilite( InfoBut) == 0 && MyTrackControl( InfoBut, theEvent.where, NULL))
-		{
-			DialogPatternInfo( CurrentPat);
-		}
-	break;
-
-	case 3:		
-		if( GetControlHilite( OpenBut) == 0 && MyTrackControl( OpenBut, theEvent.where, NULL))
-		{
-			OpenPcmdFile( NULL);
-		}
-	break;
-	
-	case 23:
-		if( GetControlHilite( DownBut) == 0  && MyTrackControl( DownBut, theEvent.where, NULL))
-		{
-			DoKeyPressEditor( '/');
-		}
-	break;
-	
-	case 10:
-		if( GetControlHilite( UpBut) == 0  && MyTrackControl( UpBut, theEvent.where, NULL))
-		{
-			DoKeyPressEditor( '*');
-		}
-	break;
-
-	case 12:
-		if( GetControlHilite( FXBut) == 0)// && MyTrackControl( FXBut, theEvent.where, NULL))
-		{
-			short	itemType;
-			Rect	itemRect;
-			Handle	itemHandle;
-			
-		//	HiliteControl( FXBut, kControlButtonPart);
-			
-			GetDialogItem( whichDialog, 12, &itemType, &itemHandle, &itemRect);
-			
-			temp = PressPPDGMenu( &itemRect);
-			
-			if( temp != -1)
-			{
-				Pcmd*	myPcmd;
-				
-				myPcmd = CreatePcmdFromSelection();
-				
-				CallPPDGPlugIns( temp-1, myPcmd);
-				
-				SaveUndo( UPattern, CurrentPat, "\pUndo 'Digital Editor Plug'");
-				
-				theCell.h = theCell.v = 0;
-				if( PLGetSelect( &theCell, &myList)) PasteCmdEditor( theCell, myPcmd);
-				
-				MyDisposePtr( (Ptr*) &myPcmd);
+				DoubleClick = MLClick(myPt, theEvent.modifiers);
 			}
 			
-		//	HiliteControl( FXBut, 0);
-		}
-	break;
-
-	case 11:
-		if( PianoRecording)
-		{
-			Erreur( 82, -2);
-			break;
-		}
-	
-		if(MyTrackControl( RecBut, theEvent.where, NULL))
-		{
-			EditorKeyRecording = !EditorKeyRecording;
-			if( EditorKeyRecording)
-			{
-				HiliteControl( RecBut, kControlButtonPart);
-				
-			/*	RGBBackColor( &theColor);
-				for( i = 0; i < 4; i++) HiliteControl( CheckBut[ i], 0);
-				BackColor( whiteColor);*/
-			}
-			else
-			{
-				HiliteControl( RecBut, 0);
-				
-			/*	RGBBackColor( &theColor);
-				for( i = 0; i < 4; i++) HiliteControl( CheckBut[ i], 255);
-				BackColor( whiteColor);*/
-			}
-		}
-	break;
-
-	case 4:
-		if( GetControlHilite( SaveBut) == 0  && MyTrackControl( SaveBut, theEvent.where, NULL))
-		{
-			SavePcmdFile( CreatePcmdFromSelection());
-		}
-	break;
-
-	case 6:
-		if( GetControlHilite( PrefBut) == 0  && MyTrackControl( PrefBut, theEvent.where, NULL))
-		{
-#include "Help.h"
-
-			ShowPrefs( DIGITAL);
-		}
-	break;
-
-	case 7:
-		if( GetControlHilite( PlayBut) == 0)
-		{
-			whichItem = -1;
-			theCell.v = theCell.h = 0;
-			if( PLGetSelect( &theCell, &myList)) goto PlaySelection;
-		}
-	break;
-
-	case 8:
-		if( GetControlHilite( ShowBut) == 0  && MyTrackControl( ShowBut, theEvent.where, NULL))
-		{
 			theCell.v = theCell.h = 0;
 			if( PLGetSelect( &theCell, &myList))
 			{
-				ShowCurrentCmdNote();
-				SetCommandTrack( theCell.h, theCell.v);
-			}
-		}
-	break;
-
-	case 9:
-	case 5:
-		if( myPt.h < myList.rect.left && myPt.v < myList.rect.top)
-		{
-			PLSetSelect( 0, 0, curMusic->header->numChn, curMusic->partition[ CurrentPat]->header.size, &myList);
-		}
-		else if( myPt.h < myList.rect.left)
-		{
-			short start;
-		
-			theCell.v = (myPt.v - myList.rect.top) / myList.HCell;
-			theCell.v += GetControlValue( myList.yScroll);
-			
-			if( (theEvent.modifiers & shiftKey) != 0)
-			{
-				if( theCell.v > myList.select.top) start = myList.select.top;
-				else
+				Point	aCell;
+				
+				if( theEvent.modifiers == thePrefs.FastDigitalEdition)	//& thePrefs.FastDigitalEdition
 				{
-					start = theCell.v;
-					theCell.v = myList.select.bottom;
+					myPt = theEvent.where;
+					GlobalToLocal( &myPt);
 				}
-			}
-			else start = theCell.v;
-			
-			PLSetSelect( 0, start, curMusic->header->numChn-1, theCell.v, &myList);
-			
-			if( (theEvent.modifiers & cmdKey) != 0)
-			{
-				Boolean IsPlay = MADDriver->Reading;
-				Boolean	IsJump = MADDriver->JumpToNextPattern;
+				else GetMouse( &myPt);
 				
-				MADDriver->JumpToNextPattern = false;
-				MADDriver->PartitionReader = start;
+				HiliteControl( OpenBut, 0);	HiliteControl( SaveBut, 0);
+				HiliteControl( ShowBut, 0);	HiliteControl( PlayBut, 0);
+				HiliteControl( UpBut, 0); 		HiliteControl( FXBut, 0);
+				HiliteControl( DownBut, 0);
 				
-				DoPlay();
+				if( OnOffInstru == false && OnOffFX == false && OnOffArg == false && OnOffVolume == false) ControlSwitch( 18, EditorDlog, 255);
+				else ControlSwitch( 18, EditorDlog, 0);
 				
-				while( Button())
+				aCell = myPt;
+				PLConvertPoint( &aCell, &myList);
+				
+				if (PtInRect( myPt, &myList.rect))
 				{
-					DoGlobalNull();
-					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-				}
-				
-				if( IsPlay == false) DoPause();
-				
-				MADDriver->JumpToNextPattern = IsJump;
-			}
-		}
-		else if( myPt.v < myList.rect.top)
-		{
-			short	start;
-			Rect	caRect;
-			
-			theCell.h = (myPt.h - myList.rect.left) / myList.LCell;
-			theCell.h += GetControlValue( myList.xScroll);
-			
-			if( (theEvent.modifiers & cmdKey) != 0)			// Mute
-			{
-				MADDriver->Active[ theCell.h] = !MADDriver->Active[ theCell.h];
-				
-				UPDATE_TrackActive();
-			}
-			else if( (theEvent.modifiers & optionKey) != 0)	// Solo
-			{
-				short	noActive;
-				
-				for( i = 0, noActive = 0; i < curMusic->header->numChn; i++)
-				{
-					if( MADDriver->Active[ i] == true)
+					if( aCell.v != lastCell.v || aCell.h != lastCell.h || MADDriver->Reading == false)
 					{
-						noActive++;
+						MADDriver->Pat = CurrentPat;
+						if( thePrefs.MusicTrace) MADDriver->PartitionReader = aCell.v;
+						SetCommandTrack( aCell.h, aCell.v);
 					}
 				}
 				
-				if( noActive <= 1 && MADDriver->Active[ theCell.h] == true)
+				if( MADDriver->Reading == false)
 				{
-					for( i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
+					GetKeys( km);
+					if( IsPressed( 0x37))	// On joue la note = PlayCrsr
+					{
+						short		VolExtCopy[ MAXTRACK];
+						long		rePat;
+						long		reReader;
+						long		rePL;
+						
+					PlaySelection:
+						
+						rePat = MADDriver->Pat;
+						reReader = MADDriver->PartitionReader;
+						rePL = MADDriver->PL;
+						
+						MADDriver->PartitionReader = theCell.v;
+						SetCommandTrack( theCell.h, theCell.v);
+						
+						HiliteControl( PlayBut, kControlButtonPart);
+						
+						DoRemember();
+						
+						for( i = 0; i < myList.select.left; i++)			MADDriver->TrackReading[ i] = false;
+						for( i = myList.select.right+1; i < MAXTRACK; i++)	MADDriver->TrackReading[ i] = false;
+						
+						MADDriver->Reading = true;
+						while( Button() == true  && MADDriver->PartitionReader <= myList.select.bottom && MADDriver->PartitionReader >= myList.select.top && rePat == MADDriver->Pat)
+						{
+							DoGlobalNull();
+							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+						}
+						MADDriver->Reading = false;
+						while( Button() == true)
+						{
+							DoGlobalNull();
+							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+						}
+						DoPause();
+						
+						MADDriver->Pat = rePat;
+						MADDriver->PartitionReader = reReader;
+						MADDriver->PL = rePL;
+						
+						for( i = 0; i < MAXTRACK; i++)					MADDriver->TrackReading[ i] = true;		// Restore
+						
+						HiliteControl( PlayBut, 0);
+					}
+					/*	else if( DoubleClick)
+					 {
+					 
+					 
+					 }*/
+					else if( DidTryToDrag == false)
+					{
+						if( DoubleClick)
+						{
+							ShowCurrentCmdNote();
+							SetCommandTrack( aCell.h, aCell.v);
+						}
+						
+						theCell.v = theCell.h = 0;
+						if( PLGetSelect( &theCell, &myList))
+						{
+							if( EditorKeyRecording == false && lastCell.h == theCell.h &&  lastCell.v==theCell.v)
+							{
+								ConvertPointAndType( &myPt, &type);
+								DoNullCmdWindow();
+								ActiveCmdWindow( type);
+							}
+						}
+					}
+					
+					DidTryToDrag = false;
 				}
-				else
-				{
-					for( i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
-					MADDriver->Active[ theCell.h] = true;
-				}
-				
-				UPDATE_TrackActive();
-			}
-			else if( (theEvent.modifiers & shiftKey) != 0)
-			{
-				if( theCell.h > myList.select.left) start = myList.select.left;
-				else
-				{
-					start = theCell.h;
-					theCell.h = myList.select.right;
-				}
-				
-				PLSetSelect( start, 0, theCell.h, curMusic->partition[ CurrentPat]->header.size-1, &myList);
 			}
 			else
 			{
-				start = theCell.h;
-				PLSetSelect( start, 0, theCell.h, curMusic->partition[ CurrentPat]->header.size-1, &myList);
+				HiliteControl( OpenBut, 255);
+				HiliteControl( SaveBut, 255);
+				HiliteControl( ShowBut, 255);
+				HiliteControl( PlayBut, 255);
+				HiliteControl( UpBut, 255);
+				HiliteControl( DownBut, 255);
+				HiliteControl( FXBut, 255);
+				
+				ControlSwitch( 18, EditorDlog, 255);
 			}
 		}
-
-		theCell.v = theCell.h = 0;
-		if( PLGetSelect( &theCell, &myList))
-		{
-			if( theCell.v != lastCell.v || theCell.h != lastCell.h || MADDriver->Reading == false)
+	}
+	
+	switch( whichItem)
+	{
+		case 18:
+			if( GetControlHilite( FillBut) == 0)	// && )
 			{
-				MADDriver->Pat = CurrentPat;
-				if( thePrefs.MusicTrace) MADDriver->PartitionReader = theCell.v;
-				SetCommandTrack( theCell.h, theCell.v);
+				short X, Y;
+				
+				MyTrackControl( FillBut, theEvent.where, NULL);
+				
+				curMusic->hasChanged = true;
+				
+				SaveUndo( UPattern, CurrentPat, "\pUndo 'Fill Digital Editor'");
+				
+				for( X = myList.select.left; X <= myList.select.right; X++)
+				{
+					for( Y = myList.select.top; Y <= myList.select.bottom; Y++)
+					{
+						theCommand = GetMADCommand( Y, X, curMusic->partition[ CurrentPat]);
+						
+						if( OnOffInstru)		theCommand->ins 	= curInstru;		//else theCommand->ins = 0;
+						if( OnOffFX)		theCommand->cmd 	= DefaultFX;		//else theCommand->cmd = 0;
+						if( OnOffArg)		theCommand->arg 	= DefaultArg;		//else theCommand->arg = 0;
+						if( OnOffVolume)
+						{
+							if( DefaultVol == 0)	theCommand->vol	= 0xFF;
+							else theCommand->vol = DefaultVol;
+						}
+						
+						UPDATE_NoteBOUCLE( Y, X);
+					}
+				}
+				
+				UPDATE_NoteFINISH();
+				
+				UpdatePartitionWindow( EditorDlog);
 			}
+			break;
+			
+		case 40:
+		case 37:
+		case 38:
+		case 39:
+			//	RGBBackColor( &theColor);
+			if(MyTrackControl( (ControlHandle) CheckBut[ whichItem - 37], theEvent.where, NULL))
+			{
+				SetControlValue( (ControlHandle) CheckBut[ whichItem - 37], !GetControlValue( (ControlHandle) CheckBut[ whichItem - 37]));
+				
+				switch( whichItem)
+				{
+					case 40:	OnOffInstru = !OnOffInstru;	break;	//Instru
+					case 37:	OnOffFX = !OnOffFX;			break;	// FX
+					case 38:	OnOffArg = !OnOffArg;		break;	// Arg
+					case 39:	OnOffVolume= !OnOffVolume;	break;	// Volume
+				}
+				
+				if( OnOffInstru == false && OnOffFX == false && OnOffArg == false && OnOffVolume == false)
+				{
+					ControlSwitch( 18, EditorDlog, 255);
+				}
+				else
+				{
+					ControlSwitch( 18, EditorDlog, 0);
+				}
+			}
+			//	BackColor( whiteColor);
+			break;
+			
+		case 30:
+		{
+			short 		itemType;
+			Handle		itemHandle;
+			Rect			itemRect;
+			long			mresult;
+			MenuHandle	curMenu;
+			
+			curMenu = GetMenu( 161);
+			
+			InsertMenu( curMenu, hierMenu );
+			GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
+			
+			myPt.v = itemRect.top;	myPt.h = itemRect.left;
+			LocalToGlobal( &myPt);
+			
+			SetItemMark( curMenu, DefaultVol +1, 0xa5);
+			
+			mresult = PopUpMenuSelect(	curMenu,
+									  myPt.v,
+									  myPt.h,
+									  DefaultVol+1);
+			
+			SetItemMark( curMenu, DefaultVol +1, 0);
+			
+			if ( HiWord(mresult ) != 0 )
+			{
+				DefaultVol = LoWord( mresult)-1;
+				
+				pStrcpy( aStr, "\pVol: ");
+				
+				aStr[ 6] = EArgu[ DefaultVol][ 0];
+				aStr[ 7] = EArgu[ DefaultVol][ 1];
+				aStr[ 0] += 2;
+				
+				TextFont( 0);	TextSize( 0);
+				//	RGBBackColor( &theColor);
+				SetControlTitle( CheckBut[ 2], aStr);
+				//	BackColor( whiteColor);
+				TextFont( 4);	TextSize( 9);
+				
+				OnOffVolume = true;
+				SetControlValue( (ControlHandle) CheckBut[ 2], OnOffVolume);
+			}
+			DeleteMenu( GetMenuID( curMenu));
+			DisposeMenu( curMenu);
 		}
-	break;
-}
-
+			break;
+			
+		case 31:
+		{
+			short 		itemType;
+			Handle		itemHandle;
+			Rect			itemRect;
+			long			mresult;
+			MenuHandle	curMenu;
+			
+			curMenu = GetMenu( 161);
+			
+			InsertMenu( curMenu, hierMenu );
+			GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
+			
+			myPt.v = itemRect.top;	myPt.h = itemRect.left;
+			LocalToGlobal( &myPt);
+			
+			SetItemMark( curMenu, DefaultArg + 1, 0xa5);
+			
+			mresult = PopUpMenuSelect(	curMenu,
+									  myPt.v,
+									  myPt.h,
+									  DefaultArg+1);
+			
+			
+			
+			SetItemMark( curMenu, DefaultArg + 1, 0);
+			
+			if ( HiWord(mresult ) != 0 )
+			{
+				DefaultArg = LoWord( mresult) -1;
+				
+				pStrcpy( aStr, "\pArg: ");
+				
+				aStr[ 6] = EArgu[ DefaultArg][ 0];
+				aStr[ 7] = EArgu[ DefaultArg][ 1];
+				aStr[ 0] += 2;
+				
+				TextFont( 0);	TextSize( 0);
+				//	RGBBackColor( &theColor);
+				SetControlTitle( CheckBut[ 1], aStr);
+				//	BackColor( whiteColor);
+				TextFont( 4);	TextSize( 9);
+				
+				OnOffArg = true;
+				SetControlValue( (ControlHandle) CheckBut[ 1], OnOffArg);
+			}
+			DeleteMenu( GetMenuID( curMenu));
+			DisposeMenu( curMenu);
+		}
+			break;
+			
+		case 32:
+		{
+			short 		itemType;
+			Handle		itemHandle;
+			Rect			itemRect;
+			long			mresult;
+			
+			InsertMenu( EffectMenu, hierMenu );
+			GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
+			
+			myPt.v = itemRect.top;	myPt.h = itemRect.left;
+			LocalToGlobal( &myPt);
+			
+			SetItemMark( EffectMenu, DefaultFX+1, 0xa5);
+			
+			mresult = PopUpMenuSelect(	EffectMenu,
+									  myPt.v,
+									  myPt.h,
+									  DefaultFX+1);
+			
+			SetItemMark( EffectMenu, DefaultFX+1, 0);
+			
+			if ( HiWord(mresult ) != 0 )
+			{
+				DefaultFX = LoWord( mresult)-1;
+				
+				pStrcpy( aStr, "\pFX: ");
+				
+				aStr[ 5] = EEffect[ DefaultFX];
+				aStr[ 0] ++;
+				
+				TextFont( 0);	TextSize( 0);
+				//	RGBBackColor( &theColor);
+				SetControlTitle( CheckBut[ 0], aStr);
+				//	BackColor( whiteColor);
+				TextFont( 4);	TextSize( 9);
+				
+				OnOffFX = true;
+				SetControlValue( (ControlHandle) CheckBut[ 0], OnOffFX);
+			}
+			DeleteMenu( GetMenuID( EffectMenu));
+		}
+			break;
+			
+		case 21:	// Step
+		case 20:
+		{
+			short 		itemType;
+			Handle		itemHandle;
+			Rect			itemRect;
+			long			mresult;
+			char			text[ 10];
+			MenuHandle	curMenu;
+			
+			curMenu = GetMenu( 178);
+			
+			InsertMenu( curMenu, hierMenu );
+			GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
+			
+			myPt.v = itemRect.top;	myPt.h = itemRect.left;
+			LocalToGlobal( &myPt);
+			
+			SetItemMark( curMenu, curStep, 0xa5);
+			
+			mresult = PopUpMenuSelect(	curMenu,
+									  myPt.v,
+									  myPt.h,
+									  curStep);
+			
+			SetItemMark( curMenu, curStep, 0);
+			
+			if ( HiWord(mresult ) != 0 )
+			{
+				curStep = LoWord( mresult);
+				
+				NTStr( 1, curStep, text);
+				
+				TextFont( 0);	TextSize( 0);
+				//	RGBBackColor( &theColor);
+				SetDText( whichDialog, 20, MyC2PStr( text));
+				//	BackColor( whiteColor);
+				TextFont( 4);	TextSize( 9);
+			}
+			DeleteMenu( GetMenuID( curMenu));
+			DisposeMenu(  curMenu);
+		}
+			break;
+			
+		case 17:
+		{
+			short 	itemType;
+			Handle	itemHandle;
+			Rect		itemRect;
+			long		mresult;
+			char		text[ 10];
+			
+			InsertMenuItem( InstruMenu, "\pNo Ins", 0);
+			
+			InsertMenu( InstruMenu, hierMenu );
+			GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
+			
+			myPt.v = itemRect.top;	myPt.h = itemRect.left;
+			LocalToGlobal( &myPt);
+			
+			SetItemMark( InstruMenu, curInstru + 1, 0xa5);
+			
+			mresult = PopUpMenuSelect(	InstruMenu,
+									  myPt.v,
+									  myPt.h,
+									  curInstru + 1);
+			
+			SetItemMark( InstruMenu, curInstru + 1, 0);
+			
+			if ( HiWord(mresult ) != 0 )
+			{
+				curInstru = LoWord( mresult) - 1;
+				
+				NTStr( 3, curInstru, text);
+				
+				pStrcpy( aStr, "\pIns: ");
+				pStrcat( aStr, MyC2PStr( text));
+				
+				TextFont( 0);	TextSize( 0);
+				//	RGBBackColor( &theColor);
+				SetControlTitle( CheckBut[ 3], aStr);
+				
+				//	strcpy( (Ptr) aStr, curMusic->fid[ curInstru-1].name);
+				//	MyC2PStr( (Ptr) aStr);
+				//	SetDText( whichDialog, 18, aStr);
+				
+				TextFont( 4);	TextSize( 9);
+				
+				//	BackColor( whiteColor);
+				
+				NSelectInstruList( curInstru - 1, -1);
+				
+				OnOffInstru = true;
+				SetControlValue( (ControlHandle) CheckBut[ 3], OnOffInstru);
+			}
+			DeleteMenu( GetMenuID( InstruMenu));
+			DeleteMenuItem( InstruMenu, 1);
+		}
+			break;
+			
+		case 13:
+			if(MyTrackControl( TraceBut, theEvent.where, NULL))
+			{
+				thePrefs.MusicTrace = !thePrefs.MusicTrace;
+				
+				if( thePrefs.MusicTrace) HiliteControl( TraceBut, kControlButtonPart);
+				else HiliteControl( TraceBut, 0);
+			}
+			break;
+			
+		case 14:
+			if(MyTrackControl( FindBut, theEvent.where, NULL))
+			{
+				HandleOtherChoice( 6);
+			}
+			break;
+			
+		case 2:
+			if( GetControlHilite( InfoBut) == 0 && MyTrackControl( InfoBut, theEvent.where, NULL))
+			{
+				DialogPatternInfo( CurrentPat);
+			}
+			break;
+			
+		case 3:		
+			if( GetControlHilite( OpenBut) == 0 && MyTrackControl( OpenBut, theEvent.where, NULL))
+			{
+				OpenPcmdFile( NULL);
+			}
+			break;
+			
+		case 23:
+			if( GetControlHilite( DownBut) == 0  && MyTrackControl( DownBut, theEvent.where, NULL))
+			{
+				DoKeyPressEditor( '/');
+			}
+			break;
+			
+		case 10:
+			if( GetControlHilite( UpBut) == 0  && MyTrackControl( UpBut, theEvent.where, NULL))
+			{
+				DoKeyPressEditor( '*');
+			}
+			break;
+			
+		case 12:
+			if( GetControlHilite( FXBut) == 0)// && MyTrackControl( FXBut, theEvent.where, NULL))
+			{
+				short	itemType;
+				Rect	itemRect;
+				Handle	itemHandle;
+				
+				//	HiliteControl( FXBut, kControlButtonPart);
+				
+				GetDialogItem( whichDialog, 12, &itemType, &itemHandle, &itemRect);
+				
+				temp = PressPPDGMenu( &itemRect);
+				
+				if( temp != -1)
+				{
+					Pcmd*	myPcmd;
+					
+					myPcmd = CreatePcmdFromSelection();
+					
+					CallPPDGPlugIns( temp-1, myPcmd);
+					
+					SaveUndo( UPattern, CurrentPat, "\pUndo 'Digital Editor Plug'");
+					
+					theCell.h = theCell.v = 0;
+					if( PLGetSelect( &theCell, &myList)) PasteCmdEditor( theCell, myPcmd);
+					
+					MyDisposePtr( (Ptr*) &myPcmd);
+				}
+				
+				//	HiliteControl( FXBut, 0);
+			}
+			break;
+			
+		case 11:
+			if( PianoRecording)
+			{
+				Erreur( 82, -2);
+				break;
+			}
+			
+			if(MyTrackControl( RecBut, theEvent.where, NULL))
+			{
+				EditorKeyRecording = !EditorKeyRecording;
+				if( EditorKeyRecording)
+				{
+					HiliteControl( RecBut, kControlButtonPart);
+					
+					/*	RGBBackColor( &theColor);
+					 for( i = 0; i < 4; i++) HiliteControl( CheckBut[ i], 0);
+					 BackColor( whiteColor);*/
+				}
+				else
+				{
+					HiliteControl( RecBut, 0);
+					
+					/*	RGBBackColor( &theColor);
+					 for( i = 0; i < 4; i++) HiliteControl( CheckBut[ i], 255);
+					 BackColor( whiteColor);*/
+				}
+			}
+			break;
+			
+		case 4:
+			if( GetControlHilite( SaveBut) == 0  && MyTrackControl( SaveBut, theEvent.where, NULL))
+			{
+				SavePcmdFile( CreatePcmdFromSelection());
+			}
+			break;
+			
+		case 6:
+			if( GetControlHilite( PrefBut) == 0  && MyTrackControl( PrefBut, theEvent.where, NULL))
+			{
+#include "Help.h"
+				
+				ShowPrefs( DIGITAL);
+			}
+			break;
+			
+		case 7:
+			if( GetControlHilite( PlayBut) == 0)
+			{
+				whichItem = -1;
+				theCell.v = theCell.h = 0;
+				if( PLGetSelect( &theCell, &myList)) goto PlaySelection;
+			}
+			break;
+			
+		case 8:
+			if( GetControlHilite( ShowBut) == 0  && MyTrackControl( ShowBut, theEvent.where, NULL))
+			{
+				theCell.v = theCell.h = 0;
+				if( PLGetSelect( &theCell, &myList))
+				{
+					ShowCurrentCmdNote();
+					SetCommandTrack( theCell.h, theCell.v);
+				}
+			}
+			break;
+			
+		case 9:
+		case 5:
+			if( myPt.h < myList.rect.left && myPt.v < myList.rect.top)
+			{
+				PLSetSelect( 0, 0, curMusic->header->numChn, curMusic->partition[ CurrentPat]->header.size, &myList);
+			}
+			else if( myPt.h < myList.rect.left)
+			{
+				short start;
+				
+				theCell.v = (myPt.v - myList.rect.top) / myList.HCell;
+				theCell.v += GetControlValue( myList.yScroll);
+				
+				if( (theEvent.modifiers & shiftKey) != 0)
+				{
+					if( theCell.v > myList.select.top) start = myList.select.top;
+					else
+					{
+						start = theCell.v;
+						theCell.v = myList.select.bottom;
+					}
+				}
+				else start = theCell.v;
+				
+				PLSetSelect( 0, start, curMusic->header->numChn-1, theCell.v, &myList);
+				
+				if( (theEvent.modifiers & cmdKey) != 0)
+				{
+					Boolean IsPlay = MADDriver->Reading;
+					Boolean	IsJump = MADDriver->JumpToNextPattern;
+					
+					MADDriver->JumpToNextPattern = false;
+					MADDriver->PartitionReader = start;
+					
+					DoPlay();
+					
+					while( Button())
+					{
+						DoGlobalNull();
+						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+					}
+					
+					if( IsPlay == false) DoPause();
+					
+					MADDriver->JumpToNextPattern = IsJump;
+				}
+			}
+			else if( myPt.v < myList.rect.top)
+			{
+				short	start;
+				Rect	caRect;
+				
+				theCell.h = (myPt.h - myList.rect.left) / myList.LCell;
+				theCell.h += GetControlValue( myList.xScroll);
+				
+				if( (theEvent.modifiers & cmdKey) != 0)			// Mute
+				{
+					MADDriver->Active[ theCell.h] = !MADDriver->Active[ theCell.h];
+					
+					UPDATE_TrackActive();
+				}
+				else if( (theEvent.modifiers & optionKey) != 0)	// Solo
+				{
+					short	noActive;
+					
+					for( i = 0, noActive = 0; i < curMusic->header->numChn; i++)
+					{
+						if( MADDriver->Active[ i] == true)
+						{
+							noActive++;
+						}
+					}
+					
+					if( noActive <= 1 && MADDriver->Active[ theCell.h] == true)
+					{
+						for( i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
+					}
+					else
+					{
+						for( i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
+						MADDriver->Active[ theCell.h] = true;
+					}
+					
+					UPDATE_TrackActive();
+				}
+				else if( (theEvent.modifiers & shiftKey) != 0)
+				{
+					if( theCell.h > myList.select.left) start = myList.select.left;
+					else
+					{
+						start = theCell.h;
+						theCell.h = myList.select.right;
+					}
+					
+					PLSetSelect( start, 0, theCell.h, curMusic->partition[ CurrentPat]->header.size-1, &myList);
+				}
+				else
+				{
+					start = theCell.h;
+					PLSetSelect( start, 0, theCell.h, curMusic->partition[ CurrentPat]->header.size-1, &myList);
+				}
+			}
+			
+			theCell.v = theCell.h = 0;
+			if( PLGetSelect( &theCell, &myList))
+			{
+				if( theCell.v != lastCell.v || theCell.h != lastCell.h || MADDriver->Reading == false)
+				{
+					MADDriver->Pat = CurrentPat;
+					if( thePrefs.MusicTrace) MADDriver->PartitionReader = theCell.v;
+					SetCommandTrack( theCell.h, theCell.v);
+				}
+			}
+			break;
+	}
+	
 	theCell.v = theCell.h = 0;
 	if( PLGetSelect( &theCell, &myList))
 	{
@@ -2888,7 +2873,7 @@ switch( whichItem)
 		HiliteControl( UpBut, 255);	HiliteControl( FXBut, 255);
 		HiliteControl( DownBut, 0);	ControlSwitch( 18, EditorDlog, 255);
 	}
-
+	
 	SetPort( SavePort);
 }
 
@@ -2903,12 +2888,12 @@ void UpdateCompleteEditor(void)
 
 void PLScrollIntPartition( short curVal, short sVal, long lRefCon)
 {
-short			maxValue, minValue, XX, itemType;
-RgnHandle		aRgn;
-Handle			itemHandle;
-RgnHandle		clipRgn;
-
-
+	short			maxValue, minValue, XX, itemType;
+	RgnHandle		aRgn;
+	Handle			itemHandle;
+	RgnHandle		clipRgn;
+	
+	
 	if( sVal != curVal)
 	{
 		Rect	aRect = myList.rect, bRect;
@@ -2937,11 +2922,11 @@ RgnHandle		clipRgn;
 				
 				
 				
-			//	DoNullEditor();
+				//	DoNullEditor();
 				
 				DisposeRgn( aRgn);
-			break;
-			
+				break;
+				
 			case xScrollNum:
 				aRgn = NewRgn();
 				
@@ -2955,7 +2940,7 @@ RgnHandle		clipRgn;
 				DrawEditorUp();
 				
 				DisposeRgn( aRgn);
-			break;
+				break;
 		}
 	}
 }
@@ -3265,8 +3250,6 @@ void InternalEditorInit()
 	Cmd				aCmd;
 	GrafPtr			SavePort;
 	Rect	caRect;
-	
-	
 
 	if( EditorDlog == NULL) return;
 	
@@ -3313,10 +3296,8 @@ void InternalEditorInit()
 
 void ClosePartitionWindow(void)
 {
-Point	Start;
-Rect	caRect;
-	
-	
+	Point	Start;
+	Rect	caRect;
 
 	if( EditorDlog != NULL)
 	{
@@ -3361,7 +3342,7 @@ void DigitalEditorProcess( short whichNote, short *eff, short *arg, short *volCm
 	short				theNo, temp;
 	Cmd					*theCommand;
 	GrafPtr				SavePort;
-
+	
 	if( EditorDlog == NULL) return;
 	if( !EditorKeyRecording) return;
 	
@@ -3380,67 +3361,67 @@ void DigitalEditorProcess( short whichNote, short *eff, short *arg, short *volCm
 	{
 		theCommand = GetMADCommand( theCell.v, theCell.h, curMusic->partition[ CurrentPat]);
 		
-	//	if( InstruListDlog != NULL)
-	//	{
+		//	if( InstruListDlog != NULL)
+		//	{
 		//	aCell.v = 0;	aCell.h = 0;
 		//	if( GetIns( &aCell.v, NULL))
-			{
+		{
 			//	if( whichNote == 0) aCell.v = -1;
-				
-				SaveUndo( UPattern, CurrentPat, "\pUndo 'Key Press in Digital Editor'");
-				
-				if( OnOffInstru)		theCommand->ins 	= curInstru;		//else theCommand->ins = 0;
-				theCommand->note = whichNote;
-				if( OnOffFX)		theCommand->cmd 	= DefaultFX;		//else theCommand->cmd = 0;
-				if( OnOffArg)		theCommand->arg 	= DefaultArg;		//else theCommand->arg = 0;
-				if( OnOffVolume)
+			
+			SaveUndo( UPattern, CurrentPat, "\pUndo 'Key Press in Digital Editor'");
+			
+			if( OnOffInstru)		theCommand->ins 	= curInstru;		//else theCommand->ins = 0;
+			theCommand->note = whichNote;
+			if( OnOffFX)		theCommand->cmd 	= DefaultFX;		//else theCommand->cmd = 0;
+			if( OnOffArg)		theCommand->arg 	= DefaultArg;		//else theCommand->arg = 0;
+			if( OnOffVolume)
+			{
+				if( DefaultVol == 0)	theCommand->vol	= 0xFF;
+				else theCommand->vol = DefaultVol;
+			}
+			//else theCommand->vol = 0xFF;
+			
+			if( eff) *eff = theCommand->cmd;
+			if( arg) *arg = theCommand->arg;
+			if( volCmd) *volCmd = theCommand->vol;
+			
+			UPDATE_Note( theCell.v, theCell.h);	
+			
+			theCell.v += curStep;
+			MADDriver->Pat = CurrentPat;
+			
+			if( theCell.v >= curMusic->partition[ CurrentPat]->header.size)
+			{
+				if( MADDriver->JumpToNextPattern && thePrefs.patternWrapping == false)
 				{
-					if( DefaultVol == 0)	theCommand->vol	= 0xFF;
-					else theCommand->vol = DefaultVol;
-				}
-				//else theCommand->vol = 0xFF;
-				
-				if( eff) *eff = theCommand->cmd;
-				if( arg) *arg = theCommand->arg;
-				if( volCmd) *volCmd = theCommand->vol;
-				
-				UPDATE_Note( theCell.v, theCell.h);	
-				
-				theCell.v += curStep;
-				MADDriver->Pat = CurrentPat;
-				
-				if( theCell.v >= curMusic->partition[ CurrentPat]->header.size)
-				{
-					if( MADDriver->JumpToNextPattern && thePrefs.patternWrapping == false)
-					{
-						short newPL = MADDriver->PL;
-						newPL++;
-						if( newPL >= curMusic->header->numPointers) newPL--;
-						else
-						{
-							theCell.v -= curMusic->partition[ CurrentPat]->header.size;
-							
-							MADDriver->PL = newPL;
-							MADDriver->Pat = curMusic->header->oPointers[ MADDriver->PL];
-						}
-					}
+					short newPL = MADDriver->PL;
+					newPL++;
+					if( newPL >= curMusic->header->numPointers) newPL--;
 					else
 					{
 						theCell.v -= curMusic->partition[ CurrentPat]->header.size;
-						MADDriver->Pat = CurrentPat;
+						
+						MADDriver->PL = newPL;
+						MADDriver->Pat = curMusic->header->oPointers[ MADDriver->PL];
 					}
 				}
-				
-				PLSetSelect( theCell.h, theCell.v, theCell.h, theCell.v, &myList);
-				
-				if( thePrefs.MusicTrace) MADDriver->PartitionReader = theCell.v;
-				SetCommandTrack( theCell.h, theCell.v);
-
-				PLAutoScroll( &myList);
+				else
+				{
+					theCell.v -= curMusic->partition[ CurrentPat]->header.size;
+					MADDriver->Pat = CurrentPat;
+				}
 			}
+			
+			PLSetSelect( theCell.h, theCell.v, theCell.h, theCell.v, &myList);
+			
+			if( thePrefs.MusicTrace) MADDriver->PartitionReader = theCell.v;
+			SetCommandTrack( theCell.h, theCell.v);
+			
+			PLAutoScroll( &myList);
+		}
 		//	else Erreur( 13, 0);
-	//	}
-	//	else Erreur( 13, 0);
+		//	}
+		//	else Erreur( 13, 0);
 	}
 	
 	SetPort( SavePort);
@@ -3457,28 +3438,28 @@ void DoKeyPressEditor( short theChar)
 	Cmd					*theCommand;
 	GrafPtr				SavePort;
 	unsigned	long			ll;
-
-
+	
+	
  	if( curMusic == NULL) return;
  	
  	GetPort( &SavePort);
  	SetPortDialogPort( EditorDlog);
  	
  	if(	theChar == 0x0B ||
- 		theChar == 0x0C ||
- 		theChar == 0x04 ||
- 		theChar == 0x01)
+	   theChar == 0x0C ||
+	   theChar == 0x04 ||
+	   theChar == 0x01)
  	{
  		PLDoArrows( theChar, &myList);
  	}
  	
  	if(	theChar == 0x1E ||
- 		theChar == 0x03 ||
- 		theChar == 0x1F ||
- 		theChar == 0x1C ||
- 		theChar == 9 ||
- 		theChar == 0x0D ||
- 		theChar == 0x1D )
+	   theChar == 0x03 ||
+	   theChar == 0x1F ||
+	   theChar == 0x1C ||
+	   theChar == 9 ||
+	   theChar == 0x0D ||
+	   theChar == 0x1D )
  	{
 		UpdateCurrentCmd();
 		
@@ -3509,7 +3490,7 @@ void DoKeyPressEditor( short theChar)
 		 		{
 			 		case 0x1E:	theCell.v -= curStep;		break;
 			 		case 0x1F:	theCell.v += curStep;		break;
-			 		
+						
 			 		case 0x03:
 			 		case 0x0D:
 			 			DoItemPressPartition( 18, EditorDlog);	// Press Fill
@@ -3518,12 +3499,12 @@ void DoKeyPressEditor( short theChar)
 			 			Delay( 7, &ll);
 			 			HiliteControl( (ControlHandle) itemHandle, 0);
 			 			theCell.v += curStep;
-			 		break;
-			 		
+						break;
+						
 			 		case 0x1C:	theCell.h--;				break;
-			 		
-			 		
-			 	//	case 9:	//tab
+						
+						
+						//	case 9:	//tab
 					case 0x1D:	theCell.h++;		break;
 				}
 				
@@ -3588,7 +3569,7 @@ void DoKeyPressEditor( short theChar)
 			
 			DoGlobalNull();
 			
-		//	WaitNextEvent( everyEvent, &theEvent, 1, NULL);	// ne pas le mettre... a cause du PLSetSelect! et du update
+			//	WaitNextEvent( everyEvent, &theEvent, 1, NULL);	// ne pas le mettre... a cause du PLSetSelect! et du update
 			
 			PLAutoScroll( &myList);
 	 	}
@@ -3669,8 +3650,8 @@ void DoKeyPressEditor( short theChar)
  	}
  	else if( theChar == 0x09)
  	{
- 	//	DoKeyPressEditor( 0x1F);
- 	//	theChar = 0;
+		//	DoKeyPressEditor( 0x1F);
+		//	theChar = 0;
  	}
  	else if( theChar == selectAll)
  	{
@@ -3712,7 +3693,7 @@ Ptr ConvertPcmd2Text( Pcmd *myPcmd)
 	Str255			myStr;
 	Ptr				myText;
 	long			mSize;
-
+	
 	mSize = (long) 5 + myPcmd->tracks * (long) myPcmd->length * 16L;
 	myText = NewPtrClear( mSize);
 	if( myText == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error");
@@ -3747,13 +3728,13 @@ Pcmd* CreatePcmdFromSelection(void)
 	Cmd					*cmd, *cmd2;
 	Pcmd				*myPcmd;
 	short				X, Y, count;
-
+	
 	theCell.h = theCell.v = 0;
 	if( !PLGetSelect( &theCell, &myList)) return NULL;
 	
 	count = (myList.select.bottom - myList.select.top + 1) * (myList.select.right - myList.select.left + 1);
 	if( count <= 0) return NULL;
-
+	
 	myPcmd = (Pcmd*) NewPtrClear( sizeof( Pcmd) + count * sizeof( Cmd));
 	if( myPcmd == NULL) MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
 	
@@ -3782,9 +3763,8 @@ void ApplyOnAllCell(short ins, short note, short ef, short argu, short vol)
 	Cmd			*theCommand;
 	short		X, Y;
 	
-	
 	if( EditorDlog == NULL) return;
-
+	
 	theCell.h = theCell.v = 0;
 	
 	for( X = myList.select.left; X <= myList.select.right; X++)
@@ -3810,13 +3790,15 @@ void ApplyOnAllCell(short ins, short note, short ef, short argu, short vol)
 
 void PasteCmdEditor( Point theCell, Pcmd *myPcmd)
 {
-short			itemType,i,StartH, x;
-long			inOutBytes, iL, scrapOffset, lCntOrErr;
-Handle			theHandle;
-Point			aPt;
-Cmd				*cmd, *cmd2;
-Rect			sRect, eRect;
-GrafPtr			SavePort;
+	short			itemType,i,StartH, x;
+	long			inOutBytes, iL, scrapOffset, lCntOrErr;
+	Handle			theHandle;
+	Point			aPt;
+	Cmd				*cmd, *cmd2;
+	Rect			sRect, eRect;
+	GrafPtr			SavePort;
+	
+	SwapPcmd(myPcmd);
 	
 	GetPort( &SavePort);
 	SetPortDialogPort( EditorDlog);
@@ -3824,7 +3806,7 @@ GrafPtr			SavePort;
 	/*** Deselect all cells ***/
 	
 	PLSetSelect( -1, -1, -1, -1, &myList);
-		
+	
 	/**************************/
 	
 	PLSetSelect( theCell.h, theCell.v, theCell.h + myPcmd->tracks - 1, theCell.v + myPcmd->length - 1, &myList);
@@ -3833,13 +3815,13 @@ GrafPtr			SavePort;
 	for( i = 0; i < myPcmd->length; i++)
 	{
 		theCell.h = StartH;
-
+		
 		for( x = 0; x < myPcmd->tracks; x++)
 		{
 			if( theCell.v >= 0 &&
-				theCell.v < curMusic->partition[ CurrentPat]->header.size &&
-				theCell.h >= 0 &&
-				theCell.h < curMusic->header->numChn)
+			   theCell.v < curMusic->partition[ CurrentPat]->header.size &&
+			   theCell.h >= 0 &&
+			   theCell.h < curMusic->header->numChn)
 			{
 				cmd = GetMADCommand( theCell.v, theCell.h, curMusic->partition[ CurrentPat]);
 				cmd2 = GetCmd( i, x, myPcmd);
@@ -3855,7 +3837,7 @@ GrafPtr			SavePort;
 		theCell.v++;
 		if( theCell.v >= curMusic->partition[ CurrentPat]->header.size) i = myPcmd->length;
 	}
-		
+	
 	UPDATE_NoteFINISH();
 	
 	/*** Update de la région ***/
@@ -3877,7 +3859,7 @@ void COPYEditor(void)
 	
  	GetPort( &SavePort);
  	SetPortDialogPort( EditorDlog);
-
+	
 	myPcmd = CreatePcmdFromSelection();
 	if( myPcmd == NULL)
 	{
@@ -3891,7 +3873,7 @@ void COPYEditor(void)
 	anErr = GetCurrentScrap( &scrap);
 	
 	anErr = PutScrapFlavor( scrap, 'Pcmd', 0, GetPtrSize( (Ptr) myPcmd), (Ptr) myPcmd);
-		
+	
 	myText = ConvertPcmd2Text( myPcmd);
 	
 	anErr = PutScrapFlavor( scrap, 'TEXT', 0, GetPtrSize( myText), myText);
@@ -3906,18 +3888,18 @@ void COPYEditor(void)
 
 void PASTEEditor(void)
 {
-short			itemType,i,StartH, x;
-long				inOutBytes, iL, scrapOffset, lCntOrErr;
-Handle			theHandle;
-Point				theCell, aPt;
-Cmd				*theCommand;
-Rect				sRect, eRect;
-GrafPtr			SavePort;
-Pcmd			*myPcmd;
-ScrapRef			scrap;
-ScrapFlavorFlags	flags;
-OSErr			anErr;
-
+	short			itemType,i,StartH, x;
+	long				inOutBytes, iL, scrapOffset, lCntOrErr;
+	Handle			theHandle;
+	Point				theCell, aPt;
+	Cmd				*theCommand;
+	Rect				sRect, eRect;
+	GrafPtr			SavePort;
+	Pcmd			*myPcmd;
+	ScrapRef			scrap;
+	ScrapFlavorFlags	flags;
+	OSErr			anErr;
+	
  	GetPort( &SavePort);
  	SetPortDialogPort( EditorDlog);
 	
@@ -4006,8 +3988,8 @@ void EraseHilite( Rect *newRect)
 }
 
 pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
-
-{	short				result, offset, i, fRefNum;
+{
+	short				result, offset, i, fRefNum;
 	long				textSize, inOutBytes;
 	unsigned short		index;
 	unsigned long		flavorFlags, attributes;
@@ -4022,15 +4004,15 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 	FInfo				fndrInfo;
 	OSErr				iErr;
 	Str255				pStr;
-
+	
 	if( !mainSystemDrag) return noErr;
-
+	
 	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return(noErr);
-
+	
 	SetPortWindowPort( theWindow);
 	
 	GetDragAttributes(theDrag, &attributes);
-
+	
 	switch (message)
 	{
 		case kDragTrackingEnterHandler:
@@ -4063,13 +4045,13 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 			else if( GetFlavorFlags(theDrag, theItem, flavorTypeHFS, &theFlags) == noErr)
 			{
 				Boolean	targetIsFolder, wasAliased;
-			
+				
 				GetFlavorDataSize( theDrag, theItem, flavorTypeHFS, &textSize);
 				GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
-		
+				
 				ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
-		
-			//	HSetVol( NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
+				
+				//	HSetVol( NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
 				FSpGetFInfo( &myFlavor.fileSpec, &fndrInfo);
 				
 				switch( fndrInfo.fdType)
@@ -4089,29 +4071,28 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 							MyDisposePtr( (Ptr*) &myPcmd);
 						}
 						/****************/
-
+						
 						canAcceptDrag = true;
-					break;
-
+						break;
+						
 					default:
 						canAcceptDrag = false;
-					break;
+						break;
 				}
 		    }
 			else canAcceptDrag = false;
-		break;
-
+			break;
+			
 		case kDragTrackingEnterWindow:
-		
-		break;
-
+			break;
+			
 		case kDragTrackingInWindow:
 			GetDragMouse(theDrag, &theMouse, NULL);
 			localMouse = theMouse;
 			GlobalToLocal(&localMouse);
-
+			
 			selectedControl = NULL;
-
+			
 			if (attributes & kDragInsideSenderWindow)
 			{
 				Rect	contrlRect;
@@ -4121,8 +4102,8 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 				if( PtInRect( localMouse, &contrlRect) && selectedControl == NULL) { HiliteControl( SaveBut, kControlButtonPart);		selectedControl = SaveBut;}
 				else HiliteControl( SaveBut, 0);
 				
-			/*	if( PtInRect( localMouse, &(*PoubBut)->contrlRect) && selectedControl == NULL)	{ HiliteControl( PoubBut, kControlButtonPart);		selectedControl = PoubBut;}
-				else HiliteControl( PoubBut, 0);*/
+				/*	if( PtInRect( localMouse, &(*PoubBut)->contrlRect) && selectedControl == NULL)	{ HiliteControl( PoubBut, kControlButtonPart);		selectedControl = PoubBut;}
+				 else HiliteControl( PoubBut, 0);*/
 			}
 			
 			CellSelec.v = -1;	CellSelec.h = -1;
@@ -4161,12 +4142,12 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 			else
 			{
 				if( dragRect.left != 0 &&
-					dragRect.right != 0 &&
-					dragRect.top != 0 &&
-					dragRect.bottom != 0)
+				   dragRect.right != 0 &&
+				   dragRect.top != 0 &&
+				   dragRect.bottom != 0)
 				{
 					Rect	ta = { 0, 0, 0, 0};
-				
+					
 					EraseHilite( &ta);
 					SetRect( &dragRect, 0, 0, 0, 0);
 				}
@@ -4174,13 +4155,13 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 			
 			SetClip( saveClip);
 			DisposeRgn( saveClip);
-		break;
-
+			break;
+			
 		case kDragTrackingLeaveWindow:
 			if( dragRect.left != 0 &&
-				dragRect.right != 0 &&
-				dragRect.top != 0 &&
-				dragRect.bottom != 0)
+			   dragRect.right != 0 &&
+			   dragRect.top != 0 &&
+			   dragRect.bottom != 0)
 			{
 				Rect	ta = { 0, 0, 0, 0};
 				
@@ -4194,11 +4175,11 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 				SetClip( saveClip);
 				DisposeRgn( saveClip);
 			}
-		break;
-
+			break;
+			
 		case kDragTrackingLeaveHandler:
-		//	InvalWindowRect( GetDialogWindow( EditorDlog), &myList.rect);
-		break;
+			//	InvalWindowRect( GetDialogWindow( EditorDlog), &myList.rect);
+			break;
 	}
 	
 	return(noErr);
@@ -4222,17 +4203,17 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 	{
 		err = GetDropLocation( theDrag, &dropLoc);
 		if (err) return (err);
-
+		
 		err = ResolveAlias( nil, (AliasHandle) dropLoc.dataHandle, &target, &wasChanged);
 		if (err) return (err);
 		
 		AEDisposeDesc( &dropLoc);
-
+		
 		/**/
 		PathNameFromDirIDTRUE(		target.parID,
-									target.vRefNum,
-									sName);
-									
+							  target.vRefNum,
+							  sName);
+		
 		pStrcat( sName, "\p:");
 		pStrcat( sName, target.name);
 		pStrcat( sName, "\p:");
@@ -4244,7 +4225,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 		
 		
 		err = GetFlavorDataSize(theDrag, theItem, 'Pcmd', &textSize);
-
+		
 		if (err == noErr)
 		{	
 			myPcmd = (Pcmd*) MyNewPtr( textSize);
@@ -4252,7 +4233,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 			{
 				GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
 				
-			//	pStrcpy( str, "\pMy Pcmd (");
+				//	pStrcpy( str, "\pMy Pcmd (");
 				pStrcpy( str, curMusic->musicFileName);
 				
 				for( i = str[ 0]; i > 0; i--)
@@ -4287,10 +4268,10 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 		
 		/**/
 		
-		ReGiveName:
+	ReGiveName:
 		
 		FSMakeFSSpec(target.vRefNum, target.parID, sName, &target);
-	//	HSetVol( NULL, target.vRefNum, target.parID);
+		//	HSetVol( NULL, target.vRefNum, target.parID);
 		err = FSpOpenDF( &target, fsCurPerm, &fRefNum);
 		if( err != fnfErr)
 		{
@@ -4311,7 +4292,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 			{
 				err = FSpCreate( &target, 'TVOD', 'AIFF', smSystemScript);
 				err = FSpOpenDF( &target, fsCurPerm, &fRefNum);
-		
+				
 				if( CreateAIFFExporting( true, fRefNum, &target, 'AIFF', NULL))
 				{
 					while( theProgressDia != NULL) DoAIFFExporting();
@@ -4331,7 +4312,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 			if (err) return (err);
 		}
 	}
-
+	
 	return (noErr);
 }
 
@@ -4360,7 +4341,7 @@ Boolean DragEditor( RgnHandle myRgn, Pcmd	*myPcmd, EventRecord *theEvent)
 	NewDrag( &theDrag);
 	
 	AddDragItemFlavor( theDrag, 1, 'Pcmd', myPcmd, myPcmd->structSize, 0);
-
+	
 	if( thePrefs.editorSoundDrag)
 	{
 		myNewFile.fileType			=	'AIFF';
@@ -4397,9 +4378,9 @@ Boolean DragEditor( RgnHandle myRgn, Pcmd	*myPcmd, EventRecord *theEvent)
 	UpdatePartitionWindow( EditorDlog);
 	
 	result = TrackDrag(theDrag, theEvent, dragRegion);
-
+	
 	if (result != noErr && result != userCanceledErr) return(true);
-
+	
 	DisposeDrag( theDrag);
 	DisposeRgn( dragRegion);
 	
@@ -4418,7 +4399,7 @@ pascal OSErr MyReceiveDropEditor(WindowPtr theWindow, void* handlerRefCon, DragR
 	Point				theCell;
 	Pcmd				*myPcmd;
 	HFSFlavor			myFlavor;
-
+	
 	if( !mainSystemDrag) return dragNotAcceptedErr;
 	if( !canAcceptDrag) return( dragNotAcceptedErr);
 	
@@ -4428,7 +4409,7 @@ pascal OSErr MyReceiveDropEditor(WindowPtr theWindow, void* handlerRefCon, DragR
 	
 	GetDragAttributes(theDrag, &attributes);
 	GetDragModifiers(theDrag, NULL, &mouseDownModifiers, &mouseUpModifiers);
-
+	
 	if( attributes & kDragInsideSenderWindow)
 	{
 		if( selectedControl != NULL)
@@ -4436,31 +4417,31 @@ pascal OSErr MyReceiveDropEditor(WindowPtr theWindow, void* handlerRefCon, DragR
 			HiliteControl( selectedControl, 0);
 			
 			if( selectedControl == SaveBut)		SavePcmdFile( CreatePcmdFromSelection());
-		//	if( selectedControl == PoubBut) 	DoKeyPressEditor( 8);
+			//	if( selectedControl == PoubBut) 	DoKeyPressEditor( 8);
 			selectedControl = NULL;
-
+			
 			return noErr;
 		}
 	}
-
+	
 	if( CellSelec.v == -1) return( dragNotAcceptedErr);
-
+	
 	movePcmd = (attributes & kDragInsideSenderWindow) && (!((mouseDownModifiers & optionKey) | (mouseUpModifiers & optionKey)));
-
+	
 	HideDragHilite(theDrag);
 	
 	curMusic->hasChanged = true;
-
+	
 	GetDragItemReferenceNumber(theDrag, 1, &theItem);
 	result = GetFlavorDataSize(theDrag, theItem, 'Pcmd', &textSize);
-
+	
 	if (result == noErr)
 	{	
 		myPcmd = (Pcmd*) MyNewPtr( textSize);
 		if( myPcmd != NULL)
 		{
 			GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
-	
+			
 			if( movePcmd)		// Delete source
 			{
 				// La source est déjà selectionnée...
@@ -4468,7 +4449,7 @@ pascal OSErr MyReceiveDropEditor(WindowPtr theWindow, void* handlerRefCon, DragR
 				DoKeyPressEditor( 8);
 			}
 			else SaveUndo( UPattern, CurrentPat, "\pUndo 'Move Selection'");
-	
+			
 			PasteCmdEditor( CellSelec, myPcmd);
 			
 			MyDisposePtr( (Ptr*) &myPcmd);
@@ -4477,31 +4458,28 @@ pascal OSErr MyReceiveDropEditor(WindowPtr theWindow, void* handlerRefCon, DragR
 		}
 		else return( dragNotAcceptedErr);
 	}
-
+	
 	//	Un fichier en provenance du Finder
 	
 	GetDragItemReferenceNumber(theDrag, 1, &theItem);
 	result = GetFlavorDataSize(theDrag, theItem, flavorTypeHFS, &textSize);
-
+	
 	if (result == noErr)
 	{
 		Boolean		targetIsFolder, wasAliased;
-	
+		
 		SaveUndo( UPattern, CurrentPat, "\pUndo 'Drop Pcmd File'");
-
-	//	PLSetSelect( -1, -1, -1, -1, &myList);
+		
+		//	PLSetSelect( -1, -1, -1, -1, &myList);
 		
 		PLSetSelect( CellSelec.h, CellSelec.v, CellSelec.h, CellSelec.v, &myList);
-
 		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
-	
 		ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
-	
 		OpenPcmdFile( &myFlavor.fileSpec);
 		
 		return(noErr);
 	}
-
+	
 	return( dragNotAcceptedErr);
 }
 
@@ -4512,7 +4490,7 @@ void PrintEditor(void)
 	TEHandle	hTE;
 	TextStyle	newStyle;
 	Rect		tRect = { 0, 0, 20, 20};
-
+	
 	DoKeyPressEditor( selectAll);
 	myPcmd = CreatePcmdFromSelection();
 	myText = ConvertPcmd2Text( myPcmd);
@@ -4525,9 +4503,9 @@ void PrintEditor(void)
 	newStyle.tsFont = 4;
 	newStyle.tsSize = 9;
 	TESetStyle( doFont + doSize, &newStyle, false, hTE);
-
+	
 	PrintTEHandle( hTE);
-
+	
 	MyDisposePtr( (Ptr*) &myPcmd);
 	MyDisposePtr( & myText);
 	TEDispose( hTE);

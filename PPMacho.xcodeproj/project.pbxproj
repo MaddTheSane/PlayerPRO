@@ -242,8 +242,6 @@
 		5573A3E410B513BD00FF8B50 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* FileUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573A3EA10B5147C00FF8B50 /* MyDebugStr.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A3E810B5147C00FF8B50 /* MyDebugStr.c */; };
 		5573A41210B5160000FF8B50 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5573A46E10B51CAB00FF8B50 /* ByteSwap.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A46D10B51CAB00FF8B50 /* ByteSwap.c */; };
-		5573A46F10B51CAB00FF8B50 /* ByteSwap.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A46D10B51CAB00FF8B50 /* ByteSwap.c */; };
 		5573A51C10B52EB500FF8B50 /* DrawSprocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */; };
 		557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */ = {isa = PBXBuildFile; fileRef = 557B8FD910CE01BF00B9A37D /* DefaultPref.r */; };
 		557DE1F310E0159600177B4C /* PPMenus.r in Rez */ = {isa = PBXBuildFile; fileRef = 557DE1F110E0158C00177B4C /* PPMenus.r */; };
@@ -1474,7 +1472,6 @@
 		5573A3ED10B5151700FF8B50 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		5573A3EF10B5151700FF8B50 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5573A41010B5160000FF8B50 /* PPDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = PPDefs.h; path = ../../PPDefs.h; sourceTree = "<group>"; };
-		5573A46D10B51CAB00FF8B50 /* ByteSwap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 2; path = ByteSwap.c; sourceTree = "<group>"; };
 		5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawSprocket.framework; path = System/Library/Frameworks/DrawSprocket.framework; sourceTree = SDKROOT; };
 		5573A59F10B542F300FF8B50 /* Proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Proto.c; path = "(Proto)/Proto.c"; sourceTree = "<group>"; };
 		557B8FD910CE01BF00B9A37D /* DefaultPref.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = DefaultPref.r; path = Files/DefaultPref.r; sourceTree = "<group>"; };
@@ -2950,7 +2947,6 @@
 				88E0C47F0C2F21E400D6C081 /* PPPlug.h */,
 				550B011310BA1E1C004FC5D7 /* PPPrivate.h */,
 				88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */,
-				5573A46D10B51CAB00FF8B50 /* ByteSwap.c */,
 				88E0C3D10C2F21DD00D6C081 /* Effects.c */,
 				88E0C3D20C2F21DD00D6C081 /* Interrupt.c */,
 				5528625010E9A7FC00BF8792 /* Mac-ASIO.c */,
@@ -4984,7 +4980,6 @@
 				5573A36310B50DF600FF8B50 /* realft.c in Sources */,
 				5573A36410B50DFF00FF8B50 /* TickRemover.c in Sources */,
 				5573A3EA10B5147C00FF8B50 /* MyDebugStr.c in Sources */,
-				5573A46E10B51CAB00FF8B50 /* ByteSwap.c in Sources */,
 				550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
 				55672F4810CAE90B008C5C3D /* OSX-PlugImport.c in Sources */,
 			);
@@ -5302,7 +5297,6 @@
 				55FD862410B22C3F00F8BDE6 /* OutPut8.c in Sources */,
 				55FD862510B22C4300F8BDE6 /* realft.c in Sources */,
 				55FD862610B22C4600F8BDE6 /* TickRemover.c in Sources */,
-				5573A46F10B51CAB00FF8B50 /* ByteSwap.c in Sources */,
 				550B011710BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
 				5547CE5F10C6E5490041DEF6 /* ByteUtils.c in Sources */,
 				55672E9010CAD830008C5C3D /* OSX-PlugImport.c in Sources */,

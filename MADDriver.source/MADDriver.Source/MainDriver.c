@@ -4003,5 +4003,3 @@ Boolean MADIsExporting(MADDriverRec *driver)
 		return driver->currentlyExporting;
 	}
 }
-
-

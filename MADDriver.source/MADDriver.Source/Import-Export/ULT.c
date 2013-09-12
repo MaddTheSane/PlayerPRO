@@ -419,4 +419,3 @@ OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	return mainULT(order, AlienFileName, MadFile, info, init);
 }
 #endif
-

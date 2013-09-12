@@ -564,4 +564,3 @@ OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	return mainOKTA(order, AlienFileName, MadFile, info, init);
 }
 #endif
-

@@ -937,4 +937,3 @@ OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *i
 	return mainDMF(order, AlienFileName, MadFile, info, init);
 }
 #endif
-
