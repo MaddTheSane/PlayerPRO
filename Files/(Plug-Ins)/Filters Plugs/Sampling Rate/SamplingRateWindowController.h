@@ -9,5 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @interface SamplingRateWindowController : NSWindowController
-
+@property unsigned int currentRate;
+@property unsigned int changedRate;
+- (IBAction)okOrCancel:(id)sender;
 @end

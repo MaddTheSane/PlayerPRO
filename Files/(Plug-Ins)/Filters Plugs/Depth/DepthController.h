@@ -9,5 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @interface DepthController : NSWindowController
-
+@property int depthAmmount;
+- (IBAction)okOrCancel:(id)sender;
 @end

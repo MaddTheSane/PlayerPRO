@@ -15,4 +15,6 @@
 @property (weak) IBOutlet LengthViewController *currentSize;
 @property (weak) IBOutlet LengthViewController *newSize;
 
+- (IBAction)okOrCancel:(id)sender;
+
 @end

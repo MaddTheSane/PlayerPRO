@@ -31,4 +31,9 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
+- (IBAction)okOrCancel:(id)sender
+{
+	[NSApp stopModalWithCode:([sender tag] == 1) ? NSOffState : NSOnState];
+}
+
 @end

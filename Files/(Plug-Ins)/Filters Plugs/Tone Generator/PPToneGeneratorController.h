@@ -7,7 +7,16 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#include "ToneGenerator.h"
+#include <PlayerPROCore/PlayerPROCore.h>
+
+typedef enum _ToneGenerator
+{
+	cancelTone,
+	silence = 3,
+	triangle = 4,
+	square = 5,
+	wave = 6
+} ToneGenerator;
 
 @interface PPToneGeneratorController : NSWindowController
 {

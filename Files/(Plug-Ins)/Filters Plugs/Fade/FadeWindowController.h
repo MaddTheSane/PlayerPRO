@@ -9,5 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 @interface FadeWindowController : NSWindowController
+@property double fadeFrom;
+@property double fadeTo;
+- (IBAction)okOrCancel:(id)sender;
 
 @end
