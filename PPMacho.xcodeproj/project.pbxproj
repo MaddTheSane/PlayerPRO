@@ -523,16 +523,8 @@
 		55879F8F164CA693009068D5 /* PPPlay.c in Sources */ = {isa = PBXBuildFile; fileRef = 55879F7D164CA63D009068D5 /* PPPlay.c */; };
 		55879F90164CA6A4009068D5 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		558D4D9F1666E8D600A333E8 /* ppApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55FA5FBA102D2D6C00CB63DA /* ppApp.icns */; };
-		558D4DA01666E8D600A333E8 /* 669.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D010BA17BC004FC5D7 /* 669.icns */; };
-		558D4DA31666E8D600A333E8 /* IT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D110BA17BC004FC5D7 /* IT.icns */; };
 		558D4DA51666E8D600A333E8 /* MAD.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D310BA17BC004FC5D7 /* MAD.icns */; };
-		558D4DA61666E8D600A333E8 /* MED.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D410BA17BC004FC5D7 /* MED.icns */; };
 		558D4DA81666E8D600A333E8 /* MOD.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D610BA17BC004FC5D7 /* MOD.icns */; };
-		558D4DA91666E8D600A333E8 /* MTM.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D710BA17BC004FC5D7 /* MTM.icns */; };
-		558D4DAA1666E8D600A333E8 /* OKTA.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00D810BA17BC004FC5D7 /* OKTA.icns */; };
-		558D4DAC1666E8D600A333E8 /* S3M.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DA10BA17BC004FC5D7 /* S3M.icns */; };
-		558D4DAD1666E8D600A333E8 /* UMX.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DB10BA17BC004FC5D7 /* UMX.icns */; };
-		558D4DB01666E8D600A333E8 /* XM.icns in Resources */ = {isa = PBXBuildFile; fileRef = 550B00DE10BA17BC004FC5D7 /* XM.icns */; };
 		558D4DDA1666F14E00A333E8 /* PPDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DD81666F14E00A333E8 /* PPDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4DD91666F14E00A333E8 /* PPDriver.m */; };
 		558D4DDD1666F19600A333E8 /* PPLibrary_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */; };
@@ -722,7 +714,7 @@
 		55EA019C16AF1D3900D6AEA0 /* Backwards.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE5DF10E0882800177B4C /* Backwards.plugin */; };
 		55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */; };
 		55EA01A216AF368F00D6AEA0 /* CrossFade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE66310E0885C00177B4C /* CrossFade.plugin */; };
-		55ED50AB10D40BFE00824C61 /* MOD.ppimpexp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
+		55ED50AB10D40BFE00824C61 /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55ED547410D5F9CD00824C61 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		55EE2D8817E12F9300FED42A /* Amplitude.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE43410E06BF200177B4C /* Amplitude.plugin */; };
 		55EE2D8917E12F9300FED42A /* Depth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6A410E0886400177B4C /* Depth.plugin */; };
@@ -1403,41 +1395,6 @@
 			remoteGlobalIDString = 5586881D10BF62F500FCC24D;
 			remoteInfo = UMX;
 		};
-		5583C5F516D015C70078ACE8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 557DE7F110E08D8900177B4C;
-			remoteInfo = Invert;
-		};
-		5583C5F816D016600078ACE8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 557DE8BA10E08DA800177B4C;
-			remoteInfo = Normalize;
-		};
-		5583C5FD16D017410078ACE8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 557DE90D10E08DB000177B4C;
-			remoteInfo = Silence;
-		};
-		5583C5FF16D017410078ACE8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 557DE95010E08DB900177B4C;
-			remoteInfo = Smooth;
-		};
-		5583C60116D01DD40078ACE8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 557DE61410E0884100177B4C;
-			remoteInfo = Crop;
-		};
 		5586870510BF5C4700FCC24D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1683,20 +1640,6 @@
 			remoteGlobalIDString = 55E898A810F17C2B004EB52B;
 			remoteInfo = "PAT copy";
 		};
-		55EA019A16AF1D2100D6AEA0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 557DE5D110E0882800177B4C;
-			remoteInfo = Backwards;
-		};
-		55EA01A016AF368200D6AEA0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 557DE65710E0885C00177B4C;
-			remoteInfo = CrossFade;
-		};
 		55ED50B910D40C0B00824C61 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1710,13 +1653,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 557DE3BD10E06BB500177B4C;
 			remoteInfo = "Filters Plugs";
-		};
-		55F8C3DF17B9974100DFE937 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 557DE99310E08DC100177B4C;
-			remoteInfo = "Tone Generator";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1915,14 +1851,15 @@
 			name = "Copy PlugIns";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		55ED50BD10D40C3400824C61 /* CopyFiles */ = {
+		55ED50BD10D40C3400824C61 /* Copy PlugIns */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				55ED50AB10D40BFE00824C61 /* MOD.ppimpexp in CopyFiles */,
+				55ED50AB10D40BFE00824C61 /* MOD.ppimpexp in Copy PlugIns */,
 			);
+			name = "Copy PlugIns";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		55FA5F7E102D2B9000CB63DA /* Copy PlugIns */ = {
@@ -4694,14 +4631,14 @@
 			productReference = 55151F8010DEDBDB0054ABC4 /* XI.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
-		5518107110C35A4500ADA9F4 /* PlayerPRO Example */ = {
+		5518107110C35A4500ADA9F4 /* Carbon Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5518107810C35A4700ADA9F4 /* Build configuration list for PBXNativeTarget "PlayerPRO Example" */;
+			buildConfigurationList = 5518107810C35A4700ADA9F4 /* Build configuration list for PBXNativeTarget "Carbon Example" */;
 			buildPhases = (
 				5518106E10C35A4500ADA9F4 /* Resources */,
 				5518106F10C35A4500ADA9F4 /* Sources */,
 				5518107010C35A4500ADA9F4 /* Frameworks */,
-				55ED50BD10D40C3400824C61 /* CopyFiles */,
+				55ED50BD10D40C3400824C61 /* Copy PlugIns */,
 				558678B51659AA1100BCFB70 /* Copy Frameworks */,
 			);
 			buildRules = (
@@ -4710,7 +4647,7 @@
 				5518107A10C35A4C00ADA9F4 /* PBXTargetDependency */,
 				55ED50BA10D40C0B00824C61 /* PBXTargetDependency */,
 			);
-			name = "PlayerPRO Example";
+			name = "Carbon Example";
 			productName = "PlayerPRO Example";
 			productReference = 5518107210C35A4500ADA9F4 /* PlayerPRO Example.app */;
 			productType = "com.apple.product-type.application";
@@ -5647,14 +5584,6 @@
 				55ADC3F517D7F4A0001F27D4 /* PBXTargetDependency */,
 				55ADC3F717D7F52B001F27D4 /* PBXTargetDependency */,
 				55CBFA0011EB77AA0028C6BB /* PBXTargetDependency */,
-				55F8C3E017B9974100DFE937 /* PBXTargetDependency */,
-				5583C60216D01DD40078ACE8 /* PBXTargetDependency */,
-				5583C5FE16D017410078ACE8 /* PBXTargetDependency */,
-				5583C60016D017410078ACE8 /* PBXTargetDependency */,
-				5583C5F916D016600078ACE8 /* PBXTargetDependency */,
-				5583C5F616D015C70078ACE8 /* PBXTargetDependency */,
-				55EA01A116AF368200D6AEA0 /* PBXTargetDependency */,
-				55EA019B16AF1D2100D6AEA0 /* PBXTargetDependency */,
 			);
 			name = Cocoa;
 			productName = Cocoa;
@@ -5730,7 +5659,7 @@
 			targets = (
 				55CBF9A511EB77760028C6BB /* Cocoa */,
 				5578C48017D9E8560057D11B /* PlayerPRO Player */,
-				5518107110C35A4500ADA9F4 /* PlayerPRO Example */,
+				5518107110C35A4500ADA9F4 /* Carbon Example */,
 				55BE997717978AEF00D6DECC /* PPImport */,
 				5578C51B17DB94A50057D11B /* PPImport-app */,
 				5573A33E10B50D2600FF8B50 /* PlayerPROCore */,
@@ -5821,16 +5750,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				558D4D9F1666E8D600A333E8 /* ppApp.icns in Resources */,
-				558D4DA01666E8D600A333E8 /* 669.icns in Resources */,
-				558D4DA31666E8D600A333E8 /* IT.icns in Resources */,
 				558D4DA51666E8D600A333E8 /* MAD.icns in Resources */,
-				558D4DA61666E8D600A333E8 /* MED.icns in Resources */,
 				558D4DA81666E8D600A333E8 /* MOD.icns in Resources */,
-				558D4DA91666E8D600A333E8 /* MTM.icns in Resources */,
-				558D4DAA1666E8D600A333E8 /* OKTA.icns in Resources */,
-				558D4DAC1666E8D600A333E8 /* S3M.icns in Resources */,
-				558D4DAD1666E8D600A333E8 /* UMX.icns in Resources */,
-				558D4DB01666E8D600A333E8 /* XM.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7394,31 +7315,6 @@
 			target = 5586881D10BF62F500FCC24D /* UMX */;
 			targetProxy = 557F9AF417D92C5700325C78 /* PBXContainerItemProxy */;
 		};
-		5583C5F616D015C70078ACE8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 557DE7F110E08D8900177B4C /* Invert */;
-			targetProxy = 5583C5F516D015C70078ACE8 /* PBXContainerItemProxy */;
-		};
-		5583C5F916D016600078ACE8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 557DE8BA10E08DA800177B4C /* Normalize */;
-			targetProxy = 5583C5F816D016600078ACE8 /* PBXContainerItemProxy */;
-		};
-		5583C5FE16D017410078ACE8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 557DE90D10E08DB000177B4C /* Silence */;
-			targetProxy = 5583C5FD16D017410078ACE8 /* PBXContainerItemProxy */;
-		};
-		5583C60016D017410078ACE8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 557DE95010E08DB900177B4C /* Smooth */;
-			targetProxy = 5583C5FF16D017410078ACE8 /* PBXContainerItemProxy */;
-		};
-		5583C60216D01DD40078ACE8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 557DE61410E0884100177B4C /* Crop */;
-			targetProxy = 5583C60116D01DD40078ACE8 /* PBXContainerItemProxy */;
-		};
 		5586870410BF5C4700FCC24D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
@@ -7594,16 +7490,6 @@
 			target = 55E898A810F17C2B004EB52B /* QuickTime */;
 			targetProxy = 55E8997C10F17CE5004EB52B /* PBXContainerItemProxy */;
 		};
-		55EA019B16AF1D2100D6AEA0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 557DE5D110E0882800177B4C /* Backwards */;
-			targetProxy = 55EA019A16AF1D2100D6AEA0 /* PBXContainerItemProxy */;
-		};
-		55EA01A116AF368200D6AEA0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 557DE65710E0885C00177B4C /* CrossFade */;
-			targetProxy = 55EA01A016AF368200D6AEA0 /* PBXContainerItemProxy */;
-		};
 		55ED50BA10D40C0B00824C61 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5533411010BB547C005208D1 /* MOD */;
@@ -7613,11 +7499,6 @@
 			isa = PBXTargetDependency;
 			target = 557DE3BD10E06BB500177B4C /* Filters Plugs */;
 			targetProxy = 55EE2D8617E12F0D00FED42A /* PBXContainerItemProxy */;
-		};
-		55F8C3E017B9974100DFE937 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 557DE99310E08DC100177B4C /* Tone Generator */;
-			targetProxy = 55F8C3DF17B9974100DFE937 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -10470,7 +10351,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5518107810C35A4700ADA9F4 /* Build configuration list for PBXNativeTarget "PlayerPRO Example" */ = {
+		5518107810C35A4700ADA9F4 /* Build configuration list for PBXNativeTarget "Carbon Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5518107510C35A4600ADA9F4 /* Release */,

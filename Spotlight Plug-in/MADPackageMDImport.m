@@ -20,7 +20,7 @@ Boolean GetMetadataForPackage(CFMutableDictionaryRef attributes, CFStringRef pat
 	
 	
 	
-	
+	return FALSE;
 }
 
 
