@@ -13,18 +13,16 @@
 
 @interface PPInstrumentImporterObject : PPPlugInObject
 {
+	@private
 	PPInstrumentPlugin	**xxxx;
-	NSArray				*UTITypes;
-	OSType				mode;
-	BOOL				isSamp;
 }
 
-@property (readonly) NSArray *UTITypes;
+@property (readonly, copy) NSArray *UTITypes;
 @property (readonly) OSType mode;
-@property (readonly) BOOL isSamp;
+@property (readonly) BOOL isSample;
 
 - (id)initWithBundle:(NSBundle *)theBund;
-- (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insNum function:(OSType)imporexp;
+- (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insNum function:(OSType)imporexp UNAVAILABLE_ATTRIBUTE;
 - (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insSamp function:(OSType)imporexp plugInfo:(PPInfoPlug*)plugInfo;
 
 @end

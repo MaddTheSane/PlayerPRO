@@ -162,7 +162,6 @@
 								<bytes key="NSWhite">MQA</bytes>
 							</object>
 							<reference key="NSFont" ref="859703677"/>
-							<bool key="NSAutorecalculatesCellSize">YES</bool>
 						</object>
 						<object class="NSButton" id="456636945">
 							<reference key="NSNextResponder" ref="1006"/>
@@ -423,22 +422,6 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="392236120"/>
 							<reference ref="775711147"/>
-							<object class="IBNSLayoutConstraint" id="100667481">
-								<reference key="firstItem" ref="312910545"/>
-								<int key="firstAttribute">7</int>
-								<int key="relation">0</int>
-								<nil key="secondItem"/>
-								<int key="secondAttribute">0</int>
-								<float key="multiplier">1</float>
-								<object class="IBLayoutConstant" key="constant">
-									<double key="value">207</double>
-								</object>
-								<float key="priority">1000</float>
-								<reference key="containingView" ref="312910545"/>
-								<int key="scoringType">3</int>
-								<float key="scoringTypeFloat">9</float>
-								<int key="contentType">1</int>
-							</object>
 						</array>
 						<reference key="parent" ref="1006"/>
 					</object>
@@ -464,11 +447,6 @@
 						<int key="objectID">14</int>
 						<reference key="object" ref="15659469"/>
 						<reference key="parent" ref="1006"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">16</int>
-						<reference key="object" ref="100667481"/>
-						<reference key="parent" ref="312910545"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">17</int>
@@ -532,7 +510,6 @@
 				<integer value="1" key="1.NSWindowTemplate.visibleAtLaunch"/>
 				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="14.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="17.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="17.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -555,9 +532,6 @@
 				<integer value="1041" key="25.IBNumberFormatterBehaviorMetadataKey"/>
 				<boolean value="NO" key="25.IBNumberFormatterLocalizesFormatMetadataKey"/>
 				<string key="25.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<array class="NSMutableArray" key="5.IBNSViewMetadataConstraints">
-					<reference ref="100667481"/>
-				</array>
 				<boolean value="NO" key="5.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

@@ -13,7 +13,7 @@
 @interface LengthWindowController : NSWindowController
 
 @property (weak) IBOutlet LengthViewController *currentSize;
-@property (weak) IBOutlet LengthViewController *newSize;
+@property (weak, getter = getNewSize) IBOutlet LengthViewController *newSize;
 
 - (IBAction)okOrCancel:(id)sender;
 

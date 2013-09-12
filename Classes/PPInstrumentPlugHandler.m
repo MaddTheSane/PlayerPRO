@@ -169,7 +169,7 @@ return self;
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		if (kind == obj.type) {
 			if (theType) {
-				if (obj.isSamp) {
+				if (obj.isSample) {
 					*theType = MADPlugSampleImporter;
 				} else {
 					*theType = MADPlugInstrumentImporter;

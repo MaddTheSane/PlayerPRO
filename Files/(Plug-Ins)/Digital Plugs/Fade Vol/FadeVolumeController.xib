@@ -109,13 +109,15 @@
 								<int key="NSCellFlags2">-1941961728</int>
 								<string key="NSContents"/>
 								<reference key="NSSupport" ref="765947899"/>
-								<object class="NSNumberFormatter" key="NSFormatter" id="713377332">
+								<object class="NSNumberFormatter" key="NSFormatter" id="467318232">
 									<dictionary class="NSMutableDictionary" key="NS.attributes">
 										<boolean value="YES" key="allowsFloats"/>
 										<integer value="1040" key="formatterBehavior"/>
 										<object class="NSLocale" key="locale">
 											<string key="NS.identifier"/>
 										</object>
+										<integer value="1" key="maximum"/>
+										<integer value="0" key="minimum"/>
 										<string key="negativeInfinitySymbol">-∞</string>
 										<string key="nilSymbol"/>
 										<integer value="3" key="numberStyle"/>
@@ -133,15 +135,8 @@
 										<string key="NSString">NaN</string>
 										<dictionary key="NSAttributes"/>
 									</object>
-									<object class="NSDecimalNumberPlaceholder" key="NS.min" id="980891659">
-										<int key="NS.exponent">0</int>
-										<int key="NS.length">0</int>
-										<bool key="NS.negative">YES</bool>
-										<bool key="NS.compact">NO</bool>
-										<int key="NS.mantissa.bo">1</int>
-										<bytes key="NS.mantissa">AAAAAAAAAAAAAAAAAAAAAA</bytes>
-									</object>
-									<reference key="NS.max" ref="980891659"/>
+									<integer value="0" key="NS.min"/>
+									<integer value="1" key="NS.max"/>
 									<object class="NSDecimalNumberHandler" key="NS.rounding">
 										<int key="NS.roundingmode">3</int>
 										<bool key="NS.raise.overflow">YES</bool>
@@ -257,6 +252,30 @@
 						<reference key="destination" ref="1001"/>
 					</object>
 					<int key="connectionID">4</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">formatter</string>
+						<reference key="source" ref="663281397"/>
+						<reference key="destination" ref="467318232"/>
+					</object>
+					<int key="connectionID">24</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">formatter</string>
+						<reference key="source" ref="148663522"/>
+						<reference key="destination" ref="467318232"/>
+					</object>
+					<int key="connectionID">22</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">formatter</string>
+						<reference key="source" ref="783807787"/>
+						<reference key="destination" ref="467318232"/>
+					</object>
+					<int key="connectionID">23</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -413,7 +432,7 @@
 						<int key="objectID">6</int>
 						<reference key="object" ref="720752348"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="713377332"/>
+							<reference ref="467318232"/>
 						</array>
 						<reference key="parent" ref="663281397"/>
 					</object>
@@ -486,7 +505,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">21</int>
-						<reference key="object" ref="713377332"/>
+						<reference key="object" ref="467318232"/>
 						<reference key="parent" ref="720752348"/>
 					</object>
 				</array>
@@ -532,7 +551,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">21</int>
+			<int key="maxID">24</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -33,13 +33,13 @@ static inline BOOL getBoolFromId(id NSType)
 @interface PPInstrumentImporterObject ()
 @property (readwrite, copy) NSArray *UTITypes;
 @property (readwrite) OSType mode;
-@property (readwrite) BOOL isSamp;
+@property (readwrite) BOOL isSample;
 @end
 
 @implementation PPInstrumentImporterObject
 @synthesize UTITypes;
 @synthesize mode;
-@synthesize isSamp;
+@synthesize isSample = isSamp;
 
 typedef enum _MADPlugCapabilities {
 	PPMADCanDoNothing = 0,
@@ -52,7 +52,7 @@ typedef enum _MADPlugCapabilities {
 {
 	char typeString[5] = {0};
 	OSType2Ptr(type, typeString);
-	return [NSString stringWithFormat:@"%@ - %@ Sample: %@ Type: %@ UTIs: %@", menuName, [file bundlePath], isSamp ? @"YES": @"NO", [NSString stringWithCString:typeString encoding:NSMacOSRomanStringEncoding], [UTITypes description]];
+	return [NSString stringWithFormat:@"%@ - %@ Sample: %@ Type: %@ UTIs: %@", self.menuName, [self.file bundlePath], isSamp ? @"YES": @"NO", [NSString stringWithCString:typeString encoding:NSMacOSRomanStringEncoding], [UTITypes description]];
 }
 
 - (id)initWithBundle:(NSBundle *)tempBundle
@@ -87,7 +87,7 @@ typedef enum _MADPlugCapabilities {
 		
 		DictionaryTemp = [tempDict valueForKey:kMadPlugIsSampleKey];
 		if ([DictionaryTemp isKindOfClass:numClass] || [DictionaryTemp isKindOfClass:strClass]) {
-			self.isSamp = [DictionaryTemp boolValue];
+			self.isSample = [DictionaryTemp boolValue];
 		} else {
 			return nil;
 		}
@@ -158,7 +158,7 @@ typedef enum _MADPlugCapabilities {
 
 - (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insSamp function:(OSType)imporexp plugInfo:(PPInfoPlug*)plugInfo
 {
-	NSURL *bundleURL = [file bundleURL];
+	NSURL *bundleURL = [self.file bundleURL];
 	CFBundleRef tempRef = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)bundleURL);
 	
 	CFBundleRefNum fileID = CFBundleOpenBundleResourceMap(tempRef);

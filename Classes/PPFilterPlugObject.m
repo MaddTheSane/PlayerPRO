@@ -22,9 +22,9 @@
 		return YES;
 	}
 	if ([object isKindOfClass:[PPFilterPlugObject class]]) {
-		if (![menuName isEqualToString:[object menuName]]) {
+		if (![self.menuName isEqualToString:[object menuName]]) {
 			return NO;
-		} else if (![file isEqual:[object file]]) {
+		} else if (![self.file isEqual:[object file]]) {
 			return NO;
 			//Ignore version, authorstring and type
 		} else return YES;
@@ -34,7 +34,7 @@
 
 - (NSUInteger)hash
 {
-	return [menuName hash];
+	return [self.menuName hash];
 }
 
 - (id)initWithBundle:(NSBundle *)aBund
@@ -56,7 +56,7 @@
 
 - (OSErr)callPluginWithData:(sData *)theData selectionStart:(long) SelectionStart selectionEnd:(long) SelectionEnd plugInInfo:(PPInfoPlug *)thePPInfoPlug stereoMode:(short)stereoMode
 {
-	CFBundleRef tempBund = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)[file bundleURL]);
+	CFBundleRef tempBund = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)[self.file bundleURL]);
 	CFBundleRefNum refNum = CFBundleOpenBundleResourceMap(tempBund);
 	
 	OSErr iErr = (*plugData)->FiltersMain(plugData, theData, SelectionStart, SelectionEnd, thePPInfoPlug, stereoMode);

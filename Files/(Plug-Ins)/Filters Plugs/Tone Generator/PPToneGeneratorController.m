@@ -430,7 +430,7 @@ static OSErr mainToneGenerator(void				*unused,
 		
 		free( theData->data);		free( Audio8Ptr);
 		theData->data = resultPtr;
-		theData->size = theData->size  - (SelectionEnd - SelectionStart) + AudioLength;
+		theData->size = (SInt32)(theData->size  - (SelectionEnd - SelectionStart) + AudioLength);
 	}
 	
 	return noErr;

@@ -322,10 +322,10 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 #endif
 		
 		//Local systemwide plugins
-		[PlugFolds addObject:[NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
+		[PlugFolds addObject:[NSURL fileURLWithPathComponents: [[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] pathComponents] arrayByAddingObjectsFromArray: @[@"PlayerPRO", @"Plugins"]]]];
 		
 		//User plugins
-		[PlugFolds addObject:[NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
+		[PlugFolds addObject:[NSURL fileURLWithPathComponents: [[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] pathComponents] arrayByAddingObjectsFromArray: @[@"PlayerPRO", @"Plugins"]]]];
 		
 		return (CFMutableArrayRef)CFBridgingRetain(PlugFolds);
 	}
