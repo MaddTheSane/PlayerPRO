@@ -20,9 +20,9 @@
 		return YES;
 	}
 	if ([object isKindOfClass:[PPDigitalPlugInObject class]]) {
-		if (![menuName isEqualToString:[object menuName]]) {
+		if (![self.menuName isEqualToString:[object menuName]]) {
 			return NO;
-		} else if (![file isEqual:[object file]]) {
+		} else if (![self.file isEqual:[object file]]) {
 			return NO;
 			//Ignore version, authorstring and type
 		} else return YES;
@@ -32,7 +32,7 @@
 
 - (NSUInteger)hash
 {
-	return [menuName hash];
+	return [self.menuName hash];
 }
 
 #define PPDGLoadPlug(theBundle) (PPDigitalPlugin**)GetCOMPlugInterface(theBundle, kPlayerPRODigitalPlugTypeID, kPlayerPRODigitalPlugInterfaceID)
@@ -64,7 +64,7 @@
 
 - (OSErr)callWithPcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug*)pi
 {
-	NSURL *tempURL = [file bundleURL];
+	NSURL *tempURL = [self.file bundleURL];
 	CFBundleRef tempBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef) tempURL);
 	
 	CFBundleRefNum resFileNum = CFBundleOpenBundleResourceMap(tempBundle);

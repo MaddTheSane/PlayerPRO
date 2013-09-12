@@ -51,6 +51,11 @@
 #undef HAS_LONG_DOUBLE
 #endif
 
+#if TARGET_OS_IPHONE
+//iOS also has long double the same size as double
+#undef HAS_LONG_DOUBLE
+#endif
+
 #if !defined(__BIG_ENDIAN__) && defined(WORDS_BIGENDIAN)
 #define __BIG_ENDIAN__ 1
 #endif
@@ -156,7 +161,6 @@ typedef struct Cmd							// COMMAND
 	Byte	vol;					// Volume				0xFF : no volume cmd
 	Byte	unused;
 } Cmd;
-typedef Cmd MadCommand;
 
 typedef struct PatHeader					// HEADER
 {
@@ -166,7 +170,6 @@ typedef struct PatHeader					// HEADER
 	SInt32	patBytes;				// Pattern Size in Bytes
 	SInt32	unused2;
 } PatHeader;
-typedef PatHeader PatternHeader;
 
 typedef struct PatternHeaderUnicode					// HEADER
 {
@@ -182,7 +185,6 @@ typedef struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
 	PatHeader	header;
 	Cmd			Cmds[ 1];
 } PatData;
-typedef PatData PatternData;
 
 
 typedef struct PatternDataUnicode						// DATA STRUCTURE : HEADER + COMMANDS
@@ -211,7 +213,6 @@ typedef struct sData								// SAMPLE
 	Byte				stereo;				// Stereo
 	Ptr					data;				// Used only in memory, not in files
 } sData;
-typedef sData SampleData;
 
 //64-bit safe sample structure
 //Used for file i/o
@@ -229,7 +230,6 @@ typedef struct sData32								// SAMPLE
 	Byte				stereo;				// Stereo
 	UInt32				data;				// Used only in memory, not in files
 } sData32;
-typedef sData32 SampleData32;
 
 typedef union SampleDataUnicode								// SAMPLE
 {
@@ -320,7 +320,6 @@ typedef struct InstrData				// INSTRUMENT
 	Byte	vibDepth;
 	Byte	vibRate;
 } InstrData;
-typedef InstrData InstrumentData;
 
 typedef struct InstrumentDataUnicode				// INSTRUMENT
 {

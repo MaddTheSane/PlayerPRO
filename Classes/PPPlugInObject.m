@@ -133,7 +133,7 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 @interface PPPlugInObject ()
 @property (readwrite, copy) NSString *menuName;
 @property (readwrite, copy) NSString *authorString;
-@property (readwrite, retain) NSBundle *file;
+@property (readwrite, strong) NSBundle *file;
 @property (readwrite) OSType type;
 @property (readwrite) UInt32 version;
 @end
@@ -141,9 +141,6 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 @implementation PPPlugInObject
 
 @synthesize type;
-@synthesize menuName;
-@synthesize authorString;
-@synthesize file;
 @synthesize version;
 
 - (id)init
@@ -191,7 +188,7 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 {
 	char typ[5];
 	OSType2Ptr(type, typ);
-	return [NSString stringWithFormat:@"%@ - type \"%@\" Location: %@", menuName, [NSString stringWithCString:typ encoding:NSMacOSRomanStringEncoding], [file bundlePath]];
+	return [NSString stringWithFormat:@"%@ - type \"%@\" Location: %@", _menuName, [NSString stringWithCString:typ encoding:NSMacOSRomanStringEncoding], [_file bundlePath]];
 }
 
 @end

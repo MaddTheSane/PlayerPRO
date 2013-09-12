@@ -7,15 +7,22 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#include "ToneGenerator.h"
+#include <PlayerPROCore/PlayerPROCore.h>
+
+typedef enum _ToneGenerator
+{
+	cancelTone,
+	silence = 3,
+	triangle = 4,
+	square = 5,
+	wave = 6
+} ToneGenerator;
 
 @interface PPToneGeneratorController : NSWindowController
 {
 	sData *theData;
 	PPInfoPlug *ppInfoPlug;
 	long audioLength;
-	long audioAmplitude;
-	long audioFrequency;
 	ToneGenerator generator;
 	
 	IBOutlet NSMatrix *stereoOrMono;
@@ -31,8 +38,8 @@
 @property (readwrite) sData *theData;
 @property (readwrite) PPInfoPlug *ppInfoPlug;
 @property (readwrite) long audioLength;
-@property (readwrite) long audioAmplitude;
-@property (readwrite) long audioFrequency;
+@property (readwrite) double audioAmplitude;
+@property (readwrite) int audioFrequency;
 @property (readwrite) ToneGenerator generator;
 
 - (IBAction)okayOrCancel:(id)sender;
