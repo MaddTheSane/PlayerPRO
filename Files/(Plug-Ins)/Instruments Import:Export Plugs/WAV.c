@@ -30,139 +30,6 @@
 #define kStereoStr 			"\pStereo"
 #define kMonoStr 			"\pMonaural"
 
-//typedef unsigned short	WORD;
-//typedef unsigned long	DWORD;
-//typedef long			FOURCC;
-
-OSErr TestWAV( PCMWavePtr CC)
-{
-	if( CC->ckid =='RIFF') return noErr;
-	else return MADFileNotSupportedByThisPlug;
-}
-
-/*___________________ long byte swap for Intel <-> Motorola Conversions*/
-//Just going to byteswap on big-endian platforms
-/*unsigned long longswap(unsigned long ul)
-{
-//	return (ul >> 24) | ((ul >> 8) & 0xff00) | ((ul << 8) & 0xff0000) | (ul << 24);
-	return EndianU32_LtoN(ul);
-}*/
-#define longswap(ul) EndianU32_LtoN(ul)
-
-/*___________________ word byte swap for Intel <-> Motorola Conversions*/
-
-/*unsigned short shrtswap(unsigned int us)
-{
-//	return ((us >> 8) | (us << 8)) & 0xffff;
-	return EndianU16_LtoN(us);
-}*/
-#define shrtswap(us) EndianU16_LtoN(us)
-
-/*_______________________________________________________________________*/
-
-Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo)
-{
-	PCMWavePtr			WAVERsrc;
-	short				fRef,tempResRef,x;
-	long				fSize;
-	int					theHit;
-	char				test;
- 	short				gRefNum;
- 	short				gVolSet;
-	
-	*stereo = false;
-	
-	if(!FSpOpenDF(fileSpec,fsRdWrPerm,&fRef))
-	{
-		GetEOF(fRef,&fSize);
-		if(!(WAVERsrc = (PCMWavePtr) NewPtr(fSize))) 
-		{
-			FSCloseFork(fRef); return NULL;
-		}
-		
-		if(FSRead(fRef,&fSize,&(*WAVERsrc)))
-		{
-			FSCloseFork(fRef); return NULL;
-		}
-		
-		if((*WAVERsrc).ckid =='RIFF')
-		{
-			(*WAVERsrc).cksize = longswap((*WAVERsrc).cksize);
-			
-			if((*WAVERsrc).fccType =='WAVE')
-			{
-				(*WAVERsrc).dwDataOffset = longswap((*WAVERsrc).dwDataOffset);
-				
-				if((*WAVERsrc).fmtType,'fmt ')
-				{
-					(*WAVERsrc).wFormatTag      = shrtswap((*WAVERsrc).wFormatTag);
-					(*WAVERsrc).nCannels        = shrtswap((*WAVERsrc).nCannels);
-					(*WAVERsrc).nSamplesPerSec  = longswap((*WAVERsrc).nSamplesPerSec);
-					(*WAVERsrc).nSamplesPerSec  = (*WAVERsrc).nSamplesPerSec << 16;
-					(*WAVERsrc).nAvgBytesPerSec = longswap((*WAVERsrc).nAvgBytesPerSec);
-					(*WAVERsrc).nBlockAlign     = shrtswap((*WAVERsrc).nBlockAlign);
-					(*WAVERsrc).wBitsPerSample  = shrtswap((*WAVERsrc).wBitsPerSample);
-					(*WAVERsrc).dataSize        = longswap((*WAVERsrc).dataSize);
-					
-					*loopStart	= 0;
-					*loopEnd 	= 0;
-					*sampleSize = (*WAVERsrc).wBitsPerSample;
-					*rate		= (*WAVERsrc).nSamplesPerSec;
-					
-					if( (*WAVERsrc).nCannels == 2) *stereo = true;
-					else *stereo = false;
-					
-					if((*WAVERsrc).wFormatTag != 1)
-					{
-						return NULL;
-					}
-				}
-				else
-				{
-					DisposePtr( (Ptr) WAVERsrc);
-					return NULL;
-				}	
-			}
-			else
-			{
-				DisposePtr( (Ptr) WAVERsrc);
-				return NULL;
-			}
-		}
-		else
-		{
-			DisposePtr( (Ptr) WAVERsrc);
-			return NULL;
-		}
-		FSClose(fRef);
-	}
-	
-	{
-		long sndSize = WAVERsrc->dataSize;
-		
-		BlockMoveData( (Ptr)(long) (WAVERsrc->theData), (Ptr) WAVERsrc , sndSize);
-		
-		SetPtrSize( (Ptr) WAVERsrc, sndSize);
-		
-		switch( *sampleSize)
-		{
-			case 8:
-				ConvertInstrumentIn( (Byte*) WAVERsrc, sndSize);
-			break;
-			
-			case 16:
-				{
-					long			i;
-					unsigned short	*tt = (unsigned short*) WAVERsrc;
-					
-					for( i = 0; i < sndSize/2; i++) tt[ i] = shrtswap( tt[ i]);
-				}
-			break;
-		}
-	}
-	return (Ptr) WAVERsrc;
-}
-
 static OSErr mainWave(OSType					order,						// Order to execute
 					  InstrData				*InsHeader,					// Ptr on instrument header
 					  sData					**sample,					// Ptr on samples data
@@ -175,17 +42,18 @@ static OSErr mainWave(OSType					order,						// Order to execute
 	Ptr		AlienFile;
 	short	iFileRefI;
 	long	inOutBytes;
-		
+	
 	switch( order)
 	{
-	/*	case 'PLAY':
+#if 0
+		case 'PLAY':
 		{
 			Ptr				theSound;
 			long			lS, lE;
 			short			sS;
 			unsigned long	rate;
 			Boolean			stereo;
-		
+			
 			theSound = ConvertWAV( AlienFileFSSpec, &lS, &lE, &sS, &rate, &stereo);
 			
 			if( theSound != 0L)
@@ -196,8 +64,9 @@ static OSErr mainWave(OSType					order,						// Order to execute
 				theSound = 0L;
 			}
 		}
-		break;*/
-	
+			break;
+#endif
+			
 		case 'IMPL':
 		{
 			Ptr				theSound;
@@ -205,14 +74,14 @@ static OSErr mainWave(OSType					order,						// Order to execute
 			short			sS;
 			unsigned long	rate;
 			Boolean			stereo;
-		
+			
 			theSound = ConvertWAV( AlienFileFSSpec, &lS, &lE, &sS, &rate, &stereo);
 			
 			if( theSound != NULL)
 				inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
 		}
-		break;
-		
+			break;
+			
 		case 'TEST':
 		{
 			Ptr	theSound;
@@ -235,12 +104,20 @@ static OSErr mainWave(OSType					order,						// Order to execute
 				FSClose( iFileRefI);
 			}
 		}
-		break;
-		
+			break;
+			
 		default:
 			myErr = MADOrderNotImplemented;
-		break;
+			break;
 	}
-		
+	
 	return myErr;
 }
+
+// F303D78E-41F6-41EB-B18B-F7FC8B967AD2
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xF3, 0x03, 0xD7, 0x8E, 0x41, 0xF6, 0x41, 0xEB, 0xB1, 0x8B, 0xF7, 0xFC, 0x8B, 0x96, 0x7A, 0xD2)
+#define PLUGINFACTORY WaveFactory //The factory name as defined in the Info.plist file
+#define PLUGMAIN mainWave //The old main function, renamed please
+
+#include "CFPlugin-InstrBridge.c"
+

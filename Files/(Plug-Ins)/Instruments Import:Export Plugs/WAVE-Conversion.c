@@ -16,7 +16,7 @@
 
 OSErr TestWAV( PCMWavePtr CC)
 {
-	if( CC->ckid =='RIFF') return noErr;
+	if( EndianU32_BtoN(CC->ckid) =='RIFF') return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -65,15 +65,15 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 			FSCloseFork(fRef); return NULL;
 		}
 		
-		if((*WAVERsrc).ckid =='RIFF')
+		if(EndianU32_BtoN((*WAVERsrc).ckid) =='RIFF')
 		{
 			(*WAVERsrc).cksize = longswap((*WAVERsrc).cksize);
 			
-			if((*WAVERsrc).fccType =='WAVE')
+			if(EndianU32_BtoN((*WAVERsrc).fccType) =='WAVE')
 			{
 				(*WAVERsrc).dwDataOffset = longswap((*WAVERsrc).dwDataOffset);
 				
-				if((*WAVERsrc).fmtType,'fmt ')
+				if(EndianU32_BtoN((*WAVERsrc).fmtType),'fmt ')
 				{
 					(*WAVERsrc).wFormatTag      = shrtswap((*WAVERsrc).wFormatTag);
 					(*WAVERsrc).nCannels        = shrtswap((*WAVERsrc).nCannels);
