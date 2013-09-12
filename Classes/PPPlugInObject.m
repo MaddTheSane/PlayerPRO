@@ -88,10 +88,10 @@ NSArray *DefaultPlugInLocations()
 		NSFileManager *fm = [NSFileManager defaultManager];
 		[plugLocs addObject:[[NSBundle mainBundle] builtInPlugInsURL]];
 		
-		[plugLocs addObject:[NSURL fileURLWithPathComponents: [[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] pathComponents] arrayByAddingObjectsFromArray: @[@"PlayerPRO", @"Plugins"]]]];
+		[plugLocs addObject:[NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
 		
 		//User plugins
-		[plugLocs addObject:[NSURL fileURLWithPathComponents: [[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] pathComponents] arrayByAddingObjectsFromArray:@[@"PlayerPRO", @"Plugins"]]]];
+		[plugLocs addObject:[NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
 		
 		immPlugLocs = [[NSArray alloc] initWithArray:plugLocs];
 	}
