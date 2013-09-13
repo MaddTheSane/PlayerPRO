@@ -16,6 +16,9 @@
 #include <PlayerPROCore/RDriver.h>
 #ifdef ISUSINGPPPLUG
 #include <PlayerPROCore/PPPlug.h>
+#ifdef __OBJC__
+#import <PlayerPROCore/MADPluginWindowController.h>
+#endif
 #endif
 
 

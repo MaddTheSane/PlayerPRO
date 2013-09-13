@@ -13,7 +13,6 @@
 			buildPhases = (
 			);
 			dependencies = (
-				55E8997D10F17CE5004EB52B /* PBXTargetDependency */,
 				551FEB7910E7282700EDF2F1 /* PBXTargetDependency */,
 				551FEB7710E7282700EDF2F1 /* PBXTargetDependency */,
 				55151F8410DEDC0F0054ABC4 /* PBXTargetDependency */,
@@ -43,7 +42,6 @@
 				5586884310BF631700FCC24D /* PBXTargetDependency */,
 				5586875410BF5E4600FCC24D /* PBXTargetDependency */,
 				5546217A163A20AE0005F491 /* PBXTargetDependency */,
-				55ADC3EE17D7F00A001F27D4 /* PBXTargetDependency */,
 				557F9AF517D92C5700325C78 /* PBXTargetDependency */,
 			);
 			name = "Import-export";
@@ -236,14 +234,11 @@
 		554E10FE10D6F09F00BB619C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		554E10FF10D6F09F00BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E112A10D6F10100BB619C /* FadeNote.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE710D6C79D00BB619C /* FadeNote.r */; };
-		554E112B10D6F10500BB619C /* FadeNote.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FE610D6C79D00BB619C /* FadeNote.c */; };
 		554E114510D6F1BF00BB619C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		554E114610D6F1BF00BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		554E117310D6F22800BB619C /* FadeVol.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FE810D6C79D00BB619C /* FadeVol.c */; };
 		554E117410D6F22D00BB619C /* FadeVol.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE910D6C79D00BB619C /* FadeVol.r */; };
 		554E11B210D6F32900BB619C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		554E11B310D6F32900BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		554E11E010D6F37F00BB619C /* NoteTrans.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FEB10D6C79D00BB619C /* NoteTrans.c */; };
 		554E11E110D6F38200BB619C /* NoteTrans.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FEC10D6C79D00BB619C /* NoteTrans.r */; };
 		554E11F710D6F3E100BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -358,7 +353,6 @@
 		5578C4AB17D9E8B50057D11B /* S3M.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; };
 		5578C4AD17D9E8B50057D11B /* UMX.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586882910BF62F500FCC24D /* UMX.ppimpexp */; };
 		5578C4AE17D9E8B50057D11B /* XM.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; };
-		5578C4AF17D9E8B50057D11B /* MIDI.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppimpexp */; };
 		5578C4B017D9E8B50057D11B /* APPL.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
 		5578C4B217DA4AA90057D11B /* PPMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1BD5E120FBE51004FD083 /* PPMusicList.m */; };
 		5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
@@ -542,9 +536,7 @@
 		55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55ADC3E817D7E4DE001F27D4 /* MADDriver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; };
 		55ADC3E917D7E4E5001F27D4 /* MADDriver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; };
-		55ADC3EC17D7EFEE001F27D4 /* QuickTime.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55E898B710F17C2B004EB52B /* QuickTime.plugin */; };
 		55ADC3F117D7F475001F27D4 /* Complex Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55B797DC10D6E6C40073E379 /* Complex Fade.plugin */; };
-		55ADC3F917D7FF93001F27D4 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		55ADC3FA17D7FFAA001F27D4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55ADC3FB17D8004B001F27D4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55ADC3FC17D80052001F27D4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -581,7 +573,9 @@
 		55B23D231689321F00DCE923 /* PAT.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEADA10E727B100EDF2F1 /* PAT.plugin */; };
 		55B23D24168935D300DCE923 /* MINs.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEA6B10E727AD00EDF2F1 /* MINs.plugin */; };
 		55B23D2916893DE300DCE923 /* XI.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55151F8010DEDBDB0054ABC4 /* XI.plugin */; };
-		55B797E310D6E6E50073E379 /* CompFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FE110D6C79D00BB619C /* CompFade.c */; };
+		55B7665817E3BF9E004C1D45 /* MADPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B7665617E3BF9E004C1D45 /* MADPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55B7665917E3BF9E004C1D45 /* MADPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B7665717E3BF9E004C1D45 /* MADPluginWindowController.m */; };
+		55B7665A17E3C0DC004C1D45 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
 		55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B7E65A161D1D4E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -1577,13 +1571,6 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
-		55ADC3ED17D7F00A001F27D4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5586888B10BF67F100FCC24D;
-			remoteInfo = MIDI;
-		};
 		55ADC3EF17D7F016001F27D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1632,13 +1619,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
-		};
-		55E8997C10F17CE5004EB52B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 55E898A810F17C2B004EB52B;
-			remoteInfo = "PAT copy";
 		};
 		55ED50B910D40C0B00824C61 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1719,7 +1699,6 @@
 				5578C4AB17D9E8B50057D11B /* S3M.ppimpexp in Copy Plug-ins */,
 				5578C4AD17D9E8B50057D11B /* UMX.ppimpexp in Copy Plug-ins */,
 				5578C4AE17D9E8B50057D11B /* XM.ppimpexp in Copy Plug-ins */,
-				5578C4AF17D9E8B50057D11B /* MIDI.ppimpexp in Copy Plug-ins */,
 				5578C4B017D9E8B50057D11B /* APPL.ppimpexp in Copy Plug-ins */,
 			);
 			name = "Copy Plug-ins";
@@ -1817,7 +1796,6 @@
 				55ADC3FD17D8021C001F27D4 /* Fade Note.plugin in Copy PlugIns */,
 				55ADC3FE17D8021C001F27D4 /* Fade Volume.plugin in Copy PlugIns */,
 				55ADC3F117D7F475001F27D4 /* Complex Fade.plugin in Copy PlugIns */,
-				55ADC3EC17D7EFEE001F27D4 /* QuickTime.plugin in Copy PlugIns */,
 				55ADC3E217D7B484001F27D4 /* Wave.plugin in Copy PlugIns */,
 				55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */,
 				5583C60316D01DDE0078ACE8 /* Crop.plugin in Copy PlugIns */,
@@ -2331,6 +2309,8 @@
 		55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicObject_PPKPrivate.h; sourceTree = "<group>"; };
 		55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDriverCarbon.h; sourceTree = "<group>"; };
 		55B23D111687D22700DCE923 /* MainDriverCarbon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MainDriverCarbon.c; sourceTree = "<group>"; };
+		55B7665617E3BF9E004C1D45 /* MADPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MADPluginWindowController.h; sourceTree = "<group>"; };
+		55B7665717E3BF9E004C1D45 /* MADPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MADPluginWindowController.m; sourceTree = "<group>"; };
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55BE997817978AEF00D6DECC /* PlayerPROImporter.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlayerPROImporter.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2465,7 +2445,7 @@
 		88E0C4790C2F21E400D6C081 /* Shuddup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Shuddup.h; path = Files/Shuddup.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		88E0C47B0C2F21E400D6C081 /* RDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RDriver.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		88E0C47D0C2F21E400D6C081 /* RDriverInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDriverInt.h; sourceTree = "<group>"; };
-		88E0C47F0C2F21E400D6C081 /* PPPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlug.h; sourceTree = "<group>"; };
+		88E0C47F0C2F21E400D6C081 /* PPPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPPlug.h; path = ../PPPlug.h; sourceTree = "<group>"; };
 		88E0C4810C2F21E400D6C081 /* VA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VA.h; path = Files/VA.h; sourceTree = SOURCE_ROOT; };
 		88E0C4850C2F21E400D6C081 /* VideoToolbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoToolbox.h; path = Files/VideoToolbox.h; sourceTree = SOURCE_ROOT; };
 		88E0C4870C2F21E400D6C081 /* dlsmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dlsmac.h; path = Files/dlsmac.h; sourceTree = SOURCE_ROOT; };
@@ -2714,6 +2694,7 @@
 				554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */,
 				554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */,
 				55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */,
+				55B7665A17E3C0DC004C1D45 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3869,7 +3850,6 @@
 				551520A310DEE9570054ABC4 /* Wave */,
 				551520A210DEE93E0054ABC4 /* XI */,
 				554E103210D6C79E00BB619C /* Clip File.r */,
-				554E105010D6C79E00BB619C /* SndUtils.c */,
 				554E105710D6C79E00BB619C /* WAVE-Conversion.c */,
 				55151E7410DD4F400054ABC4 /* CFPlugin-InstrBridge.c */,
 			);
@@ -3995,6 +3975,7 @@
 		55868B1810BFC0BB00FCC24D /* Main Driver Source */ = {
 			isa = PBXGroup;
 			children = (
+				55B7665517E3BDFE004C1D45 /* App Plug-in code */,
 				55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */,
 				55ADC3E617D7E4A4001F27D4 /* MADDriver.h */,
 				5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */,
@@ -4009,7 +3990,6 @@
 				88E0C4750C2F21E400D6C081 /* MAD.h */,
 				88E0C47B0C2F21E400D6C081 /* RDriver.h */,
 				88E0C47D0C2F21E400D6C081 /* RDriverInt.h */,
-				88E0C47F0C2F21E400D6C081 /* PPPlug.h */,
 				550B011310BA1E1C004FC5D7 /* PPPrivate.h */,
 				88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */,
 				5573A46D10B51CAB00FF8B50 /* ByteSwap.c */,
@@ -4040,6 +4020,18 @@
 			);
 			name = PPPlay;
 			path = Examples/PPPlay;
+			sourceTree = "<group>";
+		};
+		55B7665517E3BDFE004C1D45 /* App Plug-in code */ = {
+			isa = PBXGroup;
+			children = (
+				554E105010D6C79E00BB619C /* SndUtils.c */,
+				88E0C47F0C2F21E400D6C081 /* PPPlug.h */,
+				55B7665617E3BF9E004C1D45 /* MADPluginWindowController.h */,
+				55B7665717E3BF9E004C1D45 /* MADPluginWindowController.m */,
+			);
+			name = "App Plug-in code";
+			path = "App Plug-in Code";
 			sourceTree = "<group>";
 		};
 		55BE998517978BB100D6DECC /* Spotlight Plug-in */ = {
@@ -4453,6 +4445,7 @@
 				550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */,
 				55B23D0F1687D1D700DCE923 /* RDriverCarbon.h in Headers */,
 				55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */,
+				55B7665817E3BF9E004C1D45 /* MADPluginWindowController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6372,7 +6365,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554E112B10D6F10500BB619C /* FadeNote.c in Sources */,
 				552C440717DFDF5A00AFCB5C /* FadeNoteController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6381,7 +6373,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554E117310D6F22800BB619C /* FadeVol.c in Sources */,
 				552C440C17DFE00000AFCB5C /* FadeVolumeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6390,7 +6381,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554E11E010D6F37F00BB619C /* NoteTrans.c in Sources */,
 				552C441117DFE08700AFCB5C /* NoteTranslateController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6465,6 +6455,7 @@
 				55B23D131687D22700DCE923 /* MainDriverCarbon.c in Sources */,
 				557EF736168D0CE4001BF077 /* SndUtils.c in Sources */,
 				5523EC7C169361A00067B22A /* MIDI-Hardware-OSX.c in Sources */,
+				55B7665917E3BF9E004C1D45 /* MADPluginWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6769,7 +6760,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55B797E310D6E6E50073E379 /* CompFade.c in Sources */,
 				552C440217DFDE1100AFCB5C /* ComplexFadeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6816,7 +6806,6 @@
 				55C358B116C42D1800FB9FA6 /* iOS-PlugImport.c in Sources */,
 				55C358F716C42F7100FB9FA6 /* MIDI-Hardware-OSX.c in Sources */,
 				5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */,
-				55ADC3F917D7FF93001F27D4 /* SndUtils.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7445,11 +7434,6 @@
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 55ADC3D117D6F390001F27D4 /* PBXContainerItemProxy */;
 		};
-		55ADC3EE17D7F00A001F27D4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5586888B10BF67F100FCC24D /* MIDI */;
-			targetProxy = 55ADC3ED17D7F00A001F27D4 /* PBXContainerItemProxy */;
-		};
 		55ADC3F017D7F016001F27D4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 55ADC3CF17D6F390001F27D4 /* Wave */;
@@ -7484,11 +7468,6 @@
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 55E898AA10F17C2B004EB52B /* PBXContainerItemProxy */;
-		};
-		55E8997D10F17CE5004EB52B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 55E898A810F17C2B004EB52B /* QuickTime */;
-			targetProxy = 55E8997C10F17CE5004EB52B /* PBXContainerItemProxy */;
 		};
 		55ED50BA10D40C0B00824C61 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8142,9 +8121,10 @@
 		554E110310D6F09F00BB619C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -8158,7 +8138,6 @@
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
@@ -8168,9 +8147,10 @@
 		554E110410D6F09F00BB619C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -8185,7 +8165,6 @@
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8194,9 +8173,10 @@
 		554E114A10D6F1BF00BB619C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -8210,7 +8190,6 @@
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/Fade Vol/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
@@ -8220,9 +8199,10 @@
 		554E114B10D6F1BF00BB619C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -8237,7 +8217,6 @@
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/Fade Vol/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8246,9 +8225,10 @@
 		554E11B710D6F32900BB619C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -8262,7 +8242,6 @@
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
@@ -8272,9 +8251,10 @@
 		554E11B810D6F32900BB619C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -8289,7 +8269,6 @@
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8404,6 +8383,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -8519,6 +8499,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CLANG_ENABLE_OBJC_ARC[arch=x86_64]" = YES;
+				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
 				COPY_PHASE_STRIP = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
@@ -8538,6 +8519,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CLANG_ENABLE_OBJC_ARC[arch=x86_64]" = YES;
+				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
@@ -8549,7 +8531,6 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "@rpath";
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = PlayerPROCore;
 			};
 			name = Debug;
@@ -9912,6 +9893,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -9923,6 +9905,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -10090,9 +10073,10 @@
 		55B797DF10D6E6C70073E379 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -10106,7 +10090,6 @@
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
@@ -10116,9 +10099,10 @@
 		55B797E010D6E6C70073E379 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -10133,7 +10117,6 @@
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -10181,6 +10164,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -10203,6 +10187,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

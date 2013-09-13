@@ -40,10 +40,6 @@ typedef enum _MADPlugCapabilities {
 	PPMADCanDoBoth = PPMADCanImport | PPMADCanExport
 } MADPlugCapabilities;
 
-#if !__has_feature(objc_arc)
-#define __bridge
-#endif
-
 static Boolean GetBoolFromType(CFTypeRef theType)
 {
 	//We don't need to test for the other CFTypeIDs because they should already be set up
