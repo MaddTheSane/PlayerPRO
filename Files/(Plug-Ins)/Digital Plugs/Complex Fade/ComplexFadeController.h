@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#include <PlayerPROCore/PlayerPROCore.h>
 
-@interface ComplexFadeController : NSWindowController
+@interface ComplexFadeController : MADDigitalPluginWindowController
 
 @end
