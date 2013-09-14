@@ -7,6 +7,7 @@ endif
 
 PLAYERPRO_TARGET=Cocoa
 PLAYER_TARGET="PlayerPRO Player"
+MDIMPORT_TARGET=PPImport
 
 DEFAULT_BUILDCONFIGURATION=Release
 DEFAULT_TARGET=$(PLAYERPRO_TARGET)
@@ -15,10 +16,9 @@ BUILDCONFIGURATION?=$(DEFAULT_BUILDCONFIGURATION)
 CP=ditto --rsrc
 RM=rm
 
-.PHONY: all playerpro playerpro6 player clean latest
+.PHONY: all playerpro playerpro6 mdimport player clean latest
 
-playerpro:
-	xcodebuild -project PPMacho.xcodeproj -target $(DEFAULT_TARGET) -configuration $(BUILDCONFIGURATION) build
+playerpro: playerpro6
 
 playerpro6:
 	xcodebuild -project PPMacho.xcodeproj -target $(PLAYERPRO_TARGET) -configuration $(BUILDCONFIGURATION) build
@@ -26,16 +26,22 @@ playerpro6:
 player:
 	xcodebuild -project PPMacho.xcodeproj -target $(PLAYER_TARGET) -configuration $(BUILDCONFIGURATION) build
 
+mdimport:
+	xcodebuild -project PPMacho.xcodeproj -target $(MDIMPORT_TARGET) -configuration $(BUILDCONFIGURATION) build
+
 #install:
 #	    cp -R build/Adium.app ~/Applications/
 #	    cp -R build/AIUtilities.framework ~/Library/Frameworks/
 
 clean:
-	xcodebuild -project PPMacho.xcodeproj -target $(DEFAULT_TARGET) -configuration $(BUILDCONFIGURATION) clean
+	xcodebuild -project PPMacho.xcodeproj -target $(MDIMPORT_TARGET) -configuration $(BUILDCONFIGURATION) clean
 	xcodebuild -project PPMacho.xcodeproj -target $(PLAYERPRO_TARGET) -configuration $(BUILDCONFIGURATION) clean
 	xcodebuild -project PPMacho.xcodeproj -target $(PLAYER_TARGET) -configuration $(BUILDCONFIGURATION) clean
 
 latest:
 	git pull
-	make playerpro
+	make playerpro6
+	make player
+	make mdimport
 
+all: playerpro6 mdimport player
