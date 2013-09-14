@@ -1324,9 +1324,7 @@
 		551520A910DEEA670054ABC4 /* MuLaw.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MuLaw.r; sourceTree = "<group>"; };
 		5517F7541126203E0034F90C /* Lin-PlugImport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "Lin-PlugImport.c"; sourceTree = "<group>"; };
 		5518105610C35A2600ADA9F4 /* Example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Example.c; sourceTree = "<group>"; };
-		5518105710C35A2600ADA9F4 /* small MAD Music */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music"; sourceTree = "<group>"; };
-		5518105810C35A2600ADA9F4 /* small MAD Music.mad */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music.mad"; sourceTree = "<group>"; };
-		5518105910C35A2600ADA9F4 /* small MOD Music */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MOD Music"; sourceTree = "<group>"; };
+		5518105810C35A2600ADA9F4 /* small MAD Music.madk */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music.madk"; sourceTree = "<group>"; };
 		5518105A10C35A2600ADA9F4 /* small MOD Music.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MOD Music.mod"; sourceTree = "<group>"; };
 		5518107210C35A4500ADA9F4 /* PlayerPRO Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5518107410C35A4500ADA9F4 /* PlayerPRO Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PlayerPRO Example-Info.plist"; path = "../PlayerPRO Example-Info.plist"; sourceTree = "<group>"; };
@@ -1466,11 +1464,6 @@
 		554E105610D6C79E00BB619C /* WAV.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = WAV.c; sourceTree = "<group>"; };
 		554E105710D6C79E00BB619C /* WAVE-Conversion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "WAVE-Conversion.c"; sourceTree = "<group>"; };
 		554E105910D6C79E00BB619C /* XI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = XI.c; sourceTree = "<group>"; };
-		554E105D10D6C79E00BB619C /* 0xFF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = 0xFF.c; sourceTree = "<group>"; };
-		554E105E10D6C79E00BB619C /* MDEF */ = {isa = PBXFileReference; lastKnownFileType = file; path = MDEF; sourceTree = "<group>"; };
-		554E105F10D6C79E00BB619C /* MDEF.old */ = {isa = PBXFileReference; lastKnownFileType = file; path = MDEF.old; sourceTree = "<group>"; };
-		554E106010D6C79E00BB619C /* Note.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Note.c; sourceTree = "<group>"; };
-		554E106110D6C79E00BB619C /* PopupMenu Tester */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "PopupMenu Tester"; sourceTree = "<group>"; };
 		554E106510D6C9E100BB619C /* Read-Me.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Read-Me.rtf"; sourceTree = "<group>"; };
 		554E110510D6F09F00BB619C /* Fade Note.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fade Note.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E112910D6F0A000BB619C /* Fade Note-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Fade Note-Info.plist"; path = "../../../Fade Note-Info.plist"; sourceTree = "<group>"; };
@@ -2510,9 +2503,7 @@
 			isa = PBXGroup;
 			children = (
 				5518105610C35A2600ADA9F4 /* Example.c */,
-				5518105710C35A2600ADA9F4 /* small MAD Music */,
-				5518105810C35A2600ADA9F4 /* small MAD Music.mad */,
-				5518105910C35A2600ADA9F4 /* small MOD Music */,
+				5518105810C35A2600ADA9F4 /* small MAD Music.madk */,
 				5518105A10C35A2600ADA9F4 /* small MOD Music.mod */,
 				5518107410C35A4500ADA9F4 /* PlayerPRO Example-Info.plist */,
 			);
@@ -2830,7 +2821,6 @@
 				554E0FDE10D6C79D00BB619C /* Digital Plugs */,
 				554E0FF710D6C79D00BB619C /* Filters Plugs */,
 				554E102910D6C79E00BB619C /* Instruments Import:Export Plugs */,
-				554E105C10D6C79E00BB619C /* MDEF */,
 			);
 			name = "(Plug-Ins)";
 			path = "Files/(Plug-Ins)";
@@ -2897,18 +2887,6 @@
 				55151E7410DD4F400054ABC4 /* CFPlugin-InstrBridge.c */,
 			);
 			path = "Instruments Import:Export Plugs";
-			sourceTree = "<group>";
-		};
-		554E105C10D6C79E00BB619C /* MDEF */ = {
-			isa = PBXGroup;
-			children = (
-				554E105D10D6C79E00BB619C /* 0xFF.c */,
-				554E105E10D6C79E00BB619C /* MDEF */,
-				554E105F10D6C79E00BB619C /* MDEF.old */,
-				554E106010D6C79E00BB619C /* Note.c */,
-				554E106110D6C79E00BB619C /* PopupMenu Tester */,
-			);
-			path = MDEF;
 			sourceTree = "<group>";
 		};
 		554E11A410D6F2CA00BB619C /* Fade Vol */ = {

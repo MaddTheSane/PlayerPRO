@@ -2639,4 +2639,4 @@ resource 'DITL' (DiagNum) {
 	}
 };
 
-read 'MADK' (kMADKmusic, "chipmunks") "chipmunks.MADK";
+read kMADType (kMADKmusic, "chipmunks") "chipmunks.MADK";
