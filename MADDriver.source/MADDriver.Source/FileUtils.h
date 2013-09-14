@@ -58,6 +58,7 @@ PPEXPORT void iClose( UNFILE iFileRefI);
 	
 ////////////////////////////////////////////////////////////
 
+//TODO: use system-based functions which will probably be faster
 static inline void MADByteSwap32(void *msg_buf)
 {
 	UInt32			temp = *((UInt32*) msg_buf);
@@ -70,18 +71,14 @@ static inline void MADByteSwap32(void *msg_buf)
 #endif
 }
 
+//TODO: use system-based functions which will probably be faster
 static inline void MADByteSwap16(void *msg_buf)
 {
-#if (defined(__i386__) || defined(__x86_64__)) && defined(__GNUC__)
-    __asm__("xchgb %b0, %h0" : "+q" (*((UInt16*) msg_buf)));
-	return;
-#else
 	UInt16			buf = *((UInt16*) msg_buf);
-#if defined(_MAC_H)
+#ifdef _MAC_H
 	*((UInt16*) msg_buf) = CFSwapInt16(buf);
 #else
 	*((UInt16*) msg_buf) = (((((UInt16)buf)<<8) & 0xFF00) | ((((UInt16)buf)>>8) & 0x00FF));
-#endif
 #endif
 }
 
@@ -118,6 +115,8 @@ static inline void PPLE16(void *msg_buf)
 #define PPLE32(msg_buf)
 #define PPLE16(msg_buf)
 #endif
+
+/////////////////////////////////
 
 static inline void OSType2Ptr( OSType type, Ptr str)
 {
