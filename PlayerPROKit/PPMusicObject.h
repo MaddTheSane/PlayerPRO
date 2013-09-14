@@ -46,12 +46,14 @@
 
 @interface PPMusicObjectWrapper : PPMusicObject
 
+@property (strong) NSMutableArray *sDatas;
+@property (strong) NSMutableArray *instruments;
+
 - (id)init;
 - (id)initFromMusicObject:(PPMusicObject*)oldFromat;
 - (id)initWithPath:(NSString *)url;
 - (id)initWithURL:(NSURL *)url;
-@property (strong) NSArray *sDatas;
-@property (strong) NSArray *instruments;
+- (MADMusic *)newMadMusicStruct;
 
 
 @end

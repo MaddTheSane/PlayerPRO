@@ -305,5 +305,9 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return [super saveMusicToURL:tosave];
 }
 
+- (MADMusic *)newMadMusicStruct
+{
+	return DeepCopyMusic(self._currentMusic);
+}
 
 @end
