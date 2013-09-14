@@ -37,8 +37,8 @@ static		Byte		LastAEffect[ MAXTRACK];
 static		XMHEADER	*mh;
 static		Ptr			theXMRead, theXMMax;
 
-#define READXMFILE(dst, size)	{BlockMoveData( theXMRead, dst, size);	theXMRead += (long) size;}
-#define WRITEXMFILE(src, size)	{BlockMoveData( src, theXMRead, size);	theXMRead += (long) size;}
+#define READXMFILE(dst, size)	{memcpy( dst, theXMRead, size); theXMRead += (long) size;}
+#define WRITEXMFILE(src, size)	{memcpy( theXMRead, src, size); theXMRead += (long) size;}
 
 #ifndef _SRC
 
