@@ -13,6 +13,10 @@
 @class PPLibrary;
 
 @interface PPMusicObject : NSObject
+{
+	@package
+	MADMusic *currentMusic;
+}
 
 @property (readonly, strong, nonatomic) NSString *internalFileName;
 @property (readonly) int totalPartitions;

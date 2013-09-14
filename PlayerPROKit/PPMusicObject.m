@@ -255,7 +255,6 @@
 	return YES;
 }
 
-
 @end
 
 @implementation PPMusicObjectWrapper
@@ -267,10 +266,21 @@
 	}
 	return self;
 }
+static MADMusic *DeepCopyMusic(MADMusic* oldMus)
+{
+	MADMusic *toreturn = calloc(sizeof(MADMusic), 1);
+	
+	
+	return toreturn;
+}
 
 - (id)initFromMusicObject:(PPMusicObject*)oldFromat
 {
-	
+	if (self = [super init]) {
+		MADDisposeMusic(&currentMusic, NULL);
+		currentMusic = DeepCopyMusic(oldFromat._currentMusic);
+	}
+	return self;
 }
 
 - (void)syncMusicDataTypes
