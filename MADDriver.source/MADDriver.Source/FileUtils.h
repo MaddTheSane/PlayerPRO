@@ -58,16 +58,6 @@ PPEXPORT void iClose( UNFILE iFileRefI);
 	
 ////////////////////////////////////////////////////////////
 
-#ifdef NOINLINE
-PPEXPORT OSType Ptr2OSType( Ptr str);
-PPEXPORT void OSType2Ptr( OSType type, Ptr str);
-
-PPEXPORT void PPLE32( void *msg_buf);
-PPEXPORT void PPLE16( void *msg_buf);
-PPEXPORT void PPBE32( void *msg_buf);
-PPEXPORT void PPBE16( void *msg_buf);
-#else
-
 static inline void MADByteSwap32(void *msg_buf)
 {
 	UInt32			temp = *((UInt32*) msg_buf);
@@ -82,11 +72,16 @@ static inline void MADByteSwap32(void *msg_buf)
 
 static inline void MADByteSwap16(void *msg_buf)
 {
+#if (defined(__i386__) || defined(__x86_64__)) && defined(__GNUC__)
+    __asm__("xchgb %b0, %h0" : "+q" (*((UInt16*) msg_buf)));
+	return;
+#else
 	UInt16			buf = *((UInt16*) msg_buf);
-#ifdef _MAC_H
+#if defined(_MAC_H)
 	*((UInt16*) msg_buf) = CFSwapInt16(buf);
 #else
 	*((UInt16*) msg_buf) = (((((UInt16)buf)<<8) & 0xFF00) | ((((UInt16)buf)>>8) & 0x00FF));
+#endif
 #endif
 }
 
@@ -145,8 +140,6 @@ static inline OSType Ptr2OSType( char* str)
 	
 	return type;
 }
-
-#endif
 
 #ifdef __cplusplus
 }
