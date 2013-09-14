@@ -25,7 +25,7 @@
 				OSErr	MySndPlayDoubleBuffer (SndChannelPtr chan, PPSndDoubleBufferHeaderPtr theParams);
 				OSErr	MySndDoImmediate (SndChannelPtr chan, SndCommand * cmd);
 //#pragma export off
-static	pascal	void	MySndPlayDoubleBufferCleanUpProc (SndChannelPtr theChannel, SndCommand * theCallBackCmd);
+//static	pascal	void	MySndPlayDoubleBufferCleanUpProc (SndChannelPtr theChannel, SndCommand * theCallBackCmd);
 static	pascal	void	MySndPlayDoubleBufferCallBackProc (SndChannelPtr theChannel, SndCommand * theCmd);
 static			void	InsertSndDoCommand (SndChannelPtr chan, SndCommand * theCmd);
 static	pascal	void	NMResponseProc (NMRecPtr nmReqPtr);
