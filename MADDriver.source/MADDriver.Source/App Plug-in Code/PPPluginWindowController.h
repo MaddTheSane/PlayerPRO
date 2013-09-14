@@ -9,9 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PPPlug.h>
 
-EXP const NSString * const MADPlugInSheetDidEnd;
+const NSString * const PPPlugInSheetDidEnd;
 
-EXP @interface MADPluginWindowController : NSWindowController
+@interface PPPluginWindowController : NSWindowController
 {
 	@protected
 	PPInfoPlug *infoPlug;

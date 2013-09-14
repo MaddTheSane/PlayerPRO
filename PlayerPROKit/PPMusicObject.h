@@ -14,9 +14,15 @@
 
 @interface PPMusicObject : NSObject
 
+@property (readonly, strong, nonatomic) NSString *internalFileName;
+@property (readonly) int totalPartitions;
+@property (readonly) int partitionLength;
+@property (readonly) short totalTracks;
+@property (readonly) short totalInstruments;
+
 @property (readonly, weak) PPDriver *attachedDriver;
 @property (readonly) NSURL *filePath;
-//The following three functions must be attached to a driver before deallocating or memory will leak!
+
 - (id)init;
 - (id)initWithURL:(NSURL *)url library:(PPLibrary *)theLib;
 - (id)initWithPath:(NSString *)url library:(PPLibrary *)theLib;
@@ -30,6 +36,18 @@
 - (void)attachToDriver:(PPDriver *)theDriv;
 //This method does set the music object as the playback music
 - (void)attachToDriver:(PPDriver *)theDriv setAsCurrentMusic:(BOOL)toSet;
+
+
+@end
+
+@interface PPMusicObjectWrapper : PPMusicObject
+
+- (id)init;
+- (id)initFromMusicObject:(PPMusicObject*)oldFromat;
+- (id)initWithPath:(NSString *)url;
+- (id)initWithURL:(NSURL *)url;
+@property (strong) NSArray *sDatas;
+@property (strong) NSArray *instruments;
 
 
 @end

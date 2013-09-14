@@ -7,8 +7,8 @@
 //
 
 #import <PlayerPROCore/PlayerPROCore.h>
-#import <PlayerPROCore/MADPluginWindowController.h>
+#import <PlayerPROKit/PPPluginWindowController.h>
 
-EXP @interface MADDigitalPluginWindowController : MADPluginWindowController
+@interface PPDigitalPluginWindowController : PPPluginWindowController
 
 @end

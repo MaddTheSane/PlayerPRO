@@ -6,15 +6,15 @@
 //
 //
 
-#import "MADPluginWindowController.h"
+#import "PPPluginWindowController.h"
 
-NSString * const MADPlugInSheetDidEnd = @"MAD Plugin sheet did end";
+NSString * const PPPlugInSheetDidEnd = @"MAD Plugin sheet did end";
 
-@interface MADPluginWindowController ()
+@interface PPPluginWindowController ()
 
 @end
 
-@implementation MADPluginWindowController
+@implementation PPPluginWindowController
 @synthesize infoPlug;
 
 - (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
@@ -22,7 +22,7 @@ NSString * const MADPlugInSheetDidEnd = @"MAD Plugin sheet did end";
 	if (returnCode == NSOnState) {
 		plugBlock();
 	}
-	[[NSNotificationCenter defaultCenter] postNotificationName:MADPlugInSheetDidEnd object:self.window];
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPPlugInSheetDidEnd object:self.window];
 }
 
 - (id)initWithWindow:(NSWindow *)window

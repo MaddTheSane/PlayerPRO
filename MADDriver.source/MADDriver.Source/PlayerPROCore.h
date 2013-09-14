@@ -16,10 +16,6 @@
 #include <PlayerPROCore/RDriver.h>
 #ifdef ISUSINGPPPLUG
 #include <PlayerPROCore/PPPlug.h>
-#if defined (__OBJC__) && !TARGET_OS_IPHONE
-#import <PlayerPROCore/MADPluginWindowController.h>
-#import <PlayerPROCore/MADDigitalPluginWindowController.h>
-#endif
 #endif
 
 

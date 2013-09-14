@@ -87,10 +87,22 @@ static NSInteger selMusFromList = -1;
 - (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to;
 @property (strong) NSString *musicInfo;
 @property (strong, nonatomic, readonly) NSDictionary *trackerDict;
+@property (strong) PPMusicList				*musicList;
+@property (strong) PPCurrentlyPlayingIndex	*currentlyPlayingIndex;
+@property (strong) PPCurrentlyPlayingIndex	*previouslyPlayingIndex;
+@property (strong) PPPreferences			*preferences;
+@property (strong) NSMutableArray			*plugInInfos;
+@property BOOL isQuitting;
 @end
 
 
 @implementation AppDelegate
+@synthesize toolsPanel;
+@synthesize instrumentController;
+@synthesize musicList;
+@synthesize currentlyPlayingIndex, previouslyPlayingIndex;
+@synthesize preferences;
+@synthesize isQuitting;
 
 @synthesize trackerDict = _trackerDict;
 - (NSDictionary *)trackerDict
@@ -218,32 +230,32 @@ static NSInteger selMusFromList = -1;
 	PPMusicList *tempList = [[PPMusicList alloc] init];
 	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:@{PPRememberMusicList: @YES,
-															 PPLoadMusicAtListLoad: @NO,
-															 PPAfterPlayingMusic: @(PPStopPlaying),
-															 PPGotoStartupAfterPlaying: @YES,
-															 PPSaveModList: @YES,
-															 PPLoadMusicAtMusicLoad: @NO,
-															 PPLoopMusicWhenDone: @NO,
-															 
-															 PPSoundOutBits: @16,
-															 PPSoundOutRate: @44100,
-															 PPSoundDriver: @(CoreAudioDriver),
-															 PPStereoDelayToggle: @YES,
-															 PPReverbToggle: @NO,
-															 PPSurroundToggle: @NO,
-															 PPOversamplingToggle: @NO,
-															 PPStereoDelayAmount: @30,
-															 PPReverbAmount: @25,
-															 PPReverbStrength: @30,
-															 PPOversamplingAmount: @1,
-															 
-															 
-															 PPMAddExtension: @YES,
-															 PPMMadCompression: @YES,
-															 PPMNoLoadMixerFromFiles: @NO,
-															 PPMOscilloscopeDrawLines: @YES,
-															 															 
-															 PPMMusicList: [NSKeyedArchiver archivedDataWithRootObject:tempList]}];
+									  PPLoadMusicAtListLoad: @NO,
+										PPAfterPlayingMusic: @(PPStopPlaying),
+								  PPGotoStartupAfterPlaying: @YES,
+											  PPSaveModList: @YES,
+									 PPLoadMusicAtMusicLoad: @NO,
+										PPLoopMusicWhenDone: @NO,
+	 
+											 PPSoundOutBits: @16,
+											 PPSoundOutRate: @44100,
+											  PPSoundDriver: @(CoreAudioDriver),
+										PPStereoDelayToggle: @YES,
+											 PPReverbToggle: @NO,
+										   PPSurroundToggle: @NO,
+									   PPOversamplingToggle: @NO,
+										PPStereoDelayAmount: @30,
+											 PPReverbAmount: @25,
+										   PPReverbStrength: @30,
+									   PPOversamplingAmount: @1,
+	 
+	 
+											PPMAddExtension: @YES,
+										  PPMMadCompression: @YES,
+									PPMNoLoadMixerFromFiles: @NO,
+								   PPMOscilloscopeDrawLines: @YES,
+	 
+											   PPMMusicList: [NSKeyedArchiver archivedDataWithRootObject:tempList]}];
 }
 
 - (IBAction)showMusicList:(id)sender
@@ -1143,7 +1155,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (IBAction)showPlugInInfo:(id)sender
 {
-	PPPlugInInfo *inf = plugInInfos[[sender tag]];
+	PPPlugInInfo *inf = (self.plugInInfos)[[sender tag]];
 	if (!inf) {
 		return;
 	}
@@ -1162,12 +1174,12 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	
 	for (i = 0; i < madLib->TotalPlug ; i++) {
 		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:(__bridge NSString*) madLib->ThePlug[i].MenuName author:(__bridge NSString*) madLib->ThePlug[i].AuthorString plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name") plugURL:CFBridgingRelease(CFBundleCopyBundleURL(madLib->ThePlug[i].file))];
-		if (![plugInInfos containsObject:tmpInfo]) {
-			[plugInInfos addObject:tmpInfo];
+		if (![self.plugInInfos containsObject:tmpInfo]) {
+			[self.plugInInfos addObject:tmpInfo];
 		}
 	}
 		
-	[plugInInfos sortWithOptions:NSSortConcurrent usingComparator:^NSComparisonResult(id obj1, id obj2) {
+	[self.plugInInfos sortWithOptions:NSSortConcurrent usingComparator:^NSComparisonResult(id obj1, id obj2) {
 		NSString *menuNam1 = [obj1 plugName];
 		NSString *menuNam2 = [obj2 plugName];
 		NSComparisonResult res = [menuNam1 localizedStandardCompare:menuNam2];
@@ -1176,8 +1188,8 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	
 	[aboutPlugInMenu removeAllItems];
 	
-	for (i = 0; i < [plugInInfos count]; i++) {
-		PPPlugInInfo *pi = plugInInfos[i];
+	for (i = 0; i < [self.plugInInfos count]; i++) {
+		PPPlugInInfo *pi = (self.plugInInfos)[i];
 		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:pi.plugName action:@selector(showPlugInInfo:) keyEquivalent:@""];
 		[mi setTag:i];
 		[mi setTarget:self];
@@ -1215,9 +1227,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	MADAttachDriverToMusic(madDriver, music, NULL);
 	[self setTitleForSongLabelBasedOnMusic];
 	
-	//Initialize the QTKit framework on the main thread. needed for 32-bit code.
-	[QTMovie class];
-		
 	NSInteger i;
 	for (i = 0; i < madLib->TotalPlug; i++) {
 		if (madLib->ThePlug[i].mode == MADPlugImportExport || madLib->ThePlug[i].mode == MADPlugExport) {
@@ -1228,7 +1237,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		}
 	}
 	
-	plugInInfos = [[NSMutableArray alloc] init];
+	self.plugInInfos = [[NSMutableArray alloc] init];
 	[self updatePlugInInfoMenu];
 	
 	previouslyPlayingIndex = [[PPCurrentlyPlayingIndex alloc] init];

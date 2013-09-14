@@ -9,6 +9,28 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>madbundle</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>MAD</string>
+			<key>CFBundleTypeName</key>
+			<string>PPMADBundle</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSIsAppleDefaultForType</key>
+			<true/>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.mad-bundle</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<true/>
+			<key>NSDocumentClass</key>
+			<string>PPDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>pppatn</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -91,6 +113,8 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSIsAppleDefaultForType</key>
+			<false/>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.mod</string>
@@ -113,6 +137,8 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSIsAppleDefaultForType</key>
+			<false/>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.mtm</string>
@@ -135,6 +161,8 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSIsAppleDefaultForType</key>
+			<false/>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.s3m</string>
@@ -161,6 +189,8 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSIsAppleDefaultForType</key>
+			<false/>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madi</string>
@@ -189,6 +219,8 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSIsAppleDefaultForType</key>
+			<false/>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madfg</string>
@@ -215,6 +247,8 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSIsAppleDefaultForType</key>
+			<false/>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madh</string>
@@ -241,6 +275,8 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSIsAppleDefaultForType</key>
+			<false/>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madk</string>
@@ -263,6 +299,8 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSIsAppleDefaultForType</key>
+			<false/>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.xm</string>
@@ -346,7 +384,7 @@
 			<key>CFBundleTypeName</key>
 			<string>PPImpExpBundle</string>
 			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
+			<string>None</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.ppimpexp</string>
@@ -365,6 +403,8 @@
 			<string>PPMADFile</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSIsAppleDefaultForType</key>
+			<false/>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.mad</string>
@@ -373,22 +413,29 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>madbundle</string>
+				<string>wav</string>
+				<string>wave</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>MAD</string>
+			<string>WAV</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>audio/wav</string>
+				<string>audio/wave</string>
+			</array>
 			<key>CFBundleTypeName</key>
-			<string>PPMADBundle</string>
+			<string>Wave Audio</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>.WAV</string>
+				<string>WAVE</string>
+			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>net.sourceforge.playerpro.mad-bundle</string>
+				<string>com.microsoft.waveform-audio</string>
 			</array>
-			<key>LSTypeIsPackage</key>
-			<true/>
-			<key>NSDocumentClass</key>
-			<string>PPDocument</string>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>

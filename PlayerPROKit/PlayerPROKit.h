@@ -12,3 +12,7 @@
 #import <PlayerPROKit/PPLibrary.h>
 #import <PlayerPROKit/PPDriver.h>
 #import <PlayerPROKit/PPMusicObject.h>
+#if defined(ISUSINGPPPLUG) && !TARGET_OS_IPHONE
+#import <PlayerPROKit/PPPluginWindowController.h>
+#import <PlayerPROKit/PPDigitalPluginWindowController.h>
+#endif

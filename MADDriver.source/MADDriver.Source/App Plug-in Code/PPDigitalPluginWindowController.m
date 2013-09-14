@@ -6,13 +6,13 @@
 //
 //
 
-#import "MADDigitalPluginWindowController.h"
+#import "PPDigitalPluginWindowController.h"
 
-@interface MADDigitalPluginWindowController ()
+@interface PPDigitalPluginWindowController ()
 
 @end
 
-@implementation MADDigitalPluginWindowController
+@implementation PPDigitalPluginWindowController
 
 - (id)initWithWindow:(NSWindow *)window
 {

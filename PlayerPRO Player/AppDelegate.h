@@ -16,7 +16,6 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate>
 {
-	IBOutlet NSPanel		*toolsPanel;
 	IBOutlet NSButton		*loopButton;
     IBOutlet NSButton		*playButton;
     IBOutlet NSButton		*stopButton;
@@ -25,13 +24,9 @@
 	IBOutlet NSSlider		*songPos;
 	IBOutlet NSButton		*pauseButton;
 	
-	NSMutableArray			*plugInInfos;
 	IBOutlet NSMenu			*aboutPlugInMenu;
 	
 	IBOutlet NSMenu			*musicExportMenu;
-	
-	PPInstrumentWindowController *instrumentController;
-	
 	
 	IBOutlet NSDrawer		*infoDrawer;
 	IBOutlet NSTextField	*fileName;
@@ -50,16 +45,9 @@
 	MADMusic				*music;
 	MADLibrary				*madLib;
 	
-	PPMusicList				*musicList;
-	PPCurrentlyPlayingIndex	*currentlyPlayingIndex;
-	PPCurrentlyPlayingIndex	*previouslyPlayingIndex;
-	PPPreferences			*preferences;
 	MADDriverSettings		exportSettings;
 	IBOutlet NSBox			*exportSettingsBox;
 	PPSoundSettingsViewController *exportController;
-	
-	BOOL isQuitting;
-
 }
 
 @property (strong) NSString* musicName;
@@ -68,6 +56,8 @@
 @property (assign) IBOutlet NSWindow *exportWindow;
 @property (assign) IBOutlet NSMenuItem *pauseDockMenuItem;
 
+@property (assign) IBOutlet NSPanel *toolsPanel;
+@property (readonly, strong) PPInstrumentWindowController *instrumentController;
 @property (getter=isPaused, readwrite) BOOL paused;
 
 - (IBAction)showMusicList:(id)sender;
