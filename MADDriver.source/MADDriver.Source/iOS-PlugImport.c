@@ -176,6 +176,42 @@ static const iPlugInfo iOSPlugInfo[] = {
 	}
 };
 
+static OSErr PPMADuInfoFile( char *AlienFile, PPInfoRecU *InfoRec)
+{
+	MADSpecUni	*theMAD;
+	long		fileSize;
+	UNFILE		fileID;
+	
+	theMAD = (MADSpecUni*) malloc( sizeof( MADSpecUni) + 200);
+	
+	fileID = iFileOpenRead( AlienFile);
+	if( !fileID)
+	{
+		free( theMAD);
+		return MADReadingErr;
+	}
+	fileSize = iGetEOF( fileID);
+	
+	iRead( sizeof( MADSpec), (Ptr) theMAD, fileID);
+	iClose( fileID);
+	
+	wcscpy(InfoRec->internalFileName, theMAD->name);
+	
+	InfoRec->totalPatterns = theMAD->numPat;
+	InfoRec->partitionLength = theMAD->numPointers;
+	InfoRec->totalTracks = theMAD->numChn;
+	InfoRec->signature = 'MADK';
+	wchar_t madu[] = {'M', 'A', 'D', 'u', 0};
+	wcscpy(InfoRec->formatDescription, madu);
+	InfoRec->totalInstruments = theMAD->numInstru;
+	InfoRec->fileSize = fileSize;
+	
+	free( theMAD);
+	theMAD = NULL;
+	
+	return noErr;
+}
+
 static OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 {
 	MADSpec		*theMAD;
@@ -346,6 +382,29 @@ OSErr CheckMADFile(char* name)
 		   charl[ 1] == 'A' &&
 		   charl[ 2] == 'D' &&
 		   charl[ 3] == 'K') err = noErr;
+		else err = MADIncompatibleFile;
+		
+		iClose( refNum);
+	}
+	return err;
+}
+
+OSErr CheckMADuFile(char* name)
+{
+	UNFILE				refNum;
+	char				charl[CharlMADcheckLength];
+	OSErr				err;
+	
+	refNum = iFileOpenRead( name);
+	if( !refNum) return MADReadingErr;
+	else
+	{
+		iRead(CharlMADcheckLength, charl, refNum);
+		
+		if( charl[ 0] == 'M' &&							// MADK
+		   charl[ 1] == 'A' &&
+		   charl[ 2] == 'D' &&
+		   charl[ 3] == 'u') err = noErr;
 		else err = MADIncompatibleFile;
 		
 		iClose( refNum);
