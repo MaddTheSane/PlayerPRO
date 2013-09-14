@@ -262,7 +262,7 @@ void AudioEffect::dB2string(float value, char *text)
 {
 	if(value <= 0)
 #if MAC
-		strcpy(text, "   -°   ");
+		strcpy(text, "   -\xB0   ");
 #else
 		strcpy(text, "  -oo   ");
 #endif

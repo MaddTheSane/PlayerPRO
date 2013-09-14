@@ -245,8 +245,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		
 		{
 			//Check to see if there's a plug-in that matches the type.
-			int i = 0;
-			for (i = 0; i < inMADDriver->TotalPlug; i++) {
+			for (int i = 0; i < inMADDriver->TotalPlug; i++) {
 				if (strcmp(FillPlug->type, inMADDriver->ThePlug[i].type) == 0) {
 					//NSLog(@"Plug-ins %@ and %@ are similar", inMADDriver->ThePlug[i].file, tempBundle);
 					if (inMADDriver->ThePlug[i].version < FillPlug->version) {
@@ -309,18 +308,18 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 		//Application Main Bundle
 		NSBundle *mainBundle = [NSBundle mainBundle];
 		if (mainBundle != NULL) {
-			[PlugFolds addObject:[mainBundle bundleURL]];
+			[PlugFolds addObject:[mainBundle builtInPlugInsURL]];
 		}
 		
 #ifndef MAINPLAYERPRO
 		mainBundle = [NSBundle bundleWithIdentifier:@"net.sourceforge.playerpro.PlayerPROCore"];
 		if (mainBundle != NULL) {
-			[PlugFolds addObject:[mainBundle bundleURL]];
+			[PlugFolds addObject:[mainBundle builtInPlugInsURL]];
 		}
 		
 		mainBundle = [NSBundle bundleWithIdentifier:@"net.sourceforge.playerpro.PlayerPROKit"];
 		if (mainBundle != NULL) {
-			[PlugFolds addObject:[mainBundle bundleURL]];
+			[PlugFolds addObject:[mainBundle builtInPlugInsURL]];
 		}
 #endif
 		

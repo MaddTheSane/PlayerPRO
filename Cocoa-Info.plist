@@ -58,7 +58,6 @@
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>Pcmd</string>
-				<string>PPIN</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>

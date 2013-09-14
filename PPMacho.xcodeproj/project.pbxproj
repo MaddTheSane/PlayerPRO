@@ -231,7 +231,6 @@
 		5573A1161656FB3400A5AECA /* PlayerPROCore.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; };
 		5573A1171656FB3C00A5AECA /* MyDebugStr.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A3E810B5147C00FF8B50 /* MyDebugStr.c */; };
 		5573A1181656FB4D00A5AECA /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
-		5573A1191656FB4D00A5AECA /* ByteSwap.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A46D10B51CAB00FF8B50 /* ByteSwap.c */; };
 		5573A11A1656FB4D00A5AECA /* Effects.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D10C2F21DD00D6C081 /* Effects.c */; };
 		5573A11B1656FB4D00A5AECA /* Interrupt.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D20C2F21DD00D6C081 /* Interrupt.c */; };
 		5573A11C1656FB4D00A5AECA /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
@@ -273,7 +272,6 @@
 		5573A3E410B513BD00FF8B50 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* FileUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573A3EA10B5147C00FF8B50 /* MyDebugStr.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A3E810B5147C00FF8B50 /* MyDebugStr.c */; };
 		5573A41210B5160000FF8B50 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5573A46E10B51CAB00FF8B50 /* ByteSwap.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A46D10B51CAB00FF8B50 /* ByteSwap.c */; };
 		5573AF0817DF8FD400B68127 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 552C716210CDC11400C0E0D4 /* README.rtf */; };
 		5573AF0917DF8FD500B68127 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 552C716210CDC11400C0E0D4 /* README.rtf */; };
 		5574BCEC169634DE00CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -553,7 +551,6 @@
 		55BE99DA17978DB200D6DECC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55BE99DB17978DC700D6DECC /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		55C3589716C42D1800FB9FA6 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
-		55C3589816C42D1800FB9FA6 /* ByteSwap.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A46D10B51CAB00FF8B50 /* ByteSwap.c */; };
 		55C3589916C42D1800FB9FA6 /* Effects.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D10C2F21DD00D6C081 /* Effects.c */; };
 		55C3589A16C42D1800FB9FA6 /* Interrupt.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D20C2F21DD00D6C081 /* Interrupt.c */; };
 		55C3589B16C42D1800FB9FA6 /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
@@ -1890,7 +1887,6 @@
 		5573A3ED10B5151700FF8B50 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		5573A3EF10B5151700FF8B50 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5573A41010B5160000FF8B50 /* PPDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDefs.h; sourceTree = "<group>"; };
-		5573A46D10B51CAB00FF8B50 /* ByteSwap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ByteSwap.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawSprocket.framework; path = System/Library/Frameworks/DrawSprocket.framework; sourceTree = SDKROOT; };
 		5573AF0717DF8F5500B68127 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; lineEnding = 0; path = README; sourceTree = "<group>"; };
 		5578C48117D9E8560057D11B /* PlayerPRO Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2662,7 +2658,6 @@
 			isa = PBXGroup;
 			children = (
 				551292E5163DD68500C2C639 /* PlayerPROKit.h */,
-				551292DF163DD68500C2C639 /* Supporting Files */,
 				551292EE163DD7CE00C2C639 /* PPLibrary.h */,
 				558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */,
 				551292EF163DD7CE00C2C639 /* PPLibrary.m */,
@@ -2673,6 +2668,7 @@
 				55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */,
 				55B1B4F6166A861900820424 /* PPMusicObject.m */,
 				55B7665517E3BDFE004C1D45 /* App Plug-in code */,
+				551292DF163DD68500C2C639 /* Supporting Files */,
 			);
 			path = PlayerPROKit;
 			sourceTree = "<group>";
@@ -3476,7 +3472,6 @@
 				88E0C47D0C2F21E400D6C081 /* RDriverInt.h */,
 				550B011310BA1E1C004FC5D7 /* PPPrivate.h */,
 				88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */,
-				5573A46D10B51CAB00FF8B50 /* ByteSwap.c */,
 				88E0C3D10C2F21DD00D6C081 /* Effects.c */,
 				88E0C3D20C2F21DD00D6C081 /* Interrupt.c */,
 				88E0C3D60C2F21DD00D6C081 /* MainDriver.c */,
@@ -5577,7 +5572,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5573A1181656FB4D00A5AECA /* DelayOutPut.c in Sources */,
-				5573A1191656FB4D00A5AECA /* ByteSwap.c in Sources */,
 				5573A11A1656FB4D00A5AECA /* Effects.c in Sources */,
 				5573A11B1656FB4D00A5AECA /* Interrupt.c in Sources */,
 				5573A11C1656FB4D00A5AECA /* MainDriver.c in Sources */,
@@ -5620,7 +5614,6 @@
 				5573A36310B50DF600FF8B50 /* realft.c in Sources */,
 				5573A36410B50DFF00FF8B50 /* TickRemover.c in Sources */,
 				5573A3EA10B5147C00FF8B50 /* MyDebugStr.c in Sources */,
-				5573A46E10B51CAB00FF8B50 /* ByteSwap.c in Sources */,
 				550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
 				55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */,
 				55007E9D161A552C00297A3F /* FileUtils.c in Sources */,
@@ -5950,7 +5943,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55C3589716C42D1800FB9FA6 /* DelayOutPut.c in Sources */,
-				55C3589816C42D1800FB9FA6 /* ByteSwap.c in Sources */,
 				55C3589916C42D1800FB9FA6 /* Effects.c in Sources */,
 				55C3589A16C42D1800FB9FA6 /* Interrupt.c in Sources */,
 				55C3589B16C42D1800FB9FA6 /* MainDriver.c in Sources */,

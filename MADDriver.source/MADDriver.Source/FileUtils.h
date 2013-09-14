@@ -58,16 +58,7 @@ PPEXPORT void iClose( UNFILE iFileRefI) DEPRECATED_ATTRIBUTE;
 	
 ////////////////////////////////////////////////////////////
 
-#ifdef NOINLINE
-PPEXPORT OSType Ptr2OSType( Ptr str);
-PPEXPORT void OSType2Ptr( OSType type, Ptr str);
-
-PPEXPORT void PPLE32( void *msg_buf);
-PPEXPORT void PPLE16( void *msg_buf);
-PPEXPORT void PPBE32( void *msg_buf);
-PPEXPORT void PPBE16( void *msg_buf);
-#else
-
+//TODO: use system-based functions which will probably be faster
 static inline void MADByteSwap32(void *msg_buf)
 {
 	UInt32			temp = *((UInt32*) msg_buf);
@@ -80,6 +71,7 @@ static inline void MADByteSwap32(void *msg_buf)
 #endif
 }
 
+//TODO: use system-based functions which will probably be faster
 static inline void MADByteSwap16(void *msg_buf)
 {
 	UInt16			buf = *((UInt16*) msg_buf);
@@ -124,6 +116,8 @@ static inline void PPLE16(void *msg_buf)
 #define PPLE16(msg_buf)
 #endif
 
+/////////////////////////////////
+
 static inline void OSType2Ptr( OSType type, Ptr str)
 {
 	PPBE32(&type);
@@ -145,8 +139,6 @@ static inline OSType Ptr2OSType( char* str)
 	
 	return type;
 }
-
-#endif
 
 #ifdef __cplusplus
 }

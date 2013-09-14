@@ -7,3 +7,4 @@
 #endif
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
+#include <PlayerPROCore/PPPlug.h>
