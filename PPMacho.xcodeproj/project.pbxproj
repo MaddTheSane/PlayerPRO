@@ -2646,7 +2646,6 @@
 			isa = PBXGroup;
 			children = (
 				551292E5163DD68500C2C639 /* PlayerPROKit.h */,
-				551292DF163DD68500C2C639 /* Supporting Files */,
 				551292EE163DD7CE00C2C639 /* PPLibrary.h */,
 				558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */,
 				551292EF163DD7CE00C2C639 /* PPLibrary.m */,
@@ -2657,6 +2656,7 @@
 				55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */,
 				55B1B4F6166A861900820424 /* PPMusicObject.m */,
 				55B7665517E3BDFE004C1D45 /* App Plug-in code */,
+				551292DF163DD68500C2C639 /* Supporting Files */,
 			);
 			path = PlayerPROKit;
 			sourceTree = "<group>";

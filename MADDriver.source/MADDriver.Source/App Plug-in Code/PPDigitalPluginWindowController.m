@@ -13,6 +13,7 @@
 @end
 
 @implementation PPDigitalPluginWindowController
+@synthesize thePcmd;
 
 - (id)initWithWindow:(NSWindow *)window
 {
