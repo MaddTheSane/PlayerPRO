@@ -26,19 +26,11 @@ OSErr TestWAV( PCMWavePtr CC)
 /*___________________ long byte swap for Intel <-> Motorola Conversions*/
 //The following will only byteswap on a Big-endian machine
 
-/*static inline UInt32 longswap(UInt32 ul)
-{
-	return EndianS32_LtoN(ul);
-}*/
 #define longswap(ul) EndianU32_LtoN(ul)
 
 /*___________________ word byte swap for Intel <-> Motorola Conversions*/
 //The following will only byteswap on a Big-endian machine
 
-/*static inline UInt16 shrtswap(UInt16 us)
-{
-	return EndianS16_LtoN(us);
-}*/
 #define shrtswap(us) EndianU16_LtoN(us)
 
 /*_______________________________________________________________________*/
@@ -63,12 +55,8 @@ static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean res
 Ptr ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loopEnd, short *sampleSize, unsigned int *rate, Boolean *stereo)
 {
 	PCMWavePtr	WAVERsrc = NULL;
-	UNFILE		fRef;//, tempResRef, x;
+	UNFILE		fRef;
 	long		fSize;
-	//int			theHit;
-	//char		test;
- 	//short		gRefNum;
- 	//short		gVolSet;
 
 	{
 		CFIndex theLen = getCFURLFilePathRepresentationLength(theURL, true);
@@ -89,16 +77,19 @@ Ptr ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loo
 	
 	*stereo = false;
 	
-	{
+	if (fRef != NULL) {
 		fSize = iGetEOF(fRef);
 		if(!(WAVERsrc = (PCMWavePtr) malloc(fSize)))
 		{
-			iClose(fRef); return NULL;
+			iClose(fRef);
+			return NULL;
 		}
 		
 		if(iRead(fSize, (Ptr)WAVERsrc, fRef))
 		{
-			iClose(fRef); return NULL;
+			free(WAVERsrc);
+			iClose(fRef);
+			return NULL;
 		}
 		
 		if(EndianU32_BtoN((*WAVERsrc).ckid) =='RIFF')
@@ -114,7 +105,7 @@ Ptr ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loo
 					(*WAVERsrc).wFormatTag      = shrtswap((*WAVERsrc).wFormatTag);
 					(*WAVERsrc).nCannels        = shrtswap((*WAVERsrc).nCannels);
 					(*WAVERsrc).nSamplesPerSec  = longswap((*WAVERsrc).nSamplesPerSec);
-					(*WAVERsrc).nSamplesPerSec  = (*WAVERsrc).nSamplesPerSec << 16;
+					(*WAVERsrc).nSamplesPerSec  = (*WAVERsrc).nSamplesPerSec << 16; //FIXME: is this right for LE machines?
 					(*WAVERsrc).nAvgBytesPerSec = longswap((*WAVERsrc).nAvgBytesPerSec);
 					(*WAVERsrc).nBlockAlign     = shrtswap((*WAVERsrc).nBlockAlign);
 					(*WAVERsrc).wBitsPerSample  = shrtswap((*WAVERsrc).wBitsPerSample);
@@ -130,24 +121,29 @@ Ptr ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loo
 					
 					if((*WAVERsrc).wFormatTag != 1)
 					{
+						free(WAVERsrc);
+						iClose(fRef);
 						return NULL;
 					}
 				}
 				else
 				{
-					free( WAVERsrc);
+					free(WAVERsrc);
+					iClose(fRef);
 					return NULL;
-				}	
+				}
 			}
 			else
 			{
 				free(WAVERsrc);
+				iClose(fRef);
 				return NULL;
 			}
 		}
 		else
 		{
 			free(WAVERsrc);
+			iClose(fRef);
 			return NULL;
 		}
 		iClose(fRef);
@@ -212,7 +208,7 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 	return ptrReturn;
 }
 
-OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
+OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 {
 	OSErr					iErr;
 	Boolean					canceled;

@@ -1,2 +1,0 @@
-
-/* ThreadSystem.c */

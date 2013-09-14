@@ -239,7 +239,7 @@
 			<key>CFBundleTypeName</key>
 			<string>PPImpExpBundle</string>
 			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
+			<string>None</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.ppimpexp</string>
@@ -266,7 +266,7 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>mad</string>
+				<string>madbundle</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>MAD</string>
@@ -274,9 +274,11 @@
 			<string>PPMADBundle</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSIsAppleDefaultForType</key>
+			<false/>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.quadmation.playerpro.mad</string>
+				<string>net.sourceforge.playerpro.mad-bundle</string>
 			</array>
 		</dict>
 	</array>

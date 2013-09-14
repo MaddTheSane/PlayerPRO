@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 
+@class AppDelegate;
+
 @interface PPInstrumentWindowController : NSWindowController <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
 	MADMusic **curMusic;
@@ -27,6 +29,8 @@
 	IBOutlet NSImageView *waveFormImage;
 	IBOutlet NSOutlineView *instrumentView;
 }
+
+@property (weak) AppDelegate *appDel;
 
 @property (readwrite, nonatomic) MADMusic **curMusic;
 @property (readwrite) MADDriverRec **theDriver;

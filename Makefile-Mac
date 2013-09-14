@@ -5,18 +5,26 @@ ifeq ($(strip $(BUILD_DIR)),)
 	BUILD_DIR=build
 endif
 
+PLAYERPRO_TARGET=Cocoa
+PLAYER_TARGET="PlayerPRO Player"
+
 DEFAULT_BUILDCONFIGURATION=Release
-DEFAULT_TARGET=Cocoa
+DEFAULT_TARGET=$(PLAYERPRO_TARGET)
 BUILDCONFIGURATION?=$(DEFAULT_BUILDCONFIGURATION)
 
 CP=ditto --rsrc
 RM=rm
 
-.PHONY: all playerpro clean latest
+.PHONY: all playerpro playerpro6 player clean latest
 
 playerpro:
 	xcodebuild -project PPMacho.xcodeproj -target $(DEFAULT_TARGET) -configuration $(BUILDCONFIGURATION) build
 
+playerpro6:
+	xcodebuild -project PPMacho.xcodeproj -target $(PLAYERPRO_TARGET) -configuration $(BUILDCONFIGURATION) build
+
+player:
+	xcodebuild -project PPMacho.xcodeproj -target $(PLAYER_TARGET) -configuration $(BUILDCONFIGURATION) build
 
 #install:
 #	    cp -R build/Adium.app ~/Applications/
@@ -24,10 +32,10 @@ playerpro:
 
 clean:
 	xcodebuild -project PPMacho.xcodeproj -target $(DEFAULT_TARGET) -configuration $(BUILDCONFIGURATION) clean
-
-
+	xcodebuild -project PPMacho.xcodeproj -target $(PLAYERPRO_TARGET) -configuration $(BUILDCONFIGURATION) clean
+	xcodebuild -project PPMacho.xcodeproj -target $(PLAYER_TARGET) -configuration $(BUILDCONFIGURATION) clean
 
 latest:
-	svn up
+	git pull
 	make playerpro
 

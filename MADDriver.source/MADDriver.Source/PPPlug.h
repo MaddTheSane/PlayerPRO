@@ -96,7 +96,8 @@ typedef struct _PPInfoPlug
 	MADDriverRec *driverRec;
 	OSType fileType;
 	CFStringRef fileUTI;
-	CFTypeRef nsWindow;
+	CFTypeRef NSWindow;
+	CFTypeRef OutNSModal;
 } PPInfoPlug;
 
 #pragma mark Filters for Samples/Sounds

@@ -7,7 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#include <PlayerPROCore/PlayerPROCore.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
-@interface ComplexFadeController : NSWindowController
+@interface ComplexFadeController : PPDigitalPluginWindowController
 
 @end
