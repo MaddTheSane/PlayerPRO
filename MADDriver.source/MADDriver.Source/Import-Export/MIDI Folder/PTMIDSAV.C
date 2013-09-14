@@ -90,6 +90,7 @@ sData	* MADCreateSample( MADMusic *MDriver, short ins, short sample)
 	return curData;		
 }
 
+#if 0
 static Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, Boolean *stereo)
 {
 	Ptr 			soundPtr;
@@ -266,10 +267,9 @@ static Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short 
 	
 	if( *loopEnd - *loopStart < 4) { *loopEnd = 0;	*loopStart = 0;}
 	
-	CompactMem( maxSize);
-	
 	return( sound);
 }
+#endif
 
 /*
  * WritePfile: Writes division information (sample, pitch, effect) to

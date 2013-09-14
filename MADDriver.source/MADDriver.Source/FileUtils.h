@@ -59,9 +59,8 @@ EXP OSErr iSeekCur( long size, UNFILE iFileRefI);
 
 EXP void iClose( UNFILE iFileRefI);
 
-EXP char* MADstrcpy( char*, const char*) DEPRECATED_ATTRIBUTE;
-EXP int MADstrcmp( const char *dst, const char* src);
-
+#define MADstrcpy(char1, char2) strcpy(char1, char2)
+#define MADstrcmp(str1, str2) strcmp(str1, str2)
 	
 EXP unsigned char* MYC2PStr( Ptr cStr);
 EXP void MYP2CStr( unsigned char *cStr);

@@ -38,8 +38,6 @@
 
 #include "MySndPlayDB.h"
 
-static pascal void	MySndPlayDoubleBufferCleanUpProc (SndChannelPtr theChannel, SndCommand * theCallBackCmd);
-
 #define kBufSize					2048
 
 // Structs
@@ -243,6 +241,7 @@ exitDispose:
 	goto exit;
 }
 
+#if 0
 static pascal void	MySndPlayDoubleBufferCleanUpProc (SndChannelPtr theChannel, SndCommand * theCallBackCmd) {
 	PerChanInfoPtr					perChanInfoPtr;
 
@@ -260,6 +259,7 @@ static pascal void	MySndPlayDoubleBufferCleanUpProc (SndChannelPtr theChannel, S
 	// Have to put the user's callback proc back so they get called when the next buffer finishes
 	theChannel->callBack = perChanInfoPtr->usersCallBack;
 }
+#endif
 
 static pascal void	MySndPlayDoubleBufferCallBackProc (SndChannelPtr theChannel, SndCommand * theCallBackCmd) {
 	PPSndDoubleBufferHeaderPtr		theParams;

@@ -43,26 +43,25 @@ OSErr TestWAV( PCMWavePtr CC)
 Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo)
 {
 	PCMWavePtr	WAVERsrc = NULL;
-	short		fRef;//, tempResRef, x;
+	short		fRef;
 	long		fSize;
-	//int			theHit;
-	//char		test;
- 	//short		gRefNum;
- 	//short		gVolSet;
 	
 	*stereo = false;
 	
-	if(!FSpOpenDF(fileSpec, fsRdWrPerm, &fRef))
+	if(!FSpOpenDF(fileSpec, fsRdPerm, &fRef))
 	{
 		GetEOF(fRef, &fSize);
 		if(!(WAVERsrc = (PCMWavePtr) NewPtr(fSize))) 
 		{
-			FSCloseFork(fRef); return NULL;
+			FSCloseFork(fRef);
+			return NULL;
 		}
 		
 		if(FSRead(fRef, &fSize, &(*WAVERsrc)))
 		{
-			FSCloseFork(fRef); return NULL;
+			FSCloseFork(fRef);
+			DisposePtr((Ptr)WAVERsrc);
+			return NULL;
 		}
 		
 		if(EndianU32_BtoN((*WAVERsrc).ckid) =='RIFF')
@@ -94,24 +93,29 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 					
 					if((*WAVERsrc).wFormatTag != 1)
 					{
+						DisposePtr( (Ptr) WAVERsrc);
+						FSCloseFork(fRef);
 						return NULL;
 					}
 				}
 				else
 				{
 					DisposePtr( (Ptr) WAVERsrc);
+					FSCloseFork(fRef);
 					return NULL;
 				}	
 			}
 			else
 			{
 				DisposePtr( (Ptr) WAVERsrc);
+				FSCloseFork(fRef);
 				return NULL;
 			}
 		}
 		else
 		{
 			DisposePtr( (Ptr) WAVERsrc);
+			FSCloseFork(fRef);
 			return NULL;
 		}
 		FSCloseFork(fRef);
@@ -120,7 +124,7 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 	{
 		long sndSize = WAVERsrc->dataSize;
 		
-		BlockMoveData( (Ptr)(long) (WAVERsrc->theData), (Ptr) WAVERsrc , sndSize);
+		memmove(WAVERsrc, WAVERsrc->theData, sndSize);
 		
 		SetPtrSize( (Ptr) WAVERsrc, sndSize);
 		
@@ -184,11 +188,13 @@ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug
 	
 	if( !canceled && iErr == noErr)
 	{
-		pStrcpy( newfile->name, file.name);
+		short tmpvRef;
+		long tmpDirID;
 		
-		iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newfile->vRefNum, &newfile->parID);
+		iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tmpvRef, &tmpDirID);
 		if( iErr == noErr)
 		{
+			iErr = FSMakeFSSpec(tmpvRef, tmpDirID, file.name, newfile);
 			/////////////////////////////////////////////////
 			//		WAVE CONVERSION
 			/////////////////////////////////////////////////

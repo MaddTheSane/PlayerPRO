@@ -37,7 +37,7 @@ static MMD1NOTE 	*mmd1pat;
 
 
 static Ptr			theMEDRead;
-#define READMEDFILE(dst, size)	{BlockMoveData( theMEDRead, dst, size);	theMEDRead += (long) size;}
+#define READMEDFILE(dst, size)	{memcpy( tdst, heMEDRead, size);	theMEDRead += (long) size;}
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {

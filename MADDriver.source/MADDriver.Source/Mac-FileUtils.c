@@ -34,7 +34,7 @@ extern void NSLog(CFStringRef format, ...);
 unsigned char* MYC2PStr( Ptr cStr)
 {
 	long size = strlen( cStr);
-	BlockMoveData( cStr, cStr + 1, strlen( cStr));
+	memmove( cStr + 1, cStr, size);
 	cStr[ 0] = size;
 
 	return (unsigned char*) cStr;
@@ -43,7 +43,7 @@ unsigned char* MYC2PStr( Ptr cStr)
 void MYP2CStr( unsigned char *cStr)
 {
 	long size = cStr[ 0];
-	BlockMoveData( cStr + 1, cStr, size);
+	memmove( cStr, cStr + 1, size);
 	cStr[ size] = 0;
 }
 
@@ -156,37 +156,10 @@ void iClose(UNFILE iFileRefI)
 
 /////////////////////////////////
 
-Ptr MADstrcpy( Ptr dst, const char* src)
-{
-	NSLog(CFSTR("MADstrcpy is depricated; just use strcpy"));
-	long i = 0;
-	
-	do
-	{
-		dst[ i] = src[ i];
-	}while( src[ i++]);
-	
-	return dst;
-}
-
-//TODO: use system native strcmp?
-int MADstrcmp( const char *dst, const char* src)
-{
-	long i = 0;
-	
-	do
-	{
-		if( dst[ i] != src[ i]) return -1;
-	}while( src[ i++]);
-	
-	return 0;
-}
-
 EXP void OSType2Ptr( OSType type, Ptr str)
 {
 	MOT32(&type);
-	
-	BlockMoveData( &type, str, 4);
+	memcpy(str, &type, 4);
 	str[ 4] = 0;
 }
 
@@ -198,7 +171,7 @@ EXP OSType Ptr2OSType( char* str)
 	i = strlen( str);
 	if( i > 4) i = 4;
 	type = '    ';
-	BlockMoveData( str, &type, i);
+	memcpy(&type, str, i);
 	MOT32(&type);
 	
 	return type;

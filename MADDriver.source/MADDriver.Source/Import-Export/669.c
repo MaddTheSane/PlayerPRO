@@ -60,7 +60,7 @@ Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatDa
 
 static inline void mystrcpy( Ptr a, BytePtr b)
 {
-	BlockMoveData( b + 1, a, b[ 0]);
+	memcpy(a, b + 1, b[0]);
 }
 
 static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDriverSettings *init)
@@ -229,7 +229,7 @@ static OSErr Convert6692Mad( Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADD
 				return MADNeedMemory;
 			}
 			
-			BlockMoveData( theInstrument[i], curData->data, curData->size);
+			memcpy(curData->data, theInstrument[i], curData->size);
 			
 			destPtr = curData->data;
 			for( temp = 0; temp < curData->size; temp++) *(destPtr + temp) -= 0x80;

@@ -254,7 +254,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		if( curData->data != NULL)
 		{
-			BlockMove( PATData, curData->data, curData->size);
+			memcpy( curData->data, PATData, curData->size);
 			
 			if( curData->amp == 16)
 			{

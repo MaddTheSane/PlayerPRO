@@ -30,8 +30,6 @@ static void SetDText (DialogPtr dlog, short item, Str255 str)
 	DrawOneControl( control);
 }
 
-static GDHandle	TheGDevice/*:0xCC8*/;
-
 static void AutoPosition( DialogPtr aDia)
 {
 	Point		Position, mouse;

@@ -415,7 +415,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	UpdateALLWindow();
 	
 	copyMusic = (MADMusic*) NewPtr( sizeof( MADMusic));
-	BlockMoveData( curMusic, copyMusic, sizeof( MADMusic));
+	memcpy( copyMusic, curMusic, sizeof( MADMusic));
 	
 	if( MADCreateDriver( &thePrefs.DirectDriverType, gMADLib, &copyDriver) != noErr) return false;
 	
@@ -789,7 +789,7 @@ void DoAIFFExporting( void)
 			
 			if( theType == 'sfil')
 			{
-				BlockMoveData( sndPtr, tempPtr, full);
+				memcpy( tempPtr, sndPtr, full);
 				tempPtr += full;
 			}
 			else
@@ -804,7 +804,7 @@ void DoAIFFExporting( void)
 		else
 		{
 			full = (copyDriver->ASCBUFFERReal - copyDriver->BytesToRemoveAtEnd) * 2L * 2L;
-			BlockMoveData( sndPtr, tempPtr, full);
+			memcpy( tempPtr, sndPtr, full);
 			tempPtr += full;
 		}
 		

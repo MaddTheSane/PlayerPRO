@@ -3,6 +3,7 @@
 #include <CoreFoundation/CFPlugInCOM.h>
 #include "MAD.h"
 #include "RDriver.h"
+#include "RDriverInt.h"
 #include "PPPlug.h"
 #include "PPPrivate.h"
 

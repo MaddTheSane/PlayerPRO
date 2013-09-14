@@ -805,7 +805,7 @@ void OSType2Str( OSType type, Str255 str)
 
 	str[ 0] = 4;
 	MOT32(&type);
-	BlockMoveData( &type, str+1, 4);
+	memcpy( str+1, &type, 4);
 
 	for( i = 4; i > 0; i--)
 	{
