@@ -718,8 +718,6 @@ void MADDisposeReverb( MADDriverRec *intDriver)
 
 OSErr MADCreateReverb( MADDriverRec *intDriver)
 {
-	long i;
-	
 	if( intDriver->DriverSettings.Reverb)
 	{
 		intDriver->RDelay = (intDriver->DriverSettings.ReverbSize * ( intDriver->DriverSettings.outPutRate >> 16L)) / 1000;
@@ -1339,7 +1337,6 @@ OSErr MADInitLibraryNew( FSRefPtr PlugsFolder, MADLibrary **lib)
 OSErr MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
 {
 	FSRef TempRef;
-	OSErr errmess = noErr;
 	if(sysMemory == TRUE) NSLog(CFSTR("sysMemory definition in MADInitLibrary is ignored"));
 	
 	if(PlugsFolderName != NULL)
@@ -2738,8 +2735,6 @@ OSErr MADCleanCurrentMusic( MADMusic *MDriver, MADDriverRec *intDriver)
 
 OSErr MADResetInstrument( InstrData		*curIns)
 {
-	short i;
-
 	if (curIns == NULL) {
 		return MADParametersErr;
 	}
@@ -2751,25 +2746,11 @@ OSErr MADResetInstrument( InstrData		*curIns)
 	
 	/**/
 	
-#if 1
 	memset(curIns->what, 0, sizeof(curIns->what));
 	memset(curIns->volEnv, 0, sizeof(curIns->volEnv));
 	memset(curIns->pannEnv, 0, sizeof(curIns->pannEnv));
 	memset(curIns->pitchEnv, 0, sizeof(curIns->pitchEnv));
-#else
-	for( i = 0; i < 96; i++) curIns->what[ i]		= 0;
-	for( i = 0; i < 12; i++)
-	{
-		curIns->volEnv[ i].pos		= 0;
-		curIns->volEnv[ i].val		= 0;
-		
-		curIns->pannEnv[ i].pos	= 0;
-		curIns->pannEnv[ i].val	= 0;
-		
-		curIns->pitchEnv[ i].pos	= 0;
-		curIns->pitchEnv[ i].val	= 0;
-	}
-#endif
+	
 	curIns->volSize		= 0;
 	curIns->pannSize	= 0;
 	
@@ -2942,7 +2923,7 @@ void MADCheckSpeedPattern( MADMusic *MDriver, MADDriverRec *intDriver)
 	{
 		for( y = MDriver->header->numChn-1; y >= 0 ; y--)
 		{
-			Channel	*ch = &intDriver->chan[ y];
+			//Channel	*ch = &intDriver->chan[ y];
 			
 			aCmd = GetMADCommand( x, y, MDriver->partition[ intDriver->Pat]);
 			
@@ -3385,7 +3366,7 @@ OSErr MADPlaySndHandle( MADDriverRec *MDriver, Handle sound, long channel, long 
 	ExtSoundHeader	*ExtHeader = NULL;
 	long			i;
 	Boolean			stereo = false;
-	Channel			*curVoice;
+	//Channel			*curVoice;
 	OSType			Scomp;
 	unsigned long	Ssize, Samp, SbaseFreq, Sc2spd, Sstart, Send;
 	Ptr				rPtr;

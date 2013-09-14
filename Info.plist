@@ -384,7 +384,7 @@
 	<key>CFBundleIconFile</key>
 	<string>ppApp</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.sourceforge.playerpro.playerpro</string>
+	<string>net.sourceforge.playerpro.playerpro5</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleLongVersionString</key>
@@ -393,6 +393,11 @@
 	<string>PlayerPRO</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>LSArchitecturePriority</key>
+	<array>
+		<string>ppc</string>
+		<string>i386</string>
+	</array>
 	<key>CFBundleShortVersionString</key>
 	<string>5.10.0</string>
 	<key>CFBundleSignature</key>

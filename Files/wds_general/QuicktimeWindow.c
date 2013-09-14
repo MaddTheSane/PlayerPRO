@@ -12,34 +12,33 @@
 //static pascal void MySoundCallBackFunction(SndChannelPtr theChannel, SndCommand *theCmd);
 
 
-	extern	EventRecord				theEvent;
-	extern	Cursor					HandCrsr;
-	extern	MenuHandle				ViewsMenu;
-	extern	Boolean 				DragManagerUse, newQuicktime;
-	
-			DialogPtr				QuicktimeDlog;
-	
-	static	MovieController				gMovieController;
-			FSSpec						QTFile;
-			Movie						QTMovie;
-	static	Rect						QTMovieRect;
-	static	long						lastSeconds;
-	static	Str63						durationString;
-	static	UNFILE						QTresRefNum;
-	static	Boolean						QTCheckLoop, QTTemporaryFile;
-	static	Str255						QTFileName;
-	static	Boolean						canAcceptDrag;
-	static	ControlHandle				ResetBalanceBut, balanceCntl, volumeCntl, SaveBut, LoadBut, BassCntl, TrebleCntl, LeftCntl, RightCntl, ResetBassBut, ResetTrebleBut;
-	static	MovieProgressUPP			gProgressUPP;
-	static	short						gVolume, gBass, gTreble, gBalance;
-			MediaHandler				gSoundMediaHandler;
-	static	DataHandler					gDataHandler;
-	static	Track						gSoundTrack;
-	static	MediaEQSpectrumBandsRecord	gEQ;
-			Boolean						gMovieQuicktime, gBufferDone;
-	
-	
-/*
+extern	EventRecord				theEvent;
+extern	Cursor					HandCrsr;
+extern	MenuHandle				ViewsMenu;
+extern	Boolean 				DragManagerUse, newQuicktime;
+
+DialogPtr				QuicktimeDlog;
+
+static	MovieController				gMovieController;
+FSSpec						QTFile;
+Movie						QTMovie;
+static	Rect						QTMovieRect;
+static	long						lastSeconds;
+static	Str63						durationString;
+static	UNFILE						QTresRefNum;
+static	Boolean						QTCheckLoop, QTTemporaryFile;
+static	Str255						QTFileName;
+static	Boolean						canAcceptDrag;
+static	ControlHandle				ResetBalanceBut, balanceCntl, volumeCntl, SaveBut, LoadBut, BassCntl, TrebleCntl, LeftCntl, RightCntl, ResetBassBut, ResetTrebleBut;
+static	MovieProgressUPP			gProgressUPP;
+static	short						gVolume, gBass, gTreble, gBalance;
+MediaHandler				gSoundMediaHandler;
+static	DataHandler					gDataHandler;
+static	Track						gSoundTrack;
+static	MediaEQSpectrumBandsRecord	gEQ;
+Boolean						gMovieQuicktime, gBufferDone;
+
+#if 0
 static	long			   					whichBuffer = kFirstBuffer;
 static	SndCommand	 						*pPlayCmd;
 static	Ptr 								pDecomBuffer = NULL;
@@ -55,9 +54,9 @@ static	SndChannelPtr 						pSoundChannel = NULL;
 static	SndCallBackUPP 						theSoundCallBackUPP = NewSndCallBackUPP(MySoundCallBackFunction);
 static	Handle								hSys7SoundData = NULL;
 static	long								BufferSwitch = 0;
-*/
-	DragTrackingHandlerUPP	MyTrackingQTUPP;
-	DragReceiveHandlerUPP	MyReceiveQTUPP;
+#endif
+DragTrackingHandlerUPP	MyTrackingQTUPP;
+DragReceiveHandlerUPP	MyReceiveQTUPP;
 
 #define MINWIDTH	305
 
@@ -71,7 +70,7 @@ void CloseQT(void);
 
 
 
-/*
+#if 0
 // * ----------------------------
 // MySoundCallBackFunction
 //
@@ -80,24 +79,24 @@ static pascal void MySoundCallBackFunction(SndChannelPtr theChannel, SndCommand 
 {
 #pragma unused(theChannel)
 	
-	#ifndef TARGET_API_MAC_CARBON
-		#if !GENERATINGCFM
-			long oldA5;
-			oldA5 = SetA5(theCmd->param2);
-		#else
-			#pragma unused(theCmd)
-		#endif
-	#else
-		#pragma unused(theCmd)
-	#endif // TARGET_API_MAC_CARBON
-
+#ifndef TARGET_API_MAC_CARBON
+#if !GENERATINGCFM
+	long oldA5;
+	oldA5 = SetA5(theCmd->param2);
+#else
+#pragma unused(theCmd)
+#endif
+#else
+#pragma unused(theCmd)
+#endif // TARGET_API_MAC_CARBON
+	
 	gBufferDone = true;
-
-	#ifndef TARGET_API_MAC_CARBON
-		#if !GENERATINGCFM
-			oldA5 = SetA5(oldA5);
-		#endif
-	#endif // TARGET_API_MAC_CARBON
+	
+#ifndef TARGET_API_MAC_CARBON
+#if !GENERATINGCFM
+	oldA5 = SetA5(oldA5);
+#endif
+#endif // TARGET_API_MAC_CARBON
 }
 
 // * ----------------------------
@@ -111,7 +110,7 @@ pascal Boolean SoundConverterFillBufferDataProc(SoundComponentDataPtr *outData, 
 	SCFillBufferDataPtr pFillData = (SCFillBufferDataPtr)inRefCon;
 	
 	OSErr err = noErr;
-							
+	
 	// if after getting the last chunk of data the total time is over the duration, we're done
 	if (pFillData->getMediaAtThisTime >= pFillData->sourceDuration) {
 		pFillData->isThereMoreSource = false;
@@ -121,13 +120,13 @@ pascal Boolean SoundConverterFillBufferDataProc(SoundComponentDataPtr *outData, 
 	}
 	
 	if (pFillData->isThereMoreSource) {
-	
+		
 		long		sourceBytesReturned;
 		long		numberOfSamples;
 		TimeValue	sourceReturnedTime, durationPerSample;
-							
+		
 		HUnlock(pFillData->hSource);
-
+		
 		err = GetMediaSample(pFillData->sourceMedia,		// specifies the media for this operation
 							 pFillData->hSource,			// function returns the sample data into this handle
 							 pFillData->maxBufferSize,		// maximum number of bytes of sample data to be returned
@@ -140,7 +139,7 @@ pascal Boolean SoundConverterFillBufferDataProc(SoundComponentDataPtr *outData, 
 							 0,								// maximum number of samples to be returned (0 to use a value that is appropriate for the media)
 							 &numberOfSamples,				// number of samples it actually returned
 							 NULL);							// flags that describe the sample (NULL to ignore)
-							 
+		
 		HLock(pFillData->hSource);
 		
 		
@@ -157,7 +156,7 @@ pascal Boolean SoundConverterFillBufferDataProc(SoundComponentDataPtr *outData, 
 		pFillData->getMediaAtThisTime = sourceReturnedTime + (durationPerSample * numberOfSamples);
 		pFillData->compData.bufferSize = sourceBytesReturned; 
 	}
-
+	
 	// set outData to a properly filled out ExtendedSoundComponentData struct
 	*outData = (SoundComponentDataPtr)&pFillData->compData;
 	
@@ -172,10 +171,10 @@ pascal Boolean SoundConverterFillBufferDataProc(SoundComponentDataPtr *outData, 
 OSErr MyGetSoundDescriptionExtension(Media inMedia, AudioFormatAtomPtr *outAudioAtom, CmpSoundHeaderPtr outSoundHeader)
 {
 	OSErr err = noErr;
-			
+	
 	Size size;
 	Handle extension;
-		
+	
 	// Version 1 of this record includes four extra fields to store information about compression ratios. It also defines
 	// how other extensions are added to the SoundDescription record.
 	// All other additions to the SoundDescription record are made using QT atoms. That means one or more
@@ -187,7 +186,7 @@ OSErr MyGetSoundDescriptionExtension(Media inMedia, AudioFormatAtomPtr *outAudio
 	// get the description of the sample data
 	GetMediaSampleDescription(inMedia, 1, (SampleDescriptionHandle)sourceSoundDescription);
 	BailErr(GetMoviesError());
-
+	
 	extension = NewHandle(0);
 	
 	// get the "magic" decompression atom
@@ -221,7 +220,8 @@ OSErr MyGetSoundDescriptionExtension(Media inMedia, AudioFormatAtomPtr *outAudio
 	
 bail:
 	return err;
-}*/
+}
+#endif
 
 pascal OSErr QTProgressUPP(Movie theMovie, short message, short whatOperation, Fixed percentDone, long refcon)
 {
@@ -245,7 +245,7 @@ void DrawQTItem( Boolean selected, Rect* bounds, Str255 data, FSSpec	*spec, RgnH
 	FInfo				fndrInfo;
 	IconRef			iconref;
 	SInt16				label;
-
+	
 	iconRect.left		= bounds->left;			// 21
 	iconRect.top		= bounds->top;
 	iconRect.bottom		= iconRect.top + 32;
@@ -268,7 +268,7 @@ void DrawQTItem( Boolean selected, Rect* bounds, Str255 data, FSSpec	*spec, RgnH
 	
 	GetDialogItem( QuicktimeDlog, 9, &itemType, &itemHandle, &itemRect);
 	srcRect = itemRect;
-		
+	
 	itemRect.bottom = itemRect.top + 13;
 	itemRect.left = itemRect.left +  (itemRect.right - itemRect.left)/2 - StringWidth( data)/2;
 	itemRect.right = itemRect.left + 2 + StringWidth( data);
@@ -293,9 +293,9 @@ void  UpdateQTWindow( DialogPtr GetSelection)
 	
 	GetPort( &SavePort);
 	SetPortDialogPort( QuicktimeDlog);
-
+	
 	BeginUpdate( GetDialogWindow( QuicktimeDlog));
-
+	
 	DrawDialog( QuicktimeDlog);
 	
 	UpdateMovie( QTMovie);
@@ -310,8 +310,8 @@ void  UpdateQTWindow( DialogPtr GetSelection)
 	itemRect.left = 0;
 	itemRect.right = caRect.right;
 	
-/*	ForeColor( whiteColor);
-	PaintRect( &itemRect);*/
+	/*	ForeColor( whiteColor);
+	 PaintRect( &itemRect);*/
 	
 	GetDialogItem( QuicktimeDlog , 2, &itemType, &itemHandle, &itemRect);
 	DrawQTItem( false, &itemRect, QTFileName, &QTFile, NULL);
@@ -323,27 +323,27 @@ void  UpdateQTWindow( DialogPtr GetSelection)
 	InsetRect( &QTMovieRect, 1, 1);
 	
 	EndUpdate( GetDialogWindow( QuicktimeDlog));
-
+	
 	SetPort( SavePort);
 } 
 
 short GetQuicktimeChannels( void)
 {
-//	return mySndHeader0.numChannels;
-
-return 2;
+	//return mySndHeader0.numChannels;
+	
+	return 2;
 }
 
 short GetQuicktimeBits( void)
 {
-//	return mySndHeader0.sampleSize;
-return 8;
+	//return mySndHeader0.sampleSize;
+	return 8;
 }
 
 Ptr GetQuicktimeSource( void)
 {
-//	return pDecomBuffer + BufferSwitch*256;
-return NULL;
+	//return pDecomBuffer + BufferSwitch*256;
+	return NULL;
 }
 
 void DoNullQT( void)
@@ -361,53 +361,54 @@ void DoNullQT( void)
 	SetPortDialogPort( QuicktimeDlog);
 	
 	////////
-	
-/*	{
-	UInt32		actualOutputBytes;
-	UInt32		outputFrames, outputFlags;
-	OSErr		err;
-	Boolean		isSoundDone = false;
-	
-	if (gBufferDone == true)
+#if 0
 	{
-		if (kFirstBuffer == whichBuffer) {
-			pPlayCmd = &thePlayCmd0;
-			pDecomBuffer = pDecomBuffer0;
-			pSndHeader = &mySndHeader0;
-			whichBuffer = kSecondBuffer;
-		} else {
-			pPlayCmd = &thePlayCmd1;
-			pDecomBuffer = pDecomBuffer1;
-			pSndHeader = &mySndHeader1;
-			whichBuffer = kFirstBuffer;
+		UInt32		actualOutputBytes;
+		UInt32		outputFrames, outputFlags;
+		OSErr		err;
+		Boolean		isSoundDone = false;
+		
+		if (gBufferDone == true)
+		{
+			if (kFirstBuffer == whichBuffer) {
+				pPlayCmd = &thePlayCmd0;
+				pDecomBuffer = pDecomBuffer0;
+				pSndHeader = &mySndHeader0;
+				whichBuffer = kSecondBuffer;
+			} else {
+				pPlayCmd = &thePlayCmd1;
+				pDecomBuffer = pDecomBuffer1;
+				pSndHeader = &mySndHeader1;
+				whichBuffer = kFirstBuffer;
+			}
+			
+			BufferSwitch = 0;
+			
+			err = SoundConverterFillBuffer(mySoundConverter,		// a sound converter
+										   theFillBufferDataUPP,	// the callback UPP
+										   &scFillBufferData,		// refCon passed to FillDataProc
+										   pDecomBuffer,			// the decompressed data 'play' buffer
+										   outputBytes,				// size of the 'play' buffer
+										   &actualOutputBytes,		// number of output bytes
+										   &outputFrames,			// number of output frames
+										   &outputFlags);			// fillbuffer retured advisor flags
+			//if (err) break;
+			if((outputFlags & kSoundConverterHasLeftOverData) == false) {
+				isSoundDone = true;
+			}
+			
+			pSndHeader->numFrames = outputFrames;
+			
+			gBufferDone = false;
+			if (!isSoundDone) {
+				SndDoCommand(pSoundChannel, &theCallBackCmd, true);	// reuse callBackCmd
+			}
+			
+			SndDoCommand(pSoundChannel, pPlayCmd, true);			// play the next buffer
 		}
-		
-		BufferSwitch = 0;
-		
-		err = SoundConverterFillBuffer(mySoundConverter,		// a sound converter
-									   theFillBufferDataUPP,	// the callback UPP
-									   &scFillBufferData,		// refCon passed to FillDataProc
-									   pDecomBuffer,			// the decompressed data 'play' buffer
-									   outputBytes,				// size of the 'play' buffer
-									   &actualOutputBytes,		// number of output bytes
-									   &outputFrames,			// number of output frames
-									   &outputFlags);			// fillbuffer retured advisor flags
-		//if (err) break;
-		if((outputFlags & kSoundConverterHasLeftOverData) == false) {
-			isSoundDone = true;
-		}
-		
-		pSndHeader->numFrames = outputFrames;
-		
-		gBufferDone = false;
-		if (!isSoundDone) {
-			SndDoCommand(pSoundChannel, &theCallBackCmd, true);	// reuse callBackCmd
-		}
-		
-		SndDoCommand(pSoundChannel, pPlayCmd, true);			// play the next buffer
+		if( BufferSwitch < 128) BufferSwitch++;
 	}
-	if( BufferSwitch < 128) BufferSwitch++;
-	}*/
+#endif
 	////////
 	
 	MoviesTask( QTMovie, 0);
@@ -442,44 +443,46 @@ void DoNullQT( void)
 			{
 				Fixed playRate = 1;
 				MCDoAction( gMovieController, mcActionPrerollAndPlay, (void*) playRate);
-		
+				
 				GoToBeginningOfMovie( QTMovie);
 				StartMovie( QTMovie);
 			}
-			break;
-			
+				break;
+				
 			default:
 				QTDoAction( false);
 				DoLoadOtherMusic( true);
 				
 				//CloseQT();
-			break;
+				break;
 		}
 	}
 	
-/*	if( gSoundMediaHandler)
+#if 0
+	if( gSoundMediaHandler)
 	{
-	SoundComponentDataPtr sourceData;
-	Component	outputComponent;
-	ComponentInstance	ci;
-	SoundComponentDataPtr	sd;
+		SoundComponentDataPtr sourceData;
+		Component	outputComponent;
+		ComponentInstance	ci;
+		SoundComponentDataPtr	sd;
+		
+		result = MediaGetSoundOutputComponent( gSoundMediaHandler, &outputComponent);
+		if( result) DebugStr("\pError");
+		
+		result = SoundComponentGetSourceData( gSoundMediaHandler, &sourceData);
+		if( result) DebugStr("\pError");
+		
+		Debugger();
+	}
 	
-	result = MediaGetSoundOutputComponent( gSoundMediaHandler, &outputComponent);
-	if( result) DebugStr("\pError");
-	
-	result = SoundComponentGetSourceData( gSoundMediaHandler, &sourceData);
-	if( result) DebugStr("\pError");
-	
-	Debugger();
-	}*/
-	
-/*	if( gSoundMediaHandler)
+	if( gSoundMediaHandler)
 	{
 		MediaGetSoundBassAndTreble( gSoundMediaHandler, &gBass, &gTreble);
 		
 		NumToString( gBass, aStr);
 		SetDText( QuicktimeDlog, 13, aStr);
-	}*/
+	}
+#endif
 	
 	if( gSoundMediaHandler && newQuicktime)
 	{
@@ -550,7 +553,7 @@ void SelectQTFile( FSSpec	*file)
 	{
 		MyDebugStr(__LINE__, __FILE__, "QTMovie != NULL");
 	}
-
+	
 	QTFile = *file;
 	QTMovie = NULL;
 	
@@ -578,7 +581,7 @@ void SelectQTFile( FSSpec	*file)
 		}
 	}
 	
-	RETRY:
+RETRY:
 	
 	iErr = OpenMovieFile( &QTFile, &QTresRefNum, fsCurPerm);
 	if( iErr) MyDebugStr(__LINE__, __FILE__, "OpenMovieFile");
@@ -588,10 +591,12 @@ void SelectQTFile( FSSpec	*file)
 	
 	CloseMovieFile( QTresRefNum);
 	
-/*	if( iErr != noErr)
+#if 0
+	if( iErr != noErr)
 	{
 		return;
-	}*/
+	}
+#endif
 	
 	if( iErr == -2048 && QTTemporaryFile == false)	// TRY A CONVERSION FILE->MOVIE
 	{
@@ -620,156 +625,158 @@ void SelectQTFile( FSSpec	*file)
 	
 	////////////////////////////////
 	
-/*	{
-	AudioCompressionAtomPtr	theDecompressionAtom;
-	SoundComponentData		theInputFormat,
-							theOutputFormat;
-	
-	Media					theSoundMedia = NULL;
-
-	Ptr						pSourceBuffer = NULL;
-								
-	OSErr 					err = noErr;
-	
-	// get the first sound track
-	usedTrack = GetMovieIndTrackType( QTMovie, 1, SoundMediaType, movieTrackMediaType);
-	if (NULL == usedTrack ) iErr = invalidTrack;
-
-	// get and return the sound track media
-	theSoundMedia = GetTrackMedia( usedTrack);
-	if (NULL == theSoundMedia) iErr = invalidTrack;
-	
-	err = MyGetSoundDescriptionExtension(theSoundMedia, (AudioFormatAtomPtr *)&theDecompressionAtom, &mySndHeader0);
-	if (noErr == err) {	
-		// setup input/output format for sound converter
-		theInputFormat.flags = 0;
-		theInputFormat.format = mySndHeader0.format;
-		theInputFormat.numChannels = mySndHeader0.numChannels;
-		theInputFormat.sampleSize = mySndHeader0.sampleSize;
-		theInputFormat.sampleRate = mySndHeader0. sampleRate;
-		theInputFormat.sampleCount = 0;
-		theInputFormat.buffer = NULL;
-		theInputFormat.reserved = 0;
+#if 0
+	{
+		AudioCompressionAtomPtr	theDecompressionAtom;
+		SoundComponentData		theInputFormat,
+		theOutputFormat;
 		
-		theOutputFormat.flags = 0;
-		theOutputFormat.format = kSoundNotCompressed;
-		theOutputFormat.numChannels = theInputFormat.numChannels;
-		theOutputFormat.sampleSize = theInputFormat.sampleSize;
-		theOutputFormat.sampleRate = theInputFormat.sampleRate;
-		theOutputFormat.sampleCount = 0;
-		theOutputFormat.buffer = NULL;
-		theOutputFormat.reserved = 0;
-
-		err = SoundConverterOpen(&theInputFormat, &theOutputFormat, &mySoundConverter);
-		BailErr(err);
-
-		// set up the sound converters decompresson 'environment' by passing in the 'magic' decompression atom
-		err = SoundConverterSetInfo(mySoundConverter, siDecompressionParams, theDecompressionAtom);
-		if (siUnknownInfoType == err) {
-			// clear this error, the decompressor didn't
-			// need the decompression atom and that's OK
-			err = noErr;
-		} else BailErr(err);
+		Media					theSoundMedia = NULL;
 		
-		UInt32	targetBytes = 32768;
+		Ptr						pSourceBuffer = NULL;
 		
-		// find out how much buffer space to alocate for our output buffers
-		// The differences between SoundConverterConvertBuffer begin with how the buffering is done. SoundConverterFillBuffer will do as much or as
-		// little work as is required to satisfy a given request. This means that you can pass in buffers of any size you like and expect that
-		// the Sound Converter will never overflow the output buffer. SoundConverterFillBufferDataProc function will be called as many times as
-		// necessary to fulfill a request. This means that the SoundConverterFillBufferDataProc routine is free to provide data in whatever chunk size
-		// it likes. Of course with both sides, the buffer sizes will control how many times you need to request data and there is a certain amount of
-		// overhead for each call. You will want to balance this against the performance you require. While a call to SoundConverterGetBufferSizes is
-		// not required by the SoundConverterFillBuffer function, it is useful as a guide for non-VBR formats
-		do {
-			UInt32 inputFrames, inputBytes;
-			targetBytes *= 2;
-			err = SoundConverterGetBufferSizes(mySoundConverter, targetBytes, &inputFrames, &inputBytes, &outputBytes);
-		} while (notEnoughBufferSpace == err  && targetBytes < (MaxBlock() / 4));
+		OSErr 					err = noErr;
 		
-		// allocate play buffers
-		pDecomBuffer0 = NewPtr(outputBytes);
-		BailErr(MemError());
+		// get the first sound track
+		usedTrack = GetMovieIndTrackType( QTMovie, 1, SoundMediaType, movieTrackMediaType);
+		if (NULL == usedTrack ) iErr = invalidTrack;
 		
-		pDecomBuffer1 = NewPtr(outputBytes);
-		BailErr(MemError());
-
-		err = SoundConverterBeginConversion(mySoundConverter);
-		BailErr(err);
-
-		// setup first header
-		mySndHeader0.samplePtr = pDecomBuffer0;
-		mySndHeader0.numChannels = theOutputFormat.numChannels;
-		mySndHeader0.sampleRate = theOutputFormat.sampleRate;
-		mySndHeader0.loopStart = 0;
-		mySndHeader0.loopEnd = 0;
-		mySndHeader0.encode = cmpSH;					// compressed sound header encode value
-		mySndHeader0.baseFrequency = kMiddleC;
-		// mySndHeader0.AIFFSampleRate;					// this is not used
-		mySndHeader0.markerChunk = NULL;
-		mySndHeader0.format = theOutputFormat.format;
-		mySndHeader0.futureUse2 = 0;
-		mySndHeader0.stateVars = NULL;
-		mySndHeader0.leftOverSamples = NULL;
-		mySndHeader0.compressionID = fixedCompression;	// compression ID for fixed-sized compression, even uncompressed sounds use fixedCompression
-		mySndHeader0.packetSize = 0;					// the Sound Manager will figure this out for us
-		mySndHeader0.snthID = 0;
-		mySndHeader0.sampleSize = theOutputFormat.sampleSize;
-		mySndHeader0.sampleArea[0] = 0;					// no samples here because we use samplePtr to point to our buffer instead
-
-		// setup second header, only the buffer ptr is different
-		BlockMoveData(&mySndHeader0, &mySndHeader1, sizeof(mySndHeader0));
-		mySndHeader1.samplePtr = pDecomBuffer1;
+		// get and return the sound track media
+		theSoundMedia = GetTrackMedia( usedTrack);
+		if (NULL == theSoundMedia) iErr = invalidTrack;
 		
-		// fill in struct that gets passed to SoundConverterFillBufferDataProc via the refcon
-		// this includes the ExtendedSoundComponentData record		
-		scFillBufferData.sourceMedia = theSoundMedia;
-		scFillBufferData.getMediaAtThisTime = 0;		
-		scFillBufferData.sourceDuration = GetMediaDuration(theSoundMedia);
-		scFillBufferData.isThereMoreSource = true;
-		scFillBufferData.maxBufferSize = kMaxInputBuffer;
-		scFillBufferData.hSource = NewHandle((long)scFillBufferData.maxBufferSize);		// allocate source media buffer
-		BailErr(MemError());
-
-		scFillBufferData.compData.desc = theInputFormat;
-		scFillBufferData.compData.desc.buffer = (Byte *)*scFillBufferData.hSource;
-		scFillBufferData.compData.desc.flags = kExtendedSoundData;
-		scFillBufferData.compData.recordSize = sizeof(ExtendedSoundComponentData);
-		scFillBufferData.compData.extendedFlags = kExtendedSoundSampleCountNotValid | kExtendedSoundBufferSizeValid;
-		scFillBufferData.compData.bufferSize = 0;
-		
-		// setup the callback, create the sound channel and play the sound
-		// we will continue to convert the sound data into the free (non playing) buffer
-		 		
-		err = SndNewChannel(&pSoundChannel, sampledSynth, 0, theSoundCallBackUPP);
-
-		if (err == noErr) {			
+		err = MyGetSoundDescriptionExtension(theSoundMedia, (AudioFormatAtomPtr *)&theDecompressionAtom, &mySndHeader0);
+		if (noErr == err) {	
+			// setup input/output format for sound converter
+			theInputFormat.flags = 0;
+			theInputFormat.format = mySndHeader0.format;
+			theInputFormat.numChannels = mySndHeader0.numChannels;
+			theInputFormat.sampleSize = mySndHeader0.sampleSize;
+			theInputFormat.sampleRate = mySndHeader0. sampleRate;
+			theInputFormat.sampleCount = 0;
+			theInputFormat.buffer = NULL;
+			theInputFormat.reserved = 0;
 			
+			theOutputFormat.flags = 0;
+			theOutputFormat.format = kSoundNotCompressed;
+			theOutputFormat.numChannels = theInputFormat.numChannels;
+			theOutputFormat.sampleSize = theInputFormat.sampleSize;
+			theOutputFormat.sampleRate = theInputFormat.sampleRate;
+			theOutputFormat.sampleCount = 0;
+			theOutputFormat.buffer = NULL;
+			theOutputFormat.reserved = 0;
 			
-			thePlayCmd0.cmd = bufferCmd;
-			thePlayCmd0.param1 = 0;						// not used, but clear it out anyway just to be safe
-			thePlayCmd0.param2 = (long)&mySndHeader0;
-
-			thePlayCmd1.cmd = bufferCmd;
-			thePlayCmd1.param1 = 0;						// not used, but clear it out anyway just to be safe
-			thePlayCmd1.param2 = (long)&mySndHeader1;
-						
-			whichBuffer = kFirstBuffer;					// buffer 1 will be free when callback runs
-			theCallBackCmd.cmd = callBackCmd;
-			theCallBackCmd.param2 = SetCurrentA5();
+			err = SoundConverterOpen(&theInputFormat, &theOutputFormat, &mySoundConverter);
+			BailErr(err);
 			
-			gBufferDone = true;
+			// set up the sound converters decompresson 'environment' by passing in the 'magic' decompression atom
+			err = SoundConverterSetInfo(mySoundConverter, siDecompressionParams, theDecompressionAtom);
+			if (siUnknownInfoType == err) {
+				// clear this error, the decompressor didn't
+				// need the decompression atom and that's OK
+				err = noErr;
+			} else BailErr(err);
 			
-		//	if (noErr == err) {
-		//		while (!isSoundDone && !Button()) {						
-					
-		//		} // while
+			UInt32	targetBytes = 32768;
+			
+			// find out how much buffer space to alocate for our output buffers
+			// The differences between SoundConverterConvertBuffer begin with how the buffering is done. SoundConverterFillBuffer will do as much or as
+			// little work as is required to satisfy a given request. This means that you can pass in buffers of any size you like and expect that
+			// the Sound Converter will never overflow the output buffer. SoundConverterFillBufferDataProc function will be called as many times as
+			// necessary to fulfill a request. This means that the SoundConverterFillBufferDataProc routine is free to provide data in whatever chunk size
+			// it likes. Of course with both sides, the buffer sizes will control how many times you need to request data and there is a certain amount of
+			// overhead for each call. You will want to balance this against the performance you require. While a call to SoundConverterGetBufferSizes is
+			// not required by the SoundConverterFillBuffer function, it is useful as a guide for non-VBR formats
+			do {
+				UInt32 inputFrames, inputBytes;
+				targetBytes *= 2;
+				err = SoundConverterGetBufferSizes(mySoundConverter, targetBytes, &inputFrames, &inputBytes, &outputBytes);
+			} while (notEnoughBufferSpace == err  && targetBytes < (MaxBlock() / 4));
+			
+			// allocate play buffers
+			pDecomBuffer0 = NewPtr(outputBytes);
+			BailErr(MemError());
+			
+			pDecomBuffer1 = NewPtr(outputBytes);
+			BailErr(MemError());
+			
+			err = SoundConverterBeginConversion(mySoundConverter);
+			BailErr(err);
+			
+			// setup first header
+			mySndHeader0.samplePtr = pDecomBuffer0;
+			mySndHeader0.numChannels = theOutputFormat.numChannels;
+			mySndHeader0.sampleRate = theOutputFormat.sampleRate;
+			mySndHeader0.loopStart = 0;
+			mySndHeader0.loopEnd = 0;
+			mySndHeader0.encode = cmpSH;					// compressed sound header encode value
+			mySndHeader0.baseFrequency = kMiddleC;
+			// mySndHeader0.AIFFSampleRate;					// this is not used
+			mySndHeader0.markerChunk = NULL;
+			mySndHeader0.format = theOutputFormat.format;
+			mySndHeader0.futureUse2 = 0;
+			mySndHeader0.stateVars = NULL;
+			mySndHeader0.leftOverSamples = NULL;
+			mySndHeader0.compressionID = fixedCompression;	// compression ID for fixed-sized compression, even uncompressed sounds use fixedCompression
+			mySndHeader0.packetSize = 0;					// the Sound Manager will figure this out for us
+			mySndHeader0.snthID = 0;
+			mySndHeader0.sampleSize = theOutputFormat.sampleSize;
+			mySndHeader0.sampleArea[0] = 0;					// no samples here because we use samplePtr to point to our buffer instead
+			
+			// setup second header, only the buffer ptr is different
+			BlockMoveData(&mySndHeader0, &mySndHeader1, sizeof(mySndHeader0));
+			mySndHeader1.samplePtr = pDecomBuffer1;
+			
+			// fill in struct that gets passed to SoundConverterFillBufferDataProc via the refcon
+			// this includes the ExtendedSoundComponentData record		
+			scFillBufferData.sourceMedia = theSoundMedia;
+			scFillBufferData.getMediaAtThisTime = 0;		
+			scFillBufferData.sourceDuration = GetMediaDuration(theSoundMedia);
+			scFillBufferData.isThereMoreSource = true;
+			scFillBufferData.maxBufferSize = kMaxInputBuffer;
+			scFillBufferData.hSource = NewHandle((long)scFillBufferData.maxBufferSize);		// allocate source media buffer
+			BailErr(MemError());
+			
+			scFillBufferData.compData.desc = theInputFormat;
+			scFillBufferData.compData.desc.buffer = (Byte *)*scFillBufferData.hSource;
+			scFillBufferData.compData.desc.flags = kExtendedSoundData;
+			scFillBufferData.compData.recordSize = sizeof(ExtendedSoundComponentData);
+			scFillBufferData.compData.extendedFlags = kExtendedSoundSampleCountNotValid | kExtendedSoundBufferSizeValid;
+			scFillBufferData.compData.bufferSize = 0;
+			
+			// setup the callback, create the sound channel and play the sound
+			// we will continue to convert the sound data into the free (non playing) buffer
+			
+			err = SndNewChannel(&pSoundChannel, sampledSynth, 0, theSoundCallBackUPP);
+			
+			if (err == noErr) {			
+				
+				
+				thePlayCmd0.cmd = bufferCmd;
+				thePlayCmd0.param1 = 0;						// not used, but clear it out anyway just to be safe
+				thePlayCmd0.param2 = (long)&mySndHeader0;
+				
+				thePlayCmd1.cmd = bufferCmd;
+				thePlayCmd1.param1 = 0;						// not used, but clear it out anyway just to be safe
+				thePlayCmd1.param2 = (long)&mySndHeader1;
+				
+				whichBuffer = kFirstBuffer;					// buffer 1 will be free when callback runs
+				theCallBackCmd.cmd = callBackCmd;
+				theCallBackCmd.param2 = SetCurrentA5();
+				
+				gBufferDone = true;
+				
+				//	if (noErr == err) {
+				//		while (!isSoundDone && !Button()) {						
+				
+				//		} // while
 			}
 		}
-	}*/
+	}
+#endif
 	////////////////////////////////
 	
-
+	
 	
 	GetMovieBox( QTMovie, &dispBounds);
 	OffsetRect( &dispBounds, -dispBounds.left, -dispBounds.top);
@@ -814,145 +821,147 @@ void SelectQTFile( FSSpec	*file)
 	
 	// Get informations about the movie
 	{
-	Track						aTrack;
-	Media						aMedia;
-	TimeValue					aTime;
-	TimeScale					aTimeScale;
-	OSType						mediaType, creatorManufacturer;
-	Str255						creatorName;
-	DateTimeRec					dtrp;
-	Str255						aStr, bStr;
-	short						refNum;
-	SoundDescriptionHandle		descH;
-	
-	gSoundMediaHandler = NULL;
-	gDataHandler = NULL;
-	
-	for( i = 1; i <= GetMovieTrackCount( QTMovie); i++)
-	{
-		aTrack = GetMovieIndTrack( QTMovie, i);
+		Track						aTrack;
+		Media						aMedia;
+		TimeValue					aTime;
+		TimeScale					aTimeScale;
+		OSType						mediaType, creatorManufacturer;
+		Str255						creatorName;
+		DateTimeRec					dtrp;
+		Str255						aStr, bStr;
+		short						refNum;
+		SoundDescriptionHandle		descH;
 		
-		aMedia = GetTrackMedia( aTrack);
+		gSoundMediaHandler = NULL;
+		gDataHandler = NULL;
 		
-		GetMediaHandlerDescription( aMedia, &mediaType, creatorName, &creatorManufacturer);
-		
-		if( mediaType == SoundMediaType)	// Bingo !
+		for( i = 1; i <= GetMovieTrackCount( QTMovie); i++)
 		{
-			gSoundMediaHandler = GetMediaHandler( aMedia);
-			gDataHandler = GetMediaDataHandler( aMedia, 1);
-			gSoundTrack = aTrack;
+			aTrack = GetMovieIndTrack( QTMovie, i);
 			
-			gVolume = GetMovieVolume( QTMovie);
-			SetControlValue( volumeCntl, gVolume);
+			aMedia = GetTrackMedia( aTrack);
 			
-			MediaGetSoundBalance( gSoundMediaHandler, &gBalance);
-			NumToString( gBalance, aStr);	SetDText( QuicktimeDlog, 30, aStr);
+			GetMediaHandlerDescription( aMedia, &mediaType, creatorName, &creatorManufacturer);
 			
-			// QT 4.0
-			
-			if( newQuicktime)
+			if( mediaType == SoundMediaType)	// Bingo !
 			{
-				MediaGetSoundBassAndTreble( gSoundMediaHandler, &gBass, &gTreble);
+				gSoundMediaHandler = GetMediaHandler( aMedia);
+				gDataHandler = GetMediaDataHandler( aMedia, 1);
+				gSoundTrack = aTrack;
 				
-				NumToString( gTreble, aStr);	SetDText( QuicktimeDlog, 18, aStr);
-				NumToString( gBass, aStr);	SetDText( QuicktimeDlog, 19, aStr);
+				gVolume = GetMovieVolume( QTMovie);
+				SetControlValue( volumeCntl, gVolume);
 				
-				MediaGetSoundEqualizerBands( gSoundMediaHandler, &gEQ);
+				MediaGetSoundBalance( gSoundMediaHandler, &gBalance);
+				NumToString( gBalance, aStr);	SetDText( QuicktimeDlog, 30, aStr);
 				
-				MediaSetSoundLevelMeteringEnabled( gSoundMediaHandler, true);
-			}
-			
-			
-			///	///	///	///	///	///	///	///	///	///	///	///	///	///	///	///	
-			/*fileSize = 0;
-			iErr = FSpOpenDF( &QTFile, fsCurPerm, &refNum);
-			if( iErr == noErr)
-			{
-				iErr = GetEOF( refNum, &fileSize);
-				FSClose( refNum);
-			}*/
-			fileSize /= 1024L;
-			
-			if( fileSize > 1000)
-			{
-				sprintf( (Ptr) aStr, "%.2f", (double) fileSize / (double) 1024.);
-				MyC2PStr( (Ptr) aStr);
-				pStrcat( aStr, "\p Mb");
-			}
-			else
-			{
-				NumToString( fileSize, aStr);
-				pStrcat( aStr, "\p Kb");
-			}
-			SetDText( QuicktimeDlog, 4, aStr);		// File Size
-			
-			///	///	///	///	///	///	///	///	///	///	///	///	///	///	///	///	
-			
-			aTime = GetMovieDuration( QTMovie);
-			aTimeScale = GetMovieTimeScale( QTMovie);
-			//aTime = GetMediaDuration( aMedia);
-			//aTimeScale = GetMediaTimeScale( aMedia);
-			SecondsToDate( aTime / aTimeScale, &dtrp);
-			
-			NTStr( 2, dtrp.minute, (Ptr) aStr);		MyC2PStr( (Ptr) aStr);
-			NTStr( 2, dtrp.second, (Ptr) bStr);		MyC2PStr( (Ptr) bStr);
-			pStrcat( aStr, "\p:");
-			pStrcat( aStr, bStr);
-			
-			pStrcpy( durationString, "\p / ");
-			pStrcat( durationString, aStr);
-			
-		//	SetDText( QuicktimeDlog, 7, aStr);				// Duration
-			
-			///	///	///	///	///	///	///	///	///	///	///	///	///	///	///	///	
-			
-			descH = (SoundDescriptionHandle) NewHandleClear( 1);
-			
-			GetMediaSampleDescription( aMedia, 1, (SampleDescriptionHandle) descH);
-			
-			HLock( (Handle) descH);
-			
-			OSType2Str( fndrInfo.fdType, aStr);
-			pStrcat( aStr, "\p/");
-						
-			if( (*descH)->numChannels == 1) pStrcat( aStr, "\pmono");
-			if( (*descH)->numChannels == 2) pStrcat( aStr, "\pstereo");
-			if( (*descH)->numChannels > 2)
-			{
-				NumToString( (*descH)->numChannels, bStr);
+				// QT 4.0
+				
+				if( newQuicktime)
+				{
+					MediaGetSoundBassAndTreble( gSoundMediaHandler, &gBass, &gTreble);
+					
+					NumToString( gTreble, aStr);	SetDText( QuicktimeDlog, 18, aStr);
+					NumToString( gBass, aStr);	SetDText( QuicktimeDlog, 19, aStr);
+					
+					MediaGetSoundEqualizerBands( gSoundMediaHandler, &gEQ);
+					
+					MediaSetSoundLevelMeteringEnabled( gSoundMediaHandler, true);
+				}
+				
+				
+				///	///	///	///	///	///	///	///	///	///	///	///	///	///	///	///	
+#if 0
+				fileSize = 0;
+				iErr = FSpOpenDF( &QTFile, fsCurPerm, &refNum);
+				if( iErr == noErr)
+				{
+					iErr = GetEOF( refNum, &fileSize);
+					FSClose( refNum);
+				}
+#endif
+				fileSize /= 1024L;
+				
+				if( fileSize > 1000)
+				{
+					sprintf( (Ptr) aStr, "%.2f", (double) fileSize / (double) 1024.);
+					MyC2PStr( (Ptr) aStr);
+					pStrcat( aStr, "\p Mb");
+				}
+				else
+				{
+					NumToString( fileSize, aStr);
+					pStrcat( aStr, "\p Kb");
+				}
+				SetDText( QuicktimeDlog, 4, aStr);		// File Size
+				
+				///	///	///	///	///	///	///	///	///	///	///	///	///	///	///	///	
+				
+				aTime = GetMovieDuration( QTMovie);
+				aTimeScale = GetMovieTimeScale( QTMovie);
+				//aTime = GetMediaDuration( aMedia);
+				//aTimeScale = GetMediaTimeScale( aMedia);
+				SecondsToDate( aTime / aTimeScale, &dtrp);
+				
+				NTStr( 2, dtrp.minute, (Ptr) aStr);		MyC2PStr( (Ptr) aStr);
+				NTStr( 2, dtrp.second, (Ptr) bStr);		MyC2PStr( (Ptr) bStr);
+				pStrcat( aStr, "\p:");
 				pStrcat( aStr, bStr);
+				
+				pStrcpy( durationString, "\p / ");
+				pStrcat( durationString, aStr);
+				
+				//SetDText( QuicktimeDlog, 7, aStr);				// Duration
+				
+				///	///	///	///	///	///	///	///	///	///	///	///	///	///	///	///	
+				
+				descH = (SoundDescriptionHandle) NewHandleClear( 1);
+				
+				GetMediaSampleDescription( aMedia, 1, (SampleDescriptionHandle) descH);
+				
+				HLock( (Handle) descH);
+				
+				OSType2Str( fndrInfo.fdType, aStr);
+				pStrcat( aStr, "\p/");
+				
+				if( (*descH)->numChannels == 1) pStrcat( aStr, "\pmono");
+				if( (*descH)->numChannels == 2) pStrcat( aStr, "\pstereo");
+				if( (*descH)->numChannels > 2)
+				{
+					NumToString( (*descH)->numChannels, bStr);
+					pStrcat( aStr, bStr);
+				}
+				pStrcat( aStr, "\p/");
+				
+				NumToString( (*descH)->sampleSize, bStr);
+				pStrcat( aStr, bStr);
+				pStrcat( aStr, "\p Bits/");
+				
+				sprintf( (Ptr) bStr, "%.1f Khz", (double) ((*descH)->sampleRate>>16L) / (double) 1000.);
+				
+				MyC2PStr( (Ptr) bStr);
+				pStrcat( aStr, bStr);
+				
+				//NumToString( (*descH)->sampleRate>>16L, bStr);
+				//pStrcat( aStr, bStr);
+				//pStrcat( aStr, "\p Hz");
+				
+				SetDText( QuicktimeDlog, 8, aStr);		// File Type
+				
+				
+				///	///	///	///	///	///	///	///	///	///	///	///	///	///	///	///
+				
+				OSType2Str( (*descH)->dataFormat, aStr);
+				pStrcat( aStr, "\p/");
+				GetCompressionName( (*descH)->dataFormat, bStr);
+				pStrcat( aStr, bStr);
+				
+				SetDText( QuicktimeDlog, 11, aStr);		// Compressor
+				
+				HUnlock( (Handle) descH);
+				DisposeHandle( (Handle) descH);
 			}
-			pStrcat( aStr, "\p/");
-			
-			NumToString( (*descH)->sampleSize, bStr);
-			pStrcat( aStr, bStr);
-			pStrcat( aStr, "\p Bits/");
-			
-			sprintf( (Ptr) bStr, "%.1f Khz", (double) ((*descH)->sampleRate>>16L) / (double) 1000.);
-			
-			MyC2PStr( (Ptr) bStr);
-			pStrcat( aStr, bStr);
-			
-		//	NumToString( (*descH)->sampleRate>>16L, bStr);
-		//	pStrcat( aStr, bStr);
-		//	pStrcat( aStr, "\p Hz");
-			
-			SetDText( QuicktimeDlog, 8, aStr);		// File Type
-			
-			
-			///	///	///	///	///	///	///	///	///	///	///	///	///	///	///	///
-			
-			OSType2Str( (*descH)->dataFormat, aStr);
-			pStrcat( aStr, "\p/");
-			GetCompressionName( (*descH)->dataFormat, bStr);
-			pStrcat( aStr, bStr);
-			
-			SetDText( QuicktimeDlog, 11, aStr);		// Compressor
-			
-			HUnlock( (Handle) descH);
-			DisposeHandle( (Handle) descH);
 		}
-	}
 	}
 	
 	//GetMediaSampleDescription( theMedia, index, descH);
@@ -981,7 +990,7 @@ void SelectQTFile( FSSpec	*file)
 	
 	SetPort( savePort);
 	
-	bail:
+bail:
 	
 	return;
 }
@@ -1023,9 +1032,9 @@ Boolean CreateQTWindow( FSSpec	*file)
 	GrafPtr					SavePort;
 	
 	FSpGetFInfo( file, &fndrInfo);
-
+	
 	lastSeconds = -1;
-
+	
 	if( !QTTestConversion( file, fndrInfo.fdType)) return false;
 	
 	if( QuicktimeDlog != NULL)
@@ -1049,62 +1058,62 @@ Boolean CreateQTWindow( FSSpec	*file)
 	GetDialogItem( QuicktimeDlog , 12, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	SaveBut = NewControl( 	GetDialogWindow( QuicktimeDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							151,
-							kControlBevelButtonNormalBevelProc,
-							0);
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 151,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
 	
 	GetDialogItem( QuicktimeDlog , 20, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	LoadBut = NewControl( 	GetDialogWindow( QuicktimeDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							152,
-							kControlBevelButtonNormalBevelProc,
-							0);
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 152,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
 	
 	GetDialogItem( QuicktimeDlog , 25, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	ResetBassBut = NewControl( 	GetDialogWindow( QuicktimeDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							168,
-							kControlBevelButtonNormalBevelProc,
-							0);
+							  &itemRect,
+							  "\p",
+							  true,
+							  0,
+							  kControlContentIconSuiteRes,
+							  168,
+							  kControlBevelButtonNormalBevelProc,
+							  0);
 	
 	GetDialogItem( QuicktimeDlog , 24, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	ResetTrebleBut = NewControl( 	GetDialogWindow( QuicktimeDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							168,
-							kControlBevelButtonNormalBevelProc,
-							0);
+								&itemRect,
+								"\p",
+								true,
+								0,
+								kControlContentIconSuiteRes,
+								168,
+								kControlBevelButtonNormalBevelProc,
+								0);
 	
 	GetDialogItem( QuicktimeDlog , 21, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	ResetBalanceBut = NewControl( 	GetDialogWindow( QuicktimeDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							168,
-							kControlBevelButtonNormalBevelProc,
-							0);
+								 &itemRect,
+								 "\p",
+								 true,
+								 0,
+								 kControlContentIconSuiteRes,
+								 168,
+								 kControlBevelButtonNormalBevelProc,
+								 0);
 	
 	HiliteControl( ResetBassBut, 255);
 	HiliteControl( ResetTrebleBut, 255);
@@ -1144,7 +1153,7 @@ Boolean CreateQTWindow( FSSpec	*file)
 	SelectWindow2( GetDialogWindow( QuicktimeDlog));
 	
 	ShowWindow( GetDialogWindow( QuicktimeDlog));
-
+	
 	
 	if( thePrefs.AutoPlayWhenOpen)
 	{
@@ -1213,9 +1222,9 @@ Boolean QTTypeConversion( OSType fileType)
 		case 'MP3 ':
 		case 'mpg4':
 		case 'PLAY':
-		//case '????':
+			//case '????':
 			return true;
-		break;
+			break;
 	}
 	
 	return false;
@@ -1223,341 +1232,329 @@ Boolean QTTypeConversion( OSType fileType)
 
 void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 {
- 		short				temp,itemType, newPL, newPat, newPartitionReader;
-		Point				myPt;
-		Handle				itemHandle;
-		Rect				itemRect;
-		long				oldH, tempLong, max, val;
-		GrafPtr				savePort;
-		Boolean				ReadingCopy;
-		ControlActionUPP	MyControlUPP;
-		FSSpec				newFile;
-		Str255				str;
-		
-		GetPort( &savePort);
-		SetPortDialogPort( whichDialog);
-		
-		if( !MCIsPlayerEvent( gMovieController, &theEvent))
+	short				temp,itemType, newPL, newPat, newPartitionReader;
+	Point				myPt;
+	Handle				itemHandle;
+	Rect				itemRect;
+	long				oldH, tempLong, max, val;
+	GrafPtr				savePort;
+	Boolean				ReadingCopy;
+	ControlActionUPP	MyControlUPP;
+	FSSpec				newFile;
+	Str255				str;
+	
+	GetPort( &savePort);
+	SetPortDialogPort( whichDialog);
+	
+	if( !MCIsPlayerEvent( gMovieController, &theEvent))
+	{
+		switch( whichItem)
 		{
-			switch( whichItem)
-			{
-				case 20:
+			case 20:
 				if( GetControlHilite( LoadBut) == 0 && MyTrackControl( LoadBut, theEvent.where, NULL))
 				{
 					HandleFileChoice( 2);
 				}
 				break;
 				
-				case 25:
-					if( GetControlHilite( ResetBassBut)  == 0 && MyTrackControl( ResetBassBut, theEvent.where, NULL))
-					{
-						HiliteControl( ResetBassBut, 255);
-						
-						gBass = 0;
-						
-						if( newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
-						NumToString( gBass, str);	SetDText( QuicktimeDlog, 19, str);
-						
-						SetControlValue( BassCntl, gBass);
-					}
-				break;
-				
-				case 24:
-					if( GetControlHilite( ResetTrebleBut) == 0 && MyTrackControl( ResetTrebleBut, theEvent.where, NULL))
-					{
-						HiliteControl( ResetTrebleBut, 255);
-						
-						gTreble = 0;
-						
-						if( newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
-						NumToString( gTreble, str);	SetDText( QuicktimeDlog, 18, str);
-						
-						SetControlValue( TrebleCntl, gTreble);
-					}
-				break;
-				
-				case 21:
-					if( GetControlHilite( ResetBalanceBut) == 0 && MyTrackControl( ResetBalanceBut, theEvent.where, NULL))
-					{
-						HiliteControl( ResetBalanceBut, 255);
-						
-						gBalance = 0;
-						
-						MediaSetSoundBalance( gSoundMediaHandler, gBalance);
-						NumToString( gTreble, str);	SetDText( QuicktimeDlog, 30, str);
-						
-						SetControlValue( balanceCntl, gBalance);
-					}
-				break;
-				
-				case 27:
-					GetMouse( &myPt);
-					GetDialogItem (whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
+			case 25:
+				if( GetControlHilite( ResetBassBut)  == 0 && MyTrackControl( ResetBassBut, theEvent.where, NULL))
+				{
+					HiliteControl( ResetBassBut, 255);
 					
-					if(PtInRect( myPt, &itemRect))
+					gBass = 0;
+					
+					if( newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
+					NumToString( gBass, str);	SetDText( QuicktimeDlog, 19, str);
+					
+					SetControlValue( BassCntl, gBass);
+				}
+				break;
+				
+			case 24:
+				if( GetControlHilite( ResetTrebleBut) == 0 && MyTrackControl( ResetTrebleBut, theEvent.where, NULL))
+				{
+					HiliteControl( ResetTrebleBut, 255);
+					
+					gTreble = 0;
+					
+					if( newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
+					NumToString( gTreble, str);	SetDText( QuicktimeDlog, 18, str);
+					
+					SetControlValue( TrebleCntl, gTreble);
+				}
+				break;
+				
+			case 21:
+				if( GetControlHilite( ResetBalanceBut) == 0 && MyTrackControl( ResetBalanceBut, theEvent.where, NULL))
+				{
+					HiliteControl( ResetBalanceBut, 255);
+					
+					gBalance = 0;
+					
+					MediaSetSoundBalance( gSoundMediaHandler, gBalance);
+					NumToString( gTreble, str);	SetDText( QuicktimeDlog, 30, str);
+					
+					SetControlValue( balanceCntl, gBalance);
+				}
+				break;
+				
+			case 27:
+				GetMouse( &myPt);
+				GetDialogItem (whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
+				
+				if(PtInRect( myPt, &itemRect))
+				{
+					while( Button())
 					{
-						while( Button())
-						{
-							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-							DoGlobalNull();
-							SetPortDialogPort( whichDialog);
-							GetMouse( &myPt);
-							
-							if( oldH != myPt.h)
-							{
-								oldH = myPt.h;
-								
-								if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
-								else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
+						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+						DoGlobalNull();
+						SetPortDialogPort( whichDialog);
+						GetMouse( &myPt);
 						
-								gBalance = (255* (myPt.h - itemRect.left)) / ( itemRect.right-itemRect.left);
-								gBalance -= 127;
-								
-								SetControlValue( balanceCntl, gBalance);
-								
-								MediaSetSoundBalance( gSoundMediaHandler, gBalance);
-								
-								NumToString( gBalance, str);	SetDText( QuicktimeDlog, 30, str);
-								
-								if( gBalance != 0) HiliteControl( ResetBalanceBut, 0);
-								else HiliteControl( ResetBalanceBut, 255);
-							}
+						if( oldH != myPt.h)
+						{
+							oldH = myPt.h;
+							
+							if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
+							else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
+							
+							gBalance = (255* (myPt.h - itemRect.left)) / ( itemRect.right-itemRect.left);
+							gBalance -= 127;
+							
+							SetControlValue( balanceCntl, gBalance);
+							
+							MediaSetSoundBalance( gSoundMediaHandler, gBalance);
+							
+							NumToString( gBalance, str);	SetDText( QuicktimeDlog, 30, str);
+							
+							if( gBalance != 0) HiliteControl( ResetBalanceBut, 0);
+							else HiliteControl( ResetBalanceBut, 255);
 						}
 					}
+				}
 				break;
 				
-				case 17:
-					GetMouse( &myPt);
-					GetDialogItem (whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
-					
-					if(PtInRect( myPt, &itemRect))
+			case 17:
+				GetMouse( &myPt);
+				GetDialogItem (whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
+				
+				if(PtInRect( myPt, &itemRect))
+				{
+					while( Button())
 					{
-						while( Button())
-						{
-							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-							DoGlobalNull();
-							SetPortDialogPort( whichDialog);
-							GetMouse( &myPt);
-							
-							if( oldH != myPt.h)
-							{
-								oldH = myPt.h;
-								
-								if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
-								else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
+						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+						DoGlobalNull();
+						SetPortDialogPort( whichDialog);
+						GetMouse( &myPt);
 						
-								gBass = (512* (myPt.h - itemRect.left)) / ( itemRect.right-itemRect.left);
-								gBass -= 256;
-								
-								SetControlValue( BassCntl, gBass);
-								
-								if( newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
-								
-								NumToString( gBass, str);	SetDText( QuicktimeDlog, 19, str);
-								
-								if( gBass != 0) HiliteControl( ResetBassBut, 0);
-								else HiliteControl( ResetBassBut, 255);
-							}
+						if( oldH != myPt.h)
+						{
+							oldH = myPt.h;
+							
+							if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
+							else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
+							
+							gBass = (512* (myPt.h - itemRect.left)) / ( itemRect.right-itemRect.left);
+							gBass -= 256;
+							
+							SetControlValue( BassCntl, gBass);
+							
+							if( newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
+							
+							NumToString( gBass, str);	SetDText( QuicktimeDlog, 19, str);
+							
+							if( gBass != 0) HiliteControl( ResetBassBut, 0);
+							else HiliteControl( ResetBassBut, 255);
 						}
 					}
+				}
 				break;
 				
-				case 16:
-					GetMouse( &myPt);
-					GetDialogItem (whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
-					
-					if(PtInRect( myPt, &itemRect))
+			case 16:
+				GetMouse( &myPt);
+				GetDialogItem (whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
+				
+				if(PtInRect( myPt, &itemRect))
+				{
+					while( Button())
 					{
-						while( Button())
-						{
-							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-							DoGlobalNull();
-							SetPortDialogPort( whichDialog);
-							GetMouse( &myPt);
-							
-							if( oldH != myPt.h)
-							{
-								oldH = myPt.h;
-								
-								if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
-								else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
+						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+						DoGlobalNull();
+						SetPortDialogPort( whichDialog);
+						GetMouse( &myPt);
 						
-								gTreble = (512* (myPt.h - itemRect.left)) / ( itemRect.right-itemRect.left);
-								gTreble -= 256;
-								
-								SetControlValue( TrebleCntl, gTreble);
-								
-								if( newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
-								
-								NumToString( gTreble, str);	SetDText( QuicktimeDlog, 18, str);
-								
-								if( gTreble != 0) HiliteControl( ResetTrebleBut, 0);
-								else HiliteControl( ResetTrebleBut, 255);
-							}
+						if( oldH != myPt.h)
+						{
+							oldH = myPt.h;
+							
+							if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
+							else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
+							
+							gTreble = (512* (myPt.h - itemRect.left)) / ( itemRect.right-itemRect.left);
+							gTreble -= 256;
+							
+							SetControlValue( TrebleCntl, gTreble);
+							
+							if( newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
+							
+							NumToString( gTreble, str);	SetDText( QuicktimeDlog, 18, str);
+							
+							if( gTreble != 0) HiliteControl( ResetTrebleBut, 0);
+							else HiliteControl( ResetTrebleBut, 255);
 						}
 					}
+				}
 				break;
 				
-				case 29:
-					GetMouse( &myPt);
-					GetDialogItem (whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
-					
-					if(PtInRect( myPt, &itemRect))
+			case 29:
+				GetMouse( &myPt);
+				GetDialogItem (whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
+				
+				if(PtInRect( myPt, &itemRect))
+				{
+					while( Button())
 					{
-						while( Button())
-						{
-							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-							DoGlobalNull();
-							SetPortDialogPort( whichDialog);
-							GetMouse( &myPt);
-							
-							if( oldH != myPt.h)
-							{
-								oldH = myPt.h;
-								
-								if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
-								else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
+						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+						DoGlobalNull();
+						SetPortDialogPort( whichDialog);
+						GetMouse( &myPt);
 						
-								gVolume = (255* (myPt.h - itemRect.left)) / ( itemRect.right-itemRect.left);
-								
-								SetControlValue( volumeCntl, gVolume);
-								
-								SetMovieVolume( QTMovie, gVolume);
-								
+						if( oldH != myPt.h)
+						{
+							oldH = myPt.h;
+							
+							if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
+							else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
+							
+							gVolume = (255* (myPt.h - itemRect.left)) / ( itemRect.right-itemRect.left);
+							
+							SetControlValue( volumeCntl, gVolume);
+							
+							SetMovieVolume( QTMovie, gVolume);
+							
 							//	NumToString( gTreble, str);	SetDText( QuicktimeDlog, 18, str);
-								
+							
 							/*	if( gTreble != 0) HiliteControl( ResetTrebleBut, 0);
-								else HiliteControl( ResetTrebleBut, 255);	*/
-							}
+							 else HiliteControl( ResetTrebleBut, 255);	*/
 						}
 					}
+				}
 				break;
 				
-				case 12:
-					if( GetControlHilite( SaveBut) == 0 && MyTrackControl( SaveBut, theEvent.where, NULL))
-					{
+			case 12:
+				if( GetControlHilite( SaveBut) == 0 && MyTrackControl( SaveBut, theEvent.where, NULL))
+				{
 					/*	mcActionGetSelectionBegin
-						mcActionGetSelectionDuration*/
+					 mcActionGetSelectionDuration*/
 					
-						newFile = QTFile;
-						ConvertMovieToAIFF( &QTFile, &newFile);
-						
-						ForceUpdateALLWindow();
-						
-						AddMODList( true, newFile.name, newFile.vRefNum, newFile.parID);
-					}
+					newFile = QTFile;
+					ConvertMovieToAIFF( &QTFile, &newFile);
+					
+					ForceUpdateALLWindow();
+					
+					AddMODList( true, newFile.name, newFile.vRefNum, newFile.parID);
+				}
 				break;
-			
-			/*	case 2:
-					GetDialogItem( QuicktimeDlog , 2, &itemType, &itemHandle, &itemRect);
-					DrawQTItem( true, &itemRect, QTFileName, &QTFile, NULL);
+#if 0
+			case 2:
+				GetDialogItem( QuicktimeDlog , 2, &itemType, &itemHandle, &itemRect);
+				DrawQTItem( true, &itemRect, QTFileName, &QTFile, NULL);
+				
+				if( WaitMouseMoved( theEvent.where))
+				{
+					RgnHandle	dstRgn;
+					Handle		gTheSuite;
+					SInt16	label;
+					IconRef	iconref;
+					OSErr	iErr;
 					
-					if( WaitMouseMoved( theEvent.where))
+					dstRgn = NewRgn();
+					
+					GetDialogItem( QuicktimeDlog , 2, &itemType, &itemHandle, &itemRect);
+					
+					iErr = GetIconRefFromFile( &QTFile, &iconref, &label);
+					if( iErr == noErr)
 					{
-						RgnHandle	dstRgn;
-						Handle		gTheSuite;
-						SInt16	label;
-						IconRef	iconref;
-						OSErr	iErr;
+						IconRefToRgn( dstRgn, &itemRect, 0, kIconServicesNormalUsageFlag, iconref);
 						
-						dstRgn = NewRgn();
-						
-						GetDialogItem( QuicktimeDlog , 2, &itemType, &itemHandle, &itemRect);
-						
-#if MACOS9VERSION
-						if( GetFileIcon( &QTFile, svAllLargeData, &gTheSuite) == noErr)
-						{
-							IconSuiteToRgn( dstRgn, &itemRect, 0,gTheSuite);
-							
-							DisposeIconSuite( gTheSuite, true);
-						}
-						else
-						{
-							IconIDToRgn( dstRgn, &itemRect, 0, 133);
-						}
-#else
-						iErr = GetIconRefFromFile( &QTFile, &iconref, &label);
-						if( iErr == noErr)
-						{
-							IconRefToRgn( dstRgn, &itemRect, 0, kIconServicesNormalUsageFlag, iconref);
-							
-							ReleaseIconRef( iconref);
-						}
-#endif
-						
-						//	srcRgnB = NewRgn();
-						//	OpenRgn();
-						//	FrameRect( &itemRect);
-						//	CloseRgn( srcRgnB);
-							
-						//	UnionRgn( tempRgn, srcRgnB, tempRgn);
-						//	DisposeRgn( srcRgnB);
-						
-						DragQTFile( dstRgn, &theEvent);
-						
-						DisposeRgn( dstRgn);
+						ReleaseIconRef( iconref);
 					}
 					
-					GetDialogItem( QuicktimeDlog , 2, &itemType, &itemHandle, &itemRect);
-					DrawQTItem( false, &itemRect, QTFileName, &QTFile, NULL);
-				break;*/
-			}
+					//	srcRgnB = NewRgn();
+					//	OpenRgn();
+					//	FrameRect( &itemRect);
+					//	CloseRgn( srcRgnB);
+					
+					//	UnionRgn( tempRgn, srcRgnB, tempRgn);
+					//	DisposeRgn( srcRgnB);
+					
+					DragQTFile( dstRgn, &theEvent);
+					
+					DisposeRgn( dstRgn);
+				}
+				
+				GetDialogItem( QuicktimeDlog , 2, &itemType, &itemHandle, &itemRect);
+				DrawQTItem( false, &itemRect, QTFileName, &QTFile, NULL);
+				break;
+#endif
 		}
-		else
-		{
-			gVolume = GetMovieVolume( QTMovie);
-			SetControlValue( volumeCntl, gVolume);
-		}
-		
-		SetPort( savePort);
+	}
+	else
+	{
+		gVolume = GetMovieVolume( QTMovie);
+		SetControlValue( volumeCntl, gVolume);
+	}
+	
+	SetPort( savePort);
 }
 
 void CloseQT(void)
 {
 	OSErr	iErr, err;
-
+	
 	if( QuicktimeDlog != NULL)
 	{
 		//////////////////
-		/*
+#if 0
 		UInt32		outputFrames, outputBytes;
 		
 		err = SoundConverterEndConversion(mySoundConverter, pDecomBuffer, &outputFrames, &outputBytes);
-
-			if (noErr == err && outputFrames) {
-				pSndHeader->numFrames = outputFrames;
-				SndDoCommand(pSoundChannel, pPlayCmd, true);	// play the last buffer.
-			}
-			
-			if (theFillBufferDataUPP)
-				DisposeSoundConverterFillBufferDataUPP(theFillBufferDataUPP);
-				
-				
-						
+		
+		if (noErr == err && outputFrames) {
+			pSndHeader->numFrames = outputFrames;
+			SndDoCommand(pSoundChannel, pPlayCmd, true);	// play the last buffer.
+		}
+		
+		if (theFillBufferDataUPP)
+			DisposeSoundConverterFillBufferDataUPP(theFillBufferDataUPP);
+		
+		
+		
 		if (pSoundChannel)
 			err = SndDisposeChannel(pSoundChannel, false);		// wait until sounds stops playing before disposing of channel
 		
 		if (theSoundCallBackUPP)
 			DisposeSndCallBackUPP(theSoundCallBackUPP);
-			
+		
 		if (scFillBufferData.hSource)
 			DisposeHandle(scFillBufferData.hSource);
-			
+		
 		if (mySoundConverter)
 			SoundConverterClose(mySoundConverter);
-			
+		
 		if (pDecomBuffer0)
 			DisposePtr(pDecomBuffer0);
-			
+		
 		if (pDecomBuffer1)
 			DisposePtr(pDecomBuffer1);
-			
+		
 		if (hSys7SoundData)
 			DisposeHandle(hSys7SoundData);
-
-		*/
+		
+#endif
 		//////////////////
-	
+		
 		if( gMovieController) DisposeMovieController( gMovieController);
 		gMovieController = NULL;
 		
@@ -1572,11 +1569,11 @@ void CloseQT(void)
 		
 		if( MyTrackingQTUPP != NULL && MyReceiveQTUPP != NULL)
 		{
-		RemoveTrackingHandler( MyTrackingQTUPP, GetDialogWindow( QuicktimeDlog));
-		RemoveReceiveHandler( MyReceiveQTUPP, GetDialogWindow( QuicktimeDlog));
-		
-		DisposeDragTrackingHandlerUPP( MyTrackingQTUPP);
-		DisposeDragReceiveHandlerUPP( MyReceiveQTUPP);
+			RemoveTrackingHandler( MyTrackingQTUPP, GetDialogWindow( QuicktimeDlog));
+			RemoveReceiveHandler( MyReceiveQTUPP, GetDialogWindow( QuicktimeDlog));
+			
+			DisposeDragTrackingHandlerUPP( MyTrackingQTUPP);
+			DisposeDragReceiveHandlerUPP( MyReceiveQTUPP);
 		}
 		MyTrackingQTUPP = NULL;
 		MyReceiveQTUPP = NULL;
@@ -1586,7 +1583,7 @@ void CloseQT(void)
 	}
 	QuicktimeDlog = NULL;
 	
-//	SetItemMark( ViewsMenu, m3D, noMark);
+	//SetItemMark( ViewsMenu, m3D, noMark);
 }
 
 Boolean IsQTDrag( DragReference theDrag)
@@ -1607,11 +1604,11 @@ Boolean IsQTDrag( DragReference theDrag)
 	if (result == noErr)
 	{
 		Boolean		targetIsFolder, wasAliased;
-	
+		
 		GetFlavorDataSize( theDrag, theItem, flavorTypeHFS, &textSize);
 		
 		GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
-
+		
 		ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		
 		HSetVol( NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
@@ -1631,26 +1628,27 @@ OSErr ConvertMovieToAIFF(FSSpec *inputFile, FSSpec *outputFile)
 	Movie			aMovie;
 	TimeValue		selectionTime, selectionDuration;
 	
-
-/*	err = OpenMovieFile(inputFile, &fRef, fsRdPerm);
+#if 0
+	err = OpenMovieFile(inputFile, &fRef, fsRdPerm);
 	if (err != noErr)
 		goto OpenMovieFileFailed;
-
+	
 	err = NewMovieFromFile(&theMovie, fRef, nil, nil, 0, nil);
-	if (err != noErr) goto NewMovieFromFileFailed;*/
-
-//	SetMovieProgressProc(theMovie, (MovieProgressUPP) gProgressUPP, 0);
+	if (err != noErr) goto NewMovieFromFileFailed;
+#endif
+	
+	//SetMovieProgressProc(theMovie, (MovieProgressUPP) gProgressUPP, 0);
 	
 	GetMovieSelection( QTMovie, &selectionTime, &selectionDuration);
-
+	
 	if( selectionDuration == 0)
 	{
 		aMovie = QTMovie;
 	}
 	else aMovie = CopyMovieSelection( QTMovie);
-
+	
 	SetMovieProgressProc( aMovie, (MovieProgressUPP) gProgressUPP, 0);
-
+	
 	err = ConvertMovieToFile( aMovie, nil, outputFile, 'mpg4', 'TVOD', 0, nil, showUserSettingsDialog, nil);
 	
 	SetCursor( GetQDGlobalsArrow( &qdarrow));
@@ -1668,7 +1666,7 @@ OSErr ConvertMovieToMPEG4(FSSpec *inputFile, FSSpec *outputFile)
 	TimeValue		selectionTime, selectionDuration;
 	Movie			theMovie;
 	
-
+	
 	err = OpenMovieFile(inputFile, &fRef, fsRdPerm);
 	if (err != noErr) return err;
 	
@@ -1706,28 +1704,28 @@ Boolean DragQTFile( RgnHandle myRgn, EventRecord *theEvent)
 	Rect				dragRegionRect;
 	
 	if( !DragManagerUse) return false;
-
+	
 	//******************************************
 	//******************************************
-
+	
 	CopyRgn( myRgn, dragRegion = NewRgn());
-//	SetPt( &theLoc, 0, 0);
-//	LocalToGlobal( &theLoc);
-//	OffsetRgn( dragRegion, theLoc.h, theLoc.v);
+	//SetPt( &theLoc, 0, 0);
+	//LocalToGlobal( &theLoc);
+	//OffsetRgn( dragRegion, theLoc.h, theLoc.v);
 	
 	NewDrag( &theDrag);
 	
 	///////////
 	{
-	GDHandle			oldGDeviceH;
-	OSErr				errCode;
-	CGrafPtr			oldPort;
-	short				itemType;
-	Rect				itemRect;
-	Handle				itemHandle;
-	Rect				picRect = { 0, 0, 32, 32};
-	RgnHandle			rectRgn;
-	
+		GDHandle			oldGDeviceH;
+		OSErr				errCode;
+		CGrafPtr			oldPort;
+		short				itemType;
+		Rect				itemRect;
+		Handle				itemHandle;
+		Rect				picRect = { 0, 0, 32, 32};
+		RgnHandle			rectRgn;
+		
 		GetGWorld( &oldPort, &oldGDeviceH);
 		
 		GetDialogItem( QuicktimeDlog, 2, &itemType, &itemHandle, &itemRect);
@@ -1741,11 +1739,11 @@ Boolean DragQTFile( RgnHandle myRgn, EventRecord *theEvent)
 		picRect.bottom = itemRect.bottom;
 		
 		NewGWorld(	&theGWorld,
-					24,
-					&picRect,
-					NULL,				// CTabHandle
-					nil,
-					(GWorldFlags) 0);
+				  24,
+				  &picRect,
+				  NULL,				// CTabHandle
+				  nil,
+				  (GWorldFlags) 0);
 		
 		LockPixels( GetPortPixMap( theGWorld));
 		SetGWorld( theGWorld, NULL);
@@ -1755,9 +1753,9 @@ Boolean DragQTFile( RgnHandle myRgn, EventRecord *theEvent)
 		
 		PaintRect( &picRect);
 		
-	/*	IconRgn = NewRgn();
-		GetDialogItem( QuicktimeDlog, 2, &itemType, &itemHandle, &itemRect);
-		DrawQTItem( true, &itemRect, QTFileName, &QTFile, IconRgn);*/
+		/*	IconRgn = NewRgn();
+		 GetDialogItem( QuicktimeDlog, 2, &itemType, &itemHandle, &itemRect);
+		 DrawQTItem( true, &itemRect, QTFileName, &QTFile, IconRgn);*/
 		
 		GetDialogItem( QuicktimeDlog, 9, &itemType, &itemHandle, &itemRect);
 		
@@ -1768,8 +1766,8 @@ Boolean DragQTFile( RgnHandle myRgn, EventRecord *theEvent)
 		if( itemRect.right > picRect.right) itemRect.right = picRect.right;
 		if( itemRect.left < picRect.left) itemRect.left = picRect.left;
 		
-	//	TETextBox( QTFileName+1, QTFileName[0], &itemRect, teJustCenter);
-	//	InvertRect( &itemRect);
+		//TETextBox( QTFileName+1, QTFileName[0], &itemRect, teJustCenter);
+		//InvertRect( &itemRect);
 		
 		SetGWorld( oldPort, oldGDeviceH);
 		
@@ -1792,7 +1790,7 @@ Boolean DragQTFile( RgnHandle myRgn, EventRecord *theEvent)
 	
 	
 	FSpGetFInfo( &QTFile, &fndrInfo);
-		
+	
 	myNewFile.fileType			=	fndrInfo.fdType;
 	myNewFile.fileCreator		=	fndrInfo.fdCreator;
 	myNewFile.fdFlags			=	fndrInfo.fdFlags;
@@ -1813,23 +1811,24 @@ Boolean DragQTFile( RgnHandle myRgn, EventRecord *theEvent)
 	
 	result = TrackDrag(theDrag, theEvent, myRgn);
 	if (result != noErr && result != userCanceledErr) return(true);
-
+	
 	gMovieQuicktime = false;
 	
 	//
 	//	Dispose of the drag.
 	//
-
+	
 	DisposeDrag( theDrag);
 	DisposeGWorld( theGWorld);
 	DisposeRgn( dragRegion);
-//	DisposeRgn( IconRgn);
+	//DisposeRgn( IconRgn);
 	
 	return(true);
 }
 
 pascal OSErr MyTrackingQuicktime(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
-{	short				result, offset, i;
+{	
+	short				result, offset, i;
 	long				theTime = TickCount();
 	unsigned short		count, index;
 	unsigned long		flavorFlags, attributes;
@@ -1838,38 +1837,38 @@ pascal OSErr MyTrackingQuicktime(short message, WindowPtr theWindow, void *handl
 	Point				theMouse, localMouse, theCell;
 	Rect				caRect, tempRect;
 	GrafPtr				savePort;
-
+	
 	if( !mainSystemDrag) return noErr;
-
+	
 	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return( noErr);
-
+	
 	GetPort( &savePort);
 	SetPortWindowPort( theWindow);
 	
 	GetDragAttributes(theDrag, &attributes);
 	
 	switch (message) {
-
+			
 		case kDragTrackingEnterHandler:
 			if( attributes & kDragInsideSenderWindow) canAcceptDrag = false;
 			else canAcceptDrag = IsQTDrag( theDrag);
-		break;
-
+			break;
+			
 		case kDragTrackingEnterWindow:
 			
-		break;
-
+			break;
+			
 		case kDragTrackingInWindow:
 			//
 			//	We receive InWindow messages as long as the mouse is in one of our windows
 			//	during a drag. We draw the window highlighting and blink the insertion caret
 			//	when we get these messages.
 			//
-
+			
 			GetDragMouse(theDrag, &theMouse, NULL);
 			localMouse = theMouse;
 			GlobalToLocal(&localMouse);
-
+			
 			//
 			//	Show or hide the window highlighting when the mouse enters or leaves the
 			//	TextEdit field in our window (we don't want to show the highlighting when
@@ -1884,29 +1883,29 @@ pascal OSErr MyTrackingQuicktime(short message, WindowPtr theWindow, void *handl
 				ShowDragHilite(theDrag, theRgn, true);
 				DisposeRgn(theRgn);
 			}
-
+			
 			//
 			//	If this application is the sender, do not allow tracking through
 			//	the selection in the window that sourced the drag.
 			//
-
+			
 			if (attributes & kDragInsideSenderWindow)
 			{
-			
+				
 			}
-		break;
-
+			break;
+			
 		case kDragTrackingLeaveWindow:
 			HideDragHilite( theDrag);
-		break;
-
+			break;
+			
 		case kDragTrackingLeaveHandler:
-		
-		break;
+			
+			break;
 	}
-
+	
 	SetPort( savePort);
-
+	
 	return(noErr);
 }
 
@@ -1926,15 +1925,14 @@ void COPYQuicktime()
 	
 	DisposeMovie( aMovie);
 	
-/*	MCDoAction( gMovieController, mcActionGetSelectionBegin, (void*) &start);
+#if 0
+	
+	MCDoAction( gMovieController, mcActionGetSelectionBegin, (void*) &start);
 	
 	MCDoAction( gMovieController, mcActionGetSelectionDuration, (void*) &dur);
 	
-	*/
+	GetMovieSelection( QTMovie, &selectionTime, &selectionDuration);
 	
-	
-/*	GetMovieSelection( QTMovie, &selectionTime, &selectionDuration);
-
 	if( selectionDuration == 0)
 	{
 		aMovie = QTMovie;
@@ -1956,7 +1954,8 @@ void COPYQuicktime()
 	
 	anErr = ConvertMovieToFile( aMovie, nil, &newFile, 'AIFF', 'TVOD', 0, nil, showUserSettingsDialog, nil);
 	
-	DisposeMovie( aMovie);*/
+	DisposeMovie( aMovie);
+#endif
 }
 
 pascal OSErr MyReceiveQuicktime(WindowPtr theWindow, void* handlerRefCon, DragReference theDrag)
@@ -1974,9 +1973,9 @@ pascal OSErr MyReceiveQuicktime(WindowPtr theWindow, void* handlerRefCon, DragRe
 	AppleEvent			aeEvent, reply;
 	AEDesc				target, listElem, fileList;
 	//
-
+	
 	if( !mainSystemDrag) return dragNotAcceptedErr;
-
+	
 	GetPort( &SavedPort);
 	SetPortWindowPort(theWindow);
 	
@@ -1986,43 +1985,43 @@ pascal OSErr MyReceiveQuicktime(WindowPtr theWindow, void* handlerRefCon, DragRe
 	if( (attributes & kDragInsideSenderWindow)) return dragNotAcceptedErr;
 	
 	HideDragHilite( theDrag);
-
+	
 	//
 	//	Un fichier en provenance du Finder
 	//
 	
 	iErr = AECreateDesc(	typeApplSignature,
-							(Ptr) &sign,
-							sizeof( sign),
-							&target);
+						(Ptr) &sign,
+						sizeof( sign),
+						&target);
 	
 	iErr = AECreateAppleEvent(	kCoreEventClass,
-								kAEOpenDocuments,
-								&target,
-								kAutoGenerateReturnID,
-								kAnyTransactionID,
-								&aeEvent);
+							  kAEOpenDocuments,
+							  &target,
+							  kAutoGenerateReturnID,
+							  kAnyTransactionID,
+							  &aeEvent);
 	
 	iErr = AECreateList( nil,0,false, &fileList);
-
+	
 	CountDragItems(theDrag, &items);
-
+	
 	SetCursor( &watchCrsr);
-
+	
 	for (index = 1; index <= items; index++)
 	{
 		GetDragItemReferenceNumber(theDrag, index, &theItem);
 		
 		iErr = GetFlavorDataSize(theDrag, theItem, flavorTypeHFS, &textSize);
-	
+		
 		if (iErr == noErr)
 		{
 			Boolean		targetIsFolder, wasAliased;
-		
+			
 			GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
 			
 			ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
-		
+			
 			AECreateDesc(typeFSS, (Ptr) &myFlavor.fileSpec, sizeof( myFlavor.fileSpec), &listElem);
 			
 			iErr = AEPutDesc( &fileList, 0, &listElem);
@@ -2037,13 +2036,13 @@ pascal OSErr MyReceiveQuicktime(WindowPtr theWindow, void* handlerRefCon, DragRe
 	
 	iErr = AEDisposeDesc( &fileList);
 	
-	iErr = AESend(	&aeEvent,
-					&reply,
-					kAENoReply,
-					kAENormalPriority,
-					kAEDefaultTimeout,
-					NULL,
-					NULL);
+	iErr = AESend(&aeEvent,
+				  &reply,
+				  kAENoReply,
+				  kAENormalPriority,
+				  kAEDefaultTimeout,
+				  NULL,
+				  NULL);
 	if( iErr) return iErr;
 	
 	SetCursor( GetQDGlobalsArrow( &qdarrow));

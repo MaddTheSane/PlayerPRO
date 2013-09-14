@@ -887,7 +887,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 									if( curData->amp == 16)
 									{
 										short			*tt;
-										long			tL;
+										//long			tL;
 										
 										tt = (short*) curData->data;
 										

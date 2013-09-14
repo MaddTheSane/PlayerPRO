@@ -52,25 +52,12 @@ int main( int argc, char* argv[])
 	MADMusic				*MADMusic;
 	MADLibrary				*MADLib;
 	
-/***************					****************/
-/****** 	 	Toolbox Initialization	  **********/
-/***************					****************/
+	/***************					****************/
+	/****** 	 	Toolbox Initialization	  **********/
+	/***************					****************/
 	
-#if TARGET_API_MAC_CARBON == 1
 	InitCursor();
 	MoreMasters();
-#else
-	InitGraf( &qd.thePort);
-	InitFonts();
-	InitWindows();
-	InitMenus();
-	TEInit();
-	InitDialogs(0L);
-	InitCursor();
-	MaxApplZone();
-	MoreMasters();
-	
-#endif
 	
 	if( NavServicesAvailable() == false) return EXIT_FAILURE;
 	

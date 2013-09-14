@@ -551,16 +551,9 @@ static OSErr mainOKTA( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 	return myErr;
 }
 
-#ifdef _MAC_H
 #define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x08, 0xD9, 0x62, 0x6A, 0xF3, 0xD9, 0x45, 0x36, 0xA2, 0x9B, 0x78, 0x22, 0x2D, 0xFD, 0x8F, 0x32))
 //08D9626A-F3D9-4536-A29B-78222DFD8F32
 
 #define PLUGMAIN mainOKTA
 #define PLUGINFACTORY OKTAFactory
 #include "CFPlugin-bridge.c"
-#else
-OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-{
-	return mainOKTA(order, AlienFileName, MadFile, info, init);
-}
-#endif

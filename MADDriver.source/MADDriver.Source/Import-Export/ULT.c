@@ -406,16 +406,9 @@ static OSErr mainULT( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 	return myErr;
 }
 
-#ifdef _MAC_H
 #define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xC6, 0x59, 0x34, 0xC3, 0x9B, 0x3B, 0x44, 0x84, 0xA0, 0xBF, 0xF0, 0x24, 0x44, 0xE4, 0xD3, 0xFD))
 //C65934C3-9B3B-4484-A0BF-F02444E4D3FD
 
 #define PLUGMAIN mainULT
 #define PLUGINFACTORY ULTFactory
 #include "CFPlugin-bridge.c"
-#else
-OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-{
-	return mainULT(order, AlienFileName, MadFile, info, init);
-}
-#endif

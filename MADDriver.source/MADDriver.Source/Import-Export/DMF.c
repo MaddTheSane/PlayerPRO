@@ -66,6 +66,7 @@ static inline void mystrcpy( Ptr a, BytePtr b)
 	BlockMoveData( b + 1, a, b[ 0]);
 }
 
+#if 0
 static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
 {
 	//Str255	tStr;
@@ -203,6 +204,7 @@ static void ConvertMADEffect( Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 			break;
 	}
 }
+#endif
 
 static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
@@ -924,16 +926,9 @@ static OSErr mainDMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 	return myErr;
 }
 
-#ifdef _MAC_H 
 #define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x45, 0xAE, 0x25, 0xED, 0x47, 0xCE, 0x44, 0xD8, 0xA3, 0x51, 0xE3, 0xCB, 0x1C, 0x48, 0xED, 0xA8))
 //45AE25ED-47CE-44D8-A351-E3CB1C48EDA8
 
 #define PLUGMAIN mainDMF
 #define PLUGINFACTORY DMFFactory
 #include "CFPlugin-bridge.c"
-#else
-OSErr mainPLUG( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-{
-	return mainDMF(order, AlienFileName, MadFile, info, init);
-}
-#endif

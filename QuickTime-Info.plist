@@ -39,11 +39,12 @@
 	<key>MADPlugMenuName</key>
 	<string>Quicktime Movie</string>
 	<key>MADPlugMode</key>
-	<string>EXIM</string>
+	<string>IMPL</string>
 	<key>MADPlugType</key>
 	<string>MooV</string>
 	<key>MADPlugUTITypes</key>
 	<array>
+		<string>public.aiff-audio</string>
 		<string>com.apple.quicktime-movie</string>
 		<string>public.mpeg</string>
 		<string>public.mpeg-2-video</string>
@@ -56,11 +57,9 @@
 		<string>public.ulaw-audio</string>
 		<string>public.au-audio</string>
 		<string>public.aifc-audio</string>
-		<string>public.aiff-audio</string>
 		<string>com.apple.coreaudio-format</string>
 		<string>org.3gpp.adaptive-multi-rate-audio</string>
 		<string>com.digidesign.sd2-audio</string>
-		<string>com.microsoft.waveform-audio</string>
 	</array>
 </dict>
 </plist>

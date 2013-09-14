@@ -13,6 +13,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				55F48B6117E25F7B00DB4584 /* PBXTargetDependency */,
 				55E8997D10F17CE5004EB52B /* PBXTargetDependency */,
 				551FEB7910E7282700EDF2F1 /* PBXTargetDependency */,
 				551FEB7710E7282700EDF2F1 /* PBXTargetDependency */,
@@ -384,6 +385,13 @@
 		55EE8C741003E83A00E75E63 /* General-rez.r in Rez */ = {isa = PBXBuildFile; fileRef = 55EE8C731003E83A00E75E63 /* General-rez.r */; };
 		55EE8EC2100404EB00E75E63 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBC100404EB00E75E63 /* CoreAudio.framework */; };
 		55EE8EC6100404EB00E75E63 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
+		55F48AB517E25F6800DB4584 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
+		55F48AB717E25F6800DB4584 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		55F48AB817E25F6800DB4584 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		55F48B6317E2604B00DB4584 /* WAV.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105610D6C79E00BB619C /* WAV.c */; };
+		55F48B6417E2608D00DB4584 /* WAVE-Conversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105710D6C79E00BB619C /* WAVE-Conversion.c */; };
+		55F48B6717E2632000DB4584 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
+		55F48BBD17E2636800DB4584 /* Wave.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55F48ABC17E25F6800DB4584 /* Wave.plugin */; };
 		55FA5FBB102D2D6C00CB63DA /* ppApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55FA5FBA102D2D6C00CB63DA /* ppApp.icns */; };
 		55FA5FCA102D31BA00CB63DA /* PlayerHeaders.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4770C2F21E400D6C081 /* PlayerHeaders.c */; };
 		55FD861E10B22C2300F8BDE6 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
@@ -1202,6 +1210,20 @@
 			remoteGlobalIDString = 5533411010BB547C005208D1;
 			remoteInfo = MOD;
 		};
+		55F48AB117E25F6800DB4584 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
+		55F48B6017E25F7B00DB4584 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55F48AAF17E25F6800DB4584;
+			remoteInfo = "XI copy";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1221,6 +1243,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				55F48BBD17E2636800DB4584 /* Wave.plugin in Copy PlugIns */,
 				551FEBF510E72AD900EDF2F1 /* MINs.plugin in Copy PlugIns */,
 				55E899F910F18B53004EB52B /* QuickTime.plugin in Copy PlugIns */,
 				551FEBF610E72AD900EDF2F1 /* PAT.plugin in Copy PlugIns */,
@@ -1301,9 +1324,7 @@
 		551520A910DEEA670054ABC4 /* MuLaw.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MuLaw.r; sourceTree = "<group>"; };
 		5517F7541126203E0034F90C /* Lin-PlugImport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "Lin-PlugImport.c"; sourceTree = "<group>"; };
 		5518105610C35A2600ADA9F4 /* Example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Example.c; sourceTree = "<group>"; };
-		5518105710C35A2600ADA9F4 /* small MAD Music */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music"; sourceTree = "<group>"; };
-		5518105810C35A2600ADA9F4 /* small MAD Music.mad */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music.mad"; sourceTree = "<group>"; };
-		5518105910C35A2600ADA9F4 /* small MOD Music */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MOD Music"; sourceTree = "<group>"; };
+		5518105810C35A2600ADA9F4 /* small MAD Music.madk */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music.madk"; sourceTree = "<group>"; };
 		5518105A10C35A2600ADA9F4 /* small MOD Music.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MOD Music.mod"; sourceTree = "<group>"; };
 		5518107210C35A4500ADA9F4 /* PlayerPRO Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5518107410C35A4500ADA9F4 /* PlayerPRO Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PlayerPRO Example-Info.plist"; path = "../PlayerPRO Example-Info.plist"; sourceTree = "<group>"; };
@@ -1375,7 +1396,6 @@
 		553341EA10BB5FFA005208D1 /* DMF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DMF-Info.plist"; path = "../../../DMF-Info.plist"; sourceTree = "<group>"; };
 		553341FC10BB600A005208D1 /* IT.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IT.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		553341FD10BB600A005208D1 /* IT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "IT-Info.plist"; path = "../../../IT-Info.plist"; sourceTree = "<group>"; };
-		5542403D10DB602D00C08864 /* WAVE.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = WAVE.r; sourceTree = "<group>"; };
 		5542403E10DB602D00C08864 /* SoundDesignerII.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = SoundDesignerII.r; sourceTree = "<group>"; };
 		5542403F10DB602D00C08864 /* Mp3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mp3.r; sourceTree = "<group>"; };
 		5542404010DB602D00C08864 /* MPG3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MPG3.r; sourceTree = "<group>"; };
@@ -1444,11 +1464,6 @@
 		554E105610D6C79E00BB619C /* WAV.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = WAV.c; sourceTree = "<group>"; };
 		554E105710D6C79E00BB619C /* WAVE-Conversion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "WAVE-Conversion.c"; sourceTree = "<group>"; };
 		554E105910D6C79E00BB619C /* XI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = XI.c; sourceTree = "<group>"; };
-		554E105D10D6C79E00BB619C /* 0xFF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = 0xFF.c; sourceTree = "<group>"; };
-		554E105E10D6C79E00BB619C /* MDEF */ = {isa = PBXFileReference; lastKnownFileType = file; path = MDEF; sourceTree = "<group>"; };
-		554E105F10D6C79E00BB619C /* MDEF.old */ = {isa = PBXFileReference; lastKnownFileType = file; path = MDEF.old; sourceTree = "<group>"; };
-		554E106010D6C79E00BB619C /* Note.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Note.c; sourceTree = "<group>"; };
-		554E106110D6C79E00BB619C /* PopupMenu Tester */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "PopupMenu Tester"; sourceTree = "<group>"; };
 		554E106510D6C9E100BB619C /* Read-Me.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Read-Me.rtf"; sourceTree = "<group>"; };
 		554E110510D6F09F00BB619C /* Fade Note.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fade Note.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E112910D6F0A000BB619C /* Fade Note-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Fade Note-Info.plist"; path = "../../../Fade Note-Info.plist"; sourceTree = "<group>"; };
@@ -1551,6 +1566,8 @@
 		55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		55EE8EBF100404EB00E75E63 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		55EE8EC0100404EB00E75E63 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
+		55F48ABC17E25F6800DB4584 /* Wave.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Wave.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		55F48B0E17E25F6800DB4584 /* Wave-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Wave-Info.plist"; path = "../../../Wave-Info.plist"; sourceTree = "<group>"; };
 		55FA5FBA102D2D6C00CB63DA /* ppApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ppApp.icns; path = ../ppApp.icns; sourceTree = "<group>"; };
 		88E0C3B50C2F21DD00D6C081 /* PlayerPRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayerPRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88E0C3BE0C2F21DD00D6C081 /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 1; name = Carbon.r; path = Files/Carbon.r; sourceTree = "<group>"; };
@@ -2154,6 +2171,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55F48AB617E25F6800DB4584 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55F48AB717E25F6800DB4584 /* Carbon.framework in Frameworks */,
+				55F48AB817E25F6800DB4584 /* CoreFoundation.framework in Frameworks */,
+				55F48B6717E2632000DB4584 /* QuickTime.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88E0C3B00C2F21DD00D6C081 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2224,8 +2251,8 @@
 			isa = PBXGroup;
 			children = (
 				5590896710E883AF00CE70B8 /* WAV.h */,
-				5542403D10DB602D00C08864 /* WAVE.r */,
 				554E105610D6C79E00BB619C /* WAV.c */,
+				55F48B0E17E25F6800DB4584 /* Wave-Info.plist */,
 			);
 			name = Wave;
 			sourceTree = "<group>";
@@ -2476,9 +2503,7 @@
 			isa = PBXGroup;
 			children = (
 				5518105610C35A2600ADA9F4 /* Example.c */,
-				5518105710C35A2600ADA9F4 /* small MAD Music */,
-				5518105810C35A2600ADA9F4 /* small MAD Music.mad */,
-				5518105910C35A2600ADA9F4 /* small MOD Music */,
+				5518105810C35A2600ADA9F4 /* small MAD Music.madk */,
 				5518105A10C35A2600ADA9F4 /* small MOD Music.mod */,
 				5518107410C35A4500ADA9F4 /* PlayerPRO Example-Info.plist */,
 			);
@@ -2796,7 +2821,6 @@
 				554E0FDE10D6C79D00BB619C /* Digital Plugs */,
 				554E0FF710D6C79D00BB619C /* Filters Plugs */,
 				554E102910D6C79E00BB619C /* Instruments Import:Export Plugs */,
-				554E105C10D6C79E00BB619C /* MDEF */,
 			);
 			name = "(Plug-Ins)";
 			path = "Files/(Plug-Ins)";
@@ -2863,18 +2887,6 @@
 				55151E7410DD4F400054ABC4 /* CFPlugin-InstrBridge.c */,
 			);
 			path = "Instruments Import:Export Plugs";
-			sourceTree = "<group>";
-		};
-		554E105C10D6C79E00BB619C /* MDEF */ = {
-			isa = PBXGroup;
-			children = (
-				554E105D10D6C79E00BB619C /* 0xFF.c */,
-				554E105E10D6C79E00BB619C /* MDEF */,
-				554E105F10D6C79E00BB619C /* MDEF.old */,
-				554E106010D6C79E00BB619C /* Note.c */,
-				554E106110D6C79E00BB619C /* PopupMenu Tester */,
-			);
-			path = MDEF;
 			sourceTree = "<group>";
 		};
 		554E11A410D6F2CA00BB619C /* Fade Vol */ = {
@@ -3085,6 +3097,7 @@
 				551FEADA10E727B100EDF2F1 /* PAT.plugin */,
 				551FECC510E7354900EDF2F1 /* AutoExec.app */,
 				55E898B710F17C2B004EB52B /* QuickTime.plugin */,
+				55F48ABC17E25F6800DB4584 /* Wave.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4217,6 +4230,24 @@
 			productReference = 55E898B710F17C2B004EB52B /* QuickTime.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		55F48AAF17E25F6800DB4584 /* Wave */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55F48AB917E25F6800DB4584 /* Build configuration list for PBXNativeTarget "Wave" */;
+			buildPhases = (
+				55F48AB217E25F6800DB4584 /* Resources */,
+				55F48AB317E25F6800DB4584 /* Sources */,
+				55F48AB617E25F6800DB4584 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55F48AB017E25F6800DB4584 /* PBXTargetDependency */,
+			);
+			name = Wave;
+			productName = "Complex Fade";
+			productReference = 55F48ABC17E25F6800DB4584 /* Wave.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		88E0C3B20C2F21DD00D6C081 /* Carbon */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 88E0C3B80C2F21DD00D6C081 /* Build configuration list for PBXNativeTarget "Carbon" */;
@@ -4298,6 +4329,7 @@
 				55151F7210DEDBDB0054ABC4 /* XI */,
 				551FEA5C10E727AD00EDF2F1 /* MINs */,
 				551FEACB10E727B100EDF2F1 /* PAT */,
+				55F48AAF17E25F6800DB4584 /* Wave */,
 				55E898A810F17C2B004EB52B /* QuickTime */,
 				557DE3BD10E06BB500177B4C /* Filters Plugs */,
 				557DE42510E06BF200177B4C /* Amplitude */,
@@ -4640,6 +4672,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		55E898AB10F17C2B004EB52B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55F48AB217E25F6800DB4584 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -5224,6 +5263,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55F48AB317E25F6800DB4584 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55F48AB517E25F6800DB4584 /* SndUtils.c in Sources */,
+				55F48B6317E2604B00DB4584 /* WAV.c in Sources */,
+				55F48B6417E2608D00DB4584 /* WAVE-Conversion.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88E0C3AE0C2F21DD00D6C081 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -5778,6 +5827,16 @@
 			target = 5533411010BB547C005208D1 /* MOD */;
 			targetProxy = 55ED50B910D40C0B00824C61 /* PBXContainerItemProxy */;
 		};
+		55F48AB017E25F6800DB4584 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 55F48AB117E25F6800DB4584 /* PBXContainerItemProxy */;
+		};
+		55F48B6117E25F7B00DB4584 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55F48AAF17E25F6800DB4584 /* Wave */;
+			targetProxy = 55F48B6017E25F7B00DB4584 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -5865,7 +5924,6 @@
 				);
 				INFOPLIST_FILE = "XI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = XI;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -5887,7 +5945,6 @@
 				);
 				INFOPLIST_FILE = "XI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = XI;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -5902,9 +5959,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PREBINDING = NO;
 				PRODUCT_NAME = "PlayerPRO Example";
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -5918,7 +5973,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PREBINDING = NO;
 				PRODUCT_NAME = "PlayerPRO Example";
 			};
 			name = Debug;
@@ -5937,7 +5991,6 @@
 				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = MINs;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -5959,7 +6012,6 @@
 				);
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = MINs;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6114,10 +6166,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = 669;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -6136,7 +6186,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = 669;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6155,10 +6204,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = AMF;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -6177,7 +6224,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = AMF;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6196,10 +6242,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = DMF;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -6218,7 +6262,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = DMF;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6237,10 +6280,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = IT;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -6259,7 +6300,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = IT;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6275,7 +6315,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Fade Note-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Fade Note";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6293,7 +6332,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Fade Note-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Fade Note";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6309,7 +6347,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Fade Volume-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Fade Volume";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6327,7 +6364,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Fade Volume-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Fade Volume";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6343,7 +6379,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Note Translate-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Note Translate";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6361,7 +6396,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Note Translate-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Note Translate";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6377,7 +6411,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Propagate-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Propagate;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6395,7 +6428,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Propagate-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Propagate;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6411,7 +6443,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Revert-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Revert;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6429,7 +6460,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Revert-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Revert;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6488,7 +6518,6 @@
 					"-multiply_defined",
 					warning,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = PlayerPRO;
 				REZ_SCRIPT_TYPE = Roman;
 			};
@@ -6507,7 +6536,6 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = /Library/Frameworks;
-				PREBINDING = NO;
 				PRODUCT_NAME = PlayerPROCore;
 				ZERO_LINK = NO;
 			};
@@ -6527,7 +6555,6 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
-				PREBINDING = NO;
 				PRODUCT_NAME = PlayerPROCore;
 			};
 			name = Debug;
@@ -6563,7 +6590,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Amplitude-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Amplitude;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6581,7 +6607,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Amplitude-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Amplitude;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6597,7 +6622,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Backwards-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Backwards;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6615,7 +6639,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Backwards-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Backwards;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6631,7 +6654,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Crop-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Crop;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6649,7 +6671,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Crop-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Crop;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6665,7 +6686,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "CrossFade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = CrossFade;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6683,7 +6703,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "CrossFade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = CrossFade;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6699,7 +6718,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Depth-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Depth;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6717,7 +6735,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Depth-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Depth;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6733,7 +6750,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Echo-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Echo;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6751,7 +6767,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Echo-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Echo;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6767,7 +6782,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Fade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Fade;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6785,7 +6799,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Fade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Fade;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6801,7 +6814,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Invert;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6819,7 +6831,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Invert;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6835,7 +6846,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Length;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6853,7 +6863,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Length;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6869,7 +6878,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Mix;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6887,7 +6895,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Mix;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6903,7 +6910,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Normalize;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6921,7 +6927,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Normalize;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6937,7 +6942,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Sampling Rate";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6955,7 +6959,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Sampling Rate";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6971,7 +6974,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Silence;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -6989,7 +6991,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Silence;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7005,7 +7006,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Smooth;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7023,7 +7023,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = Smooth;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7039,7 +7038,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Tone Generator";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7057,7 +7055,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Tone Generator";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7076,7 +7073,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MADfg;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7097,7 +7093,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MADfg;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7116,10 +7111,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MADH;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -7138,7 +7131,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MADH;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7157,10 +7149,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MADI;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -7179,7 +7169,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MADI;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7198,10 +7187,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MED;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -7220,7 +7207,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MED;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7239,10 +7225,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MTM;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -7261,7 +7245,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MTM;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7280,10 +7263,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = Okta;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -7302,7 +7283,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = Okta;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7321,10 +7301,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = S3M;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -7343,7 +7321,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = S3M;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7362,10 +7339,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = ULT;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -7384,7 +7359,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = ULT;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7403,10 +7377,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = UMX;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -7425,7 +7397,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = UMX;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7444,10 +7415,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = XM;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -7466,7 +7435,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = XM;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7485,10 +7453,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MIDI;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -7507,7 +7473,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MIDI;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7526,10 +7491,8 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = APPL;
 				WRAPPER_EXTENSION = ppimpexp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -7548,7 +7511,6 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = APPL;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7611,7 +7573,6 @@
 					"-multiply_defined",
 					warning,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = PlayerPRO;
 				REZ_SCRIPT_TYPE = Roman;
 			};
@@ -7649,7 +7610,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Complex Fade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Complex Fade";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7667,7 +7627,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "Complex Fade-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Complex Fade";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7683,7 +7642,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "QuickTime-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = QuickTime;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7701,8 +7659,47 @@
 				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
 				INFOPLIST_FILE = "QuickTime-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = QuickTime;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		55F48ABA17E25F6800DB4584 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+				);
+				INFOPLIST_FILE = "Wave-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Wave;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		55F48ABB17E25F6800DB4584 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+				);
+				INFOPLIST_FILE = "Wave-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Wave;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -8156,6 +8153,15 @@
 			buildConfigurations = (
 				55E898B510F17C2B004EB52B /* Release */,
 				55E898B610F17C2B004EB52B /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55F48AB917E25F6800DB4584 /* Build configuration list for PBXNativeTarget "Wave" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55F48ABA17E25F6800DB4584 /* Release */,
+				55F48ABB17E25F6800DB4584 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

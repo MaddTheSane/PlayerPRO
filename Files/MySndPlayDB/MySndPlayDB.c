@@ -34,8 +34,11 @@
 #define DEBUG 0
 #include "RDriver.h"
 #include <Carbon/Carbon.h>
+#include <libkern/OSAtomic.h>
 
 #include "MySndPlayDB.h"
+
+static pascal void	MySndPlayDoubleBufferCleanUpProc (SndChannelPtr theChannel, SndCommand * theCallBackCmd);
 
 #define kBufSize					2048
 
@@ -78,7 +81,7 @@ OSErr	MySndDoImmediate (SndChannelPtr chan, SndCommand * cmd) {
 #endif
 			perChanInfoPtr->stopping = true;
 			Enqueue ((QElemPtr)perChanInfoPtr, gFreeList);
-			if (! OTAtomicSetBit (&gNMRecBusy, 0)) { //FIXME: use something else here
+			if (! OSAtomicTestAndSet(0, &gNMRecBusy)) {
 				NMInstall (gNMRecPtr);
 			}
 			chan->callBack = perChanInfoPtr->usersCallBack;
@@ -251,7 +254,7 @@ static pascal void	MySndPlayDoubleBufferCleanUpProc (SndChannelPtr theChannel, S
 	// Put our per channel data on the free queue so we can clean up later
 	Enqueue ((QElemPtr)perChanInfoPtr, gFreeList);
 	// Have to install our Notification Manager routine so that we can clean up the gFreeList
-	if (! OTAtomicSetBit (&gNMRecBusy, 0)) { //FIXME: use something else here
+	if (! OSAtomicTestAndSet ( 0, &gNMRecBusy)) {
 		NMInstall (gNMRecPtr);
 	}
 	// Have to put the user's callback proc back so they get called when the next buffer finishes
