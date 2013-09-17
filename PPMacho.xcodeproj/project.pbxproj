@@ -1619,13 +1619,13 @@
 		550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "OSX-CoreAudio.c"; sourceTree = "<group>"; };
 		550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentCellView.h; sourceTree = "<group>"; };
 		550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentCellView.m; sourceTree = "<group>"; };
-		550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject.h; sourceTree = "<group>"; };
-		550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSampleObject.m; sourceTree = "<group>"; };
-		550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentObject.h; sourceTree = "<group>"; };
-		550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentObject.m; sourceTree = "<group>"; };
+		550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPSampleObject.h; path = ../Classes/PPSampleObject.h; sourceTree = "<group>"; };
+		550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPSampleObject.m; path = ../Classes/PPSampleObject.m; sourceTree = "<group>"; };
+		550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPInstrumentObject.h; path = ../Classes/PPInstrumentObject.h; sourceTree = "<group>"; };
+		550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPInstrumentObject.m; path = ../Classes/PPInstrumentObject.m; sourceTree = "<group>"; };
 		550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embeddedPlugs.h; sourceTree = "<group>"; };
 		550FFAEB17CEA4570003A2F3 /* AIFF.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AIFF.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
-		550FFAEC17CEA4590003A2F3 /* AIFF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AIFF-Info.plist"; path = "/Users/cwbetts/makestuff/playerpro-all/trunk/AIFF-Info.plist"; sourceTree = "<absolute>"; };
+		550FFAEC17CEA4590003A2F3 /* AIFF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AIFF-Info.plist"; path = "../../../AIFF-Info.plist"; sourceTree = "<group>"; };
 		55113CBA133688D60008C2AF /* Win-DirectSound.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "Win-DirectSound.c"; sourceTree = "<group>"; };
 		55113CBB133688D60008C2AF /* FileUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = FileUtils.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55113CBC133688D60008C2AF /* Win-PlugImport.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "Win-PlugImport.c"; sourceTree = "<group>"; };
@@ -2642,6 +2642,10 @@
 			isa = PBXGroup;
 			children = (
 				551292E5163DD68500C2C639 /* PlayerPROKit.h */,
+				550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */,
+				550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */,
+				550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */,
+				550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */,
 				551292EE163DD7CE00C2C639 /* PPLibrary.h */,
 				558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */,
 				551292EF163DD7CE00C2C639 /* PPLibrary.m */,
@@ -3161,10 +3165,6 @@
 				557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */,
 				5523EC6716925FF80067B22A /* PPInstrumentWindowController.h */,
 				5523EC6816925FF80067B22A /* PPInstrumentWindowController.m */,
-				550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */,
-				550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */,
-				550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */,
-				550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */,
 				550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */,
 				550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */,
 				552581FB16C6FC350016A31C /* InstrumentInfoController.h */,
@@ -3316,7 +3316,8 @@
 				554E105710D6C79E00BB619C /* WAVE-Conversion.c */,
 				55151E7410DD4F400054ABC4 /* CFPlugin-InstrBridge.c */,
 			);
-			path = "Instruments Import:Export Plugs";
+			name = "Instruments Import:Export Plugs";
+			path = "Instruments Import-Export Plugs";
 			sourceTree = "<group>";
 		};
 		554E11A410D6F2CA00BB619C /* Fade Vol */ = {

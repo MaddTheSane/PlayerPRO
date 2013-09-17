@@ -12,10 +12,6 @@
 @interface PPSampleObject : NSObject <NSCopying, NSCoding>
 {
 	sData		theSample;
-	NSString	*name;
-	NSData		*data;
-	short		sampleIndex;
-	short		instrumentIndex;
 }
 
 @property (readwrite) short sampleIndex;
