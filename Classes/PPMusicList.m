@@ -232,7 +232,6 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	return tmpURL ? tmpURL : otherURL;
 }
 
-
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen
 {
 	lostMusicCount = 0;
@@ -473,6 +472,11 @@ static inline NSURL *PPHomeURL()
 - (NSUInteger)countOfMusicList
 {
 	return [musicList count];
+}
+
+- (NSArray*)arrayOfObjectsInMusicListAtIndexes:(NSIndexSet*)theSet
+{
+	return [musicList objectsAtIndexes:theSet];
 }
 
 - (void)removeObjectsInMusicListAtIndexes:(NSIndexSet *)set
