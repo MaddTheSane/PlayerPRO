@@ -2820,7 +2820,7 @@
 			children = (
 				554E0FDE10D6C79D00BB619C /* Digital Plugs */,
 				554E0FF710D6C79D00BB619C /* Filters Plugs */,
-				554E102910D6C79E00BB619C /* Instruments Import:Export Plugs */,
+				554E102910D6C79E00BB619C /* Instruments Import-Export Plugs */,
 			);
 			name = "(Plug-Ins)";
 			path = "Files/(Plug-Ins)";
@@ -2866,7 +2866,7 @@
 			path = "Filters Plugs";
 			sourceTree = "<group>";
 		};
-		554E102910D6C79E00BB619C /* Instruments Import:Export Plugs */ = {
+		554E102910D6C79E00BB619C /* Instruments Import-Export Plugs */ = {
 			isa = PBXGroup;
 			children = (
 				551520A610DEE9800054ABC4 /* AIFF */,
@@ -2886,7 +2886,8 @@
 				554E105710D6C79E00BB619C /* WAVE-Conversion.c */,
 				55151E7410DD4F400054ABC4 /* CFPlugin-InstrBridge.c */,
 			);
-			path = "Instruments Import:Export Plugs";
+			lineEnding = 0;
+			path = "Instruments Import-Export Plugs";
 			sourceTree = "<group>";
 		};
 		554E11A410D6F2CA00BB619C /* Fade Vol */ = {
