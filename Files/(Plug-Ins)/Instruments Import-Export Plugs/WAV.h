@@ -103,7 +103,7 @@ typedef struct _MyAtom{
 extern "C" {
 #endif
 #ifndef __LP64__
-__private_extern__ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo) DEPRECATED_ATTRIBUTE;
+__private_extern__ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo) DEPRECATED_ATTRIBUTE; //Returns memory allocated using Carbon's NewPtr.
 __private_extern__ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug) DEPRECATED_ATTRIBUTE;
 #endif
 __private_extern__ OSErr TestWAV(PCMWavePtr CC);
