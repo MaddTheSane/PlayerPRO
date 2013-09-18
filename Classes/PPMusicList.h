@@ -9,10 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @interface PPMusicListObject : NSObject <NSCopying>
-{
-	NSURL *musicUrl;
-	//NSString *fileName;
-}
 
 @property (retain, readonly) NSURL *musicUrl;
 @property (unsafe_unretained, readonly) NSString *fileName;
@@ -22,11 +18,7 @@
 
 @end
 
-@interface PPMusicList : NSObject <NSCoding, NSFastEnumeration> {
-	NSMutableArray	*musicList;
-	NSInteger		selectedMusic;
-	NSUInteger		lostMusicCount;
-}
+@interface PPMusicList : NSObject <NSCoding, NSFastEnumeration>
 
 @property (readonly) NSUInteger lostMusicCount;
 @property (readwrite) NSInteger selectedMusic;
@@ -47,6 +39,7 @@
 - (NSInteger)indexOfObjectSimilarToURL:(NSURL*)theURL;
 
 - (void)removeObjectsInMusicListAtIndexes:(NSIndexSet *)set;
+- (NSArray*)arrayOfObjectsInMusicListAtIndexes:(NSIndexSet*)theSet;
 
 //KVC functions
 - (NSUInteger)countOfMusicList;

@@ -25,8 +25,6 @@
 @implementation PPSampleObject
 @synthesize name;
 @synthesize data;
-@synthesize instrumentIndex;
-@synthesize sampleIndex;
 
 - (void)setAmplitude:(unsigned char)amplitude
 {
@@ -200,8 +198,8 @@
 	[aCoder encodeObject:@(theSample.relNote) forKey:RELATIVENOTEKEY];
 	[aCoder encodeObject:@(self.stereo) forKey:STEREOKEY];
 	
-	[aCoder encodeObject:@(sampleIndex) forKey:SAMPLEINDEXKEY];
-	[aCoder encodeObject:@(instrumentIndex) forKey:INSTRUMENTINDEXKEY];
+	[aCoder encodeObject:@(self.sampleIndex) forKey:SAMPLEINDEXKEY];
+	[aCoder encodeObject:@(self.instrumentIndex) forKey:INSTRUMENTINDEXKEY];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -218,8 +216,8 @@
 		theSample.relNote = [[aDecoder decodeObjectForKey:RELATIVENOTEKEY] charValue];
 		self.stereo = [[aDecoder decodeObjectForKey:STEREOKEY] boolValue];
 		
-		sampleIndex = [[aDecoder decodeObjectForKey:SAMPLEINDEXKEY] shortValue];
-		instrumentIndex = [[aDecoder decodeObjectForKey:INSTRUMENTINDEXKEY] shortValue];
+		self.sampleIndex = [[aDecoder decodeObjectForKey:SAMPLEINDEXKEY] shortValue];
+		self.instrumentIndex = [[aDecoder decodeObjectForKey:INSTRUMENTINDEXKEY] shortValue];
 	}
 	return self;
 }
