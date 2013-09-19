@@ -3432,8 +3432,8 @@
 				55BE998617978BB100D6DECC /* InfoPlist.strings */,
 				55BE998817978BB100D6DECC /* schema.strings */,
 				55BE998A17978BB100D6DECC /* GetMetadataForFile.c */,
-				5578C56E17DBD9930057D11B /* MADPackageMDImport.m */,
 				55BE998B17978BB100D6DECC /* GetMetadataForFile.h */,
+				5578C56E17DBD9930057D11B /* MADPackageMDImport.m */,
 				55BE998C17978BB100D6DECC /* Info.plist */,
 				55BE998D17978BB100D6DECC /* main.c */,
 				55BE999117978BB200D6DECC /* schema.xml */,
@@ -7324,7 +7324,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
-				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -7350,7 +7349,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
-				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -8679,7 +8677,6 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 			};
@@ -8703,7 +8700,6 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 			};
