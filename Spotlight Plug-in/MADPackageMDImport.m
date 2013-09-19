@@ -15,12 +15,39 @@
 
 Boolean GetMetadataForPackage(CFMutableDictionaryRef attributes, CFStringRef pathToFile)
 {
-	NSMutableDictionary *outDict = (__bridge NSMutableDictionary*)attributes;
-	NSURL *fileURL = [NSURL fileURLWithPath:(__bridge NSString*)pathToFile];
-	
-	
-	
-	return FALSE;
+	@autoreleasepool {
+		NSMutableDictionary *outDict = (__bridge NSMutableDictionary*)attributes;
+		NSURL *fileURL = [NSURL fileURLWithPath:(__bridge NSString*)pathToFile];
+		PPMusicObjectWrapper *musFile = [[PPMusicObjectWrapper alloc] initWithURL:fileURL];
+		if (!musFile) {
+			return FALSE;
+		}
+		outDict[(NSString*)kMDItemTitle] = musFile.internalFileName;
+		outDict[(__bridge NSString*)(kPPMDPartitionLength)] = @(musFile.partitionLength);
+		{
+			OSType codecType = musFile.madType;
+			char cType[5];
+			OSType2Ptr(codecType, cType);
+			NSString *theString = [[NSString alloc] initWithCString:cType encoding:NSMacOSRomanStringEncoding];
+			if (!theString) {
+				theString = [[NSString alloc] initWithFormat:@"0x%08x", (unsigned int)codecType];
+			}
+			outDict[(NSString*)kMDItemCodecs] = @[theString];
+		}
+		outDict[(__bridge NSString*)kPPMDTotalPatterns] = @(musFile.totalPatterns);
+		outDict[(__bridge NSString*)kPPMDPartitionLength] = @(musFile.totalPartitions);
+		outDict[(__bridge NSString*)kPPMDTotalInstruments] = @(musFile.totalInstruments);
+		outDict[(__bridge NSString*)kPPMDTotalTracks] = @(musFile.totalTracks);
+		
+		outDict[(__bridge NSString*)kPPMDFormatDescription] = @"MAD Bundle"; //TODO: localize
+		
+		//TODO: fill these out!
+		outDict[(__bridge NSString*)kPPMDInstumentsList] = @[];
+		outDict[(__bridge NSString*)kPPMDPatternList] = @[];
+		
+		
+		return TRUE;
+	}
 }
 
 

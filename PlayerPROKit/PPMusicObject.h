@@ -19,6 +19,9 @@
 }
 
 @property (readonly, strong, nonatomic) NSString *internalFileName;
+@property (readonly, strong, nonatomic) NSString *madInfo;
+
+@property (readonly) int totalPatterns;
 @property (readonly) int totalPartitions;
 @property (readonly) int partitionLength;
 @property (readonly) short totalTracks;
@@ -44,13 +47,17 @@
 
 @end
 
-@interface PPMusicObjectWrapper : PPMusicObject
+@interface PPMusicObjectWrapper : PPMusicObject 
 
 @property (strong) NSMutableArray *sDatas;
 @property (strong) NSMutableArray *instruments;
+@property (readonly) OSType madType;
+@property (readwrite, strong, nonatomic) NSString *internalFileName;
+@property (readwrite, strong, nonatomic) NSString *madInfo;
 
 - (id)init;
 - (id)initFromMusicObject:(PPMusicObject*)oldFromat;
+- (BOOL)exportMusicToURL:(NSURL *)tosave;
 - (id)initWithPath:(NSString *)url;
 - (id)initWithURL:(NSURL *)url;
 - (MADMusic *)newMadMusicStruct;

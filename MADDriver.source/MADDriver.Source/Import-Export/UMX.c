@@ -661,7 +661,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 		
 		if( theMAD->fid[ i].numSamples > 0)
 		{
-			destPtr = (Ptr) ((SInt32) theMOD + (SInt32) OffSetToSample + (SInt32) InstruSize);
+			destPtr = (Ptr) ((uintptr_t) theMOD + (uintptr_t) OffSetToSample + (uintptr_t) InstruSize);
 			
 			if( curData->c2spd > 8757 || curData->c2spd < 7895)
 			{

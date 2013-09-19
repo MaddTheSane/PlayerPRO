@@ -439,10 +439,8 @@
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string>shiney</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.sourceforge.playerpro.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>

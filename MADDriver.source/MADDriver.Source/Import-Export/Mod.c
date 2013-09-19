@@ -517,7 +517,7 @@ static SInt32 ConvertSampleC4SPD( Ptr src, size_t srcSize, short amp, SInt32 src
 		}
 	}
 	
-	return (srcSize * dstC4SPD) / srcC4SPD;
+	return (SInt32)((srcSize * dstC4SPD) / srcC4SPD);
 }
 
 static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *PtrSize)
