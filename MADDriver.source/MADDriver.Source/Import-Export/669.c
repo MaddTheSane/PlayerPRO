@@ -67,7 +67,8 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 {
 	SixSixNine			*the669;
 	short				i, PatMax, x, z;
-	SInt32				sndSize, OffSetToSample, OldTicks, temp;
+	SInt32				sndSize, OffSetToSample, OldTicks;
+	size_t temp;
 	Ptr					MaxPtr;
 	//OSErr				theErr;
 	Ptr					theInstrument[ 64], destPtr;
@@ -93,13 +94,13 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 		return MADNeedMemory;
 	}
 	
-	MaxPtr = (Ptr)((long) the669 + MODSize);
+	MaxPtr = (Ptr)((size_t) the669 + MODSize);
 	
 	OffSetToSample = 0x1f1 +  the669->NOS * 25 + the669->NOP * 0x600L;
 	
 	for( i = 0; i < the669->NOS ; i++)
 	{
-		temp = (long) the669;
+		temp = (size_t) the669;
 		temp += 0x1f1L + i*25L + 13L;
 		
 		SInfo = (SampleInfo*) temp;
@@ -172,7 +173,7 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 	
 	for(i=0; i<the669->NOS; i++)
 	{
-		temp = (SInt32) the669;
+		temp = (size_t) the669;
 		temp += 0x1f1L + i*25L + 13L;
 		
 		SInfo = (SampleInfo*) temp;

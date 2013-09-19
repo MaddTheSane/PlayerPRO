@@ -74,7 +74,7 @@ static inline unsigned short ReadUS( Ptr *samplePtr)
 
 /* unpack a 8bit IT packed sample */
 
-static SInt32 read_itcompr8(ITPACK* status, Ptr *reader, Byte *sl_buffer, unsigned short count, unsigned short* incnt)
+static uintptr_t read_itcompr8(ITPACK* status, Ptr *reader, Byte *sl_buffer, unsigned short count, unsigned short* incnt)
 {
 	Byte 				*dest=sl_buffer,*end=sl_buffer+count;
 	unsigned short 		x,y,needbits,havebits,new_count=0;
@@ -153,7 +153,7 @@ static SInt32 read_itcompr8(ITPACK* status, Ptr *reader, Byte *sl_buffer, unsign
 }
 
 // unpack a 16bit IT packed sample
-static SInt32 read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,unsigned short count,unsigned short* incnt)
+static uintptr_t read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,unsigned short count,unsigned short* incnt)
 {
 	short 			*dest=sl_buffer,*end=sl_buffer+ count;// (short*) ((Ptr) sl_buffer+ count);
 	SInt32 			x,y,needbits,havebits,new_count=0;
@@ -236,8 +236,8 @@ static SInt32 read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,unsign
 
 static OSErr DecompressSample( short bits, Ptr reader, size_t length, Ptr destPtr)		// sloader.c
 {
-	int				stodo/*, t, u*/;
-	int				result,c_block=0;	/* compression bytes until next block */
+	size_t			stodo/*, t, u*/;
+	size_t			result,c_block=0;	/* compression bytes until next block */
 	ITPACK			status;
 	unsigned short	incnt;
 	
