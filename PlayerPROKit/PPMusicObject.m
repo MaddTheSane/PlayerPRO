@@ -22,10 +22,14 @@
 @implementation PPMusicObject
 @synthesize attachedDriver;
 @synthesize _currentMusic = currentMusic;
+@synthesize internalFileName;
 
 - (NSString *)internalFileName
 {
-	
+	if (!internalFileName) {
+		//generate internal file name
+	}
+	return internalFileName;
 }
 
 - (id)initWithURL:(NSURL *)url library:(PPLibrary *)theLib
@@ -257,7 +261,16 @@
 
 @end
 
+@interface PPMusicObjectWrapper ()
+@property (readwrite) OSType madType;
+@end
+
 @implementation PPMusicObjectWrapper
+@synthesize madType;
+@synthesize internalFileName = _internalFileName;
+#define kMADMusicName @"Mad Name"
+#define kMADMusicInfo @"Mad Info"
+#define kMADMusicType @"Mad Type"
 
 - (id)init
 {
@@ -295,19 +308,32 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (id)initWithURL:(NSURL *)url
 {
+	if (self = [super init]) {
+		NSFileWrapper *theWrapper = [[NSFileWrapper alloc] initWithURL:url options:NSFileWrapperReadingImmediate error:NULL];
+		NSDictionary *stuff = [theWrapper fileWrappers];
+		stuff = nil;
+		return nil;
+	}
 	
+	return self;
 }
 
-- (BOOL)saveMusicToURL:(NSURL *)tosave
+- (BOOL)exportMusicToURL:(NSURL *)tosave
 {
 	[self syncMusicDataTypes];
 	
 	return [super saveMusicToURL:tosave];
 }
 
+- (BOOL)saveMusicToURL:(NSURL *)tosave
+{
+	return NO;
+}
+
 - (MADMusic *)newMadMusicStruct
 {
 	return DeepCopyMusic(self._currentMusic);
 }
+
 
 @end
