@@ -7,12 +7,16 @@
 //
 
 #import "PPiMasterViewController.h"
-
 #import "PPiDetailViewController.h"
+#import "PPiSettingsDetailController.h"
+#import <PlayerPROKit/PlayerPROKit.h>
+
 
 @interface PPiMasterViewController () {
     NSMutableArray *_objects;
 }
+	@property (weak) PPLibrary *madLib;
+	@property (strong) PPDriver *driver;
 @end
 
 @implementation PPiMasterViewController
@@ -35,6 +39,7 @@
 	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
 	self.navigationItem.rightBarButtonItem = addButton;
 	self.detailViewController = (PPiDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+	//self.settingsViewController;
 }
 
 - (void)didReceiveMemoryWarning
@@ -97,14 +102,12 @@
 }
 */
 
-/*
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the item to be re-orderable.
     return YES;
 }
-*/
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

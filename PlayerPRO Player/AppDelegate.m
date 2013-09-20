@@ -227,35 +227,39 @@ static NSInteger selMusFromList = -1;
 
 + (void)initialize
 {
-	PPMusicList *tempList = [[PPMusicList alloc] init];
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		PPMusicList *tempList = [[PPMusicList alloc] init];
+		[[NSUserDefaults standardUserDefaults] registerDefaults:@{PPRememberMusicList: @YES,
+																  PPLoadMusicAtListLoad: @NO,
+																  PPAfterPlayingMusic: @(PPStopPlaying),
+																  PPGotoStartupAfterPlaying: @YES,
+																  PPSaveModList: @YES,
+																  PPLoadMusicAtMusicLoad: @NO,
+																  PPLoopMusicWhenDone: @NO,
+																  
+																  PPSoundOutBits: @16,
+																  PPSoundOutRate: @44100,
+																  PPSoundDriver: @(CoreAudioDriver),
+																  PPStereoDelayToggle: @YES,
+																  PPReverbToggle: @NO,
+																  PPSurroundToggle: @NO,
+																  PPOversamplingToggle: @NO,
+																  PPStereoDelayAmount: @30,
+																  PPReverbAmount: @25,
+																  PPReverbStrength: @30,
+																  PPOversamplingAmount: @1,
+																  
+																  
+																  PPMAddExtension: @YES,
+																  PPMMadCompression: @YES,
+																  PPMNoLoadMixerFromFiles: @NO,
+																  PPMOscilloscopeDrawLines: @YES,
+																  
+																  PPMMusicList: [NSKeyedArchiver archivedDataWithRootObject:tempList]}];
+		
+	});
 	
-	[[NSUserDefaults standardUserDefaults] registerDefaults:@{PPRememberMusicList: @YES,
-									  PPLoadMusicAtListLoad: @NO,
-										PPAfterPlayingMusic: @(PPStopPlaying),
-								  PPGotoStartupAfterPlaying: @YES,
-											  PPSaveModList: @YES,
-									 PPLoadMusicAtMusicLoad: @NO,
-										PPLoopMusicWhenDone: @NO,
-	 
-											 PPSoundOutBits: @16,
-											 PPSoundOutRate: @44100,
-											  PPSoundDriver: @(CoreAudioDriver),
-										PPStereoDelayToggle: @YES,
-											 PPReverbToggle: @NO,
-										   PPSurroundToggle: @NO,
-									   PPOversamplingToggle: @NO,
-										PPStereoDelayAmount: @30,
-											 PPReverbAmount: @25,
-										   PPReverbStrength: @30,
-									   PPOversamplingAmount: @1,
-	 
-	 
-											PPMAddExtension: @YES,
-										  PPMMadCompression: @YES,
-									PPMNoLoadMixerFromFiles: @NO,
-								   PPMOscilloscopeDrawLines: @YES,
-	 
-											   PPMMusicList: [NSKeyedArchiver archivedDataWithRootObject:tempList]}];
 }
 
 - (IBAction)showMusicList:(id)sender

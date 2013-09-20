@@ -7,13 +7,45 @@
 //
 
 #import "PPiAppDelegate.h"
+#import "UserDefaultKeys.h"
 
 @interface PPiAppDelegate ()
-	@property (strong) PPLibrary *madLib;
+@property (readwrite, strong) PPLibrary *madLib;
 @end
 
 @implementation PPiAppDelegate
 
++ (void)initialize
+{
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		[[NSUserDefaults standardUserDefaults] registerDefaults:@{PPRememberMusicList: @YES,
+																  PPLoadMusicAtListLoad: @NO,
+																  PPAfterPlayingMusic: @(PPStopPlaying),
+																  PPGotoStartupAfterPlaying: @YES,
+																  PPSaveModList: @YES,
+																  PPLoadMusicAtMusicLoad: @NO,
+																  PPLoopMusicWhenDone: @NO,
+																  
+																  PPSoundOutBits: @16,
+																  PPSoundOutRate: @44100,
+																  PPSoundDriver: @(CoreAudioDriver),
+																  PPStereoDelayToggle: @YES,
+																  PPReverbToggle: @NO,
+																  PPSurroundToggle: @NO,
+																  PPOversamplingToggle: @NO,
+																  PPStereoDelayAmount: @30,
+																  PPReverbAmount: @25,
+																  PPReverbStrength: @30,
+																  PPOversamplingAmount: @1,
+																  
+																  PPMAddExtension: @YES,
+																  PPMMadCompression: @YES,
+																  PPMNoLoadMixerFromFiles: @NO,
+																  PPMOscilloscopeDrawLines: @YES}];
+	});
+}
+	
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
@@ -21,8 +53,8 @@
 	    UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
 	    UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
 	    splitViewController.delegate = (id)navigationController.topViewController;
-		self.madLib = [[PPLibrary alloc] init];
 	}
+	self.madLib = [[PPLibrary alloc] init];
     return YES;
 }
 							

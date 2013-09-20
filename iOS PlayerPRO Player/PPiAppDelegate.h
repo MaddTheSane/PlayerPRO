@@ -7,9 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <PlayerPROKit/PlayerPROKit.h>
+
+enum {
+	PPStopPlaying = 0,
+	PPLoopMusic,
+	PPLoadNext,
+	PPLoadRandom
+};
 
 @interface PPiAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (readonly, strong) PPLibrary *madLib;
 
 @end
