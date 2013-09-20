@@ -8,6 +8,10 @@
 
 #import "PPiAppDelegate.h"
 
+@interface PPiAppDelegate ()
+	@property (strong) PPLibrary *madLib;
+@end
+
 @implementation PPiAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -17,6 +21,7 @@
 	    UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
 	    UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
 	    splitViewController.delegate = (id)navigationController.topViewController;
+		self.madLib = [[PPLibrary alloc] init];
 	}
     return YES;
 }

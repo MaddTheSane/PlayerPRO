@@ -9233,6 +9233,7 @@
 				555776D417EBF9000019D008 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		555776D517EBF9000019D008 /* Build configuration list for PBXNativeTarget "iOS PlayerPRO PlayerTests" */ = {
 			isa = XCConfigurationList;
@@ -9241,6 +9242,7 @@
 				555776D717EBF9000019D008 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5573A10C1656FAF100A5AECA /* Build configuration list for PBXNativeTarget "iOSPlayerPROCore" */ = {
 			isa = XCConfigurationList;
