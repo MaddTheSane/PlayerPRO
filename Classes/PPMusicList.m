@@ -17,6 +17,7 @@
 #define kMUSICLISTKEY2 @"Music List Key2"
 #define kMusicListLocation2 @"Music Key Location2"
 
+#if !TARGET_OS_IPHONE
 // GetIndString isn't supported on 64-bit Mac OS X
 // This code is emulation for GetIndString.
 // Code based on Mozilla's Mac Eudora importer
@@ -50,6 +51,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	return data;
 }
+#endif
 
 @interface PPMusicListObject ()
 @property (strong, readwrite, setter = setTheMusicUrl:) NSURL *musicUrl;

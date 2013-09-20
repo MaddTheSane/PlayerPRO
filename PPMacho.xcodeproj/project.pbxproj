@@ -220,6 +220,27 @@
 		5557769617EBDA740019D008 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5557769517EBDA740019D008 /* Media.xcassets */; };
 		5557769717EBDFAC0019D008 /* PPFastForward.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E271245640500315307 /* PPFastForward.pdf */; };
 		5557769817EBDFAC0019D008 /* PPFastForward.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E271245640500315307 /* PPFastForward.pdf */; };
+		555776A017EBF8FE0019D008 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
+		555776A217EBF8FE0019D008 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776A117EBF8FE0019D008 /* CoreGraphics.framework */; };
+		555776A417EBF8FE0019D008 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776A317EBF8FE0019D008 /* UIKit.framework */; };
+		555776AA17EBF8FE0019D008 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 555776A817EBF8FE0019D008 /* InfoPlist.strings */; };
+		555776AC17EBF8FE0019D008 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776AB17EBF8FE0019D008 /* main.m */; };
+		555776B017EBF8FE0019D008 /* PPiAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776AF17EBF8FE0019D008 /* PPiAppDelegate.m */; };
+		555776B317EBF8FE0019D008 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 555776B117EBF8FE0019D008 /* Main_iPhone.storyboard */; };
+		555776B617EBF8FF0019D008 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 555776B417EBF8FF0019D008 /* Main_iPad.storyboard */; };
+		555776B917EBF8FF0019D008 /* PPiMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776B817EBF8FF0019D008 /* PPiMasterViewController.m */; };
+		555776BC17EBF8FF0019D008 /* PPiDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776BB17EBF8FF0019D008 /* PPiDetailViewController.m */; };
+		555776BE17EBF8FF0019D008 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 555776BD17EBF8FF0019D008 /* Images.xcassets */; };
+		555776C517EBF8FF0019D008 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776C417EBF8FF0019D008 /* XCTest.framework */; };
+		555776C617EBF9000019D008 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
+		555776C717EBF9000019D008 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776A317EBF8FE0019D008 /* UIKit.framework */; };
+		555776CF17EBF9000019D008 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 555776CD17EBF9000019D008 /* InfoPlist.strings */; };
+		555776D117EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776D017EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m */; };
+		555776D817EBF9D80019D008 /* libiOSPlayerPROCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A1031656FAF100A5AECA /* libiOSPlayerPROCore.a */; };
+		555776D917EBF9D80019D008 /* libPlayerPROKit-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B0F59E17DF0F0500653BCD /* libPlayerPROKit-iOS.a */; };
+		555776DC17EBFA430019D008 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776DB17EBFA430019D008 /* AudioToolbox.framework */; };
+		555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
+		555776DE17EBFBFD0019D008 /* PPMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1BD5E120FBE51004FD083 /* PPMusicList.m */; };
 		555C125116378B3500735225 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
@@ -836,6 +857,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 554E11EF10D6F3E100BB619C;
 			remoteInfo = Propagate;
+		};
+		555776C817EBF9000019D008 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5557769E17EBF8FD0019D008;
+			remoteInfo = "iOS PlayerPRO Player";
 		};
 		5578C49817D9E86D0057D11B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1808,6 +1836,28 @@
 		555143C717B6EDCF00252657 /* PPToneGeneratorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPToneGeneratorController.h; sourceTree = "<group>"; };
 		555143C817B6EDCF00252657 /* PPToneGeneratorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPToneGeneratorController.m; sourceTree = "<group>"; };
 		5557769517EBDA740019D008 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		5557769F17EBF8FE0019D008 /* iOS PlayerPRO Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS PlayerPRO Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		555776A117EBF8FE0019D008 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		555776A317EBF8FE0019D008 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		555776A717EBF8FE0019D008 /* iOS PlayerPRO Player-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS PlayerPRO Player-Info.plist"; sourceTree = "<group>"; };
+		555776A917EBF8FE0019D008 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		555776AB17EBF8FE0019D008 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		555776AD17EBF8FE0019D008 /* iOS PlayerPRO Player-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOS PlayerPRO Player-Prefix.pch"; sourceTree = "<group>"; };
+		555776AE17EBF8FE0019D008 /* PPiAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPiAppDelegate.h; sourceTree = "<group>"; };
+		555776AF17EBF8FE0019D008 /* PPiAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPiAppDelegate.m; sourceTree = "<group>"; };
+		555776B217EBF8FE0019D008 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		555776B517EBF8FF0019D008 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		555776B717EBF8FF0019D008 /* PPiMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPiMasterViewController.h; sourceTree = "<group>"; };
+		555776B817EBF8FF0019D008 /* PPiMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPiMasterViewController.m; sourceTree = "<group>"; };
+		555776BA17EBF8FF0019D008 /* PPiDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPiDetailViewController.h; sourceTree = "<group>"; };
+		555776BB17EBF8FF0019D008 /* PPiDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPiDetailViewController.m; sourceTree = "<group>"; };
+		555776BD17EBF8FF0019D008 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		555776C317EBF8FF0019D008 /* iOS PlayerPRO PlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS PlayerPRO PlayerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		555776C417EBF8FF0019D008 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		555776CC17EBF9000019D008 /* iOS PlayerPRO PlayerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS PlayerPRO PlayerTests-Info.plist"; sourceTree = "<group>"; };
+		555776CE17EBF9000019D008 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		555776D017EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOS_PlayerPRO_PlayerTests.m; sourceTree = "<group>"; };
+		555776DB17EBFA430019D008 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		555C125016378B3500735225 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		556AE4BB16E290650074BBF9 /* PPByteswap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPByteswap.h; sourceTree = "<group>"; };
@@ -1820,7 +1870,7 @@
 		5573A1081656FAF100A5AECA /* iOSPlayerPROCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSPlayerPROCore.h; sourceTree = "<group>"; };
 		5573A1301656FCC100A5AECA /* iOS-PlugImport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "iOS-PlugImport.c"; sourceTree = "<group>"; };
 		5573A1331656FD3600A5AECA /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
-		5573A1351656FD4000A5AECA /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = DEVELOPER_DIR; };
+		5573A1351656FD4000A5AECA /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = ../../../../iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		5573A1361656FD4000A5AECA /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreAudio.framework; sourceTree = DEVELOPER_DIR; };
 		5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPROCore-Info.plist"; sourceTree = "<group>"; };
@@ -2155,6 +2205,29 @@
 			files = (
 				5574BCEC169634DE00CF3C37 /* PlayerPROCore.framework in Frameworks */,
 				554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5557769C17EBF8FD0019D008 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				555776DC17EBFA430019D008 /* AudioToolbox.framework in Frameworks */,
+				555776D817EBF9D80019D008 /* libiOSPlayerPROCore.a in Frameworks */,
+				555776D917EBF9D80019D008 /* libPlayerPROKit-iOS.a in Frameworks */,
+				555776A217EBF8FE0019D008 /* CoreGraphics.framework in Frameworks */,
+				555776A417EBF8FE0019D008 /* UIKit.framework in Frameworks */,
+				555776A017EBF8FE0019D008 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		555776C017EBF8FF0019D008 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				555776C517EBF8FF0019D008 /* XCTest.framework in Frameworks */,
+				555776C717EBF9000019D008 /* UIKit.framework in Frameworks */,
+				555776C617EBF9000019D008 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3312,6 +3385,52 @@
 			path = Revert;
 			sourceTree = "<group>";
 		};
+		555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */ = {
+			isa = PBXGroup;
+			children = (
+				555776AE17EBF8FE0019D008 /* PPiAppDelegate.h */,
+				555776AF17EBF8FE0019D008 /* PPiAppDelegate.m */,
+				555776B117EBF8FE0019D008 /* Main_iPhone.storyboard */,
+				555776B417EBF8FF0019D008 /* Main_iPad.storyboard */,
+				555776B717EBF8FF0019D008 /* PPiMasterViewController.h */,
+				555776B817EBF8FF0019D008 /* PPiMasterViewController.m */,
+				555776BA17EBF8FF0019D008 /* PPiDetailViewController.h */,
+				555776BB17EBF8FF0019D008 /* PPiDetailViewController.m */,
+				555776BD17EBF8FF0019D008 /* Images.xcassets */,
+				555776A617EBF8FE0019D008 /* Supporting Files */,
+			);
+			path = "iOS PlayerPRO Player";
+			sourceTree = "<group>";
+		};
+		555776A617EBF8FE0019D008 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				555776A717EBF8FE0019D008 /* iOS PlayerPRO Player-Info.plist */,
+				555776A817EBF8FE0019D008 /* InfoPlist.strings */,
+				555776AB17EBF8FE0019D008 /* main.m */,
+				555776AD17EBF8FE0019D008 /* iOS PlayerPRO Player-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		555776CA17EBF9000019D008 /* iOS PlayerPRO PlayerTests */ = {
+			isa = PBXGroup;
+			children = (
+				555776D017EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m */,
+				555776CB17EBF9000019D008 /* Supporting Files */,
+			);
+			path = "iOS PlayerPRO PlayerTests";
+			sourceTree = "<group>";
+		};
+		555776CB17EBF9000019D008 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				555776CC17EBF9000019D008 /* iOS PlayerPRO PlayerTests-Info.plist */,
+				555776CD17EBF9000019D008 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		5573A1051656FAF100A5AECA /* iOSPlayerPROCore */ = {
 			isa = PBXGroup;
 			children = (
@@ -3323,9 +3442,12 @@
 		5573A1321656FD1700A5AECA /* iOS Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				555776DB17EBFA430019D008 /* AudioToolbox.framework */,
 				5573A1351656FD4000A5AECA /* AudioUnit.framework */,
 				5573A1361656FD4000A5AECA /* CoreAudio.framework */,
 				5573A1331656FD3600A5AECA /* CoreFoundation.framework */,
+				555776A317EBF8FE0019D008 /* UIKit.framework */,
+				555776C417EBF8FF0019D008 /* XCTest.framework */,
 			);
 			name = "iOS Frameworks";
 			sourceTree = "<group>";
@@ -3513,6 +3635,8 @@
 				5573A1051656FAF100A5AECA /* iOSPlayerPROCore */,
 				55BE998517978BB100D6DECC /* Spotlight Plug-in */,
 				5578C48317D9E8560057D11B /* PlayerPRO Player */,
+				555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */,
+				555776CA17EBF9000019D008 /* iOS PlayerPRO PlayerTests */,
 				88E0C4950C2F21E500D6C081 /* Frameworks */,
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 				5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */,
@@ -3580,6 +3704,8 @@
 				5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */,
 				5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */,
 				55B0F59E17DF0F0500653BCD /* libPlayerPROKit-iOS.a */,
+				5557769F17EBF8FE0019D008 /* iOS PlayerPRO Player.app */,
+				555776C317EBF8FF0019D008 /* iOS PlayerPRO PlayerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3633,6 +3759,7 @@
 				5573A3ED10B5151700FF8B50 /* Cocoa.framework */,
 				5573A3EF10B5151700FF8B50 /* Foundation.framework */,
 				55ED547310D5F9CD00824C61 /* CoreMIDI.framework */,
+				555776A117EBF8FE0019D008 /* CoreGraphics.framework */,
 				551292DA163DD68500C2C639 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -3989,6 +4116,41 @@
 			productName = "Complex Fade";
 			productReference = 554E123010D6F3E600BB619C /* Revert.plugin */;
 			productType = "com.apple.product-type.bundle";
+		};
+		5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 555776D217EBF9000019D008 /* Build configuration list for PBXNativeTarget "iOS PlayerPRO Player" */;
+			buildPhases = (
+				5557769B17EBF8FD0019D008 /* Sources */,
+				5557769C17EBF8FD0019D008 /* Frameworks */,
+				5557769D17EBF8FD0019D008 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "iOS PlayerPRO Player";
+			productName = "iOS PlayerPRO Player";
+			productReference = 5557769F17EBF8FE0019D008 /* iOS PlayerPRO Player.app */;
+			productType = "com.apple.product-type.application";
+		};
+		555776C217EBF8FF0019D008 /* iOS PlayerPRO PlayerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 555776D517EBF9000019D008 /* Build configuration list for PBXNativeTarget "iOS PlayerPRO PlayerTests" */;
+			buildPhases = (
+				555776BF17EBF8FF0019D008 /* Sources */,
+				555776C017EBF8FF0019D008 /* Frameworks */,
+				555776C117EBF8FF0019D008 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				555776C917EBF9000019D008 /* PBXTargetDependency */,
+			);
+			name = "iOS PlayerPRO PlayerTests";
+			productName = "iOS PlayerPRO PlayerTests";
+			productReference = 555776C317EBF8FF0019D008 /* iOS PlayerPRO PlayerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		5573A1021656FAF100A5AECA /* iOSPlayerPROCore */ = {
 			isa = PBXNativeTarget;
@@ -4735,6 +4897,11 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 0500;
+				TargetAttributes = {
+					555776C217EBF8FF0019D008 = {
+						TestTargetID = 55CBF9A511EB77760028C6BB;
+					};
+				};
 			};
 			buildConfigurationList = 88E0C3A90C2F21DD00D6C081 /* Build configuration list for PBXProject "PPMacho" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -4746,6 +4913,7 @@
 				French,
 				German,
 				en,
+				Base,
 			);
 			mainGroup = 88E0C3A60C2F21DD00D6C081;
 			productRefGroup = 88E0C3B60C2F21DD00D6C081 /* Products */;
@@ -4754,9 +4922,11 @@
 			targets = (
 				55CBF9A511EB77760028C6BB /* Cocoa */,
 				5578C48017D9E8560057D11B /* PlayerPRO Player */,
-				5518107110C35A4500ADA9F4 /* Carbon Example */,
+				5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */,
+				555776C217EBF8FF0019D008 /* iOS PlayerPRO PlayerTests */,
 				55BE997717978AEF00D6DECC /* PPImport */,
 				5578C51B17DB94A50057D11B /* PPImport-app */,
+				5518107110C35A4500ADA9F4 /* Carbon Example */,
 				5573A33E10B50D2600FF8B50 /* PlayerPROCore */,
 				551292D7163DD68500C2C639 /* PlayerPROKit */,
 				55879F84164CA65D009068D5 /* PPPlay */,
@@ -4931,6 +5101,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5557769D17EBF8FD0019D008 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				555776B617EBF8FF0019D008 /* Main_iPad.storyboard in Resources */,
+				555776BE17EBF8FF0019D008 /* Images.xcassets in Resources */,
+				555776B317EBF8FE0019D008 /* Main_iPhone.storyboard in Resources */,
+				555776AA17EBF8FE0019D008 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		555776C117EBF8FF0019D008 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				555776CF17EBF9000019D008 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5424,6 +5613,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				554E126610D6F50500BB619C /* Revert.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5557769B17EBF8FD0019D008 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				555776B917EBF8FF0019D008 /* PPiMasterViewController.m in Sources */,
+				555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */,
+				555776B017EBF8FE0019D008 /* PPiAppDelegate.m in Sources */,
+				555776DE17EBFBFD0019D008 /* PPMusicList.m in Sources */,
+				555776AC17EBF8FE0019D008 /* main.m in Sources */,
+				555776BC17EBF8FF0019D008 /* PPiDetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		555776BF17EBF8FF0019D008 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				555776D117EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6041,6 +6251,11 @@
 			target = 554E11EF10D6F3E100BB619C /* Propagate */;
 			targetProxy = 554E126A10D6F51B00BB619C /* PBXContainerItemProxy */;
 		};
+		555776C917EBF9000019D008 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */;
+			targetProxy = 555776C817EBF9000019D008 /* PBXContainerItemProxy */;
+		};
 		5578C49917D9E86D0057D11B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5533410810BB5460005208D1 /* Import-export */;
@@ -6466,6 +6681,38 @@
 				5533600111EBC65600525CAF /* English */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		555776A817EBF8FE0019D008 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				555776A917EBF8FE0019D008 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		555776B117EBF8FE0019D008 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				555776B217EBF8FE0019D008 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		555776B417EBF8FF0019D008 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				555776B517EBF8FF0019D008 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		555776CD17EBF9000019D008 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				555776CE17EBF9000019D008 /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		5578C48617D9E8560057D11B /* InfoPlist.strings */ = {
@@ -7129,6 +7376,132 @@
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		555776D317EBF9000019D008 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS PlayerPRO Player/iOS PlayerPRO Player-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				INFOPLIST_FILE = "iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		555776D417EBF9000019D008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS PlayerPRO Player/iOS PlayerPRO Player-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				INFOPLIST_FILE = "iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		555776D617EBF9000019D008 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS PlayerPRO Player/iOS PlayerPRO Player-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				INFOPLIST_FILE = "iOS PlayerPRO PlayerTests/iOS PlayerPRO PlayerTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+		555776D717EBF9000019D008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS PlayerPRO Player/iOS PlayerPRO Player-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				INFOPLIST_FILE = "iOS PlayerPRO PlayerTests/iOS PlayerPRO PlayerTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
 		};
@@ -8839,6 +9212,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		555776D217EBF9000019D008 /* Build configuration list for PBXNativeTarget "iOS PlayerPRO Player" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				555776D317EBF9000019D008 /* Release */,
+				555776D417EBF9000019D008 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		555776D517EBF9000019D008 /* Build configuration list for PBXNativeTarget "iOS PlayerPRO PlayerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				555776D617EBF9000019D008 /* Release */,
+				555776D717EBF9000019D008 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		5573A10C1656FAF100A5AECA /* Build configuration list for PBXNativeTarget "iOSPlayerPROCore" */ = {
 			isa = XCConfigurationList;
