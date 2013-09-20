@@ -9,7 +9,13 @@
 #import "SoundOutputController.h"
 #import "UserDefaultKeys.h"
 
+@interface SoundOutputController ()
+@property (retain) PPSoundSettingsViewController *soundSettingsView;
+@end
+
 @implementation SoundOutputController
+@synthesize soundSettingsView;
+@synthesize subView;
 
 -(id)init
 {
@@ -23,7 +29,7 @@
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
-	soundSettingsView = [[PPSoundSettingsViewController alloc] init];
+	self.soundSettingsView = [[PPSoundSettingsViewController alloc] init];
 	soundSettingsView.delegate = self;
 	
 	[subView setContentView:[soundSettingsView view]];

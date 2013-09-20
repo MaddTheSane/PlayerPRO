@@ -9,9 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "PPSoundSettingsViewController.h"
 
-@interface SoundOutputController : NSViewController <PPSoundSettingsViewControllerDelegate> {
-	PPSoundSettingsViewController *soundSettingsView;
-	IBOutlet NSBox *subView;
-}
+@interface SoundOutputController : NSViewController <PPSoundSettingsViewControllerDelegate>
+@property (weak) IBOutlet NSBox *subView;
 
 @end
