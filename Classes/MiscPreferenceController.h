@@ -8,11 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface MiscPreferenceController : NSViewController {
-    IBOutlet NSButton *addExt;
-    IBOutlet NSButton *madCompression;
-    IBOutlet NSButton *noLoadMixerFromFile;
-	IBOutlet NSButton *oscDrawLines;
-}
+@interface MiscPreferenceController : NSViewController
+
+@property (weak) IBOutlet NSButtonCell *addExt;
+@property (weak) IBOutlet NSButtonCell *madCompression;
+@property (weak) IBOutlet NSButtonCell *noLoadMixerFromFile;
+@property (weak) IBOutlet NSButton *oscDrawLines;
+
 - (IBAction)changePrefs:(id)sender;
 @end

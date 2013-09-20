@@ -27,23 +27,17 @@
 @end
 
 @interface PPSoundSettingsViewController : NSViewController
-{
-	IBOutlet NSButton *oversampling;
-	IBOutlet NSButton *reverb;
-	IBOutlet NSButton *stereoDelay;
-	IBOutlet NSButton *surround;
-	IBOutlet NSMatrix *rate;
-	IBOutlet NSMatrix *outputBits;
-	IBOutlet NSMatrix *soundDriver;
-	IBOutlet NSPopUpButton *oversamplingNum;
-	IBOutlet NSPopUpButton *reverbNum;
-	IBOutlet NSPopUpButton *stereoDelayNum;
-	IBOutlet NSPopUpButton *reverbPercent;
-	BOOL reverbActive;
-	BOOL surroundActive;
-	BOOL stereoDelayActive;
-	BOOL oversamplingActive;
-}
+@property (weak) IBOutlet NSButton *oversampling;
+@property (weak) IBOutlet NSButton *reverb;
+@property (weak) IBOutlet NSButton *stereoDelay;
+@property (weak) IBOutlet NSButton *surround;
+@property (weak) IBOutlet NSMatrix *rate;
+@property (weak) IBOutlet NSMatrix *outputBits;
+@property (weak) IBOutlet NSMatrix *soundDriver;
+@property (weak) IBOutlet NSPopUpButton *oversamplingNum;
+@property (weak) IBOutlet NSPopUpButton *reverbNum;
+@property (weak) IBOutlet NSPopUpButton *stereoDelayNum;
+@property (weak) IBOutlet NSPopUpButton *reverbPercent;
 
 - (id)init;
 

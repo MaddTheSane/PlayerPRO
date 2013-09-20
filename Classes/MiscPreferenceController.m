@@ -11,6 +11,11 @@
 
 
 @implementation MiscPreferenceController
+@synthesize addExt;
+@synthesize madCompression;
+@synthesize noLoadMixerFromFile;
+@synthesize oscDrawLines;
+
 - (IBAction)changePrefs:(id)sender {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 

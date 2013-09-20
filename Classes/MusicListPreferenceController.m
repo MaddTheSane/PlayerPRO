@@ -11,6 +11,13 @@
 #import "PPPreferences.h"
 
 @implementation MusicListPreferenceController
+@synthesize askToSave;
+@synthesize autoPlay;
+@synthesize goToStartupPos;
+@synthesize loadFirstMusic;
+@synthesize loopMusic;
+@synthesize musicPlayingOutlet;
+@synthesize rememberMusicList;
 
 -(NSInteger)playedMusic
 {
@@ -74,7 +81,6 @@
 			[musicPlayingOutlet selectCellAtRow:1 column:1];
 			break;
 	}
-	
 }
 
 -(void)awakeFromNib

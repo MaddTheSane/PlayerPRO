@@ -217,6 +217,29 @@
 		554E126410D6F4F700BB619C /* Propagate.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF010D6C79D00BB619C /* Propagate.c */; };
 		554E126610D6F50500BB619C /* Revert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF410D6C79D00BB619C /* Revert.c */; };
 		555143CA17B6EDCF00252657 /* PPToneGeneratorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555143C817B6EDCF00252657 /* PPToneGeneratorController.m */; };
+		5557769617EBDA740019D008 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5557769517EBDA740019D008 /* Media.xcassets */; };
+		5557769717EBDFAC0019D008 /* PPFastForward.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E271245640500315307 /* PPFastForward.pdf */; };
+		5557769817EBDFAC0019D008 /* PPFastForward.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E271245640500315307 /* PPFastForward.pdf */; };
+		555776A017EBF8FE0019D008 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
+		555776A217EBF8FE0019D008 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776A117EBF8FE0019D008 /* CoreGraphics.framework */; };
+		555776A417EBF8FE0019D008 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776A317EBF8FE0019D008 /* UIKit.framework */; };
+		555776AA17EBF8FE0019D008 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 555776A817EBF8FE0019D008 /* InfoPlist.strings */; };
+		555776AC17EBF8FE0019D008 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776AB17EBF8FE0019D008 /* main.m */; };
+		555776B017EBF8FE0019D008 /* PPiAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776AF17EBF8FE0019D008 /* PPiAppDelegate.m */; };
+		555776B317EBF8FE0019D008 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 555776B117EBF8FE0019D008 /* Main_iPhone.storyboard */; };
+		555776B617EBF8FF0019D008 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 555776B417EBF8FF0019D008 /* Main_iPad.storyboard */; };
+		555776B917EBF8FF0019D008 /* PPiMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776B817EBF8FF0019D008 /* PPiMasterViewController.m */; };
+		555776BC17EBF8FF0019D008 /* PPiDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776BB17EBF8FF0019D008 /* PPiDetailViewController.m */; };
+		555776BE17EBF8FF0019D008 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 555776BD17EBF8FF0019D008 /* Images.xcassets */; };
+		555776C517EBF8FF0019D008 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776C417EBF8FF0019D008 /* XCTest.framework */; };
+		555776C617EBF9000019D008 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
+		555776C717EBF9000019D008 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776A317EBF8FE0019D008 /* UIKit.framework */; };
+		555776CF17EBF9000019D008 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 555776CD17EBF9000019D008 /* InfoPlist.strings */; };
+		555776D117EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776D017EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m */; };
+		555776D817EBF9D80019D008 /* libiOSPlayerPROCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A1031656FAF100A5AECA /* libiOSPlayerPROCore.a */; };
+		555776D917EBF9D80019D008 /* libPlayerPROKit-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B0F59E17DF0F0500653BCD /* libPlayerPROKit-iOS.a */; };
+		555776DC17EBFA430019D008 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776DB17EBFA430019D008 /* AudioToolbox.framework */; };
+		555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		555C125116378B3500735225 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
@@ -324,7 +347,6 @@
 		5578C4C217DA4C430057D11B /* MusicListPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6F016619E39005BDE4B /* MusicListPrefs.xib */; };
 		5578C4C317DA4C6D0057D11B /* PPPause.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 552AFC7E167A8C8B00F32481 /* PPPause.pdf */; };
 		5578C4C417DA4C6D0057D11B /* PPPlay.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 557EC3E8121711280082B80A /* PPPlay.pdf */; };
-		5578C4C517DA4C6D0057D11B /* PPFastForward.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E271245640500315307 /* PPFastForward.pdf */; };
 		5578C4C617DA4C6D0057D11B /* PPReverse.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E281245640500315307 /* PPReverse.pdf */; };
 		5578C4C717DA4C6D0057D11B /* PPStop.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E291245640500315307 /* PPStop.pdf */; };
 		5578C4C817DA4C6D0057D11B /* PPNextTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */; };
@@ -454,6 +476,7 @@
 		55981C5311EE370D00656EE3 /* PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55981C5211EE370D00656EE3 /* PPPreferences.m */; };
 		5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
 		5599F13316C82100008DDAFB /* RDriverCarbon.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; };
+		559C871917ECD8B400E4E13C /* PPiSettingsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559C871817ECD8B400E4E13C /* PPiSettingsDetailController.m */; };
 		55ABFD54125E6D4400B182F1 /* PPNextTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */; };
 		55ABFD55125E6D4400B182F1 /* PPPrevTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */; };
 		55ABFD56125E6D4400B182F1 /* PPRecord.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD53125E6D4400B182F1 /* PPRecord.pdf */; };
@@ -590,7 +613,6 @@
 		55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */; };
 		55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55D1BD58120FBAC0004FD083 /* Credits.rtf */; };
 		55E52E2512455E5100315307 /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
-		55E52E2A1245640500315307 /* PPFastForward.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E271245640500315307 /* PPFastForward.pdf */; };
 		55E52E2B1245640500315307 /* PPReverse.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E281245640500315307 /* PPReverse.pdf */; };
 		55E52E2C1245640500315307 /* PPStop.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E291245640500315307 /* PPStop.pdf */; };
 		55E898B010F17C2B004EB52B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
@@ -621,10 +643,6 @@
 		55F4287816A89A9C009013D8 /* PPMadCommandObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287716A89A9C009013D8 /* PPMadCommandObject.m */; };
 		55F4287C16A8B1FB009013D8 /* PPSoundSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */; };
 		55F4287D16A8B1FB009013D8 /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */; };
-		55F8C3D917B9927A00DFE937 /* JigsawWave.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 55F8C3D517B9927A00DFE937 /* JigsawWave.tiff */; };
-		55F8C3DA17B9927A00DFE937 /* SilentWave.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 55F8C3D617B9927A00DFE937 /* SilentWave.tiff */; };
-		55F8C3DB17B9927A00DFE937 /* SineWave.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 55F8C3D717B9927A00DFE937 /* SineWave.tiff */; };
-		55F8C3DC17B9927A00DFE937 /* SquareWave.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 55F8C3D817B9927A00DFE937 /* SquareWave.tiff */; };
 		55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; };
 		55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
@@ -847,6 +865,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 554E11EF10D6F3E100BB619C;
 			remoteInfo = Propagate;
+		};
+		555776C817EBF9000019D008 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5557769E17EBF8FD0019D008;
+			remoteInfo = "iOS PlayerPRO Player";
+		};
+		555776DF17EBFF260019D008 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A1021656FAF100A5AECA;
+			remoteInfo = iOSPlayerPROCore;
 		};
 		5578C49817D9E86D0057D11B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1818,6 +1850,29 @@
 		554E125410D6F3E600BB619C /* Revert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Revert-Info.plist"; sourceTree = "<group>"; };
 		555143C717B6EDCF00252657 /* PPToneGeneratorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPToneGeneratorController.h; sourceTree = "<group>"; };
 		555143C817B6EDCF00252657 /* PPToneGeneratorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPToneGeneratorController.m; sourceTree = "<group>"; };
+		5557769517EBDA740019D008 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		5557769F17EBF8FE0019D008 /* iOS PlayerPRO Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS PlayerPRO Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		555776A117EBF8FE0019D008 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		555776A317EBF8FE0019D008 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		555776A717EBF8FE0019D008 /* iOS PlayerPRO Player-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS PlayerPRO Player-Info.plist"; sourceTree = "<group>"; };
+		555776A917EBF8FE0019D008 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		555776AB17EBF8FE0019D008 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		555776AD17EBF8FE0019D008 /* iOS PlayerPRO Player-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOS PlayerPRO Player-Prefix.pch"; sourceTree = "<group>"; };
+		555776AE17EBF8FE0019D008 /* PPiAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPiAppDelegate.h; sourceTree = "<group>"; };
+		555776AF17EBF8FE0019D008 /* PPiAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPiAppDelegate.m; sourceTree = "<group>"; };
+		555776B217EBF8FE0019D008 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		555776B517EBF8FF0019D008 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		555776B717EBF8FF0019D008 /* PPiMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPiMasterViewController.h; sourceTree = "<group>"; };
+		555776B817EBF8FF0019D008 /* PPiMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPiMasterViewController.m; sourceTree = "<group>"; };
+		555776BA17EBF8FF0019D008 /* PPiDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPiDetailViewController.h; sourceTree = "<group>"; };
+		555776BB17EBF8FF0019D008 /* PPiDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPiDetailViewController.m; sourceTree = "<group>"; };
+		555776BD17EBF8FF0019D008 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		555776C317EBF8FF0019D008 /* iOS PlayerPRO PlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS PlayerPRO PlayerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		555776C417EBF8FF0019D008 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		555776CC17EBF9000019D008 /* iOS PlayerPRO PlayerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS PlayerPRO PlayerTests-Info.plist"; sourceTree = "<group>"; };
+		555776CE17EBF9000019D008 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		555776D017EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOS_PlayerPRO_PlayerTests.m; sourceTree = "<group>"; };
+		555776DB17EBFA430019D008 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		555C125016378B3500735225 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		556AE4BB16E290650074BBF9 /* PPByteswap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPByteswap.h; sourceTree = "<group>"; };
@@ -1830,7 +1885,7 @@
 		5573A1081656FAF100A5AECA /* iOSPlayerPROCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSPlayerPROCore.h; sourceTree = "<group>"; };
 		5573A1301656FCC100A5AECA /* iOS-PlugImport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "iOS-PlugImport.c"; sourceTree = "<group>"; };
 		5573A1331656FD3600A5AECA /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
-		5573A1351656FD4000A5AECA /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = DEVELOPER_DIR; };
+		5573A1351656FD4000A5AECA /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = ../../../../iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		5573A1361656FD4000A5AECA /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreAudio.framework; sourceTree = DEVELOPER_DIR; };
 		5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPROCore-Info.plist"; sourceTree = "<group>"; };
@@ -1940,6 +1995,8 @@
 		55981C5111EE370D00656EE3 /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
 		55981C5211EE370D00656EE3 /* PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPreferences.m; sourceTree = "<group>"; };
 		55981C5411EE375400656EE3 /* preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = preferences.xib; sourceTree = "<group>"; };
+		559C871717ECD8B400E4E13C /* PPiSettingsDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPiSettingsDetailController.h; sourceTree = "<group>"; };
+		559C871817ECD8B400E4E13C /* PPiSettingsDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPiSettingsDetailController.m; sourceTree = "<group>"; };
 		55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPNextTrack.pdf; sourceTree = "<group>"; };
 		55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPPrevTrack.pdf; sourceTree = "<group>"; };
 		55ABFD53125E6D4400B182F1 /* PPRecord.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPRecord.pdf; sourceTree = "<group>"; };
@@ -2009,10 +2066,6 @@
 		55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSoundSettingsViewController.h; sourceTree = "<group>"; };
 		55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSoundSettingsViewController.m; sourceTree = "<group>"; };
 		55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPSoundSettingsViewController.xib; sourceTree = "<group>"; };
-		55F8C3D517B9927A00DFE937 /* JigsawWave.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = JigsawWave.tiff; sourceTree = "<group>"; };
-		55F8C3D617B9927A00DFE937 /* SilentWave.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SilentWave.tiff; sourceTree = "<group>"; };
-		55F8C3D717B9927A00DFE937 /* SineWave.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SineWave.tiff; sourceTree = "<group>"; };
-		55F8C3D817B9927A00DFE937 /* SquareWave.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SquareWave.tiff; sourceTree = "<group>"; };
 		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileUtils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = DelayOutPut.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C3D10C2F21DD00D6C081 /* Effects.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Effects.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -2174,6 +2227,29 @@
 			files = (
 				5574BCEC169634DE00CF3C37 /* PlayerPROCore.framework in Frameworks */,
 				554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5557769C17EBF8FD0019D008 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				555776DC17EBFA430019D008 /* AudioToolbox.framework in Frameworks */,
+				555776D817EBF9D80019D008 /* libiOSPlayerPROCore.a in Frameworks */,
+				555776D917EBF9D80019D008 /* libPlayerPROKit-iOS.a in Frameworks */,
+				555776A217EBF8FE0019D008 /* CoreGraphics.framework in Frameworks */,
+				555776A417EBF8FE0019D008 /* UIKit.framework in Frameworks */,
+				555776A017EBF8FE0019D008 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		555776C017EBF8FF0019D008 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				555776C517EBF8FF0019D008 /* XCTest.framework in Frameworks */,
+				555776C717EBF9000019D008 /* UIKit.framework in Frameworks */,
+				555776C617EBF9000019D008 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3334,6 +3410,54 @@
 			path = Revert;
 			sourceTree = "<group>";
 		};
+		555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */ = {
+			isa = PBXGroup;
+			children = (
+				555776AE17EBF8FE0019D008 /* PPiAppDelegate.h */,
+				555776AF17EBF8FE0019D008 /* PPiAppDelegate.m */,
+				555776B117EBF8FE0019D008 /* Main_iPhone.storyboard */,
+				555776B417EBF8FF0019D008 /* Main_iPad.storyboard */,
+				555776B717EBF8FF0019D008 /* PPiMasterViewController.h */,
+				555776B817EBF8FF0019D008 /* PPiMasterViewController.m */,
+				555776BA17EBF8FF0019D008 /* PPiDetailViewController.h */,
+				555776BB17EBF8FF0019D008 /* PPiDetailViewController.m */,
+				559C871717ECD8B400E4E13C /* PPiSettingsDetailController.h */,
+				559C871817ECD8B400E4E13C /* PPiSettingsDetailController.m */,
+				555776BD17EBF8FF0019D008 /* Images.xcassets */,
+				555776A617EBF8FE0019D008 /* Supporting Files */,
+			);
+			path = "iOS PlayerPRO Player";
+			sourceTree = "<group>";
+		};
+		555776A617EBF8FE0019D008 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				555776A717EBF8FE0019D008 /* iOS PlayerPRO Player-Info.plist */,
+				555776A817EBF8FE0019D008 /* InfoPlist.strings */,
+				555776AB17EBF8FE0019D008 /* main.m */,
+				555776AD17EBF8FE0019D008 /* iOS PlayerPRO Player-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		555776CA17EBF9000019D008 /* iOS PlayerPRO PlayerTests */ = {
+			isa = PBXGroup;
+			children = (
+				555776D017EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m */,
+				555776CB17EBF9000019D008 /* Supporting Files */,
+			);
+			path = "iOS PlayerPRO PlayerTests";
+			sourceTree = "<group>";
+		};
+		555776CB17EBF9000019D008 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				555776CC17EBF9000019D008 /* iOS PlayerPRO PlayerTests-Info.plist */,
+				555776CD17EBF9000019D008 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		5573A1051656FAF100A5AECA /* iOSPlayerPROCore */ = {
 			isa = PBXGroup;
 			children = (
@@ -3345,9 +3469,12 @@
 		5573A1321656FD1700A5AECA /* iOS Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				555776DB17EBFA430019D008 /* AudioToolbox.framework */,
 				5573A1351656FD4000A5AECA /* AudioUnit.framework */,
 				5573A1361656FD4000A5AECA /* CoreAudio.framework */,
 				5573A1331656FD3600A5AECA /* CoreFoundation.framework */,
+				555776A317EBF8FE0019D008 /* UIKit.framework */,
+				555776C417EBF8FF0019D008 /* XCTest.framework */,
 			);
 			name = "iOS Frameworks";
 			sourceTree = "<group>";
@@ -3518,10 +3645,7 @@
 			isa = PBXGroup;
 			children = (
 				557F9AF317D927DB00325C78 /* PPToneGeneratorController.xib */,
-				55F8C3D517B9927A00DFE937 /* JigsawWave.tiff */,
-				55F8C3D617B9927A00DFE937 /* SilentWave.tiff */,
-				55F8C3D717B9927A00DFE937 /* SineWave.tiff */,
-				55F8C3D817B9927A00DFE937 /* SquareWave.tiff */,
+				5557769517EBDA740019D008 /* Media.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -3541,6 +3665,8 @@
 				5573A1051656FAF100A5AECA /* iOSPlayerPROCore */,
 				55BE998517978BB100D6DECC /* Spotlight Plug-in */,
 				5578C48317D9E8560057D11B /* PlayerPRO Player */,
+				555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */,
+				555776CA17EBF9000019D008 /* iOS PlayerPRO PlayerTests */,
 				88E0C4950C2F21E500D6C081 /* Frameworks */,
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 				5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */,
@@ -3608,6 +3734,8 @@
 				5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */,
 				5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */,
 				55B0F59E17DF0F0500653BCD /* libPlayerPROKit-iOS.a */,
+				5557769F17EBF8FE0019D008 /* iOS PlayerPRO Player.app */,
+				555776C317EBF8FF0019D008 /* iOS PlayerPRO PlayerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3662,6 +3790,7 @@
 				5573A3ED10B5151700FF8B50 /* Cocoa.framework */,
 				5573A3EF10B5151700FF8B50 /* Foundation.framework */,
 				55ED547310D5F9CD00824C61 /* CoreMIDI.framework */,
+				555776A117EBF8FE0019D008 /* CoreGraphics.framework */,
 				551292DA163DD68500C2C639 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -4019,6 +4148,41 @@
 			productName = "Complex Fade";
 			productReference = 554E123010D6F3E600BB619C /* Revert.plugin */;
 			productType = "com.apple.product-type.bundle";
+		};
+		5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 555776D217EBF9000019D008 /* Build configuration list for PBXNativeTarget "iOS PlayerPRO Player" */;
+			buildPhases = (
+				5557769B17EBF8FD0019D008 /* Sources */,
+				5557769C17EBF8FD0019D008 /* Frameworks */,
+				5557769D17EBF8FD0019D008 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "iOS PlayerPRO Player";
+			productName = "iOS PlayerPRO Player";
+			productReference = 5557769F17EBF8FE0019D008 /* iOS PlayerPRO Player.app */;
+			productType = "com.apple.product-type.application";
+		};
+		555776C217EBF8FF0019D008 /* iOS PlayerPRO PlayerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 555776D517EBF9000019D008 /* Build configuration list for PBXNativeTarget "iOS PlayerPRO PlayerTests" */;
+			buildPhases = (
+				555776BF17EBF8FF0019D008 /* Sources */,
+				555776C017EBF8FF0019D008 /* Frameworks */,
+				555776C117EBF8FF0019D008 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				555776C917EBF9000019D008 /* PBXTargetDependency */,
+			);
+			name = "iOS PlayerPRO PlayerTests";
+			productName = "iOS PlayerPRO PlayerTests";
+			productReference = 555776C317EBF8FF0019D008 /* iOS PlayerPRO PlayerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		5573A1021656FAF100A5AECA /* iOSPlayerPROCore */ = {
 			isa = PBXNativeTarget;
@@ -4652,6 +4816,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				555776E017EBFF260019D008 /* PBXTargetDependency */,
 			);
 			name = "PlayerPROKit-iOS";
 			productName = "PlayerPROKit-iOS";
@@ -4765,6 +4930,11 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 0500;
+				TargetAttributes = {
+					555776C217EBF8FF0019D008 = {
+						TestTargetID = 55CBF9A511EB77760028C6BB;
+					};
+				};
 			};
 			buildConfigurationList = 88E0C3A90C2F21DD00D6C081 /* Build configuration list for PBXProject "PPMacho" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -4776,6 +4946,7 @@
 				French,
 				German,
 				en,
+				Base,
 			);
 			mainGroup = 88E0C3A60C2F21DD00D6C081;
 			productRefGroup = 88E0C3B60C2F21DD00D6C081 /* Products */;
@@ -4784,9 +4955,11 @@
 			targets = (
 				55CBF9A511EB77760028C6BB /* Cocoa */,
 				5578C48017D9E8560057D11B /* PlayerPRO Player */,
-				5518107110C35A4500ADA9F4 /* Carbon Example */,
+				5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */,
+				555776C217EBF8FF0019D008 /* iOS PlayerPRO PlayerTests */,
 				55BE997717978AEF00D6DECC /* PPImport */,
 				5578C51B17DB94A50057D11B /* PPImport-app */,
+				5518107110C35A4500ADA9F4 /* Carbon Example */,
 				5573A33E10B50D2600FF8B50 /* PlayerPROCore */,
 				551292D7163DD68500C2C639 /* PlayerPROKit */,
 				55879F84164CA65D009068D5 /* PPPlay */,
@@ -4964,6 +5137,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5557769D17EBF8FD0019D008 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				555776B617EBF8FF0019D008 /* Main_iPad.storyboard in Resources */,
+				555776BE17EBF8FF0019D008 /* Images.xcassets in Resources */,
+				555776B317EBF8FE0019D008 /* Main_iPhone.storyboard in Resources */,
+				555776AA17EBF8FE0019D008 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		555776C117EBF8FF0019D008 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				555776CF17EBF9000019D008 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5573A33B10B50D2600FF8B50 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4985,7 +5177,6 @@
 				5578C4C217DA4C430057D11B /* MusicListPrefs.xib in Resources */,
 				5578C4C317DA4C6D0057D11B /* PPPause.pdf in Resources */,
 				5578C4C417DA4C6D0057D11B /* PPPlay.pdf in Resources */,
-				5578C4C517DA4C6D0057D11B /* PPFastForward.pdf in Resources */,
 				5578C4C617DA4C6D0057D11B /* PPReverse.pdf in Resources */,
 				5578C4C717DA4C6D0057D11B /* PPStop.pdf in Resources */,
 				5578C4C817DA4C6D0057D11B /* PPNextTrack.pdf in Resources */,
@@ -4993,6 +5184,7 @@
 				5578C4CD17DA6B170057D11B /* Localizable.strings in Resources */,
 				5578C4D117DA71650057D11B /* OpenPanelViewController.xib in Resources */,
 				5578C4EF17DA97020057D11B /* InstrumentWindow.xib in Resources */,
+				5557769817EBDFAC0019D008 /* PPFastForward.pdf in Resources */,
 				5578C4D917DA95BC0057D11B /* SoundOutput.xib in Resources */,
 				5578C4DA17DA95C20057D11B /* MiscPrefs.xib in Resources */,
 				5573AF0917DF8FD500B68127 /* README.rtf in Resources */,
@@ -5120,10 +5312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				557F9AF117D927DB00325C78 /* PPToneGeneratorController.xib in Resources */,
-				55F8C3D917B9927A00DFE937 /* JigsawWave.tiff in Resources */,
-				55F8C3DA17B9927A00DFE937 /* SilentWave.tiff in Resources */,
-				55F8C3DB17B9927A00DFE937 /* SineWave.tiff in Resources */,
-				55F8C3DC17B9927A00DFE937 /* SquareWave.tiff in Resources */,
+				5557769617EBDA740019D008 /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5248,6 +5437,7 @@
 				5504A6DE16619DFA005BDE4B /* SoundOutput.xib in Resources */,
 				55232AFF11FDF1310041A4EC /* MidiPrefs.xib in Resources */,
 				5504A6E216619E10005BDE4B /* ClassicPrefs.xib in Resources */,
+				5557769717EBDFAC0019D008 /* PPFastForward.pdf in Resources */,
 				5504A6E516619E1C005BDE4B /* DigitalPrefs.xib in Resources */,
 				5504A6E816619E25005BDE4B /* BoxPrefs.xib in Resources */,
 				5504A6EB16619E2E005BDE4B /* MiscPrefs.xib in Resources */,
@@ -5256,7 +5446,6 @@
 				55232B1411FDF3090041A4EC /* PianoPrefs.xib in Resources */,
 				55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */,
 				557EC3E9121711280082B80A /* PPPlay.pdf in Resources */,
-				55E52E2A1245640500315307 /* PPFastForward.pdf in Resources */,
 				55E52E2B1245640500315307 /* PPReverse.pdf in Resources */,
 				55E52E2C1245640500315307 /* PPStop.pdf in Resources */,
 				55ABFD54125E6D4400B182F1 /* PPNextTrack.pdf in Resources */,
@@ -5457,6 +5646,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				554E126610D6F50500BB619C /* Revert.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5557769B17EBF8FD0019D008 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				559C871917ECD8B400E4E13C /* PPiSettingsDetailController.m in Sources */,
+				555776B917EBF8FF0019D008 /* PPiMasterViewController.m in Sources */,
+				555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */,
+				555776B017EBF8FE0019D008 /* PPiAppDelegate.m in Sources */,
+				555776AC17EBF8FE0019D008 /* main.m in Sources */,
+				555776BC17EBF8FF0019D008 /* PPiDetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		555776BF17EBF8FF0019D008 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				555776D117EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6078,6 +6288,16 @@
 			target = 554E11EF10D6F3E100BB619C /* Propagate */;
 			targetProxy = 554E126A10D6F51B00BB619C /* PBXContainerItemProxy */;
 		};
+		555776C917EBF9000019D008 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */;
+			targetProxy = 555776C817EBF9000019D008 /* PBXContainerItemProxy */;
+		};
+		555776E017EBFF260019D008 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A1021656FAF100A5AECA /* iOSPlayerPROCore */;
+			targetProxy = 555776DF17EBFF260019D008 /* PBXContainerItemProxy */;
+		};
 		5578C49917D9E86D0057D11B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5533410810BB5460005208D1 /* Import-export */;
@@ -6505,6 +6725,38 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
+		555776A817EBF8FE0019D008 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				555776A917EBF8FE0019D008 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		555776B117EBF8FE0019D008 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				555776B217EBF8FE0019D008 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		555776B417EBF8FF0019D008 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				555776B517EBF8FF0019D008 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		555776CD17EBF9000019D008 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				555776CE17EBF9000019D008 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		5578C48617D9E8560057D11B /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -6583,7 +6835,6 @@
 		550FFAE917CEA4570003A2F3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -6604,7 +6855,6 @@
 		550FFAEA17CEA4570003A2F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -6629,7 +6879,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -6658,7 +6907,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -6708,7 +6956,6 @@
 		55151F7E10DEDBDB0054ABC4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -6729,7 +6976,6 @@
 		55151F7F10DEDBDB0054ABC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -6781,7 +7027,6 @@
 		551FEA6910E727AD00EDF2F1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -6802,7 +7047,6 @@
 		551FEA6A10E727AD00EDF2F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -6824,7 +7068,6 @@
 		551FEAD810E727B100EDF2F1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -6845,7 +7088,6 @@
 		551FEAD910E727B100EDF2F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -6987,7 +7229,6 @@
 		554E110310D6F09F00BB619C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7007,7 +7248,6 @@
 		554E110410D6F09F00BB619C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7028,7 +7268,6 @@
 		554E114A10D6F1BF00BB619C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7048,7 +7287,6 @@
 		554E114B10D6F1BF00BB619C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7069,7 +7307,6 @@
 		554E11B710D6F32900BB619C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7089,7 +7326,6 @@
 		554E11B810D6F32900BB619C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7110,7 +7346,6 @@
 		554E11FB10D6F3E100BB619C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7130,7 +7365,6 @@
 		554E11FC10D6F3E100BB619C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7151,7 +7385,6 @@
 		554E122E10D6F3E600BB619C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7171,7 +7404,6 @@
 		554E122F10D6F3E600BB619C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7189,6 +7421,132 @@
 			};
 			name = Debug;
 		};
+		555776D317EBF9000019D008 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS PlayerPRO Player/iOS PlayerPRO Player-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				INFOPLIST_FILE = "iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		555776D417EBF9000019D008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS PlayerPRO Player/iOS PlayerPRO Player-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				INFOPLIST_FILE = "iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		555776D617EBF9000019D008 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS PlayerPRO Player/iOS PlayerPRO Player-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				INFOPLIST_FILE = "iOS PlayerPRO PlayerTests/iOS PlayerPRO PlayerTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+		555776D717EBF9000019D008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS PlayerPRO Player/iOS PlayerPRO Player-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				INFOPLIST_FILE = "iOS PlayerPRO PlayerTests/iOS PlayerPRO PlayerTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
 		5569FF521024B44400DDDF39 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -7197,6 +7555,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -7337,7 +7696,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -7360,7 +7718,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -7384,7 +7741,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
@@ -7402,7 +7758,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7422,7 +7777,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -7448,7 +7802,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -7493,7 +7846,6 @@
 		557DE43210E06BF200177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7512,7 +7864,6 @@
 		557DE43310E06BF200177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7532,7 +7883,6 @@
 		557DE5DD10E0882800177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7551,7 +7901,6 @@
 		557DE5DE10E0882800177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7571,7 +7920,6 @@
 		557DE62010E0884100177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7591,7 +7939,6 @@
 		557DE62110E0884100177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7612,7 +7959,6 @@
 		557DE66110E0885C00177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7632,7 +7978,6 @@
 		557DE66210E0885C00177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7653,7 +7998,6 @@
 		557DE6A210E0886400177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7673,7 +8017,6 @@
 		557DE6A310E0886400177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7694,7 +8037,6 @@
 		557DE6E310E0886A00177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7714,7 +8056,6 @@
 		557DE6E410E0886A00177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7735,7 +8076,6 @@
 		557DE7BA10E08D8300177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7755,7 +8095,6 @@
 		557DE7BB10E08D8300177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7776,7 +8115,6 @@
 		557DE7FD10E08D8900177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7796,7 +8134,6 @@
 		557DE7FE10E08D8900177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7817,7 +8154,6 @@
 		557DE84010E08D9E00177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7836,7 +8172,6 @@
 		557DE84110E08D9E00177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7859,7 +8194,6 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -7885,7 +8219,6 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -7908,7 +8241,6 @@
 		557DE8C610E08DA800177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7928,7 +8260,6 @@
 		557DE8C710E08DA800177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7949,7 +8280,6 @@
 		557DE90910E08DAC00177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -7969,7 +8299,6 @@
 		557DE90A10E08DAC00177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7990,7 +8319,6 @@
 		557DE91910E08DB000177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -8010,7 +8338,6 @@
 		557DE91A10E08DB000177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -8031,7 +8358,6 @@
 		557DE95C10E08DB900177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -8051,7 +8377,6 @@
 		557DE95D10E08DB900177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -8072,7 +8397,6 @@
 		557DE99F10E08DC100177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8091,7 +8415,6 @@
 		557DE9A010E08DC100177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -8399,6 +8722,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -8433,7 +8757,6 @@
 		55ADC3D917D6F390001F27D4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8455,7 +8778,6 @@
 		55ADC3DA17D6F390001F27D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -8482,7 +8804,6 @@
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/PlayerPROKit_iOS.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8506,7 +8827,6 @@
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/PlayerPROKit_iOS.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8550,7 +8870,6 @@
 		55B797DF10D6E6C70073E379 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -8570,7 +8889,6 @@
 		55B797E010D6E6C70073E379 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -8692,7 +9010,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8714,7 +9031,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -8935,6 +9251,24 @@
 			buildConfigurations = (
 				554E122E10D6F3E600BB619C /* Release */,
 				554E122F10D6F3E600BB619C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		555776D217EBF9000019D008 /* Build configuration list for PBXNativeTarget "iOS PlayerPRO Player" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				555776D317EBF9000019D008 /* Release */,
+				555776D417EBF9000019D008 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		555776D517EBF9000019D008 /* Build configuration list for PBXNativeTarget "iOS PlayerPRO PlayerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				555776D617EBF9000019D008 /* Release */,
+				555776D717EBF9000019D008 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
