@@ -865,6 +865,13 @@
 			remoteGlobalIDString = 5557769E17EBF8FD0019D008;
 			remoteInfo = "iOS PlayerPRO Player";
 		};
+		555776DF17EBFF260019D008 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A1021656FAF100A5AECA;
+			remoteInfo = iOSPlayerPROCore;
+		};
 		5578C49817D9E86D0057D11B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -4784,6 +4791,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				555776E017EBFF260019D008 /* PBXTargetDependency */,
 			);
 			name = "PlayerPROKit-iOS";
 			productName = "PlayerPROKit-iOS";
@@ -6255,6 +6263,11 @@
 			isa = PBXTargetDependency;
 			target = 5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */;
 			targetProxy = 555776C817EBF9000019D008 /* PBXContainerItemProxy */;
+		};
+		555776E017EBFF260019D008 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A1021656FAF100A5AECA /* iOSPlayerPROCore */;
+			targetProxy = 555776DF17EBFF260019D008 /* PBXContainerItemProxy */;
 		};
 		5578C49917D9E86D0057D11B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
