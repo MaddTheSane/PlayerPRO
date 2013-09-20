@@ -35,7 +35,31 @@ static const TagCoupling ReverbPercentCoupling[] = {{10, 1}, {20, 2}, {30, 3}, {
 static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4},
 	{6, 5}, {8, 6}, {10, 7}, {16, 8}, {20, 9}, {25, 10}, {30, 11}};
 
+@interface PPSoundSettingsViewController ()
+@property BOOL reverbActive;
+@property BOOL surroundActive;
+@property BOOL stereoDelayActive;
+@property BOOL oversamplingActive;
+@end
+
 @implementation PPSoundSettingsViewController
+@synthesize outputBits;
+@synthesize oversampling;
+@synthesize oversamplingActive;
+@synthesize oversamplingNum;
+@synthesize rate;
+@synthesize reverb;
+@synthesize reverbActive;
+@synthesize reverbNum;
+@synthesize reverbPercent;
+@synthesize soundDriver;
+@synthesize stereoDelay;
+@synthesize stereoDelayActive;
+@synthesize stereoDelayNum;
+@synthesize surround;
+@synthesize surroundActive;
+
+@synthesize delegate;
 
 -(void)setCurrentSoundDriver:(NSInteger)theDriver
 {
@@ -240,8 +264,6 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 		}
 	}
 }
-
-@synthesize delegate;
 
 - (id)init
 {

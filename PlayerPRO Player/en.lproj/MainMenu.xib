@@ -1092,6 +1092,10 @@
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="559">
                         <rect key="frame" x="0.0" y="50" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="32" id="ObX-e3-2YW"/>
+                            <constraint firstAttribute="width" constant="32" id="uQO-Kw-P0T"/>
+                        </constraints>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPPrevTrack" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="617">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1103,6 +1107,10 @@
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="599">
                         <rect key="frame" x="42" y="50" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="32" id="FQ8-a1-Pha"/>
+                            <constraint firstAttribute="width" constant="32" id="p8i-pn-yCo"/>
+                        </constraints>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPReverse" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="601">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1116,6 +1124,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="32" id="789"/>
+                            <constraint firstAttribute="height" constant="32" id="PSD-oC-0ZF"/>
                         </constraints>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRefreshTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="604">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1128,6 +1137,10 @@
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="596">
                         <rect key="frame" x="126" y="50" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="32" id="IaE-n3-E1S"/>
+                            <constraint firstAttribute="height" constant="32" id="fzW-bq-rQe"/>
+                        </constraints>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPStop" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="605">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1139,6 +1152,10 @@
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="595">
                         <rect key="frame" x="168" y="50" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="32" id="F8v-f1-oNZ"/>
+                            <constraint firstAttribute="width" constant="32" id="V28-NA-Ue0"/>
+                        </constraints>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPPlay" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="606">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1150,6 +1167,10 @@
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="591">
                         <rect key="frame" x="252" y="50" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="32" id="JO2-cQ-FJb"/>
+                            <constraint firstAttribute="width" constant="32" id="aVK-q1-Rrm"/>
+                        </constraints>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPFastForward" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="614">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1161,6 +1182,10 @@
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="592">
                         <rect key="frame" x="294" y="50" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="32" id="0mc-Ra-qAk"/>
+                            <constraint firstAttribute="width" constant="32" id="l9t-je-IQY"/>
+                        </constraints>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPNextTrack" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="613">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1221,6 +1246,10 @@
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="590" customClass="PPHilightableButton">
                         <rect key="frame" x="210" y="50" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="32" id="4W1-zh-cJm"/>
+                            <constraint firstAttribute="width" constant="32" id="xlQ-Rh-BTt"/>
+                        </constraints>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPPause" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="615">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
