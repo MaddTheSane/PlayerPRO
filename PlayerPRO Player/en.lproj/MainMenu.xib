@@ -721,31 +721,38 @@
                             <rect key="frame" x="1" y="1" width="480" height="360"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" columnResizing="NO" autosaveColumns="NO" id="733">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" autosaveColumns="NO" id="733">
                                     <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn editable="NO" width="477.04296875" minWidth="40" maxWidth="1000" id="736">
+                                        <tableColumn editable="NO" width="20" minWidth="20" maxWidth="40" id="736">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" alignment="left" title="Text Cell" id="737">
+                                            <imageCell key="dataCell" lineBreakMode="truncatingTail" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="1lr-rA-xvy"/>
+                                            <connections>
+                                                <binding destination="536" name="value" keyPath="arrangedObjects.fileIcon" id="46z-do-JzH"/>
+                                            </connections>
+                                        </tableColumn>
+                                        <tableColumn editable="NO" width="454" minWidth="10" maxWidth="3.4028234663852886e+38" id="NKI-PH-Tz3">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="EjT-Rf-y2i">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                             <connections>
-                                                <binding destination="536" name="value" keyPath="arrangedObjects.fileName" id="905">
-                                                    <dictionary key="options">
-                                                        <bool key="NSConditionallySetsEditable" value="NO"/>
-                                                    </dictionary>
-                                                </binding>
+                                                <binding destination="536" name="value" keyPath="arrangedObjects.fileName" id="wtd-fk-Rb4"/>
                                             </connections>
                                         </tableColumn>
                                     </tableColumns>

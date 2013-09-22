@@ -25,28 +25,22 @@
 #define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."
 
 @interface PPCurrentlyPlayingIndex : NSObject
-{
-	NSInteger index;
-	NSURL *playbackURL;
-}
-
 @property (readwrite) NSInteger index;
-@property (readwrite, retain) NSURL *playbackURL;
+@property (readwrite, strong) NSURL *playbackURL;
 
 - (void)movePlayingIndexToOtherIndex:(PPCurrentlyPlayingIndex *)othidx;
 
 @end
 
 @implementation PPCurrentlyPlayingIndex
+@synthesize index;
+@synthesize playbackURL;
 
 - (void)movePlayingIndexToOtherIndex:(PPCurrentlyPlayingIndex *)othidx
 {
 	othidx.index = index;
 	othidx.playbackURL = playbackURL;
 }
-
-@synthesize index;
-@synthesize playbackURL;
 
 - (NSString *)description
 {
@@ -1923,6 +1917,5 @@ enum PPMusicToolbarTypes {
 {
 	exportSettings.MicroDelaySize = std;
 }
-
 
 @end

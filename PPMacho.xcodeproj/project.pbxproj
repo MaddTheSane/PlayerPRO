@@ -87,6 +87,17 @@
 			name = "Digital Plugs";
 			productName = "Digital Plugs";
 		};
+		55F41A2417EF814500605DF8 /* Generate Git versions */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 55F41A2517EF814600605DF8 /* Build configuration list for PBXAggregateTarget "Generate Git versions" */;
+			buildPhases = (
+				55F41A2817EF81D900605DF8 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Generate Git versions";
+			productName = "Generate Git versions";
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -1384,6 +1395,20 @@
 			remoteGlobalIDString = 557DE3BD10E06BB500177B4C;
 			remoteInfo = "Filters Plugs";
 		};
+		55F41A2917EF849F00605DF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55F41A2417EF814500605DF8;
+			remoteInfo = "Generate Git versions";
+		};
+		55F41A2B17EF84A500605DF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55F41A2417EF814500605DF8;
+			remoteInfo = "Generate Git versions";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -2059,6 +2084,10 @@
 		55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		55EE8EBF100404EB00E75E63 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		55EE8EC0100404EB00E75E63 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
+		55F41A2217EF800B00605DF8 /* version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = version.sh; sourceTree = "<group>"; };
+		55F41A2317EF802500605DF8 /* updateInfoPlist.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = updateInfoPlist.rb; sourceTree = "<group>"; };
+		55F41A2D17EF853C00605DF8 /* PlayerPRO Player-Info.plistvers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPRO Player-Info.plistvers.plist"; sourceTree = "<group>"; };
+		55F41A2E17EF855800605DF8 /* Cocoa-Info.plistvers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Cocoa-Info.plistvers.plist"; sourceTree = "<group>"; };
 		55F4287216A8968C009013D8 /* PPPatternObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPatternObject.h; sourceTree = "<group>"; };
 		55F4287316A8968C009013D8 /* PPPatternObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPatternObject.m; sourceTree = "<group>"; };
 		55F4287616A89A9C009013D8 /* PPMadCommandObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMadCommandObject.h; sourceTree = "<group>"; };
@@ -3499,6 +3528,7 @@
 			isa = PBXGroup;
 			children = (
 				5578C48517D9E8560057D11B /* PlayerPRO Player-Info.plist */,
+				55F41A2D17EF853C00605DF8 /* PlayerPRO Player-Info.plistvers.plist */,
 				5578C48617D9E8560057D11B /* InfoPlist.strings */,
 				5578C48917D9E8560057D11B /* main.m */,
 				5578C48B17D9E8560057D11B /* PlayerPRO Player-Prefix.pch */,
@@ -3653,6 +3683,8 @@
 		88E0C3A60C2F21DD00D6C081 = {
 			isa = PBXGroup;
 			children = (
+				55F41A2217EF800B00605DF8 /* version.sh */,
+				55F41A2317EF802500605DF8 /* updateInfoPlist.rb */,
 				553626AE17EA6ED200D3A3C8 /* Xcconfigs */,
 				55CBFCD411EB7CA00028C6BB /* Classes */,
 				552C70C210CDAF8C00C0E0D4 /* Documentation */,
@@ -3671,6 +3703,7 @@
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 				5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */,
 				55CBF9A811EB77760028C6BB /* Cocoa-Info.plist */,
+				55F41A2E17EF855800605DF8 /* Cocoa-Info.plistvers.plist */,
 				5578C53017DB94A60057D11B /* PPImport copy-Info.plist */,
 			);
 			sourceTree = "<group>";
@@ -4234,6 +4267,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55F41A2C17EF84A500605DF8 /* PBXTargetDependency */,
 				5578C49917D9E86D0057D11B /* PBXTargetDependency */,
 				5578C49B17D9E8730057D11B /* PBXTargetDependency */,
 				55886F7317DEDAA200021A82 /* PBXTargetDependency */,
@@ -4891,6 +4925,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55F41A2A17EF849F00605DF8 /* PBXTargetDependency */,
 				5578C53217DB95290057D11B /* PBXTargetDependency */,
 				5578C4FB17DAB2910057D11B /* PBXTargetDependency */,
 				55A01A1B13BE63180049B720 /* PBXTargetDependency */,
@@ -4955,6 +4990,7 @@
 			targets = (
 				55CBF9A511EB77760028C6BB /* Cocoa */,
 				5578C48017D9E8560057D11B /* PlayerPRO Player */,
+				55F41A2417EF814500605DF8 /* Generate Git versions */,
 				5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */,
 				555776C217EBF8FF0019D008 /* iOS PlayerPRO PlayerTests */,
 				55BE997717978AEF00D6DECC /* PPImport */,
@@ -5513,6 +5549,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXRezBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		55F41A2817EF81D900605DF8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+				"PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist",
+				"Cocoa-Info.plistvers.plist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ruby updateInfoPlist.rb Cocoa-Info.plist Cocoa\ntouch -amfc Cocoa-Info.plistvers.plist\nruby updateInfoPlist.rb \"PlayerPRO Player/PlayerPRO Player-Info.plist\" player\ntouch -amfc \"PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist\"\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		550FFAE317CEA4570003A2F3 /* Sources */ = {
@@ -6658,6 +6712,16 @@
 			target = 557DE3BD10E06BB500177B4C /* Filters Plugs */;
 			targetProxy = 55EE2D8617E12F0D00FED42A /* PBXContainerItemProxy */;
 		};
+		55F41A2A17EF849F00605DF8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55F41A2417EF814500605DF8 /* Generate Git versions */;
+			targetProxy = 55F41A2917EF849F00605DF8 /* PBXContainerItemProxy */;
+		};
+		55F41A2C17EF84A500605DF8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55F41A2417EF814500605DF8 /* Generate Git versions */;
+			targetProxy = 55F41A2B17EF84A500605DF8 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -7447,6 +7511,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -7479,6 +7544,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -7595,6 +7661,7 @@
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEAD_CODE_STRIPPING = NO;
 				DSTROOT = /tmp/iOSPlayerPROCore.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7606,8 +7673,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GENERATE_MASTER_OBJECT_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[arch=arm64]" = 7.0;
+				KEEP_PRIVATE_EXTERNS = YES;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -7625,6 +7694,7 @@
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEAD_CODE_STRIPPING = NO;
 				DSTROOT = /tmp/iOSPlayerPROCore.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -7637,8 +7707,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GENERATE_MASTER_OBJECT_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[arch=arm64]" = 7.0;
+				KEEP_PRIVATE_EXTERNS = YES;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -7694,17 +7766,13 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -7716,10 +7784,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7728,7 +7793,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -7741,10 +7805,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				DEAD_CODE_STRIPPING = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				KEEP_PRIVATE_EXTERNS = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PlayerPROKit;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -7758,12 +7825,15 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				DEAD_CODE_STRIPPING = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				KEEP_PRIVATE_EXTERNS = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PlayerPROKit;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -8805,12 +8875,15 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = NO;
 				DSTROOT = /tmp/PlayerPROKit_iOS.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GENERATE_MASTER_OBJECT_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[arch=arm64]" = 7.0;
+				KEEP_PRIVATE_EXTERNS = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -8827,14 +8900,17 @@
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				DEAD_CODE_STRIPPING = NO;
 				DSTROOT = /tmp/PlayerPROKit_iOS.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GENERATE_MASTER_OBJECT_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[arch=arm64]" = 7.0;
+				KEEP_PRIVATE_EXTERNS = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -8959,6 +9035,7 @@
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/MADDriver.Source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8968,6 +9045,8 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				KEEP_PRIVATE_EXTERNS = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PlayerPROCompact;
@@ -8985,6 +9064,7 @@
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/MADDriver.Source/PlayerPROCore-OSX.pch";
@@ -8995,6 +9075,8 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				KEEP_PRIVATE_EXTERNS = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PlayerPROCompact;
@@ -9008,17 +9090,12 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				INFOPLIST_FILE = "Cocoa-Info.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
+				INFOPLIST_FILE = "Cocoa-Info.plistvers.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 			};
@@ -9029,18 +9106,13 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "Cocoa-Info.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 			};
@@ -9087,6 +9159,20 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		55F41A2617EF814600605DF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		55F41A2717EF814600605DF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
@@ -9650,6 +9736,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		55F41A2517EF814600605DF8 /* Build configuration list for PBXAggregateTarget "Generate Git versions" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55F41A2617EF814600605DF8 /* Release */,
+				55F41A2717EF814600605DF8 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		88E0C3A90C2F21DD00D6C081 /* Build configuration list for PBXProject "PPMacho" */ = {
 			isa = XCConfigurationList;
