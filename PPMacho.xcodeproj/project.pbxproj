@@ -1931,9 +1931,9 @@
 		5578C53017DB94A60057D11B /* PPImport copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PPImport copy-Info.plist"; sourceTree = "<group>"; };
 		5578C53A17DB9F630057D11B /* PPInstrumentPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPlugHandler.h; sourceTree = "<group>"; };
 		5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentPlugHandler.m; sourceTree = "<group>"; };
-		5578C53D17DBABBE0057D11B /* PPDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPDocument.h; path = "Document-based code/PPDocument.h"; sourceTree = "<group>"; };
-		5578C53E17DBABBF0057D11B /* PPDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPDocument.m; path = "Document-based code/PPDocument.m"; sourceTree = "<group>"; };
-		5578C53F17DBABC20057D11B /* PPDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PPDocument.xib; path = "Document-based code/PPDocument.xib"; sourceTree = "<group>"; };
+		5578C53D17DBABBE0057D11B /* PPDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDocument.h; sourceTree = "<group>"; };
+		5578C53E17DBABBF0057D11B /* PPDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDocument.m; sourceTree = "<group>"; };
+		5578C53F17DBABC20057D11B /* PPDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPDocument.xib; sourceTree = "<group>"; };
 		5578C56E17DBD9930057D11B /* MADPackageMDImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MADPackageMDImport.m; sourceTree = "<group>"; };
 		557C758416A3455D00923755 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-FilterBridge.c"; sourceTree = "<group>"; };
@@ -3645,11 +3645,19 @@
 				5547C9DC16D97FC700C36FEA /* PPFileSizeFormatter.h */,
 				5547C9DD16D97FC700C36FEA /* PPFileSizeFormatter.m */,
 				556AE4BB16E290650074BBF9 /* PPByteswap.h */,
+				55F41A3417EF918100605DF8 /* Document-based code */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		55F41A3417EF918100605DF8 /* Document-based code */ = {
+			isa = PBXGroup;
+			children = (
 				5578C53D17DBABBE0057D11B /* PPDocument.h */,
 				5578C53E17DBABBF0057D11B /* PPDocument.m */,
 				5578C53F17DBABC20057D11B /* PPDocument.xib */,
 			);
-			path = Classes;
+			path = "Document-based code";
 			sourceTree = "<group>";
 		};
 		55F8C3E117B998E200DFE937 /* Resources */ = {
@@ -3668,11 +3676,11 @@
 				55F41A2317EF802500605DF8 /* updateInfoPlist.rb */,
 				553626AE17EA6ED200D3A3C8 /* Xcconfigs */,
 				55CBFCD411EB7CA00028C6BB /* Classes */,
+				88E0C3CA0C2F21DD00D6C081 /* Resources */,
 				552C70C210CDAF8C00C0E0D4 /* Documentation */,
 				55879F7B164CA63D009068D5 /* PPPlay */,
 				5518105510C35A0100ADA9F4 /* Example */,
 				554E0FDD10D6C79D00BB619C /* App Plug-ins */,
-				88E0C3CA0C2F21DD00D6C081 /* Resources */,
 				88E0C3CE0C2F21DD00D6C081 /* MADDriver.Source */,
 				551292DE163DD68500C2C639 /* PlayerPROKit */,
 				5573A1051656FAF100A5AECA /* iOSPlayerPROCore */,
