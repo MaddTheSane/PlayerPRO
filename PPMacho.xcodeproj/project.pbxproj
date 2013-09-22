@@ -3930,6 +3930,7 @@
 				5518107010C35A4500ADA9F4 /* Frameworks */,
 				55ED50BD10D40C3400824C61 /* Copy PlugIns */,
 				558678B51659AA1100BCFB70 /* Copy Frameworks */,
+				55F41A3217EF8C7400605DF8 /* Strip Headers */,
 			);
 			buildRules = (
 			);
@@ -4242,6 +4243,7 @@
 				5578C49C17D9E8840057D11B /* Copy Frameworks */,
 				5578C49F17D9E8A30057D11B /* Copy Plug-ins */,
 				5578C4F417DA996C0057D11B /* Copy Spotlight */,
+				55F41A3017EF8A8E00605DF8 /* Strip headers */,
 			);
 			buildRules = (
 			);
@@ -4900,6 +4902,7 @@
 				55CBFB3711EB780B0028C6BB /* Copy PlugIns */,
 				5573A1611658A3B800A5AECA /* Copy Frameworks */,
 				55BE99DE17978E4400D6DECC /* Copy Spotlight Importer */,
+				55F41A3117EF8C2000605DF8 /* Strip Headers */,
 			);
 			buildRules = (
 			);
@@ -4971,10 +4974,10 @@
 				5578C48017D9E8560057D11B /* PlayerPRO Player */,
 				55F41A2417EF814500605DF8 /* Generate Git versions */,
 				5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */,
+				5518107110C35A4500ADA9F4 /* Carbon Example */,
 				555776C217EBF8FF0019D008 /* iOS PlayerPRO PlayerTests */,
 				55BE997717978AEF00D6DECC /* PPImport */,
 				5578C51B17DB94A50057D11B /* PPImport-app */,
-				5518107110C35A4500ADA9F4 /* Carbon Example */,
 				5573A33E10B50D2600FF8B50 /* PlayerPROCore */,
 				551292D7163DD68500C2C639 /* PlayerPROKit */,
 				55879F84164CA65D009068D5 /* PPPlay */,
@@ -5544,6 +5547,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "ruby updateInfoPlist.rb Cocoa-Info.plist Cocoa\ntouch -amfc Cocoa-Info.plistvers.plist\nruby updateInfoPlist.rb \"PlayerPRO Player/PlayerPRO Player-Info.plist\" player\ntouch -amfc \"PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist\"\n\n";
+		};
+		55F41A3017EF8A8E00605DF8 /* Strip headers */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Strip headers";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Remove all headers from copied frameworks\nfind \"${TARGET_BUILD_DIR}\"/\"${PRODUCT_NAME}\".${WRAPPER_EXTENSION} -name Headers -o -name PrivateHeaders -print0 | xargs -0 rm -rf\n";
+		};
+		55F41A3117EF8C2000605DF8 /* Strip Headers */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Strip Headers";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Remove all headers from copied frameworks\nfind \"${TARGET_BUILD_DIR}\"/\"${PRODUCT_NAME}\".${WRAPPER_EXTENSION} -name Headers -o -name PrivateHeaders -print0 | xargs -0 rm -rf\n";
+		};
+		55F41A3217EF8C7400605DF8 /* Strip Headers */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Strip Headers";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Remove all headers from copied frameworks\nfind \"${TARGET_BUILD_DIR}\"/\"${PRODUCT_NAME}\".${WRAPPER_EXTENSION} -name Headers -o -name PrivateHeaders -print0 | xargs -0 rm -rf\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
