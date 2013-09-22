@@ -10,12 +10,16 @@ if info != nil then
 	
 	if currentVersion == "unknown" then
 		puts "version is invalid!"
-	else
+		else
 		puts "version is valid:" + currentVersion
 		
 		currentVersion = currentVersion.chomp
 		
-		info.setValue_forKey_(currentVersion, "CFBundleVersion")
+		if ARGV[1] == "player" then
+			info.setValue_forKey_("1.0.0" + currentVersion, "CFBundleVersion")
+			else
+			info.setValue_forKey_("6.0.0" + currentVersion, "CFBundleVersion")
+		end
 		
 		commitHash = %x[git rev-list --max-count=1 HEAD]
 		
@@ -23,6 +27,6 @@ if info != nil then
 		
 		info.setValue_forKey_(commitHash, "MPXCommitHash")
 		
-		info.writeToFile_atomically_(ARGV[0], 0)
+		info.writeToFile_atomically_(ARGV[0] + "vers.plist", 0)
 	end
 end

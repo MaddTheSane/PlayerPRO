@@ -87,6 +87,17 @@
 			name = "Digital Plugs";
 			productName = "Digital Plugs";
 		};
+		55F41A2417EF814500605DF8 /* Generate Git versions */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 55F41A2517EF814600605DF8 /* Build configuration list for PBXAggregateTarget "Generate Git versions" */;
+			buildPhases = (
+				55F41A2817EF81D900605DF8 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Generate Git versions";
+			productName = "Generate Git versions";
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -1376,6 +1387,20 @@
 			remoteGlobalIDString = 557DE3BD10E06BB500177B4C;
 			remoteInfo = "Filters Plugs";
 		};
+		55F41A2917EF849F00605DF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55F41A2417EF814500605DF8;
+			remoteInfo = "Generate Git versions";
+		};
+		55F41A2B17EF84A500605DF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55F41A2417EF814500605DF8;
+			remoteInfo = "Generate Git versions";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -2046,6 +2071,10 @@
 		55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		55EE8EBF100404EB00E75E63 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		55EE8EC0100404EB00E75E63 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
+		55F41A2217EF800B00605DF8 /* version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = version.sh; sourceTree = "<group>"; };
+		55F41A2317EF802500605DF8 /* updateInfoPlist.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = updateInfoPlist.rb; sourceTree = "<group>"; };
+		55F41A2D17EF853C00605DF8 /* PlayerPRO Player-Info.plistvers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPRO Player-Info.plistvers.plist"; sourceTree = "<group>"; };
+		55F41A2E17EF855800605DF8 /* Cocoa-Info.plistvers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Cocoa-Info.plistvers.plist"; sourceTree = "<group>"; };
 		55F4287216A8968C009013D8 /* PPPatternObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPatternObject.h; sourceTree = "<group>"; };
 		55F4287316A8968C009013D8 /* PPPatternObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPatternObject.m; sourceTree = "<group>"; };
 		55F4287616A89A9C009013D8 /* PPMadCommandObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMadCommandObject.h; sourceTree = "<group>"; };
@@ -3483,6 +3512,7 @@
 			isa = PBXGroup;
 			children = (
 				5578C48517D9E8560057D11B /* PlayerPRO Player-Info.plist */,
+				55F41A2D17EF853C00605DF8 /* PlayerPRO Player-Info.plistvers.plist */,
 				5578C48617D9E8560057D11B /* InfoPlist.strings */,
 				5578C48917D9E8560057D11B /* main.m */,
 				5578C48B17D9E8560057D11B /* PlayerPRO Player-Prefix.pch */,
@@ -3634,6 +3664,8 @@
 		88E0C3A60C2F21DD00D6C081 = {
 			isa = PBXGroup;
 			children = (
+				55F41A2217EF800B00605DF8 /* version.sh */,
+				55F41A2317EF802500605DF8 /* updateInfoPlist.rb */,
 				553626AE17EA6ED200D3A3C8 /* Xcconfigs */,
 				55CBFCD411EB7CA00028C6BB /* Classes */,
 				552C70C210CDAF8C00C0E0D4 /* Documentation */,
@@ -3652,6 +3684,7 @@
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 				5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */,
 				55CBF9A811EB77760028C6BB /* Cocoa-Info.plist */,
+				55F41A2E17EF855800605DF8 /* Cocoa-Info.plistvers.plist */,
 				5578C53017DB94A60057D11B /* PPImport copy-Info.plist */,
 			);
 			sourceTree = "<group>";
@@ -4213,6 +4246,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55F41A2C17EF84A500605DF8 /* PBXTargetDependency */,
 				5578C49917D9E86D0057D11B /* PBXTargetDependency */,
 				5578C49B17D9E8730057D11B /* PBXTargetDependency */,
 				55886F7317DEDAA200021A82 /* PBXTargetDependency */,
@@ -4870,6 +4904,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55F41A2A17EF849F00605DF8 /* PBXTargetDependency */,
 				5578C53217DB95290057D11B /* PBXTargetDependency */,
 				5578C4FB17DAB2910057D11B /* PBXTargetDependency */,
 				55A01A1B13BE63180049B720 /* PBXTargetDependency */,
@@ -4934,6 +4969,7 @@
 			targets = (
 				55CBF9A511EB77760028C6BB /* Cocoa */,
 				5578C48017D9E8560057D11B /* PlayerPRO Player */,
+				55F41A2417EF814500605DF8 /* Generate Git versions */,
 				5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */,
 				555776C217EBF8FF0019D008 /* iOS PlayerPRO PlayerTests */,
 				55BE997717978AEF00D6DECC /* PPImport */,
@@ -5492,6 +5528,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXRezBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		55F41A2817EF81D900605DF8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+				"PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist",
+				"Cocoa-Info.plistvers.plist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ruby updateInfoPlist.rb Cocoa-Info.plist Cocoa\ntouch -amfc Cocoa-Info.plistvers.plist\nruby updateInfoPlist.rb \"PlayerPRO Player/PlayerPRO Player-Info.plist\" player\ntouch -amfc \"PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist\"\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		550FFAE317CEA4570003A2F3 /* Sources */ = {
@@ -6633,6 +6687,16 @@
 			target = 557DE3BD10E06BB500177B4C /* Filters Plugs */;
 			targetProxy = 55EE2D8617E12F0D00FED42A /* PBXContainerItemProxy */;
 		};
+		55F41A2A17EF849F00605DF8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55F41A2417EF814500605DF8 /* Generate Git versions */;
+			targetProxy = 55F41A2917EF849F00605DF8 /* PBXContainerItemProxy */;
+		};
+		55F41A2C17EF84A500605DF8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55F41A2417EF814500605DF8 /* Generate Git versions */;
+			targetProxy = 55F41A2B17EF84A500605DF8 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -7683,7 +7747,7 @@
 				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -9005,7 +9069,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				INFOPLIST_FILE = "Cocoa-Info.plist";
+				INFOPLIST_FILE = "Cocoa-Info.plistvers.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
@@ -9070,6 +9134,20 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		55F41A2617EF814600605DF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		55F41A2717EF814600605DF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
@@ -9633,6 +9711,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		55F41A2517EF814600605DF8 /* Build configuration list for PBXAggregateTarget "Generate Git versions" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55F41A2617EF814600605DF8 /* Release */,
+				55F41A2717EF814600605DF8 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		88E0C3A90C2F21DD00D6C081 /* Build configuration list for PBXProject "PPMacho" */ = {
 			isa = XCConfigurationList;
