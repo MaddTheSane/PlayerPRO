@@ -1651,7 +1651,7 @@
 		5518105610C35A2600ADA9F4 /* Example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Example.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5518105810C35A2600ADA9F4 /* small MAD Music.madk */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music.madk"; sourceTree = "<group>"; };
 		5518105A10C35A2600ADA9F4 /* small MOD Music.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MOD Music.mod"; sourceTree = "<group>"; };
-		5518107210C35A4500ADA9F4 /* PlayerPRO Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5518107210C35A4500ADA9F4 /* Carbon Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Carbon Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5518107410C35A4500ADA9F4 /* PlayerPRO Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PlayerPRO Example-Info.plist"; path = "../PlayerPRO Example-Info.plist"; sourceTree = "<group>"; };
 		5519D3491646C5C00085589D /* Win-WaveDriver.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "Win-WaveDriver.c"; sourceTree = "<group>"; };
 		551FEA6B10E727AD00EDF2F1 /* MINs.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MINs.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3710,7 +3710,7 @@
 				5586883D10BF62FB00FCC24D /* XM.ppimpexp */,
 				5586889710BF67F100FCC24D /* MIDI.ppimpexp */,
 				55868A6710BFB46100FCC24D /* APPL.ppimpexp */,
-				5518107210C35A4500ADA9F4 /* PlayerPRO Example.app */,
+				5518107210C35A4500ADA9F4 /* Carbon Example.app */,
 				55B797DC10D6E6C40073E379 /* Complex Fade.plugin */,
 				554E110510D6F09F00BB619C /* Fade Note.plugin */,
 				554E114C10D6F1BF00BB619C /* Fade Volume.plugin */,
@@ -3940,7 +3940,7 @@
 			);
 			name = "Carbon Example";
 			productName = "PlayerPRO Example";
-			productReference = 5518107210C35A4500ADA9F4 /* PlayerPRO Example.app */;
+			productReference = 5518107210C35A4500ADA9F4 /* Carbon Example.app */;
 			productType = "com.apple.product-type.application";
 		};
 		551FEA5C10E727AD00EDF2F1 /* MINs */ = {
@@ -6979,7 +6979,6 @@
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				INSTALL_PATH = "@rpath";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -7009,7 +7008,6 @@
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				INSTALL_PATH = "@rpath";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -7087,7 +7085,6 @@
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				PRODUCT_NAME = "PlayerPRO Example";
 				VALID_ARCHS = i386;
 				ZERO_LINK = NO;
 			};
@@ -7103,7 +7100,6 @@
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				PRODUCT_NAME = "PlayerPRO Example";
 				VALID_ARCHS = i386;
 			};
 			name = Debug;
@@ -7745,7 +7741,6 @@
 			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
@@ -7765,7 +7760,6 @@
 			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
