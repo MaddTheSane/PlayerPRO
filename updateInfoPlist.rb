@@ -16,9 +16,9 @@ if info != nil then
 		currentVersion = currentVersion.chomp
 		
 		if ARGV[1] == "player" then
-			info.setValue_forKey_("1.0.0" + currentVersion, "CFBundleVersion")
+			info.setValue_forKey_("1.0.0." + currentVersion, "CFBundleVersion")
 			else
-			info.setValue_forKey_("6.0.0" + currentVersion, "CFBundleVersion")
+			info.setValue_forKey_("6.0.0." + currentVersion, "CFBundleVersion")
 		end
 		
 		commitHash = %x[git rev-list --max-count=1 HEAD]
