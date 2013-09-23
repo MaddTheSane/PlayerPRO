@@ -29,6 +29,8 @@
 
 @property (readonly, weak) PPDriver *attachedDriver;
 @property (readonly) NSURL *filePath;
+- (OSErr)saveMusicToURL:(NSURL *)tosave;
+- (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib;
 
 - (id)init;
 - (id)initWithURL:(NSURL *)url library:(PPLibrary *)theLib;
@@ -57,7 +59,7 @@
 
 - (id)init;
 - (id)initFromMusicObject:(PPMusicObject*)oldFromat;
-- (BOOL)exportMusicToURL:(NSURL *)tosave;
+- (OSErr)exportMusicToURL:(NSURL *)tosave;
 - (id)initWithPath:(NSString *)url;
 - (id)initWithURL:(NSURL *)url;
 - (MADMusic *)newMadMusicStruct;

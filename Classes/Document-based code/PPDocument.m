@@ -8,22 +8,41 @@
 
 #import "PPDocument.h"
 #import <PlayerPROKit/PlayerPROKit.h>
+#import <QTKit/QTKit.h>
+#import <QTKit/QTExportSession.h>
+#import <QTKit/QTExportOptions.h>
 #import "PPApp_AppDelegate.h"
 #import "UserDefaultKeys.h"
+#import "PPExportObject.h"
 
 @interface PPDocument ()
 @property (strong) PPDriver *theDriver;
-@property (strong) PPMusicObject *theMusic;
+@property (strong) PPMusicObjectWrapper *theMusic;
 @property (weak) PPLibrary *globalLib;
 @end
 
 @implementation PPDocument
 
-- (IBAction)exportMusic:(id)sender
+- (NSString*)musicName
 {
-	
+	return self.theMusic.internalFileName;
 }
 
+- (void)setMusicName:(NSString *)musicName
+{
+	self.theMusic.internalFileName = musicName;
+}
+
+- (NSString*)musicInfo
+{
+	return self.theMusic.madInfo;
+}
+
+- (void)setMusicInfo:(NSString *)musicInfo
+{
+	self.theMusic.madInfo = musicInfo;
+}
+	
 - (id)init
 {
     self = [super init];
@@ -173,6 +192,8 @@
 	}
 }
 
+#endif
+
 //Yes, the pragma pack is needed
 //otherwise the data will be improperly mapped.
 #pragma pack(push, 2)
@@ -248,7 +269,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 #else
 		ChunkHeader nameChunk;
 		NSInteger macRomanNameLength = 0;
-		NSData *macRomanNameData = [musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+		NSData *macRomanNameData = [self.musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 		macRomanNameLength = [macRomanNameData length];
 		BOOL isPadded = (macRomanNameLength & 1);
 		
@@ -297,7 +318,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 #else
 		ChunkHeader infoChunk;
 		NSInteger macRomanInfoLength = 0;
-		NSData *macRomanInfoData = [musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+		NSData *macRomanInfoData = [self.musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 		macRomanInfoLength = [macRomanInfoData length];
 		BOOL isPadded = (macRomanInfoLength & 1);
 		infoChunk.ckSize = macRomanInfoLength + 1;
@@ -397,34 +418,32 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (NSData *)getSoundData:(MADDriverSettings*)theSet
 {
-	MADDriverRec *theRec = NULL;
+	PPDriver *theRec = [[PPDriver alloc] initWithLibrary:_globalLib settings:theSet];
 	
-	OSErr err = MADCreateDriver( theSet, madLib, &theRec);
-	if (err != noErr) {
+	if (theRec == nil) {
+#if 0
 		dispatch_async(dispatch_get_main_queue(), ^{
 			NSError *NSerr = CreateErrorFromMADErrorType(err);
 			[[NSAlert alertWithError:NSerr] runModal];
-			RELEASEOBJ(NSerr);
 		});
+#endif
 		
 		return nil;
 	}
-	MADCleanDriver( theRec);
-	
-	MADAttachDriverToMusic( theRec, music, NULL);
-	MADPlayMusic(theRec);
+	[theRec cleanDriver];
+	[_theMusic attachToDriver:theRec setAsCurrentMusic:YES];
 	
 	Ptr soundPtr = NULL;
-	long full = 0;
+	NSUInteger full = [theRec audioLength];
 	if (theSet->outPutBits == 8) {
-		full = MADAudioLength(theRec);
+		//full = audLen;
 	}else if (theSet->outPutBits == 16) {
-		full = MADAudioLength(theRec) * 2;
+		full *= 2;
 	} else if (theSet->outPutBits == 20 || theSet->outPutBits == 24 ) {
-		full = MADAudioLength(theRec) * 3;
+		full *= 3;
 	} else {
 		//This is just to make the Static analyzer happy
-		full = MADAudioLength(theRec);
+		//full = MADAudioLength(theRec);
 	}
 	
 	switch (theSet->outPutMode) {
@@ -441,48 +460,157 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			break;
 	}
 	
+	[theRec play];
+
 	NSMutableData *mutData = [[NSMutableData alloc] init];
 	soundPtr = calloc(full, 1);
 	
-	while(DirectSave(soundPtr, theSet, theRec))
+	while([theRec directSaveToPointer:soundPtr settings:theSet])
 	{
 		[mutData appendBytes:soundPtr length:full];
 	}
 	NSData *retData = [self newAIFFDataFromSettings:theSet data:mutData];
-	RELEASEOBJ(mutData);
 	mutData = nil;
 	
-	MADStopMusic(theRec);
-	MADCleanDriver(theRec);
-	MADDisposeDriver(theRec);
 	free(soundPtr);
 	
-	return AUTORELEASEOBJ(retData);
+	return retData;
 }
-
-- (NSInteger)showExportSettings
-{
-	MADGetBestDriver(&exportSettings);
-	exportSettings.driverMode = NoHardwareDriver;
-	exportSettings.repeatMusic = FALSE;
-	[exportController settingsFromDriverSettings:&exportSettings];
-	return [NSApp runModalForWindow:exportWindow];
-}
-
 #ifndef PPEXPORT_CREATE_TMP_AIFF
 #define PPEXPORT_CREATE_TMP_AIFF 1
 #endif
 
+typedef struct {
+	NSInteger	tag;
+	CFURLRef	fileURL;
+} ExportContextInfo;
+
+- (void)exportSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+{
+	ExportContextInfo *ei = contextInfo;
+	NSURL *outURL = CFBridgingRelease(ei->fileURL);
+	
+	if (returnCode == NSAlertDefaultReturn) {
+		
+		switch (ei->tag) {
+			case -1:
+			{
+				PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:outURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
+					if (errStr) {
+						*errStr = nil;
+					}
+					NSData *saveData = [self getSoundData:&exportSettings];
+					if (!saveData) {
+						return MADNeedMemory;
+					}
+					[_theDriver endExport];
+					return [saveData writeToURL:theURL atomically:YES] ? noErr : MADWritingErr;
+				}];
+			}
+			break;
+			
+			case -2:
+			{
+				PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:outURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
+					if (errStr) {
+						*errStr = nil;
+					}
+					NSData *saveData = [self getSoundData:&exportSettings];
+					NSString *oldMusicName = self.musicName;
+					NSString *oldMusicInfo = self.musicInfo;
+					NSURL *oldURL = [self fileURL];
+					[_theDriver endExport];
+					NSError *expErr = nil;
+#if PPEXPORT_CREATE_TMP_AIFF
+					NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
+					[saveData writeToURL:tmpURL atomically:NO];
+					QTMovie *exportMov = [[QTMovie alloc] initWithURL:tmpURL error:&expErr];
+					if (exportMov) {
+						[exportMov setAttribute:oldMusicName forKey:QTMovieDisplayNameAttribute];
+						[exportMov setAttribute:oldMusicInfo forKey:QTMovieCopyrightAttribute];
+					}
+#else
+					//Attempts of using data directly have resulted in internal assertion failures in the export session initialization code
+					QTDataReference *dataRef = [[QTDataReference alloc] initWithReferenceToData:saveData name:oldMusicName MIMEType:@"audio/aiff"];
+					
+					QTMovie *exportMov = [[QTMovie alloc] initWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:dataRef, QTMovieDataReferenceAttribute, @NO, QTMovieOpenAsyncOKAttribute, @YES, QTMovieDontInteractWithUserAttribute, @NO, QTMovieOpenForPlaybackAttribute, oldMusicName, QTMovieDisplayNameAttribute, oldMusicInfo, QTMovieCopyrightAttribute, nil] error:&expErr];
+#endif
+					oldMusicInfo = nil;
+					saveData = nil;
+					if (!exportMov) {
+						if (errStr) {
+							*errStr = [[NSString alloc] initWithFormat:@"Init Failed for %@, error: %@", oldMusicName, [expErr localizedDescription]];
+						}
+#if PPEXPORT_CREATE_TMP_AIFF
+						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
+#endif
+						return MADWritingErr;
+					}
+					
+					QTExportSession *session = [[QTExportSession alloc] initWithMovie:exportMov exportOptions:[QTExportOptions exportOptionsWithIdentifier:QTExportOptionsAppleM4A] outputURL:theURL error:&expErr];
+					if (!session) {
+						if (errStr) {
+							*errStr = [[NSString alloc] initWithFormat:@"Export session creation for %@ failed, error: %@", oldMusicName, [expErr localizedDescription]];
+						}
+#if PPEXPORT_CREATE_TMP_AIFF
+						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
+#endif
+						
+						return MADWritingErr;
+					}
+					[session run];
+					BOOL didFinish = [session waitUntilFinished:&expErr];
+#if PPEXPORT_CREATE_TMP_AIFF
+					[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
+#endif
+					
+					if (didFinish) {
+						return noErr;
+					} else {
+						if (errStr) {
+							*errStr = [[NSString alloc] initWithFormat:@"export of \"%@\" failed, error: %@", oldMusicName, [expErr localizedDescription]];
+						}
+						return MADWritingErr;
+					}
+				}];
+			}
+			break;
+						
+			default:
+			break;
+		}
+	}
+	[_theDriver endExport];
+	
+	free(contextInfo);
+}
+	
+- (void)showExportSettingsWithExportType:(NSInteger)expType URL:(NSURL*)theURL
+{
+	MADGetBestDriver(&exportSettings);
+	exportSettings.driverMode = NoHardwareDriver;
+	exportSettings.repeatMusic = FALSE;
+	[_exportController settingsFromDriverSettings:&exportSettings];
+	ExportContextInfo *ei = calloc(sizeof(ExportContextInfo), 1);
+	ei->tag = expType;
+	ei->fileURL = CFBridgingRetain(theURL);
+	
+	[NSApp beginSheet:_exportWindow modalForWindow:[self windowForSheet] modalDelegate:self didEndSelector:@selector(exportSheetDidEnd:returnCode:contextInfo:) contextInfo:ei];
+}
+
 - (IBAction)exportMusicAs:(id)sender
 {
+	//TODO: show up on the document window, not the whole app!
 	NSInteger tag = [sender tag];
-	MADBeginExport(madDriver);
+	[_theDriver beginExport];
+	
+	NSString *musicName = self.musicName;
 	
 	switch (tag) {
 		case -1:
 			//AIFF
 		{
-			NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
+			NSSavePanel *savePanel = [NSSavePanel savePanel];
 			[savePanel setAllowedFileTypes:@[@"public.aiff-audio"]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
@@ -492,39 +620,17 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as AIFF audio"];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-				if ([self showExportSettings] == NSAlertDefaultReturn) {
-					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-						NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
-						MADEndExport(madDriver);
-						
-						[saveData writeToURL:[savePanel URL] atomically:YES];
-						RELEASEOBJ(saveData);
-						saveData = nil;
-						dispatch_async(dispatch_get_main_queue(), ^{
-							if (isQuitting) {
-								[NSApp replyToApplicationShouldTerminate:YES];
-							} else {
-								NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
-								if (retVal == NSAlertAlternateReturn) {
-									[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[[savePanel URL]]];
-								}
-							}
-						});
-					});
-				} else {
-					MADEndExport(madDriver);
-				}
+				[self showExportSettingsWithExportType:-1 URL:[savePanel URL]];
 			} else {
-				MADEndExport(madDriver);
+				[_theDriver endExport];
 			}
-			RELEASEOBJ(savePanel);
 		}
 			break;
 			
 		case -2:
 			//MP4
 		{
-			NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
+			NSSavePanel *savePanel = [NSSavePanel savePanel];
 			[savePanel setAllowedFileTypes:@[@"com.apple.m4a-audio"]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
@@ -534,159 +640,74 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as MPEG-4 Audio"];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-				if ([self showExportSettings] == NSAlertDefaultReturn) {
-					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-						NSData *saveData = RETAINOBJ([self getSoundData:&exportSettings]);
-						NSString *oldMusicName = RETAINOBJ(musicName);
-						NSString *oldMusicInfo = RETAINOBJ(musicInfo);
-						NSURL *oldURL = [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] musicUrl];
-						MADEndExport(madDriver);
-						NSError *expErr = nil;
-						dispatch_block_t errBlock = ^{
-							if (isQuitting) {
-								[NSApp replyToApplicationShouldTerminate:YES];
-							}else {
-								NSRunAlertPanel(@"Export failed", @"Export/coversion of the music file failed:\n%@", nil, nil, nil, [expErr localizedDescription]);
-							}
-						};
-#if PPEXPORT_CREATE_TMP_AIFF
-						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
-						[saveData writeToURL:tmpURL atomically:NO];
-						QTMovie *exportMov = [[QTMovie alloc] initWithURL:tmpURL error:&expErr];
-						if (exportMov) {
-							[exportMov setAttribute:oldMusicName forKey:QTMovieDisplayNameAttribute];
-							[exportMov setAttribute:oldMusicInfo forKey:QTMovieCopyrightAttribute];
-						}
-#else
-						//Attempts of using data directly have resulted in internal assertion failures in the export session initialization code
-						QTDataReference *dataRef = [[QTDataReference alloc] initWithReferenceToData:saveData name:oldMusicName MIMEType:@"audio/aiff"];
-						
-						QTMovie *exportMov = [[QTMovie alloc] initWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:dataRef, QTMovieDataReferenceAttribute, @NO, QTMovieOpenAsyncOKAttribute, @YES, QTMovieDontInteractWithUserAttribute, @NO, QTMovieOpenForPlaybackAttribute, oldMusicName, QTMovieDisplayNameAttribute, oldMusicInfo, QTMovieCopyrightAttribute, nil] error:&expErr];
-#endif
-						RELEASEOBJ(oldMusicInfo);
-						oldMusicInfo = nil;
-						RELEASEOBJ(saveData);
-						saveData = nil;
-						if (!exportMov) {
-							NSLog(@"Init Failed for %@, error: %@", oldMusicName, [expErr localizedDescription]);
-#if !PPEXPORT_CREATE_TMP_AIFF
-#else
-							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-#endif
-							
-							dispatch_async(dispatch_get_main_queue(), errBlock);
-							return;
-						}
-						
-						QTExportSession *session = [[QTExportSession alloc] initWithMovie:exportMov exportOptions:[QTExportOptions exportOptionsWithIdentifier:QTExportOptionsAppleM4A] outputURL:[savePanel URL] error:&expErr];
-						if (!session) {
-							NSLog(@"Export session creation for %@ failed, error: %@", oldMusicName, [expErr localizedDescription]);
-#if !PPEXPORT_CREATE_TMP_AIFF
-#else
-							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-#endif
-							
-							dispatch_async(dispatch_get_main_queue(), errBlock);
-							return;
-						}
-						[session run];
-						BOOL didFinish = [session waitUntilFinished:&expErr];
-						if (!didFinish)
-						{
-							NSLog(@"export of \"%@\" failed, error: %@", oldMusicName, [expErr localizedDescription]);
-							dispatch_async(dispatch_get_main_queue(), errBlock);
-						}
-#if !PPEXPORT_CREATE_TMP_AIFF
-#else
-						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-#endif
-						
-						if (didFinish) {
-							dispatch_async(dispatch_get_main_queue(), ^{
-								if (isQuitting) {
-									[NSApp replyToApplicationShouldTerminate:YES];
-								} else {
-									NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
-									if (retVal == NSAlertAlternateReturn) {
-										[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[[savePanel URL]]];
-									}
-								}
-							});
-						}
-						
-					});
-				} else {
-					MADEndExport(madDriver);
-				}
+				[self showExportSettingsWithExportType:-2 URL:[savePanel URL]];
 			} else {
-				MADEndExport(madDriver);
+				[_theDriver endExport];
 			}
-			RELEASEOBJ(savePanel);
 		}
 			break;
 			
+		case -3:
+		{
+		NSSavePanel *savePanel = [NSSavePanel savePanel];
+		[savePanel setAllowedFileTypes:@[MADNativeUTI]];
+		[savePanel setCanCreateDirectories:YES];
+		[savePanel setCanSelectHiddenExtension:YES];
+		if (![musicName isEqualToString:@""]) {
+			[savePanel setNameFieldStringValue:musicName];
+		}
+		[savePanel setPrompt:@"Export"];
+		[savePanel setTitle:@"Export as MADK"];
+		if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+			PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
+				return [_theMusic exportMusicToURL:theURL];
+			}];
+		}
+		}
+
+		break;
+		
 		default:
 		{
-			if (tag > madLib->TotalPlug || tag < 0) {
+			if (tag > [_globalLib pluginCount] || tag < 0) {
 				NSBeep();
-				MADEndExport(madDriver);
+				[_theDriver endExport];
+#if 0
 				if (isQuitting) {
 					[NSApp replyToApplicationShouldTerminate:YES];
 				}
+#endif
 				
 				return;
 			}
-			NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
-			[savePanel setAllowedFileTypes:BRIDGE(NSArray*, madLib->ThePlug[tag].UTItypes)];
+			NSSavePanel *savePanel = [NSSavePanel savePanel];
+			PPLibraryObject *tmpObj = [_globalLib pluginAtIndex:tag];
+			[savePanel setAllowedFileTypes:tmpObj.UTItypes];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
 			if (![musicName isEqualToString:@""]) {
 				[savePanel setNameFieldStringValue:musicName];
 			}
 			[savePanel setPrompt:@"Export"];
-			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", BRIDGE(NSString*, madLib->ThePlug[tag].MenuName)]];
+			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", tmpObj.menuName]];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-				NSURL *fileURL = RETAINOBJ([savePanel URL]);
-				OSErr err = MADMusicExportCFURL(madLib, music, madLib->ThePlug[tag].type, BRIDGE(CFURLRef, fileURL));
-				if (err != noErr) {
-					if (isQuitting) {
-						[NSApp replyToApplicationShouldTerminate:YES];
-					} else {
-						NSError *aerr = CreateErrorFromMADErrorType(err);
-						[[NSAlert alertWithError:aerr] runModal];
-						RELEASEOBJ(aerr);
-					}
-				} else {
-					[self addMusicToMusicList:fileURL loadIfPreferencesAllow:NO];
-					if (isQuitting) {
-						[NSApp replyToApplicationShouldTerminate:YES];
-					} else {
-						NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
-						if (retVal == NSAlertAlternateReturn) {
-							[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[fileURL]];
-						}
-					}
-				}
-				RELEASEOBJ(fileURL);
+				PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
+					return [_theMusic exportMusicToURL:theURL format:tmpObj.plugType library:_globalLib];
+				}];
 			}
-			RELEASEOBJ(savePanel);
 		}
-			MADEndExport(madDriver);
+		[_theDriver endExport];
 			break;
 	}
 }
 
-
-
-#endif
-
 - (IBAction)okayExportSettings:(id)sender {
-	[NSApp stopModalWithCode:NSAlertDefaultReturn];
+	[NSApp endSheet:self.exportWindow returnCode:NSAlertDefaultReturn];
 	[self.exportWindow close];
 }
 
 - (IBAction)cancelExportSettings:(id)sender {
-	[NSApp stopModalWithCode:NSAlertAlternateReturn];
+	[NSApp endSheet:self.exportWindow returnCode:NSAlertAlternateReturn];
 	[self.exportWindow close];
 }
 

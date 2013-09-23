@@ -111,7 +111,7 @@
 	}
 }
 
-- (BOOL)saveMusicToURL:(NSURL *)tosave
+- (OSErr)saveMusicToURL:(NSURL *)tosave
 {
 	int i, x;
 	size_t inOutCount;
@@ -256,7 +256,12 @@
 	music->header->numInstru = MAXINSTRU;
 	
 	music->hasChanged = FALSE;
-	return YES;
+	return noErr;
+}
+
+- (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib
+{
+	return MADOrderNotImplemented;
 }
 
 @end
@@ -318,14 +323,14 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return self;
 }
 
-- (BOOL)exportMusicToURL:(NSURL *)tosave
+- (OSErr)exportMusicToURL:(NSURL *)tosave
 {
 	[self syncMusicDataTypes];
 	
 	return [super saveMusicToURL:tosave];
 }
 
-- (BOOL)saveMusicToURL:(NSURL *)tosave
+- (OSErr)saveMusicToURL:(NSURL *)tosave
 {
 	return NO;
 }

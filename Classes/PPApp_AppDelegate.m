@@ -54,24 +54,12 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 }
 
 @interface PPApp_AppDelegate ()
-- (void)selectCurrentlyPlayingMusic;
-- (void)selectMusicAtIndex:(NSInteger)anIdx;
-- (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(out NSError *__autoreleasing*)theErr;
-- (void)musicListContentsDidMove;
-- (BOOL)musicListWillChange;
-- (void)musicListDidChange;
-- (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to;
-@property (readwrite, retain) NSString *musicName;
-@property (readwrite, retain) NSString *musicInfo;
 @property (readonly, strong) NSDictionary *trackerDict;
 @property (readwrite, strong) PPLibrary *madLib;
 @end
 
 @implementation PPApp_AppDelegate
 @synthesize window;
-@synthesize exportWindow;
-@synthesize musicInfo;
-@synthesize musicName;
 @synthesize madLib;
 
 @synthesize trackerDict = _trackerDict;
@@ -1133,7 +1121,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	isQuitting = NO;
-	undoManager = [[NSUndoManager alloc] init];
 	srandom(time(NULL) & 0xffffffff);
 	PPRegisterDebugFunc(CocoaDebugStr);
 	self.madLib = [[PPLibrary alloc] init];
@@ -1171,9 +1158,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	exportController = [[PPSoundSettingsViewController alloc] init];
 	exportController.delegate = self;
 	[exportSettingsBox setContentView:[exportController view]];
-	
-	timeChecker = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0] interval:1/8.0 target:self selector:@selector(updateMusicStats:) userInfo:nil repeats:YES];
-	[[NSRunLoop mainRunLoop] addTimer:timeChecker forMode:NSRunLoopCommonModes];
 }
 
 #if 0

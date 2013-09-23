@@ -11,11 +11,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application">
-            <connections>
-                <outlet property="dockMenu" destination="1335" id="1339"/>
-            </connections>
-        </customObject>
+        <customObject id="-3" userLabel="Application"/>
         <menu title="Main Menu" systemMenu="main" id="814">
             <items>
                 <menuItem title="PlayerPRO" id="823">
@@ -76,12 +72,18 @@
                         <items>
                             <menuItem title="New" keyEquivalent="n" id="857">
                                 <connections>
-                                    <action selector="newMusic:" target="811" id="1332"/>
+                                    <action selector="newDocument:" target="811" id="DO2-Wa-2gc"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Open…" keyEquivalent="o" id="858">
                                 <connections>
-                                    <action selector="openFile:" target="811" id="1305"/>
+                                    <action selector="openDocument:" target="811" id="JzS-qU-BFr"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Import…" id="khR-4y-Mpn">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="openFile:" target="811" id="jcG-3k-z66"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Open Recent" id="856">
@@ -90,6 +92,9 @@
                                     <items>
                                         <menuItem title="Clear Menu" id="863">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="clearRecentDocuments:" target="811" id="TeN-S9-PO0"/>
+                                            </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
@@ -102,13 +107,13 @@
                             </menuItem>
                             <menuItem title="Save" keyEquivalent="s" id="861">
                                 <connections>
-                                    <action selector="saveMusic:" target="811" id="1314"/>
+                                    <action selector="saveDocument:" target="-1" id="RAS-6b-Oyd"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Save As…" keyEquivalent="S" id="860">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                 <connections>
-                                    <action selector="saveMusicAs:" target="811" id="1315"/>
+                                    <action selector="saveDocumentAs:" target="-1" id="VNB-by-V5L"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Get Info" keyEquivalent="i" id="1480">
@@ -116,20 +121,20 @@
                                     <action selector="toggleInfo:" target="-1" id="1481"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Export As" id="850">
+                            <menuItem title="Export Music" id="850">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Export As" id="864">
+                                <menu key="submenu" title="Export Music" id="864">
                                     <items>
                                         <menuItem title="AIFF File..." tag="-1" id="867">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="exportMusicAs:" target="811" id="1316"/>
+                                                <action selector="exportMusicAs:" target="-1" id="OzH-mE-Qez"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="MPEG 4 File..." tag="-2" id="866">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="exportMusicAs:" target="811" id="1317"/>
+                                                <action selector="exportMusicAs:" target="-1" id="afo-so-0g7"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="865"/>
@@ -204,6 +209,45 @@
                                     <action selector="selectAll:" target="-1" id="1036"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="G1m-YS-ob2"/>
+                            <menuItem title="Find" id="EvT-rx-xCS">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Find" id="ViU-Up-zCM">
+                                    <items>
+                                        <menuItem title="Find…" tag="1" keyEquivalent="f" id="0FX-49-DRi">
+                                            <connections>
+                                                <action selector="performFindPanelAction:" target="-1" id="nIc-3U-7mo"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Find and Replace…" tag="12" keyEquivalent="f" id="QDk-cc-hGZ">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="performTextFinderAction:" target="-1" id="Geu-hg-zrj"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Find Next" tag="2" keyEquivalent="g" id="wyZ-cn-4Fg">
+                                            <connections>
+                                                <action selector="performFindPanelAction:" target="-1" id="C74-hh-BvV"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Find Previous" tag="3" keyEquivalent="G" id="taA-hX-wJ9">
+                                            <connections>
+                                                <action selector="performFindPanelAction:" target="-1" id="fHG-wJ-O6l"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Use Selection for Find" tag="7" keyEquivalent="e" id="qQb-RG-a8N">
+                                            <connections>
+                                                <action selector="performFindPanelAction:" target="-1" id="qtz-d2-zAR"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Jump to Selection" keyEquivalent="j" id="hYA-8e-p6Y">
+                                            <connections>
+                                                <action selector="centerSelectionInVisibleArea:" target="-1" id="gjR-Zh-9Km"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -221,8 +265,6 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="878"/>
-                            <menuItem title="Tools" keyEquivalent="t" id="877"/>
-                            <menuItem isSeparatorItem="YES" id="876"/>
                             <menuItem title="Oscillo View" id="875">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
@@ -277,7 +319,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="984"/>
-                            <menuItem title="General Information" id="983">
+                            <menuItem title="Music Info" id="983">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                         </items>
@@ -311,7 +353,7 @@
                             <menuItem title="Save Instrument List..." id="993">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="saveInstrumentList:" target="811" id="1349"/>
+                                    <action selector="saveInstrumentList:" target="-1" id="ERi-a8-46a"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -361,7 +403,17 @@
                                     <action selector="performZoom:" target="-1" id="1018"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Enter Full Screen" keyEquivalent="f" id="OFt-Fe-VZe">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleFullScreen:" target="-1" id="ha0-3o-aKT"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="826"/>
+                            <menuItem title="Export Status" id="uZ4-Ri-l5a">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="iUa-Xb-uza"/>
                             <menuItem title="Bring All to Front" id="827">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
@@ -375,7 +427,7 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="843">
                         <items>
-                            <menuItem title="PlayerPRO Help" keyEquivalent="?" id="844">
+                            <menuItem title="PlayerPRO 6 Help" keyEquivalent="?" id="844">
                                 <connections>
                                     <action selector="showHelp:" target="-2" id="1016"/>
                                 </connections>
@@ -386,100 +438,131 @@
             </items>
         </menu>
         <customObject id="373" customClass="NSFontManager"/>
-        <window title="Music List" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" animationBehavior="default" id="367">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="338" height="270"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
-            <view key="contentView" id="368">
-                <rect key="frame" x="0.0" y="0.0" width="338" height="270"/>
-                <autoresizingMask key="autoresizingMask"/>
-            </view>
-        </window>
         <customObject id="811" customClass="PPApp_AppDelegate">
             <connections>
                 <outlet property="aboutPlugInMenu" destination="1311" id="1313"/>
-                <outlet property="exportSettingsBox" destination="1324" id="1329"/>
-                <outlet property="exportWindow" destination="1321" id="1323"/>
                 <outlet property="instrumentExportMenu" destination="1307" id="1309"/>
                 <outlet property="musicExportMenu" destination="864" id="1318"/>
                 <outlet property="newInstrumentMenu" destination="1000" id="1351"/>
-                <outlet property="pauseDockMenuItem" destination="1336" id="1348"/>
-                <outlet property="window" destination="367" id="812"/>
+                <outlet property="window" destination="tua-JN-ftU" id="aNW-r8-sHk"/>
             </connections>
         </customObject>
-        <window title="Export Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="1321">
-            <windowStyleMask key="styleMask" titled="YES"/>
+        <window title="Export List" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="tua-JN-ftU" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
+            <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="207" width="403" height="419"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
-            <value key="minSize" type="size" width="403" height="419"/>
-            <view key="contentView" id="1322">
-                <rect key="frame" x="0.0" y="0.0" width="403" height="419"/>
+            <rect key="contentRect" x="196" y="112" width="472" height="216"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1080"/>
+            <view key="contentView" id="wAm-d3-RhC">
+                <rect key="frame" x="0.0" y="0.0" width="472" height="216"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box autoresizesSubviews="NO" title="Box" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="1324">
-                        <rect key="frame" x="0.0" y="63" width="403" height="356"/>
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="44" horizontalPageScroll="10" verticalLineScroll="44" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYs-5M-nWT">
+                        <rect key="frame" x="-1" y="-1" width="474" height="218"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <view key="contentView">
-                            <rect key="frame" x="0.0" y="0.0" width="403" height="356"/>
+                        <clipView key="contentView" id="9lj-jK-gOB">
+                            <rect key="frame" x="1" y="1" width="472" height="216"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        </view>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="397" id="1463"/>
-                            <constraint firstAttribute="height" constant="350" id="1464"/>
-                        </constraints>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </box>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1325">
-                        <rect key="frame" x="327" y="13" width="59" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1326">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="okayExportSettings:" target="811" id="1330"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1327">
-                        <rect key="frame" x="245" y="13" width="82" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1328">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="cancelExportSettings:" target="811" id="1331"/>
-                        </connections>
-                    </button>
+                            <subviews>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="42" rowSizeStyle="automatic" viewBased="YES" id="EGb-c2-NE8">
+                                    <rect key="frame" x="0.0" y="0.0" width="472" height="216"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <size key="intercellSpacing" width="3" height="2"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    <tableColumns>
+                                        <tableColumn width="469" minWidth="40" maxWidth="1000" id="CpK-NE-GVO">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="GkM-qJ-jpW">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <prototypeCellViews>
+                                                <tableCellView id="r34-Wc-GeB">
+                                                    <rect key="frame" x="1" y="1" width="469" height="42"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <imageView translatesAutoresizingMaskIntoConstraints="NO" id="cwu-Wk-sId">
+                                                            <rect key="frame" x="454" y="15" width="12" height="12"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="12" id="3qR-WY-Ze9"/>
+                                                                <constraint firstAttribute="height" constant="12" id="cHC-TK-SOm"/>
+                                                            </constraints>
+                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="NSStopProgressFreestandingTemplate" id="yQO-T3-r44"/>
+                                                        </imageView>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eSN-g0-qjV">
+                                                            <rect key="frame" x="42" y="25" width="407" height="14"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="Ou3-tp-z64">
+                                                                <font key="font" metaFont="smallSystem"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tcp-7r-gO2">
+                                                            <rect key="frame" x="5" y="5" width="32" height="32"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="32" id="CDt-Xx-XCZ"/>
+                                                                <constraint firstAttribute="width" constant="32" id="QNa-gs-Fmm"/>
+                                                            </constraints>
+                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="M71-rQ-Ezp"/>
+                                                        </imageView>
+                                                        <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="JAA-MZ-Zcz">
+                                                            <rect key="frame" x="45" y="3" width="401" height="12"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        </progressIndicator>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="tcp-7r-gO2" secondAttribute="bottom" constant="5" id="6Ha-CJ-iHd"/>
+                                                        <constraint firstItem="JAA-MZ-Zcz" firstAttribute="top" relation="greaterThanOrEqual" secondItem="eSN-g0-qjV" secondAttribute="bottom" constant="8" symbolic="YES" id="87A-lp-PNM"/>
+                                                        <constraint firstItem="cwu-Wk-sId" firstAttribute="leading" secondItem="eSN-g0-qjV" secondAttribute="trailing" constant="8" symbolic="YES" id="Ahk-oR-8UH"/>
+                                                        <constraint firstItem="JAA-MZ-Zcz" firstAttribute="leading" secondItem="eSN-g0-qjV" secondAttribute="leading" id="DvP-8T-TRd"/>
+                                                        <constraint firstAttribute="bottom" secondItem="JAA-MZ-Zcz" secondAttribute="bottom" constant="3" id="GBV-ma-X0w"/>
+                                                        <constraint firstAttribute="trailing" secondItem="cwu-Wk-sId" secondAttribute="trailing" constant="3" id="HkH-WO-1vl"/>
+                                                        <constraint firstItem="tcp-7r-gO2" firstAttribute="top" secondItem="r34-Wc-GeB" secondAttribute="top" constant="5" id="OBU-Pj-67L"/>
+                                                        <constraint firstItem="eSN-g0-qjV" firstAttribute="top" secondItem="r34-Wc-GeB" secondAttribute="top" constant="3" id="RD3-dV-aPr"/>
+                                                        <constraint firstItem="eSN-g0-qjV" firstAttribute="leading" secondItem="tcp-7r-gO2" secondAttribute="trailing" constant="8" symbolic="YES" id="Z3N-de-cIW"/>
+                                                        <constraint firstAttribute="centerY" secondItem="cwu-Wk-sId" secondAttribute="centerY" id="e0A-68-Wb2"/>
+                                                        <constraint firstItem="JAA-MZ-Zcz" firstAttribute="trailing" secondItem="eSN-g0-qjV" secondAttribute="trailing" id="inI-bN-J6T"/>
+                                                        <constraint firstItem="tcp-7r-gO2" firstAttribute="leading" secondItem="r34-Wc-GeB" secondAttribute="leading" constant="5" id="pV3-uL-8NR"/>
+                                                        <constraint firstItem="cwu-Wk-sId" firstAttribute="leading" secondItem="JAA-MZ-Zcz" secondAttribute="trailing" constant="8" symbolic="YES" id="uot-uR-f9t"/>
+                                                    </constraints>
+                                                </tableCellView>
+                                            </prototypeCellViews>
+                                        </tableColumn>
+                                    </tableColumns>
+                                </tableView>
+                            </subviews>
+                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="pCO-G5-uAX">
+                            <rect key="frame" x="1" y="1" width="0.0" height="16"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" id="zpH-l6-TQb">
+                            <rect key="frame" x="-15" y="17" width="16" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="1325" secondAttribute="bottom" constant="20" symbolic="YES" id="1435"/>
-                    <constraint firstItem="1324" firstAttribute="top" secondItem="1322" secondAttribute="top" constant="2" id="1438"/>
-                    <constraint firstItem="1325" firstAttribute="leading" secondItem="1327" secondAttribute="trailing" constant="12" symbolic="YES" id="1468"/>
-                    <constraint firstAttribute="bottom" secondItem="1327" secondAttribute="bottom" constant="20" symbolic="YES" id="1469"/>
-                    <constraint firstAttribute="trailing" secondItem="1325" secondAttribute="trailing" constant="23" id="1473"/>
-                    <constraint firstItem="1324" firstAttribute="centerX" secondItem="1322" secondAttribute="centerX" id="1474"/>
+                    <constraint firstItem="LYs-5M-nWT" firstAttribute="top" secondItem="wAm-d3-RhC" secondAttribute="top" constant="-1" id="Mdh-Y0-iOC"/>
+                    <constraint firstItem="LYs-5M-nWT" firstAttribute="leading" secondItem="wAm-d3-RhC" secondAttribute="leading" constant="-1" id="OUT-wM-mb8"/>
+                    <constraint firstAttribute="bottom" secondItem="LYs-5M-nWT" secondAttribute="bottom" constant="-1" id="c0g-6J-sy1"/>
+                    <constraint firstAttribute="trailing" secondItem="LYs-5M-nWT" secondAttribute="trailing" constant="-1" id="vG8-QW-0vs"/>
                 </constraints>
             </view>
         </window>
-        <menu id="1335" userLabel="Dock Menu">
-            <items>
-                <menuItem title="Play" id="1336">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="pauseButtonPressed:" target="811" id="1340"/>
-                    </connections>
-                </menuItem>
-            </items>
-        </menu>
     </objects>
+    <resources>
+        <image name="NSStopProgressFreestandingTemplate" width="12" height="12"/>
+    </resources>
 </document>

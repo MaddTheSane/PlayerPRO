@@ -29,6 +29,36 @@
 
 @synthesize theLibrary = thePPLib;
 
+- (void)beginExport
+{
+	MADBeginExport(theRec);
+}
+
+- (void)endExport
+{
+	MADEndExport(theRec);
+}
+
+- (void)cleanDriver
+{
+	MADCleanDriver(theRec);
+}
+	
+- (BOOL)directSaveToPointer:(void*)thePtr settings:(MADDriverSettings*)theSett
+{
+	return DirectSave(thePtr, theSett, theRec);
+}
+
+- (NSInteger)audioLength
+{
+	return MADAudioLength(theRec);
+}
+
+- (OSErr)play
+{
+	return MADPlayMusic(theRec);
+}
+
 - (id)init
 {
 	NSAssert(NO, @"PPDriver cannot be inited without a library");

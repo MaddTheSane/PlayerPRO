@@ -30,8 +30,6 @@
 	IBOutlet NSMenu			*instrumentExportMenu;
 	PPInstrumentWindowController *instrumentController;
 	
-	NSTimer					*timeChecker;
-	
 	PPPreferences			*preferences;
 	PPInstrumentPlugHandler	*instrumentImporter;
 	//PPDigitalPlugInHandler	*digitalHandler;
@@ -41,24 +39,14 @@
 	IBOutlet NSBox			*exportSettingsBox;
 	PPSoundSettingsViewController *exportController;
 	
-	IBOutlet NSMenuItem *pauseDockMenuItem;
-	
-	NSUndoManager *undoManager;
-	
 	BOOL isQuitting;
 }
 
 @property (readonly) PPLibrary *madLib;
-
 @property (weak) IBOutlet NSWindow *window;
-@property (weak) IBOutlet NSWindow *exportWindow;
 
-- (IBAction)toggleInfo:(id)sender;
+//- (IBAction)toggleInfo:(id)sender;
 
-- (IBAction)showInstrumentsList:(id)sender;
-- (IBAction)exportInstrumentAs:(id)sender;
-- (IBAction)deleteInstrument:(id)sender;
-- (IBAction)saveInstrumentList:(id)sender;
 
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)showBoxEditor:(id)sender;
@@ -66,12 +54,5 @@
 - (IBAction)showDigitalEditor:(id)sender;
 
 - (IBAction)openFile:(id)sender;
-- (IBAction)saveMusic:(id)sender;
-- (IBAction)saveMusicAs:(id)sender;
-- (IBAction)newMusic:(id)sender;
-
-- (IBAction)exportMusicAs:(id)sender;
-- (IBAction)okayExportSettings:(id)sender;
-- (IBAction)cancelExportSettings:(id)sender;
 
 @end

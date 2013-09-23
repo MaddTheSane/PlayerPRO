@@ -23,6 +23,16 @@
 - (id)initWithLibrary:(PPLibrary *)theLib;
 - (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings;
 
+- (void)beginExport;
+- (void)endExport;
+	
+- (void)cleanDriver;
+	
+- (BOOL)directSaveToPointer:(void*)thePtr settings:(MADDriverSettings*)theSett;
+- (NSInteger)audioLength;
+	
+- (OSErr)play;
+	
 - (void)loadMusicFile:(NSString *)path;
 - (void)loadMusicURL:(NSURL*)url;
 
