@@ -93,13 +93,13 @@
 
 - (void)loadMusicFile:(NSString *)path
 {
-	PPMusicObject *theMus = [[PPMusicObject alloc] initWithPath:path driver:self setAsCurrentMusic:YES];
+	PPMusicObject *theMus = [[PPMusicObject alloc] initWithPath:path driver:self];
 	theMus = nil;
 }
 
 - (void)loadMusicURL:(NSURL*)url
 {
-	PPMusicObject *theMus = [[PPMusicObject alloc] initWithURL:url driver:self setAsCurrentMusic:YES];
+	PPMusicObject *theMus = [[PPMusicObject alloc] initWithURL:url driver:self];
 	theMus = nil;
 }
 

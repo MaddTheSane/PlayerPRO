@@ -16,10 +16,18 @@
 #include "PPByteswap.h"
 
 @interface PPMusicObject ()
+{
+	@package
+	MADMusic *currentMusic;
+	NSString *internalFileName;
+	NSString *madInfo;
+}
 @property (readwrite, strong, nonatomic) NSString *internalFileName;
+@property (readwrite, strong, nonatomic) NSString *madInfo;
 @end
 
 @implementation PPMusicObject
+@synthesize madInfo;
 @synthesize attachedDriver;
 @synthesize _currentMusic = currentMusic;
 @synthesize internalFileName;
@@ -32,21 +40,48 @@
 	return internalFileName;
 }
 
-- (id)initWithURL:(NSURL *)url library:(PPLibrary *)theLib
+- (NSString*)madInfo
+{
+	if (!madInfo) {
+		//Generate mad info
+	}
+	return madInfo;
+}
+
+- (id)initWithURL:(NSURL *)url
+{
+	return [self initWithPath:[url path]];
+}
+
+- (id)initWithPath:(NSString *)url
 {
 	if (self = [super init]) {
-		self.currentLibrary = theLib;
+		if (MADLoadMADFileCString(&currentMusic, (char*)[url fileSystemRepresentation]) != noErr)
+			return nil;
+	}
+	return self;
+}
+
+- (id)initWithURL:(NSURL *)url library:(PPLibrary *)theLib
+{
+	if ([[url pathExtension] caseInsensitiveCompare:@"madbundle"]) {
+		return self = [[PPMusicObjectWrapper alloc] initWithURL:url];
+	}
+	if (self = [super init]) {
 		char type[5];
 		CFURLRef tmpURL = CFBridgingRetain(url);
 		if (MADMusicIdentifyCFURL(theLib._madLib, type, tmpURL) != noErr) {
 			CFRelease(tmpURL);
 			return nil;
 		}
+		if (strcmp(type, "MADK") == 0) {
+			CFRelease(tmpURL);
+			return self = [[PPMusicObject alloc] initWithURL:url];
+		}
 		if (MADLoadMusicCFURLFile(theLib._madLib, &currentMusic, type, tmpURL) != noErr) {
 			CFRelease(tmpURL);
 			return nil;
 		}
-		
 		CFRelease(tmpURL);
 	}
 	return self;
@@ -65,43 +100,24 @@
 	return self;
 }
 
-- (id)initWithURL:(NSURL *)url driver:(PPDriver *)theLib setAsCurrentMusic:(BOOL)toSet
+- (id)initWithURL:(NSURL *)url driver:(PPDriver *)theLib
 {
 	if (self = [self initWithURL:url library:theLib.theLibrary]) {
 		self.attachedDriver = theLib;
-		if (toSet) {
-			[attachedDriver setCurrentMusic:self];
-		}
+		[theLib setCurrentMusic:self];
 	}
 	return nil;
 }
 
-- (id)initWithPath:(NSString *)url driver:(PPDriver *)theLib setAsCurrentMusic:(BOOL)toSet
-{
-	return [self initWithURL:[NSURL fileURLWithPath:url] driver:theLib setAsCurrentMusic:toSet];
-}
-
-- (id)initWithURL:(NSURL *)url driver:(PPDriver *)theLib
-{
-	return [self initWithURL:url driver:theLib setAsCurrentMusic:NO];
-}
-
 - (id)initWithPath:(NSString *)url driver:(PPDriver *)theLib
 {
-	return [self initWithPath:url driver:theLib setAsCurrentMusic:NO];
+	return [self initWithPath:url driver:theLib];
 }
 
 - (void)attachToDriver:(PPDriver *)theDriv
 {
-	[self attachToDriver:theDriv setAsCurrentMusic:NO];
-}
-
-- (void)attachToDriver:(PPDriver *)theDriv setAsCurrentMusic:(BOOL)toSet
-{
 	self.attachedDriver = theDriv;
-	if (toSet) {
-		[attachedDriver setCurrentMusic:self];
-	}
+	[theDriv setCurrentMusic:self];
 }
 
 - (void)dealloc
@@ -113,6 +129,7 @@
 
 - (OSErr)saveMusicToURL:(NSURL *)tosave
 {
+	//TODO: error-checking
 	int i, x;
 	size_t inOutCount;
 	MADCleanCurrentMusic(currentMusic, attachedDriver ? attachedDriver.rec : NULL);
@@ -261,7 +278,10 @@
 
 - (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib
 {
-	return MADOrderNotImplemented;
+	if ([form isEqualToString:@"MADK"]) {
+		return [self saveMusicToURL:tosave];
+	}
+	return MADMusicExportCFURL(otherLib._madLib, self._currentMusic, (char*)[form cStringUsingEncoding:NSMacOSRomanStringEncoding], (__bridge CFURLRef)tosave);
 }
 
 @end
@@ -272,18 +292,53 @@
 
 @implementation PPMusicObjectWrapper
 @synthesize madType;
-@synthesize internalFileName = _internalFileName;
+
+- (id)copyWithZone:(NSZone *)zone
+{
+	return [[[self class] alloc] initFromMusicObject:self];
+}
+
+- (NSString*)internalFileName
+{
+	return internalFileName;
+}
+
+- (void)setInternalFileName:(NSString *)_internalFileName
+{
+	[self willChangeValueForKey:@"internalFileName"];
+	internalFileName = _internalFileName;
+	[self didChangeValueForKey:@"internalFileName"];
+}
+
+- (NSString*)madInfo
+{
+	return madInfo;
+}
+
+- (void)setMadInfo:(NSString *)_madInfo
+{
+	[self willChangeValueForKey:@"madInfo"];
+	madInfo = _madInfo;
+	[self didChangeValueForKey:@"madInfo"];
+}
+
 #define kMADMusicName @"Mad Name"
 #define kMADMusicInfo @"Mad Info"
 #define kMADMusicType @"Mad Type"
 
+- (void)setUpObjCStructures
+{
+	
+}
+
 - (id)init
 {
 	if (self = [super init]) {
-		
+		[self setUpObjCStructures];
 	}
 	return self;
 }
+
 static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 {
 	MADMusic *toreturn = calloc(sizeof(MADMusic), 1);
@@ -297,6 +352,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	if (self = [super init]) {
 		MADDisposeMusic(&currentMusic, NULL);
 		currentMusic = DeepCopyMusic(oldFromat._currentMusic);
+		[self setUpObjCStructures];
 	}
 	return self;
 }
@@ -308,19 +364,48 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (id)initWithPath:(NSString *)url
 {
-	return [self initWithURL:[NSURL fileURLWithPath:url]];
+	return [self initWithFileWrapper:[[NSFileWrapper alloc] initWithPath:url]];
 }
 
 - (id)initWithURL:(NSURL *)url
 {
+	return [self initWithFileWrapper:[[NSFileWrapper alloc] initWithURL:url options:NSFileWrapperReadingImmediate error:NULL]];
+}
+
+- (id)initWithFileWrapper:(NSFileWrapper*)wrapper
+{
 	if (self = [super init]) {
-		NSFileWrapper *theWrapper = [[NSFileWrapper alloc] initWithURL:url options:NSFileWrapperReadingImmediate error:NULL];
-		NSDictionary *stuff = [theWrapper fileWrappers];
+		NSDictionary *stuff = [wrapper fileWrappers];
 		stuff = nil;
 		return nil;
 	}
 	
 	return self;
+}
+
+- (id)initWithURL:(NSURL *)url library:(PPLibrary *)theLib
+{
+	if ([[url pathExtension] caseInsensitiveCompare:@"madbundle"]) {
+		return self = [self initWithURL:url];
+	}
+	PPMusicObject *tmpObj = [[PPMusicObject alloc] initWithURL:url library:theLib];
+	return self = [self initFromMusicObject:tmpObj];
+}
+
+- (NSFileWrapper*)musicWrapper
+{
+	NSFileWrapper *outWrap = [[NSFileWrapper alloc] init];
+	
+	return outWrap;
+}
+
+- (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib
+{
+	if ([form isEqualToString:@"MADK"]) {
+		return [self exportMusicToURL:tosave];
+	}
+	[self syncMusicDataTypes];
+	return [super exportMusicToURL:tosave format:form library:otherLib];
 }
 
 - (OSErr)exportMusicToURL:(NSURL *)tosave
@@ -332,13 +417,12 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (OSErr)saveMusicToURL:(NSURL *)tosave
 {
-	return NO;
+	return MADOrderNotImplemented;
 }
 
 - (MADMusic *)newMadMusicStruct
 {
 	return DeepCopyMusic(self._currentMusic);
 }
-
 
 @end
