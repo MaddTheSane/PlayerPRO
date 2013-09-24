@@ -14,14 +14,17 @@
 #import "PPApp_AppDelegate.h"
 #import "UserDefaultKeys.h"
 #import "PPExportObject.h"
+#import "PPErrors.h"
 
 @interface PPDocument ()
 @property (strong) PPDriver *theDriver;
 @property (strong) PPMusicObjectWrapper *theMusic;
 @property (weak) PPLibrary *globalLib;
+@property MADDriverSettings exportSettings;
 @end
 
 @implementation PPDocument
+@synthesize exportSettings;
 
 - (NSString*)musicName
 {
@@ -55,18 +58,18 @@
 			
 			//TODO: Sanity Checking
 			init.surround = [defaults boolForKey:PPSurroundToggle];
-			init.outPutRate = [defaults integerForKey:PPSoundOutRate];
+			init.outPutRate = (unsigned int)[defaults integerForKey:PPSoundOutRate];
 			init.outPutBits = [defaults integerForKey:PPSoundOutBits];
 			if ([defaults boolForKey:PPOversamplingToggle]) {
-				init.oversampling = [defaults integerForKey:PPOversamplingAmount];
+				init.oversampling = (int)[defaults integerForKey:PPOversamplingAmount];
 			} else {
 				init.oversampling = 1;
 			}
 			init.Reverb = [defaults boolForKey:PPReverbToggle];
-			init.ReverbSize = [defaults integerForKey:PPReverbAmount];
-			init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
+			init.ReverbSize = (int)[defaults integerForKey:PPReverbAmount];
+			init.ReverbStrength = (int)[defaults integerForKey:PPReverbStrength];
 			if ([defaults boolForKey:PPStereoDelayToggle]) {
-				init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
+				init.MicroDelaySize = (int)[defaults integerForKey:PPStereoDelayAmount];
 			} else {
 				init.MicroDelaySize = 0;
 			}
@@ -79,6 +82,10 @@
 		
 		self.exportController = [[PPSoundSettingsViewController alloc] init];
 		self.exportController.delegate = self;
+		
+		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+		[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
+
     }
     return self;
 }
@@ -119,40 +126,27 @@
     return YES;
 }
 
-#if 0
-
 - (void)MADDriverWithPreferences
 {
-	Boolean madWasReading = false;
-	long fullTime = 0, curTime = 0;
-	if (madDriver) {
-		madWasReading = MADIsPlayingMusic(madDriver);
-		MADStopMusic(madDriver);
-		MADStopDriver(madDriver);
-		if (madWasReading) {
-			MADGetMusicStatus(madDriver, &fullTime, &curTime);
-		}
-		MADDisposeDriver(madDriver);
-		madDriver = NULL;
-	}
+	OSErr returnerr = noErr;
 	MADDriverSettings init;
 	MADGetBestDriver(&init);
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
 	//TODO: Sanity Checking
 	init.surround = [defaults boolForKey:PPSurroundToggle];
-	init.outPutRate = [defaults integerForKey:PPSoundOutRate];
+	init.outPutRate = (unsigned int)[defaults integerForKey:PPSoundOutRate];
 	init.outPutBits = [defaults integerForKey:PPSoundOutBits];
 	if ([defaults boolForKey:PPOversamplingToggle]) {
-		init.oversampling = [defaults integerForKey:PPOversamplingAmount];
+		init.oversampling = (int)[defaults integerForKey:PPOversamplingAmount];
 	} else {
 		init.oversampling = 1;
 	}
 	init.Reverb = [defaults boolForKey:PPReverbToggle];
-	init.ReverbSize = [defaults integerForKey:PPReverbAmount];
-	init.ReverbStrength = [defaults integerForKey:PPReverbStrength];
+	init.ReverbSize = (int)[defaults integerForKey:PPReverbAmount];
+	init.ReverbStrength = (int)[defaults integerForKey:PPReverbStrength];
 	if ([defaults boolForKey:PPStereoDelayToggle]) {
-		init.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
+		init.MicroDelaySize = (int)[defaults integerForKey:PPStereoDelayAmount];
 	} else {
 		init.MicroDelaySize = 0;
 	}
@@ -160,24 +154,16 @@
 	init.driverMode = [defaults integerForKey:PPSoundDriver];
 	init.repeatMusic = FALSE;
 	
-	OSErr returnerr = MADCreateDriver(&init, madLib, &madDriver);
-	[[NSNotificationCenter defaultCenter] postNotificationName:PPDriverDidChange object:self];
+	returnerr = [_theDriver changeDriverSettingsToSettings:init];
+	//[[NSNotificationCenter defaultCenter] postNotificationName:PPDriverDidChange object:self];
+	
 	if (returnerr != noErr) {
-		NSError *err = CreateErrorFromMADErrorType(returnerr);
-		[[NSAlert alertWithError:err] runModal];
-		RELEASEOBJ(err);
-		return;
-	}
-	MADStartDriver(madDriver);
-	if (music) {
-		MADAttachDriverToMusic(madDriver, music, NULL);
-		if (madWasReading) {
-			MADSetMusicStatus(madDriver, 0, fullTime, curTime);
-			MADPlayMusic(madDriver);
-		}
+		[[NSAlert alertWithError:CreateErrorFromMADErrorType(returnerr)] runModal];
+		//return;
 	}
 }
 
+#if 0
 - (void)updateMusicStats:(NSTimer*)theTimer
 {
 	if (music) {
@@ -190,6 +176,30 @@
 		[songPos setDoubleValue:cT];
 		[songCurTime setIntegerValue:cT];
 	}
+}
+
+- (IBAction)saveInstrumentList:(id)sender
+{
+	[_theDriver beginExport];
+	NSSavePanel *savePanel = [NSSavePanel savePanel];
+	[savePanel setAllowedFileTypes:@[PPInstrumentListUTI]];
+	[savePanel setCanCreateDirectories:YES];
+	[savePanel setCanSelectHiddenExtension:YES];
+	if (![musicName isEqualToString:@""]) {
+		[savePanel setNameFieldStringValue:[NSString stringWithFormat:@"%@'s instruments", musicName]];
+	} else {
+		[savePanel setNameFieldStringValue:@"Tracker Instruments"];
+	}
+	
+	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+		OSErr fileErr = [instrumentController exportInstrumentListToURL:[savePanel URL]];
+		if (fileErr) {
+			NSError *theErr = CreateErrorFromMADErrorType(fileErr);
+			[[NSAlert alertWithError:theErr] runModal];
+		}
+	}
+	
+	[_theDriver endExport];
 }
 
 #endif
@@ -273,7 +283,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		macRomanNameLength = [macRomanNameData length];
 		BOOL isPadded = (macRomanNameLength & 1);
 		
-		nameChunk.ckSize = macRomanNameLength + 1;
+		nameChunk.ckSize = (SInt32)(macRomanNameLength + 1);
 		char pStrLen = macRomanNameLength;
 		PPBE32(&nameChunk.ckSize);
 		
@@ -321,7 +331,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		NSData *macRomanInfoData = [self.musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 		macRomanInfoLength = [macRomanInfoData length];
 		BOOL isPadded = (macRomanInfoLength & 1);
-		infoChunk.ckSize = macRomanInfoLength + 1;
+		infoChunk.ckSize = (SInt32)(macRomanInfoLength + 1);
 		char pStrLen = macRomanInfoLength;
 		PPBE32(&infoChunk.ckSize);
 		
@@ -343,7 +353,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	NSMutableData *returnData = [[NSMutableData alloc] initWithCapacity:dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + sizeof(ContainerChunk) + [nameData length] + [infoData length]];
 	header.ckID = FORMID;
 	PPBE32(&header.ckID);
-	header.ckSize = dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + 4 + [nameData length] + [infoData length];
+	header.ckSize = (SInt32)(dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + 4 + [nameData length] + [infoData length]);
 	PPBE32(&header.ckSize);
 	header.formType = AIFFID;
 	PPBE32(&header.formType);
@@ -374,7 +384,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 				chanNums = 1;
 				break;
 		}
-		container.numSampleFrames = dataLen / todiv;
+		container.numSampleFrames = (UInt32)(dataLen / todiv);
 	}
 	
 	container.numChannels = chanNums;
@@ -391,7 +401,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	PPBE32(&dataChunk.ckID);
 	dataChunk.blockSize = 0;
 	PPBE32(&dataChunk.blockSize);
-	dataChunk.ckSize = dataLen + 8 + dataOffset;
+	dataChunk.ckSize = (SInt32)(dataLen + 8 + dataOffset);
 	PPBE32(&dataChunk.ckSize);
 	dataChunk.offset = dataOffset;
 	PPBE32(&dataChunk.offset);
@@ -469,13 +479,11 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	{
 		[mutData appendBytes:soundPtr length:full];
 	}
-	NSData *retData = [self newAIFFDataFromSettings:theSet data:mutData];
-	mutData = nil;
 	
 	free(soundPtr);
-	
-	return retData;
+	return [self newAIFFDataFromSettings:theSet data:mutData];
 }
+
 #ifndef PPEXPORT_CREATE_TMP_AIFF
 #define PPEXPORT_CREATE_TMP_AIFF 1
 #endif
@@ -506,9 +514,10 @@ typedef struct {
 					[_theDriver endExport];
 					return [saveData writeToURL:theURL atomically:YES] ? noErr : MADWritingErr;
 				}];
+				[[NSApp delegate] addExportObject:expObj];
 			}
-			break;
-			
+				break;
+				
 			case -2:
 			{
 				PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:outURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
@@ -576,11 +585,12 @@ typedef struct {
 						return MADWritingErr;
 					}
 				}];
+				[[NSApp delegate] addExportObject:expObj];
 			}
-			break;
-						
+				break;
+				
 			default:
-			break;
+				break;
 		}
 	}
 	[_theDriver endExport];
@@ -603,7 +613,7 @@ typedef struct {
 
 - (IBAction)exportMusicAs:(id)sender
 {
-	//TODO: show up on the document window, not the whole app!
+	//TODO: show the save dialog on the document window, not the whole app!
 	NSInteger tag = [sender tag];
 	[_theDriver beginExport];
 	
@@ -652,24 +662,24 @@ typedef struct {
 			
 		case -3:
 		{
-		NSSavePanel *savePanel = [NSSavePanel savePanel];
-		[savePanel setAllowedFileTypes:@[MADNativeUTI]];
-		[savePanel setCanCreateDirectories:YES];
-		[savePanel setCanSelectHiddenExtension:YES];
-		if (![musicName isEqualToString:@""]) {
-			[savePanel setNameFieldStringValue:musicName];
+			NSSavePanel *savePanel = [NSSavePanel savePanel];
+			[savePanel setAllowedFileTypes:@[MADNativeUTI]];
+			[savePanel setCanCreateDirectories:YES];
+			[savePanel setCanSelectHiddenExtension:YES];
+			if (![musicName isEqualToString:@""]) {
+				[savePanel setNameFieldStringValue:musicName];
+			}
+			[savePanel setPrompt:@"Export"];
+			[savePanel setTitle:@"Export as MADK"];
+			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+				PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
+					return [_theMusic exportMusicToURL:theURL];
+				}];
+				[[NSApp delegate] addExportObject:expObj];
+			}
 		}
-		[savePanel setPrompt:@"Export"];
-		[savePanel setTitle:@"Export as MADK"];
-		if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-			PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
-				return [_theMusic exportMusicToURL:theURL];
-			}];
-		}
-		}
-
-		break;
-		
+			break;
+			
 		default:
 		{
 			if (tag > [_globalLib pluginCount] || tag < 0) {
@@ -695,11 +705,15 @@ typedef struct {
 			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", tmpObj.menuName]];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 				PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
-					return [_theMusic exportMusicToURL:theURL format:tmpObj.plugType library:_globalLib];
+					OSErr theErr = [_theMusic exportMusicToURL:theURL format:tmpObj.plugType library:_globalLib];
+					[_theDriver endExport];
+					return theErr;
 				}];
+				[[NSApp delegate] addExportObject:expObj];
+			} else {
+				[_theDriver endExport];
 			}
 		}
-		[_theDriver endExport];
 			break;
 	}
 }
@@ -717,6 +731,11 @@ typedef struct {
 - (void)awakeFromNib
 {
 	[self.exportSettingsBox setContentView:self.exportController.view];
+}
+
+- (void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark PPSoundSettingsViewControllerDelegate methods

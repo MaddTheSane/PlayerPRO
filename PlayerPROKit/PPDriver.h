@@ -19,6 +19,9 @@
 - (id)initWithLibrary:(PPLibrary *)theLib;
 - (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings;
 
+@property (readonly) MADDriverSettings driverSettings;
+- (OSErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett;
+
 - (void)beginExport;
 - (void)endExport;
 	

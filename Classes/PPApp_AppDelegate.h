@@ -17,6 +17,7 @@
 @class PPFilterPlugHandler;
 @class PatternHandler;
 @class PPInstrumentPlugHandler;
+@class PPExportObject;
 
 @interface PPApp_AppDelegate : NSDocumentController <NSApplicationDelegate>
 {
@@ -47,5 +48,7 @@
 - (IBAction)showBoxEditor:(id)sender;
 - (IBAction)showClassicEditor:(id)sender;
 - (IBAction)showDigitalEditor:(id)sender;
+
+- (void)addExportObject:(PPExportObject *)expObj;
 
 @end

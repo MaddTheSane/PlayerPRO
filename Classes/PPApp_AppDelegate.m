@@ -227,6 +227,11 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 	}
 }
 
+- (void)addExportObject:(PPExportObject *)expObj
+{
+	
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	isQuitting = NO;
@@ -237,8 +242,6 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[self addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionNew context:NULL];
 	//self.paused = YES;
 	
-	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
 	instrumentImporter = [[PPInstrumentPlugHandler alloc] init];
 	NSInteger i;
 	for (i = 0; i < [instrumentImporter plugInCount]; i++) {
@@ -294,38 +297,12 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 	}
 	return NSTerminateNow;
 }
+#endif
 
 - (void)applicationWillTerminate:(NSNotification *)notification
 {
-
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-- (IBAction)saveInstrumentList:(id)sender
-{
-	MADBeginExport(madDriver);
-	NSSavePanel *savePanel = RETAINOBJ([NSSavePanel savePanel]);
-	[savePanel setAllowedFileTypes:@[PPInstrumentListUTI]];
-	[savePanel setCanCreateDirectories:YES];
-	[savePanel setCanSelectHiddenExtension:YES];
-	if (![musicName isEqualToString:@""]) {
-		[savePanel setNameFieldStringValue:[NSString stringWithFormat:@"%@'s instruments", musicName]];
-	} else {
-		[savePanel setNameFieldStringValue:@"Tracker Instruments"];
-	}
-
-	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-		OSErr fileErr = [instrumentController exportInstrumentListToURL:[savePanel URL]];
-		if (fileErr) {
-			NSError *theErr = CreateErrorFromMADErrorType(fileErr);
-			[[NSAlert alertWithError:theErr] runModal];
-			RELEASEOBJ(theErr);
-		}
-	}
-	
-	MADEndExport(madDriver);
-	RELEASEOBJ(savePanel);
-}
-#endif
 
 - (IBAction)showBoxEditor:(id)sender
 {

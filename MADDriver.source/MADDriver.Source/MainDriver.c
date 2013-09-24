@@ -737,6 +737,10 @@ OSErr MADCreateTiming( MADDriverRec *intDriver)
 	return noErr;
 }
 
+MADDriverSettings MADGetDriverSettings(MADDriverRec * theDriver)
+{
+	return theDriver->DriverSettings;
+}
 
 OSErr MADChangeDriverSettings( MADDriverSettings	*DriverInitParam, MADDriverRec** returnDriver)
 {

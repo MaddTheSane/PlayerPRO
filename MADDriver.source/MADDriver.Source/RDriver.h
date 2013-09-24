@@ -596,6 +596,8 @@ PPEXPORT OSErr	MADDisposeDriver( MADDriverRec *MDriver);											// Dispose th
 
 PPEXPORT OSErr	MADChangeDriverSettings( MADDriverSettings	*DriverInitParam, MADDriverRec** returnDriver);
 
+PPEXPORT MADDriverSettings MADGetDriverSettings(MADDriverRec * theDriver);
+
 PPEXPORT OSErr	MADStartDriver( MADDriverRec *MDriver);										// NEW - Activates the sound generating procedure (interruption)
 PPEXPORT OSErr	MADStopDriver( MADDriverRec *MDriver);										// NEW - DEActivates the sound generating procedure (interruption)
 

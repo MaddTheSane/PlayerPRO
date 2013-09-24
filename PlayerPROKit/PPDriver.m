@@ -16,18 +16,25 @@
 @implementation PPDriver
 @synthesize rec = theRec;
 @synthesize currentMusic;
-
 - (void)setCurrentMusic:(PPMusicObject *)curMusic
 {
 	if (curMusic != currentMusic) {
-		if (currentMusic) {
-		}
 		currentMusic = curMusic;
 		MADAttachDriverToMusic(theRec, currentMusic._currentMusic, NULL);
 	}
 }
 
 @synthesize theLibrary = thePPLib;
+
+- (MADDriverSettings)driverSettings
+{
+	return MADGetDriverSettings(theRec);
+}
+
+- (OSErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett
+{
+	return MADChangeDriverSettings(&theSett, &theRec);
+}
 
 - (void)beginExport
 {
