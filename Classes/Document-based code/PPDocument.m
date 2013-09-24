@@ -431,7 +431,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		return nil;
 	}
 	[theRec cleanDriver];
-	[_theMusic attachToDriver:theRec setAsCurrentMusic:YES];
+	[_theMusic attachToDriver:theRec];
 	
 	Ptr soundPtr = NULL;
 	NSUInteger full = [theRec audioLength];
@@ -516,6 +516,9 @@ typedef struct {
 						*errStr = nil;
 					}
 					NSData *saveData = [self getSoundData:&exportSettings];
+					if (!saveData) {
+						return MADNeedMemory;
+					}
 					NSString *oldMusicName = self.musicName;
 					NSString *oldMusicInfo = self.musicInfo;
 					NSURL *oldURL = [self fileURL];
