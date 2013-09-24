@@ -346,8 +346,8 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 {
 	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
 	if ([sharedWorkspace type:theUTI conformsToType:MADPackageUTI]) {
-		// Do nothing right now
-		return NO;
+		// Document controller should automatically handle this.
+		return YES;
 	} else if ([theUTI isEqualToString:MADGenericUTI]) {
 		NSInteger retVal = NSRunInformationalAlertPanel(NSLocalizedString(@"Invalid Extension", @"Invalid extension"), NSLocalizedString(@"The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", @"Invalid extension description"), NSLocalizedString(@"Rename", @"rename file"), NSLocalizedString(@"Open", @"Open a file"), NSLocalizedString(@"Cancel", @"Cancel"), [theURL lastPathComponent]);
 		switch (retVal) {
