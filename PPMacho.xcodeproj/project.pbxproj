@@ -212,15 +212,11 @@
 		5547C9DE16D97FC700C36FEA /* PPFileSizeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547C9DD16D97FC700C36FEA /* PPFileSizeFormatter.m */; };
 		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
-		554E10E010D6EF8200BB619C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		554E10FE10D6F09F00BB619C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		554E10FF10D6F09F00BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E112A10D6F10100BB619C /* FadeNote.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE710D6C79D00BB619C /* FadeNote.r */; };
-		554E114510D6F1BF00BB619C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		554E114610D6F1BF00BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E117410D6F22D00BB619C /* FadeVol.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE910D6C79D00BB619C /* FadeVol.r */; };
-		554E11B210D6F32900BB619C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		554E11B310D6F32900BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E11E110D6F38200BB619C /* NoteTrans.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FEC10D6C79D00BB619C /* NoteTrans.r */; };
 		554E11F710D6F3E100BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -488,6 +484,9 @@
 		5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
 		5599F13316C82100008DDAFB /* RDriverCarbon.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; };
 		559C871917ECD8B400E4E13C /* PPiSettingsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559C871817ECD8B400E4E13C /* PPiSettingsDetailController.m */; };
+		55A934F817F2121D00493DC5 /* PPFilterPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A934F617F2121D00493DC5 /* PPFilterPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55A934F917F2121D00493DC5 /* PPFilterPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A934F717F2121D00493DC5 /* PPFilterPluginWindowController.m */; };
+		55A934FE17F2141200493DC5 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		55ABFD54125E6D4400B182F1 /* PPNextTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */; };
 		55ABFD55125E6D4400B182F1 /* PPPrevTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */; };
 		55ABFD56125E6D4400B182F1 /* PPRecord.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD53125E6D4400B182F1 /* PPRecord.pdf */; };
@@ -1318,6 +1317,97 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
+		55A934FA17F213F500493DC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		55A934FC17F2140200493DC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		55A934FF17F2141800493DC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		55A9350117F2141E00493DC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		55A9350317F2143000493DC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		55A9350517F2143700493DC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		55A9350717F2143D00493DC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		55A9350917F2144300493DC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		55A9350B17F2144C00493DC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		55A9350D17F2145C00493DC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		55A9350F17F2146200493DC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		55A9351117F2146B00493DC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		55A9351317F2147400493DC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
 		55ADC3D117D6F390001F27D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -2015,6 +2105,8 @@
 		55981C5411EE375400656EE3 /* preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = preferences.xib; sourceTree = "<group>"; };
 		559C871717ECD8B400E4E13C /* PPiSettingsDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPiSettingsDetailController.h; sourceTree = "<group>"; };
 		559C871817ECD8B400E4E13C /* PPiSettingsDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPiSettingsDetailController.m; sourceTree = "<group>"; };
+		55A934F617F2121D00493DC5 /* PPFilterPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPluginWindowController.h; sourceTree = "<group>"; };
+		55A934F717F2121D00493DC5 /* PPFilterPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPluginWindowController.m; sourceTree = "<group>"; };
 		55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPNextTrack.pdf; sourceTree = "<group>"; };
 		55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPPrevTrack.pdf; sourceTree = "<group>"; };
 		55ABFD53125E6D4400B182F1 /* PPRecord.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPRecord.pdf; sourceTree = "<group>"; };
@@ -2200,7 +2292,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55ADC3FA17D7FFAA001F27D4 /* PlayerPROCore.framework in Frameworks */,
-				554E10FE10D6F09F00BB619C /* Carbon.framework in Frameworks */,
 				554E10FF10D6F09F00BB619C /* CoreFoundation.framework in Frameworks */,
 				552C443C17DFEF7D00AFCB5C /* Cocoa.framework in Frameworks */,
 				5582135D17E4224100B84F51 /* PlayerPROKit.framework in Frameworks */,
@@ -2212,7 +2303,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55ADC3FB17D8004B001F27D4 /* PlayerPROCore.framework in Frameworks */,
-				554E114510D6F1BF00BB619C /* Carbon.framework in Frameworks */,
 				554E114610D6F1BF00BB619C /* CoreFoundation.framework in Frameworks */,
 				552C443D17DFEF7E00AFCB5C /* Cocoa.framework in Frameworks */,
 				5582135E17E4224200B84F51 /* PlayerPROKit.framework in Frameworks */,
@@ -2224,7 +2314,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55ADC3FC17D80052001F27D4 /* PlayerPROCore.framework in Frameworks */,
-				554E11B210D6F32900BB619C /* Carbon.framework in Frameworks */,
 				554E11B310D6F32900BB619C /* CoreFoundation.framework in Frameworks */,
 				552C443E17DFEF8200AFCB5C /* Cocoa.framework in Frameworks */,
 				5582135F17E4224300B84F51 /* PlayerPROKit.framework in Frameworks */,
@@ -2417,6 +2506,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55A934FE17F2141200493DC5 /* PlayerPROKit.framework in Frameworks */,
 				557DE87F10E08DA300177B4C /* CoreFoundation.framework in Frameworks */,
 				552C444517DFEF9B00AFCB5C /* Cocoa.framework in Frameworks */,
 			);
@@ -2598,7 +2688,6 @@
 			files = (
 				552C443B17DFEF6400AFCB5C /* Cocoa.framework in Frameworks */,
 				5574BCF9169645FE00CF3C37 /* PlayerPROCore.framework in Frameworks */,
-				554E10E010D6EF8200BB619C /* Carbon.framework in Frameworks */,
 				554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */,
 				5582135C17E4224000B84F51 /* PlayerPROKit.framework in Frameworks */,
 			);
@@ -3581,6 +3670,8 @@
 				55B7665717E3BF9E004C1D45 /* PPPluginWindowController.m */,
 				55B7665B17E3CDA2004C1D45 /* PPDigitalPluginWindowController.h */,
 				55B7665C17E3CDA2004C1D45 /* PPDigitalPluginWindowController.m */,
+				55A934F617F2121D00493DC5 /* PPFilterPluginWindowController.h */,
+				55A934F717F2121D00493DC5 /* PPFilterPluginWindowController.m */,
 			);
 			name = "App Plug-in code";
 			path = "../MADDriver.source/MADDriver.Source/App Plug-in Code";
@@ -3839,6 +3930,7 @@
 				5578C4FF17DB8A5C0057D11B /* PPSampleObject.h in Headers */,
 				5578C50017DB8A640057D11B /* PPInstrumentObject.h in Headers */,
 				5582135817E4201300B84F51 /* PPPluginWindowController.h in Headers */,
+				55A934F817F2121D00493DC5 /* PPFilterPluginWindowController.h in Headers */,
 				5582135917E4201700B84F51 /* PPDigitalPluginWindowController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4094,6 +4186,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55A9351017F2146200493DC5 /* PBXTargetDependency */,
 				554E10F810D6F09F00BB619C /* PBXTargetDependency */,
 			);
 			name = "Fade Note";
@@ -4113,6 +4206,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55A9351217F2146B00493DC5 /* PBXTargetDependency */,
 				554E113F10D6F1BF00BB619C /* PBXTargetDependency */,
 			);
 			name = "Fade Volume";
@@ -4132,6 +4226,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55A9351417F2147400493DC5 /* PBXTargetDependency */,
 				554E11AC10D6F32900BB619C /* PBXTargetDependency */,
 			);
 			name = "Note Translate";
@@ -4319,6 +4414,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55A9350C17F2144C00493DC5 /* PBXTargetDependency */,
 				557DE42610E06BF200177B4C /* PBXTargetDependency */,
 			);
 			name = Amplitude;
@@ -4373,6 +4469,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55A9350A17F2144300493DC5 /* PBXTargetDependency */,
 				557DE65810E0885C00177B4C /* PBXTargetDependency */,
 			);
 			name = CrossFade;
@@ -4391,6 +4488,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55A9350817F2143D00493DC5 /* PBXTargetDependency */,
 				557DE69910E0886400177B4C /* PBXTargetDependency */,
 			);
 			name = Depth;
@@ -4409,6 +4507,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55A9350617F2143700493DC5 /* PBXTargetDependency */,
 				557DE6DA10E0886A00177B4C /* PBXTargetDependency */,
 			);
 			name = Echo;
@@ -4427,6 +4526,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55A9350417F2143000493DC5 /* PBXTargetDependency */,
 				557DE7AF10E08D8300177B4C /* PBXTargetDependency */,
 			);
 			name = Fade;
@@ -4463,6 +4563,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55A9350217F2141E00493DC5 /* PBXTargetDependency */,
 				557DE83510E08D9E00177B4C /* PBXTargetDependency */,
 			);
 			name = Length;
@@ -4481,6 +4582,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55A9350017F2141800493DC5 /* PBXTargetDependency */,
 				557DE87810E08DA300177B4C /* PBXTargetDependency */,
 			);
 			name = Mix;
@@ -4517,6 +4619,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55A934FD17F2140200493DC5 /* PBXTargetDependency */,
 				557DE8FE10E08DAC00177B4C /* PBXTargetDependency */,
 			);
 			name = "Sampling Rate";
@@ -4571,6 +4674,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55A934FB17F213F500493DC5 /* PBXTargetDependency */,
 				557DE99410E08DC100177B4C /* PBXTargetDependency */,
 			);
 			name = "Tone Generator";
@@ -4863,6 +4967,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55A9350E17F2145C00493DC5 /* PBXTargetDependency */,
 				55B797E210D6E6D00073E379 /* PBXTargetDependency */,
 			);
 			name = "Complex Fade";
@@ -5618,6 +5723,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55A934F917F2121D00493DC5 /* PPFilterPluginWindowController.m in Sources */,
 				551292F1163DD7CE00C2C639 /* PPLibrary.m in Sources */,
 				558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */,
 				55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */,
@@ -6695,6 +6801,71 @@
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 55A01A1A13BE63180049B720 /* PBXContainerItemProxy */;
+		};
+		55A934FB17F213F500493DC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55A934FA17F213F500493DC5 /* PBXContainerItemProxy */;
+		};
+		55A934FD17F2140200493DC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55A934FC17F2140200493DC5 /* PBXContainerItemProxy */;
+		};
+		55A9350017F2141800493DC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55A934FF17F2141800493DC5 /* PBXContainerItemProxy */;
+		};
+		55A9350217F2141E00493DC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55A9350117F2141E00493DC5 /* PBXContainerItemProxy */;
+		};
+		55A9350417F2143000493DC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55A9350317F2143000493DC5 /* PBXContainerItemProxy */;
+		};
+		55A9350617F2143700493DC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55A9350517F2143700493DC5 /* PBXContainerItemProxy */;
+		};
+		55A9350817F2143D00493DC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55A9350717F2143D00493DC5 /* PBXContainerItemProxy */;
+		};
+		55A9350A17F2144300493DC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55A9350917F2144300493DC5 /* PBXContainerItemProxy */;
+		};
+		55A9350C17F2144C00493DC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55A9350B17F2144C00493DC5 /* PBXContainerItemProxy */;
+		};
+		55A9350E17F2145C00493DC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55A9350D17F2145C00493DC5 /* PBXContainerItemProxy */;
+		};
+		55A9351017F2146200493DC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55A9350F17F2146200493DC5 /* PBXContainerItemProxy */;
+		};
+		55A9351217F2146B00493DC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55A9351117F2146B00493DC5 /* PBXContainerItemProxy */;
+		};
+		55A9351417F2147400493DC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55A9351317F2147400493DC5 /* PBXContainerItemProxy */;
 		};
 		55ADC3D017D6F390001F27D4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9772,6 +9943,7 @@
 				55F41A2717EF814600605DF8 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		88E0C3A90C2F21DD00D6C081 /* Build configuration list for PBXProject "PPMacho" */ = {
 			isa = XCConfigurationList;

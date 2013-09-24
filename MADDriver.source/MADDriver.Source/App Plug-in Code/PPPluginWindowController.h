@@ -21,7 +21,7 @@ extern const NSString * const PPPlugInSheetDidEnd;
 }
 
 @property PPInfoPlug *infoPlug;
+@property (copy) dispatch_block_t plugBlock;
 - (IBAction)okOrCancel:(id)sender;
 - (OSErr)runAsModal;
-
 @end
