@@ -1,17 +1,6 @@
 {
   "images" : [
     {
-      "resizing" : {
-        "mode" : "3-part-vertical",
-        "center" : {
-          "mode" : "fill",
-          "height" : 1
-        },
-        "capInsets" : {
-          "top" : 9,
-          "bottom" : 9
-        }
-      },
       "idiom" : "mac",
       "filename" : "SquareWave.png",
       "scale" : "1x"

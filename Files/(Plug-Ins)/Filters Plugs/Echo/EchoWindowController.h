@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
-@interface EchoWindowController : NSWindowController
+@interface EchoWindowController : PPFilterPluginWindowController
 @property double echoStrength;
 @property int echoDelay;
-- (IBAction)okOrCancel:(id)sender;
 @end

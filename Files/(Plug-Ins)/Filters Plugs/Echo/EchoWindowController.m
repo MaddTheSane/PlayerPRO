@@ -21,8 +21,7 @@ static Boolean getParams (SInt32 *p1, double *p2, PPInfoPlug *thePPInfoPlug)
 	controller.echoDelay = *p1;
 	controller.echoStrength = *p2;
 	
-	NSInteger retVal = [NSApp runModalForWindow:controller.window];
-	[controller close];
+	NSInteger retVal = [controller runAsModal];
 	
 	if (retVal == NSOffState) {
 		return FALSE;
@@ -52,11 +51,6 @@ static Boolean getParams (SInt32 *p1, double *p2, PPInfoPlug *thePPInfoPlug)
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
-- (IBAction)okOrCancel:(id)sender
-{
-	[NSApp stopModalWithCode:([sender tag] == 1) ? NSOffState : NSOnState];
-}
-
 @end
 
 #define timeConvert		22254 //≈22KHZ
@@ -82,7 +76,7 @@ static OSErr mainEcho(void			*unused,
 	
 	if (getParams (&pDelay, &pStrength, thePPInfoPlug))
 	{
-		length = SelectionEnd - SelectionStart - 1;
+		length = (int)(SelectionEnd - SelectionStart - 1);
 		
 		pDelay = (pDelay * timeConvert) / 1000;	//convert ms to samples
 		

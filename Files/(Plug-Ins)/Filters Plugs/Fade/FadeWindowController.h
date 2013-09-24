@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
-@interface FadeWindowController : NSWindowController
+@interface FadeWindowController : PPFilterPluginWindowController
 @property double fadeFrom;
 @property double fadeTo;
-- (IBAction)okOrCancel:(id)sender;
 
 @end

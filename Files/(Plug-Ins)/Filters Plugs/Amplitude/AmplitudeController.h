@@ -7,9 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
-@interface AmplitudeController : NSWindowController
+@interface AmplitudeController : PPFilterPluginWindowController
 @property int amplitudeAmount;
-- (IBAction)okOrCancel:(id)sender;
-
 @end

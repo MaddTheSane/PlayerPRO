@@ -19,8 +19,7 @@ static Boolean getParams ( SInt32 *p1, PPInfoPlug *thePPInfoPlug)
 	AmplitudeController *controller = [[AmplitudeController alloc] initWithWindowNibName:@"AmplitudeController"];
 	controller.amplitudeAmount = *p1;
 	
-	NSInteger retVal = [NSApp runModalForWindow:controller.window];
-	[controller close];
+	NSInteger retVal = [controller runAsModal];
 
 	if (retVal == NSOffState) {
 		return FALSE;
@@ -47,11 +46,6 @@ static Boolean getParams ( SInt32 *p1, PPInfoPlug *thePPInfoPlug)
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-}
-
-- (IBAction)okOrCancel:(id)sender
-{
-	[NSApp stopModalWithCode:([sender tag] == 1) ? NSOffState : NSOnState];
 }
 @end
 

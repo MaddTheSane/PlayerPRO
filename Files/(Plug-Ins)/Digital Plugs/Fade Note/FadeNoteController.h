@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
-@interface FadeNoteController : NSWindowController
+@interface FadeNoteController : PPDigitalPluginWindowController
 
 @end

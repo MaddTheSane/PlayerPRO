@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PlayerPROKit.h>
-#import <PlayerPROKit/PPFilterPluginWindowController.h>
 
 typedef enum _ToneGenerator
 {
