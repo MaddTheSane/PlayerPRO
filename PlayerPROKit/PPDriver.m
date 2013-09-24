@@ -59,6 +59,20 @@
 	return MADPlayMusic(theRec);
 }
 
+- (OSErr)pause
+{
+	return MADStopMusic(theRec);
+}
+
+- (OSErr)stop
+{
+	OSErr theErr = MADStopMusic(theRec);
+	if (theErr) {
+		return theErr;
+	}
+	return MADSetMusicStatus(theRec, 0, 100, 0);
+}
+
 - (id)init
 {
 	NSAssert(NO, @"PPDriver cannot be inited without a library");
@@ -68,7 +82,7 @@
 
 - (id)initWithLibrary:(PPLibrary *)theLib
 {
-	MADDriverSettings theSet;
+	MADDriverSettings theSet = {0};
 	MADGetBestDriver(&theSet);
 	return [self initWithLibrary:theLib settings:&theSet];
 }
@@ -77,7 +91,7 @@
 {
 	if (self = [super init]) {
 		thePPLib = theLib;
-		if(MADCreateDriver(theSettings, theLib._madLib, &theRec) !=noErr)
+		if (MADCreateDriver(theSettings, theLib._madLib, &theRec) !=noErr)
 		{
 			return nil;
 		}

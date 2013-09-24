@@ -13,10 +13,6 @@
 @class PPMusicObject;
 
 @interface PPDriver : NSObject
-{
-	PPMusicObject *currentMusic;
-}
-
 @property (readwrite, nonatomic, strong) PPMusicObject *currentMusic;
 @property (readonly) PPLibrary *theLibrary;
 
@@ -32,6 +28,8 @@
 - (NSInteger)audioLength;
 	
 - (OSErr)play;
+- (OSErr)pause;
+- (OSErr)stop;
 	
 - (void)loadMusicFile:(NSString *)path;
 - (void)loadMusicURL:(NSURL*)url;
