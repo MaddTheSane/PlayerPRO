@@ -23,7 +23,8 @@ NSString * const PPPlugInSheetDidEnd = @"MAD Plugin sheet did end";
 	if (returnCode == NSOnState) {
 		plugBlock();
 	}
-	[[NSNotificationCenter defaultCenter] postNotificationName:PPPlugInSheetDidEnd object:self.window];
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPPlugInSheetDidEnd object:self.window userInfo:@{@"MADReturnCode": @(returnCode)}];
+	[self close];
 }
 
 - (id)initWithWindow:(NSWindow *)window
@@ -42,7 +43,7 @@ NSString * const PPPlugInSheetDidEnd = @"MAD Plugin sheet did end";
 	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 	if (isMultipleIstanceSafe) {
 		parentWindow = (__bridge NSWindow*)(infoPlug->NSWindow);
-		infoPlug->OutNSModal = CFBridgingRetain(self.window);
+		infoPlug->OutWindowController = CFBridgingRetain(self);
 	}
 }
 
@@ -62,7 +63,9 @@ NSString * const PPPlugInSheetDidEnd = @"MAD Plugin sheet did end";
 		
 		return MADIsRunningModal;
 	} else {
-		return [NSApp runModalForWindow:self.window];
+		NSInteger retVal = [NSApp runModalForWindow:self.window];
+		[self close];
+		return retVal;
 	}
 }
 
