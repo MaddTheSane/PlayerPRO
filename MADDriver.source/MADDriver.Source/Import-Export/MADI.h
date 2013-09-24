@@ -24,8 +24,6 @@
 #ifndef __MADH__
 #define __MADH__
 
-#pragma pack(push, 2)
-
 // ***	
 // ***	PATTERN DESCRIPTION
 // ***	
@@ -58,12 +56,9 @@ struct oldPatData						// DATA STRUCTURE : HEADER + COMMANDS
 };
 typedef struct oldPatData oldPatData;
 
-
-
 // ***	
 // ***	INSTRUMENT DESCRIPTION
 // ***	
-
 
 struct oldsData								// SAMPLE
 {
@@ -80,13 +75,6 @@ struct oldsData								// SAMPLE
 	UInt32				data;				// Used only in memory, not in files
 };
 typedef struct oldsData oldsData;
-
-/*enum
-{
-	eClassicLoop	= 0,
-	ePingPongLoop	= 1
-};*/
-
 
 struct oldEnvRec				// Volume Enveloppe
 {
@@ -142,20 +130,9 @@ struct oldInstrData				// INSTRUMENT
 };
 typedef struct oldInstrData oldInstrData;
 
-
-/*enum
-{
-	EFON		= 1,
-	EFSUSTAIN	= 2,
-	EFLOOP		= 4,
-	EFNOTE		= 8
-};*/
-
-
 // ***	
 // ***	MAD FILE HEADER DESCRIPTION
 // ***	
-
 
 #define INFOSSIZE 239
 
@@ -187,7 +164,5 @@ struct oldMADSpec
 	Byte		chanVol[ MAXTRACK];			// Channel Volume, from 0 to 64
 };
 typedef struct oldMADSpec oldMADSpec;
-
-#pragma pack(pop)
 
 #endif

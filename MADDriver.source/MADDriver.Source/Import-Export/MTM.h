@@ -21,8 +21,6 @@
 //
 /********************						***********************/
 
-#pragma pack(push, 2)
-
 struct	MTMTrack
 {
 	//FIXME: is this little-endian safe?
@@ -59,5 +57,3 @@ struct MTMDef
 	char			voicePos[ 32];
 };
 typedef struct MTMDef MTMDef;
-
-#pragma pack(pop)

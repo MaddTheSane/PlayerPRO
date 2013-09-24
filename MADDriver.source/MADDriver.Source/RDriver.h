@@ -444,8 +444,6 @@ typedef struct PlugInfo
 } PlugInfo;
 #endif
 
-#pragma pack(push, 2)
-
 /********************						***********************/
 /*** 		Global structure : PlayerPRO variables				***/
 /********************						***********************/
@@ -453,12 +451,13 @@ typedef struct PlugInfo
 typedef struct MADLibrary
 {
 	OSType					IDType;								// IDType = 'MADD' -- READ ONLY --
-	SInt32					mytab[ 12];
 	
 	/** Plugs Import/Export variables **/
 	
-	PlugInfo 				*ThePlug;							// Pointers on plugs code & infos
 	short					TotalPlug;							// no of Plugs in pointer ThePlug
+	PlugInfo 				*ThePlug;							// Pointers on plugs code & infos
+	SInt32					mytab[ 12];
+	
 } MADLibrary;
 
 #ifndef __callback
@@ -684,7 +683,5 @@ PPEXPORT SInt32 MADAudioLength(MADDriverRec *theRec);
 #ifdef __cplusplus
 }
 #endif
-
-#pragma pack(pop)
 
 #endif

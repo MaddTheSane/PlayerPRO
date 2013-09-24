@@ -24,9 +24,7 @@
 #ifndef __MADH__
 #define __MADH__
 
-#pragma pack(push, 2)
-
-// ***	
+// ***
 // ***	PATTERN DESCRIPTION
 // ***	
 
@@ -58,12 +56,9 @@ struct oldPatData						// DATA STRUCTURE : HEADER + COMMANDS
 };
 typedef struct oldPatData oldPatData;
 
-
-
 // ***	
 // ***	INSTRUMENT DESCRIPTION
 // ***	
-
 
 struct oldsData								// SAMPLE
 {
@@ -98,8 +93,8 @@ struct oldInstrData				// INSTRUMENT
 	/**/
 
 	Byte		what[ 96];		// Sample number for all notes
-	oldEnvRec 		volEnv[ 12];	// Points for volume envelope
-	oldEnvRec		pannEnv[ 12];	// Points for panning envelope
+	oldEnvRec 	volEnv[ 12];	// Points for volume envelope
+	oldEnvRec	pannEnv[ 12];	// Points for panning envelope
 	
 	Byte	volSize;			// Number of volume points
 	Byte	pannSize;			// Number of panning points
@@ -122,12 +117,9 @@ struct oldInstrData				// INSTRUMENT
 };
 typedef struct oldInstrData oldInstrData;
 
-
-
 // ***	
 // ***	MAD FILE HEADER DESCRIPTION
 // ***	
-
 
 struct oldMADSpec
 {
@@ -143,7 +135,5 @@ struct oldMADSpec
 	oldInstrData 	fid[ 64];				// Instruments description
 };
 typedef struct oldMADSpec oldMADSpec;
-
-#pragma pack(pop)
 
 #endif

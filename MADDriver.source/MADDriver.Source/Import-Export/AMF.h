@@ -24,8 +24,6 @@
 #ifndef __AMFH__
 #define __AMFH__
 
-#pragma pack(push, 2)
-
 typedef unsigned char uchar;
 #ifndef __APPLE__
 typedef unsigned short ushort;
@@ -51,7 +49,5 @@ typedef struct {
     uchar       volume;
     UInt32      loopstart,loopend;
 } INSTRUMENT;
-
-#pragma pack(pop)
 
 #endif
