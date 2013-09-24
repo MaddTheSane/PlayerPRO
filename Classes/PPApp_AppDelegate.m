@@ -147,17 +147,6 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[preferences showWindow:sender];
 }
 
-
-- (IBAction)exportInstrumentAs:(id)sender
-{
-    //[instrumentController exportInstrument:sender];
-}
-
-- (IBAction)showInstrumentsList:(id)sender
-{
-    //[instrumentController showWindow:sender];
-}
-
 - (IBAction)showPlugInInfo:(id)sender
 {
 	PPPlugInInfo *inf = plugInInfos[[sender tag]];
@@ -249,7 +238,7 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 		if (obj.mode == MADPlugImportExport || obj.mode == MADPlugExport) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:obj.menuName action:@selector(exportInstrument:) keyEquivalent:@""];
 			[mi setTag:i];
-			[mi setTarget:self];
+			[mi setTarget:nil];
 			[instrumentExportMenu addItem:mi];
 		}
 	}
@@ -259,7 +248,7 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 		if (obj.canExport) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@...", obj.menuName] action:@selector(exportMusicAs:) keyEquivalent:@""];
 			[mi setTag:i];
-			[mi setTarget:self];
+			[mi setTarget:nil];
 			[musicExportMenu addItem:mi];
 		}
 	}
