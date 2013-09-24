@@ -4,6 +4,9 @@
 
 #ifdef __OBJC__
 	#import <Foundation/Foundation.h>
+	#if !TARGET_OS_IPHONE
+		#import <Cocoa/Cocoa.h>
+	#endif
 #endif
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
