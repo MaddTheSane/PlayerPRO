@@ -364,7 +364,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (id)initWithPath:(NSString *)url
 {
-	return [self initWithFileWrapper:[[NSFileWrapper alloc] initWithPath:url]];
+	return [self initWithURL:[NSURL fileURLWithPath:url]];
 }
 
 - (id)initWithURL:(NSURL *)url
