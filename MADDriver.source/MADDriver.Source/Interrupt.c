@@ -1224,9 +1224,9 @@ short FindAFreeChannel( MADDriverRec *intDriver)
 
 void ApplyVSTEffects( MADDriverRec *intDriver, Boolean ByPass)
 {
-	if (!intDriver) return;
 	SInt32 i;
-	
+	if (!intDriver) return;
+
 	if( intDriver->curMusic != NULL)
 	{
 		if( intDriver->curMusic->header != NULL)
