@@ -7,3 +7,4 @@ Debug
 Release
 *.vcxproj.user
 ipch
+**/*vers.plist

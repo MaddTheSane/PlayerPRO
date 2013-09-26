@@ -25,28 +25,22 @@
 #define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."
 
 @interface PPCurrentlyPlayingIndex : NSObject
-{
-	NSInteger index;
-	NSURL *playbackURL;
-}
-
 @property (readwrite) NSInteger index;
-@property (readwrite, retain) NSURL *playbackURL;
+@property (readwrite, strong) NSURL *playbackURL;
 
 - (void)movePlayingIndexToOtherIndex:(PPCurrentlyPlayingIndex *)othidx;
 
 @end
 
 @implementation PPCurrentlyPlayingIndex
+@synthesize index;
+@synthesize playbackURL;
 
 - (void)movePlayingIndexToOtherIndex:(PPCurrentlyPlayingIndex *)othidx
 {
 	othidx.index = index;
 	othidx.playbackURL = playbackURL;
 }
-
-@synthesize index;
-@synthesize playbackURL;
 
 - (NSString *)description
 {
@@ -227,35 +221,39 @@ static NSInteger selMusFromList = -1;
 
 + (void)initialize
 {
-	PPMusicList *tempList = [[PPMusicList alloc] init];
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		PPMusicList *tempList = [[PPMusicList alloc] init];
+		[[NSUserDefaults standardUserDefaults] registerDefaults:@{PPRememberMusicList: @YES,
+																  PPLoadMusicAtListLoad: @NO,
+																  PPAfterPlayingMusic: @(PPStopPlaying),
+																  PPGotoStartupAfterPlaying: @YES,
+																  PPSaveModList: @YES,
+																  PPLoadMusicAtMusicLoad: @NO,
+																  PPLoopMusicWhenDone: @NO,
+																  
+																  PPSoundOutBits: @16,
+																  PPSoundOutRate: @44100,
+																  PPSoundDriver: @(CoreAudioDriver),
+																  PPStereoDelayToggle: @YES,
+																  PPReverbToggle: @NO,
+																  PPSurroundToggle: @NO,
+																  PPOversamplingToggle: @NO,
+																  PPStereoDelayAmount: @30,
+																  PPReverbAmount: @25,
+																  PPReverbStrength: @30,
+																  PPOversamplingAmount: @1,
+																  
+																  
+																  PPMAddExtension: @YES,
+																  PPMMadCompression: @YES,
+																  PPMNoLoadMixerFromFiles: @NO,
+																  PPMOscilloscopeDrawLines: @YES,
+																  
+																  PPMMusicList: [NSKeyedArchiver archivedDataWithRootObject:tempList]}];
+		
+	});
 	
-	[[NSUserDefaults standardUserDefaults] registerDefaults:@{PPRememberMusicList: @YES,
-									  PPLoadMusicAtListLoad: @NO,
-										PPAfterPlayingMusic: @(PPStopPlaying),
-								  PPGotoStartupAfterPlaying: @YES,
-											  PPSaveModList: @YES,
-									 PPLoadMusicAtMusicLoad: @NO,
-										PPLoopMusicWhenDone: @NO,
-	 
-											 PPSoundOutBits: @16,
-											 PPSoundOutRate: @44100,
-											  PPSoundDriver: @(CoreAudioDriver),
-										PPStereoDelayToggle: @YES,
-											 PPReverbToggle: @NO,
-										   PPSurroundToggle: @NO,
-									   PPOversamplingToggle: @NO,
-										PPStereoDelayAmount: @30,
-											 PPReverbAmount: @25,
-										   PPReverbStrength: @30,
-									   PPOversamplingAmount: @1,
-	 
-	 
-											PPMAddExtension: @YES,
-										  PPMMadCompression: @YES,
-									PPMNoLoadMixerFromFiles: @NO,
-								   PPMOscilloscopeDrawLines: @YES,
-	 
-											   PPMMusicList: [NSKeyedArchiver archivedDataWithRootObject:tempList]}];
 }
 
 - (IBAction)showMusicList:(id)sender
@@ -1919,6 +1917,5 @@ enum PPMusicToolbarTypes {
 {
 	exportSettings.MicroDelaySize = std;
 }
-
 
 @end

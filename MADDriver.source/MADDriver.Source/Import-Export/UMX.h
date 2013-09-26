@@ -21,8 +21,6 @@
 //
 /********************						***********************/
 
-#pragma pack(push, 2)
-
 #define MAXPTRS 128
 
 struct MODCom
@@ -55,5 +53,3 @@ typedef struct MODDef
 	OSType longFmtSignature;
 	struct MODPat patterns[];
 }MODDef;
-
-#pragma pack(pop)

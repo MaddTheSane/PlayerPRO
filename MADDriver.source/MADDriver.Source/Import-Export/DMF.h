@@ -21,8 +21,6 @@
 //
 /********************						***********************/
 
-#pragma pack(push, 2)
-
 typedef struct ITPatForm
 {
 	unsigned short		length;
@@ -132,5 +130,3 @@ typedef struct ITForm
 	ITInsForm			*insdata;
 	ITSampForm			*sampdata;
 } ITForm;
-
-#pragma pack(pop)

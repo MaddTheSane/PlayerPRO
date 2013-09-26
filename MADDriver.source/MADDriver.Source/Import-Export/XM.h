@@ -289,8 +289,6 @@
 #ifndef __XM_H
 #define __XM_H
 
-#pragma pack(push, 2)
-
 typedef struct XMHEADER{
 	char  id[17];                   // ID text: 'Extended module: '
 	char  songname[21];             // Module name, padded with zeroes and 0x1a at the end
@@ -372,7 +370,5 @@ typedef struct MTMNOTE{
 typedef struct XMNOTE{
 	UBYTE note,ins,vol,eff,dat;
 }XMNOTE;
-
-#pragma pack(pop)
 
 #endif

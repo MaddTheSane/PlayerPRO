@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
-@interface SamplingRateWindowController : NSWindowController
+@interface SamplingRateWindowController : PPFilterPluginWindowController
 @property unsigned int currentRate;
 @property unsigned int changedRate;
-- (IBAction)okOrCancel:(id)sender;
 @end

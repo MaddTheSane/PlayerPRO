@@ -97,7 +97,7 @@ typedef struct _PPInfoPlug
 	OSType fileType;
 	CFStringRef fileUTI;
 	CFTypeRef NSWindow;
-	CFTypeRef OutNSModal;
+	CFTypeRef OutWindowController;
 } PPInfoPlug;
 
 #pragma mark Filters for Samples/Sounds

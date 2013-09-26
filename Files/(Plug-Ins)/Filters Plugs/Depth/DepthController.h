@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
-@interface DepthController : NSWindowController
+@interface DepthController : PPFilterPluginWindowController
 @property int depthAmmount;
-- (IBAction)okOrCancel:(id)sender;
 @end

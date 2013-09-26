@@ -8,14 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface BoxEditorPreferenceController : NSViewController {
+@interface BoxEditorPreferenceController : NSViewController
 
-	IBOutlet NSButton *notesCheck;
-	IBOutlet NSButton *octaveCheck;
-	IBOutlet NSTextField *loopField;
-	IBOutlet NSTextField *offsetField;
-	IBOutlet NSButton *markersCheck;
-}
+@property (weak) IBOutlet NSButton *notesCheck;
+@property (weak) IBOutlet NSButton *octaveCheck;
+@property (weak) IBOutlet NSFormCell *loopField;
+@property (weak) IBOutlet NSFormCell *offsetField;
+@property (weak) IBOutlet NSButton *markersCheck;
+
 - (IBAction)changeMarkerCheck:(id)sender;
 
 @end

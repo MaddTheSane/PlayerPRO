@@ -9,8 +9,12 @@
 #import "BoxEditorPreferenceController.h"
 #import "UserDefaultKeys.h"
 
-
 @implementation BoxEditorPreferenceController
+@synthesize loopField;
+@synthesize markersCheck;
+@synthesize notesCheck;
+@synthesize octaveCheck;
+@synthesize offsetField;
 
 -(id)init
 {

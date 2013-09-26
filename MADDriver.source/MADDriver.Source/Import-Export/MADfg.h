@@ -24,8 +24,6 @@
 #ifndef __MADFG__
 #define __MADFG__
 
-#pragma pack(push, 2)
-
 struct oldPatHeader {
 	SInt32	PatternSize;			// Length of pattern: standard = 64
 	OSType	CompressionMode;		// Compression mode, none = 'NONE'
@@ -70,7 +68,5 @@ struct oldMADSpec
 	Byte	Tracks;					// Tracks number
 };
 typedef struct oldMADSpec oldMADSpec;
-
-#pragma pack(pop)
 
 #endif

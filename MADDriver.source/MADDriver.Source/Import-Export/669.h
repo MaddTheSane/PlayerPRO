@@ -21,8 +21,6 @@
 //
 /********************						***********************/
 
-#pragma pack(push, 2)
-
 typedef struct PasByte {
 	Byte	aByte[ 3];
 } PasByte;
@@ -65,5 +63,3 @@ typedef struct Partition669	{
 		Ptr				samplePtr[ 128];
 		Ptr				patternPtr[ 128];
 } Partition669;
-
-#pragma pack(pop)

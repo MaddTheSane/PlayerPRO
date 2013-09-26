@@ -9,12 +9,15 @@
 #import "PPMusicList.h"
 #import "UserDefaultKeys.h"
 #include <PlayerPROCore/PlayerPROCore.h>
+#if !TARGET_OS_IPHONE
 #include <CoreServices/CoreServices.h>
+#endif
 
 #define kMUSICLISTKEY @"Music List Key1"
 #define kMUSICLISTKEY2 @"Music List Key2"
 #define kMusicListLocation2 @"Music Key Location2"
 
+#if !TARGET_OS_IPHONE
 // GetIndString isn't supported on 64-bit Mac OS X
 // This code is emulation for GetIndString.
 // Code based on Mozilla's Mac Eudora importer
@@ -48,9 +51,10 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	return data;
 }
+#endif
 
 @interface PPMusicListObject ()
-@property (retain, readwrite, setter = setTheMusicUrl:) NSURL *musicUrl;
+@property (strong, readwrite, setter = setTheMusicUrl:) NSURL *musicUrl;
 @end
 
 @implementation PPMusicListObject
@@ -116,12 +120,14 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	}
 }
 
+#if !TARGET_OS_IPHONE
 - (NSImage *)fileIcon
 {
 	NSImage *image = [[NSWorkspace sharedWorkspace] iconForFile:[musicUrl path]];
 	[image setSize:NSMakeSize(16, 16)];
 	return image;
 }
+#endif
 
 - (id)initWithURL:(NSURL *)aURL
 {
@@ -232,7 +238,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	return tmpURL ? tmpURL : otherURL;
 }
 
-
+#if !TARGET_OS_IPHONE
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen
 {
 	lostMusicCount = 0;
@@ -314,6 +320,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 
 	return noErr;
 }
+#endif
 
 - (BOOL)loadMusicListAtURL:(NSURL *)fromURL
 {
@@ -473,6 +480,11 @@ static inline NSURL *PPHomeURL()
 - (NSUInteger)countOfMusicList
 {
 	return [musicList count];
+}
+
+- (NSArray*)arrayOfObjectsInMusicListAtIndexes:(NSIndexSet*)theSet
+{
+	return [musicList objectsAtIndexes:theSet];
 }
 
 - (void)removeObjectsInMusicListAtIndexes:(NSIndexSet *)set
