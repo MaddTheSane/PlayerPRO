@@ -24,6 +24,7 @@
 }
 @property (readwrite, strong, nonatomic) NSString *internalFileName;
 @property (readwrite, strong, nonatomic) NSString *madInfo;
+@property (readwrite, strong) NSURL *filePath;
 @end
 
 @implementation PPMusicObject
@@ -35,7 +36,7 @@
 - (NSString *)internalFileName
 {
 	if (!internalFileName) {
-		//generate internal file name
+		self.internalFileName = [[NSString alloc] initWithCString:currentMusic->header->name encoding:NSMacOSRomanStringEncoding];
 	}
 	return internalFileName;
 }
@@ -43,7 +44,7 @@
 - (NSString*)madInfo
 {
 	if (!madInfo) {
-		//Generate mad info
+		self.madInfo = [[NSString alloc] initWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
 	}
 	return madInfo;
 }
@@ -58,6 +59,7 @@
 	if (self = [super init]) {
 		if (MADLoadMADFileCString(&currentMusic, (char*)[url fileSystemRepresentation]) != noErr)
 			return nil;
+		self.filePath = [NSURL fileURLWithPath:url];
 	}
 	return self;
 }
@@ -83,6 +85,7 @@
 			return nil;
 		}
 		CFRelease(tmpURL);
+		self.filePath = url;
 	}
 	return self;
 }
@@ -288,6 +291,8 @@
 
 @interface PPMusicObjectWrapper ()
 @property (readwrite) OSType madType;
+@property (strong, readwrite) NSFileWrapper *musicWrapper;
+- (void)syncMusicDataTypes;
 @end
 
 @implementation PPMusicObjectWrapper
@@ -295,6 +300,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
+	[self syncMusicDataTypes];
 	return [[[self class] alloc] initFromMusicObject:self];
 }
 
@@ -306,7 +312,7 @@
 - (void)setInternalFileName:(NSString *)_internalFileName
 {
 	[self willChangeValueForKey:@"internalFileName"];
-	internalFileName = _internalFileName;
+	internalFileName = [_internalFileName copy];
 	[self didChangeValueForKey:@"internalFileName"];
 }
 
@@ -318,7 +324,7 @@
 - (void)setMadInfo:(NSString *)_madInfo
 {
 	[self willChangeValueForKey:@"madInfo"];
-	madInfo = _madInfo;
+	madInfo = [_madInfo copy];
 	[self didChangeValueForKey:@"madInfo"];
 }
 
@@ -347,12 +353,13 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return toreturn;
 }
 
-- (id)initFromMusicObject:(PPMusicObject*)oldFromat
+- (id)initFromMusicObject:(PPMusicObject*)oldFormat
 {
 	if (self = [super init]) {
 		MADDisposeMusic(&currentMusic, NULL);
-		currentMusic = DeepCopyMusic(oldFromat._currentMusic);
+		currentMusic = DeepCopyMusic(oldFormat._currentMusic);
 		[self setUpObjCStructures];
+		self.filePath = oldFormat.filePath;
 	}
 	return self;
 }
@@ -369,12 +376,16 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (id)initWithURL:(NSURL *)url
 {
-	return [self initWithFileWrapper:[[NSFileWrapper alloc] initWithURL:url options:NSFileWrapperReadingImmediate error:NULL]];
+	if (self = [self initWithFileWrapper:[[NSFileWrapper alloc] initWithURL:url options:NSFileWrapperReadingImmediate error:NULL]]) {
+		self.filePath = url;
+	}
+	return self;
 }
 
 - (id)initWithFileWrapper:(NSFileWrapper*)wrapper
 {
 	if (self = [super init]) {
+		self.musicWrapper = wrapper;
 		NSDictionary *stuff = [wrapper fileWrappers];
 		stuff = nil;
 		return nil;
@@ -390,13 +401,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	}
 	PPMusicObject *tmpObj = [[PPMusicObject alloc] initWithURL:url library:theLib];
 	return self = [self initFromMusicObject:tmpObj];
-}
-
-- (NSFileWrapper*)musicWrapper
-{
-	NSFileWrapper *outWrap = [[NSFileWrapper alloc] init];
-	
-	return outWrap;
 }
 
 - (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib
@@ -417,11 +421,17 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (OSErr)saveMusicToURL:(NSURL *)tosave
 {
+	if (![self.musicWrapper writeToURL:tosave options:NSFileWrapperWritingWithNameUpdating originalContentsURL:self.filePath error:NULL]) {
+		return MADWritingErr;
+	} else {
+		return noErr;
+	}
 	return MADOrderNotImplemented;
 }
 
 - (MADMusic *)newMadMusicStruct
 {
+	[self syncMusicDataTypes];
 	return DeepCopyMusic(self._currentMusic);
 }
 

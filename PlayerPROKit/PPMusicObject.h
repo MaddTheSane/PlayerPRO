@@ -29,9 +29,6 @@
 - (OSErr)saveMusicToURL:(NSURL *)tosave;
 - (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib;
 
-//Use to create a blank music object. NOT recommended for PPMusicObject
-- (id)init;
-
 //Creates a music object from the supplied MADK (PPMusicObject) or MAD bundle (PPMusicObjectWrapper)
 - (id)initWithURL:(NSURL *)url;
 - (id)initWithPath:(NSString *)url;
@@ -53,14 +50,14 @@
 @property (strong) NSMutableArray *sDatas;
 @property (strong) NSMutableArray *instruments;
 @property (readonly) OSType madType;
-@property (readwrite, strong, nonatomic) NSString *internalFileName;
-@property (readwrite, strong, nonatomic) NSString *madInfo;
+@property (readwrite, strong, nonatomic) NSString *internalFileName; //This is actually copied, but I don't want Clang to complain
+@property (readwrite, strong, nonatomic) NSString *madInfo; //Ditto
 
-//Use to create a blank music object. Use on PPMusicObjectWrapper is Okay
+//Use to create a blank music object.
 - (id)init;
 
 //Import from another PPMusicObject
-- (id)initFromMusicObject:(PPMusicObject*)oldFromat;
+- (id)initFromMusicObject:(PPMusicObject*)oldFormat;
 
 //Creates a MADK tracker file
 - (OSErr)exportMusicToURL:(NSURL *)tosave;
@@ -71,13 +68,16 @@
 //Load a MAD bundle from a URL
 - (id)initWithURL:(NSURL *)url;
 
-//Load a MAD bundle from a file wrapper. Not recommended to use it outside of NSDocument-based apps.
-- (id)initWithFileWrapper:(NSFileWrapper*)wrapper;
-
-//creates a file wrapper for use with an NSDocument class
-- (NSFileWrapper*)musicWrapper;
-
 //Creates a music struct for use outside of PlayerPROKit.
 - (MADMusic *)newMadMusicStruct;
+
+
+#pragma mark Document-based code
+//For use with document classes, like NSDocument or UIDocument
+//Load a MAD bundle from a file wrapper.
+- (id)initWithFileWrapper:(NSFileWrapper*)wrapper;
+
+//The file wrapper
+@property (strong, readonly) NSFileWrapper* musicWrapper;
 
 @end
