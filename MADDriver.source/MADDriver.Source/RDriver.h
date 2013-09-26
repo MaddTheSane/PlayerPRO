@@ -450,14 +450,12 @@ typedef struct PlugInfo
 
 typedef struct MADLibrary
 {
+	short					TotalPlug;							// no of Plugs in pointer ThePlug
 	OSType					IDType;								// IDType = 'MADD' -- READ ONLY --
 	
 	/** Plugs Import/Export variables **/
-	
-	short					TotalPlug;							// no of Plugs in pointer ThePlug
-	PlugInfo 				*ThePlug;							// Pointers on plugs code & infos
 	SInt32					mytab[ 12];
-	
+	PlugInfo 				*ThePlug;							// Pointers on plugs code & infos
 } MADLibrary;
 
 #ifndef __callback
