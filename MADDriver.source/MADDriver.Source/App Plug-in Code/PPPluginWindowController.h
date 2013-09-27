@@ -21,6 +21,7 @@ extern NSString * const PPPlugReturnCode;
 	dispatch_block_t plugBlock;
 }
 
+- (id)initWithWindowNibName:(NSString *)windowNibName UNAVAILABLE_ATTRIBUTE;
 - (id)initWithWindowNibName:(NSString *)windowNibName infoPlug:(PPInfoPlug *)ip;
 
 @property PPInfoPlug *infoPlug;

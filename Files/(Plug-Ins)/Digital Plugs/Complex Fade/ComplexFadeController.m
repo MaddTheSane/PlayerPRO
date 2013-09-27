@@ -18,7 +18,11 @@
 {
     self = [super initWithWindow:window];
     if (self) {
-        // Initialization code here.
+		isMultipleIstanceSafe = YES;
+		dispatch_block_t tmp = ^{
+			
+		};
+		self.plugBlock = tmp;
     }
     
     return self;
@@ -26,17 +30,22 @@
 
 - (void)windowDidLoad
 {
-    isMultipleIstanceSafe = YES;
 	[super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
+- (IBAction)changeFadeType:(id)sender {
+}
 @end
 
 static OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
-	return MADOrderNotImplemented;
+	ComplexFadeController *controller = [[ComplexFadeController alloc] initWithWindowNibName:@"ComplexFadeController" infoPlug:thePPInfoPlug];
+	controller.thePcmd = myPcmd;
+	
+	
+	return [controller runAsSheet];
 }
 
 #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x2C, 0xE9, 0x02, 0x81, 0xE2, 0xC2, 0x47, 0x5A, 0xA0, 0xF0, 0xB9, 0x0C, 0x64, 0x1E, 0xAE, 0xB1)

@@ -19,6 +19,13 @@ NSString * const PPPlugReturnCode = @"MAD Return Code";
 @synthesize infoPlug;
 @synthesize plugBlock;
 
+#if 0
+- (id)initWithWindowNibName:(NSString *)windowNibName
+{
+	return self = [super initWithWindowNibName:windowNibName];
+}
+#endif
+
 - (id)initWithWindowNibName:(NSString *)windowNibName infoPlug:(PPInfoPlug *)ip
 {
 	if (self = [super initWithWindowNibName:windowNibName]) {
