@@ -238,8 +238,6 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 @interface PPToneGeneratorController ()
 @property (retain) NSArray *toneRadios;
 @property BOOL disabledData;
-@property long selectionStart;
-@property long selectionEnd;
 @end
 
 @implementation PPToneGeneratorController
@@ -404,17 +402,17 @@ static OSErr mainToneGenerator(void				*unused,
 	Audio8Ptr	= NULL;
 	Audio16Ptr	= NULL;
 	
-	PPToneGeneratorController *controller = [[PPToneGeneratorController alloc] initWithWindowNibName:@"PPToneGeneratorController"];
+	PPToneGeneratorController *controller = [[PPToneGeneratorController alloc] initWithWindowNibName:@"PPToneGeneratorController" infoPlug:thePPInfoPlug];
 	
 	controller.theData = theData;
-	controller.infoPlug = thePPInfoPlug;
 	controller.audioLength = AudioLength;
 	controller.audioAmplitude = (double)(AudioAmp) / 100.0;
 	controller.audioFrequency = AudioFreq;
 	controller.selectionStart = SelectionStart;
 	controller.selectionEnd = SelectionEnd;
+	controller.stereoMode = StereoMode ? YES : NO;
 	
-	return [controller runAsModal];
+	return [controller runAsSheet];
 }
 
 // 25FA16EC-75FF-4514-9C84-7202360044B9

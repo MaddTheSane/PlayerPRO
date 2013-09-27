@@ -7,6 +7,7 @@
 //
 
 #import "LengthWindowController.h"
+#import "LengthViewController.h"
 
 @interface LengthWindowController ()
 

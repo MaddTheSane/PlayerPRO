@@ -12,7 +12,12 @@
 {
 	@protected
 	sData *theData;
+	long selectionStart;
+	long selectionEnd;
+	BOOL stereoMode;
 }
 @property sData *theData;
+@property long selectionStart, selectionEnd;
+@property BOOL stereoMode;
 
 @end

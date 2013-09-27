@@ -38,7 +38,7 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="okayOrCancel:" target="-2" id="261"/>
+                            <action selector="okOrCancel:" target="-2" id="ZQY-gm-qyt"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="9">
@@ -52,7 +52,7 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="okayOrCancel:" target="-2" id="262"/>
+                            <action selector="okOrCancel:" target="-2" id="X9h-r7-7XA"/>
                         </connections>
                     </button>
                     <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="13">
@@ -260,6 +260,17 @@ Gw
                             </column>
                         </cells>
                     </form>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ckR-hm-ytw">
+                        <rect key="frame" x="14" y="13" width="65" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Play" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DsG-SZ-Vlc">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="playSample:" target="-2" id="irP-Bv-U4f"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="5" secondAttribute="trailing" constant="20" symbolic="YES" id="7"/>
@@ -268,6 +279,7 @@ Gw
                     <constraint firstItem="13" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="23"/>
                     <constraint firstItem="324" firstAttribute="top" secondItem="13" secondAttribute="bottom" constant="8" symbolic="YES" id="336"/>
                     <constraint firstItem="164" firstAttribute="top" secondItem="324" secondAttribute="bottom" constant="8" symbolic="YES" id="337"/>
+                    <constraint firstItem="ckR-hm-ytw" firstAttribute="baseline" secondItem="9" secondAttribute="baseline" id="65n-Az-fwB"/>
                     <constraint firstItem="1UQ-xd-Aoh" firstAttribute="top" secondItem="164" secondAttribute="bottom" constant="8" symbolic="YES" id="HpE-sr-6bU"/>
                     <constraint firstAttribute="trailing" secondItem="164" secondAttribute="trailing" constant="20" symbolic="YES" id="LB0-d4-3Ra"/>
                     <constraint firstItem="9" firstAttribute="top" secondItem="1UQ-xd-Aoh" secondAttribute="bottom" constant="20" symbolic="YES" id="Y7K-Z8-RTM"/>
@@ -276,6 +288,7 @@ Gw
                     <constraint firstItem="164" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="jdU-hI-puF"/>
                     <constraint firstItem="9" firstAttribute="baseline" secondItem="5" secondAttribute="baseline" id="p7Q-vK-aY7"/>
                     <constraint firstAttribute="centerX" secondItem="1UQ-xd-Aoh" secondAttribute="centerX" id="tgM-eY-kOl"/>
+                    <constraint firstItem="ckR-hm-ytw" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="vf6-uJ-aqg"/>
                 </constraints>
             </view>
             <connections>

@@ -14,28 +14,77 @@
 
 @end
 
-static Boolean getParams( SInt32 *p1, PPInfoPlug *thePPInfoPlug)
-{
-	DepthController *controller = [[DepthController alloc] initWithWindowNibName:@"DepthController"];
-	controller.depthAmmount = *p1;
-	
-	NSInteger retVal = [controller runAsModal];
-	
-	if (retVal == NSOffState) {
-		return FALSE;
-	} else {
-		*p1 = controller.depthAmmount;
-		return TRUE;
-	}
-}
-
 @implementation DepthController
 
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
-        // Initialization code here.
+		isMultipleIstanceSafe = YES;
+
+		dispatch_block_t tmp = ^{
+			SInt32			i, temp, Inc = self.depthAmmount;
+			char			*Sample8Ptr = (char*) theData->data;
+			short			*Sample16Ptr = ( short*) theData->data;
+			
+			if( Inc == 0) Inc = 1;
+			switch( theData->amp)
+			{
+				case 8:
+					Sample8Ptr += selectionStart;
+					
+					for( i = 0; i < selectionEnd - selectionStart; i++)
+					{
+						temp = *Sample8Ptr;
+						
+						temp *= Inc;
+						temp /= 256;
+						
+						temp *= 256;
+						temp /= Inc;
+						
+						*Sample8Ptr = temp;
+						
+						if( stereoMode)
+						{
+							Sample8Ptr++;
+							i++;
+						}
+						
+						Sample8Ptr++;
+					}
+					break;
+					
+				case 16:
+					Sample16Ptr += selectionStart/2;						// Div 2, because it's in bytes !!!
+					
+					for( i = 0; i < (selectionEnd - selectionStart)/2; i++)	// Div 2, because it's in bytes !!!
+					{
+						temp = *Sample16Ptr;
+						
+						temp *= Inc;
+						temp /= 0x0000FFFF;
+						
+						temp *= 0x0000FFFF;
+						temp /= Inc;
+						
+						*Sample16Ptr = temp;
+						
+						if( stereoMode)
+						{
+							Sample16Ptr++;
+							i++;
+						}
+						
+						Sample16Ptr++;
+					}
+					break;
+			}
+
+
+		};
+		
+		self.plugBlock = tmp;
     }
     
     return self;
@@ -57,68 +106,14 @@ static OSErr mainDepth(void						*unused,
 					   PPInfoPlug				*thePPInfoPlug,
 					   short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	SInt32			i, temp, Inc;
-	char			*Sample8Ptr = (char*) theData->data;
-	short			*Sample16Ptr = ( short*) theData->data;
+	DepthController *controller = [[DepthController alloc] initWithWindowNibName:@"DepthController" infoPlug:thePPInfoPlug];
+	controller.depthAmmount = 8;
+	controller.theData = theData;
+	controller.selectionStart = SelectionStart;
+	controller.selectionEnd = SelectionEnd;
+	controller.stereoMode = StereoMode ? YES : NO;
 	
-	Inc = 8;
-	if( getParams( &Inc, thePPInfoPlug))
-	{
-		if( Inc == 0) Inc = 1;
-		switch( theData->amp)
-		{
-			case 8:
-				Sample8Ptr += SelectionStart;
-				
-				for( i = 0; i < SelectionEnd - SelectionStart; i++)
-				{
-					temp = *Sample8Ptr;
-					
-					temp *= Inc;
-					temp /= 256;
-					
-					temp *= 256;
-					temp /= Inc;
-					
-					*Sample8Ptr = temp;
-					
-					if( StereoMode)
-					{
-						Sample8Ptr++;
-						i++;
-					}
-					
-					Sample8Ptr++;
-				}
-				break;
-				
-			case 16:
-				Sample16Ptr += SelectionStart/2;						// Div 2, because it's in bytes !!!
-				
-				for( i = 0; i < (SelectionEnd - SelectionStart)/2; i++)	// Div 2, because it's in bytes !!!
-				{
-					temp = *Sample16Ptr;
-					
-					temp *= Inc;
-					temp /= 0x0000FFFF;
-					
-					temp *= 0x0000FFFF;
-					temp /= Inc;
-					
-					*Sample16Ptr = temp;
-					
-					if( StereoMode)
-					{
-						Sample16Ptr++;
-						i++;
-					}
-					
-					Sample16Ptr++;
-				}
-				break;
-		}
-	}
-	return noErr;
+	return [controller runAsSheet];
 }
 
 // D7F6D8C0-FC86-48E4-A2B8-61BB681DE071

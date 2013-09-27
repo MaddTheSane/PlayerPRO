@@ -13,30 +13,79 @@
 
 @end
 
-static Boolean getParams ( double *p1, double *p2, PPInfoPlug *thePPInfoPlug)
-{
-	FadeWindowController *controller = [[FadeWindowController alloc] initWithWindowNibName:@"FadeWindowController"];
-	controller.fadeTo = *p1;
-	controller.fadeFrom = *p2;
-	
-	NSInteger retVal = [controller runAsModal];
-	
-	if (retVal == NSOffState) {
-		return FALSE;
-	} else {
-		*p1 = controller.fadeTo;
-		*p2 = controller.fadeFrom;
-		return TRUE;
-	}
-}
-
 @implementation FadeWindowController
 
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
-        // Initialization code here.
+		isMultipleIstanceSafe = YES;
+		
+		dispatch_block_t tmp = ^{
+			long		i, per;
+			double		from = self.fadeFrom, to = self.fadeTo, temp;
+			Ptr			Sample8Ptr = theData->data;
+			short		*Sample16Ptr = (short*) theData->data;
+			
+			
+			switch( theData->amp)
+			{
+				case 8:
+					Sample8Ptr += selectionStart;
+					
+					for( i = 0; i < selectionEnd - selectionStart; i++)
+					{
+						temp = *Sample8Ptr;
+						if( temp >= 0x80) temp -= 0xFF;
+						
+						per = from + ((to-from) * i) / (selectionEnd - selectionStart);
+						
+						temp *= per;
+						temp /= 100L;
+						if( temp >= 127) temp = 127;
+						else if( temp <= -127 ) temp = -127;
+						
+						*Sample8Ptr = temp;
+						
+						if( stereoMode)
+						{
+							Sample8Ptr++;
+							i++;
+						}
+						
+						Sample8Ptr++;
+					}
+					break;
+					
+				case 16:
+					Sample16Ptr += selectionStart/2;						// Div 2, because it's in bytes !!!
+					
+					for( i = 0; i < (selectionEnd - selectionStart)/2; i++)	// Div 2, because it's in bytes !!!
+					{
+						temp = *Sample16Ptr;
+						
+						per = from + ((to-from) * i) / ((selectionEnd - selectionStart)/2);
+						
+						temp *= per;
+						temp /= 100L;
+						
+						if( temp >= (short) 0x7FFF) temp = 0x7FFF;	// overflow ?
+						else if( temp <= (short) 0x8000 ) temp = (short) 0x8000;
+						
+						*Sample16Ptr = temp;
+						
+						if( stereoMode)
+						{
+							Sample16Ptr++;
+							i++;
+						}
+						Sample16Ptr++;
+					}
+					break;
+			}
+			
+		};
+		self.plugBlock = tmp;
     }
     
     return self;
@@ -58,73 +107,15 @@ static OSErr mainFade(void			*unused,
 					  PPInfoPlug	*thePPInfoPlug,
 					  short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	long		i, per;
-	double		from, to, temp;
-	Ptr			Sample8Ptr = theData->data;
-	short		*Sample16Ptr = (short*) theData->data;
+	FadeWindowController *controller = [[FadeWindowController alloc] initWithWindowNibName:@"FadeWindowController" infoPlug:thePPInfoPlug];
+	controller.fadeTo = 1.0;
+	controller.fadeFrom = .70;
+	controller.theData = theData;
+	controller.selectionStart = SelectionStart;
+	controller.selectionEnd = SelectionEnd;
+	controller.stereoMode = StereoMode ? YES : NO;
 	
-	to = 1.0;
-	from = .70;
-	
-	if( getParams( &to, &from, thePPInfoPlug))
-	{
-		switch( theData->amp)
-		{
-			case 8:
-				Sample8Ptr += SelectionStart;
-				
-				for( i = 0; i < SelectionEnd - SelectionStart; i++)
-				{
-					temp = *Sample8Ptr;
-					if( temp >= 0x80) temp -= 0xFF;
-					
-					per = from + ((to-from) * i) / (SelectionEnd - SelectionStart);
-					
-					temp *= per;
-					temp /= 100L;
-					if( temp >= 127) temp = 127;
-					else if( temp <= -127 ) temp = -127;
-					
-					*Sample8Ptr = temp;
-					
-					if( StereoMode)
-					{
-						Sample8Ptr++;
-						i++;
-					}
-					
-					Sample8Ptr++;
-				}
-				break;
-				
-			case 16:
-				Sample16Ptr += SelectionStart/2;						// Div 2, because it's in bytes !!!
-				
-				for( i = 0; i < (SelectionEnd - SelectionStart)/2; i++)	// Div 2, because it's in bytes !!!
-				{
-					temp = *Sample16Ptr;
-					
-					per = from + ((to-from) * i) / ((SelectionEnd - SelectionStart)/2);
-					
-					temp *= per;
-					temp /= 100L;
-					
-					if( temp >= (short) 0x7FFF) temp = 0x7FFF;	// overflow ?
-					else if( temp <= (short) 0x8000 ) temp = (short) 0x8000;
-					
-					*Sample16Ptr = temp;
-					
-					if( StereoMode)
-					{
-						Sample16Ptr++;
-						i++;
-					}
-					Sample16Ptr++;
-				}
-				break;
-		}
-	}
-	return noErr;
+	return [controller runAsSheet];
 }
 
 // 47C646EE-2B4B-428B-9309-C65B75CBE7EF
