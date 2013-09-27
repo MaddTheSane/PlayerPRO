@@ -33,6 +33,27 @@
 @synthesize _currentMusic = currentMusic;
 @synthesize internalFileName;
 
++ (OSErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib
+{
+	char filetype[5];
+	CFURLRef tmpCFURL;
+	OSErr theErr = noErr;
+	if (!theInfo || !thURL || !theLib) {
+		return MADParametersErr;
+	}
+	
+	tmpCFURL = CFBridgingRetain(thURL);
+	
+	if ((theErr = MADMusicIdentifyCFURL(theLib._madLib, filetype, tmpCFURL)) != noErr)
+		goto end;
+	
+	theErr = MADMusicInfoCFURL(theLib._madLib, filetype, tmpCFURL, theInfo);
+	
+end:
+	CFRelease(tmpCFURL);
+	return theErr;
+}
+
 - (NSString *)internalFileName
 {
 	if (!internalFileName) {
@@ -296,6 +317,37 @@
 @end
 
 @implementation PPMusicObjectWrapper
+
++ (PPInfoRec)infoFromTrackerAtURL:(NSURL*)thURL
+{
+	PPMusicObjectWrapper *tmpVal = [[self alloc] initWithURL:thURL];
+	PPInfoRec toReturn = {0};
+	strcpy(toReturn.formatDescription, "MAD Bundle");
+	NSData *nameData = [[tmpVal internalFileName] dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+	[nameData getBytes:toReturn.internalFileName length:MIN(nameData.length, (sizeof(toReturn.internalFileName) - 1))];
+	toReturn.signature = tmpVal.madType;
+	toReturn.totalInstruments = tmpVal.totalInstruments;
+	toReturn.partitionLength = tmpVal.partitionLength;
+	toReturn.totalPatterns = tmpVal.totalPatterns;
+	toReturn.totalTracks = tmpVal.totalTracks;
+	toReturn.fileSize = [[tmpVal.musicWrapper fileAttributes][NSFileSize] longValue];
+	
+	return toReturn;
+}
+
++ (OSErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib
+{
+	if (!theInfo || !thURL || !theLib) {
+		return MADParametersErr;
+	}
+	if ([[thURL lastPathComponent] caseInsensitiveCompare:@"madbundle"] == NSOrderedSame) {
+		*theInfo = [self infoFromTrackerAtURL:thURL];
+		return noErr;
+	} else {
+		return [super info:theInfo fromTrackerAtURL:thURL usingLibrary:theLib];
+	}
+}
+
 @synthesize madType;
 
 - (id)copyWithZone:(NSZone *)zone
