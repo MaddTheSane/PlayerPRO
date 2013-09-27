@@ -14,32 +14,6 @@
 
 @end
 
-@implementation SamplingRateWindowController
-
-- (id)initWithWindow:(NSWindow *)window
-{
-    self = [super initWithWindow:window];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
-}
-
-- (void)windowDidLoad
-{
-    [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-}
-
-- (IBAction)okOrCancel:(id)sender
-{
-	[NSApp stopModalWithCode:([sender tag] == 1) ? NSOffState : NSOnState];
-}
-
-@end
-
 static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int srcC4SPD, int dstC4SPD, Boolean stereo, size_t *newsize)
 {
 #define LRVAL	3L
@@ -143,6 +117,27 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 	return dst;
 }
 
+@implementation SamplingRateWindowController
+
+- (id)initWithWindow:(NSWindow *)window
+{
+    self = [super initWithWindow:window];
+    if (self) {
+        // Initialization code here.
+    }
+    
+    return self;
+}
+
+- (void)windowDidLoad
+{
+    [super windowDidLoad];
+    
+    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+}
+
+@end
+
 static OSErr mainSampRate(void			*unused,
 						  sData			*theData,
 						  long			SelectionStart,
@@ -155,7 +150,7 @@ static OSErr mainSampRate(void			*unused,
 	
 	controller.currentRate = controller.changedRate = theData->c2spd;
 	
-	NSInteger retval = [NSApp runModalForWindow:[controller window]];
+	NSInteger retval = [controller runAsModal];
 	if( retval != NSOffState)
 	{
 		int	newFreq = controller.changedRate;

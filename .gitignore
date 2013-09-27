@@ -1,4 +1,11 @@
 build
 *.DS_Store
 *xcuserdata
+PlayerPROCore.opensdf
+PlayerPROCore.sdf
+Debug
+Release
+*.vcxproj.user
+ipch
 **/*vers.plist
+PlayerPROCore.suo

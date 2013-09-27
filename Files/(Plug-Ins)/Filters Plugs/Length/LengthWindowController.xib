@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" promptedForUpgradeToXcode5="NO">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1070" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
     </dependencies>
     <objects>
@@ -13,17 +14,17 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" wantsToBeColor="NO" animationBehavior="default" id="1">
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="480" height="345"/>
+            <rect key="contentRect" x="196" y="240" width="308" height="317"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="345"/>
+                <rect key="frame" x="0.0" y="0.0" width="308" height="317"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5">
-                        <rect key="frame" x="20" y="67" width="98" height="58"/>
+                        <rect key="frame" x="20" y="83" width="98" height="58"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         <size key="cellSize" width="98" height="18"/>
@@ -50,23 +51,19 @@
                         </cells>
                     </matrix>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="16">
-                        <rect key="frame" x="108" y="233" width="203" height="92"/>
+                        <rect key="frame" x="108" y="227" width="180" height="70"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="203" id="58"/>
-                            <constraint firstAttribute="height" constant="92" id="59"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="58"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="59"/>
                         </constraints>
                     </customView>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="23">
-                        <rect key="frame" x="108" y="133" width="203" height="92"/>
+                        <rect key="frame" x="108" y="149" width="180" height="70"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="203" id="56"/>
-                            <constraint firstAttribute="height" constant="92" id="57"/>
-                        </constraints>
                     </customView>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="29">
-                        <rect key="frame" x="17" y="308" width="86" height="17"/>
+                        <rect key="frame" x="17" y="280" width="86" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Current Size:" id="30">
                             <font key="font" metaFont="system"/>
@@ -75,7 +72,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="64">
-                        <rect key="frame" x="38" y="208" width="65" height="17"/>
+                        <rect key="frame" x="38" y="202" width="65" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="New Size:" id="65">
                             <font key="font" metaFont="system"/>
@@ -84,7 +81,7 @@
                         </textFieldCell>
                     </textField>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="72">
-                        <rect key="frame" x="18" y="43" width="161" height="18"/>
+                        <rect key="frame" x="18" y="59" width="161" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Update Sampling Rate" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="73">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -92,7 +89,7 @@
                         </buttonCell>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="80">
-                        <rect key="frame" x="407" y="13" width="59" height="32"/>
+                        <rect key="frame" x="235" y="13" width="59" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="81">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -103,7 +100,7 @@ DQ
                         </buttonCell>
                     </button>
                     <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="84">
-                        <rect key="frame" x="325" y="13" width="82" height="32"/>
+                        <rect key="frame" x="153" y="13" width="82" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="85">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -117,20 +114,24 @@ Gw
                 <constraints>
                     <constraint firstItem="5" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="9"/>
                     <constraint firstItem="29" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="31"/>
-                    <constraint firstItem="29" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="32"/>
                     <constraint firstItem="16" firstAttribute="leading" secondItem="29" secondAttribute="trailing" constant="8" symbolic="YES" id="34"/>
                     <constraint firstItem="23" firstAttribute="top" secondItem="16" secondAttribute="bottom" constant="8" symbolic="YES" id="61"/>
                     <constraint firstItem="23" firstAttribute="leading" secondItem="16" secondAttribute="leading" id="63"/>
                     <constraint firstItem="64" firstAttribute="top" secondItem="23" secondAttribute="top" id="67"/>
-                    <constraint firstItem="23" firstAttribute="leading" secondItem="64" secondAttribute="trailing" constant="8" symbolic="YES" id="69"/>
                     <constraint firstItem="16" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="70"/>
                     <constraint firstItem="5" firstAttribute="top" secondItem="23" secondAttribute="bottom" constant="8" symbolic="YES" id="71"/>
-                    <constraint firstItem="72" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="76"/>
                     <constraint firstItem="72" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="8" symbolic="YES" id="77"/>
                     <constraint firstAttribute="trailing" secondItem="80" secondAttribute="trailing" constant="20" symbolic="YES" id="82"/>
                     <constraint firstAttribute="bottom" secondItem="80" secondAttribute="bottom" constant="20" symbolic="YES" id="83"/>
                     <constraint firstItem="80" firstAttribute="leading" secondItem="84" secondAttribute="trailing" constant="12" symbolic="YES" id="86"/>
-                    <constraint firstAttribute="bottom" secondItem="84" secondAttribute="bottom" constant="20" symbolic="YES" id="87"/>
+                    <constraint firstItem="16" firstAttribute="height" secondItem="23" secondAttribute="height" id="7DI-17-8fx"/>
+                    <constraint firstItem="5" firstAttribute="leading" secondItem="72" secondAttribute="leading" id="IJh-ge-vlO"/>
+                    <constraint firstItem="16" firstAttribute="top" secondItem="29" secondAttribute="top" id="JqA-v7-bj1"/>
+                    <constraint firstItem="84" firstAttribute="baseline" secondItem="80" secondAttribute="baseline" id="Wy8-ua-h44"/>
+                    <constraint firstItem="64" firstAttribute="trailing" secondItem="29" secondAttribute="trailing" id="Z5K-ic-XP1"/>
+                    <constraint firstAttribute="trailing" secondItem="16" secondAttribute="trailing" constant="20" symbolic="YES" id="amm-ug-Wsn"/>
+                    <constraint firstItem="84" firstAttribute="top" secondItem="72" secondAttribute="bottom" constant="20" symbolic="YES" id="ani-Qw-u0r"/>
+                    <constraint firstItem="16" firstAttribute="width" secondItem="23" secondAttribute="width" id="spp-EF-YBY"/>
                 </constraints>
             </view>
             <connections>

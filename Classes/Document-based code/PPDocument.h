@@ -11,15 +11,13 @@
 #import "PPSoundSettingsViewController.h"
 
 @interface PPDocument : NSDocument <PPSoundSettingsViewControllerDelegate>
-{
-	MADDriverSettings		exportSettings;
-}
 
 @property (weak) IBOutlet NSWindow	*exportWindow;
 @property (weak) IBOutlet NSBox		*exportSettingsBox;
 @property (strong) PPSoundSettingsViewController *exportController;
+@property (strong) NSString *musicName;
+@property (strong) NSString *musicInfo;
 
-
-- (IBAction)exportMusic:(id)sender;
+- (IBAction)exportMusicAs:(id)sender;
 
 @end

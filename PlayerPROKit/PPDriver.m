@@ -16,18 +16,69 @@
 @implementation PPDriver
 @synthesize rec = theRec;
 @synthesize currentMusic;
-
 - (void)setCurrentMusic:(PPMusicObject *)curMusic
 {
 	if (curMusic != currentMusic) {
-		if (currentMusic) {
-		}
 		currentMusic = curMusic;
 		MADAttachDriverToMusic(theRec, currentMusic._currentMusic, NULL);
 	}
 }
 
 @synthesize theLibrary = thePPLib;
+
+- (MADDriverSettings)driverSettings
+{
+	return MADGetDriverSettings(theRec);
+}
+
+- (OSErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett
+{
+	return MADChangeDriverSettings(&theSett, &theRec);
+}
+
+- (void)beginExport
+{
+	MADBeginExport(theRec);
+}
+
+- (void)endExport
+{
+	MADEndExport(theRec);
+}
+
+- (void)cleanDriver
+{
+	MADCleanDriver(theRec);
+}
+	
+- (BOOL)directSaveToPointer:(void*)thePtr settings:(MADDriverSettings*)theSett
+{
+	return DirectSave(thePtr, theSett, theRec);
+}
+
+- (NSInteger)audioLength
+{
+	return MADAudioLength(theRec);
+}
+
+- (OSErr)play
+{
+	return MADPlayMusic(theRec);
+}
+
+- (OSErr)pause
+{
+	return MADStopMusic(theRec);
+}
+
+- (OSErr)stop
+{
+	OSErr theErr = MADStopMusic(theRec);
+	if (theErr) {
+		return theErr;
+	}
+	return MADSetMusicStatus(theRec, 0, 100, 0);
+}
 
 - (id)init
 {
@@ -38,7 +89,7 @@
 
 - (id)initWithLibrary:(PPLibrary *)theLib
 {
-	MADDriverSettings theSet;
+	MADDriverSettings theSet = {0};
 	MADGetBestDriver(&theSet);
 	return [self initWithLibrary:theLib settings:&theSet];
 }
@@ -47,7 +98,7 @@
 {
 	if (self = [super init]) {
 		thePPLib = theLib;
-		if(MADCreateDriver(theSettings, theLib._madLib, &theRec) !=noErr)
+		if (MADCreateDriver(theSettings, theLib._madLib, &theRec) !=noErr)
 		{
 			return nil;
 		}
@@ -63,13 +114,13 @@
 
 - (void)loadMusicFile:(NSString *)path
 {
-	PPMusicObject *theMus = [[PPMusicObject alloc] initWithPath:path driver:self setAsCurrentMusic:YES];
+	PPMusicObject *theMus = [[PPMusicObject alloc] initWithPath:path driver:self];
 	theMus = nil;
 }
 
 - (void)loadMusicURL:(NSURL*)url
 {
-	PPMusicObject *theMus = [[PPMusicObject alloc] initWithURL:url driver:self setAsCurrentMusic:YES];
+	PPMusicObject *theMus = [[PPMusicObject alloc] initWithURL:url driver:self];
 	theMus = nil;
 }
 

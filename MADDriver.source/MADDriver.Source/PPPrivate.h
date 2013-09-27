@@ -79,12 +79,12 @@ void 	Play16Mono( MADDriverRec* intDriver);
 
 void 	DoEffect( Channel *ch, short call, MADDriverRec *intDriver);
 void 	SetUpEffect( Channel *ch, MADDriverRec *intDriver);
-void DoVolCmd( Channel *ch, short call, MADDriverRec *intDriver);
+void	DoVolCmd( Channel *ch, short call, MADDriverRec *intDriver);
 
 /*** Interruption Functions ***/
 
 void 	NoteAnalyse( MADDriverRec *intDriver);
-void 	ReadNote( Channel *curVoice, Cmd		*theCommand, MADDriverRec *intDriver);
+void 	ReadNote( Channel *curVoice, Cmd *theCommand, MADDriverRec *intDriver);
 void 	Filter8Bit(  Byte *myPtr, MADDriverRec *intDriver);
 void 	Filter8BitX(  Byte *myPtr, MADDriverRec *intDriver);
 void 	Filter16BitX(  short *myPtr, MADDriverRec *intDriver);
@@ -129,12 +129,12 @@ void W95_Exit( MADDriverRec* driver);
 #endif
 	
 #if 0
-OSErr	CallImportPlug( 	MADLibrary		*inMADDriver,
-							short			PlugNo,			// CODE du plug
-							OSType			order,
-							char			*AlienFile,
-							MADMusic		*theNewMAD,
-							PPInfoRec		*info);
+OSErr	CallImportPlug(MADLibrary		*inMADDriver,
+						short			PlugNo,			// CODE du plug
+						OSType			order,
+						char			*AlienFile,
+						MADMusic		*theNewMAD,
+						PPInfoRec		*info);
 #endif
 
 OSErr	PPTestFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile);
@@ -150,7 +150,6 @@ OSErr	PPImportFileU( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, M
 OSType	GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType type);
 void	MInitImportPlug( MADLibrary *inMADDriver, char*);	
 void	CloseImportPlug( MADLibrary *inMADDriver);
-OSErr	MADLoadMADFileCString( MADMusic **, Ptr fName) DEPRECATED_ATTRIBUTE;
 OSErr	CheckMADFile( char *AlienFile);
 
 #ifndef __PPPLUGH__

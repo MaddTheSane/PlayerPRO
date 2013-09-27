@@ -737,6 +737,10 @@ OSErr MADCreateTiming( MADDriverRec *intDriver)
 	return noErr;
 }
 
+MADDriverSettings MADGetDriverSettings(MADDriverRec * theDriver)
+{
+	return theDriver->DriverSettings;
+}
 
 OSErr MADChangeDriverSettings( MADDriverSettings	*DriverInitParam, MADDriverRec** returnDriver)
 {
@@ -1546,7 +1550,7 @@ OSErr MADCopyCurrentPartition( MADMusic *aPartition)
 #endif
 
 
-OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef)
+OSErr MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef)
 {
 	char *URLcString = NULL;
 	
@@ -1609,7 +1613,7 @@ OSErr MADMusicInfoCString( MADLibrary *lib, char *type, char* cName, PPInfoRec *
 	return PPInfoFile(lib, type, cName, InfoRec);
 }
 
-OSErr	MADMusicIdentifyCString( MADLibrary *lib, char *type, Ptr fName)
+OSErr MADMusicIdentifyCString( MADLibrary *lib, char *type, Ptr fName)
 {
 	if (lib == NULL || type == NULL || fName == NULL) {
 		return MADParametersErr;
@@ -1845,6 +1849,9 @@ OSErr MADGetMusicStatus( MADDriverRec *MDriver, long *fullTime, long *curTime)
 
 static inline void SwapFXSets(FXSets *set)
 {
+#ifndef __BLOCKS__
+	int y;
+#endif
 	PPBE16(&set->id);
 	PPBE16(&set->noArg);
 	PPBE16(&set->track);
@@ -1854,16 +1861,17 @@ static inline void SwapFXSets(FXSets *set)
 		PPBE32(&set->values[y]);
 	});
 #else
-	int y;
 	for (y = 0; y < 100; y++) {
 		PPBE32(&set->values[y]);
 	}
-
 #endif
 }
 
 static inline void ByteSwapInstrData(InstrData *toSwap)
 {
+#ifndef __BLOCKS__
+	int x;
+#endif
 	PPBE16( &toSwap->numSamples);
 	PPBE16( &toSwap->firstSample);
 	PPBE16( &toSwap->volFade);
@@ -1882,7 +1890,6 @@ static inline void ByteSwapInstrData(InstrData *toSwap)
 		PPBE16( &toSwap->pitchEnv[ x].val);
 	});
 #else
-	int x;
 	for (x = 0; x < 12; x++) {
 		PPBE16( &toSwap->volEnv[ x].pos);
 		PPBE16( &toSwap->volEnv[ x].val);

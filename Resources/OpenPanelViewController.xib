@@ -22,7 +22,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" inset="2" id="4">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="5"/>
                     </popUpButtonCell>
                     <connections>
@@ -31,6 +31,7 @@
                 </popUpButton>
             </subviews>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="3" secondAttribute="bottom" constant="20" symbolic="YES" id="CdM-Kr-uFg"/>
                 <constraint firstItem="3" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="DgZ-Hz-ZQY"/>
                 <constraint firstItem="3" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="Lvk-jg-ZcM"/>
                 <constraint firstAttribute="trailing" secondItem="3" secondAttribute="trailing" constant="20" symbolic="YES" id="ae0-7s-7hj"/>

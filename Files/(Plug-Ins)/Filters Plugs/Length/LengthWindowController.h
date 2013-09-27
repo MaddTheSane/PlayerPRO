@@ -7,14 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
 @class LengthViewController;
 
-@interface LengthWindowController : NSWindowController
+@interface LengthWindowController : PPFilterPluginWindowController
 
 @property (weak) IBOutlet LengthViewController *currentSize;
 @property (weak, getter = getNewSize) IBOutlet LengthViewController *newSize;
-
-- (IBAction)okOrCancel:(id)sender;
 
 @end

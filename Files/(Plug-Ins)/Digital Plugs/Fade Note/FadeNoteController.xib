@@ -12,21 +12,18 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" wantsToBeColor="NO" animationBehavior="default" id="1">
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="242" height="154"/>
+            <rect key="contentRect" x="196" y="240" width="191" height="129"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="242" height="154"/>
+                <rect key="frame" x="0.0" y="0.0" width="191" height="129"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5">
-                        <rect key="frame" x="68" y="110" width="99" height="26"/>
+                        <rect key="frame" x="73" y="85" width="101" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="96" id="9"/>
-                        </constraints>
                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="6">
                             <numberFormatter key="formatter" formatterBehavior="default10_4" positiveFormat="#" negativeFormat="#" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" minimumFractionDigits="0" maximumFractionDigits="0" id="35">
                                 <real key="roundingIncrement" value="0.0"/>
@@ -40,7 +37,7 @@
                         </comboBoxCell>
                     </comboBox>
                     <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="10">
-                        <rect key="frame" x="66" y="79" width="101" height="26"/>
+                        <rect key="frame" x="73" y="57" width="101" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="98" id="33"/>
@@ -55,25 +52,25 @@
                         </comboBoxCell>
                     </comboBox>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="15">
-                        <rect key="frame" x="20" y="114" width="41" height="17"/>
+                        <rect key="frame" x="17" y="89" width="51" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="From:" id="16">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="From:" id="16">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19">
-                        <rect key="frame" x="36" y="83" width="25" height="17"/>
+                        <rect key="frame" x="17" y="61" width="51" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="To:" id="20">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="To:" id="20">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="25">
-                        <rect key="frame" x="169" y="13" width="59" height="32"/>
+                        <rect key="frame" x="118" y="13" width="59" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="26">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -82,9 +79,12 @@
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="okOrCancel:" target="-2" id="Y89-9j-DYk"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="29">
-                        <rect key="frame" x="87" y="13" width="82" height="32"/>
+                        <rect key="frame" x="36" y="13" width="82" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="30">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -93,21 +93,29 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="okOrCancel:" target="-2" id="gIo-oq-qga"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="5" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="8"/>
-                    <constraint firstItem="10" firstAttribute="top" secondItem="2" secondAttribute="top" constant="51" id="13"/>
                     <constraint firstItem="15" firstAttribute="baseline" secondItem="5" secondAttribute="baseline" id="17"/>
-                    <constraint firstItem="15" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="23" id="18"/>
+                    <constraint firstItem="15" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="18"/>
                     <constraint firstItem="19" firstAttribute="baseline" secondItem="10" secondAttribute="baseline" id="21"/>
                     <constraint firstItem="19" firstAttribute="trailing" secondItem="15" secondAttribute="trailing" id="22"/>
                     <constraint firstItem="10" firstAttribute="leading" secondItem="19" secondAttribute="trailing" constant="8" symbolic="YES" id="23"/>
                     <constraint firstAttribute="trailing" secondItem="25" secondAttribute="trailing" constant="20" symbolic="YES" id="27"/>
                     <constraint firstAttribute="bottom" secondItem="25" secondAttribute="bottom" constant="20" symbolic="YES" id="28"/>
                     <constraint firstItem="25" firstAttribute="leading" secondItem="29" secondAttribute="trailing" constant="12" symbolic="YES" id="31"/>
-                    <constraint firstAttribute="bottom" secondItem="29" secondAttribute="bottom" constant="20" symbolic="YES" id="32"/>
                     <constraint firstItem="10" firstAttribute="trailing" secondItem="5" secondAttribute="trailing" id="34"/>
+                    <constraint firstItem="25" firstAttribute="baseline" secondItem="29" secondAttribute="baseline" id="0vf-uH-oGE"/>
+                    <constraint firstItem="29" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="CWn-Pw-gk8"/>
+                    <constraint firstItem="5" firstAttribute="leading" secondItem="10" secondAttribute="leading" id="LtY-MO-pLO"/>
+                    <constraint firstItem="29" firstAttribute="top" secondItem="10" secondAttribute="bottom" constant="20" symbolic="YES" id="PMr-8E-mrA"/>
+                    <constraint firstItem="10" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="8" symbolic="YES" id="RJ0-Bi-h3u"/>
+                    <constraint firstAttribute="trailing" secondItem="5" secondAttribute="trailing" constant="20" symbolic="YES" id="Ts5-Dj-dSE"/>
+                    <constraint firstItem="19" firstAttribute="width" secondItem="15" secondAttribute="width" id="aYs-aC-RDC"/>
                 </constraints>
             </view>
             <connections>

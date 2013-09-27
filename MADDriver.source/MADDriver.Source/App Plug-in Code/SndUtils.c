@@ -126,9 +126,9 @@ OSErr inAddSoundToMADCString(Ptr			theSound,
 	if( curData->data != NULL) free( curData->data);
 	curData->data = theSound;
 	
-	curData->size		= inOutBytes;
-	curData->loopBeg	= loopStart;
-	curData->loopSize	= loopEnd - loopStart;
+	curData->size		= (int)inOutBytes;
+	curData->loopBeg	= (int)loopStart;
+	curData->loopSize	= (int)(loopEnd - loopStart);
 	curData->vol		= 64;
 	curData->amp		= sS;
 	curData->c2spd		= rate;

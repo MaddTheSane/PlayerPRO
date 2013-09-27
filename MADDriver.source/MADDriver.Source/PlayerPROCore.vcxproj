@@ -97,11 +97,9 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="PlayerPROCore.def" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ByteSwap.c" />
     <ClCompile Include="DelayOutPut.c" />
     <ClCompile Include="Effects.c" />
     <ClCompile Include="FileUtils.c" />

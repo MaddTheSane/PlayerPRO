@@ -350,7 +350,6 @@ typedef struct PPInfoRec
 	OSType		signature;
 	
 	long		fileSize;
-	
 } PPInfoRec;
 
 typedef struct PPInfoRecU
@@ -520,21 +519,18 @@ typedef struct PlugInfoInternal
 
 #endif
 
-#pragma pack(push, 2)
-
 /********************						***********************/
 /*** 		Global structure : PlayerPRO variables				***/
 /********************						***********************/
 
 typedef struct MADLibrary
 {
+	short					TotalPlug;							// no of Plugs in pointer ThePlug
 	OSType					IDType;								// IDType = 'MADD' -- READ ONLY --
-	SInt32					mytab[ 12];
 	
 	/** Plugs Import/Export variables **/
-	
+	SInt32					mytab[ 12];
 	PlugInfoInternal		*ThePlug;							// Pointers on plugs code & infos
-	short					TotalPlug;							// no of Plugs in pointer ThePlug
 } MADLibrary;
 
 #ifndef __callback
@@ -672,6 +668,8 @@ PPEXPORT OSErr	MADDisposeDriver( MADDriverRec *MDriver);											// Dispose th
 
 PPEXPORT OSErr	MADChangeDriverSettings( MADDriverSettings	*DriverInitParam, MADDriverRec** returnDriver);
 
+PPEXPORT MADDriverSettings MADGetDriverSettings(MADDriverRec * theDriver);
+
 PPEXPORT OSErr	MADStartDriver( MADDriverRec *MDriver);										// NEW - Activates the sound generating procedure (interruption)
 PPEXPORT OSErr	MADStopDriver( MADDriverRec *MDriver);										// NEW - DEActivates the sound generating procedure (interruption)
 
@@ -758,7 +756,5 @@ PPEXPORT SInt32 MADAudioLength(MADDriverRec *theRec);
 #ifdef __cplusplus
 }
 #endif
-
-#pragma pack(pop)
 
 #endif

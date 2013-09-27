@@ -39,18 +39,18 @@
 	drivSet.surround = [defaults boolForKey:PPSurroundToggle];
 	drivSet.driverMode = [defaults integerForKey:PPSoundDriver];
 	drivSet.outPutBits = [defaults integerForKey:PPSoundOutBits];
-	drivSet.outPutRate = [defaults integerForKey:PPSoundOutRate];
+	drivSet.outPutRate = (unsigned int)[defaults integerForKey:PPSoundOutRate];
 	drivSet.outPutMode = DeluxeStereoOutPut;
 	if ([defaults boolForKey:PPOversamplingToggle]) {
-		drivSet.oversampling = [defaults integerForKey:PPOversamplingAmount];
+		drivSet.oversampling = (int)[defaults integerForKey:PPOversamplingAmount];
 	} else {
 		drivSet.oversampling = 1;
 	}
 	drivSet.Reverb = [defaults boolForKey:PPReverbToggle];
-	drivSet.ReverbSize = [defaults integerForKey:PPReverbAmount];
-	drivSet.ReverbStrength = [defaults integerForKey:PPReverbStrength];
+	drivSet.ReverbSize = (int)[defaults integerForKey:PPReverbAmount];
+	drivSet.ReverbStrength = (int)[defaults integerForKey:PPReverbStrength];
 	if ([defaults boolForKey:PPStereoDelayToggle]) {
-		drivSet.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
+		drivSet.MicroDelaySize = (int)[defaults integerForKey:PPStereoDelayAmount];
 	} else {
 		drivSet.MicroDelaySize = 0;
 	}

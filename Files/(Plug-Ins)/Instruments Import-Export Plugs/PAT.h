@@ -1,8 +1,6 @@
 #ifndef __PAT_H
 #define __PAT_H
 
-#pragma pack(push, 2)
-
 typedef struct _PatchHeader
 {
 	char	ID[ 12];
@@ -74,8 +72,6 @@ typedef struct _PatSampHeader
 	char			reserved[ 36];
 	
 } PatSampHeader;
-
-#pragma pack(pop)
 
 /*
 Document converted to plain ASCII for inclusion in Wotsit's Format

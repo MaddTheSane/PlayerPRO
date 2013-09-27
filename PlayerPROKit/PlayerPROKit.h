@@ -15,4 +15,6 @@
 #if defined(ISUSINGPPPLUG) && !TARGET_OS_IPHONE
 #import <PlayerPROKit/PPPluginWindowController.h>
 #import <PlayerPROKit/PPDigitalPluginWindowController.h>
+#import <PlayerPROKit/PPFilterPluginWindowController.h>
+#import <PlayerPROKit/PPInstrumentPluginWindowController.h>
 #endif

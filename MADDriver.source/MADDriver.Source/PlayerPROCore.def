@@ -42,16 +42,8 @@ MADStartDriver
 MADStopDriver
 MADStopMusic
 MADWasReading
-MADstrcmp
-MADstrcpy
-OSType2Ptr
-PPBE16
-PPBE32
 PPDebugStr
-PPLE16
-PPLE32
 PPRegisterDebugFunc
-Ptr2OSType
 UpdateTracksNumber
 iClose
 iFileCreate
