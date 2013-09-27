@@ -16,4 +16,5 @@
 #import <PlayerPROKit/PPPluginWindowController.h>
 #import <PlayerPROKit/PPDigitalPluginWindowController.h>
 #import <PlayerPROKit/PPFilterPluginWindowController.h>
+#import <PlayerPROKit/PPInstrumentPluginWindowController.h>
 #endif

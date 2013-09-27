@@ -136,6 +136,8 @@
 		551FEAD410E727B100EDF2F1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		551FEB7C10E728D400EDF2F1 /* MINS.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E103710D6C79E00BB619C /* MINS.c */; };
 		551FEB7E10E728F100EDF2F1 /* PAT.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E104110D6C79E00BB619C /* PAT.c */; };
+		5521F3FD17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5521F3FF17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */; };
 		55232A7611FDD2A60041A4EC /* SoundOutputController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232A7511FDD2A60041A4EC /* SoundOutputController.m */; };
 		55232AD811FDDFEA0041A4EC /* PianoPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AD711FDDFEA0041A4EC /* PianoPreferencesController.m */; };
 		55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AE911FDE29B0041A4EC /* ColorPreferenceController.m */; };
@@ -1760,6 +1762,8 @@
 		551FEAC910E727AD00EDF2F1 /* MINs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MINs-Info.plist"; path = "../../../MINs-Info.plist"; sourceTree = "<group>"; };
 		551FEADA10E727B100EDF2F1 /* PAT.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PAT.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		551FEB2810E727B100EDF2F1 /* PAT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PAT-Info.plist"; path = "../../../PAT-Info.plist"; sourceTree = "<group>"; };
+		5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPluginWindowController.h; sourceTree = "<group>"; };
+		5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentPluginWindowController.m; sourceTree = "<group>"; };
 		55232A7411FDD2A60041A4EC /* SoundOutputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundOutputController.h; sourceTree = "<group>"; };
 		55232A7511FDD2A60041A4EC /* SoundOutputController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundOutputController.m; sourceTree = "<group>"; };
 		55232AD611FDDFEA0041A4EC /* PianoPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PianoPreferencesController.h; sourceTree = "<group>"; };
@@ -3684,6 +3688,8 @@
 				55B7665C17E3CDA2004C1D45 /* PPDigitalPluginWindowController.m */,
 				55A934F617F2121D00493DC5 /* PPFilterPluginWindowController.h */,
 				55A934F717F2121D00493DC5 /* PPFilterPluginWindowController.m */,
+				5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */,
+				5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */,
 			);
 			name = "App Plug-in code";
 			path = "../MADDriver.source/MADDriver.Source/App Plug-in Code";
@@ -3941,6 +3947,7 @@
 				55B1B4F7166A861900820424 /* PPMusicObject.h in Headers */,
 				55B1B4FA166A8ED500820424 /* PPMusicObject_PPKPrivate.h in Headers */,
 				5578C4FF17DB8A5C0057D11B /* PPSampleObject.h in Headers */,
+				5521F3FD17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h in Headers */,
 				5578C50017DB8A640057D11B /* PPInstrumentObject.h in Headers */,
 				5582135817E4201300B84F51 /* PPPluginWindowController.h in Headers */,
 				55A934F817F2121D00493DC5 /* PPFilterPluginWindowController.h in Headers */,
@@ -5745,6 +5752,7 @@
 				55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */,
 				5578C4FE17DB8A580057D11B /* PPSampleObject.m in Sources */,
 				5578C50117DB8A6E0057D11B /* PPInstrumentObject.m in Sources */,
+				5521F3FF17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m in Sources */,
 				5582135A17E4201B00B84F51 /* PPPluginWindowController.m in Sources */,
 				5582135B17E4201D00B84F51 /* PPDigitalPluginWindowController.m in Sources */,
 			);

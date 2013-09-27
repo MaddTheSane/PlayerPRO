@@ -1550,7 +1550,7 @@ OSErr MADCopyCurrentPartition( MADMusic *aPartition)
 #endif
 
 
-OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef)
+OSErr MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef)
 {
 	char *URLcString = NULL;
 	
@@ -1613,7 +1613,7 @@ OSErr MADMusicInfoCString( MADLibrary *lib, char *type, char* cName, PPInfoRec *
 	return PPInfoFile(lib, type, cName, InfoRec);
 }
 
-OSErr	MADMusicIdentifyCString( MADLibrary *lib, char *type, Ptr fName)
+OSErr MADMusicIdentifyCString( MADLibrary *lib, char *type, Ptr fName)
 {
 	if (lib == NULL || type == NULL || fName == NULL) {
 		return MADParametersErr;
@@ -1864,7 +1864,6 @@ static inline void SwapFXSets(FXSets *set)
 	for (y = 0; y < 100; y++) {
 		PPBE32(&set->values[y]);
 	}
-
 #endif
 }
 

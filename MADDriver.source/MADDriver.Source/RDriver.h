@@ -346,7 +346,6 @@ typedef struct PPInfoRec
 	OSType		signature;
 	
 	long		fileSize;
-	
 } PPInfoRec;
 
 

@@ -15,7 +15,7 @@ extern const NSString * const PPPlugInSheetDidEnd;
 {
 	@protected
 	PPInfoPlug *infoPlug;
-	BOOL isMultipleIstanceSafe;//For those that can safely handle multiple instances
+	BOOL isMultipleIstanceSafe; //For those that can safely handle multiple instances
 	__unsafe_unretained NSWindow *parentWindow;
 	dispatch_block_t plugBlock;
 }
