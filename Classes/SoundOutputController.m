@@ -10,7 +10,6 @@
 #import "UserDefaultKeys.h"
 
 @interface SoundOutputController ()
-@property (retain) PPSoundSettingsViewController *soundSettingsView;
 @end
 
 @implementation SoundOutputController
@@ -28,12 +27,7 @@
 -(void)awakeFromNib
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
-	self.soundSettingsView = [[PPSoundSettingsViewController alloc] init];
-	soundSettingsView.delegate = self;
-	
 	[subView setContentView:[soundSettingsView view]];
-
 	MADDriverSettings drivSet;
 	
 	drivSet.surround = [defaults boolForKey:PPSurroundToggle];
