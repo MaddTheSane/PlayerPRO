@@ -6,27 +6,25 @@
 //
 //
 
-#import "PPDigitalPlugInHandler.h"
+#import "PPDigitalPlugHandler.h"
 #import "PPDigitalPlugInObject.h"
 #import "PPPlugInCommon.h"
 //#import <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 #import "UserDefaultKeys.h"
 
-@implementation PPDigitalPlugInHandler
+@interface PPDigitalPlugHandler ()
+@property (strong) NSMutableArray *digitalPlugs;
+@end
 
-@synthesize driverRec;
+@implementation PPDigitalPlugHandler
+@synthesize digitalPlugs;
 
-- (void)setDriverRec:(MADDriverRec **)aDriverRec
+- (OSErr)callDigitalPlugIn:(NSUInteger)plugNum pcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug *)theInfo
 {
-	driverRec = aDriverRec;
-	theInfo.driverRec = *driverRec;
-}
-
-- (OSErr)callDigitalPlugIn:(NSUInteger)plugNum pcmd:(Pcmd*)myPcmd
-{
+	theInfo->fileType = 'PPDG';
 	PPDigitalPlugInObject *tmp = digitalPlugs[plugNum];
-	return [tmp callWithPcmd:myPcmd plugInfo:&theInfo];
+	return [tmp callWithPcmd:myPcmd plugInfo:theInfo];
 }
 
 - (PPDigitalPlugInObject*)plugInAtIndex:(NSUInteger)idx
@@ -41,34 +39,8 @@
 
 - (id)init
 {
-	[self doesNotRecognizeSelector:_cmd];
-	return nil;
-}
-
-- (void)driverRecDidChange:(NSNotification*)aNot
-{
-	if (driverRec && *driverRec) {
-		theInfo.driverRec = *driverRec;
-	} else {
-		theInfo.driverRec = NULL;
-	}
-}
-
-- (void)madMusicDidChange:(NSNotification*)aNot
-{
-	
-}
-
-- (id)initWithMusic:(MADMusic**)theMus
-{
 	if (self = [super init]) {
-		NSNotificationCenter *notCen = [NSNotificationCenter defaultCenter];
-		[notCen addObserver:self selector:@selector(driverRecDidChange:) name:PPDriverDidChange object:nil];
-		[notCen addObserver:self selector:@selector(madMusicDidChange:) name:PPMusicDidChange object:nil];
-		curMusic = theMus;
-		digitalPlugs = [[NSMutableArray alloc] initWithCapacity:20];
-		theInfo.RPlaySound = inMADPlaySoundData;
-		theInfo.fileType = 'PPDG';
+		self.digitalPlugs = [[NSMutableArray alloc] initWithCapacity:20];
 
 		NSArray *plugLocs = DefaultPlugInLocations();
 		
@@ -116,11 +88,6 @@
 {
 	NSBundle *theBund = [NSBundle bundleWithPath:thePath];
 	[self addPlugInFromBundle:theBund];
-}
-
-- (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len

@@ -12,7 +12,7 @@
 @class PPPreferences;
 @class PPMusicList;
 @class PPInstrumentWindowController;
-@class PPDigitalPlugInHandler;
+@class PPDigitalPlugHandler;
 @class PPCurrentlyPlayingIndex;
 @class PPFilterPlugHandler;
 @class PatternHandler;
@@ -32,8 +32,8 @@
 	
 	PPPreferences			*preferences;
 	PPInstrumentPlugHandler	*instrumentImporter;
-	//PPDigitalPlugInHandler	*digitalHandler;
-	//PPFilterPlugHandler		*filterHandler;
+	PPDigitalPlugHandler	*digitalHandler;
+	PPFilterPlugHandler		*filterHandler;
 	
 	BOOL isQuitting;
 }

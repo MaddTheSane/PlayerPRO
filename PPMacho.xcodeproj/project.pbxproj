@@ -158,7 +158,7 @@
 		5523EC77169265C30067B22A /* PPPlugInInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC76169265C30067B22A /* PPPlugInInfo.m */; };
 		5523EC79169358470067B22A /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5523EC7C169361A00067B22A /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */; };
-		5523EC8116936F880067B22A /* PPDigitalPlugInHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8016936F880067B22A /* PPDigitalPlugInHandler.m */; };
+		5523EC8116936F880067B22A /* PPDigitalPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */; };
 		5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */; };
 		552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552581FC16C6FC350016A31C /* InstrumentInfoController.m */; };
 		552581FF16C6FC350016A31C /* InstrumentInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552581FD16C6FC350016A31C /* InstrumentInfoController.xib */; };
@@ -1797,8 +1797,8 @@
 		5523EC76169265C30067B22A /* PPPlugInInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPlugInInfo.m; sourceTree = "<group>"; };
 		5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "MIDI-Hardware-OSX.c"; sourceTree = "<group>"; };
 		5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "MIDI-Hardware-Stub.c"; sourceTree = "<group>"; };
-		5523EC7F16936F870067B22A /* PPDigitalPlugInHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPlugInHandler.h; sourceTree = "<group>"; };
-		5523EC8016936F880067B22A /* PPDigitalPlugInHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPlugInHandler.m; sourceTree = "<group>"; };
+		5523EC7F16936F870067B22A /* PPDigitalPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPlugHandler.h; sourceTree = "<group>"; };
+		5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPlugHandler.m; sourceTree = "<group>"; };
 		5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPlugInObject.h; sourceTree = "<group>"; };
 		5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPlugInObject.m; sourceTree = "<group>"; };
 		552581FB16C6FC350016A31C /* InstrumentInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstrumentInfoController.h; sourceTree = "<group>"; };
@@ -3742,8 +3742,8 @@
 				5523EC71169265AB0067B22A /* PPPlugInInfoController.m */,
 				5523EC75169265C30067B22A /* PPPlugInInfo.h */,
 				5523EC76169265C30067B22A /* PPPlugInInfo.m */,
-				5523EC7F16936F870067B22A /* PPDigitalPlugInHandler.h */,
-				5523EC8016936F880067B22A /* PPDigitalPlugInHandler.m */,
+				5523EC7F16936F870067B22A /* PPDigitalPlugHandler.h */,
+				5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */,
 				5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */,
 				5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */,
 				55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */,
@@ -6325,7 +6325,7 @@
 				5523EC6A16925FF80067B22A /* PPInstrumentWindowController.m in Sources */,
 				5523EC73169265AC0067B22A /* PPPlugInInfoController.m in Sources */,
 				5523EC77169265C30067B22A /* PPPlugInInfo.m in Sources */,
-				5523EC8116936F880067B22A /* PPDigitalPlugInHandler.m in Sources */,
+				5523EC8116936F880067B22A /* PPDigitalPlugHandler.m in Sources */,
 				5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */,
 				550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */,
 				55F4287416A8968C009013D8 /* PPPatternObject.m in Sources */,

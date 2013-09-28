@@ -11,19 +11,11 @@
 #include <PlayerPROCore/PPPlug.h>
 @class PPDigitalPlugInObject;
 
-@interface PPDigitalPlugInHandler : NSObject <NSFastEnumeration>
-{
-	NSMutableArray	*digitalPlugs;
-	MADMusic		**curMusic;
-	MADDriverRec	**driverRec;
-	PPInfoPlug		theInfo;
-}
+@interface PPDigitalPlugHandler : NSObject <NSFastEnumeration>
 
-@property (readwrite, nonatomic) MADDriverRec **driverRec;
+- (id)init;
 
-- (id)initWithMusic:(MADMusic**)theMus;
-
-- (OSErr)callDigitalPlugIn:(NSUInteger)plugNum pcmd:(Pcmd*)myPcmd;
+- (OSErr)callDigitalPlugIn:(NSUInteger)plugNum pcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug *)theInfo;
 
 - (PPDigitalPlugInObject*)plugInAtIndex:(NSUInteger)idx;
 - (NSUInteger)plugInCount;

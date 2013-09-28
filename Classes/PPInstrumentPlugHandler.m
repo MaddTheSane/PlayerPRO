@@ -9,56 +9,58 @@
 #import "PPInstrumentPlugHandler.h"
 #import "PPInstrumentImporterObject.h"
 #import "PPPlugInCommon.h"
+
+@interface PPInstrumentPlugHandler ()
+@property (strong) NSMutableArray *instrumentIEArray;
+@end
+
 @implementation PPInstrumentPlugHandler
 @synthesize instrumentIEArray;
 
 - (id)init
 {
 	if (self = [super init]) {
+		NSArray *plugLocs = DefaultPlugInLocations();
 		
-	
-	NSArray *plugLocs = DefaultPlugInLocations();
-	
-	NSInteger x, y;
-	
-	for (NSURL *aPlugLoc in plugLocs) {
-		CFIndex		PlugNums;
-		CFArrayRef	somePlugs;
-		somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef)aPlugLoc, CFSTR("plugin"));
-		PlugNums = CFArrayGetCount( somePlugs );
-		if (PlugNums > 0) {
-			for (x = 0; x < PlugNums; x++) {
-				@autoreleasepool {
-					CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
-					NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(tempBundleRef))];
-					PPInstrumentImporterObject *tempObj = [[PPInstrumentImporterObject alloc] initWithBundle:tempBundle];
-					CFRelease(tempBundleRef);
-					if (tempObj) {
-						for (y = 0; y < [instrumentIEArray count]; y++) {
-							PPInstrumentImporterObject *toComp = instrumentIEArray[y];
-							if (toComp.type == tempObj.type) {
-								if (toComp.version < tempObj.version) {
-									instrumentIEArray[y] = tempObj;
-									tempObj = nil;
-									break;
-								} else {
-									tempObj = nil;
-									break;
+		NSInteger x, y;
+		
+		for (NSURL *aPlugLoc in plugLocs) {
+			CFIndex		PlugNums;
+			CFArrayRef	somePlugs;
+			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef)aPlugLoc, CFSTR("plugin"));
+			PlugNums = CFArrayGetCount( somePlugs );
+			if (PlugNums > 0) {
+				for (x = 0; x < PlugNums; x++) {
+					@autoreleasepool {
+						CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
+						NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(tempBundleRef))];
+						PPInstrumentImporterObject *tempObj = [[PPInstrumentImporterObject alloc] initWithBundle:tempBundle];
+						CFRelease(tempBundleRef);
+						if (tempObj) {
+							for (y = 0; y < [instrumentIEArray count]; y++) {
+								PPInstrumentImporterObject *toComp = instrumentIEArray[y];
+								if (toComp.type == tempObj.type) {
+									if (toComp.version < tempObj.version) {
+										instrumentIEArray[y] = tempObj;
+										tempObj = nil;
+										break;
+									} else {
+										tempObj = nil;
+										break;
+									}
 								}
 							}
-						}
-						if (tempObj) {
-							[instrumentIEArray addObject:tempObj];
+							if (tempObj) {
+								[instrumentIEArray addObject:tempObj];
+							}
 						}
 					}
 				}
 			}
+			CFRelease(somePlugs);
 		}
-		CFRelease(somePlugs);
 	}
-}
-return self;
-
+	return self;
 }
 
 - (void)addPlugInFromBundle:(NSBundle *)theBund
@@ -82,7 +84,6 @@ return self;
 		if (obj) {
 			[instrumentIEArray addObject:obj];
 		}
-		
 	}
 }
 
@@ -193,6 +194,5 @@ return self;
 {
 	return [instrumentIEArray countByEnumeratingWithState:state objects:buffer count:len];
 }
-
 
 @end
