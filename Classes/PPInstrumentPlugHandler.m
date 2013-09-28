@@ -35,6 +35,7 @@
 						CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
 						NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(tempBundleRef))];
 						PPInstrumentImporterObject *tempObj = [[PPInstrumentImporterObject alloc] initWithBundle:tempBundle];
+						//You can ignore the Clang static warning of incorrect decrement here.
 						CFRelease(tempBundleRef);
 						if (tempObj) {
 							for (y = 0; y < [instrumentIEArray count]; y++) {

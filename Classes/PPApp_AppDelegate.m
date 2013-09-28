@@ -20,6 +20,7 @@
 #import "PPDigitalPlugInObject.h"
 #import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
+#import "PPDocument.h"
 #import <PlayerPROKit/PlayerPROKit.h>
 #include <PlayerPROCore/RDriverInt.h>
 
@@ -376,6 +377,11 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 			for (NSString *aUTI in trackerUTIs) {
 				if([sharedWorkspace type:theUTI conformsToType:aUTI])
 				{
+					PPMusicObjectWrapper *theWrap = [[PPMusicObjectWrapper alloc] initWithURL:theURL library:madLib];
+					PPDocument *theDoc = [[PPDocument alloc] init];
+					[theDoc importMusicObjectWrapper:theWrap];
+					
+					[self addDocument:theDoc];
 					return YES;
 				}
 			}

@@ -11,13 +11,14 @@
 #import "PPSoundSettingsViewController.h"
 
 @interface PPDocument : NSDocument <PPSoundSettingsViewControllerDelegate>
-
 @property (weak) IBOutlet NSWindow	*exportWindow;
 @property (weak) IBOutlet NSBox		*exportSettingsBox;
 @property (strong) PPSoundSettingsViewController *exportController;
 @property (strong) NSString *musicName;
 @property (strong) NSString *musicInfo;
 
+- (void)importMusicObject:(PPMusicObject*)theObj;
+- (void)importMusicObjectWrapper:(PPMusicObjectWrapper*)theWrap;
 - (IBAction)exportMusicAs:(id)sender;
 
 @end

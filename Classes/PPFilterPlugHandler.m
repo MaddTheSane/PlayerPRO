@@ -36,6 +36,7 @@
 						CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
 						NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(tempBundleRef))];
 						PPFilterPlugObject *tempObj = [[PPFilterPlugObject alloc] initWithBundle:tempBundle];
+						//You can ignore the Clang static warning of incorrect decrement here.
 						CFRelease(tempBundleRef);
 						if (tempObj) {
 							[filterPlugs addObject:tempObj];

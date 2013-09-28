@@ -14,6 +14,11 @@
 @end
 
 @implementation LengthWindowController
+@synthesize currentSize;
+@synthesize newSize;
+@synthesize theCurrentBox = currentBox;
+@synthesize theNewBox = newBox;
+@synthesize lengthCompensationMatrix;
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -30,6 +35,10 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	self.theCurrentBox.contentView = self.currentSize.view;
+	self.theNewBox.contentView = self.newSize.view;
+	currentSize.isNewSize = NO;
+	newSize.isNewSize = YES;
 }
 
 @end

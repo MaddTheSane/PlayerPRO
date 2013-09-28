@@ -15,5 +15,8 @@
 
 @property (weak) IBOutlet LengthViewController *currentSize;
 @property (weak, getter = getNewSize) IBOutlet LengthViewController *newSize;
+@property (weak) IBOutlet NSBox *theCurrentBox;
+@property (weak) IBOutlet NSBox *theNewBox;
+@property (weak) IBOutlet NSMatrix *lengthCompensationMatrix;
 
 @end

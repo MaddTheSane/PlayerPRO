@@ -21,8 +21,8 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 	short						*src16 = (short*) src, *dst16;
 	char						*src8 = (char*) src, *dst8;
 	Ptr							dst;
-	int						newSize, tempL, tempR;
-	unsigned  int			x, left, right, pos;
+	int						newSize = 0, tempL = 0, tempR = 0;
+	unsigned  int			x = 0, left = 0, right = 0, pos = 0;
 	
 	srcC4SPD /= 100;
 	dstC4SPD /= 100;

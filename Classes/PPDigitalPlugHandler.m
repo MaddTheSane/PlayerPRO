@@ -57,6 +57,7 @@
 						CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
 						NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(tempBundleRef))];
 						PPDigitalPlugInObject *tempObj = [[PPDigitalPlugInObject alloc] initWithBundle:tempBundle];
+						//You can ignore the Clang static warning of incorrect decrement here.
 						CFRelease(tempBundleRef);
 						if (tempObj) {
 							[digitalPlugs addObject:tempObj];

@@ -63,8 +63,7 @@ void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUID
 			}
 		}
 		else {
-			//Clang says that we aren't supposed to release, but Apple's sample code does release
-			//Trusting the sample code until further notice
+			//You can ignore the Clang static warning of incorrect decrement here.
 			CFRelease(factories); factories = NULL;
 			return NULL;
 		}
@@ -72,8 +71,7 @@ void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUID
 	else {
 		return NULL;
 	}
-	//Clang says that we aren't supposed to release, but Apple's sample code does release
-	//Trusting the sample code until further notice
+	//You can ignore the Clang static warning of incorrect decrement here.
 	CFRelease(factories); factories = NULL;
 	
 	return formatPlugA;

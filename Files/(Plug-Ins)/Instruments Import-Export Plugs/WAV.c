@@ -101,6 +101,7 @@ static OSErr mainWave(void					*unused,
 				} else {
 					shortName = strdup("Wave Sound");
 				}
+				CFRelease(lastPath);
 				
 				inAddSoundToMADCString(theSound, sndLen, lS, lE, sS, 60, rate, stereo, shortName, InsHeader, sample, sampleID);
 				free(shortName);
