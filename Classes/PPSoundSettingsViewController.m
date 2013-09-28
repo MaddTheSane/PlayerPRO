@@ -131,12 +131,12 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 	BOOL oversamplingState = sett->oversampling > 1;
 	BOOL reverbState = sett->Reverb;
 	BOOL stereoDelayState = sett->MicroDelaySize > 0;
-
+	
 	reverbActive = reverbState;
 	oversamplingActive = oversamplingState;
 	stereoDelayActive = stereoDelayState;
 	surroundActive = sett->surround;
-
+	
 	if ([self view]) {
 		[oversampling setState:oversamplingState];
 		[reverb setState:reverbState];
@@ -272,12 +272,12 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
+	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+	if (self) {
+		// Initialization code here.
+	}
+	
+	return self;
 }
 
 - (NSInteger)currentRate
@@ -402,7 +402,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 	if (toSet == 0) {
 		toSet = 30;
 	}
-
+	
 	return toSet;
 }
 
@@ -420,7 +420,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 	if (toSet == 0) {
 		toSet = 1;
 	}
-
+	
 	return toSet;
 }
 
@@ -430,12 +430,12 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 	NSInteger stereoDelayState = [stereoDelay state];
 	NSInteger oversamplingState = [oversampling state];
 	BOOL surroundState = [surround state];
-		
+	
 	[oversamplingNum setEnabled:oversamplingState];
 	[reverbNum setEnabled:reverbState];
 	[reverbPercent setEnabled:reverbState];
 	[stereoDelayNum setEnabled:stereoDelayState];
-
+	
 	if (delegate) {
 		if (!!reverbState != reverbActive) {
 			[delegate soundOutReverbDidChangeActive:reverbState];

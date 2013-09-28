@@ -24,12 +24,12 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+	if (self) {
 		self.delegate = self;
-    }
-    
-    return self;
+	}
+	
+	return self;
 }
 
 -(void)awakeFromNib
@@ -125,14 +125,14 @@
 - (void)soundOutOversamplingAmountDidChange:(short)ovs
 {
 	[[NSUserDefaults standardUserDefaults] setInteger:ovs forKey:PPOversamplingAmount];
-
+	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 
 - (void)soundOutStereoDelayAmountDidChange:(short)std
 {
 	[[NSUserDefaults standardUserDefaults] setInteger:std forKey:PPStereoDelayAmount];
-
+	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 

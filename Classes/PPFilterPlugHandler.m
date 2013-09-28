@@ -11,31 +11,20 @@
 #import "PPPlugInCommon.h"
 #import "UserDefaultKeys.h"
 
+@interface PPFilterPlugHandler ()
+@property (strong) NSMutableArray *filterPlugs;
+@end
+
 @implementation PPFilterPlugHandler
+@synthesize filterPlugs;
 
-@synthesize driverRec;
-
-- (void)setDriverRec:(MADDriverRec **)aDriverRec
-{
-	driverRec = aDriverRec;
-	theInfo.driverRec = *driverRec;
-}
-
-- (id)initWithMusic:(MADMusic**)theMus
+- (id)init
 {
 	if (self = [super init]) {
-		NSNotificationCenter *notCen = [NSNotificationCenter defaultCenter];
-		[notCen addObserver:self selector:@selector(driverRecDidChange:) name:PPDriverDidChange object:nil];
-		[notCen addObserver:self selector:@selector(madMusicDidChange:) name:PPMusicDidChange object:nil];
-		curMusic = theMus;
-		filterPlugs = [[NSMutableArray alloc] initWithCapacity:20];
-		theInfo.RPlaySound = inMADPlaySoundData;
-		theInfo.fileType = 'PLug';
+		self.filterPlugs = [[NSMutableArray alloc] initWithCapacity:20];
 		
 		NSArray *plugLocs = DefaultPlugInLocations();
-		
 		NSInteger x;
-		
 		for (NSURL *aPlugLoc in plugLocs) {
 			CFIndex		PlugNums;
 			CFArrayRef	somePlugs;
@@ -60,10 +49,10 @@
 	return self;
 }
 
-- (OSErr)callDigitalPlugAtIndex:(NSInteger)idx sampleData:(sData*)theInsData startLength:(long)start endLength:(long)end stereoMode:(short)stereo
+- (OSErr)callDigitalPlugAtIndex:(NSInteger)idx sampleData:(sData*)theInsData startLength:(long)start endLength:(long)end stereoMode:(short)stereo info:(PPInfoPlug *)theInfo
 {
 	PPFilterPlugObject *tmp = filterPlugs[idx];
-	return [tmp callPluginWithData:theInsData selectionStart:start selectionEnd:end plugInInfo:&theInfo stereoMode:stereo];
+	return [tmp callPluginWithData:theInsData selectionStart:start selectionEnd:end plugInInfo:theInfo stereoMode:stereo];
 }
 
 - (PPFilterPlugObject*)plugInAtIndex:(NSUInteger)idx
@@ -74,26 +63,6 @@
 - (NSUInteger)plugInCount
 {
 	return [filterPlugs count];
-}
-
-- (id)init
-{
-	[self doesNotRecognizeSelector:_cmd];
-	return nil;
-}
-
-- (void)driverRecDidChange:(NSNotification*)aNot
-{
-	if (driverRec && *driverRec) {
-		theInfo.driverRec = *driverRec;
-	} else {
-		theInfo.driverRec = NULL;
-	}
-}
-
-- (void)madMusicDidChange:(NSNotification*)aNot
-{
-	
 }
 
 - (void)addPlugInFromBundle:(NSBundle *)theBund
@@ -114,11 +83,6 @@
 {
 	NSBundle *theBund = [NSBundle bundleWithPath:thePath];
 	[self addPlugInFromBundle:theBund];
-}
-
-- (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len
