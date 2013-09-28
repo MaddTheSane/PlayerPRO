@@ -103,7 +103,6 @@
 
 /* Begin PBXBuildFile section */
 		55007E9D161A552C00297A3F /* FileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 55113CBB133688D60008C2AF /* FileUtils.c */; };
-		5504A6DE16619DFA005BDE4B /* SoundOutput.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6E016619DFA005BDE4B /* SoundOutput.xib */; };
 		5504A6E216619E10005BDE4B /* ClassicPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6E416619E10005BDE4B /* ClassicPrefs.xib */; };
 		5504A6E516619E1C005BDE4B /* DigitalPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6E716619E1C005BDE4B /* DigitalPrefs.xib */; };
 		5504A6E816619E25005BDE4B /* BoxPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6EA16619E25005BDE4B /* BoxPrefs.xib */; };
@@ -368,7 +367,6 @@
 		5578C4D017DA715D0057D11B /* OpenPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139E41685007B00831A5A /* OpenPanelViewController.m */; };
 		5578C4D117DA71650057D11B /* OpenPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557139E51685007B00831A5A /* OpenPanelViewController.xib */; };
 		5578C4D617DA88460057D11B /* PPInstrumentWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */; };
-		5578C4D917DA95BC0057D11B /* SoundOutput.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6E016619DFA005BDE4B /* SoundOutput.xib */; };
 		5578C4DA17DA95C20057D11B /* MiscPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6ED16619E2E005BDE4B /* MiscPrefs.xib */; };
 		5578C4EF17DA97020057D11B /* InstrumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5578C4F117DA97020057D11B /* InstrumentWindow.xib */; };
 		5578C4F817DAB2830057D11B /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
@@ -1714,7 +1712,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5504A6DF16619DFA005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SoundOutput.xib; sourceTree = "<group>"; };
 		5504A6E316619E10005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ClassicPrefs.xib; sourceTree = "<group>"; };
 		5504A6E616619E1C005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DigitalPrefs.xib; sourceTree = "<group>"; };
 		5504A6E916619E25005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BoxPrefs.xib; sourceTree = "<group>"; };
@@ -3275,7 +3272,6 @@
 		55232AFD11FDF10C0041A4EC /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				5504A6E016619DFA005BDE4B /* SoundOutput.xib */,
 				55232AFE11FDF1310041A4EC /* MidiPrefs.xib */,
 				5504A6E416619E10005BDE4B /* ClassicPrefs.xib */,
 				5504A6E716619E1C005BDE4B /* DigitalPrefs.xib */,
@@ -5343,7 +5339,6 @@
 				5578C4EF17DA97020057D11B /* InstrumentWindow.xib in Resources */,
 				5557769817EBDFAC0019D008 /* PPFastForward.pdf in Resources */,
 				55A9351A17F28F9700493DC5 /* Shared.xcassets in Resources */,
-				5578C4D917DA95BC0057D11B /* SoundOutput.xib in Resources */,
 				5578C4DA17DA95C20057D11B /* MiscPrefs.xib in Resources */,
 				5573AF0917DF8FD500B68127 /* README.rtf in Resources */,
 			);
@@ -5592,7 +5587,6 @@
 				55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */,
 				5533600411EBC66400525CAF /* Localizable.strings in Resources */,
 				55E52E2512455E5100315307 /* preferences.xib in Resources */,
-				5504A6DE16619DFA005BDE4B /* SoundOutput.xib in Resources */,
 				55232AFF11FDF1310041A4EC /* MidiPrefs.xib in Resources */,
 				5504A6E216619E10005BDE4B /* ClassicPrefs.xib in Resources */,
 				5557769717EBDFAC0019D008 /* PPFastForward.pdf in Resources */,
@@ -6959,14 +6953,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5504A6E016619DFA005BDE4B /* SoundOutput.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5504A6DF16619DFA005BDE4B /* en */,
-			);
-			name = SoundOutput.xib;
-			sourceTree = "<group>";
-		};
 		5504A6E416619E10005BDE4B /* ClassicPrefs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
