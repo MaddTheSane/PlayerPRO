@@ -10,20 +10,18 @@
 
 typedef OSErr (^PPExportBlock)(NSURL* theURL, NSString **errStr);
 
-
 @protocol PPExportObjectDelegate;
 
 @interface PPExportObject : NSObject
-
-- (id)initWithExportBlock:(PPExportBlock)exportCode destination:(NSURL*)dest;
-- (id)initWithDestination:(NSURL*)dest exportBlock:(PPExportBlock)exportCode;
-
 @property (weak) NSObject<PPExportObjectDelegate> *delegate;
 @property (strong) NSURL *destination;
 @property (copy) PPExportBlock exportBlock;
+
+- (id)initWithDestination:(NSURL*)dest exportBlock:(PPExportBlock)exportCode;
+- (void)run;
 @end
 
 @protocol PPExportObjectDelegate <NSObject>
 - (void)PPExportObjectDidFinish:(PPExportObject*)theObj;
-- (OSErr)PPExportObjectEncounteredError:(PPExportObject*)theObj;
+- (void)PPExportObjectEncounteredError:(PPExportObject*)theObj errorCode:(OSErr)errCode errorString:(NSString*)errStr;
 @end

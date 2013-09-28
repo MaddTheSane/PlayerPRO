@@ -138,8 +138,6 @@
 		5521F3FD17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5521F3FF17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */; };
 		5521F40317F65F19002CDBA9 /* PPFilterPlugController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */; };
-		5521F40417F65F19002CDBA9 /* PPFilterPlugController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */; };
-		5521F40517F65F19002CDBA9 /* PPFilterPlugController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */; };
 		55232A7611FDD2A60041A4EC /* SoundOutputController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232A7511FDD2A60041A4EC /* SoundOutputController.m */; };
 		55232AD811FDDFEA0041A4EC /* PianoPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AD711FDDFEA0041A4EC /* PianoPreferencesController.m */; };
 		55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AE911FDE29B0041A4EC /* ColorPreferenceController.m */; };
@@ -5979,7 +5977,6 @@
 				5578C51317DB901F0057D11B /* PPLibrary.m in Sources */,
 				5578C51517DB901F0057D11B /* PPDriver.m in Sources */,
 				5578C51917DB901F0057D11B /* PPMusicObject.m in Sources */,
-				5521F40517F65F19002CDBA9 /* PPFilterPlugController.m in Sources */,
 				55B0F5AD17DF0FA900653BCD /* PPSampleObject.m in Sources */,
 				55B0F5B017DF0FBD00653BCD /* PPInstrumentObject.m in Sources */,
 			);
@@ -6311,7 +6308,6 @@
 				55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */,
 				55232AED11FDE2E40041A4EC /* MiscPreferenceController.m in Sources */,
 				55232AF011FDE5180041A4EC /* BoxEditorPreferenceController.m in Sources */,
-				5521F40417F65F19002CDBA9 /* PPFilterPlugController.m in Sources */,
 				55232AF311FDE56D0041A4EC /* DigitalEditorPreferenceControler.m in Sources */,
 				55232AF711FDE5CB0041A4EC /* ClassicEditorPreferenceController.m in Sources */,
 				55232AFA11FDE5F90041A4EC /* MidiHardwarePreferenceController.m in Sources */,
