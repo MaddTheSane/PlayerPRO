@@ -142,6 +142,7 @@
 		5521F40917F7598E002CDBA9 /* PPFileSizeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547C9DD16D97FC700C36FEA /* PPFileSizeFormatter.m */; };
 		5521F40C17F75A93002CDBA9 /* PPSizeFormatterLength.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F40B17F75A93002CDBA9 /* PPSizeFormatterLength.m */; };
 		5521F40F17F75DAF002CDBA9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		5521F41017F8ED5A002CDBA9 /* PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55981C5211EE370D00656EE3 /* PPPreferences.m */; };
 		55232A7611FDD2A60041A4EC /* SoundOutputController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232A7511FDD2A60041A4EC /* SoundOutputController.m */; };
 		55232AD811FDDFEA0041A4EC /* PianoPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AD711FDDFEA0041A4EC /* PianoPreferencesController.m */; };
 		55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AE911FDE29B0041A4EC /* ColorPreferenceController.m */; };
@@ -363,7 +364,6 @@
 		5578C4C717DA4C6D0057D11B /* PPStop.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E291245640500315307 /* PPStop.pdf */; };
 		5578C4C817DA4C6D0057D11B /* PPNextTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */; };
 		5578C4C917DA4C6D0057D11B /* PPPrevTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */; };
-		5578C4CC17DA6AAB0057D11B /* PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C4CB17DA6AAB0057D11B /* PPPreferences.m */; };
 		5578C4CD17DA6B170057D11B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5533600311EBC66400525CAF /* Localizable.strings */; };
 		5578C4CE17DA6D0E0057D11B /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557C758416A3455D00923755 /* QTKit.framework */; };
 		5578C4CF17DA6D2C0057D11B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -2037,8 +2037,6 @@
 		5578C48F17D9E8560057D11B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5578C49017D9E8560057D11B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5578C49317D9E8570057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		5578C4CA17DA6AAB0057D11B /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
-		5578C4CB17DA6AAB0057D11B /* PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPreferences.m; sourceTree = "<group>"; };
 		5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentWindowController.h; sourceTree = "<group>"; };
 		5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentWindowController.m; sourceTree = "<group>"; };
 		5578C4F017DA97020057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/InstrumentWindow.xib; sourceTree = "<group>"; };
@@ -3614,8 +3612,6 @@
 		5578C48317D9E8560057D11B /* PlayerPRO Player */ = {
 			isa = PBXGroup;
 			children = (
-				5578C4CA17DA6AAB0057D11B /* PPPreferences.h */,
-				5578C4CB17DA6AAB0057D11B /* PPPreferences.m */,
 				5578C48F17D9E8560057D11B /* AppDelegate.h */,
 				5578C49017D9E8560057D11B /* AppDelegate.m */,
 				5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */,
@@ -5967,6 +5963,7 @@
 				5578C49117D9E8560057D11B /* AppDelegate.m in Sources */,
 				5578C4B217DA4AA90057D11B /* PPMusicList.m in Sources */,
 				5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */,
+				5521F41017F8ED5A002CDBA9 /* PPPreferences.m in Sources */,
 				5578C4B417DA4ADD0057D11B /* PPErrors.m in Sources */,
 				5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */,
 				5578C4B817DA4B0D0057D11B /* PPSoundSettingsViewController.m in Sources */,
@@ -5977,7 +5974,6 @@
 				5521F40917F7598E002CDBA9 /* PPFileSizeFormatter.m in Sources */,
 				5578C4BF17DA4BF20057D11B /* MusicListPreferenceController.m in Sources */,
 				5578C4C017DA4C040057D11B /* MiscPreferenceController.m in Sources */,
-				5578C4CC17DA6AAB0057D11B /* PPPreferences.m in Sources */,
 				5578C4D017DA715D0057D11B /* OpenPanelViewController.m in Sources */,
 				5578C4D617DA88460057D11B /* PPInstrumentWindowController.m in Sources */,
 			);
@@ -9333,7 +9329,10 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PLAYERPRO6=1",
+				);
 				INFOPLIST_FILE = "Cocoa-Info.plistvers.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "PlayerPRO 6";
@@ -9350,7 +9349,10 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PLAYERPRO6=1",
+				);
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "PlayerPRO 6";
