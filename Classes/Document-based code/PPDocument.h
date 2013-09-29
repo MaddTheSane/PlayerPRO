@@ -13,9 +13,18 @@
 @interface PPDocument : NSDocument <PPSoundSettingsViewControllerDelegate>
 @property (weak) IBOutlet NSWindow	*exportWindow;
 @property (weak) IBOutlet NSBox		*exportSettingsBox;
+@property (weak) IBOutlet NSButton *fastForwardButton;
+@property (weak) IBOutlet NSButton *playButton;
+@property (weak) IBOutlet NSButton *reverseButton;
+@property (weak) IBOutlet NSTextField *currentTimeLabel;
+@property (weak) IBOutlet NSTextField *totalTimeLabel;
+@property (weak) IBOutlet NSSlider *playbackPositionSlider;
+
+
 @property (strong) PPSoundSettingsViewController *exportController;
-@property (strong) NSString *musicName;
-@property (strong) NSString *musicInfo;
+@property (copy) NSString *musicName;
+@property (copy) NSString *musicInfo;
+@property (copy) NSString *authorString;
 
 - (void)importMusicObject:(PPMusicObject*)theObj;
 - (void)importMusicObjectWrapper:(PPMusicObjectWrapper*)theWrap;

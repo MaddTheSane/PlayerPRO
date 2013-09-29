@@ -478,7 +478,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	} else {
 		return noErr;
 	}
-	return MADOrderNotImplemented;
 }
 
 - (MADMusic *)newMadMusicStruct

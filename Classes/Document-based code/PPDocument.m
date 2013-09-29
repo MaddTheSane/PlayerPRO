@@ -33,7 +33,9 @@
 
 - (void)setMusicName:(NSString *)musicName
 {
+	[self willChangeValueForKey:@"musicName"];
 	self.theMusic.internalFileName = musicName;
+	[self didChangeValueForKey:@"musicName"];
 }
 
 - (NSString*)musicInfo
@@ -43,7 +45,21 @@
 
 - (void)setMusicInfo:(NSString *)musicInfo
 {
+	[self willChangeValueForKey:@"musicInfo"];
 	self.theMusic.madInfo = musicInfo;
+	[self didChangeValueForKey:@"musicInfo"];
+}
+
+- (NSString*)authorString
+{
+	return self.theMusic.madAuthor;
+}
+
+- (void)setAuthorString:(NSString *)authorString
+{
+	[self willChangeValueForKey:@"authorString"];
+	self.theMusic.madAuthor = authorString;
+	[self didChangeValueForKey:@"authorString"];
 }
 	
 - (id)init
@@ -178,7 +194,7 @@
 
 - (void)importMusicObjectWrapper:(PPMusicObjectWrapper*)theWrap
 {
-	if (_theMusic) {
+	if (!_theMusic) {
 		self.theMusic = theWrap;
 	}
 }

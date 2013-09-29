@@ -412,6 +412,14 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 	return NO;
 }
 
+- (id)openUntitledDocumentAndDisplay:(BOOL)displayDocument error:(NSError **)outError;
+{
+	PPDocument *theDoc = [[PPDocument alloc] init];
+	[theDoc importMusicObjectWrapper:[[PPMusicObjectWrapper alloc] init]];
+	
+	return theDoc;
+}
+
 - (IBAction)openFile:(id)sender {
 	
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
