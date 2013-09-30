@@ -302,7 +302,7 @@
 - (void)writeBackToMusic
 {
 	NSInteger i, ii;
-	NSInteger firstSample = self.firstSample;
+	int firstSample = self.firstSample;
 	int totalSamples = self.sampleCount + firstSample;
 	int totalPossibleSamples = firstSample + MAXSAMPLE - 1;
 	for (i = firstSample; i < totalPossibleSamples; i++) {

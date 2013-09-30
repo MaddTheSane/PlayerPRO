@@ -581,7 +581,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		macRomanNameLength = [macRomanNameData length];
 		BOOL isPadded = (macRomanNameLength & 1);
 		
-		nameChunk.ckSize = macRomanNameLength + 1;
+		nameChunk.ckSize = (SInt32)(macRomanNameLength + 1);
 		char pStrLen = macRomanNameLength;
 		PPBE32(&nameChunk.ckSize);
 		
@@ -629,7 +629,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		NSData *macRomanInfoData = [self.musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 		macRomanInfoLength = [macRomanInfoData length];
 		BOOL isPadded = (macRomanInfoLength & 1);
-		infoChunk.ckSize = macRomanInfoLength + 1;
+		infoChunk.ckSize = (SInt32)(macRomanInfoLength + 1);
 		char pStrLen = macRomanInfoLength;
 		PPBE32(&infoChunk.ckSize);
 		
@@ -651,7 +651,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	NSMutableData *returnData = [[NSMutableData alloc] initWithCapacity:dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + sizeof(ContainerChunk) + [nameData length] + [infoData length]];
 	header.ckID = FORMID;
 	PPBE32(&header.ckID);
-	header.ckSize = dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + 4 + [nameData length] + [infoData length];
+	header.ckSize = (SInt32)(dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + 4 + [nameData length] + [infoData length]);
 	PPBE32(&header.ckSize);
 	header.formType = AIFFID;
 	PPBE32(&header.formType);
@@ -682,7 +682,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 				chanNums = 1;
 				break;
 		}
-		container.numSampleFrames = dataLen / todiv;
+		container.numSampleFrames = (SInt32)(dataLen / todiv);
 	}
 	
 	container.numChannels = chanNums;
@@ -699,7 +699,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	PPBE32(&dataChunk.ckID);
 	dataChunk.blockSize = 0;
 	PPBE32(&dataChunk.blockSize);
-	dataChunk.ckSize = dataLen + 8 + dataOffset;
+	dataChunk.ckSize = (SInt32)(dataLen + 8 + dataOffset);
 	PPBE32(&dataChunk.ckSize);
 	dataChunk.offset = dataOffset;
 	PPBE32(&dataChunk.offset);
