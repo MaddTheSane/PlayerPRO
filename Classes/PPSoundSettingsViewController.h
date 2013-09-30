@@ -52,6 +52,6 @@
 - (IBAction)changeReverbPercent:(id)sender;
 - (IBAction)changeStereoDelay:(id)sender;
 
-@property (readwrite, weak) id<PPSoundSettingsViewControllerDelegate> delegate;
+@property (weak) IBOutlet id<PPSoundSettingsViewControllerDelegate> delegate;
 
 @end

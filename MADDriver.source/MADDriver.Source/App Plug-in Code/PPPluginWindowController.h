@@ -9,7 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PPPlug.h>
 
-extern const NSString * const PPPlugInSheetDidEnd;
+extern NSString * const PPPlugInSheetDidEnd;
+extern NSString * const PPPlugReturnCode;
 
 @interface PPPluginWindowController : NSWindowController
 {
@@ -20,8 +21,12 @@ extern const NSString * const PPPlugInSheetDidEnd;
 	dispatch_block_t plugBlock;
 }
 
+- (id)initWithWindowNibName:(NSString *)windowNibName UNAVAILABLE_ATTRIBUTE;
+- (id)initWithWindowNibName:(NSString *)windowNibName infoPlug:(PPInfoPlug *)ip;
+
 @property PPInfoPlug *infoPlug;
 @property (copy) dispatch_block_t plugBlock;
 - (IBAction)okOrCancel:(id)sender;
 - (OSErr)runAsModal;
+- (OSErr)runAsSheet;
 @end

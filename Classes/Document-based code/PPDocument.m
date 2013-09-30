@@ -33,7 +33,9 @@
 
 - (void)setMusicName:(NSString *)musicName
 {
+	[self willChangeValueForKey:@"musicName"];
 	self.theMusic.internalFileName = musicName;
+	[self didChangeValueForKey:@"musicName"];
 }
 
 - (NSString*)musicInfo
@@ -43,7 +45,21 @@
 
 - (void)setMusicInfo:(NSString *)musicInfo
 {
+	[self willChangeValueForKey:@"musicInfo"];
 	self.theMusic.madInfo = musicInfo;
+	[self didChangeValueForKey:@"musicInfo"];
+}
+
+- (NSString*)authorString
+{
+	return self.theMusic.madAuthor;
+}
+
+- (void)setAuthorString:(NSString *)authorString
+{
+	[self willChangeValueForKey:@"authorString"];
+	self.theMusic.madAuthor = authorString;
+	[self didChangeValueForKey:@"authorString"];
 }
 	
 - (id)init
@@ -106,19 +122,27 @@
 - (NSFileWrapper *)fileWrapperOfType:(NSString *)typeName error:(NSError **)outError
 {
 	if (outError) {
-        *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
-    }
-    return nil;
-
+		*outError = nil;
+	}
+	return self.theMusic.musicWrapper;
 }
 
 - (BOOL)readFromFileWrapper:(NSFileWrapper *)fileWrapper ofType:(NSString *)typeName error:(NSError **)outError
 {
-	    if (outError) {
-        *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
-    }
-    return YES;
-
+	self.theMusic = [[PPMusicObjectWrapper alloc] initWithFileWrapper:fileWrapper];
+	if (self.theMusic) {
+		if (outError) {
+			*outError = nil;
+		}
+		
+		return YES;
+	} else {
+		if (outError) {
+			*outError = CreateErrorFromMADErrorType(MADReadingErr);
+		}
+		
+		return NO;
+	}
 }
 
 + (BOOL)autosavesInPlace
@@ -160,6 +184,18 @@
 	if (returnerr != noErr) {
 		[[NSAlert alertWithError:CreateErrorFromMADErrorType(returnerr)] runModal];
 		//return;
+	}
+}
+
+- (void)importMusicObject:(PPMusicObject*)theObj
+{
+	[self importMusicObjectWrapper:[[PPMusicObjectWrapper alloc] initFromMusicObject:theObj]];
+}
+
+- (void)importMusicObjectWrapper:(PPMusicObjectWrapper*)theWrap
+{
+	if (!_theMusic) {
+		self.theMusic = theWrap;
 	}
 }
 

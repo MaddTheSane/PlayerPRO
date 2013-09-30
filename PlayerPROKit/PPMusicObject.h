@@ -55,6 +55,7 @@
 @property (readonly) OSType madType;
 @property (readwrite, strong, nonatomic) NSString *internalFileName; //This is actually copied, but I don't want Clang to complain
 @property (readwrite, strong, nonatomic) NSString *madInfo; //Ditto
+@property (copy) NSString *madAuthor;
 
 //Use to create a blank music object.
 - (id)init;

@@ -12,6 +12,8 @@
 #import <PlayerPROKit/PPLibrary.h>
 #import <PlayerPROKit/PPDriver.h>
 #import <PlayerPROKit/PPMusicObject.h>
+#import <PlayerPROKit/PPSampleObject.h>
+#import <PlayerPROKit/PPInstrumentObject.h>
 #if defined(ISUSINGPPPLUG) && !TARGET_OS_IPHONE
 #import <PlayerPROKit/PPPluginWindowController.h>
 #import <PlayerPROKit/PPDigitalPluginWindowController.h>

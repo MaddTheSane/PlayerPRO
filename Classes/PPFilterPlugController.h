@@ -1,21 +1,17 @@
 //
-//  PPDigitalPlugInHandler.h
+//  PPFilterPlugHandler.h
 //  PPMacho
 //
-//  Created by C.W. Betts on 1/1/13.
+//  Created by C.W. Betts on 1/22/13.
 //
 //
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
-@class PPDigitalPlugInObject;
+@class PPFilterPlugObject;
 
-@interface PPDigitalPlugInHandler : NSObject <NSFastEnumeration>
+@interface PPFilterPlugController : NSObject 
 {
-	NSMutableArray	*digitalPlugs;
-	MADMusic		**curMusic;
-	MADDriverRec	**driverRec;
 	PPInfoPlug		theInfo;
 }
 
@@ -23,13 +19,13 @@
 
 - (id)initWithMusic:(MADMusic**)theMus;
 
-- (OSErr)callDigitalPlugIn:(NSUInteger)plugNum pcmd:(Pcmd*)myPcmd;
-
-- (PPDigitalPlugInObject*)plugInAtIndex:(NSUInteger)idx;
+- (PPFilterPlugObject*)plugInAtIndex:(NSUInteger)idx;
 - (NSUInteger)plugInCount;
 
 - (void)addPlugInFromPath:(NSString*)thePath;
 - (void)addPlugInFromURL:(NSURL *)urlpath;
 - (void)addPlugInFromBundle:(NSBundle *)theBund;
+
+- (OSErr)callDigitalPlugAtIndex:(NSInteger)idx sampleData:(sData*)theInsData startLength:(long)start endLength:(long)end stereoMode:(short)stereo;
 
 @end

@@ -6,18 +6,18 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFPlugInDynamicRegistration</key>
 	<false/>
 	<key>CFPlugInFactories</key>
@@ -33,8 +33,10 @@
 		</array>
 	</dict>
 	<key>CSResourcesFileMapped</key>
-	<string>yes</string>
+	<true/>
 	<key>MADPlugMenuName</key>
 	<string>Tone Generator</string>
+	<key>NSPrincipalClass</key>
+	<string>PPToneGeneratorController</string>
 </dict>
 </plist>

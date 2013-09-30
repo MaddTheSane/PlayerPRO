@@ -14,8 +14,6 @@
 
 @interface PPInstrumentPlugHandler : NSObject <NSFastEnumeration>
 
-@property (strong)	NSMutableArray *instrumentIEArray;
-
 - (NSInteger)plugInCount;
 - (PPInstrumentImporterObject*)plugInAtIndex:(NSUInteger)idx;
 

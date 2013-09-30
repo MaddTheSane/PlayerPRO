@@ -24,12 +24,16 @@
 {
 	if (self = [super initWithWindowNibName:@"Preferences"]) {
 		self.viewControllers = @[[[SoundOutputController alloc] init],
+#if defined(PLAYERPRO6) && PLAYERPRO6
 					  [[PianoPreferencesController alloc] init],
 					  [[ColorPreferenceController alloc] init],
 					  [[BoxEditorPreferenceController alloc] init],
 					  [[DigitalEditorPreferenceControler alloc] init],
 					  [[ClassicEditorPreferenceController alloc] init],
 					  [[MidiHardwarePreferenceController alloc] init],
+#else
+								 [[MusicListPreferenceController alloc] init],
+#endif
 					  [[MiscPreferenceController alloc] init]];
 	}
 	return self;

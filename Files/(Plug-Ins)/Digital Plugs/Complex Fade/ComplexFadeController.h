@@ -11,5 +11,13 @@
 #import <PlayerPROKit/PlayerPROKit.h>
 
 @interface ComplexFadeController : PPDigitalPluginWindowController
+@property (weak) IBOutlet NSMatrix *fadeTypeMatrix;
+@property (weak) IBOutlet NSFormCell *stepCell;
+@property (weak) IBOutlet NSTextField *textValues;
+
+
+
+
+- (IBAction)changeFadeType:(id)sender;
 
 @end

@@ -9,21 +9,37 @@
 #import "PPPluginWindowController.h"
 
 NSString * const PPPlugInSheetDidEnd = @"MAD Plugin sheet did end";
+NSString * const PPPlugReturnCode = @"MAD Return Code";
 
 @interface PPPluginWindowController ()
-
+@property BOOL isRunningModal;
 @end
 
 @implementation PPPluginWindowController
 @synthesize infoPlug;
 @synthesize plugBlock;
 
+#if 0
+- (id)initWithWindowNibName:(NSString *)windowNibName
+{
+	return self = [super initWithWindowNibName:windowNibName];
+}
+#endif
+
+- (id)initWithWindowNibName:(NSString *)windowNibName infoPlug:(PPInfoPlug *)ip
+{
+	if (self = [super initWithWindowNibName:windowNibName]) {
+		self.infoPlug = ip;
+	}
+	return self;
+}
+
 - (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 	if (returnCode == NSOnState) {
 		plugBlock();
 	}
-	[[NSNotificationCenter defaultCenter] postNotificationName:PPPlugInSheetDidEnd object:self.window userInfo:@{@"MADReturnCode": @(returnCode)}];
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPPlugInSheetDidEnd object:self.window userInfo:@{PPPlugReturnCode: @(returnCode)}];
 	[self close];
 }
 
@@ -49,7 +65,7 @@ NSString * const PPPlugInSheetDidEnd = @"MAD Plugin sheet did end";
 
 - (IBAction)okOrCancel:(id)sender
 {
-	if (isMultipleIstanceSafe) {
+	if (!_isRunningModal) {
 		[NSApp endSheet:self.window returnCode:[sender tag] == 1 ? NSOffState : NSOnState];
 	}else {
 		[NSApp stopModalWithCode:([sender tag] == 1) ? NSOffState : NSOnState];
@@ -58,15 +74,21 @@ NSString * const PPPlugInSheetDidEnd = @"MAD Plugin sheet did end";
 
 - (OSErr)runAsModal
 {
+	self.isRunningModal = YES;
+	NSInteger retVal = [NSApp runModalForWindow:self.window];
+	[self close];
+	return retVal;
+}
+
+- (OSErr)runAsSheet
+{
 	if (isMultipleIstanceSafe) {
+		self.isRunningModal = NO;
 		[NSApp beginSheet:self.window modalForWindow:parentWindow modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
 		
 		return MADIsRunningModal;
-	} else {
-		NSInteger retVal = [NSApp runModalForWindow:self.window];
-		[self close];
-		return retVal;
-	}
+	} else
+		return MADOrderNotImplemented;
 }
 
 @end

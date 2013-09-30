@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
-@interface MixWindowController : NSWindowController
+@interface MixWindowController : PPFilterPluginWindowController
 @property double mixOriginal;
 @property double mixPasteboard;
 @property (weak) IBOutlet NSTextField *instrumentLabel;

@@ -208,7 +208,7 @@ static OSErr mainXI(void						*unused,
 		{
 			Ptr				theXI;
 			XMPATCHHEADER	*pth;
-			XMWAVHEADER		*wh;
+			XMWAVHEADER		*wh = NULL;
 			short			numSamples;
 			
 			iFileRefI = iFileOpenRead(file);

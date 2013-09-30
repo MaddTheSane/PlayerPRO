@@ -8,16 +8,16 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFPlugInDynamicRegistration</key>
 	<false/>
 	<key>CFPlugInFactories</key>
@@ -34,5 +34,7 @@
 	</dict>
 	<key>MADPlugMenuName</key>
 	<string>Amplitude</string>
+	<key>NSPrincipalClass</key>
+	<string>AmplitudeController</string>
 </dict>
 </plist>

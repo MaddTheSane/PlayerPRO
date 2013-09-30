@@ -21,8 +21,8 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 	short						*src16 = (short*) src, *dst16;
 	char						*src8 = (char*) src, *dst8;
 	Ptr							dst;
-	int						newSize, tempL, tempR;
-	unsigned  int			x, left, right, pos;
+	int						newSize = 0, tempL = 0, tempR = 0;
+	unsigned  int			x = 0, left = 0, right = 0, pos = 0;
 	
 	srcC4SPD /= 100;
 	dstC4SPD /= 100;
@@ -123,7 +123,39 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 {
     self = [super initWithWindow:window];
     if (self) {
-        // Initialization code here.
+		isMultipleIstanceSafe = YES;
+		
+		dispatch_block_t tmp = ^{
+			int	newFreq = self.changedRate;
+			Ptr		newPtr;
+			size_t newPtrSize = 0;
+			
+			newPtr = ConvertSampleC4SPD(theData->data,
+										theData->size,
+										theData->amp,
+										theData->c2spd,
+										newFreq,
+										theData->stereo,
+										&newPtrSize);
+			
+			theData->loopBeg = (theData->loopBeg * (newFreq/100)) / (long) (theData->c2spd/100);
+			theData->loopSize = (theData->loopSize * (newFreq/100)) / (long) (theData->c2spd/100);
+			
+			if( newPtr != NULL)
+			{
+				free( theData->data);
+				theData->data		= newPtr;
+				theData->size		= (SInt32)newPtrSize;
+				theData->c2spd	= newFreq;
+			}
+			
+			
+			if( theData->loopBeg < 0) { theData->loopSize += theData->loopBeg;	theData->loopBeg = 0;}
+			if( theData->loopBeg > theData->size) {theData->loopBeg = 0;	theData->loopSize = 0;}
+			if( theData->loopSize < 0) theData->loopSize = 0;
+			if( theData->loopBeg + theData->loopSize > theData->size) theData->loopSize = theData->size - theData->loopBeg;
+		};
+		self.plugBlock = tmp;
     }
     
     return self;
@@ -146,44 +178,14 @@ static OSErr mainSampRate(void			*unused,
 						  short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	
-	SamplingRateWindowController *controller = [[SamplingRateWindowController alloc] initWithWindowNibName:@"SamplingRateWindowController"];
-	
+	SamplingRateWindowController *controller = [[SamplingRateWindowController alloc] initWithWindowNibName:@"SamplingRateWindowController" infoPlug:thePPInfoPlug];
 	controller.currentRate = controller.changedRate = theData->c2spd;
+	controller.theData = theData;
+	controller.selectionStart = SelectionStart;
+	controller.selectionEnd = SelectionEnd;
+	controller.stereoMode = StereoMode ? YES : NO;
 	
-	NSInteger retval = [controller runAsModal];
-	if( retval != NSOffState)
-	{
-		int	newFreq = controller.changedRate;
-		Ptr		newPtr;
-		size_t newPtrSize = 0;
-				
-		newPtr = ConvertSampleC4SPD(	theData->data,
-									theData->size,
-									theData->amp,
-									theData->c2spd,
-									newFreq,
-									theData->stereo,
-									&newPtrSize);
-		
-		theData->loopBeg = (theData->loopBeg * (newFreq/100)) / (long) (theData->c2spd/100);
-		theData->loopSize = (theData->loopSize * (newFreq/100)) / (long) (theData->c2spd/100);
-		
-		if( newPtr != NULL)
-		{
-			free( theData->data);
-			theData->data		= newPtr;
-			theData->size		= (SInt32)newPtrSize;
-			theData->c2spd	= newFreq;
-		}
-		
-		
-		if( theData->loopBeg < 0) { theData->loopSize += theData->loopBeg;	theData->loopBeg = 0;}
-		if( theData->loopBeg > theData->size) {theData->loopBeg = 0;	theData->loopSize = 0;}
-		if( theData->loopSize < 0) theData->loopSize = 0;
-		if( theData->loopBeg + theData->loopSize > theData->size) theData->loopSize = theData->size - theData->loopBeg;
-	}
-	
-	return noErr;
+	return [controller runAsSheet];
 }
 
 // 81D156A0-6737-4D5F-BE63-5BA48F527276

@@ -81,11 +81,9 @@
 								if (toComp.type == tempObj.type) {
 									if (toComp.version < tempObj.version) {
 										instrumentIEArray[y] = tempObj;
-										RELEASEOBJ(tempObj);
 										tempObj = nil;
 										break;
 									} else {
-										RELEASEOBJ(tempObj);
 										tempObj = nil;
 										break;
 									}
@@ -93,7 +91,6 @@
 							}
 							if (tempObj) {
 								[instrumentIEArray addObject:tempObj];
-								RELEASEOBJ(tempObj);
 							}
 						}
 					}
@@ -127,9 +124,7 @@
 		}
 		if (obj) {
 			[instrumentIEArray addObject:obj];
-			RELEASEOBJ(obj);
 		}
-
 	}
 }
 

@@ -8,7 +8,10 @@
         <customObject id="-2" userLabel="File's Owner" customClass="LengthWindowController">
             <connections>
                 <outlet property="currentSize" destination="14" id="78"/>
+                <outlet property="lengthCompensationMatrix" destination="5" id="V8J-Hy-Kaq"/>
                 <outlet property="newSize" destination="15" id="79"/>
+                <outlet property="theCurrentBox" destination="fM6-DB-PLd" id="y9M-hZ-aEE"/>
+                <outlet property="theNewBox" destination="eUt-i6-8Gs" id="bmp-2M-wSw"/>
                 <outlet property="window" destination="1" id="3"/>
             </connections>
         </customObject>
@@ -17,10 +20,10 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="308" height="317"/>
+            <rect key="contentRect" x="196" y="240" width="308" height="387"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="308" height="317"/>
+                <rect key="frame" x="0.0" y="0.0" width="308" height="387"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5">
@@ -50,20 +53,8 @@
                             </column>
                         </cells>
                     </matrix>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="16">
-                        <rect key="frame" x="108" y="227" width="180" height="70"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="58"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="59"/>
-                        </constraints>
-                    </customView>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="23">
-                        <rect key="frame" x="108" y="149" width="180" height="70"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    </customView>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="29">
-                        <rect key="frame" x="17" y="280" width="86" height="17"/>
+                        <rect key="frame" x="17" y="350" width="86" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Current Size:" id="30">
                             <font key="font" metaFont="system"/>
@@ -72,7 +63,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="64">
-                        <rect key="frame" x="38" y="202" width="65" height="17"/>
+                        <rect key="frame" x="38" y="237" width="65" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="New Size:" id="65">
                             <font key="font" metaFont="system"/>
@@ -110,39 +101,83 @@ Gw
 </string>
                         </buttonCell>
                     </button>
+                    <box autoresizesSubviews="NO" title="Box" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fM6-DB-PLd">
+                        <rect key="frame" x="105" y="258" width="186" height="111"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <view key="contentView">
+                            <rect key="frame" x="0.0" y="0.0" width="186" height="111"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="16">
+                                    <rect key="frame" x="3" y="4" width="180" height="105"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="58"/>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="59"/>
+                                    </constraints>
+                                </customView>
+                            </subviews>
+                        </view>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="16" secondAttribute="trailing" id="UFE-NG-u2G"/>
+                            <constraint firstItem="16" firstAttribute="top" secondItem="fM6-DB-PLd" secondAttribute="top" id="Wsr-M1-VqF"/>
+                            <constraint firstItem="16" firstAttribute="leading" secondItem="fM6-DB-PLd" secondAttribute="leading" id="Y3J-hK-OiU"/>
+                            <constraint firstAttribute="bottom" secondItem="16" secondAttribute="bottom" id="eoY-zy-zCn"/>
+                        </constraints>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </box>
+                    <box autoresizesSubviews="NO" title="Box" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="eUt-i6-8Gs">
+                        <rect key="frame" x="105" y="145" width="186" height="111"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <view key="contentView">
+                            <rect key="frame" x="0.0" y="0.0" width="186" height="111"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="23">
+                                    <rect key="frame" x="3" y="4" width="180" height="105"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                </customView>
+                            </subviews>
+                        </view>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="23" secondAttribute="bottom" id="LI0-5t-s5n"/>
+                            <constraint firstItem="23" firstAttribute="top" secondItem="eUt-i6-8Gs" secondAttribute="top" id="PHe-dK-2Go"/>
+                            <constraint firstItem="23" firstAttribute="leading" secondItem="eUt-i6-8Gs" secondAttribute="leading" id="PUm-Kq-p19"/>
+                            <constraint firstAttribute="trailing" secondItem="23" secondAttribute="trailing" id="vsw-vq-vAx"/>
+                        </constraints>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </box>
                 </subviews>
                 <constraints>
                     <constraint firstItem="5" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="9"/>
                     <constraint firstItem="29" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="31"/>
-                    <constraint firstItem="16" firstAttribute="leading" secondItem="29" secondAttribute="trailing" constant="8" symbolic="YES" id="34"/>
-                    <constraint firstItem="23" firstAttribute="top" secondItem="16" secondAttribute="bottom" constant="8" symbolic="YES" id="61"/>
-                    <constraint firstItem="23" firstAttribute="leading" secondItem="16" secondAttribute="leading" id="63"/>
-                    <constraint firstItem="64" firstAttribute="top" secondItem="23" secondAttribute="top" id="67"/>
-                    <constraint firstItem="16" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="70"/>
-                    <constraint firstItem="5" firstAttribute="top" secondItem="23" secondAttribute="bottom" constant="8" symbolic="YES" id="71"/>
                     <constraint firstItem="72" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="8" symbolic="YES" id="77"/>
                     <constraint firstAttribute="trailing" secondItem="80" secondAttribute="trailing" constant="20" symbolic="YES" id="82"/>
                     <constraint firstAttribute="bottom" secondItem="80" secondAttribute="bottom" constant="20" symbolic="YES" id="83"/>
                     <constraint firstItem="80" firstAttribute="leading" secondItem="84" secondAttribute="trailing" constant="12" symbolic="YES" id="86"/>
-                    <constraint firstItem="16" firstAttribute="height" secondItem="23" secondAttribute="height" id="7DI-17-8fx"/>
+                    <constraint firstItem="eUt-i6-8Gs" firstAttribute="height" secondItem="fM6-DB-PLd" secondAttribute="height" id="7GV-qH-CfQ"/>
                     <constraint firstItem="5" firstAttribute="leading" secondItem="72" secondAttribute="leading" id="IJh-ge-vlO"/>
-                    <constraint firstItem="16" firstAttribute="top" secondItem="29" secondAttribute="top" id="JqA-v7-bj1"/>
+                    <constraint firstItem="eUt-i6-8Gs" firstAttribute="trailing" secondItem="fM6-DB-PLd" secondAttribute="trailing" id="Kbp-S8-wQX"/>
+                    <constraint firstItem="fM6-DB-PLd" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="P1q-po-NQX"/>
+                    <constraint firstAttribute="trailing" secondItem="fM6-DB-PLd" secondAttribute="trailing" constant="20" symbolic="YES" id="QqT-rr-y6K"/>
+                    <constraint firstItem="eUt-i6-8Gs" firstAttribute="leading" secondItem="fM6-DB-PLd" secondAttribute="leading" id="Sxr-XV-85t"/>
+                    <constraint firstItem="eUt-i6-8Gs" firstAttribute="top" secondItem="fM6-DB-PLd" secondAttribute="bottom" constant="8" symbolic="YES" id="T4J-RF-4ee"/>
                     <constraint firstItem="84" firstAttribute="baseline" secondItem="80" secondAttribute="baseline" id="Wy8-ua-h44"/>
                     <constraint firstItem="64" firstAttribute="trailing" secondItem="29" secondAttribute="trailing" id="Z5K-ic-XP1"/>
-                    <constraint firstAttribute="trailing" secondItem="16" secondAttribute="trailing" constant="20" symbolic="YES" id="amm-ug-Wsn"/>
+                    <constraint firstItem="fM6-DB-PLd" firstAttribute="top" secondItem="29" secondAttribute="top" id="aab-kd-4Tt"/>
                     <constraint firstItem="84" firstAttribute="top" secondItem="72" secondAttribute="bottom" constant="20" symbolic="YES" id="ani-Qw-u0r"/>
-                    <constraint firstItem="16" firstAttribute="width" secondItem="23" secondAttribute="width" id="spp-EF-YBY"/>
+                    <constraint firstItem="5" firstAttribute="top" secondItem="eUt-i6-8Gs" secondAttribute="bottom" constant="8" symbolic="YES" id="dts-IC-qeX"/>
+                    <constraint firstItem="eUt-i6-8Gs" firstAttribute="top" secondItem="64" secondAttribute="top" id="ksf-k5-mAM"/>
+                    <constraint firstItem="fM6-DB-PLd" firstAttribute="leading" secondItem="64" secondAttribute="trailing" constant="8" symbolic="YES" id="zGk-cz-jZS"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="4"/>
             </connections>
         </window>
-        <viewController nibName="LengthViewController" id="14" userLabel="Current Size" customClass="LengthViewController">
-            <connections>
-                <outlet property="view" destination="16" id="40"/>
-            </connections>
-        </viewController>
+        <viewController nibName="LengthViewController" id="14" userLabel="Current Size" customClass="LengthViewController"/>
         <viewController nibName="LengthViewController" id="15" userLabel="New Size" customClass="LengthViewController"/>
     </objects>
 </document>

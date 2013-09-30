@@ -147,7 +147,7 @@ end:
 - (void)dealloc
 {
 	if (currentMusic) {
-		MADDisposeMusic(&currentMusic, attachedDriver ? attachedDriver.rec : NULL);
+		MADDisposeMusic(&currentMusic, NULL);
 	}
 }
 
@@ -386,6 +386,9 @@ end:
 
 - (void)setUpObjCStructures
 {
+	self.internalFileName = [NSString stringWithCString:currentMusic->header->name encoding:NSMacOSRomanStringEncoding];
+	self.madInfo = [NSString stringWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
+	self.madAuthor = @"";
 	
 }
 
@@ -411,7 +414,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		MADDisposeMusic(&currentMusic, NULL);
 		currentMusic = DeepCopyMusic(oldFormat._currentMusic);
 		[self setUpObjCStructures];
-		self.filePath = oldFormat.filePath;
 	}
 	return self;
 }
@@ -441,6 +443,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		NSDictionary *stuff = [wrapper fileWrappers];
 		stuff = nil;
 		return nil;
+		
 	}
 	
 	return self;
@@ -478,7 +481,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	} else {
 		return noErr;
 	}
-	return MADOrderNotImplemented;
 }
 
 - (MADMusic *)newMadMusicStruct

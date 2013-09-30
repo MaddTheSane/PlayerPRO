@@ -11,16 +11,8 @@
 @class PPFilterPlugObject;
 
 @interface PPFilterPlugHandler : NSObject <NSFastEnumeration>
-{
-	NSMutableArray	*filterPlugs;
-	MADMusic		**curMusic;
-	MADDriverRec	**driverRec;
-	PPInfoPlug		theInfo;
-}
 
-@property (readwrite, nonatomic) MADDriverRec **driverRec;
-
-- (id)initWithMusic:(MADMusic**)theMus;
+- (id)init;
 
 - (PPFilterPlugObject*)plugInAtIndex:(NSUInteger)idx;
 - (NSUInteger)plugInCount;
@@ -29,6 +21,6 @@
 - (void)addPlugInFromURL:(NSURL *)urlpath;
 - (void)addPlugInFromBundle:(NSBundle *)theBund;
 
-- (OSErr)callDigitalPlugAtIndex:(NSInteger)idx sampleData:(sData*)theInsData startLength:(long)start endLength:(long)end stereoMode:(short)stereo;
+- (OSErr)callDigitalPlugAtIndex:(NSInteger)idx sampleData:(sData*)theInsData startLength:(long)start endLength:(long)end stereoMode:(short)stereo info:(PPInfoPlug *)theInfo;
 
 @end

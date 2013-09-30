@@ -103,7 +103,6 @@
 
 /* Begin PBXBuildFile section */
 		55007E9D161A552C00297A3F /* FileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 55113CBB133688D60008C2AF /* FileUtils.c */; };
-		5504A6DE16619DFA005BDE4B /* SoundOutput.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6E016619DFA005BDE4B /* SoundOutput.xib */; };
 		5504A6E216619E10005BDE4B /* ClassicPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6E416619E10005BDE4B /* ClassicPrefs.xib */; };
 		5504A6E516619E1C005BDE4B /* DigitalPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6E716619E1C005BDE4B /* DigitalPrefs.xib */; };
 		5504A6E816619E25005BDE4B /* BoxPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6EA16619E25005BDE4B /* BoxPrefs.xib */; };
@@ -138,6 +137,12 @@
 		551FEB7E10E728F100EDF2F1 /* PAT.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E104110D6C79E00BB619C /* PAT.c */; };
 		5521F3FD17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5521F3FF17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */; };
+		5521F40317F65F19002CDBA9 /* PPFilterPlugController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */; };
+		5521F40817F7598D002CDBA9 /* PPFileSizeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547C9DD16D97FC700C36FEA /* PPFileSizeFormatter.m */; };
+		5521F40917F7598E002CDBA9 /* PPFileSizeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547C9DD16D97FC700C36FEA /* PPFileSizeFormatter.m */; };
+		5521F40C17F75A93002CDBA9 /* PPSizeFormatterLength.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F40B17F75A93002CDBA9 /* PPSizeFormatterLength.m */; };
+		5521F40F17F75DAF002CDBA9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		5521F41017F8ED5A002CDBA9 /* PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55981C5211EE370D00656EE3 /* PPPreferences.m */; };
 		55232A7611FDD2A60041A4EC /* SoundOutputController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232A7511FDD2A60041A4EC /* SoundOutputController.m */; };
 		55232AD811FDDFEA0041A4EC /* PianoPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AD711FDDFEA0041A4EC /* PianoPreferencesController.m */; };
 		55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AE911FDE29B0041A4EC /* ColorPreferenceController.m */; };
@@ -156,7 +161,7 @@
 		5523EC77169265C30067B22A /* PPPlugInInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC76169265C30067B22A /* PPPlugInInfo.m */; };
 		5523EC79169358470067B22A /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5523EC7C169361A00067B22A /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */; };
-		5523EC8116936F880067B22A /* PPDigitalPlugInHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8016936F880067B22A /* PPDigitalPlugInHandler.m */; };
+		5523EC8116936F880067B22A /* PPDigitalPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */; };
 		5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */; };
 		552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552581FC16C6FC350016A31C /* InstrumentInfoController.m */; };
 		552581FF16C6FC350016A31C /* InstrumentInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552581FD16C6FC350016A31C /* InstrumentInfoController.xib */; };
@@ -212,7 +217,6 @@
 		553626BD17EBA1FB00D3A3C8 /* Cocoa Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Images.xcassets */; };
 		5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
 		55469C2716BF34D200175A1F /* PatternHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55469C2616BF34D200175A1F /* PatternHandler.m */; };
-		5547C9DE16D97FC700C36FEA /* PPFileSizeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547C9DD16D97FC700C36FEA /* PPFileSizeFormatter.m */; };
 		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -343,7 +347,6 @@
 		5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		5578C4B417DA4ADD0057D11B /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
 		5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
-		5578C4B617DA4AFA0057D11B /* PPFileSizeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547C9DD16D97FC700C36FEA /* PPFileSizeFormatter.m */; };
 		5578C4B817DA4B0D0057D11B /* PPSoundSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */; };
 		5578C4B917DA4B1A0057D11B /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */; };
 		5578C4BA17DA4B320057D11B /* PPPlugInInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC76169265C30067B22A /* PPPlugInInfo.m */; };
@@ -361,14 +364,12 @@
 		5578C4C717DA4C6D0057D11B /* PPStop.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E291245640500315307 /* PPStop.pdf */; };
 		5578C4C817DA4C6D0057D11B /* PPNextTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */; };
 		5578C4C917DA4C6D0057D11B /* PPPrevTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */; };
-		5578C4CC17DA6AAB0057D11B /* PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C4CB17DA6AAB0057D11B /* PPPreferences.m */; };
 		5578C4CD17DA6B170057D11B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5533600311EBC66400525CAF /* Localizable.strings */; };
 		5578C4CE17DA6D0E0057D11B /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557C758416A3455D00923755 /* QTKit.framework */; };
 		5578C4CF17DA6D2C0057D11B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5578C4D017DA715D0057D11B /* OpenPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139E41685007B00831A5A /* OpenPanelViewController.m */; };
 		5578C4D117DA71650057D11B /* OpenPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557139E51685007B00831A5A /* OpenPanelViewController.xib */; };
 		5578C4D617DA88460057D11B /* PPInstrumentWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */; };
-		5578C4D917DA95BC0057D11B /* SoundOutput.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6E016619DFA005BDE4B /* SoundOutput.xib */; };
 		5578C4DA17DA95C20057D11B /* MiscPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6ED16619E2E005BDE4B /* MiscPrefs.xib */; };
 		5578C4EF17DA97020057D11B /* InstrumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5578C4F117DA97020057D11B /* InstrumentWindow.xib */; };
 		5578C4F817DAB2830057D11B /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
@@ -379,7 +380,6 @@
 		5578C4FF17DB8A5C0057D11B /* PPSampleObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5578C50017DB8A640057D11B /* PPInstrumentObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5578C50117DB8A6E0057D11B /* PPInstrumentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */; };
-		5578C50717DB8F9E0057D11B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		5578C51117DB90110057D11B /* PlayerPROKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 551292E5163DD68500C2C639 /* PlayerPROKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5578C51217DB901F0057D11B /* PPLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 551292EE163DD7CE00C2C639 /* PPLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5578C51317DB901F0057D11B /* PPLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 551292EF163DD7CE00C2C639 /* PPLibrary.m */; };
@@ -728,6 +728,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 551FEA5C10E727AD00EDF2F1;
 			remoteInfo = MINs;
+		};
+		5521F40D17F75CDB002CDBA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55C3589516C42D1800FB9FA6;
+			remoteInfo = PlayerPROCompact;
 		};
 		5533411910BB548E005208D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1722,7 +1729,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5504A6DF16619DFA005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SoundOutput.xib; sourceTree = "<group>"; };
 		5504A6E316619E10005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ClassicPrefs.xib; sourceTree = "<group>"; };
 		5504A6E616619E1C005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DigitalPrefs.xib; sourceTree = "<group>"; };
 		5504A6E916619E25005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BoxPrefs.xib; sourceTree = "<group>"; };
@@ -1772,6 +1778,10 @@
 		551FEB2810E727B100EDF2F1 /* PAT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PAT-Info.plist"; path = "../../../PAT-Info.plist"; sourceTree = "<group>"; };
 		5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPluginWindowController.h; sourceTree = "<group>"; };
 		5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentPluginWindowController.m; sourceTree = "<group>"; };
+		5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPlugController.h; sourceTree = "<group>"; };
+		5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPlugController.m; sourceTree = "<group>"; };
+		5521F40A17F75A93002CDBA9 /* PPSizeFormatterLength.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSizeFormatterLength.h; sourceTree = "<group>"; };
+		5521F40B17F75A93002CDBA9 /* PPSizeFormatterLength.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSizeFormatterLength.m; sourceTree = "<group>"; };
 		55232A7411FDD2A60041A4EC /* SoundOutputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundOutputController.h; sourceTree = "<group>"; };
 		55232A7511FDD2A60041A4EC /* SoundOutputController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundOutputController.m; sourceTree = "<group>"; };
 		55232AD611FDDFEA0041A4EC /* PianoPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PianoPreferencesController.h; sourceTree = "<group>"; };
@@ -1803,8 +1813,8 @@
 		5523EC76169265C30067B22A /* PPPlugInInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPlugInInfo.m; sourceTree = "<group>"; };
 		5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "MIDI-Hardware-OSX.c"; sourceTree = "<group>"; };
 		5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "MIDI-Hardware-Stub.c"; sourceTree = "<group>"; };
-		5523EC7F16936F870067B22A /* PPDigitalPlugInHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPlugInHandler.h; sourceTree = "<group>"; };
-		5523EC8016936F880067B22A /* PPDigitalPlugInHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPlugInHandler.m; sourceTree = "<group>"; };
+		5523EC7F16936F870067B22A /* PPDigitalPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPlugHandler.h; sourceTree = "<group>"; };
+		5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPlugHandler.m; sourceTree = "<group>"; };
 		5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPlugInObject.h; sourceTree = "<group>"; };
 		5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPlugInObject.m; sourceTree = "<group>"; };
 		552581FB16C6FC350016A31C /* InstrumentInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstrumentInfoController.h; sourceTree = "<group>"; };
@@ -2035,8 +2045,6 @@
 		5578C48F17D9E8560057D11B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5578C49017D9E8560057D11B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5578C49317D9E8570057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		5578C4CA17DA6AAB0057D11B /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
-		5578C4CB17DA6AAB0057D11B /* PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPreferences.m; sourceTree = "<group>"; };
 		5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentWindowController.h; sourceTree = "<group>"; };
 		5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentWindowController.m; sourceTree = "<group>"; };
 		5578C4F017DA97020057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/InstrumentWindow.xib; sourceTree = "<group>"; };
@@ -2430,7 +2438,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5578C50717DB8F9E0057D11B /* Cocoa.framework in Frameworks */,
+				5521F40F17F75DAF002CDBA9 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3024,6 +3032,8 @@
 				552C442717DFE48A00AFCB5C /* LengthWindowController.h */,
 				552C442817DFE48A00AFCB5C /* LengthWindowController.m */,
 				552C442917DFE48A00AFCB5C /* LengthWindowController.xib */,
+				5521F40A17F75A93002CDBA9 /* PPSizeFormatterLength.h */,
+				5521F40B17F75A93002CDBA9 /* PPSizeFormatterLength.m */,
 				552C442C17DFE4B800AFCB5C /* LengthViewController.h */,
 				552C442D17DFE4B800AFCB5C /* LengthViewController.m */,
 				552C442E17DFE4B800AFCB5C /* LengthViewController.xib */,
@@ -3291,7 +3301,6 @@
 		55232AFD11FDF10C0041A4EC /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				5504A6E016619DFA005BDE4B /* SoundOutput.xib */,
 				55232AFE11FDF1310041A4EC /* MidiPrefs.xib */,
 				5504A6E416619E10005BDE4B /* ClassicPrefs.xib */,
 				5504A6E716619E1C005BDE4B /* DigitalPrefs.xib */,
@@ -3619,8 +3628,6 @@
 		5578C48317D9E8560057D11B /* PlayerPRO Player */ = {
 			isa = PBXGroup;
 			children = (
-				5578C4CA17DA6AAB0057D11B /* PPPreferences.h */,
-				5578C4CB17DA6AAB0057D11B /* PPPreferences.m */,
 				5578C48F17D9E8560057D11B /* AppDelegate.h */,
 				5578C49017D9E8560057D11B /* AppDelegate.m */,
 				5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */,
@@ -3760,8 +3767,8 @@
 				5523EC71169265AB0067B22A /* PPPlugInInfoController.m */,
 				5523EC75169265C30067B22A /* PPPlugInInfo.h */,
 				5523EC76169265C30067B22A /* PPPlugInInfo.m */,
-				5523EC7F16936F870067B22A /* PPDigitalPlugInHandler.h */,
-				5523EC8016936F880067B22A /* PPDigitalPlugInHandler.m */,
+				5523EC7F16936F870067B22A /* PPDigitalPlugHandler.h */,
+				5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */,
 				5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */,
 				5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */,
 				55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */,
@@ -3771,6 +3778,8 @@
 				55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */,
 				55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */,
 				55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */,
+				5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */,
+				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
 				552A662716B5EBEA007C63F7 /* PPPlugInObject.h */,
 				552A662816B5EBEB007C63F7 /* PPPlugInObject.m */,
 				5547C9DC16D97FC700C36FEA /* PPFileSizeFormatter.h */,
@@ -3999,6 +4008,7 @@
 			files = (
 				5578C51117DB90110057D11B /* PlayerPROKit.h in Headers */,
 				5578C51217DB901F0057D11B /* PPLibrary.h in Headers */,
+				5521F40317F65F19002CDBA9 /* PPFilterPlugController.h in Headers */,
 				5578C51417DB901F0057D11B /* PPDriver.h in Headers */,
 				5578C51617DB901F0057D11B /* PPLibrary_PPKPrivate.h in Headers */,
 				5578C51717DB901F0057D11B /* PPDriver_Private.h in Headers */,
@@ -4351,8 +4361,8 @@
 			buildConfigurationList = 5573A10C1656FAF100A5AECA /* Build configuration list for PBXNativeTarget "iOSPlayerPROCore" */;
 			buildPhases = (
 				5573A0FF1656FAF100A5AECA /* Sources */,
-				5573A1001656FAF100A5AECA /* Frameworks */,
 				5573A1011656FAF100A5AECA /* CopyFiles */,
+				5573A1001656FAF100A5AECA /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -4413,12 +4423,13 @@
 			buildConfigurationList = 5578C50E17DB8FA00057D11B /* Build configuration list for PBXNativeTarget "libPlayerPROKit" */;
 			buildPhases = (
 				5578C50217DB8F9E0057D11B /* Sources */,
-				5578C50317DB8F9E0057D11B /* Frameworks */,
 				5578C50417DB8F9E0057D11B /* Headers */,
+				5578C50317DB8F9E0057D11B /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5521F40E17F75CDB002CDBA9 /* PBXTargetDependency */,
 			);
 			name = libPlayerPROKit;
 			productName = libPlayerPROKit;
@@ -5039,8 +5050,8 @@
 			buildConfigurationList = 55C358BF16C42D1800FB9FA6 /* Build configuration list for PBXNativeTarget "PlayerPROCompact" */;
 			buildPhases = (
 				55C3589616C42D1800FB9FA6 /* Sources */,
-				55C358B216C42D1800FB9FA6 /* Frameworks */,
 				55C358B616C42D1800FB9FA6 /* CopyFiles */,
+				55C358B216C42D1800FB9FA6 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -5364,7 +5375,6 @@
 				5578C4EF17DA97020057D11B /* InstrumentWindow.xib in Resources */,
 				5557769817EBDFAC0019D008 /* PPFastForward.pdf in Resources */,
 				55A9351A17F28F9700493DC5 /* Shared.xcassets in Resources */,
-				5578C4D917DA95BC0057D11B /* SoundOutput.xib in Resources */,
 				5578C4DA17DA95C20057D11B /* MiscPrefs.xib in Resources */,
 				5573AF0917DF8FD500B68127 /* README.rtf in Resources */,
 			);
@@ -5613,7 +5623,6 @@
 				55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */,
 				5533600411EBC66400525CAF /* Localizable.strings in Resources */,
 				55E52E2512455E5100315307 /* preferences.xib in Resources */,
-				5504A6DE16619DFA005BDE4B /* SoundOutput.xib in Resources */,
 				55232AFF11FDF1310041A4EC /* MidiPrefs.xib in Resources */,
 				5504A6E216619E10005BDE4B /* ClassicPrefs.xib in Resources */,
 				5557769717EBDFAC0019D008 /* PPFastForward.pdf in Resources */,
@@ -5977,17 +5986,17 @@
 				5578C49117D9E8560057D11B /* AppDelegate.m in Sources */,
 				5578C4B217DA4AA90057D11B /* PPMusicList.m in Sources */,
 				5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */,
+				5521F41017F8ED5A002CDBA9 /* PPPreferences.m in Sources */,
 				5578C4B417DA4ADD0057D11B /* PPErrors.m in Sources */,
 				5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */,
-				5578C4B617DA4AFA0057D11B /* PPFileSizeFormatter.m in Sources */,
 				5578C4B817DA4B0D0057D11B /* PPSoundSettingsViewController.m in Sources */,
 				5578C4BA17DA4B320057D11B /* PPPlugInInfo.m in Sources */,
 				5578C4BB17DA4B3A0057D11B /* PPPlugInInfoController.m in Sources */,
 				5578C4BD17DA4BC20057D11B /* PPTimeFormatter.m in Sources */,
 				5578C4BE17DA4BE70057D11B /* SoundOutputController.m in Sources */,
+				5521F40917F7598E002CDBA9 /* PPFileSizeFormatter.m in Sources */,
 				5578C4BF17DA4BF20057D11B /* MusicListPreferenceController.m in Sources */,
 				5578C4C017DA4C040057D11B /* MiscPreferenceController.m in Sources */,
-				5578C4CC17DA6AAB0057D11B /* PPPreferences.m in Sources */,
 				5578C4D017DA715D0057D11B /* OpenPanelViewController.m in Sources */,
 				5578C4D617DA88460057D11B /* PPInstrumentWindowController.m in Sources */,
 			);
@@ -6084,6 +6093,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				552C442A17DFE48A00AFCB5C /* LengthWindowController.m in Sources */,
+				5521F40C17F75A93002CDBA9 /* PPSizeFormatterLength.m in Sources */,
 				552C442F17DFE4B800AFCB5C /* LengthViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6346,19 +6356,19 @@
 				5523EC6A16925FF80067B22A /* PPInstrumentWindowController.m in Sources */,
 				5523EC73169265AC0067B22A /* PPPlugInInfoController.m in Sources */,
 				5523EC77169265C30067B22A /* PPPlugInInfo.m in Sources */,
-				5523EC8116936F880067B22A /* PPDigitalPlugInHandler.m in Sources */,
+				5523EC8116936F880067B22A /* PPDigitalPlugHandler.m in Sources */,
 				5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */,
 				550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */,
 				55F4287416A8968C009013D8 /* PPPatternObject.m in Sources */,
 				55F4287816A89A9C009013D8 /* PPMadCommandObject.m in Sources */,
 				55F4287C16A8B1FB009013D8 /* PPSoundSettingsViewController.m in Sources */,
 				55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */,
+				5521F40817F7598D002CDBA9 /* PPFileSizeFormatter.m in Sources */,
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
 				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,
 				55469C2716BF34D200175A1F /* PatternHandler.m in Sources */,
 				552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */,
 				5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */,
-				5547C9DE16D97FC700C36FEA /* PPFileSizeFormatter.m in Sources */,
 				5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */,
 				5578C54017DBABC50057D11B /* PPDocument.m in Sources */,
 			);
@@ -6420,6 +6430,11 @@
 			isa = PBXTargetDependency;
 			target = 551FEA5C10E727AD00EDF2F1 /* MINs */;
 			targetProxy = 551FEB7810E7282700EDF2F1 /* PBXContainerItemProxy */;
+		};
+		5521F40E17F75CDB002CDBA9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55C3589516C42D1800FB9FA6 /* PlayerPROCompact */;
+			targetProxy = 5521F40D17F75CDB002CDBA9 /* PBXContainerItemProxy */;
 		};
 		5533411A10BB548E005208D1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6984,14 +6999,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5504A6E016619DFA005BDE4B /* SoundOutput.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5504A6DF16619DFA005BDE4B /* en */,
-			);
-			name = SoundOutput.xib;
-			sourceTree = "<group>";
-		};
 		5504A6E416619E10005BDE4B /* ClassicPrefs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -8026,6 +8033,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -8046,6 +8054,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -8063,12 +8072,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				KEEP_PRIVATE_EXTERNS = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PlayerPROKit;
 				STRIP_INSTALLED_PRODUCT = NO;
-				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
@@ -8084,13 +8093,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				KEEP_PRIVATE_EXTERNS = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PlayerPROKit;
 				STRIP_INSTALLED_PRODUCT = NO;
-				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -9346,7 +9354,10 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PLAYERPRO6=1",
+				);
 				INFOPLIST_FILE = "Cocoa-Info.plistvers.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "PlayerPRO 6";
@@ -9363,7 +9374,10 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PLAYERPRO6=1",
+				);
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "PlayerPRO 6";

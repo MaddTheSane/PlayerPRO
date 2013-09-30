@@ -16,10 +16,11 @@
 #import "PPInstrumentImporterObject.h"
 #import "PPPlugInInfo.h"
 #import "PPPlugInInfoController.h"
-#import "PPDigitalPlugInHandler.h"
+#import "PPDigitalPlugHandler.h"
 #import "PPDigitalPlugInObject.h"
 #import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
+#import "PPDocument.h"
 #import <PlayerPROKit/PlayerPROKit.h>
 #include <PlayerPROCore/RDriverInt.h>
 
@@ -180,13 +181,11 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 		}
 	}
 	
-#if 0
 	for (PPDigitalPlugInObject *obj in digitalHandler) {
 		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"DigitalPlugName", @"Digital plug-in name") plugURL:[[obj file] bundleURL]];
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
 		}
-		RELEASEOBJ(tmpInfo);
 	}
 	
 	for (PPFilterPlugObject *obj in filterHandler) {
@@ -194,9 +193,7 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
 		}
-		RELEASEOBJ(tmpInfo);
 	}
-#endif
 	
 	[plugInInfos sortWithOptions:NSSortConcurrent usingComparator:^NSComparisonResult(id obj1, id obj2) {
 		NSString *menuNam1 = [obj1 plugName];
@@ -231,6 +228,8 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 	[self addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionNew context:NULL];
 	//self.paused = YES;
 	
+	filterHandler = [[PPFilterPlugHandler alloc] init];
+	digitalHandler = [[PPDigitalPlugHandler alloc] init];
 	instrumentImporter = [[PPInstrumentPlugHandler alloc] init];
 	NSInteger i;
 	for (i = 0; i < [instrumentImporter plugInCount]; i++) {
@@ -378,6 +377,11 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 			for (NSString *aUTI in trackerUTIs) {
 				if([sharedWorkspace type:theUTI conformsToType:aUTI])
 				{
+					PPMusicObjectWrapper *theWrap = [[PPMusicObjectWrapper alloc] initWithURL:theURL library:madLib];
+					PPDocument *theDoc = [[PPDocument alloc] init];
+					[theDoc importMusicObjectWrapper:theWrap];
+					
+					[self addDocument:theDoc];
 					return YES;
 				}
 			}
@@ -406,6 +410,14 @@ static void CocoaDebugStr( short line, Ptr file, Ptr text)
 		}
 	}
 	return NO;
+}
+
+- (id)openUntitledDocumentAndDisplay:(BOOL)displayDocument error:(NSError **)outError;
+{
+	PPDocument *theDoc = [[PPDocument alloc] init];
+	[theDoc importMusicObjectWrapper:[[PPMusicObjectWrapper alloc] init]];
+	
+	return theDoc;
 }
 
 - (IBAction)openFile:(id)sender {

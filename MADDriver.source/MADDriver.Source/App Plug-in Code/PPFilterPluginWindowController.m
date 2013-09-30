@@ -14,6 +14,9 @@
 
 @implementation PPFilterPluginWindowController
 @synthesize theData;
+@synthesize selectionEnd;
+@synthesize selectionStart;
+@synthesize stereoMode;
 
 - (id)initWithWindow:(NSWindow *)window
 {

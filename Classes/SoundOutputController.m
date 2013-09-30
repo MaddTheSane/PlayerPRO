@@ -10,30 +10,31 @@
 #import "UserDefaultKeys.h"
 
 @interface SoundOutputController ()
-@property (retain) PPSoundSettingsViewController *soundSettingsView;
 @end
 
 @implementation SoundOutputController
-@synthesize soundSettingsView;
-@synthesize subView;
 
 -(id)init
 {
-	if (self = [super initWithNibName:@"SoundOutput" bundle:nil]) {
+	if (self = [super initWithNibName:@"PPSoundSettingsViewController" bundle:nil]) {
 		[self setTitle:@"Sound Output"];
 	}
+	return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+	if (self) {
+		self.delegate = self;
+	}
+	
 	return self;
 }
 
 -(void)awakeFromNib
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
-	self.soundSettingsView = [[PPSoundSettingsViewController alloc] init];
-	soundSettingsView.delegate = self;
-	
-	[subView setContentView:[soundSettingsView view]];
-
 	MADDriverSettings drivSet;
 	
 	drivSet.surround = [defaults boolForKey:PPSurroundToggle];
@@ -55,7 +56,7 @@
 		drivSet.MicroDelaySize = 0;
 	}
 	
-	[soundSettingsView settingsFromDriverSettings:&drivSet];
+	[self settingsFromDriverSettings:&drivSet];
 }
 
 - (void)soundOutDriverDidChange:(short)driv
@@ -124,14 +125,14 @@
 - (void)soundOutOversamplingAmountDidChange:(short)ovs
 {
 	[[NSUserDefaults standardUserDefaults] setInteger:ovs forKey:PPOversamplingAmount];
-
+	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 
 - (void)soundOutStereoDelayAmountDidChange:(short)std
 {
 	[[NSUserDefaults standardUserDefaults] setInteger:std forKey:PPStereoDelayAmount];
-
+	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 

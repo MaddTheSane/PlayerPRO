@@ -15,22 +15,7 @@
 
 @end
 
-static Boolean getParams (SInt32 *p1, double *p2, PPInfoPlug *thePPInfoPlug)
-{
-	EchoWindowController *controller = [[EchoWindowController alloc] initWithWindowNibName:@"DepthController"];
-	controller.echoDelay = *p1;
-	controller.echoStrength = *p2;
-	
-	NSInteger retVal = [controller runAsModal];
-	
-	if (retVal == NSOffState) {
-		return FALSE;
-	} else {
-		*p1 = controller.echoDelay;
-		*p2 = controller.echoStrength;
-		return TRUE;
-	}
-}
+#define timeConvert		22254 //≈22KHZ
 
 @implementation EchoWindowController
 
@@ -39,6 +24,64 @@ static Boolean getParams (SInt32 *p1, double *p2, PPInfoPlug *thePPInfoPlug)
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
+		isMultipleIstanceSafe = YES;
+		dispatch_block_t tmp = ^{
+			SInt32 i, length, temp1, temp2, pDelay = self.echoDelay;
+			double pStrength = self.echoStrength;
+
+			
+			length = (int)(selectionEnd - selectionStart - 1);
+			
+			pDelay = (pDelay * timeConvert) / 1000;	//convert ms to samples
+			
+			switch( theData->amp)
+			{
+				case 8:
+				{
+					Ptr	orgPtr = (theData->data) + selectionStart, destPtr = orgPtr + pDelay;
+					
+					for( i = 0; i < (length - pDelay); i++)
+					{
+						temp1 = *orgPtr++;
+						temp1 = (pStrength * temp1);
+						
+						temp2 = *destPtr;
+						
+						temp1 += temp2;
+						
+						if( temp1 >= 127) temp1 = 127;	// overflow ?
+						else if( temp1 <= -128 ) temp1 = -128;
+						
+						*destPtr++ = temp1;
+					}
+				}
+					break;
+					
+				case 16:
+				{
+					short	*orgPtr = (short*) theData->data + (selectionStart / 2),
+					*destPtr = orgPtr + pDelay;
+					
+					for( i = 0; i < length / 2 - pDelay; i++)
+					{
+						temp1 = *orgPtr++;
+						temp1 = (pStrength * temp1);
+						
+						temp2 = *destPtr;
+						
+						temp1 += temp2;
+						
+						if( temp1 >= (short)0x7FFF) temp1 = 0x7FFF;	// overflow ?
+						else if( temp1 <= (short)0x8000 ) temp1 = (short)0x8000;
+						
+						*destPtr++ = temp1;
+					}
+				}
+					break;
+			}
+			
+		};
+		self.plugBlock = tmp;
     }
     
     return self;
@@ -53,17 +96,6 @@ static Boolean getParams (SInt32 *p1, double *p2, PPInfoPlug *thePPInfoPlug)
 
 @end
 
-#define timeConvert		22254 //≈22KHZ
-
-#if 0
-static int checkMax (int v)
-{
-	if( v >= 127) return 127;
-	else if( v <= -127 ) return -127;
-	else return v;
-}
-#endif
-
 static OSErr mainEcho(void			*unused,
 					  sData			*theData,
 					  long			SelectionStart,
@@ -71,63 +103,15 @@ static OSErr mainEcho(void			*unused,
 					  PPInfoPlug		*thePPInfoPlug,
 					  short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	SInt32 i, length, temp1, temp2, pDelay = 250;
-	double pStrength = 0.50;
+	EchoWindowController *controller = [[EchoWindowController alloc] initWithWindowNibName:@"EchoWindowController" infoPlug:thePPInfoPlug];
+	controller.echoStrength = 0.50;
+	controller.echoDelay = 250;
+	controller.theData = theData;
+	controller.selectionStart = SelectionStart;
+	controller.selectionEnd = SelectionEnd;
+	controller.stereoMode = StereoMode ? YES : NO;
 	
-	if (getParams (&pDelay, &pStrength, thePPInfoPlug))
-	{
-		length = (int)(SelectionEnd - SelectionStart - 1);
-		
-		pDelay = (pDelay * timeConvert) / 1000;	//convert ms to samples
-		
-		switch( theData->amp)
-		{
-			case 8:
-			{
-				Ptr	orgPtr = (theData->data) + SelectionStart, destPtr = orgPtr + pDelay;
-				
-				for( i = 0; i < (length - pDelay); i++)
-				{
-					temp1 = *orgPtr++;
-					temp1 = (pStrength * temp1);
-					
-					temp2 = *destPtr;
-					
-					temp1 += temp2;
-					
-					if( temp1 >= 127) temp1 = 127;	// overflow ?
-					else if( temp1 <= -128 ) temp1 = -128;
-					
-					*destPtr++ = temp1;
-				}
-			}
-				break;
-				
-			case 16:
-			{
-				short	*orgPtr = (short*) theData->data + (SelectionStart / 2),
-				*destPtr = orgPtr + pDelay;
-				
-				for( i = 0; i < length / 2 - pDelay; i++)
-				{
-					temp1 = *orgPtr++;
-					temp1 = (pStrength * temp1);
-					
-					temp2 = *destPtr;
-					
-					temp1 += temp2;
-					
-					if( temp1 >= (short)0x7FFF) temp1 = 0x7FFF;	// overflow ?
-					else if( temp1 <= (short)0x8000 ) temp1 = (short)0x8000;
-					
-					*destPtr++ = temp1;
-				}
-			}
-				break;
-		}
-	}
-	
-	return noErr;
+	return [controller runAsSheet];
 }
 
 // DA609751-C4B0-4814-BAE7-2B82CA59E64E
