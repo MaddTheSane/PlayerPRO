@@ -75,7 +75,7 @@
 //Creates a music struct for use outside of PlayerPROKit.
 - (MADMusic *)newMadMusicStruct;
 
-+ (PPInfoRec)infoFromTrackerAtURL:(NSURL*)thURL;
++ (OSErr)info:(PPInfoRec *)theInfo fromTrackerAtURL:(NSURL *)thURL;
 
 #pragma mark Document-based code
 //For use with document classes, like NSDocument or UIDocument

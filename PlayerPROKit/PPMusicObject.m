@@ -42,6 +42,10 @@
 		return MADParametersErr;
 	}
 	
+	if ([[thURL pathExtension] caseInsensitiveCompare:@"madbundle"] == NSOrderedSame) {
+		return [PPMusicObjectWrapper info:theInfo fromTrackerAtURL:thURL];
+	}
+
 	tmpCFURL = CFBridgingRetain(thURL);
 	
 	if ((theErr = MADMusicIdentifyCFURL(theLib._madLib, filetype, tmpCFURL)) != noErr)
@@ -317,38 +321,46 @@ end:
 @end
 
 @implementation PPMusicObjectWrapper
+@synthesize madType;
 
-+ (PPInfoRec)infoFromTrackerAtURL:(NSURL*)thURL
++ (OSErr)info:(PPInfoRec *)theInfo fromTrackerAtURL:(NSURL *)thURL
 {
-	PPMusicObjectWrapper *tmpVal = [[self alloc] initWithURL:thURL];
-	PPInfoRec toReturn = {0};
-	strcpy(toReturn.formatDescription, "MAD Bundle");
-	NSData *nameData = [[tmpVal internalFileName] dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
-	[nameData getBytes:toReturn.internalFileName length:MIN(nameData.length, (sizeof(toReturn.internalFileName) - 1))];
-	toReturn.signature = tmpVal.madType;
-	toReturn.totalInstruments = tmpVal.totalInstruments;
-	toReturn.partitionLength = tmpVal.partitionLength;
-	toReturn.totalPatterns = tmpVal.totalPatterns;
-	toReturn.totalTracks = tmpVal.totalTracks;
-	toReturn.fileSize = [[tmpVal.musicWrapper fileAttributes][NSFileSize] longValue];
-	
-	return toReturn;
-}
-
-+ (OSErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib
-{
-	if (!theInfo || !thURL || !theLib) {
+	OSErr theErr = noErr;
+	if (!theInfo || !thURL) {
 		return MADParametersErr;
 	}
-	if ([[thURL pathExtension] caseInsensitiveCompare:@"madbundle"] == NSOrderedSame) {
-		*theInfo = [self infoFromTrackerAtURL:thURL];
-		return noErr;
-	} else {
-		return [super info:theInfo fromTrackerAtURL:thURL usingLibrary:theLib];
-	}
-}
+	PPMusicObjectWrapper *tmpVal = [[PPMusicObjectWrapper alloc] initWithURL:thURL];
 
-@synthesize madType;
+	if (!tmpVal) {
+		return MADReadingErr;
+	}
+	strcpy(theInfo->formatDescription, "MAD Bundle");
+
+	@try {
+		NSData *nameData = [tmpVal.internalFileName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+		if (!nameData || nameData.length == 0) {
+			theInfo->internalFileName[0] = '\0';
+		} else {
+			char fileNameInt[60] = {0};
+			[nameData getBytes:fileNameInt length:MIN(nameData.length, (sizeof(fileNameInt)))];
+			strlcpy(theInfo->internalFileName, fileNameInt, sizeof(theInfo->internalFileName));
+		}
+		theInfo->signature = tmpVal.madType;
+		theInfo->totalInstruments = tmpVal.totalInstruments;
+		theInfo->partitionLength = tmpVal.partitionLength;
+		theInfo->totalPatterns = tmpVal.totalPatterns;
+		theInfo->totalTracks = tmpVal.totalTracks;
+		theInfo->fileSize = [[tmpVal.musicWrapper fileAttributes][NSFileSize] longValue];
+	}
+	@catch (NSException *exception) {
+		memset(theInfo, 0, sizeof(PPInfoRec));
+		theErr = MADIncompatibleFile;
+	}
+	@finally {
+		return theErr;
+	}
+
+}
 
 - (id)copyWithZone:(NSZone *)zone
 {
@@ -383,6 +395,7 @@ end:
 #define kMADMusicName @"Mad Name"
 #define kMADMusicInfo @"Mad Info"
 #define kMADMusicType @"Mad Type"
+#define kMADMusicAuthor @"Mad Author"
 
 - (void)setUpObjCStructures
 {
