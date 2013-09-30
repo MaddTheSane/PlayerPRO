@@ -386,6 +386,9 @@ end:
 
 - (void)setUpObjCStructures
 {
+	self.internalFileName = [NSString stringWithCString:currentMusic->header->name encoding:NSMacOSRomanStringEncoding];
+	self.madInfo = [NSString stringWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
+	self.madAuthor = @"";
 	
 }
 
