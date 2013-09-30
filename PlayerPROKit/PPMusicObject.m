@@ -135,7 +135,7 @@ end:
 
 - (id)initWithPath:(NSString *)url driver:(PPDriver *)theLib
 {
-	return [self initWithPath:url driver:theLib];
+	return [self initWithPath:url library:theLib.theLibrary];
 }
 
 - (void)attachToDriver:(PPDriver *)theDriv
@@ -340,7 +340,7 @@ end:
 	if (!theInfo || !thURL || !theLib) {
 		return MADParametersErr;
 	}
-	if ([[thURL lastPathComponent] caseInsensitiveCompare:@"madbundle"] == NSOrderedSame) {
+	if ([[thURL pathExtension] caseInsensitiveCompare:@"madbundle"] == NSOrderedSame) {
 		*theInfo = [self infoFromTrackerAtURL:thURL];
 		return noErr;
 	} else {
@@ -389,6 +389,7 @@ end:
 	self.internalFileName = [NSString stringWithCString:currentMusic->header->name encoding:NSMacOSRomanStringEncoding];
 	self.madInfo = [NSString stringWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
 	self.madAuthor = @"";
+	
 	
 }
 

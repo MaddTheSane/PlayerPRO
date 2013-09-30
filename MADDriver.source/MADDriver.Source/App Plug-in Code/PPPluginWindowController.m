@@ -39,7 +39,7 @@ NSString * const PPPlugReturnCode = @"MAD Return Code";
 	if (returnCode == NSOnState) {
 		plugBlock();
 	}
-	[[NSNotificationCenter defaultCenter] postNotificationName:PPPlugInSheetDidEnd object:self.window userInfo:@{PPPlugReturnCode: @(returnCode)}];
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPPlugInSheetDidEnd object:self userInfo:@{PPPlugReturnCode: @(returnCode)}];
 	[self close];
 }
 
