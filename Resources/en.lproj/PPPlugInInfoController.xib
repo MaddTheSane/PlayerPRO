@@ -122,11 +122,13 @@ DQ
                     <constraint firstItem="10" firstAttribute="baseline" secondItem="15" secondAttribute="baseline" id="51"/>
                     <constraint firstItem="29" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="52"/>
                     <constraint firstAttribute="centerX" secondItem="5ok-6Q-QTf" secondAttribute="centerX" id="8bZ-oA-kdu"/>
-                    <constraint firstItem="15" firstAttribute="width" secondItem="5" secondAttribute="width" id="A7P-Rh-1lD"/>
+                    <constraint firstItem="24" firstAttribute="trailing" secondItem="5" secondAttribute="trailing" id="DT2-pG-8C7"/>
+                    <constraint firstItem="24" firstAttribute="trailing" secondItem="15" secondAttribute="trailing" id="JKf-S5-7TP"/>
                     <constraint firstItem="5ok-6Q-QTf" firstAttribute="top" secondItem="26" secondAttribute="bottom" constant="8" symbolic="YES" id="Qnq-mN-0I8"/>
                     <constraint firstItem="17" firstAttribute="leading" secondItem="5" secondAttribute="trailing" constant="8" symbolic="YES" id="Ukx-Vq-gAo"/>
+                    <constraint firstItem="24" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="YDN-uT-P4u"/>
+                    <constraint firstItem="24" firstAttribute="leading" secondItem="15" secondAttribute="leading" id="YWF-aA-0h2"/>
                     <constraint firstItem="15" firstAttribute="trailing" secondItem="5" secondAttribute="trailing" id="ZIJ-3s-L2Q"/>
-                    <constraint firstItem="15" firstAttribute="width" secondItem="24" secondAttribute="width" id="clT-0F-89l"/>
                     <constraint firstAttribute="bottom" secondItem="5ok-6Q-QTf" secondAttribute="bottom" constant="20" symbolic="YES" id="ewl-PB-Mya"/>
                     <constraint firstItem="15" firstAttribute="trailing" secondItem="24" secondAttribute="trailing" id="gbm-J0-69s"/>
                 </constraints>
