@@ -8,10 +8,7 @@ CFBundleName = "PlayerPRO";
 "PPITFile" = "ImpulseTracker Audio";
 "PPAMFFile" = "AMF Tracker Audio";
 "PP669File" = "669 Tracker Audio";
-
-"PPXIFile" = "FastTracker Instrument";
-"PPMINsFile" = "PlayerPRO Instrument";
-"PPPATFile" = "PlayerPRO Patterns";
+"PPOKTAFile" = "OKTAmed Tracker Audio";
 
 "PPMADFile" = "PlayerPRO MAD Tracker";
 "PPMADFGFile" = "PlayerPRO MADfg Tracker";
@@ -20,6 +17,3 @@ CFBundleName = "PlayerPRO";
 "PPMADHFile" = "PlayerPRO MADH Tracker";
 "PPMADBundle" = "PlayerPRO Tracker Bundle";
 "Music Tracker" = "Music Tracker";
-
-"MIDI File" = "MIDI File";
-"PPImpExpBundle" = "PlayerPRO Import/Export PlugIn";

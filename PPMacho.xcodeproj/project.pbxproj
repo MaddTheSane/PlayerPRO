@@ -144,6 +144,11 @@
 		5521F40F17F75DAF002CDBA9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		5521F41017F8ED5A002CDBA9 /* PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55981C5211EE370D00656EE3 /* PPPreferences.m */; };
 		5521F41517FA4365002CDBA9 /* BoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F41417FA4365002CDBA9 /* BoxViewController.m */; };
+		5521F41717FA541C002CDBA9 /* Trackers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5521F41617FA541C002CDBA9 /* Trackers.xcassets */; };
+		5521F41817FA541C002CDBA9 /* Trackers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5521F41617FA541C002CDBA9 /* Trackers.xcassets */; };
+		5521F41917FA541C002CDBA9 /* Trackers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5521F41617FA541C002CDBA9 /* Trackers.xcassets */; };
+		5521F41A17FA548A002CDBA9 /* Trackers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5521F41617FA541C002CDBA9 /* Trackers.xcassets */; };
+		5521F41C17FA54B8002CDBA9 /* Player-only.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5521F41B17FA54B8002CDBA9 /* Player-only.xcassets */; };
 		55232A7611FDD2A60041A4EC /* SoundOutputController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232A7511FDD2A60041A4EC /* SoundOutputController.m */; };
 		55232AD811FDDFEA0041A4EC /* PianoPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AD711FDDFEA0041A4EC /* PianoPreferencesController.m */; };
 		55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AE911FDE29B0041A4EC /* ColorPreferenceController.m */; };
@@ -214,8 +219,6 @@
 		5533422410BB6675005208D1 /* IT.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E110BB5368005208D1 /* IT.c */; };
 		5533600411EBC66400525CAF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5533600311EBC66400525CAF /* Localizable.strings */; };
 		553626B817EB9DEA00D3A3C8 /* Cocoa Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Images.xcassets */; };
-		553626B917EB9E8D00D3A3C8 /* Cocoa Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Images.xcassets */; };
-		553626BD17EBA1FB00D3A3C8 /* Cocoa Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Images.xcassets */; };
 		5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
 		55469C2716BF34D200175A1F /* PatternHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55469C2616BF34D200175A1F /* PatternHandler.m */; };
 		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
@@ -1777,6 +1780,8 @@
 		5521F40B17F75A93002CDBA9 /* PPSizeFormatterLength.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSizeFormatterLength.m; sourceTree = "<group>"; };
 		5521F41317FA4365002CDBA9 /* BoxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoxViewController.h; sourceTree = "<group>"; };
 		5521F41417FA4365002CDBA9 /* BoxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoxViewController.m; sourceTree = "<group>"; };
+		5521F41617FA541C002CDBA9 /* Trackers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Trackers.xcassets; sourceTree = "<group>"; };
+		5521F41B17FA54B8002CDBA9 /* Player-only.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Player-only.xcassets"; sourceTree = "<group>"; };
 		55232A7411FDD2A60041A4EC /* SoundOutputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundOutputController.h; sourceTree = "<group>"; };
 		55232A7511FDD2A60041A4EC /* SoundOutputController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundOutputController.m; sourceTree = "<group>"; };
 		55232AD611FDDFEA0041A4EC /* PianoPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PianoPreferencesController.h; sourceTree = "<group>"; };
@@ -3629,6 +3634,7 @@
 		5578C48417D9E8560057D11B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5521F41B17FA54B8002CDBA9 /* Player-only.xcassets */,
 				5578C48517D9E8560057D11B /* PlayerPRO Player-Info.plist */,
 				55F41A2D17EF853C00605DF8 /* PlayerPRO Player-Info.plistvers.plist */,
 				5578C48617D9E8560057D11B /* InfoPlist.strings */,
@@ -3894,6 +3900,7 @@
 			isa = PBXGroup;
 			children = (
 				553626B717EB9DEA00D3A3C8 /* Cocoa Images.xcassets */,
+				5521F41617FA541C002CDBA9 /* Trackers.xcassets */,
 				55A9351817F28F9700493DC5 /* Shared.xcassets */,
 				557139E51685007B00831A5A /* OpenPanelViewController.xib */,
 				5523EC6916925FF80067B22A /* PPInstrumentWindowController.xib */,
@@ -5218,7 +5225,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				553626BD17EBA1FB00D3A3C8 /* Cocoa Images.xcassets in Resources */,
+				5521F41A17FA548A002CDBA9 /* Trackers.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5317,6 +5324,7 @@
 				55A9351B17F28F9700493DC5 /* Shared.xcassets in Resources */,
 				555776BE17EBF8FF0019D008 /* Images.xcassets in Resources */,
 				555776B317EBF8FE0019D008 /* Main_iPhone.storyboard in Resources */,
+				5521F41917FA541C002CDBA9 /* Trackers.xcassets in Resources */,
 				555776AA17EBF8FE0019D008 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5340,7 +5348,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				553626B917EB9E8D00D3A3C8 /* Cocoa Images.xcassets in Resources */,
 				5578C48817D9E8560057D11B /* InfoPlist.strings in Resources */,
 				5578C48E17D9E8560057D11B /* Credits.rtf in Resources */,
 				5578C49417D9E8570057D11B /* MainMenu.xib in Resources */,
@@ -5350,6 +5357,7 @@
 				5578C4C217DA4C430057D11B /* MusicListPrefs.xib in Resources */,
 				5578C4C317DA4C6D0057D11B /* PPPause.pdf in Resources */,
 				5578C4C417DA4C6D0057D11B /* PPPlay.pdf in Resources */,
+				5521F41817FA541C002CDBA9 /* Trackers.xcassets in Resources */,
 				5578C4C617DA4C6D0057D11B /* PPReverse.pdf in Resources */,
 				5578C4C717DA4C6D0057D11B /* PPStop.pdf in Resources */,
 				5578C4C817DA4C6D0057D11B /* PPNextTrack.pdf in Resources */,
@@ -5360,6 +5368,7 @@
 				5557769817EBDFAC0019D008 /* PPFastForward.pdf in Resources */,
 				55A9351A17F28F9700493DC5 /* Shared.xcassets in Resources */,
 				5578C4DA17DA95C20057D11B /* MiscPrefs.xib in Resources */,
+				5521F41C17FA54B8002CDBA9 /* Player-only.xcassets in Resources */,
 				5573AF0917DF8FD500B68127 /* README.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5631,6 +5640,7 @@
 				55F4287D16A8B1FB009013D8 /* PPSoundSettingsViewController.xib in Resources */,
 				552581FF16C6FC350016A31C /* InstrumentInfoController.xib in Resources */,
 				5578C54117DBABC50057D11B /* PPDocument.xib in Resources */,
+				5521F41717FA541C002CDBA9 /* Trackers.xcassets in Resources */,
 				5573AF0817DF8FD400B68127 /* README.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
