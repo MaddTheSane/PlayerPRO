@@ -8,3 +8,5 @@
  */
 
 #define diaNum 3214
+
+void Burk( short fRefnum);
