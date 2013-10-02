@@ -753,7 +753,7 @@ resource 'DITL' (1002, purgeable) {
 		{10, 10, 26, 320},
 		StaticText {
 			disabled,
-			"Veuillez choisir un fichier son Ã  ouvrir"
+			"Veuillez choisir un fichier son ˆ ouvrir"
 			" :"
 		}
 	}
@@ -981,7 +981,7 @@ resource 'DITL' (684) {
 		{81, 215, 94, 258},
 		StaticText {
 			disabled,
-			"DÃ©but:"
+			"Dbut:"
 		},
 		/* [5] */
 		{93, 215, 106, 259},
@@ -1777,7 +1777,7 @@ resource 'DITL' (202) {
 		{1, 219, 13, 282},
 		StaticText {
 			disabled,
-			"SÃ©lection:"
+			"Slection:"
 		},
 		/* [5] */
 		{1, 283, 13, 320},
@@ -1789,7 +1789,7 @@ resource 'DITL' (202) {
 		{1, 319, 13, 339},
 		StaticText {
 			disabled,
-			"Ã :"
+			"ˆ:"
 		},
 		/* [7] */
 		{1, 335, 13, 375},
@@ -1813,7 +1813,7 @@ resource 'DITL' (202) {
 		{14, 319, 26, 339},
 		StaticText {
 			disabled,
-			"Ã :"
+			"ˆ:"
 		},
 		/* [11] */
 		{14, 335, 26, 375},
@@ -1877,7 +1877,7 @@ resource 'DITL' (202) {
 		{27, 319, 39, 339},
 		StaticText {
 			disabled,
-			"Ã :"
+			"ˆ:"
 		},
 		/* [22] */
 		{27, 335, 39, 375},
@@ -1889,7 +1889,7 @@ resource 'DITL' (202) {
 		{1, 100, 13, 154},
 		StaticText {
 			disabled,
-			"Ã‰chelle:"
+			"ƒchelle:"
 		},
 		/* [24] */
 		{1, 168, 13, 208},
@@ -1933,7 +1933,7 @@ resource 'DITL' (202) {
 		{1, 377, 13, 458},
 		StaticText {
 			disabled,
-			"FrÃ©quence:"
+			"Frquence:"
 		},
 		/* [32] */
 		{1, 459, 13, 509},
@@ -1951,7 +1951,7 @@ resource 'DITL' (202) {
 		{14, 377, 26, 457},
 		StaticText {
 			disabled,
-			"Note rÃ©elle:"
+			"Note relle:"
 		},
 		/* [35] */
 		{153, 726, 185, 758},
@@ -2135,13 +2135,13 @@ resource 'DITL' (2000) {
 		{132, 169, 148, 237},
 		RadioButton {
 			enabled,
-			"StÃ©rÃ©o"
+			"Stro"
 		},
 		/* [14] */
 		{132, 240, 148, 339},
 		RadioButton {
 			enabled,
-			"True StÃ©rÃ©o"
+			"True Stro"
 		},
 		/* [15] */
 		{197, 253, 213, 289},
@@ -2174,13 +2174,13 @@ resource 'DITL' (2000) {
 		{177, 55, 193, 164},
 		CheckBox {
 			enabled,
-			"DÃ©lai stÃ©rÃ©o:"
+			"Dlai stro:"
 		},
 		/* [21] */
 		{157, 55, 173, 260},
 		CheckBox {
 			enabled,
-			"Interpolation linÃ©aire"
+			"Interpolation linaire"
 		},
 		/* [22] */
 		{37, 5, 53, 54},
@@ -2192,7 +2192,7 @@ resource 'DITL' (2000) {
 		{96, 10, 112, 84},
 		StaticText {
 			disabled,
-			"FrÃ©quence:"
+			"Frquence:"
 		},
 		/* [24] */
 		{114, 10, 130, 51},
@@ -2222,7 +2222,7 @@ resource 'DITL' (2000) {
 		{72, 251, 90, 329},
 		Button {
 			enabled,
-			"DÃ©finir"
+			"Dfinir"
 		},
 		/* [29] */
 		{157, 5, 173, 51},
@@ -2246,7 +2246,7 @@ resource 'DITL' (2000) {
 		{197, 55, 213, 170},
 		CheckBox {
 			enabled,
-			"RÃ©verbÃ©ration:"
+			"Rverbration:"
 		},
 		/* [33] */
 		{199, 225, 212, 245},
@@ -2275,7 +2275,7 @@ resource 'DITL' (2001) {
 		{74, 88, 92, 174},
 		StaticText {
 			disabled,
-			"EntrÃ©e Piano:"
+			"Entre Piano:"
 		},
 		/* [2] */
 		{93, 98, 111, 220},
@@ -2287,7 +2287,7 @@ resource 'DITL' (2001) {
 		{224, 210, 242, 342},
 		CheckBox {
 			enabled,
-			"Octaves marquÃ©s"
+			"Octaves marqus"
 		},
 		/* [4] */
 		{204, 290, 222, 346},
@@ -2328,7 +2328,7 @@ resource 'DITL' (2001) {
 		{113, 272, 131, 350},
 		Button {
 			enabled,
-			"DÃ©finir"
+			"Dfinir"
 		},
 		/* [11] */
 		{199, 0, 200, 352},
@@ -2368,7 +2368,7 @@ resource 'DITL' (2001) {
 		{113, 98, 131, 270},
 		CheckBox {
 			enabled,
-			"EntrÃ©e MIDI - (OMS)"
+			"Entre MIDI - (OMS)"
 		},
 		/* [18] */
 		{133, 111, 151, 328},
@@ -2380,7 +2380,7 @@ resource 'DITL' (2001) {
 		{153, 111, 171, 328},
 		CheckBox {
 			enabled,
-			"MIDI VÃ©locitÃ© -> Volume"
+			"MIDI Vlocit -> Volume"
 		},
 		/* [20] */
 		{173, 111, 191, 349},
@@ -2439,13 +2439,13 @@ resource 'DITL' (2002) {
 		{80, 111, 98, 332},
 		RadioButton {
 			enabled,
-			"Charger alÃ©atoirement"
+			"Charger alatoirement"
 		},
 		/* [4] */
 		{40, 8, 56, 208},
 		StaticText {
 			disabled,
-			"AprÃ¨s avoir jouÃ© une musique:"
+			"Aprs avoir jou une musique:"
 		},
 		/* [5] */
 		{0, 0, 35, 259},
@@ -2456,19 +2456,19 @@ resource 'DITL' (2002) {
 		{189, 10, 207, 308},
 		CheckBox {
 			enabled,
-			"Afficher les icÃ´nes du Finder"
+			"Afficher les ic™nes du Finder"
 		},
 		/* [7] */
 		{60, 10, 78, 102},
 		RadioButton {
 			enabled,
-			"ArrÃªter"
+			"Arrter"
 		},
 		/* [8] */
 		{149, 10, 167, 339},
 		CheckBox {
 			enabled,
-			"Ouvrir la premiÃ¨re musique aprÃ¨s chargem"
+			"Ouvrir la premire musique aprs chargem"
 			"ent "
 		},
 		/* [9] */
@@ -2486,7 +2486,7 @@ resource 'DITL' (2002) {
 		{169, 10, 187, 334},
 		CheckBox {
 			enabled,
-			"Position de dÃ©part Ã  l'arrÃªt de la musiq"
+			"Position de dpart ˆ l'arrt de la musiq"
 			"ue"
 		},
 		/* [12] */
@@ -2494,13 +2494,13 @@ resource 'DITL' (2002) {
 		CheckBox {
 			enabled,
 			"Demander la sauvegarde d'une liste modif"
-			"iÃ©e"
+			"ie"
 		},
 		/* [13] */
 		{229, 10, 247, 335},
 		CheckBox {
 			enabled,
-			"Jouer automatiquement une musique chargÃ©"
+			"Jouer automatiquement une musique charg"
 			"e"
 		},
 		/* [14] */
@@ -2513,7 +2513,7 @@ resource 'DITL' (2002) {
 		{129, 10, 147, 325},
 		CheckBox {
 			enabled,
-			"Charger la mÃªme liste au prochain dÃ©marr"
+			"Charger la mme liste au prochain dmarr"
 			"age"
 		}
 	}
@@ -3070,7 +3070,7 @@ resource 'DITL' (300, purgeable) {
 		{6, 60, 54, 270},
 		StaticText {
 			disabled,
-			"Sauvegarder â€œ^0â€ avant la fermeture?"
+			"Sauvegarder Ò^0Ó avant la fermeture?"
 		},
 		/* [5] */
 		{10, 10, 42, 42},
@@ -3940,7 +3940,7 @@ resource 'DITL' (152) {
 		{38, 304, 56, 448},
 		RadioButton {
 			enabled,
-			"SÃ©lection (Digital)"
+			"Slection (Digital)"
 		},
 		/* [12] */
 		{58, 304, 76, 410},
@@ -4583,7 +4583,7 @@ resource 'DITL' (163) {
 		{63, 7, 79, 105},
 		StaticText {
 			disabled,
-			"Temps Ã©coulÃ©:"
+			"Temps coul:"
 		},
 		/* [5] */
 		{63, 185, 79, 260},
@@ -4595,7 +4595,7 @@ resource 'DITL' (163) {
 		{83, 7, 99, 185},
 		StaticText {
 			disabled,
-			"Temps restant estimÃ©:"
+			"Temps restant estim:"
 		},
 		/* [7] */
 		{83, 185, 99, 260},
@@ -4860,7 +4860,7 @@ resource 'DITL' (623) {
 		{8, 12, 24, 126},
 		StaticText {
 			disabled,
-			"RÃ©sult (en ticks):"
+			"Rsult (en ticks):"
 		},
 		/* [4] */
 		{8, 132, 24, 207},
@@ -4896,7 +4896,7 @@ resource 'DITL' (623) {
 		{69, 185, 89, 310},
 		Button {
 			enabled,
-			"Purger la mÃ©moire"
+			"Purger la mmoire"
 		}
 	}
 };
@@ -4997,13 +4997,13 @@ resource 'DITL' (319) {
 		{42, 161, 58, 226},
 		RadioButton {
 			enabled,
-			"StÃ©rÃ©o"
+			"Stro"
 		},
 		/* [17] */
 		{42, 230, 58, 325},
 		RadioButton {
 			enabled,
-			"True StÃ©rÃ©o"
+			"True Stro"
 		},
 		/* [18] */
 		{127, 254, 143, 290},
@@ -5015,19 +5015,19 @@ resource 'DITL' (319) {
 		{107, 55, 123, 165},
 		CheckBox {
 			enabled,
-			"DÃ©lai stÃ©rÃ©o:"
+			"Dlai stro:"
 		},
 		/* [20] */
 		{87, 55, 103, 261},
 		CheckBox {
 			enabled,
-			"Interpolation linÃ©aire"
+			"Interpolation linaire"
 		},
 		/* [21] */
 		{6, 10, 22, 85},
 		StaticText {
 			disabled,
-			"FrÃ©quence:"
+			"Frquence:"
 		},
 		/* [22] */
 		{24, 10, 40, 85},
@@ -5075,7 +5075,7 @@ resource 'DITL' (319) {
 		{127, 55, 143, 171},
 		CheckBox {
 			enabled,
-			"RÃ©verbÃ©ration:"
+			"Rverbration:"
 		},
 		/* [30] */
 		{129, 226, 142, 246},
@@ -5115,7 +5115,7 @@ resource 'DITL' (364) {
 		{19, 20, 32, 79},
 		StaticText {
 			disabled,
-			"UtilisÃ©e:"
+			"Utilise:"
 		},
 		/* [3] */
 		{19, 81, 32, 129},
@@ -5250,7 +5250,7 @@ resource 'DITL' (761) {
 		{38, 5, 52, 161},
 		StaticText {
 			disabled,
-			"EntrÃ©e audio:"
+			"Entre audio:"
 		},
 		/* [6] */
 		{54, 5, 103, 110},
@@ -5272,7 +5272,7 @@ resource 'DITL' (761) {
 		{94, 168, 108, 221},
 		StaticText {
 			disabled,
-			"FrÃ©quence:"
+			"Frquence:"
 		},
 		/* [10] */
 		{54, 168, 68, 221},
@@ -5393,7 +5393,7 @@ resource 'DITL' (761) {
 		{183, 205, 197, 263},
 		StaticText {
 			disabled,
-			"EnregistrÃ©:"
+			"Enregistr:"
 		},
 		/* [31] */
 		{211, 170, 225, 221},
@@ -5727,7 +5727,7 @@ resource 'DITL' (317) {
 		{58, 20, 72, 73},
 		StaticText {
 			disabled,
-			"CrÃ©ateur:"
+			"Crateur:"
 		},
 		/* [7] */
 		{34, 82, 47, 115},
@@ -5862,7 +5862,7 @@ resource 'DITL' (2004) {
 		{40, 10, 56, 290},
 		StaticText {
 			disabled,
-			"Compression automatique Ã  la sauvegarde:"
+			"Compression automatique ˆ la sauvegarde:"
 		},
 		/* [4] */
 		{82, 0, 83, 352},
@@ -5874,7 +5874,7 @@ resource 'DITL' (2004) {
 		{107, 10, 125, 347},
 		CheckBox {
 			enabled,
-			"MÃªmes options au prochain chargement"
+			"Mmes options au prochain chargement"
 		},
 		/* [6] */
 		{128, 10, 146, 347},
@@ -5924,8 +5924,8 @@ resource 'DITL' (2004) {
 		{195, 10, 213, 347},
 		CheckBox {
 			enabled,
-			"Utiliser l'accÃ¨s direct Ã  la mÃ©moire vid"
-			"Ã©o"
+			"Utiliser l'accs direct ˆ la mmoire vid"
+			"o"
 		},
 		/* [14] */
 		{175, 10, 191, 307},
@@ -5949,25 +5949,25 @@ resource 'DITL' (2005) {
 		{60, 10, 78, 169},
 		CheckBox {
 			enabled,
-			"DÃ©filement de texte"
+			"Dfilement de texte"
 		},
 		/* [2] */
 		{80, 10, 98, 161},
 		CheckBox {
 			enabled,
-			"Ã‰toiles"
+			"ƒtoiles"
 		},
 		/* [3] */
 		{40, 10, 56, 153},
 		StaticText {
 			disabled,
-			"Ã‰conomiseur d'Ã©cran:"
+			"ƒconomiseur d'cran:"
 		},
 		/* [4] */
 		{40, 185, 56, 276},
 		StaticText {
 			disabled,
-			"Plein Ã©cran:"
+			"Plein cran:"
 		},
 		/* [5] */
 		{100, 10, 118, 172},
@@ -5979,13 +5979,13 @@ resource 'DITL' (2005) {
 		{60, 185, 78, 347},
 		CheckBox {
 			enabled,
-			"DÃ©filement de texte"
+			"Dfilement de texte"
 		},
 		/* [7] */
 		{80, 185, 98, 288},
 		CheckBox {
 			enabled,
-			"Ã‰toiles"
+			"ƒtoiles"
 		},
 		/* [8] */
 		{100, 185, 118, 315},
@@ -6003,7 +6003,7 @@ resource 'DITL' (2005) {
 		{120, 185, 138, 349},
 		CheckBox {
 			enabled,
-			"DÃ©filement sinusoÃ¯dal"
+			"Dfilement sinuso•dal"
 		}
 	}
 };
@@ -6014,7 +6014,7 @@ resource 'DITL' (172) {
 		{110, 365, 130, 435},
 		Button {
 			enabled,
-			"DÃ©placer"
+			"Dplacer"
 		},
 		/* [2] */
 		{110, 450, 130, 508},
@@ -6074,7 +6074,7 @@ resource 'DITL' (172) {
 		{40, 370, 58, 514},
 		RadioButton {
 			enabled,
-			"SÃ©lection (Digital)"
+			"Slection (Digital)"
 		},
 		/* [12] */
 		{80, 370, 98, 476},
@@ -6086,7 +6086,7 @@ resource 'DITL' (172) {
 		{60, 370, 78, 521},
 		RadioButton {
 			enabled,
-			"SÃ©lection (Classique)"
+			"Slection (Classique)"
 		},
 		/* [14] */
 		{20, 150, 33, 170},
@@ -6342,7 +6342,7 @@ resource 'DITL' (2007) {
 		{164, 30, 180, 127},
 		CheckBox {
 			enabled,
-			"contrÃ´le"
+			"contr™le"
 		},
 		/* [17] */
 		{184, 30, 200, 128},
@@ -6572,9 +6572,9 @@ resource 'DITL' (934) {
 		{4, 41, 70, 235},
 		StaticText {
 			disabled,
-			"^0% du temps machine est utilisÃ© pour la"
-			" crÃ©ation d'une musique et d'autres proc"
-			"essus en tÃ¢che de fond."
+			"^0% du temps machine est utilis pour la"
+			" cration d'une musique et d'autres proc"
+			"essus en t‰che de fond."
 		},
 		/* [3] */
 		{3, 4, 35, 36},
@@ -6682,7 +6682,7 @@ resource 'DITL' (176) {
 		{4, 18, 17, 70},
 		StaticText {
 			disabled,
-			"CatÃ©gorie:"
+			"Catgorie:"
 		},
 		/* [4] */
 		{20, 12, 33, 72},
@@ -7010,7 +7010,7 @@ resource 'DITL' (174) {
 		{143, 172, 156, 232},
 		StaticText {
 			disabled,
-			"PrÃ©nom:"
+			"Prnom:"
 		},
 		/* [5] */
 		{189, 10, 202, 72},
@@ -7100,7 +7100,7 @@ resource 'DITL' (174) {
 		{166, 10, 179, 71},
 		StaticText {
 			disabled,
-			"TÃ©lÃ©phone:"
+			"Tlphone:"
 		},
 		/* [20] */
 		{166, 75, 179, 225},
@@ -7378,7 +7378,7 @@ resource 'DITL' (301, purgeable) {
 		{6, 60, 54, 270},
 		StaticText {
 			disabled,
-			"â€œ^0â€ introuvable.\nQue faire ?"
+			"Ò^0Ó introuvable.\nQue faire ?"
 		},
 		/* [5] */
 		{10, 10, 42, 42},
@@ -7413,7 +7413,7 @@ resource 'DITL' (3004, purgeable) {
 		{5, 60, 53, 269},
 		StaticText {
 			disabled,
-			"Sauver cette liste de musiques â€œ^0â€ avan"
+			"Sauver cette liste de musiques Ò^0Ó avan"
 			"t la fermeture ?"
 		},
 		/* [5] */
@@ -7589,7 +7589,7 @@ resource 'DITL' (2008) {
 		{40, 10, 56, 136},
 		StaticText {
 			enabled,
-			"GÃ©nÃ©ral:"
+			"Gnral:"
 		},
 		/* [2] */
 		{174, 31, 198, 267},
@@ -7654,7 +7654,7 @@ resource 'DITL' (2008) {
 		{112, 243, 128, 283},
 		StaticText {
 			disabled,
-			"UnitÃ©:"
+			"Unit:"
 		},
 		/* [13] */
 		{112, 169, 128, 219},
@@ -7689,7 +7689,7 @@ resource 'DITL' (2009) {
 		{40, 10, 56, 136},
 		StaticText {
 			enabled,
-			"GÃ©nÃ©ral:"
+			"Gnral:"
 		},
 		/* [2] */
 		{61, 20, 77, 69},
@@ -7955,8 +7955,8 @@ resource 'DLOG' (130, "Info") {
 };
 
 data 'DLOG' (1002, "Open Dialog") {
-	$"0036 002A 013C 0180 0005 0000 0000 0000"            /* .6.*.<.Ã„........ */
-	$"0000 0081 094F 7576 6572 7475 7265"                 /* ...Ã…âˆ†Ouverture */
+	$"0036 002A 013C 0180 0005 0000 0000 0000"            /* .6.*.<.€........ */
+	$"0000 0081 094F 7576 6572 7475 7265"                 /* ...ÆOuverture */
 };
 
 resource 'DLOG' (133, "Preferences") {
@@ -7966,7 +7966,7 @@ resource 'DLOG' (133, "Preferences") {
 	goAway,
 	0x11,
 	132,
-	"PrÃ©fÃ©rences",
+	"Prfrences",
 	centerMainScreen
 };
 
@@ -7982,29 +7982,29 @@ resource 'DLOG' (139, "Editor") {
 };
 
 data 'DLOG' (142, "MusicList") {
-	$"002E 0006 01E7 02D3 0008 0000 0100 0000"            /* .....Ã.â€........ */
-	$"0007 008E 0E4C 6973 7465 206D 7573 6971"            /* ...Ã©.Liste musiq */
+	$"002E 0006 01E7 02D3 0008 0000 0100 0000"            /* .....ç.Ó........ */
+	$"0007 008E 0E4C 6973 7465 206D 7573 6971"            /* ....Liste musiq */
 	$"7565 73"                                            /* ues */
 };
 
 data 'DLOG' (137, "Samples") {
-	$"005E 0014 00F6 0226 0008 0000 0100 0000"            /* .^...Ë†.&........ */
-	$"0009 00CA 00"                                       /* .âˆ†.Â . */
+	$"005E 0014 00F6 0226 0008 0000 0100 0000"            /* .^...ö.&........ */
+	$"0009 00CA 00"                                       /* .Æ.Ê. */
 };
 
 data 'DLOG' (143, "Tools") {
-	$"005C 00BB 00F5 0173 0C84 0000 0100 0000"            /* .\.Âª.Ä±.s.Ã‘...... */
-	$"0008 008F 064F 7574 696C 73"                        /* ...Ã¨.Outils */
+	$"005C 00BB 00F5 0173 0C84 0000 0100 0000"            /* .\.».õ.s.„...... */
+	$"0008 008F 064F 7574 696C 73"                        /* ....Outils */
 };
 
 data 'DLOG' (2000, "Pref: DRIVER") {
-	$"002A 0028 015C 01AA 0001 0100 0100 0000"            /* .*.(.\.â„¢........ */
-	$"0011 07D0 00"                                       /* ...â€“. */
+	$"002A 0028 015C 01AA 0001 0100 0100 0000"            /* .*.(.\.ª........ */
+	$"0011 07D0 00"                                       /* ...Ğ. */
 };
 
 data 'DLOG' (2002, "Pref: MUSIC LIST") {
-	$"0010 0025 0150 01FD 0001 0100 0100 0000"            /* ...%.P.Ë........ */
-	$"0011 07D2 00"                                       /* ...â€œ. */
+	$"0010 0025 0150 01FD 0001 0100 0100 0000"            /* ...%.P.ı........ */
+	$"0011 07D2 00"                                       /* ...Ò. */
 };
 
 resource 'DLOG' (146, "EditInfo Instrument") {
@@ -8019,25 +8019,25 @@ resource 'DLOG' (146, "EditInfo Instrument") {
 };
 
 data 'DLOG' (144, "PatList") {
-	$"0064 0108 013B 01D0 0008 0000 0100 0000"            /* .d...;.â€“........ */
-	$"0005 0090 0E4C 6973 7465 2070 6174 7465"            /* ...Ãª.Liste patte */
+	$"0064 0108 013B 01D0 0008 0000 0100 0000"            /* .d...;.Ğ........ */
+	$"0005 0090 0E4C 6973 7465 2070 6174 7465"            /* ....Liste patte */
 	$"726E 73"                                            /* rns */
 };
 
 data 'DLOG' (147, "Classic") {
-	$"004C 0018 00D8 01DB 0008 0000 0100 0000"            /* .L...Ã¿.â‚¬........ */
-	$"000B 0093 0950 6172 7469 7469 6F6E"                 /* ...Ã¬âˆ†Partition */
+	$"004C 0018 00D8 01DB 0008 0000 0100 0000"            /* .L...Ø.Û........ */
+	$"000B 0093 0950 6172 7469 7469 6F6E"                 /* ...“ÆPartition */
 };
 
 data 'DLOG' (148, "General Informations") {
-	$"0084 007C 0115 01E0 0005 0000 0000 0000"            /* .Ã‘.|...â€¡........ */
-	$"0000 0094 1649 6E66 6F72 6D61 7469 6F6E"            /* ...Ã®.Information */
-	$"7320 678E 6E8E 7261 6C65 73"                        /* s gÃ©nÃ©rales */
+	$"0084 007C 0115 01E0 0005 0000 0000 0000"            /* .„.|...à........ */
+	$"0000 0094 1649 6E66 6F72 6D61 7469 6F6E"            /* ...”.Information */
+	$"7320 678E 6E8E 7261 6C65 73"                        /* s gnrales */
 };
 
 data 'DLOG' (1003, "Save Dialog Music") {
 	$"0046 0026 0168 017D 0005 0000 0000 0000"            /* .F.&.h.}........ */
-	$"0057 0083 0A53 6175 7665 6761 7264 65"              /* .W.Ã‰Â¬Sauvegarde */
+	$"0057 0083 0A53 6175 7665 6761 7264 65"              /* .W.ƒÂSauvegarde */
 };
 
 resource 'DLOG' (132, "PUB") {
@@ -8053,17 +8053,17 @@ resource 'DLOG' (132, "PUB") {
 
 data 'DLOG' (129, "Instrument Viewer") {
 	$"0034 0031 0078 0105 000C 0000 0100 0000"            /* .4.1.x.......... */
-	$"000E 034D 0A49 6E73 7472 756D 656E 74"              /* ...MÂ¬Instrument */
+	$"000E 034D 0A49 6E73 7472 756D 656E 74"              /* ...MÂInstrument */
 };
 
 data 'DLOG' (136, "FullView") {
-	$"0000 0000 01E0 0280 0002 0100 0000 0000"            /* .....â€¡.Ã„........ */
-	$"0000 0088 00"                                       /* ...Ã . */
+	$"0000 0000 01E0 0280 0002 0100 0000 0000"            /* .....à.€........ */
+	$"0000 0088 00"                                       /* ...ˆ. */
 };
 
 data 'DLOG' (150, "Digital Info") {
-	$"004E 0064 0141 01C4 0008 0000 0100 0000"            /* .N.d.A.Æ’........ */
-	$"000F 00C1 1649 6E66 6F72 6D61 7469 6F6E"            /* ...Â¡.Information */
+	$"004E 0064 0141 01C4 0008 0000 0100 0000"            /* .N.d.A.Ä........ */
+	$"000F 00C1 1649 6E66 6F72 6D61 7469 6F6E"            /* ...Á.Information */
 	$"7320 6469 6769 7461 6C65 73"                        /* s digitales */
 };
 
@@ -8079,30 +8079,30 @@ resource 'DLOG' (131, "About") {
 };
 
 data 'DLOG' (152, "Find/Replace") {
-	$"0034 0028 00D0 01DE 0005 0000 0100 0000"            /* .4.(.â€“.ï¬........ */
-	$"0000 0098 1452 6563 6865 7263 6865 722F"            /* ...Ã².Rechercher/ */
+	$"0034 0028 00D0 01DE 0005 0000 0100 0000"            /* .4.(.Ğ.Ş........ */
+	$"0000 0098 1452 6563 6865 7263 6865 722F"            /* ...˜.Rechercher/ */
 	$"5265 6D70 6C61 6365 72"                             /* Remplacer */
 };
 
 data 'DLOG' (135, "Box Editor") {
-	$"0036 000A 0229 0346 0008 0000 0100 0000"            /* .6.Â¬.).F........ */
-	$"000D 0087 1183 6469 7465 7572 2063 6C61"            /* ...Ã¡.Ã‰diteur cla */
+	$"0036 000A 0229 0346 0008 0000 0100 0000"            /* .6.Â.).F........ */
+	$"000D 0087 1183 6469 7465 7572 2063 6C61"            /* ...‡.ƒditeur cla */
 	$"7373 6971 7565"                                     /* ssique */
 };
 
 data 'DLOG' (145, "Piano") {
-	$"0094 00BA 01D7 0378 0008 0000 0100 0000"            /* .Ã®.âˆ«.â—Š.x........ */
-	$"000A 0091 0550 6961 6E6F"                           /* .Â¬.Ã«.Piano */
+	$"0094 00BA 01D7 0378 0008 0000 0100 0000"            /* .”.º.×.x........ */
+	$"000A 0091 0550 6961 6E6F"                           /* .Â.‘.Piano */
 };
 
 data 'DLOG' (2003, "Pref: COLOR") {
-	$"002C 008C 0137 01ED 0001 0100 0100 0000"            /* .,.Ã¥.7.ÃŒ........ */
-	$"0011 07D3 00"                                       /* ...â€. */
+	$"002C 008C 0137 01ED 0001 0100 0100 0000"            /* .,.Œ.7.í........ */
+	$"0011 07D3 00"                                       /* ...Ó. */
 };
 
 data 'DLOG' (155, "Color") {
-	$"006A 0012 00E6 01F6 0005 0000 0100 0000"            /* .j...ÃŠ.Ë†........ */
-	$"2703 009B 104E 6F75 7665 6C6C 6520 636F"            /* '..Ãµ.Nouvelle co */
+	$"006A 0012 00E6 01F6 0005 0000 0100 0000"            /* .j...æ.ö........ */
+	$"2703 009B 104E 6F75 7665 6C6C 6520 636F"            /* '..›.Nouvelle co */
 	$"756C 6575 72"                                       /* uleur */
 };
 
@@ -8113,13 +8113,13 @@ resource 'DLOG' (156, "ProgressWindow") {
 	goAway,
 	0x1C,
 	163,
-	"CrÃ©ation d'un son",
+	"Cration d'un son",
 	alertPositionMainScreen
 };
 
 data 'DLOG' (157, "Track Viewer") {
-	$"0046 002F 008A 0103 000C 0000 0100 0000"            /* .F./.Ã¤.......... */
-	$"0012 00AA 0650 6973 7465 73"                        /* ...â„¢.Pistes */
+	$"0046 002F 008A 0103 000C 0000 0100 0000"            /* .F./.Š.......... */
+	$"0012 00AA 0650 6973 7465 73"                        /* ...ª.Pistes */
 };
 
 resource 'DLOG' (158, "Debug") {
@@ -8140,30 +8140,30 @@ resource 'DLOG' (160, "Export AIFF/SND") {
 	goAway,
 	0x0,
 	319,
-	"QualitÃ© d'un son",
+	"Qualit d'un son",
 	centerMainScreen
 };
 
 data 'DLOG' (163, "Memory") {
-	$"004A 0096 00C3 01C6 000C 0000 0100 0000"            /* .J.Ã±.âˆš.âˆ†........ */
-	$"0013 016C 074D 8E6D 6F69 7265"                      /* ...l.MÃ©moire */
+	$"004A 0096 00C3 01C6 000C 0000 0100 0000"            /* .J.–.Ã.Æ........ */
+	$"0013 016C 074D 8E6D 6F69 7265"                      /* ...l.Mmoire */
 };
 
 data 'DLOG' (164, "Spectrum") {
-	$"0070 006A 00F0 01DC 0008 0000 0100 0000"            /* .p.j.ï£¿.â€¹........ */
+	$"0070 006A 00F0 01DC 0008 0000 0100 0000"            /* .p.j.ğ.Ü........ */
 	$"0014 0151 1441 6E61 6C79 7365 7572 2064"            /* ...Q.Analyseur d */
 	$"6520 7370 6563 7472 65"                             /* e spectre */
 };
 
 data 'DLOG' (165, "Microphone") {
 	$"003F 0040 012A 016A 0005 0000 0100 0000"            /* .?.@.*.j........ */
-	$"19F8 02F9 0C45 6E74 728E 6520 6175 6469"            /* .Â¯.Ë˜.EntrÃ©e audi */
+	$"19F8 02F9 0C45 6E74 728E 6520 6175 6469"            /* .ø.ù.Entre audi */
 	$"6F"                                                 /* o */
 };
 
 data 'DLOG' (166, "Partition") {
 	$"0062 005E 0133 0126 0008 0000 0100 0000"            /* .b.^.3.&........ */
-	$"0015 0330 0950 6172 7469 7469 6F6E"                 /* ...0âˆ†Partition */
+	$"0015 0330 0950 6172 7469 7469 6F6E"                 /* ...0ÆPartition */
 };
 
 resource 'DLOG' (167, "Pattern Info") {
@@ -8176,12 +8176,12 @@ resource 'DLOG' (167, "Pattern Info") {
 	"Infos sur une pattern",
 	63784
 	/****** Extra bytes follow... ******/
-//	$"0A"                                                 /* Â¬ */
+//	$"0A"                                                 /* Â */
 };
 
 data 'DLOG' (168, "File information") {
-	$"0065 0083 010B 01DF 0005 0000 0100 0000"            /* .e.Ã‰...ï¬‚........ */
-	$"03C6 013D 1449 6E66 6F73 2073 7572 2075"            /* .âˆ†.=.Infos sur u */
+	$"0065 0083 010B 01DF 0005 0000 0100 0000"            /* .e.ƒ...ß........ */
+	$"03C6 013D 1449 6E66 6F73 2073 7572 2075"            /* .Æ.=.Infos sur u */
 	$"6E20 6669 6368 6965 72"                             /* n fichier */
 };
 
@@ -8209,17 +8209,17 @@ resource 'DLOG' (161, "SoundFormat Export") {
 
 //FIXME: some strange error here...
 //data 'DLOG' (2004, "Pref: MISC") {
-//	$"004A 008E 0181 0278 0000 0100 0100 0000"            /* .J.Ã©.Ã….x........ */
-//	$"0000 07D4 00"                                       /* ...â€˜. */
+//	$"004A 008E 0181 0278 0000 0100 0100 0000"            /* .J...x........ */
+//	$"0000 07D4 00"                                       /* ...Ô. */
 //};
 
 //data 'DLOG' (2005, "Pref: Fullview&ScreenSaver") {
-//	$"007C 004C 017D 01AD 0000 0100 0100 0000"            /* .|.L.}.â‰ ........ */
-//	$"0000 07D5 00"                                       /* ...â€™. */
+//	$"007C 004C 017D 01AD 0000 0100 0100 0000"            /* .|.L.}.­........ */
+//	$"0000 07D5 00"                                       /* ...Õ. */
 //};
 
 //data 'DLOG' (170, "MIDI Channels") {
-//	$"009C 0124 01E4 0348 0005 0100 0100 0000"            /* .Ãº.$.â€°.H........ */
+//	$"009C 0124 01E4 0348 0005 0100 0100 0000"            /* .œ.$.ä.H........ */
 //	$"0000 0156 1143 616E 6175 7820 4D49 4449"            /* ...V.Canaux MIDI */
 //};
 
@@ -8235,18 +8235,18 @@ resource 'DLOG' (172, "Move") {
 };
 
 data 'DLOG' (2006, "Pref: CLASSICAL") {
-	$"0039 0048 0133 01FD 0000 0100 0100 0000"            /* .9.H.3.Ë........ */
-	$"0000 07D6 00"                                       /* ...Ã·. */
+	$"0039 0048 0133 01FD 0000 0100 0100 0000"            /* .9.H.3.ı........ */
+	$"0000 07D6 00"                                       /* ...Ö. */
 };
 
 data 'DLOG' (2001, "Pref: PIANO") {
 	$"001D 000F 0138 0171 0001 0100 0100 0000"            /* .....8.q........ */
-	$"0011 07D1 00"                                       /* ...â€”. */
+	$"0011 07D1 00"                                       /* ...Ñ. */
 };
 
 data 'DLOG' (179, "OpenDialog Sample/Instrument") {
-	$"002C 002A 0198 0181 0005 0000 0000 0000"            /* .,.*.Ã².Ã…........ */
-	$"0000 00A1 094F 7576 6572 7475 7265"                 /* ...Â°âˆ†Ouverture */
+	$"002C 002A 0198 0181 0005 0000 0000 0000"            /* .,.*.˜......... */
+	$"0000 00A1 094F 7576 6572 7475 7265"                 /* ...¡ÆOuverture */
 };
 
 resource 'DLOG' (171, "StartUp Dialog") {
@@ -8272,30 +8272,30 @@ resource 'DLOG' (175, "Registration") {
 };
 
 data 'DLOG' (128, "Oscilloscope") {
-	$"002A 0002 015B 01E2 0008 0000 0100 0000"            /* .*...[.â€š........ */
-	$"000C 0080 0C4F 7363 696C 6C6F 7363 6F70"            /* ...Ã„.Oscilloscop */
+	$"002A 0002 015B 01E2 0008 0000 0100 0000"            /* .*...[.â........ */
+	$"000C 0080 0C4F 7363 696C 6C6F 7363 6F70"            /* ...€.Oscilloscop */
 	$"65"                                                 /* e */
 };
 
 data 'DLOG' (159, "Pub Window") {
-	$"0064 00AC 00E4 012C 0C80 0000 0100 0000"            /* .d.Â¨.â€°.,.Ã„...... */
-	$"0018 02A3 0950 7562 6C69 6369 748E"                 /* ...Â£âˆ†PublicitÃ© */
+	$"0064 00AC 00E4 012C 0C80 0000 0100 0000"            /* .d.¬.ä.,.€...... */
+	$"0018 02A3 0950 7562 6C69 6369 748E"                 /* ...£ÆPublicit */
 };
 
 data 'DLOG' (176, "Quicktime 2.5 Instruments") {
-	$"0044 0036 00DC 01FF 0005 0000 0100 0000"            /* .D.6.â€¹.Ë‡........ */
-	$"0FB7 00B0 1949 6E73 7472 756D 656E 7473"            /* .âˆ‘.âˆ.Instruments */
+	$"0044 0036 00DC 01FF 0005 0000 0100 0000"            /* .D.6.Ü.ÿ........ */
+	$"0FB7 00B0 1949 6E73 7472 756D 656E 7473"            /* .·.°.Instruments */
 	$"2051 7569 636B 7469 6D65 2032 2E35"                 /*  Quicktime 2.5 */
 };
 
 data 'DLOG' (173, "Active Help") {
 	$"0014 0000 0024 0208 0002 0000 0100 0000"            /* .....$.......... */
-	$"0019 00AD 00"                                       /* ...â‰ . */
+	$"0019 00AD 00"                                       /* ...­. */
 };
 
 //data 'DLOG' (3000, "General Error") {
-//	$"0034 0031 00C2 0188 0005 0000 0100 0000"            /* .4.1.Â¬.Ã ........ */
-//	$"270C 010C 0645 7272 6575 7270 0A"                   /* '....ErreurpÂ¬ */
+//	$"0034 0031 00C2 0188 0005 0000 0100 0000"            /* .4.1.Â.ˆ........ */
+//	$"270C 010C 0645 7272 6575 7270 0A"                   /* '....ErreurpÂ */
 //};
 
 resource 'DLOG' (3001, "Info") {
@@ -8321,13 +8321,13 @@ resource 'DLOG' (3002, "Save Or Not?") {
 };
 
 data 'DLOG' (138, "Black Dlog") {
-	$"F448 F448 0BB8 0BB8 0002 0100 0100 0000"            /* Ã™HÃ™H.âˆ.âˆ........ */
-	$"0000 008A 00"                                       /* ...Ã¤. */
+	$"F448 F448 0BB8 0BB8 0002 0100 0100 0000"            /* ôHôH.¸.¸........ */
+	$"0000 008A 00"                                       /* ...Š. */
 };
 
 data 'DLOG' (2007, "Pref: DIGITAL EDITOR") {
-	$"0031 0023 01F3 0253 0000 0100 0100 0000"            /* .1.#.Ã›.S........ */
-	$"0000 07D7 00"                                       /* ...â—Š. */
+	$"0031 0023 01F3 0253 0000 0100 0100 0000"            /* .1.#.ó.S........ */
+	$"0000 07D7 00"                                       /* ...×. */
 };
 
 resource 'DLOG' (153, "Wave") {
@@ -8351,23 +8351,23 @@ resource 'DLOG' (174, "Print Order Form") {
 	"Imprimer le formulaire d'enregistrement",
 	3624
 	/****** Extra bytes follow... ******/
-//	$"0A"                                                 /* Â¬ */
+//	$"0A"                                                 /* Â */
 };
 
 data 'DLOG' (151, "OpenDialog2") {
-	$"0052 002C 0198 0182 0005 0000 0000 0000"            /* .R.,.Ã².Ã‡........ */
-	$"0288 0085 094F 7576 6572 7475 7265"                 /* .Ã .Ã–âˆ†Ouverture */
+	$"0052 002C 0198 0182 0005 0000 0000 0000"            /* .R.,.˜.‚........ */
+	$"0288 0085 094F 7576 6572 7475 7265"                 /* .ˆ.…ÆOuverture */
 };
 
 data 'DLOG' (154, "About Plugs") {
-	$"0062 0050 010F 01FB 0005 0100 0100 0001"            /* .b.P...Ëš........ */
-	$"85DA 009A 1549 6E66 6F73 2073 7572 206C"            /* Ã–â„.Ã¶.Infos sur l */
+	$"0062 0050 010F 01FB 0005 0100 0100 0001"            /* .b.P...û........ */
+	$"85DA 009A 1549 6E66 6F73 2073 7572 206C"            /* …Ú.š.Infos sur l */
 	$"6573 2066 696C 7472 6573"                           /* es filtres */
 };
 
 data 'DLOG' (1004, "Save Dialog") {
 	$"0046 0026 0167 017D 0005 0000 0000 0000"            /* .F.&.g.}........ */
-	$"0057 0089 0A53 6175 7665 6761 7264 65"              /* .W.Ã¢Â¬Sauvegarde */
+	$"0057 0089 0A53 6175 7665 6761 7264 65"              /* .W.‰ÂSauvegarde */
 };
 
 resource 'DLOG' (3003, "File Not Found") {
@@ -8393,9 +8393,9 @@ resource 'DLOG' (3004, "Music List Save Or Not?") {
 };
 
 data 'DLOG' (149, "Minimize Results") {
-	$"00C6 00BE 0139 0215 0005 0000 0100 0000"            /* .âˆ†.Ã¦.9.......... */
+	$"00C6 00BE 0139 0215 0005 0000 0100 0000"            /* .Æ.¾.9.......... */
 	$"0000 012E 134D 696E 696D 6973 6572 2072"            /* .....Minimiser r */
-	$"8E73 756C 7461 7473"                                /* Ã©sultats */
+	$"8E73 756C 7461 7473"                                /* sultats */
 };
 
 resource 'DLOG' (134, "Classic Editor") {
@@ -8410,24 +8410,24 @@ resource 'DLOG' (134, "Classic Editor") {
 };
 
 data 'DLOG' (2008, "Pref: CLASSIC PREFS") {
-	$"002B 004B 014A 01D9 0000 0100 0100 0000"            /* .+.K.J.Å¸........ */
-	$"0000 07D8 00"                                       /* ...Ã¿. */
+	$"002B 004B 014A 01D9 0000 0100 0100 0000"            /* .+.K.J.Ù........ */
+	$"0000 07D8 00"                                       /* ...Ø. */
 };
 
 data 'DLOG' (2009, "Pref: FKEY PREFS") {
-	$"002B 004B 0148 01BB 0000 0100 0100 0000"            /* .+.K.H.Âª........ */
-	$"0000 07D9 00"                                       /* ...Å¸. */
+	$"002B 004B 0148 01BB 0000 0100 0100 0000"            /* .+.K.H.»........ */
+	$"0000 07D9 00"                                       /* ...Ù. */
 };
 
 data 'DLOG' (140, "Instruments List") {
-	$"002C 0004 0146 01A1 0008 0000 0100 0000"            /* .,...F.Â°........ */
-	$"0001 02AC 114C 6973 7465 2069 6E73 7472"            /* ...Â¨.Liste instr */
+	$"002C 0004 0146 01A1 0008 0000 0100 0000"            /* .,...F.¡........ */
+	$"0001 02AC 114C 6973 7465 2069 6E73 7472"            /* ...¬.Liste instr */
 	$"756D 656E 7473"                                     /* uments */
 };
 
 data 'DLOG' (141, "Adaptators") {
-	$"002C 0004 01D9 023F 0008 0000 0100 0000"            /* .,...Å¸.?........ */
-	$"0006 008D 0941 6461 7074 6575 7273"                 /* ...Ã§âˆ†Adapteurs */
+	$"002C 0004 01D9 023F 0008 0000 0100 0000"            /* .,...Ù.?........ */
+	$"0006 008D 0941 6461 7074 6575 7273"                 /* ...ÆAdapteurs */
 };
 
 resource 'MENU' (128) {
@@ -8448,7 +8448,7 @@ resource 'MENU' (128) {
 		/* [5] */
 		"Fermer", noIcon, "W", noMark, plain,
 		/* [6] */
-		"Exporter sous...", noIcon, hierarchicalMenu, "Ã£", plain,
+		"Exporter sous...", noIcon, hierarchicalMenu, "‹", plain,
 		/* [7] */
 		"-", noIcon, noKey, noMark, plain,
 		/* [8] */
@@ -8464,7 +8464,7 @@ resource 'MENU' (128) {
 		/* [13] */
 		"-", noIcon, noKey, noMark, plain,
 		/* [14] */
-		"PrÃ©fÃ©rences...", noIcon, hierarchicalMenu, "Â»", plain,
+		"Prfrences...", noIcon, hierarchicalMenu, "È", plain,
 		/* [15] */
 		"Tableau de bord Son...", noIcon, noKey, noMark, plain,
 		/* [16] */
@@ -8486,7 +8486,7 @@ resource 'MENU' (133) {
 	apple,
 	{	/* array: 4 elements */
 		/* [1] */
-		"Ã€ propos de PlayerPRO...", noIcon, noKey, noMark, 32,
+		"Ë propos de PlayerPRO...", noIcon, noKey, noMark, 32,
 		/* [2] */
 		"Aide...", noIcon, "H", noMark, plain,
 		/* [3] */
@@ -8526,13 +8526,13 @@ resource 'MENU' (140) {
 	"Editeur",
 	{	/* array: 12 elements */
 		/* [1] */
-		"Ã‰diteur digital", noIcon, noKey, noMark, plain,
+		"ƒditeur digital", noIcon, noKey, noMark, plain,
 		/* [2] */
-		"Ã‰diteur classique (cases)", noIcon, noKey, noMark, plain,
+		"ƒditeur classique (cases)", noIcon, noKey, noMark, plain,
 		/* [3] */
-		"Ã‰diteur classique (portÃ©es)", noIcon, noKey, noMark, plain,
+		"ƒditeur classique (portes)", noIcon, noKey, noMark, plain,
 		/* [4] */
-		"AperÃ§u des formes d'ondes", noIcon, noKey, noMark, plain,
+		"Aperu des formes d'ondes", noIcon, noKey, noMark, plain,
 		/* [5] */
 		"-", noIcon, noKey, noMark, plain,
 		/* [6] */
@@ -8544,12 +8544,12 @@ resource 'MENU' (140) {
 		/* [9] */
 		"Minimiser", noIcon, noKey, noMark, plain,
 		/* [10] */
-		"Convertir toutes les patterns Ã  64 ligne"
+		"Convertir toutes les patterns ˆ 64 ligne"
 		"s", noIcon, noKey, noMark, plain,
 		/* [11] */
 		"-", noIcon, noKey, noMark, plain,
 		/* [12] */
-		"Informations gÃ©nÃ©rales", noIcon, noKey, noMark, plain
+		"Informations gnrales", noIcon, noKey, noMark, plain
 	}
 };
 
@@ -8565,7 +8565,7 @@ resource 'MENU' (130) {
 		/* [2] */
 		"-", noIcon, noKey, noMark, plain,
 		/* [3] */
-		"Nouveau...", noIcon, hierarchicalMenu, "Ã¶", plain,
+		"Nouveau...", noIcon, hierarchicalMenu, "š", plain,
 		/* [4] */
 		"Importer...", noIcon, noKey, noMark, plain,
 		/* [5] */
@@ -8615,13 +8615,13 @@ resource 'MENU' (131) {
 		/* [14] */
 		"Piano", noIcon, "P", noMark, plain,
 		/* [15] */
-		"MÃ©moire", noIcon, noKey, noMark, plain,
+		"Mmoire", noIcon, noKey, noMark, plain,
 		/* [16] */
 		"-", noIcon, noKey, noMark, plain,
 		/* [17] */
-		"Plein Ã©cran", noIcon, noKey, noMark, plain,
+		"Plein cran", noIcon, noKey, noMark, plain,
 		/* [18] */
-		"Ã‰conomiseur d'Ã©cran", noIcon, noKey, noMark, plain,
+		"ƒconomiseur d'cran", noIcon, noKey, noMark, plain,
 		/* [19] */
 		"ScrollText ON", noIcon, noKey, noMark, plain,
 		/* [20] */
@@ -8639,7 +8639,7 @@ resource 'MENU' (200, "Prefs") {
 		/* [1] */
 		"Pilote - Sortie", noIcon, noKey, noMark, plain,
 		/* [2] */
-		"Piano - EntrÃ©e", noIcon, noKey, noMark, plain,
+		"Piano - Entre", noIcon, noKey, noMark, plain,
 		/* [3] */
 		"Liste des musiques", noIcon, noKey, noMark, plain,
 		/* [4] */
@@ -8647,7 +8647,7 @@ resource 'MENU' (200, "Prefs") {
 		/* [5] */
 		"Divers", noIcon, noKey, noMark, plain,
 		/* [6] */
-		"Ã‰conomiseur d'Ã©cran", noIcon, noKey, noMark, plain,
+		"ƒconomiseur d'cran", noIcon, noKey, noMark, plain,
 		/* [7] */
 		"Box Editor", noIcon, noKey, noMark, plain,
 		/* [8] */
@@ -8683,7 +8683,7 @@ resource 'MENU' (132) {
 		/* [8] */
 		"Dupliquer", noIcon, "D", noMark, plain,
 		/* [9] */
-		"Tout sÃ©lectionner", noIcon, "A", noMark, plain,
+		"Tout slectionner", noIcon, "A", noMark, plain,
 		/* [10] */
 		"Lire les informations...", noIcon, "I", noMark, plain
 	}
@@ -8739,9 +8739,9 @@ resource 'MENU' (136) {
 	"Effect",
 	{	/* array: 3 elements */
 		/* [1] */
-		"SÃ©lection->Boucle", noIcon, noKey, noMark, plain,
+		"Slection->Boucle", noIcon, noKey, noMark, plain,
 		/* [2] */
-		"Boucle->SÃ©lection", noIcon, noKey, noMark, plain,
+		"Boucle->Slection", noIcon, noKey, noMark, plain,
 		/* [3] */
 		"Effacer", noIcon, noKey, noMark, plain
 	}
@@ -9003,7 +9003,7 @@ resource 'MENU' (143) {
 		/* [1] */
 		"F#5 - Bonne", noIcon, noKey, noMark, plain,
 		/* [2] */
-		"F#4 - TrÃ¨s bonne", noIcon, noKey, noMark, plain,
+		"F#4 - Trs bonne", noIcon, noKey, noMark, plain,
 		/* [3] */
 		"F#3 - Excellente", noIcon, noKey, noMark, plain
 	}
@@ -9049,7 +9049,7 @@ resource 'MENU' (145) {
 		/* [3] */
 		"-", noIcon, noKey, noMark, plain,
 		/* [4] */
-		"CrÃ©er une nouvelle pattern", noIcon, noKey, noMark, plain,
+		"Crer une nouvelle pattern", noIcon, noKey, noMark, plain,
 		/* [5] */
 		"Ouvrir...", noIcon, noKey, noMark, plain,
 		/* [6] */
@@ -9157,7 +9157,7 @@ resource 'MENU' (150) {
 		/* [2] */
 		"Driver pistes", noIcon, noKey, noMark, plain,
 		/* [3] */
-		"EntrÃ©e audio ", noIcon, noKey, noMark, plain
+		"Entre audio ", noIcon, noKey, noMark, plain
 	}
 };
 
@@ -9199,21 +9199,21 @@ resource 'MENU' (152) {
 		/* [5] */
 		"Basse", noIcon, noKey, noMark, plain,
 		/* [6] */
-		"Instruments Ã  cordes", noIcon, noKey, noMark, plain,
+		"Instruments ˆ cordes", noIcon, noKey, noMark, plain,
 		/* [7] */
 		"Ensembles", noIcon, noKey, noMark, plain,
 		/* [8] */
 		"Cuivres", noIcon, noKey, noMark, plain,
 		/* [9] */
-		"Instruments Ã  anche", noIcon, noKey, noMark, plain,
+		"Instruments ˆ anche", noIcon, noKey, noMark, plain,
 		/* [10] */
 		"Tuyau d'orgue", noIcon, noKey, noMark, plain,
 		/* [11] */
-		"SynthÃ© principal", noIcon, noKey, noMark, plain,
+		"Synth principal", noIcon, noKey, noMark, plain,
 		/* [12] */
-		"SynthÃ©", noIcon, noKey, noMark, plain,
+		"Synth", noIcon, noKey, noMark, plain,
 		/* [13] */
-		"Effets synthÃ©.", noIcon, noKey, noMark, plain,
+		"Effets synth.", noIcon, noKey, noMark, plain,
 		/* [14] */
 		"Exotique", noIcon, noKey, noMark, plain,
 		/* [15] */
@@ -9235,7 +9235,7 @@ resource 'MENU' (153) {
 		/* [1] */
 		"Sortie audio", noIcon, noKey, noMark, plain,
 		/* [2] */
-		"EntrÃ©e audio", noIcon, noKey, noMark, plain
+		"Entre audio", noIcon, noKey, noMark, plain
 	}
 };
 
@@ -9247,9 +9247,9 @@ resource 'MENU' (154) {
 	"Title",
 	{	/* array: 3 elements */
 		/* [1] */
-		"Silence/GÃ©nÃ©rateur de tonalitÃ©", noIcon, noKey, noMark, plain,
+		"Silence/Gnrateur de tonalit", noIcon, noKey, noMark, plain,
 		/* [2] */
-		"Enregistrement (EntrÃ©e audio)", noIcon, noKey, noMark, plain,
+		"Enregistrement (Entre audio)", noIcon, noKey, noMark, plain,
 		/* [3] */
 		"Instrument Quicktime ", noIcon, noKey, noMark, plain
 	}
@@ -9369,7 +9369,7 @@ resource 'MENU' (160) {
 	"scale",
 	{	/* array: 2 elements */
 		/* [1] */
-		"linÃ©aire", noIcon, noKey, noMark, plain,
+		"linaire", noIcon, noKey, noMark, plain,
 		/* [2] */
 		"logarithmique", noIcon, noKey, noMark, plain
 	}
@@ -9425,11 +9425,11 @@ resource 'MENU' (162) {
 	"Title",
 	{	/* array: 3 elements */
 		/* [1] */
-		"SÃ©lection->boucle", noIcon, noKey, noMark, plain,
+		"Slection->boucle", noIcon, noKey, noMark, plain,
 		/* [2] */
-		"Boucle->sÃ©lection", noIcon, noKey, noMark, plain,
+		"Boucle->slection", noIcon, noKey, noMark, plain,
 		/* [3] */
-		"DÃ©finir le point de sustain", noIcon, noKey, noMark, plain
+		"Dfinir le point de sustain", noIcon, noKey, noMark, plain
 	}
 };
 
@@ -9593,9 +9593,9 @@ resource 'MENU' (168) {
 	"Osci Mode",
 	{	/* array: 2 elements */
 		/* [1] */
-		"EmpilÃ©", noIcon, noKey, noMark, plain,
+		"Empil", noIcon, noKey, noMark, plain,
 		/* [2] */
-		"SÃ©parÃ©", noIcon, noKey, noMark, plain
+		"Spar", noIcon, noKey, noMark, plain
 	}
 };
 
@@ -9752,146 +9752,146 @@ resource 'STR#' (128, "Errors") {
 		"Player PRO ne peut que lire les sons de "
 		"11Khz ou 22Khz.",
 		/* [2] */
-		"Il n'y a pas assez de mÃ©moire pour ce so"
-		"n. Allouer plus de mÃ©moire Ã  Player PRO "
-		"en utilisant â€œLire les informationsâ€ du "
+		"Il n'y a pas assez de mmoire pour ce so"
+		"n. Allouer plus de mmoire ˆ Player PRO "
+		"en utilisant ÒLire les informationsÓ du "
 		"Finder. ",
 		/* [3] */
 		"Ce programme requiert un adressage 32 bi"
-		"ts. Utiliser le tableau de bord MÃ©moire "
-		"pour dÃ©finir le mode systÃ¨me Ã  32 bits e"
-		"t redÃ©marrer.",
+		"ts. Utiliser le tableau de bord Mmoire "
+		"pour dfinir le mode systme ˆ 32 bits e"
+		"t redmarrer.",
 		/* [4] */
-		"Aucun sons/musique n'a Ã©tÃ© trouvÃ© dans c"
+		"Aucun sons/musique n'a t trouv dans c"
 		"e fichier. Tester le fichier.",
 		/* [5] */
 		"Une erreur de fichier est survenue. Il n"
-		"'y a probablement pas assez de mÃ©moire.",
+		"'y a probablement pas assez de mmoire.",
 		/* [6] */
-		"Le systÃ¨me 7.0 est requis par Player PRO"
+		"Le systme 7.0 est requis par Player PRO"
 		".",
 		/* [7] */
 		"Ce son utilise un format de compression "
-		"qui ne peut pas Ãªtre lu par Player PRO. "
-		"Veuillez vous rÃ©fÃ©rer Ã  la documentation"
+		"qui ne peut pas tre lu par Player PRO. "
+		"Veuillez vous rfrer ˆ la documentation"
 		".",
 		/* [8] */
 		"Vos changements ne prendront pas effet a"
 		"vant que le fichier MOD suivant soit ouv"
 		"ert.",
 		/* [9] */
-		"MÃ©moire dangereusement basse.  Allouer p"
-		"lus de mÃ©moire Ã  Player PRO en utilisant"
-		" â€œLire les informationsâ€ du Finder.",
+		"Mmoire dangereusement basse.  Allouer p"
+		"lus de mmoire ˆ Player PRO en utilisant"
+		" ÒLire les informationsÓ du Finder.",
 		/* [10] */
 		"Cette musique est introuvable.",
 		/* [11] */
 		"Ce pilote n'est disponible que sur les M"
-		"acintoshs sÃ©rie AV.",
+		"acintoshs srie AV.",
 		/* [12] */
-		"DÃ©solÃ©, mais vous Ãªtes un utilisateur NO"
-		"N ENREGISTRE ! Voir â€œEnregistrementâ€ dan"
-		"s le menu Pomme pour savoir comment accÃ©"
-		"der Ã  toutes les fonctions.",
+		"Dsol, mais vous tes un utilisateur NO"
+		"N ENREGISTRE ! Voir ÒEnregistrementÓ dan"
+		"s le menu Pomme pour savoir comment acc"
+		"der ˆ toutes les fonctions.",
 		/* [13] */
-		"Pour faire cela, vous devez sÃ©lectionner"
-		" un instrument dans la fenÃªtre â€œListe in"
-		"strumentsâ€.",
+		"Pour faire cela, vous devez slectionner"
+		" un instrument dans la fentre ÒListe in"
+		"strumentsÓ.",
 		/* [14] */
 		"Voulez-vous vraiment remplacer cet instr"
 		"ument?",
 		/* [15] */
-		"Ce fichier MOD est dÃ©passÃ©. Voulez-vous "
-		"le mettre Ã  jour ?",
+		"Ce fichier MOD est dpass. Voulez-vous "
+		"le mettre ˆ jour ?",
 		/* [16] */
 		"Ce Macintosh ne peut pas utiliser de pil"
 		"ote haute-performance. C'est pourtant mi"
 		"eux pour utiliser les routines MOD 2 de "
 		"A. ROSSET.",
 		/* [17] */
-		"Votre Macintosh ne peut pas jouer en stÃ©"
-		"rÃ©o. Achetez un autre Macintosh!",
+		"Votre Macintosh ne peut pas jouer en st"
+		"ro. Achetez un autre Macintosh!",
 		/* [18] */
-		"OÃ¹ est le Apple Sound Chip (ASC)? Quel e"
+		"O est le Apple Sound Chip (ASC)? Quel e"
 		"st cet ordinateur ?",
 		/* [19] */
-		"DÃ©solÃ©, mais vous ne possÃ©dez pas de mic"
+		"Dsol, mais vous ne possdez pas de mic"
 		"rophone.",
 		/* [20] */
 		"La boucle de l'instrument est incorrecte"
-		". Veuillez la rÃ©gler.",
+		". Veuillez la rgler.",
 		/* [21] */
-		"Etes-vous sÃ»r de vouloir effacer cet ins"
+		"Etes-vous sr de vouloir effacer cet ins"
 		"trument?",
 		/* [22] */
-		"DÃ©solÃ©, mais vous ne pouvez pas utiliser"
+		"Dsol, mais vous ne pouvez pas utiliser"
 		" ce pilote sans le Apple Sound Chip.",
 		/* [23] */
-		"Vous devez Ãªtre en mode 256 couleurs et "
-		"avoir une rÃ©solution de 640 x 480 pour u"
+		"Vous devez tre en mode 256 couleurs et "
+		"avoir une rsolution de 640 x 480 pour u"
 		"tiliser cette fonction.",
 		/* [24] */
-		"DÃ©solÃ©, mais ce son est trop large. Les "
-		"instruments doivent Ãªtre plus petits que"
+		"Dsol, mais ce son est trop large. Les "
+		"instruments doivent tre plus petits que"
 		" 128 Ko.",
 		/* [25] */
 		"Veuillez reconstruire le bureau ! (Reboo"
 		"ter en appuyant sur les touches Commande"
 		" et Option.)",
 		/* [26] */
-		"DÃ©solÃ©, mais cette rÃ©ponse est invalide."
+		"Dsol, mais cette rponse est invalide."
 		" Veuillez entrer un nombre compris entre"
 		" 0 et la pattern maximum.",
 		/* [27] */
 		"Player PRO requiert le Sound Manager 3.0"
 		" pour tourner.",
 		/* [28] */
-		"DÃ©solÃ©, mais la longueur de la partition"
-		" doit Ãªtre comprise entre 1 et 128.",
+		"Dsol, mais la longueur de la partition"
+		" doit tre comprise entre 1 et 128.",
 		/* [29] */
-		"DÃ©solÃ©, mais le code d'enregistrement es"
+		"Dsol, mais le code d'enregistrement es"
 		"t incorrect.",
 		/* [30] */
 		"Veuillez entrer votre nom.",
 		/* [31] */
-		"Ce programme a dÃ©jÃ  Ã©tÃ© enregistrÃ©.",
+		"Ce programme a djˆ t enregistr.",
 		/* [32] */
-		"40 minutes est dÃ©jÃ  long pour se servir "
+		"40 minutes est djˆ long pour se servir "
 		"d'un programme NON ENREGISTRE, n'est-ce-"
 		"pas ? Veuillez enregistrer votre copie d"
 		"e Player PRO!",
 		/* [33] */
-		"DÃ©solÃ©, mais Player PRO requiert les App"
+		"Dsol, mais Player PRO requiert les App"
 		"leEvents.",
 		/* [34] */
-		"DÃ©solÃ©, mais il n'y a rien Ã  imprimer da"
-		"ns cette fenÃªtre.",
+		"Dsol, mais il n'y a rien ˆ imprimer da"
+		"ns cette fentre.",
 		/* [35] */
 		"Ce fichier MIDI est inconnu. Il ne sembl"
-		"e pas Ãªtre un fichier SMF (MThd).",
+		"e pas tre un fichier SMF (MThd).",
 		/* [36] */
 		"Dans votre liste de patterns, le nombre "
-		"de pattern DOIT apparaÃ®tre au minimum un"
+		"de pattern DOIT appara”tre au minimum un"
 		"e fois!",
 		/* [37] */
-		"Etes-vous sÃ»r de vouloir remplacer la pa"
+		"Etes-vous sr de vouloir remplacer la pa"
 		"rtition courante avec cette partition de"
 		" fichier MIDI ?",
 		/* [38] */
-		"DÃ©solÃ©, mais rien n'est sÃ©lectionnÃ©.",
+		"Dsol, mais rien n'est slectionn.",
 		/* [39] */
 		"Ce fichier MIDI n'a aucun sample. Des sa"
-		"mple sont requis si vous voulez Ã©couter "
+		"mple sont requis si vous voulez couter "
 		"quelque chose !",
 		/* [40] */
-		"DÃ©solÃ©, mais les modules de filtres â€œPlu"
-		"g-Inâ€ retournent une erreur. Veuillez vo"
-		"us rÃ©fÃ©rer Ã  la documentation.",
+		"Dsol, mais les modules de filtres ÒPlu"
+		"g-InÓ retournent une erreur. Veuillez vo"
+		"us rfrer ˆ la documentation.",
 		/* [41] */
-		"DÃ©solÃ©, mais Player PRO n'est PAS ENREGI"
-		"STREE, et votre pÃ©riode d'essai de 15 jo"
-		"urs est arrivÃ©e Ã  terme. Vous devez acqu"
-		"Ã©rir ce programme ou l'effacer !",
+		"Dsol, mais Player PRO n'est PAS ENREGI"
+		"STREE, et votre priode d'essai de 15 jo"
+		"urs est arrive ˆ terme. Vous devez acqu"
+		"rir ce programme ou l'effacer !",
 		/* [42] */
 		"Cette fonction n'est pas disponible dans"
 		" cette version.",
@@ -9902,27 +9902,27 @@ resource 'STR#' (128, "Errors") {
 		"ur de type de fichier.\nErreur de filtre "
 		"d'importation.",
 		/* [45] */
-		"Aucune mÃ©thode d'importation n'est dispo"
+		"Aucune mthode d'importation n'est dispo"
 		"nible pour ouvrir ce fichier.",
 		/* [46] */
-		"Etes-vous sÃ»r de vouloir effacer les not"
+		"Etes-vous sr de vouloir effacer les not"
 		"es de cette piste et de cette pattern?",
 		/* [47] */
 		"ATTENTION - C'est une beta version de ce"
 		" filtre d'importation !",
 		/* [48] */
-		"Etes-vous sÃ»r de vouloir purger cette pa"
+		"Etes-vous sr de vouloir purger cette pa"
 		"ttern?",
 		/* [49] */
-		"Cette pattern ne peut pas Ãªtre effacÃ©e. "
+		"Cette pattern ne peut pas tre efface. "
 		"Votre fichier musique DOIT avoir au mini"
 		"mum 1 pattern.",
 		/* [50] */
-		"Etes-vous sÃ»r de vouloir effacer cette p"
+		"Etes-vous sr de vouloir effacer cette p"
 		"attern?",
 		/* [51] */
-		"Voulez-vous remplacer la pattern sÃ©lecti"
-		"onnÃ©e ou le charger dans une nouvelle pa"
+		"Voulez-vous remplacer la pattern slecti"
+		"onne ou le charger dans une nouvelle pa"
 		"ttern ?",
 		/* [52] */
 		"Cette version de PlayerPRO supporte une "
@@ -9938,50 +9938,50 @@ resource 'STR#' (128, "Errors") {
 		"ir des fichiers Midi en fichiers Player "
 		"PRO.",
 		/* [56] */
-		"Aucun fichier d'aide trouvÃ©.",
+		"Aucun fichier d'aide trouv.",
 		/* [57] */
 		"Erreur Hardware MIDI. Testez le tableau "
 		"de bord et vos connections.",
 		/* [58] */
-		"La valeur facteur MIDI doit Ãªtre compris"
-		"e entre 0% et 500% de la valeur vÃ©locitÃ©"
+		"La valeur facteur MIDI doit tre compris"
+		"e entre 0% et 500% de la valeur vlocit"
 		".",
 		/* [59] */
 		"Erreur dans la valeur 'argument'. Elle d"
-		"oit Ãªtre en hÃ©xadecimal entre 0 et FF.",
+		"oit tre en hxadecimal entre 0 et FF.",
 		/* [60] */
-		"Corriger le type & crÃ©ateur de ce fichie"
+		"Corriger le type & crateur de ce fichie"
 		"r avant l'ouverture ?",
 		/* [61] */
-		"Ce pÃ©riphÃ©rique SoundInPut ne supporte p"
+		"Ce priphrique SoundInPut ne supporte p"
 		"as la zone de dialogue  options.",
 		/* [62] */
 		"Fichier introuvable !\nCette musique n'a "
-		"pas Ã©tÃ© trouvÃ©e sur votre disque dur.",
+		"pas t trouve sur votre disque dur.",
 		/* [63] */
-		"Pas assez de mÃ©moire pour cette opÃ©ratio"
-		"n. Allouez plus de mÃ©moire Ã  PlayerPRO.",
+		"Pas assez de mmoire pour cette opratio"
+		"n. Allouez plus de mmoire ˆ PlayerPRO.",
 		/* [64] */
-		"Le nom â€œ^2â€ est dÃ©jÃ  donnÃ© Ã  un autre fi"
-		"chier. Veuillez utiliser un nom diffÃ©ren"
+		"Le nom Ò^2Ó est djˆ donn ˆ un autre fi"
+		"chier. Veuillez utiliser un nom diffren"
 		"t.",
 		/* [65] */
-		"Donnez un nom Ã  ce son, si vous voulez c"
-		"rÃ©er un fichier !",
+		"Donnez un nom ˆ ce son, si vous voulez c"
+		"rer un fichier !",
 		/* [66] */
-		"DÃ©solÃ©, mais la frÃ©quence (c2spd) doit Ãª"
+		"Dsol, mais la frquence (c2spd) doit "
 		"tre comprise entre  1 Hz et 50 Khz.",
 		/* [67] */
 		"ERREUR DE FILTRE: Cette fonction n'est p"
-		"as supportÃ©e par ce filtre. (orderNotImp"
+		"as supporte par ce filtre. (orderNotImp"
 		"lemented)",
 		/* [68] */
-		"ERREUR DE FILTRE: Pas assez de mÃ©moire p"
-		"our cette opÃ©ration. Allouez plus de mÃ©m"
-		"oire Ã  PlayerPRO. (needMoreMemory)",
+		"ERREUR DE FILTRE: Pas assez de mmoire p"
+		"our cette opration. Allouez plus de mm"
+		"oire ˆ PlayerPRO. (needMoreMemory)",
 		/* [69] */
 		"ERREUR DE FILTRE: Ce format de fichier n"
-		"'est pas supportÃ© par ce filtre. (fileNo"
+		"'est pas support par ce filtre. (fileNo"
 		"tSupportedByThisPlug)",
 		/* [70] */
 		"ERREUR DE FILTRE: Erreur inconnue. (unkn"
@@ -9991,70 +9991,70 @@ resource 'STR#' (128, "Errors") {
 		"s le filtre pour ouvrir ce format de fic"
 		"hier.\n(cannotFindPlug)",
 		/* [72] */
-		"Vous ne possÃ©dez pas l'extension 'QuickT"
-		"imeâ„¢ Musical Instruments'. Cette fonctio"
+		"Vous ne possdez pas l'extension 'QuickT"
+		"imeª Musical Instruments'. Cette fonctio"
 		"n n'est pas disponible.",
 		/* [73] */
 		"Erreur: PlayerPRO ne peut pas ouvrir les"
 		" ressources de 'Help PP'.",
 		/* [74] */
-		"Erreur: PÃ©riphÃ©rique d'entrÃ©e introuvabl"
+		"Erreur: Priphrique d'entre introuvabl"
 		"e.",
 		/* [75] */
-		"Erreur d'Ã©criture: volume protÃ©gÃ© contre"
-		" l'Ã©criture.",
+		"Erreur d'criture: volume protg contre"
+		" l'criture.",
 		/* [76] */
-		"DÃ©solÃ©, mais la note rÃ©elle doit Ãªtre co"
+		"Dsol, mais la note relle doit tre co"
 		"mpris entre -96 et 96.",
 		/* [77] */
-		"DÃ©solÃ©, mais le volume doit Ãªtre compris"
+		"Dsol, mais le volume doit tre compris"
 		" entre 0 et 64.",
 		/* [78] */
-		"DÃ©solÃ©, mais le Volume Fade doit Ãªtre co"
+		"Dsol, mais le Volume Fade doit tre co"
 		"mpris entre 0 et 32767.",
 		/* [79] */
-		"DÃ©solÃ©, le maximum de points pour l'enve"
+		"Dsol, le maximum de points pour l'enve"
 		"loppe de volume est 12.",
 		/* [80] */
 		"Erreur dans la valeur 'volume'. Elle doi"
-		"t Ãªtre en hÃ©xadecimal comprise entre 0 e"
+		"t tre en hxadecimal comprise entre 0 e"
 		"t FF.",
 		/* [81] */
-		"DÃ©solÃ©, mais vous Ãªtes un utilisateur no"
-		"n enregistrÃ© ! Vous pouvez seulement ouv"
+		"Dsol, mais vous tes un utilisateur no"
+		"n enregistr ! Vous pouvez seulement ouv"
 		"rir des fichiers musiques : MOD et MAD. "
-		"Voir â€œEnregistrementâ€ dans le menu Pomme"
-		" comment obtenir le plein accÃ¨s Ã  toutes"
+		"Voir ÒEnregistrementÓ dans le menu Pomme"
+		" comment obtenir le plein accs ˆ toutes"
 		" les fonctions.",
 		/* [82] */
-		"Vous avez dÃ©sactivÃ© \"Enregistrement Pian"
-		"o\". Voir la fenÃªtre Piano.",
+		"Vous avez dsactiv \"Enregistrement Pian"
+		"o\". Voir la fentre Piano.",
 		/* [83] */
-		"Erreur d'Ã©criture. L'Ã©criture de ce fich"
+		"Erreur d'criture. L'criture de ce fich"
 		"ier sur ce disque dur est impossible.",
 		/* [84] */
 		"Veuillez saisir le nom de votre pays.",
 		/* [85] */
-		"Veuillez sÃ©lectionner le distributeur, e"
+		"Veuillez slectionner le distributeur, e"
 		"n cliquant sur le menu pop-up.",
 		/* [86] */
 		"ERREUR DE FILTRE: PlayerPRO ne trouve pa"
-		"s le filtre requis pour cette opÃ©ration."
+		"s le filtre requis pour cette opration."
 		"\n(cannotFindPlug)",
 		/* [87] */
 		"Votre fichier 'PlayerPRO Pref' est corro"
-		"mpu. Il va Ãªtre effacÃ©!",
+		"mpu. Il va tre effac!",
 		/* [88] */
-		"ATTENTION - Cette fonction est irrÃ©versi"
+		"ATTENTION - Cette fonction est irrversi"
 		"ble. Cette fonction efface toutes les do"
-		"nnÃ©es inutilisÃ©es de cette musique. Cont"
+		"nnes inutilises de cette musique. Cont"
 		"inuer ?",
 		/* [89] */
-		"Je suis dÃ©solÃ©, cette fonction requiert "
+		"Je suis dsol, cette fonction requiert "
 		"l'extension Drag Manager. Elle est dispo"
-		"nible sur vos disques SystÃ¨me.",
+		"nible sur vos disques Systme.",
 		/* [90] */
-		"PlayerPRO a un problÃ¨me pour identifier "
+		"PlayerPRO a un problme pour identifier "
 		"votre nom & votre code d'enregistrement."
 		" Testez-le!",
 		/* [91] */
@@ -10098,7 +10098,7 @@ resource 'STR#' (128, "Errors") {
 		"s music file?\nYou cannot undo this opera"
 		"tion.",
 		/* [103] */
-		"You need to open â€œDigital Editorâ€ window"
+		"You need to open ÒDigital EditorÓ window"
 		" to use this function.",
 		/* [104] */
 		"Are you sure that you want to delete thi"
@@ -10107,7 +10107,7 @@ resource 'STR#' (128, "Errors") {
 		"Are you sure that you want to replace th"
 		"ese settings with current one?",
 		/* [106] */
-		"This file is compressed in â€œ.zipâ€ format"
+		"This file is compressed in Ò.zipÓ format"
 		". You need to uncompress it before, with"
 		" Stuffit Expander application.",
 		/* [107] */
@@ -10170,13 +10170,13 @@ resource 'STR#' (131) {
 		/* [5] */
 		"Salutations",
 		/* [6] */
-		"Ã ",
+		"ˆ",
 		/* [7] */
 		"Petteri Lajunen (Pest/TranZe)",
 		/* [8] */
 		"John Stiles",
 		/* [9] */
-		"FÃ©lix Lapointe",
+		"Flix Lapointe",
 		/* [10] */
 		"Hubert Garrido",
 		/* [11] */
@@ -10208,17 +10208,17 @@ resource 'STR#' (131) {
 		/* [24] */
 		"Eric",
 		/* [25] */
-		"GÃ©raldine",
+		"Graldine",
 		/* [26] */
 		"Corinne",
 		/* [27] */
 		"Laurent",
 		/* [28] */
-		"CÃ©dric Lombard",
+		"Cdric Lombard",
 		/* [29] */
 		"Eric Laporte",
 		/* [30] */
-		"DorothÃ©e",
+		"Dorothe",
 		/* [31] */
 		"FA-18 Team",
 		/* [32] */
@@ -10234,7 +10234,7 @@ resource 'STR#' (131) {
 		/* [37] */
 		"Trm II/4 -- 5",
 		/* [38] */
-		"FranÃ§ois Rossi",
+		"Franois Rossi",
 		/* [39] */
 		"Luc Deschenaux",
 		/* [40] */
@@ -10246,7 +10246,7 @@ resource 'STR#' (131) {
 		/* [43] */
 		"Jacqueline Meyer",
 		/* [44] */
-		"FranÃ§ois Mitterand",
+		"Franois Mitterand",
 		/* [45] */
 		"Arnold",
 		/* [46] */
@@ -10383,427 +10383,427 @@ resource 'STR#' (129, "ScreenSaver") {
 };
 
 data 'styl' (5632) {
-	$"00B0 0000 0000 0012 000E 0015 4100 0012"            /* .âˆ..........A... */
-	$"DD6B 08C2 06A2 0000 0014 000E 000A 0015"            /* â€ºk.Â¬.Â¢.......Â¬.. */
-	$"4100 000C DD6B 08C2 06A2 0000 002E 0010"            /* A...â€ºk.Â¬.Â¢...... */
-	$"000C 0002 0000 000C DD6B 08C2 06A2 0000"            /* ........â€ºk.Â¬.Â¢.. */
-	$"002F 000C 000A 0003 0000 0009 0000 0000"            /* ./...Â¬.....âˆ†.... */
-	$"D400 0000 0031 000C 000A 0003 0000 0009"            /* â€˜....1...Â¬.....âˆ† */
-	$"DD6B 08C2 06A2 0000 003F 000C 000A 0003"            /* â€ºk.Â¬.Â¢...?...Â¬.. */
-	$"0000 0009 0000 0000 D400 0000 0044 000C"            /* ...âˆ†....â€˜....D.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"007F 000C 0009 0015 0100 000A DD6B 08C2"            /* .....âˆ†.....Â¬â€ºk.Â¬ */
-	$"06A2 0000 009B 0010 000C 0003 0100 000C"            /* .Â¢...Ãµ.......... */
-	$"0000 0000 D400 0000 009C 000C 000A 0003"            /* ....â€˜....Ãº...Â¬.. */
-	$"0100 0009 0000 0000 D400 0000 0115 0010"            /* ...âˆ†....â€˜....... */
-	$"000C 0003 0100 000C DD6B 08C2 06A2 0000"            /* ........â€ºk.Â¬.Â¢.. */
-	$"0116 000C 000A 0003 0000 0009 0000 0000"            /* .....Â¬.....âˆ†.... */
+	$"00B0 0000 0000 0012 000E 0015 4100 0012"            /* .°..........A... */
+	$"DD6B 08C2 06A2 0000 0014 000E 000A 0015"            /* İk.Â.¢.......Â.. */
+	$"4100 000C DD6B 08C2 06A2 0000 002E 0010"            /* A...İk.Â.¢...... */
+	$"000C 0002 0000 000C DD6B 08C2 06A2 0000"            /* ........İk.Â.¢.. */
+	$"002F 000C 000A 0003 0000 0009 0000 0000"            /* ./...Â.....Æ.... */
+	$"D400 0000 0031 000C 000A 0003 0000 0009"            /* Ô....1...Â.....Æ */
+	$"DD6B 08C2 06A2 0000 003F 000C 000A 0003"            /* İk.Â.¢...?...Â.. */
+	$"0000 0009 0000 0000 D400 0000 0044 000C"            /* ...Æ....Ô....D.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"007F 000C 0009 0015 0100 000A DD6B 08C2"            /* .....Æ.....Âİk.Â */
+	$"06A2 0000 009B 0010 000C 0003 0100 000C"            /* .¢...›.......... */
+	$"0000 0000 D400 0000 009C 000C 000A 0003"            /* ....Ô....œ...Â.. */
+	$"0100 0009 0000 0000 D400 0000 0115 0010"            /* ...Æ....Ô....... */
+	$"000C 0003 0100 000C DD6B 08C2 06A2 0000"            /* ........İk.Â.¢.. */
+	$"0116 000C 000A 0003 0000 0009 0000 0000"            /* .....Â.....Æ.... */
 	$"0000 0000 014E 0010 000C 0003 0000 000C"            /* .....N.......... */
-	$"0000 0000 0000 0000 014F 000C 000A 0003"            /* .........O...Â¬.. */
-	$"0100 0009 0000 0000 D400 0000 0181 000C"            /* ...âˆ†....â€˜....Ã….. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"0218 000C 000A 0003 0100 0009 0000 0000"            /* .....Â¬.....âˆ†.... */
-	$"0000 0000 0230 000C 000A 0003 0000 0009"            /* .....0...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 023F 000C 000A 0003"            /* .........?...Â¬.. */
-	$"0100 0009 DD6B 08C2 06A2 0000 024F 000C"            /* ...âˆ†â€ºk.Â¬.Â¢...O.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"0261 000B 0009 0004 0000 0009 0000 0000"            /* .a...âˆ†.....âˆ†.... */
-	$"0000 0000 027F 000C 000A 0003 0000 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0280 000B 0009 0004"            /* .........Ã„...âˆ†.. */
-	$"0000 0009 0000 0000 0000 0000 0293 000C"            /* ...âˆ†.........Ã¬.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"0294 000C 000A 0003 0500 0009 0000 0000"            /* .Ã®...Â¬.....âˆ†.... */
-	$"0000 0000 029A 000C 000A 0003 0000 0009"            /* .....Ã¶...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 029C 000C 000A 0003"            /* .........Ãº...Â¬.. */
-	$"0100 0009 0000 0000 0000 0000 02A1 000C"            /* ...âˆ†.........Â°.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"02A3 000B 0009 0004 0000 0009 0000 0000"            /* .Â£...âˆ†.....âˆ†.... */
-	$"0000 0000 02AF 000C 000A 0003 0000 0009"            /* .....Ã˜...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 02B0 000C 000A 0003"            /* .........âˆ...Â¬.. */
-	$"0100 0009 0000 0000 0000 0000 02B3 000C"            /* ...âˆ†.........â‰¥.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"02B5 000B 0009 0004 0000 0009 0000 0000"            /* .Âµ...âˆ†.....âˆ†.... */
-	$"0000 0000 02C1 000C 000A 0003 0000 0009"            /* .....Â¡...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 02C2 000C 000A 0003"            /* .........Â¬...Â¬.. */
-	$"0100 0009 0000 0000 0000 0000 02C7 000C"            /* ...âˆ†.........Â«.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"02DE 000C 000A 0003 0100 0009 0000 0000"            /* .ï¬...Â¬.....âˆ†.... */
-	$"0000 0000 02E1 000C 000A 0003 0000 0009"            /* .....Â·...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0337 000C 000A 0003"            /* .........7...Â¬.. */
-	$"0100 0009 0000 0000 0000 0000 033C 000C"            /* ...âˆ†.........<.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"034B 000C 000A 0003 0100 0009 DD6B 08C2"            /* .K...Â¬.....âˆ†â€ºk.Â¬ */
-	$"06A2 0000 0357 000C 000A 0003 0000 0009"            /* .Â¢...W...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 03A8 000C 000A 0003"            /* .........Â®...Â¬.. */
-	$"0500 0009 0000 0000 0000 0000 03AD 000C"            /* ...âˆ†.........â‰ .. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"03AF 000C 000A 0003 0100 0009 0000 0000"            /* .Ã˜...Â¬.....âˆ†.... */
-	$"0000 0000 03B4 000C 000A 0003 0000 0009"            /* .....Â¥...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 03C3 000C 000A 0003"            /* .........âˆš...Â¬.. */
-	$"0100 0009 0000 0000 0000 0000 03C6 000C"            /* ...âˆ†.........âˆ†.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"03D5 000C 000A 0003 0100 0009 0000 0000"            /* .â€™...Â¬.....âˆ†.... */
-	$"0000 0000 03DD 000C 000A 0003 0000 0009"            /* .....â€º...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0433 000C 000A 0003"            /* .........3...Â¬.. */
-	$"0100 0009 0000 0000 0000 0000 0441 000C"            /* ...âˆ†.........A.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"0450 000C 000A 0003 0100 0009 DD6B 08C2"            /* .P...Â¬.....âˆ†â€ºk.Â¬ */
-	$"06A2 0000 0456 000C 000A 0003 0000 0009"            /* .Â¢...V...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0496 000C 000A 0003"            /* .........Ã±...Â¬.. */
-	$"0500 0009 0000 0000 0000 0000 049D 000C"            /* ...âˆ†.........Ã¹.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"049F 000C 000A 0003 0100 0009 0000 0000"            /* .Ã¼...Â¬.....âˆ†.... */
-	$"0000 0000 04A7 000C 000A 0003 0000 0009"            /* .....ÃŸ...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 04A9 000B 0009 0004"            /* .........Â©...âˆ†.. */
-	$"0000 0009 0000 0000 0000 0000 04B8 000C"            /* ...âˆ†.........âˆ.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"04F3 000C 000A 0003 0100 0009 0000 0000"            /* .Ã›...Â¬.....âˆ†.... */
-	$"0000 0000 0507 000C 000A 0003 0000 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0516 000C 000A 0003"            /* .............Â¬.. */
-	$"0100 0009 DD6B 08C2 06A2 0000 0524 000C"            /* ...âˆ†â€ºk.Â¬.Â¢...$.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"0541 000C 000A 0003 0500 0009 0000 0000"            /* .A...Â¬.....âˆ†.... */
-	$"0000 0000 054C 000C 000A 0003 0000 0009"            /* .....L...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 054E 000C 000A 0003"            /* .........N...Â¬.. */
-	$"0100 0009 0000 0000 D400 0000 0553 000C"            /* ...âˆ†....â€˜....S.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"056E 000C 000A 0003 0100 0009 0000 0000"            /* .n...Â¬.....âˆ†.... */
-	$"D400 0000 0573 000C 000A 0003 0000 0009"            /* â€˜....s...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0588 000C 000A 0003"            /* .........Ã ...Â¬.. */
-	$"0100 0009 0000 0000 D400 0000 058B 000C"            /* ...âˆ†....â€˜....Ã£.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"05A0 000C 000A 0003 0100 0009 0000 0000"            /* .â€ ...Â¬.....âˆ†.... */
-	$"D400 0000 05A8 000C 000A 0003 0000 0009"            /* â€˜....Â®...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 05C1 000C 000A 0003"            /* .........Â¡...Â¬.. */
-	$"0100 0009 0000 0000 D400 0000 05CD 000C"            /* ...âˆ†....â€˜....Ã•.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"0606 000C 000A 0003 0100 0009 0000 0000"            /* .....Â¬.....âˆ†.... */
-	$"D400 0000 060F 000C 000A 0003 0000 0009"            /* â€˜........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 066F 000C 000A 0003"            /* .........o...Â¬.. */
-	$"0100 0009 0000 0000 D400 0000 0678 000C"            /* ...âˆ†....â€˜....x.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"067E 000C 000A 0001 0000 0009 0000 0000"            /* .~...Â¬.....âˆ†.... */
-	$"0000 0000 06C6 000C 000A 0003 0000 0009"            /* .....âˆ†...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 06FC 000C 000A 0003"            /* .........Â¸...Â¬.. */
-	$"0100 0009 0000 0000 D400 0000 0702 000C"            /* ...âˆ†....â€˜....... */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"0735 000C 000A 0003 0100 0009 0000 0000"            /* .5...Â¬.....âˆ†.... */
-	$"D400 0000 0738 000C 000A 0003 0000 0009"            /* â€˜....8...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0757 000C 000A 0001"            /* .........W...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 076A 000B"            /* ...âˆ†.........j.. */
-	$"0008 0015 0000 0009 0000 0000 0000 0000"            /* .......âˆ†........ */
-	$"076B 000C 000A 0003 0000 0009 0000 0000"            /* .k...Â¬.....âˆ†.... */
-	$"0000 0000 07C3 000C 000A 0003 0100 0009"            /* .....âˆš...Â¬.....âˆ† */
-	$"DD6B 08C2 06A2 0000 07D1 000C 000A 0003"            /* â€ºk.Â¬.Â¢...â€”...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 0811 000C"            /* ...âˆ†............ */
-	$"000A 0003 0100 0009 DD6B 08C2 06A2 0000"            /* .Â¬.....âˆ†â€ºk.Â¬.Â¢.. */
-	$"081D 000C 000A 0003 0000 0009 0000 0000"            /* .....Â¬.....âˆ†.... */
-	$"0000 0000 0833 000C 000A 0003 0100 0009"            /* .....3...Â¬.....âˆ† */
-	$"DD6B 08C2 06A2 0000 083E 000C 000A 0003"            /* â€ºk.Â¬.Â¢...>...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 0881 000C"            /* ...âˆ†.........Ã….. */
-	$"000A 0003 0100 0009 DD6B 08C2 06A2 0000"            /* .Â¬.....âˆ†â€ºk.Â¬.Â¢.. */
-	$"088F 000C 000A 0003 0000 0009 0000 0000"            /* .Ã¨...Â¬.....âˆ†.... */
-	$"0000 0000 0899 000C 000A 0003 0100 0009"            /* .....Ã´...Â¬.....âˆ† */
-	$"DD6B 08C2 06A2 0000 08A5 000C 000A 0003"            /* â€ºk.Â¬.Â¢...â€¢...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 08DB 000C"            /* ...âˆ†.........â‚¬.. */
-	$"000A 0003 0100 0009 DD6B 08C2 06A2 0000"            /* .Â¬.....âˆ†â€ºk.Â¬.Â¢.. */
-	$"08E9 000C 000A 0003 0000 0009 0000 0000"            /* .Ãˆ...Â¬.....âˆ†.... */
-	$"0000 0000 094C 000C 000A 0003 0100 0009"            /* ....âˆ†L...Â¬.....âˆ† */
-	$"DD6B 08C2 06A2 0000 0957 000C 000A 0003"            /* â€ºk.Â¬.Â¢..âˆ†W...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 098A 000C"            /* ...âˆ†........âˆ†Ã¤.. */
-	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â¬.....âˆ†....â€˜... */
-	$"0997 000C 000A 0003 0000 0009 0000 0000"            /* âˆ†Ã³...Â¬.....âˆ†.... */
-	$"0000 0000 0A27 000C 000A 0003 0100 0009"            /* ....Â¬'...Â¬.....âˆ† */
-	$"0000 0000 D400 0000 0A58 000C 000A 0003"            /* ....â€˜...Â¬X...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 0ABD 000C"            /* ...âˆ†........Â¬Î©.. */
-	$"000A 0003 0100 0009 F2D7 0856 84EC 0000"            /* .Â¬.....âˆ†Ãšâ—Š.VÃ‘Ã.. */
-	$"0AC6 000C 000A 0003 0000 0009 0000 0000"            /* Â¬âˆ†...Â¬.....âˆ†.... */
-	$"0000 0000 0BB9 000C 000A 0003 0100 0009"            /* .....Ï€...Â¬.....âˆ† */
-	$"0000 0000 D400 0000 0BC5 000C 000A 0003"            /* ....â€˜....â‰ˆ...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 0BC6 000C"            /* ...âˆ†.........âˆ†.. */
-	$"000A 0003 0100 0009 DD6B 08C2 06A2 0000"            /* .Â¬.....âˆ†â€ºk.Â¬.Â¢.. */
-	$"0BD4 000C 000A 0003 0000 0009 0000 0000"            /* .â€˜...Â¬.....âˆ†.... */
-	$"0000 0000 0E33 000C 000A 0003 0100 0009"            /* .....3...Â¬.....âˆ† */
-	$"0000 0000 D400 0000 0E53 000C 000A 0003"            /* ....â€˜....S...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 0E65 000C"            /* ...âˆ†.........e.. */
-	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â¬.....âˆ†....â€˜... */
-	$"0E69 000C 000A 0003 0000 0009 0000 0000"            /* .i...Â¬.....âˆ†.... */
-	$"0000 0000 0FD4 000C 000A 0003 0100 0009"            /* .....â€˜...Â¬.....âˆ† */
-	$"DD6B 08C2 06A2 0000 0FE3 000C 000A 0003"            /* â€ºk.Â¬.Â¢...â€...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 103C 000C"            /* ...âˆ†.........<.. */
-	$"000A 0003 0500 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"1047 000C 000A 0003 0000 0009 0000 0000"            /* .G...Â¬.....âˆ†.... */
-	$"0000 0000 1049 000C 000A 0003 0100 0009"            /* .....I...Â¬.....âˆ† */
-	$"0000 0000 D400 0000 104C 000C 000A 0003"            /* ....â€˜....L...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 1061 000C"            /* ...âˆ†.........a.. */
-	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â¬.....âˆ†....â€˜... */
-	$"1069 000C 000A 0003 0000 0009 0000 0000"            /* .i...Â¬.....âˆ†.... */
-	$"0000 0000 107E 000C 000A 0003 0100 0009"            /* .....~...Â¬.....âˆ† */
-	$"0000 0000 D400 0000 1086 000C 000A 0003"            /* ....â€˜....Ãœ...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 10B2 000C"            /* ...âˆ†.........â‰¤.. */
-	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â¬.....âˆ†....â€˜... */
-	$"10BA 000C 000A 0003 0000 0009 0000 0000"            /* .âˆ«...Â¬.....âˆ†.... */
-	$"0000 0000 1120 000C 000A 0003 0100 0009"            /* ..... ...Â¬.....âˆ† */
-	$"DD6B 08C2 06A2 0000 112C 000C 000A 0003"            /* â€ºk.Â¬.Â¢...,...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 1455 000C"            /* ...âˆ†.........U.. */
-	$"000A 0003 0100 0009 DD6B 08C2 06A2 0000"            /* .Â¬.....âˆ†â€ºk.Â¬.Â¢.. */
-	$"145C 000C 000A 0003 0000 0009 0000 0000"            /* .\...Â¬.....âˆ†.... */
-	$"0000 0000 1483 000C 000A 0003 0100 0009"            /* .....Ã‰...Â¬.....âˆ† */
-	$"DD6B 08C2 06A2 0000 148E 000C 000A 0003"            /* â€ºk.Â¬.Â¢...Ã©...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 14D4 000C"            /* ...âˆ†.........â€˜.. */
-	$"000A 0003 0100 0009 DD6B 08C2 06A2 0000"            /* .Â¬.....âˆ†â€ºk.Â¬.Â¢.. */
-	$"14E2 000C 000A 0003 0000 0009 0000 0000"            /* .â€š...Â¬.....âˆ†.... */
-	$"0000 0000 15DE 000C 000A 0003 0100 0009"            /* .....ï¬...Â¬.....âˆ† */
-	$"DD6B 08C2 06A2 0000 15E5 000C 000A 0003"            /* â€ºk.Â¬.Â¢...Ã‚...Â¬.. */
-	$"0000 0009 DD6B 08C2 06A2 0000 15E6 000C"            /* ...âˆ†â€ºk.Â¬.Â¢...ÃŠ.. */
-	$"000A 0003 0100 0009 DD6B 08C2 06A2 0000"            /* .Â¬.....âˆ†â€ºk.Â¬.Â¢.. */
-	$"15EC 000C 000A 0003 0000 0009 0000 0000"            /* .Ã...Â¬.....âˆ†.... */
-	$"0000 0000 15FB 000C 000A 0003 0100 0009"            /* .....Ëš...Â¬.....âˆ† */
-	$"DD6B 08C2 06A2 0000 1609 000C 000A 0003"            /* â€ºk.Â¬.Â¢...âˆ†...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 1638 000C"            /* ...âˆ†.........8.. */
-	$"000A 0003 0500 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"1643 000C 000A 0003 0000 0009 0000 0000"            /* .C...Â¬.....âˆ†.... */
-	$"0000 0000 16C3 000C 000A 0003 0100 0009"            /* .....âˆš...Â¬.....âˆ† */
-	$"DD6B 08C2 06A2 0000 16D1 000C 000A 0003"            /* â€ºk.Â¬.Â¢...â€”...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 16EE 000C"            /* ...âˆ†.........Ã“.. */
-	$"000A 0003 0500 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"16F9 000C 000A 0003 0000 0009 0000 0000"            /* .Ë˜...Â¬.....âˆ†.... */
-	$"0000 0000 16FA 000E 000A 0015 0000 000C"            /* .....Ë™...Â¬...... */
-	$"0000 0000 0000 0000 16FB 000C 000A 0003"            /* .........Ëš...Â¬.. */
-	$"0100 0009 0000 0000 D400 0000 1700 000C"            /* ...âˆ†....â€˜....... */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"171B 000C 000A 0003 0100 0009 0000 0000"            /* .....Â¬.....âˆ†.... */
-	$"D400 0000 1720 000C 000A 0003 0000 0009"            /* â€˜.... ...Â¬.....âˆ† */
-	$"0000 0000 0000 0000 1735 000C 000A 0003"            /* .........5...Â¬.. */
-	$"0100 0009 0000 0000 D400 0000 1738 000C"            /* ...âˆ†....â€˜....8.. */
-	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"174C 000E 000A 0015 0000 000C 0000 0000"            /* .L...Â¬.......... */
-	$"0000 0000 174D 000C 000A 0003 0100 0009"            /* .....M...Â¬.....âˆ† */
-	$"0000 0000 D400 0000 1750 000C 000A 0003"            /* ....â€˜....P...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 1767 000C"            /* ...âˆ†.........g.. */
-	$"000A 0001 0000 0009 0000 0000 0000 0000"            /* .Â¬.....âˆ†........ */
-	$"177A 000C 000A 0003 0000 0009 0000 0000"            /* .z...Â¬.....âˆ†.... */
-	$"0000 0000 178F 000C 000A 0003 0100 0009"            /* .....Ã¨...Â¬.....âˆ† */
-	$"0000 0000 D400 0000 1797 000C 000A 0003"            /* ....â€˜....Ã³...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 17A3 000C"            /* ...âˆ†.........Â£.. */
-	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â¬.....âˆ†....â€˜... */
-	$"17C5 000C 000A 0003 0000 0009 0000 0000"            /* .â‰ˆ...Â¬.....âˆ†.... */
-	$"0000 0000 17C7 000C 000A 0003 0100 0009"            /* .....Â«...Â¬.....âˆ† */
-	$"0000 0000 D400 0000 17D3 000C 000A 0003"            /* ....â€˜....â€...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 17D5 000C"            /* ...âˆ†.........â€™.. */
-	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â¬.....âˆ†....â€˜... */
-	$"17F4 000C 000A 0003 0000 0009 0000 0000"            /* .Ã™...Â¬.....âˆ†.... */
-	$"0000 0000 180E 000C 000A 0003 0100 0009"            /* .........Â¬.....âˆ† */
-	$"DD6B 08C2 06A2 0000 181A 000C 000A 0003"            /* â€ºk.Â¬.Â¢.......Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 181C 000C"            /* ...âˆ†............ */
-	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â¬.....âˆ†....â€˜... */
-	$"1825 000C 000A 0003 0000 0009 0000 0000"            /* .%...Â¬.....âˆ†.... */
-	$"0000 0000 1885 000C 000A 0003 0100 0009"            /* .....Ã–...Â¬.....âˆ† */
-	$"0000 0000 D400 0000 188E 000C 000A 0003"            /* ....â€˜....Ã©...Â¬.. */
-	$"0000 0009 0000 0000 0000 0000 1923 000C"            /* ...âˆ†.........#.. */
-	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â¬.....âˆ†....â€˜... */
-	$"1929 000C 000A 0003 0000 0009 0000 0000"            /* .)...Â¬.....âˆ†.... */
+	$"0000 0000 0000 0000 014F 000C 000A 0003"            /* .........O...Â.. */
+	$"0100 0009 0000 0000 D400 0000 0181 000C"            /* ...Æ....Ô...... */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"0218 000C 000A 0003 0100 0009 0000 0000"            /* .....Â.....Æ.... */
+	$"0000 0000 0230 000C 000A 0003 0000 0009"            /* .....0...Â.....Æ */
+	$"0000 0000 0000 0000 023F 000C 000A 0003"            /* .........?...Â.. */
+	$"0100 0009 DD6B 08C2 06A2 0000 024F 000C"            /* ...Æİk.Â.¢...O.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"0261 000B 0009 0004 0000 0009 0000 0000"            /* .a...Æ.....Æ.... */
+	$"0000 0000 027F 000C 000A 0003 0000 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0280 000B 0009 0004"            /* .........€...Æ.. */
+	$"0000 0009 0000 0000 0000 0000 0293 000C"            /* ...Æ.........“.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"0294 000C 000A 0003 0500 0009 0000 0000"            /* .”...Â.....Æ.... */
+	$"0000 0000 029A 000C 000A 0003 0000 0009"            /* .....š...Â.....Æ */
+	$"0000 0000 0000 0000 029C 000C 000A 0003"            /* .........œ...Â.. */
+	$"0100 0009 0000 0000 0000 0000 02A1 000C"            /* ...Æ.........¡.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"02A3 000B 0009 0004 0000 0009 0000 0000"            /* .£...Æ.....Æ.... */
+	$"0000 0000 02AF 000C 000A 0003 0000 0009"            /* .....¯...Â.....Æ */
+	$"0000 0000 0000 0000 02B0 000C 000A 0003"            /* .........°...Â.. */
+	$"0100 0009 0000 0000 0000 0000 02B3 000C"            /* ...Æ.........³.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"02B5 000B 0009 0004 0000 0009 0000 0000"            /* .µ...Æ.....Æ.... */
+	$"0000 0000 02C1 000C 000A 0003 0000 0009"            /* .....Á...Â.....Æ */
+	$"0000 0000 0000 0000 02C2 000C 000A 0003"            /* .........Â...Â.. */
+	$"0100 0009 0000 0000 0000 0000 02C7 000C"            /* ...Æ.........Ç.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"02DE 000C 000A 0003 0100 0009 0000 0000"            /* .Ş...Â.....Æ.... */
+	$"0000 0000 02E1 000C 000A 0003 0000 0009"            /* .....á...Â.....Æ */
+	$"0000 0000 0000 0000 0337 000C 000A 0003"            /* .........7...Â.. */
+	$"0100 0009 0000 0000 0000 0000 033C 000C"            /* ...Æ.........<.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"034B 000C 000A 0003 0100 0009 DD6B 08C2"            /* .K...Â.....Æİk.Â */
+	$"06A2 0000 0357 000C 000A 0003 0000 0009"            /* .¢...W...Â.....Æ */
+	$"0000 0000 0000 0000 03A8 000C 000A 0003"            /* .........¨...Â.. */
+	$"0500 0009 0000 0000 0000 0000 03AD 000C"            /* ...Æ.........­.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"03AF 000C 000A 0003 0100 0009 0000 0000"            /* .¯...Â.....Æ.... */
+	$"0000 0000 03B4 000C 000A 0003 0000 0009"            /* .....´...Â.....Æ */
+	$"0000 0000 0000 0000 03C3 000C 000A 0003"            /* .........Ã...Â.. */
+	$"0100 0009 0000 0000 0000 0000 03C6 000C"            /* ...Æ.........Æ.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"03D5 000C 000A 0003 0100 0009 0000 0000"            /* .Õ...Â.....Æ.... */
+	$"0000 0000 03DD 000C 000A 0003 0000 0009"            /* .....İ...Â.....Æ */
+	$"0000 0000 0000 0000 0433 000C 000A 0003"            /* .........3...Â.. */
+	$"0100 0009 0000 0000 0000 0000 0441 000C"            /* ...Æ.........A.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"0450 000C 000A 0003 0100 0009 DD6B 08C2"            /* .P...Â.....Æİk.Â */
+	$"06A2 0000 0456 000C 000A 0003 0000 0009"            /* .¢...V...Â.....Æ */
+	$"0000 0000 0000 0000 0496 000C 000A 0003"            /* .........–...Â.. */
+	$"0500 0009 0000 0000 0000 0000 049D 000C"            /* ...Æ........... */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"049F 000C 000A 0003 0100 0009 0000 0000"            /* .Ÿ...Â.....Æ.... */
+	$"0000 0000 04A7 000C 000A 0003 0000 0009"            /* .....§...Â.....Æ */
+	$"0000 0000 0000 0000 04A9 000B 0009 0004"            /* .........©...Æ.. */
+	$"0000 0009 0000 0000 0000 0000 04B8 000C"            /* ...Æ.........¸.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"04F3 000C 000A 0003 0100 0009 0000 0000"            /* .ó...Â.....Æ.... */
+	$"0000 0000 0507 000C 000A 0003 0000 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0516 000C 000A 0003"            /* .............Â.. */
+	$"0100 0009 DD6B 08C2 06A2 0000 0524 000C"            /* ...Æİk.Â.¢...$.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"0541 000C 000A 0003 0500 0009 0000 0000"            /* .A...Â.....Æ.... */
+	$"0000 0000 054C 000C 000A 0003 0000 0009"            /* .....L...Â.....Æ */
+	$"0000 0000 0000 0000 054E 000C 000A 0003"            /* .........N...Â.. */
+	$"0100 0009 0000 0000 D400 0000 0553 000C"            /* ...Æ....Ô....S.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"056E 000C 000A 0003 0100 0009 0000 0000"            /* .n...Â.....Æ.... */
+	$"D400 0000 0573 000C 000A 0003 0000 0009"            /* Ô....s...Â.....Æ */
+	$"0000 0000 0000 0000 0588 000C 000A 0003"            /* .........ˆ...Â.. */
+	$"0100 0009 0000 0000 D400 0000 058B 000C"            /* ...Æ....Ô....‹.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"05A0 000C 000A 0003 0100 0009 0000 0000"            /* . ...Â.....Æ.... */
+	$"D400 0000 05A8 000C 000A 0003 0000 0009"            /* Ô....¨...Â.....Æ */
+	$"0000 0000 0000 0000 05C1 000C 000A 0003"            /* .........Á...Â.. */
+	$"0100 0009 0000 0000 D400 0000 05CD 000C"            /* ...Æ....Ô....Í.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"0606 000C 000A 0003 0100 0009 0000 0000"            /* .....Â.....Æ.... */
+	$"D400 0000 060F 000C 000A 0003 0000 0009"            /* Ô........Â.....Æ */
+	$"0000 0000 0000 0000 066F 000C 000A 0003"            /* .........o...Â.. */
+	$"0100 0009 0000 0000 D400 0000 0678 000C"            /* ...Æ....Ô....x.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"067E 000C 000A 0001 0000 0009 0000 0000"            /* .~...Â.....Æ.... */
+	$"0000 0000 06C6 000C 000A 0003 0000 0009"            /* .....Æ...Â.....Æ */
+	$"0000 0000 0000 0000 06FC 000C 000A 0003"            /* .........ü...Â.. */
+	$"0100 0009 0000 0000 D400 0000 0702 000C"            /* ...Æ....Ô....... */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"0735 000C 000A 0003 0100 0009 0000 0000"            /* .5...Â.....Æ.... */
+	$"D400 0000 0738 000C 000A 0003 0000 0009"            /* Ô....8...Â.....Æ */
+	$"0000 0000 0000 0000 0757 000C 000A 0001"            /* .........W...Â.. */
+	$"0000 0009 0000 0000 0000 0000 076A 000B"            /* ...Æ.........j.. */
+	$"0008 0015 0000 0009 0000 0000 0000 0000"            /* .......Æ........ */
+	$"076B 000C 000A 0003 0000 0009 0000 0000"            /* .k...Â.....Æ.... */
+	$"0000 0000 07C3 000C 000A 0003 0100 0009"            /* .....Ã...Â.....Æ */
+	$"DD6B 08C2 06A2 0000 07D1 000C 000A 0003"            /* İk.Â.¢...Ñ...Â.. */
+	$"0000 0009 0000 0000 0000 0000 0811 000C"            /* ...Æ............ */
+	$"000A 0003 0100 0009 DD6B 08C2 06A2 0000"            /* .Â.....Æİk.Â.¢.. */
+	$"081D 000C 000A 0003 0000 0009 0000 0000"            /* .....Â.....Æ.... */
+	$"0000 0000 0833 000C 000A 0003 0100 0009"            /* .....3...Â.....Æ */
+	$"DD6B 08C2 06A2 0000 083E 000C 000A 0003"            /* İk.Â.¢...>...Â.. */
+	$"0000 0009 0000 0000 0000 0000 0881 000C"            /* ...Æ........... */
+	$"000A 0003 0100 0009 DD6B 08C2 06A2 0000"            /* .Â.....Æİk.Â.¢.. */
+	$"088F 000C 000A 0003 0000 0009 0000 0000"            /* ....Â.....Æ.... */
+	$"0000 0000 0899 000C 000A 0003 0100 0009"            /* .....™...Â.....Æ */
+	$"DD6B 08C2 06A2 0000 08A5 000C 000A 0003"            /* İk.Â.¢...¥...Â.. */
+	$"0000 0009 0000 0000 0000 0000 08DB 000C"            /* ...Æ.........Û.. */
+	$"000A 0003 0100 0009 DD6B 08C2 06A2 0000"            /* .Â.....Æİk.Â.¢.. */
+	$"08E9 000C 000A 0003 0000 0009 0000 0000"            /* .é...Â.....Æ.... */
+	$"0000 0000 094C 000C 000A 0003 0100 0009"            /* ....ÆL...Â.....Æ */
+	$"DD6B 08C2 06A2 0000 0957 000C 000A 0003"            /* İk.Â.¢..ÆW...Â.. */
+	$"0000 0009 0000 0000 0000 0000 098A 000C"            /* ...Æ........ÆŠ.. */
+	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â.....Æ....Ô... */
+	$"0997 000C 000A 0003 0000 0009 0000 0000"            /* Æ—...Â.....Æ.... */
+	$"0000 0000 0A27 000C 000A 0003 0100 0009"            /* ....Â'...Â.....Æ */
+	$"0000 0000 D400 0000 0A58 000C 000A 0003"            /* ....Ô...ÂX...Â.. */
+	$"0000 0009 0000 0000 0000 0000 0ABD 000C"            /* ...Æ........Â½.. */
+	$"000A 0003 0100 0009 F2D7 0856 84EC 0000"            /* .Â.....Æò×.V„ì.. */
+	$"0AC6 000C 000A 0003 0000 0009 0000 0000"            /* ÂÆ...Â.....Æ.... */
+	$"0000 0000 0BB9 000C 000A 0003 0100 0009"            /* .....¹...Â.....Æ */
+	$"0000 0000 D400 0000 0BC5 000C 000A 0003"            /* ....Ô....Å...Â.. */
+	$"0000 0009 0000 0000 0000 0000 0BC6 000C"            /* ...Æ.........Æ.. */
+	$"000A 0003 0100 0009 DD6B 08C2 06A2 0000"            /* .Â.....Æİk.Â.¢.. */
+	$"0BD4 000C 000A 0003 0000 0009 0000 0000"            /* .Ô...Â.....Æ.... */
+	$"0000 0000 0E33 000C 000A 0003 0100 0009"            /* .....3...Â.....Æ */
+	$"0000 0000 D400 0000 0E53 000C 000A 0003"            /* ....Ô....S...Â.. */
+	$"0000 0009 0000 0000 0000 0000 0E65 000C"            /* ...Æ.........e.. */
+	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â.....Æ....Ô... */
+	$"0E69 000C 000A 0003 0000 0009 0000 0000"            /* .i...Â.....Æ.... */
+	$"0000 0000 0FD4 000C 000A 0003 0100 0009"            /* .....Ô...Â.....Æ */
+	$"DD6B 08C2 06A2 0000 0FE3 000C 000A 0003"            /* İk.Â.¢...ã...Â.. */
+	$"0000 0009 0000 0000 0000 0000 103C 000C"            /* ...Æ.........<.. */
+	$"000A 0003 0500 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"1047 000C 000A 0003 0000 0009 0000 0000"            /* .G...Â.....Æ.... */
+	$"0000 0000 1049 000C 000A 0003 0100 0009"            /* .....I...Â.....Æ */
+	$"0000 0000 D400 0000 104C 000C 000A 0003"            /* ....Ô....L...Â.. */
+	$"0000 0009 0000 0000 0000 0000 1061 000C"            /* ...Æ.........a.. */
+	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â.....Æ....Ô... */
+	$"1069 000C 000A 0003 0000 0009 0000 0000"            /* .i...Â.....Æ.... */
+	$"0000 0000 107E 000C 000A 0003 0100 0009"            /* .....~...Â.....Æ */
+	$"0000 0000 D400 0000 1086 000C 000A 0003"            /* ....Ô....†...Â.. */
+	$"0000 0009 0000 0000 0000 0000 10B2 000C"            /* ...Æ.........².. */
+	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â.....Æ....Ô... */
+	$"10BA 000C 000A 0003 0000 0009 0000 0000"            /* .º...Â.....Æ.... */
+	$"0000 0000 1120 000C 000A 0003 0100 0009"            /* ..... ...Â.....Æ */
+	$"DD6B 08C2 06A2 0000 112C 000C 000A 0003"            /* İk.Â.¢...,...Â.. */
+	$"0000 0009 0000 0000 0000 0000 1455 000C"            /* ...Æ.........U.. */
+	$"000A 0003 0100 0009 DD6B 08C2 06A2 0000"            /* .Â.....Æİk.Â.¢.. */
+	$"145C 000C 000A 0003 0000 0009 0000 0000"            /* .\...Â.....Æ.... */
+	$"0000 0000 1483 000C 000A 0003 0100 0009"            /* .....ƒ...Â.....Æ */
+	$"DD6B 08C2 06A2 0000 148E 000C 000A 0003"            /* İk.Â.¢......Â.. */
+	$"0000 0009 0000 0000 0000 0000 14D4 000C"            /* ...Æ.........Ô.. */
+	$"000A 0003 0100 0009 DD6B 08C2 06A2 0000"            /* .Â.....Æİk.Â.¢.. */
+	$"14E2 000C 000A 0003 0000 0009 0000 0000"            /* .â...Â.....Æ.... */
+	$"0000 0000 15DE 000C 000A 0003 0100 0009"            /* .....Ş...Â.....Æ */
+	$"DD6B 08C2 06A2 0000 15E5 000C 000A 0003"            /* İk.Â.¢...å...Â.. */
+	$"0000 0009 DD6B 08C2 06A2 0000 15E6 000C"            /* ...Æİk.Â.¢...æ.. */
+	$"000A 0003 0100 0009 DD6B 08C2 06A2 0000"            /* .Â.....Æİk.Â.¢.. */
+	$"15EC 000C 000A 0003 0000 0009 0000 0000"            /* .ì...Â.....Æ.... */
+	$"0000 0000 15FB 000C 000A 0003 0100 0009"            /* .....û...Â.....Æ */
+	$"DD6B 08C2 06A2 0000 1609 000C 000A 0003"            /* İk.Â.¢...Æ...Â.. */
+	$"0000 0009 0000 0000 0000 0000 1638 000C"            /* ...Æ.........8.. */
+	$"000A 0003 0500 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"1643 000C 000A 0003 0000 0009 0000 0000"            /* .C...Â.....Æ.... */
+	$"0000 0000 16C3 000C 000A 0003 0100 0009"            /* .....Ã...Â.....Æ */
+	$"DD6B 08C2 06A2 0000 16D1 000C 000A 0003"            /* İk.Â.¢...Ñ...Â.. */
+	$"0000 0009 0000 0000 0000 0000 16EE 000C"            /* ...Æ.........î.. */
+	$"000A 0003 0500 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"16F9 000C 000A 0003 0000 0009 0000 0000"            /* .ù...Â.....Æ.... */
+	$"0000 0000 16FA 000E 000A 0015 0000 000C"            /* .....ú...Â...... */
+	$"0000 0000 0000 0000 16FB 000C 000A 0003"            /* .........û...Â.. */
+	$"0100 0009 0000 0000 D400 0000 1700 000C"            /* ...Æ....Ô....... */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"171B 000C 000A 0003 0100 0009 0000 0000"            /* .....Â.....Æ.... */
+	$"D400 0000 1720 000C 000A 0003 0000 0009"            /* Ô.... ...Â.....Æ */
+	$"0000 0000 0000 0000 1735 000C 000A 0003"            /* .........5...Â.. */
+	$"0100 0009 0000 0000 D400 0000 1738 000C"            /* ...Æ....Ô....8.. */
+	$"000A 0003 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"174C 000E 000A 0015 0000 000C 0000 0000"            /* .L...Â.......... */
+	$"0000 0000 174D 000C 000A 0003 0100 0009"            /* .....M...Â.....Æ */
+	$"0000 0000 D400 0000 1750 000C 000A 0003"            /* ....Ô....P...Â.. */
+	$"0000 0009 0000 0000 0000 0000 1767 000C"            /* ...Æ.........g.. */
+	$"000A 0001 0000 0009 0000 0000 0000 0000"            /* .Â.....Æ........ */
+	$"177A 000C 000A 0003 0000 0009 0000 0000"            /* .z...Â.....Æ.... */
+	$"0000 0000 178F 000C 000A 0003 0100 0009"            /* ........Â.....Æ */
+	$"0000 0000 D400 0000 1797 000C 000A 0003"            /* ....Ô....—...Â.. */
+	$"0000 0009 0000 0000 0000 0000 17A3 000C"            /* ...Æ.........£.. */
+	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â.....Æ....Ô... */
+	$"17C5 000C 000A 0003 0000 0009 0000 0000"            /* .Å...Â.....Æ.... */
+	$"0000 0000 17C7 000C 000A 0003 0100 0009"            /* .....Ç...Â.....Æ */
+	$"0000 0000 D400 0000 17D3 000C 000A 0003"            /* ....Ô....Ó...Â.. */
+	$"0000 0009 0000 0000 0000 0000 17D5 000C"            /* ...Æ.........Õ.. */
+	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â.....Æ....Ô... */
+	$"17F4 000C 000A 0003 0000 0009 0000 0000"            /* .ô...Â.....Æ.... */
+	$"0000 0000 180E 000C 000A 0003 0100 0009"            /* .........Â.....Æ */
+	$"DD6B 08C2 06A2 0000 181A 000C 000A 0003"            /* İk.Â.¢.......Â.. */
+	$"0000 0009 0000 0000 0000 0000 181C 000C"            /* ...Æ............ */
+	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â.....Æ....Ô... */
+	$"1825 000C 000A 0003 0000 0009 0000 0000"            /* .%...Â.....Æ.... */
+	$"0000 0000 1885 000C 000A 0003 0100 0009"            /* .....…...Â.....Æ */
+	$"0000 0000 D400 0000 188E 000C 000A 0003"            /* ....Ô.......Â.. */
+	$"0000 0009 0000 0000 0000 0000 1923 000C"            /* ...Æ.........#.. */
+	$"000A 0003 0100 0009 0000 0000 D400 0000"            /* .Â.....Æ....Ô... */
+	$"1929 000C 000A 0003 0000 0009 0000 0000"            /* .)...Â.....Æ.... */
 	$"0000"                                               /* .. */
 };
 
 data 'styl' (200, "Arpeggio") {
-	$"0002 0000 0000 000C 000A 0003 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0008 000C 000A 0003"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0003 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0008 000C 000A 0003"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (201, "SlideUp") {
-	$"0002 0000 0000 000C 000A 0003 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0008 000C 000A 0003"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0003 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0008 000C 000A 0003"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (202, "Slide Down") {
-	$"0002 0000 0000 000C 000A 0003 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 000A 000C 000A 0003"            /* .........Â¬...Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0003 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 000A 000C 000A 0003"            /* .........Â...Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (203, "Slide to Note") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 000D 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 000D 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (204, "Vibrato") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0007 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0007 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (205, "Slide to note + Volume Slide") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0032 000C 000A 0001"            /* .........2...Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0032 000C 000A 0001"            /* .........2...Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (206, "Vibrato + Volume Slide") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 002C 000C 000A 0001"            /* .........,...Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 002C 000C 000A 0001"            /* .........,...Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (207, "Tremolo") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0007 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0007 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (208, "Unused") {
-	$"0001 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
+	$"0001 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
 	$"0000 0000 0000"                                     /* ...... */
 };
 
 data 'styl' (209, "Set sample offset") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0011 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0011 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (210, "Volume slide") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 000C 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 000C 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (211, "Position Jump") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 000D 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 000D 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (212, "Set volume") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 000A 000C 000A 0001"            /* .........Â¬...Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 000A 000C 000A 0001"            /* .........Â...Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (213, "Pattern Break") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 000D 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 000D 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (214, "E - Effects") {
-	$"0001 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
+	$"0001 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
 	$"0000 0000 0000"                                     /* ...... */
 };
 
 data 'styl' (215, "Set speed") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0009 000C 000A 0001"            /* .........âˆ†...Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0009 000C 000A 0001"            /* .........Æ...Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (300, "Set filter on/off") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0011 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0011 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (301, "Fineslide up") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 000C 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 000C 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (302, "Fineslide down") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 000E 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 000E 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (303, "Set glissando on/off") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0014 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0014 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (304, "Set vibrato waveform") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0014 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0014 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (305, "Set finetune value") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0012 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0012 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (306, "Loop pattern") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 000C 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 000C 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (307, "Set tremolo waveform") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0014 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0014 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (308, "Unused") {
-	$"0001 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
+	$"0001 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
 	$"0000 0000 0000"                                     /* ...... */
 };
 
 data 'styl' (309, "Retrigger sample") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0010 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0010 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (310, "Fine volume slide up") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0014 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0014 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (311, "Fine volume slide down") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 0016 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 0016 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (312, "Cut sample") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 000A 000C 000A 0001"            /* .........Â¬...Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 000A 000C 000A 0001"            /* .........Â...Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (313, "Delay sample") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 000C 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 000C 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (314, "Delay pattern") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 000D 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 000D 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (315, "Invert loop") {
-	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â¬.....âˆ† */
-	$"0000 0000 0000 0000 000B 000C 000A 0001"            /* .............Â¬.. */
-	$"0000 0009 0000 0000 0000"                           /* ...âˆ†...... */
+	$"0002 0000 0000 000C 000A 0001 0100 0009"            /* .........Â.....Æ */
+	$"0000 0000 0000 0000 000B 000C 000A 0001"            /* .............Â.. */
+	$"0000 0009 0000 0000 0000"                           /* ...Æ...... */
 };
 
 data 'styl' (257) {
-	$"0001 0000 0000 000C 000A 0001 0000 0009"            /* .........Â¬.....âˆ† */
+	$"0001 0000 0000 000C 000A 0001 0000 0009"            /* .........Â.....Æ */
 	$"0000 0000 0000"                                     /* ...... */
 };
 
 data 'TEXT' (5632) {
 	$"506C 6179 6572 2050 524F 2034 2E36 2028"            /* Player PRO 4.6 ( */
 	$"4641 5429 0D68 7474 703A 2F2F 7777 772E"            /* FAT).http://www. */
-	$"7175 6164 6D61 7469 6F6E 2E63 6F6D 0DA9"            /* quadmation.com.Â© */
+	$"7175 6164 6D61 7469 6F6E 2E63 6F6D 0DA9"            /* quadmation.com.© */
 	$"2041 6E74 6F69 6E65 2052 4F53 5345 5420"            /*  Antoine ROSSET  */
 	$"3139 3937 0D0D 2D2D 2D2D 2D2D 2D2D 2D2D"            /* 1997..---------- */
 	$"2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D"            /* ---------------- */
@@ -10811,7 +10811,7 @@ data 'TEXT' (5632) {
 	$"2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 0D50"            /* --------------.P */
 	$"4C41 5945 5220 5052 4F20 4344 2D52 4F4D"            /* LAYER PRO CD-ROM */
 	$"204D 4143 0D39 3920 5553 240D 506C 6179"            /*  MAC.99 US$.Play */
-	$"6572 5052 4F20 6465 726E 698F 7265 2076"            /* erPRO derniÃ¨re v */
+	$"6572 5052 4F20 6465 726E 698F 7265 2076"            /* erPRO dernire v */
 	$"6572 7369 6F6E 2C20 6465 762E 206B 6974"            /* ersion, dev. kit */
 	$"2C20 3430 3030 206D 7573 6971 7565 732C"            /* , 4000 musiques, */
 	$"2035 3030 2069 6E73 7472 756D 656E 7473"            /*  500 instruments */
@@ -10822,9 +10822,9 @@ data 'TEXT' (5632) {
 	$"2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D"            /* ---------------- */
 	$"2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D"            /* ---------------- */
 	$"2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 0D53"            /* --------------.S */
-	$"6920 766F 7573 2064 8E73 6972 657A 2064"            /* i vous dÃ©sirez d */
+	$"6920 766F 7573 2064 8E73 6972 657A 2064"            /* i vous dsirez d */
 	$"6576 656E 6972 2075 6E20 7574 696C 6973"            /* evenir un utilis */
-	$"6174 6575 7220 656E 7265 6769 7374 728E"            /* ateur enregistrÃ© */
+	$"6174 6575 7220 656E 7265 6769 7374 728E"            /* ateur enregistr */
 	$"3A0D 0D43 6C69 7175 657A 2073 7572 206C"            /* :..Cliquez sur l */
 	$"6520 626F 7574 6F6E 2022 496D 7072 696D"            /* e bouton "Imprim */
 	$"6572 2220 6F75 2072 656D 706C 6973 7365"            /* er" ou remplisse */
@@ -10898,25 +10898,25 @@ data 'TEXT' (5632) {
 	$"676E 752E 6169 2E6D 6974 2E65 6475 2028"            /* gnu.ai.mit.edu ( */
 	$"6A61 6D61 6C40 676E 752E 6169 2E6D 6974"            /* jamal@gnu.ai.mit */
 	$"2E65 6475 290D 4654 5020 5369 7465 733A"            /* .edu).FTP Sites: */
-	$"0D20 2020 20A5 2066 7470 3A2F 2F66 7470"            /* .    â€¢ ftp://ftp */
+	$"0D20 2020 20A5 2066 7470 3A2F 2F66 7470"            /* .    ¥ ftp://ftp */
 	$"2E65 736B 696D 6F2E 636F 6D2F 752F 772F"            /* .eskimo.com/u/w/ */
 	$"776F 726D 6579 2F50 6C61 7965 7250 726F"            /* wormey/PlayerPro */
-	$"0D20 2020 20A5 2066 7470 3A2F 2F66 7470"            /* .    â€¢ ftp://ftp */
+	$"0D20 2020 20A5 2066 7470 3A2F 2F66 7470"            /* .    ¥ ftp://ftp */
 	$"2E6D 6963 726F 7365 7276 652E 6E65 742F"            /* .microserve.net/ */
 	$"7070 702D 706F 702F 7374 7261 7461 0D57"            /* ppp-pop/strata.W */
-	$"5757 2053 6974 6573 3A0D 2020 2020 A520"            /* WW Sites:.    â€¢  */
+	$"5757 2053 6974 6573 3A0D 2020 2020 A520"            /* WW Sites:.    ¥  */
 	$"6874 7470 3A2F 2F68 7970 6572 6172 6368"            /* http://hyperarch */
 	$"6976 652E 6C63 732E 6D69 742E 6564 752F"            /* ive.lcs.mit.edu/ */
 	$"5265 6365 6E74 2D53 756D 6D61 7279 2E68"            /* Recent-Summary.h */
 	$"746D 6C20 2753 6561 7263 6820 506C 6179"            /* tml 'Search Play */
-	$"6572 5052 4F27 0D20 2020 20A5 2068 7474"            /* erPRO'.    â€¢ htt */
+	$"6572 5052 4F27 0D20 2020 20A5 2068 7474"            /* erPRO'.    ¥ htt */
 	$"703A 2F2F 7777 772E 6573 6B69 6D6F 2E63"            /* p://www.eskimo.c */
 	$"6F6D 2F7E 776F 726D 6579 2F50 6C61 7965"            /* om/~wormey/Playe */
 	$"7250 524F 5553 2E68 746D 6C0D 5553 454E"            /* rPROUS.html.USEN */
-	$"4554 3A0D 2020 2020 A520 4A6F 696E 204D"            /* ET:.    â€¢ Join M */
+	$"4554 3A0D 2020 2020 A520 4A6F 696E 204D"            /* ET:.    ¥ Join M */
 	$"4F44 7320 666F 7275 6D20 3A20 616C 742E"            /* ODs forum : alt. */
 	$"6269 6E61 7269 6573 2E73 6F75 6E64 732E"            /* binaries.sounds. */
-	$"6D6F 6473 0D42 4253 3A0D 2020 2020 A520"            /* mods.BBS:.    â€¢  */
+	$"6D6F 6473 0D42 4253 3A0D 2020 2020 A520"            /* mods.BBS:.    ¥  */
 	$"4652 414E 4345 202D 2045 6C6C 6973 203A"            /* FRANCE - Ellis : */
 	$"2050 6172 6973 2028 2B33 3320 3120 3437"            /*  Paris (+33 1 47 */
 	$"2033 3120 3231 2032 3129 0D2D 2D2D 2D2D"            /*  31 21 21).----- */
@@ -10924,34 +10924,34 @@ data 'TEXT' (5632) {
 	$"2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D"            /* ---------------- */
 	$"2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D"            /* ---------------- */
 	$"2D2D 2D2D 0D0D 4365 2070 726F 6772 616D"            /* ----..Ce program */
-	$"6D65 2061 208E 748E 2063 6F6E 8D75 0D70"            /* me a Ã©tÃ© conÃ§u.p */
+	$"6D65 2061 208E 748E 2063 6F6E 8D75 0D70"            /* me a t conu.p */
 	$"6172 2041 6E74 6F69 6E65 2052 4F53 5345"            /* ar Antoine ROSSE */
 	$"5420 2868 616E 646C 653A 2042 7961 6B68"            /* T (handle: Byakh */
 	$"6565 292E 0D0D 4C65 7320 7465 7874 6573"            /* ee)...Les textes */
 	$"2065 7420 6772 6170 6869 7175 6573 206F"            /*  et graphiques o */
-	$"6E74 208E 748E 2063 728E 8E73 0D70 6172"            /* nt Ã©tÃ© crÃ©Ã©s.par */
+	$"6E74 208E 748E 2063 728E 8E73 0D70 6172"            /* nt t crs.par */
 	$"204D 696B 6520 5645 4E54 5552 4920 2868"            /*  Mike VENTURI (h */
 	$"616E 646C 653A 2043 7962 6F72 6729 200D"            /* andle: Cyborg) . */
 	$"6574 204A 6F68 6E20 5354 494C 4553 2028"            /* et John STILES ( */
-	$"6861 6E64 6C65 3A20 AE4F 4E20 464C 5558"            /* handle: Ã†ON FLUX */
-	$"290D 0D4C 6520 648E 6669 6C65 6D65 6E74"            /* )..Le dÃ©filement */
+	$"6861 6E64 6C65 3A20 AE4F 4E20 464C 5558"            /* handle: ®ON FLUX */
+	$"290D 0D4C 6520 648E 6669 6C65 6D65 6E74"            /* )..Le dfilement */
 	$"2064 6520 7465 7874 6520 2620 6C65 2063"            /*  de texte & le c */
-	$"7562 6520 3344 2063 6F6E 8D75 0D70 6172"            /* ube 3D conÃ§u.par */
+	$"7562 6520 3344 2063 6F6E 8D75 0D70 6172"            /* ube 3D conu.par */
 	$"2053 6861 6861 6E20 4D4F 4D4A 4941 4E0D"            /*  Shahan MOMJIAN. */
-	$"0D4D 6572 6369 2088 204A 616D 616C 2048"            /* .Merci Ã  Jamal H */
+	$"0D4D 6572 6369 2088 204A 616D 616C 2048"            /* .Merci ˆ Jamal H */
 	$"616E 6E61 6820 706F 7572 2073 6F6E 2073"            /* annah pour son s */
 	$"7570 706F 7274 2026 2062 6574 612D 7465"            /* upport & beta-te */
 	$"7374 2026 206D 6169 6C69 6E67 2D6C 6973"            /* st & mailing-lis */
-	$"740D 0D4D 6572 6369 2088 2048 7562 6572"            /* t..Merci Ã  Huber */
+	$"740D 0D4D 6572 6369 2088 2048 7562 6572"            /* t..Merci ˆ Huber */
 	$"7420 4761 7272 6964 6F20 706F 7572 2073"            /* t Garrido pour s */
 	$"6573 206D 6F64 756C 6573 2065 7874 6572"            /* es modules exter */
 	$"6E65 7321 0D28 436F 6465 2073 6F75 7263"            /* nes!.(Code sourc */
 	$"6520 6469 7370 6F6E 6962 6C65 2064 616E"            /* e disponible dan */
-	$"7320 6C65 206B 6974 2064 8E76 656C 6F70"            /* s le kit dÃ©velop */
+	$"7320 6C65 206B 6974 2064 8E76 656C 6F70"            /* s le kit dvelop */
 	$"7065 7572 2064 6520 506C 6179 6572 5052"            /* peur de PlayerPR */
-	$"4F29 0D0D 4D65 7263 6920 8820 4A2E 422E"            /* O)..Merci Ã  J.B. */
+	$"4F29 0D0D 4D65 7263 6920 8820 4A2E 422E"            /* O)..Merci ˆ J.B. */
 	$"2057 696C 736F 6E20 706F 7572 2073 6573"            /*  Wilson pour ses */
-	$"206E 6F75 7665 6C6C 6573 2069 6399 6E65"            /*  nouvelles icÃ´ne */
+	$"206E 6F75 7665 6C6C 6573 2069 6399 6E65"            /*  nouvelles ic™ne */
 	$"7320 210D 0D43 6520 7072 6F67 7261 6D6D"            /* s !..Ce programm */
 	$"6520 6573 7420 756E 2020 536F 756E 642D"            /* e est un  Sound- */
 	$"5472 6163 6B65 722E 0D49 6C20 766F 7573"            /* Tracker..Il vous */
@@ -10967,10 +10967,10 @@ data 'TEXT' (5632) {
 	$"4F20 6573 7420 6C65 206D 6569 6C6C 6575"            /* O est le meilleu */
 	$"7220 536F 756E 642D 5472 6163 6B65 7220"            /* r Sound-Tracker  */
 	$"7375 7220 4D61 6321 0D0D 496C 2065 7374"            /* sur Mac!..Il est */
-	$"2072 6563 6F6D 6D61 6E64 8E20 6427 7574"            /*  recommandÃ© d'ut */
+	$"2072 6563 6F6D 6D61 6E64 8E20 6427 7574"            /*  recommand d'ut */
 	$"696C 6973 6572 2064 6573 2068 6175 742D"            /* iliser des haut- */
-	$"7061 726C 6575 7273 2073 748E 728E 6F20"            /* parleurs stÃ©rÃ©o  */
-	$"706F 7572 2075 6E65 2071 7561 6C69 748E"            /* pour une qualitÃ© */
+	$"7061 726C 6575 7273 2073 748E 728E 6F20"            /* parleurs stro  */
+	$"706F 7572 2075 6E65 2071 7561 6C69 748E"            /* pour une qualit */
 	$"206D 6178 696D 616C 652E 0D0D 4C65 7320"            /*  maximale...Les  */
 	$"7069 6C6F 7465 7320 736F 6E74 204C 4942"            /* pilotes sont LIB */
 	$"5245 4D45 4E54 2064 6973 706F 6E69 626C"            /* REMENT disponibl */
@@ -10978,7 +10978,7 @@ data 'TEXT' (5632) {
 	$"7261 6D6D 6575 7273 2E20 496C 7320 7365"            /* rammeurs. Ils se */
 	$"2074 726F 7576 656E 7420 6461 6E73 2075"            /*  trouvent dans u */
 	$"6E20 7061 636B 2064 6520 6269 626C 696F"            /* n pack de biblio */
-	$"7468 8F71 7565 7320 6175 2066 6F72 6D61"            /* thÃ¨ques au forma */
+	$"7468 8F71 7565 7320 6175 2066 6F72 6D61"            /* thques au forma */
 	$"7420 4320 284D 5057 2C20 436F 6465 5761"            /* t C (MPW, CodeWa */
 	$"7272 696F 7220 2620 5468 696E 6B29 2E0D"            /* rrior & Think).. */
 	$"4C27 7574 696C 6973 6174 696F 6E20 6574"            /* L'utilisation et */
@@ -10990,13 +10990,13 @@ data 'TEXT' (5632) {
 	$"4176 6169 6C61 626C 6520 6576 6572 7977"            /* Available everyw */
 	$"6865 7265 2021 210D 0D4C 6573 2061 7574"            /* here !!..Les aut */
 	$"6575 7273 3A0D 416E 746F 696E 6520 524F"            /* eurs:.Antoine RO */
-	$"5353 4554 3A20 4E8E 2065 6E20 3139 3732"            /* SSET: NÃ© en 1972 */
-	$"2C20 8E74 7564 6961 6E74 2065 6E20 6D8E"            /* , Ã©tudiant en mÃ© */
-	$"6465 6369 6E65 2068 756D 6169 6E65 2088"            /* decine humaine Ã  */
+	$"5353 4554 3A20 4E8E 2065 6E20 3139 3732"            /* SSET: N en 1972 */
+	$"2C20 8E74 7564 6961 6E74 2065 6E20 6D8E"            /* , tudiant en m */
+	$"6465 6369 6E65 2068 756D 6169 6E65 2088"            /* decine humaine ˆ */
 	$"206C 2755 6E69 7665 7273 6974 7920 486F"            /*  l'University Ho */
-	$"7370 6974 616C 2064 6520 4765 6E8F 7665"            /* spital de GenÃ¨ve */
+	$"7370 6974 616C 2064 6520 4765 6E8F 7665"            /* spital de Genve */
 	$"2065 6E20 5375 6973 7365 2E20 4661 7363"            /*  en Suisse. Fasc */
-	$"696E 8E20 6465 7075 6973 206C 2789 6765"            /* inÃ© depuis l'Ã¢ge */
+	$"696E 8E20 6465 7075 6973 206C 2789 6765"            /* in depuis l'‰ge */
 	$"2064 6520 3130 2061 6E73 2070 6172 206C"            /*  de 10 ans par l */
 	$"6573 206F 7264 696E 6174 6575 7273 2041"            /* es ordinateurs A */
 	$"7070 6C65 3A20 4170 706C 6520 4949 2B2C"            /* pple: Apple II+, */
@@ -11011,19 +11011,19 @@ data 'TEXT' (5632) {
 	$"6772 616D 6D65 7572 2065 6E20 4469 6769"            /* grammeur en Digi */
 	$"7461 6C20 496D 6167 696E 6720 556E 6974"            /* tal Imaging Unit */
 	$"2028 556E 6976 6572 7369 7479 2048 6F73"            /*  (University Hos */
-	$"7069 7461 6C20 6465 2047 656E 8F76 6529"            /* pital de GenÃ¨ve) */
+	$"7069 7461 6C20 6465 2047 656E 8F76 6529"            /* pital de Genve) */
 	$"2C20 436F 6E73 756C 7469 6E67 2050 726F"            /* , Consulting Pro */
 	$"6772 616D 6D65 722C 2046 7265 656C 616E"            /* grammer, Freelan */
 	$"6365 2050 726F 6772 616D 6D65 7220 6574"            /* ce Programmer et */
-	$"2073 708E 6369 616C 6973 8E20 656E 206F"            /*  spÃ©cialisÃ© en o */
+	$"2073 708E 6369 616C 6973 8E20 656E 206F"            /*  spcialis en o */
 	$"7074 696D 6973 6174 696F 6E20 3638 3078"            /* ptimisation 680x */
 	$"3020 6574 2061 7263 6869 7465 6374 7572"            /* 0 et architectur */
 	$"6520 4D61 6369 6E74 6F73 682E 0D54 6F75"            /* e Macintosh..Tou */
-	$"6A6F 7572 7320 7072 9074 2088 2064 6520"            /* jours prÃªt Ã  de  */
+	$"6A6F 7572 7320 7072 9074 2088 2064 6520"            /* jours prt ˆ de  */
 	$"6E6F 7576 6561 7578 2070 726F 6A65 7473"            /* nouveaux projets */
 	$"2073 7572 206C 6520 4D61 6369 6E74 6F73"            /*  sur le Macintos */
-	$"682E 2028 4E27 688E 7369 7465 7A20 7061"            /* h. (N'hÃ©sitez pa */
-	$"7320 8820 6D27 656E 766F 7965 7220 756E"            /* s Ã  m'envoyer un */
+	$"682E 2028 4E27 688E 7369 7465 7A20 7061"            /* h. (N'hsitez pa */
+	$"7320 8820 6D27 656E 766F 7965 7220 756E"            /* s ˆ m'envoyer un */
 	$"2066 6178 2129 0D0D 2D2D 2D2D 2D2D 2D2D"            /*  fax!)..-------- */
 	$"2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D"            /* ---------------- */
 	$"2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D"            /* ---------------- */
@@ -11031,7 +11031,7 @@ data 'TEXT' (5632) {
 	$"2D0D 0D56 6F75 7320 7472 6176 6169 6C6C"            /* -..Vous travaill */
 	$"657A 2064 616E 7320 756E 2068 6F70 6974"            /* ez dans un hopit */
 	$"616C 3F20 436F 6E6E 6169 7373 657A 2D76"            /* al? Connaissez-v */
-	$"6F75 7320 D250 4143 53D3 2028 5069 6374"            /* ous â€œPACSâ€ (Pict */
+	$"6F75 7320 D250 4143 53D3 2028 5069 6374"            /* ous ÒPACSÓ (Pict */
 	$"7572 6520 6172 6368 6976 696E 6720 616E"            /* ure archiving an */
 	$"6420 636F 6D6D 756E 6963 6174 696F 6E20"            /* d communication  */
 	$"7379 7374 656D 2920 3F21 2048 6572 6520"            /* system) ?! Here  */
@@ -11048,12 +11048,12 @@ data 'TEXT' (5632) {
 	$"7972 7573 2F4D 6174 7269 782F 5049 4354"            /* yrus/Matrix/PICT */
 	$"2F51 7569 636B 7469 6D65 290D 4F73 6972"            /* /Quicktime).Osir */
 	$"6973 202D 2050 686F 746F 7368 6F70 2070"            /* is - Photoshop p */
-	$"6F75 7220 696D 6167 6572 6965 206D 8E64"            /* our imagerie mÃ©d */
+	$"6F75 7220 696D 6167 6572 6965 206D 8E64"            /* our imagerie md */
 	$"6963 616C 6520 2121 0D45 7463 2E20 4574"            /* icale !!.Etc. Et */
 	$"632E 0D50 6F75 7220 706C 7573 2020 6427"            /* c..Pour plus  d' */
 	$"696E 666F 726D 6174 696F 6E73 2073 7572"            /* informations sur */
 	$"2063 6573 2066 7265 6577 6172 6573 206D"            /*  ces freewares m */
-	$"8E64 6963 6175 782C 2063 6F6E 7461 6374"            /* Ã©dicaux, contact */
+	$"8E64 6963 6175 782C 2063 6F6E 7461 6374"            /* dicaux, contact */
 	$"6572 3A0D 4452 2E20 4F53 4D41 4E20 5241"            /* er:.DR. OSMAN RA */
 	$"5449 420D 4469 6769 7461 6C20 496D 6167"            /* TIB.Digital Imag */
 	$"696E 6720 556E 6974 0D55 6E69 7665 7273"            /* ing Unit.Univers */
@@ -11075,7 +11075,7 @@ data 'TEXT' (5632) {
 	$"2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D"            /* ---------------- */
 	$"2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D"            /* ---------------- */
 	$"2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 0D0D"            /* --------------.. */
-	$"4D69 6B65 2056 454E 5455 5249 3A20 4E8E"            /* Mike VENTURI: NÃ© */
+	$"4D69 6B65 2056 454E 5455 5249 3A20 4E8E"            /* Mike VENTURI: N */
 	$"2065 6E20 3134 3635 2073 6F75 7320 4865"            /*  en 1465 sous He */
 	$"6E72 7920 6C65 2073 6563 6F6E 6420 2861"            /* nry le second (a */
 	$"7420 6C65 6173 7420 7468 6174 2077 6861"            /* t least that wha */
@@ -11090,17 +11090,17 @@ data 'TEXT' (5632) {
 	$"626F 726E 2069 6E20 4D61 7373 6163 6875"            /* born in Massachu */
 	$"7365 7474 7320 696E 2031 3935 3320 2879"            /* setts in 1953 (y */
 	$"6570 2120 4865 6164 696E 6720 666F 7220"            /* ep! Heading for  */
-	$"7468 6520 3430 D573 2E2E 2E29 0D47 6F74"            /* the 40â€™s...).Got */
+	$"7468 6520 3430 D573 2E2E 2E29 0D47 6F74"            /* the 40Õs...).Got */
 	$"2073 656E 7420 746F 2073 6576 6572 616C"            /*  sent to several */
 	$"2069 6E73 7469 7475 7465 7320 7375 6368"            /*  institutes such */
 	$"2061 733A 0D4C 2745 636F 6C65 204E 6174"            /*  as:.L'Ecole Nat */
-	$"696F 6E61 6C65 2053 7570 8E72 6965 7572"            /* ionale SupÃ©rieur */
-	$"2064 D541 7274 2056 6973 7565 6C20 2845"            /*  dâ€™Art Visuel (E */
+	$"696F 6E61 6C65 2053 7570 8E72 6965 7572"            /* ionale Suprieur */
+	$"2064 D541 7274 2056 6973 7565 6C20 2845"            /*  dÕArt Visuel (E */
 	$"2E4E 2E53 2E41 2E56 290D 696E 206F 7468"            /* .N.S.A.V).in oth */
 	$"6572 2077 6F72 6473 2C20 4172 7420 5363"            /* er words, Art Sc */
 	$"686F 6F6C 2E2E 2E20 7765 6E74 2074 6F20"            /* hool... went to  */
 	$"7468 6520 4361 6D62 7265 2C20 7468 6174"            /* the Cambre, that */
-	$"D573 2074 6865 2042 656C 6769 616E 2076"            /* â€™s the Belgian v */
+	$"D573 2074 6865 2042 656C 6769 616E 2076"            /* Õs the Belgian v */
 	$"6572 7369 6F6E 206F 6620 4172 7420 5363"            /* ersion of Art Sc */
 	$"686F 6F6C 2E20 4920 7374 7564 6965 6420"            /* hool. I studied  */
 	$"6D6F 7374 6C79 2053 6375 6C70 7475 7265"            /* mostly Sculpture */
@@ -11111,15 +11111,15 @@ data 'TEXT' (5632) {
 	$"616E 6420 7061 696E 7469 6E67 2077 6869"            /* and painting whi */
 	$"6368 2049 2067 6176 6520 7570 2070 7265"            /* ch I gave up pre */
 	$"7474 7920 6661 7374 2E20 2869 7420 6169"            /* tty fast. (it ai */
-	$"6ED5 7420 6561 7379 2129 0D50 6172 7469"            /* nâ€™t easy!).Parti */
+	$"6ED5 7420 6561 7379 2129 0D50 6172 7469"            /* nÕt easy!).Parti */
 	$"6375 6C61 726C 792C 2049 2077 6F75 6E64"            /* cularly, I wound */
 	$"2075 7020 696E 746F 2064 6F69 6E67 2073"            /*  up into doing s */
 	$"6F6D 6520 776F 726B 2077 6974 6820 6120"            /* ome work with a  */
 	$"4D61 6369 6E74 6F73 6820 284D 6163 2050"            /* Macintosh (Mac P */
 	$"6C75 7320 6174 2074 6865 2074 696D 6529"            /* lus at the time) */
 	$"2061 6E64 2073 696E 6365 2C20 4920 6361"            /*  and since, I ca */
-	$"6ED5 7420 6765 7420 6F76 6572 2069 742E"            /* nâ€™t get over it. */
-	$"0D4E 6F77 2049 D56D 2077 6F72 6B69 6E67"            /* .Now Iâ€™m working */
+	$"6ED5 7420 6765 7420 6F76 6572 2069 742E"            /* nÕt get over it. */
+	$"0D4E 6F77 2049 D56D 2077 6F72 6B69 6E67"            /* .Now IÕm working */
 	$"2077 6974 6820 6120 4D61 6320 4949 7369"            /*  with a Mac IIsi */
 	$"2028 6E6F 7420 6576 6572 7962 6F64 7920"            /*  (not everybody  */
 	$"6361 6E20 6166 666F 7264 2061 2051 7561"            /* can afford a Qua */
@@ -11136,9 +11136,9 @@ data 'TEXT' (5632) {
 	$"6820 7765 7265 2070 7265 7474 7920 6261"            /* h were pretty ba */
 	$"642E 0D0D 5368 6168 616E 204D 4F4D 4A49"            /* d...Shahan MOMJI */
 	$"414E 3A20 4574 7564 6961 6E74 2065 6E20"            /* AN: Etudiant en  */
-	$"6D8E 6465 6369 6E65 2068 756D 6169 6E65"            /* mÃ©decine humaine */
-	$"2088 206C 2755 6E69 7665 7273 6974 7920"            /*  Ã  l'University  */
-	$"486F 7370 6974 616C 2064 6520 4765 6E8F"            /* Hospital de GenÃ¨ */
+	$"6D8E 6465 6369 6E65 2068 756D 6169 6E65"            /* mdecine humaine */
+	$"2088 206C 2755 6E69 7665 7273 6974 7920"            /*  ˆ l'University  */
+	$"486F 7370 6974 616C 2064 6520 4765 6E8F"            /* Hospital de Gen */
 	$"7665 2E20 5072 6F67 7261 6D6D 6575 7220"            /* ve. Programmeur  */
 	$"7375 7220 416D 6967 6120 6574 206D 6169"            /* sur Amiga et mai */
 	$"6E74 656E 616E 7420 7375 7220 4D61 6369"            /* ntenant sur Maci */
@@ -11152,9 +11152,9 @@ data 'TEXT' (5632) {
 	$"7465 726E 6574 2C20 6164 7265 7373 6520"            /* ternet, adresse  */
 	$"636F 6D70 7573 6572 7665 2064 6520 416E"            /* compuserve de An */
 	$"746F 696E 6520 524F 5353 4554 206F 7520"            /* toine ROSSET ou  */
-	$"8E63 7269 7265 2088 3A0D 0D53 6861 6861"            /* Ã©crire Ã :..Shaha */
+	$"8E63 7269 7265 2088 3A0D 0D53 6861 6861"            /* crire ˆ:..Shaha */
 	$"6E20 4D4F 4D4A 4941 4E0D 3137 2C20 4368"            /* n MOMJIAN.17, Ch */
-	$"2E20 6465 7320 5072 8E73 2064 6520 6C61"            /* . des PrÃ©s de la */
+	$"2E20 6465 7320 5072 8E73 2064 6520 6C61"            /* . des Prs de la */
 	$"2020 4772 6164 656C 6C65 0D31 3232 3320"            /*   Gradelle.1223  */
 	$"436F 6C6F 676E 790D 5357 4954 5A45 524C"            /* Cologny.SWITZERL */
 	$"414E 440D 0D2D 2D2D 2D2D 2D2D 2D2D 2D2D"            /* AND..----------- */
@@ -11163,7 +11163,7 @@ data 'TEXT' (5632) {
 	$"2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 2D2D 0D0D"            /* --------------.. */
 	$"506F 7572 2070 6C75 7320 6427 696E 666F"            /* Pour plus d'info */
 	$"726D 6174 696F 6E73 2073 7572 206C 6573"            /* rmations sur les */
-	$"2061 7574 6575 7273 2C20 8820 7072 6F70"            /*  auteurs, Ã  prop */
+	$"2061 7574 6575 7273 2C20 8820 7072 6F70"            /*  auteurs, ˆ prop */
 	$"6F73 2064 6520 506C 6179 6572 2050 524F"            /* os de Player PRO */
 	$"3A0D 0D41 6E74 6F69 6E65 2052 4F53 5345"            /* :..Antoine ROSSE */
 	$"540D 3136 2042 4420 5472 616E 6368 6565"            /* T.16 BD Tranchee */
@@ -11187,48 +11187,48 @@ data 'TEXT' (5632) {
 	$"2E65 6475 0D28 206A 616D 616C 4067 6E75"            /* .edu.( jamal@gnu */
 	$"2E61 692E 6D69 742E 6564 7520 2F20 4A61"            /* .ai.mit.edu / Ja */
 	$"6D61 6C20 4861 6E6E 6168 290D 4654 5020"            /* mal Hannah).FTP  */
-	$"5369 7465 733A 0D20 2020 20A5 2066 7470"            /* Sites:.    â€¢ ftp */
+	$"5369 7465 733A 0D20 2020 20A5 2066 7470"            /* Sites:.    ¥ ftp */
 	$"3A2F 2F66 7470 2E65 736B 696D 6F2E 636F"            /* ://ftp.eskimo.co */
 	$"6D2F 752F 772F 776F 726D 6579 2F50 6C61"            /* m/u/w/wormey/Pla */
-	$"7965 7250 726F 0D20 2020 20A5 2066 7470"            /* yerPro.    â€¢ ftp */
+	$"7965 7250 726F 0D20 2020 20A5 2066 7470"            /* yerPro.    ¥ ftp */
 	$"3A2F 2F66 7470 2E6D 6963 726F 7365 7276"            /* ://ftp.microserv */
 	$"652E 6E65 742F 7070 702D 706F 702F 7374"            /* e.net/ppp-pop/st */
 	$"7261 7461 0D57 5757 2053 6974 6573 3A0D"            /* rata.WWW Sites:. */
-	$"2020 2020 A520 6874 7470 3A2F 2F77 7777"            /*     â€¢ http://www */
+	$"2020 2020 A520 6874 7470 3A2F 2F77 7777"            /*     ¥ http://www */
 	$"2E71 7561 646D 6174 696F 6E2E 636F 6D2F"            /* .quadmation.com/ */
-	$"0D20 2020 20A5 2068 7474 703A 2F2F 7777"            /* .    â€¢ http://ww */
+	$"0D20 2020 20A5 2068 7474 703A 2F2F 7777"            /* .    ¥ http://ww */
 	$"772E 6573 6B69 6D6F 2E63 6F6D 2F7E 776F"            /* w.eskimo.com/~wo */
 	$"726D 6579 2F50 6C61 7965 7250 524F 5553"            /* rmey/PlayerPROUS */
-	$"2E68 746D 6C0D 2020 2020 A520 6874 7470"            /* .html.    â€¢ http */
+	$"2E68 746D 6C0D 2020 2020 A520 6874 7470"            /* .html.    ¥ http */
 	$"3A2F 2F77 7777 2E63 7369 732E 6776 7375"            /* ://www.csis.gvsu */
 	$"2E65 6475 2F7E 6265 6872 656E 736D 2F61"            /* .edu/~behrensm/a */
 	$"6273 6D2D 6661 712F 696E 6465 782E 6874"            /* bsm-faq/index.ht */
-	$"6D6C 0D55 5345 4E45 543A 0D20 2020 20A5"            /* ml.USENET:.    â€¢ */
+	$"6D6C 0D55 5345 4E45 543A 0D20 2020 20A5"            /* ml.USENET:.    ¥ */
 	$"204A 6F69 6E20 4D4F 4473 2066 6F72 756D"            /*  Join MODs forum */
 	$"203A 2061 6C74 2E62 696E 6172 6965 732E"            /*  : alt.binaries. */
 	$"736F 756E 6473 2E6D 6F64 730D"                      /* sounds.mods. */
 };
 
 data 'TEXT' (200, "Arpeggio") {
-	$"4172 7065 6767 696F 0D4F 9D20 5B30 5D5B"            /* Arpeggio.OÃ¹ [0][ */
+	$"4172 7065 6767 696F 0D4F 9D20 5B30 5D5B"            /* Arpeggio.O [0][ */
 	$"785D 5B79 5D20 7369 676E 6966 6965 2022"            /* x][y] signifie " */
 	$"6A6F 7565 7220 6C61 206E 6F74 652C 206E"            /* jouer la note, n */
 	$"6F74 652B 7820 6465 6D69 2D74 6F6E 732C"            /* ote+x demi-tons, */
 	$"206E 6F74 652B 7920 6465 6D69 2D74 6F6E"            /*  note+y demi-ton */
 	$"732C 2070 7569 7320 7265 746F 7572 6E65"            /* s, puis retourne */
-	$"2088 206C 6120 6E6F 7465 206F 7269 6769"            /*  Ã  la note origi */
+	$"2088 206C 6120 6E6F 7465 206F 7269 6769"            /*  ˆ la note origi */
 	$"6E61 6C65 222E 2054 6865 2066 6C75 6374"            /* nale". The fluct */
 	$"7561 7469 6F6E 7320 6172 6520 6361 7272"            /* uations are carr */
 	$"6965 6420 6F75 7420 6576 656E 6C79 2073"            /* ied out evenly s */
 	$"7061 6365 6420 696E 206F 6E65 2070 6174"            /* paced in one pat */
 	$"7465 726E 2064 6976 6973 696F 6E2E 2048"            /* tern division. H */
 	$"6162 6974 7565 6C6C 656D 656E 7420 7574"            /* abituellement ut */
-	$"696C 6973 8E20 706F 7572 2073 696D 756C"            /* ilisÃ© pour simul */
+	$"696C 6973 8E20 706F 7572 2073 696D 756C"            /* ilis pour simul */
 	$"6572 2064 6573 2061 6363 6F72 6473 2C20"            /* er des accords,  */
 	$"6275 7420 7468 6973 2064 6F65 736E 2774"            /* but this doesn't */
 	$"2077 6F72 6B20 746F 6F20 7765 6C6C 2E20"            /*  work too well.  */
-	$"8367 616C 656D 656E 7420 7574 696C 6973"            /* Ã‰galement utilis */
-	$"8E20 706F 7572 2070 726F 6475 6972 6520"            /* Ã© pour produire  */
+	$"8367 616C 656D 656E 7420 7574 696C 6973"            /* ƒgalement utilis */
+	$"8E20 706F 7572 2070 726F 6475 6972 6520"            /*  pour produire  */
 	$"756E 2068 6561 7679 2076 6962 7261 746F"            /* un heavy vibrato */
 	$"2E20 556E 2061 6363 6F72 6420 6D61 6A65"            /* . Un accord maje */
 	$"7572 2065 7374 2071 7561 6E64 2078 3D34"            /* ur est quand x=4 */
@@ -11238,7 +11238,7 @@ data 'TEXT' (200, "Arpeggio") {
 };
 
 data 'TEXT' (201, "SlideUp") {
-	$"536C 6964 6520 7570 0D4F 9D20 5B31 5D5B"            /* Slide up.OÃ¹ [1][ */
+	$"536C 6964 6520 7570 0D4F 9D20 5B31 5D5B"            /* Slide up.O [1][ */
 	$"785D 5B79 5D20 7369 676E 6966 6965 2022"            /* x][y] signifie " */
 	$"736D 6F6F 7468 6C79 2064 6563 7265 6173"            /* smoothly decreas */
 	$"6520 7468 6520 7065 7269 6F64 206F 6620"            /* e the period of  */
@@ -11439,7 +11439,7 @@ data 'TEXT' (215, "Set speed") {
 	$"6973 6520 6974 206D 6561 6E73 2022 7365"            /* ise it means "se */
 	$"7420 6265 6174 732F 6D69 6E75 7465 2074"            /* t beats/minute t */
 	$"6F20 7A22 2E20 4C65 7320 7661 6C65 7572"            /* o z". Les valeur */
-	$"7320 7061 7220 648E 6661 7574 2073 6F6E"            /* s par dÃ©faut son */
+	$"7320 7061 7220 648E 6661 7574 2073 6F6E"            /* s par dfaut son */
 	$"7420 3620 7469 636B 732F 6469 7669 7369"            /* t 6 ticks/divisi */
 	$"6F6E 2C20 6574 2031 3235 2062 6174 7465"            /* on, et 125 batte */
 	$"6D65 6E74 732F 6D69 6E75 7465 2E"                   /* ments/minute. */

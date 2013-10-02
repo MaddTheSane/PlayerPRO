@@ -1,24 +1,24 @@
 #include <Carbon/Carbon.r>
 #include "PPResDefs.h"
 
-resource 'MBAR' (128) {
+resource 'MBAR' (MAINMENUBAR) {
 	{	/* array MenuArray: 8 elements */
 		/* [1] */
-		133,
+		mAppleMenu,
 		/* [2] */
-		128,
+		mFileMenu,
 		/* [3] */
-		132,
+		mEditMenu,
 		/* [4] */
-		131,
+		mViewsMenu,
 		/* [5] */
-		140,
+		mEditorMenu,
 		/* [6] */
-		130,
+		mInstrumentsMenu,
 		/* [7] */
-		145,
+		mPatternsMenu,
 		/* [8] */
-		179,
+		mInternetMenu,
 		//TODO: Help and Window menus
 //		mWindowMenu,
 		mHelpMenu
@@ -193,8 +193,8 @@ data 'MDEF' (1972, sysheap, purgeable, locked, protected, preload) {
 	$"4CDF 4C78 4E74 0012"                                /* LßLxNt.. */
 };
 
-resource 'MENU' (128) {
-	128,
+resource 'MENU' (mFileMenu) {
+	mFileMenu,
 	textMenuProc,
 	0x7FEFB77F,
 	enabled,
@@ -269,8 +269,8 @@ resource 'MENU' (129) {
 	}
 };
 
-resource 'MENU' (130) {
-	130,
+resource 'MENU' (mInstrumentsMenu) {
+	mInstrumentsMenu,
 	textMenuProc,
 	0x7FFFFFDD,
 	enabled,
@@ -293,8 +293,8 @@ resource 'MENU' (130) {
 	}
 };
 
-resource 'MENU' (131, "Views Menu") {
-	131,
+resource 'MENU' (mViewsMenu, "Views Menu") {
+	mViewsMenu,
 	textMenuProc,
 	AllItems & ~MenuItem2 & ~MenuItem5,
 	enabled,
@@ -325,8 +325,8 @@ resource 'MENU' (131, "Views Menu") {
 	}
 };
 
-resource 'MENU' (132) {
-	132,
+resource 'MENU' (mEditMenu) {
+	mEditMenu,
 	textMenuProc,
 	0x7FFFFBBC,
 	enabled,
@@ -359,8 +359,8 @@ resource 'MENU' (132) {
 	}
 };
 
-resource 'MENU' (133) {
-	133,
+resource 'MENU' (mAppleMenu) {
+	mAppleMenu,
 	textMenuProc,
 	0x7FFFFFFB,
 	enabled,
@@ -493,8 +493,8 @@ resource 'MENU' (139) {
 	}
 };
 
-resource 'MENU' (140) {
-	140,
+resource 'MENU' (mEditorMenu) {
+	mEditorMenu,
 	textMenuProc,
 	0x7FFFFB6F,
 	enabled,
@@ -579,8 +579,8 @@ resource 'MENU' (144) {
 	}
 };
 
-resource 'MENU' (145) {
-	145,
+resource 'MENU' (mPatternsMenu) {
+	mPatternsMenu,
 	textMenuProc,
 	0x7FFFFFFB,
 	enabled,
@@ -1871,8 +1871,8 @@ resource 'MENU' (178) {
 	}
 };
 
-resource 'MENU' (179) {
-	179,
+resource 'MENU' (mInternetMenu) {
+	mInternetMenu,
 	textMenuProc,
 	0x7FFFFFAF,
 	enabled,
@@ -2010,7 +2010,7 @@ data 'Mcmd' (1) {
 	$"0000"                                               /* .. */
 };
 
-data 'Mcmd' (128) {
+data 'Mcmd' (mFileMenu) {
 	$"0016 0000 0000 0000 0000 0000 0000 0000"            /* ................ */
 	$"0000 0000 0000 0000 0000 0000 0000 0000"            /* ................ */
 	$"0000 0000 0000 0000 0000 0000 0000 0000"            /* ................ */
@@ -2019,25 +2019,25 @@ data 'Mcmd' (128) {
 	$"0000 0000 0000 0000 0000"                           /* .......... */
 };
 
-data 'Mcmd' (130) {
+data 'Mcmd' (mInstrumentsMenu) {
 	$"0007 0000 0000 0000 0000 0000 0000 0000"            /* ................ */
 	$"0000 0000 0000 0000 0000 0000 0000"                 /* .............. */
 };
 
-data 'Mcmd' (131) {
+data 'Mcmd' (mViewsMenu) {
 	$"000B 0000 0000 0000 0000 0000 0000 0000"            /* ................ */
 	$"0000 0000 0000 0000 0000 0000 0000 0000"            /* ................ */
 	$"0000 0000 0000 0000 0000 0000 0000"                 /* .............. */
 };
 
-data 'Mcmd' (132) {
+data 'Mcmd' (mEditMenu) {
 	$"000C 0000 0000 0000 0000 0000 0000 0000"            /* ................ */
 	$"0000 0000 0000 0000 0000 0000 0000 0000"            /* ................ */
 	$"0000 0000 0000 0000 0000 0000 0000 0000"            /* ................ */
 	$"0000"                                               /* .. */
 };
 
-data 'Mcmd' (133) {
+data 'Mcmd' (mAppleMenu) {
 	$"0003 0000 0000 0000 0000 0000 0000"                 /* .............. */
 };
 
@@ -2147,7 +2147,7 @@ data 'Mcmd' (178) {
 	$"0000 0000 0000"                                     /* ...... */
 };
 
-data 'Mcmd' (179) {
+data 'Mcmd' (mInternetMenu) {
 	$"0007 0000 0000 0000 0000 0000 0000 0000"            /* ................ */
 	$"0000 0000 0000 0000 0000 0000 0000"                 /* .............. */
 };

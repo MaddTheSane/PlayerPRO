@@ -29,7 +29,18 @@
 #define MenuItem18	0b0000000000000100000000000000000
 #define MenuItem19	0b0000000000001000000000000000000
 
+#define MAINMENUBAR 128
+#define DEFAULTPREFSNUM 128
+
 enum {
+	mAppleMenu = 133,
+	mFileMenu = 128,
+	mEditMenu = 132,
+	mViewsMenu = 131,
+	mEditorMenu = 140,
+	mInstrumentsMenu = 130,
+	mPatternsMenu = 145,
+	mInternetMenu = 179,
 	mWindowMenu = 182,
 	mHelpMenu = 183
 };

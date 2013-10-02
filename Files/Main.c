@@ -4152,11 +4152,11 @@ void MenuBarInit( void)
 	
 	/****** MAIN MENU ********/
 	
-	myMenuBar			=	GetNewMBar( 128);
+	myMenuBar			=	GetNewMBar( MAINMENUBAR);
 	SetMenuBar( myMenuBar);
 	
 	
-	FileMenu			=	GetMenuHandle( 128);
+	FileMenu			=	GetMenuHandle( mFileMenu);
 
 	// check to see if we should modify the File menu's quit item in
 	// order to follow the Aqua HI quit guideline
@@ -4167,7 +4167,7 @@ void MenuBarInit( void)
 		DeleteMenuItem(FileMenu, 21);
 	}
 	
-	AppleMenu			=	GetMenuHandle( 133);
+	AppleMenu			=	GetMenuHandle( mAppleMenu);
 	if( !HelpAvalaible) DisableMenuItem( AppleMenu, 2);
 	
 	PatchSave			=	true;
@@ -4176,7 +4176,7 @@ void MenuBarInit( void)
 	if( !MIDIHardware) DisableMenuItem( FileMenu, 19);
 	if( !MIDIHardware) DisableMenuItem( FileMenu, 20);
 	
-	InstruEditMenu		=	GetMenuHandle( 130);
+	InstruEditMenu		=	GetMenuHandle( mInstrumentsMenu);
 	ActiveInstrumentMenu( false);
 	
 	PrefSubMenu			=	GetMenu( 200);
@@ -4189,20 +4189,20 @@ void MenuBarInit( void)
 	
 	InsertMenu( NewSoundMenu, hierMenu);
 	
-	EditorMenu			=	GetMenuHandle( 140);
-	ViewsMenu			=	GetMenuHandle( 131);	
+	EditorMenu			=	GetMenuHandle( mEditorMenu);
+	ViewsMenu			=	GetMenuHandle( mViewsMenu);	
 	
 	VSTMenu				=	GetMenu( 180);
 //	if( !CubeReady) DisableMenuItem( ViewsMenu, 20);
 	
-	EditMenu			=	GetMenuHandle( 132);
+	EditMenu			=	GetMenuHandle( mEditMenu);
 	
-	WindowMenu			=	GetMenuHandle(182);
-	HelpMenu			=	GetMenuHandle(183);
+	WindowMenu			=	GetMenuHandle( mWindowMenu);
+	HelpMenu			=	GetMenuHandle( mHelpMenu);
 	
 	if( !HelpAvalaible) DisableMenuItem( HelpMenu, 1);
 
-	PatternEditMenu		=	GetMenuHandle( 145);
+	PatternEditMenu		=	GetMenuHandle( mPatternsMenu);
 	ActivePatternMenu( false);
 
 	InitImportMenu();
@@ -4213,7 +4213,7 @@ void MenuBarInit( void)
 	/******************/
 	
 	InstruMenu			=	GetMenu( 134);
-	InternetMenu		=	GetMenuHandle(179);
+	InternetMenu		=	GetMenuHandle( mInternetMenu);
 	for( i = 0; i < URLsNo; i++)
 	{
 		AppendMenu( InternetMenu, URLsDesc[ i]);
@@ -4664,19 +4664,19 @@ void HandleMenuChoice(long menuChoice)
 		
 		switch(theMenu)
 		{
-			case 133:
+			case mAppleMenu:
 				HandleAppleChoice( theItem);
 				break;
 			
-			case 132:
+			case mEditMenu:
 				HandleEdit( theItem);
 				break;
 			
-			case 128:
+			case mFileMenu:
 				HandleFileChoice( theItem);
 				break;
 			
-			case 145:
+			case mPatternsMenu:
 				HandlePatternChoice( theItem);
 				break;
 			
@@ -4688,11 +4688,11 @@ void HandleMenuChoice(long menuChoice)
 				HandleVSTChoice( theItem-3, &masterVST[ theItem-3]);
 				break;	*/
 			
-			case 131:
+			case mViewsMenu:
 				HandleViewsChoice( theItem);
 				break;
 			
-			case 130:
+			case mInstrumentsMenu:
 				HandleInstruChoice( theItem);
 				break;
 			
@@ -4716,10 +4716,9 @@ void HandleMenuChoice(long menuChoice)
 				ShowPrefs( 2000 + theItem - 1);
 				break;
 			
-			case 179:
+			case mInternetMenu:
 				DoInternetMenu( theItem);
 				break;
-				//TODO: HandleHelpChoice and HandleWindowChoice
 			
 			case mHelpMenu:
 				HandleHelpChoice(theItem);
@@ -5462,7 +5461,7 @@ ReLoadPrefs:
 		iErr = FSpCreate( &spec, 'SNPL', 'PREF', smSystemScript);
 		iErr = FSpOpenDF( &spec, fsCurPerm, &fRefNum);
 		if( iErr != noErr) MyDebugStr( __LINE__, __FILE__, "PlayerPREF ERROR 32");
-		aHandle = GetResource( 'AGGA', 128);
+		aHandle = GetResource( 'AGGA', DEFAULTPREFSNUM);
 		if( aHandle != NULL)
 		{
 			DetachResource( aHandle);
