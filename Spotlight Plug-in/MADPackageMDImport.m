@@ -6,8 +6,8 @@
 //
 //
 
-#import <Cocoa/Cocoa.h>
-#import <PlayerPROKit/PlayerPROKit.h>
+#import <Foundation/Foundation.h>
+#import <PlayerPROKit/PPMusicObject.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h>
 
@@ -23,7 +23,7 @@ Boolean GetMetadataForPackage(CFMutableDictionaryRef attributes, CFStringRef pat
 			return FALSE;
 		}
 		outDict[(NSString*)kMDItemTitle] = musFile.internalFileName;
-		outDict[(__bridge NSString*)(kPPMDPartitionLength)] = @(musFile.partitionLength);
+		outDict[(NSString*)kMDItemAuthors] = @[musFile.madAuthor];
 		{
 			OSType codecType = musFile.madType;
 			char cType[5];
@@ -34,6 +34,7 @@ Boolean GetMetadataForPackage(CFMutableDictionaryRef attributes, CFStringRef pat
 			}
 			outDict[(NSString*)kMDItemCodecs] = @[theString];
 		}
+		outDict[(__bridge NSString*)(kPPMDPartitionLength)] = @(musFile.partitionLength);
 		outDict[(__bridge NSString*)kPPMDTotalPatterns] = @(musFile.totalPatterns);
 		outDict[(__bridge NSString*)kPPMDPartitionLength] = @(musFile.totalPartitions);
 		outDict[(__bridge NSString*)kPPMDTotalInstruments] = @(musFile.totalInstruments);
@@ -44,7 +45,7 @@ Boolean GetMetadataForPackage(CFMutableDictionaryRef attributes, CFStringRef pat
 		//TODO: fill these out!
 		outDict[(__bridge NSString*)kPPMDInstumentsList] = @[];
 		outDict[(__bridge NSString*)kPPMDPatternList] = @[];
-		
+		outDict[(NSString*)kMDItemDurationSeconds] = @0;
 		
 		return TRUE;
 	}

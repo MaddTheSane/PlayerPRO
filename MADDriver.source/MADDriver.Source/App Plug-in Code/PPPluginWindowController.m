@@ -8,8 +8,8 @@
 
 #import "PPPluginWindowController.h"
 
-NSString * const PPPlugInSheetDidEnd = @"MAD Plugin sheet did end";
-NSString * const PPPlugReturnCode = @"MAD Return Code";
+NSString * const PPPlugInSheetDidEnd = @"PlayerPROKit Plugin Sheet Did End";
+NSString * const PPPlugReturnCode = @"PlayerPROKit Return Code";
 
 @interface PPPluginWindowController ()
 @property BOOL isRunningModal;
@@ -39,7 +39,7 @@ NSString * const PPPlugReturnCode = @"MAD Return Code";
 	if (returnCode == NSOnState) {
 		plugBlock();
 	}
-	[[NSNotificationCenter defaultCenter] postNotificationName:PPPlugInSheetDidEnd object:self.window userInfo:@{PPPlugReturnCode: @(returnCode)}];
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPPlugInSheetDidEnd object:self userInfo:@{PPPlugReturnCode: @(returnCode)}];
 	[self close];
 }
 
@@ -76,6 +76,9 @@ NSString * const PPPlugReturnCode = @"MAD Return Code";
 {
 	self.isRunningModal = YES;
 	NSInteger retVal = [NSApp runModalForWindow:self.window];
+	if (self.plugBlock) {
+		plugBlock();
+	}
 	[self close];
 	return retVal;
 }

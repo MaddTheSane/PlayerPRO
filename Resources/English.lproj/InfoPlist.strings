@@ -14,6 +14,7 @@ CFBundleName = "PlayerPRO 6";
 "PPITFile" = "ImpulseTracker Audio";
 "PPAMFFile" = "AMF Tracker Audio";
 "PP669File" = "669 Tracker Audio";
+"PPOKTAFile" = "OKTAmed Tracker Audio";
 
 "PPXIFile" = "FastTracker Instrument";
 "PPMINsFile" = "PlayerPRO Instrument";

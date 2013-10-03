@@ -64,7 +64,37 @@
             </displayattrs>
             
         </type>
-
+		
+		<type name="net.sourceforge.playerpro.mad-bundle">  <!-- add one <type>...</type> entry for each UTI that you need to define.-->
+			
+			<!-- 'allattrs' is a whitespace separated list of all of the attributes that this UTI type normally has.
+			 It does not have to be exhaustive. -->
+			<allattrs>
+				kMDItemTitle
+				kMDItemDurationSeconds
+				kMDItemCodecs
+				kMDItemAuthors
+				net_sourceforge_playerpro_tracker_instumentlist
+				net_sourcegorge_playerpro_tracker_patternlist
+				net_sourcegorge_playerpro_tracker_totalpatterns
+				net_sourcegorge_playerpro_tracker_partitionlength
+				net_sourceforge_playerpro_tracker_totalinstruments
+				net_sourceforge_playerpro_tracker_totaltracks
+				net_sourceforge_playerpro_tracker_formatdescription
+			</allattrs>
+			<!-- 'displayattrs' is a whitespace separated list of the attributes that should normally be displayed when previewing files of this UTI type. -->
+			<displayattrs>
+				kMDItemTitle
+				kMDItemDurationSeconds
+				kMDItemCodecs
+				kMDItemAuthors
+				net_sourcegorge_playerpro_tracker_partitionlength
+				net_sourcegorge_playerpro_tracker_totalpatterns
+				net_sourceforge_playerpro_tracker_totalinstruments
+				net_sourceforge_playerpro_tracker_totaltracks
+			</displayattrs>
+			
+		</type>
     </types>
 </schema>
 

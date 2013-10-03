@@ -10,7 +10,7 @@
 #include <PlayerPROCore/PPPlug.h>
 #include <math.h>
 
-#define		KHZ				22254.54545
+#define KHZ 22254.54545
 
 static char *Audio8Ptr = NULL;
 static short *Audio16Ptr = NULL;
@@ -345,7 +345,7 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 - (IBAction)toggleToneType:(id)sender
 {
 	generator = (int)[sender tag];
-	for (NSButton *radio in toneRadios) {
+	for (NSButtonCell *radio in toneRadios) {
 		[radio setIntegerValue:(generator == [radio tag]) ? NSOnState : NSOffState];
 	}
 }

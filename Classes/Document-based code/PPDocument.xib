@@ -7,11 +7,11 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PPDocument">
             <connections>
+                <outlet property="boxController" destination="LsL-Pc-9w4" id="ya3-2S-kpA"/>
                 <outlet property="currentTimeLabel" destination="WaK-0d-ulU" id="wSC-OM-A0w"/>
                 <outlet property="exportSettingsBox" destination="100036" id="100042"/>
                 <outlet property="exportWindow" destination="100026" id="100041"/>
                 <outlet property="fastForwardButton" destination="uMf-5K-EbC" id="kSU-RY-Mmk"/>
-                <outlet property="fastForwardPressed" destination="uMf-5K-EbC" id="to8-AO-Q7w"/>
                 <outlet property="playButton" destination="Ldh-ec-MpH" id="Tvg-5A-q7q"/>
                 <outlet property="playbackPositionSlider" destination="oP5-bp-Z0e" id="e4y-UQ-cKW"/>
                 <outlet property="reverseButton" destination="3cJ-rm-kq9" id="8Sh-w9-ekG"/>
@@ -32,14 +32,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box autoresizesSubviews="NO" title="Box" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="tja-dm-7N1">
-                        <rect key="frame" x="146" y="285" width="216" height="110"/>
+                        <rect key="frame" x="146" y="289" width="216" height="106"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView">
-                            <rect key="frame" x="1" y="1" width="214" height="108"/>
+                            <rect key="frame" x="1" y="1" width="214" height="104"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="uMf-5K-EbC">
-                                    <rect key="frame" x="164" y="64" width="32" height="32"/>
+                                    <rect key="frame" x="164" y="60" width="32" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="32" id="DKJ-rJ-dJp"/>
@@ -51,7 +51,7 @@
                                     </buttonCell>
                                 </button>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Ldh-ec-MpH">
-                                    <rect key="frame" x="91" y="64" width="32" height="32"/>
+                                    <rect key="frame" x="91" y="60" width="32" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="32" id="eej-5U-tKP"/>
@@ -63,7 +63,7 @@
                                     </buttonCell>
                                 </button>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="3cJ-rm-kq9">
-                                    <rect key="frame" x="18" y="64" width="32" height="32"/>
+                                    <rect key="frame" x="18" y="60" width="32" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="32" id="NuU-so-bYL"/>
@@ -75,32 +75,32 @@
                                     </buttonCell>
                                 </button>
                                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oP5-bp-Z0e">
-                                    <rect key="frame" x="64" y="37" width="86" height="21"/>
+                                    <rect key="frame" x="66" y="38" width="82" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="i9g-hZ-aEP"/>
                                     </constraints>
-                                    <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="OXP-YL-GLW"/>
+                                    <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="OXP-YL-GLW"/>
                                 </slider>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jwX-rY-VeA">
-                                    <rect key="frame" x="153" y="39" width="46" height="17"/>
+                                    <rect key="frame" x="153" y="39" width="46" height="14"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="Dh4-2B-dT8"/>
                                     </constraints>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" id="mgN-3o-ygt">
+                                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" id="mgN-3o-ygt">
                                         <customFormatter key="formatter" id="TzP-h9-fEV" customClass="PPTimeFormatter"/>
-                                        <font key="font" metaFont="system"/>
+                                        <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WaK-0d-ulU">
-                                    <rect key="frame" x="15" y="39" width="46" height="17"/>
+                                    <rect key="frame" x="15" y="39" width="46" height="14"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" id="yHJ-QM-ZJs">
+                                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" id="yHJ-QM-ZJs">
                                         <customFormatter key="formatter" id="Yrl-l6-oXP" customClass="PPTimeFormatter"/>
-                                        <font key="font" metaFont="system"/>
+                                        <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -148,20 +148,32 @@
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <tabView translatesAutoresizingMaskIntoConstraints="NO" id="eP8-FW-QMd">
-                        <rect key="frame" x="13" y="10" width="481" height="277"/>
+                    <tabView initialItem="ykk-c8-31L" translatesAutoresizingMaskIntoConstraints="NO" id="eP8-FW-QMd">
+                        <rect key="frame" x="13" y="10" width="481" height="281"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
-                            <tabViewItem label="Classical" identifier="1" id="ykk-c8-31L">
-                                <view key="view" id="9ML-I9-VAO">
-                                    <rect key="frame" x="10" y="33" width="461" height="231"/>
+                            <tabViewItem label="Digital" identifier="2" id="gav-7k-IAf">
+                                <view key="view" id="3cF-zg-o6h">
+                                    <rect key="frame" x="10" y="33" width="461" height="235"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Digital" identifier="2" id="gav-7k-IAf">
-                                <view key="view" id="3cF-zg-o6h">
-                                    <rect key="frame" x="10" y="33" width="461" height="231"/>
+                            <tabViewItem label="Box" identifier="" id="A24-KY-JgR">
+                                <view key="view" id="BQP-AN-bfF">
+                                    <rect key="frame" x="10" y="33" width="461" height="235"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="Classic" identifier="1" id="ykk-c8-31L">
+                                <view key="view" id="9ML-I9-VAO">
+                                    <rect key="frame" x="10" y="33" width="461" height="235"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="Wave" identifier="" id="zqf-cY-1dY">
+                                <view key="view" id="UQt-sf-rgN">
+                                    <rect key="frame" x="10" y="33" width="461" height="235"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
@@ -257,5 +269,25 @@ Gw
             </view>
         </window>
         <customObject id="-3" userLabel="Application"/>
+        <viewController id="fvI-Iq-sXE" userLabel="Digital View Controller">
+            <connections>
+                <outlet property="view" destination="3cF-zg-o6h" id="iSe-6E-HLQ"/>
+            </connections>
+        </viewController>
+        <viewController id="LsL-Pc-9w4" customClass="BoxViewController">
+            <connections>
+                <outlet property="view" destination="BQP-AN-bfF" id="opZ-Zq-cWh"/>
+            </connections>
+        </viewController>
+        <viewController id="euO-9U-7Ee" userLabel="Classic View Controller">
+            <connections>
+                <outlet property="view" destination="9ML-I9-VAO" id="xzn-pU-xhT"/>
+            </connections>
+        </viewController>
+        <viewController id="UmV-E5-CNH" userLabel="Wave View Controller">
+            <connections>
+                <outlet property="view" destination="UQt-sf-rgN" id="jMn-XP-STC"/>
+            </connections>
+        </viewController>
     </objects>
 </document>
