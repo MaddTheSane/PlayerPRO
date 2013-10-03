@@ -1,1 +1,15 @@
-/* *	Support for automatically naming the precompiled header file ... */#define _MIDIHARDWARE_#define MAINPLAYERPRO 1#define MACOS9VERSION 1#define CALL_IN_SPOCKETS_BUT_NOT_IN_CARBON 1#define ACCESSOR_CALLS_ARE_FUNCTIONS 1//#define OPAQUE_TOOLBOX_STRUCTS 1#pragma precompile_target "PlayerHeaders.PPC"#include "PlayerHeaders.c"
+/*
+ *	Support for automatically naming the precompiled header file ...
+ */
+
+#define _MIDIHARDWARE_
+#define MAINPLAYERPRO 1
+#define MACOS9VERSION 1
+#define CALL_IN_SPOCKETS_BUT_NOT_IN_CARBON 1
+
+#define ACCESSOR_CALLS_ARE_FUNCTIONS 1
+//#define OPAQUE_TOOLBOX_STRUCTS 1
+
+#pragma precompile_target "PlayerHeaders.PPC"
+
+#include "PlayerHeaders.c"

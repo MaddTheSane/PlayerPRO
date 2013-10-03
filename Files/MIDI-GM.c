@@ -87,8 +87,8 @@ static	short		vers1, vers2;
 void InitQuicktimeInstruments(void)
 {
 	long					lS, lE, inOutBytes, result;
-//	short					sS, qQ;
-//	short 					i;
+	//	short					sS, qQ;
+	//	short 					i;
 	short					foundVRefNum, vRefNum;
 	UNFILE					iFileRef;
 	long					foundDirID, dirID;
@@ -315,7 +315,7 @@ short OpenDataFileQK( long dirID, short VRefNum)
 {
 	CInfoPBRec		info;
 	Str255			tempStr;
-//	long			dirIDCopy;
+	//	long			dirIDCopy;
 	short			i, vRefNum;
 	OSErr			iErr;
 	FSSpec			spec;
@@ -853,7 +853,7 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 						
 						switch( fmt.wBitsPerSample)
 						{
-							//TODO: Handle 24-bit sound?
+								//TODO: Handle 24-bit sound?
 							case 8:
 								ConvertInstrumentIn( (Byte*) curData->data, dataAt.size);
 								break;

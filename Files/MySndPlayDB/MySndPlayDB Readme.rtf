@@ -1,0 +1,18 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10820\viewh9520\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 MySndPlayDB was written to try to be a Carbon compatible replacement for SndPlayDoubleBuffer.\
+\
+This is not as easy as I had hoped.  It requires that I walk the sound channel's data, which  should be OK since you can allocate the sound channel memory yourself.  There are no accessors to get at the sound channel structure, so hopefully this will be OK.\
+\
+This also requires that I have a wrapper around SndDoImmediate for any quietCmd that is issued.\
+\
+Also, with Sound Manager 3.4 and 3.5, to make the beginning of the sound glitch free would require that the library implement triple buffering (making one more copy of the buffers passed by the users fill routine).  I don't have the time to implement such a scheme at this point, though it should not be too hard to do.  This sample works just fine with Sound Manager 3.6 and 3.3.  The reason it doesn't work with 3.4 and 3.5 is that they implement a double buffering scheme in the Apple Mixer that causes code to think that it has finished playing a sound (and therefore reuse a buffer) before the sound has actually finished playing.\
+\
+The code is heavily commented, at least I think so, so it should be pretty easy to follow the code and figure out what's going on.\
+\
+Good luck.\
+}
