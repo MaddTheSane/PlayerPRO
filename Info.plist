@@ -91,7 +91,7 @@
 				<string>STrk</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.mod</string>
@@ -113,7 +113,7 @@
 				<string>MTM </string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.mtm</string>
@@ -135,7 +135,7 @@
 				<string>S3M </string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.s3m</string>
@@ -161,7 +161,7 @@
 				<string>MADI</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madi</string>
@@ -189,7 +189,7 @@
 				<string>MADF</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madfg</string>
@@ -215,7 +215,7 @@
 				<string>MADH</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madh</string>
@@ -264,7 +264,7 @@
 				<string>XM  </string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.xm</string>
@@ -286,7 +286,7 @@
 				<string>XI  </string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.xi</string>
@@ -308,7 +308,7 @@
 				<string>IT  </string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.it</string>
@@ -352,7 +352,7 @@
 				<string>MINs</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.mins</string>
