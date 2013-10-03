@@ -219,7 +219,7 @@ EXP OSErr main(		OSType					order,						// Order to execute
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
 	short	iFileRefI;
-	long	inOutBytes;
+	long	inOutBytes = 0;
 		
 	switch( order)
 	{

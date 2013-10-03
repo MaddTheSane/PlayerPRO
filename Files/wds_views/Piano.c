@@ -101,7 +101,11 @@ Boolean DragCommand( RgnHandle myRgn, Cmd myCmd, EventRecord *theEvent)
 	NewDrag( &theDrag);
 	
 	myPcmd = (Pcmd*) NewPtrClear( sizeof( Pcmd) + 1 * sizeof( Cmd));
-	if( myPcmd == NULL) MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
+	if( myPcmd == NULL) 
+	{
+		MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
+		return false;
+	}
 	
 	myPcmd->structSize = sizeof( Pcmd) + 1 * sizeof( Cmd);
 	myPcmd->tracks = 1;
@@ -810,257 +814,257 @@ GetPortBounds( GetDialogPort( PianoDlog), &caRect);
 
 void DoItemPressPiano( short whichItem, DialogPtr whichDialog)    			/* Item hit ID to pass to Dialog function */
 {
-		Cell				theCell;
-		long				tempLong;
- 		short				temp, ctlPart, oldtemp, itemType, bogus, i;
- 		Rect				caRect, cellRect, tempRect, aRect;
- 		GrafPtr				SavePort;
- 		ControlHandle		theControl;
- 		Handle				itemHandle;
-		RgnHandle			myRgn;
- 		Str255				sTemp;
- 		Point				myPt;
-		Cmd					myCmd;
- 		ControlActionUPP	MyControlUPP;
- 		
- 		GetPort( &SavePort);
- 		SetPortDialogPort( PianoDlog);
- 		
-		if (theEvent.what == mouseDown) /* See if a mouse click */
+	Cell				theCell;
+	long				tempLong;
+	short				temp = 0, ctlPart, oldtemp, itemType, bogus, i;
+	Rect				caRect, cellRect, tempRect, aRect;
+	GrafPtr				SavePort;
+	ControlHandle		theControl;
+	Handle				itemHandle;
+	RgnHandle			myRgn;
+	Str255				sTemp;
+	Point				myPt;
+	Cmd					myCmd = {0};
+	ControlActionUPP	MyControlUPP;
+	
+	GetPort( &SavePort);
+	SetPortDialogPort( PianoDlog);
+	
+	if (theEvent.what == mouseDown) /* See if a mouse click */
+	{
+		myPt = theEvent.where;
+		GlobalToLocal(&myPt);
+		
+		GetDialogItem( whichDialog, 1, &itemType, &itemHandle, &tempRect);
+		if( PtInRect( myPt, &tempRect))
 		{
-			myPt = theEvent.where;
-			GlobalToLocal(&myPt);
+			theControl = NULL;
+			if( TestControl(  PianoCtl, myPt)) theControl = PianoCtl;
 			
-			GetDialogItem( whichDialog, 1, &itemType, &itemHandle, &tempRect);
-			if( PtInRect( myPt, &tempRect))
+			GetPortBounds( GetDialogPort( whichDialog), &caRect);
+			
+			if( theControl)
 			{
-				theControl = NULL;
-				if( TestControl(  PianoCtl, myPt)) theControl = PianoCtl;
-				
-				GetPortBounds( GetDialogPort( whichDialog), &caRect);
-				
-				if( theControl)
+				MyControlUPP = NewControlActionUPP( actionPiano);
+				gThumbPrev = GetControlValue( theControl);
+				TrackControl(theControl, myPt, MyControlUPP);
+				DisposeControlActionUPP( MyControlUPP);
+			}
+			
+			if( myPt.v > 1 && myPt.v < PianoH && myPt.h > PianoRect.left)
+			{
+				if( !GetIns( &bogus, NULL)) Erreur( 13, 0);
+				else
 				{
-					MyControlUPP = NewControlActionUPP( actionPiano);
-					gThumbPrev = GetControlValue( theControl);
-					TrackControl(theControl, myPt, MyControlUPP);
-					DisposeControlActionUPP( MyControlUPP);
-				}
-				
-				if( myPt.v > 1 && myPt.v < PianoH && myPt.h > PianoRect.left)
-				{
-					if( !GetIns( &bogus, NULL)) Erreur( 13, 0);
-					else
+					Point tPt;
+					
+					oldtemp = -1;
+					SetRect( &cellRect,0,0,0,0);
+					
+					do
 					{
-						Point tPt;
-					
-						oldtemp = -1;
-						SetRect( &cellRect,0,0,0,0);
-					
-						do
+						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+						DoGlobalNull();
+						DoNullInstrument();
+						GetMouse( &myPt);
+						
+						switch( pianoType)
 						{
-							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-							DoGlobalNull();
-							DoNullInstrument();
-							GetMouse( &myPt);
-							
-							switch( pianoType)
-							{
-								case eLargePiano:
-									temp = (myPt.h + GetControlValue( PianoCtl) - PianoRect.left) / ToucheLarg;
-									
+							case eLargePiano:
+								temp = (myPt.h + GetControlValue( PianoCtl) - PianoRect.left) / ToucheLarg;
+								
 								break;
 								
-								case eSmallPiano:
-									temp = -1;
-									tPt = myPt;
-									tPt.h += GetControlValue( PianoCtl);
-									
-									for( i = 0; i < NUMBER_NOTES; i++)
+							case eSmallPiano:
+								temp = -1;
+								tPt = myPt;
+								tPt.h += GetControlValue( PianoCtl);
+								
+								for( i = 0; i < NUMBER_NOTES; i++)
+								{
+									if( PtInRect( tPt, &SPianoRect[ i]))
 									{
-										if( PtInRect( tPt, &SPianoRect[ i]))
-										{
-											temp = i;
-											if( SPianoRect[ i].right - SPianoRect[ i].left == 5) break;
-										}
+										temp = i;
+										if( SPianoRect[ i].right - SPianoRect[ i].left == 5) break;
 									}
+								}
 								break;
-							}
-							
-							if( temp >= 0 && temp < NUMBER_NOTES)
+						}
+						
+						if( temp >= 0 && temp < NUMBER_NOTES)
+						{
+							if( oldtemp != temp)
 							{
-								if( oldtemp != temp)
+								GetToucheRect( &tempRect,  oldtemp);
+								EffaceTouche( oldtemp, &tempRect);
+								
+								switch( thePrefs.KeyUpMode)
 								{
-									GetToucheRect( &tempRect,  oldtemp);
-									EffaceTouche( oldtemp, &tempRect);
-									
-									switch( thePrefs.KeyUpMode)
-									{
-										case eStop:
-											MADDriver->chan[ LastCanal].loopBeg = 0;
-											MADDriver->chan[ LastCanal].loopSize = 0;
-											MADDriver->chan[ LastCanal].maxPtr = MADDriver->chan[ LastCanal].curPtr;
+									case eStop:
+										MADDriver->chan[ LastCanal].loopBeg = 0;
+										MADDriver->chan[ LastCanal].loopSize = 0;
+										MADDriver->chan[ LastCanal].maxPtr = MADDriver->chan[ LastCanal].curPtr;
 										break;
 										
-										case eNoteOFF:
-											MADDriver->chan[ LastCanal].KeyOn = false;
+									case eNoteOFF:
+										MADDriver->chan[ LastCanal].KeyOn = false;
 										break;
-									}
-								}
-								
-								GetPortBounds( GetDialogPort( PianoDlog), &caRect);
-								
-								if( myPt.h < PianoRect.left)
-								{
-									if( GetControlValue( PianoCtl) - ToucheLarg >= 0)
-									{
-										SetControlValue( PianoCtl, GetControlValue( PianoCtl) - ToucheLarg);
-										InvalWindowRect( GetDialogWindow( PianoDlog), &PianoRect);
-										UpdatePianoWindow( PianoDlog);
-										
-										myPt.h += ToucheLarg;
-										
-										oldtemp = -1;
-									}
-									else if( GetControlValue( PianoCtl) - 1 >= 0)
-									{
-										SetControlValue( PianoCtl, GetControlMinimum( PianoCtl));
-										InvalWindowRect( GetDialogWindow( PianoDlog), &PianoRect);
-										UpdatePianoWindow( PianoDlog);
-										
-										myPt.h += ToucheLarg;
-										
-										oldtemp = -1;
-									}
-								}
-								else if( myPt.h > caRect.right)
-								{
-									if( GetControlValue( PianoCtl) + ToucheLarg + caRect.right - PianoRect.left <= PianoL)
-									{
-										SetControlValue( PianoCtl, GetControlValue( PianoCtl) + ToucheLarg);
-										InvalWindowRect( GetDialogWindow( PianoDlog), &PianoRect);
-										UpdatePianoWindow( PianoDlog);
-										
-										myPt.h -= ToucheLarg;
-										
-										oldtemp = -1;
-									}
-									else if( GetControlValue( PianoCtl) + 1 + caRect.right - PianoRect.left <= PianoL)
-									{
-										SetControlValue( PianoCtl, GetControlMaximum( PianoCtl));
-										InvalWindowRect( GetDialogWindow( PianoDlog), &PianoRect);
-										UpdatePianoWindow( PianoDlog);
-										
-										myPt.h -= ToucheLarg;
-										
-										oldtemp = -1;
-									}
-								}
-								
-								if( oldtemp != temp)
-								{
-									oldtemp = temp;
-									
-									SelectTouche( temp, -1);
-									SelectToucheMozart( temp + 1, 0);
-									
-									if( GetIns( &bogus, NULL))
-									{
-										short	track = GetWhichTrackPlay();
-										short	eff = 0, arg = 0, volCmd = 0xFF;
-										
-										if( PianoRecording) NPianoRecordProcess( temp, -1, 0xFF, track);
-										else if( oldWindow == GetDialogWindow( EditorDlog)) DigitalEditorProcess( temp  + 2, &eff, &arg, &volCmd);
-										
-										
-										if(	SampleDlog[ bogus] != NULL &&
-											SelecRect[ bogus].end != SelecRect[ bogus].start)
-										{
-											DoPlayInstruInt( temp, bogus, eff, arg, volCmd, &MADDriver->chan[ track], SelecRect[ bogus].start, SelecRect[ bogus].end);
-										}
-										else
-										{
-											DoPlayInstruInt( temp , bogus, eff, arg, volCmd, &MADDriver->chan[ track], 0, 0);
-										}
-										
-										if( pianoType == eSmallPiano)
-										{
-											Rect	 itemRect;
-										
-											GetDialogItem( whichDialog, 6, &itemType, &itemHandle, &itemRect);
-											TextFace( bold);
-											GetNoteString( oldtemp, sTemp);
-											TETextBox( sTemp+1, sTemp[ 0], &itemRect, teCenter);
-											TextFace( 0);
-										}
-									}
-								}
-								
-								if( myPt.v < 0 && DragManagerUse == true)
-								{
-									myRgn = NewRgn();
-									
-									GetToucheRect( &aRect,  temp);
-									aRect.top = 0;
-									
-									RectRgn( myRgn, &aRect);
-									
-									theEvent.where.v = aRect.top + (aRect.bottom - aRect.top)/2;
-									theEvent.where.h = aRect.left + (aRect.right - aRect.left)/2;
-									LocalToGlobal( &theEvent.where);
-									
-									if( GetIns( &bogus, NULL))
-									{
-										myCmd.ins = bogus + 1;
-										myCmd.note = temp;
-										myCmd.cmd = 0;
-										myCmd.arg = 0;
-										myCmd.vol = 0xFF;
-									}
-									
-									DragCommand( myRgn, myCmd, &theEvent);
-									DisposeRgn( myRgn);
 								}
 							}
-						}
-						while( Button());
-						
-						GetToucheRect( &tempRect,  oldtemp);
-						EffaceTouche( oldtemp, &tempRect);
-						SelectToucheMozart( -1, 0);
-						
-						if( pianoType == eSmallPiano)
-						{
-							Rect	 itemRect;
-						
-							GetDialogItem( whichDialog, 6, &itemType, &itemHandle, &itemRect);
-							EraseRect( &itemRect);
-						}
-						
-						switch( thePrefs.KeyUpMode)
-						{
-							case eStop:
-								MADDriver->chan[ LastCanal].loopBeg = 0;
-								MADDriver->chan[ LastCanal].loopSize = 0;
-								MADDriver->chan[ LastCanal].maxPtr = MADDriver->chan[ LastCanal].curPtr;
-							break;
 							
-							case eNoteOFF:
-								MADDriver->chan[ LastCanal].KeyOn = false;
-							break;
-						}
-						
-						if( MADDriver->DriverSettings.driverMode == MIDISoundDriver)
-						{
-							if( MADDriver->NoteOld[ LastCanal] != -1)
+							GetPortBounds( GetDialogPort( PianoDlog), &caRect);
+							
+							if( myPt.h < PianoRect.left)
 							{
-								NoteOff( MADDriver->InstuNoOld[ LastCanal], MADDriver->NoteOld[ LastCanal], MADDriver->VelocityOld[ LastCanal], MADDriver);
-								MADDriver->NoteOld[ LastCanal] = -1;
+								if( GetControlValue( PianoCtl) - ToucheLarg >= 0)
+								{
+									SetControlValue( PianoCtl, GetControlValue( PianoCtl) - ToucheLarg);
+									InvalWindowRect( GetDialogWindow( PianoDlog), &PianoRect);
+									UpdatePianoWindow( PianoDlog);
+									
+									myPt.h += ToucheLarg;
+									
+									oldtemp = -1;
+								}
+								else if( GetControlValue( PianoCtl) - 1 >= 0)
+								{
+									SetControlValue( PianoCtl, GetControlMinimum( PianoCtl));
+									InvalWindowRect( GetDialogWindow( PianoDlog), &PianoRect);
+									UpdatePianoWindow( PianoDlog);
+									
+									myPt.h += ToucheLarg;
+									
+									oldtemp = -1;
+								}
+							}
+							else if( myPt.h > caRect.right)
+							{
+								if( GetControlValue( PianoCtl) + ToucheLarg + caRect.right - PianoRect.left <= PianoL)
+								{
+									SetControlValue( PianoCtl, GetControlValue( PianoCtl) + ToucheLarg);
+									InvalWindowRect( GetDialogWindow( PianoDlog), &PianoRect);
+									UpdatePianoWindow( PianoDlog);
+									
+									myPt.h -= ToucheLarg;
+									
+									oldtemp = -1;
+								}
+								else if( GetControlValue( PianoCtl) + 1 + caRect.right - PianoRect.left <= PianoL)
+								{
+									SetControlValue( PianoCtl, GetControlMaximum( PianoCtl));
+									InvalWindowRect( GetDialogWindow( PianoDlog), &PianoRect);
+									UpdatePianoWindow( PianoDlog);
+									
+									myPt.h -= ToucheLarg;
+									
+									oldtemp = -1;
+								}
+							}
+							
+							if( oldtemp != temp)
+							{
+								oldtemp = temp;
+								
+								SelectTouche( temp, -1);
+								SelectToucheMozart( temp + 1, 0);
+								
+								if( GetIns( &bogus, NULL))
+								{
+									short	track = GetWhichTrackPlay();
+									short	eff = 0, arg = 0, volCmd = 0xFF;
+									
+									if( PianoRecording) NPianoRecordProcess( temp, -1, 0xFF, track);
+									else if( oldWindow == GetDialogWindow( EditorDlog)) DigitalEditorProcess( temp  + 2, &eff, &arg, &volCmd);
+									
+									
+									if(	SampleDlog[ bogus] != NULL &&
+									   SelecRect[ bogus].end != SelecRect[ bogus].start)
+									{
+										DoPlayInstruInt( temp, bogus, eff, arg, volCmd, &MADDriver->chan[ track], SelecRect[ bogus].start, SelecRect[ bogus].end);
+									}
+									else
+									{
+										DoPlayInstruInt( temp , bogus, eff, arg, volCmd, &MADDriver->chan[ track], 0, 0);
+									}
+									
+									if( pianoType == eSmallPiano)
+									{
+										Rect	 itemRect;
+										
+										GetDialogItem( whichDialog, 6, &itemType, &itemHandle, &itemRect);
+										TextFace( bold);
+										GetNoteString( oldtemp, sTemp);
+										TETextBox( sTemp+1, sTemp[ 0], &itemRect, teCenter);
+										TextFace( 0);
+									}
+								}
+							}
+							
+							if( myPt.v < 0 && DragManagerUse == true)
+							{
+								myRgn = NewRgn();
+								
+								GetToucheRect( &aRect,  temp);
+								aRect.top = 0;
+								
+								RectRgn( myRgn, &aRect);
+								
+								theEvent.where.v = aRect.top + (aRect.bottom - aRect.top)/2;
+								theEvent.where.h = aRect.left + (aRect.right - aRect.left)/2;
+								LocalToGlobal( &theEvent.where);
+								
+								if( GetIns( &bogus, NULL))
+								{
+									myCmd.ins = bogus + 1;
+									myCmd.note = temp;
+									myCmd.cmd = 0;
+									myCmd.arg = 0;
+									myCmd.vol = 0xFF;
+								}
+								
+								DragCommand( myRgn, myCmd, &theEvent);
+								DisposeRgn( myRgn);
 							}
 						}
 					}
+					while( Button());
+					
+					GetToucheRect( &tempRect,  oldtemp);
+					EffaceTouche( oldtemp, &tempRect);
+					SelectToucheMozart( -1, 0);
+					
+					if( pianoType == eSmallPiano)
+					{
+						Rect	 itemRect;
+						
+						GetDialogItem( whichDialog, 6, &itemType, &itemHandle, &itemRect);
+						EraseRect( &itemRect);
+					}
+					
+					switch( thePrefs.KeyUpMode)
+					{
+						case eStop:
+							MADDriver->chan[ LastCanal].loopBeg = 0;
+							MADDriver->chan[ LastCanal].loopSize = 0;
+							MADDriver->chan[ LastCanal].maxPtr = MADDriver->chan[ LastCanal].curPtr;
+							break;
+							
+						case eNoteOFF:
+							MADDriver->chan[ LastCanal].KeyOn = false;
+							break;
+					}
+					
+					if( MADDriver->DriverSettings.driverMode == MIDISoundDriver)
+					{
+						if( MADDriver->NoteOld[ LastCanal] != -1)
+						{
+							NoteOff( MADDriver->InstuNoOld[ LastCanal], MADDriver->NoteOld[ LastCanal], MADDriver->VelocityOld[ LastCanal], MADDriver);
+							MADDriver->NoteOld[ LastCanal] = -1;
+						}
+					}
 				}
-			}   		
+			}
+		}   		
 		
 		switch( whichItem)
 		{
@@ -1068,11 +1072,11 @@ void DoItemPressPiano( short whichItem, DialogPtr whichDialog)    			/* Item hit
 				if( GetControlHilite( prefBut) == 0 && MyTrackControl( prefBut, theEvent.where, NULL))
 				{
 #include "Help.h"
-			
+					
 					ShowPrefs( EDITOR);
 				}
-			break;
-			
+				break;
+				
 			case 7:	// Right
 				if( GetControlHilite( rightBut) == 0 && MyTrackControl( rightBut, theEvent.where, NULL))
 				{
@@ -1082,8 +1086,8 @@ void DoItemPressPiano( short whichItem, DialogPtr whichDialog)    			/* Item hit
 						UpdatePianoInfo();
 					}
 				}
-			break;
-			
+				break;
+				
 			case 4:	// Left
 				if( GetControlHilite( leftBut) == 0 && MyTrackControl( leftBut, theEvent.where, NULL))
 				{
@@ -1093,11 +1097,11 @@ void DoItemPressPiano( short whichItem, DialogPtr whichDialog)    			/* Item hit
 						UpdatePianoInfo();
 					}
 				}
-			break;
-	
-		SetPort( SavePort);
+				break;
+				
+				SetPort( SavePort);
 		}
-		}
+	}
 }
 
 void UpdatePressChar(void)

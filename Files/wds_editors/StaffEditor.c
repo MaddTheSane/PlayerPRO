@@ -1392,7 +1392,11 @@ Pcmd* CreatePcmdFromSelectionStaff(void)
 	if( count <= 0) return NULL;
 	
 	myPcmd = (Pcmd*) NewPtrClear( sizeof( Pcmd) + count * sizeof( Cmd));
-	if( myPcmd == NULL) MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
+	if( myPcmd == NULL) 
+	{
+		MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
+		return NULL;
+	}
 	
 	myPcmd->structSize 	= sizeof( Pcmd) + count * sizeof( Cmd);
 	myPcmd->tracks 		= endYSelec - startYSelec + 1;
@@ -1424,7 +1428,10 @@ Pcmd* CreatePcmdFromNoteStaff( Point myPt)
 		short	pos, track, note;
 		
 		myPcmd = (Pcmd*) NewPtrClear( sizeof( Pcmd) + sizeof( Cmd));
-		if( myPcmd == NULL) MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
+		if( myPcmd == NULL) {
+			MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
+			return NULL;
+		}
 		
 		ConvertPt2Note( myPt, &pos, &track, NULL);
 		

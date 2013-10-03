@@ -121,6 +121,9 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 		FSCloseFork(fRef);
 	}
 	
+	if (WAVERsrc == NULL)
+		return NULL;
+	
 	{
 		long sndSize = WAVERsrc->dataSize;
 		

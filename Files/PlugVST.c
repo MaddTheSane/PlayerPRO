@@ -1657,7 +1657,7 @@ void VSTEditorDoItemPress( short itemHit, DialogPtr aDia)
 				Point				myPt;
 				ControlHandle		theControl;
 				short				ctlPart, bogus, ctlID;
-				long				oldH;
+				long				oldH = 0;
 				ControlActionUPP	MyControlUPP;
 				
 				GetMouse( &myPt);

@@ -163,11 +163,11 @@ void SetCommandTrack( int theTrack, long incurPos)
 
 short	Analyse( short	menuType)
 {
-Str255		aStr;
-CharsHandle	cHdle;
-short			Oct;
-long		ltemp;
-
+	Str255		aStr;
+	CharsHandle	cHdle;
+	short			Oct = 0;
+	long		ltemp = 0;
+	
 	switch( menuType)
 	{
 		case VolumeTE:
@@ -182,8 +182,8 @@ long		ltemp;
 			if( (*cHdle)[ 0] >= '0' && (*cHdle)[ 0] <= '9') Oct += ((*cHdle)[ 0] - '0')<<4;
 			
 			if( Oct >= 0 && Oct < 256) return Oct;
-		break;
-	
+			break;
+			
 		case InstruTE:
 			aStr[ 0] = (*TEH[ InstruTE])->teLength;
 			
@@ -197,8 +197,8 @@ long		ltemp;
 			else StringToNum( aStr, &ltemp);
 			
 			if( ltemp >= 0 && ltemp < MAXINSTRU) return ltemp;
-		break;
-		
+			break;
+			
 		case NoteTE:
 			aStr[ 0] = (*TEH[ NoteTE])->teLength;
 			
@@ -218,8 +218,8 @@ long		ltemp;
 				if( Oct >= 0 && Oct < NUMBER_NOTES) return Oct;
 				else return NUMBER_NOTES;
 			}
-		break;
-		
+			break;
+			
 		case EffectTE:
 			aStr[ 0] = (*TEH[ EffectTE])->teLength;
 			
@@ -233,8 +233,8 @@ long		ltemp;
 			if( **cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
 			
 			if( Oct >= 0 && Oct < 19) return (Oct + 1);
-		break;
-		
+			break;
+			
 		case ArguTE:
 			aStr[ 0] = (*TEH[ ArguTE])->teLength;
 			
@@ -247,7 +247,7 @@ long		ltemp;
 			if( (*cHdle)[ 0] >= '0' && (*cHdle)[ 0] <= '9') Oct += ((*cHdle)[ 0] - '0')<<4;
 			
 			if( Oct >= 0 && Oct < 256) return Oct;
-		break;
+			break;
 	}
 	
 	return 1;
@@ -255,194 +255,195 @@ long		ltemp;
 
 void SetCmdValue( short	menuType)
 {
-Str255			aStr;
-CharsHandle		cHdle;
-short			Oct, tt;
-long			ltemp;
-Cmd				*aCmd = NULL;
-Point			cell;
-Boolean			allCellCopy;
-
+	Str255			aStr;
+	CharsHandle		cHdle;
+	short			Oct, tt = 0;
+	long			ltemp;
+	Cmd				whatCmd = {0};
+	Cmd				*aCmd = &whatCmd;
+	Point			cell;
+	Boolean			allCellCopy;
+	
 	allCellCopy = AllCellApply;
 	
 	if( EditorDlog == NULL) AllCellApply = false;
-
+	
 	curMusic->hasChanged = true;
-
+	
 	switch( menuType)
 	{
-	case VolumeTE:
-		aStr[ 0] = (*TEH[ VolumeTE])->teLength;
-		
-		ltemp = 0;
-		if( aStr[ 0] == 1)
-		{
-			cHdle = TEGetText( TEH[ VolumeTE]);
-		
-			if( **cHdle >= 'A' && **cHdle <= 'F') ltemp = 10 + **cHdle - 'A';
-			if( **cHdle >= '0' && **cHdle <= '9') ltemp = **cHdle - '0';
-		}
-		else if( aStr[ 0] >= 2)
-		{
-			cHdle = TEGetText( TEH[ VolumeTE]);
-		
-			if( **cHdle >= 'A' && **cHdle <= 'F') ltemp = 10 + **cHdle - 'A';
-			if( **cHdle >= '0' && **cHdle <= '9') ltemp = **cHdle - '0';
+		case VolumeTE:
+			aStr[ 0] = (*TEH[ VolumeTE])->teLength;
 			
-			if( (*cHdle)[ 1] >= 'A' && (*cHdle)[ 1] <= 'F') tt = 10 + (*cHdle)[ 1] - 'A';
-			if( (*cHdle)[ 1] >= '0' && (*cHdle)[ 1] <= '9') tt = (*cHdle)[ 1] - '0';
-			
-			ltemp = ltemp*16 + tt;
-		}
-		if( ltemp < 0x10 || ltemp > 0xFF) ltemp = 0xFF;
-		
-		if( AllCellApply)
-		{
-			ApplyOnAllCell( -1, -1, -1, -1, ltemp);
-		}
-		else
-		{
-			aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
-		}
-		
-		aCmd->vol = ltemp;
-	break;
-	
-	case InstruTE:
-		aStr[ 0] = (*TEH[ InstruTE])->teLength;
-		
-		cHdle = TEGetText( TEH[ InstruTE]);
-		
-		if( (*cHdle)[ 1] == '-') ltemp = 0;
-		else if( aStr[ 0] > 0)
-		{
-			aStr[ 1] = (*cHdle)[ 0];
-			aStr[ 2] = (*cHdle)[ 1];
-			aStr[ 3] = (*cHdle)[ 2];
-			
-			StringToNum( aStr, &ltemp);
-		}
-		else ltemp = 0;
-		if( ltemp < 0 || ltemp > MAXINSTRU) ltemp = 0;
-		
-		if( AllCellApply)
-		{
-			ApplyOnAllCell( ltemp, -1, -1, -1, -1);
-		}
-		else
-		{
-			aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
-		}
-		
-		aCmd->ins = ltemp;
-		NSelectInstruList( aCmd->ins - 1, -1);
-	break;
-	
-	case NoteTE:
-		aStr[ 0] = (*TEH[ NoteTE])->teLength;
-		
-		if( aStr[ 0] > 1)
-		{
-			cHdle = TEGetText( TEH[ NoteTE]);
-			
-			aStr[ 1] = (*cHdle)[ 0];
-			aStr[ 2] = (*cHdle)[ 1];
-			aStr[ 3] = (*cHdle)[ 2];
-			
-			if( EqualString( aStr, "\pOFF", false, false))
+			ltemp = 0;
+			if( aStr[ 0] == 1)
 			{
-				Oct = 0xFE;
+				cHdle = TEGetText( TEH[ VolumeTE]);
+				
+				if( **cHdle >= 'A' && **cHdle <= 'F') ltemp = 10 + **cHdle - 'A';
+				if( **cHdle >= '0' && **cHdle <= '9') ltemp = **cHdle - '0';
+			}
+			else if( aStr[ 0] >= 2)
+			{
+				cHdle = TEGetText( TEH[ VolumeTE]);
+				
+				if( **cHdle >= 'A' && **cHdle <= 'F') ltemp = 10 + **cHdle - 'A';
+				if( **cHdle >= '0' && **cHdle <= '9') ltemp = **cHdle - '0';
+				
+				if( (*cHdle)[ 1] >= 'A' && (*cHdle)[ 1] <= 'F') tt = 10 + (*cHdle)[ 1] - 'A';
+				if( (*cHdle)[ 1] >= '0' && (*cHdle)[ 1] <= '9') tt = (*cHdle)[ 1] - '0';
+				
+				ltemp = ltemp*16 + tt;
+			}
+			if( ltemp < 0x10 || ltemp > 0xFF) ltemp = 0xFF;
+			
+			if( AllCellApply)
+			{
+				ApplyOnAllCell( -1, -1, -1, -1, ltemp);
 			}
 			else
 			{
-				if( aStr[ 2] >= '0' && aStr[ 2] <= '9')
-				{
-					aStr[ 3] = aStr[ 2];
-					aStr[ 2] = ' ';
-				}
-				
-				Oct = ConvertNote2No( aStr);
-				
-				if( Oct < 0 || Oct > NUMBER_NOTES) Oct = 0xFF;
+				aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
 			}
-		}
-		else Oct = 0xFF;
-		
-		if( AllCellApply)
-		{
-			ApplyOnAllCell( -1, Oct, -1, -1, -1);
-		}
-		else
-		{
-			aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
-			aCmd->note = Oct;
-		}
-	break;
-	
-	case EffectTE:
-		aStr[ 0] = (*TEH[ EffectTE])->teLength;
-		Oct = -1;
-		
-		if( aStr[ 0] > 0)
-		{
-			cHdle = TEGetText( TEH[ EffectTE]);
 			
-			if( **cHdle == 'L') Oct = 17;
-			if( **cHdle == 'O') Oct = 18;
-			if( **cHdle >= 'A' && **cHdle <= 'G') Oct = 10 + **cHdle - 'A';
-			if( **cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
-		}
-		if( Oct < 0 || Oct >= 19) Oct = 0;
-		
-		if( AllCellApply)
-		{
-			ApplyOnAllCell( -1, -1, Oct, -1, -1);
-		}
-		else
-		{
-			aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
-			aCmd->cmd = Oct;
-		}
-		
-		AfficheGoodEffect( aCmd->cmd, aCmd->arg);
-	break;
-	
-	case ArguTE:
-		aStr[ 0] = (*TEH[ ArguTE])->teLength;
-		
-		Oct = 0;
-		if( aStr[ 0] == 1)
-		{
-			cHdle = TEGetText( TEH[ ArguTE]);
-		
-			if( **cHdle >= 'A' && **cHdle <= 'F') Oct = 10 + **cHdle - 'A';
-			if( **cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
-		}
-		else if( aStr[ 0] >= 2)
-		{
-			cHdle = TEGetText( TEH[ ArguTE]);
-		
-			if( **cHdle >= 'A' && **cHdle <= 'F') Oct = 10 + **cHdle - 'A';
-			if( **cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
+			aCmd->vol = ltemp;
+			break;
 			
-			if( (*cHdle)[ 1] >= 'A' && (*cHdle)[ 1] <= 'F') tt = 10 + (*cHdle)[ 1] - 'A';
-			if( (*cHdle)[ 1] >= '0' && (*cHdle)[ 1] <= '9') tt = (*cHdle)[ 1] - '0';
+		case InstruTE:
+			aStr[ 0] = (*TEH[ InstruTE])->teLength;
 			
-			Oct = Oct*16 + tt;
-		}
-		
-		if( AllCellApply)
-		{
-			ApplyOnAllCell( -1, -1, -1, Oct, -1);
-		}
-		else
-		{
-			aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
-			aCmd->arg = Oct;
-		}
-		
-		AfficheGoodEffect( aCmd->cmd, aCmd->arg);
-	break;
+			cHdle = TEGetText( TEH[ InstruTE]);
+			
+			if( (*cHdle)[ 1] == '-') ltemp = 0;
+			else if( aStr[ 0] > 0)
+			{
+				aStr[ 1] = (*cHdle)[ 0];
+				aStr[ 2] = (*cHdle)[ 1];
+				aStr[ 3] = (*cHdle)[ 2];
+				
+				StringToNum( aStr, &ltemp);
+			}
+			else ltemp = 0;
+			if( ltemp < 0 || ltemp > MAXINSTRU) ltemp = 0;
+			
+			if( AllCellApply)
+			{
+				ApplyOnAllCell( ltemp, -1, -1, -1, -1);
+			}
+			else
+			{
+				aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
+			}
+			
+			aCmd->ins = ltemp;
+			NSelectInstruList( aCmd->ins - 1, -1);
+			break;
+			
+		case NoteTE:
+			aStr[ 0] = (*TEH[ NoteTE])->teLength;
+			
+			if( aStr[ 0] > 1)
+			{
+				cHdle = TEGetText( TEH[ NoteTE]);
+				
+				aStr[ 1] = (*cHdle)[ 0];
+				aStr[ 2] = (*cHdle)[ 1];
+				aStr[ 3] = (*cHdle)[ 2];
+				
+				if( EqualString( aStr, "\pOFF", false, false))
+				{
+					Oct = 0xFE;
+				}
+				else
+				{
+					if( aStr[ 2] >= '0' && aStr[ 2] <= '9')
+					{
+						aStr[ 3] = aStr[ 2];
+						aStr[ 2] = ' ';
+					}
+					
+					Oct = ConvertNote2No( aStr);
+					
+					if( Oct < 0 || Oct > NUMBER_NOTES) Oct = 0xFF;
+				}
+			}
+			else Oct = 0xFF;
+			
+			if( AllCellApply)
+			{
+				ApplyOnAllCell( -1, Oct, -1, -1, -1);
+			}
+			else
+			{
+				aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
+				aCmd->note = Oct;
+			}
+			break;
+			
+		case EffectTE:
+			aStr[ 0] = (*TEH[ EffectTE])->teLength;
+			Oct = -1;
+			
+			if( aStr[ 0] > 0)
+			{
+				cHdle = TEGetText( TEH[ EffectTE]);
+				
+				if( **cHdle == 'L') Oct = 17;
+				if( **cHdle == 'O') Oct = 18;
+				if( **cHdle >= 'A' && **cHdle <= 'G') Oct = 10 + **cHdle - 'A';
+				if( **cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
+			}
+			if( Oct < 0 || Oct >= 19) Oct = 0;
+			
+			if( AllCellApply)
+			{
+				ApplyOnAllCell( -1, -1, Oct, -1, -1);
+			}
+			else
+			{
+				aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
+				aCmd->cmd = Oct;
+			}
+			
+			AfficheGoodEffect( aCmd->cmd, aCmd->arg);
+			break;
+			
+		case ArguTE:
+			aStr[ 0] = (*TEH[ ArguTE])->teLength;
+			
+			Oct = 0;
+			if( aStr[ 0] == 1)
+			{
+				cHdle = TEGetText( TEH[ ArguTE]);
+				
+				if( **cHdle >= 'A' && **cHdle <= 'F') Oct = 10 + **cHdle - 'A';
+				if( **cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
+			}
+			else if( aStr[ 0] >= 2)
+			{
+				cHdle = TEGetText( TEH[ ArguTE]);
+				
+				if( **cHdle >= 'A' && **cHdle <= 'F') Oct = 10 + **cHdle - 'A';
+				if( **cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
+				
+				if( (*cHdle)[ 1] >= 'A' && (*cHdle)[ 1] <= 'F') tt = 10 + (*cHdle)[ 1] - 'A';
+				if( (*cHdle)[ 1] >= '0' && (*cHdle)[ 1] <= '9') tt = (*cHdle)[ 1] - '0';
+				
+				Oct = Oct*16 + tt;
+			}
+			
+			if( AllCellApply)
+			{
+				ApplyOnAllCell( -1, -1, -1, Oct, -1);
+			}
+			else
+			{
+				aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
+				aCmd->arg = Oct;
+			}
+			
+			AfficheGoodEffect( aCmd->cmd, aCmd->arg);
+			break;
 	}
 	
 	/*** Update du Digital Editor ***/

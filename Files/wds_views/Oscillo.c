@@ -1448,6 +1448,7 @@ void DoItemPressOscillo( short whichItem, DialogPtr whichDialog)	/* Item hit ID 
 				
 				switch( OsciH)
 				{
+					default:
 					case 16:	curSelec = 0;		break;
 					case 32:	curSelec = 1;		break;
 					case 64:	curSelec = 2;		break;

@@ -367,7 +367,7 @@ void DoItemPressEQ( short whichItem, DialogPtr whichDialog)
 		Point				myPt;
 		Handle				itemHandle;
 		Rect				itemRect;
-		long				i, x, oldH, tempLong, max, val;
+		long				i, x, oldH = 0, tempLong, max, val;
 		GrafPtr				savePort;
 		Boolean				ReadingCopy;
 		ControlActionUPP	MyControlUPP;

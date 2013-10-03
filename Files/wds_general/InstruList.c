@@ -160,7 +160,7 @@ Ptr MyExp1to6( Ptr sound, unsigned long numSampleFrames)
 Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, Boolean *stereo)
 {
 	short 			soundFormat, numChannels;
-	short 			numSynths, numCmds, CompressID;
+	short 			numSynths = 1, numCmds = 1, CompressID;
 	long 			offset, MusSize;
 	SoundHeaderPtr 	header;
 	CmpSoundHeader	*CmpHeader;
@@ -3005,7 +3005,10 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 				srcData = curMusic->sample[ curMusic->fid[ DragIns].firstSample +  DragSamp];
 				dstData = curMusic->sample[ curMusic->fid[ DestIns].firstSample +  DestSamp];
 				
-				if( dstData == NULL) MyDebugStr( __LINE__, __FILE__, "Arggggggg");
+				if( dstData == NULL) {
+					MyDebugStr( __LINE__, __FILE__, "Arggggggg");
+					return cantGetFlavorErr;
+				}
 				if( dstData->data != NULL) { DisposePtr( dstData->data);	dstData->data = NULL;}
 				
 				*dstData = *srcData;
@@ -3329,8 +3332,14 @@ Boolean DragInstrument( RgnHandle myRgn, short no, EventRecord *theEvent)
 		short				numChan;
 		
 		curData		= curMusic->sample[ curMusic->fid[ DragIns].firstSample +  DragSamp];
-		if( curData == NULL) MyDebugStr( __LINE__, __FILE__, "Errorrr");
-		if( curData->data == NULL) MyDebugStr( __LINE__, __FILE__, "Errorrr");
+		if( curData == NULL) {
+			MyDebugStr( __LINE__, __FILE__, "Errorrr");
+			return false;
+		}
+		if( curData->data == NULL) {
+			MyDebugStr( __LINE__, __FILE__, "Errorrr");
+			return false;
+		}
 		
 		if( curData->size == 0) return false;
 		

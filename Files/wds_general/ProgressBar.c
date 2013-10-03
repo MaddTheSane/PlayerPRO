@@ -171,7 +171,7 @@ Boolean DoWorkingWindow(void)
 	Handle		itemHandle;
 	Rect		itemRect;
 	Str255		str, str2;
-	long		Ltemp, temp, curTicks = TickCount();
+	long		Ltemp = 0, temp, curTicks = TickCount();
 	GrafPtr		SavePort;
 	Point		pt;
 	DateTimeRec	dtrp;

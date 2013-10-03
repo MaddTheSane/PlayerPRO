@@ -1,12 +1,9 @@
-#include <Threads.h>
+#include <Carbon/Carbon.h>
 #include <stdio.h>
-#include <Gestalt.h>
-
-#include <CodeFragments.h>
 
 pascal void *MyThread_A( void *refCon);
 
-void	InitThreadSystem( void)
+void InitThreadSystem( void)
 {
 	OSErr		errWhatErr;
 	int			i;
@@ -30,7 +27,7 @@ void	InitThreadSystem( void)
 
 pascal void *MyThread_A( void * notused)
 {
-	int			i;
+	int i;
 	
 	DoGlobalNull();
 	

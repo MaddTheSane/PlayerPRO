@@ -537,7 +537,7 @@ void DoItemPressParti( short whichItem, DialogPtr whichDialog)    			/* Item hit
 	Rect				caRect, cellRect, itemRect;
 	GrafPtr				SavePort;
 	Cmd					theCommand;
-	Point				myPt;
+	Point				myPt = {0};
 	Handle				itemHandle;
 	Boolean				DoubleClick;
  		

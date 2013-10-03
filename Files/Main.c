@@ -270,7 +270,7 @@ EXP void MyDebugStr( short line, Ptr file, Ptr text)
 	{
 		case 1:	return;				break;
 		case 5: Debugger();			break;
-		case 6: ExitToShell();		break;
+		case 6: abort();			break;
 	}
 }
 
@@ -783,48 +783,46 @@ void SelectWindow2(	WindowPtr	whichWindow)
 
 static Boolean HasDoneSwith;
 
-
-
 void MusiqueDriverInit(void)
 {
 	short				i, x;
 	OSErr				iErr;
 	MADDriverSettings	init;
-
-
-/**** Initialise le MOD Driver ****/
-//curMusic = 0;
-//curMusic->header = (MADSpec*) NULL;
-//for( i = 0; i < MAXINSTRU ; i++)  for( x = 0; x < MAXSAMPLE ; x++) curMusic->sample[ i][ x] = (sData*) NULL;
-//for( i = 0; i < MAXPATTERN ; i++) curMusic->partition[ i] = (PatData*) NULL;
-/**********************************/
-
-if( thePrefs.numChn < 2 || thePrefs.numChn > 32) thePrefs.numChn = 4;
-
-init.numChn			= thePrefs.numChn;
-init.outPutBits		= thePrefs.outPutBits;
-init.outPutRate		= thePrefs.outPutRate;
-init.outPutMode		= DeluxeStereoOutPut;	// force DeluxeStereoOutPut
-init.driverMode		= thePrefs.driverMode;
-init.surround		= thePrefs.surround;
-init.MicroDelaySize	= thePrefs.MicroDelaySize;
-init.Reverb			= thePrefs.Reverb;
-init.ReverbSize		= thePrefs.ReverbSize;
-init.ReverbStrength	= thePrefs.ReverbStrength;
-init.sysMemory		= false;
-init.TickRemover	= thePrefs.TickRemover;
-init.oversampling	= thePrefs.oversampling;
-
-if( thePrefs.LoopType != 0) init.repeatMusic = false;
-else init.repeatMusic = true;
-
-//if( init.driverMode == ASCSoundDriver || init.driverMode == AWACSoundDriver) Switch();
-
-iErr = MADCreateDriver( &init, gMADLib, &MADDriver);
-if( iErr) MyDebugStr( __LINE__, __FILE__, "MusicDriver ERROR !");
-
-MADDriver->VolGlobal = thePrefs.softVolumeLevel;
-MADDriver->SendMIDIClockData = thePrefs.SendMIDIClockData;
+	
+	
+	/**** Initialise le MOD Driver ****/
+	//curMusic = 0;
+	//curMusic->header = (MADSpec*) NULL;
+	//for( i = 0; i < MAXINSTRU ; i++)  for( x = 0; x < MAXSAMPLE ; x++) curMusic->sample[ i][ x] = (sData*) NULL;
+	//for( i = 0; i < MAXPATTERN ; i++) curMusic->partition[ i] = (PatData*) NULL;
+	/**********************************/
+	
+	if( thePrefs.numChn < 2 || thePrefs.numChn > 32) thePrefs.numChn = 4;
+	
+	init.numChn			= thePrefs.numChn;
+	init.outPutBits		= thePrefs.outPutBits;
+	init.outPutRate		= thePrefs.outPutRate;
+	init.outPutMode		= DeluxeStereoOutPut;	// force DeluxeStereoOutPut
+	init.driverMode		= thePrefs.driverMode;
+	init.surround		= thePrefs.surround;
+	init.MicroDelaySize	= thePrefs.MicroDelaySize;
+	init.Reverb			= thePrefs.Reverb;
+	init.ReverbSize		= thePrefs.ReverbSize;
+	init.ReverbStrength	= thePrefs.ReverbStrength;
+	init.sysMemory		= false;
+	init.TickRemover	= thePrefs.TickRemover;
+	init.oversampling	= thePrefs.oversampling;
+	
+	if( thePrefs.LoopType != 0) init.repeatMusic = false;
+	else init.repeatMusic = true;
+	
+	//if( init.driverMode == ASCSoundDriver || init.driverMode == AWACSoundDriver) Switch();
+	
+	iErr = MADCreateDriver( &init, gMADLib, &MADDriver);
+	if( iErr) MyDebugStr( __LINE__, __FILE__, "MusicDriver ERROR !");
+	
+	MADDriver->VolGlobal = thePrefs.softVolumeLevel;
+	MADDriver->SendMIDIClockData = thePrefs.SendMIDIClockData;
 }
 
 Handle MyNewHandle( long	size)
@@ -1449,8 +1447,8 @@ int main( int argc, char* argv[])
 	
 	HGetVol( NULL, &mainVRefNum, &mainParID);
 	
-	
-	/*{
+#if 0
+	{
 		FSSpec			rsrcSpec;
 		short			fileID;
 		CInfoPBRec		info;
@@ -1473,27 +1471,28 @@ int main( int argc, char* argv[])
 		
 		UseResFile( fileID);
 		
-	}*/
+	}
 	
-	//MIDImain(0, NULL);
+	MIDImain(0, NULL);
 	
 	//////////////////////////
-	/*{
-	 MADMusic	*tempMusic;
-	 FSSpec		file;
-	 
-	 tempMusic = CreateFreeMADK();
-	 
-	 
-	 
-	 FindFolder( kOnSystemDisk, kSystemDesktopFolderType, kCreateFolder, &file.vRefNum, &file.parID);
-	 pStrcpy( file.name, "\pMADK");
-	 
-	 WriteMADKFile( &file, tempMusic);
-	 
-	 ExitToShell();
-	 
-	 }*/
+	{
+		MADMusic	*tempMusic;
+		FSSpec		file;
+		
+		tempMusic = CreateFreeMADK();
+		
+		
+		
+		FindFolder( kOnSystemDisk, kSystemDesktopFolderType, kCreateFolder, &file.vRefNum, &file.parID);
+		pStrcpy( file.name, "\pMADK");
+		
+		WriteMADKFile( &file, tempMusic);
+		
+		ExitToShell();
+		
+	}
+#endif
 	//////////////////////////
 	
 	
@@ -1526,11 +1525,11 @@ int main( int argc, char* argv[])
 	defSpec2.defType = kMenuDefProcPtr;
 	defSpec2.u.defProc = NewMenuDefUPP( MyMenuNoteDefProc );
 	RegisterMenuDefinition( 1972, &defSpec2);
-
-//	thePrefs.ThreadUse = true;
+	
+	//	thePrefs.ThreadUse = true;
 	thePrefs.ThreadUse = false;
-
-//	EventLoop();
+	
+	//	EventLoop();
 	
 	
 	GetCurrentProcess( &playerPROPSN);
@@ -1553,33 +1552,26 @@ int main( int argc, char* argv[])
 	DebuggingMode = false;
 #endif
 	
-	gUseNavigation = NavServicesAvailable();
+	gUseNavigation = true;
 	
 	MacOSXSystem = true;
-		
+	
 	AppearanceManager = true;
 	gUseControlSize = true;
 	gScrollBarID = kControlScrollBarLiveProc;
 	newQuicktime = true;
 	
 	EnterMovies();	
-		
+	
 	NewSoundManager31 = true;
 	NewSoundManager = true;
-		
+	
 	if( DebuggingMode)
 	{
 		GetDateTime( &secs);
 		SecondsToDate( secs, &dtrp);
 		
-		/*	if( dtrp.year >= 1999)
-		 {
-		 Erreur( 93, 93);
-		 goto End;
-		 }*/
 	}
-	
-	
 	
 	MainResFile = CurResFile();
 	
@@ -1608,60 +1600,96 @@ int main( int argc, char* argv[])
 	/************/
 	
 	{
-		CursHandle				myCursH;
+		CursHandle myCursH;
 		
-		myCursH = GetCursor( 357);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
-		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-		watchCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		myCursH = GetCursor( 357);				if( myCursH == NULL)
+			MyDebugStr( __LINE__, __FILE__, "");
+		else {
+			DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
+			watchCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		}
 		
-		myCursH = GetCursor( iBeamCursor);		if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
-		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-		beamCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		myCursH = GetCursor( iBeamCursor);		if( myCursH == NULL)
+			MyDebugStr( __LINE__, __FILE__, "");
+		else {
+			DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
+			beamCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		}
+		myCursH = GetCursor( 300);				if( myCursH == NULL)
+			MyDebugStr( __LINE__, __FILE__, "");
+		else {
+			DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
+			pencilCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		}
 		
-		myCursH = GetCursor( 300);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
-		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-		pencilCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		myCursH = GetCursor( 137);				if( myCursH == NULL)
+			MyDebugStr( __LINE__, __FILE__, "");
+		else {
+			DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
+			pencilCrsrStereo = **myCursH;			HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		}
 		
-		myCursH = GetCursor( 137);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
-		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-		pencilCrsrStereo = **myCursH;			HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		myCursH = GetCursor( 135);				if( myCursH == NULL)
+			MyDebugStr( __LINE__, __FILE__, "");
+		else {
+			DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
+			HelpCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		}
 		
-		myCursH = GetCursor( 135);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
-		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-		HelpCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		myCursH = GetCursor( 134);				if( myCursH == NULL)
+			MyDebugStr( __LINE__, __FILE__, "");
+		else {
+			DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
+			DelCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		}
 		
-		myCursH = GetCursor( 134);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
-		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-		DelCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		myCursH = GetCursor( 130);				if( myCursH == NULL)
+			MyDebugStr( __LINE__, __FILE__, "");
+		else {
+			DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
+			NoteCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		}
 		
-		myCursH = GetCursor( 130);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
-		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-		NoteCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		myCursH = GetCursor( 133);				if( myCursH == NULL)
+			MyDebugStr( __LINE__, __FILE__, "");
+		else {
+			DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
+			PlayCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		}
 		
+		myCursH = GetCursor( 132);				if( myCursH == NULL) 
+			MyDebugStr( __LINE__, __FILE__, "");
+		else {
+			DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
+			CHandCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		}
 		
-		myCursH = GetCursor( 133);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");	
-		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-		PlayCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		myCursH = GetCursor( 131);				if( myCursH == NULL)
+			MyDebugStr( __LINE__, __FILE__, "");
+		else {
+			DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
+			HandCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		}
 		
-		myCursH = GetCursor( 132);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");	
-		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-		CHandCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		myCursH = GetCursor( 128);				if( myCursH == NULL)
+			MyDebugStr( __LINE__, __FILE__, "");
+		else {
+			DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
+			ZoomInCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		}
 		
-		myCursH = GetCursor( 131);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
-		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-		HandCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
-		
-		myCursH = GetCursor( 128);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
-		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-		ZoomInCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
-		
-		myCursH = GetCursor( 129);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
-		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-		ZoomOutCrsr = **myCursH;				HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
-		
-		myCursH = GetCursor( 138);				if( myCursH == NULL) MyDebugStr( __LINE__, __FILE__, "");
-		DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-		ContextCrsr = **myCursH;				HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		myCursH = GetCursor( 129);				if( myCursH == NULL)
+			MyDebugStr( __LINE__, __FILE__, "");
+		else {
+			DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
+			ZoomOutCrsr = **myCursH;				HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		}
+		myCursH = GetCursor( 138);				if( myCursH == NULL) 
+			MyDebugStr( __LINE__, __FILE__, "");
+		else {
+			DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
+			ContextCrsr = **myCursH;				HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+		}
 	}
 	/************/
 	
@@ -1677,7 +1705,6 @@ int main( int argc, char* argv[])
 	/************/
 	/************/
 	
-	
 	{
 		FSSpec	appSpec;
 		
@@ -1687,6 +1714,7 @@ int main( int argc, char* argv[])
 		
 		MADInitLibrary( &appSpec, false, &gMADLib);
 	}
+	
 	/************/
 	/************/
 	
@@ -1695,7 +1723,7 @@ int main( int argc, char* argv[])
 	InitFindReplace();
 	InitPlayWhenClicked();
 	InitStringEditor();
-//	InitPrintRegistration();
+	//	InitPrintRegistration();
 	InitPrefs();
 	InitQuicktimeInstruments();
 	InitSoundInput();
@@ -1730,7 +1758,7 @@ int main( int argc, char* argv[])
 	
 	GetDefaultOutputVolume( &OldVolL);
 	SKVolume( thePrefs.volumeLevel);
-		
+	
 	MusiqueDriverInit();
 	
 	HSetVol( NULL, mainVRefNum, mainParID);
@@ -1749,20 +1777,7 @@ int main( int argc, char* argv[])
 	InstallAE();
 	
 	InitPrinting();
-	
-	/*
-	 if( PixMap32Bit( (**GetGDevice()).gdPMap) == true)
-	 {
-	 #define MMU32bit 0x0CB2
-	 
-	 if( *(Boolean*)(MMU32bit) == 0)
-	 {
-	 Erreur( 3, -1);
-	 ExitToShell();
-	 }
-	 }
-	 */
-	
+		
 	NoSelectWindow2 = true;
 	StartTime = TickCount();
 	
@@ -1774,17 +1789,6 @@ int main( int argc, char* argv[])
 	InitSampleWindow();
 	
 	CreateMODListWindow();
-	
-	
-	/*{
-	 FSSpec	aSpec;
-	 curMusic = CreateFreeMADI();
-	 
-	 HGetVol( NULL, &aSpec.vRefNum, &aSpec.parID);
-	 pStrcpy( aSpec.name, "\pMADI");
-	 ExportFile( 'MADI', &aSpec);
-	 ExitToShell();
-	 }*/
 	
 	InitAdapWindow();
 	
@@ -1815,7 +1819,7 @@ int main( int argc, char* argv[])
 	if( thePrefs.Registred == false) DoHelp();
 	
 	ShowWindowPref( -1);
-		
+	
 	NoSelectWindow2 = false;
 	
 	ShowWindow( GetDialogWindow( ToolsDlog));
@@ -1830,11 +1834,11 @@ int main( int argc, char* argv[])
 OnRefaitEvent:
 	
 	End = false;
-		
+	
 	//TODO: Threading?
 	thePrefs.ThreadUse = false;
 	//thePrefs.ThreadUse = true;
-
+	
 	
 	DeleteTempFile();
 	
@@ -1845,8 +1849,8 @@ OnRefaitEvent:
 	
 	if( thePrefs.Registred == false)
 	{
-//		CreateCubeWindow();
-	//	SelectWindow( GetDialogWindow (CubeDlog));
+		//		CreateCubeWindow();
+		//	SelectWindow( GetDialogWindow (CubeDlog));
 		thePrefs.Registred = true;
 	}
 	
@@ -1855,7 +1859,7 @@ OnRefaitEvent:
 	EventLoop();
 	
 	/***********/
-		
+	
 	/*****/
 	if( curMusic->hasChanged) 
 	{	
@@ -3699,7 +3703,11 @@ pascal Boolean MyCustomFileFilter2( CInfoPBRec	*pb, void *myDataPtr)
 	OSType		type;
 	char		tempC[ 5];
 
-	if( pb == NULL) MyDebugStr( __LINE__, __FILE__, "");
+	if( pb == NULL) 
+	{
+		MyDebugStr( __LINE__, __FILE__, "pb is NULL!");
+		return false;
+	}
 	
 	if( pb->hFileInfo.ioFlAttrib & 16) return false;
 	
@@ -5998,24 +6006,24 @@ OSErr FindAProcess(OSType typeToFind, OSType creatorToFind,
 	FSSpec	procSpec;
 	Str31			processName;
 	OSErr			myErr = noErr;
-
+	
 	// start at the beginning of the process list
 	processSN->lowLongOfPSN = kNoProcess;
 	processSN->highLongOfPSN = kNoProcess;
-
+	
 	// initialize the process information record
 	tempInfo.processInfoLength = sizeof(ProcessInfoRec);
 	tempInfo.processName = (StringPtr)&processName;
 	tempInfo.processAppSpec = &procSpec;
-
-	while((tempInfo.processSignature != creatorToFind ||
-			tempInfo.processType != typeToFind) ||
-			myErr != noErr)
-	{
-			myErr = GetNextProcess(processSN);
-			if (myErr == noErr)
-					GetProcessInformation(processSN, &tempInfo);
-	}
+	
+	
+	do {
+		myErr = GetNextProcess(processSN);
+		if (myErr == noErr)
+			GetProcessInformation(processSN, &tempInfo);
+	} while((tempInfo.processSignature != creatorToFind ||
+			 tempInfo.processType != typeToFind) ||
+			myErr != noErr);
 	return(myErr);
 }
 

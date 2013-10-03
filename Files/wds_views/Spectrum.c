@@ -121,7 +121,7 @@ void GetWorkingZoneSpectrum( Rect	*myRect)
 void FillInterTextSpectrum( Rect *tempRect, short i)
 {
 	Str255		aStr, bStr, cStr;
-	long		defV;
+	long		defV = 1;
 	
 	switch( OsciType)
 	{
@@ -605,7 +605,7 @@ void DrawSpectrum( OsciRec	*osciPtr, short no)
 	short		i;
 	Rect		tempRect, resultRect;
 	Boolean		doubleView;
-	Ptr			spectrumPtr;
+	Ptr			spectrumPtr = NULL;
 
 	switch( OsciScale)
 	{
@@ -895,7 +895,7 @@ void DoItemPressSpectrum( short whichItem, DialogPtr whichDialog)
 {
 	Cell				theCell;
 	long				mresult;
-	short				temp, bogus, itemType, ctlPart, curSelec, i, tempB, OsciSee;
+	short				temp, bogus, itemType, ctlPart, curSelec = 0, i, tempB, OsciSee;
 	Rect				caRect, tempRect;
 	Handle				itemHandle;
 	GrafPtr				SavePort;

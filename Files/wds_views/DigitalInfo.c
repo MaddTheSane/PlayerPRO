@@ -33,25 +33,23 @@ void SetUpScrollDigi(void)
 
 void DoGrowDigi( DialogPtr theDialog)
 {
-long		lSizeVH;
-GrafPtr		SavePort;
-Rect		temp;
-short		tempB, tempA, avant;
-Point		theCell = { 0, 0}, aPt = { 0, 0};
-Rect	caRect;
+	long		lSizeVH;
+	GrafPtr		SavePort;
+	Rect		temp = {0};
+	short		tempB, tempA, avant;
+	Point		theCell = { 0, 0}, aPt = { 0, 0};
+	Rect		caRect;
 	
-	
-
 	GetPort( &SavePort);
  	SetPortDialogPort( theDialog);
-
+	
 	temp.left = 381;
 	temp.right = viewRect.left + MAXTRACK * TEXTLARG + 2;
-
+	
 	LocalToGlobal( &aPt);
-
+	
 	if( temp.right < temp.left) temp.bottom = temp.top;
-//	else if( temp.right > qd.screenBits.bounds.right - aPt.h) temp.right = qd.screenBits.bounds.right - aPt.h -2;
+	//	else if( temp.right > qd.screenBits.bounds.right - aPt.h) temp.right = qd.screenBits.bounds.right - aPt.h -2;
 	
 	GetPortBounds( GetDialogPort( theDialog), &caRect);
 	
@@ -64,7 +62,7 @@ Rect	caRect;
 	
 	lSizeVH = 0;
 	if( theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( theDialog), theEvent.where, &temp);
-
+	
 	if( lSizeVH != 0)
 	{
 		tempA = LoWord( lSizeVH);
@@ -87,7 +85,7 @@ Rect	caRect;
 	GetPortBounds( GetDialogPort( theDialog), &caRect);
 	
 	viewRect.right = caRect.right - 2;
-
+	
 	EraseRect( &caRect);
 	InvalWindowRect( GetDialogWindow( theDialog), &caRect);
 	
@@ -126,7 +124,7 @@ void DoNullDigiWindow(void)
 {
 	short		i, x, start, end;
  	Rect		tempRect, aRect;
- 	Str255		tempStr;
+ 	Str255		tempStr = "\p";
  	GrafPtr		savePort;
  	long		val;
  	RgnHandle	saveClip;

@@ -1977,7 +1977,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 		if (QDIsPortBuffered( GetDialogPort( theDia)))
     		QDFlushPortBuffer( GetDialogPort( theDia), NULL);
 	
-		Boolean		InOutPt;
+		Boolean		InOutPt = false;
 	
 		PreInOutPt = InOutPt;
 	
@@ -2764,7 +2764,11 @@ void DrawSample( short	tSS, short tSE, short InstruNo, DialogPtr	theDia)
 	if( samp >= curMusic->fid[ InstruNo].numSamples) goto RENVOI;
 	
 	curData = curMusic->sample[ curMusic->fid[ InstruNo].firstSample +  samp];
-	if( curData == NULL) MyDebugStr( __LINE__, __FILE__, "Samp ERR");
+	if( curData == NULL) 
+	{
+		MyDebugStr( __LINE__, __FILE__, "Samp ERR");
+		return;
+	}
 	theSample = curData->data;
 	theShortSample = (short*) theSample;
 	
@@ -3529,7 +3533,7 @@ CurWin = FindSample( theDialogControl);
 void MoveLoopSelection( short InstruNo)
 {
 	Boolean		firstTime = true;
-	Point		aPt, prevPt;
+	Point		aPt, prevPt = {0};
 	Boolean		StartPoint;
 	long		start;
 	long		end;
@@ -3653,7 +3657,7 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 		Cell				theCell;
  		short				ctlPart, bogus, CurWin, temp, itemType, InstruNo;
 		Point				myPt, Pt2, aPt;
-		long				val, sampleSize, start, beginPoint, otherPoint, tL, TickEnd;
+		long				val, sampleSize, start, beginPoint, otherPoint, tL = 0, TickEnd;
 		ControlHandle		theControl;
 		Handle				itemHandle;
 		RgnHandle			tempRgn;
@@ -4197,7 +4201,7 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 			Point		Zone;
 			short		i, kk;
 			MenuHandle	sMenu;
-			short		menuSampleId[ 255];
+			short		menuSampleId[ 255] = {0};
 		
 			sMenu = GetMenu( 156);
 			

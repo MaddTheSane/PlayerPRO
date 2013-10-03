@@ -1236,7 +1236,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 	Point				myPt;
 	Handle				itemHandle;
 	Rect				itemRect;
-	long				oldH, tempLong, max, val;
+	long				oldH = 0, tempLong, max, val;
 	GrafPtr				savePort;
 	Boolean				ReadingCopy;
 	ControlActionUPP	MyControlUPP;

@@ -826,7 +826,11 @@ void ScanTime()
 			for( y = 0; y <  curMusic->header->numChn; y++)
 			{
 				aCmd = GetMADCommand( x, y, curMusic->partition[ curMusic->header->oPointers[ i]]);
-				if( aCmd == NULL) Debugger();
+				if( aCmd == NULL) 
+				{
+					MyDebugStr(__LINE__, __FILE__, "Could not find the selected command!");
+					return;
+				}
 				/** SpeedE **/
 				
 				if( aCmd->cmd == speedE)
@@ -962,7 +966,7 @@ void DoChangeLoop( void)
 
 void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 {
-	short				temp,itemType, newPL, newPat, newPartitionReader;
+	short				temp = 0,itemType, newPL, newPat, newPartitionReader;
 	Point				myPt;
 	Handle				itemHandle;
 	Rect				itemRect;

@@ -414,7 +414,10 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	
 	inOutCount = sizeof( MADSpec);
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( inOutCount, init);	
-	if( theMAD->header == NULL) DebugStr("\pHeader: I NEED MEMORY !!! NOW !");
+	if( theMAD->header == NULL) {
+		DebugStr("\pHeader: I NEED MEMORY !!! NOW !");
+		return MADNeedMemory;
+	}
 	
 	theMAD->header->MAD = 'MADK';
 	

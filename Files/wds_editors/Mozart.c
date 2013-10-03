@@ -1425,7 +1425,7 @@ void UpdateMozartInfoInternal(void)
 		
 		/** Drawing Notes **/
 		{
-			short destRight;
+			short destRight = 0;
 			
 			
 			if( thePrefs.ClassicalProjection)
@@ -2239,7 +2239,11 @@ void PressPartition( Point myPt)
 				Rect		markee;
 				
 				myPcmd = (Pcmd*) NewPtrClear( sizeof( Pcmd) + 1 * sizeof( Cmd));
-				if( myPcmd == NULL) MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
+				if( myPcmd == NULL) 
+				{
+					MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
+					return;
+				}
 				
 				myPcmd->structSize = sizeof( Pcmd) + 1 * sizeof( Cmd);
 				myPcmd->tracks = 1;

@@ -513,7 +513,7 @@ long GetDisplayID( long inX, long inY ) {
 	OSStatus			err;
 	DisplayIDType		id = 0;
 	Point				inPt;
-	
+	DSpContextReference ref;
 	inPt.h = inX;
 	inPt.v = inY;
 
@@ -542,9 +542,9 @@ long GetDisplayID( long inX, long inY ) {
 	}	
 
 	//TODO: is THIS needed?
-//	err = DSpFindContextFromPoint( inPt, &ref );	
-//	if ( ! err )
-//		err = DSpContext_GetDisplayID( ref, &id );
+	err = DSpFindContextFromPoint( inPt, &ref );	
+	if ( ! err )
+		err = DSpContext_GetDisplayID( ref, &id );
 
 	return ( err ) ? 0 : id;
 #endif

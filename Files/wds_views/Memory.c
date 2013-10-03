@@ -16,7 +16,7 @@ void DoGrowMem( DialogPtr theDialog)
 {
 	long		lSizeVH;
 	GrafPtr		SavePort;
-	Rect		caRect, temp, cellRect, tempRect;
+	Rect		caRect, temp = {0}, cellRect, tempRect;
 	short		cur, tempB, tempA, itemType, avant;
 	Handle		itemHandle;
 	Point		theCell = { 0, 0}, aPt = { 0, 0};

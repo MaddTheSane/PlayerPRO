@@ -596,7 +596,7 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 		
 	do
 	{
-		long			i, whichTrack, ptrsize, ttt, prevReader;
+		long			i = 0, whichTrack = 0, ptrsize = 0, ttt = 0, prevReader = 0;
 		Byte			*alpha = (Byte*) WavePtr;
 		
 		ttt		= WaveCopyDriver->VSYNC;
@@ -1201,6 +1201,7 @@ void DoItemPressWave( short whichItem, DialogPtr whichDialog)
 			
 			switch( YSize)
 			{
+				default:
 				case 16:	curSelec = 0;		break;
 				case 32:	curSelec = 1;		break;
 				case 64:	curSelec = 2;		break;

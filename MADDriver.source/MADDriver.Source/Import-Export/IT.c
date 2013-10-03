@@ -77,13 +77,19 @@ static long read_itcompr8(ITPACK* status,Ptr *reader,Byte *sl_buffer,unsigned sh
 {
 	Byte 				*dest=sl_buffer,*end=sl_buffer+count;
 	unsigned short 		x,y,needbits,havebits,new_count=0;
-	unsigned short 		bits = status->bits;
-	unsigned short 		bufbits = status->bufbits;
-	char 				last = status->last;
+	unsigned short 		bits = 0;
+	unsigned short 		bufbits = 0;
+	char 				last = 0;
 	Byte 				buf;
 	
+	if (status) {
+		buf = status->buf;
+		bits = status->bits;
+		bufbits = status->bufbits;
+		last = status->last;
+	}
+	
 	//FIXME: Static analyzer says that this assignment may be garbage under certain circumstances.
-	buf = status->buf;
 	
 	while (dest<end) {
 		needbits=new_count?3:bits;
@@ -156,13 +162,18 @@ static long read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,unsigned
 {
 	short 			*dest=sl_buffer,*end=sl_buffer+ count;// (short*) ((Ptr) sl_buffer+ count);
 	long 			x,y,needbits,havebits,new_count=0;
-	unsigned short 	bits = status->bits;
-	unsigned short 	bufbits = status->bufbits;
-	short 			last = status->last;
-	Byte 			buf = status->buf;
+	unsigned short 	bits = 0;
+	unsigned short 	bufbits = 0;
+	short 			last = 0;
+	Byte 			buf = 0;
 	
 	//FIXME: Static analyzer says that this assignment may be garbage under certain circumstances.
-	buf = status->buf;
+	if (status) {
+		buf = status->buf;
+		bits = status->bits;
+		bufbits = status->bufbits;
+		last = status->last;
+	}
 	
 	while (dest<end) {
 		needbits=new_count?4:bits;

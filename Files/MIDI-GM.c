@@ -220,7 +220,12 @@ short GenerateDLSFromBundle()
 	bundleURL = CFURLCreateFromFSRef( kCFAllocatorDefault, &bundleFSRef);
 	
 	AudioBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL);
-	if( AudioBundle == NULL) Debugger();
+	CFRelease(bundleURL);
+	if( AudioBundle == NULL) 
+	{
+		MyDebugStr(__LINE__, __FILE__, "Unable to load CoreAudio.component");
+		return -1;
+	}
 	
 	
 	// MacOS X 10.2
@@ -813,7 +818,11 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					else
 					{
 						curData = (sData*) NewPtrClear( sizeof( sData));
-						if( curData == NULL) MyDebugStr( __LINE__, __FILE__, "");
+						if( curData == NULL) 
+						{
+							MyDebugStr( __LINE__, __FILE__, "curData should not be NULL!");
+							return;
+						}
 						sample[ inst->no * MAXSAMPLE + inst->numSamples] = curData;
 						
 						inst->numSamples++;

@@ -1696,7 +1696,7 @@ void DoCOMPRESSION( short itemHit)
 		{
 			long		mresult;
 			Point		Zone;
-			short		i, temp;
+			short		i, temp = 0;
 			MenuHandle	tMenu;
 		
 			GetDialogItem( prefDlog, base + 2, &itemType, &itemHandle, &itemRect);

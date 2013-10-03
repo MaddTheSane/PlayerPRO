@@ -939,7 +939,7 @@ void DrawEditorUp(void)
 	short				i, itemType;
 	Handle				itemHandle;
 	Point				theCell;
-	Rect				tempRect, bRect, itemRect;
+	Rect				tempRect = {0}, bRect, itemRect;
 	Str255				tempStr, aStr;
 	Rect				caRect;
 	ThemeDrawingState	state;
@@ -2107,7 +2107,7 @@ void DoItemPressPartition( short whichItem, DialogPtr whichDialog)    			/* Item
 	GrafPtr			SavePort;
 	Cmd				*theCommand;
 	Boolean			DoubleClick;
-	Point				myPt, lastCell = { -1, -1};
+	Point				myPt = {0}, lastCell = { -1, -1};
 	ControlHandle		theControl;
 	ControlActionUPP	MyControlUPP;
 	Str255			aStr;
@@ -3736,7 +3736,10 @@ Pcmd* CreatePcmdFromSelection(void)
 	if( count <= 0) return NULL;
 	
 	myPcmd = (Pcmd*) NewPtrClear( sizeof( Pcmd) + count * sizeof( Cmd));
-	if( myPcmd == NULL) MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
+	if( myPcmd == NULL) {
+		MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
+		return NULL;
+	}
 	
 	myPcmd->structSize 	= sizeof( Pcmd) + count * sizeof( Cmd);
 	myPcmd->tracks 		= myList.select.right - myList.select.left + 1;

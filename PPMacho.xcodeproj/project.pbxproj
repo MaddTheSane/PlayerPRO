@@ -392,6 +392,12 @@
 		55F48B6417E2608D00DB4584 /* WAVE-Conversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105710D6C79E00BB619C /* WAVE-Conversion.c */; };
 		55F48B6717E2632000DB4584 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
 		55F48BBD17E2636800DB4584 /* Wave.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55F48ABC17E25F6800DB4584 /* Wave.plugin */; };
+		55F7DB6C17FCD30500338025 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 552C70C610CDB07E00C0E0D4 /* LICENSE.txt */; };
+		55F7DB6D17FCD30A00338025 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 552C716210CDC11400C0E0D4 /* README.rtf */; };
+		55F7DB6E17FCD31A00338025 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 552C70C610CDB07E00C0E0D4 /* LICENSE.txt */; };
+		55F7DB6F17FCD31D00338025 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 552C716210CDC11400C0E0D4 /* README.rtf */; };
+		55F7DBF517FCD39E00338025 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */; };
+		55F7DBF617FCD3A700338025 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		55FA5FBB102D2D6C00CB63DA /* ppApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55FA5FBA102D2D6C00CB63DA /* ppApp.icns */; };
 		55FA5FCA102D31BA00CB63DA /* PlayerHeaders.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4770C2F21E400D6C081 /* PlayerHeaders.c */; };
 		55FD861E10B22C2300F8BDE6 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
@@ -1568,6 +1574,7 @@
 		55EE8EC0100404EB00E75E63 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
 		55F48ABC17E25F6800DB4584 /* Wave.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Wave.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F48B0E17E25F6800DB4584 /* Wave-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Wave-Info.plist"; path = "../../../Wave-Info.plist"; sourceTree = "<group>"; };
+		55F7DB8017FCD34700338025 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; path = README; sourceTree = "<group>"; };
 		55FA5FBA102D2D6C00CB63DA /* ppApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ppApp.icns; path = ../ppApp.icns; sourceTree = "<group>"; };
 		88E0C3B50C2F21DD00D6C081 /* PlayerPRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayerPRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88E0C3BE0C2F21DD00D6C081 /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = Carbon.r; path = Files/Carbon.r; sourceTree = "<group>"; };
@@ -2193,6 +2200,8 @@
 				55ED547410D5F9CD00824C61 /* CoreMIDI.framework in Frameworks */,
 				554E0DAD10D619D700BB619C /* Foundation.framework in Frameworks */,
 				9EE24021164A04800046BE6F /* AudioUnit.framework in Frameworks */,
+				55F7DBF517FCD39E00338025 /* ApplicationServices.framework in Frameworks */,
+				55F7DBF617FCD3A700338025 /* CoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2683,6 +2692,7 @@
 				551FED0110E7358D00EDF2F1 /* TestMADH.MADH */,
 				551FED0E10E7365600EDF2F1 /* Exemple.h */,
 			);
+			lineEnding = 0;
 			name = AutoExec;
 			path = MADDriver.source/AutoExec;
 			sourceTree = "<group>";
@@ -2690,6 +2700,7 @@
 		552C70C210CDAF8C00C0E0D4 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				55F7DB8017FCD34700338025 /* README */,
 				552C70C310CDAFBC00C0E0D4 /* TODO.txt */,
 				552C70C610CDB07E00C0E0D4 /* LICENSE.txt */,
 				552C716210CDC11400C0E0D4 /* README.rtf */,
@@ -3202,6 +3213,7 @@
 				5547CE5E10C6E5490041DEF6 /* ByteUtils.c */,
 				554E15FF10D8BD0600BB619C /* FileUtils.exp */,
 			);
+			lineEnding = 0;
 			name = Source;
 			sourceTree = "<group>";
 		};
@@ -3239,6 +3251,7 @@
 				88E0C52C0C2F21E600D6C081 /* AEffect.h */,
 				5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */,
 			);
+			lineEnding = 0;
 			name = Headers;
 			sourceTree = "<group>";
 		};
@@ -4475,6 +4488,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55F7DB6E17FCD31A00338025 /* LICENSE.txt in Resources */,
+				55F7DB6F17FCD31D00338025 /* README.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4711,6 +4726,8 @@
 				550B00ED10BA17BC004FC5D7 /* XM.icns in Resources */,
 				55E89D3C10F26A4B004EB52B /* PATN.icns in Resources */,
 				55E89D3D10F26A4B004EB52B /* INS.icns in Resources */,
+				55F7DB6C17FCD30500338025 /* LICENSE.txt in Resources */,
+				55F7DB6D17FCD30A00338025 /* README.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

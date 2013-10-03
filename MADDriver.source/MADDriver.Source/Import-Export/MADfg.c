@@ -33,7 +33,10 @@ static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myP
 	short					maxCmd;
 	
 	finalPtr = ( struct MusicPattern*) MADPlugNewPtr( sizeof( struct oldPatHeader) + myPat->header.PatternSize * Tracks * sizeof( struct Command), init);
-	if( finalPtr == NULL) DebugStr("\pDecompressPartitionMAD1");
+	if( finalPtr == NULL) {
+		DebugStr("\pDecompressPartitionMAD1");
+		return NULL;
+	}
 	
 	BlockMoveData( myPat, finalPtr, sizeof( struct oldPatHeader));
 

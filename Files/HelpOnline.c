@@ -478,7 +478,7 @@ void DoContentHelp(WindowPtr theWindow, EventRecord *theEventI)
 pascal void ScrollProcHelp (ControlHandle theControl, short theCode)
 {
 	short		pageSize;
-	short		scrollAmt;
+	short		scrollAmt = 0;
 	short 		oldCtl;
 	TEHandle	CurrentTE;
 	double		height;

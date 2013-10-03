@@ -511,7 +511,11 @@ void SetUpPartition( short newVal)
 	for(i = 0; i< curMusic->header->numPat; i++)
 	{
 		theNewPartition = (PatData*) NewPtrClear( sizeof( PatHeader) + newVal * curMusic->partition[ i]->header.size * sizeof( Cmd));
-		if( theNewPartition == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error");
+		if( theNewPartition == NULL) 
+		{
+			MyDebugStr( __LINE__, __FILE__, "Memory Error");
+			return;
+		}
 		theNewPartition->header = curMusic->partition[ i]->header;
 		
 		for(x = 0; x < curMusic->partition[ i]->header.size; x++)
@@ -836,7 +840,7 @@ Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short *sample
 {
 	Ptr 			soundPtr;
 	short 			soundFormat, numChannels;
-	short 			numSynths, numCmds, CompressID;
+	short 			numSynths = 0, numCmds = 0, CompressID;
 	long 			offset, MusSize;
 	SoundHeaderPtr 	header;
 	CmpSoundHeader	*CmpHeader;
