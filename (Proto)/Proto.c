@@ -1,6 +1,7 @@
+#include <CoreFoundation/CFPlugInCOM.h>
+#include <CoreFoundation/CoreFoundation.h>
 #include <Carbon/Carbon.h>
 #include <QuickTime/QuickTime.h>
-#include <CoreFoundation/CFPlugInCOM.h>
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
