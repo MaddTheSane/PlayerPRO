@@ -184,7 +184,7 @@ void DoNullDigiWindow(void)
 					else
 					{
 						val = MADDriver->chan[ i].cmd;
-						sprintf( (Ptr) tempStr, "%X", val);
+						sprintf( (Ptr) tempStr, "%lX", val);
 						MyC2PStr( (Ptr) tempStr);
 					}
 				break;
@@ -194,7 +194,7 @@ void DoNullDigiWindow(void)
 					else
 					{
 						val = MADDriver->chan[ i].arg;
-						sprintf( (Ptr) tempStr, "%X", val);
+						sprintf( (Ptr) tempStr, "%lX", val);
 						MyC2PStr( (Ptr) tempStr);
 					}
 				break;

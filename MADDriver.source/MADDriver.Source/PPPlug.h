@@ -92,7 +92,7 @@ typedef pascal Boolean	(*MyDlgFilterUPP)		( DialogPtr, EventRecord*, short*);
 		(* (RPlaySoundUPP) (thePPInfoPlug->RPlaySoundUPP))( v1, v2, v3, v4, v5, v6, v7, v8, v9)
 
 #define CallUpdateALLWindowUPP()		\
-		(* (UpdateALLWindowUPP) (thePPInfoPlug->UpdateALLWindowUPP))
+		(* (UpdateALLWindowUPP) (thePPInfoPlug->UpdateALLWindowUPP))()
 
 #define kPlayerPROFiltersPlugTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x15, 0x8F, 0xF3, 0x3B, 0x47, 0xF4, 0x44, 0x97, 0x92, 0x92, 0x1B, 0x54, 0x4E, 0x8C, 0x2B, 0x01))
 //158FF33B-47F4-4497-9292-1B544E8C2B01

@@ -501,7 +501,7 @@ long			nVersLong;
 	pStrcat( aStr, "\p.");
 	NumToString( nVers.minorAndBugRev >> 4, bStr);
 	pStrcat( aStr, bStr);
-	if( nVers.minorAndBugRev & 0x0F > 0)
+	if( (nVers.minorAndBugRev & 0x0F) > 0)
 	{
 		pStrcat( aStr, "\p.");
 		NumToString( nVers.minorAndBugRev & 0x0F, bStr);
@@ -526,7 +526,7 @@ long			nVersLong;
 		pStrcat( aStr, "\p.");
 		NumToString( nVers.minorAndBugRev >> 4, bStr);
 		pStrcat( aStr, bStr);
-		if( nVers.minorAndBugRev & 0x0F > 0)
+		if( (nVers.minorAndBugRev & 0x0F) > 0)
 		{
 			pStrcat( aStr, "\p.");
 			NumToString( nVers.minorAndBugRev & 0x0F, bStr);
@@ -1400,7 +1400,7 @@ long		nVersLong;
 		pStrcat( aStr, "\p.");
 		NumToString( nVers.minorAndBugRev >> 4, bStr);
 		pStrcat( aStr, bStr);
-		if( nVers.minorAndBugRev & 0x0F > 0)
+		if( (nVers.minorAndBugRev & 0x0F) > 0)
 		{
 			pStrcat( aStr, "\p.");
 			NumToString( nVers.minorAndBugRev & 0x0F, bStr);

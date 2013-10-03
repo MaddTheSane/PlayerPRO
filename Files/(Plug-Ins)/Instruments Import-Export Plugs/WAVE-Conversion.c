@@ -72,7 +72,7 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 			{
 				(*WAVERsrc).dwDataOffset = longswap((*WAVERsrc).dwDataOffset);
 				
-				if(EndianU32_BtoN((*WAVERsrc).fmtType),'fmt ')
+				if(EndianU32_BtoN((*WAVERsrc).fmtType) == 'fmt ')
 				{
 					(*WAVERsrc).wFormatTag      = shrtswap((*WAVERsrc).wFormatTag);
 					(*WAVERsrc).nCannels        = shrtswap((*WAVERsrc).nCannels);
@@ -153,15 +153,10 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 
 OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 {
-	//OSType					fileType;
 	OSErr					iErr;
 	Boolean					canceled;
 	Movie 					theMovie;
-	//Track					usedTrack;
-	//TimeValue				addedDuration;
-	//long					outFlags;
 	short					resRefNum, /*ins, samp,*/ resId;
-	//FInfo					fndrInfo;
 	Cursor					watchCrsr;
 	CursHandle				myCursH;
 	Str255					resName;

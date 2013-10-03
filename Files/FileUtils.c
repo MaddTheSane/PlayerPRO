@@ -42,8 +42,6 @@ void DoScanDir( long	DirID, short VRefNum)
 	GrafPtr	savePort;
 	Rect	caRect;
 	
-	
-
 	GetPort( &savePort);
 	SetPortDialogPort( MODListDlog);
 	
@@ -65,9 +63,9 @@ void ScanDir( long dirID, short VRefNum, Boolean recurse)
 	short			i;
 	CInfoPBRec		info;
 	FSSpec			spec;
-
+	
 	if( remonte) return;
-
+	
 	info.hFileInfo.ioNamePtr = asc_WorkStr;
 	info.hFileInfo.ioVRefNum = VRefNum;
 	for (i = 1; 1; i ++)
@@ -87,9 +85,9 @@ void ScanDir( long dirID, short VRefNum, Boolean recurse)
 		{
 			if( info.hFileInfo.ioFlFndrInfo.fdType != 'sTAT' && info.hFileInfo.ioFlFndrInfo.fdType != 'STCf')
 				AddMODList( 	false,
-								info.hFileInfo.ioNamePtr,
-								info.hFileInfo.ioVRefNum,
-								dirID);
+						   info.hFileInfo.ioNamePtr,
+						   info.hFileInfo.ioVRefNum,
+						   dirID);
 		}
 		else if (info.hFileInfo.ioFlAttrib & 16)
 		{
@@ -106,63 +104,63 @@ void PathNameFromDirID(long dirID, short vRefNum, StringPtr fullPathName)
 	CInfoPBRec	block;
 	Str255		directoryName;
 	OSErr		err;
-
-
+	
+	
 	pStrcpy( directoryName, "\p");
 	pStrcpy( fullPathName, "\p");
-
+	
 	block.dirInfo.ioDrParID = dirID;
 	block.dirInfo.ioNamePtr = directoryName;
 	do {
-			block.dirInfo.ioVRefNum = vRefNum;
-			block.dirInfo.ioFDirIndex = -1;
-			block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
-			err = PBGetCatInfoSync(&block);
-			if( fullPathName[ 0] < 200)
-			{
-				pstrcat(directoryName, (StringPtr)"\p: ");//\r
-				pstrinsert(fullPathName, directoryName);
-			}
+		block.dirInfo.ioVRefNum = vRefNum;
+		block.dirInfo.ioFDirIndex = -1;
+		block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
+		err = PBGetCatInfoSync(&block);
+		if( fullPathName[ 0] < 200)
+		{
+			pstrcat(directoryName, (StringPtr)"\p: ");//\r
+			pstrinsert(fullPathName, directoryName);
+		}
 	} while (block.dirInfo.ioDrDirID != 2 && err == noErr);
 }
 
 /*
-PathNameFromWD:
-Given an HFS working directory, this routine returns the full pathname that
-corresponds to it. It does this by calling PBGetWDInfo to get the VRefNum and
-DirID of the real directory. It then calls PathNameFromDirID, and returns its
-result.
-
-*/
-/*
+ PathNameFromWD:
+ Given an HFS working directory, this routine returns the full pathname that
+ corresponds to it. It does this by calling PBGetWDInfo to get the VRefNum and
+ DirID of the real directory. It then calls PathNameFromDirID, and returns its
+ result.
+ */
+#if 0
 void PathNameFromWD(long vRefNum, StringPtr pathName)
 {
 	WDPBRec	myBlock;
 	OSErr	err;
 	/*
- 	PBGetWDInfo has a bug under A/UX 1.1.  If vRefNum is a real
+	 PBGetWDInfo has a bug under A/UX 1.1.  If vRefNum is a real
 	 vRefNum and not a wdRefNum, then it returns garbage.
- 	Since A/UX has only 1 volume (in the Macintosh sense) and
- 	only 1 root directory, this can occur only when a file has been
- 	selected in the root directory (/).
- 	So we look for this and hardcode the DirID and vRefNum. 
+	 Since A/UX has only 1 volume (in the Macintosh sense) and
+	 only 1 root directory, this can occur only when a file has been
+	 selected in the root directory (/).
+	 So we look for this and hardcode the DirID and vRefNum. */
  	
 	if ((haveAUX()) && (vRefNum == -1))
-			PathNameFromDirID(2, -1, pathName);
+		PathNameFromDirID(2, -1, pathName);
 	else {
-			myBlock.ioNamePtr = nil;
-			myBlock.ioVRefNum = vRefNum;
-			myBlock.ioWDIndex = 0;
-			myBlock.ioWDProcID = 0;
-	/*
-	 Change the Working Directory number in vRefnum into a real
-	vRefnum and DirID. The real vRefnum is returned in ioVRefnum,
-	 and the real DirID is returned in ioWDDirID. 
-			err = PBGetWDInfo(&myBlock, false);
-			if (err != noErr)
-					return;
-			PathNameFromDirID(myBlock.ioWDDirID, myBlock.ioWDVRefNum,
-					pathName);
+		myBlock.ioNamePtr = nil;
+		myBlock.ioVRefNum = vRefNum;
+		myBlock.ioWDIndex = 0;
+		myBlock.ioWDProcID = 0;
+		/*
+		 Change the Working Directory number in vRefnum into a real
+		 vRefnum and DirID. The real vRefnum is returned in ioVRefnum,
+		 and the real DirID is returned in ioWDDirID. */
+		err = PBGetWDInfo(&myBlock, false);
+		if (err != noErr)
+			return;
+		PathNameFromDirID(myBlock.ioWDDirID, myBlock.ioWDVRefNum,
+						  pathName);
 	}
-}*/
+}
+#endif
 

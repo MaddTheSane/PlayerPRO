@@ -51,7 +51,7 @@ void MegaPurge(void)
 	
 	//for( i = 0; i < contigSize/4; i++) aPtr[ i] = 0x12344321; //FIXME: Overflow in implicit constant conversion
 	//XXX: what is the point of this, again?
-	for( i = 0; i < contigSize/4; i + 4)
+	for( i = 0; i < contigSize/4; i += 4)
 	{
 		UInt32 *toconv = (UInt32*)(&aPtr[ i]);
 		*toconv = 0x12344321;
@@ -479,84 +479,83 @@ Boolean DoHelp(void)
 	Rect			itemRect;
 	StScrpHandle	theStyle;
 	ControlHandle	vScroll;
-//Boolean			ScrollBasActive;
+	//Boolean			ScrollBasActive;
 	long			GestaltResponse, StartupWait;
 	ModalFilterUPP	AboutFilterDesc = NewModalFilterUPP( AboutFilter);
 	Str255			str, str2;
-
+	
 	GetPort( &myPort);
-
+	
 	Gestalt( gestaltProcessorType, &GestaltResponse);
-
+	
 	theDialog = GetNewDialog( 130, NULL, (WindowPtr) -1L);
 	SetPortDialogPort( theDialog);
 	DrawDialog( theDialog);
-
+	
 	GetDialogItem ( theDialog, 2, &itemType, &itemHandle, &itemRect);
-	itemRect.left++;  itemRect.right; itemRect.top++; itemRect.bottom--;
+	itemRect.left++;  itemRect.right--; itemRect.top++; itemRect.bottom--;
 	hTE = TEStyleNew( &itemRect, &itemRect);
-
+	
 	GetDialogItem ( theDialog, 2, &itemType, &itemHandle, &itemRect);
 	itemRect.left = itemRect.right;
 	itemRect.right = itemRect.left + 16;
-
+	
 	vScroll = NewControl( GetDialogWindow( theDialog), &itemRect, "\p", true, 0, 0, 0, gScrollBarID, 0);
 	SetControlReference( vScroll, 1);
-
+	
 	Text = GetResource( 'TEXT', 5632);
 	DetachResource( Text);
 	HLock( Text);
-
+	
 	theStyle = (StScrpHandle) GetResource( 'styl', 5632);
 	DetachResource( (Handle) theStyle);
-
+	
 	TESetAlignment( teCenter, hTE);
 	TEStyleInsert( *Text, GetHandleSize( Text), theStyle, hTE);
-
-//TECalText( hTE);
-
+	
+	//TECalText( hTE);
+	
 	SetScroll( vScroll, hTE);
-
+	
 	AboutFirstCall = true;
-
+	
 	GetDialogItem ( theDialog, 2, &itemType, &itemHandle, &itemRect);
 	itemRect.right++;
 	FrameRect( &itemRect);
-
+	
 	SetDialogDefaultItem( theDialog, 1);
-
+	
 	SetDText( theDialog, 4, "\p");
 	StartupWait = 0;
-//ControlSwitch( 1, theDialog, 255);
-//ControlSwitch( 5, theDialog, 255);
+	//ControlSwitch( 1, theDialog, 255);
+	//ControlSwitch( 5, theDialog, 255);
 	ControlSwitch( 7, theDialog, 255);
-	do
-	{
+	do {
 		ModalDialog( AboutFilterDesc, &itemHit);
-	
+		
 		switch( itemHit)
 		{
 			case 1:
 				if( StartupWait != 0) itemHit = 0;
 				break;
-	
+				
 			case -5:
 				DoGlobalNull();
-		
+				
 				if( StartupWait != 0)
 				{
 					if( TickCount() >= StartupWait)
 					{
 						ControlSwitch( 7, theDialog, 0);
-				
+						
 						StartupWait = 0;
-				
+						
 						SetDText( theDialog, 4, "\p");
 					}
 					else
 					{
 						NumToString( 1 + ((StartupWait - TickCount())/60), str);
-				
+						
 						pStrcpy( str2, "\pWait ");
 						pStrcat( str2, str);
 						pStrcat( str2, "\p s");
@@ -565,25 +564,25 @@ Boolean DoHelp(void)
 				}
 				break;
 		}
-
+		
 	}while( itemHit != 1 && itemHit != 6 && itemHit != 7);
-
+	
 	DisposeDialog( theDialog);
 	TEDispose( hTE);
 	HUnlock( Text);
 	MyDisposHandle( & Text);
 	MyDisposHandle( (Handle*) &theStyle);
-
+	
 	UpdateALLWindow();
-
+	
 	DisposeModalFilterUPP( AboutFilterDesc);
-
+	
 	switch( itemHit)
 	{
 		case 6:
 			DoInternetMenu( 1);
 			break;
-	
+			
 		case 7:
 			break;
 	}

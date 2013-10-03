@@ -17,6 +17,7 @@
 #else
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/PPDefs.h>
+#include <PlayerPROCore/PPPlug.h>
 #endif
 
 typedef struct _infoformat_tag{
@@ -24,9 +25,7 @@ typedef struct _infoformat_tag{
 	Str32	smpls;
 	Str32	dataBits;
 	Str32	stereo;
-} InfoRec;
-typedef InfoRec *InfoPtr;
-typedef InfoPtr *InfoHnd;
+} InfoRec, *InfoPtr, **InfoHnd;
 
 typedef struct _MMCKINFO{
 	FOURCC		ckid;
@@ -60,9 +59,7 @@ typedef struct _pcwaveformat_tag{
 	FOURCC		dataType;
 	DWORD		dataSize;
 	char		theData[];
-} PCMWaveRec;
-typedef PCMWaveRec *PCMWavePtr;
-typedef PCMWavePtr *PCMWaveHnd;
+} PCMWaveRec, *PCMWavePtr, **PCMWaveHnd;
 
 typedef struct _CK{
 	FOURCC		ckid;
@@ -75,5 +72,18 @@ typedef struct _MyAtom{
 	long		size;
 	short		ref;
 } MyAtom;
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+OSErr TestWAV( PCMWavePtr CC);
+Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo);
+OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug);
+
+#ifdef __cplusplus
+}
+#endif		
 
 #endif

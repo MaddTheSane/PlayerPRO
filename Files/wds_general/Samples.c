@@ -518,7 +518,7 @@ void UpdateDisplayPosition( short InstruNo)
 			pStrcat( StrTemp, "\p/0x");
 			
 			val = (255UL * PosToByte( myPt.h, InstruNo)) / SampleDataD( InstruNo)->size;
-			sprintf( dest, "%02X", val);
+			sprintf( dest, "%02lX", val);
 			MyC2PStr( dest);
 			pStrcat( StrTemp, (unsigned char*) dest);
 			
@@ -527,7 +527,7 @@ void UpdateDisplayPosition( short InstruNo)
 			val /= 256;
 			if( SampleDataD( InstruNo)->amp == 16) val /= 2;
 			if( SampleDataD( InstruNo)->stereo == true) val /= 2;
-			sprintf( dest, "%02X", val);
+			sprintf( dest, "%02lX", val);
 			MyC2PStr( dest);
 			pStrcat( StrTemp, (unsigned char*) dest);
 			SetDText( SampleDlog[ InstruNo], 38, StrTemp);
