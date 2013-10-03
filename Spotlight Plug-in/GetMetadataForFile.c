@@ -37,9 +37,9 @@
    ----------------------------------------------------------------------------- */
 
 const CFStringRef kPPMDInstumentsList = CFSTR("net_sourceforge_playerpro_tracker_instumentlist");
-const CFStringRef kPPMDPatternList = CFSTR("net_sourcegorge_playerpro_tracker_patternlist");
-const CFStringRef kPPMDTotalPatterns = CFSTR("net_sourcegorge_playerpro_tracker_totalpatterns");
-const CFStringRef kPPMDPartitionLength = CFSTR("net_sourcegorge_playerpro_tracker_partitionlength");
+const CFStringRef kPPMDPatternList = CFSTR("net_sourceforge_playerpro_tracker_patternlist");
+const CFStringRef kPPMDTotalPatterns = CFSTR("net_sourceforge_playerpro_tracker_totalpatterns");
+const CFStringRef kPPMDPartitionLength = CFSTR("net_sourceforge_playerpro_tracker_partitionlength");
 const CFStringRef kPPMDTotalInstruments = CFSTR("net_sourceforge_playerpro_tracker_totalinstruments");
 const CFStringRef kPPMDTotalTracks = CFSTR("net_sourceforge_playerpro_tracker_totaltracks");
 const CFStringRef kPPMDFormatDescription = CFSTR("net_sourceforge_playerpro_tracker_formatdescription");
