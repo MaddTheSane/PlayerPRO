@@ -210,7 +210,7 @@ OSErr inMADPlaySoundData( Ptr soundPtr, long size, long channel, long note, long
 {
 	OSErr iErr = MADPlaySoundData( MADDriver, soundPtr, size, channel, note, amplitude, 0, 0, rate, stereo);
 	Boolean	continueLoop;
-
+	
 	if( iErr == noErr)
 	{
 		continueLoop = true;
@@ -233,7 +233,7 @@ OSErr inMADPlaySoundData( Ptr soundPtr, long size, long channel, long note, long
 			MADDriver->chan[ channel].loopSize 	= 0;
 		}
 	}
-
+	
 	return iErr;
 }
 
@@ -287,16 +287,14 @@ void CloseALLWindow(void)
 		
 		aWind = GetNextWindow( aWind);
 	}
-
+	
 	ClosePlayerWindow( GetDialogFromWindow( tempWind));
-
 }
-
 
 void TESTBugs(void)
 {
 	Handle	ttHdl;
-
+	
 	do
 	{
 		ttHdl = NewHandleClear( 5410);
@@ -308,7 +306,7 @@ void TESTBugs(void)
 	if( MemError() != noErr) MyDebugStr( __LINE__, __FILE__, "");
 }
 
-void	SKVolume( short vol)
+void SKVolume( short vol)
 {
 	MADSetHardwareVolume( vol);
 	
@@ -321,120 +319,120 @@ void ClosePlayerWindow(DialogPtr	theDia)
 	{
 		case RefVST:
 			VSTEditorClose( theDia, 11);
-		break;
-		
+			break;
+			
 		case RefStaff:
 			CloseStaff();
-		break;
-	
+			break;
+			
 		case RefWave:
 			CloseWave();
-		break;
-	
+			break;
+			
 		case RefCube:
 			CloseCube();
-		break;
-	
+			break;
+			
 		case RefSpectrum:
 			CloseSpectrum();
-		break;
-	
+			break;
+			
 		case RefPlayer:
 			CloseOscillo();
-		break;
-		
+			break;
+			
 		case RefMemory:
 			CloseMem();
-		break;
-		
+			break;
+			
 		case RefInstruList:
 			CloseInstruListWindow();
-		break;
-		
+			break;
+			
 		case RefInstruView:
 			CloseInstruViewDlog();
-		break;
-		
-	/*	case RefTrackView:
-			CloseTrackViewDlog();
-		break;*/
-		
+			break;
+			
+			/*	case RefTrackView:
+			 CloseTrackViewDlog();
+			 break;*/
+			
 		case RefMozart:
 			CloseMozartWindow();
-		break;
-		
-	/*	case RefCmd:
-			CloseCmdDlog();
-		break;
-	*/	
+			break;
+			
+			/*	case RefCmd:
+			 CloseCmdDlog();
+			 break;
+			 */	
 		case RefPartition:
 			ClosePartitionWindow();
-		break;
-		
+			break;
+			
 		case RefAdaptators:
 			CloseAdapWindow();
-		break;
-		
+			break;
+			
 		case RefMODList:
 			CloseMODListWindow();
-		break;
-		
+			break;
+			
 		case RefTools:
 			HideWindow( GetDialogWindow( ToolsDlog));
 			SetItemMark( ViewsMenu, mTools, noMark);
-		break;
-		
+			break;
+			
 		case RefSample:
 			CloseSampleWindow( theDia);
-		break;
-		
+			break;
+			
 		case RefVisual:
 			CloseVisual();
-		break;
-		
+			break;
+			
 		case RefEqualizer:
 			CloseEQ();
-		break;
-		
+			break;
+			
 		case RefQuicktime:
 			CloseQT();
-		break;
-		
+			break;
+			
 		case RefPatList:
 			ClosePatList();
-		break;
-		
+			break;
+			
 		case RefParti:
 			CloseParti();
-		break;
-		
+			break;
+			
 		case RefHelp:
 			CloseHelpOnline();
-		break;
-		
+			break;
+			
 		case RefActiveHelp:
 			CloseAHelp();
-		break;
-		
+			break;
+			
 		case RefPiano:
 			ClosePiano();
-		break;
-		
-	/*	case RefFindReplace:
-			CloseFind();
-		break;
-	*/	
+			break;
+			
+			/*	case RefFindReplace:
+			 CloseFind();
+			 break;
+			 */	
 		case RefClassic:
 			CloseClassicWindow();
-		break;
-		
+			break;
+			
 		case RefDigiView:
 			CloseDigiList();
-		break;
-		
+			break;
+			
 		case RefSndExport:
 			StopAIFFExporting();
-		break;
+			break;
 	}
 }
 
@@ -442,30 +440,29 @@ void SetWindEtat( WindowPtr	whichWindow)
 {
 	Rect		tempRect, caRect;
 	long		WRef = GetWRefCon( whichWindow);
-
+	
 	if( WindowStateNOW != -1)
 	{
 		if( thePrefs.WinPosO[ WindowStateNOW][ WRef].h != 0)
 		{
-			MoveWindow( 	whichWindow,
-							thePrefs.WinPosO[ WindowStateNOW][ WRef].h,
-							thePrefs.WinPosO[ WindowStateNOW][ WRef].v,
-							false);
+			MoveWindow(whichWindow,
+					   thePrefs.WinPosO[ WindowStateNOW][ WRef].h,
+					   thePrefs.WinPosO[ WindowStateNOW][ WRef].v,
+					   false);
 			
-			MoveWindow( 	whichWindow,
-							thePrefs.WinPosO[ WindowStateNOW][ WRef].h,
-							thePrefs.WinPosO[ WindowStateNOW][ WRef].v,
-							false);
+			MoveWindow(whichWindow,
+					   thePrefs.WinPosO[ WindowStateNOW][ WRef].h,
+					   thePrefs.WinPosO[ WindowStateNOW][ WRef].v,
+					   false);
 			
-			if( thePrefs.WinPosO[ WindowStateNOW][ WRef].v < GetMBarHeight())
-				{
-					thePrefs.WinPosO[ WindowStateNOW][ WRef].v = 100;
-					thePrefs.WinPosO[ WindowStateNOW][ WRef].h = 100;
-					MoveWindow( 	whichWindow,
-									100,
-									100,
-									false);
-				}
+			if( thePrefs.WinPosO[ WindowStateNOW][ WRef].v < GetMBarHeight()) {
+				thePrefs.WinPosO[ WindowStateNOW][ WRef].v = 100;
+				thePrefs.WinPosO[ WindowStateNOW][ WRef].h = 100;
+				MoveWindow( 	whichWindow,
+						   100,
+						   100,
+						   false);
+			}
 			
 			tempRect. top = thePrefs.WinPosO[ WindowStateNOW][ WRef].v;
 			tempRect. left = thePrefs.WinPosO[ WindowStateNOW][ WRef].h;
@@ -477,12 +474,12 @@ void SetWindEtat( WindowPtr	whichWindow)
 			
 			if( !RectInRgn( &tempRect, GetGrayRgn()))
 			{
-					thePrefs.WinPosO[ WindowStateNOW][ WRef].v = 100;
-					thePrefs.WinPosO[ WindowStateNOW][ WRef].h = 100;
-					MoveWindow( 	whichWindow,
-									100,
-									100,
-									false);
+				thePrefs.WinPosO[ WindowStateNOW][ WRef].v = 100;
+				thePrefs.WinPosO[ WindowStateNOW][ WRef].h = 100;
+				MoveWindow( 	whichWindow,
+						   100,
+						   100,
+						   false);
 			}
 		}
 		
@@ -490,30 +487,29 @@ void SetWindEtat( WindowPtr	whichWindow)
 		
 		if( thePrefs.WinLargO[ WindowStateNOW][ WRef] != 0)
 		{
-			MySizeWindow(	GetDialogFromWindow( whichWindow),
-							thePrefs.WinLargO[ WindowStateNOW][ WRef],
-							thePrefs.WinHiO[ WindowStateNOW][ WRef],
-							true);
+			MySizeWindow(GetDialogFromWindow( whichWindow),
+						 thePrefs.WinLargO[ WindowStateNOW][ WRef],
+						 thePrefs.WinHiO[ WindowStateNOW][ WRef],
+						 true);
 		}
 	}
 	else
 	{
 		if( thePrefs.WinPos[ WRef].h != 0)
 		{
-			MoveWindow( 	whichWindow,
-							thePrefs.WinPos[ WRef].h,
-							thePrefs.WinPos[ WRef].v,
-							false);
+			MoveWindow(whichWindow,
+					   thePrefs.WinPos[ WRef].h,
+					   thePrefs.WinPos[ WRef].v,
+					   false);
 			
-			if( thePrefs.WinPos[ WRef].v < GetMBarHeight())
-				{
-					thePrefs.WinPos[ WRef].v = 100;
-					thePrefs.WinPos[ WRef].h = 100;
-					MoveWindow( 	whichWindow,
-									100,
-									100,
-									false);
-				}
+			if( thePrefs.WinPos[ WRef].v < GetMBarHeight()) {
+				thePrefs.WinPos[ WRef].v = 100;
+				thePrefs.WinPos[ WRef].h = 100;
+				MoveWindow(whichWindow,
+						   100,
+						   100,
+						   false);
+			}
 			
 			tempRect. top = thePrefs.WinPos[ WRef].v;
 			tempRect. left = thePrefs.WinPos[ WRef].h;
@@ -525,12 +521,12 @@ void SetWindEtat( WindowPtr	whichWindow)
 			
 			if( !RectInRgn( &tempRect, GetGrayRgn()))
 			{
-					thePrefs.WinPos[ WRef].v = 100;
-					thePrefs.WinPos[ WRef].h = 100;
-					MoveWindow( 	whichWindow,
-									100,
-									100,
-									false);
+				thePrefs.WinPos[ WRef].v = 100;
+				thePrefs.WinPos[ WRef].h = 100;
+				MoveWindow(whichWindow,
+						   100,
+						   100,
+						   false);
 			}
 		}
 		
@@ -538,24 +534,24 @@ void SetWindEtat( WindowPtr	whichWindow)
 		
 		if( thePrefs.WinLarg[ WRef] != 0)
 		{
-			MySizeWindow(	GetDialogFromWindow( whichWindow),
-							thePrefs.WinLarg[ WRef],
-							thePrefs.WinHi[ WRef],
-							true);
+			MySizeWindow( GetDialogFromWindow( whichWindow),
+						 thePrefs.WinLarg[ WRef],
+						 thePrefs.WinHi[ WRef],
+						 true);
 		}
 	}
 	
 	ChangeDialogFont( GetDialogFromWindow( whichWindow));
 }
 
-extern	long	DBTick;
+extern long DBTick;
 
 void CheckOneWindow( WindowPtr pWindow)
 {
-	Rect	caRect;
+	Rect caRect;
 	
 	GetPortBounds( GetWindowPort( pWindow), &caRect);
-
+	
 	thePrefs.WinHi[ GetWRefCon( pWindow)] = caRect.bottom;
 	thePrefs.WinLarg[ GetWRefCon( pWindow)] = caRect.right;
 }
@@ -567,14 +563,13 @@ void SaveWindowState( short id)
 	Point		Start;
 	GrafPtr		savedPort;
 	Rect		caRect;
-
+	
 	for ( i= 0 ; i < MAXWINDOWS; i++) thePrefs.WinEtatO[ id][ i] = 0;	// Fenêtre inactive
 	for ( i= 0 ; i < MAXWINDOWS; i++) thePrefs.WinIDO[ id][ i] = -1;	// Aucune fenêtre
 	
 	pWindow = FrontWindow();
 	order = 0;
-	do
-	{
+	do {
 		if( pWindow)
 		{
 			GetPortBounds( GetWindowPort( pWindow), &caRect);
@@ -599,7 +594,7 @@ void SaveWindowState( short id)
 		
 		pWindow = NextWindowVisible( pWindow);
 		
-	}while( pWindow != NULL);
+	} while( pWindow != NULL);
 }
 
 void CheckShowWindow(void)
@@ -609,7 +604,7 @@ void CheckShowWindow(void)
 	GrafPtr			savedPort;
 	Point			Start;
 	Rect			caRect;
-
+	
 	for ( i= 0 ; i < MAXWINDOWS; i++) thePrefs.WinEtat[ i] = 0;	// Fenêtre inactive
 	for ( i= 0 ; i < MAXWINDOWS; i++) thePrefs.WinID[ i] = -1;	// Aucune fenêtre
 	
@@ -642,7 +637,7 @@ void CheckShowWindow(void)
 			
 			ClosePlayerWindow( GetDialogFromWindow( pWindow));
 		}
-	}while( pWindow != NULL);
+	} while( pWindow != NULL);
 	
 	oldWindow = NULL;
 	SelectWindow2( NULL);
@@ -652,7 +647,7 @@ void ShowWindowPref( short whichState)
 {
 	short	order;
 	long	ID;
-
+	
 	if( whichState != -1)
 	{
 		WindowStateNOW = whichState;
@@ -675,7 +670,7 @@ void ShowWindowPref( short whichState)
 			{
 				case RefStaff:			CreateStaffWindow();			if( StaffDlog != NULL) SelectWindow( GetDialogWindow( StaffDlog));		break;
 				case RefWave:			CreateWaveWindow();				if( WaveDlog != NULL) SelectWindow( GetDialogWindow( WaveDlog));		break;
-			//	case RefCube:			CreateCubeWindow();				if( CubeDlog != NULL) SelectWindow( GetDialogWindow( CubeDlog));		break;
+					//	case RefCube:			CreateCubeWindow();				if( CubeDlog != NULL) SelectWindow( GetDialogWindow( CubeDlog));		break;
 				case RefInstruList:		CreateInstruListWindow();		if( InstruListDlog != NULL) SelectWindow( GetDialogWindow( InstruListDlog));	break;
 				case RefPartition:		CreatePartitionWindow();		if( EditorDlog != NULL) SelectWindow( GetDialogWindow( EditorDlog));		break;
 				case RefPatList:		CreatePatListWindow();			if( PatListDlog != NULL) SelectWindow( GetDialogWindow( PatListDlog));		break;
@@ -683,7 +678,7 @@ void ShowWindowPref( short whichState)
 				case RefClassic:		CreateClassicWindow();			if( ClassicDlog != NULL) SelectWindow( GetDialogWindow( ClassicDlog));		break;
 				case RefMozart:			CreateMozartWindow();			if( MozartDlog != NULL) SelectWindow( GetDialogWindow( MozartDlog));		break;
 				case RefInstruView:		CreateInstruView();				if( InstruViewDlog != NULL) SelectWindow( GetDialogWindow( InstruViewDlog));	break;
-			//	case RefTrackView:		CreateTrackView();				if( TrackViewDlog != NULL) SelectWindow( GetDialogWindow( TrackViewDlog));	break;
+					//	case RefTrackView:		CreateTrackView();				if( TrackViewDlog != NULL) SelectWindow( GetDialogWindow( TrackViewDlog));	break;
 				case RefDigiView:		CreateDigiListWindow();			if( DigitalDlog != NULL) SelectWindow( GetDialogWindow( DigitalDlog));		break;
 				case RefHelp:			CreateHelpOnline( 0);			if( HelpDlog != NULL) SelectWindow( GetDialogWindow( HelpDlog));		break;
 				case RefAdaptators:		ShowWindow( GetDialogWindow( AdapDlog));			if( AdapDlog != NULL) {SetWindEtat( GetDialogWindow(AdapDlog)); SetUpScroll(); SelectWindow( GetDialogWindow( AdapDlog));}	SetItemMark( ViewsMenu, mAdap, checkMark);	break;
@@ -705,21 +700,19 @@ void ShowWindowPref( short whichState)
 
 WindowPtr NextWindowVisible( WindowPtr	whichWindow)
 {
-//WindowPeek 	myWin;
-//WindowPeek	temp;
+	//WindowPeek 	myWin;
+	//WindowPeek	temp;
 	WindowPtr	temp, myWin;
 	Boolean		Sortie = false;
-
-	do
-	{
+	
+	do {
 		myWin = whichWindow;
 		temp = MacGetNextWindow( myWin);
 		
 		if( temp == NULL) return( NULL);
 		else if( MacIsWindowVisible( temp) != true) whichWindow = (WindowPtr) MacGetNextWindow( myWin);
 		else Sortie = true;
-		
-	}while( Sortie == false);
+	} while( Sortie == false);
 	
 	return( temp);
 }
@@ -729,7 +722,7 @@ void EraseGrowIcon( DialogPtr	theDialog)
 	Rect	temp;
 	GrafPtr	SavePort;
 	Rect	caRect;
-
+	
 	switch( GetWRefCon( GetDialogWindow( theDialog)))
 	{
 		case RefMODList:
@@ -748,12 +741,12 @@ void EraseGrowIcon( DialogPtr	theDialog)
 		case RefPlayer:
 		case RefSpectrum:
 		case RefHelp:
-		
-		break;
-		
+			
+			break;
+			
 		default:	return;		break;
 	}
-
+	
 	GetPort( &SavePort);
 	SetPortDialogPort( theDialog);
 	
@@ -766,8 +759,8 @@ void EraseGrowIcon( DialogPtr	theDialog)
 	EraseRect( &temp);
 	InvalWindowRect( GetDialogWindow( theDialog), &temp);
 	
-//	InsetRect( &temp, -1, -1);
-//	FrameRect( &temp);
+	//InsetRect( &temp, -1, -1);
+	//FrameRect( &temp);
 	
 	SetPort( SavePort);
 }
@@ -829,15 +822,15 @@ Handle MyNewHandle( long	size)
 {
 	long		aL;
 	Handle		aPtr;
-
+	
 	if( size < 0) MyDebugStr( __LINE__, __FILE__, "MyNewHandle 1");
 	
 	aPtr = NewHandle( size);
 	if( aPtr == NULL) return NULL;
 	
-/*	HLock( aPtr);
-	for( aL = 0; aL < size; aL++) (*aPtr)[ aL] = 0xEE;
-	HUnlock( aPtr);*/
+	/*	HLock( aPtr);
+	 for( aL = 0; aL < size; aL++) (*aPtr)[ aL] = 0xEE;
+	 HUnlock( aPtr);*/
 	
 	if( MemError()) MyDebugStr( __LINE__, __FILE__, "MyNewHandle 4");
 	
@@ -852,7 +845,7 @@ void MyDisposHandle( Handle *aHandle)
 {
 	long	aL, size;
 	char	cMemTags;
-
+	
 	if( *aHandle == NULL) MyDebugStr( __LINE__, __FILE__, "*aHandle2");
 	
 	cMemTags = HGetState( *aHandle);
@@ -861,15 +854,15 @@ void MyDisposHandle( Handle *aHandle)
 	if( size < 0) MyDebugStr( __LINE__, __FILE__, "aHandle33");
 	else
 	{
-	/*	HLock( *aHandle);
-		for( aL = 0; aL < size; aL++) (**aHandle)[ aL] = 0xEE;
-		HUnlock( *aHandle);*/
+		/*	HLock( *aHandle);
+		 for( aL = 0; aL < size; aL++) (**aHandle)[ aL] = 0xEE;
+		 HUnlock( *aHandle);*/
 	}
 	
 	DisposeHandle( *aHandle);
 	
 	*aHandle = (Handle) NULL;
-
+	
 	if( MemError()) MyDebugStr( __LINE__, __FILE__, "aHandle55");
 }
 
@@ -877,7 +870,7 @@ Ptr MyNewPtr( long	size)
 {
 	long	aL;
 	Ptr		aPtr;
-
+	
 	if( size < 0) MyDebugStr( __LINE__, __FILE__, "MyNewPtr 1");
 	
 	aPtr = NewPtr( size);
@@ -891,7 +884,7 @@ Ptr MyNewPtr( long	size)
 void MyDisposePtr( Ptr	*aPtr)
 {
 	long	aL, size;
-
+	
 	if( *aPtr == NULL) MyDebugStr( __LINE__, __FILE__, "pCodeMyDisposePtr == NULL");
 	
 	size = GetPtrSize( *aPtr);
@@ -936,7 +929,7 @@ pascal void MyMenuNoteDefProc(short msg, MenuRef whichMenu, Rect *menuRect, Poin
 	GDHandle				aH;
 	RGBColor				theColor;
 	MenuTrackingDataPtr		mTracking;
-
+	
 	GrafPtr				savedPort;
 	short				savedFont;
 	short				savedSize;
@@ -946,126 +939,126 @@ pascal void MyMenuNoteDefProc(short msg, MenuRef whichMenu, Rect *menuRect, Poin
 	
 	savedFont = GetPortTextFont( (CGrafPtr) savedPort);
 	savedSize = GetPortTextSize( (CGrafPtr) savedPort);
-
+	
 	
 	itemCount = CountMenuItems( whichMenu);
-
+	
 	TextFont( 0);	TextSize( 0);
-
+	
 	switch (msg)
 	{
-	case mDrawMsg:
-		theColor.red = 56797;
-		theColor.green = 56797;
-		theColor.blue = 56797;
-		
-	//	RGBForeColor( &theColor);
-		PaintRect( menuRect);
-		
-		ForeColor( blackColor);
-	//	RGBBackColor( &theColor);
-		
-		for ( j = 1;  j <= itemCount;  j++)
-		{
-			GetMenuItemText( whichMenu, j, str);
-			tempRect.bottom--;
-			GetMDEFRect( &tempRect, menuRect, j);
+		case mDrawMsg:
+			theColor.red = 56797;
+			theColor.green = 56797;
+			theColor.blue = 56797;
 			
+			//	RGBForeColor( &theColor);
+			PaintRect( menuRect);
 			
-			if( GetMenuID( whichMenu) == j) ForeColor( redColor);
-			else ForeColor( blackColor);
-			TETextBox( str+1, str[ 0], &tempRect, teJustCenter);
-		}
-		
-		ForeColor( blackColor);
-	break;
-
-	case kMenuFindItemMsg:
-		mTracking = (MenuTrackingDataPtr) itemID;
-	
-		if( !PtInRect( hitPt, menuRect)) mouseItem = 0;
-		else
-		{
-			mouseItem = (hitPt.v - menuRect->top) / HIM;
-			mouseItem *= 12;
+			ForeColor( blackColor);
+			//	RGBBackColor( &theColor);
 			
-			mouseItem += (hitPt.h - menuRect->left) / WIM;
-			mouseItem++;
-			
-			if( mouseItem >= itemCount) mouseItem = itemCount;
-		}
-		
-		if (mouseItem == 0)
-		{		/* out of bounds or disabled */
-			GetMDEFRect( &tempRect, menuRect, mTracking->itemSelected);
-			InvertRect( &tempRect);
-			mTracking->itemSelected = 0;						/* return "cancel" code */
-		}
-		else if ( mouseItem != mTracking->itemSelected )
-		{
-			GetMDEFRect( &tempRect, menuRect, mTracking->itemSelected);
-			InvertRect( &tempRect);
-			
-			GetMDEFRect( &tempRect, menuRect, mouseItem);
-			InvertRect( &tempRect);
-			mTracking->itemSelected = mouseItem; 				/* return new */
-		}
-		
-		mTracking->itemUnderMouse = mTracking->itemSelected;
-		mTracking->itemRect = tempRect;
-		break;
-
-	case mSizeMsg:
-		mSize = 0;
-		for ( j=1;  j<=itemCount;  j++ )
-		{
-			GetMenuItemText( whichMenu, j, str);
-			if( StringWidth( str) > mSize) mSize = StringWidth( str);
-		}
-		
-		SetMenuWidth( whichMenu, mSize + 2);
-		SetMenuHeight( whichMenu, itemCount*HIM);	/* assume 12 pts high */
-		break;
-
-	case mPopUpMsg:
-		
-		SetMenuID( whichMenu, *itemID);
-		//(*whichMenu)->menuID = *itemID;
-		
-		Xpos = (*itemID - 1) - ((*itemID - 1)/12)*12;
-		Ypos = (*itemID - 1) / 12;
-		
-		menuRect->top = hitPt.h - (Ypos * HIM);
-		menuRect->left = hitPt.v - (Xpos * WIM);
-		
-		Ypos = (itemCount - 1) / 12;
-		
-		menuRect->right = menuRect->left + 12*WIM;
-		menuRect->bottom = menuRect->top + (Ypos+1)*HIM;
-		
-		GetMouse( &hitPt);
-		
-		aH = GetDeviceList();
-		do
-		{
-			if( aH != NULL)
+			for ( j = 1;  j <= itemCount;  j++)
 			{
-				if( PtInRect( hitPt, &(*(*aH)->gdPMap)->bounds))
-				{
-					Rect 		ar = (*(*aH)->gdPMap)->bounds;
-					
-					if( menuRect->bottom > ar.bottom) 	OffsetRect( menuRect, 0, ar.bottom - menuRect->bottom);
-					if( menuRect->top < ar.top)			OffsetRect( menuRect, 0, ar.top - menuRect->top);
-					if( menuRect->right > ar.right) 	OffsetRect( menuRect, ar.right - menuRect->right, 0);
-					if( menuRect->left < ar.left)		OffsetRect( menuRect, ar.left - menuRect->left, 0);
-				}
+				GetMenuItemText( whichMenu, j, str);
+				tempRect.bottom--;
+				GetMDEFRect( &tempRect, menuRect, j);
+				
+				
+				if( GetMenuID( whichMenu) == j) ForeColor( redColor);
+				else ForeColor( blackColor);
+				TETextBox( str+1, str[ 0], &tempRect, teJustCenter);
 			}
 			
-			aH = GetNextDevice( aH);
-		}
-		while( aH != NULL);
-	break;
-
+			ForeColor( blackColor);
+			break;
+			
+		case kMenuFindItemMsg:
+			mTracking = (MenuTrackingDataPtr) itemID;
+			
+			if( !PtInRect( hitPt, menuRect)) mouseItem = 0;
+			else
+			{
+				mouseItem = (hitPt.v - menuRect->top) / HIM;
+				mouseItem *= 12;
+				
+				mouseItem += (hitPt.h - menuRect->left) / WIM;
+				mouseItem++;
+				
+				if( mouseItem >= itemCount) mouseItem = itemCount;
+			}
+			
+			if (mouseItem == 0)
+			{		/* out of bounds or disabled */
+				GetMDEFRect( &tempRect, menuRect, mTracking->itemSelected);
+				InvertRect( &tempRect);
+				mTracking->itemSelected = 0;						/* return "cancel" code */
+			}
+			else if ( mouseItem != mTracking->itemSelected )
+			{
+				GetMDEFRect( &tempRect, menuRect, mTracking->itemSelected);
+				InvertRect( &tempRect);
+				
+				GetMDEFRect( &tempRect, menuRect, mouseItem);
+				InvertRect( &tempRect);
+				mTracking->itemSelected = mouseItem; 				/* return new */
+			}
+			
+			mTracking->itemUnderMouse = mTracking->itemSelected;
+			mTracking->itemRect = tempRect;
+			break;
+			
+		case mSizeMsg:
+			mSize = 0;
+			for ( j=1;  j<=itemCount;  j++ )
+			{
+				GetMenuItemText( whichMenu, j, str);
+				if( StringWidth( str) > mSize) mSize = StringWidth( str);
+			}
+			
+			SetMenuWidth( whichMenu, mSize + 2);
+			SetMenuHeight( whichMenu, itemCount*HIM);	/* assume 12 pts high */
+			break;
+			
+		case mPopUpMsg:
+			
+			SetMenuID( whichMenu, *itemID);
+			//(*whichMenu)->menuID = *itemID;
+			
+			Xpos = (*itemID - 1) - ((*itemID - 1)/12)*12;
+			Ypos = (*itemID - 1) / 12;
+			
+			menuRect->top = hitPt.h - (Ypos * HIM);
+			menuRect->left = hitPt.v - (Xpos * WIM);
+			
+			Ypos = (itemCount - 1) / 12;
+			
+			menuRect->right = menuRect->left + 12*WIM;
+			menuRect->bottom = menuRect->top + (Ypos+1)*HIM;
+			
+			GetMouse( &hitPt);
+			
+			aH = GetDeviceList();
+			do
+			{
+				if( aH != NULL)
+				{
+					if( PtInRect( hitPt, &(*(*aH)->gdPMap)->bounds))
+					{
+						Rect 		ar = (*(*aH)->gdPMap)->bounds;
+						
+						if( menuRect->bottom > ar.bottom) 	OffsetRect( menuRect, 0, ar.bottom - menuRect->bottom);
+						if( menuRect->top < ar.top)			OffsetRect( menuRect, 0, ar.top - menuRect->top);
+						if( menuRect->right > ar.right) 	OffsetRect( menuRect, ar.right - menuRect->right, 0);
+						if( menuRect->left < ar.left)		OffsetRect( menuRect, ar.left - menuRect->left, 0);
+					}
+				}
+				
+				aH = GetNextDevice( aH);
+			}
+			while( aH != NULL);
+			break;
+			
 	}
 	
 	TextFont( savedFont);	TextSize( savedSize);
@@ -1107,227 +1100,227 @@ pascal void MyMenu0xFFDefProc(short msg, MenuRef whichMenu, Rect *menuRect, Poin
 	
 	switch (msg)
 	{
-	case kMenuInitMsg:
-		*itemID = noErr;
-	break;
-	
-	case mDrawMsg:
-		theColor.red = 56797;
-		theColor.green = 56797;
-		theColor.blue = 56797;
-		
-		ForeColor( blackColor);
-	//	RGBBackColor( &theColor);
-		
-		for( i = 0;  i < 2;  i++)
-		{
-			for( j = 0;  j < 16;  j++)
-			{
-				GetMenuItemText( whichMenu, j + 1, str);
-				
-				GetMDEFRect2( &tempRect, menuRect, j, i);
-				
-				if( i == 1) o = ( GetMenuID( whichMenu)-1) & 0x0F;
-				else
-				{
-					o = ( GetMenuID( whichMenu)-1) & 0xF0;
-					o >>= 4;
-				}
-				
-				if( o == j) ForeColor( redColor);
-				else ForeColor( blackColor);
-				
-				TETextBox( str+1, str[ 0], &tempRect, teJustCenter);
-			}
-		}
-		
-		ForeColor( blackColor);
-		
-		MoveTo( menuRect->left + (menuRect->right - menuRect->left) / 2, menuRect->top);
-		LineTo( menuRect->left + (menuRect->right - menuRect->left) / 2, menuRect->bottom-HIM);
-		
-		MoveTo( menuRect->left, menuRect->bottom-HIM*3);
-		LineTo( menuRect->right, menuRect->bottom-HIM*3);
-	break;
-	
-	case kMenuFindItemMsg:
-		mTracking = (MenuTrackingDataPtr) itemID;
-		
-		tempRect = *menuRect;
-		tempRect.bottom -= HIM*3;
-		if( !PtInRect( hitPt, &tempRect))
-		{
-			mouseItem = 0;
-			HiLo = false;
+		case kMenuInitMsg:
+			*itemID = noErr;
+			break;
 			
-			if(Button()) goto TEST;
-		}
-		else
-		{
-			if( GetMenuID( whichMenu) != 2000)
+		case mDrawMsg:
+			theColor.red = 56797;
+			theColor.green = 56797;
+			theColor.blue = 56797;
+			
+			ForeColor( blackColor);
+			//RGBBackColor( &theColor);
+			
+			for( i = 0;  i < 2;  i++)
 			{
-				mTracking->itemSelected = GetMenuID( whichMenu);
-			//	*itemID = GetMenuID( whichMenu);
-				SetMenuID( whichMenu, 2000);
-				if( mTracking->itemSelected > 0)
+				for( j = 0;  j < 16;  j++)
 				{
-					GetMDEFRect2( &tempRect, menuRect, (mTracking->itemSelected)-1 & 0x000F, true);			InvertRect( &tempRect);
-					GetMDEFRect2( &tempRect, menuRect, (((mTracking->itemSelected)-1) & 0x00F0)>>4, false);	InvertRect( &tempRect);
-				}
-				
-				// **** Draw bottom ****
-				
-				GetMenuItemText( whichMenu, 1 + ((mTracking->itemSelected)-1 & 0x000F), bstr);
-				GetMenuItemText( whichMenu, 1 + ((((mTracking->itemSelected)-1) & 0x00F0)>>4), str);
-				str[ 0]++;
-				str[ 2] = bstr[ 1];
-				
-				SetRect( &tempRect, menuRect->left, menuRect->bottom-HIM*3+1, menuRect->right, menuRect->bottom);
-				TETextBox( str+1, str[ 0], &tempRect, teCenter);
-				
-				
-				{
-				short tempValue = mTracking->itemSelected-1;
-				NumToString( tempValue, str);
-				SetRect( &tempRect, menuRect->left, menuRect->bottom-HIM*2 + 1, menuRect->right, menuRect->bottom);
-				TETextBox( str+1, str[ 0], &tempRect, teCenter);
-				}
-				
-				{
-				short tempValue = (char) (mTracking->itemSelected-1);
-				NumToString( tempValue, str);
-				SetRect( &tempRect, menuRect->left, menuRect->bottom-HIM + 1, menuRect->right, menuRect->bottom);
-				TETextBox( str+1, str[ 0], &tempRect, teCenter);
+					GetMenuItemText( whichMenu, j + 1, str);
+					
+					GetMDEFRect2( &tempRect, menuRect, j, i);
+					
+					if( i == 1) o = ( GetMenuID( whichMenu)-1) & 0x0F;
+					else
+					{
+						o = ( GetMenuID( whichMenu)-1) & 0xF0;
+						o >>= 4;
+					}
+					
+					if( o == j) ForeColor( redColor);
+					else ForeColor( blackColor);
+					
+					TETextBox( str+1, str[ 0], &tempRect, teJustCenter);
 				}
 			}
 			
-			HiLo = (hitPt.h - menuRect->left) / WIM2;
-			mouseItem = (hitPt.v - menuRect->top) / HIM;
-						
-			if( !HiLo)
+			ForeColor( blackColor);
+			
+			MoveTo( menuRect->left + (menuRect->right - menuRect->left) / 2, menuRect->top);
+			LineTo( menuRect->left + (menuRect->right - menuRect->left) / 2, menuRect->bottom-HIM);
+			
+			MoveTo( menuRect->left, menuRect->bottom-HIM*3);
+			LineTo( menuRect->right, menuRect->bottom-HIM*3);
+			break;
+			
+		case kMenuFindItemMsg:
+			mTracking = (MenuTrackingDataPtr) itemID;
+			
+			tempRect = *menuRect;
+			tempRect.bottom -= HIM*3;
+			if( !PtInRect( hitPt, &tempRect))
 			{
-				mouseItem <<= 4;
+				mouseItem = 0;
+				HiLo = false;
 				
-				if( mTracking->itemSelected != 0) mouseItem += ((mTracking->itemSelected)-1) & 0x000F;
+				if(Button()) goto TEST;
 			}
 			else
 			{
-				if( mTracking->itemSelected != 0) mouseItem += ((mTracking->itemSelected)-1) & 0x00F0;
-			}
-			mouseItem++;
-			
-			TEST:
-			
-			if( mouseItem == 0)
-			{
-				if( mTracking->itemSelected > 0)
+				if( GetMenuID( whichMenu) != 2000)
 				{
-					GetMDEFRect2( &tempRect, menuRect, (mTracking->itemSelected)-1 & 0x000F, true);			InvertRect( &tempRect);
-					GetMDEFRect2( &tempRect, menuRect, (((mTracking->itemSelected)-1) & 0x00F0)>>4, false);	InvertRect( &tempRect);
-				}
-				mTracking->itemSelected = 0;
-				
-				SetRect( &tempRect, menuRect->left, menuRect->bottom-HIM*3+1, menuRect->right, menuRect->bottom);
-				EraseRect( &tempRect);
-			}
-			else if( mouseItem != mTracking->itemSelected)
-			{
-				if( mTracking->itemSelected > 0)
-				{
-					GetMDEFRect2( &tempRect, menuRect, (mTracking->itemSelected)-1 & 0x000F, true);			InvertRect( &tempRect);
-					GetMDEFRect2( &tempRect, menuRect, (((mTracking->itemSelected)-1) & 0x00F0)>>4, false);	InvertRect( &tempRect);
-				}
-				
-				GetMDEFRect2( &tempRect, menuRect, (mouseItem-1) & 0x000F, true);		InvertRect( &tempRect);
-				GetMDEFRect2( &tempRect, menuRect, ((mouseItem-1) & 0x00F0)>>4, false);	InvertRect( &tempRect);
-				
-				mTracking->itemSelected = mouseItem;
-				
-				// **** Draw bottom ****
-				
-				GetMenuItemText( whichMenu, 1 + ((mTracking->itemSelected)-1 & 0x000F), bstr);
-				GetMenuItemText( whichMenu, 1 + ((((mTracking->itemSelected)-1) & 0x00F0)>>4), str);
-				str[ 0]++;
-				str[ 2] = bstr[ 1];
-				
-				SetRect( &tempRect, menuRect->left, menuRect->bottom-HIM*3 + 1, menuRect->right, menuRect->bottom);
-				TETextBox( str+1, str[ 0], &tempRect, teCenter);
-				
-				{
-				short tempValue = mTracking->itemSelected-1;
-				NumToString( tempValue, str);
-				SetRect( &tempRect, menuRect->left, menuRect->bottom-HIM*2 + 1, menuRect->right, menuRect->bottom);
-				TETextBox( str+1, str[ 0], &tempRect, teCenter);
-				}
-				
-				{
-				short tempValue = (char) (mTracking->itemSelected-1);
-				NumToString( tempValue, str);
-				SetRect( &tempRect, menuRect->left, menuRect->bottom-HIM + 1, menuRect->right, menuRect->bottom);
-				TETextBox( str+1, str[ 0], &tempRect, teCenter);
-				}
-			}
-		}
-		
-		mTracking->itemUnderMouse = mTracking->itemSelected;
-		mTracking->itemRect = tempRect;
-		
-	break;
-	
-	case mSizeMsg:
-		mSize = 0;
-		for( j = 0;  j< 16;  j++ )
-		{
-			GetMenuItemText( whichMenu, j, str);
-			if( StringWidth( str) > mSize) mSize = StringWidth( str);
-		}
-		
-		SetMenuWidth( whichMenu, 2 * mSize + 2);
-		SetMenuHeight( whichMenu, 19 * HIM);
-		
-	//	(*whichMenu)->menuWidth  = 2 * mSize + 2;
-	//	(*whichMenu)->menuHeight = 17 * HIM;
-	break;
-
-
-	case mPopUpMsg:
-	{
-		GDHandle	aH;
-		
-		SetMenuID( whichMenu, *itemID);
-	//	(*whichMenu)->menuID = *itemID;
-		
-		GetMouse( &hitPt);
-		
-		Ypos = (((*itemID)-1) & 0x00F0)>>4;
-		
-		menuRect->top = hitPt.v - (Ypos * HIM + HIM/2);
-		menuRect->left = hitPt.h - WIM2/2;
-		
-		menuRect->right = menuRect->left + 2*WIM2 + 1;
-		menuRect->bottom = menuRect->top + 19*HIM;
-		
-		aH = GetDeviceList();
-		do
-		{
-			if( aH != NULL)
-			{
-				if( PtInRect( hitPt, &(*(*aH)->gdPMap)->bounds))
-				{
-					Rect 		ar = (*(*aH)->gdPMap)->bounds;
+					mTracking->itemSelected = GetMenuID( whichMenu);
+					//	*itemID = GetMenuID( whichMenu);
+					SetMenuID( whichMenu, 2000);
+					if( mTracking->itemSelected > 0)
+					{
+						GetMDEFRect2( &tempRect, menuRect, (mTracking->itemSelected)-1 & 0x000F, true);			InvertRect( &tempRect);
+						GetMDEFRect2( &tempRect, menuRect, (((mTracking->itemSelected)-1) & 0x00F0)>>4, false);	InvertRect( &tempRect);
+					}
 					
-					if( menuRect->bottom > ar.bottom) 	OffsetRect( menuRect, 0, ar.bottom - menuRect->bottom);
-					if( menuRect->top < ar.top)			OffsetRect( menuRect, 0, ar.top - menuRect->top);
-					if( menuRect->right > ar.right) 	OffsetRect( menuRect, ar.right - menuRect->right, 0);
-					if( menuRect->left < ar.left)		OffsetRect( menuRect, ar.left - menuRect->left, 0);
+					// **** Draw bottom ****
+					
+					GetMenuItemText( whichMenu, 1 + ((mTracking->itemSelected)-1 & 0x000F), bstr);
+					GetMenuItemText( whichMenu, 1 + ((((mTracking->itemSelected)-1) & 0x00F0)>>4), str);
+					str[ 0]++;
+					str[ 2] = bstr[ 1];
+					
+					SetRect( &tempRect, menuRect->left, menuRect->bottom-HIM*3+1, menuRect->right, menuRect->bottom);
+					TETextBox( str+1, str[ 0], &tempRect, teCenter);
+					
+					
+					{
+						short tempValue = mTracking->itemSelected-1;
+						NumToString( tempValue, str);
+						SetRect( &tempRect, menuRect->left, menuRect->bottom-HIM*2 + 1, menuRect->right, menuRect->bottom);
+						TETextBox( str+1, str[ 0], &tempRect, teCenter);
+					}
+					
+					{
+						short tempValue = (char) (mTracking->itemSelected-1);
+						NumToString( tempValue, str);
+						SetRect( &tempRect, menuRect->left, menuRect->bottom-HIM + 1, menuRect->right, menuRect->bottom);
+						TETextBox( str+1, str[ 0], &tempRect, teCenter);
+					}
+				}
+				
+				HiLo = (hitPt.h - menuRect->left) / WIM2;
+				mouseItem = (hitPt.v - menuRect->top) / HIM;
+				
+				if( !HiLo)
+				{
+					mouseItem <<= 4;
+					
+					if( mTracking->itemSelected != 0) mouseItem += ((mTracking->itemSelected)-1) & 0x000F;
+				}
+				else
+				{
+					if( mTracking->itemSelected != 0) mouseItem += ((mTracking->itemSelected)-1) & 0x00F0;
+				}
+				mouseItem++;
+				
+			TEST:
+				
+				if( mouseItem == 0)
+				{
+					if( mTracking->itemSelected > 0)
+					{
+						GetMDEFRect2( &tempRect, menuRect, (mTracking->itemSelected)-1 & 0x000F, true);			InvertRect( &tempRect);
+						GetMDEFRect2( &tempRect, menuRect, (((mTracking->itemSelected)-1) & 0x00F0)>>4, false);	InvertRect( &tempRect);
+					}
+					mTracking->itemSelected = 0;
+					
+					SetRect( &tempRect, menuRect->left, menuRect->bottom-HIM*3+1, menuRect->right, menuRect->bottom);
+					EraseRect( &tempRect);
+				}
+				else if( mouseItem != mTracking->itemSelected)
+				{
+					if( mTracking->itemSelected > 0)
+					{
+						GetMDEFRect2( &tempRect, menuRect, (mTracking->itemSelected)-1 & 0x000F, true);			InvertRect( &tempRect);
+						GetMDEFRect2( &tempRect, menuRect, (((mTracking->itemSelected)-1) & 0x00F0)>>4, false);	InvertRect( &tempRect);
+					}
+					
+					GetMDEFRect2( &tempRect, menuRect, (mouseItem-1) & 0x000F, true);		InvertRect( &tempRect);
+					GetMDEFRect2( &tempRect, menuRect, ((mouseItem-1) & 0x00F0)>>4, false);	InvertRect( &tempRect);
+					
+					mTracking->itemSelected = mouseItem;
+					
+					// **** Draw bottom ****
+					
+					GetMenuItemText( whichMenu, 1 + ((mTracking->itemSelected)-1 & 0x000F), bstr);
+					GetMenuItemText( whichMenu, 1 + ((((mTracking->itemSelected)-1) & 0x00F0)>>4), str);
+					str[ 0]++;
+					str[ 2] = bstr[ 1];
+					
+					SetRect( &tempRect, menuRect->left, menuRect->bottom-HIM*3 + 1, menuRect->right, menuRect->bottom);
+					TETextBox( str+1, str[ 0], &tempRect, teCenter);
+					
+					{
+						short tempValue = mTracking->itemSelected-1;
+						NumToString( tempValue, str);
+						SetRect( &tempRect, menuRect->left, menuRect->bottom-HIM*2 + 1, menuRect->right, menuRect->bottom);
+						TETextBox( str+1, str[ 0], &tempRect, teCenter);
+					}
+					
+					{
+						short tempValue = (char) (mTracking->itemSelected-1);
+						NumToString( tempValue, str);
+						SetRect( &tempRect, menuRect->left, menuRect->bottom-HIM + 1, menuRect->right, menuRect->bottom);
+						TETextBox( str+1, str[ 0], &tempRect, teCenter);
+					}
 				}
 			}
 			
-			aH = GetNextDevice( aH);
+			mTracking->itemUnderMouse = mTracking->itemSelected;
+			mTracking->itemRect = tempRect;
+			
+			break;
+			
+		case mSizeMsg:
+			mSize = 0;
+			for( j = 0;  j< 16;  j++ )
+			{
+				GetMenuItemText( whichMenu, j, str);
+				if( StringWidth( str) > mSize) mSize = StringWidth( str);
+			}
+			
+			SetMenuWidth( whichMenu, 2 * mSize + 2);
+			SetMenuHeight( whichMenu, 19 * HIM);
+			
+			//	(*whichMenu)->menuWidth  = 2 * mSize + 2;
+			//	(*whichMenu)->menuHeight = 17 * HIM;
+			break;
+			
+			
+		case mPopUpMsg:
+		{
+			GDHandle	aH;
+			
+			SetMenuID( whichMenu, *itemID);
+			//	(*whichMenu)->menuID = *itemID;
+			
+			GetMouse( &hitPt);
+			
+			Ypos = (((*itemID)-1) & 0x00F0)>>4;
+			
+			menuRect->top = hitPt.v - (Ypos * HIM + HIM/2);
+			menuRect->left = hitPt.h - WIM2/2;
+			
+			menuRect->right = menuRect->left + 2*WIM2 + 1;
+			menuRect->bottom = menuRect->top + 19*HIM;
+			
+			aH = GetDeviceList();
+			do
+			{
+				if( aH != NULL)
+				{
+					if( PtInRect( hitPt, &(*(*aH)->gdPMap)->bounds))
+					{
+						Rect 		ar = (*(*aH)->gdPMap)->bounds;
+						
+						if( menuRect->bottom > ar.bottom) 	OffsetRect( menuRect, 0, ar.bottom - menuRect->bottom);
+						if( menuRect->top < ar.top)			OffsetRect( menuRect, 0, ar.top - menuRect->top);
+						if( menuRect->right > ar.right) 	OffsetRect( menuRect, ar.right - menuRect->right, 0);
+						if( menuRect->left < ar.left)		OffsetRect( menuRect, ar.left - menuRect->left, 0);
+					}
+				}
+				
+				aH = GetNextDevice( aH);
+			}
+			while( aH != NULL);
 		}
-		while( aH != NULL);
-	}
-	break;
+			break;
 	}
 	
 	TextFont( savedFont);	TextSize( savedSize);
@@ -1351,18 +1344,18 @@ OSErr GetApplicationPackageFSSpec(FSSpecPtr theFSSpecPtr)
 	Str255 applName;
 	ProcessSerialNumber psn;
 	ProcessInfoRec info;
-
+	
 	info.processInfoLength = sizeof(ProcessInfoRec);
 	info.processName = applName;
 	info.processAppSpec = theFSSpecPtr;
 	err = GetCurrentProcess(&psn);
 	if (err != noErr) return err;
 	err = GetProcessInformation(&psn, &info);
-
+	
 	{
 		CInfoPBRec	block;
 		Str255		directoryName;
-	
+		
 		block.dirInfo.ioDrParID = theFSSpecPtr->parID;
 		block.dirInfo.ioNamePtr = directoryName;
 		block.dirInfo.ioVRefNum = theFSSpecPtr->vRefNum;
@@ -1375,7 +1368,7 @@ OSErr GetApplicationPackageFSSpec(FSSpecPtr theFSSpecPtr)
 		block.dirInfo.ioFDirIndex = -1;
 		block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
 		err = PBGetCatInfoSync(&block);
-	
+		
 		theFSSpecPtr->parID = block.dirInfo.ioDrParID;
 		theFSSpecPtr->vRefNum = block.dirInfo.ioVRefNum;
 	}
@@ -1777,7 +1770,7 @@ int main( int argc, char* argv[])
 	InstallAE();
 	
 	InitPrinting();
-		
+	
 	NoSelectWindow2 = true;
 	StartTime = TickCount();
 	
@@ -1942,9 +1935,9 @@ End:;
 
 static	Boolean 		PressInDialog;
 static	long			checkMemory;
-		short			TouchMem[11];
-		short			TrackMem[11];
-		short			TouchIn;
+short			TouchMem[11];
+short			TrackMem[11];
+short			TouchIn;
 
 short NEWdoDlgEvt( EventRecord *evp, WindowPtr whichWindow)
 {
@@ -1957,31 +1950,31 @@ short NEWdoDlgEvt( EventRecord *evp, WindowPtr whichWindow)
 	
 	SetPortWindowPort( whichWindow);
 	
-//#if MACOS9VERSION
-//	if( DialogSelect( evp, &whichDialog, &whichItem) == false ) return(0);
+	//#if MACOS9VERSION
+	//	if( DialogSelect( evp, &whichDialog, &whichItem) == false ) return(0);
 	DialogSelect( evp, &whichDialog, &whichItem);
-/*#else
-	whichDialog = GetDialogFromWindow( whichWindow);
-	pt = evp->where;
-	GlobalToLocal( &pt);
-	if( whichDialog)
-	{
-		//whichItem = FindDialogItem( whichDialog, pt);
-		//whichItem++;
-		for( i = 0 ; i < CountDITL( whichDialog); i++)
-		{
-			GetDialogItem( whichDialog, i, &itemType, &item, &box);
-			if( PtInRect( pt, &box))
-			{
-				whichItem = i;
-			}
-		}
-	}
-	#endif
-	
-#if MACOS9VERSION
-	LMSetGhostWindow( NULL);
-#endif*/
+	/*#else
+	 whichDialog = GetDialogFromWindow( whichWindow);
+	 pt = evp->where;
+	 GlobalToLocal( &pt);
+	 if( whichDialog)
+	 {
+	 //whichItem = FindDialogItem( whichDialog, pt);
+	 //whichItem++;
+	 for( i = 0 ; i < CountDITL( whichDialog); i++)
+	 {
+	 GetDialogItem( whichDialog, i, &itemType, &item, &box);
+	 if( PtInRect( pt, &box))
+	 {
+	 whichItem = i;
+	 }
+	 }
+	 }
+	 #endif
+	 
+	 #if MACOS9VERSION
+	 LMSetGhostWindow( NULL);
+	 #endif*/
 	
 	ProcessDoItemPress( GetWRefCon( GetDialogWindow( whichDialog)), whichItem, whichDialog);
 	
@@ -1994,91 +1987,91 @@ void ProcessDoItemPress( long ref, short whichItem, DialogPtr whichDialog)
 	{
 		case RefVST:
 			VSTEditorDoItemPress( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefCube:
 			DoItemPressCube( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefPlayer:
 			DoItemPressOscillo( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefSpectrum:
 			DoItemPressSpectrum( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefDigiView:
 			DoItemPressDigiList( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefMozart:
 			DoItemPressMozart( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefInstruList:
 			DoItemPressInstruList( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefPartition:
 			DoItemPressPartition( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefStaff:
 			DoItemPressStaff( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefWave:
 			DoItemPressWave( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefAdaptators:
 			DoItemPressAdap( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefMODList:
 			DoItemPressMODList( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefTools:
 			DoItemPressTools( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefSample:
 			DoItemPressSample( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefQuicktime:
 			DoItemPressQT( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefEqualizer:
 			DoItemPressEQ( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefVisual:
 			DoItemPressVisual( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefPatList:
 			DoItemPressPatList( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefParti:
 			DoItemPressParti( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefHelp:
 			DoItemPressHelpOnline( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefPiano:
 			DoItemPressPiano( whichItem, whichDialog);
-		break;
-		
+			break;
+			
 		case RefClassic:
 			DoItemPressClassic( whichItem, whichDialog);
-		break;
+			break;
 	}
 }
 
@@ -2088,178 +2081,174 @@ void DoGlobalNull(void)
 	Str255		str1, str2;
 	short		i, x;
 	Point		pt;
-
+	
 	theDepth = (*(*GetGDevice())->gdPMap)->pixelSize;
-
+	
 	GetPort( &savePort);
-
+	
 	GetKeys( km);
-
-//if( thePrefs.MidiKeyBoard) DoMIDIHarwareRecord();
-
-if( DebuggingMode)
-{
-	unsigned long			secs;
-	NumVersion				nVers;
-	DateTimeRec				dtrp;
-/*	if( MemError() != noErr)
-	{
-		pStrcpy( str1, "\pMemError ID:");
-		NumToString( MemError(), str2);
-		pStrcat( str1, str2);
-		
-		MyDebugStr( str1);
-	}
 	
-	if( ResError() != noErr)
-	{
-		pStrcpy( str1, "\pResError ID:");
-		NumToString( ResError(), str2);
-		pStrcat( str1, str2);
-		
-		MyDebugStr( str1);
-	}	
+	//if( thePrefs.MidiKeyBoard) DoMIDIHarwareRecord();
 	
-	for( i = 0; i < MAXINSTRU; i++)
+	if( DebuggingMode)
 	{
-		for( x = 0; x < curMusic->fid[ i].numSamples; x++)
+		unsigned long			secs;
+		NumVersion				nVers;
+		DateTimeRec				dtrp;
+#if 0
+		if( MemError() != noErr)
 		{
-			if( curMusic->sample[ curMusic->fid[ i].firstSample + x] == NULL) MyDebugStr( __LINE__, __FILE__, "Sound Size not CORRECT !");
+			pStrcpy( str1, "\pMemError ID:");
+			NumToString( MemError(), str2);
+			pStrcat( str1, str2);
 			
+			MyDebugStr( str1);
+		}
+		
+		if( ResError() != noErr)
+		{
+			pStrcpy( str1, "\pResError ID:");
+			NumToString( ResError(), str2);
+			pStrcat( str1, str2);
 			
-			if( curMusic->sample[ curMusic->fid[ i].firstSample + x]->data != NULL)
+			MyDebugStr( str1);
+		}	
+		
+		for( i = 0; i < MAXINSTRU; i++)
+		{
+			for( x = 0; x < curMusic->fid[ i].numSamples; x++)
 			{
-				if( curMusic->sample[ curMusic->fid[ i].firstSample + x]->size != GetPtrSize( curMusic->sample[ curMusic->fid[ i].firstSample + x]->data))
+				if( curMusic->sample[ curMusic->fid[ i].firstSample + x] == NULL) MyDebugStr( __LINE__, __FILE__, "Sound Size not CORRECT !");
+				
+				
+				if( curMusic->sample[ curMusic->fid[ i].firstSample + x]->data != NULL)
 				{
-					MyDebugStr( __LINE__, __FILE__, "Sound Size not CORRECT !");
+					if( curMusic->sample[ curMusic->fid[ i].firstSample + x]->size != GetPtrSize( curMusic->sample[ curMusic->fid[ i].firstSample + x]->data))
+					{
+						MyDebugStr( __LINE__, __FILE__, "Sound Size not CORRECT !");
+					}
 				}
 			}
 		}
-	}*/
+#endif
+		
+	}
 	
-/*	GetDateTime( &secs);
-	SecondsToDate( secs, &dtrp);
-	
-	if( dtrp.year >= 1999)
-	{
-		curMusic = (MADMusic*) -1L;
-	}*/
-
-}
-
 	if( MADDriver->musicEnd == true)
 	{
 		DoLoadOtherMusic( true);
 	}
-
-VSTEditorDoNull();
-DoVisualNull();
-DoNullPattern();
-DoNullSpectrum();
-DoNull();
-DoNullInstruList();
-DoNullInstrument();
-DoNullEditor();
-DoNullClassic();
-DoNullMozart();
-DoNullTools();
-DoNullDigiWindow();
-//DoNullCubeWindow();
-DoNullWave();
-DoNullMODList();
-DoNullQT();
-DoNullStaff();
-DoAIFFExporting();
-DoNullParti();
-DoNullAdap();
-DoNullInstruView();
-//DoNullTrackView();
-MyNullHook();
-
-if( checkMemory < TickCount())
-{
-	checkMemory = TickCount() + 60;
-	DoNullMemWindow();
-	//if( FreeMem() < 50000) Erreur(9, 0);
-}
-
-if( PianoDlog != NULL && MusicPlayActive == true) DoNullPiano();
-
-if( IsCodeOK()) //??ATTENTION, CA TUE LE QUITEVENT SOUS MACOS X
-{
-	if( TickCount() - StartTime > 72000)		// 20 Minutes
+	
+	VSTEditorDoNull();
+	DoVisualNull();
+	DoNullPattern();
+	DoNullSpectrum();
+	DoNull();
+	DoNullInstruList();
+	DoNullInstrument();
+	DoNullEditor();
+	DoNullClassic();
+	DoNullMozart();
+	DoNullTools();
+	DoNullDigiWindow();
+	//DoNullCubeWindow();
+	DoNullWave();
+	DoNullMODList();
+	DoNullQT();
+	DoNullStaff();
+	DoAIFFExporting();
+	DoNullParti();
+	DoNullAdap();
+	DoNullInstruView();
+	//DoNullTrackView();
+	MyNullHook();
+	
+	if( checkMemory < TickCount())
 	{
-		if( ShowIt)
-		{
-			Erreur( 32, -4);
-			ShowIt = false;
-		}
-		End = true;
+		checkMemory = TickCount() + 60;
+		DoNullMemWindow();
+		//if( FreeMem() < 50000) Erreur(9, 0);
 	}
-}
-
-/*** Active Help ***/
-
-if( thePrefs.ActiveHelp) DoAHelpInfo();
-
-/*******************/
-
-SetPort( savePort);
+	
+	if( PianoDlog != NULL && MusicPlayActive == true) DoNullPiano();
+	
+	if( IsCodeOK()) //??ATTENTION, CA TUE LE QUITEVENT SOUS MACOS X
+	{
+		if( TickCount() - StartTime > 72000)		// 20 Minutes
+		{
+			if( ShowIt)
+			{
+				Erreur( 32, -4);
+				ShowIt = false;
+			}
+			End = true;
+		}
+	}
+	
+	/*** Active Help ***/
+	
+	if( thePrefs.ActiveHelp) DoAHelpInfo();
+	
+	/*******************/
+	
+	SetPort( savePort);
 }
 
 void GlobalDoKey( WindowPtr	theWind, char theChar)
 {
-//	if( theChar == 8) return;
-
+	//if( theChar == 8) return;
+	
 	switch( GetWRefCon( theWind))
 	{
-	case RefInstruList:
-		DoKeyPressInstruList( (short) theChar, -1);
-	break;
-	
-	case RefClassic:
-		DoKeyPressClassic( (short) theChar);
-	break;
-	
-/*	case RefCmd:
-		DoKeyPressCmdDlog( (short) theChar);
-	break;*/
-
-	case RefPatList:
-		DoKeyPressPatList( (short) theChar);
-	break;
-	
-	case RefParti:
-		DoKeyPressParti( (short) theChar);
-	break;
-	
-	case RefMODList:
-		DoKeyPressMODList( (short) theChar);
-	break;
-	
-	case RefPartition:
-		DoKeyPressEditor( (short) theChar);
-	break;
-	
-	case RefStaff:
-		DoKeyPressStaff( (short) theChar);
-	break;
-	
-	case RefWave:
-		DoKeyPressWave( (short) theChar);
-	break;
-	
-	case RefSample:
-		DoKeyPressSample( GetDialogFromWindow( theWind), (short) theChar);
-	break;
-	
-	case RefQuicktime:
-	
-	break;
-	
-	case RefMozart:
-		DoKeyPressMozart( (short) theChar);
-	break;
+		case RefInstruList:
+			DoKeyPressInstruList( (short) theChar, -1);
+			break;
+			
+		case RefClassic:
+			DoKeyPressClassic( (short) theChar);
+			break;
+			
+#if 0
+		case RefCmd:
+			DoKeyPressCmdDlog( (short) theChar);
+			break;
+#endif
+			
+		case RefPatList:
+			DoKeyPressPatList( (short) theChar);
+			break;
+			
+		case RefParti:
+			DoKeyPressParti( (short) theChar);
+			break;
+			
+		case RefMODList:
+			DoKeyPressMODList( (short) theChar);
+			break;
+			
+		case RefPartition:
+			DoKeyPressEditor( (short) theChar);
+			break;
+			
+		case RefStaff:
+			DoKeyPressStaff( (short) theChar);
+			break;
+			
+		case RefWave:
+			DoKeyPressWave( (short) theChar);
+			break;
+			
+		case RefSample:
+			DoKeyPressSample( GetDialogFromWindow( theWind), (short) theChar);
+			break;
+			
+		case RefQuicktime:
+			
+			break;
+			
+		case RefMozart:
+			DoKeyPressMozart( (short) theChar);
+			break;
 	}
 }
 
@@ -2269,8 +2258,8 @@ void ActivateProcedure( Boolean ModalCall)
 	{
 		ShowWindow( GetDialogWindow( AHelpDlog));
 	}
-//	ShowWindow( GetDialogWindow( ToolsDlog));
-//	if( !ModalCall) SelectWindow( GetDialogWindow( ToolsDlog));
+	//ShowWindow( GetDialogWindow( ToolsDlog));
+	//if( !ModalCall) SelectWindow( GetDialogWindow( ToolsDlog));
 	
 	if( !ModalCall)
 	{
@@ -2316,10 +2305,11 @@ void	DoOSEvent( EventRecord *event, Boolean ModalCall)
 				}
 				SetCursor( GetQDGlobalsArrow( &qdarrow));
 			}
-		break;
+			break;
 	}
 }
-/*
+
+#if 0
 void DoActivateEvent( EventRecord *event, Boolean activate, Boolean ModalCall)
 {
 	if( IsAppWindow( (WindowPtr) event->message))
@@ -2341,28 +2331,29 @@ void DoActivateEvent( EventRecord *event, Boolean activate, Boolean ModalCall)
 			SetCursor( GetQDGlobalsArrow( &qdarrow));
 		}
 	}
-}*/
+}
 
-/*void EventLoop3(void)
+void EventLoop3(void)
 {
 	WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 	
-//	theDepth = (*(*GetGDevice())->gdPMap)->pixelSize;
+	//	theDepth = (*(*GetGDevice())->gdPMap)->pixelSize;
 	
-//	if( theOldDepth != theDepth) ReComputeVA();
-//	theDepth = theOldDepth;
+	//	if( theOldDepth != theDepth) ReComputeVA();
+	//	theDepth = theOldDepth;
 	
 	switch(theEvent.what)
 	{
 		case updateEvt:
 			DoUpdateEvent( &theEvent);
-		break;
-		
+			break;
+			
 		case osEvt:
 			DoOSEvent( &theEvent, false);
-		break;
+			break;
 	}
-}*/
+}
+#endif
 
 short ConvertCharToNote( char theChar)
 {
@@ -2380,16 +2371,15 @@ short ConvertCharToNote( char theChar)
 	else return -1;
 }
 
-static Boolean
-IsDialogWindow( WindowPtr window )
+static Boolean IsDialogWindow( WindowPtr window )
 {
-//	WindowAttributes	outAttributes;
+	//WindowAttributes	outAttributes;
 	
 	if ( window == NULL )
 		return FALSE;
-
-//	 GetWindowAttributes( window, &outAttributes);
-
+	
+	//GetWindowAttributes( window, &outAttributes);
+	
     return( GetWindowKind( window ) == dialogKind);
 }
 
@@ -2444,71 +2434,71 @@ void EventLoop2(void)
 	Rect			tempRect;
 	Str255			str1;
 	Boolean			gotEvent;
-
+	
 	gotEvent = WaitNextEvent( everyEvent, &theEvent, 1, gCursorRgn);
 	
 	//	PressInDialog = false;
-		switch(theEvent.what)
-		{
+	switch(theEvent.what)
+	{
 			
-			case activateEvt:
+		case activateEvt:
 			//	DoActivateEvent( &theEvent, (theEvent.modifiers & activeFlag) != 0, false);
-			{
-				WindowPtr theWindow = (WindowPtr) theEvent.message;
-				
+		{
+			WindowPtr theWindow = (WindowPtr) theEvent.message;
+			
 			//	ShowWindow( theWindow);
-				
+			
 			/*	#if MACOS9VERSION
-					if( FrontWindow() == ToolsDlog)
-					{
-						if( theWindow != ToolsDlog) break;
-					}
-				#endif*/
+			 if( FrontWindow() == ToolsDlog)
+			 {
+			 if( theWindow != ToolsDlog) break;
+			 }
+			 #endif*/
+			
+			if ( IsDialogWindow( theWindow ) )
+			{
+				DialogRef		dialog;
+				SInt16			itemHit;
 				
-				if ( IsDialogWindow( theWindow ) )
-				{
-					DialogRef		dialog;
-					SInt16			itemHit;
-					
 				//	dialog = GetDialogFromWindow( theWindow);
+				
+				dialog = NULL;
+				
+				DialogSelect( &theEvent, &dialog, &itemHit);
+				
+				//UpdateALLWindow();
+				
+				{
+					Rect caRect;
 					
-					dialog = NULL;
+					GetPort( &savePort);
+					SetPortWindowPort( theWindow);
+					GetPortBounds( GetWindowPort( theWindow), &caRect);
+					InvalWindowRect( theWindow, &caRect);
+					SetPort( savePort);
 					
-					DialogSelect( &theEvent, &dialog, &itemHit);
-					
-					//UpdateALLWindow();
-					
-					{
-						Rect caRect;
-						
-						GetPort( &savePort);
-						SetPortWindowPort( theWindow);
-						GetPortBounds( GetWindowPort( theWindow), &caRect);
-						InvalWindowRect( theWindow, &caRect);
-						SetPort( savePort);
-						
-						DoUpdateEvent( &theEvent);
-					}
+					DoUpdateEvent( &theEvent);
 				}
 			}
+		}
 			break;
 			
-			case osEvt:
-				DoOSEvent( &theEvent, false);
-				break;
+		case osEvt:
+			DoOSEvent( &theEvent, false);
+			break;
 			
-			case kHighLevelEvent:
-				AEProcessAppleEvent (&theEvent);
-				break;
+		case kHighLevelEvent:
+			AEProcessAppleEvent (&theEvent);
+			break;
 			
-			case keyUp:
+		case keyUp:
 			if( thePrefs.MacKeyBoard)
 			{
 				theChar = theEvent.message & charCodeMask;
 				str1[0] = 1;	str1[1] = theChar;
-			//	UpperString( str1, true);
+				//	UpperString( str1, true);
 				theChar = str1[1];
-
+				
 				if( (short) theChar >= 0 && (short) theChar < 300)
 				{
 					i = thePrefs.PianoKey[ (short) theChar];
@@ -2540,13 +2530,13 @@ void EventLoop2(void)
 										MADDriver->chan[ TrackMem[ x]].maxPtr = MADDriver->chan[ TrackMem[ x]].curPtr;
 										
 										if( PianoRecording) NPianoRecordProcess( 0xFF, 0xFF, 0x10, TrackMem[ x]);
-									break;
-									
+										break;
+										
 									case eNoteOFF:
 										MADDriver->chan[ TrackMem[ x]].KeyOn = false;
 										
 										if( PianoRecording) NPianoRecordProcess( 0xFE, 0xFF, 0xFF, TrackMem[ x]);
-									break;
+										break;
 								}
 								
 								if( MADDriver->DriverSettings.driverMode == MIDISoundDriver)
@@ -2568,123 +2558,123 @@ void EventLoop2(void)
 			}
 			break;
 			
-			case mouseDown:
-				DoMouseDown(theEvent);
-				break; 
-						
-			case updateEvt:
-				DoUpdateEvent( &theEvent);
-				break;
+		case mouseDown:
+			DoMouseDown(theEvent);
+			break; 
 			
-			case nullEvent:
-				mainSystemDrag = true;
-				if( !thePrefs.ThreadUse) DoGlobalNull();
-				else YieldToAnyThread();
-				break;
+		case updateEvt:
+			DoUpdateEvent( &theEvent);
+			break;
 			
-			case keyDown:
-			case autoKey:
-				if( VisualDlog != NULL)
+		case nullEvent:
+			mainSystemDrag = true;
+			if( !thePrefs.ThreadUse) DoGlobalNull();
+			else YieldToAnyThread();
+			break;
+			
+		case keyDown:
+		case autoKey:
+			if( VisualDlog != NULL)
+			{
+				if( oldWindow == GetDialogWindow( VisualDlog))
 				{
-					if( oldWindow == GetDialogWindow( VisualDlog))
+					DoKeyVisual( VisualDlog);
+				}
+			}
+			
+		{
+			for( i = 0; i < 15; i++)
+			{
+				if( FKEYCo[ i] == (theEvent.message & keyCodeMask) >> 8L)
+				{
+					PressFKey( i);
+					break;
+				}
+			}
+			
+			theChar = theEvent.message & charCodeMask;
+			
+			
+			if ((theEvent.modifiers & cmdKey) != 0)
+			{
+				HandleMenuChoice( MenuKey( theChar));
+				
+				if( theChar == deletekey)
+				{
+					if( GetWRefCon( oldWindow) == RefMODList)
 					{
-						DoKeyVisual( VisualDlog);
-					}
+						GlobalDoKey( oldWindow, theChar);
+					} 
 				}
 				
-				{
-					for( i = 0; i < 15; i++)
-					{
-						if( FKEYCo[ i] == (theEvent.message & keyCodeMask) >> 8L)
-						{
-							PressFKey( i);
-							break;
-						}
-					}
-					
-					theChar = theEvent.message & charCodeMask;
-					
-					
-					if ((theEvent.modifiers & cmdKey) != 0)
-					{
-						HandleMenuChoice( MenuKey( theChar));
-						
-						if( theChar == deletekey)
-						{
-							if( GetWRefCon( oldWindow) == RefMODList)
-							{
-								GlobalDoKey( oldWindow, theChar);
-							} 
-						}
-						
-						break;
-					}
-					else if( oldWindow != NULL)
-					{
-						if( AcceptKeysTools() || ( theChar == 9)) DoKeyPressCmdDlog( theChar);
-						else GlobalDoKey( oldWindow, theChar);
-					}
-					
-					//
-					
-					if( theChar == '+') DoSearchUp();
-					else if( theChar == '-') DoSearchDown();
-					if( theChar == 27) DoPause();	// ESC = Pause
-				//	if( theChar == '/') DoChangeLoop( );
-					
-					//
-					
-					if( theEvent.what != autoKey)
-					{
-						short	 ins;
-					
-						///
-					
-						if( oldWindow != NULL)
-						{
-							if( GetWRefCon( oldWindow) == RefSample) break;
-						}
-						
-						if( AcceptKeysTools()) break;
-						
-						if( EditorDlog != NULL)
-						{
-							if( !GetIns( &ins, NULL) && oldWindow != GetDialogWindow( EditorDlog)) break;
-						}
-						
-						///
-						
-						if( thePrefs.MacKeyBoard)
-						{
-							i = ConvertCharToNote( theChar);
-							if( i != -1)
-							{
-									short	track = GetWhichTrackPlay();
-									short	eff = 0, arg = 0, volCmd = 0xFF;
-									
-									if( PianoRecording) NPianoRecordProcess( i, -1, 0xFF, track);
-									else if( EditorDlog != NULL)
-									{
-										if( oldWindow == GetDialogWindow( EditorDlog)) DigitalEditorProcess( i, &eff, &arg, &volCmd);
-									}
-									
-									SelectTouche( i, -1);
-									SelectToucheMozart( i, 0);
-									
-									TouchIn++;
-									if( TouchIn < 0 || TouchIn >= 10) TouchIn = 0;
-									TouchMem[ TouchIn] = i;
-									TrackMem[ TouchIn] = track;
-									if( TrackMem[ TouchIn] < 0 || TrackMem[ TouchIn] >= MADDriver->DriverSettings.numChn) TrackMem[ TouchIn] = 0;
-									
-									if( GetIns( &ins, NULL)) DoPlayInstruInt( i, ins, eff, arg, volCmd, &MADDriver->chan[ track], 0, 0);
-							}
-						}
-					}
-					else DoNullInstrument();
-				}
 				break;
+			}
+			else if( oldWindow != NULL)
+			{
+				if( AcceptKeysTools() || ( theChar == 9)) DoKeyPressCmdDlog( theChar);
+				else GlobalDoKey( oldWindow, theChar);
+			}
+			
+			//
+			
+			if( theChar == '+') DoSearchUp();
+			else if( theChar == '-') DoSearchDown();
+			if( theChar == 27) DoPause();	// ESC = Pause
+			//	if( theChar == '/') DoChangeLoop( );
+			
+			//
+			
+			if( theEvent.what != autoKey)
+			{
+				short	 ins;
+				
+				///
+				
+				if( oldWindow != NULL)
+				{
+					if( GetWRefCon( oldWindow) == RefSample) break;
+				}
+				
+				if( AcceptKeysTools()) break;
+				
+				if( EditorDlog != NULL)
+				{
+					if( !GetIns( &ins, NULL) && oldWindow != GetDialogWindow( EditorDlog)) break;
+				}
+				
+				///
+				
+				if( thePrefs.MacKeyBoard)
+				{
+					i = ConvertCharToNote( theChar);
+					if( i != -1)
+					{
+						short	track = GetWhichTrackPlay();
+						short	eff = 0, arg = 0, volCmd = 0xFF;
+						
+						if( PianoRecording) NPianoRecordProcess( i, -1, 0xFF, track);
+						else if( EditorDlog != NULL)
+						{
+							if( oldWindow == GetDialogWindow( EditorDlog)) DigitalEditorProcess( i, &eff, &arg, &volCmd);
+						}
+						
+						SelectTouche( i, -1);
+						SelectToucheMozart( i, 0);
+						
+						TouchIn++;
+						if( TouchIn < 0 || TouchIn >= 10) TouchIn = 0;
+						TouchMem[ TouchIn] = i;
+						TrackMem[ TouchIn] = track;
+						if( TrackMem[ TouchIn] < 0 || TrackMem[ TouchIn] >= MADDriver->DriverSettings.numChn) TrackMem[ TouchIn] = 0;
+						
+						if( GetIns( &ins, NULL)) DoPlayInstruInt( i, ins, eff, arg, volCmd, &MADDriver->chan[ track], 0, 0);
+					}
+				}
+			}
+			else DoNullInstrument();
 		}
+			break;
+	}
 }
 
 void EventLoop(void)
@@ -2697,21 +2687,21 @@ void EventLoop(void)
 	for(i=0; i<10; i++) TrackMem[i] = 0;
 	
 	SetEventMask( everyEvent);
-//	gCursorRgn = NewRgn();
-//	SetEmptyRgn(gCursorRgn);
+	//	gCursorRgn = NewRgn();
+	//	SetEmptyRgn(gCursorRgn);
 	
 	gCursorRgn = NULL;
-
-//#if MACOS9VERSION
+	
+	//#if MACOS9VERSION
 	do
 	{
 		EventLoop2();
 		
 	} while ( End == false);
-//#else
-//	CarbonEventLoop();
-//#endif
-
+	//#else
+	//	CarbonEventLoop();
+	//#endif
+	
 	//TODO: Window registration?
 	//InstallMenuEventHandler(window, NewEventHandlerUPP(MyWindowEventHandler), 3, list, 0, &ref);
 }
@@ -2723,9 +2713,9 @@ pascal OSStatus CarbonWindowEventHandler(EventHandlerCallRef myHandler, EventRef
     WindowRef			window;
     Rect				bounds;
     OSStatus			result = eventNotHandledErr;
-
+	
     GetEventParameter(event, kEventParamDirectObject, typeWindowRef, NULL, sizeof(window), NULL, &window);
-
+	
     if (GetEventKind(event) == kEventWindowDrawContent)
     {
     	theEvent.message = (unsigned long) window;
@@ -2737,7 +2727,7 @@ pascal OSStatus CarbonWindowEventHandler(EventHandlerCallRef myHandler, EventRef
         InvalWindowRect(window, GetWindowPortBounds(window, &bounds));
         result = noErr;
     }
-
+	
     else if (GetEventKind(event) == kEventWindowClose)
     {
         ClosePlayerWindow( GetDialogFromWindow( window));
@@ -2760,7 +2750,7 @@ pascal short MyGetDirHook(short item, DialogPtr dPtr)
 	Handle				itemHandle;
 	Rect				itemRect;
 	Boolean				MiseAjour = false;
-		
+	
 	switch( item)
 	{
 		case 10:
@@ -2774,8 +2764,8 @@ pascal short MyGetDirHook(short item, DialogPtr dPtr)
 			GetDialogItem (dPtr, item, &itemType, &itemHandle, &itemRect);
 			SetControlValue( (ControlHandle) itemHandle, 255);
 			Quality = item;
-		break;
-		
+			break;
+			
 		case 14:
 		case 15:
 			for( i = 14; i <= 15; i++)
@@ -2786,14 +2776,14 @@ pascal short MyGetDirHook(short item, DialogPtr dPtr)
 			GetDialogItem (dPtr, item, &itemType, &itemHandle, &itemRect);
 			SetControlValue( (ControlHandle) itemHandle, 255);
 			Mode = item;
-		break;
-		
+			break;
+			
 		case -1:
 			GetDialogItem (dPtr, Mode, &itemType, &itemHandle, &itemRect);
 			SetControlValue( (ControlHandle) itemHandle, 255);
 			GetDialogItem (dPtr, Quality, &itemType, &itemHandle, &itemRect);
 			SetControlValue( (ControlHandle) itemHandle, 255);
-		break;
+			break;
 	}
 	return(item);
 }
@@ -2822,7 +2812,7 @@ void DragReferencedWindow( WindowPtr windowToDrag, Point startPoint, const Rect 
 		
 		dragRect = *draggingBounds;
 		if (dragRect.top < topLimit) dragRect.top = topLimit;
-	
+		
 		GetPort( &savePort);
 		
 		SetClip( GetGrayRgn());
@@ -2836,29 +2826,29 @@ void DragReferencedWindow( WindowPtr windowToDrag, Point startPoint, const Rect 
 		
 		// Drag the window around
 		dragResult = DragGrayRgn( dragRegion, startPoint, &dragRect, &dragRect, 0, nil);
-	
+		
 		// Restore the port for coordinate conversion.
 		
 		if( AHelpDlog != NULL) RemoveWindowBar();
 		
 		SetPort(savePort);
-
+		
 		if (dragResult != 0)
 		{
 			horizontalOffset = dragResult & 0xFFFF;
 			verticalOffset = dragResult >> 16;
-	
+			
 			// Only move it if it stayed inside the dragging box.
 			
 			if (verticalOffset != -32768)
 			{
 				Rect	rgnBBox;
 				
-			//	windowContentRegion = NewRgn();
+				//	windowContentRegion = NewRgn();
 				
-			//	GetWindowRegion( windowToDrag, kWindowContentRgn, windowContentRegion);
+				//	GetWindowRegion( windowToDrag, kWindowContentRgn, windowContentRegion);
 				
-			//	GetRegionBounds( windowContentRegion, &rgnBBox);
+				//	GetRegionBounds( windowContentRegion, &rgnBBox);
 				
 				SetPortWindowPort( windowToDrag);
 				
@@ -2876,24 +2866,24 @@ void DragReferencedWindow( WindowPtr windowToDrag, Point startPoint, const Rect 
 				
 				MoveWindow((WindowPtr) windowToDrag, newHorizontalWindowPosition, newVerticalWindowPosition, false);
 				
-			//	DisposeRgn( windowContentRegion);
+				//	DisposeRgn( windowContentRegion);
 			}
 		}
-
+		
 		DisposeRgn(dragRegion);
 	}
 }
 
 void UseSameLeft( WindowPtr whichWindow)
 {
-//	WindowPeek	wPeek;
-//	WStateData	*wspd;
+	//	WindowPeek	wPeek;
+	//	WStateData	*wspd;
 	Rect		caRect, stdRect;
-
-//	wPeek = ( WindowPeek) whichWindow;
 	
-//	wspd = (WStateData*) *(wPeek->dataHandle);
-
+	//	wPeek = ( WindowPeek) whichWindow;
+	
+	//	wspd = (WStateData*) *(wPeek->dataHandle);
+	
 	GetWindowStandardState( whichWindow, &stdRect);
 	
 	GetPortBounds( GetWindowPort( whichWindow), &caRect);
@@ -2905,16 +2895,16 @@ void UseSameLeft( WindowPtr whichWindow)
 }
 
 /*typedef pascal long (*myProcPtr) ( short varCode, WindowPeek window, short message, long param);
-
-
-Boolean TrackInHelpButton( WindowPtr wind, Point where)
-{
-	ProcPtr	myProcPtr = (ProcPtr) *((WindowPeek) wind)->windowDefProc;
-
-	//(long) (*myProcPtr) ( ((WindowPeek) wind)->windowKind, (WindowPeek) wind, wHit, where);
-	
-	return true;
-}*/
+ 
+ 
+ Boolean TrackInHelpButton( WindowPtr wind, Point where)
+ {
+ ProcPtr	myProcPtr = (ProcPtr) *((WindowPeek) wind)->windowDefProc;
+ 
+ //(long) (*myProcPtr) ( ((WindowPeek) wind)->windowKind, (WindowPeek) wind, wHit, where);
+ 
+ return true;
+ }*/
 
 void DoMouseDown(EventRecord theEventI)
 {
@@ -2922,587 +2912,589 @@ void DoMouseDown(EventRecord theEventI)
 	Point			Start;
 	WindowPtr 		whichWindow;
 	char			stillInGoAway;
-//GrafPtr			savedPort;
+	//GrafPtr			savedPort;
 	long			menuChoice;
 	Str255			sStr;
 	Boolean			mouseInDown;
 	Rect			caRect;
 	GrafPtr			savedPort;
-
+	
 	thePart = FindWindow(theEventI.where, &whichWindow);
-
-// A REMETTRE
-
+	
+	// A REMETTRE
+	
 	DesactivateCmdWindow();
 	UpdateALLWindow();
-
-switch( thePart)
-{
-	case inContent:
-		PressInDialog = true;
-	/*	if ( whichWindow != FrontNonFloatingWindow() )
-		{
-			SelectWindow( whichWindow );
-		}
-		else //if( IsDialogEvent( &theEvent))
-		{
-			NEWdoDlgEvt( &theEvent, whichWindow);
-		}*/
-		
-		// A REMETTRE
-		
-		if( whichWindow == GetDialogWindow( ToolsDlog))
-		{
-		//	SelectWindow( whichWindow);
-			//if( IsDialogEvent( &theEvent))
+	
+	switch( thePart)
+	{
+		case inContent:
+			PressInDialog = true;
+			/*	if ( whichWindow != FrontNonFloatingWindow() )
+			 {
+			 SelectWindow( whichWindow );
+			 }
+			 else //if( IsDialogEvent( &theEvent))
+			 {
+			 NEWdoDlgEvt( &theEvent, whichWindow);
+			 }*/
+			
+			// A REMETTRE
+			
+			if( whichWindow == GetDialogWindow( ToolsDlog))
 			{
-				short	whichItem;
-				Point	pt;
-				
-				GetPort( &savedPort);
-				SetPortWindowPort( whichWindow);
-				
-				pt = theEventI.where;
-				GlobalToLocal( &pt);
-				
-				whichItem = FindDialogItem( ToolsDlog, pt);
-				whichItem++;
-				
-			//	if( DialogSelect( &theEventI, &ToolsDlog, &whichItem))
-				{
-					ProcessDoItemPress( GetWRefCon( whichWindow), whichItem, ToolsDlog);
-				}
-				//NEWdoDlgEvt( &theEvent, whichWindow);
-				
-				SetPort( savedPort);
-			}
-		}
-		else
-		{
-			if( GetWRefCon( whichWindow) != RefActiveHelp)
-			{
-				mouseInDown = true;
-				if( oldWindow != whichWindow)
-				{
-					SelectWindow2( whichWindow);
 				//	SelectWindow( whichWindow);
+				//if( IsDialogEvent( &theEvent))
+				{
+					short	whichItem;
+					Point	pt;
 					
-				//	theEventI.message = (long) whichWindow;
-				//	DoUpdateEvent( &theEventI);
-				//	if( GetWRefCon( whichWindow) == RefMozart) mouseInDown = false;
-				
-					PostEvent( mouseDown, 0);
-				}
-				else
-				{					
-					if( mouseInDown)
+					GetPort( &savedPort);
+					SetPortWindowPort( whichWindow);
+					
+					pt = theEventI.where;
+					GlobalToLocal( &pt);
+					
+					whichItem = FindDialogItem( ToolsDlog, pt);
+					whichItem++;
+					
+					//	if( DialogSelect( &theEventI, &ToolsDlog, &whichItem))
 					{
-					//	if( IsDialogEvent( &theEvent))
+						ProcessDoItemPress( GetWRefCon( whichWindow), whichItem, ToolsDlog);
+					}
+					//NEWdoDlgEvt( &theEvent, whichWindow);
+					
+					SetPort( savedPort);
+				}
+			}
+			else
+			{
+				if( GetWRefCon( whichWindow) != RefActiveHelp)
+				{
+					mouseInDown = true;
+					if( oldWindow != whichWindow)
+					{
+						SelectWindow2( whichWindow);
+						//	SelectWindow( whichWindow);
+						
+						//	theEventI.message = (long) whichWindow;
+						//	DoUpdateEvent( &theEventI);
+						//	if( GetWRefCon( whichWindow) == RefMozart) mouseInDown = false;
+						
+						PostEvent( mouseDown, 0);
+					}
+					else
+					{					
+						if( mouseInDown)
 						{
-							NEWdoDlgEvt( &theEvent, whichWindow);
+							//	if( IsDialogEvent( &theEvent))
+							{
+								NEWdoDlgEvt( &theEvent, whichWindow);
+							}
 						}
 					}
 				}
 			}
-		}
-		
-		SetPortWindowPort( whichWindow);
-	break;
-
-	case inZoomIn:
-	case inZoomOut:
-		if( TrackBox( whichWindow, theEventI.where, thePart))
-		{
-			theEvent.what = 0;
-			
-			AdjustZoomIn( whichWindow);
-			
-			EraseGrowIcon( GetDialogFromWindow( whichWindow));
 			
 			SetPortWindowPort( whichWindow);
+			break;
 			
-			switch( GetWRefCon( whichWindow))
+		case inZoomIn:
+		case inZoomOut:
+			if( TrackBox( whichWindow, theEventI.where, thePart))
 			{
-				case RefVisual:
-					VisualFullScreen();
-				break;
+				theEvent.what = 0;
 				
-				case RefTools:
-					SwitchSize();
-					DesactivateCmdWindow();
-				break;
+				AdjustZoomIn( whichWindow);
 				
-				case RefClassic:
-					ZoomWindow( whichWindow, thePart, false);
-					SetPortWindowPort( whichWindow);
-					GetPortBounds( GetWindowPort( whichWindow), &caRect);
-					EraseRect( &caRect);
-					DoGrowClassic();
-				break;
+				EraseGrowIcon( GetDialogFromWindow( whichWindow));
 				
-				case RefPiano:
-					ZoomWindow( whichWindow, thePart, false);
-					SetPortWindowPort( whichWindow);
-					GetPortBounds( GetWindowPort( whichWindow), &caRect);
-					EraseRect( &caRect);
-					DoGrowPiano();
-				break;
+				SetPortWindowPort( whichWindow);
 				
-				case RefPlayer:
-					ZoomWindow( whichWindow, thePart, false);
-					SetPortWindowPort( whichWindow);
-					GetPortBounds( GetWindowPort( whichWindow), &caRect);
-					EraseRect( &caRect);
-					DoGrowOscillo();
-				break;
-	
-				case RefSpectrum:
-					ZoomWindow( whichWindow, thePart, false);
-					SetPortWindowPort( whichWindow);
-					GetPortBounds( GetWindowPort( whichWindow), &caRect);
-					EraseRect( &caRect);
-					DoGrowSpectrum();
-				break;
-	
-				case RefMemory:
-					GetPortBounds( GetWindowPort( whichWindow), &caRect);
-					
-					if( caRect.bottom == 33) MySizeWindow( GetDialogFromWindow( whichWindow), caRect.right, 90, true);
-					else MySizeWindow( GetDialogFromWindow( whichWindow), caRect.right, 33, true);
-				break;
-			
-				case RefMODList:
-					UseSameLeft( whichWindow);
+				switch( GetWRefCon( whichWindow))
+				{
+					case RefVisual:
+						VisualFullScreen();
+						break;
+						
+					case RefTools:
+						SwitchSize();
+						DesactivateCmdWindow();
+						break;
+						
+					case RefClassic:
+						ZoomWindow( whichWindow, thePart, false);
+						SetPortWindowPort( whichWindow);
+						GetPortBounds( GetWindowPort( whichWindow), &caRect);
+						EraseRect( &caRect);
+						DoGrowClassic();
+						break;
+						
+					case RefPiano:
+						ZoomWindow( whichWindow, thePart, false);
+						SetPortWindowPort( whichWindow);
+						GetPortBounds( GetWindowPort( whichWindow), &caRect);
+						EraseRect( &caRect);
+						DoGrowPiano();
+						break;
+						
+					case RefPlayer:
+						ZoomWindow( whichWindow, thePart, false);
+						SetPortWindowPort( whichWindow);
+						GetPortBounds( GetWindowPort( whichWindow), &caRect);
+						EraseRect( &caRect);
+						DoGrowOscillo();
+						break;
+						
+					case RefSpectrum:
+						ZoomWindow( whichWindow, thePart, false);
+						SetPortWindowPort( whichWindow);
+						GetPortBounds( GetWindowPort( whichWindow), &caRect);
+						EraseRect( &caRect);
+						DoGrowSpectrum();
+						break;
+						
+					case RefMemory:
+						GetPortBounds( GetWindowPort( whichWindow), &caRect);
+						
+						if( caRect.bottom == 33) MySizeWindow( GetDialogFromWindow( whichWindow), caRect.right, 90, true);
+						else MySizeWindow( GetDialogFromWindow( whichWindow), caRect.right, 33, true);
+						break;
+						
+					case RefMODList:
+						UseSameLeft( whichWindow);
+						
+						ZoomWindow( whichWindow, thePart, false);
+						theEvent.what = 0;
+						SetPortWindowPort( whichWindow);
+						GetPortBounds( GetWindowPort( whichWindow), &caRect);
+						EraseRect( &caRect);
+						InvalWindowRect( whichWindow, &caRect);
+						DoGrowMODList( GetDialogFromWindow( whichWindow));
+						break;
+						
+					case RefHelp:
+						ZoomWindow( whichWindow, thePart, false);
+						theEvent.what = 0;
+						SetPortWindowPort( whichWindow);
+						GetPortBounds( GetWindowPort( whichWindow), &caRect);
+						EraseRect( &caRect);
+						InvalWindowRect( whichWindow, &caRect);
+						DoGrowHelpOnline();
+						break;
+						
+					case RefParti:
+						UseSameLeft( whichWindow);
+						
+						ZoomWindow( whichWindow, thePart, false);
+						theEvent.what = 0;
+						SetPortWindowPort( whichWindow);
+						GetPortBounds( GetWindowPort( whichWindow), &caRect);
+						EraseRect( &caRect);
+						InvalWindowRect( whichWindow, &caRect);
+						DoGrowParti( GetDialogFromWindow( whichWindow));
+						break;
+						
+					case RefPatList:
+						UseSameLeft( whichWindow);
+						
+						ZoomWindow( whichWindow, thePart, false);
+						theEvent.what = 0;
+						SetPortWindowPort( whichWindow);
+						GetPortBounds( GetWindowPort( whichWindow), &caRect);
+						EraseRect( &caRect);
+						InvalWindowRect( whichWindow, &caRect);
+						DoGrowPatList( GetDialogFromWindow( whichWindow));
+						break;
+						
+					case RefInstruList:
+						UseSameLeft( whichWindow);
+						
+						ZoomWindow( whichWindow, thePart, false);
+						theEvent.what = 0;
+						SetPortWindowPort( whichWindow);
+						GetPortBounds( GetWindowPort( whichWindow), &caRect);
+						EraseRect( &caRect);
+						InvalWindowRect( whichWindow, &caRect);
+						DoGrowInstruList( GetDialogFromWindow( whichWindow));
+						break;
+						
+					case RefStaff:
+						ZoomWindow( whichWindow, thePart, false);
+						theEvent.what = 0;
+						
+						DoGrowStaff();
+						break;
+						
+					case RefWave:
+						ZoomWindow( whichWindow, thePart, false);
+						theEvent.what = 0;
+						
+						DoGrowWave();
+						break;
+						
+					case RefPartition:
+						ZoomWindow( whichWindow, thePart, false);
+						theEvent.what = 0;
+						
+						DoGrowPartition();
+						break;
+						
+					case RefAdaptators:
+						UseSameLeft( whichWindow);
+						
+						ZoomWindow( whichWindow, thePart, false);
+						theEvent.what = 0;
+						
+						SetPortWindowPort( whichWindow);
+						GetPortBounds( GetWindowPort( whichWindow), &caRect);
+						EraseRect( &caRect);
+						InvalWindowRect( whichWindow, &caRect);
+						
+						DoGrowAdap( GetDialogFromWindow( whichWindow));
+						break;
+						
+					case RefDigiView:
+						ZoomWindow( whichWindow, thePart, false);
+						theEvent.what = 0;
+						
+						SetPortWindowPort( whichWindow);
+						GetPortBounds( GetWindowPort( whichWindow), &caRect);
+						EraseRect( &caRect);
+						InvalWindowRect( whichWindow, &caRect);
+						
+						DoGrowDigi( GetDialogFromWindow( whichWindow));
+						break;
+						
+					case RefSample:
+						ZoomWindow( whichWindow, thePart, false);
+						theEvent.what = 0;
+						
+						DoGrowSample( GetDialogFromWindow( whichWindow));
+						break;
+						
+					case RefMozart:
+						ZoomWindow( whichWindow, thePart, false);
+						theEvent.what = 0;
+						
+						DoGrowMozart( GetDialogFromWindow( whichWindow));
+						break;
+						
+					case RefInstruView:
+						DoGrowInstruView();
+						break;
+						
+						/*	case RefTrackView:
+						 DoGrowTrackView();
+						 break;*/
+				}
 				
-					ZoomWindow( whichWindow, thePart, false);
-					theEvent.what = 0;
-					SetPortWindowPort( whichWindow);
-					GetPortBounds( GetWindowPort( whichWindow), &caRect);
-					EraseRect( &caRect);
-					InvalWindowRect( whichWindow, &caRect);
-					DoGrowMODList( GetDialogFromWindow( whichWindow));
-				break;
-			
-				case RefHelp:
-					ZoomWindow( whichWindow, thePart, false);
-					theEvent.what = 0;
-					SetPortWindowPort( whichWindow);
-					GetPortBounds( GetWindowPort( whichWindow), &caRect);
-					EraseRect( &caRect);
-					InvalWindowRect( whichWindow, &caRect);
-					DoGrowHelpOnline();
-				break;
-			
-				case RefParti:
-					UseSameLeft( whichWindow);
+				//	wspd->stdState = savedStdState;
 				
-					ZoomWindow( whichWindow, thePart, false);
-					theEvent.what = 0;
-					SetPortWindowPort( whichWindow);
-					GetPortBounds( GetWindowPort( whichWindow), &caRect);
-					EraseRect( &caRect);
-					InvalWindowRect( whichWindow, &caRect);
-					DoGrowParti( GetDialogFromWindow( whichWindow));
-				break;
-			
-				case RefPatList:
-					UseSameLeft( whichWindow);
-				
-					ZoomWindow( whichWindow, thePart, false);
-					theEvent.what = 0;
-					SetPortWindowPort( whichWindow);
-					GetPortBounds( GetWindowPort( whichWindow), &caRect);
-					EraseRect( &caRect);
-					InvalWindowRect( whichWindow, &caRect);
-					DoGrowPatList( GetDialogFromWindow( whichWindow));
-				break;
-			
-				case RefInstruList:
-					UseSameLeft( whichWindow);
-				
-					ZoomWindow( whichWindow, thePart, false);
-					theEvent.what = 0;
-					SetPortWindowPort( whichWindow);
-					GetPortBounds( GetWindowPort( whichWindow), &caRect);
-					EraseRect( &caRect);
-					InvalWindowRect( whichWindow, &caRect);
-					DoGrowInstruList( GetDialogFromWindow( whichWindow));
-				break;
-				
-				case RefStaff:
-					ZoomWindow( whichWindow, thePart, false);
-					theEvent.what = 0;
-					
-					DoGrowStaff();
-				break;
-				
-				case RefWave:
-					ZoomWindow( whichWindow, thePart, false);
-					theEvent.what = 0;
-					
-					DoGrowWave();
-				break;
-				
-				case RefPartition:
-					ZoomWindow( whichWindow, thePart, false);
-					theEvent.what = 0;
-					
-					DoGrowPartition();
-				break;
-				
-				case RefAdaptators:
-					UseSameLeft( whichWindow);
-				
-					ZoomWindow( whichWindow, thePart, false);
-					theEvent.what = 0;
-					
-					SetPortWindowPort( whichWindow);
-					GetPortBounds( GetWindowPort( whichWindow), &caRect);
-					EraseRect( &caRect);
-					InvalWindowRect( whichWindow, &caRect);
-					
-					DoGrowAdap( GetDialogFromWindow( whichWindow));
-				break;
-				
-				case RefDigiView:
-					ZoomWindow( whichWindow, thePart, false);
-					theEvent.what = 0;
-					
-					SetPortWindowPort( whichWindow);
-					GetPortBounds( GetWindowPort( whichWindow), &caRect);
-					EraseRect( &caRect);
-					InvalWindowRect( whichWindow, &caRect);
-					
-					DoGrowDigi( GetDialogFromWindow( whichWindow));
-				break;
-				
-				case RefSample:
-					ZoomWindow( whichWindow, thePart, false);
-					theEvent.what = 0;
-				
-					DoGrowSample( GetDialogFromWindow( whichWindow));
-				break;
-			
-				case RefMozart:
-					ZoomWindow( whichWindow, thePart, false);
-					theEvent.what = 0;
-					
-					DoGrowMozart( GetDialogFromWindow( whichWindow));
-				break;
-			
-				case RefInstruView:
-					DoGrowInstruView();
-				break;
-				
-			/*	case RefTrackView:
-					DoGrowTrackView();
-				break;*/
+				EraseGrowIcon( GetDialogFromWindow( whichWindow));
 			}
-			
-		//	wspd->stdState = savedStdState;
-
-			EraseGrowIcon( GetDialogFromWindow( whichWindow));
-		}
-		Start.h = Start.v = 0;
-		LocalToGlobal( &Start);
-		
-		thePrefs.WinPos[ GetWRefCon( whichWindow)].v = Start.v;
-		thePrefs.WinPos[ GetWRefCon( whichWindow)].h = Start.h;
-	break;
-
-	case inDrag:
-		if( oldWindow != whichWindow)
-		{
-			SelectWindow2( whichWindow);
-			theEventI.message = (long) whichWindow;
-			DoUpdateEvent( &theEventI);
-		}
-		else SelectWindow2( whichWindow);
-		SetPortWindowPort( whichWindow);
-
-	/*	if( IsPressed( 0x3A) && HelpAvalaible)
-		{
-			SetCursor( &HelpCrsr);
-			
-			while( Button());
-			
-			switch( GetWRefCon( whichWindow))
-			{
-				case 	RefInstruList:		ShowSection( 0);	break;
-				case 	RefPartition:		ShowSection( 0);	break;
-				case 	RefInstruEdit:		ShowSection( 0);	break;
-				case 	RefBoutons:			ShowSection( 0);	break;
-				case 	RefPatList:			ShowSection( 0);	break;
-				case 	RefAdaptators:		ShowSection( 0);	break;
-				case 	RefMODList:			ShowSection( 0);	break;
-				case 	RefTools:			ShowSection( 0);	break;
-				case 	RefSample:			ShowSection( 0);	break;
-				case 	RefPiano:			ShowSection( 0);	break;
-				case 	RefClassic:			ShowSection( 0);	break;
-				case 	RefPlayer:			ShowSection( 0);	break;
-				case 	RefMozart:			ShowSection( 0);	break;
-				case 	RefInstruView:		ShowSection( 0);	break;
-				case 	RefDigiView:		ShowSection( 0);	break;
-				case 	RefCmd:				ShowSection( 0);	break;
-				case 	RefPref:			ShowSection( 0);	break;
-				case 	RefTrackView:		ShowSection( 0);	break;
-				case 	RefMemory:			ShowSection( 0);	break;
-				case 	RefSpectrum:		ShowSection( 0);	break;
-				case 	RefParti:			ShowSection( 0);	break;
-				case 	RefHelp:			ShowSection( 0);	break;
-			}
-			
-			SetCursor( GetQDGlobalsArrow( &qdarrow));
-		}
-		else*/
-		{
-			BitMap	screenBits;
-			
-			GetQDGlobalsScreenBits( &screenBits);
-			
-			DragWindow( whichWindow, theEventI.where, &screenBits.bounds);			
-			
 			Start.h = Start.v = 0;
 			LocalToGlobal( &Start);
 			
-			
 			thePrefs.WinPos[ GetWRefCon( whichWindow)].v = Start.v;
 			thePrefs.WinPos[ GetWRefCon( whichWindow)].h = Start.h;
-		}
-	break;
-
-	case inGoAway:
-		stillInGoAway = TrackGoAway(whichWindow, theEventI.where);
-		if( stillInGoAway )
-		{	
-			GetKeys( km);
-			if( IsPressed( 0x3A))
+			break;
+			
+		case inDrag:
+			if( oldWindow != whichWindow)
 			{
-				CloseALLWindow();
+				SelectWindow2( whichWindow);
+				theEventI.message = (long) whichWindow;
+				DoUpdateEvent( &theEventI);
+			}
+			else SelectWindow2( whichWindow);
+			SetPortWindowPort( whichWindow);
+			
+#if 0
+			if( IsPressed( 0x3A) && HelpAvalaible)
+			{
+				SetCursor( &HelpCrsr);
 				
-				SelectWindow2( FrontWindow());
+				while( Button());
+				
+				switch( GetWRefCon( whichWindow))
+				{
+					case 	RefInstruList:		ShowSection( 0);	break;
+					case 	RefPartition:		ShowSection( 0);	break;
+					case 	RefInstruEdit:		ShowSection( 0);	break;
+					case 	RefBoutons:			ShowSection( 0);	break;
+					case 	RefPatList:			ShowSection( 0);	break;
+					case 	RefAdaptators:		ShowSection( 0);	break;
+					case 	RefMODList:			ShowSection( 0);	break;
+					case 	RefTools:			ShowSection( 0);	break;
+					case 	RefSample:			ShowSection( 0);	break;
+					case 	RefPiano:			ShowSection( 0);	break;
+					case 	RefClassic:			ShowSection( 0);	break;
+					case 	RefPlayer:			ShowSection( 0);	break;
+					case 	RefMozart:			ShowSection( 0);	break;
+					case 	RefInstruView:		ShowSection( 0);	break;
+					case 	RefDigiView:		ShowSection( 0);	break;
+					case 	RefCmd:				ShowSection( 0);	break;
+					case 	RefPref:			ShowSection( 0);	break;
+					case 	RefTrackView:		ShowSection( 0);	break;
+					case 	RefMemory:			ShowSection( 0);	break;
+					case 	RefSpectrum:		ShowSection( 0);	break;
+					case 	RefParti:			ShowSection( 0);	break;
+					case 	RefHelp:			ShowSection( 0);	break;
+				}
+				
+				SetCursor( GetQDGlobalsArrow( &qdarrow));
 			}
 			else
+#endif
 			{
-				SelectWindow2( NextWindowVisible( whichWindow));
+				BitMap	screenBits;
 				
-				CheckOneWindow( whichWindow);
+				GetQDGlobalsScreenBits( &screenBits);
 				
-				ClosePlayerWindow( GetDialogFromWindow( whichWindow));
+				DragWindow( whichWindow, theEventI.where, &screenBits.bounds);			
+				
+				Start.h = Start.v = 0;
+				LocalToGlobal( &Start);
+				
+				
+				thePrefs.WinPos[ GetWRefCon( whichWindow)].v = Start.v;
+				thePrefs.WinPos[ GetWRefCon( whichWindow)].h = Start.h;
 			}
-		}
-	break;
-		
-	case inMenuBar:
-		menuChoice = MenuSelect(theEventI.where);
-	//	if( theMenuRgn != NULL) ResetMenuRgn( true);
-
-		HandleMenuChoice( menuChoice);
-	break;
-		
-	case inGrow:
-		switch( GetWRefCon( whichWindow))
+			break;
+			
+		case inGoAway:
+			stillInGoAway = TrackGoAway(whichWindow, theEventI.where);
+			if( stillInGoAway )
+			{	
+				GetKeys( km);
+				if( IsPressed( 0x3A))
+				{
+					CloseALLWindow();
+					
+					SelectWindow2( FrontWindow());
+				}
+				else
+				{
+					SelectWindow2( NextWindowVisible( whichWindow));
+					
+					CheckOneWindow( whichWindow);
+					
+					ClosePlayerWindow( GetDialogFromWindow( whichWindow));
+				}
+			}
+			break;
+			
+		case inMenuBar:
+			menuChoice = MenuSelect(theEventI.where);
+			//if( theMenuRgn != NULL) ResetMenuRgn( true);
+			
+			HandleMenuChoice( menuChoice);
+			break;
+			
+		case inGrow:
+			switch( GetWRefCon( whichWindow))
 		{
 			case RefPiano:
 				DoGrowPiano();
-			break;
-
+				break;
+				
 			case RefSpectrum:
 				DoGrowSpectrum();
-			break;
-
+				break;
+				
 			case RefPlayer:
 				DoGrowOscillo();
-			break;
-			
+				break;
+				
 			case RefHelp:
 				DoGrowHelpOnline();
-			break;
-			
+				break;
+				
 			case RefParti:
 				DoGrowParti( GetDialogFromWindow( whichWindow));
-			break;
-			
+				break;
+				
 			case RefPatList:
 				DoGrowPatList( GetDialogFromWindow( whichWindow));
-			break;
-			
+				break;
+				
 			case RefMozart:
 				DoGrowMozart( GetDialogFromWindow( whichWindow));
-			break;
-			
+				break;
+				
 			case RefSample:
 				DoGrowSample( GetDialogFromWindow( whichWindow));
-			break;
-			
+				break;
+				
 			case RefInstruList:
 				DoGrowInstruList( GetDialogFromWindow( whichWindow));
-			break;
-			
+				break;
+				
 			case RefPartition:
 				DoGrowPartition();
-			break;
-			
+				break;
+				
 			case RefWave:
 				DoGrowWave();
-			break;
-			
+				break;
+				
 			case RefStaff:
 				DoGrowStaff();
-			break;
-			
+				break;
+				
 			case RefAdaptators:
 				DoGrowAdap( GetDialogFromWindow( whichWindow));
-			break;
-			
+				break;
+				
 			case RefDigiView:
 				DoGrowDigi( GetDialogFromWindow( whichWindow));
-			break;
-			
+				break;
+				
 			case RefMODList:
 				DoGrowMODList( GetDialogFromWindow( whichWindow));
-			break;
-			
+				break;
+				
 			case RefTools:
-			break;
-			
+				break;
+				
 			case RefClassic:
 				DoGrowClassic();
-			break;
+				break;
 		}
-		GetPortBounds( GetWindowPort( whichWindow), &caRect);
-		
-		thePrefs.WinHi[ GetWRefCon( whichWindow)] = caRect.bottom;
-	break;
-}
+			GetPortBounds( GetWindowPort( whichWindow), &caRect);
+			
+			thePrefs.WinHi[ GetWRefCon( whichWindow)] = caRect.bottom;
+			break;
+	}
 }
 
 void DoUpdateEvent(EventRecord *theEventI)
 {
 	if( theEventI->message == 0) MyDebugStr( __LINE__, __FILE__, "Err DoUpdateEvent");
 	
-//	if( EmptyRgn( ((WindowPeek) theEventI->message)->updateRgn)) return;
+	//if( EmptyRgn( ((WindowPeek) theEventI->message)->updateRgn)) return;
 	
 	switch( GetWRefCon(( (WindowPtr) theEventI->message)))
 	{
 		case RefVST:
 			VSTEditorUpdate( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
-		//case RefCube:
+			break;
+			
+			//case RefCube:
 			//UpdateCubeWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
 			//break;
-	
+			
 		case RefPref:
 			UpdatePrefWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefMozart:
 			UpdateMozartWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefPlayer:
 			UpdateOscilloWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefSpectrum:
 			UpdateSpectrumWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefInstruList:
 			UpdateInstruListWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
 			break;
-		
+			
 		case RefInstruView:
 			UpdateInstruView(GetDialogFromWindow( (WindowPtr) theEventI->message));
 			break;
-		
-	/*	case RefTrackView:
-			UpdateTrackView(GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;*/
-		
+			
+			/*	case RefTrackView:
+			 UpdateTrackView(GetDialogFromWindow( (WindowPtr) theEventI->message));
+			 break;*/
+			
 		case RefPartition:
 			UpdatePartitionWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefStaff:
 			UpdateStaffWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefWave:
 			UpdateWaveWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefAdaptators:
 			UpdateAdapWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefMODList:
 			UpdateMODListWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefTools:
 			UpdateToolsWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefSample:
 			UpdateSampleWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefQuicktime:
 			UpdateQTWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefEqualizer:
 			UpdateEQWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefVisual:
 			UpdateVisualWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefHelp:
 			UpdateHelpOnline();
-		break;
-		
+			break;
+			
 		case RefActiveHelp:
 			UpdateAHelpWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefParti:
 			UpdatePartiWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefPatList:
 			UpdatePatListWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefPiano:
 			UpdatePianoWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
-	/*	case RefFindReplace:
-			UpdateFind( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-	*/	
+			break;
+			
+			/*	case RefFindReplace:
+			 UpdateFind( GetDialogFromWindow( (WindowPtr) theEventI->message));
+			 break;
+			 */	
 		case RefClassic:
 			UpdateClassicWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefDigiView:
 			UpdateDigiListWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefMemory:
 			UpdateMemWindow( GetDialogFromWindow( (WindowPtr) theEventI->message));
-		break;
-		
+			break;
+			
 		case RefSndExport:
 			UpdateWorkingWindow();
-		break;
-		
+			break;
+			
 		default:
-		break;
+			break;
 	}
 }
 
@@ -3531,7 +3523,7 @@ void UpdateALLWindow(void)
 		}	
 		//if (QDIsPortBuffered( GetWindowPort( aWind)))
 		//QDFlushPortBuffer( GetWindowPort( aWind), NULL);
-
+		
 		aWind = GetNextWindow( aWind);
 	}
 }
@@ -3564,12 +3556,12 @@ void ForceUpdateALLWindow(void)
 
 Boolean PtRect( Point	thePoint,	Rect *theRect)
 {
-
-	if(		thePoint.h  <= theRect->right &&
-			thePoint.h  >= theRect->left  &&
-			thePoint.v  <= theRect->bottom &&
-			thePoint.v  >= theRect->top) return true;
-			else return false;
+	
+	if(thePoint.h  <= theRect->right &&
+	   thePoint.h  >= theRect->left  &&
+	   thePoint.v  <= theRect->bottom &&
+	   thePoint.v  >= theRect->top) return true;
+	else return false;
 }
 
 extern Str255	versString;
@@ -3579,41 +3571,41 @@ void DrawVERSION(void)
 	Str255				strTemp;
 	char				str2[ 300];
 	Handle				aHandle;
-
-	/**********************/
-		ForeColor( whiteColor);
-		TextFont( 21);		TextSize( 12);
-		
-		pStrcpy( (unsigned char*) versString, "\pVers:");
-		
-		aHandle = GetResource( 'vers', 1);
-		pStrcpy( strTemp, (unsigned char*) (*aHandle) + 6L);
-		ReleaseResource( aHandle);
-		
-		pStrcat( (unsigned char*) versString, strTemp);
-		pStrcpy( (unsigned char*) str2, versString);
-		
-		MyP2CStr( (unsigned char*) str2);
-		WriteCText( GetDialogFromWindow( FrontWindow()), 2, (Ptr) str2);
-		
-	/*	strcpy( str2, "Internal: ");
-		NumToString( (long) thePrefs.NoStart, strTemp);
-		MyP2CStr( strTemp);
-		strcat( str2, (Ptr) strTemp);
-		WriteCText( FrontWindow(), 3, (Ptr) str2);
-	*/
-		
 	
-		TextFont( 0);	TextSize( 0);
-		ForeColor( blackColor);
+	/**********************/
+	ForeColor( whiteColor);
+	TextFont( 21);		TextSize( 12);
+	
+	pStrcpy( (unsigned char*) versString, "\pVers:");
+	
+	aHandle = GetResource( 'vers', 1);
+	pStrcpy( strTemp, (unsigned char*) (*aHandle) + 6L);
+	ReleaseResource( aHandle);
+	
+	pStrcat( (unsigned char*) versString, strTemp);
+	pStrcpy( (unsigned char*) str2, versString);
+	
+	MyP2CStr( (unsigned char*) str2);
+	WriteCText( GetDialogFromWindow( FrontWindow()), 2, (Ptr) str2);
+	
+	/*	strcpy( str2, "Internal: ");
+	 NumToString( (long) thePrefs.NoStart, strTemp);
+	 MyP2CStr( strTemp);
+	 strcat( str2, (Ptr) strTemp);
+	 WriteCText( FrontWindow(), 3, (Ptr) str2);
+	 */
+	
+	
+	TextFont( 0);	TextSize( 0);
+	ForeColor( blackColor);
 	/**********************/
 }
 
 /**************************************************************************************************
-*
-*	Start Up Proceeding, open or print file, or create a new file.
-*
-**************************************************************************************************/
+ *
+ *	Start Up Proceeding, open or print file, or create a new file.
+ *
+ **************************************************************************************************/
 
 static DialogPtr	myStartUpDlog;
 
@@ -3623,17 +3615,17 @@ void StartDialog(void)
 	short		itemHit;
 	
 	SetCursor( &watchCrsr);
-
+	
 	myStartUpDlog = GetNewDialog( 171, NULL, (WindowPtr) -1L);
 	if( myStartUpDlog == NULL) ExitToShell();
 	SetPortDialogPort( myStartUpDlog);
-
+	
 	{
 		short				itemType,i;
 		Handle				itemHandle;
 		Rect				itemRect;
 		Str255				text;
-	
+		
 		GetDialogItem( myStartUpDlog, 2, &itemType, &itemHandle, &itemRect);
 		OffsetRect( &itemRect, 0, -50);
 		SetDialogItem( myStartUpDlog, 2, itemType, itemHandle, &itemRect);
@@ -3642,8 +3634,8 @@ void StartDialog(void)
 	DrawDialog( myStartUpDlog);
 	WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 	
-//	if (QDIsPortBuffered( GetDialogPort( myStartUpDlog)))
-//		QDFlushPortBuffer( GetDialogPort( myStartUpDlog), NULL);
+	//	if (QDIsPortBuffered( GetDialogPort( myStartUpDlog)))
+	//		QDFlushPortBuffer( GetDialogPort( myStartUpDlog), NULL);
 	
 	if( DebuggingMode)
 	{
@@ -3661,7 +3653,7 @@ void StartDialog(void)
 		//Unless we do this, the "Debugging Mode" text won't display unless a window moves over it
 		if (QDIsPortBuffered( GetDialogPort( myStartUpDlog)))
 			QDFlushPortBuffer( GetDialogPort( myStartUpDlog), NULL);
-
+		
 	}
 }
 
@@ -3669,7 +3661,7 @@ void EndDialog(void)
 {
 	long		oldTicks;
 	short		itemHit;
-
+	
 	SetPortDialogPort( myStartUpDlog);
 	thePrefs.NoStart++;
 	WritePreferences();
@@ -3686,7 +3678,7 @@ void EndDialog(void)
 	
 	FlushEvents( everyEvent, 0);
 	
-//	Delay( 180, &oldTicks);
+	//	Delay( 180, &oldTicks);
 	
 	DisposeDialog( myStartUpDlog);
 }
@@ -3702,7 +3694,7 @@ pascal Boolean MyCustomFileFilter2( CInfoPBRec	*pb, void *myDataPtr)
 	FSSpec		spec;
 	OSType		type;
 	char		tempC[ 5];
-
+	
 	if( pb == NULL) 
 	{
 		MyDebugStr( __LINE__, __FILE__, "pb is NULL!");
@@ -3724,13 +3716,13 @@ pascal Boolean MyCustomFileFilter2( CInfoPBRec	*pb, void *myDataPtr)
 			}
 			
 			if( QTTypeConversion( pb->hFileInfo.ioFlFndrInfo.fdType)) return false;
-		break;
-		
+			break;
+			
 		case allReadable:
 			RollCursor();
 			
 			if( EqualString("\pIcon", pb->hFileInfo.ioNamePtr, false, false)) MyDebugStr( __LINE__, __FILE__, "");
-	
+			
 			
 			if( pb->hFileInfo.ioFlFndrInfo.fdType == 'sTAT') return false;
 			if( pb->hFileInfo.ioFlFndrInfo.fdType == 'STCf') return false;
@@ -3741,12 +3733,12 @@ pascal Boolean MyCustomFileFilter2( CInfoPBRec	*pb, void *myDataPtr)
 			
 			if( MADMusicIdentifyFSp( gMADLib, tempC, &spec) == noErr) return false;
 			else return true;
-		break;
-				
+			break;
+			
 		case allFiles:		return false;	break;
-		
+			
 		case MADK:	if( pb->hFileInfo.ioFlFndrInfo.fdType == 'MADK') return false;	break;
-		
+			
 		default:	if( pb->hFileInfo.ioFlFndrInfo.fdType == specificType) return false;	break;
 	}
 	
@@ -3781,7 +3773,7 @@ static OSType		plugListO[ 25];
 pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 {
 	Boolean				MiseAjour = false;
-//	StandardFileReply	*IntReply;
+	//	StandardFileReply	*IntReply;
 	GrafPtr				savePort;
 	FInfo				fndrInfo;
 	Str255				str;
@@ -3791,7 +3783,7 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 	SetPortDialogPort( theDialog);
 	
 	if( myDataPtr == NULL) MyDebugStr( __LINE__, __FILE__, "");
-
+	
 	IntReply = (StandardFileReply*) myDataPtr;
 	
 	switch( item)
@@ -3807,11 +3799,11 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 					case allFiles:
 						MADMusicIdentifyFSp( gMADLib, tempC, &IntReply->sfFile);
 						type = Ptr2OSType( tempC);
-					break;
-					
+						break;
+						
 					default:
 						type = IntReply->sfType;
-					break;
+						break;
 				}
 				
 				if( type == '!!!!' || CheckFileType( IntReply->sfFile, type) == false)
@@ -3827,15 +3819,15 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 					// SetFInfo( IntReply->sfFile.name, 0, &fndrInfo);
 				}
 			}
-		break;
-		
+			break;
+			
 		case sfHookFirstCall:
 			WriteSupportedFormat( theDialog);
 			
 			GetMenuItemText( showWhatMenu, showWhat, str);
 			SetDText( theDialog, 19, str);
-		break;
-		
+			break;
+			
 		case 19:
 		case 20:
 		{
@@ -3855,9 +3847,9 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 			
 			SetItemMark( showWhatMenu, showWhat, 0xa5);
 			mresult = PopUpMenuSelect(	showWhatMenu,
-										Zone.v,
-										Zone.h,
-										showWhat );
+									  Zone.v,
+									  Zone.h,
+									  showWhat );
 			SetItemMark( showWhatMenu, showWhat, 0);
 			
 			if ( HiWord( mresult ) != 0 )
@@ -3877,14 +3869,14 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 			
 			DeleteMenu( GetMenuID( showWhatMenu));
 		}
-		break;
-		
+			break;
+			
 		case 16:
 			item = getOpen;
 			
 			AddAll = true;
-		break;
-		
+			break;
+			
 		case 17:	// Preview
 			if( IntReply->sfType != 'sTAT' && IntReply->sfType != 'STCf')
 			{
@@ -3896,11 +3888,11 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 					case allFiles:
 						MADMusicIdentifyFSp( gMADLib, tempC, &IntReply->sfFile);
 						type = Ptr2OSType( tempC);
-					break;
-					
+						break;
+						
 					default:
 						type = IntReply->sfType;
-					break;
+						break;
 				}
 				
 				if( type == '!!!!' || CheckFileType( IntReply->sfFile, type) == false)
@@ -3912,7 +3904,7 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 				{
 					MADMusic	*savedPartition;
 					
-				//	if( MADCopyCurrentPartition( &savedPartition) == noErr)
+					//	if( MADCopyCurrentPartition( &savedPartition) == noErr)
 					{
 						MADDriver->Reading = false;
 						MADPurgeTrack( MADDriver);
@@ -3929,7 +3921,7 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 						if( MADPlugAvailable( gMADLib, tempC))		// Is available a plug to open this file?
 						{
 							if( MADLoadMusicFilePString( gMADLib, &savedPartition, tempC, IntReply->sfFile.name) == noErr)			// Load this music with help of Plugs
-																															// in application folder or in 'Plugs' folder
+								// in application folder or in 'Plugs' folder
 							{
 								MADAttachDriverToMusic( MADDriver, savedPartition, NULL);
 								
@@ -3945,7 +3937,7 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 								while( Button()) {};
 								
 								MADDriver->Reading = false;		// Stop reading current partition
-							//	MADStopDriver();						// Stop driver interrupt function
+								//	MADStopDriver();						// Stop driver interrupt function
 								
 								MADAttachDriverToMusic( MADDriver, curMusic, NULL);
 								
@@ -3955,14 +3947,14 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 						
 						FlushEvents( everyEvent,0);
 						
-					//	MADDriver->Reading = readingCopy;
+						//	MADDriver->Reading = readingCopy;
 						
 						SetCursor( GetQDGlobalsArrow( &qdarrow));
 					}
 				}
 			}
-		break;
-		
+			break;
+			
 		case 10:	// Add
 			if( IntReply->sfType != 'sTAT' && IntReply->sfType != 'STCf')
 			{
@@ -3974,11 +3966,11 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 					case allFiles:
 						MADMusicIdentifyFSp( gMADLib, tempC, &IntReply->sfFile);
 						type = Ptr2OSType( tempC);
-					break;
-					
+						break;
+						
 					default:
 						type = IntReply->sfType;
-					break;
+						break;
 				}
 				
 				if( type == '!!!!' || CheckFileType( IntReply->sfFile, type) == false)
@@ -3991,17 +3983,17 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 					HSetVol( NULL, IntReply->sfFile.vRefNum, IntReply->sfFile.parID);
 					
 					AddMODList( true,
-								IntReply->sfFile.name,
-								IntReply->sfFile.vRefNum,
-								IntReply->sfFile.parID);
+							   IntReply->sfFile.name,
+							   IntReply->sfFile.vRefNum,
+							   IntReply->sfFile.parID);
 				}
 			}
 			else
 			{
 				ImportFile( IntReply->sfFile.name, IntReply->sfFile.vRefNum, IntReply->sfFile.parID, IntReply->sfType);
 			}
-		break;
-		
+			break;
+			
 		case -5:
 		case sfHookNullEvent:
 			if( needUp)
@@ -4028,18 +4020,18 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 				
 				needUp = false;
 			}
-		break;
-		
+			break;
+			
 		case sfHookOpenFolder:		
 		case sfItemFileListUser:
 		case sfItemDesktopButton:
 		case sfHookSetActiveOffset:
 			needUp = true;
-		break;
-		
+			break;
+			
 		default:
 			if( (item & 0xF000) == 0x1000) needUp = true;
-		break;
+			break;
 	}
 	
 	SetPort( savePort);
@@ -4062,7 +4054,7 @@ void NOpenMusic()
 		
 		AddAll = false;
 		
-//#if MACOS9VERSION
+		//#if MACOS9VERSION
 		if( NGetFileName( &reply) == noErr)
 		{
 			SetCursor( GetQDGlobalsArrow( &qdarrow));
@@ -4087,7 +4079,8 @@ void NOpenMusic()
 			}
 			else AESendOpenFile( &reply);
 		}
-/*#else
+		//#else
+#if 0
 		if( DoStandardOpen( &reply, "\pOpen a MADI music file", 'MADI') == noErr)
 		{
 			OSType 	tempType;
@@ -4098,16 +4091,16 @@ void NOpenMusic()
 			err = HGetFInfo( reply.vRefNum, reply.parID, reply.name, &fndrInfo);
 			
 			if( OpenableFile( fndrInfo.fdType, &reply) == true ||
-				fndrInfo.fdType == 'sTAT' ||
-				fndrInfo.fdType == 'STCf' ||
-				MADMusicIdentifyFSp( gMADLib, tempC, &reply) == noErr)
+			   fndrInfo.fdType == 'sTAT' ||
+			   fndrInfo.fdType == 'STCf' ||
+			   MADMusicIdentifyFSp( gMADLib, tempC, &reply) == noErr)
 			{
 				if( fndrInfo.fdType != 'sTAT' && fndrInfo.fdType != 'STCf')
 				{
-					AddMODList( 	false,
-									reply.name,
-									reply.vRefNum,
-									reply.parID);
+					AddMODList(false,
+							   reply.name,
+							   reply.vRefNum,
+							   reply.parID);
 					
 					if( ImportFile( reply.name, reply.vRefNum, reply.parID, fndrInfo.fdType))
 					{
@@ -4117,7 +4110,7 @@ void NOpenMusic()
 			}
 			
 		}
-#endif*/
+#endif
 		
 	}
 	
@@ -4130,14 +4123,14 @@ void ActivePatternMenu( Boolean);
 void InitImportMenu(void)
 {
 	short	i;
-
+	
 	ExportMenu	= GetMenu( 139);
 	
 	for( i = 0; i < gMADLib->TotalPlug; i++)
 	{
 		Str255 pMenuName;
 		GetPStrFromCFString(gMADLib->ThePlug[ i].MenuName, pMenuName);
-
+		
 		switch( gMADLib->ThePlug[ i].mode)
 		{
 			case 'EXIM':
@@ -4146,7 +4139,7 @@ void InitImportMenu(void)
 				break;
 		}
 	}
-
+	
 	InsertMenu( ExportMenu, hierMenu);
 }
 
@@ -4165,7 +4158,7 @@ void MenuBarInit( void)
 	
 	
 	FileMenu			=	GetMenuHandle( mFileMenu);
-
+	
 	// check to see if we should modify the File menu's quit item in
 	// order to follow the Aqua HI quit guideline
 	err = Gestalt(gestaltMenuMgrAttr, &response);
@@ -4201,7 +4194,7 @@ void MenuBarInit( void)
 	ViewsMenu			=	GetMenuHandle( mViewsMenu);	
 	
 	VSTMenu				=	GetMenu( 180);
-//	if( !CubeReady) DisableMenuItem( ViewsMenu, 20);
+	//	if( !CubeReady) DisableMenuItem( ViewsMenu, 20);
 	
 	EditMenu			=	GetMenuHandle( mEditMenu);
 	
@@ -4209,15 +4202,15 @@ void MenuBarInit( void)
 	HelpMenu			=	GetMenuHandle( mHelpMenu);
 	
 	if( !HelpAvalaible) DisableMenuItem( HelpMenu, 1);
-
+	
 	PatternEditMenu		=	GetMenuHandle( mPatternsMenu);
 	ActivePatternMenu( false);
-
+	
 	InitImportMenu();
 	WindowsSettingsInit();
-
+	
 	DrawMenuBar();
-		
+	
 	/******************/
 	
 	InstruMenu			=	GetMenu( 134);
@@ -4266,16 +4259,16 @@ short		IntInfoL( short ID)
 	EventRecord				tRecord;
 	OSErr					err;
 	ProcessSerialNumber		PSN;
-
+	
 	GetFrontProcess( &PSN);
 	if( PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
-		PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN) SetFrontProcess( &PSN);
-
+	   PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN) SetFrontProcess( &PSN);
+	
 	GetPort( &savedPort);
-
+	
 	GetIndString( theString, 128, ID);
 	ParamText( theString, NULL, NULL, NULL);
-
+	
 	aDia = GetNewDialog( 3001, NULL, (WindowPtr) -1L);
 	SetPortDialogPort( aDia);
 	
@@ -4305,8 +4298,8 @@ short InfoL( short ID)
 	ProcessSerialNumber		PSN;
 	
 	GetFrontProcess( &PSN);
-	if( PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
-		PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN)
+	if(PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
+	   PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN)
 	{
 		return true;
 	}
@@ -4333,7 +4326,7 @@ void IntErreur( short ID, OSErr theErr)
 	DialogPtr				aDia;
 	Str255					theString, theString2, theMemStr, theRsrStr;
 	GrafPtr					savedPort;
-
+	
 	GetPort( &savedPort);
 	
 	GetIndString( theString, 128, ID);
@@ -4351,10 +4344,8 @@ void IntErreur( short ID, OSErr theErr)
 	
 	SetCursor( GetQDGlobalsArrow( &qdarrow));
 	
-	do
-	{
+	do {
 		MyModalDialog( aDia, &itemHit);	//ModalDialog( MyDlgFilterDesc, &itemHit);
-		
 	} while( itemHit != 1);
 	
 	DisposeDialog( aDia);
@@ -4369,7 +4360,7 @@ void OtherIntErreur( short ID, OSErr theErr, Str255 otherstr)
 	DialogPtr				aDia;
 	Str255					theString, theString2, theMemStr, theRsrStr;
 	GrafPtr					savedPort;
-
+	
 	GetPort( &savedPort);
 	
 	GetIndString( theString, 128, ID);
@@ -4389,12 +4380,11 @@ void OtherIntErreur( short ID, OSErr theErr, Str255 otherstr)
 	
 	SetCursor( GetQDGlobalsArrow( &qdarrow));
 	
-	do
-	{
+	do {
 		MyModalDialog( aDia, &itemHit);	//ModalDialog( MyDlgFilterDesc, &itemHit);
 		
-	}while( itemHit != 1);
-
+	} while( itemHit != 1);
+	
 	DisposeDialog( aDia);
 	SetPort( savedPort);
 	
@@ -4408,8 +4398,8 @@ void Erreur( short ID, OSErr theErr)
 	
 	GetFrontProcess( &PSN);
 	if( PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
-		PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN ||
-		UseAEErreur == true)
+	   PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN ||
+	   UseAEErreur == true)
 	{
 		OSType				sign = 'SNPL';
 		AppleEvent			aeEvent, reply;
@@ -4422,17 +4412,17 @@ void Erreur( short ID, OSErr theErr)
 #define kErreurID				'AERR'
 		
 		
-		iErr = AECreateDesc(	typeApplSignature,
-								(Ptr) &sign,
-								sizeof( sign),
-								&target);
+		iErr = AECreateDesc(typeApplSignature,
+							(Ptr) &sign,
+							sizeof( sign),
+							&target);
 		
-		iErr = AECreateAppleEvent(	kPlayerPROClass,
-									kErreurID,
-									&target,
-									kAutoGenerateReturnID,
-									kAnyTransactionID,
-									&aeEvent);
+		iErr = AECreateAppleEvent(kPlayerPROClass,
+								  kErreurID,
+								  &target,
+								  kAutoGenerateReturnID,
+								  kAnyTransactionID,
+								  &aeEvent);
 		
 		iErr = AECreateList( nil,0,false, &fileList);
 		
@@ -4453,13 +4443,13 @@ void Erreur( short ID, OSErr theErr)
 		
 		//
 		
-		iErr = AESend(	&aeEvent,
-						&reply,
-						kAENoReply,
-						kAENormalPriority,
-						kAEDefaultTimeout,
-						NULL,
-						NULL);
+		iErr = AESend(&aeEvent,
+					  &reply,
+					  kAENoReply,
+					  kAENormalPriority,
+					  kAEDefaultTimeout,
+					  NULL,
+					  NULL);
 	}
 	else IntErreur( ID, theErr);
 }
@@ -4493,7 +4483,7 @@ OSErr GereChanged(void)
 		MyModalDialog( aDia, &itemHit);
 		
 	}while( itemHit != 1 && itemHit != 2 && itemHit != 3);
-
+	
 	DisposeDialog( aDia);
 	SetPort( savedPort);
 	UpdateALLWindow();
@@ -4506,12 +4496,12 @@ OSErr GereChanged(void)
 			curMusic->hasChanged = false;
 			return noErr;
 			break;
-		
+			
 		case 2:
 			curMusic->hasChanged = false;
 			return noErr;
 			break;
-		
+			
 		case 3:
 			return -1;
 			break;
@@ -4523,14 +4513,14 @@ OSErr GereChanged(void)
 void WindowsSettingsInit()
 {
 	short	i;
-
+	
 	WinSettingsMenu	= GetMenu( 176);
 	
 	for( i = 0; i < 3; i++)
 	{
 		SetMenuItemText( WinSettingsMenu, i+1, thePrefs.WinNames[ i]);
 	}
-
+	
 	InsertMenu( WinSettingsMenu, hierMenu);
 }
 
@@ -4588,9 +4578,9 @@ void WindowsSettingsOption()
 				SetItemMark( tMenu, curSelec+1, 0xa5);
 				
 				mresult = PopUpMenuSelect(	tMenu,
-											myPt.v,
-											myPt.h,
-											curSelec+1);
+										  myPt.v,
+										  myPt.h,
+										  curSelec+1);
 				
 				SetItemMark( tMenu, curSelec+1, 0);
 				
@@ -4604,7 +4594,7 @@ void WindowsSettingsOption()
 					SetDText( aDia, 7, theString);
 				}
 				DeleteMenu( GetMenuID( tMenu));
-			break;
+				break;
 		}
 		
 	}while( itemHit != 1 && itemHit != 2);
@@ -4624,7 +4614,7 @@ void WindowsSettingsOption()
 			SetMenuItemText( WinSettingsMenu, i+1, thePrefs.WinNames[ i]);
 		}
 	}
-
+	
 	DisposeDialog( aDia);
 	SetPort( savedPort);
 }
@@ -4633,30 +4623,30 @@ void WindowsSettingsMenu( short item)
 {
 	switch( item)
 	{	
-	case 1:
-	case 2:
-	case 3:
-		if( theEvent.modifiers & controlKey)
-		{
-			SaveWindowState( item-1);
-		}
-		else
-		{
-			CheckShowWindow();
+		case 1:
+		case 2:
+		case 3:
+			if( theEvent.modifiers & controlKey)
+			{
+				SaveWindowState( item-1);
+			}
+			else
+			{
+				CheckShowWindow();
+				
+				if( thePrefs.ActiveHelp) CreateAHelpWindow();
+				ShowWindowPref( item-1);
+				
+				ShowWindow( GetDialogWindow( ToolsDlog));
+				SelectWindow( GetDialogWindow( ToolsDlog));
+				SelectWindow2( NextWindowVisible( GetDialogWindow( ToolsDlog)));
+				UpdateALLWindow();
+			}
+			break;
 			
-			if( thePrefs.ActiveHelp) CreateAHelpWindow();
-			ShowWindowPref( item-1);
-			
-			ShowWindow( GetDialogWindow( ToolsDlog));
-			SelectWindow( GetDialogWindow( ToolsDlog));
-			SelectWindow2( NextWindowVisible( GetDialogWindow( ToolsDlog)));
-			UpdateALLWindow();
-		}
-	break;
-	
-	case 5:
-		WindowsSettingsOption();
-	break;
+		case 5:
+			WindowsSettingsOption();
+			break;
 	}
 }
 
@@ -4675,67 +4665,67 @@ void HandleMenuChoice(long menuChoice)
 			case mAppleMenu:
 				HandleAppleChoice( theItem);
 				break;
-			
+				
 			case mEditMenu:
 				HandleEdit( theItem);
 				break;
-			
+				
 			case mFileMenu:
 				HandleFileChoice( theItem);
 				break;
-			
+				
 			case mPatternsMenu:
 				HandlePatternChoice( theItem);
 				break;
-			
+				
 			case 140:
 				HandleOtherChoice( theItem);
 				break;
-			
-		/*	case 180:
-				HandleVSTChoice( theItem-3, &masterVST[ theItem-3]);
-				break;	*/
-			
+				
+				/*	case 180:
+				 HandleVSTChoice( theItem-3, &masterVST[ theItem-3]);
+				 break;	*/
+				
 			case mViewsMenu:
 				HandleViewsChoice( theItem);
 				break;
-			
+				
 			case mInstrumentsMenu:
 				HandleInstruChoice( theItem);
 				break;
-			
+				
 			case 139:
 				HandleExportFile( theItem);
 				break;
-			
+				
 			case 176:
 				WindowsSettingsMenu( theItem);
 				break;
-			
+				
 			case 138:
-			//	HandleImportFile( theItem);
+				//	HandleImportFile( theItem);
 				break;
-			
+				
 			case 154:
 				HandleNewSound( theItem);
 				break;
-			
+				
 			case 200:
 				ShowPrefs( 2000 + theItem - 1);
 				break;
-			
+				
 			case mInternetMenu:
 				DoInternetMenu( theItem);
 				break;
-			
+				
 			case mHelpMenu:
 				HandleHelpChoice(theItem);
 				break;
-
+				
 			case mWindowMenu:
 				HandleWindowChoice(theItem);
 				break;
-
+				
 		}
 		HiliteMenu(0);
 	}
@@ -4744,21 +4734,21 @@ void HandleMenuChoice(long menuChoice)
 void HandleAppleChoice(short theItem)
 {
 	Str255 		accName;
-
+	
 	switch(theItem)
 	{
 		case mAboutPlayerPRO:
 			DoAbout();					
 			break;
-		
+			
 		case mGeneralInfo:
 			DoHelp();
 			break;
-	
-/*	case 4:
-		AboutPlugs(); //TODO: revive AboutPlugs()?
-	break;*/
-	
+			
+			/*	case 4:
+			 AboutPlugs(); //TODO: revive AboutPlugs()?
+			 break;*/
+			
 		default:
 			GetMenuItemText( AppleMenu, theItem, accName);
 			break;
@@ -4768,330 +4758,338 @@ void HandleAppleChoice(short theItem)
 void HandleInstruChoice(short theItem)
 {
 	short		temp;
-
-switch(theItem)
-{
-	case 1:
-		if( InstruListDlog != NULL)
-		{
-			if( GetDialogWindow( InstruListDlog) == oldWindow)
-			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( InstruListDlog)));
-				CheckOneWindow( GetDialogWindow( InstruListDlog));
-				ClosePlayerWindow( InstruListDlog);
-			}
-			else
-			{
-				SelectWindow2( GetDialogWindow( InstruListDlog));
-				SetPortDialogPort( InstruListDlog);
-			}
-		}
-		else CreateInstruListWindow();
-	break;
-
-	case 3:
-		
-	break;
 	
-	case 4:
-		SaveSample();
-	break;
-
-	case 5:
-		DoKeyPressInstruList( 0x08, -1);
-	break;
-
-	case 7:
-		SaveInstrumentsList();
-	break;
-
-	default:
-		Erreur( 12, -1);
-	break;
-}
+	switch(theItem)
+	{
+		case 1:
+			if( InstruListDlog != NULL)
+			{
+				if( GetDialogWindow( InstruListDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( InstruListDlog)));
+					CheckOneWindow( GetDialogWindow( InstruListDlog));
+					ClosePlayerWindow( InstruListDlog);
+				}
+				else
+				{
+					SelectWindow2( GetDialogWindow( InstruListDlog));
+					SetPortDialogPort( InstruListDlog);
+				}
+			}
+			else CreateInstruListWindow();
+			break;
+			
+		case 3:
+			
+			break;
+			
+		case 4:
+			SaveSample();
+			break;
+			
+		case 5:
+			DoKeyPressInstruList( 0x08, -1);
+			break;
+			
+		case 7:
+			SaveInstrumentsList();
+			break;
+			
+		default:
+			Erreur( 12, -1);
+			break;
+	}
 }
 
 void HandleViewsChoice(short theItem)
 {
 	switch( theItem)
 	{
-/*	case mMemory:
-		if( MemoryDlog != NULL)
-		{
-			if( GetDialogWindow( MemoryDlog) == oldWindow)
+#if 0
+		case mMemory:
+			if( MemoryDlog != NULL)
 			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( MemoryDlog)));
-				CheckOneWindow( GetDialogWindow( MemoryDlog));
-				ClosePlayerWindow( MemoryDlog);
-			}
-			else
-			{
-				ShowWindow( GetDialogWindow( MemoryDlog));
-				SelectWindow2( GetDialogWindow( MemoryDlog));
-			}
-		}
-		else CreateMemWindow();
-	break;*/
-
-/*	case mMusic:
-		if( MODListDlog != NULL)
-		{
-			if( GetDialogWindow( MODListDlog) == oldWindow)
-			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( MODListDlog)));
-				CheckOneWindow( GetDialogWindow( MODListDlog));
-				ClosePlayerWindow( MODListDlog);
-			}
-			else
-			{
-				ShowWindow( GetDialogWindow( MODListDlog));
-				SelectWindow2( GetDialogWindow( MODListDlog));
-				SetItemMark( ViewsMenu, mMusic, checkMark);
-			}
-		}
-	break;*/
-	
-	case mPiano:
-		if( PianoDlog != NULL)
-		{
-			if( GetDialogWindow( PianoDlog) == oldWindow)
-			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( PianoDlog)));
-				CheckOneWindow( GetDialogWindow( PianoDlog));
-				ClosePlayerWindow( PianoDlog);
-			}
-			else
-			{
-				ShowWindow( GetDialogWindow( PianoDlog));
-				SelectWindow2( GetDialogWindow( PianoDlog));
-				SetPortDialogPort( PianoDlog);
-			}
-		}
-		else CreatePianoWindow();
-	break;
-	
-	case mOscilloV:
-		if( OscilloDlog != NULL)
-		{
-			if( GetDialogWindow( OscilloDlog) == oldWindow)
-			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( OscilloDlog)));
-				CheckOneWindow( GetDialogWindow( OscilloDlog));
-				ClosePlayerWindow( OscilloDlog);
-			}
-			else
-			{
-				ShowWindow( GetDialogWindow( OscilloDlog));
-				SelectWindow2( GetDialogWindow( OscilloDlog));
-				SetPortDialogPort( OscilloDlog);
-			}
-		}
-		else CreateOscilloWindow();
-	break;
-	
-	case mSpectrumV:
-		if( SpectrumDlog != NULL)
-		{
-			if( GetDialogWindow( SpectrumDlog) == oldWindow)
-			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( SpectrumDlog)));
-				CheckOneWindow( GetDialogWindow( SpectrumDlog));
-				ClosePlayerWindow( SpectrumDlog);
-			}
-			else
-			{
-				ShowWindow( GetDialogWindow( SpectrumDlog));
-				SelectWindow2( GetDialogWindow( SpectrumDlog));
-				SetPortDialogPort( SpectrumDlog);
-			}
-		}
-		else CreateSpectrumWindow();
-	break;
-	
-	case mAdap:
-		if( AdapDlog != NULL)
-		{
-			if( GetDialogWindow( AdapDlog) == oldWindow)
-			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( AdapDlog)));
-				CheckOneWindow( GetDialogWindow( AdapDlog));
-				ClosePlayerWindow( AdapDlog);
-			}
-			else
-			{
-				ShowWindow( GetDialogWindow( AdapDlog));
-				SelectWindow2( GetDialogWindow( AdapDlog));
-				SetPortDialogPort( AdapDlog);
-				SetItemMark( ViewsMenu, mAdap, checkMark);
-			}
-		}
-		else CreateAdapWindow();
-	break;
-	
-	case mPatternV:
-		if( ClassicDlog != NULL)
-		{
-			if( GetDialogWindow( ClassicDlog) == oldWindow)
-			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( ClassicDlog)));
-				CheckOneWindow( GetDialogWindow( ClassicDlog));
-				ClosePlayerWindow( ClassicDlog);
-			}
-			else
-			{
-				SelectWindow2( GetDialogWindow( ClassicDlog));
-				SetPortDialogPort( ClassicDlog);
-				SetItemMark( ViewsMenu, mPatternV, checkMark);
-			}
-		}
-		else CreateClassicWindow();
-	break;
-	
-/*	case mDigitalV:
-		if( DigitalDlog != NULL)
-		{
-			if( GetDialogWindow( DigitalDlog) == oldWindow)
-			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( DigitalDlog)));
-				CheckOneWindow( GetDialogWindow( DigitalDlog));
-				ClosePlayerWindow( DigitalDlog);
-			}
-			else
-			{
-				SelectWindow2(  GetDialogWindow( DigitalDlog));
-				SetPortDialogPort( DigitalDlog);
-			}
-		}
-		else CreateDigiListWindow();
-	break;*/
-
-	case mEqualizer:
-		if( EQDlog != NULL)
-		{
-			if( GetDialogWindow( EQDlog) == oldWindow)
-			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( EQDlog)));
-				CheckOneWindow( GetDialogWindow( EQDlog));
-				ClosePlayerWindow( EQDlog);
-			}
-			else
-			{
-				SelectWindow2( GetDialogWindow( EQDlog));
-				SetPortDialogPort( EQDlog);
-			}
-		}
-		else CreateEQWindow();
-	break;
-
-/*	case mInsV:
-		if( InstruViewDlog != NULL)
-		{
-			if( GetDialogWindow( InstruViewDlog) == oldWindow)
-			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( InstruViewDlog)));
-				CheckOneWindow( GetDialogWindow( InstruViewDlog));
-				ClosePlayerWindow( InstruViewDlog);
-			}
-			else
-			{
-				SelectWindow2( GetDialogWindow( InstruViewDlog));
-				SetPortDialogPort( InstruViewDlog);
-			}
-		}
-		else CreateInstruView();
-	break;
-
-	case mFullView:
-		if( NOWScrollMode) HandleViewsChoice( mScrollT);
-		FullView();
-	break;
-	
-	case mScreenSaver:
-		if( NOWScrollMode) HandleViewsChoice( mScrollT);
-		ScreenSaver();
-	break;
-*/
-	
-	case mTools:
-		if( IsWindowVisible( GetDialogWindow( ToolsDlog)))
-		{
-			ClosePlayerWindow( ToolsDlog);
-		}
-		else
-		{
-			ShowWindow( GetDialogWindow( ToolsDlog));
-			SelectWindow( GetDialogWindow( ToolsDlog));
-			SelectWindow2( oldWindow);
-			SetItemMark( ViewsMenu, mTools, checkMark);
-		}
-	break;
-	
-/*	case mOnlineHelp:
-		if( AHelpDlog == NULL)
-		{
-			CreateAHelpWindow();
-			thePrefs.ActiveHelp = true;
-		}
-		else
-		{
-			thePrefs.ActiveHelp = false;
-			CloseAHelp();
-		}
-	break;*/
-
-/*	case mScrollT:
-		if( NOWScrollMode == false)
-		{
-			if( theDepth != 8)
-			{
-				Erreur( 23, -6);
-			}
-			else
-			{
-				NOWScrollMode = true;
-				HideBottom();
-				ScrollTextInit( true, true);
-				SetMenuItemText( ViewsMenu, mScrollT, "\pScrollText OFF");
-			}
-		}
-		else
-		{
-			NOWScrollMode = false;
-			ScrollTextClose( true);
-			ShowBottom();
-			SetMenuItemText( ViewsMenu, mScrollT, "\pScrollText ON");
-		}
-	break;
-
-	case m3D:
-		if( CubeDlog != NULL)
-		{
-			SelectWindow2( CubeDlog);
-			SetPortDialogPort( CubeDlog);
-		}
-		else CreateCubeWindow();
-	break;
-*/
-	default:
-		if( theItem - mVisual < maxVisualPlug())
-		{
-			if( VisualDlog != NULL)
-			{
-				if( GetDialogWindow( VisualDlog) == oldWindow)
+				if( GetDialogWindow( MemoryDlog) == oldWindow)
 				{
-					SelectWindow2( NextWindowVisible( GetDialogWindow( VisualDlog)));
-					CheckOneWindow( GetDialogWindow( VisualDlog));
-					ClosePlayerWindow( VisualDlog);
+					SelectWindow2( NextWindowVisible( GetDialogWindow( MemoryDlog)));
+					CheckOneWindow( GetDialogWindow( MemoryDlog));
+					ClosePlayerWindow( MemoryDlog);
 				}
 				else
 				{
-					SelectWindow2( GetDialogWindow( VisualDlog));
-					SetPortDialogPort( VisualDlog);
+					ShowWindow( GetDialogWindow( MemoryDlog));
+					SelectWindow2( GetDialogWindow( MemoryDlog));
 				}
 			}
-		}
-		CreateVisualWindow( theItem - mVisual);
-	break;
+			else CreateMemWindow();
+			break;
+			
+		case mMusic:
+			if( MODListDlog != NULL)
+			{
+				if( GetDialogWindow( MODListDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( MODListDlog)));
+					CheckOneWindow( GetDialogWindow( MODListDlog));
+					ClosePlayerWindow( MODListDlog);
+				}
+				else
+				{
+					ShowWindow( GetDialogWindow( MODListDlog));
+					SelectWindow2( GetDialogWindow( MODListDlog));
+					SetItemMark( ViewsMenu, mMusic, checkMark);
+				}
+			}
+			break;
+#endif
+			
+		case mPiano:
+			if( PianoDlog != NULL)
+			{
+				if( GetDialogWindow( PianoDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( PianoDlog)));
+					CheckOneWindow( GetDialogWindow( PianoDlog));
+					ClosePlayerWindow( PianoDlog);
+				}
+				else
+				{
+					ShowWindow( GetDialogWindow( PianoDlog));
+					SelectWindow2( GetDialogWindow( PianoDlog));
+					SetPortDialogPort( PianoDlog);
+				}
+			}
+			else CreatePianoWindow();
+			break;
+			
+		case mOscilloV:
+			if( OscilloDlog != NULL)
+			{
+				if( GetDialogWindow( OscilloDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( OscilloDlog)));
+					CheckOneWindow( GetDialogWindow( OscilloDlog));
+					ClosePlayerWindow( OscilloDlog);
+				}
+				else
+				{
+					ShowWindow( GetDialogWindow( OscilloDlog));
+					SelectWindow2( GetDialogWindow( OscilloDlog));
+					SetPortDialogPort( OscilloDlog);
+				}
+			}
+			else CreateOscilloWindow();
+			break;
+			
+		case mSpectrumV:
+			if( SpectrumDlog != NULL)
+			{
+				if( GetDialogWindow( SpectrumDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( SpectrumDlog)));
+					CheckOneWindow( GetDialogWindow( SpectrumDlog));
+					ClosePlayerWindow( SpectrumDlog);
+				}
+				else
+				{
+					ShowWindow( GetDialogWindow( SpectrumDlog));
+					SelectWindow2( GetDialogWindow( SpectrumDlog));
+					SetPortDialogPort( SpectrumDlog);
+				}
+			}
+			else CreateSpectrumWindow();
+			break;
+			
+		case mAdap:
+			if( AdapDlog != NULL)
+			{
+				if( GetDialogWindow( AdapDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( AdapDlog)));
+					CheckOneWindow( GetDialogWindow( AdapDlog));
+					ClosePlayerWindow( AdapDlog);
+				}
+				else
+				{
+					ShowWindow( GetDialogWindow( AdapDlog));
+					SelectWindow2( GetDialogWindow( AdapDlog));
+					SetPortDialogPort( AdapDlog);
+					SetItemMark( ViewsMenu, mAdap, checkMark);
+				}
+			}
+			else CreateAdapWindow();
+			break;
+			
+		case mPatternV:
+			if( ClassicDlog != NULL)
+			{
+				if( GetDialogWindow( ClassicDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( ClassicDlog)));
+					CheckOneWindow( GetDialogWindow( ClassicDlog));
+					ClosePlayerWindow( ClassicDlog);
+				}
+				else
+				{
+					SelectWindow2( GetDialogWindow( ClassicDlog));
+					SetPortDialogPort( ClassicDlog);
+					SetItemMark( ViewsMenu, mPatternV, checkMark);
+				}
+			}
+			else CreateClassicWindow();
+			break;
+			
+#if 0	
+		case mDigitalV:
+			if( DigitalDlog != NULL)
+			{
+				if( GetDialogWindow( DigitalDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( DigitalDlog)));
+					CheckOneWindow( GetDialogWindow( DigitalDlog));
+					ClosePlayerWindow( DigitalDlog);
+				}
+				else
+				{
+					SelectWindow2(  GetDialogWindow( DigitalDlog));
+					SetPortDialogPort( DigitalDlog);
+				}
+			}
+			else CreateDigiListWindow();
+			break;
+#endif
+			
+		case mEqualizer:
+			if( EQDlog != NULL)
+			{
+				if( GetDialogWindow( EQDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( EQDlog)));
+					CheckOneWindow( GetDialogWindow( EQDlog));
+					ClosePlayerWindow( EQDlog);
+				}
+				else
+				{
+					SelectWindow2( GetDialogWindow( EQDlog));
+					SetPortDialogPort( EQDlog);
+				}
+			}
+			else CreateEQWindow();
+			break;
+			
+#if 0
+		case mInsV:
+			if( InstruViewDlog != NULL)
+			{
+				if( GetDialogWindow( InstruViewDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( InstruViewDlog)));
+					CheckOneWindow( GetDialogWindow( InstruViewDlog));
+					ClosePlayerWindow( InstruViewDlog);
+				}
+				else
+				{
+					SelectWindow2( GetDialogWindow( InstruViewDlog));
+					SetPortDialogPort( InstruViewDlog);
+				}
+			}
+			else CreateInstruView();
+			break;
+			
+		case mFullView:
+			if( NOWScrollMode) HandleViewsChoice( mScrollT);
+			FullView();
+			break;
+			
+		case mScreenSaver:
+			if( NOWScrollMode) HandleViewsChoice( mScrollT);
+			ScreenSaver();
+			break;
+#endif
+			
+		case mTools:
+			if( IsWindowVisible( GetDialogWindow( ToolsDlog)))
+			{
+				ClosePlayerWindow( ToolsDlog);
+			}
+			else
+			{
+				ShowWindow( GetDialogWindow( ToolsDlog));
+				SelectWindow( GetDialogWindow( ToolsDlog));
+				SelectWindow2( oldWindow);
+				SetItemMark( ViewsMenu, mTools, checkMark);
+			}
+			break;
+			
+#if 0
+		case mOnlineHelp:
+			if( AHelpDlog == NULL)
+			{
+				CreateAHelpWindow();
+				thePrefs.ActiveHelp = true;
+			}
+			else
+			{
+				thePrefs.ActiveHelp = false;
+				CloseAHelp();
+			}
+			break;
+			
+		case mScrollT:
+			if( NOWScrollMode == false)
+			{
+				if( theDepth != 8)
+				{
+					Erreur( 23, -6);
+				}
+				else
+				{
+					NOWScrollMode = true;
+					HideBottom();
+					ScrollTextInit( true, true);
+					SetMenuItemText( ViewsMenu, mScrollT, "\pScrollText OFF");
+				}
+			}
+			else
+			{
+				NOWScrollMode = false;
+				ScrollTextClose( true);
+				ShowBottom();
+				SetMenuItemText( ViewsMenu, mScrollT, "\pScrollText ON");
+			}
+			break;
+			
+		case m3D:
+			if( CubeDlog != NULL)
+			{
+				SelectWindow2( CubeDlog);
+				SetPortDialogPort( CubeDlog);
+			}
+			else CreateCubeWindow();
+			break;
+			
+#endif
+			
+		default:
+			if( theItem - mVisual < maxVisualPlug())
+			{
+				if( VisualDlog != NULL)
+				{
+					if( GetDialogWindow( VisualDlog) == oldWindow)
+					{
+						SelectWindow2( NextWindowVisible( GetDialogWindow( VisualDlog)));
+						CheckOneWindow( GetDialogWindow( VisualDlog));
+						ClosePlayerWindow( VisualDlog);
+					}
+					else
+					{
+						SelectWindow2( GetDialogWindow( VisualDlog));
+						SetPortDialogPort( VisualDlog);
+					}
+				}
+			}
+			CreateVisualWindow( theItem - mVisual);
+			break;
 	}	
 }
 
@@ -5099,65 +5097,65 @@ void HandlePatternChoice(short theItem)
 {
 	switch(theItem)
 	{
-	case 1:
-		if( PartiDlog != NULL)
-		{
-			if( GetDialogWindow( PartiDlog) == oldWindow)
+		case 1:
+			if( PartiDlog != NULL)
 			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( PartiDlog)));
-				CheckOneWindow( GetDialogWindow( PartiDlog));
-				ClosePlayerWindow( PartiDlog);
+				if( GetDialogWindow( PartiDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( PartiDlog)));
+					CheckOneWindow( GetDialogWindow( PartiDlog));
+					ClosePlayerWindow( PartiDlog);
+				}
+				else
+				{
+					SelectWindow2( GetDialogWindow( PartiDlog));
+					SetPortDialogPort( PartiDlog);
+				}
 			}
-			else
+			else CreatePartiWindow();
+			break;
+			
+		case 2:
+			if( PatListDlog != NULL)
 			{
-				SelectWindow2( GetDialogWindow( PartiDlog));
-				SetPortDialogPort( PartiDlog);
+				if( GetDialogWindow( PatListDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( PatListDlog)));
+					CheckOneWindow( GetDialogWindow( PatListDlog));
+					ClosePlayerWindow( PatListDlog);
+				}
+				else
+				{
+					SelectWindow2( GetDialogWindow( PatListDlog));
+					SetPortDialogPort( PatListDlog);
+				}
 			}
-		}
-		else CreatePartiWindow();
-	break;
-	
-	case 2:
-		if( PatListDlog != NULL)
-		{
-			if( GetDialogWindow( PatListDlog) == oldWindow)
-			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( PatListDlog)));
-				CheckOneWindow( GetDialogWindow( PatListDlog));
-				ClosePlayerWindow( PatListDlog);
-			}
-			else
-			{
-				SelectWindow2( GetDialogWindow( PatListDlog));
-				SetPortDialogPort( PatListDlog);
-			}
-		}
-		else CreatePatListWindow();
-	break;
-	
-	case 4:	// New
-		AddAPattern();
-	break;
-	
-	case 5:	// Load
-		LoadAPattern();
-	break;
-	
-	case 6:	// Save
-		SaveAPattern();
-	break;
-	
-	case 8:	// Delete
-		DeleteAPattern( false);
-	break;
-	
-	case 7:	// Purge
-		PurgePattern();
-	break;
-	
-	default:
-		Erreur( 12, -1);
-	break;
+			else CreatePatListWindow();
+			break;
+			
+		case 4:	// New
+			AddAPattern();
+			break;
+			
+		case 5:	// Load
+			LoadAPattern();
+			break;
+			
+		case 6:	// Save
+			SaveAPattern();
+			break;
+			
+		case 8:	// Delete
+			DeleteAPattern( false);
+			break;
+			
+		case 7:	// Purge
+			PurgePattern();
+			break;
+			
+		default:
+			Erreur( 12, -1);
+			break;
 	}
 }
 
@@ -5165,185 +5163,183 @@ void HandleOtherChoice(short theItem)
 {
 	switch(theItem)
 	{		
-	case 1:
-		if( EditorDlog != NULL)
-		{
-			if( GetDialogWindow( EditorDlog) == oldWindow)
+		case 1:
+			if( EditorDlog != NULL)
 			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( EditorDlog)));
-				CheckOneWindow( GetDialogWindow( EditorDlog));
-				ClosePlayerWindow( EditorDlog);
+				if( GetDialogWindow( EditorDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( EditorDlog)));
+					CheckOneWindow( GetDialogWindow( EditorDlog));
+					ClosePlayerWindow( EditorDlog);
+				}
+				else
+				{
+					SelectWindow2( GetDialogWindow( EditorDlog));
+					SetPortDialogPort( EditorDlog);
+				}
+			}
+			else CreatePartitionWindow();
+			break;
+			
+		case 2:
+			if( MozartDlog != NULL)
+			{
+				if( GetDialogWindow( MozartDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( MozartDlog)));
+					CheckOneWindow( GetDialogWindow( MozartDlog));
+					ClosePlayerWindow( MozartDlog);
+				}
+				else
+				{
+					SelectWindow2( GetDialogWindow( MozartDlog));
+					SetPortDialogPort( MozartDlog);
+				}
+			}
+			else CreateMozartWindow();
+			break;
+			
+		case 3:	// STAFF Editor
+			if( StaffDlog != NULL)
+			{
+				if( GetDialogWindow( StaffDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( StaffDlog)));
+					CheckOneWindow( GetDialogWindow( StaffDlog));
+					ClosePlayerWindow( StaffDlog);
+				}
+				else
+				{
+					SelectWindow2( GetDialogWindow( StaffDlog));
+					SetPortDialogPort( StaffDlog);
+				}
+			}
+			else CreateStaffWindow();
+			break;
+			
+		case 4:	// WAVE Editor
+			if( WaveDlog != NULL)
+			{
+				if( GetDialogWindow( WaveDlog) == oldWindow)
+				{
+					SelectWindow2( NextWindowVisible( GetDialogWindow( WaveDlog)));
+					CheckOneWindow( GetDialogWindow( WaveDlog));
+					ClosePlayerWindow( WaveDlog);
+				}
+				else
+				{
+					SelectWindow2( GetDialogWindow( WaveDlog));
+					SetPortDialogPort( WaveDlog);
+				}
+			}
+			else CreateWaveWindow();
+			break;
+			
+		case 10:
+			SaveUndo( UAllPatterns, 0, "\pUndo 'Change patterns rows to 64'");
+			
+			DoStop();
+			
+			ConvertTo64Rows( curMusic);
+			
+			UPDATE_Total();
+			ScanTime();
+			UpdateALLWindow();
+			break;
+			
+		case 9:
+			if( InfoL( 88))
+			{
+				Str255		theString;
+				long 		size;
+				GrafPtr		savedPort;
+				DialogPtr	aDia;
+				short		itemHit;
+				
+				DoPause();
+				
+				size = MADMinimize( curMusic);
+				
+				GetPort( &savedPort);
+				
+				NumToString( size, theString);
+				ParamText( theString, NULL, NULL, NULL);
+				
+				aDia = GetNewDialog( 149, NULL, (WindowPtr) -1L);
+				SetPortDialogPort( aDia);
+				
+				AutoPosition( aDia);
+				
+				SetCursor( GetQDGlobalsArrow( &qdarrow));
+				
+				do
+				{
+					//	ModalDialog( MyDlgFilterDesc, &itemHit);
+					
+					MyModalDialog( aDia, &itemHit);
+					
+				}while( itemHit != 1);
+				
+				DisposeDialog( aDia);
+				SetPort( savedPort);
+				
+				UPDATE_Total();
+				
+				ResetUndo();
+				ScanTime();
+				
+				UpdateALLWindow();
+			}
+			break;
+			
+		case 12:
+			DoChangeMODName();
+			break;
+			
+#if 0
+		case 9:
+			DialogTracks();
+			break;
+			
+		case 10:
+			if( MicroPhone)
+			{
+				MicroOff();
+				SetMenuItemText( EditorMenu, theItem, "\pTurn Microphone ON");
 			}
 			else
+			{
+				MicroOn();
+				SetMenuItemText( EditorMenu, theItem, "\pTurn Microphone OFF");
+			}
+			break;	
+#endif
+			
+		case 6:
+			if( EditorDlog != NULL)
 			{
 				SelectWindow2( GetDialogWindow( EditorDlog));
 				SetPortDialogPort( EditorDlog);
 			}
-		}
-		else CreatePartitionWindow();
-	break;
-	
-	case 2:
-		if( MozartDlog != NULL)
-		{
-			if( GetDialogWindow( MozartDlog) == oldWindow)
-			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( MozartDlog)));
-				CheckOneWindow( GetDialogWindow( MozartDlog));
-				ClosePlayerWindow( MozartDlog);
-			}
-			else
-			{
-				SelectWindow2( GetDialogWindow( MozartDlog));
-				SetPortDialogPort( MozartDlog);
-			}
-		}
-		else CreateMozartWindow();
-	break;
-	
-	case 3:	// STAFF Editor
-		if( StaffDlog != NULL)
-		{
-			if( GetDialogWindow( StaffDlog) == oldWindow)
-			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( StaffDlog)));
-				CheckOneWindow( GetDialogWindow( StaffDlog));
-				ClosePlayerWindow( StaffDlog);
-			}
-			else
-			{
-				SelectWindow2( GetDialogWindow( StaffDlog));
-				SetPortDialogPort( StaffDlog);
-			}
-		}
-		else CreateStaffWindow();
-	break;
-	
-	case 4:	// WAVE Editor
-		if( WaveDlog != NULL)
-		{
-			if( GetDialogWindow( WaveDlog) == oldWindow)
-			{
-				SelectWindow2( NextWindowVisible( GetDialogWindow( WaveDlog)));
-				CheckOneWindow( GetDialogWindow( WaveDlog));
-				ClosePlayerWindow( WaveDlog);
-			}
-			else
-			{
-				SelectWindow2( GetDialogWindow( WaveDlog));
-				SetPortDialogPort( WaveDlog);
-			}
-		}
-		else CreateWaveWindow();
-	break;
-	
-	case 10:
-		SaveUndo( UAllPatterns, 0, "\pUndo 'Change patterns rows to 64'");
-		
-		DoStop();
-		
-		ConvertTo64Rows( curMusic);
-		
-		UPDATE_Total();
-		ScanTime();
-		UpdateALLWindow();
-	break;
-	
-	case 9:
-		if( InfoL( 88))
-		{
-			Str255		theString;
-			long 		size;
-			GrafPtr		savedPort;
-			DialogPtr	aDia;
-			short		itemHit;
-			
-			DoPause();
-			
-			size = MADMinimize( curMusic);
-			
-			GetPort( &savedPort);
-			
-			NumToString( size, theString);
-			ParamText( theString, NULL, NULL, NULL);
-
-			aDia = GetNewDialog( 149, NULL, (WindowPtr) -1L);
-			SetPortDialogPort( aDia);
-			
-			AutoPosition( aDia);
-			
-			SetCursor( GetQDGlobalsArrow( &qdarrow));
-			
-			do
-			{
-				//	ModalDialog( MyDlgFilterDesc, &itemHit);
-				
-				MyModalDialog( aDia, &itemHit);
-				
-			}while( itemHit != 1);
-
-			DisposeDialog( aDia);
-			SetPort( savedPort);
-			
-			UPDATE_Total();
-			
-			ResetUndo();
-			ScanTime();
-			
+			else CreatePartitionWindow();
 			UpdateALLWindow();
-		}
-	break;
-	
-	case 12:
-		DoChangeMODName();
-	break;
-	
-/*	case 9:
-		DialogTracks();
-	break;
-	
-	case 10:
-		if( MicroPhone)
-		{
-			MicroOff();
-			SetMenuItemText( EditorMenu, theItem, "\pTurn Microphone ON");
-		}
-		else
-		{
-			MicroOn();
-			SetMenuItemText( EditorMenu, theItem, "\pTurn Microphone OFF");
-		}
-	break;	*/
-	
-/*	case 11:
-		TestProcessor();
-	break;	*/
-	
-	case 6:
-		if( EditorDlog != NULL)
-		{
-			SelectWindow2( GetDialogWindow( EditorDlog));
-			SetPortDialogPort( EditorDlog);
-		}
-		else CreatePartitionWindow();
-		UpdateALLWindow();
-		CreateFind();
-	break;
-
-	case 7:
-		if( EditorDlog != NULL)
-		{
-			SelectWindow2( GetDialogWindow( EditorDlog));
-			SetPortDialogPort( EditorDlog);
-		}
-		else CreatePartitionWindow();
-		ReplaceCommand();
-		CreateFind();
-	break;
-
-	default:
+			CreateFind();
+			break;
+			
+		case 7:
+			if( EditorDlog != NULL)
+			{
+				SelectWindow2( GetDialogWindow( EditorDlog));
+				SetPortDialogPort( EditorDlog);
+			}
+			else CreatePartitionWindow();
+			ReplaceCommand();
+			CreateFind();
+			break;
+			
+		default:
 			Erreur( 12, -1);
-	break;
+			break;
 	}	
 }
 
@@ -5356,16 +5352,16 @@ void WritePreferences(void)
 	
 	HGetVol(NULL, &vRefNumOld, &DirIDOld);
 ReLoadPrefs:
-
+	
 	iErr = FindFolder( kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &vRefNum, &DirID);
 	if( iErr == noErr)
 	{
 		FSMakeFSSpec(vRefNum, DirID, PLAYERPREF, &spec);
-	
+		
 		Prefs *outPrefs = (Prefs*)NewPtr(sizeof(Prefs));
 		*outPrefs = thePrefs;
 		SwapPrefs(outPrefs);
-	
+		
 		iErr = HSetVol( NULL, vRefNum, DirID);
 		if( iErr == noErr)
 		{
@@ -5373,7 +5369,7 @@ ReLoadPrefs:
 			if( iErr == noErr)
 			{
 				iErr = SetFPos( fRefNum, fsFromStart, 0);
-			
+				
 				inOutBytes = sizeof( Prefs);
 				iErr = FSWrite( fRefNum, &inOutBytes, outPrefs);
 				
@@ -5382,7 +5378,7 @@ ReLoadPrefs:
 		}
 		DisposePtr((Ptr)outPrefs);
 	}
-
+	
 	HSetVol(NULL, vRefNumOld, DirIDOld);
 }
 
@@ -5392,11 +5388,11 @@ void DeletePreferences()
 	short		vRefNum, fRefNum, vRefNumOld;
 	long		DirID, inOutBytes, DirIDOld;
 	FSSpec		spec;
-
+	
 	HGetVol(NULL, &vRefNumOld, &DirIDOld);
-
+	
 ReLoadPrefs:
-
+	
 	iErr = FindFolder( kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &vRefNum, &DirID);
 	if( iErr == noErr)
 	{
@@ -5420,21 +5416,11 @@ void DoPreferences()
 	Point			tempL;
 	Prefs			*tempPrefs = NULL;
 	FSSpec			spec;
-	
-	/*Gestalt( kSoundOutputDeviceType, &gestaltAnswer);
-	 if( gestaltAnswer == kASCSubType) hasASC = true;
-	 else hasASC = false;
-	 */
-	
+		
 	Gestalt( gestaltHardwareAttr, &gestaltAnswer);
 	myBit = gestaltHasASC;
 	
-#if defined(powerc) || defined (__powerc) || defined(TARGET_RT_MAC_MACHO)
 	hasASC = false;
-#else
-	if( BitTst( &gestaltAnswer, 31-myBit) == false) hasASC = false;
-	else hasASC = true;
-#endif
 	
 	Gestalt( gestaltSoundAttr, &gestaltAnswer);
 	gestaltAnswer = EndianS32_BtoN(gestaltAnswer);
@@ -5784,162 +5770,137 @@ ReLoadPrefs:
 	 }*/
 	
 	/////////
-	
-	//SAUVEGARDER LES NOUVELLES PREFS !!!
-	/*
-	 thePrefs.Registred	= false;
-	 thePrefs.SNumber	= 0;
-	 thePrefs.Decode		= 0;
-	 thePrefs.Version 	= VERSION;
-	 thePrefs.NoStart 	= 0;
-	 thePrefs.NewPrefSystem = false;
-	 for( i = 0; i < 30; i++) thePrefs.NewPrefsCode[ i] = 0;
-	 
-	 UseResFile( MainResFile);
-	 
-	 aHandle = Get1Resource( 'AGGA', 128);
-	 if( aHandle != NULL)
-	 {
-	 RemoveResource( aHandle);
-	 MyDisposHandle( & aHandle);
-	 }
-	 aHandle = MyNewHandle( sizeof( Prefs));
-	 BlockMoveData( &thePrefs, *aHandle, sizeof( Prefs));
-	 AddResource( aHandle, 'AGGA', 128, "\p");
-	 WriteResource( aHandle);
-	 ReleaseResource( aHandle);*/
-	/////////
 }
 
 void HandleEdit(short item)
 {
 	short		theNo, lastNo, samp;
-
+	
 	switch( item)
 	{
 		case 1:		// UNDO
 			DoUndo();
-		break;
-	
+			break;
+			
 		case 3:		// cut
 			if( oldWindow == NULL) break;
 			
 			HandleEdit( 4);
 			HandleEdit( 6);
-		break;
-		
+			break;
+			
 		case 4:		// copy
 			if( oldWindow == NULL) break;
 			
 			switch( GetWRefCon( oldWindow))
-			{
-				case RefMODList:
-					COPYMODList();
+		{
+			case RefMODList:
+				COPYMODList();
 				break;
+				
+			case RefStaff:
+				COPYStaff();
+				break;
+				
+			case RefSample:
+				COPYSampleInt( GetDialogFromWindow( oldWindow));
+				break;
+				
+			case RefQuicktime:
+				COPYQuicktime();
+				break;
+				
+			case RefMozart:
+				COPYMozart();
+				break;
+				
+			case RefInstruList:
+				if( GetIns( &theNo, &samp)) NCOPYSample( 0, -1L, theNo, samp);
+				else Erreur( 13, theNo);
+				break;
+				
+			case RefPartition:
+				COPYEditor();
+				break;
+				
+			case RefParti:
+				COPYParti();
+				break;
+				
+			case RefPatList:
+				COPYPatList();
+				break;
+		}
+			break;
 			
-				case RefStaff:
-					COPYStaff();
-				break;
-				
-				case RefSample:
-					COPYSampleInt( GetDialogFromWindow( oldWindow));
-				break;
-				
-				case RefQuicktime:
-					COPYQuicktime();
-				break;
-				
-				case RefMozart:
-					COPYMozart();
-				break;
-				
-				case RefInstruList:
-					if( GetIns( &theNo, &samp)) NCOPYSample( 0, -1L, theNo, samp);
-					else Erreur( 13, theNo);
-				break;
-				
-				case RefPartition:
-					COPYEditor();
-				break;
-				
-				case RefParti:
-					COPYParti();
-				break;
-				
-				case RefPatList:
-					COPYPatList();
-				break;
-			}
-		break;
-		
 		case 5:		// paste
 			if( oldWindow == NULL) break;
 			
 			switch( GetWRefCon( oldWindow))
-			{
-				case RefMODList:
-					PASTEMODList();
+		{
+			case RefMODList:
+				PASTEMODList();
 				break;
 				
-				case RefSample:
-					PASTESampleInt( GetDialogFromWindow( oldWindow));
+			case RefSample:
+				PASTESampleInt( GetDialogFromWindow( oldWindow));
 				break;
 				
-				case RefStaff:
-					PASTEStaff();
+			case RefStaff:
+				PASTEStaff();
 				break;
 				
-				case RefMozart:
-					PASTEMozart();
+			case RefMozart:
+				PASTEMozart();
 				break;
 				
-				case RefInstruList:
-					PASTEInstruList();
+			case RefInstruList:
+				PASTEInstruList();
 				break;
 				
-				case RefPartition:
-					PASTEEditor();
+			case RefPartition:
+				PASTEEditor();
 				break;
 				
-				case RefParti:
-					PASTEParti();
+			case RefParti:
+				PASTEParti();
 				break;
 				
-				case RefPatList:
-					PASTEPatList();
+			case RefPatList:
+				PASTEPatList();
 				break;
-			}
-		break;
-	
+		}
+			break;
+			
 		case 6:		// clear
 			if( oldWindow == NULL) break;
 			
 			GlobalDoKey( oldWindow, 0x08);
-		break;
-	
+			break;
+			
 		default:
 			Erreur( 12, -1);
-		break;
-		
+			break;
+			
 		case 8:		// Duplicate
 			if( oldWindow == NULL) break;
 			
 			GlobalDoKey( oldWindow, duplicate);
-		break;
-		
+			break;
+			
 		case 9:		// Select All
 			if( oldWindow == NULL) break;
 			
 			GlobalDoKey( oldWindow, selectAll);
-		break;
-		
+			break;
+			
 		case 10:	// Get Info...
 			if( oldWindow == NULL) break;
 			
 			GlobalDoKey( oldWindow, getinfo);
-		break;
-		
-					// Switch Memory Music
+			break;
+			
+			// Switch Memory Music
 		case 12:
 		{
 			Boolean changedCopy;
@@ -5986,7 +5947,7 @@ void HandleEdit(short item)
 			
 			MADSetMusicStatus( MADDriver, 0, curMusic->fullTime, curMusic->position);
 		}
-		break;
+			break;
 	}
 }
 
@@ -6000,7 +5961,7 @@ void HandleEdit(short item)
 // Search through the current process list to find the given application. See
 // Using the Process Manager for a similar way of doing this.
 OSErr FindAProcess(OSType typeToFind, OSType creatorToFind,
-			ProcessSerialNumberPtr processSN)
+				   ProcessSerialNumberPtr processSN)
 {
 	ProcessInfoRec	tempInfo;
 	FSSpec	procSpec;
@@ -6039,60 +6000,60 @@ OSErr OpenSelection(FSSpecPtr theDoc)
 	AliasHandle	fileAlias;				// alias of the file itself
 	ProcessSerialNumber process;		// the finder's psn
 	OSErr			myErr;					// duh
-
+	
 	// Get the psn of the Finder and create the target address for the .
 	if(FindAProcess(kFinderSig,kSystemType,&process))
-			return procNotFound;
+		return procNotFound;
 	myErr = AECreateDesc(typeProcessSerialNumber,(Ptr) &process,
-							sizeof(process), &myAddressDesc);
+						 sizeof(process), &myAddressDesc);
 	if(myErr)	return myErr;
-
+	
 	// Create an empty 
 	myErr = AECreateAppleEvent (kAEFinderEvents, kAEOpenSelection, &myAddressDesc, kAutoGenerateReturnID, kAnyTransactionID, &aeEvent);
 	if(myErr)
-			return myErr;
-
+		return myErr;
+	
 	// Make an FSSpec and alias for the parent folder, and an alias for the file
 	FSMakeFSSpec(theDoc->vRefNum,theDoc->parID,nil,&dirSpec);
 	NewAlias(nil,&dirSpec,&dirAlias);
 	NewAlias(nil,theDoc,&fileAlias);
-
+	
 	// Create the file list.
 	myErr=AECreateList(nil,0,false,&fileList);
 	if( myErr) return myErr;
-
+	
 	/* Create the folder descriptor
-	*/
+	 */
 	HLock((Handle)dirAlias);
 	AECreateDesc(typeAlias, (Ptr) *dirAlias, GetHandleSize
-					((Handle) dirAlias), &aeDirDesc);
+				 ((Handle) dirAlias), &aeDirDesc);
 	HUnlock((Handle)dirAlias);
 	DisposeHandle((Handle)dirAlias);
-
+	
 	if((myErr = AEPutParamDesc(&aeEvent,keyDirectObject,&aeDirDesc)) ==
-			noErr)
+	   noErr)
 	{
-			AEDisposeDesc(&aeDirDesc);
-			HLock((Handle)fileAlias);
-
-			AECreateDesc(typeAlias, (Ptr)*fileAlias,
-					GetHandleSize((Handle)fileAlias), &listElem);
-			HUnlock((Handle)fileAlias);
-			DisposeHandle((Handle)fileAlias);
-			myErr = AEPutDesc(&fileList,0,&listElem);
+		AEDisposeDesc(&aeDirDesc);
+		HLock((Handle)fileAlias);
+		
+		AECreateDesc(typeAlias, (Ptr)*fileAlias,
+					 GetHandleSize((Handle)fileAlias), &listElem);
+		HUnlock((Handle)fileAlias);
+		DisposeHandle((Handle)fileAlias);
+		myErr = AEPutDesc(&fileList,0,&listElem);
 	}
 	if(myErr)
-			return myErr;
+		return myErr;
 	AEDisposeDesc(&listElem);
-
+	
 	myErr = AEPutParamDesc(&aeEvent,keySelection,&fileList);
 	if( myErr) return myErr;
-
+	
 	myErr = AEDisposeDesc(&fileList);
-
+	
 	myErr = AESend(&aeEvent, nil,
-			kAENoReply+kAEAlwaysInteract+kAECanSwitchLayer,
-			kAENormalPriority, kAEDefaultTimeout, nil, nil);
+				   kAENoReply+kAEAlwaysInteract+kAECanSwitchLayer,
+				   kAENormalPriority, kAEDefaultTimeout, nil, nil);
 	AEDisposeDesc(&aeEvent);
 	
 	SetFrontProcess( &process);
@@ -6133,7 +6094,7 @@ void DoReset()
 	
 	if( !ResetPatterns && !ResetInstrus && !PurgePatterns) ControlSwitch( 1, aDia, 255);
 	else ControlSwitch( 1, aDia, 0);
-			
+	
 	do
 	{
 		//	ModalDialog( MyDlgFilterDesc, &itemHit);
@@ -6149,15 +6110,15 @@ void DoReset()
 				SetControlValue( (ControlHandle) itemHandle, !GetControlValue( (ControlHandle) itemHandle));
 				
 				switch( itemHit)
-				{
-					case 3:	ResetPatterns = !ResetPatterns;		break;
-					case 5:	ResetInstrus = !ResetInstrus;		break;
-					case 6:	PurgePatterns = !PurgePatterns;		break;
-				}
+			{
+				case 3:	ResetPatterns = !ResetPatterns;		break;
+				case 5:	ResetInstrus = !ResetInstrus;		break;
+				case 6:	PurgePatterns = !PurgePatterns;		break;
+			}
 				
 				if( !ResetPatterns && !ResetInstrus && !PurgePatterns) ControlSwitch( 1, aDia, 255);
 				else ControlSwitch( 1, aDia, 0);
-			break;
+				break;
 		}
 		
 	}while( itemHit != 1 && itemHit != 2);
@@ -6175,7 +6136,7 @@ void DoReset()
 			for( x = 1; x < curMusic->header->numPat ; x++)
 			{
 				if(  curMusic->partition[ x] != NULL) DisposePtr( (Ptr)  curMusic->partition[ x]);
-				 curMusic->partition[ x] = NULL;
+				curMusic->partition[ x] = NULL;
 			}
 			curMusic->header->numPat = 1;
 			
@@ -6227,27 +6188,28 @@ void DoReset()
 		pStrcpy( curMusic->musicFileName, "\pReseted Music");
 		SetCurrentMOD( curMusic->musicFileName);
 	}
-
+	
 	DisposeDialog( aDia);
 	SetPort( savedPort);
 	
-	
-/*	if( DoWindowState)
+#if 0
+	if( DoWindowState)
 	{
 		CheckShowWindow();
-			
+		
 		if( thePrefs.ActiveHelp) CreateAHelpWindow();
 		ShowWindowPref( -1);
 		
 		ShowWindow( ToolsDlog);
 		SelectWindow( ToolsDlog);
 		SelectWindow2( NextWindowVisible( ToolsDlog));
-	}*/
+	}
+#endif
 	
 	MADReset( MADDriver);
 	
 	UPDATE_Total();
-
+	
 	ResetUndo();
 	ScanTime();
 	
@@ -6267,30 +6229,30 @@ void HandleFileChoice( short theItem)
 			}
 			CreateNewMOD();
 			PatchSave = false;
-		break;
-	
+			break;
+			
 		case 2:
 			NOpenMusic();
-		break;
-		
+			break;
+			
 		case 3:
 			SaveMOD( false, 'MADK');
-		break;
-		
+			break;
+			
 		case 4:
 			SaveMOD( true, 'MADK');
-		break;
-
+			break;
+			
 		case 6:
 			// EXPORT FILE
-		break;
-		
+			break;
+			
 		case 7:
 			// RESET
 			
 			DoReset();
-		break;
-		
+			break;
+			
 		case 5:
 			if( oldWindow == nil) break;
 			savedWindow = NextWindowVisible( oldWindow);
@@ -6300,8 +6262,8 @@ void HandleFileChoice( short theItem)
 			
 			oldWindow = NULL;
 			SelectWindow2( savedWindow);
-		break;
-		
+			break;
+			
 		case 9:
 			if( MODListDlog != NULL)
 			{
@@ -6318,12 +6280,12 @@ void HandleFileChoice( short theItem)
 					SetItemMark( FileMenu, 9, checkMark);
 				}
 			}
-		break;
-		
+			break;
+			
 		case 10:
 			SaveMODList();
 			break;
-		
+			
 		case 11:
 			if( GereMusicListChanged() == noErr)
 			{
@@ -6331,45 +6293,45 @@ void HandleFileChoice( short theItem)
 				SetMODListWindowName();
 			}
 			break;
-		
+			
 		case 13:
 			PageSetUp();
 			break;
-		
+			
 		case 14:
 			Print();
 			break;
-		
+			
 		case 16:
 			ShowPrefs( DRIVER);
 			break;
-		
+			
 		case 17:
 			// Windows Settings
 			break;
-		
-		// OMS
-		
+			
+			// OMS
+			
 		case 19:
 			OpenMIDIHardware();
 #if MACOS9VERSION
 			OMSOpenCurrentStudioSetup();
 #endif
 			break;
-		
+			
 		case 20:
 			OpenMIDIHardware();
 #if MACOS9VERSION
 			OMSMIDISetupDialog();
 #endif
 			break;
-		
-		///
-		
+			
+			///
+			
 		case 18:
-			{
+		{
 			FSSpec specFolder;
-	
+			
 			if( FindFolder( kOnSystemDisk, kControlPanelFolderType, kDontCreateFolder, &specFolder.vRefNum, &specFolder.parID) == noErr)
 			{
 				short			i;
@@ -6389,7 +6351,7 @@ void HandleFileChoice( short theItem)
 						break;
 					
 					if( info.hFileInfo.ioFlFndrInfo.fdType == 'cdev' &&
-						info.hFileInfo.ioFlFndrInfo.fdCreator == 'soun')
+					   info.hFileInfo.ioFlFndrInfo.fdCreator == 'soun')
 					{
 						LaunchParamBlockRec		myLaunchParams;
 						
@@ -6405,7 +6367,7 @@ void HandleFileChoice( short theItem)
 					}
 					
 					if( info.hFileInfo.ioFlFndrInfo.fdType == 'APPC' &&
-						info.hFileInfo.ioFlFndrInfo.fdCreator == 'soun')
+					   info.hFileInfo.ioFlFndrInfo.fdCreator == 'soun')
 					{
 						LaunchParamBlockRec		myLaunchParams;
 						
@@ -6459,13 +6421,13 @@ void HandleFileChoice( short theItem)
 					}
 				}
 			}
-			}
+		}
 			break;
-		
+			
 		case 22:
 			End = true;
 			break;
-		
+			
 		default:
 			Erreur( 12, -1);
 			break;
@@ -6476,18 +6438,18 @@ void HandleExportFile( short theItem)
 {
 	switch( theItem)
 	{
-	case 1:
-		SaveMOD( true, 'AIFF');
+		case 1:
+			SaveMOD( true, 'AIFF');
 			break;
-	
-	case 2:
-		SaveMOD( true, 'MPG4');
+			
+		case 2:
+			SaveMOD( true, 'MPG4');
 			break;
-	
-	default:
-		if( CallPlug( 0)) break;
-		SaveMOD( true, GetPPPlugType( gMADLib, theItem - 4, 'EXPL'));
-		break;
+			
+		default:
+			if( CallPlug( 0)) break;
+			SaveMOD( true, GetPPPlugType( gMADLib, theItem - 4, 'EXPL'));
+			break;
 	}
 }
 
@@ -6511,6 +6473,7 @@ void HandleHelpChoice(short theItem)
 				CloseAHelp();
 			}
 			break;
+			
 		default:
 			break;
 	}
@@ -6550,13 +6513,13 @@ void UpdateBookmarks( DialogPtr	theDia)
 	FrameRect( &itemRect);
 	
 	visibleRegion = NewRgn();
-		
+	
 	GetPortVisibleRegion( GetDialogPort( theDia), visibleRegion);
 	
 	LUpdate( visibleRegion, BookmarkList);
 	
 	DisposeRgn( visibleRegion);
-			
+	
 	GetDialogItem( theDia, 11, &itemType, &itemHandle, &itemRect);
 	destRect = itemRect;
 	
@@ -6565,10 +6528,10 @@ void UpdateBookmarks( DialogPtr	theDia)
 	Text = GetResource( 'TEXT', 401);
 	DetachResource( Text);
 	HLock( Text);
-
+	
 	theStyle = (StScrpHandle) GetResource( 'styl', 401);
 	DetachResource( (Handle) theStyle);
-
+	
 	TESetAlignment( teCenter, hTE);
 	TEStyleInsert( *Text, GetHandleSize( Text), theStyle, hTE);
 	
@@ -6587,7 +6550,7 @@ void UpdateBookmarks( DialogPtr	theDia)
 	HUnlock( Text);
 	MyDisposHandle( & Text);
 	MyDisposHandle( (Handle*) &theStyle);
-
+	
 	EndUpdate( GetDialogWindow( theDia));
 	SetPort( savePort);
 }
@@ -6595,24 +6558,24 @@ void UpdateBookmarks( DialogPtr	theDia)
 
 void AddRemoveBookmarksFilter( DialogPtr theDialog, EventRecord *theEventI, short *itemHit)
 {
-		WindowPtr	whichWindow;
-		short		thePart,i, theChar;
-		GrafPtr		oldPort;
-		Point		aPoint, theCell;
- 		Str255		str1, str2;
- 		Boolean		DrawAll;
- 		
-		GetPort( &oldPort);
-		SetPortDialogPort( theDialog);
-		
-		switch( theEventI->what)
-		{
+	WindowPtr	whichWindow;
+	short		thePart,i, theChar;
+	GrafPtr		oldPort;
+	Point		aPoint, theCell;
+	Str255		str1, str2;
+	Boolean		DrawAll;
+	
+	GetPort( &oldPort);
+	SetPortDialogPort( theDialog);
+	
+	switch( theEventI->what)
+	{
 		case updateEvt:
 		{
 			
 		}
-		break;
-		
+			break;
+			
 		case mouseDown:
 			thePart = FindWindow( theEventI->where, &whichWindow);
 			
@@ -6623,62 +6586,64 @@ void AddRemoveBookmarksFilter( DialogPtr theDialog, EventRecord *theEventI, shor
 				GlobalToLocal( &aPoint);
 				if( PtInRect( aPoint, &BookmarkRectList) == true)
 				{
-				//	TextFont( 4);	TextSize( 9);
+					//	TextFont( 4);	TextSize( 9);
 					LClick(aPoint, theEventI->modifiers, BookmarkList);
-				//	TextFont( 0);	TextSize( 0);
+					//	TextFont( 0);	TextSize( 0);
 				}
 			}
-		break;
-		
+			break;
+			
 		case keyDown:
 		case autoKey:
-			/*	if( GetWRefCon( whichWindow) == 3885)
+#if 0
+			if( GetWRefCon( whichWindow) == 3885)
+			{
+				TextFont( 4);	TextSize( 9);
+				theChar = theEventI->message & charCodeMask;
+				theCell.v = 0;
+				theCell.h = 0;
+				if( LGetSelect( true, &theCell, BookmarkList))
 				{
-					TextFont( 4);	TextSize( 9);
-					theChar = theEventI->message & charCodeMask;
-					theCell.v = 0;
-					theCell.h = 0;
-					if( LGetSelect( true, &theCell, BookmarkList))
+					if( theChar == 0x1E)
 					{
-						if( theChar == 0x1E)
+						if( theCell.v > 0)
 						{
-							if( theCell.v > 0)
-							{
-								LSetSelect( false, theCell, BookmarkList);
-								theCell.v--;
-								LSetSelect( true, theCell, BookmarkList);
-								LAutoScroll( PianoList);
-							}
-						}
-						else if( theChar == 0x1F) 
-						{
-							if( theCell.v < NUMBER_NOTES)
-							{
-								LSetSelect( false, theCell, BookmarkList);
-								theCell.v++;
-								LSetSelect( true, theCell, BookmarkList);
-								LAutoScroll( PianoList);
-							}
-						}
-						else if( theChar == 0x08) 
-						{
-							if( theCell.v == NUMBER_NOTES) theCell.v = 0xFF;	// NO NOTE
-							
-							for( i = 0; i < 299; i++)
-							{
-								if( thePrefs.PianoKey[ i] == theCell.v) thePrefs.PianoKey[ i] = -1;
-							}
-							DrawAllBookMarks();
+							LSetSelect( false, theCell, BookmarkList);
+							theCell.v--;
+							LSetSelect( true, theCell, BookmarkList);
+							LAutoScroll( PianoList);
 						}
 					}
-					TextFont( 0);	TextSize( 0);
-				}*/
-		break;
-		}
-		
-		SetPort( oldPort);
-		
-		return;
+					else if( theChar == 0x1F) 
+					{
+						if( theCell.v < NUMBER_NOTES)
+						{
+							LSetSelect( false, theCell, BookmarkList);
+							theCell.v++;
+							LSetSelect( true, theCell, BookmarkList);
+							LAutoScroll( PianoList);
+						}
+					}
+					else if( theChar == 0x08) 
+					{
+						if( theCell.v == NUMBER_NOTES) theCell.v = 0xFF;	// NO NOTE
+						
+						for( i = 0; i < 299; i++)
+						{
+							if( thePrefs.PianoKey[ i] == theCell.v) thePrefs.PianoKey[ i] = -1;
+						}
+						DrawAllBookMarks();
+					}
+				}
+				TextFont( 0);	TextSize( 0);
+			}
+#endif
+			break;
+	}
+	
+	SetPort( oldPort);
+	
+	return;
 }
 
 void DrawAllBookMarks()
@@ -6687,18 +6652,18 @@ void DrawAllBookMarks()
 	Point	cSize, theCell;
 	short	i,x;
 	Str255	tempString;
-
-/*	theCell.v = 0;
-	theCell.h = 0;
-	LGetSelect( true, &theCell, BookmarkList);*/
-
+	
+	/*	theCell.v = 0;
+	 theCell.h = 0;
+	 LGetSelect( true, &theCell, BookmarkList);*/
+	
 	cSize.h = cSize.v = 0;
 	
 	LSetDrawingMode( true, BookmarkList);
 	
-/*	LDelRow( 0, 0, BookmarkList);
-	
-	LAddRow( URLsNo, 0, BookmarkList);*/
+	/*	LDelRow( 0, 0, BookmarkList);
+	 
+	 LAddRow( URLsNo, 0, BookmarkList);*/
 	
 	for( i = 0; i < URLsNo; i++)
 	{
@@ -6706,9 +6671,9 @@ void DrawAllBookMarks()
 		cSize.v++;
 	}
 	
-//	for( i = URLsNo; i < (*BookmarkList)->dataBounds.bottom; i++) LDelRow( 1, (*BookmarkList)->dataBounds.bottom-1, BookmarkList);
+	//	for( i = URLsNo; i < (*BookmarkList)->dataBounds.bottom; i++) LDelRow( 1, (*BookmarkList)->dataBounds.bottom-1, BookmarkList);
 	
-//	LSetSelect( true, theCell, BookmarkList);
+	//	LSetSelect( true, theCell, BookmarkList);
 	
 	LAutoScroll( BookmarkList);
 }
@@ -6741,7 +6706,7 @@ void AddRemoveBookmarks()
 	}
 	
 	GetPort( &myPort);
-
+	
 	TheDia = GetNewDialog( 181,NULL, (WindowPtr) -1L);
 	SetPortDialogPort( TheDia);
 	AutoPosition( TheDia);
@@ -6754,7 +6719,7 @@ void AddRemoveBookmarks()
 	
 	tempRect = BookmarkRectList;
 	tempRect.right = tempRect.right - 15;
-
+	
 	if (tempRect.right <= (tempRect.left + 15)) tempRect.right = tempRect.left + 15;
 	
 	InsetRect(&tempRect, -1, -1);
@@ -6764,15 +6729,15 @@ void AddRemoveBookmarks()
 	cSize.h = (tempRect.right - tempRect.left);
 	
 	BookmarkList =  LNew(	&tempRect, 
-							&dataBounds,
-							cSize,
-							0,
-							GetDialogWindow( TheDia),
-							true,
-							false,
-							false,
-							true);
-							
+						 &dataBounds,
+						 cSize,
+						 0,
+						 GetDialogWindow( TheDia),
+						 true,
+						 false,
+						 false,
+						 true);
+	
 	(*BookmarkList)->selFlags = lOnlyOne + lNoExtend;
 	
 	DrawAllBookMarks();
@@ -6796,7 +6761,7 @@ void AddRemoveBookmarks()
 					spec.vRefNum = mainVRefNum;
 					spec.parID = mainParID;
 					
-				//	HSetVol( NULL, mainVRefNum, mainParID);
+					//	HSetVol( NULL, mainVRefNum, mainParID);
 					FSpDelete( &spec);
 					
 					InitBookMarks();
@@ -6806,12 +6771,12 @@ void AddRemoveBookmarks()
 					
 					DrawAllBookMarks();
 				}
-			break;
-			
+				break;
+				
 			case 11:
 				DoInternetMenu( 3);
-			break;
-			
+				break;
+				
 			case 3:	// Add
 				theCell.v = 0;
 				theCell.h = 0;
@@ -6847,9 +6812,9 @@ void AddRemoveBookmarks()
 				if( LGetSelect( true, &cSize, BookmarkList)) LSetSelect( false, cSize, BookmarkList);
 				
 				LSetSelect( true, theCell, BookmarkList);
-			break;
-			
-			
+				break;
+				
+				
 			case 4:	// Remove
 				theCell.v = 0;
 				theCell.h = 0;
@@ -6869,8 +6834,8 @@ void AddRemoveBookmarks()
 				LDelRow( 1, (*BookmarkList)->dataBounds.bottom-1, BookmarkList);
 				
 				DrawAllBookMarks();
-			break;
-			
+				break;
+				
 			case 10:
 				theCell.v = 0;
 				theCell.h = 0;
@@ -6881,8 +6846,8 @@ void AddRemoveBookmarks()
 				}
 				
 				DrawAllBookMarks();
-			break;
-			
+				break;
+				
 			case -5:
 			case nullEvent:
 				theCell.v = 0;
@@ -6926,9 +6891,9 @@ void AddRemoveBookmarks()
 						SetDText( TheDia, 6, "\p");
 					}
 				}
-			break;
+				break;
 		}
-	
+		
 	}while( itemHit != 1 && itemHit != 2);
 	
 	if( itemHit == 1)
@@ -6966,11 +6931,7 @@ void CloseBookMarks()
 	char		achar;
 	Handle		Text;
 	
-//	HSetVol( NULL, mainVRefNum, mainParID);
-
-	pStrcpy( spec.name, PLAYERBOOK);
-	spec.vRefNum = mainVRefNum;
-	spec.parID = mainParID;
+	FSMakeFSSpec(mainVRefNum, mainParID, PLAYERBOOK, &spec);
 	
 	iErr = FSpDelete( &spec);
 	iErr = FSpCreate( &spec,  'ttxt', 'TEXT', smSystemScript);
@@ -7018,7 +6979,7 @@ void InitBookMarks()
 	
 	HGetVol( NULL, &vRefNum, &dirID);
 	
-//	URLs[ MAXURL], URLsDesc[ MAXURL];
+	//	URLs[ MAXURL], URLsDesc[ MAXURL];
 	
 	///////// LOAD DEFAULT FILES IN ANY CASE !!!!!
 	
@@ -7034,7 +6995,7 @@ void InitBookMarks()
 	{
 		//////////////////////
 		
-		RETRY1:
+	RETRY1:
 		
 		prev = i;
 		while( i < eof && data[ i] != '\r') i++;
@@ -7046,7 +7007,7 @@ void InitBookMarks()
 		
 		//////////////////////
 		
-		RETRY2:
+	RETRY2:
 		
 		prev = i;
 		while( i < eof && data[ i] != '\r') i++;
@@ -7071,7 +7032,8 @@ void InitBookMarks()
 	iErr = FSpOpenDF( &theSpec, fsCurPerm, &fRefNum);
 	if( iErr)
 	{
-	/*	if( iErr == fnfErr)
+#if 0
+		if( iErr == fnfErr)
 		{
 			iErr = Create( PLAYERPREF, 0, 'ttxt', 'TEXT');
 			iErr = FSpOpenDF( PLAYERPREF, 0, &fRefNum);
@@ -7088,7 +7050,8 @@ void InitBookMarks()
 			MyDisposHandle( & Text);
 			
 			iErr = FSClose( fRefNum);
-		}*/
+		}
+#endif
 		
 		return;
 	}
@@ -7105,7 +7068,7 @@ void InitBookMarks()
 	{
 		//////////////////////
 		
-		RETRY3:
+	RETRY3:
 		
 		prev = i;
 		while( i < eof && data[ i] != '\r') i++;
@@ -7117,7 +7080,7 @@ void InitBookMarks()
 		
 		//////////////////////
 		
-		RETRY4:
+	RETRY4:
 		
 		prev = i;
 		while( i < eof && data[ i] != '\r') i++;
@@ -7134,7 +7097,7 @@ void InitBookMarks()
 	
 	DisposePtr( data);
 	
-	END:
+END:
 	
 	iErr = FSCloseFork( fRefNum);
 }
@@ -7144,7 +7107,7 @@ void DoInternetMenu( short theItem)
 	short 	no;
 	Str255	str;
 	OSStatus err;
-
+	
 	switch( theItem)
 	{
 		case 1:
@@ -7152,22 +7115,22 @@ void DoInternetMenu( short theItem)
 		case 3:
 		case 4:
 			GetIndString( str, 133, theItem);
-		
+			
 			err = LaunchURLC( str);
-		
+			
 			if( err == -108) Erreur( 98, err);
 			else if( err != noErr) Erreur( 99, err);
 			break;
-	
+			
 		case 6:
 			AddRemoveBookmarks();
 			break;
-	
+			
 		default:
 			no = theItem - 8;
-		
+			
 			err = LaunchURLC( URLs[ no]);
-		
+			
 			if( err == -108) Erreur( 98, err);
 			else if( err != noErr) Erreur( 99, err);
 			break;
@@ -7298,7 +7261,7 @@ void HandleNewSound( short theItem)
 					UpdateInstruMenu();
 				}
 				SetCursor( GetQDGlobalsArrow( &qdarrow));
-		
+				
 				FSpDelete( &newFile);
 			}
 			break;
