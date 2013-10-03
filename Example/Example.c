@@ -55,30 +55,14 @@ int main( int argc, char* argv[])
 	MADMusic				*MADMusic;
 	MADLibrary				*MADLib;
 	
-/***************					****************/
-/****** 	 	Toolbox Initialization	  **********/
-/***************					****************/
+	/***************					****************/
+	/****** 	 	Toolbox Initialization	  **********/
+	/***************					****************/
 	
-#if TARGET_API_MAC_CARBON == 1
 	InitCursor();
-	MoreMasters();
-#else
-	InitGraf( &qd.thePort);
-	InitFonts();
-	InitWindows();
-	InitMenus();
-	TEInit();
-	InitDialogs(0L);
-	InitCursor();
-	MaxApplZone();
-	MoreMasters();
-	
-#endif
-	
-	//if( NavServicesAvailable() == false) return EXIT_FAILURE;
 	
 	/*******************************************************************************************/
-	/****** MAD Library Initialisation : choose the best driver for the current hardware  ******/
+	/****** MAD Library Initialization : choose the best driver for the current hardware  ******/
 	/******																				  ******/
 	/****** Standard initialization with 4 channels...									  ******/
 	/*******************************************************************************************/
@@ -186,7 +170,7 @@ int main( int argc, char* argv[])
 					}
 				}
 				
-				iErr = NavDisposeReply( &theReply);	// clean up after ourselves	
+				iErr = NavDisposeReply( &theReply);	// clean up after ourselves
 			}
 			else iErr = -1;
 		}
@@ -194,7 +178,7 @@ int main( int argc, char* argv[])
 		if( iErr != noErr) End = true;
 		else
 		{
-			char	type[ 5];			
+			char	type[ 5];
 			MADMusicIdentifyFSpFile( MADLib, type, &spec);
 			
 			if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?

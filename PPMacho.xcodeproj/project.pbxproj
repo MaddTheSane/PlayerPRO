@@ -3098,7 +3098,7 @@
 			path = "Tone Generator";
 			sourceTree = "<group>";
 		};
-		5518105510C35A0100ADA9F4 /* Example */ = {
+		5518105510C35A0100ADA9F4 /* Carbon Example */ = {
 			isa = PBXGroup;
 			children = (
 				5518105610C35A2600ADA9F4 /* Example.c */,
@@ -3106,6 +3106,7 @@
 				5518105A10C35A2600ADA9F4 /* small MOD Music.mod */,
 				5518107410C35A4500ADA9F4 /* PlayerPRO Example-Info.plist */,
 			);
+			name = "Carbon Example";
 			path = Example;
 			sourceTree = "<group>";
 		};
@@ -3817,7 +3818,7 @@
 				88E0C3CA0C2F21DD00D6C081 /* Resources */,
 				552C70C210CDAF8C00C0E0D4 /* Documentation */,
 				55879F7B164CA63D009068D5 /* PPPlay */,
-				5518105510C35A0100ADA9F4 /* Example */,
+				5518105510C35A0100ADA9F4 /* Carbon Example */,
 				554E0FDD10D6C79D00BB619C /* App Plug-ins */,
 				88E0C3CE0C2F21DD00D6C081 /* MADDriver.Source */,
 				551292DE163DD68500C2C639 /* PlayerPROKit */,
