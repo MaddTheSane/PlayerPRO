@@ -14,10 +14,10 @@
 /* The name on the left is the name defined in schema.xml */
 /* The name on the right is what the user will see */
 "net_sourceforge_playerpro_tracker_instumentlist" = "Tracker Instrument list";
-"net_sourcegorge_playerpro_tracker_patternlist" = "Tracker Pattern list";
+"net_sourceforge_playerpro_tracker_patternlist" = "Tracker Pattern list";
 kMDItemCodecs = "Tracker Signature";
-"net_sourcegorge_playerpro_tracker_totalpatterns" = "Total Patterns";
-"net_sourcegorge_playerpro_tracker_partitionlength" = "Partition Length";
+"net_sourceforge_playerpro_tracker_totalpatterns" = "Total Patterns";
+"net_sourceforge_playerpro_tracker_partitionlength" = "Partition Length";
 "net_sourceforge_playerpro_tracker_totalinstruments" = "Total Instruments";
 "net_sourceforge_playerpro_tracker_totaltracks" = "Total Tracks";
 "net_sourceforge_playerpro_tracker_formatdescription" = "Format Description";
@@ -28,10 +28,10 @@ kMDItemCodecs = "Tracker Signature";
 /* com_Foo_YourAttrName should be definded in the schema.xml file  */
 /* The value on the right will be displayed by the Finder etc.. */
 "net_sourceforge_playerpro_tracker_instumentlist.Description" = "This lists all the instrument titles in a tracker audio file.";
-"net_sourcegorge_playerpro_tracker_patternlist.Description" = "This lists all the pattern titles in a tracker audio file";
+"net_sourceforge_playerpro_tracker_patternlist.Description" = "This lists all the pattern titles in a tracker audio file";
 "kMDItemCodecs.Description" = "The tracker signature of the music";
-"net_sourcegorge_playerpro_tracker_totalpatterns.Description" = "The amount of patterns that the tracker uses";
-"net_sourcegorge_playerpro_tracker_partitionlength.Description" = "The length of a partition";
+"net_sourceforge_playerpro_tracker_totalpatterns.Description" = "The amount of patterns that the tracker uses";
+"net_sourceforge_playerpro_tracker_partitionlength.Description" = "The length of a partition";
 "net_sourceforge_playerpro_tracker_totalinstruments.Description" = "The total amount of instruments that the tracker has";
 "net_sourceforge_playerpro_tracker_totaltracks.Description" = "The total amount of tracks that the tracker has";
 "net_sourceforge_playerpro_tracker_formatdescription.Description" = "The format description of the tracker";

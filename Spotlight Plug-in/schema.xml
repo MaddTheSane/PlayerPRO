@@ -26,12 +26,12 @@
 	
 	<attributes>
 		<attribute name="net_sourceforge_playerpro_tracker_instumentlist" multivalued="true" type="CFString"/>
-		<attribute name="net_sourcegorge_playerpro_tracker_patternlist" multivalued="true" type="CFString"/>
-		<attribute name="net_sourcegorge_playerpro_tracker_totalpatterns" multivalued="false" type="CFNumber"/>
-		<attribute name="net_sourcegorge_playerpro_tracker_partitionlength" multivalued="false" type="CFNumber"/>
-		<attribute name="net_sourceforge_playerpro_tracker_totalinstruments" multivalued="false" type="CFNumber"/>
-		<attribute name="net_sourceforge_playerpro_tracker_totaltracks" multivalued="false" type="CFNumber"/>
-		<attribute name="net_sourceforge_playerpro_tracker_formatdescription" multivalued="false" type="CFString"/>
+		<attribute name="net_sourceforge_playerpro_tracker_patternlist" multivalued="true" type="CFString"/>
+		<attribute name="net_sourceforge_playerpro_tracker_totalpatterns" multivalued="false" nosearch="true" type="CFNumber"/>
+		<attribute name="net_sourceforge_playerpro_tracker_partitionlength" multivalued="false" nosearch="true" type="CFNumber"/>
+		<attribute name="net_sourceforge_playerpro_tracker_totalinstruments" multivalued="false" nosearch="true" type="CFNumber"/>
+		<attribute name="net_sourceforge_playerpro_tracker_totaltracks" multivalued="false" nosearch="true" type="CFNumber"/>
+		<attribute name="net_sourceforge_playerpro_tracker_formatdescription" multivalued="false" nosearch="true" type="CFString"/>
 	</attributes>
 
     <types>
@@ -44,9 +44,9 @@
 				kMDItemDurationSeconds
 				kMDItemCodecs
 				net_sourceforge_playerpro_tracker_instumentlist
-				net_sourcegorge_playerpro_tracker_patternlist
-				net_sourcegorge_playerpro_tracker_totalpatterns
-				net_sourcegorge_playerpro_tracker_partitionlength
+				net_sourceforge_playerpro_tracker_patternlist
+				net_sourceforge_playerpro_tracker_totalpatterns
+				net_sourceforge_playerpro_tracker_partitionlength
 				net_sourceforge_playerpro_tracker_totalinstruments
 				net_sourceforge_playerpro_tracker_totaltracks
 				net_sourceforge_playerpro_tracker_formatdescription
@@ -56,8 +56,8 @@
 				kMDItemTitle
 				kMDItemDurationSeconds
 				kMDItemCodecs
-				net_sourcegorge_playerpro_tracker_partitionlength
-				net_sourcegorge_playerpro_tracker_totalpatterns
+				net_sourceforge_playerpro_tracker_partitionlength
+				net_sourceforge_playerpro_tracker_totalpatterns
 				net_sourceforge_playerpro_tracker_totalinstruments
 				net_sourceforge_playerpro_tracker_totaltracks
 				net_sourceforge_playerpro_tracker_formatdescription
@@ -65,35 +65,30 @@
             
         </type>
 		
-		<type name="net.sourceforge.playerpro.mad-bundle">  <!-- add one <type>...</type> entry for each UTI that you need to define.-->
-			
-			<!-- 'allattrs' is a whitespace separated list of all of the attributes that this UTI type normally has.
-			 It does not have to be exhaustive. -->
+		<type name="net.sourceforge.playerpro.mad-bundle">
 			<allattrs>
 				kMDItemTitle
 				kMDItemDurationSeconds
 				kMDItemCodecs
 				kMDItemAuthors
 				net_sourceforge_playerpro_tracker_instumentlist
-				net_sourcegorge_playerpro_tracker_patternlist
-				net_sourcegorge_playerpro_tracker_totalpatterns
-				net_sourcegorge_playerpro_tracker_partitionlength
+				net_sourceforge_playerpro_tracker_patternlist
+				net_sourceforge_playerpro_tracker_totalpatterns
+				net_sourceforge_playerpro_tracker_partitionlength
 				net_sourceforge_playerpro_tracker_totalinstruments
 				net_sourceforge_playerpro_tracker_totaltracks
 				net_sourceforge_playerpro_tracker_formatdescription
 			</allattrs>
-			<!-- 'displayattrs' is a whitespace separated list of the attributes that should normally be displayed when previewing files of this UTI type. -->
 			<displayattrs>
 				kMDItemTitle
 				kMDItemDurationSeconds
 				kMDItemCodecs
 				kMDItemAuthors
-				net_sourcegorge_playerpro_tracker_partitionlength
-				net_sourcegorge_playerpro_tracker_totalpatterns
+				net_sourceforge_playerpro_tracker_partitionlength
+				net_sourceforge_playerpro_tracker_totalpatterns
 				net_sourceforge_playerpro_tracker_totalinstruments
 				net_sourceforge_playerpro_tracker_totaltracks
 			</displayattrs>
-			
 		</type>
     </types>
 </schema>

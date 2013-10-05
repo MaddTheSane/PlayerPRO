@@ -14,25 +14,26 @@
 
 @implementation SoundOutputController
 
--(id)init
+#if 0
+//Technically not needed
+- (id)init
 {
-	if (self = [super initWithNibName:@"PPSoundSettingsViewController" bundle:nil]) {
-		[self setTitle:@"Sound Output"];
-	}
-	return self;
+	return [self initWithNibName:@"PPSoundSettingsViewController" bundle:[NSBundle bundleForClass:[PPSoundSettingsViewController class]]];
 }
+#endif
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (self) {
 		self.delegate = self;
+		self.title = @"Sound Output";
 	}
 	
 	return self;
 }
 
--(void)awakeFromNib
+- (void)awakeFromNib
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	MADDriverSettings drivSet;

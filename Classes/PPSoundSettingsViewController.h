@@ -6,8 +6,9 @@
 //
 //
 
-#import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#import <Foundation/NSObject.h>
+#import <AppKit/NSViewController.h>
 
 @protocol PPSoundSettingsViewControllerDelegate <NSObject>
 @optional
@@ -23,8 +24,9 @@
 - (void)soundOutReverbSizeDidChange:(short)rev;
 - (void)soundOutOversamplingAmountDidChange:(short)ovs;
 - (void)soundOutStereoDelayAmountDidChange:(short)std;
-
 @end
+
+@class NSButton, NSMatrix, NSPopUpButton;
 
 @interface PPSoundSettingsViewController : NSViewController
 @property (weak) IBOutlet NSButton *oversampling;
@@ -38,9 +40,9 @@
 @property (weak) IBOutlet NSPopUpButton *reverbNum;
 @property (weak) IBOutlet NSPopUpButton *stereoDelayNum;
 @property (weak) IBOutlet NSPopUpButton *reverbPercent;
+@property (weak) IBOutlet id<PPSoundSettingsViewControllerDelegate> delegate;
 
 - (id)init;
-
 - (void)settingsFromDriverSettings:(MADDriverSettings*)sett;
 
 - (IBAction)changeBits:(id)sender;
@@ -51,7 +53,4 @@
 - (IBAction)changeReverbAmount:(id)sender;
 - (IBAction)changeReverbPercent:(id)sender;
 - (IBAction)changeStereoDelay:(id)sender;
-
-@property (weak) IBOutlet id<PPSoundSettingsViewControllerDelegate> delegate;
-
 @end
