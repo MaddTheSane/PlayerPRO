@@ -7,7 +7,11 @@
 //
 
 #import "PPSoundSettingsViewController.h"
-#import "PPPreferences.h"
+
+typedef struct _tagCoupling {
+	int amount;
+	NSInteger tag;
+} TagCoupling;
 
 enum {
 	rate11Khz,
@@ -267,7 +271,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 
 - (id)init
 {
-	return [self initWithNibName:@"PPSoundSettingsViewController" bundle:nil];
+	return [self initWithNibName:@"PPSoundSettingsViewController" bundle:[NSBundle bundleForClass:[PPSoundSettingsViewController class]]];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

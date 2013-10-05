@@ -352,8 +352,6 @@
 		5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		5578C4B417DA4ADD0057D11B /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
 		5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
-		5578C4B817DA4B0D0057D11B /* PPSoundSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */; };
-		5578C4B917DA4B1A0057D11B /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */; };
 		5578C4BA17DA4B320057D11B /* PPPlugInInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC76169265C30067B22A /* PPPlugInInfo.m */; };
 		5578C4BB17DA4B3A0057D11B /* PPPlugInInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC71169265AB0067B22A /* PPPlugInInfoController.m */; };
 		5578C4BD17DA4BC20057D11B /* PPTimeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55323352167687A200076604 /* PPTimeFormatter.m */; };
@@ -632,6 +630,9 @@
 		55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7B11EB7C950028C6BB /* MainMenu.xib */; };
 		55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */; };
 		55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55D1BD58120FBAC0004FD083 /* Credits.rtf */; };
+		55DEBFE918008D970089B940 /* PPSoundSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55DEBFEA18008D9E0089B940 /* PPSoundSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */; };
+		55DEBFEB18008DA50089B940 /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */; };
 		55E52E2512455E5100315307 /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
 		55E52E2B1245640500315307 /* PPReverse.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E281245640500315307 /* PPReverse.pdf */; };
 		55E52E2C1245640500315307 /* PPStop.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E291245640500315307 /* PPStop.pdf */; };
@@ -654,8 +655,6 @@
 		55F41A3717EF96B000605DF8 /* PPExportObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F41A3617EF96AF00605DF8 /* PPExportObject.m */; };
 		55F4287416A8968C009013D8 /* PPPatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287316A8968C009013D8 /* PPPatternObject.m */; };
 		55F4287816A89A9C009013D8 /* PPMadCommandObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287716A89A9C009013D8 /* PPMadCommandObject.m */; };
-		55F4287C16A8B1FB009013D8 /* PPSoundSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */; };
-		55F4287D16A8B1FB009013D8 /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */; };
 		55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; };
 		55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
@@ -3965,6 +3964,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55DEBFE918008D970089B940 /* PPSoundSettingsViewController.h in Headers */,
 				551292ED163DD74100C2C639 /* PlayerPROKit.h in Headers */,
 				551292F0163DD7CE00C2C639 /* PPLibrary.h in Headers */,
 				558D4DDA1666F14E00A333E8 /* PPDriver.h in Headers */,
@@ -5216,6 +5216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				551292E3163DD68500C2C639 /* InfoPlist.strings in Resources */,
+				55DEBFEB18008DA50089B940 /* PPSoundSettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5356,7 +5357,6 @@
 				5578C48817D9E8560057D11B /* InfoPlist.strings in Resources */,
 				5578C48E17D9E8560057D11B /* Credits.rtf in Resources */,
 				5578C49417D9E8570057D11B /* MainMenu.xib in Resources */,
-				5578C4B917DA4B1A0057D11B /* PPSoundSettingsViewController.xib in Resources */,
 				5521F41E17FA573B002CDBA9 /* PPPlugInInfoController.xib in Resources */,
 				5578C4C117DA4C210057D11B /* preferences.xib in Resources */,
 				5578C4C217DA4C430057D11B /* MusicListPrefs.xib in Resources */,
@@ -5644,7 +5644,6 @@
 				557139E71685007B00831A5A /* OpenPanelViewController.xib in Resources */,
 				5523EC6B16925FF80067B22A /* PPInstrumentWindowController.xib in Resources */,
 				5521F41D17FA573B002CDBA9 /* PPPlugInInfoController.xib in Resources */,
-				55F4287D16A8B1FB009013D8 /* PPSoundSettingsViewController.xib in Resources */,
 				552581FF16C6FC350016A31C /* InstrumentInfoController.xib in Resources */,
 				5578C54117DBABC50057D11B /* PPDocument.xib in Resources */,
 				5521F41717FA541C002CDBA9 /* Trackers.xcassets in Resources */,
@@ -5784,6 +5783,7 @@
 				5578C4FE17DB8A580057D11B /* PPSampleObject.m in Sources */,
 				5578C50117DB8A6E0057D11B /* PPInstrumentObject.m in Sources */,
 				5521F3FF17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m in Sources */,
+				55DEBFEA18008D9E0089B940 /* PPSoundSettingsViewController.m in Sources */,
 				5582135A17E4201B00B84F51 /* PPPluginWindowController.m in Sources */,
 				5582135B17E4201D00B84F51 /* PPDigitalPluginWindowController.m in Sources */,
 			);
@@ -5988,7 +5988,6 @@
 				5521F41017F8ED5A002CDBA9 /* PPPreferences.m in Sources */,
 				5578C4B417DA4ADD0057D11B /* PPErrors.m in Sources */,
 				5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */,
-				5578C4B817DA4B0D0057D11B /* PPSoundSettingsViewController.m in Sources */,
 				5578C4BA17DA4B320057D11B /* PPPlugInInfo.m in Sources */,
 				5578C4BB17DA4B3A0057D11B /* PPPlugInInfoController.m in Sources */,
 				5578C4BD17DA4BC20057D11B /* PPTimeFormatter.m in Sources */,
@@ -6359,7 +6358,6 @@
 				550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */,
 				55F4287416A8968C009013D8 /* PPPatternObject.m in Sources */,
 				55F4287816A89A9C009013D8 /* PPMadCommandObject.m in Sources */,
-				55F4287C16A8B1FB009013D8 /* PPSoundSettingsViewController.m in Sources */,
 				55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */,
 				5521F40817F7598D002CDBA9 /* PPFileSizeFormatter.m in Sources */,
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
