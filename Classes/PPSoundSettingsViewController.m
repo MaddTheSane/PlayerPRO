@@ -7,6 +7,7 @@
 //
 
 #import "PPSoundSettingsViewController.h"
+#import <Cocoa/Cocoa.h>
 
 typedef struct _tagCoupling {
 	int amount;
