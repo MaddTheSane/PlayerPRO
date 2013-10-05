@@ -31,7 +31,7 @@
 void parse_slidevol(Channel *ch, Byte Arg)
 {
 	if ( HI( Arg) ) ch->volumerate = HI( Arg);
-	else ch->volumerate = -LOW( Arg);
+	else ch->volumerate -= LOW( Arg);
 }
 
 void CloseEffect( Channel *ch, short notUsed, MADDriverRec *intDriver)
@@ -195,8 +195,6 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 		case downslideE:						// OK
 			if( intDriver->MODMode)
 			{
-				/*	if( ch->period > intDriver->MOD_MIN_PITCH)
-				 ch->period -= ch->slide*4;*/
 				ch->period -= ch->slide*4;
 				if( ch->period < intDriver->MOD_MIN_PITCH) ch->period = intDriver->MOD_MIN_PITCH;
 			}
@@ -210,8 +208,6 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 		case upslideE:							// OK
 			if( intDriver->MODMode)
 			{
-				/*	if( ch->period < intDriver->MOD_MAX_PITCH)
-				 ch->period += ch->slide*4;*/
 				ch->period += ch->slide*4;
 				if( ch->period > intDriver->MOD_MAX_PITCH) ch->period = intDriver->MOD_MAX_PITCH;
 			}
@@ -361,12 +357,13 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 			return;
 			break;
 	}
-	
-	/*	if( call == intDriver->speed - 1)
-	 {
-	 ch->arg = 0;
-	 ch->cmd = 0;
-	 }*/
+#if 0
+	if( call == intDriver->speed - 1)
+	{
+		ch->arg = 0;
+		ch->cmd = 0;
+	}
+#endif
 }
 
 void SetUpCmdEffect( Channel *ch, MADDriverRec *intDriver)
@@ -569,7 +566,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 				if(ch->pann<=8) ch->pann<<=4;
 				else ch->pann*=17;
 				
-				ch->pann = ( (long) ch->pann * (long)  MAX_PANNING) / (long) 0xFF;
+				ch->pann = ( (int)ch->pann *  MAX_PANNING) / (int) 0xFF;
 				
 				if( ch->pann < 0) ch->pann = 0;
 				else if( ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
@@ -691,7 +688,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 				if( ch->maxPtr < ch->begPtr) ch->maxPtr = ch->begPtr;
 				if( ch->maxPtr > ch->begPtr + ch->sizePtr) ch->maxPtr = ch->begPtr + ch->sizePtr;
 				
-				if( ch->loopBeg < 0) ch->loopBeg = 0;
+				//if( ch->loopBeg < 0) ch->loopBeg = 0;
 			}
 			break;
 			
@@ -733,7 +730,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 		case panningE:
 			ch->pann = ch->arg;
 			
-			ch->pann = ( (long) ch->pann * (long)  MAX_PANNING) / (long) 0xFF;
+			ch->pann = ( (int)ch->pann *  MAX_PANNING) / 0xFF;
 			
 			if( ch->pann < 0) ch->pann = 0;
 			else if( ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;

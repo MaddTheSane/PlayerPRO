@@ -427,12 +427,12 @@ void ConvertTo64Rows( MADMusic *music)
 	music->musicUnderModification = IsReading;
 }
 
-SInt32 MADMinimize( MADMusic *music)
+size_t MADMinimize( MADMusic *music)
 {
 	short 		i, x, z;
 	Boolean		remove, IsReading;
 	Boolean		inst[ MAXINSTRU];
-	SInt32		before, after;
+	size_t		before, after;
 	
 	if( music->header == NULL) return 0;
 	
@@ -618,8 +618,6 @@ void MADDisposeReverb( MADDriverRec *intDriver)
 
 OSErr MADCreateReverb( MADDriverRec *intDriver)
 {
-	//SInt32 i;
-	
 	if( intDriver->DriverSettings.Reverb)
 	{
 		intDriver->RDelay = (intDriver->DriverSettings.ReverbSize * ( intDriver->DriverSettings.outPutRate)) / 1000;
@@ -669,16 +667,27 @@ OSErr MADCreateDriverBuffer( MADDriverRec *intDriver)
 	
 	switch( intDriver->DriverSettings.outPutMode)
 	{
-		case MonoOutPut:			BufSize = BufSize;			break;
+		case MonoOutPut:
+			BufSize = BufSize;
+			break;
 		case StereoOutPut:
-		case DeluxeStereoOutPut:	BufSize *= 2;				break;
+		case DeluxeStereoOutPut:
+			BufSize *= 2;
+			break;
+		case PolyPhonic:
+			BufSize *= 4;
+			break;
 	}
 	
 	switch( intDriver->DriverSettings.outPutBits)
 	{
-		case 16:									BufSize *= 2;		break;
-		case 20:									//This is actually 2.5 more than 8, but I don't want to round
-		case 24:									BufSize *= 3;		break;
+		case 16:
+			BufSize *= 2;
+			break;
+		case 20: //This is actually 2.5 more than 8, but I don't want to round
+		case 24:
+			BufSize *= 3;
+			break;
 	}
 	
 	intDriver->curDrawPtr = 0;
@@ -3438,7 +3447,7 @@ PatData* CompressPartitionMAD1( MADMusic *MDriver, PatData* myPat)
 		myCmd++;
 	}
 	
-	finalPtr->header.patBytes = NewPtrSize;
+	finalPtr->header.patBytes = (SInt32)NewPtrSize;
 	
 	finalPtr = realloc(finalPtr, NewPtrSize + sizeof(PatHeader));
 	

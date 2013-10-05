@@ -92,12 +92,12 @@ typedef struct Channel
 		char		*begPtr;			// Sample Data Ptr - Beginning of data
 		char		*maxPtr;			// Sample Data Ptr - End of data
 		char		*curPtr;			// Sample Data Ptr - Current position
-		SInt32		sizePtr;			// Sample Size in bytes
+		size_t		sizePtr;			// Sample Size in bytes
 		
 		SInt32		amp;				// Sample amplitude: 8 or 16 bits
 		
-		SInt32		loopBeg;			// Loop Beginning
-		SInt32		loopSize;			// Loop Size
+		size_t		loopBeg;			// Loop Beginning
+		size_t		loopSize;			// Loop Size
 		
 		SInt32		ins;				// Current Instrument ID
 		SInt32		insOld;				// Previous Instrument ID played on this channel

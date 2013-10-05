@@ -33,13 +33,13 @@ double EQInterpolate(double p,double p1,double p2,double v1,double v2);
 double EQInterpolate(double p,double p1,double p2,double v1,double v2)
 {
 	double dp,dv,di;
-
+	
 	if( p1 == p2) return v1;
-
+	
 	dv=v2-v1;
 	dp=p2-p1;
 	di=p-p1;
-
+	
 	return v1 + ((di*dv) / dp);
 }
 
@@ -51,8 +51,6 @@ OSErr MADInitEqualizer( MADDriverRec *intDriver)
 	
 	intDriver->Filter	= (double*) calloc( sizeof( double) * ((EQPACKET*2)+2), 1);
 	intDriver->fData	= (double*) calloc( sizeof( double) * ((EQPACKET*2)+2), 1);
-	
-
 	
 	if( intDriver->Filter == NULL) return MADNeedMemory;
 	if (intDriver->fData == NULL) {
@@ -81,7 +79,7 @@ void MADfour1( double *data,int nn,int isign)
 	int 		n, mmax, m, j, istep, i;
 	double 		wtemp, wr, wpr, wpi, wi, theta;
 	double 		tempr, tempi;
-
+	
 	n = nn << 1;
 	j = 1;
 	for (i = 1; i < n; i += 2) {
@@ -130,7 +128,7 @@ void MADrealft(double *data,int n,int isign)
 	int 		i, i1, i2, i3, i4, n2p3;
 	double 		c1 = 0.5, c2, h1r, h1i, h2r, h2i;
 	double 		wr, wi, wpr, wpi, wtemp, theta;
-
+	
 	theta = M_PI / (double) n;
 	if (isign == 1) {
 		c2 = -0.5;
@@ -168,11 +166,12 @@ void MADrealft(double *data,int n,int isign)
 	}
 }
 
-/*void twofft(double *data1,double *data2,double *fft1,double *fft2, int n)
+#if 0
+void twofft(double *data1,double *data2,double *fft1,double *fft2, int n)
 {
 	int nn3,nn2,jj,j;
 	double rep,rem,aip,aim;
-
+	
 	nn3=1+(nn2=2+n+n);
 	for (j=1,jj=2;j<=n;j++,jj+=2) {
 		fft1[jj-1]=data1[j];
@@ -195,45 +194,49 @@ void MADrealft(double *data,int n,int isign)
 		fft2[nn2-j]=aip;
 		fft2[nn3-j]=rem;
 	}
-}*/
+}
+#endif
 
 void MADCallFFT( sData *SData, double *filter, MADDriverRec *intDriver, Boolean shift)
 {
 	if( filter == NULL) filter = intDriver->Filter;
-
+	
 	switch( SData->amp)
 	{
 		case 8:
 			if( SData->stereo) FFT8S( SData->data, SData->size, filter, intDriver, 2, shift);
 			else FFT8S( SData->data, SData->size, filter, intDriver, 1, shift);
-		break;
-		
+			break;
+			
 		case 16:
 			if( SData->stereo) FFT16S( (short*) SData->data, SData->size, filter, intDriver, 2, shift);
 			else FFT16S( (short*) SData->data, SData->size, filter, intDriver, 1, shift);
-		break;
+			break;
 	}
 }
 
-/*double MADEQInterpolate(double p,double p1,double p2,double v1,double v2)
+#if 0
+double MADEQInterpolate(double p,double p1,double p2,double v1,double v2)
 {
 	double dp,dv,di;
-
+	
 	if( p1 == p2) return v1;
-
+	
 	dv=v2-v1;
 	dp=p2-p1;
 	di=p-p1;
-
+	
 	return v1 + ((di*dv) / dp);
-}*/
+}
+#endif
 
 void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
-	SInt32	i, y, powersize;
+	SInt32	y, powersize;
 	SInt32	*shiftAr = NULL;
 	double	pente, axe, *fDataCopy2 = NULL, *fDataCopy = intDriver->fData;
 	Boolean didInitFData = 0;
+	size_t	i;
 	
 	if( nochan == 2)	// STEREO
 	{
@@ -341,8 +344,8 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 			
 			for( i = 0 ; i < powersize; i++)
 			{
-				a = (i * EQPACKET*2) / powersize;
-			//	b = a+1;
+				a = (SInt32)((i * EQPACKET*2) / powersize);
+				//b = a+1;
 				
 				if( a+1 < powersize)
 				{
@@ -385,7 +388,7 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 			fDataCopy[ i] -= (axe + (double)(i-1) * pente);
 		}
 		// ** //  // ** //  // ** //  // ** //  // ** //  // ** //  // ** //
-		   
+		
 		for( i = 1 ; i <= powersize; i++) fDataCopy[ i] /= powersize/2;
 		
 		// Check data
@@ -429,12 +432,12 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 	
 	if( size != EQPACKET*2*2)
 	{
-		free( (Ptr) fDataCopy);
+		free( fDataCopy);
 		fDataCopy = NULL;
 		
-		if( shift) free( (Ptr) fDataCopy2);
+		if( shift) free( fDataCopy2);
 		
-		if( shift) free( (Ptr) shiftAr);
+		if( shift) free( shiftAr);
 	}
 }
 
@@ -443,9 +446,10 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 
 void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
-	SInt32	i, y, powersize, *shiftAr = NULL;
+	SInt32	y, powersize, *shiftAr = NULL;
 	double	pente, axe, *fDataCopy2 = NULL, *fDataCopy = intDriver->fData;
 	Boolean didInitFData = 0;
+	size_t	i;
 	
 	size /= 2;
 	
@@ -538,19 +542,8 @@ void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver,
 		
 		// First and last values MUST be zero! // ** //  // ** //  // ** //
 		
-		
-		
-	//		pente = (fDataCopy[ powersize] - PreviousAxe[ y]) / (double) (powersize -1);
-	//		axe = PreviousAxe[ y];
-	//		PreviousAxe[ y] = fDataCopy[ powersize];
-		
 		pente = (fDataCopy[ powersize] - fDataCopy[ 1]) / (double) (powersize -1);
 		axe = fDataCopy[ 1];
-		
-	/*	NumToString( axe, str);
-		DebugStr( str);
-		NumToString( PreviousAxe[ y], str);
-		DebugStr( str);*/
 		
 		for( i = 1 ; i <= powersize; i++)
 		{
@@ -566,7 +559,7 @@ void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver,
 			
 			for( i = 0 ; i < powersize; i++)
 			{
-				a = (i * EQPACKET*2) / powersize;
+				a = (SInt32)((i * EQPACKET*2) / powersize);
 				b = a+1;
 				
 				shiftAr[ i] = (EQInterpolate( (double) (i * EQPACKET*2) / (double) powersize, a, a+1, filter[ a], filter[ a+1]) * powersize) / (EQPACKET*2);
@@ -595,28 +588,16 @@ void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver,
 		MADrealft( fDataCopy, powersize/2, false);
 		
 		for( i = 1 ; i <= powersize; i++) fDataCopy[ i] /= powersize/2;
-
+		
 		// First and last values MUST be zero! // ** //  // ** //  // ** //
 		pente = (fDataCopy[ powersize] - fDataCopy[ 1]) / (double) (powersize -1);
 		axe = fDataCopy[ 1];
-		
-	//		pente = (fDataCopy[ powersize] - PreviousAxe2[ y]) / (double) (powersize -1);
-	//		axe = PreviousAxe2[ y];
-	//		PreviousAxe2[ y] = fDataCopy[ powersize];
 		
 		for( i = 1 ; i <= powersize; i++)
 		{
 			fDataCopy[ i] -= (axe + (double)(i-1) * pente);
 		}
 		// ** //  // ** //  // ** //  // ** //  // ** //  // ** //  // ** //
-		   
-		
-	/*	if( fDataCopy[ 1] != 0) Debugger();
-		if( fDataCopy[ powersize]  != 0)
-		{
-			NumToString( fDataCopy[ powersize], str);
-			DebugStr( str);
-		}*/
 		
 		// Check data
 		for( i = 1 ; i <= powersize; i++)
@@ -667,7 +648,8 @@ void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver,
 	}
 }
 
-/*void FFT8S( char	*SData, long size, double *filter, MADDriverRec *intDriver, short nochan)
+#if 0
+void FFT8S( char	*SData, long size, double *filter, MADDriverRec *intDriver, short nochan)
 {
 	long	i, x, y;
 	
@@ -719,4 +701,5 @@ void FFT16S( short* SData, size_t size, double *filter, MADDriverRec *intDriver,
 		
 		SData -= 2;
 	}
-}*/
+}
+#endif
