@@ -17,7 +17,13 @@
 #import "ClassicEditorPreferenceController.h"
 #import "MidiHardwarePreferenceController.h"
 
+@interface PPPreferences ()
+@property (strong) NSArray *viewControllers;
+@end
+
 @implementation PPPreferences
+@synthesize box;
+@synthesize popUp;
 @synthesize viewControllers;
 
 - (id)init 
@@ -32,7 +38,7 @@
 					  [[ClassicEditorPreferenceController alloc] init],
 					  [[MidiHardwarePreferenceController alloc] init],
 #else
-								 [[MusicListPreferenceController alloc] init],
+					  [[MusicListPreferenceController alloc] init],
 #endif
 					  [[MiscPreferenceController alloc] init]];
 	}
@@ -85,13 +91,12 @@
 -(void)awakeFromNib
 {
 	NSMenu *menu = [popUp menu];
-	NSInteger i, itemCount;
-	itemCount = [viewControllers count];
+	NSInteger itemCount = [viewControllers count];
 	
-	for(i = 0; i < itemCount; i++)
+	for(NSInteger i = 0; i < itemCount; i++)
 	{
 		NSViewController *vc = viewControllers[i];
-		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[vc title] action:@selector(changeViewController:) keyEquivalent:@""];
+		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:vc.title action:@selector(changeViewController:) keyEquivalent:@""];
 		[mi setTag:i];
 		[menu addItem:mi];
 	}

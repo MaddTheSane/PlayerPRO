@@ -20,12 +20,9 @@ typedef struct _tagCoupling {
 	NSInteger tag;
 } TagCoupling;
 
-@interface PPPreferences : NSWindowController {
-	IBOutlet NSBox *box;
-	IBOutlet NSPopUpButton *popUp;
-	NSArray *viewControllers;
-}
-@property (readwrite, retain) NSArray *viewControllers;
+@interface PPPreferences : NSWindowController
+@property (weak) IBOutlet NSBox *box;
+@property (weak) IBOutlet NSPopUpButton *popUp;
 
 -(IBAction)changeViewController:(id)sender;
 -(void)displayViewController:(NSViewController *)vc;
