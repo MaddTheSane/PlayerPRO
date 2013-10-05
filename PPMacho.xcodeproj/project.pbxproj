@@ -646,7 +646,6 @@
 		55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */; };
 		55EA01A216AF368F00D6AEA0 /* CrossFade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE66310E0885C00177B4C /* CrossFade.plugin */; };
 		55ED50AB10D40BFE00824C61 /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
-		55ED547410D5F9CD00824C61 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		55EE2D7D17E110DA00FED42A /* MADTypeConversions.h in Headers */ = {isa = PBXBuildFile; fileRef = 55EE2D7C17E110DA00FED42A /* MADTypeConversions.h */; };
 		55EE2D7F17E11DEB00FED42A /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE2D7E17E11DEB00FED42A /* libiconv.dylib */; };
 		55EE2D8017E11EB300FED42A /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE2D7E17E11DEB00FED42A /* libiconv.dylib */; };
@@ -2204,7 +2203,6 @@
 		55EE2D7C17E110DA00FED42A /* MADTypeConversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MADTypeConversions.h; sourceTree = "<group>"; };
 		55EE2D7E17E11DEB00FED42A /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		55EE2D8217E12A0F00FED42A /* MADTypeConversions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MADTypeConversions.m; sourceTree = "<group>"; };
-		55EE8C731003E83A00E75E63 /* General-rez.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; lineEnding = 0; name = "General-rez.r"; path = "../Files/General-rez.r"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		55EE8EBC100404EB00E75E63 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -6346,7 +6344,6 @@
 				55C358B116C42D1800FB9FA6 /* iOS-PlugImport.c in Sources */,
 				55C358F716C42F7100FB9FA6 /* MIDI-Hardware-OSX.c in Sources */,
 				5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */,
-				55ADC3F917D7FF93001F27D4 /* SndUtils.c in Sources */,
 				55EE2D8517E12A0F00FED42A /* MADTypeConversions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7911,7 +7908,6 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -7923,7 +7919,6 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -9081,7 +9076,6 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -9093,7 +9087,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
