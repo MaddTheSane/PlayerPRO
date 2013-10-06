@@ -28,7 +28,7 @@ static OSErr mainInvert(void					*unused,
 				
 				*SamplePtr++ = temp;
 				
-				if( StereoMode)
+				if (StereoMode)
 				{
 					SamplePtr++;
 					i++;
@@ -48,7 +48,7 @@ static OSErr mainInvert(void					*unused,
 				
 				*SamplePtr++ = temp;
 				
-				if( StereoMode)
+				if (StereoMode)
 				{
 					SamplePtr++;
 					i++;

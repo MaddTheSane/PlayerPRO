@@ -132,8 +132,8 @@ static OSErr mainMix(void			*unused,
 						temp = (gp1 * temp1) + (gp2 * temp2);
 						temp = (peak * temp) / 0x10000;
 						
-						if( temp >= 127) temp = 127;	// overflow ?
-						else if( temp <= -128 ) temp = -128;
+						if (temp >= 127) temp = 127;	// overflow ?
+						else if (temp <= -128 ) temp = -128;
 						
 						*wresultPtr = temp;
 						worgPtr++;

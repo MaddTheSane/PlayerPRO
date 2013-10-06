@@ -120,13 +120,13 @@ static void DrawCGSampleInt(long 	start,
 	BOOL isStereo = curData.stereo;
 	CGFloat			minY, maxY;
 	
-	if( curData.amplitude == 16)
+	if (curData.amplitude == 16)
 	{
 		sampleSize /= 2;
 		start /= 2;
 		
 		BS = start + (tSS * sampleSize) / larg;
-		if( isStereo)
+		if (isStereo)
 		{
 			BS /= 2;	BS *=2;
 			BS += channel;
@@ -140,7 +140,7 @@ static void DrawCGSampleInt(long 	start,
 			BS = start + (i * sampleSize) / larg;
 			BE = start + ((i+1) * sampleSize) / larg;
 			
-			if( isStereo)
+			if (isStereo)
 			{
 				BS /=2;		BS *=2;
 				BE /=2;		BE *=2;
@@ -154,16 +154,16 @@ static void DrawCGSampleInt(long 	start,
 			temp *= high;		temp  /= (1 << 16);
 			CGContextAddLineToPoint(ctxRef, trueH + i, temp + trueV);
 			
-			if( BS != BE)
+			if (BS != BE)
 			{
 				for( x = BS; x < BE; x++)
 				{
 					temp = (theShortSample[ x]  + 0x8000);
 					
-					if( temp > maxY) maxY = temp;
-					if( temp < minY) minY = temp;
+					if (temp > maxY) maxY = temp;
+					if (temp < minY) minY = temp;
 					
-					if( isStereo) x++;
+					if (isStereo) x++;
 				}
 				
 				maxY *= high;		maxY /= (1 << 16);
@@ -177,7 +177,7 @@ static void DrawCGSampleInt(long 	start,
 	else
 	{
 		BS = start + (tSS * sampleSize) / larg;
-		if( isStereo)
+		if (isStereo)
 		{
 			BS /= 2;	BS *=2;
 			BS += channel;
@@ -193,7 +193,7 @@ static void DrawCGSampleInt(long 	start,
 			BS = start + (i * sampleSize) / larg;
 			BE = start + ((i+1) * sampleSize) / larg;
 			
-			if( isStereo)
+			if (isStereo)
 			{
 				BS /=2;		BS *=2;
 				BE /=2;		BE *=2;
@@ -207,16 +207,16 @@ static void DrawCGSampleInt(long 	start,
 			temp *= high;		temp /= (1 << 8);
 			CGContextAddLineToPoint(ctxRef, trueH + i, temp + trueV);
 			
-			if( BS != BE)
+			if (BS != BE)
 			{
 				for( x = BS; x < BE; x++)
 				{
 					temp = (unsigned char) (theSample[ x] - 0x80);
 					
-					if( temp > maxY) maxY = temp;
-					if( temp < minY) minY = temp;
+					if (temp > maxY) maxY = temp;
+					if (temp < minY) minY = temp;
 					
-					if( isStereo) x++;
+					if (isStereo) x++;
 				}
 				maxY *= high;		maxY /= (1 << 8);
 				minY *= high;		minY /= (1 << 8);

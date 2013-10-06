@@ -88,16 +88,16 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	READAMFFILE( &AMFType, 4);		// AMF Type
 	PPBE32(&AMFType);
 	
-	if( AMFType >= 0x414D460C ) pan = 32;
+	if (AMFType >= 0x414D460C ) pan = 32;
 	else pan = 16;
 	
-	if( AMFType == 0x414D4601 ) uusize = 3;
-	else if( AMFType >= 0x414D460A ) oldIns = 0;
-	else if( AMFType!= 0x414D4608 && AMFType != 0x414D4609) return MADFileNotSupportedByThisPlug;
+	if (AMFType == 0x414D4601 ) uusize = 3;
+	else if (AMFType >= 0x414D460A ) oldIns = 0;
+	else if (AMFType!= 0x414D4608 && AMFType != 0x414D4609) return MADFileNotSupportedByThisPlug;
 	
 	// Conversion
 	theMAD->header = (MADSpec*) calloc( sizeof( MADSpec), 1);
-	if( theMAD->header == NULL) return MADNeedMemory;
+	if (theMAD->header == NULL) return MADNeedMemory;
 	
 	strlcpy( theMAD->header->infos, "Converted by PlayerPRO AMF Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
@@ -108,18 +108,18 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	READAMFFILE( &tempByte, 1);		theMAD->header->numPat = tempByte;
 	READAMFFILE( &tempShort, 2);	trackCount = Tdecode16( &tempShort);
 	
-	if( AMFType >= 0x414D4609 )
+	if (AMFType >= 0x414D4609 )
 	{
 		READAMFFILE( &tempByte, 1);		theMAD->header->numChn = tempByte;
 		
 		READAMFFILE( &tempByte, pan);
-		if( AMFType < 0x414D460B )
+		if (AMFType < 0x414D460B )
 		{
 			//memcpy(&module->channelPanning,order16,16);
 		}
 	}
 	else theMAD->header->numChn = 4;
-	if( AMFType >= 0x414D460D )
+	if (AMFType >= 0x414D460D )
 	{
 		READAMFFILE( &tempByte, 1);		theMAD->header->tempo = tempByte;
 		READAMFFILE( &tempByte, 1);		theMAD->header->speed = tempByte;
@@ -141,14 +141,14 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	{
 		long patSize;
 		
-		if( AMFType >= 0x414D460E )
+		if (AMFType >= 0x414D460E )
 		{
 			READAMFFILE( &tempShort, 2);	patSize = Tdecode16( &tempShort);
 		}
 		else patSize = 64;
 		
 		theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * patSize * sizeof( Cmd), 1);
-		if( theMAD->partition[ i] == NULL) return MADNeedMemory;
+		if (theMAD->partition[ i] == NULL) return MADNeedMemory;
 		
 		theMAD->partition[ i]->header.size 		= patSize;
 		theMAD->partition[ i]->header.compMode 	= 'NONE';
@@ -167,7 +167,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	
 	for( i = 0; i < MAXTRACK; i++)
 	{
-		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
+		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
 		
 		theMAD->header->chanVol[ i] = MAX_VOLUME;
@@ -181,10 +181,10 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	/**** Instruments header *****/
 	
 	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
-	if( !theMAD->fid) return MADNeedMemory;
+	if (!theMAD->fid) return MADNeedMemory;
 	
 	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
-	if( !theMAD->sample) return MADNeedMemory;
+	if (!theMAD->sample) return MADNeedMemory;
 	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
@@ -192,7 +192,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	{
 		InstrData		*curIns = &theMAD->fid[ i];
 		
-		if( oldIns )
+		if (oldIns )
 		{
 			OLDINSTRUMENT	oi;
 			
@@ -201,7 +201,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 			memmove( curIns->name, oi.name, 32);
 			curIns->type = 0;
 			
-			if( oi.size > 0)
+			if (oi.size > 0)
 			{
 				sData	*curData;
 				ushort oiloopstart = 0;
@@ -217,7 +217,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 				oiloopend = Tdecode16( &oi.loopend);
 				curData->loopBeg 	= oiloopstart;
 				curData->loopSize 	= oiloopend - oiloopstart;
-				if( oiloopend == 65535)
+				if (oiloopend == 65535)
 				{
 					curData->loopSize = curData->loopBeg = 0;
 				}
@@ -229,7 +229,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 				curData->relNote	= 0;
 				
 				curData->data 		= (Ptr)malloc( curData->size);
-				if( curData->data == NULL) return MADNeedMemory;
+				if (curData->data == NULL) return MADNeedMemory;
 			}
 			else curIns->numSamples = 0;
 		}
@@ -243,7 +243,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 			memmove( curIns->name, oi.name, 32);
 			curIns->type = 0;
 			
-			if( oi.size > 0)
+			if (oi.size > 0)
 			{
 				sData	*curData;
 				
@@ -254,7 +254,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 				curData->size		= Tdecode32( &oi.size);
 				curData->loopBeg 	= Tdecode32( &oi.loopstart);
 				curData->loopSize 	= Tdecode32( &oi.loopend) - Tdecode32( &oi.loopstart);
-				if( oi.loopend == 65535)
+				if (oi.loopend == 65535)
 				{
 					curData->loopSize = curData->loopBeg = 0;
 				}
@@ -266,7 +266,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 				curData->relNote	= 0;
 				
 				curData->data 		= malloc( curData->size);
-				if( curData->data == NULL) return MADNeedMemory;
+				if (curData->data == NULL) return MADNeedMemory;
 			}
 			else curIns->numSamples = 0;
 		}
@@ -276,7 +276,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	for( t = 0; t < trackCount; t++ )
 	{
 		READAMFFILE( &tempShort, 2);	tempShort = Tdecode16( &tempShort);
-		if( tempShort > trckPtr) trckPtr = tempShort;
+		if (tempShort > trckPtr) trckPtr = tempShort;
 	}
 	
 	for( t = 0; t < trckPtr; t++)
@@ -284,7 +284,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 		READAMFFILE( &tempShort, 2);		tempShort = Tdecode16( &tempShort);
 		READAMFFILE( &tempByte, 1);
 		
-		if( tempShort == 0 ) t=t;
+		if (tempShort == 0 ) t=t;
 		else
 		{
 			Ptr tPtr = (Ptr)malloc( tempShort * 3 + size);
@@ -297,7 +297,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	{
 		InstrData		*curIns = &theMAD->fid[ i];
 		
-		if( curIns->numSamples > 0)
+		if (curIns->numSamples > 0)
 		{
 			sData	*curData;
 			
@@ -315,7 +315,7 @@ static OSErr TestAMFFile( Ptr AlienFile)
 	OSType	myMADSign = *((OSType*) AlienFile);
 	PPBE32(&myMADSign);
 	
-	if( (myMADSign & 0xFFFFFF00) == 0x414D4600) return noErr;
+	if ((myMADSign & 0xFFFFFF00) == 0x414D4600) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -390,13 +390,13 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	{
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if( iFileRefI )
+			if (iFileRefI )
 			{
 				sndSize = iGetEOF( iFileRefI);
 				
 				// ** MEMORY Test Start
 				AlienFile = malloc( sndSize * 2L);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
 				else
@@ -405,10 +405,10 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					
 					AlienFile = malloc( sndSize);
 					myErr = iRead( sndSize, AlienFile,iFileRefI);
-					if( myErr == noErr)
+					if (myErr == noErr)
 					{
 						myErr = TestAMFFile( AlienFile);
-						if( myErr == noErr)
+						if (myErr == noErr)
 						{
 							myErr = AMF2Mad( AlienFile, sndSize, MadFile, init);
 						}
@@ -422,12 +422,12 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = malloc( sndSize);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
@@ -443,18 +443,18 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			
 		case MADPlugInfo:
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);
 				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = malloc( sndSize);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
-					if( myErr == noErr)
+					if (myErr == noErr)
 					{
 						myErr = ExtractAMFInfo( info, AlienFile);
 					}

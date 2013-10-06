@@ -95,13 +95,13 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 	
 	memcpy( &ULTinfo, theULTCopy, sizeof( ULTinfo));
 	
-	//if( ULTinfo.reserved != 0) return MADFileNotSupportedByThisPlug;	// RES in v.1.4 see doc
+	//if (ULTinfo.reserved != 0) return MADFileNotSupportedByThisPlug;	// RES in v.1.4 see doc
 	
 	ULTSuite.NOS = *(theULTCopy + sizeof( ULTinfo) + ULTinfo.reserved * 32L);
 	
 	
 	/**** Ins Num *****/
-	if( sizeof( ULTIns) != 64) //DebugStr("\pULTIns != 64");
+	if (sizeof( ULTIns) != 64) //DebugStr("\pULTIns != 64");
 		return MADIncompatibleFile;
 	ULTSuite.ins = (ULTIns*) calloc( ULTSuite.NOS * sizeof( ULTIns), 1);
 	memcpy( ULTSuite.ins, theULTCopy + sizeof( ULTinfo) + ULTinfo.reserved * 32L + 1, ULTSuite.NOS * sizeof( ULTIns));
@@ -113,7 +113,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 	// ******** Copie des informations dans le MAD ***
 	
 	theMAD->header = (MADSpec*) calloc( sizeof( MADSpec), 1);
-	if( theMAD->header == NULL) return MADNeedMemory;
+	if (theMAD->header == NULL) return MADNeedMemory;
 	
 	theMAD->header->MAD = 'MADK';
 	for(i=0; i<32; i++) theMAD->header->name[i] = 0;
@@ -134,12 +134,12 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 	{
 		theMAD->header->oPointers[ i] = ULTSuite.pattSeq[i];
 		
-		if( theMAD->header->oPointers[ i] < 0 || theMAD->header->oPointers[ i] >= 128) theMAD->header->oPointers[ i] = 0;
+		if (theMAD->header->oPointers[ i] < 0 || theMAD->header->oPointers[ i] >= 128) theMAD->header->oPointers[ i] = 0;
 	}
 	
 	for( i = 0; i < MAXTRACK; i++)
 	{
-		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
+		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
 		
 		theMAD->header->chanVol[ i] = MAX_VOLUME;
@@ -154,10 +154,10 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 	// ********************
 	
 	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
-	if( !theMAD->fid) return MADNeedMemory;
+	if (!theMAD->fid) return MADNeedMemory;
 	
 	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
-	if( !theMAD->sample) return MADNeedMemory;
+	if (!theMAD->sample) return MADNeedMemory;
 	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
@@ -181,7 +181,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 			curIns->volFade			= DEFAULT_VOLFADE;
 			
 			curData = theMAD->sample[ i*MAXSAMPLE +  0] = (sData*) calloc( sizeof( sData), 1);
-			if( curData == NULL) return MADNeedMemory;
+			if (curData == NULL) return MADNeedMemory;
 			
 			ULTSuite.ins[i].loopStart	= Tdecode32( &ULTSuite.ins[i].loopStart);
 			ULTSuite.ins[i].loopEnd		= Tdecode32( &ULTSuite.ins[i].loopEnd);
@@ -215,7 +215,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 			for( x = 0; x < 28; x++) theMAD->fid[i].name[x] = ULTSuite.ins[i].name[x];
 			
 			curData->data 		= malloc( curData->size);
-			if( curData->data == NULL) return MADNeedMemory;
+			if (curData->data == NULL) return MADNeedMemory;
 			
 			else
 			{
@@ -231,7 +231,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 	for( i = 0; i < theMAD->header->numPat ; i++)
 	{
 		theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * 64 * sizeof( Cmd), 1);
-		if( theMAD->partition[ i] == NULL) return MADNeedMemory;
+		if (theMAD->partition[ i] == NULL) return MADNeedMemory;
 		
 		theMAD->partition[ i]->header.size 			= 64;
 		theMAD->partition[ i]->header.compMode 	= 'NONE';
@@ -307,7 +307,7 @@ static OSErr TestULTFile( Ptr AlienFile)
 	OSType ultID = *((OSType *) myULT->ID);
 	PPBE32(&ultID);
 	
-	if( ultID == 'MAS_') return noErr;
+	if (ultID == 'MAS_') return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -343,13 +343,13 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	{
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				sndSize = iGetEOF( iFileRefI);
 				
 				// ** MEMORY Test Start
 				AlienFile = (Ptr)malloc( sndSize * 2);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
 				else
@@ -357,14 +357,14 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					free( AlienFile);
 					
 					AlienFile = (Ptr)malloc( sndSize);
-					if( AlienFile == NULL) myErr = MADNeedMemory;
+					if (AlienFile == NULL) myErr = MADNeedMemory;
 					else
 					{
 						myErr = iRead(sndSize, AlienFile, iFileRefI);
-						if( myErr == noErr)
+						if (myErr == noErr)
 						{
 							myErr = TestULTFile( AlienFile);
-							if( myErr == noErr)
+							if (myErr == noErr)
 							{
 								myErr = ConvertULT2Mad( AlienFile,  sndSize, MadFile, init);
 							}
@@ -378,12 +378,12 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				sndSize = 1024L;
 				
 				AlienFile = (Ptr)malloc( sndSize);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
@@ -398,18 +398,18 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			
 		case 'INFO':
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);
 				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = (Ptr)malloc( sndSize);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if( myErr == noErr)
+					if (myErr == noErr)
 					{
 						myErr = ExtractULTInfo( info, AlienFile);
 					}

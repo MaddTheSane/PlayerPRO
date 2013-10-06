@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0</string>
+	<key>CFBundleSignature</key>
+	<string>SNPL</string>
+	<key>CFBundleVersion</key>
+	<string>2.0</string>
+	<key>MADPlugAuthorName</key>
+	<string>Written by A.ROSSET 95</string>
+	<key>MADCanImport</key>
+	<true/>
+	<key>MADCanExport</key>
+	<true/>
+	<key>MADPlugMenuName</key>
+	<string>Example</string>
+	<key>MADPlugType</key>
+	<string>STrk</string>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>net.sourceforge.playerpro.mod</string>
+	</array>
+</dict>
+</plist>

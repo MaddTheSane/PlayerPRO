@@ -62,28 +62,28 @@ int main( int argc, char *argv[])
 		init.TickRemover		= false;
 		init.oversampling		= 1;
 		
-		if( MADInitLibrary( "Plugins", &lib))
+		if (MADInitLibrary( "Plugins", &lib))
 		{
 			debugger( "ERR MADInitLibrary\n");
 			returntype = EXIT_FAILURE;
 		}
 		else
 		{
-			if( MADCreateDriver( &init, lib, &aDriver)) 
+			if (MADCreateDriver( &init, lib, &aDriver)) 
 			{
 				debugger( "ERR MADCreateDriver\n");
 				returntype = EXIT_FAILURE;
 			}
 			else
 			{
-				if( MADMusicIdentifyCString( lib, type, argv[ 1]))  
+				if (MADMusicIdentifyCString( lib, type, argv[ 1]))  
 				{
 					debugger( "ERR MADMusicIdentifyCString\n");
 					returntype = EXIT_FAILURE;
 				}
 				else
 				{
-					if( MADLoadMusicFileCString( lib, &aMusic, type, argv[ 1])) 
+					if (MADLoadMusicFileCString( lib, &aMusic, type, argv[ 1])) 
 					{
 						debugger( "ERR MADLoadMusicFile\n");
 						returntype = EXIT_FAILURE;

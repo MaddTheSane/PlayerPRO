@@ -75,7 +75,7 @@ static OSErr MADKillInstrument( MADMusic *music, short ins)
 	InstrData		*curIns;
 	Boolean			IsReading;
 	
-	if( music == NULL) return MADParametersErr;
+	if (music == NULL) return MADParametersErr;
 	
 	curIns = &music->fid[ ins];
 	
@@ -84,9 +84,9 @@ static OSErr MADKillInstrument( MADMusic *music, short ins)
 	
 	for( i = 0; i < curIns->numSamples; i++)
 	{
-		if( music->sample[ ins * MAXSAMPLE + i] != NULL)
+		if (music->sample[ ins * MAXSAMPLE + i] != NULL)
 		{
-			if( music->sample[ ins * MAXSAMPLE + i]->data != NULL)
+			if (music->sample[ ins * MAXSAMPLE + i]->data != NULL)
 			{
 				free( (Ptr) music->sample[ ins * MAXSAMPLE + i]->data);
 				music->sample[ ins * MAXSAMPLE + i]->data = NULL;
@@ -114,7 +114,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	
 	/**** HEADER ****/
 	MadFile->header = (MADSpec*) malloc( sizeof( MADSpec));
-	if( MadFile->header == NULL) return MADNeedMemory;
+	if (MadFile->header == NULL) return MADNeedMemory;
 	
 	OffSetToSample = 0;
 	memmove( MadFile->header, MADPtr, sizeof( MADSpec));
@@ -123,7 +123,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	MadHeader = MadFile->header;
 	PPBE32(&MadHeader->MAD);
 	
-	if( MadHeader->MAD != 'MADK')
+	if (MadHeader->MAD != 'MADK')
 	{
 		free(MadFile->header);
 		return MADFileNotSupportedByThisPlug;
@@ -137,14 +137,14 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	//////////////////
 	
 	MadFile->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
-	if( !MadFile->fid)
+	if (!MadFile->fid)
 	{
 		free(MadFile->header);
 		return MADNeedMemory;
 	}
 	
 	MadFile->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
-	if( !MadFile->sample)
+	if (!MadFile->sample)
 	{
 		free(MadFile->header);
 		free(MadFile->fid);
@@ -167,11 +167,11 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		
 		inOutCount = sizeof( PatHeader) + MadHeader->numChn * tempPatHeader.size * sizeof( Cmd);
 		MadFile->partition[ i] = (PatData*) malloc( inOutCount);
-		if( MadFile->partition[ i] == NULL)
+		if (MadFile->partition[ i] == NULL)
 		{
 			for( x = 0; x < i; x++)
 			{
-				if( MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
+				if (MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
 			}
 			free( MadFile->header);
 			free(MadFile->fid);
@@ -222,7 +222,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		}
 #endif
 		
-		if( i != curIns->no)
+		if (i != curIns->no)
 		{
 			MadFile->fid[ curIns->no] = *curIns;
 			MADResetInstrument( curIns);
@@ -241,13 +241,13 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			// ** Read Sample header **
 			
 			curData = MadFile->sample[ i*MAXSAMPLE + x] = (sData*) malloc( sizeof( sData));
-			if( curData == NULL)
+			if (curData == NULL)
 			{
 				for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( MadFile, x);
 				
 				for( x = 0; x < MadFile->header->numPat; x++)
 				{
-					if( MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
+					if (MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
 				}
 				free( MadFile->header);
 				
@@ -270,13 +270,13 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			inOutCount = curData->size;
 			
 			curData->data = malloc( inOutCount);
-			if( curData->data == NULL)
+			if (curData->data == NULL)
 			{
 				for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( MadFile, x);
 				
 				for( x = 0; x < MadFile->header->numPat; x++)
 				{
-					if( MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
+					if (MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
 				}
 				free( MadFile->header);
 				
@@ -285,7 +285,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			
 			memcpy( curData->data, MADPtr + OffSetToSample, inOutCount);
 			OffSetToSample += inOutCount;
-			if( curData->amp == 16)
+			if (curData->amp == 16)
 			{
 				SInt32 	ll;
 				short	*shortPtr = (short*) curData->data;
@@ -309,7 +309,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		
 		for( i = 0; i < 10 ; i++)	// Global Effects
 		{
-			if( MadFile->header->globalEffect[ i])
+			if (MadFile->header->globalEffect[ i])
 			{
 				int x = 0;
 				inOutCount = sizeof( FXSets);
@@ -330,7 +330,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		{
 			for( x = 0; x < 4; x++)
 			{
-				if( MadFile->header->chanEffect[ i][ x])
+				if (MadFile->header->chanEffect[ i][ x])
 				{
 					int y = 0;
 					inOutCount = sizeof( FXSets);
@@ -357,7 +357,7 @@ static OSErr TESTMADH( MADSpec* MADPtr)
 {
 	OSType madType = MADPtr->MAD;
 	PPBE32(&madType);
-	if( madType == 'MADK') return noErr;
+	if (madType == 'MADK') return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -399,12 +399,12 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	{
 		case MADPlugImport:
 			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
-			if( iFileRefI == -1) myErr = MADFileNotSupportedByThisPlug;
+			if (iFileRefI == -1) myErr = MADFileNotSupportedByThisPlug;
 			else
 			{
 				UseResFile( iFileRefI);
 				
-				if( Count1Resources( 'MADK') > 0)
+				if (Count1Resources( 'MADK') > 0)
 				{
 					myRes = Get1IndResource( 'MADK', 1);
 					DetachResource( myRes);
@@ -423,12 +423,12 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			
 		case MADPlugTest:
 			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
-			if( iFileRefI == -1) myErr = MADFileNotSupportedByThisPlug;
+			if (iFileRefI == -1) myErr = MADFileNotSupportedByThisPlug;
 			else
 			{
 				UseResFile( iFileRefI);
 				
-				if( Count1Resources( 'MADK') > 0)
+				if (Count1Resources( 'MADK') > 0)
 				{
 					myRes = Get1IndResource( 'MADK', 1);
 					DetachResource( myRes);
@@ -448,12 +448,12 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			
 		case MADPlugInfo:
 			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
-			if( iFileRefI == -1) myErr = MADFileNotSupportedByThisPlug;
+			if (iFileRefI == -1) myErr = MADFileNotSupportedByThisPlug;
 			else
 			{
 				UseResFile( iFileRefI);
 				
-				if( Count1Resources( 'MADK') > 0)
+				if (Count1Resources( 'MADK') > 0)
 				{
 					myRes = Get1IndResource( 'MADK', 1);
 					info->fileSize = GetResourceSizeOnDisk( myRes);

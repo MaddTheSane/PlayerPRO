@@ -35,16 +35,16 @@
 					for( i = 0; i < selectionEnd - selectionStart; i++)
 					{
 						temp = *Sample8Ptr;
-						if( temp >= 0x80) temp -= 0xFF;
+						if (temp >= 0x80) temp -= 0xFF;
 						
 						temp *= Inc;
 						temp /= 100L;
-						if( temp >= 127) temp = 127;
-						else if( temp <= -127 ) temp = -127;
+						if (temp >= 127) temp = 127;
+						else if (temp <= -127 ) temp = -127;
 						
 						*Sample8Ptr = temp;
 						
-						if( stereoMode)
+						if (stereoMode)
 						{
 							Sample8Ptr++;
 							i++;
@@ -64,12 +64,12 @@
 						temp *= Inc;
 						temp /= 100L;
 						
-						if( temp >= (short) 0x7FFF) temp = 0x7FFF;	// overflow ?
-						else if( temp <= (short) 0x8000 ) temp = (short) 0x8000;
+						if (temp >= (short) 0x7FFF) temp = 0x7FFF;	// overflow ?
+						else if (temp <= (short) 0x8000 ) temp = (short) 0x8000;
 						
 						*Sample16Ptr = temp;
 						
-						if( stereoMode)
+						if (stereoMode)
 						{
 							Sample16Ptr++;
 							i++;

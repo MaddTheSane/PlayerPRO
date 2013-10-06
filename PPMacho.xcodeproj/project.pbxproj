@@ -2182,6 +2182,9 @@
 		55D1BD5D120FBE51004FD083 /* PPMusicList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicList.h; sourceTree = "<group>"; };
 		55D1BD5E120FBE51004FD083 /* PPMusicList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPMusicList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO-PrefixHeader.pch"; sourceTree = "<group>"; };
+		55DEBFED1801DFF70089B940 /* Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Example-Info.plist"; sourceTree = "<group>"; };
+		55DEBFEE1801DFF70089B940 /* Example.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Example.c; sourceTree = "<group>"; };
+		55DEBFEF1801DFF70089B940 /* Example.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example.h; sourceTree = "<group>"; };
 		55E52E271245640500315307 /* PPFastForward.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPFastForward.pdf; sourceTree = "<group>"; };
 		55E52E281245640500315307 /* PPReverse.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPReverse.pdf; sourceTree = "<group>"; };
 		55E52E291245640500315307 /* PPStop.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPStop.pdf; sourceTree = "<group>"; };
@@ -3345,6 +3348,7 @@
 		553340D810BB5368005208D1 /* Import-Export */ = {
 			isa = PBXGroup;
 			children = (
+				55DEBFEC1801DFF70089B940 /* Plug-in example */,
 				5546217D163A345F0005F491 /* PlugExports-Mac.exp */,
 				551E166C10CCD5DF003C842A /* 669 */,
 				551E166D10CCD5F3003C842A /* AMF */,
@@ -3784,6 +3788,16 @@
 				55F41A3417EF918100605DF8 /* Document-based code */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		55DEBFEC1801DFF70089B940 /* Plug-in example */ = {
+			isa = PBXGroup;
+			children = (
+				55DEBFED1801DFF70089B940 /* Example-Info.plist */,
+				55DEBFEE1801DFF70089B940 /* Example.c */,
+				55DEBFEF1801DFF70089B940 /* Example.h */,
+			);
+			path = "Plug-in example";
 			sourceTree = "<group>";
 		};
 		55F41A3417EF918100605DF8 /* Document-based code */ = {

@@ -37,7 +37,7 @@ static OSErr mainBackwards(void					*unused,
 				*orgPtr++ = temp2;
 				*destPtr-- = temp1;
 				
-				if( StereoMode)
+				if (StereoMode)
 				{
 					orgPtr++;
 					destPtr--;
@@ -60,7 +60,7 @@ static OSErr mainBackwards(void					*unused,
 				*orgPtr++ = temp2;
 				*destPtr-- = temp1;
 				
-				if( StereoMode)
+				if (StereoMode)
 				{
 					orgPtr++;
 					destPtr--;

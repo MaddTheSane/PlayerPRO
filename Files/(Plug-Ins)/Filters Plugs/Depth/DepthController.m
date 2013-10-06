@@ -27,7 +27,7 @@
 			char			*Sample8Ptr = (char*) theData->data;
 			short			*Sample16Ptr = ( short*) theData->data;
 			
-			if( Inc == 0) Inc = 1;
+			if (Inc == 0) Inc = 1;
 			switch( theData->amp)
 			{
 				case 8:
@@ -45,7 +45,7 @@
 						
 						*Sample8Ptr = temp;
 						
-						if( stereoMode)
+						if (stereoMode)
 						{
 							Sample8Ptr++;
 							i++;
@@ -70,7 +70,7 @@
 						
 						*Sample16Ptr = temp;
 						
-						if( stereoMode)
+						if (stereoMode)
 						{
 							Sample16Ptr++;
 							i++;

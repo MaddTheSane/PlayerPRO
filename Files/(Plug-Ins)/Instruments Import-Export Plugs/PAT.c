@@ -40,7 +40,7 @@ static OSErr TestPAT( Ptr CC)
 	
 	for( i = 0; i < 12; i++)
 	{
-		if( CC[ i] != IDStr[ i]) return MADFileNotSupportedByThisPlug;
+		if (CC[ i] != IDStr[ i]) return MADFileNotSupportedByThisPlug;
 	}
 	
 	return noErr;
@@ -53,9 +53,9 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 
 	for( i = 0; i < curIns->numSamples; i++)
 	{
-		if( sample[ i] != NULL)
+		if (sample[ i] != NULL)
 		{
-			if( sample[ i]->data != NULL)
+			if (sample[ i]->data != NULL)
 			{
 				free ( sample[ i]->data);
 				sample[ i]->data = NULL;
@@ -142,7 +142,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 	PATHeader = (PatchHeader*) PATData;
 	PATData += 129;
 	
-	if( PATHeader->InsNo != 1) return MADFileNotSupportedByThisPlug;
+	if (PATHeader->InsNo != 1) return MADFileNotSupportedByThisPlug;
 	
 	InsHeader->numSamples = ((long) PATHeader->LoSamp << 8) + (long) PATHeader->HiSamp;
 	
@@ -187,19 +187,19 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		curData->vol		= 64;
 		curData->loopType	= 0;
 		
-		if( PATSamp->Flag & 0x01)	curData->amp = 16;
+		if (PATSamp->Flag & 0x01)	curData->amp = 16;
 		else curData->amp = 8;
 		
-		if( PATSamp->Flag & 0x02)	signedData = true;
+		if (PATSamp->Flag & 0x02)	signedData = true;
 		else signedData = false;
 		
-		if( !(PATSamp->Flag & 0x04))
+		if (!(PATSamp->Flag & 0x04))
 		{
 			curData->loopBeg = 0;
 			curData->loopSize = 0;
 		}
 		
-		if( PATSamp->Flag & 0x08) curData->loopType = ePingPongLoop;
+		if (PATSamp->Flag & 0x08) curData->loopType = ePingPongLoop;
 		else curData->loopType = eClassicLoop;
 		
 		///////////////
@@ -211,7 +211,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		for( i = 0; i < 107; i++)
 		{
-			if( scale_table[ i] >= PATSamp->originRate)
+			if (scale_table[ i] >= PATSamp->originRate)
 			{
 				PATSamp->originRate = i;
 				i = 108;
@@ -222,7 +222,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		for( i = 0; i < 107; i++)
 		{
-			if( scale_table[ i] >= PATSamp->minFreq)
+			if (scale_table[ i] >= PATSamp->minFreq)
 			{
 				PATSamp->minFreq = i;
 				i = 108;
@@ -231,7 +231,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		for( i = 0; i < 107; i++)
 		{
-			if( scale_table[ i] >= PATSamp->maxFreq)
+			if (scale_table[ i] >= PATSamp->maxFreq)
 			{
 				PATSamp->maxFreq = i;
 				i = 108;
@@ -240,7 +240,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		for( i = PATSamp->minFreq; i < PATSamp->maxFreq; i++)
 		{
-			if( i < 96 && i >= 0)
+			if (i < 96 && i >= 0)
 			{
 				InsHeader->what[ i] = x;
 			}
@@ -253,11 +253,11 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		curData->data = malloc( curData->size);
 		
-		if( curData->data != NULL)
+		if (curData->data != NULL)
 		{
 			memcpy(curData->data, PATData, curData->size);
 
-			if( curData->amp == 16)
+			if (curData->amp == 16)
 			{
 				short	*tt;
 				long	tL;
@@ -268,14 +268,14 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 				{
 					*(tt + tL) = Tdecode16( (Ptr) (tt + tL));
 					
-					if( signedData) *(tt + tL) += 0x8000;
+					if (signedData) *(tt + tL) += 0x8000;
 				}
 			}
 			else
 			{
 				for( i = 0; i < curData->size; i++)
 				{
-					if( signedData) curData->data[ i] = curData->data[i] + 0x80;
+					if (signedData) curData->data[ i] = curData->data[i] + 0x80;
 				}
 			}
 		}
@@ -346,12 +346,12 @@ static OSErr mainPAT(void					*unused,
 			Ptr				theSound;
 			
 			iFileRefI = iFileOpenRead(file);
-			if( iFileRefI != NULL)
+			if (iFileRefI != NULL)
 			{
 				inOutCount = iGetEOF( iFileRefI);
 				
 				theSound = malloc( inOutCount);
-				if( theSound == NULL) myErr = MADNeedMemory;
+				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
 					iRead(inOutCount, theSound, iFileRefI);
@@ -373,11 +373,11 @@ static OSErr mainPAT(void					*unused,
 			Ptr	theSound;
 			
 			iFileRefI = iFileOpenRead(file);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				inOutCount = 50L;
 				theSound = malloc( inOutCount);
-				if( theSound == NULL) myErr = MADNeedMemory;
+				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
 					iRead(inOutCount, theSound, iFileRefI);

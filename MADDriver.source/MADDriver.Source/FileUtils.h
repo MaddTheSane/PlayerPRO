@@ -132,7 +132,7 @@ static inline OSType Ptr2OSType( char* str)
 	OSType  type;
 	
 	i = strlen( str);
-	if( i > 4) i = 4;
+	if (i > 4) i = 4;
 	type = '    ';
 	memcpy( &type, str, i);
 	PPBE32(&type);

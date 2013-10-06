@@ -8,7 +8,7 @@
 
 static OSErr TestMINS( InstrData *CC)
 {
-	if( CC->type == 0 && CC->numSamples >= 0 && CC->numSamples < MAXSAMPLE) return noErr;
+	if (CC->type == 0 && CC->numSamples >= 0 && CC->numSamples < MAXSAMPLE) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -19,9 +19,9 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 
 	for( i = 0; i < curIns->numSamples; i++)
 	{
-		if( sample[ i] != NULL)
+		if (sample[ i] != NULL)
 		{
-			if( sample[ i]->data != NULL)
+			if (sample[ i]->data != NULL)
 			{
 				free( sample[ i]->data);
 				sample[ i]->data = NULL;
@@ -162,12 +162,12 @@ static OSErr mainMINs(void						*unused,
 	{
 		case 'IMPL':
 			iFileRefI = iFileOpenRead(file);
-			if( iFileRefI != NULL)
+			if (iFileRefI != NULL)
 			{
 				inOutCount = iGetEOF(iFileRefI);
 				
 				theSound = malloc( inOutCount);
-				if( theSound == NULL) myErr = MADNeedMemory;
+				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
 					free( theSound);
@@ -195,13 +195,13 @@ static OSErr mainMINs(void						*unused,
 						ByteswapsData(curData);
 						
 						curData->data = malloc( curData->size);
-						if( curData->data != NULL)
+						if (curData->data != NULL)
 						{
 							inOutCount = curData->size;
 							myErr = iRead(inOutCount, (Ptr)curData->data, iFileRefI);
 						}
 						
-						if( curData->amp == 16)
+						if (curData->amp == 16)
 						{
 							SInt32 	ll;
 							short	*shortPtr = (short*) curData->data;
@@ -219,11 +219,11 @@ static OSErr mainMINs(void						*unused,
 		
 		case 'TEST':
 			iFileRefI = iFileOpenRead(file);
-			if( iFileRefI != NULL)
+			if (iFileRefI != NULL)
 			{
 				inOutCount = sizeof(InstrData);
 				theSound = malloc( inOutCount);
-				if( theSound == NULL) myErr = MADNeedMemory;
+				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
 					iRead(inOutCount, theSound, iFileRefI);
@@ -245,7 +245,7 @@ static OSErr mainMINs(void						*unused,
 			iFileCreate(file, 'MINs');
 			iFileRefI = iFileOpenWrite(file);
 			
-			if( iFileRefI != NULL)
+			if (iFileRefI != NULL)
 			{
 				// Write instrument header
 				inOutCount = sizeof( InstrData);
@@ -268,7 +268,7 @@ static OSErr mainMINs(void						*unused,
 					ByteswapsData(copyData);
 					copydataData = malloc(curData->size);
 					memcpy(copydataData, curData->data, curData->size);
-					if( curData->amp == 16)
+					if (curData->amp == 16)
 					{
 						SInt32 	ll;
 						short	*shortPtr = (short*) copydataData;

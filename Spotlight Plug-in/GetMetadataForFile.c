@@ -146,7 +146,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 		}
 #endif
 		
-		if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
+		if (MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 		{
 			OSErr err = noErr;
 			err = MADLoadMusicFileCString(MADLib, &MADMusic1, type, path);

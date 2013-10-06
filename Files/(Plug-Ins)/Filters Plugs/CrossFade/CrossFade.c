@@ -43,13 +43,13 @@ static OSErr mainCrossFade(void				*unused,
 					tempEnd = *EndPtr;
 					
 					temp = ((tempEnd * i) + (tempStart * (length - i))) / length;
-					if( temp > 127) temp = 127;
-					else if( temp < -127 ) temp = -127;
+					if (temp > 127) temp = 127;
+					else if (temp < -127 ) temp = -127;
 					*StartPtr++ = temp;
 			
 					temp = ((tempStart * i) + (tempEnd * (length - i))) / length;
-					if( temp > 127) temp = 127;
-					else if( temp < -127 ) temp = -127;
+					if (temp > 127) temp = 127;
+					else if (temp < -127 ) temp = -127;
 					*EndPtr++ = temp;
 				}
 			}
@@ -76,13 +76,13 @@ static OSErr mainCrossFade(void				*unused,
 					tempEnd = *EndPtr;
 			
 					temp = ((tempEnd * i) + (tempStart * (length - i))) / length;
-					if( temp >= (short)0x7FFF) temp = 0x7FFF;	// overflow ?
-					else if( temp <= (short)0x8000 ) temp = (short)0x8000;
+					if (temp >= (short)0x7FFF) temp = 0x7FFF;	// overflow ?
+					else if (temp <= (short)0x8000 ) temp = (short)0x8000;
 					*StartPtr++ = temp;
 			
 					temp = ((tempStart * i) + (tempEnd * (length - i))) / length;
-					if( temp >= (short)0x7FFF) temp = 0x7FFF;	// overflow ?
-					else if( temp <= (short)0x8000 ) temp = (short)0x8000;
+					if (temp >= (short)0x7FFF) temp = 0x7FFF;	// overflow ?
+					else if (temp <= (short)0x8000 ) temp = (short)0x8000;
 					*EndPtr++ = temp;
 				}
 			}

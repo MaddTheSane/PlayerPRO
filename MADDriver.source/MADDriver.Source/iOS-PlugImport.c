@@ -185,7 +185,7 @@ static OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	theMAD = (MADSpec*) malloc( sizeof( MADSpec) + 200);
 	
 	fileID = iFileOpenRead( AlienFile);
-	if( !fileID)
+	if (!fileID)
 	{
 		free( theMAD);
 		return MADReadingErr;
@@ -292,14 +292,14 @@ OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInf
 	short		i;
 	MADMusic	aMAD;
 	
-	if( !strcmp( kindFile, "MADK"))
+	if (!strcmp( kindFile, "MADK"))
 	{
 		return PPMADInfoFile( AlienFile, InfoRec);
 	}
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
 			return CallImportPlug( inMADDriver, i, MADPlugInfo, AlienFile, &aMAD, InfoRec);
 		}
@@ -314,10 +314,10 @@ OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
 			*theNewMAD = (MADMusic*) calloc( sizeof( MADMusic), 1);
-			if( !theNewMAD) return MADNeedMemory;
+			if (!theNewMAD) return MADNeedMemory;
 			
 			OSErr err = CallImportPlug( inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
 			if (err != noErr) {
@@ -337,12 +337,12 @@ OSErr CheckMADFile(char* name)
 	OSErr				err;
 	
 	refNum = iFileOpenRead( name);
-	if( !refNum) return MADReadingErr;
+	if (!refNum) return MADReadingErr;
 	else
 	{
 		iRead(CharlMADcheckLength, charl, refNum);
 		
-		if( charl[ 0] == 'M' &&							// MADK
+		if (charl[ 0] == 'M' &&							// MADK
 		   charl[ 1] == 'A' &&
 		   charl[ 2] == 'D' &&
 		   charl[ 3] == 'K') err = noErr;
@@ -364,17 +364,17 @@ OSErr PPIdentifyFile( MADLibrary *inMADDriver, char *type, char *AlienFile)
 	
 	// Check if we have access to this file
 	refNum = iFileOpenRead( AlienFile);
-	if( !refNum) return MADReadingErr;
+	if (!refNum) return MADReadingErr;
 	else
 	{
-		if( iGetEOF( refNum) < 100) iErr = MADIncompatibleFile;
+		if (iGetEOF( refNum) < 100) iErr = MADIncompatibleFile;
 		iClose( refNum);
-		if( iErr) return iErr;
+		if (iErr) return iErr;
 	}
 	
 	// Is it a MAD file?
 	iErr = CheckMADFile( AlienFile);
-	if( iErr == noErr)
+	if (iErr == noErr)
 	{
 		strcpy( type, "MADK");
 		return noErr;
@@ -382,7 +382,7 @@ OSErr PPIdentifyFile( MADLibrary *inMADDriver, char *type, char *AlienFile)
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( CallImportPlug( inMADDriver, i, MADPlugTest, AlienFile, NULL, &InfoRec) == noErr)
+		if (CallImportPlug( inMADDriver, i, MADPlugTest, AlienFile, NULL, &InfoRec) == noErr)
 		{
 			strcpy(type, inMADDriver->ThePlug[i].type);
 			return noErr;
@@ -397,10 +397,10 @@ Boolean	MADPlugAvailable( MADLibrary *inMADDriver, char* kindFile)
 {
 	short		i;
 	
-	if( !strcmp( kindFile, "MADK")) return TRUE;
+	if (!strcmp( kindFile, "MADK")) return TRUE;
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type)) return TRUE;
+		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type)) return TRUE;
 	}
 	return FALSE;
 }
@@ -412,7 +412,7 @@ OSErr PPExportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
 			return CallImportPlug( inMADDriver, i, MADPlugExport, AlienFile, theNewMAD, &InfoRec);
 		}
@@ -428,7 +428,7 @@ OSErr PPTestFile( MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
 			return CallImportPlug( inMADDriver, i, MADPlugTest, AlienFile, &aMAD, &InfoRec);
 		}
@@ -440,19 +440,19 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 {
 	short	i, x;
 	
-	if( ID >= inMADDriver->TotalPlug) PPDebugStr( __LINE__, __FILE__, "PP-Plug ERROR. ");
+	if (ID >= inMADDriver->TotalPlug) PPDebugStr( __LINE__, __FILE__, "PP-Plug ERROR. ");
 	
 	for( i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == MADPlugImportExport)
+		if (inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == MADPlugImportExport)
 		{
-			if( ID == x)
+			if (ID == x)
 			{
 				short 	xx;
 				OSType	type;
 				
 				xx = strlen( inMADDriver->ThePlug[ i].type);
-				if( xx > 4) xx = 4;
+				if (xx > 4) xx = 4;
 				type = '    ';
 				memcpy( inMADDriver->ThePlug[ i].type, &type, xx);
 				PPBE32(&type);

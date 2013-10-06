@@ -45,11 +45,11 @@ sData* inMADCreateSample()
 
 Cmd* GetCmd( short row, short track, Pcmd* myPcmd)
 {
-	if( row < 0) row = 0;
-	else if( row >= myPcmd->length) row = myPcmd->length -1;
+	if (row < 0) row = 0;
+	else if (row >= myPcmd->length) row = myPcmd->length -1;
 	
-	if( track < 0) track = 0;
-	else if( track >= myPcmd->tracks) track = myPcmd->tracks -1;
+	if (track < 0) track = 0;
+	else if (track >= myPcmd->tracks) track = myPcmd->tracks -1;
 	
 	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
@@ -96,18 +96,18 @@ OSErr inAddSoundToMADCString(Ptr			theSound,
 	long 	inOutBytes;
 	sData	*curData;
 
-	if( theSound == NULL) return MADParametersErr;
+	if (theSound == NULL) return MADParametersErr;
 
 	if (!sampleID || !InsHeader || !sample) {
 		return MADParametersErr;
 	}
-	if( *sampleID > MAXSAMPLE) return MADParametersErr;
+	if (*sampleID > MAXSAMPLE) return MADParametersErr;
 
 	inOutBytes = sndLen;
 	
 	///////
 	
-	if( *sampleID >= 0)		// replace this sample
+	if (*sampleID >= 0)		// replace this sample
 	{
 		curData = sample[ *sampleID];
 	}
@@ -123,7 +123,7 @@ OSErr inAddSoundToMADCString(Ptr			theSound,
 		}
 	}
 	
-	if( curData->data != NULL) free( curData->data);
+	if (curData->data != NULL) free( curData->data);
 	curData->data = theSound;
 	
 	curData->size		= (int)inOutBytes;

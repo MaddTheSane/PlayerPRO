@@ -16,7 +16,7 @@ static short Text2Note( char *myTT)
 {
 	short		Oct;
 	
-	if( strlen(myTT) > 3) Oct = myTT[ 2] - 48;
+	if (strlen(myTT) > 3) Oct = myTT[ 2] - 48;
 	else Oct = myTT[ 1] - 48;
 	
 	Oct *= 12;
@@ -36,11 +36,11 @@ static short Text2Note( char *myTT)
 		default:	Oct = 0xFF;		break;
 	}
 	
-	if( Oct != 0xFF)
+	if (Oct != 0xFF)
 	{
-		if( myTT[ 2] == '#') Oct++;
-		if( Oct >= 96) Oct = 0xFF;
-		if( Oct < 0) Oct = 0xFF;
+		if (myTT[ 2] == '#') Oct++;
+		if (Oct >= 96) Oct = 0xFF;
+		if (Oct < 0) Oct = 0xFF;
 	}
 	
 	return( Oct);
@@ -48,11 +48,11 @@ static short Text2Note( char *myTT)
 
 static void StringToHex( char *str, int *oct)
 {
-	if( str[ 2] >= 'A' && str[ 2] <= 'F') *oct = 10 + str[ 2] - 'A';
-	if( str[ 2] >= '0' && str[ 2] <= '9') *oct = str[ 2] - '0';
+	if (str[ 2] >= 'A' && str[ 2] <= 'F') *oct = 10 + str[ 2] - 'A';
+	if (str[ 2] >= '0' && str[ 2] <= '9') *oct = str[ 2] - '0';
 	
-	if( str[ 1] >= 'A' && str[ 1] <= 'F') *oct += (10 + str[ 1] - 'A')<<4;
-	if( str[ 1] >= '0' && str[ 1] <= '9') *oct += (str[ 1] - '0')<<4;
+	if (str[ 1] >= 'A' && str[ 1] <= 'F') *oct += (10 + str[ 1] - 'A')<<4;
+	if (str[ 1] >= '0' && str[ 1] <= '9') *oct += (str[ 1] - '0')<<4;
 }
 
 

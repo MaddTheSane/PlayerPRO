@@ -254,7 +254,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	}
 	UseResFile(refNum);
 	aHandle = Get1Resource('STR#', 128);
-	if( aHandle == NULL)
+	if (aHandle == NULL)
 	{
 		CloseResFile(refNum);
 		return ResError();

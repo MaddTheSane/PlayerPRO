@@ -22,18 +22,8 @@
 /********************						***********************/
 
 //NOTE: your plug-in should include PlayerPROCore/PlayerPROCore.h
-//These plug-ins use RDriver and FileUtils to build without having to create subdirs for headers
-#ifdef __APPLE__
 #include <PlayerPROCore/PlayerPROCore.h>
-#else
-#include "RDriver.h"
-#include "FileUtils.h"
-#endif
-#include "MOD.h"
-
-#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-#include "embeddedPlugs.h"
-#endif
+#include "Example.h"
 
 #ifdef WIN32
 #define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
@@ -311,6 +301,8 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 	theMAD->header = (MADSpec*) calloc( inOutCount, 1);
 	if (theMAD->header == NULL) return MADNeedMemory;
 	
+	//Some info about the tracker being imported.
+	//If your tracker doesn't have an info field, just do
 	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MOD Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->MAD = 'MADK';
@@ -845,6 +837,7 @@ static OSErr ExtractMODInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Check MOD Type ***/
 	
 	AnalyseSignatureMOD( -1, info->signature, &maxInstru, &PatternSize, &info->totalTracks, myMOD);
+	//The signature of the file.
 	PPBE32(&info->signature);
 	if (maxInstru == 0)
 	{
@@ -876,6 +869,7 @@ static OSErr ExtractMODInfo( PPInfoRec *info, Ptr AlienFile)
 		if (myMOD->fid[ i].numWords > 5) info->totalInstruments++;
 	}
 	
+	//The plug-in type used to get the tracker
 	strlcpy( info->formatDescription, "MOD Plug", sizeof(info->formatDescription));
 	
 	return noErr;
@@ -895,23 +889,21 @@ static OSErr TestMODFile( Ptr AlienFile, long EOFo)
 
 //These must be exported so that C can see them.
 //If your plug-in uses C++, export them using extern "C"
+// The EXP preprocessor define is defined as extern "C", so you can use that
 
 EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 #ifndef _MAC_H
-
 EXP OSErr FillPlug( PlugInfo *p);
-
-
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC, BeOS, and UNIX
 {
-	//If your architecture supports it, you can get this metadata from the plug-in
+	//If your architecture supports it, you can get this metadata from the plug-in file itself
 	//You can also localize it if you feel so inclined
-	strlcpy( p->type, 		"MOD ", sizeof(p->type));		// NEVER MORE THAN 4 CHARS !!!!!!!!
+	strlcpy( p->type, 		"MOD ", sizeof(p->type));// NEVER MORE THAN 4 CHARS!
 	strlcpy( p->MenuName, 	"MOD Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImportExport;
 	//Version 2.0.0
-	//Increment the version when you make big changes so the newer one will be loaded
+	//Increment the version when you make big changes so the newer one will be used
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
@@ -921,12 +913,8 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC, BeOS, and UN
 /*****************/
 /* MAIN FUNCTION */
 /*****************/
-#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainMOD( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#else
 //Every PlayerPRO import/export plug-in must have this function!
 extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
-#endif
 {
 	OSErr	myErr;
 	Ptr		AlienFile;

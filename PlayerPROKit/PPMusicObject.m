@@ -167,7 +167,7 @@ end:
 	{
 		music->fid[ i].no = i;
 		
-		if( music->fid[ i].numSamples > 0 || music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
+		if (music->fid[ i].numSamples > 0 || music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
 		{
 			x++;
 		}
@@ -211,7 +211,7 @@ end:
 	
 	for( i = 0; i < MAXINSTRU; i++)
 	{
-		if( music->fid[ i].numSamples > 0 || music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
+		if (music->fid[ i].numSamples > 0 || music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
 		{
 			music->fid[ i].no = i;
 			InstrData instData = music->fid[i];
@@ -237,7 +237,7 @@ end:
 			inOutCount = music->sample[ music->fid[i].firstSample + x]->size;
 			Ptr dataCopy = malloc(inOutCount);
 			memcpy(dataCopy, curData.data, inOutCount);
-			if( curData.amp == 16)
+			if (curData.amp == 16)
 			{
 				__block short	*shortPtr = (short*) dataCopy;
 				
@@ -257,7 +257,7 @@ end:
 	int alpha = 0;
 	for( i = 0; i < 10 ; i++)	// Global Effects
 	{
-		if( music->header->globalEffect[ i])
+		if (music->header->globalEffect[ i])
 		{
 			inOutCount = sizeof( FXSets);
 			__block FXSets aSet = music->sets[alpha];
@@ -278,7 +278,7 @@ end:
 	{
 		for( x = 0; x < 4; x++)
 		{
-			if( music->header->chanEffect[ i][ x])
+			if (music->header->chanEffect[ i][ x])
 			{
 				inOutCount = sizeof( FXSets);
 				__block FXSets aSet = music->sets[alpha];
