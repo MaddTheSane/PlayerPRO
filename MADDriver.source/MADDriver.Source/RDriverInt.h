@@ -107,7 +107,7 @@ SInt32	DoVolPanning( short, Channel *ch, MADDriverRec *intDriver);
 SInt32	DoVolPanning256( short, Channel *ch, MADDriverRec *intDriver, Boolean);
 void	MADKeyOFF( MADDriverRec *MDriver, short track);
 
-PPEXPORT SInt32 MADMinimize( MADMusic*);
+PPEXPORT size_t MADMinimize( MADMusic*);
 void	MADPurgeTrackIfInstru( MADDriverRec *intDriver, short instru);
 void	MADTickLoopFill8( Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, size_t size, short left, short right);
 void	MADTickLoop8( size_t size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver);

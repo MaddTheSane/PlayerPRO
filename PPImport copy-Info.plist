@@ -103,6 +103,10 @@
 			<string>com.quadmation.playerpro.mad</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mad</string>
+				</array>
 				<key>public.mime-type</key>
 				<array>
 					<string>audio/x-mad</string>
@@ -127,7 +131,6 @@
 				</array>
 				<key>public.filename-extension</key>
 				<array>
-					<string>mad</string>
 					<string>madk</string>
 				</array>
 			</dict>
@@ -355,8 +358,8 @@
 				</array>
 				<key>public.filename-extension</key>
 				<array>
-					<string>okt</string>
 					<string>okta</string>
+					<string>okt</string>
 				</array>
 			</dict>
 		</dict>
