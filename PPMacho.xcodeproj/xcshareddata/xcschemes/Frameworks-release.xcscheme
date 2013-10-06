@@ -34,6 +34,62 @@
                ReferencedContainer = "container:PPMacho.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "55C3589516C42D1800FB9FA6"
+               BuildableName = "libPlayerPROCompact.a"
+               BlueprintName = "PlayerPROCompact"
+               ReferencedContainer = "container:PPMacho.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "55B0F59D17DF0F0500653BCD"
+               BuildableName = "libPlayerPROKit-iOS.a"
+               BlueprintName = "PlayerPROKit-iOS"
+               ReferencedContainer = "container:PPMacho.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5573A1021656FAF100A5AECA"
+               BuildableName = "libiOSPlayerPROCore.a"
+               BlueprintName = "iOSPlayerPROCore"
+               ReferencedContainer = "container:PPMacho.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5578C50517DB8F9E0057D11B"
+               BuildableName = "libPlayerPROKit.a"
+               BlueprintName = "libPlayerPROKit"
+               ReferencedContainer = "container:PPMacho.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
