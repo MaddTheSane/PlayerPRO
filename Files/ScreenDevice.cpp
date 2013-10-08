@@ -5,9 +5,10 @@
 #include "VisualPlugin.h"
 #include "ScreenDevice.h"
 
+static ScreenDevice *mScreenDevice = NULL;
 
 #if EG_MAC
-#include <Displays.h>
+#include <Carbon/Carbon.h>
 #endif
 
 
@@ -27,24 +28,25 @@ short GetCurrentID( void);
 #endif
 
 
-ScreenDevice::ScreenDevice() {
+ScreenDevice::ScreenDevice()
+{
 	mContextRef = 0;
-
-	#if USE_DIRECTX
+	
+#if USE_DIRECTX
 	HDC hdc = ::GetDC( NULL );
 	sOSDepth = ::GetDeviceCaps( hdc, BITSPIXEL );
 	::ReleaseDC( NULL, hdc );
 	if ( sOSDepth == 24 )
 		sOSDepth = 32;	
-	#endif
+#endif
 	
-	#if EG_WIN
+#if EG_WIN
 	mDDObj		= NULL;
 	mFS_DC		= NULL;
-	#endif
+#endif
 	
-
-	/*
+	
+#if 0
 	GDHandle gDevice = ::GetMainDevice();
 	if ( gDevice ) {
 		PixMapHandle pixMap = (**gDevice).gdPMap;
@@ -54,14 +56,12 @@ ScreenDevice::ScreenDevice() {
 		} }
 	else
 		sOSDepth = 16;
-	*/
-
+#endif
 }
 
 
-ScreenDevice::~ScreenDevice() {
-
-
+ScreenDevice::~ScreenDevice()
+{
 	//EndFrame();
 	
 	ExitFullscreen();
@@ -70,33 +70,34 @@ ScreenDevice::~ScreenDevice() {
 
 
 
-bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth, WindowPtr inWin, long inFreq ) {
+bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth, WindowPtr inWin, long inFreq )
+{
 	bool ok = false;
 	
 	if ((Ptr) DSpStartup == (Ptr) kUnresolvedCFragSymbolAddress) return false;
-		
+	
 	// Check inBitDepth
 	if ( inBitDepth != 8 && inBitDepth != 16 && inBitDepth != 32 )
 		inBitDepth = sOSDepth;
 	if ( inBitDepth < sMinDepth )
 		inBitDepth = sMinDepth;
-		
-		
+	
+	
 	ExitFullscreen();
 	mDispID		= inDispID;
 	mBitDepth	= inBitDepth;
-
-
-	#if USE_DISP_MGR
-	#pragma unused( inFreq )
+	
+	
+#if USE_DISP_MGR
+#pragma unused( inFreq )
 	
 	Rect		r;
 	GDHandle	theGDevice;
-
+	
 	::HideCursor();
 	::HideWindow( inWin );
-
-
+	
+	
 	// Hide that pesky menubar...
 	RgnHandle grayRgn;
 	grayRgn = ::LMGetGrayRgn();
@@ -107,7 +108,7 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 	mMenuBarRgn	= ::NewRgn();
 	::RectRgn( mMenuBarRgn, &r );
 	::UnionRgn( grayRgn, mMenuBarRgn, grayRgn );
-
+	
 	// Fetch a ptr to the device given by inDispNum
 	if ( ::DMGetGDeviceByDisplayID( inDispNum, &theGDevice, false ) != noErr )
 		theGDevice = NULL;
@@ -132,12 +133,12 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 	}
 	
 	if ( ok ) {
-
+		
 		// Make the window cover the device
 		::MoveWindow( inWin, 0, 0, true );
 		::SizeWindow( inWin, outSize.h, outSize.v, true ); 
 		::ShowWindow( inWin );
-
+		
 		// Setup the window as the main grafport
 		mContextRef = inWin;
 		mX			= outSize.h;
@@ -148,18 +149,16 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 		mBytesPerRow	= (**mBM).rowBytes & 0xFFF;
 		mBytesPerPix	= (**mBM).pixelSize / 8;
 	}
-
-
-
-	#elif USE_DRAW_SPROCKETS
+	
+#elif USE_DRAW_SPROCKETS
 	DSpContextReference		ref;
 	OSStatus				err;
 	DSpContextAttributes	context;
 	long					bestWidth = 0x7FFFFFFF;
 	bool 					isInitted = false;
-
+	
 	err = ::DSpStartup();
-
+	
 	
 	if ( ! err ) {
 		err = ::DSpGetFirstContext( inDispID, &ref );
@@ -190,7 +189,7 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 			::DSpShutdown();
 			return false;
 		}
-			
+		
 		::DSpContext_GetAttributes( mContextRef, &context );
 		ioSize.h = context.displayWidth;
 		ioSize.v = context.displayHeight;
@@ -207,18 +206,18 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 		context.colorTable		= 0;
 		context.pageCount		= 1;
 		context.colorNeeds		= kDSpColorNeeds_Require;
-					
+		
 		RGBColor back = { 0, 0, 0 };
 		::DSpSetBlankingColor( &back );
-	
+		
 		// Try to reserve the device
 		err = ::DSpContext_Reserve( mContextRef, &context );
 		if ( ! err ) {
-
+			
 			// If no errors, 'activate' the device into fullscreen
 			::DSpContext_FadeGammaOut( mContextRef, NULL );
 			::HideCursor();
-
+			
 			err = ::DSpContext_SetState( mContextRef, kDSpContextState_Active );
 			::DSpContext_FadeGamma( mContextRef, 100, NULL );
 			
@@ -228,23 +227,24 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 			else {
 				ok = true;
 				
-				#pragma unused( inWin )
-				/*
+#pragma unused( inWin )
+#if 0
 				// Make the window cover the device
 				::MoveWindow( inWin, 0, 0, true );
 				::SizeWindow( inWin, ioSize.h, ioSize.v, true ); 
 				::ShowWindow( inWin );
-
+				
 				// Setup the window as the main grafport
-				mFS_DC = inWin; */
+				mFS_DC = inWin;
+#endif
 				mFS_DC = NULL;
 			}
 		}
 	}
 	
 	
-	#elif USE_DIRECTX
-	#pragma unused( inFreq )
+#elif USE_DIRECTX
+#pragma unused( inFreq )
 	
 	if ( inWin ) {
 		HRESULT err = ::DirectDrawCreate( NULL, &mDDObj, NULL );
@@ -282,55 +282,50 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 				mContextRef -> SetPalette( mFS_Palette );
 				ok = true; }
 			else {
-				 mDDObj -> Release();
-				 mDDObj = NULL;
+				mDDObj -> Release();
+				mDDObj = NULL;
 			}
 		}
 	}
 	
 	
-	#else
-	#pragma unused( ioSize, inWin, inFreq )
-	#endif
+#else
+#pragma unused( ioSize, inWin, inFreq )
+#endif
 	
 	if ( ok ) {
-		#if EG_MAC
+#if EG_MAC
 		::HideCursor();
-		#elif EG_WIN
+#elif EG_WIN
 		::SetCursor( ::LoadCursor( NULL, IDC_ARROW ) );
 		while ( ::ShowCursor( false ) >= 0 ) { }
-		#endif
-		}
+#endif
+	}
 	else
 		mContextRef = 0;
-	
 	
 	return ok;
 }
 	
-
-
-	
-void ScreenDevice::ExitFullscreen() {
-
-
+void ScreenDevice::ExitFullscreen()
+{
 	EndFrame();
 	if ( ! IsFullscreen() ) 
 		return;
-		
-	#if USE_DRAW_SPROCKETS
+	
+#if USE_DRAW_SPROCKETS
 	::DSpContext_FadeGamma( mContextRef, 0, NULL );
 	::DSpContext_SetState( mContextRef, kDSpContextState_Inactive );
 	::DSpContext_FadeGamma( mContextRef, 100, NULL );	
 	::DSpContext_Release( mContextRef );
 	::DSpShutdown();
 	::InitCursor();
-	#endif
+#endif
 	
 	
-	#if USE_DISP_MGR
+#if USE_DISP_MGR
 	RVSetVideoAsScreenPrefs();
-
+	
 	// Make the menu bar visible again
 	RgnHandle grayRgn;
 	grayRgn = ::LMGetGrayRgn();
@@ -338,15 +333,15 @@ void ScreenDevice::ExitFullscreen() {
 	::DiffRgn( grayRgn, mMenuBarRgn, grayRgn );	// remove the menu bar from the desktop
 	::PaintOne( NULL, mMenuBarRgn );			// redraw the menubar 
 	::DisposeRgn( mMenuBarRgn );
-
+	
 	// Restore the original color table for the main device
 	if ( sOSDepth == 8 && mBytesPerPix == 1 )
 		::SetEntries( 0, 255, sOSPalette );
 	::InitCursor();
-	#endif
+#endif
 	
 	
-	#if USE_DIRECTX
+#if USE_DIRECTX
 	if ( mFS_DC ) {
 		mContextRef -> ReleaseDC( mFS_DC );
 		mFS_DC = NULL;
@@ -362,166 +357,185 @@ void ScreenDevice::ExitFullscreen() {
 	}
 	::ReleaseCapture();
 	while ( ::ShowCursor( true ) < 0 ) { }
-	#endif
+#endif
 	
 	mContextRef = NULL;
 	mFS_DC = NULL;
 }
 
-
-
-
-
-
-	/*
-void ScreenDevice::SetPalette( PixPalEntry inPal[ 256 ] ) {
-
+#if 0
+void ScreenDevice::SetPalette( PixPalEntry inPal[ 256 ] )
+{
 	if ( mBitDepth != 8 || ! IsFullscreen() )
 		return;
-
-	#if USE_DIRECTX
+	
+#if USE_DIRECTX
 	PALETTEENTRY pal[ 256 ];
 	for ( int i = 0; i < 256; i++ ) {
 		* ( (long*) &pal[ i ] ) = inPal[ i ].rgbRed | ( inPal[ i ].rgbGreen << 8 )| ( inPal[ i ].rgbBlue << 16 ) | ( PC_RESERVED << 24 );
 	}
 	mFS_Palette -> SetEntries( 0, 0, 256, pal );
-	#endif
+#endif
 	
 	
-	#if EG_MAC
+#if EG_MAC
 	::SetEntries( 0, 255, inPal );
-	
-
+#endif
 }
-*/
+#endif
 	
-GrafPtr ScreenDevice::BeginFrame() {
+GrafPtr ScreenDevice::BeginFrame()
+{
 	
 	if ( IsFullscreen() ) {
-
-		#if USE_DRAW_SPROCKETS
+		
+#if USE_DRAW_SPROCKETS
 		OSErr err;
-	//	err = ::DSpContext_GetBackBuffer( mContextRef, kDSpBufferKind_Normal, (CGrafPtr*) &mFS_DC );
+		//	err = ::DSpContext_GetBackBuffer( mContextRef, kDSpBufferKind_Normal, (CGrafPtr*) &mFS_DC );
 		//if ( ! mFS_DC ) {
-			err = ::DSpContext_GetFrontBuffer( mContextRef, (CGrafPtr*) &mFS_DC );
-			if ( mFS_DC )
-				::SetPort( mFS_DC );
-			else
-				ExitFullscreen();
+		err = ::DSpContext_GetFrontBuffer( mContextRef, (CGrafPtr*) &mFS_DC );
+		if ( mFS_DC )
+			::SetPort( mFS_DC );
+		else
+			ExitFullscreen();
 		//}
-		#endif
+#endif
 		
 		
-		#if USE_DISP_MGR
+#if USE_DISP_MGR
 		mBM	= ::GetGWorldPixMap( mWorld );
 		fix me!
-		#endif
+#endif
 		
-
-		#if USE_DIRECTX
+		
+#if USE_DIRECTX
 		if ( mContextRef -> GetDC( &mFS_DC ) != DD_OK )
 			mFS_DC = NULL;
-		#endif
+#endif
 		
 	}
 	
 	return mFS_DC;
 }
 
-
-
-void ScreenDevice::EndFrame() {
-
+void ScreenDevice::EndFrame()
+{
 	if ( IsFullscreen() ) {
-
-		#if USE_DRAW_SPROCKETS
+		
+#if USE_DRAW_SPROCKETS
 		//::DSpContext_SwapBuffers( mContextRef, NULL, 0 );
 		mFS_DC = NULL;
-		#endif 
+#endif 
 		
-		#if USE_DIRECTX
+#if USE_DIRECTX
 		if ( mFS_DC ) {
 			mContextRef -> ReleaseDC( mFS_DC );
 			mFS_DC = NULL;
 		}
-		#endif
+#endif
 	}
 }
 
-
-
-long ScreenDevice::GetDisplayID( long inDeviceNum ) {
-
-
-	#if EG_MAC
+long ScreenDevice::GetDisplayID( long inDeviceNum )
+{
+#if EG_MAC
 	OSStatus			err;
 	DisplayIDType		id = 0;
-	GDHandle theGDevice = DMGetFirstScreenDevice( false );
+	GDHandle theGDevice = ::DMGetFirstScreenDevice( false );
 	while ( theGDevice && inDeviceNum ) {
 		inDeviceNum--;
 		
-		theGDevice = DMGetNextScreenDevice( theGDevice, false );
+		theGDevice = ::DMGetNextScreenDevice( theGDevice, false );
 	}
 	
 	if ( ! theGDevice )
-		theGDevice = DMGetFirstScreenDevice( false );
-		
-	err = DMGetDisplayIDByGDevice( theGDevice, &id, false );
-
-	return ( err ) ? 0 : id;
-	#endif
+		theGDevice = ::DMGetFirstScreenDevice( false );
 	
-	#if EG_WIN
+	err = ::DMGetDisplayIDByGDevice( theGDevice, &id, false );
+	
+	return ( err ) ? 0 : id;
+#endif
+	
+#if EG_WIN
 	//#pragma unused( inX, inY )
 	return 0;
-	#endif
+#endif
 }
-	
-	
 
-long ScreenDevice::GetDisplayID( long inX, long inY ) {
-	
-	#if EG_MAC
+long ScreenDevice::GetDisplayID( long inX, long inY )
+{
+#if EG_MAC
 	OSStatus			err;
 	DisplayIDType		id = 0;
 	Point				inPt;
 	
 	inPt.h = inX;
 	inPt.v = inY;
-
+	
 	GDHandle theGDevice;
-
+	
 	/*
-	** Walk the list of display devices in the system.  DrawSprocket is
-	** centered around the DisplayIDType, which is used by the Display
-	** Manager.  The GDevice records are going to be in flux with future
-	** versions of the system software, so it is best to make the change
-	** now and make your software DisplayManager-centric.
-	*/
+	 ** Walk the list of display devices in the system.  DrawSprocket is
+	 ** centered around the DisplayIDType, which is used by the Display
+	 ** Manager.  The GDevice records are going to be in flux with future
+	 ** versions of the system software, so it is best to make the change
+	 ** now and make your software DisplayManager-centric.
+	 */
 	theGDevice = DMGetFirstScreenDevice( false );
 	while( theGDevice && ! id ) {
 		
 		if ( ::PtInRect( inPt, &(**theGDevice).gdRect ) ) {
-		
+			
 			/* get the display ID */
-			err = DMGetDisplayIDByGDevice( theGDevice, &id, false );
+			err = ::DMGetDisplayIDByGDevice( theGDevice, &id, false );
 			if ( err )
 				id = 0;
 		}
 		
 		/* next device */
-		theGDevice = DMGetNextScreenDevice( theGDevice, false );
+		theGDevice = ::DMGetNextScreenDevice( theGDevice, false );
 	}	
-/*
-	err = ::DSpFindContextFromPoint( inPt, &ref );	
-	if ( ! err )
-		err = ::DSpContext_GetDisplayID( ref, &id );
-*/
+	/*
+	 err = ::DSpFindContextFromPoint( inPt, &ref );	
+	 if ( ! err )
+	 err = ::DSpContext_GetDisplayID( ref, &id );
+	 */
 	return ( err ) ? 0 : id;
-	#endif
+#endif
 	
-	#if EG_WIN
-	#pragma unused( inX, inY )
+#if EG_WIN
+#pragma unused( inX, inY )
 	return 0;
-	#endif
+#endif
+}
+
+#pragma mark C-based functions
+
+Boolean EnterFullscreen( long inDispID, Point ioSize, int inBitDepth, WindowPtr inWin, long inFreq )
+{
+	if (mScreenDevice == NULL)
+		mScreenDevice = new ScreenDevice();
+	return mScreenDevice->EnterFullscreen(inDispID, ioSize, inBitDepth, inWin, inFreq);
+}
+
+GrafPtr BeginFrame()
+{
+	return mScreenDevice->BeginFrame();
+}
+
+void EndFrame()
+{
+	mScreenDevice->EndFrame();
+}
+
+void ExitFullscreen()
+{
+	mScreenDevice->ExitFullscreen();
+	delete mScreenDevice;
+	mScreenDevice = NULL;
+}
+
+long GetDisplayID( long inDeviceNum )
+{
+	return mScreenDevice->GetDisplayID(inDeviceNum);
 }

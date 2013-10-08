@@ -63,10 +63,13 @@ void EndFrame();
 
 //#if MACOS9VERSION
 #if 1
-Boolean IsFullscreen()									{ return mContextRef != 0; }
+Boolean IsFullscreen()
+{
+	return mContextRef != 0; 
+}
 
-void ScreenDevice() {
-	
+void ScreenDevice() 
+{
 
 #if USE_DIRECTX
 	HDC hdc = GetDC( NULL );
@@ -81,7 +84,7 @@ void ScreenDevice() {
 	mFS_DC		= NULL;
 #endif
 	
-//TODO: is this needed?
+	//TODO: is this needed?
 #if 0	
 	GDHandle gDevice = GetMainDevice();
 	if ( gDevice ) {
@@ -93,7 +96,6 @@ void ScreenDevice() {
 	else
 		sOSDepth = 16;
 #endif	
-
 }
 
 Boolean EnterFullscreen( long inDispID, Point ioSize, int inBitDepth, WindowPtr inWin, long inFreq )
@@ -101,29 +103,28 @@ Boolean EnterFullscreen( long inDispID, Point ioSize, int inBitDepth, WindowPtr 
 	Boolean ok = false;
 	
 	if ((Ptr) DSpStartup == (Ptr) kUnresolvedCFragSymbolAddress) return false;
-		
+	
 	// Check inBitDepth
 	if ( inBitDepth != 8 && inBitDepth != 16 && inBitDepth != 32 )
 		inBitDepth = sOSDepth;
 	if ( inBitDepth < sMinDepth )
 		inBitDepth = sMinDepth;
-		
-		
+	
+	
 	ExitFullscreen();
 	mDispID		= inDispID;
 	mBitDepth	= inBitDepth;
-
-
+	
 #if USE_DISP_MGR
 #pragma unused( inFreq )
 	
 	Rect		r;
 	GDHandle	theGDevice;
-
+	
 	HideCursor();
 	HideWindow( inWin );
-
-
+	
+	
 	// Hide that pesky menubar...
 	RgnHandle grayRgn;
 	grayRgn = LMGetGrayRgn();
@@ -134,7 +135,7 @@ Boolean EnterFullscreen( long inDispID, Point ioSize, int inBitDepth, WindowPtr 
 	mMenuBarRgn	= NewRgn();
 	RectRgn( mMenuBarRgn, &r );
 	UnionRgn( grayRgn, mMenuBarRgn, grayRgn );
-
+	
 	// Fetch a ptr to the device given by inDispNum
 	if ( DMGetGDeviceByDisplayID( inDispNum, &theGDevice, false ) != noErr )
 		theGDevice = NULL;
@@ -159,12 +160,12 @@ Boolean EnterFullscreen( long inDispID, Point ioSize, int inBitDepth, WindowPtr 
 	}
 	
 	if ( ok ) {
-
+		
 		// Make the window cover the device
 		MoveWindow( inWin, 0, 0, true );
 		SizeWindow( inWin, outSize.h, outSize.v, true ); 
 		ShowWindow( inWin );
-
+		
 		// Setup the window as the main grafport
 		mContextRef = inWin;
 		mX			= outSize.h;
@@ -175,100 +176,98 @@ Boolean EnterFullscreen( long inDispID, Point ioSize, int inBitDepth, WindowPtr 
 		mBytesPerRow	= (**mBM).rowBytes & 0xFFF;
 		mBytesPerPix	= (**mBM).pixelSize / 8;
 	}
-
-
-
+	
 #elif USE_DRAW_SPROCKETS
 	{
-	DSpContextReference		ref;
-	OSStatus				err;
-	DSpContextAttributes	context;
-	long					bestWidth = 0x7FFFFFFF;
-	Boolean 					isInitted = false;
-
-	err = DSpStartup();
-
-	
-	if ( ! err ) {
-		err = DSpGetFirstContext( inDispID, &ref );
+		DSpContextReference		ref;
+		OSStatus				err;
+		DSpContextAttributes	context;
+		long					bestWidth = 0x7FFFFFFF;
+		Boolean 					isInitted = false;
 		
-		// Look for smallest size w/ for given depth
-		while ( ! err && ref ) {
-			err = DSpContext_GetAttributes( ref, &context );
-			if ( ! err && ref ) {
-				if ( context.displayBestDepth == inBitDepth ) {
-					if ( context.displayWidth == ioSize.h && context.displayHeight == ioSize.v ) {
-						mContextRef = ref;
-						isInitted = true; 
-						break; }
-					else if ( context.displayWidth <= bestWidth && context.displayWidth >= 640 ) {
-						mContextRef = ref;
-						isInitted = true;
-						bestWidth = context.displayWidth;
-					}
-				}
-				
-				// Try the next context for this display
-				err = DSpGetNextContext( ref, &ref );
-			}
-		}
+		err = DSpStartup();
 		
-		if ( ! isInitted ) {
-			mContextRef = 0;
-			DSpShutdown();
-			return false;
-		}
-			
-		DSpContext_GetAttributes( mContextRef, &context );
-		ioSize.h = context.displayWidth;
-		ioSize.v = context.displayHeight;
 		
-		context.contextOptions 			= kDSpContextOption_DontSyncVBL;
-		context.frequency					= inFreq;
-		context.reserved1					= 0;
-		context.reserved2					= 0;
-		context.gameMustConfirmSwitch		= false;
-		context.reserved3[0]	= 0;
-		context.reserved3[1]	= 0;
-		context.reserved3[2]	= 0;
-		context.reserved3[3]	= 0;
-		context.colorTable		= 0;
-		context.pageCount		= 1;
-		context.colorNeeds		= kDSpColorNeeds_Require;
-					
-		RGBColor back = { 0, 0, 0 };
-		DSpSetBlankingColor( &back );
-	
-		// Try to reserve the device
-		err = DSpContext_Reserve( mContextRef, &context );
 		if ( ! err ) {
-
-			// If no errors, 'activate' the device into fullscreen
-			DSpContext_FadeGammaOut( mContextRef, NULL );
-			HideCursor();
-
-			err = DSpContext_SetState( mContextRef, kDSpContextState_Active );
-			DSpContext_FadeGamma( mContextRef, 100, NULL );
+			err = DSpGetFirstContext( inDispID, &ref );
 			
-			if ( err && err != kDSpConfirmSwitchWarning ) {
-				DSpContext_Release( mContextRef );
-				DSpShutdown(); }
-			else {
-				ok = true;
+			// Look for smallest size w/ for given depth
+			while ( ! err && ref ) {
+				err = DSpContext_GetAttributes( ref, &context );
+				if ( ! err && ref ) {
+					if ( context.displayBestDepth == inBitDepth ) {
+						if ( context.displayWidth == ioSize.h && context.displayHeight == ioSize.v ) {
+							mContextRef = ref;
+							isInitted = true; 
+							break; }
+						else if ( context.displayWidth <= bestWidth && context.displayWidth >= 640 ) {
+							mContextRef = ref;
+							isInitted = true;
+							bestWidth = context.displayWidth;
+						}
+					}
+					
+					// Try the next context for this display
+					err = DSpGetNextContext( ref, &ref );
+				}
+			}
+			
+			if ( ! isInitted ) {
+				mContextRef = 0;
+				DSpShutdown();
+				return false;
+			}
+			
+			DSpContext_GetAttributes( mContextRef, &context );
+			ioSize.h = context.displayWidth;
+			ioSize.v = context.displayHeight;
+			
+			context.contextOptions 			= kDSpContextOption_DontSyncVBL;
+			context.frequency					= inFreq;
+			context.reserved1					= 0;
+			context.reserved2					= 0;
+			context.gameMustConfirmSwitch		= false;
+			context.reserved3[0]	= 0;
+			context.reserved3[1]	= 0;
+			context.reserved3[2]	= 0;
+			context.reserved3[3]	= 0;
+			context.colorTable		= 0;
+			context.pageCount		= 1;
+			context.colorNeeds		= kDSpColorNeeds_Require;
+			
+			RGBColor back = { 0, 0, 0 };
+			DSpSetBlankingColor( &back );
+			
+			// Try to reserve the device
+			err = DSpContext_Reserve( mContextRef, &context );
+			if ( ! err ) {
 				
+				// If no errors, 'activate' the device into fullscreen
+				DSpContext_FadeGammaOut( mContextRef, NULL );
+				HideCursor();
+				
+				err = DSpContext_SetState( mContextRef, kDSpContextState_Active );
+				DSpContext_FadeGamma( mContextRef, 100, NULL );
+				
+				if ( err && err != kDSpConfirmSwitchWarning ) {
+					DSpContext_Release( mContextRef );
+					DSpShutdown(); }
+				else {
+					ok = true;
+					
 #pragma unused( inWin )
-				/*
-				// Make the window cover the device
-				MoveWindow( inWin, 0, 0, true );
-				SizeWindow( inWin, ioSize.h, ioSize.v, true ); 
-				ShowWindow( inWin );
-
-				// Setup the window as the main grafport
-				mFS_DC = inWin; */
-				mFS_DC = NULL;
+					/*
+					 // Make the window cover the device
+					 MoveWindow( inWin, 0, 0, true );
+					 SizeWindow( inWin, ioSize.h, ioSize.v, true ); 
+					 ShowWindow( inWin );
+					 
+					 // Setup the window as the main grafport
+					 mFS_DC = inWin; */
+					mFS_DC = NULL;
+				}
 			}
 		}
-	}
 	}
 	
 #elif USE_DIRECTX
@@ -310,8 +309,8 @@ Boolean EnterFullscreen( long inDispID, Point ioSize, int inBitDepth, WindowPtr 
 				mContextRef -> SetPalette( mFS_Palette );
 				ok = true; }
 			else {
-				 mDDObj -> Release();
-				 mDDObj = NULL;
+				mDDObj -> Release();
+				mDDObj = NULL;
 			}
 		}
 	}
@@ -328,20 +327,15 @@ Boolean EnterFullscreen( long inDispID, Point ioSize, int inBitDepth, WindowPtr 
 		SetCursor( LoadCursor( NULL, IDC_ARROW ) );
 		while ( ShowCursor( false ) >= 0 ) { }
 #endif
-		}
+	}
 	else
 		mContextRef = 0;
-	
 	
 	return ok;
 }
 	
-
-
-	
-void ExitFullscreen() {
-
-
+void ExitFullscreen() 
+{
 	EndFrame();
 	if ( ! IsFullscreen() ) 
 		return;
@@ -396,32 +390,27 @@ void ExitFullscreen() {
 	mFS_DC = NULL;
 }
 
-
-
-
-
-
-	/*
-void SetPalette( PixPalEntry inPal[ 256 ] ) {
-
+#if 0
+void SetPalette( PixPalEntry inPal[ 256 ] )
+{
+	
 	if ( mBitDepth != 8 || ! IsFullscreen() )
 		return;
-
-	#if USE_DIRECTX
+	
+#if USE_DIRECTX
 	PALETTEENTRY pal[ 256 ];
 	for ( int i = 0; i < 256; i++ ) {
 		* ( (long*) &pal[ i ] ) = inPal[ i ].rgbRed | ( inPal[ i ].rgbGreen << 8 )| ( inPal[ i ].rgbBlue << 16 ) | ( PC_RESERVED << 24 );
 	}
 	mFS_Palette -> SetEntries( 0, 0, 256, pal );
-	#endif
+#endif
 	
 	
-	#if EG_MAC
+#if EG_MAC
 	SetEntries( 0, 255, inPal );
-	
-
+#endif
 }
-*/
+#endif
 	
 GrafPtr BeginFrame() {
 	

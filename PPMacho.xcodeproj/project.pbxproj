@@ -355,6 +355,7 @@
 		559088E410E87ED700CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		55A290BA17B6A0C200764F80 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
+		55B1953E17FD5CC200E6F160 /* ScreenDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55B1953D17FD5CC200E6F160 /* ScreenDevice.cpp */; };
 		55B797E310D6E6E50073E379 /* CompFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FE110D6C79D00BB619C /* CompFade.c */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
 		55BDD38910DC9EDE00813A3A /* Complex Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55B797DC10D6E6C40073E379 /* Complex Fade.plugin */; };
@@ -464,7 +465,6 @@
 		88E0C4690C2F21DE00D6C081 /* Carbon.r in Rez */ = {isa = PBXBuildFile; fileRef = 88E0C3BE0C2F21DD00D6C081 /* Carbon.r */; };
 		88E0C46A0C2F21DE00D6C081 /* PlugVisual.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C80C2F21DD00D6C081 /* PlugVisual.c */; };
 		88E0C46B0C2F21DE00D6C081 /* PlugVST.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C90C2F21DD00D6C081 /* PlugVST.c */; };
-		88E0C46C0C2F21DE00D6C081 /* ScreenDevice.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4110C2F21DD00D6C081 /* ScreenDevice.c */; };
 		88E0C46D0C2F21DE00D6C081 /* ScreenDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4120C2F21DD00D6C081 /* ScreenDevice.h */; };
 		88E0C4760C2F21E400D6C081 /* MAD.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4750C2F21E400D6C081 /* MAD.h */; };
 		88E0C47A0C2F21E400D6C081 /* Shuddup.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4790C2F21E400D6C081 /* Shuddup.h */; };
@@ -1409,7 +1409,7 @@
 		5542404310DB602D00C08864 /* AVI.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = AVI.r; sourceTree = "<group>"; };
 		554240C810DBF91300C08864 /* CFPlugin-DigitalBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "CFPlugin-DigitalBridge.c"; sourceTree = "<group>"; };
 		5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ByteUtils.h; path = Files/ByteUtils.h; sourceTree = "<group>"; };
-		5547CE5E10C6E5490041DEF6 /* ByteUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = ByteUtils.c; path = Files/ByteUtils.c; sourceTree = "<group>"; };
+		5547CE5E10C6E5490041DEF6 /* ByteUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ByteUtils.c; sourceTree = "<group>"; };
 		554E0FE010D6C79D00BB619C /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; lineEnding = 1; path = Carbon.r; sourceTree = "<group>"; };
 		554E0FE110D6C79D00BB619C /* CompFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = CompFade.c; sourceTree = "<group>"; };
 		554E0FE210D6C79D00BB619C /* CompFade.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = CompFade.r; sourceTree = "<group>"; };
@@ -1480,7 +1480,7 @@
 		554E122110D6F3E100BB619C /* Propagate-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Propagate-Info.plist"; path = "../../../Propagate-Info.plist"; sourceTree = "<group>"; };
 		554E123010D6F3E600BB619C /* Revert.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Revert.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E125410D6F3E600BB619C /* Revert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Revert-Info.plist"; path = "../../../Revert-Info.plist"; sourceTree = "<group>"; };
-		554E15FF10D8BD0600BB619C /* FileUtils.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; lineEnding = 0; name = FileUtils.exp; path = Files/FileUtils.exp; sourceTree = "<group>"; };
+		554E15FF10D8BD0600BB619C /* FileUtils.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; lineEnding = 0; path = FileUtils.exp; sourceTree = "<group>"; };
 		555E9B491101912100986239 /* MIDI-Hardware-Mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Mac.c"; path = "Files/MIDI-Hardware-Mac.c"; sourceTree = "<group>"; };
 		555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = "MIDI-Hardware-OSX.c"; path = "Files/MIDI-Hardware-OSX.c"; sourceTree = "<group>"; };
 		555E9B4B1101912100986239 /* MIDI-Hardware-Stub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Stub.c"; path = "Files/MIDI-Hardware-Stub.c"; sourceTree = "<group>"; };
@@ -1557,6 +1557,7 @@
 		558A15250FE749B400533D71 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		559087F410E8364F00CE70B8 /* Exemple.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Exemple.icns; sourceTree = "<group>"; };
 		5590896710E883AF00CE70B8 /* WAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WAV.h; sourceTree = "<group>"; };
+		55B1953D17FD5CC200E6F160 /* ScreenDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScreenDevice.cpp; path = Files/ScreenDevice.cpp; sourceTree = "<group>"; };
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Complex Fade-Info.plist"; path = "../../../Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = DFTB.r; path = Files/DFTB.r; sourceTree = "<group>"; };
@@ -1599,49 +1600,49 @@
 		88E0C3DD0C2F21DD00D6C081 /* About.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = About.c; sourceTree = "<group>"; };
 		88E0C3DE0C2F21DD00D6C081 /* ActiveHelp.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ActiveHelp.c; sourceTree = "<group>"; };
 		88E0C3DF0C2F21DD00D6C081 /* Adaptators.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Adaptators.c; sourceTree = "<group>"; };
-		88E0C3E00C2F21DD00D6C081 /* AEvent.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = AEvent.c; path = Files/AEvent.c; sourceTree = SOURCE_ROOT; };
-		88E0C3E10C2F21DD00D6C081 /* AudioCD.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = AudioCD.c; path = Files/AudioCD.c; sourceTree = SOURCE_ROOT; };
-		88E0C3E20C2F21DD00D6C081 /* Check.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Check.c; path = Files/Check.c; sourceTree = SOURCE_ROOT; };
+		88E0C3E00C2F21DD00D6C081 /* AEvent.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AEvent.c; sourceTree = "<group>"; };
+		88E0C3E10C2F21DD00D6C081 /* AudioCD.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AudioCD.c; sourceTree = "<group>"; };
+		88E0C3E20C2F21DD00D6C081 /* Check.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Check.c; sourceTree = "<group>"; };
 		88E0C3E30C2F21DD00D6C081 /* ClassicalP.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ClassicalP.c; sourceTree = "<group>"; };
 		88E0C3E40C2F21DD00D6C081 /* DigitalInfo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = DigitalInfo.c; sourceTree = "<group>"; };
-		88E0C3E50C2F21DD00D6C081 /* DLS Import.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = "DLS Import.c"; path = "Files/DLS Import.c"; sourceTree = SOURCE_ROOT; };
-		88E0C3E60C2F21DD00D6C081 /* DragManager.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = DragManager.c; path = Files/DragManager.c; sourceTree = SOURCE_ROOT; };
+		88E0C3E50C2F21DD00D6C081 /* DLS Import.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "DLS Import.c"; sourceTree = "<group>"; };
+		88E0C3E60C2F21DD00D6C081 /* DragManager.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = DragManager.c; sourceTree = "<group>"; };
 		88E0C3E70C2F21DD00D6C081 /* Equalizer.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Equalizer.c; sourceTree = "<group>"; };
-		88E0C3E80C2F21DD00D6C081 /* FFT-Dialog.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = "FFT-Dialog.c"; path = "Files/FFT-Dialog.c"; sourceTree = SOURCE_ROOT; };
-		88E0C3E90C2F21DD00D6C081 /* FileUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = FileUtils.c; path = Files/FileUtils.c; sourceTree = SOURCE_ROOT; };
-		88E0C3EA0C2F21DD00D6C081 /* FKey.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = FKey.c; path = Files/FKey.c; sourceTree = SOURCE_ROOT; };
-		88E0C3EB0C2F21DD00D6C081 /* FourierNEW.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = FourierNEW.c; path = Files/FourierNEW.c; sourceTree = SOURCE_ROOT; };
-		88E0C3EC0C2F21DD00D6C081 /* Functions.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Functions.c; path = Files/Functions.c; sourceTree = SOURCE_ROOT; };
-		88E0C3ED0C2F21DD00D6C081 /* G3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = G3.c; path = Files/G3.c; sourceTree = SOURCE_ROOT; };
-		88E0C3EE0C2F21DD00D6C081 /* Help.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Help.c; path = Files/Help.c; sourceTree = SOURCE_ROOT; };
-		88E0C3EF0C2F21DD00D6C081 /* Help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Help.h; path = Files/Help.h; sourceTree = SOURCE_ROOT; };
-		88E0C3F00C2F21DD00D6C081 /* HelpOnline.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = HelpOnline.c; path = Files/HelpOnline.c; sourceTree = SOURCE_ROOT; };
+		88E0C3E80C2F21DD00D6C081 /* FFT-Dialog.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "FFT-Dialog.c"; sourceTree = "<group>"; };
+		88E0C3E90C2F21DD00D6C081 /* FileUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = FileUtils.c; sourceTree = "<group>"; };
+		88E0C3EA0C2F21DD00D6C081 /* FKey.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = FKey.c; sourceTree = "<group>"; };
+		88E0C3EB0C2F21DD00D6C081 /* FourierNEW.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = FourierNEW.c; sourceTree = "<group>"; };
+		88E0C3EC0C2F21DD00D6C081 /* Functions.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Functions.c; sourceTree = "<group>"; };
+		88E0C3ED0C2F21DD00D6C081 /* G3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = G3.c; sourceTree = "<group>"; };
+		88E0C3EE0C2F21DD00D6C081 /* Help.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Help.c; sourceTree = "<group>"; };
+		88E0C3EF0C2F21DD00D6C081 /* Help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Help.h; sourceTree = "<group>"; };
+		88E0C3F00C2F21DD00D6C081 /* HelpOnline.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = HelpOnline.c; sourceTree = "<group>"; };
 		88E0C3F10C2F21DD00D6C081 /* InstruList.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = InstruList.c; sourceTree = "<group>"; };
 		88E0C3F20C2F21DD00D6C081 /* InstruView.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = InstruView.c; sourceTree = "<group>"; };
-		88E0C3F30C2F21DD00D6C081 /* LDEF.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = LDEF.c; path = Files/LDEF.c; sourceTree = SOURCE_ROOT; };
-		88E0C3F40C2F21DD00D6C081 /* Main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Main.c; path = Files/Main.c; sourceTree = SOURCE_ROOT; };
+		88E0C3F30C2F21DD00D6C081 /* LDEF.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = LDEF.c; sourceTree = "<group>"; };
+		88E0C3F40C2F21DD00D6C081 /* Main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Main.c; sourceTree = "<group>"; };
 		88E0C3F50C2F21DD00D6C081 /* Memory.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Memory.c; sourceTree = "<group>"; };
-		88E0C3F60C2F21DD00D6C081 /* MIDI-GM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = "MIDI-GM.c"; path = "Files/MIDI-GM.c"; sourceTree = SOURCE_ROOT; };
+		88E0C3F60C2F21DD00D6C081 /* MIDI-GM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "MIDI-GM.c"; sourceTree = "<group>"; };
 		88E0C3F70C2F21DD00D6C081 /* MODList.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MODList.c; sourceTree = "<group>"; };
 		88E0C3F80C2F21DD00D6C081 /* Oscillo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Oscillo.c; sourceTree = "<group>"; };
-		88E0C3F90C2F21DD00D6C081 /* Partition.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Partition.c; path = Files/Partition.c; sourceTree = SOURCE_ROOT; };
-		88E0C3FA0C2F21DD00D6C081 /* Pattern.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Pattern.c; path = Files/Pattern.c; sourceTree = SOURCE_ROOT; };
+		88E0C3F90C2F21DD00D6C081 /* Partition.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Partition.c; sourceTree = "<group>"; };
+		88E0C3FA0C2F21DD00D6C081 /* Pattern.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Pattern.c; sourceTree = "<group>"; };
 		88E0C3FB0C2F21DD00D6C081 /* Piano.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Piano.c; sourceTree = "<group>"; };
-		88E0C3FC0C2F21DD00D6C081 /* Print.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Print.c; path = Files/Print.c; sourceTree = SOURCE_ROOT; };
-		88E0C3FD0C2F21DD00D6C081 /* PrivateList.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PrivateList.c; path = Files/PrivateList.c; sourceTree = SOURCE_ROOT; };
-		88E0C3FE0C2F21DD00D6C081 /* PrivateList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PrivateList.h; path = Files/PrivateList.h; sourceTree = SOURCE_ROOT; };
-		88E0C3FF0C2F21DD00D6C081 /* Progress.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Progress.c; path = Files/Progress.c; sourceTree = SOURCE_ROOT; };
+		88E0C3FC0C2F21DD00D6C081 /* Print.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Print.c; sourceTree = "<group>"; };
+		88E0C3FD0C2F21DD00D6C081 /* PrivateList.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = PrivateList.c; sourceTree = "<group>"; };
+		88E0C3FE0C2F21DD00D6C081 /* PrivateList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PrivateList.h; sourceTree = "<group>"; };
+		88E0C3FF0C2F21DD00D6C081 /* Progress.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Progress.c; sourceTree = "<group>"; };
 		88E0C4000C2F21DD00D6C081 /* ProgressBar.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ProgressBar.c; sourceTree = "<group>"; };
 		88E0C4010C2F21DD00D6C081 /* PubWindow.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = PubWindow.c; sourceTree = "<group>"; };
 		88E0C4020C2F21DD00D6C081 /* QuicktimeWindow.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = QuicktimeWindow.c; sourceTree = "<group>"; };
-		88E0C4030C2F21DD00D6C081 /* Record.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Record.c; path = Files/Record.c; sourceTree = SOURCE_ROOT; };
+		88E0C4030C2F21DD00D6C081 /* Record.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Record.c; sourceTree = "<group>"; };
 		88E0C4050C2F21DD00D6C081 /* Samples.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Samples.c; sourceTree = "<group>"; };
-		88E0C4060C2F21DD00D6C081 /* SoundInput.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = SoundInput.c; path = Files/SoundInput.c; sourceTree = SOURCE_ROOT; };
+		88E0C4060C2F21DD00D6C081 /* SoundInput.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = SoundInput.c; sourceTree = "<group>"; };
 		88E0C4070C2F21DD00D6C081 /* Spectrum.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Spectrum.c; sourceTree = "<group>"; };
-		88E0C4080C2F21DD00D6C081 /* ThreadSystem.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = ThreadSystem.c; path = Files/ThreadSystem.c; sourceTree = SOURCE_ROOT; };
+		88E0C4080C2F21DD00D6C081 /* ThreadSystem.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ThreadSystem.c; sourceTree = "<group>"; };
 		88E0C4090C2F21DD00D6C081 /* TrackView.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = TrackView.c; sourceTree = "<group>"; };
-		88E0C40A0C2F21DD00D6C081 /* Undo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Undo.c; path = Files/Undo.c; sourceTree = SOURCE_ROOT; };
-		88E0C40B0C2F21DD00D6C081 /* Undo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Undo.h; path = Files/Undo.h; sourceTree = SOURCE_ROOT; };
+		88E0C40A0C2F21DD00D6C081 /* Undo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Undo.c; sourceTree = "<group>"; };
+		88E0C40B0C2F21DD00D6C081 /* Undo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Undo.h; sourceTree = "<group>"; };
 		88E0C40D0C2F21DD00D6C081 /* GetFileIcon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = GetFileIcon.c; path = Files/GetFileIcon.c; sourceTree = SOURCE_ROOT; };
 		88E0C40E0C2F21DD00D6C081 /* GetFileIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = GetFileIcon.h; path = Files/GetFileIcon.h; sourceTree = SOURCE_ROOT; };
 		88E0C40F0C2F21DD00D6C081 /* InternetMapping.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = InternetMapping.c; path = Files/InternetMapping.c; sourceTree = SOURCE_ROOT; };
@@ -3001,9 +3002,8 @@
 				88E0C3DE0C2F21DD00D6C081 /* ActiveHelp.c */,
 				88E0C3DF0C2F21DD00D6C081 /* Adaptators.c */,
 			);
-			name = wds_general;
-			path = Files/wds_general;
-			sourceTree = SOURCE_ROOT;
+			path = wds_general;
+			sourceTree = "<group>";
 		};
 		55F0DA6710CC80E600835D4E /* wds_editors */ = {
 			isa = PBXGroup;
@@ -3015,9 +3015,8 @@
 				88E0C4180C2F21DD00D6C081 /* StaffEditor.c */,
 				88E0C41A0C2F21DD00D6C081 /* WaveEditor.c */,
 			);
-			name = wds_editors;
-			path = Files/wds_editors;
-			sourceTree = SOURCE_ROOT;
+			path = wds_editors;
+			sourceTree = "<group>";
 		};
 		55F0DA6810CC813500835D4E /* wds_views */ = {
 			isa = PBXGroup;
@@ -3031,9 +3030,8 @@
 				88E0C3F20C2F21DD00D6C081 /* InstruView.c */,
 				88E0C3E70C2F21DD00D6C081 /* Equalizer.c */,
 			);
-			name = wds_views;
-			path = Files/wds_views;
-			sourceTree = SOURCE_ROOT;
+			path = wds_views;
+			sourceTree = "<group>";
 		};
 		88E0C3A60C2F21DD00D6C081 = {
 			isa = PBXGroup;
@@ -3045,7 +3043,7 @@
 				88E0C3C20C2F21DD00D6C081 /* Plugs */,
 				88E0C3CA0C2F21DD00D6C081 /* Resources */,
 				88E0C3CE0C2F21DD00D6C081 /* MADDriver.Source */,
-				88E0C3DC0C2F21DD00D6C081 /* Source */,
+				88E0C3DC0C2F21DD00D6C081 /* Files */,
 				88E0C40C0C2F21DD00D6C081 /* Utils Group */,
 				88E0C4740C2F21E400D6C081 /* Headers */,
 				551FECF610E7358D00EDF2F1 /* AutoExec */,
@@ -3172,7 +3170,7 @@
 			name = "ASIO Driver";
 			sourceTree = "<group>";
 		};
-		88E0C3DC0C2F21DD00D6C081 /* Source */ = {
+		88E0C3DC0C2F21DD00D6C081 /* Files */ = {
 			isa = PBXGroup;
 			children = (
 				55F0DA6610CC808500835D4E /* wds_general */,
@@ -3209,7 +3207,7 @@
 				5547CE5E10C6E5490041DEF6 /* ByteUtils.c */,
 				554E15FF10D8BD0600BB619C /* FileUtils.exp */,
 			);
-			name = Source;
+			path = Files;
 			sourceTree = "<group>";
 		};
 		88E0C40C0C2F21DD00D6C081 /* Utils Group */ = {
@@ -3221,6 +3219,7 @@
 				88E0C4100C2F21DD00D6C081 /* Navigation.c */,
 				88E0C4120C2F21DD00D6C081 /* ScreenDevice.h */,
 				88E0C4110C2F21DD00D6C081 /* ScreenDevice.c */,
+				55B1953D17FD5CC200E6F160 /* ScreenDevice.cpp */,
 				88E0C4130C2F21DD00D6C081 /* Utils.c */,
 			);
 			name = "Utils Group";
@@ -5342,7 +5341,6 @@
 				88E0C4660C2F21DE00D6C081 /* InternetMapping.c in Sources */,
 				88E0C46A0C2F21DE00D6C081 /* PlugVisual.c in Sources */,
 				88E0C46B0C2F21DE00D6C081 /* PlugVST.c in Sources */,
-				88E0C46C0C2F21DE00D6C081 /* ScreenDevice.c in Sources */,
 				551E56F2102A9E8B0086C86E /* Main.c in Sources */,
 				551E57A1102AB9A30086C86E /* Mozart.c in Sources */,
 				55356A01102BFDB80093F21D /* DLS Import.c in Sources */,
@@ -5365,6 +5363,7 @@
 				55672E9010CAD830008C5C3D /* OSX-PlugImport.c in Sources */,
 				55E8981A10EEC5BA004EB52B /* AboutPlugs.c in Sources */,
 				555E9B4E110192F900986239 /* MIDI-Hardware-OSX.c in Sources */,
+				55B1953E17FD5CC200E6F160 /* ScreenDevice.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
