@@ -6,6 +6,7 @@
 
 #include "VisualPlugin.h"
 #include "SoundJamAPI.h"
+#include "ScreenDevice.h"
 
 	extern	EventRecord				theEvent;
 	extern	Cursor					HandCrsr;

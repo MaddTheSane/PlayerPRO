@@ -399,7 +399,6 @@
 		55F7DBF517FCD39E00338025 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */; };
 		55F7DBF617FCD3A700338025 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		55FA5FBB102D2D6C00CB63DA /* ppApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55FA5FBA102D2D6C00CB63DA /* ppApp.icns */; };
-		55FA5FCA102D31BA00CB63DA /* PlayerHeaders.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4770C2F21E400D6C081 /* PlayerHeaders.c */; };
 		55FD861E10B22C2300F8BDE6 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
 		55FD861F10B22C2700F8BDE6 /* Effects.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D10C2F21DD00D6C081 /* Effects.c */; };
 		55FD862010B22C2D00F8BDE6 /* Interrupt.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D20C2F21DD00D6C081 /* Interrupt.c */; };
@@ -1557,7 +1556,7 @@
 		558A15250FE749B400533D71 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		559087F410E8364F00CE70B8 /* Exemple.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Exemple.icns; sourceTree = "<group>"; };
 		5590896710E883AF00CE70B8 /* WAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WAV.h; sourceTree = "<group>"; };
-		55B1953D17FD5CC200E6F160 /* ScreenDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScreenDevice.cpp; path = Files/ScreenDevice.cpp; sourceTree = "<group>"; };
+		55B1953D17FD5CC200E6F160 /* ScreenDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = ScreenDevice.cpp; path = Files/ScreenDevice.cpp; sourceTree = "<group>"; };
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Complex Fade-Info.plist"; path = "../../../Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = DFTB.r; path = Files/DFTB.r; sourceTree = "<group>"; };
@@ -3222,6 +3221,7 @@
 				55B1953D17FD5CC200E6F160 /* ScreenDevice.cpp */,
 				88E0C4130C2F21DD00D6C081 /* Utils.c */,
 			);
+			lineEnding = 0;
 			name = "Utils Group";
 			sourceTree = "<group>";
 		};
@@ -5347,7 +5347,6 @@
 				55356A05102BFE7D0093F21D /* Print.c in Sources */,
 				55356A1E102C06550093F21D /* MIDI-GM.c in Sources */,
 				55356A97102C08650093F21D /* PlugsPPINInit.c in Sources */,
-				55FA5FCA102D31BA00CB63DA /* PlayerHeaders.c in Sources */,
 				55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */,
 				55FD861E10B22C2300F8BDE6 /* DelayOutPut.c in Sources */,
 				55FD861F10B22C2700F8BDE6 /* Effects.c in Sources */,

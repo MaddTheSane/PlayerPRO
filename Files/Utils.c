@@ -100,68 +100,20 @@ void NNumToString( short no, Str255 aStr)
 	pStrcat( aStr, tStr);
 }
 
-void ByteSwapMADSpec(MADSpec *toSwap)
-{
-	MOT32( &toSwap->MAD);
-	MOT16( &toSwap->speed);
-	MOT16( &toSwap->tempo);
-	MOT32( &toSwap->EPitch);
-	MOT32( &toSwap->ESpeed);
-}
-
-void ByteSwapPatHeader(PatHeader *toSwap)
-{
-	MOT32( &toSwap->size);
-	MOT32( &toSwap->compMode);
-	MOT32( &toSwap->patBytes);
-	MOT32( &toSwap->unused2);
-}
-
-void ByteSwapInstrData(InstrData *toSwap)
-{
-	int x;
-	MOT16( &toSwap->numSamples);
-	MOT16( &toSwap->firstSample);
-	MOT16( &toSwap->volFade);
-	MOT16( &toSwap->MIDI);
-	MOT16( &toSwap->MIDIType);
-	
-	for( x = 0; x < 12; x++)
-	{
-		MOT16( &toSwap->volEnv[ x].pos);
-		MOT16( &toSwap->volEnv[ x].val);
-
-		MOT16( &toSwap->pannEnv[ x].pos);
-		MOT16( &toSwap->pannEnv[ x].val);
-		
-		MOT16( &toSwap->pitchEnv[ x].pos);
-		MOT16( &toSwap->pitchEnv[ x].val);
-	}
-}
-
-void ByteSwapsData(sData *toSwap)
-{
-	MOT32( &toSwap->size);
-	MOT32( &toSwap->loopBeg);
-	MOT32( &toSwap->loopSize);
-	MOT16( &toSwap->c2spd);
-	
-}
-
 void oldFrameButton( DialogPtr theDlg)
 {
 	Rect	iRect;
 	Handle	iHndl;
 	short	iType;
-
+	
 	GetDialogItem (theDlg, 1, &iType, &iHndl, &iRect );
 	
 	if( iHndl == NULL) MyDebugStr( __LINE__, __FILE__, "oldFrameButton itemHandle = NULL");
 	
-/*	PenSize( 3,3 );
-	InsetRect( &iRect, -4,-4);
-	FrameRoundRect( &iRect, 16,16 );
-	PenSize( 1,1 );*/
+	/*	PenSize( 3,3 );
+	 InsetRect( &iRect, -4,-4);
+	 FrameRoundRect( &iRect, 16,16 );
+	 PenSize( 1,1 );*/
 	
 	SetDialogDefaultItem( theDlg, 1);
 }
@@ -293,7 +245,7 @@ pascal Boolean MyDlgFilter( DialogPtr theDlg, EventRecord *theEvt, short *itemHi
 
 void MyUpdateDialog( DialogPtr theDia)
 {
-	GrafPtr		savePort;
+	GrafPtr savePort;
 	
 	GetPort( &savePort);
 	SetPortDialogPort( theDia);
@@ -315,11 +267,11 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 	short		LoopSet;
 	GrafPtr		savePort;
 	DialogPtr	whichDialog;
-
+	
 	WaitNextEvent( everyEvent, myIntEvent, 1, NULL);
 	
 	mainSystemDrag = false;
-
+	
 	dialogModifiers = myIntEvent->modifiers;
 	*itemHit = 0;
 	
@@ -330,7 +282,7 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 			switch( GetWRefCon( GetDialogWindow( theDlg)))
 			{
 				case RefPref:	UpdatePrefWindow( theDlg);				break;
-				
+					
 				default:
 				case 0:		MyUpdateDialog( theDlg);					break;
 				case 96:	MyUpdateDialog( theDlg);					break;
@@ -363,7 +315,7 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 			case 6648:	DeviceFilterMouseDown( myIntEvent);					break;
 			case RefPref: PrefFilterPiano( theDlg, myIntEvent, itemHit);	break;
 			case 3885:	AddRemoveBookmarksFilter( theDlg, myIntEvent, itemHit);	break;				
-
+				
 		}
 		
 		if( thePart == inDrag)
@@ -398,7 +350,7 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 				*itemHit = 1;
 				return true;
 				break;
-			
+				
 			case 0x0d:
 				if( GetWRefCon( GetDialogWindow( theDlg)) != 8775)
 				{
@@ -406,30 +358,30 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 					return true;
 				}
 				break;
-
-				case 0x1b:
-					*itemHit = 2;
-					return true;
-					break;
-
+				
+			case 0x1b:
+				*itemHit = 2;
+				return true;
+				break;
+				
 			default:
 			{
 				DialogSelect( myIntEvent, &whichDialog, itemHit);
 				
 				return false;
 			}
-			break;
+				break;
 		}
 	}
 	else if( myIntEvent->what == nullEvent)
 	{
 		TEHandle	textEdit;
-
+		
 		///////
 		
-	/*	textEdit = GetDialogTextEditHandle( theDlg);
-		if( textEdit) TEIdle( textEdit);*/
-
+		/*	textEdit = GetDialogTextEditHandle( theDlg);
+		 if( textEdit) TEIdle( textEdit);*/
+		
 		//if( aDiaPeek->textH != NULL && aDiaPeek->editField != -1) TEIdle( aDiaPeek->textH);
 		
 		///////
@@ -443,9 +395,9 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 		
 		thePrefs.LoopType = LoopSet;
 		
-/*		GetFrontProcess( &PSN);
-	if( PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
-		PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN) SetFrontProcess( &playerPROPSN);*/
+		/*		GetFrontProcess( &PSN);
+		 if( PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
+		 PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN) SetFrontProcess( &playerPROPSN);*/
 		
 		*itemHit = -5;
 		return( true );
@@ -461,10 +413,11 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 Boolean MyModalDialog( DialogPtr theDlg, short *itemHit)
 {
 	EventRecord		gModalDialogEvent;
-
+	
 	if( MyIntModalDialog( theDlg, itemHit, &gModalDialogEvent) == false)
 	{
-		/*if( IsDialogEvent( &gModalDialogEvent))
+#if 0
+		if( IsDialogEvent( &gModalDialogEvent))
 		{
 			short 		whichItem;
 			DialogPtr	whichDialog;
@@ -473,7 +426,8 @@ Boolean MyModalDialog( DialogPtr theDlg, short *itemHit)
 			{
 				*itemHit = whichItem;
 			}
-		}*/
+		}
+#endif
 	}
 	return true;
 }
@@ -545,14 +499,14 @@ void TurnRadio( short item, DialogPtr dlog, Boolean alors)
 	Handle		itemHandle = NULL;
 	short		itemType = 0;
 	Rect		itemRect = {0,0,0,0};
-
+	
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
-
+	
 	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "TurnRadio itemHandle = NULL");
-
+	
 	if( itemType >= 128) itemType -= 128;
 	if( itemType != 6 && itemType != 5) MyDebugStr( __LINE__, __FILE__, "Error in TurnRadio");
-
+	
 	if( alors)
 	{
 		SetControlValue( (ControlHandle) itemHandle, 1);
@@ -569,11 +523,11 @@ void ControlSwitch(short item, DialogPtr dlog, short Switch)
 	ControlHandle	control;
 	short			itemType;
 	Rect			itemRect;
-
-//	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
-
-//	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "ControlSwitch itemHandle = NULL");
-
+	
+	//GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
+	
+	//if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "ControlSwitch itemHandle = NULL");
+	
 	GetDialogItemAsControl( dlog, item, &control );
 	
 	HiliteControl( control, Switch);
@@ -610,7 +564,7 @@ void MySizeControl( ControlHandle ah, short x, short y)
 void MySizeWindow( DialogPtr dlg, short right, short bottom, Boolean v)
 {
 	Rect	caRect;
-
+	
 	GetPortBounds( GetDialogPort( dlg), &caRect);
 	
 	if( bottom != caRect.bottom || right != caRect.right)
@@ -631,7 +585,7 @@ void SetFKeyMode( Boolean v)
 
 pascal void myTrackAction( ControlHandle theCntl, short ctlPart)
 {
-//	WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+	//WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 	
 	DoGlobalNull();
 }
@@ -647,8 +601,8 @@ Boolean MyTrackControl( ControlHandle	myCtl, Point where, ControlActionUPP funct
 	
 	GlobalToLocal( &myPt);
 	
-	visible = IsControlVisible( myCtl); //(*myCtl)->contrlVis;
-	SetControlVisibility( myCtl, true, false);	//(*myCtl)->contrlVis = 255;
+	visible = IsControlVisible( myCtl);
+	SetControlVisibility( myCtl, true, false);
 	HiliteControl( myCtl, kControlButtonPart);
 	
 	if( function == NULL)
@@ -659,7 +613,6 @@ Boolean MyTrackControl( ControlHandle	myCtl, Point where, ControlActionUPP funct
 		DisposeControlActionUPP( MyControlUPP);
 	}
 	else val = TrackControl( myCtl, myPt, (ControlActionUPP) function);
-	
 	
 	SetControlVisibility( myCtl, visible, false);
 	
@@ -672,15 +625,14 @@ short NewOffscreenBitMap(BitMap *thePixMap, Rect *picRect)
 	char				*offscreenData ;
 	short 				offrowbytes;
 	short				thedepth;
-	unsigned long		memoryRequest ;
+	unsigned long		memoryRequest;
 	
-
 	/* get some memory for our offscreenPixMap^^.baseAddr */
 	thedepth = 1;
-
+	
 	offrowbytes = 1 + (picRect->right-picRect->left)/8;
 	memoryRequest = (long)((picRect->bottom-picRect->top+1)* (long) offrowbytes) + 4;
-
+	
 	offscreenData = MyNewPtr(memoryRequest) ;
 	if (offscreenData == NULL) return -1;
 	
@@ -688,17 +640,17 @@ short NewOffscreenBitMap(BitMap *thePixMap, Rect *picRect)
 	offscreenPixMap.rowBytes = offrowbytes;
 	offscreenPixMap.baseAddr = offscreenData ;
 	*thePixMap = offscreenPixMap;
-
+	
 	return (0);
 }
 
 void ZapBitMap(BitMap *offscreenPixMap)
 {
 	char			*offscreenData ;
-
+	
 	/* Since DisposPixMap doesn't free the data memory we have to
-			dispose the pointer to the data first !! */
-
+	 dispose the pointer to the data first !! */
+	
 	offscreenData = offscreenPixMap->baseAddr; 
 	MyDisposePtr( &offscreenData);
 	offscreenPixMap->baseAddr = NULL;
@@ -770,11 +722,11 @@ void WriteCText (DialogPtr dlog, short item, char *str)
 	Handle	itemHandle;
 	short	itemType, iWidth;
 	Rect	itemRect;
-
+	
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 	
 	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "WriteCText itemHandle = NULL");
-
+	
 	MyC2PStr( str);
 	
 	iWidth = StringWidth( (unsigned char*) str);
@@ -790,7 +742,7 @@ void GetDText (DialogPtr dlog, short item, StringPtr str)
 	Handle	itemHandle;
 	short	itemType;
 	Rect	itemRect;
-
+	
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "Error in SetDText");
 	if( itemType >= 128) itemType -= 128;
@@ -802,11 +754,11 @@ void GetDText (DialogPtr dlog, short item, StringPtr str)
 void OSType2Str( OSType type, Str255 str)
 {
 	short i;
-
+	
 	str[ 0] = 4;
 	MOT32(&type);
 	memcpy( str+1, &type, 4);
-
+	
 	for( i = 4; i > 0; i--)
 	{
 		if( str[ i] == ' ') str[ 0]--;

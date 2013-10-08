@@ -7,44 +7,15 @@
 
 static ScreenDevice *mScreenDevice = NULL;
 
-#if EG_MAC
 #include <Carbon/Carbon.h>
-#endif
 
 
-long		ScreenDevice::sOSDepth				= 32;
-long		ScreenDevice::sMinDepth 			= 16;
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void DoVisualNull();
-void CallVisualFonction( short PlugNo, OSType msg, CGrafPtr port);
-short GetCurrentID( void);
-
-#ifdef __cplusplus
-}
-#endif
-
+long ScreenDevice::sOSDepth		= 32;
+long ScreenDevice::sMinDepth	= 16;
 
 ScreenDevice::ScreenDevice()
 {
 	mContextRef = 0;
-	
-#if USE_DIRECTX
-	HDC hdc = ::GetDC( NULL );
-	sOSDepth = ::GetDeviceCaps( hdc, BITSPIXEL );
-	::ReleaseDC( NULL, hdc );
-	if ( sOSDepth == 24 )
-		sOSDepth = 32;	
-#endif
-	
-#if EG_WIN
-	mDDObj		= NULL;
-	mFS_DC		= NULL;
-#endif
-	
 	
 #if 0
 	GDHandle gDevice = ::GetMainDevice();
@@ -67,17 +38,12 @@ ScreenDevice::~ScreenDevice()
 	ExitFullscreen();
 }
 
-
-
-
 bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth, WindowPtr inWin, long inFreq )
 {
 	bool ok = false;
 	
-	if ((Ptr) DSpStartup == (Ptr) kUnresolvedCFragSymbolAddress) return false;
-	
 	// Check inBitDepth
-	if ( inBitDepth != 8 && inBitDepth != 16 && inBitDepth != 32 )
+	if ( /* inBitDepth != 8 && */ inBitDepth != 16 && inBitDepth != 32 )
 		inBitDepth = sOSDepth;
 	if ( inBitDepth < sMinDepth )
 		inBitDepth = sMinDepth;
@@ -159,7 +125,6 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 	
 	err = ::DSpStartup();
 	
-	
 	if ( ! err ) {
 		err = ::DSpGetFirstContext( inDispID, &ref );
 		
@@ -227,80 +192,15 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 			else {
 				ok = true;
 				
-#pragma unused( inWin )
-#if 0
-				// Make the window cover the device
-				::MoveWindow( inWin, 0, 0, true );
-				::SizeWindow( inWin, ioSize.h, ioSize.v, true ); 
-				::ShowWindow( inWin );
-				
-				// Setup the window as the main grafport
-				mFS_DC = inWin;
-#endif
 				mFS_DC = NULL;
 			}
 		}
 	}
 	
-	
-#elif USE_DIRECTX
-#pragma unused( inFreq )
-	
-	if ( inWin ) {
-		HRESULT err = ::DirectDrawCreate( NULL, &mDDObj, NULL );
-		if ( err == DD_OK ) {
-			LPDIRECTDRAWSURFACE context;
-			
-			err = mDDObj -> SetCooperativeLevel( inWin, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN );
-			if ( err == DD_OK ) {
-				err = mDDObj -> SetDisplayMode( ioSize.h, ioSize.v, inBitDepth );
-				if ( err == DD_OK ) {
-					mDDObj -> Compact();
-					DDSURFACEDESC ddsd;
-					ddsd.dwSize = sizeof(ddsd);
-					ddsd.dwFlags = DDSD_CAPS;
-					ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
-					err = mDDObj -> CreateSurface( &ddsd, &context, NULL);
-				}
-			}
-			
-			if ( err == DD_OK ) {
-				mContextRef = context;
-				::SetWindowPos( inWin, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
-				::SetForegroundWindow( inWin );
-				::SetCapture( inWin );
-				mFS_Win = inWin;
-				
-				PALETTEENTRY pal[ 256 ];
-				for ( int j = 0; j < 256; j++ ) {
-					pal[ j ].peRed = j;
-					pal[ j ].peGreen = j;
-					pal[ j ].peBlue = j;
-					pal[ j ].peFlags = 0;
-				}
-				mDDObj -> CreatePalette( DDPCAPS_8BIT, pal, &mFS_Palette, NULL );
-				mContextRef -> SetPalette( mFS_Palette );
-				ok = true; }
-			else {
-				mDDObj -> Release();
-				mDDObj = NULL;
-			}
-		}
-	}
-	
-	
-#else
-#pragma unused( ioSize, inWin, inFreq )
 #endif
 	
-	if ( ok ) {
-#if EG_MAC
+	if ( ok )
 		::HideCursor();
-#elif EG_WIN
-		::SetCursor( ::LoadCursor( NULL, IDC_ARROW ) );
-		while ( ::ShowCursor( false ) >= 0 ) { }
-#endif
-	}
 	else
 		mContextRef = 0;
 	
@@ -340,25 +240,6 @@ void ScreenDevice::ExitFullscreen()
 	::InitCursor();
 #endif
 	
-	
-#if USE_DIRECTX
-	if ( mFS_DC ) {
-		mContextRef -> ReleaseDC( mFS_DC );
-		mFS_DC = NULL;
-	}	
-	if ( mContextRef ) {
-		mContextRef -> Release();
-		mContextRef = 0;
-	}
-	if ( mDDObj ) {
-		mDDObj -> SetCooperativeLevel( mFS_Win, DDSCL_NORMAL );
-		mDDObj -> Release();
-		mDDObj = NULL;
-	}
-	::ReleaseCapture();
-	while ( ::ShowCursor( true ) < 0 ) { }
-#endif
-	
 	mContextRef = NULL;
 	mFS_DC = NULL;
 }
@@ -369,15 +250,6 @@ void ScreenDevice::SetPalette( PixPalEntry inPal[ 256 ] )
 	if ( mBitDepth != 8 || ! IsFullscreen() )
 		return;
 	
-#if USE_DIRECTX
-	PALETTEENTRY pal[ 256 ];
-	for ( int i = 0; i < 256; i++ ) {
-		* ( (long*) &pal[ i ] ) = inPal[ i ].rgbRed | ( inPal[ i ].rgbGreen << 8 )| ( inPal[ i ].rgbBlue << 16 ) | ( PC_RESERVED << 24 );
-	}
-	mFS_Palette -> SetEntries( 0, 0, 256, pal );
-#endif
-	
-	
 #if EG_MAC
 	::SetEntries( 0, 255, inPal );
 #endif
@@ -386,9 +258,7 @@ void ScreenDevice::SetPalette( PixPalEntry inPal[ 256 ] )
 	
 GrafPtr ScreenDevice::BeginFrame()
 {
-	
 	if ( IsFullscreen() ) {
-		
 #if USE_DRAW_SPROCKETS
 		OSErr err;
 		//	err = ::DSpContext_GetBackBuffer( mContextRef, kDSpBufferKind_Normal, (CGrafPtr*) &mFS_DC );
@@ -408,10 +278,6 @@ GrafPtr ScreenDevice::BeginFrame()
 #endif
 		
 		
-#if USE_DIRECTX
-		if ( mContextRef -> GetDC( &mFS_DC ) != DD_OK )
-			mFS_DC = NULL;
-#endif
 		
 	}
 	
@@ -427,18 +293,11 @@ void ScreenDevice::EndFrame()
 		mFS_DC = NULL;
 #endif 
 		
-#if USE_DIRECTX
-		if ( mFS_DC ) {
-			mContextRef -> ReleaseDC( mFS_DC );
-			mFS_DC = NULL;
-		}
-#endif
 	}
 }
 
 long ScreenDevice::GetDisplayID( long inDeviceNum )
 {
-#if EG_MAC
 	OSStatus			err;
 	DisplayIDType		id = 0;
 	GDHandle theGDevice = ::DMGetFirstScreenDevice( false );
@@ -454,17 +313,10 @@ long ScreenDevice::GetDisplayID( long inDeviceNum )
 	err = ::DMGetDisplayIDByGDevice( theGDevice, &id, false );
 	
 	return ( err ) ? 0 : id;
-#endif
-	
-#if EG_WIN
-	//#pragma unused( inX, inY )
-	return 0;
-#endif
 }
 
 long ScreenDevice::GetDisplayID( long inX, long inY )
 {
-#if EG_MAC
 	OSStatus			err;
 	DisplayIDType		id = 0;
 	Point				inPt;
@@ -501,19 +353,13 @@ long ScreenDevice::GetDisplayID( long inX, long inY )
 	 err = ::DSpContext_GetDisplayID( ref, &id );
 	 */
 	return ( err ) ? 0 : id;
-#endif
-	
-#if EG_WIN
-#pragma unused( inX, inY )
-	return 0;
-#endif
 }
 
 #pragma mark C-based functions
 
 Boolean EnterFullscreen( long inDispID, Point ioSize, int inBitDepth, WindowPtr inWin, long inFreq )
 {
-	if (mScreenDevice == NULL)
+	if ((void*)mScreenDevice == NULL)
 		mScreenDevice = new ScreenDevice();
 	return mScreenDevice->EnterFullscreen(inDispID, ioSize, inBitDepth, inWin, inFreq);
 }
@@ -530,12 +376,11 @@ void EndFrame()
 
 void ExitFullscreen()
 {
-	mScreenDevice->ExitFullscreen();
 	delete mScreenDevice;
 	mScreenDevice = NULL;
 }
 
 long GetDisplayID( long inDeviceNum )
 {
-	return mScreenDevice->GetDisplayID(inDeviceNum);
+	return ScreenDevice::GetDisplayID(inDeviceNum);
 }
