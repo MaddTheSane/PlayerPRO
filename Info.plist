@@ -168,8 +168,6 @@
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>Binary</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
