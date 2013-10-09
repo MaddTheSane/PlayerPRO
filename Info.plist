@@ -388,28 +388,6 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>it</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>IT</string>
-			<key>CFBundleTypeName</key>
-			<string>PPITFile</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>IT  </string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>net.sourceforge.playerpro.it</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
 				<string>669</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -523,7 +501,7 @@
 	<key>LSMinimumSystemVersionByArchitecture</key>
 	<dict>
 		<key>i386</key>
-		<string>10.4.0</string>
+		<string>10.5.0</string>
 		<key>ppc</key>
 		<string>10.3.9</string>
 	</dict>

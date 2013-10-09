@@ -384,3 +384,9 @@ long GetDisplayID( long inDeviceNum )
 {
 	return ScreenDevice::GetDisplayID(inDeviceNum);
 }
+
+long GetDisplayIDWithXandY(long inX, long inY)
+{
+	return ScreenDevice::GetDisplayID(inX,inY);
+}
+

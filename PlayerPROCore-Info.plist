@@ -9,11 +9,29 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>xm</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>PPXMFile</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>XM  </string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.xm</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>mod</string>
 				<string>strk</string>
 			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>MOD</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
 				<string>audio/mod</string>
@@ -27,7 +45,7 @@
 				<string>STrk</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.mod</string>
@@ -40,8 +58,6 @@
 			<array>
 				<string>mtm</string>
 			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>MTM</string>
 			<key>CFBundleTypeName</key>
 			<string>PPMTMFile</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -49,7 +65,7 @@
 				<string>MTM </string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.mtm</string>
@@ -62,8 +78,6 @@
 			<array>
 				<string>s3m</string>
 			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>S3M</string>
 			<key>CFBundleTypeName</key>
 			<string>PPS3MFile</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -71,10 +85,30 @@
 				<string>S3M </string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.s3m</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>mad</string>
+			</array>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>audio/x-mad</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>PPMADFile</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.quadmation.playerpro.mad</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -88,8 +122,6 @@
 			<array>
 				<string>audio/x-mad</string>
 			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>MAD</string>
 			<key>CFBundleTypeName</key>
 			<string>PPMADIFile</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -97,7 +129,7 @@
 				<string>MADI</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madi</string>
@@ -111,8 +143,6 @@
 				<string>madg</string>
 				<string>madf</string>
 			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>MAD</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
 				<string>audio/x-mad</string>
@@ -125,7 +155,7 @@
 				<string>MADF</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madfg</string>
@@ -138,8 +168,6 @@
 			<array>
 				<string>madh</string>
 			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>MAD</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
 				<string>audio/x-mad</string>
@@ -151,7 +179,7 @@
 				<string>MADH</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madh</string>
@@ -164,8 +192,6 @@
 			<array>
 				<string>madk</string>
 			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>MAD</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
 				<string>audio/x-mad</string>
@@ -184,6 +210,103 @@
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>it</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>PPITFile</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>IT  </string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.it</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>669</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>PP669File</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>6669</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.669</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>s3m</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>PPS3MFile</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>S3M </string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.s3m</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>okt</string>
+				<string>okta</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>PPOKTAFile</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>OKTA</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.okta</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>ppimpexp</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>PPImpExpBundle</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.ppimpexp</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<true/>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
@@ -261,13 +384,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>PPMADHFile</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>com.quadmation.playerpro.mad</string>
 				<string>public.data</string>
 			</array>
+			<key>UTTypeDescription</key>
+			<string>PPMADHFile</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madh</string>
 			<key>UTTypeTagSpecification</key>
@@ -283,13 +406,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>PPMADFGFile</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>com.quadmation.playerpro.mad</string>
 				<string>public.data</string>
 			</array>
+			<key>UTTypeDescription</key>
+			<string>PPMADFGFile</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madfg</string>
 			<key>UTTypeTagSpecification</key>
@@ -307,13 +430,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>PPMADIFile</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>com.quadmation.playerpro.mad</string>
 				<string>public.data</string>
 			</array>
+			<key>UTTypeDescription</key>
+			<string>PPMADIFile</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madi</string>
 			<key>UTTypeTagSpecification</key>
@@ -383,15 +506,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>PPMODFile</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
-			<key>UTTypeIconFile</key>
-			<string>MOD</string>
+			<key>UTTypeDescription</key>
+			<string>PPMODFile</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.mod</string>
 			<key>UTTypeTagSpecification</key>
@@ -414,15 +535,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>PP669File</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
-			<key>UTTypeIconFile</key>
-			<string>669</string>
+			<key>UTTypeDescription</key>
+			<string>PP669File</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.669</string>
 			<key>UTTypeTagSpecification</key>
@@ -438,15 +557,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>PPAMFFile</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
-			<key>UTTypeIconFile</key>
-			<string>AMF</string>
+			<key>UTTypeDescription</key>
+			<string>PPAMFFile</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.amf</string>
 			<key>UTTypeTagSpecification</key>
@@ -462,15 +579,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>PPITFile</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
-			<key>UTTypeIconFile</key>
-			<string>IT</string>
+			<key>UTTypeDescription</key>
+			<string>PPITFile</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.it</string>
 			<key>UTTypeTagSpecification</key>
@@ -486,15 +601,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>PPMTMFile</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
-			<key>UTTypeIconFile</key>
-			<string>MTM</string>
+			<key>UTTypeDescription</key>
+			<string>PPMTMFile</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.mtm</string>
 			<key>UTTypeTagSpecification</key>
@@ -510,15 +623,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>OKTA Tracker</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
-			<key>UTTypeIconFile</key>
-			<string>OKTA</string>
+			<key>UTTypeDescription</key>
+			<string>OKTA Tracker</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.okta</string>
 			<key>UTTypeTagSpecification</key>
@@ -535,15 +646,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>PPS3MFile</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
-			<key>UTTypeIconFile</key>
-			<string>S3M</string>
+			<key>UTTypeDescription</key>
+			<string>PPS3MFile</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.s3m</string>
 			<key>UTTypeTagSpecification</key>
@@ -559,15 +668,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>PPULTFile</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
-			<key>UTTypeIconFile</key>
-			<string>ULT</string>
+			<key>UTTypeDescription</key>
+			<string>PPULTFile</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.ult</string>
 			<key>UTTypeTagSpecification</key>
@@ -583,15 +690,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>PPXMFile</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 			</array>
-			<key>UTTypeIconFile</key>
-			<string>XM</string>
+			<key>UTTypeDescription</key>
+			<string>PPXMFile</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.xm</string>
 			<key>UTTypeTagSpecification</key>

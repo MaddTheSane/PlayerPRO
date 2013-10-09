@@ -5,13 +5,13 @@
 extern "C" {
 #endif
 
-Boolean EnterFullscreen( long inDispID, Point *ioSize, int inBitDepth, WindowPtr inWin, long inFreq );
-GrafPtr BeginFrame();
-void EndFrame();
-void ExitFullscreen();
-long GetDisplayID( long inDeviceNum );
-	
-void DoFullScreenNow( WindowPtr mWind);
+Boolean	EnterFullscreen( long inDispID, Point *ioSize, int inBitDepth, WindowPtr inWin, long inFreq );
+GrafPtr	BeginFrame();
+void	EndFrame();
+void	ExitFullscreen();
+long	GetDisplayID( long inDeviceNum );
+long	GetDisplayIDWithXandY( long inX, long inY );
+void	DoFullScreenNow( WindowPtr mWind);
 
 
 #ifdef __cplusplus
