@@ -376,6 +376,95 @@
 			<key>LSTypeIsPackage</key>
 			<true/>
 		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>it</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>IT</string>
+			<key>CFBundleTypeName</key>
+			<string>PPITFile</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>IT  </string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.it</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>669</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>669</string>
+			<key>CFBundleTypeName</key>
+			<string>PP669File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.669</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>6669</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>s3m</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>S3M</string>
+			<key>CFBundleTypeName</key>
+			<string>PPS3MFile</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>S3M </string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.s3m</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>okt</string>
+				<string>okta</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>OKTA</string>
+			<key>CFBundleTypeName</key>
+			<string>PPOKTAFile</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>OKTA</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.okta</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
