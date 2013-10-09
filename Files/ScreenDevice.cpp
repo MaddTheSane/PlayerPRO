@@ -357,7 +357,7 @@ long ScreenDevice::GetDisplayID( long inX, long inY )
 
 #pragma mark C-based functions
 
-Boolean EnterFullscreen( long inDispID, Point ioSize, int inBitDepth, WindowPtr inWin, long inFreq )
+Boolean EnterFullscreen( long inDispID, Point *ioSize, int inBitDepth, WindowPtr inWin, long inFreq )
 {
 	if ((void*)mScreenDevice == NULL)
 		mScreenDevice = new ScreenDevice();

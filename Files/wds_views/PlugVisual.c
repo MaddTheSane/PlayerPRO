@@ -51,10 +51,6 @@ Ptr GetAudioChannel( Boolean LeftChannel, long Size);
 Ptr MakeCalculusSpectrum( Ptr srcPtr, Boolean logScale);
 void ProcessVisualPlug( MADDriverRec *intDriver, short* in, long inNum);
 void DoFullScreenNow( WindowPtr mWind);
-Boolean EnterFullscreen( long inDispID, Point ioSize, int inBitDepth, WindowPtr inWin, long inFreq );
-GrafPtr BeginFrame();
-void EndFrame();
-void ExitFullscreen();
 OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
 
 //#if MACOS9VERSION
@@ -72,7 +68,7 @@ void DoFullScreenNow( WindowPtr mWind)
 	mFullscreenDevice	= 0;
 	mFullscreenFreq		= 0;
 	
-	success = EnterFullscreen( GetDisplayID( mFullscreenDevice ), mFullscreenSize, mFullscreenDepth, mWind, mFullscreenFreq );
+	success = EnterFullscreen( GetDisplayID( mFullscreenDevice ), &mFullscreenSize, mFullscreenDepth, mWind, mFullscreenFreq );
 	
 	if( success)
 	{
