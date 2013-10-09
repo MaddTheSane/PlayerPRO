@@ -2425,11 +2425,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5578C48217D9E8560057D11B /* Cocoa.framework in Frameworks */,
-				5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */,
-				5578C4CE17DA6D0E0057D11B /* QTKit.framework in Frameworks */,
 				5578C4CF17DA6D2C0057D11B /* CoreFoundation.framework in Frameworks */,
+				5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */,
+				5578C48217D9E8560057D11B /* Cocoa.framework in Frameworks */,
 				5578C4FC17DB8A2F0057D11B /* PlayerPROKit.framework in Frameworks */,
+				5578C4CE17DA6D0E0057D11B /* QTKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2757,11 +2757,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5578C4F817DAB2830057D11B /* PlayerPROKit.framework in Frameworks */,
-				557C758516A3455E00923755 /* QTKit.framework in Frameworks */,
-				55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */,
 				55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */,
 				55105C9C13BE638D00902106 /* PlayerPROCore.framework in Frameworks */,
+				55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */,
+				5578C4F817DAB2830057D11B /* PlayerPROKit.framework in Frameworks */,
+				557C758516A3455E00923755 /* QTKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
