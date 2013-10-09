@@ -140,7 +140,7 @@ void SetStaffControl()
 {
 	short	tt;
 	Rect	caRect;
-
+	
 	// XScroll
 	
 	if( xScroll != 0)
@@ -171,13 +171,13 @@ void SetStaffControl()
 		
 		tt = curMusic->header->numChn  - ((caRect.bottom - 14) - StaffRect.top) / YSize;	if( tt < 0) tt = 0;
 		SetControlMaximum( yScroll, tt);
-
+		
 		if( gUseControlSize) SetControlViewSize( yScroll, ((caRect.bottom - 14) - StaffRect.top) / YSize);
 	}
 	
-	SetMaxWindow( 	StaffRect.left + curMusic->partition[ CurrentPat]->header.size*XSize + 14,
-					StaffRect.top + curMusic->header->numChn*YSize + 15,
-					StaffDlog);
+	SetMaxWindow(StaffRect.left + curMusic->partition[ CurrentPat]->header.size*XSize + 14,
+				 StaffRect.top + curMusic->header->numChn*YSize + 15,
+				 StaffDlog);
 }
 
 void CreateCurStaffRect()
@@ -185,7 +185,7 @@ void CreateCurStaffRect()
 	Rect	caRect;
 	
 	GetPortBounds( GetDialogPort( StaffDlog), &caRect);
-
+	
 	StaffRect.right = caRect.right - 15;
 	StaffRect.bottom = caRect.bottom - 15;
 	
@@ -219,7 +219,7 @@ void ConvertPt2Note( Point pt, short *position, short *track, short *note)
 	ptv   = pt.v + GetControlValue( yScroll)*YSize;
 	pt.v /= YSize;
 	pt.v += GetControlValue( yScroll);
-		
+	
 	if( pt.v < 0) pt.v = 0;
 	else if( pt.v >= curMusic->header->numChn) pt.v = curMusic->header->numChn - 1;
 	
@@ -270,10 +270,10 @@ void DrawNoteCarre( Point *myPt)
 	Handle	iHandle;
 	Rect	iRect;
 	Str255	str;
-
+	
 	GetDialogItem( StaffDlog, 12, &iType, &iHandle, &iRect);
 	iRect.right--;	iRect.top++;
-
+	
 	if( myPt == NULL)
 	{
 		TETextBox( curDisplayedNote+1, curDisplayedNote[ 0], &iRect, teCenter);
@@ -299,9 +299,9 @@ void DoNullStaff(void)
 	Point		myPt;
  	Rect		caRect, tempRect;
  	Boolean		MakeUpdate = false;
- 
+	
  	if( StaffDlog == NULL) return;
- 
+	
  	GetPort( &SavePort);
  	SetPortDialogPort( StaffDlog);
 	
@@ -334,7 +334,7 @@ void DoNullStaff(void)
 		{
 			PatternSizeCopy = curMusic->partition[ CurrentPat]->header.size;
 			
-		//	GetPortBounds( GetDialogPort( StaffDlog), &caRect);
+			//	GetPortBounds( GetDialogPort( StaffDlog), &caRect);
 			
 			SetStaffControl();
 		}
@@ -383,13 +383,13 @@ void DoNullStaff(void)
 			{
 				DrawNoteCarre( &myPt);
 				
-			/*	temp = (myPt.v - StaffRect.top) / YSize;
-			//	temp = (myPt.v - StaffRect.top) - YSize*temp;
-				if( (myPt.v - StaffRect.top) - YSize*temp == YSize)
-				{
-					SetCursor( &HandCrsr);
-				}
-				else*/
+				/*	temp = (myPt.v - StaffRect.top) / YSize;
+				 //	temp = (myPt.v - StaffRect.top) - YSize*temp;
+				 if( (myPt.v - StaffRect.top) - YSize*temp == YSize)
+				 {
+				 SetCursor( &HandCrsr);
+				 }
+				 else*/
 				{
 					GetKeys( km);
 					if( IsPressed( 0x37) && PtInRect( myPt, &CurRect))	// On joue la note = PlayCrsr
@@ -401,13 +401,13 @@ void DoNullStaff(void)
 						switch( mode)
 						{
 							case noteM:
-								if( aNoteStaff( myPt, NULL)) SetCursor( &HandCrsr);
-								else SetCursor( &NoteCrsr);
+							if( aNoteStaff( myPt, NULL)) SetCursor( &HandCrsr);
+							else SetCursor( &NoteCrsr);
 							break;
 							
 							case selecM:
-								if( PtInRect( myPt, &CurRect)) SetCursor( &HandCrsr);
-								else SetCursor( &beamCrsr);
+							if( PtInRect( myPt, &CurRect)) SetCursor( &HandCrsr);
+							else SetCursor( &beamCrsr);
 							break;
 						}
 					}
@@ -460,7 +460,7 @@ void DoGrowStaff(void)
 	Handle		itemHandle;
 	short		itemType;
 	BitMap		screenBits;
-
+	
 	GetPort( &SavePort);
  	SetPortDialogPort( StaffDlog);
 	
@@ -601,7 +601,7 @@ void EraseStaffReader()
 
 void DrawStaffFrame()
 {
-	short			i, x, itemType, temp, add;
+	short			i, x, itemType, temp, add = 0;
 	Rect			fRect;
 	Handle			itemHandle;
 	char			String[ 200];
@@ -2983,10 +2983,10 @@ void PasteCmdStaff( Pcmd *myPcmd)
 	{
 		for( x = 0; x < myPcmd->tracks; x++)
 		{
-			if( startXSelec + i >= 0 &&
-				startXSelec + i < curMusic->partition[ CurrentPat]->header.size &&
-				startYSelec + x >= 0 &&
-				startYSelec + x < curMusic->header->numChn)
+			if(startXSelec + i >= 0 &&
+			   startXSelec + i < curMusic->partition[ CurrentPat]->header.size &&
+			   startYSelec + x >= 0 &&
+			   startYSelec + x < curMusic->header->numChn)
 			{
 				cmd = GetMADCommand( startXSelec + i, startYSelec + x, curMusic->partition[ CurrentPat]);
 				cmd2 = GetCmd( i, x, myPcmd);
@@ -2999,7 +2999,7 @@ void PasteCmdStaff( Pcmd *myPcmd)
 					{
 						case noteM:
 							cmd->note = DropNote;
-						break;
+							break;
 					}
 				}
 				UPDATE_NoteBOUCLE( startXSelec + i, startYSelec + x);
@@ -3009,7 +3009,7 @@ void PasteCmdStaff( Pcmd *myPcmd)
 	
 	UPDATE_NoteFINISH();
 	
-	if( startXSelec < 0) startXSelec = 0;		
+	if( startXSelec < 0) startXSelec = 0;
 	if( endXSelec >= curMusic->partition[ CurrentPat]->header.size) endXSelec = curMusic->partition[ CurrentPat]->header.size-1;
 	
 	if( startYSelec < 0) startYSelec = 0;
@@ -3033,7 +3033,7 @@ void COPYStaff(void)
 	
  	GetPort( &SavePort);
  	SetPortDialogPort( StaffDlog);
-
+	
 	myPcmd = CreatePcmdFromSelectionStaff();
 	if( myPcmd == NULL)
 	{
@@ -3042,7 +3042,6 @@ void COPYStaff(void)
 		return;
 	}
 	
-
 	anErr = ClearCurrentScrap();
 	anErr = GetCurrentScrap( &scrap);
 	anErr = PutScrapFlavor( scrap, 'Pcmd', 0, GetPtrSize( (Ptr) myPcmd), (Ptr) myPcmd);

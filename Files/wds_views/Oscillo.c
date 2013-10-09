@@ -139,7 +139,6 @@ void GetWorkingZone( Rect	*myRect)
 	myRect->right = caRect.right - 15;
 	myRect->top = OsciVStart;
 	myRect->bottom = caRect.bottom - 15;
-
 }
 
 void AdjustZoomOscillo2( Rect	*vRect)

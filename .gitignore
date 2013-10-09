@@ -3,3 +3,5 @@ build
 *.mode1
 *.mode1*
 *.pbxuser
+*/project.xcworkspace
+*/xcuserdata

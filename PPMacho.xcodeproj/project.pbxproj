@@ -1571,6 +1571,7 @@
 		55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		55EE8EBF100404EB00E75E63 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		55EE8EC0100404EB00E75E63 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
+		55F03E7F1804FAA30043C72C /* OldCarbHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = OldCarbHeaders.h; sourceTree = "<group>"; };
 		55F48ABC17E25F6800DB4584 /* Wave.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Wave.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F48B0E17E25F6800DB4584 /* Wave-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Wave-Info.plist"; path = "../../../Wave-Info.plist"; sourceTree = "<group>"; };
 		55F7DB8017FCD34700338025 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; path = README; sourceTree = "<group>"; };
@@ -3233,6 +3234,7 @@
 		88E0C4740C2F21E400D6C081 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				55F03E7F1804FAA30043C72C /* OldCarbHeaders.h */,
 				552C70C910CDB46100C0E0D4 /* Proto */,
 				88E0C4770C2F21E400D6C081 /* PlayerHeaders.c */,
 				88E0C4790C2F21E400D6C081 /* Shuddup.h */,
@@ -6503,7 +6505,10 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_MODEL_TUNING = G4;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = OldCarbHeaders.h;
 				GCC_VERSION = 4.2;
 				"GCC_VERSION[sdk=macosx*][arch=ppc]" = 4.0;
 				"GCC_VERSION[sdk=macosx10.3.9][arch=ppc]" = 3.3;
@@ -6525,7 +6530,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				EXPORTED_SYMBOLS_FILE = Files/FileUtils.exp;
-				GCC_CHAR_IS_UNSIGNED_CHAR = NO;
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7557,8 +7561,11 @@
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_MODEL_TUNING = G4;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = OldCarbHeaders.h;
 				GCC_VERSION = 4.2;
 				"GCC_VERSION[sdk=macosx*][arch=ppc]" = 4.0;
 				"GCC_VERSION[sdk=macosx10.3.9][arch=ppc]" = 3.3;
@@ -7694,6 +7701,970 @@
 			};
 			name = Debug;
 		};
+		55F03E4A1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = OldCarbHeaders.h;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_PKGINFO_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx;
+				STRIP_INSTALLED_PRODUCT = NO;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E4B1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				EXPORTED_SYMBOLS_FILE = Files/FileUtils.exp;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_SYMBOL_SEPARATION = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "(Proto)/Proto.c";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG_MODE,
+					USE_DRAW_SPROCKETS,
+					MAINPLAYERPRO,
+				);
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-multiply_defined",
+					warning,
+				);
+				PRODUCT_NAME = PlayerPRO;
+				REZ_SCRIPT_TYPE = Roman;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E4C1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "PlayerPRO Example";
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E4D1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "Game Example-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				PRODUCT_NAME = "Game Example";
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E4E1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "AutoExec-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				PRODUCT_NAME = AutoExec;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E4F1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 5.10;
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				PRODUCT_NAME = PlayerPROCore;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E501804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Import-export";
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E511804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MOD;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E521804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = 669;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E531804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = AMF;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E541804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = DMF;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E551804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "IT-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = IT;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E561804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = MADfg;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E571804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = MADH;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E581804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = MADI;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E591804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = MED;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E5A1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = MTM;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E5B1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = Okta;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E5C1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = S3M;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E5D1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = ULT;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E5E1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = UMX;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E5F1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = XM;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E601804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = MIDI;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E611804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = APPL;
+				WRAPPER_EXTENSION = ppimpexp;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E621804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Digital Plugs";
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E631804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Complex Fade-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = "Complex Fade";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E641804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Fade Note-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = "Fade Note";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E651804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Fade Volume-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = "Fade Volume";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E661804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Note Translate-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = "Note Translate";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E671804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Propagate-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Propagate;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E681804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Revert-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Revert;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E691804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Instrument Plugs";
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E6A1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+				);
+				INFOPLIST_FILE = "XI-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = XI;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E6B1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+				);
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = MINs;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E6C1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+				);
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = PAT;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E6D1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+				);
+				INFOPLIST_FILE = "Wave-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Wave;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E6E1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "QuickTime-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = QuickTime;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E6F1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Filters Plugs";
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E701804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Amplitude-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Amplitude;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E711804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Backwards-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Backwards;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E721804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Crop-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Crop;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E731804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "CrossFade-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = CrossFade;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E741804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Depth-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Depth;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E751804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Echo-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Echo;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E761804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "Fade-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Fade;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E771804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Invert;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E781804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Length;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E791804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Mix;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E7A1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Normalize;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E7B1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = "Sampling Rate";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E7C1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Silence;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E7D1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Smooth;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
+		55F03E7E1804F9700043C72C /* Recent OS-debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ISUSINGPPPLUG;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = "Tone Generator";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Recent OS-debug";
+		};
 		55F4762917FD4FB20082C85D /* Recent OS */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -7704,7 +8675,9 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_MODEL_TUNING = G4;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = OldCarbHeaders.h;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
@@ -7714,7 +8687,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PREBINDING = NO;
 				SDKROOT = macosx;
-				WARNING_CFLAGS = "-Wall";
 			};
 			name = "Recent OS";
 		};
@@ -7723,7 +8695,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				EXPORTED_SYMBOLS_FILE = Files/FileUtils.exp;
-				GCC_CHAR_IS_UNSIGNED_CHAR = NO;
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -8617,6 +9588,7 @@
 				550BFF1410BA017A004FC5D7 /* Release */,
 				55F4762C17FD4FB20082C85D /* Recent OS */,
 				550BFF1510BA017A004FC5D7 /* Debug */,
+				55F03E4D1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8627,6 +9599,7 @@
 				55151F7E10DEDBDB0054ABC4 /* Release */,
 				55F4764917FD4FB20082C85D /* Recent OS */,
 				55151F7F10DEDBDB0054ABC4 /* Debug */,
+				55F03E6A1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8637,6 +9610,7 @@
 				55151F7010DEDBD80054ABC4 /* Release */,
 				55F4764817FD4FB20082C85D /* Recent OS */,
 				55151F7110DEDBD80054ABC4 /* Debug */,
+				55F03E691804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8647,6 +9621,7 @@
 				5518107510C35A4600ADA9F4 /* Release */,
 				55F4762B17FD4FB20082C85D /* Recent OS */,
 				5518107610C35A4600ADA9F4 /* Debug */,
+				55F03E4C1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8657,6 +9632,7 @@
 				551FEA6910E727AD00EDF2F1 /* Release */,
 				55F4764A17FD4FB20082C85D /* Recent OS */,
 				551FEA6A10E727AD00EDF2F1 /* Debug */,
+				55F03E6B1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8667,6 +9643,7 @@
 				551FEAD810E727B100EDF2F1 /* Release */,
 				55F4764B17FD4FB20082C85D /* Recent OS */,
 				551FEAD910E727B100EDF2F1 /* Debug */,
+				55F03E6C1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8677,6 +9654,7 @@
 				551FECC810E7354B00EDF2F1 /* Release */,
 				55F4762D17FD4FB20082C85D /* Recent OS */,
 				551FECC910E7354B00EDF2F1 /* Debug */,
+				55F03E4E1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8687,6 +9665,7 @@
 				5533410A10BB5460005208D1 /* Release */,
 				55F4762F17FD4FB20082C85D /* Recent OS */,
 				5533410B10BB5460005208D1 /* Debug */,
+				55F03E501804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8697,6 +9676,7 @@
 				5533411410BB547D005208D1 /* Release */,
 				55F4763017FD4FB20082C85D /* Recent OS */,
 				5533411510BB547D005208D1 /* Debug */,
+				55F03E511804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8707,6 +9687,7 @@
 				5533415010BB572C005208D1 /* Release */,
 				55F4763117FD4FB20082C85D /* Recent OS */,
 				5533415110BB572C005208D1 /* Debug */,
+				55F03E521804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8717,6 +9698,7 @@
 				553341D010BB5FE0005208D1 /* Release */,
 				55F4763217FD4FB20082C85D /* Recent OS */,
 				553341D110BB5FE0005208D1 /* Debug */,
+				55F03E531804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8727,6 +9709,7 @@
 				553341E610BB5FFA005208D1 /* Release */,
 				55F4763317FD4FB20082C85D /* Recent OS */,
 				553341E710BB5FFA005208D1 /* Debug */,
+				55F03E541804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8737,6 +9720,7 @@
 				553341F910BB600A005208D1 /* Release */,
 				55F4763417FD4FB20082C85D /* Recent OS */,
 				553341FA10BB600A005208D1 /* Debug */,
+				55F03E551804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8747,6 +9731,7 @@
 				554E110310D6F09F00BB619C /* Release */,
 				55F4764317FD4FB20082C85D /* Recent OS */,
 				554E110410D6F09F00BB619C /* Debug */,
+				55F03E641804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8757,6 +9742,7 @@
 				554E114A10D6F1BF00BB619C /* Release */,
 				55F4764417FD4FB20082C85D /* Recent OS */,
 				554E114B10D6F1BF00BB619C /* Debug */,
+				55F03E651804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8767,6 +9753,7 @@
 				554E11B710D6F32900BB619C /* Release */,
 				55F4764517FD4FB20082C85D /* Recent OS */,
 				554E11B810D6F32900BB619C /* Debug */,
+				55F03E661804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8777,6 +9764,7 @@
 				554E11FB10D6F3E100BB619C /* Release */,
 				55F4764617FD4FB20082C85D /* Recent OS */,
 				554E11FC10D6F3E100BB619C /* Debug */,
+				55F03E671804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8787,6 +9775,7 @@
 				554E122E10D6F3E600BB619C /* Release */,
 				55F4764717FD4FB20082C85D /* Recent OS */,
 				554E122F10D6F3E600BB619C /* Debug */,
+				55F03E681804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8797,6 +9786,7 @@
 				5573A34210B50D2900FF8B50 /* Release */,
 				55F4762E17FD4FB20082C85D /* Recent OS */,
 				5573A34310B50D2900FF8B50 /* Debug */,
+				55F03E4F1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8807,6 +9797,7 @@
 				557DE43210E06BF200177B4C /* Release */,
 				55F4764F17FD4FB20082C85D /* Recent OS */,
 				557DE43310E06BF200177B4C /* Debug */,
+				55F03E701804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8817,6 +9808,7 @@
 				557DE3EF10E06BB500177B4C /* Release */,
 				55F4764E17FD4FB20082C85D /* Recent OS */,
 				557DE3F010E06BB500177B4C /* Debug */,
+				55F03E6F1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8827,6 +9819,7 @@
 				557DE5DD10E0882800177B4C /* Release */,
 				55F4765017FD4FB20082C85D /* Recent OS */,
 				557DE5DE10E0882800177B4C /* Debug */,
+				55F03E711804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8837,6 +9830,7 @@
 				557DE62010E0884100177B4C /* Release */,
 				55F4765117FD4FB20082C85D /* Recent OS */,
 				557DE62110E0884100177B4C /* Debug */,
+				55F03E721804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8847,6 +9841,7 @@
 				557DE66110E0885C00177B4C /* Release */,
 				55F4765217FD4FB20082C85D /* Recent OS */,
 				557DE66210E0885C00177B4C /* Debug */,
+				55F03E731804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8857,6 +9852,7 @@
 				557DE6A210E0886400177B4C /* Release */,
 				55F4765317FD4FB20082C85D /* Recent OS */,
 				557DE6A310E0886400177B4C /* Debug */,
+				55F03E741804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8867,6 +9863,7 @@
 				557DE6E310E0886A00177B4C /* Release */,
 				55F4765417FD4FB20082C85D /* Recent OS */,
 				557DE6E410E0886A00177B4C /* Debug */,
+				55F03E751804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8877,6 +9874,7 @@
 				557DE7BA10E08D8300177B4C /* Release */,
 				55F4765517FD4FB20082C85D /* Recent OS */,
 				557DE7BB10E08D8300177B4C /* Debug */,
+				55F03E761804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8887,6 +9885,7 @@
 				557DE7FD10E08D8900177B4C /* Release */,
 				55F4765617FD4FB20082C85D /* Recent OS */,
 				557DE7FE10E08D8900177B4C /* Debug */,
+				55F03E771804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8897,6 +9896,7 @@
 				557DE84010E08D9E00177B4C /* Release */,
 				55F4765717FD4FB20082C85D /* Recent OS */,
 				557DE84110E08D9E00177B4C /* Debug */,
+				55F03E781804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8907,6 +9907,7 @@
 				557DE88310E08DA300177B4C /* Release */,
 				55F4765817FD4FB20082C85D /* Recent OS */,
 				557DE88410E08DA300177B4C /* Debug */,
+				55F03E791804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8917,6 +9918,7 @@
 				557DE8C610E08DA800177B4C /* Release */,
 				55F4765917FD4FB20082C85D /* Recent OS */,
 				557DE8C710E08DA800177B4C /* Debug */,
+				55F03E7A1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8927,6 +9929,7 @@
 				557DE90910E08DAC00177B4C /* Release */,
 				55F4765A17FD4FB20082C85D /* Recent OS */,
 				557DE90A10E08DAC00177B4C /* Debug */,
+				55F03E7B1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8937,6 +9940,7 @@
 				557DE91910E08DB000177B4C /* Release */,
 				55F4765B17FD4FB20082C85D /* Recent OS */,
 				557DE91A10E08DB000177B4C /* Debug */,
+				55F03E7C1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8947,6 +9951,7 @@
 				557DE95C10E08DB900177B4C /* Release */,
 				55F4765C17FD4FB20082C85D /* Recent OS */,
 				557DE95D10E08DB900177B4C /* Debug */,
+				55F03E7D1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8957,6 +9962,7 @@
 				557DE99F10E08DC100177B4C /* Release */,
 				55F4765D17FD4FB20082C85D /* Recent OS */,
 				557DE9A010E08DC100177B4C /* Debug */,
+				55F03E7E1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8967,6 +9973,7 @@
 				5586870D10BF5C4700FCC24D /* Release */,
 				55F4763517FD4FB20082C85D /* Recent OS */,
 				5586870E10BF5C4700FCC24D /* Debug */,
+				55F03E561804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8977,6 +9984,7 @@
 				5586871C10BF5C4A00FCC24D /* Release */,
 				55F4763617FD4FB20082C85D /* Recent OS */,
 				5586871D10BF5C4A00FCC24D /* Debug */,
+				55F03E571804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8987,6 +9995,7 @@
 				5586872B10BF5C4E00FCC24D /* Release */,
 				55F4763717FD4FB20082C85D /* Recent OS */,
 				5586872C10BF5C4E00FCC24D /* Debug */,
+				55F03E581804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8997,6 +10006,7 @@
 				5586874B10BF5D3700FCC24D /* Release */,
 				55F4763817FD4FB20082C85D /* Recent OS */,
 				5586874C10BF5D3700FCC24D /* Debug */,
+				55F03E591804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9007,6 +10017,7 @@
 				5586876010BF5E4D00FCC24D /* Release */,
 				55F4763917FD4FB20082C85D /* Recent OS */,
 				5586876110BF5E4D00FCC24D /* Debug */,
+				55F03E5A1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9017,6 +10028,7 @@
 				558687DC10BF620500FCC24D /* Release */,
 				55F4763A17FD4FB20082C85D /* Recent OS */,
 				558687DD10BF620500FCC24D /* Debug */,
+				55F03E5B1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9027,6 +10039,7 @@
 				558687F810BF624E00FCC24D /* Release */,
 				55F4763B17FD4FB20082C85D /* Recent OS */,
 				558687F910BF624E00FCC24D /* Debug */,
+				55F03E5C1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9037,6 +10050,7 @@
 				5586881910BF62F100FCC24D /* Release */,
 				55F4763C17FD4FB20082C85D /* Recent OS */,
 				5586881A10BF62F100FCC24D /* Debug */,
+				55F03E5D1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9047,6 +10061,7 @@
 				5586882710BF62F500FCC24D /* Release */,
 				55F4763D17FD4FB20082C85D /* Recent OS */,
 				5586882810BF62F500FCC24D /* Debug */,
+				55F03E5E1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9057,6 +10072,7 @@
 				5586883B10BF62FB00FCC24D /* Release */,
 				55F4763E17FD4FB20082C85D /* Recent OS */,
 				5586883C10BF62FB00FCC24D /* Debug */,
+				55F03E5F1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9067,6 +10083,7 @@
 				5586889510BF67F100FCC24D /* Release */,
 				55F4763F17FD4FB20082C85D /* Recent OS */,
 				5586889610BF67F100FCC24D /* Debug */,
+				55F03E601804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9077,6 +10094,7 @@
 				55868A6410BFB46100FCC24D /* Release */,
 				55F4764017FD4FB20082C85D /* Recent OS */,
 				55868A6510BFB46100FCC24D /* Debug */,
+				55F03E611804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9087,6 +10105,7 @@
 				55B797D610D6E6A60073E379 /* Release */,
 				55F4764117FD4FB20082C85D /* Recent OS */,
 				55B797D710D6E6A60073E379 /* Debug */,
+				55F03E621804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9097,6 +10116,7 @@
 				55B797DF10D6E6C70073E379 /* Release */,
 				55F4764217FD4FB20082C85D /* Recent OS */,
 				55B797E010D6E6C70073E379 /* Debug */,
+				55F03E631804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9107,6 +10127,7 @@
 				55E898B510F17C2B004EB52B /* Release */,
 				55F4764D17FD4FB20082C85D /* Recent OS */,
 				55E898B610F17C2B004EB52B /* Debug */,
+				55F03E6E1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9117,6 +10138,7 @@
 				55F48ABA17E25F6800DB4584 /* Release */,
 				55F4764C17FD4FB20082C85D /* Recent OS */,
 				55F48ABB17E25F6800DB4584 /* Debug */,
+				55F03E6D1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9127,6 +10149,7 @@
 				5569FF521024B44400DDDF39 /* Release */,
 				55F4762917FD4FB20082C85D /* Recent OS */,
 				559344191002F01700F95B82 /* Debug */,
+				55F03E4A1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 1;
 			defaultConfigurationName = Release;
@@ -9137,6 +10160,7 @@
 				5569FF531024B44400DDDF39 /* Release */,
 				55F4762A17FD4FB20082C85D /* Recent OS */,
 				5593441A1002F01700F95B82 /* Debug */,
+				55F03E4B1804F9700043C72C /* Recent OS-debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

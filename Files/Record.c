@@ -1301,17 +1301,17 @@ FInfo				fndrInfo;
 
 void NPASTESample( long Pos, short ins, short samp)
 {
-short				itemType,fRefNum, sS, qual;
-long				inOutBytes, iL, scrapOffset, lCntOrErr, totalSize, lS, lE, i;
-Handle				newSound, tempHandle;
-Rect				itemRect;
-Str255				theString;
-OSErr				iErr, anErr;
-Ptr					finalPtr;
-Boolean				Info;
-Movie				aMovie;
-ScrapRef			scrap;
-ScrapFlavorFlags	flags;
+	short				itemType,fRefNum, sS, qual;
+	long				inOutBytes = 0, iL, scrapOffset, lCntOrErr, totalSize, lS, lE, i;
+	Handle				newSound, tempHandle;
+	Rect				itemRect;
+	Str255				theString;
+	OSErr				iErr, anErr;
+	Ptr					finalPtr;
+	Boolean				Info;
+	Movie				aMovie;
+	ScrapRef			scrap;
+	ScrapFlavorFlags	flags;
 
 	SetCursor( &watchCrsr);
 
@@ -1846,6 +1846,8 @@ void AddLoopToSndHandle( Handle sound, long Start, long End)
 		
 		default:					/* jack says, what about 12? or 6? */
 			MyDebugStr( __LINE__, __FILE__, " NSndToHandle... Burkk");
+		return;
+		break;
 	} 
 
 	/* compute address of sound header. */

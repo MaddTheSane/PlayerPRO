@@ -1,5 +1,16 @@
 #include <Carbon/Carbon.r>
 
+#ifdef QD_HEADERS_ARE_PRIVATE
+type 'acur' {
+	integer = $$CountOf(CursIdArray); /* Nbr of cursors                 */
+	fill word;                        /* Next frame to show             */
+	array CursIdArray {
+		integer;                      /* 'CURS' resource id for a frame */
+		fill word;                    /* Pad word to make longint       */
+	};
+};
+#endif
+
 resource 'ALRT' (128, "General Error") {
 	{106, 86, 221, 429},
 	268,

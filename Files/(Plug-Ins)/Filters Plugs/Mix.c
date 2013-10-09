@@ -70,7 +70,7 @@ static void drawSlider (Rect	theRect,
 	theRect.left += 1;
 	theRect.top += 1;
 	{
-		Pattern	myPat = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+		Pattern	myPat = { {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}};
 		iWidth = theRect.left; // save left
 		theRect.left = theRect.left + (((theRect.right - theRect.left) * theValue) / 100);
 		EraseRect(&theRect);

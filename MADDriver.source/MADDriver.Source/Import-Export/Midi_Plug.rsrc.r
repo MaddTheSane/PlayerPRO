@@ -1,17 +1,15 @@
 #include <Carbon/Carbon.r>
 
-resource 'STR#' (1000) {
-	{	/* array StringArray: 4 elements */
-		/* [1] */
-		"Midi",
-		/* [2] */
-		"IMPL",
-		/* [3] */
-		"Midi",
-		/* [4] */
-		"Written by A.ROSSET 95"
-	}
+#ifdef QD_HEADERS_ARE_PRIVATE
+type 'acur' {
+	integer = $$CountOf(CursIdArray); /* Nbr of cursors                 */
+	fill word;                        /* Next frame to show             */
+	array CursIdArray {
+		integer;                      /* 'CURS' resource id for a frame */
+		fill word;                    /* Pad word to make longint       */
+	};
 };
+#endif
 
 resource 'vers' (1) {
 	0x1,
@@ -171,10 +169,6 @@ resource 'BNDL' (128) {
 			0, 128
 		}
 	}
-};
-
-data 'SNPL' (0, "Owner resource") {
-	$"00"                                                 /* . */
 };
 
 resource 'ICN#' (128) {

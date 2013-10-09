@@ -8,20 +8,20 @@
 //#include "WaveEditor.proto.h"
 
 	/******** HELP MODULE ********/
-	enum
-	{
-		HView = 0
-	};
+enum
+{
+	HView = 0
+};
 #define	AHELPSIZE	1
 
-	static	short		AHelp[ AHELPSIZE] =
-	{ HView};
+static	short		AHelp[ AHELPSIZE] =
+{ HView};
 
-	void DoHelpWave( short **items, short *lsize)
-	{
-		*lsize = AHELPSIZE;
-		*items = AHelp;
-	}
+void DoHelpWave( short **items, short *lsize)
+{
+	*lsize = AHELPSIZE;
+	*items = AHelp;
+}
 
 	/*****************************/
 
@@ -68,7 +68,7 @@ void UpdateWaveInfo();
 
 short GetMaxXWave()
 {
-short	ret;
+	short	ret;
 
 	ret = 1 + GetControlValue( xScroll) + (WaveRect.right - WaveRect.left) / XSize;
 	if( ret > curMusic->partition[ CurrentPat]->header.size) ret = curMusic->partition[ CurrentPat]->header.size;
@@ -123,7 +123,7 @@ void SetWaveControl()
 {
 	short	tt;
 	Rect	caRect;
-
+	
 	// XScroll
 	
 	if( xScroll != NULL)
@@ -152,9 +152,9 @@ void SetWaveControl()
 		
 		MyMoveControl( yScroll, caRect.right-15, BASETOP + 14);
 		MySizeControl( yScroll, 16, caRect.bottom - (BASETOP + 14) + 1 - 15);
-	
+		
 		SetControlMinimum( yScroll, 0);
-	
+		
 		tt = WaveDriverType.numChn  - ((caRect.bottom - 14) - WaveRect.top) / YSize;	if( tt < 0) tt = 0;
 		SetControlMaximum( yScroll, tt);
 		
@@ -163,16 +163,16 @@ void SetWaveControl()
 		prevYSize = YSize;
 	}
 	
-	SetMaxWindow( 	WaveRect.left + curMusic->partition[ CurrentPat]->header.size*XSize + 14,
-					WaveRect.top + WaveDriverType.numChn*YSize + 15,
-					WaveDlog);
+	SetMaxWindow(WaveRect.left + curMusic->partition[ CurrentPat]->header.size*XSize + 14,
+				 WaveRect.top + WaveDriverType.numChn*YSize + 15,
+				 WaveDlog);
 }
 
 void CreateCurWaveRect()
 {
 	short	temp = ReaderCopy - GetControlValue( xScroll);
 	Rect	caRect;
-
+	
 	GetPortBounds( GetDialogPort( WaveDlog), &caRect);
 	
 	WaveRect.right = caRect.right - 15;
@@ -192,12 +192,12 @@ void DoNullWave(void)
 	Point		myPt;
  	Rect		tempRect;
  	Boolean		MakeUpdate = false;
- 
+	
  	if( WaveDlog == NULL) return;
- 
+	
  	GetPort( &SavePort);
  	SetPortDialogPort( WaveDlog);
-
+	
 	if( CurrentPat != MADDriver->Pat)
 	{
 		Str255			theStr;
@@ -243,10 +243,10 @@ void DoNullWave(void)
 			saveClipRgn = NewRgn();
 		 	GetClip( saveClipRgn);
 			
-		//	WaveRect.left++;
+			//	WaveRect.left++;
 			WaveRect.top++;
 			ClipRect( &WaveRect);
-		//	WaveRect.left--;
+			//	WaveRect.left--;
 			WaveRect.top--;
 			
 			BackColor( whiteColor);
@@ -283,16 +283,16 @@ void DoNullWave(void)
 				switch( mode)
 				{
 					case zoomM:
-						if( theEvent.modifiers & optionKey) SetCursor( &ZoomOutCrsr);
-						else SetCursor( &ZoomInCrsr);
+					if( theEvent.modifiers & optionKey) SetCursor( &ZoomOutCrsr);
+					else SetCursor( &ZoomInCrsr);
 					break;
 					
 					case playM:
-						SetCursor( &PlayCrsr);
+					SetCursor( &PlayCrsr);
 					break;
 					
 					case noteM:
-						SetCursor( GetQDGlobalsArrow( &qdarrow));
+					SetCursor( GetQDGlobalsArrow( &qdarrow));
 					break;
 				}
 			}
@@ -318,7 +318,7 @@ void DoGrowWave(void)
 	Handle		itemHandle;
 	short		itemType;
 	BitMap		screenBits;
-
+	
 	GetPort( &SavePort);
  	SetPortDialogPort( WaveDlog);
 	
@@ -364,14 +364,14 @@ void DoGrowWave(void)
 	InvalWindowRect( GetDialogWindow( WaveDlog), &caRect);
 	
 	SetWaveControl();
-
+	
 	SetPort( SavePort);
 }
 
 void GetMinMax( long BS, long BE, Ptr ptr, long *mi, long *mx)
 {
 	long	temp, minY, maxY;
-
+	
 	BS /= WaveDriverType.numChn;	BS *= WaveDriverType.numChn;
 	BE /= WaveDriverType.numChn;	BE *= WaveDriverType.numChn;
 	
@@ -379,7 +379,7 @@ void GetMinMax( long BS, long BE, Ptr ptr, long *mi, long *mx)
 	if( temp < 0) temp += 128;
 	else temp -= 128;
 	minY = maxY = temp;
-				
+	
 	if( BS != BE)
 	{
 		long	x;
@@ -494,11 +494,19 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 	}
 	else
 	{
-		cRect.top = YOffSet+1;					if( cRect.top <= WaveRect.top) 		cRect.top = WaveRect.top+1;
-												if( cRect.top > WaveRect.bottom) 	cRect.top = WaveRect.bottom;
+		cRect.top = YOffSet+1;
+		if( cRect.top <= WaveRect.top)
+			cRect.top = WaveRect.top+1;
+								
+		if( cRect.top > WaveRect.bottom)
+			cRect.top = WaveRect.bottom;
 												
-		cRect.bottom = (WaveDriverType.numChn)*YSize + YOffSet+1;	if( cRect.bottom <= WaveRect.top) 	cRect.bottom = WaveRect.top+1;
-																if( cRect.bottom > WaveRect.bottom) cRect.bottom = WaveRect.bottom;
+		cRect.bottom = (WaveDriverType.numChn)*YSize + YOffSet+1;
+		if( cRect.bottom <= WaveRect.top)
+			cRect.bottom = WaveRect.top+1;
+								
+		if( cRect.bottom > WaveRect.bottom)
+			cRect.bottom = WaveRect.bottom;
 	}
 	
 	ClipRect( &cRect);
@@ -554,7 +562,8 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 	WaveCopyDriver->PartitionReader		= 0;
 	WaveCopyDriver->Pat					= MADDriver->Pat;
 	WaveCopyDriver->PL					= MADDriver->PL;
-/*	{
+#if 0
+	{
 		short 		pos, tt;
 		Cmd 		*theCmd;
 		Boolean		okT[ MAXTRACK];
@@ -581,7 +590,7 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 			}
 		}
 	}
-	*/
+#endif
 	
 	destReader 					= toX;
 	dataX 						= 0;
@@ -717,7 +726,7 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 
 void DrawFrame()
 {
-	short			i, itemType, temp, add;
+	short			i, itemType, temp, add = 0;
 	Rect			caRect, fRect;
 	Handle			itemHandle;
 	char			String[ 200];

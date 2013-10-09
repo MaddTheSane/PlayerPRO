@@ -333,7 +333,7 @@ long ScreenDevice::GetDisplayID( long inX, long inY )
 	 ** versions of the system software, so it is best to make the change
 	 ** now and make your software DisplayManager-centric.
 	 */
-	theGDevice = DMGetFirstScreenDevice( false );
+	theGDevice = ::DMGetFirstScreenDevice( false );
 	while( theGDevice && ! id ) {
 		
 		if ( ::PtInRect( inPt, &(**theGDevice).gdRect ) ) {

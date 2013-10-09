@@ -368,7 +368,7 @@ void DLSImport(void)
 	MenuHandle				CategoryMenu;
 	
 	InstrData				*inst;
-	Handle					instCopy;
+	Handle					instCopy = NULL;
 	
 	for( i = 0; i < 18; i++) QKInstruMenu[ i] = NULL;
 	

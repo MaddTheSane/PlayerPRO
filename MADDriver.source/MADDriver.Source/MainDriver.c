@@ -767,14 +767,19 @@ OSErr MADCreateDriverBuffer( MADDriverRec *intDriver)
 	
 	switch( intDriver->DriverSettings.outPutMode)
 	{
-		case MonoOutPut:			BufSize = BufSize;			break;
-		case StereoOutPut:			BufSize = BufSize*2L;		break;
-		case DeluxeStereoOutPut:	BufSize = BufSize*2L;		break;
+		case MonoOutPut:
+			break;
+		case StereoOutPut:
+		case DeluxeStereoOutPut:
+			BufSize *= 2;
+			break;
 	}
 	
 	switch( intDriver->DriverSettings.outPutBits)
 	{
-		case 16:									BufSize = BufSize*2L;		break;
+		case 16:
+			BufSize *= 2;
+			break;
 	}
 	
 	intDriver->curDrawPtr = 0;

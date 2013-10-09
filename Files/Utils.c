@@ -876,33 +876,34 @@ void ZapPixMap(PixMapHandle *offscreenPixMap)
 	*offscreenPixMap = NULL;
 }
 
-/*void PixToPic(PicHandle *thepict, PixMapHandle theDocument, Rect imageRect)
+#if 0
+void PixToPic(PicHandle *thepict, PixMapHandle theDocument, Rect imageRect)
 {
-PixMapHandle			offscreenPixMap ;
-GDHandle				CurrentGDevice ;
-GrafPtr					currentPort ;
-CGrafPtr				offscreenPort ;		
-CGrafPort				offscreenPortData;
-Rect					aRect ;
-OSErr					errCode;
-
+	PixMapHandle			offscreenPixMap ;
+	GDHandle				CurrentGDevice ;
+	GrafPtr					currentPort ;
+	CGrafPtr				offscreenPort ;
+	CGrafPort				offscreenPortData;
+	Rect					aRect ;
+	OSErr					errCode;
+	
 	CurrentGDevice = GetGDevice() ;
 	GetPort(&currentPort) ;
 	
 	errCode = NewOffscreenPixMap(&offscreenPixMap, &imageRect);
 	if(errCode != noErr) {
-			SysBeep(100);
-			return;
-			}
-
+		SysBeep(100);
+		return;
+	}
+	
 	offscreenPort = &offscreenPortData;
 	OpenCPort( offscreenPort) ;
-
+	
 	(*offscreenPort->visRgn)->rgnBBox = (*offscreenPort->clipRgn)->rgnBBox ;
-
+	
 	SetPort( (GrafPtr) offscreenPort) ;
 	SetPortPix(offscreenPixMap) ;
-
+	
 	
 	aRect.bottom = imageRect.bottom - imageRect.top;
 	aRect.right = imageRect.right - imageRect.left;
@@ -910,17 +911,18 @@ OSErr					errCode;
 	aRect.left = 0;
 	
 	*thepict = OpenPicture(&aRect);
-		
+	
 	CopyBits( (BitMap*) *theDocument,(BitMap*) *offscreenPixMap, &imageRect, &aRect, srcCopy, NULL);
 	
 	ClosePicture();
 	
-	(*offscreenPixMap)->pmTable = nil ; 
-	ZapPixMap( &offscreenPixMap);		
-
+	(*offscreenPixMap)->pmTable = nil ;
+	ZapPixMap( &offscreenPixMap);
+	
 	SetPort(currentPort);
 	SetGDevice(CurrentGDevice);
-}*/
+}
+#endif
 
 short PicToPix (PicHandle thePic, PixMapHandle *offscreenPixMap)
 {

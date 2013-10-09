@@ -1059,7 +1059,7 @@ long ComputeRight( short note, short ins)
 	Str255	aStr;
 	long	cellBytes;
 	long	insBytes;
-	long	aDD;
+	long long	aDD;
 	long	period;
 	long	result;
 	sData	*curData;
@@ -1081,7 +1081,7 @@ long ComputeRight( short note, short ins)
 		note			+= curData->relNote;
 		
 		period = GetOldPeriod( note, curData->c2spd, MADDriver);
-		aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / ( period * (rate22khz>>16));
+		aDD = ((long long)AMIGA_CLOCKFREQ2 << BYTEDIV) / ( period * (rate22khz>>16));
 		insBytes = (curData->size << BYTEDIV)/ aDD;
 		
 		/* Compute cell size in bytes */

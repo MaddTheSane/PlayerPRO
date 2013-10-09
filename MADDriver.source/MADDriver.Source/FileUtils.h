@@ -66,7 +66,7 @@ EXP unsigned char* MYC2PStr( Ptr cStr);
 EXP void MYP2CStr( unsigned char *cStr);
 EXP OSType Ptr2OSType( Ptr str);
 EXP void OSType2Ptr( OSType type, Ptr str);
-void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
+extern void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
 
 
 ////////////////////////////////////////////////////////////

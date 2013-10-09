@@ -228,8 +228,8 @@ void FlushCacheRange (void *address, unsigned long count);
 void AddExplicitPalette(WindowPtr window);
 WindowPtr GDOpenWindow1(GDHandle device);
 void GDDisposeWindow1(WindowPtr window);
-CWindowPtr GDOpenWindow(GDHandle device);					// Old. Use GD...1 instead.
-void GDDisposeWindow(GDHandle device,CWindowPtr myWindow);	// Old. Use GD...1 instead.
+WindowPtr GDOpenWindow(GDHandle device);					// Old. Use GD...1 instead.
+void GDDisposeWindow(GDHandle device,WindowPtr myWindow);	// Old. Use GD...1 instead.
 
 /* GDPrintf.c */
 

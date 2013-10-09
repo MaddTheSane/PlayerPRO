@@ -1,16 +1,12 @@
 #include <CoreFoundation/CFPlugInCOM.h>
 #include <CoreFoundation/CoreFoundation.h>
-#include <Carbon/Carbon.h>
+#include "OldCarbHeaders.h"
 #include <QuickTime/QuickTime.h>
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "PPPlug.h"
 #include "PPPrivate.h"
-
-#ifdef __OBJC__
-#include <Cocoa/Cocoa.h>
-#endif
 
 typedef OSType SFTypeList[4];
 

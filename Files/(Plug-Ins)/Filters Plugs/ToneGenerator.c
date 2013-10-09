@@ -206,7 +206,7 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp, long AudioType, Boolean stereo)
 {
 	short	*Audio16Ptr;
-	long	i, temp, inter, x, dest;
+	long	i, temp, inter = 0, x, dest;
 	Boolean	UpDown;
 	
 	if( stereo) AudioLength *= 2L;

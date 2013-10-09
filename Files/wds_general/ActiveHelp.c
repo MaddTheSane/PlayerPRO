@@ -43,96 +43,96 @@ void DoAHelpInfo(void)
 	if( !HelpAvalaible) return;
 	if( AHelpDlog == NULL) return;
 	if( MacIsWindowVisible( GetDialogWindow( AHelpDlog)) == false) return;
-
+	
 	GetFrontProcess( &PSN);
-	if( PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
-		PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN) return;
+	if(PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
+	   PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN) return;
 	
 	GetPort( &savePort);
-		
+	
 	GetMouse( &pt);
 	LocalToGlobal( &pt);
 	if( pt.h == savept.h && pt.v == savept.v) return;
 	
 	savept = pt;
-
+	
 	aWin = FrontWindow();
 	
 	while( aWin != NULL)
 	{
 		strucRgn = NewRgn();
 		
-	/*	GetWindowFeatures( aWin, &outFeatures);
-		if( outFeatures & kWindowCanGetWindowRegion) aWin = aWin;
-		else Debugger();*/
+		/*	GetWindowFeatures( aWin, &outFeatures);
+		 if( outFeatures & kWindowCanGetWindowRegion) aWin = aWin;
+		 else Debugger();*/
 		
 		GetWindowRegion( aWin, kWindowStructureRgn, strucRgn);
-			
+		
 		if( PtInRgn( pt, strucRgn))
 		{
 			wref = GetWRefCon( aWin);
-		
+			
 			switch( wref)
 			{
 				case RefMozart:
 					DoHelpMozart( &items, &lsize);
-				break;
-			
+					break;
+				
 				case RefPartition:
 					DoHelpEditor( &items, &lsize);
-				break;
-			
+					break;
+				
 				case RefPlayer:
 					DoHelpOscillo( &items, &lsize);
-				break;
-			
+					break;
+				
 				case RefSpectrum:
 					DoHelpSpectrum( &items, &lsize);
-				break;
-			
+					break;
+				
 				case RefInstruList:
 					DoHelpInstruList( &items, &lsize);
-				break;
+					break;
 				
 				case RefMODList:
 					DoHelpMODList( &items, &lsize);
-				break;
+					break;
 				
 				case RefTools:
 					DoHelpTools( &items, &lsize);
-				break;
+					break;
 				
 				case RefPiano:
 					DoHelpPiano( &items, &lsize);
-				break;
+					break;
 				
 				case RefSample:
 					DoHelpSamples( &items, &lsize);
-				break;
+					break;
 				
 				case RefClassic:
 					DoHelpClassic( &items, &lsize);
-				break;
+					break;
 				
 				case RefParti:
 					DoHelpPartition( &items, &lsize);
-				break;
+					break;
 				
 				case RefAdaptators:
 					DoHelpAdap( &items, &lsize);
-				break;
+					break;
 				
 				case RefPatList:
 					DoHelpPatList( &items, &lsize);
-				break;
+					break;
 				
 				case RefStaff:
 					DoHelpStaff( &items, &lsize);
-				break;
+					break;
 				
 				default:
 					lsize = 0;
-				break;
+					break;
 			}
 			//////
 			
@@ -154,7 +154,9 @@ void DoAHelpInfo(void)
 							GetIndString( aStr, wref*200, i + 1);
 							
 							SetPortDialogPort( AHelpDlog);
-							TextFont( kFontIDGeneva);	TextSize( 9);	TextFace( bold);
+							TextFont( kFontIDGeneva);
+							TextSize( 9);
+							TextFace( bold);
 							SetDText( AHelpDlog, 1, aStr);
 							SetPortWindowPort( aWin);
 						}
@@ -164,7 +166,7 @@ void DoAHelpInfo(void)
 					}
 				}
 				
-			//	UseResFile( iRefNum);
+				//	UseResFile( iRefNum);
 			}
 			/////
 			
@@ -178,7 +180,7 @@ void DoAHelpInfo(void)
 		
 		aWin = MacGetNextWindow( aWin);
 	}
-
+	
 	SetDText( AHelpDlog, 1, "\p");
 	wref = -1;		lastitem = -1;
 	SetPort( savePort);
@@ -186,81 +188,82 @@ void DoAHelpInfo(void)
 
 void FrameRectRelief2( Rect *theRect)
 {
-RGBColor	theColor;
-Rect		aCopy;
-
+	RGBColor	theColor;
+	Rect		aCopy;
+	
 #define GrisClair	0xEEEE
 #define GrisFonce	0x8888
 	
-if( (**(**GetMainDevice()).gdPMap).pixelSize < 8)
-{
-	aCopy.left = theRect->left ;
-	aCopy.right = theRect->right;
-	aCopy.top = theRect->top ;
-	aCopy.bottom = theRect->bottom;
+	if( (**(**GetMainDevice()).gdPMap).pixelSize < 8)
+	{
+		aCopy.left = theRect->left ;
+		aCopy.right = theRect->right;
+		aCopy.top = theRect->top ;
+		aCopy.bottom = theRect->bottom;
+		ForeColor( blackColor);
+		FrameRect( &aCopy);
+		return;
+	}
+	MoveTo( theRect->left, theRect->top);
+	
+	theColor.red = GrisClair;	theColor.blue = GrisClair;	theColor.green = GrisClair;
+	RGBForeColor( &theColor);
+	LineTo( theRect->right-1, theRect->top);
+	
+	theColor.red = GrisFonce;	theColor.blue = GrisFonce;	theColor.green = GrisFonce;
+	RGBForeColor( &theColor);
+	LineTo( theRect->right-1, theRect->bottom-1);
+	
+	theColor.red = GrisFonce;	theColor.blue = GrisFonce;	theColor.green = GrisFonce;
+	RGBForeColor( &theColor);
+	LineTo( theRect->left, theRect->bottom-1);
+	
+	theColor.red = GrisClair;	theColor.blue = GrisClair;	theColor.green = GrisClair;
+	RGBForeColor( &theColor);
+	LineTo( theRect->left, theRect->top);
+	
+	
 	ForeColor( blackColor);
-	FrameRect( &aCopy);
-	return;
-}
-MoveTo( theRect->left, theRect->top);
-
-theColor.red = GrisClair;	theColor.blue = GrisClair;	theColor.green = GrisClair;
-RGBForeColor( &theColor);
-LineTo( theRect->right-1, theRect->top);
-
-theColor.red = GrisFonce;	theColor.blue = GrisFonce;	theColor.green = GrisFonce;
-RGBForeColor( &theColor);
-LineTo( theRect->right-1, theRect->bottom-1);
-
-theColor.red = GrisFonce;	theColor.blue = GrisFonce;	theColor.green = GrisFonce;
-RGBForeColor( &theColor);
-LineTo( theRect->left, theRect->bottom-1);
-
-theColor.red = GrisClair;	theColor.blue = GrisClair;	theColor.green = GrisClair;
-RGBForeColor( &theColor);
-LineTo( theRect->left, theRect->top);
-
-
-ForeColor( blackColor);
 }
 
 void  UpdateAHelpWindow(DialogPtr GetSelection)
-{ 
-		Rect   		tempRect, itemRect;
- 		GrafPtr		SavePort;
- 		Handle		itemHandle;
- 		Rect		caRect;
- 		RgnHandle	visibleRegion;
- 		
- 		GetPort( &SavePort);
- 		SetPortDialogPort( AHelpDlog);
-
-		BeginUpdate( GetDialogWindow( AHelpDlog));
-		
-			TextFont( kFontIDGeneva);	TextSize( 9);	TextFace( bold);
-			
-			visibleRegion = NewRgn();
-			
-			GetPortVisibleRegion( GetDialogPort( AHelpDlog), visibleRegion);
-			
- 			UpdateDialog( AHelpDlog, visibleRegion);
- 			
- 			DisposeRgn( visibleRegion);
- 			
- 			GetPortBounds( GetDialogPort( AHelpDlog), &caRect);
- 			
- 			itemRect = caRect;
-			FrameRectRelief2( &itemRect);
-		EndUpdate( GetDialogWindow( AHelpDlog));
-
-		SetPort( SavePort);
+{
+	Rect   		tempRect, itemRect;
+	GrafPtr		SavePort;
+	Handle		itemHandle;
+	Rect		caRect;
+	RgnHandle	visibleRegion;
+	
+	GetPort( &SavePort);
+	SetPortDialogPort( AHelpDlog);
+	
+	BeginUpdate( GetDialogWindow( AHelpDlog));
+	
+	TextFont( kFontIDGeneva);	TextSize( 9);	TextFace( bold);
+	
+	visibleRegion = NewRgn();
+	
+	GetPortVisibleRegion( GetDialogPort( AHelpDlog), visibleRegion);
+	
+	UpdateDialog( AHelpDlog, visibleRegion);
+	
+	DisposeRgn( visibleRegion);
+	
+	GetPortBounds( GetDialogPort( AHelpDlog), &caRect);
+	
+	itemRect = caRect;
+	FrameRectRelief2( &itemRect);
+	EndUpdate( GetDialogWindow( AHelpDlog));
+	
+	SetPort( SavePort);
 }
 
-/*void MyFindControl( Point localPt, WindowPtr wind, ControlHandle *myCtl)
+#if 0
+void MyFindControl( Point localPt, WindowPtr wind, ControlHandle *myCtl)
 {
-//	WindowPeek		wPeek = (WindowPeek) wind;
-//	ControlHandle	aCtl = (ControlHandle) wPeek->controlList;
-
+	//WindowPeek		wPeek = (WindowPeek) wind;
+	//ControlHandle	aCtl = (ControlHandle) wPeek->controlList;
+	
 	*myCtl = 0;
 	
 	while( aCtl != NULL)
@@ -276,19 +279,20 @@ void  UpdateAHelpWindow(DialogPtr GetSelection)
 		
 		aCtl = (*aCtl)->nextControl;
 	}
-}*/
+}
+#endif
 
 void AdjustZoomIn( WindowPtr	wind)
 {
-//	WindowPeek		wPeek;
-//	WStateData		*wspd;
+	//WindowPeek		wPeek;
+	//WStateData		*wspd;
 	GDHandle		aH;
 	Point			mouse;
 	Rect			stdRect, ViewRect, ar;
 	short			h,v;
 	GrafPtr			savedPtr;
 	Rect			ttt;
-//	ControlHandle	aCtl;
+	//ControlHandle	aCtl;
 	Point			localPt;
 	
 #define BORD	4
@@ -297,7 +301,7 @@ void AdjustZoomIn( WindowPtr	wind)
 	SetPortWindowPort( wind);
 	
 	localPt.v = localPt.h = 1;
-//	FindControl( localPt, wind, &aCtl);
+	//FindControl( localPt, wind, &aCtl);
 	
 	mouse = theEvent.where;
 	
@@ -316,26 +320,26 @@ void AdjustZoomIn( WindowPtr	wind)
 			{
 				ar = (*(*aH)->gdPMap)->bounds;
 				
-				SetRect( &ViewRect, ar.left + BORD, ar.top + 24,
-									ar.right - BORD, ar.bottom - BORD);
+				SetRect(&ViewRect, ar.left + BORD, ar.top + 24,
+						ar.right - BORD, ar.bottom - BORD);
 			}
 		}
 	}
 	while( aH != NULL);
 	
-//	wPeek = (WindowPeek) wind;
-//	wspd = (WStateData*) *(wPeek->dataHandle);
+	//wPeek = (WindowPeek) wind;
+	//wspd = (WStateData*) *(wPeek->dataHandle);
 	
 	GetWindowStandardState( wind, &stdRect);
 	
-/*	if( aCtl != NULL)
-	{
-		long lRefCon = GetControlReference( aCtl);
-		
-		h = lRefCon>>16L;
-		v = lRefCon & 0x0000FFFF;
-	}
-	else*/
+	/*	if( aCtl != NULL)
+	 {
+	 long lRefCon = GetControlReference( aCtl);
+	 
+	 h = lRefCon>>16L;
+	 v = lRefCon & 0x0000FFFF;
+	 }
+	 else*/
 	{
 		h = stdRect.right - stdRect.left;
 		v = stdRect.bottom - stdRect.top;
@@ -356,15 +360,15 @@ void AdjustZoomIn( WindowPtr	wind)
 	{
 		case RefClassic:
 			AdjustZoomClassic2( &ViewRect);
-		break;
+			break;
 		
 		case RefPiano:
 			AdjustZoomPiano2( &ViewRect);
-		break;
+			break;
 		
 		case RefPlayer:
 			AdjustZoomOscillo2( &ViewRect);
-		break;
+			break;
 	}
 	
 	GetWindowStandardState( wind, &stdRect);
@@ -381,15 +385,15 @@ void InitWindowBar(void)
 {
 	Rect	mBarRect;
 	BitMap	screenBits;
-
+	
 	oldMBarHeight = GetMBarHeight();
 	MBarHeightInt = oldMBarHeight + WINDOWHIGH;
 	
 	GetQDGlobalsScreenBits( &screenBits);
 	
-	SetRect(	&mBarRect, screenBits.bounds.left, oldMBarHeight,
-				screenBits.bounds.right, MBarHeightInt);
-			
+	SetRect(&mBarRect, screenBits.bounds.left, oldMBarHeight,
+			screenBits.bounds.right, MBarHeightInt);
+	
 	mBarRgn = NewRgn();
 	RectRgn( mBarRgn, &mBarRect);
 }
@@ -414,12 +418,11 @@ void CreateAHelpWindow(void)
 	Str255		String;
 	GrafPtr		savePort;
 	long		cParID;
-	Rect	caRect;
+	Rect		caRect;
 	
 	
-
 	SetItemMark( HelpMenu, 1, checkMark);
-
+	
 	if( !HelpAvalaible) return;
 	if( AHelpDlog != NULL) return;
 	
@@ -438,7 +441,7 @@ void CreateAHelpWindow(void)
 	SelectWindow2( GetDialogWindow( AHelpDlog));
 	HiliteWindow( GetDialogWindow( AHelpDlog), true);
 	
-//	SetMenuItemText( HelpMenu, 1, "\pHide Online Help");
+	//SetMenuItemText( HelpMenu, 1, "\pHide Online Help");
 	
 	InitWindowBar();
 	
@@ -449,7 +452,7 @@ void CloseAHelp(void)
 {
 	if( AHelpDlog != NULL)
 	{
-//		SetMenuItemText( HelpMenu, 1, "\pShow Online Help");
+		//SetMenuItemText( HelpMenu, 1, "\pShow Online Help");
 		RemoveWindowBar();
 		DisposeDialog( AHelpDlog);
 	}
