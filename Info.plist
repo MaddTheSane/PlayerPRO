@@ -35,6 +35,10 @@
 			<false/>
 		</dict>
 		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>stcf</string>
+			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>List</string>
 			<key>CFBundleTypeName</key>
@@ -146,6 +150,30 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>mad</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>MAD</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>audio/x-mad</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>PPMADFile</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.quadmation.playerpro.mad</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>Binary</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>madi</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -227,7 +255,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>madk</string>
-				<string>mad</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>MAD</string>
@@ -363,22 +390,6 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>ppimpexp</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>PPImpExpBundle</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>net.sourceforge.playerpro.ppimpexp</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
 				<string>it</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -407,6 +418,10 @@
 			<string>669</string>
 			<key>CFBundleTypeName</key>
 			<string>PP669File</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>6669</string>
+			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
@@ -415,10 +430,6 @@
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>6669</string>
-			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
@@ -465,6 +476,22 @@
 			<key>LSTypeIsPackage</key>
 			<false/>
 		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>ppimpexp</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>PPImpExpBundle</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.ppimpexp</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<true/>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
@@ -482,11 +509,6 @@
 	<string>PlayerPRO</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<key>LSArchitecturePriority</key>
-	<array>
-		<string>ppc</string>
-		<string>i386</string>
-	</array>
 	<key>CFBundleShortVersionString</key>
 	<string>5.10.0</string>
 	<key>CFBundleSignature</key>
@@ -495,6 +517,11 @@
 	<string>5.10.0</string>
 	<key>CSResourcesFileMapped</key>
 	<string>yes</string>
+	<key>LSArchitecturePriority</key>
+	<array>
+		<string>ppc</string>
+		<string>i386</string>
+	</array>
 	<key>LSMinimumSystemVersionByArchitecture</key>
 	<dict>
 		<key>i386</key>
@@ -517,8 +544,29 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
 				<string>net.sourceforge.playerpro.tracker</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PPMADFile</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.quadmation.playerpro.mad</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mad</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>audio/x-mad</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>com.quadmation.playerpro.mad</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADKFile</string>
@@ -533,18 +581,14 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>madk</string>
-					<string>mad</string>
-				</array>
-				<key>public.mime-type</key>
-				<array>
-					<string>audio/x-mad</string>
 				</array>
 			</dict>
 		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.quadmation.playerpro.madk</string>
+				<string>public.data</string>
+				<string>com.quadmation.playerpro.mad</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADHFile</string>
@@ -565,7 +609,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.quadmation.playerpro.madk</string>
+				<string>public.data</string>
+				<string>com.quadmation.playerpro.mad</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADFGFile</string>
@@ -588,7 +633,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.quadmation.playerpro.madk</string>
+				<string>public.data</string>
+				<string>com.quadmation.playerpro.mad</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADIFile</string>
