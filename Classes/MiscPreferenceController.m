@@ -16,7 +16,8 @@
 @synthesize noLoadMixerFromFile;
 @synthesize oscDrawLines;
 
-- (IBAction)changePrefs:(id)sender {
+- (IBAction)changePrefs:(id)sender
+{
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
 	[defaults setBool:[addExt state] forKey:PPMAddExtension];
@@ -27,7 +28,6 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPMiscPreferencesDidChange object:self];
 }
 
-
 -(id)init
 {
 	if (self = [super initWithNibName:@"MiscPrefs" bundle:nil]) {
@@ -36,7 +36,8 @@
 	return self;
 }
 
--(void)awakeFromNib {
+-(void)awakeFromNib
+{
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[addExt setState:[defaults boolForKey:PPMAddExtension]];
 	[madCompression setState:[defaults boolForKey:PPMMadCompression]];
