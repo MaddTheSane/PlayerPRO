@@ -11,6 +11,7 @@
 
 @interface PPiAppDelegate ()
 @property (readwrite, strong) PPLibrary *madLib;
+@property (readwrite, strong) PPDriver *madDriver;
 @end
 
 @implementation PPiAppDelegate
@@ -55,6 +56,7 @@
 	    splitViewController.delegate = (id)navigationController.topViewController;
 	}
 	self.madLib = [[PPLibrary alloc] init];
+	self.madDriver = [[PPDriver alloc] initWithLibrary:self.madLib settings:NULL];
     return YES;
 }
 							
@@ -83,6 +85,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

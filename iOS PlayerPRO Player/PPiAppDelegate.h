@@ -20,5 +20,6 @@ enum {
 
 @property (strong, nonatomic) UIWindow *window;
 @property (readonly, strong) PPLibrary *madLib;
+@property (readonly, strong) PPDriver *madDriver;
 
 @end
