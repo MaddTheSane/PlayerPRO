@@ -478,7 +478,7 @@ static SInt32 ConvertSampleC4SPD( Ptr src, size_t srcSize, short amp, SInt32 src
 	
 	if (dstC4SPD > srcC4SPD)
 	{
-		dstSize = (srcSize * dstC4SPD) / srcC4SPD;
+		dstSize = (SInt32)((srcSize * dstC4SPD) / srcC4SPD);
 		
 		if (amp == 8)
 		{
@@ -513,7 +513,7 @@ static SInt32 ConvertSampleC4SPD( Ptr src, size_t srcSize, short amp, SInt32 src
 		}
 	}
 	
-	return (srcSize * dstC4SPD) / srcC4SPD;
+	return (SInt32)((srcSize * dstC4SPD) / srcC4SPD);
 }
 
 Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize)

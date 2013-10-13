@@ -213,7 +213,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		{
 			if (scale_table[ i] >= PATSamp->originRate)
 			{
-				PATSamp->originRate = i;
+				PATSamp->originRate = (SInt32)i;
 				i = 108;
 			}
 		}
@@ -224,7 +224,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		{
 			if (scale_table[ i] >= PATSamp->minFreq)
 			{
-				PATSamp->minFreq = i;
+				PATSamp->minFreq = (SInt32)i;
 				i = 108;
 			}
 		}
@@ -233,7 +233,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		{
 			if (scale_table[ i] >= PATSamp->maxFreq)
 			{
-				PATSamp->maxFreq = i;
+				PATSamp->maxFreq = (SInt32)i;
 				i = 108;
 			}
 		}

@@ -150,7 +150,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 		theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * patSize * sizeof( Cmd), 1);
 		if (theMAD->partition[ i] == NULL) return MADNeedMemory;
 		
-		theMAD->partition[ i]->header.size 		= patSize;
+		theMAD->partition[ i]->header.size 		= (SInt32)patSize;
 		theMAD->partition[ i]->header.compMode 	= 'NONE';
 		
 		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;

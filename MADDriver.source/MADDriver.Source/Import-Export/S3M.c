@@ -453,7 +453,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, size_t *sn
 			sData			*curData = theMAD->sample[ i*MAXSAMPLE + 0];
 			SInt32			tempL, dstSize;
 			
-			tempL = (16L + finalS3MCopy - finalS3M) / 16L;
+			tempL = (SInt32)((16L + finalS3MCopy - finalS3M) / 16L);
 			
 			ins[ i]->memsegl = tempL & 0x0000FFFF;
 			PPLE16(  &ins[ i]->memsegl);
@@ -555,8 +555,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, size_t *sn
 				   aCmd->arg			!= 0 ||
 				   aCmd->vol			!= 0xFF)
 				{
-					//		*tempChar = 0;
-					
+					//*tempChar = 0;
 					finalS3MCopy++;
 					
 					// Channel
@@ -568,7 +567,6 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, size_t *sn
 					if (aCmd->note != 0xFF || aCmd->ins != 0)
 					{
 						short Octave, Note;
-						
 						*tempChar += 32;
 						
 						if (aCmd->note == 0xFF)
@@ -634,13 +632,10 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, size_t *sn
 		
 		*sizePtr = finalS3MCopy - (Ptr) sizePtr;
 		*sizePtr -= 2;
-		PPLE16(  sizePtr);
+		PPLE16( sizePtr);
 	}
 	
-	//SetPtrSize( finalS3M, finalS3MCopy - finalS3M);
-	
-	//if (finalS3MCopy > maxfinalS3M) Debugger();
-	
+	finalS3M = realloc(finalS3M, finalS3MCopy - finalS3M);
 	*sndSize = finalS3MCopy - finalS3M;
 	
 	return( (Ptr) finalS3M);
@@ -654,7 +649,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDrive
 	Ptr						theInstrument[ MAXINSTRU];
 	Byte					tempChar, *theS3MCopy;
 	short					Note, Octave, maxTrack;
-	//	short					S3Mperiod[ 12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
+	//short					S3Mperiod[ 12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
 	Byte					S3Mpan[ 32];
 	
 	/**** Variables pour le MAD ****/
@@ -1027,43 +1022,45 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDrive
 	maxTrack /= 2;
 	maxTrack *= 2;
 	
-	/*	maxTrack = 0;
-	 for( i = 0; i < theMAD->header->numPat ; i++)
-	 {
-	 Row = 0;
-	 
-	 if (s3minfo.parappat[ i] > 0)
-	 {
-	 theS3MCopy = (Byte*) theS3M;
-	 theS3MCopy += ( (long) s3minfo.parappat[i] )*16L;
-	 theS3MCopy++;
-	 
-	 while( Row < 64)
-	 {
-	 tempChar = *theS3MCopy;
-	 theS3MCopy++;
-	 
-	 if (tempChar == 0) Row++;
-	 else
-	 {	// Channel
-	 channel = tempChar;
-	 channel &= 31;
-	 
-	 if (channel > maxTrack) maxTrack = channel;
-	 if ((tempChar & 32) != 0) theS3MCopy += 2L;
-	 if ((tempChar & 64) != 0) theS3MCopy += 1L;
-	 if ((tempChar & 128) != 0) theS3MCopy += 2L;
-	 }
-	 }
-	 }
-	 }
-	 maxTrack ++;
-	 
-	 
-	 // ** Pair **
-	 maxTrack++;
-	 maxTrack /= 2;
-	 maxTrack *= 2;*/
+#if 0
+	maxTrack = 0;
+	for( i = 0; i < theMAD->header->numPat ; i++)
+	{
+		Row = 0;
+		
+		if (s3minfo.parappat[ i] > 0)
+		{
+			theS3MCopy = (Byte*) theS3M;
+			theS3MCopy += ( (long) s3minfo.parappat[i] )*16L;
+			theS3MCopy++;
+			
+			while( Row < 64)
+			{
+				tempChar = *theS3MCopy;
+				theS3MCopy++;
+				
+				if (tempChar == 0) Row++;
+				else
+				{	// Channel
+					channel = tempChar;
+					channel &= 31;
+					
+					if (channel > maxTrack) maxTrack = channel;
+					if ((tempChar & 32) != 0) theS3MCopy += 2L;
+					if ((tempChar & 64) != 0) theS3MCopy += 1L;
+					if ((tempChar & 128) != 0) theS3MCopy += 2L;
+				}
+			}
+		}
+	}
+	maxTrack ++;
+	
+	
+	// ** Pair **
+	maxTrack++;
+	maxTrack /= 2;
+	maxTrack *= 2;
+#endif
 	/********************/
 	/***** TEMPORAIRE ******/
 	/********************/

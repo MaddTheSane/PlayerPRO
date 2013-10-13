@@ -74,10 +74,10 @@ static struct MTMTrack* GetMTMCommand( short position, short whichTracks, Ptr Pa
 	return (struct MTMTrack*) aPtr;
 }
 
-static OSErr ConvertMTM2Mad( MTMDef *MTMFile, SInt32 MTMSize, MADMusic *theMAD, MADDriverSettings *init)
+static OSErr ConvertMTM2Mad( MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short 			i, x, z;
-	SInt32 			sndSize, OffSetToSample, MPatSize, temp, inOutCount;
+	SInt32 			sndSize, OffSetToSample, temp, inOutCount;
 	Ptr				MaxPtr;
 	//OSErr			theErr;
 	Ptr				theInstrument[ 64], destPtr;
