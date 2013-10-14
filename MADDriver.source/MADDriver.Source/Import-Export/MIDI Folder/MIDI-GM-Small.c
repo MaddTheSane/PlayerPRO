@@ -33,7 +33,6 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst);
 
 /**** Resource Format QK25 ****/
 
-//FIXME: Is this the proper way to do this?
 //Tip: the original code was written thus:
 //long GetNELong(BigEndianLong toget)
 //{
@@ -113,6 +112,8 @@ static inline void ConvertInstrumentIn16(  short *tempPtr,  long sSize)
 static void DebugLong( long type)
 {
 	Str31	str;
+	
+	PPBE32(&type);
 	
 	str[ 0] = 4;
 	BlockMoveData( &type, &str[ 1], 4);
