@@ -221,7 +221,7 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 		/** Lecture du header + contenu de la partition **/
 		/*************************************************/
 		CompMode = tempPatHeader.CompressionMode;
-		//PPBE32(&CompMode);
+		
 		if (CompMode == 'MAD1')
 		{
 			inOutCount = sizeof( struct MusicPattern) + tempPatHeader.PatBytes;
@@ -232,7 +232,7 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 		}
 		
 		tempPat = (struct MusicPattern*) malloc( inOutCount);
-		if (tempPat == NULL) //DebugStr("\pMemory Prob1");
+		if (tempPat == NULL)
 			return MADNeedMemory;
 		
 		if (MADConvert)
@@ -278,7 +278,8 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 		
 		memcpy(theMAD->partition[ i]->header.name, tempPat->header.PatternName, 20);
 		
-		theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
+		theMAD->partition[ i]->header.patBytes = 0;
+		theMAD->partition[ i]->header.unused2 = 0;
 		
 		for( x = 0; x < theMAD->partition[ i]->header.size; x++)
 		{
@@ -308,6 +309,7 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 				}
 			}
 		}
+		free(tempPat);
 	}
 	for( i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[ i] = NULL;
 	

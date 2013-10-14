@@ -1224,7 +1224,7 @@ static OSErr ExtractXMInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	for(i=0; i<21; i++)
+	for(i = 0; i < 21; i++)
 	{
 		info->internalFileName[ i] = mh->songname[ i];
 		if (info->internalFileName[ i] == 0 || info->internalFileName[ i] == 0x1a)
