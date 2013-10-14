@@ -108,8 +108,8 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (NSString *)fileName
 {
-	NSString *val = nil;
-	NSError *err = nil;
+	NSString *val;
+	NSError *err;
 
 	if([musicUrl getResourceValue:&val forKey:NSURLLocalizedNameKey error:&err] == NO)
 	{

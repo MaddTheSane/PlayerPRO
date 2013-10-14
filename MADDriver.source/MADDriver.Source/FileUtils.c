@@ -21,6 +21,7 @@
 //
 /********************						***********************/
 
+//Needed to quiet a few warnings on Windows.
 #define _CRT_SECURE_NO_WARNINGS 1
 
 #include "RDriver.h"
@@ -28,6 +29,7 @@
 
 void iFileCreate(Ptr path, OSType type)
 {
+	//TODO: delete old file, if present.
 }
 
 FILE* iFileOpen( Ptr name)
@@ -80,4 +82,3 @@ void iClose( FILE* iFileRefI)
 {
 	fclose( iFileRefI);
 }
-
