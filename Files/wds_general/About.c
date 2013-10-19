@@ -3,7 +3,7 @@
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include <stdio.h>
-#include <VideoToolbox.h>
+#include "VideoToolbox.h"
 #include "VA.h"
 
 pascal Boolean AboutFilter(DialogPtr, EventRecord *, short *);
