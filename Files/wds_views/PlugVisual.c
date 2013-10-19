@@ -712,7 +712,7 @@ void InitVisual(void)
 	GetApplicationPackageFSSpecFromBundle( &spec);
 	ScanDirVisualPlug( spec.parID, spec.vRefNum);
 	
-//	InitPPINMenu();
+	//InitPPINMenu();
 
 	HSetVol( NULL, vRefNum, dirID);
 	

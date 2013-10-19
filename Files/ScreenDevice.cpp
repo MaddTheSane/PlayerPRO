@@ -5,13 +5,12 @@
 #include "VisualPlugin.h"
 #include "ScreenDevice.h"
 
-static ScreenDevice *mScreenDevice = NULL;
-
 #include <Carbon/Carbon.h>
 
+static ScreenDevice *mScreenDevice = NULL;
 
-long ScreenDevice::sOSDepth		= 32;
-long ScreenDevice::sMinDepth	= 16;
+long ScreenDevice::sOSDepth = 32;
+long ScreenDevice::sMinDepth = 16;
 
 ScreenDevice::ScreenDevice()
 {
@@ -271,14 +270,10 @@ GrafPtr ScreenDevice::BeginFrame()
 		//}
 #endif
 		
-		
 #if USE_DISP_MGR
 		mBM	= ::GetGWorldPixMap( mWorld );
 		fix me!
 #endif
-		
-		
-		
 	}
 	
 	return mFS_DC;
@@ -287,12 +282,10 @@ GrafPtr ScreenDevice::BeginFrame()
 void ScreenDevice::EndFrame()
 {
 	if ( IsFullscreen() ) {
-		
 #if USE_DRAW_SPROCKETS
 		//::DSpContext_SwapBuffers( mContextRef, NULL, 0 );
 		mFS_DC = NULL;
-#endif 
-		
+#endif
 	}
 }
 

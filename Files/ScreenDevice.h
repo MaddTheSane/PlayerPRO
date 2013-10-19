@@ -56,10 +56,6 @@ a screen device to go into full screen mode.  */
 
 class ScreenDevice {
 public:
-	
-	// Returns true if EnterFullscreen() can work for any device
-	//bool					FullscreenAvail()							{ return mCanFullscreen;	}
-	
 	ScreenDevice();
 	~ScreenDevice();
 	
@@ -83,14 +79,13 @@ public:
 	inline bool EnterFullscreen( long inDispID, Point *ioSize, int inBitDepth, WindowPtr inWin, long inFreq )
 	{
 		Point tempPoint = *ioSize;
-		bool retVal = EnterFullscreen(inDispID, &tempPoint, inBitDepth, inWin, inFreq);
+		bool retVal = EnterFullscreen(inDispID, tempPoint, inBitDepth, inWin, inFreq);
 		*ioSize = tempPoint;
 		return retVal;
 	}
+	
 	bool	EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth, WindowPtr inWin, long inFreq );
 	void	ExitFullscreen();
-	
-
 	
 	// Encase these before using the port returned by GetPort();
 	//	Be sure this is called before and after *any* of the following calls
@@ -102,9 +97,7 @@ public:
 	static long sMinDepth;
 	static long sOSDepth;
 	
-	
 protected:
-	
 	long	mDispID;
 	long	mBitDepth;			 
 	GrafPtr	mFS_DC;
