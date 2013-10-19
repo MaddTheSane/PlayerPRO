@@ -9,6 +9,8 @@
 #ifndef PPMacho_OldCarbHeaders_h
 #define PPMacho_OldCarbHeaders_h
 #include <string.h>
+#include <stdio.h>
+#include <math.h>
 #include <stdlib.h>
 #include <CoreServices/CoreServices.h>
 #include <CoreFoundation/CFPlugInCOM.h>
