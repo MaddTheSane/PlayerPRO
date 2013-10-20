@@ -222,6 +222,7 @@
 		5533422410BB6675005208D1 /* IT.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E110BB5368005208D1 /* IT.c */; };
 		5533600411EBC66400525CAF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5533600311EBC66400525CAF /* Localizable.strings */; };
 		553626B817EB9DEA00D3A3C8 /* Cocoa Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Images.xcassets */; };
+		553EFE0018135EBD00F0D51E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 553EFE0218135EBD00F0D51E /* InfoPlist.strings */; };
 		5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
 		55469C2716BF34D200175A1F /* PatternHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55469C2616BF34D200175A1F /* PatternHandler.m */; };
 		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
@@ -1934,6 +1935,7 @@
 		553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PPCPlugs.xcconfig; sourceTree = "<group>"; };
 		553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "PPCPlugs-debug.xcconfig"; sourceTree = "<group>"; };
 		553626B717EB9DEA00D3A3C8 /* Cocoa Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Cocoa Images.xcassets"; path = "Cocoa/Cocoa Images.xcassets"; sourceTree = SOURCE_ROOT; };
+		553EFE0118135EBD00F0D51E /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5542403E10DB602D00C08864 /* SoundDesignerII.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = SoundDesignerII.r; sourceTree = "<group>"; };
 		5542403F10DB602D00C08864 /* Mp3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mp3.r; sourceTree = "<group>"; };
 		5542404010DB602D00C08864 /* MPG3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MPG3.r; sourceTree = "<group>"; };
@@ -3118,6 +3120,7 @@
 				5518105810C35A2600ADA9F4 /* small MAD Music.madk */,
 				5518105A10C35A2600ADA9F4 /* small MOD Music.mod */,
 				5518107410C35A4500ADA9F4 /* PlayerPRO Example-Info.plist */,
+				553EFE0218135EBD00F0D51E /* InfoPlist.strings */,
 			);
 			name = "Carbon Example";
 			path = Example;
@@ -5261,6 +5264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5521F41A17FA548A002CDBA9 /* Trackers.xcassets in Resources */,
+				553EFE0018135EBD00F0D51E /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7091,6 +7095,14 @@
 				5533600111EBC65600525CAF /* English */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		553EFE0218135EBD00F0D51E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				553EFE0118135EBD00F0D51E /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		555776A817EBF8FE0019D008 /* InfoPlist.strings */ = {
