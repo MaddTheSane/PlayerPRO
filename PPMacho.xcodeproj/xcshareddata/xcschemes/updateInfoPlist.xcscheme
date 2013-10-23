@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "55F41A2417EF814500605DF8"
-               BuildableName = "Generate Git versions"
-               BlueprintName = "Generate Git versions"
+               BlueprintIdentifier = "55534ACC1817C387006D6BCB"
+               BuildableName = "updateInfoPlist"
+               BlueprintName = "updateInfoPlist"
                ReferencedContainer = "container:PPMacho.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,6 +29,15 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "55534ACC1817C387006D6BCB"
+            BuildableName = "updateInfoPlist"
+            BlueprintName = "updateInfoPlist"
+            ReferencedContainer = "container:PPMacho.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -39,6 +48,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "55534ACC1817C387006D6BCB"
+            BuildableName = "updateInfoPlist"
+            BlueprintName = "updateInfoPlist"
+            ReferencedContainer = "container:PPMacho.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -48,6 +66,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "55534ACC1817C387006D6BCB"
+            BuildableName = "updateInfoPlist"
+            BlueprintName = "updateInfoPlist"
+            ReferencedContainer = "container:PPMacho.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
