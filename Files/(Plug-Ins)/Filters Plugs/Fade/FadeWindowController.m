@@ -24,7 +24,7 @@
 		dispatch_block_t tmp = ^{
 			long		i, per;
 			double		from = self.fadeFrom, to = self.fadeTo, temp;
-			Ptr			Sample8Ptr = theData->data;
+			char		*Sample8Ptr = theData->data;
 			short		*Sample16Ptr = (short*) theData->data;
 			
 			

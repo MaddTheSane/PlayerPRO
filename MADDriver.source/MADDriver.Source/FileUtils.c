@@ -23,31 +23,67 @@
 
 //Needed to quiet a few warnings on Windows.
 #define _CRT_SECURE_NO_WARNINGS 1
-
+#include <errno.h>
 #include "RDriver.h"
 #include "FileUtils.h"
+#include "PPPrivate.h"
 
-void iFileCreate(Ptr path, OSType type)
+#ifdef _MAC_H
+#include <CoreFoundation/CFURL.h>
+#endif
+
+OSErr iFileCreate(const char *path, OSType type)
 {
-	//TODO: delete old file, if present.
+	int status = 0;
+	int fd = 0;
+	errno = 0;
+	status = remove(path);
+	if (status == -1) {
+		switch (errno) {
+				//We're fine if there's no file there.
+			case ENOENT:
+				errno = 0;
+				break;
+				
+			default:
+				fprintf(stderr, "Error encountered deleting %s: %s", path, strerror(errno));
+				errno = 0;
+				return MADWritingErr;
+				break;
+		}
+	}
+	
+	//FIXME: does this work on Windows?
+	fd = open(path, O_WRONLY|O_CREAT|O_TRUNC, 0644);
+	if (fd == -1) {
+		return MADWritingErr;
+	}
+	close(fd);
+
+#if defined _MAC_H && !TARGET_OS_IPHONE
+	CFURLRef fileURL = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8*)path, strlen(path), false);
+	SetOSType(fileURL, type);
+	CFRelease(fileURL);
+#endif
+	return noErr;
 }
 
-FILE* iFileOpen( Ptr name)
+FILE* iFileOpen(const char *name)
 {
 	return iFileOpenRead( name);
 }
 
-FILE* iFileOpenRead( Ptr name)
+FILE* iFileOpenRead(const char *name)
 {
 	return fopen( name, "rb");
 }
 
-FILE* iFileOpenWrite( Ptr name)
+FILE* iFileOpenWrite(const char *name)
 {
 	return fopen( name, "wb");
 }
 
-long iGetEOF( FILE* iFileRefI)
+long iGetEOF(FILE* iFileRefI)
 {
 	long curEOF, oldPos;
 	
@@ -59,19 +95,19 @@ long iGetEOF( FILE* iFileRefI)
 	return curEOF;
 }
 
-OSErr iRead( long size, Ptr dest, FILE* iFileRefI)
+OSErr iRead(long size, void *dest, FILE* iFileRefI)
 {
 	fread( dest, size, 1, iFileRefI);
 	
 	return noErr;
 }
 
-OSErr iSeekCur( long size, FILE* iFileRefI)
+OSErr iSeekCur(long size, FILE* iFileRefI)
 {
 	return fseek( iFileRefI, size, SEEK_CUR);
 }
 
-OSErr iWrite( long size, Ptr dest, FILE* iFileRefI)
+OSErr iWrite(long size, const void *dest, FILE* iFileRefI)
 {
 	fwrite( dest, size, 1, iFileRefI);
 	

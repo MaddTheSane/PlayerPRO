@@ -104,7 +104,7 @@ static OSErr MADKillInstrument( MADMusic *music, short ins)
 }
 #endif
 
-static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
+static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 {
 	short 					i = 0;
 	int						x = 0;
@@ -385,7 +385,7 @@ static OSErr INFOMADF( MADSpec* MADPtr, PPInfoRec *info)
 /* MAIN FUNCTION */
 /*****************/
 
-extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	//TODO: learn how to get resource forks using POSIX commands or CoreFoundation, but not Carbon
 	OSErr			myErr = noErr;

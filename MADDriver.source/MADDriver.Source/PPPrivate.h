@@ -151,6 +151,10 @@ OSErr	CheckMADFile( char *AlienFile);
 PPEXPORT void ConvertInstrumentIn( 	Byte *tempPtr,  size_t sSize);
 #endif
 
+#if defined _MAC_H && !TARGET_OS_IPHONE
+void SetOSType(CFURLRef, OSType);
+#endif
+
 #ifdef __cplusplus
 }
 #endif

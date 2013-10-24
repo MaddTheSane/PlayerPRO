@@ -24,7 +24,7 @@
 		
         dispatch_block_t ampPlugBlock = ^{
 			SInt32	i = 0, temp = 0, Inc = self.amplitudeAmount;
-			Ptr		Sample8Ptr = theData->data;
+			char	*Sample8Ptr = theData->data;
 			short	*Sample16Ptr = (short*) theData->data;
 
 			switch( theData->amp)

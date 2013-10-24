@@ -37,7 +37,8 @@
 #define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
 #endif
 
-static Ptr			theAMFRead;
+//TODO: make this multiple-instance safe!
+static char *theAMFRead;
 
 #define READAMFFILE(dst, size)	{memmove( dst, theAMFRead, size);	theAMFRead += (long) size;}
 
@@ -67,7 +68,7 @@ static inline UInt32 Tdecode32( void *msg_buf)
 #endif
 #endif
 
-static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
+static OSErr AMF2Mad( char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
 	Byte			tempByte;
 	short			i, x, noIns, tempShort, trackCount, trckPtr, t;
@@ -228,7 +229,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 				
 				curData->relNote	= 0;
 				
-				curData->data 		= (Ptr)malloc( curData->size);
+				curData->data 		= (char*)malloc( curData->size);
 				if (curData->data == NULL) return MADNeedMemory;
 			}
 			else curIns->numSamples = 0;
@@ -287,7 +288,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 		if (tempShort == 0 ) t=t;
 		else
 		{
-			Ptr tPtr = (Ptr)malloc( tempShort * 3 + size);
+			char *tPtr = (char*)malloc( tempShort * 3 + size);
 			READAMFFILE( tPtr,tempShort * 3 + size);
 			free( tPtr);
 		}
@@ -310,7 +311,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	return noErr;
 }
 
-static OSErr TestAMFFile( Ptr AlienFile)
+static OSErr TestAMFFile( void *AlienFile)
 {
 	OSType	myMADSign = *((OSType*) AlienFile);
 	PPBE32(&myMADSign);
@@ -319,7 +320,7 @@ static OSErr TestAMFFile( Ptr AlienFile)
 	else return MADFileNotSupportedByThisPlug;
 }
 
-static OSErr ExtractAMFInfo( PPInfoRec *info, Ptr AlienFile)
+static OSErr ExtractAMFInfo( PPInfoRec *info, char *AlienFile)
 {
 	//long		PatternSize;
 	//short		i;
@@ -356,7 +357,7 @@ static OSErr ExtractAMFInfo( PPInfoRec *info, Ptr AlienFile)
 #ifndef _MAC_H
 
 EXP OSErr FillPlug( PlugInfo *p);
-EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -374,13 +375,13 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /* MAIN FUNCTION */
 /*****************/
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainAMF( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+OSErr mainAMF( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	OSErr	myErr;
-	Ptr		AlienFile;
+	char	*AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
 	

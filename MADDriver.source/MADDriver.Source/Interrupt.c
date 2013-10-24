@@ -1015,7 +1015,7 @@ void ReadNote( Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 						{
 							curVoice->loopBeg 	= curData->loopBeg;
 							curVoice->loopSize	= curData->loopSize;
-							curVoice->maxPtr 	= (Ptr) ((size_t) curData->data + curData->loopBeg + curData->loopSize);
+							curVoice->maxPtr 	= (char*) ((size_t) curData->data + curData->loopBeg + curData->loopSize);
 						}
 						else
 						{
@@ -1844,7 +1844,7 @@ void NoteAnalyse( MADDriverRec *intDriver)
 		if (intDriver->DriverSettings.outPutMode != PolyPhonic)
 		{
 			short			*ttt;
-			Ptr				ASCBuffer;
+			char			*ASCBuffer;
 			
 			ttt = intDriver->DASCBuffer8;
 			ASCBuffer = intDriver->IntDataPtr;
@@ -2158,10 +2158,10 @@ void GenerateSound( MADDriverRec *intDriver)
 	}
 }
 
-Boolean DirectSaveAlways( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
+Boolean DirectSaveAlways( char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
-	Ptr						ptrCopy;
-	MADDriverSettings		driverCopy;
+	char				*ptrCopy;
+	MADDriverSettings	driverCopy;
 	
 	if (intDriver == NULL) return false;	//intDriver = MADGetMADDriverPtr();
 	
@@ -2192,10 +2192,10 @@ Boolean DirectSaveAlways( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec
 	return true;
 }
 
-Boolean DirectSave( Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
+Boolean DirectSave( char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
-	Ptr						ptrCopy;
-	MADDriverSettings		driverCopy;
+	char				*ptrCopy;
+	MADDriverSettings	driverCopy;
 	
 	if (intDriver == NULL) return false;	//intDriver = MADGetMADDriverPtr();
 	if (!intDriver->Reading) return false;

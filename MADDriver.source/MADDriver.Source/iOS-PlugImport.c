@@ -192,7 +192,7 @@ static OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	}
 	fileSize = iGetEOF( fileID);
 	
-	iRead( sizeof( MADSpec), (Ptr) theMAD, fileID);
+	iRead( sizeof( MADSpec), theMAD, fileID);
 	iClose( fileID);
 	
 	strcpy( InfoRec->internalFileName, theMAD->name);

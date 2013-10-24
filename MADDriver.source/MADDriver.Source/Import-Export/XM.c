@@ -69,7 +69,7 @@ typedef UInt8			UBYTE;
 
 static		Byte		LastAEffect[ MAXTRACK];
 static		XMHEADER	*mh;
-static		Ptr			theXMRead, theXMMax;
+static		char		*theXMRead, *theXMMax;
 
 #define READXMFILE(dst, size)	{memcpy( dst, theXMRead, size);	theXMRead += (long) size;}
 #define WRITEXMFILE(src, size)	{memcpy( theXMRead, src, size);	theXMRead += (long) size;}
@@ -395,7 +395,7 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 	{
 		XMINSTHEADER 	ih;
 		InstrData		*curIns = &theMAD->fid[ t];
-		Ptr				theXMReadCopy;
+		char			*theXMReadCopy;
 		
 		theXMReadCopy = theXMRead;
 		READXMFILE( &ih.size,	4);		PPLE32( &ih.size);
@@ -556,7 +556,7 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 		{
 			sData	*curData = theMAD->sample[ t*MAXSAMPLE + u];
 			
-			curData->data 		= (Ptr)malloc( curData->size);
+			curData->data 		= (char*)malloc( curData->size);
 			if (curData->data == NULL) return MADNeedMemory;
 			else {
 				READXMFILE( curData->data, curData->size);
@@ -570,7 +570,7 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 					
 					for( tL = 0; tL < curData->size/2; tL++)
 					{
-						PPLE16( (Ptr) (tt + tL));
+						PPLE16( (void*) (tt + tL));
 					}
 					
 					{

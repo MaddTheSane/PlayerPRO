@@ -48,7 +48,7 @@
 }
 @end
 
-static void CocoaDebugStr( short line, Ptr file, Ptr text)
+static void CocoaDebugStr( short line, const char *file, const char *text)
 {
 	NSLog(@"%s:%u error text:%s!", file, line, text);
 	NSInteger alert = NSRunAlertPanel(NSLocalizedString(@"MyDebugStr_Error", @"Error"),
@@ -434,7 +434,7 @@ static NSInteger selMusFromList = -1;
 			[saveData appendBytes:&copyData length:inOutCount];
 			
 			inOutCount = music->sample[ music->fid[i].firstSample + x]->size;
-			Ptr dataCopy = malloc(inOutCount);
+			char *dataCopy = malloc(inOutCount);
 			memcpy(dataCopy, curData.data, inOutCount);
 			if (curData.amp == 16)
 			{
@@ -742,17 +742,21 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	MADAttachDriverToMusic( theRec, music, NULL);
 	MADPlayMusic(theRec);
 	
-	Ptr soundPtr = NULL;
+	char *soundPtr = NULL;
 	long full = 0;
-	if (theSet->outPutBits == 8) {
-		full = MADAudioLength(theRec);
-	}else if (theSet->outPutBits == 16) {
-		full = MADAudioLength(theRec) * 2;
-	} else if (theSet->outPutBits == 20 || theSet->outPutBits == 24 ) {
-		full = MADAudioLength(theRec) * 3;
-	} else {
-		//This is just to make the Static analyzer happy
-		full = MADAudioLength(theRec);
+	switch (theset->outPutBits) {
+		case 16:
+			full = MADAudioLength(theRec) * 2;
+			break;
+			
+		case 20:
+		case 24:
+			full = MADAudioLength(theRec) * 3;
+			
+		default:
+		case 8:
+			full = MADAudioLength(theRec);
+			break;
 	}
 	
 	switch (theSet->outPutMode) {

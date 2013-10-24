@@ -60,6 +60,6 @@ typedef struct SixSixNine	{
 typedef struct Partition669	{
 		SixSixNine		*theFile;
 		SampleInfo		*sampleInfo;
-		Ptr				samplePtr[ 128];
-		Ptr				patternPtr[ 128];
+		char			*samplePtr[ 128];
+		char			*patternPtr[ 128];
 } Partition669;

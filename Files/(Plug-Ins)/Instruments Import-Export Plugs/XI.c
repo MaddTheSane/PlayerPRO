@@ -536,7 +536,7 @@ static OSErr mainXI(void						*unused,
 				for( u = 0 ; u < InsHeader->numSamples ; u++)
 				{
 					sData 	*curData = sample[ u];
-					Ptr		tempPtr;
+					char	*tempPtr;
 					long	dstSize;
 					
 					tempPtr = malloc( curData->size);
@@ -574,7 +574,7 @@ static OSErr mainXI(void						*unused,
 							
 							for( tL = 0; tL < dstSize/2; tL++)
 							{
-								*(tt + tL) = Tdecode16( (Ptr) (tt + tL));
+								*(tt + tL) = Tdecode16( (void*) (tt + tL));
 							}
 						}
 						else
@@ -582,7 +582,7 @@ static OSErr mainXI(void						*unused,
 							/* Real to Delta */
 							long	oldV, newV;
 							long	xL;
-							Ptr		tt = ( Ptr) tempPtr;
+							char	*tt = (char*) tempPtr;
 							
 							if (curData->stereo)
 							{

@@ -25,7 +25,7 @@ static OSErr mainAIFF(void					*unused,
 					  PPInfoPlug			*thePPInfoPlug)
 {
 	OSErr	myErr = noErr;
-	Ptr		AlienFile;
+	char	*AlienFile;
 	short	iFileRefI;
 	long	inOutBytes;
 		
@@ -33,7 +33,7 @@ static OSErr mainAIFF(void					*unused,
 	{
 		case 'IMPL':
 		{
-			Ptr				theSound;
+			char			*theSound;
 			long			lS, lE;
 			short			sS;
 			unsigned long	rate;
@@ -58,7 +58,7 @@ static OSErr mainAIFF(void					*unused,
 		
 		case 'TEST':
 		{
-			Ptr	theSound;
+			char *theSound;
 			
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr)
@@ -84,7 +84,7 @@ static OSErr mainAIFF(void					*unused,
 			if (*sampleID >= 0)
 			{
 				OSType				compType = 'NONE';
-				unsigned long		rate;
+				unsigned int		rate;
 				sData 				*curData = sample[ *sampleID];
 				short				numChan;
 				

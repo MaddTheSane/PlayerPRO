@@ -24,7 +24,7 @@ static OSErr mainBackwards(void					*unused,
 	{
 		case 8:
 		{
-			Ptr	orgPtr = theData->data, destPtr = orgPtr;
+			char *orgPtr = theData->data, *destPtr = orgPtr;
 
 			orgPtr += SelectionStart;
 			destPtr += SelectionEnd - 1;
