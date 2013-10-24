@@ -27,7 +27,7 @@
 #define kUnresolvableFile @"Unresolvable files"
 #define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."
 
-static void CocoaDebugStr( short line, Ptr file, Ptr text)
+static void CocoaDebugStr( short line, const char *file, const char *text)
 {
 	NSLog(@"%s:%u error text:%s!", file, line, text);
 	NSInteger alert = NSRunAlertPanel(NSLocalizedString(@"MyDebugStr_Error", @"Error"),
