@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" promptedForUpgradeToXcode5="NO">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MusicListPreferenceController">
@@ -23,14 +23,14 @@
             <rect key="frame" x="0.0" y="0.0" width="404" height="276"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <box autoresizesSubviews="NO" fixedFrame="YES" title="After playing music:" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="3">
+                <box autoresizesSubviews="NO" title="After playing music:" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="3">
                     <rect key="frame" x="17" y="178" width="370" height="78"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView">
                         <rect key="frame" x="1" y="1" width="368" height="62"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6">
+                            <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6">
                                 <rect key="frame" x="18" y="14" width="332" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -68,17 +68,22 @@
                             </matrix>
                         </subviews>
                     </view>
+                    <constraints>
+                        <constraint firstItem="6" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="16" id="XvN-ak-gwM"/>
+                        <constraint firstItem="6" firstAttribute="top" secondItem="3" secondAttribute="top" constant="25" id="fOJ-rc-tHh"/>
+                        <constraint firstAttribute="bottom" secondItem="6" secondAttribute="bottom" constant="11" id="vQ1-GV-qba"/>
+                    </constraints>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </box>
-                <box autoresizesSubviews="NO" fixedFrame="YES" title="Music List Settings" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="15">
+                <box autoresizesSubviews="NO" title="Music List Settings" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="15">
                     <rect key="frame" x="17" y="16" width="370" height="158"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView">
                         <rect key="frame" x="1" y="1" width="368" height="142"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <matrix verticalHuggingPriority="750" fixedFrame="YES" mode="highlight" allowsEmptySelection="NO" autosizesCells="NO" translatesAutoresizingMaskIntoConstraints="NO" id="45">
+                            <matrix verticalHuggingPriority="750" mode="highlight" allowsEmptySelection="NO" autosizesCells="NO" translatesAutoresizingMaskIntoConstraints="NO" id="45">
                                 <rect key="frame" x="18" y="14" width="332" height="118"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -137,10 +142,23 @@
                             </matrix>
                         </subviews>
                     </view>
+                    <constraints>
+                        <constraint firstItem="45" firstAttribute="top" secondItem="15" secondAttribute="top" constant="25" id="2Hv-7i-frs"/>
+                        <constraint firstItem="45" firstAttribute="leading" secondItem="15" secondAttribute="leading" constant="16" id="Mwz-V9-QjB"/>
+                    </constraints>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </box>
             </subviews>
+            <constraints>
+                <constraint firstItem="3" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="0V1-Fh-n0Z"/>
+                <constraint firstItem="15" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" id="6D0-Qr-7Fu"/>
+                <constraint firstItem="15" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="8" symbolic="YES" id="7gy-Cf-de1"/>
+                <constraint firstAttribute="trailing" secondItem="3" secondAttribute="trailing" constant="20" symbolic="YES" id="Hdw-MK-duj"/>
+                <constraint firstItem="15" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="VD7-Jh-n6x"/>
+                <constraint firstAttribute="bottom" secondItem="15" secondAttribute="bottom" constant="20" symbolic="YES" id="dnZ-O4-X2d"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="sig-Gg-cON"/>
+            </constraints>
         </customView>
     </objects>
 </document>

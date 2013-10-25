@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PPDocument">
@@ -32,14 +32,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box autoresizesSubviews="NO" title="Box" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="tja-dm-7N1">
-                        <rect key="frame" x="146" y="289" width="216" height="106"/>
+                        <rect key="frame" x="146" y="287" width="216" height="108"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView">
-                            <rect key="frame" x="1" y="1" width="214" height="104"/>
+                            <rect key="frame" x="1" y="1" width="214" height="106"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="uMf-5K-EbC">
-                                    <rect key="frame" x="164" y="60" width="32" height="32"/>
+                                    <rect key="frame" x="164" y="62" width="32" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="32" id="DKJ-rJ-dJp"/>
@@ -51,7 +51,7 @@
                                     </buttonCell>
                                 </button>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Ldh-ec-MpH">
-                                    <rect key="frame" x="91" y="60" width="32" height="32"/>
+                                    <rect key="frame" x="91" y="62" width="32" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="32" id="eej-5U-tKP"/>
@@ -63,7 +63,7 @@
                                     </buttonCell>
                                 </button>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="3cJ-rm-kq9">
-                                    <rect key="frame" x="18" y="60" width="32" height="32"/>
+                                    <rect key="frame" x="18" y="62" width="32" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="32" id="NuU-so-bYL"/>
@@ -75,7 +75,7 @@
                                     </buttonCell>
                                 </button>
                                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oP5-bp-Z0e">
-                                    <rect key="frame" x="66" y="38" width="82" height="15"/>
+                                    <rect key="frame" x="66" y="38" width="82" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="i9g-hZ-aEP"/>
@@ -83,7 +83,7 @@
                                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="OXP-YL-GLW"/>
                                 </slider>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jwX-rY-VeA">
-                                    <rect key="frame" x="153" y="39" width="46" height="14"/>
+                                    <rect key="frame" x="154" y="39" width="44" height="14"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="Dh4-2B-dT8"/>
@@ -96,7 +96,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WaK-0d-ulU">
-                                    <rect key="frame" x="15" y="39" width="46" height="14"/>
+                                    <rect key="frame" x="16" y="39" width="44" height="14"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" id="yHJ-QM-ZJs">
                                         <customFormatter key="formatter" id="Yrl-l6-oXP" customClass="PPTimeFormatter"/>
@@ -106,7 +106,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gxI-fR-ZcW">
-                                    <rect key="frame" x="15" y="14" width="184" height="17"/>
+                                    <rect key="frame" x="16" y="14" width="182" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" placeholderString="Music Name" id="ui0-6T-OrF">
                                         <font key="font" metaFont="system"/>
@@ -149,13 +149,13 @@
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
                     <tabView initialItem="ykk-c8-31L" translatesAutoresizingMaskIntoConstraints="NO" id="eP8-FW-QMd">
-                        <rect key="frame" x="13" y="10" width="481" height="281"/>
+                        <rect key="frame" x="13" y="10" width="481" height="279"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Digital" identifier="2" id="gav-7k-IAf">
                                 <view key="view" id="3cF-zg-o6h">
-                                    <rect key="frame" x="10" y="33" width="461" height="235"/>
+                                    <rect key="frame" x="10" y="33" width="461" height="233"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>

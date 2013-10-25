@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" promptedForUpgradeToXcode5="NO">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ColorPreferenceController">
@@ -24,15 +24,19 @@
             <rect key="frame" x="0.0" y="0.0" width="448" height="369"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <colorWell id="3">
+                <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="3">
                     <rect key="frame" x="20" y="326" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="23" id="LXe-df-pXy"/>
+                        <constraint firstAttribute="width" constant="44" id="b4D-rM-sOk"/>
+                    </constraints>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="changeColorWell:" target="-2" id="27"/>
                     </connections>
                 </colorWell>
-                <colorWell id="4">
+                <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="4">
                     <rect key="frame" x="72" y="326" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -40,7 +44,7 @@
                         <action selector="changeColorWell:" target="-2" id="28"/>
                     </connections>
                 </colorWell>
-                <colorWell id="5">
+                <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="5">
                     <rect key="frame" x="124" y="326" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -48,7 +52,7 @@
                         <action selector="changeColorWell:" target="-2" id="29"/>
                     </connections>
                 </colorWell>
-                <colorWell id="6">
+                <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="6">
                     <rect key="frame" x="176" y="326" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -56,7 +60,7 @@
                         <action selector="changeColorWell:" target="-2" id="30"/>
                     </connections>
                 </colorWell>
-                <colorWell id="7">
+                <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="7">
                     <rect key="frame" x="228" y="326" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -64,7 +68,7 @@
                         <action selector="changeColorWell:" target="-2" id="31"/>
                     </connections>
                 </colorWell>
-                <colorWell id="8">
+                <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="8">
                     <rect key="frame" x="280" y="326" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -72,7 +76,7 @@
                         <action selector="changeColorWell:" target="-2" id="32"/>
                     </connections>
                 </colorWell>
-                <colorWell id="9">
+                <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="9">
                     <rect key="frame" x="332" y="326" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -80,7 +84,7 @@
                         <action selector="changeColorWell:" target="-2" id="33"/>
                     </connections>
                 </colorWell>
-                <colorWell id="10">
+                <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="10">
                     <rect key="frame" x="384" y="326" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -89,6 +93,38 @@
                     </connections>
                 </colorWell>
             </subviews>
+            <constraints>
+                <constraint firstItem="3" firstAttribute="top" secondItem="4" secondAttribute="top" id="0cI-dl-29A"/>
+                <constraint firstItem="3" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="0lG-mT-k1w"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="3gO-ru-Msj"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="10" secondAttribute="top" id="BDe-DC-4Cr"/>
+                <constraint firstItem="7" firstAttribute="leading" secondItem="6" secondAttribute="trailing" constant="8" symbolic="YES" id="FEk-3q-j9p"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="5" secondAttribute="top" id="G5f-zZ-vhP"/>
+                <constraint firstItem="4" firstAttribute="leading" secondItem="3" secondAttribute="trailing" constant="8" symbolic="YES" id="Igz-A1-hOe"/>
+                <constraint firstItem="3" firstAttribute="height" secondItem="6" secondAttribute="height" id="Ix2-Kk-INx"/>
+                <constraint firstItem="10" firstAttribute="leading" secondItem="9" secondAttribute="trailing" constant="8" id="M3E-XY-piY"/>
+                <constraint firstItem="3" firstAttribute="width" secondItem="7" secondAttribute="width" id="Nim-1s-H26"/>
+                <constraint firstItem="3" firstAttribute="width" secondItem="4" secondAttribute="width" id="Q0S-Vs-YhM"/>
+                <constraint firstItem="5" firstAttribute="leading" secondItem="4" secondAttribute="trailing" constant="8" symbolic="YES" id="TCI-BQ-iNh"/>
+                <constraint firstItem="3" firstAttribute="height" secondItem="8" secondAttribute="height" id="U4T-Dg-zbw"/>
+                <constraint firstItem="3" firstAttribute="width" secondItem="6" secondAttribute="width" id="W6l-fG-fC2"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="8" secondAttribute="top" id="WeT-Ee-agG"/>
+                <constraint firstItem="3" firstAttribute="height" secondItem="7" secondAttribute="height" id="Zt6-od-FZH"/>
+                <constraint firstAttribute="trailing" secondItem="10" secondAttribute="trailing" constant="20" symbolic="YES" id="ccc-93-sDJ"/>
+                <constraint firstItem="3" firstAttribute="width" secondItem="8" secondAttribute="width" id="gPN-7v-QBa"/>
+                <constraint firstItem="3" firstAttribute="height" secondItem="9" secondAttribute="height" id="hyb-IA-VAS"/>
+                <constraint firstItem="3" firstAttribute="height" secondItem="4" secondAttribute="height" id="i7N-li-XK3"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="7" secondAttribute="top" id="iUt-g1-pbw"/>
+                <constraint firstItem="6" firstAttribute="leading" secondItem="5" secondAttribute="trailing" constant="8" symbolic="YES" id="m1b-Be-W9i"/>
+                <constraint firstItem="3" firstAttribute="width" secondItem="9" secondAttribute="width" id="moF-L5-rpf"/>
+                <constraint firstItem="3" firstAttribute="width" secondItem="10" secondAttribute="width" id="nU8-ei-WnD"/>
+                <constraint firstItem="8" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="8" symbolic="YES" id="vI8-GT-Vmg"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="9" secondAttribute="top" id="wCv-R1-39e"/>
+                <constraint firstItem="3" firstAttribute="height" secondItem="10" secondAttribute="height" id="wYt-5y-6QC"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="6" secondAttribute="top" id="xft-BY-QoK"/>
+                <constraint firstItem="3" firstAttribute="height" secondItem="5" secondAttribute="height" id="z1B-Jh-xhX"/>
+                <constraint firstItem="3" firstAttribute="width" secondItem="5" secondAttribute="width" id="z6g-WE-WWU"/>
+            </constraints>
         </customView>
     </objects>
 </document>

@@ -604,6 +604,7 @@
 		55C358F816C42F7600FB9FA6 /* MIDI-Hardware-Stub.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */; };
 		55C930391819E68700D9E072 /* CocoaFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C930381819E68700D9E072 /* CocoaFuncs.m */; };
 		55C9303A1819E68700D9E072 /* CocoaFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C930381819E68700D9E072 /* CocoaFuncs.m */; };
+		55C9303B1819F6EC00D9E072 /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */; };
 		55CB01A711EB82FA0028C6BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CB01A611EB82FA0028C6BB /* main.m */; };
 		55CBFAD211EB77ED0028C6BB /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55CBFAD311EB77ED0028C6BB /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
@@ -626,7 +627,6 @@
 		55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55D1BD58120FBAC0004FD083 /* Credits.rtf */; };
 		55DEBFE918008D970089B940 /* PPSoundSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55DEBFEA18008D9E0089B940 /* PPSoundSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */; };
-		55DEBFEB18008DA50089B940 /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */; };
 		55E52E2512455E5100315307 /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
 		55E52E2B1245640500315307 /* PPReverse.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E281245640500315307 /* PPReverse.pdf */; };
 		55E52E2C1245640500315307 /* PPStop.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E291245640500315307 /* PPStop.pdf */; };
@@ -2191,6 +2191,7 @@
 		55BE999117978BB200D6DECC /* schema.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; lineEnding = 0; path = schema.xml; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xml; };
 		55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPlayerPROCompact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C930381819E68700D9E072 /* CocoaFuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaFuncs.m; sourceTree = "<group>"; };
+		55C9303C1819F6EC00D9E072 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/PPSoundSettingsViewController.xib; sourceTree = "<group>"; };
 		55CB01A611EB82FA0028C6BB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO 6.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CBF9A811EB77760028C6BB /* Cocoa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Cocoa-Info.plist"; sourceTree = "<group>"; };
@@ -2233,7 +2234,6 @@
 		55F4287716A89A9C009013D8 /* PPMadCommandObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMadCommandObject.m; sourceTree = "<group>"; };
 		55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSoundSettingsViewController.h; sourceTree = "<group>"; };
 		55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSoundSettingsViewController.m; sourceTree = "<group>"; };
-		55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPSoundSettingsViewController.xib; sourceTree = "<group>"; };
 		55FCC5E417FDF199004FBEE7 /* schema.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = schema.plist; sourceTree = "<group>"; };
 		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileUtils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = DelayOutPut.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -3824,7 +3824,7 @@
 				5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */,
 				55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */,
 				55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */,
-				55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */,
+				55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */,
 				55EA019616AF15B500D6AEA0 /* PPFilterPlugObject.h */,
 				55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */,
 				55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */,
@@ -5302,7 +5302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				551292E3163DD68500C2C639 /* InfoPlist.strings in Resources */,
-				55DEBFEB18008DA50089B940 /* PPSoundSettingsViewController.xib in Resources */,
+				55C9303B1819F6EC00D9E072 /* PPSoundSettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7239,6 +7239,14 @@
 				55BE998917978BB100D6DECC /* English */,
 			);
 			name = schema.strings;
+			sourceTree = "<group>";
+		};
+		55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55C9303C1819F6EC00D9E072 /* en */,
+			);
+			name = PPSoundSettingsViewController.xib;
 			sourceTree = "<group>";
 		};
 		55CBFC7211EB7BD90028C6BB /* InfoPlist.strings */ = {
