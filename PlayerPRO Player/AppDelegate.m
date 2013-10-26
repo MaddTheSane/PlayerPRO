@@ -744,7 +744,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	
 	char *soundPtr = NULL;
 	long full = 0;
-	switch (theset->outPutBits) {
+	switch (theSet->outPutBits) {
 		case 16:
 			full = MADAudioLength(theRec) * 2;
 			break;
