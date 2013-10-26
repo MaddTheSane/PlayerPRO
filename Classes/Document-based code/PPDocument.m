@@ -482,15 +482,10 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	
 	Ptr soundPtr = NULL;
 	NSUInteger full = [theRec audioLength];
-	if (theSet->outPutBits == 8) {
-		//full = audLen;
-	}else if (theSet->outPutBits == 16) {
+	if (theSet->outPutBits == 16) {
 		full *= 2;
 	} else if (theSet->outPutBits == 20 || theSet->outPutBits == 24 ) {
 		full *= 3;
-	} else {
-		//This is just to make the Static analyzer happy
-		//full = MADAudioLength(theRec);
 	}
 	
 	switch (theSet->outPutMode) {
