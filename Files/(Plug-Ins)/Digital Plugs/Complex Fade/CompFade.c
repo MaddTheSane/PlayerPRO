@@ -110,13 +110,40 @@ static short Text2Note( Str255 myTT)
 	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
 	switch( myTT[1])
 	{
-		case 'C':	case'c':	Oct += 0;	break;
-		case 'D':	case'd':	Oct += 2;	break;
-		case 'E':	case'e':	Oct += 4;	break;
-		case 'F':	case'f':	Oct += 5;	break;
-		case 'G':	case'g':	Oct += 7;	break;
-		case 'A':	case'a':	Oct += 9;	break;
-		case 'B':	case'b':	Oct += 11;	break;
+		case 'C':
+		case 'c':
+			Oct += 0;
+			break;
+			
+		case 'D':
+		case 'd':
+			Oct += 2;
+			break;
+			
+		case 'E':
+		case 'e':
+			Oct += 4;
+			break;
+			
+		case 'F':
+		case 'f':
+			Oct += 5;
+			break;
+			
+		case 'G':
+		case 'g':
+			Oct += 7;
+			break;
+			
+		case 'A':
+		case 'a':
+			Oct += 9;
+			break;
+			
+		case 'B':
+		case 'b':
+			Oct += 11;
+			break;
 		
 		default:	Oct = 0xFF;		break;
 	}

@@ -32,7 +32,7 @@ OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	InfoRec->totalInstruments = theMAD->numInstru;
 	InfoRec->fileSize = fileSize;
 	
-	free( (Ptr) theMAD);	
+	free(theMAD);
 	theMAD = NULL;
 	
 	return noErr;

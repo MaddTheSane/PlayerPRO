@@ -313,13 +313,25 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 	switch( B0X40)
 	{
 			// Speed
-		case 'A':	*Cmd = speedE;		*Arg = B1;	break;
+		case 'A':
+			*Cmd = speedE;
+			*Arg = B1;
+			break;
 			// Tempo
-		case 'T':	*Cmd = speedE;		*Arg = B1;	break;
+		case 'T':
+			*Cmd = speedE;
+			*Arg = B1;
+			break;
 			
-		case 'B':	*Cmd = fastskipE;		*Arg = B1;	break;
+		case 'B':
+			*Cmd = fastskipE;
+			*Arg = B1;
+			break;
 			
-		case 'C':	*Cmd = skipE;			*Arg = B1;	break;
+		case 'C':
+			*Cmd = skipE;
+			*Arg = B1;
+			break;
 			
 		case 'D':
 			if (LoB1 == 0 || HiB1 == 0)		// Slide volume

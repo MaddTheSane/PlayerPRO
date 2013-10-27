@@ -316,7 +316,8 @@ void MADCleanDriver( MADDriverRec *intDriver)
 	}
 	
 	intDriver->PatDelay = 0;
-	intDriver->BufCounter = 0;	intDriver->BytesToGenerate = 0;
+	intDriver->BufCounter = 0;
+	intDriver->BytesToGenerate = 0;
 	
 	for( i = 0; i < MAXTRACK; i++) intDriver->TrackLineReading[ i] = true;
 	for( i = 0; i < MAXTRACK; i++) intDriver->TrackReading[ i] = true;
@@ -970,7 +971,9 @@ void ReadNote( Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 			
 			/**** INSTRUMENT ****/
 			
-			ins						= intCmd.ins - 1;		if (ins >= MAXINSTRU) ins = MAXINSTRU-1;
+			ins						= intCmd.ins - 1;
+			if (ins >= MAXINSTRU)
+				ins = MAXINSTRU-1;
 			samp					= intDriver->curMusic->fid[ ins].what[ intCmd.note];
 			
 			if (intDriver->DriverSettings.driverMode == MIDISoundDriver)
@@ -1255,9 +1258,15 @@ void ApplyVSTEffects( MADDriverRec *intDriver, Boolean ByPass)
 					{
 						// LEFT & RIGHT
 						
-						tempL = 0;	tempR = 0;	intempLong = &eee[ ii*mul*2];
+						tempL = 0;
+						tempR = 0;
+						intempLong = &eee[ ii*mul*2];
+						
 						x = mul;
-						while( x-- > 0) {	tempL += *(intempLong++);	tempR += *(intempLong++); }
+						while( x-- > 0) {
+							tempL += *(intempLong++);
+							tempR += *(intempLong++);
+						}
 						eee[ ii*2] = tempL / mul;
 						eee[ ii*2 + 1] = tempR / mul;
 					}
@@ -1308,8 +1317,10 @@ void NoteAnalyse( MADDriverRec *intDriver)
 			
 			switch( intDriver->DriverSettings.outPutMode)
 			{
-				case PolyPhonic:					Tracks	= intDriver->DriverSettings.numChn;	break;
-				default:							Tracks  = 2;	break;
+				case PolyPhonic:					Tracks	= intDriver->DriverSettings.numChn;
+					break;
+				default:							Tracks  = 2;
+					break;
 			}
 			
 			Tracks = 1;
@@ -1348,8 +1359,12 @@ void NoteAnalyse( MADDriverRec *intDriver)
 		intDriver->ASCBUFFER = intDriver->BytesToGenerate - intDriver->BufCounter;
 		
 		if (intDriver->ASCBUFFER < 0) intDriver->ASCBUFFER = 0;
-		if (intDriver->ASCBUFFER > InterruptBufferSize) { intDriver->ASCBUFFER = InterruptBufferSize;	NoteReading = false;}
-		else NoteReading = true;
+		if (intDriver->ASCBUFFER > InterruptBufferSize) {
+			intDriver->ASCBUFFER = InterruptBufferSize;
+			NoteReading = false;
+		}
+		else
+			NoteReading = true;
 		
 		if (intDriver->ASCBUFFER > 0)
 		{
@@ -1690,7 +1705,9 @@ void NoteAnalyse( MADDriverRec *intDriver)
 				for( i = 0; i < intDriver->ASCBUFFER / mul; i++)
 				{
 					// LEFT & RIGHT
-					tempL = 0;	tempR = 0;	intempShort = &tempShortIn[ i*mul*2];
+					tempL = 0;
+					tempR = 0;
+					intempShort = &tempShortIn[ i*mul*2];
 					x = mul;
 					while( x-- > 0)	{ tempL += *(intempShort++);	tempR += *(intempShort++);	}
 					tempShortIn[ i*2] = tempL / mul;
@@ -1895,8 +1912,10 @@ void NoteAnalyse( MADDriverRec *intDriver)
 			ASCBuffer += 2;
 		}
 		
-		ttt = intDriver->DASCBuffer;					ttt++;
-		ASCBuffer = (short*) intDriver->IntDataPtr;		ASCBuffer++;
+		ttt = intDriver->DASCBuffer;
+		ttt++;
+		ASCBuffer = (short*) intDriver->IntDataPtr;
+		ASCBuffer++;
 		
 		i = intDriver->ASCBUFFERReal;
 		// Right

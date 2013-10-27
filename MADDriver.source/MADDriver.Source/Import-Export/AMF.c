@@ -105,13 +105,19 @@ static OSErr AMF2Mad( char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 	theMAD->header->MAD = 'MADK';
 	
 	READAMFFILE( theMAD->header->name, 32);
-	READAMFFILE( &tempByte, 1);		noIns = tempByte;
-	READAMFFILE( &tempByte, 1);		theMAD->header->numPat = tempByte;
-	READAMFFILE( &tempShort, 2);	trackCount = Tdecode16( &tempShort);
+	READAMFFILE( &tempByte, 1);
+	noIns = tempByte;
+	
+	READAMFFILE( &tempByte, 1);
+	theMAD->header->numPat = tempByte;
+	
+	READAMFFILE( &tempShort, 2);
+	trackCount = Tdecode16( &tempShort);
 	
 	if (AMFType >= 0x414D4609 )
 	{
-		READAMFFILE( &tempByte, 1);		theMAD->header->numChn = tempByte;
+		READAMFFILE( &tempByte, 1);
+		theMAD->header->numChn = tempByte;
 		
 		READAMFFILE( &tempByte, pan);
 		if (AMFType < 0x414D460B )
@@ -122,8 +128,11 @@ static OSErr AMF2Mad( char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 	else theMAD->header->numChn = 4;
 	if (AMFType >= 0x414D460D )
 	{
-		READAMFFILE( &tempByte, 1);		theMAD->header->tempo = tempByte;
-		READAMFFILE( &tempByte, 1);		theMAD->header->speed = tempByte;
+		READAMFFILE( &tempByte, 1);
+		theMAD->header->tempo = tempByte;
+		
+		READAMFFILE( &tempByte, 1);
+		theMAD->header->speed = tempByte;
 	}
 	else
 	{
@@ -144,7 +153,8 @@ static OSErr AMF2Mad( char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 		
 		if (AMFType >= 0x414D460E )
 		{
-			READAMFFILE( &tempShort, 2);	patSize = Tdecode16( &tempShort);
+			READAMFFILE( &tempShort, 2);
+			patSize = Tdecode16( &tempShort);
 		}
 		else patSize = 64;
 		
@@ -156,7 +166,8 @@ static OSErr AMF2Mad( char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 		
 		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
 		
-		theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
+		theMAD->partition[ i]->header.patBytes = 0;
+		theMAD->partition[ i]->header.unused2 = 0;
 		
 		for( x = 0; x < theMAD->header->numChn; x++ )
 		{
@@ -223,7 +234,7 @@ static OSErr AMF2Mad( char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 					curData->loopSize = curData->loopBeg = 0;
 				}
 				curData->vol		= oi.volume;
-				curData->c2spd		= Tdecode16( &oi.rate);	//finetune[ oldMAD->fid[ i].fineTune];
+				curData->c2spd		= Tdecode16( &oi.rate); //finetune[ oldMAD->fid[ i].fineTune];
 				curData->loopType	= 0;
 				curData->amp		= 8;
 				
@@ -276,13 +287,16 @@ static OSErr AMF2Mad( char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 	trckPtr = 0;
 	for( t = 0; t < trackCount; t++ )
 	{
-		READAMFFILE( &tempShort, 2);	tempShort = Tdecode16( &tempShort);
+		READAMFFILE( &tempShort, 2);
+		tempShort = Tdecode16( &tempShort);
 		if (tempShort > trckPtr) trckPtr = tempShort;
 	}
 	
 	for( t = 0; t < trckPtr; t++)
 	{
-		READAMFFILE( &tempShort, 2);		tempShort = Tdecode16( &tempShort);
+		READAMFFILE( &tempShort, 2);
+		tempShort = Tdecode16( &tempShort);
+		
 		READAMFFILE( &tempByte, 1);
 		
 		if (tempShort == 0 ) t=t;
@@ -414,7 +428,8 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 							myErr = AMF2Mad( AlienFile, sndSize, MadFile, init);
 						}
 					}
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
@@ -434,7 +449,8 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					myErr = TestAMFFile( AlienFile);
 					
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
@@ -459,7 +475,8 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 					{
 						myErr = ExtractAMFInfo( info, AlienFile);
 					}
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}

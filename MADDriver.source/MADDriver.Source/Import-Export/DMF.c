@@ -71,13 +71,25 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
 	switch( B0 + 0x40)
 	{
 			// Speed
-		case 'A':	*Cmd = speedE;		*Arg = B1;	break;
+		case 'A':
+			*Cmd = speedE;
+			*Arg = B1;
+			break;
 			// Tempo
-		case 'T':	*Cmd = speedE;		*Arg = B1;	break;
+		case 'T':
+			*Cmd = speedE;
+			*Arg = B1;
+			break;
 			
-		case 'B':	*Cmd = fastskipE;		*Arg = B1;	break;
+		case 'B':
+			*Cmd = fastskipE;
+			*Arg = B1;
+			break;
 			
-		case 'C':	*Cmd = skipE;			*Arg = B1;	break;
+		case 'C':
+			*Cmd = skipE;
+			*Arg = B1;
+			break;
 			
 		case 'D':
 			if (LoB1 == 0 || HiB1 == 0)		// Slide volume
@@ -132,28 +144,98 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
 			}
 			break;
 			
-		case 'G':	*Cmd = portamentoE;	*Arg = B1;	break;
-		case 'H':	*Cmd = vibratoE;		*Arg = B1;	break;
+		case 'G':
+			*Cmd = portamentoE;
+			*Arg = B1;
+			break;
 			
-		case 'J':	*Cmd = arpeggioE;		*Arg = B1;	break;
-		case 'K':	*Cmd = vibratoslideE;	*Arg = B1;	break;
-		case 'L':	*Cmd = portaslideE;		*Arg = B1;	break;
-		case 'O':	*Cmd = offsetE;		*Arg = B1;	break;
+		case 'H':
+			*Cmd = vibratoE;
+			*Arg = B1;
+			break;
+			
+		case 'J':
+			*Cmd = arpeggioE;
+			*Arg = B1;
+			break;
+			
+		case 'K':
+			*Cmd = vibratoslideE;
+			*Arg = B1;
+			break;
+			
+		case 'L':
+			*Cmd = portaslideE;
+			*Arg = B1;
+			break;
+			
+		case 'O':
+			*Cmd = offsetE;
+			*Arg = B1;
+			break;
 			
 		case 'S':		// Special Effects
 			switch( HiB1)
 		{
-			case 2:	*Cmd = extendedE;	*Arg = 5 << 4;		*Arg += LoB1;		break;	// FineTune
-			case 3:	*Cmd = extendedE;	*Arg = 4 << 4;		*Arg += LoB1;		break;	// Set Vibrato WaveForm
-			case 4:	*Cmd = extendedE;	*Arg = 7 << 4;		*Arg += LoB1;		break;	// Set Tremolo WaveForm
-			case 0xB:	*Cmd = extendedE;	*Arg = 6 << 4;		*Arg += LoB1;		break;	// Loop pattern
-			case 0xC:	*Cmd = extendedE;	*Arg = 12 << 4;	*Arg += LoB1;		break;	// Cut sample
-			case 0xD:	*Cmd = extendedE;	*Arg = 13 << 4;	*Arg += LoB1;		break;	// Delay sample
-			case 0xE:	*Cmd = extendedE;	*Arg = 14 << 4;	*Arg += LoB1;		break;	// Delay pattern
-			default:	*Cmd = 0;		*Arg = 0;							break;
+			case 2:
+				// FineTune
+				*Cmd = extendedE;
+				*Arg = 5 << 4;
+				*Arg += LoB1;
+				break;
+				
+			case 3:
+				// Set Vibrato WaveForm
+				*Cmd = extendedE;
+				*Arg = 4 << 4;
+				*Arg += LoB1;
+				break;
+				
+			case 4:
+				// Set Tremolo WaveForm
+				*Cmd = extendedE;
+				*Arg = 7 << 4;
+				*Arg += LoB1;
+				break;
+				
+			case 0xB:
+				// Loop pattern
+				*Cmd = extendedE;
+				*Arg = 6 << 4;
+				*Arg += LoB1;
+				break;
+				
+			case 0xC:
+				// Cut sample
+				*Cmd = extendedE;
+				*Arg = 12 << 4;
+				*Arg += LoB1;
+				break;
+				
+			case 0xD:
+				// Delay sample
+				*Cmd = extendedE;
+				*Arg = 13 << 4;
+				*Arg += LoB1;
+				break;	
+				
+			case 0xE:
+				// Delay pattern
+				*Cmd = extendedE;
+				*Arg = 14 << 4;
+				*Arg += LoB1;
+				break;	
+				
+			default:
+				*Cmd = 0;
+				*Arg = 0;
+				break;
 		}
 			break;
-		default:	*Cmd = 0;			*Arg = 0;		break;
+		default:
+			*Cmd = 0;
+			*Arg = 0;
+			break;
 	}
 }
 
