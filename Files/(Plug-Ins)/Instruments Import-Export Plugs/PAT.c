@@ -176,22 +176,30 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		for( i = 0; i < 6; i++) curData->name[ i] = PATSamp->name[ i];
 		
-		PATSamp->size		= Tdecode32( &PATSamp->size);		curData->size		= PATSamp->size;
+		PATSamp->size		= Tdecode32( &PATSamp->size);
+		curData->size		= PATSamp->size;
 		
-		PATSamp->startLoop	= Tdecode32( &PATSamp->startLoop);	curData->loopBeg 	= PATSamp->startLoop;
-		PATSamp->endLoop	= Tdecode32( &PATSamp->endLoop);	curData->loopSize 	= PATSamp->endLoop - PATSamp->startLoop;
+		PATSamp->startLoop	= Tdecode32( &PATSamp->startLoop);
+		curData->loopBeg 	= PATSamp->startLoop;
+		PATSamp->endLoop	= Tdecode32( &PATSamp->endLoop);
+		curData->loopSize 	= PATSamp->endLoop - PATSamp->startLoop;
 		
-		PATSamp->rate		= Tdecode16( &PATSamp->rate);		curData->c2spd		= PATSamp->rate;
+		PATSamp->rate		= Tdecode16( &PATSamp->rate);
+		curData->c2spd		= PATSamp->rate;
 		
 		
 		curData->vol		= 64;
 		curData->loopType	= 0;
 		
-		if (PATSamp->Flag & 0x01)	curData->amp = 16;
-		else curData->amp = 8;
+		if (PATSamp->Flag & 0x01)
+			curData->amp = 16;
+		else
+			curData->amp = 8;
 		
-		if (PATSamp->Flag & 0x02)	signedData = true;
-		else signedData = false;
+		if (PATSamp->Flag & 0x02)
+			signedData = true;
+		else
+			signedData = false;
 		
 		if (!(PATSamp->Flag & 0x04))
 		{
@@ -199,15 +207,17 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 			curData->loopSize = 0;
 		}
 		
-		if (PATSamp->Flag & 0x08) curData->loopType = ePingPongLoop;
-		else curData->loopType = eClassicLoop;
+		if (PATSamp->Flag & 0x08)
+			curData->loopType = ePingPongLoop;
+		else
+			curData->loopType = eClassicLoop;
 		
 		///////////////
 		
 		PATSamp->minFreq	= Tdecode32( &PATSamp->minFreq);
 		PATSamp->maxFreq	= Tdecode32( &PATSamp->maxFreq);
 		
-		PATSamp->originRate		= Tdecode32( &PATSamp->originRate);
+		PATSamp->originRate	= Tdecode32( &PATSamp->originRate);
 		
 		for( i = 0; i < 107; i++)
 		{

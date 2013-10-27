@@ -409,7 +409,8 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 		//char					tempChar;
 		
 		
-		sbod_count = 0;	pbod_count = 0;
+		sbod_count = 0;
+		pbod_count = 0;
 		
 		MaxPtr		= theOkta + MODSize;
 		theOktaPos	= theOkta;
@@ -515,7 +516,8 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 							myErr = ConvertOKTA2Mad( AlienFile,  sndSize, MadFile, init);
 						}
 					}
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
@@ -535,7 +537,8 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					if(myErr == noErr) myErr = TestOKTAFile( AlienFile);
 					
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
@@ -557,7 +560,8 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					{
 						myErr = ExtractOKTAInfo( info, AlienFile, sndSize);
 					}
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}

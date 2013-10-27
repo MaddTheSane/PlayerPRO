@@ -272,8 +272,14 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 				
 				Ptr		resultPtr;
 				
-				if (Audio16Ptr != NULL)	{	free( Audio16Ptr);			Audio16Ptr = NULL;}
-				if (Audio8Ptr != NULL)	{	free( Audio8Ptr);			Audio8Ptr = NULL;}
+				if (Audio16Ptr != NULL)	{
+					free( Audio16Ptr);
+					Audio16Ptr = NULL;
+				}
+				if (Audio8Ptr != NULL) {
+					free( Audio8Ptr);
+					Audio8Ptr = NULL;
+				}
 				
 				switch( theData->amp)
 				{

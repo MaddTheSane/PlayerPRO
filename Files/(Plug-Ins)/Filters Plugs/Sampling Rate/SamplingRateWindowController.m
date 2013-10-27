@@ -150,10 +150,18 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 			}
 			
 			
-			if (theData->loopBeg < 0) { theData->loopSize += theData->loopBeg;	theData->loopBeg = 0;}
-			if (theData->loopBeg > theData->size) {theData->loopBeg = 0;	theData->loopSize = 0;}
-			if (theData->loopSize < 0) theData->loopSize = 0;
-			if (theData->loopBeg + theData->loopSize > theData->size) theData->loopSize = theData->size - theData->loopBeg;
+			if (theData->loopBeg < 0) {
+				theData->loopSize += theData->loopBeg;
+				theData->loopBeg = 0;
+			}
+			if (theData->loopBeg > theData->size) {
+				theData->loopBeg = 0;
+				theData->loopSize = 0;
+			}
+			if (theData->loopSize < 0)
+				theData->loopSize = 0;
+			if (theData->loopBeg + theData->loopSize > theData->size)
+				theData->loopSize = theData->size - theData->loopBeg;
 		};
 		self.plugBlock = tmp;
     }

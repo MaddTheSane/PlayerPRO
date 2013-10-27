@@ -59,7 +59,7 @@ PPEXPORT OSErr inAddSoundToMAD(Ptr			theSound,
 							   sData		**sample,					// Ptr on samples data
 							   short		*sampleID) DEPRECATED_ATTRIBUTE;
 
-PPEXPORT OSErr inAddSoundToMADCString(Ptr			theSound,
+PPEXPORT OSErr inAddSoundToMADCString(void			*theSound,
 									  size_t		sndLen,
 									  long			loopStart,
 									  long			loopEnd,

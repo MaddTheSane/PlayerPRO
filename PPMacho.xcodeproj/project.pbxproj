@@ -230,7 +230,6 @@
 		555143CA17B6EDCF00252657 /* PPToneGeneratorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555143C817B6EDCF00252657 /* PPToneGeneratorController.m */; };
 		55534ACE1817C387006D6BCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55534AD11817C387006D6BCB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55534AD01817C387006D6BCB /* main.m */; };
-		55534AD51817C388006D6BCB /* updateInfoPlist.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55534AD41817C388006D6BCB /* updateInfoPlist.1 */; };
 		5557769617EBDA740019D008 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5557769517EBDA740019D008 /* Media.xcassets */; };
 		5557769717EBDFAC0019D008 /* PPFastForward.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E271245640500315307 /* PPFastForward.pdf */; };
 		5557769817EBDFAC0019D008 /* PPFastForward.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E271245640500315307 /* PPFastForward.pdf */; };
@@ -1523,16 +1522,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		55534ACB1817C387006D6BCB /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-				55534AD51817C388006D6BCB /* updateInfoPlist.1 in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
 		5573A1011656FAF100A5AECA /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2012,7 +2001,6 @@
 		55534ACD1817C387006D6BCB /* updateInfoPlist */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = updateInfoPlist; sourceTree = BUILT_PRODUCTS_DIR; };
 		55534AD01817C387006D6BCB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55534AD31817C388006D6BCB /* updateInfoPlist-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "updateInfoPlist-Prefix.pch"; sourceTree = "<group>"; };
-		55534AD41817C388006D6BCB /* updateInfoPlist.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = updateInfoPlist.1; sourceTree = "<group>"; };
 		5557769517EBDA740019D008 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		5557769F17EBF8FE0019D008 /* iOS PlayerPRO Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS PlayerPRO Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		555776A117EBF8FE0019D008 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -3593,7 +3581,6 @@
 			isa = PBXGroup;
 			children = (
 				55534AD01817C387006D6BCB /* main.m */,
-				55534AD41817C388006D6BCB /* updateInfoPlist.1 */,
 				55534AD21817C387006D6BCB /* Supporting Files */,
 			);
 			path = updateInfoPlist;
@@ -4391,7 +4378,6 @@
 			buildPhases = (
 				55534AC91817C387006D6BCB /* Sources */,
 				55534ACA1817C387006D6BCB /* Frameworks */,
-				55534ACB1817C387006D6BCB /* CopyFiles */,
 				55534AD918183934006D6BCB /* ShellScript */,
 			);
 			buildRules = (
@@ -7299,7 +7285,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -7320,7 +7305,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -7418,7 +7402,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -7439,7 +7422,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -7453,6 +7435,7 @@
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				SKIP_INSTALL = NO;
 				VALID_ARCHS = i386;
 				ZERO_LINK = NO;
 			};
@@ -7468,6 +7451,7 @@
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				SKIP_INSTALL = NO;
 				VALID_ARCHS = i386;
 			};
 			name = Debug;
@@ -7487,7 +7471,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -7508,7 +7491,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -7528,7 +7510,6 @@
 					"$(inherited)",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -7549,7 +7530,6 @@
 					"$(inherited)",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -7687,7 +7667,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7707,7 +7686,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7726,7 +7704,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/Fade Vol/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7746,7 +7723,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/Fade Vol/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7765,7 +7741,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7785,7 +7760,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7804,7 +7778,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7824,7 +7797,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7843,7 +7815,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7863,7 +7834,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8115,7 +8085,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -8150,7 +8119,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
@@ -8361,7 +8329,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8380,7 +8347,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8398,7 +8364,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8417,7 +8382,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8436,7 +8400,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8456,7 +8419,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8475,7 +8437,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8495,7 +8456,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8514,7 +8474,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8534,7 +8493,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8553,7 +8511,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8573,7 +8530,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8592,7 +8548,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8612,7 +8567,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8631,7 +8585,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8651,7 +8604,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8669,7 +8621,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8688,7 +8639,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8713,7 +8663,6 @@
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8757,7 +8706,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8777,7 +8725,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8796,7 +8743,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8816,7 +8762,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8835,7 +8780,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8855,7 +8799,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8874,7 +8817,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8894,7 +8836,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8912,7 +8853,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8931,7 +8871,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -9265,7 +9204,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9287,7 +9225,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9313,7 +9250,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -9342,7 +9278,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
@@ -9383,7 +9318,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -9403,7 +9337,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -9478,7 +9411,6 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PlayerPROCompact;
-				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Release;
@@ -9509,7 +9441,6 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PlayerPROCompact;
-				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
@@ -9570,7 +9501,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;

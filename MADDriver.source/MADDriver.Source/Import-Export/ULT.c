@@ -370,7 +370,8 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 							}
 						}
 					}
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			} else myErr = MADReadingErr;
@@ -390,7 +391,8 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					if (myErr == noErr)
 						myErr = TestULTFile( AlienFile);
 					
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			} else myErr = MADReadingErr;
@@ -413,7 +415,8 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					{
 						myErr = ExtractULTInfo( info, AlienFile);
 					}
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			} else myErr = MADReadingErr;

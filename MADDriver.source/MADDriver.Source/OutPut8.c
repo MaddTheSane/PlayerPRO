@@ -72,14 +72,16 @@ void Sampler8in8AddPolyStereo( Channel *curVoice, Ptr ASCBuffer, short chanNo, M
 		temp += (volChn * *(SndBuffer + off)) >> 8;
 		temp /= 2;
 		
-		*ASCBuffer	+= temp;			 aCC += aDD;
+		*ASCBuffer	+= temp;
+		aCC += aDD;
 		ASCBuffer	+= chanNo;
 	}
 	
 	if (!killSample) curVoice->curPtr = (Ptr) (SndBuffer + (long) 2*(aCC>>BYTEDIV));
 	else
 	{
-		curVoice->samplePtr	= NULL;	curVoice->curPtr	= curVoice->maxPtr;
+		curVoice->samplePtr	= NULL;
+		curVoice->curPtr	= curVoice->maxPtr;
 	}
 	
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);
@@ -125,14 +127,16 @@ void Sampler8in8AddPoly( Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriv
 					break;
 				}
 			}
-			*ASCBuffer	+= (volChn * *(SndBuffer + off)) >> 8;	aCC += aDD;
+			*ASCBuffer	+= (volChn * *(SndBuffer + off)) >> 8;
+			aCC += aDD;
 			ASCBuffer	+= chanNo;
 		}
 		
 		if (!killSample) curVoice->curPtr = (Ptr) (SndBuffer + (long) (aCC>>BYTEDIV));
 		else
 		{
-			curVoice->samplePtr	= NULL;	curVoice->curPtr	= curVoice->maxPtr;
+			curVoice->samplePtr	= NULL;
+			curVoice->curPtr	= curVoice->maxPtr;
 		}
 
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);
@@ -185,14 +189,16 @@ void Sampler16in8AddPolyStereo( Channel *curVoice, Ptr ASCBuffer, short chanNo, 
 		temp += (volChn * *(SndBuffer + off)) >> 8;
 		temp /= 2;
 		
-		*ASCBuffer	+= temp;			 aCC += aDD;
+		*ASCBuffer	+= temp;
+		aCC += aDD;
 		ASCBuffer	+= chanNo;
 	}
 	
 	if (!killSample) curVoice->curPtr = (Ptr) (SndBuffer + (long) 4*(aCC>>BYTEDIV));
 	else
 	{
-		curVoice->samplePtr	= NULL;	curVoice->curPtr	= curVoice->maxPtr;
+		curVoice->samplePtr	= NULL;
+		curVoice->curPtr	= curVoice->maxPtr;
 	}
 	
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);
@@ -238,14 +244,16 @@ void Sampler16in8AddPoly( Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDri
 					break;
 				}
 			}
-			*ASCBuffer	+= (volChn * *(SndBuffer + off)) >> 8;			 aCC += aDD;
+			*ASCBuffer	+= (volChn * *(SndBuffer + off)) >> 8;
+			aCC += aDD;
 			ASCBuffer	+= chanNo;
 		}
 		
 		if (!killSample) curVoice->curPtr = (Ptr) (SndBuffer + (long) 2*(aCC>>BYTEDIV));
 		else
 		{
-			curVoice->samplePtr	= NULL;	curVoice->curPtr	= curVoice->maxPtr;
+			curVoice->samplePtr	= NULL;
+			curVoice->curPtr	= curVoice->maxPtr;
 		}
 
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);

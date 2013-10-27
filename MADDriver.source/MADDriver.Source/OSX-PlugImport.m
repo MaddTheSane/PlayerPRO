@@ -417,7 +417,7 @@ static OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
 	InfoRec->totalInstruments = theMAD->numInstru;
 	InfoRec->fileSize = fileSize;
 	
-	free( theMAD);	
+	free(theMAD);
 	theMAD = NULL;
 	
 	return noErr;
@@ -492,7 +492,8 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 		CFRelease(inMADDriver->ThePlug[i].MenuName);
 
 	}
-	free( inMADDriver->ThePlug);		inMADDriver->ThePlug = NULL;
+	free( inMADDriver->ThePlug);
+	inMADDriver->ThePlug = NULL;
 }
 
 OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)

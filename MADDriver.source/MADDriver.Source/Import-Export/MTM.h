@@ -49,7 +49,7 @@ struct MTMDef
 	unsigned short	tracks;
 	char			patNo;
 	char			positionNo;
-	unsigned short	comments;	
+	unsigned short	comments;
 	char			NOS;
 	char			attribute;
 	char			beats;

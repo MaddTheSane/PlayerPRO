@@ -388,7 +388,8 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 						myErr = ConvertMTM2Mad( (MTMDef*) AlienFile, sndSize, MadFile, init);
 					}
 					
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
@@ -409,7 +410,8 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					
 					myErr = TestFile( (MTMDef*) AlienFile);
 					
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
@@ -436,7 +438,8 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					
 					myErr = ExtractInfo( info, (MTMDef*) AlienFile);
 					
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}

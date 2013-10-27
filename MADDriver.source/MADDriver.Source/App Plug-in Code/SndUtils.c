@@ -23,7 +23,7 @@
 sData* inMADCreateSample()
 {
 	sData	*curData;
-
+	
 	curData = (sData*) calloc( sizeof( sData), 1);
 	
 	if (curData == NULL) {
@@ -40,7 +40,7 @@ sData* inMADCreateSample()
 	curData->relNote	= 0;
 	curData->data		= NULL;
 	
-	return curData;		
+	return curData;
 }
 
 Cmd* GetCmd( short row, short track, Pcmd* myPcmd)
@@ -80,7 +80,7 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 }
 
 
-OSErr inAddSoundToMADCString(Ptr			theSound,
+OSErr inAddSoundToMADCString(void			*theSound,
 							 size_t			sndLen,
 							 long			loopStart,
 							 long			loopEnd,
@@ -95,14 +95,16 @@ OSErr inAddSoundToMADCString(Ptr			theSound,
 {
 	long 	inOutBytes;
 	sData	*curData;
-
-	if (theSound == NULL) return MADParametersErr;
-
+	
+	if (theSound == NULL)
+		return MADParametersErr;
+	
 	if (!sampleID || !InsHeader || !sample) {
 		return MADParametersErr;
 	}
-	if (*sampleID > MAXSAMPLE) return MADParametersErr;
-
+	if (*sampleID > MAXSAMPLE)
+		return MADParametersErr;
+	
 	inOutBytes = sndLen;
 	
 	///////

@@ -128,11 +128,13 @@ static void DrawCGSampleInt(long 	start,
 		BS = start + (tSS * sampleSize) / larg;
 		if (isStereo)
 		{
-			BS /= 2;	BS *=2;
+			BS /= 2;
+			BS *=2;
 			BS += channel;
 		}
 		temp = (theShortSample[ BS]  + 0x8000);
-		temp *= high;	temp  /= (1 << 16);
+		temp *= high;
+		temp  /= (1 << 16);
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
 		
 		for( i = tSS; i < tSE; i++)
@@ -142,8 +144,10 @@ static void DrawCGSampleInt(long 	start,
 			
 			if (isStereo)
 			{
-				BS /=2;		BS *=2;
-				BE /=2;		BE *=2;
+				BS /=2;
+				BS *=2;
+				BE /=2;
+				BE *=2;
 				
 				BS += channel;
 				BE += channel;
@@ -151,7 +155,8 @@ static void DrawCGSampleInt(long 	start,
 			
 			temp =(theShortSample[ BS]  + 0x8000);
 			minY = maxY = temp;
-			temp *= high;		temp  /= (1 << 16);
+			temp *= high;
+			temp  /= (1 << 16);
 			CGContextAddLineToPoint(ctxRef, trueH + i, temp + trueV);
 			
 			if (BS != BE)
@@ -166,8 +171,10 @@ static void DrawCGSampleInt(long 	start,
 					if (isStereo) x++;
 				}
 				
-				maxY *= high;		maxY /= (1 << 16);
-				minY *= high;		minY /= (1 << 16);
+				maxY *= high;
+				maxY /= (1 << 16);
+				minY *= high;
+				minY /= (1 << 16);
 				
 				CGContextMoveToPoint(ctxRef, trueH + i, minY + trueV);
 				CGContextAddLineToPoint(ctxRef, trueH + i, maxY + trueV);
@@ -179,12 +186,14 @@ static void DrawCGSampleInt(long 	start,
 		BS = start + (tSS * sampleSize) / larg;
 		if (isStereo)
 		{
-			BS /= 2;	BS *=2;
+			BS /= 2;
+			BS *=2;
 			BS += channel;
 		}
 		
 		temp = (unsigned char) (theSample[ BS] - 0x80);
-		temp *= high;	temp /= (1 << 8);
+		temp *= high;
+		temp /= (1 << 8);
 		
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
 		
@@ -195,8 +204,10 @@ static void DrawCGSampleInt(long 	start,
 			
 			if (isStereo)
 			{
-				BS /=2;		BS *=2;
-				BE /=2;		BE *=2;
+				BS /=2;
+				BS *=2;
+				BE /=2;
+				BE *=2;
 				
 				BS += channel;
 				BE += channel;
@@ -204,7 +215,8 @@ static void DrawCGSampleInt(long 	start,
 			
 			temp = (unsigned char) (theSample[ BS] - 0x80);
 			minY = maxY = temp;
-			temp *= high;		temp /= (1 << 8);
+			temp *= high;
+			temp /= (1 << 8);
 			CGContextAddLineToPoint(ctxRef, trueH + i, temp + trueV);
 			
 			if (BS != BE)
@@ -218,8 +230,10 @@ static void DrawCGSampleInt(long 	start,
 					
 					if (isStereo) x++;
 				}
-				maxY *= high;		maxY /= (1 << 8);
-				minY *= high;		minY /= (1 << 8);
+				maxY *= high;
+				maxY /= (1 << 8);
+				minY *= high;
+				minY /= (1 << 8);
 				
 				CGContextMoveToPoint(ctxRef, trueH + i, minY + trueV);
 				CGContextAddLineToPoint(ctxRef, trueH + i, maxY + trueV);

@@ -30,8 +30,10 @@ void MADTickLoopFill8( Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2
 	size++;
 	while( size-- > 0)
 	{
-		*ASCBuffer1 += left;		ASCBuffer1 += 2;
-		*ASCBuffer2 += right;		ASCBuffer2 += 2;
+		*ASCBuffer1 += left;
+		ASCBuffer1 += 2;
+		*ASCBuffer2 += right;
+		ASCBuffer2 += 2;
 	}
 	curVoice->prevPtr = NULL;
 }
@@ -40,7 +42,7 @@ void MADTickLoop8( size_t size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *A
 {
 	SInt32		tLongL, tLongR;
 	SInt32		curLevelL = curVoice->curLevelL, curLevelR = curVoice->curLevelR, curLastWordL = curVoice->curLastWordL, curLastWordR = curVoice->curLastWordR, TICKREMOVESIZE = curVoice->TICKREMOVESIZE;
-	Boolean	LevelDirectionL = curVoice->LevelDirectionL, LevelDirectionR = curVoice->LevelDirectionR, RemoverWorking = curVoice->RemoverWorking;
+	Boolean		LevelDirectionL = curVoice->LevelDirectionL, LevelDirectionR = curVoice->LevelDirectionR, RemoverWorking = curVoice->RemoverWorking;
 	
 	if (TICKREMOVESIZE == 0) return;
 	
@@ -48,31 +50,45 @@ void MADTickLoop8( size_t size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *A
 	{
 		if (LevelDirectionL)
 		{
-			if (curLevelL > 0) curLevelL--;			else RemoverWorking = false;
+			if (curLevelL > 0)
+				curLevelL--;
+			else
+				RemoverWorking = false;
 			tLongL = (curLastWordL * curLevelL) / TICKREMOVESIZE;
 		}
 		else
 		{
-			if (curLevelL < TICKREMOVESIZE) curLevelL++;	else RemoverWorking = false;
+			if (curLevelL < TICKREMOVESIZE)
+				curLevelL++;
+			else
+				RemoverWorking = false;
 			tLongL = (curLastWordL * curLevelL) / TICKREMOVESIZE;
 			tLongL -= curLastWordL;
 		}
 		
 		if (LevelDirectionR)
 		{
-			if (curLevelR > 0) curLevelR--;			else RemoverWorking = false;
+			if (curLevelR > 0)
+				curLevelR--;
+			else
+				RemoverWorking = false;
 			tLongR = (curLastWordR * curLevelR) / TICKREMOVESIZE;
 		}
 		else
 		{
-			if (curLevelR < TICKREMOVESIZE) curLevelR++;			else RemoverWorking = false;
+			if (curLevelR < TICKREMOVESIZE)
+				curLevelR++;
+			else
+				RemoverWorking = false;
 			tLongR = (curLastWordR * curLevelR) / TICKREMOVESIZE;
 			tLongR -= curLastWordR;
 		}
 		
 		//	Double ASCBUFFER
-		*ASCBuffer1 += tLongL;	ASCBuffer1 += 2;
-		*ASCBuffer2 += tLongR;	ASCBuffer2 += 2;
+		*ASCBuffer1 += tLongL;
+		ASCBuffer1 += 2;
+		*ASCBuffer2 += tLongR;
+		ASCBuffer2 += 2;
 	}
 	
 	curVoice->curLevelL = curLevelL;
