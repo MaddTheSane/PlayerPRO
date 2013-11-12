@@ -313,25 +313,25 @@ static void DrawCGSampleInt(long 	start,
 		}
 	}
 	if (!object) {
-		[instrumentSize setTitleWithMnemonic:PPDoubleDash];
-		[instrumentLoopStart setTitleWithMnemonic:PPDoubleDash];
-		[instrumentLoopSize setTitleWithMnemonic:PPDoubleDash];
-		[instrumentVolume setTitleWithMnemonic:PPDoubleDash];
-		[instrumentRate setTitleWithMnemonic:PPDoubleDash];
-		[instrumentNote setTitleWithMnemonic:PPDoubleDash];
-		[instrumentBits setTitleWithMnemonic:PPDoubleDash];
-		[instrumentMode setTitleWithMnemonic:PPDoubleDash];
+		[[instrumentSize cell] setTitle:PPDoubleDash];
+		[[instrumentLoopStart cell] setTitle:PPDoubleDash];
+		[[instrumentLoopSize cell] setTitle:PPDoubleDash];
+		[[instrumentVolume cell] setTitle:PPDoubleDash];
+		[[instrumentRate cell] setTitle:PPDoubleDash];
+		[[instrumentNote cell] setTitle:PPDoubleDash];
+		[[instrumentBits cell] setTitle:PPDoubleDash];
+		[[instrumentMode cell] setTitle:PPDoubleDash];
 		[waveFormImage setImage:nil];
 		return;
 	}
 	[instrumentSize setIntegerValue:[object dataSize]];
 	[instrumentLoopStart setIntegerValue:[object loopBegin]];
 	[instrumentLoopSize setIntegerValue:[object loopSize]];
-	[instrumentVolume setTitleWithMnemonic:[NSString stringWithFormat:@"%u", [(PPSampleObject*)object volume]]];
-	[instrumentRate setTitleWithMnemonic:[NSString stringWithFormat:@"%u", [object c2spd]]];
-	[instrumentNote setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object relativeNote]]];
-	[instrumentBits setTitleWithMnemonic:[NSString stringWithFormat:@"%u", [object amplitude]]];
-	[instrumentMode setTitleWithMnemonic:[NSString stringWithFormat:@"%u", [object loopType]]];
+	[[instrumentVolume cell] setTitle:[NSString stringWithFormat:@"%u", [(PPSampleObject*)object volume]]];
+	[[instrumentRate cell] setTitle:[NSString stringWithFormat:@"%u", [object c2spd]]];
+	[[instrumentNote cell] setTitle:[NSString stringWithFormat:@"%d", [object relativeNote]]];
+	[[instrumentBits cell] setTitle:[NSString stringWithFormat:@"%u", [object amplitude]]];
+	[[instrumentMode cell] setTitle:[NSString stringWithFormat:@"%u", [object loopType]]];
 	[waveFormImage setImage:[self waveformImageFromSample:object]];
 }
 

@@ -1,0 +1,57 @@
+
+/* Class = "NSWindow"; title = "Tone Generator"; ObjectID = "1"; */
+"1.title" = "Tone Generator";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "6"; */
+"6.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "10"; */
+"10.title" = "Cancel";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "14"; */
+"14.title" = "Radio";
+
+/* Class = "NSButtonCell"; title = "Mono"; ObjectID = "15"; */
+"15.title" = "Mono";
+
+/* Class = "NSButtonCell"; title = "Stereo"; ObjectID = "21"; */
+"21.title" = "Stereo";
+
+/* Class = "NSButtonCell"; title = "Silent"; ObjectID = "77"; */
+"77.title" = "Silent";
+
+/* Class = "NSButtonCell"; title = "Triangle"; ObjectID = "101"; */
+"101.title" = "Triangle";
+
+/* Class = "NSButtonCell"; title = "Wave"; ObjectID = "112"; */
+"112.title" = "Wave";
+
+/* Class = "NSButtonCell"; title = "Square"; ObjectID = "120"; */
+"120.title" = "Square";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "164"; */
+"164.title" = "Box";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "325"; */
+"325.title" = "Radio";
+
+/* Class = "NSButtonCell"; title = "8-Bit"; ObjectID = "326"; */
+"326.title" = "8-Bit";
+
+/* Class = "NSButtonCell"; title = "16-Bit"; ObjectID = "333"; */
+"333.title" = "16-Bit";
+
+/* Class = "NSFormCell"; title = "Frequency:"; ObjectID = "8hv-7z-PDp"; */
+"8hv-7z-PDp.title" = "Frequency:";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "9xo-dc-IhJ"; */
+"9xo-dc-IhJ.title" = "Field:";
+
+/* Class = "NSButtonCell"; title = "Play"; ObjectID = "DsG-SZ-Vlc"; */
+"DsG-SZ-Vlc.title" = "Play";
+
+/* Class = "NSFormCell"; title = "Length:"; ObjectID = "IoM-H7-Ces"; */
+"IoM-H7-Ces.title" = "Length:";
+
+/* Class = "NSFormCell"; title = "Amplitude:"; ObjectID = "Mtc-cq-oAe"; */
+"Mtc-cq-oAe.title" = "Amplitude:";

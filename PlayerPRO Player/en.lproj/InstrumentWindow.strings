@@ -1,0 +1,54 @@
+
+/* Class = "NSWindow"; title = "Instruments List"; ObjectID = "1"; */
+"1.title" = "Instruments List";
+
+/* Class = "NSToolbarItem"; label = "Info"; ObjectID = "12"; */
+"12.label" = "Info";
+
+/* Class = "NSToolbarItem"; paletteLabel = "Info"; ObjectID = "12"; */
+"12.paletteLabel" = "Info";
+
+/* Class = "NSTextFieldCell"; title = "Size:"; ObjectID = "28"; */
+"28.title" = "Size:";
+
+/* Class = "NSTextFieldCell"; title = "Loop:"; ObjectID = "32"; */
+"32.title" = "Loop:";
+
+/* Class = "NSTextFieldCell"; title = "    Start:"; ObjectID = "34"; */
+"34.title" = "    Start:";
+
+/* Class = "NSTextFieldCell"; title = "    Size:"; ObjectID = "36"; */
+"36.title" = "    Size:";
+
+/* Class = "NSTextFieldCell"; title = "Volume:"; ObjectID = "38"; */
+"38.title" = "Volume:";
+
+/* Class = "NSTextFieldCell"; title = "Bit Rate:"; ObjectID = "40"; */
+"40.title" = "Bit Rate:";
+
+/* Class = "NSTextFieldCell"; title = "Real Note:"; ObjectID = "42"; */
+"42.title" = "Real Note:";
+
+/* Class = "NSTextFieldCell"; title = "Bits:"; ObjectID = "44"; */
+"44.title" = "Bits:";
+
+/* Class = "NSTextFieldCell"; title = "Mode:"; ObjectID = "46"; */
+"46.title" = "Mode:";
+
+/* Class = "NSTextFieldCell"; title = "Label"; ObjectID = "56"; */
+"56.title" = "Label";
+
+/* Class = "NSTextFieldCell"; title = "Label"; ObjectID = "58"; */
+"58.title" = "Label";
+
+/* Class = "NSTextFieldCell"; title = "Label"; ObjectID = "60"; */
+"60.title" = "Label";
+
+/* Class = "NSTextFieldCell"; title = "Label"; ObjectID = "62"; */
+"62.title" = "Label";
+
+/* Class = "NSTextFieldCell"; title = "Label"; ObjectID = "64"; */
+"64.title" = "Label";
+
+/* Class = "NSTextFieldCell"; title = "Text"; ObjectID = "109"; */
+"109.title" = "Text";

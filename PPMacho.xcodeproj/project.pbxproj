@@ -97,7 +97,6 @@
 		5504A6E516619E1C005BDE4B /* DigitalPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6E716619E1C005BDE4B /* DigitalPrefs.xib */; };
 		5504A6E816619E25005BDE4B /* BoxPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6EA16619E25005BDE4B /* BoxPrefs.xib */; };
 		5504A6EB16619E2E005BDE4B /* MiscPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6ED16619E2E005BDE4B /* MiscPrefs.xib */; };
-		5504A6EE16619E39005BDE4B /* MusicListPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6F016619E39005BDE4B /* MusicListPrefs.xib */; };
 		5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508C3ED16CEB33B007CA458 /* SampleCellView.m */; };
 		55096A3210E0A6EF000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
@@ -116,6 +115,8 @@
 		551292F0163DD7CE00C2C639 /* PPLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 551292EE163DD7CE00C2C639 /* PPLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		551292F1163DD7CE00C2C639 /* PPLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 551292EF163DD7CE00C2C639 /* PPLibrary.m */; };
 		551292F2163DDA8E00C2C639 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55149C611832D16C009C850B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552F12E116AE08AF00394143 /* AVFoundation.framework */; };
+		55149C621832D176009C850B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552F12E116AE08AF00394143 /* AVFoundation.framework */; };
 		55151F7A10DEDBDB0054ABC4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5515200E10DEDC9B0054ABC4 /* XI.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105910D6C79E00BB619C /* XI.c */; };
 		5517DAC5180CAD61001413D0 /* ULT.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; };
@@ -1728,11 +1729,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5504A6E316619E10005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ClassicPrefs.xib; sourceTree = "<group>"; };
-		5504A6E616619E1C005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DigitalPrefs.xib; sourceTree = "<group>"; };
-		5504A6E916619E25005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BoxPrefs.xib; sourceTree = "<group>"; };
-		5504A6EC16619E2E005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MiscPrefs.xib; sourceTree = "<group>"; };
-		5504A6EF16619E39005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MusicListPrefs.xib; sourceTree = "<group>"; };
 		5508C3EC16CEB33B007CA458 /* SampleCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleCellView.h; sourceTree = "<group>"; };
 		5508C3ED16CEB33B007CA458 /* SampleCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleCellView.m; sourceTree = "<group>"; };
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
@@ -1760,6 +1756,31 @@
 		551292E5163DD68500C2C639 /* PlayerPROKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerPROKit.h; sourceTree = "<group>"; };
 		551292EE163DD7CE00C2C639 /* PPLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLibrary.h; sourceTree = "<group>"; };
 		551292EF163DD7CE00C2C639 /* PPLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLibrary.m; sourceTree = "<group>"; };
+		55149C3C1832CC64009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PPSoundSettingsViewController.xib; sourceTree = "<group>"; };
+		55149C3D1832CC64009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PPPlugInInfoController.xib; sourceTree = "<group>"; };
+		55149C3E1832CC64009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		55149C3F1832CC64009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ClassicPrefs.xib; sourceTree = "<group>"; };
+		55149C401832CC65009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DigitalPrefs.xib; sourceTree = "<group>"; };
+		55149C411832CC65009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/BoxPrefs.xib; sourceTree = "<group>"; };
+		55149C421832CC65009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MiscPrefs.xib; sourceTree = "<group>"; };
+		55149C431832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MusicListPrefs.xib; sourceTree = "<group>"; };
+		55149C441832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PPToneGeneratorController.xib; sourceTree = "<group>"; };
+		55149C451832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		55149C461832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InstrumentWindow.xib; sourceTree = "<group>"; };
+		55149C471832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		55149C481832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		55149C4A1832CD8D009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPPlugInInfoController.strings; sourceTree = "<group>"; };
+		55149C4C1832CD95009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		55149C4E1832CDA2009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ClassicPrefs.strings; sourceTree = "<group>"; };
+		55149C501832CDAA009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DigitalPrefs.strings; sourceTree = "<group>"; };
+		55149C521832CE42009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BoxPrefs.strings; sourceTree = "<group>"; };
+		55149C541832CE48009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MiscPrefs.strings; sourceTree = "<group>"; };
+		55149C561832CE54009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MusicListPrefs.strings; sourceTree = "<group>"; };
+		55149C581832CEA3009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPToneGeneratorController.strings; sourceTree = "<group>"; };
+		55149C5A1832CEBF009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		55149C5C1832CEC4009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InstrumentWindow.strings; sourceTree = "<group>"; };
+		55149C5E1832CED1009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPad.strings; sourceTree = "<group>"; };
+		55149C601832CED8009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		55151E7410DD4F400054ABC4 /* CFPlugin-InstrBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-InstrBridge.c"; sourceTree = "<group>"; };
 		55151F8010DEDBDB0054ABC4 /* XI.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XI.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55151F8110DEDBDB0054ABC4 /* XI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "XI-Info.plist"; path = "../../../XI-Info.plist"; sourceTree = "<group>"; };
@@ -1788,7 +1809,6 @@
 		5521F41417FA4365002CDBA9 /* BoxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoxViewController.m; sourceTree = "<group>"; };
 		5521F41617FA541C002CDBA9 /* Trackers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Trackers.xcassets; sourceTree = "<group>"; };
 		5521F41B17FA54B8002CDBA9 /* Player-only.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Player-only.xcassets"; sourceTree = "<group>"; };
-		5521F42317FA5776002CDBA9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PPPlugInInfoController.xib; sourceTree = "<group>"; };
 		55232A7411FDD2A60041A4EC /* SoundOutputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundOutputController.h; sourceTree = "<group>"; };
 		55232A7511FDD2A60041A4EC /* SoundOutputController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundOutputController.m; sourceTree = "<group>"; };
 		55232AD611FDDFEA0041A4EC /* PianoPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PianoPreferencesController.h; sourceTree = "<group>"; };
@@ -2052,10 +2072,8 @@
 		5578C48D17D9E8560057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		5578C48F17D9E8560057D11B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5578C49017D9E8560057D11B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5578C49317D9E8570057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentWindowController.h; sourceTree = "<group>"; };
 		5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentWindowController.m; sourceTree = "<group>"; };
-		5578C4F017DA97020057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/InstrumentWindow.xib; sourceTree = "<group>"; };
 		5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPlayerPROKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PPImport Cocoa.mdimporter"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5578C53017DB94A60057D11B /* PPImport copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PPImport copy-Info.plist"; sourceTree = "<group>"; };
@@ -2103,7 +2121,6 @@
 		557EF732168BDE95001BF077 /* PPPlugInCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPlugInCommon.h; sourceTree = "<group>"; };
 		557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporterObject.h; sourceTree = "<group>"; };
 		557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentImporterObject.m; sourceTree = "<group>"; };
-		557F9AF217D927DB00325C78 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PPToneGeneratorController.xib; sourceTree = "<group>"; };
 		55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+PPPreferences.h"; sourceTree = "<group>"; };
 		55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+PPPreferences.m"; sourceTree = "<group>"; };
 		5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADfg.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2179,12 +2196,10 @@
 		55BE999117978BB200D6DECC /* schema.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; lineEnding = 0; path = schema.xml; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xml; };
 		55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPlayerPROCompact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C930381819E68700D9E072 /* CocoaFuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaFuncs.m; sourceTree = "<group>"; };
-		55C9303C1819F6EC00D9E072 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PPSoundSettingsViewController.xib; sourceTree = "<group>"; };
 		55CB01A611EB82FA0028C6BB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO 6.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CBF9A811EB77760028C6BB /* Cocoa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Cocoa-Info.plist"; sourceTree = "<group>"; };
 		55CBFC7011EB7BC90028C6BB /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
-		55CBFC7911EB7C4E0028C6BB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPApp_AppDelegate.h; sourceTree = "<group>"; };
 		55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPApp_AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55D1BD58120FBAC0004FD083 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
@@ -2203,8 +2218,6 @@
 		55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPlugObject.m; sourceTree = "<group>"; };
 		55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPlugHandler.h; sourceTree = "<group>"; };
 		55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPlugHandler.m; sourceTree = "<group>"; };
-		55ECB33F180A280800497C7E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		55ECB342180A281400497C7E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		55ED547310D5F9CD00824C61 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		55EE8EBC100404EB00E75E63 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -2442,6 +2455,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55149C621832D176009C850B /* AVFoundation.framework in Frameworks */,
 				5578C4CF17DA6D2C0057D11B /* CoreFoundation.framework in Frameworks */,
 				5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */,
 				5578C48217D9E8560057D11B /* Cocoa.framework in Frameworks */,
@@ -2774,6 +2788,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55149C611832D16C009C850B /* AVFoundation.framework in Frameworks */,
 				55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */,
 				55105C9C13BE638D00902106 /* PlayerPROCore.framework in Frameworks */,
 				55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */,
@@ -5212,8 +5227,8 @@
 				5578C48017D9E8560057D11B /* PlayerPRO Player */,
 				55534ACC1817C387006D6BCB /* updateInfoPlist */,
 				5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */,
-				5518107110C35A4500ADA9F4 /* Carbon Example */,
 				555776C217EBF8FF0019D008 /* iOS PlayerPRO PlayerTests */,
+				5518107110C35A4500ADA9F4 /* Carbon Example */,
 				55BE997717978AEF00D6DECC /* PPImport */,
 				5578C51B17DB94A50057D11B /* PPImport-app */,
 				5573A33E10B50D2600FF8B50 /* PlayerPROCore */,
@@ -5703,7 +5718,6 @@
 				5504A6E816619E25005BDE4B /* BoxPrefs.xib in Resources */,
 				5504A6EB16619E2E005BDE4B /* MiscPrefs.xib in Resources */,
 				55232B0E11FDF2980041A4EC /* ColorPrefs.xib in Resources */,
-				5504A6EE16619E39005BDE4B /* MusicListPrefs.xib in Resources */,
 				55A9351917F28F9700493DC5 /* Shared.xcassets in Resources */,
 				55232B1411FDF3090041A4EC /* PianoPrefs.xib in Resources */,
 				55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */,
@@ -7086,7 +7100,8 @@
 		5504A6E416619E10005BDE4B /* ClassicPrefs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5504A6E316619E10005BDE4B /* en */,
+				55149C3F1832CC64009C850B /* Base */,
+				55149C4E1832CDA2009C850B /* en */,
 			);
 			name = ClassicPrefs.xib;
 			sourceTree = "<group>";
@@ -7094,7 +7109,8 @@
 		5504A6E716619E1C005BDE4B /* DigitalPrefs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5504A6E616619E1C005BDE4B /* en */,
+				55149C401832CC65009C850B /* Base */,
+				55149C501832CDAA009C850B /* en */,
 			);
 			name = DigitalPrefs.xib;
 			sourceTree = "<group>";
@@ -7102,7 +7118,8 @@
 		5504A6EA16619E25005BDE4B /* BoxPrefs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5504A6E916619E25005BDE4B /* en */,
+				55149C411832CC65009C850B /* Base */,
+				55149C521832CE42009C850B /* en */,
 			);
 			name = BoxPrefs.xib;
 			sourceTree = "<group>";
@@ -7110,7 +7127,8 @@
 		5504A6ED16619E2E005BDE4B /* MiscPrefs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5504A6EC16619E2E005BDE4B /* en */,
+				55149C421832CC65009C850B /* Base */,
+				55149C541832CE48009C850B /* en */,
 			);
 			name = MiscPrefs.xib;
 			sourceTree = "<group>";
@@ -7118,7 +7136,8 @@
 		5504A6F016619E39005BDE4B /* MusicListPrefs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5504A6EF16619E39005BDE4B /* en */,
+				55149C431832CC66009C850B /* Base */,
+				55149C561832CE54009C850B /* en */,
 			);
 			name = MusicListPrefs.xib;
 			sourceTree = "<group>";
@@ -7134,7 +7153,8 @@
 		5521F42017FA573B002CDBA9 /* PPPlugInInfoController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5521F42317FA5776002CDBA9 /* en */,
+				55149C3D1832CC64009C850B /* Base */,
+				55149C4A1832CD8D009C850B /* en */,
 			);
 			name = PPPlugInInfoController.xib;
 			sourceTree = "<group>";
@@ -7190,7 +7210,8 @@
 		5578C49217D9E8570057D11B /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5578C49317D9E8570057D11B /* en */,
+				55149C451832CC66009C850B /* Base */,
+				55149C5A1832CEBF009C850B /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -7198,7 +7219,8 @@
 		5578C4F117DA97020057D11B /* InstrumentWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5578C4F017DA97020057D11B /* en */,
+				55149C461832CC66009C850B /* Base */,
+				55149C5C1832CEC4009C850B /* en */,
 			);
 			name = InstrumentWindow.xib;
 			sourceTree = "<group>";
@@ -7206,7 +7228,8 @@
 		557F9AF317D927DB00325C78 /* PPToneGeneratorController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				557F9AF217D927DB00325C78 /* en */,
+				55149C441832CC66009C850B /* Base */,
+				55149C581832CEA3009C850B /* en */,
 			);
 			name = PPToneGeneratorController.xib;
 			sourceTree = "<group>";
@@ -7230,7 +7253,7 @@
 		55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55C9303C1819F6EC00D9E072 /* en */,
+				55149C3C1832CC64009C850B /* Base */,
 			);
 			name = PPSoundSettingsViewController.xib;
 			sourceTree = "<group>";
@@ -7246,7 +7269,8 @@
 		55CBFC7B11EB7C950028C6BB /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55CBFC7911EB7C4E0028C6BB /* English */,
+				55149C3E1832CC64009C850B /* Base */,
+				55149C4C1832CD95009C850B /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -7254,7 +7278,8 @@
 		55ECB340180A280800497C7E /* Main_iPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55ECB33F180A280800497C7E /* en */,
+				55149C471832CC66009C850B /* Base */,
+				55149C5E1832CED1009C850B /* en */,
 			);
 			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
@@ -7262,7 +7287,8 @@
 		55ECB343180A281400497C7E /* Main_iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55ECB342180A281400497C7E /* en */,
+				55149C481832CC66009C850B /* Base */,
+				55149C601832CED8009C850B /* en */,
 			);
 			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
@@ -7330,7 +7356,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				INSTALL_PATH = "@rpath";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -7359,7 +7384,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				INSTALL_PATH = "@rpath";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -7909,7 +7933,8 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GENERATE_PKGINFO_FILE = NO;
 				INFOPLIST_FILE = "iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				"IPHONEOS_DEPLOYMENT_TARGET[arch=arm64]" = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
@@ -7942,7 +7967,8 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GENERATE_PKGINFO_FILE = NO;
 				INFOPLIST_FILE = "iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				"IPHONEOS_DEPLOYMENT_TARGET[arch=arm64]" = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -8045,7 +8071,7 @@
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INFOPLIST_OUTPUT_FORMAT = binary;
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -9178,7 +9204,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				LLVM_LTO = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -9500,7 +9526,6 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9522,7 +9547,6 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;

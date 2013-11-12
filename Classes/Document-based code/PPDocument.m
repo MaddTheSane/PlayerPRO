@@ -8,9 +8,7 @@
 
 #import "PPDocument.h"
 #import <PlayerPROKit/PlayerPROKit.h>
-#import <QTKit/QTKit.h>
-#import <QTKit/QTExportSession.h>
-#import <QTKit/QTExportOptions.h>
+#import <AVFoundation/AVFoundation.h>
 #import "PPApp_AppDelegate.h"
 #import "UserDefaultKeys.h"
 #import "PPExportObject.h"
@@ -560,53 +558,83 @@ typedef struct {
 					if (!saveData) {
 						return MADNeedMemory;
 					}
+                    NSArray *metadataInfo;
 					NSString *oldMusicName = self.musicName;
 					NSString *oldMusicInfo = self.musicInfo;
 					NSURL *oldURL = [self fileURL];
 					[_theDriver endExport];
 					NSError *expErr = nil;
-#if PPEXPORT_CREATE_TMP_AIFF
 					NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
 					[saveData writeToURL:tmpURL atomically:NO];
-					QTMovie *exportMov = [[QTMovie alloc] initWithURL:tmpURL error:&expErr];
-					if (exportMov) {
-						[exportMov setAttribute:oldMusicName forKey:QTMovieDisplayNameAttribute];
-						[exportMov setAttribute:oldMusicInfo forKey:QTMovieCopyrightAttribute];
-					}
-#else
-					//Attempts of using data directly have resulted in internal assertion failures in the export session initialization code
-					QTDataReference *dataRef = [[QTDataReference alloc] initWithReferenceToData:saveData name:oldMusicName MIMEType:@"audio/aiff"];
-					
-					QTMovie *exportMov = [[QTMovie alloc] initWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:dataRef, QTMovieDataReferenceAttribute, @NO, QTMovieOpenAsyncOKAttribute, @YES, QTMovieDontInteractWithUserAttribute, @NO, QTMovieOpenForPlaybackAttribute, oldMusicName, QTMovieDisplayNameAttribute, oldMusicInfo, QTMovieCopyrightAttribute, nil] error:&expErr];
-#endif
+					AVURLAsset *exportMov = [AVAsset assetWithURL:tmpURL];
+
+                    AVAssetReader *assetReader = [[AVAssetReader alloc] initWithAsset:exportMov error:&expErr];
+                    [assetReader startReading];
+                    {
+						AVMutableMetadataItem *titleName = [[AVMutableMetadataItem alloc] init];
+						[titleName setKeySpace:AVMetadataKeySpaceCommon];
+						[titleName setKey:AVMetadataCommonKeyTitle];
+						[titleName setValue:oldMusicName];
+						
+						AVMutableMetadataItem *dataInfo = [[AVMutableMetadataItem alloc] init];
+						[titleName setKeySpace:AVMetadataKeySpaceCommon];
+						[titleName setKey:AVMetadataCommonKeySoftware];
+						[titleName setValue:@"PlayerPRO 6"];
+						
+						AVMutableMetadataItem *musicInfoQTUser = [[AVMutableMetadataItem alloc] init];
+                        [musicInfoQTUser setKeySpace:AVMetadataKeySpaceQuickTimeUserData];
+						[musicInfoQTUser setKey:AVMetadataQuickTimeUserDataKeyInformation];
+						[musicInfoQTUser setValue:oldMusicInfo];
+						
+						AVMutableMetadataItem *musicInfoiTunes = [[AVMutableMetadataItem alloc] init];
+                        [musicInfoiTunes setKeySpace:AVMetadataKeySpaceiTunes];
+						[musicInfoiTunes setKey:AVMetadataiTunesMetadataKeyUserComment];
+						[musicInfoiTunes setValue:oldMusicInfo];
+						
+						AVMutableMetadataItem *musicInfoQTMeta = [[AVMutableMetadataItem alloc] init];
+                        [musicInfoQTMeta setKeySpace:AVMetadataKeySpaceQuickTimeMetadata];
+						[musicInfoQTMeta setKey:AVMetadataQuickTimeMetadataKeyInformation];
+						[musicInfoQTMeta setValue:oldMusicInfo];
+						
+						
+                        metadataInfo = @[titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
+                    }
+
+
 					oldMusicInfo = nil;
 					saveData = nil;
 					if (!exportMov) {
 						if (errStr) {
 							*errStr = [[NSString alloc] initWithFormat:@"Init Failed for %@, error: %@", oldMusicName, [expErr localizedDescription]];
 						}
-#if PPEXPORT_CREATE_TMP_AIFF
 						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-#endif
 						return MADWritingErr;
 					}
 					
-					QTExportSession *session = [[QTExportSession alloc] initWithMovie:exportMov exportOptions:[QTExportOptions exportOptionsWithIdentifier:QTExportOptionsAppleM4A] outputURL:theURL error:&expErr];
+					AVAssetExportSession *session = [[AVAssetExportSession alloc] initWithAsset:exportMov presetName:AVAssetExportPresetAppleM4A]; //[[AVAssetReaderOutput alloc] initWithMovie:exportMov exportOptions:[QTExportOptions exportOptionsWithIdentifier:QTExportOptionsAppleM4A] outputURL:theURL error:&expErr];
 					if (!session) {
 						if (errStr) {
 							*errStr = [[NSString alloc] initWithFormat:@"Export session creation for %@ failed, error: %@", oldMusicName, [expErr localizedDescription]];
 						}
-#if PPEXPORT_CREATE_TMP_AIFF
 						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-#endif
 						
 						return MADWritingErr;
 					}
-					[session run];
-					BOOL didFinish = [session waitUntilFinished:&expErr];
-#if PPEXPORT_CREATE_TMP_AIFF
+					[session setOutputURL:theURL];
+					[session setOutputFileType:AVFileTypeAppleM4A];
+					[session setMetadata:[session.metadata arrayByAddingObjectsFromArray:metadataInfo]];
+					metadataInfo = nil;
+					dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create( 0 );
+					[session exportAsynchronouslyWithCompletionHandler:^{
+						dispatch_semaphore_signal(sessionWaitSemaphore);
+					}];
+					do {
+						dispatch_time_t dispatchTime = DISPATCH_TIME_FOREVER;  // if we dont want progress, we will wait until it finishes.
+						dispatch_semaphore_wait(sessionWaitSemaphore, dispatchTime);
+					} while( [session status] < AVAssetExportSessionStatusCompleted );
+
+					BOOL didFinish = [session status] == AVAssetExportSessionStatusCompleted;
 					[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-#endif
 					
 					if (didFinish) {
 						return noErr;

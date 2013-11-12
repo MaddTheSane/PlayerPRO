@@ -17,9 +17,7 @@
 #import "OpenPanelViewController.h"
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
-#import <QTKit/QTKit.h>
-#import <QTKit/QTExportSession.h>
-#import <QTKit/QTExportOptions.h>
+#import <AVFoundation/AVFoundation.h>
 
 #define kUnresolvableFile @"Unresolvable files"
 #define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."
@@ -800,10 +798,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	return [NSApp runModalForWindow:self.exportWindow];
 }
 
-#ifndef PPEXPORT_CREATE_TMP_AIFF
-#define PPEXPORT_CREATE_TMP_AIFF 1
-#endif
-
 - (IBAction)exportMusicAs:(id)sender
 {
 	NSInteger tag = [sender tag];
@@ -870,6 +864,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						NSString *oldMusicInfo = self.musicInfo;
 						NSURL *oldURL = [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] musicUrl];
 						MADEndExport(madDriver);
+						NSArray *metadataInfo;
 						NSError *expErr = nil;
 						dispatch_block_t errBlock = ^{
 							if (isQuitting) {
@@ -878,54 +873,75 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 								NSRunAlertPanel(@"Export failed", @"Export/coversion of the music file failed:\n%@", nil, nil, nil, [expErr localizedDescription]);
 							}
 						};
-#if PPEXPORT_CREATE_TMP_AIFF
 						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
 						
 						[saveData writeToURL:tmpURL atomically:NO];
-						QTMovie *exportMov = [[QTMovie alloc] initWithURL:tmpURL error:&expErr];
-						if (exportMov) {
-							[exportMov setAttribute:oldMusicName forKey:QTMovieDisplayNameAttribute];
-							[exportMov setAttribute:oldMusicInfo forKey:QTMovieCopyrightAttribute];
-						}
-#else
-						//Attempts of using data directly have resulted in internal assertion failures in the export session initialization code
-						QTDataReference *dataRef = [[QTDataReference alloc] initWithReferenceToData:saveData name:oldMusicName MIMEType:@"audio/aiff"];
+						AVURLAsset *exportMov = [AVAsset assetWithURL:tmpURL];
 						
-						QTMovie *exportMov = [[QTMovie alloc] initWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:dataRef, QTMovieDataReferenceAttribute, @NO, QTMovieOpenAsyncOKAttribute, @YES, QTMovieDontInteractWithUserAttribute, @NO, QTMovieOpenForPlaybackAttribute, oldMusicName, QTMovieDisplayNameAttribute, oldMusicInfo, QTMovieCopyrightAttribute, nil] error:&expErr];
-#endif
+						{
+							AVMutableMetadataItem *titleName = [[AVMutableMetadataItem alloc] init];
+							[titleName setKeySpace:AVMetadataKeySpaceCommon];
+							[titleName setKey:AVMetadataCommonKeyTitle];
+							[titleName setValue:oldMusicName];
+							
+							AVMutableMetadataItem *dataInfo = [[AVMutableMetadataItem alloc] init];
+							[titleName setKeySpace:AVMetadataKeySpaceCommon];
+							[titleName setKey:AVMetadataCommonKeySoftware];
+							[titleName setValue:@"PlayerPRO Player"];
+							
+							AVMutableMetadataItem *musicInfoQTUser = [[AVMutableMetadataItem alloc] init];
+							[musicInfoQTUser setKeySpace:AVMetadataKeySpaceQuickTimeUserData];
+							[musicInfoQTUser setKey:AVMetadataQuickTimeUserDataKeyInformation];
+							[musicInfoQTUser setValue:oldMusicInfo];
+							
+							AVMutableMetadataItem *musicInfoiTunes = [[AVMutableMetadataItem alloc] init];
+							[musicInfoiTunes setKeySpace:AVMetadataKeySpaceiTunes];
+							[musicInfoiTunes setKey:AVMetadataiTunesMetadataKeyUserComment];
+							[musicInfoiTunes setValue:oldMusicInfo];
+							
+							AVMutableMetadataItem *musicInfoQTMeta = [[AVMutableMetadataItem alloc] init];
+							[musicInfoQTMeta setKeySpace:AVMetadataKeySpaceQuickTimeMetadata];
+							[musicInfoQTMeta setKey:AVMetadataQuickTimeMetadataKeyInformation];
+							[musicInfoQTMeta setValue:oldMusicInfo];
+							
+							
+							metadataInfo = @[titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
+						}
+						
+						
 						oldMusicInfo = nil;
 						saveData = nil;
 						if (!exportMov) {
+							expErr = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadUnknownError userInfo:nil];
 							NSLog(@"Init Failed for %@, error: %@", oldMusicName, [expErr localizedDescription]);
-#if !PPEXPORT_CREATE_TMP_AIFF
-#else
 							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-#endif
 							dispatch_async(dispatch_get_main_queue(), errBlock);
 							return;
 						}
 						
-						QTExportSession *session = [[QTExportSession alloc] initWithMovie:exportMov exportOptions:[QTExportOptions exportOptionsWithIdentifier:QTExportOptionsAppleM4A] outputURL:[savePanel URL] error:&expErr];
+						AVAssetExportSession *session = [[AVAssetExportSession alloc] initWithAsset:exportMov presetName:AVAssetExportPresetAppleM4A];
 						if (!session) {
 							NSLog(@"Export session creation for %@ failed, error: %@", oldMusicName, [expErr localizedDescription]);
-#if !PPEXPORT_CREATE_TMP_AIFF
-#else
 							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-#endif
 							dispatch_async(dispatch_get_main_queue(), errBlock);
 							return;
 						}
-						[session run];
-						BOOL didFinish = [session waitUntilFinished:&expErr];
-						if (!didFinish)
-						{
-							NSLog(@"export of \"%@\" failed, error: %@", oldMusicName, [expErr localizedDescription]);
-							dispatch_async(dispatch_get_main_queue(), errBlock);
-						}
-#if !PPEXPORT_CREATE_TMP_AIFF
-#else
+						[session setOutputURL:tmpURL];
+						[session setOutputFileType:AVFileTypeAppleM4A];
+						session.metadata = [session.metadata arrayByAddingObjectsFromArray:metadataInfo];
+						metadataInfo = nil;
+						dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create( 0 );
+						[session exportAsynchronouslyWithCompletionHandler:^{
+							dispatch_semaphore_signal(sessionWaitSemaphore);
+						}];
+						do {
+							dispatch_time_t dispatchTime = DISPATCH_TIME_FOREVER;
+							dispatch_semaphore_wait(sessionWaitSemaphore, dispatchTime);
+						} while( [session status] < AVAssetExportSessionStatusCompleted );
+						
+						BOOL didFinish = [session status] == AVAssetExportSessionStatusCompleted;
 						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-#endif
+						
 						if (didFinish) {
 							dispatch_async(dispatch_get_main_queue(), ^{
 								if (isQuitting) {
@@ -938,7 +954,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 								}
 							});
 						}
-						
 					});
 				} else {
 					MADEndExport(madDriver);
@@ -1764,12 +1779,12 @@ enum PPMusicToolbarTypes {
 		char info[5] = {0};
 		if(MADMusicIdentifyCFURL(madLib, info, (__bridge CFURLRef) musicURL) != noErr) break;
 		if(MADMusicInfoCFURL(madLib, info, (__bridge CFURLRef) musicURL, &theInfo) != noErr) break;
-		[fileName setTitleWithMnemonic:obj.fileName];
-		[internalName setTitleWithMnemonic:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
+		[[fileName cell] setTitle:obj.fileName];
+		[[internalName cell] setTitle:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
 		[fileSize setIntegerValue:theInfo.fileSize];
-		[musicInstrument setTitleWithMnemonic:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
-		[musicPatterns setTitleWithMnemonic:[NSString stringWithFormat:@"%ld", (long)theInfo.totalPatterns]];
-		[musicPlugType setTitleWithMnemonic:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
+		[[musicInstrument cell] setTitle:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
+		[[musicPatterns cell] setTitle:[NSString stringWithFormat:@"%ld", (long)theInfo.totalPatterns]];
+		[[musicPlugType cell] setTitle:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
 		{
 			char sig[5] = {0};
 			OSType2Ptr(theInfo.signature, sig);
@@ -1777,20 +1792,20 @@ enum PPMusicToolbarTypes {
 			if (!NSSig) {
 				NSSig = [NSString stringWithFormat:@"0x%08X", (unsigned int)theInfo.signature];
 			}
-			[musicSignature setTitleWithMnemonic:NSSig];
+			[[musicSignature cell] setTitle:NSSig];
 		}
-		[fileLocation setTitleWithMnemonic:[musicURL path]];
+		[[fileLocation cell] setTitle:[musicURL path]];
 		return;
 	} while (0);
 	
-	[fileName setTitleWithMnemonic:PPDoubleDash];
-	[internalName setTitleWithMnemonic:PPDoubleDash];
-	[fileSize setTitleWithMnemonic:PPDoubleDash];
-	[musicInstrument setTitleWithMnemonic:PPDoubleDash];
-	[musicPatterns setTitleWithMnemonic:PPDoubleDash];
-	[musicPlugType setTitleWithMnemonic:PPDoubleDash];
-	[musicSignature setTitleWithMnemonic:PPDoubleDash];
-	[fileLocation setTitleWithMnemonic:PPDoubleDash];
+	[[fileName cell] setTitle:PPDoubleDash];
+	[[internalName cell] setTitle:PPDoubleDash];
+	[[fileSize cell] setTitle:PPDoubleDash];
+	[[musicInstrument cell] setTitle:PPDoubleDash];
+	[[musicPatterns cell] setTitle:PPDoubleDash];
+	[[musicPlugType cell] setTitle:PPDoubleDash];
+	[[musicSignature cell] setTitle:PPDoubleDash];
+	[[fileLocation cell] setTitle:PPDoubleDash];
 }
 
 - (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to

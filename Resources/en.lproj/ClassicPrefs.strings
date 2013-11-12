@@ -1,0 +1,51 @@
+
+/* Class = "NSButtonCell"; title = "Show Notes Length"; ObjectID = "4"; */
+"4.title" = "Show Notes Length";
+
+/* Class = "NSButtonCell"; title = "Markers:"; ObjectID = "6"; */
+"6.title" = "Markers:";
+
+/* Class = "NSTextFieldCell"; title = "Tempo:"; ObjectID = "8"; */
+"8.title" = "Tempo:";
+
+/* Class = "NSTextFieldCell"; title = "Track Height:"; ObjectID = "10"; */
+"10.title" = "Track Height:";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "13"; */
+"13.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "100"; ObjectID = "14"; */
+"14.title" = "100";
+
+/* Class = "NSMenuItem"; title = "110"; ObjectID = "15"; */
+"15.title" = "110";
+
+/* Class = "NSMenuItem"; title = "120"; ObjectID = "16"; */
+"16.title" = "120";
+
+/* Class = "NSMenuItem"; title = "130"; ObjectID = "17"; */
+"17.title" = "130";
+
+/* Class = "NSMenuItem"; title = "140"; ObjectID = "18"; */
+"18.title" = "140";
+
+/* Class = "NSMenuItem"; title = "160"; ObjectID = "19"; */
+"19.title" = "160";
+
+/* Class = "NSMenuItem"; title = "180"; ObjectID = "20"; */
+"20.title" = "180";
+
+/* Class = "NSMenuItem"; title = "200"; ObjectID = "21"; */
+"21.title" = "200";
+
+/* Class = "NSTextFieldCell"; title = "Offset:"; ObjectID = "23"; */
+"23.title" = "Offset:";
+
+/* Class = "NSTextFieldCell"; title = "No:"; ObjectID = "25"; */
+"25.title" = "No:";
+
+/* Class = "NSTextFieldCell"; title = "Loop:"; ObjectID = "31"; */
+"31.title" = "Loop:";
+
+/* Class = "NSTextFieldCell"; title = "Unit:"; ObjectID = "33"; */
+"33.title" = "Unit:";
