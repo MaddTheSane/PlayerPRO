@@ -19,6 +19,8 @@
 @class PPInstrumentPlugHandler;
 @class PPExportObject;
 
+extern __weak PPLibrary *globalMadLib;
+
 @interface PPApp_AppDelegate : NSDocumentController <NSApplicationDelegate>
 {
 	NSMutableArray			*plugInInfos;
@@ -38,7 +40,6 @@
 	BOOL isQuitting;
 }
 
-@property (readonly) PPLibrary *madLib;
 @property (weak) IBOutlet NSWindow *window;
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)openFile:(id)sender;

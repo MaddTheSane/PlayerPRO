@@ -85,9 +85,12 @@ static OSStatus CFURLToFSSpec (CFURLRef pathURL, FSSpec *outSpec)
 	}
 	
 	// Free allocated memory
-	if (pathString != NULL) { CFRelease (pathString); }
-	if (parentURL != NULL)  { CFRelease (parentURL);  }
-	if (nameString != NULL) { CFRelease (nameString); }
+	if (pathString != NULL)
+		CFRelease (pathString);
+	if (parentURL != NULL)
+		CFRelease (parentURL);
+	if (nameString != NULL)
+		CFRelease (nameString);
 	
 	return err;
 }
@@ -151,8 +154,10 @@ static OSErr mainQTInst(void					*unused,
 			
 			FSpGetFInfo( &tmpSpec, &fInfo);
 			
-			if (fInfo.fdType == thePPInfoPlug->fileType) myErr = noErr;
-			else myErr = MADFileNotSupportedByThisPlug;
+			if (fInfo.fdType == thePPInfoPlug->fileType)
+				myErr = noErr;
+			else
+				myErr = MADFileNotSupportedByThisPlug;
 		}
 			break;
 			
@@ -166,7 +171,8 @@ static OSErr mainQTInst(void					*unused,
 				
 				FSpDelete(&tmpSpec);
 				myErr = FSpCreate( &tmpSpec, 'TVOD', 'AIFF', smCurrentScript);
-				if(myErr == noErr) myErr = FSpOpenDF( &tmpSpec, fsCurPerm, &iFileRefI);
+				if(myErr == noErr)
+					myErr = FSpOpenDF( &tmpSpec, fsCurPerm, &iFileRefI);
 				
 				if (myErr == noErr)
 				{
@@ -184,7 +190,8 @@ static OSErr mainQTInst(void					*unused,
 											inOutBytes,
 											0);
 					
-					if(myErr == noErr) myErr = FSWrite( iFileRefI, &inOutBytes, curData->data);
+					if(myErr == noErr)
+						myErr = FSWrite( iFileRefI, &inOutBytes, curData->data);
 					FSCloseFork( iFileRefI);
 				}
 			}

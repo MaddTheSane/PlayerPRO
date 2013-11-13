@@ -27,6 +27,8 @@
 #define kUnresolvableFile @"Unresolvable files"
 #define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."
 
+__weak PPLibrary *globalMadLib = nil;
+
 static void CocoaDebugStr( short line, const char *file, const char *text)
 {
 	NSLog(@"%s:%u error text:%s!", file, line, text);
@@ -50,12 +52,20 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 
 @interface PPApp_AppDelegate ()
 @property (readonly, strong) NSDictionary *trackerDict;
-@property (readwrite, strong) PPLibrary *madLib;
+@property (nonatomic, strong) PPLibrary *madLib;
 @end
 
 @implementation PPApp_AppDelegate
 @synthesize window;
 @synthesize madLib;
+- (void)setMadLib:(PPLibrary *)madLibb
+{
+	[self willChangeValueForKey:@"madLib"];
+	madLib = madLibb;
+	globalMadLib = madLib;
+	[self didChangeValueForKey:@"madLib"];
+}
+
 
 @synthesize trackerDict = _trackerDict;
 - (NSDictionary *)trackerDict
@@ -255,37 +265,6 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	plugInInfos = [[NSMutableArray alloc] init];
 	[self updatePlugInInfoMenu];
 }
-
-#if 0
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
-{
-	if (MADIsExporting(madDriver)) {
-		NSInteger selection = NSRunAlertPanel(@"Exporting", @"PlayerPRO is currently exporting a tracker file.\nQuitting will stop this. Do you really wish to quit?", @"Wait", @"Quit", @"Cancel");
-		switch (selection) {
-			default:
-			case NSAlertOtherReturn:
-				return NSTerminateCancel;
-				break;
-				
-			case NSAlertAlternateReturn:
-				return NSTerminateNow;
-				break;
-				
-			case NSAlertDefaultReturn:
-				//Double-check to make sure we're still exporting
-				if (MADIsExporting(madDriver)) {
-					isQuitting = YES;
-					return NSTerminateLater;
-				} else {
-					return NSTerminateNow;
-				}
-				
-				break;
-		}
-	}
-	return NSTerminateNow;
-}
-#endif
 
 - (void)applicationWillTerminate:(NSNotification *)notification
 {

@@ -46,7 +46,7 @@ typedef struct _Pcmd
 extern "C" {
 #endif
 	
-PPEXPORT OSErr inAddSoundToMAD(Ptr			theSound,
+PPEXPORT OSErr inAddSoundToMAD(void			*theSound,
 							   size_t		sndLen,
 							   long			lS,
 							   long			lE,

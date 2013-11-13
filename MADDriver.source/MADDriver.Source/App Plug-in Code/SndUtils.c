@@ -22,9 +22,9 @@
 
 sData* inMADCreateSample()
 {
-	sData	*curData;
+	sData *curData;
 	
-	curData = (sData*) calloc( sizeof( sData), 1);
+	curData = (sData*) calloc(sizeof(sData), 1);
 	
 	if (curData == NULL) {
 		return NULL;
@@ -54,7 +54,7 @@ Cmd* GetCmd( short row, short track, Pcmd* myPcmd)
 	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
 
-OSErr inAddSoundToMAD(Ptr			theSound,
+OSErr inAddSoundToMAD(void			*theSound,
 					  size_t		sndLen,
 					  long			lS,
 					  long			lE,
@@ -69,7 +69,8 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 {
 	OSErr theErr = noErr;
 	char *cName = malloc(name[0] + 1);
-	if (!cName) return MADNeedMemory;
+	if (!cName)
+		return MADNeedMemory;
 	memcpy(cName, &name[1], name[0]);
 	cName[name[0]] = '\0';
 	

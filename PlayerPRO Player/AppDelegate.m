@@ -518,7 +518,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	
 	unsigned int shift, exponent;
 	
-	
 	for(shift = 0U; (theNum >> (31 - shift)) == 0U; ++shift)
 		;
 	theNum <<= shift;
@@ -548,31 +547,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	NSData *nameData;
 	NSData *infoData;
 	
-	{
-#if 0
-		TextChunk *nameChunk;
-		NSInteger macRomanNameLength = 0;
-		NSData *macRomanNameData = [musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
-		macRomanNameLength = [macRomanNameData length];
-		BOOL isPadded = (macRomanNameLength & 1);
-		NSInteger nameChunkLen = sizeof(TextChunk) + macRomanNameLength;
-		
-		if (!isPadded) {
-			nameChunkLen--;
-		}
-		
-		nameChunk = calloc(nameChunkLen, 1);
-		char *firstChar;
-		nameChunk->ckID = NameID;
-		PPBE32(&nameChunk->ckID);
-		nameChunk->ckSize = 1 + macRomanNameLength;
-		PPBE32(&nameChunk->ckSize);
-		nameChunk->text[0] = macRomanNameLength;
-		firstChar = &nameChunk->text[1];
-		memcpy(firstChar, [macRomanNameData bytes], macRomanNameLength);
-		nameData = [NSData dataWithBytes:nameChunk length:nameChunkLen];
-		free(nameChunk);
-#else
+	@autoreleasepool {
 		ChunkHeader nameChunk;
 		NSInteger macRomanNameLength = 0;
 		NSData *macRomanNameData = [self.musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
@@ -586,7 +561,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		nameChunk.ckID = NameID;
 		PPBE32(&nameChunk.ckID);
 		
-		NSMutableData *tmpNameDat = [NSMutableData dataWithBytes:&nameChunk length:sizeof(ChunkHeader)];
+		NSMutableData *tmpNameDat = [[NSMutableData alloc] initWithBytes:&nameChunk length:sizeof(ChunkHeader)];
 		[tmpNameDat appendBytes:&pStrLen length:1];
 		[tmpNameDat appendData:macRomanNameData];
 		
@@ -595,45 +570,20 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			[tmpNameDat appendBytes:&padbyte length:1];
 		}
 		nameData = tmpNameDat;
-#endif
-	}
-	
-	{
-#if 0
-		ApplicationSpecificChunk *infoChunk;
-		NSInteger macRomanInfoLength = 0;
-		NSData *macRomanInfoData = [musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
-		macRomanInfoLength = [macRomanInfoData length];
-		BOOL isPadded = (macRomanInfoLength & 1);
-		NSInteger infoChunkLen = sizeof(ApplicationSpecificChunk) + macRomanInfoLength;
 		
-		if (!isPadded) {
-			infoChunkLen--;
-		}
 		
-		infoChunk = calloc(infoChunkLen, 0);
-		infoChunk->applicationSignature = CommentID;
-		PPBE32(&infoChunk->applicationSignature);
-		infoChunk->ckID = ApplicationSpecificID;
-		PPBE32(&infoChunk->ckID);
-		infoChunk->ckSize = macRomanInfoLength + 1;
-		PPBE32(&infoChunk->ckSize);
-		memcpy(infoChunk->data, [macRomanInfoData bytes], macRomanInfoLength);
-		infoData = [NSData dataWithBytes:infoChunk length:infoChunkLen];
-		free(infoChunk);
-#else
 		ChunkHeader infoChunk;
 		NSInteger macRomanInfoLength = 0;
 		NSData *macRomanInfoData = [self.musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 		macRomanInfoLength = [macRomanInfoData length];
-		BOOL isPadded = (macRomanInfoLength & 1);
+		isPadded = (macRomanInfoLength & 1);
 		infoChunk.ckSize = (SInt32)(macRomanInfoLength + 1);
-		char pStrLen = macRomanInfoLength;
+		pStrLen = macRomanInfoLength;
 		PPBE32(&infoChunk.ckSize);
 		
 		infoChunk.ckID = CommentID;
 		PPBE32(&infoChunk.ckID);
-		NSMutableData *tmpInfoDat = [NSMutableData dataWithBytes:&infoChunk length:sizeof(ChunkHeader)];
+		NSMutableData *tmpInfoDat = [[NSMutableData alloc] initWithBytes:&infoChunk length:sizeof(ChunkHeader)];
 		[tmpInfoDat appendBytes:&pStrLen length:1];
 		[tmpInfoDat appendData:macRomanInfoData];
 		
@@ -643,7 +593,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		}
 		
 		infoData = tmpInfoDat;
-#endif
 	}
 	
 	NSMutableData *returnData = [[NSMutableData alloc] initWithCapacity:dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + sizeof(ContainerChunk) + [nameData length] + [infoData length]];
@@ -719,7 +668,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	[returnData appendData:nameData];
 	[returnData appendData:infoData];
 	
-	return returnData;
+	return [[NSData alloc] initWithData:returnData];
 }
 
 - (NSData *)getSoundData:(MADDriverSettings*)theSet
@@ -735,10 +684,8 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		
 		return nil;
 	}
-	MADCleanDriver( theRec);
-	
-	MADAttachDriverToMusic( theRec, music, NULL);
-	MADPlayMusic(theRec);
+	MADCleanDriver(theRec);
+	MADAttachDriverToMusic(theRec, music, NULL);
 	
 	char *soundPtr = NULL;
 	long full = 0;
@@ -770,7 +717,8 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		default:
 			break;
 	}
-	
+	MADPlayMusic(theRec);
+
 	NSMutableData *mutData = [[NSMutableData alloc] init];
 	soundPtr = calloc(full, 1);
 	
@@ -779,8 +727,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		[mutData appendBytes:soundPtr length:full];
 	}
 	NSData *retData = [self newAIFFDataFromSettings:theSet data:mutData];
-	mutData = nil;
-	
 	MADStopMusic(theRec);
 	MADCleanDriver(theRec);
 	MADDisposeDriver(theRec);
@@ -819,16 +765,21 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-						NSData *saveData = [self getSoundData:&exportSettings];
-						MADEndExport(madDriver);
-						
-						[saveData writeToURL:[savePanel URL] atomically:YES];
-						saveData = nil;
+						@autoreleasepool {
+							NSData *saveData = [self getSoundData:&exportSettings];
+							MADEndExport(madDriver);
+							
+							if (!saveData) {
+								return;
+							}
+							
+							[saveData writeToURL:[savePanel URL] atomically:YES];
+						}
 						dispatch_async(dispatch_get_main_queue(), ^{
 							if (isQuitting) {
 								[NSApp replyToApplicationShouldTerminate:YES];
 							} else {
-								NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
+								NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"OK", @"Show File", nil, [[savePanel URL] lastPathComponent]);
 								if (retVal == NSAlertAlternateReturn) {
 									[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[[savePanel URL]]];
 								}
@@ -859,7 +810,10 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-						NSData *saveData = [self getSoundData:&exportSettings];
+						NSData *saveData;
+						@autoreleasepool {
+							saveData = [self getSoundData:&exportSettings];
+						}
 						NSString *oldMusicName = self.musicName;
 						NSString *oldMusicInfo = self.musicInfo;
 						NSURL *oldURL = [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] musicUrl];
@@ -908,11 +862,10 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 							metadataInfo = @[titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
 						}
 						
-						
 						oldMusicInfo = nil;
 						saveData = nil;
 						if (!exportMov) {
-							expErr = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadUnknownError userInfo:nil];
+							expErr = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:nil];
 							NSLog(@"Init Failed for %@, error: %@", oldMusicName, [expErr localizedDescription]);
 							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 							dispatch_async(dispatch_get_main_queue(), errBlock);
@@ -921,6 +874,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						
 						AVAssetExportSession *session = [[AVAssetExportSession alloc] initWithAsset:exportMov presetName:AVAssetExportPresetAppleM4A];
 						if (!session) {
+							expErr = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:nil];
 							NSLog(@"Export session creation for %@ failed, error: %@", oldMusicName, [expErr localizedDescription]);
 							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 							dispatch_async(dispatch_get_main_queue(), errBlock);
@@ -935,8 +889,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 							dispatch_semaphore_signal(sessionWaitSemaphore);
 						}];
 						do {
-							dispatch_time_t dispatchTime = DISPATCH_TIME_FOREVER;
-							dispatch_semaphore_wait(sessionWaitSemaphore, dispatchTime);
+							dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
 						} while( [session status] < AVAssetExportSessionStatusCompleted );
 						
 						BOOL didFinish = [session status] == AVAssetExportSessionStatusCompleted;
@@ -947,7 +900,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 								if (isQuitting) {
 									[NSApp replyToApplicationShouldTerminate:YES];
 								} else {
-									NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
+									NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"OK", @"Show File", nil, [[savePanel URL] lastPathComponent]);
 									if (retVal == NSAlertAlternateReturn) {
 										[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[[savePanel URL]]];
 									}
@@ -999,7 +952,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 					if (isQuitting) {
 						[NSApp replyToApplicationShouldTerminate:YES];
 					} else {
-						NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"Okay", @"Show File", nil, [[savePanel URL] lastPathComponent]);
+						NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"OK", @"Show File", nil, [[savePanel URL] lastPathComponent]);
 						if (retVal == NSAlertAlternateReturn) {
 							[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[fileURL]];
 						}
