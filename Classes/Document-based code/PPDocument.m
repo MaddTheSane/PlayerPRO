@@ -59,11 +59,11 @@
 	self.theMusic.madAuthor = authorString;
 	[self didChangeValueForKey:@"authorString"];
 }
-	
+
 - (id)init
 {
-    self = [super init];
-    if (self) {
+	self = [super init];
+	if (self) {
 		MADDriverSettings init;
 		{
 			MADGetBestDriver(&init);
@@ -90,7 +90,7 @@
 			init.driverMode = [defaults integerForKey:PPSoundDriver];
 			init.repeatMusic = FALSE;
 		}
-
+		
 		self.theDriver = [[PPDriver alloc] initWithLibrary:globalMadLib settings:&init];
 		
 		self.exportController = [[PPSoundSettingsViewController alloc] init];
@@ -98,22 +98,22 @@
 		
 		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 		[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
-
-    }
-    return self;
+		
+	}
+	return self;
 }
 
 - (NSString *)windowNibName
 {
-    // Override returning the nib file name of the document
-    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-    return @"PPDocument";
+	// Override returning the nib file name of the document
+	// If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
+	return @"PPDocument";
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
-    [super windowControllerDidLoadNib:aController];
-    // Add any code here that needs to be executed once the windowController has loaded the document's window.
+	[super windowControllerDidLoadNib:aController];
+	// Add any code here that needs to be executed once the windowController has loaded the document's window.
 }
 
 - (NSFileWrapper *)fileWrapperOfType:(NSString *)typeName error:(NSError **)outError
@@ -144,7 +144,7 @@
 
 + (BOOL)autosavesInPlace
 {
-    return YES;
+	return YES;
 }
 
 - (void)MADDriverWithPreferences
@@ -446,7 +446,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	}
 	
 	[theRec play];
-
+	
 	NSMutableData *mutData = [[NSMutableData alloc] init];
 	soundPtr = calloc(full, 1);
 	
@@ -506,7 +506,7 @@ typedef struct {
 					if (!saveData) {
 						return MADNeedMemory;
 					}
-                    NSArray *metadataInfo;
+					NSArray *metadataInfo;
 					NSString *oldMusicName = self.musicName;
 					NSString *oldMusicInfo = self.musicInfo;
 					NSURL *oldURL = [self fileURL];
@@ -515,8 +515,8 @@ typedef struct {
 					NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
 					[saveData writeToURL:tmpURL atomically:NO];
 					AVURLAsset *exportMov = [AVAsset assetWithURL:tmpURL];
-
-                    {
+					
+					{
 						AVMutableMetadataItem *titleName = [[AVMutableMetadataItem alloc] init];
 						[titleName setKeySpace:AVMetadataKeySpaceCommon];
 						[titleName setKey:AVMetadataCommonKeyTitle];
@@ -528,24 +528,24 @@ typedef struct {
 						[titleName setValue:@"PlayerPRO 6"];
 						
 						AVMutableMetadataItem *musicInfoQTUser = [[AVMutableMetadataItem alloc] init];
-                        [musicInfoQTUser setKeySpace:AVMetadataKeySpaceQuickTimeUserData];
+						[musicInfoQTUser setKeySpace:AVMetadataKeySpaceQuickTimeUserData];
 						[musicInfoQTUser setKey:AVMetadataQuickTimeUserDataKeyInformation];
 						[musicInfoQTUser setValue:oldMusicInfo];
 						
 						AVMutableMetadataItem *musicInfoiTunes = [[AVMutableMetadataItem alloc] init];
-                        [musicInfoiTunes setKeySpace:AVMetadataKeySpaceiTunes];
+						[musicInfoiTunes setKeySpace:AVMetadataKeySpaceiTunes];
 						[musicInfoiTunes setKey:AVMetadataiTunesMetadataKeyUserComment];
 						[musicInfoiTunes setValue:oldMusicInfo];
 						
 						AVMutableMetadataItem *musicInfoQTMeta = [[AVMutableMetadataItem alloc] init];
-                        [musicInfoQTMeta setKeySpace:AVMetadataKeySpaceQuickTimeMetadata];
+						[musicInfoQTMeta setKeySpace:AVMetadataKeySpaceQuickTimeMetadata];
 						[musicInfoQTMeta setKey:AVMetadataQuickTimeMetadataKeyInformation];
 						[musicInfoQTMeta setValue:oldMusicInfo];
 						
 						
-                        metadataInfo = @[titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
-                    }
-
+						metadataInfo = @[titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
+					}
+					
 					oldMusicInfo = nil;
 					saveData = nil;
 					if (!exportMov) {
@@ -601,7 +601,7 @@ typedef struct {
 	
 	free(contextInfo);
 }
-	
+
 - (void)showExportSettingsWithExportType:(NSInteger)expType URL:(NSURL*)theURL
 {
 	MADGetBestDriver(&exportSettings);
@@ -734,17 +734,17 @@ typedef struct {
 
 - (IBAction)showBoxEditor:(id)sender
 {
-    
+	
 }
 
 - (IBAction)showClassicEditor:(id)sender
 {
-    
+	
 }
 
 - (IBAction)showDigitalEditor:(id)sender
 {
-    
+	
 }
 
 - (IBAction)okayExportSettings:(id)sender {

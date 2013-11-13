@@ -101,11 +101,11 @@ static NSInteger selMusFromList = -1;
 {
 	if (!_trackerDict || [_trackerDict count] != madLib->TotalPlug - 1) {
 		NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithDictionary:@{
-											NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
-																				[NSBundle mainBundle],
-																				@"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
-											NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI],
-											NSLocalizedString(@"MAD Package", @"MAD Package"):@[MADPackageUTI]}];
+																						   NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
+																															 [NSBundle mainBundle],
+																															 @"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
+																						   NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI],
+																						   NSLocalizedString(@"MAD Package", @"MAD Package"):@[MADPackageUTI]}];
 		for (int i = 0; i < madLib->TotalPlug; i++) {
 			trackerDict[(__bridge NSString*)madLib->ThePlug[i].MenuName] = (__bridge NSArray*)madLib->ThePlug[i].UTItypes;
 		}
@@ -256,7 +256,7 @@ static NSInteger selMusFromList = -1;
 
 - (IBAction)showMusicList:(id)sender
 {
-    [self.window makeKeyAndOrderFront:sender];
+	[self.window makeKeyAndOrderFront:sender];
 }
 
 - (void)selectMusicAtIndex:(NSInteger)anIdx
@@ -716,7 +716,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			break;
 	}
 	MADPlayMusic(theRec);
-
+	
 	NSMutableData *mutData = [[NSMutableData alloc] init];
 	soundPtr = calloc(full, 1);
 	
@@ -1074,7 +1074,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (IBAction)showPreferences:(id)sender
 {
-    if (!preferences) {
+	if (!preferences) {
 		preferences = [[PPPreferences alloc] init];
 	}
 	[[preferences window] center];
@@ -1083,12 +1083,12 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (IBAction)showInstrumentsList:(id)sender
 {
-    [instrumentController showWindow:sender];
+	[instrumentController showWindow:sender];
 }
 
 - (IBAction)showTools:(id)sender
 {
-    [toolsPanel makeKeyAndOrderFront:sender];
+	[toolsPanel makeKeyAndOrderFront:sender];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -1148,7 +1148,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			[self.plugInInfos addObject:tmpInfo];
 		}
 	}
-		
+	
 	[self.plugInInfos sortWithOptions:NSSortConcurrent usingComparator:^NSComparisonResult(id obj1, id obj2) {
 		NSString *menuNam1 = [obj1 plugName];
 		NSString *menuNam2 = [obj2 plugName];
@@ -1268,7 +1268,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	[timeChecker invalidate];
 	
 	[self removeObserver:self forKeyPath:@"paused"];
-		
+	
 	if (music != NULL) {
 		if (music->hasChanged) {
 			NSInteger selection = 0;
@@ -1583,7 +1583,7 @@ enum PPMusicToolbarTypes {
 			for (NSString *key in tracDic) {
 				[trackerUTIs addObjectsFromArray:tracDic[key]];
 			}
-
+			
 			for (NSString *aUTI in trackerUTIs) {
 				if([sharedWorkspace type:theUTI conformsToType:aUTI])
 				{
@@ -1633,17 +1633,17 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)fastForwardButtonPressed:(id)sender
 {
-    
+	
 }
 
 - (IBAction)loopButtonPressed:(id)sender
 {
-    
+	
 }
 
 - (IBAction)nextButtonPressed:(id)sender
 {
-    if (currentlyPlayingIndex.index + 1 < [musicList countOfMusicList]) {
+	if (currentlyPlayingIndex.index + 1 < [musicList countOfMusicList]) {
 		currentlyPlayingIndex.index++;
 		[self selectCurrentlyPlayingMusic];
 		NSError *err = nil;
@@ -1670,7 +1670,7 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)prevButtonPressed:(id)sender
 {
-    if (currentlyPlayingIndex.index > 0) {
+	if (currentlyPlayingIndex.index > 0) {
 		currentlyPlayingIndex.index--;
 		[self selectCurrentlyPlayingMusic];
 		NSError *err = nil;
@@ -1682,19 +1682,19 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)rewindButtonPressed:(id)sender
 {
-    
+	
 }
 
 - (IBAction)sliderChanged:(id)sender
 {
-    if(music){
+	if(music){
 		MADSetMusicStatus(madDriver, 0, [songPos maxValue], [songPos doubleValue]);
 	}
 }
 
 - (IBAction)stopButtonPressed:(id)sender
 {
-    if (music) {
+	if (music) {
 		MADStopMusic(madDriver);
 		MADCleanDriver(madDriver);
 		MADSetMusicStatus(madDriver, 0, 100, 0);
