@@ -500,21 +500,19 @@ static NSInteger selMusFromList = -1;
 	music->hasChanged = FALSE;
 }
 
-//Yes, the pragma pack is needed
-//otherwise the data will be improperly mapped.
-#pragma pack(push, 2)
-struct Float80i {
-	SInt16  exp;
-	UInt32  man[2];
-};
-#pragma pack(pop)
-
 static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 {
+	//Yes, the pragma pack is needed
+	//otherwise the data will be improperly mapped.
+#pragma pack(push, 2)
 	union {
 		extended80 shortman;
-		struct Float80i intman;
+		struct Float80i {
+			SInt16  exp;
+			UInt32  man[2];
+		} intman;
 	} toreturn;
+#pragma pack(pop)
 	
 	unsigned int shift, exponent;
 	
@@ -880,11 +878,11 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 							dispatch_async(dispatch_get_main_queue(), errBlock);
 							return;
 						}
-						[session setOutputURL:tmpURL];
-						[session setOutputFileType:AVFileTypeAppleM4A];
-						session.metadata = [session.metadata arrayByAddingObjectsFromArray:metadataInfo];
+						session.outputURL = [savePanel URL];
+						session.outputFileType = AVFileTypeAppleM4A;
+						session.metadata = metadataInfo;
 						metadataInfo = nil;
-						dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create( 0 );
+						dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create(0);
 						[session exportAsynchronouslyWithCompletionHandler:^{
 							dispatch_semaphore_signal(sessionWaitSemaphore);
 						}];
@@ -906,6 +904,8 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 									}
 								}
 							});
+						} else {
+							NSLog(@"%@", [session error]);
 						}
 					});
 				} else {
