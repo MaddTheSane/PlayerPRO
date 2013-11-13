@@ -1,0 +1,225 @@
+
+/* Class = "NSBox"; title = "Driver"; ObjectID = "136"; */
+"136.title" = "Driver";
+
+/* Class = "NSBox"; title = "Misc"; ObjectID = "141"; */
+"141.title" = "Misc";
+
+/* Class = "NSButtonCell"; title = "Surround"; ObjectID = "150"; */
+"150.title" = "Surround";
+
+/* Class = "NSButtonCell"; title = "Oversampling:"; ObjectID = "151"; */
+"151.title" = "Oversampling:";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "153"; */
+"153.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "200 ms"; ObjectID = "154"; */
+"154.title" = "200 ms";
+
+/* Class = "NSMenuItem"; title = "100 ms"; ObjectID = "155"; */
+"155.title" = "100 ms";
+
+/* Class = "NSMenuItem"; title = "90 ms"; ObjectID = "156"; */
+"156.title" = "90 ms";
+
+/* Class = "NSMenuItem"; title = "80 ms"; ObjectID = "157"; */
+"157.title" = "80 ms";
+
+/* Class = "NSMenuItem"; title = "70 ms"; ObjectID = "158"; */
+"158.title" = "70 ms";
+
+/* Class = "NSMenuItem"; title = "60 ms"; ObjectID = "159"; */
+"159.title" = "60 ms";
+
+/* Class = "NSMenuItem"; title = "50 ms"; ObjectID = "160"; */
+"160.title" = "50 ms";
+
+/* Class = "NSMenuItem"; title = "45 ms"; ObjectID = "161"; */
+"161.title" = "45 ms";
+
+/* Class = "NSMenuItem"; title = "40 ms"; ObjectID = "162"; */
+"162.title" = "40 ms";
+
+/* Class = "NSMenuItem"; title = "35 ms"; ObjectID = "163"; */
+"163.title" = "35 ms";
+
+/* Class = "NSMenuItem"; title = "30 ms"; ObjectID = "164"; */
+"164.title" = "30 ms";
+
+/* Class = "NSMenuItem"; title = "25 ms"; ObjectID = "165"; */
+"165.title" = "25 ms";
+
+/* Class = "NSMenuItem"; title = "10 ms"; ObjectID = "166"; */
+"166.title" = "10 ms";
+
+/* Class = "NSMenuItem"; title = "1 ms"; ObjectID = "167"; */
+"167.title" = "1 ms";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "169"; */
+"169.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "400 ms"; ObjectID = "170"; */
+"170.title" = "400 ms";
+
+/* Class = "NSMenuItem"; title = "300 ms"; ObjectID = "171"; */
+"171.title" = "300 ms";
+
+/* Class = "NSMenuItem"; title = "200 ms"; ObjectID = "172"; */
+"172.title" = "200 ms";
+
+/* Class = "NSMenuItem"; title = "100 ms"; ObjectID = "173"; */
+"173.title" = "100 ms";
+
+/* Class = "NSMenuItem"; title = "90 ms"; ObjectID = "174"; */
+"174.title" = "90 ms";
+
+/* Class = "NSMenuItem"; title = "70 ms"; ObjectID = "175"; */
+"175.title" = "70 ms";
+
+/* Class = "NSMenuItem"; title = "60 ms"; ObjectID = "176"; */
+"176.title" = "60 ms";
+
+/* Class = "NSMenuItem"; title = "50 ms"; ObjectID = "177"; */
+"177.title" = "50 ms";
+
+/* Class = "NSMenuItem"; title = "45 ms"; ObjectID = "178"; */
+"178.title" = "45 ms";
+
+/* Class = "NSMenuItem"; title = "40 ms"; ObjectID = "179"; */
+"179.title" = "40 ms";
+
+/* Class = "NSMenuItem"; title = "35 ms"; ObjectID = "180"; */
+"180.title" = "35 ms";
+
+/* Class = "NSMenuItem"; title = "80 ms"; ObjectID = "181"; */
+"181.title" = "80 ms";
+
+/* Class = "NSMenuItem"; title = "30 ms"; ObjectID = "182"; */
+"182.title" = "30 ms";
+
+/* Class = "NSMenuItem"; title = "25 ms"; ObjectID = "183"; */
+"183.title" = "25 ms";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "185"; */
+"185.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "30 x"; ObjectID = "186"; */
+"186.title" = "30 x";
+
+/* Class = "NSMenuItem"; title = "25 x"; ObjectID = "187"; */
+"187.title" = "25 x";
+
+/* Class = "NSMenuItem"; title = "20 x"; ObjectID = "188"; */
+"188.title" = "20 x";
+
+/* Class = "NSMenuItem"; title = "16 x"; ObjectID = "189"; */
+"189.title" = "16 x";
+
+/* Class = "NSMenuItem"; title = "10 x"; ObjectID = "190"; */
+"190.title" = "10 x";
+
+/* Class = "NSMenuItem"; title = "8 x"; ObjectID = "191"; */
+"191.title" = "8 x";
+
+/* Class = "NSMenuItem"; title = "6 x"; ObjectID = "192"; */
+"192.title" = "6 x";
+
+/* Class = "NSMenuItem"; title = "4 x"; ObjectID = "193"; */
+"193.title" = "4 x";
+
+/* Class = "NSMenuItem"; title = "3 x"; ObjectID = "194"; */
+"194.title" = "3 x";
+
+/* Class = "NSMenuItem"; title = "2 x"; ObjectID = "195"; */
+"195.title" = "2 x";
+
+/* Class = "NSMenuItem"; title = "Off"; ObjectID = "196"; */
+"196.title" = "Off";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "198"; */
+"198.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "40 %"; ObjectID = "199"; */
+"199.title" = "40 %";
+
+/* Class = "NSMenuItem"; title = "50 %"; ObjectID = "200"; */
+"200.title" = "50 %";
+
+/* Class = "NSMenuItem"; title = "60 %"; ObjectID = "201"; */
+"201.title" = "60 %";
+
+/* Class = "NSMenuItem"; title = "70 %"; ObjectID = "202"; */
+"202.title" = "70 %";
+
+/* Class = "NSMenuItem"; title = "30 %"; ObjectID = "203"; */
+"203.title" = "30 %";
+
+/* Class = "NSMenuItem"; title = "20 %"; ObjectID = "204"; */
+"204.title" = "20 %";
+
+/* Class = "NSMenuItem"; title = "10 %"; ObjectID = "205"; */
+"205.title" = "10 %";
+
+/* Class = "NSButtonCell"; title = "Stereo Delay:"; ObjectID = "206"; */
+"206.title" = "Stereo Delay:";
+
+/* Class = "NSButtonCell"; title = "Reverb:"; ObjectID = "207"; */
+"207.title" = "Reverb:";
+
+/* Class = "NSButtonCell"; title = "24 Bits"; ObjectID = "208"; */
+"208.title" = "24 Bits";
+
+/* Class = "NSButtonCell"; title = "20 Bits"; ObjectID = "209"; */
+"209.title" = "20 Bits";
+
+/* Class = "NSButtonCell"; title = "16 Bits"; ObjectID = "210"; */
+"210.title" = "16 Bits";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "211"; */
+"211.title" = "Radio";
+
+/* Class = "NSButtonCell"; title = "8 Bits"; ObjectID = "212"; */
+"212.title" = "8 Bits";
+
+/* Class = "NSButtonCell"; title = "48 Khz"; ObjectID = "213"; */
+"213.title" = "48 Khz";
+
+/* Class = "NSButtonCell"; title = "44 Khz"; ObjectID = "214"; */
+"214.title" = "44 Khz";
+
+/* Class = "NSButtonCell"; title = "22 Khz"; ObjectID = "215"; */
+"215.title" = "22 Khz";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "216"; */
+"216.title" = "Radio";
+
+/* Class = "NSButtonCell"; title = "11 Khz"; ObjectID = "217"; */
+"217.title" = "11 Khz";
+
+/* Class = "NSTextFieldCell"; title = "Bits:"; ObjectID = "218"; */
+"218.title" = "Bits:";
+
+/* Class = "NSTextFieldCell"; title = "Rate:"; ObjectID = "219"; */
+"219.title" = "Rate:";
+
+/* Class = "NSButtonCell"; title = "Other..."; ObjectID = "221"; */
+"221.title" = "Other...";
+
+/* Class = "NSButtonCell"; title = "CoreMIDI"; ObjectID = "222"; */
+"222.title" = "CoreMIDI";
+
+/* Class = "NSButtonCell"; title = "CoreAudio"; ObjectID = "223"; */
+"223.title" = "CoreAudio";
+
+/* Class = "NSButtonCell"; title = "Sound Manager"; ObjectID = "224"; */
+"224.title" = "Sound Manager";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "225"; */
+"225.title" = "Radio";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "URz-qr-YhO"; */
+"URz-qr-YhO.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Hidden"; ObjectID = "dFf-B0-93B"; */
+"dFf-B0-93B.title" = "Hidden";
