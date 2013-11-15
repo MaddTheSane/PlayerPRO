@@ -458,7 +458,7 @@ static inline NSURL *PPHomeURL()
 	NSInteger changedIndex = selectedMusic;
 	for (PPMusicListObject *obj in musicList)
 	{
-		NSData *bookData = [obj.musicUrl bookmarkDataWithOptions:NSURLBookmarkCreationPreferFileIDResolution includingResourceValuesForKeys:nil relativeToURL:PPHomeURL() error:nil];
+		NSData *bookData = [obj.musicUrl bookmarkDataWithOptions:0 includingResourceValuesForKeys:nil relativeToURL:PPHomeURL() error:nil];
 		if (bookData) {
 			[BookmarkArray addObject:bookData];
 		}
