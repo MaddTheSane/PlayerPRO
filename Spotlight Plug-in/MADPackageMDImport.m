@@ -41,6 +41,7 @@ Boolean GetMetadataForPackage(CFMutableDictionaryRef attributes, CFStringRef pat
 		outDict[(__bridge NSString*)kPPMDTotalTracks] = @(musFile.totalTracks);
 		
 		outDict[(__bridge NSString*)kPPMDFormatDescription] = @"MAD Bundle"; //TODO: localize
+		outDict[(__bridge NSString*)kPPMDMADKInfo] = musFile.madInfo;
 		
 		//TODO: fill these out!
 		outDict[(__bridge NSString*)kPPMDInstumentsList] = @[];

@@ -24,23 +24,22 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 #include <CoreServices/CoreServices.h>
-#include "MOD.h"
 
 static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 {
-	short 					i = 0;
-	int						x = 0;
-	long 					inOutCount, OffSetToSample;
-	struct PatHeader		tempPatHeader;
-	MADSpec					*MadHeader;
+	short 				i = 0;
+	int					x = 0;
+	long 				inOutCount, OffSetToSample;
+	struct PatHeader	tempPatHeader;
+	MADSpec				*MadHeader;
 	
 	/**** HEADER ****/
 	MadFile->header = (MADSpec*) malloc( sizeof( MADSpec));
 	if (MadFile->header == NULL) return MADNeedMemory;
 	
 	OffSetToSample = 0;
-	memmove( MadFile->header, MADPtr, sizeof( MADSpec));
-	OffSetToSample += sizeof( MADSpec);
+	memmove(MadFile->header, MADPtr, sizeof(MADSpec));
+	OffSetToSample += sizeof(MADSpec);
 	
 	MadHeader = MadFile->header;
 	PPBE32(&MadHeader->MAD);
@@ -51,21 +50,21 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		return MADFileNotSupportedByThisPlug;
 	}
 	
-	PPBE16( &MadHeader->speed);
-	PPBE16( &MadHeader->tempo);
-	PPBE32( &MadHeader->ESpeed);
-	PPBE32( &MadHeader->EPitch);
+	PPBE16(&MadHeader->speed);
+	PPBE16(&MadHeader->tempo);
+	PPBE32(&MadHeader->ESpeed);
+	PPBE32(&MadHeader->EPitch);
 	
 	//////////////////
 	
-	MadFile->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
+	MadFile->fid = (InstrData*)calloc(sizeof(InstrData), MAXINSTRU);
 	if (!MadFile->fid)
 	{
 		free(MadFile->header);
 		return MADNeedMemory;
 	}
 	
-	MadFile->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
+	MadFile->sample = ( sData**)calloc(sizeof(sData*), (long) MAXINSTRU * (long) MAXSAMPLE);
 	if (!MadFile->sample)
 	{
 		free(MadFile->header);
@@ -75,38 +74,40 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	
 	
 	/**** PARTITION ****/
-	for( i = MadHeader->numPat; i < MAXPATTERN; i++) MadFile->partition[ i] = NULL;
+	for( i = MadHeader->numPat; i < MAXPATTERN; i++)
+		MadFile->partition[ i] = NULL;
 	
 	for( i = 0; i < MadHeader->numPat; i++)
 	{
 		inOutCount = sizeof( PatHeader);
-		memcpy(  &tempPatHeader, MADPtr + OffSetToSample, inOutCount);
+		memcpy(&tempPatHeader, MADPtr + OffSetToSample, inOutCount);
 		
-		PPBE32( &tempPatHeader.size);
-		PPBE32( &tempPatHeader.compMode);
-		PPBE32( &tempPatHeader.patBytes);
-		PPBE32( &tempPatHeader.unused2);
+		PPBE32(&tempPatHeader.size);
+		PPBE32(&tempPatHeader.compMode);
+		PPBE32(&tempPatHeader.patBytes);
+		PPBE32(&tempPatHeader.unused2);
 		
-		inOutCount = sizeof( PatHeader) + MadHeader->numChn * tempPatHeader.size * sizeof( Cmd);
+		inOutCount = sizeof(PatHeader) + MadHeader->numChn * tempPatHeader.size * sizeof(Cmd);
 		MadFile->partition[ i] = (PatData*) malloc( inOutCount);
 		if (MadFile->partition[ i] == NULL)
 		{
 			for( x = 0; x < i; x++)
 			{
-				if (MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
+				if (MadFile->partition[ x] != NULL)
+					free(MadFile->partition[ x]);
 			}
-			free( MadFile->header);
+			free(MadFile->header);
 			free(MadFile->fid);
 			free(MadFile->sample);
 			
 			return MADNeedMemory;
 		}
 		
-		memcpy( MadFile->partition[ i], MADPtr + OffSetToSample, inOutCount);
-		PPBE32( &MadFile->partition[ i]->header.size);
-		PPBE32( &MadFile->partition[ i]->header.compMode);
-		PPBE32( &MadFile->partition[ i]->header.patBytes);
-		PPBE32( &MadFile->partition[ i]->header.unused2);
+		memcpy(MadFile->partition[ i], MADPtr + OffSetToSample, inOutCount);
+		PPBE32(&MadFile->partition[ i]->header.size);
+		PPBE32(&MadFile->partition[ i]->header.compMode);
+		PPBE32(&MadFile->partition[ i]->header.patBytes);
+		PPBE32(&MadFile->partition[ i]->header.unused2);
 		OffSetToSample += inOutCount;
 	}
 	
@@ -120,20 +121,20 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	{
 		InstrData	*curIns = &MadFile->fid[ i];
 		int x = 0;
-		PPBE16( &curIns->numSamples);
-		PPBE16( &curIns->firstSample);
-		PPBE16( &curIns->volFade);
+		PPBE16(&curIns->numSamples);
+		PPBE16(&curIns->firstSample);
+		PPBE16(&curIns->volFade);
 		
 		for( x = 0; x < 12; x++)
 		{
-			PPBE16( &curIns->volEnv[ x].pos);
-			PPBE16( &curIns->volEnv[ x].val);
+			PPBE16(&curIns->volEnv[ x].pos);
+			PPBE16(&curIns->volEnv[ x].val);
 			
-			PPBE16( &curIns->pitchEnv[ x].pos);
-			PPBE16( &curIns->pitchEnv[ x].val);
+			PPBE16(&curIns->pitchEnv[ x].pos);
+			PPBE16(&curIns->pitchEnv[ x].val);
 			
-			PPBE16( &curIns->pannEnv[ x].pos);
-			PPBE16( &curIns->pannEnv[ x].val);
+			PPBE16(&curIns->pannEnv[ x].pos);
+			PPBE16(&curIns->pannEnv[ x].val);
 		}
 		
 		if (i != curIns->no)
@@ -157,21 +158,22 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			curData = MadFile->sample[ i*MAXSAMPLE + x] = (sData*) malloc( sizeof( sData));
 			if (curData == NULL)
 			{
-				for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( MadFile, x);
+				for( x = 0; x < MAXINSTRU ; x++)
+					MADKillInstrument( MadFile, x);
 				
 				for( x = 0; x < MadFile->header->numPat; x++)
 				{
-					if (MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
+					if (MadFile->partition[ x] != NULL)
+						free( MadFile->partition[ x]);
 				}
 				free( MadFile->header);
-				
 				
 				return MADNeedMemory;
 			}
 			
 			inOutCount = sizeof( sData32);
 			
-			memcpy( curData, MADPtr + OffSetToSample, inOutCount);
+			memcpy(curData, MADPtr + OffSetToSample, inOutCount);
 			OffSetToSample += inOutCount;
 			
 			// ** Read Sample DATA
@@ -186,11 +188,13 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			curData->data = malloc( inOutCount);
 			if (curData->data == NULL)
 			{
-				for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( MadFile, x);
+				for( x = 0; x < MAXINSTRU ; x++)
+					MADKillInstrument( MadFile, x);
 				
 				for( x = 0; x < MadFile->header->numPat; x++)
 				{
-					if (MadFile->partition[ x] != NULL)	free( MadFile->partition[ x]);
+					if (MadFile->partition[ x] != NULL)
+						free( MadFile->partition[ x]);
 				}
 				free( MadFile->header);
 				
@@ -272,17 +276,19 @@ static inline OSErr TESTMADH( MADSpec* MADPtr)
 {
 	OSType madType = MADPtr->MAD;
 	PPBE32(&madType);
-	if (madType == 'MADK') return noErr;
-	else return MADFileNotSupportedByThisPlug;
+	if (madType == 'MADK')
+		return noErr;
+	else
+		return MADFileNotSupportedByThisPlug;
 }
 
 static inline OSErr INFOMADF( MADSpec* MADPtr, PPInfoRec *info)
 {
 	//short	i;
 	
-	strcpy( info->internalFileName, MADPtr->name);
+	strlcpy(info->internalFileName, MADPtr->name, sizeof(MADPtr->name));
 	
-	strcpy( info->formatDescription, "MADK Resource (APPL)");
+	strcpy(info->formatDescription, "MADK Resource (APPL)");
 	
 	info->totalPatterns		= MADPtr->numPat;
 	info->partitionLength	= MADPtr->numPointers;

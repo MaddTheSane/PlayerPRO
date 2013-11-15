@@ -1,9 +1,12 @@
-﻿/* Localized versions of Info.plist keys */
+/* 
+   InfoPlist.strings
+   PPMacho
 
-CFBundleShortVersionString = "1.5.2";
-CFBundleGetInfoString = "PlayerPRO Importer version 1.5.2, Copyright © 2013 SourceForge.";
-NSHumanReadableCopyright = "Copyright © 2013 SourceForge.";
-
+   Created by C.W. Betts on 7/12/10.
+   Copyright 2010 __MyCompanyName__. All rights reserved.
+ */
+ 
+CFBundleName = "PlayerPRO 6";
 "PPMTMFile" = "MultiTracker Audio";
 "PPS3MFile" = "ScreamTracker Audio";
 "PPMODFile" = "ProTracker Audio";
@@ -12,6 +15,10 @@ NSHumanReadableCopyright = "Copyright © 2013 SourceForge.";
 "PPAMFFile" = "AMF Tracker Audio";
 "PP669File" = "669 Tracker Audio";
 "PPOKTAFile" = "OKTAmed Tracker Audio";
+
+"PPXIFile" = "FastTracker Instrument";
+"PPMINsFile" = "PlayerPRO Instrument";
+"PPPATFile" = "PlayerPRO Patterns";
 
 "PPMADFile" = "PlayerPRO MAD Tracker";
 "PPMADFGFile" = "PlayerPRO MADfg Tracker";
@@ -22,4 +29,6 @@ NSHumanReadableCopyright = "Copyright © 2013 SourceForge.";
 
 "Music Tracker" = "Music Tracker";
 
+"MIDI File" = "MIDI File";
 "PPImpExpBundle" = "PlayerPRO Import/Export PlugIn";
+

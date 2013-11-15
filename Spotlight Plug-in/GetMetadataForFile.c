@@ -4,38 +4,6 @@
 #include "FileUtils.h"
 #include "GetMetadataForFile.h"
 
-/* -----------------------------------------------------------------------------
-   Step 1
-   Set the UTI types the importer supports
-  
-   Modify the CFBundleDocumentTypes entry in Info.plist to contain
-   an array of Uniform Type Identifiers (UTI) for the LSItemContentTypes 
-   that your importer can handle
-  
-   ----------------------------------------------------------------------------- */
-
-/* -----------------------------------------------------------------------------
-   Step 2 
-   Implement the GetMetadataForFile function
-  
-   Implement the GetMetadataForFile function below to scrape the relevant
-   metadata from your document and return it as a CFDictionary using standard keys
-   (defined in MDItem.h) whenever possible.
-   ----------------------------------------------------------------------------- */
-
-/* -----------------------------------------------------------------------------
-   Step 3 (optional) 
-   If you have defined new attributes, update the schema.xml file
-  
-   Edit the schema.xml file to include the metadata keys that your importer returns.
-   Add them to the <allattrs> and <displayattrs> elements.
-  
-   Add any custom types that your importer requires to the <attributes> element
-  
-   <attribute name="com_mycompany_metadatakey" type="CFString" multivalued="true"/>
-  
-   ----------------------------------------------------------------------------- */
-
 const CFStringRef kPPMDInstumentsList = CFSTR("net_sourceforge_playerpro_tracker_instumentlist");
 const CFStringRef kPPMDPatternList = CFSTR("net_sourceforge_playerpro_tracker_patternlist");
 const CFStringRef kPPMDTotalPatterns = CFSTR("net_sourceforge_playerpro_tracker_totalpatterns");
@@ -43,6 +11,7 @@ const CFStringRef kPPMDPartitionLength = CFSTR("net_sourceforge_playerpro_tracke
 const CFStringRef kPPMDTotalInstruments = CFSTR("net_sourceforge_playerpro_tracker_totalinstruments");
 const CFStringRef kPPMDTotalTracks = CFSTR("net_sourceforge_playerpro_tracker_totaltracks");
 const CFStringRef kPPMDFormatDescription = CFSTR("net_sourceforge_playerpro_tracker_formatdescription");
+const CFStringRef kPPMDMADKInfo = CFSTR("net_sourceforge_playerpro_tracker_madkinfo");
 
 /* -----------------------------------------------------------------------------
     Get metadata attributes from file
@@ -57,8 +26,8 @@ Boolean GetMetadataForFile(void* thisInterface,
 			   CFStringRef pathToFile)
 {
 	//Before we do anything else, check to make sure it's not the Windows file winoldap.mod
-	//This file seems to crash the metadata importer, even though the proper plug-in should
-	//Say that it can't open it.
+	//This file seems to crash the metadata importer, even though
+	//the proper PlayerPRO plug-in should say that it can't open it.
 	{
 		CFURLRef theRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
 		CFStringRef lastPathName = CFURLCopyLastPathComponent(theRef);
@@ -146,7 +115,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 		}
 #endif
 		
-		if (MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
+		if (MADPlugAvailable( MADLib, type))
 		{
 			OSErr err = noErr;
 			err = MADLoadMusicFileCString(MADLib, &MADMusic1, type, path);
@@ -158,6 +127,19 @@ Boolean GetMetadataForFile(void* thisInterface,
 		} else {
 			free(path);
 			goto fail1;
+		}
+		
+		{
+			//Get info
+			//Note that most trackers don't have an info field, so most will be "Converted by PlayerPRO..."
+			//Hence why we're only letting the MADK tracker show it.
+			CFStringRef infoString = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->header->infos, kCFStringEncodingMacRoman);
+			if (!infoString) {
+				CFDictionaryAddValue(attributes, kPPMDMADKInfo, CFSTR(""));
+			} else {
+				CFDictionaryAddValue(attributes, kPPMDMADKInfo, infoString);
+				CFRelease(infoString);
+			}
 		}
 		
 		{
@@ -178,7 +160,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 				CFRelease(codecArray);
 			}
 			//Set the title metadata
-			CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, rec.internalFileName, kCFStringEncodingMacRoman); //TODO: Check for other encodings?
+			CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, rec.internalFileName, kCFStringEncodingMacRoman);
 			CFDictionarySetValue(attributes, kMDItemTitle, title);
 			CFRelease(title);
 			CFNumberRef tempNum = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &rec.totalPatterns);
@@ -207,7 +189,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 		//Set duration metadata
 		MADAttachDriverToMusic( MADDriver, MADMusic1, NULL);
 		long fT, cT;
-		MADGetMusicStatus( MADDriver, &fT, &cT);	// Some infos about current music
+		MADGetMusicStatus( MADDriver, &fT, &cT);
 		double fTd = fT / 60.0;
 		
 		CFNumberRef duration = CFNumberCreate(kCFAllocatorDefault, kCFNumberDoubleType, &fTd);
@@ -223,7 +205,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 		{
 			InstrData *tempData = &MADMusic1->fid[i];
 			
-			CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, tempData->name, kCFStringEncodingMacRoman);//TODO: check for other encodings?
+			CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, tempData->name, kCFStringEncodingMacRoman);
 			if (!(CFEqual(CFSTR(""), temp))) {
 				CFArrayAppendValue(InstruArray, temp);
 			}
@@ -251,7 +233,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 		{
 			if (MADMusic1->partition != NULL && MADMusic1->partition[i] != NULL)
 			{
-				CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->partition[i]->header.name, kCFStringEncodingMacRoman);//TODO: check for other encodings?
+				CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->partition[i]->header.name, kCFStringEncodingMacRoman);
 				if (!(CFEqual(CFSTR(""), temp))) {
 					CFArrayAppendValue(PatArray, temp);
 				}
@@ -262,8 +244,8 @@ Boolean GetMetadataForFile(void* thisInterface,
 		CFRelease(PatArray);
 	}
 	
-	MADCleanDriver( MADDriver);
-	MADDisposeMusic( &MADMusic1, MADDriver);	// Dispose the current music
+	MADCleanDriver(MADDriver);
+	MADDisposeMusic(&MADMusic1, MADDriver);	// Dispose the current music
 	MADStopDriver(MADDriver);					// Stop driver interrupt function
 	MADDisposeDriver(MADDriver);				// Dispose music driver
 	MADDisposeLibrary(MADLib);					// Close music library
