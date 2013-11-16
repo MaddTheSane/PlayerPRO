@@ -14,17 +14,11 @@
 /* Class = "IBUINavigationItem"; title = "Detail"; ObjectID = "cra-N8-TIN"; */
 "cra-N8-TIN.title" = "Detail";
 
-/* Class = "IBUISegmentedControl"; e5C-xL-5Ca.segmentTitles[0] = "11025 Hz"; ObjectID = "e5C-xL-5Ca"; */
-"e5C-xL-5Ca.segmentTitles[0]" = "11025 Hz";
+/* Class = "IBUISegmentedControl"; e5C-xL-5Ca.segmentTitles[0] = "41000 Hz"; ObjectID = "e5C-xL-5Ca"; */
+"e5C-xL-5Ca.segmentTitles[0]" = "41000 Hz";
 
-/* Class = "IBUISegmentedControl"; e5C-xL-5Ca.segmentTitles[1] = "22050 Hz"; ObjectID = "e5C-xL-5Ca"; */
-"e5C-xL-5Ca.segmentTitles[1]" = "22050 Hz";
-
-/* Class = "IBUISegmentedControl"; e5C-xL-5Ca.segmentTitles[2] = "44100 Hz"; ObjectID = "e5C-xL-5Ca"; */
-"e5C-xL-5Ca.segmentTitles[2]" = "44100 Hz";
-
-/* Class = "IBUISegmentedControl"; e5C-xL-5Ca.segmentTitles[3] = "48000 Hz"; ObjectID = "e5C-xL-5Ca"; */
-"e5C-xL-5Ca.segmentTitles[3]" = "48000 Hz";
+/* Class = "IBUISegmentedControl"; e5C-xL-5Ca.segmentTitles[1] = "48000 Hz"; ObjectID = "e5C-xL-5Ca"; */
+"e5C-xL-5Ca.segmentTitles[1]" = "48000 Hz";
 
 /* Class = "IBUITableViewController"; title = "Master"; ObjectID = "pGg-6v-bdr"; */
 "pGg-6v-bdr.title" = "Master";
