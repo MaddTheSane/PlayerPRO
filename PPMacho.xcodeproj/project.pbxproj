@@ -4081,9 +4081,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 551292EA163DD68500C2C639 /* Build configuration list for PBXNativeTarget "PlayerPROKit" */;
 			buildPhases = (
+				551292D5163DD68500C2C639 /* Headers */,
 				551292D3163DD68500C2C639 /* Sources */,
 				551292D4163DD68500C2C639 /* Frameworks */,
-				551292D5163DD68500C2C639 /* Headers */,
 				551292D6163DD68500C2C639 /* Resources */,
 			);
 			buildRules = (
@@ -5116,9 +5116,9 @@
 			productReference = 55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		55CBF9A511EB77760028C6BB /* Cocoa */ = {
+		55CBF9A511EB77760028C6BB /* PlayerPRO 6 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 55CBF9AB11EB77780028C6BB /* Build configuration list for PBXNativeTarget "Cocoa" */;
+			buildConfigurationList = 55CBF9AB11EB77780028C6BB /* Build configuration list for PBXNativeTarget "PlayerPRO 6" */;
 			buildPhases = (
 				55CBF9A211EB77760028C6BB /* Resources */,
 				55CBF9A311EB77760028C6BB /* Sources */,
@@ -5140,7 +5140,7 @@
 				55ADC3F717D7F52B001F27D4 /* PBXTargetDependency */,
 				55CBFA0011EB77AA0028C6BB /* PBXTargetDependency */,
 			);
-			name = Cocoa;
+			name = "PlayerPRO 6";
 			productName = Cocoa;
 			productReference = 55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */;
 			productType = "com.apple.product-type.application";
@@ -5195,7 +5195,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				55CBF9A511EB77760028C6BB /* Cocoa */,
+				55CBF9A511EB77760028C6BB /* PlayerPRO 6 */,
 				5578C48017D9E8560057D11B /* PlayerPRO Player */,
 				55534ACC1817C387006D6BCB /* updateInfoPlist */,
 				5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */,
@@ -10083,7 +10083,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		55CBF9AB11EB77780028C6BB /* Build configuration list for PBXNativeTarget "Cocoa" */ = {
+		55CBF9AB11EB77780028C6BB /* Build configuration list for PBXNativeTarget "PlayerPRO 6" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55CBF9A911EB77780028C6BB /* Release */,

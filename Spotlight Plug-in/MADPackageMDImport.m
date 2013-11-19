@@ -13,11 +13,11 @@
 
 #include "GetMetadataForFile.h"
 
-Boolean GetMetadataForPackage(CFMutableDictionaryRef attributes, CFStringRef pathToFile)
+Boolean GetMetadataForPackage(CFMutableDictionaryRef attributes, CFURLRef pathToFile)
 {
 	@autoreleasepool {
 		NSMutableDictionary *outDict = (__bridge NSMutableDictionary*)attributes;
-		NSURL *fileURL = [NSURL fileURLWithPath:(__bridge NSString*)pathToFile];
+		NSURL *fileURL = (__bridge NSURL*)pathToFile;
 		PPMusicObjectWrapper *musFile = [[PPMusicObjectWrapper alloc] initWithURL:fileURL];
 		if (!musFile) {
 			return FALSE;

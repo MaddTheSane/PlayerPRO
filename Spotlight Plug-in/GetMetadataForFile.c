@@ -20,18 +20,16 @@ const CFStringRef kPPMDMADKInfo = CFSTR("net_sourceforge_playerpro_tracker_madki
    and return it as a dictionary
    ----------------------------------------------------------------------------- */
 
-Boolean GetMetadataForFile(void* thisInterface,
-			   CFMutableDictionaryRef attributes, 
-			   CFStringRef contentTypeUTI,
-			   CFStringRef pathToFile)
+Boolean GetMetadataForURL(void* thisInterface,
+						  CFMutableDictionaryRef attributes,
+						  CFStringRef contentTypeUTI,
+						  CFURLRef urlForFile)
 {
 	//Before we do anything else, check to make sure it's not the Windows file winoldap.mod
 	//This file seems to crash the metadata importer, even though
 	//the proper PlayerPRO plug-in should say that it can't open it.
 	{
-		CFURLRef theRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
-		CFStringRef lastPathName = CFURLCopyLastPathComponent(theRef);
-		CFRelease(theRef);
+		CFStringRef lastPathName = CFURLCopyLastPathComponent(urlForFile);
 		CFComparisonResult result = CFStringCompare(lastPathName, CFSTR("winoldap.mod"), kCFCompareCaseInsensitive | kCFCompareWidthInsensitive);
 		CFRelease(lastPathName);
 		if (result == kCFCompareEqualTo) return FALSE;
@@ -42,7 +40,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 	/* Return TRUE if successful, FALSE if there was no data provided */
 #ifdef IMPORT_COCOA_BUNDLE
 	if (UTTypeConformsTo(contentTypeUTI, CFSTR("net.sourceforge.playerpro.mad-bundle"))) {
-		return GetMetadataForPackage(attributes, pathToFile);
+		return GetMetadataForPackage(attributes, urlForFile);
 	}
 #endif
 	MADDriverRec			*MADDriver;
@@ -80,26 +78,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 			}
 		}
 		
-		char *path = NULL;
-		{
-			char *fullPath = NULL;
-			CFIndex maxLen = CFStringGetMaximumSizeOfFileSystemRepresentation(pathToFile);
-			fullPath = malloc(maxLen);
-			if (CFStringGetFileSystemRepresentation(pathToFile, fullPath, maxLen) == FALSE)
-			{
-				free(fullPath);
-				MADDisposeDriver(MADDriver);
-				MADDisposeLibrary(MADLib);
-				return FALSE;
-			}
-			size_t shortLen = strlen(fullPath);
-			path = malloc(++shortLen);
-			strlcpy(path, fullPath, shortLen);
-			free(fullPath);
-		}
-		
-		
-		if(MADMusicIdentifyCString(MADLib, type, path) != noErr)
+		if(MADMusicIdentifyCFURL(MADLib, type, urlForFile) != noErr)
 		{
 			//Couldn't identify via raw file, try by UTI
 			//CFRelease(tempRef);
@@ -118,14 +97,12 @@ Boolean GetMetadataForFile(void* thisInterface,
 		if (MADPlugAvailable( MADLib, type))
 		{
 			OSErr err = noErr;
-			err = MADLoadMusicFileCString(MADLib, &MADMusic1, type, path);
+			err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, type, urlForFile);
 			if(err != noErr)
 			{
-				free(path);
 				goto fail1;
 			}
 		} else {
-			free(path);
 			goto fail1;
 		}
 		
@@ -146,7 +123,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 			PPInfoRec rec;
 			{
 				char sig[5];
-				if(MADMusicInfoCString(MADLib, type, path, &rec) != noErr) goto skipInfo;
+				if(MADMusicInfoCFURL(MADLib, type, urlForFile, &rec) != noErr) goto skipInfo;
 				OSType2Ptr(rec.signature, sig);
 				CFStringRef CFSig = CFStringCreateWithCString(kCFAllocatorDefault, sig, kCFStringEncodingMacRoman);
 				if (!CFSig) {
@@ -182,7 +159,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 			}
 		}
 	skipInfo:
-		free(path);
+		;
 	}
 	
 	{
@@ -245,7 +222,7 @@ Boolean GetMetadataForFile(void* thisInterface,
 	}
 	
 	MADCleanDriver(MADDriver);
-	MADDisposeMusic(&MADMusic1, MADDriver);	// Dispose the current music
+	MADDisposeMusic(&MADMusic1, MADDriver);		// Dispose the current music
 	MADStopDriver(MADDriver);					// Stop driver interrupt function
 	MADDisposeDriver(MADDriver);				// Dispose music driver
 	MADDisposeLibrary(MADLib);					// Close music library
