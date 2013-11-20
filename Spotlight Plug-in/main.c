@@ -130,6 +130,7 @@ static HRESULT MetadataImporterQueryInterface(void *thisInstance, REFIID iid, LP
 		 * set the ppv parameter equal to the instance, and
 		 * return good status.
 		 */
+        ((MetadataImporterPluginType*)thisInstance)->conduitInterface->ImporterImportData = GetMetadataForFile;
         ((MetadataImporterPluginType*)thisInstance)->conduitInterface->AddRef(thisInstance);
         *ppv = thisInstance;
         CFRelease(interfaceID);
