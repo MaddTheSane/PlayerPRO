@@ -75,6 +75,7 @@ static short Text2Note( char *myTT)
 	return( Oct);
 }
 
+#if 0
 static void StringToHex( char *str, int *oct)
 {
 	if (str[ 2] >= 'A' && str[ 2] <= 'F') *oct = 10 + str[ 2] - 'A';
@@ -83,9 +84,11 @@ static void StringToHex( char *str, int *oct)
 	if (str[ 1] >= 'A' && str[ 1] <= 'F') *oct += (10 + str[ 1] - 'A')<<4;
 	if (str[ 1] >= '0' && str[ 1] <= '9') *oct += (str[ 1] - '0')<<4;
 }
+#endif
 
 
 @implementation ComplexFadeController
+@synthesize fadeType;
 
 - (id)initWithWindow:(NSWindow *)window
 {

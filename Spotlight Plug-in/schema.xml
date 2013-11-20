@@ -63,7 +63,6 @@
 				net_sourceforge_playerpro_tracker_totaltracks
 				net_sourceforge_playerpro_tracker_formatdescription
             </displayattrs>
-            
         </type>
 		
 		<type name="com.quadmation.playerpro.madk">
@@ -80,7 +79,6 @@
 				net_sourceforge_playerpro_tracker_formatdescription
 				net_sourceforge_playerpro_tracker_madkinfo
             </allattrs>
-            <!-- 'displayattrs' is a whitespace separated list of the attributes that should normally be displayed when previewing files of this UTI type. -->
             <displayattrs>
 				kMDItemTitle
 				kMDItemDurationSeconds
@@ -92,7 +90,6 @@
 				net_sourceforge_playerpro_tracker_formatdescription
 				net_sourceforge_playerpro_tracker_madkinfo
             </displayattrs>
-            
         </type>
 
 
