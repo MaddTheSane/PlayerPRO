@@ -91,9 +91,9 @@ void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst);
 #define	GetNEUnsignedFixed(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
 
-static void ConvertInstrument16( 	short	*tempPtr,	 long sSize)
+static void ConvertInstrument16(short *tempPtr, long sSize)
 {
-	 short val = 0x8000;
+	short val = 0x8000;
 	
 	sSize /= 2;
 	
@@ -104,19 +104,19 @@ static void ConvertInstrument16( 	short	*tempPtr,	 long sSize)
 	}
 }
 
-static inline void ConvertInstrumentIn16(  short *tempPtr,  long sSize)
+static inline void ConvertInstrumentIn16(short *tempPtr, long sSize)
 {
-	ConvertInstrument16( tempPtr, sSize);
+	ConvertInstrument16(tempPtr, sSize);
 }
 
-static void DebugLong( long type)
+static void DebugLong(long type)
 {
 	Str31	str;
 	
 	PPBE32(&type);
 	
-	str[ 0] = 4;
-	BlockMoveData( &type, &str[ 1], 4);
+	str[0] = 4;
+	memcpy(&str[1], &type, 4);
 	
 	DebugStr( str);
 }
@@ -125,7 +125,7 @@ typedef struct {
 	long	size;
 	OSType	type;
 	long	id;
-	long	a[ 2];
+	long	a[2];
 	
 	Byte	data[];
 } QuictimeRsrc25;
@@ -142,7 +142,7 @@ typedef struct {
 } QuictimeSs25;
 
 typedef struct {
-	char			unused[ 0x58];
+	char			unused[0x58];
 	Str31			name;
 	QuictimeSs25	Ss[];
 } QuicktimeInst25;
@@ -162,7 +162,7 @@ typedef struct {
 } QuictimeSs;
 
 typedef struct {
-	char			unused[ 0x62];
+	char			unused[0x62];
 	short			no;
 	QuictimeSs		Ss[];
 } QuicktimeInst;
@@ -177,8 +177,8 @@ OSErr GetAtomDataById( MyAtom at, long type, void *data, long size);
 
 /*************************/
 
-void pStrcpy( unsigned char *s1,  const unsigned char *s2);
-void pStrcat( unsigned char *s1,  unsigned char *s2);
+void pStrcpy( unsigned char *s1, const unsigned char *s2);
+void pStrcat( unsigned char *s1, unsigned char *s2);
 
 
 void OctavesMIDIName(short	id, Str255	String)
@@ -199,7 +199,7 @@ void OctavesMIDIName(short	id, Str255	String)
 	pStrcat( String, WorkStr);
 }
 
-void SetInstruNameM( short	theNo, Str255 theNewName, short MIDIgm, Ptr destName)
+void SetInstruNameM(short theNo, Str255 theNewName, short MIDIgm, Ptr destName)
 {
 	short	i;
 	Str255	aStr, bStr;
@@ -217,352 +217,20 @@ void SetInstruNameM( short	theNo, Str255 theNewName, short MIDIgm, Ptr destName)
 	}
 }
 
-void SetSampNameM( Str255 theNewName, Ptr destName)
+void SetSampNameM(Str255 theNewName, Ptr destName)
 {
 	short	i;
 	
-	for(i=0; i<32; i++)
+	for (i = 0; i < 32; i++)
 	{
-		if (i < theNewName[ 0]) destName[i] = theNewName[i+1];
-		else destName[i] = '\0';
+		if (i < theNewName[0])
+			destName[i] = theNewName[i+1];
+		else
+			destName[i] = '\0';
 	}
 }
 
-#if 0
-short OpenResFileQK( long dirID, short VRefNum)
-{
-	CInfoPBRec		info;
-	Str255			tempStr;
-	long			dirIDCopy;
-	short			i, vRefNum;
-	OSErr			iErr;
-	FSSpec			spec;
-	short			ret;
-	
-	pStrcpy( spec.name, "\pQuickTime™ Musical Instruments");
-	spec.vRefNum = VRefNum;
-	spec.parID = dirID;
-	
-	ret = FSpOpenResFile( &spec, fsCurPerm);
-	if (ret != -1) return ret;
-	
-	/************/
-	
-	ret = -1;
-	
-	info.hFileInfo.ioNamePtr = tempStr;
-	info.hFileInfo.ioVRefNum = VRefNum;
-	
-	for (i = 1; true; i ++)
-	{
-		info.hFileInfo.ioDirID = dirID;
-		info.hFileInfo.ioFDirIndex = i;
-		
-		if (PBGetCatInfoSync(&info) != noErr) break;
-		
-		if (info.hFileInfo.ioFlFndrInfo.fdType == 'INIT' && info.hFileInfo.ioFlFndrInfo.fdCreator == 'dvb ')
-		{
-			//	HGetVol( NULL, &vRefNum, &dirIDCopy);
-			
-			//	iErr = HSetVol( NULL, info.hFileInfo.ioVRefNum, dirID);
-			
-			pStrcpy( spec.name, info.hFileInfo.ioNamePtr);
-			spec.vRefNum = info.hFileInfo.ioVRefNum;
-			spec.parID = dirID;
-			
-			ret = FSpOpenResFile( &spec, fsCurPerm);
-			
-			//	iErr = HSetVol( NULL, vRefNum, dirIDCopy);
-			//	if (iErr != noErr) PPDebugStr( __LINE__, __FILE__, "HSetVol error...");
-		}
-	}
-	
-	return ret;
-}
-
-void ComputeQuicktimeSound25( short GMInstruID, sData **sample, InstrData* inst, short ins)
-{
-	long					lS, lE, inOutBytes;
-	short					sS;
-	unsigned long			sRate;
-	long					bFreq;
-	
-	short					ii;
-	short 					i, x;
-	Handle					hRsrc;
-	short					foundVRefNum, iFileRef;
-	long					foundDirID;
-	OSErr					iErr;
-	//	QuicktimeInst25			*QuickInst;
-	Ptr						tPtr;
-	Str255					aStr, bStr;
-	
-	/***************/
-	
-	for( i = 0; i < inst->numSamples; i++)
-	{
-		if (sample[ inst->firstSample + i] != NULL)
-		{
-			if (sample[ inst->firstSample + i]->data != NULL)
-			{
-				DisposePtr( (Ptr) sample[ inst->firstSample + i]->data);
-				sample[ inst->firstSample + i]->data = NULL;
-			}
-			DisposePtr( (Ptr) sample[ inst->firstSample + i]);
-			sample[ inst->firstSample + i] = NULL;
-		}
-	}
-	
-	for( i = 0; i < 32; i++) inst->name[ i]	= 0;
-	inst->type			= 0;
-	inst->numSamples	= 0;
-	
-	/**/
-	
-	for( i = 0; i < 96; i++) inst->what[ i]		= 0;
-	for( i = 0; i < 12; i++)
-	{
-		inst->volEnv[ i].pos		= 0;
-		inst->volEnv[ i].val		= 0;
-	}
-	for( i = 0; i < 12; i++)
-	{
-		inst->pannEnv[ i].pos	= 0;
-		inst->pannEnv[ i].val	= 0;
-	}
-	inst->volSize		= 0;
-	inst->pannSize		= 0;
-	
-	inst->volSus		= 0;
-	inst->volBeg		= 0;
-	inst->volEnd		= 0;
-	
-	inst->pannSus		= 0;
-	inst->pannBeg		= 0;
-	inst->pannEnd		= 0;
-	
-	inst->volType		= 0;
-	inst->pannType		= 0;
-	
-	inst->volFade		= 900;
-	inst->vibDepth		= 0;
-	inst->vibRate		= 0;
-	
-	/***************/
-	
-	iErr = FindFolder( kOnSystemDisk, kExtensionFolderType, kDontCreateFolder, &foundVRefNum, &foundDirID);
-	if (iErr == noErr)
-	{
-		HSetVol( NULL, foundVRefNum, foundDirID);
-		
-		iFileRef = OpenResFileQK( foundDirID, foundVRefNum);
-		if (iFileRef != -1)
-		{
-			UseResFile( iFileRef);
-			
-		ENCORE:
-			
-			while( (hRsrc = GetResource( 'ssai', GMInstruID)) == NULL) GMInstruID++;
-			if (SizeResource( hRsrc) < 600) goto ENCORE;
-			
-			if (hRsrc != NULL)
-			{
-				QuictimeRsrc25	*rsrc, *maxrsrc;
-				short			sampleIDMap[ 500];
-				
-				for( i = 0; i < 500; i++) sampleIDMap[ i] = -1;
-				
-				DetachResource( hRsrc);
-				HLock( hRsrc);
-				if (hRsrc == NULL) DebugStr("\pMIDI Ins Err");
-				
-				maxrsrc = (QuictimeRsrc25*) ((*hRsrc) + GetHandleSize( hRsrc));
-				
-				/// NEW SYSTEM !!!!!
-				
-				rsrc = (QuictimeRsrc25*) ((*hRsrc) + 0x20);
-				
-				while( rsrc < maxrsrc && rsrc->type != kaiToneDescType) rsrc = (QuictimeRsrc25*) (((Ptr) rsrc) + rsrc->size);			// Find the name
-				
-				SetInstruNameM( ins, (unsigned char*) rsrc->data + 36, GMInstruID, inst->name);
-				
-				while( rsrc < maxrsrc && rsrc->type != kaiKeyRangeInfoType) rsrc = (QuictimeRsrc25*) (((Ptr) rsrc) + rsrc->size);
-				
-				while( rsrc->type == kaiKeyRangeInfoType)
-				{
-					QuictimeRsrc25	*rsrcCopy = rsrc;
-					
-					rsrc = (QuictimeRsrc25*) (((Ptr) rsrc) + 5L*4L);		// go to  kaiSampleDescType
-					
-					if (rsrc->type == kaiSampleDescType)
-					{
-						InstSampleDescRec	*sdesc;
-						QuictimeRsrc25		*rsrc2;
-						sData				*curData;
-						Ptr					ptr2delete = NULL;
-						
-						sdesc = (InstSampleDescRec*) rsrc->data;
-						
-						// SampleData exists already ??
-						
-						if (sampleIDMap[ GetNEShort( sdesc->sampleDataID)] != -1)
-						{
-							for( ii = GetNELong( sdesc->pitchLow) - 12; ii <= GetNELong( sdesc->pitchHigh) - 12; ii++)
-							{
-								if (ii < NUMBER_NOTES && ii > 0) inst->what[ ii] = sampleIDMap[ GetNEShort(sdesc->sampleDataID)];
-							}
-							
-							goto NEXTSAMP;
-						}
-						else sampleIDMap[ GetNEShort(sdesc->sampleDataID)] = inst->numSamples;
-						
-						for( ii = GetNELong(sdesc->pitchLow) - 12; ii <= GetNELong(sdesc->pitchHigh) - 12; ii++)
-						{
-							if (ii < NUMBER_NOTES && ii > 0) inst->what[ ii] = inst->numSamples;
-						}
-						
-						if (GetNELong(sdesc->offset) != 0) DebugStr("\pOffset!");
-						
-						// Go to DATA
-						
-						if (GetNEOSType(sdesc->dataFormat) == 'raw ' || GetNEOSType(sdesc->dataFormat) == 'twos')
-						{
-							QuictimeRsrc25		*rsrc3;
-							
-							Boolean	Founded = false;
-							
-							rsrc2 = (QuictimeRsrc25*) ((*hRsrc) + 0x20);
-							while( rsrc2 < maxrsrc && Founded == false)
-							{
-								rsrc2 = (QuictimeRsrc25*) (((Ptr) rsrc2) + rsrc2->size);
-								
-								if (rsrc2->type == kaiSampleInfoType)
-								{
-									rsrc3 = (QuictimeRsrc25*) (((Ptr) rsrc2) + 5L*4L);
-									
-									while( rsrc3->type != kaiSampleDataType) rsrc3 = (QuictimeRsrc25*) (((Ptr) rsrc3) + rsrc3->size);
-									
-									if (rsrc3->type == kaiSampleDataType)
-									{
-										if (rsrc2->id  == GetNEShort(sdesc->sampleDataID))
-										{
-											Founded = true;
-										}
-									}
-								}
-							}
-							
-							if (Founded)
-							{
-								ptr2delete = NULL;
-								rsrc2 = rsrc3;			// go to
-								inOutBytes = (GetNEShort(sdesc->sampleSize) * GetNELong(sdesc->numSamples)) / 8L;
-							}
-							else
-							{
-								inOutBytes = (GetNEShort(sdesc->sampleSize) * GetNELong(sdesc->numSamples)) / 8L;
-								
-								LoadQK25Sample( GetNEShort(sdesc->sampleDataID), GMInstruID, &ptr2delete, inOutBytes);
-								
-								if (!ptr2delete) inOutBytes = 0;
-								else Founded = true;
-							}
-						}
-						else inOutBytes = 0;
-						
-						// ************************
-						// * Add it to instrument *
-						// ************************
-						
-						{
-							curData = MADCreateSample(NULL, ins, 0);
-							
-							curData->data = NewPtr( inOutBytes);
-							
-							if (curData->data == NULL)
-							{
-								Erreur( 63, -2);
-								
-								curData->size = 0;
-							}
-							else
-							{
-								if (inOutBytes)
-								{
-									if (!ptr2delete) BlockMoveData( rsrc2->data, curData->data, inOutBytes);
-									else
-									{
-										BlockMoveData( ptr2delete, curData->data, inOutBytes);
-										DisposePtr( ptr2delete);
-										ptr2delete = NULL;
-									}
-								}
-								
-								if (GetNEOSType(sdesc->dataFormat) == 'raw ')
-								{
-									switch( GetNEShort(sdesc->sampleSize))
-									{
-										case 8:
-											ConvertInstrumentIn( (Byte*) curData->data, inOutBytes);
-											break;
-											
-										case 16:
-											ConvertInstrument16( (short*) curData->data, inOutBytes);
-											break;
-									}
-								}
-								curData->size 		= inOutBytes;
-								curData->loopBeg 	= GetNELong(sdesc->loopStart);
-								curData->loopSize 	= GetNELong(sdesc->loopEnd) - GetNELong(sdesc->loopStart);
-								curData->vol 		= 64;
-								curData->amp	 	= GetNEShort(sdesc->sampleSize);
-								
-								if (GetNEShort(sdesc->numChannels) == 2)
-								{
-									curData->stereo = true;
-								}
-								if (GetNEShort(sdesc->numChannels) > 2) DebugStr("\pMore than 2 channels");
-								
-								// **
-								curData->c2spd		= GetNEUnsignedFixed(sdesc->sampleRate) >> 16;
-								curData->relNote	= 60 - GetNELong(sdesc->pitchNormal);
-								// **
-								
-								OctavesMIDIName( GetNELong(sdesc->pitchLow) - 12, aStr);
-								pStrcat( aStr, "\p -> ");
-								OctavesMIDIName( GetNELong(sdesc->pitchHigh) - 12, bStr);
-								pStrcat( aStr, bStr);
-								pStrcat( aStr, "\p, ");
-								NumToString( curData->c2spd, bStr);
-								pStrcat( aStr, bStr);
-								pStrcat( aStr, "\p Hz");
-								
-								SetSampNameM( aStr, curData->name);
-							}
-						}
-						// ************************
-					}
-					else Debugger();
-					
-				NEXTSAMP:
-					
-					rsrc = (QuictimeRsrc25*) (((Ptr) rsrcCopy) + rsrcCopy->size);
-				}
-				
-				HUnlock( hRsrc);
-				DisposeHandle( hRsrc);
-			}
-			CloseResFile( iFileRef);
-		}
-		//	else Erreur( 72, iFileRef);
-	}
-	else Erreur( 72, 0);
-	
-	//	SetCursor( &qd.arrow);
-}
-#endif
-
-void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, short ins)
+void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, short ins)
 {
 	short i;
 	
@@ -753,7 +421,7 @@ void InitQuicktimeInstruments(void)
 }
 
 
-void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
+void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 {
 	short 						iFileRef, ii, i, x;
 	OSErr 						iErr;
@@ -1090,7 +758,7 @@ BAIL:
 	return;
 }
 
-void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai)
+void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 {
 	short 						no, ii, i;
 	OSErr 						iErr;	
@@ -1284,19 +952,17 @@ FSIORefNum GenerateDLSFromBundle()
 	
 	// MacOS X 10.2
 	
-	rsrcURL = 		CFBundleCopyResourceURL( AudioBundle,
-											CFSTR("gs_instruments"), 			//CoreAudio
-											CFSTR("dls"),	 					//rsrc
-											NULL);
+	rsrcURL = CFBundleCopyResourceURL(AudioBundle,
+									  CFSTR("gs_instruments"), 			//CoreAudio
+									  CFSTR("dls"),	 					//rsrc
+									  NULL);
 	
 	CFURLGetFSRef( rsrcURL, &rsrcRef);
 	
 	iErr = FSOpenFork( &rsrcRef, 0, 0, fsRdPerm, &refNum);
 	CFRelease(rsrcURL);
 	if (iErr != noErr)
-	{
 		refNum = -1;
-	}
 	CFRelease(AudioBundle);
 	return refNum;
 }
@@ -1316,7 +982,7 @@ void DeleteDLSFile()
 }
 
 #pragma mark Atom functions
-OSErr GetAtomData( MyAtom at, void* data, long size)
+OSErr GetAtomData(MyAtom at, void* data, long size)
 {
 	//long 	prePos, fSize, ilistType, nlistType, index, listSize;
 	long	fSize;
@@ -1340,7 +1006,7 @@ OSErr GetAtomData( MyAtom at, void* data, long size)
 	return noErr;
 }
 
-long CountAtomById( MyAtom at, long type)
+long CountAtomById(MyAtom at, long type)
 {
 	long 	prePos, fSize, ilistType, /*nlistType,*/ index, listSize;
 	CK		sck;
@@ -1392,7 +1058,7 @@ long CountAtomById( MyAtom at, long type)
 	return index;
 }
 
-OSErr FindAtomById( MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
+OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 {
 	long 	prePos, fSize, ilistType, /*nlistType,*/ index, listSize;
 	CK		sck;
@@ -1471,7 +1137,7 @@ OSErr FindAtomById( MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 	return -1;
 }
 
-OSErr GetAtomDataById( MyAtom at, long type, void *data, long size)
+OSErr GetAtomDataById(MyAtom at, long type, void *data, long size)
 {
 	MyAtom 	tempAt;
 	OSErr	iErr;

@@ -12,23 +12,9 @@
 #include <CoreFoundation/CFDictionary.h>
 #include <CoreFoundation/CFString.h>
 
-extern const CFStringRef kPPMDInstumentsList __attribute__ ((visibility ("hidden")));
-extern const CFStringRef kPPMDPatternList __attribute__ ((visibility ("hidden")));
-extern const CFStringRef kPPMDTotalPatterns __attribute__ ((visibility ("hidden")));
-extern const CFStringRef kPPMDPartitionLength __attribute__ ((visibility ("hidden")));
-extern const CFStringRef kPPMDTotalInstruments __attribute__ ((visibility ("hidden")));
-extern const CFStringRef kPPMDTotalTracks __attribute__ ((visibility ("hidden")));
-extern const CFStringRef kPPMDFormatDescription __attribute__ ((visibility ("hidden")));
-extern const CFStringRef kPPMDMADKInfo __attribute__ ((visibility ("hidden")));
-
-
 // The import function to be implemented in GetMetadataForFile.c
 __private_extern__ Boolean GetMetadataForURL(void* thisInterface,
 											 CFMutableDictionaryRef attributes,
 											 CFStringRef contentTypeUTI,
 											 CFURLRef urlForFile);
-
-__private_extern__ Boolean GetMetadataForPackage(CFMutableDictionaryRef attributes,
-												 CFURLRef pathToFile);
-
 #endif
