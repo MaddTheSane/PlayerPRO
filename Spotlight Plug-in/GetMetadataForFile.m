@@ -46,11 +46,9 @@ Boolean GetMetadataForURL(void* thisInterface,
 		/* Pull any available metadata from the file at the specified path */
 		/* Return the attribute keys and attribute values in the dict */
 		/* Return TRUE if successful, FALSE if there was no data provided */
-#ifdef IMPORT_COCOA_BUNDLE
 		if (UTTypeConformsTo(contentTypeUTI, CFSTR("net.sourceforge.playerpro.mad-bundle"))) {
 			return GetMetadataForPackage(NSattribs, NSFileURL);
 		}
-#endif
 		MADDriverRec			*MADDriver;
 		MADMusic				*MADMusic1;
 		MADLibrary				*MADLib;
