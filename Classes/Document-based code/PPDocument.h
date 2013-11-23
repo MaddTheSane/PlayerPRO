@@ -32,4 +32,8 @@
 - (void)importMusicObjectWrapper:(PPMusicObjectWrapper*)theWrap;
 - (IBAction)exportMusicAs:(id)sender;
 
+- (IBAction)showBoxEditor:(id)sender;
+- (IBAction)showClassicEditor:(id)sender;
+- (IBAction)showDigitalEditor:(id)sender;
+
 @end

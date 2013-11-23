@@ -20,8 +20,10 @@
 	return self;
 }
 
--(void)awakeFromNib {
+-(void)awakeFromNib
+{
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
 	
 }
 

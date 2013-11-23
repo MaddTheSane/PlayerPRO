@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1070" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="MusicListPreferenceController">
+            <connections>
+                <outlet property="askToSave" destination="26" id="59"/>
+                <outlet property="autoPlay" destination="28" id="61"/>
+                <outlet property="goToStartupPos" destination="22" id="62"/>
+                <outlet property="loadFirstMusic" destination="20" id="63"/>
+                <outlet property="loopMusic" destination="57" id="58"/>
+                <outlet property="musicPlayingOutlet" destination="6" id="44"/>
+                <outlet property="rememberMusicList" destination="17" id="60"/>
+                <outlet property="view" destination="1" id="2"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <customView id="1" userLabel="Music">
+            <rect key="frame" x="0.0" y="0.0" width="404" height="276"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <box autoresizesSubviews="NO" title="After playing music:" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="3">
+                    <rect key="frame" x="17" y="178" width="370" height="78"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView">
+                        <rect key="frame" x="1" y="1" width="368" height="62"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6">
+                                <rect key="frame" x="18" y="14" width="332" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                <size key="cellSize" width="164" height="18"/>
+                                <size key="intercellSpacing" width="4" height="2"/>
+                                <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="9">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <cells>
+                                    <column>
+                                        <buttonCell type="radio" title="Stop playing" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="7">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <buttonCell type="radio" title="Loop music" imagePosition="left" alignment="left" inset="2" id="8">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </column>
+                                    <column>
+                                        <buttonCell type="radio" title="Load next music" imagePosition="left" alignment="left" inset="2" id="12">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <buttonCell type="radio" title="Load random music" imagePosition="left" alignment="left" inset="2" id="13">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </column>
+                                </cells>
+                                <connections>
+                                    <action selector="changePlayedMusic:" target="-2" id="37"/>
+                                </connections>
+                            </matrix>
+                        </subviews>
+                    </view>
+                    <constraints>
+                        <constraint firstItem="6" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="16" id="XvN-ak-gwM"/>
+                        <constraint firstItem="6" firstAttribute="top" secondItem="3" secondAttribute="top" constant="25" id="fOJ-rc-tHh"/>
+                        <constraint firstAttribute="bottom" secondItem="6" secondAttribute="bottom" constant="11" id="vQ1-GV-qba"/>
+                    </constraints>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </box>
+                <box autoresizesSubviews="NO" title="Music List Settings" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="15">
+                    <rect key="frame" x="17" y="16" width="370" height="158"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView">
+                        <rect key="frame" x="1" y="1" width="368" height="142"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <matrix verticalHuggingPriority="750" mode="highlight" allowsEmptySelection="NO" autosizesCells="NO" translatesAutoresizingMaskIntoConstraints="NO" id="45">
+                                <rect key="frame" x="18" y="14" width="332" height="118"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                <size key="cellSize" width="332" height="18"/>
+                                <size key="intercellSpacing" width="0.0" height="2"/>
+                                <buttonCell key="prototype" type="check" title="Remember Music List for next startup" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="46">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <cells>
+                                    <column>
+                                        <buttonCell type="check" title="Remember Music List for next startup" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="17">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <connections>
+                                                <action selector="toggleButton:" target="-2" id="56"/>
+                                            </connections>
+                                        </buttonCell>
+                                        <buttonCell type="check" title="Load first music when opening a list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="20">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <connections>
+                                                <action selector="toggleButton:" target="-2" id="55"/>
+                                            </connections>
+                                        </buttonCell>
+                                        <buttonCell type="check" title="Go to startup position when done playing" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="22">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <connections>
+                                                <action selector="toggleButton:" target="-2" id="54"/>
+                                            </connections>
+                                        </buttonCell>
+                                        <buttonCell type="check" title="Ask to save modified Music List files" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="26">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <connections>
+                                                <action selector="toggleButton:" target="-2" id="53"/>
+                                            </connections>
+                                        </buttonCell>
+                                        <buttonCell type="check" title="Automatically play after opening a music file" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="28">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <connections>
+                                                <action selector="toggleButton:" target="-2" id="52"/>
+                                            </connections>
+                                        </buttonCell>
+                                        <buttonCell type="check" title="Loop music list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="57">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <connections>
+                                                <action selector="toggleButton:" target="-2" id="64"/>
+                                            </connections>
+                                        </buttonCell>
+                                    </column>
+                                </cells>
+                            </matrix>
+                        </subviews>
+                    </view>
+                    <constraints>
+                        <constraint firstItem="45" firstAttribute="top" secondItem="15" secondAttribute="top" constant="25" id="2Hv-7i-frs"/>
+                        <constraint firstItem="45" firstAttribute="leading" secondItem="15" secondAttribute="leading" constant="16" id="Mwz-V9-QjB"/>
+                    </constraints>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </box>
+            </subviews>
+            <constraints>
+                <constraint firstItem="3" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="0V1-Fh-n0Z"/>
+                <constraint firstItem="15" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" id="6D0-Qr-7Fu"/>
+                <constraint firstItem="15" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="8" symbolic="YES" id="7gy-Cf-de1"/>
+                <constraint firstAttribute="trailing" secondItem="3" secondAttribute="trailing" constant="20" symbolic="YES" id="Hdw-MK-duj"/>
+                <constraint firstItem="15" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="VD7-Jh-n6x"/>
+                <constraint firstAttribute="bottom" secondItem="15" secondAttribute="bottom" constant="20" symbolic="YES" id="dnZ-O4-X2d"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="sig-Gg-cON"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>

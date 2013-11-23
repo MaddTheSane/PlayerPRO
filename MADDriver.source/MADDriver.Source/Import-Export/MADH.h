@@ -24,6 +24,8 @@
 #ifndef __MADH__
 #define __MADH__
 
+#pragma pack(push, 2)
+
 // ***
 // ***	PATTERN DESCRIPTION
 // ***	
@@ -135,5 +137,7 @@ struct oldMADSpec
 	oldInstrData 	fid[ 64];				// Instruments description
 };
 typedef struct oldMADSpec oldMADSpec;
+
+#pragma pack(pop)
 
 #endif

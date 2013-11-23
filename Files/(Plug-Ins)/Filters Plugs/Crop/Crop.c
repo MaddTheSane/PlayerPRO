@@ -19,7 +19,7 @@ static OSErr mainCrop(void					*unused,
 	{
 		case 8:
 		{
-			Ptr	SamplePtr = theData->data + SelectionStart;
+			char *SamplePtr = theData->data + SelectionStart;
 			for( i = 0; i < SelectionEnd - SelectionStart; i++)
 			{
 				theData->data[ i] = SamplePtr[ i];

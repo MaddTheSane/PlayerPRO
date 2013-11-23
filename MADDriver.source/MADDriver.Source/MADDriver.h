@@ -73,7 +73,7 @@ struct __MADDriverRec {
 #ifdef _MAC_H
 	AudioUnit				CAAudioUnit;
 	size_t					CABufOff;
-	Ptr						CABuffer;
+	char					*CABuffer;
 #endif
 	
 #ifdef WIN32
@@ -112,8 +112,8 @@ struct __MADDriverRec {
 	short					smallcounter, trackDiv;
 	SInt32					FREQBASE;
 	short					InstruActif[ MAXINSTRU];
-	Ptr						IntDataPtr;
-	Ptr						OsciDrawPtr[ MAXDRAW];
+	char					*IntDataPtr;
+	void					*OsciDrawPtr[ MAXDRAW];
 	Boolean					newData[ MAXDRAW];
 	Boolean					useOsciBuffers;
 	short					curDrawPtr;
@@ -128,7 +128,7 @@ struct __MADDriverRec {
 	short					NoteOld[ MAXTRACK];
 	short					VelocityOld[ MAXTRACK];
 	Boolean					TrackLineReading[ MAXTRACK], TrackReading[ MAXTRACK], wasReading;
-	Ptr						OverShoot;
+	char					*OverShoot;
 	SInt32					*DASCBuffer;//, *DASCBufferOut;
 	SInt32					*DASCEffectBuffer[ MAXCHANEFFECT];
 	SInt32					EffectBufferID[ MAXCHANEFFECT];
@@ -137,7 +137,7 @@ struct __MADDriverRec {
 	double					*Filter, *fData;
 	SInt32					MDelay;
 	SInt32					RDelay;
-	Ptr						ReverbPtr;
+	void					*ReverbPtr;
 	short					PatDelay;
 	short					lastChannelUsed[ MAXTRACK];
 	SInt32					MultiChanNo, globPan;

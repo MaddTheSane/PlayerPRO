@@ -8,8 +8,8 @@
 
 static OSErr TestAIFF( ContainerChunk* CC)
 {
-	if( CC->formType == AIFCID) return noErr;
-	else if( CC->formType == AIFFID) return noErr;
+	if (CC->formType == AIFCID) return noErr;
+	else if (CC->formType == AIFFID) return noErr;
 	else if (CFSwapInt32(CC->formType) == AIFCID) return noErr;
 	else if (CFSwapInt32(CC->formType) == AIFFID) return noErr;
 	else return MADFileNotSupportedByThisPlug;
@@ -25,7 +25,7 @@ static OSErr mainAIFF(void					*unused,
 					  PPInfoPlug			*thePPInfoPlug)
 {
 	OSErr	myErr = noErr;
-	Ptr		AlienFile;
+	char	*AlienFile;
 	short	iFileRefI;
 	long	inOutBytes;
 		
@@ -33,7 +33,7 @@ static OSErr mainAIFF(void					*unused,
 	{
 		case 'IMPL':
 		{
-			Ptr				theSound;
+			char			*theSound;
 			long			lS, lE;
 			short			sS;
 			unsigned long	rate;
@@ -41,11 +41,11 @@ static OSErr mainAIFF(void					*unused,
 			FSSpec			newFile;
 			
 			myErr = ConvertDataToWAVE( *AlienFileFSSpec, &newFile, thePPInfoPlug);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				theSound = ConvertWAV( &newFile, &lS, &lE, &sS, &rate, &stereo);
 				
-				if( theSound) inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
+				if (theSound) inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
 				else
 				{
 					myErr = MADNeedMemory;
@@ -58,14 +58,14 @@ static OSErr mainAIFF(void					*unused,
 		
 		case 'TEST':
 		{
-			Ptr	theSound;
+			char *theSound;
 			
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				inOutBytes = 50L;
 				theSound = NewPtr( inOutBytes);
-				if( theSound == NULL) myErr = MADNeedMemory;
+				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
 					FSRead( iFileRefI, &inOutBytes, theSound);
@@ -81,22 +81,22 @@ static OSErr mainAIFF(void					*unused,
 		break;
 		
 		case 'EXPL':
-			if( *sampleID >= 0)
+			if (*sampleID >= 0)
 			{
 				OSType				compType = 'NONE';
-				unsigned long		rate;
+				unsigned int		rate;
 				sData 				*curData = sample[ *sampleID];
 				short				numChan;
 				
 				myErr = FSpCreate( AlienFileFSSpec, 'TVOD', 'AIFF', smCurrentScript);
 				myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
 				
-				if( myErr == noErr)
+				if (myErr == noErr)
 				{
 					inOutBytes 	= curData->size;
 					rate		= curData->c2spd;
 					
-					if( curData->stereo) numChan = 2;
+					if (curData->stereo) numChan = 2;
 					else numChan = 1;
 					
 					myErr = SetupAIFFHeader(	iFileRefI,
@@ -111,7 +111,7 @@ static OSErr mainAIFF(void					*unused,
 					
 					/*
 					marker = (MarkerChunk*) CH;
-					if( marker->numMarkers == 2)
+					if (marker->numMarkers == 2)
 					{
 						*loopStart = marker->Markers[ 0].position;
 						mm = (Marker*) marker->Markers;
@@ -119,7 +119,7 @@ static OSErr mainAIFF(void					*unused,
 						mm = (Marker*) ((Ptr) mm + marker->Markers[ 0].markerName[0]);
 						*loopEnd = mm->position;
 						
-						if( *sampleSize == 16)
+						if (*sampleSize == 16)
 						{
 							*loopStart *= 2;
 							*loopEnd *= 2;

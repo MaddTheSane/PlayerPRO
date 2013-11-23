@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>${PRODUCT_NAME}</string>
+	<string>PlayerPRO</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -239,8 +239,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -393,39 +391,6 @@
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.audio</string>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>MIDI File</string>
-			<key>UTTypeIdentifier</key>
-			<string>public.midi-audio</string>
-			<key>UTTypeReferenceURL</key>
-			<string>http://www.midi.org/about-midi/specinfo.shtml</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>com.apple.ostype</key>
-				<array>
-					<string>Midi</string>
-				</array>
-				<key>public.filename-extension</key>
-				<array>
-					<string>mid</string>
-					<string>kar</string>
-					<string>smf</string>
-					<string>midi</string>
-				</array>
-				<key>public.mime-type</key>
-				<array>
-					<string>audio/mid</string>
-					<string>audio/midi</string>
-					<string>audio/x-midi</string>
-				</array>
-			</dict>
-		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>

@@ -16,12 +16,13 @@
 -(id)init
 {
 	if (self = [super initWithNibName:@"ColorPrefs" bundle:nil]) {
-		[self setTitle:@"Color"];
+		[self setTitle:@"Colors"];
 	}
 	return self;
 }
 
--(void)awakeFromNib {
+-(void)awakeFromNib
+{
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[colorWell1 setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor1]]];
 	[colorWell2 setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor2]]];

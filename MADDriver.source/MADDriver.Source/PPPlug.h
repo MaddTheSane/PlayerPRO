@@ -46,7 +46,7 @@ typedef struct _Pcmd
 extern "C" {
 #endif
 	
-PPEXPORT OSErr inAddSoundToMAD(Ptr			theSound,
+PPEXPORT OSErr inAddSoundToMAD(void			*theSound,
 							   size_t		sndLen,
 							   long			lS,
 							   long			lE,
@@ -59,7 +59,7 @@ PPEXPORT OSErr inAddSoundToMAD(Ptr			theSound,
 							   sData		**sample,					// Ptr on samples data
 							   short		*sampleID) DEPRECATED_ATTRIBUTE;
 
-PPEXPORT OSErr inAddSoundToMADCString(Ptr			theSound,
+PPEXPORT OSErr inAddSoundToMADCString(void			*theSound,
 									  size_t		sndLen,
 									  long			loopStart,
 									  long			loopEnd,
@@ -115,7 +115,7 @@ typedef struct _PPInfoPlug
 //
 //	If you want to reallocate theData or theData->data:
 //
-//	if( theData->data != 0L) free( theData->data);		// VERY IMPORTANT to free memory
+//	if (theData->data != 0L) free( theData->data);		// VERY IMPORTANT to free memory
 //	theData->data = malloc( newsize);						// Use malloc ONLY to allocate memory!
 //
 //	theData->size = newsize;								// In bytes !! Even for 16 bits !
@@ -187,7 +187,7 @@ typedef struct _PPInstrumentPlugin {
 //
 //	If you want to reallocate Pcmd:
 //
-//	if( Pcmd != 0L) free( (Ptr) Pcmd);							// VERY IMPORTANT
+//	if (Pcmd != 0L) free( (Ptr) Pcmd);							// VERY IMPORTANT
 //	Pcmd = malloc( sizeof( Pcmd) + noCell * sizeof( Cmd));		// Use malloc ONLY to allocate memory!
 //
 //	myPcmd->structSize 	= sizeof( Pcmd) + noCell * sizeof( Cmd);

@@ -33,7 +33,7 @@ static HRESULT CFPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
 	
     // Test the requested ID against the valid interfaces.
 	
-    if( CFEqual( interfaceID, kPlayerPRODigitalPlugInterfaceID ) ) 
+    if (CFEqual( interfaceID, kPlayerPRODigitalPlugInterfaceID ) ) 
 	{
 		
         //  If the TestInterface was requested, bump the ref count, set the ppv parameter
@@ -44,7 +44,7 @@ static HRESULT CFPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
         CFRelease( interfaceID );
         return S_OK;
     }
-    else if( CFEqual( interfaceID, IUnknownUUID ) ) 
+    else if (CFEqual( interfaceID, IUnknownUUID ) ) 
 	{
 		
         //  If the IUnknown interface was requested, same as above.

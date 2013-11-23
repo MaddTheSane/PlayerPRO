@@ -32,7 +32,7 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 	*newsize = newSize;
 	
 	dst = malloc( newSize);
-	if( dst == NULL) return NULL;
+	if (dst == NULL) return NULL;
 	
 	dst16 = (short*) dst;
 	dst8 = (char*) dst;
@@ -46,20 +46,20 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 				right		= pos & ((1 << LRVAL)-1);
 				left		= (1 << LRVAL) - right;
 				
-				if( stereo)
+				if (stereo)
 				{
 					pos >>= LRVAL;
 					pos /= 2;
 					pos *= 2;
 					
-					if( 1 + pos >= srcSize) {}
+					if (1 + pos >= srcSize) {}
 					else tempL = (left * src8[ pos] + right * src8[ 2 + pos]) >> LRVAL;
 					
 					dst8[ x] = tempL;
 					
 					x++;
 					
-					if( 3 + pos >= srcSize) {}
+					if (3 + pos >= srcSize) {}
 					else tempR = (left * src8[ 1 + pos] + right * src8[ 3 + pos]) >> LRVAL;
 					
 					dst8[ x] = tempR;
@@ -68,7 +68,7 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 				{
 					pos >>= LRVAL;
 					
-					if( pos < 0 ||  1 + pos >= srcSize) {}
+					if (pos < 0 ||  1 + pos >= srcSize) {}
 					else tempL = (left * src8[ pos] + right * src8[ 1 + pos]) >> LRVAL;
 					
 					dst8[ x] = tempL;
@@ -83,20 +83,20 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 				right		= pos & ((1 << LRVAL)-1);
 				left		= (1 << LRVAL) - right;
 				
-				if( stereo)
+				if (stereo)
 				{
 					pos >>= LRVAL;
 					pos /= 2;
 					pos *= 2;
 					
-					if( 1 + pos >= srcSize/2) {}
+					if (1 + pos >= srcSize/2) {}
 					else tempL = (left * src16[ pos] + right * src16[ 2 + pos]) >> LRVAL;
 					
 					dst16[ x] = tempL;
 					
 					x++;
 					
-					if( 3 + pos >= srcSize/2) {}
+					if (3 + pos >= srcSize/2) {}
 					else tempL = (left * src16[ 1 + pos] + right * src16[ 3 + pos]) >> LRVAL;
 					
 					dst16[ x] = tempL;
@@ -105,7 +105,7 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 				{
 					pos >>= LRVAL;
 					
-					if( 1 + pos >= srcSize/2) {}
+					if (1 + pos >= srcSize/2) {}
 					else tempL = (left * src16[ pos] + right * src16[ 1 + pos]) >> LRVAL;
 					
 					dst16[ x] = tempL;
@@ -141,7 +141,7 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 			theData->loopBeg = (theData->loopBeg * (newFreq/100)) / (long) (theData->c2spd/100);
 			theData->loopSize = (theData->loopSize * (newFreq/100)) / (long) (theData->c2spd/100);
 			
-			if( newPtr != NULL)
+			if (newPtr != NULL)
 			{
 				free( theData->data);
 				theData->data		= newPtr;
@@ -150,10 +150,18 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 			}
 			
 			
-			if( theData->loopBeg < 0) { theData->loopSize += theData->loopBeg;	theData->loopBeg = 0;}
-			if( theData->loopBeg > theData->size) {theData->loopBeg = 0;	theData->loopSize = 0;}
-			if( theData->loopSize < 0) theData->loopSize = 0;
-			if( theData->loopBeg + theData->loopSize > theData->size) theData->loopSize = theData->size - theData->loopBeg;
+			if (theData->loopBeg < 0) {
+				theData->loopSize += theData->loopBeg;
+				theData->loopBeg = 0;
+			}
+			if (theData->loopBeg > theData->size) {
+				theData->loopBeg = 0;
+				theData->loopSize = 0;
+			}
+			if (theData->loopSize < 0)
+				theData->loopSize = 0;
+			if (theData->loopBeg + theData->loopSize > theData->size)
+				theData->loopSize = theData->size - theData->loopBeg;
 		};
 		self.plugBlock = tmp;
     }

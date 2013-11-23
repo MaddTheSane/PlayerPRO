@@ -1,0 +1,108 @@
+
+/* Class = "NSBox"; title = "Cell Information"; ObjectID = "3"; */
+"3.title" = "Cell Information";
+
+/* Class = "NSButtonCell"; title = "Instrument"; ObjectID = "5"; */
+"5.title" = "Instrument";
+
+/* Class = "NSButtonCell"; title = "Note"; ObjectID = "7"; */
+"7.title" = "Note";
+
+/* Class = "NSButtonCell"; title = "Argument"; ObjectID = "10"; */
+"10.title" = "Argument";
+
+/* Class = "NSButtonCell"; title = "Effect"; ObjectID = "11"; */
+"11.title" = "Effect";
+
+/* Class = "NSButtonCell"; title = "Volume"; ObjectID = "15"; */
+"15.title" = "Volume";
+
+/* Class = "NSButtonCell"; title = "Markers:"; ObjectID = "17"; */
+"17.title" = "Markers:";
+
+/* Class = "NSTextFieldCell"; title = "Offset:"; ObjectID = "19"; */
+"19.title" = "Offset:";
+
+/* Class = "NSTextFieldCell"; title = "0"; ObjectID = "21"; */
+"21.title" = "0";
+
+/* Class = "NSTextFieldCell"; title = "Loop:"; ObjectID = "23"; */
+"23.title" = "Loop:";
+
+/* Class = "NSTextFieldCell"; title = "3"; ObjectID = "25"; */
+"25.title" = "3";
+
+/* Class = "NSTextFieldCell"; title = "Color:"; ObjectID = "27"; */
+"27.title" = "Color:";
+
+/* Class = "NSBox"; title = "Pop-up Keys"; ObjectID = "29"; */
+"29.title" = "Pop-up Keys";
+
+/* Class = "NSTextFieldCell"; title = "Mouse click +"; ObjectID = "31"; */
+"31.title" = "Mouse click +";
+
+/* Class = "NSButtonCell"; title = "Control"; ObjectID = "33"; */
+"33.title" = "Control";
+
+/* Class = "NSButtonCell"; title = "Shift"; ObjectID = "35"; */
+"35.title" = "Shift";
+
+/* Class = "NSButtonCell"; title = "Command"; ObjectID = "37"; */
+"37.title" = "Command";
+
+/* Class = "NSButtonCell"; title = "Option"; ObjectID = "39"; */
+"39.title" = "Option";
+
+/* Class = "NSBox"; title = "Misc"; ObjectID = "40"; */
+"40.title" = "Misc";
+
+/* Class = "NSTextFieldCell"; title = "Line Height:"; ObjectID = "42"; */
+"42.title" = "Line Height:";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "44"; */
+"44.title" = "Radio";
+
+/* Class = "NSButtonCell"; title = "Normal"; ObjectID = "45"; */
+"45.title" = "Normal";
+
+/* Class = "NSButtonCell"; title = "Small"; ObjectID = "47"; */
+"47.title" = "Small";
+
+/* Class = "NSButtonCell"; title = "Off"; ObjectID = "50"; */
+"50.title" = "Off";
+
+/* Class = "NSButtonCell"; title = "On"; ObjectID = "51"; */
+"51.title" = "On";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "52"; */
+"52.title" = "Radio";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "54"; */
+"54.title" = "Radio";
+
+/* Class = "NSButtonCell"; title = "Loop"; ObjectID = "55"; */
+"55.title" = "Loop";
+
+/* Class = "NSButtonCell"; title = "Partition"; ObjectID = "56"; */
+"56.title" = "Partition";
+
+/* Class = "NSButtonCell"; title = "Sound"; ObjectID = "58"; */
+"58.title" = "Sound";
+
+/* Class = "NSButtonCell"; title = "Pcmd"; ObjectID = "59"; */
+"59.title" = "Pcmd";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "60"; */
+"60.title" = "Radio";
+
+/* Class = "NSTextFieldCell"; title = "Music Trace:"; ObjectID = "62"; */
+"62.title" = "Music Trace:";
+
+/* Class = "NSTextFieldCell"; title = "Pattern Wrapping:"; ObjectID = "64"; */
+"64.title" = "Pattern Wrapping:";
+
+/* Class = "NSTextFieldCell"; title = "Drag As:"; ObjectID = "66"; */
+"66.title" = "Drag As:";
+
+/* Class = "NSButtonCell"; title = "Control"; ObjectID = "107"; */
+"107.title" = "Control";

@@ -257,7 +257,7 @@
 			// ** Read Sample header **
 			
 			curData = tmpsData[ i * MAXSAMPLE +  x] = (sData*)malloc( sizeof( sData));
-			if( curData == NULL)
+			if (curData == NULL)
 			{
 				if (theErr) {
 					*theErr = CreateErrorFromMADErrorType(MADNeedMemory);
@@ -284,7 +284,7 @@
 			// ** Read Sample DATA
 			
 			curData->data = malloc(curData->size);
-			if( curData->data == NULL)
+			if (curData->data == NULL)
 			{
 				if (theErr) {
 					*theErr = CreateErrorFromMADErrorType(MADNeedMemory);
@@ -460,19 +460,21 @@ static void DrawCGSampleInt(long 	start,
 	BOOL isStereo = curData.stereo;
 	CGFloat			minY, maxY;
 	
-	if( curData.amplitude == 16)
+	if (curData.amplitude == 16)
 	{
 		sampleSize /= 2;
 		start /= 2;
 		
 		BS = start + (tSS * sampleSize) / larg;
-		if( isStereo)
+		if (isStereo)
 		{
-			BS /= 2;	BS *=2;
+			BS /= 2;
+			BS *=2;
 			BS += channel;
 		}
 		temp = (theShortSample[ BS]  + 0x8000);
-		temp *= high;	temp  /= (1 << 16);
+		temp *= high;
+		temp  /= (1 << 16);
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
 		
 		for( i = tSS; i < tSE; i++)
@@ -480,10 +482,12 @@ static void DrawCGSampleInt(long 	start,
 			BS = start + (i * sampleSize) / larg;
 			BE = start + ((i+1) * sampleSize) / larg;
 			
-			if( isStereo)
+			if (isStereo)
 			{
-				BS /=2;		BS *=2;
-				BE /=2;		BE *=2;
+				BS /=2;
+				BS *=2;
+				BE /=2;
+				BE *=2;
 				
 				BS += channel;
 				BE += channel;
@@ -491,23 +495,26 @@ static void DrawCGSampleInt(long 	start,
 			
 			temp =(theShortSample[ BS]  + 0x8000);
 			minY = maxY = temp;
-			temp *= high;		temp  /= (1 << 16);
+			temp *= high;
+			temp  /= (1 << 16);
 			CGContextAddLineToPoint(ctxRef, trueH + i, temp + trueV);
 			
-			if( BS != BE)
+			if (BS != BE)
 			{
 				for( x = BS; x < BE; x++)
 				{
 					temp = (theShortSample[ x]  + 0x8000);
 					
-					if( temp > maxY) maxY = temp;
-					if( temp < minY) minY = temp;
+					if (temp > maxY) maxY = temp;
+					if (temp < minY) minY = temp;
 					
-					if( isStereo) x++;
+					if (isStereo) x++;
 				}
 				
-				maxY *= high;		maxY /= (1 << 16);
-				minY *= high;		minY /= (1 << 16);
+				maxY *= high;
+				maxY /= (1 << 16);
+				minY *= high;
+				minY /= (1 << 16);
 				
 				CGContextMoveToPoint(ctxRef, trueH + i, minY + trueV);
 				CGContextAddLineToPoint(ctxRef, trueH + i, maxY + trueV);
@@ -517,14 +524,16 @@ static void DrawCGSampleInt(long 	start,
 	else
 	{
 		BS = start + (tSS * sampleSize) / larg;
-		if( isStereo)
+		if (isStereo)
 		{
-			BS /= 2;	BS *=2;
+			BS /= 2;
+			BS *=2;
 			BS += channel;
 		}
 		
 		temp = (unsigned char) (theSample[ BS] - 0x80);
-		temp *= high;	temp /= (1 << 8);
+		temp *= high;
+		temp /= (1 << 8);
 		
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
 		
@@ -533,10 +542,12 @@ static void DrawCGSampleInt(long 	start,
 			BS = start + (i * sampleSize) / larg;
 			BE = start + ((i+1) * sampleSize) / larg;
 			
-			if( isStereo)
+			if (isStereo)
 			{
-				BS /=2;		BS *=2;
-				BE /=2;		BE *=2;
+				BS /=2;
+				BS *=2;
+				BE /=2;
+				BE *=2;
 				
 				BS += channel;
 				BE += channel;
@@ -544,22 +555,25 @@ static void DrawCGSampleInt(long 	start,
 			
 			temp = (unsigned char) (theSample[ BS] - 0x80);
 			minY = maxY = temp;
-			temp *= high;		temp /= (1 << 8);
+			temp *= high;
+			temp /= (1 << 8);
 			CGContextAddLineToPoint(ctxRef, trueH + i, temp + trueV);
 			
-			if( BS != BE)
+			if (BS != BE)
 			{
 				for( x = BS; x < BE; x++)
 				{
 					temp = (unsigned char) (theSample[ x] - 0x80);
 					
-					if( temp > maxY) maxY = temp;
-					if( temp < minY) minY = temp;
+					if (temp > maxY) maxY = temp;
+					if (temp < minY) minY = temp;
 					
-					if( isStereo) x++;
+					if (isStereo) x++;
 				}
-				maxY *= high;		maxY /= (1 << 8);
-				minY *= high;		minY /= (1 << 8);
+				maxY *= high;
+				maxY /= (1 << 8);
+				minY *= high;
+				minY /= (1 << 8);
 				
 				CGContextMoveToPoint(ctxRef, trueH + i, minY + trueV);
 				CGContextAddLineToPoint(ctxRef, trueH + i, maxY + trueV);
@@ -639,25 +653,25 @@ static void DrawCGSampleInt(long 	start,
 		}
 	}
 	if (!object) {
-		[instrumentSize setTitleWithMnemonic:PPDoubleDash];
-		[instrumentLoopStart setTitleWithMnemonic:PPDoubleDash];
-		[instrumentLoopSize setTitleWithMnemonic:PPDoubleDash];
-		[instrumentVolume setTitleWithMnemonic:PPDoubleDash];
-		[instrumentRate setTitleWithMnemonic:PPDoubleDash];
-		[instrumentNote setTitleWithMnemonic:PPDoubleDash];
-		[instrumentBits setTitleWithMnemonic:PPDoubleDash];
-		[instrumentMode setTitleWithMnemonic:PPDoubleDash];
+		[[instrumentSize cell] setTitle:PPDoubleDash];
+		[[instrumentLoopStart cell] setTitle:PPDoubleDash];
+		[[instrumentLoopSize cell] setTitle:PPDoubleDash];
+		[[instrumentVolume cell] setTitle:PPDoubleDash];
+		[[instrumentRate cell] setTitle:PPDoubleDash];
+		[[instrumentNote cell] setTitle:PPDoubleDash];
+		[[instrumentBits cell] setTitle:PPDoubleDash];
+		[[instrumentMode cell] setTitle:PPDoubleDash];
 		[waveFormImage setImage:nil];
 		return;
 	}
 	[instrumentSize setIntegerValue:[object dataSize]];
 	[instrumentLoopStart setIntegerValue:[object loopBegin]];
 	[instrumentLoopSize setIntegerValue:[object loopSize]];
-	[instrumentVolume setTitleWithMnemonic:[NSString stringWithFormat:@"%u", [(PPSampleObject*)object volume]]];
-	[instrumentRate setTitleWithMnemonic:[NSString stringWithFormat:@"%u", [object c2spd]]];
-	[instrumentNote setTitleWithMnemonic:[NSString stringWithFormat:@"%d", [object relativeNote]]];
-	[instrumentBits setTitleWithMnemonic:[NSString stringWithFormat:@"%u", [object amplitude]]];
-	[instrumentMode setTitleWithMnemonic:[NSString stringWithFormat:@"%u", [object loopType]]];
+	[[instrumentVolume cell] setTitle:[NSString stringWithFormat:@"%u", [(PPSampleObject*)object volume]]];
+	[[instrumentRate cell] setTitle:[NSString stringWithFormat:@"%u", [object c2spd]]];
+	[[instrumentNote cell] setTitle:[NSString stringWithFormat:@"%d", [object relativeNote]]];
+	[[instrumentBits cell] setTitle:[NSString stringWithFormat:@"%u", [object amplitude]]];
+	[[instrumentMode cell] setTitle:[NSString stringWithFormat:@"%u", [object loopType]]];
 	[waveFormImage setImage:[self waveformImageFromSample:object]];
 }
 
@@ -697,12 +711,12 @@ static void DrawCGSampleInt(long 	start,
 	theView.controller = self;
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
 		theView.isSample = NO;
-		[theView.textField setTitleWithMnemonic:[item name]];
-		[theView.numField setTitleWithMnemonic:[NSString stringWithFormat:@"%03ld", (long)[item number] + 1]];
+		[[theView.textField cell] setTitle:[item name]];
+		[[theView.numField cell] setTitle:[NSString stringWithFormat:@"%03ld", (long)[item number] + 1]];
 		theView.isBlank = [item countOfChildren] <= 0;
 	} else if ([item isKindOfClass:[PPSampleObject class]]) {
 		theView.isSample = YES;
-		[theView.textField setTitleWithMnemonic:[item name]];
+		[[theView.textField cell] setTitle:[item name]];
 		if ([item loopSize]) {
 			theView.isLoopingSample = YES;
 		} else {

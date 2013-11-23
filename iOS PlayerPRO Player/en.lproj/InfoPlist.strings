@@ -1,6 +1,8 @@
 /* Localized versions of Info.plist keys */
 
-CFBundleName = "PlayerPRO";
+CFBundleName = "PlayerPRO Player";
+CFBundleDisplayName = "PlayerPRO";
+
 "PPMTMFile" = "MultiTracker Audio";
 "PPS3MFile" = "ScreamTracker Audio";
 "PPMODFile" = "ProTracker Audio";

@@ -53,7 +53,7 @@ static void MADMIDIPortProc(const MIDIPacketList *pktlist, void *readProcRefCon,
 
 void CloseMIDIHarware(void)
 {
-	if( MIDIHardware)
+	if (MIDIHardware)
 	{
 		OSStatus MIDIErr = MIDIEndpointDispose(MADMIDIKeyboardEndRef);
 		MIDIErr = MIDIClientDispose(MADMIDICliRef);

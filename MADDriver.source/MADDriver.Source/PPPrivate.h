@@ -148,12 +148,16 @@ OSErr	PPExportFileU( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, M
 OSErr	PPImportFileU( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusicUnicode **theNewMAD);
 	
 OSType	GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType type);
-void	MInitImportPlug( MADLibrary *inMADDriver, char*);	
+void	MInitImportPlug( MADLibrary *inMADDriver, char*);
 void	CloseImportPlug( MADLibrary *inMADDriver);
 OSErr	CheckMADFile( char *AlienFile);
 
 #ifndef __PPPLUGH__
 PPEXPORT void ConvertInstrumentIn( 	Byte *tempPtr,  size_t sSize);
+#endif
+
+#if defined _MAC_H && !TARGET_OS_IPHONE
+void SetOSType(CFURLRef, OSType);
 #endif
 
 #ifdef __cplusplus

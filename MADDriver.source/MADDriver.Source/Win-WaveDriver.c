@@ -113,16 +113,16 @@ ULONG GetPos(MADDriverRec *WinMADDriver)
 		{
 			OnOff = false;
 			
-			if( !DirectSave( mydma, &WinMADDriver->DriverSettings, WinMADDriver))
+			if (!DirectSave( mydma, &WinMADDriver->DriverSettings, WinMADDriver))
 			{
 				for( i = 0; i < WIN95BUFFERSIZE/2; i++) mydma[ i] = 0;
 			}
 		}
-		else if( OnOff == false && (pos < WIN95BUFFERSIZE/2))
+		else if (OnOff == false && (pos < WIN95BUFFERSIZE/2))
 		{
 			OnOff = true;
 			
-			if( !DirectSave( mydma + WIN95BUFFERSIZE/2, &WinMADDriver->DriverSettings, WinMADDriver))
+			if (!DirectSave( mydma + WIN95BUFFERSIZE/2, &WinMADDriver->DriverSettings, WinMADDriver))
 			{
 				for( i = 0; i < WIN95BUFFERSIZE/2; i++) mydma[ i] = 0;
 			}
@@ -155,11 +155,11 @@ void CALLBACK TimeProc(
 		
 		if(pos > WinMADDriver->WIN95BUFFERSIZE/2L && WinMADDriver->OnOff == true)
 		{
-			if( WinMADDriver->MICROBUFState < MICROBUF)
+			if (WinMADDriver->MICROBUFState < MICROBUF)
 			{
 				dmaDst = WinMADDriver->mydma + WinMADDriver->MICROBUFState*WinMADDriver->BufSize;
 				
-				if( !DirectSave( dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
+				if (!DirectSave( dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
 				{
 					memset(dmaDst, 0, WinMADDriver->BufSize);
 				}
@@ -172,13 +172,13 @@ void CALLBACK TimeProc(
 				WinMADDriver->MICROBUFState = 0;
 			}
 		}
-		else if( WinMADDriver->OnOff == false && (pos < WinMADDriver->WIN95BUFFERSIZE/2L))
+		else if (WinMADDriver->OnOff == false && (pos < WinMADDriver->WIN95BUFFERSIZE/2L))
 		{
-			if( WinMADDriver->MICROBUFState < MICROBUF)
+			if (WinMADDriver->MICROBUFState < MICROBUF)
 			{
 				dmaDst = WinMADDriver->mydma + WinMADDriver->WIN95BUFFERSIZE/2L + WinMADDriver->MICROBUFState*WinMADDriver->BufSize;
 				
-				if( !DirectSave( dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
+				if (!DirectSave( dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
 				{
 					memset(dmaDst, 0, WinMADDriver->BufSize);
 				}
@@ -254,10 +254,10 @@ Boolean W95_Init( MADDriverRec *WinMADDriver)
 	
 	WinMADDriver->MICROBUFState = 0;
 	
-	if( WinMADDriver->WIN95BUFFERSIZE < 0) return false;
+	if (WinMADDriver->WIN95BUFFERSIZE < 0) return false;
 	
 	WinMADDriver->hglobal= GlobalAlloc( GMEM_FIXED, WinMADDriver->WIN95BUFFERSIZE);	//GMEM_MOVEABLE | GMEM_SHARE
-	if( WinMADDriver->hglobal == NULL) return false;
+	if (WinMADDriver->hglobal == NULL) return false;
 	
 	WinMADDriver->mydata = GlobalLock(WinMADDriver->hglobal);
 	

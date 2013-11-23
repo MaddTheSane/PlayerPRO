@@ -108,8 +108,8 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (NSString *)fileName
 {
-	NSString *val = nil;
-	NSError *err = nil;
+	NSString *val;
+	NSError *err;
 
 	if([musicUrl getResourceValue:&val forKey:NSURLLocalizedNameKey error:&err] == NO)
 	{
@@ -254,7 +254,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	}
 	UseResFile(refNum);
 	aHandle = Get1Resource('STR#', 128);
-	if( aHandle == NULL)
+	if (aHandle == NULL)
 	{
 		CloseResFile(refNum);
 		return ResError();
@@ -458,7 +458,7 @@ static inline NSURL *PPHomeURL()
 	NSInteger changedIndex = selectedMusic;
 	for (PPMusicListObject *obj in musicList)
 	{
-		NSData *bookData = [obj.musicUrl bookmarkDataWithOptions:NSURLBookmarkCreationPreferFileIDResolution includingResourceValuesForKeys:nil relativeToURL:PPHomeURL() error:nil];
+		NSData *bookData = [obj.musicUrl bookmarkDataWithOptions:0 includingResourceValuesForKeys:nil relativeToURL:PPHomeURL() error:nil];
 		if (bookData) {
 			[BookmarkArray addObject:bookData];
 		}

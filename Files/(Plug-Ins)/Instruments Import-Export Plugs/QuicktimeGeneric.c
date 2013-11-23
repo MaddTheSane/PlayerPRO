@@ -85,9 +85,12 @@ static OSStatus CFURLToFSSpec (CFURLRef pathURL, FSSpec *outSpec)
 	}
 	
 	// Free allocated memory
-	if (pathString != NULL) { CFRelease (pathString); }
-	if (parentURL != NULL)  { CFRelease (parentURL);  }
-	if (nameString != NULL) { CFRelease (nameString); }
+	if (pathString != NULL)
+		CFRelease (pathString);
+	if (parentURL != NULL)
+		CFRelease (parentURL);
+	if (nameString != NULL)
+		CFRelease (nameString);
 	
 	return err;
 }
@@ -123,11 +126,11 @@ static OSErr mainQTInst(void					*unused,
 			FSSpec			newFile;
 			
 			myErr = ConvertDataToWAVE( tmpSpec, &newFile, thePPInfoPlug);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				theSound = ConvertWAV( &newFile, &lS, &lE, &sS, &rate, &stereo);
 				
-				if( theSound)
+				if (theSound)
 				{
 					long sndSize = GetPtrSize(theSound);
 					Ptr newSound = malloc(sndSize);
@@ -151,13 +154,15 @@ static OSErr mainQTInst(void					*unused,
 			
 			FSpGetFInfo( &tmpSpec, &fInfo);
 			
-			if( fInfo.fdType == thePPInfoPlug->fileType) myErr = noErr;
-			else myErr = MADFileNotSupportedByThisPlug;
+			if (fInfo.fdType == thePPInfoPlug->fileType)
+				myErr = noErr;
+			else
+				myErr = MADFileNotSupportedByThisPlug;
 		}
 			break;
 			
 		case MADPlugExport:
-			if( *sampleID >= 0)
+			if (*sampleID >= 0)
 			{
 				OSType				compType = 'NONE';
 				unsigned long		rate;
@@ -166,14 +171,15 @@ static OSErr mainQTInst(void					*unused,
 				
 				FSpDelete(&tmpSpec);
 				myErr = FSpCreate( &tmpSpec, 'TVOD', 'AIFF', smCurrentScript);
-				if(myErr == noErr) myErr = FSpOpenDF( &tmpSpec, fsCurPerm, &iFileRefI);
+				if(myErr == noErr)
+					myErr = FSpOpenDF( &tmpSpec, fsCurPerm, &iFileRefI);
 				
-				if( myErr == noErr)
+				if (myErr == noErr)
 				{
 					inOutBytes 	= curData->size;
 					rate		= curData->c2spd;
 					
-					if( curData->stereo) numChan = 2;
+					if (curData->stereo) numChan = 2;
 					else numChan = 1;
 					
 					myErr = SetupAIFFHeader(iFileRefI,
@@ -184,7 +190,8 @@ static OSErr mainQTInst(void					*unused,
 											inOutBytes,
 											0);
 					
-					if(myErr == noErr) myErr = FSWrite( iFileRefI, &inOutBytes, curData->data);
+					if(myErr == noErr)
+						myErr = FSWrite( iFileRefI, &inOutBytes, curData->data);
 					FSCloseFork( iFileRefI);
 				}
 			}

@@ -42,13 +42,15 @@ static const TagCoupling TrackHeightCoupling[] = {{100, 1}, {110, 2}, {120, 3}, 
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPClassicalEditorPreferencesDidChange object:self];
 }
 
-- (IBAction)toggleNoteLength:(id)sender {
+- (IBAction)toggleNoteLength:(id)sender
+{
 	[[NSUserDefaults standardUserDefaults] setBool:[notesLengthCheck state] forKey:PPCEShowNotesLen];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPClassicalEditorPreferencesDidChange object:self];
 
 }
 
-- (IBAction)toggleMarkers:(id)sender {
+- (IBAction)toggleMarkers:(id)sender
+{
 	NSInteger state = [markersCheck state];
 	[[NSUserDefaults standardUserDefaults] setBool:state forKey:PPCEShowMarkers];
 	[markersLoopValue setEnabled:state];
@@ -56,7 +58,8 @@ static const TagCoupling TrackHeightCoupling[] = {{100, 1}, {110, 2}, {120, 3}, 
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPClassicalEditorPreferencesDidChange object:self];
 }
 
--(void)awakeFromNib {
+-(void)awakeFromNib
+{
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	{
 		NSInteger theRate = [defaults integerForKey:PPCETrackHeight];
@@ -85,7 +88,6 @@ static const TagCoupling TrackHeightCoupling[] = {{100, 1}, {110, 2}, {120, 3}, 
 	[markersLoopValue setEnabled:markersVal];
 	[markersOffsetValue setEnabled:markersVal];
 	[markersCheck setState:markersVal];
-
 }
 
 @end

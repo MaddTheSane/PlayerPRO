@@ -24,6 +24,8 @@
 #ifndef __MADH__
 #define __MADH__
 
+#pragma pack(push, 2)
+
 // ***	
 // ***	PATTERN DESCRIPTION
 // ***	
@@ -164,5 +166,8 @@ struct oldMADSpec
 	Byte		chanVol[ MAXTRACK];			// Channel Volume, from 0 to 64
 };
 typedef struct oldMADSpec oldMADSpec;
+
+#pragma pack(pop)
+
 
 #endif

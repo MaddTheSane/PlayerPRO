@@ -161,9 +161,9 @@ void AppDetermineHardwareCaps(LPDIRECTSOUND lpDirectSound)
     {
     	printf( "dwFlags = %ld", dscaps.dwFlags);
     	
-    //DEBUG	if( dscaps.dwFlags & DSBCAPS_GLOBALFOCUS)	debugger("global");
-    //DEBUG	if( dscaps.dwFlags & DSBCAPS_STICKYFOCUS)	debugger("sticky");
-  	//DEBUG	if( dscaps.dwFlags & DSBCAPS_PRIMARYBUFFER)	debugger("DSBCAPS_PRIMARYBUFFER");
+    //DEBUG	if (dscaps.dwFlags & DSBCAPS_GLOBALFOCUS)	debugger("global");
+    //DEBUG	if (dscaps.dwFlags & DSBCAPS_STICKYFOCUS)	debugger("sticky");
+  	//DEBUG	if (dscaps.dwFlags & DSBCAPS_PRIMARYBUFFER)	debugger("DSBCAPS_PRIMARYBUFFER");
   		  
         // Succeeded, now parse DSCAPS structure.
         
@@ -306,7 +306,7 @@ static void CALLBACK TimeProc(
 		{
 			WinMADDriver->OnOff = false;
 			
-			if( !DirectSave( WinMADDriver->currentBuf, NULL, WinMADDriver))
+			if (!DirectSave( WinMADDriver->currentBuf, NULL, WinMADDriver))
 			{
 				switch( WinMADDriver->DriverSettings.outPutBits)
 				{
@@ -320,16 +320,16 @@ static void CALLBACK TimeProc(
 				}
 			}
 			
-			if( !WriteDataToBuffer( WinMADDriver->lpSwSamp, 0, (unsigned char*) WinMADDriver->currentBuf, WinMADDriver->WIN95BUFFERSIZE/2))
+			if (!WriteDataToBuffer( WinMADDriver->lpSwSamp, 0, (unsigned char*) WinMADDriver->currentBuf, WinMADDriver->WIN95BUFFERSIZE/2))
 			{
 				//DEBUG 	debugger("ERR");
 			}
 		}
-		else if( WinMADDriver->OnOff == false && (pos < WinMADDriver->WIN95BUFFERSIZE/2))
+		else if (WinMADDriver->OnOff == false && (pos < WinMADDriver->WIN95BUFFERSIZE/2))
 		{
 			WinMADDriver->OnOff = true;
 			
-			if( !DirectSave( WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, NULL, WinMADDriver))
+			if (!DirectSave( WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, NULL, WinMADDriver))
 			{
 				switch( WinMADDriver->DriverSettings.outPutBits)
 				{
@@ -343,13 +343,13 @@ static void CALLBACK TimeProc(
 				}
 			}
 			
-			if( !WriteDataToBuffer( WinMADDriver->lpSwSamp, WinMADDriver->WIN95BUFFERSIZE/2, (unsigned char*) (WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2), WinMADDriver->WIN95BUFFERSIZE/2))
+			if (!WriteDataToBuffer( WinMADDriver->lpSwSamp, WinMADDriver->WIN95BUFFERSIZE/2, (unsigned char*) (WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2), WinMADDriver->WIN95BUFFERSIZE/2))
 			{
 				//DEBUG 	debugger("ERR");
 			}
 		}
 		
-		if( WinMADDriver->WIN95BUFFERSIZE - pos > 1700)	WinMADDriver->OscilloWavePtr = WinMADDriver->currentBuf + pos;
+		if (WinMADDriver->WIN95BUFFERSIZE - pos > 1700)	WinMADDriver->OscilloWavePtr = WinMADDriver->currentBuf + pos;
 		else WinMADDriver->OscilloWavePtr = WinMADDriver->currentBuf;
 	}
 	timersema--;
@@ -366,23 +366,23 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 	WinMADDriver->currentBuf 		= (Ptr)calloc( WinMADDriver->WIN95BUFFERSIZE, 1);
 	
 	WinMADDriver->hwnd = GetForegroundWindow();	//GetForegroundWindow();
-	if( !WinMADDriver->hwnd) return false;
+	if (!WinMADDriver->hwnd) return false;
 	
 	if(DS_OK == DirectSoundCreate(NULL, &WinMADDriver->lpDirectSound, NULL))
 	{
-		if( !AppCreateWritePrimaryBuffer( WinMADDriver->lpDirectSound, &WinMADDriver->lpDirectSoundBuffer, WinMADDriver->hwnd, WinMADDriver))
+		if (!AppCreateWritePrimaryBuffer( WinMADDriver->lpDirectSound, &WinMADDriver->lpDirectSoundBuffer, WinMADDriver->hwnd, WinMADDriver))
 		{
 			WinMADDriver->lpDirectSound->lpVtbl->Release(WinMADDriver->lpDirectSound);
 			WinMADDriver->lpDirectSound = NULL;
 			return false;
 		}
-		if( !WinMADDriver->lpDirectSoundBuffer) return false;
+		if (!WinMADDriver->lpDirectSoundBuffer) return false;
 		
 		// Creation succeeded.
 		WinMADDriver->lpDirectSound->lpVtbl->SetCooperativeLevel(WinMADDriver->lpDirectSound, WinMADDriver->hwnd, DSSCL_NORMAL);
 		
 		WinMADDriver->lpSwSamp = NULL;
-		if( !LoadSamp(WinMADDriver->lpDirectSound, &WinMADDriver->lpSwSamp, NULL, WinMADDriver->WIN95BUFFERSIZE, DSBCAPS_LOCSOFTWARE, WinMADDriver))
+		if (!LoadSamp(WinMADDriver->lpDirectSound, &WinMADDriver->lpSwSamp, NULL, WinMADDriver->WIN95BUFFERSIZE, DSBCAPS_LOCSOFTWARE, WinMADDriver))
 		{
 			//DEBUG debugger( "Error 2\n");		//DSBCAPS_LOCSOFTWARE
 			WinMADDriver->lpDirectSound->lpVtbl->Release(WinMADDriver->lpDirectSound);
@@ -390,7 +390,7 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 			return false;
 		}
 		
-		if( !WinMADDriver->lpSwSamp) 
+		if (!WinMADDriver->lpSwSamp) 
 		{
 			WinMADDriver->lpDirectSound->lpVtbl->Release(WinMADDriver->lpDirectSound);
 			return false;
@@ -413,7 +413,7 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 											(unsigned long) WinMADDriver,		/* info to pass to callback  */
 											TIME_PERIODIC); 					/* oneshot or periodic?      */
 		
-		if( WinMADDriver->gwID == 0) return false;
+		if (WinMADDriver->gwID == 0) return false;
 		else return true;
 	}
 	
@@ -427,7 +427,7 @@ void DirectSoundClose( MADDriverRec* WinMADDriver)
 	if (WinMADDriver->currentBuf != NULL) {
 		free(WinMADDriver->currentBuf);
 	}
-	if( WinMADDriver->lpDirectSound)
+	if (WinMADDriver->lpDirectSound)
 	{
 		/* stop the timer */
 		timeEndPeriod( 20);

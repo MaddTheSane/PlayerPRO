@@ -24,7 +24,7 @@ static OSErr mainBackwards(void					*unused,
 	{
 		case 8:
 		{
-			Ptr	orgPtr = theData->data, destPtr = orgPtr;
+			char *orgPtr = theData->data, *destPtr = orgPtr;
 
 			orgPtr += SelectionStart;
 			destPtr += SelectionEnd - 1;
@@ -37,7 +37,7 @@ static OSErr mainBackwards(void					*unused,
 				*orgPtr++ = temp2;
 				*destPtr-- = temp1;
 				
-				if( StereoMode)
+				if (StereoMode)
 				{
 					orgPtr++;
 					destPtr--;
@@ -60,7 +60,7 @@ static OSErr mainBackwards(void					*unused,
 				*orgPtr++ = temp2;
 				*destPtr-- = temp1;
 				
-				if( StereoMode)
+				if (StereoMode)
 				{
 					orgPtr++;
 					destPtr--;

@@ -21,7 +21,8 @@
 	return self;
 }
 
--(BOOL)lineHeight {
+-(BOOL)lineHeight
+{
 	id curSelected = [PPDELineHeightMatrix selectedCell];
 	if ([PPDELineHeightMatrix cellAtRow:0 column:0] == curSelected) {
 		return YES;
@@ -32,7 +33,8 @@
 	}
 }
 
--(BOOL)musicTrace {
+-(BOOL)musicTrace
+{
 	id curSelected = [PPDEMusicTraceMatrix selectedCell];
 	if ([PPDEMusicTraceMatrix cellAtRow:0 column:0] == curSelected) {
 		return YES;
@@ -43,7 +45,8 @@
 	}
 }
 
--(BOOL)patternWrapping {
+-(BOOL)patternWrapping
+{
 	id curSelected = [PPDEPatternWrappingMatrix selectedCell];
 	if ([PPDEPatternWrappingMatrix cellAtRow:0 column:0] == curSelected) {
 		return NO;
@@ -54,7 +57,8 @@
 	}
 }
 
--(BOOL)PPDEDragAs {
+-(BOOL)PPDEDragAs
+{
 	id curSelected = [PPDEDragAsMatrix selectedCell];
 	if ([PPDEDragAsMatrix cellAtRow:0 column:0] == curSelected) {
 		return YES;
@@ -66,7 +70,8 @@
 }
 
 
-- (IBAction)cellInformationCheckClicked:(id)sender {
+- (IBAction)cellInformationCheckClicked:(id)sender
+{
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setBool:[PPDEEffect state] forKey:PPDEShowEffect];
 	[defaults setBool:[PPDENote state] forKey:PPDEShowNote];
@@ -77,12 +82,14 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
-- (IBAction)markersCheckClicked:(id)sender {
+- (IBAction)markersCheckClicked:(id)sender
+{
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
-- (IBAction)mouseCheckClicked:(id)sender {
+- (IBAction)mouseCheckClicked:(id)sender
+{
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setBool:[PPDEMouseClickControl state] forKey:PPDEMouseClickControlPref];
 	[defaults setBool:[PPDEMouseClickShift state] forKey:PPDEMouseClickShiftPref];
@@ -92,32 +99,38 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
-- (IBAction)lineHeightClicked:(id)sender {
+- (IBAction)lineHeightClicked:(id)sender
+{
 	[[NSUserDefaults standardUserDefaults] setBool:[self lineHeight] forKey:PPDELineHeightNormal];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
-- (IBAction)musicTraceClicked:(id)sender {
+- (IBAction)musicTraceClicked:(id)sender
+{
 	[[NSUserDefaults standardUserDefaults] setBool:[self musicTrace] forKey:PPDEMusicTraceOn];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
-- (IBAction)patternWrappingClicked:(id)sender {
+- (IBAction)patternWrappingClicked:(id)sender
+{
 	[[NSUserDefaults standardUserDefaults] setBool:[self patternWrapping] forKey:PPDEPatternWrappingPartition];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
-- (IBAction)dragAsClicked:(id)sender {
+- (IBAction)dragAsClicked:(id)sender
+{
 	[[NSUserDefaults standardUserDefaults] setBool:[self PPDEDragAs] forKey:PPDEDragAsPcmd];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
-- (IBAction)changeColor:(id)sender {
+- (IBAction)changeColor:(id)sender
+{
 	[[NSUserDefaults standardUserDefaults] setObject:[[PPDEMarkerColor color] PPencodeColor] forKey:PPDEMarkerColorPref];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDigitalEditorPrefrencesDidChange object:self];
 }
 
--(void)awakeFromNib {
+-(void)awakeFromNib
+{
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[PPDEEffect setState:[defaults boolForKey:PPDEShowEffect]];
 	[PPDENote setState:[defaults boolForKey:PPDEShowNote]];
@@ -158,7 +171,6 @@
 	}else {
 		[PPDEDragAsMatrix selectCellAtRow:0 column:1];
 	}
-
 }
 
 @end

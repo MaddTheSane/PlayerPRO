@@ -102,20 +102,20 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 	OSErr iErr = MADPlaySoundData( theRec, soundPtr, size, channel, note, amplitude, 0, 0, rate, stereo);
 	Boolean	continueLoop;
 	
-	if( iErr == noErr)
+	if (iErr == noErr)
 	{
 		continueLoop = true;
 		while( continueLoop)
 		{
 			//GetKeys( km);
 			
-			if( theRec->chan[ channel].samplePtr == NULL) continueLoop = false;
-			//if( MADIsPressed( (unsigned char*) km, 0x37) && MADIsPressed( (unsigned char*) km, 0x2F)) continueLoop = false;
-			//if( Button()) continueLoop = false;
+			if (theRec->chan[ channel].samplePtr == NULL) continueLoop = false;
+			//if (MADIsPressed( (unsigned char*) km, 0x37) && MADIsPressed( (unsigned char*) km, 0x2F)) continueLoop = false;
+			//if (Button()) continueLoop = false;
 			//DoGlobalNull();
 		}
 		
-		if( theRec->chan[ channel].samplePtr != NULL)
+		if (theRec->chan[ channel].samplePtr != NULL)
 		{
 			theRec->chan[ channel].curPtr 		= theRec->chan[ channel].maxPtr;
 			theRec->chan[ channel].samplePtr	= NULL;

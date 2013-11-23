@@ -33,7 +33,7 @@ static OSErr TestXI( Ptr CC)
 	OSType Ident = *((OSType*) CC);
 	PPBE32(&Ident);
 	
-	if( Ident == 'Exte') return noErr;
+	if (Ident == 'Exte') return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -44,9 +44,9 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 
 	for( i = 0; i < curIns->numSamples; i++)
 	{
-		if( sample[ i] != NULL)
+		if (sample[ i] != NULL)
 		{
-			if( sample[ i]->data != NULL)
+			if (sample[ i]->data != NULL)
 			{
 				free( sample[ i]->data);
 				sample[ i]->data = NULL;
@@ -212,13 +212,13 @@ static OSErr mainXI(void						*unused,
 			short			numSamples;
 			
 			iFileRefI = iFileOpenRead(file);
-			if( iFileRefI != NULL)
+			if (iFileRefI != NULL)
 			{
 				
 				inOutCount = iGetEOF(iFileRefI);
 				
 				theXI = malloc( inOutCount);
-				if( theXI == NULL) myErr = MADNeedMemory;
+				if (theXI == NULL) myErr = MADNeedMemory;
 				else
 				{
 					MAD2KillInstrument( InsHeader, sample);
@@ -313,11 +313,11 @@ static OSErr mainXI(void						*unused,
 						curData->c2spd		= finetune[ (wh->finetune + 128)/16];
 						curData->loopType	= 0;
 						curData->amp		= 8;
-						if( wh->type & 0x10)		// 16 Bits
+						if (wh->type & 0x10)		// 16 Bits
 						{
 							curData->amp = 16;
 						}
-						if( !(wh->type & 0x3))
+						if (!(wh->type & 0x3))
 						{
 							curData->loopBeg = 0;
 							curData->loopSize = 0;
@@ -339,11 +339,11 @@ static OSErr mainXI(void						*unused,
 							sData *curData = sample[ x];
 							
 							curData->data = malloc( curData->size);
-							if( curData->data != NULL)
+							if (curData->data != NULL)
 							{
 								memcpy(curData->data, reader, curData->size);
 								
-								if( curData->amp == 16)
+								if (curData->amp == 16)
 								{
 									short	*tt;
 									long	tL;
@@ -402,11 +402,11 @@ static OSErr mainXI(void						*unused,
 			Ptr	theSound;
 			
 			iFileRefI = iFileOpenRead( file);
-			if( iFileRefI != NULL)
+			if (iFileRefI != NULL)
 			{
 				inOutCount = 50L;
 				theSound = malloc( inOutCount);
-				if( theSound == NULL) myErr = MADNeedMemory;
+				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
 					iRead( inOutCount, theSound, iFileRefI);
@@ -425,7 +425,7 @@ static OSErr mainXI(void						*unused,
 			iFileCreate( file, 'XI  ');
 			iFileRefI = iFileOpenWrite( file);
 			
-			if( iFileRefI != NULL)
+			if (iFileRefI != NULL)
 			{
 				// Write instrument header
 				
@@ -492,7 +492,7 @@ static OSErr mainXI(void						*unused,
 					
 					curData = sample[ u];
 					
-					if( curData->stereo) wh.length = curData->size / 2;
+					if (curData->stereo) wh.length = curData->size / 2;
 					else wh.length = curData->size;
 					
 					inOutCount += wh.length;
@@ -500,7 +500,7 @@ static OSErr mainXI(void						*unused,
 					wh.loopstart	= curData->loopBeg;
 					wh.looplength	= curData->loopSize;
 					
-					if( curData->stereo)
+					if (curData->stereo)
 					{
 						wh.loopstart /=2;
 						wh.looplength /=2;
@@ -509,7 +509,7 @@ static OSErr mainXI(void						*unused,
 					wh.volume		= curData->vol;
 					
 					wh.finetune = -128;
-					if( curData->c2spd > 8757) wh.finetune = 127;
+					if (curData->c2spd > 8757) wh.finetune = 127;
 					else
 					{
 						while( finetune[ (wh.finetune + 128)/16] < curData->c2spd)
@@ -518,8 +518,8 @@ static OSErr mainXI(void						*unused,
 						}
 					}
 					wh.type = 0;
-					if( curData->amp == 16) wh.type += 0x10;
-					if( curData->loopSize > 0) wh.type += 0x3;
+					if (curData->amp == 16) wh.type += 0x10;
+					if (curData->loopSize > 0) wh.type += 0x3;
 					
 				//	wh.panning = curData->panning;
 					wh.relnote = curData->relNote;
@@ -536,19 +536,19 @@ static OSErr mainXI(void						*unused,
 				for( u = 0 ; u < InsHeader->numSamples ; u++)
 				{
 					sData 	*curData = sample[ u];
-					Ptr		tempPtr;
+					char	*tempPtr;
 					long	dstSize;
 					
 					tempPtr = malloc( curData->size);
 						
 					/// WriteData
-					if( tempPtr != NULL)
+					if (tempPtr != NULL)
 					{
 						memcpy(tempPtr, curData->data, curData->size);
 						
 						dstSize = curData->size;
 						
-						if( curData->amp == 16)
+						if (curData->amp == 16)
 						{
 							short	*tt = (short*) tempPtr;
 							long	tL;
@@ -557,7 +557,7 @@ static OSErr mainXI(void						*unused,
 							long	oldV, newV;
 							long	xL;
 							
-							if( curData->stereo)
+							if (curData->stereo)
 							{
 								for( i = 0; i < dstSize; i++) tt[ i] = tt[ i*2];
 								dstSize /= 2;
@@ -574,7 +574,7 @@ static OSErr mainXI(void						*unused,
 							
 							for( tL = 0; tL < dstSize/2; tL++)
 							{
-								*(tt + tL) = Tdecode16( (Ptr) (tt + tL));
+								*(tt + tL) = Tdecode16( (void*) (tt + tL));
 							}
 						}
 						else
@@ -582,9 +582,9 @@ static OSErr mainXI(void						*unused,
 							/* Real to Delta */
 							long	oldV, newV;
 							long	xL;
-							Ptr		tt = ( Ptr) tempPtr;
+							char	*tt = (char*) tempPtr;
 							
-							if( curData->stereo)
+							if (curData->stereo)
 							{
 								for( i = 0; i < dstSize; i++) tt[ i] = tt[ i*2];
 								dstSize /= 2;

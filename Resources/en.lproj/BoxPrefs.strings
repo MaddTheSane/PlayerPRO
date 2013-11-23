@@ -1,0 +1,21 @@
+
+/* Class = "NSBox"; title = "Markers"; ObjectID = "3"; */
+"3.title" = "Markers";
+
+/* Class = "NSButtonCell"; title = "Enable"; ObjectID = "5"; */
+"5.title" = "Enable";
+
+/* Class = "NSButtonCell"; title = "Octave Markers"; ObjectID = "15"; */
+"15.title" = "Octave Markers";
+
+/* Class = "NSButtonCell"; title = "Notes Projection"; ObjectID = "17"; */
+"17.title" = "Notes Projection";
+
+/* Class = "NSFormCell"; title = "Offset:"; ObjectID = "9m8-BJ-tg2"; */
+"9m8-BJ-tg2.title" = "Offset:";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "FJg-qn-miz"; */
+"FJg-qn-miz.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Loop:"; ObjectID = "iKj-uY-4NG"; */
+"iKj-uY-4NG.title" = "Loop:";

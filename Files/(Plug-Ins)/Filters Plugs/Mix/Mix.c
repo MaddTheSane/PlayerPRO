@@ -153,9 +153,9 @@ static void AutoPosition( DialogPtr aDia)
 	do
 	{
 		aH = GetNextDevice( aH);
-		if( aH != NULL)
+		if (aH != NULL)
 		{
-			if( PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
@@ -167,12 +167,12 @@ static void AutoPosition( DialogPtr aDia)
 	while( aH != NULL);
 	
 	Position.h = mouse.h - XSize/2;
-	if( Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
-	else if( Position.h <= ViewRect.left) Position.h = ViewRect.left;
+	if (Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
+	else if (Position.h <= ViewRect.left) Position.h = ViewRect.left;
 
 	Position.v = mouse.v - YSize/2;
-	if( Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
-	else if( Position.v <= ViewRect.top) Position.v = ViewRect.top;
+	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
+	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
 	SetDialogDefaultItem( aDia, 1 );
 	SetDialogCancelItem( aDia, 2 );
@@ -262,7 +262,7 @@ OSErr mainMix( 	sData					*theData,
 	lCntOrErr = 0;
 	GetCurrentScrap( &scrap);
 	anErr = GetScrapFlavorFlags( scrap, soundListRsrc, &flags);
-	if( anErr == noErr) GetScrapFlavorSize( scrap, soundListRsrc, &lCntOrErr);	
+	if (anErr == noErr) GetScrapFlavorSize( scrap, soundListRsrc, &lCntOrErr);	
 	
 	if ( lCntOrErr > 0) {
 		Str255	s1, s2 = "\pUntitled";
@@ -348,8 +348,8 @@ OSErr mainMix( 	sData					*theData,
 						temp = (gp1 * temp1) + (gp2 * temp2);
 						temp = (peak * temp) / 0x10000;
 							
-						if( temp >= 127) temp = 127;	// overflow ?
-						else if( temp <= -128 ) temp = -128;
+						if (temp >= 127) temp = 127;	// overflow ?
+						else if (temp <= -128 ) temp = -128;
 
 						*wresultPtr = temp;
 						worgPtr++;

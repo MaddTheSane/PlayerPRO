@@ -24,7 +24,8 @@
 	return self;
 }
 
--(void)awakeFromNib {
+-(void)awakeFromNib
+{
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[notesCheck setState:[defaults boolForKey:PPBENotesProjection]];
 	[octaveCheck setState:[defaults boolForKey:PPBEOctaveMarkers]];
@@ -33,7 +34,8 @@
 	[offsetField setIntegerValue:[defaults integerForKey:PPBEMarkersOffset]];
 }
 
-- (IBAction)changeMarkerCheck:(id)sender {
+- (IBAction)changeMarkerCheck:(id)sender
+{
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setBool:[notesCheck state] forKey:PPBENotesProjection];
 	[defaults setBool:[octaveCheck state] forKey:PPBEOctaveMarkers];

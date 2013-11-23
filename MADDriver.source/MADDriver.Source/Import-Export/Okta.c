@@ -69,7 +69,7 @@ short FoundNote( short Period)
 	
 	while( NCount < NUMBER_NOTES+1)
     {
-    	if( Period >= MADpitchTable[ NCount]) return( NCount);
+    	if (Period >= MADpitchTable[ NCount]) return( NCount);
     	NCount++;
     }
     
@@ -116,7 +116,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	
 	OKTAHeader = (*(OSType*)theOkta);
 	PPBE32(&OKTAHeader);
-	if( OKTAHeader != 'OKTA') //DebugStr("\pError in OKTA");
+	if (OKTAHeader != 'OKTA') //DebugStr("\pError in OKTA");
 		return MADIncompatibleFile;
 	
 	theOktaPos += 8L;
@@ -174,10 +174,10 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 			case 'PBOD':
 				Okta->pbodlen[ pbod_count] = decode16 (theOktaPos);
 				
-				if( pbod_count == 0) theMAD->header->numChn = (aSect->length - 2L) / (Okta->pbodlen[ pbod_count] * 4L);
+				if (pbod_count == 0) theMAD->header->numChn = (aSect->length - 2L) / (Okta->pbodlen[ pbod_count] * 4L);
 				else
 				{
-					if( theMAD->header->numChn != (aSect->length - 2L) / (Okta->pbodlen[ pbod_count] * 4L))
+					if (theMAD->header->numChn != (aSect->length - 2L) / (Okta->pbodlen[ pbod_count] * 4L))
 					{
 						//DebugStr("\pNon-standard OKTA - numChn");
 						return MADIncompatibleFile;
@@ -238,7 +238,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	
 	for( i = 0; i < MAXTRACK; i++)
 	{
-		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
+		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
 		
 		theMAD->header->chanVol[ i] = MAX_VOLUME;
@@ -253,10 +253,10 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	// INSTRUMENTS
 	
 	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
-	if( !theMAD->fid) return MADNeedMemory;
+	if (!theMAD->fid) return MADNeedMemory;
 	
 	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
-	if( !theMAD->sample) return MADNeedMemory;
+	if (!theMAD->sample) return MADNeedMemory;
 	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
@@ -266,7 +266,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 		for( x = 0; x < 22; x++) theMAD->fid[i].name[x] = instru[i].name[ x];
 		theMAD->fid[i].type = 0;
 		
-		if( instru[i].length > 0)
+		if (instru[i].length > 0)
 		{
 			sData	*curData;
 			
@@ -286,7 +286,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 			curData->relNote	= 0;
 			
 			curData->data 		= (Ptr)malloc( curData->size);
-			if( curData->data == NULL) return MADNeedMemory;
+			if (curData->data == NULL) return MADNeedMemory;
 			
 			memcpy( curData->data, theInstrument[i], curData->size);
 		}
@@ -299,7 +299,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	
 	theMAD->header->numChn /= 2;
 	theMAD->header->numChn *= 2;
-	if( theMAD->header->numChn != TrueTracks) theMAD->header->numChn += 2;
+	if (theMAD->header->numChn != TrueTracks) theMAD->header->numChn += 2;
 	
 	for(i=0; i<MAXPATTERN;i++) theMAD->partition[ i] = NULL;
 	
@@ -321,7 +321,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 			for(z=0; z<theMAD->header->numChn; z++)
 			{
 				aCmd = GetMADCommand( x, z, theMAD->partition[ i]);
-				if( (Ptr) aCmd >= MaxPtr) //Debugger();
+				if ((Ptr) aCmd >= MaxPtr) //Debugger();
 					return MADIncompatibleFile;
 				aCmd->note		= 0xFF;
 				aCmd->ins			= 0;
@@ -329,16 +329,16 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 				aCmd->arg		= 0;
 				aCmd->vol		= 0xFF;
 				
-				if( z < TrueTracks)
+				if (z < TrueTracks)
 				{
 					OktaCmd = (OktaPattern*) (Okta->pbod[i] + x * TrueTracks * 4L + 4L*z);
 					
-					if( OktaCmd->b1 > 0)
+					if (OktaCmd->b1 > 0)
 					{
 						aCmd->note = 	OktaCmd->b1 - 1;
 						aCmd->note += 24;
 						
-						if( aCmd->note < 0 || aCmd->note >= NUMBER_NOTES) aCmd->note = 0xFF;
+						if (aCmd->note < 0 || aCmd->note >= NUMBER_NOTES) aCmd->note = 0xFF;
 						
 						aCmd->ins  = OktaCmd->b2 + 1;
 					}
@@ -362,7 +362,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 							break;
 					}
 					
-					/*	if( i == 0 && x == 0 && z == 0)
+					/*	if (i == 0 && x == 0 && z == 0)
 					 {
 					 aCmd->cmd		= speedE;
 					 aCmd->arg		= Okta->speed;
@@ -409,7 +409,8 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 		//char					tempChar;
 		
 		
-		sbod_count = 0;	pbod_count = 0;
+		sbod_count = 0;
+		pbod_count = 0;
 		
 		MaxPtr		= theOkta + MODSize;
 		theOktaPos	= theOkta;
@@ -417,7 +418,7 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 		OKTAHead = (*(uint32_t*)theOkta);
 		PPBE32(&OKTAHead);
 		
-		if( OKTAHead != 'OKTA') //DebugStr("\pError in OKTA");
+		if (OKTAHead != 'OKTA') //DebugStr("\pError in OKTA");
 			return MADIncompatibleFile;
 		
 		theOktaPos += 8L;
@@ -456,7 +457,7 @@ static OSErr TestOKTAFile( Ptr AlienFile)
 	OSType myOKTA = *(( OSType*) AlienFile);
 	PPBE32(&myOKTA);
 	
-	if( myOKTA == 'OKTA') return noErr;
+	if (myOKTA == 'OKTA') return noErr;
 	else return  MADFileNotSupportedByThisPlug;
 }
 
@@ -492,13 +493,13 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	{
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead( AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				sndSize = iGetEOF( iFileRefI);
 				
 				// ** MEMORY Test Start
 				AlienFile = (Ptr)malloc( sndSize * 2L);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
 				else
@@ -507,15 +508,16 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					
 					AlienFile = (Ptr)malloc( sndSize);
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if( myErr == noErr)
+					if (myErr == noErr)
 					{
 						myErr = TestOKTAFile( AlienFile);
-						if( myErr == noErr)
+						if (myErr == noErr)
 						{
 							myErr = ConvertOKTA2Mad( AlienFile,  sndSize, MadFile, init);
 						}
 					}
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
@@ -524,18 +526,19 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead( AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				sndSize = 1024L;
 				
 				AlienFile = (Ptr)malloc( sndSize);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					if(myErr == noErr) myErr = TestOKTAFile( AlienFile);
 					
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}
@@ -544,20 +547,21 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			
 		case 'INFO':
 			iFileRefI = iFileOpenRead( AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);
 				sndSize = info->fileSize;
 				AlienFile = (Ptr)malloc( sndSize);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if( myErr == noErr)
+					if (myErr == noErr)
 					{
 						myErr = ExtractOKTAInfo( info, AlienFile, sndSize);
 					}
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
 			}

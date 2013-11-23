@@ -68,7 +68,7 @@ static OSErr mainWave(void					*unused,
 			
 			theSound = ConvertWAV( AlienFileFSSpec, &lS, &lE, &sS, &rate, &stereo);
 			
-			if( theSound != 0L)
+			if (theSound != 0L)
 			{
 				myErr = CallRPlaySoundUPP( theSound, GetPtrSize( theSound), 0, 0xFF, sS, lS, lE, rate, stereo);
 				
@@ -90,7 +90,7 @@ static OSErr mainWave(void					*unused,
 			
 			theSound = ConvertWAVCFURL( AlienFileRef, &sndLen, &lS, &lE, &sS, &rate, &stereo);
 			
-			if( theSound != NULL) {
+			if (theSound != NULL) {
 				char longName[PATH_MAX] = {0};
 				char *shortName = NULL;
 				CFStringRef lastPath = CFURLCopyLastPathComponent(AlienFileRef);

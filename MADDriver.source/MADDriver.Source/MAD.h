@@ -166,7 +166,7 @@ typedef struct PatHeader					// HEADER
 {
 	SInt32	size;					// Length of pattern: standard = 64
 	OSType	compMode;				// Compression mode, none = 'NONE'
-	char	name[ 32];
+	char	name[32];
 	SInt32	patBytes;				// Pattern Size in Bytes
 	SInt32	unused2;
 } PatHeader;
@@ -183,7 +183,7 @@ typedef struct PatternHeaderUnicode					// HEADER
 typedef struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
 {									// Pattern = 64 notes to play
 	PatHeader	header;
-	Cmd			Cmds[ 1];
+	Cmd			Cmds[1];
 } PatData;
 
 
@@ -209,7 +209,7 @@ typedef struct sData								// SAMPLE
 	Byte				loopType;
 	Byte				amp;				// 8 or 16 bits
 	char				relNote;
-	char 				name[ 32];			// Sample name
+	char 				name[32];			// Sample name
 	Byte				stereo;				// Stereo
 	Ptr					data;				// Used only in memory, not in files
 } sData;
@@ -226,7 +226,7 @@ typedef struct sData32								// SAMPLE
 	Byte				loopType;
 	Byte				amp;				// 8 or 16 bits
 	char				relNote;
-	char 				name[ 32];			// Sample name
+	char 				name[32];			// Sample name
 	Byte				stereo;				// Stereo
 	UInt32				data;				// Used only in memory, not in files
 } sData32;
@@ -278,7 +278,7 @@ typedef struct EnvRec				// Volume Enveloppe
 
 typedef struct InstrData				// INSTRUMENT
 {
-	char 	name[ 32];			// instrument name
+	char 	name[32];			// instrument name
 	Byte 	type;				// Instrument type = 0
 	Byte	no;					// Instrument number
 	
@@ -291,10 +291,10 @@ typedef struct InstrData				// INSTRUMENT
 	
 	/**/
 	
-	Byte	what[ 96];			// Sample number for all notes
-	EnvRec 	volEnv[ 12];		// Points for volume envelope
-	EnvRec	pannEnv[ 12];		// Points for panning envelope
-	EnvRec	pitchEnv[ 12];		// Points for panning envelope
+	Byte	what[96];			// Sample number for all notes
+	EnvRec 	volEnv[12];			// Points for volume envelope
+	EnvRec	pannEnv[12];		// Points for panning envelope
+	EnvRec	pitchEnv[12];		// Points for panning envelope
 
 	Byte	volSize;			// Number of volume points
 	Byte	pannSize;			// Number of panning points
@@ -369,9 +369,9 @@ typedef struct InstrumentDataUnicode				// INSTRUMENT
 enum
 {
 	EFON		= 1,
-	EFSUSTAIN	= 2,
-	EFLOOP		= 4,
-	EFNOTE		= 8
+	EFSUSTAIN	= 1 << 1,
+	EFLOOP		= 1 << 2,
+	EFNOTE		= 1 << 3
 };
 
 
@@ -394,8 +394,8 @@ typedef struct FXBus
 typedef struct MADSpec
 {
 	OSType		MAD;						// Mad Identification
-	char 		name[ 32];					// Music's name
-	char		infos[ INFOSSIZE];			// Informations & Author name of the music
+	char 		name[32];					// Music's name
+	char		infos[INFOSSIZE];			// Informations & Author name of the music
 	Byte		generalPan;					// General Panning
 	Byte		MultiChanNo;				// Number of chan for multichannel
 	Byte		MultiChan;					// MultiChannel per tracks?
@@ -412,17 +412,17 @@ typedef struct MADSpec
 	Byte 		numPointers;				// Partition length
 	Byte		numInstru;					// Instruments number
 	Byte		numSamples;					// Samples number
-	Byte		oPointers[ MAXPOINTER];		// Partition : Patterns ID List
+	Byte		oPointers[MAXPOINTER];		// Partition : Patterns ID List
 	short		speed;						// Default speed
 	short		tempo;						// Default tempo
-	Byte		chanPan[ MAXTRACK];			// Channel settings, from 0 to 256
-	Byte		chanVol[ MAXTRACK];			// Channel Volume, from 0 to 64
+	Byte		chanPan[MAXTRACK];			// Channel settings, from 0 to 256
+	Byte		chanVol[MAXTRACK];			// Channel Volume, from 0 to 64
 	
 	SInt32		globalEffect[ 10];			// Global Effects IDs
 	Boolean		globalFXActive;				// Global FX Active?
 	
-	SInt32		chanEffect[ MAXTRACK][ 4];	// Channel Effect IDs
-	FXBus		chanBus[ MAXTRACK];
+	SInt32		chanEffect[MAXTRACK][ 4];	// Channel Effect IDs
+	FXBus		chanBus[MAXTRACK];
 } MADSpec;
 
 typedef struct MADSpecUni
@@ -466,7 +466,7 @@ typedef struct FXSets
 	short	id;
 	SInt32	FXID;
 	short	noArg;
-	float	values[ 100];
+	float	values[100];
 	Str63	name;
 } FXSets;	// and then float values
 

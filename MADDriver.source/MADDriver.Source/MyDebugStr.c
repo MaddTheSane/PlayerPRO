@@ -10,9 +10,9 @@
 #include "MAD.h"
 #include "RDriver.h"
 
-static void (__callback *MyDebugFunc)(short, Ptr, Ptr) = NULL;
+static void (__callback *MyDebugFunc)(short, const char*, const char*) = NULL;
 
-void PPRegisterDebugFunc(void (__callback *debugFunc)(short, Ptr, Ptr))
+void PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*))
 {
 	MyDebugFunc = debugFunc;
 }
@@ -22,7 +22,7 @@ void PPRegisterDebugFunc(void (__callback *debugFunc)(short, Ptr, Ptr))
 
 extern void NSLog(CFStringRef format, ...);
 
-void PPDebugStr( short line, Ptr file, Ptr text)
+void PPDebugStr( short line, const char *file, const char *text)
 {
 	if (MyDebugFunc != NULL) {
 		(*MyDebugFunc)(line, file, text);
@@ -35,7 +35,7 @@ void PPDebugStr( short line, Ptr file, Ptr text)
 #else
 #include <stdio.h>
 
-void PPDebugStr( short line, Ptr file, Ptr text)
+void PPDebugStr( short line, const char *file, const char *text)
 {
 	if (MyDebugFunc != NULL) {
 		(*MyDebugFunc)(line, file, text);

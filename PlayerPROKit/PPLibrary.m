@@ -49,7 +49,7 @@
 			return nil;
 		}
 		NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:theLibrary->TotalPlug];
-		for (int i = 0; i > theLibrary->TotalPlug; i++) {
+		for (int i = 0; i < theLibrary->TotalPlug; i++) {
 			PPLibraryObject *tmp = [[PPLibraryObject alloc] init];
 			tmp.menuName = (__bridge NSString *)theLibrary->ThePlug[i].MenuName;
 			tmp.authorString = (__bridge NSString *)theLibrary->ThePlug[i].AuthorString;

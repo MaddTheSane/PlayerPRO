@@ -35,14 +35,14 @@ static OSErr mainNormalize(void					*unused,
 				
 				peak = max (peak, labs(temp));
 				
-				if( StereoMode)
+				if (StereoMode)
 				{
 					SamplePtr++;
 					i++;
 				}
 			}
 			
-			if( peak != 0)
+			if (peak != 0)
 			{
 				peak = ((long)0x80 * 0x10000) / peak;
 				
@@ -53,12 +53,12 @@ static OSErr mainNormalize(void					*unused,
 					
 					temp = (peak * temp) / 0x10000;
 			
-					if( temp > 127) temp = 127;
-					else if( temp < -127 ) temp = -127;
+					if (temp > 127) temp = 127;
+					else if (temp < -127 ) temp = -127;
 					
 					*SamplePtr++ = temp;
 					
-					if( StereoMode)
+					if (StereoMode)
 					{
 						SamplePtr++;
 						i++;
@@ -76,14 +76,14 @@ static OSErr mainNormalize(void					*unused,
 				temp = (long)*SamplePtr++;
 				peak = max (peak, labs(temp));
 				
-				if( StereoMode)
+				if (StereoMode)
 				{
 					SamplePtr++;
 					i++;
 				}
 			}
 			
-			if( peak != 0)
+			if (peak != 0)
 			{
 				peak = ((long)0x8000 * 0x10000) / peak;
 				
@@ -96,7 +96,7 @@ static OSErr mainNormalize(void					*unused,
 			
 					*SamplePtr++ = temp;
 					
-					if( StereoMode)
+					if (StereoMode)
 					{
 						SamplePtr++;
 						i++;

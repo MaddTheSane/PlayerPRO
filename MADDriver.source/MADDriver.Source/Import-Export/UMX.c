@@ -63,7 +63,7 @@ static short FoundNote( short Period)
 		if(note >= NUMBER_NOTES) note = 0xFF;
 	}
 	
-	if( note != 0xFF) note += 24;
+	if (note != 0xFF) note += 24;
 	
 	return note;
 }
@@ -135,15 +135,15 @@ static void AnalyseSignatureMOD( size_t EOFo, UInt32 temp, short *maxInstru, SIn
 			for( i = 0; i < 15; i++)
 			{
 				test += aMOD->fid[i].numWords;
-				if( aMOD->fid[i].fineTune > 0x0F) result = false;
+				if (aMOD->fid[i].fineTune > 0x0F) result = false;
 				
-				if( aMOD->fid[i].numWords > 0)
+				if (aMOD->fid[i].numWords > 0)
 				{
-					if( aMOD->fid[i].loopWords > aMOD->fid[i].numWords) result = false;
+					if (aMOD->fid[i].loopWords > aMOD->fid[i].numWords) result = false;
 				}
 			}
 			
-			if( EOFo != -1)
+			if (EOFo != -1)
 			{
 				SInt32 		PatMax = 0;
 				MODDef		*MODInt;
@@ -152,19 +152,19 @@ static void AnalyseSignatureMOD( size_t EOFo, UInt32 temp, short *maxInstru, SIn
 				
 				for(i=0; i<128; i++)
 				{
-					if( MODInt->oPointers[i] < 0) MODInt->oPointers[i] = 0;
-					if( MODInt->oPointers[i] > 128) MODInt->oPointers[i] = 0;
+					if (MODInt->oPointers[i] < 0) MODInt->oPointers[i] = 0;
+					if (MODInt->oPointers[i] > 128) MODInt->oPointers[i] = 0;
 					
-					if( MODInt->oPointers[i] >= PatMax)	PatMax = MODInt->oPointers[i];
+					if (MODInt->oPointers[i] >= PatMax)	PatMax = MODInt->oPointers[i];
 				}
 				PatMax++;
 				
-				if( PatMax * *PatternSize + test > EOFo) result = false;
+				if (PatMax * *PatternSize + test > EOFo) result = false;
 			}
 			
-			if( test == 0) result = false;
+			if (test == 0) result = false;
 			
-			if( result) *maxInstru 		= 15;
+			if (result) *maxInstru 		= 15;
 			else *maxInstru 			= 0;
 			break;
 	}
@@ -211,11 +211,11 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 	
 	AnalyseSignatureMOD( -1, temp, &maxInstru, &MPatSize, &tracksNo, theMOD);
 	
-	if( maxInstru == 0)
+	if (maxInstru == 0)
 	{
 		return MADFileNotSupportedByThisPlug;	// This file is NOT a Mod file !!!!!! This should NEVER happen !
 	}
-	else if( maxInstru == 15)				// Old Mods format with 15 instruments
+	else if (maxInstru == 15)				// Old Mods format with 15 instruments
 	{
 		MODInt = (MODDef*) ( (Ptr) theMOD - (Ptr) 0x1E0);
 		PatInt = (struct MODPat*) ((Ptr) MODInt->patterns - (Ptr) 0x4);
@@ -223,14 +223,14 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 		PatMax = 0;
 		for(i=0; i<128; i++)
 		{
-			if( MODInt->oPointers[i] < 0) MODInt->oPointers[i] = 0;
-			if( MODInt->oPointers[i] > 128) MODInt->oPointers[i] = 0;
+			if (MODInt->oPointers[i] < 0) MODInt->oPointers[i] = 0;
+			if (MODInt->oPointers[i] > 128) MODInt->oPointers[i] = 0;
 			
-			if( MODInt->oPointers[i] >= PatMax)	PatMax = MODInt->oPointers[i];
+			if (MODInt->oPointers[i] >= PatMax)	PatMax = MODInt->oPointers[i];
 		}
 		PatMax++;
 		
-		//if( MODInt->numPointers > 64) MODInt->numPointers = 64;
+		//if (MODInt->numPointers > 64) MODInt->numPointers = 64;
 		//for(i=64; i<128; i++) MODInt->oPointers[i] = 0;
 		
 		OffSetToSample = (SInt32) 0x258 + PatMax * MPatSize;
@@ -243,10 +243,10 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 		PatMax = 0;
 		for(i=0; i<128; i++)
 		{
-			if( MODInt->oPointers[i] < 0) MODInt->oPointers[i] = 0;
-			if( MODInt->oPointers[i] > 128) MODInt->oPointers[i] = 0;
+			if (MODInt->oPointers[i] < 0) MODInt->oPointers[i] = 0;
+			if (MODInt->oPointers[i] > 128) MODInt->oPointers[i] = 0;
 			
-			if( MODInt->oPointers[i] >= PatMax) PatMax = MODInt->oPointers[i];
+			if (MODInt->oPointers[i] >= PatMax) PatMax = MODInt->oPointers[i];
 		}
 		PatMax++;
 		
@@ -263,28 +263,28 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 		
 		sndSize = ((SInt32) theMOD->fid[i].numWords) * 2L;
 		
-		if( theInstrument[i] + sndSize > MaxPtr)
+		if (theInstrument[i] + sndSize > MaxPtr)
 		{
 			theMOD->fid[i].numWords = MaxPtr - theInstrument[i];
 			theMOD->fid[i].numWords /= 2L;
 			
-			if( theMOD->fid[i].numWords < 0) theMOD->fid[i].numWords = 0;
+			if (theMOD->fid[i].numWords < 0) theMOD->fid[i].numWords = 0;
 			
 			sndSize = ((SInt32) theMOD->fid[i].numWords) * 2L;
 		}
 		
 		OffSetToSample += sndSize;
 		
-		if( theMOD->fid[i].loopWords > 2 && sndSize > 0)
+		if (theMOD->fid[i].loopWords > 2 && sndSize > 0)
 		{
-			if( (SInt32) theMOD->fid[i].loopWord +
+			if ((SInt32) theMOD->fid[i].loopWord +
 			   (SInt32) theMOD->fid[i].loopWords >
 			   (SInt32) theMOD->fid[i].numWords)
 			{
 				theMOD->fid[ i].loopWords =	(SInt32) theMOD->fid[i].numWords -
 				(SInt32) theMOD->fid[i].loopWord;
 				
-				if( (SInt32) theMOD->fid[i].loopWord +
+				if ((SInt32) theMOD->fid[i].loopWord +
 				   (SInt32) theMOD->fid[i].loopWords >
 				   (SInt32) theMOD->fid[i].numWords)
 				{
@@ -306,7 +306,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 	
 	inOutCount = sizeof( MADSpec);
 	theMAD->header = (MADSpec*) calloc( inOutCount, 1);
-	if( theMAD->header == NULL) return MADNeedMemory;
+	if (theMAD->header == NULL) return MADNeedMemory;
 	
 	strlcpy( theMAD->header->infos, "Converted by PlayerPRO UMX Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
@@ -327,11 +327,11 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 	x = 1;
 	for( i = 0; i < MAXTRACK; i++)
 	{
-		if( x > 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
+		if (x > 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
 		x--;
 		
-		if( x == -2) x = 2;
+		if (x == -2) x = 2;
 		
 		theMAD->header->chanVol[ i] = MAX_VOLUME;
 	}
@@ -348,10 +348,10 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 	/////////////////////////////////
 	
 	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
-	if( !theMAD->fid) return MADNeedMemory;
+	if (!theMAD->fid) return MADNeedMemory;
 	
 	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
-	if( !theMAD->sample) return MADNeedMemory;
+	if (!theMAD->sample) return MADNeedMemory;
 	
 	for(i = 0; i < maxInstru; i++)
 	{
@@ -359,7 +359,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 		theMAD->fid[i].type = 0;
 		theMAD->fid[i].volFade = DEFAULT_VOLFADE;
 		
-		if( theMOD->fid[ i].numWords > 0)
+		if (theMOD->fid[ i].numWords > 0)
 		{
 			sData	*curData;
 			
@@ -379,11 +379,11 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 			
 			
 			curData->data 		= (Ptr)malloc( curData->size);
-			if( curData->data == NULL) return MADNeedMemory;
+			if (curData->data == NULL) return MADNeedMemory;
 			
 			memcpy( curData->data, theInstrument[i], curData->size);
 			
-			if( theInstrument[i] + curData->size> MaxPtr) //DebugStr("\pMax Ptr Instru");
+			if (theInstrument[i] + curData->size> MaxPtr) //DebugStr("\pMax Ptr Instru");
 				return MADIncompatibleFile;
 		}
 		else theMAD->fid[ i].numSamples = 0;
@@ -400,7 +400,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 	for(i=0; i<theMAD->header->numPat; i++)
 	{
 		theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * 64L * sizeof( Cmd), 1);
-		if( theMAD->partition[ i] == NULL) return MADNeedMemory;
+		if (theMAD->partition[ i] == NULL) return MADNeedMemory;
 		
 		theMAD->partition[ i]->header.size 		= 64L;
 		theMAD->partition[ i]->header.compMode 	= 'NONE';
@@ -423,37 +423,37 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 									  theMAD->header->numChn,
 									  (Ptr) PatInt);
 				
-				if( (Ptr) n > MaxPtr) //DebugStr("\pMax Ptr GetMODCommand");
+				if ((Ptr) n > MaxPtr) //DebugStr("\pMax Ptr GetMODCommand");
 					return MADIncompatibleFile;
 				
 				aCmd->ins = (n->a&0x10)|(n->c>>4);
 				
 				aCmd->note = FoundNote( (((unsigned short)n->a&0xf)<<8)+n->b);
-				if( aCmd->note == 0xFF && aCmd->ins != 0)
+				if (aCmd->note == 0xFF && aCmd->ins != 0)
 				{
-					if( aCmd->ins != lastIns[ z])
+					if (aCmd->ins != lastIns[ z])
 					{
 						aCmd->note = lastNote[ z];
 					}
 				}
 				
-				if( aCmd->note != 0xFF) lastNote[ z] = aCmd->note;
-				if( aCmd->ins) lastIns[ z] = aCmd->ins;
+				if (aCmd->note != 0xFF) lastNote[ z] = aCmd->note;
+				if (aCmd->ins) lastIns[ z] = aCmd->ins;
 				
 				aCmd->cmd = n->c & 0x0F;
 				
-				if( aCmd->cmd == 0x0A)
+				if (aCmd->cmd == 0x0A)
 				{
-					if( n->d == 0)
+					if (n->d == 0)
 					{
 						aCmd->cmd = 0;
 					}
 				}
 				
-				if( aCmd->cmd == 0x0C)
+				if (aCmd->cmd == 0x0C)
 				{
 					aCmd->vol	= 0x10 + (n->d);
-					if( aCmd->arg > 0x50) aCmd->vol = 0x50;
+					if (aCmd->arg > 0x50) aCmd->vol = 0x50;
 					aCmd->cmd 	= 0;
 					aCmd->arg 	= 0;
 				}
@@ -476,11 +476,11 @@ static SInt32 ConvertSampleC4SPD( Ptr src, size_t srcSize, short amp, SInt32 src
 	Ptr		src8 = src, dst8 = dst;
 	SInt32	x, dstSize;
 	
-	if( dstC4SPD > srcC4SPD)
+	if (dstC4SPD > srcC4SPD)
 	{
-		dstSize = (srcSize * dstC4SPD) / srcC4SPD;
+		dstSize = (SInt32)((srcSize * dstC4SPD) / srcC4SPD);
 		
-		if( amp == 8)
+		if (amp == 8)
 		{
 			for( x = 0; x < dstSize; x++)
 			{
@@ -497,7 +497,7 @@ static SInt32 ConvertSampleC4SPD( Ptr src, size_t srcSize, short amp, SInt32 src
 	}
 	else
 	{
-		if( amp == 8)
+		if (amp == 8)
 		{
 			for( x = 0; x < srcSize; x++)
 			{
@@ -513,7 +513,7 @@ static SInt32 ConvertSampleC4SPD( Ptr src, size_t srcSize, short amp, SInt32 src
 		}
 	}
 	
-	return (srcSize * dstC4SPD) / srcC4SPD;
+	return (SInt32)((srcSize * dstC4SPD) / srcC4SPD);
 }
 
 Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize)
@@ -552,7 +552,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 	InstruSize = 0;
 	for( i = 0; i < maxInstru ; i++)
 	{
-		if( theMAD->fid[ i].numSamples > 0)
+		if (theMAD->fid[ i].numSamples > 0)
 		{
 			SInt32 dstSize;
 			
@@ -560,7 +560,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 			
 			dstSize = theMAD->sample[ i*MAXSAMPLE + 0]->size;
 			
-			if( theMAD->sample[ i*MAXSAMPLE + 0]->c2spd < 7895) dstSize = ( dstSize * 8363L) / theMAD->sample[ i*MAXSAMPLE + 0]->c2spd;
+			if (theMAD->sample[ i*MAXSAMPLE + 0]->c2spd < 7895) dstSize = ( dstSize * 8363L) / theMAD->sample[ i*MAXSAMPLE + 0]->c2spd;
 			
 			InstruSize += dstSize;
 		}
@@ -572,14 +572,14 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 	*PtrSize = 0x43c + InstruSize + theMAD->header->numChn * 64L * theMAD->header->numPat * sizeof( struct MODCom);
 	
 	theMOD = (MODDef*) malloc( *PtrSize + 25000L);
-	if( theMOD == NULL) return NULL;
+	if (theMOD == NULL) return NULL;
 	
 	maxMOD = ((Ptr) theMOD + *PtrSize);
 	
 	theMOD->longFmtSignature = 'M.K.';
-	if( theMAD->header->numChn > 4)
+	if (theMAD->header->numChn > 4)
 	{
-		if( theMAD->header->numChn >= 10)
+		if (theMAD->header->numChn >= 10)
 		{
 			redut[0] = 0x30 + (theMAD->header->numChn / 10);
 			redut[1] = 0x30 + (theMAD->header->numChn - ((theMAD->header->numChn / 10) * 10));
@@ -606,24 +606,24 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 	for(i=0; i<128; i++)
 	{
 		theMOD->oPointers[ i] = theMAD->header->oPointers[ i];
-		if( theMOD->oPointers[ i] == theMAD->header->numPat - 1) CheckGoodMod = true;
+		if (theMOD->oPointers[ i] == theMAD->header->numPat - 1) CheckGoodMod = true;
 	}
-	if( !CheckGoodMod) theMOD->oPointers[ theMOD->numPointers + 1] = theMAD->header->numPat - 1;
+	if (!CheckGoodMod) theMOD->oPointers[ theMOD->numPointers + 1] = theMAD->header->numPat - 1;
 	
 	for(i=0; i<maxInstru; i++)
 	{
-		if( theMAD->fid[ i].numSamples > 0)
+		if (theMAD->fid[ i].numSamples > 0)
 		{
 			sData	*curData = theMAD->sample[ i*MAXSAMPLE + 0];
 			short	temp;
 			
 			for( x = 0; x < 22; x++) theMOD->fid[i].Filename[x] = theMAD->fid[i].name[x];
 			
-			if( curData->size/2L > 0xFFFFUL) theMOD->fid[i].numWords = 0xFFFFUL;
+			if (curData->size/2L > 0xFFFFUL) theMOD->fid[i].numWords = 0xFFFFUL;
 			else theMOD->fid[i].numWords = (short) (curData->size / 2L);
 			
 			temp = (curData->c2spd - NOFINETUNE) / 50;
-			if( temp < 0) temp += 16;
+			if (temp < 0) temp += 16;
 			
 			theMOD->fid[i].fineTune		= temp;
 			
@@ -631,7 +631,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 			theMOD->fid[i].loopWord 	= curData->loopBeg / 2;
 			theMOD->fid[i].loopWords 	= curData->loopSize / 2;
 			
-			if( curData->c2spd > 8757 || curData->c2spd < 7895)
+			if (curData->c2spd > 8757 || curData->c2spd < 7895)
 			{
 				theMOD->fid[i].fineTune = 0;
 				theMOD->fid[i].loopWord = ((curData->loopBeg / 2L) * 8363) / curData->c2spd;
@@ -659,21 +659,21 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 	{
 		sData	*curData = theMAD->sample[ i*MAXSAMPLE + 0];
 		
-		if( theMAD->fid[ i].numSamples > 0)
+		if (theMAD->fid[ i].numSamples > 0)
 		{
 			destPtr = (Ptr) ((uintptr_t) theMOD + (uintptr_t) OffSetToSample + (uintptr_t) InstruSize);
 			
-			if( curData->c2spd > 8757 || curData->c2spd < 7895)
+			if (curData->c2spd > 8757 || curData->c2spd < 7895)
 			{
 				ConvertSampleC4SPD( theInstrument[ i], curData->size, curData->amp, curData->c2spd, destPtr, 8363);
 			}
 			else memcpy( destPtr, theInstrument[ i], (long) (theMOD->fid[i].numWords) * 2L);
-			if( destPtr + (theMOD->fid[i].numWords) * 2L > maxMOD) //DebugStr("\pOut");
+			if (destPtr + (theMOD->fid[i].numWords) * 2L > maxMOD) //DebugStr("\pOut");
 				return NULL;
 			
-			if( theMOD->fid[i].numWords > 0)
+			if (theMOD->fid[i].numWords > 0)
 			{
-				if( curData->amp == 16)
+				if (curData->amp == 16)
 				{
 					Convert16to8(destPtr,
 								 destPtr,
@@ -684,7 +684,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 					theMOD->fid[i].numWords /= 2;
 				}
 				
-				if( curData->stereo)
+				if (curData->stereo)
 				{
 					for( x = 0 ; x < (theMOD->fid[ i].numWords) * 2L; x+=2)
 					{
@@ -718,7 +718,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 			{
 				//short		note;
 				
-				if( x < theMAD->partition[ i]->header.size)
+				if (x < theMAD->partition[ i]->header.size)
 				{
 					aCmd 	= GetMADCommand(x,
 											z,
@@ -732,21 +732,21 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 											theMAD->header->numChn,
 											(Ptr) theMOD->patterns);
 				
-				if( (Ptr) n > maxMOD) //DebugStr("\pOut");
+				if ((Ptr) n > maxMOD) //DebugStr("\pOut");
 					return NULL;
-				if( (Ptr) n < (Ptr) theMOD) //DebugStr("\pOut");
+				if ((Ptr) n < (Ptr) theMOD) //DebugStr("\pOut");
 					return NULL;
 				
 				n->a = aCmd->ins & 0xF0;
 				n->c = (aCmd->ins & 0x0F)<<4;
 				
-				if( aCmd->note != 0xFF && aCmd->note != 0xFE)
+				if (aCmd->note != 0xFF && aCmd->note != 0xFE)
 				{
 					short curNote;
 					
-					if( aCmd->ins != 0)
+					if (aCmd->ins != 0)
 					{
-						if( theMAD->fid[ aCmd->ins-1].numSamples > 0)
+						if (theMAD->fid[ aCmd->ins-1].numSamples > 0)
 							curNote = aCmd->note + theMAD->sample[ (aCmd->ins-1)*MAXSAMPLE + 0]->relNote;
 						else 	curNote = aCmd->note;
 					}
@@ -754,7 +754,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 					
 					curNote -= 24;
 					
-					if( curNote > 0 && curNote < 65) curNote = MODTuning[ curNote];
+					if (curNote > 0 && curNote < 65) curNote = MODTuning[ curNote];
 					else curNote = 0;
 					
 					n->b = curNote & 0xFF;
@@ -766,9 +766,9 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 					n->a = n->a + 0x0;
 				}
 				
-				if( aCmd->vol != 0xFF && aCmd->cmd == 0 && aCmd->arg == 0)
+				if (aCmd->vol != 0xFF && aCmd->cmd == 0 && aCmd->arg == 0)
 				{
-					if( aCmd->vol >= 0x10 && aCmd->vol <= 0x50)
+					if (aCmd->vol >= 0x10 && aCmd->vol <= 0x50)
 					{
 						n->c = n->c + 0xC;
 						n->d = aCmd->vol - 0x10;
@@ -785,7 +785,7 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 	
 	// Default speed & tempo
 	
-	if( theMAD->header->tempo != 125 || theMAD->header->speed != 6)
+	if (theMAD->header->tempo != 125 || theMAD->header->speed != 6)
 	{
 		n 	= GetMODCommand(0,
 							theMAD->header->numChn-1,
@@ -793,9 +793,9 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 							theMAD->header->numChn,
 							(Ptr) theMOD->patterns);
 		
-		if( (Ptr) n > maxMOD) //DebugStr("\pOut");
+		if ((Ptr) n > maxMOD) //DebugStr("\pOut");
 			return NULL;
-		if( (Ptr) n < (Ptr) theMOD) //DebugStr("\pOut");
+		if ((Ptr) n < (Ptr) theMOD) //DebugStr("\pOut");
 			return NULL;
 		
 		n->a = 0;
@@ -810,9 +810,9 @@ Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize
 							theMAD->header->numChn,
 							(Ptr) theMOD->patterns);
 		
-		if( (Ptr) n > maxMOD) //DebugStr("\pOut");
+		if ((Ptr) n > maxMOD) //DebugStr("\pOut");
 			return NULL;
-		if( (Ptr) n < (Ptr) theMOD) //DebugStr("\pOut");
+		if ((Ptr) n < (Ptr) theMOD) //DebugStr("\pOut");
 			return NULL;
 		
 		n->a = 0;
@@ -931,13 +931,13 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	{
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead( AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				sndSize = iGetEOF( iFileRefI);
 				
 				// ** MEMORY Test Start
 				AlienFile = (Ptr)malloc( sndSize * 2L);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
 				else
@@ -948,7 +948,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					iRead( sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestUMXFile( AlienFile, sndSize);
-					if( myErr == noErr)
+					if (myErr == noErr)
 					{
 						myErr = PPConvertMod2Mad( AlienFile, sndSize, MadFile, init);
 					}
@@ -962,12 +962,12 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead( AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = (Ptr)malloc( sndSize);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					iRead( sndSize, AlienFile, iFileRefI);
@@ -985,21 +985,21 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			
 		case 'INFO':
 			iFileRefI = iFileOpenRead( AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);
 				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = (Ptr)malloc( sndSize);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					iRead( sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestUMXFile( AlienFile, info->fileSize);
 					
-					if( !myErr) myErr = ExtractUMXInfo( info, AlienFile);
+					if (!myErr) myErr = ExtractUMXInfo( info, AlienFile);
 					
 					free( AlienFile);	AlienFile = NULL;
 				}

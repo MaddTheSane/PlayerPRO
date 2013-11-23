@@ -8,9 +8,7 @@
 
 #import "PPDocument.h"
 #import <PlayerPROKit/PlayerPROKit.h>
-#import <QTKit/QTKit.h>
-#import <QTKit/QTExportSession.h>
-#import <QTKit/QTExportOptions.h>
+#import <AVFoundation/AVFoundation.h>
 #import "PPApp_AppDelegate.h"
 #import "UserDefaultKeys.h"
 #import "PPExportObject.h"
@@ -20,7 +18,6 @@
 @interface PPDocument ()
 @property (strong) PPDriver *theDriver;
 @property (strong) PPMusicObjectWrapper *theMusic;
-@property (weak) PPLibrary *globalLib;
 @property MADDriverSettings exportSettings;
 @end
 
@@ -62,12 +59,11 @@
 	self.theMusic.madAuthor = authorString;
 	[self didChangeValueForKey:@"authorString"];
 }
-	
+
 - (id)init
 {
-    self = [super init];
-    if (self) {
-		self.globalLib = [[NSApp delegate] madLib];
+	self = [super init];
+	if (self) {
 		MADDriverSettings init;
 		{
 			MADGetBestDriver(&init);
@@ -94,30 +90,30 @@
 			init.driverMode = [defaults integerForKey:PPSoundDriver];
 			init.repeatMusic = FALSE;
 		}
-
-		self.theDriver = [[PPDriver alloc] initWithLibrary:self.globalLib settings:&init];
+		
+		self.theDriver = [[PPDriver alloc] initWithLibrary:globalMadLib settings:&init];
 		
 		self.exportController = [[PPSoundSettingsViewController alloc] init];
 		self.exportController.delegate = self;
 		
 		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 		[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
-
-    }
-    return self;
+		
+	}
+	return self;
 }
 
 - (NSString *)windowNibName
 {
-    // Override returning the nib file name of the document
-    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-    return @"PPDocument";
+	// Override returning the nib file name of the document
+	// If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
+	return @"PPDocument";
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
-    [super windowControllerDidLoadNib:aController];
-    // Add any code here that needs to be executed once the windowController has loaded the document's window.
+	[super windowControllerDidLoadNib:aController];
+	// Add any code here that needs to be executed once the windowController has loaded the document's window.
 }
 
 - (NSFileWrapper *)fileWrapperOfType:(NSString *)typeName error:(NSError **)outError
@@ -148,7 +144,7 @@
 
 + (BOOL)autosavesInPlace
 {
-    return YES;
+	return YES;
 }
 
 - (void)MADDriverWithPreferences
@@ -241,24 +237,21 @@
 
 #endif
 
-//Yes, the pragma pack is needed
-//otherwise the data will be improperly mapped.
-#pragma pack(push, 2)
-struct Float80i {
-	SInt16  exp;
-	UInt32  man[2];
-};
-#pragma pack(pop)
-
 static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 {
+	//Yes, the pragma pack is needed
+	//otherwise the data will be improperly mapped.
+#pragma pack(push, 2)
 	union {
 		extended80 shortman;
-		struct Float80i intman;
+		struct Float80i {
+			SInt16  exp;
+			UInt32  man[2];
+		} intman;
 	} toreturn;
+#pragma pack(pop)
 	
 	unsigned int shift, exponent;
-	
 	
 	for(shift = 0U; (theNum >> (31 - shift)) == 0U; ++shift)
 		;
@@ -289,31 +282,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	NSData *nameData;
 	NSData *infoData;
 	
-	{
-#if 0
-		TextChunk *nameChunk;
-		NSInteger macRomanNameLength = 0;
-		NSData *macRomanNameData = [musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
-		macRomanNameLength = [macRomanNameData length];
-		BOOL isPadded = (macRomanNameLength & 1);
-		NSInteger nameChunkLen = sizeof(TextChunk) + macRomanNameLength;
-		
-		if (!isPadded) {
-			nameChunkLen--;
-		}
-		
-		nameChunk = calloc(nameChunkLen, 1);
-		char *firstChar;
-		nameChunk->ckID = NameID;
-		PPBE32(&nameChunk->ckID);
-		nameChunk->ckSize = 1 + macRomanNameLength;
-		PPBE32(&nameChunk->ckSize);
-		nameChunk->text[0] = macRomanNameLength;
-		firstChar = &nameChunk->text[1];
-		memcpy(firstChar, [macRomanNameData bytes], macRomanNameLength);
-		nameData = [NSData dataWithBytes:nameChunk length:nameChunkLen];
-		free(nameChunk);
-#else
+	@autoreleasepool {
 		ChunkHeader nameChunk;
 		NSInteger macRomanNameLength = 0;
 		NSData *macRomanNameData = [self.musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
@@ -327,7 +296,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		nameChunk.ckID = NameID;
 		PPBE32(&nameChunk.ckID);
 		
-		NSMutableData *tmpNameDat = [NSMutableData dataWithBytes:&nameChunk length:sizeof(ChunkHeader)];
+		NSMutableData *tmpNameDat = [[NSMutableData alloc] initWithBytes:&nameChunk length:sizeof(ChunkHeader)];
 		[tmpNameDat appendBytes:&pStrLen length:1];
 		[tmpNameDat appendData:macRomanNameData];
 		
@@ -336,45 +305,20 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			[tmpNameDat appendBytes:&padbyte length:1];
 		}
 		nameData = tmpNameDat;
-#endif
-	}
-	
-	{
-#if 0
-		ApplicationSpecificChunk *infoChunk;
-		NSInteger macRomanInfoLength = 0;
-		NSData *macRomanInfoData = [musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
-		macRomanInfoLength = [macRomanInfoData length];
-		BOOL isPadded = (macRomanInfoLength & 1);
-		NSInteger infoChunkLen = sizeof(ApplicationSpecificChunk) + macRomanInfoLength;
 		
-		if (!isPadded) {
-			infoChunkLen--;
-		}
 		
-		infoChunk = calloc(infoChunkLen, 0);
-		infoChunk->applicationSignature = CommentID;
-		PPBE32(&infoChunk->applicationSignature);
-		infoChunk->ckID = ApplicationSpecificID;
-		PPBE32(&infoChunk->ckID);
-		infoChunk->ckSize = macRomanInfoLength + 1;
-		PPBE32(&infoChunk->ckSize);
-		memcpy(infoChunk->data, [macRomanInfoData bytes], macRomanInfoLength);
-		infoData = [NSData dataWithBytes:infoChunk length:infoChunkLen];
-		free(infoChunk);
-#else
 		ChunkHeader infoChunk;
 		NSInteger macRomanInfoLength = 0;
 		NSData *macRomanInfoData = [self.musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 		macRomanInfoLength = [macRomanInfoData length];
-		BOOL isPadded = (macRomanInfoLength & 1);
+		isPadded = (macRomanInfoLength & 1);
 		infoChunk.ckSize = (SInt32)(macRomanInfoLength + 1);
-		char pStrLen = macRomanInfoLength;
+		pStrLen = macRomanInfoLength;
 		PPBE32(&infoChunk.ckSize);
 		
 		infoChunk.ckID = CommentID;
 		PPBE32(&infoChunk.ckID);
-		NSMutableData *tmpInfoDat = [NSMutableData dataWithBytes:&infoChunk length:sizeof(ChunkHeader)];
+		NSMutableData *tmpInfoDat = [[NSMutableData alloc] initWithBytes:&infoChunk length:sizeof(ChunkHeader)];
 		[tmpInfoDat appendBytes:&pStrLen length:1];
 		[tmpInfoDat appendData:macRomanInfoData];
 		
@@ -384,7 +328,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		}
 		
 		infoData = tmpInfoDat;
-#endif
 	}
 	
 	NSMutableData *returnData = [[NSMutableData alloc] initWithCapacity:dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + sizeof(ContainerChunk) + [nameData length] + [infoData length]];
@@ -465,7 +408,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (NSData *)getSoundData:(MADDriverSettings*)theSet
 {
-	PPDriver *theRec = [[PPDriver alloc] initWithLibrary:_globalLib settings:theSet];
+	PPDriver *theRec = [[PPDriver alloc] initWithLibrary:globalMadLib settings:theSet];
 	
 	if (theRec == nil) {
 #if 0
@@ -482,15 +425,10 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	
 	Ptr soundPtr = NULL;
 	NSUInteger full = [theRec audioLength];
-	if (theSet->outPutBits == 8) {
-		//full = audLen;
-	}else if (theSet->outPutBits == 16) {
+	if (theSet->outPutBits == 16) {
 		full *= 2;
 	} else if (theSet->outPutBits == 20 || theSet->outPutBits == 24 ) {
 		full *= 3;
-	} else {
-		//This is just to make the Static analyzer happy
-		//full = MADAudioLength(theRec);
 	}
 	
 	switch (theSet->outPutMode) {
@@ -508,7 +446,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	}
 	
 	[theRec play];
-
+	
 	NSMutableData *mutData = [[NSMutableData alloc] init];
 	soundPtr = calloc(full, 1);
 	
@@ -541,14 +479,17 @@ typedef struct {
 			case -1:
 			{
 				PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:outURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
+					NSData *saveData;
 					if (errStr) {
 						*errStr = nil;
 					}
-					NSData *saveData = [self getSoundData:&exportSettings];
+					@autoreleasepool {
+						saveData = [self getSoundData:&exportSettings];
+					}
+					[_theDriver endExport];
 					if (!saveData) {
 						return MADNeedMemory;
 					}
-					[_theDriver endExport];
 					return [saveData writeToURL:theURL atomically:YES] ? noErr : MADWritingErr;
 				}];
 				[[NSApp delegate] addExportObject:expObj];
@@ -565,53 +506,79 @@ typedef struct {
 					if (!saveData) {
 						return MADNeedMemory;
 					}
+					NSArray *metadataInfo;
 					NSString *oldMusicName = self.musicName;
 					NSString *oldMusicInfo = self.musicInfo;
 					NSURL *oldURL = [self fileURL];
 					[_theDriver endExport];
 					NSError *expErr = nil;
-#if PPEXPORT_CREATE_TMP_AIFF
 					NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
 					[saveData writeToURL:tmpURL atomically:NO];
-					QTMovie *exportMov = [[QTMovie alloc] initWithURL:tmpURL error:&expErr];
-					if (exportMov) {
-						[exportMov setAttribute:oldMusicName forKey:QTMovieDisplayNameAttribute];
-						[exportMov setAttribute:oldMusicInfo forKey:QTMovieCopyrightAttribute];
-					}
-#else
-					//Attempts of using data directly have resulted in internal assertion failures in the export session initialization code
-					QTDataReference *dataRef = [[QTDataReference alloc] initWithReferenceToData:saveData name:oldMusicName MIMEType:@"audio/aiff"];
+					AVURLAsset *exportMov = [AVAsset assetWithURL:tmpURL];
 					
-					QTMovie *exportMov = [[QTMovie alloc] initWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:dataRef, QTMovieDataReferenceAttribute, @NO, QTMovieOpenAsyncOKAttribute, @YES, QTMovieDontInteractWithUserAttribute, @NO, QTMovieOpenForPlaybackAttribute, oldMusicName, QTMovieDisplayNameAttribute, oldMusicInfo, QTMovieCopyrightAttribute, nil] error:&expErr];
-#endif
+					{
+						AVMutableMetadataItem *titleName = [[AVMutableMetadataItem alloc] init];
+						[titleName setKeySpace:AVMetadataKeySpaceCommon];
+						[titleName setKey:AVMetadataCommonKeyTitle];
+						[titleName setValue:oldMusicName];
+						
+						AVMutableMetadataItem *dataInfo = [[AVMutableMetadataItem alloc] init];
+						[titleName setKeySpace:AVMetadataKeySpaceCommon];
+						[titleName setKey:AVMetadataCommonKeySoftware];
+						[titleName setValue:@"PlayerPRO 6"];
+						
+						AVMutableMetadataItem *musicInfoQTUser = [[AVMutableMetadataItem alloc] init];
+						[musicInfoQTUser setKeySpace:AVMetadataKeySpaceQuickTimeUserData];
+						[musicInfoQTUser setKey:AVMetadataQuickTimeUserDataKeyInformation];
+						[musicInfoQTUser setValue:oldMusicInfo];
+						
+						AVMutableMetadataItem *musicInfoiTunes = [[AVMutableMetadataItem alloc] init];
+						[musicInfoiTunes setKeySpace:AVMetadataKeySpaceiTunes];
+						[musicInfoiTunes setKey:AVMetadataiTunesMetadataKeyUserComment];
+						[musicInfoiTunes setValue:oldMusicInfo];
+						
+						AVMutableMetadataItem *musicInfoQTMeta = [[AVMutableMetadataItem alloc] init];
+						[musicInfoQTMeta setKeySpace:AVMetadataKeySpaceQuickTimeMetadata];
+						[musicInfoQTMeta setKey:AVMetadataQuickTimeMetadataKeyInformation];
+						[musicInfoQTMeta setValue:oldMusicInfo];
+						
+						
+						metadataInfo = @[titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
+					}
+					
 					oldMusicInfo = nil;
 					saveData = nil;
 					if (!exportMov) {
 						if (errStr) {
 							*errStr = [[NSString alloc] initWithFormat:@"Init Failed for %@, error: %@", oldMusicName, [expErr localizedDescription]];
 						}
-#if PPEXPORT_CREATE_TMP_AIFF
 						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-#endif
 						return MADWritingErr;
 					}
 					
-					QTExportSession *session = [[QTExportSession alloc] initWithMovie:exportMov exportOptions:[QTExportOptions exportOptionsWithIdentifier:QTExportOptionsAppleM4A] outputURL:theURL error:&expErr];
+					AVAssetExportSession *session = [[AVAssetExportSession alloc] initWithAsset:exportMov presetName:AVAssetExportPresetAppleM4A];
 					if (!session) {
 						if (errStr) {
 							*errStr = [[NSString alloc] initWithFormat:@"Export session creation for %@ failed, error: %@", oldMusicName, [expErr localizedDescription]];
 						}
-#if PPEXPORT_CREATE_TMP_AIFF
 						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-#endif
 						
 						return MADWritingErr;
 					}
-					[session run];
-					BOOL didFinish = [session waitUntilFinished:&expErr];
-#if PPEXPORT_CREATE_TMP_AIFF
+					[session setOutputURL:theURL];
+					[session setOutputFileType:AVFileTypeAppleM4A];
+					session.metadata = metadataInfo;
+					metadataInfo = nil;
+					dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create(0);
+					[session exportAsynchronouslyWithCompletionHandler:^{
+						dispatch_semaphore_signal(sessionWaitSemaphore);
+					}];
+					do {
+						dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
+					} while( [session status] < AVAssetExportSessionStatusCompleted );
+					
+					BOOL didFinish = [session status] == AVAssetExportSessionStatusCompleted;
 					[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-#endif
 					
 					if (didFinish) {
 						return noErr;
@@ -634,7 +601,7 @@ typedef struct {
 	
 	free(contextInfo);
 }
-	
+
 - (void)showExportSettingsWithExportType:(NSInteger)expType URL:(NSURL*)theURL
 {
 	MADGetBestDriver(&exportSettings);
@@ -650,7 +617,6 @@ typedef struct {
 
 - (IBAction)exportMusicAs:(id)sender
 {
-	//TODO: show the save dialog on the document window, not the whole app!
 	NSInteger tag = [sender tag];
 	[_theDriver beginExport];
 	
@@ -669,11 +635,14 @@ typedef struct {
 			}
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as AIFF audio"];
-			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-				[self showExportSettingsWithExportType:-1 URL:[savePanel URL]];
-			} else {
-				[_theDriver endExport];
-			}
+			[savePanel beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSInteger result) {
+				if (result == NSFileHandlingPanelOKButton) {
+					[self showExportSettingsWithExportType:-1 URL:[savePanel URL]];
+				} else {
+					[_theDriver endExport];
+				}
+			}];
+			
 		}
 			break;
 			
@@ -689,11 +658,13 @@ typedef struct {
 			}
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as MPEG-4 Audio"];
-			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-				[self showExportSettingsWithExportType:-2 URL:[savePanel URL]];
-			} else {
-				[_theDriver endExport];
-			}
+			[savePanel beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSInteger result) {
+				if (result == NSFileHandlingPanelOKButton) {
+					[self showExportSettingsWithExportType:-2 URL:[savePanel URL]];
+				} else {
+					[_theDriver endExport];
+				}
+			}];
 		}
 			break;
 			
@@ -708,18 +679,22 @@ typedef struct {
 			}
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as MADK"];
-			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-				PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
-					return [_theMusic exportMusicToURL:theURL];
-				}];
-				[[NSApp delegate] addExportObject:expObj];
-			}
+			[savePanel beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSInteger result) {
+				if (result == NSFileHandlingPanelOKButton) {
+					PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
+						return [_theMusic exportMusicToURL:theURL];
+					}];
+					[[NSApp delegate] addExportObject:expObj];
+				} else {
+					[_theDriver endExport];
+				}
+			}];
 		}
 			break;
 			
 		default:
 		{
-			if (tag > [_globalLib pluginCount] || tag < 0) {
+			if (tag > [globalMadLib pluginCount] || tag < 0) {
 				NSBeep();
 				[_theDriver endExport];
 #if 0
@@ -731,7 +706,7 @@ typedef struct {
 				return;
 			}
 			NSSavePanel *savePanel = [NSSavePanel savePanel];
-			PPLibraryObject *tmpObj = [_globalLib pluginAtIndex:tag];
+			PPLibraryObject *tmpObj = [globalMadLib pluginAtIndex:tag];
 			[savePanel setAllowedFileTypes:tmpObj.UTItypes];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
@@ -740,19 +715,36 @@ typedef struct {
 			}
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", tmpObj.menuName]];
-			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-				PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
-					OSErr theErr = [_theMusic exportMusicToURL:theURL format:tmpObj.plugType library:_globalLib];
+			[savePanel beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSInteger result) {
+				if (result == NSFileHandlingPanelOKButton) {
+					PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
+						OSErr theErr = [_theMusic exportMusicToURL:theURL format:tmpObj.plugType library:globalMadLib];
+						[_theDriver endExport];
+						return theErr;
+					}];
+					[[NSApp delegate] addExportObject:expObj];
+				} else {
 					[_theDriver endExport];
-					return theErr;
-				}];
-				[[NSApp delegate] addExportObject:expObj];
-			} else {
-				[_theDriver endExport];
-			}
+				}
+			}];
 		}
 			break;
 	}
+}
+
+- (IBAction)showBoxEditor:(id)sender
+{
+	
+}
+
+- (IBAction)showClassicEditor:(id)sender
+{
+	
+}
+
+- (IBAction)showDigitalEditor:(id)sender
+{
+	
 }
 
 - (IBAction)okayExportSettings:(id)sender {

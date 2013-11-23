@@ -1,0 +1,21 @@
+
+/* Class = "NSBox"; title = "Files"; ObjectID = "3"; */
+"3.title" = "Files";
+
+/* Class = "NSButtonCell"; title = "Automatic MAD1 compression for patterns"; ObjectID = "5"; */
+"5.title" = "Automatic MAD1 compression for patterns";
+
+/* Class = "NSButtonCell"; title = "Add extension to file names"; ObjectID = "7"; */
+"7.title" = "Add extension to file names";
+
+/* Class = "NSButtonCell"; title = "Don't load Mixer settings from music files"; ObjectID = "9"; */
+"9.title" = "Don't load Mixer settings from music files";
+
+/* Class = "NSBox"; title = "Oscilloscope"; ObjectID = "19"; */
+"19.title" = "Oscilloscope";
+
+/* Class = "NSButtonCell"; title = "Draw lines between points"; ObjectID = "21"; */
+"21.title" = "Draw lines between points";
+
+/* Class = "NSButtonCell"; title = "Automatic MAD1 compression for patterns"; ObjectID = "ce2-8T-E4h"; */
+"ce2-8T-E4h.title" = "Automatic MAD1 compression for patterns";

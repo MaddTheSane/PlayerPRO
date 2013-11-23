@@ -51,7 +51,7 @@ void AddLoopToSndHandle( Handle sound, long Start, long End)
 	{
 		case cmpSH:
 			CmpHeader = (CmpSoundHeader*) header;
-			if( CmpHeader->sampleSize == 16) { Start /= 2; End /= 2; }
+			if (CmpHeader->sampleSize == 16) { Start /= 2; End /= 2; }
 			
 			CmpHeader->loopStart	= Start;
 			CmpHeader->loopEnd		= End;
@@ -59,7 +59,7 @@ void AddLoopToSndHandle( Handle sound, long Start, long End)
 
 		case extSH:
 			ExtHeader = (ExtSoundHeader*) header;
-			if( ExtHeader->sampleSize == 16) { Start /= 2; End /= 2; }
+			if (ExtHeader->sampleSize == 16) { Start /= 2; End /= 2; }
 			
 			ExtHeader->loopStart	= Start;
 			ExtHeader->loopEnd		= End;
@@ -133,11 +133,11 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 			*loopStart = CmpHeader->loopStart;
 			*loopEnd = CmpHeader->loopEnd;
 			*sampleSize = CmpHeader->sampleSize;
-			if( numChannels == 2) *stereo = true;
+			if (numChannels == 2) *stereo = true;
 			else *stereo = false;
 			
-			if( sampleRate != NULL)	*sampleRate	= CmpHeader->sampleRate;
-			if( baseFreq != NULL) 	*baseFreq 	= CmpHeader->baseFrequency;
+			if (sampleRate != NULL)	*sampleRate	= CmpHeader->sampleRate;
+			if (baseFreq != NULL) 	*baseFreq 	= CmpHeader->baseFrequency;
 			
 			MusSize = (*CmpHeader).numFrames;
 			
@@ -166,7 +166,7 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 				inputFormat.reserved = 0;
 			
 				outputFormat = inputFormat;
-				if( *sampleSize == 8) outputFormat.format = kOffsetBinary;
+				if (*sampleSize == 8) outputFormat.format = kOffsetBinary;
 				else outputFormat.format = k16BitBigEndianFormat;
 			
 				err = SoundConverterOpen(&inputFormat, &outputFormat, &sc);
@@ -180,7 +180,7 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 				inputFrames = MusSize;
 			
 				dstPtr = NewPtr( inputFrames * numChannels * (*sampleSize/8) * cp.samplesPerPacket);
-				if( dstPtr == NULL)
+				if (dstPtr == NULL)
 				{
 					DisposePtr( soundPtr);
 					return NULL;
@@ -196,7 +196,7 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 				if (err != noErr)
 					DebugStr("\pEnd Conversion failed");
 			
-				if( outputBytes != 0) Debugger();
+				if (outputBytes != 0) Debugger();
 			
 				err = SoundConverterClose(sc);
 				if (err != noErr)
@@ -218,26 +218,26 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 			*loopEnd = ExtHeader->loopEnd;
 			*sampleSize = ExtHeader->sampleSize;
 			
-			if( sampleRate != NULL)	*sampleRate	= ExtHeader->sampleRate;
-			if( baseFreq != NULL) 	*baseFreq 	= ExtHeader->baseFrequency;
+			if (sampleRate != NULL)	*sampleRate	= ExtHeader->sampleRate;
+			if (baseFreq != NULL) 	*baseFreq 	= ExtHeader->baseFrequency;
 			
-			if( numChannels == 2) *stereo = true;
+			if (numChannels == 2) *stereo = true;
 			else *stereo = false;
 			
-			if( *stereo) MusSize *= 2;
+			if (*stereo) MusSize *= 2;
 			
-			if( *sampleSize == 16)
+			if (*sampleSize == 16)
 			{
 				MusSize *= 2;
 				*loopStart *= 2;
 				*loopEnd *= 2;
 			}
 			
-			if( numChannels == 1) BlockMoveData( ExtHeader->sampleArea, soundPtr, MusSize);
-			else if( numChannels == 2) BlockMoveData( ExtHeader->sampleArea, soundPtr, MusSize);
+			if (numChannels == 1) BlockMoveData( ExtHeader->sampleArea, soundPtr, MusSize);
+			else if (numChannels == 2) BlockMoveData( ExtHeader->sampleArea, soundPtr, MusSize);
 			else
 			{
-				if( *sampleSize == 8)
+				if (*sampleSize == 8)
 				{
 					for( i = 0; i < MusSize; i ++)
 					{
@@ -263,22 +263,22 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 			*loopStart = header->loopStart;
 			*loopEnd = header->loopEnd;
 			
-			if( sampleRate != NULL)	*sampleRate	= header->sampleRate;
-			if( baseFreq != NULL) 	*baseFreq 	= header->baseFrequency;
+			if (sampleRate != NULL)	*sampleRate	= header->sampleRate;
+			if (baseFreq != NULL) 	*baseFreq 	= header->baseFrequency;
 			
 			MusSize = header->length;
 			BlockMoveData( (*header).sampleArea, soundPtr, MusSize);
 			break;
 	}
 	
-	if( *sampleSize == 8)
+	if (*sampleSize == 8)
 	{
 		ConvertInstrumentIn( (Byte*) soundPtr, MusSize);
 	}
 	
 	SetPtrSize( soundPtr, MusSize);
 	
-	if( *loopEnd - *loopStart < 4) { *loopEnd = 0;	*loopStart = 0;}
+	if (*loopEnd - *loopStart < 4) { *loopEnd = 0;	*loopStart = 0;}
 	
 	return soundPtr;
 }
@@ -287,7 +287,7 @@ OSErr TestSND( short *soundPtr)
 {
 	short oldSound = *soundPtr;
 	MOT16(&oldSound);
-	if( oldSound == 1 || oldSound == 2) return noErr;
+	if (oldSound == 1 || oldSound == 2) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -315,19 +315,19 @@ OSErr main(		OSType					order,						// Order to execute
 			Boolean			stereo;
 			
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				GetEOF( iFileRefI, &inOutBytes);
 				
 				theSound = NewPtr( inOutBytes);
-				if( theSound == NULL) myErr = MADNeedMemory;
+				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
 					FSRead( iFileRefI, &inOutBytes, theSound);
 					
 					theSound = NSndToPtr( theSound, &lS, &lE, &sS, &rate, &bFreq, &stereo);
 					
-					if( theSound) inAddSoundToMAD( theSound, lS, lE, sS, bFreq, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
+					if (theSound) inAddSoundToMAD( theSound, lS, lE, sS, bFreq, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
 					else
 					{
 						myErr = MADNeedMemory;
@@ -344,11 +344,11 @@ OSErr main(		OSType					order,						// Order to execute
 			Ptr	theSound;
 			
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				inOutBytes = 50L;
 				theSound = NewPtr( inOutBytes);
-				if( theSound == NULL) myErr = MADNeedMemory;
+				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
 					FSRead( iFileRefI, &inOutBytes, theSound);
@@ -364,7 +364,7 @@ OSErr main(		OSType					order,						// Order to execute
 		break;
 		
 /*		case 'EXPL':
-			if( *sampleID >= 0)
+			if (*sampleID >= 0)
 			{
 				sData 	*curData = sample[ *sampleID];
 				short	temp, fRefNum;

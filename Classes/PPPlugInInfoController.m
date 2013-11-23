@@ -43,9 +43,9 @@
 {
     [super windowDidLoad];
 	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    [nameField setTitleWithMnemonic:info.plugName];
-	[authorField setTitleWithMnemonic:info.authorName];
-	[typeField setTitleWithMnemonic:info.plugType];
+    [[nameField cell] setTitle:info.plugName];
+	[[authorField cell] setTitle:info.authorName];
+	[[typeField cell] setTitle:info.plugType];
 	NSImage *plugImage = [[NSWorkspace sharedWorkspace] iconForFile:[info.plugURL path]];
 	[plugImage setSize:NSMakeSize(64, 64)];
 	[pluginImage setImage:plugImage];

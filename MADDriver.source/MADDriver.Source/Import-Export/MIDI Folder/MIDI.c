@@ -47,7 +47,7 @@ Boolean compMem( Ptr a, Ptr b, long s)
 	
 	for( i = 0; i < s; i++)
 	{
-		if( a[ i] != b[ i]) return false;
+		if (a[ i] != b[ i]) return false;
 	}
 	
 	return true;
@@ -55,7 +55,7 @@ Boolean compMem( Ptr a, Ptr b, long s)
 
 OSErr TestMIDIFile( Ptr AlienFile)
 {
-	if( compMem( AlienFile, "MThd", 4)) return noErr;
+	if (compMem( AlienFile, "MThd", 4)) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -91,13 +91,13 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 	{
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead( AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				sndSize =iGetEOF( iFileRefI);
 				
 				// ** MEMORY Test Start
 				AlienFile = malloc( sndSize * 2L);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
 				else
@@ -108,11 +108,11 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
 					
 					
-					if( myErr == noErr)
+					if (myErr == noErr)
 					{
 						myErr = TestMIDIFile( AlienFile);
 						
-						if( myErr == noErr) ConvertMidiFile( AlienFile, MadFile, init);
+						if (myErr == noErr) ConvertMidiFile( AlienFile, MadFile, init);
 						
 						free( AlienFile);	AlienFile = NULL;
 					}
@@ -124,12 +124,12 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead( AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				sndSize = 1024L;
 				
 				AlienFile = malloc( sndSize);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
@@ -144,14 +144,14 @@ extern OSErr PPImpExpMain( OSType order, char *AlienFileName, MADMusic *MadFile,
 			
 		case 'INFO':
 			iFileRefI = iFileOpenRead( AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);
 				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = malloc( sndSize);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);

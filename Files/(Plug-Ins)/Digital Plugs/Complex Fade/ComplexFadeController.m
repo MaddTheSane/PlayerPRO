@@ -16,7 +16,7 @@ static short Text2Note( char *myTT)
 {
 	short		Oct;
 	
-	if( strlen(myTT) > 3) Oct = myTT[ 2] - 48;
+	if (strlen(myTT) > 3) Oct = myTT[ 2] - 48;
 	else Oct = myTT[ 1] - 48;
 	
 	Oct *= 12;
@@ -25,38 +25,70 @@ static short Text2Note( char *myTT)
 	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
 	switch( myTT[0])
 	{
-		case 'C':	case'c':	Oct += 0;	break;
-		case 'D':	case'd':	Oct += 2;	break;
-		case 'E':	case'e':	Oct += 4;	break;
-		case 'F':	case'f':	Oct += 5;	break;
-		case 'G':	case'g':	Oct += 7;	break;
-		case 'A':	case'a':	Oct += 9;	break;
-		case 'B':	case'b':	Oct += 11;	break;
+		case 'C':
+		case 'c':
+			Oct += 0;
+			break;
 			
-		default:	Oct = 0xFF;		break;
+		case 'D':
+		case 'd':
+			Oct += 2;
+			break;
+			
+		case 'E':
+		case 'e':
+			Oct += 4;
+			break;
+			
+		case 'F':
+		case 'f':
+			Oct += 5;
+			break;
+			
+		case 'G':
+		case 'g':
+			Oct += 7;
+			break;
+			
+		case 'A':
+		case 'a':
+			Oct += 9;
+			break;
+			
+		case 'B':
+		case 'b':
+			Oct += 11;
+			break;
+			
+		default:
+			Oct = 0xFF;
+			break;
 	}
 	
-	if( Oct != 0xFF)
+	if (Oct != 0xFF)
 	{
-		if( myTT[ 2] == '#') Oct++;
-		if( Oct >= 96) Oct = 0xFF;
-		if( Oct < 0) Oct = 0xFF;
+		if (myTT[ 2] == '#') Oct++;
+		if (Oct >= 96) Oct = 0xFF;
+		if (Oct < 0) Oct = 0xFF;
 	}
 	
 	return( Oct);
 }
 
+#if 0
 static void StringToHex( char *str, int *oct)
 {
-	if( str[ 2] >= 'A' && str[ 2] <= 'F') *oct = 10 + str[ 2] - 'A';
-	if( str[ 2] >= '0' && str[ 2] <= '9') *oct = str[ 2] - '0';
+	if (str[ 2] >= 'A' && str[ 2] <= 'F') *oct = 10 + str[ 2] - 'A';
+	if (str[ 2] >= '0' && str[ 2] <= '9') *oct = str[ 2] - '0';
 	
-	if( str[ 1] >= 'A' && str[ 1] <= 'F') *oct += (10 + str[ 1] - 'A')<<4;
-	if( str[ 1] >= '0' && str[ 1] <= '9') *oct += (str[ 1] - '0')<<4;
+	if (str[ 1] >= 'A' && str[ 1] <= 'F') *oct += (10 + str[ 1] - 'A')<<4;
+	if (str[ 1] >= '0' && str[ 1] <= '9') *oct += (str[ 1] - '0')<<4;
 }
+#endif
 
 
 @implementation ComplexFadeController
+@synthesize fadeType;
 
 - (id)initWithWindow:(NSWindow *)window
 {

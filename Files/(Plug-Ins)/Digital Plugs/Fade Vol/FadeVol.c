@@ -58,9 +58,9 @@ static void AutoPosition( DialogPtr aDia)
 	do
 	{
 		aH = GetNextDevice( aH);
-		if( aH != NULL)
+		if (aH != NULL)
 		{
-			if( PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
@@ -72,12 +72,12 @@ static void AutoPosition( DialogPtr aDia)
 	while( aH != NULL);
 	
 	Position.h = mouse.h - XSize/2;
-	if( Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
-	else if( Position.h <= ViewRect.left) Position.h = ViewRect.left;
+	if (Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
+	else if (Position.h <= ViewRect.left) Position.h = ViewRect.left;
 
 	Position.v = mouse.v - YSize/2;
-	if( Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
-	else if( Position.v <= ViewRect.top) Position.v = ViewRect.top;
+	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
+	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
 	SetDialogDefaultItem( aDia, 1 );
 	SetDialogCancelItem( aDia, 2 );
@@ -97,9 +97,9 @@ static Boolean PPModalDialogRep(DialogRef theDialog, EventRecord *theEvent, Dial
 	short dialogModifiers = theEvent->modifiers;
 	*itemHit = 0;
 	
-	if( theEvent->what == updateEvt)
+	if (theEvent->what == updateEvt)
 	{
-		if( (WindowPtr) theEvent->message == GetDialogWindow( theDialog))
+		if ((WindowPtr) theEvent->message == GetDialogWindow( theDialog))
 		{
 			switch( GetWRefCon( GetDialogWindow( theDialog)))
 			{
@@ -125,11 +125,11 @@ static Boolean PPModalDialogRep(DialogRef theDialog, EventRecord *theEvent, Dial
 	{
 		thePart = FindWindow( theEvent->where, &whichWindow);
 		
-		if( thePart == inDrag)
+		if (thePart == inDrag)
 		{
 			BitMap		screenBits;
 			
-			if( whichWindow != GetDialogWindow( theDialog)) return( false);
+			if (whichWindow != GetDialogWindow( theDialog)) return( false);
 			
 			GetQDGlobalsScreenBits( &screenBits);
 			
@@ -138,7 +138,7 @@ static Boolean PPModalDialogRep(DialogRef theDialog, EventRecord *theEvent, Dial
 		}
 		else return( false);
 	}
-	else if( theEvent->what == keyDown)
+	else if (theEvent->what == keyDown)
 	{
 		switch ( (theEvent->message) & charCodeMask )
 		{
@@ -153,14 +153,14 @@ static Boolean PPModalDialogRep(DialogRef theDialog, EventRecord *theEvent, Dial
 				return( false );
 		}
 	}
-	else if( theEvent->what == nullEvent)
+	else if (theEvent->what == nullEvent)
 	{
 		//ProcessSerialNumber	PSN;
 		
 		//LoopSet = thePrefs.LoopType;
 		//thePrefs.LoopType = 4;
 		
-		//if( GetWRefCon( GetDialogWindow( theDlg)) != 9996) DoGlobalNull();
+		//if (GetWRefCon( GetDialogWindow( theDlg)) != 9996) DoGlobalNull();
 		
 		//thePrefs.LoopType = LoopSet;
 		
@@ -174,11 +174,11 @@ static Boolean PPModalDialogRep(DialogRef theDialog, EventRecord *theEvent, Dial
 		*itemHit = -5;
 		return( true );
 	}
-	/*	else if( theEvt->what == activateEvt)
+	/*	else if (theEvt->what == activateEvt)
 	 {
-	 if( AHelpDlog != NULL)
+	 if (AHelpDlog != NULL)
 	 {
-	 if( MacIsWindowVisible( GetDialogWindow( AHelpDlog))) ActivateProcedure( true);
+	 if (MacIsWindowVisible( GetDialogWindow( AHelpDlog))) ActivateProcedure( true);
 	 }
 	 }	*/
 	
@@ -210,7 +210,7 @@ static OSErr mainFadeVol(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		
 	}while( itemHit != 1 && itemHit != 2);
 	
-	if( itemHit == 1)
+	if (itemHit == 1)
 	{
 		short	track, row;
 		long	from, to;
@@ -221,14 +221,14 @@ static OSErr mainFadeVol(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		
 		// Check values
 		
-		if( from < 0 || from > 100)
+		if (from < 0 || from > 100)
 		{
 			SelectDialogItemText( myDia, 3, 0, 200);
 			SysBeep( 1);
 			goto RESTART;
 		}
 		
-		if( to < 0 || to > 100)
+		if (to < 0 || to > 100)
 		{
 			SelectDialogItemText( myDia, 4, 0, 200);
 			SysBeep( 1);
@@ -251,7 +251,7 @@ static OSErr mainFadeVol(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 				myCmd->cmd	= myCmd->cmd;		// is this very usefull ?
 				myCmd->arg	= myCmd->arg;		// is this very usefull ?
 				
-				if( myPcmd->length > 1)			// no zero div !!
+				if (myPcmd->length > 1)			// no zero div !!
 					myCmd->vol	= 0x10 + from + ((to-from) * row) / (myPcmd->length-1);
 				
 				// my fade command : 0x10 min vol, 0x50 : max vol

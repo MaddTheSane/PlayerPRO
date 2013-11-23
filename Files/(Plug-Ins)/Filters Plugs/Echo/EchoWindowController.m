@@ -49,8 +49,8 @@
 						
 						temp1 += temp2;
 						
-						if( temp1 >= 127) temp1 = 127;	// overflow ?
-						else if( temp1 <= -128 ) temp1 = -128;
+						if (temp1 >= 127) temp1 = 127;	// overflow ?
+						else if (temp1 <= -128 ) temp1 = -128;
 						
 						*destPtr++ = temp1;
 					}
@@ -71,8 +71,8 @@
 						
 						temp1 += temp2;
 						
-						if( temp1 >= (short)0x7FFF) temp1 = 0x7FFF;	// overflow ?
-						else if( temp1 <= (short)0x8000 ) temp1 = (short)0x8000;
+						if (temp1 >= (short)0x7FFF) temp1 = 0x7FFF;	// overflow ?
+						else if (temp1 <= (short)0x8000 ) temp1 = (short)0x8000;
 						
 						*destPtr++ = temp1;
 					}

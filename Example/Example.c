@@ -25,7 +25,7 @@ OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, 
 	ByteCount	dataSize;
 	ByteCount	acSize;
 	
-	if( typeCode) *typeCode = desc->descriptorType;
+	if (typeCode) *typeCode = desc->descriptorType;
 	
 	h = (Handle)desc->dataHandle;
 	dataSize = GetHandleSize(h);
@@ -35,7 +35,7 @@ OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, 
 		acSize = dataSize;
 	BlockMoveData( *h, dataBuffer, acSize);
 	
-	if( actualSize) *actualSize = acSize;
+	if (actualSize) *actualSize = acSize;
 	
 	return noErr;
 }
@@ -97,10 +97,10 @@ int main( int argc, char* argv[])
 		MADGetBestDriver( &init);
 		
 		{
-			if( MADInitLibrary( NULL, &MADLib) != noErr) DebugStr("\pSmall Problem...");
+			if (MADInitLibrary( NULL, &MADLib) != noErr) DebugStr("\pSmall Problem...");
 		}
 		
-		if( MADCreateDriver( &init, MADLib, &MADDriver) != noErr) DebugStr("\pSmall Problem...");
+		if (MADCreateDriver( &init, MADLib, &MADDriver) != noErr) DebugStr("\pSmall Problem...");
 	}
 	/*********************************/
 	/*********************************/
@@ -175,15 +175,15 @@ int main( int argc, char* argv[])
 			else iErr = -1;
 		}
 		
-		if( iErr != noErr) End = true;
+		if (iErr != noErr) End = true;
 		else
 		{
 			char	type[ 5];
 			MADMusicIdentifyFSpFile( MADLib, type, &spec);
 			
-			if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
+			if (MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 			{
-				if( MADLoadMusicFSpFile( MADLib, &MADMusic, type, &spec) == noErr)		// Load this music with help of Plugs
+				if (MADLoadMusicFSpFile( MADLib, &MADMusic, type, &spec) == noErr)		// Load this music with help of Plugs
 					// in application folder, in 'Plugs' folder or internal resources
 				{
 					MADAttachDriverToMusic( MADDriver, MADMusic, NULL);

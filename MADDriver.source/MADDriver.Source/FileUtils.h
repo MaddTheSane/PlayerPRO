@@ -42,19 +42,19 @@ extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-typedef FILE*		UNFILE;
+typedef FILE* UNFILE;
 	
-PPEXPORT UNFILE iFileOpen( Ptr name) DEPRECATED_ATTRIBUTE;
-PPEXPORT UNFILE iFileOpenRead( Ptr name) DEPRECATED_ATTRIBUTE;
-PPEXPORT UNFILE iFileOpenWrite( Ptr name) DEPRECATED_ATTRIBUTE;
-PPEXPORT void iFileCreate(Ptr path, OSType type) DEPRECATED_ATTRIBUTE;
+PPEXPORT UNFILE	iFileOpen(const char *name) DEPRECATED_ATTRIBUTE;
+PPEXPORT UNFILE	iFileOpenRead(const char *name) DEPRECATED_ATTRIBUTE;
+PPEXPORT UNFILE	iFileOpenWrite(const char *name) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr	iFileCreate(const char *path, OSType type) DEPRECATED_ATTRIBUTE;
 
-PPEXPORT long iGetEOF( UNFILE iFileRefI);
-PPEXPORT OSErr iRead( long size, Ptr dest, UNFILE iFileRefI) DEPRECATED_ATTRIBUTE;
-PPEXPORT OSErr iWrite( long size, Ptr dest, UNFILE iFileRefI) DEPRECATED_ATTRIBUTE;
-PPEXPORT OSErr iSeekCur( long size, UNFILE iFileRefI) DEPRECATED_ATTRIBUTE;
+PPEXPORT long	iGetEOF( UNFILE iFileRefI) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr	iRead( long size, void *dest, UNFILE iFileRefI) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr	iWrite( long size, const void *dest, UNFILE iFileRefI) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr	iSeekCur( long size, UNFILE iFileRefI) DEPRECATED_ATTRIBUTE;
 
-PPEXPORT void iClose( UNFILE iFileRefI) DEPRECATED_ATTRIBUTE;
+PPEXPORT void	iClose( UNFILE iFileRefI) DEPRECATED_ATTRIBUTE;
 	
 ////////////////////////////////////////////////////////////
 
@@ -118,7 +118,7 @@ static inline void PPLE16(void *msg_buf)
 
 /////////////////////////////////
 
-static inline void OSType2Ptr( OSType type, Ptr str)
+static inline void OSType2Ptr(OSType type, char *str)
 {
 	PPBE32(&type);
 	
@@ -126,13 +126,13 @@ static inline void OSType2Ptr( OSType type, Ptr str)
 	str[ 4] = 0;
 }
 
-static inline OSType Ptr2OSType( char* str)
+static inline OSType Ptr2OSType(const char* str)
 {
 	short   i;
 	OSType  type;
 	
 	i = strlen( str);
-	if( i > 4) i = 4;
+	if (i > 4) i = 4;
 	type = '    ';
 	memcpy( &type, str, i);
 	PPBE32(&type);

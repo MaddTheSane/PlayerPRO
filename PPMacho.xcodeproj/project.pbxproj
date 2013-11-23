@@ -44,6 +44,7 @@
 				5586875410BF5E4600FCC24D /* PBXTargetDependency */,
 				5546217A163A20AE0005F491 /* PBXTargetDependency */,
 				557F9AF517D92C5700325C78 /* PBXTargetDependency */,
+				5517DAC4180CAC6D001413D0 /* PBXTargetDependency */,
 			);
 			name = "Import-export";
 			productName = "Import-export";
@@ -88,17 +89,6 @@
 			name = "Digital Plugs";
 			productName = "Digital Plugs";
 		};
-		55F41A2417EF814500605DF8 /* Generate Git versions */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 55F41A2517EF814600605DF8 /* Build configuration list for PBXAggregateTarget "Generate Git versions" */;
-			buildPhases = (
-				55F41A2817EF81D900605DF8 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = "Generate Git versions";
-			productName = "Generate Git versions";
-		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -107,7 +97,12 @@
 		5504A6E516619E1C005BDE4B /* DigitalPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6E716619E1C005BDE4B /* DigitalPrefs.xib */; };
 		5504A6E816619E25005BDE4B /* BoxPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6EA16619E25005BDE4B /* BoxPrefs.xib */; };
 		5504A6EB16619E2E005BDE4B /* MiscPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6ED16619E2E005BDE4B /* MiscPrefs.xib */; };
-		5504A6EE16619E39005BDE4B /* MusicListPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6F016619E39005BDE4B /* MusicListPrefs.xib */; };
+		55085D781836BAAA004A152F /* MidiPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55085D7A1836BAAA004A152F /* MidiPrefs.xib */; };
+		55085D7B1836BAB2004A152F /* PianoPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55085D7D1836BAB2004A152F /* PianoPrefs.xib */; };
+		55085D811836EC82004A152F /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
+		55085D821836EC8D004A152F /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
+		55085D851836EE0F004A152F /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55085D841836EE0F004A152F /* CoreAudio.framework */; };
+		55085D881836EE7B004A152F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55085D861836EE7B004A152F /* AudioToolbox.framework */; };
 		5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508C3ED16CEB33B007CA458 /* SampleCellView.m */; };
 		55096A3210E0A6EF000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
@@ -126,8 +121,13 @@
 		551292F0163DD7CE00C2C639 /* PPLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 551292EE163DD7CE00C2C639 /* PPLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		551292F1163DD7CE00C2C639 /* PPLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 551292EF163DD7CE00C2C639 /* PPLibrary.m */; };
 		551292F2163DDA8E00C2C639 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55149C611832D16C009C850B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552F12E116AE08AF00394143 /* AVFoundation.framework */; };
+		55149C621832D176009C850B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552F12E116AE08AF00394143 /* AVFoundation.framework */; };
+		55149C641832EE86009C850B /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
+		55149C651832EE92009C850B /* embeddedPlugs.h in Headers */ = {isa = PBXBuildFile; fileRef = 550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */; };
 		55151F7A10DEDBDB0054ABC4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5515200E10DEDC9B0054ABC4 /* XI.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105910D6C79E00BB619C /* XI.c */; };
+		5517DAC5180CAD61001413D0 /* ULT.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; };
 		5518107B10C35A5100ADA9F4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5518109210C35A6C00ADA9F4 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5518109310C35A7500ADA9F4 /* Example.c in Sources */ = {isa = PBXBuildFile; fileRef = 5518105610C35A2600ADA9F4 /* Example.c */; };
@@ -138,9 +138,6 @@
 		5521F3FD17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5521F3FF17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */; };
 		5521F40317F65F19002CDBA9 /* PPFilterPlugController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */; };
-		5521F40817F7598D002CDBA9 /* PPFileSizeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547C9DD16D97FC700C36FEA /* PPFileSizeFormatter.m */; };
-		5521F40917F7598E002CDBA9 /* PPFileSizeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547C9DD16D97FC700C36FEA /* PPFileSizeFormatter.m */; };
-		5521F40C17F75A93002CDBA9 /* PPSizeFormatterLength.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F40B17F75A93002CDBA9 /* PPSizeFormatterLength.m */; };
 		5521F40F17F75DAF002CDBA9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		5521F41017F8ED5A002CDBA9 /* PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55981C5211EE370D00656EE3 /* PPPreferences.m */; };
 		5521F41517FA4365002CDBA9 /* BoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F41417FA4365002CDBA9 /* BoxViewController.m */; };
@@ -159,9 +156,7 @@
 		55232AF311FDE56D0041A4EC /* DigitalEditorPreferenceControler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF211FDE56D0041A4EC /* DigitalEditorPreferenceControler.m */; };
 		55232AF711FDE5CB0041A4EC /* ClassicEditorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF611FDE5CB0041A4EC /* ClassicEditorPreferenceController.m */; };
 		55232AFA11FDE5F90041A4EC /* MidiHardwarePreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF911FDE5F90041A4EC /* MidiHardwarePreferenceController.m */; };
-		55232AFF11FDF1310041A4EC /* MidiPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232AFE11FDF1310041A4EC /* MidiPrefs.xib */; };
 		55232B0E11FDF2980041A4EC /* ColorPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232B0D11FDF2980041A4EC /* ColorPrefs.xib */; };
-		55232B1411FDF3090041A4EC /* PianoPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232B1311FDF3080041A4EC /* PianoPrefs.xib */; };
 		5523EC6A16925FF80067B22A /* PPInstrumentWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC6816925FF80067B22A /* PPInstrumentWindowController.m */; };
 		5523EC6B16925FF80067B22A /* PPInstrumentWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5523EC6916925FF80067B22A /* PPInstrumentWindowController.xib */; };
 		5523EC73169265AC0067B22A /* PPPlugInInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC71169265AB0067B22A /* PPPlugInInfoController.m */; };
@@ -219,7 +214,8 @@
 		5533421D10BB6445005208D1 /* DMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DE10BB5368005208D1 /* DMF.c */; };
 		5533422410BB6675005208D1 /* IT.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E110BB5368005208D1 /* IT.c */; };
 		5533600411EBC66400525CAF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5533600311EBC66400525CAF /* Localizable.strings */; };
-		553626B817EB9DEA00D3A3C8 /* Cocoa Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Images.xcassets */; };
+		553626B817EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */; };
+		553EFE0018135EBD00F0D51E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 553EFE0218135EBD00F0D51E /* InfoPlist.strings */; };
 		5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
 		55469C2716BF34D200175A1F /* PatternHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55469C2616BF34D200175A1F /* PatternHandler.m */; };
 		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
@@ -236,28 +232,24 @@
 		554E126410D6F4F700BB619C /* Propagate.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF010D6C79D00BB619C /* Propagate.c */; };
 		554E126610D6F50500BB619C /* Revert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF410D6C79D00BB619C /* Revert.c */; };
 		555143CA17B6EDCF00252657 /* PPToneGeneratorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555143C817B6EDCF00252657 /* PPToneGeneratorController.m */; };
+		55534ACE1817C387006D6BCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
+		55534AD11817C387006D6BCB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55534AD01817C387006D6BCB /* main.m */; };
 		5557769617EBDA740019D008 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5557769517EBDA740019D008 /* Media.xcassets */; };
 		5557769717EBDFAC0019D008 /* PPFastForward.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E271245640500315307 /* PPFastForward.pdf */; };
 		5557769817EBDFAC0019D008 /* PPFastForward.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E271245640500315307 /* PPFastForward.pdf */; };
 		555776A017EBF8FE0019D008 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
-		555776A217EBF8FE0019D008 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776A117EBF8FE0019D008 /* CoreGraphics.framework */; };
-		555776A417EBF8FE0019D008 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776A317EBF8FE0019D008 /* UIKit.framework */; };
 		555776AA17EBF8FE0019D008 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 555776A817EBF8FE0019D008 /* InfoPlist.strings */; };
 		555776AC17EBF8FE0019D008 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776AB17EBF8FE0019D008 /* main.m */; };
 		555776B017EBF8FE0019D008 /* PPiAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776AF17EBF8FE0019D008 /* PPiAppDelegate.m */; };
-		555776B317EBF8FE0019D008 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 555776B117EBF8FE0019D008 /* Main_iPhone.storyboard */; };
-		555776B617EBF8FF0019D008 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 555776B417EBF8FF0019D008 /* Main_iPad.storyboard */; };
 		555776B917EBF8FF0019D008 /* PPiMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776B817EBF8FF0019D008 /* PPiMasterViewController.m */; };
 		555776BC17EBF8FF0019D008 /* PPiDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776BB17EBF8FF0019D008 /* PPiDetailViewController.m */; };
 		555776BE17EBF8FF0019D008 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 555776BD17EBF8FF0019D008 /* Images.xcassets */; };
 		555776C517EBF8FF0019D008 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776C417EBF8FF0019D008 /* XCTest.framework */; };
 		555776C617EBF9000019D008 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
-		555776C717EBF9000019D008 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776A317EBF8FE0019D008 /* UIKit.framework */; };
 		555776CF17EBF9000019D008 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 555776CD17EBF9000019D008 /* InfoPlist.strings */; };
 		555776D117EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776D017EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m */; };
 		555776D817EBF9D80019D008 /* libiOSPlayerPROCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A1031656FAF100A5AECA /* libiOSPlayerPROCore.a */; };
 		555776D917EBF9D80019D008 /* libPlayerPROKit-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B0F59E17DF0F0500653BCD /* libPlayerPROKit-iOS.a */; };
-		555776DC17EBFA430019D008 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776DB17EBFA430019D008 /* AudioToolbox.framework */; };
 		555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		555C125116378B3500735225 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
@@ -299,8 +291,6 @@
 		5573A12E1656FC0700A5AECA /* 669.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340D910BB5368005208D1 /* 669.c */; };
 		5573A12F1656FC0700A5AECA /* AMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DB10BB5368005208D1 /* AMF.c */; };
 		5573A1311656FCC200A5AECA /* iOS-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A1301656FCC100A5AECA /* iOS-PlugImport.c */; };
-		5573A1341656FD3600A5AECA /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A1331656FD3600A5AECA /* CoreFoundation.framework */; };
-		5573A1371656FD4000A5AECA /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A1351656FD4000A5AECA /* AudioUnit.framework */; };
 		5573A1621658A3E700A5AECA /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5573A35A10B50DCC00FF8B50 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
 		5573A35B10B50DD000FF8B50 /* Effects.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D10C2F21DD00D6C081 /* Effects.c */; };
@@ -345,7 +335,6 @@
 		5578C4A917D9E8B50057D11B /* MTM.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586876210BF5E4D00FCC24D /* MTM.ppimpexp */; };
 		5578C4AA17D9E8B50057D11B /* Okta.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 558687DE10BF620500FCC24D /* Okta.ppimpexp */; };
 		5578C4AB17D9E8B50057D11B /* S3M.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; };
-		5578C4AD17D9E8B50057D11B /* UMX.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586882910BF62F500FCC24D /* UMX.ppimpexp */; };
 		5578C4AE17D9E8B50057D11B /* XM.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; };
 		5578C4B017D9E8B50057D11B /* APPL.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
 		5578C4B217DA4AA90057D11B /* PPMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1BD5E120FBE51004FD083 /* PPMusicList.m */; };
@@ -367,7 +356,6 @@
 		5578C4C817DA4C6D0057D11B /* PPNextTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */; };
 		5578C4C917DA4C6D0057D11B /* PPPrevTrack.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */; };
 		5578C4CD17DA6B170057D11B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5533600311EBC66400525CAF /* Localizable.strings */; };
-		5578C4CE17DA6D0E0057D11B /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557C758416A3455D00923755 /* QTKit.framework */; };
 		5578C4CF17DA6D2C0057D11B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5578C4D017DA715D0057D11B /* OpenPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139E41685007B00831A5A /* OpenPanelViewController.m */; };
 		5578C4D117DA71650057D11B /* OpenPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557139E51685007B00831A5A /* OpenPanelViewController.xib */; };
@@ -382,17 +370,17 @@
 		5578C4FF17DB8A5C0057D11B /* PPSampleObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5578C50017DB8A640057D11B /* PPInstrumentObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5578C50117DB8A6E0057D11B /* PPInstrumentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */; };
-		5578C51117DB90110057D11B /* PlayerPROKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 551292E5163DD68500C2C639 /* PlayerPROKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5578C51217DB901F0057D11B /* PPLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 551292EE163DD7CE00C2C639 /* PPLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5578C51117DB90110057D11B /* PlayerPROKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 551292E5163DD68500C2C639 /* PlayerPROKit.h */; };
+		5578C51217DB901F0057D11B /* PPLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 551292EE163DD7CE00C2C639 /* PPLibrary.h */; };
 		5578C51317DB901F0057D11B /* PPLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 551292EF163DD7CE00C2C639 /* PPLibrary.m */; };
-		5578C51417DB901F0057D11B /* PPDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DD81666F14E00A333E8 /* PPDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5578C51417DB901F0057D11B /* PPDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DD81666F14E00A333E8 /* PPDriver.h */; };
 		5578C51517DB901F0057D11B /* PPDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4DD91666F14E00A333E8 /* PPDriver.m */; };
 		5578C51617DB901F0057D11B /* PPLibrary_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */; };
 		5578C51717DB901F0057D11B /* PPDriver_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F2166A850D00820424 /* PPDriver_Private.h */; };
-		5578C51817DB901F0057D11B /* PPMusicObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F5166A861900820424 /* PPMusicObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5578C51817DB901F0057D11B /* PPMusicObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F5166A861900820424 /* PPMusicObject.h */; };
 		5578C51917DB901F0057D11B /* PPMusicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B1B4F6166A861900820424 /* PPMusicObject.m */; };
 		5578C51A17DB901F0057D11B /* PPMusicObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */; };
-		5578C51F17DB94A50057D11B /* GetMetadataForFile.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE998A17978BB100D6DECC /* GetMetadataForFile.c */; };
+		5578C51F17DB94A50057D11B /* GetMetadataForFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BE998A17978BB100D6DECC /* GetMetadataForFile.m */; };
 		5578C52017DB94A50057D11B /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE998D17978BB100D6DECC /* main.c */; };
 		5578C52217DB94A50057D11B /* libPlayerPROCompact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */; };
 		5578C52317DB94A50057D11B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -409,8 +397,6 @@
 		5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */; };
 		5578C54017DBABC50057D11B /* PPDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C53E17DBABBF0057D11B /* PPDocument.m */; };
 		5578C54117DBABC50057D11B /* PPDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5578C53F17DBABC20057D11B /* PPDocument.xib */; };
-		5578C56F17DBD9930057D11B /* MADPackageMDImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C56E17DBD9930057D11B /* MADPackageMDImport.m */; };
-		557C758516A3455E00923755 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557C758416A3455D00923755 /* QTKit.framework */; };
 		557DE42E10E06BF200177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE5D910E0882800177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE61C10E0884100177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -487,7 +473,15 @@
 		558D4DDD1666F19600A333E8 /* PPLibrary_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */; };
 		55981C5311EE370D00656EE3 /* PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55981C5211EE370D00656EE3 /* PPPreferences.m */; };
 		5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
-		5599F13316C82100008DDAFB /* RDriverCarbon.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; };
+		5599F13316C82100008DDAFB /* RDriverCarbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; };
+		559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559C4188183EB4AB004A073C /* QuickLook.framework */; };
+		559C418B183EB4AB004A073C /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559C418A183EB4AB004A073C /* ApplicationServices.framework */; };
+		559C418D183EB4AB004A073C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559C418C183EB4AB004A073C /* CoreServices.framework */; };
+		559C418E183EB4AB004A073C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		559C4194183EB4AB004A073C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 559C4192183EB4AB004A073C /* InfoPlist.strings */; };
+		559C4196183EB4AB004A073C /* GenerateThumbnailForURL.c in Sources */ = {isa = PBXBuildFile; fileRef = 559C4195183EB4AB004A073C /* GenerateThumbnailForURL.c */; };
+		559C4198183EB4AB004A073C /* GeneratePreviewForURL.c in Sources */ = {isa = PBXBuildFile; fileRef = 559C4197183EB4AB004A073C /* GeneratePreviewForURL.c */; };
+		559C419A183EB4AB004A073C /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 559C4199183EB4AB004A073C /* main.c */; };
 		559C871917ECD8B400E4E13C /* PPiSettingsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559C871817ECD8B400E4E13C /* PPiSettingsDetailController.m */; };
 		55A934F817F2121D00493DC5 /* PPFilterPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A934F617F2121D00493DC5 /* PPFilterPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55A934F917F2121D00493DC5 /* PPFilterPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A934F717F2121D00493DC5 /* PPFilterPluginWindowController.m */; };
@@ -505,7 +499,7 @@
 		55ADC3E217D7B484001F27D4 /* Wave.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55ADC3DB17D6F390001F27D4 /* Wave.plugin */; };
 		55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55ADC3E817D7E4DE001F27D4 /* MADDriver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; };
-		55ADC3E917D7E4E5001F27D4 /* MADDriver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; };
+		55ADC3E917D7E4E5001F27D4 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; };
 		55ADC3F117D7F475001F27D4 /* Complex Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55B797DC10D6E6C40073E379 /* Complex Fade.plugin */; };
 		55ADC3FA17D7FFAA001F27D4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55ADC3FB17D8004B001F27D4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -519,10 +513,10 @@
 		55B0F5AC17DF0F7800653BCD /* PPMusicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B1B4F6166A861900820424 /* PPMusicObject.m */; };
 		55B0F5AD17DF0FA900653BCD /* PPSampleObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */; };
 		55B0F5AE17DF0FAA00653BCD /* PPSampleObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */; };
-		55B0F5AF17DF0FB000653BCD /* PPSampleObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55B0F5AF17DF0FB000653BCD /* PPSampleObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */; };
 		55B0F5B017DF0FBD00653BCD /* PPInstrumentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */; };
 		55B0F5B117DF0FBE00653BCD /* PPInstrumentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */; };
-		55B0F5B217DF0FC100653BCD /* PPInstrumentObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55B0F5B217DF0FC100653BCD /* PPInstrumentObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */; };
 		55B0F5B317DF0FF700653BCD /* PPSampleObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */; };
 		55B0F5B417DF0FF700653BCD /* PPInstrumentObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */; };
 		55B0F5B517DF101000653BCD /* PlayerPROKit.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 551292E5163DD68500C2C639 /* PlayerPROKit.h */; };
@@ -560,19 +554,8 @@
 		55B7E667161D1DE1000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B7E668161D1DEB000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B7E669161D1DF3000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
-		55BE997917978AEF00D6DECC /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		55BE999517978BE700D6DECC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55BE998617978BB100D6DECC /* InfoPlist.strings */; };
-		55BE999617978BE700D6DECC /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55BE998817978BB100D6DECC /* schema.strings */; };
-		55BE999717978BEF00D6DECC /* schema.xml in Resources */ = {isa = PBXBuildFile; fileRef = 55BE999117978BB200D6DECC /* schema.xml */; };
-		55BE999817978BF700D6DECC /* GetMetadataForFile.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE998A17978BB100D6DECC /* GetMetadataForFile.c */; };
-		55BE999917978BF700D6DECC /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE998D17978BB100D6DECC /* main.c */; };
-		55BE999C17978C5200D6DECC /* libPlayerPROCompact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */; };
 		55BE999D17978C7D00D6DECC /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		55BE999E17978C7D00D6DECC /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
-		55BE999F17978C7F00D6DECC /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
-		55BE99A017978C7F00D6DECC /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
-		55BE99DA17978DB200D6DECC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
-		55BE99DB17978DC700D6DECC /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		55C3589716C42D1800FB9FA6 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
 		55C3589916C42D1800FB9FA6 /* Effects.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D10C2F21DD00D6C081 /* Effects.c */; };
 		55C3589A16C42D1800FB9FA6 /* Interrupt.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D20C2F21DD00D6C081 /* Interrupt.c */; };
@@ -600,16 +583,18 @@
 		55C358B016C42D1800FB9FA6 /* AMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DB10BB5368005208D1 /* AMF.c */; };
 		55C358B116C42D1800FB9FA6 /* iOS-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A1301656FCC100A5AECA /* iOS-PlugImport.c */; };
 		55C358B516C42D1800FB9FA6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
-		55C358B716C42D1800FB9FA6 /* iOSPlayerPROCore.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5573A1081656FAF100A5AECA /* iOSPlayerPROCore.h */; };
-		55C358B816C42D1800FB9FA6 /* PlayerPROCore.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; };
-		55C358B916C42D1800FB9FA6 /* MAD.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 88E0C4750C2F21E400D6C081 /* MAD.h */; };
-		55C358BA16C42D1800FB9FA6 /* RDriver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 88E0C47B0C2F21E400D6C081 /* RDriver.h */; };
-		55C358BB16C42D1800FB9FA6 /* RDriverInt.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 88E0C47D0C2F21E400D6C081 /* RDriverInt.h */; };
-		55C358BC16C42D1800FB9FA6 /* PPPlug.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* PPPlug.h */; };
-		55C358BD16C42D1800FB9FA6 /* PPDefs.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; };
-		55C358BE16C42D1800FB9FA6 /* FileUtils.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* FileUtils.h */; };
+		55C358B816C42D1800FB9FA6 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; };
+		55C358B916C42D1800FB9FA6 /* MAD.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4750C2F21E400D6C081 /* MAD.h */; };
+		55C358BA16C42D1800FB9FA6 /* RDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47B0C2F21E400D6C081 /* RDriver.h */; };
+		55C358BB16C42D1800FB9FA6 /* RDriverInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47D0C2F21E400D6C081 /* RDriverInt.h */; };
+		55C358BC16C42D1800FB9FA6 /* PPPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* PPPlug.h */; };
+		55C358BD16C42D1800FB9FA6 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; };
+		55C358BE16C42D1800FB9FA6 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* FileUtils.h */; };
 		55C358F716C42F7100FB9FA6 /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */; };
 		55C358F816C42F7600FB9FA6 /* MIDI-Hardware-Stub.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */; };
+		55C930391819E68700D9E072 /* CocoaFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C930381819E68700D9E072 /* CocoaFuncs.m */; };
+		55C9303A1819E68700D9E072 /* CocoaFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C930381819E68700D9E072 /* CocoaFuncs.m */; };
+		55C9303B1819F6EC00D9E072 /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */; };
 		55CB01A711EB82FA0028C6BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CB01A611EB82FA0028C6BB /* main.m */; };
 		55CBFAD211EB77ED0028C6BB /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55CBFAD311EB77ED0028C6BB /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
@@ -632,7 +617,6 @@
 		55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55D1BD58120FBAC0004FD083 /* Credits.rtf */; };
 		55DEBFE918008D970089B940 /* PPSoundSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55DEBFEA18008D9E0089B940 /* PPSoundSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */; };
-		55DEBFEB18008DA50089B940 /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */; };
 		55E52E2512455E5100315307 /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
 		55E52E2B1245640500315307 /* PPReverse.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E281245640500315307 /* PPReverse.pdf */; };
 		55E52E2C1245640500315307 /* PPStop.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 55E52E291245640500315307 /* PPStop.pdf */; };
@@ -645,6 +629,8 @@
 		55EA019C16AF1D3900D6AEA0 /* Backwards.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE5DF10E0882800177B4C /* Backwards.plugin */; };
 		55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */; };
 		55EA01A216AF368F00D6AEA0 /* CrossFade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE66310E0885C00177B4C /* CrossFade.plugin */; };
+		55ECB33E180A280800497C7E /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55ECB340180A280800497C7E /* Main_iPad.storyboard */; };
+		55ECB341180A281400497C7E /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55ECB343180A281400497C7E /* Main_iPhone.storyboard */; };
 		55ED50AB10D40BFE00824C61 /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55EE2D7D17E110DA00FED42A /* MADTypeConversions.h in Headers */ = {isa = PBXBuildFile; fileRef = 55EE2D7C17E110DA00FED42A /* MADTypeConversions.h */; };
 		55EE2D7F17E11DEB00FED42A /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE2D7E17E11DEB00FED42A /* libiconv.dylib */; };
@@ -665,8 +651,6 @@
 		55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; };
 		55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
-		55FCC5E517FDF199004FBEE7 /* schema.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55FCC5E417FDF199004FBEE7 /* schema.plist */; };
-		55FCC5E617FDF199004FBEE7 /* schema.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55FCC5E417FDF199004FBEE7 /* schema.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -697,6 +681,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 55151F7210DEDBDB0054ABC4;
 			remoteInfo = XI;
+		};
+		5517DAC3180CAC6D001413D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5586888B10BF67F100FCC24D;
+			remoteInfo = MIDI;
 		};
 		5518107910C35A4C00ADA9F4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -893,6 +884,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 554E11EF10D6F3E100BB619C;
 			remoteInfo = Propagate;
+		};
+		55534AE818183B0C006D6BCB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55534ACC1817C387006D6BCB;
+			remoteInfo = updateInfoPlist;
+		};
+		55534AEA18183B17006D6BCB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55534ACC1817C387006D6BCB;
+			remoteInfo = updateInfoPlist;
 		};
 		555776C817EBF9000019D008 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1475,13 +1480,6 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
-		55BE999A17978C4400D6DECC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 55C3589516C42D1800FB9FA6;
-			remoteInfo = PlayerPROCompact;
-		};
 		55CBF9FF11EB77AA0028C6BB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1509,20 +1507,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 557DE3BD10E06BB500177B4C;
 			remoteInfo = "Filters Plugs";
-		};
-		55F41A2917EF849F00605DF8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 55F41A2417EF814500605DF8;
-			remoteInfo = "Generate Git versions";
-		};
-		55F41A2B17EF84A500605DF8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 55F41A2417EF814500605DF8;
-			remoteInfo = "Generate Git versions";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1575,6 +1559,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				5517DAC5180CAD61001413D0 /* ULT.ppimpexp in Copy Plug-ins */,
 				5578C4A017D9E8B50057D11B /* MOD.ppimpexp in Copy Plug-ins */,
 				5578C4A117D9E8B50057D11B /* 669.ppimpexp in Copy Plug-ins */,
 				5578C4A217D9E8B50057D11B /* AMF.ppimpexp in Copy Plug-ins */,
@@ -1587,7 +1572,6 @@
 				5578C4A917D9E8B50057D11B /* MTM.ppimpexp in Copy Plug-ins */,
 				5578C4AA17D9E8B50057D11B /* Okta.ppimpexp in Copy Plug-ins */,
 				5578C4AB17D9E8B50057D11B /* S3M.ppimpexp in Copy Plug-ins */,
-				5578C4AD17D9E8B50057D11B /* UMX.ppimpexp in Copy Plug-ins */,
 				5578C4AE17D9E8B50057D11B /* XM.ppimpexp in Copy Plug-ins */,
 				5578C4B017D9E8B50057D11B /* APPL.ppimpexp in Copy Plug-ins */,
 			);
@@ -1649,25 +1633,6 @@
 				5578C53617DB956D0057D11B /* PPImport Cocoa.mdimporter in Copy Spotlight Importer */,
 			);
 			name = "Copy Spotlight Importer";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55C358B616C42D1800FB9FA6 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = "include/${PRODUCT_NAME}";
-			dstSubfolderSpec = 16;
-			files = (
-				5599F13316C82100008DDAFB /* RDriverCarbon.h in CopyFiles */,
-				55C358B716C42D1800FB9FA6 /* iOSPlayerPROCore.h in CopyFiles */,
-				55C358B816C42D1800FB9FA6 /* PlayerPROCore.h in CopyFiles */,
-				55C358B916C42D1800FB9FA6 /* MAD.h in CopyFiles */,
-				55C358BA16C42D1800FB9FA6 /* RDriver.h in CopyFiles */,
-				55C358BB16C42D1800FB9FA6 /* RDriverInt.h in CopyFiles */,
-				55C358BC16C42D1800FB9FA6 /* PPPlug.h in CopyFiles */,
-				55C358BD16C42D1800FB9FA6 /* PPDefs.h in CopyFiles */,
-				55ADC3E917D7E4E5001F27D4 /* MADDriver.h in CopyFiles */,
-				55C358BE16C42D1800FB9FA6 /* FileUtils.h in CopyFiles */,
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		55CBFB3711EB780B0028C6BB /* Copy PlugIns */ = {
@@ -1733,11 +1698,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5504A6E316619E10005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ClassicPrefs.xib; sourceTree = "<group>"; };
-		5504A6E616619E1C005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DigitalPrefs.xib; sourceTree = "<group>"; };
-		5504A6E916619E25005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BoxPrefs.xib; sourceTree = "<group>"; };
-		5504A6EC16619E2E005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MiscPrefs.xib; sourceTree = "<group>"; };
-		5504A6EF16619E39005BDE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MusicListPrefs.xib; sourceTree = "<group>"; };
+		55085D791836BAAA004A152F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MidiPrefs.xib; sourceTree = "<group>"; };
+		55085D7C1836BAB2004A152F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PianoPrefs.xib; sourceTree = "<group>"; };
+		55085D7E1836DD85004A152F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55085D7F1836DD85004A152F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/schema.strings; sourceTree = "<group>"; };
+		55085D801836DDA0004A152F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55085D841836EE0F004A152F /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreAudio.framework; sourceTree = DEVELOPER_DIR; };
+		55085D861836EE7B004A152F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		55085D871836EE7B004A152F /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = DEVELOPER_DIR; };
+		55085D8B1836EF96004A152F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		5508C3EC16CEB33B007CA458 /* SampleCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleCellView.h; sourceTree = "<group>"; };
 		5508C3ED16CEB33B007CA458 /* SampleCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleCellView.m; sourceTree = "<group>"; };
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
@@ -1758,17 +1727,43 @@
 		551292D8163DD68500C2C639 /* PlayerPROKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		551292DB163DD68500C2C639 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		551292DC163DD68500C2C639 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		551292DD163DD68500C2C639 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		551292E0163DD68500C2C639 /* PlayerPROKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPROKit-Info.plist"; sourceTree = "<group>"; };
 		551292E2163DD68500C2C639 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		551292E4163DD68500C2C639 /* PlayerPROKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPROKit-Prefix.pch"; sourceTree = "<group>"; };
 		551292E5163DD68500C2C639 /* PlayerPROKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerPROKit.h; sourceTree = "<group>"; };
 		551292EE163DD7CE00C2C639 /* PPLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLibrary.h; sourceTree = "<group>"; };
 		551292EF163DD7CE00C2C639 /* PPLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLibrary.m; sourceTree = "<group>"; };
+		55149C3C1832CC64009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PPSoundSettingsViewController.xib; sourceTree = "<group>"; };
+		55149C3D1832CC64009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PPPlugInInfoController.xib; sourceTree = "<group>"; };
+		55149C3E1832CC64009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		55149C3F1832CC64009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ClassicPrefs.xib; sourceTree = "<group>"; };
+		55149C401832CC65009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DigitalPrefs.xib; sourceTree = "<group>"; };
+		55149C411832CC65009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/BoxPrefs.xib; sourceTree = "<group>"; };
+		55149C421832CC65009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MiscPrefs.xib; sourceTree = "<group>"; };
+		55149C431832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MusicListPrefs.xib; sourceTree = "<group>"; };
+		55149C441832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PPToneGeneratorController.xib; sourceTree = "<group>"; };
+		55149C451832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		55149C461832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InstrumentWindow.xib; sourceTree = "<group>"; };
+		55149C471832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		55149C481832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		55149C4A1832CD8D009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPPlugInInfoController.strings; sourceTree = "<group>"; };
+		55149C4C1832CD95009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		55149C4E1832CDA2009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ClassicPrefs.strings; sourceTree = "<group>"; };
+		55149C501832CDAA009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DigitalPrefs.strings; sourceTree = "<group>"; };
+		55149C521832CE42009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BoxPrefs.strings; sourceTree = "<group>"; };
+		55149C541832CE48009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MiscPrefs.strings; sourceTree = "<group>"; };
+		55149C561832CE54009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MusicListPrefs.strings; sourceTree = "<group>"; };
+		55149C581832CEA3009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPToneGeneratorController.strings; sourceTree = "<group>"; };
+		55149C5A1832CEBF009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		55149C5C1832CEC4009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InstrumentWindow.strings; sourceTree = "<group>"; };
+		55149C5E1832CED1009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		55151E7410DD4F400054ABC4 /* CFPlugin-InstrBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-InstrBridge.c"; sourceTree = "<group>"; };
 		55151F8010DEDBDB0054ABC4 /* XI.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XI.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55151F8110DEDBDB0054ABC4 /* XI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "XI-Info.plist"; path = "../../../XI-Info.plist"; sourceTree = "<group>"; };
 		551520A910DEEA670054ABC4 /* MuLaw.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MuLaw.r; sourceTree = "<group>"; };
+		5517DAC6180CAE2C001413D0 /* dls.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dls.h; sourceTree = "<group>"; };
+		5517DAC7180CAE2C001413D0 /* dls2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dls2.h; sourceTree = "<group>"; };
+		5517DAC8180CAE2C001413D0 /* dlsmac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dlsmac.h; sourceTree = "<group>"; };
 		5517F7541126203E0034F90C /* Lin-PlugImport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "Lin-PlugImport.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5518105610C35A2600ADA9F4 /* Example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Example.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5518105810C35A2600ADA9F4 /* small MAD Music.madk */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music.madk"; sourceTree = "<group>"; };
@@ -1784,13 +1779,10 @@
 		5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentPluginWindowController.m; sourceTree = "<group>"; };
 		5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPlugController.h; sourceTree = "<group>"; };
 		5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPlugController.m; sourceTree = "<group>"; };
-		5521F40A17F75A93002CDBA9 /* PPSizeFormatterLength.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSizeFormatterLength.h; sourceTree = "<group>"; };
-		5521F40B17F75A93002CDBA9 /* PPSizeFormatterLength.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSizeFormatterLength.m; sourceTree = "<group>"; };
 		5521F41317FA4365002CDBA9 /* BoxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoxViewController.h; sourceTree = "<group>"; };
 		5521F41417FA4365002CDBA9 /* BoxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoxViewController.m; sourceTree = "<group>"; };
 		5521F41617FA541C002CDBA9 /* Trackers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Trackers.xcassets; sourceTree = "<group>"; };
 		5521F41B17FA54B8002CDBA9 /* Player-only.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Player-only.xcassets"; sourceTree = "<group>"; };
-		5521F42317FA5776002CDBA9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PPPlugInInfoController.xib; sourceTree = "<group>"; };
 		55232A7411FDD2A60041A4EC /* SoundOutputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundOutputController.h; sourceTree = "<group>"; };
 		55232A7511FDD2A60041A4EC /* SoundOutputController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundOutputController.m; sourceTree = "<group>"; };
 		55232AD611FDDFEA0041A4EC /* PianoPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PianoPreferencesController.h; sourceTree = "<group>"; };
@@ -1809,9 +1801,7 @@
 		55232AF611FDE5CB0041A4EC /* ClassicEditorPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassicEditorPreferenceController.m; sourceTree = "<group>"; };
 		55232AF811FDE5F90041A4EC /* MidiHardwarePreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MidiHardwarePreferenceController.h; sourceTree = "<group>"; };
 		55232AF911FDE5F90041A4EC /* MidiHardwarePreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MidiHardwarePreferenceController.m; sourceTree = "<group>"; };
-		55232AFE11FDF1310041A4EC /* MidiPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MidiPrefs.xib; sourceTree = "<group>"; };
 		55232B0D11FDF2980041A4EC /* ColorPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPrefs.xib; sourceTree = "<group>"; };
-		55232B1311FDF3080041A4EC /* PianoPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PianoPrefs.xib; sourceTree = "<group>"; };
 		5523EC6716925FF80067B22A /* PPInstrumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentWindowController.h; sourceTree = "<group>"; };
 		5523EC6816925FF80067B22A /* PPInstrumentWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentWindowController.m; sourceTree = "<group>"; };
 		5523EC6916925FF80067B22A /* PPInstrumentWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPInstrumentWindowController.xib; sourceTree = "<group>"; };
@@ -1929,7 +1919,8 @@
 		553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Universal.xcconfig; sourceTree = "<group>"; };
 		553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PPCPlugs.xcconfig; sourceTree = "<group>"; };
 		553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "PPCPlugs-debug.xcconfig"; sourceTree = "<group>"; };
-		553626B717EB9DEA00D3A3C8 /* Cocoa Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Cocoa Images.xcassets"; path = "Cocoa/Cocoa Images.xcassets"; sourceTree = SOURCE_ROOT; };
+		553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Cocoa Editor Images.xcassets"; path = "Cocoa/Cocoa Editor Images.xcassets"; sourceTree = SOURCE_ROOT; };
+		553EFE0118135EBD00F0D51E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5542403E10DB602D00C08864 /* SoundDesignerII.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = SoundDesignerII.r; sourceTree = "<group>"; };
 		5542403F10DB602D00C08864 /* Mp3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mp3.r; sourceTree = "<group>"; };
 		5542404010DB602D00C08864 /* MPG3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MPG3.r; sourceTree = "<group>"; };
@@ -1940,8 +1931,7 @@
 		5546217D163A345F0005F491 /* PlugExports-Mac.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; path = "PlugExports-Mac.exp"; sourceTree = "<group>"; };
 		55469C2516BF34D200175A1F /* PatternHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternHandler.h; sourceTree = "<group>"; };
 		55469C2616BF34D200175A1F /* PatternHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternHandler.m; sourceTree = "<group>"; };
-		5547C9DC16D97FC700C36FEA /* PPFileSizeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFileSizeFormatter.h; sourceTree = "<group>"; };
-		5547C9DD16D97FC700C36FEA /* PPFileSizeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFileSizeFormatter.m; sourceTree = "<group>"; };
+		554703D81834368F008E5B9B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPSoundSettingsViewController.strings; sourceTree = "<group>"; };
 		554E0FE010D6C79D00BB619C /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Carbon.r; sourceTree = "<group>"; };
 		554E0FE110D6C79D00BB619C /* CompFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CompFade.c; sourceTree = "<group>"; };
 		554E0FE210D6C79D00BB619C /* CompFade.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = CompFade.r; sourceTree = "<group>"; };
@@ -1999,18 +1989,17 @@
 		554E125410D6F3E600BB619C /* Revert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Revert-Info.plist"; sourceTree = "<group>"; };
 		555143C717B6EDCF00252657 /* PPToneGeneratorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPToneGeneratorController.h; sourceTree = "<group>"; };
 		555143C817B6EDCF00252657 /* PPToneGeneratorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPToneGeneratorController.m; sourceTree = "<group>"; };
+		55534ACD1817C387006D6BCB /* updateInfoPlist */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = updateInfoPlist; sourceTree = BUILT_PRODUCTS_DIR; };
+		55534AD01817C387006D6BCB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		55534AD31817C388006D6BCB /* updateInfoPlist-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "updateInfoPlist-Prefix.pch"; sourceTree = "<group>"; };
 		5557769517EBDA740019D008 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		5557769F17EBF8FE0019D008 /* iOS PlayerPRO Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS PlayerPRO Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		555776A117EBF8FE0019D008 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		555776A317EBF8FE0019D008 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		555776A717EBF8FE0019D008 /* iOS PlayerPRO Player-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS PlayerPRO Player-Info.plist"; sourceTree = "<group>"; };
 		555776A917EBF8FE0019D008 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		555776AB17EBF8FE0019D008 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		555776AD17EBF8FE0019D008 /* iOS PlayerPRO Player-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOS PlayerPRO Player-Prefix.pch"; sourceTree = "<group>"; };
 		555776AE17EBF8FE0019D008 /* PPiAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPiAppDelegate.h; sourceTree = "<group>"; };
 		555776AF17EBF8FE0019D008 /* PPiAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPiAppDelegate.m; sourceTree = "<group>"; };
-		555776B217EBF8FE0019D008 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		555776B517EBF8FF0019D008 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		555776B717EBF8FF0019D008 /* PPiMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPiMasterViewController.h; sourceTree = "<group>"; };
 		555776B817EBF8FF0019D008 /* PPiMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPiMasterViewController.m; sourceTree = "<group>"; };
 		555776BA17EBF8FF0019D008 /* PPiDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPiDetailViewController.h; sourceTree = "<group>"; };
@@ -2021,7 +2010,6 @@
 		555776CC17EBF9000019D008 /* iOS PlayerPRO PlayerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS PlayerPRO PlayerTests-Info.plist"; sourceTree = "<group>"; };
 		555776CE17EBF9000019D008 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		555776D017EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOS_PlayerPRO_PlayerTests.m; sourceTree = "<group>"; };
-		555776DB17EBFA430019D008 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		555C125016378B3500735225 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		556AE4BB16E290650074BBF9 /* PPByteswap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPByteswap.h; sourceTree = "<group>"; };
@@ -2033,16 +2021,12 @@
 		5573A1031656FAF100A5AECA /* libiOSPlayerPROCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiOSPlayerPROCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5573A1081656FAF100A5AECA /* iOSPlayerPROCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSPlayerPROCore.h; sourceTree = "<group>"; };
 		5573A1301656FCC100A5AECA /* iOS-PlugImport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "iOS-PlugImport.c"; sourceTree = "<group>"; };
-		5573A1331656FD3600A5AECA /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
-		5573A1351656FD4000A5AECA /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = ../../../../iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
-		5573A1361656FD4000A5AECA /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreAudio.framework; sourceTree = DEVELOPER_DIR; };
 		5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPROCore-Info.plist"; sourceTree = "<group>"; };
 		5573A3E810B5147C00FF8B50 /* MyDebugStr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MyDebugStr.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5573A3ED10B5151700FF8B50 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		5573A3EF10B5151700FF8B50 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5573A41010B5160000FF8B50 /* PPDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDefs.h; sourceTree = "<group>"; };
-		5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawSprocket.framework; path = System/Library/Frameworks/DrawSprocket.framework; sourceTree = SDKROOT; };
 		5573AF0717DF8F5500B68127 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; lineEnding = 0; path = README; sourceTree = "<group>"; };
 		5578C48117D9E8560057D11B /* PlayerPRO Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5578C48517D9E8560057D11B /* PlayerPRO Player-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPRO Player-Info.plist"; sourceTree = "<group>"; };
@@ -2052,10 +2036,8 @@
 		5578C48D17D9E8560057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		5578C48F17D9E8560057D11B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5578C49017D9E8560057D11B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5578C49317D9E8570057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentWindowController.h; sourceTree = "<group>"; };
 		5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentWindowController.m; sourceTree = "<group>"; };
-		5578C4F017DA97020057D11B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/InstrumentWindow.xib; sourceTree = "<group>"; };
 		5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPlayerPROKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PPImport Cocoa.mdimporter"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5578C53017DB94A60057D11B /* PPImport copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PPImport copy-Info.plist"; sourceTree = "<group>"; };
@@ -2064,8 +2046,6 @@
 		5578C53D17DBABBE0057D11B /* PPDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDocument.h; sourceTree = "<group>"; };
 		5578C53E17DBABBF0057D11B /* PPDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDocument.m; sourceTree = "<group>"; };
 		5578C53F17DBABC20057D11B /* PPDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPDocument.xib; sourceTree = "<group>"; };
-		5578C56E17DBD9930057D11B /* MADPackageMDImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MADPackageMDImport.m; sourceTree = "<group>"; };
-		557C758416A3455D00923755 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-FilterBridge.c"; sourceTree = "<group>"; };
 		557DE43410E06BF200177B4C /* Amplitude.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amplitude.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE43510E06BF200177B4C /* Amplitude-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Amplitude-Info.plist"; sourceTree = "<group>"; };
@@ -2103,7 +2083,6 @@
 		557EF732168BDE95001BF077 /* PPPlugInCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPlugInCommon.h; sourceTree = "<group>"; };
 		557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporterObject.h; sourceTree = "<group>"; };
 		557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentImporterObject.m; sourceTree = "<group>"; };
-		557F9AF217D927DB00325C78 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PPToneGeneratorController.xib; sourceTree = "<group>"; };
 		55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+PPPreferences.h"; sourceTree = "<group>"; };
 		55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+PPPreferences.m"; sourceTree = "<group>"; };
 		5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADfg.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2142,6 +2121,16 @@
 		55981C5111EE370D00656EE3 /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
 		55981C5211EE370D00656EE3 /* PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPreferences.m; sourceTree = "<group>"; };
 		55981C5411EE375400656EE3 /* preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = preferences.xib; sourceTree = "<group>"; };
+		559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPQuickView.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
+		559C4188183EB4AB004A073C /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		559C418A183EB4AB004A073C /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		559C418C183EB4AB004A073C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		559C4191183EB4AB004A073C /* PPQuickView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PPQuickView-Info.plist"; sourceTree = "<group>"; };
+		559C4193183EB4AB004A073C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		559C4195183EB4AB004A073C /* GenerateThumbnailForURL.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GenerateThumbnailForURL.c; sourceTree = "<group>"; };
+		559C4197183EB4AB004A073C /* GeneratePreviewForURL.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GeneratePreviewForURL.c; sourceTree = "<group>"; };
+		559C4199183EB4AB004A073C /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		559C419B183EB4AB004A073C /* PPQuickView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PPQuickView-Prefix.pch"; sourceTree = "<group>"; };
 		559C871717ECD8B400E4E13C /* PPiSettingsDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPiSettingsDetailController.h; sourceTree = "<group>"; };
 		559C871817ECD8B400E4E13C /* PPiSettingsDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPiSettingsDetailController.m; sourceTree = "<group>"; };
 		55A934F617F2121D00493DC5 /* PPFilterPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPluginWindowController.h; sourceTree = "<group>"; };
@@ -2169,26 +2158,27 @@
 		55B7665C17E3CDA2004C1D45 /* PPDigitalPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPluginWindowController.m; sourceTree = "<group>"; };
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Complex Fade-Info.plist"; sourceTree = "<group>"; };
-		55BE997817978AEF00D6DECC /* PlayerPROImporter.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlayerPROImporter.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		55BE998717978BB100D6DECC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		55BE998917978BB100D6DECC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/schema.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
-		55BE998A17978BB100D6DECC /* GetMetadataForFile.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = GetMetadataForFile.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		55BE998A17978BB100D6DECC /* GetMetadataForFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = GetMetadataForFile.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55BE998B17978BB100D6DECC /* GetMetadataForFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetMetadataForFile.h; sourceTree = "<group>"; };
-		55BE998C17978BB100D6DECC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55BE998D17978BB100D6DECC /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		55BE999117978BB200D6DECC /* schema.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; lineEnding = 0; path = schema.xml; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xml; };
 		55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPlayerPROCompact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		55C930381819E68700D9E072 /* CocoaFuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaFuncs.m; sourceTree = "<group>"; };
 		55CB01A611EB82FA0028C6BB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO 6.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CBF9A811EB77760028C6BB /* Cocoa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Cocoa-Info.plist"; sourceTree = "<group>"; };
 		55CBFC7011EB7BC90028C6BB /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
-		55CBFC7911EB7C4E0028C6BB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPApp_AppDelegate.h; sourceTree = "<group>"; };
 		55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPApp_AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55D1BD58120FBAC0004FD083 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		55D1BD5D120FBE51004FD083 /* PPMusicList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicList.h; sourceTree = "<group>"; };
 		55D1BD5E120FBE51004FD083 /* PPMusicList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPMusicList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO-PrefixHeader.pch"; sourceTree = "<group>"; };
+		55DEBFED1801DFF70089B940 /* Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Example-Info.plist"; sourceTree = "<group>"; };
+		55DEBFEE1801DFF70089B940 /* Example.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Example.c; sourceTree = "<group>"; };
+		55DEBFEF1801DFF70089B940 /* Example.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example.h; sourceTree = "<group>"; };
 		55E52E271245640500315307 /* PPFastForward.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPFastForward.pdf; sourceTree = "<group>"; };
 		55E52E281245640500315307 /* PPReverse.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPReverse.pdf; sourceTree = "<group>"; };
 		55E52E291245640500315307 /* PPStop.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPStop.pdf; sourceTree = "<group>"; };
@@ -2209,7 +2199,6 @@
 		55EE8EBF100404EB00E75E63 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		55EE8EC0100404EB00E75E63 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
 		55F41A2217EF800B00605DF8 /* version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = version.sh; sourceTree = "<group>"; };
-		55F41A2317EF802500605DF8 /* updateInfoPlist.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = updateInfoPlist.rb; sourceTree = "<group>"; };
 		55F41A2D17EF853C00605DF8 /* PlayerPRO Player-Info.plistvers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPRO Player-Info.plistvers.plist"; sourceTree = "<group>"; };
 		55F41A2E17EF855800605DF8 /* Cocoa-Info.plistvers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Cocoa-Info.plistvers.plist"; sourceTree = "<group>"; };
 		55F41A3517EF96AF00605DF8 /* PPExportObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPExportObject.h; sourceTree = "<group>"; };
@@ -2220,7 +2209,6 @@
 		55F4287716A89A9C009013D8 /* PPMadCommandObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMadCommandObject.m; sourceTree = "<group>"; };
 		55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSoundSettingsViewController.h; sourceTree = "<group>"; };
 		55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSoundSettingsViewController.m; sourceTree = "<group>"; };
-		55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPSoundSettingsViewController.xib; sourceTree = "<group>"; };
 		55FCC5E417FDF199004FBEE7 /* schema.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = schema.plist; sourceTree = "<group>"; };
 		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileUtils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = DelayOutPut.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -2252,6 +2240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				551292F2163DDA8E00C2C639 /* PlayerPROCore.framework in Frameworks */,
+				55085D821836EC8D004A152F /* CoreMIDI.framework in Frameworks */,
 				551292D9163DD68500C2C639 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2383,15 +2372,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55534ACA1817C387006D6BCB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55534ACE1817C387006D6BCB /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5557769C17EBF8FD0019D008 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				555776DC17EBFA430019D008 /* AudioToolbox.framework in Frameworks */,
+				55085D881836EE7B004A152F /* AudioToolbox.framework in Frameworks */,
+				55085D851836EE0F004A152F /* CoreAudio.framework in Frameworks */,
 				555776D817EBF9D80019D008 /* libiOSPlayerPROCore.a in Frameworks */,
 				555776D917EBF9D80019D008 /* libPlayerPROKit-iOS.a in Frameworks */,
-				555776A217EBF8FE0019D008 /* CoreGraphics.framework in Frameworks */,
-				555776A417EBF8FE0019D008 /* UIKit.framework in Frameworks */,
 				555776A017EBF8FE0019D008 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2401,7 +2397,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				555776C517EBF8FF0019D008 /* XCTest.framework in Frameworks */,
-				555776C717EBF9000019D008 /* UIKit.framework in Frameworks */,
 				555776C617EBF9000019D008 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2410,8 +2405,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5573A1371656FD4000A5AECA /* AudioUnit.framework in Frameworks */,
-				5573A1341656FD3600A5AECA /* CoreFoundation.framework in Frameworks */,
 				5573A1041656FAF100A5AECA /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2434,10 +2427,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5578C48217D9E8560057D11B /* Cocoa.framework in Frameworks */,
-				5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */,
-				5578C4CE17DA6D0E0057D11B /* QTKit.framework in Frameworks */,
+				55149C621832D176009C850B /* AVFoundation.framework in Frameworks */,
 				5578C4CF17DA6D2C0057D11B /* CoreFoundation.framework in Frameworks */,
+				5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */,
+				5578C48217D9E8560057D11B /* Cocoa.framework in Frameworks */,
 				5578C4FC17DB8A2F0057D11B /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2712,6 +2705,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		559C4182183EB4AB004A073C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				559C418E183EB4AB004A073C /* CoreFoundation.framework in Frameworks */,
+				559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */,
+				559C418D183EB4AB004A073C /* CoreServices.framework in Frameworks */,
+				559C418B183EB4AB004A073C /* ApplicationServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55ADC3D517D6F390001F27D4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2768,11 +2772,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5578C4F817DAB2830057D11B /* PlayerPROKit.framework in Frameworks */,
-				557C758516A3455E00923755 /* QTKit.framework in Frameworks */,
-				55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */,
+				55149C611832D16C009C850B /* AVFoundation.framework in Frameworks */,
 				55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */,
 				55105C9C13BE638D00902106 /* PlayerPROCore.framework in Frameworks */,
+				55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */,
+				55085D811836EC82004A152F /* CoreMIDI.framework in Frameworks */,
+				5578C4F817DAB2830057D11B /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2793,11 +2798,11 @@
 		551292DA163DD68500C2C639 /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				555776C417EBF8FF0019D008 /* XCTest.framework */,
 				55EE8EBF100404EB00E75E63 /* CoreServices.framework */,
 				55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */,
 				551292DB163DD68500C2C639 /* AppKit.framework */,
 				551292DC163DD68500C2C639 /* CoreData.framework */,
-				551292DD163DD68500C2C639 /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
@@ -3040,8 +3045,6 @@
 				552C442717DFE48A00AFCB5C /* LengthWindowController.h */,
 				552C442817DFE48A00AFCB5C /* LengthWindowController.m */,
 				552C442917DFE48A00AFCB5C /* LengthWindowController.xib */,
-				5521F40A17F75A93002CDBA9 /* PPSizeFormatterLength.h */,
-				5521F40B17F75A93002CDBA9 /* PPSizeFormatterLength.m */,
 				552C442C17DFE4B800AFCB5C /* LengthViewController.h */,
 				552C442D17DFE4B800AFCB5C /* LengthViewController.m */,
 				552C442E17DFE4B800AFCB5C /* LengthViewController.xib */,
@@ -3118,6 +3121,7 @@
 				5518105810C35A2600ADA9F4 /* small MAD Music.madk */,
 				5518105A10C35A2600ADA9F4 /* small MOD Music.mod */,
 				5518107410C35A4500ADA9F4 /* PlayerPRO Example-Info.plist */,
+				553EFE0218135EBD00F0D51E /* InfoPlist.strings */,
 			);
 			name = "Carbon Example";
 			path = Example;
@@ -3310,14 +3314,14 @@
 		55232AFD11FDF10C0041A4EC /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				55232AFE11FDF1310041A4EC /* MidiPrefs.xib */,
+				55085D7A1836BAAA004A152F /* MidiPrefs.xib */,
 				5504A6E416619E10005BDE4B /* ClassicPrefs.xib */,
 				5504A6E716619E1C005BDE4B /* DigitalPrefs.xib */,
 				5504A6EA16619E25005BDE4B /* BoxPrefs.xib */,
 				5504A6ED16619E2E005BDE4B /* MiscPrefs.xib */,
 				55232B0D11FDF2980041A4EC /* ColorPrefs.xib */,
 				5504A6F016619E39005BDE4B /* MusicListPrefs.xib */,
-				55232B1311FDF3080041A4EC /* PianoPrefs.xib */,
+				55085D7D1836BAB2004A152F /* PianoPrefs.xib */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -3359,6 +3363,7 @@
 		553340D810BB5368005208D1 /* Import-Export */ = {
 			isa = PBXGroup;
 			children = (
+				55DEBFEC1801DFF70089B940 /* Plug-in example */,
 				5546217D163A345F0005F491 /* PlugExports-Mac.exp */,
 				551E166C10CCD5DF003C842A /* 669 */,
 				551E166D10CCD5F3003C842A /* AMF */,
@@ -3376,14 +3381,17 @@
 				551E167A10CCD6BE003C842A /* ULT */,
 				551E167910CCD6B4003C842A /* UMX */,
 				551E167B10CCD6C8003C842A /* XM */,
-				553340EB10BB5368005208D1 /* MIDI Folder */,
+				553340EB10BB5368005208D1 /* MIDI */,
 			);
 			path = "Import-Export";
 			sourceTree = "<group>";
 		};
-		553340EB10BB5368005208D1 /* MIDI Folder */ = {
+		553340EB10BB5368005208D1 /* MIDI */ = {
 			isa = PBXGroup;
 			children = (
+				5517DAC6180CAE2C001413D0 /* dls.h */,
+				5517DAC7180CAE2C001413D0 /* dls2.h */,
+				5517DAC8180CAE2C001413D0 /* dlsmac.h */,
 				55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */,
 				55ADC3E517D7CBF8001F27D4 /* Midi-rsrc.h */,
 				5586889810BF67F100FCC24D /* MIDI-Info.plist */,
@@ -3395,6 +3403,7 @@
 				553340F310BB5368005208D1 /* PTMIDSAV.C */,
 				553340F410BB5368005208D1 /* PTMIDZAP.C */,
 			);
+			name = MIDI;
 			path = "MIDI Folder";
 			sourceTree = "<group>";
 		};
@@ -3565,19 +3574,36 @@
 			path = Revert;
 			sourceTree = "<group>";
 		};
+		55534ACF1817C387006D6BCB /* updateInfoPlist */ = {
+			isa = PBXGroup;
+			children = (
+				55534AD01817C387006D6BCB /* main.m */,
+				55534AD21817C387006D6BCB /* Supporting Files */,
+			);
+			path = updateInfoPlist;
+			sourceTree = "<group>";
+		};
+		55534AD21817C387006D6BCB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				55534AD31817C388006D6BCB /* updateInfoPlist-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */ = {
 			isa = PBXGroup;
 			children = (
 				555776AE17EBF8FE0019D008 /* PPiAppDelegate.h */,
 				555776AF17EBF8FE0019D008 /* PPiAppDelegate.m */,
-				555776B117EBF8FE0019D008 /* Main_iPhone.storyboard */,
-				555776B417EBF8FF0019D008 /* Main_iPad.storyboard */,
 				555776B717EBF8FF0019D008 /* PPiMasterViewController.h */,
 				555776B817EBF8FF0019D008 /* PPiMasterViewController.m */,
 				555776BA17EBF8FF0019D008 /* PPiDetailViewController.h */,
 				555776BB17EBF8FF0019D008 /* PPiDetailViewController.m */,
 				559C871717ECD8B400E4E13C /* PPiSettingsDetailController.h */,
 				559C871817ECD8B400E4E13C /* PPiSettingsDetailController.m */,
+				55ECB340180A280800497C7E /* Main_iPad.storyboard */,
+				55ECB343180A281400497C7E /* Main_iPhone.storyboard */,
 				555776BD17EBF8FF0019D008 /* Images.xcassets */,
 				555776A617EBF8FE0019D008 /* Supporting Files */,
 			);
@@ -3624,12 +3650,9 @@
 		5573A1321656FD1700A5AECA /* iOS Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				555776DB17EBFA430019D008 /* AudioToolbox.framework */,
-				5573A1351656FD4000A5AECA /* AudioUnit.framework */,
-				5573A1361656FD4000A5AECA /* CoreAudio.framework */,
-				5573A1331656FD3600A5AECA /* CoreFoundation.framework */,
-				555776A317EBF8FE0019D008 /* UIKit.framework */,
-				555776C417EBF8FF0019D008 /* XCTest.framework */,
+				55085D861836EE7B004A152F /* AudioToolbox.framework */,
+				55085D871836EE7B004A152F /* AudioUnit.framework */,
+				55085D841836EE0F004A152F /* CoreAudio.framework */,
 			);
 			name = "iOS Frameworks";
 			sourceTree = "<group>";
@@ -3700,6 +3723,7 @@
 				55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */,
 				55B23D111687D22700DCE923 /* MainDriverCarbon.c */,
 				550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */,
+				55C930381819E68700D9E072 /* CocoaFuncs.m */,
 			);
 			name = "Main Driver Source";
 			sourceTree = "<group>";
@@ -3713,6 +3737,27 @@
 			);
 			name = PPPlay;
 			path = Examples/PPPlay;
+			sourceTree = "<group>";
+		};
+		559C418F183EB4AB004A073C /* PPQuickView */ = {
+			isa = PBXGroup;
+			children = (
+				559C4195183EB4AB004A073C /* GenerateThumbnailForURL.c */,
+				559C4197183EB4AB004A073C /* GeneratePreviewForURL.c */,
+				559C4199183EB4AB004A073C /* main.c */,
+				559C4190183EB4AB004A073C /* Supporting Files */,
+			);
+			path = PPQuickView;
+			sourceTree = "<group>";
+		};
+		559C4190183EB4AB004A073C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				559C4191183EB4AB004A073C /* PPQuickView-Info.plist */,
+				559C4192183EB4AB004A073C /* InfoPlist.strings */,
+				559C419B183EB4AB004A073C /* PPQuickView-Prefix.pch */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		55B7665517E3BDFE004C1D45 /* App Plug-in code */ = {
@@ -3736,10 +3781,8 @@
 			children = (
 				55BE998617978BB100D6DECC /* InfoPlist.strings */,
 				55BE998817978BB100D6DECC /* schema.strings */,
-				55BE998A17978BB100D6DECC /* GetMetadataForFile.c */,
+				55BE998A17978BB100D6DECC /* GetMetadataForFile.m */,
 				55BE998B17978BB100D6DECC /* GetMetadataForFile.h */,
-				5578C56E17DBD9930057D11B /* MADPackageMDImport.m */,
-				55BE998C17978BB100D6DECC /* Info.plist */,
 				55BE998D17978BB100D6DECC /* main.c */,
 				55BE999117978BB200D6DECC /* schema.xml */,
 				55FCC5E417FDF199004FBEE7 /* schema.plist */,
@@ -3784,7 +3827,7 @@
 				5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */,
 				55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */,
 				55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */,
-				55F4287B16A8B1FB009013D8 /* PPSoundSettingsViewController.xib */,
+				55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */,
 				55EA019616AF15B500D6AEA0 /* PPFilterPlugObject.h */,
 				55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */,
 				55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */,
@@ -3793,14 +3836,22 @@
 				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
 				552A662716B5EBEA007C63F7 /* PPPlugInObject.h */,
 				552A662816B5EBEB007C63F7 /* PPPlugInObject.m */,
-				5547C9DC16D97FC700C36FEA /* PPFileSizeFormatter.h */,
-				5547C9DD16D97FC700C36FEA /* PPFileSizeFormatter.m */,
 				556AE4BB16E290650074BBF9 /* PPByteswap.h */,
 				55F41A3517EF96AF00605DF8 /* PPExportObject.h */,
 				55F41A3617EF96AF00605DF8 /* PPExportObject.m */,
 				55F41A3417EF918100605DF8 /* Document-based code */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		55DEBFEC1801DFF70089B940 /* Plug-in example */ = {
+			isa = PBXGroup;
+			children = (
+				55DEBFED1801DFF70089B940 /* Example-Info.plist */,
+				55DEBFEE1801DFF70089B940 /* Example.c */,
+				55DEBFEF1801DFF70089B940 /* Example.h */,
+			);
+			path = "Plug-in example";
 			sourceTree = "<group>";
 		};
 		55F41A3417EF918100605DF8 /* Document-based code */ = {
@@ -3828,7 +3879,6 @@
 			isa = PBXGroup;
 			children = (
 				55F41A2217EF800B00605DF8 /* version.sh */,
-				55F41A2317EF802500605DF8 /* updateInfoPlist.rb */,
 				553626AE17EA6ED200D3A3C8 /* Xcconfigs */,
 				55CBFCD411EB7CA00028C6BB /* Classes */,
 				88E0C3CA0C2F21DD00D6C081 /* Resources */,
@@ -3843,6 +3893,8 @@
 				5578C48317D9E8560057D11B /* PlayerPRO Player */,
 				555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */,
 				555776CA17EBF9000019D008 /* iOS PlayerPRO PlayerTests */,
+				55534ACF1817C387006D6BCB /* updateInfoPlist */,
+				559C418F183EB4AB004A073C /* PPQuickView */,
 				88E0C4950C2F21E500D6C081 /* Frameworks */,
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 				5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */,
@@ -3904,7 +3956,6 @@
 				55879F85164CA65D009068D5 /* PPPlay */,
 				5573A1031656FAF100A5AECA /* libiOSPlayerPROCore.a */,
 				55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */,
-				55BE997817978AEF00D6DECC /* PlayerPROImporter.mdimporter */,
 				550FFAEB17CEA4570003A2F3 /* AIFF.plugin */,
 				55ADC3DB17D6F390001F27D4 /* Wave.plugin */,
 				5578C48117D9E8560057D11B /* PlayerPRO Player.app */,
@@ -3913,6 +3964,8 @@
 				55B0F59E17DF0F0500653BCD /* libPlayerPROKit-iOS.a */,
 				5557769F17EBF8FE0019D008 /* iOS PlayerPRO Player.app */,
 				555776C317EBF8FF0019D008 /* iOS PlayerPRO PlayerTests.xctest */,
+				55534ACD1817C387006D6BCB /* updateInfoPlist */,
+				559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3920,7 +3973,7 @@
 		88E0C3CA0C2F21DD00D6C081 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				553626B717EB9DEA00D3A3C8 /* Cocoa Images.xcassets */,
+				553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */,
 				5521F41617FA541C002CDBA9 /* Trackers.xcassets */,
 				55A9351817F28F9700493DC5 /* Shared.xcassets */,
 				557139E51685007B00831A5A /* OpenPanelViewController.xib */,
@@ -3961,7 +4014,6 @@
 				557C758416A3455D00923755 /* QTKit.framework */,
 				552F12E116AE08AF00394143 /* AVFoundation.framework */,
 				555C125016378B3500735225 /* AudioUnit.framework */,
-				5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */,
 				55EE8EBC100404EB00E75E63 /* CoreAudio.framework */,
 				55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */,
 				55EE8EC0100404EB00E75E63 /* QuickTime.framework */,
@@ -3969,7 +4021,9 @@
 				5573A3ED10B5151700FF8B50 /* Cocoa.framework */,
 				5573A3EF10B5151700FF8B50 /* Foundation.framework */,
 				55ED547310D5F9CD00824C61 /* CoreMIDI.framework */,
-				555776A117EBF8FE0019D008 /* CoreGraphics.framework */,
+				559C4188183EB4AB004A073C /* QuickLook.framework */,
+				559C418A183EB4AB004A073C /* ApplicationServices.framework */,
+				559C418C183EB4AB004A073C /* CoreServices.framework */,
 				551292DA163DD68500C2C639 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -3999,6 +4053,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55149C631832EDC0009C850B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5599F13316C82100008DDAFB /* RDriverCarbon.h in Headers */,
+				55C358B816C42D1800FB9FA6 /* PlayerPROCore.h in Headers */,
+				55C358B916C42D1800FB9FA6 /* MAD.h in Headers */,
+				55ADC3E917D7E4E5001F27D4 /* MADDriver.h in Headers */,
+				55C358BA16C42D1800FB9FA6 /* RDriver.h in Headers */,
+				55C358BC16C42D1800FB9FA6 /* PPPlug.h in Headers */,
+				55C358BD16C42D1800FB9FA6 /* PPDefs.h in Headers */,
+				55C358BE16C42D1800FB9FA6 /* FileUtils.h in Headers */,
+				55C358BB16C42D1800FB9FA6 /* RDriverInt.h in Headers */,
+				55149C641832EE86009C850B /* PPPrivate.h in Headers */,
+				55149C651832EE92009C850B /* embeddedPlugs.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5573A33A10B50D2600FF8B50 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -4021,16 +4093,23 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5578C51117DB90110057D11B /* PlayerPROKit.h in Headers */,
-				5578C51217DB901F0057D11B /* PPLibrary.h in Headers */,
 				5521F40317F65F19002CDBA9 /* PPFilterPlugController.h in Headers */,
-				5578C51417DB901F0057D11B /* PPDriver.h in Headers */,
 				5578C51617DB901F0057D11B /* PPLibrary_PPKPrivate.h in Headers */,
 				5578C51717DB901F0057D11B /* PPDriver_Private.h in Headers */,
+				5578C51117DB90110057D11B /* PlayerPROKit.h in Headers */,
+				5578C51217DB901F0057D11B /* PPLibrary.h in Headers */,
+				5578C51417DB901F0057D11B /* PPDriver.h in Headers */,
 				5578C51817DB901F0057D11B /* PPMusicObject.h in Headers */,
-				5578C51A17DB901F0057D11B /* PPMusicObject_PPKPrivate.h in Headers */,
 				55B0F5AF17DF0FB000653BCD /* PPSampleObject.h in Headers */,
 				55B0F5B217DF0FC100653BCD /* PPInstrumentObject.h in Headers */,
+				5578C51A17DB901F0057D11B /* PPMusicObject_PPKPrivate.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		559C4183183EB4AB004A073C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4059,9 +4138,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 551292EA163DD68500C2C639 /* Build configuration list for PBXNativeTarget "PlayerPROKit" */;
 			buildPhases = (
+				551292D5163DD68500C2C639 /* Headers */,
 				551292D3163DD68500C2C639 /* Sources */,
 				551292D4163DD68500C2C639 /* Frameworks */,
-				551292D5163DD68500C2C639 /* Headers */,
 				551292D6163DD68500C2C639 /* Resources */,
 			);
 			buildRules = (
@@ -4336,6 +4415,23 @@
 			productReference = 554E123010D6F3E600BB619C /* Revert.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		55534ACC1817C387006D6BCB /* updateInfoPlist */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55534AD81817C388006D6BCB /* Build configuration list for PBXNativeTarget "updateInfoPlist" */;
+			buildPhases = (
+				55534AC91817C387006D6BCB /* Sources */,
+				55534ACA1817C387006D6BCB /* Frameworks */,
+				55534AD918183934006D6BCB /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = updateInfoPlist;
+			productName = updateInfoPlist;
+			productReference = 55534ACD1817C387006D6BCB /* updateInfoPlist */;
+			productType = "com.apple.product-type.tool";
+		};
 		5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 555776D217EBF9000019D008 /* Build configuration list for PBXNativeTarget "iOS PlayerPRO Player" */;
@@ -4422,7 +4518,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				55F41A2C17EF84A500605DF8 /* PBXTargetDependency */,
+				55534AEB18183B17006D6BCB /* PBXTargetDependency */,
 				5578C49917D9E86D0057D11B /* PBXTargetDependency */,
 				5578C49B17D9E8730057D11B /* PBXTargetDependency */,
 				55886F7317DEDAA200021A82 /* PBXTargetDependency */,
@@ -4986,6 +5082,25 @@
 			productReference = 55879F85164CA65D009068D5 /* PPPlay */;
 			productType = "com.apple.product-type.tool";
 		};
+		559C4186183EB4AB004A073C /* PPQuickView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 559C419C183EB4AC004A073C /* Build configuration list for PBXNativeTarget "PPQuickView" */;
+			buildPhases = (
+				559C4181183EB4AB004A073C /* Sources */,
+				559C4182183EB4AB004A073C /* Frameworks */,
+				559C4183183EB4AB004A073C /* Headers */,
+				559C4184183EB4AB004A073C /* Resources */,
+				559C4185183EB4AB004A073C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PPQuickView;
+			productName = PPQuickView;
+			productReference = 559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */;
+			productType = "com.apple.product-type.bundle";
+		};
 		55ADC3CF17D6F390001F27D4 /* Wave */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55ADC3D817D6F390001F27D4 /* Build configuration list for PBXNativeTarget "Wave" */;
@@ -5042,30 +5157,12 @@
 			productReference = 55B797DC10D6E6C40073E379 /* Complex Fade.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
-		55BE997717978AEF00D6DECC /* PPImport */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 55BE998317978AF000D6DECC /* Build configuration list for PBXNativeTarget "PPImport" */;
-			buildPhases = (
-				55BE997417978AEF00D6DECC /* Sources */,
-				55BE997517978AEF00D6DECC /* Frameworks */,
-				55BE997617978AEF00D6DECC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				55BE999B17978C4400D6DECC /* PBXTargetDependency */,
-			);
-			name = PPImport;
-			productName = PPImport;
-			productReference = 55BE997817978AEF00D6DECC /* PlayerPROImporter.mdimporter */;
-			productType = "com.apple.product-type.bundle";
-		};
 		55C3589516C42D1800FB9FA6 /* PlayerPROCompact */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55C358BF16C42D1800FB9FA6 /* Build configuration list for PBXNativeTarget "PlayerPROCompact" */;
 			buildPhases = (
+				55149C631832EDC0009C850B /* Headers */,
 				55C3589616C42D1800FB9FA6 /* Sources */,
-				55C358B616C42D1800FB9FA6 /* CopyFiles */,
 				55C358B216C42D1800FB9FA6 /* Frameworks */,
 			);
 			buildRules = (
@@ -5077,9 +5174,9 @@
 			productReference = 55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		55CBF9A511EB77760028C6BB /* Cocoa */ = {
+		55CBF9A511EB77760028C6BB /* PlayerPRO 6 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 55CBF9AB11EB77780028C6BB /* Build configuration list for PBXNativeTarget "Cocoa" */;
+			buildConfigurationList = 55CBF9AB11EB77780028C6BB /* Build configuration list for PBXNativeTarget "PlayerPRO 6" */;
 			buildPhases = (
 				55CBF9A211EB77760028C6BB /* Resources */,
 				55CBF9A311EB77760028C6BB /* Sources */,
@@ -5092,7 +5189,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				55F41A2A17EF849F00605DF8 /* PBXTargetDependency */,
+				55534AE918183B0C006D6BCB /* PBXTargetDependency */,
 				5578C53217DB95290057D11B /* PBXTargetDependency */,
 				5578C4FB17DAB2910057D11B /* PBXTargetDependency */,
 				55A01A1B13BE63180049B720 /* PBXTargetDependency */,
@@ -5101,7 +5198,7 @@
 				55ADC3F717D7F52B001F27D4 /* PBXTargetDependency */,
 				55CBFA0011EB77AA0028C6BB /* PBXTargetDependency */,
 			);
-			name = Cocoa;
+			name = "PlayerPRO 6";
 			productName = Cocoa;
 			productReference = 55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */;
 			productType = "com.apple.product-type.application";
@@ -5134,7 +5231,7 @@
 				LastUpgradeCheck = 0500;
 				TargetAttributes = {
 					555776C217EBF8FF0019D008 = {
-						TestTargetID = 5557769E17EBF8FD0019D008;
+						TestTargetID = 55CBF9A511EB77760028C6BB;
 					};
 				};
 			};
@@ -5149,25 +5246,26 @@
 				German,
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 88E0C3A60C2F21DD00D6C081;
 			productRefGroup = 88E0C3B60C2F21DD00D6C081 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				55CBF9A511EB77760028C6BB /* Cocoa */,
+				55CBF9A511EB77760028C6BB /* PlayerPRO 6 */,
 				5578C48017D9E8560057D11B /* PlayerPRO Player */,
-				55F41A2417EF814500605DF8 /* Generate Git versions */,
+				55534ACC1817C387006D6BCB /* updateInfoPlist */,
 				5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */,
-				5518107110C35A4500ADA9F4 /* Carbon Example */,
 				555776C217EBF8FF0019D008 /* iOS PlayerPRO PlayerTests */,
-				55BE997717978AEF00D6DECC /* PPImport */,
+				5518107110C35A4500ADA9F4 /* Carbon Example */,
 				5578C51B17DB94A50057D11B /* PPImport-app */,
+				559C4186183EB4AB004A073C /* PPQuickView */,
 				5573A33E10B50D2600FF8B50 /* PlayerPROCore */,
 				551292D7163DD68500C2C639 /* PlayerPROKit */,
 				55879F84164CA65D009068D5 /* PPPlay */,
-				5573A1021656FAF100A5AECA /* iOSPlayerPROCore */,
 				55C3589516C42D1800FB9FA6 /* PlayerPROCompact */,
+				5573A1021656FAF100A5AECA /* iOSPlayerPROCore */,
 				5578C50517DB8F9E0057D11B /* libPlayerPROKit */,
 				55B0F59D17DF0F0500653BCD /* PlayerPROKit-iOS */,
 				5533410810BB5460005208D1 /* Import-export */,
@@ -5235,7 +5333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				551292E3163DD68500C2C639 /* InfoPlist.strings in Resources */,
-				55DEBFEB18008DA50089B940 /* PPSoundSettingsViewController.xib in Resources */,
+				55C9303B1819F6EC00D9E072 /* PPSoundSettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5251,6 +5349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5521F41A17FA548A002CDBA9 /* Trackers.xcassets in Resources */,
+				553EFE0018135EBD00F0D51E /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5345,10 +5444,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				555776B617EBF8FF0019D008 /* Main_iPad.storyboard in Resources */,
+				55ECB33E180A280800497C7E /* Main_iPad.storyboard in Resources */,
 				55A9351B17F28F9700493DC5 /* Shared.xcassets in Resources */,
+				55ECB341180A281400497C7E /* Main_iPhone.storyboard in Resources */,
 				555776BE17EBF8FF0019D008 /* Images.xcassets in Resources */,
-				555776B317EBF8FE0019D008 /* Main_iPhone.storyboard in Resources */,
 				5521F41917FA541C002CDBA9 /* Trackers.xcassets in Resources */,
 				555776AA17EBF8FE0019D008 /* InfoPlist.strings in Resources */,
 			);
@@ -5404,7 +5503,6 @@
 				5578C52917DB94A50057D11B /* InfoPlist.strings in Resources */,
 				5578C52A17DB94A50057D11B /* schema.strings in Resources */,
 				5578C52B17DB94A50057D11B /* schema.xml in Resources */,
-				55FCC5E617FDF199004FBEE7 /* schema.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5607,6 +5705,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		559C4184183EB4AB004A073C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				559C4194183EB4AB004A073C /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55ADC3D217D6F390001F27D4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -5622,36 +5728,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		55BE997617978AEF00D6DECC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				55BE999517978BE700D6DECC /* InfoPlist.strings in Resources */,
-				55BE999617978BE700D6DECC /* schema.strings in Resources */,
-				55BE999717978BEF00D6DECC /* schema.xml in Resources */,
-				55FCC5E517FDF199004FBEE7 /* schema.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		55CBF9A211EB77760028C6BB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				553626B817EB9DEA00D3A3C8 /* Cocoa Images.xcassets in Resources */,
+				553626B817EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets in Resources */,
 				55CBFC7311EB7BD90028C6BB /* InfoPlist.strings in Resources */,
 				55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */,
 				5533600411EBC66400525CAF /* Localizable.strings in Resources */,
 				55E52E2512455E5100315307 /* preferences.xib in Resources */,
-				55232AFF11FDF1310041A4EC /* MidiPrefs.xib in Resources */,
+				55085D781836BAAA004A152F /* MidiPrefs.xib in Resources */,
 				5504A6E216619E10005BDE4B /* ClassicPrefs.xib in Resources */,
 				5557769717EBDFAC0019D008 /* PPFastForward.pdf in Resources */,
 				5504A6E516619E1C005BDE4B /* DigitalPrefs.xib in Resources */,
 				5504A6E816619E25005BDE4B /* BoxPrefs.xib in Resources */,
 				5504A6EB16619E2E005BDE4B /* MiscPrefs.xib in Resources */,
 				55232B0E11FDF2980041A4EC /* ColorPrefs.xib in Resources */,
-				5504A6EE16619E39005BDE4B /* MusicListPrefs.xib in Resources */,
 				55A9351917F28F9700493DC5 /* Shared.xcassets in Resources */,
-				55232B1411FDF3090041A4EC /* PianoPrefs.xib in Resources */,
+				55085D7B1836BAB2004A152F /* PianoPrefs.xib in Resources */,
 				55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */,
 				557EC3E9121711280082B80A /* PPPlay.pdf in Resources */,
 				55E52E2B1245640500315307 /* PPReverse.pdf in Resources */,
@@ -5712,6 +5806,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		559C4185183EB4AB004A073C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55B797E410D6E6F80073E379 /* Rez */ = {
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
@@ -5723,7 +5824,7 @@
 /* End PBXRezBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		55F41A2817EF81D900605DF8 /* ShellScript */ = {
+		55534AD918183934006D6BCB /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -5736,7 +5837,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "ruby updateInfoPlist.rb Cocoa-Info.plist Cocoa\ntouch -amfc Cocoa-Info.plistvers.plist\nruby updateInfoPlist.rb \"PlayerPRO Player/PlayerPRO Player-Info.plist\" player\ntouch -amfc \"PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist\"\n\n";
+			shellScript = "cd $SRCROOT\n\"$TARGET_BUILD_DIR\"/$PRODUCT_NAME Cocoa-Info.plist Cocoa\ntouch -amfc Cocoa-Info.plistvers.plist\n\"$TARGET_BUILD_DIR\"/$PRODUCT_NAME \"PlayerPRO Player/PlayerPRO Player-Info.plist\" player\ntouch -amfc \"PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist\"\n";
 		};
 		55F41A3017EF8A8E00605DF8 /* Strip headers */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5920,6 +6021,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55534AC91817C387006D6BCB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55534AD11817C387006D6BCB /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5557769B17EBF8FD0019D008 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -5988,6 +6097,7 @@
 				5573A36310B50DF600FF8B50 /* realft.c in Sources */,
 				5573A36410B50DFF00FF8B50 /* TickRemover.c in Sources */,
 				5573A3EA10B5147C00FF8B50 /* MyDebugStr.c in Sources */,
+				55C930391819E68700D9E072 /* CocoaFuncs.m in Sources */,
 				550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
 				55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */,
 				55007E9D161A552C00297A3F /* FileUtils.c in Sources */,
@@ -6013,7 +6123,6 @@
 				5578C4BB17DA4B3A0057D11B /* PPPlugInInfoController.m in Sources */,
 				5578C4BD17DA4BC20057D11B /* PPTimeFormatter.m in Sources */,
 				5578C4BE17DA4BE70057D11B /* SoundOutputController.m in Sources */,
-				5521F40917F7598E002CDBA9 /* PPFileSizeFormatter.m in Sources */,
 				5578C4BF17DA4BF20057D11B /* MusicListPreferenceController.m in Sources */,
 				5578C4C017DA4C040057D11B /* MiscPreferenceController.m in Sources */,
 				5578C4D017DA715D0057D11B /* OpenPanelViewController.m in Sources */,
@@ -6037,9 +6146,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5578C51F17DB94A50057D11B /* GetMetadataForFile.c in Sources */,
+				5578C51F17DB94A50057D11B /* GetMetadataForFile.m in Sources */,
 				5578C52017DB94A50057D11B /* main.c in Sources */,
-				5578C56F17DBD9930057D11B /* MADPackageMDImport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6112,7 +6220,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				552C442A17DFE48A00AFCB5C /* LengthWindowController.m in Sources */,
-				5521F40C17F75A93002CDBA9 /* PPSizeFormatterLength.m in Sources */,
 				552C442F17DFE4B800AFCB5C /* LengthViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6274,6 +6381,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		559C4181183EB4AB004A073C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				559C4196183EB4AB004A073C /* GenerateThumbnailForURL.c in Sources */,
+				559C4198183EB4AB004A073C /* GeneratePreviewForURL.c in Sources */,
+				559C419A183EB4AB004A073C /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55ADC3D317D6F390001F27D4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6303,15 +6420,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		55BE997417978AEF00D6DECC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				55BE999817978BF700D6DECC /* GetMetadataForFile.c in Sources */,
-				55BE999917978BF700D6DECC /* main.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		55C3589616C42D1800FB9FA6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6328,6 +6436,7 @@
 				55C358A116C42D1800FB9FA6 /* MyDebugStr.c in Sources */,
 				55C358A216C42D1800FB9FA6 /* DMF.c in Sources */,
 				55C358A316C42D1800FB9FA6 /* IT.c in Sources */,
+				55C9303A1819E68700D9E072 /* CocoaFuncs.m in Sources */,
 				55C358A416C42D1800FB9FA6 /* MADfg.c in Sources */,
 				55C358A516C42D1800FB9FA6 /* MADH.c in Sources */,
 				55C358A616C42D1800FB9FA6 /* MADI.c in Sources */,
@@ -6381,7 +6490,6 @@
 				55F4287416A8968C009013D8 /* PPPatternObject.m in Sources */,
 				55F4287816A89A9C009013D8 /* PPMadCommandObject.m in Sources */,
 				55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */,
-				5521F40817F7598D002CDBA9 /* PPFileSizeFormatter.m in Sources */,
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
 				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,
 				55469C2716BF34D200175A1F /* PatternHandler.m in Sources */,
@@ -6423,6 +6531,11 @@
 			isa = PBXTargetDependency;
 			target = 55151F7210DEDBDB0054ABC4 /* XI */;
 			targetProxy = 55151F8310DEDC0F0054ABC4 /* PBXContainerItemProxy */;
+		};
+		5517DAC4180CAC6D001413D0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5586888B10BF67F100FCC24D /* MIDI */;
+			targetProxy = 5517DAC3180CAC6D001413D0 /* PBXContainerItemProxy */;
 		};
 		5518107A10C35A4C00ADA9F4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6563,6 +6676,16 @@
 			isa = PBXTargetDependency;
 			target = 554E11EF10D6F3E100BB619C /* Propagate */;
 			targetProxy = 554E126A10D6F51B00BB619C /* PBXContainerItemProxy */;
+		};
+		55534AE918183B0C006D6BCB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55534ACC1817C387006D6BCB /* updateInfoPlist */;
+			targetProxy = 55534AE818183B0C006D6BCB /* PBXContainerItemProxy */;
+		};
+		55534AEB18183B17006D6BCB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55534ACC1817C387006D6BCB /* updateInfoPlist */;
+			targetProxy = 55534AEA18183B17006D6BCB /* PBXContainerItemProxy */;
 		};
 		555776C917EBF9000019D008 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6979,11 +7102,6 @@
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 55B797E110D6E6D00073E379 /* PBXContainerItemProxy */;
 		};
-		55BE999B17978C4400D6DECC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 55C3589516C42D1800FB9FA6 /* PlayerPROCompact */;
-			targetProxy = 55BE999A17978C4400D6DECC /* PBXContainerItemProxy */;
-		};
 		55CBFA0011EB77AA0028C6BB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5533410810BB5460005208D1 /* Import-export */;
@@ -7004,23 +7122,14 @@
 			target = 557DE3BD10E06BB500177B4C /* Filters Plugs */;
 			targetProxy = 55EE2D8617E12F0D00FED42A /* PBXContainerItemProxy */;
 		};
-		55F41A2A17EF849F00605DF8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 55F41A2417EF814500605DF8 /* Generate Git versions */;
-			targetProxy = 55F41A2917EF849F00605DF8 /* PBXContainerItemProxy */;
-		};
-		55F41A2C17EF84A500605DF8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 55F41A2417EF814500605DF8 /* Generate Git versions */;
-			targetProxy = 55F41A2B17EF84A500605DF8 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5504A6E416619E10005BDE4B /* ClassicPrefs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5504A6E316619E10005BDE4B /* en */,
+				55149C3F1832CC64009C850B /* Base */,
+				55149C4E1832CDA2009C850B /* en */,
 			);
 			name = ClassicPrefs.xib;
 			sourceTree = "<group>";
@@ -7028,7 +7137,8 @@
 		5504A6E716619E1C005BDE4B /* DigitalPrefs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5504A6E616619E1C005BDE4B /* en */,
+				55149C401832CC65009C850B /* Base */,
+				55149C501832CDAA009C850B /* en */,
 			);
 			name = DigitalPrefs.xib;
 			sourceTree = "<group>";
@@ -7036,7 +7146,8 @@
 		5504A6EA16619E25005BDE4B /* BoxPrefs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5504A6E916619E25005BDE4B /* en */,
+				55149C411832CC65009C850B /* Base */,
+				55149C521832CE42009C850B /* en */,
 			);
 			name = BoxPrefs.xib;
 			sourceTree = "<group>";
@@ -7044,7 +7155,8 @@
 		5504A6ED16619E2E005BDE4B /* MiscPrefs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5504A6EC16619E2E005BDE4B /* en */,
+				55149C421832CC65009C850B /* Base */,
+				55149C541832CE48009C850B /* en */,
 			);
 			name = MiscPrefs.xib;
 			sourceTree = "<group>";
@@ -7052,9 +7164,26 @@
 		5504A6F016619E39005BDE4B /* MusicListPrefs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5504A6EF16619E39005BDE4B /* en */,
+				55149C431832CC66009C850B /* Base */,
+				55149C561832CE54009C850B /* en */,
 			);
 			name = MusicListPrefs.xib;
+			sourceTree = "<group>";
+		};
+		55085D7A1836BAAA004A152F /* MidiPrefs.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55085D791836BAAA004A152F /* Base */,
+			);
+			name = MidiPrefs.xib;
+			sourceTree = "<group>";
+		};
+		55085D7D1836BAB2004A152F /* PianoPrefs.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55085D7C1836BAB2004A152F /* Base */,
+			);
+			name = PianoPrefs.xib;
 			sourceTree = "<group>";
 		};
 		551292E1163DD68500C2C639 /* InfoPlist.strings */ = {
@@ -7068,7 +7197,8 @@
 		5521F42017FA573B002CDBA9 /* PPPlugInInfoController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5521F42317FA5776002CDBA9 /* en */,
+				55149C3D1832CC64009C850B /* Base */,
+				55149C4A1832CD8D009C850B /* en */,
 			);
 			name = PPPlugInInfoController.xib;
 			sourceTree = "<group>";
@@ -7081,28 +7211,20 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
+		553EFE0218135EBD00F0D51E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				553EFE0118135EBD00F0D51E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		555776A817EBF8FE0019D008 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				555776A917EBF8FE0019D008 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		555776B117EBF8FE0019D008 /* Main_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				555776B217EBF8FE0019D008 /* Base */,
-			);
-			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		555776B417EBF8FF0019D008 /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				555776B517EBF8FF0019D008 /* Base */,
-			);
-			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		555776CD17EBF9000019D008 /* InfoPlist.strings */ = {
@@ -7132,7 +7254,8 @@
 		5578C49217D9E8570057D11B /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5578C49317D9E8570057D11B /* en */,
+				55149C451832CC66009C850B /* Base */,
+				55149C5A1832CEBF009C850B /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -7140,7 +7263,8 @@
 		5578C4F117DA97020057D11B /* InstrumentWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5578C4F017DA97020057D11B /* en */,
+				55149C461832CC66009C850B /* Base */,
+				55149C5C1832CEC4009C850B /* en */,
 			);
 			name = InstrumentWindow.xib;
 			sourceTree = "<group>";
@@ -7148,15 +7272,25 @@
 		557F9AF317D927DB00325C78 /* PPToneGeneratorController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				557F9AF217D927DB00325C78 /* en */,
+				55149C441832CC66009C850B /* Base */,
+				55149C581832CEA3009C850B /* en */,
 			);
 			name = PPToneGeneratorController.xib;
+			sourceTree = "<group>";
+		};
+		559C4192183EB4AB004A073C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				559C4193183EB4AB004A073C /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		55BE998617978BB100D6DECC /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				55BE998717978BB100D6DECC /* English */,
+				55085D801836DDA0004A152F /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -7165,14 +7299,25 @@
 			isa = PBXVariantGroup;
 			children = (
 				55BE998917978BB100D6DECC /* English */,
+				55085D7F1836DD85004A152F /* fr */,
 			);
 			name = schema.strings;
+			sourceTree = "<group>";
+		};
+		55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55149C3C1832CC64009C850B /* Base */,
+				554703D81834368F008E5B9B /* en */,
+			);
+			name = PPSoundSettingsViewController.xib;
 			sourceTree = "<group>";
 		};
 		55CBFC7211EB7BD90028C6BB /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				55CBFC7011EB7BC90028C6BB /* English */,
+				55085D7E1836DD85004A152F /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -7180,9 +7325,28 @@
 		55CBFC7B11EB7C950028C6BB /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				55CBFC7911EB7C4E0028C6BB /* English */,
+				55149C3E1832CC64009C850B /* Base */,
+				55149C4C1832CD95009C850B /* en */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		55ECB340180A280800497C7E /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55149C471832CC66009C850B /* Base */,
+				55149C5E1832CED1009C850B /* en */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		55ECB343180A281400497C7E /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55149C481832CC66009C850B /* Base */,
+				55085D8B1836EF96004A152F /* en */,
+			);
+			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -7203,7 +7367,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -7224,7 +7387,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -7250,7 +7412,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				INSTALL_PATH = "@rpath";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -7279,7 +7440,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				INSTALL_PATH = "@rpath";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -7322,7 +7482,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -7343,7 +7502,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -7357,6 +7515,7 @@
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				SKIP_INSTALL = NO;
 				VALID_ARCHS = i386;
 				ZERO_LINK = NO;
 			};
@@ -7372,6 +7531,7 @@
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				SKIP_INSTALL = NO;
 				VALID_ARCHS = i386;
 			};
 			name = Debug;
@@ -7391,7 +7551,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -7412,7 +7571,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -7432,7 +7590,6 @@
 					"$(inherited)",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -7453,7 +7610,6 @@
 					"$(inherited)",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -7591,7 +7747,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7611,7 +7766,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7630,7 +7784,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/Fade Vol/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7650,7 +7803,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/Fade Vol/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7669,7 +7821,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7689,7 +7840,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7708,7 +7858,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7728,7 +7877,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7747,7 +7895,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -7767,9 +7914,54 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		55534AD61817C388006D6BCB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "updateInfoPlist/updateInfoPlist-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				MACOSX_DEPLOYMENT_TARGET = "";
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		55534AD71817C388006D6BCB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "updateInfoPlist/updateInfoPlist-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				MACOSX_DEPLOYMENT_TARGET = "";
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
@@ -7778,7 +7970,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -7795,8 +7987,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GENERATE_PKGINFO_FILE = NO;
 				INFOPLIST_FILE = "iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
@@ -7810,7 +8003,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -7827,8 +8020,9 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GENERATE_PKGINFO_FILE = NO;
 				INFOPLIST_FILE = "iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -7842,7 +8036,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/iOS PlayerPRO Player.app/iOS PlayerPRO Player";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
@@ -7872,7 +8066,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/iOS PlayerPRO Player.app/iOS PlayerPRO Player";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
@@ -7916,8 +8110,10 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				COMPRESS_PNG_FILES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
@@ -7928,7 +8124,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LLVM_LTO = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -7959,15 +8157,11 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GENERATE_MASTER_OBJECT_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[arch=arm64]" = 7.0;
-				KEEP_PRIVATE_EXTERNS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -7993,15 +8187,11 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GENERATE_MASTER_OBJECT_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[arch=arm64]" = 7.0;
-				KEEP_PRIVATE_EXTERNS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
@@ -8049,7 +8239,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				CLANG_WARN_EMPTY_BODY = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8068,7 +8258,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				CLANG_WARN_EMPTY_BODY = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -8097,9 +8287,6 @@
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GENERATE_MASTER_OBJECT_FILE = YES;
-				KEEP_PRIVATE_EXTERNS = YES;
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PlayerPROKit;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
@@ -8118,9 +8305,6 @@
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GENERATE_MASTER_OBJECT_FILE = YES;
-				KEEP_PRIVATE_EXTERNS = YES;
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PlayerPROKit;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
@@ -8130,16 +8314,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"IMPORT_COCOA_BUNDLE=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source/MADDriver.Source";
@@ -8155,17 +8332,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"IMPORT_COCOA_BUNDLE=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source/MADDriver.Source";
 				INFOPLIST_FILE = "PPImport copy-Info.plist";
@@ -8210,7 +8380,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8229,7 +8398,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8247,7 +8415,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8266,7 +8433,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8285,7 +8451,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8305,7 +8470,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8324,7 +8488,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8344,7 +8507,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8363,7 +8525,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8383,7 +8544,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8402,7 +8562,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8422,7 +8581,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8441,7 +8599,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8461,7 +8618,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8480,7 +8636,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8500,7 +8655,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8518,7 +8672,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8537,7 +8690,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8562,7 +8714,6 @@
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8606,7 +8757,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8626,7 +8776,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8645,7 +8794,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8665,7 +8813,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8684,7 +8831,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8704,7 +8850,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8723,7 +8868,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8743,7 +8887,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8761,7 +8904,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8780,7 +8922,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8978,34 +9119,23 @@
 		};
 		5586889510BF67F100FCC24D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
-				GENERATE_PKGINFO_FILE = YES;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
-				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Release;
 		};
 		5586889610BF67F100FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EXPORTED_SYMBOLS_FILE = "MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GENERATE_PKGINFO_FILE = YES;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				ONLY_ACTIVE_ARCH = NO;
-				SKIP_INSTALL = YES;
-				WRAPPER_EXTENSION = ppimpexp;
 			};
 			name = Debug;
 		};
@@ -9036,7 +9166,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -9056,7 +9185,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -9066,6 +9194,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/.";
 				MACH_O_TYPE = mh_execute;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -9097,13 +9226,62 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LLVM_LTO = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		559C419D183EB4AC004A073C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PPQuickView/PPQuickView-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PROJECT_DIR\"/MADDriver.source/MADDriver.Source",
+				);
+				INFOPLIST_FILE = "PPQuickView/PPQuickView-Info.plist";
+				INSTALL_PATH = /Library/QuickLook;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = qlgenerator;
+			};
+			name = Release;
+		};
+		559C419E183EB4AC004A073C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PPQuickView/PPQuickView-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PROJECT_DIR\"/MADDriver.source/MADDriver.Source",
+				);
+				INFOPLIST_FILE = "PPQuickView/PPQuickView-Info.plist";
+				INSTALL_PATH = /Library/QuickLook;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = qlgenerator;
 			};
 			name = Debug;
 		};
@@ -9123,7 +9301,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9145,7 +9322,6 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9163,14 +9339,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				GENERATE_MASTER_OBJECT_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[arch=arm64]" = 7.0;
-				KEEP_PRIVATE_EXTERNS = YES;
-				OTHER_LDFLAGS = "-ObjC";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -9190,15 +9361,10 @@
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GENERATE_MASTER_OBJECT_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[arch=arm64]" = 7.0;
-				KEEP_PRIVATE_EXTERNS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
@@ -9239,7 +9405,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -9259,53 +9424,8 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
-			};
-			name = Debug;
-		};
-		55BE998117978AF000D6DECC /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_WARN_EMPTY_BODY = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source/MADDriver.Source";
-				INFOPLIST_FILE = "Spotlight Plug-in/Info.plist";
-				INSTALL_PATH = /Library/Spotlight;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = PlayerPROImporter;
-				SKIP_INSTALL = NO;
-				WRAPPER_EXTENSION = mdimporter;
-			};
-			name = Release;
-		};
-		55BE998217978AF000D6DECC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_WARN_EMPTY_BODY = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source/MADDriver.Source";
-				INFOPLIST_FILE = "Spotlight Plug-in/Info.plist";
-				INSTALL_PATH = /Library/Spotlight;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = PlayerPROImporter;
-				SKIP_INSTALL = NO;
-				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Debug;
 		};
@@ -9328,12 +9448,9 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GENERATE_MASTER_OBJECT_FILE = YES;
-				KEEP_PRIVATE_EXTERNS = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PlayerPROCompact;
-				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Release;
@@ -9358,12 +9475,9 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GENERATE_MASTER_OBJECT_FILE = YES;
-				KEEP_PRIVATE_EXTERNS = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PlayerPROCompact;
-				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
@@ -9372,7 +9486,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = EditorIcon;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
@@ -9391,7 +9505,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = EditorIcon;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -9423,8 +9537,6 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9446,22 +9558,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				WRAPPER_EXTENSION = plugin;
-			};
-			name = Debug;
-		};
-		55F41A2617EF814600605DF8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		55F41A2717EF814600605DF8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
@@ -9626,6 +9723,15 @@
 			buildConfigurations = (
 				554E122E10D6F3E600BB619C /* Release */,
 				554E122F10D6F3E600BB619C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55534AD81817C388006D6BCB /* Build configuration list for PBXNativeTarget "updateInfoPlist" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55534AD61817C388006D6BCB /* Release */,
+				55534AD71817C388006D6BCB /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9954,6 +10060,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		559C419C183EB4AC004A073C /* Build configuration list for PBXNativeTarget "PPQuickView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				559C419D183EB4AC004A073C /* Release */,
+				559C419E183EB4AC004A073C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		55ADC3D817D6F390001F27D4 /* Build configuration list for PBXNativeTarget "Wave" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -9990,15 +10104,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		55BE998317978AF000D6DECC /* Build configuration list for PBXNativeTarget "PPImport" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				55BE998117978AF000D6DECC /* Release */,
-				55BE998217978AF000D6DECC /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		55C358BF16C42D1800FB9FA6 /* Build configuration list for PBXNativeTarget "PlayerPROCompact" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -10008,7 +10113,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		55CBF9AB11EB77780028C6BB /* Build configuration list for PBXNativeTarget "Cocoa" */ = {
+		55CBF9AB11EB77780028C6BB /* Build configuration list for PBXNativeTarget "PlayerPRO 6" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55CBF9A911EB77780028C6BB /* Release */,
@@ -10022,15 +10127,6 @@
 			buildConfigurations = (
 				55E898B510F17C2B004EB52B /* Release */,
 				55E898B610F17C2B004EB52B /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		55F41A2517EF814600605DF8 /* Build configuration list for PBXAggregateTarget "Generate Git versions" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				55F41A2617EF814600605DF8 /* Release */,
-				55F41A2717EF814600605DF8 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

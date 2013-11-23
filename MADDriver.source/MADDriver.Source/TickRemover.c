@@ -30,8 +30,10 @@ void MADTickLoopFill8( Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2
 	size++;
 	while( size-- > 0)
 	{
-		*ASCBuffer1 += left;		ASCBuffer1 += 2;
-		*ASCBuffer2 += right;		ASCBuffer2 += 2;
+		*ASCBuffer1 += left;
+		ASCBuffer1 += 2;
+		*ASCBuffer2 += right;
+		ASCBuffer2 += 2;
 	}
 	curVoice->prevPtr = NULL;
 }
@@ -40,39 +42,53 @@ void MADTickLoop8( size_t size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *A
 {
 	SInt32		tLongL, tLongR;
 	SInt32		curLevelL = curVoice->curLevelL, curLevelR = curVoice->curLevelR, curLastWordL = curVoice->curLastWordL, curLastWordR = curVoice->curLastWordR, TICKREMOVESIZE = curVoice->TICKREMOVESIZE;
-	Boolean	LevelDirectionL = curVoice->LevelDirectionL, LevelDirectionR = curVoice->LevelDirectionR, RemoverWorking = curVoice->RemoverWorking;
+	Boolean		LevelDirectionL = curVoice->LevelDirectionL, LevelDirectionR = curVoice->LevelDirectionR, RemoverWorking = curVoice->RemoverWorking;
 	
-	if( TICKREMOVESIZE == 0) return;
+	if (TICKREMOVESIZE == 0) return;
 	
 	while( size-- > 0)
 	{
-		if( LevelDirectionL)
+		if (LevelDirectionL)
 		{
-			if( curLevelL > 0) curLevelL--;			else RemoverWorking = false;
+			if (curLevelL > 0)
+				curLevelL--;
+			else
+				RemoverWorking = false;
 			tLongL = (curLastWordL * curLevelL) / TICKREMOVESIZE;
 		}
 		else
 		{
-			if( curLevelL < TICKREMOVESIZE) curLevelL++;	else RemoverWorking = false;
+			if (curLevelL < TICKREMOVESIZE)
+				curLevelL++;
+			else
+				RemoverWorking = false;
 			tLongL = (curLastWordL * curLevelL) / TICKREMOVESIZE;
 			tLongL -= curLastWordL;
 		}
 		
-		if( LevelDirectionR)
+		if (LevelDirectionR)
 		{
-			if( curLevelR > 0) curLevelR--;			else RemoverWorking = false;
+			if (curLevelR > 0)
+				curLevelR--;
+			else
+				RemoverWorking = false;
 			tLongR = (curLastWordR * curLevelR) / TICKREMOVESIZE;
 		}
 		else
 		{
-			if( curLevelR < TICKREMOVESIZE) curLevelR++;			else RemoverWorking = false;
+			if (curLevelR < TICKREMOVESIZE)
+				curLevelR++;
+			else
+				RemoverWorking = false;
 			tLongR = (curLastWordR * curLevelR) / TICKREMOVESIZE;
 			tLongR -= curLastWordR;
 		}
 		
 		//	Double ASCBUFFER
-		*ASCBuffer1 += tLongL;	ASCBuffer1 += 2;
-		*ASCBuffer2 += tLongR;	ASCBuffer2 += 2;
+		*ASCBuffer1 += tLongL;
+		ASCBuffer1 += 2;
+		*ASCBuffer2 += tLongR;
+		ASCBuffer2 += 2;
 	}
 	
 	curVoice->curLevelL = curLevelL;
@@ -101,60 +117,60 @@ void MADTickRemoverStart8( Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuf
 		curVoice->LevelDirectionR = true;
 		
 		// Right Channel
-		if( curVoice->prevVol0 != curDoVol0 && curVoice->prevPtr	== curVoice->begPtr && curVoice->begPtr != NULL)
+		if (curVoice->prevVol0 != curDoVol0 && curVoice->prevPtr	== curVoice->begPtr && curVoice->begPtr != NULL)
 		{
 			SInt32 diff = curVoice->prevVol0 - curDoVol0;
 			
-			if( diff > 0)
+			if (diff > 0)
 			{
-				if( curVoice->prevVol0 != 0) curVoice->lastWordR -= (curVoice->lastWordR * curDoVol0) / curVoice->prevVol0;
+				if (curVoice->prevVol0 != 0) curVoice->lastWordR -= (curVoice->lastWordR * curDoVol0) / curVoice->prevVol0;
 				curVoice->prevVol0	= curDoVol0;
 				DoIT = true;
 			}
-			else if( diff < 0)
+			else if (diff < 0)
 			{
-				if( curVoice->prevVol0 != 0) curVoice->lastWordR -= (curVoice->lastWordR * curDoVol0) / curVoice->prevVol0;
+				if (curVoice->prevVol0 != 0) curVoice->lastWordR -= (curVoice->lastWordR * curDoVol0) / curVoice->prevVol0;
 				curVoice->lastWordR = -curVoice->lastWordR;
 				curVoice->prevVol0	= curDoVol0;
 				curVoice->LevelDirectionR = false;
 				DoIT = true;
 			}
 		}
-		else if( curVoice->prevPtr	== curVoice->begPtr) curVoice->lastWordR = 0;
+		else if (curVoice->prevPtr	== curVoice->begPtr) curVoice->lastWordR = 0;
 		
 		// Left Channel
-		if( curVoice->prevVol1 != curDoVol1 && curVoice->prevPtr	== curVoice->begPtr && curVoice->begPtr != NULL)
+		if (curVoice->prevVol1 != curDoVol1 && curVoice->prevPtr	== curVoice->begPtr && curVoice->begPtr != NULL)
 		{
 			SInt32 diff = curVoice->prevVol1 - curDoVol1;
 			
-			if( diff > 0)
+			if (diff > 0)
 			{
-				if( curVoice->prevVol1 != 0) curVoice->lastWordL -= (curVoice->lastWordL * curDoVol1) / curVoice->prevVol1;
+				if (curVoice->prevVol1 != 0) curVoice->lastWordL -= (curVoice->lastWordL * curDoVol1) / curVoice->prevVol1;
 				curVoice->prevVol1	= curDoVol1;
 				DoIT = true;
 			}
-			else if( diff < 0)
+			else if (diff < 0)
 			{
-				if( curVoice->prevVol1 != 0) curVoice->lastWordL -= (curVoice->lastWordL * curDoVol1) / curVoice->prevVol1;
+				if (curVoice->prevVol1 != 0) curVoice->lastWordL -= (curVoice->lastWordL * curDoVol1) / curVoice->prevVol1;
 				curVoice->lastWordL = -curVoice->lastWordL;
 				curVoice->prevVol1	= curDoVol1;
 				curVoice->LevelDirectionL = false;
 				DoIT = true;
 			}
 		}
-		else if( curVoice->prevPtr	== curVoice->begPtr) curVoice->lastWordL = 0;
+		else if (curVoice->prevPtr	== curVoice->begPtr) curVoice->lastWordL = 0;
 		
-		if( curVoice->lastWordL != 0 || curVoice->lastWordR != 0 || DoIT == true)
+		if (curVoice->lastWordL != 0 || curVoice->lastWordR != 0 || DoIT == true)
 		{
 			curVoice->TICKREMOVESIZE 		= intDriver->VSYNC;
 			curVoice->TICKREMOVESIZE 		/= intDriver->finespeed;
 			curVoice->TICKREMOVESIZE 		*= 8000;
 			curVoice->TICKREMOVESIZE 		/= intDriver->VExt;
 			
-			if( curVoice->LevelDirectionR) curVoice->curLevelR		= curVoice->TICKREMOVESIZE;
+			if (curVoice->LevelDirectionR) curVoice->curLevelR		= curVoice->TICKREMOVESIZE;
 			else curVoice->curLevelR		= 0;
 			
-			if( curVoice->LevelDirectionL) curVoice->curLevelL		= curVoice->TICKREMOVESIZE;
+			if (curVoice->LevelDirectionL) curVoice->curLevelL		= curVoice->TICKREMOVESIZE;
 			else curVoice->curLevelL		= 0;
 			
 			curVoice->curLastWordR		= curVoice->lastWordR;
@@ -170,5 +186,5 @@ void MADTickRemoverStart8( Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuf
 		curVoice->prevVol1		= curDoVol1;
 	}
 	
-	if( curVoice->RemoverWorking) MADTickLoop8( i, curVoice, ASCBuffer1, ASCBuffer2, intDriver);
+	if (curVoice->RemoverWorking) MADTickLoop8( i, curVoice, ASCBuffer1, ASCBuffer2, intDriver);
 }

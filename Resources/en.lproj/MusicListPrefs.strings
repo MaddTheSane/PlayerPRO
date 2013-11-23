@@ -1,0 +1,42 @@
+
+/* Class = "NSBox"; title = "After playing music:"; ObjectID = "3"; */
+"3.title" = "After playing music:";
+
+/* Class = "NSButtonCell"; title = "Stop playing"; ObjectID = "7"; */
+"7.title" = "Stop playing";
+
+/* Class = "NSButtonCell"; title = "Loop music"; ObjectID = "8"; */
+"8.title" = "Loop music";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "9"; */
+"9.title" = "Radio";
+
+/* Class = "NSButtonCell"; title = "Load next music"; ObjectID = "12"; */
+"12.title" = "Load next music";
+
+/* Class = "NSButtonCell"; title = "Load random music"; ObjectID = "13"; */
+"13.title" = "Load random music";
+
+/* Class = "NSBox"; title = "Music List Settings"; ObjectID = "15"; */
+"15.title" = "Music List Settings";
+
+/* Class = "NSButtonCell"; title = "Remember Music List for next startup"; ObjectID = "17"; */
+"17.title" = "Remember Music List for next startup";
+
+/* Class = "NSButtonCell"; title = "Load first music when opening a list"; ObjectID = "20"; */
+"20.title" = "Load first music when opening a list";
+
+/* Class = "NSButtonCell"; title = "Go to startup position when done playing"; ObjectID = "22"; */
+"22.title" = "Go to startup position when done playing";
+
+/* Class = "NSButtonCell"; title = "Ask to save modified Music List files"; ObjectID = "26"; */
+"26.title" = "Ask to save modified Music List files";
+
+/* Class = "NSButtonCell"; title = "Automatically play after opening a music file"; ObjectID = "28"; */
+"28.title" = "Automatically play after opening a music file";
+
+/* Class = "NSButtonCell"; title = "Remember Music List for next startup"; ObjectID = "46"; */
+"46.title" = "Remember Music List for next startup";
+
+/* Class = "NSButtonCell"; title = "Loop music list"; ObjectID = "57"; */
+"57.title" = "Loop music list";

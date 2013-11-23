@@ -56,7 +56,7 @@ typedef struct oldInstrData oldInstrData;
 
 OSErr TestMINS( oldInstrData *CC)
 {
-	if( CC->type == 0 && CC->numSamples >= 0 && CC->numSamples < MAXSAMPLE) return noErr;
+	if (CC->type == 0 && CC->numSamples >= 0 && CC->numSamples < MAXSAMPLE) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -67,9 +67,9 @@ OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 
 	for( i = 0; i < curIns->numSamples; i++)
 	{
-		if( sample[ i] != 0L)
+		if (sample[ i] != 0L)
 		{
-			if( sample[ i]->data != 0L)
+			if (sample[ i]->data != 0L)
 			{
 				DisposePtr( (Ptr) sample[ i]->data);
 				sample[ i]->data = 0L;
@@ -142,12 +142,12 @@ OSErr main(		OSType					order,						// Order to execute
 			Ptr				theSound;
 			
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				GetEOF( iFileRefI, &inOutCount);
 				
 				theSound = NewPtr( inOutCount);
-				if( theSound == 0L) myErr = MADNeedMemory;
+				if (theSound == 0L) myErr = MADNeedMemory;
 				else
 				{
 					DisposePtr( theSound);
@@ -210,7 +210,7 @@ OSErr main(		OSType					order,						// Order to execute
 						myErr = FSRead( iFileRefI, &inOutCount, curData);
 						
 						curData->data = NewPtr( curData->size);
-						if( curData->data != 0L)
+						if (curData->data != 0L)
 						{
 							inOutCount = curData->size;
 							myErr = FSRead( iFileRefI, &inOutCount, curData->data);
@@ -228,11 +228,11 @@ OSErr main(		OSType					order,						// Order to execute
 			Ptr	theSound;
 			
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				inOutCount = 50L;
 				theSound = NewPtr( inOutCount);
-				if( theSound == 0L) myErr = MADNeedMemory;
+				if (theSound == 0L) myErr = MADNeedMemory;
 				else
 				{
 					FSRead( iFileRefI, &inOutCount, theSound);
