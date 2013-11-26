@@ -252,6 +252,11 @@
 		555776D917EBF9D80019D008 /* libPlayerPROKit-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B0F59E17DF0F0500653BCD /* libPlayerPROKit-iOS.a */; };
 		555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		555C125116378B3500735225 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
+		555C5FC818445C3600DBD5DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
+		555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		555C5FCB18445CBC00DBD5DA /* libPlayerPROCompact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */; };
+		555C5FCC18445CBC00DBD5DA /* libPlayerPROKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		557139E61685007B00831A5A /* OpenPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139E41685007B00831A5A /* OpenPanelViewController.m */; };
@@ -386,7 +391,7 @@
 		5578C52317DB94A50057D11B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5578C52417DB94A50057D11B /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		5578C52517DB94A50057D11B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
-		5578C52617DB94A50057D11B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
+		5578C52617DB94A50057D11B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		5578C52717DB94A50057D11B /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		5578C52917DB94A50057D11B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55BE998617978BB100D6DECC /* InfoPlist.strings */; };
 		5578C52A17DB94A50057D11B /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55BE998817978BB100D6DECC /* schema.strings */; };
@@ -475,8 +480,6 @@
 		5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
 		5599F13316C82100008DDAFB /* RDriverCarbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; };
 		559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559C4188183EB4AB004A073C /* QuickLook.framework */; };
-		559C418B183EB4AB004A073C /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559C418A183EB4AB004A073C /* ApplicationServices.framework */; };
-		559C418D183EB4AB004A073C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559C418C183EB4AB004A073C /* CoreServices.framework */; };
 		559C418E183EB4AB004A073C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		559C4194183EB4AB004A073C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 559C4192183EB4AB004A073C /* InfoPlist.strings */; };
 		559C4196183EB4AB004A073C /* GenerateThumbnailForURL.c in Sources */ = {isa = PBXBuildFile; fileRef = 559C4195183EB4AB004A073C /* GenerateThumbnailForURL.c */; };
@@ -905,6 +908,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5573A1021656FAF100A5AECA;
 			remoteInfo = iOSPlayerPROCore;
+		};
+		555C5FCD18445CCC00DBD5DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55C3589516C42D1800FB9FA6;
+			remoteInfo = PlayerPROCompact;
+		};
+		555C5FCF18445CCC00DBD5DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5578C50517DB8F9E0057D11B;
+			remoteInfo = libPlayerPROKit;
 		};
 		5578C49817D9E86D0057D11B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2116,8 +2133,6 @@
 		55981C5411EE375400656EE3 /* preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = preferences.xib; sourceTree = "<group>"; };
 		559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPQuickView.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		559C4188183EB4AB004A073C /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
-		559C418A183EB4AB004A073C /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
-		559C418C183EB4AB004A073C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		559C4191183EB4AB004A073C /* PPQuickView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PPQuickView-Info.plist"; sourceTree = "<group>"; };
 		559C4193183EB4AB004A073C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		559C4195183EB4AB004A073C /* GenerateThumbnailForURL.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GenerateThumbnailForURL.c; sourceTree = "<group>"; };
@@ -2696,10 +2711,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				555C5FCB18445CBC00DBD5DA /* libPlayerPROCompact.a in Frameworks */,
+				555C5FCC18445CBC00DBD5DA /* libPlayerPROKit.a in Frameworks */,
+				555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */,
 				559C418E183EB4AB004A073C /* CoreFoundation.framework in Frameworks */,
+				555C5FC818445C3600DBD5DA /* Cocoa.framework in Frameworks */,
 				559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */,
-				559C418D183EB4AB004A073C /* CoreServices.framework in Frameworks */,
-				559C418B183EB4AB004A073C /* ApplicationServices.framework in Frameworks */,
+				555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3990,8 +4008,6 @@
 				5573A3EF10B5151700FF8B50 /* Foundation.framework */,
 				55ED547310D5F9CD00824C61 /* CoreMIDI.framework */,
 				559C4188183EB4AB004A073C /* QuickLook.framework */,
-				559C418A183EB4AB004A073C /* ApplicationServices.framework */,
-				559C418C183EB4AB004A073C /* CoreServices.framework */,
 				551292DA163DD68500C2C639 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -4070,13 +4086,6 @@
 				55B0F5AF17DF0FB000653BCD /* PPSampleObject.h in Headers */,
 				55B0F5B217DF0FC100653BCD /* PPInstrumentObject.h in Headers */,
 				5578C51A17DB901F0057D11B /* PPMusicObject_PPKPrivate.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		559C4183183EB4AB004A073C /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5055,13 +5064,13 @@
 			buildPhases = (
 				559C4181183EB4AB004A073C /* Sources */,
 				559C4182183EB4AB004A073C /* Frameworks */,
-				559C4183183EB4AB004A073C /* Headers */,
 				559C4184183EB4AB004A073C /* Resources */,
-				559C4185183EB4AB004A073C /* Rez */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				555C5FCE18445CCC00DBD5DA /* PBXTargetDependency */,
+				555C5FD018445CCC00DBD5DA /* PBXTargetDependency */,
 			);
 			name = PPQuickView;
 			productName = PPQuickView;
@@ -5770,13 +5779,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55868A4510BFB44700FCC24D /* Midi_Plug.rsrc.r in Rez */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		559C4185183EB4AB004A073C /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6660,6 +6662,16 @@
 			isa = PBXTargetDependency;
 			target = 5573A1021656FAF100A5AECA /* iOSPlayerPROCore */;
 			targetProxy = 555776DF17EBFF260019D008 /* PBXContainerItemProxy */;
+		};
+		555C5FCE18445CCC00DBD5DA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55C3589516C42D1800FB9FA6 /* PlayerPROCompact */;
+			targetProxy = 555C5FCD18445CCC00DBD5DA /* PBXContainerItemProxy */;
+		};
+		555C5FD018445CCC00DBD5DA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5578C50517DB8F9E0057D11B /* libPlayerPROKit */;
+			targetProxy = 555C5FCF18445CCC00DBD5DA /* PBXContainerItemProxy */;
 		};
 		5578C49917D9E86D0057D11B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10035,6 +10047,7 @@
 				559C419E183EB4AC004A073C /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		55ADC3D817D6F390001F27D4 /* Build configuration list for PBXNativeTarget "Wave" */ = {
 			isa = XCConfigurationList;
