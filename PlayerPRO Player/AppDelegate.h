@@ -13,6 +13,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 @class PPInstrumentWindowController;
 @class PPCurrentlyPlayingIndex;
+@class AXCArrayControllerWithDragAndDrop;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate>
 {
@@ -39,7 +40,7 @@
 	IBOutlet NSTextField	*fileLocation;
 	
 	IBOutlet NSTableView	*tableView;
-	IBOutlet NSArrayController *musicListController;
+	IBOutlet AXCArrayControllerWithDragAndDrop *musicListController;
 	NSTimer					*timeChecker;
 	MADDriverRec			*madDriver;
 	MADMusic				*music;

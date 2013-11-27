@@ -682,7 +682,10 @@ typedef struct {
 			[savePanel beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSInteger result) {
 				if (result == NSFileHandlingPanelOKButton) {
 					PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
-						return [_theMusic exportMusicToURL:theURL];
+						OSErr theErr = [_theMusic exportMusicToURL:theURL];
+						[_theDriver endExport];
+						return theErr;
+
 					}];
 					[[NSApp delegate] addExportObject:expObj];
 				} else {
@@ -743,6 +746,11 @@ typedef struct {
 }
 
 - (IBAction)showDigitalEditor:(id)sender
+{
+	
+}
+
+- (IBAction)showWavePreview:(id)sender
 {
 	
 }

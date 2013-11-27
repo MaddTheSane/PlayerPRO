@@ -450,6 +450,7 @@
 		5583C5FB16D0172F0078ACE8 /* Silence.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE91B10E08DB000177B4C /* Silence.plugin */; };
 		5583C5FC16D017380078ACE8 /* Smooth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE95E10E08DB900177B4C /* Smooth.plugin */; };
 		5583C60316D01DDE0078ACE8 /* Crop.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE62210E0884100177B4C /* Crop.plugin */; };
+		558446BE18467771001ECB9E /* AXCArrayControllerWithDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 558446BD18467771001ECB9E /* AXCArrayControllerWithDragAndDrop.m */; };
 		558678B61659AA3400BCFB70 /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5586873D10BF5D0900FCC24D /* MADfg.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E310BB5368005208D1 /* MADfg.c */; };
 		5586873E10BF5D2700FCC24D /* MADI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E710BB5368005208D1 /* MADI.c */; };
@@ -464,10 +465,10 @@
 		5586889310BF67F100FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		558688A210BF683000FCC24D /* MIDI-GM-Small.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340EC10BB5368005208D1 /* MIDI-GM-Small.c */; };
 		558688A310BF683100FCC24D /* MIDI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340ED10BB5368005208D1 /* MIDI.c */; };
-		558688A510BF683300FCC24D /* PTMID.C in Sources */ = {isa = PBXBuildFile; fileRef = 553340F010BB5368005208D1 /* PTMID.C */; };
-		558688A610BF683400FCC24D /* PTMIDINP.C in Sources */ = {isa = PBXBuildFile; fileRef = 553340F210BB5368005208D1 /* PTMIDINP.C */; };
-		558688A710BF683400FCC24D /* PTMIDSAV.C in Sources */ = {isa = PBXBuildFile; fileRef = 553340F310BB5368005208D1 /* PTMIDSAV.C */; };
-		558688A810BF683500FCC24D /* PTMIDZAP.C in Sources */ = {isa = PBXBuildFile; fileRef = 553340F410BB5368005208D1 /* PTMIDZAP.C */; };
+		558688A510BF683300FCC24D /* PTMID.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F010BB5368005208D1 /* PTMID.c */; };
+		558688A610BF683400FCC24D /* PTMIDINP.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F210BB5368005208D1 /* PTMIDINP.c */; };
+		558688A710BF683400FCC24D /* PTMIDSAV.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F310BB5368005208D1 /* PTMIDSAV.c */; };
+		558688A810BF683500FCC24D /* PTMIDZAP.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F410BB5368005208D1 /* PTMIDZAP.c */; };
 		558688A910BF683C00FCC24D /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
 		55868A4510BFB44700FCC24D /* Midi_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */; };
 		55868A7C10BFB4B300FCC24D /* APPL.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DD10BB5368005208D1 /* APPL.c */; };
@@ -1896,11 +1897,11 @@
 		553340EA10BB5368005208D1 /* MED.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MED.h; sourceTree = "<group>"; };
 		553340EC10BB5368005208D1 /* MIDI-GM-Small.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "MIDI-GM-Small.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		553340ED10BB5368005208D1 /* MIDI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MIDI.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		553340F010BB5368005208D1 /* PTMID.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; path = PTMID.C; sourceTree = "<group>"; };
-		553340F110BB5368005208D1 /* PTMID.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PTMID.H; sourceTree = "<group>"; };
-		553340F210BB5368005208D1 /* PTMIDINP.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; path = PTMIDINP.C; sourceTree = "<group>"; };
-		553340F310BB5368005208D1 /* PTMIDSAV.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; lineEnding = 0; path = PTMIDSAV.C; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		553340F410BB5368005208D1 /* PTMIDZAP.C */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; path = PTMIDZAP.C; sourceTree = "<group>"; };
+		553340F010BB5368005208D1 /* PTMID.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; path = PTMID.c; sourceTree = "<group>"; };
+		553340F110BB5368005208D1 /* PTMID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTMID.h; sourceTree = "<group>"; };
+		553340F210BB5368005208D1 /* PTMIDINP.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; path = PTMIDINP.c; sourceTree = "<group>"; };
+		553340F310BB5368005208D1 /* PTMIDSAV.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; lineEnding = 0; path = PTMIDSAV.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		553340F410BB5368005208D1 /* PTMIDZAP.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; path = PTMIDZAP.c; sourceTree = "<group>"; };
 		553340F610BB5368005208D1 /* Mod.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Mod.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		553340F710BB5368005208D1 /* MOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOD.h; sourceTree = "<group>"; };
 		553340F810BB5368005208D1 /* MTM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MTM.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -2095,6 +2096,8 @@
 		557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentImporterObject.m; sourceTree = "<group>"; };
 		55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+PPPreferences.h"; sourceTree = "<group>"; };
 		55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+PPPreferences.m"; sourceTree = "<group>"; };
+		558446BC18467771001ECB9E /* AXCArrayControllerWithDragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXCArrayControllerWithDragAndDrop.h; sourceTree = "<group>"; };
+		558446BD18467771001ECB9E /* AXCArrayControllerWithDragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXCArrayControllerWithDragAndDrop.m; sourceTree = "<group>"; };
 		5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADfg.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5586871010BF5C4700FCC24D /* MADfg-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MADfg-Info.plist"; path = "../../../MADfg-Info.plist"; sourceTree = "<group>"; };
 		5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADH.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3376,11 +3379,11 @@
 				5586889810BF67F100FCC24D /* MIDI-Info.plist */,
 				553340EC10BB5368005208D1 /* MIDI-GM-Small.c */,
 				553340ED10BB5368005208D1 /* MIDI.c */,
-				553340F010BB5368005208D1 /* PTMID.C */,
-				553340F110BB5368005208D1 /* PTMID.H */,
-				553340F210BB5368005208D1 /* PTMIDINP.C */,
-				553340F310BB5368005208D1 /* PTMIDSAV.C */,
-				553340F410BB5368005208D1 /* PTMIDZAP.C */,
+				553340F010BB5368005208D1 /* PTMID.c */,
+				553340F110BB5368005208D1 /* PTMID.h */,
+				553340F210BB5368005208D1 /* PTMIDINP.c */,
+				553340F310BB5368005208D1 /* PTMIDSAV.c */,
+				553340F410BB5368005208D1 /* PTMIDZAP.c */,
 			);
 			name = MIDI;
 			path = "MIDI Folder";
@@ -3643,6 +3646,8 @@
 				5578C49017D9E8560057D11B /* AppDelegate.m */,
 				5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */,
 				5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */,
+				558446BC18467771001ECB9E /* AXCArrayControllerWithDragAndDrop.h */,
+				558446BD18467771001ECB9E /* AXCArrayControllerWithDragAndDrop.m */,
 				5578C49217D9E8570057D11B /* MainMenu.xib */,
 				5578C4F117DA97020057D11B /* InstrumentWindow.xib */,
 				5578C48417D9E8560057D11B /* Supporting Files */,
@@ -6078,6 +6083,7 @@
 				5521F41017F8ED5A002CDBA9 /* PPPreferences.m in Sources */,
 				5578C4B417DA4ADD0057D11B /* PPErrors.m in Sources */,
 				5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */,
+				558446BE18467771001ECB9E /* AXCArrayControllerWithDragAndDrop.m in Sources */,
 				5578C4BA17DA4B320057D11B /* PPPlugInInfo.m in Sources */,
 				5578C4BB17DA4B3A0057D11B /* PPPlugInInfoController.m in Sources */,
 				5578C4BD17DA4BC20057D11B /* PPTimeFormatter.m in Sources */,
@@ -6317,10 +6323,10 @@
 			files = (
 				558688A210BF683000FCC24D /* MIDI-GM-Small.c in Sources */,
 				558688A310BF683100FCC24D /* MIDI.c in Sources */,
-				558688A510BF683300FCC24D /* PTMID.C in Sources */,
-				558688A610BF683400FCC24D /* PTMIDINP.C in Sources */,
-				558688A710BF683400FCC24D /* PTMIDSAV.C in Sources */,
-				558688A810BF683500FCC24D /* PTMIDZAP.C in Sources */,
+				558688A510BF683300FCC24D /* PTMID.c in Sources */,
+				558688A610BF683400FCC24D /* PTMIDINP.c in Sources */,
+				558688A710BF683400FCC24D /* PTMIDSAV.c in Sources */,
+				558688A810BF683500FCC24D /* PTMIDZAP.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

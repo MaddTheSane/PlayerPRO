@@ -362,9 +362,9 @@ static OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		GetDText( myDia, 11, tStr);		StringToNum( tStr, &step);
 		if (step < 1 || step > 64)	{	SelectDialogItemText( myDia, 11, 0, 200);	SysBeep( 1);	goto RESTART;}
 		
-		for( track = 0; track < myPcmd->tracks; track ++)
+		for (track = 0; track < myPcmd->tracks; track ++)
 		{
-			for( row = 0; row < myPcmd->length; row += step)
+			for (row = 0; row < myPcmd->length; row += step)
 			{
 				myCmd = GetCmd( row, track, myPcmd);
 				

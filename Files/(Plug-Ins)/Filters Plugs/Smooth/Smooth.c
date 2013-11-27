@@ -32,7 +32,7 @@ static OSErr mainSmooth(void			*unused,
 			
 			prevtemp = *SamplePtr++;
 			temp = *SamplePtr++;
-			for( i = 1; i < length; i++)
+			for (i = 1; i < length; i++)
 			{
 				nexttemp = *SamplePtr--;
 				
@@ -51,7 +51,7 @@ static OSErr mainSmooth(void			*unused,
 			
 			prevtemp = *SamplePtr++;
 			temp = *SamplePtr++;
-			for( i = 1; i < length / 2; i++)
+			for (i = 1; i < length / 2; i++)
 			{
 				nexttemp = *SamplePtr--;
 				

@@ -102,7 +102,7 @@ PPEXPORT OSErr	AddSoundToMAD(Ptr			theSound,
 							  short			*sampleID);
 
 PPEXPORT OSErr MADCopyCurrentPartition(MADMusic *theNewMAD);
-PPEXPORT OSErr MADLoadMADFileCString(MADMusic **, Ptr fName);
+PPEXPORT OSErr MADLoadMADFileCString(MADMusic **, const char *fName);
 SInt32	DoVolPanning( short, Channel *ch, MADDriverRec *intDriver);
 SInt32	DoVolPanning256( short, Channel *ch, MADDriverRec *intDriver, Boolean);
 void	MADKeyOFF( MADDriverRec *MDriver, short track);

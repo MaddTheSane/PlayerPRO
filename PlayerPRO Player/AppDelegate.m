@@ -6,6 +6,7 @@
 //
 //
 
+#import "AXCArrayControllerWithDragAndDrop.h"
 #import "AppDelegate.h"
 #import "PPPreferences.h"
 #import "PPMusicList.h"
@@ -18,6 +19,7 @@
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
 #import <AVFoundation/AVFoundation.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
 #define kUnresolvableFile @"Unresolvable files"
 #define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."
@@ -360,7 +362,7 @@ static NSInteger selMusFromList = -1;
 	size_t inOutCount;
 	MADCleanCurrentMusic(music, madDriver);
 	NSMutableData *saveData = [[NSMutableData alloc] initWithCapacity:MADGetMusicSize(music)];
-	for( i = 0, x = 0; i < MAXINSTRU; i++)
+	for (i = 0, x = 0; i < MAXINSTRU; i++)
 	{
 		music->fid[ i].no = i;
 		
@@ -380,7 +382,7 @@ static NSInteger selMusFromList = -1;
 	{
 		BOOL compressMAD = [[NSUserDefaults standardUserDefaults] boolForKey:PPMMadCompression];
 		if (compressMAD) {
-			for( i = 0; i < music->header->numPat ; i++)
+			for (i = 0; i < music->header->numPat ; i++)
 			{
 				if (music->partition[i]) {
 					PatData *tmpPat = CompressPartitionMAD1(music, music->partition[i]);
@@ -406,7 +408,7 @@ static NSInteger selMusFromList = -1;
 		}
 	}
 	
-	for( i = 0; i < MAXINSTRU; i++)
+	for (i = 0; i < MAXINSTRU; i++)
 	{
 		if (music->fid[ i].numSamples > 0 || music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
 		{
@@ -417,9 +419,9 @@ static NSInteger selMusFromList = -1;
 		}
 	}
 	
-	for( i = 0; i < MAXINSTRU ; i++)
+	for (i = 0; i < MAXINSTRU ; i++)
 	{
-		for( x = 0; x < music->fid[i].numSamples; x++)
+		for (x = 0; x < music->fid[i].numSamples; x++)
 		{
 			sData	curData;
 			sData32	copyData;
@@ -452,7 +454,7 @@ static NSInteger selMusFromList = -1;
 	// EFFECTS *** *** *** *** *** *** *** *** *** *** *** ***
 	
 	int alpha = 0;
-	for( i = 0; i < 10 ; i++)	// Global Effects
+	for (i = 0; i < 10 ; i++)	// Global Effects
 	{
 		if (music->header->globalEffect[ i])
 		{
@@ -471,9 +473,9 @@ static NSInteger selMusFromList = -1;
 		}
 	}
 	
-	for( i = 0; i < music->header->numChn ; i++)	// Channel Effects
+	for (i = 0; i < music->header->numChn ; i++)	// Channel Effects
 	{
-		for( x = 0; x < 4; x++)
+		for (x = 0; x < 4; x++)
 		{
 			if (music->header->chanEffect[ i][ x])
 			{
@@ -1832,6 +1834,16 @@ enum PPMusicToolbarTypes {
 		return NO;
 	}
 	return [self handleFile:[NSURL fileURLWithPath:filename] ofType:utiFile];
+}
+
+#pragma mark Table View delegate methods
+
+- (NSString *)tableView:(NSTableView *)tableView toolTipForCell:(NSCell *)cell rect:(NSRectPointer)rect tableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row mouseLocation:(NSPoint)mouseLocation
+{
+	if (row >= 0 || row <= [musicList countOfMusicList]) {
+		return nil;
+	}
+	return [[musicList URLAtIndex:row] path];
 }
 
 #pragma mark PPSoundSettingsViewControllerDelegate methods

@@ -29,7 +29,7 @@ static OSErr mainBackwards(void					*unused,
 			orgPtr += SelectionStart;
 			destPtr += SelectionEnd - 1;
 			
-			for( i = 0; i < (SelectionEnd - SelectionStart) / 2; i++)	//just swap values
+			for (i = 0; i < (SelectionEnd - SelectionStart) / 2; i++)	//just swap values
 			{
 				temp1 = *orgPtr;
 				temp2 = *destPtr;
@@ -53,7 +53,7 @@ static OSErr mainBackwards(void					*unused,
 			orgPtr += SelectionStart / 2;
 			destPtr += (SelectionEnd - 1) / 2;
 			
-			for( i = 0; i < (SelectionEnd - SelectionStart) / 4; i++)
+			for (i = 0; i < (SelectionEnd - SelectionStart) / 4; i++)
 			{
 				temp1 = *orgPtr;
 				temp2 = *destPtr;

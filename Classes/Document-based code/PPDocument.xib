@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="boxController" destination="LsL-Pc-9w4" id="ya3-2S-kpA"/>
                 <outlet property="currentTimeLabel" destination="WaK-0d-ulU" id="wSC-OM-A0w"/>
+                <outlet property="editorsTab" destination="eP8-FW-QMd" id="b10-ZB-cms"/>
                 <outlet property="exportSettingsBox" destination="100036" id="100042"/>
                 <outlet property="exportWindow" destination="100026" id="100041"/>
                 <outlet property="fastForwardButton" destination="uMf-5K-EbC" id="kSU-RY-Mmk"/>

@@ -46,6 +46,11 @@
 	MADEndExport(theRec);
 }
 
+- (BOOL)isExporting
+{
+	return MADIsExporting(theRec) ? YES : NO;
+}
+
 - (void)cleanDriver
 {
 	MADCleanDriver(theRec);
@@ -98,7 +103,7 @@
 {
 	if (self = [super init]) {
 		thePPLib = theLib;
-		if (MADCreateDriver(theSettings, theLib._madLib, &theRec) !=noErr)
+		if (MADCreateDriver(theSettings, theLib._madLib, &theRec) != noErr)
 		{
 			return nil;
 		}
@@ -112,16 +117,22 @@
 		MADDisposeDriver(theRec);
 }
 
-- (void)loadMusicFile:(NSString *)path
+- (PPMusicObject *)loadMusicFile:(NSString *)path
 {
 	PPMusicObject *theMus = [[PPMusicObject alloc] initWithPath:path library:self.theLibrary];
-	[theMus attachToDriver:self];
+	if (theMus) {
+		[theMus attachToDriver:self];
+	}
+	return theMus;
 }
 
-- (void)loadMusicURL:(NSURL*)url
+- (PPMusicObject *)loadMusicURL:(NSURL*)url
 {
 	PPMusicObject *theMus = [[PPMusicObject alloc] initWithURL:url library:self.theLibrary];
-	[theMus attachToDriver:self];
+	if (theMus) {
+		[theMus attachToDriver:self];
+	}
+	return theMus;
 }
 
 @end

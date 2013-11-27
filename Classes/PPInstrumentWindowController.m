@@ -172,9 +172,9 @@
 		[outData appendBytes:tempInstrData length:sizeof(InstrData) * MAXINSTRU];
 		free(tempInstrData);
 	}
-	for( i = 0; i < MAXINSTRU ; i++)
+	for (i = 0; i < MAXINSTRU ; i++)
 	{
-		for( x = 0; x < (*curMusic)->fid[ i].numSamples ; x++)
+		for (x = 0; x < (*curMusic)->fid[ i].numSamples ; x++)
 		{
 			sData tempData, *curData = (*curMusic)->sample[ i * MAXSAMPLE +  x];
 			sData32 writeData;
@@ -248,9 +248,9 @@
 	sData **tmpsData = calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
 	
 	// **** INSTRUMENTS ***
-	for( i = 0; i < MAXINSTRU ; i++)
+	for (i = 0; i < MAXINSTRU ; i++)
 	{
-		for( x = 0; x < tempInstrData[ i].numSamples ; x++)
+		for (x = 0; x < tempInstrData[ i].numSamples ; x++)
 		{
 			sData	*curData;
 			
@@ -322,7 +322,7 @@
 		*theErr = nil;
 	}
 	
-	for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument(*curMusic, x);
+	for (x = 0; x < MAXINSTRU ; x++) MADKillInstrument(*curMusic, x);
 	memcpy((*curMusic)->fid, tempInstrData, inOutCount);
 	free(tempInstrData);
 
@@ -477,7 +477,7 @@ static void DrawCGSampleInt(long 	start,
 		temp  /= (1 << 16);
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
 		
-		for( i = tSS; i < tSE; i++)
+		for (i = tSS; i < tSE; i++)
 		{
 			BS = start + (i * sampleSize) / larg;
 			BE = start + ((i+1) * sampleSize) / larg;
@@ -501,7 +501,7 @@ static void DrawCGSampleInt(long 	start,
 			
 			if (BS != BE)
 			{
-				for( x = BS; x < BE; x++)
+				for (x = BS; x < BE; x++)
 				{
 					temp = (theShortSample[ x]  + 0x8000);
 					
@@ -537,7 +537,7 @@ static void DrawCGSampleInt(long 	start,
 		
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
 		
-		for( i = tSS; i < tSE; i++)
+		for (i = tSS; i < tSE; i++)
 		{
 			BS = start + (i * sampleSize) / larg;
 			BE = start + ((i+1) * sampleSize) / larg;
@@ -561,7 +561,7 @@ static void DrawCGSampleInt(long 	start,
 			
 			if (BS != BE)
 			{
-				for( x = BS; x < BE; x++)
+				for (x = BS; x < BE; x++)
 				{
 					temp = (unsigned char) (theSample[ x] - 0x80);
 					

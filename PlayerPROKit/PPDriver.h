@@ -24,6 +24,7 @@
 
 - (void)beginExport;
 - (void)endExport;
+- (BOOL)isExporting;
 	
 - (void)cleanDriver;
 	
@@ -34,7 +35,7 @@
 - (OSErr)pause;
 - (OSErr)stop;
 	
-- (void)loadMusicFile:(NSString *)path;
-- (void)loadMusicURL:(NSURL*)url;
+- (PPMusicObject *)loadMusicFile:(NSString *)path;
+- (PPMusicObject *)loadMusicURL:(NSURL*)url;
 
 @end

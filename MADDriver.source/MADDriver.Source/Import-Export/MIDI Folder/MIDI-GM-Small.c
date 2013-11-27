@@ -2,7 +2,7 @@
 #include <PlayerPROCore/RDriverInt.h>
 #include <PlayerPROCore/PPPlug.h>
 #include <Carbon/Carbon.h>
-#include "PTMID.H"
+#include "PTMID.h"
 #include "dlsmac.h"
 #include "dls.h"
 #include "dls2.h"
@@ -234,7 +234,7 @@ void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, sh
 {
 	short i;
 	
-	for( i = 0; i < inst->numSamples; i++)
+	for (i = 0; i < inst->numSamples; i++)
 	{
 		if (sample[ inst->firstSample + i] != NULL)
 		{
@@ -248,19 +248,19 @@ void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, sh
 		}
 	}
 	
-	for( i = 0; i < 32; i++) inst->name[ i]	= 0;
+	for (i = 0; i < 32; i++) inst->name[ i]	= 0;
 	inst->type			= 0;
 	inst->numSamples	= 0;
 	inst->no			= ins;
 	/**/
 	
-	for( i = 0; i < 96; i++) inst->what[ i]		= 0;
-	for( i = 0; i < 12; i++)
+	for (i = 0; i < 96; i++) inst->what[ i]		= 0;
+	for (i = 0; i < 12; i++)
 	{
 		inst->volEnv[ i].pos		= 0;
 		inst->volEnv[ i].val		= 0;
 	}
-	for( i = 0; i < 12; i++)
+	for (i = 0; i < 12; i++)
 	{
 		inst->pannEnv[ i].pos	= 0;
 		inst->pannEnv[ i].val	= 0;
@@ -469,7 +469,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 			if (iErr) DebugLong( iErr);
 			
 			tot = CountAtomById( sat, 'ins ');
-			for( i = 0 ; i < tot; i++)
+			for (i = 0 ; i < tot; i++)
 			{
 				iErr = FindAtomById( sat, &insAt, true, 'ins ', i);
 				if (iErr) DebugLong( iErr);
@@ -559,12 +559,12 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 				 iErr = GetAtomData( InfoData, insName, sizeof( insName));
 				 if (iErr) DebugLong( iErr);*/
 				
-				for( x = 0; x < 32 && x < NoteRequest->tone.instrumentName[0]; x++) inst->name[ x]	= NoteRequest->tone.instrumentName[ x+1]; //insName[ x];
+				for (x = 0; x < 32 && x < NoteRequest->tone.instrumentName[0]; x++) inst->name[ x]	= NoteRequest->tone.instrumentName[ x+1]; //insName[ x];
 				
 				iErr = FindAtomById( insAt, &sat, true, 'lrgn', 0);
 				if (iErr) DebugLong( iErr);
 				
-				for( x = 0; x < curIns.cRegions; x++)
+				for (x = 0; x < curIns.cRegions; x++)
 				{
 					RGNHEADER 	rgnh;
 					WSMPL 		wsmp;
@@ -664,7 +664,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					// * Add it to instrument *
 					// ************************
 					
-					for( ii = rgnh.RangeKey.usLow - 12; ii <= rgnh.RangeKey.usHigh - 12; ii++)
+					for (ii = rgnh.RangeKey.usLow - 12; ii <= rgnh.RangeKey.usHigh - 12; ii++)
 					{
 						if (ii < NUMBER_NOTES && ii > 0) inst->what[ ii] = inst->numSamples;
 					}
@@ -776,11 +776,11 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 		
 	short						sampleIDMap[ 500];
 	
-	for( i = 0; i < 500; i++) sampleIDMap[ i] = -1;
+	for (i = 0; i < 500; i++) sampleIDMap[ i] = -1;
 	
 	/***************/
 	
-	for( i = 0; i < QTCountChildrenOfType( ai, kParentAtomIsContainer, kaiKeyRangeInfoType); i++)
+	for (i = 0; i < QTCountChildrenOfType( ai, kParentAtomIsContainer, kaiKeyRangeInfoType); i++)
 	{
 		myKeyRangeInfoAtom = QTFindChildByIndex( ai, kParentAtomIsContainer, kaiKeyRangeInfoType, i+1, &atomID);
 		
@@ -794,7 +794,7 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 		
 		if (sampleIDMap[ GetNEShort(sdesc->sampleDataID)] != -1)
 		{
-			for( ii = GetNELong( sdesc->pitchLow) - 12; ii <= GetNELong(sdesc->pitchHigh) - 12; ii++)
+			for (ii = GetNELong( sdesc->pitchLow) - 12; ii <= GetNELong(sdesc->pitchHigh) - 12; ii++)
 			{
 				if (ii < NUMBER_NOTES && ii > 0) inst->what[ ii] = sampleIDMap[ GetNEShort(sdesc->sampleDataID)];
 			}
@@ -803,7 +803,7 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 		{
 			sampleIDMap[ GetNEShort(sdesc->sampleDataID)] = inst->numSamples;
 			
-			for( ii = GetNELong(sdesc->pitchLow) - 12; ii <= GetNELong(sdesc->pitchHigh) - 12; ii++)
+			for (ii = GetNELong(sdesc->pitchLow) - 12; ii <= GetNELong(sdesc->pitchHigh) - 12; ii++)
 			{
 				if (ii < NUMBER_NOTES && ii > 0) inst->what[ ii] = inst->numSamples;
 			}

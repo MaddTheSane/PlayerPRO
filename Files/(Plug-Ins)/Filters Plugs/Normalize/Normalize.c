@@ -29,7 +29,7 @@ static OSErr mainNormalize(void					*unused,
 		case 8:
 		{
 			Ptr	SamplePtr = (theData->data) + SelectionStart;
-			for( i = 0; i < SelectionEnd - SelectionStart; i++)
+			for (i = 0; i < SelectionEnd - SelectionStart; i++)
 			{
 				temp = *SamplePtr++;
 				
@@ -47,7 +47,7 @@ static OSErr mainNormalize(void					*unused,
 				peak = ((long)0x80 * 0x10000) / peak;
 				
 				SamplePtr = (theData->data) + SelectionStart;
-				for( i = 0; i < SelectionEnd - SelectionStart; i++)
+				for (i = 0; i < SelectionEnd - SelectionStart; i++)
 				{
 					temp = *SamplePtr;
 					
@@ -71,7 +71,7 @@ static OSErr mainNormalize(void					*unused,
 		{
 			short	*SamplePtr = (short*) theData->data + (SelectionStart / 2);
 
-			for( i = 0; i < (SelectionEnd - SelectionStart) / 2; i++)
+			for (i = 0; i < (SelectionEnd - SelectionStart) / 2; i++)
 			{
 				temp = (long)*SamplePtr++;
 				peak = max (peak, labs(temp));
@@ -88,7 +88,7 @@ static OSErr mainNormalize(void					*unused,
 				peak = ((long)0x8000 * 0x10000) / peak;
 				
 				SamplePtr = (short*) theData->data + (SelectionStart / 2);
-				for( i = 0; i < (SelectionEnd - SelectionStart) / 2; i++)
+				for (i = 0; i < (SelectionEnd - SelectionStart) / 2; i++)
 				{
 					temp = (long)*SamplePtr;
 			

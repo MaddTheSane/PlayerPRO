@@ -12,7 +12,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "PTMID.H"
+#include "PTMID.h"
 
 MS rgmsDecided[ MAXSAMPS];
 int cmsDecided, wMinpitch, wMaxpitch;
@@ -138,7 +138,7 @@ void AnalyzePtune(Tune *ptune)
 	
 	short					i, NewIns;
 	
-	for( i = 0; i < 129; i++) MIDIInstMOD[ i] = -1;
+	for (i = 0; i < 129; i++) MIDIInstMOD[ i] = -1;
 	NewIns = 0;
 	
 	while (NULL != ptune)											/** While not at end of tune **/

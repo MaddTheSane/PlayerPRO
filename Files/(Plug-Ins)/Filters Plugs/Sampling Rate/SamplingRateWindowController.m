@@ -40,7 +40,7 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 	switch( amp)
 	{
 		case 8:
-			for( x = 0; x < newSize; x++)
+			for (x = 0; x < newSize; x++)
 			{
 				pos			= (x * srcC4SPD << LRVAL) / dstC4SPD;
 				right		= pos & ((1 << LRVAL)-1);
@@ -77,7 +77,7 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 			break;
 			
 		case 16:
-			for( x = 0; x < newSize/2; x++)
+			for (x = 0; x < newSize/2; x++)
 			{
 				pos			= (x * srcC4SPD << LRVAL) / dstC4SPD;
 				right		= pos & ((1 << LRVAL)-1);

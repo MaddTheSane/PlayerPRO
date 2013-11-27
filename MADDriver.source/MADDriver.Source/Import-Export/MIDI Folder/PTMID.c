@@ -18,7 +18,7 @@ void InitQuicktimeInstruments(void);
 #include <ctype.h>
 #include "Midi-rsrc.h"
 #include <PlayerPROCore/PlayerPROCore.h>
-#include "PTMID.H"
+#include "PTMID.h"
 #include <Carbon/Carbon.h>
 
 #ifndef R_OK

@@ -103,7 +103,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	OSType OKTAHeader = 0;
 	/********************************/
 	
-	for( i = 0 ; i < 64; i ++) theInstrument[ i] = NULL;
+	for (i = 0 ; i < 64; i ++) theInstrument[ i] = NULL;
 	
 	theMAD->header = (MADSpec*) calloc( sizeof( MADSpec), 1);
 	Okta = ( struct OktaHeader*) malloc( sizeof( struct OktaHeader));
@@ -144,7 +144,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 			case 'SAMP':
 				samps = (OktaInstru*) theOktaPos;
           		
-				for( i = 0; i * sizeof( OktaInstru) < aSect->length; i++)
+				for (i = 0; i * sizeof( OktaInstru) < aSect->length; i++)
 				{
 					instru[i] = samps[i];
 					
@@ -233,10 +233,10 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	
 	strlcpy( theMAD->header->infos, "Converted by PlayerPRO OKTA Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
-	for( i = 0;  i < 128; i++) theMAD->header->oPointers[ i] = 0;
-	for( i = 0;  i < pbod_count; i++) theMAD->header->oPointers[ i] = Okta->patt[ i];
+	for (i = 0;  i < 128; i++) theMAD->header->oPointers[ i] = 0;
+	for (i = 0;  i < pbod_count; i++) theMAD->header->oPointers[ i] = Okta->patt[ i];
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
 		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
@@ -248,7 +248,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	theMAD->header->generalPitch	= 80;
 	
 	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
-	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 	
 	// INSTRUMENTS
 	
@@ -258,12 +258,12 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
 	if (!theMAD->sample) return MADNeedMemory;
 	
-	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
 	
 	for(i=0; i< sbod_count; i++)
 	{
-		for( x = 0; x < 22; x++) theMAD->fid[i].name[x] = instru[i].name[ x];
+		for (x = 0; x < 22; x++) theMAD->fid[i].name[x] = instru[i].name[ x];
 		theMAD->fid[i].type = 0;
 		
 		if (instru[i].length > 0)
@@ -309,14 +309,14 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 		
 		theMAD->partition[ i]->header.size = Okta->pbodlen[ i];
 		theMAD->partition[ i]->header.compMode = 'NONE';
-		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
+		for (x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
 		theMAD->partition[ i]->header.patBytes = 0;
 		theMAD->partition[ i]->header.unused2 = 0;
 		
 		MaxPtr = (Ptr) theMAD->partition[ i];
 		MaxPtr += sizeof( PatHeader) + theMAD->header->numChn * Okta->pbodlen[ i] * sizeof( Cmd);
 		
-		for( x = 0; x < Okta->pbodlen[ i]; x++)
+		for (x = 0; x < Okta->pbodlen[ i]; x++)
 		{
 			for(z=0; z<theMAD->header->numChn; z++)
 			{

@@ -65,7 +65,7 @@ OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	short		i;
 	Boolean		IsReading;
 
-	for( i = 0; i < curIns->numSamples; i++)
+	for (i = 0; i < curIns->numSamples; i++)
 	{
 		if (sample[ i] != 0L)
 		{
@@ -80,24 +80,24 @@ OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	}
 	
 	
-	for( i = 0; i < 32; i++) curIns->name[ i]	= 0;
+	for (i = 0; i < 32; i++) curIns->name[ i]	= 0;
 	curIns->type		= 0;
 	curIns->numSamples	= 0;
 	
 	/**/
 	
-	for( i = 0; i < 96; i++) curIns->what[ i]		= 0;
-	for( i = 0; i < 12; i++)
+	for (i = 0; i < 96; i++) curIns->what[ i]		= 0;
+	for (i = 0; i < 12; i++)
 	{
 		curIns->volEnv[ i].pos		= 0;
 		curIns->volEnv[ i].val		= 0;
 	}
-	for( i = 0; i < 12; i++)
+	for (i = 0; i < 12; i++)
 	{
 		curIns->pannEnv[ i].pos	= 0;
 		curIns->pannEnv[ i].val	= 0;
 	}
-	for( i = 0; i < 12; i++)
+	for (i = 0; i < 12; i++)
 	{
 		curIns->pitchEnv[ i].pos	= 0;
 		curIns->pitchEnv[ i].val	= 0;
@@ -173,7 +173,7 @@ OSErr main(		OSType					order,						// Order to execute
 						InsHeader->numSamples = oldData.numSamples;
 						BlockMoveData( oldData.what, InsHeader->what, 96);
 						
-						for( i = 0; i < 12; i++)
+						for (i = 0; i < 12; i++)
 						{
 							InsHeader->volEnv[ i] = oldData.volEnv[ i];
 							InsHeader->pannEnv[ i] = oldData.pannEnv[ i];
@@ -201,7 +201,7 @@ OSErr main(		OSType					order,						// Order to execute
 					
 					// READ samples headers & data
 					
-					for( x = 0; x < InsHeader->numSamples; x++)
+					for (x = 0; x < InsHeader->numSamples; x++)
 					{
 						sData *curData = sample[ x] = inMADCreateSample();
 						

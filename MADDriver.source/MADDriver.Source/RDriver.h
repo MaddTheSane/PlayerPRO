@@ -580,7 +580,7 @@ PPEXPORT void PPDebugStr( short, const char*, const char*);								// Internal D
 PPEXPORT void PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*));	//Use this function to call your own debug function when PPDebugStr is called
 																					//Otherwise calls to PPDebugStr will crash your app
 
-PPEXPORT OSErr	MADInitLibrary( char *PlugsFolderName, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
+PPEXPORT OSErr	MADInitLibrary(const char *PlugsFolderName, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
 PPEXPORT OSErr	MADDisposeLibrary( MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
 PPEXPORT void	MADGetBestDriver( MADDriverSettings	*DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam

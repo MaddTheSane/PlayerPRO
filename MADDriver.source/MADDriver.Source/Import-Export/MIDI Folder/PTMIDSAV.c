@@ -19,7 +19,7 @@
 #include <string.h>
 
 #include <errno.h>
-#include "PTMID.H"
+#include "PTMID.h"
 
 void pStrcat( unsigned char *s1,  unsigned char *s2)
 {
@@ -207,7 +207,7 @@ Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short *sample
 			{
 				if (*sampleSize == 8)
 				{
-					for( i = 0; i < MusSize; i ++)
+					for (i = 0; i < MusSize; i ++)
 					{
 						(*sound)[ i] = ExtHeader->sampleArea[ i * numChannels];
 					}
@@ -215,7 +215,7 @@ Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short *sample
 				else
 				{
 					MusSize /= 2;
-					for( i = 0; i < MusSize; i ++)
+					for (i = 0; i < MusSize; i ++)
 					{
 						((short*) (*sound))[ i] = ((short*) ExtHeader->sampleArea)[ i * numChannels];
 					}
@@ -382,7 +382,7 @@ int PutpatternsPtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *ini
 	ipw = wMaxchan;
 	ipwMax = wMaxchan * 3;
 	
-	for( i = 0; i < MAXPATTERN; i++) theMAD->partition[ i] = NULL;
+	for (i = 0; i < MAXPATTERN; i++) theMAD->partition[ i] = NULL;
 	
 	for (wPat = 0; fGoing; wPat++)					/** Loop until told to stop **/
 	{
@@ -610,7 +610,7 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( inOutCount, init);
 	if (theMAD->header == NULL) DebugStr("\pHeader: I NEED MEMORY !!! NOW !");
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
 		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
@@ -622,7 +622,7 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	theMAD->header->generalPitch	= 80;
 	
 	
-	//	for( x = 0; x < 20; x++)		theMAD->header->name[ x] = szTitle[ x];
+	//	for (x = 0; x < 20; x++)		theMAD->header->name[ x] = szTitle[ x];
 	theMAD->header->MAD				=	'MADK';
 	theMAD->header->speed			= 	6;
 	theMAD->header->tempo			=	125;
@@ -637,7 +637,7 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	theMAD->header->numChn			=	wMaxchan;
 	
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
-	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 	
 	theMAD->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
 	if (!theMAD->fid) return;
@@ -645,7 +645,7 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	theMAD->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
 	if (!theMAD->sample) return;
 	
-	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
 	for (iT = 0; iT < cSamps; iT++)
 	{
@@ -653,13 +653,13 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 		short		MidiIns;
 		
 		MidiIns = 0;
-		for( x = 0; x < 129; x++)
+		for (x = 0; x < 129; x++)
 		{
 			if (MIDIInstMOD[ x] == iT) MidiIns = x;
 		}
 		
 		NumToString( MidiIns+1, tStr);
-		for( x = 1; x <= tStr[ 0]; x++) theMAD->fid[ iT].name[ x-1] = tStr[ x];
+		for (x = 1; x <= tStr[ 0]; x++) theMAD->fid[ iT].name[ x-1] = tStr[ x];
 		
 		if (UseQKIns)
 		{
@@ -674,7 +674,7 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	theMAD->header->numPointers		=	cPatterns;
 	if (theMAD->header->numPointers > 128) theMAD->header->numPointers = 128;
 	
-	for( x = 0; x < theMAD->header->numPointers; x++) theMAD->header->oPointers[ x] = x;
+	for (x = 0; x < theMAD->header->numPointers; x++) theMAD->header->oPointers[ x] = x;
 	
 	curMusic = tempCopy;
 }

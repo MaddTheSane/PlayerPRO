@@ -22,6 +22,7 @@
 @property (weak) IBOutlet NSTextField *totalTimeLabel;
 @property (weak) IBOutlet NSSlider *playbackPositionSlider;
 @property (weak) IBOutlet BoxViewController *boxController;
+@property (weak) IBOutlet NSTabView *editorsTab;
 
 @property (strong) PPSoundSettingsViewController *exportController;
 @property (copy) NSString *musicName;
@@ -35,5 +36,6 @@
 - (IBAction)showBoxEditor:(id)sender;
 - (IBAction)showClassicEditor:(id)sender;
 - (IBAction)showDigitalEditor:(id)sender;
+- (IBAction)showWavePreview:(id)sender;
 
 @end

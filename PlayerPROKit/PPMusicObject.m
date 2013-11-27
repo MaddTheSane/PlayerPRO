@@ -82,7 +82,7 @@ end:
 - (id)initWithPath:(NSString *)url
 {
 	if (self = [super init]) {
-		if (MADLoadMADFileCString(&currentMusic, (char*)[url fileSystemRepresentation]) != noErr)
+		if (MADLoadMADFileCString(&currentMusic, [url fileSystemRepresentation]) != noErr)
 			return nil;
 		self.filePath = [NSURL fileURLWithPath:url];
 	}
@@ -152,6 +152,7 @@ end:
 {
 	if (currentMusic) {
 		MADDisposeMusic(&currentMusic, NULL);
+		currentMusic = NULL;
 	}
 }
 
@@ -163,7 +164,7 @@ end:
 	MADCleanCurrentMusic(currentMusic, attachedDriver ? attachedDriver.rec : NULL);
 	MADMusic *music = currentMusic;
 	NSMutableData *saveData = [[NSMutableData alloc] initWithCapacity:MADGetMusicSize(currentMusic)];
-	for( i = 0, x = 0; i < MAXINSTRU; i++)
+	for (i = 0, x = 0; i < MAXINSTRU; i++)
 	{
 		music->fid[ i].no = i;
 		
@@ -183,7 +184,7 @@ end:
 	{
 		BOOL compressMAD = NO /*[[NSUserDefaults standardUserDefaults] boolForKey:PPMMadCompression]*/;
 		if (compressMAD) {
-			for( i = 0; i < music->header->numPat ; i++)
+			for (i = 0; i < music->header->numPat ; i++)
 			{
 				if (music->partition[i]) {
 					PatData *tmpPat = CompressPartitionMAD1(music, music->partition[i]);
@@ -198,7 +199,7 @@ end:
 			for (i = 0; i < music->header->numPat; i++) {
 				if (music->partition[i]) {
 					inOutCount = sizeof( PatHeader);
-					inOutCount += music->header->numChn * music->partition[ i]->header.size * sizeof( Cmd);
+					inOutCount += music->header->numChn * music->partition[i]->header.size * sizeof(Cmd);
 					PatData *tmpPat = calloc(inOutCount, 1);
 					memcpy(tmpPat, music->partition[i], inOutCount);
 					ByteSwapPatHeader(&tmpPat->header);
@@ -209,20 +210,20 @@ end:
 		}
 	}
 	
-	for( i = 0; i < MAXINSTRU; i++)
+	for (i = 0; i < MAXINSTRU; i++)
 	{
 		if (music->fid[ i].numSamples > 0 || music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
 		{
 			music->fid[ i].no = i;
 			InstrData instData = music->fid[i];
 			ByteSwapInstrData(&instData);
-			[saveData appendBytes:&instData length:sizeof( InstrData)];
+			[saveData appendBytes:&instData length:sizeof(InstrData)];
 		}
 	}
 	
-	for( i = 0; i < MAXINSTRU ; i++)
+	for (i = 0; i < MAXINSTRU ; i++)
 	{
-		for( x = 0; x < music->fid[i].numSamples; x++)
+		for (x = 0; x < music->fid[i].numSamples; x++)
 		{
 			sData	curData;
 			sData32	copyData;
@@ -255,9 +256,9 @@ end:
 	// EFFECTS *** *** *** *** *** *** *** *** *** *** *** ***
 	
 	int alpha = 0;
-	for( i = 0; i < 10 ; i++)	// Global Effects
+	for (i = 0; i < 10 ; i++)	// Global Effects
 	{
-		if (music->header->globalEffect[ i])
+		if (music->header->globalEffect[i])
 		{
 			inOutCount = sizeof( FXSets);
 			__block FXSets aSet = music->sets[alpha];
@@ -274,13 +275,13 @@ end:
 		}
 	}
 	
-	for( i = 0; i < music->header->numChn ; i++)	// Channel Effects
+	for (i = 0; i < music->header->numChn ; i++)	// Channel Effects
 	{
-		for( x = 0; x < 4; x++)
+		for (x = 0; x < 4; x++)
 		{
-			if (music->header->chanEffect[ i][ x])
+			if (music->header->chanEffect[i][x])
 			{
-				inOutCount = sizeof( FXSets);
+				inOutCount = sizeof(FXSets);
 				__block FXSets aSet = music->sets[alpha];
 				PPBE16(&aSet.id);
 				PPBE16(&aSet.noArg);
@@ -402,7 +403,7 @@ end:
 	self.internalFileName = [NSString stringWithCString:currentMusic->header->name encoding:NSMacOSRomanStringEncoding];
 	self.madInfo = [NSString stringWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
 	self.madAuthor = @"";
-	
+	self.madType = currentMusic->header->MAD;
 	
 }
 

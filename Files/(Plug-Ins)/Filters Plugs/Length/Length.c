@@ -114,7 +114,7 @@ static Ptr ConvertSampleSize( Ptr src, long srcSize, short amp, long dstSize, Bo
 	switch( amp)
 	{
 	case 8:
-		for( x = 0; x < newSize; x++)
+		for (x = 0; x < newSize; x++)
 		{
 			pos			= (x * srcSize << LRVAL) / dstSize;
 			right		= pos & ((1 << LRVAL)-1);
@@ -151,7 +151,7 @@ static Ptr ConvertSampleSize( Ptr src, long srcSize, short amp, long dstSize, Bo
 	break;
 	
 	case 16:
-		for( x = 0; x < newSize/2; x++)
+		for (x = 0; x < newSize/2; x++)
 		{
 			pos			= (x * srcSize << LRVAL) / dstSize;
 			right		= pos & ((1 << LRVAL)-1);

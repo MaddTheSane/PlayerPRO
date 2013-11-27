@@ -16,7 +16,7 @@
 #include <string.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <Carbon/Carbon.h>
-#include "PTMID.H"
+#include "PTMID.h"
 //#include <unix.h>
 
 #define BUFSIZE 512

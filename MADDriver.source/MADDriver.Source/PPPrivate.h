@@ -143,7 +143,7 @@ OSErr	PPImportFile( MADLibrary *inMADDriver, char	*kindFile, char *AlienFile, MA
 OSErr	PPIdentifyFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile);
 
 OSType	GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType type);
-void	MInitImportPlug( MADLibrary *inMADDriver, char*);
+void	MInitImportPlug( MADLibrary *inMADDriver, const char*);
 void	CloseImportPlug( MADLibrary *inMADDriver);
 OSErr	CheckMADFile( char *AlienFile);
 

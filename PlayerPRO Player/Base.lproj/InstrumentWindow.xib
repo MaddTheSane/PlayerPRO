@@ -336,7 +336,7 @@
                 <constraint firstItem="59" firstAttribute="leading" secondItem="41" secondAttribute="trailing" constant="8" symbolic="YES" id="yQ1-zn-zWc"/>
             </constraints>
         </customView>
-        <drawer trailingOffset="15" id="21">
+        <drawer trailingOffset="15" id="21" userLabel="Info Drawer">
             <size key="contentSize" width="230" height="100"/>
             <size key="maxContentSize" width="10000" height="10000"/>
             <connections>

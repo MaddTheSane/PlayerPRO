@@ -29,7 +29,7 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 	switch( AudioType)
 	{
 		case wave:
-			for( i = 0, x = 0; i < AudioLength; i++, x++)
+			for (i = 0, x = 0; i < AudioLength; i++, x++)
 			{
 				temp = 127.0 * sin( ( ((double) x * (double) AudioFreq * M_PI * 2.0) / KHZ));
 				
@@ -51,11 +51,11 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 			break;
 			
 		case silence:
-			for( i = 0; i < AudioLength; i++) Audio8Ptr[ i] = 0x00;
+			for (i = 0; i < AudioLength; i++) Audio8Ptr[ i] = 0x00;
 			break;
 			
 		case square:
-			for( i = 0, x = 0, dest = -1; i < AudioLength; i++)
+			for (i = 0, x = 0, dest = -1; i < AudioLength; i++)
 			{
 				if (i > dest)
 				{
@@ -87,7 +87,7 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 			
 		case triangle:
 			UpDown = true;
-			for( i = 0, x = 0, dest = -1; i < AudioLength; i++)
+			for (i = 0, x = 0, dest = -1; i < AudioLength; i++)
 			{
 				if (i > dest)
 				{
@@ -139,7 +139,7 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 	switch( AudioType)
 	{
 		case wave:
-			for( i = 0, x = 0; i < AudioLength; i++, x++)
+			for (i = 0, x = 0; i < AudioLength; i++, x++)
 			{
 				temp = 32767.0 * sin( ( ((double) x * (double) AudioFreq * M_PI * 2.0) / KHZ));
 				
@@ -161,11 +161,11 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 			break;
 			
 		case silence:
-			for( i = 0; i < AudioLength; i++) Audio16Ptr[ i] = 0x00;
+			for (i = 0; i < AudioLength; i++) Audio16Ptr[ i] = 0x00;
 			break;
 			
 		case square:
-			for( i = 0, x = 0, dest = -1; i < AudioLength; i++)
+			for (i = 0, x = 0, dest = -1; i < AudioLength; i++)
 			{
 				if (i > dest)
 				{
@@ -197,7 +197,7 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 			
 		case triangle:
 			UpDown = true;
-			for( i = 0, x = 0, dest = -1; i < AudioLength; i++)
+			for (i = 0, x = 0, dest = -1; i < AudioLength; i++)
 			{
 				if (i > dest)
 				{

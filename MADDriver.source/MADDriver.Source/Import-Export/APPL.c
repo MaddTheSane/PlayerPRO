@@ -74,10 +74,10 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	
 	
 	/**** PARTITION ****/
-	for( i = MadHeader->numPat; i < MAXPATTERN; i++)
+	for (i = MadHeader->numPat; i < MAXPATTERN; i++)
 		MadFile->partition[ i] = NULL;
 	
-	for( i = 0; i < MadHeader->numPat; i++)
+	for (i = 0; i < MadHeader->numPat; i++)
 	{
 		inOutCount = sizeof( PatHeader);
 		memcpy(&tempPatHeader, MADPtr + OffSetToSample, inOutCount);
@@ -91,7 +91,7 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		MadFile->partition[ i] = (PatData*) malloc( inOutCount);
 		if (MadFile->partition[ i] == NULL)
 		{
-			for( x = 0; x < i; x++)
+			for (x = 0; x < i; x++)
 			{
 				if (MadFile->partition[ x] != NULL)
 					free(MadFile->partition[ x]);
@@ -117,7 +117,7 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	memcpy( MadFile->fid, MADPtr + OffSetToSample, inOutCount);
 	OffSetToSample += inOutCount;
 	
-	for( i = MadFile->header->numInstru-1; i >= 0 ; i--)
+	for (i = MadFile->header->numInstru-1; i >= 0 ; i--)
 	{
 		InstrData	*curIns = &MadFile->fid[ i];
 		int x = 0;
@@ -125,7 +125,7 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		PPBE16(&curIns->firstSample);
 		PPBE16(&curIns->volFade);
 		
-		for( x = 0; x < 12; x++)
+		for (x = 0; x < 12; x++)
 		{
 			PPBE16(&curIns->volEnv[ x].pos);
 			PPBE16(&curIns->volEnv[ x].val);
@@ -145,11 +145,11 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	}
 	MadFile->header->numInstru = MAXINSTRU;
 	
-	for( i = 0; i < MAXINSTRU ; i++)
+	for (i = 0; i < MAXINSTRU ; i++)
 	{
 		short x;
 		
-		for( x = 0; x < MadFile->fid[ i].numSamples ; x++)
+		for (x = 0; x < MadFile->fid[ i].numSamples ; x++)
 		{
 			sData	*curData;
 			
@@ -158,10 +158,10 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			curData = MadFile->sample[ i*MAXSAMPLE + x] = (sData*) malloc( sizeof( sData));
 			if (curData == NULL)
 			{
-				for( x = 0; x < MAXINSTRU ; x++)
+				for (x = 0; x < MAXINSTRU ; x++)
 					MADKillInstrument( MadFile, x);
 				
-				for( x = 0; x < MadFile->header->numPat; x++)
+				for (x = 0; x < MadFile->header->numPat; x++)
 				{
 					if (MadFile->partition[ x] != NULL)
 						free( MadFile->partition[ x]);
@@ -188,10 +188,10 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			curData->data = malloc( inOutCount);
 			if (curData->data == NULL)
 			{
-				for( x = 0; x < MAXINSTRU ; x++)
+				for (x = 0; x < MAXINSTRU ; x++)
 					MADKillInstrument( MadFile, x);
 				
-				for( x = 0; x < MadFile->header->numPat; x++)
+				for (x = 0; x < MadFile->header->numPat; x++)
 				{
 					if (MadFile->partition[ x] != NULL)
 						free( MadFile->partition[ x]);
@@ -208,13 +208,13 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 				SInt32 	ll;
 				short	*shortPtr = (short*) curData->data;
 				
-				for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+				for (ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
 			}
 			
 		}
 	}
 	
-	for( i = 0; i < MAXINSTRU; i++)
+	for (i = 0; i < MAXINSTRU; i++)
 		MadFile->fid[ i].firstSample = i * MAXSAMPLE;
 	
 	/*********************/
@@ -226,7 +226,7 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		
 		alpha = 0;
 		
-		for( i = 0; i < 10 ; i++)	// Global Effects
+		for (i = 0; i < 10 ; i++)	// Global Effects
 		{
 			if (MadFile->header->globalEffect[ i])
 			{
@@ -245,9 +245,9 @@ static OSErr LoadMADH( char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			}
 		}
 		
-		for( i = 0; i < MadFile->header->numChn ; i++)	// Channel Effects
+		for (i = 0; i < MadFile->header->numChn ; i++)	// Channel Effects
 		{
-			for( x = 0; x < 4; x++)
+			for (x = 0; x < 4; x++)
 			{
 				if (MadFile->header->chanEffect[ i][ x])
 				{

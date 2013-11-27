@@ -137,7 +137,7 @@ static void DrawCGSampleInt(long 	start,
 		temp  /= (1 << 16);
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
 		
-		for( i = tSS; i < tSE; i++)
+		for (i = tSS; i < tSE; i++)
 		{
 			BS = start + (i * sampleSize) / larg;
 			BE = start + ((i+1) * sampleSize) / larg;
@@ -161,7 +161,7 @@ static void DrawCGSampleInt(long 	start,
 			
 			if (BS != BE)
 			{
-				for( x = BS; x < BE; x++)
+				for (x = BS; x < BE; x++)
 				{
 					temp = (theShortSample[ x]  + 0x8000);
 					
@@ -197,7 +197,7 @@ static void DrawCGSampleInt(long 	start,
 		
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
 		
-		for( i = tSS; i < tSE; i++)
+		for (i = tSS; i < tSE; i++)
 		{
 			BS = start + (i * sampleSize) / larg;
 			BE = start + ((i+1) * sampleSize) / larg;
@@ -221,7 +221,7 @@ static void DrawCGSampleInt(long 	start,
 			
 			if (BS != BE)
 			{
-				for( x = BS; x < BE; x++)
+				for (x = BS; x < BE; x++)
 				{
 					temp = (unsigned char) (theSample[ x] - 0x80);
 					
