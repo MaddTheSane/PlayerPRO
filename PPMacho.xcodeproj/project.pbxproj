@@ -2786,18 +2786,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		551292DA163DD68500C2C639 /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				555776C417EBF8FF0019D008 /* XCTest.framework */,
-				55EE8EBF100404EB00E75E63 /* CoreServices.framework */,
-				55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */,
-				551292DB163DD68500C2C639 /* AppKit.framework */,
-				551292DC163DD68500C2C639 /* CoreData.framework */,
-			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
 		551292DE163DD68500C2C639 /* PlayerPROKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -4008,7 +3996,11 @@
 				5573A3EF10B5151700FF8B50 /* Foundation.framework */,
 				55ED547310D5F9CD00824C61 /* CoreMIDI.framework */,
 				559C4188183EB4AB004A073C /* QuickLook.framework */,
-				551292DA163DD68500C2C639 /* Other Frameworks */,
+				555776C417EBF8FF0019D008 /* XCTest.framework */,
+				55EE8EBF100404EB00E75E63 /* CoreServices.framework */,
+				55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */,
+				551292DB163DD68500C2C639 /* AppKit.framework */,
+				551292DC163DD68500C2C639 /* CoreData.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
