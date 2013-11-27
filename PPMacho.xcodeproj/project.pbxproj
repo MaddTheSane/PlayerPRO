@@ -254,7 +254,7 @@
 		555C125116378B3500735225 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		555C5FC818445C3600DBD5DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
-		555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		555C5FCB18445CBC00DBD5DA /* libPlayerPROCompact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */; };
 		555C5FCC18445CBC00DBD5DA /* libPlayerPROKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
@@ -392,7 +392,7 @@
 		5578C52417DB94A50057D11B /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		5578C52517DB94A50057D11B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		5578C52617DB94A50057D11B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		5578C52717DB94A50057D11B /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
+		5578C52717DB94A50057D11B /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		5578C52917DB94A50057D11B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55BE998617978BB100D6DECC /* InfoPlist.strings */; };
 		5578C52A17DB94A50057D11B /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55BE998817978BB100D6DECC /* schema.strings */; };
 		5578C52B17DB94A50057D11B /* schema.xml in Resources */ = {isa = PBXBuildFile; fileRef = 55BE999117978BB200D6DECC /* schema.xml */; };
