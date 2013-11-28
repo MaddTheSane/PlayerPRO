@@ -17,7 +17,7 @@
  *   information to that object, and also carry the results back.
  */
 @interface AXCArrayControllerWithDragAndDrop : NSArrayController
-@property (weak) IBOutlet NSObject<AXCArrayControllerValidator> *dragValidator;
+@property (weak) id<AXCArrayControllerValidator> dragValidator;
 
 #pragma mark -
 

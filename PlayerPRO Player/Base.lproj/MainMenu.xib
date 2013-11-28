@@ -855,7 +855,6 @@
         <arrayController objectClassName="NSMutableArray" automaticallyRearrangesObjects="YES" id="536" userLabel="Music List" customClass="AXCArrayControllerWithDragAndDrop">
             <connections>
                 <binding destination="494" name="contentArray" keyPath="self.musicList.musicList" id="700"/>
-                <outlet property="dragValidator" destination="494" id="OtU-3x-Xsj"/>
             </connections>
         </arrayController>
         <customView id="537" userLabel="Drawer Content View">

@@ -1174,6 +1174,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	srandom(time(NULL) & 0xffffffff);
 	PPRegisterDebugFunc(CocoaDebugStr);
 	MADInitLibrary(NULL, &madLib);
+	musicListController.dragValidator = self;
 	//the NIB won't store the value anymore, so do this hackery to make sure there's some value in it.
 	[songTotalTime setIntegerValue:0];
 	[songCurTime setIntegerValue:0];
@@ -1233,6 +1234,8 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	if (selMus != -1) {
 		[self selectMusicAtIndex:selMus];
 	}
+	musicListController.dragValidator = self;
+	[tableView setVerticalMotionCanBeginDrag:YES];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
@@ -1903,16 +1906,39 @@ enum PPMusicToolbarTypes {
 
 #pragma mark ACXArrayControllerValidator methods
 
-- (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation
-{
-	NSDragOperation result = NSDragOperationNone, mask = [info draggingSourceOperationMask];
+#define DnDType @"PPPDragDropType"
 
+- (NSDragOperation)tableView:(NSTableView *)tableView1 validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation
+{
+	NSDragOperation result = NSDragOperationNone;//, mask = [info draggingSourceOperationMask];
+
+	if ([info draggingSource] == tableView1) {
+		result = NSDragOperationMove;
+	}
+	
+	[tableView1 setDropRow:row dropOperation:NSTableViewDropAbove];
+	
 	return result;
 }
 
-- (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id <NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
+- (BOOL)tableView:(NSTableView *)tableView1 acceptDrop:(id <NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
 {
-	return NO;
+	return YES;
+}
+
+- (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndices toPasteboard:(NSPasteboard*)pboard
+{
+	//NSMutableArray *declaredTypes = [[NSMutableArray alloc] initWithCapacity:2];
+	NSMutableArray *urlArrays = [[NSMutableArray alloc] init];
+	NSArray *ppmobjects = [musicList arrayOfObjectsInMusicListAtIndexes:rowIndices];
+	for (PPMusicListObject *obj in ppmobjects) {
+		[urlArrays addObject:obj.musicUrl];
+	}
+	[pboard clearContents]; // clear pasteboard to take ownership
+    [pboard writeObjects:[urlArrays copy]]; // write the URLs
+	[pboard addTypes:@[DnDType] owner:self];
+	BOOL status = [pboard setPropertyList:rowIndices forType:DnDType];
+	return YES;
 }
 
 @end
