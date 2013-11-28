@@ -11,11 +11,11 @@
 #import "PPPreferences.h"
 #import "PPMusicList.h"
 #include <PlayerPROCore/PlayerPROCore.h>
+#import "AXCArrayControllerWithDragAndDrop.h"
 @class PPInstrumentWindowController;
 @class PPCurrentlyPlayingIndex;
-@class AXCArrayControllerWithDragAndDrop;
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate, AXCArrayControllerValidator>
 {
 	IBOutlet NSButton		*loopButton;
     IBOutlet NSButton		*playButton;

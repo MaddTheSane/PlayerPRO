@@ -6,7 +6,7 @@
 //  Copyright 2005 Adium Team. All rights reserved.
 //
 
-@protocol ACXArrayControllerValidator;
+@protocol AXCArrayControllerValidator;
 
 /*! @class AXCArrayControllerWithDragAndDrop
  *  @brief Forwards table-view data-source methods for drag-and-drop validation
@@ -17,19 +17,18 @@
  *   information to that object, and also carry the results back.
  */
 @interface AXCArrayControllerWithDragAndDrop : NSArrayController
-@property (weak) id<ACXArrayControllerValidator> dragValidator;
+@property (weak) IBOutlet NSObject<AXCArrayControllerValidator> *dragValidator;
 
 #pragma mark -
 
 - (NSDragOperation) tableView:(NSTableView *)tableView validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation;
 - (BOOL) tableView:(NSTableView *)tableView acceptDrop:(id <NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation;
-
 @end
 
-@protocol ACXArrayControllerValidator <NSObject>
-
+@protocol AXCArrayControllerValidator <NSObject>
 - (NSDragOperation) tableView:(NSTableView *)tableView validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation;
 - (BOOL) tableView:(NSTableView *)tableView acceptDrop:(id <NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation;
+
 @optional;
 - (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndices toPasteboard:(NSPasteboard*)pboard;
 @end

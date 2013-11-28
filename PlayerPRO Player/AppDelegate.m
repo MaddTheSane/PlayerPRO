@@ -6,7 +6,6 @@
 //
 //
 
-#import "AXCArrayControllerWithDragAndDrop.h"
 #import "AppDelegate.h"
 #import "PPPreferences.h"
 #import "PPMusicList.h"
@@ -1900,6 +1899,20 @@ enum PPMusicToolbarTypes {
 - (void)soundOutStereoDelayAmountDidChange:(short)std
 {
 	exportSettings.MicroDelaySize = std;
+}
+
+#pragma mark ACXArrayControllerValidator methods
+
+- (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation
+{
+	NSDragOperation result = NSDragOperationNone, mask = [info draggingSourceOperationMask];
+
+	return result;
+}
+
+- (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id <NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
+{
+	return NO;
 }
 
 @end
