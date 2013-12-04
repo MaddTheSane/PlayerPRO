@@ -5,13 +5,13 @@
 extern "C" {
 #endif
 
-Boolean	EnterFullscreen( long inDispID, Point *ioSize, int inBitDepth, WindowPtr inWin, long inFreq );
+Boolean	EnterFullscreen(long inDispID, Point *ioSize, int inBitDepth, WindowPtr inWin, long inFreq);
 GrafPtr	BeginFrame();
 void	EndFrame();
 void	ExitFullscreen();
-long	GetDisplayID( long inDeviceNum );
-long	GetDisplayIDWithXandY( long inX, long inY );
-void	DoFullScreenNow( WindowPtr mWind);
+long	GetDisplayID(long inDeviceNum );
+long	GetDisplayIDWithXandY(long inX, long inY );
+void	DoFullScreenNow(WindowPtr mWind);
 
 
 #ifdef __cplusplus
@@ -62,9 +62,9 @@ public:
 	// Two different ways to obtain a display ID...
 	// Use the long returned here for EnterFullscreen()...
 	// Returns the (inDeviceNum)th display ID
-	static long	GetDisplayID( long inDeviceNum );
+	static long	GetDisplayID(long inDeviceNum);
 	// Returns a display ID that contains the given global coordinate
-	static long	GetDisplayID( long inX, long inY );
+	static long	GetDisplayID(long inX, long inY);
 	
 	// Returns true if this ScreenDevice is currently fullscreen (ie, if EnterFullscreen has been called)
 	inline bool	IsFullscreen()
@@ -76,7 +76,7 @@ public:
 	// on entry and contains the final fullscreen res dimentions upon return.	
 	// inWin expands to fit fullscreen size if in Windows *or* we're no using mac drawsprockets	
 	// If Mac and using draw sprockets: inFreq is the preferred freq (or use 0 for default freq)
-	inline bool EnterFullscreen( long inDispID, Point *ioSize, int inBitDepth, WindowPtr inWin, long inFreq )
+	inline bool EnterFullscreen(long inDispID, Point *ioSize, int inBitDepth, WindowPtr inWin, long inFreq)
 	{
 		Point tempPoint = *ioSize;
 		bool retVal = EnterFullscreen(inDispID, tempPoint, inBitDepth, inWin, inFreq);
@@ -84,7 +84,7 @@ public:
 		return retVal;
 	}
 	
-	bool	EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth, WindowPtr inWin, long inFreq );
+	bool	EnterFullscreen(long inDispID, Point& ioSize, int inBitDepth, WindowPtr inWin, long inFreq);
 	void	ExitFullscreen();
 	
 	// Encase these before using the port returned by GetPort();

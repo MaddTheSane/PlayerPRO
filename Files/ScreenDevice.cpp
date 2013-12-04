@@ -289,26 +289,25 @@ void ScreenDevice::EndFrame()
 	}
 }
 
-long ScreenDevice::GetDisplayID( long inDeviceNum )
+long ScreenDevice::GetDisplayID(long inDeviceNum)
 {
 	OSStatus			err;
 	DisplayIDType		id = 0;
-	GDHandle theGDevice = ::DMGetFirstScreenDevice( false );
-	while ( theGDevice && inDeviceNum ) {
+	GDHandle theGDevice = ::DMGetFirstScreenDevice(false);
+	while (theGDevice && inDeviceNum ) {
 		inDeviceNum--;
-		
-		theGDevice = ::DMGetNextScreenDevice( theGDevice, false );
+		theGDevice = ::DMGetNextScreenDevice(theGDevice, false);
 	}
 	
-	if ( ! theGDevice )
-		theGDevice = ::DMGetFirstScreenDevice( false );
+	if (!theGDevice)
+		theGDevice = ::DMGetFirstScreenDevice(false);
 	
-	err = ::DMGetDisplayIDByGDevice( theGDevice, &id, false );
+	err = ::DMGetDisplayIDByGDevice(theGDevice, &id, false);
 	
 	return ( err ) ? 0 : id;
 }
 
-long ScreenDevice::GetDisplayID( long inX, long inY )
+long ScreenDevice::GetDisplayID(long inX, long inY)
 {
 	OSStatus			err;
 	DisplayIDType		id = 0;
@@ -326,7 +325,7 @@ long ScreenDevice::GetDisplayID( long inX, long inY )
 	 ** versions of the system software, so it is best to make the change
 	 ** now and make your software DisplayManager-centric.
 	 */
-	theGDevice = ::DMGetFirstScreenDevice( false );
+	theGDevice = ::DMGetFirstScreenDevice(false);
 	while( theGDevice && ! id ) {
 		
 		if ( ::PtInRect( inPt, &(**theGDevice).gdRect ) ) {
@@ -350,7 +349,7 @@ long ScreenDevice::GetDisplayID( long inX, long inY )
 
 #pragma mark C-based functions
 
-Boolean EnterFullscreen( long inDispID, Point *ioSize, int inBitDepth, WindowPtr inWin, long inFreq )
+Boolean EnterFullscreen(long inDispID, Point *ioSize, int inBitDepth, WindowPtr inWin, long inFreq)
 {
 	if ((void*)mScreenDevice == NULL)
 		mScreenDevice = new ScreenDevice();
@@ -373,13 +372,13 @@ void ExitFullscreen()
 	mScreenDevice = NULL;
 }
 
-long GetDisplayID( long inDeviceNum )
+long GetDisplayID(long inDeviceNum)
 {
 	return ScreenDevice::GetDisplayID(inDeviceNum);
 }
 
 long GetDisplayIDWithXandY(long inX, long inY)
 {
-	return ScreenDevice::GetDisplayID(inX,inY);
+	return ScreenDevice::GetDisplayID(inX, inY);
 }
 
