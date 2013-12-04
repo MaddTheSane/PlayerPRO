@@ -35,7 +35,7 @@ void DrawPlugInfo( short iD)
 	
 	NNumToString( iD + 1, aStr);
 	pStrcat( aStr, "\p  ");
-
+	
 	switch( plugType[iD])
 	{
 		case eMusicFilePlug:
@@ -49,18 +49,18 @@ void DrawPlugInfo( short iD)
 			pStrcat( aStr, tempSpec.name);
 			CFRelease(tempURL);
 		}
-		break;
-		
+			break;
+			
 		case eSoundFilePlug:
-		
+			
 			break;
-		
+			
 		case eDigitalEditorPlug:
-		
+			
 			break;
-		
+			
 		case eSoundFilterPlug:
-		
+			
 			break;
 	}
 	
@@ -71,16 +71,16 @@ void DrawPlugInfo( short iD)
 	{
 		Rect 			t;
 		RGBColor		hilite;
-	
+		
 		LMGetHiliteRGB( &hilite);
 		
 		t.left = myList.rect.left;						t.right = myList.rect.right;
 		t.top = myList.rect.top + myList.HCell*pos;		t.bottom = t.top + myList.HCell-1;
-
+		
 		
 		if( hilite.red == 0 &&
-			hilite.green == 0 &&
-			hilite.blue == 0)
+		   hilite.green == 0 &&
+		   hilite.blue == 0)
 		{
 			InvertRect( &t);
 		}
@@ -89,11 +89,11 @@ void DrawPlugInfo( short iD)
 			RGBBackColor( &hilite);
 			
 			CopyBits ( 	(BitMap*) *GetPortPixMap(GetDialogPort( aDialog)),
-						(BitMap*) *GetPortPixMap(GetDialogPort( aDialog)),
-						&t,
-						&t,
-						srcCopy,
-						nil);
+					  (BitMap*) *GetPortPixMap(GetDialogPort( aDialog)),
+					  &t,
+					  &t,
+					  srcCopy,
+					  nil);
 			
 			ForeColor( blackColor);
 			BackColor( whiteColor);
@@ -121,15 +121,15 @@ void AboutPlugs()
 	
 	SetRect( &itemRect, 0, 0, 30, 16);
 	myList.yScroll = NewControl( 	GetDialogWindow( aDialog),
-									&itemRect,
-									"\p.",
-									true,
-									0,
-									0,
-									0,
-									gScrollBarID,
-									0);
-							
+								&itemRect,
+								"\p.",
+								true,
+								0,
+								0,
+								0,
+								gScrollBarID,
+								0);
+	
 	myList.xScroll = 0;
 	myList.maxX = 1;
 	myList.maxY = MADDriver->lib->TotalPlug + GetNoPPDG();
@@ -169,13 +169,13 @@ void AboutPlugs()
 				Point	pt;
 				
 				GetMouse( &pt);
-			
+				
 				PLScroll( pt, &myList);
 				
 				PLClick( pt, 0, &myList);
 				
 			}
-			break;
+				break;
 		}
 		
 	}while( itemHit != 1);
@@ -203,8 +203,7 @@ void UpdatePlugsAbout( DialogPtr aDialog)
 	PaintRect( &myList.rect);
 	ForeColor( blackColor);
 	
-	for( i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++)
-	{
+	for( i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++) {
 		DrawPlugInfo( i);
 	}
 	

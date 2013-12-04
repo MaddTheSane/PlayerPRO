@@ -6,14 +6,14 @@
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
 
-static OSErr mainInvert(	sData					*theData,
-					long					SelectionStart,
-					long					SelectionEnd,
-					PPInfoPlug				*thePPInfoPlug,
-					short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainInvert(sData					*theData,
+						long					SelectionStart,
+						long					SelectionEnd,
+						PPInfoPlug				*thePPInfoPlug,
+						short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long	i, /*peak = 0,*/ temp;
-
+	
 	switch( theData->amp)
 	{
 		case 8:
@@ -34,11 +34,11 @@ static OSErr mainInvert(	sData					*theData,
 				}
 			}
 		} break;
-
+			
 		case 16:
 		{
 			short	*SamplePtr = (short*) theData->data + (SelectionStart / 2);
-
+			
 			for( i = 0; i < (SelectionEnd - SelectionStart) / 2; i++)
 			{
 				temp = (long)*SamplePtr;

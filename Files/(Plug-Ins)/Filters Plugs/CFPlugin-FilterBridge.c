@@ -17,52 +17,41 @@
  */
 
 typedef struct _CFPlugType {
-	PPFiltersPlugin		*_PPROCFPlugFormat;
-	CFUUIDRef			_factoryID;
-	UInt32				_refCount;
+	PPFiltersPlugin	*_PPROCFPlugFormat;
+	CFUUIDRef		_factoryID;
+	UInt32			_refCount;
 } CFPlugType;
 
-static void _deallocCFPlugType( CFPlugType *myInstance );
-
+static void _deallocCFPlugType(CFPlugType *myInstance );
 
 static HRESULT CFPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
 {
-    //  Create a CoreFoundation UUIDRef for the requested interface.
+	//  Create a CoreFoundation UUIDRef for the requested interface.
+	CFUUIDRef interfaceID = CFUUIDCreateFromUUIDBytes( kCFAllocatorDefault, iid );
 	
-    CFUUIDRef interfaceID = CFUUIDCreateFromUUIDBytes( kCFAllocatorDefault, iid );
-	
-    // Test the requested ID against the valid interfaces.
-	
-    if( CFEqual( interfaceID, kPlayerPROFiltersPlugInterfaceID ) ) 
-	{
+	// Test the requested ID against the valid interfaces.
+	if( CFEqual( interfaceID, kPlayerPROFiltersPlugInterfaceID ) ) {
 		
-        //  If the TestInterface was requested, bump the ref count, set the ppv parameter
-        //  equal to the instance, and return good status.
+		//  If the TestInterface was requested, bump the ref count, set the ppv parameter
+		//  equal to the instance, and return good status.
+		( (CFPlugType *) myInstance )->_PPROCFPlugFormat->AddRef( myInstance );
+		*ppv = myInstance;
+		CFRelease( interfaceID );
+		return S_OK;
+	} else if( CFEqual( interfaceID, IUnknownUUID ) ) {
 		
-        ( (CFPlugType *) myInstance )->_PPROCFPlugFormat->AddRef( myInstance );
-        *ppv = myInstance;
-        CFRelease( interfaceID );
-        return S_OK;
-    }
-    else if( CFEqual( interfaceID, IUnknownUUID ) ) 
-	{
+		//  If the IUnknown interface was requested, same as above.
+		( (CFPlugType *) myInstance )->_PPROCFPlugFormat->AddRef( myInstance );
+		*ppv = myInstance;
+		CFRelease( interfaceID );
+		return S_OK;
+	} else {
 		
-        //  If the IUnknown interface was requested, same as above.
-		
-        ( (CFPlugType *) myInstance )->_PPROCFPlugFormat->AddRef( myInstance );
-        *ppv = myInstance;
-        CFRelease( interfaceID );
-        return S_OK;
-    }
-    else 
-	{
-		
-        //  Requested interface unknown, bail with error.
-		
-        *ppv = NULL;
-        CFRelease( interfaceID );
-        return E_NOINTERFACE;
-    }
+		//  Requested interface unknown, bail with error.
+		*ppv = NULL;
+		CFRelease( interfaceID );
+		return E_NOINTERFACE;
+	}
 }
 
 static ULONG CFPlugAddRef( void *myInstance )
@@ -99,25 +88,21 @@ static PPFiltersPlugin CFPlugFormat =
 
 static CFPlugType *_allocCFPlugType( CFUUIDRef factoryID )
 {
-    //  Allocate memory for the new instance.
+	//  Allocate memory for the new instance.
+	CFPlugType *newOne = (CFPlugType *)malloc( sizeof(CFPlugType) );
 	
-    CFPlugType *newOne = (CFPlugType *)malloc( sizeof(CFPlugType) );
+	//  Point to the function table
+	newOne->_PPROCFPlugFormat = &CFPlugFormat;
 	
-    //  Point to the function table
+	//  Retain and keep an open instance refcount for each factory.
+	if (factoryID) {
+		newOne->_factoryID = (CFUUIDRef)CFRetain( factoryID );
+		CFPlugInAddInstanceForFactory( factoryID );
+	}
 	
-    newOne->_PPROCFPlugFormat = &CFPlugFormat;
-	
-    //  Retain and keep an open instance refcount for each factory.
-	
-    if (factoryID) {
-        newOne->_factoryID = (CFUUIDRef)CFRetain( factoryID );
-        CFPlugInAddInstanceForFactory( factoryID );
-    }
-	
-    //  This function returns the IUnknown interface so set the refCount to one.
-	
-    newOne->_refCount = 1;
-    return newOne;
+	//  This function returns the IUnknown interface so set the refCount to one.
+	newOne->_refCount = 1;
+	return newOne;
 }
 
 // -------------------------------------------------------------------------------------------
@@ -127,28 +112,25 @@ static CFPlugType *_allocCFPlugType( CFUUIDRef factoryID )
 
 static void _deallocCFPlugType( CFPlugType *myInstance )
 {
-    CFUUIDRef factoryID = myInstance->_factoryID;
-    free( myInstance );
-    if ( factoryID ) {
-        CFPlugInRemoveInstanceForFactory( factoryID );
-        CFRelease( factoryID );
-    }
+	CFUUIDRef factoryID = myInstance->_factoryID;
+	free( myInstance );
+	if ( factoryID ) {
+		CFPlugInRemoveInstanceForFactory( factoryID );
+		CFRelease( factoryID );
+	}
 }
 
 EXP void * PLUGINFACTORY( CFAllocatorRef allocator, CFUUIDRef typeID )
 {
 	
-    //  If correct type is being requested, allocate an instance of TestType and return
-    //  the IUnknown interface.
-	
-    if ( CFEqual( typeID, kPlayerPROFiltersPlugTypeID ) ) {
-        CFPlugType *result = _allocCFPlugType( PLUGUUID );
-        return result;
-    }
-    else {
+	//  If correct type is being requested, allocate an instance of TestType and return
+	//  the IUnknown interface.
+	if ( CFEqual( typeID, kPlayerPROFiltersPlugTypeID ) ) {
+		CFPlugType *result = _allocCFPlugType( PLUGUUID );
+		return result;
+	} else {
 		
-        // If the requested type is incorrect, return NULL.
-		
-        return NULL;
-    }
+		// If the requested type is incorrect, return NULL.
+		return NULL;
+	}
 }

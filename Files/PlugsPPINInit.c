@@ -110,69 +110,69 @@ void PPINGetFileName( void)
 	NavTypeListHandle	openList;
 	NavEventUPP			eventUPP = NewNavEventUPP( myCustomEventNAVProc);
 	NavObjectFilterUPP 	filterProcUPP = NewNavObjectFilterUPP( MyInsCustomFilter);
-		
-		// default behavior for browser and dialog:
+	
+	// default behavior for browser and dialog:
 	iErr = NavGetDefaultDialogOptions( &dialogOptions);
-		
+	
 	dialogOptions.dialogOptionFlags	&=	~kNavAllowPreviews;
 	dialogOptions.dialogOptionFlags	|=	kNavNoTypePopup;
 	dialogOptions.dialogOptionFlags	&=	~kNavAllowStationery;
 	dialogOptions.dialogOptionFlags	|=	kNavDontAutoTranslate;
 	dialogOptions.dialogOptionFlags	&=	~kNavAllowMultipleFiles;
+	
+	pStrcpy( dialogOptions.clientName, "\pPlayerPRO");
+	
+	/*	openList = (NavTypeListHandle) NewHandle( sizeof(NavTypeList) + (tPlug+1) * sizeof(OSType));
+	 if ( openList ) HLock((Handle)openList);
+	 
+	 (*openList)->componentSignature	= 'SNPL';
+	 (*openList)->osTypeCount			= tPlug+1;
+	 (*openList)->osType[ 0]			= 'INso';
+	 for( i = 1; i <= tPlug; i++) (*openList)->osType[ i] = ThePPINPlug[ i].type;*/
+	
+	
+	iErr = NavGetFile(			NULL,	// use system's default location
+					  &theReply,
+					  &dialogOptions,
+					  eventUPP,		//MyDlgFilterNavDesc,
+					  NULL,	// no custom previews
+					  filterProcUPP,
+					  NULL, 		//,
+					  (NavCallBackUserData) 2L);
+	
+	DisposeNavEventUPP( eventUPP);
+	DisposeNavObjectFilterUPP( filterProcUPP);
+	
+	/*	if (openList != NULL)
+	 {
+	 HUnlock((Handle)openList);
+	 DisposeHandle((Handle)openList);
+	 }*/
+	
+	if (theReply.validRecord && iErr == noErr)
+	{
+		AEDesc 	resultDesc;
+		long	index, count;
 		
-		pStrcpy( dialogOptions.clientName, "\pPlayerPRO");
-		
-		/*	openList = (NavTypeListHandle) NewHandle( sizeof(NavTypeList) + (tPlug+1) * sizeof(OSType));
-		 if ( openList ) HLock((Handle)openList);
-		 
-		 (*openList)->componentSignature	= 'SNPL';
-		 (*openList)->osTypeCount			= tPlug+1;
-		 (*openList)->osType[ 0]			= 'INso';
-		 for( i = 1; i <= tPlug; i++) (*openList)->osType[ i] = ThePPINPlug[ i].type;*/
-		
-		
-		iErr = NavGetFile(			NULL,	// use system's default location
-						  &theReply,
-						  &dialogOptions,
-						  eventUPP,		//MyDlgFilterNavDesc,
-						  NULL,	// no custom previews
-						  filterProcUPP,
-						  NULL, 		//,
-						  (NavCallBackUserData) 2L);
-		
-		DisposeNavEventUPP( eventUPP);
-		DisposeNavObjectFilterUPP( filterProcUPP);
-		
-		/*	if (openList != NULL)
-		 {
-		 HUnlock((Handle)openList);
-		 DisposeHandle((Handle)openList);
-		 }*/
-		
-		if (theReply.validRecord && iErr == noErr)
+		// we are ready to open the document(s), grab information about each file for opening:
+		iErr = AECountItems(&(theReply.selection),&count);
+		for (index=1;index<=count;index++)
 		{
-			AEDesc 	resultDesc;
-			long	index, count;
+			AEKeyword keyword;
 			
-			// we are ready to open the document(s), grab information about each file for opening:
-			iErr = AECountItems(&(theReply.selection),&count);
-			for (index=1;index<=count;index++)
+			if ((iErr = AEGetNthDesc(&(theReply.selection), index, typeFSS, &keyword, &resultDesc)) == noErr)
 			{
-				AEKeyword keyword;
-				
-				if ((iErr = AEGetNthDesc(&(theReply.selection), index, typeFSS, &keyword, &resultDesc)) == noErr)
-				{
-					if ((iErr = MyAEGetDescData ( &resultDesc, NULL, &replyspec, sizeof ( FSSpec ), NULL )) == noErr)
-						
-						iErr = AEDisposeDesc(&resultDesc);
-				}
+				if ((iErr = MyAEGetDescData ( &resultDesc, NULL, &replyspec, sizeof ( FSSpec ), NULL )) == noErr)
+					
+					iErr = AEDisposeDesc(&resultDesc);
 			}
-			
-			iErr = NavDisposeReply(&theReply);	// clean up after ourselves	
 		}
-		else iErr = -1;
 		
-		if( iErr) return;
+		iErr = NavDisposeReply(&theReply);	// clean up after ourselves	
+	}
+	else iErr = -1;
+	
+	if( iErr) return;
 	
 	
 	curMusic->hasChanged = true;
@@ -276,13 +276,13 @@ void InitPPINPlug(void)
 	thePPInfoPlug.RPlaySoundUPP				= inMADPlaySoundData;
 	thePPInfoPlug.UpdateALLWindowUPP 		= UpdateALLWindow;
 	thePPInfoPlug.MyDlgFilterUPP			= MyDlgFilterDesc;	
-		
+	
 	ThePPINPlug = (PPINFilterInfo*) MyNewPtr( MAXINSTRPLUG * sizeof( PPINFilterInfo));
 	
-//	GetApplicationPackageFSSpecFromBundle( &spec);
+	//	GetApplicationPackageFSSpecFromBundle( &spec);
 	
 	tPlug		= 0;
-
+	
 	PPInstrumentPlugin** tempMADPlug = NULL;
 	PlugLocNums = CFArrayGetCount(PlugLocsDigital);
 	for (i=0; i < PlugLocNums; i++) {
@@ -356,7 +356,7 @@ OSType PressPPINMenu( Rect *PopUpRect, OSType curType, short samp, Str255 name)
 		{
 			Str255 pMenuName;
 			GetPStrFromCFString(ThePPINPlug[ instMenuID[ LoWord( mresult)-1]].MenuName, pMenuName);
-
+			
 			pStrcpy( name, pMenuName);
 			return ThePPINPlug[ instMenuID[ LoWord( mresult)-1]].type;
 		}
@@ -364,7 +364,7 @@ OSType PressPPINMenu( Rect *PopUpRect, OSType curType, short samp, Str255 name)
 		{
 			Str255 pMenuName;
 			GetPStrFromCFString(ThePPINPlug[ sampMenuID[ LoWord( mresult)-1]].MenuName, pMenuName);
-
+			
 			pStrcpy( name, pMenuName);
 			return ThePPINPlug[ sampMenuID[ LoWord( mresult)-1]].type;
 		}
@@ -474,7 +474,7 @@ void InitPPINMenu(void)
 		{
 			Str255 pMenuName;
 			GetPStrFromCFString(ThePPINPlug[ i].MenuName, pMenuName);
-
+			
 			if( ThePPINPlug[ i].isSamp)
 			{
 				AppendMenu( PPINMenuSample, pMenuName);
@@ -512,7 +512,7 @@ OSErr PPINGetPlugName( OSType kindFile, Str255 name)
 		{
 			Str255 pMenuName;
 			GetPStrFromCFString(ThePPINPlug[i].MenuName, pMenuName);
-
+			
 			pStrcpy( name, pMenuName);
 			return noErr;
 		}
@@ -855,7 +855,7 @@ static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *TheP
 		ThePPINPlugA->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
 	}
 	else goto badplug;
-
+	
 	
 	OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugMenuNameKey);
 	InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
@@ -863,7 +863,7 @@ static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *TheP
 		ThePPINPlugA->MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
 	}
 	else goto badplug2;
-
+	
 	
 	OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugUTITypesKey);
 	InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
@@ -919,7 +919,7 @@ static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *TheP
 		CFStringToOSType((CFStringRef)OpaqueDictionaryType, &ThePPINPlugA->type);
 	}
 	else goto badplug4;
-
+	
 	
 	
 	OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugModeKey);
@@ -948,6 +948,6 @@ badplug:
 	
 	(*tempPPINPlug)->Release(tempPPINPlug);
 	NSLog(CFSTR("Error with plug-in"));
-
+	
 	return;
 }

@@ -39,28 +39,24 @@ static const unsigned midivolume[128] = {
  */
 static void Init(void)
 {
-  int ims = MAXSAMPS;
-
+	int ims = MAXSAMPS;
+	
 	/** Put default values in sample array **/
-
-	while (ims--)
-	{ 
+	
+	while (ims--) { 
 		sprintf(rgmsDecided[ims].szName, "");
     	rgmsDecided[ims].psi = NULL;
 		rgmsDecided[ims].bDefvol = 64;
 	}
 	
-  cmsDecided = 0;
-  if (fExtend)
-  {
+	cmsDecided = 0;
+	if (fExtend) {
 		wMinpitch = MIDDLEC - 24;
 		wMaxpitch = MIDDLEC + 36;
-  }
-  else
-  {
+	} else {
 		wMinpitch = MIDDLEC - 12;
 		wMaxpitch = MIDDLEC + 24;
-  }
+	}
 }
 
 /*
@@ -71,7 +67,7 @@ static void Init(void)
 static void FitSzBFn(Sz szName, int bPos, Sz fnSample)
 {
 	int iT = 18;
-
+	
 	sprintf(szName, "%02d: ", bPos); /** First the number **/
 	szName += 4;
 	while (iT-- && (*(szName++) = *(fnSample++))); /** Then the name **/
@@ -87,37 +83,37 @@ static void FitSzBFn(Sz szName, int bPos, Sz fnSample)
  */
 static int WConvertMidipitch(int pitch, unsigned long *cDev)
 {
-  switch (wRgmode) {
-    case 0:
-      if (pitch < wMinpitch) {
-        if (fStats)
-          (*cDev)++;
-        pitch = wMinpitch;
-      } else if (pitch >= wMaxpitch) {
-        if (fStats)
-          (*cDev)++;
-        pitch = wMaxpitch - 1;
-      }
-      break;
-    case 1:
-      if (pitch < wMinpitch || pitch >= wMaxpitch) {
-        if (fStats)
-          (*cDev)++;
-        pitch = -2;
-      }
-      break;
-    case 2:
-      if (pitch < wMinpitch) {
-        if (fStats)
-          (*cDev)++;
-        pitch += ((wMinpitch - pitch + 11) / 12) * 12;
-      } else if (pitch >= wMaxpitch) {
-        if (fStats)
-          (*cDev)++;
-        pitch -= ((pitch - wMaxpitch + 12) / 12) * 12;
-      }
-  }
-  return pitch;
+	switch (wRgmode) {
+		case 0:
+			if (pitch < wMinpitch) {
+				if (fStats)
+					(*cDev)++;
+				pitch = wMinpitch;
+			} else if (pitch >= wMaxpitch) {
+				if (fStats)
+					(*cDev)++;
+				pitch = wMaxpitch - 1;
+			}
+			break;
+		case 1:
+			if (pitch < wMinpitch || pitch >= wMaxpitch) {
+				if (fStats)
+					(*cDev)++;
+				pitch = -2;
+			}
+			break;
+		case 2:
+			if (pitch < wMinpitch) {
+				if (fStats)
+					(*cDev)++;
+				pitch += ((wMinpitch - pitch + 11) / 12) * 12;
+			} else if (pitch >= wMaxpitch) {
+				if (fStats)
+					(*cDev)++;
+				pitch -= ((pitch - wMaxpitch + 12) / 12) * 12;
+			}
+	}
+	return pitch;
 }
 
 /*
@@ -139,27 +135,24 @@ static void AnalyzePtune(Tune *ptune)
 	SI						*psi = NULL, **ppsi;
 	
 	short					i, NewIns;
-
-	for( i = 0; i < 129; i++) MIDIInstMOD[ i] = -1;
+	
+	for( i = 0; i < 129; i++) 
+		MIDIInstMOD[ i] = -1;
 	NewIns = 0;
-
-	while (NULL != ptune)											/** While not at end of tune **/
-	{
-	    for (pei = ptune->pei; NULL != pei; pei = pei->pei) 		/** With each event **/
-	    {
-	    	if (-1 != pei->pitch)
-	    	{
+	
+	while (NULL != ptune) {
+	    for (pei = ptune->pei; NULL != pei; pei = pei->pei) { 		/** With each event **/
+	    	if (-1 != pei->pitch) {
 		        pei->vol = midivolume[ pei->vol];					// ** Convert volumes **
 				
-				if( pei->inst < 0)
-				{
+				if( pei->inst < 0) {
 					pei->inst = 128;
-				//	pei->pitch = MIDDLEC;
+					//	pei->pitch = MIDDLEC;
 				}
-				if( pei->inst > 128) Debugger();
+				if( pei->inst > 128)
+					Debugger();
 				
-				if( MIDIInstMOD[ pei->inst] == -1)					// A new instrument !!
-				{
+				if( MIDIInstMOD[ pei->inst] == -1) {					// A new instrument !!
 					MIDIInstMOD[ pei->inst] = NewIns;
 					NewIns++;
 				}
@@ -177,15 +170,15 @@ static void AnalyzePtune(Tune *ptune)
 static void UnitifyPtune(Tune *ptune)
 {
 	EI *pei;
-
+	
 	while (NULL != ptune) { /** While not end of tune **/
 		pei = ptune->pei;
 		ptune->count /= wQuant; /** Divide intervals by quantize amount **/
 		ptune = ptune->ptune;
 		while (NULL != pei) { /** Go through each event **/
-      if (-1 != pei->pitch)
+			if (-1 != pei->pitch)
 				pei->effect /= wQuant; /** Divide durations by quantize amount **/
-      pei = pei->pei;
+			pei = pei->pei;
 		}
 	}
 }
@@ -198,12 +191,12 @@ static void UnitifyPtune(Tune *ptune)
 void ResolvePtune(Tune *ptune)
 {
 	Init();
-/*#if 0
+#if 0
 	FilterPtune(ptune);
 	Calcchords();
 	ConvertPtune(ptune);
 	Storevols();
-#endif	*/
+#endif
 	AnalyzePtune(ptune);
 	UnitifyPtune(ptune);
 }

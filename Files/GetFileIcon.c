@@ -333,18 +333,16 @@ void GetFinderFilename(
 	XVolumeParam	vpb;
 	short			DTRefNum = 0;
 	
-	if( !InOneDesktop(firstVRefNum, fileCreator, &DTRefNum) )
-	{
+	if(!InOneDesktop(firstVRefNum, fileCreator, &DTRefNum)) {
 		vpb.ioNamePtr = NULL;
-		for(vpb.ioVolIndex = 1; PBXGetVolInfoSync( &vpb) == noErr; ++vpb.ioVolIndex)
-		{
+		for(vpb.ioVolIndex = 1; PBXGetVolInfoSync( &vpb) == noErr; ++vpb.ioVolIndex) {
 			if(vpb.ioVRefNum == firstVRefNum)
 				continue;
 			if( InOneDesktop(vpb.ioVRefNum, fileCreator, &DTRefNum) )
 				break;
 		}
 	}
-	return( DTRefNum );
+	return DTRefNum;
 }
 
 
@@ -548,8 +546,8 @@ pascal OSErr TestHandle(ResType theType, Handle *theIcon, void *yourDataPtr)
 {
 	if(*theIcon != NULL)
 		*(Boolean *)yourDataPtr = false;	// not empty!
-
-	return( noErr );
+	
+	return noErr;
 }
 
 
@@ -557,14 +555,12 @@ Boolean IsSuiteEmpty( Handle theSuite )
 {
 	Boolean			retVal;
 	IconActionUPP	testHandleProc;
-
+	
 	testHandleProc = NewIconActionUPP( TestHandle );
 	
 	retVal = true;
 	ForEachIconDo(theSuite, svAllAvailableData, testHandleProc, &retVal);
 	DisposeIconActionUPP( testHandleProc );
-
-	return( retVal );
+	
+	return retVal ;
 }
-
-

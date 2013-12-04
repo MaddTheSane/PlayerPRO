@@ -112,6 +112,7 @@ void InitPPDGPlug(void)
 	
 	InitPPDGMenu();
 }
+
 //TODO: close PPDG Plugins?
 //If we don't, memory leaks! But The OS should take care of it when the program quits.
 //I think.
@@ -122,8 +123,7 @@ void InitPPDGMenu(void)
 	
 	PPDGMenu = GetMenu( 159);
 	
-	for(i=0; i < tPlug; i++)
-	{
+	for(i=0; i < tPlug; i++) {
 		Str255	PPDGPlugMenuName;
 		GetPStrFromCFString(ThePlug[ i].MenuName, PPDGPlugMenuName);
 
@@ -144,10 +144,7 @@ short PressPPDGMenu( Rect	*PopUpRect)
 	
 	LocalToGlobal( &Zone);
 	
-	mresult = PopUpMenuSelect(	PPDGMenu,
-							  Zone.v,
-							  Zone.h,
-							  0 );
+	mresult = PopUpMenuSelect(PPDGMenu, Zone.v, Zone.h, 0);
 	
 	DeleteMenu( GetMenuID( PPDGMenu));
 	

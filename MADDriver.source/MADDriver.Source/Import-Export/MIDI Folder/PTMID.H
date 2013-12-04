@@ -33,18 +33,18 @@ typedef char Fn[MAXFILELEN];
 
 typedef struct FX_ FX; /** FX structure represents effects **/
 struct FX_ {
-  unsigned long delay;
-  char eff;
-  int param;
-  FX *pfx;
+	unsigned long delay;
+	char eff;
+	int param;
+	FX *pfx;
 };
 typedef struct EI_ EI; /** EI structure represents event info **/
 struct EI_ {
 	unsigned long effect;
-  int pitch; /*** If pitch == -1, effect is qpm, else duration ***/
-  short inst, vol;
-  FX *pfxTail; /*** pfxTail points to tail of FX circular list. ***/
-  EI *pei;
+	int pitch; /*** If pitch == -1, effect is qpm, else duration ***/
+	short inst, vol;
+	FX *pfxTail; /*** pfxTail points to tail of FX circular list. ***/
+	EI *pei;
 };
 typedef struct Tune_ Tune; /** Tune structure holds list of events **/
 struct Tune_ {
@@ -56,7 +56,7 @@ struct Tune_ {
 typedef struct NRL_ NRL; /** NRL structure represents note record list **/
 struct NRL_ {
 	int inst, vol;
-  FX *pfxTail;
+	FX *pfxTail;
 	Tune *ptuneNow;
 	NRL *pnrl;
 };
@@ -64,15 +64,15 @@ struct NRL_ {
 typedef struct SI_ SI; /** SI structure represents sample info tree **/
 struct SI_ {
 	Sz fnSample;
-  int pitch, perpitch, sample, bFinetune;
-  unsigned freq, wLppos, wLplen;
+	int pitch, perpitch, sample, bFinetune;
+	unsigned freq, wLppos, wLplen;
 	SI *psiL, *psiR;
 };
 
 typedef struct { /** MS structure represents a mix of samples **/
 	char szName[22];
-  char bDefvol;
-  SI *psi;
+	char bDefvol;
+	SI *psi;
 } MS;
 
 extern char bDrumch, szId[5];
@@ -104,7 +104,7 @@ void CreateResult( Ptr);
 Ptr LenOutPfileFn( long *Ssize,  Ptr fnSample);
 void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, short ins);
 
-extern  	short 				MIDIInstMOD[ 129];
+extern short MIDIInstMOD[ 129];
 
 void pStrcat(register unsigned char *s1, register unsigned char *s2);
 
