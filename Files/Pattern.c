@@ -1199,9 +1199,12 @@ Boolean DialogPatternInfo( short thePos)
 		}
 	
 		GetDText( TheDia, 3, theStr);
-		if( theStr[ 0] > 20) theStr[ 0] = 20;
-		for( x = 0; x < theStr[ 0]; x++) curMusic->partition[ thePos]->header.name[ x] = theStr[ x + 1];
-		for( theStr[ 0]; x < 20; x++) curMusic->partition[ thePos]->header.name[ x] = 0;
+		if( theStr[ 0] > 20) 
+			theStr[ 0] = 20;
+		for( x = 0; x < theStr[ 0]; x++) 
+			curMusic->partition[thePos]->header.name[x] = theStr[x + 1];
+		for( x = theStr[0]; x < 20; x++) 
+			curMusic->partition[thePos]->header.name[x] = 0;
 		
 		UpdateEditorInfo();
 		UpdateWaveInfo();
