@@ -450,7 +450,6 @@
 		5583C5FB16D0172F0078ACE8 /* Silence.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE91B10E08DB000177B4C /* Silence.plugin */; };
 		5583C5FC16D017380078ACE8 /* Smooth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE95E10E08DB900177B4C /* Smooth.plugin */; };
 		5583C60316D01DDE0078ACE8 /* Crop.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE62210E0884100177B4C /* Crop.plugin */; };
-		558446BE18467771001ECB9E /* AXCArrayControllerWithDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 558446BD18467771001ECB9E /* AXCArrayControllerWithDragAndDrop.m */; };
 		558678B61659AA3400BCFB70 /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5586873D10BF5D0900FCC24D /* MADfg.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E310BB5368005208D1 /* MADfg.c */; };
 		5586873E10BF5D2700FCC24D /* MADI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E710BB5368005208D1 /* MADI.c */; };
@@ -2096,8 +2095,6 @@
 		557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentImporterObject.m; sourceTree = "<group>"; };
 		55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+PPPreferences.h"; sourceTree = "<group>"; };
 		55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+PPPreferences.m"; sourceTree = "<group>"; };
-		558446BC18467771001ECB9E /* AXCArrayControllerWithDragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXCArrayControllerWithDragAndDrop.h; sourceTree = "<group>"; };
-		558446BD18467771001ECB9E /* AXCArrayControllerWithDragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXCArrayControllerWithDragAndDrop.m; sourceTree = "<group>"; };
 		5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADfg.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5586871010BF5C4700FCC24D /* MADfg-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MADfg-Info.plist"; path = "../../../MADfg-Info.plist"; sourceTree = "<group>"; };
 		5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADH.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3646,8 +3643,6 @@
 				5578C49017D9E8560057D11B /* AppDelegate.m */,
 				5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */,
 				5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */,
-				558446BC18467771001ECB9E /* AXCArrayControllerWithDragAndDrop.h */,
-				558446BD18467771001ECB9E /* AXCArrayControllerWithDragAndDrop.m */,
 				5578C49217D9E8570057D11B /* MainMenu.xib */,
 				5578C4F117DA97020057D11B /* InstrumentWindow.xib */,
 				5578C48417D9E8560057D11B /* Supporting Files */,
@@ -6083,7 +6078,6 @@
 				5521F41017F8ED5A002CDBA9 /* PPPreferences.m in Sources */,
 				5578C4B417DA4ADD0057D11B /* PPErrors.m in Sources */,
 				5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */,
-				558446BE18467771001ECB9E /* AXCArrayControllerWithDragAndDrop.m in Sources */,
 				5578C4BA17DA4B320057D11B /* PPPlugInInfo.m in Sources */,
 				5578C4BB17DA4B3A0057D11B /* PPPlugInInfoController.m in Sources */,
 				5578C4BD17DA4BC20057D11B /* PPTimeFormatter.m in Sources */,

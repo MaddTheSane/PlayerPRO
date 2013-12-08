@@ -1174,7 +1174,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	srandom(time(NULL) & 0xffffffff);
 	PPRegisterDebugFunc(CocoaDebugStr);
 	MADInitLibrary(NULL, &madLib);
-	musicListController.dragValidator = self;
 	//the NIB won't store the value anymore, so do this hackery to make sure there's some value in it.
 	[songTotalTime setIntegerValue:0];
 	[songCurTime setIntegerValue:0];
@@ -1234,8 +1233,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	if (selMus != -1) {
 		[self selectMusicAtIndex:selMus];
 	}
-	musicListController.dragValidator = self;
-	[tableView setVerticalMotionCanBeginDrag:YES];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
@@ -1904,7 +1901,7 @@ enum PPMusicToolbarTypes {
 	exportSettings.MicroDelaySize = std;
 }
 
-#pragma mark ACXArrayControllerValidator methods
+#pragma mark NSTableViewDataSource methods
 
 #define DnDType @"PPPDragDropType"
 
@@ -1929,16 +1926,17 @@ enum PPMusicToolbarTypes {
 - (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndices toPasteboard:(NSPasteboard*)pboard
 {
 	//NSMutableArray *declaredTypes = [[NSMutableArray alloc] initWithCapacity:2];
+	BOOL status = NO;
 	NSMutableArray *urlArrays = [[NSMutableArray alloc] init];
 	NSArray *ppmobjects = [musicList arrayOfObjectsInMusicListAtIndexes:rowIndices];
 	for (PPMusicListObject *obj in ppmobjects) {
 		[urlArrays addObject:obj.musicUrl];
 	}
 	[pboard clearContents]; // clear pasteboard to take ownership
-    [pboard writeObjects:[urlArrays copy]]; // write the URLs
-	[pboard addTypes:@[DnDType] owner:self];
-	BOOL status = [pboard setPropertyList:rowIndices forType:DnDType];
-	return YES;
+	status = [pboard writeObjects:@[[urlArrays copy], rowIndices]]; // write the URLs
+	//[pboard addTypes:@[DnDType] owner:self];
+	//BOOL status = [pboard setPropertyList:rowIndices forType:DnDType];
+	return status;
 }
 
 @end

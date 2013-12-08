@@ -756,6 +756,7 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
+                                        <outlet property="dataSource" destination="494" id="yMq-mc-Ebc"/>
                                         <outlet property="delegate" destination="494" id="929"/>
                                     </connections>
                                 </tableView>
@@ -852,7 +853,7 @@
                 <outlet property="window" destination="371" id="532"/>
             </connections>
         </customObject>
-        <arrayController objectClassName="NSMutableArray" automaticallyRearrangesObjects="YES" id="536" userLabel="Music List" customClass="AXCArrayControllerWithDragAndDrop">
+        <arrayController objectClassName="NSMutableArray" automaticallyRearrangesObjects="YES" id="536" userLabel="Music List">
             <connections>
                 <binding destination="494" name="contentArray" keyPath="self.musicList.musicList" id="700"/>
             </connections>

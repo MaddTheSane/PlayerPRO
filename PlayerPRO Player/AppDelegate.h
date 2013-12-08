@@ -11,11 +11,10 @@
 #import "PPPreferences.h"
 #import "PPMusicList.h"
 #include <PlayerPROCore/PlayerPROCore.h>
-#import "AXCArrayControllerWithDragAndDrop.h"
 @class PPInstrumentWindowController;
 @class PPCurrentlyPlayingIndex;
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate, AXCArrayControllerValidator>
+@interface AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate>
 {
 	IBOutlet NSButton		*loopButton;
     IBOutlet NSButton		*playButton;
@@ -40,7 +39,7 @@
 	IBOutlet NSTextField	*fileLocation;
 	
 	IBOutlet NSTableView	*tableView;
-	IBOutlet AXCArrayControllerWithDragAndDrop *musicListController;
+	IBOutlet NSArrayController *musicListController;
 	NSTimer					*timeChecker;
 	MADDriverRec			*madDriver;
 	MADMusic				*music;
