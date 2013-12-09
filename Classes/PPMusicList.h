@@ -46,6 +46,7 @@
 
 - (void)removeObjectsInMusicListAtIndexes:(NSIndexSet *)set;
 - (NSArray*)arrayOfObjectsInMusicListAtIndexes:(NSIndexSet*)theSet;
+- (void)insertObjects:(NSArray*)anObj inMusicListAtIndex:(NSUInteger)idx;
 
 //KVC functions
 - (NSUInteger)countOfMusicList;

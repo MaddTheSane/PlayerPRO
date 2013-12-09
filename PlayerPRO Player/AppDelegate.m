@@ -1912,6 +1912,20 @@ enum PPMusicToolbarTypes {
 	if ([info draggingSource] == tableView1) {
 		result = NSDragOperationMove;
 		[tableView1 setDropRow:row dropOperation:NSTableViewDropAbove];
+	} else {
+		NSPasteboard* pb = info.draggingPasteboard;
+		
+		//list the file type UTIs we want to accept
+		NSArray* acceptedTypes = [self.trackerDict allValues];
+		
+		NSArray* urls = [pb readObjectsForClasses:@[[NSURL class]]
+										  options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES,
+												    NSPasteboardURLReadingContentsConformToTypesKey : acceptedTypes}];
+		
+		if ([urls count] > 0) {
+			result = NSDragOperationCopy;
+			[tableView1 setDropRow:row dropOperation:NSTableViewDropAbove];
+		}
 	}
 	
 	return result;
@@ -1919,7 +1933,43 @@ enum PPMusicToolbarTypes {
 
 - (BOOL)tableView:(NSTableView *)tableView1 acceptDrop:(id <NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
 {
-	return YES;
+	if (row < 0) {
+		row = 0;
+	}
+	NSPasteboard *dragPB = [info draggingPasteboard];
+	NSArray *tmpArray = [dragPB readObjectsForClasses:@[[PPMusicListDragClass class]] options:nil];
+	if (tmpArray) {
+		PPMusicListDragClass *dragClass = tmpArray[0];
+		NSIndexSet *dragIndexSet = dragClass.theIndexSet;
+		[self willChangeValueForKey:kMusicListKVO];
+
+		NSArray *selArray = [musicList arrayOfObjectsInMusicListAtIndexes:dragIndexSet];
+		[musicList removeObjectsInMusicListAtIndexes:dragIndexSet];
+		[musicList insertObjects:selArray inMusicListAtIndex:row];
+		
+		[self didChangeValueForKey:kMusicListKVO];
+		[self musicListContentsDidMove];
+		return YES;
+	} else if((tmpArray = [dragPB readObjectsForClasses:@[[NSURL class]] options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES, NSPasteboardURLReadingContentsConformToTypesKey : [self.trackerDict allValues]}])) {
+		
+		if ([tmpArray count] < 1) {
+			return NO;
+		}
+		
+		[self willChangeValueForKey:kMusicListKVO];
+		NSMutableArray *mutArray = [NSMutableArray new];
+		for (NSURL *curURL in tmpArray) {
+			[mutArray addObject:[[PPMusicListObject alloc] initWithURL:curURL]];
+		}
+		
+		[musicList insertObjects:mutArray inMusicListAtIndex:row];
+		
+		[self didChangeValueForKey:kMusicListKVO];
+		[self musicListContentsDidMove];
+		return YES;
+	}
+	
+	return NO;
 }
 
 - (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndices toPasteboard:(NSPasteboard*)pboard
