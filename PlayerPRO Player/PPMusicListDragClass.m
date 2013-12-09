@@ -24,17 +24,13 @@ NSString * const PPMLDCUTI = @"net.sourceforge.playerpro.PlayerPRO-Player.player
 	return self;
 }
 
-- (id)initWithPasteboardPropertyList:(id)propertyList ofType:(NSString *)type
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
 {
 	if ([type isEqualToString:PPMLDCUTI]) {
-		NSArray *theArray = propertyList;
-		NSMutableIndexSet *newSet = [[NSMutableIndexSet alloc] init];
-		for (NSNumber *theNum in theArray) {
-			[newSet addIndex:[theNum unsignedIntegerValue]];
-		}
-		return self = [self initWithIndexSet:[newSet copy]];
-	} else
-		return nil;
+		return NSPasteboardReadingAsKeyedArchive;
+	} else {
+		return NSPasteboardReadingAsData;
+	}
 }
 
 static NSArray *UTIArray;
@@ -58,15 +54,22 @@ static const dispatch_block_t initUTIArray = ^{
 - (id)pasteboardPropertyListForType:(NSString *)type
 {
 	if ([type isEqualToString:PPMLDCUTI]) {
-		NSMutableArray *theNums = [[NSMutableArray alloc] initWithCapacity:[_theIndexSet count]];
-		NSUInteger currentIndex = [_theIndexSet firstIndex];
-		while (currentIndex != NSNotFound) {
-			[theNums addObject:@(currentIndex)];
-			currentIndex = [_theIndexSet indexGreaterThanIndex:currentIndex];
-		}
-		return [theNums copy];
+		return [NSKeyedArchiver archivedDataWithRootObject:self];
 	} else
 		return nil;
 }
-	
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+	[aCoder encodeObject:_theIndexSet forKey:PPMLDCUTI];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	if (self = [super init]) {
+		self.theIndexSet = [aDecoder decodeObjectForKey:PPMLDCUTI];
+	}
+	return self;
+}
+
 @end

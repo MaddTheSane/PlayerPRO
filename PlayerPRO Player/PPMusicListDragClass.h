@@ -11,7 +11,7 @@
 
 extern NSString * const PPMLDCUTI;
 
-@interface PPMusicListDragClass : NSObject <NSPasteboardReading, NSPasteboardWriting>
+@interface PPMusicListDragClass : NSObject <NSPasteboardReading, NSPasteboardWriting, NSCoding>
 @property (readonly, strong) NSIndexSet *theIndexSet;
 
 - (instancetype)initWithIndexSet:(NSIndexSet*)theSet;
