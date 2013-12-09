@@ -15,6 +15,7 @@
 #import "PPPlugInInfo.h"
 #import "PPPlugInInfoController.h"
 #import "OpenPanelViewController.h"
+#import "PPMusicListDragClass.h"
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
 #import <AVFoundation/AVFoundation.h>
@@ -101,12 +102,13 @@ static NSInteger selMusFromList = -1;
 - (NSDictionary *)trackerDict
 {
 	if (!_trackerDict || [_trackerDict count] != madLib->TotalPlug - 1) {
-		NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithDictionary:@{
-																						   NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
-																															 [NSBundle mainBundle],
-																															 @"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
-																						   NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI],
-																						   NSLocalizedString(@"MAD Package", @"MAD Package"):@[MADPackageUTI]}];
+		NSMutableDictionary *trackerDict =
+		[NSMutableDictionary dictionaryWithDictionary:@{
+														NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
+																						  [NSBundle mainBundle],
+																						  @"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
+														NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI],
+														NSLocalizedString(@"MAD Package", @"MAD Package"):@[MADPackageUTI]}];
 		for (int i = 0; i < madLib->TotalPlug; i++) {
 			trackerDict[(__bridge NSString*)madLib->ThePlug[i].MenuName] = (__bridge NSArray*)madLib->ThePlug[i].UTItypes;
 		}
@@ -242,7 +244,6 @@ static NSInteger selMusFromList = -1;
 																  PPReverbAmount: @25,
 																  PPReverbStrength: @30,
 																  PPOversamplingAmount: @1,
-																  
 																  
 																  PPMAddExtension: @YES,
 																  PPMMadCompression: @YES,
@@ -1178,6 +1179,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	[songTotalTime setIntegerValue:0];
 	[songCurTime setIntegerValue:0];
 	
+	[tableView registerForDraggedTypes:@[PPMLDCUTI, (NSString*)kUTTypeFileURL]];
 	[self addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionNew context:NULL];
 	self.paused = YES;
 	[self willChangeValueForKey:kMusicListKVO];
@@ -1903,17 +1905,14 @@ enum PPMusicToolbarTypes {
 
 #pragma mark NSTableViewDataSource methods
 
-#define DnDType @"PPPDragDropType"
-
 - (NSDragOperation)tableView:(NSTableView *)tableView1 validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation
 {
-	NSDragOperation result = NSDragOperationNone;//, mask = [info draggingSourceOperationMask];
-
+	NSDragOperation result = NSDragOperationNone;
+	
 	if ([info draggingSource] == tableView1) {
 		result = NSDragOperationMove;
+		[tableView1 setDropRow:row dropOperation:NSTableViewDropAbove];
 	}
-	
-	[tableView1 setDropRow:row dropOperation:NSTableViewDropAbove];
 	
 	return result;
 }
@@ -1925,17 +1924,15 @@ enum PPMusicToolbarTypes {
 
 - (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndices toPasteboard:(NSPasteboard*)pboard
 {
-	//NSMutableArray *declaredTypes = [[NSMutableArray alloc] initWithCapacity:2];
 	BOOL status = NO;
+	PPMusicListDragClass *dragClass = [[PPMusicListDragClass alloc] initWithIndexSet:rowIndices];
 	NSMutableArray *urlArrays = [[NSMutableArray alloc] init];
 	NSArray *ppmobjects = [musicList arrayOfObjectsInMusicListAtIndexes:rowIndices];
 	for (PPMusicListObject *obj in ppmobjects) {
 		[urlArrays addObject:obj.musicUrl];
 	}
 	[pboard clearContents]; // clear pasteboard to take ownership
-	status = [pboard writeObjects:@[[urlArrays copy], rowIndices]]; // write the URLs
-	//[pboard addTypes:@[DnDType] owner:self];
-	//BOOL status = [pboard setPropertyList:rowIndices forType:DnDType];
+	status = [pboard writeObjects:[[urlArrays copy] arrayByAddingObject:dragClass]]; // write the URLs
 	return status;
 }
 

@@ -14,7 +14,7 @@
 @class PPInstrumentWindowController;
 @class PPCurrentlyPlayingIndex;
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate, NSTableViewDataSource>
 {
 	IBOutlet NSButton		*loopButton;
     IBOutlet NSButton		*playButton;
