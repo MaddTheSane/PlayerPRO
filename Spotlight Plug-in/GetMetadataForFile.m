@@ -6,6 +6,40 @@
 #include "FileUtils.h"
 #include "GetMetadataForFile.h"
 
+@interface NSString (PPextras)
+- (NSString *)PPtrimWhiteSpace;
++ (BOOL) PPstringIsEmpty:(NSString *)s;
+@end
+
+@implementation NSString (extras)
+- (NSString *)PPtrimWhiteSpace
+{
+	NSMutableString *s = [NSMutableString stringWithString:self];
+	
+	CFStringTrimWhitespace ((__bridge CFMutableStringRef) s);
+	
+	return [NSString stringWithString:s];
+} /*trimWhiteSpace*/
+
++ (BOOL)PPstringIsEmpty:(NSString *) s
+{
+	NSString *copy;
+	
+	if (s == nil)
+		return (YES);
+	
+	if ([s isEqualTo: @""])
+		return YES;
+	
+	copy = [NSString stringWithString:s];
+	
+	if ([[copy PPtrimWhiteSpace] isEqualTo: @""])
+		return YES;
+	
+	return NO;
+} /*stringIsEmpty*/
+@end
+
 static NSString * const kPPMDInstumentsList = @"net_sourceforge_playerpro_tracker_instumentlist";
 static NSString * const kPPMDPatternList = @"net_sourceforge_playerpro_tracker_patternlist";
 static NSString * const kPPMDTotalPatterns = @"net_sourceforge_playerpro_tracker_totalpatterns";
@@ -49,10 +83,10 @@ Boolean GetMetadataForURL(void* thisInterface,
 		if (UTTypeConformsTo(contentTypeUTI, CFSTR("net.sourceforge.playerpro.mad-bundle"))) {
 			return GetMetadataForPackage(NSattribs, NSFileURL);
 		}
-		MADDriverRec			*MADDriver;
-		MADMusic				*MADMusic1;
-		MADLibrary				*MADLib;
-		MADDriverSettings		init;
+		MADDriverRec		*MADDriver;
+		MADMusic			*MADMusic1;
+		MADLibrary			*MADLib;
+		MADDriverSettings	init;
 		
 		MADGetBestDriver(&init);
 		init.driverMode = NoHardwareDriver;
@@ -66,8 +100,8 @@ Boolean GetMetadataForURL(void* thisInterface,
 		}
 		
 		{
-			char		type[5];
-			char		utiType[5] = {0};
+			char type[5];
+			char utiType[5] = {0};
 			{
 				OSType info;
 				CFStringRef ostypes;
@@ -85,8 +119,7 @@ Boolean GetMetadataForURL(void* thisInterface,
 				}
 			}
 			
-			if(MADMusicIdentifyCFURL(MADLib, type, urlForFile) != noErr)
-			{
+			if(MADMusicIdentifyCFURL(MADLib, type, urlForFile) != noErr) {
 				//Couldn't identify via raw file, try by UTI
 				//CFRelease(tempRef);
 				//goto fail1;
@@ -101,12 +134,10 @@ Boolean GetMetadataForURL(void* thisInterface,
 			}
 #endif
 			
-			if (MADPlugAvailable( MADLib, type))
-			{
+			if (MADPlugAvailable( MADLib, type)) {
 				OSErr err = noErr;
 				err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, type, urlForFile);
-				if(err != noErr)
-				{
+				if(err != noErr) {
 					goto fail1;
 				}
 			} else {
@@ -126,6 +157,7 @@ Boolean GetMetadataForURL(void* thisInterface,
 				
 			}
 			
+			NSString *title = nil;
 			{
 				PPInfoRec rec;
 				{
@@ -134,37 +166,36 @@ Boolean GetMetadataForURL(void* thisInterface,
 					OSType2Ptr(rec.signature, sig);
 					NSString *NSSig = [[NSString alloc] initWithCString:sig encoding:NSMacOSRomanStringEncoding];
 					if (!NSSig) {
-						NSSig = [[NSString alloc] initWithFormat:@"%08x", (unsigned int)rec.signature];
+						NSSig = [[NSString alloc] initWithFormat:@"0x%08x", (unsigned int)rec.signature];
 					}
 					NSattribs[(NSString*)kMDItemCodecs] = @[NSSig];
 				}
 				//Set the title metadata
 				
-				NSString *title = [[NSString alloc] initWithCString:rec.internalFileName encoding:NSMacOSRomanStringEncoding];
+				title = [[NSString alloc] initWithCString:rec.internalFileName encoding:NSMacOSRomanStringEncoding];
 				NSattribs[(NSString*)kMDItemTitle] = title;
 				
-				NSNumber *tempNum = @(rec.totalPatterns);
-				NSattribs[kPPMDTotalPatterns] = tempNum;
-				tempNum = @(rec.partitionLength);
-				NSattribs[kPPMDPartitionLength] = tempNum;
-				tempNum = @(rec.totalInstruments);
-				NSattribs[kPPMDTotalInstruments] = tempNum;
-				tempNum = @(rec.totalTracks);
-				NSattribs[kPPMDTotalTracks] = tempNum;
+				NSattribs[kPPMDTotalPatterns] = @(rec.totalPatterns);
+				NSattribs[kPPMDPartitionLength] = @(rec.partitionLength);
+				NSattribs[kPPMDTotalInstruments] = @(rec.totalInstruments);
+				NSattribs[kPPMDTotalTracks] = @(rec.totalTracks);
 				{
-					NSString *FormatDes = [NSString stringWithCString:rec.formatDescription encoding:NSMacOSRomanStringEncoding];
+					NSString *FormatDes = [[NSString alloc] initWithCString:rec.formatDescription encoding:NSMacOSRomanStringEncoding];
 					NSattribs[kPPMDFormatDescription] = FormatDes;
 				}
 			}
 		skipInfo:
-			;
+			if (!title) {
+				title = [[NSString alloc] initWithCString:MADMusic1->header->name encoding:NSMacOSRomanStringEncoding];
+				NSattribs[(NSString*)kMDItemTitle] = title;
+			}
 		}
 		
 		{
 			//Set duration metadata
-			MADAttachDriverToMusic( MADDriver, MADMusic1, NULL);
+			MADAttachDriverToMusic(MADDriver, MADMusic1, NULL);
 			long fT, cT;
-			MADGetMusicStatus( MADDriver, &fT, &cT);
+			MADGetMusicStatus(MADDriver, &fT, &cT);
 			double fTd = fT / 60.0;
 			
 			NSattribs[(NSString*)kMDItemDurationSeconds] = @(fTd);
@@ -176,14 +207,14 @@ Boolean GetMetadataForURL(void* thisInterface,
 			for (int i = 0; i < MAXINSTRU; i++) {
 				InstrData *tempData = &MADMusic1->fid[i];
 				NSString *temp = [[NSString alloc] initWithCString:tempData->name encoding:NSMacOSRomanStringEncoding];
-				if (![temp isEqualToString:@""]) {
+				if (![NSString PPstringIsEmpty:temp]) {
 					[InstruArray addObject:temp];
 				}
 				int sDataCount = tempData->firstSample + tempData->numSamples;
 				for (int x = tempData->firstSample; x < sDataCount; x++) {
 					sData *tempSData = MADMusic1->sample[x];
 					temp = [[NSString alloc] initWithCString:tempSData->name encoding:NSMacOSRomanStringEncoding];
-					if (![temp isEqualToString:@""]) {
+					if (![NSString PPstringIsEmpty:temp]) {
 						[InstruArray addObject:temp];
 					}
 				}
@@ -198,7 +229,7 @@ Boolean GetMetadataForURL(void* thisInterface,
 				if (MADMusic1->partition != NULL && MADMusic1->partition[i] != NULL)
 				{
 					NSString *temp = [[NSString alloc] initWithCString:MADMusic1->partition[i]->header.name encoding:NSMacOSRomanStringEncoding];
-					if (![temp isEqualToString:@""]) {
+					if (![NSString PPstringIsEmpty:temp]) {
 						[PatArray addObject:temp];
 					}
 				}
@@ -252,7 +283,7 @@ static Boolean GetMetadataForPackage(NSMutableDictionary *attributes, NSURL *pat
 	//TODO: fill these out!
 	attributes[kPPMDInstumentsList] = @[];
 	attributes[kPPMDPatternList] = @[];
-	attributes[(NSString*)kMDItemDurationSeconds] = @0;
+	attributes[(NSString*)kMDItemDurationSeconds] = @0.0;
 	
 	return TRUE;
 }
