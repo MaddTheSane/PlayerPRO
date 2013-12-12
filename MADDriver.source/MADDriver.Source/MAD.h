@@ -201,17 +201,17 @@ typedef struct sData								// SAMPLE
 //Used for file i/o
 typedef struct sData32								// SAMPLE
 {
-	SInt32 				size;				// Sample length
-	SInt32				loopBeg;			// LoopStart
-	SInt32				loopSize;			// LoopLength
-	Byte 				vol;				// Base volume
-	unsigned short		c2spd;				// c2spd
-	Byte				loopType;
-	Byte				amp;				// 8 or 16 bits
-	char				relNote;
-	char 				name[32];			// Sample name
-	Byte				stereo;				// Stereo
-	UInt32				data;				// Used only in memory, not in files
+	SInt32 			size;				// Sample length
+	SInt32			loopBeg;			// LoopStart
+	SInt32			loopSize;			// LoopLength
+	Byte 			vol;				// Base volume
+	unsigned short	c2spd;				// c2spd
+	Byte			loopType;
+	Byte			amp;				// 8 or 16 bits
+	char			relNote;
+	char 			name[32];			// Sample name
+	Byte			stereo;				// Stereo
+	UInt32			data;				// Used only in memory, not in files
 } sData32;
 
 enum
@@ -325,10 +325,10 @@ typedef struct MADSpec
 	Byte		chanPan[MAXTRACK];			// Channel settings, from 0 to 256
 	Byte		chanVol[MAXTRACK];			// Channel Volume, from 0 to 64
 	
-	SInt32		globalEffect[ 10];			// Global Effects IDs
+	SInt32		globalEffect[10];			// Global Effects IDs
 	Boolean		globalFXActive;				// Global FX Active?
 	
-	SInt32		chanEffect[MAXTRACK][ 4];	// Channel Effect IDs
+	SInt32		chanEffect[MAXTRACK][4];	// Channel Effect IDs
 	FXBus		chanBus[MAXTRACK];
 } MADSpec;
 

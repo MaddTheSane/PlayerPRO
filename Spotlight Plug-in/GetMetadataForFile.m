@@ -11,33 +11,33 @@
 + (BOOL) PPstringIsEmpty:(NSString *)s;
 @end
 
-@implementation NSString (extras)
+@implementation NSString (PPextras)
 - (NSString *)PPtrimWhiteSpace
 {
-	NSMutableString *s = [NSMutableString stringWithString:self];
+	NSMutableString *s = [[NSMutableString alloc] initWithString:self];
 	
-	CFStringTrimWhitespace ((__bridge CFMutableStringRef) s);
+	CFStringTrimWhitespace((CFMutableStringRef)s);
 	
-	return [NSString stringWithString:s];
-} /*trimWhiteSpace*/
+	return [[NSString alloc] initWithString:s];
+}
 
-+ (BOOL)PPstringIsEmpty:(NSString *) s
++ (BOOL)PPstringIsEmpty:(NSString *)s
 {
 	NSString *copy;
 	
 	if (s == nil)
-		return (YES);
-	
-	if ([s isEqualTo: @""])
 		return YES;
 	
-	copy = [NSString stringWithString:s];
+	if ([s isEqualTo:@""])
+		return YES;
 	
-	if ([[copy PPtrimWhiteSpace] isEqualTo: @""])
+	copy = [s copy];
+	
+	if ([[copy PPtrimWhiteSpace] isEqualTo:@""])
 		return YES;
 	
 	return NO;
-} /*stringIsEmpty*/
+}
 @end
 
 static NSString * const kPPMDInstumentsList = @"net_sourceforge_playerpro_tracker_instumentlist";
@@ -109,9 +109,8 @@ Boolean GetMetadataForURL(void* thisInterface,
 				ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
 				
 				info = UTGetOSTypeFromString(ostypes);
-				if (ostypes) {
+				if (ostypes)
 					CFRelease(ostypes);
-				}
 				if (info) {
 					OSType2Ptr(info, utiType);
 				} else {
@@ -121,20 +120,18 @@ Boolean GetMetadataForURL(void* thisInterface,
 			
 			if(MADMusicIdentifyCFURL(MADLib, type, urlForFile) != noErr) {
 				//Couldn't identify via raw file, try by UTI
-				//CFRelease(tempRef);
-				//goto fail1;
 				strcpy(type, utiType);
 			}
 			
 #ifdef DEBUG
 			if (strcmp(utiType, "!!!!") == 0) {
 				NSLog(@"PPImporter: Unable to determine file type based on UTI.");
-			}else if (strcmp(utiType, type) != 0) {
+			} else if (strcmp(utiType, type) != 0) {
 				NSLog(@"PPImporter: File types differ, UTI says %s, PlayerPRO says %s.", utiType, type);
 			}
 #endif
 			
-			if (MADPlugAvailable( MADLib, type)) {
+			if (MADPlugAvailable(MADLib, type)) {
 				OSErr err = noErr;
 				err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, type, urlForFile);
 				if(err != noErr) {
@@ -229,9 +226,8 @@ Boolean GetMetadataForURL(void* thisInterface,
 				if (MADMusic1->partition != NULL && MADMusic1->partition[i] != NULL)
 				{
 					NSString *temp = [[NSString alloc] initWithCString:MADMusic1->partition[i]->header.name encoding:NSMacOSRomanStringEncoding];
-					if (![NSString PPstringIsEmpty:temp]) {
+					if (![NSString PPstringIsEmpty:temp])
 						[PatArray addObject:temp];
-					}
 				}
 			}
 			NSattribs[kPPMDPatternList] = [PatArray copy];

@@ -12,19 +12,16 @@
 #include "PPPrivate.h"
 
 //TODO: we should probably do something to prevent thread contention
-static OSStatus     CAAudioCallback (void                            *inRefCon,
-									 AudioUnitRenderActionFlags      *ioActionFlags,
-									 const AudioTimeStamp            *inTimeStamp,
-									 UInt32                          inBusNumber,
-									 UInt32                          inNumberFrames,
-									 AudioBufferList                 *ioData)
+static OSStatus CAAudioCallback(void                            *inRefCon,
+								AudioUnitRenderActionFlags      *ioActionFlags,
+								const AudioTimeStamp            *inTimeStamp,
+								UInt32                          inBusNumber,
+								UInt32                          inNumberFrames,
+								AudioBufferList                 *ioData)
 {
 	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
-	//int j = 0;
-	if(theRec->Reading == false)
-	{
-		switch( theRec->DriverSettings.outPutBits)
-		{
+	if(theRec->Reading == false) {
+		switch(theRec->DriverSettings.outPutBits) {
 			case 8:
 				memset(theRec->CABuffer, 0x80, theRec->BufSize);
 				break;
@@ -45,15 +42,15 @@ static OSStatus     CAAudioCallback (void                            *inRefCon,
         ptr = abuf->mData;
         while (remaining > 0) {
             if (theRec->CABufOff >= theRec->BufSize) {
-                if (!DirectSave( theRec->CABuffer, NULL, theRec))
-				{
-					switch( theRec->DriverSettings.outPutBits)
+                if (!DirectSave(theRec->CABuffer, NULL, theRec)) {
+					switch(theRec->DriverSettings.outPutBits)
 					{
 						case 8:
 							memset(theRec->CABuffer, 0x80, theRec->BufSize);
 							break;
 							
 						case 16:
+						default:
 							memset(theRec->CABuffer, 0, theRec->BufSize);
 							break;
 					}
@@ -72,21 +69,19 @@ static OSStatus     CAAudioCallback (void                            *inRefCon,
     }
 	
 	/*if (BuffSize - pos > tickadd)	theRec->OscilloWavePtr = theRec->CABuffer + (int)pos;
-	else */ theRec->OscilloWavePtr = theRec->CABuffer;
+	else */
+	theRec->OscilloWavePtr = theRec->CABuffer;
 	return noErr;
 }
 
-OSErr initCoreAudio( MADDriverRec *inMADDriver)
+OSErr initCoreAudio(MADDriverRec *inMADDriver)
 {
 	OSStatus result = noErr;
-	struct AURenderCallbackStruct callback, blankCallback;
+	struct AURenderCallbackStruct callback, blankCallback = {0};
 	callback.inputProc = CAAudioCallback;
 	callback.inputProcRefCon = inMADDriver;
-	
-	blankCallback.inputProc = NULL;
-	blankCallback.inputProcRefCon = NULL;
 
-	AudioComponentDescription theDes;
+	AudioComponentDescription theDes = {0};
 	theDes.componentType = kAudioUnitType_Output;
 #if TARGET_OS_IPHONE
 	theDes.componentSubType = kAudioUnitSubType_GenericOutput;
@@ -94,12 +89,9 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver)
 	theDes.componentSubType = kAudioUnitSubType_DefaultOutput;
 #endif
 	theDes.componentManufacturer = kAudioUnitManufacturer_Apple;
-	theDes.componentFlags = 0;
-	theDes.componentFlagsMask = 0;
 	AudioStreamBasicDescription audDes = {0};
 	audDes.mFormatID = kAudioFormatLinearPCM;
-	audDes.mFormatFlags = kLinearPCMFormatFlagIsPacked;
-	audDes.mFormatFlags |= kLinearPCMFormatFlagIsSignedInteger;
+	audDes.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
 
 	int outChn = 0;
 	switch (inMADDriver->DriverSettings.outPutMode) {
@@ -134,12 +126,7 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver)
 		return MADSoundManagerErr;
 	}
 	
-	result = AudioUnitSetProperty (inMADDriver->CAAudioUnit,
-								   kAudioUnitProperty_StreamFormat,
-								   kAudioUnitScope_Input,
-								   0,
-								   &audDes,
-								   sizeof (audDes));
+	result = AudioUnitSetProperty(inMADDriver->CAAudioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 0, &audDes, sizeof(audDes));
 	if (result != noErr) {
 		AudioComponentInstanceDispose(inMADDriver->CAAudioUnit);
 		return MADSoundManagerErr;
@@ -171,11 +158,9 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver)
 	return noErr;
 }
 
-OSErr closeCoreAudio( MADDriverRec *inMADDriver)
+OSErr closeCoreAudio(MADDriverRec *inMADDriver)
 {
-	struct AURenderCallbackStruct callback;
-	callback.inputProc = NULL;
-	callback.inputProcRefCon = NULL;
+	struct AURenderCallbackStruct callback = {0};
 	
 	OSStatus result = AudioOutputUnitStop(inMADDriver->CAAudioUnit);
 	if (result != noErr) {

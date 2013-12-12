@@ -47,14 +47,14 @@ typedef FILE* UNFILE;
 PPEXPORT UNFILE	iFileOpen(const char *name) DEPRECATED_ATTRIBUTE;
 PPEXPORT UNFILE	iFileOpenRead(const char *name);
 PPEXPORT UNFILE	iFileOpenWrite(const char *name);
-PPEXPORT OSErr	iFileCreate(const char *path, OSType type);
+PPEXPORT void	iFileCreate(const char *path, OSType type);
 
-PPEXPORT long	iGetEOF( UNFILE iFileRefI);
-PPEXPORT OSErr	iRead( long size, void *dest, UNFILE iFileRefI);
-PPEXPORT OSErr	iWrite( long size, const void *dest, UNFILE iFileRefI);
-PPEXPORT OSErr	iSeekCur( long size, UNFILE iFileRefI);
+PPEXPORT long	iGetEOF(UNFILE iFileRefI);
+PPEXPORT OSErr	iRead(long size, void *dest, UNFILE iFileRefI);
+PPEXPORT OSErr	iWrite(long size, const void *dest, UNFILE iFileRefI);
+PPEXPORT OSErr	iSeekCur(long size, UNFILE iFileRefI);
 
-PPEXPORT void	iClose( UNFILE iFileRefI);
+PPEXPORT void	iClose(UNFILE iFileRefI);
 	
 ////////////////////////////////////////////////////////////
 
@@ -122,19 +122,19 @@ static inline void OSType2Ptr(OSType type, char *str)
 {
 	PPBE32(&type);
 	
-	memcpy( str, &type, 4);
+	memcpy(str, &type, 4);
 	str[ 4] = 0;
 }
 
-static inline OSType Ptr2OSType(const char* str)
+static inline OSType Ptr2OSType(const char *str)
 {
-	short   i;
-	OSType  type;
+	short	i;
+	OSType	type = '    ';
 	
-	i = strlen( str);
-	if (i > 4) i = 4;
-	type = '    ';
-	memcpy( &type, str, i);
+	i = strlen(str);
+	if (i > 4)
+		i = 4;
+	memcpy(&type, str, i);
 	PPBE32(&type);
 	
 	return type;
