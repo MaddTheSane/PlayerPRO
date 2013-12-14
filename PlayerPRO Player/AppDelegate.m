@@ -25,11 +25,9 @@
 #define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."
 
 @interface PPCurrentlyPlayingIndex : NSObject
-@property (readwrite) NSInteger index;
-@property (readwrite, strong) NSURL *playbackURL;
-
+@property NSInteger index;
+@property (strong) NSURL *playbackURL;
 - (void)movePlayingIndexToOtherIndex:(PPCurrentlyPlayingIndex *)othidx;
-
 @end
 
 @implementation PPCurrentlyPlayingIndex
@@ -80,7 +78,8 @@ static NSInteger selMusFromList = -1;
 - (void)musicListDidChange;
 - (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to;
 @property (strong) NSString *musicInfo;
-@property (strong, nonatomic, readonly) NSDictionary *trackerDict;
+@property (strong, readonly) NSDictionary	*trackerDict;
+@property (strong, readonly) NSArray		*trackerUTIs;
 @property (strong) PPMusicList				*musicList;
 @property (strong) PPCurrentlyPlayingIndex	*currentlyPlayingIndex;
 @property (strong) PPCurrentlyPlayingIndex	*previouslyPlayingIndex;
@@ -89,7 +88,6 @@ static NSInteger selMusFromList = -1;
 @property BOOL isQuitting;
 @end
 
-
 @implementation AppDelegate
 @synthesize toolsPanel;
 @synthesize instrumentController;
@@ -97,7 +95,7 @@ static NSInteger selMusFromList = -1;
 @synthesize currentlyPlayingIndex, previouslyPlayingIndex;
 @synthesize preferences;
 @synthesize isQuitting;
-
+@synthesize trackerUTIs = _trackerUTIs;
 @synthesize trackerDict = _trackerDict;
 - (NSDictionary *)trackerDict
 {
@@ -116,6 +114,20 @@ static NSInteger selMusFromList = -1;
 	}
 	
 	return _trackerDict;
+}
+
+- (NSArray *)trackerUTIs
+{
+	if (!_trackerUTIs) {
+		NSArray *arrayOfUTIs = [self.trackerDict allValues];
+		NSMutableArray *toAddUTIArray = [[NSMutableArray alloc] init];
+		for (NSArray *anArray in arrayOfUTIs) {
+			[toAddUTIArray addObjectsFromArray:anArray];
+		}
+		_trackerUTIs = [[NSArray alloc] initWithArray:toAddUTIArray];
+	}
+	
+	return _trackerUTIs;
 }
 
 - (BOOL)loadMusicFromCurrentlyPlayingIndexWithError:(out NSError *__autoreleasing*)theErr
@@ -1599,7 +1611,8 @@ enum PPMusicToolbarTypes {
 	return NO;
 }
 
-- (IBAction)openFile:(id)sender {
+- (IBAction)openFile:(id)sender
+{
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	NSDictionary *playlistDict = @{@"PlayerPRO Music List" : @[PPMusicListUTI], @"PlayerPRO Old Music List" : @[PPOldMusicListUTI]};
 	
@@ -1911,13 +1924,13 @@ enum PPMusicToolbarTypes {
 	
 	if ([info draggingSource] == tableView1) {
 		result = NSDragOperationMove;
+		//TODO: check for number of indexes that are greater than the drop row.
 		[tableView1 setDropRow:row dropOperation:NSTableViewDropAbove];
 	} else {
 		NSPasteboard* pb = info.draggingPasteboard;
 		
 		//list the file type UTIs we want to accept
-		NSArray* acceptedTypes = [self.trackerDict allValues];
-		
+		NSArray* acceptedTypes = self.trackerUTIs;
 		NSArray* urls = [pb readObjectsForClasses:@[[NSURL class]]
 										  options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES,
 												    NSPasteboardURLReadingContentsConformToTypesKey : acceptedTypes}];
@@ -1950,7 +1963,7 @@ enum PPMusicToolbarTypes {
 		[self didChangeValueForKey:kMusicListKVO];
 		[self musicListContentsDidMove];
 		return YES;
-	} else if((tmpArray = [dragPB readObjectsForClasses:@[[NSURL class]] options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES, NSPasteboardURLReadingContentsConformToTypesKey : [self.trackerDict allValues]}])) {
+	} else if((tmpArray = [dragPB readObjectsForClasses:@[[NSURL class]] options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES, NSPasteboardURLReadingContentsConformToTypesKey : self.trackerUTIs}])) {
 		
 		if ([tmpArray count] < 1) {
 			return NO;
@@ -1976,7 +1989,7 @@ enum PPMusicToolbarTypes {
 {
 	BOOL status = NO;
 	PPMusicListDragClass *dragClass = [[PPMusicListDragClass alloc] initWithIndexSet:rowIndices];
-	NSMutableArray *urlArrays = [[NSMutableArray alloc] init];
+	NSMutableArray *urlArrays = [NSMutableArray new];
 	NSArray *ppmobjects = [musicList arrayOfObjectsInMusicListAtIndexes:rowIndices];
 	for (PPMusicListObject *obj in ppmobjects) {
 		[urlArrays addObject:obj.musicUrl];
