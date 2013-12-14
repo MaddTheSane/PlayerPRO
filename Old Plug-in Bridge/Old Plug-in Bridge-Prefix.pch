@@ -1,0 +1,12 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#include <xpc/xpc.h>
+#import <Foundation/Foundation.h>
+#include <PlayerPROCoreTemp/PPDefs.h>
+#include <PlayerPROCoreTemp/MAD.h>
+#include <PlayerPROCoreTemp/RDriver.h>
+#include <PlayerPROCoreTemp/PPPlug.h>

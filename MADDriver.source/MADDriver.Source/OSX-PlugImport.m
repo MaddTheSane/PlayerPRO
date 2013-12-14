@@ -186,6 +186,9 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		return FALSE;
 	}
 
+	//check architecture
+	//If i386, then use the XPC
+	
 	if ((inMADDriver->TotalPlug + 1) >= MAXPLUG) {
 		PPDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
 		return false;
