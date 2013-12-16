@@ -284,22 +284,22 @@ enum
 
 typedef struct MADDriverSettings
 {
-	short					numChn;								// Active tracks from 2 to 32, automatically setup when a new music is loaded
-	short					outPutBits;							// 8 or 16 Bits TODO: 24 Bits
-	unsigned int			outPutRate;							// Integer of audio sample rate
-	short					outPutMode;							// Now, only DeluxeStereoOutPut is available !
-	short					driverMode;							// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
-//	Boolean					antiAliasing;						// NOT USED anymore
-	Boolean					repeatMusic;						// If music finished, repeat it or stop.
-//	Boolean					Interpolation;						// NOT USED anymore
-//	Boolean					MicroDelay;							// NOT USED anymore
-	SInt32					MicroDelaySize;						// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
-	Boolean					surround;							// Surround effect active? true/false
-	Boolean					Reverb;								// Reverb effect active? true/false
-	SInt32					ReverbSize;							// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
-	SInt32					ReverbStrength;						// Reverb strength in % (0 <-> 70)
-	Boolean					TickRemover;						// Remove volume/sample/loop ticks.
-	SInt32					oversampling;						// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
+	short			numChn;								// Active tracks from 2 to 32, automatically setup when a new music is loaded
+	short			outPutBits;							// 8 or 16 Bits TODO: 24 Bits
+	unsigned int	outPutRate;							// Integer of audio sample rate
+	short			outPutMode;							// Now, only DeluxeStereoOutPut is available !
+	short			driverMode;							// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
+	//Boolean		antiAliasing;						// NOT USED anymore
+	Boolean			repeatMusic;						// If music finished, repeat it or stop.
+	//Boolean		Interpolation;						// NOT USED anymore
+	//Boolean		MicroDelay;							// NOT USED anymore
+	SInt32			MicroDelaySize;						// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
+	Boolean			surround;							// Surround effect active? true/false
+	Boolean			Reverb;								// Reverb effect active? true/false
+	SInt32			ReverbSize;							// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
+	SInt32			ReverbStrength;						// Reverb strength in % (0 <-> 70)
+	Boolean			TickRemover;						// Remove volume/sample/loop ticks.
+	SInt32			oversampling;						// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
 } MADDriverSettings;
 
 /******************************************************************/
@@ -353,15 +353,15 @@ typedef struct PPInfoRec
 /********************						***********************/
 
 enum PPPlugModes {
-	MADPlugImport = (OSType)'IMPL',
-	MADPlugExport = (OSType)'EXPL',
-	MADPlugInfo = (OSType)'INFO',
-	MADPlugTest = (OSType)'TEST',
-	MADPlugPlay = (OSType)'PLAY',
-	MADPlugImportExport = (OSType)'EXIM',
-	MADPlugSampleImporter = (OSType)'SAMP',
-	MADPlugInstrumentImporter = (OSType)'INST',
-	MADPlugNonePlug = (OSType)'NONE'
+	MADPlugImport =				(OSType)'IMPL',
+	MADPlugExport =				(OSType)'EXPL',
+	MADPlugInfo =				(OSType)'INFO',
+	MADPlugTest =				(OSType)'TEST',
+	MADPlugPlay =				(OSType)'PLAY',
+	MADPlugImportExport =		(OSType)'EXIM',
+	MADPlugSampleImporter =		(OSType)'SAMP',
+	MADPlugInstrumentImporter =	(OSType)'INST',
+	MADPlugNonePlug =			(OSType)'NONE'
 };
 
 #pragma pack(pop)
@@ -375,60 +375,63 @@ enum PPPlugModes {
 #include <CoreFoundation/CFBundle.h>
 #endif
 
-typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
+typedef OSErr (*MADPLUGFUNC)(OSType, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
 
 typedef struct PlugInfo
 {
-	MADPLUGFUNC	IOPlug;											// Plug CODE
-	CFStringRef	MenuName;										// Plug name
-	CFStringRef	AuthorString;									// Plug author
+	MADPLUGFUNC	IOPlug;			// Plug CODE
+	CFStringRef	MenuName;		// Plug name
+	CFStringRef	AuthorString;	// Plug author
 #if !TARGET_OS_IPHONE
-	CFBundleRef	file;											// Location of plug file
+	CFBundleRef	file;			// Location of plug file
 #endif
-	char		type[5];										// OSType of file support.
-	CFArrayRef	UTItypes;										// CFStrings of supported UTIs
-	OSType		mode;											// Mode support : Import +/ Export
-	UInt32		version;										// Plug-in version
+	char		type[5];		// OSType of file support.
+	CFArrayRef	UTItypes;		// CFStrings of supported UTIs
+	OSType		mode;			// Mode support : Import +/ Export
+	UInt32		version;		// Plug-in version
+#ifdef __x86_64__
+	Boolean		is32BitOnly;	// if the specified plug-in is only 32-bit
+#endif
 } PlugInfo;
 #endif
 
 #ifdef WIN32
 #include <windows.h>
-typedef OSErr (*PLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
+typedef OSErr (*PLUGDLLFUNC)(OSType, char *, MADMusic*, PPInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
 	HMODULE			hLibrary;
-	PLUGDLLFUNC		IOPlug;										// Plug CODE
-	char			MenuName[65];								// Plug name
-	char			AuthorString[65];							// Plug author
-	char			file[MAX_PATH * 2];						// Location of plug file
-	char			type[5];									// OSType of file support
-	OSType			mode;										// Mode support : Import +/ Export
-	int				version;									// Plug-in version
+	PLUGDLLFUNC		IOPlug;					// Plug CODE
+	char			MenuName[65];			// Plug name
+	char			AuthorString[65];		// Plug author
+	char			file[MAX_PATH * 2];		// Location of plug file
+	char			type[5];				// OSType of file support
+	OSType			mode;					// Mode support : Import +/ Export
+	int				version;				// Plug-in version
 } PlugInfo;
 #endif
 
 #ifdef _BE_H
-//TODO: BeOS headers!
-typedef	OSErr (*MADPlug)( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+//TODO: include BeOS headers!
+typedef	OSErr (*MADPlug)(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 typedef struct PlugInfo
 {
 	image_id		hLibrary;
-	MADPlug			IOPlug;										// Plug CODE
-	char			MenuName[ 65];								// Plug name
-	char			AuthorString[ 65];							// Plug author
-	char			file[1024];									// Location of plug file
-	char			type[5];									// OSType of file support
-	OSType			mode;										// Mode support : Import +/ Export
-	int				version;									// Plug-in version
+	MADPlug			IOPlug;					// Plug CODE
+	char			MenuName[ 65];			// Plug name
+	char			AuthorString[ 65];		// Plug author
+	char			file[1024];				// Location of plug file
+	char			type[5];				// OSType of file support
+	OSType			mode;					// Mode support : Import +/ Export
+	int				version;				// Plug-in version
 } PlugInfo;
 #endif
 
 #if (defined(__UNIX__) && !(defined (_MAC_H) || defined (_BE_H)))
 #include <dlfcn.h>
 #include <sys/param.h>  //For PATH_MAX
-typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
+typedef OSErr (*MADPLUGFUNC)(OSType, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
 	void*			hLibrary;
@@ -508,7 +511,7 @@ typedef struct __VSTEffect
 #endif
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
-}	VSTEffect;
+} VSTEffect;
 #endif
 
 #ifdef WIN32
@@ -521,7 +524,7 @@ typedef struct __VSTEffect
 	HMODULE				connID;
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
-}	VSTEffect;
+} VSTEffect;
 #endif
 
 #if (defined(__UNIX__) && !(defined (_MAC_H) || defined (_BE_H)))
@@ -534,7 +537,7 @@ typedef struct __VSTEffect
 	void				*connID;
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
-}	VSTEffect;
+} VSTEffect;
 #endif
 
 typedef struct __MADDriverRec MADDriverRec;
@@ -574,9 +577,9 @@ enum MADEffectsID {
 extern "C" {
 #endif
 
-PPEXPORT void PPDebugStr( short, const char*, const char*);								// Internal Debugger function, NORMALLY it is never called, only when FATAL error
+PPEXPORT void	PPDebugStr(short, const char*, const char*);								// Internal Debugger function, NORMALLY it is never called, only when FATAL error
 
-PPEXPORT void PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*));	//Use this function to call your own debug function when PPDebugStr is called
+PPEXPORT void	PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*));	//Use this function to call your own debug function when PPDebugStr is called
 																					//Otherwise calls to PPDebugStr will crash your app
 
 PPEXPORT OSErr	MADInitLibrary(const char *PlugsFolderName, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
@@ -584,7 +587,7 @@ PPEXPORT OSErr	MADDisposeLibrary(MADLibrary *MADLib);						// Close Library, clo
 
 PPEXPORT void	MADGetBestDriver(MADDriverSettings *DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
 PPEXPORT Boolean MADSoundDriverIsAvalable(short theDriver);
-PPEXPORT int MADSoundDriverList();
+PPEXPORT int	MADSoundDriverList();
 
 PPEXPORT OSErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
 PPEXPORT OSErr	MADDisposeDriver(MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
@@ -621,10 +624,10 @@ PPEXPORT OSErr	MADMusicIdentifyCString(MADLibrary *, char *type, char *cName);		
 PPEXPORT OSErr	MADMusicIdentifyCFURL(MADLibrary *lib, char *type, CFURLRef URLRef); //Identify what kind of music format is URLRef file.
 #endif
 
-PPEXPORT OSErr MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec);
+PPEXPORT OSErr	MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec);
 	
 #ifdef _MAC_H
-PPEXPORT OSErr MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec);
+PPEXPORT OSErr	MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec);
 #endif
 	
 PPEXPORT OSErr	MADMusicExportCString(MADLibrary *lib, MADMusic *music, char *type, char* cName);
@@ -632,7 +635,7 @@ PPEXPORT OSErr	MADMusicExportCString(MADLibrary *lib, MADMusic *music, char *typ
 PPEXPORT OSErr	MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL);
 #endif
 
-PPEXPORT Boolean	MADPlugAvailable(MADLibrary *, char *type);								// Is plug 'type' available?
+PPEXPORT Boolean MADPlugAvailable(MADLibrary *, char *type);								// Is plug 'type' available?
 
 PPEXPORT OSErr	MADDisposeMusic(MADMusic **, MADDriverRec *MDriver);								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
 

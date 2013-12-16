@@ -40,12 +40,28 @@ typedef enum _MADPlugCapabilities {
 	PPMADCanDoBoth = PPMADCanImport | PPMADCanExport
 } MADPlugCapabilities;
 
+#ifdef __x86_64__
+static OSErr BlankPlugFunc(OSType order, char * fileName, MADMusic* theMusic, PPInfoRec *theInfo, MADDriverSettings *unused)
+{
+	PPDebugStr(__LINE__, __FILE__, "Calling the XPC stub function");
+	return MADOrderNotImplemented;
+}
+
+static Boolean LoadPlugInXPC(CFBundleRef theBundle)
+{
+	//TODO: implement!
+	return false;
+}
+
+static OSErr CallImportPlugXPC(MADLibrary *inMADDriver, char *plugSig, OSType order, char *AlienFile, MADMusic *theNewMAD, PPInfoRec *info)
+{
+	//TODO: implement!
+	return MADOrderNotImplemented;
+}
+#endif
+
 static Boolean GetBoolFromType(CFTypeRef theType)
 {
-	//We don't need to test for the other CFTypeIDs because they should already be set up
-	if (booleantype == 0) {
-		booleantype = CFBooleanGetTypeID();
-	}
 	CFTypeID theID = CFGetTypeID(theType);
 	if (theID == booleantype) {
 		return CFBooleanGetValue(theType);
@@ -55,24 +71,20 @@ static Boolean GetBoolFromType(CFTypeRef theType)
 		return theVal != 0;
 	} else if (theID == stringtype) {
 		return [(__bridge NSString*)theType boolValue];
-	} else return false;
+	} else
+		return false;
 }
 
 static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 {
-	//We don't need to test for the other CFTypeIDs because they should already be set up
-	if (arraytype == 0) {
-		arraytype = CFArrayGetTypeID();
-	}
-	
 	{
 		CFTypeID InfoDictionaryType;
 		CFTypeRef OpaqueDictionaryType;
 
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugMenuNameKey);
-		if (OpaqueDictionaryType == NULL) {
+		if (OpaqueDictionaryType == NULL)
 			goto badplug;
-		}
+		
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
 			thePlug->MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
@@ -124,9 +136,9 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 				}
 			} else { //If not, use the likely-to-be broken method.
 				OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugModeKey);
-				if (OpaqueDictionaryType == NULL) {
+				if (OpaqueDictionaryType == NULL)
 					goto badplug3;
-				}
+				
 				InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 				if (InfoDictionaryType == stringtype) {
 					char fallbackOSType[20] = {0};
@@ -150,22 +162,43 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 		}
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugUTITypesKey);
-		if (OpaqueDictionaryType == NULL) {
+		if (OpaqueDictionaryType == NULL)
 			goto badplug3;
-		}
+		
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == arraytype) {
 			thePlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, (CFArrayRef)OpaqueDictionaryType);
 		} else if(InfoDictionaryType == stringtype) {
-			NSArray *utiArray = @[[(__bridge NSString*)OpaqueDictionaryType copy]];
+			NSArray *utiArray = @[[NSString stringWithString:(__bridge NSString*)OpaqueDictionaryType]];
 			thePlug->UTItypes = CFBridgingRetain(utiArray);
 		} else
 			goto badplug3;
 	}
 	
+#ifdef __x86_64__
+	{
+		NSArray *bundleArchs = nil;
+		{
+			CFArrayRef tmpBundleArchs = CFBundleCopyExecutableArchitectures(theBundle);
+			if (!tmpBundleArchs)
+				goto badplug4;
+			bundleArchs = CFBridgingRelease(tmpBundleArchs);
+		}
+		
+		if (![bundleArchs containsObject:@(kCFBundleExecutableArchitectureX86_64)] && [bundleArchs containsObject:@(kCFBundleExecutableArchitectureI386)]) {
+			if (LoadPlugInXPC(theBundle)) {
+				thePlug->IOPlug = BlankPlugFunc;
+				thePlug->is32BitOnly = true;
+				goto goodWrap;
+			}
+		}
+	}
+#endif
+	
 	thePlug->IOPlug = CFBundleGetFunctionPointerForName(theBundle, CFSTR("PPImpExpMain"));
 	if(!thePlug->IOPlug)
 		goto badplug4;
+goodWrap:
 	thePlug->file = theBundle;
 	CFRetain(thePlug->file);
 	
@@ -182,22 +215,21 @@ badplug:
 
 static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
+	static dispatch_once_t typeIDToken;
+	dispatch_once(&typeIDToken, ^{
+		stringtype = CFStringGetTypeID();
+		numbertype = CFNumberGetTypeID();
+		arraytype = CFArrayGetTypeID();
+		booleantype = CFBooleanGetTypeID();
+	});
+	
 	if (!tempBundle) {
 		return FALSE;
 	}
-
-	//check architecture
-	//If i386, then use the XPC
 	
 	if ((inMADDriver->TotalPlug + 1) >= MAXPLUG) {
 		PPDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
 		return false;
-	}
-	if (stringtype == 0) {
-		stringtype = CFStringGetTypeID();
-	}
-	if (numbertype == 0) {
-		numbertype = CFNumberGetTypeID();
 	}
 	
 	PlugInfo *FillPlug = &(inMADDriver->ThePlug[inMADDriver->TotalPlug]);
@@ -330,41 +362,22 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 
 static Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
 {
-	// Check if we're running Lion or later
-	if (&NSURLFileResourceIdentifierKey == NULL) {
-		//If not, compare using FSCompareFSRefs
-		FSRef refA, refB;
-		Boolean bothAreGood = true;
-		if (CFURLGetFSRef(urla, &refA) == false)
-			bothAreGood = false;
-		else if (CFURLGetFSRef(urlb, &refB) == false)
-			bothAreGood = false;
-		if (bothAreGood) {
-			if (FSCompareFSRefs(&refA, &refB) == noErr) {
-				return true;
-			} else {
-				return false;
-			}
-		} else
-			return false;
-	} else {
-		@autoreleasepool {
-			id refA = nil, refB = nil;
-			NSURL *nsurlA = (__bridge NSURL*)urla, *nsurlB = (__bridge NSURL*)urlb;
-			BOOL bothAreValid = YES;
-			Boolean theSame = false;
-			
-			if ([nsurlA getResourceValue:&refA forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
-				bothAreValid = NO;
-			} else if ([nsurlB getResourceValue:&refB forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
-				bothAreValid = NO;
-			}
-			
-			if (bothAreValid)
-				theSame = [refA isEqual:refB];
-			
-			return theSame;
+	@autoreleasepool {
+		id refA = nil, refB = nil;
+		NSURL *nsurlA = (__bridge NSURL*)urla, *nsurlB = (__bridge NSURL*)urlb;
+		BOOL bothAreValid = YES;
+		Boolean theSame = false;
+		
+		if ([nsurlA getResourceValue:&refA forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
+			bothAreValid = NO;
+		} else if ([nsurlB getResourceValue:&refB forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
+			bothAreValid = NO;
 		}
+		
+		if (bothAreValid)
+			theSame = [refA isEqual:refB];
+		
+		return theSame;
 	}
 }
 
@@ -382,9 +395,9 @@ static CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(const char *U
 			break;
 		}
 	}
-	if (isTheSame == NO) {
+	if (isTheSame == NO)
 		CFArrayInsertValueAtIndex(FoldLocs, 0, custfolder);
-	}
+	
 	CFRelease(custfolder);
 	return FoldLocs;
 }
@@ -402,8 +415,8 @@ static OSErr PPMADInfoFile(char *AlienFile, PPInfoRec *InfoRec)
 		free(theMAD);
 		return MADReadingErr;
 	}
-	fileSize = iGetEOF(fileID);
 	
+	fileSize = iGetEOF(fileID);
 	iRead(sizeof(MADSpec), theMAD, fileID);
 	iClose(fileID);
 	
@@ -430,10 +443,14 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 					 MADMusic				*theNewMAD,
 					 PPInfoRec				*info)
 {
+#ifdef __x86_64__
+	if (inMADDriver->ThePlug[PlugNo].is32BitOnly) {
+		return CallImportPlugXPC(inMADDriver, inMADDriver->ThePlug[PlugNo].type, order, AlienFile, theNewMAD, info);
+	}
+#endif
+	
 	OSErr					iErr = noErr;
-	
 	CFBundleRefNum			resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
-	
 	MADDriverSettings		driverSettings = {0};
 	
 	iErr = (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);
@@ -541,8 +558,10 @@ OSErr CheckMADFile(char* name)
 		if (charl[ 0] == 'M' &&							// MADK
 			charl[ 1] == 'A' &&
 			charl[ 2] == 'D' &&
-			charl[ 3] == 'K') err = noErr;
-		else err = MADIncompatibleFile;
+			charl[ 3] == 'K')
+			err = noErr;
+		else
+			err = MADIncompatibleFile;
 		
 		iClose(refNum);
 	}
@@ -572,7 +591,7 @@ OSErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 	// Is it a MAD file?
 	iErr = CheckMADFile(AlienFile);
 	if (iErr == noErr) {
-		strcpy( type, "MADK");
+		strcpy(type, "MADK");
 		return noErr;
 	}
 	
