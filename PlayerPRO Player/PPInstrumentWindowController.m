@@ -61,11 +61,10 @@
 
 - (id)initWithWindow:(NSWindow *)window
 {
-    self = [super initWithWindow:window];
-    if (self) {
+    if (self = [super initWithWindow:window]) {
         // Initialization code here.
 		NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-		[center addObserver:self selector:@selector(colorsDidChange:) name:PPColorsDidChange object:nil];
+		//[center addObserver:self selector:@selector(colorsDidChange:) name:PPColorsDidChange object:nil];
 		[center addObserver:self selector:@selector(musicDidChange:) name:PPMusicDidChange object:nil];
 		instruments = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU];
     }
@@ -257,7 +256,7 @@ static void DrawCGSampleInt(long 	start,
 		defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
 	}
 	
-	CGContextRef bitmapContext = CGBitmapContextCreateWithData(NULL, imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast, NULL, NULL);
+	CGContextRef bitmapContext = CGBitmapContextCreateWithData(NULL, imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, (CGBitmapInfo)kCGImageAlphaPremultipliedLast, NULL, NULL);
 	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
 	{
 		NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];

@@ -86,128 +86,128 @@ enum MADErrors
 
 typedef struct Channel
 {
-	SInt32		ID;					// Channel ID - 0 to MAXTRACK
-	SInt32		TrackID;			// TrackID - 0 to MAXTRACK (Used in multiChannel mode)
+	SInt32	ID;					// Channel ID - 0 to MAXTRACK
+	SInt32	TrackID;			// TrackID - 0 to MAXTRACK (Used in multiChannel mode)
 	
-	char		*begPtr;			// Sample Data Ptr - Beginning of data
-	char		*maxPtr;			// Sample Data Ptr - End of data
-	char		*curPtr;			// Sample Data Ptr - Current position
-	size_t		sizePtr;			// Sample Size in bytes
+	char	*begPtr;			// Sample Data Ptr - Beginning of data
+	char	*maxPtr;			// Sample Data Ptr - End of data
+	char	*curPtr;			// Sample Data Ptr - Current position
+	size_t	sizePtr;			// Sample Size in bytes
 	
-	SInt32		amp;				// Sample amplitude: 8 or 16 bits
+	SInt32	amp;				// Sample amplitude: 8 or 16 bits
 	
-	size_t		loopBeg;			// Loop Beginning
-	size_t		loopSize;			// Loop Size
+	size_t	loopBeg;			// Loop Beginning
+	size_t	loopSize;			// Loop Size
 	
-	SInt32		ins;				// Current Instrument ID
-	SInt32		insOld;				// Previous Instrument ID played on this channel
-	SInt32		samp;				// Current Sample ID
+	SInt32	ins;				// Current Instrument ID
+	SInt32	insOld;				// Previous Instrument ID played on this channel
+	SInt32	samp;				// Current Sample ID
 	
-	SInt32		fineTune;			// Finetune
+	SInt32	fineTune;			// Finetune
 	
-	SInt32		note;				// Note
-	SInt32		noteOld;			// Previous note played on this channel
-	SInt32		relNoteOld;			// Previous realnote
+	SInt32	note;				// Note
+	SInt32	noteOld;			// Previous note played on this channel
+	SInt32	relNoteOld;			// Previous realnote
 	
-	SInt32 		period;				// Current period
-	SInt32		periodOld;			// Previous period played on this channel
+	SInt32 	period;				// Current period
+	SInt32	periodOld;			// Previous period played on this channel
 	
-	SInt32		vol;				// Channel vol (0 to 64)
-	SInt32		pann;				// Channel pan (0 to 64)
+	SInt32	vol;				// Channel vol (0 to 64)
+	SInt32	pann;				// Channel pan (0 to 64)
 	
-	SInt32 		cmd;				// Command
-	Byte		arg;				// Argument of command
-	Byte		volcmd;				// Volume Command
+	SInt32 	cmd;				// Command
+	Byte	arg;				// Argument of command
+	Byte	volcmd;				// Volume Command
 	
-	SInt32 		arp[ MAX_ARP];		// Used for arpeggio command
-	SInt32 		arpindex;			// Used for arpeggio command
-	Boolean		arpUse;
+	SInt32 	arp[MAX_ARP];		// Used for arpeggio command
+	SInt32 	arpindex;			// Used for arpeggio command
+	Boolean	arpUse;
 	
-	char		viboffset;			// Used for vibrato command
-	SInt32 		vibdepth;			// Used for vibrato command
-	SInt32 		vibrate;			// Used for vibrato command
-	SInt32		vibtype;			// Used for vibrato command
+	char	viboffset;			// Used for vibrato command
+	SInt32 	vibdepth;			// Used for vibrato command
+	SInt32 	vibrate;			// Used for vibrato command
+	SInt32	vibtype;			// Used for vibrato command
 	
-	SInt32 		slide;				// Used for slideUp and slideDown command
+	SInt32 	slide;				// Used for slideUp and slideDown command
 	
-	SInt32 		pitchgoal;			// Used for portamento command
-	SInt32 		pitchrate;			// Used for portamento command
+	SInt32 	pitchgoal;			// Used for portamento command
+	SInt32 	pitchrate;			// Used for portamento command
 	
-	SInt32 		volumerate;			// Used for slideVolume command
+	SInt32 	volumerate;			// Used for slideVolume command
 	
-	SInt32		oldArg[ 16];
-	SInt32		oldVibrate;
-	SInt32		oldVibdepth;
+	SInt32	oldArg[16];
+	SInt32	oldVibrate;
+	SInt32	oldVibdepth;
 	
-	SInt32		eventTime;
+	SInt32	eventTime;
 	
-	char		*samplePtr;			// Used internaly by MADPlaySoundData & MADPlaySndHandle
-	
-	/**/
-	
-	Boolean		KeyOn;
-	short		a;
-	short		b;
-	float		p;
-	SInt32		volEnv;
-	SInt32		nextvolEnv;
-	SInt32		volEnvInter;
-	
-	SInt32		volFade;
-	SInt32		nextvolFade;
-	
-	short		aa;
-	short		bb;
-	float		pp;
-	SInt32		pannEnv;
-	SInt32		nextpannEnv;
-	//long		pannEnvInter;
-	
-	Boolean		volEnvActive, pannEnvActive;
-	
-	short		aaa;
-	short		bbb;
-	float		ppp;
-	SInt32		panPitch;
-	
-	SInt32		lAC;
-	
-	char		*prevPtr;
-	SInt32		lastWordL, curLastWordL;
-	SInt32		lastWordR, curLastWordR;
-	SInt32		curLevelL, curLevelR;
-	
-	Boolean		LevelDirectionL, LevelDirectionR, RemoverWorking;
-	
-	SInt32		prevVol0;
-	SInt32		prevVol1;
+	char	*samplePtr;			// Used internaly by MADPlaySoundData & MADPlaySndHandle
 	
 	/**/
 	
-	Boolean		GEffect;
-	short		GPat, GReader;
+	Boolean	KeyOn;
+	short	a;
+	short	b;
+	float	p;
+	SInt32	volEnv;
+	SInt32	nextvolEnv;
+	SInt32	volEnvInter;
+	
+	SInt32	volFade;
+	SInt32	nextvolFade;
+	
+	short	aa;
+	short	bb;
+	float	pp;
+	SInt32	pannEnv;
+	SInt32	nextpannEnv;
+	//long	pannEnvInter;
+	
+	Boolean	volEnvActive, pannEnvActive;
+	
+	short	aaa;
+	short	bbb;
+	float	ppp;
+	SInt32	panPitch;
+	
+	SInt32	lAC;
+	
+	char	*prevPtr;
+	SInt32	lastWordL, curLastWordL;
+	SInt32	lastWordR, curLastWordR;
+	SInt32	curLevelL, curLevelR;
+	
+	Boolean	LevelDirectionL, LevelDirectionR, RemoverWorking;
+	
+	SInt32	prevVol0;
+	SInt32	prevVol1;
 	
 	/**/
 	
-	Boolean		stereo;
+	Boolean	GEffect;
+	short	GPat, GReader;
 	
-	Byte		loopType;
-	Boolean		pingpong;
+	/**/
 	
-	SInt32		preOff;
-	char		preVal, preVal2;
-	char		preValR, preVal2R;
+	Boolean	stereo;
 	
-	short		spreVal, spreVal2;
-	short		spreValR, spreVal2R;
-	SInt32		TICKREMOVESIZE;
+	Byte	loopType;
+	Boolean	pingpong;
+	
+	SInt32	preOff;
+	char	preVal, preVal2;
+	char	preValR, preVal2R;
+	
+	short	spreVal, spreVal2;
+	short	spreValR, spreVal2R;
+	SInt32	TICKREMOVESIZE;
 	
 	
-	Boolean		PanningE8;
-	short		trig;
-	short		PatternLoopE6, PatternLoopE6Count, PatternLoopE6ID;
+	Boolean	PanningE8;
+	short	trig;
+	short	PatternLoopE6, PatternLoopE6Count, PatternLoopE6ID;
 	
-	SInt32		TimeCounter;
+	SInt32	TimeCounter;
 } Channel;
 
 /********************						***********************/
@@ -216,17 +216,16 @@ typedef struct Channel
 
 typedef struct MADMusic
 {
-	MADSpec					*header;								// Music Header - See 'MAD.h'
-	PatData					*partition[ MAXPATTERN];				// Patterns
-	InstrData				*fid;									// Instruments
-	sData					**sample;								// Samples
-	FXSets					*sets;									// FXSettings
-	Boolean					musicUnderModification;					// Tell the driver to NOT access music data
-	Str255					musicFileName;
-	Boolean					hasChanged;
-	SInt32					position, fullTime;
-	OSType					originalFormat;
-	
+	MADSpec		*header;					// Music Header - See 'MAD.h'
+	PatData		*partition[MAXPATTERN];		// Patterns
+	InstrData	*fid;						// Instruments
+	sData		**sample;					// Samples
+	FXSets		*sets;						// FXSettings
+	Boolean		musicUnderModification;		// Tell the driver to NOT access music data
+	Str255		musicFileName;
+	Boolean		hasChanged;
+	SInt32		position, fullTime;
+	OSType		originalFormat;
 } MADMusic;
 
 /********************						***********************/
@@ -235,48 +234,38 @@ typedef struct MADMusic
 
 enum MADSoundOutput
 {
-	oldASCSoundDriver = 1,				// MAC ONLY,	// NOT Available
-	oldAWACSoundDriver,					// MAC ONLY		// NOT Available
-	MIDISoundDriver,					// Not yet available
-	SoundManagerDriver,					// MAC ONLY		// NOT Available
-	QK25SoundDriver,					// MAC ONLY		// NOT Available
-	DigiDesignSoundDriver,				// MAC ONLY		// NOT Available
-	BeOSSoundDriver,					// BE ONLY when using with BeOS compatible systems
-	DirectSound95NT,					// WINDOWS 95/NT ONLY when using with PC compatible systems
-	Wave95NT,							// WINDOWS 95/NT ONLY when using with PC compatible systems
-	CoreAudioDriver,					// OSX ONLY Core Audio driver
-	ALSADriver,							// LINUX ONLY ALSA driver
-	OSSDriver,							// Open Sound System. Most Unices (NOT OS X) including Linux
-	ESDDriver,							// ESound Driver. available on most UNIX Systems
-	ASIOSoundManager,					// ASIO Sound Driver by Steinberg //NOT Available
-	NoHardwareDriver = SHRT_MAX			// NO HARDWARE CONNECTION, will not produce any sound
+	CoreAudioDriver = 1,		// OSX ONLY Core Audio driver
+	DirectSound95NT,			// WINDOWS ONLY
+	Wave95NT,					// WINDOWS ONLY
+	PortAudioDriver,			// Can be present on multiple OSes
+	PulseAudioDriver,			// Mostly used by Linux/Unix
+	ESDDriver,					// ESound Driver. available on most UNIX Systems
+	BeOSSoundDriver,			// BeOS/Haiku ONLY
+	MIDISoundDriver,			// Not yet available
+	ASIOSoundManager,			// ASIO Sound Driver by Steinberg //NOT Available
+	NoHardwareDriver = SHRT_MAX	// NO HARDWARE CONNECTION, will not produce any sound
 };
 
 //Used for MADSoundDriverList()
 enum MADSoundDriverAvailable
 {
-	oldASCSoundDriverBit		= 1 << oldASCSoundDriver,
-	oldAWACSoundDriverBit		= 1 << oldAWACSoundDriver,
-	MIDISoundDriverBit			= 1 << MIDISoundDriver,
-	SoundManagerDriverBit		= 1 << SoundManagerDriver,
-	QK25SoundDriverBit			= 1 << QK25SoundDriver,
-	DigiDesignSoundDriverBit	= 1 << DigiDesignSoundDriver,
-	BeOSSoundDriverBit			= 1 << BeOSSoundDriver,
-	DirectSound95NTBit			= 1 << DirectSound95NT,
-	Wave95NTBit					= 1 << Wave95NT,
-	CoreAudioDriverBit			= 1 << CoreAudioDriver,
-	ALSADriverBit				= 1 << ALSADriver,
-	OSSDriverBit				= 1 << OSSDriver,
-	ESDDriverBit				= 1 << ESDDriver,
-	ASIOSoundManagerBit			= 1 << ASIOSoundManager
+	MIDISoundDriverBit	= 1 << MIDISoundDriver,
+	BeOSSoundDriverBit	= 1 << BeOSSoundDriver,
+	DirectSound95NTBit	= 1 << DirectSound95NT,
+	Wave95NTBit			= 1 << Wave95NT,
+	CoreAudioDriverBit	= 1 << CoreAudioDriver,
+	ESDDriverBit		= 1 << ESDDriver,
+	PortAudioDriverBit	= 1 << PortAudioDriver,
+	PulseAudioDriverBit	= 1 << PulseAudioDriver,
+	ASIOSoundManagerBit	= 1 << ASIOSoundManager
 };
 
-enum
+enum OutputChannels
 {
-	oldMonoOutPut = 1,				// NOT SUPPORTED anymore
-	oldStereoOutPut,				// NOT SUPPORTED anymore
-	DeluxeStereoOutPut,				// USE THIS ONE ONLY !!!!!!!!!!!!!!
-	PolyPhonic,						// Do NOT use it ! Standard hardware doesn't support it !
+	oldMonoOutPut = 1,	// NOT SUPPORTED anymore
+	oldStereoOutPut,	// NOT SUPPORTED anymore
+	DeluxeStereoOutPut,	// USE THIS ONE ONLY !!!!!!!!!!!!!!
+	PolyPhonic,			// Do NOT use it ! Standard hardware doesn't support it !
 	
 	StereoOutPut = oldStereoOutPut,
 	MonoOutPut = oldMonoOutPut
@@ -400,14 +389,14 @@ typedef struct PlugInfo
 typedef OSErr (*PLUGDLLFUNC)(OSType, char *, MADMusic*, PPInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
-	HMODULE			hLibrary;
-	PLUGDLLFUNC		IOPlug;					// Plug CODE
-	char			MenuName[65];			// Plug name
-	char			AuthorString[65];		// Plug author
-	char			file[MAX_PATH * 2];		// Location of plug file
-	char			type[5];				// OSType of file support
-	OSType			mode;					// Mode support : Import +/ Export
-	int				version;				// Plug-in version
+	HMODULE		hLibrary;
+	PLUGDLLFUNC	IOPlug;				// Plug CODE
+	char		MenuName[65];		// Plug name
+	char		AuthorString[65];	// Plug author
+	char		file[MAX_PATH * 2];	// Location of plug file
+	char		type[5];			// OSType of file support
+	OSType		mode;				// Mode support : Import +/ Export
+	int			version;			// Plug-in version
 } PlugInfo;
 #endif
 
@@ -417,14 +406,14 @@ typedef	OSErr (*MADPlug)(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPI
 
 typedef struct PlugInfo
 {
-	image_id		hLibrary;
-	MADPlug			IOPlug;					// Plug CODE
-	char			MenuName[ 65];			// Plug name
-	char			AuthorString[ 65];		// Plug author
-	char			file[1024];				// Location of plug file
-	char			type[5];				// OSType of file support
-	OSType			mode;					// Mode support : Import +/ Export
-	int				version;				// Plug-in version
+	image_id	hLibrary;
+	MADPlug		IOPlug;				// Plug CODE
+	char		MenuName[ 65];		// Plug name
+	char		AuthorString[ 65];	// Plug author
+	char		file[1024];			// Location of plug file
+	char		type[5];			// OSType of file support
+	OSType		mode;				// Mode support : Import +/ Export
+	int			version;			// Plug-in version
 } PlugInfo;
 #endif
 
@@ -434,14 +423,14 @@ typedef struct PlugInfo
 typedef OSErr (*MADPLUGFUNC)(OSType, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
-	void*			hLibrary;
-	MADPLUGFUNC		IOPlug;										// Plug CODE
-	char			MenuName[65];								// Plug name
-	char			AuthorString[65];							// Plug author
-	char			file[PATH_MAX];								// Location of plug file
-	char			type[5];									// OSType of file support
-	OSType			mode;										// Mode support : Import +/ Export
-	int				version;									// Plug-in version
+	void*		hLibrary;
+	MADPLUGFUNC	IOPlug;				// Plug CODE
+	char		MenuName[65];		// Plug name
+	char		AuthorString[65];	// Plug author
+	char		file[PATH_MAX];		// Location of plug file
+	char		type[5];			// OSType of file support
+	OSType		mode;				// Mode support : Import +/ Export
+	int			version;			// Plug-in version
 } PlugInfo;
 #endif
 
@@ -451,12 +440,12 @@ typedef struct PlugInfo
 
 typedef struct MADLibrary
 {
-	short		TotalPlug;							// no of Plugs in pointer ThePlug
-	OSType		IDType;								// IDType = 'MADD' -- READ ONLY --
+	short		TotalPlug;	// Number of Plugs in pointer ThePlug
+	OSType		IDType;		// IDType = 'MADD' -- READ ONLY --
 	
 	/** Plugs Import/Export variables **/
 	SInt32		mytab[12];
-	PlugInfo	*ThePlug;							// Pointers on plugs code & infos
+	PlugInfo	*ThePlug;	// Pointers on plugs code & infos
 } MADLibrary;
 
 #ifndef __callback
@@ -468,8 +457,7 @@ typedef struct AEffect AEffect;
 struct AEffect
 {
 	SInt32 magic;
-	SInt32 (__callback *dispatcher)(AEffect *effect, SInt32 opCode, SInt32 index, SInt32 value,
-									void *ptr, float opt);
+	SInt32 (__callback *dispatcher)(AEffect *effect, SInt32 opCode, SInt32 index, SInt32 value, void *ptr, float opt);
 	void (__callback *process)(AEffect *effect, float **inputs, float **outputs, SInt32 sampleframes);
 	void (__callback *setParameter)(AEffect *effect, SInt32 index, float parameter);
 	float (__callback *getParameter)(AEffect *effect, SInt32 index);
@@ -493,8 +481,7 @@ struct AEffect
 	char future[60];
 };
 
-typedef	SInt32 (*audioMasterCallback)(AEffect *effect, SInt32 opcode, SInt32 index,
-		SInt32 value, void *ptr, float opt);
+typedef	SInt32 (*audioMasterCallback)(AEffect *effect, SInt32 opcode, SInt32 index, SInt32 value, void *ptr, float opt);
 	
 	typedef AEffect *(*VSTPlugInPtr) (audioMasterCallback  cb);
 

@@ -14,14 +14,6 @@
 
 @implementation SoundOutputController
 
-#if 0
-//Technically not needed
-- (id)init
-{
-	return [self initWithNibName:@"PPSoundSettingsViewController" bundle:[NSBundle bundleForClass:[PPSoundSettingsViewController class]]];
-}
-#endif
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

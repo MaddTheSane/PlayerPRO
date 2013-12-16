@@ -859,11 +859,11 @@
             </connections>
         </arrayController>
         <customView id="537" userLabel="Drawer Content View">
-            <rect key="frame" x="0.0" y="0.0" width="340" height="293"/>
+            <rect key="frame" x="0.0" y="0.0" width="342" height="289"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="677">
-                    <rect key="frame" x="18" y="256" width="97" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="677">
+                    <rect key="frame" x="18" y="252" width="97" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="File Name:" id="678">
                         <font key="font" metaFont="system"/>
@@ -871,20 +871,17 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="676">
-                    <rect key="frame" x="18" y="231" width="97" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="676">
+                    <rect key="frame" x="18" y="227" width="97" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="92" id="E80-ms-7zs"/>
-                    </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Internal Name:" id="679">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="675">
-                    <rect key="frame" x="18" y="206" width="97" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="675">
+                    <rect key="frame" x="18" y="202" width="97" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Size:" id="681">
                         <font key="font" metaFont="system"/>
@@ -892,8 +889,8 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="674">
-                    <rect key="frame" x="18" y="181" width="97" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="674">
+                    <rect key="frame" x="18" y="177" width="97" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Signature:" id="682">
                         <font key="font" metaFont="system"/>
@@ -901,8 +898,8 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="673">
-                    <rect key="frame" x="18" y="156" width="97" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="673">
+                    <rect key="frame" x="18" y="152" width="97" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Instruments:" id="683">
                         <font key="font" metaFont="system"/>
@@ -910,8 +907,8 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="672">
-                    <rect key="frame" x="18" y="131" width="97" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="672">
+                    <rect key="frame" x="18" y="127" width="97" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Patterns:" id="684">
                         <font key="font" metaFont="system"/>
@@ -919,8 +916,8 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="671">
-                    <rect key="frame" x="18" y="106" width="97" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="671">
+                    <rect key="frame" x="18" y="102" width="97" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Plug Type:" id="685">
                         <font key="font" metaFont="system"/>
@@ -928,8 +925,8 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="670">
-                    <rect key="frame" x="18" y="81" width="97" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="670">
+                    <rect key="frame" x="18" y="77" width="97" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Where:" id="686">
                         <font key="font" metaFont="system"/>
@@ -938,7 +935,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="669">
-                    <rect key="frame" x="119" y="256" width="203" height="17"/>
+                    <rect key="frame" x="119" y="252" width="205" height="17"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="0W7-Hx-QOu"/>
@@ -950,7 +947,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="668">
-                    <rect key="frame" x="119" y="231" width="203" height="17"/>
+                    <rect key="frame" x="119" y="227" width="205" height="17"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="689">
                         <font key="font" metaFont="system"/>
@@ -959,7 +956,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="667">
-                    <rect key="frame" x="119" y="206" width="203" height="17"/>
+                    <rect key="frame" x="119" y="202" width="205" height="17"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="690">
                         <byteCountFormatter key="formatter" countStyle="binary" id="CxO-IO-pLb"/>
@@ -969,7 +966,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="666">
-                    <rect key="frame" x="119" y="181" width="203" height="17"/>
+                    <rect key="frame" x="119" y="177" width="205" height="17"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="692">
                         <font key="font" metaFont="system"/>
@@ -978,7 +975,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="665">
-                    <rect key="frame" x="119" y="156" width="203" height="17"/>
+                    <rect key="frame" x="119" y="152" width="205" height="17"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="693">
                         <font key="font" metaFont="system"/>
@@ -987,7 +984,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="664">
-                    <rect key="frame" x="119" y="131" width="203" height="17"/>
+                    <rect key="frame" x="119" y="127" width="205" height="17"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="694">
                         <font key="font" metaFont="system"/>
@@ -996,7 +993,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="663">
-                    <rect key="frame" x="119" y="106" width="203" height="17"/>
+                    <rect key="frame" x="119" y="102" width="205" height="17"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="695">
                         <font key="font" metaFont="system"/>
@@ -1004,13 +1001,14 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="623">
-                    <rect key="frame" x="119" y="20" width="203" height="78"/>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="623">
+                    <rect key="frame" x="119" y="20" width="205" height="74"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="78" id="936"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="74" placeholder="YES" id="eOQ-kl-IeX"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="194" id="wdN-Zx-dWN"/>
                     </constraints>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Multiline Label" id="697">
+                    <textFieldCell key="cell" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" placeholderString="Multiline Label" id="697">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1020,7 +1018,6 @@
             <constraints>
                 <constraint firstItem="623" firstAttribute="leading" secondItem="663" secondAttribute="leading" id="749"/>
                 <constraint firstItem="676" firstAttribute="top" secondItem="677" secondAttribute="bottom" constant="8" symbolic="YES" id="750"/>
-                <constraint firstAttribute="trailing" secondItem="667" secondAttribute="trailing" constant="20" symbolic="YES" id="752"/>
                 <constraint firstItem="668" firstAttribute="leading" secondItem="667" secondAttribute="leading" id="753"/>
                 <constraint firstItem="665" firstAttribute="baseline" secondItem="673" secondAttribute="baseline" id="754"/>
                 <constraint firstItem="675" firstAttribute="top" secondItem="676" secondAttribute="bottom" constant="8" symbolic="YES" id="755"/>
@@ -1032,7 +1029,7 @@
                 <constraint firstItem="664" firstAttribute="leading" secondItem="663" secondAttribute="leading" id="765"/>
                 <constraint firstItem="672" firstAttribute="baseline" secondItem="664" secondAttribute="baseline" id="772"/>
                 <constraint firstItem="666" firstAttribute="leading" secondItem="665" secondAttribute="leading" id="773"/>
-                <constraint firstAttribute="bottom" secondItem="623" secondAttribute="bottom" constant="20" symbolic="YES" id="774"/>
+                <constraint firstAttribute="bottom" secondItem="623" secondAttribute="bottom" constant="20" symbolic="YES" placeholder="YES" id="774"/>
                 <constraint firstItem="674" firstAttribute="top" secondItem="675" secondAttribute="bottom" constant="8" symbolic="YES" id="775"/>
                 <constraint firstItem="677" firstAttribute="leading" secondItem="537" secondAttribute="leading" constant="20" symbolic="YES" id="777"/>
                 <constraint firstItem="675" firstAttribute="leading" secondItem="537" secondAttribute="leading" constant="20" symbolic="YES" id="778"/>
@@ -1043,7 +1040,6 @@
                 <constraint firstItem="673" firstAttribute="top" secondItem="674" secondAttribute="bottom" constant="8" symbolic="YES" id="915"/>
                 <constraint firstItem="671" firstAttribute="baseline" secondItem="663" secondAttribute="baseline" id="920"/>
                 <constraint firstItem="671" firstAttribute="top" secondItem="672" secondAttribute="bottom" constant="8" symbolic="YES" id="923"/>
-                <constraint firstItem="623" firstAttribute="top" secondItem="670" secondAttribute="top" id="924"/>
                 <constraint firstItem="670" firstAttribute="top" secondItem="671" secondAttribute="bottom" constant="8" symbolic="YES" id="925"/>
                 <constraint firstItem="664" firstAttribute="leading" secondItem="667" secondAttribute="leading" id="12X-MC-saD"/>
                 <constraint firstItem="664" firstAttribute="leading" secondItem="669" secondAttribute="leading" id="1l6-gJ-8uO"/>
@@ -1056,6 +1052,7 @@
                 <constraint firstItem="677" firstAttribute="trailing" secondItem="670" secondAttribute="trailing" id="BBs-SN-dME"/>
                 <constraint firstItem="664" firstAttribute="trailing" secondItem="665" secondAttribute="trailing" id="CMK-q1-sKs"/>
                 <constraint firstItem="664" firstAttribute="trailing" secondItem="669" secondAttribute="trailing" id="D2t-Xj-BSb"/>
+                <constraint firstItem="623" firstAttribute="top" secondItem="663" secondAttribute="bottom" constant="8" symbolic="YES" id="D9B-q6-WkP"/>
                 <constraint firstItem="664" firstAttribute="leading" secondItem="663" secondAttribute="leading" id="ESv-k0-DYY"/>
                 <constraint firstItem="677" firstAttribute="leading" secondItem="670" secondAttribute="leading" id="Ipa-dA-HuX"/>
                 <constraint firstItem="677" firstAttribute="leading" secondItem="671" secondAttribute="leading" id="K64-fz-UcE"/>

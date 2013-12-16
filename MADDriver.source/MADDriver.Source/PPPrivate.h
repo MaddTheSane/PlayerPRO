@@ -113,20 +113,6 @@ void StopChannelESD(MADDriverRec *inMADDriver);
 void PlayChannelESD(MADDriverRec *inMADDriver);
 #endif
 
-#ifdef _OSSSOUND
-OSErr initOSS( MADDriverRec *inMADDriver);
-OSErr closeOSS( MADDriverRec *inMADDriver);
-void StopChannelOSS(MADDriverRec *inMADDriver);
-void PlayChannelOSS(MADDriverRec *inMADDriver);
-#endif
-
-#ifdef LINUX
-OSErr initALSA( MADDriverRec *inMADDriver);
-OSErr closeALSA( MADDriverRec *inMADDriver);
-void StopChannelALSA(MADDriverRec *inMADDriver);
-void PlayChannelALSA(MADDriverRec *inMADDriver);
-#endif
-
 #ifdef WIN32
 Boolean	DirectSoundInit(MADDriverRec* driver);
 void	DirectSoundClose(MADDriverRec* driver);
