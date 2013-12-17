@@ -46,9 +46,7 @@ typedef struct _infoformat_tag {
 	Str32	smpls;
 	Str32	dataBits;
 	Str32	stereo;
-} InfoRec;
-typedef InfoRec *InfoPtr;
-typedef InfoPtr *InfoHnd;
+} InfoRec, *InfoPtr, **InfoHnd;
 
 typedef struct _MMCKINFO {
 	FOURCC		ckid;
@@ -82,9 +80,7 @@ typedef struct _pcwaveformat_tag {
 	FOURCC		dataType;
 	DWORD		dataSize;
 	char		theData[];
-} PCMWaveRec;
-typedef PCMWaveRec *PCMWavePtr;
-typedef PCMWavePtr *PCMWaveHnd;
+} PCMWaveRec, *PCMWavePtr, **PCMWaveHnd;
 
 typedef struct _CK{
 	FOURCC		ckid;
@@ -106,7 +102,7 @@ __private_extern__ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopE
 __private_extern__ OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug) DEPRECATED_ATTRIBUTE;
 #endif
 __private_extern__ OSErr TestWAV(PCMWavePtr CC);
-__private_extern__ char *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loopEnd, short *sampleSize, unsigned int *rate, Boolean *stereo)
+__private_extern__ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loopEnd, short *sampleSize, unsigned int *rate, Boolean *stereo)
 ;
 #ifdef __cplusplus
 }

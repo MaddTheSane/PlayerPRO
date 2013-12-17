@@ -40,7 +40,6 @@ void iFileCreate(const char *path, OSType type)
 	status = remove(path);
 	if (status == -1) {
 		switch (errno) {
-			case 0:
 				//We're fine if there's no file there.
 			case ENOENT:
 				errno = 0;

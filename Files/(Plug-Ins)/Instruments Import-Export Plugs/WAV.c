@@ -81,14 +81,14 @@ static OSErr mainWave(void					*unused,
 			
 		case 'IMPL':
 		{
-			Ptr				theSound;
+			void			*theSound;
 			long			lS, lE;
 			short			sS;
 			unsigned int	rate;
 			Boolean			stereo;
-			size_t sndLen;
+			size_t			sndLen;
 			
-			theSound = ConvertWAVCFURL( AlienFileRef, &sndLen, &lS, &lE, &sS, &rate, &stereo);
+			theSound = ConvertWAVCFURL(AlienFileRef, &sndLen, &lS, &lE, &sS, &rate, &stereo);
 			
 			if (theSound != NULL) {
 				char longName[PATH_MAX] = {0};
