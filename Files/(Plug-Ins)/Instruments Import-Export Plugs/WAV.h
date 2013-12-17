@@ -16,7 +16,6 @@
 #include "PPDefs.h"
 #else
 #include <PlayerPROCore/MAD.h>
-//#include <PlayerPROCore/PPDefs.h>
 #endif
 
 #ifndef WIN32
@@ -96,7 +95,7 @@ typedef struct _MyAtom{
 	SInt32		pos;
 	SInt32		id;
 	SInt32		size;
-	short		ref;
+	FSIORefNum	ref;
 } MyAtom;
 
 #ifdef __cplusplus
@@ -104,10 +103,10 @@ extern "C" {
 #endif
 #ifndef __LP64__
 __private_extern__ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo) DEPRECATED_ATTRIBUTE; //Returns memory allocated using Carbon's NewPtr.
-__private_extern__ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug) DEPRECATED_ATTRIBUTE;
+__private_extern__ OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug) DEPRECATED_ATTRIBUTE;
 #endif
 __private_extern__ OSErr TestWAV(PCMWavePtr CC);
-__private_extern__ Ptr ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loopEnd, short *sampleSize, unsigned int *rate, Boolean *stereo)
+__private_extern__ char *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loopEnd, short *sampleSize, unsigned int *rate, Boolean *stereo)
 ;
 #ifdef __cplusplus
 }

@@ -240,7 +240,7 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 		else theMAD->fid[ i].numSamples = 0;
 	}
 	
-	PatInt = ( struct PatSix*) the669 + 0x1f1 + the669->NOS * 0x19;
+	PatInt = (struct PatSix*) the669 + 0x1f1 + the669->NOS * 0x19;
 	
 	temp = (SInt32) the669;
 	temp += 0x1f1L + (SInt32) the669->NOS * 0x19L;
@@ -364,9 +364,9 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 	return noErr;
 }
 
-static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
+static OSErr Extract669Info(PPInfoRec *info, void *AlienFile)
 {
-	SixSixNine	*the669 = (SixSixNine*) AlienFile;
+	SixSixNine	*the669 = (SixSixNine*)AlienFile;
 	//long			PatternSize;
 	//short		i;
 	//short		maxInstru;
@@ -379,7 +379,7 @@ static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	//the669->message[ 30] = '\0';
-	strlcpy( info->internalFileName, ( the669->message), sizeof(info->internalFileName));
+	strlcpy( info->internalFileName, the669->message, sizeof(info->internalFileName));
 	
 	/*** Total Patterns ***/
 	
@@ -393,18 +393,19 @@ static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
 	
 	info->totalInstruments = 0;
 	
-	strlcpy( info->formatDescription, "669 Plug", sizeof(info->formatDescription));
+	strlcpy(info->formatDescription, "669 Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
 
-static OSErr Test669File( Ptr AlienFile)
+static OSErr Test669File(void *AlienFile)
 {
-	SixSixNine	*the669 = (SixSixNine*) AlienFile;
+	SixSixNine *the669 = (SixSixNine*)AlienFile;
 	
-	//This seems to be endian-safe...
-	if (the669->marker == 0x6669 || the669->marker == 0x6966) return   noErr;
-	else return  MADFileNotSupportedByThisPlug;
+	if (the669->marker == 0x6669 || the669->marker == 0x6966)
+		return noErr;
+	else
+		return MADFileNotSupportedByThisPlug;
 }
 
 #ifndef _MAC_H
@@ -414,9 +415,9 @@ EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPIn
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy( p->type, 		"669 ", sizeof(p->type));
-	strlcpy( p->MenuName, 	"669 Files", sizeof(p->MenuName));
-	p->mode	=	MADPlugImport;
+	strlcpy(p->type, "669 ", sizeof(p->type));
+	strlcpy(p->MenuName, "669 Files", sizeof(p->MenuName));
+	p->mode	= MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
@@ -429,93 +430,84 @@ OSErr main669( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr;
+	OSErr	myErr = noErr;
 	Ptr		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
-	myErr = noErr;
-	
-	switch( order)
+	switch(order)
 	{
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead( AlienFileName);
-			if (iFileRefI)
-			{
-				sndSize = iGetEOF( iFileRefI );
+			if (iFileRefI) {
+				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (Ptr)malloc( sndSize * 2L);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
+				AlienFile = (Ptr)malloc(sndSize * 2L);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
-				else
-				{
+				else {
 					free( AlienFile);
 					
 					AlienFile = (Ptr)malloc( sndSize);
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr)
-					{
+					if (myErr == noErr) {
 						myErr = Test669File( AlienFile);
 						if (myErr == noErr)
-						{
 							myErr = Convert6692Mad( AlienFile,  sndSize, MadFile, init);
-						}
-					}
-					free( AlienFile);
-					AlienFile = NULL;
-				}
-				iClose( iFileRefI);
-			}
-			else myErr = MADReadingErr;
-			break;
-			
-		case MADPlugTest:
-			iFileRefI = iFileOpenRead( AlienFileName);
-			if (iFileRefI)
-			{
-				sndSize = 1024L;
-				
-				AlienFile = (Ptr)malloc( sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
-					myErr = iRead(sndSize, AlienFile, iFileRefI );
-					
-					myErr = Test669File( AlienFile);
-					
-					free( AlienFile);
-					AlienFile = NULL;
-				}
-				iClose( iFileRefI);
-			}
-			else myErr = MADReadingErr;
-			break;
-			
-		case MADPlugInfo:
-			iFileRefI = iFileOpenRead( AlienFileName);
-			if (iFileRefI)
-			{
-				info->fileSize = iGetEOF( iFileRefI);
-				
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
-				
-				AlienFile = (Ptr)malloc( sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
-					myErr = iRead(sndSize, AlienFile, iFileRefI );
-					if (myErr == noErr)
-					{
-						myErr = Extract669Info( info, AlienFile);
 					}
 					free(AlienFile);
 					AlienFile = NULL;
 				}
+				iClose(iFileRefI);
+			} else
+				myErr = MADReadingErr;
+			break;
+			
+		case MADPlugTest:
+			iFileRefI = iFileOpenRead(AlienFileName);
+			if (iFileRefI) {
+				sndSize = 1024L;
+				
+				AlienFile = (Ptr)malloc(sndSize);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
+					myErr = iRead(sndSize, AlienFile, iFileRefI);
+					
+					myErr = Test669File( AlienFile);
+					
+					free(AlienFile);
+					AlienFile = NULL;
+				}
+				iClose(iFileRefI);
+			} else
+				myErr = MADReadingErr;
+			break;
+			
+		case MADPlugInfo:
+			iFileRefI = iFileOpenRead( AlienFileName);
+			if (iFileRefI) {
+				info->fileSize = iGetEOF( iFileRefI);
+				
+				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+				
+				AlienFile = (Ptr)malloc(sndSize);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
+					myErr = iRead(sndSize, AlienFile, iFileRefI );
+					if (myErr == noErr)
+						myErr = Extract669Info( info, AlienFile);
+
+					free(AlienFile);
+					AlienFile = NULL;
+				}
 				iClose( iFileRefI);
-			}
-			else myErr = MADReadingErr;
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		default:
