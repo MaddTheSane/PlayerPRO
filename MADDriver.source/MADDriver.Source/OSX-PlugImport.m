@@ -182,7 +182,7 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 			CFArrayRef tmpBundleArchs = CFBundleCopyExecutableArchitectures(theBundle);
 			if (!tmpBundleArchs)
 				goto badplug4;
-			bundleArchs = CFBridgingRelease(tmpBundleArchs);
+			bundleArchs = [CFBridgingRelease(tmpBundleArchs) copy];
 		}
 		
 		if (![bundleArchs containsObject:@(kCFBundleExecutableArchitectureX86_64)] && [bundleArchs containsObject:@(kCFBundleExecutableArchitectureI386)]) {
@@ -190,13 +190,14 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 				thePlug->IOPlug = BlankPlugFunc;
 				thePlug->is32BitOnly = true;
 				goto goodWrap;
-			}
+			} else
+				goto badplug4;
 		}
 	}
 #endif
 	
 	thePlug->IOPlug = CFBundleGetFunctionPointerForName(theBundle, CFSTR("PPImpExpMain"));
-	if(!thePlug->IOPlug)
+	if (!thePlug->IOPlug)
 		goto badplug4;
 goodWrap:
 	thePlug->file = theBundle;

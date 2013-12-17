@@ -654,6 +654,8 @@
 		55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7B11EB7C950028C6BB /* MainMenu.xib */; };
 		55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */; };
 		55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55D1BD58120FBAC0004FD083 /* Credits.rtf */; };
+		55D57E1B18601BA000192497 /* MIDI.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppimpexp */; };
+		55D57E1C18601BBC00192497 /* MIDI.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppimpexp */; };
 		55DEBFE918008D970089B940 /* PPSoundSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55DEBFEA18008D9E0089B940 /* PPSoundSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */; };
 		55E52E2512455E5100315307 /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
@@ -1619,6 +1621,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				55D57E1B18601BA000192497 /* MIDI.ppimpexp in Copy Plug-ins */,
 				5517DAC5180CAD61001413D0 /* ULT.ppimpexp in Copy Plug-ins */,
 				5578C4A017D9E8B50057D11B /* MOD.ppimpexp in Copy Plug-ins */,
 				5578C4A117D9E8B50057D11B /* 669.ppimpexp in Copy Plug-ins */,
@@ -1701,6 +1704,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				55D57E1C18601BBC00192497 /* MIDI.ppimpexp in Copy PlugIns */,
 				55EE2D8817E12F9300FED42A /* Amplitude.plugin in Copy PlugIns */,
 				55EE2D8917E12F9300FED42A /* Depth.plugin in Copy PlugIns */,
 				55EE2D8A17E12F9300FED42A /* Echo.plugin in Copy PlugIns */,
@@ -10371,6 +10375,7 @@
 				55A8434D185D230F0072250E /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		55ADC3D817D6F390001F27D4 /* Build configuration list for PBXNativeTarget "Wave" */ = {
 			isa = XCConfigurationList;
