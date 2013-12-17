@@ -182,7 +182,7 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 			CFArrayRef tmpBundleArchs = CFBundleCopyExecutableArchitectures(theBundle);
 			if (!tmpBundleArchs)
 				goto badplug4;
-			bundleArchs = [CFBridgingRelease(tmpBundleArchs) copy];
+			bundleArchs = CFBridgingRelease(tmpBundleArchs);
 		}
 		
 		if (![bundleArchs containsObject:@(kCFBundleExecutableArchitectureX86_64)] && [bundleArchs containsObject:@(kCFBundleExecutableArchitectureI386)]) {
