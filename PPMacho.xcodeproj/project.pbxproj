@@ -654,7 +654,6 @@
 		55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7B11EB7C950028C6BB /* MainMenu.xib */; };
 		55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */; };
 		55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55D1BD58120FBAC0004FD083 /* Credits.rtf */; };
-		55D57E1B18601BA000192497 /* MIDI.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppimpexp */; };
 		55D57E1C18601BBC00192497 /* MIDI.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppimpexp */; };
 		55DEBFE918008D970089B940 /* PPSoundSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55DEBFEA18008D9E0089B940 /* PPSoundSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */; };
@@ -1621,7 +1620,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				55D57E1B18601BA000192497 /* MIDI.ppimpexp in Copy Plug-ins */,
 				5517DAC5180CAD61001413D0 /* ULT.ppimpexp in Copy Plug-ins */,
 				5578C4A017D9E8B50057D11B /* MOD.ppimpexp in Copy Plug-ins */,
 				5578C4A117D9E8B50057D11B /* 669.ppimpexp in Copy Plug-ins */,
@@ -2275,7 +2273,6 @@
 		55F4287716A89A9C009013D8 /* PPMadCommandObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMadCommandObject.m; sourceTree = "<group>"; };
 		55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSoundSettingsViewController.h; sourceTree = "<group>"; };
 		55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSoundSettingsViewController.m; sourceTree = "<group>"; };
-		55FCC5E417FDF199004FBEE7 /* schema.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = schema.plist; sourceTree = "<group>"; };
 		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileUtils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = DelayOutPut.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C3D10C2F21DD00D6C081 /* Effects.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Effects.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -3866,7 +3863,6 @@
 				55BE998B17978BB100D6DECC /* GetMetadataForFile.h */,
 				55BE998D17978BB100D6DECC /* main.c */,
 				55BE999117978BB200D6DECC /* schema.xml */,
-				55FCC5E417FDF199004FBEE7 /* schema.plist */,
 			);
 			path = "Spotlight Plug-in";
 			sourceTree = "<group>";
