@@ -55,7 +55,7 @@ void iFileCreate(const char *path, OSType type)
 	}
 	
 	//FIXME: does this work on Windows?
-	fd = open(path, O_WRONLY|O_CREAT|O_TRUNC);
+	fd = open(path, O_WRONLY|O_CREAT|O_TRUNC, 0644);
 	if (fd == -1) {
 		return;
 	}

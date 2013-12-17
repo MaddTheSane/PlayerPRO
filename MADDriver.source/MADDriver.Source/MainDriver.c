@@ -762,6 +762,7 @@ OSErr MADChangeDriverSettings(MADDriverSettings *DriverInitParam, MADDriverRec**
 	}
 	music = (*returnDriver)->curMusic;
 	playing = (*returnDriver)->Reading;
+	MADLibrary *lib = (*returnDriver)->lib;
 	
 	MADGetMusicStatus(*returnDriver, &fullTime, &curTime);
 	
@@ -770,7 +771,7 @@ OSErr MADChangeDriverSettings(MADDriverSettings *DriverInitParam, MADDriverRec**
 	if ((err = MADDisposeDriver(*returnDriver)) != noErr)
 		return err;
 	
-	if ((err = MADCreateDriver(DriverInitParam, (*returnDriver)->lib, returnDriver)) != noErr)
+	if ((err = MADCreateDriver(DriverInitParam, lib, returnDriver)) != noErr)
 		return err;
 	
 	if ((err = MADStartDriver(*returnDriver)) != noErr)
