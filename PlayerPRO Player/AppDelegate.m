@@ -1748,12 +1748,12 @@ enum PPMusicToolbarTypes {
 		char info[5] = {0};
 		if(MADMusicIdentifyCFURL(madLib, info, (__bridge CFURLRef) musicURL) != noErr) break;
 		if(MADMusicInfoCFURL(madLib, info, (__bridge CFURLRef) musicURL, &theInfo) != noErr) break;
-		[[fileName cell] setTitle:obj.fileName];
-		[[internalName cell] setTitle:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
+		[fileName setStringValue:obj.fileName];
+		[internalName setStringValue:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
 		[fileSize setIntegerValue:theInfo.fileSize];
-		[[musicInstrument cell] setTitle:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
-		[[musicPatterns cell] setTitle:[NSString stringWithFormat:@"%ld", (long)theInfo.totalPatterns]];
-		[[musicPlugType cell] setTitle:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
+		[musicInstrument setStringValue:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
+		[musicPatterns setStringValue:[NSString stringWithFormat:@"%ld", (long)theInfo.totalPatterns]];
+		[musicPlugType setStringValue:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
 		{
 			char sig[5] = {0};
 			OSType2Ptr(theInfo.signature, sig);
@@ -1761,20 +1761,20 @@ enum PPMusicToolbarTypes {
 			if (!NSSig) {
 				NSSig = [NSString stringWithFormat:@"0x%08X", (unsigned int)theInfo.signature];
 			}
-			[[musicSignature cell] setTitle:NSSig];
+			[musicSignature setStringValue:NSSig];
 		}
-		[[fileLocation cell] setTitle:[musicURL path]];
+		[fileLocation setStringValue:[musicURL path]];
 		return;
 	} while (0);
 	
-	[[fileName cell] setTitle:PPDoubleDash];
-	[[internalName cell] setTitle:PPDoubleDash];
-	[[fileSize cell] setTitle:PPDoubleDash];
-	[[musicInstrument cell] setTitle:PPDoubleDash];
-	[[musicPatterns cell] setTitle:PPDoubleDash];
-	[[musicPlugType cell] setTitle:PPDoubleDash];
-	[[musicSignature cell] setTitle:PPDoubleDash];
-	[[fileLocation cell] setTitle:PPDoubleDash];
+	[fileName setStringValue:PPDoubleDash];
+	[internalName setStringValue:PPDoubleDash];
+	[fileSize setStringValue:PPDoubleDash];
+	[musicInstrument setStringValue:PPDoubleDash];
+	[musicPatterns setStringValue:PPDoubleDash];
+	[musicPlugType setStringValue:PPDoubleDash];
+	[musicSignature setStringValue:PPDoubleDash];
+	[fileLocation setStringValue:PPDoubleDash];
 }
 
 - (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to

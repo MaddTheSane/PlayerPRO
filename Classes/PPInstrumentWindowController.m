@@ -653,25 +653,25 @@ static void DrawCGSampleInt(long 	start,
 		}
 	}
 	if (!object) {
-		[[instrumentSize cell] setTitle:PPDoubleDash];
-		[[instrumentLoopStart cell] setTitle:PPDoubleDash];
-		[[instrumentLoopSize cell] setTitle:PPDoubleDash];
-		[[instrumentVolume cell] setTitle:PPDoubleDash];
-		[[instrumentRate cell] setTitle:PPDoubleDash];
-		[[instrumentNote cell] setTitle:PPDoubleDash];
-		[[instrumentBits cell] setTitle:PPDoubleDash];
-		[[instrumentMode cell] setTitle:PPDoubleDash];
+		[instrumentSize setStringValue:PPDoubleDash];
+		[instrumentLoopStart setStringValue:PPDoubleDash];
+		[instrumentLoopSize setStringValue:PPDoubleDash];
+		[instrumentVolume setStringValue:PPDoubleDash];
+		[instrumentRate setStringValue:PPDoubleDash];
+		[instrumentNote setStringValue:PPDoubleDash];
+		[instrumentBits setStringValue:PPDoubleDash];
+		[instrumentMode setStringValue:PPDoubleDash];
 		[waveFormImage setImage:nil];
 		return;
 	}
 	[instrumentSize setIntegerValue:[object dataSize]];
 	[instrumentLoopStart setIntegerValue:[object loopBegin]];
 	[instrumentLoopSize setIntegerValue:[object loopSize]];
-	[[instrumentVolume cell] setTitle:[NSString stringWithFormat:@"%u", [(PPSampleObject*)object volume]]];
-	[[instrumentRate cell] setTitle:[NSString stringWithFormat:@"%u", [object c2spd]]];
-	[[instrumentNote cell] setTitle:[NSString stringWithFormat:@"%d", [object relativeNote]]];
-	[[instrumentBits cell] setTitle:[NSString stringWithFormat:@"%u", [object amplitude]]];
-	[[instrumentMode cell] setTitle:[NSString stringWithFormat:@"%u", [object loopType]]];
+	[instrumentVolume setIntegerValue:[(PPSampleObject*)object volume]];
+	[instrumentRate setStringValue:[NSString stringWithFormat:@"%u Hz", [object c2spd]]];
+	[instrumentNote setStringValue:[NSString stringWithFormat:@"%d", [object relativeNote]]]; //TODO: properly set note.
+	[instrumentBits setStringValue:[NSString stringWithFormat:@"%u-bit", [object amplitude]]];
+	[instrumentMode setStringValue:([object loopType] == ePingPongLoop ? @"Ping-pong" : @"Classic")];
 	[waveFormImage setImage:[self waveformImageFromSample:object]];
 }
 
@@ -711,12 +711,12 @@ static void DrawCGSampleInt(long 	start,
 	theView.controller = self;
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
 		theView.isSample = NO;
-		[[theView.textField cell] setTitle:[item name]];
-		[[theView.numField cell] setTitle:[NSString stringWithFormat:@"%03ld", (long)[item number] + 1]];
+		[theView.textField setStringValue:[item name]];
+		[theView.numField setStringValue:[NSString stringWithFormat:@"%03ld", (long)[item number] + 1]];
 		theView.isBlank = [item countOfChildren] <= 0;
 	} else if ([item isKindOfClass:[PPSampleObject class]]) {
 		theView.isSample = YES;
-		[[theView.textField cell] setTitle:[item name]];
+		[theView.textField setStringValue:[item name]];
 		if ([item loopSize]) {
 			theView.isLoopingSample = YES;
 		} else {

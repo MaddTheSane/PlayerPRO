@@ -20,8 +20,8 @@
 - (void)updateInstrumentInfo
 {
 	[sampleTable reloadData];
-	[[instrumentName cell] setTitle:instrument.name];
-	[[instrumentNumber cell] setTitle:[NSString stringWithFormat:@"Instrument %ld", (long)instrument.number + 1]];
+	[instrumentName setStringValue:instrument.name];
+	[instrumentNumber setStringValue:[NSString stringWithFormat:@"Instrument %ld", (long)instrument.number + 1]];
 }
 
 @synthesize instrument;
