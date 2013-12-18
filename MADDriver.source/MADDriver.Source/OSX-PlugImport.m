@@ -41,9 +41,9 @@ typedef enum _MADPlugCapabilities {
 } MADPlugCapabilities;
 
 #ifdef __x86_64__
-static OSErr BlankPlugFunc(OSType order, char * fileName, MADMusic* theMusic, PPInfoRec *theInfo, MADDriverSettings *unused)
+static OSErr BlankPlugFunc(OSType order, char *fileName, MADMusic *theMusic, PPInfoRec *theInfo, MADDriverSettings *unused)
 {
-	PPDebugStr(__LINE__, __FILE__, "Calling the XPC stub function");
+	PPDebugStr(__LINE__, __FILE__, "Calling the XPC stub function!");
 	return MADOrderNotImplemented;
 }
 
@@ -113,10 +113,12 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 					if(GetBoolFromType(importValue))
 						possibilities = PPMADCanImport;
 				}
+				
 				if (exportValue != NULL) {
 					if(GetBoolFromType(exportValue))
 						possibilities |= PPMADCanExport;
 				}
+				
 				switch (possibilities) {
 					case PPMADCanImport:
 						thePlug->mode = MADPlugImport;
@@ -143,11 +145,8 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 				if (InfoDictionaryType == stringtype) {
 					char fallbackOSType[20] = {0};
 					const char *thecOSType = NULL;
-					thecOSType = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
-					if (thecOSType == NULL) {
-						if (CFStringGetCString((CFStringRef)OpaqueDictionaryType, fallbackOSType, sizeof(fallbackOSType), kCFStringEncodingMacRoman))
-							thecOSType = fallbackOSType;
-					}
+					if (CFStringGetCString((CFStringRef)OpaqueDictionaryType, fallbackOSType, sizeof(fallbackOSType), kCFStringEncodingMacRoman))
+						thecOSType = fallbackOSType;
 					if (thecOSType == NULL)
 						goto badplug3;
 					
@@ -185,7 +184,8 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 			bundleArchs = CFBridgingRelease(tmpBundleArchs);
 		}
 		
-		if (![bundleArchs containsObject:@(kCFBundleExecutableArchitectureX86_64)] && [bundleArchs containsObject:@(kCFBundleExecutableArchitectureI386)]) {
+		if (![bundleArchs containsObject:@(kCFBundleExecutableArchitectureX86_64)] &&
+			[bundleArchs containsObject:@(kCFBundleExecutableArchitectureI386)]) {
 			if (LoadPlugInXPC(theBundle)) {
 				thePlug->IOPlug = BlankPlugFunc;
 				thePlug->is32BitOnly = true;
@@ -248,7 +248,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		if (InfoDictionaryType == stringtype) {
 			size_t strlength = 0;
 			char fallbackOSType[20] = {0};
-			const char * tempstring = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
+			const char * tempstring = NULL;
 			if (CFStringGetCString((CFStringRef)OpaqueDictionaryType, fallbackOSType, sizeof(fallbackOSType), kCFStringEncodingMacRoman))
 				tempstring = fallbackOSType;
 			if (tempstring == NULL)
@@ -476,11 +476,11 @@ void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 	}
 	
 	PlugLocNums	= CFArrayGetCount(PlugLocations);
-	for (i = 0; i < PlugLocNums; i++) {
-		CFURLRef aPlugLoc = CFArrayGetValueAtIndex(PlugLocations, i);
-		somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, CFSTR("ppimpexp"));
-		PlugNums = CFArrayGetCount(somePlugs);
-		if (PlugNums > 0) {
+	@autoreleasepool {
+		for (i = 0; i < PlugLocNums; i++) {
+			CFURLRef aPlugLoc = CFArrayGetValueAtIndex(PlugLocations, i);
+			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, CFSTR("ppimpexp"));
+			PlugNums = CFArrayGetCount(somePlugs);
 			for (x = 0; x < PlugNums; x++) {
 				CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
 				MakeMADPlug(inMADDriver, tempBundleRef);
@@ -488,8 +488,8 @@ void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 				//Read the documentation for CFBundleCreateBundlesFromDirectory for more info
 				CFRelease(tempBundleRef);
 			}
+			CFRelease(somePlugs);
 		}
-		CFRelease(somePlugs);
 	}
 	CFRelease(PlugLocations);
 	PlugLocations = NULL;

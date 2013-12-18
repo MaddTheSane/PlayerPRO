@@ -31,14 +31,13 @@
 #include "PPPrivate.h"
 #ifdef _MAC_H
 #include <CoreFoundation/CoreFoundation.h>
-extern void NSLog(CFStringRef format, ...);
 #else
 #ifdef __BLOCKS__
 #include <dispatch/dispatch.h>
 #endif
 #endif
 
-void debugger( Ptr a) DEPRECATED_ATTRIBUTE;
+void debugger(Ptr a) DEPRECATED_ATTRIBUTE;
 
 ///////////////////////////////
 
@@ -49,16 +48,16 @@ enum {
 	MADPtrType = 3
 };
 
-void CheckVSTEditor( VSTEffect *ce);
-void SendMIDIClock( MADDriverRec *intDriver, Byte MIDIByte);
-void DisposeVSTEffect( VSTEffect	*myEffect);
-VSTEffect* CreateVSTEffect( short effectID);
-short ConvertUniqueIDToIndex( UInt32);
-void ApplyVSTSets( VSTEffect* myEffect, FXSets* set);
+void		CheckVSTEditor(VSTEffect *ce);
+void		SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte);
+void		DisposeVSTEffect(VSTEffect *myEffect);
+VSTEffect*	CreateVSTEffect(short effectID);
+short		ConvertUniqueIDToIndex(UInt32);
+void		ApplyVSTSets(VSTEffect* myEffect, FXSets* set);
 
-MADMusic* CreateFreeMADK( void)
+MADMusic* CreateFreeMADK()
 {
-	MADMusic	*music = (MADMusic*) calloc( sizeof( MADMusic), 1);
+	MADMusic	*music = (MADMusic*)calloc(sizeof(MADMusic), 1);
 	MADSpec		*MADI;
 	short		i, x, z;
 	Cmd			*aCmd;
@@ -66,7 +65,7 @@ MADMusic* CreateFreeMADK( void)
 		return NULL;
 	// ******* HEADER *********
 	
-	MADI = (MADSpec*) calloc( sizeof( MADSpec), 1);
+	MADI = (MADSpec*)calloc(sizeof(MADSpec), 1);
 	if (MADI == NULL)
 	{
 		free(music);
@@ -208,7 +207,7 @@ void WriteMADKFile( FSSpec *newFile, MADMusic	*music)
 }
 #endif
 
-size_t MADGetMusicSize( MADMusic	*music)
+size_t MADGetMusicSize(MADMusic *music)
 {
 	int i, x;
 	size_t fileSize;
@@ -218,10 +217,8 @@ size_t MADGetMusicSize( MADMusic	*music)
 	fileSize = sizeof( MADSpec);
 	fileSize += (long) music->header->numInstru * sizeof( InstrData);
 	for (i = 0; i < music->header->numPat; i++) fileSize += sizeof( PatHeader) + music->header->numChn * music->partition[ i]->header.size * sizeof( Cmd);
-	for (i = 0; i < music->header->numInstru ; i++)
-	{
-		for (x = 0; x < music->fid[ i].numSamples ; x++)
-		{
+	for (i = 0; i < music->header->numInstru ; i++) {
+		for (x = 0; x < music->fid[ i].numSamples ; x++) {
 			sData	*curData = music->sample[ i * MAXSAMPLE + x];
 			
 			fileSize += sizeof( sData32);
@@ -232,19 +229,19 @@ size_t MADGetMusicSize( MADMusic	*music)
 	return fileSize;
 }
 
-void ConvertTo64Rows( MADMusic *music)
+void ConvertTo64Rows(MADMusic *music)
 {
-	SInt32		i, x, z;
-	Boolean		IsReading;
-	SInt32		patID, found;
+	SInt32	i, x, z;
+	Boolean	IsReading;
+	SInt32	patID, found;
 	
-	if (music->header == NULL) return;
+	if (music->header == NULL)
+		return;
 	
 	IsReading = music->musicUnderModification;
 	music->musicUnderModification = true;
 	
-	for (i = music->header->numPat-1; i >= 0 ; i--)
-	{
+	for (i = music->header->numPat-1; i >= 0 ; i--) {
 		// Resize pattern to 64 rows and put a pattern break
 		
 		SInt32		newSize;
@@ -254,8 +251,7 @@ void ConvertTo64Rows( MADMusic *music)
 		
 		newSize = sizeof( PatHeader) + music->header->numChn * 64L * sizeof( Cmd);
 		
-		if (music->partition[ i]->header.size < 64)
-		{
+		if (music->partition[ i]->header.size < 64) {
 			Cmd		*srccmd = NULL, *dstcmd = NULL;
 			SInt32	patsize;
 			
@@ -266,7 +262,7 @@ void ConvertTo64Rows( MADMusic *music)
 			newPat->header.patBytes 	= 0;
 			newPat->header.unused2 		= 0;
 			
-			memmove( newPat->header.name, music->partition[ i]->header.name, 32);
+			memmove(newPat->header.name, music->partition[i]->header.name, 32);
 			
 			// Upgrade length to 64
 			
@@ -295,27 +291,22 @@ void ConvertTo64Rows( MADMusic *music)
 			}
 			
 			// dst
-			dstcmd = GetMADCommand( music->partition[ i]->header.size-1, 0, newPat);		// Pose le pattern break
+			dstcmd = GetMADCommand(music->partition[i]->header.size-1, 0, newPat);		// Pose le pattern break
 			
-			MADKillCmd( dstcmd);
+			MADKillCmd(dstcmd);
 			
 			dstcmd->cmd = skipE;
 			dstcmd->arg = 0;
 			
 			// Replace old pattern
 			
-			free( music->partition[ i]);
-			music->partition[ i] = NULL;
-			
+			free(music->partition[i]);
 			music->partition[ i] = newPat;
-		}
-		else if (music->partition[ i]->header.size > 64)
-		{
+		} else if (music->partition[ i]->header.size > 64) {
 			SInt32 		patsize = 0;
 			PatData*	srcPat = music->partition[ i];
 			
-			while( patsize < srcPat->header.size)
-			{
+			while (patsize < srcPat->header.size) {
 				newPat = ( PatData*) calloc( newSize, 1);
 				
 				newPat->header.size 		= 64L;
@@ -325,14 +316,11 @@ void ConvertTo64Rows( MADMusic *music)
 				
 				memmove( newPat->header.name, srcPat->header.name, 32);
 				
-				for (x = 0; x < 64; x++, patsize++)
-				{
-					for (z = 0; z < music->header->numChn; z++)
-					{
+				for (x = 0; x < 64; x++, patsize++) {
+					for (z = 0; z < music->header->numChn; z++) {
 						Cmd		*srccmd, *dstcmd;
 						
-						if (patsize < srcPat->header.size)
-						{
+						if (patsize < srcPat->header.size) {
 							// src
 							srccmd = GetMADCommand( patsize, z, srcPat);
 							
@@ -340,9 +328,7 @@ void ConvertTo64Rows( MADMusic *music)
 							dstcmd = GetMADCommand( x, z, newPat);
 							
 							*dstcmd = *srccmd;
-						}
-						else
-						{
+						} else {
 							dstcmd = GetMADCommand( x, z, newPat);
 							MADKillCmd( dstcmd);
 						}
@@ -351,18 +337,16 @@ void ConvertTo64Rows( MADMusic *music)
 				
 				// Update patterns list & partition
 				
-				if (patID != i)
-				{
+				if (patID != i) {
 					for (x = music->header->numPat; x > patID ; x--)
-					{
-						music->partition[ x] = music->partition[ x - 1];
-					}
+						music->partition[x] = music->partition[x - 1];
 					music->header->numPat++;
 				}
 				
-				for (x = music->header->numPat; x < MAXPATTERN; x++) music->partition[ x] = NULL;
+				for (x = music->header->numPat; x < MAXPATTERN; x++)
+					music->partition[x] = NULL;
 				
-				music->partition[ patID] = newPat;
+				music->partition[patID] = newPat;
 				
 				patID++;
 			}
@@ -371,8 +355,7 @@ void ConvertTo64Rows( MADMusic *music)
 			
 			// Do we need a pattern break ?
 			
-			if ((srcPat->header.size / 64) * 64 != srcPat->header.size)
-			{
+			if ((srcPat->header.size / 64) * 64 != srcPat->header.size) {
 				short	breakpos;
 				Cmd		*dstcmd;
 				
@@ -388,50 +371,44 @@ void ConvertTo64Rows( MADMusic *music)
 			
 			// Update la partition list
 			
-			for (x = 0; x < music->header->numPointers ; x++)
-			{
-				if (music->header->oPointers[ x] > i) music->header->oPointers[ x] += patID - i;
+			for (x = 0; x < music->header->numPointers ; x++) {
+				if (music->header->oPointers[x] > i)
+					music->header->oPointers[x] += patID - i;
 			}
 			
 			found = 0;
 			
-			for (x = music->header->numPointers-1; x >= 0 ; x--)
-			{
-				if (music->header->oPointers[ x] == i)
-				{
+			for (x = music->header->numPointers-1; x >= 0 ; x--) {
+				if (music->header->oPointers[x] == i) {
 					found++;
 					
 					// Avance le reste de la partition
 					
-					for (z = 256-1; z >= x ; z--)
-					{
-						if (z + patID - i< 256)
-						{
+					for (z = 256-1; z >= x ; z--) {
+						if (z + patID - i < 256) {
 							music->header->oPointers[ z + patID - i] = music->header->oPointers[ z];
 						}
 					}
 					
 					for (z = 0; z <= patID - i; z++)
-					{
-						music->header->oPointers[ x + z] = i + z;
-					}
+						music->header->oPointers[x + z] = i + z;
 				}
 			}
 			
 			music->header->numPointers += found * (patID - i);
 			
-			free( srcPat);
+			free(srcPat);
 		}
 	}
 	
 	music->musicUnderModification = IsReading;
 }
 
-size_t MADMinimize( MADMusic *music)
+size_t MADMinimize(MADMusic *music)
 {
 	short 		i, x, z;
 	Boolean		remove, IsReading;
-	Boolean		inst[ MAXINSTRU];
+	Boolean		inst[MAXINSTRU];
 	size_t		before, after;
 	
 	if (music->header == NULL) return 0;
@@ -486,7 +463,8 @@ size_t MADMinimize( MADMusic *music)
 	}
 	
 	// Check for unused instruments
-	for (i = 0; i < 32 ; i++) inst[ i] = false;
+	for (i = 0; i < 32 ; i++)
+		inst[i] = false;
 	
 	for (i = 0; i < music->header->numPat; i++)
 	{
@@ -539,25 +517,18 @@ static int driverList = 0;
 static void BuildAvailableDriverList()
 {
 	if (driverList == 0) {
-		driverList =   1 << MIDISoundDriver |
+		driverList = MIDISoundDriverBit |
 #ifdef _BE_H
 		1 << BeOSSoundDriver |
 #endif
 #ifdef WIN32
-		1 << DirectSound95NT |
-		1 << Wave95NT |
+		DirectSound95NTBit | Wave95NTBit |
 #endif
 #ifdef _MAC_H
-		1 << CoreAudioDriver |
-#endif
-#ifdef LINUX
-		1 << ALSADriver |
-#endif
-#ifdef _OSSSOUND
-		1 << OSSDriver |
+		CoreAudioDriverBit |
 #endif
 #ifdef _ESOUND
-		1 << ESDDriver |
+		ESDDriverBit |
 #endif
 		0;
 	}
@@ -1224,7 +1195,7 @@ OSErr MADDisposeDriver(MADDriverRec* MDriver)
 
 OSErr MADInitLibrary(const char *PlugsFolderName, MADLibrary **lib)
 {
-	UInt32 	i, mytab[ 12] =
+	UInt32 i, mytab[12] =
 	{
 		1712*16, 1616*16, 1524*16, 1440*16, 1356*16, 1280*16,
 		1208*16, 1140*16, 1076*16, 1016*16, 960*16, 907*16
@@ -1232,7 +1203,7 @@ OSErr MADInitLibrary(const char *PlugsFolderName, MADLibrary **lib)
 	if (lib == NULL)
 		return MADParametersErr;
 	
-	*lib = (MADLibrary*) calloc( sizeof( MADLibrary), 1);
+	*lib = (MADLibrary*)calloc(sizeof(MADLibrary), 1);
 	
 	if (*lib == NULL)
 		return MADNeedMemory;
@@ -1240,9 +1211,7 @@ OSErr MADInitLibrary(const char *PlugsFolderName, MADLibrary **lib)
 	(*lib)->IDType = 'MADD';
 	
 	for (i = 0; i < 12; i++)
-	{
-		(*lib)->mytab[ i] = mytab[ i];
-	}
+		(*lib)->mytab[i] = mytab[i];
 	
 	MInitImportPlug(*lib, PlugsFolderName);
 	return noErr;
