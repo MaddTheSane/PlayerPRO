@@ -614,7 +614,7 @@ static OSErr XMReadInstruments(MADMusic *theMAD, MADDriverSettings *init)
 					short	*tt;
 					SInt32	tL;
 					
-					tt = (short*) curData->data;
+					tt = (short*)curData->data;
 					
 					for( tL = 0; tL < curData->size/2; tL++) {
 						PPLE16( (void*) (tt + tL));

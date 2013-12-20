@@ -361,17 +361,16 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 	}
 }
 
-static Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
+static Boolean CompareTwoNSURLs(NSURL *urla, NSURL *urlb)
 {
 	@autoreleasepool {
 		id refA = nil, refB = nil;
-		NSURL *nsurlA = (__bridge NSURL*)urla, *nsurlB = (__bridge NSURL*)urlb;
 		BOOL bothAreValid = YES;
 		Boolean theSame = false;
 		
-		if ([nsurlA getResourceValue:&refA forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
+		if ([urla getResourceValue:&refA forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
 			bothAreValid = NO;
-		} else if ([nsurlB getResourceValue:&refB forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
+		} else if ([urlb getResourceValue:&refB forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
 			bothAreValid = NO;
 		}
 		
@@ -379,6 +378,13 @@ static Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
 			theSame = [refA isEqual:refB];
 		
 		return theSame;
+	}
+}
+
+static inline Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
+{
+	@autoreleasepool {
+		return CompareTwoNSURLs((__bridge NSURL*)urla, (__bridge NSURL*)urlb);
 	}
 }
 

@@ -10,8 +10,11 @@
 #include <QuickTime/QuickTime.h>
 #endif
 
-#define WAVE_FORMAT_PCM		1
-#define kmaxVolume			7
+
+enum {
+	WAVE_FORMAT_PCM = 1,
+	kmaxVolume = 7
+};
 
 #ifndef USEDEPRECATEDFUNCS
 #define USEDEPRECATEDFUNCS 1
@@ -101,7 +104,7 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *l
 					(*WAVERsrc).wFormatTag      = shrtswap((*WAVERsrc).wFormatTag);
 					(*WAVERsrc).nCannels        = shrtswap((*WAVERsrc).nCannels);
 					(*WAVERsrc).nSamplesPerSec  = longswap((*WAVERsrc).nSamplesPerSec);
-					(*WAVERsrc).nSamplesPerSec  = (*WAVERsrc).nSamplesPerSec << 16; //FIXME: is this right for LE machines?
+					(*WAVERsrc).nSamplesPerSec  = longswap((*WAVERsrc).nSamplesPerSec) << 16; //FIXME: is this right for LE machines?
 					(*WAVERsrc).nAvgBytesPerSec = longswap((*WAVERsrc).nAvgBytesPerSec);
 					(*WAVERsrc).nBlockAlign     = shrtswap((*WAVERsrc).nBlockAlign);
 					(*WAVERsrc).wBitsPerSample  = shrtswap((*WAVERsrc).wBitsPerSample);
@@ -154,12 +157,11 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *l
 				
 			case 16:
 			{
-				size_t			i;
-				unsigned short	*tt = (unsigned short*)WAVERsrc;
+				unsigned short *tt = (unsigned short*)WAVERsrc;
 				
-				i = (*sndSize)/2;
-				while( i-- > 0)
+				dispatch_apply((*sndSize)/2, dispatch_get_global_queue(0, 0), ^(size_t i) {
 					tt[i] = shrtswap(tt[i]);
+				});
 			}
 				break;
 		}

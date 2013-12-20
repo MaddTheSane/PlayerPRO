@@ -573,9 +573,7 @@ typedef struct {
 					[session exportAsynchronouslyWithCompletionHandler:^{
 						dispatch_semaphore_signal(sessionWaitSemaphore);
 					}];
-					do {
-						dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
-					} while( [session status] < AVAssetExportSessionStatusCompleted );
+					dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
 					
 					BOOL didFinish = [session status] == AVAssetExportSessionStatusCompleted;
 					[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];

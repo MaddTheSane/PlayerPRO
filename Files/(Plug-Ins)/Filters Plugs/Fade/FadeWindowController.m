@@ -25,7 +25,7 @@
 			long		i, per;
 			double		from = self.fadeFrom, to = self.fadeTo, temp;
 			char		*Sample8Ptr = theData->data;
-			short		*Sample16Ptr = (short*) theData->data;
+			short		*Sample16Ptr = (short*)theData->data;
 			
 			
 			switch( theData->amp)

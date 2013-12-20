@@ -94,11 +94,11 @@ static Ptr ConvertSampleSize( Ptr src, long srcSize, short amp, long dstSize, Bo
 {
 	#define LRVAL	3L
 
-	short								*src16 = (short*) src, *dst16;
-	char								*src8 = (char*) src, *dst8;
-	Ptr									dst;
-	long								realsrcSize, tempL, tempR;
-	unsigned  long			x, left, right, pos, newSize = dstSize;
+	short			*src16 = (short*)src, *dst16;
+	char			*src8 = (char*)src, *dst8;
+	Ptr				dst;
+	long			realsrcSize, tempL, tempR;
+	unsigned long	x, left, right, pos, newSize = dstSize;
 	
 	dst = NewPtrClear( newSize);
 	if (dst == NULL) return NULL;
