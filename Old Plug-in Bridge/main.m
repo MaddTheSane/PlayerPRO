@@ -14,6 +14,7 @@
 #include <PlayerPROCoreTemp/PPPlug.h>
 #include <PlayerPROCoreTemp/PPPrivate.h>
 #include <PlayerPROCoreTemp/MADDriver.h>
+#import "PP32BitBridge.h"
 
 static void Old_Plug_in_Bridge_peer_event_handler(xpc_connection_t peer, xpc_object_t event) 
 {
