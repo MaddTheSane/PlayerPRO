@@ -15,10 +15,9 @@
 
 @implementation FadeWindowController
 
-- (id)initWithWindow:(NSWindow *)window
+- (instancetype)initWithWindow:(NSWindow *)window
 {
-    self = [super initWithWindow:window];
-    if (self) {
+    if (self = [super initWithWindow:window]) {
 		isMultipleIstanceSafe = YES;
 		
 		dispatch_block_t tmp = ^{

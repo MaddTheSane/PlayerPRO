@@ -90,7 +90,7 @@ static void StringToHex( char *str, int *oct)
 @implementation ComplexFadeController
 @synthesize fadeType;
 
-- (id)initWithWindow:(NSWindow *)window
+- (instancetype)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {

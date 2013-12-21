@@ -10,14 +10,10 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 
-@interface SamplingRateWindowController ()
-
-@end
+#define LRVAL	3L
 
 static void *ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int srcC4SPD, int dstC4SPD, Boolean stereo, size_t *newsize)
 {
-#define LRVAL	3L
-	
 	short			*src16 = (short*)src, *dst16;
 	char			*src8 = (char*)src, *dst8;
 	Ptr				dst;
@@ -125,7 +121,7 @@ static void *ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int s
 
 @implementation SamplingRateWindowController
 
-- (id)initWithWindow:(NSWindow *)window
+- (instancetype)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {

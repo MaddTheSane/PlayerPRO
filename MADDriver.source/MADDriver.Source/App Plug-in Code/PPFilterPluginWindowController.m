@@ -18,7 +18,7 @@
 @synthesize selectionStart;
 @synthesize stereoMode;
 
-- (id)initWithWindow:(NSWindow *)window
+- (instancetype)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
