@@ -4593,7 +4593,6 @@
 				5573A33C10B50D2600FF8B50 /* Sources */,
 				5573A33D10B50D2600FF8B50 /* Frameworks */,
 				5596C10B1863CF85001C32F8 /* CopyFiles */,
-				5596C10D1863D0C6001C32F8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -5988,19 +5987,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd $SRCROOT\n\"$TARGET_BUILD_DIR\"/$PRODUCT_NAME Cocoa-Info.plist Cocoa\ntouch -amfc Cocoa-Info.plistvers.plist\n\"$TARGET_BUILD_DIR\"/$PRODUCT_NAME \"PlayerPRO Player/PlayerPRO Player-Info.plist\" player\ntouch -amfc \"PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist\"\n";
-		};
-		5596C10D1863D0C6001C32F8 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "##TODO: change the linker path of the plug-in bridge to this framework";
 		};
 		55F41A3017EF8A8E00605DF8 /* Strip headers */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -9533,6 +9519,7 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "@rpath";
+				LD_DYLIB_INSTALL_NAME = "@rpath/PlayerPROCore.framework/Versions/${FRAMEWORK_VERSION}/PlayerPROCore";
 				PRODUCT_NAME = PlayerPROCoreTemp;
 			};
 			name = Release;
@@ -9553,6 +9540,7 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "@rpath";
+				LD_DYLIB_INSTALL_NAME = "@rpath/PlayerPROCore.framework/Versions/${FRAMEWORK_VERSION}/PlayerPROCore";
 				PRODUCT_NAME = PlayerPROCoreTemp;
 			};
 			name = Debug;
@@ -9571,7 +9559,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				INFOPLIST_FILE = "Old Plug-in Bridge/Old Plug-in Bridge-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../../../../../..";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../../../../../../Frameworks";
 				MACH_O_TYPE = mh_execute;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
 				WRAPPER_EXTENSION = xpc;
@@ -9594,7 +9582,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				INFOPLIST_FILE = "Old Plug-in Bridge/Old Plug-in Bridge-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../../../../../..";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../../../../../../Frameworks";
 				MACH_O_TYPE = mh_execute;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
 				WRAPPER_EXTENSION = xpc;

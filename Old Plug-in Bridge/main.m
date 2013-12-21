@@ -12,6 +12,8 @@
 #include <PlayerPROCoreTemp/MAD.h>
 #include <PlayerPROCoreTemp/RDriver.h>
 #include <PlayerPROCoreTemp/PPPlug.h>
+#include <PlayerPROCoreTemp/PPPrivate.h>
+#include <PlayerPROCoreTemp/MADDriver.h>
 
 static void Old_Plug_in_Bridge_peer_event_handler(xpc_connection_t peer, xpc_object_t event) 
 {
