@@ -13,7 +13,8 @@ void SetOSType(CFURLRef theURL, OSType theType)
 {
 	@autoreleasepool {
 		NSURL *theNSURL = (__bridge NSURL*)theURL;
-		
-		[theNSURL setResourceValue:@(theType) forKey:NSFileHFSTypeCode error:NULL];
+		if (theType == 0) {
+			[theNSURL setResourceValue:@(theType) forKey:NSFileHFSTypeCode error:NULL];
+		}
 	}
 }

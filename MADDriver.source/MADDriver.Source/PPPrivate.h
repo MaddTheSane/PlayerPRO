@@ -18,6 +18,10 @@
 #include "MADDriver.h"
 #endif
 
+#ifdef __OBJC__
+#import <Foundation/NSURL.h>
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -107,10 +111,8 @@ OSErr	closeCoreAudio( MADDriverRec *inMADDriver);
 #endif
 
 #ifdef _ESOUND
-OSErr initESD( MADDriverRec *inMADDriver);
-OSErr closeESD( MADDriverRec *inMADDriver);
-void StopChannelESD(MADDriverRec *inMADDriver);
-void PlayChannelESD(MADDriverRec *inMADDriver);
+OSErr initESD(MADDriverRec *inMADDriver);
+OSErr closeESD(MADDriverRec *inMADDriver);
 #endif
 
 #ifdef WIN32
@@ -145,6 +147,10 @@ PPEXPORT void ConvertInstrumentIn(Byte *tempPtr, size_t sSize);
 
 #if defined _MAC_H && !TARGET_OS_IPHONE
 void SetOSType(CFURLRef, OSType);
+#endif
+
+#ifdef __OBJC__
+PPEXPORT BOOL MakeMADPlugFromNSURL(MADLibrary *inMADDriver, NSURL* theURL);
 #endif
 
 #ifdef __cplusplus

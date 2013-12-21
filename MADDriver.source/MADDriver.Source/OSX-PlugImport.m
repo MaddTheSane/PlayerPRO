@@ -318,6 +318,20 @@ badplug:
 	return false;
 }
 
+BOOL MakeMADPlugFromNSURL(MADLibrary *inMADDriver, NSURL *theURL)
+{
+	@autoreleasepool {
+		BOOL yesOrNo = NO;
+		CFBundleRef theBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)theURL);
+		if (!theBundle) {
+			return NO;
+		}
+		yesOrNo = MakeMADPlug(inMADDriver, theBundle) ? YES : NO;
+		CFRelease(theBundle);
+		return yesOrNo;
+	}
+}
+
 #pragma mark Plug-in Locations
 //There are many places that a plug-in might be kept in OS X
 /*

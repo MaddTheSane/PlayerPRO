@@ -16,7 +16,9 @@
 
 @interface PP32BitBridge : NSObject
 {
-	
+	MADLibrary *the32BitLibrary;
 }
+- (id)init;
+- (BOOL)addPlugInAtPath:(NSURL*)plugPath;
 
 @end
