@@ -518,7 +518,6 @@
 		55A84333185D22800072250E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55A84334185D22800072250E /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		55A84335185D22800072250E /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
-		55A84336185D22800072250E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55A84341185D230E0072250E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55A84347185D230E0072250E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55A84345185D230E0072250E /* InfoPlist.strings */; };
 		55A8434A185D230E0072250E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A84349185D230E0072250E /* main.m */; };
@@ -575,7 +574,6 @@
 		55B23D231689321F00DCE923 /* PAT.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEADA10E727B100EDF2F1 /* PAT.plugin */; };
 		55B23D24168935D300DCE923 /* MINs.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEA6B10E727AD00EDF2F1 /* MINs.plugin */; };
 		55B23D2916893DE300DCE923 /* XI.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55151F8010DEDBDB0054ABC4 /* XI.plugin */; };
-		55B7665A17E3C0DC004C1D45 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
 		55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B7E65A161D1D4E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -2490,12 +2488,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				555C125116378B3500735225 /* AudioUnit.framework in Frameworks */,
-				5573A39510B50F6900FF8B50 /* CoreFoundation.framework in Frameworks */,
-				554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */,
-				554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */,
 				55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */,
-				55B7665A17E3C0DC004C1D45 /* Cocoa.framework in Frameworks */,
+				5573A39510B50F6900FF8B50 /* CoreFoundation.framework in Frameworks */,
+				555C125116378B3500735225 /* AudioUnit.framework in Frameworks */,
+				554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */,
+				554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2503,10 +2500,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55149C621832D176009C850B /* AVFoundation.framework in Frameworks */,
 				5578C4CF17DA6D2C0057D11B /* CoreFoundation.framework in Frameworks */,
-				5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */,
 				5578C48217D9E8560057D11B /* Cocoa.framework in Frameworks */,
+				5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */,
+				55149C621832D176009C850B /* AVFoundation.framework in Frameworks */,
 				5578C4FC17DB8A2F0057D11B /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2803,7 +2800,6 @@
 				55A84333185D22800072250E /* Foundation.framework in Frameworks */,
 				55A84334185D22800072250E /* CoreMIDI.framework in Frameworks */,
 				55A84335185D22800072250E /* CoreServices.framework in Frameworks */,
-				55A84336185D22800072250E /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2858,11 +2854,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55149C611832D16C009C850B /* AVFoundation.framework in Frameworks */,
 				55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */,
-				55105C9C13BE638D00902106 /* PlayerPROCore.framework in Frameworks */,
-				55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */,
 				55085D811836EC82004A152F /* CoreMIDI.framework in Frameworks */,
+				55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */,
+				55149C611832D16C009C850B /* AVFoundation.framework in Frameworks */,
+				55105C9C13BE638D00902106 /* PlayerPROCore.framework in Frameworks */,
 				5578C4F817DAB2830057D11B /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
