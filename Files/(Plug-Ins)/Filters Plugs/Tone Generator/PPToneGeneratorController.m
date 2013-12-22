@@ -387,7 +387,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 			
 		case 16:
 			if (Audio16Ptr != NULL) {
-				free((Ptr)Audio16Ptr);
+				free(Audio16Ptr);
 				Audio16Ptr = NULL;
 			}
 			Audio16Ptr	= CreateAudio16Ptr(audioLength, audioFrequency, audioAmplitude, generator, theData->stereo);

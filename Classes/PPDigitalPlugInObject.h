@@ -16,7 +16,7 @@
 	PPDigitalPlugin	**plugCode;
 }
 
-- (id)initWithBundle:(NSBundle*)toInit;
+- (instancetype)initWithBundle:(NSBundle*)toInit;
 
 - (OSErr)callWithPcmd:(Pcmd*)myPcmd;
 - (OSErr)callWithPcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug*)pi;

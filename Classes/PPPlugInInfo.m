@@ -16,7 +16,6 @@
 @end
 
 @implementation PPPlugInInfo
-
 @synthesize authorName;
 @synthesize plugName;
 @synthesize plugType;
@@ -63,8 +62,10 @@
 			return NO;
 		} else if (![plugType isEqualToString:[object plugType]]) {
 			return NO;
-		} else return YES;
-	} else return NO;
+		} else
+			return YES;
+	} else
+		return NO;
 }
 
 - (NSUInteger)hash
