@@ -18,6 +18,11 @@
 #include "MADDriver.h"
 #endif
 
+#ifndef BUILDINGPPRO
+#warning this header should NOT be used outside of PlayerPROCore! 
+#warning the functions and datatypes here may change FOR ANY REASON, including differing compiler includes and defines.
+#endif
+
 #ifdef __OBJC__
 #import <Foundation/NSURL.h>
 #endif

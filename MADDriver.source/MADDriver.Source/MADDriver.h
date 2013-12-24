@@ -24,17 +24,13 @@
 #include <AudioUnit/AudioUnit.h>
 #endif
 
-#ifdef LINUX
-#include <alsa/asoundlib.h>
-#endif
-
 #ifdef _ESOUND
 #include <esd.h>
 #endif
 
-#ifdef _OSSSOUND
-#warning headers not included!
-//TODO: include headers
+#ifndef BUILDINGPPRO
+#warning this header should NOT be used outside of PlayerPROCore!
+#warning the functions and datatypes here may change FOR ANY REASON, including differing compiler includes and defines.
 #endif
 
 struct __MADDriverRec {

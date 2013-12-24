@@ -831,7 +831,10 @@ FSIORefNum GenerateDLSFromBundle()
 	bundleURL = CFURLCreateFromFSRef(kCFAllocatorDefault, &bundleFSRef);
 	AudioBundle = CFBundleCreate(kCFAllocatorDefault, bundleURL);
 	CFRelease(bundleURL);
-	if (AudioBundle == NULL) Debugger();
+	if (AudioBundle == NULL) {
+		Debugger();
+		return -1;
+	}
 	
 	rsrcURL = CFBundleCopyResourceURL(AudioBundle, CFSTR("gs_instruments"),  CFSTR("dls"), NULL);
 	CFURLGetFSRef(rsrcURL, &rsrcRef);

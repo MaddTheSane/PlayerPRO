@@ -76,7 +76,7 @@ static inline void ByteSwapsData(sData *toSwap)
 		//	the32BitLibrary->mytab[i] = mytab[i];
 		memcpy(the32BitLibrary->mytab, mytab, sizeof(mytab));
 		
-		the32BitLibrary->ThePlug = calloc(sizeof(MADLibrary), MAXPLUG);
+		the32BitLibrary->ThePlug = calloc(sizeof(PlugInfo), MAXPLUG);
 		the32BitLibrary->TotalPlug = 0;
 	}
 	return self;

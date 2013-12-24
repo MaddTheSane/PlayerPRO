@@ -1,0 +1,19 @@
+//
+//  PlayerPROCore.xcconfig
+//  PPMacho
+//
+//  Created by C.W. Betts on 12/24/13.
+//
+//
+
+#include "Universal.xcconfig"
+
+//:configuration = Debug
+DYLIB_COMPATIBILITY_VERSION = 2
+DYLIB_CURRENT_VERSION = 6.1
+FRAMEWORK_VERSION = B
+INFOPLIST_FILE = PlayerPROCore-Info.plist
+GCC_PRECOMPILE_PREFIX_HEADER = YES
+GCC_PREFIX_HEADER = MADDriver.source/MADDriver.Source/PlayerPROCore-OSX.pch
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) BUILDINGPPRO=1
+CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO
