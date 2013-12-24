@@ -22,6 +22,26 @@
 #import <Foundation/NSURL.h>
 #endif
 
+#pragma pack(push, 2)
+
+typedef struct PPInfoRec32
+{
+	char	internalFileName[60];
+	char	formatDescription[60];
+	
+	SInt32	totalPatterns;
+	SInt32	partitionLength;
+	
+	short	totalTracks;
+	short	totalInstruments;
+	
+	OSType	signature;
+	
+	SInt32	fileSize;
+} PPInfoRec32;
+
+#pragma pack(pop)
+
 #ifdef __cplusplus
 extern "C" {
 #endif

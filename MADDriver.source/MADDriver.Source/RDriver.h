@@ -666,6 +666,8 @@ PPEXPORT void	MADSetReading(MADDriverRec *driver, Boolean toSet) DEPRECATED_ATTR
 
 PPEXPORT SInt32	MADAudioLength(MADDriverRec *theRec);
 
+PPEXPORT size_t MADGetMusicSize(MADMusic*);
+
 #ifdef __cplusplus
 }
 #endif

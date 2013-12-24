@@ -74,7 +74,6 @@ void	MADDisposeDriverBuffer(MADDriverRec *intDriver);
 OSErr	MADCreateReverb(MADDriverRec *intDriver);
 void	MADDisposeReverb(MADDriverRec *intDriver);
 OSErr	MADCreateMicroDelay(MADDriverRec *intDriver);
-PPEXPORT size_t MADGetMusicSize(MADMusic*);
 OSErr	MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRsrc, Ptr MADPtr);
 OSErr	DBSndClose(MADDriverRec *inMADDriver);
 void	StopChannel(MADDriverRec *inMADDriver);

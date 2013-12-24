@@ -20,5 +20,8 @@
 }
 - (id)init;
 - (BOOL)addPlugInAtPath:(NSURL*)plugPath;
+- (OSErr)getMusicData:(out NSData **)theOutData fromMusicAtFileURL:(NSURL*)theURL withPlugInType:(char*)theType;
+- (BOOL)canLoadFileAtURL:(NSURL*)theURL withPlugInType:(char*)theType;
+- (OSErr)getMusicInformation:(out NSData **)theOutData fromMusicAtFileURL:(NSURL*)theURL withPlugInType:(char*)theType;
 
 @end

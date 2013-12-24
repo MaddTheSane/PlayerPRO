@@ -151,7 +151,7 @@ enum {
 // ***	PATTERN DESCRIPTION
 // ***	
 
-typedef struct Cmd							// COMMAND
+typedef struct Cmd			// COMMAND
 {
 	Byte	ins;					// Instrument no		0x00: no ins cmd
 	Byte 	note;					// Note, see table		0xFF : no note cmd
@@ -161,7 +161,7 @@ typedef struct Cmd							// COMMAND
 	Byte	unused;
 } Cmd;
 
-typedef struct PatHeader					// HEADER
+typedef struct PatHeader	// HEADER
 {
 	SInt32	size;					// Length of pattern: standard = 64
 	OSType	compMode;				// Compression mode, none = 'NONE'
@@ -170,48 +170,46 @@ typedef struct PatHeader					// HEADER
 	SInt32	unused2;
 } PatHeader;
 
-typedef struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
-{									// Pattern = 64 notes to play
+typedef struct PatData		// DATA STRUCTURE : HEADER + COMMANDS
+{							// Pattern = 64 notes to play
 	PatHeader	header;
 	Cmd			Cmds[1];
 } PatData;
 
-
-// ***	
+// ***
 // ***	INSTRUMENT DESCRIPTION
-// ***	
+// ***
 
-
-typedef struct sData								// SAMPLE
+typedef struct sData		// SAMPLE
 {
-	SInt32 				size;				// Sample length
-	SInt32				loopBeg;			// LoopStart
-	SInt32				loopSize;			// LoopLength
-	Byte 				vol;				// Base volume
-	unsigned short		c2spd;				// c2spd
-	Byte				loopType;
-	Byte				amp;				// 8 or 16 bits
-	char				relNote;
-	char 				name[32];			// Sample name
-	Byte				stereo;				// Stereo
-	Ptr					data;				// Used only in memory, not in files
+	SInt32 			size;		// Sample length
+	SInt32			loopBeg;	// LoopStart
+	SInt32			loopSize;	// LoopLength
+	Byte 			vol;		// Base volume
+	unsigned short	c2spd;		// c2spd
+	Byte			loopType;
+	Byte			amp;		// 8 or 16 bits
+	char			relNote;
+	char 			name[32];	// Sample name
+	Byte			stereo;		// Stereo
+	Ptr				data;		// Used only in memory, not in files
 } sData;
 
 //64-bit safe sample structure
 //Used for file i/o
-typedef struct sData32								// SAMPLE
+typedef struct sData32
 {
-	SInt32 			size;				// Sample length
-	SInt32			loopBeg;			// LoopStart
-	SInt32			loopSize;			// LoopLength
-	Byte 			vol;				// Base volume
-	unsigned short	c2spd;				// c2spd
+	SInt32 			size;		// Sample length
+	SInt32			loopBeg;	// LoopStart
+	SInt32			loopSize;	// LoopLength
+	Byte 			vol;		// Base volume
+	unsigned short	c2spd;		// c2spd
 	Byte			loopType;
-	Byte			amp;				// 8 or 16 bits
+	Byte			amp;		// 8 or 16 bits
 	char			relNote;
-	char 			name[32];			// Sample name
-	Byte			stereo;				// Stereo
-	UInt32			data;				// Used only in memory, not in files
+	char 			name[32];	// Sample name
+	Byte			stereo;		// Stereo
+	UInt32			data;		// Used only in memory, not in files
 } sData32;
 
 enum
@@ -220,14 +218,13 @@ enum
 	ePingPongLoop	= 1
 };
 
-
-typedef struct EnvRec				// Volume Enveloppe
+typedef struct EnvRec			// Volume Enveloppe
 {
 	short 	pos;				// pos
 	short	val;				// val
 } EnvRec;
 
-typedef struct InstrData				// INSTRUMENT
+typedef struct InstrData		// INSTRUMENT
 {
 	char 	name[32];			// instrument name
 	Byte 	type;				// Instrument type = 0
@@ -272,7 +269,6 @@ typedef struct InstrData				// INSTRUMENT
 	Byte	vibRate;
 } InstrData;
 
-
 enum
 {
 	EFON		= 1,
@@ -281,21 +277,17 @@ enum
 	EFNOTE		= 1 << 3
 };
 
-
-// ***	
+// ***
 // ***	MAD FILE HEADER DESCRIPTION
-// ***	
-
+// ***
 
 #define INFOSSIZE 239
-
 
 typedef struct FXBus
 {
 	Boolean		ByPass;
 	short		copyId;
 	Boolean		Active;
-	
 } FXBus;
 
 typedef struct MADSpec
@@ -341,7 +333,6 @@ typedef struct FXSets
 	float	values[100];
 	Str63	name;
 } FXSets;	// and then float values
-
 
 #pragma pack(pop)
 
