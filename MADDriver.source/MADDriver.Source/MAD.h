@@ -163,11 +163,11 @@ typedef struct Cmd			// COMMAND
 
 typedef struct PatHeader	// HEADER
 {
-	SInt32	size;					// Length of pattern: standard = 64
+	int		size;					// Length of pattern: standard = 64
 	OSType	compMode;				// Compression mode, none = 'NONE'
 	char	name[32];
-	SInt32	patBytes;				// Pattern Size in Bytes
-	SInt32	unused2;
+	int		patBytes;				// Pattern Size in Bytes
+	int		unused2;
 } PatHeader;
 
 typedef struct PatData		// DATA STRUCTURE : HEADER + COMMANDS
@@ -182,9 +182,9 @@ typedef struct PatData		// DATA STRUCTURE : HEADER + COMMANDS
 
 typedef struct sData		// SAMPLE
 {
-	SInt32 			size;		// Sample length
-	SInt32			loopBeg;	// LoopStart
-	SInt32			loopSize;	// LoopLength
+	int 			size;		// Sample length
+	int				loopBeg;	// LoopStart
+	int				loopSize;	// LoopLength
 	Byte 			vol;		// Base volume
 	unsigned short	c2spd;		// c2spd
 	Byte			loopType;
@@ -298,8 +298,8 @@ typedef struct MADSpec
 	Byte		generalPan;					// General Panning
 	Byte		MultiChanNo;				// Number of chan for multichannel
 	Byte		MultiChan;					// MultiChannel per tracks?
-	SInt32		EPitch;						// New Pitch
-	SInt32		ESpeed;						// New Speed
+	int			EPitch;						// New Pitch
+	int			ESpeed;						// New Speed
 	Byte		XMLinear;					// Linear picth table?
 	Byte		MODMode;					// Limit pitch to MOD pitch table
 	Byte		showCopyright;				// Show infos at startup? true or false
@@ -317,10 +317,10 @@ typedef struct MADSpec
 	Byte		chanPan[MAXTRACK];			// Channel settings, from 0 to 256
 	Byte		chanVol[MAXTRACK];			// Channel Volume, from 0 to 64
 	
-	SInt32		globalEffect[10];			// Global Effects IDs
+	int			globalEffect[10];			// Global Effects IDs
 	Boolean		globalFXActive;				// Global FX Active?
 	
-	SInt32		chanEffect[MAXTRACK][4];	// Channel Effect IDs
+	int			chanEffect[MAXTRACK][4];	// Channel Effect IDs
 	FXBus		chanBus[MAXTRACK];
 } MADSpec;
 
@@ -328,7 +328,7 @@ typedef struct FXSets
 {
 	short	track;
 	short	id;
-	SInt32	FXID;
+	int		FXID;
 	short	noArg;
 	float	values[100];
 	Str63	name;

@@ -62,7 +62,59 @@ struct __MADDriverRec {
 	Boolean					Reading;										// Reading indicator
 	Boolean					Active[ MAXTRACK];								// Channel Active?
 	Boolean					Equalizer;										// Is Equalizer Active?
+		
+	void					*OscilloWavePtr;								// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
+	size_t					OscilloWaveSize;								// Size of previous buffer
 	
+	/** Private variables - Not documented **/
+	/* DO NOT MODIFY OR USE these variables */
+	
+	SInt32					BytesToRemoveAtEnd, MIN_PITCH, MAX_PITCH, MOD_MIN_PITCH, MOD_MAX_PITCH, ASCBUFFERReal;
+	short					smallcounter, trackDiv;
+	SInt32					FREQBASE;
+	short					InstruActif[ MAXINSTRU];
+	char					*IntDataPtr;
+	void					*OsciDrawPtr[ MAXDRAW];
+	Boolean					newData[ MAXDRAW];
+	Boolean					useOsciBuffers;
+	short					curDrawPtr;
+	unsigned long			curTime;
+	Boolean					XMLinear, MODMode, JumpToNextPattern, endPattern, MADPlay;
+	SInt32					ASCBUFFER;
+	size_t					BufSize;
+	SInt32					VSYNC, BufCounter, BytesToGenerate;
+	short					vibrato_table[64];
+	short					SendMIDIClockData;	//gOutNodeRefNum, MIDIPortRefNum
+	short					InstuNoOld[MAXTRACK];
+	short					NoteOld[MAXTRACK];
+	short					VelocityOld[MAXTRACK];
+	Boolean					TrackLineReading[MAXTRACK], TrackReading[MAXTRACK], wasReading;
+	char					*OverShoot;
+	SInt32					*DASCBuffer;//, *DASCBufferOut;
+	SInt32					*DASCEffectBuffer[MAXCHANEFFECT];
+	SInt32					EffectBufferID[MAXCHANEFFECT];
+	SInt32					EffectBufferRealID[MAXCHANEFFECT];
+	short					*DASCBuffer8;//, *DASCBuffer8Out;
+	double					*Filter, *fData;
+	SInt32					MDelay;
+	SInt32					RDelay;
+	void					*ReverbPtr;
+	short					PatDelay;
+	short					lastChannelUsed[MAXTRACK];
+	SInt32					MultiChanNo, globPan;
+	Boolean					currentlyExporting;
+	Boolean					thisExport;
+	Boolean					OneMoreBeforeEnd;
+	Boolean					clipL, clipR;
+	SInt32					levelL, levelR;
+	SInt32					curCenterL, curCenterR;
+	
+	
+	//#ifdef _MAC_H
+	VSTEffect				*masterVST[ 10];
+	VSTEffect				*chanVST[ MAXTRACK][ 4];
+	//PPSndDoubleBufferHeader 	TheHeader;
+	//#endif
 #ifdef _MAC_H
 	AudioUnit				CAAudioUnit;
 	size_t					CABufOff;
@@ -97,59 +149,8 @@ struct __MADDriverRec {
 #ifdef _ESOUND
 	//TODO: EsounD driver
 #endif
+
 	
-	void					*OscilloWavePtr;								// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
-	size_t					OscilloWaveSize;								// Size of previous buffer
-	
-	/** Private variables - Not documented **/
-	/* DO NOT MODIFY OR USE these variables */
-	
-	SInt32					BytesToRemoveAtEnd, MIN_PITCH, MAX_PITCH, MOD_MIN_PITCH, MOD_MAX_PITCH, ASCBUFFERReal;
-	short					smallcounter, trackDiv;
-	SInt32					FREQBASE;
-	short					InstruActif[ MAXINSTRU];
-	char					*IntDataPtr;
-	void					*OsciDrawPtr[ MAXDRAW];
-	Boolean					newData[ MAXDRAW];
-	Boolean					useOsciBuffers;
-	short					curDrawPtr;
-	unsigned long			curTime;
-	Boolean					XMLinear, MODMode, JumpToNextPattern, endPattern, MADPlay;
-	SInt32					ASCBUFFER;
-	size_t					BufSize;
-	SInt32					VSYNC, BufCounter, BytesToGenerate;
-	short					vibrato_table[ 64];
-	short					SendMIDIClockData;	//gOutNodeRefNum, MIDIPortRefNum
-	short					InstuNoOld[ MAXTRACK];
-	short					NoteOld[ MAXTRACK];
-	short					VelocityOld[ MAXTRACK];
-	Boolean					TrackLineReading[ MAXTRACK], TrackReading[ MAXTRACK], wasReading;
-	char					*OverShoot;
-	SInt32					*DASCBuffer;//, *DASCBufferOut;
-	SInt32					*DASCEffectBuffer[ MAXCHANEFFECT];
-	SInt32					EffectBufferID[ MAXCHANEFFECT];
-	SInt32					EffectBufferRealID[ MAXCHANEFFECT];
-	short					*DASCBuffer8;//, *DASCBuffer8Out;
-	double					*Filter, *fData;
-	SInt32					MDelay;
-	SInt32					RDelay;
-	void					*ReverbPtr;
-	short					PatDelay;
-	short					lastChannelUsed[ MAXTRACK];
-	SInt32					MultiChanNo, globPan;
-	Boolean					currentlyExporting;
-	Boolean					thisExport;
-	Boolean					OneMoreBeforeEnd;
-	Boolean					clipL, clipR;
-	SInt32					levelL, levelR;
-	SInt32					curCenterL, curCenterR;
-	
-	
-	//#ifdef _MAC_H
-	VSTEffect				*masterVST[ 10];
-	VSTEffect				*chanVST[ MAXTRACK][ 4];
-	//PPSndDoubleBufferHeader 	TheHeader;
-	//#endif
 };
 
 

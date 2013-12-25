@@ -86,60 +86,60 @@ enum MADErrors
 
 typedef struct Channel
 {
-	SInt32	ID;					// Channel ID - 0 to MAXTRACK
-	SInt32	TrackID;			// TrackID - 0 to MAXTRACK (Used in multiChannel mode)
+	int		ID;					// Channel ID - 0 to MAXTRACK
+	int		TrackID;			// TrackID - 0 to MAXTRACK (Used in multiChannel mode)
 	
 	char	*begPtr;			// Sample Data Ptr - Beginning of data
 	char	*maxPtr;			// Sample Data Ptr - End of data
 	char	*curPtr;			// Sample Data Ptr - Current position
 	size_t	sizePtr;			// Sample Size in bytes
 	
-	SInt32	amp;				// Sample amplitude: 8 or 16 bits
+	int		amp;				// Sample amplitude: 8 or 16 bits
 	
 	size_t	loopBeg;			// Loop Beginning
 	size_t	loopSize;			// Loop Size
 	
-	SInt32	ins;				// Current Instrument ID
-	SInt32	insOld;				// Previous Instrument ID played on this channel
-	SInt32	samp;				// Current Sample ID
+	int		ins;				// Current Instrument ID
+	int		insOld;				// Previous Instrument ID played on this channel
+	int		samp;				// Current Sample ID
 	
-	SInt32	fineTune;			// Finetune
+	int		fineTune;			// Finetune
 	
-	SInt32	note;				// Note
-	SInt32	noteOld;			// Previous note played on this channel
-	SInt32	relNoteOld;			// Previous realnote
+	int		note;				// Note
+	int		noteOld;			// Previous note played on this channel
+	int		relNoteOld;			// Previous realnote
 	
-	SInt32 	period;				// Current period
-	SInt32	periodOld;			// Previous period played on this channel
+	int		period;				// Current period
+	int		periodOld;			// Previous period played on this channel
 	
-	SInt32	vol;				// Channel vol (0 to 64)
-	SInt32	pann;				// Channel pan (0 to 64)
+	int		vol;				// Channel vol (0 to 64)
+	int		pann;				// Channel pan (0 to 64)
 	
-	SInt32 	cmd;				// Command
+	int		cmd;				// Command
 	Byte	arg;				// Argument of command
 	Byte	volcmd;				// Volume Command
 	
-	SInt32 	arp[MAX_ARP];		// Used for arpeggio command
-	SInt32 	arpindex;			// Used for arpeggio command
+	SInt32	arp[MAX_ARP];		// Used for arpeggio command
+	int		arpindex;			// Used for arpeggio command
 	Boolean	arpUse;
 	
 	char	viboffset;			// Used for vibrato command
-	SInt32 	vibdepth;			// Used for vibrato command
-	SInt32 	vibrate;			// Used for vibrato command
-	SInt32	vibtype;			// Used for vibrato command
+	int		vibdepth;			// Used for vibrato command
+	int		vibrate;			// Used for vibrato command
+	int		vibtype;			// Used for vibrato command
 	
-	SInt32 	slide;				// Used for slideUp and slideDown command
+	int		slide;				// Used for slideUp and slideDown command
 	
-	SInt32 	pitchgoal;			// Used for portamento command
-	SInt32 	pitchrate;			// Used for portamento command
+	int 	pitchgoal;			// Used for portamento command
+	int 	pitchrate;			// Used for portamento command
 	
-	SInt32 	volumerate;			// Used for slideVolume command
+	int 	volumerate;			// Used for slideVolume command
 	
 	SInt32	oldArg[16];
-	SInt32	oldVibrate;
-	SInt32	oldVibdepth;
+	int		oldVibrate;
+	int		oldVibdepth;
 	
-	SInt32	eventTime;
+	int		eventTime;
 	
 	char	*samplePtr;			// Used internaly by MADPlaySoundData & MADPlaySndHandle
 	
@@ -149,18 +149,18 @@ typedef struct Channel
 	short	a;
 	short	b;
 	float	p;
-	SInt32	volEnv;
-	SInt32	nextvolEnv;
-	SInt32	volEnvInter;
+	int		volEnv;
+	int		nextvolEnv;
+	int		volEnvInter;
 	
-	SInt32	volFade;
-	SInt32	nextvolFade;
+	int		volFade;
+	int		nextvolFade;
 	
 	short	aa;
 	short	bb;
 	float	pp;
-	SInt32	pannEnv;
-	SInt32	nextpannEnv;
+	int		pannEnv;
+	int		nextpannEnv;
 	//long	pannEnvInter;
 	
 	Boolean	volEnvActive, pannEnvActive;
@@ -168,19 +168,19 @@ typedef struct Channel
 	short	aaa;
 	short	bbb;
 	float	ppp;
-	SInt32	panPitch;
+	int		panPitch;
 	
-	SInt32	lAC;
+	int		lAC;
 	
 	char	*prevPtr;
-	SInt32	lastWordL, curLastWordL;
-	SInt32	lastWordR, curLastWordR;
-	SInt32	curLevelL, curLevelR;
+	int		lastWordL, curLastWordL;
+	int		lastWordR, curLastWordR;
+	int		curLevelL, curLevelR;
 	
 	Boolean	LevelDirectionL, LevelDirectionR, RemoverWorking;
 	
-	SInt32	prevVol0;
-	SInt32	prevVol1;
+	int		prevVol0;
+	int		prevVol1;
 	
 	/**/
 	
@@ -194,20 +194,20 @@ typedef struct Channel
 	Byte	loopType;
 	Boolean	pingpong;
 	
-	SInt32	preOff;
+	int		preOff;
 	char	preVal, preVal2;
 	char	preValR, preVal2R;
 	
 	short	spreVal, spreVal2;
 	short	spreValR, spreVal2R;
-	SInt32	TICKREMOVESIZE;
+	int		TICKREMOVESIZE;
 	
 	
 	Boolean	PanningE8;
 	short	trig;
 	short	PatternLoopE6, PatternLoopE6Count, PatternLoopE6ID;
 	
-	SInt32	TimeCounter;
+	int		TimeCounter;
 } Channel;
 
 /********************						***********************/
@@ -224,7 +224,7 @@ typedef struct MADMusic
 	Boolean		musicUnderModification;		// Tell the driver to NOT access music data
 	Str255		musicFileName;
 	Boolean		hasChanged;
-	SInt32		position, fullTime;
+	int			position, fullTime;
 	OSType		originalFormat;
 } MADMusic;
 
@@ -279,13 +279,13 @@ typedef struct MADDriverSettings
 	short			outPutMode;							// Now, only DeluxeStereoOutPut is available !
 	short			driverMode;							// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
 	Boolean			repeatMusic;						// If music finished, repeat it or stop.
-	SInt32			MicroDelaySize;						// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
+	int				MicroDelaySize;						// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
 	Boolean			surround;							// Surround effect active? true/false
 	Boolean			Reverb;								// Reverb effect active? true/false
-	SInt32			ReverbSize;							// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
-	SInt32			ReverbStrength;						// Reverb strength in % (0 <-> 70)
+	int				ReverbSize;							// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
+	int				ReverbStrength;						// Reverb strength in % (0 <-> 70)
 	Boolean			TickRemover;						// Remove volume/sample/loop ticks.
-	SInt32			oversampling;						// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
+	int				oversampling;						// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
 } MADDriverSettings;
 
 /******************************************************************/
@@ -322,8 +322,8 @@ typedef struct PPInfoRec
 	char	internalFileName[60];
 	char	formatDescription[60];
 	
-	SInt32	totalPatterns;
-	SInt32	partitionLength;
+	int		totalPatterns;
+	int		partitionLength;
 	
 	short	totalTracks;
 	short	totalInstruments;
