@@ -1859,54 +1859,43 @@ void NoteAnalyse(MADDriverRec *intDriver)
 		{
 				//TODO: 24-bit, maybe even 20-bit
 			case 16:
-				memmove( intDriver->DASCBuffer, intDriver->DASCBuffer + intDriver->ASCBUFFER*2, realMDelay*8L);
+				memmove(intDriver->DASCBuffer, intDriver->DASCBuffer + intDriver->ASCBUFFER*2, realMDelay*8L);
 				memset(intDriver->DASCBuffer + realMDelay*2L, 0, intDriver->ASCBUFFER*8L);
 				
-				for (i = 0; i < MAXCHANEFFECT; i++)
-				{
-					if (intDriver->EffectBufferID[ i] != -1)
-					{
-						memmove( intDriver->DASCEffectBuffer[ i] + intDriver->ASCBUFFER*2, intDriver->DASCEffectBuffer[ i], realMDelay*8L);
-						memset((intDriver->DASCEffectBuffer[ i] + realMDelay*2L), 0, intDriver->ASCBUFFER*8L);
+				for (i = 0; i < MAXCHANEFFECT; i++) {
+					if (intDriver->EffectBufferID[i] != -1) {
+						memmove(intDriver->DASCEffectBuffer[i] + intDriver->ASCBUFFER*2, intDriver->DASCEffectBuffer[i], realMDelay*8L);
+						memset((intDriver->DASCEffectBuffer[i] + realMDelay*2L), 0, intDriver->ASCBUFFER*8L);
 					}
 				}
 				break;
 				
 			case 8:
-				if (realMDelay % 2 != 0)
-				{
+				if (realMDelay % 2 != 0) {
 					memmove(intDriver->DASCBuffer8, intDriver->DASCBuffer8 + intDriver->ASCBUFFER*2, 1 + realMDelay*4L);
-					
 					memset((intDriver->DASCBuffer8 + realMDelay*2L), 0, (1 + intDriver->ASCBUFFER/2)*8L);
-				}
-				else
-				{
-					memmove( intDriver->DASCBuffer8, intDriver->DASCBuffer8 + intDriver->ASCBUFFER*2,  realMDelay*4L);
+				} else {
+					memmove(intDriver->DASCBuffer8, intDriver->DASCBuffer8 + intDriver->ASCBUFFER*2,  realMDelay*4L);
 					
-					memset( (intDriver->DASCBuffer8 + realMDelay*2L), 0, (intDriver->ASCBUFFER/2)*8L);
+					memset((intDriver->DASCBuffer8 + realMDelay*2L), 0, (intDriver->ASCBUFFER/2)*8L);
 				}
 				break;
 		}
-	}
-	else
-	{
-		if (intDriver->DriverSettings.outPutMode != PolyPhonic)
-		{
+	} else {
+		if (intDriver->DriverSettings.outPutMode != PolyPhonic) {
 			switch( intDriver->DriverSettings.outPutBits)
 			{
 				case 16:
-					memset( (intDriver->DASCBuffer), 0, intDriver->ASCBUFFER*8L);
-					for (i = 0; i < MAXCHANEFFECT; i++)
-					{
-						if (intDriver->EffectBufferID[ i] != -1)
-						{
+					memset((intDriver->DASCBuffer), 0, intDriver->ASCBUFFER*8L);
+					for (i = 0; i < MAXCHANEFFECT; i++) {
+						if (intDriver->EffectBufferID[i] != -1)
 							memset( intDriver->DASCEffectBuffer[ i], 0, intDriver->ASCBUFFER*8L);
-						}
+						
 					}
 					break;
 					
 				case 8:
-					memset( (intDriver->DASCBuffer8), 0, (intDriver->ASCBUFFER/2)*8L);
+					memset((intDriver->DASCBuffer8), 0, (intDriver->ASCBUFFER/2)*8L);
 					break;
 			}
 		}
@@ -1918,22 +1907,21 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	
 	
 	
-	if (intDriver->DriverSettings.surround) ApplySurround( intDriver);
+	if (intDriver->DriverSettings.surround)
+		ApplySurround(intDriver);
 	
-	if (intDriver->DriverSettings.Reverb && intDriver->ASCBUFFERReal < intDriver->RDelay)
-	{
-		if (intDriver->DriverSettings.outPutMode == DeluxeStereoOutPut)
-		{
-			switch( intDriver->DriverSettings.outPutBits)
+	if (intDriver->DriverSettings.Reverb && intDriver->ASCBUFFERReal < intDriver->RDelay) {
+		if (intDriver->DriverSettings.outPutMode == DeluxeStereoOutPut) {
+			switch(intDriver->DriverSettings.outPutBits)
 			{
 				case 8:
-					ComputeReverb8( (Byte*) intDriver->ReverbPtr, (Byte*) intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->DriverSettings.ReverbStrength);
-					memmove( intDriver->ReverbPtr, intDriver->ReverbPtr + intDriver->ASCBUFFERReal*2L, intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L);
-					memmove( intDriver->ReverbPtr + intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L,intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L);
+					ComputeReverb8((Byte*)intDriver->ReverbPtr, (Byte*)intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->DriverSettings.ReverbStrength);
+					memmove(intDriver->ReverbPtr, intDriver->ReverbPtr + intDriver->ASCBUFFERReal*2L, intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L);
+					memmove(intDriver->ReverbPtr + intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L,intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L);
 					break;
 					
 				case 16:
-					ComputeReverb16( (short*) intDriver->ReverbPtr, (short*) intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->DriverSettings.ReverbStrength);
+					ComputeReverb16((short*) intDriver->ReverbPtr, (short*) intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->DriverSettings.ReverbStrength);
 					memmove( intDriver->ReverbPtr,intDriver->ReverbPtr + intDriver->ASCBUFFERReal*4, (intDriver->RDelay - intDriver->ASCBUFFERReal)*4);
 					memmove( intDriver->ReverbPtr + intDriver->RDelay*4 - intDriver->ASCBUFFERReal*4, intDriver->IntDataPtr, intDriver->ASCBUFFERReal*4);
 					break;
@@ -1941,18 +1929,17 @@ void NoteAnalyse(MADDriverRec *intDriver)
 		}
 	}
 	
-	if (intDriver->Equalizer)	// Apply Fourier Transform
-	{
+	if (intDriver->Equalizer) {	// Apply Fourier Transform
 		switch( intDriver->DriverSettings.outPutBits)
 		{
 			case 8:
-				ConvertInstrument( (Byte*) intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*2));
-				FFT8S( intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*2), intDriver->Filter, intDriver, 2, false);
-				ConvertInstrumentIn( (Byte*) intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*2));
+				ConvertInstrument((Byte*)intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*2));
+				FFT8S(intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*2), intDriver->Filter, intDriver, 2, false);
+				ConvertInstrumentIn((Byte*)intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*2));
 				break;
 				
 			case 16:
-				FFT16S( (short*) intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*4), intDriver->Filter, intDriver, 2, false);
+				FFT16S((short*)intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*4), intDriver->Filter, intDriver, 2, false);
 				break;
 		}
 	}
@@ -1975,16 +1962,15 @@ void ApplySurround( MADDriverRec *intDriver)
 	switch( intDriver->DriverSettings.outPutBits)
 	{
 		case 8:
-			switch( intDriver->DriverSettings.outPutMode)
+			switch(intDriver->DriverSettings.outPutMode)
 		{
 			case DeluxeStereoOutPut:
 			{
 				SInt32	i = intDriver->ASCBUFFER;
-				char	*data = (char*) intDriver->IntDataPtr;
+				char	*data = (char*)intDriver->IntDataPtr;
 				
-				while( i-- > 0)
-				{
-					*data = -1-*data;
+				while( i-- > 0) {
+					*data = -1 - *data;
 					data += 2;
 				}
 			}
@@ -1993,16 +1979,15 @@ void ApplySurround( MADDriverRec *intDriver)
 			break;
 			
 		case 16:
-			switch( intDriver->DriverSettings.outPutMode)
+			switch(intDriver->DriverSettings.outPutMode)
 		{
 			case DeluxeStereoOutPut:
 			{
-				SInt32		i = intDriver->ASCBUFFER;
-				short		*data = (short*) intDriver->IntDataPtr;
+				SInt32	i = intDriver->ASCBUFFER;
+				short	*data = (short*)intDriver->IntDataPtr;
 				
-				while( i-- > 0)
-				{
-					*data = -1-*data;
+				while( i-- > 0) {
+					*data = -1 - *data;
 					data += 2;
 				}
 			}
@@ -2012,11 +1997,12 @@ void ApplySurround( MADDriverRec *intDriver)
 	}
 }
 
-void GenerateSound( MADDriverRec *intDriver)
+void GenerateSound(MADDriverRec *intDriver)
 {
 	SInt32 i;
 	
-	if (intDriver->DriverSettings.driverMode == MIDISoundDriver) return;
+	if (intDriver->DriverSettings.driverMode == MIDISoundDriver)
+		return;
 	
 	switch( intDriver->DriverSettings.outPutBits)
 	{
@@ -2035,14 +2021,14 @@ void GenerateSound( MADDriverRec *intDriver)
 				break;
 #endif
 			case DeluxeStereoOutPut:
-				Play8StereoDelay( intDriver);
+				Play8StereoDelay(intDriver);
 				intDriver->IntDataPtr	+= intDriver->ASCBUFFER*2L;
 				intDriver->DASCBuffer8	+= intDriver->ASCBUFFER*2L;
 				break;
 				
 			case PolyPhonic:
 				//case MultiFiles:
-				Play8PolyPhonic( intDriver);
+				Play8PolyPhonic(intDriver);
 				intDriver->IntDataPtr	+= intDriver->ASCBUFFER * intDriver->DriverSettings.numChn;
 				break;
 		}
@@ -2064,7 +2050,7 @@ void GenerateSound( MADDriverRec *intDriver)
 				
 #endif
 			case DeluxeStereoOutPut:
-				Play16StereoDelay( intDriver);
+				Play16StereoDelay(intDriver);
 				intDriver->IntDataPtr	+= (intDriver->ASCBUFFER*4L) ;
 				intDriver->DASCBuffer	+= (intDriver->ASCBUFFER*2L) ;
 				
@@ -2081,21 +2067,24 @@ void GenerateSound( MADDriverRec *intDriver)
 	}
 }
 
-Boolean DirectSaveAlways( char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
+Boolean DirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
 	char				*ptrCopy;
 	MADDriverSettings	driverCopy;
 	
-	if (intDriver == NULL) return false;	//intDriver = MADGetMADDriverPtr();
+	if (intDriver == NULL)
+		return false;
 	
 	/*** Copy values ***/
 	ptrCopy 		= intDriver->IntDataPtr;
-	if (driverType != NULL) driverCopy	= intDriver->DriverSettings;
+	if (driverType != NULL)
+		driverCopy	= intDriver->DriverSettings;
 	
 	/*** Install New Values ***/
 	
 	intDriver->IntDataPtr 		= myPtr;
-	if (driverType != NULL) intDriver->DriverSettings	= *driverType;
+	if (driverType != NULL)
+		intDriver->DriverSettings	= *driverType;
 	
 	/***/			/***/
 	/***/			/***/
@@ -2110,7 +2099,8 @@ Boolean DirectSaveAlways( char *myPtr, MADDriverSettings *driverType, MADDriverR
 	/*** Restore values ***/
 	
 	intDriver->IntDataPtr 		= ptrCopy;
-	if (driverType != NULL) intDriver->DriverSettings	= driverCopy;
+	if (driverType != NULL)
+		intDriver->DriverSettings	= driverCopy;
 	
 	return true;
 }
@@ -2120,8 +2110,10 @@ Boolean DirectSave( char *myPtr, MADDriverSettings *driverType, MADDriverRec *in
 	char				*ptrCopy;
 	MADDriverSettings	driverCopy;
 	
-	if (intDriver == NULL) return false;	//intDriver = MADGetMADDriverPtr();
-	if (!intDriver->Reading) return false;
+	if (intDriver == NULL)
+		return false;
+	if (!intDriver->Reading)
+		return false;
 	
 	/*** Copy values ***/
 	ptrCopy 		= intDriver->IntDataPtr;
@@ -2130,13 +2122,14 @@ Boolean DirectSave( char *myPtr, MADDriverSettings *driverType, MADDriverRec *in
 	/*** Install New Values ***/
 	
 	intDriver->IntDataPtr 		= myPtr;
-	if (driverType != NULL) intDriver->DriverSettings	= *driverType;
+	if (driverType != NULL)
+		intDriver->DriverSettings	= *driverType;
 	
 	/***/			/***/
 	/***/			/***/
 	/***/			/***/
 	
-	NoteAnalyse( intDriver);
+	NoteAnalyse(intDriver);
 	
 	/***/			/***/
 	/***/			/***/
@@ -2145,9 +2138,11 @@ Boolean DirectSave( char *myPtr, MADDriverSettings *driverType, MADDriverRec *in
 	/*** Restore values ***/
 	
 	intDriver->IntDataPtr 		= ptrCopy;
-	if (driverType != NULL) intDriver->DriverSettings	= driverCopy;
+	if (driverType != NULL)
+		intDriver->DriverSettings	= driverCopy;
 	
-	if (intDriver->musicEnd == true) return false;
+	if (intDriver->musicEnd == true)
+		return false;
 	
 #if 0
 	if (intDriver->curMusic != NULL)

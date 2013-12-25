@@ -385,20 +385,19 @@ static OSErr PPConvertMod2Mad( Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDr
 			
 			if (theInstrument[i] + curData->size> MaxPtr) //DebugStr("\pMax Ptr Instru");
 				return MADIncompatibleFile;
-		}
-		else theMAD->fid[ i].numSamples = 0;
+		} else
+			theMAD->fid[i].numSamples = 0;
 	}
 	
-	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++)
+		theMAD->fid[i].firstSample = i * MAXSAMPLE;
 	
-	for (i=0; i < 32; i++)
-	{
-		lastIns[ i] = 0;
-		lastNote[ i] = 0;
+	for (i=0; i < 32; i++) {
+		lastIns[i] = 0;
+		lastNote[i] = 0;
 	}
 	
-	for(i=0; i<theMAD->header->numPat; i++)
-	{
+	for(i=0; i<theMAD->header->numPat; i++) {
 		theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * 64L * sizeof( Cmd), 1);
 		if (theMAD->partition[ i] == NULL) return MADNeedMemory;
 		

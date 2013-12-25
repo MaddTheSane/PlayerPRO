@@ -376,7 +376,7 @@ static OSErr PPConvertMod2Mad( Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDrive
 			curData->data 		= (Ptr)malloc( curData->size);
 			if (curData->data == NULL) return MADNeedMemory;
 			
-			memmove( curData->data, theInstrument[i], curData->size);
+			memcpy( curData->data, theInstrument[i], curData->size);
 			
 			if (theInstrument[i] + curData->size > MaxPtr) //DebugStr("\pMax Ptr Instru");
 				return MADIncompatibleFile;
@@ -663,7 +663,7 @@ static Ptr PPConvertMad2Mod( MADMusic *theMAD, MADDriverSettings *init, long *Pt
 			{
 				ConvertSampleC4SPD( theInstrument[ i], curData->size, curData->amp, curData->c2spd, destPtr, 8363);
 			}
-			else memmove( destPtr, theInstrument[ i], (long) (theMOD->fid[i].numWords) * 2L);
+			else memcpy( destPtr, theInstrument[ i], (long) (theMOD->fid[i].numWords) * 2L);
 			if (destPtr + (theMOD->fid[i].numWords) * 2L > maxMOD) //DebugStr("\pOut");
 				return NULL;
 			

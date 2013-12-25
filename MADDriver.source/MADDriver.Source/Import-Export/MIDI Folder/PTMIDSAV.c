@@ -200,9 +200,9 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 			
 			HLock(sound);
 			if (numChannels == 1)
-				memmove(*sound, ExtHeader->sampleArea, MusSize);
+				memcpy(*sound, ExtHeader->sampleArea, MusSize);
 			else if (numChannels == 2) {
-				memmove(*sound, ExtHeader->sampleArea, MusSize);
+				memcpy(*sound, ExtHeader->sampleArea, MusSize);
 			} else {
 				if (*sampleSize == 8) {
 					for (i = 0; i < MusSize; i ++) {
@@ -230,7 +230,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 				*baseFreq = header->baseFrequency;
 			
 			MusSize = header->length;
-			memmove(*sound, (*header).sampleArea, MusSize);
+			memcpy(*sound, (*header).sampleArea, MusSize);
 			HUnlock( sound);
 			break;
 	}

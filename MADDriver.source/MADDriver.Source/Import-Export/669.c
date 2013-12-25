@@ -215,13 +215,11 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 			//	for (x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
 			
 			curData->data 		= malloc( curData->size);
-			if (curData->data == NULL)
-			{
+			if (curData->data == NULL) {
 				for (i = 0; i < MAXINSTRU * MAXSAMPLE; i++) {
 					if (theMAD->sample[i]) {
-						if (theMAD->sample[i]->data) {
+						if (theMAD->sample[i]->data)
 							free(theMAD->sample[i]->data);
-						}
 						free(theMAD->sample[i]);
 					}
 				}
@@ -232,12 +230,13 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 				return MADNeedMemory;
 			}
 			
-			memmove( curData->data, theInstrument[i], curData->size);
+			memcpy( curData->data, theInstrument[i], curData->size);
 			
 			destPtr = curData->data;
-			for (temp = 0; temp < curData->size; temp++) *(destPtr + temp) -= 0x80;
-		}
-		else theMAD->fid[ i].numSamples = 0;
+			for (temp = 0; temp < curData->size; temp++)
+				*(destPtr + temp) -= 0x80;
+		} else
+			theMAD->fid[ i].numSamples = 0;
 	}
 	
 	PatInt = (struct PatSix*) the669 + 0x1f1 + the669->NOS * 0x19;

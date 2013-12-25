@@ -190,22 +190,19 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 			case 'SBOD':
 				s = &instru[ sbod_count];
 				
-				if (Okta->splitted[0] || Okta->splitted[1] || Okta->splitted[2] || Okta->splitted[3])
-				{
+				if (Okta->splitted[0] || Okta->splitted[1] || Okta->splitted[2] || Okta->splitted[3]) {
 				}
 				
 				s->length = aSect->length;		//if (s->length < aSect->length)
 				
-				theInstrument[ sbod_count] = theOktaPos;
+				theInstrument[sbod_count] = theOktaPos;
 				
-				if (s->replen == 0)
-				{
-				}
-				else if (s->repeat != 0)
-				{
-				}
-				else
-				{
+				if (s->replen == 0) {
+					
+				} else if (s->repeat != 0) {
+					
+				} else {
+					
 				}
 				
 				sbod_count++;
