@@ -13,11 +13,12 @@
 @class PPMusicObject;
 
 @interface PPDriver : NSObject
-@property (readwrite, nonatomic, strong) PPMusicObject *currentMusic;
+@property (nonatomic, strong) PPMusicObject *currentMusic;
 @property (readonly) PPLibrary *theLibrary;
 
 - (id)initWithLibrary:(PPLibrary *)theLib;
 - (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings;
+- (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out OSErr*)theErr;
 
 @property (readonly) MADDriverSettings driverSettings;
 - (OSErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett;

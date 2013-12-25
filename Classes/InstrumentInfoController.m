@@ -9,7 +9,7 @@
 #import "InstrumentInfoController.h"
 #import "PPInstrumentObject.h"
 #import "PPSampleObject.h"
-#import "PPInstrumentWindowController.h"
+#import "PPInstrumentViewController.h"
 
 @interface InstrumentInfoController ()
 
@@ -46,7 +46,7 @@
     return self;
 }
 
-- (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+- (void)instrumentSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 	if (sheet == [self window]) {
 		if (returnCode == NSOKButton) {
@@ -63,36 +63,42 @@
 
 - (void)windowDidLoad
 {
-    [super windowDidLoad];
-    
+	[super windowDidLoad];
+	
+	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	
 	if (instrument) {
 		[self updateInstrumentInfo];
 	}
-	
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
-- (IBAction)okayButton:(id)sender {
+- (IBAction)okayButton:(id)sender
+{
 	[NSApp endSheet:[self window] returnCode:NSOKButton];
 }
 
-- (IBAction)cancelButton:(id)sender {
+- (IBAction)cancelButton:(id)sender
+{
 	[NSApp endSheet:[self window] returnCode:NSCancelButton];
 }
 
-- (IBAction)volumeEditButtonPressed:(id)sender {
+- (IBAction)volumeEditButtonPressed:(id)sender
+{
 	
 }
 
-- (IBAction)volumeCheckClicked:(id)sender {
+- (IBAction)volumeCheckClicked:(id)sender
+{
 	
 }
 
-- (IBAction)panningCheckClicked:(id)sender {
+- (IBAction)panningCheckClicked:(id)sender
+{
 	
 }
 
-- (IBAction)panningEditButtonPressed:(id)sender {
+- (IBAction)panningEditButtonPressed:(id)sender
+{
 	
 }
 

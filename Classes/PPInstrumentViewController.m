@@ -6,7 +6,7 @@
 //
 //
 
-#import "PPInstrumentWindowController.h"
+#import "PPInstrumentViewController.h"
 #import "PPInstrumentImporter.h"
 #import "PPInstrumentImporterObject.h"
 #import "PPInstrumentObject.h"
@@ -16,18 +16,19 @@
 #import "InstrumentInfoController.h"
 #import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
+#import "PPDocument.h"
 #include <PlayerPROCore/PPPlug.h>
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
 #import "PPErrors.h"
 #import "UserDefaultKeys.h"
 
-@interface PPInstrumentWindowController ()
+@interface PPInstrumentViewController ()
 - (void)loadInstrumentsFromMusic;
 @end
 
-@implementation PPInstrumentWindowController
-
+@implementation PPInstrumentViewController
+@synthesize currentDocument;
 @synthesize importer;
 @synthesize curMusic;
 @synthesize theDriver;
@@ -83,10 +84,9 @@
 	[self loadInstrumentsFromMusic];
 }
 
-- (id)initWithWindow:(NSWindow *)window
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 {
-    self = [super initWithWindow:window];
-    if (self) {
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         // Initialization code here.
 		NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 		[center addObserver:self selector:@selector(colorsDidChange:) name:PPColorsDidChange object:nil];
@@ -102,11 +102,6 @@
 - (IBAction)toggleInfo:(id)sender
 {
 	[infoDrawer toggle:sender];
-}
-
-- (id)init
-{
-	return self = [self initWithWindowNibName:@"PPInstrumentWindowController"];
 }
 
 - (BOOL)importSampleFromURL:(NSURL *)sampURL
@@ -126,23 +121,23 @@
 	OSErr theOSErr = [importer identifyInstrumentFile:sampURL type:&plugType];
 	if (theOSErr != noErr)
 	{
-		if (theErr) {
+		if (theErr)
 			*theErr = CreateErrorFromMADErrorType(theOSErr);
-		}
+		
 		return NO;
 	};
 	short theSamp = 0;
 	short theIns = 0;
 	theOSErr = [importer importInstrumentOfType:plugType instrument:theIns sample:&theSamp URL:sampURL];
 	if (theOSErr != noErr) {
-		if (theErr) {
+		if (theErr)
 			*theErr = CreateErrorFromMADErrorType(theOSErr);
-		}
+		
 		return NO;
 	} else {
-		if (theErr) {
+		if (theErr)
 			*theErr = nil;
-		}
+		
 		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:*curMusic instrumentIndex:theIns];
 		[self replaceObjectInInstrumentsAtIndex:theIns withObject:insObj];
 		[instrumentView reloadData];
@@ -413,7 +408,7 @@
 	}
 	instrumentInfo.instrument = ctxt;
 	
-	[NSApp beginSheet:[instrumentInfo window] modalForWindow:[self window] modalDelegate:instrumentInfo didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+	[NSApp beginSheet:[instrumentInfo window] modalForWindow:[self.currentDocument windowForSheet] modalDelegate:instrumentInfo didEndSelector:@selector(instrumentSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
 }
 
 - (IBAction)playSample:(id)sender
@@ -423,9 +418,9 @@
 	short instrNum = tag / MAXSAMPLE;
 }
 
-- (void)windowDidLoad
+- (void)awakeFromNib
 {
-    [super windowDidLoad];
+    [super awakeFromNib];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 	[instrumentView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
@@ -597,7 +592,7 @@ static void DrawCGSampleInt(long 	start,
 		defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
 	}
 	
-	CGContextRef bitmapContext = CGBitmapContextCreateWithData(NULL, imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast, NULL, NULL);
+	CGContextRef bitmapContext = CGBitmapContextCreateWithData(NULL, imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, (CGBitmapInfo)kCGImageAlphaPremultipliedLast, NULL, NULL);
 	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
 	{
 		NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];

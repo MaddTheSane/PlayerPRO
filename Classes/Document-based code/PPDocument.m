@@ -19,6 +19,8 @@
 @property (strong) PPDriver *theDriver;
 @property (strong) PPMusicObjectWrapper *theMusic;
 @property MADDriverSettings exportSettings;
+
+- (NSData *)newAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat includeInfo:(BOOL)incInfo;
 @end
 
 @implementation PPDocument
@@ -58,6 +60,11 @@
 	[self willChangeValueForKey:@"authorString"];
 	self.theMusic.madAuthor = authorString;
 	[self didChangeValueForKey:@"authorString"];
+}
+
+- (void)soundPreferencesDidChange:(NSNotification *)notification
+{
+	[self MADDriverWithPreferences];
 }
 
 - (id)init
@@ -179,7 +186,9 @@
 	//[[NSNotificationCenter defaultCenter] postNotificationName:PPDriverDidChange object:self];
 	
 	if (returnerr != noErr) {
-		[[NSAlert alertWithError:CreateErrorFromMADErrorType(returnerr)] runModal];
+		[[NSAlert alertWithError:CreateErrorFromMADErrorType(returnerr)] beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSModalResponse returnCode) {
+			;//Currently, do nothing
+		}];
 		//return;
 	}
 }
@@ -270,6 +279,11 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (NSData *)newAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat
 {
+	return [self newAIFFDataFromSettings:sett data:dat includeInfo:NO];
+}
+
+- (NSData *)newAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat includeInfo:(BOOL)incInfo
+{
 	//TODO: Write a little-endian AIFF exporter
 	NSInteger dataLen = [dat length];
 	
@@ -282,55 +296,57 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	NSData *nameData;
 	NSData *infoData;
 	
-	@autoreleasepool {
-		ChunkHeader nameChunk;
-		NSInteger macRomanNameLength = 0;
-		NSData *macRomanNameData = [self.musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
-		macRomanNameLength = [macRomanNameData length];
-		BOOL isPadded = (macRomanNameLength & 1);
-		
-		nameChunk.ckSize = (SInt32)(macRomanNameLength + 1);
-		char pStrLen = macRomanNameLength;
-		PPBE32(&nameChunk.ckSize);
-		
-		nameChunk.ckID = NameID;
-		PPBE32(&nameChunk.ckID);
-		
-		NSMutableData *tmpNameDat = [[NSMutableData alloc] initWithBytes:&nameChunk length:sizeof(ChunkHeader)];
-		[tmpNameDat appendBytes:&pStrLen length:1];
-		[tmpNameDat appendData:macRomanNameData];
-		
-		if (!isPadded) {
-			char padbyte = 0;
-			[tmpNameDat appendBytes:&padbyte length:1];
+	if (incInfo) {
+		@autoreleasepool {
+			ChunkHeader nameChunk;
+			NSInteger macRomanNameLength = 0;
+			NSData *macRomanNameData = [self.musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+			macRomanNameLength = [macRomanNameData length];
+			BOOL isPadded = (macRomanNameLength & 1);
+			
+			nameChunk.ckSize = (SInt32)(macRomanNameLength + 1);
+			char pStrLen = macRomanNameLength;
+			PPBE32(&nameChunk.ckSize);
+			
+			nameChunk.ckID = NameID;
+			PPBE32(&nameChunk.ckID);
+			
+			NSMutableData *tmpNameDat = [[NSMutableData alloc] initWithBytes:&nameChunk length:sizeof(ChunkHeader)];
+			[tmpNameDat appendBytes:&pStrLen length:1];
+			[tmpNameDat appendData:macRomanNameData];
+			
+			if (!isPadded) {
+				char padbyte = 0;
+				[tmpNameDat appendBytes:&padbyte length:1];
+			}
+			nameData = tmpNameDat;
+			
+			
+			ChunkHeader infoChunk;
+			NSInteger macRomanInfoLength = 0;
+			NSData *macRomanInfoData = [self.musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+			macRomanInfoLength = [macRomanInfoData length];
+			isPadded = (macRomanInfoLength & 1);
+			infoChunk.ckSize = (SInt32)(macRomanInfoLength + 1);
+			pStrLen = macRomanInfoLength;
+			PPBE32(&infoChunk.ckSize);
+			
+			infoChunk.ckID = CommentID;
+			PPBE32(&infoChunk.ckID);
+			NSMutableData *tmpInfoDat = [[NSMutableData alloc] initWithBytes:&infoChunk length:sizeof(ChunkHeader)];
+			[tmpInfoDat appendBytes:&pStrLen length:1];
+			[tmpInfoDat appendData:macRomanInfoData];
+			
+			if (!isPadded) {
+				char padbyte = 0;
+				[tmpInfoDat appendBytes:&padbyte length:1];
+			}
+			
+			infoData = tmpInfoDat;
 		}
-		nameData = tmpNameDat;
-		
-		
-		ChunkHeader infoChunk;
-		NSInteger macRomanInfoLength = 0;
-		NSData *macRomanInfoData = [self.musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
-		macRomanInfoLength = [macRomanInfoData length];
-		isPadded = (macRomanInfoLength & 1);
-		infoChunk.ckSize = (SInt32)(macRomanInfoLength + 1);
-		pStrLen = macRomanInfoLength;
-		PPBE32(&infoChunk.ckSize);
-		
-		infoChunk.ckID = CommentID;
-		PPBE32(&infoChunk.ckID);
-		NSMutableData *tmpInfoDat = [[NSMutableData alloc] initWithBytes:&infoChunk length:sizeof(ChunkHeader)];
-		[tmpInfoDat appendBytes:&pStrLen length:1];
-		[tmpInfoDat appendData:macRomanInfoData];
-		
-		if (!isPadded) {
-			char padbyte = 0;
-			[tmpInfoDat appendBytes:&padbyte length:1];
-		}
-		
-		infoData = tmpInfoDat;
 	}
 	
-	NSMutableData *returnData = [[NSMutableData alloc] initWithCapacity:dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + sizeof(ContainerChunk) + [nameData length] + [infoData length]];
+	NSMutableData *returnData = [[NSMutableData alloc] initWithCapacity:dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + sizeof(ContainerChunk) + incInfo ? ([nameData length] + [infoData length]) : 0];
 	header.ckID = FORMID;
 	PPBE32(&header.ckID);
 	header.ckSize = (SInt32)(dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + 4 + [nameData length] + [infoData length]);
@@ -389,41 +405,53 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	
 	[returnData appendBytes:&dataChunk length:sizeof(SoundDataChunk)];
 	if (sett->outPutBits == 16) {
-		short swapdata;
-		int i;
-		for (i = 0; i < dataLen; i += 2) {
-			[dat getBytes:&swapdata range:NSMakeRange(i, 2)];
-			PPBE16(&swapdata);
-			[returnData appendBytes:&swapdata length:2];
+		short *swapDataPtr = malloc(dataLen);
+		if (!swapDataPtr) {
+			short swapdata;
+			for (int i = 0; i < dataLen; i += 2) {
+				[dat getBytes:&swapdata range:NSMakeRange(i, sizeof(short))];
+				PPBE16(&swapdata);
+				[returnData appendBytes:&swapdata length:sizeof(short)];
+			}
+		} else {
+			[dat getBytes:swapDataPtr length:dataLen];
+			dispatch_apply(dataLen / 2, dispatch_get_global_queue(0, 0), ^(size_t i) {
+				PPBE16(&swapDataPtr[i]);
+			});
+			[returnData appendData:[[NSData alloc] initWithBytesNoCopy:swapDataPtr length:dataLen]];
 		}
 	} else {
 		[returnData appendData:dat];
 	}
 	
-	[returnData appendData:nameData];
-	[returnData appendData:infoData];
+	if (incInfo) {
+		[returnData appendData:nameData];
+		[returnData appendData:infoData];
+	}
 	
 	return returnData;
 }
 
 - (NSData *)getSoundData:(MADDriverSettings*)theSet
 {
-	PPDriver *theRec = [[PPDriver alloc] initWithLibrary:globalMadLib settings:theSet];
+	OSErr err = noErr;
+	PPDriver *theRec = [[PPDriver alloc] initWithLibrary:globalMadLib settings:theSet error:&err];
 	
 	if (theRec == nil) {
-#if 0
 		dispatch_async(dispatch_get_main_queue(), ^{
 			NSError *NSerr = CreateErrorFromMADErrorType(err);
-			[[NSAlert alertWithError:NSerr] runModal];
+			[[NSAlert alertWithError:NSerr] beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSModalResponse returnCode) {
+				;//Do nothing for now
+			}];
 		});
-#endif
 		
 		return nil;
 	}
+	
 	[theRec cleanDriver];
 	[_theMusic attachToDriver:theRec];
 	
-	Ptr soundPtr = NULL;
+	char *soundPtr = NULL;
 	NSUInteger full = [theRec audioLength];
 	if (theSet->outPutBits == 16) {
 		full *= 2;
@@ -474,22 +502,22 @@ typedef struct {
 	NSURL *outURL = CFBridgingRelease(ei->fileURL);
 	
 	if (returnCode == NSAlertDefaultReturn) {
-		
-		switch (ei->tag) {
+		switch (ei->tag)
+		{
 			case -1:
 			{
 				PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:outURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
 					NSData *saveData;
-					if (errStr) {
+					if (errStr)
 						*errStr = nil;
-					}
+					
 					@autoreleasepool {
 						saveData = [self getSoundData:&exportSettings];
 					}
 					[_theDriver endExport];
-					if (!saveData) {
+					if (!saveData)
 						return MADNeedMemory;
-					}
+					
 					return [saveData writeToURL:theURL atomically:YES] ? noErr : MADWritingErr;
 				}];
 				[[NSApp delegate] addExportObject:expObj];
@@ -636,9 +664,8 @@ typedef struct {
 			[savePanel beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSInteger result) {
 				if (result == NSFileHandlingPanelOKButton) {
 					[self showExportSettingsWithExportType:-1 URL:[savePanel URL]];
-				} else {
+				} else
 					[_theDriver endExport];
-				}
 			}];
 			
 		}
@@ -659,9 +686,8 @@ typedef struct {
 			[savePanel beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSInteger result) {
 				if (result == NSFileHandlingPanelOKButton) {
 					[self showExportSettingsWithExportType:-2 URL:[savePanel URL]];
-				} else {
+				} else
 					[_theDriver endExport];
-				}
 			}];
 		}
 			break;
@@ -711,9 +737,9 @@ typedef struct {
 			[savePanel setAllowedFileTypes:tmpObj.UTItypes];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
-			if (![musicName isEqualToString:@""]) {
+			if (![musicName isEqualToString:@""])
 				[savePanel setNameFieldStringValue:musicName];
-			}
+			
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", tmpObj.menuName]];
 			[savePanel beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSInteger result) {
@@ -724,9 +750,8 @@ typedef struct {
 						return theErr;
 					}];
 					[[NSApp delegate] addExportObject:expObj];
-				} else {
+				} else
 					[_theDriver endExport];
-				}
 			}];
 		}
 			break;

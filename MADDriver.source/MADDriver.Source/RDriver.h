@@ -483,19 +483,17 @@ struct AEffect
 
 typedef	SInt32 (*audioMasterCallback)(AEffect *effect, SInt32 opcode, SInt32 index, SInt32 value, void *ptr, float opt);
 	
-	typedef AEffect *(*VSTPlugInPtr) (audioMasterCallback  cb);
+typedef AEffect *(*VSTPlugInPtr)(audioMasterCallback  cb);
 
-#ifdef _MAC_H
-//TODO: use OS X's native VST?
+#if defined(_MAC_H) && !TARGET_OS_IPHONE
+//TODO: update VST headers
 typedef struct __VSTEffect
 {
 	AEffect				*ce[ 2];
 	short				VSTid;
 	CFStringRef			name;
 	Boolean				Active;
-#if !TARGET_OS_IPHONE
 	CFBundleRef			connID;
-#endif
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
 } VSTEffect;

@@ -673,7 +673,7 @@ OSType GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 	for (i = 0, x = 0; i < inMADDriver->TotalPlug; i++) {
 		if (inMADDriver->ThePlug[i].mode == mode || inMADDriver->ThePlug[i].mode == MADPlugImportExport) {
 			if (ID == x) {
-				size_t 	xx;
+				size_t	xx;
 				OSType	type = '    ';
 				
 				xx = strlen(inMADDriver->ThePlug[i].type);
@@ -689,5 +689,5 @@ OSType GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 	
 	PPDebugStr(__LINE__, __FILE__, "PP-Plug ERROR II.");
 	
-	return noErr;
+	return '!!!!';
 }
