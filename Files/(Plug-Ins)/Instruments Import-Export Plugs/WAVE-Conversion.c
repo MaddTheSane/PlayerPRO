@@ -4,6 +4,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 #include <PlayerPROCore/RDriverInt.h>
+#include <CoreFoundation/CFByteOrder.h>
 #include "WAV.h"
 
 #ifndef __LP64__
@@ -22,7 +23,7 @@ enum {
 
 OSErr TestWAV(PCMWavePtr CC)
 {
-	if (EndianU32_BtoN(CC->ckid) =='RIFF')
+	if (CFSwapInt32BigToHost(CC->ckid) =='RIFF')
 		return noErr;
 	else
 		return MADFileNotSupportedByThisPlug;
@@ -31,12 +32,12 @@ OSErr TestWAV(PCMWavePtr CC)
 /*___________________ long byte swap for Intel <-> Motorola Conversions*/
 //The following will only byteswap on a Big-endian machine
 
-#define longswap(ul) EndianU32_LtoN(ul)
+#define longswap(ul) CFSwapInt32LittleToHost(ul)
 
 /*___________________ word byte swap for Intel <-> Motorola Conversions*/
 //The following will only byteswap on a Big-endian machine
 
-#define shrtswap(us) EndianU16_LtoN(us)
+#define shrtswap(us) CFSwapInt16LittleToHost(us)
 
 /*_______________________________________________________________________*/
 
@@ -44,15 +45,15 @@ OSErr TestWAV(PCMWavePtr CC)
 static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
 {
 	CFURLRef toDeref = theRef;
-	if (resolveAgainstBase) {
+	if (resolveAgainstBase)
 		toDeref = CFURLCopyAbsoluteURL(theRef);
-	}
+	
 	CFStringRef fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
 	CFIndex strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
 	CFRelease(fileString);
-	if (resolveAgainstBase) {
+	if (resolveAgainstBase)
 		CFRelease(toDeref);
-	}
+	
 	return strLength;
 }
 
@@ -94,17 +95,17 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *l
 			return NULL;
 		}
 		
-		if(EndianU32_BtoN((*WAVERsrc).ckid) =='RIFF') {
+		if(CFSwapInt32BigToHost((*WAVERsrc).ckid) =='RIFF') {
 			(*WAVERsrc).cksize = longswap((*WAVERsrc).cksize);
 			
-			if(EndianU32_BtoN((*WAVERsrc).fccType) =='WAVE') {
+			if(CFSwapInt32BigToHost((*WAVERsrc).fccType) =='WAVE') {
 				(*WAVERsrc).dwDataOffset = longswap((*WAVERsrc).dwDataOffset);
 				
-				if(EndianU32_BtoN((*WAVERsrc).fmtType) == 'fmt ') {
+				if(CFSwapInt32BigToHost((*WAVERsrc).fmtType) == 'fmt ') {
 					(*WAVERsrc).wFormatTag      = shrtswap((*WAVERsrc).wFormatTag);
 					(*WAVERsrc).nCannels        = shrtswap((*WAVERsrc).nCannels);
 					(*WAVERsrc).nSamplesPerSec  = longswap((*WAVERsrc).nSamplesPerSec);
-					(*WAVERsrc).nSamplesPerSec  = longswap((*WAVERsrc).nSamplesPerSec) << 16; //FIXME: is this right for LE machines?
+					(*WAVERsrc).nSamplesPerSec  = CFSwapInt32BigToHost((*WAVERsrc).nSamplesPerSec) << 16; //FIXME: is this right for LE machines?
 					(*WAVERsrc).nAvgBytesPerSec = longswap((*WAVERsrc).nAvgBytesPerSec);
 					(*WAVERsrc).nBlockAlign     = shrtswap((*WAVERsrc).nBlockAlign);
 					(*WAVERsrc).wBitsPerSample  = shrtswap((*WAVERsrc).wBitsPerSample);
@@ -250,15 +251,7 @@ OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 			
 			iErr = FSpDelete(newfile);
 			
-			iErr = ConvertMovieToFile(theMovie,
-									  0,
-									  newfile,
-									  'WAVE',
-									  'SNPL',
-									  smCurrentScript,
-									  NULL,
-									  0,
-									  0);
+			iErr = ConvertMovieToFile(theMovie, 0, newfile, 'WAVE', 'SNPL', smCurrentScript, NULL, 0, 0);
 			
 			DisposeMovie(theMovie);
 			CloseMovieFile(resRefNum);
