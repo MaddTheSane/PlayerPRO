@@ -21,6 +21,7 @@
 #import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
 #import "PPDocument.h"
+#import "PPInstrumentViewController.h"
 #import <PlayerPROKit/PlayerPROKit.h>
 #include <PlayerPROCore/RDriverInt.h>
 

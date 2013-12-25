@@ -278,10 +278,7 @@ typedef struct MADDriverSettings
 	unsigned int	outPutRate;							// Integer of audio sample rate
 	short			outPutMode;							// Now, only DeluxeStereoOutPut is available !
 	short			driverMode;							// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
-	//Boolean		antiAliasing;						// NOT USED anymore
 	Boolean			repeatMusic;						// If music finished, repeat it or stop.
-	//Boolean		Interpolation;						// NOT USED anymore
-	//Boolean		MicroDelay;							// NOT USED anymore
 	SInt32			MicroDelaySize;						// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
 	Boolean			surround;							// Surround effect active? true/false
 	Boolean			Reverb;								// Reverb effect active? true/false
