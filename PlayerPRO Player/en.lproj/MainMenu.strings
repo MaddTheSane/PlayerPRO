@@ -443,8 +443,8 @@
 /* Class = "NSTextFieldCell"; title = "Label"; ObjectID = "695"; */
 "695.title" = "Label";
 
-/* Class = "NSTextFieldCell"; title = "Multiline Label"; ObjectID = "697"; */
-"697.title" = "Multiline Label";
+/* Class = "NSTextFieldCell"; placeholderString = "Multiline Label"; ObjectID = "697"; */
+"697.placeholderString" = "Multiline Label";
 
 /* Class = "NSToolbarItem"; label = "Play"; ObjectID = "724"; */
 "724.label" = "Play";
@@ -523,6 +523,9 @@
 
 /* Class = "NSMenuItem"; title = "Show Instuments List"; ObjectID = "902"; */
 "902.title" = "Show Instuments List";
+
+/* Class = "NSMenuItem"; title = "Wave…"; ObjectID = "7ye-GY-uk8"; */
+"7ye-GY-uk8.title" = "Wave…";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "EjT-Rf-y2i"; */
 "EjT-Rf-y2i.title" = "Text Cell";

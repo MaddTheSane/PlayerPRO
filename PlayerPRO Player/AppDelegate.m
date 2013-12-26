@@ -1004,6 +1004,105 @@ return; \
 		}
 			break;
 			
+			case -3:
+			// wave
+		{
+			NSSavePanel *savePanel = [NSSavePanel savePanel];
+			[savePanel setAllowedFileTypes:@[AVFileTypeWAVE]];
+			[savePanel setCanCreateDirectories:YES];
+			[savePanel setCanSelectHiddenExtension:YES];
+			if (![self.musicName isEqualToString:@""])
+				[savePanel setNameFieldStringValue:self.musicName];
+			
+			[savePanel setPrompt:@"Export"];
+			[savePanel setTitle:@"Export as Wave Audio"];
+			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+				if ([self showExportSettings] == NSAlertDefaultReturn) {
+					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+						@autoreleasepool {
+							NSData *saveData = [self rawSoundData:&exportSettings];
+							MADEndExport(madDriver);
+							
+							if (!saveData)
+								return;
+							
+							__block NSError *expErr = nil;
+							dispatch_block_t errBlock = ^{
+								if (isQuitting) {
+									[NSApp replyToApplicationShouldTerminate:YES];
+								} else {
+									NSRunAlertPanel(@"Export failed", @"Export of the music file failed:\n%@", nil, nil, nil, [expErr localizedDescription]);
+								}
+							};
+							
+#define checkError(res) { \
+if (res != noErr){ \
+expErr = [NSError errorWithDomain:NSOSStatusErrorDomain code:res userInfo:nil];\
+dispatch_async(dispatch_get_main_queue(), errBlock);\
+return; \
+} \
+}
+							AudioStreamBasicDescription asbd = {0};
+							asbd.mSampleRate = exportSettings.outPutMode;
+							asbd.mFormatID = kAudioFormatLinearPCM;
+							asbd.mFormatFlags = kAudioFormatFlagIsSignedInteger;
+							asbd.mBitsPerChannel = exportSettings.outPutBits;
+							switch (exportSettings.outPutMode) {
+								case MonoOutPut:
+									asbd.mChannelsPerFrame = 1;
+									break;
+									
+								default:
+								case StereoOutPut:
+								case DeluxeStereoOutPut:
+									asbd.mChannelsPerFrame = 2;
+									break;
+									
+								case PolyPhonic:
+									asbd.mChannelsPerFrame = 4;
+									break;
+							}
+							asbd.mFramesPerPacket = 1;
+							asbd.mBytesPerFrame = asbd.mBitsPerChannel * asbd.mChannelsPerFrame / 8;
+							asbd.mBytesPerPacket = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
+							
+							CFURLRef url = (__bridge CFURLRef)[savePanel URL];
+							
+							AudioFileID audioFile;
+							OSStatus res;
+							res = AudioFileCreateWithURL(url, kAudioFileWAVEType, &asbd, kAudioFileFlags_EraseFile, &audioFile);
+							checkError(res);
+							
+							UInt32 numBytes = (UInt32)[saveData length];
+							
+							res = AudioFileWriteBytes(audioFile, false, 0, &numBytes, [saveData bytes]);
+							checkError(res);
+							
+							res = AudioFileClose(audioFile);
+							checkError(res);
+#undef checkError
+							
+						}
+						dispatch_async(dispatch_get_main_queue(), ^{
+							if (isQuitting) {
+								[NSApp replyToApplicationShouldTerminate:YES];
+							} else {
+								NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"OK", @"Show File", nil, [[savePanel URL] lastPathComponent]);
+								if (retVal == NSAlertAlternateReturn) {
+									[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[[savePanel URL]]];
+								}
+							}
+						});
+					});
+				} else {
+					MADEndExport(madDriver);
+				}
+			} else {
+				MADEndExport(madDriver);
+			}
+		}
+			break;
+			
 		default:
 		{
 			if (tag > madLib->TotalPlug || tag < 0) {
