@@ -11,7 +11,7 @@
 NSString * const PPMLDCUTI = @"net.sourceforge.playerpro.PlayerPRO-Player.playerlistdragtype";
 
 @interface PPMusicListDragClass ()
-@property (readwrite, strong) NSIndexSet *theIndexSet;
+@property (readwrite, copy) NSIndexSet *theIndexSet;
 @end
 
 @implementation PPMusicListDragClass
@@ -26,11 +26,10 @@ NSString * const PPMLDCUTI = @"net.sourceforge.playerpro.PlayerPRO-Player.player
 
 + (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
 {
-	if ([type isEqualToString:PPMLDCUTI]) {
+	if ([type isEqualToString:PPMLDCUTI])
 		return NSPasteboardReadingAsKeyedArchive;
-	} else {
+	else
 		return NSPasteboardReadingAsData;
-	}
 }
 
 static NSArray *UTIArray;
@@ -53,9 +52,9 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (id)pasteboardPropertyListForType:(NSString *)type
 {
-	if ([type isEqualToString:PPMLDCUTI]) {
+	if ([type isEqualToString:PPMLDCUTI])
 		return [NSKeyedArchiver archivedDataWithRootObject:self];
-	} else
+	else
 		return nil;
 }
 
@@ -66,10 +65,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-	if (self = [super init]) {
-		self.theIndexSet = [aDecoder decodeObjectForKey:PPMLDCUTI];
-	}
-	return self;
+	return self = [self initWithIndexSet:[aDecoder decodeObjectForKey:PPMLDCUTI]];
 }
 
 @end

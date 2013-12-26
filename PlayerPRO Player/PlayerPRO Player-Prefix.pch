@@ -2,6 +2,7 @@
 // Prefix header for all source files of the 'PlayerPRO Player' target in the 'PlayerPRO Player' project
 //
 
+#include <CoreFoundation/CoreFoundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 
 #ifdef __OBJC__
