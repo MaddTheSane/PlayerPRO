@@ -71,12 +71,6 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 static NSInteger selMusFromList = -1;
 
 @interface AppDelegate ()
-- (void)selectCurrentlyPlayingMusic;
-- (void)selectMusicAtIndex:(NSInteger)anIdx;
-- (void)musicListContentsDidMove;
-- (BOOL)musicListWillChange;
-- (void)musicListDidChange;
-- (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to;
 @property (strong) NSString *musicInfo;
 @property (strong, readonly) NSDictionary	*trackerDict;
 @property (strong, readonly) NSArray		*trackerUTIs;
@@ -86,6 +80,14 @@ static NSInteger selMusFromList = -1;
 @property (strong) PPPreferences			*preferences;
 @property (strong) NSMutableArray			*plugInInfos;
 @property BOOL isQuitting;
+
+- (void)selectCurrentlyPlayingMusic;
+- (void)selectMusicAtIndex:(NSInteger)anIdx;
+- (void)musicListContentsDidMove;
+- (BOOL)musicListWillChange;
+- (void)musicListDidChange;
+- (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to;
+- (NSData *)newAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat includeInfo:(BOOL)incInfo;
 @end
 
 @implementation AppDelegate
@@ -547,6 +549,11 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (NSData *)newAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat
 {
+	return [self newAIFFDataFromSettings:sett data:dat includeInfo:NO];
+}
+
+- (NSData *)newAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat includeInfo:(BOOL)incInfo
+{
 	//TODO: Write a little-endian AIFF exporter
 	NSInteger dataLen = [dat length];
 	
@@ -559,7 +566,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	NSData *nameData;
 	NSData *infoData;
 	
-	@autoreleasepool {
+	if (incInfo) {
 		ChunkHeader nameChunk;
 		NSInteger macRomanNameLength = 0;
 		NSData *macRomanNameData = [self.musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
@@ -607,7 +614,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		infoData = tmpInfoDat;
 	}
 	
-	NSMutableData *returnData = [[NSMutableData alloc] initWithCapacity:dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + sizeof(ContainerChunk) + [nameData length] + [infoData length]];
+	NSMutableData *returnData = [[NSMutableData alloc] initWithCapacity:dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + sizeof(ContainerChunk) + incInfo ? ([nameData length] + [infoData length]) : 0];
 	header.ckID = FORMID;
 	PPBE32(&header.ckID);
 	header.ckSize = (SInt32)(dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + 4 + [nameData length] + [infoData length]);
@@ -666,24 +673,34 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	
 	[returnData appendBytes:&dataChunk length:sizeof(SoundDataChunk)];
 	if (sett->outPutBits == 16) {
-		short swapdata;
-		int i;
-		for (i = 0; i < dataLen; i += 2) {
-			[dat getBytes:&swapdata range:NSMakeRange(i, 2)];
-			PPBE16(&swapdata);
-			[returnData appendBytes:&swapdata length:2];
+		short *swapDataPtr = malloc(dataLen);
+		if (!swapDataPtr) {
+			short swapdata;
+			for (int i = 0; i < dataLen; i += 2) {
+				[dat getBytes:&swapdata range:NSMakeRange(i, 2)];
+				PPBE16(&swapdata);
+				[returnData appendBytes:&swapdata length:2];
+			}
+		} else {
+			[dat getBytes:swapDataPtr length:dataLen];
+			dispatch_apply(dataLen / 2, dispatch_get_global_queue(0, 0), ^(size_t i) {
+				PPBE16(&swapDataPtr[i]);
+			});
+			[returnData appendData:[NSData dataWithBytesNoCopy:swapDataPtr length:dataLen]];
 		}
 	} else {
 		[returnData appendData:dat];
 	}
 	
-	[returnData appendData:nameData];
-	[returnData appendData:infoData];
+	if (incInfo) {
+		[returnData appendData:nameData];
+		[returnData appendData:infoData];
+	}
 	
 	return [[NSData alloc] initWithData:returnData];
 }
 
-- (NSData *)getSoundData:(MADDriverSettings*)theSet
+- (NSData*)rawSoundData:(MADDriverSettings*)theSet
 {
 	MADDriverRec *theRec = NULL;
 	
@@ -735,16 +752,19 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	soundPtr = calloc(full, 1);
 	
 	while(DirectSave(soundPtr, theSet, theRec))
-	{
 		[mutData appendBytes:soundPtr length:full];
-	}
-	NSData *retData = [self newAIFFDataFromSettings:theSet data:mutData];
+	
 	MADStopMusic(theRec);
 	MADCleanDriver(theRec);
 	MADDisposeDriver(theRec);
 	free(soundPtr);
 	
-	return retData;
+	return mutData;
+}
+
+- (NSData *)getAIFFData:(MADDriverSettings*)theSet
+{
+	return [self newAIFFDataFromSettings:theSet data:[self rawSoundData:theSet]];
 }
 
 - (NSInteger)showExportSettings
@@ -766,26 +786,81 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			//AIFF
 		{
 			NSSavePanel *savePanel = [NSSavePanel savePanel];
-			[savePanel setAllowedFileTypes:@[@"public.aiff-audio"]];
+			[savePanel setAllowedFileTypes:@[AVFileTypeAIFF]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
-			if (![self.musicName isEqualToString:@""]) {
+			if (![self.musicName isEqualToString:@""])
 				[savePanel setNameFieldStringValue:self.musicName];
-			}
+			
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as AIFF audio"];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						@autoreleasepool {
-							NSData *saveData = [self getSoundData:&exportSettings];
+							NSData *saveData = [self rawSoundData:&exportSettings];
 							MADEndExport(madDriver);
 							
-							if (!saveData) {
+							if (!saveData)
 								return;
-							}
 							
-							[saveData writeToURL:[savePanel URL] atomically:YES];
+							__block NSError *expErr = nil;
+							dispatch_block_t errBlock = ^{
+								if (isQuitting) {
+									[NSApp replyToApplicationShouldTerminate:YES];
+								} else {
+									NSRunAlertPanel(@"Export failed", @"Export of the music file failed:\n%@", nil, nil, nil, [expErr localizedDescription]);
+								}
+							};
+							
+#define checkError(res) { \
+if (res != noErr){ \
+expErr = [NSError errorWithDomain:NSOSStatusErrorDomain code:res userInfo:nil];\
+dispatch_async(dispatch_get_main_queue(), errBlock);\
+return; \
+} \
+}
+							AudioStreamBasicDescription asbd = {0};
+							asbd.mSampleRate = exportSettings.outPutMode;
+							asbd.mFormatID = kAudioFormatLinearPCM;
+							asbd.mFormatFlags = kAudioFormatFlagIsSignedInteger;
+							asbd.mBitsPerChannel = exportSettings.outPutBits;
+							switch (exportSettings.outPutMode) {
+								case MonoOutPut:
+									asbd.mChannelsPerFrame = 1;
+									break;
+									
+								default:
+								case StereoOutPut:
+								case DeluxeStereoOutPut:
+									asbd.mChannelsPerFrame = 2;
+									break;
+									
+								case PolyPhonic:
+									asbd.mChannelsPerFrame = 4;
+									break;
+							}
+							asbd.mFramesPerPacket = 1;
+							asbd.mBytesPerFrame = asbd.mBitsPerChannel * asbd.mChannelsPerFrame / 8;
+							asbd.mBytesPerPacket = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
+							
+							CFURLRef url = (__bridge CFURLRef)[savePanel URL];
+							
+							AudioFileID audioFile;
+							OSStatus res;
+							res = AudioFileCreateWithURL(url, kAudioFileAIFFType, &asbd,
+														 kAudioFileFlags_EraseFile, &audioFile);
+							checkError(res);
+							
+							UInt32 numBytes = (UInt32)[saveData length];
+							
+							res = AudioFileWriteBytes(audioFile, false, 0, &numBytes, [saveData bytes]);
+							checkError(res);
+							
+							res = AudioFileClose(audioFile);
+							checkError(res);
+#undef checkError
+							
 						}
 						dispatch_async(dispatch_get_main_queue(), ^{
 							if (isQuitting) {
@@ -824,14 +899,14 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						NSData *saveData;
 						@autoreleasepool {
-							saveData = [self getSoundData:&exportSettings];
+							saveData = [self getAIFFData:&exportSettings];
 						}
 						NSString *oldMusicName = self.musicName;
 						NSString *oldMusicInfo = self.musicInfo;
 						NSURL *oldURL = [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] musicUrl];
 						MADEndExport(madDriver);
 						NSArray *metadataInfo;
-						NSError *expErr = nil;
+						__block NSError *expErr = nil;
 						dispatch_block_t errBlock = ^{
 							if (isQuitting) {
 								[NSApp replyToApplicationShouldTerminate:YES];
@@ -839,7 +914,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 								NSRunAlertPanel(@"Export failed", @"Export/coversion of the music file failed:\n%@", nil, nil, nil, [expErr localizedDescription]);
 							}
 						};
-						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
+						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", (oldMusicName && ![oldMusicName isEqualToString:@""]) ? oldMusicName : @"untitled"] isDirectory:NO];
 						
 						[saveData writeToURL:tmpURL atomically:NO];
 						AVURLAsset *exportMov = [AVAsset assetWithURL:tmpURL];
@@ -900,9 +975,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						[session exportAsynchronouslyWithCompletionHandler:^{
 							dispatch_semaphore_signal(sessionWaitSemaphore);
 						}];
-						do {
-							dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
-						} while( [session status] < AVAssetExportSessionStatusCompleted );
+						dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
 						
 						BOOL didFinish = [session status] == AVAssetExportSessionStatusCompleted;
 						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];

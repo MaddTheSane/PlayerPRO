@@ -297,53 +297,51 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	NSData *infoData;
 	
 	if (incInfo) {
-		@autoreleasepool {
-			ChunkHeader nameChunk;
-			NSInteger macRomanNameLength = 0;
-			NSData *macRomanNameData = [self.musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
-			macRomanNameLength = [macRomanNameData length];
-			BOOL isPadded = (macRomanNameLength & 1);
-			
-			nameChunk.ckSize = (SInt32)(macRomanNameLength + 1);
-			char pStrLen = macRomanNameLength;
-			PPBE32(&nameChunk.ckSize);
-			
-			nameChunk.ckID = NameID;
-			PPBE32(&nameChunk.ckID);
-			
-			NSMutableData *tmpNameDat = [[NSMutableData alloc] initWithBytes:&nameChunk length:sizeof(ChunkHeader)];
-			[tmpNameDat appendBytes:&pStrLen length:1];
-			[tmpNameDat appendData:macRomanNameData];
-			
-			if (!isPadded) {
-				char padbyte = 0;
-				[tmpNameDat appendBytes:&padbyte length:1];
-			}
-			nameData = tmpNameDat;
-			
-			
-			ChunkHeader infoChunk;
-			NSInteger macRomanInfoLength = 0;
-			NSData *macRomanInfoData = [self.musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
-			macRomanInfoLength = [macRomanInfoData length];
-			isPadded = (macRomanInfoLength & 1);
-			infoChunk.ckSize = (SInt32)(macRomanInfoLength + 1);
-			pStrLen = macRomanInfoLength;
-			PPBE32(&infoChunk.ckSize);
-			
-			infoChunk.ckID = CommentID;
-			PPBE32(&infoChunk.ckID);
-			NSMutableData *tmpInfoDat = [[NSMutableData alloc] initWithBytes:&infoChunk length:sizeof(ChunkHeader)];
-			[tmpInfoDat appendBytes:&pStrLen length:1];
-			[tmpInfoDat appendData:macRomanInfoData];
-			
-			if (!isPadded) {
-				char padbyte = 0;
-				[tmpInfoDat appendBytes:&padbyte length:1];
-			}
-			
-			infoData = tmpInfoDat;
+		ChunkHeader nameChunk;
+		NSInteger macRomanNameLength = 0;
+		NSData *macRomanNameData = [self.musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+		macRomanNameLength = [macRomanNameData length];
+		BOOL isPadded = (macRomanNameLength & 1);
+		
+		nameChunk.ckSize = (SInt32)(macRomanNameLength + 1);
+		char pStrLen = macRomanNameLength;
+		PPBE32(&nameChunk.ckSize);
+		
+		nameChunk.ckID = NameID;
+		PPBE32(&nameChunk.ckID);
+		
+		NSMutableData *tmpNameDat = [[NSMutableData alloc] initWithBytes:&nameChunk length:sizeof(ChunkHeader)];
+		[tmpNameDat appendBytes:&pStrLen length:1];
+		[tmpNameDat appendData:macRomanNameData];
+		
+		if (!isPadded) {
+			char padbyte = 0;
+			[tmpNameDat appendBytes:&padbyte length:1];
 		}
+		nameData = tmpNameDat;
+		
+		
+		ChunkHeader infoChunk;
+		NSInteger macRomanInfoLength = 0;
+		NSData *macRomanInfoData = [self.musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+		macRomanInfoLength = [macRomanInfoData length];
+		isPadded = (macRomanInfoLength & 1);
+		infoChunk.ckSize = (SInt32)(macRomanInfoLength + 1);
+		pStrLen = macRomanInfoLength;
+		PPBE32(&infoChunk.ckSize);
+		
+		infoChunk.ckID = CommentID;
+		PPBE32(&infoChunk.ckID);
+		NSMutableData *tmpInfoDat = [[NSMutableData alloc] initWithBytes:&infoChunk length:sizeof(ChunkHeader)];
+		[tmpInfoDat appendBytes:&pStrLen length:1];
+		[tmpInfoDat appendData:macRomanInfoData];
+		
+		if (!isPadded) {
+			char padbyte = 0;
+			[tmpInfoDat appendBytes:&padbyte length:1];
+		}
+		
+		infoData = tmpInfoDat;
 	}
 	
 	NSMutableData *returnData = [[NSMutableData alloc] initWithCapacity:dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + sizeof(ContainerChunk) + incInfo ? ([nameData length] + [infoData length]) : 0];
@@ -432,7 +430,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	return returnData;
 }
 
-- (NSData *)getSoundData:(MADDriverSettings*)theSet
+- (NSData *)rawSoundData:(MADDriverSettings*)theSet
 {
 	OSErr err = noErr;
 	PPDriver *theRec = [[PPDriver alloc] initWithLibrary:globalMadLib settings:theSet error:&err];
@@ -479,17 +477,16 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	soundPtr = calloc(full, 1);
 	
 	while([theRec directSaveToPointer:soundPtr settings:theSet])
-	{
 		[mutData appendBytes:soundPtr length:full];
-	}
 	
 	free(soundPtr);
-	return [self newAIFFDataFromSettings:theSet data:mutData];
+	return mutData;
 }
 
-#ifndef PPEXPORT_CREATE_TMP_AIFF
-#define PPEXPORT_CREATE_TMP_AIFF 1
-#endif
+- (NSData*)getAIFFData:(MADDriverSettings*)theSet
+{
+	return [self newAIFFDataFromSettings:theSet data:[self rawSoundData:theSet]];
+}
 
 typedef struct {
 	NSInteger	tag;
@@ -505,32 +502,89 @@ typedef struct {
 		switch (ei->tag)
 		{
 			case -1:
+				//AIFF
 			{
 				PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:outURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
 					NSData *saveData;
 					if (errStr)
 						*errStr = nil;
-					
 					@autoreleasepool {
-						saveData = [self getSoundData:&exportSettings];
+						saveData = [self rawSoundData:&exportSettings];
 					}
 					[_theDriver endExport];
+					
 					if (!saveData)
 						return MADNeedMemory;
 					
-					return [saveData writeToURL:theURL atomically:YES] ? noErr : MADWritingErr;
+					__block NSError *expErr = nil;
+					dispatch_block_t errBlock = ^{
+						NSAlert *theAlert = [NSAlert alertWithMessageText:@"Export Failed" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat: @"Export of the music file failed:\n%@", [expErr localizedDescription]];
+						theAlert.alertStyle = NSCriticalAlertStyle;
+						[theAlert beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSModalResponse returnCode) {
+							;//Do nothing for now
+						}];
+					};
+					
+#define checkError(res) { \
+if (res != noErr){ \
+expErr = [NSError errorWithDomain:NSOSStatusErrorDomain code:res userInfo:nil];\
+dispatch_async(dispatch_get_main_queue(), errBlock);\
+return MADWritingErr; \
+} \
+}
+					AudioStreamBasicDescription asbd = {0};
+					asbd.mSampleRate = exportSettings.outPutMode;
+					asbd.mFormatID = kAudioFormatLinearPCM;
+					asbd.mFormatFlags = kAudioFormatFlagIsSignedInteger;
+					asbd.mBitsPerChannel = exportSettings.outPutBits;
+					switch (exportSettings.outPutMode) {
+						case MonoOutPut:
+							asbd.mChannelsPerFrame = 1;
+							break;
+							
+						default:
+						case StereoOutPut:
+						case DeluxeStereoOutPut:
+							asbd.mChannelsPerFrame = 2;
+							break;
+							
+						case PolyPhonic:
+							asbd.mChannelsPerFrame = 4;
+							break;
+					}
+					asbd.mFramesPerPacket = 1;
+					asbd.mBytesPerFrame = asbd.mBitsPerChannel * asbd.mChannelsPerFrame / 8;
+					asbd.mBytesPerPacket = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
+					
+					CFURLRef url = (__bridge CFURLRef)theURL;
+					
+					AudioFileID audioFile;
+					OSStatus res;
+					res = AudioFileCreateWithURL(url, kAudioFileAIFFType, &asbd, kAudioFileFlags_EraseFile, &audioFile);
+					checkError(res);
+					
+					UInt32 numBytes = (UInt32)[saveData length];
+					
+					res = AudioFileWriteBytes(audioFile, false, 0, &numBytes, [saveData bytes]);
+					checkError(res);
+					
+					res = AudioFileClose(audioFile);
+					checkError(res);
+#undef checkError
+					return noErr;
 				}];
 				[[NSApp delegate] addExportObject:expObj];
 			}
 				break;
 				
 			case -2:
+				//M4A
 			{
 				PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:outURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
 					if (errStr) {
 						*errStr = nil;
 					}
-					NSData *saveData = [self getSoundData:&exportSettings];
+					NSData *saveData = [self getAIFFData:&exportSettings];
 					if (!saveData) {
 						return MADNeedMemory;
 					}
@@ -539,8 +593,7 @@ typedef struct {
 					NSString *oldMusicInfo = self.musicInfo;
 					NSURL *oldURL = [self fileURL];
 					[_theDriver endExport];
-					NSError *expErr = nil;
-					NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
+					NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:NULL] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", (oldMusicName && ![oldMusicName isEqualToString:@""]) ? oldMusicName : @"untitled"] isDirectory:NO];
 					[saveData writeToURL:tmpURL atomically:NO];
 					AVURLAsset *exportMov = [AVAsset assetWithURL:tmpURL];
 					
@@ -578,7 +631,7 @@ typedef struct {
 					saveData = nil;
 					if (!exportMov) {
 						if (errStr) {
-							*errStr = [[NSString alloc] initWithFormat:@"Init Failed for %@, error: %@", oldMusicName, [expErr localizedDescription]];
+							*errStr = [[NSString alloc] initWithFormat:@"Init Failed for %@.", oldMusicName];
 						}
 						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 						return MADWritingErr;
@@ -586,15 +639,15 @@ typedef struct {
 					
 					AVAssetExportSession *session = [[AVAssetExportSession alloc] initWithAsset:exportMov presetName:AVAssetExportPresetAppleM4A];
 					if (!session) {
-						if (errStr) {
-							*errStr = [[NSString alloc] initWithFormat:@"Export session creation for %@ failed, error: %@", oldMusicName, [expErr localizedDescription]];
-						}
-						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
+						if (errStr)
+							*errStr = [[NSString alloc] initWithFormat:@"Export session creation for %@ failed.", oldMusicName];
 						
+						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 						return MADWritingErr;
 					}
-					[session setOutputURL:theURL];
-					[session setOutputFileType:AVFileTypeAppleM4A];
+					[[NSFileManager defaultManager] removeItemAtURL:theURL error:NULL];
+					session.outputURL = theURL;
+					session.outputFileType = AVFileTypeAppleM4A;
 					session.metadata = metadataInfo;
 					metadataInfo = nil;
 					dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create(0);
@@ -609,9 +662,9 @@ typedef struct {
 					if (didFinish) {
 						return noErr;
 					} else {
-						if (errStr) {
-							*errStr = [[NSString alloc] initWithFormat:@"export of \"%@\" failed, error: %@", oldMusicName, [expErr localizedDescription]];
-						}
+						if (errStr)
+							*errStr = [[NSString alloc] initWithFormat:@"export of \"%@\" failed.", oldMusicName];
+						
 						return MADWritingErr;
 					}
 				}];
@@ -653,7 +706,7 @@ typedef struct {
 			//AIFF
 		{
 			NSSavePanel *savePanel = [NSSavePanel savePanel];
-			[savePanel setAllowedFileTypes:@[@"public.aiff-audio"]];
+			[savePanel setAllowedFileTypes:@[AVFileTypeAIFF]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
 			if (![musicName isEqualToString:@""]) {
@@ -675,7 +728,7 @@ typedef struct {
 			//MP4
 		{
 			NSSavePanel *savePanel = [NSSavePanel savePanel];
-			[savePanel setAllowedFileTypes:@[@"com.apple.m4a-audio"]];
+			[savePanel setAllowedFileTypes:@[AVFileTypeAppleM4A]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
 			if (![musicName isEqualToString:@""]) {
