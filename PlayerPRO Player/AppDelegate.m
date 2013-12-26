@@ -933,7 +933,7 @@ return; \
 						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", (oldMusicName && ![oldMusicName isEqualToString:@""]) ? oldMusicName : @"untitled"] isDirectory:NO];
 						
 						[saveData writeToURL:tmpURL atomically:NO];
-						AVURLAsset *exportMov = [AVAsset assetWithURL:tmpURL];
+						AVAsset *exportMov = [AVAsset assetWithURL:tmpURL];
 						
 						{
 							AVMutableMetadataItem *titleName = [[AVMutableMetadataItem alloc] init];

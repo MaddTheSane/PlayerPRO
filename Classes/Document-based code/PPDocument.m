@@ -600,30 +600,30 @@ return MADWritingErr; \
 					[_theDriver endExport];
 					NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:NULL] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", (oldMusicName && ![oldMusicName isEqualToString:@""]) ? oldMusicName : @"untitled"] isDirectory:NO];
 					[saveData writeToURL:tmpURL atomically:NO];
-					AVURLAsset *exportMov = [AVAsset assetWithURL:tmpURL];
+					AVAsset *exportMov = [AVAsset assetWithURL:tmpURL];
 					
 					{
-						AVMutableMetadataItem *titleName = [[AVMutableMetadataItem alloc] init];
+						AVMutableMetadataItem *titleName = [AVMutableMetadataItem new];
 						[titleName setKeySpace:AVMetadataKeySpaceCommon];
 						[titleName setKey:AVMetadataCommonKeyTitle];
 						[titleName setValue:oldMusicName];
 						
-						AVMutableMetadataItem *dataInfo = [[AVMutableMetadataItem alloc] init];
+						AVMutableMetadataItem *dataInfo = [AVMutableMetadataItem new];
 						[titleName setKeySpace:AVMetadataKeySpaceCommon];
 						[titleName setKey:AVMetadataCommonKeySoftware];
 						[titleName setValue:@"PlayerPRO 6"];
 						
-						AVMutableMetadataItem *musicInfoQTUser = [[AVMutableMetadataItem alloc] init];
+						AVMutableMetadataItem *musicInfoQTUser = [AVMutableMetadataItem new];
 						[musicInfoQTUser setKeySpace:AVMetadataKeySpaceQuickTimeUserData];
 						[musicInfoQTUser setKey:AVMetadataQuickTimeUserDataKeyInformation];
 						[musicInfoQTUser setValue:oldMusicInfo];
 						
-						AVMutableMetadataItem *musicInfoiTunes = [[AVMutableMetadataItem alloc] init];
+						AVMutableMetadataItem *musicInfoiTunes = [AVMutableMetadataItem new];
 						[musicInfoiTunes setKeySpace:AVMetadataKeySpaceiTunes];
 						[musicInfoiTunes setKey:AVMetadataiTunesMetadataKeyUserComment];
 						[musicInfoiTunes setValue:oldMusicInfo];
 						
-						AVMutableMetadataItem *musicInfoQTMeta = [[AVMutableMetadataItem alloc] init];
+						AVMutableMetadataItem *musicInfoQTMeta = [AVMutableMetadataItem new];
 						[musicInfoQTMeta setKeySpace:AVMetadataKeySpaceQuickTimeMetadata];
 						[musicInfoQTMeta setKey:AVMetadataQuickTimeMetadataKeyInformation];
 						[musicInfoQTMeta setValue:oldMusicInfo];
