@@ -483,6 +483,22 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	return mutData;
 }
 
+- (NSData*)rawBESoundData:(MADDriverSettings*)theSet
+{
+	NSData *rsd = [self rawSoundData:theSet];
+	if (theSet->outPutBits == 16) {
+		size_t sndSize = [rsd length];
+		short *bePtr = malloc(sndSize);
+		[rsd getBytes:bePtr length:sndSize];
+		dispatch_apply(sndSize / 2, dispatch_get_global_queue(0, 0), ^(size_t i) {
+			PPBE16(&bePtr[i]);
+		});
+		
+		return [NSData dataWithBytesNoCopy:bePtr length:sndSize];
+	} else
+		return rsd;
+}
+
 - (NSData*)getAIFFData:(MADDriverSettings*)theSet
 {
 	return [self newAIFFDataFromSettings:theSet data:[self rawSoundData:theSet]];
@@ -509,33 +525,22 @@ typedef struct {
 					if (errStr)
 						*errStr = nil;
 					@autoreleasepool {
-						saveData = [self rawSoundData:&exportSettings];
+						saveData = [self rawBESoundData:&exportSettings];
 					}
 					[_theDriver endExport];
 					
 					if (!saveData)
 						return MADNeedMemory;
 					
-					__block NSError *expErr = nil;
-					dispatch_block_t errBlock = ^{
-						NSAlert *theAlert = [NSAlert alertWithMessageText:@"Export Failed" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat: @"Export of the music file failed:\n%@", [expErr localizedDescription]];
-						theAlert.alertStyle = NSCriticalAlertStyle;
-						[theAlert beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSModalResponse returnCode) {
-							;//Do nothing for now
-						}];
-					};
-					
 #define checkError(res) { \
 if (res != noErr){ \
-expErr = [NSError errorWithDomain:NSOSStatusErrorDomain code:res userInfo:nil];\
-dispatch_async(dispatch_get_main_queue(), errBlock);\
 return MADWritingErr; \
 } \
 }
 					AudioStreamBasicDescription asbd = {0};
-					asbd.mSampleRate = exportSettings.outPutMode;
+					asbd.mSampleRate = exportSettings.outPutRate;
 					asbd.mFormatID = kAudioFormatLinearPCM;
-					asbd.mFormatFlags = kAudioFormatFlagIsSignedInteger;
+					asbd.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked | kAudioFormatFlagIsBigEndian;
 					asbd.mBitsPerChannel = exportSettings.outPutBits;
 					switch (exportSettings.outPutMode) {
 						case MonoOutPut:
@@ -746,6 +751,7 @@ return MADWritingErr; \
 			break;
 			
 		case -3:
+			//MADK
 		{
 			NSSavePanel *savePanel = [NSSavePanel savePanel];
 			[savePanel setAllowedFileTypes:@[MADNativeUTI]];

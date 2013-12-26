@@ -1085,7 +1085,7 @@
                 <menuItem title="Play" id="622">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="playButtonPressed:" target="494" id="828"/>
+                        <action selector="pauseButtonPressed:" target="494" id="HOq-SR-PBF"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Next" id="621">

@@ -762,6 +762,22 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	return mutData;
 }
 
+- (NSData*)rawBESoundData:(MADDriverSettings*)theSet
+{
+	NSData *rsd = [self rawSoundData:theSet];
+	if (theSet->outPutBits == 16) {
+		size_t sndSize = [rsd length];
+		short *bePtr = malloc(sndSize);
+		[rsd getBytes:bePtr length:sndSize];
+		dispatch_apply(sndSize / 2, dispatch_get_global_queue(0, 0), ^(size_t i) {
+			PPBE16(&bePtr[i]);
+		});
+		
+		return [NSData dataWithBytesNoCopy:bePtr length:sndSize];
+	} else
+		return rsd;
+}
+
 - (NSData *)getAIFFData:(MADDriverSettings*)theSet
 {
 	return [self newAIFFDataFromSettings:theSet data:[self rawSoundData:theSet]];
@@ -798,7 +814,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						@autoreleasepool {
-							NSData *saveData = [self rawSoundData:&exportSettings];
+							NSData *saveData = [self rawBESoundData:&exportSettings];
 							MADEndExport(madDriver);
 							
 							if (!saveData)
@@ -821,9 +837,9 @@ return; \
 } \
 }
 							AudioStreamBasicDescription asbd = {0};
-							asbd.mSampleRate = exportSettings.outPutMode;
+							asbd.mSampleRate = exportSettings.outPutRate;
 							asbd.mFormatID = kAudioFormatLinearPCM;
-							asbd.mFormatFlags = kAudioFormatFlagIsSignedInteger;
+							asbd.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked | kAudioFormatFlagIsBigEndian;
 							asbd.mBitsPerChannel = exportSettings.outPutBits;
 							switch (exportSettings.outPutMode) {
 								case MonoOutPut:
@@ -844,12 +860,12 @@ return; \
 							asbd.mBytesPerFrame = asbd.mBitsPerChannel * asbd.mChannelsPerFrame / 8;
 							asbd.mBytesPerPacket = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
 							
-							CFURLRef url = (__bridge CFURLRef)[savePanel URL];
+							CFURLRef url = CFBridgingRetain([savePanel URL]);
 							
 							AudioFileID audioFile;
 							OSStatus res;
-							res = AudioFileCreateWithURL(url, kAudioFileAIFFType, &asbd,
-														 kAudioFileFlags_EraseFile, &audioFile);
+							res = AudioFileCreateWithURL(url, kAudioFileAIFFType, &asbd, kAudioFileFlags_EraseFile, &audioFile);
+							CFRelease(url);
 							checkError(res);
 							
 							UInt32 numBytes = (UInt32)[saveData length];
@@ -967,6 +983,7 @@ return; \
 							dispatch_async(dispatch_get_main_queue(), errBlock);
 							return;
 						}
+						[[NSFileManager defaultManager] removeItemAtURL:[savePanel URL] error:NULL];
 						session.outputURL = [savePanel URL];
 						session.outputFileType = AVFileTypeAppleM4A;
 						session.metadata = metadataInfo;
@@ -1043,9 +1060,9 @@ return; \
 } \
 }
 							AudioStreamBasicDescription asbd = {0};
-							asbd.mSampleRate = exportSettings.outPutMode;
+							asbd.mSampleRate = exportSettings.outPutRate;
 							asbd.mFormatID = kAudioFormatLinearPCM;
-							asbd.mFormatFlags = kAudioFormatFlagIsSignedInteger;
+							asbd.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
 							asbd.mBitsPerChannel = exportSettings.outPutBits;
 							switch (exportSettings.outPutMode) {
 								case MonoOutPut:
@@ -1066,11 +1083,12 @@ return; \
 							asbd.mBytesPerFrame = asbd.mBitsPerChannel * asbd.mChannelsPerFrame / 8;
 							asbd.mBytesPerPacket = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
 							
-							CFURLRef url = (__bridge CFURLRef)[savePanel URL];
+							CFURLRef url = CFBridgingRetain([savePanel URL]);
 							
 							AudioFileID audioFile;
 							OSStatus res;
 							res = AudioFileCreateWithURL(url, kAudioFileWAVEType, &asbd, kAudioFileFlags_EraseFile, &audioFile);
+							CFRelease(url);
 							checkError(res);
 							
 							UInt32 numBytes = (UInt32)[saveData length];
