@@ -166,12 +166,10 @@ end:
 	NSMutableData *saveData = [[NSMutableData alloc] initWithCapacity:MADGetMusicSize(currentMusic)];
 	for (i = 0, x = 0; i < MAXINSTRU; i++)
 	{
-		music->fid[ i].no = i;
+		music->fid[i].no = i;
 		
-		if (music->fid[ i].numSamples > 0 || music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
-		{
+		if (music->fid[i].numSamples > 0 || music->fid[i].name[ 0] != 0)	// Is there something in this instrument?
 			x++;
-		}
 	}
 	
 	music->header->numInstru = x;
@@ -180,8 +178,7 @@ end:
 		aHeader = *music->header;
 		ByteSwapMADSpec(&aHeader);
 		[saveData appendBytes:&aHeader length:sizeof(MADSpec)];
-	}
-	{
+		
 		BOOL compressMAD = NO /*[[NSUserDefaults standardUserDefaults] boolForKey:PPMMadCompression]*/;
 		if (compressMAD) {
 			for (i = 0; i < music->header->numPat ; i++)
@@ -210,26 +207,23 @@ end:
 		}
 	}
 	
-	for (i = 0; i < MAXINSTRU; i++)
-	{
-		if (music->fid[ i].numSamples > 0 || music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
-		{
-			music->fid[ i].no = i;
+	for (i = 0; i < MAXINSTRU; i++) {
+		if (music->fid[i].numSamples > 0 || music->fid[i].name[0] != 0) {	// Is there something in this instrument?
+		
+			music->fid[i].no = i;
 			InstrData instData = music->fid[i];
 			ByteSwapInstrData(&instData);
 			[saveData appendBytes:&instData length:sizeof(InstrData)];
 		}
 	}
 	
-	for (i = 0; i < MAXINSTRU ; i++)
-	{
-		for (x = 0; x < music->fid[i].numSamples; x++)
-		{
+	for (i = 0; i < MAXINSTRU ; i++) {
+		for (x = 0; x < music->fid[i].numSamples; x++) {
 			sData	curData;
 			sData32	copyData;
-			curData = *music->sample[ music->fid[i].firstSample + x];
+			curData = *music->sample[music->fid[i].firstSample + x];
 			
-			inOutCount = sizeof( sData32);
+			inOutCount = sizeof(sData32);
 			ByteSwapsData(&curData);
 			memcpy(&copyData, &curData, inOutCount);
 			copyData.data = 0;
@@ -238,14 +232,12 @@ end:
 			inOutCount = music->sample[ music->fid[i].firstSample + x]->size;
 			Ptr dataCopy = malloc(inOutCount);
 			memcpy(dataCopy, curData.data, inOutCount);
-			if (curData.amp == 16)
-			{
-				__block short	*shortPtr = (short*) dataCopy;
+			if (curData.amp == 16) {
+				short *shortPtr = (short*)dataCopy;
 				
 				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
 					PPBE16(&shortPtr[y]);
 				});
-				
 			}
 			
 			[saveData appendBytes:dataCopy length:inOutCount];
@@ -260,7 +252,7 @@ end:
 	{
 		if (music->header->globalEffect[i])
 		{
-			inOutCount = sizeof( FXSets);
+			inOutCount = sizeof(FXSets);
 			__block FXSets aSet = music->sets[alpha];
 			PPBE16(&aSet.id);
 			PPBE16(&aSet.noArg);
@@ -275,12 +267,9 @@ end:
 		}
 	}
 	
-	for (i = 0; i < music->header->numChn ; i++)	// Channel Effects
-	{
-		for (x = 0; x < 4; x++)
-		{
-			if (music->header->chanEffect[i][x])
-			{
+	for (i = 0; i < music->header->numChn ; i++) {	// Channel Effects
+		for (x = 0; x < 4; x++) {
+			if (music->header->chanEffect[i][x]) {
 				inOutCount = sizeof(FXSets);
 				__block FXSets aSet = music->sets[alpha];
 				PPBE16(&aSet.id);

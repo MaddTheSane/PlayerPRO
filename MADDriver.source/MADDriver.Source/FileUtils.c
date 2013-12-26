@@ -106,9 +106,9 @@ OSErr iSeekCur(long size, FILE* iFileRefI)
 	return fseek(iFileRefI, size, SEEK_CUR);
 }
 
-OSErr iWrite(long size, const void *dest, FILE* iFileRefI)
+OSErr iWrite(long size, const void *src, FILE* iFileRefI)
 {
-	fwrite(dest, size, 1, iFileRefI);
+	fwrite(src, size, 1, iFileRefI);
 	
 	return noErr;
 }

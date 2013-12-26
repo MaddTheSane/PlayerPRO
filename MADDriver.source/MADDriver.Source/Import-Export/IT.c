@@ -38,8 +38,8 @@
 #define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
 #endif
 
-static	Byte	LastAEffect[ MAXTRACK], LastJEffect[ MAXTRACK];
-static	int		old_effect;
+static Byte		LastAEffect[MAXTRACK], LastJEffect[MAXTRACK];
+static int		old_effect;
 
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
@@ -53,9 +53,9 @@ typedef struct ITPACK {
 } ITPACK;
 
 
-static inline Byte _mm_read_UBYTE( Ptr	*samplePtr)
+static inline Byte _mm_read_UBYTE(char **samplePtr)
 {
-	Byte val = *((Byte*) *samplePtr);
+	Byte val = *((Byte*)*samplePtr);
 	
 	*samplePtr += 1;
 	
@@ -63,10 +63,10 @@ static inline Byte _mm_read_UBYTE( Ptr	*samplePtr)
 }
 
 //TODO: byteswapping?
-static inline unsigned short ReadUS( Ptr *samplePtr)
+static inline unsigned short ReadUS(char **samplePtr)
 {
 	unsigned short result=_mm_read_UBYTE(samplePtr);
-	result|=((unsigned short)_mm_read_UBYTE(samplePtr))<<8;
+	result |= ((unsigned short)_mm_read_UBYTE(samplePtr)) << 8;
 	
 	return result;
 }
@@ -236,16 +236,16 @@ static uintptr_t read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,uns
 
 static OSErr DecompressSample( short bits, Ptr reader, size_t length, Ptr destPtr)		// sloader.c
 {
-	size_t			stodo/*, t, u*/;
-	size_t			result,c_block=0;	/* compression bytes until next block */
+	size_t			stodo;
+	size_t			result, c_block=0;	/* compression bytes until next block */
 	ITPACK			status;
 	unsigned short	incnt;
 	
-	if (bits == 16) length/=2;
+	if (bits == 16)
+		length /= 2;
 	
-	while( length)
-	{
-		stodo=(length<SLBUFSIZE)?length:SLBUFSIZE;
+	while(length) {
+		stodo = (length < SLBUFSIZE) ? length : SLBUFSIZE;
 		
 		if (!c_block)
 		{
@@ -260,26 +260,22 @@ static OSErr DecompressSample( short bits, Ptr reader, size_t length, Ptr destPt
 			else c_block = 0x8000;
 		}
 		
-		if (bits == 16)
-		{
-			if(!(result=read_itcompr16( &status, &reader, (short*) destPtr, stodo, &incnt)))
+		if (bits == 16) {
+			if(!(result=read_itcompr16(&status, &reader, (short*)destPtr, stodo, &incnt)))
 				return 1;
-		}
-		else
-		{
+		} else {
 			if(!(result=read_itcompr8( &status, &reader, (Byte*) destPtr, stodo, &incnt)))
 				return 1;
 		}
 		
-		if(result!=stodo)
+		if (result!=stodo)
 		{
 			//_mm_errno=MMERR_ITPACK_INVALID_DATA;
 			
 			return 1;
 		}
 		
-		if (bits == 16)
-		{
+		if (bits == 16) {
 			result *= 2;
 		}
 		length -= stodo;
@@ -292,25 +288,21 @@ static OSErr DecompressSample( short bits, Ptr reader, size_t length, Ptr destPt
 }
 
 
-static inline Boolean ITcompMem(char *a, char *b, long s)
+static inline Boolean ITcompMem(const void *a, const void *b, size_t s)
 {
-	long i;
-	
-	for (i = 0; i < s; i++) {
-		if (a[i] != b[i])
-			return false;
-	}
-	
-	return true;
+	if (memcmp(a, b, s) == 0)
+		return true;
+	else
+		return false;
 }
 
-static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short channel)
+static void ConvertITEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short channel)
 {
-	Byte		LoB1 = LOW( B1);
-	Byte		HiB1 = HI( B1);
-	Byte		B0X40 = B0 + 0x40;
+	Byte LoB1 = LOW(B1);
+	Byte HiB1 = HI(B1);
+	Byte B0X40 = B0 + 0x40;
 	
-	switch( B0X40)
+	switch(B0X40)
 	{
 			// Speed
 		case 'A':
@@ -334,8 +326,8 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 			break;
 			
 		case 'D':
-			if (LoB1 == 0 || HiB1 == 0)		// Slide volume
-			{
+			if (LoB1 == 0 || HiB1 == 0) {	// Slide volume
+			
 				*Cmd = slidevolE;		*Arg = B1;
 				
 				/*	if (*Arg == 0)				// Use last command
@@ -343,15 +335,11 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 				 *Arg = LastAEffect[ channel];
 				 }
 				 else LastAEffect[ channel] = *Arg;*/
-			}
-			else if (HiB1 == 0x0F)		// Fine Slide volume DOWN
-			{
+			} else if (HiB1 == 0x0F) {		// Fine Slide volume DOWN
 				*Cmd = extendedE;
 				*Arg = 11 << 4;
 				*Arg += LoB1;
-			}
-			else if (LoB1 == 0x0F)		// Fine Slide volume UP
-			{
+			} else if (LoB1 == 0x0F) {		// Fine Slide volume UP
 				*Cmd = extendedE;
 				*Arg = 10 << 4;
 				*Arg += HiB1;
@@ -359,131 +347,274 @@ static void ConvertITEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 			break;
 			
 		case 'E':
-			if (HiB1 == 0x0F)		// FineSlide DOWN
-			{
+			if (HiB1 == 0x0F) {				// FineSlide DOWN
 				*Cmd = extendedE;
-				*Arg = 2 << 4;		//not supported
+				*Arg = 2 << 4;				//not supported
 				*Arg += LoB1;
-			}
-			else if (HiB1 == 0x0E)	// ExtraFineSlide DOWN
-			{
-				*Cmd = 0;			*Arg = 0;		//not supported
-			}
-			else					// Slide DOWN
-			{
-				*Cmd = upslideE;		*Arg = B1;
+			} else if (HiB1 == 0x0E) {		// ExtraFineSlide DOWN
+				*Cmd = 0;
+				*Arg = 0;					//not supported
+			} else {						// Slide DOWN
+				*Cmd = upslideE;
+				*Arg = B1;
 			}
 			break;
 			
 		case 'F':
-			if (HiB1 == 0x0F)		// FineSlide UP
-			{
+			if (HiB1 == 0x0F) {				// FineSlide UP
 				*Cmd = extendedE;
-				*Arg = 1 << 4;		//not supported
+				*Arg = 1 << 4;				//not supported
 				*Arg += LoB1;
-			}
-			else if (HiB1 == 0x0E)	// ExtraFineSlide UP
-			{
-				*Cmd = 0;			*Arg = 0;		//not supported
-			}
-			else					// Slide UP
-			{
-				*Cmd = downslideE;		*Arg = B1;
+			} else if (HiB1 == 0x0E) {		// ExtraFineSlide UP
+				*Cmd = 0;
+				*Arg = 0;					//not supported
+			} else {						// Slide UP
+				*Cmd = downslideE;
+				*Arg = B1;
 			}
 			break;
 			
-		case 'G':	*Cmd = portamentoE;		*Arg = B1;	break;
-		case 'H':	*Cmd = vibratoE;		*Arg = B1;	break;
+		case 'G':
+			*Cmd = portamentoE;
+			*Arg = B1;
+			break;
+			
+		case 'H':
+			*Cmd = vibratoE;
+			*Arg = B1;
+			break;
 			
 		case 'J':
 			*Cmd = arpeggioE;
 			*Arg = B1;
 			
-			if (*Arg == 0)				// Use last command
-			{
-				*Arg = LastJEffect[ channel];
-			}
-			else LastJEffect[ channel] = *Arg;
+			if (*Arg == 0) {				// Use last command
+				*Arg = LastJEffect[channel];
+			} else
+				LastJEffect[channel] = *Arg;
 			
 			break;
-		case 'K':	*Cmd = vibratoslideE;	*Arg = B1;	break;
-		case 'L':	*Cmd = portaslideE;		*Arg = B1;	break;
-		case 'O':	*Cmd = offsetE;			*Arg = B1;	break;
+			
+		case 'K':
+			*Cmd = vibratoslideE;
+			*Arg = B1;
+			break;
+			
+		case 'L':
+			*Cmd = portaslideE;
+			*Arg = B1;
+			break;
+			
+		case 'O':
+			*Cmd = offsetE;
+			*Arg = B1;
+			break;
 			
 		case 'S':		// Special Effects
-			switch( HiB1)
+			switch(HiB1)
 		{
-			case 2:		*Cmd = extendedE;	*Arg = 5 << 4;		*Arg += LoB1;		break;	// FineTune
-			case 3:		*Cmd = extendedE;	*Arg = 4 << 4;		*Arg += LoB1;		break;	// Set Vibrato WaveForm
-			case 4:		*Cmd = extendedE;	*Arg = 7 << 4;		*Arg += LoB1;		break;	// Set Tremolo WaveForm
-			case 8:		*Cmd = extendedE;	*Arg = 8 << 4;		*Arg += LoB1;		break;	// Set Panning
-			case 0xB:	*Cmd = extendedE;	*Arg = 6 << 4;		*Arg += LoB1;		break;	// Loop pattern
-			case 0xC:	*Cmd = extendedE;	*Arg = 12 << 4;		*Arg += LoB1;		break;	// Cut sample
-			case 0xD:	*Cmd = extendedE;	*Arg = 13 << 4;		*Arg += LoB1;		break;	// Delay sample
-			case 0xE:	*Cmd = extendedE;	*Arg = 14 << 4;		*Arg += LoB1;		break;	// Delay pattern
-			default:	*Cmd = 0;			*Arg = 0;								break;
+			case 2:		// FineTune
+				*Cmd = extendedE;
+				*Arg = 5 << 4;
+				*Arg += LoB1;
+				break;
+				
+			case 3:		// Set Vibrato WaveForm
+				*Cmd = extendedE;
+				*Arg = 4 << 4;
+				*Arg += LoB1;
+				break;
+				
+			case 4:		// Set Tremolo WaveForm
+				*Cmd = extendedE;
+				*Arg = 7 << 4;
+				*Arg += LoB1;
+				break;
+				
+			case 8:		// Set Panning
+				*Cmd = extendedE;
+				*Arg = 8 << 4;
+				*Arg += LoB1;
+				break;
+				
+			case 0xB:	// Loop pattern
+				*Cmd = extendedE;
+				*Arg = 6 << 4;
+				*Arg += LoB1;
+				break;
+				
+			case 0xC:	// Cut sample
+				*Cmd = extendedE;
+				*Arg = 12 << 4;
+				*Arg += LoB1;
+				break;
+				
+			case 0xD:	// Delay sample
+				*Cmd = extendedE;
+				*Arg = 13 << 4;
+				*Arg += LoB1;
+				break;
+				
+			case 0xE:	// Delay pattern
+				*Cmd = extendedE;
+				*Arg = 14 << 4;
+				*Arg += LoB1;
+				break;
+				
+			default:
+				*Cmd = 0;
+				*Arg = 0;
+				break;
 		}
 			break;
 			
 		case 'X':
-			if(old_effect & 1)
-			{
-				if (B1 <= 128)
-				{
+			if(old_effect & 1) {
+				if (B1 <= 128) {
 					*Cmd = panningE;
-					if (B1 == 128) *Arg = 255;
-					else *Arg = B1<<1;
+					if (B1 == 128)
+						*Arg = 255;
+					else
+						*Arg = B1<<1;
 				}
-			}
-			else
-			{
+			} else {
 				*Cmd = panningE;
 				*Arg = B1;
 			}
 			break;
-		default:	*Cmd = 0;			*Arg = 0;		break;
+			
+		default:
+			*Cmd = 0;
+			*Arg = 0;
+			break;
 	}
 }
 
 #if 0
-void ConvertMADEffect( Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
+void ConvertMADEffect(Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 {
 	*B0 = 0;
 	*B1 = 0;
 	
-	switch( Cmd)
+	switch(Cmd)
 	{
-		case speedE:		*B0 = 'A' - 0x40;	*B1 = Arg;	break;
-		case fastskipE:		*B0 = 'B' - 0x40;	*B1 = Arg;	break;
-		case skipE:		*B0 = 'C' - 0x40;	*B1 = Arg;	break;
-		case slidevolE:		*B0 = 'D' - 0x40;	*B1 = Arg;	break;
-		case upslideE:		*B0 = 'E' - 0x40;	*B1 = Arg;	break;
-		case downslideE:	*B0 = 'F' - 0x40;	*B1 = Arg;	break;
-		case portamentoE:	*B0 = 'G' - 0x40;	*B1 = Arg;	break;
-		case vibratoE:		*B0 = 'H' - 0x40;	*B1 = Arg;	break;
+		case speedE:
+			*B0 = 'A' - 0x40;
+			*B1 = Arg;
+			break;
 			
-		case arpeggioE:		*B0 = 'J' - 0x40;	*B1 = Arg;	break;
-		case vibratoslideE:	*B0 = 'K' - 0x40;	*B1 = Arg;	break;
-		case portaslideE:	*B0 = 'L' - 0x40;	*B1 = Arg;	break;
-		case offsetE:		*B0 = 'O' - 0x40;	*B1 = Arg;	break;
+		case fastskipE:
+			*B0 = 'B' - 0x40;
+			*B1 = Arg;
+			break;
+			
+		case skipE:
+			*B0 = 'C' - 0x40;
+			*B1 = Arg;
+			break;
+			
+		case slidevolE:
+			*B0 = 'D' - 0x40;
+			*B1 = Arg;
+			break;
+			
+		case upslideE:
+			*B0 = 'E' - 0x40;
+			*B1 = Arg;
+			break;
+			
+		case downslideE:
+			*B0 = 'F' - 0x40;
+			*B1 = Arg;
+			break;
+			
+		case portamentoE:
+			*B0 = 'G' - 0x40;
+			*B1 = Arg;
+			break;
+			
+		case vibratoE:
+			*B0 = 'H' - 0x40;
+			*B1 = Arg;
+			break;
+			
+		case arpeggioE:
+			*B0 = 'J' - 0x40;
+			*B1 = Arg;
+			break;
+			
+		case vibratoslideE:
+			*B0 = 'K' - 0x40;
+			*B1 = Arg;
+			break;
+			
+		case portaslideE:
+			*B0 = 'L' - 0x40;
+			*B1 = Arg;
+			break;
+			
+		case offsetE:
+			*B0 = 'O' - 0x40;
+			*B1 = Arg;
+			break;
 			
 		case extendedE:
-			switch( (Arg & 0xF0) >> 4)
+			switch((Arg & 0xF0) >> 4)
 		{
-			case 1:	*B0 = 'F' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
-			case 2:	*B0 = 'E' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
+			case 1:
+				*B0 = 'F' - 0x40;
+				*B1 = 0xf0 + (Arg & 0x0F);
+				break;
 				
-			case 5:	*B0 = 'S' - 0x40;	*B1 = 0x20 + (Arg & 0x0F);		break;
+			case 2:
+				*B0 = 'E' - 0x40;
+				*B1 = 0xf0 + (Arg & 0x0F);
+				break;
 				
-			case 4:	*B0 = 'S' - 0x40;	*B1 = 0x30 + (Arg & 0x0F);		break;
-			case 7:	*B0 = 'S' - 0x40;	*B1 = 0x40 + (Arg & 0x0F);		break;
-			case 6:	*B0 = 'S' - 0x40;	*B1 = 0xb0 + (Arg & 0x0F);		break;
-			case 12:	*B0 = 'S' - 0x40;	*B1 = 0xc0 + (Arg & 0x0F);		break;
-			case 13:	*B0 = 'S' - 0x40;	*B1 = 0xd0 + (Arg & 0x0F);		break;
-			case 14:	*B0 = 'S' - 0x40;	*B1 = 0xe0 + (Arg & 0x0F);		break;
+			case 5:
+				*B0 = 'S' - 0x40;
+				*B1 = 0x20 + (Arg & 0x0F);
+				break;
 				
-			case 11:	*B0 = 'D' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
-			case 10:	*B0 = 'D' - 0x40;	*B1 = 0x0f + ((Arg & 0x0F)<<4);	break;
+			case 4:
+				*B0 = 'S' - 0x40;
+				*B1 = 0x30 + (Arg & 0x0F);
+				break;
+				
+			case 7:
+				*B0 = 'S' - 0x40;
+				*B1 = 0x40 + (Arg & 0x0F);
+				break;
+				
+			case 6:
+				*B0 = 'S' - 0x40;
+				*B1 = 0xb0 + (Arg & 0x0F);
+				break;
+				
+			case 12:
+				*B0 = 'S' - 0x40;
+				*B1 = 0xc0 + (Arg & 0x0F);
+				break;
+				
+			case 13:
+				*B0 = 'S' - 0x40;
+				*B1 = 0xd0 + (Arg & 0x0F);
+				break;
+				
+			case 14:
+				*B0 = 'S' - 0x40;
+				*B1 = 0xe0 + (Arg & 0x0F);
+				break;
+				
+			case 11:
+				*B0 = 'D' - 0x40;
+				*B1 = 0xf0 + (Arg & 0x0F);
+				break;
+				
+			case 10:
+				*B0 = 'D' - 0x40;
+				*B1 = 0x0f + ((Arg & 0x0F)<<4);
+				break;
 		}
 			break;
 	}
@@ -501,11 +632,11 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	Boolean				useLinear;
 	
 	/**** Variables pour le MAD ****/
-	Cmd				*aCmd;
+	Cmd					*aCmd;
 	
 	/**** Variables pour le IT ****/
 	
-	ITForm			ITinfo;
+	ITForm				ITinfo;
 	/********************************/
 	
 	ITinfo.orders		= NULL;
@@ -552,19 +683,20 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	theITCopy += ITinfo.orderNum;
 	
 	/**** Ins Num *****/
-	ITinfo.parapins = (SInt32 *) malloc( ITinfo.insNum * 4L);
-	if (ITinfo.parapins == NULL) return MADNeedMemory;
-	memcpy( ITinfo.parapins, theITCopy, ITinfo.insNum * 4L);
+	ITinfo.parapins = (SInt32 *)malloc(ITinfo.insNum * 4L);
+	if (ITinfo.parapins == NULL)
+		return MADNeedMemory;
+	memcpy(ITinfo.parapins, theITCopy, ITinfo.insNum * 4L);
 	theITCopy += ITinfo.insNum * 4L;
 	for (i = 0; i < ITinfo.insNum; i++)
 		PPLE32(&ITinfo.parapins[i]);
 	//if (ITinfo.insNum > 0) DebugStr("\pInsNum");
 	
 	/**** Samp Num *****/
-	ITinfo.parapsamp = (SInt32 *) malloc(ITinfo.smpNum * 4L);
+	ITinfo.parapsamp = (SInt32 *)malloc(ITinfo.smpNum * 4L);
 	if (ITinfo.parapsamp == NULL)
 		return MADNeedMemory;
-	memcpy( ITinfo.parapsamp, theITCopy, ITinfo.smpNum * 4L);
+	memcpy(ITinfo.parapsamp, theITCopy, ITinfo.smpNum * 4L);
 	theITCopy += ITinfo.smpNum * 4L;
 	for (i = 0; i < ITinfo.smpNum; i++)
 		PPLE32(&ITinfo.parapsamp[i]);
@@ -607,12 +739,11 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	//if (ITinfo.insNum > 64) ITinfo.insNum = 64;
 	ITinfo.sampdata = (ITSampForm *) malloc( sizeof(ITSampForm) * ITinfo.smpNum);
 	if (ITinfo.sampdata == NULL) return MADNeedMemory;
-	for (i = 0; i < ITinfo.smpNum; i++)
-	{
+	for (i = 0; i < ITinfo.smpNum; i++) {
 		theITCopy = (Byte*) theIT;
 		theITCopy += ITinfo.parapsamp[i];
 		
-		memcpy( &ITinfo.sampdata[i], theITCopy, sizeof(ITSampForm));
+		memcpy(&ITinfo.sampdata[i], theITCopy, sizeof(ITSampForm));
 		
 		if (!ITcompMem((Ptr) &ITinfo.sampdata[i].ID, "IMPS", 4)) {
 			free(ITinfo.orders);
@@ -645,7 +776,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	// ******** Le IT a été lu et analysé ***********
 	// ******** Copie des informations dans le MAD ***
 	
-	theMAD->header = (MADSpec*) calloc(sizeof(MADSpec), 1);
+	theMAD->header = (MADSpec*)calloc(sizeof(MADSpec), 1);
 	if (theMAD->header == NULL)
 		return MADNeedMemory;
 	
@@ -662,22 +793,22 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	theMAD->header->XMLinear		= useLinear;
 	
 	//for(i=0; i<256; i++) theMAD->header->oPointers[ i] = 0;
-	for(i=0; i<ITinfo.orderNum; i++) {
-		theMAD->header->oPointers[ i] = ITinfo.orders[i];
+	for(i = 0; i < ITinfo.orderNum; i++) {
+		theMAD->header->oPointers[i] = ITinfo.orders[i];
 		
-		if (theMAD->header->oPointers[ i] < 0 || theMAD->header->oPointers[ i] >= ITinfo.patNum)
-			theMAD->header->oPointers[ i] = 0;
+		if (theMAD->header->oPointers[i] < 0 || theMAD->header->oPointers[i] >= ITinfo.patNum)
+			theMAD->header->oPointers[i] = 0;
 	}
 	
 	for (i = 0; i < MAXTRACK; i++) {
 		if (i < 64) {
-			theMAD->header->chanPan[ i] = ITinfo.chanPan[ i];
-			theMAD->header->chanVol[ i] = ITinfo.chanVol[ i];
+			theMAD->header->chanPan[i] = ITinfo.chanPan[i];
+			theMAD->header->chanVol[i] = ITinfo.chanVol[i];
 			
-			if (theMAD->header->chanPan[ i] < 0 || theMAD->header->chanPan[ i] > 64)
-				theMAD->header->chanPan[ i] = 32;
-			if (theMAD->header->chanVol[ i] < 0 || theMAD->header->chanVol[ i] > 64)
-				theMAD->header->chanVol[ i] = 64;
+			if (theMAD->header->chanPan[i] < 0 || theMAD->header->chanPan[i] > 64)
+				theMAD->header->chanPan[i] = 32;
+			if (theMAD->header->chanVol[i] < 0 || theMAD->header->chanVol[i] > 64)
+				theMAD->header->chanVol[i] = 64;
 		} else {
 			if (i % 2 == 0)
 				theMAD->header->chanPan[i] = MAX_PANNING/4;
@@ -699,11 +830,11 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	// ***** INSTRUMENTS *****
 	// ********************
 	
-	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
+	theMAD->fid = (InstrData*)calloc(sizeof(InstrData), MAXINSTRU);
 	if (!theMAD->fid)
 		return MADNeedMemory;
 	
-	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
+	theMAD->sample = (sData**)calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
 	if (!theMAD->sample)
 		return MADNeedMemory;
 	
@@ -717,15 +848,13 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 		theMAD->fid[i].numSamples	= 0;
 	}
 	
-	if (ITinfo.flags & 4)		// USE INSTRUMENTS
-	{
+	if (ITinfo.flags & 4) {		// USE INSTRUMENTS
 		short minSamp;
 		
-		for(i=0; i<ITinfo.insNum; i++)
-		{
-			InstrData		*curIns = &theMAD->fid[ i];
+		for (i = 0; i < ITinfo.insNum; i++) {
+			InstrData *curIns	= &theMAD->fid[i];
 			
-			curIns->type	= 0;
+			curIns->type		= 0;
 			
 			{
 				sData	*curData;
@@ -734,36 +863,33 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 				// Instrument conversion
 				
 				curIns->numSamples	= 0;	//ITinfo.insdata[ i].NoS;
-				PPLE16( &ITinfo.insdata[ i].FadeOut);
+				PPLE16(&ITinfo.insdata[i].FadeOut);
 				
-				for (x = 0; x < 26; x++) curIns->name[ x] = ITinfo.insdata[ i].INSName[ x];
+				for (x = 0; x < 26; x++)
+					curIns->name[x] = ITinfo.insdata[i].INSName[x];
 				
-				for (x = 0; x < 96; x++) curIns->what[ x] = 0;
+				memset(curIns->what, 0, sizeof(curIns->what));
 				
 				minSamp = 200;
-				for (x = 0; x < 120; x++)
-				{
-					if (ITinfo.insdata[ i].keyMap[ x].samp)
-					{
-						if (ITinfo.insdata[ i].keyMap[ x].samp-1 < minSamp) minSamp = ITinfo.insdata[ i].keyMap[ x].samp-1;
+				for (x = 0; x < 120; x++) {
+					if (ITinfo.insdata[i].keyMap[x].samp) {
+						if (ITinfo.insdata[i].keyMap[x].samp - 1 < minSamp)
+							minSamp = ITinfo.insdata[i].keyMap[x].samp - 1;
 					}
 				}
 				
-				for (x = 12; x < 96 + 12; x++)
-				{
-					if (ITinfo.insdata[ i].keyMap[ x].samp)
-					{
-						if (x >= 12 && x < 96+12)
-						{
-							curIns->what[ x-12] = ITinfo.insdata[ i].keyMap[ x].samp-1 - minSamp;
-							
-							/*	if (ITinfo.insdata[ i].keyMap[ x].note != x)
-							 {
-							 Str32	str;
-							 
-							 NumToString( ITinfo.insdata[ i].keyMap[ x].note, str);
-							 DebugStr( str);
-							 }*/
+				for (x = 12; x < 96 + 12; x++) {
+					if (ITinfo.insdata[i].keyMap[x].samp) {
+						if (x >= 12 && x < 96+12) {
+							curIns->what[x-12] = ITinfo.insdata[i].keyMap[x].samp - 1 - minSamp;
+#if 0
+							if (ITinfo.insdata[ i].keyMap[ x].note != x) {
+								Str32	str;
+								
+								NumToString( ITinfo.insdata[ i].keyMap[ x].note, str);
+								DebugStr( str);
+							}
+#endif
 						}
 					}
 				}
@@ -772,51 +898,44 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 				
 				zz = 0;
 				
-				for (zz = 0; zz < 120; zz++)
-				{
+				for (zz = 0; zz < 120; zz++) {
 					//CHECK ALL PREVIOUS SAMPLES !!!!
 					prevSamp = false;
-					for (bb = 0; bb < zz; bb++)
-					{
+					for (bb = 0; bb < zz; bb++) {
 						if (ITinfo.insdata[ i].keyMap[ zz].samp-1 == ITinfo.insdata[ i].keyMap[ bb].samp-1)
-						{
 							prevSamp = true;
-						}
 					}
 					
-					if (prevSamp == false && ITinfo.insdata[ i].keyMap[ zz].samp != 0)
-					{
+					if (prevSamp == false && ITinfo.insdata[i].keyMap[zz].samp != 0) {
 						//Str32 str;
 						
-						prevSamp = ITinfo.insdata[ i].keyMap[ zz].samp-1;
-						if (prevSamp >= 0 && prevSamp < ITinfo.smpNum)
-						{
-							curData = theMAD->sample[ i*MAXSAMPLE + curIns->numSamples] = (sData*) calloc( sizeof( sData), 1);
-							if (curData == NULL) return MADNeedMemory;
+						prevSamp = ITinfo.insdata[i].keyMap[zz].samp-1;
+						if (prevSamp >= 0 && prevSamp < ITinfo.smpNum) {
+							curData = theMAD->sample[i * MAXSAMPLE + curIns->numSamples] = (sData*)calloc(sizeof(sData), 1);
+							if (curData == NULL)
+								return MADNeedMemory;
 							
-							curData->size			= ITinfo.sampdata[ prevSamp].length;
+							curData->size			= ITinfo.sampdata[prevSamp].length;
 							
-							if (ITinfo.sampdata[prevSamp].Flag&16)
-							{
-								curData->loopBeg 	= ITinfo.sampdata[ prevSamp].loopBegin;
-								curData->loopSize	= ITinfo.sampdata[ prevSamp].loopEnd - ITinfo.sampdata[ prevSamp].loopBegin;
-							}
-							else
-							{
+							if (ITinfo.sampdata[prevSamp].Flag&16) {
+								curData->loopBeg 	= ITinfo.sampdata[prevSamp].loopBegin;
+								curData->loopSize	= ITinfo.sampdata[prevSamp].loopEnd - ITinfo.sampdata[prevSamp].loopBegin;
+							} else {
 								curData->loopBeg = 0;
 								curData->loopSize = 0;
 							}
 							
-							if (ITinfo.sampdata[prevSamp].Flag&64) curData->loopType = ePingPongLoop;
-							else curData->loopType = eClassicLoop;
+							if (ITinfo.sampdata[prevSamp].Flag&64)
+								curData->loopType = ePingPongLoop;
+							else
+								curData->loopType = eClassicLoop;
 							
-							curData->vol			= ITinfo.sampdata[ prevSamp].GvL;
-							curData->c2spd			= ITinfo.sampdata[ prevSamp].C5Speed / 2;
+							curData->vol			= ITinfo.sampdata[prevSamp].GvL;
+							curData->c2spd			= ITinfo.sampdata[prevSamp].C5Speed / 2;
 							curData->loopType		= 0;
 							curData->amp			= 8;
 							
-							if (ITinfo.sampdata[prevSamp].Flag&2)
-							{
+							if (ITinfo.sampdata[prevSamp].Flag&2) {
 								curData->amp		= 16;
 								
 								curData->size		*= 2;
@@ -837,66 +956,58 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 							//	NumToString( ITinfo.insdata[ i].keyMap[ zz].note, str);
 							//	DebugStr( str);
 							
-							for (z = 0; z < 26; z++) curData->name[ z] = ITinfo.sampdata[ prevSamp].SampName[ z];
+							for (z = 0; z < 26; z++)
+								curData->name[z] = ITinfo.sampdata[prevSamp].SampName[z];
 							
-							curData->data 		= (Ptr)malloc( curData->size);
-							if (curData->data == NULL)
-							{
-								curData->loopBeg = 0;
-								curData->loopSize = 0;
-								curData->size = 0;
-								curData->data 		= (Ptr)malloc( curData->size);
-							}
-							else
-							{
-								if (ITinfo.sampdata[prevSamp].Flag&8)	// Compressed Sample
-								{
+							curData->data 		= (Ptr)malloc(curData->size);
+							if (curData->data == NULL) {
+								curData->loopBeg	= 0;
+								curData->loopSize	= 0;
+								curData->size		= 0;
+								curData->data 		= (Ptr)malloc(curData->size);
+							} else {
+								if (ITinfo.sampdata[prevSamp].Flag&8) {	// Compressed Sample
 									OSErr	err;
 									
-									err = DecompressSample( curData->amp, theInstrument[ prevSamp], curData->size, curData->data);
+									err = DecompressSample(curData->amp, theInstrument[ prevSamp], curData->size, curData->data);
 									
-									if (err)
-									{
-										SInt32 temp;
+									if (err) {
+										size_t temp;
 										
-										for (temp = 0; temp < curData->size; temp++) *(curData->data + temp) = 0;
+										for (temp = 0; temp < curData->size; temp++)
+											*(curData->data + temp) = 0;
 									}
-								}
-								else memcpy( curData->data, theInstrument[ prevSamp], curData->size);
+								} else
+									memcpy(curData->data, theInstrument[prevSamp], curData->size);
 								
-								if (!(ITinfo.sampdata[ prevSamp].Convert & 1) && curData->amp == 8)
-								{
-									SInt32 temp;
+								if (!(ITinfo.sampdata[prevSamp].Convert & 1) && curData->amp == 8) {
+									size_t temp;
 									
-									for (temp = 0; temp < curData->size; temp++) *(curData->data + temp) -= 0x80;
+									for (temp = 0; temp < curData->size; temp++)
+										*(curData->data + temp) -= 0x80;
 								}
 								
-								if (curData->amp == 16 && !(ITinfo.sampdata[prevSamp].Flag&8))
-								{
-									unsigned short 	*tempShort = (unsigned short*) curData->data;
-									SInt32 						temp;
+								if (curData->amp == 16 && !(ITinfo.sampdata[prevSamp].Flag&8)) {
+									unsigned short *tempShort = (unsigned short*)curData->data;
+									size_t temp;
 									
-									for (temp = 0; temp < curData->size/2; temp++)
-									{
+									for (temp = 0; temp < curData->size/2; temp++) {
 										PPLE16(  &( (tempShort[ temp])));
 										
-										if (!(ITinfo.sampdata[ prevSamp].Convert & 1)) *(tempShort + temp) -= 0x8000;
+										if (!(ITinfo.sampdata[prevSamp].Convert & 1))
+											*(tempShort + temp) -= 0x8000;
 									}
 								}
 								
-								if ((ITinfo.sampdata[ prevSamp].Convert & 2))
-								{
+								if ((ITinfo.sampdata[ prevSamp].Convert & 2)) {
 									//Str255 str;
 									//NumToString( i, str);
 									//DebugStr( str);
 								}
 								
-								if ((ITinfo.sampdata[ prevSamp].Convert & 4))		// Delta values -> Real
-								{
-									if (curData->amp == 16)
-									{
-										short			*tt;
-										//SInt32			tL;
+								if ((ITinfo.sampdata[ prevSamp].Convert & 4)) {		// Delta values -> Real
+									if (curData->amp == 16) {
+										short *tt;
 										
 										tt = (short*) curData->data;
 										
@@ -906,35 +1017,32 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 											SInt32	xL;
 											
 											oldV = 0;
-											for (xL = 0; xL < curData->size/2; xL++)
-											{
-												newV = tt[ xL] + oldV;
+											for (xL = 0; xL < curData->size/2; xL++) {
+												newV = tt[xL] + oldV;
 												oldV = newV;
-												if (xL  % 16383 == 0) oldV = 0;
-												tt[ xL] = newV;
+												if (xL  % 16383 == 0)
+													oldV = 0;
+												tt[xL] = newV;
 												
 											}
 										}
-									}
-									else
-									{
+									} else {
 										/* Delta to Real */
 										SInt32	oldV, newV;
 										SInt32	xL;
 										
 										oldV = 0;
-										for (xL = 0; xL < curData->size; xL++)
-										{
+										for (xL = 0; xL < curData->size; xL++) {
 											newV = curData->data[ xL] + oldV;
 											oldV = newV;
-											if (xL  % (32768) == 0) oldV = 0;
+											if (xL  % (32768) == 0)
+												oldV = 0;
 											curData->data[ xL] = newV;
 										}
 									}
 								}
 								
-								if ((ITinfo.sampdata[ prevSamp].Convert & 8))
-								{
+								if ((ITinfo.sampdata[ prevSamp].Convert & 8)) {
 									//Str255 str;
 									//NumToString( i, str);
 									//DebugStr( str);
@@ -944,57 +1052,44 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 						}
 					}
 				}
-				/*
-				 if (noSamp != curIns->numSamples)
-				 {
-				 Str255 str;
-				 
-				 NumToString( noSamp, str);		DebugStr( str);
-				 }*/
 			}
 		}
-	}
-	else										// USE SAMPLES AS INSTRUMENTS
-	{
-		for(i=0; i<ITinfo.smpNum; i++)
-		{
-			InstrData		*curIns = &theMAD->fid[ i];
-			
+	} else {										// USE SAMPLES AS INSTRUMENTS
+		for(i=0; i<ITinfo.smpNum; i++) {
+			InstrData *curIns = &theMAD->fid[ i];
 			curIns->type	= 0;
 			
-			if (theInstrument[ i] != NULL)
-			{
+			if (theInstrument[i] != NULL) {
 				sData	*curData;
 				
 				curIns->numSamples	= 1;
-				curIns->volFade			= DEFAULT_VOLFADE;
+				curIns->volFade		= DEFAULT_VOLFADE;
 				
-				curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) calloc( sizeof( sData), 1);
-				if (curData == NULL) return MADNeedMemory;
+				curData = theMAD->sample[i * MAXSAMPLE + 0] = (sData*)calloc(sizeof(sData), 1);
+				if (curData == NULL)
+					return MADNeedMemory;
 				
-				curData->size			= ITinfo.sampdata[i].length;
+				curData->size = ITinfo.sampdata[i].length;
 				
 				
-				if (ITinfo.sampdata[i].Flag&16)
-				{
+				if (ITinfo.sampdata[i].Flag&16) {
 					curData->loopBeg 	= ITinfo.sampdata[i].loopBegin;
 					curData->loopSize	= ITinfo.sampdata[i].loopEnd - ITinfo.sampdata[i].loopBegin;
-				}
-				else
-				{
+				} else {
 					curData->loopBeg = 0;
 					curData->loopSize = 0;
 				}
 				
-				if (ITinfo.sampdata[i].Flag&64) curData->loopType = ePingPongLoop;
-				else curData->loopType = eClassicLoop;
+				if (ITinfo.sampdata[i].Flag & 64)
+					curData->loopType = ePingPongLoop;
+				else
+					curData->loopType = eClassicLoop;
 				
-				curData->vol			= ITinfo.sampdata[i].GvL;
+				curData->vol		= ITinfo.sampdata[i].GvL;
 				curData->c2spd		= ITinfo.sampdata[i].C5Speed / 2;
-				curData->amp			= 8;
+				curData->amp		= 8;
 				
-				if (ITinfo.sampdata[i].Flag&2)
-				{
+				if (ITinfo.sampdata[i].Flag & 2) {
 					curData->amp		= 16;
 					
 					curData->size		*= 2;
@@ -1003,67 +1098,66 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 				}
 				
 				curData->relNote	= 0;
-				for (x = 0; x < 26; x++) curIns->name[x] = ITinfo.sampdata[i].SampName[x];
+				for (x = 0; x < 26; x++)
+					curIns->name[x] = ITinfo.sampdata[i].SampName[x];
 				
-				curData->data 		= (Ptr)malloc( curData->size);
-				if (curData->data == NULL) return MADNeedMemory;
+				curData->data 		= (Ptr)malloc(curData->size);
+				if (curData->data == NULL)
+					return MADNeedMemory;
 				
-				if (curData->data != NULL)
-				{
-					if (ITinfo.sampdata[i].Flag&8)	// Compressed Sample
-					{
+				if (curData->data != NULL) {
+					if (ITinfo.sampdata[i].Flag&8) {	// Compressed Sample
 						OSErr	err;
 						
 						err = DecompressSample( curData->amp, theInstrument[ i], curData->size, curData->data);
 						
-						if (err)
-						{
-							SInt32 temp;
+						if (err) {
+							size_t temp;
 							
-							for (temp = 0; temp < curData->size; temp++) *(curData->data + temp) = 0;
+							for (temp = 0; temp < curData->size; temp++)
+								*(curData->data + temp) = 0;
 						}
-					}
-					else memcpy( curData->data, theInstrument[ i], curData->size);
+					} else
+						memcpy(curData->data, theInstrument[i], curData->size);
 					
-					//	BlockMoveData( theInstrument[i], curData->data, curData->size);
-					
-					/*	if (!(ITinfo.sampdata[i].Convert & 1) && curData->amp == 8)
-					 {
-					 long temp;
-					 
-					 for (temp = 0; temp < curData->size; temp++) *(curData->data + temp) -= 0x80;
-					 }
-					 
-					 if (curData->amp == 16)
-					 {
-					 unsigned short 	*tempShort = (unsigned short*) curData->data;
-					 long 						temp;
-					 
-					 for (temp = 0; temp < curData->size/2; temp++)
-					 {
-					 PPLE16(  &( (tempShort[ temp])));
-					 
-					 if (!(ITinfo.sampdata[ i].Convert & 1)) *(tempShort + temp) -= 0x8000;
-					 }
-					 }*/
-					
-					if (!(ITinfo.sampdata[ i].Convert & 1) && curData->amp == 8)
+#if 0
+					if (!(ITinfo.sampdata[i].Convert & 1) && curData->amp == 8)
 					{
-						SInt32 temp;
+						long temp;
 						
 						for (temp = 0; temp < curData->size; temp++) *(curData->data + temp) -= 0x80;
 					}
 					
-					if (curData->amp == 16 && !(ITinfo.sampdata[i].Flag&8))
+					if (curData->amp == 16)
 					{
 						unsigned short 	*tempShort = (unsigned short*) curData->data;
-						SInt32 						temp;
+						long 						temp;
 						
 						for (temp = 0; temp < curData->size/2; temp++)
 						{
 							PPLE16(  &( (tempShort[ temp])));
 							
 							if (!(ITinfo.sampdata[ i].Convert & 1)) *(tempShort + temp) -= 0x8000;
+						}
+					}
+#endif
+					
+					if (!(ITinfo.sampdata[i].Convert & 1) && curData->amp == 8) {
+						SInt32 temp;
+						
+						for (temp = 0; temp < curData->size; temp++)
+							*(curData->data + temp) -= 0x80;
+					}
+					
+					if (curData->amp == 16 && !(ITinfo.sampdata[i].Flag&8)) {
+						unsigned short 	*tempShort = (unsigned short*)curData->data;
+						SInt32 			temp;
+						
+						for (temp = 0; temp < curData->size/2; temp++) {
+							PPLE16(&((tempShort[temp])));
+							
+							if (!(ITinfo.sampdata[i].Convert & 1))
+								*(tempShort + temp) -= 0x8000;
 						}
 					}
 				}
@@ -1077,66 +1171,86 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	
 	maxTrack = 0;
 	
-	for (i = 0; i < theMAD->header->numPat ; i++)
-	{
+	for (i = 0; i < theMAD->header->numPat ; i++) {
 		ITPatForm		*curITPat;
 		
-		if (ITinfo.parappat[i])
-		{
-			curITPat = (ITPatForm*) (theIT + ITinfo.parappat[i]);
+		if (ITinfo.parappat[i]) {
+			curITPat = (ITPatForm*)(theIT + ITinfo.parappat[i]);
 			
-			PPLE16(  &curITPat->length);
-			PPLE16(  &curITPat->row);
+			PPLE16(&curITPat->length);
+			PPLE16(&curITPat->row);
 			
-			if (ITinfo.parappat[i] > 0)
-			{
+			if (ITinfo.parappat[i] > 0) {
 				Ptr 			curDataPat = curITPat->data;
 				char			maskvariable = 0, prevmaskvariable[ MAXTRACK];
 				Boolean			NeedChannelToRead = true;
 				short			xx, newmaxTrack;
 				
-				for (xx = 0; xx < MAXTRACK; xx++) prevmaskvariable[ xx] = 0;
+				for (xx = 0; xx < MAXTRACK; xx++)
+					prevmaskvariable[xx] = 0;
 				
 				Row = 0;
-				while( Row < curITPat->row)
-				{
+				while(Row < curITPat->row) {
 					tempChar = *curDataPat;
 					curDataPat++;
 					
 					newmaxTrack = maxTrack;
 					
-					if (tempChar == 0) Row++;
-					else
-					{
-						if (NeedChannelToRead)
-						{
+					if (tempChar == 0)
+						Row++;
+					else {
+						if (NeedChannelToRead) {
 							// Channel
 							channel = (tempChar-1) & 63;
 							
-							if (channel > maxTrack) newmaxTrack = channel;
+							if (channel > maxTrack)
+								newmaxTrack = channel;
 						}
 						
-						if(tempChar & 128)
-						{
-							prevmaskvariable[ channel] = maskvariable = *curDataPat;
+						if(tempChar & 128) {
+							prevmaskvariable[channel] = maskvariable = *curDataPat;
 							curDataPat++;
-						}
-						else maskvariable = prevmaskvariable[ channel];
+						} else
+							maskvariable = prevmaskvariable[channel];
 						
 						// NOTE
-						if (maskvariable & 1) {curDataPat++;		maxTrack = newmaxTrack;}
-						if (maskvariable & 2) {curDataPat++;		maxTrack = newmaxTrack;}
-						if (maskvariable & 4) {curDataPat++;		maxTrack = newmaxTrack;}
-						if (maskvariable & 8) {curDataPat += 2;		maxTrack = newmaxTrack;}
+						if (maskvariable & 1) {
+							curDataPat++;
+							maxTrack = newmaxTrack;
+						}
 						
-						if (maskvariable & 16) {maxTrack = newmaxTrack;}
-						if (maskvariable & 32) {maxTrack = newmaxTrack;}
-						if (maskvariable & 64) {maxTrack = newmaxTrack;}
-						if (maskvariable & 128){maxTrack = newmaxTrack;}
+						if (maskvariable & 2) {
+							curDataPat++;
+							maxTrack = newmaxTrack;
+						}
+						
+						if (maskvariable & 4) {
+							curDataPat++;
+							maxTrack = newmaxTrack;
+						}
+						
+						if (maskvariable & 8) {
+							curDataPat += 2;
+							maxTrack = newmaxTrack;
+						}
+						
+						if (maskvariable & 16)
+							maxTrack = newmaxTrack;
+						
+						
+						if (maskvariable & 32)
+							maxTrack = newmaxTrack;
+						
+						if (maskvariable & 64)
+							maxTrack = newmaxTrack;
+						
+						if (maskvariable & 128)
+							maxTrack = newmaxTrack;
 					}
 				}
 				
-				if (curDataPat - curITPat->data !=  curITPat->length) return MADUnknowErr;
+				if (curDataPat - curITPat->data !=  curITPat->length)
+					return MADUnknownErr;
 			}
 		}
 	}
@@ -1149,214 +1263,211 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	// ***** TEMPORAIRE ******
 	// ********************
 	
-	for (i = 0; i < MAXTRACK; i++) LastAEffect[ i] = 0;
-	for (i = 0; i < MAXTRACK; i++) LastJEffect[ i] = 0;
-	
+	memset(LastAEffect, 0, sizeof(LastAEffect));
+	memset(LastJEffect, 0, sizeof(LastJEffect));
+		
 	theMAD->header->numChn = maxTrack;
 	
+	memset(theMAD->partition, 0, sizeof(theMAD->partition));
 	
-	for (i = 0; i < MAXPATTERN; i++) theMAD->partition[ i] = NULL;
-	for (i = 0; i < theMAD->header->numPat ; i++)
-	{
+	for (i = 0; i < theMAD->header->numPat ; i++) {
 		ITPatForm		*curITPat;
 		
-		if (ITinfo.parappat[i])
-		{
+		if (ITinfo.parappat[i]) {
 			curITPat = (ITPatForm*) (theIT + ITinfo.parappat[i]);
-			/*
-			 curITPat->length 	= PPLE16(  &curITPat->length);
-			 curITPat->row 		= PPLE16(  &curITPat->row);
+#if 0
+			
+			curITPat->length	= PPLE16(&curITPat->length);
+			curITPat->row		= PPLE16(&curITPat->row);
+			
+			//Deja fait dans la recherche du maxtrack
 			 
-			 Deja fait dans la recherche du maxtrack
-			 */
+#endif
 			
-			theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * curITPat->row * sizeof( Cmd), 1);
-			if (theMAD->partition[ i] == NULL) return MADNeedMemory;
+			theMAD->partition[i] = (PatData*) calloc(sizeof(PatHeader) + theMAD->header->numChn * curITPat->row * sizeof(Cmd), 1);
+			if (theMAD->partition[i] == NULL)
+				return MADNeedMemory;
 			
-			theMAD->partition[ i]->header.size 			= curITPat->row;
-			theMAD->partition[ i]->header.compMode 	= 'NONE';
+			theMAD->partition[i]->header.size 		= curITPat->row;
+			theMAD->partition[i]->header.compMode 	= 'NONE';
 			
-			for (x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
+			memset(theMAD->partition[i]->header.name, 0, 20);
 			
-			MaxPtr = (Ptr) theMAD->partition[ i];
-			MaxPtr += sizeof( PatHeader) + theMAD->header->numChn * curITPat->row * sizeof( Cmd);
+			MaxPtr = (Ptr)theMAD->partition[i];
+			MaxPtr += sizeof(PatHeader) + theMAD->header->numChn * curITPat->row * sizeof(Cmd);
 			
-			for (Row = 0; Row < curITPat->row; Row++)
-			{
-				for(z = 0; z < theMAD->header->numChn; z++)
-				{
-					aCmd = GetMADCommand( Row, z, theMAD->partition[ i]);
+			for (Row = 0; Row < curITPat->row; Row++) {
+				for(z = 0; z < theMAD->header->numChn; z++) {
+					aCmd = GetMADCommand(Row, z, theMAD->partition[ i]);
 					
-					aCmd->note		= 0xFF;
-					aCmd->ins			= 0;
-					aCmd->cmd			= 0;
-					aCmd->arg			= 0;
-					aCmd->vol			= 0xFF;
+					aCmd->note	= 0xFF;
+					aCmd->ins	= 0;
+					aCmd->cmd	= 0;
+					aCmd->arg	= 0;
+					aCmd->vol	= 0xFF;
 				}
 			}
-		}
-		else	// No Data for this pattern - Clear Pattern
-		{
+		} else {	// No Data for this pattern - Clear Pattern
 #define DEFSIZE 10
 			
-			theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * DEFSIZE * sizeof( Cmd), 1);
-			if (theMAD->partition[ i] == NULL) return MADNeedMemory;
+			theMAD->partition[i] = (PatData*) calloc(sizeof(PatHeader) + theMAD->header->numChn * DEFSIZE * sizeof(Cmd), 1);
+			if (theMAD->partition[i] == NULL)
+				return MADNeedMemory;
 			
-			theMAD->partition[ i]->header.size 			= DEFSIZE;
+			theMAD->partition[ i]->header.size 		= DEFSIZE;
 			theMAD->partition[ i]->header.compMode 	= 'NONE';
 			
-			strlcpy( theMAD->partition[ i]->header.name, "Not used pattern", sizeof(theMAD->partition[ i]->header.name));
+			strlcpy(theMAD->partition[i]->header.name, "Not used pattern", sizeof(theMAD->partition[ i]->header.name));
 			
-			for (Row = 0; Row < DEFSIZE; Row++)
-			{
-				for(z = 0; z < theMAD->header->numChn; z++)
-				{
-					aCmd = GetMADCommand( Row, z, theMAD->partition[ i]);
+			for (Row = 0; Row < DEFSIZE; Row++) {
+				for(z = 0; z < theMAD->header->numChn; z++) {
+					aCmd = GetMADCommand(Row, z, theMAD->partition[i]);
 					
-					aCmd->note			= 0xFF;
-					aCmd->ins			= 0;
-					aCmd->cmd			= 0;
-					aCmd->arg			= 0;
-					aCmd->vol			= 0xFF;
+					aCmd->note	= 0xFF;
+					aCmd->ins	= 0;
+					aCmd->cmd	= 0;
+					aCmd->arg	= 0;
+					aCmd->vol	= 0xFF;
 				}
 			}
 		}
 		
-		
-		if (ITinfo.parappat[i])
-		{
-			Ptr 			curDataPat = curITPat->data;
-			char			maskvariable = 0, prevmaskvariable[ MAXTRACK];
+		if (ITinfo.parappat[i]) {
+			Ptr 		curDataPat = curITPat->data;
+			char		maskvariable = 0, prevmaskvariable[ MAXTRACK];
 			Boolean		NeedChannelToRead = true;
-			short			xx;
 			
-			char			lastnote[ MAXTRACK], lastins[ MAXTRACK], lastvol[ MAXTRACK], lastcmd[ MAXTRACK], lasteff[ MAXTRACK];
+			char		lastnote[MAXTRACK], lastins[ MAXTRACK], lastvol[ MAXTRACK], lastcmd[ MAXTRACK], lasteff[ MAXTRACK];
 			
-			for (xx = 0; xx < MAXTRACK; xx++) prevmaskvariable[ xx] = 0;
+			memset(prevmaskvariable, 0, sizeof(prevmaskvariable));
 			
 			Row = 0;
-			while( Row < curITPat->row)
-			{
+			while(Row < curITPat->row) {
 				tempChar = *curDataPat;
 				curDataPat++;
 				
-				if (tempChar == 0) Row++;
-				else
-				{
-					if (NeedChannelToRead)
-					{
+				if (tempChar == 0)
+					Row++;
+				else {
+					if (NeedChannelToRead) {
 						// Channel
 						channel = (tempChar-1) & 63;
-						if (channel >= 0 && channel < theMAD->header->numChn) aCmd = GetMADCommand( Row, channel, theMAD->partition[ i]);
+						if (channel >= 0 && channel < theMAD->header->numChn)
+							aCmd = GetMADCommand(Row, channel, theMAD->partition[i]);
 						else
-						{
-							return MADUnknowErr;
-						}
+							return MADUnknownErr;
 					}
 					
-					if(tempChar & 128)
-					{
-						prevmaskvariable[ channel] = maskvariable = *curDataPat;
+					if(tempChar & 128) {
+						prevmaskvariable[channel] = maskvariable = *curDataPat;
 						curDataPat++;
-					}
-					else maskvariable = prevmaskvariable[ channel];
+					} else
+						maskvariable = prevmaskvariable[channel];
 					
 					// NOTE
 					if (maskvariable & 1 || maskvariable & 16)
 					{
 						char note;
 						
-						if (maskvariable & 1) note = *curDataPat++;
-						else note = lastnote[ channel];
-						lastnote[ channel] = note;
+						if (maskvariable & 1)
+							note = *curDataPat++;
+						else
+							note = lastnote[channel];
+						lastnote[channel] = note;
 						
-						if (aCmd != NULL)
-						{
+						if (aCmd != NULL) {
 							aCmd->note = note;
-							if (aCmd->note == 255) aCmd->note = 0xFE;
-							else if (aCmd->note < 0 || aCmd->note >= NUMBER_NOTES) aCmd->note = 0xFF;
+							if (aCmd->note == 255)
+								aCmd->note = 0xFE;
+							else if (aCmd->note < 0 || aCmd->note >= NUMBER_NOTES)
+								aCmd->note = 0xFF;
 						}
 					}
 					
 					// INSTRUMENT
-					if (maskvariable & 2 || maskvariable & 32)
-					{
+					if (maskvariable & 2 || maskvariable & 32) {
 						char ins;
 						
-						if (maskvariable & 2) ins = *curDataPat++;
-						else ins = lastins[ channel];
-						lastins[ channel] = ins;
+						if (maskvariable & 2)
+							ins = *curDataPat++;
+						else
+							ins = lastins[channel];
+						lastins[channel] = ins;
 						
-						if (aCmd != NULL) aCmd->ins = ins;
+						if (aCmd != NULL)
+							aCmd->ins = ins;
 					}
 					
 					// VOLUME
-					if (maskvariable & 4 || maskvariable & 64)
-					{
+					if (maskvariable & 4 || maskvariable & 64) {
 						char vol;
 						
-						if (maskvariable & 4) vol = *curDataPat++;
-						else vol = lastvol[ channel];
-						lastvol[ channel] = vol;
+						if (maskvariable & 4)
+							vol = *curDataPat++;
+						else
+							vol = lastvol[channel];
+						lastvol[channel] = vol;
 						
-						if (aCmd != NULL)
-						{
+						if (aCmd != NULL) {
 							aCmd->vol = vol;
-							if (aCmd->vol > 64) aCmd->vol = 64;
+							if (aCmd->vol > 64)
+								aCmd->vol = 64;
 							aCmd->vol += 0x10;
 						}
-					}
-					else aCmd->vol = 255;
+					} else
+						aCmd->vol = 255;
 					
 					// PARAMETER
-					if (maskvariable & 8 || maskvariable & 128)
-					{
+					if (maskvariable & 8 || maskvariable & 128) {
 						char eff, cmd;
 						
-						if (maskvariable & 8)
-						{
+						if (maskvariable & 8) {
 							eff = *curDataPat++;
 							cmd = *curDataPat++;
+						} else {
+							eff = lasteff[channel];
+							cmd = lastcmd[channel];
 						}
-						else
-						{
-							eff = lasteff[ channel];
-							cmd = lastcmd[ channel];
-						}
-						lasteff[ channel] = eff;
-						lastcmd[ channel] = cmd;
+						lasteff[channel] = eff;
+						lastcmd[channel] = cmd;
 						
 						if (aCmd != NULL)
-						{
-							ConvertITEffect( eff, cmd, &aCmd->cmd, &aCmd->arg, channel);
-						}
+							ConvertITEffect(eff, cmd, &aCmd->cmd, &aCmd->arg, channel);
 					}
 				}
 			}
 			
-			if (curDataPat - curITPat->data !=  curITPat->length) return MADUnknowErr;
+			if (curDataPat - curITPat->data !=  curITPat->length)
+				return MADUnknownErr;
 		}
 	}
 	
 	
 	
-	if(ITinfo.orders)	free( ITinfo.orders);
-	if(ITinfo.parapins)	free( ITinfo.parapins);
-	if(ITinfo.parappat)	free( ITinfo.parappat);
-	if(ITinfo.insdata)	free( ITinfo.insdata);
-	if(ITinfo.parapsamp)free( ITinfo.parapsamp);
-	if(ITinfo.sampdata)	free( ITinfo.sampdata);
+	if (ITinfo.orders)
+		free(ITinfo.orders);
+	if (ITinfo.parapins)
+		free(ITinfo.parapins);
+	if (ITinfo.parappat)
+		free(ITinfo.parappat);
+	if (ITinfo.insdata)
+		free(ITinfo.insdata);
+	if (ITinfo.parapsamp)
+		free(ITinfo.parapsamp);
+	if (ITinfo.sampdata)
+		free(ITinfo.sampdata);
+	
 	return noErr;
 }
 
-static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
+static OSErr ExtractITInfo(PPInfoRec *info, void *AlienFile)
 {
 	//short			i;
 	ITForm			ITinfo;
 	/********************************/
 	
 	/**** Header principal *****/
-	memcpy( &ITinfo, AlienFile, 96);
+	memcpy(&ITinfo, AlienFile, 96);
 	
 	/*** Signature ***/
 	
@@ -1365,37 +1476,37 @@ static OSErr ExtractITInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	//ITinfo.name[ 25] = '\0';
-	strlcpy( info->internalFileName, ITinfo.name, sizeof(ITinfo.name));
+	strlcpy(info->internalFileName, ITinfo.name, sizeof(ITinfo.name));
 	
 	/*** Total Patterns ***/
 	
-	PPLE16(  &ITinfo.patNum);
+	PPLE16(&ITinfo.patNum);
 	info->totalPatterns = ITinfo.patNum;
 	
 	/*** Partition Length ***/
 	
-	PPLE16( &ITinfo.orderNum);
+	PPLE16(&ITinfo.orderNum);
 	info->partitionLength = ITinfo.orderNum;
 	
 	/*** Total Instruments ***/
 	
-	PPLE16(  &ITinfo.insNum);
+	PPLE16(&ITinfo.insNum);
 	info->totalInstruments = ITinfo.insNum;
 	
 	/*** Tracks ***/
 	
 	//info->totalTracks	 = PPLE16(  &ITinfo.insNum);
 	
-	strlcpy( info->formatDescription, "IT Plug", sizeof(info->formatDescription));
+	strlcpy(info->formatDescription, "IT Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
 
-static OSErr TestITFile( Ptr AlienFile)
+static OSErr TestITFile(const void *AlienFile)
 {
-	ITForm	*myIT = (ITForm*)AlienFile;
+	ITForm *myIT = (ITForm*)AlienFile;
 	
-	if (ITcompMem((Ptr)&myIT->ID, "IMPM", 4))
+	if (ITcompMem(&myIT->ID, "IMPM", 4))
 		return noErr;
 	else
 		return MADFileNotSupportedByThisPlug;
@@ -1403,15 +1514,15 @@ static OSErr TestITFile( Ptr AlienFile)
 
 #ifndef _MAC_H
 
-EXP OSErr FillPlug( PlugInfo *p);
-EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP OSErr FillPlug(PlugInfo *p);
+EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy( p->type, 		"IT  ", sizeof(p->type));
-	strlcpy( p->MenuName, 	"IT Files", sizeof(p->MenuName));
-	p->mode	=	MADPlugImport;
-	p->version = 2 << 16 | 0 << 8 | 0;
+	strlcpy(p->type, 		"IT  ", sizeof(p->type));
+	strlcpy(p->MenuName, 	"IT Files", sizeof(p->MenuName));
+	p->mode		= MADPlugImport;
+	p->version	= 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
 }
@@ -1423,22 +1534,20 @@ OSErr mainIT(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *in
 extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr		myErr;
+	OSErr		myErr = noErr;
 	Ptr			AlienFile;
 	long		sndSize;
 	UNFILE		iFileRefI;
-	
-	myErr = noErr;
 	
 	switch(order)
 	{
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI) {
-				sndSize = iGetEOF( iFileRefI);
+				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (Ptr)malloc( sndSize * 2L);
+				AlienFile = (Ptr)malloc(sndSize * 2L);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				// ** MEMORY Test End
@@ -1446,68 +1555,66 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 				else {
 					free( AlienFile);
 					
-					AlienFile = (Ptr)malloc( sndSize);
-					if (AlienFile == NULL) myErr = MADNeedMemory;
-					else
-					{
-						myErr = iRead( sndSize, AlienFile, iFileRefI);
+					AlienFile = (Ptr)malloc(sndSize);
+					if (AlienFile == NULL)
+						myErr = MADNeedMemory;
+					else {
+						myErr = iRead(sndSize, AlienFile, iFileRefI);
 						
-						if (myErr == noErr)
-						{
-							myErr = TestITFile( AlienFile);
+						if (myErr == noErr) {
+							myErr = TestITFile(AlienFile);
 							if (myErr == noErr)
-							{
-								myErr = ConvertIT2Mad( AlienFile,  sndSize, MadFile, init);
-							}
+								myErr = ConvertIT2Mad(AlienFile, sndSize, MadFile, init);
 						}
 					}
-					free( AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
-				iClose( iFileRefI);
+				iClose(iFileRefI);
 			}
 			break;
 			
 		case MADPlugTest:
-			iFileRefI = iFileOpenRead( AlienFileName);
-			if (iFileRefI)
-			{
+			iFileRefI = iFileOpenRead(AlienFileName);
+			if (iFileRefI) {
 				sndSize = 1024L;
 				
-				AlienFile = (Ptr)malloc( sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
-					myErr = iRead( sndSize, AlienFile, iFileRefI);
+				AlienFile = (Ptr)malloc(sndSize);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
+					myErr = iRead(sndSize, AlienFile, iFileRefI);
+					if(myErr == noErr)
+						myErr = TestITFile(AlienFile);
 					
-					if(myErr == noErr) myErr = TestITFile( AlienFile);
-					
-					free( AlienFile);	AlienFile = NULL;
+					free( AlienFile);
+					AlienFile = NULL;
 				}
-				iClose( iFileRefI);
+				iClose(iFileRefI);
 			}
 			break;
 			
 		case MADPlugInfo:
-			iFileRefI = iFileOpenRead( AlienFileName);
-			if (iFileRefI)
-			{
-				info->fileSize = iGetEOF( iFileRefI);
+			iFileRefI = iFileOpenRead(AlienFileName);
+			if (iFileRefI) {
+				info->fileSize = iGetEOF(iFileRefI);
 				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (Ptr)malloc( sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
-					myErr = iRead( sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr)
-					{
-						myErr = TestITFile( AlienFile);
-						if (!myErr) myErr = ExtractITInfo( info, AlienFile);
+				AlienFile = (Ptr)malloc(sndSize);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
+					myErr = iRead(sndSize, AlienFile, iFileRefI);
+					if (myErr == noErr) {
+						myErr = TestITFile(AlienFile);
+						if (!myErr)
+							myErr = ExtractITInfo(info, AlienFile);
 					}
-					free( AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
-				iClose( iFileRefI);
+				iClose(iFileRefI);
 			}
 			break;
 			

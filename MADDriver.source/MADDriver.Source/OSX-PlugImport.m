@@ -55,7 +55,24 @@ static Boolean LoadPlugInXPC(CFBundleRef theBundle)
 
 static OSErr CallImportPlugXPC(MADLibrary *inMADDriver, char *plugSig, OSType order, char *AlienFile, MADMusic *theNewMAD, PPInfoRec *info)
 {
-	//TODO: implement!
+	switch (order) {
+		case MADPlugImport:
+			//TODO: implement
+			break;
+			
+		case MADPlugInfo:
+			//TODO: implement
+			break;
+			
+		case MADPlugTest:
+			//TODO: implement
+			break;
+			
+		case MADPlugExport: //No, we won't support exporting using the bridge
+		default:
+			return MADOrderNotImplemented;
+			break;
+	}
 	return MADOrderNotImplemented;
 }
 #endif
@@ -517,8 +534,7 @@ void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 
 void CloseImportPlug(MADLibrary *inMADDriver)
 {
-	for (int i = 0; i < inMADDriver->TotalPlug; i++)
-	{
+	for (int i = 0; i < inMADDriver->TotalPlug; i++) {
 		CFRelease(inMADDriver->ThePlug[i].file);
 		CFRelease(inMADDriver->ThePlug[i].AuthorString);
 		CFRelease(inMADDriver->ThePlug[i].UTItypes);

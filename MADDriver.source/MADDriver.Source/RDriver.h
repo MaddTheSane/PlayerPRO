@@ -628,25 +628,22 @@ PPEXPORT OSErr	MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, cha
 PPEXPORT OSErr	MADLoadMusicPtr(MADMusic **music, char *myPtr);								// MAD ONLY - Load a MAD Ptr into memory, you can free() your Ptr after this call
 
 PPEXPORT OSErr	MADLoadMusicFileCString(MADLibrary *, MADMusic **music, char *type, char *fName);			// Load a music file with plugs
-#ifdef _MAC_H
-PPEXPORT OSErr	MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef);
-#endif
 
 PPEXPORT OSErr	MADMusicIdentifyCString(MADLibrary *, char *type, char *cName);			// Identify what kind of music format is cName file.
 
-#ifdef _MAC_H
-PPEXPORT OSErr	MADMusicIdentifyCFURL(MADLibrary *lib, char *type, CFURLRef URLRef); //Identify what kind of music format is URLRef file.
-#endif
-
 PPEXPORT OSErr	MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec);
 	
-#ifdef _MAC_H
-PPEXPORT OSErr	MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec);
-#endif
-	
 PPEXPORT OSErr	MADMusicExportCString(MADLibrary *lib, MADMusic *music, char *type, char* cName);
+
+PPEXPORT OSErr	MADMusicSaveCString(MADMusic *music, const char *cName, Boolean compressMAD);
+//PPEXPORT OSErr	MADMusicSavePointer(MADMusic *music, void **outPtr, size_t *outPtrSize, Boolean compressMAD);
+
 #ifdef _MAC_H
+PPEXPORT OSErr	MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef);
+PPEXPORT OSErr	MADMusicIdentifyCFURL(MADLibrary *lib, char *type, CFURLRef URLRef);
+PPEXPORT OSErr	MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec);
 PPEXPORT OSErr	MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL);
+PPEXPORT OSErr	MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, Boolean compressMAD);
 #endif
 
 PPEXPORT Boolean MADPlugAvailable(MADLibrary *, char *type);								// Is plug 'type' available?

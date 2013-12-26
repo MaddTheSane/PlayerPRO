@@ -215,6 +215,7 @@
 		5533600411EBC66400525CAF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5533600311EBC66400525CAF /* Localizable.strings */; };
 		553626B817EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */; };
 		553EFE0018135EBD00F0D51E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 553EFE0218135EBD00F0D51E /* InfoPlist.strings */; };
+		55453523186BA2CA00F69F4D /* CocoaFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C930381819E68700D9E072 /* CocoaFuncs.m */; };
 		5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
 		55469C2716BF34D200175A1F /* PatternHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55469C2616BF34D200175A1F /* PatternHandler.m */; };
 		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
@@ -6229,6 +6230,7 @@
 				5573A12B1656FBF200A5AECA /* ULT.c in Sources */,
 				5573A12C1656FBF200A5AECA /* UMX.c in Sources */,
 				5573A12D1656FBF200A5AECA /* XM.c in Sources */,
+				55453523186BA2CA00F69F4D /* CocoaFuncs.m in Sources */,
 				5573A12E1656FC0700A5AECA /* 669.c in Sources */,
 				5573A12F1656FC0700A5AECA /* AMF.c in Sources */,
 				5573A1311656FCC200A5AECA /* iOS-PlugImport.c in Sources */,

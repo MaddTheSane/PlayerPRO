@@ -51,7 +51,7 @@ PPEXPORT void	iFileCreate(const char *path, OSType type);
 
 PPEXPORT long	iGetEOF(UNFILE iFileRefI);
 PPEXPORT OSErr	iRead(long size, void *dest, UNFILE iFileRefI);
-PPEXPORT OSErr	iWrite(long size, const void *dest, UNFILE iFileRefI);
+PPEXPORT OSErr	iWrite(long size, const void *src, UNFILE iFileRefI);
 PPEXPORT OSErr	iSeekCur(long size, UNFILE iFileRefI);
 
 PPEXPORT void	iClose(UNFILE iFileRefI);
@@ -61,12 +61,12 @@ PPEXPORT void	iClose(UNFILE iFileRefI);
 //TODO: use system-based functions which will probably be faster
 static inline void MADByteSwap32(void *msg_buf)
 {
-	UInt32			temp = *((UInt32*) msg_buf);
+	UInt32 temp = *((UInt32*)msg_buf);
 #ifdef _MAC_H
-	*((UInt32*) msg_buf) = CFSwapInt32(temp);
+	*((UInt32*)msg_buf) = CFSwapInt32(temp);
 #else
-	*((UInt32*) msg_buf) = ((((temp & 0xff000000) >> 24) | \
-	(( temp & 0x00ff0000) >> 8) | (( temp & 0x0000ff00) << 8) | \
+	*((UInt32*)msg_buf) = ((((temp & 0xff000000) >> 24) | \
+	((temp & 0x00ff0000) >> 8) | ((temp & 0x0000ff00) << 8) | \
 	(temp & 0x000000ff) << 24));
 #endif
 }
@@ -74,11 +74,11 @@ static inline void MADByteSwap32(void *msg_buf)
 //TODO: use system-based functions which will probably be faster
 static inline void MADByteSwap16(void *msg_buf)
 {
-	UInt16			buf = *((UInt16*) msg_buf);
+	UInt16 buf = *((UInt16*)msg_buf);
 #ifdef _MAC_H
-	*((UInt16*) msg_buf) = CFSwapInt16(buf);
+	*((UInt16*)msg_buf) = CFSwapInt16(buf);
 #else
-	*((UInt16*) msg_buf) = (((((UInt16)buf)<<8) & 0xFF00) | ((((UInt16)buf)>>8) & 0x00FF));
+	*((UInt16*)msg_buf) = (((((UInt16)buf) << 8) & 0xFF00) | ((((UInt16)buf) >> 8) & 0x00FF));
 #endif
 }
 
