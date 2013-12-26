@@ -1574,23 +1574,20 @@ enum PPMusicToolbarTypes {
 			break;
 			
 		case PPToolbarFileInfo:
-			if ([infoDrawer state] == NSDrawerOpeningState || [infoDrawer state] == NSDrawerOpenState) {
+			if ([infoDrawer state] == NSDrawerOpeningState || [infoDrawer state] == NSDrawerOpenState)
 				return YES;
-			}
 		case PPToolbarPlayMusic:
-			if([[tableView selectedRowIndexes] count] == 1) {
+			if([[tableView selectedRowIndexes] count] == 1)
 				return YES;
-			} else {
+			else
 				return NO;
-			}
 			break;
 			
 		case PPToolbarRemoveMusic:
-			if([[tableView selectedRowIndexes] count] > 0) {
+			if([[tableView selectedRowIndexes] count] > 0)
 				return YES;
-			} else {
+			else
 				return NO;
-			}
 			break;
 			
 		default:

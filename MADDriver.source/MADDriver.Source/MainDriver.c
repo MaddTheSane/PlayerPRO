@@ -2922,13 +2922,14 @@ OSErr MADStopDriver(MADDriverRec *MDriver)
 	MADCleanDriver(MDriver);
 	
 	//#ifdef _MIDIHARDWARE_
-	if (MDriver->SendMIDIClockData) SendMIDIClock(MDriver, 0xFC);
+	if (MDriver->SendMIDIClockData)
+		SendMIDIClock(MDriver, 0xFC);
 	//#endif
 	
 	return noErr;
 }
 
-OSErr MADReset( MADDriverRec *MDriver)
+OSErr MADReset(MADDriverRec *MDriver)
 {
 	MADCleanDriver(MDriver);
 	

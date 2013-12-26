@@ -93,7 +93,7 @@ OSErr initCoreAudio(MADDriverRec *inMADDriver)
 	audDes.mFormatID = kAudioFormatLinearPCM;
 	audDes.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
 
-	int outChn = 0;
+	int outChn;
 	switch (inMADDriver->DriverSettings.outPutMode) {
 		case MonoOutPut:
 			outChn = 1;

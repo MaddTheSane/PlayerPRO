@@ -113,10 +113,9 @@
 		thePPLib = theLib;
 		OSErr iErr = MADCreateDriver(theSettings, theLib._madLib, &theRec);
 		if (iErr != noErr) {
-			return nil;
 			if (theErr)
 				*theErr = iErr;
-
+			return nil;
 		}
 	}
 	return self;

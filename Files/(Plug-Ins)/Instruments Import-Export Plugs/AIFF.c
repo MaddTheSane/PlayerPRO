@@ -6,13 +6,18 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <CoreFoundation/CoreFoundation.h>
 
-static OSErr TestAIFF( ContainerChunk* CC)
+static inline OSErr TestAIFF(ContainerChunk* CC)
 {
-	if (CC->formType == AIFCID) return noErr;
-	else if (CC->formType == AIFFID) return noErr;
-	else if (CFSwapInt32(CC->formType) == AIFCID) return noErr;
-	else if (CFSwapInt32(CC->formType) == AIFFID) return noErr;
-	else return MADFileNotSupportedByThisPlug;
+	if (CC->formType == AIFCID)
+		return noErr;
+	else if (CC->formType == AIFFID)
+		return noErr;
+	else if (CFSwapInt32(CC->formType) == AIFCID)
+		return noErr;
+	else if (CFSwapInt32(CC->formType) == AIFFID)
+		return noErr;
+	else
+		return MADFileNotSupportedByThisPlug;
 }
 
 static OSErr mainAIFF(void					*unused,
@@ -29,7 +34,7 @@ static OSErr mainAIFF(void					*unused,
 	short	iFileRefI;
 	long	inOutBytes;
 		
-	switch( order)
+	switch(order)
 	{
 		case 'IMPL':
 		{
@@ -40,18 +45,16 @@ static OSErr mainAIFF(void					*unused,
 			Boolean			stereo;
 			FSSpec			newFile;
 			
-			myErr = ConvertDataToWAVE( *AlienFileFSSpec, &newFile, thePPInfoPlug);
-			if (myErr == noErr)
-			{
-				theSound = ConvertWAV( &newFile, &lS, &lE, &sS, &rate, &stereo);
+			myErr = ConvertDataToWAVE(*AlienFileFSSpec, &newFile, thePPInfoPlug);
+			if (myErr == noErr) {
+				theSound = ConvertWAV(&newFile, &lS, &lE, &sS, &rate, &stereo);
 				
-				if (theSound) inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
+				if (theSound)
+					myErr = inAddSoundToMAD(theSound, lS, lE, sS, 60, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
 				else
-				{
 					myErr = MADNeedMemory;
-				}
 				
-				FSpDelete( &newFile);
+				FSpDelete(&newFile);
 			}
 		}
 		break;
@@ -60,22 +63,20 @@ static OSErr mainAIFF(void					*unused,
 		{
 			char *theSound;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if (myErr == noErr)
-			{
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			if (myErr == noErr) {
 				inOutBytes = 50L;
-				theSound = NewPtr( inOutBytes);
+				theSound = malloc(inOutBytes);
 				if (theSound == NULL) myErr = MADNeedMemory;
-				else
-				{
+				else {
 					FSRead( iFileRefI, &inOutBytes, theSound);
 					
 					myErr = TestAIFF( (ContainerChunk*) theSound);
 				}
 				
-				DisposePtr( theSound);
+				free(theSound);
 				
-				FSClose( iFileRefI);
+				FSClose(iFileRefI);
 			}
 		}
 		break;
@@ -83,31 +84,30 @@ static OSErr mainAIFF(void					*unused,
 		case 'EXPL':
 			if (*sampleID >= 0)
 			{
-				OSType				compType = 'NONE';
-				unsigned int		rate;
-				sData 				*curData = sample[ *sampleID];
-				short				numChan;
+				OSType			compType = 'NONE';
+				unsigned int	rate;
+				sData 			*curData = sample[*sampleID];
+				short			numChan;
 				
-				myErr = FSpCreate( AlienFileFSSpec, 'TVOD', 'AIFF', smCurrentScript);
-				myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+				myErr = FSpCreate(AlienFileFSSpec, 'TVOD', 'AIFF', smCurrentScript);
+				myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 				
-				if (myErr == noErr)
-				{
+				if (myErr == noErr) {
 					inOutBytes 	= curData->size;
 					rate		= curData->c2spd;
 					
 					if (curData->stereo) numChan = 2;
 					else numChan = 1;
 					
-					myErr = SetupAIFFHeader(	iFileRefI,
-												numChan,
-												rate << 16L,
-												curData->amp,
-												compType,
-												inOutBytes,
-												0);
+					myErr = SetupAIFFHeader(iFileRefI,
+											numChan,
+											rate << 16L,
+											curData->amp,
+											compType,
+											inOutBytes,
+											0);
 					
-					myErr = FSWrite( iFileRefI, &inOutBytes, curData->data);
+					myErr = FSWrite(iFileRefI, &inOutBytes, curData->data);
 					
 					/*
 					marker = (MarkerChunk*) CH;
@@ -126,14 +126,14 @@ static OSErr mainAIFF(void					*unused,
 						}
 					}*/
 					
-					FSClose( iFileRefI);
+					FSClose(iFileRefI);
 				}
 			}
 		break;
 		
 		default:
 			myErr = MADOrderNotImplemented;
-		break;
+			break;
 	}
 		
 	return myErr;

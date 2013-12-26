@@ -104,8 +104,7 @@ end:
 		if (strcmp(type, "MADK") == 0) {
 			CFRelease(tmpURL);
 			return self = [[PPMusicObject alloc] initWithURL:url];
-		}
-		if (MADLoadMusicCFURLFile(theLib._madLib, &currentMusic, type, tmpURL) != noErr) {
+		} else if (MADLoadMusicCFURLFile(theLib._madLib, &currentMusic, type, tmpURL) != noErr) {
 			CFRelease(tmpURL);
 			return nil;
 		}
@@ -164,8 +163,7 @@ end:
 	MADCleanCurrentMusic(currentMusic, attachedDriver ? attachedDriver.rec : NULL);
 	MADMusic *music = currentMusic;
 	NSMutableData *saveData = [[NSMutableData alloc] initWithCapacity:MADGetMusicSize(currentMusic)];
-	for (i = 0, x = 0; i < MAXINSTRU; i++)
-	{
+	for (i = 0, x = 0; i < MAXINSTRU; i++) {
 		music->fid[i].no = i;
 		
 		if (music->fid[i].numSamples > 0 || music->fid[i].name[ 0] != 0)	// Is there something in this instrument?
@@ -349,7 +347,6 @@ end:
 	@finally {
 		return theErr;
 	}
-
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -393,7 +390,6 @@ end:
 	self.madInfo = [NSString stringWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
 	self.madAuthor = @"";
 	self.madType = currentMusic->header->MAD;
-	
 }
 
 - (id)init
@@ -407,7 +403,7 @@ end:
 static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 {
 	MADMusic *toreturn = calloc(sizeof(MADMusic), 1);
-	
+	memcpy(toreturn, oldMus, sizeof(MADMusic));
 	
 	return toreturn;
 }
@@ -429,7 +425,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (id)initWithPath:(NSString *)url
 {
-	return [self initWithURL:[NSURL fileURLWithPath:url]];
+	return self = [self initWithURL:[NSURL fileURLWithPath:url]];
 }
 
 - (id)initWithURL:(NSURL *)url
