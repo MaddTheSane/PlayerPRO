@@ -40,7 +40,8 @@ static OSStatus CFURLToFSSpec (CFURLRef pathURL, FSSpec *outSpec)
 		// Get a CFString for the path
 		if (err == noErr) {
 			pathString = CFURLCopyFileSystemPath(pathURL, kCFURLPOSIXPathStyle);
-			if (pathString == NULL) { err = memFullErr; }
+			if (pathString == NULL)
+				err = memFullErr;
 		}
 		
 		// Get a CFURL for the parent
@@ -105,12 +106,25 @@ static OSErr mainQTInst(void					*unused,
 						CFURLRef				AlienFileURLRef,	// IN/OUT file
 						PPInfoPlug				*thePPInfoPlug)
 {
-	OSErr		myErr = noErr;
+	OSErr		myErr;
 	FSIORefNum	iFileRefI;
-	long		inOutBytes;
+	ByteCount	inOutBytes;
 	FSSpec		tmpSpec;
 	
-	CFURLToFSSpec(AlienFileURLRef, &tmpSpec);
+	myErr = CFURLToFSSpec(AlienFileURLRef, &tmpSpec);
+	switch (myErr) {
+		case memFullErr:
+			return MADNeedMemory;
+			break;
+			
+		default:
+		case fnfErr:
+			return order == MADPlugExport ? MADWritingErr : MADReadingErr;
+			break;
+						
+		case noErr:
+			break;
+	}
 	
 	switch (order)
 	{
@@ -179,16 +193,10 @@ static OSErr mainQTInst(void					*unused,
 					else
 						numChan = 1;
 					
-					myErr = SetupAIFFHeader(iFileRefI,
-											numChan,
-											rate << 16L,
-											curData->amp,
-											compType,
-											inOutBytes,
-											0);
+					myErr = SetupAIFFHeader(iFileRefI, numChan, rate << 16L, curData->amp, compType, inOutBytes, 0);
 					
 					if(myErr == noErr)
-						myErr = FSWrite(iFileRefI, &inOutBytes, curData->data);
+						myErr = FSWriteFork(iFileRefI, fsAtMark, 0, inOutBytes, curData->data, &inOutBytes);
 					FSCloseFork(iFileRefI);
 				}
 			}

@@ -32,17 +32,16 @@
 #include <CoreFoundation/CFByteOrder.h>
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
-////////////////////////////////////////////////////////////
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 typedef FILE* UNFILE;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+////////////////////////////////////////////////////////////
 	
 PPEXPORT UNFILE	iFileOpen(const char *name) DEPRECATED_ATTRIBUTE;
 PPEXPORT UNFILE	iFileOpenRead(const char *name);
@@ -58,27 +57,27 @@ PPEXPORT void	iClose(UNFILE iFileRefI);
 	
 ////////////////////////////////////////////////////////////
 
-//TODO: use system-based functions which will probably be faster
+//TODO: use system-based functions, such as the ones used on OS X/iOS
 static inline void MADByteSwap32(void *msg_buf)
 {
-	UInt32 temp = *((UInt32*)msg_buf);
+	uint32_t temp = *((uint32_t*)msg_buf);
 #ifdef _MAC_H
-	*((UInt32*)msg_buf) = CFSwapInt32(temp);
+	*((uint32_t*)msg_buf) = CFSwapInt32(temp);
 #else
-	*((UInt32*)msg_buf) = ((((temp & 0xff000000) >> 24) | \
+	*((uint32_t*)msg_buf) = ((((temp & 0xff000000) >> 24) | \
 	((temp & 0x00ff0000) >> 8) | ((temp & 0x0000ff00) << 8) | \
 	(temp & 0x000000ff) << 24));
 #endif
 }
 
-//TODO: use system-based functions which will probably be faster
+//TODO: use system-based functions, such as the ones used on OS X/iOS
 static inline void MADByteSwap16(void *msg_buf)
 {
-	UInt16 buf = *((UInt16*)msg_buf);
+	uint16_t buf = *((uint16_t*)msg_buf);
 #ifdef _MAC_H
-	*((UInt16*)msg_buf) = CFSwapInt16(buf);
+	*((uint16_t*)msg_buf) = CFSwapInt16(buf);
 #else
-	*((UInt16*)msg_buf) = (((((UInt16)buf) << 8) & 0xFF00) | ((((UInt16)buf) >> 8) & 0x00FF));
+	*((uint16_t*)msg_buf) = ((((buf) << 8) & 0xFF00) | (((buf) >> 8) & 0x00FF));
 #endif
 }
 
@@ -121,7 +120,6 @@ static inline void PPLE16(void *msg_buf)
 static inline void OSType2Ptr(OSType type, char *str)
 {
 	PPBE32(&type);
-	
 	memcpy(str, &type, 4);
 	str[ 4] = 0;
 }
