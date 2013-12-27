@@ -114,9 +114,8 @@
 		550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */; };
 		550FFAE617CEA4570003A2F3 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		550FFAE717CEA4570003A2F3 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		550FFAED17CEA5540003A2F3 /* AIFF.m in Sources */ = {isa = PBXBuildFile; fileRef = 554E102C10D6C79E00BB619C /* AIFF.m */; };
+		550FFAED17CEA5540003A2F3 /* AIFF.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102C10D6C79E00BB619C /* AIFF.c */; };
 		55105C9C13BE638D00902106 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
-		5511F4E4186CF3A5008F6BE1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		5511F4E6186CF3AD008F6BE1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
 		5511F4E9186CFC63008F6BE1 /* AIFF.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 550FFAEB17CEA4570003A2F3 /* AIFF.plugin */; };
 		551292D9163DD68500C2C639 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
@@ -2040,7 +2039,7 @@
 		554E101810D6C79E00BB619C /* Normalize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Normalize.c; sourceTree = "<group>"; };
 		554E102010D6C79E00BB619C /* Silence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Silence.c; sourceTree = "<group>"; };
 		554E102310D6C79E00BB619C /* Smooth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Smooth.c; sourceTree = "<group>"; };
-		554E102C10D6C79E00BB619C /* AIFF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIFF.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		554E102C10D6C79E00BB619C /* AIFF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AIFF.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E103010D6C79E00BB619C /* AVI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AVI.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E103210D6C79E00BB619C /* Clip File.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = "Clip File.r"; sourceTree = "<group>"; };
 		554E103410D6C79E00BB619C /* DVC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DVC.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -2320,10 +2319,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5511F4E6186CF3AD008F6BE1 /* AudioToolbox.framework in Frameworks */,
-				5511F4E4186CF3A5008F6BE1 /* Foundation.framework in Frameworks */,
-				550FFAE617CEA4570003A2F3 /* PlayerPROCore.framework in Frameworks */,
 				550FFAE717CEA4570003A2F3 /* CoreFoundation.framework in Frameworks */,
+				550FFAE617CEA4570003A2F3 /* PlayerPROCore.framework in Frameworks */,
+				5511F4E6186CF3AD008F6BE1 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2968,7 +2966,7 @@
 			isa = PBXGroup;
 			children = (
 				550FFAEC17CEA4590003A2F3 /* AIFF-Info.plist */,
-				554E102C10D6C79E00BB619C /* AIFF.m */,
+				554E102C10D6C79E00BB619C /* AIFF.c */,
 			);
 			name = AIFF;
 			sourceTree = "<group>";
@@ -6065,7 +6063,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				550FFAED17CEA5540003A2F3 /* AIFF.m in Sources */,
+				550FFAED17CEA5540003A2F3 /* AIFF.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

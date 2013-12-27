@@ -6,7 +6,6 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <AudioToolbox/AudioToolbox.h>
-#import <Foundation/Foundation.h>
 
 static inline OSErr TestAIFF(const ContainerChunk* CC)
 {
@@ -83,23 +82,28 @@ static OSErr mainAIFF(void					*unused,
 			if (myStat != noErr) {
 				myErr = MADReadingErr;
 			} else {
+				AudioFileClose(theInID);
 				myErr = MADOrderNotImplemented;
 			}
 		}
 			
 		case MADPlugTest:
-			@autoreleasepool {
-				NSURL	*alienNSURL = (__bridge NSURL*)AlienFileURL;
-				char	theSound[50] = {0};
-				
-				NSData *curData = [[NSData alloc] initWithContentsOfURL:alienNSURL];
-				if (!curData)
-					return MADNeedMemory;
-				
-				[curData getBytes:theSound length:sizeof(theSound)];
-				
-				myErr = TestAIFF((const ContainerChunk*)theSound);
+		{
+			AudioFileID audioFile;
+			OSStatus res;
+
+			res = AudioFileOpenURL(AlienFileURL, kAudioFileReadPermission, kAudioFileAIFFType, &audioFile);
+			if (res != noErr) {
+				res = AudioFileOpenURL(AlienFileURL, kAudioFileReadPermission, kAudioFileAIFCType, &audioFile);
+				if (res != noErr) {
+					myErr = MADFileNotSupportedByThisPlug;
+				} else {
+					AudioFileClose(audioFile);
+				}
+			} else {
+				AudioFileClose(audioFile);
 			}
+		}
 			break;
 			
 		case MADPlugExport:
@@ -146,8 +150,11 @@ static OSErr mainAIFF(void					*unused,
 							AIFFLoop theLoop = {0};
 							AudioFileSetUserData(audioFile, 'LOOP', 0, sizeof(theLoop), &theLoop);
 						}
-#endif
 						AudioFileOptimize(audioFile);
+#endif
+						if (curData->amp == 16)
+							free(data);
+						
 						res = AudioFileClose(audioFile);
 						if (res != noErr)
 							myErr = MADWritingErr;
