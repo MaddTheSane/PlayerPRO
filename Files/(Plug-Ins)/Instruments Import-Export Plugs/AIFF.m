@@ -38,12 +38,12 @@ static inline OSErr TestAIFF(const ContainerChunk* CC)
 }
 
 static OSErr mainAIFF(void					*unused,
-					  OSType				order,						// Order to execute
-					  InstrData				*InsHeader,					// Ptr on instrument header
-					  sData					**sample,					// Ptr on samples data
-					  short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
-					  // If sampleID == -1 : add sample else replace selected sample.
-					  CFURLRef				AlienFileURL,				// IN/OUT file
+					  OSType				order,			// Order to execute
+					  InstrData				*InsHeader,		// Ptr on instrument header
+					  sData					**sample,		// Ptr on samples data
+					  short					*sampleID,		// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+															// If sampleID == -1 : add sample else replace selected sample.
+					  CFURLRef				AlienFileURL,	// IN/OUT file
 					  PPInfoPlug			*thePPInfoPlug)
 {
 	OSErr	myErr = noErr;
@@ -76,8 +76,18 @@ static OSErr mainAIFF(void					*unused,
 		}
 			break;
 #endif
+		case MADPlugImport:
+		{
+			AudioFileID theInID;
+			OSStatus myStat = AudioFileOpenURL(AlienFileURL, kAudioFileReadPermission, 0, &theInID);
+			if (myStat != noErr) {
+				myErr = MADReadingErr;
+			} else {
+				myErr = MADOrderNotImplemented;
+			}
+		}
 			
-		case 'TEST':
+		case MADPlugTest:
 			@autoreleasepool {
 				NSURL	*alienNSURL = (__bridge NSURL*)AlienFileURL;
 				char	theSound[50] = {0};
@@ -92,7 +102,7 @@ static OSErr mainAIFF(void					*unused,
 			}
 			break;
 			
-		case 'EXPL':
+		case MADPlugExport:
 			if (*sampleID >= 0)
 			{
 				char* data = NULL;
@@ -131,6 +141,13 @@ static OSErr mainAIFF(void					*unused,
 					if (res != noErr) {
 						myErr = MADWritingErr;
 					} else {
+#if 0
+						if (curData->loopBeg) {
+							AIFFLoop theLoop = {0};
+							AudioFileSetUserData(audioFile, 'LOOP', 0, sizeof(theLoop), &theLoop);
+						}
+#endif
+						AudioFileOptimize(audioFile);
 						res = AudioFileClose(audioFile);
 						if (res != noErr)
 							myErr = MADWritingErr;
