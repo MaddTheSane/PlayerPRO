@@ -1602,6 +1602,21 @@ OSErr MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRef
 	free(URLcString);
 	return theErr;
 }
+
+OSErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, Boolean compressMAD)
+{
+	char *URLcString = NULL;
+	
+	OSErr theErr = getCStringFromCFURL(urlRef, &URLcString);
+	
+	if (theErr)
+		return theErr;
+	
+	theErr = MADMusicSaveCString(music, URLcString, compressMAD);
+	free(URLcString);
+	return theErr;
+
+}
 #endif
 
 OSErr MADMusicExportCString(MADLibrary *lib, MADMusic *music, char *type, char* cName)
