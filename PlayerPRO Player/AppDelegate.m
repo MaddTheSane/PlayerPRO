@@ -554,7 +554,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 
 - (NSData *)newAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat includeInfo:(BOOL)incInfo
 {
-	//TODO: Write a little-endian AIFF exporter
 	NSInteger dataLen = [dat length];
 	
 	ContainerChunk header;
@@ -697,7 +696,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 		[returnData appendData:infoData];
 	}
 	
-	return [[NSData alloc] initWithData:returnData];
+	return returnData;
 }
 
 - (NSData*)rawSoundData:(MADDriverSettings*)theSet

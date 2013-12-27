@@ -13,6 +13,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				5511F4E8186CFC39008F6BE1 /* PBXTargetDependency */,
 				551FEB7910E7282700EDF2F1 /* PBXTargetDependency */,
 				551FEB7710E7282700EDF2F1 /* PBXTargetDependency */,
 				55151F8410DEDC0F0054ABC4 /* PBXTargetDependency */,
@@ -113,8 +114,11 @@
 		550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */; };
 		550FFAE617CEA4570003A2F3 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		550FFAE717CEA4570003A2F3 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		550FFAED17CEA5540003A2F3 /* AIFF.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102C10D6C79E00BB619C /* AIFF.c */; };
+		550FFAED17CEA5540003A2F3 /* AIFF.m in Sources */ = {isa = PBXBuildFile; fileRef = 554E102C10D6C79E00BB619C /* AIFF.m */; };
 		55105C9C13BE638D00902106 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		5511F4E4186CF3A5008F6BE1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
+		5511F4E6186CF3AD008F6BE1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
+		5511F4E9186CFC63008F6BE1 /* AIFF.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 550FFAEB17CEA4570003A2F3 /* AIFF.plugin */; };
 		551292D9163DD68500C2C639 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		551292E3163DD68500C2C639 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 551292E1163DD68500C2C639 /* InfoPlist.strings */; };
 		551292ED163DD74100C2C639 /* PlayerPROKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 551292E5163DD68500C2C639 /* PlayerPROKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -693,6 +697,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
+		};
+		5511F4E7186CFC39008F6BE1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FFADF17CEA4570003A2F3;
+			remoteInfo = AIFF;
 		};
 		551292EB163DD72E00C2C639 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1712,6 +1723,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				5511F4E9186CFC63008F6BE1 /* AIFF.plugin in Copy PlugIns */,
 				55D57E1C18601BBC00192497 /* MIDI.ppimpexp in Copy PlugIns */,
 				55EE2D8817E12F9300FED42A /* Amplitude.plugin in Copy PlugIns */,
 				55EE2D8917E12F9300FED42A /* Depth.plugin in Copy PlugIns */,
@@ -1796,6 +1808,7 @@
 		55113CBA133688D60008C2AF /* Win-DirectSound.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "Win-DirectSound.c"; sourceTree = "<group>"; };
 		55113CBB133688D60008C2AF /* FileUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = FileUtils.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55113CBC133688D60008C2AF /* Win-PlugImport.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "Win-PlugImport.c"; sourceTree = "<group>"; };
+		5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		551292D8163DD68500C2C639 /* PlayerPROKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		551292DB163DD68500C2C639 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		551292DC163DD68500C2C639 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -2027,7 +2040,7 @@
 		554E101810D6C79E00BB619C /* Normalize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Normalize.c; sourceTree = "<group>"; };
 		554E102010D6C79E00BB619C /* Silence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Silence.c; sourceTree = "<group>"; };
 		554E102310D6C79E00BB619C /* Smooth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Smooth.c; sourceTree = "<group>"; };
-		554E102C10D6C79E00BB619C /* AIFF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AIFF.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		554E102C10D6C79E00BB619C /* AIFF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIFF.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E103010D6C79E00BB619C /* AVI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AVI.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E103210D6C79E00BB619C /* Clip File.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = "Clip File.r"; sourceTree = "<group>"; };
 		554E103410D6C79E00BB619C /* DVC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DVC.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -2307,6 +2320,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5511F4E6186CF3AD008F6BE1 /* AudioToolbox.framework in Frameworks */,
+				5511F4E4186CF3A5008F6BE1 /* Foundation.framework in Frameworks */,
 				550FFAE617CEA4570003A2F3 /* PlayerPROCore.framework in Frameworks */,
 				550FFAE717CEA4570003A2F3 /* CoreFoundation.framework in Frameworks */,
 			);
@@ -2953,7 +2968,7 @@
 			isa = PBXGroup;
 			children = (
 				550FFAEC17CEA4590003A2F3 /* AIFF-Info.plist */,
-				554E102C10D6C79E00BB619C /* AIFF.c */,
+				554E102C10D6C79E00BB619C /* AIFF.m */,
 			);
 			name = AIFF;
 			sourceTree = "<group>";
@@ -4113,6 +4128,7 @@
 		88E0C4950C2F21E500D6C081 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */,
 				5573A1321656FD1700A5AECA /* iOS Frameworks */,
 				552F12E116AE08AF00394143 /* AVFoundation.framework */,
 				555C125016378B3500735225 /* AudioUnit.framework */,
@@ -6049,7 +6065,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				550FFAED17CEA5540003A2F3 /* AIFF.c in Sources */,
+				550FFAED17CEA5540003A2F3 /* AIFF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6707,6 +6723,11 @@
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 550FFAE117CEA4570003A2F3 /* PBXContainerItemProxy */;
+		};
+		5511F4E8186CFC39008F6BE1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 550FFADF17CEA4570003A2F3 /* AIFF */;
+			targetProxy = 5511F4E7186CFC39008F6BE1 /* PBXContainerItemProxy */;
 		};
 		551292EC163DD72E00C2C639 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7576,7 +7597,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -7595,8 +7615,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -7699,7 +7717,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -7718,8 +7735,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -7768,7 +7783,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -7787,8 +7801,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -7807,7 +7819,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -7826,8 +7837,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -7966,7 +7975,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -7984,8 +7992,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8003,7 +8009,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8021,8 +8026,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8040,7 +8043,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8058,8 +8060,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8077,7 +8077,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8095,8 +8094,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8114,7 +8111,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8132,8 +8128,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8585,7 +8579,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -8602,8 +8595,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -8620,7 +8611,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -8637,8 +8627,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -8655,7 +8643,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8673,8 +8660,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8692,7 +8677,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8710,8 +8694,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8729,7 +8711,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8747,8 +8728,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8766,7 +8745,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8784,8 +8762,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8803,7 +8779,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8821,8 +8796,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8840,7 +8813,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8858,8 +8830,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8877,7 +8847,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -8894,8 +8863,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -8911,13 +8878,8 @@
 		557DE88310E08DA300177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8926,7 +8888,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8935,14 +8896,8 @@
 		557DE88410E08DA300177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8951,7 +8906,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8961,7 +8915,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8979,8 +8932,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -8998,7 +8949,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -9016,8 +8966,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -9035,7 +8983,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -9053,8 +9000,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -9072,7 +9017,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -9090,8 +9034,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -9109,7 +9051,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -9126,8 +9067,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -9588,7 +9527,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -9608,8 +9546,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -9702,7 +9638,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -9720,8 +9655,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -9833,11 +9766,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
@@ -9852,12 +9782,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
