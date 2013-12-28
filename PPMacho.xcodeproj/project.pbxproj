@@ -140,7 +140,6 @@
 		551FEB7E10E728F100EDF2F1 /* PAT.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E104110D6C79E00BB619C /* PAT.c */; };
 		5521F3FD17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5521F3FF17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */; };
-		5521F40317F65F19002CDBA9 /* PPFilterPlugController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */; };
 		5521F40F17F75DAF002CDBA9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		5521F41017F8ED5A002CDBA9 /* PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55981C5211EE370D00656EE3 /* PPPreferences.m */; };
 		5521F41517FA4365002CDBA9 /* BoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F41417FA4365002CDBA9 /* BoxViewController.m */; };
@@ -4209,7 +4208,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5521F40317F65F19002CDBA9 /* PPFilterPlugController.h in Headers */,
 				5578C51617DB901F0057D11B /* PPLibrary_PPKPrivate.h in Headers */,
 				5578C51717DB901F0057D11B /* PPDriver_Private.h in Headers */,
 				5578C51117DB90110057D11B /* PlayerPROKit.h in Headers */,

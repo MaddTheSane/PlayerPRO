@@ -7,14 +7,11 @@
 //
 
 #import "PPInstrumentWindowController.h"
-#import "PPInstrumentImporter.h"
-#import "PPInstrumentImporterObject.h"
 #import "PPInstrumentObject.h"
 #import "PPSampleObject.h"
 #import "PPInstrumentCellView.h"
 #import "OpenPanelViewController.h"
 #import "InstrumentInfoController.h"
-#import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
 #include <PlayerPROCore/PPPlug.h>
 #include <PlayerPROCore/RDriverInt.h>

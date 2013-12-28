@@ -25,34 +25,34 @@
 - (void)writeBackToMusic;
 - (void)writeSampleAtIndexBackToMusic:(short)idx;
 
-@property (readwrite, copy) NSString *name;
+@property (copy) NSString *name;
 @property (readonly) NSArray *samples;
 @property (readonly) NSInteger number;
 @property (readonly) short sampleCount;
 @property (readonly) short firstSample;
 
-@property (readwrite) short MIDI;
-@property (readwrite, getter = isSoundOut) BOOL soundOut;
-@property (readwrite, getter = isMIDIOut) BOOL MIDIOut;
+@property short MIDI;
+@property (getter = isSoundOut) BOOL soundOut;
+@property (getter = isMIDIOut) BOOL MIDIOut;
 
-@property (readwrite) Byte volumeSize;
-@property (readwrite) Byte panningSize;
-@property (readwrite) Byte pitchSize;
+@property Byte volumeSize;
+@property Byte panningSize;
+@property Byte pitchSize;
 
-@property (readwrite) Byte volumeSustain;
-@property (readwrite) Byte volumeBegin;
-@property (readwrite) Byte volumeEnd;
+@property Byte volumeSustain;
+@property Byte volumeBegin;
+@property Byte volumeEnd;
 
-@property (readwrite) Byte panningSustain;
-@property (readwrite) Byte panningBegin;
-@property (readwrite) Byte panningEnd;
+@property Byte panningSustain;
+@property Byte panningBegin;
+@property Byte panningEnd;
 
-@property (readwrite) Byte pitchSustain;
-@property (readwrite) Byte pitchBegin;
-@property (readwrite) Byte pitchEnd;
+@property Byte pitchSustain;
+@property Byte pitchBegin;
+@property Byte pitchEnd;
 
-@property (readwrite) Byte vibratoDepth;
-@property (readwrite) Byte vibratoRate;
+@property Byte vibratoDepth;
+@property Byte vibratoRate;
 
 - (BOOL)isVolumeTypeOn;
 - (void)setVolumeTypeOn;

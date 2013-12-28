@@ -38,11 +38,11 @@
 	NSUndoManager *undoManager;
 }
 
-@property (readwrite, retain) PPInstrumentImporter *importer;
-@property (readwrite, nonatomic) MADMusic **curMusic;
-@property (readwrite) MADDriverRec **theDriver;
-@property (readwrite, retain) NSUndoManager *undoManager;
-@property (readwrite, retain) PPFilterPlugHandler *filterHandler;
+@property (strong) PPInstrumentImporter *importer;
+@property (nonatomic) MADMusic **curMusic;
+@property MADDriverRec **theDriver;
+@property (strong) NSUndoManager *undoManager;
+@property (strong) PPFilterPlugHandler *filterHandler;
 @property (weak) IBOutlet PPDocument *currentDocument;
 
 - (BOOL)importSampleFromURL:(NSURL *)sampURL;

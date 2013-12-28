@@ -254,6 +254,12 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 @synthesize generator;
 @synthesize toneRadios;
 @synthesize disabledData;
+@synthesize audioBitRate;
+@synthesize stereoOrMono;
+@synthesize silentRadio;
+@synthesize triangleRadio;
+@synthesize squareRadio;
+@synthesize waveRadio;
 
 - (id)initWithWindow:(NSWindow *)window
 {

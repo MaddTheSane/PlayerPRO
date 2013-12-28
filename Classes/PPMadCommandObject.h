@@ -10,17 +10,13 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 
 @interface PPMadCommandObject : NSObject <NSCopying>
-{
-	Cmd theCommand;
-}
-
-@property (readonly) Cmd theCommand;
-@property (readwrite) Byte instrument;
-@property (readwrite) Byte note;
-@property (readwrite) Byte command;
-@property (readwrite) Byte argument;
-@property (readwrite) Byte volume;
 
 - (id)initWithCmd:(Cmd *)theCmd;
 
+@property (readonly) Cmd theCommand;
+@property Byte instrument;
+@property Byte note;
+@property Byte command;
+@property Byte argument;
+@property Byte volume;
 @end

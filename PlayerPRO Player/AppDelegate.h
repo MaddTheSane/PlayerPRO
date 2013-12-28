@@ -52,13 +52,13 @@
 
 @property (strong) NSString* musicName;
 
-@property (assign) IBOutlet NSWindow *window;
-@property (assign) IBOutlet NSWindow *exportWindow;
-@property (assign) IBOutlet NSMenuItem *pauseDockMenuItem;
+@property (weak) IBOutlet NSWindow *window;
+@property (weak) IBOutlet NSWindow *exportWindow;
+@property (weak) IBOutlet NSMenuItem *pauseDockMenuItem;
 
-@property (assign) IBOutlet NSPanel *toolsPanel;
+@property (weak) IBOutlet NSPanel *toolsPanel;
 @property (readonly, strong) PPInstrumentWindowController *instrumentController;
-@property (getter=isPaused, readwrite) BOOL paused;
+@property (getter=isPaused) BOOL paused;
 
 - (IBAction)showMusicList:(id)sender;
 - (IBAction)sortMusicList:(id)sender;

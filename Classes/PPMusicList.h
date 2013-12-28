@@ -27,7 +27,7 @@
 @interface PPMusicList : NSObject <NSCoding, NSFastEnumeration>
 
 @property (readonly) NSUInteger lostMusicCount;
-@property (readwrite) NSInteger selectedMusic;
+@property NSInteger selectedMusic;
 
 - (void)sortMusicList;
 

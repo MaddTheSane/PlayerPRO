@@ -10,34 +10,26 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 
-typedef enum _ToneGenerator
+typedef NS_ENUM(char, ToneGenerator)
 {
 	cancelTone,
 	silence = 3,
 	triangle = 4,
 	square = 5,
 	wave = 6
-} ToneGenerator;
+};
 
 @interface PPToneGeneratorController : PPFilterPluginWindowController
-{
-	long audioLength;
-	ToneGenerator generator;
-	
-	IBOutlet NSMatrix *stereoOrMono;
-	IBOutlet NSMatrix *audioBitRate;
-	BOOL disabledData;
-	
-	NSArray *toneRadios;
-	IBOutlet NSButton *silentRadio;
-	IBOutlet NSButton *triangleRadio;
-	IBOutlet NSButton *squareRadio;
-	IBOutlet NSButton *waveRadio;
-}
-@property (readwrite) long audioLength;
-@property (readwrite) double audioAmplitude;
-@property (readwrite) int audioFrequency;
-@property (readwrite) ToneGenerator generator;
+@property (weak) IBOutlet NSMatrix *stereoOrMono;
+@property (weak) IBOutlet NSMatrix *audioBitRate;
+@property (weak) IBOutlet NSButton *silentRadio;
+@property (weak) IBOutlet NSButton *triangleRadio;
+@property (weak) IBOutlet NSButton *squareRadio;
+@property (weak) IBOutlet NSButton *waveRadio;
+@property long audioLength;
+@property double audioAmplitude;
+@property int audioFrequency;
+@property ToneGenerator generator;
 
 - (IBAction)toggleToneType:(id)sender;
 
