@@ -30,6 +30,7 @@
 
 //Save music to a URL in MADK format in PPMusicObject, and MAD bundle in PPMusicObjectWrapper
 - (OSErr)saveMusicToURL:(NSURL *)tosave;
+- (OSErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp;
 - (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib;
 
 //Creates a music object from the supplied MADK (PPMusicObject) or MAD bundle (PPMusicObjectWrapper)

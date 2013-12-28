@@ -16,7 +16,7 @@
 
 @implementation DepthController
 
-- (id)initWithWindow:(NSWindow *)window
+- (instancetype)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
@@ -33,7 +33,7 @@
 				case 8:
 					Sample8Ptr += selectionStart;
 					
-					for( i = 0; i < selectionEnd - selectionStart; i++)
+					for (i = 0; i < selectionEnd - selectionStart; i++)
 					{
 						temp = *Sample8Ptr;
 						
@@ -58,7 +58,7 @@
 				case 16:
 					Sample16Ptr += selectionStart/2;						// Div 2, because it's in bytes !!!
 					
-					for( i = 0; i < (selectionEnd - selectionStart)/2; i++)	// Div 2, because it's in bytes !!!
+					for (i = 0; i < (selectionEnd - selectionStart)/2; i++)	// Div 2, because it's in bytes !!!
 					{
 						temp = *Sample16Ptr;
 						

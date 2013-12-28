@@ -10,8 +10,42 @@
 #ifndef __PLAYERPROCORE_PPPRIVATE__
 #define __PLAYERPROCORE_PPPRIVATE__
 
+#ifndef __RDRIVERH__
 #include "RDriver.h"
+#endif
+
+#ifndef PPMacho_MADDriver_h
 #include "MADDriver.h"
+#endif
+
+#ifndef BUILDINGPPRO
+#warning this header should NOT be used outside of PlayerPROCore! The functions and datatypes here may change FOR ANY REASON, including differing compiler includes and defines.
+#endif
+
+#ifdef __OBJC__
+#import <Foundation/NSURL.h>
+#endif
+
+#pragma pack(push, 2)
+
+typedef struct PPInfoRec32
+{
+	char	internalFileName[60];
+	char	formatDescription[60];
+	
+	SInt32	totalPatterns;
+	SInt32	partitionLength;
+	
+	short	totalTracks;
+	short	totalInstruments;
+	
+	OSType	signature;
+	
+	SInt32	fileSize;
+} PPInfoRec32;
+
+#pragma pack(pop)
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -23,39 +57,39 @@ extern "C" {
 
 /*** Deluxe ***/
 
-void	MADCreateOverShoot( MADDriverRec *intDriver);
-void	MADKillOverShoot( MADDriverRec *intDriver);
-void 	Sampler16AddDeluxe( Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver);
-void 	Sampler16Addin16Deluxe( Channel *curVoice, SInt32	*ASCBuffer, MADDriverRec *intDriver);
-void 	Sample16BufferAddDeluxe( Channel *curVoice, SInt32	*ASCBuffer, MADDriverRec *intDriver);
-void 	Play16StereoDeluxe( MADDriverRec *intDriver);
-void 	Sampler8in8AddDeluxe( Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver);
-void 	Sampler8in16AddDeluxe( Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver);
-void 	Sample8BufferAddDeluxe( Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver);
-void 	Play8StereoDeluxe( MADDriverRec *intDriver);
+void	MADCreateOverShoot(MADDriverRec *intDriver);
+void	MADKillOverShoot(MADDriverRec *intDriver);
+void 	Sampler16AddDeluxe(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler16Addin16Deluxe(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver);
+void 	Sample16BufferAddDeluxe(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver);
+void 	Play16StereoDeluxe(MADDriverRec *intDriver);
+void 	Sampler8in8AddDeluxe(Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler8in16AddDeluxe(Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver);
+void 	Sample8BufferAddDeluxe(Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver);
+void 	Play8StereoDeluxe(MADDriverRec *intDriver);
 
 /*** Delay ***/
 
-void Sampler16AddDelay( Channel *curVoice, SInt32	*ASCBuffer, MADDriverRec *intDriver);
-void Sampler16Addin16Delay( Channel *curVoice, SInt32	*ASCBuffer, MADDriverRec *intDriver);
-void Sample16BufferAddDelay( Channel *curVoice, SInt32	*ASCBuffer, MADDriverRec *intDriver);
-void Play16StereoDelay( MADDriverRec *intDriver);
-void Sampler8in8AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver);
-void Sampler8in16AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver);
-void Sample8BufferAddDelay( Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver);
-void Play8StereoDelay( MADDriverRec *intDriver);
+void	Sampler16AddDelay(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver);
+void	Sampler16Addin16Delay(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver);
+void	Sample16BufferAddDelay(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver);
+void	Play16StereoDelay(MADDriverRec *intDriver);
+void	Sampler8in8AddDelay(Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver);
+void	Sampler8in16AddDelay(Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver);
+void	Sample8BufferAddDelay(Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver);
+void	Play8StereoDelay(MADDriverRec *intDriver);
 
 /*** 8 Bits ***/
 
-void 	Sampler8in8Add( Channel *curVoice, Ptr ASCBuffer, MADDriverRec *intDriver);
-void 	Sampler8in16Add( Channel *curVoice, Ptr	ASCBuffer, MADDriverRec *intDriver);
-void 	Sampler8in8AddPoly( Channel *curVoice, Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver);
-void 	Sampler8in16AddPoly( Channel *curVoice, Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver);
-void 	Sample8BufferAdd( Channel *curVoice, Ptr ASCBuffer, MADDriverRec *intDriver);
-void 	Sample8BufferAddPoly( Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver);
-void	Play8Mono( MADDriverRec *intDriver);
-void 	Play8Stereo( MADDriverRec *intDriver);
-void 	Play8PolyPhonic( MADDriverRec *intDriver);
+void 	Sampler8in8Add(Channel *curVoice, Ptr ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler8in16Add(Channel *curVoice, Ptr ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler8in8AddPoly(Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver);
+void 	Sampler8in16AddPoly(Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver);
+void 	Sample8BufferAdd(Channel *curVoice, Ptr ASCBuffer, MADDriverRec *intDriver);
+void 	Sample8BufferAddPoly(Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver);
+void	Play8Mono(MADDriverRec *intDriver);
+void 	Play8Stereo(MADDriverRec *intDriver);
+void 	Play8PolyPhonic(MADDriverRec *intDriver);
 
 /*** 16 Bits ***/
 
@@ -83,49 +117,33 @@ void	DoVolCmd( Channel *ch, short call, MADDriverRec *intDriver);
 
 /*** Interruption Functions ***/
 
-void 	NoteAnalyse( MADDriverRec *intDriver);
-void 	ReadNote( Channel *curVoice, Cmd *theCommand, MADDriverRec *intDriver);
-void 	Filter8Bit(  Byte *myPtr, MADDriverRec *intDriver);
-void 	Filter8BitX(  Byte *myPtr, MADDriverRec *intDriver);
-void 	Filter16BitX(  short *myPtr, MADDriverRec *intDriver);
-void 	BufferCopyM( MADDriverRec *intDriver);
-void 	BufferCopyS( MADDriverRec *intDriver);
+void 	NoteAnalyse(MADDriverRec *intDriver);
+void 	ReadNote(Channel *curVoice, Cmd *theCommand, MADDriverRec *intDriver);
+void 	Filter8Bit(Byte *myPtr, MADDriverRec *intDriver);
+void 	Filter8BitX(Byte *myPtr, MADDriverRec *intDriver);
+void 	Filter16BitX(short *myPtr, MADDriverRec *intDriver);
+void 	BufferCopyM(MADDriverRec *intDriver);
+void 	BufferCopyS(MADDriverRec *intDriver);
 void 	NoteOff(short oldIns, short oldN, short oldV, MADDriverRec *intDriver);
-void 	SampleMIDI( Channel *curVoice, short channel, short curN, MADDriverRec *intDriver);
-void 	CleanDriver( MADDriverRec *intDriver);
+void 	SampleMIDI(Channel *curVoice, short channel, short curN, MADDriverRec *intDriver);
+void 	CleanDriver(MADDriverRec *intDriver);
 
 #ifdef _MAC_H
 #pragma mark Core Audio Functions
-OSErr initCoreAudio( MADDriverRec *inMADDriver);
-OSErr closeCoreAudio( MADDriverRec *inMADDriver);
+OSErr	initCoreAudio( MADDriverRec *inMADDriver);
+OSErr	closeCoreAudio( MADDriverRec *inMADDriver);
 #endif
 
 #ifdef _ESOUND
-OSErr initESD( MADDriverRec *inMADDriver);
-OSErr closeESD( MADDriverRec *inMADDriver);
-void StopChannelESD(MADDriverRec *inMADDriver);
-void PlayChannelESD(MADDriverRec *inMADDriver);
-#endif
-
-#ifdef _OSSSOUND
-OSErr initOSS( MADDriverRec *inMADDriver);
-OSErr closeOSS( MADDriverRec *inMADDriver);
-void StopChannelOSS(MADDriverRec *inMADDriver);
-void PlayChannelOSS(MADDriverRec *inMADDriver);
-#endif
-
-#ifdef LINUX
-OSErr initALSA( MADDriverRec *inMADDriver);
-OSErr closeALSA( MADDriverRec *inMADDriver);
-void StopChannelALSA(MADDriverRec *inMADDriver);
-void PlayChannelALSA(MADDriverRec *inMADDriver);
+OSErr initESD(MADDriverRec *inMADDriver);
+OSErr closeESD(MADDriverRec *inMADDriver);
 #endif
 
 #ifdef WIN32
-void DirectSoundClose( MADDriverRec* driver);
-Boolean DirectSoundInit( MADDriverRec* driver);
-Boolean W95_Init( MADDriverRec* driver);
-void W95_Exit( MADDriverRec* driver);
+Boolean	DirectSoundInit(MADDriverRec* driver);
+void	DirectSoundClose(MADDriverRec* driver);
+Boolean	W95_Init(MADDriverRec* driver);
+void	W95_Exit(MADDriverRec* driver);
 #endif
 	
 #if 0
@@ -148,16 +166,20 @@ OSErr	PPExportFileU( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, M
 OSErr	PPImportFileU( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusicUnicode **theNewMAD);
 	
 OSType	GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType type);
-void	MInitImportPlug( MADLibrary *inMADDriver, char*);
+void	MInitImportPlug( MADLibrary *inMADDriver, const char*);
 void	CloseImportPlug( MADLibrary *inMADDriver);
 OSErr	CheckMADFile( char *AlienFile);
 
 #ifndef __PPPLUGH__
-PPEXPORT void ConvertInstrumentIn( 	Byte *tempPtr,  size_t sSize);
+PPEXPORT void ConvertInstrumentIn(Byte *tempPtr, size_t sSize);
 #endif
 
 #if defined _MAC_H && !TARGET_OS_IPHONE
 void SetOSType(CFURLRef, OSType);
+#endif
+
+#ifdef __OBJC__
+PPEXPORT BOOL MakeMADPlugFromNSURL(MADLibrary *inMADDriver, NSURL* theURL);
 #endif
 
 #ifdef __cplusplus

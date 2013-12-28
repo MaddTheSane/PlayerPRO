@@ -293,23 +293,26 @@
                         <items>
                             <menuItem title="Digital Editor" keyEquivalent="d" id="991">
                                 <connections>
-                                    <action selector="showDigitalEditor:" target="811" id="1043"/>
+                                    <action selector="showDigitalEditor:" target="-1" id="z3f-zB-W2I"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Box Editor" id="990">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="showBoxEditor:" target="811" id="1044"/>
+                                    <action selector="showBoxEditor:" target="-1" id="5SF-vS-zNr"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Classic Editor" id="989">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="showClassicEditor:" target="811" id="1045"/>
+                                    <action selector="showClassicEditor:" target="-1" id="RQN-dU-ErY"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Wave Preview" id="988">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showWavePreview:" target="-1" id="GhU-iw-bww"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="987"/>
                             <menuItem title="Minimize" id="986">
@@ -331,7 +334,7 @@
                         <items>
                             <menuItem title="Instruments List" keyEquivalent="l" id="999">
                                 <connections>
-                                    <action selector="showInstrumentsList:" target="811" id="1032"/>
+                                    <action selector="showInstrumentsList:" target="-1" id="1XA-Gq-8OE"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="998"/>

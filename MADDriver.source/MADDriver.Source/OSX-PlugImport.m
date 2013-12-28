@@ -6,13 +6,14 @@
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
+
+#include <CoreFoundation/CoreFoundation.h>
 #import <Foundation/Foundation.h>
 
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "FileUtils.h"
 #include "PPPrivate.h"
-#include <CoreFoundation/CoreFoundation.h>
 #include "MADTypeConversions.h"
 
 #define MAXPLUG	40
@@ -40,12 +41,45 @@ typedef enum _MADPlugCapabilities {
 	PPMADCanDoBoth = PPMADCanImport | PPMADCanExport
 } MADPlugCapabilities;
 
+#ifdef __x86_64__
+static OSErr BlankPlugFunc(OSType order, char *fileName, MADMusic *theMusic, PPInfoRec *theInfo, MADDriverSettings *unused)
+{
+	PPDebugStr(__LINE__, __FILE__, "Calling the XPC stub function!");
+	return MADOrderNotImplemented;
+}
+
+static Boolean LoadPlugInXPC(CFBundleRef theBundle)
+{
+	//TODO: implement!
+	return false;
+}
+
+static OSErr CallImportPlugXPC(MADLibrary *inMADDriver, char *plugSig, OSType order, char *AlienFile, MADMusic *theNewMAD, PPInfoRec *info)
+{
+	switch (order) {
+		case MADPlugImport:
+			//TODO: implement
+			break;
+			
+		case MADPlugInfo:
+			//TODO: implement
+			break;
+			
+		case MADPlugTest:
+			//TODO: implement
+			break;
+			
+		case MADPlugExport: //No, we won't support exporting using the bridge
+		default:
+			return MADOrderNotImplemented;
+			break;
+	}
+	return MADOrderNotImplemented;
+}
+#endif
+
 static Boolean GetBoolFromType(CFTypeRef theType)
 {
-	//We don't need to test for the other CFTypeIDs because they should already be set up
-	if (booleantype == 0) {
-		booleantype = CFBooleanGetTypeID();
-	}
 	CFTypeID theID = CFGetTypeID(theType);
 	if (theID == booleantype) {
 		return CFBooleanGetValue(theType);
@@ -55,29 +89,25 @@ static Boolean GetBoolFromType(CFTypeRef theType)
 		return theVal != 0;
 	} else if (theID == stringtype) {
 		return [(__bridge NSString*)theType boolValue];
-	} else return false;
+	} else
+		return false;
 }
 
 static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 {
-	//We don't need to test for the other CFTypeIDs because they should already be set up
-	if (arraytype == 0) {
-		arraytype = CFArrayGetTypeID();
-	}
-	
 	{
 		CFTypeID InfoDictionaryType;
 		CFTypeRef OpaqueDictionaryType;
 
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugMenuNameKey);
-		if (OpaqueDictionaryType == NULL) {
+		if (OpaqueDictionaryType == NULL)
 			goto badplug;
-		}
+		
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
 			thePlug->MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
-		}
-		else goto badplug;
+		} else
+			goto badplug;
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugAuthorNameKey);
 		if (OpaqueDictionaryType == NULL) {
@@ -101,10 +131,12 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 					if(GetBoolFromType(importValue))
 						possibilities = PPMADCanImport;
 				}
+				
 				if (exportValue != NULL) {
 					if(GetBoolFromType(exportValue))
 						possibilities |= PPMADCanExport;
 				}
+				
 				switch (possibilities) {
 					case PPMADCanImport:
 						thePlug->mode = MADPlugImport;
@@ -124,46 +156,63 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 				}
 			} else { //If not, use the likely-to-be broken method.
 				OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugModeKey);
-				if (OpaqueDictionaryType == NULL) {
+				if (OpaqueDictionaryType == NULL)
 					goto badplug3;
-				}
+				
 				InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 				if (InfoDictionaryType == stringtype) {
-					const char * thecOSType = NULL;
-					thecOSType = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
+					char fallbackOSType[20] = {0};
+					const char *thecOSType = NULL;
+					if (CFStringGetCString((CFStringRef)OpaqueDictionaryType, fallbackOSType, sizeof(fallbackOSType), kCFStringEncodingMacRoman))
+						thecOSType = fallbackOSType;
+					if (thecOSType == NULL)
+						goto badplug3;
 					
-					thePlug->mode = Ptr2OSType((char*)thecOSType);
-				}
-				else if(InfoDictionaryType == numbertype)
-				{
+					thePlug->mode = Ptr2OSType(thecOSType);
+				} else if(InfoDictionaryType == numbertype) {
 					OSType theplugType;
 					CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberSInt32Type, &theplugType);
-					//PPBE32(&theplugType);
 					thePlug->mode = theplugType;
-				}
-				else goto badplug3;
+				} else
+					goto badplug3;
 			}
 		}
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(theBundle, kMadPlugUTITypesKey);
-		if (OpaqueDictionaryType == NULL) {
+		if (OpaqueDictionaryType == NULL)
 			goto badplug3;
-		}
+		
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == arraytype) {
 			thePlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, (CFArrayRef)OpaqueDictionaryType);
-		}
-		else if(InfoDictionaryType == stringtype)
-		{
-			CFMutableArrayRef UTIMutableArray = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
-			CFStringRef utiName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
-			CFArrayAppendValue(UTIMutableArray, utiName);
-			CFRelease(utiName);
-			thePlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, UTIMutableArray);
-			CFRelease(UTIMutableArray);
-		}
-		else goto badplug3;
+		} else if(InfoDictionaryType == stringtype) {
+			NSArray *utiArray = @[[NSString stringWithString:(__bridge NSString*)OpaqueDictionaryType]];
+			thePlug->UTItypes = CFBridgingRetain(utiArray);
+		} else
+			goto badplug3;
 	}
+	
+#ifdef __x86_64__
+	{
+		NSArray *bundleArchs = nil;
+		{
+			CFArrayRef tmpBundleArchs = CFBundleCopyExecutableArchitectures(theBundle);
+			if (!tmpBundleArchs)
+				goto badplug4;
+			bundleArchs = CFBridgingRelease(tmpBundleArchs);
+		}
+		
+		if (![bundleArchs containsObject:@(kCFBundleExecutableArchitectureX86_64)] &&
+			[bundleArchs containsObject:@(kCFBundleExecutableArchitectureI386)]) {
+			if (LoadPlugInXPC(theBundle)) {
+				thePlug->IOPlug = BlankPlugFunc;
+				thePlug->is32BitOnly = true;
+				goto goodWrap;
+			} else
+				goto badplug4;
+		}
+	}
+#endif
 	
 	thePlug->IOPlug = CFBundleGetFunctionPointerForName(theBundle, CFSTR(PPIMPEXPNAME));
 	thePlug->IOPlugU = CFBundleGetFunctionPointerForName(theBundle, CFSTR(PPIMPEXPNAMEUTF));
@@ -174,6 +223,8 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 	} else {
 		thePlug->hasUnicode = false;
 	}
+	
+goodWrap:
 	thePlug->file = theBundle;
 	CFRetain(thePlug->file);
 	
@@ -190,19 +241,21 @@ badplug:
 
 static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
+	static dispatch_once_t typeIDToken;
+	dispatch_once(&typeIDToken, ^{
+		stringtype = CFStringGetTypeID();
+		numbertype = CFNumberGetTypeID();
+		arraytype = CFArrayGetTypeID();
+		booleantype = CFBooleanGetTypeID();
+	});
+	
 	if (!tempBundle) {
 		return FALSE;
 	}
-
+	
 	if ((inMADDriver->TotalPlug + 1) >= MAXPLUG) {
 		PPDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
 		return false;
-	}
-	if (stringtype == 0) {
-		stringtype = CFStringGetTypeID();
-	}
-	if (numbertype == 0) {
-		numbertype = CFNumberGetTypeID();
 	}
 	
 	PlugInfo *FillPlug = &(inMADDriver->ThePlug[inMADDriver->TotalPlug]);
@@ -218,29 +271,30 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		}
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
-			short i;
 			size_t strlength = 0;
-			const char * tempstring = CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
-			if (tempstring == NULL) goto badplug;
+			char fallbackOSType[20] = {0};
+			const char * tempstring = NULL;
+			if (CFStringGetCString((CFStringRef)OpaqueDictionaryType, fallbackOSType, sizeof(fallbackOSType), kCFStringEncodingMacRoman))
+				tempstring = fallbackOSType;
+			if (tempstring == NULL)
+				goto badplug;
 			strcpy(FillPlug->type, "    ");
 			strlength = strlen(tempstring);
-			if (strlength > 4) {
+			if (strlength > 4)
 				strlength = 4;
-			}
-			for (i = 0; i < strlength; i++) {
+			
+			for (int i = 0; i < strlength; i++) {
 				if (tempstring[i] == 0) {
 					FillPlug->type[i] = ' ';
-				}else FillPlug->type[i] = tempstring[i];
+				} else FillPlug->type[i] = tempstring[i];
 			}
 			FillPlug->type[4] = 0;
-		}
-		else if(InfoDictionaryType == numbertype)
-		{
+		} else if(InfoDictionaryType == numbertype) {
 			OSType theplugType;
 			CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberSInt32Type, &theplugType);
 			OSType2Ptr(theplugType, FillPlug->type);
-		}
-		else goto badplug;
+		} else
+			goto badplug;
 		
 		{
 			//Check to see if there's a plug-in that matches the type.
@@ -289,6 +343,20 @@ badplug:
 	return false;
 }
 
+BOOL MakeMADPlugFromNSURL(MADLibrary *inMADDriver, NSURL *theURL)
+{
+	@autoreleasepool {
+		BOOL yesOrNo = NO;
+		CFBundleRef theBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)theURL);
+		if (!theBundle) {
+			return NO;
+		}
+		yesOrNo = MakeMADPlug(inMADDriver, theBundle) ? YES : NO;
+		CFRelease(theBundle);
+		return yesOrNo;
+	}
+}
+
 #pragma mark Plug-in Locations
 //There are many places that a plug-in might be kept in OS X
 /*
@@ -332,54 +400,39 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 	}
 }
 
-static Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
+static Boolean CompareTwoNSURLs(NSURL *urla, NSURL *urlb)
 {
-	// Check if we're running Lion or later
-	if (&kCFURLFileResourceIdentifierKey == NULL) {
-		//If not, compare using FSCompareFSRefs
-		FSRef refA, refB;
-		Boolean bothAreGood = true;
-		if (CFURLGetFSRef(urla, &refA) == false)
-			bothAreGood = false;
-		if (CFURLGetFSRef(urlb, &refB) == false)
-			bothAreGood = false;
-		if (bothAreGood) {
-			if (FSCompareFSRefs(&refA, &refB) == noErr)
-			{
-				return true;
-			}else{
-				return false;
-			}
-		} else return false;
-	} else {
-		CFTypeRef refA = NULL, refB = NULL;
-		Boolean bothAreValid = true;
-		
-		if (CFURLCopyResourcePropertyForKey(urla, kCFURLFileResourceIdentifierKey, &refA, NULL) == false)
-			bothAreValid = false;
-		if (CFURLCopyResourcePropertyForKey(urlb, kCFURLFileResourceIdentifierKey, &refB, NULL) == false)
-			bothAreValid = false;
+	@autoreleasepool {
+		id refA = nil, refB = nil;
+		BOOL bothAreValid = YES;
 		Boolean theSame = false;
-		if (bothAreValid) {
-			theSame = CFEqual(refA, refB);
+		
+		if ([urla getResourceValue:&refA forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
+			bothAreValid = NO;
+		} else if ([urlb getResourceValue:&refB forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
+			bothAreValid = NO;
 		}
 		
-		if (refA) {
-			CFRelease(refA);
-		}
-		if (refB) {
-			CFRelease(refB);
-		}
+		if (bothAreValid)
+			theSame = [refA isEqual:refB];
+		
 		return theSame;
 	}
 }
 
-static CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(char *UserAddedPlace)
+static inline Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
+{
+	@autoreleasepool {
+		return CompareTwoNSURLs((__bridge NSURL*)urla, (__bridge NSURL*)urlb);
+	}
+}
+
+static CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(const char *UserAddedPlace)
 {
 	CFMutableArrayRef FoldLocs = CreateDefaultPluginFolderLocations();
 	BOOL isTheSame = NO;
 	CFIndex i;
-	CFURLRef custfolder = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (UInt8*)UserAddedPlace, strlen(UserAddedPlace), true);
+	CFURLRef custfolder = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8*)UserAddedPlace, strlen(UserAddedPlace), true);
 
 	for (i = 0; i < CFArrayGetCount(FoldLocs); i++) {
 		CFURLRef index = CFArrayGetValueAtIndex(FoldLocs, i);
@@ -388,39 +441,38 @@ static CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(char *UserAdd
 			break;
 		}
 	}
-	if (isTheSame == NO) {
+	if (isTheSame == NO)
 		CFArrayInsertValueAtIndex(FoldLocs, 0, custfolder);
-	}
+	
 	CFRelease(custfolder);
 	return FoldLocs;
 }
 
-static OSErr PPMADKInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
+static OSErr PPMADKInfoFile(char *AlienFile, PPInfoRec *InfoRec)
 {
 	MADSpec		*theMAD;
 	long		fileSize;
 	UNFILE		fileID;
 	
-	theMAD = (MADSpec*) malloc( sizeof( MADSpec) + 200);
+	theMAD = (MADSpec*)malloc(sizeof(MADSpec) + 200);
 	
-	fileID = iFileOpenRead( AlienFile);
-	if (!fileID)
-	{
-		free( theMAD);
+	fileID = iFileOpenRead(AlienFile);
+	if (!fileID) {
+		free(theMAD);
 		return MADReadingErr;
 	}
-	fileSize = iGetEOF( fileID);
 	
-	iRead( sizeof( MADSpec), (Ptr) theMAD, fileID);
-	iClose( fileID);
+	fileSize = iGetEOF(fileID);
+	iRead(sizeof(MADSpec), theMAD, fileID);
+	iClose(fileID);
 	
-	strlcpy( InfoRec->internalFileName, theMAD->name, sizeof(theMAD->name));
+	strlcpy(InfoRec->internalFileName, theMAD->name, sizeof(theMAD->name));
 	
 	InfoRec->totalPatterns = theMAD->numPat;
 	InfoRec->partitionLength = theMAD->numPointers;
 	InfoRec->totalTracks = theMAD->numChn;
 	InfoRec->signature = 'MADK';
-	strcpy( InfoRec->formatDescription, "MADK");
+	strcpy(InfoRec->formatDescription, "MADK");
 	InfoRec->totalInstruments = theMAD->numInstru;
 	InfoRec->fileSize = fileSize;
 	
@@ -469,15 +521,19 @@ static OSErr CallImportPlug(MADLibrary				*inMADDriver,
 					 MADMusic				*theNewMAD,
 					 PPInfoRec				*info)
 {
+#ifdef __x86_64__
+	if (inMADDriver->ThePlug[PlugNo].is32BitOnly) {
+		return CallImportPlugXPC(inMADDriver, inMADDriver->ThePlug[PlugNo].type, order, AlienFile, theNewMAD, info);
+	}
+#endif
 	OSErr					iErr = noErr;
 	
 	if (!(inMADDriver->ThePlug[PlugNo].IOPlug)) {
 		return MADOrderNotImplemented;
 	}
 	
-	CFBundleRefNum resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
-	
-	MADDriverSettings		driverSettings;
+	CFBundleRefNum			resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
+	MADDriverSettings		driverSettings = {0};
 	
 	iErr = (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);
 	
@@ -486,12 +542,12 @@ static OSErr CallImportPlug(MADLibrary				*inMADDriver,
 	return iErr;
 }
 
-static OSErr CallImportPlugUnicode(MADLibrary				*inMADDriver,
-					 short					PlugNo,			// CODE du plug
-					 OSType					order,
-					 char					*AlienFile,
-					 MADMusicUnicode		*theNewMAD,
-					 PPInfoRecU				*info)
+static OSErr CallImportPlugUnicode(MADLibrary		*inMADDriver,
+								   short			PlugNo,			// CODE du plug
+								   OSType			order,
+								   char				*AlienFile,
+								   MADMusicUnicode	*theNewMAD,
+								   PPInfoRecU		*info)
 {
 	OSErr iErr = noErr;
 	
@@ -541,13 +597,13 @@ static OSErr CallImportPlugUnicode(MADLibrary				*inMADDriver,
 }
 
 
-void MInitImportPlug( MADLibrary *inMADDriver, char *PlugsFolderName)
+void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 {
-	CFMutableArrayRef PlugLocations = NULL;
-	CFArrayRef		somePlugs = NULL;
-	CFIndex			PlugLocNums, PlugNums, i, x;
+	CFMutableArrayRef	PlugLocations = NULL;
+	CFArrayRef			somePlugs = NULL;
+	CFIndex				PlugLocNums, PlugNums, i, x;
 	
-	inMADDriver->ThePlug = (PlugInfo*) calloc( MAXPLUG, sizeof( PlugInfo));
+	inMADDriver->ThePlug = (PlugInfo*)calloc(MAXPLUG, sizeof(PlugInfo));
 	inMADDriver->TotalPlug = 0;
 	if (PlugsFolderName == NULL) {
 		PlugLocations = CreateDefaultPluginFolderLocations();
@@ -555,24 +611,21 @@ void MInitImportPlug( MADLibrary *inMADDriver, char *PlugsFolderName)
 		PlugLocations = CreatePluginFolderLocationsWithFolderPath(PlugsFolderName);
 	}
 	
-	PlugLocNums	= CFArrayGetCount( PlugLocations );
-	for (i = 0; i < PlugLocNums; i++) {
-		CFURLRef aPlugLoc = CFArrayGetValueAtIndex(PlugLocations, i);
-		somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, CFSTR("ppimpexp"));
-		PlugNums = CFArrayGetCount( somePlugs );
-		if (PlugNums > 0) {
+	PlugLocNums	= CFArrayGetCount(PlugLocations);
+	@autoreleasepool {
+		for (i = 0; i < PlugLocNums; i++) {
+			CFURLRef aPlugLoc = CFArrayGetValueAtIndex(PlugLocations, i);
+			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, CFSTR("ppimpexp"));
+			PlugNums = CFArrayGetCount(somePlugs);
 			for (x = 0; x < PlugNums; x++) {
 				CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
 				MakeMADPlug(inMADDriver, tempBundleRef);
 				//We do this to prevent resource/memory leak
 				//Read the documentation for CFBundleCreateBundlesFromDirectory for more info
-				//If the plug-in creation succeeded, it will bump the ref count from two (one from the CFArray) to three
-				//And we can safely release it to get the proper retain count needed
-				//If plug-in creation failed, the retain count is two and we probably don't want anything to do with the plug-in
 				CFRelease(tempBundleRef);
 			}
+			CFRelease(somePlugs);
 		}
-		CFRelease(somePlugs);
 	}
 	CFRelease(PlugLocations);
 	PlugLocations = NULL;
@@ -580,35 +633,26 @@ void MInitImportPlug( MADLibrary *inMADDriver, char *PlugsFolderName)
 
 void CloseImportPlug(MADLibrary *inMADDriver)
 {
-	short	i;
-	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
-	{
+	for (int i = 0; i < inMADDriver->TotalPlug; i++) {
 		CFRelease(inMADDriver->ThePlug[i].file);
 		CFRelease(inMADDriver->ThePlug[i].AuthorString);
 		CFRelease(inMADDriver->ThePlug[i].UTItypes);
 		CFRelease(inMADDriver->ThePlug[i].MenuName);
-
 	}
-	free( inMADDriver->ThePlug);
+	free(inMADDriver->ThePlug);
 	inMADDriver->ThePlug = NULL;
 }
 
 OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)
 {
-	short		i;
-	MADMusic	aMAD;
+	MADMusic aMAD;
 	
-	if (!strcmp( kindFile, "MADK"))
-	{
-		return PPMADKInfoFile( AlienFile, InfoRec);
-	}
+	if (!strcmp(kindFile, "MADK"))
+		return PPMADKInfoFile(AlienFile, InfoRec);
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
-	{
-		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type))
-		{
-			return CallImportPlug( inMADDriver, i, MADPlugInfo, AlienFile, &aMAD, InfoRec);
+	for (int i = 0; i < inMADDriver->TotalPlug; i++) {
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
+			return CallImportPlug(inMADDriver, i, MADPlugInfo, AlienFile, &aMAD, InfoRec);
 		}
 	}
 	return MADCannotFindPlug;
@@ -640,19 +684,17 @@ OSErr PPInfoFileU(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPIn
 	return MADCannotFindPlug;
 }
 
-OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD)
+OSErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD)
 {
-	short		i;
-	PPInfoRec	InfoRec;
+	PPInfoRec InfoRec = {0};
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
-	{
-		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type))
-		{
-			*theNewMAD = (MADMusic*) calloc( sizeof( MADMusic), 1);
-			if (!theNewMAD) return MADNeedMemory;
+	for (int i = 0; i < inMADDriver->TotalPlug; i++) {
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
+			*theNewMAD = (MADMusic*)calloc(sizeof(MADMusic), 1);
+			if (!theNewMAD)
+				return MADNeedMemory;
 			
-			OSErr iErr = CallImportPlug( inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
+			OSErr iErr = CallImportPlug(inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
 			if (iErr != noErr) {
 				free(*theNewMAD);
 				*theNewMAD = NULL;
@@ -688,23 +730,25 @@ OSErr PPImportFileU( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, M
 
 OSErr CheckMADFile(char* name)
 {
-	UNFILE				refNum;
-	char				charl[CharlMADcheckLength];
-	OSErr				err;
+	UNFILE	refNum;
+	char	charl[CharlMADcheckLength];
+	OSErr	err;
 	
 	refNum = iFileOpenRead( name);
-	if (!refNum) return MADReadingErr;
-	else
-	{
+	if (!refNum)
+		return MADReadingErr;
+	else {
 		iRead(CharlMADcheckLength, charl, refNum);
 		
 		if (charl[ 0] == 'M' &&							// MADK
-		   charl[ 1] == 'A' &&
-		   charl[ 2] == 'D' &&
-		   charl[ 3] == 'K') err = noErr;
-		else err = MADIncompatibleFile;
+			charl[ 1] == 'A' &&
+			charl[ 2] == 'D' &&
+			charl[ 3] == 'K')
+			err = noErr;
+		else
+			err = MADIncompatibleFile;
 		
-		iClose( refNum);
+		iClose(refNum);
 	}
 	return err;
 }
@@ -739,23 +783,24 @@ OSErr PPIdentifyFile( MADLibrary *inMADDriver, char *type, char *AlienFile)
 	PPInfoRecU			InfoRec;
 	OSErr				iErr = noErr;
 	
-	strcpy( type, "!!!!");
+	strcpy(type, "!!!!");
 	
 	// Check if we have access to this file
 	refNum = iFileOpenRead( AlienFile);
-	if (!refNum) return MADReadingErr;
-	else
-	{
-		if (iGetEOF( refNum) < 100) iErr = MADIncompatibleFile;
-		iClose( refNum);
-		if (iErr) return iErr;
+	if (!refNum)
+		return MADReadingErr;
+	else {
+		if (iGetEOF(refNum) < 100)
+			iErr = MADIncompatibleFile;
+		iClose(refNum);
+		if (iErr)
+			return iErr;
 	}
 	
 	// Is it a MAD file?
-	iErr = CheckMADFile( AlienFile);
-	if (iErr == noErr)
-	{
-		strcpy( type, "MADK");
+	iErr = CheckMADFile(AlienFile);
+	if (iErr == noErr) {
+		strcpy(type, "MADK");
 		return noErr;
 	}
 	iErr = CheckMADuFile(AlienFile);
@@ -764,82 +809,72 @@ OSErr PPIdentifyFile( MADLibrary *inMADDriver, char *type, char *AlienFile)
 		return noErr;
 	}
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
-	{
-		if (CallImportPlugUnicode(inMADDriver, i, MADPlugTest, AlienFile, NULL, &InfoRec) == noErr)
-		{
+	for(i = 0; i < inMADDriver->TotalPlug; i++) {
+		if (CallImportPlugUnicode(inMADDriver, i, MADPlugTest, AlienFile, NULL, &InfoRec) == noErr) {
 			strcpy(type, inMADDriver->ThePlug[i].type);
 			return noErr;
 		}
 	}
 	
-	strcpy( type, "!!!!");
+	strcpy(type, "!!!!");
 	return MADCannotFindPlug;
 }
 
-Boolean	MADPlugAvailable( MADLibrary *inMADDriver, char* kindFile)
+Boolean	MADPlugAvailable(MADLibrary *inMADDriver, char* kindFile)
 {
-	short		i;
-	
-	if (!strcmp( kindFile, "MADK")) return TRUE;
-	if (!strcmp(kindFile, "MADu")) return TRUE;
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
-	{
-		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type)) return TRUE;
+	if (!strcmp( kindFile, "MADK")) 
+	return TRUE;
+	if (!strcmp(kindFile, "MADu")) 
+	return TRUE;
+	for(int i = 0; i < inMADDriver->TotalPlug; i++) {
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) 
+		return TRUE;
 	}
 	return FALSE;
 }
 
-OSErr PPExportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD)
+OSErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD)
 {
-	short		i;
+	PPInfoRec InfoRec;
+	
+	for (int i = 0; i < inMADDriver->TotalPlug; i++) {
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
+			return CallImportPlug(inMADDriver, i, MADPlugExport, AlienFile, theNewMAD, &InfoRec);
+		}
+	}
+	return MADCannotFindPlug;
+}
+
+OSErr PPTestFile(MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
+{
+	MADMusic	aMAD;
 	PPInfoRec	InfoRec;
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
-	{
-		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type))
-		{
-			return CallImportPlug( inMADDriver, i, MADPlugExport, AlienFile, theNewMAD, &InfoRec);
+	for (int i = 0; i < inMADDriver->TotalPlug; i++) {
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
+			return CallImportPlug(inMADDriver, i, MADPlugTest, AlienFile, &aMAD, &InfoRec);
 		}
 	}
 	return MADCannotFindPlug;
 }
 
-OSErr PPTestFile( MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
+OSType GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 {
-	short			i;
-	MADMusic		aMAD;
-	PPInfoRec		InfoRec;
+	short i, x;
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
-	{
-		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type))
-		{
-			return CallImportPlug( inMADDriver, i, MADPlugTest, AlienFile, &aMAD, &InfoRec);
-		}
-	}
-	return MADCannotFindPlug;
-}
-
-OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
-{
-	short	i, x;
+	if (ID >= inMADDriver->TotalPlug)
+		PPDebugStr( __LINE__, __FILE__, "PP-Plug ERROR. ");
 	
-	if (ID >= inMADDriver->TotalPlug) PPDebugStr( __LINE__, __FILE__, "PP-Plug ERROR. ");
-	
-	for( i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
-	{
-		if (inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == MADPlugImportExport)
-		{
-			if (ID == x)
-			{
-				short 	xx;
-				OSType	type;
+	for (i = 0, x = 0; i < inMADDriver->TotalPlug; i++) {
+		if (inMADDriver->ThePlug[i].mode == mode || inMADDriver->ThePlug[i].mode == MADPlugImportExport) {
+			if (ID == x) {
+				size_t	xx;
+				OSType	type = '    ';
 				
-				xx = strlen( inMADDriver->ThePlug[ i].type);
-				if (xx > 4) xx = 4;
-				type = '    ';
-				memcpy( inMADDriver->ThePlug[ i].type, &type, xx);
+				xx = strlen(inMADDriver->ThePlug[i].type);
+				if (xx > 4)
+					xx = 4;
+				memcpy(inMADDriver->ThePlug[i].type, &type, xx);
 				PPBE32(&type);
 				return type;
 			}
@@ -847,8 +882,8 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 		}
 	}
 	
-	PPDebugStr( __LINE__, __FILE__, "PP-Plug ERROR II.");
+	PPDebugStr(__LINE__, __FILE__, "PP-Plug ERROR II.");
 	
-	return noErr;
+	return '!!!!';
 }
 

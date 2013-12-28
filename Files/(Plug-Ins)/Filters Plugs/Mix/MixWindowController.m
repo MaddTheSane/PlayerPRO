@@ -16,7 +16,7 @@
 
 @implementation MixWindowController
 
-- (id)initWithWindow:(NSWindow *)window
+- (instancetype)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
@@ -95,12 +95,12 @@ static OSErr mainMix(void			*unused,
 					resultPtr = NewPtr(resultLength);
 					
 					worgPtr = theData->data; wclipPtr = clipPtr;
-					for( i = 0; i < SelectionStart; i++) // first pass to get max value.
+					for (i = 0; i < SelectionStart; i++) // first pass to get max value.
 					{
 						temp1 = *worgPtr++;
 						peak = max( peak, labs( gp1 * temp1));
 					}
-					for( i = 0; i < (resultLength - SelectionStart); i++)
+					for (i = 0; i < (resultLength - SelectionStart); i++)
 					{
 						if (i < length1) {
 							temp1 = *worgPtr;
@@ -120,7 +120,7 @@ static OSErr mainMix(void			*unused,
 					}
 					
 					worgPtr = theData->data; wclipPtr = clipPtr - SelectionStart; wresultPtr = resultPtr;
-					for( i = 0; i < resultLength; i++) // one more time, all together, now !!!
+					for (i = 0; i < resultLength; i++) // one more time, all together, now !!!
 					{
 						if (i < theData->size) {
 							temp1 = *worgPtr;

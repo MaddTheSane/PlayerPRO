@@ -25,7 +25,8 @@
 		} else if (![self.file isEqual:[object file]]) {
 			return NO;
 			//Ignore version, authorstring and type
-		} else return YES;
+		} else
+			return YES;
 	}
 	return NO;
 }
@@ -37,7 +38,7 @@
 
 #define PPDGLoadPlug(theBundle) (PPDigitalPlugin**)GetCOMPlugInterface(theBundle, kPlayerPRODigitalPlugTypeID, kPlayerPRODigitalPlugInterfaceID)
 
-- (id)initWithBundle:(NSBundle*)toInit
+- (instancetype)initWithBundle:(NSBundle*)toInit
 {
 	if (self = [super initWithBundle:toInit]) {
 		NSURL *bundleURL = [toInit bundleURL];

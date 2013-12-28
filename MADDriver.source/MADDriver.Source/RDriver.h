@@ -87,128 +87,128 @@ enum MADErrors
 
 typedef struct Channel
 {
-		SInt32		ID;					// Channel ID - 0 to MAXTRACK
-		SInt32		TrackID;			// TrackID - 0 to MAXTRACK (Used in multiChannel mode)
-		
-		char		*begPtr;			// Sample Data Ptr - Beginning of data
-		char		*maxPtr;			// Sample Data Ptr - End of data
-		char		*curPtr;			// Sample Data Ptr - Current position
-		size_t		sizePtr;			// Sample Size in bytes
-		
-		SInt32		amp;				// Sample amplitude: 8 or 16 bits
-		
-		size_t		loopBeg;			// Loop Beginning
-		size_t		loopSize;			// Loop Size
-		
-		SInt32		ins;				// Current Instrument ID
-		SInt32		insOld;				// Previous Instrument ID played on this channel
-		SInt32		samp;				// Current Sample ID
-		
-		SInt32		fineTune;			// Finetune
-		
-		SInt32		note;				// Note
-		SInt32		noteOld;			// Previous note played on this channel
-		SInt32		relNoteOld;			// Previous realnote
-		
-		SInt32 		period;				// Current period
-		SInt32		periodOld;			// Previous period played on this channel
-		
-		SInt32		vol;				// Channel vol (0 to 64)
-		SInt32		pann;				// Channel pan (0 to 64)
-		
-		SInt32 		cmd;				// Command
-		Byte		arg;				// Argument of command
-		Byte		volcmd;				// Volume Command
-		
-		SInt32 		arp[ MAX_ARP];		// Used for arpeggio command
-		SInt32 		arpindex;			// Used for arpeggio command
-		Boolean		arpUse;
-		
-		char		viboffset;			// Used for vibrato command
-		SInt32 		vibdepth;			// Used for vibrato command
-		SInt32 		vibrate;			// Used for vibrato command
-		SInt32		vibtype;			// Used for vibrato command
-		
-		SInt32 		slide;				// Used for slideUp and slideDown command
-		
-		SInt32 		pitchgoal;			// Used for portamento command
-		SInt32 		pitchrate;			// Used for portamento command
-		
-		SInt32 		volumerate;			// Used for slideVolume command
-		
-		SInt32		oldArg[ 16];
-		SInt32		oldVibrate;
-		SInt32		oldVibdepth;
-		
-		SInt32		eventTime;
-		
-		char		*samplePtr;			// Used internaly by MADPlaySoundData & MADPlaySndHandle
-		
-		/**/
-		
-		Boolean		KeyOn;
-		short		a;
-		short		b;
-		float		p;
-		SInt32		volEnv;
-		SInt32		nextvolEnv;
-		SInt32		volEnvInter;
-		
-		SInt32		volFade;
-		SInt32		nextvolFade;
-		
-		short		aa;
-		short		bb;
-		float		pp;
-		SInt32		pannEnv;
-		SInt32		nextpannEnv;
-//		long		pannEnvInter;
-		
-		Boolean		volEnvActive, pannEnvActive;
-		
-		short		aaa;
-		short		bbb;
-		float		ppp;
-		SInt32		panPitch;
-		
-		SInt32		lAC;
-		
-		char		*prevPtr;
-		SInt32		lastWordL, curLastWordL;
-		SInt32		lastWordR, curLastWordR;
-		SInt32		curLevelL, curLevelR;
-		
-		Boolean		LevelDirectionL, LevelDirectionR, RemoverWorking;
-		
-		SInt32		prevVol0;
-		SInt32		prevVol1;
-		
-		/**/
-		
-		Boolean		GEffect;
-		short		GPat, GReader;
-		
-		/**/
-		
-		Boolean		stereo;
-		
-		Byte		loopType;
-		Boolean		pingpong;
-		
-		SInt32		preOff;
-		char		preVal, preVal2;
-		char		preValR, preVal2R;
-		
-		short		spreVal, spreVal2;
-		short		spreValR, spreVal2R;
-		SInt32		TICKREMOVESIZE;
-		
-		
-		Boolean		PanningE8;
-		short		trig;
-		short		PatternLoopE6, PatternLoopE6Count, PatternLoopE6ID;
-		
-		SInt32		TimeCounter;
+	int		ID;					// Channel ID - 0 to MAXTRACK
+	int		TrackID;			// TrackID - 0 to MAXTRACK (Used in multiChannel mode)
+	
+	char	*begPtr;			// Sample Data Ptr - Beginning of data
+	char	*maxPtr;			// Sample Data Ptr - End of data
+	char	*curPtr;			// Sample Data Ptr - Current position
+	size_t	sizePtr;			// Sample Size in bytes
+	
+	int		amp;				// Sample amplitude: 8 or 16 bits
+	
+	size_t	loopBeg;			// Loop Beginning
+	size_t	loopSize;			// Loop Size
+	
+	int		ins;				// Current Instrument ID
+	int		insOld;				// Previous Instrument ID played on this channel
+	int		samp;				// Current Sample ID
+	
+	int		fineTune;			// Finetune
+	
+	int		note;				// Note
+	int		noteOld;			// Previous note played on this channel
+	int		relNoteOld;			// Previous realnote
+	
+	int		period;				// Current period
+	int		periodOld;			// Previous period played on this channel
+	
+	int		vol;				// Channel vol (0 to 64)
+	int		pann;				// Channel pan (0 to 64)
+	
+	int		cmd;				// Command
+	Byte	arg;				// Argument of command
+	Byte	volcmd;				// Volume Command
+	
+	SInt32	arp[MAX_ARP];		// Used for arpeggio command
+	int		arpindex;			// Used for arpeggio command
+	Boolean	arpUse;
+	
+	char	viboffset;			// Used for vibrato command
+	int		vibdepth;			// Used for vibrato command
+	int		vibrate;			// Used for vibrato command
+	int		vibtype;			// Used for vibrato command
+	
+	int		slide;				// Used for slideUp and slideDown command
+	
+	int 	pitchgoal;			// Used for portamento command
+	int 	pitchrate;			// Used for portamento command
+	
+	int 	volumerate;			// Used for slideVolume command
+	
+	SInt32	oldArg[16];
+	int		oldVibrate;
+	int		oldVibdepth;
+	
+	int		eventTime;
+	
+	char	*samplePtr;			// Used internaly by MADPlaySoundData & MADPlaySndHandle
+	
+	/**/
+	
+	Boolean	KeyOn;
+	short	a;
+	short	b;
+	float	p;
+	int		volEnv;
+	int		nextvolEnv;
+	int		volEnvInter;
+	
+	int		volFade;
+	int		nextvolFade;
+	
+	short	aa;
+	short	bb;
+	float	pp;
+	int		pannEnv;
+	int		nextpannEnv;
+	//long	pannEnvInter;
+	
+	Boolean	volEnvActive, pannEnvActive;
+	
+	short	aaa;
+	short	bbb;
+	float	ppp;
+	int		panPitch;
+	
+	int		lAC;
+	
+	char	*prevPtr;
+	int		lastWordL, curLastWordL;
+	int		lastWordR, curLastWordR;
+	int		curLevelL, curLevelR;
+	
+	Boolean	LevelDirectionL, LevelDirectionR, RemoverWorking;
+	
+	int		prevVol0;
+	int		prevVol1;
+	
+	/**/
+	
+	Boolean	GEffect;
+	short	GPat, GReader;
+	
+	/**/
+	
+	Boolean	stereo;
+	
+	Byte	loopType;
+	Boolean	pingpong;
+	
+	int		preOff;
+	char	preVal, preVal2;
+	char	preValR, preVal2R;
+	
+	short	spreVal, spreVal2;
+	short	spreValR, spreVal2R;
+	int		TICKREMOVESIZE;
+	
+	
+	Boolean	PanningE8;
+	short	trig;
+	short	PatternLoopE6, PatternLoopE6Count, PatternLoopE6ID;
+	
+	int		TimeCounter;
 } Channel;
 
 /********************						***********************/
@@ -217,17 +217,16 @@ typedef struct Channel
 
 typedef struct MADMusic
 {
-	MADSpec					*header;								// Music Header - See 'MAD.h'
-	PatData					*partition[ MAXPATTERN];				// Patterns
-	InstrData				*fid;									// Instruments
-	sData					**sample;								// Samples
-	FXSets					*sets;									// FXSettings
-	Boolean					musicUnderModification;					// Tell the driver to NOT access music data
-	Str255					musicFileName;
-	Boolean					hasChanged;
-	SInt32					position, fullTime;
-	OSType					originalFormat;
-	
+	MADSpec		*header;					// Music Header - See 'MAD.h'
+	PatData		*partition[MAXPATTERN];		// Patterns
+	InstrData	*fid;						// Instruments
+	sData		**sample;					// Samples
+	FXSets		*sets;						// FXSettings
+	Boolean		musicUnderModification;		// Tell the driver to NOT access music data
+	Str255		musicFileName;
+	Boolean		hasChanged;
+	int			position, fullTime;
+	OSType		originalFormat;
 } MADMusic;
 
 typedef struct MADMusicUnicode
@@ -251,36 +250,38 @@ typedef struct MADMusicUnicode
 
 enum MADSoundOutput
 {
-	MIDISoundDriver = 3,					// Not yet available
-	BeOSSoundDriver = 6,					// BE ONLY when using with BeOS compatible systems ! - NOT FOR MAC
-	DirectSound95NT,					// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
-	Wave95NT,							// WINDOWS 95/NT ONLY when using with PC compatible systems ! - NOT FOR MAC
-	CoreAudioDriver,					// OSX ONLY Core Audio driver
-	ALSADriver,							// LINUX ONLY ALSA driver
-	OSSDriver,							// Open Sound System. Most Unices (NOT OS X) including Linux
-	ESDDriver,							// ESound Driver. available on most UNIX Systems
-	NoHardwareDriver = SHRT_MAX			// NO HARDWARE CONNECTION, will not produce any sound
+	CoreAudioDriver = 1,		// OSX ONLY Core Audio driver
+	DirectSound95NT,			// WINDOWS ONLY
+	Wave95NT,					// WINDOWS ONLY
+	PortAudioDriver,			// Can be present on multiple OSes
+	PulseAudioDriver,			// Mostly used by Linux/Unix
+	ESDDriver,					// ESound Driver. available on most UNIX Systems
+	BeOSSoundDriver,			// BeOS/Haiku ONLY
+	MIDISoundDriver,			// Not yet available
+	ASIOSoundManager,			// ASIO Sound Driver by Steinberg //NOT Available
+	NoHardwareDriver = SHRT_MAX	// NO HARDWARE CONNECTION, will not produce any sound
 };
 
 //Used for MADSoundDriverList()
 enum MADSoundDriverAvailable
 {
-	MIDISoundDriverBit			= 1 << MIDISoundDriver,
-	BeOSSoundDriverBit			= 1 << BeOSSoundDriver,
-	DirectSound95NTBit			= 1 << DirectSound95NT,
-	Wave95NTBit					= 1 << Wave95NT,
-	CoreAudioDriverBit			= 1 << CoreAudioDriver,
-	ALSADriverBit				= 1 << ALSADriver,
-	OSSDriverBit				= 1 << OSSDriver,
-	ESDDriverBit				= 1 << ESDDriver,
+	MIDISoundDriverBit	= 1 << MIDISoundDriver,
+	BeOSSoundDriverBit	= 1 << BeOSSoundDriver,
+	DirectSound95NTBit	= 1 << DirectSound95NT,
+	Wave95NTBit			= 1 << Wave95NT,
+	CoreAudioDriverBit	= 1 << CoreAudioDriver,
+	ESDDriverBit		= 1 << ESDDriver,
+	PortAudioDriverBit	= 1 << PortAudioDriver,
+	PulseAudioDriverBit	= 1 << PulseAudioDriver,
+	ASIOSoundManagerBit	= 1 << ASIOSoundManager
 };
 
-enum
+enum OutputChannels
 {
-	oldMonoOutPut = 1,				// NOT SUPPORTED anymore
-	oldStereoOutPut,				// NOT SUPPORTED anymore
-	DeluxeStereoOutPut,				// USE THIS ONE ONLY !!!!!!!!!!!!!!
-	PolyPhonic,						// Do NOT use it ! Standard hardware doesn't support it !
+	oldMonoOutPut = 1,	// NOT SUPPORTED anymore
+	oldStereoOutPut,	// NOT SUPPORTED anymore
+	DeluxeStereoOutPut,	// USE THIS ONE ONLY !!!!!!!!!!!!!!
+	PolyPhonic,			// Do NOT use it ! Standard hardware doesn't support it !
 	
 	StereoOutPut = oldStereoOutPut,
 	MonoOutPut = oldMonoOutPut
@@ -288,23 +289,19 @@ enum
 
 typedef struct MADDriverSettings
 {
-	short					numChn;								// Active tracks from 2 to 32, automatically setup when a new music is loaded
-	short					outPutBits;							// 8 or 16 Bits TODO: 24 Bits
-	unsigned int			outPutRate;							// Integer of audio sample rate
-	short					outPutMode;							// Now, only DeluxeStereoOutPut is available !
-	short					driverMode;							// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
-//	Boolean					antiAliasing;						// NOT USED anymore
-	Boolean					repeatMusic;						// If music finished, repeat it or stop.
-//	Boolean					sysMemory;							// NOT USED anymore
-//	Boolean					Interpolation;						// NOT USED anymore
-//	Boolean					MicroDelay;							// NOT USED anymore
-	SInt32					MicroDelaySize;						// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
-	Boolean					surround;							// Surround effect active? true/false
-	Boolean					Reverb;								// Reverb effect active? true/false
-	SInt32					ReverbSize;							// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
-	SInt32					ReverbStrength;						// Reverb strength in % (0 <-> 70)
-	Boolean					TickRemover;						// Remove volume/sample/loop ticks.
-	SInt32					oversampling;						// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
+	short			numChn;								// Active tracks from 2 to 32, automatically setup when a new music is loaded
+	short			outPutBits;							// 8 or 16 Bits TODO: 24 Bits
+	unsigned int	outPutRate;							// Integer of audio sample rate
+	short			outPutMode;							// Now, only DeluxeStereoOutPut is available !
+	short			driverMode;							// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
+	Boolean			repeatMusic;						// If music finished, repeat it or stop.
+	int				MicroDelaySize;						// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
+	Boolean			surround;							// Surround effect active? true/false
+	Boolean			Reverb;								// Reverb effect active? true/false
+	int				ReverbSize;							// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
+	int				ReverbStrength;						// Reverb strength in % (0 <-> 70)
+	Boolean			TickRemover;						// Remove volume/sample/loop ticks.
+	int				oversampling;						// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
 } MADDriverSettings;
 
 /******************************************************************/
@@ -338,18 +335,18 @@ typedef struct MADDriverSettings
 
 typedef struct PPInfoRec
 {
-	char		internalFileName[ 60];
-	char		formatDescription[ 60];
+	char	internalFileName[60];
+	char	formatDescription[60];
 	
-	SInt32		totalPatterns;
-	SInt32		partitionLength;
+	int		totalPatterns;
+	int		partitionLength;
 	
-	short		totalTracks;
-	short		totalInstruments;
+	short	totalTracks;
+	short	totalInstruments;
 	
-	OSType		signature;
+	OSType	signature;
 	
-	long		fileSize;
+	long	fileSize;
 } PPInfoRec;
 
 typedef struct PPInfoRecU
@@ -376,15 +373,15 @@ typedef struct PPInfoRecU
 /********************						***********************/
 
 enum PPPlugModes {
-	MADPlugImport = (OSType)'IMPL',
-	MADPlugExport = (OSType)'EXPL',
-	MADPlugInfo = (OSType)'INFO',
-	MADPlugTest = (OSType)'TEST',
-	MADPlugPlay = (OSType)'PLAY',
-	MADPlugImportExport = (OSType)'EXIM',
-	MADPlugSampleImporter = (OSType)'SAMP',
-	MADPlugInstrumentImporter = (OSType)'INST',
-	MADPlugNonePlug = (OSType)'NONE'
+	MADPlugImport =				(OSType)'IMPL',
+	MADPlugExport =				(OSType)'EXPL',
+	MADPlugInfo =				(OSType)'INFO',
+	MADPlugTest =				(OSType)'TEST',
+	MADPlugPlay =				(OSType)'PLAY',
+	MADPlugImportExport =		(OSType)'EXIM',
+	MADPlugSampleImporter =		(OSType)'SAMP',
+	MADPlugInstrumentImporter =	(OSType)'INST',
+	MADPlugNonePlug =			(OSType)'NONE'
 };
 
 #pragma pack(pop)
@@ -401,8 +398,8 @@ enum PPPlugModes {
 #include <CoreFoundation/CFBundle.h>
 #endif
 
-typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-typedef OSErr (*MADPLUGFUNCUTF16) ( OSType , char * , MADMusicUnicode* , PPInfoRecU *);
+typedef OSErr (*MADPLUGFUNC)(OSType, char*, MADMusic*, PPInfoRec*, MADDriverSettings*);
+typedef OSErr (*MADPLUGFUNCUTF16)(OSType, char*, MADMusicUnicode* , PPInfoRecU*);
 
 typedef struct PlugInfo
 {
@@ -418,24 +415,29 @@ typedef struct PlugInfo
 	OSType				mode;											// Mode support : Import +/ Export
 	UInt32				version;										// Plug-in version
 	Boolean				hasUnicode;
+#ifdef __x86_64__
+	Boolean		is32BitOnly;	// if the specified plug-in is only 32-bit
+#endif
+
 } PlugInfo;
 typedef PlugInfo PlugInfoInternal;
 #endif
 
 #ifdef WIN32
 #include <windows.h>
-typedef OSErr (*PLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
+typedef OSErr (*PLUGDLLFUNC)(OSType, char *, MADMusic*, PPInfoRec *, MADDriverSettings *);
 typedef OSErr (*MADPLUGFUNCUTF) ( OSType , char * , MADMusicUnicode* , PPInfoRecU *);
+
 typedef struct PlugInfo
 {
-	HMODULE			hLibrary;
-	PLUGDLLFUNC		IOPlug;										// Plug CODE
-	char			MenuName[ 65];								// Plug name
-	char			AuthorString[ 65];							// Plug author
-	char			file[ MAX_PATH * 2];						// Location of plug file
-	char			type[ 5];									// OSType of file support
-	OSType			mode;										// Mode support : Import +/ Export
-	int				version;									// Plug-in version
+	HMODULE		hLibrary;
+	PLUGDLLFUNC	IOPlug;				// Plug CODE
+	char		MenuName[65];		// Plug name
+	char		AuthorString[65];	// Plug author
+	char		file[MAX_PATH * 2];	// Location of plug file
+	char		type[5];			// OSType of file support
+	OSType		mode;				// Mode support : Import +/ Export
+	int			version;			// Plug-in version
 } PlugInfo;
 
 typedef struct PlugInfoInternal
@@ -455,19 +457,19 @@ typedef struct PlugInfoInternal
 
 #ifdef _BE_H
 //TODO: BeOS headers!
-typedef	OSErr (*MADPlug)( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
-typedef OSErr (*MADPLUGFUNCUTF) ( OSType , char * , MADMusicUnicode* , PPInfoRecU *);
+typedef	OSErr (*MADPlug)(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+typedef OSErr (*MADPLUGFUNCUTF)(OSType, char*, MADMusicUnicode* , PPInfoRecU*);
 
 typedef struct PlugInfo
 {
-	image_id		hLibrary;
-	MADPlug			IOPlug;										// Plug CODE
-	char			MenuName[ 65];								// Plug name
-	char			AuthorString[ 65];							// Plug author
-	char			file[1024];									// Location of plug file
-	char			type[ 5];									// OSType of file support
-	OSType			mode;										// Mode support : Import +/ Export
-	int				version;									// Plug-in version
+	image_id	hLibrary;
+	MADPlug		IOPlug;				// Plug CODE
+	char		MenuName[ 65];		// Plug name
+	char		AuthorString[ 65];	// Plug author
+	char		file[1024];			// Location of plug file
+	char		type[5];			// OSType of file support
+	OSType		mode;				// Mode support : Import +/ Export
+	int			version;			// Plug-in version
 } PlugInfo;
 
 typedef struct PlugInfoInternal
@@ -489,18 +491,19 @@ typedef struct PlugInfoInternal
 #if (defined(__UNIX__) && !(defined (_MAC_H) || defined (_BE_H)))
 #include <dlfcn.h>
 #include <sys/param.h>  //For PATH_MAX
-typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
-typedef OSErr (*MADPLUGFUNCUTF) ( OSType , char * , MADMusicUnicode* , PPInfoRecU *);
+typedef OSErr (*MADPLUGFUNC)(OSType, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
+typedef OSErr (*MADPLUGFUNCUTF)(OSType, char*, MADMusicUnicode* , PPInfoRecU*);
+
 typedef struct PlugInfo
 {
-	void*			hLibrary;
-	MADPLUGFUNC		IOPlug;										// Plug CODE
-	char			MenuName[ 65];								// Plug name
-	char			AuthorString[ 65];							// Plug author
-	char			file[PATH_MAX];								// Location of plug file
-	char			type[ 5];									// OSType of file support
-	OSType			mode;										// Mode support : Import +/ Export
-	int				version;									// Plug-in version
+	void*		hLibrary;
+	MADPLUGFUNC	IOPlug;				// Plug CODE
+	char		MenuName[65];		// Plug name
+	char		AuthorString[65];	// Plug author
+	char		file[PATH_MAX];		// Location of plug file
+	char		type[5];			// OSType of file support
+	OSType		mode;				// Mode support : Import +/ Export
+	int			version;			// Plug-in version
 } PlugInfo;
 
 typedef struct PlugInfoInternal
@@ -525,12 +528,12 @@ typedef struct PlugInfoInternal
 
 typedef struct MADLibrary
 {
-	short					TotalPlug;							// no of Plugs in pointer ThePlug
-	OSType					IDType;								// IDType = 'MADD' -- READ ONLY --
+	short				TotalPlug;	// Number of Plugs in pointer ThePlug
+	OSType				IDType;		// IDType = 'MADD' -- READ ONLY --
 	
 	/** Plugs Import/Export variables **/
-	SInt32					mytab[ 12];
-	PlugInfoInternal		*ThePlug;							// Pointers on plugs code & infos
+	SInt32				mytab[12];
+	PlugInfoInternal	*ThePlug;	// Pointers on plugs code & infos
 } MADLibrary;
 
 #ifndef __callback
@@ -542,12 +545,11 @@ typedef struct AEffect AEffect;
 struct AEffect
 {
 	SInt32 magic;
-	SInt32 (__callback *dispatcher)(AEffect *effect, SInt32 opCode, SInt32 index, SInt32 value,
-		void *ptr, float opt);
+	SInt32 (__callback *dispatcher)(AEffect *effect, SInt32 opCode, SInt32 index, SInt32 value, void *ptr, float opt);
 	void (__callback *process)(AEffect *effect, float **inputs, float **outputs, SInt32 sampleframes);
 	void (__callback *setParameter)(AEffect *effect, SInt32 index, float parameter);
 	float (__callback *getParameter)(AEffect *effect, SInt32 index);
-
+	
 	SInt32 numPrograms;
 	SInt32 numParams;
 	SInt32 numInputs;
@@ -567,25 +569,22 @@ struct AEffect
 	char future[60];
 };
 
-typedef	SInt32 (*audioMasterCallback)(AEffect *effect, SInt32 opcode, SInt32 index,
-		SInt32 value, void *ptr, float opt);
+typedef	SInt32 (*audioMasterCallback)(AEffect *effect, SInt32 opcode, SInt32 index, SInt32 value, void *ptr, float opt);
 	
-	typedef AEffect *(*VSTPlugInPtr) (audioMasterCallback  cb);
+typedef AEffect *(*VSTPlugInPtr)(audioMasterCallback  cb);
 
-#ifdef _MAC_H
-//TODO: use OS X's native VST?
+#if defined(_MAC_H) && !TARGET_OS_IPHONE
+//TODO: update VST headers
 typedef struct __VSTEffect
 {
 	AEffect				*ce[ 2];
 	short				VSTid;
 	CFStringRef			name;
 	Boolean				Active;
-#if !TARGET_OS_IPHONE
 	CFBundleRef			connID;
-#endif
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
-}	VSTEffect;
+} VSTEffect;
 #endif
 
 #ifdef WIN32
@@ -598,7 +597,7 @@ typedef struct __VSTEffect
 	HMODULE				connID;
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
-}	VSTEffect;
+} VSTEffect;
 #endif
 
 #if (defined(__UNIX__) && !(defined (_MAC_H) || defined (_BE_H)))
@@ -611,7 +610,7 @@ typedef struct __VSTEffect
 	void				*connID;
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
-}	VSTEffect;
+} VSTEffect;
 #endif
 
 typedef struct __MADDriverRec MADDriverRec;
@@ -621,26 +620,26 @@ typedef struct __MADDriverRec MADDriverRec;
 /********************						***********************/
 
 enum MADEffectsID {
-		arpeggioE 		= 0,	//	0x00
-		downslideE 		= 1,	//	0x01
-		upslideE 		= 2,	//	0x02
-		portamentoE 	= 3,	//	0x03
-		vibratoE 		= 4,	//	0x04
-		portaslideE 	= 5,	//	0x05
-		vibratoslideE	= 6,	//	0x06
-		nothingE 		= 7,	//	0x07
-		panningE		= 8,	//	0x08
-		offsetE 		= 9,	//	0x09
-		slidevolE 		= 10,	//	0x0A
-		fastskipE 		= 11,	//	0x0B
-		volumeE 		= 12,	//	0x0C
-		skipE 			= 13,	//	0x0D
-		extendedE 		= 14,	//	0x0E
-		speedE 			= 15,	//	0x0F
-		noteoffE 		= 16,	//	0x0G
-		LoopE			= 17,	// 	0x0L
-		NOffSetE		= 18	//  0x0O
-	};
+	arpeggioE 		= 0,	//	0x00
+	downslideE 		= 1,	//	0x01
+	upslideE 		= 2,	//	0x02
+	portamentoE 	= 3,	//	0x03
+	vibratoE 		= 4,	//	0x04
+	portaslideE 	= 5,	//	0x05
+	vibratoslideE	= 6,	//	0x06
+	nothingE 		= 7,	//	0x07
+	panningE		= 8,	//	0x08
+	offsetE 		= 9,	//	0x09
+	slidevolE 		= 10,	//	0x0A
+	fastskipE 		= 11,	//	0x0B
+	volumeE 		= 12,	//	0x0C
+	skipE 			= 13,	//	0x0D
+	extendedE 		= 14,	//	0x0E
+	speedE 			= 15,	//	0x0F
+	noteoffE 		= 16,	//	0x0G
+	LoopE			= 17,	// 	0x0L
+	NOffSetE		= 18	//  0x0O
+};
 
 /********************						***********************/
 /*** 					   FUNCTIONS							***/
@@ -651,41 +650,73 @@ enum MADEffectsID {
 extern "C" {
 #endif
 
-PPEXPORT void PPDebugStr( short, const char*, const char*);								// Internal Debugger function, NORMALLY it is never called, only when FATAL error
+/**
+ @function	PPDebugStr
+ @abstract	PlayerPROCore's internal debugger function
+ @param		line
+ The line number
+ @param		file
+ The file that has the problem
+ @param		text
+ Developer text that is used to help debug the issue. IT CANNOT BE NULL, although a blank string is fine.
+ @discussion NORMALLY it is never called, only when a FATAL error has occured.
+ This function is usually invoked using the macros __LINE__ and __FILE__ for the line and file paramaters.
+ */
+PPEXPORT void	PPDebugStr(short line, const char* file, const char* text);
+	
+/**
+ @function PPRegisterDebugFunc
+ @abstract used to set a delegate for PPDebugStr
+ @param debugFunc
+ The function to call when PPDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling abort()
+ @discussion Use this function to call your own debug function when PPDebugStr is called, otherwise calls to PPDebugStr will crash your app.
+ You can reset to the default PPDebugStr implementation by calling this function with NULL.
+ */
+PPEXPORT void	PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*));
 
-PPEXPORT void PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*));	//Use this function to call your own debug function when PPDebugStr is called
-																					//Otherwise calls to PPDebugStr will crash your app
+/**
+ @function MADInitLibrary
+ @abstract MADLibrary initialization
+ @result The error encountered, if any. Will be of type MADErrors unless zero (noErr)
+ @param PlugsFulderName
+ The folder location for the plug-ins for PlayerPROCore to look for.
+ On certain platforms, this can be NULL
+ @param MADLib
+ Usually a pointer passed by reference. If successful, it will return an initialized MADLibrary struct.
+ @discussion You must call this function if you want to use other functions & variables.
+ Needed to help set up the MADDriver structure and load non-MADK audio trackers.
+ */
+PPEXPORT OSErr	MADInitLibrary(const char *PlugsFolderName, MADLibrary **MADLib);
 
-PPEXPORT OSErr	MADInitLibrary( char *PlugsFolderName, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
-PPEXPORT OSErr	MADDisposeLibrary( MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
+PPEXPORT OSErr	MADDisposeLibrary(MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
-PPEXPORT void	MADGetBestDriver( MADDriverSettings	*DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
+PPEXPORT void	MADGetBestDriver(MADDriverSettings *DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
 PPEXPORT Boolean MADSoundDriverIsAvalable(short theDriver);
-PPEXPORT int MADSoundDriverList();
+PPEXPORT int	MADSoundDriverList();
 
-PPEXPORT OSErr	MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
-PPEXPORT OSErr	MADDisposeDriver( MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
+PPEXPORT OSErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
+PPEXPORT OSErr	MADDisposeDriver(MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
 
-PPEXPORT OSErr	MADChangeDriverSettings( MADDriverSettings	*DriverInitParam, MADDriverRec** returnDriver);
+PPEXPORT OSErr	MADChangeDriverSettings(MADDriverSettings *DriverInitParam, MADDriverRec** returnDriver);
 
-PPEXPORT MADDriverSettings MADGetDriverSettings(MADDriverRec * theDriver);
+PPEXPORT MADDriverSettings MADGetDriverSettings(MADDriverRec *theDriver);
 
-PPEXPORT OSErr	MADStartDriver( MADDriverRec *MDriver);										// NEW - Activates the sound generating procedure (interruption)
-PPEXPORT OSErr	MADStopDriver( MADDriverRec *MDriver);										// NEW - DEActivates the sound generating procedure (interruption)
+PPEXPORT OSErr	MADStartDriver(MADDriverRec *MDriver);										// NEW - Activates the sound generating procedure (interruption)
+PPEXPORT OSErr	MADStopDriver(MADDriverRec *MDriver);										// NEW - DEActivates the sound generating procedure (interruption)
 
-PPEXPORT OSErr	MADPlayMusic( MADDriverRec *MDriver);										// NEW - Read and play current music in memory - Call MADStartInterruption BEFORE
-PPEXPORT OSErr	MADStopMusic( MADDriverRec *MDriver);										// NEW - Stop reading current music in memory, Use MADCleanDriver to stop sounds
+PPEXPORT OSErr	MADPlayMusic(MADDriverRec *MDriver);										// NEW - Read and play current music in memory - Call MADStartInterruption BEFORE
+PPEXPORT OSErr	MADStopMusic(MADDriverRec *MDriver);										// NEW - Stop reading current music in memory, Use MADCleanDriver to stop sounds
 PPEXPORT Boolean MADIsPlayingMusic(MADDriverRec *driver);									// NEW - See if PlayerPRO is playing music
 
-PPEXPORT void	MADCleanDriver( MADDriverRec *intDriver);									// Clean the driver : stop playing sounds
+PPEXPORT void	MADCleanDriver(MADDriverRec *intDriver);									// Clean the driver : stop playing sounds
 
-PPEXPORT OSErr	MADReset( MADDriverRec *MDriver);											// Reset the current music at the start position
-PPEXPORT OSErr	MADGetMusicStatus( MADDriverRec *MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
-PPEXPORT OSErr	MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus( 0, 100, 50) = go to the middle of the music
+PPEXPORT OSErr	MADReset(MADDriverRec *MDriver);											// Reset the current music at the start position
+PPEXPORT OSErr	MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
+PPEXPORT OSErr	MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus( 0, 100, 50) = go to the middle of the music
 
-PPEXPORT OSErr	MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned char*) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr	MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, const char*) DEPRECATED_ATTRIBUTE;
 
-PPEXPORT OSErr	MADLoadMusicPtr( MADMusic **music, char *myPtr) DEPRECATED_ATTRIBUTE;								// MAD ONLY - Load a MAD Ptr into memory, you can free() your Ptr after this call
+PPEXPORT OSErr	MADLoadMusicPtr(MADMusic **music, char *myPtr) DEPRECATED_ATTRIBUTE;								// MAD ONLY - Load a MAD Ptr into memory, you can free() your Ptr after this call
 
 PPEXPORT OSErr	MADLoadMusicFileCString( MADLibrary *, MADMusic **music, char *type, char *fName) DEPRECATED_ATTRIBUTE;			// Load a music file with plugs
 #ifdef _MAC_H
@@ -698,26 +729,29 @@ PPEXPORT OSErr	MADMusicIdentifyCString( MADLibrary *, char *type, Ptr cName) DEP
 PPEXPORT OSErr	MADMusicIdentifyCFURL( MADLibrary *lib, char *type, CFURLRef URLRef) DEPRECATED_ATTRIBUTE; //Identify what kind of music format is URLRef file.
 #endif
 
-PPEXPORT OSErr MADMusicInfoCString( MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec) DEPRECATED_ATTRIBUTE;
 	
 #ifdef _MAC_H
-PPEXPORT OSErr MADMusicInfoCFURL( MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec) DEPRECATED_ATTRIBUTE;
 #endif
 	
-PPEXPORT OSErr MADMusicExportCString( MADLibrary *lib, MADMusic *music, char *type, char* cName) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr MADMusicExportCString(MADLibrary *lib, MADMusic *music, char *type, char* cName) DEPRECATED_ATTRIBUTE;
 #ifdef _MAC_H
-PPEXPORT OSErr MADMusicExportCFURL( MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL) DEPRECATED_ATTRIBUTE;
 #endif
 
-PPEXPORT Boolean	MADPlugAvailable( MADLibrary *, char *type);								// Is plug 'type' available?
+PPEXPORT Boolean MADPlugAvailable(MADLibrary *, char *type);								// Is plug 'type' available?
 
-PPEXPORT OSErr	MADDisposeMusic( MADMusic **, MADDriverRec *MDriver) DEPRECATED_ATTRIBUTE;								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
+PPEXPORT OSErr	MADDisposeMusic(MADMusic **, MADDriverRec *MDriver) DEPRECATED_ATTRIBUTE;								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
 
-PPEXPORT void	MADChangeTracks( MADDriverRec *MDriver, short);				// Change current tracks number of the music driver
-PPEXPORT Cmd*	GetMADCommand(	short		position,						// Extract a Command from a PatData structure
-								short		channel,
-								PatData*	aPatData) DEPRECATED_ATTRIBUTE;
+PPEXPORT void	MADChangeTracks(MADDriverRec *MDriver, short);				// Change current tracks number of the music driver
+PPEXPORT Cmd*	GetMADCommand(short		position,						// Extract a Command from a PatData structure
+							  short		channel,
+							  PatData*	aPatData) DEPRECATED_ATTRIBUTE;
+PPEXPORT OSErr	MADMusicSaveCString(MADMusic *music, const char *cName, Boolean compressMAD) DEPRECATED_ATTRIBUTE;
 
+	
+	
 PPEXPORT OSErr	MADPlaySoundData(MADDriverRec	*MDriver,
 								 Ptr			soundPtr,				// Sound Pointer to data
 								 size_t			size,					// Sound size in bytes
@@ -730,28 +764,30 @@ PPEXPORT OSErr	MADPlaySoundData(MADDriverRec	*MDriver,
 								 Boolean		stereo);				// sample is in stereo or in mono?
 							
 #if 0
-OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
-							char			*soundPtr,				// Sound Pointer to data
-							long			size,					// Sound size in bytes
-							long			channel,				// channel ID on which to play sound
-							long			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
-							long			amplitude,				// 8 or 16 bits
-							long			loopBeg,				// loop beginning
-							long			loopSize,				// loop size in bytes
-							double			rate,					// sample rate of the sound data, by ex: rate22khz
-							Boolean			stereo);				// sample is in stereo or in mono?
+PPEXPORT OSErr	MADPlaySoundDataSYNC(MADDriverRec	*MDriver,
+									 char			*soundPtr,				// Sound Pointer to data
+									 long			size,					// Sound size in bytes
+									 long			channel,				// channel ID on which to play sound
+									 long			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
+									 long			amplitude,				// 8 or 16 bits
+									 long			loopBeg,				// loop beginning
+									 long			loopSize,				// loop size in bytes
+									 double			rate,					// sample rate of the sound data, by ex: rate22khz
+									 Boolean		stereo);				// sample is in stereo or in mono?
 #endif
 
 PPEXPORT Boolean MADIsDonePlaying(MADDriverRec *MDriver);
 	
-PPEXPORT void MADBeginExport(MADDriverRec *driver);
-PPEXPORT void MADEndExport(MADDriverRec *driver);
+PPEXPORT void	MADBeginExport(MADDriverRec *driver);
+PPEXPORT void	MADEndExport(MADDriverRec *driver);
 PPEXPORT Boolean MADIsExporting(MADDriverRec *driver);
 
 PPEXPORT Boolean MADWasReading(MADDriverRec *driver) DEPRECATED_ATTRIBUTE;
-PPEXPORT void MADSetReading(MADDriverRec *driver, Boolean toSet) DEPRECATED_ATTRIBUTE;
+PPEXPORT void	MADSetReading(MADDriverRec *driver, Boolean toSet) DEPRECATED_ATTRIBUTE;
 
-PPEXPORT SInt32 MADAudioLength(MADDriverRec *theRec);
+PPEXPORT SInt32	MADAudioLength(MADDriverRec *theRec);
+
+PPEXPORT size_t MADGetMusicSize(MADMusic*);
 
 #ifdef __cplusplus
 }

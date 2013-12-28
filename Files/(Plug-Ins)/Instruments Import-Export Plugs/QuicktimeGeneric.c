@@ -31,7 +31,7 @@ static OSStatus CFURLToFSSpec (CFURLRef pathURL, FSSpec *outSpec)
 	
 	if (err == noErr) {
 		// It's a directory or a file that exists; convert directly into an FSSpec:
-		err = FSGetCatalogInfo (&ref, kFSCatInfoNone, NULL, NULL, outSpec, NULL);
+		err = FSGetCatalogInfo(&ref, kFSCatInfoNone, NULL, NULL, outSpec, NULL);
 	} else {
 		Str255 fileName;
 		// The suck case.  The file doesn't exist.
@@ -40,57 +40,59 @@ static OSStatus CFURLToFSSpec (CFURLRef pathURL, FSSpec *outSpec)
 		// Get a CFString for the path
 		if (err == noErr) {
 			pathString = CFURLCopyFileSystemPath(pathURL, kCFURLPOSIXPathStyle);
-			if (pathString == NULL) { err = memFullErr; }
+			if (pathString == NULL)
+				err = memFullErr;
 		}
 		
 		// Get a CFURL for the parent
 		if (err == noErr) {
-			parentURL = CFURLCreateCopyDeletingLastPathComponent (kCFAllocatorDefault, pathURL);
-			if (parentURL == NULL) { err = memFullErr; }
+			parentURL = CFURLCreateCopyDeletingLastPathComponent(kCFAllocatorDefault, pathURL);
+			if (parentURL == NULL)
+				err = memFullErr;
 		}
 		
 		// Build an FSRef for the parent directory, which must be valid to make an FSSpec
 		if (err == noErr) {
-			Boolean converted = CFURLGetFSRef (parentURL, &ref);
-			if (!converted) { err = fnfErr; }
+			Boolean converted = CFURLGetFSRef(parentURL, &ref);
+			if (!converted)
+				err = fnfErr;
 		}
 		
 		// Get the node ID of the parent directory
-		if (err == noErr) {
+		if (err == noErr)
 			err = FSGetCatalogInfo(&ref, kFSCatInfoNodeFlags|kFSCatInfoNodeID|kFSCatInfoVolume, &info, NULL, outSpec, NULL);
-		}
 		
 		// Get a CFString for the file name
 		if (err == noErr) {
-			nameString = CFURLCopyLastPathComponent (pathURL);
-			if (nameString == NULL) { err = memFullErr; }
+			nameString = CFURLCopyLastPathComponent(pathURL);
+			if (nameString == NULL)
+				err = memFullErr;
 		}
 		
 		// Copy the string into the FSSpec
 		if (err == noErr) {
-			Boolean converted = CFStringGetPascalString (pathString, fileName, sizeof(fileName),
-														 kCFStringEncodingMacRoman);
-			if (!converted) {
-				converted = CFStringGetPascalString (pathString, fileName, sizeof(fileName),
-													 CFStringGetSystemEncoding());
-			}
+			Boolean converted = CFStringGetPascalString(pathString, fileName, sizeof(fileName),
+														kCFStringEncodingMacRoman);
+			if (!converted)
+				converted = CFStringGetPascalString(pathString, fileName, sizeof(fileName),
+													CFStringGetSystemEncoding());
 			
-			if (!converted) { err = fnfErr; }
+			if (!converted)
+				err = fnfErr;
 		}
 		
 		// Set the node ID in the FSSpec
-		if (err == noErr) {
+		if (err == noErr)
 			err = FSMakeFSSpec(info.volume, info.nodeID, fileName, outSpec);
-		}
 	}
 	
 	// Free allocated memory
 	if (pathString != NULL)
-		CFRelease (pathString);
+		CFRelease(pathString);
 	if (parentURL != NULL)
-		CFRelease (parentURL);
+		CFRelease(parentURL);
 	if (nameString != NULL)
-		CFRelease (nameString);
+		CFRelease(nameString);
 	
 	return err;
 }
@@ -104,14 +106,27 @@ static OSErr mainQTInst(void					*unused,
 						CFURLRef				AlienFileURLRef,	// IN/OUT file
 						PPInfoPlug				*thePPInfoPlug)
 {
-	OSErr		myErr = noErr;
+	OSErr		myErr;
 	FSIORefNum	iFileRefI;
-	long		inOutBytes;
+	ByteCount	inOutBytes;
 	FSSpec		tmpSpec;
 	
-	CFURLToFSSpec(AlienFileURLRef, &tmpSpec);
+	myErr = CFURLToFSSpec(AlienFileURLRef, &tmpSpec);
+	switch (myErr) {
+		case memFullErr:
+			return MADNeedMemory;
+			break;
+			
+		default:
+		case fnfErr:
+			return order == MADPlugExport ? MADWritingErr : MADReadingErr;
+			break;
+						
+		case noErr:
+			break;
+	}
 	
-	switch( order)
+	switch (order)
 	{
 		case MADPlugPlay:
 			break;
@@ -125,25 +140,21 @@ static OSErr mainQTInst(void					*unused,
 			Boolean			stereo;
 			FSSpec			newFile;
 			
-			myErr = ConvertDataToWAVE( tmpSpec, &newFile, thePPInfoPlug);
-			if (myErr == noErr)
-			{
-				theSound = ConvertWAV( &newFile, &lS, &lE, &sS, &rate, &stereo);
+			myErr = ConvertDataToWAVE(tmpSpec, &newFile, thePPInfoPlug);
+			if (myErr == noErr) {
+				theSound = ConvertWAV(&newFile, &lS, &lE, &sS, &rate, &stereo);
 				
-				if (theSound)
-				{
+				if (theSound) {
 					long sndSize = GetPtrSize(theSound);
 					Ptr newSound = malloc(sndSize);
 					memcpy(newSound, theSound, sndSize);
 					DisposePtr(theSound);
-					myErr = inAddSoundToMAD( newSound, sndSize, lS, lE, sS, 60, rate, stereo, newFile.name, InsHeader, sample, sampleID);
-				}
-				else
-				{
+					myErr = inAddSoundToMAD(newSound, sndSize, lS, lE, sS, 60, rate, stereo, newFile.name, InsHeader, sample, sampleID);
+				} else {
 					myErr = MADNeedMemory;
 				}
 				
-				FSpDelete( &newFile);
+				FSpDelete(&newFile);
 			}
 		}
 			break;
@@ -152,7 +163,7 @@ static OSErr mainQTInst(void					*unused,
 		{
 			FInfo fInfo;
 			
-			FSpGetFInfo( &tmpSpec, &fInfo);
+			FSpGetFInfo(&tmpSpec, &fInfo);
 			
 			if (fInfo.fdType == thePPInfoPlug->fileType)
 				myErr = noErr;
@@ -162,37 +173,31 @@ static OSErr mainQTInst(void					*unused,
 			break;
 			
 		case MADPlugExport:
-			if (*sampleID >= 0)
-			{
-				OSType				compType = 'NONE';
-				unsigned long		rate;
-				sData 				*curData = sample[ *sampleID];
-				short				numChan;
+			if (*sampleID >= 0) {
+				OSType			compType = 'NONE';
+				unsigned long	rate;
+				sData 			*curData = sample[ *sampleID];
+				short			numChan;
 				
 				FSpDelete(&tmpSpec);
-				myErr = FSpCreate( &tmpSpec, 'TVOD', 'AIFF', smCurrentScript);
+				myErr = FSpCreate(&tmpSpec, 'TVOD', 'AIFF', smCurrentScript);
 				if(myErr == noErr)
-					myErr = FSpOpenDF( &tmpSpec, fsCurPerm, &iFileRefI);
+					myErr = FSpOpenDF(&tmpSpec, fsCurPerm, &iFileRefI);
 				
-				if (myErr == noErr)
-				{
+				if (myErr == noErr) {
 					inOutBytes 	= curData->size;
 					rate		= curData->c2spd;
 					
-					if (curData->stereo) numChan = 2;
-					else numChan = 1;
+					if (curData->stereo)
+						numChan = 2;
+					else
+						numChan = 1;
 					
-					myErr = SetupAIFFHeader(iFileRefI,
-											numChan,
-											rate << 16L,
-											curData->amp,
-											compType,
-											inOutBytes,
-											0);
+					myErr = SetupAIFFHeader(iFileRefI, numChan, rate << 16L, curData->amp, compType, inOutBytes, 0);
 					
 					if(myErr == noErr)
-						myErr = FSWrite( iFileRefI, &inOutBytes, curData->data);
-					FSCloseFork( iFileRefI);
+						myErr = FSWriteFork(iFileRefI, fsAtMark, 0, inOutBytes, curData->data, &inOutBytes);
+					FSCloseFork(iFileRefI);
 				}
 			}
 			break;

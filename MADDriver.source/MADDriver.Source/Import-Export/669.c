@@ -98,7 +98,7 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 	
 	OffSetToSample = 0x1f1 +  the669->NOS * 25 + the669->NOP * 0x600L;
 	
-	for( i = 0; i < the669->NOS ; i++)
+	for (i = 0; i < the669->NOS ; i++)
 	{
 		temp = (size_t) the669;
 		temp += 0x1f1L + i*25L + 13L;
@@ -137,10 +137,10 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 		free(theMAD->header);
 		return MADNeedMemory;
 	}
-	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 	
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
 		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
@@ -169,7 +169,7 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 		return MADNeedMemory;
 	}
 	
-	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
 	for(i=0; i<the669->NOS; i++)
 	{
@@ -212,16 +212,14 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 			curData->amp		= 8;
 			
 			curData->relNote	= 0;
-			//	for( x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
+			//	for (x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
 			
 			curData->data 		= malloc( curData->size);
-			if (curData->data == NULL)
-			{
+			if (curData->data == NULL) {
 				for (i = 0; i < MAXINSTRU * MAXSAMPLE; i++) {
 					if (theMAD->sample[i]) {
-						if (theMAD->sample[i]->data) {
+						if (theMAD->sample[i]->data)
 							free(theMAD->sample[i]->data);
-						}
 						free(theMAD->sample[i]);
 					}
 				}
@@ -232,15 +230,16 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 				return MADNeedMemory;
 			}
 			
-			memmove( curData->data, theInstrument[i], curData->size);
+			memcpy( curData->data, theInstrument[i], curData->size);
 			
 			destPtr = curData->data;
-			for( temp = 0; temp < curData->size; temp++) *(destPtr + temp) -= 0x80;
-		}
-		else theMAD->fid[ i].numSamples = 0;
+			for (temp = 0; temp < curData->size; temp++)
+				*(destPtr + temp) -= 0x80;
+		} else
+			theMAD->fid[ i].numSamples = 0;
 	}
 	
-	PatInt = ( struct PatSix*) the669 + 0x1f1 + the669->NOS * 0x19;
+	PatInt = (struct PatSix*) the669 + 0x1f1 + the669->NOS * 0x19;
 	
 	temp = (SInt32) the669;
 	temp += 0x1f1L + (SInt32) the669->NOS * 0x19L;
@@ -252,7 +251,7 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 	theMAD->header->numChn = 8;
 	//	theMAD->header->PatMax = 1;
 	
-	for( i = 0; i < theMAD->header->numPat; i++)
+	for (i = 0; i < theMAD->header->numPat; i++)
 	{
 		theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * 64L * sizeof( Cmd), 1);
 		if (!theMAD->partition[i]) {
@@ -277,13 +276,13 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 		}
 		theMAD->partition[ i]->header.size = 64;
 		theMAD->partition[ i]->header.compMode = 'NONE';
-		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
+		for (x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
 		theMAD->partition[ i]->header.patBytes = 0;
 		theMAD->partition[ i]->header.unused2 = 0;
 		
-		for( x = 0 ; x < 64; x++)
+		for (x = 0 ; x < 64; x++)
 		{
-			for( z = 0; z<theMAD->header->numChn; z++)
+			for (z = 0; z<theMAD->header->numChn; z++)
 			{
 				aCmd = GetMADCommand( x, z, theMAD->partition[ i]);
 				
@@ -364,9 +363,9 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 	return noErr;
 }
 
-static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
+static OSErr Extract669Info(PPInfoRec *info, void *AlienFile)
 {
-	SixSixNine	*the669 = (SixSixNine*) AlienFile;
+	SixSixNine	*the669 = (SixSixNine*)AlienFile;
 	//long			PatternSize;
 	//short		i;
 	//short		maxInstru;
@@ -379,7 +378,7 @@ static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	//the669->message[ 30] = '\0';
-	strlcpy( info->internalFileName, ( the669->message), sizeof(info->internalFileName));
+	strlcpy( info->internalFileName, the669->message, sizeof(info->internalFileName));
 	
 	/*** Total Patterns ***/
 	
@@ -393,18 +392,19 @@ static OSErr Extract669Info( PPInfoRec *info, Ptr AlienFile)
 	
 	info->totalInstruments = 0;
 	
-	strlcpy( info->formatDescription, "669 Plug", sizeof(info->formatDescription));
+	strlcpy(info->formatDescription, "669 Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
 
-static OSErr Test669File( Ptr AlienFile)
+static OSErr Test669File(void *AlienFile)
 {
-	SixSixNine	*the669 = (SixSixNine*) AlienFile;
+	SixSixNine *the669 = (SixSixNine*)AlienFile;
 	
-	//This seems to be endian-safe...
-	if (the669->marker == 0x6669 || the669->marker == 0x6966) return   noErr;
-	else return  MADFileNotSupportedByThisPlug;
+	if (the669->marker == 0x6669 || the669->marker == 0x6966)
+		return noErr;
+	else
+		return MADFileNotSupportedByThisPlug;
 }
 
 #ifndef _MAC_H
@@ -414,9 +414,9 @@ EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPIn
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy( p->type, 		"669 ", sizeof(p->type));
-	strlcpy( p->MenuName, 	"669 Files", sizeof(p->MenuName));
-	p->mode	=	MADPlugImport;
+	strlcpy(p->type, "669 ", sizeof(p->type));
+	strlcpy(p->MenuName, "669 Files", sizeof(p->MenuName));
+	p->mode	= MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
@@ -429,93 +429,84 @@ OSErr main669( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr;
+	OSErr	myErr = noErr;
 	Ptr		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
-	myErr = noErr;
-	
-	switch( order)
+	switch(order)
 	{
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead( AlienFileName);
-			if (iFileRefI)
-			{
-				sndSize = iGetEOF( iFileRefI );
+			if (iFileRefI) {
+				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (Ptr)malloc( sndSize * 2L);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
+				AlienFile = (Ptr)malloc(sndSize * 2L);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
-				else
-				{
+				else {
 					free( AlienFile);
 					
 					AlienFile = (Ptr)malloc( sndSize);
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr)
-					{
+					if (myErr == noErr) {
 						myErr = Test669File( AlienFile);
 						if (myErr == noErr)
-						{
 							myErr = Convert6692Mad( AlienFile,  sndSize, MadFile, init);
-						}
-					}
-					free( AlienFile);
-					AlienFile = NULL;
-				}
-				iClose( iFileRefI);
-			}
-			else myErr = MADReadingErr;
-			break;
-			
-		case MADPlugTest:
-			iFileRefI = iFileOpenRead( AlienFileName);
-			if (iFileRefI)
-			{
-				sndSize = 1024L;
-				
-				AlienFile = (Ptr)malloc( sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
-					myErr = iRead(sndSize, AlienFile, iFileRefI );
-					
-					myErr = Test669File( AlienFile);
-					
-					free( AlienFile);
-					AlienFile = NULL;
-				}
-				iClose( iFileRefI);
-			}
-			else myErr = MADReadingErr;
-			break;
-			
-		case MADPlugInfo:
-			iFileRefI = iFileOpenRead( AlienFileName);
-			if (iFileRefI)
-			{
-				info->fileSize = iGetEOF( iFileRefI);
-				
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
-				
-				AlienFile = (Ptr)malloc( sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
-					myErr = iRead(sndSize, AlienFile, iFileRefI );
-					if (myErr == noErr)
-					{
-						myErr = Extract669Info( info, AlienFile);
 					}
 					free(AlienFile);
 					AlienFile = NULL;
 				}
+				iClose(iFileRefI);
+			} else
+				myErr = MADReadingErr;
+			break;
+			
+		case MADPlugTest:
+			iFileRefI = iFileOpenRead(AlienFileName);
+			if (iFileRefI) {
+				sndSize = 1024L;
+				
+				AlienFile = (Ptr)malloc(sndSize);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
+					myErr = iRead(sndSize, AlienFile, iFileRefI);
+					
+					myErr = Test669File( AlienFile);
+					
+					free(AlienFile);
+					AlienFile = NULL;
+				}
+				iClose(iFileRefI);
+			} else
+				myErr = MADReadingErr;
+			break;
+			
+		case MADPlugInfo:
+			iFileRefI = iFileOpenRead( AlienFileName);
+			if (iFileRefI) {
+				info->fileSize = iGetEOF( iFileRefI);
+				
+				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+				
+				AlienFile = (Ptr)malloc(sndSize);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
+					myErr = iRead(sndSize, AlienFile, iFileRefI );
+					if (myErr == noErr)
+						myErr = Extract669Info( info, AlienFile);
+
+					free(AlienFile);
+					AlienFile = NULL;
+				}
 				iClose( iFileRefI);
-			}
-			else myErr = MADReadingErr;
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		default:

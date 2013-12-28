@@ -468,6 +468,14 @@ static inline NSURL *PPHomeURL()
 	[encoder encodeObject:BookmarkArray forKey:kMUSICLISTKEY2];
 }
 
+- (void)insertObjects:(NSArray*)anObj inMusicListAtIndex:(NSUInteger)idx
+{
+	NSIndexSet *theIndexSet = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(idx, [anObj count])];
+	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndexSet forKey:kMusicListKVO];
+	[musicList insertObjects:anObj atIndexes:theIndexSet];
+	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndexSet forKey:kMusicListKVO];
+}
+
 #pragma mark Key-valued Coding
 
 - (void)addMusicListObject:(PPMusicListObject*)obj

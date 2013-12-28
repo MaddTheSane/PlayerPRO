@@ -20,7 +20,7 @@
 	PPInfoPlug plugInfo;
 }
 
-@property (readwrite, nonatomic) MADDriverRec **driverRec;
+@property (nonatomic) MADDriverRec **driverRec;
 
 - (id)initWithMusic:(MADMusic**)theMus;
 

@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class PPInstrumentObject;
-@class PPInstrumentWindowController;
+@class PPInstrumentViewController;
 
 @interface InstrumentInfoController : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
 {
@@ -31,8 +31,8 @@
 	IBOutlet NSTableView *sampleTable;
 }
 
-@property (readwrite, copy, nonatomic) PPInstrumentObject *instrument;
-@property (readwrite, weak) PPInstrumentWindowController *delegate;
+@property (copy, nonatomic) PPInstrumentObject *instrument;
+@property (weak) PPInstrumentViewController *delegate;
 - (IBAction)okayButton:(id)sender;
 - (IBAction)cancelButton:(id)sender;
 - (IBAction)volumeEditButtonPressed:(id)sender;
@@ -40,5 +40,7 @@
 
 - (IBAction)panningCheckClicked:(id)sender;
 - (IBAction)panningEditButtonPressed:(id)sender;
+
+- (void)instrumentSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 
 @end

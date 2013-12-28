@@ -32,8 +32,8 @@
 
 @property (weak) AppDelegate *appDel;
 
-@property (readwrite, nonatomic) MADMusic **curMusic;
-@property (readwrite) MADDriverRec **theDriver;
+@property (nonatomic) MADMusic **curMusic;
+@property MADDriverRec **theDriver;
 
 - (IBAction)toggleInfo:(id)sender;
 

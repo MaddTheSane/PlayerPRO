@@ -9,6 +9,7 @@
 #import "PPMadCommandObject.h"
 
 @implementation PPMadCommandObject
+@synthesize theCommand;
 
 - (Byte)instrument
 {
@@ -60,7 +61,6 @@
 	theCommand.vol = volume;
 }
 
-@synthesize theCommand;
 
 - (id)init
 {

@@ -21,6 +21,7 @@
 #import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
 #import "PPDocument.h"
+#import "PPInstrumentViewController.h"
 #import <PlayerPROKit/PlayerPROKit.h>
 #include <PlayerPROCore/RDriverInt.h>
 
@@ -235,7 +236,7 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	PPRegisterDebugFunc(CocoaDebugStr);
 	self.madLib = [[PPLibrary alloc] init];
 
-	[self addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionNew context:NULL];
+	//[self addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionNew context:NULL];
 	//self.paused = YES;
 	
 	filterHandler = [[PPFilterPlugHandler alloc] init];
@@ -269,21 +270,6 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 - (void)applicationWillTerminate:(NSNotification *)notification
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (IBAction)showBoxEditor:(id)sender
-{
-    
-}
-
-- (IBAction)showClassicEditor:(id)sender
-{
-    
-}
-
-- (IBAction)showDigitalEditor:(id)sender
-{
-    
 }
 
 - (BOOL)handleFile:(NSURL *)theURL ofType:(NSString *)theUTI

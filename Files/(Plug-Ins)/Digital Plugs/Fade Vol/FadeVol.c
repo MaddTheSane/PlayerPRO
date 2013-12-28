@@ -240,9 +240,9 @@ static OSErr mainFadeVol(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		to 		= (to * 64) / 100;
 		from 	= (from * 64) / 100;
 		
-		for( track = 0; track < myPcmd->tracks; track++)
+		for (track = 0; track < myPcmd->tracks; track++)
 		{
-			for( row = 0; row < myPcmd->length; row++)
+			for (row = 0; row < myPcmd->length; row++)
 			{
 				myCmd = GetCmd( row, track, myPcmd);
 			

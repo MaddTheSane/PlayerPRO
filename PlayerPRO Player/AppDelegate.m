@@ -15,19 +15,19 @@
 #import "PPPlugInInfo.h"
 #import "PPPlugInInfoController.h"
 #import "OpenPanelViewController.h"
+#import "PPMusicListDragClass.h"
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
 #import <AVFoundation/AVFoundation.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
 #define kUnresolvableFile @"Unresolvable files"
 #define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."
 
 @interface PPCurrentlyPlayingIndex : NSObject
-@property (readwrite) NSInteger index;
-@property (readwrite, strong) NSURL *playbackURL;
-
+@property NSInteger index;
+@property (strong) NSURL *playbackURL;
 - (void)movePlayingIndexToOtherIndex:(PPCurrentlyPlayingIndex *)othidx;
-
 @end
 
 @implementation PPCurrentlyPlayingIndex
@@ -71,22 +71,23 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 static NSInteger selMusFromList = -1;
 
 @interface AppDelegate ()
-- (void)selectCurrentlyPlayingMusic;
-- (void)selectMusicAtIndex:(NSInteger)anIdx;
-- (void)musicListContentsDidMove;
-- (BOOL)musicListWillChange;
-- (void)musicListDidChange;
-- (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to;
 @property (strong) NSString *musicInfo;
-@property (strong, nonatomic, readonly) NSDictionary *trackerDict;
+@property (strong, readonly) NSDictionary	*trackerDict;
+@property (strong, readonly) NSArray		*trackerUTIs;
 @property (strong) PPMusicList				*musicList;
 @property (strong) PPCurrentlyPlayingIndex	*currentlyPlayingIndex;
 @property (strong) PPCurrentlyPlayingIndex	*previouslyPlayingIndex;
 @property (strong) PPPreferences			*preferences;
 @property (strong) NSMutableArray			*plugInInfos;
 @property BOOL isQuitting;
-@end
 
+- (void)selectCurrentlyPlayingMusic;
+- (void)selectMusicAtIndex:(NSInteger)anIdx;
+- (void)musicListContentsDidMove;
+- (BOOL)musicListWillChange;
+- (void)musicListDidChange;
+- (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to;
+@end
 
 @implementation AppDelegate
 @synthesize toolsPanel;
@@ -95,17 +96,18 @@ static NSInteger selMusFromList = -1;
 @synthesize currentlyPlayingIndex, previouslyPlayingIndex;
 @synthesize preferences;
 @synthesize isQuitting;
-
+@synthesize trackerUTIs = _trackerUTIs;
 @synthesize trackerDict = _trackerDict;
 - (NSDictionary *)trackerDict
 {
 	if (!_trackerDict || [_trackerDict count] != madLib->TotalPlug - 1) {
-		NSMutableDictionary *trackerDict = [NSMutableDictionary dictionaryWithDictionary:@{
-																						   NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
-																															 [NSBundle mainBundle],
-																															 @"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
-																						   NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI],
-																						   NSLocalizedString(@"MAD Package", @"MAD Package"):@[MADPackageUTI]}];
+		NSMutableDictionary *trackerDict =
+		[NSMutableDictionary dictionaryWithDictionary:@{
+														NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
+																						  [NSBundle mainBundle],
+																						  @"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
+														NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI],
+														NSLocalizedString(@"MAD Package", @"MAD Package"):@[MADPackageUTI]}];
 		for (int i = 0; i < madLib->TotalPlug; i++) {
 			trackerDict[(__bridge NSString*)madLib->ThePlug[i].MenuName] = (__bridge NSArray*)madLib->ThePlug[i].UTItypes;
 		}
@@ -113,6 +115,20 @@ static NSInteger selMusFromList = -1;
 	}
 	
 	return _trackerDict;
+}
+
+- (NSArray *)trackerUTIs
+{
+	if (!_trackerUTIs) {
+		NSArray *arrayOfUTIs = [self.trackerDict allValues];
+		NSMutableArray *toAddUTIArray = [[NSMutableArray alloc] init];
+		for (NSArray *anArray in arrayOfUTIs) {
+			[toAddUTIArray addObjectsFromArray:anArray];
+		}
+		_trackerUTIs = [[NSArray alloc] initWithArray:toAddUTIArray];
+	}
+	
+	return _trackerUTIs;
 }
 
 - (BOOL)loadMusicFromCurrentlyPlayingIndexWithError:(out NSError *__autoreleasing*)theErr
@@ -242,7 +258,6 @@ static NSInteger selMusFromList = -1;
 																  PPReverbStrength: @30,
 																  PPOversamplingAmount: @1,
 																  
-																  
 																  PPMAddExtension: @YES,
 																  PPMMadCompression: @YES,
 																  PPMNoLoadMixerFromFiles: @NO,
@@ -360,7 +375,7 @@ static NSInteger selMusFromList = -1;
 	size_t inOutCount;
 	MADCleanCurrentMusic(music, madDriver);
 	NSMutableData *saveData = [[NSMutableData alloc] initWithCapacity:MADGetMusicSize(music)];
-	for( i = 0, x = 0; i < MAXINSTRU; i++)
+	for (i = 0, x = 0; i < MAXINSTRU; i++)
 	{
 		music->fid[ i].no = i;
 		
@@ -380,7 +395,7 @@ static NSInteger selMusFromList = -1;
 	{
 		BOOL compressMAD = [[NSUserDefaults standardUserDefaults] boolForKey:PPMMadCompression];
 		if (compressMAD) {
-			for( i = 0; i < music->header->numPat ; i++)
+			for (i = 0; i < music->header->numPat ; i++)
 			{
 				if (music->partition[i]) {
 					PatData *tmpPat = CompressPartitionMAD1(music, music->partition[i]);
@@ -406,7 +421,7 @@ static NSInteger selMusFromList = -1;
 		}
 	}
 	
-	for( i = 0; i < MAXINSTRU; i++)
+	for (i = 0; i < MAXINSTRU; i++)
 	{
 		if (music->fid[ i].numSamples > 0 || music->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
 		{
@@ -417,9 +432,9 @@ static NSInteger selMusFromList = -1;
 		}
 	}
 	
-	for( i = 0; i < MAXINSTRU ; i++)
+	for (i = 0; i < MAXINSTRU ; i++)
 	{
-		for( x = 0; x < music->fid[i].numSamples; x++)
+		for (x = 0; x < music->fid[i].numSamples; x++)
 		{
 			sData	curData;
 			sData32	copyData;
@@ -452,7 +467,7 @@ static NSInteger selMusFromList = -1;
 	// EFFECTS *** *** *** *** *** *** *** *** *** *** *** ***
 	
 	int alpha = 0;
-	for( i = 0; i < 10 ; i++)	// Global Effects
+	for (i = 0; i < 10 ; i++)	// Global Effects
 	{
 		if (music->header->globalEffect[ i])
 		{
@@ -471,9 +486,9 @@ static NSInteger selMusFromList = -1;
 		}
 	}
 	
-	for( i = 0; i < music->header->numChn ; i++)	// Channel Effects
+	for (i = 0; i < music->header->numChn ; i++)	// Channel Effects
 	{
-		for( x = 0; x < 4; x++)
+		for (x = 0; x < 4; x++)
 		{
 			if (music->header->chanEffect[ i][ x])
 			{
@@ -531,145 +546,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	return toreturn.shortman;
 }
 
-- (NSData *)newAIFFDataFromSettings:(MADDriverSettings*)sett data:(NSData*)dat
-{
-	//TODO: Write a little-endian AIFF exporter
-	NSInteger dataLen = [dat length];
-	
-	ContainerChunk header;
-	
-	CommonChunk container;
-	
-	SoundDataChunk dataChunk;
-	
-	NSData *nameData;
-	NSData *infoData;
-	
-	@autoreleasepool {
-		ChunkHeader nameChunk;
-		NSInteger macRomanNameLength = 0;
-		NSData *macRomanNameData = [self.musicName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
-		macRomanNameLength = [macRomanNameData length];
-		BOOL isPadded = (macRomanNameLength & 1);
-		
-		nameChunk.ckSize = (SInt32)(macRomanNameLength + 1);
-		char pStrLen = macRomanNameLength;
-		PPBE32(&nameChunk.ckSize);
-		
-		nameChunk.ckID = NameID;
-		PPBE32(&nameChunk.ckID);
-		
-		NSMutableData *tmpNameDat = [[NSMutableData alloc] initWithBytes:&nameChunk length:sizeof(ChunkHeader)];
-		[tmpNameDat appendBytes:&pStrLen length:1];
-		[tmpNameDat appendData:macRomanNameData];
-		
-		if (!isPadded) {
-			char padbyte = 0;
-			[tmpNameDat appendBytes:&padbyte length:1];
-		}
-		nameData = tmpNameDat;
-		
-		
-		ChunkHeader infoChunk;
-		NSInteger macRomanInfoLength = 0;
-		NSData *macRomanInfoData = [self.musicInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
-		macRomanInfoLength = [macRomanInfoData length];
-		isPadded = (macRomanInfoLength & 1);
-		infoChunk.ckSize = (SInt32)(macRomanInfoLength + 1);
-		pStrLen = macRomanInfoLength;
-		PPBE32(&infoChunk.ckSize);
-		
-		infoChunk.ckID = CommentID;
-		PPBE32(&infoChunk.ckID);
-		NSMutableData *tmpInfoDat = [[NSMutableData alloc] initWithBytes:&infoChunk length:sizeof(ChunkHeader)];
-		[tmpInfoDat appendBytes:&pStrLen length:1];
-		[tmpInfoDat appendData:macRomanInfoData];
-		
-		if (!isPadded) {
-			char padbyte = 0;
-			[tmpInfoDat appendBytes:&padbyte length:1];
-		}
-		
-		infoData = tmpInfoDat;
-	}
-	
-	NSMutableData *returnData = [[NSMutableData alloc] initWithCapacity:dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + sizeof(ContainerChunk) + [nameData length] + [infoData length]];
-	header.ckID = FORMID;
-	PPBE32(&header.ckID);
-	header.ckSize = (SInt32)(dataLen + sizeof(CommonChunk) + sizeof(SoundDataChunk) + 4 + [nameData length] + [infoData length]);
-	PPBE32(&header.ckSize);
-	header.formType = AIFFID;
-	PPBE32(&header.formType);
-	[returnData appendBytes:&header length:sizeof(ContainerChunk)];
-	
-	container.ckID = CommonID;
-	PPBE32(&container.ckID);
-	container.ckSize = /*sizeof(CommonChunk)*/ 18;
-	PPBE32(&container.ckSize);
-	short chanNums = 0;
-	{
-		int todiv = sett->outPutBits / 8;
-		
-		switch (sett->outPutMode) {
-			case DeluxeStereoOutPut:
-			case StereoOutPut:
-			default:
-				todiv *= 2;
-				chanNums = 2;
-				break;
-				
-			case PolyPhonic:
-				todiv *= 4;
-				chanNums = 4;
-				break;
-				
-			case MonoOutPut:
-				chanNums = 1;
-				break;
-		}
-		container.numSampleFrames = (SInt32)(dataLen / todiv);
-	}
-	
-	container.numChannels = chanNums;
-	PPBE16(&container.numChannels);
-	container.sampleSize = sett->outPutBits;
-	PPBE16(&container.sampleSize);
-	PPBE32(&container.numSampleFrames);
-	
-	container.sampleRate = convertSampleRateToExtended80(sett->outPutRate);
-	[returnData appendBytes:&container length:sizeof(CommonChunk)];
-	
-	int dataOffset = 0;
-	dataChunk.ckID = SoundDataID;
-	PPBE32(&dataChunk.ckID);
-	dataChunk.blockSize = 0;
-	PPBE32(&dataChunk.blockSize);
-	dataChunk.ckSize = (SInt32)(dataLen + 8 + dataOffset);
-	PPBE32(&dataChunk.ckSize);
-	dataChunk.offset = dataOffset;
-	PPBE32(&dataChunk.offset);
-	
-	
-	[returnData appendBytes:&dataChunk length:sizeof(SoundDataChunk)];
-	if (sett->outPutBits == 16) {
-		short swapdata;
-		int i;
-		for (i = 0; i < dataLen; i += 2) {
-			[dat getBytes:&swapdata range:NSMakeRange(i, 2)];
-			PPBE16(&swapdata);
-			[returnData appendBytes:&swapdata length:2];
-		}
-	} else {
-		[returnData appendData:dat];
-	}
-	
-	[returnData appendData:nameData];
-	[returnData appendData:infoData];
-	
-	return [[NSData alloc] initWithData:returnData];
-}
-
-- (NSData *)getSoundData:(MADDriverSettings*)theSet
+- (NSMutableData*)rawSoundData:(MADDriverSettings*)theSet
 {
 	MADDriverRec *theRec = NULL;
 	
@@ -721,17 +598,51 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	soundPtr = calloc(full, 1);
 	
 	while(DirectSave(soundPtr, theSet, theRec))
-	{
 		[mutData appendBytes:soundPtr length:full];
-	}
-	NSData *retData = [self newAIFFDataFromSettings:theSet data:mutData];
+	
 	MADStopMusic(theRec);
 	MADCleanDriver(theRec);
 	MADDisposeDriver(theRec);
 	free(soundPtr);
 	
-	return retData;
+	return mutData;
 }
+
+- (NSData*)rawBESoundData:(MADDriverSettings*)theSet
+{
+#ifdef __LITTLE_ENDIAN__
+	NSMutableData *rsd = [self rawSoundData:theSet];
+	if (theSet->outPutBits == 16) {
+		size_t sndSize = [rsd length];
+		short *bePtr = [rsd mutableBytes];
+		dispatch_apply(sndSize / 2, dispatch_get_global_queue(0, 0), ^(size_t i) {
+			PPBE16(&bePtr[i]);
+		});
+	}
+	return rsd;
+#else
+	return [self rawSoundData:theSet];
+#endif
+}
+
+- (NSData*)rawLESoundData:(MADDriverSettings*)theSet
+{
+#ifdef __BIG_ENDIAN__
+	NSMutableData *rsd = [self rawSoundData:theSet];
+	if (theSet->outPutBits == 16) {
+		size_t sndSize = [rsd length];
+		short *lePtr = [rsd mutableBytes];
+		dispatch_apply(sndSize / 2, dispatch_get_global_queue(0, 0), ^(size_t i) {
+			PPLE16(&lePtr[i]);
+		});
+	}
+	return rsd;
+#else
+	return [self rawSoundData:theSet];
+#endif
+}
+
+#import "getAIFF.i"
 
 - (NSInteger)showExportSettings
 {
@@ -752,26 +663,22 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			//AIFF
 		{
 			NSSavePanel *savePanel = [NSSavePanel savePanel];
-			[savePanel setAllowedFileTypes:@[@"public.aiff-audio"]];
+			[savePanel setAllowedFileTypes:@[AVFileTypeAIFF]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
-			if (![self.musicName isEqualToString:@""]) {
+			if (![self.musicName isEqualToString:@""])
 				[savePanel setNameFieldStringValue:self.musicName];
-			}
+			
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as AIFF audio"];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						@autoreleasepool {
-							NSData *saveData = [self getSoundData:&exportSettings];
+							OSErr thErr =[self saveMusicAsAIFFToURL:[savePanel URL] usingSettings:&exportSettings];
 							MADEndExport(madDriver);
-							
-							if (!saveData) {
+							if (thErr != noErr)
 								return;
-							}
-							
-							[saveData writeToURL:[savePanel URL] atomically:YES];
 						}
 						dispatch_async(dispatch_get_main_queue(), ^{
 							if (isQuitting) {
@@ -808,16 +715,11 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-						NSData *saveData;
-						@autoreleasepool {
-							saveData = [self getSoundData:&exportSettings];
-						}
-						NSString *oldMusicName = self.musicName;
-						NSString *oldMusicInfo = self.musicInfo;
+						OSErr theErr = noErr;
+						
 						NSURL *oldURL = [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] musicUrl];
-						MADEndExport(madDriver);
 						NSArray *metadataInfo;
-						NSError *expErr = nil;
+						__block NSError *expErr = nil;
 						dispatch_block_t errBlock = ^{
 							if (isQuitting) {
 								[NSApp replyToApplicationShouldTerminate:YES];
@@ -825,43 +727,47 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 								NSRunAlertPanel(@"Export failed", @"Export/coversion of the music file failed:\n%@", nil, nil, nil, [expErr localizedDescription]);
 							}
 						};
-						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", oldMusicName] isDirectory:NO];
+						NSString *oldMusicName = self.musicName;
+						NSString *oldMusicInfo = self.musicInfo;
+						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", (oldMusicName && ![oldMusicName isEqualToString:@""]) ? oldMusicName : @"untitled"] isDirectory:NO];
 						
-						[saveData writeToURL:tmpURL atomically:NO];
-						AVURLAsset *exportMov = [AVAsset assetWithURL:tmpURL];
+						if ((theErr = [self saveMusicAsAIFFToURL:tmpURL usingSettings:&exportSettings]) != noErr) {
+							expErr = CreateErrorFromMADErrorType(theErr);
+							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
+							dispatch_async(dispatch_get_main_queue(), errBlock);
+						}
 						
+						AVAsset *exportMov = [AVAsset assetWithURL:tmpURL];
 						{
-							AVMutableMetadataItem *titleName = [[AVMutableMetadataItem alloc] init];
+							AVMutableMetadataItem *titleName = [AVMutableMetadataItem new];
 							[titleName setKeySpace:AVMetadataKeySpaceCommon];
 							[titleName setKey:AVMetadataCommonKeyTitle];
 							[titleName setValue:oldMusicName];
 							
-							AVMutableMetadataItem *dataInfo = [[AVMutableMetadataItem alloc] init];
+							AVMutableMetadataItem *dataInfo = [AVMutableMetadataItem new];
 							[titleName setKeySpace:AVMetadataKeySpaceCommon];
 							[titleName setKey:AVMetadataCommonKeySoftware];
 							[titleName setValue:@"PlayerPRO Player"];
 							
-							AVMutableMetadataItem *musicInfoQTUser = [[AVMutableMetadataItem alloc] init];
+							AVMutableMetadataItem *musicInfoQTUser = [AVMutableMetadataItem new];
 							[musicInfoQTUser setKeySpace:AVMetadataKeySpaceQuickTimeUserData];
 							[musicInfoQTUser setKey:AVMetadataQuickTimeUserDataKeyInformation];
 							[musicInfoQTUser setValue:oldMusicInfo];
 							
-							AVMutableMetadataItem *musicInfoiTunes = [[AVMutableMetadataItem alloc] init];
+							AVMutableMetadataItem *musicInfoiTunes = [AVMutableMetadataItem new];
 							[musicInfoiTunes setKeySpace:AVMetadataKeySpaceiTunes];
 							[musicInfoiTunes setKey:AVMetadataiTunesMetadataKeyUserComment];
 							[musicInfoiTunes setValue:oldMusicInfo];
 							
-							AVMutableMetadataItem *musicInfoQTMeta = [[AVMutableMetadataItem alloc] init];
+							AVMutableMetadataItem *musicInfoQTMeta = [AVMutableMetadataItem new];
 							[musicInfoQTMeta setKeySpace:AVMetadataKeySpaceQuickTimeMetadata];
 							[musicInfoQTMeta setKey:AVMetadataQuickTimeMetadataKeyInformation];
 							[musicInfoQTMeta setValue:oldMusicInfo];
-							
 							
 							metadataInfo = @[titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
 						}
 						
 						oldMusicInfo = nil;
-						saveData = nil;
 						if (!exportMov) {
 							expErr = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:nil];
 							NSLog(@"Init Failed for %@, error: %@", oldMusicName, [expErr localizedDescription]);
@@ -878,6 +784,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 							dispatch_async(dispatch_get_main_queue(), errBlock);
 							return;
 						}
+						[[NSFileManager defaultManager] removeItemAtURL:[savePanel URL] error:NULL];
 						session.outputURL = [savePanel URL];
 						session.outputFileType = AVFileTypeAppleM4A;
 						session.metadata = metadataInfo;
@@ -886,9 +793,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 						[session exportAsynchronouslyWithCompletionHandler:^{
 							dispatch_semaphore_signal(sessionWaitSemaphore);
 						}];
-						do {
-							dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
-						} while( [session status] < AVAssetExportSessionStatusCompleted );
+						dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
 						
 						BOOL didFinish = [session status] == AVAssetExportSessionStatusCompleted;
 						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
@@ -904,16 +809,111 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 									}
 								}
 							});
-						} else {
+						} else
 							NSLog(@"%@", [session error]);
-						}
 					});
-				} else {
+				} else
 					MADEndExport(madDriver);
-				}
-			} else {
+			} else
 				MADEndExport(madDriver);
-			}
+		}
+			break;
+			
+			case -3:
+			// wave
+		{
+			NSSavePanel *savePanel = [NSSavePanel savePanel];
+			[savePanel setAllowedFileTypes:@[AVFileTypeWAVE]];
+			[savePanel setCanCreateDirectories:YES];
+			[savePanel setCanSelectHiddenExtension:YES];
+			if (![self.musicName isEqualToString:@""])
+				[savePanel setNameFieldStringValue:self.musicName];
+			
+			[savePanel setPrompt:@"Export"];
+			[savePanel setTitle:@"Export as Wave Audio"];
+			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+				if ([self showExportSettings] == NSAlertDefaultReturn) {
+					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+						@autoreleasepool {
+							NSData *saveData = [self rawLESoundData:&exportSettings];
+							MADEndExport(madDriver);
+							
+							if (!saveData)
+								return;
+							
+							__block NSError *expErr = nil;
+							dispatch_block_t errBlock = ^{
+								if (isQuitting) {
+									[NSApp replyToApplicationShouldTerminate:YES];
+								} else {
+									NSRunAlertPanel(@"Export failed", @"Export of the music file failed:\n%@", nil, nil, nil, [expErr localizedDescription]);
+								}
+							};
+							
+#define checkError(res) { \
+if (res != noErr){ \
+expErr = [NSError errorWithDomain:NSOSStatusErrorDomain code:res userInfo:nil];\
+dispatch_async(dispatch_get_main_queue(), errBlock);\
+return; \
+} \
+}
+							AudioStreamBasicDescription asbd = {0};
+							asbd.mSampleRate = exportSettings.outPutRate;
+							asbd.mFormatID = kAudioFormatLinearPCM;
+							asbd.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+							asbd.mBitsPerChannel = exportSettings.outPutBits;
+							switch (exportSettings.outPutMode) {
+								case MonoOutPut:
+									asbd.mChannelsPerFrame = 1;
+									break;
+									
+								default:
+								case StereoOutPut:
+								case DeluxeStereoOutPut:
+									asbd.mChannelsPerFrame = 2;
+									break;
+									
+								case PolyPhonic:
+									asbd.mChannelsPerFrame = 4;
+									break;
+							}
+							asbd.mFramesPerPacket = 1;
+							asbd.mBytesPerFrame = asbd.mBitsPerChannel * asbd.mChannelsPerFrame / 8;
+							asbd.mBytesPerPacket = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
+							
+							CFURLRef url = CFBridgingRetain([savePanel URL]);
+							
+							AudioFileID audioFile;
+							OSStatus res;
+							res = AudioFileCreateWithURL(url, kAudioFileWAVEType, &asbd, kAudioFileFlags_EraseFile, &audioFile);
+							CFRelease(url);
+							checkError(res);
+							
+							UInt32 numBytes = (UInt32)[saveData length];
+							
+							res = AudioFileWriteBytes(audioFile, false, 0, &numBytes, [saveData bytes]);
+							checkError(res);
+							
+							res = AudioFileClose(audioFile);
+							checkError(res);
+#undef checkError
+							
+						}
+						dispatch_async(dispatch_get_main_queue(), ^{
+							if (isQuitting) {
+								[NSApp replyToApplicationShouldTerminate:YES];
+							} else {
+								NSInteger retVal = NSRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"OK", @"Show File", nil, [[savePanel URL] lastPathComponent]);
+								if (retVal == NSAlertAlternateReturn) {
+									[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[[savePanel URL]]];
+								}
+							}
+						});
+					});
+				} else
+					MADEndExport(madDriver);
+			} else
+				MADEndExport(madDriver);
 		}
 			break;
 			
@@ -936,7 +936,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 				[savePanel setNameFieldStringValue:self.musicName];
 			}
 			[savePanel setPrompt:@"Export"];
-			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", (__bridge NSString*) madLib->ThePlug[tag].MenuName]];
+			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", (__bridge NSString*)madLib->ThePlug[tag].MenuName]];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 				NSURL *fileURL = [savePanel URL];
 				OSErr err = MADMusicExportCFURL(madLib, music, madLib->ThePlug[tag].type, (__bridge CFURLRef)fileURL);
@@ -1177,6 +1177,7 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	[songTotalTime setIntegerValue:0];
 	[songCurTime setIntegerValue:0];
 	
+	[tableView registerForDraggedTypes:@[PPMLDCUTI, (NSString*)kUTTypeFileURL]];
 	[self addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionNew context:NULL];
 	self.paused = YES;
 	[self willChangeValueForKey:kMusicListKVO];
@@ -1486,23 +1487,20 @@ enum PPMusicToolbarTypes {
 			break;
 			
 		case PPToolbarFileInfo:
-			if ([infoDrawer state] == NSDrawerOpeningState || [infoDrawer state] == NSDrawerOpenState) {
+			if ([infoDrawer state] == NSDrawerOpeningState || [infoDrawer state] == NSDrawerOpenState)
 				return YES;
-			}
 		case PPToolbarPlayMusic:
-			if([[tableView selectedRowIndexes] count] == 1) {
+			if([[tableView selectedRowIndexes] count] == 1)
 				return YES;
-			} else {
+			else
 				return NO;
-			}
 			break;
 			
 		case PPToolbarRemoveMusic:
-			if([[tableView selectedRowIndexes] count] > 0) {
+			if([[tableView selectedRowIndexes] count] > 0)
 				return YES;
-			} else {
+			else
 				return NO;
-			}
 			break;
 			
 		default:
@@ -1596,7 +1594,8 @@ enum PPMusicToolbarTypes {
 	return NO;
 }
 
-- (IBAction)openFile:(id)sender {
+- (IBAction)openFile:(id)sender
+{
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	NSDictionary *playlistDict = @{@"PlayerPRO Music List" : @[PPMusicListUTI], @"PlayerPRO Old Music List" : @[PPOldMusicListUTI]};
 	
@@ -1732,12 +1731,12 @@ enum PPMusicToolbarTypes {
 		char info[5] = {0};
 		if(MADMusicIdentifyCFURL(madLib, info, (__bridge CFURLRef) musicURL) != noErr) break;
 		if(MADMusicInfoCFURL(madLib, info, (__bridge CFURLRef) musicURL, &theInfo) != noErr) break;
-		[[fileName cell] setTitle:obj.fileName];
-		[[internalName cell] setTitle:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
+		[fileName setStringValue:obj.fileName];
+		[internalName setStringValue:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
 		[fileSize setIntegerValue:theInfo.fileSize];
-		[[musicInstrument cell] setTitle:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
-		[[musicPatterns cell] setTitle:[NSString stringWithFormat:@"%ld", (long)theInfo.totalPatterns]];
-		[[musicPlugType cell] setTitle:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
+		[musicInstrument setStringValue:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
+		[musicPatterns setStringValue:[NSString stringWithFormat:@"%ld", (long)theInfo.totalPatterns]];
+		[musicPlugType setStringValue:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
 		{
 			char sig[5] = {0};
 			OSType2Ptr(theInfo.signature, sig);
@@ -1745,20 +1744,20 @@ enum PPMusicToolbarTypes {
 			if (!NSSig) {
 				NSSig = [NSString stringWithFormat:@"0x%08X", (unsigned int)theInfo.signature];
 			}
-			[[musicSignature cell] setTitle:NSSig];
+			[musicSignature setStringValue:NSSig];
 		}
-		[[fileLocation cell] setTitle:[musicURL path]];
+		[fileLocation setStringValue:[musicURL path]];
 		return;
 	} while (0);
 	
-	[[fileName cell] setTitle:PPDoubleDash];
-	[[internalName cell] setTitle:PPDoubleDash];
-	[[fileSize cell] setTitle:PPDoubleDash];
-	[[musicInstrument cell] setTitle:PPDoubleDash];
-	[[musicPatterns cell] setTitle:PPDoubleDash];
-	[[musicPlugType cell] setTitle:PPDoubleDash];
-	[[musicSignature cell] setTitle:PPDoubleDash];
-	[[fileLocation cell] setTitle:PPDoubleDash];
+	[fileName setStringValue:PPDoubleDash];
+	[internalName setStringValue:PPDoubleDash];
+	[fileSize setStringValue:PPDoubleDash];
+	[musicInstrument setStringValue:PPDoubleDash];
+	[musicPatterns setStringValue:PPDoubleDash];
+	[musicPlugType setStringValue:PPDoubleDash];
+	[musicSignature setStringValue:PPDoubleDash];
+	[fileLocation setStringValue:PPDoubleDash];
 }
 
 - (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to
@@ -1834,6 +1833,16 @@ enum PPMusicToolbarTypes {
 	return [self handleFile:[NSURL fileURLWithPath:filename] ofType:utiFile];
 }
 
+#pragma mark Table View delegate methods
+
+- (NSString *)tableView:(NSTableView *)tableView toolTipForCell:(NSCell *)cell rect:(NSRectPointer)rect tableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row mouseLocation:(NSPoint)mouseLocation
+{
+	if (row >= 0 || row <= [musicList countOfMusicList]) {
+		return nil;
+	}
+	return [[musicList URLAtIndex:row] path];
+}
+
 #pragma mark PPSoundSettingsViewControllerDelegate methods
 
 - (void)soundOutBitsDidChange:(short)bits
@@ -1888,6 +1897,89 @@ enum PPMusicToolbarTypes {
 - (void)soundOutStereoDelayAmountDidChange:(short)std
 {
 	exportSettings.MicroDelaySize = std;
+}
+
+#pragma mark NSTableViewDataSource methods
+
+- (NSDragOperation)tableView:(NSTableView *)tableView1 validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation
+{
+	NSDragOperation result = NSDragOperationNone;
+	
+	if ([info draggingSource] == tableView1) {
+		result = NSDragOperationMove;
+		//TODO: check for number of indexes that are greater than the drop row.
+		[tableView1 setDropRow:row dropOperation:NSTableViewDropAbove];
+	} else {
+		NSPasteboard* pb = info.draggingPasteboard;
+		
+		//list the file type UTIs we want to accept
+		NSArray* acceptedTypes = self.trackerUTIs;
+		NSArray* urls = [pb readObjectsForClasses:@[[NSURL class]]
+										  options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES,
+												    NSPasteboardURLReadingContentsConformToTypesKey : acceptedTypes}];
+		
+		if ([urls count] > 0) {
+			result = NSDragOperationCopy;
+			[tableView1 setDropRow:row dropOperation:NSTableViewDropAbove];
+		}
+	}
+	
+	return result;
+}
+
+- (BOOL)tableView:(NSTableView *)tableView1 acceptDrop:(id <NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
+{
+	if (row < 0) {
+		row = 0;
+	}
+	NSPasteboard *dragPB = [info draggingPasteboard];
+	NSArray *tmpArray = [dragPB readObjectsForClasses:@[[PPMusicListDragClass class]] options:nil];
+	if (tmpArray) {
+		PPMusicListDragClass *dragClass = tmpArray[0];
+		NSIndexSet *dragIndexSet = dragClass.theIndexSet;
+		[self willChangeValueForKey:kMusicListKVO];
+
+		NSArray *selArray = [musicList arrayOfObjectsInMusicListAtIndexes:dragIndexSet];
+		[musicList removeObjectsInMusicListAtIndexes:dragIndexSet];
+		[musicList insertObjects:selArray inMusicListAtIndex:row];
+		
+		[self didChangeValueForKey:kMusicListKVO];
+		[self musicListContentsDidMove];
+		return YES;
+	} else if((tmpArray = [dragPB readObjectsForClasses:@[[NSURL class]] options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES, NSPasteboardURLReadingContentsConformToTypesKey : self.trackerUTIs}])) {
+		
+		if ([tmpArray count] < 1) {
+			return NO;
+		}
+		
+		[self willChangeValueForKey:kMusicListKVO];
+		NSMutableArray *mutArray = [NSMutableArray new];
+		for (NSURL *curURL in tmpArray) {
+			[mutArray addObject:[[PPMusicListObject alloc] initWithURL:curURL]];
+		}
+		
+		[musicList insertObjects:mutArray inMusicListAtIndex:row];
+		
+		[self didChangeValueForKey:kMusicListKVO];
+		[self musicListContentsDidMove];
+		return YES;
+	}
+	
+	return NO;
+}
+
+- (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndices toPasteboard:(NSPasteboard*)pboard
+{
+	BOOL status = NO;
+	PPMusicListDragClass *dragClass = [[PPMusicListDragClass alloc] initWithIndexSet:rowIndices];
+	NSMutableArray *urlArrays = [NSMutableArray new];
+	NSArray *ppmobjects = [musicList arrayOfObjectsInMusicListAtIndexes:rowIndices];
+	for (PPMusicListObject *obj in ppmobjects) {
+		[urlArrays addObject:obj.musicUrl];
+	}
+	[pboard clearContents]; // clear pasteboard to take ownership
+	status = [pboard writeObjects:[[urlArrays copy] arrayByAddingObject:dragClass]]; // write the URLs
+	return status;
 }
 
 @end

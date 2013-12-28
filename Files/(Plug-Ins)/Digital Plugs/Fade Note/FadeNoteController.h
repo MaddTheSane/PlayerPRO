@@ -10,5 +10,7 @@
 #import <PlayerPROKit/PlayerPROKit.h>
 
 @interface FadeNoteController : PPDigitalPluginWindowController
+@property (weak) IBOutlet NSComboBox *fromBox;
+@property (weak) IBOutlet NSComboBox *toBox;
 
 @end

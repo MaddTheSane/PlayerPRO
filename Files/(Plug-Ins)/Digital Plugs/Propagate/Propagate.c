@@ -11,9 +11,9 @@ static OSErr mainPropagate(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug
 {
 	short track, row;
 		
-	for( track = 0; track < myPcmd->tracks; track ++)
+	for (track = 0; track < myPcmd->tracks; track ++)
 	{
-		for( row = 0; row < myPcmd->length; row ++)
+		for (row = 0; row < myPcmd->length; row ++)
 		{
 			Cmd		*myCmd, *myCmdsrc;
 			myCmdsrc = GetCmd( 0, 0, myPcmd);

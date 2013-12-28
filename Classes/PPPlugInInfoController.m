@@ -9,16 +9,11 @@
 #import "PPPlugInInfoController.h"
 #import "PPPlugInInfo.h"
 
-@interface PPPlugInInfoController ()
-
-@end
-
 @implementation PPPlugInInfoController
 
 - (id)initWithPlugInInfo:(PPPlugInInfo *)plugInfo;
 {
-	if(self = [self initWithWindowNibName:@"PPPlugInInfoController"])
-	{
+	if(self = [self initWithWindowNibName:@"PPPlugInInfoController"]) {
 		info = plugInfo;
 	}
 	return self;
@@ -41,11 +36,11 @@
 
 - (void)windowDidLoad
 {
-    [super windowDidLoad];
+	[super windowDidLoad];
 	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    [[nameField cell] setTitle:info.plugName];
-	[[authorField cell] setTitle:info.authorName];
-	[[typeField cell] setTitle:info.plugType];
+	[nameField setStringValue:info.plugName];
+	[authorField setStringValue:info.authorName];
+	[typeField setStringValue:info.plugType];
 	NSImage *plugImage = [[NSWorkspace sharedWorkspace] iconForFile:[info.plugURL path]];
 	[plugImage setSize:NSMakeSize(64, 64)];
 	[pluginImage setImage:plugImage];

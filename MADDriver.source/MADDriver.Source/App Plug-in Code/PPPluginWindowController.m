@@ -20,13 +20,13 @@ NSString * const PPPlugReturnCode = @"PlayerPROKit Return Code";
 @synthesize plugBlock;
 
 #if 0
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	return self = [super initWithWindowNibName:windowNibName];
 }
 #endif
 
-- (id)initWithWindowNibName:(NSString *)windowNibName infoPlug:(PPInfoPlug *)ip
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName infoPlug:(PPInfoPlug *)ip
 {
 	if (self = [super initWithWindowNibName:windowNibName]) {
 		self.infoPlug = ip;

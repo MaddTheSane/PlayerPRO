@@ -85,7 +85,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 	ULTSuite		ULTSuite;
 	/********************************/
 	
-	for( i = 0 ; i < 64; i ++)
+	for (i = 0 ; i < 64; i ++)
 	{
 		theInstrument[ i] = NULL;
 	}
@@ -127,7 +127,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 	theMAD->header->tempo				= 125;
 	
 	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
-	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 	
 	for(i=0; i<128; i++) theMAD->header->oPointers[ i] = 0;
 	for(i=0; i<128; i++)
@@ -137,7 +137,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 		if (theMAD->header->oPointers[ i] < 0 || theMAD->header->oPointers[ i] >= 128) theMAD->header->oPointers[ i] = 0;
 	}
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
 		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
@@ -159,11 +159,11 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
 	if (!theMAD->sample) return MADNeedMemory;
 	
-	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
 	for(i  = 0 ; i < MAXINSTRU; i++)
 	{
-		for( x = 0; x < MAXSAMPLE; x++) theMAD->sample[ i*MAXSAMPLE + x] = NULL;
+		for (x = 0; x < MAXSAMPLE; x++) theMAD->sample[ i*MAXSAMPLE + x] = NULL;
 		
 		theMAD->fid[i].numSamples	= 0;
 	}
@@ -212,7 +212,7 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 			
 			
 			curData->relNote	= 0;
-			for( x = 0; x < 28; x++) theMAD->fid[i].name[x] = ULTSuite.ins[i].name[x];
+			for (x = 0; x < 28; x++) theMAD->fid[i].name[x] = ULTSuite.ins[i].name[x];
 			
 			curData->data 		= malloc( curData->size);
 			if (curData->data == NULL) return MADNeedMemory;
@@ -227,8 +227,8 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 	
 	theMAD->header->numChn = ULTSuite.NOC;
 	
-	for( i = 0; i < MAXPATTERN; i++) theMAD->partition[ i] = NULL;
-	for( i = 0; i < theMAD->header->numPat ; i++)
+	for (i = 0; i < MAXPATTERN; i++) theMAD->partition[ i] = NULL;
+	for (i = 0; i < theMAD->header->numPat ; i++)
 	{
 		theMAD->partition[ i] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * 64 * sizeof( Cmd), 1);
 		if (theMAD->partition[ i] == NULL) return MADNeedMemory;
@@ -236,12 +236,12 @@ static OSErr ConvertULT2Mad( Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDr
 		theMAD->partition[ i]->header.size 			= 64;
 		theMAD->partition[ i]->header.compMode 	= 'NONE';
 		
-		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
+		for (x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
 		
 		MaxPtr = (Ptr) theMAD->partition[ i];
 		MaxPtr += sizeof( PatHeader) + theMAD->header->numChn * 64 * sizeof( Cmd);
 		
-		for( Row = 0; Row < 64; Row++)
+		for (Row = 0; Row < 64; Row++)
 		{
 			for(z = 0; z < theMAD->header->numChn; z++)
 			{

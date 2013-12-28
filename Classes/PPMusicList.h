@@ -27,7 +27,7 @@
 @interface PPMusicList : NSObject <NSCoding, NSFastEnumeration>
 
 @property (readonly) NSUInteger lostMusicCount;
-@property (readwrite) NSInteger selectedMusic;
+@property NSInteger selectedMusic;
 
 - (void)sortMusicList;
 
@@ -46,6 +46,7 @@
 
 - (void)removeObjectsInMusicListAtIndexes:(NSIndexSet *)set;
 - (NSArray*)arrayOfObjectsInMusicListAtIndexes:(NSIndexSet*)theSet;
+- (void)insertObjects:(NSArray*)anObj inMusicListAtIndex:(NSUInteger)idx;
 
 //KVC functions
 - (NSUInteger)countOfMusicList;

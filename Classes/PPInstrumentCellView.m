@@ -7,7 +7,7 @@
 //
 
 #import "PPInstrumentCellView.h"
-#import "PPInstrumentWindowController.h"
+#import "PPInstrumentViewController.h"
 
 @implementation PPInstrumentCellView
 @synthesize numField;

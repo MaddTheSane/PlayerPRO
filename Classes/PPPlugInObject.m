@@ -12,9 +12,9 @@
 
 void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
 {
-	CFArrayRef	factories = NULL;
-	Boolean		foundInterface = FALSE;
-	void		**formatPlugA = NULL;
+	CFArrayRef	factories		= NULL;
+	Boolean		foundInterface	= FALSE;
+	void		**formatPlugA	= NULL;
 	
 	CFPlugInRef plugToTest = CFBundleGetPlugIn(tempBundleRef);
 	
@@ -23,56 +23,48 @@ void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUID
 	}
 	
 	//  See if this plug-in implements the Test type.
-	factories	= CFPlugInFindFactoriesForPlugInTypeInPlugIn( TypeUUID, plugToTest );
+	factories = CFPlugInFindFactoriesForPlugInTypeInPlugIn(TypeUUID, plugToTest);
 	
-	if ( factories != NULL )
-	{
+	if (factories != NULL) {
 		CFIndex	factoryCount, index;
 		
-		factoryCount	= CFArrayGetCount( factories );
-		if ( factoryCount > 0 )
-		{
-			for ( index = 0 ; (index < factoryCount) && (foundInterface == false) ; index++ )
-			{
-				CFUUIDRef	factoryID;
+		factoryCount = CFArrayGetCount(factories);
+		if (factoryCount > 0) {
+			for (index = 0 ; (index < factoryCount) && (foundInterface == false) ; index++) {
+				CFUUIDRef factoryID;
 				
 				//  Get the factory ID for the first location in the array of IDs.
-				factoryID = (CFUUIDRef) CFArrayGetValueAtIndex( factories, index );
-				if ( factoryID )
-				{
+				factoryID = (CFUUIDRef) CFArrayGetValueAtIndex(factories, index);
+				if (factoryID) {
 					IUnknownVTbl **iunknown = NULL;
 					
 					//  Use the factory ID to get an IUnknown interface. Here the plug-in code is loaded.
-					iunknown	= (IUnknownVTbl **) CFPlugInInstanceCreate( kCFAllocatorDefault, factoryID, TypeUUID );
+					iunknown = (IUnknownVTbl **)CFPlugInInstanceCreate(kCFAllocatorDefault, factoryID, TypeUUID);
 					
-					if ( iunknown )
-					{
+					if (iunknown) {
 						//  If this is an IUnknown interface, query for the test interface.
-						(*iunknown)->QueryInterface( iunknown, CFUUIDGetUUIDBytes( InterfaceUUID ), (LPVOID *)( &formatPlugA ) );
+						(*iunknown)->QueryInterface(iunknown, CFUUIDGetUUIDBytes(InterfaceUUID), (LPVOID *)(&formatPlugA));
 						
 						// Now we are done with IUnknown
-						(*iunknown)->Release( iunknown );
+						(*iunknown)->Release(iunknown);
 						
-						if ( formatPlugA )
-						{
-							//	We found the interface we need
-							foundInterface	= true;
+						if (formatPlugA) {
+							// We found the interface we need
+							foundInterface = true;
 						}
 					}
 				}
 			}
-		}
-		else {
+		} else {
 			//You can ignore the Clang static warning of incorrect decrement here.
-			CFRelease(factories); factories = NULL;
+			CFRelease(factories);
 			return NULL;
 		}
-	}
-	else {
+	} else
 		return NULL;
-	}
+	
 	//You can ignore the Clang static warning of incorrect decrement here.
-	CFRelease(factories); factories = NULL;
+	CFRelease(factories);
 	
 	return formatPlugA;
 }
@@ -86,10 +78,10 @@ NSArray *DefaultPlugInLocations()
 		NSFileManager *fm = [NSFileManager defaultManager];
 		[plugLocs addObject:[[NSBundle mainBundle] builtInPlugInsURL]];
 		
-		[plugLocs addObject:[NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
+		[plugLocs addObject:[NSURL fileURLWithPathComponents:@[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
 		
 		//User plugins
-		[plugLocs addObject:[NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
+		[plugLocs addObject:[NSURL fileURLWithPathComponents:@[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
 		
 		immPlugLocs = [[NSArray alloc] initWithArray:plugLocs];
 	}
@@ -97,31 +89,29 @@ NSArray *DefaultPlugInLocations()
 	return immPlugLocs;
 }
 
-OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 channel, SInt32 note, SInt32 amplitude, long loopBeg, long loopSize, unsigned int rate, Boolean stereo)
+OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 channel, SInt32 note, SInt32 amplitude, long loopBeg, long loopSize, unsigned int rate, Boolean stereo)
 {
-	OSErr iErr = MADPlaySoundData( theRec, soundPtr, size, channel, note, amplitude, 0, 0, rate, stereo);
+	OSErr iErr = MADPlaySoundData(theRec, soundPtr, size, channel, note, amplitude, 0, 0, rate, stereo);
 	Boolean	continueLoop;
 	
-	if (iErr == noErr)
-	{
+	if (iErr == noErr) {
 		continueLoop = true;
-		while( continueLoop)
-		{
+		while (continueLoop) {
 			//GetKeys( km);
 			
-			if (theRec->chan[ channel].samplePtr == NULL) continueLoop = false;
+			if (theRec->chan[channel].samplePtr == NULL)
+				continueLoop = false;
 			//if (MADIsPressed( (unsigned char*) km, 0x37) && MADIsPressed( (unsigned char*) km, 0x2F)) continueLoop = false;
 			//if (Button()) continueLoop = false;
 			//DoGlobalNull();
 		}
 		
-		if (theRec->chan[ channel].samplePtr != NULL)
-		{
-			theRec->chan[ channel].curPtr 		= theRec->chan[ channel].maxPtr;
-			theRec->chan[ channel].samplePtr	= NULL;
-			theRec->chan[ channel].lAC			= 0;
-			theRec->chan[ channel].loopBeg		= 0;
-			theRec->chan[ channel].loopSize 	= 0;
+		if (theRec->chan[channel].samplePtr != NULL) {
+			theRec->chan[channel].curPtr 	= theRec->chan[ channel].maxPtr;
+			theRec->chan[channel].samplePtr	= NULL;
+			theRec->chan[channel].lAC		= 0;
+			theRec->chan[channel].loopBeg	= 0;
+			theRec->chan[channel].loopSize 	= 0;
 		}
 	}
 	
@@ -147,7 +137,7 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 	return nil;
 }
 
-- (id)initWithBundle:(NSBundle *)aBund
+- (instancetype)initWithBundle:(NSBundle *)aBund
 {
 	if (self = [super init]) {
 		{
@@ -160,16 +150,16 @@ OSErr inMADPlaySoundData( MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 
 		
 		NSMutableDictionary *tempDict = [[aBund infoDictionary] mutableCopy];
 		[tempDict addEntriesFromDictionary:[aBund localizedInfoDictionary]];
-		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*) kMadPlugMenuNameKey];
+		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugMenuNameKey];
 		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-			self.menuName = DictionaryTemp;
-		} else {
+			self.menuName = [DictionaryTemp copy];
+		} else
 			return nil;
-		}
-		DictionaryTemp = [tempDict valueForKey:(__bridge NSString*) kMadPlugAuthorNameKey];
+		
+		DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugAuthorNameKey];
 		if (DictionaryTemp) {
 			if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-				self.authorString = DictionaryTemp;
+				self.authorString = [DictionaryTemp copy];
 			} else {
 				self.authorString = NSLocalizedString(@"No Author", @"no author");
 			}

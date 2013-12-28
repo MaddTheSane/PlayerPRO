@@ -37,7 +37,7 @@
 	return [self.menuName hash];
 }
 
-- (id)initWithBundle:(NSBundle *)aBund
+- (instancetype)initWithBundle:(NSBundle *)aBund
 {
 	if (self = [super initWithBundle:aBund]) {
 		NSURL *bundleURL = [aBund bundleURL];

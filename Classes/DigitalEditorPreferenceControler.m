@@ -139,8 +139,8 @@
 	[PPDEVolume setState:[defaults boolForKey:PPDEShowVolume]];
 	
 	[PPDEMarkerSelect setState:[defaults boolForKey:PPDEShowMarkers]];
-	[[PPDEMarkerOffset cell] setTitle:[defaults stringForKey:PPDEMarkerOffsetPref]];
-	[[PPDEMarkerLoop cell] setTitle:[defaults stringForKey:PPDEMarkerLoopPref]];
+	[PPDEMarkerOffset setStringValue:[defaults stringForKey:PPDEMarkerOffsetPref]];
+	[PPDEMarkerLoop setStringValue:[defaults stringForKey:PPDEMarkerLoopPref]];
 	[PPDEMarkerColor setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPDEMarkerColorPref]]];
 	
 	[PPDEMouseClickControl setState:[defaults boolForKey:PPDEMouseClickControlPref]];

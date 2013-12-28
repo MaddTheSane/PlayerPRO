@@ -32,7 +32,7 @@ static OSErr mainSmooth(void			*unused,
 			
 			prevtemp = *SamplePtr++;
 			temp = *SamplePtr++;
-			for( i = 1; i < length; i++)
+			for (i = 1; i < length; i++)
 			{
 				nexttemp = *SamplePtr--;
 				
@@ -47,12 +47,14 @@ static OSErr mainSmooth(void			*unused,
 
 		case 16:
 		{
-			short	*SamplePtr = (short*) theData->data + (SelectionStart / 2);
-			
+			__block short *SamplePtr = (short*)theData->data + (SelectionStart / 2);
+			__block long prevtemp, temp;
 			prevtemp = *SamplePtr++;
 			temp = *SamplePtr++;
-			for( i = 1; i < length / 2; i++)
-			{
+			dispatch_apply(length / 2 - 1, dispatch_get_global_queue(0, 0), ^(size_t theSize) {
+				long	nexttemp, work;
+
+				theSize++;
 				nexttemp = *SamplePtr--;
 				
 				work = ((prevtemp + nexttemp) + (temp * 6)) >> 3;
@@ -61,7 +63,8 @@ static OSErr mainSmooth(void			*unused,
 				prevtemp = temp;
 				temp = nexttemp;
 				SamplePtr++;
-			}
+
+			});
 		} break;
 	}
 

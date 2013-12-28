@@ -10,19 +10,15 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 
-@interface SamplingRateWindowController ()
-
-@end
-
-static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int srcC4SPD, int dstC4SPD, Boolean stereo, size_t *newsize)
-{
 #define LRVAL	3L
-	
-	short						*src16 = (short*) src, *dst16;
-	char						*src8 = (char*) src, *dst8;
-	Ptr							dst;
-	int						newSize = 0, tempL = 0, tempR = 0;
-	unsigned  int			x = 0, left = 0, right = 0, pos = 0;
+
+static void *ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int srcC4SPD, int dstC4SPD, Boolean stereo, size_t *newsize)
+{
+	short			*src16 = (short*)src, *dst16;
+	char			*src8 = (char*)src, *dst8;
+	Ptr				dst;
+	int				newSize = 0, tempL = 0, tempR = 0;
+	unsigned int	x = 0, left = 0, right = 0, pos = 0;
 	
 	srcC4SPD /= 100;
 	dstC4SPD /= 100;
@@ -31,78 +27,84 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 	
 	*newsize = newSize;
 	
-	dst = malloc( newSize);
-	if (dst == NULL) return NULL;
+	dst = malloc(newSize);
+	if (dst == NULL)
+		return NULL;
 	
-	dst16 = (short*) dst;
-	dst8 = (char*) dst;
+	dst16 = (short*)dst;
+	dst8 = (char*)dst;
 	
-	switch( amp)
+	switch(amp)
 	{
 		case 8:
-			for( x = 0; x < newSize; x++)
-			{
+			for (x = 0; x < newSize; x++) {
 				pos			= (x * srcC4SPD << LRVAL) / dstC4SPD;
 				right		= pos & ((1 << LRVAL)-1);
 				left		= (1 << LRVAL) - right;
 				
-				if (stereo)
-				{
+				if (stereo) {
 					pos >>= LRVAL;
 					pos /= 2;
 					pos *= 2;
 					
-					if (1 + pos >= srcSize) {}
-					else tempL = (left * src8[ pos] + right * src8[ 2 + pos]) >> LRVAL;
+					if (1 + pos >= srcSize)
+					{}
+					else
+						tempL = (left * src8[pos] + right * src8[2 + pos]) >> LRVAL;
 					
-					dst8[ x] = tempL;
+					dst8[x] = tempL;
 					
 					x++;
 					
-					if (3 + pos >= srcSize) {}
-					else tempR = (left * src8[ 1 + pos] + right * src8[ 3 + pos]) >> LRVAL;
+					if (3 + pos >= srcSize)
+					{}
+					else
+						tempR = (left * src8[1 + pos] + right * src8[3 + pos]) >> LRVAL;
 					
-					dst8[ x] = tempR;
-				}
-				else
-				{
+					dst8[x] = tempR;
+				} else {
 					pos >>= LRVAL;
 					
-					if (pos < 0 ||  1 + pos >= srcSize) {}
-					else tempL = (left * src8[ pos] + right * src8[ 1 + pos]) >> LRVAL;
+					if (pos < 0 ||  1 + pos >= srcSize)
+					{
+					}
+					else
+						tempL = (left * src8[pos] + right * src8[1 + pos]) >> LRVAL;
 					
-					dst8[ x] = tempL;
+					dst8[x] = tempL;
 				}
 			}
 			break;
 			
 		case 16:
-			for( x = 0; x < newSize/2; x++)
-			{
+			for (x = 0; x < newSize / 2; x++) {
 				pos			= (x * srcC4SPD << LRVAL) / dstC4SPD;
 				right		= pos & ((1 << LRVAL)-1);
 				left		= (1 << LRVAL) - right;
 				
-				if (stereo)
-				{
+				if (stereo) {
 					pos >>= LRVAL;
 					pos /= 2;
 					pos *= 2;
 					
-					if (1 + pos >= srcSize/2) {}
-					else tempL = (left * src16[ pos] + right * src16[ 2 + pos]) >> LRVAL;
+					if (1 + pos >= srcSize/2)
+					{
+					}
+					else
+						tempL = (left * src16[pos] + right * src16[2 + pos]) >> LRVAL;
 					
-					dst16[ x] = tempL;
+					dst16[x] = tempL;
 					
 					x++;
 					
-					if (3 + pos >= srcSize/2) {}
-					else tempL = (left * src16[ 1 + pos] + right * src16[ 3 + pos]) >> LRVAL;
+					if (3 + pos >= srcSize/2)
+					{
+					}
+					else
+						tempL = (left * src16[ 1 + pos] + right * src16[ 3 + pos]) >> LRVAL;
 					
 					dst16[ x] = tempL;
-				}
-				else
-				{
+				} else {
 					pos >>= LRVAL;
 					
 					if (1 + pos >= srcSize/2) {}
@@ -119,7 +121,7 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 
 @implementation SamplingRateWindowController
 
-- (id)initWithWindow:(NSWindow *)window
+- (instancetype)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
@@ -130,22 +132,16 @@ static Ptr ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int src
 			Ptr		newPtr;
 			size_t newPtrSize = 0;
 			
-			newPtr = ConvertSampleC4SPD(theData->data,
-										theData->size,
-										theData->amp,
-										theData->c2spd,
-										newFreq,
-										theData->stereo,
-										&newPtrSize);
+			newPtr = ConvertSampleC4SPD(theData->data, theData->size, theData->amp, theData->c2spd, newFreq, theData->stereo, &newPtrSize);
 			
 			theData->loopBeg = (theData->loopBeg * (newFreq/100)) / (long) (theData->c2spd/100);
 			theData->loopSize = (theData->loopSize * (newFreq/100)) / (long) (theData->c2spd/100);
 			
 			if (newPtr != NULL)
 			{
-				free( theData->data);
-				theData->data		= newPtr;
-				theData->size		= (SInt32)newPtrSize;
+				free(theData->data);
+				theData->data	= newPtr;
+				theData->size	= (SInt32)newPtrSize;
 				theData->c2spd	= newFreq;
 			}
 			
@@ -183,7 +179,7 @@ static OSErr mainSampRate(void			*unused,
 						  long			SelectionStart,
 						  long			SelectionEnd,
 						  PPInfoPlug	*thePPInfoPlug,
-						  short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+						  short			StereoMode)			// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	
 	SamplingRateWindowController *controller = [[SamplingRateWindowController alloc] initWithWindowNibName:@"SamplingRateWindowController" infoPlug:thePPInfoPlug];

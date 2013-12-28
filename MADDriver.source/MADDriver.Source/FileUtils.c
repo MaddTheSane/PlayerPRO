@@ -32,7 +32,7 @@
 #include <CoreFoundation/CFURL.h>
 #endif
 
-OSErr iFileCreate(const char *path, OSType type)
+void iFileCreate(const char *path, OSType type)
 {
 	int status = 0;
 	int fd = 0;
@@ -48,7 +48,7 @@ OSErr iFileCreate(const char *path, OSType type)
 			default:
 				fprintf(stderr, "Error encountered deleting %s: %s", path, strerror(errno));
 				errno = 0;
-				return MADWritingErr;
+				return;
 				break;
 		}
 	}
@@ -56,7 +56,7 @@ OSErr iFileCreate(const char *path, OSType type)
 	//FIXME: does this work on Windows?
 	fd = open(path, O_WRONLY|O_CREAT|O_TRUNC, 0644);
 	if (fd == -1) {
-		return MADWritingErr;
+		return;
 	}
 	close(fd);
 
@@ -65,22 +65,21 @@ OSErr iFileCreate(const char *path, OSType type)
 	SetOSType(fileURL, type);
 	CFRelease(fileURL);
 #endif
-	return noErr;
 }
 
 FILE* iFileOpen(const char *name)
 {
-	return iFileOpenRead( name);
+	return iFileOpenRead(name);
 }
 
 FILE* iFileOpenRead(const char *name)
 {
-	return fopen( name, "rb");
+	return fopen(name, "rb");
 }
 
 FILE* iFileOpenWrite(const char *name)
 {
-	return fopen( name, "wb");
+	return fopen(name, "wb");
 }
 
 long iGetEOF(FILE* iFileRefI)
@@ -88,33 +87,33 @@ long iGetEOF(FILE* iFileRefI)
 	long curEOF, oldPos;
 	
 	oldPos = ftell(iFileRefI);
-	fseek( iFileRefI, 0, SEEK_END);
-	curEOF = ftell( iFileRefI);
-	fseek( iFileRefI, oldPos, SEEK_SET);
+	fseek(iFileRefI, 0, SEEK_END);
+	curEOF = ftell(iFileRefI);
+	fseek(iFileRefI, oldPos, SEEK_SET);
 	
 	return curEOF;
 }
 
 OSErr iRead(long size, void *dest, FILE* iFileRefI)
 {
-	fread( dest, size, 1, iFileRefI);
+	fread(dest, size, 1, iFileRefI);
 	
 	return noErr;
 }
 
 OSErr iSeekCur(long size, FILE* iFileRefI)
 {
-	return fseek( iFileRefI, size, SEEK_CUR);
+	return fseek(iFileRefI, size, SEEK_CUR);
 }
 
-OSErr iWrite(long size, const void *dest, FILE* iFileRefI)
+OSErr iWrite(long size, const void *src, FILE* iFileRefI)
 {
-	fwrite( dest, size, 1, iFileRefI);
+	fwrite(src, size, 1, iFileRefI);
 	
 	return noErr;
 }
 
-void iClose( FILE* iFileRefI)
+void iClose(FILE* iFileRefI)
 {
-	fclose( iFileRefI);
+	fclose(iFileRefI);
 }

@@ -67,7 +67,7 @@ typedef UInt8			UBYTE;
 #define IHSIZESMALL	33
 #define IHSSIZE		40
 
-static		Byte		LastAEffect[ MAXTRACK];
+static		Byte		LastAEffect[MAXTRACK];
 static		XMHEADER	*mh;
 static		char		*theXMRead, *theXMMax;
 
@@ -76,16 +76,17 @@ static		char		*theXMRead, *theXMMax;
 
 static Boolean XM_Init( MADDriverSettings *init)
 {
-	mh = (XMHEADER*) malloc( sizeof(XMHEADER));
-	if (mh == NULL) return false;
-	else return true;
+	mh = (XMHEADER*)malloc(sizeof(XMHEADER));
+	if (mh == NULL)
+		return false;
+	else
+		return true;
 }
 
 
 static void XM_Cleanup(void)
 {
-	if (mh != NULL)
-	{
+	if (mh != NULL) {
 		free( mh);
 		mh = NULL;
 	}
@@ -93,15 +94,19 @@ static void XM_Cleanup(void)
 
 static void XM_WriteNote( Cmd *cmd)
 {
-	UBYTE	cmp;
+	UBYTE	cmp = 0;
 	SInt32	r;
 	
-	cmp = 0;
-	if (cmd->note) 	cmp += 1;
-	if (cmd->ins) 	cmp += 2;
-	if (cmd->vol) 	cmp += 4;
-	if (cmd->cmd) 	cmp += 8;
-	if (cmd->arg) 	cmp += 16;
+	if (cmd->note)
+		cmp += 1;
+	if (cmd->ins)
+		cmp += 2;
+	if (cmd->vol)
+		cmp += 4;
+	if (cmd->cmd)
+		cmp += 8;
+	if (cmd->arg)
+		cmp += 16;
 	
 	if (cmp == 31)		// all bytes used -> no compression
 	{
@@ -110,20 +115,31 @@ static void XM_WriteNote( Cmd *cmd)
 		WRITEXMFILE( &cmd->vol, 1);
 		WRITEXMFILE( &cmd->cmd, 1);
 		WRITEXMFILE( &cmd->arg, 1);
-	}
-	else
-	{
-		UBYTE	ccmp = cmp + 0x80;
+	} else {
+		UBYTE ccmp = cmp + 0x80;
 		
-		WRITEXMFILE( &ccmp, 1);
+		WRITEXMFILE(&ccmp, 1);
 		
-		r = cmp & 1L;	if (r) 	WRITEXMFILE( &cmd->note, 1);
-		r = cmp & 2L;	if (r) 	WRITEXMFILE( &cmd->ins, 1);
-		r = cmp & 4L; 	if (r) 	WRITEXMFILE( &cmd->vol, 1);
-		r = cmp & 8L;	if (r) 	WRITEXMFILE( &cmd->cmd, 1);
-		r = cmp & 16L;	if (r) 	WRITEXMFILE( &cmd->arg, 1);
-		
-		
+		r = cmp & 1L;
+		if (r) {
+			WRITEXMFILE(&cmd->note, 1);
+		}
+		r = cmp & 2L;
+		if (r) {
+			WRITEXMFILE( &cmd->ins, 1);
+		}
+		r = cmp & 4L;
+		if (r) {
+			WRITEXMFILE( &cmd->vol, 1);
+		}
+		r = cmp & 8L;
+		if (r) {
+			WRITEXMFILE( &cmd->cmd, 1);
+		}
+		r = cmp & 16L;
+		if (r) {
+			WRITEXMFILE( &cmd->arg, 1);
+		}
 	}
 }
 
@@ -135,16 +151,33 @@ static void XM_ReadNote(XMNOTE *n)
 	READXMFILE( &cmp, 1);
 	
 	r = cmp & 0x80;
-	if (r)
-	{
-		r = cmp & 1L;	if (r) 	READXMFILE( &n->note, 1)	else n->note 	= 0xFF;
-		r = cmp & 2L;	if (r) 	READXMFILE( &n->ins, 1)		else n->ins 	= 0;
-		r = cmp & 4L; 	if (r) 	READXMFILE( &n->vol, 1)		else n->vol 	= 0xFF;
-		r = cmp & 8L;	if (r) 	READXMFILE( &n->eff, 1)		else n->eff 	= 0xFF;
-		r = cmp & 16L;	if (r) 	READXMFILE( &n->dat, 1)		else n->dat 	= 0xFF;
-	}
-	else
-	{
+	if (r) {
+		r = cmp & 1L;
+		if (r) {
+			READXMFILE( &n->note, 1)
+		} else
+			n->note = 0xFF;
+		r = cmp & 2L;
+		if (r) {
+			READXMFILE( &n->ins, 1)
+		} else
+			n->ins = 0;
+		r = cmp & 4L;
+		if (r) {
+			READXMFILE( &n->vol, 1)
+		} else
+			n->vol = 0xFF;
+		r = cmp & 8L;
+		if (r) {
+			READXMFILE( &n->eff, 1)
+		} else
+			n->eff = 0xFF;
+		r = cmp & 16L;
+		if (r) {
+			READXMFILE( &n->dat, 1)
+		} else
+			n->dat = 0xFF;
+	} else {
 		n->note	=	cmp;
 		READXMFILE( &n->ins, 1);
 		READXMFILE( &n->vol, 1);
@@ -153,14 +186,16 @@ static void XM_ReadNote(XMNOTE *n)
 	}
 }
 
-static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd		*aCmd, short channel)
+static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd *aCmd, short channel)
 {
 	UBYTE 	note,ins,vol,eff,dat;
 	//Str32	str;
 	
 	note	=	xmtrack->note;
-	if (note == 0 || note == 0xFF) note = 0xFF;
-	else note--;
+	if (note == 0 || note == 0xFF)
+		note = 0xFF;
+	else
+		note--;
 	
 	ins		=	xmtrack->ins;
 	vol		=	xmtrack->vol;
@@ -170,39 +205,42 @@ static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd		*aCmd, short channel)
 	aCmd->ins		= ins;
 	aCmd->note		= note;
 	aCmd->vol		= vol;
-	if (note == 96)						// KEY OFF
-	{
+	if (note == 96) {						// KEY OFF
 		aCmd->note		= 0xFE;
 	}
 	
 	
 	//	if (eff == 0 && dat != 0) Debugger();
 	
-	if (eff <= 0x0F)
-	{
+	if (eff <= 0x0F) {
 		aCmd->cmd		= eff;
 		aCmd->arg		= dat;
 		
-		if (aCmd->arg == 0xFF)
-		{
+		if (aCmd->arg == 0xFF) {
 			switch( aCmd->cmd)
 			{
-				case portamentoE:	break;
+				case portamentoE:
+					break;
 					
-				default:	aCmd->arg = 0;	break;
+				default:
+					aCmd->arg = 0;
+					break;
 			}
 		}
 		
-		if (aCmd->cmd == slidevolE)
-		{
-			/*	if (aCmd->arg == 0) aCmd->arg = LastAEffect[ channel];
-			 else LastAEffect[ channel] = aCmd->arg;*/
+		if (aCmd->cmd == slidevolE) {
+#if 0
+			if (aCmd->arg == 0)
+				aCmd->arg = LastAEffect[channel];
+			else
+				LastAEffect[channel] = aCmd->arg;
+#endif
 		}
-	}
-	else
-	{
+	} else {
 		aCmd->cmd		= 0;
-		aCmd->arg		= dat;	if (aCmd->arg == 0xFF) aCmd->arg = 0;
+		aCmd->arg		= dat;
+		if (aCmd->arg == 0xFF)
+			aCmd->arg = 0;
 		
 		switch(eff)
 		{
@@ -241,8 +279,10 @@ static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd		*aCmd, short channel)
 				/* slide right has absolute priority */
 				if(hi) lo = 0;
 				
-				if (hi) aCmd->vol = 0xE0 + hi;
-				else aCmd->vol = 0xD0 + lo;
+				if (hi)
+					aCmd->vol = 0xE0 + hi;
+				else
+					aCmd->vol = 0xD0 + lo;
 			}
 				break;
 				
@@ -255,12 +295,9 @@ static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd		*aCmd, short channel)
 				break;
 				
 			case 'X'-55:
-				if((dat>>4)==1)
-				{    						// X1 extra fine porta up
+				if((dat>>4)==1) {	// X1 extra fine porta up
 					aCmd->arg = 0;
-				}
-				else
-				{							// X2 extra fine porta down
+				} else {			// X2 extra fine porta down
 					aCmd->arg = 0;
 				}
 				break;
@@ -274,29 +311,35 @@ static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd		*aCmd, short channel)
 	}
 }
 
-static void XM_Convert2XM( Cmd		*aCmd)
+static void XM_Convert2XM(Cmd *aCmd)
 {
-	if (aCmd->note == 0xFE) aCmd->note		= 96 + 1;	// KEY OFF
-	else if (aCmd->note == 0xFF) aCmd->note		= 0;
-	else aCmd->note++;
+	if (aCmd->note == 0xFE)
+		aCmd->note = 96 + 1;	// KEY OFF
+	else if (aCmd->note == 0xFF)
+		aCmd->note = 0;
+	else
+		aCmd->note++;
 	
-	if (aCmd->vol == 0xFF)	aCmd->vol = 0;
-	if (aCmd->cmd == 0xFF)	aCmd->cmd = 0;
+	if (aCmd->vol == 0xFF)
+		aCmd->vol = 0;
+	if (aCmd->cmd == 0xFF)
+		aCmd->cmd = 0;
 }
 
-static OSErr XMReadPattern( MADMusic *theMAD, MADDriverSettings *init)
+static OSErr XMReadPattern(MADMusic *theMAD, MADDriverSettings *init)
 {
-	int			t, u, v, i;
+	int t, u, v, i;
 	
 	/*****************/
 	/** PATTERNS **/
 	/*****************/
 	
-	for( i = 0; i < MAXPATTERN; i++) theMAD->partition[ i] = NULL;
-	for( i = 0; i < MAXTRACK; i++) LastAEffect[ i] = 0;
+	for( i = 0; i < MAXPATTERN; i++)
+		theMAD->partition[i] = NULL;
+	for( i = 0; i < MAXTRACK; i++)
+		LastAEffect[i] = 0;
 	
-	for(t=0;t<mh->numpat;t++)
-	{
+	for(t=0;t<mh->numpat;t++) {
 		short				PatternSize;
 		XMPATHEADER 		ph;
 		XMNOTE				xmpat;
@@ -304,10 +347,13 @@ static OSErr XMReadPattern( MADMusic *theMAD, MADDriverSettings *init)
 		Ptr					theXMReadCopy;
 		
 		theXMReadCopy = theXMRead;
-		READXMFILE( &ph.size, 		4);			PPLE32( &ph.size);
+		READXMFILE( &ph.size, 		4);
+		PPLE32( &ph.size);
 		READXMFILE( &ph.packing, 	1);
-		READXMFILE( &ph.numrows, 	2);			PPLE16( &ph.numrows);
-		READXMFILE( &ph.packsize, 	2);			PPLE16( &ph.packsize);
+		READXMFILE( &ph.numrows, 	2);
+		PPLE16( &ph.numrows);
+		READXMFILE( &ph.packsize, 	2);
+		PPLE16( &ph.packsize);
 		theXMRead = theXMReadCopy + ph.size;
 		
 		/*
@@ -315,29 +361,25 @@ static OSErr XMReadPattern( MADMusic *theMAD, MADDriverSettings *init)
 		 This bug was discovered thanks to Khyron's module..
 		 */
 		
-		if (ph.packsize > 0)
-		{
+		if (ph.packsize > 0) {
 			PatternSize = ph.numrows;
-			theMAD->partition[ t] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * PatternSize * sizeof( Cmd), 1);
-			if (theMAD->partition[ t] == NULL) return MADNeedMemory;
+			theMAD->partition[t] = (PatData*)calloc(sizeof(PatHeader) + theMAD->header->numChn * PatternSize * sizeof(Cmd), 1);
+			if (theMAD->partition[t] == NULL)
+				return MADNeedMemory;
 			
 			theMAD->partition[ t]->header.size = PatternSize;
 			theMAD->partition[ t]->header.compMode = 'NONE';
 			
-			for( u = 0 ; u < PatternSize ; u++)
-			{
-				for( v = 0 ; v < theMAD->header->numChn ; v++)
-				{
+			for( u = 0 ; u < PatternSize ; u++) {
+				for( v = 0 ; v < theMAD->header->numChn ; v++) {
 					XM_ReadNote( &xmpat);
 					
-					aCmd = GetMADCommand(  u,  v, theMAD->partition[ t]);
+					aCmd = GetMADCommand(u, v, theMAD->partition[t]);
 					
-					XM_Convert2MAD( &xmpat, aCmd, v);
+					XM_Convert2MAD(&xmpat, aCmd, v);
 				}
 			}
-		}
-		else
-		{
+		} else {
 			Cmd			nullCmd;
 			
 			nullCmd.ins		= 0;
@@ -348,16 +390,15 @@ static OSErr XMReadPattern( MADMusic *theMAD, MADDriverSettings *init)
 			nullCmd.unused	= 0;
 			
 			PatternSize = 1;
-			theMAD->partition[ t] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * PatternSize * sizeof( Cmd), 1);
-			if (theMAD->partition[ t] == NULL) return MADNeedMemory;
+			theMAD->partition[t] = (PatData*)calloc(sizeof(PatHeader) + theMAD->header->numChn * PatternSize * sizeof(Cmd), 1);
+			if (theMAD->partition[t] == NULL)
+				return MADNeedMemory;
 			
 			theMAD->partition[ t]->header.size = PatternSize;
 			
-			for( u = 0 ; u < PatternSize ; u++)
-			{
-				for( v = 0 ; v < theMAD->header->numChn ; v++)
-				{
-					aCmd = GetMADCommand(  u,  v, theMAD->partition[ t]);
+			for( u = 0 ; u < PatternSize ; u++) {
+				for( v = 0 ; v < theMAD->header->numChn ; v++) {
+					aCmd = GetMADCommand(u, v, theMAD->partition[t]);
 					*aCmd = nullCmd;
 				}
 			}
@@ -367,7 +408,7 @@ static OSErr XMReadPattern( MADMusic *theMAD, MADDriverSettings *init)
 	return noErr;
 }
 
-static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
+static OSErr XMReadInstruments(MADMusic *theMAD, MADDriverSettings *init)
 {
 	int			t, u, i, x;
 	//long		inOutCount = 0;
@@ -376,74 +417,79 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 	/** INSTRUMENTS **/
 	/*****************/
 	
-	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
-	if (!theMAD->fid) return MADNeedMemory;
+	theMAD->fid = (InstrData*)calloc(sizeof(InstrData) ,MAXINSTRU);
+	if (!theMAD->fid)
+		return MADNeedMemory;
 	
-	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
-	if (!theMAD->sample) return MADNeedMemory;
+	theMAD->sample = (sData**)calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
+	if (!theMAD->sample)
+		return MADNeedMemory;
 	
-	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for(i = 0; i < MAXINSTRU; i++)
+		theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
-	for(i  = 0 ; i < MAXINSTRU; i++)
-	{
-		for( x = 0; x < MAXSAMPLE; x++) theMAD->sample[ i*MAXSAMPLE + x] = NULL;
+	for(i  = 0 ; i < MAXINSTRU; i++) {
+		for(x = 0; x < MAXSAMPLE; x++)
+			theMAD->sample[i * MAXSAMPLE + x] = NULL;
 		
-		theMAD->fid[i].numSamples	= 0;
+		theMAD->fid[i].numSamples = 0;
 	}
 	
-	for( t = 0; t < mh->numins; t++)	//
-	{
+	for( t = 0; t < mh->numins; t++) {
 		XMINSTHEADER 	ih;
 		InstrData		*curIns = &theMAD->fid[ t];
 		char			*theXMReadCopy;
 		
 		theXMReadCopy = theXMRead;
-		READXMFILE( &ih.size,	4);		PPLE32( &ih.size);
-		READXMFILE( &ih.name,	22);
-		READXMFILE( &ih.type,	1);
-		READXMFILE( &ih.numsmp,	2);	PPLE16( &ih.numsmp);
+		READXMFILE(&ih.size,	4);
+		PPLE32( &ih.size);
+		READXMFILE(&ih.name,	22);
+		READXMFILE(&ih.type,	1);
+		READXMFILE(&ih.numsmp,	2);
+		PPLE16( &ih.numsmp);
 		//	READXMFILE( &ih.ssize,	4);		PPLE32( &ih.ssize);
 		
 		
-		for( x = 0; x < 22; x++) curIns->name[ x] = ih.name[x];
+		for( x = 0; x < 22; x++)
+			curIns->name[x] = ih.name[x];
 		curIns->numSamples	= ih.numsmp;
 		
-		if(ih.numsmp > 0)
-		{
-			XMPATCHHEADER	pth;
+		if(ih.numsmp > 0) {
+			XMPATCHHEADER pth;
 			
-			READXMFILE( &ih.ssize,	4);			PPLE32( &ih.ssize);
-			READXMFILE( &pth.what,		96);
-			READXMFILE( &pth.volenv,	48);
-			READXMFILE( &pth.panenv,	48);
-			READXMFILE( &pth.volpts,	1);
-			READXMFILE( &pth.panpts,	1);
-			READXMFILE( &pth.volsus,	1);
-			READXMFILE( &pth.volbeg,	1);
-			READXMFILE( &pth.volend,	1);
-			READXMFILE( &pth.pansus,	1);
-			READXMFILE( &pth.panbeg,	1);
-			READXMFILE( &pth.panend,	1);
-			READXMFILE( &pth.volflg,	1);
-			READXMFILE( &pth.panflg,	1);
-			READXMFILE( &pth.vibflg,	1);
-			READXMFILE( &pth.vibsweep,	1);
-			READXMFILE( &pth.vibdepth,	1);
-			READXMFILE( &pth.vibrate,	1);
-			READXMFILE( &pth.volfade,	2);		PPLE16( &pth.volfade);
-			READXMFILE( &pth.reserved,	22);
+			READXMFILE(&ih.ssize,		4);
+			PPLE32(&ih.ssize);
+			READXMFILE(&pth.what,		96);
+			READXMFILE(&pth.volenv,		48);
+			READXMFILE(&pth.panenv,		48);
+			READXMFILE(&pth.volpts,		1);
+			READXMFILE(&pth.panpts,		1);
+			READXMFILE(&pth.volsus,		1);
+			READXMFILE(&pth.volbeg,		1);
+			READXMFILE(&pth.volend,		1);
+			READXMFILE(&pth.pansus,		1);
+			READXMFILE(&pth.panbeg,		1);
+			READXMFILE(&pth.panend,		1);
+			READXMFILE(&pth.volflg,		1);
+			READXMFILE(&pth.panflg,		1);
+			READXMFILE(&pth.vibflg,		1);
+			READXMFILE(&pth.vibsweep,	1);
+			READXMFILE(&pth.vibdepth,	1);
+			READXMFILE(&pth.vibrate,	1);
+			READXMFILE(&pth.volfade,	2);
+			PPLE16(&pth.volfade);
+			READXMFILE(&pth.reserved,	22);
 			
 			
 			
-			memcpy( curIns->what, pth.what, 96);
+			memcpy(curIns->what, pth.what, 96);
 			
 			// Volume Env
 			
 			memcpy( curIns->volEnv, pth.volenv, 48);
-			for( x = 0; x < 12; x++)
-			{
-				PPLE16( &curIns->volEnv[ x].pos);	//
-				PPLE16( &curIns->volEnv[ x].val);	// 00...64
+			for(x = 0; x < 12; x++) {
+				PPLE16(&curIns->volEnv[x].pos);	//
+				PPLE16(&curIns->volEnv[x].val);	// 00...64
 			}
 			
 			curIns->volSize	= pth.volpts;
@@ -452,29 +498,32 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 			curIns->volBeg	= pth.volbeg;
 			curIns->volEnd	= pth.volend;
 			
-			if (curIns->volBeg >= curIns->volSize) curIns->volBeg = curIns->volSize-1;
-			if (curIns->volEnd >= curIns->volSize) curIns->volEnd = curIns->volSize-1;
+			if (curIns->volBeg >= curIns->volSize)
+				curIns->volBeg = curIns->volSize-1;
+			if (curIns->volEnd >= curIns->volSize)
+				curIns->volEnd = curIns->volSize-1;
 			
 			curIns->volFade	= pth.volfade;
 			
 			// Panning Env
 			
-			memcpy( curIns->pannEnv, 	pth.panenv, 	48);
+			memcpy(curIns->pannEnv, pth.panenv, 48);
 			
-			for( x = 0; x < 12; x++)
-			{
-				PPLE16( &curIns->pannEnv[ x].pos);	//
-				PPLE16( &curIns->pannEnv[ x].val);	// 00...64
+			for(x = 0; x < 12; x++) {
+				PPLE16(&curIns->pannEnv[x].pos);	//
+				PPLE16(&curIns->pannEnv[x].val);	// 00...64
 			}
 			
 			curIns->pannSize	= pth.panpts;
 			curIns->pannType	= pth.panflg;
-			curIns->pannSus	= pth.pansus;
-			curIns->pannBeg	= pth.panbeg;
-			curIns->pannEnd	= pth.panend;
+			curIns->pannSus		= pth.pansus;
+			curIns->pannBeg		= pth.panbeg;
+			curIns->pannEnd		= pth.panend;
 			
-			if (curIns->pannBeg >= curIns->pannSize) curIns->pannBeg = curIns->pannSize-1;
-			if (curIns->pannEnd >= curIns->pannSize) curIns->pannEnd = curIns->pannSize-1;
+			if (curIns->pannBeg >= curIns->pannSize)
+				curIns->pannBeg = curIns->pannSize-1;
+			if (curIns->pannEnd >= curIns->pannSize)
+				curIns->pannEnd = curIns->pannSize-1;
 			
 			//	curIns->panFade	= pth.panfade;
 		}
@@ -482,23 +531,26 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 		
 		/** Read samples */
 		
-		if (ih.numsmp < 0 || ih.numsmp > 30) return -1;
+		if (ih.numsmp < 0 || ih.numsmp > 30)
+			return -1;
 		
-		for( u = 0 ; u < ih.numsmp ; u++)
-		{
+		for( u = 0 ; u < ih.numsmp ; u++) {
 			XMWAVHEADER		wh;
 			
 			theXMReadCopy = theXMRead;
-			READXMFILE( &wh.length,			4);			PPLE32( &wh.length);
-			READXMFILE( &wh.loopstart,		4);		PPLE32( &wh.loopstart);
-			READXMFILE( &wh.looplength,		4);		PPLE32( &wh.looplength);
-			READXMFILE( &wh.volume,			1);
-			READXMFILE( &wh.finetune,		1);
-			READXMFILE( &wh.type,			1);
-			READXMFILE( &wh.panning,		1);
-			READXMFILE( &wh.relnote,		1);
-			READXMFILE( &wh.reserved,		1);
-			READXMFILE( &wh.samplename,		22);
+			READXMFILE(&wh.length,		4);
+			PPLE32( &wh.length);
+			READXMFILE(&wh.loopstart,	4);
+			PPLE32( &wh.loopstart);
+			READXMFILE(&wh.looplength,	4);
+			PPLE32( &wh.looplength);
+			READXMFILE(&wh.volume,		1);
+			READXMFILE(&wh.finetune,	1);
+			READXMFILE(&wh.type,		1);
+			READXMFILE(&wh.panning,		1);
+			READXMFILE(&wh.relnote,		1);
+			READXMFILE(&wh.reserved,	1);
+			READXMFILE(&wh.samplename,	22);
 			
 			theXMRead = theXMReadCopy + ih.ssize;
 			
@@ -510,7 +562,7 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 					8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
 				};
 				
-				curData = theMAD->sample[ t*MAXSAMPLE + u] = (sData*) calloc( sizeof( sData), 1);
+				curData = theMAD->sample[t * MAXSAMPLE + u] = (sData*)calloc(sizeof(sData), 1);
 				
 				curData->size		= wh.length;
 				curData->loopBeg 	= wh.loopstart;
@@ -523,53 +575,48 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 				
 				
 				
-				if (wh.type & 0x10)		// 16 Bits
-				{
+				if (wh.type & 0x10) {		// 16 Bits
 					curData->amp = 16;
 				}
 				
-				if ((wh.type & 0x3) == 0)	// NO LOOP
-				{
+				if ((wh.type & 0x3) == 0) {	// NO LOOP
 					curData->loopBeg = 0;
 					curData->loopSize = 0;
 				}
 				
-				if ((wh.type & 0x3) == 1)	// Forward Loop
-				{
+				if ((wh.type & 0x3) == 1) {	// Forward Loop
 					curData->loopType = eClassicLoop;
 				}
 				
-				if ((wh.type & 0x3) == 2)	// Ping-pong Loop
-				{
+				if ((wh.type & 0x3) == 2) {	// Ping-pong Loop
 					curData->loopType = ePingPongLoop;
 				}
 				
 				//	curData->panning	= wh.panning;
 				curData->relNote	= wh.relnote;
-				for( x = 0; x < 22; x++) curData->name[ x] = wh.samplename[ x];
+				for( x = 0; x < 22; x++)
+					curData->name[x] = wh.samplename[x];
 			}
 		}
 		
 		/** Read samples data **/
 		
-		for( u = 0 ; u < curIns->numSamples ; u++)
-		{
+		for( u = 0 ; u < curIns->numSamples ; u++) {
 			sData	*curData = theMAD->sample[ t*MAXSAMPLE + u];
 			
 			curData->data 		= (char*)malloc( curData->size);
-			if (curData->data == NULL) return MADNeedMemory;
+			if (curData->data == NULL)
+				return MADNeedMemory;
 			else {
-				READXMFILE( curData->data, curData->size);
+				READXMFILE(curData->data, curData->size);
 				
-				if (curData->amp == 16)
-				{
+				if (curData->amp == 16) {
 					short	*tt;
 					SInt32	tL;
 					
-					tt = (short*) curData->data;
+					tt = (short*)curData->data;
 					
-					for( tL = 0; tL < curData->size/2; tL++)
-					{
+					for( tL = 0; tL < curData->size/2; tL++) {
 						PPLE16( (void*) (tt + tL));
 					}
 					
@@ -580,24 +627,20 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 						
 						oldV = 0;
 						
-						for( xL = 0; xL < curData->size/2; xL++)
-						{
-							newV = tt[ xL] + oldV;
-							tt[ xL] = newV;
+						for( xL = 0; xL < curData->size/2; xL++) {
+							newV = tt[xL] + oldV;
+							tt[xL] = newV;
 							oldV = newV;
 						}
 					}
-				}
-				else
-				{
+				} else {
 					/* Delta to Real */
 					SInt32	oldV, newV;
 					SInt32	xL;
 					
 					oldV = 0;
 					
-					for( xL = 0; xL < curData->size; xL++)
-					{
+					for( xL = 0; xL < curData->size; xL++) {
 						newV = curData->data[ xL] + oldV;
 						curData->data[ xL] = newV;
 						oldV = newV;
@@ -611,11 +654,11 @@ static OSErr XMReadInstruments( MADMusic *theMAD, MADDriverSettings *init)
 	return noErr;
 }
 
-static OSErr XM_Load( Ptr	theXM, size_t XMSize, MADMusic *theMAD, MADDriverSettings *init)
+static OSErr XM_Load(Ptr theXM, size_t XMSize, MADMusic *theMAD, MADDriverSettings *init)
 {
-	int			i;
-	SInt32		inOutCount, x;
-	OSErr		iErr = noErr;
+	int		i;
+	SInt32	inOutCount, x;
+	OSErr	iErr = noErr;
 	
 	theXMRead = theXM;
 	
@@ -623,7 +666,7 @@ static OSErr XM_Load( Ptr	theXM, size_t XMSize, MADMusic *theMAD, MADDriverSetti
 	/** READ XM HEADER **/
 	/********************/
 	
-	READXMFILE( mh, sizeof(XMHEADER));
+	READXMFILE(mh, sizeof(XMHEADER));
 	/* BigEndian <-> LittleEndian */
 	
 	PPLE16( &mh->version);
@@ -632,7 +675,10 @@ static OSErr XM_Load( Ptr	theXM, size_t XMSize, MADMusic *theMAD, MADDriverSetti
 	PPLE16( &mh->restart);
 	PPLE16( &mh->numchn);
 	PPLE16( &mh->numpat);
-	PPLE16( &mh->numins);		if (mh->numins > MAXINSTRU) { mh->numins = MAXINSTRU;	}
+	PPLE16( &mh->numins);
+	if (mh->numins > MAXINSTRU)
+		mh->numins = MAXINSTRU;
+	
 	PPLE16( &mh->flags);
 	PPLE16( &mh->bpm);
 	PPLE16( &mh->tempo);
@@ -642,39 +688,39 @@ static OSErr XM_Load( Ptr	theXM, size_t XMSize, MADMusic *theMAD, MADDriverSetti
 	/********************/
 	
 	inOutCount = sizeof( MADSpec);
-	theMAD->header = (MADSpec*) calloc( inOutCount, 1);
-	if (theMAD->header == NULL) return MADNeedMemory;
+	theMAD->header = (MADSpec*)calloc(inOutCount, 1);
+	if (theMAD->header == NULL)
+		return MADNeedMemory;
 	
 	theMAD->header->MAD = 'MADK';
 	
-	for(i=0; i<20; i++)
-	{
-		theMAD->header->name[ i] = mh->songname[ i];
-		if (theMAD->header->name[ i] == 0) i = 21;
+	for(i=0; i<20; i++) {
+		theMAD->header->name[i] = mh->songname[i];
+		if (theMAD->header->name[i] == 0)
+			i = 21;
 	}
 	
-	theMAD->header->speed			= 	mh->tempo;
-	theMAD->header->tempo			=	mh->bpm;
-	theMAD->header->numChn			=	mh->numchn;
-	theMAD->header->numPat			=	mh->numpat;
-	theMAD->header->numPointers		=	mh->songlength;
+	theMAD->header->speed		= 	mh->tempo;
+	theMAD->header->tempo		=	mh->bpm;
+	theMAD->header->numChn		=	mh->numchn;
+	theMAD->header->numPat		=	mh->numpat;
+	theMAD->header->numPointers	=	mh->songlength;
 	
 	if (theMAD->header->numPointers > 128) theMAD->header->numPointers = 128;
 	
 	strlcpy( theMAD->header->infos, (Ptr) "Converted by PlayerPRO XM Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
-	for( i = 0; i < mh->songlength; i++)
-	{
+	for(i = 0; i < mh->songlength; i++) {
 		theMAD->header->oPointers[ i] = mh->orders[ i];
 		if (theMAD->header->oPointers[ i] >= theMAD->header->numPat)
 			theMAD->header->oPointers[ i] = theMAD->header->numPat-1;
 	}
 	
-	if(mh->flags&1) theMAD->header->XMLinear = true;
+	if(mh->flags & 1)
+		theMAD->header->XMLinear = true;
 	
 	x = 1;
-	for( i = 0; i < MAXTRACK; i++)
-	{
+	for(i = 0; i < MAXTRACK; i++) {
 		/*	if (x > 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		 else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
 		 x--;
@@ -682,21 +728,22 @@ static OSErr XM_Load( Ptr	theXM, size_t XMSize, MADMusic *theMAD, MADDriverSetti
 		 if (x == -2) x = 2;*/
 		
 		theMAD->header->chanVol[ i] = MAX_VOLUME;
-		theMAD->header->chanPan[ i] = MAX_PANNING/2;
+		theMAD->header->chanPan[ i] = MAX_PANNING / 2;
 	}
 	
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
 	
-	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
-	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	theMAD->sets = (FXSets*)calloc(MAXTRACK * sizeof(FXSets), 1);
+	for(i = 0; i < MAXTRACK; i++)
+		theMAD->header->chanBus[i].copyId = i;
 	
 	switch( mh->version)
 	{
 		case 0x104:
-			XMReadPattern( theMAD, init);
-			iErr = XMReadInstruments( theMAD, init);
+			XMReadPattern(theMAD, init);
+			iErr = XMReadInstruments(theMAD, init);
 			break;
 			
 			/*	case 0x103:

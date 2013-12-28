@@ -18,9 +18,9 @@
 
 - (id)initWithMusic:(MADMusic **)mus;
 
-@property (readwrite) MADMusic **theMus;
-@property (readwrite) MADDriverRec **theRec;
-@property (readwrite, strong) NSUndoManager *undoManager;
+@property MADMusic **theMus;
+@property MADDriverRec **theRec;
+@property (strong) NSUndoManager *undoManager;
 
 - (OSErr)testPcmdFileAtURL:(NSURL*)theURL;
 - (OSErr)importPcmdFromURL:(NSURL*)theURL;

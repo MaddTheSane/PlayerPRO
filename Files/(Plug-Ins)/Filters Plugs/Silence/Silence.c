@@ -26,19 +26,18 @@ static OSErr mainSilence(void			*unused,
 	Ptr		Sample8Ptr = theData->data;
 	short	*Sample16Ptr = (short*) theData->data;
 	
-	if (Sample8Ptr == NULL) return noErr;
+	if (Sample8Ptr == NULL)
+		return noErr;
 	
 	switch( theData->amp)
 	{
 		case 8:
 			Sample8Ptr += SelectionStart;
 			
-			for( i = 0; i < SelectionEnd - SelectionStart; i++)
-			{
+			for (i = 0; i < SelectionEnd - SelectionStart; i++) {
 				*Sample8Ptr = 0;
 				
-				if (StereoMode)
-				{
+				if (StereoMode) {
 					Sample8Ptr++;
 					i++;
 				}
@@ -48,14 +47,12 @@ static OSErr mainSilence(void			*unused,
 		break;
 		
 		case 16:
-			Sample16Ptr += SelectionStart/2;						// Div 2, because it's in bytes !!!
+			Sample16Ptr += SelectionStart / 2;							// Div 2, because it's in bytes !!!
 			
-			for( i = 0; i < (SelectionEnd - SelectionStart)/2; i++)	// Div 2, because it's in bytes !!!
-			{
+			for (i = 0; i < (SelectionEnd - SelectionStart) / 2; i++) {	// Div 2, because it's in bytes !!!
 				*Sample16Ptr = 0;
 				
-				if (StereoMode)
-				{
+				if (StereoMode){
 					Sample16Ptr++;
 					i++;
 				}

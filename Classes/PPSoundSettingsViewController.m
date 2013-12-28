@@ -73,10 +73,6 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 			[soundDriver selectCellAtRow:0 column:0];
 			break;
 			
-		case SoundManagerDriver:
-			[soundDriver selectCellAtRow:1 column:0];
-			break;
-			
 		case MIDISoundDriver:
 			[soundDriver selectCellAtRow:2 column:0];
 			break;
@@ -306,8 +302,8 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 	id curSelected = [soundDriver selectedCell];
 	if ([soundDriver cellAtRow:0 column:0] == curSelected) {
 		return CoreAudioDriver;
-	} else if ([soundDriver cellAtRow:1 column:0] == curSelected) {
-		return SoundManagerDriver;
+	//} else if ([soundDriver cellAtRow:1 column:0] == curSelected) {
+	//	return NoHardwareDriver;
 	} else if ([soundDriver cellAtRow:2 column:0] == curSelected) {
 		return MIDISoundDriver;
 	} else {

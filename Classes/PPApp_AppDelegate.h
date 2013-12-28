@@ -44,12 +44,6 @@ extern __weak PPLibrary *globalMadLib;
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)openFile:(id)sender;
 
-//- (IBAction)toggleInfo:(id)sender;
-
-- (IBAction)showBoxEditor:(id)sender;
-- (IBAction)showClassicEditor:(id)sender;
-- (IBAction)showDigitalEditor:(id)sender;
-
 - (void)addExportObject:(PPExportObject *)expObj;
 
 @end

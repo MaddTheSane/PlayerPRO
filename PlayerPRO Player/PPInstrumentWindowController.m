@@ -7,14 +7,11 @@
 //
 
 #import "PPInstrumentWindowController.h"
-#import "PPInstrumentImporter.h"
-#import "PPInstrumentImporterObject.h"
 #import "PPInstrumentObject.h"
 #import "PPSampleObject.h"
 #import "PPInstrumentCellView.h"
 #import "OpenPanelViewController.h"
 #import "InstrumentInfoController.h"
-#import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
 #include <PlayerPROCore/PPPlug.h>
 #include <PlayerPROCore/RDriverInt.h>
@@ -61,11 +58,10 @@
 
 - (id)initWithWindow:(NSWindow *)window
 {
-    self = [super initWithWindow:window];
-    if (self) {
+    if (self = [super initWithWindow:window]) {
         // Initialization code here.
 		NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-		[center addObserver:self selector:@selector(colorsDidChange:) name:PPColorsDidChange object:nil];
+		//[center addObserver:self selector:@selector(colorsDidChange:) name:PPColorsDidChange object:nil];
 		[center addObserver:self selector:@selector(musicDidChange:) name:PPMusicDidChange object:nil];
 		instruments = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU];
     }
@@ -137,7 +133,7 @@ static void DrawCGSampleInt(long 	start,
 		temp  /= (1 << 16);
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
 		
-		for( i = tSS; i < tSE; i++)
+		for (i = tSS; i < tSE; i++)
 		{
 			BS = start + (i * sampleSize) / larg;
 			BE = start + ((i+1) * sampleSize) / larg;
@@ -161,7 +157,7 @@ static void DrawCGSampleInt(long 	start,
 			
 			if (BS != BE)
 			{
-				for( x = BS; x < BE; x++)
+				for (x = BS; x < BE; x++)
 				{
 					temp = (theShortSample[ x]  + 0x8000);
 					
@@ -197,7 +193,7 @@ static void DrawCGSampleInt(long 	start,
 		
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
 		
-		for( i = tSS; i < tSE; i++)
+		for (i = tSS; i < tSE; i++)
 		{
 			BS = start + (i * sampleSize) / larg;
 			BE = start + ((i+1) * sampleSize) / larg;
@@ -221,7 +217,7 @@ static void DrawCGSampleInt(long 	start,
 			
 			if (BS != BE)
 			{
-				for( x = BS; x < BE; x++)
+				for (x = BS; x < BE; x++)
 				{
 					temp = (unsigned char) (theSample[ x] - 0x80);
 					
@@ -257,7 +253,7 @@ static void DrawCGSampleInt(long 	start,
 		defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
 	}
 	
-	CGContextRef bitmapContext = CGBitmapContextCreateWithData(NULL, imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, kCGImageAlphaPremultipliedLast, NULL, NULL);
+	CGContextRef bitmapContext = CGBitmapContextCreateWithData(NULL, imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, (CGBitmapInfo)kCGImageAlphaPremultipliedLast, NULL, NULL);
 	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
 	{
 		NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
@@ -313,25 +309,25 @@ static void DrawCGSampleInt(long 	start,
 		}
 	}
 	if (!object) {
-		[[instrumentSize cell] setTitle:PPDoubleDash];
-		[[instrumentLoopStart cell] setTitle:PPDoubleDash];
-		[[instrumentLoopSize cell] setTitle:PPDoubleDash];
-		[[instrumentVolume cell] setTitle:PPDoubleDash];
-		[[instrumentRate cell] setTitle:PPDoubleDash];
-		[[instrumentNote cell] setTitle:PPDoubleDash];
-		[[instrumentBits cell] setTitle:PPDoubleDash];
-		[[instrumentMode cell] setTitle:PPDoubleDash];
+		[instrumentSize setStringValue:PPDoubleDash];
+		[instrumentLoopStart setStringValue:PPDoubleDash];
+		[instrumentLoopSize setStringValue:PPDoubleDash];
+		[instrumentVolume setStringValue:PPDoubleDash];
+		[instrumentRate setStringValue:PPDoubleDash];
+		[instrumentNote setStringValue:PPDoubleDash];
+		[instrumentBits setStringValue:PPDoubleDash];
+		[instrumentMode setStringValue:PPDoubleDash];
 		[waveFormImage setImage:nil];
 		return;
 	}
 	[instrumentSize setIntegerValue:[object dataSize]];
 	[instrumentLoopStart setIntegerValue:[object loopBegin]];
 	[instrumentLoopSize setIntegerValue:[object loopSize]];
-	[[instrumentVolume cell] setTitle:[NSString stringWithFormat:@"%u", [(PPSampleObject*)object volume]]];
-	[[instrumentRate cell] setTitle:[NSString stringWithFormat:@"%u", [object c2spd]]];
-	[[instrumentNote cell] setTitle:[NSString stringWithFormat:@"%d", [object relativeNote]]];
-	[[instrumentBits cell] setTitle:[NSString stringWithFormat:@"%u", [object amplitude]]];
-	[[instrumentMode cell] setTitle:[NSString stringWithFormat:@"%u", [object loopType]]];
+	[instrumentVolume setIntegerValue:[(PPSampleObject*)object volume]];
+	[instrumentRate setStringValue:[NSString stringWithFormat:@"%u Hz", [object c2spd]]];
+	[instrumentNote setStringValue:[NSString stringWithFormat:@"%d", [object relativeNote]]]; //TODO: properly set note.
+	[instrumentBits setStringValue:[NSString stringWithFormat:@"%u-bit", [object amplitude]]];
+	[instrumentMode setStringValue: [object loopType] == ePingPongLoop ? @"Ping-pong" : @"Classic"];
 	[waveFormImage setImage:[self waveformImageFromSample:object]];
 }
 

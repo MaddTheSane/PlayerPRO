@@ -18,7 +18,7 @@ void InitQuicktimeInstruments(void);
 #include <ctype.h>
 #include "Midi-rsrc.h"
 #include <PlayerPROCore/PlayerPROCore.h>
-#include "PTMID.H"
+#include "PTMID.h"
 #include <Carbon/Carbon.h>
 
 #ifndef R_OK
@@ -39,13 +39,8 @@ extern int	cmsDecided, wVolfract;
  */
 static void Init(void)
 {
-	int i;
-	
-	rgppsiIns[128] = NULL; /** Make sure sample-info arrays are clear **/
-	for (i = 128; i--; ) {
-		rgpsiDrum[i] = NULL;
-		rgppsiIns[i] = NULL;
-	}
+	bzero(rgppsiIns, sizeof(rgppsiIns));
+	bzero(rgpsiDrum, sizeof(rgpsiDrum));
 }
 
 #ifdef QD_HEADERS_ARE_PRIVATE
@@ -62,59 +57,54 @@ void Settings()
 	Str255		str;
 	long		r;
 	
-	
 	InitCursor();
 	
 	aDialog = GetNewDialog( MIDIImpDlog, NULL, (WindowPtr) -1L);
 	
-	SetPortDialogPort( aDialog);
+	SetPortDialogPort(aDialog);
+	SetDialogDefaultItem(aDialog, 1);
+	ShowWindow(GetDialogWindow(aDialog));
 	
-	SetDialogDefaultItem( aDialog, 1);
+	GetDialogItem(aDialog, 5, &itemType, &itemHandle, &itemRect);
+	SetControlValue((ControlHandle)itemHandle, 1);
 	
-	ShowWindow( GetDialogWindow( aDialog));
+	NumToString(wMaxchan, str);
+	GetDialogItem(aDialog, 4, &itemType, &itemHandle, &itemRect);
+	SetDialogItemText(itemHandle, str);
+	SelectDialogItemText(aDialog, 4, 0, 100);
 	
-	GetDialogItem( aDialog, 5, &itemType, &itemHandle, &itemRect);
-	SetControlValue( (ControlHandle) itemHandle, 1);
-	
-	NumToString( wMaxchan, str);
-	GetDialogItem( aDialog, 4, &itemType, &itemHandle, &itemRect);
-	SetDialogItemText( itemHandle, str);
-	
-	SelectDialogItemText(aDialog,4,0,100);
-	
-	do
-	{
+	do {
 	reZo:
-		
 		ModalDialog( NULL, &itemHit);
 		
-		switch( itemHit)
+		switch(itemHit)
 		{
 			case 5:
-				GetDialogItem( aDialog, 5, &itemType, &itemHandle, &itemRect);
-				SetControlValue( (ControlHandle) itemHandle,!GetControlValue( (ControlHandle) itemHandle));
+				GetDialogItem(aDialog, 5, &itemType, &itemHandle, &itemRect);
+				SetControlValue((ControlHandle)itemHandle, !GetControlValue((ControlHandle)itemHandle));
 				break;
 		}
-	}while( itemHit != 1);
+	} while(itemHit != 1);
 	
-	GetDialogItem( aDialog, 4, &itemType, &itemHandle, &itemRect);
-	GetDialogItemText( itemHandle, str);
-	StringToNum( str, &r);
+	GetDialogItem(aDialog, 4, &itemType, &itemHandle, &itemRect);
+	GetDialogItemText(itemHandle, str);
+	StringToNum(str, &r);
 	r /= 2;
 	r *= 2;
 	
-	if (r < 0 || r > 32)
-	{
-		SysBeep( 1);
-		SelectDialogItemText(aDialog,4,0,100);
+	if (r < 0 || r > 32) {
+		SysBeep(1);
+		SelectDialogItemText(aDialog, 4, 0, 100);
 		goto reZo;
 	}
 	
 	wMaxchan = r;
 	
 	GetDialogItem( aDialog, 5, &itemType, &itemHandle, &itemRect);
-	if (GetControlValue( (ControlHandle) itemHandle)) UseQKIns = true;
-	else UseQKIns = false;
+	if (GetControlValue((ControlHandle)itemHandle))
+		UseQKIns = true;
+	else
+		UseQKIns = false;
 	
 	DisposeDialog( aDialog);
 }
@@ -122,18 +112,14 @@ void Settings()
 /*
  * main: Parses arguments to program and opens appropriate MOD and MID files.
  */
-void  ConvertMidiFile( char	*src, MADMusic *theMAD, MADDriverSettings *init)
+void ConvertMidiFile(char *src, MADMusic *theMAD, MADDriverSettings *init)
 {
-	//int 		cNames = 0;
-	short		channels;
-	//Sz 			fnDef;
-	Tune 		*ptuneMusic;
-	//FInfo		fndrInfo;
+	short	channels;
+	Tune 	*ptuneMusic;
 	
 	Init();
 	
-	if ((ptuneMusic = PtuneLoadFn( src, &channels)) == NULL)
-	{
+	if ((ptuneMusic = PtuneLoadFn(src, &channels)) == NULL) {
 		DebugStr("\pNot a legal MIDI file");
 		return;
 	}
@@ -150,5 +136,5 @@ void  ConvertMidiFile( char	*src, MADMusic *theMAD, MADDriverSettings *init)
 	
 	ResolvePtune(ptuneMusic);
 	
-	SavePtunePfile( ptuneMusic, theMAD, init);
+	SavePtunePfile(ptuneMusic, theMAD, init);
 }

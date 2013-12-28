@@ -22,15 +22,15 @@
 - (sData *)createSData;
 
 @property (readonly) SInt32 dataSize;
-@property (readwrite) SInt32 loopBegin;
-@property (readwrite) SInt32 loopSize;
-@property (readwrite) unsigned char volume;
-@property (readwrite) unsigned short c2spd;
-@property (readwrite) unsigned char loopType;
-@property (readwrite) unsigned char amplitude;
-@property (readwrite) char relativeNote;
-@property (readwrite, copy) NSString *name;
-@property (readwrite, getter = isStereo) BOOL stereo;
-@property (readwrite, copy) NSData *data;
+@property SInt32 loopBegin;
+@property SInt32 loopSize;
+@property unsigned char volume;
+@property unsigned short c2spd;
+@property unsigned char loopType;
+@property unsigned char amplitude;
+@property char relativeNote;
+@property (copy) NSString *name;
+@property (getter = isStereo) BOOL stereo;
+@property (copy) NSData *data;
 
 @end

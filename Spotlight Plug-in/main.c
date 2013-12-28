@@ -76,8 +76,7 @@ static MetadataImporterPluginType *AllocMetadataImporterPluginType(CFUUIDRef inF
 {
 	MetadataImporterPluginType *theNewInstance;
 	
-	theNewInstance = (MetadataImporterPluginType *)malloc(sizeof(MetadataImporterPluginType));
-	memset(theNewInstance, 0, sizeof(MetadataImporterPluginType));
+	theNewInstance = (MetadataImporterPluginType *)calloc(sizeof(MetadataImporterPluginType), 1);
 	
 	/* Point to the function table */
 	theNewInstance->conduitInterface = &testInterfaceFtbl;
@@ -105,7 +104,7 @@ static void DeallocMetadataImporterPluginType(MetadataImporterPluginType *thisIn
 
     theFactoryID = thisInstance->factoryID;
     free(thisInstance);
-    if (theFactoryID){
+    if (theFactoryID) {
         CFPlugInRemoveInstanceForFactory(theFactoryID);
         CFRelease(theFactoryID);
     }
@@ -122,7 +121,7 @@ static HRESULT MetadataImporterQueryInterface(void *thisInstance, REFIID iid, LP
 	
     interfaceID = CFUUIDCreateFromUUIDBytes(kCFAllocatorDefault, iid);
 	
-    if (CFEqual(interfaceID, kMDImporterInterfaceID)){
+    if (CFEqual(interfaceID, kMDImporterInterfaceID)) {
 		/* If the right interface was requested, bump the ref count,
 		 * set the ppv parameter equal to the instance, and
 		 * return good status.
@@ -142,8 +141,9 @@ static HRESULT MetadataImporterQueryInterface(void *thisInstance, REFIID iid, LP
 		*ppv = thisInstance;
 		CFRelease(interfaceID);
 		return S_OK;
-	} else if (CFEqual(interfaceID, IUnknownUUID)){
+	} else if (CFEqual(interfaceID, IUnknownUUID)) {
 		/* If the IUnknown interface was requested, same as above. */
+		((MetadataImporterPluginType*)thisInstance)->conduitInterface->ImporterImportData = GetMetadataForFile;
 		((MetadataImporterPluginType*)thisInstance )->conduitInterface->AddRef(thisInstance);
 		*ppv = thisInstance;
 		CFRelease(interfaceID);
@@ -178,10 +178,10 @@ static ULONG MetadataImporterPluginAddRef(void *thisInstance)
 static ULONG MetadataImporterPluginRelease(void *thisInstance)
 {
     ((MetadataImporterPluginType*)thisInstance)->refCount -= 1;
-    if (((MetadataImporterPluginType*)thisInstance)->refCount == 0){
+    if (((MetadataImporterPluginType*)thisInstance)->refCount == 0) {
         DeallocMetadataImporterPluginType((MetadataImporterPluginType*)thisInstance );
         return 0;
-    }else{
+    } else {
         return ((MetadataImporterPluginType*) thisInstance )->refCount;
     }
 }
@@ -200,7 +200,7 @@ void *PPMetadataImporterPluginFactory(CFAllocatorRef allocator, CFUUIDRef typeID
 	 * instance of TestType and return the IUnknown interface.
 	 */
 	
-	if (CFEqual(typeID, kMDImporterTypeID)){
+	if (CFEqual(typeID, kMDImporterTypeID)) {
 		uuid = CFUUIDCreateFromString(kCFAllocatorDefault, CFSTR(PLUGIN_ID));
 		result = AllocMetadataImporterPluginType(uuid);
 		CFRelease(uuid);

@@ -33,11 +33,11 @@ static OSErr mainCrossFade(void				*unused,
 			length = min (length, SelectionStart);
 			length *= 2;
 			
-			for( j = 0; j < 2; j++)	//do it twice
+			for (j = 0; j < 2; j++)	//do it twice
 			{
 				StartPtr = theData->data + SelectionStart - (length / 2);
 				EndPtr = theData->data + SelectionEnd - (length / 2);
-				for( i = 0; i < length; i++)
+				for (i = 0; i < length; i++)
 				{
 					tempStart = *StartPtr;
 					tempEnd = *EndPtr;
@@ -66,11 +66,11 @@ static OSErr mainCrossFade(void				*unused,
 			length = min (length, SelectionStart);
 //			length *= 2;
 			
-			for( j = 0; j < 2; j++)	//do it twice
+			for (j = 0; j < 2; j++)	//do it twice
 			{
 				StartPtr = (short*) theData->data + (SelectionStart / 2) - (length / 2);
 				EndPtr = (short*) theData->data + (SelectionEnd / 2) - (length / 2);
-				for( i = 0; i < length; i++)
+				for (i = 0; i < length; i++)
 				{
 					tempStart = *StartPtr;
 					tempEnd = *EndPtr;

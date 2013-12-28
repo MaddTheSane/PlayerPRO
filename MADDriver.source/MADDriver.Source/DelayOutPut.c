@@ -50,30 +50,32 @@ static inline long InterpolateInline(long p,long p2,long v1,long v2)
 
 void MADCreateOverShoot( MADDriverRec *intDriver)
 {
-	SInt32	i, x;
+	long i, x;
 	
-	switch( intDriver->DriverSettings.outPutBits)
+	switch(intDriver->DriverSettings.outPutBits)
 	{
 		case 16:
-			intDriver->DASCBuffer 			= (SInt32*) calloc( ( intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, 1);
+			intDriver->DASCBuffer 			= (SInt32*)calloc((intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, 1);
 			
 			maxBuffer = (Ptr) intDriver->DASCBuffer;
-			maxBuffer = maxBuffer + ( (SInt32) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L;
+			maxBuffer = maxBuffer + ((size_t)intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L;
 			
-			for( i = 0; i < MAXCHANEFFECT; i++)
-			{
-				intDriver->DASCEffectBuffer[ i]	= (SInt32*) calloc( ( intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, 1);
-			}
+			for (i = 0; i < MAXCHANEFFECT; i++)
+				intDriver->DASCEffectBuffer[i]	= (SInt32*)calloc((intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, 1);
+			
 			break;
 			
 		case 8:
-			intDriver->DASCBuffer8 			= (short*) calloc( ( (long) intDriver->ASCBUFFER * 4L) + intDriver->MDelay*2L*4L, 1);
+			intDriver->DASCBuffer8 			= (short*)calloc((intDriver->ASCBUFFER * 4L) + intDriver->MDelay*2L*4L, 1);
 			
-			intDriver->OverShoot = (Ptr) calloc( 256L * 32L, 1);
+			intDriver->OverShoot = (Ptr) calloc(256L * 32L, 1);
 			
-			for( i = 0; i < 256L * 16L; i++)						intDriver->OverShoot[ i] = 0;
-			for( i = 256L * 16L, x = 0; i < 256L * 17L; i++, x++)	intDriver->OverShoot[ i] = x;
-			for( i = 256L * 17L; i < 256L * 32L; i++)				intDriver->OverShoot[ i] = 0xFF;
+			for (i = 0; i < 256L * 16L; i++)
+				intDriver->OverShoot[i] = 0;
+			for (i = 256L * 16L, x = 0; i < 256L * 17L; i++, x++)
+				intDriver->OverShoot[i] = x;
+			for (i = 256L * 17L; i < 256L * 32L; i++)
+				intDriver->OverShoot[i] = 0xFF;
 			
 			intDriver->OverShoot += 256L*16L;
 			intDriver->OverShoot += 128L;
@@ -83,70 +85,68 @@ void MADCreateOverShoot( MADDriverRec *intDriver)
 
 void MADKillOverShoot( MADDriverRec *intDriver)
 {
-	short	i;
+	short i;
 	
-	switch( intDriver->DriverSettings.outPutBits)
+	switch(intDriver->DriverSettings.outPutBits)
 	{
 		case 16:
 			if (intDriver->DASCBuffer != NULL) free( (Ptr) intDriver->DASCBuffer);
 			intDriver->DASCBuffer = NULL;
 			
-			for( i = 0; i < MAXCHANEFFECT; i++)
-			{
-				if (intDriver->DASCEffectBuffer[ i] != NULL) free( (Ptr) intDriver->DASCEffectBuffer[ i]);
-				intDriver->DASCEffectBuffer[ i] = NULL;
+			for (i = 0; i < MAXCHANEFFECT; i++) {
+				if (intDriver->DASCEffectBuffer[i] != NULL)
+					free(intDriver->DASCEffectBuffer[i]);
+				intDriver->DASCEffectBuffer[i] = NULL;
 			}
 			break;
 			
 		case 8:
-			if (intDriver->OverShoot != NULL)
-			{
+			if (intDriver->OverShoot != NULL) {
 				intDriver->OverShoot -= 128L;
 				intDriver->OverShoot -= 256L*16L;
-				free( (Ptr) intDriver->OverShoot);
+				free(intDriver->OverShoot);
 				intDriver->OverShoot = NULL;
 			}
 			
-			if (intDriver->DASCBuffer8 != NULL) free( (Ptr) intDriver->DASCBuffer8);
+			if (intDriver->DASCBuffer8 != NULL)
+				free(intDriver->DASCBuffer8);
 			intDriver->DASCBuffer8 = NULL;
 			break;
 	}
 }
 
-void Sampler16AddDelay( Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver)
+void Sampler16AddDelay(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver)
 {
-	SInt32				chnVol = 0, chnVol2 = 0;
-	SInt32				chnVolS = 0, chnVol2S = 0;
-	SInt32				chnVolD = 0, chnVol2D = 0;
-	SInt32				i = intDriver->ASCBUFFER;
-	char				tByte = 0;
-	SInt32				*ASCBuffer1, *ASCBuffer2;
-	Boolean				killSample = false;
-	Boolean				aa = true;
-	SInt32				VolInter1, VolInter2, rVolInter1, rVolInter2;
-	
-	///
-	SInt32				aDD, aCC = curVoice->lAC, off = 0;
+	SInt32	chnVol = 0, chnVol2 = 0;
+	SInt32	chnVolS = 0, chnVol2S = 0;
+	SInt32	chnVolD = 0, chnVol2D = 0;
+	SInt32	i = intDriver->ASCBUFFER;
+	char	tByte = 0;
+	SInt32	*ASCBuffer1, *ASCBuffer2;
+	Boolean	killSample = false;
+	Boolean	aa = true;
+	SInt32	VolInter1, VolInter2, rVolInter1, rVolInter2;
+	SInt32	aDD, aCC = curVoice->lAC, off = 0;
 	
 #if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
 	{
 		long long finalperiod;
 		long double temp;
 		
-		if (intDriver->XMLinear)
-		{
+		if (intDriver->XMLinear) {
 			finalperiod = getfrequency( curVoice->period);
 			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
 			
 			finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
-		}
-		else finalperiod = curVoice->period;
+		} else
+			finalperiod = curVoice->period;
 		
 		finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
 		
 		temp = ( (long double) AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate) * (long double) intDriver->DriverSettings.oversampling);
 		
-		if (temp >= 1) aa = false;
+		if (temp >= 1)
+			aa = false;
 		
 		aDD = temp * (1 << BYTEDIV);
 	}
@@ -154,33 +154,33 @@ void Sampler16AddDelay( Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intD
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 #endif
 	
-	if (curVoice->pingpong == true && curVoice->loopType == ePingPongLoop) aDD = -aDD;	// PINGPONG
+	if (curVoice->pingpong == true && curVoice->loopType == ePingPongLoop)
+		aDD = -aDD;	// PINGPONG
 	///
 	
-	chnVol2S	= DoVolPanning256( 0, curVoice, intDriver, true);
-	chnVolS		= DoVolPanning256( 1, curVoice, intDriver, true);
+	chnVol2S	= DoVolPanning256(0, curVoice, intDriver, true);
+	chnVolS		= DoVolPanning256(1, curVoice, intDriver, true);
 	
 	curVoice->volEnvInter += i;
 	
-	chnVol2D	= DoVolPanning256( 0, curVoice, intDriver, true);
-	chnVolD		= DoVolPanning256( 1, curVoice, intDriver, true);
+	chnVol2D	= DoVolPanning256(0, curVoice, intDriver, true);
+	chnVolD		= DoVolPanning256(1, curVoice, intDriver, true);
 	
-	if ((curVoice->TrackID % 2) == 0)
-	{
+	if ((curVoice->TrackID % 2) == 0) {
 		ASCBuffer1 = ASCBuffer;
 		ASCBuffer2 = ASCBuffer +1L + intDriver->MDelay*2L;
-	}
-	else
-	{
+	} else {
 		ASCBuffer2 = ASCBuffer +1L;
 		ASCBuffer1 = ASCBuffer + intDriver->MDelay*2L;
 	}
 	
 	//*****************************************
-	if (intDriver->DriverSettings.TickRemover) MADTickRemoverStart8( curVoice, ASCBuffer1, ASCBuffer2, intDriver);
+	if (intDriver->DriverSettings.TickRemover)
+		MADTickRemoverStart8(curVoice, ASCBuffer1, ASCBuffer2, intDriver);
 	//*****************************************
 	
-	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) return;
+	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0)
+		return;
 	
 	{
 		Ptr		SndBuffer = curVoice->curPtr;
@@ -190,8 +190,7 @@ void Sampler16AddDelay( Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intD
   		PrepareInline( &VolInter1, &rVolInter1, intDriver->ASCBUFFER, chnVolS, chnVolD);
   		PrepareInline( &VolInter2, &rVolInter2, intDriver->ASCBUFFER, chnVol2S, chnVol2D);
   		
-		while( i-- > 0)
-		{
+		while( i-- > 0) {
 			rVolInter2 += VolInter2;
 			chnVol2 = rVolInter2 >> BYTEDIV;
 			
@@ -202,23 +201,19 @@ void Sampler16AddDelay( Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intD
 			LeftWeight = (1 << BYTEDIV) - RightWeight;
 			off = (aCC>>BYTEDIV);
 			
-			if (preOff != off)
-			{
+			if (preOff != off) {
 				if (curVoice->loopType == ePingPongLoop && curVoice->loopSize > 0)		// PINGPONG
 				{
 					preOff = off;
 					if ((SndBuffer + off +1 >= curVoice->maxPtr && !curVoice->pingpong) ||
-					   (SndBuffer + off +1 <= curVoice->begPtr + curVoice->loopBeg && curVoice->pingpong))
-					{
+					   (SndBuffer + off +1 <= curVoice->begPtr + curVoice->loopBeg && curVoice->pingpong)) {
 						curVoice->pingpong = !curVoice->pingpong;
 						aDD = -aDD; aCC += aDD;
 						RightWeight = aCC & ((1 << BYTEDIV) - 1);
 						LeftWeight = (1 << BYTEDIV) - RightWeight; off = (aCC>>BYTEDIV);
 					}
 					preVal = *(SndBuffer + off);
-				}
-				else
-				{
+				} else {
 					preVal = preVal2;
 					preOff = off;
 					
@@ -731,9 +726,7 @@ void Sampler16Addin16DelayStereo( Channel *curVoice, SInt32	*ASCBuffer, MADDrive
 					}
 					spreVal = *(SndBuffer + off);
 					spreValR = *(SndBuffer + off + 1);
-				}
-				else
-				{
+				} else {
 					spreVal = spreVal2;
 					spreValR = spreVal2R;
 					preOff = off;
@@ -821,13 +814,13 @@ void Play16StereoDelay( MADDriverRec *intDriver)
 	short		chanCounter = 0, find, trackID;
 #endif
 	
-	for( i = 0; i < MAXCHANEFFECT; i++)
+	for (i = 0; i < MAXCHANEFFECT; i++)
 	{
 		intDriver->EffectBufferID[ i] = -1;
 		intDriver->EffectBufferRealID[ i] = -1;
 	}
 	
-	for( i = 0 ; i < intDriver->MultiChanNo; i++)	//intDriver->DriverSettings.numChn
+	for (i = 0 ; i < intDriver->MultiChanNo; i++)	//intDriver->DriverSettings.numChn
 	{
 #if defined( MAINPLAYERPRO)
 #warning VST Channel effect
@@ -838,7 +831,7 @@ void Play16StereoDelay( MADDriverRec *intDriver)
 			// Try to find a DASCEffectBuffer with the same ID
 			
 			find = -1;
-			for( ii = 0; ii < MAXCHANEFFECT; ii++)
+			for (ii = 0; ii < MAXCHANEFFECT; ii++)
 			{
 				if (intDriver->EffectBufferID[ ii] == trackID) find = ii;
 			}
@@ -1444,5 +1437,5 @@ void Play8StereoDelay( MADDriverRec *intDriver)
 	//short			*ttt;
 	//Ptr				ASCBuffer;
 	
-	for( i = 0 ; i < intDriver->DriverSettings.numChn; i++) Sample8BufferAddDelay	( &intDriver->chan[i], intDriver->DASCBuffer8, intDriver);
+	for (i = 0 ; i < intDriver->DriverSettings.numChn; i++) Sample8BufferAddDelay	( &intDriver->chan[i], intDriver->DASCBuffer8, intDriver);
 }

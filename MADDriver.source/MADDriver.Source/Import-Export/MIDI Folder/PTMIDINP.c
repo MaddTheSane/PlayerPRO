@@ -16,7 +16,7 @@
 #include <string.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <Carbon/Carbon.h>
-#include "PTMID.H"
+#include "PTMID.h"
 //#include <unix.h>
 
 #define BUFSIZE 512
@@ -41,7 +41,7 @@ RF *prf;
 
 #define MAXFILES	300
 
-static long		MADpos[ MAXFILES];
+static long		MADpos[MAXFILES];
 static short	MADcur = 0;
 static Ptr		MIDIGenPtr = NULL;
 
@@ -50,55 +50,61 @@ short MADopen( void)
 	MADpos[ MADcur] = 0;
 	MADcur++;
 	
-	if (MADcur >= MAXFILES) DebugStr("\pMADopen");
+	if (MADcur >= MAXFILES)
+		DebugStr("\pMADopen");
 	
 	return MADcur-1;
 }
 
 short MADread( short id, Ptr dst, long size)
 {
-	if (MADpos[ id] >= GetPtrSize( MIDIGenPtr)) return 0;
+	if (MADpos[ id] >= GetPtrSize(MIDIGenPtr))
+		return 0;
 	
-	if (MADpos[ id] + size >= GetPtrSize( MIDIGenPtr)) size = GetPtrSize( MIDIGenPtr) - MADpos[ id];
+	if (MADpos[id] + size >= GetPtrSize(MIDIGenPtr))
+		size = GetPtrSize( MIDIGenPtr) - MADpos[ id];
 	
-	BlockMoveData( MIDIGenPtr + MADpos[ id], dst, size);
+	BlockMoveData(MIDIGenPtr + MADpos[ id], dst, size);
 	
-	MADpos[ id] += size;
+	MADpos[id] += size;
 	
 	return size;
 }
 
-short MADseek( short id, long size, short mode)
+short MADseek(short id, long size, short mode)
 {
-	switch( mode)
+	switch(mode)
 	{
-		case SEEK_CUR:	MADpos[ id] += size;	break;
-		case SEEK_SET:	MADpos[ id]  = size;	break;
+		case SEEK_CUR:
+			MADpos[id] += size;
+			break;
+			
+		case SEEK_SET:
+			MADpos[id]  = size;
+			break;
 			
 		default:
 			DebugStr("\pMADseek");
 			break;
 	}
 	
-	if (MADpos[ id] < 0) return -1;
-	if (MADpos[ id] >= GetPtrSize( MIDIGenPtr)) return -1;
+	if (MADpos[ id] < 0)
+		return -1;
+	if (MADpos[ id] >= GetPtrSize(MIDIGenPtr))
+		return -1;
 	
 	return 0;
 }
 
-long MADtell( short id)
+long MADtell(short id)
 {
-	return MADpos[ id];
+	return MADpos[id];
 }
 
 short MADclose(int b)
 {
-	
 	return 0;
 }
-
-
-
 
 
 /*
@@ -124,7 +130,8 @@ int ChGetFd(int fd)
 {
 	unsigned char b;
 	
-	if (MADread(fd, (Ptr) &b, 1) < 1) return EOF;
+	if (MADread(fd, (Ptr)&b, 1) < 1)
+		return EOF;
 	return b;
 }
 
@@ -134,10 +141,8 @@ int ChGetFd(int fd)
  */
 unsigned char ChGetIrf(unsigned irf)
 {
-	if (prf[irf].ib == BUFSIZE)
-	{
-		if (MADread(prf[irf].fd, (Ptr) prf[irf].rgb, BUFSIZE) == -1)
-		{
+	if (prf[irf].ib == BUFSIZE) {
+		if (MADread(prf[irf].fd, (Ptr) prf[irf].rgb, BUFSIZE) == -1) {
 			ERROR;
 			//	exit(1);
 		}
@@ -155,12 +160,11 @@ unsigned char ChGetIrf(unsigned irf)
  */
 void SkipIrf(unsigned irf, long cb)
 {
-	if (BUFSIZE - prf[irf].ib >= cb) prf[irf].ib += (int) cb;
-	else
-	{
+	if (BUFSIZE - prf[irf].ib >= cb)
+		prf[irf].ib += (int)cb;
+	else {
 		cb -= BUFSIZE - prf[irf].ib;
-		if (MADseek(prf[irf].fd, cb, SEEK_CUR) == -1)
-		{
+		if (MADseek(prf[irf].fd, cb, SEEK_CUR) == -1) {
 			ERROR;
 			//	exit(1);
 		}
@@ -256,7 +260,7 @@ EI *PeiRequestPtune(Tune *ptune)
 {
 	EI *pei;
 	
-	pei = (EI *) malloc(sizeof(EI)); /** Allocate space for event **/
+	pei = (EI *)malloc(sizeof(EI)); /** Allocate space for event **/
 	pei->pei = ptune->pei;
 	ptune->pei = pei; /** Attach to front of event list at tune position **/
 	return pei;
@@ -316,15 +320,13 @@ VLQ VlqInterpIrf(unsigned irf, unsigned *pbStat)
 	VLQ vlqT;
 	FX *pfx;
 	
-	do
-	{ /** Loop.. **/
+	do { /** Loop.. **/
 		
 		bEvent = ChGetIrf(irf); /** Get first data byte **/
 		
-		if (0x80 <= bEvent && 0xEF >= bEvent)
-		{								/** If a command **/
-			*pbStat = bEvent; 			/** update running-status byte **/
-			bEvent = ChGetIrf(irf);		/** and get next data byte **/
+		if (0x80 <= bEvent && 0xEF >= bEvent) {	/** If a command **/
+			*pbStat = bEvent;					/** update running-status byte **/
+			bEvent = ChGetIrf(irf);				/** and get next data byte **/
 		}
 		if (0xF0 == bEvent || 0xF7 == bEvent) 		/** If a sys-exclusive message **/
 			SkipIrf(irf, VlqFromIrf(irf)); 			/** skip it **/
@@ -351,7 +353,8 @@ VLQ VlqInterpIrf(unsigned irf, unsigned *pbStat)
 			} else
 				SkipIrf(irf, vlqT); 			/*** Else skip event ***/
 		} else
-			switch (*pbStat & 0xF0) { 			/** Else must be a midi event.. **/
+			switch (*pbStat & 0xF0)
+		{ 			/** Else must be a midi event.. **/
 				case 0x80:
 				case 0x90: { 					/** Note on/off **/
 					unsigned bVol, bChan;
@@ -425,21 +428,16 @@ void Freearray(void)
 	NRL 	*pnrlT, *pnrlT2;
 	FX 		*pfxT, *pfxT2;
 	
-	while (j--) /** Go through hanging-note array **/
-	{
-		for (i = 128; i--; )
-		{
-			for (pnrlT = rgpnrl[j][i]; NULL != pnrlT; )		/** freeing each list **/
-			{
+	while (j--) { /** Go through hanging-note array **/
+	
+		for (i = 128; i--;) {
+			for (pnrlT = rgpnrl[j][i]; NULL != pnrlT; ) {		/** freeing each list **/
 				pnrlT2 = pnrlT->pnrl;
 				
-				if (pnrlT->pfxTail != NULL)
-				{
+				if (pnrlT->pfxTail != NULL){
 					pfxT = pnrlT->pfxTail->pfx;
-					if (NULL != pfxT)
-					{
-						while (pfxT != pnrlT->pfxTail)			/** and each fx list **/
-						{
+					if (NULL != pfxT) {
+						while (pfxT != pnrlT->pfxTail) {			/** and each fx list **/
 							pfxT2 = pfxT;
 							pfxT = pfxT->pfx;
 							free(pfxT2);
@@ -459,20 +457,19 @@ void Freearray(void)
  * a pointer to a collection of chords (a Tune structure). If MIDI file
  * cannot be processed, NULL is returned.
  */
-Tune *PtuneLoadFn( Ptr MIDIptr, short *channels)
+Tune *PtuneLoadFn(Ptr MIDIptr, short *channels)
 {
 	int 			MADfd, crf;
 	unsigned long 	cb, *pvlqWait, vlqMin = -1, vlqT, wCount, wNcount, cDev = 0;
 	unsigned 		irf, irfMax, *pbStatus, wQuant2, wDev, wMaxdev = 0, cMaxdev = 0;
-	char 			rgbHeader[9] = {'M', 'T', 'h', 'd', 0, 0, 0, 6, 0}, rgbTest[9];
+	char 			rgbHeader[] = {'M', 'T', 'h', 'd', 0, 0, 0, 6, 0}, rgbTest[9];
 	
 	MIDIGenPtr = MIDIptr;
 	
 	Init();
 	MADfd = MADopen();
-	MADread( MADfd, rgbTest, 9);
-	if (memcmp(rgbHeader, rgbTest, 9) || ChGetFd( MADfd) > 1)
-	{
+	MADread(MADfd, rgbTest, 9);
+	if (memcmp(rgbHeader, rgbTest, 9) || ChGetFd(MADfd) > 1) {
 		MADclose(MADfd);
 		return NULL; /** Only process type 0 or type 1 general MIDI files **/
 	}
@@ -484,8 +481,7 @@ Tune *PtuneLoadFn( Ptr MIDIptr, short *channels)
 		MADclose(MADfd);
 		return NULL; /** Error if MIDI file is smaller than 23 bytes **/
 	}
-	if (fNocopy && ChGetFd(MADfd) == 0xFF && ChGetFd(MADfd) == 0x02)
-	{
+	if (fNocopy && ChGetFd(MADfd) == 0xFF && ChGetFd(MADfd) == 0x02) {
 		MADclose(MADfd);
 		return NULL; /** Error if Nocopy and copyright notice exists **/
 	}
@@ -510,11 +506,9 @@ Tune *PtuneLoadFn( Ptr MIDIptr, short *channels)
 	
 	MADseek(MADfd, 18, SEEK_SET);
 	/** Put file descriptors at the start of each track in file **/
-	for (irf = 0; irf < irfMax; irf++)
-	{
+	for (irf = 0; irf < irfMax; irf++) {
 		cb = LongFromFd(MADfd, 4);
-		if ((prf[irf].fd = MADopen()) == -1)
-		{
+		if ((prf[irf].fd = MADopen()) == -1) {
 			ERROR;
 			//	exit(1);
 		}
@@ -528,8 +522,7 @@ Tune *PtuneLoadFn( Ptr MIDIptr, short *channels)
 	}
 	MADclose(MADfd);
 	
-	if (irf != irfMax)	/** If things look a bit suspicious **/
-	{
+	if (irf != irfMax) {	/** If things look a bit suspicious **/
 		CreateResult("MIDI file ends prematurely **");
 		free(prf); /** Free prf - NB. not closed **/
 		free(pvlqWait);
@@ -540,70 +533,67 @@ Tune *PtuneLoadFn( Ptr MIDIptr, short *channels)
 	ptuneMain = ptuneCurr = (Tune *) malloc(sizeof(Tune));
 	wCount = vlqMin; /** Start from first event **/
 	wNcount = (wCount + wQuant2) % wQuant;
-	if (fStats)
-	{
+	if (fStats) {
 		wDev = abs(wQuant2 - (int) wNcount);
 		
 		if (wDev > 2) cDev++;
 		
-		if (wDev > wMaxdev)
-		{
+		if (wDev > wMaxdev) {
 			wMaxdev = wDev;
 			cMaxdev = 1;
-		}
-		else if (wDev == wMaxdev) cMaxdev++;
+		} else if (wDev == wMaxdev)
+			cMaxdev++;
 	}
 	ptuneMain->count = wCount + wQuant2 - wNcount;
 	wNcount = wQuant - wNcount;
 	ptuneMain->ptune = NULL;
 	ptuneMain->pei = NULL;
 	crf = 1;
-	while (0 < crf)
-	{ /** While still tracks in file to process **/
+	while (0 < crf) { /** While still tracks in file to process **/
 		crf = 0;
 		vlqT = -1;
 		
-		for (irf = 0; irf < irfMax; irf++) /** With each track.. **/
-		{
-			if (-1 != prf[irf].fd)
-			{ /** If not finished **/
+		for (irf = 0; irf < irfMax; irf++) { /** With each track.. **/
+			if (-1 != prf[irf].fd) {
+			 /** If not finished **/
 				crf++;
 				/**
 				 ** Must keep all tracks in sync, if events occurring on this track
 				 ** at this instant, then interpret them. Also note when next event
 				 ** will occur (ie. minimum ticks to next event)
 				 **/
-				if ((pvlqWait[irf] -= vlqMin) == 0) pvlqWait[irf] = VlqInterpIrf(irf, pbStatus + irf);
-				if (pvlqWait[irf] < vlqT) vlqT = pvlqWait[irf];
+				if ((pvlqWait[irf] -= vlqMin) == 0)
+					pvlqWait[irf] = VlqInterpIrf(irf, pbStatus + irf);
+				if (pvlqWait[irf] < vlqT)
+					vlqT = pvlqWait[irf];
 			}
 		}
 		vlqMin = vlqT;
 		wCount += vlqMin;
-		if (wNcount <= vlqMin)
-		{ /** If need to advance to new quanta **/
+		if (wNcount <= vlqMin) { /** If need to advance to new quanta **/
 			if ((ptuneCurr->ptune = (Tune *) malloc(sizeof(Tune))) == NULL) {
 				ERROR;
 				//	exit(1);
 			} /** allocate **/
 			ptuneCurr = ptuneCurr->ptune; /** and initialize **/
 			wNcount = (wCount + wQuant2) % wQuant;
-			if (fStats)
-			{
+			if (fStats) {
 				wDev = abs(wQuant2 - (int) wNcount);
 				if (wDev > 2)
 					cDev++;
-				if (wDev > wMaxdev)
-				{
+				if (wDev > wMaxdev) {
 					wMaxdev = wDev;
 					cMaxdev = 1;
-				} else if (wDev == wMaxdev) cMaxdev++;
+				} else if (wDev == wMaxdev)
+					cMaxdev++;
 			}
 			ptuneCurr->count = wCount + wQuant2 - wNcount;
 			wNcount = wQuant - wNcount;
 			ptuneCurr->ptune = NULL;
 			ptuneCurr->pei = NULL;
 		}
-		else wNcount -= vlqMin; /** Else decrememnt "new quanta" count **/
+		else
+			wNcount -= vlqMin; /** Else decrememnt "new quanta" count **/
 	}
 	
 	Freearray();

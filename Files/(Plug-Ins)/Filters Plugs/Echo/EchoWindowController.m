@@ -19,7 +19,7 @@
 
 @implementation EchoWindowController
 
-- (id)initWithWindow:(NSWindow *)window
+- (instancetype)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
@@ -40,7 +40,7 @@
 				{
 					Ptr	orgPtr = (theData->data) + selectionStart, destPtr = orgPtr + pDelay;
 					
-					for( i = 0; i < (length - pDelay); i++)
+					for (i = 0; i < (length - pDelay); i++)
 					{
 						temp1 = *orgPtr++;
 						temp1 = (pStrength * temp1);
@@ -62,7 +62,7 @@
 					short	*orgPtr = (short*) theData->data + (selectionStart / 2),
 					*destPtr = orgPtr + pDelay;
 					
-					for( i = 0; i < length / 2 - pDelay; i++)
+					for (i = 0; i < length / 2 - pDelay; i++)
 					{
 						temp1 = *orgPtr++;
 						temp1 = (pStrength * temp1);

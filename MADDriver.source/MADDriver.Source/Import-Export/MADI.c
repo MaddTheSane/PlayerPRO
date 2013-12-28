@@ -199,16 +199,16 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 	theMAD->header->speed			= 	oldMAD->speed;
 	theMAD->header->tempo			= 	oldMAD->tempo;
 	
-	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanPan[ i] = oldMAD->chanPan[ i];
-	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanVol[ i] = oldMAD->chanVol[ i];
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanPan[ i] = oldMAD->chanPan[ i];
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanVol[ i] = oldMAD->chanVol[ i];
 	
 	
 	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
 	
-	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 	/**** Patterns *******/
 	
-	for( i = 0; i < oldMAD->numPat; i++)
+	for (i = 0; i < oldMAD->numPat; i++)
 	{
 		struct oldPatData		*tempPat, *tempPat2;
 		struct oldPatHeader		tempPatHeader;
@@ -263,9 +263,9 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 		
 		theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
 		
-		for( x = 0; x < theMAD->partition[ i]->header.size; x++)
+		for (x = 0; x < theMAD->partition[ i]->header.size; x++)
 		{
-			for( z = 0; z < theMAD->header->numChn; z++)
+			for (z = 0; z < theMAD->header->numChn; z++)
 			{
 				struct oldCmd *oldCmd;
 				Cmd	*aCmd;
@@ -288,7 +288,7 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 		free( tempPat);
 		tempPat = NULL;
 	}
-	for( i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[ i] = NULL;
+	for (i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[ i] = NULL;
 	
 	/**** Instruments & Samples header *****/
 	
@@ -298,7 +298,7 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
 	if (!theMAD->sample) return MADNeedMemory;
 	
-	for( i = 0; i < oldMAD->numInstru; i++)
+	for (i = 0; i < oldMAD->numInstru; i++)
 	{
 		struct oldInstrData		oldIns;
 		//InstrData	*curIns = &theMAD->fid[ i];
@@ -334,13 +334,13 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 		theMAD->fid[ d].vibRate = oldIns.vibRate;
 	}
 	
-	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
 	// Read Samples
 	
-	for( i = 0; i < MAXINSTRU ; i++)
+	for (i = 0; i < MAXINSTRU ; i++)
 	{
-		for( x = 0; x < theMAD->fid[ i].numSamples; x++)
+		for (x = 0; x < theMAD->fid[ i].numSamples; x++)
 		{
 			oldsData	 *oldcurData;
 			sData		 *curData;
@@ -374,7 +374,7 @@ static OSErr MADI2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 				SInt32 	ll;
 				short	*shortPtr = (short*) curData->data;
 				
-				for( ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
+				for (ll = 0; ll < curData->size/2; ll++) PPBE16( &shortPtr[ ll]);
 			}
 			
 		}
@@ -416,7 +416,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Total Patterns ***/
 	
 	info->totalPatterns = 0;
-	for( i = 0; i < 128; i++)
+	for (i = 0; i < 128; i++)
 	{
 		if (myMOD->oPointers[ i] >= info->totalPatterns)	info->totalPatterns = myMOD->oPointers[ i];
 	}

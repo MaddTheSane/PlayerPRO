@@ -21,6 +21,6 @@
 @property (readonly) OSType type;
 @property (readonly) UInt32 version;
 
-- (id)initWithBundle:(NSBundle *)aBund;
+- (instancetype)initWithBundle:(NSBundle *)aBund;
 
 @end

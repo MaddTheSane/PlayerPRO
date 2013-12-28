@@ -15,17 +15,16 @@
 
 @implementation FadeWindowController
 
-- (id)initWithWindow:(NSWindow *)window
+- (instancetype)initWithWindow:(NSWindow *)window
 {
-    self = [super initWithWindow:window];
-    if (self) {
+    if (self = [super initWithWindow:window]) {
 		isMultipleIstanceSafe = YES;
 		
 		dispatch_block_t tmp = ^{
 			long		i, per;
 			double		from = self.fadeFrom, to = self.fadeTo, temp;
 			char		*Sample8Ptr = theData->data;
-			short		*Sample16Ptr = (short*) theData->data;
+			short		*Sample16Ptr = (short*)theData->data;
 			
 			
 			switch( theData->amp)
@@ -33,7 +32,7 @@
 				case 8:
 					Sample8Ptr += selectionStart;
 					
-					for( i = 0; i < selectionEnd - selectionStart; i++)
+					for (i = 0; i < selectionEnd - selectionStart; i++)
 					{
 						temp = *Sample8Ptr;
 						if (temp >= 0x80) temp -= 0xFF;
@@ -60,7 +59,7 @@
 				case 16:
 					Sample16Ptr += selectionStart/2;						// Div 2, because it's in bytes !!!
 					
-					for( i = 0; i < (selectionEnd - selectionStart)/2; i++)	// Div 2, because it's in bytes !!!
+					for (i = 0; i < (selectionEnd - selectionStart)/2; i++)	// Div 2, because it's in bytes !!!
 					{
 						temp = *Sample16Ptr;
 						

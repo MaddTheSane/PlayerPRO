@@ -16,7 +16,7 @@ NSString * const kMadPlugIsSampleKey = @"MADPlugIsSample";
 
 static inline OSType NSStringToOSType(NSString *CFstri)
 {
-	char * thecOSType = (char*)[CFstri cStringUsingEncoding:NSMacOSRomanStringEncoding];
+	const char *thecOSType = [CFstri cStringUsingEncoding:NSMacOSRomanStringEncoding];
 	
 	return Ptr2OSType(thecOSType);
 }
@@ -42,10 +42,10 @@ static inline BOOL getBoolFromId(id NSType)
 @synthesize isSample = isSamp;
 
 typedef enum _MADPlugCapabilities {
-	PPMADCanDoNothing = 0,
-	PPMADCanImport = 1 << 0,
-	PPMADCanExport = 1 << 1,
-	PPMADCanDoBoth = PPMADCanImport | PPMADCanExport
+	PPMADCanDoNothing	= 0,
+	PPMADCanImport		= 1 << 0,
+	PPMADCanExport		= 1 << 1,
+	PPMADCanDoBoth		= PPMADCanImport | PPMADCanExport
 } MADPlugCapabilities;
 
 - (NSString*)description
@@ -55,11 +55,17 @@ typedef enum _MADPlugCapabilities {
 	return [NSString stringWithFormat:@"%@ - %@ Sample: %@ Type: %@ UTIs: %@", self.menuName, [self.file bundlePath], isSamp ? @"YES": @"NO", [NSString stringWithCString:typeString encoding:NSMacOSRomanStringEncoding], [UTITypes description]];
 }
 
-- (id)initWithBundle:(NSBundle *)tempBundle
+static Class strClass;
+static Class numClass;
+
+- (instancetype)initWithBundle:(NSBundle *)tempBundle
 {
 	if (self = [super initWithBundle:tempBundle]) {
-		Class strClass = [NSString class];
-		Class numClass = [NSNumber class];
+		static dispatch_once_t onceToken;
+		dispatch_once(&onceToken, ^{
+			strClass = [NSString class];
+			numClass = [NSNumber class];
+		});
 		{
 			NSURL *tempBundleRef = [tempBundle bundleURL];
 			
@@ -78,18 +84,18 @@ typedef enum _MADPlugCapabilities {
 		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
 		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugUTITypesKey];
 		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
-			self.UTITypes = DictionaryTemp;
+			self.UTITypes = [DictionaryTemp copy];
 		} else if ([DictionaryTemp isKindOfClass:strClass]) {
 			self.UTITypes = @[[NSString stringWithString:DictionaryTemp]];
-		} else {
+		} else
 			return nil;
-		}
+		
 		
 		DictionaryTemp = [tempDict valueForKey:kMadPlugIsSampleKey];
 		if ([DictionaryTemp isKindOfClass:numClass] || [DictionaryTemp isKindOfClass:strClass]) {
 			self.isSample = [DictionaryTemp boolValue];
 		} else {
-			return nil;
+			self.isSample = NO;
 		}
 		
 		DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugTypeKey];
@@ -97,9 +103,8 @@ typedef enum _MADPlugCapabilities {
 			type = NSStringToOSType(DictionaryTemp);
 		} else if([DictionaryTemp isKindOfClass:numClass]) {
 			type = [(NSNumber*)DictionaryTemp unsignedIntValue];
-		} else {
+		} else
 			return nil;
-		}
 		
 		{
 			id canImportValue = nil, canExportValue = nil;
@@ -139,9 +144,8 @@ typedef enum _MADPlugCapabilities {
 					self.mode = NSStringToOSType(DictionaryTemp);
 				} else if([DictionaryTemp isKindOfClass:numClass]) {
 					self.mode = [(NSNumber*)DictionaryTemp unsignedIntValue];
-				} else {
+				} else
 					return nil;
-				}
 			}
 		}
 	}

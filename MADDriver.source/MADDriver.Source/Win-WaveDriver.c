@@ -115,7 +115,7 @@ ULONG GetPos(MADDriverRec *WinMADDriver)
 			
 			if (!DirectSave( mydma, &WinMADDriver->DriverSettings, WinMADDriver))
 			{
-				for( i = 0; i < WIN95BUFFERSIZE/2; i++) mydma[ i] = 0;
+				for (i = 0; i < WIN95BUFFERSIZE/2; i++) mydma[ i] = 0;
 			}
 		}
 		else if (OnOff == false && (pos < WIN95BUFFERSIZE/2))
@@ -124,7 +124,7 @@ ULONG GetPos(MADDriverRec *WinMADDriver)
 			
 			if (!DirectSave( mydma + WIN95BUFFERSIZE/2, &WinMADDriver->DriverSettings, WinMADDriver))
 			{
-				for( i = 0; i < WIN95BUFFERSIZE/2; i++) mydma[ i] = 0;
+				for (i = 0; i < WIN95BUFFERSIZE/2; i++) mydma[ i] = 0;
 			}
 		}
 	}

@@ -30,7 +30,7 @@
 
 #include <CoreFoundation/CFPlugInCOM.h>
 
-typedef OSErr (*RPlaySoundUPP) (MADDriverRec *theRec, Ptr, long, SInt32, SInt32, SInt32, long, long, unsigned int, Boolean);
+typedef OSErr (*RPlaySoundUPP) (MADDriverRec *theRec, char *, long, int, int, int, long, long, unsigned int, Boolean);
 
 typedef struct _Pcmd
 {
@@ -38,7 +38,7 @@ typedef struct _Pcmd
 	short			length;					// number of rows in myCmd[]
 	short			trackStart;				// track ID of first track in myCmd[]
 	short			posStart;				// row ID of first row in myCmd[]
-	SInt32			structSize;				// struct size in bytes - see Definition
+	int				structSize;				// struct size in bytes - see Definition
 	Cmd				myCmd[];
 } Pcmd;
 
@@ -76,7 +76,7 @@ PPEXPORT sData* inMADCreateSample();
 #ifndef __PLAYERPROCORE_PPPRIVATE__
 PPEXPORT void ConvertInstrumentIn(Byte *tempPtr, size_t sSize);
 #endif
-PPEXPORT Cmd* GetCmd( short row, short track, Pcmd* myPcmd);
+PPEXPORT Cmd* GetCmd(short row, short track, Pcmd* myPcmd);
 
 PPEXPORT const CFStringRef kMadPlugMenuNameKey;
 PPEXPORT const CFStringRef kMadPlugAuthorNameKey;

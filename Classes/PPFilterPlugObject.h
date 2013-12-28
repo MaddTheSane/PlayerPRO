@@ -16,7 +16,7 @@
 	PPFiltersPlugin	**plugData;
 }
 
-- (id)initWithBundle:(NSBundle *)aBund;
+- (instancetype)initWithBundle:(NSBundle *)aBund;
 
 - (OSErr)callPluginWithData:(sData *)theData selectionStart:(long) SelectionStart selectionEnd:(long) SelectionEnd plugInInfo:(PPInfoPlug *)thePPInfoPlug stereoMode:(short)stereoMode;
 

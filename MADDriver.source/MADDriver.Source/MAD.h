@@ -63,7 +63,6 @@
 //////////////////////////////////////////////////////////////////////
 #if defined(__APPLE__)			// MACINTOSH
 #define _MAC_H
-#include <CoreFoundation/CFString.h>
 
 //////////////////////////////////////////////////////////////////////
 #else 			// WIN32 - 95/NT
@@ -152,7 +151,7 @@ enum {
 // ***	PATTERN DESCRIPTION
 // ***	
 
-typedef struct Cmd							// COMMAND
+typedef struct Cmd			// COMMAND
 {
 	Byte	ins;					// Instrument no		0x00: no ins cmd
 	Byte 	note;					// Note, see table		0xFF : no note cmd
@@ -162,13 +161,13 @@ typedef struct Cmd							// COMMAND
 	Byte	unused;
 } Cmd;
 
-typedef struct PatHeader					// HEADER
+typedef struct PatHeader	// HEADER
 {
-	SInt32	size;					// Length of pattern: standard = 64
+	int		size;					// Length of pattern: standard = 64
 	OSType	compMode;				// Compression mode, none = 'NONE'
 	char	name[32];
-	SInt32	patBytes;				// Pattern Size in Bytes
-	SInt32	unused2;
+	int		patBytes;				// Pattern Size in Bytes
+	int		unused2;
 } PatHeader;
 
 typedef struct PatternHeaderUnicode					// HEADER
@@ -180,12 +179,11 @@ typedef struct PatternHeaderUnicode					// HEADER
 	SInt32	unused2;
 } PatternHeaderUnicode;
 
-typedef struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
-{									// Pattern = 64 notes to play
+typedef struct PatData		// DATA STRUCTURE : HEADER + COMMANDS
+{							// Pattern = 64 notes to play
 	PatHeader	header;
 	Cmd			Cmds[1];
 } PatData;
-
 
 typedef struct PatternDataUnicode						// DATA STRUCTURE : HEADER + COMMANDS
 {									// Pattern = 64 notes to play
@@ -194,41 +192,40 @@ typedef struct PatternDataUnicode						// DATA STRUCTURE : HEADER + COMMANDS
 } PatternDataUnicode;
 
 
-// ***	
+// ***
 // ***	INSTRUMENT DESCRIPTION
-// ***	
+// ***
 
-
-typedef struct sData								// SAMPLE
+typedef struct sData		// SAMPLE
 {
-	SInt32 				size;				// Sample length
-	SInt32				loopBeg;			// LoopStart
-	SInt32				loopSize;			// LoopLength
-	Byte 				vol;				// Base volume
-	unsigned short		c2spd;				// c2spd
-	Byte				loopType;
-	Byte				amp;				// 8 or 16 bits
-	char				relNote;
-	char 				name[32];			// Sample name
-	Byte				stereo;				// Stereo
-	Ptr					data;				// Used only in memory, not in files
+	int 			size;		// Sample length
+	int				loopBeg;	// LoopStart
+	int				loopSize;	// LoopLength
+	Byte 			vol;		// Base volume
+	unsigned short	c2spd;		// c2spd
+	Byte			loopType;
+	Byte			amp;		// 8 or 16 bits
+	char			relNote;
+	char 			name[32];	// Sample name
+	Byte			stereo;		// Stereo
+	Ptr				data;		// Used only in memory, not in files
 } sData;
 
 //64-bit safe sample structure
 //Used for file i/o
-typedef struct sData32								// SAMPLE
+typedef struct sData32
 {
-	SInt32 				size;				// Sample length
-	SInt32				loopBeg;			// LoopStart
-	SInt32				loopSize;			// LoopLength
-	Byte 				vol;				// Base volume
-	unsigned short		c2spd;				// c2spd
-	Byte				loopType;
-	Byte				amp;				// 8 or 16 bits
-	char				relNote;
-	char 				name[32];			// Sample name
-	Byte				stereo;				// Stereo
-	UInt32				data;				// Used only in memory, not in files
+	SInt32 			size;		// Sample length
+	SInt32			loopBeg;	// LoopStart
+	SInt32			loopSize;	// LoopLength
+	Byte 			vol;		// Base volume
+	unsigned short	c2spd;		// c2spd
+	Byte			loopType;
+	Byte			amp;		// 8 or 16 bits
+	char			relNote;
+	char 			name[32];	// Sample name
+	Byte			stereo;		// Stereo
+	UInt32			data;		// Used only in memory, not in files
 } sData32;
 
 typedef union SampleDataUnicode								// SAMPLE
@@ -269,14 +266,13 @@ enum
 	ePingPongLoop	= 1
 };
 
-
-typedef struct EnvRec				// Volume Enveloppe
+typedef struct EnvRec			// Volume Enveloppe
 {
 	short 	pos;				// pos
 	short	val;				// val
 } EnvRec;
 
-typedef struct InstrData				// INSTRUMENT
+typedef struct InstrData		// INSTRUMENT
 {
 	char 	name[32];			// instrument name
 	Byte 	type;				// Instrument type = 0
@@ -374,21 +370,17 @@ enum
 	EFNOTE		= 1 << 3
 };
 
-
-// ***	
+// ***
 // ***	MAD FILE HEADER DESCRIPTION
-// ***	
-
+// ***
 
 #define INFOSSIZE 239
-
 
 typedef struct FXBus
 {
 	Boolean		ByPass;
 	short		copyId;
 	Boolean		Active;
-	
 } FXBus;
 
 typedef struct MADSpec
@@ -399,8 +391,8 @@ typedef struct MADSpec
 	Byte		generalPan;					// General Panning
 	Byte		MultiChanNo;				// Number of chan for multichannel
 	Byte		MultiChan;					// MultiChannel per tracks?
-	SInt32		EPitch;						// New Pitch
-	SInt32		ESpeed;						// New Speed
+	int			EPitch;						// New Pitch
+	int			ESpeed;						// New Speed
 	Byte		XMLinear;					// Linear picth table?
 	Byte		MODMode;					// Limit pitch to MOD pitch table
 	Byte		showCopyright;				// Show infos at startup? true or false
@@ -418,10 +410,10 @@ typedef struct MADSpec
 	Byte		chanPan[MAXTRACK];			// Channel settings, from 0 to 256
 	Byte		chanVol[MAXTRACK];			// Channel Volume, from 0 to 64
 	
-	SInt32		globalEffect[ 10];			// Global Effects IDs
+	int			globalEffect[10];			// Global Effects IDs
 	Boolean		globalFXActive;				// Global FX Active?
 	
-	SInt32		chanEffect[MAXTRACK][ 4];	// Channel Effect IDs
+	int			chanEffect[MAXTRACK][4];	// Channel Effect IDs
 	FXBus		chanBus[MAXTRACK];
 } MADSpec;
 
@@ -464,7 +456,7 @@ typedef struct FXSets
 {
 	short	track;
 	short	id;
-	SInt32	FXID;
+	int		FXID;
 	short	noArg;
 	float	values[100];
 	Str63	name;

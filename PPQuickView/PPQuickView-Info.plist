@@ -35,19 +35,19 @@
 	<key>CFBundleIconFile</key>
 	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>org.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1</string>
-	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
 	<key>CFPlugInDynamicRegisterFunction</key>
 	<string></string>
 	<key>CFPlugInDynamicRegistration</key>
-	<string>NO</string>
+	<false/>
 	<key>CFPlugInFactories</key>
 	<dict>
 		<key>EE72471B-58E4-4D22-8032-5013B453556D</key>

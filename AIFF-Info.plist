@@ -46,7 +46,7 @@
 	<key>MADPlugIsSample</key>
 	<true/>
 	<key>MADCanImport</key>
-	<true/>
+	<false/>
 	<key>MADCanExport</key>
 	<true/>
 </dict>

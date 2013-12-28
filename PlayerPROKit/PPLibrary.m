@@ -44,7 +44,7 @@
 - (id)initWithPlugInCPath:(const char*)cPath
 {
 	if (self = [super init]) {
-		if(MADInitLibrary((char*)cPath, &theLibrary) != noErr)
+		if(MADInitLibrary(cPath, &theLibrary) != noErr)
 		{
 			return nil;
 		}
