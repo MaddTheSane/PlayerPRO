@@ -187,16 +187,18 @@ end:
 + (OSErr)info:(PPInfoRec *)theInfo fromTrackerAtURL:(NSURL *)thURL
 {
 	OSErr theErr = noErr;
-	if (!theInfo || !thURL) {
+	if (!theInfo || !thURL)
 		return MADParametersErr;
-	}
+	
+	if (![[thURL pathExtension] isEqualToString:@"madbundle"])
+		return MADIncompatibleFile;
+	
 	PPMusicObjectWrapper *tmpVal = [[PPMusicObjectWrapper alloc] initWithURL:thURL];
 
-	if (!tmpVal) {
+	if (!tmpVal)
 		return MADReadingErr;
-	}
+	
 	strcpy(theInfo->formatDescription, "MAD Bundle");
-
 	@try {
 		NSData *nameData = [tmpVal.internalFileName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 		if (!nameData || nameData.length == 0) {
