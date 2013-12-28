@@ -378,11 +378,11 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 	static RPlaySoundUPP mPlay;
 	mPlay = infoPlug->RPlaySound;
 		
-	switch( theData->amp)
+	switch(theData->amp)
 	{
 		case 8:
 			if (Audio8Ptr != NULL) {
-				free( Audio8Ptr);
+				free(Audio8Ptr);
 				Audio8Ptr = NULL;
 			}
 			Audio8Ptr = CreateAudio8Ptr(audioLength, audioFrequency, audioAmplitude, generator, theData->stereo);
@@ -405,13 +405,8 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 }
 
 @end
-
-static OSErr mainToneGenerator(void				*unused,
-							   sData			*theData,
-							   long				SelectionStart,
-							   long				SelectionEnd,
-							   PPInfoPlug		*thePPInfoPlug,
-							   short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+// StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainToneGenerator(void *unused, sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short StereoMode)
 {
 	long	AudioLength;
 	int		AudioFreq, AudioAmp;
