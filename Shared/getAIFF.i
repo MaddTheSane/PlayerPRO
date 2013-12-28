@@ -9,15 +9,14 @@
 	if (!saveData) {
 		return MADNeedMemory;
 	}
+#if !PLAYERPRO6
 	__block NSError *expErr = nil;
 	dispatch_block_t errBlock = ^{
-#if !PLAYERPRO6
 		if (isQuitting) {
 			[NSApp replyToApplicationShouldTerminate:YES];
-		} else
-#endif
+		} else {
 			NSRunAlertPanel(@"Export failed", @"Export of the music file failed:\n%@", nil, nil, nil, [expErr localizedDescription]);
-		
+		}
 	};
 	
 #define checkError(res) { \
@@ -29,6 +28,18 @@ dispatch_async(dispatch_get_main_queue(), errBlock);\
 return MADWritingErr; \
 } \
 }
+
+#else
+
+#define checkError(res) { \
+if (res != noErr){ \
+if (audioFile != NULL)\
+AudioFileClose(audioFile);\
+return MADWritingErr; \
+} \
+}
+
+#endif
 	AudioStreamBasicDescription asbd = {0};
 	asbd.mSampleRate = theSett->outPutRate;
 	asbd.mFormatID = kAudioFormatLinearPCM;
