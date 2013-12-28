@@ -157,7 +157,12 @@ end:
 
 - (OSErr)saveMusicToURL:(NSURL *)tosave
 {
-	return MADMusicSaveCFURL(currentMusic, (__bridge CFURLRef)tosave, false);
+	return [self saveMusicToURL:tosave compress:NO];
+}
+
+- (OSErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp
+{
+	return MADMusicSaveCFURL(currentMusic, (__bridge CFURLRef)tosave, mad1Comp);
 }
 
 - (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib
@@ -340,6 +345,11 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	[self syncMusicDataTypes];
 	
 	return [super saveMusicToURL:tosave];
+}
+
+- (OSErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp
+{
+	return [self saveMusicToURL:tosave];
 }
 
 - (OSErr)saveMusicToURL:(NSURL *)tosave
