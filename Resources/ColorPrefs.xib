@@ -33,12 +33,76 @@
                 <outlet property="colorWell30" destination="cLm-A3-pQh" id="AnR-cl-BGr"/>
                 <outlet property="colorWell31" destination="jdZ-Oy-ehb" id="83Q-p2-XvT"/>
                 <outlet property="colorWell32" destination="Tgs-sv-tnM" id="Psy-N7-wgp"/>
+                <outlet property="colorWell33" destination="9DE-E0-xev" id="d7k-E6-1T8"/>
+                <outlet property="colorWell34" destination="Wv7-gc-lMz" id="r0P-di-twi"/>
+                <outlet property="colorWell35" destination="Pes-s6-i25" id="MeN-xz-v9Z"/>
+                <outlet property="colorWell36" destination="Crz-Pf-mWB" id="cTK-Md-kyG"/>
+                <outlet property="colorWell37" destination="XgU-sW-rce" id="Oyj-KT-x2k"/>
+                <outlet property="colorWell38" destination="6yX-X9-fqh" id="dwN-Vb-6Kv"/>
+                <outlet property="colorWell39" destination="qMO-6M-GlL" id="Q1F-xB-8dU"/>
                 <outlet property="colorWell4" destination="6" id="14"/>
+                <outlet property="colorWell40" destination="yqg-RJ-MQl" id="eTb-uN-RcN"/>
+                <outlet property="colorWell41" destination="WNA-yB-Np9" id="6ON-81-cw3"/>
+                <outlet property="colorWell42" destination="ZsL-It-Tai" id="VUE-HS-FTI"/>
+                <outlet property="colorWell43" destination="m1Z-bt-Rfn" id="Bez-Gh-a6o"/>
+                <outlet property="colorWell44" destination="ug0-83-SMr" id="c3p-Nh-gLi"/>
+                <outlet property="colorWell45" destination="vop-I1-oY2" id="pqo-aj-zgZ"/>
+                <outlet property="colorWell46" destination="Xie-2b-Iw7" id="dcf-YJ-Rp3"/>
+                <outlet property="colorWell47" destination="J42-ax-Kdd" id="mNG-W3-4Qz"/>
+                <outlet property="colorWell48" destination="aue-1l-He6" id="xMS-06-j3I"/>
+                <outlet property="colorWell49" destination="FH2-qs-flI" id="g6I-IZ-Max"/>
                 <outlet property="colorWell5" destination="7" id="15"/>
+                <outlet property="colorWell50" destination="Z2A-d3-MIH" id="q0l-ul-vTf"/>
+                <outlet property="colorWell51" destination="tu4-Qe-Agv" id="7m6-g1-s5m"/>
+                <outlet property="colorWell52" destination="8tx-x1-5Ig" id="mKc-kK-Ard"/>
+                <outlet property="colorWell53" destination="ZWm-fT-qoo" id="eRX-up-MU7"/>
+                <outlet property="colorWell54" destination="jqz-I5-wLm" id="0sj-4G-g0U"/>
+                <outlet property="colorWell55" destination="FZI-Cb-1Yt" id="ODA-0X-yjj"/>
+                <outlet property="colorWell56" destination="XKf-nQ-rpX" id="2WT-Dl-XXa"/>
+                <outlet property="colorWell57" destination="Ef9-VA-G3w" id="C67-Qu-G04"/>
+                <outlet property="colorWell58" destination="Nfi-E3-kIz" id="6cx-QH-RmG"/>
+                <outlet property="colorWell59" destination="GZE-b4-WCj" id="AkH-Bc-gWO"/>
                 <outlet property="colorWell6" destination="8" id="16"/>
+                <outlet property="colorWell60" destination="LjA-0q-fnT" id="L4a-5d-fDn"/>
+                <outlet property="colorWell61" destination="fYY-cb-kgA" id="SrI-Ya-fZB"/>
+                <outlet property="colorWell62" destination="xRL-Dt-PiR" id="9UZ-ym-nUg"/>
+                <outlet property="colorWell63" destination="3ry-04-61g" id="iE9-M9-KOM"/>
+                <outlet property="colorWell64" destination="Gwh-lM-RVq" id="x05-aZ-Okg"/>
+                <outlet property="colorWell65" destination="u8M-fF-l25" id="JwF-WM-Eok"/>
+                <outlet property="colorWell66" destination="dla-13-vSO" id="C0A-IJ-H7D"/>
+                <outlet property="colorWell67" destination="VDH-0O-Wfw" id="gMc-Gd-k7i"/>
+                <outlet property="colorWell68" destination="ADw-Ad-0IV" id="f8Z-Kx-QvH"/>
+                <outlet property="colorWell69" destination="MQd-cF-KLh" id="Fjj-hz-QjS"/>
                 <outlet property="colorWell7" destination="9" id="17"/>
+                <outlet property="colorWell70" destination="rEU-dB-NNt" id="3j0-VV-FyO"/>
+                <outlet property="colorWell71" destination="8bB-rd-Gwu" id="vO3-7r-Sp1"/>
+                <outlet property="colorWell72" destination="FKE-Ud-y9n" id="JJ3-Hj-h3F"/>
+                <outlet property="colorWell73" destination="59w-4E-Lmm" id="L9b-og-i0m"/>
+                <outlet property="colorWell74" destination="8xt-Zs-F5j" id="SNG-AY-Og9"/>
+                <outlet property="colorWell75" destination="pey-u2-uKq" id="7Fk-KO-Vlh"/>
+                <outlet property="colorWell76" destination="yfQ-jw-eY2" id="EW4-Ub-8Qs"/>
+                <outlet property="colorWell77" destination="l2g-Dm-2JP" id="LYv-9A-ise"/>
+                <outlet property="colorWell78" destination="W2c-Br-wgG" id="9NG-f4-Uai"/>
+                <outlet property="colorWell79" destination="rka-VN-Py1" id="YnM-Td-G8o"/>
                 <outlet property="colorWell8" destination="10" id="18"/>
+                <outlet property="colorWell80" destination="1Nd-vb-xso" id="ag3-xU-VE9"/>
+                <outlet property="colorWell81" destination="L9N-hp-f33" id="MsD-5q-i4b"/>
+                <outlet property="colorWell82" destination="CHg-pu-2SC" id="1Ma-A2-6Yx"/>
+                <outlet property="colorWell83" destination="rVw-N4-6QZ" id="xD9-1G-5FS"/>
+                <outlet property="colorWell84" destination="WfL-cL-Gcv" id="Pz6-et-V98"/>
+                <outlet property="colorWell85" destination="okS-Fj-7qc" id="NW1-NC-kG1"/>
+                <outlet property="colorWell86" destination="w32-kj-hsZ" id="nZ7-31-9sQ"/>
+                <outlet property="colorWell87" destination="TX7-up-pAV" id="Bz5-XH-udL"/>
+                <outlet property="colorWell88" destination="cfl-hz-YBg" id="IlL-lu-nFU"/>
+                <outlet property="colorWell89" destination="IEx-dE-bh7" id="5dy-PR-EhU"/>
                 <outlet property="colorWell9" destination="uvP-tC-TFt" id="seI-dZ-J8u"/>
+                <outlet property="colorWell90" destination="UYr-Rf-Zp5" id="ulm-e8-ZhM"/>
+                <outlet property="colorWell91" destination="YkC-Yb-t0H" id="Kxq-cP-bWZ"/>
+                <outlet property="colorWell92" destination="bcH-AV-aI0" id="cka-Vd-ERu"/>
+                <outlet property="colorWell93" destination="oPb-Tg-khJ" id="O8f-1f-yVQ"/>
+                <outlet property="colorWell94" destination="htz-WH-gSw" id="0A9-BR-EWR"/>
+                <outlet property="colorWell95" destination="oek-Mf-emv" id="2sI-rZ-Gex"/>
+                <outlet property="colorWell96" destination="MqC-lj-zil" id="Lw9-G5-3vx"/>
                 <outlet property="view" destination="1" id="2"/>
             </connections>
         </customObject>
@@ -160,416 +224,665 @@
                     <rect key="frame" x="280" y="330" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="pkZ-67-vnL"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="TsR-pA-9id" userLabel="Well 15">
                     <rect key="frame" x="332" y="330" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="teK-dV-YrI"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="IFb-gd-wdy" userLabel="Well 16">
                     <rect key="frame" x="384" y="330" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="CwR-dh-Deq"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="XSa-mK-XT9" userLabel="Well 17">
                     <rect key="frame" x="20" y="299" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="gAn-5X-wVl"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Iau-fQ-dPI" userLabel="Well 18">
                     <rect key="frame" x="72" y="299" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="EtU-s7-Fea"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="ykW-zD-Ssa" userLabel="Well 19">
                     <rect key="frame" x="124" y="299" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="prb-B7-oxc"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="PLp-ez-C3U" userLabel="Well 20">
                     <rect key="frame" x="176" y="299" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="bfr-7f-Gzb"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="fbS-qi-iwf" userLabel="Well 21">
                     <rect key="frame" x="228" y="299" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="8Yr-61-vlg"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="uQA-J2-Jy9" userLabel="Well 22">
                     <rect key="frame" x="280" y="299" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="KjC-kL-bsN"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="zqA-ty-2Sq" userLabel="Well 23">
                     <rect key="frame" x="332" y="299" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="ww1-IY-vBu"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Ur1-UC-1i1" userLabel="Well 24">
                     <rect key="frame" x="384" y="299" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="nea-gf-kmZ"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Gec-sZ-3JV" userLabel="Well 25">
                     <rect key="frame" x="20" y="268" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="E3S-HZ-DS8"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="GnF-RJ-gaf" userLabel="Well 26">
                     <rect key="frame" x="72" y="268" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="Pyq-9y-cJF"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="mXc-jn-muN" userLabel="Well 27">
                     <rect key="frame" x="124" y="268" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="nZG-R2-BPg"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="wzW-UF-uxK" userLabel="Well 28">
                     <rect key="frame" x="176" y="268" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="1Yi-IW-ciy"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="mC5-et-dS9" userLabel="Well 29">
                     <rect key="frame" x="228" y="268" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="3tr-vk-4qe"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="cLm-A3-pQh" userLabel="Well 30">
                     <rect key="frame" x="280" y="268" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="F2W-NV-S3t"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="jdZ-Oy-ehb" userLabel="Well 31">
                     <rect key="frame" x="332" y="268" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="MhS-FQ-2ah"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Tgs-sv-tnM" userLabel="Well 32">
                     <rect key="frame" x="384" y="268" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="1V1-9F-Bea"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="9DE-E0-xev" userLabel="Well 33">
                     <rect key="frame" x="20" y="237" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="hAo-W2-zaF"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Wv7-gc-lMz" userLabel="Well 34">
                     <rect key="frame" x="72" y="237" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="pqU-Dn-gs4"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Pes-s6-i25" userLabel="Well 35">
                     <rect key="frame" x="124" y="237" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="mSb-mT-FKA"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Crz-Pf-mWB" userLabel="Well 36">
                     <rect key="frame" x="176" y="237" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="f7p-kn-xpv"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="XgU-sW-rce" userLabel="Well 37">
                     <rect key="frame" x="228" y="237" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="ZHC-52-wgf"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="6yX-X9-fqh" userLabel="Well 38">
                     <rect key="frame" x="280" y="237" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="mrl-w4-G1G"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="qMO-6M-GlL" userLabel="Well 39">
                     <rect key="frame" x="332" y="237" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="fot-vm-YPZ"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="yqg-RJ-MQl" userLabel="Well 40">
                     <rect key="frame" x="384" y="237" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="BPW-MV-dsU"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="WNA-yB-Np9" userLabel="Well 41">
                     <rect key="frame" x="20" y="206" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="jH2-TB-6zY"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="ZsL-It-Tai" userLabel="Well 42">
                     <rect key="frame" x="72" y="206" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="r3G-3v-9ig"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="m1Z-bt-Rfn" userLabel="Well 43">
                     <rect key="frame" x="124" y="206" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="3Gm-e8-pof"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="ug0-83-SMr" userLabel="Well 44">
                     <rect key="frame" x="176" y="206" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="hH2-V9-meg"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="vop-I1-oY2" userLabel="Well 45">
                     <rect key="frame" x="228" y="206" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="Fn9-uI-alh"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Xie-2b-Iw7" userLabel="Well 46">
                     <rect key="frame" x="280" y="206" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="fir-Jw-Jph"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="J42-ax-Kdd" userLabel="Well 47">
                     <rect key="frame" x="332" y="206" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="zed-wX-MLp"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="aue-1l-He6" userLabel="Well 48">
                     <rect key="frame" x="384" y="206" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="WJm-dm-rXP"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="FH2-qs-flI" userLabel="Well 49">
                     <rect key="frame" x="20" y="175" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="cXh-Ou-mKm"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Z2A-d3-MIH" userLabel="Well 50">
                     <rect key="frame" x="72" y="175" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="3Dr-dg-rKC"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="tu4-Qe-Agv" userLabel="Well 51">
                     <rect key="frame" x="124" y="175" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="EzS-IY-h8U"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="8tx-x1-5Ig" userLabel="Well 52">
                     <rect key="frame" x="176" y="175" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="hs4-xE-mhc"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="ZWm-fT-qoo" userLabel="Well 53">
                     <rect key="frame" x="228" y="175" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="u3J-fB-Xx5"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="jqz-I5-wLm" userLabel="Well 54">
                     <rect key="frame" x="280" y="175" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="9iw-Ba-LfB"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="FZI-Cb-1Yt" userLabel="Well 55">
                     <rect key="frame" x="332" y="175" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="YP9-jN-VBo"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="XKf-nQ-rpX" userLabel="Well 56">
                     <rect key="frame" x="384" y="175" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="Kfj-Dx-YPd"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Ef9-VA-G3w" userLabel="Well 57">
                     <rect key="frame" x="20" y="144" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="8l7-Hl-IK2"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Nfi-E3-kIz" userLabel="Well 58">
                     <rect key="frame" x="72" y="144" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="CdR-MS-S8B"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="GZE-b4-WCj" userLabel="Well 59">
                     <rect key="frame" x="124" y="144" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="slZ-Np-98e"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="LjA-0q-fnT" userLabel="Well 60">
                     <rect key="frame" x="176" y="144" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="AXq-bE-2mh"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="fYY-cb-kgA" userLabel="Well 61">
                     <rect key="frame" x="228" y="144" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="xTQ-jd-keC"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="xRL-Dt-PiR" userLabel="Well 62">
                     <rect key="frame" x="280" y="144" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="kkQ-uz-LfA"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="3ry-04-61g" userLabel="Well 63">
                     <rect key="frame" x="332" y="144" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="WBp-FI-YgR"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Gwh-lM-RVq" userLabel="Well 64">
                     <rect key="frame" x="384" y="144" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="heO-3H-6Pt"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="u8M-fF-l25" userLabel="Well 65">
                     <rect key="frame" x="20" y="113" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="HFe-Dy-Kjg"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="dla-13-vSO" userLabel="Well 66">
                     <rect key="frame" x="72" y="113" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="QI6-iG-j6A"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="VDH-0O-Wfw" userLabel="Well 67">
                     <rect key="frame" x="124" y="113" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="1Zk-ut-rHU"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="ADw-Ad-0IV" userLabel="Well 68">
                     <rect key="frame" x="176" y="113" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="Sy6-BO-skm"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="MQd-cF-KLh" userLabel="Well 69">
                     <rect key="frame" x="228" y="113" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="8Z4-O3-LcB"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="rEU-dB-NNt" userLabel="Well 70">
                     <rect key="frame" x="280" y="113" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="MiW-9b-Sho"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="8bB-rd-Gwu" userLabel="Well 71">
                     <rect key="frame" x="332" y="113" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="3kh-uD-PlL"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="FKE-Ud-y9n" userLabel="Well 72">
                     <rect key="frame" x="384" y="113" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="mw7-ns-OYX"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="59w-4E-Lmm" userLabel="Well 73">
                     <rect key="frame" x="20" y="82" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="uqA-ey-eaX"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="8xt-Zs-F5j" userLabel="Well 74">
                     <rect key="frame" x="72" y="82" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="r9I-eO-853"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="pey-u2-uKq" userLabel="Well 75">
                     <rect key="frame" x="124" y="82" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="wju-Oc-ggD"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="yfQ-jw-eY2" userLabel="Well 76">
                     <rect key="frame" x="176" y="82" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="nk0-5Z-X2j"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="l2g-Dm-2JP" userLabel="Well 77">
                     <rect key="frame" x="228" y="82" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="dBT-Se-H3I"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="W2c-Br-wgG" userLabel="Well 78">
                     <rect key="frame" x="280" y="82" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="e4I-NT-MpF"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="rka-VN-Py1" userLabel="Well 79">
                     <rect key="frame" x="332" y="82" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="kxy-8J-X65"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="1Nd-vb-xso" userLabel="Well 80">
                     <rect key="frame" x="384" y="82" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="Gya-yw-Pbw"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="L9N-hp-f33" userLabel="Well 81">
                     <rect key="frame" x="20" y="51" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="IsD-wU-2Ij"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="CHg-pu-2SC" userLabel="Well 82">
                     <rect key="frame" x="72" y="51" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="TyM-3f-XVY"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="rVw-N4-6QZ" userLabel="Well 83">
                     <rect key="frame" x="124" y="51" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="d09-yZ-D9r"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="WfL-cL-Gcv" userLabel="Well 84">
                     <rect key="frame" x="176" y="51" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="Afm-ay-2GL"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="okS-Fj-7qc" userLabel="Well 85">
                     <rect key="frame" x="228" y="51" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="pm4-9m-ryn"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="w32-kj-hsZ" userLabel="Well 86">
                     <rect key="frame" x="280" y="51" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="dKK-tf-wCm"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="TX7-up-pAV" userLabel="Well 87">
                     <rect key="frame" x="332" y="51" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="axa-BB-OaV"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="cfl-hz-YBg" userLabel="Well 88">
                     <rect key="frame" x="384" y="51" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="AZX-SK-8lp"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="IEx-dE-bh7" userLabel="Well 89">
                     <rect key="frame" x="20" y="20" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="u48-F1-Sse"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="UYr-Rf-Zp5" userLabel="Well 90">
                     <rect key="frame" x="72" y="20" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="nET-LK-1Ku"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="YkC-Yb-t0H" userLabel="Well 91">
                     <rect key="frame" x="124" y="20" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="xYJ-i6-qlL"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="bcH-AV-aI0" userLabel="Well 92">
                     <rect key="frame" x="176" y="20" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="Bpd-70-z7g"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="oPb-Tg-khJ" userLabel="Well 93">
                     <rect key="frame" x="228" y="20" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="1Dx-Ij-K6E"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="htz-WH-gSw" userLabel="Well 94">
                     <rect key="frame" x="280" y="20" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="ev0-OT-hqp"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="oek-Mf-emv" userLabel="Well 95">
                     <rect key="frame" x="332" y="20" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="HrE-84-PRZ"/>
+                    </connections>
                 </colorWell>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="MqC-lj-zil" userLabel="Well 96">
                     <rect key="frame" x="384" y="20" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeColorWell:" target="-2" id="NyW-af-25Q"/>
+                    </connections>
                 </colorWell>
             </subviews>
             <constraints>
