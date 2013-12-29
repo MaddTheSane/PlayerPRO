@@ -37,33 +37,33 @@ void DoHelpInstruList( short **items, short *lsize)
 #define POSINS	16
 #define POSSAMP 45
 
-	extern	short					LastCanal, ToneGenerator, BlackWhite[ 12];
-	extern	EventRecord				theEvent;
-	extern	DialogPtr				SampleDlog[ 65], AHelpDlog, theProgressDia;
-	extern	Boolean					PianoRecording, QuicktimeInstruAvailable, DragManagerUse;
-	extern	RGBColor				theColor;
-	extern	MenuHandle				NewSoundMenu;
-	extern	Cursor					HandCrsr, beamCrsr, pencilCrsr, CHandCrsr;
-	extern	WindowPtr				oldWindow;
-	extern	Movie					QTMovie;
-	extern	Boolean					gMovieQuicktime;
-	extern	FSSpec					QTFile;
-	
-	static	PrivateList				myList;
-	
-	static 	Rect					ButtonRect;
-	static	ControlHandle			LoadBut, DelBut, SaveBut, RecBut, OpenBut, FlipBut, PlayBut;
-	
-	static	short					DestIns, DestSamp, DragIns, DragSamp;
-	static	Boolean					canAcceptDrag;
-	static	PixMapHandle			mySABut, OP, CP, OPB, CPB, ArrowPix;
-	static	Boolean					*SAButState, *InstrUsed;
+extern	short					LastCanal, ToneGenerator, BlackWhite[ 12];
+extern	EventRecord				theEvent;
+extern	DialogPtr				SampleDlog[ 65], AHelpDlog, theProgressDia;
+extern	Boolean					PianoRecording, QuicktimeInstruAvailable, DragManagerUse;
+extern	RGBColor				theColor;
+extern	MenuHandle				NewSoundMenu;
+extern	Cursor					HandCrsr, beamCrsr, pencilCrsr, CHandCrsr;
+extern	WindowPtr				oldWindow;
+extern	Movie					QTMovie;
+extern	Boolean					gMovieQuicktime;
+extern	FSSpec					QTFile;
 
-	static	DragSendDataUPP			mySendDataUPP;
-	static	DragTrackingHandlerUPP	MyTrackingHandlerUPP;
-	static	DragReceiveHandlerUPP	MyReceiveDropHandlerUPP;
-	
-			DialogPtr				InstruListDlog;
+static	PrivateList				myList;
+
+static 	Rect					ButtonRect;
+static	ControlHandle			LoadBut, DelBut, SaveBut, RecBut, OpenBut, FlipBut, PlayBut;
+
+static	short					DestIns, DestSamp, DragIns, DragSamp;
+static	Boolean					canAcceptDrag;
+static	PixMapHandle			mySABut, OP, CP, OPB, CPB, ArrowPix;
+static	Boolean					*SAButState, *InstrUsed;
+
+static	DragSendDataUPP			mySendDataUPP;
+static	DragTrackingHandlerUPP	MyTrackingHandlerUPP;
+static	DragReceiveHandlerUPP	MyReceiveDropHandlerUPP;
+
+		DialogPtr				InstruListDlog;
 
 OSErr			CloseSampleData( DialogPtr	TheDia);
 void			ShowSampleData( DialogPtr	TheDia);

@@ -57,11 +57,11 @@ void PLRect( Rect *dstRect, Point cell, PrivateList	*aL)
 
 void PLUpdateItem( Point cell, PrivateList *aL)
 {
-Rect			aRect;
-GrafPtr		savePort;
-RgnHandle		saveClipRgn;
-RGBColor		color;
-
+	Rect		aRect;
+	GrafPtr		savePort;
+	RgnHandle	saveClipRgn;
+	RGBColor	color;
+	
 	if( cell.v < 0 ) cell.v = 0;
 	if( cell.h < 0 ) cell.h = 0;
 	if( cell.v >= aL->maxY ) cell.v = aL->maxY-1;

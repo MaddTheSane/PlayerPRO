@@ -2,12 +2,13 @@
 #include "GetFileIcon.h"
 
 //TODO: rewrite to handle icns icons?
-typedef struct getIconData { OSType		fileCreator;
-                             OSType		fileType;
-                             short		DTRefNum;
-                            } GetIconData;
+typedef struct getIconData { 
+	OSType		fileCreator;
+	OSType		fileType;
+	short		DTRefNum;
+} GetIconData;
 
-extern Boolean IsVolEjected( short vRefNum );
+extern Boolean IsVolEjected(short vRefNum);
 extern OSErr GetCustomFileIcon(FSSpec *filespec, IconSelectorValue iconSelector, Handle *theSuite);
 extern OSErr GetNormalFileIcon(CInfoPBRec *cpb, IconSelectorValue iconSelector, Handle *theSuite);
 extern void GetFinderFilename(StringPtr _finderFilename);

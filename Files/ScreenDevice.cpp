@@ -67,17 +67,17 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 	RgnHandle grayRgn;
 	grayRgn = ::LMGetGrayRgn();
 	mMenuBarHeight	= ::LMGetMBarHeight();
-	::LMSetMBarHeight( 0 );
+	::LMSetMBarHeight(0);
 	r = qd.screenBits.bounds;
 	r.bottom = r.top + mMenuBarHeight;
 	mMenuBarRgn	= ::NewRgn();
-	::RectRgn( mMenuBarRgn, &r );
-	::UnionRgn( grayRgn, mMenuBarRgn, grayRgn );
+	::RectRgn(mMenuBarRgn, &r );
+	::UnionRgn(grayRgn, mMenuBarRgn, grayRgn );
 	
 	// Fetch a ptr to the device given by inDispNum
-	if ( ::DMGetGDeviceByDisplayID( inDispNum, &theGDevice, false ) != noErr )
+	if ( ::DMGetGDeviceByDisplayID(inDispNum, &theGDevice, false ) != noErr )
 		theGDevice = NULL;
-	if ( ! theGDevice )
+	if ( !theGDevice )
 		theGDevice = ::GetMainDevice();
 	
 	// Use RequestVideo.c to get the Disp Mgr to do what we want
@@ -89,20 +89,20 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 	requestRec.displayMode		=	nil;					// must init to nil
 	requestRec.depthMode		=	nil;					// must init to nil
 	requestRec.requestFlags		=	0;						
-	if ( RVRequestVideoSetting( &requestRec ) == noErr ) {
-		if ( RVSetVideoRequest( &requestRec ) == noErr ) {
+	if (RVRequestVideoSetting(&requestRec) == noErr ) {
+		if (RVSetVideoRequest(&requestRec) == noErr ) {
 			outSize.h = requestRec.availHorizontal;
 			outSize.v = requestRec.availVertical;
 			ok = true;
 		}
 	}
 	
-	if ( ok ) {
+	if (ok) {
 		
 		// Make the window cover the device
-		::MoveWindow( inWin, 0, 0, true );
-		::SizeWindow( inWin, outSize.h, outSize.v, true ); 
-		::ShowWindow( inWin );
+		::MoveWindow(inWin, 0, 0, true);
+		::SizeWindow(inWin, outSize.h, outSize.v, true); 
+		::ShowWindow(inWin);
 		
 		// Setup the window as the main grafport
 		mContextRef = inWin;
@@ -110,7 +110,7 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 		mY			= outSize.v;
 		::SetRect( &r, 0, 0, mX, mY+2 );
 		::NewGWorld( &mWorld, inBitDepth, &r, NULL, NULL, useTempMem );
-		mBM = ::GetGWorldPixMap( mWorld );
+		mBM = ::GetGWorldPixMap(mWorld);
 		mBytesPerRow	= (**mBM).rowBytes & 0xFFF;
 		mBytesPerPix	= (**mBM).pixelSize / 8;
 	}
@@ -130,13 +130,13 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 		// Look for smallest size w/ for given depth
 		while ( ! err && ref ) {
 			err = DSpContext_GetAttributes( ref, &context );
-			if ( ! err && ref ) {
+			if (!err && ref) {
 				if ( context.displayBestDepth == inBitDepth ) {
-					if ( context.displayWidth == ioSize.h && context.displayHeight == ioSize.v ) {
+					if (context.displayWidth == ioSize.h && context.displayHeight == ioSize.v ) {
 						mContextRef = ref;
 						isInitted = true; 
-						break; }
-					else if ( context.displayWidth <= bestWidth && context.displayWidth >= 640 ) {
+						break; 
+					} else if (context.displayWidth <= bestWidth && context.displayWidth >= 640) {
 						mContextRef = ref;
 						isInitted = true;
 						bestWidth = context.displayWidth;
@@ -144,7 +144,7 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 				}
 				
 				// Try the next context for this display
-				err = ::DSpGetNextContext( ref, &ref );
+				err = ::DSpGetNextContext(ref, &ref);
 			}
 		}
 		
@@ -154,15 +154,15 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 			return false;
 		}
 		
-		::DSpContext_GetAttributes( mContextRef, &context );
+		::DSpContext_GetAttributes(mContextRef, &context);
 		ioSize.h = context.displayWidth;
 		ioSize.v = context.displayHeight;
 		
-		context.contextOptions 			= kDSpContextOption_DontSyncVBL;
-		context.frequency					= inFreq;
-		context.reserved1					= 0;
-		context.reserved2					= 0;
-		context.gameMustConfirmSwitch		= false;
+		context.contextOptions			= kDSpContextOption_DontSyncVBL;
+		context.frequency				= inFreq;
+		context.reserved1				= 0;
+		context.reserved2				= 0;
+		context.gameMustConfirmSwitch	= false;
 		context.reserved3[0]	= 0;
 		context.reserved3[1]	= 0;
 		context.reserved3[2]	= 0;
@@ -171,24 +171,24 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 		context.pageCount		= 1;
 		context.colorNeeds		= kDSpColorNeeds_Require;
 		
-		RGBColor back = { 0, 0, 0 };
-		::DSpSetBlankingColor( &back );
+		RGBColor back = {0, 0, 0};
+		::DSpSetBlankingColor(&back);
 		
 		// Try to reserve the device
-		err = ::DSpContext_Reserve( mContextRef, &context );
-		if ( ! err ) {
+		err = ::DSpContext_Reserve(mContextRef, &context);
+		if (!err) {
 			
 			// If no errors, 'activate' the device into fullscreen
-			::DSpContext_FadeGammaOut( mContextRef, NULL );
+			::DSpContext_FadeGammaOut(mContextRef, NULL);
 			::HideCursor();
 			
-			err = ::DSpContext_SetState( mContextRef, kDSpContextState_Active );
-			::DSpContext_FadeGamma( mContextRef, 100, NULL );
+			err = ::DSpContext_SetState(mContextRef, kDSpContextState_Active);
+			::DSpContext_FadeGamma(mContextRef, 100, NULL);
 			
-			if ( err && err != kDSpConfirmSwitchWarning ) {
-				::DSpContext_Release( mContextRef );
-				::DSpShutdown(); }
-			else {
+			if (err && err != kDSpConfirmSwitchWarning) {
+				::DSpContext_Release(mContextRef);
+				::DSpShutdown(); 
+			} else {
 				ok = true;
 				
 				mFS_DC = NULL;
@@ -198,7 +198,7 @@ bool ScreenDevice::EnterFullscreen( long inDispID, Point& ioSize, int inBitDepth
 	
 #endif
 	
-	if ( ok )
+	if (ok)
 		::HideCursor();
 	else
 		mContextRef = 0;

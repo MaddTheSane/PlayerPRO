@@ -1152,17 +1152,15 @@ void DoCOLOR( short	itemHit)
 			
 			GetColor( where, "\pSelect a new color", &thePrefs.tracksColor[ myPt.h + 8*myPt.v], &thePrefs.tracksColor[ myPt.h + 8*myPt.v]);
 			
-			InitCOLOR( myPt.h + 8*myPt.v);
+			InitCOLOR(myPt.h + 8*myPt.v);
 			
-			if( ClassicDlog != NULL)
-			{
-				SetPortDialogPort( ClassicDlog);
-				GetPortBounds( GetDialogPort( ClassicDlog), &caRect);
-				InvalWindowRect( GetDialogWindow( ClassicDlog), &caRect);
+			if (ClassicDlog != NULL) {
+				SetPortDialogPort(ClassicDlog);
+				GetPortBounds(GetDialogPort(ClassicDlog), &caRect);
+				InvalWindowRect(GetDialogWindow(ClassicDlog), &caRect);
 			}
 			
-			if( EditorDlog != NULL)
-			{
+			if (EditorDlog != NULL) {
 				SetPortDialogPort( EditorDlog);
 				GetPortBounds( GetDialogPort( EditorDlog), &caRect);
 				InvalWindowRect( GetDialogWindow( EditorDlog), &caRect);

@@ -45,7 +45,6 @@ void SwapPrefs(Prefs *swapPrefs)
 	swapPrefs->Mz = EndianS32_BtoN(swapPrefs->Mz);
 	swapPrefs->firstStart = EndianU32_BtoN(swapPrefs->firstStart);
 	for (i=0; i < MAXTRACK; i++) {
-		//FIXME: Is this the right way to do this?
 		swapPrefs->tracksColor[i].red = EndianU16_BtoN(swapPrefs->tracksColor[i].red);
 		swapPrefs->tracksColor[i].green = EndianU16_BtoN(swapPrefs->tracksColor[i].green);
 		swapPrefs->tracksColor[i].blue = EndianU16_BtoN(swapPrefs->tracksColor[i].blue);
