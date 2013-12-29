@@ -8,8 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PianoPreferencesController : NSViewController {
-
-}
+@interface PianoPreferencesController : NSViewController
 
 @end

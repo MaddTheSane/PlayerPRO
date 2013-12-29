@@ -14,6 +14,13 @@ static const TagCoupling TrackHeightCoupling[] = {{100, 1}, {110, 2}, {120, 3}, 
 	{160, 6}, {180, 7}, {200, 8}};
 
 @implementation ClassicEditorPreferenceController
+@synthesize markersCheck;
+@synthesize markersLoopValue;
+@synthesize markersOffsetValue;
+@synthesize notesLengthCheck;
+@synthesize tempoNumberValue;
+@synthesize tempoUnitValue;
+@synthesize trackHeightButton;
 
 -(id)init
 {

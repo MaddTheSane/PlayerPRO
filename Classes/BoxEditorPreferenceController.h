@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @interface BoxEditorPreferenceController : NSViewController
-
 @property (weak) IBOutlet NSButton *notesCheck;
 @property (weak) IBOutlet NSButton *octaveCheck;
 @property (weak) IBOutlet NSFormCell *loopField;

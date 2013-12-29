@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @interface MiscPreferenceController : NSViewController
-
 @property (weak) IBOutlet NSButtonCell *addExt;
 @property (weak) IBOutlet NSButtonCell *madCompression;
 @property (weak) IBOutlet NSButtonCell *noLoadMixerFromFile;

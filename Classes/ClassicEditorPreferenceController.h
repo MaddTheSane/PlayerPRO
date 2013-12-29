@@ -8,16 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ClassicEditorPreferenceController : NSViewController {
-
-	IBOutlet NSTextField *tempoUnitValue;
-	IBOutlet NSTextField *tempoNumberValue;
-	IBOutlet NSTextField *markersLoopValue;
-	IBOutlet NSTextField *markersOffsetValue;
-	IBOutlet NSButton *markersCheck;
-	IBOutlet NSButton *notesLengthCheck;
-	IBOutlet NSPopUpButton *trackHeightButton;
-}
+@interface ClassicEditorPreferenceController : NSViewController
+@property (weak) IBOutlet NSTextField *tempoUnitValue;
+@property (weak) IBOutlet NSTextField *tempoNumberValue;
+@property (weak) IBOutlet NSTextField *markersLoopValue;
+@property (weak) IBOutlet NSTextField *markersOffsetValue;
+@property (weak) IBOutlet NSButton *markersCheck;
+@property (weak) IBOutlet NSButton *notesLengthCheck;
+@property (weak) IBOutlet NSPopUpButton *trackHeightButton;
 
 - (IBAction)changeTrackHeight:(id)sender;
 - (IBAction)toggleNoteLength:(id)sender;

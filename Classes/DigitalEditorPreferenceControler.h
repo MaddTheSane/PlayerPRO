@@ -8,30 +8,29 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface DigitalEditorPreferenceControler : NSViewController {
+@interface DigitalEditorPreferenceControler : NSViewController
+@property (weak) IBOutlet NSButton *PPDEEffect;
+@property (weak) IBOutlet NSButton *PPDENote;
+@property (weak) IBOutlet NSButton *PPDEInstrument;
+@property (weak) IBOutlet NSButton *PPDEArgument;
+@property (weak) IBOutlet NSButton *PPDEVolume;
+	
+@property (weak) IBOutlet NSButton *PPDEMarkerSelect;
+@property (weak) IBOutlet NSTextField *PPDEMarkerOffset;
+@property (weak) IBOutlet NSTextField *PPDEMarkerLoop;
+@property (weak) IBOutlet NSColorWell *PPDEMarkerColor;
+	
+	
+@property (weak) IBOutlet NSButtonCell *PPDEMouseClickControl;
+@property (weak) IBOutlet NSButtonCell *PPDEMouseClickShift;
+@property (weak) IBOutlet NSButtonCell *PPDEMouseClickCommand;
+@property (weak) IBOutlet NSButtonCell *PPDEMouseClickOption;
+	
+@property (weak) IBOutlet NSMatrix *PPDELineHeightMatrix;
+@property (weak) IBOutlet NSMatrix *PPDEMusicTraceMatrix;
+@property (weak) IBOutlet NSMatrix *PPDEPatternWrappingMatrix;
+@property (weak) IBOutlet NSMatrix *PPDEDragAsMatrix;
 
-	IBOutlet NSButton *PPDEEffect;
-	IBOutlet NSButton *PPDENote;
-	IBOutlet NSButton *PPDEInstrument;
-	IBOutlet NSButton *PPDEArgument;
-	IBOutlet NSButton *PPDEVolume;
-	
-	IBOutlet NSButton *PPDEMarkerSelect;
-	IBOutlet NSTextField *PPDEMarkerOffset;
-	IBOutlet NSTextField *PPDEMarkerLoop;
-	IBOutlet NSColorWell *PPDEMarkerColor;
-	
-	
-	IBOutlet NSButtonCell *PPDEMouseClickControl;
-	IBOutlet NSButtonCell *PPDEMouseClickShift;
-	IBOutlet NSButtonCell *PPDEMouseClickCommand;
-	IBOutlet NSButtonCell *PPDEMouseClickOption;
-	
-	IBOutlet NSMatrix *PPDELineHeightMatrix;
-	IBOutlet NSMatrix *PPDEMusicTraceMatrix;
-	IBOutlet NSMatrix *PPDEPatternWrappingMatrix;
-	IBOutlet NSMatrix *PPDEDragAsMatrix;
-}
 - (IBAction)cellInformationCheckClicked:(id)sender;
 - (IBAction)markersCheckClicked:(id)sender;
 - (IBAction)mouseCheckClicked:(id)sender;

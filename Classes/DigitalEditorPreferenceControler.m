@@ -12,6 +12,23 @@
 
 
 @implementation DigitalEditorPreferenceControler
+@synthesize PPDEArgument;
+@synthesize PPDEDragAsMatrix;
+@synthesize PPDEEffect;
+@synthesize PPDEInstrument;
+@synthesize PPDELineHeightMatrix;
+@synthesize PPDEMarkerColor;
+@synthesize PPDEMarkerLoop;
+@synthesize PPDEMarkerOffset;
+@synthesize PPDEMarkerSelect;
+@synthesize PPDEMouseClickCommand;
+@synthesize PPDEMouseClickControl;
+@synthesize PPDEMouseClickOption;
+@synthesize PPDEMouseClickShift;
+@synthesize PPDEMusicTraceMatrix;
+@synthesize PPDENote;
+@synthesize PPDEPatternWrappingMatrix;
+@synthesize PPDEVolume;
 
 -(id)init
 {

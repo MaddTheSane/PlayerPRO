@@ -8,8 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface MidiHardwarePreferenceController : NSViewController {
-
-}
+@interface MidiHardwarePreferenceController : NSViewController
 
 @end
