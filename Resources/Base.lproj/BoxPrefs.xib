@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1090" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
@@ -39,7 +39,7 @@
                                     <action selector="changeMarkerCheck:" target="-2" id="23"/>
                                 </connections>
                             </button>
-                            <form verticalHuggingPriority="750" mode="track" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lFc-Uy-WDi">
+                            <form verticalHuggingPriority="750" mode="track" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lFc-Uy-WDi">
                                 <rect key="frame" x="18" y="14" width="208" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -102,6 +102,7 @@
                 </button>
             </subviews>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="16" secondAttribute="bottom" constant="20" symbolic="YES" id="FC8-YP-8W1"/>
                 <constraint firstItem="14" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="8" symbolic="YES" id="LpM-vm-vq9"/>
                 <constraint firstItem="3" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="PQ1-IP-phy"/>
                 <constraint firstItem="16" firstAttribute="leading" secondItem="14" secondAttribute="leading" id="X5f-HO-KdJ"/>
