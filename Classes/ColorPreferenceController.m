@@ -36,28 +36,19 @@ PPCOLORPOPULATE();
 - (IBAction)changeColorWell:(id)sender
 {
 	NSString *keyToChange = nil;
-	
-	if (sender == colorWell1) {
-		keyToChange = PPCColor1;
-	} else if (sender == colorWell2){
-		keyToChange = PPCColor2;
-	} else if (sender == colorWell3){
-		keyToChange = PPCColor3;
-	} else if (sender == colorWell4){
-		keyToChange = PPCColor4;
-	} else if (sender == colorWell5){
-		keyToChange = PPCColor5;
-	} else if (sender == colorWell6){
-		keyToChange = PPCColor6;
-	} else if (sender == colorWell7){
-		keyToChange = PPCColor7;
-	} else if (sender == colorWell8){
-		keyToChange = PPCColor8;
+#define PPCOLOR(num) } else if (sender == colorWell ## num) \
+{\
+keyToChange = PPCColor ## num
+
+	if (sender == nil) {
+		return;
+		PPCOLORPOPULATE();
 	} else {
 		return;
 	}
 	[[NSUserDefaults standardUserDefaults] setObject:[[sender color] PPencodeColor] forKey:keyToChange];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPColorsDidChange object:self];
+#undef PPCOLOR
 }
 
 @end
