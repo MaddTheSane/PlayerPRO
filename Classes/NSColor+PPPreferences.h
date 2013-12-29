@@ -11,7 +11,17 @@
 @interface NSColor (PPPreferences) 
 - (NSData *)PPencodeColor;
 + (NSColor *)PPDecodeColorWithData:(NSData *)theData;
++ (NSColor *)PPColorFromQuickDrawColor:(RGBColor)qdColor;
 @end
+
+CF_INLINE RGBColor makeQDRGB(unsigned short red, unsigned short green, unsigned short blue)
+{
+	RGBColor toRet;
+	toRet.red = red;
+	toRet.green = green;
+	toRet.blue = blue;
+	return toRet;
+}
 
 #define PPCOLORPOPULATE() PPCOLOR(1); PPCOLOR(2); PPCOLOR(3); PPCOLOR(4); \
 PPCOLOR(5); PPCOLOR(6); PPCOLOR(7); PPCOLOR(8); PPCOLOR(9); PPCOLOR(10); \

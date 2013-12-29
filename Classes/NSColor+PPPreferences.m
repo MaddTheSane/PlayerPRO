@@ -21,4 +21,9 @@
 	return [NSKeyedUnarchiver unarchiveObjectWithData:theData];
 }
 
++ (NSColor *)PPColorFromQuickDrawColor:(RGBColor)qdColor
+{
+	return [self colorWithCalibratedRed:qdColor.red / (CGFloat)USHRT_MAX green:qdColor.green / (CGFloat)USHRT_MAX blue:qdColor.blue / (CGFloat)USHRT_MAX alpha:1];
+}
+
 @end
