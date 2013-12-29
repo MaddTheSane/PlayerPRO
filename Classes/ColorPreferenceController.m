@@ -10,8 +10,11 @@
 #import "UserDefaultKeys.h"
 #import "NSColor+PPPreferences.h"
 
-
 @implementation ColorPreferenceController
+
+#define PPCOLOR(num) @synthesize colorWell ## num
+PPCOLORPOPULATE();
+#undef PPCOLOR
 
 -(id)init
 {
@@ -24,14 +27,10 @@
 -(void)awakeFromNib
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[colorWell1 setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor1]]];
-	[colorWell2 setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor2]]];
-	[colorWell3 setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor3]]];
-	[colorWell4 setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor4]]];
-	[colorWell5 setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor5]]];
-	[colorWell6 setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor6]]];
-	[colorWell7 setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor7]]];
-	[colorWell8 setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor8]]];
+#define PPCOLOR(num) if (colorWell ## num)\
+[colorWell ## num setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor ## num]]]
+	PPCOLORPOPULATE();
+#undef PPCOLOR
 }
 
 - (IBAction)changeColorWell:(id)sender
