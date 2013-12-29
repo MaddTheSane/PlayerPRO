@@ -32,23 +32,9 @@ __weak PPLibrary *globalMadLib = nil;
 
 #define PPPRIVINLINE static __inline__ __attribute__((always_inline))
 
-PPPRIVINLINE NSColor *PPColorFromQuickDrawColor(RGBColor qdColor)
-{
-	return [NSColor colorWithCalibratedRed:qdColor.red / (CGFloat)USHRT_MAX green:qdColor.green / (CGFloat)USHRT_MAX blue:qdColor.blue / (CGFloat)USHRT_MAX alpha:1];
-}
-
-PPPRIVINLINE RGBColor makeQDRGB(unsigned short red, unsigned short green, unsigned short blue)
-{
-	RGBColor toRet;
-	toRet.red = red;
-	toRet.green = green;
-	toRet.blue = blue;
-	return toRet;
-}
-
 PPPRIVINLINE NSColor *makeNSRGB(unsigned short red, unsigned short green, unsigned short blue)
 {
-	return PPColorFromQuickDrawColor(makeQDRGB(red, green, blue));
+	return [NSColor colorWithCalibratedRed:red / (CGFloat)USHRT_MAX green:green / (CGFloat)USHRT_MAX blue:blue / (CGFloat)USHRT_MAX alpha:1];
 }
 
 static void CocoaDebugStr( short line, const char *file, const char *text)
