@@ -1989,15 +1989,15 @@
 		5533410310BB5368005208D1 /* XM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = XM.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5533410410BB5368005208D1 /* XM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XM.h; sourceTree = "<group>"; };
 		5533411110BB547D005208D1 /* MOD.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MOD.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		5533411210BB547D005208D1 /* MOD-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MOD-Info.plist"; path = "../../../MOD-Info.plist"; sourceTree = "<group>"; };
+		5533411210BB547D005208D1 /* MOD-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MOD-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5533415310BB572C005208D1 /* 669.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 669.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		5533415710BB572C005208D1 /* 669-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "669-Info.plist"; path = "../../../669-Info.plist"; sourceTree = "<group>"; };
+		5533415710BB572C005208D1 /* 669-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "669-Info.plist"; sourceTree = SOURCE_ROOT; };
 		553341D310BB5FE0005208D1 /* AMF.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AMF.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		553341D410BB5FE0005208D1 /* AMF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AMF-Info.plist"; path = "../../../AMF-Info.plist"; sourceTree = "<group>"; };
+		553341D410BB5FE0005208D1 /* AMF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AMF-Info.plist"; sourceTree = SOURCE_ROOT; };
 		553341E910BB5FFA005208D1 /* DMF.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DMF.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		553341EA10BB5FFA005208D1 /* DMF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DMF-Info.plist"; path = "../../../DMF-Info.plist"; sourceTree = "<group>"; };
+		553341EA10BB5FFA005208D1 /* DMF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DMF-Info.plist"; sourceTree = SOURCE_ROOT; };
 		553341FC10BB600A005208D1 /* IT.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IT.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		553341FD10BB600A005208D1 /* IT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "IT-Info.plist"; path = "../../../IT-Info.plist"; sourceTree = "<group>"; };
+		553341FD10BB600A005208D1 /* IT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IT-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5533600111EBC65600525CAF /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Universal.xcconfig; sourceTree = "<group>"; };
 		553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PPCPlugs.xcconfig; sourceTree = "<group>"; };
@@ -2052,7 +2052,7 @@
 		554E104C10D6C79E00BB619C /* QuicktimeGeneric.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = QuicktimeGeneric.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E104D10D6C79E00BB619C /* snd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = snd.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E104E10D6C79E00BB619C /* snd.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = snd.r; sourceTree = "<group>"; };
-		554E105010D6C79E00BB619C /* SndUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SndUtils.c; path = "App Plug-in Code/SndUtils.c"; sourceTree = "<group>"; };
+		554E105010D6C79E00BB619C /* SndUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SndUtils.c; sourceTree = "<group>"; };
 		554E105110D6C79E00BB619C /* SoundDesignerII.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SoundDesignerII.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E105410D6C79E00BB619C /* System7.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = System7.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E105510D6C79E00BB619C /* System7.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = System7.r; sourceTree = "<group>"; };
@@ -2171,30 +2171,30 @@
 		558328E518553B0B00DFACE4 /* PPMusicListDragClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicListDragClass.h; sourceTree = "<group>"; };
 		558328E618553B0B00DFACE4 /* PPMusicListDragClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMusicListDragClass.m; sourceTree = "<group>"; };
 		5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADfg.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		5586871010BF5C4700FCC24D /* MADfg-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MADfg-Info.plist"; path = "../../../MADfg-Info.plist"; sourceTree = "<group>"; };
+		5586871010BF5C4700FCC24D /* MADfg-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MADfg-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADH.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		5586871F10BF5C4A00FCC24D /* MADH-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MADH-Info.plist"; path = "../../../MADH-Info.plist"; sourceTree = "<group>"; };
+		5586871F10BF5C4A00FCC24D /* MADH-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MADH-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5586872D10BF5C4E00FCC24D /* MADI.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADI.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		5586872E10BF5C4E00FCC24D /* MADI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MADI-Info.plist"; path = "../../../MADI-Info.plist"; sourceTree = "<group>"; };
+		5586872E10BF5C4E00FCC24D /* MADI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MADI-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5586874D10BF5D3700FCC24D /* MED.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MED.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		5586874E10BF5D3700FCC24D /* MED-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MED-Info.plist"; path = "../../../MED-Info.plist"; sourceTree = "<group>"; };
+		5586874E10BF5D3700FCC24D /* MED-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MED-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5586876210BF5E4D00FCC24D /* MTM.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MTM.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		5586876310BF5E4D00FCC24D /* MTM-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MTM-Info.plist"; path = "../../../MTM-Info.plist"; sourceTree = "<group>"; };
+		5586876310BF5E4D00FCC24D /* MTM-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MTM-Info.plist"; sourceTree = SOURCE_ROOT; };
 		558687DE10BF620500FCC24D /* Okta.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Okta.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		558687DF10BF620500FCC24D /* Okta-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Okta-Info.plist"; path = "../../../Okta-Info.plist"; sourceTree = "<group>"; };
+		558687DF10BF620500FCC24D /* Okta-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Okta-Info.plist"; sourceTree = SOURCE_ROOT; };
 		558687FA10BF624E00FCC24D /* S3M.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = S3M.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		558687FB10BF624E00FCC24D /* S3M-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "S3M-Info.plist"; path = "../../../S3M-Info.plist"; sourceTree = "<group>"; };
+		558687FB10BF624E00FCC24D /* S3M-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "S3M-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5586881B10BF62F100FCC24D /* ULT.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ULT.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		5586881C10BF62F100FCC24D /* ULT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "ULT-Info.plist"; path = "../../../ULT-Info.plist"; sourceTree = "<group>"; };
+		5586881C10BF62F100FCC24D /* ULT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ULT-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5586882910BF62F500FCC24D /* UMX.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UMX.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		5586882D10BF62F500FCC24D /* UMX-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "UMX-Info.plist"; path = "../../../UMX-Info.plist"; sourceTree = "<group>"; };
+		5586882D10BF62F500FCC24D /* UMX-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UMX-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5586883D10BF62FB00FCC24D /* XM.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XM.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		5586883E10BF62FB00FCC24D /* XM-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "XM-Info.plist"; path = "../../../XM-Info.plist"; sourceTree = "<group>"; };
+		5586883E10BF62FB00FCC24D /* XM-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XM-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5586889710BF67F100FCC24D /* MIDI.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MIDI.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		5586889810BF67F100FCC24D /* MIDI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MIDI-Info.plist"; path = "../../../../MIDI-Info.plist"; sourceTree = "<group>"; };
-		55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = Midi_Plug.rsrc.r; path = "MADDriver.source/MADDriver.Source/Import-Export/Midi_Plug.rsrc.r"; sourceTree = SOURCE_ROOT; };
+		5586889810BF67F100FCC24D /* MIDI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MIDI-Info.plist"; sourceTree = SOURCE_ROOT; };
+		55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = Midi_Plug.rsrc.r; path = ../Midi_Plug.rsrc.r; sourceTree = "<group>"; };
 		55868A6710BFB46100FCC24D /* APPL.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APPL.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		55868A6810BFB46100FCC24D /* APPL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "APPL-Info.plist"; path = "../../../APPL-Info.plist"; sourceTree = "<group>"; };
+		55868A6810BFB46100FCC24D /* APPL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "APPL-Info.plist"; sourceTree = SOURCE_ROOT; };
 		55879F7C164CA63D009068D5 /* MAD.MADK */ = {isa = PBXFileReference; lastKnownFileType = file; path = MAD.MADK; sourceTree = "<group>"; };
 		55879F7D164CA63D009068D5 /* PPPlay.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PPPlay.c; sourceTree = "<group>"; };
 		55879F80164CA63D009068D5 /* Read.TXT */ = {isa = PBXFileReference; lastKnownFileType = text; lineEnding = 2; path = Read.TXT; sourceTree = "<group>"; };
@@ -3891,7 +3891,7 @@
 				5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */,
 			);
 			name = "App Plug-in code";
-			path = "../MADDriver.source/MADDriver.Source/App Plug-in Code";
+			path = "App Plug-in Code";
 			sourceTree = "<group>";
 		};
 		55BE998517978BB100D6DECC /* Spotlight Plug-in */ = {
@@ -4129,7 +4129,7 @@
 				55868B1810BFC0BB00FCC24D /* Main Driver Source */,
 			);
 			name = MADDriver.Source;
-			path = MADDriver.source/MADDriver.Source;
+			path = MADDriver.source;
 			sourceTree = "<group>";
 		};
 		88E0C4950C2F21E500D6C081 /* Frameworks */ = {
@@ -9284,7 +9284,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MADDriver.source/MADDriver.Source/Import-Export/MIDI Folder/MIDI.pch";
+				GCC_PREFIX_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI.pch";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 			};
 			name = Release;
@@ -9297,7 +9297,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MADDriver.source/MADDriver.Source/Import-Export/MIDI Folder/MIDI.pch";
+				GCC_PREFIX_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI.pch";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				ONLY_ACTIVE_ARCH = NO;
 			};
@@ -9687,7 +9687,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MADDriver.source/MADDriver.Source/PlayerPROCore-OSX.pch";
+				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NOEXPORTFUNCS=1",
 					"$(inherited)",
@@ -9715,7 +9715,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MADDriver.source/MADDriver.Source/PlayerPROCore-OSX.pch";
+				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NOEXPORTFUNCS=1",
 					"$(inherited)",

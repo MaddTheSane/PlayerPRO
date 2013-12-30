@@ -268,7 +268,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	DetachResource(locHand);
 	CloseResFile(refNum);
 	
-	HLock( aHandle);
+	HLock(aHandle);
 	theNo = *((UInt16*)(*aHandle));          // number of musics...
 	PPBE16(&theNo);
 	
@@ -311,8 +311,8 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 			lostMusicCount++;
 		}
 	}
-	HUnlock( aHandle);
-	DisposeHandle( aHandle);
+	HUnlock(aHandle);
+	DisposeHandle(aHandle);
 	
 	self.selectedMusic = (location >= [newArray count]) ? location : -1;
 	

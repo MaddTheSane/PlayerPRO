@@ -11,5 +11,5 @@ INFOPLIST_FILE = ${PRODUCT_NAME}-Info.plist
 GENERATE_PKGINFO_FILE = YES
 SKIP_INSTALL = YES
 DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
-EXPORTED_SYMBOLS_FILE = MADDriver.source/MADDriver.Source/Import-Export/PlugExports-Mac.exp
+EXPORTED_SYMBOLS_FILE = MADDriver.source/Import-Export/PlugExports-Mac.exp
 WRAPPER_EXTENSION = ppimpexp
