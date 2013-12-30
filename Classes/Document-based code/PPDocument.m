@@ -328,40 +328,6 @@ static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
 	return mutData;
 }
 
-- (NSData*)rawBESoundData:(MADDriverSettings*)theSet
-{
-#ifdef __LITTLE_ENDIAN__
-	NSMutableData *rsd = [self rawSoundData:theSet];
-	if (theSet->outPutBits == 16) {
-		size_t sndSize = [rsd length];
-		short *bePtr = [rsd mutableBytes];
-		dispatch_apply(sndSize / 2, dispatch_get_global_queue(0, 0), ^(size_t i) {
-			PPBE16(&bePtr[i]);
-		});
-	}
-	return rsd;
-#else
-	return [self rawSoundData:theSet];
-#endif
-}
-
-- (NSData*)rawLESoundData:(MADDriverSettings*)theSet
-{
-#ifdef __BIG_ENDIAN__
-	NSMutableData *rsd = [self rawSoundData:theSet];
-	if (theSet->outPutBits == 16) {
-		size_t sndSize = [rsd length];
-		short *lePtr = [rsd mutableBytes];
-		dispatch_apply(sndSize / 2, dispatch_get_global_queue(0, 0), ^(size_t i) {
-			PPLE16(&lePtr[i]);
-		});
-	}
-	return rsd;
-#else
-	return [self rawSoundData:theSet];
-#endif
-}
-
 #import "getAIFF.i"
 
 typedef struct {

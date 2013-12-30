@@ -162,7 +162,11 @@ end:
 
 - (OSErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp
 {
-	return MADMusicSaveCFURL(currentMusic, (__bridge CFURLRef)tosave, mad1Comp);
+	OSErr retErr;
+	if ((retErr = MADMusicSaveCFURL(currentMusic, (__bridge CFURLRef)tosave, mad1Comp)) == noErr) {
+		currentMusic->hasChanged = false;
+	}
+	return retErr;
 }
 
 - (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib

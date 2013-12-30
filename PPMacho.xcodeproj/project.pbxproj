@@ -321,6 +321,7 @@
 		5574BCF9169645FE00CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5574BCFC169649CB00CF3C37 /* Propagate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11FD10D6F3E100BB619C /* Propagate.plugin */; };
 		5574BCFD16964D1900CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55771DBF1871482D00AED8DC /* PPTimeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55323352167687A200076604 /* PPTimeFormatter.m */; };
 		5578C48217D9E8560057D11B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		5578C48817D9E8560057D11B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5578C48617D9E8560057D11B /* InfoPlist.strings */; };
 		5578C48A17D9E8560057D11B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C48917D9E8560057D11B /* main.m */; };
@@ -6217,6 +6218,7 @@
 			files = (
 				559C871917ECD8B400E4E13C /* PPiSettingsDetailController.m in Sources */,
 				555776B917EBF8FF0019D008 /* PPiMasterViewController.m in Sources */,
+				55771DBF1871482D00AED8DC /* PPTimeFormatter.m in Sources */,
 				555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */,
 				555776B017EBF8FE0019D008 /* PPiAppDelegate.m in Sources */,
 				555776AC17EBF8FE0019D008 /* main.m in Sources */,

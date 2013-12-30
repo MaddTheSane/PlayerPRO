@@ -2334,6 +2334,7 @@ OSErr MADMusicSaveCString(MADMusic *music, const char *cName, Boolean compressMA
 				inOutCount += music->header->numChn * music->partition[i]->header.size * sizeof(Cmd);
 				PatData *tmpPat = calloc(inOutCount, 1);
 				memcpy(tmpPat, music->partition[i], inOutCount);
+				tmpPat->header.compMode = 'NONE';
 				ByteSwapPatHeader(&tmpPat->header);
 				iWrite(inOutCount, tmpPat, curFile);
 				free(tmpPat);
@@ -2369,8 +2370,8 @@ OSErr MADMusicSaveCString(MADMusic *music, const char *cName, Boolean compressMA
 			if (curData.amp == 16) {
 				short *shortPtr = (short*)dataCopy;
 #ifdef __BLOCKS__
-				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t y) {
-					PPBE16(&shortPtr[y]);
+				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t ll) {
+					PPBE16(&shortPtr[ll]);
 				});
 #else
 				size_t ll;
