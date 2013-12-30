@@ -23,7 +23,7 @@
 // Code based on Mozilla's Mac Eudora importer
 static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 {
-	long handSize = GetHandleSize(aResource);
+	Size handSize = GetHandleSize(aResource);
 	long curSize = 2;
 	
 	if (!aResource)

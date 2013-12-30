@@ -2262,8 +2262,8 @@
 		55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPApp_AppDelegate.h; sourceTree = "<group>"; };
 		55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPApp_AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55D1BD58120FBAC0004FD083 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
-		55D1BD5D120FBE51004FD083 /* PPMusicList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicList.h; sourceTree = "<group>"; };
-		55D1BD5E120FBE51004FD083 /* PPMusicList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPMusicList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		55D1BD5D120FBE51004FD083 /* PPMusicList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPMusicList.h; path = ../Classes/PPMusicList.h; sourceTree = "<group>"; };
+		55D1BD5E120FBE51004FD083 /* PPMusicList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = PPMusicList.m; path = ../Classes/PPMusicList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55D1F15C186648DB00B49607 /* PP32BitBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PP32BitBridge.h; sourceTree = "<group>"; };
 		55D1F15D186648DB00B49607 /* PP32BitBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PP32BitBridge.m; sourceTree = "<group>"; };
 		55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO-PrefixHeader.pch"; sourceTree = "<group>"; };
@@ -3510,7 +3510,7 @@
 				55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */,
 				55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */,
 				55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */,
-				55B7665517E3BDFE004C1D45 /* App Plug-in code */,
+				55B7665517E3BDFE004C1D45 /* App Plug-in Code */,
 			);
 			name = "OS X-specific code";
 			sourceTree = "<group>";
@@ -3758,6 +3758,8 @@
 		5578C48317D9E8560057D11B /* PlayerPRO Player */ = {
 			isa = PBXGroup;
 			children = (
+				55D1BD5D120FBE51004FD083 /* PPMusicList.h */,
+				55D1BD5E120FBE51004FD083 /* PPMusicList.m */,
 				5578C48F17D9E8560057D11B /* AppDelegate.h */,
 				5578C49017D9E8560057D11B /* AppDelegate.m */,
 				5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */,
@@ -3878,7 +3880,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		55B7665517E3BDFE004C1D45 /* App Plug-in code */ = {
+		55B7665517E3BDFE004C1D45 /* App Plug-in Code */ = {
 			isa = PBXGroup;
 			children = (
 				55B7665617E3BF9E004C1D45 /* PPPluginWindowController.h */,
@@ -3890,7 +3892,6 @@
 				5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */,
 				5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */,
 			);
-			name = "App Plug-in code";
 			path = "App Plug-in Code";
 			sourceTree = "<group>";
 		};
@@ -3915,8 +3916,6 @@
 				55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */,
 				55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */,
 				55232AF411FDE5970041A4EC /* PreferenceControllers */,
-				55D1BD5D120FBE51004FD083 /* PPMusicList.h */,
-				55D1BD5E120FBE51004FD083 /* PPMusicList.m */,
 				55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */,
 				55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */,
 				5532334D16766E5700076604 /* PPErrors.h */,
@@ -4009,7 +4008,7 @@
 				55879F7B164CA63D009068D5 /* PPPlay */,
 				5518105510C35A0100ADA9F4 /* Carbon Example */,
 				554E0FDD10D6C79D00BB619C /* App Plug-ins */,
-				88E0C3CE0C2F21DD00D6C081 /* MADDriver.Source */,
+				88E0C3CE0C2F21DD00D6C081 /* MADDriver.source */,
 				551292DE163DD68500C2C639 /* PlayerPROKit */,
 				5573A1051656FAF100A5AECA /* iOSPlayerPROCore */,
 				55BE998517978BB100D6DECC /* Spotlight Plug-in */,
@@ -4122,13 +4121,12 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		88E0C3CE0C2F21DD00D6C081 /* MADDriver.Source */ = {
+		88E0C3CE0C2F21DD00D6C081 /* MADDriver.source */ = {
 			isa = PBXGroup;
 			children = (
 				553340D810BB5368005208D1 /* Import-Export */,
 				55868B1810BFC0BB00FCC24D /* Main Driver Source */,
 			);
-			name = MADDriver.Source;
 			path = MADDriver.source;
 			sourceTree = "<group>";
 		};
