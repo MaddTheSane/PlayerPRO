@@ -100,7 +100,7 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 + (void)initialize
 {
 	static dispatch_once_t oncePrefToken;
-	dispatch_once(&oncePrefToken, ^{\
+	dispatch_once(&oncePrefToken, ^{
 		[[NSUserDefaults standardUserDefaults]
 		 registerDefaults:@{PPSoundOutBits: @16,
 							PPSoundOutRate: @44100,
