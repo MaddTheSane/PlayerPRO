@@ -31,14 +31,12 @@
 __weak PPLibrary *globalMadLib = nil;
 
 #if 0
-#define PPPRIVINLINE static __inline__ __attribute__((always_inline))
-
-PPPRIVINLINE NSColor *makeNSRGB(unsigned short red, unsigned short green, unsigned short blue)
+static inline NSColor *makeNSRGB(unsigned short red, unsigned short green, unsigned short blue)
 {
 	return [NSColor colorWithCalibratedRed:red / (CGFloat)USHRT_MAX green:green / (CGFloat)USHRT_MAX blue:blue / (CGFloat)USHRT_MAX alpha:1];
 }
 #else
-#define makeNSRGB(red, green1, blue1) [NSColor colorWithCalibratedRed:red / (CGFloat)USHRT_MAX green:green1 / (CGFloat)USHRT_MAX blue:blue1 / (CGFloat)USHRT_MAX alpha:1]
+#define makeNSRGB(red1, green1, blue1) [NSColor colorWithCalibratedRed:red1 / (CGFloat)USHRT_MAX green:green1 / (CGFloat)USHRT_MAX blue:blue1 / (CGFloat)USHRT_MAX alpha:1]
 #endif
 
 static void CocoaDebugStr( short line, const char *file, const char *text)
