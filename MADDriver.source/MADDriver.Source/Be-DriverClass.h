@@ -29,18 +29,16 @@
 #define __DRIVERCLASSH__
 
 //	System headers.
-
 #include <MediaDefs.h>
-#include	<SoundPlayer.h>
-#include	<OS.h>
-#include	<Entry.h>
-#include	<File.h>
-#include	<Bitmap.h>
-#include	<NodeInfo.h>
+#include <SoundPlayer.h>
+#include <OS.h>
+#include <Entry.h>
+#include <File.h>
+#include <Bitmap.h>
+#include <NodeInfo.h>
 
 //	Low-level music driver.
-
-#include	"RDriver.h"
+#include "RDriver.h"
 
 //	Debugging.
 //	Set to 1 if debugging messages are needed.
@@ -60,13 +58,13 @@ enum {	/* for "format" */
 //	Inline functions.
 //	Convert an OSType (MacOS) to a string.
 
-static inline	char*	TypeToString( OSType type, char *string )
+static inline char* TypeToString(OSType type, char *string)
 {
-	OSType	*typePtr = (OSType*)string;
+	OSType *typePtr = (OSType*)string;
 	PPBE32(&type);
 	*typePtr = type;
 	string[4] = 0;
-	return	string;
+	return string;
 }
 
 //	Main MADDriver class:
@@ -75,49 +73,53 @@ static inline	char*	TypeToString( OSType type, char *string )
 _EXPORT	class	MADDriverClass
 {
 public:
-
 	//	Flavourful constructors.
 	
 	MADDriverClass();
-	MADDriverClass( MADDriverSettings *init);
+	MADDriverClass(MADDriverSettings *init);
 	
 	//	Destructor.
-	~MADDriverClass();
+	virtual ~MADDriverClass();
 	
 	//	Loading/checking music files.
 	
-	bool	LoadMusic( entry_ref* ref, OSType type, bool playIt = true );
-	bool	LoadMADHMusic( BFile& file, bool playIt = true );
-	bool	ValidMusicFile( entry_ref* ref, OSType* type );
-	bool	ValidMADHFile( BFile& file, OSType* type );
-	BList*	FindMusics( const char *musicPath );
+	bool	LoadMusic(entry_ref* ref, OSType type, bool playIt = true);
+	bool	LoadMADHMusic(BFile& file, bool playIt = true);
+	bool	ValidMusicFile(entry_ref* ref, OSType* type);
+	bool	ValidMADHFile(BFile& file, OSType* type);
+	BList*	FindMusics(const char *musicPath );
 	
 	//	Music control.
-	void			StartMusic( void );
-	void			PauseMusic( void );
-	void			StopMusic( bool discardIt = false );
-	bool			MusicEnd( void );
-	inline	bool	MusicPlaying( void ) 		{	return	musicPlay;	}
-	inline	bool	MusicLoaded( void )			{	return	curMusic != NULL; }
-
+	void			StartMusic(void);
+	void			PauseMusic(void);
+	void			StopMusic(bool discardIt = false);
+	bool			MusicEnd(void);
+	inline	bool	MusicPlaying(void)
+	{
+		return	musicPlay;
+	}
+	inline	bool	MusicLoaded(void)
+	{
+		return curMusic != NULL;
+	}
+	
 	//	Data members:
-	OSErr				libraryError;			//	Last error returned by MADLibrary.
-	bool				inited;					//	Successful initialization.	
-	bool				musicPlay;				//	Music playing flag.
+	OSErr				libraryError;	//	Last error returned by MADLibrary.
+	bool				inited;			//	Successful initialization.
+	bool				musicPlay;		//	Music playing flag.
 	MADLibrary 			*MADLib;
-	MADDriverRec		*curDriverRec;			//	Current driver.
-	MADMusic			*curMusic;				//	Current music.
-	MADDriverSettings	settings;				//	Current settings for driver.
-
+	MADDriverRec		*curDriverRec;	//	Current driver.
+	MADMusic			*curMusic;		//	Current music.
+	MADDriverSettings	settings;		//	Current settings for driver.
+	
 private:
-
+	
 	//	Library initialization.
-
-	MADDriverSettings	CreateDefaultDriver( void );	
-	bool				InitLibrary( MADDriverSettings *init);
-
+	
+	static MADDriverSettings	CreateDefaultDriver(void);
+	bool						InitLibrary(MADDriverSettings *init);
+	
 	//	System streamers.
-
-	BSoundPlayer		*streamPlayer;
+	BSoundPlayer				*streamPlayer;
 };
 #endif
