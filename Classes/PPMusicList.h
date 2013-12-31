@@ -21,15 +21,17 @@
 @property (unsafe_unretained, readonly) NSImage *fileIcon;
 #endif
 
-- (id)initWithURL:(NSURL *)aURL;
+- (instancetype)initWithURL:(NSURL *)aURL;
 @end
 
 @interface PPMusicList : NSObject <NSCoding, NSFastEnumeration>
-
 @property (readonly) NSUInteger lostMusicCount;
 @property NSInteger selectedMusic;
 
-- (void)sortMusicList;
+- (instancetype)init;
+
+- (void)sortMusicList DEPRECATED_ATTRIBUTE;
+- (void)sortMusicListByName;
 
 - (void)loadMusicListFromPreferences;
 - (void)saveMusicListToPreferences;

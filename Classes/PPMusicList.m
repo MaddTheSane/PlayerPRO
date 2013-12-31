@@ -21,6 +21,11 @@
 // GetIndString isn't supported on 64-bit Mac OS X
 // This code is emulation for GetIndString.
 // Code based on Mozilla's Mac Eudora importer
+
+// Ssh, we're using deprecated functions.
+// We're using them because there is no easy replacement
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 {
 	Size handSize = GetHandleSize(aResource);
@@ -51,7 +56,26 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	return data;
 }
+#pragma clang diagnostic pop
 #endif
+
+static inline NSURL *PPHomeURL()
+{
+	static NSURL *homeURL;
+	if (homeURL == nil) {
+		homeURL = [NSURL fileURLWithPath:NSHomeDirectory() isDirectory:YES];
+	}
+	return homeURL;
+}
+
+static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
+{
+	if ([otherURL isFileReferenceURL])
+		return otherURL;
+	
+	NSURL *tmpURL = [otherURL fileReferenceURL];
+	return tmpURL ? tmpURL : otherURL;
+}
 
 @interface PPMusicListObject ()
 @property (strong, readwrite, setter = setTheMusicUrl:) NSURL *musicUrl;
@@ -62,12 +86,12 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (BOOL)isEqual:(id)object
 {
-	if (!object) {
+	if (!object)
 		return NO;
-	}
-	if (self == object) {
+	
+	if (self == object)
 		return YES;
-	}
+	
 	if ([object isKindOfClass:[PPMusicListObject class]]) {
 		id dat1, dat2;
 		BOOL bothareValid = YES;
@@ -88,15 +112,15 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 		BOOL theSame = NO;
 		if (![musicUrl getResourceValue:&dat1 forKey:NSURLFileResourceIdentifierKey error:NULL]) {
 			bothareValid = NO;
-		}
-		if (![object getResourceValue:&dat2 forKey:NSURLFileResourceIdentifierKey error:NULL]) {
+		} else if (![object getResourceValue:&dat2 forKey:NSURLFileResourceIdentifierKey error:NULL]) {
 			bothareValid = NO;
 		}
 		if (bothareValid) {
 			theSame = [dat1 isEqual:dat2];
 		}
 		return theSame;
-	} else return NO;
+	} else
+		return NO;
 }
 
 - (NSUInteger)hash
@@ -129,7 +153,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 }
 #endif
 
-- (id)initWithURL:(NSURL *)aURL
+- (instancetype)initWithURL:(NSURL *)aURL
 {
 	if (self = [super init]) {
 		if (!aURL) {
@@ -147,7 +171,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	return self;
+	return self; // this class is immutable
 }
 
 @end
@@ -179,7 +203,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	return [theList writeToURL:toSave atomically:YES];
 }
 
-- (void)sortMusicList
+- (void)sortMusicListByName
 {
 	[self willChangeValueForKey:kMusicListKVO];
 	[musicList sortWithOptions:(NSSortConcurrent | NSSortStable) usingComparator:^(id rhs, id lhs) {
@@ -191,6 +215,11 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 		}
 	}];
 	[self didChangeValueForKey:kMusicListKVO];
+}
+
+- (void)sortMusicList
+{
+	[self sortMusicListByName];
 }
 
 - (void)loadMusicList:(NSArray *)newArray
@@ -211,9 +240,8 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 - (BOOL)loadMusicListFromData:(NSData *)theDat
 {
 	PPMusicList *preList = [NSKeyedUnarchiver unarchiveObjectWithData:theDat];
-	if (!preList) {
+	if (!preList)
 		return NO;
-	}
 	
 	lostMusicCount = preList.lostMusicCount;
 	[self loadMusicList:preList.theMusicList];
@@ -229,16 +257,12 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	[self loadMusicListFromData:listData];
 }
 
-static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
-{
-	if ([otherURL isFileReferenceURL]) {
-		return otherURL;
-	}
-	NSURL *tmpURL = [otherURL fileReferenceURL];
-	return tmpURL ? tmpURL : otherURL;
-}
 
 #if !TARGET_OS_IPHONE
+// Ssh, we're using deprecated functions.
+// We're using them because there is no easy replacement
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen
 {
 	lostMusicCount = 0;
@@ -320,6 +344,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 
 	return noErr;
 }
+#pragma clang diagnostic pop
 #endif
 
 - (BOOL)loadMusicListAtURL:(NSURL *)fromURL
@@ -331,10 +356,9 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	return [self loadMusicListFromData:listData];
 }
 
-- (id)init
+- (instancetype)init
 {
-	self = [super init];
-	if (self) {
+	if (self = [super init]) {
 		musicList = [[NSMutableArray alloc] init];
 		lostMusicCount = 0;
 		selectedMusic = -1;
@@ -346,12 +370,11 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 {
 	PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(musicToLoad)];
 	
-	if (!obj) {
+	if (!obj)
 		return NO;
-	}
-	if ([musicList containsObject:obj]) {
+	
+	if ([musicList containsObject:obj])
 		return NO;
-	}
 	
 	NSIndexSet *theIndex = [NSIndexSet indexSetWithIndex:[musicList count]];
 	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndex forKey:kMusicListKVO];
@@ -375,6 +398,16 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	return [musicList[index] musicUrl];
 }
 
+- (void)insertObjects:(NSArray*)anObj inMusicListAtIndex:(NSUInteger)idx
+{
+	NSIndexSet *theIndexSet = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(idx, [anObj count])];
+	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndexSet forKey:kMusicListKVO];
+	[musicList insertObjects:anObj atIndexes:theIndexSet];
+	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndexSet forKey:kMusicListKVO];
+}
+
+#pragma mark Fast Enumeration
+
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len
 {
 	return [musicList countByEnumeratingWithState:state objects:buffer count:len];
@@ -382,26 +415,16 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 
 #pragma mark Archiving
 
-static inline NSURL *PPHomeURL()
-{
-	static NSURL *homeURL;
-	if (homeURL == nil) {
-		homeURL = [NSURL fileURLWithPath:NSHomeDirectory() isDirectory:YES];
-	}
-	return homeURL;
-}
-
 - (id)initWithCoder:(NSCoder *)decoder
 {
-	if ((self = [super init])) 
-	{
+	if ((self = [super init]))  {
 		lostMusicCount = 0;
 		NSMutableArray *BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY2];
 		if (!BookmarkArray) {
 			BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY];
-			if (!BookmarkArray) {
+			if (!BookmarkArray)
 				return nil;
-			}
+			
 			musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
 			for (NSData *bookData in BookmarkArray) {
 				BOOL isStale = NO;
@@ -423,7 +446,8 @@ static inline NSURL *PPHomeURL()
 			NSNumber *curSel = nil;
 			if ((curSel = [decoder decodeObjectForKey:kMusicListLocation2])) {
 				selectedMusic = [curSel integerValue];
-			} else selectedMusic = -1;
+			} else
+				selectedMusic = -1;
 			musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
 			for (NSData *bookData in BookmarkArray) {
 				BOOL isStale = NO;
@@ -454,26 +478,16 @@ static inline NSURL *PPHomeURL()
 
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
-	NSMutableArray *BookmarkArray = [NSMutableArray arrayWithCapacity:[musicList count]];
+	NSMutableArray *BookmarkArray = [[NSMutableArray alloc] initWithCapacity:[musicList count]];
 	NSInteger changedIndex = selectedMusic;
-	for (PPMusicListObject *obj in musicList)
-	{
+	for (PPMusicListObject *obj in musicList) {
 		NSData *bookData = [obj.musicUrl bookmarkDataWithOptions:0 includingResourceValuesForKeys:nil relativeToURL:PPHomeURL() error:nil];
-		if (bookData) {
+		if (bookData)
 			[BookmarkArray addObject:bookData];
-		}
 	}
-	//TODO, check for failed data initialization
+	//TODO: check for failed data initialization, and decrement changedIndex to match.
 	[encoder encodeObject:@(changedIndex) forKey:kMusicListLocation2];
 	[encoder encodeObject:BookmarkArray forKey:kMUSICLISTKEY2];
-}
-
-- (void)insertObjects:(NSArray*)anObj inMusicListAtIndex:(NSUInteger)idx
-{
-	NSIndexSet *theIndexSet = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(idx, [anObj count])];
-	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndexSet forKey:kMusicListKVO];
-	[musicList insertObjects:anObj atIndexes:theIndexSet];
-	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:theIndexSet forKey:kMusicListKVO];
 }
 
 #pragma mark Key-valued Coding
