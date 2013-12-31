@@ -25,15 +25,15 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="133" y="235" width="507" height="413"/>
+            <rect key="contentRect" x="133" y="235" width="595" height="483"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <value key="minSize" type="size" width="94" height="86"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="507" height="413"/>
+                <rect key="frame" x="0.0" y="0.0" width="595" height="483"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box autoresizesSubviews="NO" title="Box" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="tja-dm-7N1">
-                        <rect key="frame" x="146" y="287" width="216" height="108"/>
+                        <rect key="frame" x="190" y="357" width="216" height="108"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView">
                             <rect key="frame" x="1" y="1" width="214" height="106"/>
@@ -46,7 +46,7 @@
                                         <constraint firstAttribute="height" constant="32" id="DKJ-rJ-dJp"/>
                                         <constraint firstAttribute="width" constant="32" id="dFx-i7-XL8"/>
                                     </constraints>
-                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JHA-ub-cCZ">
+                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPFastForward" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JHA-ub-cCZ">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
@@ -58,7 +58,7 @@
                                         <constraint firstAttribute="width" constant="32" id="eej-5U-tKP"/>
                                         <constraint firstAttribute="height" constant="32" id="qxL-Mb-sVA"/>
                                     </constraints>
-                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yf4-uq-0AS">
+                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPPlay" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yf4-uq-0AS">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
@@ -70,7 +70,7 @@
                                         <constraint firstAttribute="height" constant="32" id="NuU-so-bYL"/>
                                         <constraint firstAttribute="width" constant="32" id="dOn-CD-vAI"/>
                                     </constraints>
-                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Jpe-uU-IBo">
+                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PPReverse" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Jpe-uU-IBo">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
@@ -150,31 +150,31 @@
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
                     <tabView initialItem="ykk-c8-31L" translatesAutoresizingMaskIntoConstraints="NO" id="eP8-FW-QMd">
-                        <rect key="frame" x="13" y="10" width="481" height="279"/>
+                        <rect key="frame" x="13" y="10" width="569" height="349"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Digital" identifier="Digital" id="gav-7k-IAf">
                                 <view key="view" id="3cF-zg-o6h">
-                                    <rect key="frame" x="10" y="33" width="461" height="233"/>
+                                    <rect key="frame" x="10" y="33" width="549" height="303"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Box" identifier="Box" id="A24-KY-JgR">
                                 <view key="view" id="BQP-AN-bfF">
-                                    <rect key="frame" x="10" y="33" width="461" height="233"/>
+                                    <rect key="frame" x="10" y="33" width="549" height="303"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Classic" identifier="Classic" id="ykk-c8-31L">
                                 <view key="view" id="9ML-I9-VAO">
-                                    <rect key="frame" x="10" y="33" width="461" height="233"/>
+                                    <rect key="frame" x="10" y="33" width="549" height="303"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Wave" identifier="Wave" id="zqf-cY-1dY">
                                 <view key="view" id="UQt-sf-rgN">
-                                    <rect key="frame" x="10" y="33" width="461" height="233"/>
+                                    <rect key="frame" x="10" y="33" width="549" height="303"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
@@ -392,6 +392,10 @@ Gw
                                         </prototypeCellViews>
                                     </tableColumn>
                                 </tableColumns>
+                                <connections>
+                                    <outlet property="dataSource" destination="FQe-II-xjQ" id="wrc-Av-bYq"/>
+                                    <outlet property="delegate" destination="FQe-II-xjQ" id="GSz-PR-xfm"/>
+                                </connections>
                             </outlineView>
                         </subviews>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -432,5 +436,8 @@ Gw
     </objects>
     <resources>
         <image name="NSRefreshTemplate" width="10" height="12"/>
+        <image name="PPFastForward" width="26" height="26"/>
+        <image name="PPPlay" width="26" height="26"/>
+        <image name="PPReverse" width="26" height="26"/>
     </resources>
 </document>
