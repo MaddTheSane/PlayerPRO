@@ -408,8 +408,6 @@
 			<string>PPMADFile</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
-			<key>LSIsAppleDefaultForType</key>
-			<false/>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.mad</string>

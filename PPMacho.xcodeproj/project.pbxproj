@@ -3611,9 +3611,9 @@
 			children = (
 				554E0FE810D6C79D00BB619C /* FadeVol.c */,
 				554E0FE910D6C79D00BB619C /* FadeVol.r */,
-				554E117010D6F1BF00BB619C /* Fade Volume-Info.plist */,
 				552C440917DFE00000AFCB5C /* FadeVolumeController.h */,
 				552C440A17DFE00000AFCB5C /* FadeVolumeController.m */,
+				554E117010D6F1BF00BB619C /* Fade Volume-Info.plist */,
 				552C440B17DFE00000AFCB5C /* FadeVolumeController.xib */,
 			);
 			path = "Fade Vol";
@@ -3624,9 +3624,9 @@
 			children = (
 				554E0FE610D6C79D00BB619C /* FadeNote.c */,
 				554E0FE710D6C79D00BB619C /* FadeNote.r */,
-				554E112910D6F0A000BB619C /* Fade Note-Info.plist */,
 				552C440417DFDF5A00AFCB5C /* FadeNoteController.h */,
 				552C440517DFDF5A00AFCB5C /* FadeNoteController.m */,
+				554E112910D6F0A000BB619C /* Fade Note-Info.plist */,
 				552C440617DFDF5A00AFCB5C /* FadeNoteController.xib */,
 			);
 			path = "Fade Note";
@@ -3637,9 +3637,9 @@
 			children = (
 				554E0FE110D6C79D00BB619C /* CompFade.c */,
 				554E0FE210D6C79D00BB619C /* CompFade.r */,
-				55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */,
 				552C43FF17DFDE1100AFCB5C /* ComplexFadeController.h */,
 				552C440017DFDE1100AFCB5C /* ComplexFadeController.m */,
+				55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */,
 				552C440117DFDE1100AFCB5C /* ComplexFadeController.xib */,
 			);
 			path = "Complex Fade";
@@ -3648,9 +3648,9 @@
 		554E11E210D6F3AB00BB619C /* Note Translate */ = {
 			isa = PBXGroup;
 			children = (
-				554E11DD10D6F32900BB619C /* Note Translate-Info.plist */,
 				552C440E17DFE08700AFCB5C /* NoteTranslateController.h */,
 				552C440F17DFE08700AFCB5C /* NoteTranslateController.m */,
+				554E11DD10D6F32900BB619C /* Note Translate-Info.plist */,
 				55771DC81873851500AED8DC /* NoteTranslateController.xib */,
 			);
 			path = "Note Translate";
@@ -3982,9 +3982,9 @@
 			children = (
 				5578C53D17DBABBE0057D11B /* PPDocument.h */,
 				5578C53E17DBABBF0057D11B /* PPDocument.m */,
-				55771DC31873714800AED8DC /* PPDocument.xib */,
 				5521F41317FA4365002CDBA9 /* BoxViewController.h */,
 				5521F41417FA4365002CDBA9 /* BoxViewController.m */,
+				55771DC31873714800AED8DC /* PPDocument.xib */,
 			);
 			path = "Document-based code";
 			sourceTree = "<group>";
@@ -9845,6 +9845,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -9861,6 +9862,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				WRAPPER_EXTENSION = plugin;
 			};

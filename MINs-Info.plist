@@ -8,18 +8,14 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
-	<key>CFBundleShortVersionString</key>
-	<string>2.0</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
-	<key>MADCanImport</key>
-	<true/>
-	<key>MADCanExport</key>
-	<true/>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
 	<key>CFPlugInDynamicRegistration</key>
@@ -36,19 +32,21 @@
 			<string>9C897935-C00B-4AAC-81D6-E43049E3A8E0</string>
 		</array>
 	</dict>
-	<key>MADPlugUTITypes</key>
-	<array>
-		<string>net.sourceforge.playerpro.mins</string>
-	</array>
-	<key>MADPlugMode</key>
-	<string>EXIM</string>
-	<key>MADPlugMenuName</key>
-	<string>PP Instrument</string>
-	<key>MADPlugType</key>
-	<string>MINs</string>
+	<key>MADCanExport</key>
+	<true/>
+	<key>MADCanImport</key>
+	<true/>
 	<key>MADPlugAuthorName</key>
 	<string>Copyright 2000 Antoine ROSSET</string>
 	<key>MADPlugIsSample</key>
 	<false/>
+	<key>MADPlugMenuName</key>
+	<string>PP Instrument</string>
+	<key>MADPlugType</key>
+	<string>MINs</string>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>net.sourceforge.playerpro.mins</string>
+	</array>
 </dict>
 </plist>
