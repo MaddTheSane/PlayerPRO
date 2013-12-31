@@ -1,0 +1,18 @@
+
+/* Class = "NSWindow"; title = "Fade"; ObjectID = "1"; */
+"1.title" = "Fade";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "6"; */
+"6.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "10"; */
+"10.title" = "Cancel";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "14"; */
+"14.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Fade from:"; ObjectID = "15"; */
+"15.title" = "Fade from:";
+
+/* Class = "NSFormCell"; title = "Fade to:"; ObjectID = "16"; */
+"16.title" = "Fade to:";

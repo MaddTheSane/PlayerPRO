@@ -1,0 +1,18 @@
+
+/* Class = "NSWindow"; title = "Sampling Rate"; ObjectID = "1"; */
+"1.title" = "Sampling Rate";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "6"; */
+"6.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Current Sampling:"; ObjectID = "7"; */
+"7.title" = "Current Sampling:";
+
+/* Class = "NSFormCell"; title = "New Sampling:"; ObjectID = "8"; */
+"8.title" = "New Sampling:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "14"; */
+"14.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "18"; */
+"18.title" = "Cancel";

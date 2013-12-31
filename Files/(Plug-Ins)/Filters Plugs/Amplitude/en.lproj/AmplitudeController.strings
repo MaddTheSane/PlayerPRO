@@ -1,0 +1,15 @@
+
+/* Class = "NSWindow"; title = "Amplitude"; ObjectID = "1"; */
+"1.title" = "Amplitude";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "6"; */
+"6.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Amplitude:"; ObjectID = "7"; */
+"7.title" = "Amplitude:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "16"; */
+"16.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "20"; */
+"20.title" = "Cancel";

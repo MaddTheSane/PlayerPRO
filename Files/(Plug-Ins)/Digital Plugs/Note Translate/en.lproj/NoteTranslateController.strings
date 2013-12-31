@@ -1,0 +1,18 @@
+
+/* Class = "NSWindow"; title = "Window"; ObjectID = "1"; */
+"1.title" = "Window";
+
+/* Class = "NSTextFieldCell"; title = "(12 notes = 1 Octave)"; ObjectID = "6"; */
+"6.title" = "(12 notes = 1 Octave)";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "10"; */
+"10.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Translation +/-"; ObjectID = "11"; */
+"11.title" = "Translation +/-";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "27"; */
+"27.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "31"; */
+"31.title" = "Cancel";

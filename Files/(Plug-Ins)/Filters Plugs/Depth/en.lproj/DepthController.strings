@@ -1,0 +1,15 @@
+
+/* Class = "NSWindow"; title = "Bit Depth"; ObjectID = "1"; */
+"1.title" = "Bit Depth";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "6"; */
+"6.title" = "Field:";
+
+/* Class = "NSFormCell"; title = "Simulate bit depth of:"; ObjectID = "7"; */
+"7.title" = "Simulate bit depth of:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "18"; */
+"18.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "22"; */
+"22.title" = "Cancel";
