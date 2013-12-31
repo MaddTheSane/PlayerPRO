@@ -568,22 +568,22 @@ typedef struct {
 
 - (IBAction)showBoxEditor:(id)sender
 {
-	
+	[self.editorsTab selectTabViewItemWithIdentifier:@"Box"];
 }
 
 - (IBAction)showClassicEditor:(id)sender
 {
-	
+	[self.editorsTab selectTabViewItemWithIdentifier:@"Classic"];
 }
 
 - (IBAction)showDigitalEditor:(id)sender
 {
-	
+	[self.editorsTab selectTabViewItemWithIdentifier:@"Digital"];
 }
 
 - (IBAction)showWavePreview:(id)sender
 {
-	
+	[self.editorsTab selectTabViewItemWithIdentifier:@"Wave"];
 }
 
 - (IBAction)okayExportSettings:(id)sender {

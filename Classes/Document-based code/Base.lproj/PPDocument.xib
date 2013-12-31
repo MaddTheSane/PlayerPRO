@@ -154,25 +154,25 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
-                            <tabViewItem label="Digital" identifier="2" id="gav-7k-IAf">
+                            <tabViewItem label="Digital" identifier="Digital" id="gav-7k-IAf">
                                 <view key="view" id="3cF-zg-o6h">
                                     <rect key="frame" x="10" y="33" width="461" height="233"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Box" identifier="" id="A24-KY-JgR">
+                            <tabViewItem label="Box" identifier="Box" id="A24-KY-JgR">
                                 <view key="view" id="BQP-AN-bfF">
                                     <rect key="frame" x="10" y="33" width="461" height="233"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Classic" identifier="1" id="ykk-c8-31L">
+                            <tabViewItem label="Classic" identifier="Classic" id="ykk-c8-31L">
                                 <view key="view" id="9ML-I9-VAO">
                                     <rect key="frame" x="10" y="33" width="461" height="233"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Wave" identifier="" id="zqf-cY-1dY">
+                            <tabViewItem label="Wave" identifier="Wave" id="zqf-cY-1dY">
                                 <view key="view" id="UQt-sf-rgN">
                                     <rect key="frame" x="10" y="33" width="461" height="233"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
