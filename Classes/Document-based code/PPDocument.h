@@ -25,6 +25,7 @@
 @property (weak) IBOutlet NSTabView *editorsTab;
 
 @property (strong) PPSoundSettingsViewController *exportController;
+@property (readonly, strong) PPDriver *theDriver;
 @property (copy) NSString *musicName;
 @property (copy) NSString *musicInfo;
 @property (copy) NSString *authorString;

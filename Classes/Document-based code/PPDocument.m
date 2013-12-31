@@ -16,7 +16,7 @@
 #import "BoxViewController.h"
 
 @interface PPDocument ()
-@property (strong) PPDriver *theDriver;
+@property (readwrite, strong) PPDriver *theDriver;
 @property (strong) PPMusicObjectWrapper *theMusic;
 @property MADDriverSettings exportSettings;
 @end
@@ -97,6 +97,9 @@
 		}
 		
 		self.theDriver = [[PPDriver alloc] initWithLibrary:globalMadLib settings:&init];
+		if (!_theDriver) {
+			return nil;
+		}
 		
 		self.exportController = [[PPSoundSettingsViewController alloc] init];
 		self.exportController.delegate = self;
@@ -203,21 +206,20 @@
 	}
 }
 
-#if 0
 - (void)updateMusicStats:(NSTimer*)theTimer
 {
-	if (music) {
-		long fT, cT;
-		MADGetMusicStatus(madDriver, &fT, &cT);
-		if (MADIsDonePlaying(madDriver) && !self.paused && !MADIsExporting(madDriver)) {
-			[self songIsDonePlaying];
-			MADGetMusicStatus(madDriver, &fT, &cT);
-		}
-		[songPos setDoubleValue:cT];
-		[songCurTime setIntegerValue:cT];
+	long fT, cT;
+	[_theDriver getMusicStatusWithCurrentTime:&cT totalTime:&fT];
+	if ([_theDriver isDonePlayingMusic] && _theDriver.isPlayingMusic && ![_theDriver isExporting]) {
+		//[self songIsDonePlaying];
+		[_theDriver pause];
+		[_theDriver getMusicStatusWithCurrentTime:&cT totalTime:&fT];
 	}
+	[self.playbackPositionSlider setDoubleValue:cT];
+	[self.currentTimeLabel setIntegerValue:cT];
 }
 
+#if 0
 - (IBAction)saveInstrumentList:(id)sender
 {
 	[_theDriver beginExport];
@@ -241,39 +243,7 @@
 	
 	[_theDriver endExport];
 }
-
 #endif
-
-static inline extended80 convertSampleRateToExtended80(unsigned int theNum)
-{
-	//Yes, the pragma pack is needed
-	//otherwise the data will be improperly mapped.
-#pragma pack(push, 2)
-	union {
-		extended80 shortman;
-		struct Float80i {
-			SInt16  exp;
-			UInt32  man[2];
-		} intman;
-	} toreturn;
-#pragma pack(pop)
-	
-	unsigned int shift, exponent;
-	
-	for(shift = 0U; (theNum >> (31 - shift)) == 0U; ++shift)
-		;
-	theNum <<= shift;
-	exponent = 63U - (shift + 32U); /* add 32 for unused second word */
-	
-	toreturn.intman.exp = (exponent+0x3FFF);
-	PPBE16(&toreturn.intman.exp);
-	toreturn.intman.man[0] = theNum;
-	PPBE32(&toreturn.intman.man[0]);
-	toreturn.intman.man[1] = 0;
-	PPBE32(&toreturn.intman.man[1]);
-	
-	return toreturn.shortman;
-}
 
 - (NSMutableData *)rawSoundData:(MADDriverSettings*)theSet
 {
