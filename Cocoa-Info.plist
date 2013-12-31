@@ -17,12 +17,12 @@
 			<string>PPMADBundle</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>LSIsAppleDefaultForType</key>
-			<true/>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.mad-bundle</string>
 			</array>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
 			<key>LSTypeIsPackage</key>
 			<true/>
 			<key>NSDocumentClass</key>
