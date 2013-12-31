@@ -44,7 +44,7 @@ int main(int argc, const char * argv[])
 		if (strcasecmp(argv[2], "player") == 0) {
 			plistDict[@"CFBundleVersion"] = outString;
 		} else {
-			plistDict[@"CFBundleVersion"] = [NSString stringWithFormat:@"6.0.0.%@", outString];
+			plistDict[@"CFBundleVersion"] = [NSString stringWithFormat:@"%@.%@", plistDict[@"CFBundleVersion"], outString];
 		}
 		NSTask *hashTask = [[NSTask alloc] init];
 		hashTask.launchPath = @"/usr/bin/git";
@@ -59,6 +59,6 @@ int main(int argc, const char * argv[])
 		plistDict[@"MPXCommitHash"] = outString;
 		[plistDict writeToFile:[NSString stringWithFormat:@"%@vers.plist", plistLocation] atomically:NO];
 	}
-    return 0;
+    return EXIT_SUCCESS;
 }
 
