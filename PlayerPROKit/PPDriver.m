@@ -16,6 +16,8 @@
 @implementation PPDriver
 @synthesize rec = theRec;
 @synthesize currentMusic;
+@synthesize theLibrary = thePPLib;
+
 - (void)setCurrentMusic:(PPMusicObject *)curMusic
 {
 	if (curMusic != currentMusic) {
@@ -23,8 +25,6 @@
 		MADAttachDriverToMusic(theRec, currentMusic._currentMusic, NULL);
 	}
 }
-
-@synthesize theLibrary = thePPLib;
 
 - (MADDriverSettings)driverSettings
 {
@@ -51,6 +51,47 @@
 	return MADIsExporting(theRec);
 }
 
+- (void)setIsExporting:(BOOL)isExp
+{
+	if (isExp)
+		[self beginExport];
+	else
+		[self endExport];
+}
+
+- (OSErr)getMusicStatusWithCurrentTime:(long*)curTime totalTime:(long*)totTime
+{
+	return MADGetMusicStatus(theRec, totTime, curTime);
+}
+
+- (NSTimeInterval)musicPosition
+{
+	OSErr iErr;
+	long curV, totV;
+	NSTimeInterval musPos = 0;
+	iErr = MADGetMusicStatus(theRec, &totV, &curV);
+	if (iErr)
+		return musPos;
+	
+	musPos = curV / 60.0;
+	
+	return musPos;
+}
+
+- (void)setMusicPosition:(NSTimeInterval)musicPosition
+{
+	long curV = musicPosition * 60;
+	long tempCurV, tempTotV;
+	OSErr iErr = MADGetMusicStatus(theRec, &tempTotV, &tempCurV);
+	if (iErr) {
+		return; //This will probably be a thrown exception in the future
+	}
+	iErr = MADSetMusicStatus(theRec, 0, tempTotV, curV);
+	if (iErr) {
+		return; //This will probably be a thrown exception in the future
+	}
+}
+
 - (void)cleanDriver
 {
 	MADCleanDriver(theRec);
@@ -59,6 +100,26 @@
 - (BOOL)directSaveToPointer:(void*)thePtr settings:(MADDriverSettings*)theSett
 {
 	return DirectSave(thePtr, theSett, theRec);
+}
+
+- (BOOL)isPaused
+{
+	return !MADIsPlayingMusic(theRec);
+}
+
+- (BOOL)isPlayingMusic
+{
+	return MADIsPlayingMusic(theRec);
+}
+
+- (BOOL)isDonePlaying
+{
+	return [self isDonePlayingMusic];
+}
+
+- (BOOL)isDonePlayingMusic
+{
+	return MADIsDonePlaying(theRec);
 }
 
 - (NSInteger)audioLength
@@ -73,7 +134,12 @@
 
 - (OSErr)pause
 {
-	return MADStopMusic(theRec);
+	OSErr iErr = MADStopMusic(theRec);
+	if (iErr) {
+		return iErr;
+	}
+	MADCleanDriver(theRec);
+	return noErr;
 }
 
 - (OSErr)stop
@@ -82,12 +148,13 @@
 	if (theErr) {
 		return theErr;
 	}
+	MADCleanDriver(theRec);
 	return MADSetMusicStatus(theRec, 0, 100, 0);
 }
 
 - (id)init
 {
-	NSAssert(NO, @"PPDriver cannot be inited without a library");
+	NSAssert(NO, @"PPDriver cannot be inited without a library!");
 	[self doesNotRecognizeSelector:_cmd];
 	return nil;
 }
