@@ -22,7 +22,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="133" y="235" width="595" height="483"/>
@@ -40,7 +40,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="uMf-5K-EbC">
-                                    <rect key="frame" x="164" y="62" width="32" height="32"/>
+                                    <rect key="frame" x="143" y="62" width="32" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="32" id="DKJ-rJ-dJp"/>
@@ -64,7 +64,7 @@
                                     </buttonCell>
                                 </button>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="3cJ-rm-kq9">
-                                    <rect key="frame" x="18" y="62" width="32" height="32"/>
+                                    <rect key="frame" x="39" y="62" width="32" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="32" id="NuU-so-bYL"/>
@@ -121,27 +121,25 @@
                             </subviews>
                         </view>
                         <constraints>
-                            <constraint firstItem="WaK-0d-ulU" firstAttribute="leading" secondItem="3cJ-rm-kq9" secondAttribute="leading" id="0Ji-3I-dUF"/>
                             <constraint firstItem="3cJ-rm-kq9" firstAttribute="top" secondItem="uMf-5K-EbC" secondAttribute="top" id="0wE-De-WpR"/>
                             <constraint firstAttribute="centerX" secondItem="oP5-bp-Z0e" secondAttribute="centerX" id="1jy-rS-IxC"/>
-                            <constraint firstItem="uMf-5K-EbC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ldh-ec-MpH" secondAttribute="trailing" constant="10" symbolic="YES" id="6kO-mL-w1h"/>
+                            <constraint firstItem="uMf-5K-EbC" firstAttribute="leading" secondItem="Ldh-ec-MpH" secondAttribute="trailing" constant="20" id="6kO-mL-w1h"/>
+                            <constraint firstItem="WaK-0d-ulU" firstAttribute="leading" secondItem="gxI-fR-ZcW" secondAttribute="leading" id="6qZ-Oc-WqA"/>
                             <constraint firstItem="3cJ-rm-kq9" firstAttribute="top" secondItem="Ldh-ec-MpH" secondAttribute="top" id="9A8-Sk-nBg"/>
                             <constraint firstItem="gxI-fR-ZcW" firstAttribute="top" secondItem="oP5-bp-Z0e" secondAttribute="bottom" constant="8" symbolic="YES" id="BrA-0d-e8D"/>
                             <constraint firstItem="3cJ-rm-kq9" firstAttribute="bottom" secondItem="Ldh-ec-MpH" secondAttribute="bottom" id="CN3-Yr-xbJ"/>
                             <constraint firstAttribute="centerX" secondItem="gxI-fR-ZcW" secondAttribute="centerX" id="HaK-k5-nw7"/>
                             <constraint firstItem="WaK-0d-ulU" firstAttribute="baseline" secondItem="oP5-bp-Z0e" secondAttribute="baseline" id="N4K-0K-YSJ"/>
                             <constraint firstItem="3cJ-rm-kq9" firstAttribute="bottom" secondItem="uMf-5K-EbC" secondAttribute="bottom" id="OOI-rz-6Tj"/>
-                            <constraint firstItem="jwX-rY-VeA" firstAttribute="trailing" secondItem="uMf-5K-EbC" secondAttribute="trailing" id="QCm-zq-KAK"/>
                             <constraint firstItem="oP5-bp-Z0e" firstAttribute="leading" secondItem="WaK-0d-ulU" secondAttribute="trailing" constant="8" symbolic="YES" id="QQ9-Fa-shE"/>
-                            <constraint firstAttribute="trailing" secondItem="uMf-5K-EbC" secondAttribute="trailing" constant="16" id="V1u-VG-9EM"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="210" id="X4y-w4-c46"/>
-                            <constraint firstItem="gxI-fR-ZcW" firstAttribute="leading" secondItem="3cJ-rm-kq9" secondAttribute="leading" id="XL6-iY-ori"/>
-                            <constraint firstItem="3cJ-rm-kq9" firstAttribute="leading" secondItem="tja-dm-7N1" secondAttribute="leading" constant="16" id="c0d-tg-X1H"/>
+                            <constraint firstAttribute="trailing" secondItem="jwX-rY-VeA" secondAttribute="trailing" constant="16" id="csT-zo-yER"/>
+                            <constraint firstItem="WaK-0d-ulU" firstAttribute="leading" secondItem="tja-dm-7N1" secondAttribute="leading" constant="16" id="cyU-hE-FV9"/>
                             <constraint firstItem="WaK-0d-ulU" firstAttribute="width" secondItem="jwX-rY-VeA" secondAttribute="width" id="cz2-bn-ew3"/>
                             <constraint firstItem="jwX-rY-VeA" firstAttribute="leading" secondItem="oP5-bp-Z0e" secondAttribute="trailing" constant="8" symbolic="YES" id="dQh-u9-XhV"/>
                             <constraint firstAttribute="bottom" secondItem="gxI-fR-ZcW" secondAttribute="bottom" constant="11" id="eeo-Oz-soh"/>
                             <constraint firstItem="oP5-bp-Z0e" firstAttribute="top" secondItem="3cJ-rm-kq9" secondAttribute="bottom" constant="8" symbolic="YES" id="fp4-6E-zbm"/>
-                            <constraint firstItem="Ldh-ec-MpH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3cJ-rm-kq9" secondAttribute="trailing" constant="10" symbolic="YES" id="gex-lD-6uU"/>
+                            <constraint firstItem="Ldh-ec-MpH" firstAttribute="leading" secondItem="3cJ-rm-kq9" secondAttribute="trailing" constant="20" id="gex-lD-6uU"/>
                             <constraint firstAttribute="centerX" secondItem="Ldh-ec-MpH" secondAttribute="centerX" id="jki-nA-mZN"/>
                             <constraint firstItem="3cJ-rm-kq9" firstAttribute="top" secondItem="tja-dm-7N1" secondAttribute="top" constant="11" id="llU-Rm-sAm"/>
                             <constraint firstItem="oP5-bp-Z0e" firstAttribute="baseline" secondItem="jwX-rY-VeA" secondAttribute="baseline" id="zMq-ls-rlT"/>
@@ -190,6 +188,21 @@
                     <constraint firstItem="tja-dm-7N1" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="qn2-jv-Cav"/>
                 </constraints>
             </view>
+            <toolbar key="toolbar" implicitIdentifier="4D6B5386-6F5E-4A91-91FD-F2F49C14FDFA" displayMode="iconAndLabel" sizeMode="regular" id="JlD-qS-8hJ">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="wJ4-KS-vNe"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="sbL-mr-aVw"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="4c4-or-ZR4"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="HNV-ix-kLu"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="YH3-PY-P3B"/>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="wJ4-KS-vNe"/>
+                    <toolbarItem reference="sbL-mr-aVw"/>
+                    <toolbarItem reference="YH3-PY-P3B"/>
+                    <toolbarItem reference="4c4-or-ZR4"/>
+                </defaultToolbarItems>
+            </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="17"/>
             </connections>
