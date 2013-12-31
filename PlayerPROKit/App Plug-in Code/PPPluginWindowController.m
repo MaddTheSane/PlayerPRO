@@ -66,7 +66,7 @@ NSString * const PPPlugReturnCode = @"PlayerPROKit Return Code";
 - (IBAction)okOrCancel:(id)sender
 {
 	if (!_isRunningModal) {
-		[NSApp endSheet:self.window returnCode:[sender tag] == 1 ? NSOffState : NSOnState];
+		[parentWindow endSheet:self.window returnCode:[sender tag] == 1 ? NSOffState : NSOnState];
 	}else {
 		[NSApp stopModalWithCode:([sender tag] == 1) ? NSOffState : NSOnState];
 	}
@@ -87,9 +87,15 @@ NSString * const PPPlugReturnCode = @"PlayerPROKit Return Code";
 {
 	if (isMultipleIstanceSafe) {
 		self.isRunningModal = NO;
-		[NSApp beginSheet:self.window modalForWindow:parentWindow modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
-		
-		return MADIsRunningModal;
+		[parentWindow beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
+			if (returnCode == NSOnState) {
+				plugBlock();
+			}
+			[[NSNotificationCenter defaultCenter] postNotificationName:PPPlugInSheetDidEnd object:self userInfo:@{PPPlugReturnCode: @(returnCode)}];
+			[self close];
+
+		}];
+		return MADIsRunningSheet;
 	} else
 		return MADOrderNotImplemented;
 }

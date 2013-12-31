@@ -62,7 +62,7 @@
 
 enum MADErrors
 {
-	MADIsRunningModal				= 10,
+	MADIsRunningSheet				= 10,
 	MADNeedMemory 					= -1,
 	MADReadingErr					= -2,
 	MADIncompatibleFile				= -3,

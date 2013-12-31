@@ -227,7 +227,6 @@
 		554E114610D6F1BF00BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E117410D6F22D00BB619C /* FadeVol.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE910D6C79D00BB619C /* FadeVol.r */; };
 		554E11B310D6F32900BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		554E11E110D6F38200BB619C /* NoteTrans.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FEC10D6C79D00BB619C /* NoteTrans.r */; };
 		554E11F710D6F3E100BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E126410D6F4F700BB619C /* Propagate.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF010D6C79D00BB619C /* Propagate.c */; };
@@ -2022,8 +2021,6 @@
 		554E0FE710D6C79D00BB619C /* FadeNote.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = FadeNote.r; sourceTree = "<group>"; };
 		554E0FE810D6C79D00BB619C /* FadeVol.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = FadeVol.c; sourceTree = "<group>"; };
 		554E0FE910D6C79D00BB619C /* FadeVol.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = FadeVol.r; sourceTree = "<group>"; };
-		554E0FEB10D6C79D00BB619C /* NoteTrans.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = NoteTrans.c; sourceTree = "<group>"; };
-		554E0FEC10D6C79D00BB619C /* NoteTrans.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = NoteTrans.r; sourceTree = "<group>"; };
 		554E0FF010D6C79D00BB619C /* Propagate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Propagate.c; sourceTree = "<group>"; };
 		554E0FF310D6C79D00BB619C /* Read-Me */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read-Me"; sourceTree = "<group>"; };
 		554E0FF410D6C79D00BB619C /* Revert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Revert.c; sourceTree = "<group>"; };
@@ -2416,9 +2413,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55ADC3FA17D7FFAA001F27D4 /* PlayerPROCore.framework in Frameworks */,
 				554E10FF10D6F09F00BB619C /* CoreFoundation.framework in Frameworks */,
 				552C443C17DFEF7D00AFCB5C /* Cocoa.framework in Frameworks */,
+				55ADC3FA17D7FFAA001F27D4 /* PlayerPROCore.framework in Frameworks */,
 				5582135D17E4224100B84F51 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2427,9 +2424,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55ADC3FB17D8004B001F27D4 /* PlayerPROCore.framework in Frameworks */,
 				554E114610D6F1BF00BB619C /* CoreFoundation.framework in Frameworks */,
 				552C443D17DFEF7E00AFCB5C /* Cocoa.framework in Frameworks */,
+				55ADC3FB17D8004B001F27D4 /* PlayerPROCore.framework in Frameworks */,
 				5582135E17E4224200B84F51 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2438,9 +2435,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55ADC3FC17D80052001F27D4 /* PlayerPROCore.framework in Frameworks */,
 				554E11B310D6F32900BB619C /* CoreFoundation.framework in Frameworks */,
 				552C443E17DFEF8200AFCB5C /* Cocoa.framework in Frameworks */,
+				55ADC3FC17D80052001F27D4 /* PlayerPROCore.framework in Frameworks */,
 				5582135F17E4224300B84F51 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2449,8 +2446,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5574BCFD16964D1900CF3C37 /* PlayerPROCore.framework in Frameworks */,
 				554E11F710D6F3E100BB619C /* CoreFoundation.framework in Frameworks */,
+				5574BCFD16964D1900CF3C37 /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2458,8 +2455,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5574BCEC169634DE00CF3C37 /* PlayerPROCore.framework in Frameworks */,
 				554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */,
+				5574BCEC169634DE00CF3C37 /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2849,9 +2846,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */,
 				552C443B17DFEF6400AFCB5C /* Cocoa.framework in Frameworks */,
 				5574BCF9169645FE00CF3C37 /* PlayerPROCore.framework in Frameworks */,
-				554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */,
 				5582135C17E4224000B84F51 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3645,8 +3642,6 @@
 		554E11E210D6F3AB00BB619C /* Note Translate */ = {
 			isa = PBXGroup;
 			children = (
-				554E0FEB10D6C79D00BB619C /* NoteTrans.c */,
-				554E0FEC10D6C79D00BB619C /* NoteTrans.r */,
 				554E11DD10D6F32900BB619C /* Note Translate-Info.plist */,
 				552C440E17DFE08700AFCB5C /* NoteTranslateController.h */,
 				552C440F17DFE08700AFCB5C /* NoteTranslateController.m */,
@@ -3788,7 +3783,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		55868B1810BFC0BB00FCC24D /* Main Driver Source */ = {
+		55868B1810BFC0BB00FCC24D /* PlayerPROCore */ = {
 			isa = PBXGroup;
 			children = (
 				55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */,
@@ -3825,7 +3820,7 @@
 				550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */,
 				55C930381819E68700D9E072 /* CocoaFuncs.m */,
 			);
-			name = "Main Driver Source";
+			name = PlayerPROCore;
 			sourceTree = "<group>";
 		};
 		55879F7B164CA63D009068D5 /* PPPlay */ = {
@@ -4010,15 +4005,15 @@
 				5518105510C35A0100ADA9F4 /* Carbon Example */,
 				554E0FDD10D6C79D00BB619C /* App Plug-ins */,
 				88E0C3CE0C2F21DD00D6C081 /* MADDriver.source */,
+				55A84342185D230E0072250E /* Old Plug-in Bridge */,
 				551292DE163DD68500C2C639 /* PlayerPROKit */,
-				5573A1051656FAF100A5AECA /* iOSPlayerPROCore */,
-				55BE998517978BB100D6DECC /* Spotlight Plug-in */,
 				5578C48317D9E8560057D11B /* PlayerPRO Player */,
+				559C418F183EB4AB004A073C /* PPQuickView */,
+				55BE998517978BB100D6DECC /* Spotlight Plug-in */,
+				5573A1051656FAF100A5AECA /* iOSPlayerPROCore */,
 				555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */,
 				555776CA17EBF9000019D008 /* iOS PlayerPRO PlayerTests */,
 				55534ACF1817C387006D6BCB /* updateInfoPlist */,
-				559C418F183EB4AB004A073C /* PPQuickView */,
-				55A84342185D230E0072250E /* Old Plug-in Bridge */,
 				88E0C4950C2F21E500D6C081 /* Frameworks */,
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 				5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */,
@@ -4126,7 +4121,7 @@
 			isa = PBXGroup;
 			children = (
 				553340D810BB5368005208D1 /* Import-Export */,
-				55868B1810BFC0BB00FCC24D /* Main Driver Source */,
+				55868B1810BFC0BB00FCC24D /* PlayerPROCore */,
 			);
 			path = MADDriver.source;
 			sourceTree = "<group>";
@@ -4500,7 +4495,6 @@
 				554E11AE10D6F32900BB619C /* Resources */,
 				554E11AF10D6F32900BB619C /* Sources */,
 				554E11B110D6F32900BB619C /* Frameworks */,
-				554E11B410D6F32900BB619C /* Rez */,
 			);
 			buildRules = (
 			);
@@ -5976,14 +5970,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				554E117410D6F22D00BB619C /* FadeVol.r in Rez */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		554E11B410D6F32900BB619C /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				554E11E110D6F38200BB619C /* NoteTrans.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
