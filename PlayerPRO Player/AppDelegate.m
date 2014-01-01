@@ -426,7 +426,7 @@ static NSInteger selMusFromList = -1;
 	NSMutableData *mutData = [[NSMutableData alloc] init];
 	soundPtr = calloc(full, 1);
 	
-	while(DirectSave(soundPtr, theSet, theRec))
+	while (DirectSave(soundPtr, theSet, theRec))
 		[mutData appendBytes:soundPtr length:full];
 	
 	MADStopMusic(theRec);

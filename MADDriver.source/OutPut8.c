@@ -51,7 +51,7 @@ void Sampler8in8AddPolyStereo(Channel *curVoice, Ptr ASCBuffer, short chanNo, MA
 	SndBuffer		= (char*) 	curVoice->curPtr;
 	volChn			= DoVolPanning256( 3, curVoice, intDriver, true)/256;
 	
-	while( i-- > 0) {
+	while (i-- > 0) {
 		off = 2*(aCC>>BYTEDIV);
 		if ((Ptr) SndBuffer + off >= curVoice->maxPtr) {
 			if (curVoice->loopSize > 0)  {
@@ -107,7 +107,7 @@ void Sampler8in8AddPoly(Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDrive
 	SndBuffer		= (char*) 	curVoice->curPtr;
 	volChn			= DoVolPanning256( 3, curVoice, intDriver, true)/256;
 	
-	while( i-- > 0) {
+	while (i-- > 0) {
 		off = (aCC>>BYTEDIV);
 		if ((Ptr) SndBuffer + off >= curVoice->maxPtr) {
 			if (curVoice->loopSize > 0)  {
@@ -160,7 +160,7 @@ void Sampler16in8AddPolyStereo(Channel *curVoice, Ptr ASCBuffer, short chanNo, M
 	SndBuffer		= (char*) 	curVoice->curPtr;
 	volChn			= DoVolPanning256( 3, curVoice, intDriver, true)/256;
 	
-	while( i-- > 0) {
+	while (i-- > 0) {
 		off = 4*(aCC>>BYTEDIV);
 		if ((Ptr) SndBuffer + off >= curVoice->maxPtr) {
 			if (curVoice->loopSize > 0)  {
@@ -216,7 +216,7 @@ void Sampler16in8AddPoly(Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriv
 	SndBuffer		= (char*) 	curVoice->curPtr;
 	volChn			= DoVolPanning256( 3, curVoice, intDriver, true)/256;
 	
-	while( i-- > 0) {
+	while (i-- > 0) {
 		off = 2*(aCC>>BYTEDIV);
 		if ((Ptr) SndBuffer + off >= curVoice->maxPtr) {
 			if (curVoice->loopSize > 0)  {

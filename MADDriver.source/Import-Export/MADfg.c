@@ -64,11 +64,10 @@ static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myP
 	 First Byte = 0x00 -> nothing
 	 */
 	
-	while( maxCmd != 0)
-	{
+	while (maxCmd != 0) {
 		maxCmd--;
 		
-		switch( *srcPtr)
+		switch (*srcPtr)
 		{
 			case 0x03:
 				srcPtr++;
@@ -117,10 +116,12 @@ static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myP
 
 static struct Command* GetOldCommand( short PosX, short TrackIdX, struct MusicPattern* tempMusicPat)
 {
-	if (PosX < 0) PosX = 0;
-	else if (PosX >= tempMusicPat->header.PatternSize) PosX = tempMusicPat->header.PatternSize -1;
+	if (PosX < 0)
+		PosX = 0;
+	else if
+		(PosX >= tempMusicPat->header.PatternSize) PosX = tempMusicPat->header.PatternSize -1;
 	
-	return( & (tempMusicPat->Commands[ (tempMusicPat->header.PatternSize * TrackIdX) + PosX]));
+	return &(tempMusicPat->Commands[ (tempMusicPat->header.PatternSize * TrackIdX) + PosX]);
 }
 
 static void MOToldPatHeader(struct oldPatHeader * p) {
@@ -142,6 +143,7 @@ static void MOToldInstrData(struct FileInstrData * i) {
 static void MOToldMADSpec(struct oldMADSpec * m){
 	int i;
 	PPBE32(&m->MADIdentification);
+	//TODO: dispatch this
 	for (i = 0; i < 64; i++) {
 		MOToldInstrData(&m->fid[i]);
 	}

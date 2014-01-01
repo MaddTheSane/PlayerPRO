@@ -56,10 +56,10 @@ static oldPatData* oldDecompressPartitionMAD1( oldMADSpec *header, oldPatData* m
 	short					maxCmd;
 	Byte					set;
 	
-	finalPtr = ( oldPatData*) calloc( sizeof( oldPatHeader) + myPat->header.size * header->numChn * sizeof( oldCmd), 1);
+	finalPtr = ( oldPatData*) calloc(sizeof(oldPatHeader) + myPat->header.size * header->numChn * sizeof(oldCmd), 1);
 	if (finalPtr == NULL) return NULL;
 	
-	memcpy(finalPtr, myPat, sizeof( oldPatHeader));
+	memcpy(finalPtr, myPat, sizeof(oldPatHeader));
 	
 	srcPtr = (Byte*) myPat->Cmds;
 	myCmd = (oldCmd*) finalPtr->Cmds;
@@ -67,8 +67,7 @@ static oldPatData* oldDecompressPartitionMAD1( oldMADSpec *header, oldPatData* m
 	
 	/*** Decompression Routine ***/
 	
-	while( maxCmd != 0)
-	{
+	while (maxCmd != 0) {
 		maxCmd--;
 		
 		myCmd->cmd 	= 0;
@@ -79,11 +78,16 @@ static oldPatData* oldDecompressPartitionMAD1( oldMADSpec *header, oldPatData* m
 		
 		set = *srcPtr++;
 		
-		if (set & ins)	myCmd->ins = *srcPtr++;
-		if (set & note)	myCmd->note = *srcPtr++;
-		if (set & cmd)	myCmd->cmd = *srcPtr++;
-		if (set & argu)	myCmd->arg = *srcPtr++;
-		if (set & vol)	myCmd->vol = *srcPtr++;
+		if (set & ins)
+			myCmd->ins = *srcPtr++;
+		if (set & note)
+			myCmd->note = *srcPtr++;
+		if (set & cmd)
+			myCmd->cmd = *srcPtr++;
+		if (set & argu)
+			myCmd->arg = *srcPtr++;
+		if (set & vol)
+			myCmd->vol = *srcPtr++;
 		
 		myCmd++;
 	}

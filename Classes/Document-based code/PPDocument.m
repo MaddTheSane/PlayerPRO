@@ -291,7 +291,7 @@
 	NSMutableData *mutData = [[NSMutableData alloc] init];
 	soundPtr = calloc(full, 1);
 	
-	while([theRec directSaveToPointer:soundPtr settings:theSet])
+	while ([theRec directSaveToPointer:soundPtr settings:theSet])
 		[mutData appendBytes:soundPtr length:full];
 	
 	free(soundPtr);

@@ -202,7 +202,7 @@ static OSErr mainXI(void		*unused,
 		free(FileNameLong);
 	} while (0);
 	
-	switch( order)
+	switch (order)
 	{
 		case 'IMPL':
 		{
@@ -212,21 +212,19 @@ static OSErr mainXI(void		*unused,
 			short			numSamples;
 			
 			iFileRefI = iFileOpenRead(file);
-			if (iFileRefI != NULL)
-			{
+			if (iFileRefI != NULL) {
 				
 				inOutCount = iGetEOF(iFileRefI);
 				
-				theXI = malloc( inOutCount);
-				if (theXI == NULL) myErr = MADNeedMemory;
-				else
-				{
-					MAD2KillInstrument( InsHeader, sample);
+				theXI = malloc(inOutCount);
+				if (theXI == NULL)
+					myErr = MADNeedMemory;
+				else {
+					MAD2KillInstrument(InsHeader, sample);
 					
 					memset(InsHeader->name, '\0', 32);
 					
-					for (x = 0; x < 32; x++)
-					{
+					for (x = 0; x < 32; x++) {
 						if (fileName[x] == '\0') {
 							break;
 						}
@@ -240,10 +238,10 @@ static OSErr mainXI(void		*unused,
 					
 					// READ instrument header
 					
-					pth = (XMPATCHHEADER*) (theXI + 0x42);
+					pth = (XMPATCHHEADER*)(theXI + 0x42);
 					
-					numSamples = *((short*) (theXI + 0x42 + sizeof( XMPATCHHEADER)));
-					InsHeader->numSamples = Tdecode16( &numSamples);
+					numSamples = *((short*)(theXI + 0x42 + sizeof(XMPATCHHEADER)));
+					InsHeader->numSamples = Tdecode16(&numSamples);
 					
 					pth->volfade 	= Tdecode16( &pth->volfade);
 					
@@ -285,25 +283,22 @@ static OSErr mainXI(void		*unused,
 					
 					// Read SAMPLE HEADERS
 					
-					for (x = 0; x < InsHeader->numSamples; x++)
-					{
+					for (x = 0; x < InsHeader->numSamples; x++) {
 						sData	*curData;
-						long	i;
-						int 	finetune[ 16] =
-						{
+						int 	finetune[16] = {
 							7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280,
 							8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
 						};
 						
-						wh = (XMWAVHEADER*) (theXI + 0x42 + 0x02 + sizeof( XMPATCHHEADER) + x * sizeof( XMWAVHEADER));
+						wh = (XMWAVHEADER*) (theXI + 0x42 + 0x02 + sizeof(XMPATCHHEADER) + x * sizeof(XMWAVHEADER));
 						
-						wh->length 		= Tdecode32( &wh->length);
-						wh->loopstart 	= Tdecode32( &wh->loopstart);
-						wh->looplength 	= Tdecode32( &wh->looplength);
+						wh->length 		= Tdecode32(&wh->length);
+						wh->loopstart 	= Tdecode32(&wh->loopstart);
+						wh->looplength 	= Tdecode32(&wh->looplength);
 						
 						///////////
 						
-						curData = sample[ x] = inMADCreateSample();
+						curData = sample[x] = inMADCreateSample();
 						
 						curData->size		= wh->length;
 						curData->loopBeg 	= wh->loopstart;
@@ -313,44 +308,40 @@ static OSErr mainXI(void		*unused,
 						curData->c2spd		= finetune[ (wh->finetune + 128)/16];
 						curData->loopType	= 0;
 						curData->amp		= 8;
-						if (wh->type & 0x10)		// 16 Bits
-						{
+						if (wh->type & 0x10) {		// 16 Bits
 							curData->amp = 16;
 						}
-						if (!(wh->type & 0x3))
-						{
+						
+						if (!(wh->type & 0x3)) {
 							curData->loopBeg = 0;
 							curData->loopSize = 0;
 						}
 						
-						//	curData->panning	= wh->panning;
+						//curData->panning	= wh->panning;
 						curData->relNote	= wh->relnote;
-						for (i = 0; i < 22; i++) curData->name[ i] = wh->samplename[ i];
+						strlcpy(curData->name, wh->samplename, sizeof(wh->samplename));
 					}
 					
 					// Read SAMPLE DATA
 					{
 						Ptr reader = (Ptr) wh;
 						
-						reader += sizeof( XMWAVHEADER);
+						reader += sizeof(XMWAVHEADER);
 						
-						for (x = 0; x < InsHeader->numSamples; x++)
-						{
+						for (x = 0; x < InsHeader->numSamples; x++) {
 							sData *curData = sample[ x];
 							
-							curData->data = malloc( curData->size);
-							if (curData->data != NULL)
-							{
+							curData->data = malloc(curData->size);
+							if (curData->data != NULL) {
 								memcpy(curData->data, reader, curData->size);
 								
-								if (curData->amp == 16)
-								{
+								if (curData->amp == 16) {
 									short	*tt;
 									long	tL;
 									
 									tt = (short*)curData->data;
 									
-									for (tL = 0; tL < curData->size/2; tL++) {
+									for (tL = 0; tL < curData->size / 2; tL++) {
 										PPLE16((Ptr)(tt + tL));
 									}
 									
@@ -361,26 +352,22 @@ static OSErr mainXI(void		*unused,
 										
 										oldV = 0;
 										
-										for (xL = 0; xL < curData->size/2; xL++)
-										{
-											newV = tt[ xL] + oldV;
-											tt[ xL] = newV;
+										for (xL = 0; xL < curData->size / 2; xL++) {
+											newV = tt[xL] + oldV;
+											tt[xL] = newV;
 											oldV = newV;
 										}
 									}
-								}
-								else
-								{
+								} else {
 									/* Delta to Real */
 									long	oldV, newV;
 									long	xL;
 									
 									oldV = 0;
 									
-									for (xL = 0; xL < curData->size; xL++)
-									{
-										newV = curData->data[ xL] + oldV;
-										curData->data[ xL] = newV;
+									for (xL = 0; xL < curData->size; xL++) {
+										newV = curData->data[xL] + oldV;
+										curData->data[xL] = newV;
 										oldV = newV;
 									}
 								}
@@ -391,7 +378,7 @@ static OSErr mainXI(void		*unused,
 					}
 				}
 				
-				iClose( iFileRefI);
+				iClose(iFileRefI);
 			}
 		}
 			break;
@@ -400,37 +387,33 @@ static OSErr mainXI(void		*unused,
 		{
 			Ptr	theSound;
 			
-			iFileRefI = iFileOpenRead( file);
-			if (iFileRefI != NULL)
-			{
+			iFileRefI = iFileOpenRead(file);
+			if (iFileRefI != NULL) {
 				inOutCount = 50L;
-				theSound = malloc( inOutCount);
-				if (theSound == NULL) myErr = MADNeedMemory;
-				else
-				{
-					iRead( inOutCount, theSound, iFileRefI);
+				theSound = malloc(inOutCount);
+				if (theSound == NULL)
+					myErr = MADNeedMemory;
+				else {
+					iRead(inOutCount, theSound, iFileRefI);
 					
-					myErr = TestXI( (Ptr) theSound);
+					myErr = TestXI(theSound);
 				}
 				
-				free( theSound);
-				
-				iClose( iFileRefI);
+				free(theSound);
+				iClose(iFileRefI);
 			}
 		}
 			break;
 			
 		case 'EXPL':
-			iFileCreate( file, 'XI  ');
-			iFileRefI = iFileOpenWrite( file);
+			iFileCreate(file, 'XI  ');
+			iFileRefI = iFileOpenWrite(file);
 			
-			if (iFileRefI != NULL)
-			{
+			if (iFileRefI != NULL) {
 				// Write instrument header
 				
-				short			u, /*v, p,*/ i, x;
+				short			u, i, x;
 				long			inOutCount = 0;
-				//long			ihsizecopy, ihssizecopy;
 				XMPATCHHEADER	pth;
 				char			start[ 0x42];
 				
@@ -444,23 +427,21 @@ static OSErr mainXI(void		*unused,
 				
 				memcpy(pth.what, InsHeader->what, 96);
 				memcpy(pth.volenv, InsHeader->volEnv, 48);
-				for (x = 0; x < 24; x++)
-				{
-					pth.volenv[ x] = Tdecode16( &pth.volenv[ x]);
+				for (x = 0; x < 24; x++) {
+					pth.volenv[x] = Tdecode16(&pth.volenv[x]);
 				}
 				
-				pth.volpts = InsHeader->volSize;
-				pth.volflg = InsHeader->volType;
-				pth.volsus = InsHeader->volSus;
-				pth.volbeg = InsHeader->volBeg;
-				pth.volend = InsHeader->volEnd;
+				pth.volpts	= InsHeader->volSize;
+				pth.volflg	= InsHeader->volType;
+				pth.volsus	= InsHeader->volSus;
+				pth.volbeg	= InsHeader->volBeg;
+				pth.volend	= InsHeader->volEnd;
 				pth.volfade = InsHeader->volFade;
-				pth.volfade 	= Tdecode16( &pth.volfade);
+				pth.volfade = Tdecode16(&pth.volfade);
 				
 				memcpy(pth.panenv, InsHeader->pannEnv, 48);
-				for (x = 0; x < 24; x++)
-				{
-					pth.panenv[ x] = Tdecode16( &pth.panenv[ x]);
+				for (x = 0; x < 24; x++) {
+					pth.panenv[x] = Tdecode16(&pth.panenv[x]);
 				}
 				
 				pth.panpts = InsHeader->pannSize;
@@ -470,20 +451,19 @@ static OSErr mainXI(void		*unused,
 				pth.panend = InsHeader->pannEnd;
 				
 				inOutCount = sizeof( XMPATCHHEADER);
-				iWrite(inOutCount, (Ptr)&pth, iFileRefI);
+				iWrite(inOutCount, &pth, iFileRefI);
 				
 				inOutCount = 2;
 				x = InsHeader->numSamples;
-				x = Tdecode16( &x);
-				iWrite(inOutCount, (Ptr)&x, iFileRefI);
+				x = Tdecode16(&x);
+				iWrite(inOutCount, &x, iFileRefI);
 				
 				/** WRITE samples */
 				
-				for (u = 0 ; u < InsHeader->numSamples ; u++)
-				{
+				for (u = 0 ; u < InsHeader->numSamples ; u++) {
 					XMWAVHEADER		wh;
 					sData			*curData;
-					int 	finetune[ 16] =
+					int 	finetune[16] =
 					{
 						7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280,
 						8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
@@ -491,16 +471,17 @@ static OSErr mainXI(void		*unused,
 					
 					curData = sample[ u];
 					
-					if (curData->stereo) wh.length = curData->size / 2;
-					else wh.length = curData->size;
+					if (curData->stereo)
+						wh.length = curData->size / 2;
+					else
+						wh.length = curData->size;
 					
 					inOutCount += wh.length;
 					
 					wh.loopstart	= curData->loopBeg;
 					wh.looplength	= curData->loopSize;
 					
-					if (curData->stereo)
-					{
+					if (curData->stereo) {
 						wh.loopstart /=2;
 						wh.looplength /=2;
 					}
@@ -508,11 +489,10 @@ static OSErr mainXI(void		*unused,
 					wh.volume		= curData->vol;
 					
 					wh.finetune = -128;
-					if (curData->c2spd > 8757) wh.finetune = 127;
-					else
-					{
-						while( finetune[ (wh.finetune + 128)/16] < curData->c2spd)
-						{
+					if (curData->c2spd > 8757)
+						wh.finetune = 127;
+					else {
+						while (finetune[(wh.finetune + 128)/16] < curData->c2spd) {
 							wh.finetune += 16;
 						}
 					}
@@ -522,92 +502,83 @@ static OSErr mainXI(void		*unused,
 					
 					//	wh.panning = curData->panning;
 					wh.relnote = curData->relNote;
-					for (x = 0; x < 22; x++) wh.samplename[ x] = curData->name[ x];
+					strlcpy(wh.samplename, curData->name, sizeof(wh.samplename));
 					
-					wh.length 		= Tdecode32( &wh.length);
-					wh.loopstart 	= Tdecode32( &wh.loopstart);
-					wh.looplength 	= Tdecode32( &wh.looplength);
+					wh.length 		= Tdecode32(&wh.length);
+					wh.loopstart 	= Tdecode32(&wh.loopstart);
+					wh.looplength 	= Tdecode32(&wh.looplength);
 					
 					inOutCount = sizeof( wh);
 					iWrite(inOutCount, (Ptr)&wh, iFileRefI);
 				}
 				
-				for (u = 0 ; u < InsHeader->numSamples ; u++)
-				{
-					sData 	*curData = sample[ u];
+				for (u = 0 ; u < InsHeader->numSamples ; u++) {
+					sData 	*curData = sample[u];
 					char	*tempPtr;
 					long	dstSize;
 					
-					tempPtr = malloc( curData->size);
+					tempPtr = malloc(curData->size);
 					
 					/// WriteData
-					if (tempPtr != NULL)
-					{
+					if (tempPtr != NULL) {
 						memcpy(tempPtr, curData->data, curData->size);
 						
 						dstSize = curData->size;
 						
-						if (curData->amp == 16)
-						{
-							short	*tt = (short*) tempPtr;
+						if (curData->amp == 16) {
+							short	*tt = (short*)tempPtr;
 							long	tL;
 							
 							/* Real to Delta */
 							long	oldV, newV;
 							long	xL;
 							
-							if (curData->stereo)
-							{
+							if (curData->stereo) {
 								for (i = 0; i < dstSize; i++) tt[ i] = tt[ i*2];
 								dstSize /= 2;
 							}
 							
 							oldV = 0;
 							
-							for (xL = 0; xL < dstSize/2; xL++)
-							{
+							for (xL = 0; xL < dstSize/2; xL++) {
 								newV = tt[ xL];
 								tt[ xL] -= oldV;
 								oldV = newV;
 							}
 							
-							for (tL = 0; tL < dstSize/2; tL++)
-							{
-								*(tt + tL) = Tdecode16( (void*) (tt + tL));
+							for (tL = 0; tL < dstSize/2; tL++) {
+								*(tt + tL) = Tdecode16((void*)(tt + tL));
 							}
-						}
-						else
-						{
+						} else {
 							/* Real to Delta */
 							long	oldV, newV;
 							long	xL;
 							char	*tt = (char*) tempPtr;
 							
-							if (curData->stereo)
-							{
-								for (i = 0; i < dstSize; i++) tt[ i] = tt[ i*2];
+							if (curData->stereo) {
+								for (i = 0; i < dstSize; i++)
+									tt[i] = tt[i * 2];
 								dstSize /= 2;
 							}
 							
 							oldV = 0;
 							
-							for (xL = 0; xL < dstSize; xL++)
-							{
-								newV = tt[ xL];
-								tt[ xL] -= oldV;
+							for (xL = 0; xL < dstSize; xL++) {
+								newV = tt[xL];
+								tt[xL] -= oldV;
 								oldV = newV;
 							}
 						}
 						
 						inOutCount = dstSize;
-						iWrite( inOutCount, tempPtr, iFileRefI);
+						iWrite(inOutCount, tempPtr, iFileRefI);
 						
 						
-						free( tempPtr);
+						free(tempPtr);
 					}
 				}
 				
-				iClose( iFileRefI);
+				iClose(iFileRefI);
 			}
 			break;
 			

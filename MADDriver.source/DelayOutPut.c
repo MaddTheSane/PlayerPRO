@@ -194,7 +194,7 @@ void Sampler16AddDelay(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDr
   		PrepareInline(&VolInter1, &rVolInter1, intDriver->ASCBUFFER, chnVolS, chnVolD);
   		PrepareInline(&VolInter2, &rVolInter2, intDriver->ASCBUFFER, chnVol2S, chnVol2D);
   		
-		while(i-- > 0) {
+		while (i-- > 0) {
 			rVolInter2 += VolInter2;
 			chnVol2 = rVolInter2 >> BYTEDIV;
 			
@@ -509,9 +509,9 @@ void Sampler16Addin16Delay(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *i
 		short 		spreVal = curVoice->spreVal, spreVal2 = curVoice->spreVal2;
 		
 		PrepareInline(&VolInter1, &rVolInter1, intDriver->ASCBUFFER, chnVolS, chnVolD);
-  		PrepareInline(&VolInter2, &rVolInter2, intDriver->ASCBUFFER, chnVol2S, chnVol2D);
-  		
-		while( i-- > 0) {
+		PrepareInline(&VolInter2, &rVolInter2, intDriver->ASCBUFFER, chnVol2S, chnVol2D);
+		
+		while ( i-- > 0) {
 			rVolInter2 += VolInter2;
 			chnVol2 = rVolInter2 >> BYTEDIV;
 			
@@ -526,7 +526,7 @@ void Sampler16Addin16Delay(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *i
 				if (curVoice->loopType == ePingPongLoop && curVoice->loopSize > 0) {		// PINGPONG
 					preOff = off;
 					if (((SndBuffer + off +1 >= (short*) curVoice->maxPtr) && !curVoice->pingpong) ||
-					   (SndBuffer + off +1 <= (short*) (curVoice->begPtr + curVoice->loopBeg) && curVoice->pingpong)) {
+						(SndBuffer + off +1 <= (short*) (curVoice->begPtr + curVoice->loopBeg) && curVoice->pingpong)) {
 						curVoice->pingpong = !curVoice->pingpong;
 						aDD = -aDD;
 						aCC += aDD;
@@ -666,12 +666,12 @@ void Sampler16Addin16DelayStereo(Channel *curVoice, SInt32	*ASCBuffer, MADDriver
 	{
 		short	*SndBuffer = (short*)	curVoice->curPtr;
 		SInt32	RightWeight, LeftWeight, preOff = curVoice->preOff;
-  		short	spreVal = curVoice->spreVal, spreValR = curVoice->spreValR, spreVal2 = curVoice->spreVal2, spreVal2R = curVoice->spreVal2R;
+		short	spreVal = curVoice->spreVal, spreValR = curVoice->spreValR, spreVal2 = curVoice->spreVal2, spreVal2R = curVoice->spreVal2R;
 		
 		PrepareInline( &VolInter1, &rVolInter1, intDriver->ASCBUFFER, chnVolS, chnVolD);
-  		PrepareInline( &VolInter2, &rVolInter2, intDriver->ASCBUFFER, chnVol2S, chnVol2D);
-  		
-		while(i-- > 0) {
+		PrepareInline( &VolInter2, &rVolInter2, intDriver->ASCBUFFER, chnVol2S, chnVol2D);
+		
+		while (i-- > 0) {
 			rVolInter2 += VolInter2;
 			chnVol2 = rVolInter2 >> BYTEDIV;
 			
@@ -686,7 +686,7 @@ void Sampler16Addin16DelayStereo(Channel *curVoice, SInt32	*ASCBuffer, MADDriver
 				if (curVoice->loopType == ePingPongLoop && curVoice->loopSize > 0) {		// PINGPONG
 					preOff = off;
 					if ((SndBuffer + off +3 >= (short*) curVoice->maxPtr && !curVoice->pingpong) ||
-					   (SndBuffer + off +2 <= (short*) (curVoice->begPtr + curVoice->loopBeg) && curVoice->pingpong)) {
+						(SndBuffer + off +2 <= (short*) (curVoice->begPtr + curVoice->loopBeg) && curVoice->pingpong)) {
 						curVoice->pingpong = !curVoice->pingpong;
 						aDD = -aDD;
 						aCC += aDD;
@@ -874,8 +874,7 @@ void Sampler8in8AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *int
 		SInt32	RightWeight, LeftWeight, preOff = curVoice->preOff;
 		char  	preVal = curVoice->preVal, preVal2 = curVoice->preVal2;
 		
-		while( i-- > 0)
-		{
+		while (i-- > 0) {
 			RightWeight = aCC & ((1 << BYTEDIV) - 1);
 			LeftWeight = (1 << BYTEDIV) - RightWeight;
 			off = aCC>>BYTEDIV;
@@ -884,7 +883,7 @@ void Sampler8in8AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *int
 				if (curVoice->loopType == ePingPongLoop && curVoice->loopSize > 0) {		// PINGPONG
 					preOff = off;
 					if ((SndBuffer + off +1 >= curVoice->maxPtr && !curVoice->pingpong) ||
-					   (SndBuffer + off +1 <= curVoice->begPtr + curVoice->loopBeg && curVoice->pingpong)) {
+						(SndBuffer + off +1 <= curVoice->begPtr + curVoice->loopBeg && curVoice->pingpong)) {
 						curVoice->pingpong = !curVoice->pingpong;
 						aDD = -aDD;
 						aCC += aDD;
@@ -1002,8 +1001,7 @@ void Sampler8in16AddDelay(Channel *curVoice, short *ASCBuffer, MADDriverRec *int
 		SndBuffer++;
 #endif
 		
-		while( i-- > 0)
-		{
+		while (i-- > 0) {
 			RightWeight = aCC & ((1 << BYTEDIV) - 1);
 			LeftWeight = (1 << BYTEDIV) - RightWeight;
 			off = aCC>>BYTEDIV;
@@ -1127,7 +1125,7 @@ void Sampler8in8AddDelayStereo(Channel *curVoice, short *ASCBuffer, MADDriverRec
 		SInt32	RightWeight, LeftWeight, preOff = curVoice->preOff;
 		char	preVal = curVoice->preVal, preValR = curVoice->preValR, preVal2 = curVoice->preVal2, preVal2R = curVoice->preVal2R;
 		
-		while( i-- > 0) {
+		while (i-- > 0) {
 			RightWeight = aCC & ((1 << BYTEDIV) - 1);
 			LeftWeight = (1 << BYTEDIV) - RightWeight;
 			off = 2*(aCC>>BYTEDIV);
@@ -1261,7 +1259,7 @@ void Sampler8in16AddDelayStereo( Channel *curVoice, short	*ASCBuffer, MADDriverR
 		SndBuffer++;
 #endif
 		
-		while(i-- > 0) {
+		while (i-- > 0) {
 			RightWeight = aCC & ((1 << BYTEDIV) - 1);
 			LeftWeight = (1 << BYTEDIV) - RightWeight;
 			off = 2*(aCC>>BYTEDIV);

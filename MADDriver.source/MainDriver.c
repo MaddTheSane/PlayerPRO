@@ -3455,7 +3455,7 @@ PatData* DecompressPartitionMAD1(MADMusic *MDriver, PatData* myPat)
 	
 	/*** Decompression Routine ***/
 	
-	while(maxCmd != 0) {
+	while (maxCmd != 0) {
 		maxCmd--;
 		
 		MADKillCmd( myCmd);
@@ -3504,7 +3504,7 @@ PatData* CompressPartitionMAD1(MADMusic *MDriver, PatData* myPat)
 	
 	/*** Compression Routine ***/
 		
-	while(maxCmd != 0) {
+	while (maxCmd != 0) {
 		maxCmd--;
 		
 		// Set byte

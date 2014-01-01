@@ -1029,8 +1029,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 				short			modifc2spd = 0;
 				SInt32			copyc2spd;
 				
-				SInt32 	finetune[ 16] =
-				{
+				SInt32 	finetune[16] = {
 					7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280,
 					8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
 				};
@@ -1041,14 +1040,12 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 				
 				copyc2spd = curData->c2spd;
 				
-				if (curData->c2spd > 8757 || curData->c2spd < 7895)
-				{
-#define BASECALC	45
+				if (curData->c2spd > 8757 || curData->c2spd < 7895) {
+#define BASECALC 45
 					
 					wh.finetune = 0;			// <- 8363 Hz
 					
-					while( XMGetPeriod( BASECALC, curData->c2spd) < XMGetPeriod( BASECALC + modifc2spd, 8363))
-					{
+					while (XMGetPeriod( BASECALC, curData->c2spd) < XMGetPeriod( BASECALC + modifc2spd, 8363)) {
 						modifc2spd++;
 					}
 					
@@ -1061,19 +1058,17 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 					wh.loopstart	= curData->loopBeg;
 					wh.looplength	= curData->loopSize;
 					
-					if (curData->stereo)
-					{
+					if (curData->stereo) {
 						wh.length /= 2;
 						wh.loopstart /= 2;
 						wh.looplength /= 2;
 					}
 					
 					wh.finetune = -128;
-					if (curData->c2spd > 8757) wh.finetune = 127;
-					else
-					{
-						while( finetune[ (wh.finetune + 128)/16] < curData->c2spd)
-						{
+					if (curData->c2spd > 8757)
+						wh.finetune = 127;
+					else {
+						while (finetune[(wh.finetune + 128)/16] < curData->c2spd) {
 							wh.finetune += 16;
 						}
 					}
@@ -1082,58 +1077,53 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 				curData->c2spd = copyc2spd;
 				
 				wh.type = 0;
-				if (curData->amp == 16) wh.type += 0x10;
-				if (curData->loopSize > 0)
-				{
-					if (curData->loopType == ePingPongLoop) wh.type += 0x2;
-					else wh.type += 0x1;
+				if (curData->amp == 16)
+					wh.type |= 0x10;
+				if (curData->loopSize > 0) {
+					if (curData->loopType == ePingPongLoop)
+						wh.type |= 0x2;
+					else
+						wh.type |= 0x1;
 				}
 				
 				wh.panning = 128;	//curData->panning;
 				wh.relnote = curData->relNote + modifc2spd;
-				for( x = 0; x < 22; x++) wh.samplename[ x] = curData->name[ x];
+				strlcpy(wh.samplename, curData->name, sizeof(wh.samplename));
 				
 				theXMReadCopy = theXMRead;
-				PPLE32( &wh.length);		WRITEXMFILE( &wh.length,		4);
-				PPLE32( &wh.loopstart);	WRITEXMFILE( &wh.loopstart,		4);
-				PPLE32( &wh.looplength);	WRITEXMFILE( &wh.looplength,	4);
-				WRITEXMFILE( &wh.volume,		1);
-				WRITEXMFILE( &wh.finetune,		1);
-				WRITEXMFILE( &wh.type,			1);
-				wh.panning		= 128;							WRITEXMFILE( &wh.panning,		1);
-				WRITEXMFILE( &wh.relnote,		1);
-				WRITEXMFILE( &wh.reserved,		1);
-				WRITEXMFILE( &wh.samplename,		22);
+				PPLE32(&wh.length);		WRITEXMFILE(&wh.length,		4);
+				PPLE32(&wh.loopstart);	WRITEXMFILE(&wh.loopstart,	4);
+				PPLE32(&wh.looplength);	WRITEXMFILE(&wh.looplength,	4);
+				WRITEXMFILE(&wh.volume,			1);
+				WRITEXMFILE(&wh.finetune,		1);
+				WRITEXMFILE(&wh.type,			1);
+				wh.panning		= 128;	WRITEXMFILE(&wh.panning,	1);
+				WRITEXMFILE(&wh.relnote,		1);
+				WRITEXMFILE(&wh.reserved,		1);
+				WRITEXMFILE(&wh.samplename,		22);
 				theXMRead = theXMReadCopy + ihssizecopy;
 			}
 			
 			/** WRITE samples data **/
 			
-			for( u = 0 ; u < curIns->numSamples ; u++)
-			{
-				sData	*curData = theMAD->sample[ t*MAXSAMPLE + u];
+			for( u = 0 ; u < curIns->numSamples ; u++) {
+				sData	*curData = theMAD->sample[t * MAXSAMPLE + u];
 				Ptr		theXMReadCopy = theXMRead;
 				SInt32	curSize;
 				
-				WRITEXMFILE( curData->data, curData->size);
+				WRITEXMFILE(curData->data, curData->size);
 				curSize = curData->size;
 				
-				if (curData->stereo)
-				{
-					if (curData->amp == 8)
-					{
-						for( x = 0 ; x < curSize; x+=2)
-						{
-							theXMReadCopy[ x / 2] = ((SInt32) theXMReadCopy[ x] + (SInt32) theXMReadCopy[ x + 1]) / 2L;
+				if (curData->stereo) {
+					if (curData->amp == 8) {
+						for (x = 0 ; x < curSize; x += 2) {
+							theXMReadCopy[x / 2] = ((SInt32)theXMReadCopy[x] + (SInt32) theXMReadCopy[x + 1]) / 2L;
 						}
-					}
-					else
-					{
-						short *short16out = (short*) theXMReadCopy, *short16in = (short*) theXMReadCopy;
+					} else {
+						short *short16out = (short*)theXMReadCopy, *short16in = (short*)theXMReadCopy;
 						
-						for( x = 0 ; x < curSize/2; x+=2)
-						{
-							short16out[ x / 2] = ((SInt32) short16in[ x] + (SInt32) short16in[ x + 1]) / 2L;
+						for (x = 0 ; x < curSize/2; x += 2) {
+							short16out[x / 2] = ((SInt32)short16in[x] + (SInt32)short16in[x + 1]) / 2;
 						}
 					}
 					
@@ -1141,8 +1131,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 					theXMRead -= curSize;
 				}
 				
-				if (curData->amp == 16)
-				{
+				if (curData->amp == 16) {
 					short	*tt = (short*) theXMReadCopy;
 					SInt32	tL;
 					
@@ -1152,20 +1141,16 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 					
 					oldV = 0;
 					
-					for( xL = 0; xL < curSize/2; xL++)
-					{
+					for (xL = 0; xL < curSize / 2; xL++) {
 						newV = tt[ xL];
 						tt[ xL] -= oldV;
 						oldV = newV;
 					}
 					
-					for( tL = 0; tL < curSize/2; tL++)
-					{
-						PPLE16( (Ptr) (tt + tL));
+					for(tL = 0; tL < curSize / 2; tL++) {
+						PPLE16((Ptr)(tt + tL));
 					}
-				}
-				else
-				{
+				} else {
 					/* Real to Delta */
 					SInt32	oldV, newV;
 					SInt32	xL;
@@ -1173,10 +1158,9 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 					
 					oldV = 0;
 					
-					for( xL = 0; xL < curSize; xL++)
-					{
-						newV = theXMReadCopy[ xL];
-						theXMReadCopy[ xL] -= oldV;
+					for(xL = 0; xL < curSize; xL++) {
+						newV = theXMReadCopy[xL];
+						theXMReadCopy[xL] -= oldV;
 						oldV = newV;
 					}
 				}
@@ -1189,38 +1173,34 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 	return finalXMPtr;
 }
 
-static inline Boolean compMem( Ptr a, Ptr b, long s)
+static inline Boolean compMem(const void *a, const void *b, size_t s)
 {
-	long 	i;
-	
-	for( i = 0; i < s; i++)
-	{
-		if (a[ i] != b[ i]) return false;
+	if (memcmp(a, b, s) == 0) {
+		return true;
+	} else {
+		return false;
 	}
-	
-	return true;
 }
 
 static OSErr TestXMFile( Ptr AlienFile)
 {
-	if (compMem( AlienFile, "Extended Module: ", 17))
-	{
+	if (compMem(AlienFile, "Extended Module: ", 17)) {
 		theXMRead = AlienFile;
 		
 		/********************/
 		/** READ XM HEADER **/
 		/********************/
 		
-		READXMFILE( mh, sizeof(XMHEADER));
+		READXMFILE(mh, sizeof(XMHEADER));
 		/* BigEndian <-> LittleEndian */
 		
-		PPLE16( &mh->version);
-		PPLE16( &mh->songlength);
-		PPLE16( &mh->numchn);
-		PPLE16( &mh->numpat);
-		PPLE16( &mh->numins);
+		PPLE16(&mh->version);
+		PPLE16(&mh->songlength);
+		PPLE16(&mh->numchn);
+		PPLE16(&mh->numpat);
+		PPLE16(&mh->numins);
 		
-		switch( mh->version)
+		switch (mh->version)
 		{
 			case 0x104:
 				break;
@@ -1234,7 +1214,7 @@ static OSErr TestXMFile( Ptr AlienFile)
 	return MADFileNotSupportedByThisPlug;
 }
 
-static OSErr ExtractXMInfo( PPInfoRec *info, Ptr AlienFile)
+static OSErr ExtractXMInfo(PPInfoRec *info, void *AlienFile)
 {
 	short	i;
 	
@@ -1245,15 +1225,15 @@ static OSErr ExtractXMInfo( PPInfoRec *info, Ptr AlienFile)
 	/** READ XM HEADER **/
 	/********************/
 	
-	READXMFILE( mh, sizeof(XMHEADER));
+	READXMFILE(mh, sizeof(XMHEADER));
 	/* BigEndian <-> LittleEndian */
 	
-	PPLE16( &mh->version);
-	PPLE16( &mh->songlength);
-	PPLE16( &mh->numchn);
-	PPLE16( &mh->numpat);
-	PPLE16( &mh->numins);
-	PPLE16( &mh->flags);
+	PPLE16(&mh->version);
+	PPLE16(&mh->songlength);
+	PPLE16(&mh->numchn);
+	PPLE16(&mh->numpat);
+	PPLE16(&mh->numins);
+	PPLE16(&mh->flags);
 	
 	switch( mh->version)
 	{
@@ -1271,12 +1251,10 @@ static OSErr ExtractXMInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	for(i = 0; i < 21; i++)
-	{
-		info->internalFileName[ i] = mh->songname[ i];
-		if (info->internalFileName[ i] == 0 || info->internalFileName[ i] == 0x1a)
-		{
-			info->internalFileName[ i] = 0;
+	for(i = 0; i < 21; i++) {
+		info->internalFileName[i] = mh->songname[i];
+		if (info->internalFileName[i] == 0 || info->internalFileName[i] == 0x1a) {
+			info->internalFileName[i] = 0;
 			i = 21;
 		}
 	}
@@ -1297,8 +1275,10 @@ static OSErr ExtractXMInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	info->totalTracks = mh->numchn;
 	
-	if (mh->flags &1) strlcpy( info->formatDescription, "XM Linear Plug", sizeof(info->formatDescription));
-	else strlcpy( info->formatDescription, "XM Log Plug", sizeof(info->formatDescription));
+	if (mh->flags & 1)
+		strlcpy(info->formatDescription, "XM Linear Plug", sizeof(info->formatDescription));
+	else
+		strlcpy(info->formatDescription, "XM Log Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -1310,8 +1290,8 @@ EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPIn
 
 EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy( p->type, 		"XM  ", sizeof(p->type));
-	strlcpy( p->MenuName, 	"XM Files", sizeof(p->MenuName));
+	strlcpy(p->type, 		"XM  ", sizeof(p->type));
+	strlcpy(p->MenuName, 	"XM Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImportExport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
@@ -1320,9 +1300,9 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 #endif
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainXM( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+OSErr mainXM(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	OSErr		myErr;
@@ -1332,109 +1312,103 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	
 	myErr = noErr;
 	
-	if (!XM_Init( init)) return MADNeedMemory;
+	if (!XM_Init(init))
+		return MADNeedMemory;
 	
-	switch( order)
+	switch(order)
 	{
 		case MADPlugExport:
-			AlienFile = ConvertMad2XM( MadFile, init, &sndSize);
+			AlienFile = ConvertMad2XM(MadFile, init, &sndSize);
 			
-			if (AlienFile != NULL)
-			{
+			if (AlienFile != NULL) {
 				iFileCreate( AlienFileName, 'XM  ');
 				iFileRefI = iFileOpenWrite( AlienFileName);
-				if (iFileRefI)
-				{
-					iWrite( sndSize, AlienFile, iFileRefI);
-					iClose( iFileRefI);
-				}
-				else
-				{
+				if (iFileRefI) {
+					iWrite(sndSize, AlienFile, iFileRefI);
+					iClose(iFileRefI);
+				} else {
 					myErr = MADWritingErr;
 				}
-				free( AlienFile);	AlienFile = NULL;
-			}
-			else myErr = MADNeedMemory;
+				free(AlienFile);	AlienFile = NULL;
+			} else
+				myErr = MADNeedMemory;
 			break;
 			
 		case MADPlugImport:
-			iFileRefI = iFileOpenRead( AlienFileName);
-			if (iFileRefI)
-			{
-				sndSize = iGetEOF( iFileRefI);
+			iFileRefI = iFileOpenRead(AlienFileName);
+			if (iFileRefI) {
+				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (Ptr)malloc( sndSize * 2L);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
+				AlienFile = (Ptr)malloc(sndSize * 2);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
-				else
-				{
-					free( AlienFile);
+				else {
+					free(AlienFile);
 					
-					AlienFile = (Ptr)malloc( sndSize);
-					if (AlienFile == NULL) myErr = MADNeedMemory;
-					else
-					{
-						iRead( sndSize, AlienFile, iFileRefI);
+					AlienFile = (Ptr)malloc(sndSize);
+					if (AlienFile == NULL)
+						myErr = MADNeedMemory;
+					else {
+						iRead(sndSize, AlienFile, iFileRefI);
 						
-						myErr = TestXMFile( AlienFile);
-						if (myErr == noErr)
-						{
+						myErr = TestXMFile(AlienFile);
+						if (myErr == noErr) {
 							myErr = XM_Load( AlienFile,  sndSize, MadFile, init);
 						}
 					}
-					free( AlienFile);	AlienFile = NULL;
+					free(AlienFile);	AlienFile = NULL;
 				}
-				iClose( iFileRefI);
-			}
-			else myErr = MADReadingErr;
+				iClose(iFileRefI);
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		case MADPlugTest:
-			iFileRefI = iFileOpenRead( AlienFileName);
-			if (iFileRefI)
-			{
+			iFileRefI = iFileOpenRead(AlienFileName);
+			if (iFileRefI) {
 				sndSize = 1024L;
 				
-				AlienFile = (Ptr)malloc( sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
-					myErr = iRead( sndSize, AlienFile, iFileRefI);
+				AlienFile = (Ptr)malloc(sndSize);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
+					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					
-					if(myErr == noErr) myErr = TestXMFile( AlienFile);
+					if(myErr == noErr)
+						myErr = TestXMFile(AlienFile);
 					
-					free( AlienFile);	AlienFile = NULL;
+					free(AlienFile);	AlienFile = NULL;
 				}
-				iClose( iFileRefI);
-			}
-			else myErr = MADReadingErr;
+				iClose(iFileRefI);
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		case 'INFO':
-			iFileRefI = iFileOpenRead( AlienFileName);
-			if (iFileRefI)
-			{
-				info->fileSize = iGetEOF( iFileRefI);
+			iFileRefI = iFileOpenRead(AlienFileName);
+			if (iFileRefI) {
+				info->fileSize = iGetEOF(iFileRefI);
 				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (Ptr)malloc( sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
-					myErr = iRead( sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr)
-					{
-						myErr = TestXMFile( AlienFile);
-						if (!myErr) myErr = ExtractXMInfo( info, AlienFile);
+				AlienFile = (Ptr)malloc(sndSize);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
+					myErr = iRead(sndSize, AlienFile, iFileRefI);
+					if (myErr == noErr) {
+						myErr = TestXMFile(AlienFile);
+						if (!myErr)
+							myErr = ExtractXMInfo(info, AlienFile);
 					}
-					free( AlienFile);	AlienFile = NULL;
+					free(AlienFile);	AlienFile = NULL;
 				}
-				iClose( iFileRefI);
-			}
-			else myErr = MADReadingErr;
+				iClose(iFileRefI);
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		default:
