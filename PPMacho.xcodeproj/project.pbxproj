@@ -8509,12 +8509,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
-				CLANG_WARN_EMPTY_BODY = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -8529,14 +8527,12 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
-				CLANG_WARN_EMPTY_BODY = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

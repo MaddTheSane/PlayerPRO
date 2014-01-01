@@ -18,16 +18,14 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
+	<key>MADCanExport</key>
+	<false/>
+	<key>MADCanImport</key>
+	<true/>
 	<key>MADPlugAuthorName</key>
 	<string>Written by A.ROSSET 96</string>
 	<key>MADPlugMenuName</key>
 	<string>IT</string>
-	<key>MADCanImport</key>
-	<true/>
-	<key>MADCanExport</key>
-	<false/>
-	<key>MADPlugMode</key>
-	<string>IMPL</string>
 	<key>MADPlugType</key>
 	<string>IT  </string>
 	<key>MADPlugUTITypes</key>

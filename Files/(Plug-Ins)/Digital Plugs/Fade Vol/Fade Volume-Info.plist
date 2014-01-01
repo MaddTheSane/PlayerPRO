@@ -6,14 +6,14 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
@@ -32,8 +32,6 @@
 			<string>02B1554B-DE52-4745-932C-2987AA19D4EF</string>
 		</array>
 	</dict>
-	<key>CSResourcesFileMapped</key>
-	<string>yes</string>
 	<key>MADPlugMenuName</key>
 	<string>Fade Volume</string>
 </dict>

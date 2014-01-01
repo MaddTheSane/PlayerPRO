@@ -10,10 +10,10 @@
 	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
@@ -32,8 +32,6 @@
 			<string>9545DB21-5ADE-49DC-9717-093D09EC4D39</string>
 		</array>
 	</dict>
-	<key>CSResourcesFileMapped</key>
-	<string>yes</string>
 	<key>MADPlugMenuName</key>
 	<string>Fade Note</string>
 </dict>
