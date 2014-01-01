@@ -1893,14 +1893,14 @@ void NoteAnalyse(MADDriverRec *intDriver)
 			{
 				case 8:
 					ComputeReverb8((Byte*)intDriver->ReverbPtr, (Byte*)intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->DriverSettings.ReverbStrength);
-					memmove(intDriver->ReverbPtr, intDriver->ReverbPtr + intDriver->ASCBUFFERReal*2L, intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L);
-					memmove(intDriver->ReverbPtr + intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L,intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L);
+					memmove(intDriver->ReverbPtr, (void*)((size_t)intDriver->ReverbPtr + intDriver->ASCBUFFERReal*2L), intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L);
+					memmove((void*)((size_t)intDriver->ReverbPtr + intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L), intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L);
 					break;
 					
 				case 16:
 					ComputeReverb16((short*) intDriver->ReverbPtr, (short*) intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->DriverSettings.ReverbStrength);
-					memmove( intDriver->ReverbPtr,intDriver->ReverbPtr + intDriver->ASCBUFFERReal*4, (intDriver->RDelay - intDriver->ASCBUFFERReal)*4);
-					memmove( intDriver->ReverbPtr + intDriver->RDelay*4 - intDriver->ASCBUFFERReal*4, intDriver->IntDataPtr, intDriver->ASCBUFFERReal*4);
+					memmove(intDriver->ReverbPtr, (void*)((size_t)intDriver->ReverbPtr + intDriver->ASCBUFFERReal*4), (intDriver->RDelay - intDriver->ASCBUFFERReal)*4);
+					memmove((void*)((size_t)intDriver->ReverbPtr + intDriver->RDelay*4 - intDriver->ASCBUFFERReal*4), intDriver->IntDataPtr, intDriver->ASCBUFFERReal*4);
 					break;
 			}
 		}

@@ -1122,7 +1122,7 @@ return; \
 - (IBAction)sortMusicList:(id)sender
 {
 	[self willChangeValueForKey:kMusicListKVO];
-	[musicList sortMusicList];
+	[musicList sortMusicListByName];
 	[self didChangeValueForKey:kMusicListKVO];
 	[self musicListContentsDidMove];
 }

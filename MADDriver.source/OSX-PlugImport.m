@@ -233,6 +233,7 @@ badplug:
 
 static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
+	PlugInfo *FillPlug;
 	static dispatch_once_t typeIDToken;
 	dispatch_once(&typeIDToken, ^{
 		stringtype = CFStringGetTypeID();
@@ -250,12 +251,11 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		return false;
 	}
 	
-	PlugInfo *FillPlug = &(inMADDriver->ThePlug[inMADDriver->TotalPlug]);
+	FillPlug = &(inMADDriver->ThePlug[inMADDriver->TotalPlug]);
 	{
-		FillPlug->version = CFBundleGetVersionNumber(tempBundle);
-		
 		CFTypeID InfoDictionaryType;
 		CFTypeRef OpaqueDictionaryType;
+		FillPlug->version = CFBundleGetVersionNumber(tempBundle);
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugTypeKey);
 		if (OpaqueDictionaryType == NULL) {
@@ -481,15 +481,17 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 					 MADMusic				*theNewMAD,
 					 PPInfoRec				*info)
 {
+	OSErr					iErr = noErr;
+	CFBundleRefNum			resFileNum;
+	MADDriverSettings		driverSettings = {0};
+	
 #ifdef __x86_64__
 	if (inMADDriver->ThePlug[PlugNo].is32BitOnly) {
 		return CallImportPlugXPC(inMADDriver, inMADDriver->ThePlug[PlugNo].type, order, AlienFile, theNewMAD, info);
 	}
 #endif
 	
-	OSErr					iErr = noErr;
-	CFBundleRefNum			resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
-	MADDriverSettings		driverSettings = {0};
+	resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
 	
 	iErr = (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);
 	
@@ -565,11 +567,12 @@ OSErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MAD
 	
 	for (int i = 0; i < inMADDriver->TotalPlug; i++) {
 		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
+			OSErr iErr;
 			*theNewMAD = (MADMusic*)calloc(sizeof(MADMusic), 1);
 			if (!theNewMAD)
 				return MADNeedMemory;
 			
-			OSErr iErr = CallImportPlug(inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
+			iErr = CallImportPlug(inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
 			if (iErr != noErr) {
 				free(*theNewMAD);
 				*theNewMAD = NULL;

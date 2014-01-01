@@ -728,12 +728,13 @@ OSErr MADChangeDriverSettings(MADDriverSettings *DriverInitParam, MADDriverRec**
 	Boolean		playing;
 	OSErr		err;
 	long		fullTime, curTime;
+	MADLibrary	*lib;
 	if (DriverInitParam == NULL || returnDriver == NULL) {
 		return MADParametersErr;
 	}
 	music = (*returnDriver)->curMusic;
 	playing = (*returnDriver)->Reading;
-	MADLibrary *lib = (*returnDriver)->lib;
+	lib = (*returnDriver)->lib;
 	
 	MADGetMusicStatus(*returnDriver, &fullTime, &curTime);
 	
@@ -1450,11 +1451,13 @@ OSErr MADLoadMADFileCString(MADMusic **music, const char *fName)
 static inline CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
 {
 	CFURLRef toDeref = theRef;
+	CFStringRef fileString;
+	CFIndex strLength;
 	if (resolveAgainstBase) {
 		toDeref = CFURLCopyAbsoluteURL(theRef);
 	}
-	CFStringRef fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
-	CFIndex strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
+	fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
+	strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
 	CFRelease(fileString);
 	if (resolveAgainstBase) {
 		CFRelease(toDeref);
@@ -1466,6 +1469,8 @@ static OSErr getCStringFromCFURL(CFURLRef theRef, char **cStrOut)
 {
 	char *URLcString = NULL, *trimURLcString = NULL;
 	size_t StrLen = 0;
+	CFIndex pathLen;
+	Boolean pathOK;
 	if (cStrOut == NULL) {
 		return MADParametersErr;
 	}
@@ -1473,13 +1478,13 @@ static OSErr getCStringFromCFURL(CFURLRef theRef, char **cStrOut)
 		*cStrOut = NULL;
 		return MADParametersErr;
 	}
-	CFIndex pathLen = getCFURLFilePathRepresentationLength(theRef, true);
+	pathLen = getCFURLFilePathRepresentationLength(theRef, true);
 	URLcString = malloc(pathLen);
 	if (URLcString == NULL) {
 		*cStrOut = NULL;
 		return MADNeedMemory;
 	}
-	Boolean pathOK = CFURLGetFileSystemRepresentation(theRef, true, (unsigned char*)URLcString, pathLen);
+	pathOK = CFURLGetFileSystemRepresentation(theRef, true, (unsigned char*)URLcString, pathLen);
 	if (pathOK == false) {
 		free(URLcString);
 		*cStrOut = NULL;
@@ -2286,6 +2291,7 @@ OSErr MADMusicSaveCString(MADMusic *music, const char *cName, Boolean compressMA
 	size_t	inOutCount;
 	UNFILE	curFile = NULL;
 	OSErr	theErr = noErr;
+	MADSpec aHeader;
 
 	if (music->musicUnderModification)
 		return MADWritingErr;
@@ -2311,13 +2317,12 @@ OSErr MADMusicSaveCString(MADMusic *music, const char *cName, Boolean compressMA
 	
 	music->header->numInstru = x;
 	
-	MADSpec aHeader;
 	aHeader = *music->header;
 	ByteSwapMADSpec(&aHeader);
 	iWrite(sizeof(MADSpec), &aHeader, curFile);
 	
 	if (compressMAD) {
-		for (short i = 0; i < music->header->numPat ; i++) {
+		for (i = 0; i < music->header->numPat ; i++) {
 			if (music->partition[i]) {
 				PatData *tmpPat = CompressPartitionMAD1(music, music->partition[i]);
 				inOutCount = tmpPat->header.patBytes + sizeof(PatHeader);
@@ -2328,11 +2333,12 @@ OSErr MADMusicSaveCString(MADMusic *music, const char *cName, Boolean compressMA
 			}
 		}
 	} else {
-		for (short i = 0; i < music->header->numPat; i++) {
+		for (i = 0; i < music->header->numPat; i++) {
 			if (music->partition[i]) {
+				PatData *tmpPat;
 				inOutCount = sizeof(PatHeader);
 				inOutCount += music->header->numChn * music->partition[i]->header.size * sizeof(Cmd);
-				PatData *tmpPat = calloc(inOutCount, 1);
+				tmpPat = calloc(inOutCount, 1);
 				memcpy(tmpPat, music->partition[i], inOutCount);
 				tmpPat->header.compMode = 'NONE';
 				ByteSwapPatHeader(&tmpPat->header);
@@ -2344,8 +2350,9 @@ OSErr MADMusicSaveCString(MADMusic *music, const char *cName, Boolean compressMA
 	
 	for (i = 0; i < MAXINSTRU; i++) {
 		if (music->fid[i].numSamples > 0 || music->fid[i].name[0] != 0) {	// Is there something in this instrument?
+			InstrData instData;
 			music->fid[i].no = i;
-			InstrData instData = music->fid[i];
+			instData = music->fid[i];
 			ByteSwapInstrData(&instData);
 			iWrite(sizeof(InstrData), &instData, curFile);
 		}
@@ -2389,8 +2396,9 @@ OSErr MADMusicSaveCString(MADMusic *music, const char *cName, Boolean compressMA
 	
 	for (i = 0; i < 10 ; i++) {	// Global Effects
 		if (music->header->globalEffect[i]) {
+			FXSets aSet;
 			inOutCount = sizeof(FXSets);
-			FXSets aSet = music->sets[alpha];
+			aSet = music->sets[alpha];
 			SwapFXSets(&aSet);
 			iWrite(inOutCount, &aSet, curFile);
 			alpha++;
@@ -2400,8 +2408,9 @@ OSErr MADMusicSaveCString(MADMusic *music, const char *cName, Boolean compressMA
 	for (i = 0; i < music->header->numChn; i++) {	// Channel Effects
 		for (x = 0; x < 4; x++) {
 			if (music->header->chanEffect[i][x]) {
+				FXSets aSet;
 				inOutCount = sizeof(FXSets);
-				FXSets aSet = music->sets[alpha];
+				aSet = music->sets[alpha];
 				SwapFXSets(&aSet);
 				iWrite(inOutCount, &aSet, curFile);
 				alpha++;
