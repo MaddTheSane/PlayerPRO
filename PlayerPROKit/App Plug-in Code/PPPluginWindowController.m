@@ -34,15 +34,6 @@ NSString * const PPPlugReturnCode = @"PlayerPROKit Return Code";
 	return self;
 }
 
-- (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
-{
-	if (returnCode == NSOnState) {
-		plugBlock();
-	}
-	[[NSNotificationCenter defaultCenter] postNotificationName:PPPlugInSheetDidEnd object:self userInfo:@{PPPlugReturnCode: @(returnCode)}];
-	[self close];
-}
-
 - (id)initWithWindow:(NSWindow *)window
 {
 	self = [super initWithWindow:window];

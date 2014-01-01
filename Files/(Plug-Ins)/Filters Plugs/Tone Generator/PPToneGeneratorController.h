@@ -12,7 +12,6 @@
 
 typedef NS_ENUM(char, ToneGenerator)
 {
-	cancelTone,
 	silence = 3,
 	triangle = 4,
 	square = 5,
