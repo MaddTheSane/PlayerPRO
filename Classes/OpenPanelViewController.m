@@ -32,11 +32,11 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 {
 	if (rhl.playlist != lhl.playlist) {
 		return NO;
-	}else if (rhl.tracker != lhl.tracker) {
+	} else if (rhl.tracker != lhl.tracker) {
 		return NO;
-	} else if(rhl.instrument != lhl.instrument) {
+	} else if (rhl.instrument != lhl.instrument) {
 		return NO;
-	} else if(rhl.other != lhl.other) {
+	} else if (rhl.other != lhl.other) {
 		return NO;
 		//Ignoring reserved for now.
 	} else {

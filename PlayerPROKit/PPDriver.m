@@ -190,7 +190,7 @@
 
 - (void)dealloc
 {
-	if(theRec)
+	if (theRec)
 		MADDisposeDriver(theRec);
 }
 

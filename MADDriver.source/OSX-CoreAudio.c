@@ -20,7 +20,7 @@ static OSStatus CAAudioCallback(void                            *inRefCon,
 								AudioBufferList                 *ioData)
 {
 	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
-	if(theRec->Reading == false) {
+	if (theRec->Reading == false) {
 		switch(theRec->DriverSettings.outPutBits) {
 			case 8:
 				memset(theRec->CABuffer, 0x80, theRec->BufSize);

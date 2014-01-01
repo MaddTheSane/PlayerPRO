@@ -728,7 +728,7 @@ OSErr MADChangeDriverSettings(MADDriverSettings *DriverInitParam, MADDriverRec**
 	Boolean		playing;
 	OSErr		err;
 	long		fullTime, curTime;
-	if(DriverInitParam == NULL || returnDriver == NULL) {
+	if (DriverInitParam == NULL || returnDriver == NULL) {
 		return MADParametersErr;
 	}
 	music = (*returnDriver)->curMusic;
@@ -765,7 +765,7 @@ OSErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADDr
 	SInt32					i;
 	MADDriverRec*			MDriver;
 	
-	if(DriverInitParam == NULL || lib == NULL || returnDriver == NULL)
+	if (DriverInitParam == NULL || lib == NULL || returnDriver == NULL)
 		return MADParametersErr;
 	*returnDriver = NULL;
 	
@@ -818,7 +818,7 @@ OSErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADDr
 	   DriverInitParam->driverMode != ESDDriver &&
 #endif
 	   DriverInitParam->driverMode != NoHardwareDriver) {
-		if(theErr == noErr) {
+		if (theErr == noErr) {
 			theErr = MADSoundSystemUnavailable;
 		}
 	}
@@ -1424,7 +1424,7 @@ OSErr MADLoadMADFileCString(MADMusic **music, const char *fName)
 	OSErr	theErr;
 	UNFILE	srcFile;
 	
-	if(fName == NULL || music == NULL)
+	if (fName == NULL || music == NULL)
 		return MADParametersErr;
 	
 	//MADDisposeMusic(music);
@@ -1621,7 +1621,7 @@ OSErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, Boolean compressMAD)
 
 OSErr MADMusicExportCString(MADLibrary *lib, MADMusic *music, char *type, char* cName)
 {
-	if(!lib || !music || !type || !cName) {
+	if (!lib || !music || !type || !cName) {
 		return MADParametersErr;
 	}
 	return PPExportFile(lib, type, cName, music);

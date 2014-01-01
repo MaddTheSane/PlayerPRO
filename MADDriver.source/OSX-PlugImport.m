@@ -127,12 +127,12 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 			if (importValue != NULL || exportValue != NULL) {
 				MADPlugCapabilities possibilities = PPMADCanDoNothing;
 				if (importValue != NULL) {
-					if(GetBoolFromType(importValue))
+					if (GetBoolFromType(importValue))
 						possibilities = PPMADCanImport;
 				}
 				
 				if (exportValue != NULL) {
-					if(GetBoolFromType(exportValue))
+					if (GetBoolFromType(exportValue))
 						possibilities |= PPMADCanExport;
 				}
 				
@@ -168,7 +168,7 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 						goto badplug3;
 					
 					thePlug->mode = Ptr2OSType(thecOSType);
-				} else if(InfoDictionaryType == numbertype) {
+				} else if (InfoDictionaryType == numbertype) {
 					OSType theplugType;
 					CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberSInt32Type, &theplugType);
 					thePlug->mode = theplugType;
@@ -184,7 +184,7 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == arraytype) {
 			thePlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, (CFArrayRef)OpaqueDictionaryType);
-		} else if(InfoDictionaryType == stringtype) {
+		} else if (InfoDictionaryType == stringtype) {
 			NSArray *utiArray = @[[NSString stringWithString:(__bridge NSString*)OpaqueDictionaryType]];
 			thePlug->UTItypes = CFBridgingRetain(utiArray);
 		} else
@@ -281,7 +281,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 				} else FillPlug->type[i] = tempstring[i];
 			}
 			FillPlug->type[4] = 0;
-		} else if(InfoDictionaryType == numbertype) {
+		} else if (InfoDictionaryType == numbertype) {
 			OSType theplugType;
 			CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberSInt32Type, &theplugType);
 			OSType2Ptr(theplugType, FillPlug->type);

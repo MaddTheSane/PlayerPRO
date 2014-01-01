@@ -300,7 +300,7 @@ void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, sh
 		iErr = NAStuffToneDescription(na, GMInstruID, &myNoteRequest.tone);
 		if (iErr != noErr) {
 			iErr = NAStuffToneDescription(na, 1, &myNoteRequest.tone);
-			if(iErr != noErr) PPDebugStr(__LINE__, __FILE__, "NAStuff ComputeQTSound");
+			if (iErr != noErr) PPDebugStr(__LINE__, __FILE__, "NAStuff ComputeQTSound");
 		}
 		
 		SetNEOSType(&myNoteRequest.tone.synthesizerType, synthType);

@@ -94,7 +94,7 @@ static OSErr mainWave(void					*unused,
 				char longName[PATH_MAX] = {0};
 				char *shortName = NULL;
 				CFStringRef lastPath = CFURLCopyLastPathComponent(AlienFileRef);
-				if(CFStringGetCString(lastPath, longName, PATH_MAX, kCFStringEncodingMacRoman)) {
+				if (CFStringGetCString(lastPath, longName, PATH_MAX, kCFStringEncodingMacRoman)) {
 					long thelen = strlen(longName);
 					shortName = malloc(++thelen);
 					strlcpy(shortName, longName, thelen);

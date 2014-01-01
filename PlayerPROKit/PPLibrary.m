@@ -44,8 +44,7 @@
 - (id)initWithPlugInCPath:(const char*)cPath
 {
 	if (self = [super init]) {
-		if(MADInitLibrary(cPath, &theLibrary) != noErr)
-		{
+		if (MADInitLibrary(cPath, &theLibrary) != noErr) {
 			return nil;
 		}
 		NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:theLibrary->TotalPlug];
@@ -110,7 +109,7 @@
 
 - (void)dealloc
 {
-	if(theLibrary)
+	if (theLibrary)
 		MADDisposeLibrary(theLibrary);
 }
 

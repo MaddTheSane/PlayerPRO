@@ -135,8 +135,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	NSString *val;
 	NSError *err;
 
-	if([musicUrl getResourceValue:&val forKey:NSURLLocalizedNameKey error:&err] == NO)
-	{
+	if ([musicUrl getResourceValue:&val forKey:NSURLLocalizedNameKey error:&err] == NO) {
 		NSLog(@"PPMusicListObject: Could not find out if extension is hidden in file \"%@\", error: %@", [musicUrl path], [err localizedDescription]);
 		return [musicUrl lastPathComponent];
 	} else {
@@ -460,9 +459,9 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 				if (!fullURL) {
 					if (selectedMusic == -1) {
 						//Do nothing
-					} else if(selectedMusic == [musicList count] + 1) {
+					} else if (selectedMusic == [musicList count] + 1) {
 						selectedMusic = -1;
-					} else if(selectedMusic > [musicList count] + 1) {
+					} else if (selectedMusic > [musicList count] + 1) {
 						selectedMusic--;
 					}
 					lostMusicCount++;

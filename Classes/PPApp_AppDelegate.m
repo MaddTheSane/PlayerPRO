@@ -424,7 +424,7 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 			return NO;
 		}
 		return YES;
-	} else if([sharedWorkspace type:theUTI conformsToType:PPInstrumentListUTI]) {
+	} else if ([sharedWorkspace type:theUTI conformsToType:PPInstrumentListUTI]) {
 		NSError *err = nil;
 		if (![instrumentController importInstrumentListFromURL:theURL error:&err]) {
 			[[NSAlert alertWithError:err] runModal];
@@ -440,8 +440,7 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 				[trackerUTIs addObjectsFromArray:tracDict[key]];
 			}
 			for (NSString *aUTI in trackerUTIs) {
-				if([sharedWorkspace type:theUTI conformsToType:aUTI])
-				{
+				if ([sharedWorkspace type:theUTI conformsToType:aUTI]) {
 					PPMusicObjectWrapper *theWrap = [[PPMusicObjectWrapper alloc] initWithURL:theURL library:madLib];
 					PPDocument *theDoc = [[PPDocument alloc] init];
 					[theDoc importMusicObjectWrapper:theWrap];
@@ -502,8 +501,7 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:trackerDict playlistDictionary:nil instrumentDictionary:samplesDict additionalDictionary:otherDict];
 	[av setupDefaults];
-	if([panel runModal] == NSFileHandlingPanelOKButton)
-	{
+	if ([panel runModal] == NSFileHandlingPanelOKButton) {
 		NSURL *panelURL = [panel URL];
 		NSString *filename = [panelURL path];
 		NSError *err = nil;

@@ -13,7 +13,7 @@
 
 - (id)initWithPlugInInfo:(PPPlugInInfo *)plugInfo;
 {
-	if(self = [self initWithWindowNibName:@"PPPlugInInfoController"]) {
+	if (self = [self initWithWindowNibName:@"PPPlugInInfoController"]) {
 		info = plugInfo;
 	}
 	return self;

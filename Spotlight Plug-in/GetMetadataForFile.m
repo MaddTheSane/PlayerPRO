@@ -118,7 +118,7 @@ Boolean GetMetadataForURL(void* thisInterface,
 				}
 			}
 			
-			if(MADMusicIdentifyCFURL(MADLib, type, urlForFile) != noErr) {
+			if (MADMusicIdentifyCFURL(MADLib, type, urlForFile) != noErr) {
 				//Couldn't identify via raw file, try by UTI
 				strcpy(type, utiType);
 			}
@@ -134,7 +134,7 @@ Boolean GetMetadataForURL(void* thisInterface,
 			if (MADPlugAvailable(MADLib, type)) {
 				OSErr err = noErr;
 				err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, type, urlForFile);
-				if(err != noErr) {
+				if (err != noErr) {
 					goto fail1;
 				}
 			} else {
@@ -159,7 +159,8 @@ Boolean GetMetadataForURL(void* thisInterface,
 				PPInfoRec rec;
 				{
 					char sig[5];
-					if(MADMusicInfoCFURL(MADLib, type, urlForFile, &rec) != noErr) goto skipInfo;
+					if (MADMusicInfoCFURL(MADLib, type, urlForFile, &rec) != noErr)
+						goto skipInfo;
 					OSType2Ptr(rec.signature, sig);
 					NSString *NSSig = [[NSString alloc] initWithCString:sig encoding:NSMacOSRomanStringEncoding];
 					if (!NSSig) {

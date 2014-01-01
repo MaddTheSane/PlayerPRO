@@ -29,11 +29,9 @@
 {
 	int seconds = 0, minutes = 0, hours = 0;
 	NSInteger returnValue = 0;
-	if(sscanf([string UTF8String], "%d:%d:%d", &hours, &minutes, &seconds) != 3)
-	{
+	if (sscanf([string UTF8String], "%d:%d:%d", &hours, &minutes, &seconds) != 3) {
 		hours = 0;
-		if(sscanf([string UTF8String], "%d:%d", &minutes, &seconds) != 2)
-		{
+		if (sscanf([string UTF8String], "%d:%d", &minutes, &seconds) != 2) {
 			if (error) {
 				*error = @"Invalid format";
 			}

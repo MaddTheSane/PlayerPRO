@@ -822,8 +822,7 @@ return; \
 	char fileType[5];
 	OSErr theOSErr = MADMusicIdentifyCFURL(madLib, fileType, (__bridge CFURLRef) musicToLoad);
 	
-	if(theOSErr != noErr)
-	{
+	if (theOSErr != noErr) {
 		if (theErr) {
 			*theErr = CreateErrorFromMADErrorType(theOSErr);
 		}
@@ -1144,8 +1143,7 @@ return; \
 	
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:self.trackerDict playlistDictionary:nil instrumentDictionary:nil additionalDictionary:nil];
 	[av setupDefaults];
-	if([panel runModal] == NSFileHandlingPanelOKButton)
-	{
+	if ([panel runModal] == NSFileHandlingPanelOKButton) {
 		[self addMusicToMusicList:[panel URL]];
 	}
 }
@@ -1285,14 +1283,14 @@ enum PPMusicToolbarTypes {
 			if ([infoDrawer state] == NSDrawerOpeningState || [infoDrawer state] == NSDrawerOpenState)
 				return YES;
 		case PPToolbarPlayMusic:
-			if([[tableView selectedRowIndexes] count] == 1)
+			if ([[tableView selectedRowIndexes] count] == 1)
 				return YES;
 			else
 				return NO;
 			break;
 			
 		case PPToolbarRemoveMusic:
-			if([[tableView selectedRowIndexes] count] > 0)
+			if ([[tableView selectedRowIndexes] count] > 0)
 				return YES;
 			else
 				return NO;
@@ -1378,8 +1376,7 @@ enum PPMusicToolbarTypes {
 			}
 			
 			for (NSString *aUTI in trackerUTIs) {
-				if([sharedWorkspace type:theUTI conformsToType:aUTI])
-				{
+				if ([sharedWorkspace type:theUTI conformsToType:aUTI]) {
 					[self addMusicToMusicList:theURL];
 					return YES;
 				}
@@ -1400,8 +1397,7 @@ enum PPMusicToolbarTypes {
 	
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:self.trackerDict playlistDictionary:playlistDict instrumentDictionary:samplesDict additionalDictionary:otherDict];
 	[av setupDefaults];
-	if([panel runModal] == NSFileHandlingPanelOKButton)
-	{
+	if ([panel runModal] == NSFileHandlingPanelOKButton) {
 		NSURL *panelURL = [panel URL];
 		NSString *filename = [panelURL path];
 		NSError *err = nil;
@@ -1481,7 +1477,7 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)sliderChanged:(id)sender
 {
-	if(music){
+	if (music) {
 		MADSetMusicStatus(madDriver, 0, [songPos maxValue], [songPos doubleValue]);
 	}
 }
@@ -1524,8 +1520,10 @@ enum PPMusicToolbarTypes {
 		NSURL *musicURL = obj.musicUrl;
 		PPInfoRec theInfo;
 		char info[5] = {0};
-		if(MADMusicIdentifyCFURL(madLib, info, (__bridge CFURLRef) musicURL) != noErr) break;
-		if(MADMusicInfoCFURL(madLib, info, (__bridge CFURLRef) musicURL, &theInfo) != noErr) break;
+		if (MADMusicIdentifyCFURL(madLib, info, (__bridge CFURLRef) musicURL) != noErr)
+			break;
+		if (MADMusicInfoCFURL(madLib, info, (__bridge CFURLRef) musicURL, &theInfo) != noErr)
+			break;
 		[fileName setStringValue:obj.fileName];
 		[internalName setStringValue:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
 		[fileSize setIntegerValue:theInfo.fileSize];
@@ -1741,11 +1739,10 @@ enum PPMusicToolbarTypes {
 		[self didChangeValueForKey:kMusicListKVO];
 		[self musicListContentsDidMove];
 		return YES;
-	} else if((tmpArray = [dragPB readObjectsForClasses:@[[NSURL class]] options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES, NSPasteboardURLReadingContentsConformToTypesKey : self.trackerUTIs}])) {
+	} else if ((tmpArray = [dragPB readObjectsForClasses:@[[NSURL class]] options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES, NSPasteboardURLReadingContentsConformToTypesKey : self.trackerUTIs}])) {
 		
-		if ([tmpArray count] < 1) {
+		if ([tmpArray count] < 1)
 			return NO;
-		}
 		
 		[self willChangeValueForKey:kMusicListKVO];
 		NSMutableArray *mutArray = [NSMutableArray new];

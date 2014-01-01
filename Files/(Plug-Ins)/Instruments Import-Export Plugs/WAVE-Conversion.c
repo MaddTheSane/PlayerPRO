@@ -84,24 +84,24 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *l
 	
 	if (fRef != NULL) {
 		fSize = iGetEOF(fRef);
-		if(!(WAVERsrc = (PCMWavePtr)malloc(fSize))) {
+		if (!(WAVERsrc = (PCMWavePtr)malloc(fSize))) {
 			iClose(fRef);
 			return NULL;
 		}
 		
-		if(iRead(fSize, WAVERsrc, fRef)) {
+		if (iRead(fSize, WAVERsrc, fRef)) {
 			free(WAVERsrc);
 			iClose(fRef);
 			return NULL;
 		}
 		
-		if(CFSwapInt32BigToHost((*WAVERsrc).ckid) =='RIFF') {
+		if (CFSwapInt32BigToHost((*WAVERsrc).ckid) =='RIFF') {
 			(*WAVERsrc).cksize = longswap((*WAVERsrc).cksize);
 			
-			if(CFSwapInt32BigToHost((*WAVERsrc).fccType) =='WAVE') {
+			if (CFSwapInt32BigToHost((*WAVERsrc).fccType) =='WAVE') {
 				(*WAVERsrc).dwDataOffset = longswap((*WAVERsrc).dwDataOffset);
 				
-				if(CFSwapInt32BigToHost((*WAVERsrc).fmtType) == 'fmt ') {
+				if (CFSwapInt32BigToHost((*WAVERsrc).fmtType) == 'fmt ') {
 					(*WAVERsrc).wFormatTag      = shrtswap((*WAVERsrc).wFormatTag);
 					(*WAVERsrc).nCannels        = shrtswap((*WAVERsrc).nCannels);
 					(*WAVERsrc).nSamplesPerSec  = longswap((*WAVERsrc).nSamplesPerSec);
@@ -121,7 +121,7 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *l
 					else
 						*stereo = false;
 					
-					if((*WAVERsrc).wFormatTag != 1) {
+					if ((*WAVERsrc).wFormatTag != 1) {
 						free(WAVERsrc);
 						iClose(fRef);
 						return NULL;

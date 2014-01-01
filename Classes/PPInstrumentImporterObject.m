@@ -101,7 +101,7 @@ static Class numClass;
 		DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugTypeKey];
 		if ([DictionaryTemp isKindOfClass:strClass]) {
 			type = NSStringToOSType(DictionaryTemp);
-		} else if([DictionaryTemp isKindOfClass:numClass]) {
+		} else if ([DictionaryTemp isKindOfClass:numClass]) {
 			type = [(NSNumber*)DictionaryTemp unsignedIntValue];
 		} else
 			return nil;
@@ -113,11 +113,11 @@ static Class numClass;
 			if (canImportValue || canExportValue) {
 				MADPlugCapabilities capabilities = PPMADCanDoNothing;
 				if (canImportValue) {
-					if(getBoolFromId(canImportValue))
+					if (getBoolFromId(canImportValue))
 						capabilities = PPMADCanImport;
 				}
 				if (canExportValue) {
-					if(getBoolFromId(canExportValue))
+					if (getBoolFromId(canExportValue))
 						capabilities |= PPMADCanExport;
 				}
 				
@@ -142,7 +142,7 @@ static Class numClass;
 				DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugModeKey];
 				if ([DictionaryTemp isKindOfClass:strClass]) {
 					self.mode = NSStringToOSType(DictionaryTemp);
-				} else if([DictionaryTemp isKindOfClass:numClass]) {
+				} else if ([DictionaryTemp isKindOfClass:numClass]) {
 					self.mode = [(NSNumber*)DictionaryTemp unsignedIntValue];
 				} else
 					return nil;
