@@ -218,7 +218,6 @@
 		554E10FF10D6F09F00BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E112A10D6F10100BB619C /* FadeNote.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE710D6C79D00BB619C /* FadeNote.r */; };
 		554E114610D6F1BF00BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		554E117410D6F22D00BB619C /* FadeVol.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE910D6C79D00BB619C /* FadeVol.r */; };
 		554E11B310D6F32900BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E11F710D6F3E100BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -2011,8 +2010,6 @@
 		554E0FE210D6C79D00BB619C /* CompFade.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = CompFade.r; sourceTree = "<group>"; };
 		554E0FE610D6C79D00BB619C /* FadeNote.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = FadeNote.c; sourceTree = "<group>"; };
 		554E0FE710D6C79D00BB619C /* FadeNote.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = FadeNote.r; sourceTree = "<group>"; };
-		554E0FE810D6C79D00BB619C /* FadeVol.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = FadeVol.c; sourceTree = "<group>"; };
-		554E0FE910D6C79D00BB619C /* FadeVol.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = FadeVol.r; sourceTree = "<group>"; };
 		554E0FF010D6C79D00BB619C /* Propagate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Propagate.c; sourceTree = "<group>"; };
 		554E0FF310D6C79D00BB619C /* Read-Me */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read-Me"; sourceTree = "<group>"; };
 		554E0FF410D6C79D00BB619C /* Revert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Revert.c; sourceTree = "<group>"; };
@@ -2100,20 +2097,20 @@
 		5573A3EF10B5151700FF8B50 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5573A41010B5160000FF8B50 /* PPDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDefs.h; sourceTree = "<group>"; };
 		5573AF0717DF8F5500B68127 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; lineEnding = 0; path = README; sourceTree = "<group>"; };
-		55771DC21873714800AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/PPDocument.xib; sourceTree = "<group>"; };
+		55771DC21873714800AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PPDocument.xib; sourceTree = "<group>"; };
 		55771DC51873715600AED8DC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPDocument.strings; sourceTree = "<group>"; };
-		55771DC71873851500AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/NoteTranslateController.xib; sourceTree = "<group>"; };
+		55771DC71873851500AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NoteTranslateController.xib; sourceTree = "<group>"; };
 		55771DCA1873851B00AED8DC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NoteTranslateController.strings; sourceTree = "<group>"; };
-		55771DCC1873852B00AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/AmplitudeController.xib; sourceTree = "<group>"; };
+		55771DCC1873852B00AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AmplitudeController.xib; sourceTree = "<group>"; };
 		55771DCF1873853100AED8DC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AmplitudeController.strings; sourceTree = "<group>"; };
-		55771DD11873853D00AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/DepthController.xib; sourceTree = "<group>"; };
+		55771DD11873853D00AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DepthController.xib; sourceTree = "<group>"; };
 		55771DD41873854500AED8DC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DepthController.strings; sourceTree = "<group>"; };
-		55771DD61873854C00AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/EchoWindowController.xib; sourceTree = "<group>"; };
+		55771DD61873854C00AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/EchoWindowController.xib; sourceTree = "<group>"; };
 		55771DD91873855300AED8DC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EchoWindowController.strings; sourceTree = "<group>"; };
-		55771DDB1873855C00AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/FadeWindowController.xib; sourceTree = "<group>"; };
+		55771DDB1873855C00AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FadeWindowController.xib; sourceTree = "<group>"; };
 		55771DDE1873856100AED8DC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FadeWindowController.strings; sourceTree = "<group>"; };
-		55771DE01873856E00AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/LengthViewController.xib; sourceTree = "<group>"; };
-		55771DE31873857E00AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/SamplingRateWindowController.xib; sourceTree = "<group>"; };
+		55771DE01873856E00AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LengthViewController.xib; sourceTree = "<group>"; };
+		55771DE31873857E00AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SamplingRateWindowController.xib; sourceTree = "<group>"; };
 		55771DE61873858500AED8DC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SamplingRateWindowController.strings; sourceTree = "<group>"; };
 		5578C48117D9E8560057D11B /* PlayerPRO Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5578C48517D9E8560057D11B /* PlayerPRO Player-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPRO Player-Info.plist"; sourceTree = "<group>"; };
@@ -3607,8 +3604,6 @@
 		554E11A410D6F2CA00BB619C /* Fade Vol */ = {
 			isa = PBXGroup;
 			children = (
-				554E0FE810D6C79D00BB619C /* FadeVol.c */,
-				554E0FE910D6C79D00BB619C /* FadeVol.r */,
 				552C440917DFE00000AFCB5C /* FadeVolumeController.h */,
 				552C440A17DFE00000AFCB5C /* FadeVolumeController.m */,
 				554E117010D6F1BF00BB619C /* Fade Volume-Info.plist */,
@@ -4479,7 +4474,6 @@
 				554E114110D6F1BF00BB619C /* Resources */,
 				554E114210D6F1BF00BB619C /* Sources */,
 				554E114410D6F1BF00BB619C /* Frameworks */,
-				554E114710D6F1BF00BB619C /* Rez */,
 			);
 			buildRules = (
 			);
@@ -5966,14 +5960,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				554E112A10D6F10100BB619C /* FadeNote.r in Rez */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		554E114710D6F1BF00BB619C /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				554E117410D6F22D00BB619C /* FadeVol.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

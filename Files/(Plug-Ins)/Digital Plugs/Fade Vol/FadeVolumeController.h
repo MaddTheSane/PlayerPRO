@@ -10,5 +10,6 @@
 #import <PlayerPROKit/PlayerPROKit.h>
 
 @interface FadeVolumeController : PPDigitalPluginWindowController
-
+@property double fadeFrom;
+@property double fadeTo;
 @end

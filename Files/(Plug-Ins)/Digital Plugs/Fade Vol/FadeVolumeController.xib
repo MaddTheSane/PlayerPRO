@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <deployment defaultVersion="1090" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="FadeVolumeController">
@@ -12,11 +12,12 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="1">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+        <window title="Volume Fade" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="alertPanel" id="1">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="211" height="133"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1080"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="211" height="133"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -28,39 +29,46 @@
                         <size key="cellSize" width="171" height="22"/>
                         <size key="intercellSpacing" width="1" height="8"/>
                         <formCell key="prototype" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" title="Field:" id="6">
-                            <numberFormatter key="formatter" formatterBehavior="default10_4" positiveFormat="#,##0%" negativeFormat="#,##0%" numberStyle="percent" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="0" maximumFractionDigits="0" positiveSuffix="%" negativeSuffix="%" id="21">
-                                <integer key="multiplier" value="100"/>
-                                <real key="roundingIncrement" value="0.0"/>
-                                <integer key="minimum" value="0"/>
-                                <integer key="maximum" value="1"/>
-                                <metadata>
-                                    <bool key="localizesFormat" value="YES"/>
-                                </metadata>
-                            </numberFormatter>
                             <font key="font" metaFont="system"/>
                             <font key="titleFont" metaFont="system"/>
                         </formCell>
                         <cells>
                             <column>
                                 <formCell scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" title="From:" id="7">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" positiveFormat="#,##0%" negativeFormat="#,##0%" numberStyle="percent" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="0" maximumFractionDigits="0" positiveSuffix="%" negativeSuffix="%" id="ElG-H5-6U3">
+                                        <integer key="multiplier" value="100"/>
+                                        <real key="roundingIncrement" value="0.0"/>
+                                        <real key="minimum" value="0.0"/>
+                                        <real key="maximum" value="1"/>
+                                        <metadata>
+                                            <bool key="localizesFormat" value="YES"/>
+                                        </metadata>
+                                    </numberFormatter>
                                     <font key="font" metaFont="system"/>
                                     <font key="titleFont" metaFont="system"/>
                                     <connections>
-                                        <outlet property="formatter" destination="21" id="22"/>
+                                        <binding destination="-2" name="value" keyPath="self.fadeFrom" id="brC-fe-7YR"/>
                                     </connections>
                                 </formCell>
                                 <formCell scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" tag="1" title="To:" id="8">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" positiveFormat="#,##0%" negativeFormat="#,##0%" numberStyle="percent" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="0" maximumFractionDigits="0" positiveSuffix="%" negativeSuffix="%" id="vx5-Qt-avK">
+                                        <integer key="multiplier" value="100"/>
+                                        <real key="roundingIncrement" value="0.0"/>
+                                        <real key="minimum" value="0.0"/>
+                                        <real key="maximum" value="1"/>
+                                        <metadata>
+                                            <bool key="localizesFormat" value="YES"/>
+                                            <real key="inspectorSampleValue" value="0.45700000000000002"/>
+                                        </metadata>
+                                    </numberFormatter>
                                     <font key="font" metaFont="system"/>
                                     <font key="titleFont" metaFont="system"/>
                                     <connections>
-                                        <outlet property="formatter" destination="21" id="23"/>
+                                        <binding destination="-2" name="value" keyPath="self.fadeTo" id="xGt-n3-0MH"/>
                                     </connections>
                                 </formCell>
                             </column>
                         </cells>
-                        <connections>
-                            <outlet property="formatter" destination="21" id="24"/>
-                        </connections>
                     </form>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="12">
                         <rect key="frame" x="138" y="13" width="59" height="32"/>
