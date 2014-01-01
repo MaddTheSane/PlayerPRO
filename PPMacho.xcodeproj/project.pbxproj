@@ -2007,7 +2007,6 @@
 		55469C2516BF34D200175A1F /* PatternHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternHandler.h; sourceTree = "<group>"; };
 		55469C2616BF34D200175A1F /* PatternHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternHandler.m; sourceTree = "<group>"; };
 		554703D81834368F008E5B9B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPSoundSettingsViewController.strings; sourceTree = "<group>"; };
-		554E0FE010D6C79D00BB619C /* Carbon.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Carbon.r; sourceTree = "<group>"; };
 		554E0FE110D6C79D00BB619C /* CompFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CompFade.c; sourceTree = "<group>"; };
 		554E0FE210D6C79D00BB619C /* CompFade.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = CompFade.r; sourceTree = "<group>"; };
 		554E0FE610D6C79D00BB619C /* FadeNote.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = FadeNote.c; sourceTree = "<group>"; };
@@ -3547,7 +3546,6 @@
 			isa = PBXGroup;
 			children = (
 				55ADC3F817D7F74B001F27D4 /* OldCarbHeaders.h */,
-				554E0FE010D6C79D00BB619C /* Carbon.r */,
 				554E11A610D6F2EE00BB619C /* Complex Fade */,
 				554E11A510D6F2DC00BB619C /* Fade Note */,
 				554E11A410D6F2CA00BB619C /* Fade Vol */,
