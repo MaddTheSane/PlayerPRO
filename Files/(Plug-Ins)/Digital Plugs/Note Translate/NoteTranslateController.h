@@ -11,5 +11,4 @@
 
 @interface NoteTranslateController : PPDigitalPluginWindowController
 @property NSInteger transAmount;
-
 @end

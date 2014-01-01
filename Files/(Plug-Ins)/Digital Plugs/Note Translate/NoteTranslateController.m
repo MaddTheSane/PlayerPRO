@@ -8,23 +8,18 @@
 
 #import "NoteTranslateController.h"
 
-@interface NoteTranslateController ()
-
-@end
-
 @implementation NoteTranslateController
 
 - (instancetype)initWithWindow:(NSWindow *)window
 {
-    self = [super initWithWindow:window];
-    if (self) {
-        // Initialization code here.
+	if (self = [super initWithWindow:window]) {
+		// Initialization code here.
 		isMultipleIstanceSafe = YES;
 		dispatch_block_t tmpBlock = ^{
 			short		track, row;
 			NSInteger	trans = self.transAmount;
 			Cmd			*myCmd;
-
+			
 			for (track = 0; track < thePcmd->tracks; track++) {
 				for (row = 0; row < thePcmd->length; row++) {
 					myCmd = GetCmd(row, track, thePcmd);
@@ -41,16 +36,16 @@
 			}
 		};
 		self.plugBlock = tmpBlock;
-    }
-    
-    return self;
+	}
+	
+	return self;
 }
 
 - (void)windowDidLoad
 {
-    [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	[super windowDidLoad];
+	
+	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
 @end

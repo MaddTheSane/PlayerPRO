@@ -41,7 +41,7 @@
 				}
 			}
 		};
-		plugBlock = tmpBlock;
+		self.plugBlock = tmpBlock;
 	}
 	
 	return self;
