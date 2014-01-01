@@ -12,7 +12,7 @@
 
 #define LRVAL	3L
 
-static void *ConvertSampleC4SPD( Ptr src, unsigned int srcSize, short amp, int srcC4SPD, int dstC4SPD, Boolean stereo, size_t *newsize)
+static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int srcC4SPD, int dstC4SPD, Boolean stereo, size_t *newsize)
 {
 	short			*src16 = (short*)src, *dst16;
 	char			*src8 = (char*)src, *dst8;

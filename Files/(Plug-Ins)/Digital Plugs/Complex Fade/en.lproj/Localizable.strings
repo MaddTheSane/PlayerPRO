@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  PPMacho
+
+  Created by C.W. Betts on 1/1/14.
+
+*/
+
+"From 1 to 64" = "From 1 to 64";
+"From C0 to B7" = "From C0 to B7";
+"From 00 to FF" = "From 00 to FF";

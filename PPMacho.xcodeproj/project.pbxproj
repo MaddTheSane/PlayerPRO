@@ -168,6 +168,7 @@
 		5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */; };
 		552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552581FC16C6FC350016A31C /* InstrumentInfoController.m */; };
 		552581FF16C6FC350016A31C /* InstrumentInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552581FD16C6FC350016A31C /* InstrumentInfoController.xib */; };
+		55268A521874CA8F00A82269 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55268A541874CA8F00A82269 /* Localizable.strings */; };
 		552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 552A662816B5EBEB007C63F7 /* PPPlugInObject.m */; };
 		552AFC7F167A8C8B00F32481 /* PPPause.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 552AFC7E167A8C8B00F32481 /* PPPause.pdf */; };
@@ -1899,6 +1900,9 @@
 		552581FB16C6FC350016A31C /* InstrumentInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstrumentInfoController.h; sourceTree = "<group>"; };
 		552581FC16C6FC350016A31C /* InstrumentInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstrumentInfoController.m; sourceTree = "<group>"; };
 		552581FD16C6FC350016A31C /* InstrumentInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstrumentInfoController.xib; sourceTree = "<group>"; };
+		55268A551874CA9800A82269 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		55268A561874CDD100A82269 /* CompFadeNoteFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompFadeNoteFormatter.h; sourceTree = "<group>"; };
+		55268A571874CDD200A82269 /* CompFadeNoteFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompFadeNoteFormatter.m; sourceTree = "<group>"; };
 		552711E3124881F4005120FC /* UserDefaultKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDefaultKeys.h; path = ../Classes/UserDefaultKeys.h; sourceTree = "<group>"; };
 		552711E4124881F4005120FC /* UserDefaultKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = UserDefaultKeys.m; path = ../Classes/UserDefaultKeys.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		552A662716B5EBEA007C63F7 /* PPPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugInObject.h; sourceTree = "<group>"; };
@@ -3632,8 +3636,11 @@
 				554E0FE210D6C79D00BB619C /* CompFade.r */,
 				552C43FF17DFDE1100AFCB5C /* ComplexFadeController.h */,
 				552C440017DFDE1100AFCB5C /* ComplexFadeController.m */,
+				55268A561874CDD100A82269 /* CompFadeNoteFormatter.h */,
+				55268A571874CDD200A82269 /* CompFadeNoteFormatter.m */,
 				55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */,
 				552C440117DFDE1100AFCB5C /* ComplexFadeController.xib */,
+				55268A541874CA8F00A82269 /* Localizable.strings */,
 			);
 			path = "Complex Fade";
 			sourceTree = "<group>";
@@ -5907,6 +5914,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				552C440317DFDE1100AFCB5C /* ComplexFadeController.xib in Resources */,
+				55268A521874CA8F00A82269 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7414,6 +7422,14 @@
 				55149C4A1832CD8D009C850B /* en */,
 			);
 			name = PPPlugInInfoController.xib;
+			sourceTree = "<group>";
+		};
+		55268A541874CA8F00A82269 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55268A551874CA9800A82269 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		5533600311EBC66400525CAF /* Localizable.strings */ = {

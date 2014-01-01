@@ -7,6 +7,7 @@
 //
 
 #import "ComplexFadeController.h"
+//#import "CompFadeNoteFormatter.h"
 
 @interface ComplexFadeController ()
 
@@ -90,6 +91,11 @@ static void StringToHex( char *str, int *oct)
 @implementation ComplexFadeController
 @synthesize fadeType;
 
+- (BOOL)validateSettings;
+{
+	
+}
+
 - (instancetype)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
@@ -113,7 +119,20 @@ static void StringToHex( char *str, int *oct)
 
 - (IBAction)changeFadeType:(id)sender
 {
-	
+	self.fadeType = [sender tag];
+	switch (self.fadeType) {
+		case fadeInstrument:
+			
+			break;
+	}
+}
+
+- (IBAction)okOrCancel:(id)sender
+{
+	if (![self validateSettings]) {
+		
+	} else
+		[super okOrCancel:sender];
 }
 
 @end
@@ -122,7 +141,7 @@ static OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
 	ComplexFadeController *controller = [[ComplexFadeController alloc] initWithWindowNibName:@"ComplexFadeController" infoPlug:thePPInfoPlug];
 	controller.thePcmd = myPcmd;
-	
+	controller.fadeType = fadeInstrument;
 	
 	return [controller runAsSheet];
 }

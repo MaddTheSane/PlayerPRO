@@ -6,9 +6,11 @@
 //
 //
 
-#import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#import <Cocoa/Cocoa.h>
 #import <PlayerPROKit/PlayerPROKit.h>
+//TODO: Make a note formatter
+//@class CompFadeNoteFormatter;
 
 typedef NS_ENUM(NSInteger, FadeTypeEnum) {
 	fadeInstrument = 1,
@@ -20,9 +22,11 @@ typedef NS_ENUM(NSInteger, FadeTypeEnum) {
 @interface ComplexFadeController : PPDigitalPluginWindowController
 @property (weak) IBOutlet NSMatrix *fadeTypeMatrix;
 @property (weak) IBOutlet NSFormCell *stepCell;
-@property (weak) IBOutlet NSTextField *textValues;
+@property (weak) IBOutlet NSTextField *valueInfo;
+//@property (strong) IBOutlet CompFadeNoteFormatter *noteFormatter;
 @property FadeTypeEnum fadeType;
 
+- (IBAction)okOrCancel:(id)sender;
 - (IBAction)changeFadeType:(id)sender;
 
 @end
