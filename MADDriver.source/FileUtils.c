@@ -97,6 +97,9 @@ long iGetEOF(FILE* iFileRefI)
 OSErr iRead(long size, void *dest, FILE* iFileRefI)
 {
 	fread(dest, size, 1, iFileRefI);
+	if (ferror(iFileRefI)) {
+		return MADReadingErr;
+	}
 	
 	return noErr;
 }
@@ -109,6 +112,9 @@ OSErr iSeekCur(long size, FILE* iFileRefI)
 OSErr iWrite(long size, const void *src, FILE* iFileRefI)
 {
 	fwrite(src, size, 1, iFileRefI);
+	if (ferror(iFileRefI)) {
+		return MADWritingErr;
+	}
 	
 	return noErr;
 }
