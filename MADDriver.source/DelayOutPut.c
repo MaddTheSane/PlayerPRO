@@ -31,7 +31,7 @@ UInt32 getfrequency(UInt32 period);
 
 Boolean IsVSTChanEffect(MADDriverRec *intDriver, short channel);
 
-static inline void PrepareInline(SInt32 *VolInter, SInt32* rVolInter, double p2, double v1, double v2)
+static __inline__ void PrepareInline(SInt32 *VolInter, SInt32* rVolInter, double p2, double v1, double v2)
 {
 	double temp;
 	

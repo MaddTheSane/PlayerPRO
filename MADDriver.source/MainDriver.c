@@ -1841,7 +1841,7 @@ OSErr MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime)
 	return noErr;
 }
 
-static inline void ByteSwapsData(sData *toSwap)
+static __inline__ void ByteSwapsData(sData *toSwap)
 {
 	PPBE32(&toSwap->size);
 	PPBE32(&toSwap->loopBeg);
@@ -1849,7 +1849,7 @@ static inline void ByteSwapsData(sData *toSwap)
 	PPBE16(&toSwap->c2spd);
 }
 
-static inline void SwapFXSets(FXSets *set)
+static __inline__ void SwapFXSets(FXSets *set)
 {
 #ifndef __BLOCKS__
 	int y;
@@ -1869,7 +1869,7 @@ static inline void SwapFXSets(FXSets *set)
 #endif
 }
 
-static inline void ByteSwapInstrData(InstrData *toSwap)
+static __inline__ void ByteSwapInstrData(InstrData *toSwap)
 {
 #ifndef __BLOCKS__
 	int x;
@@ -1905,7 +1905,7 @@ static inline void ByteSwapInstrData(InstrData *toSwap)
 #endif
 }
 
-static inline void ByteSwapMADSpec(MADSpec *toSwap)
+static __inline__ void ByteSwapMADSpec(MADSpec *toSwap)
 {
 	PPBE32(&toSwap->MAD);
 	PPBE16(&toSwap->speed);
@@ -1914,7 +1914,7 @@ static inline void ByteSwapMADSpec(MADSpec *toSwap)
 	PPBE32(&toSwap->ESpeed);
 }
 
-static inline void ByteSwapPatHeader(PatHeader *toSwap)
+static __inline__ void ByteSwapPatHeader(PatHeader *toSwap)
 {
 	PPBE32(&toSwap->size);
 	PPBE32(&toSwap->compMode);
@@ -1942,9 +1942,8 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 	/**** HEADER ****/
 	inOutCount = sizeof(MADSpec);
 	
-	MDriver->header = (MADSpec*) calloc(inOutCount, 1);
-	if (MDriver->header == NULL)
-	{
+	MDriver->header = (MADSpec*)calloc(inOutCount, 1);
+	if (MDriver->header == NULL) {
 		free(MDriver);
 		return MADNeedMemory;
 	}
@@ -1976,8 +1975,8 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 	PPBE32(&MDriver->header->ESpeed);
 	
 	if (MDriver->header->MAD != 'MADK' || MDriver->header->numInstru > MAXINSTRU) {
-		free( MDriver->header);
-		free( MDriver);
+		free(MDriver->header);
+		free(MDriver);
 		return MADIncompatibleFile;
 	}
 	

@@ -553,7 +553,8 @@ int PutpatternsPtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init
 			}
 		}
 	}
-	if (fStats) CreateResult("Number of dropped notes.");
+	if (fStats)
+		CreateResult("Number of dropped notes.");
 	free(pwLen);
 	
 	return wPat; 												/** Return number of patterns written **/
@@ -571,12 +572,12 @@ extern  	short 				MIDIInstMOD[ 128];
 extern		Boolean				UseQKIns;
 MADMusic			*curMusic = NULL;
 
-static inline void mystrcpy( Ptr a, BytePtr b)
+static inline void mystrcpy(Ptr a, BytePtr b)
 {
-	memmove(a, b + 1, b[ 0]);
+	memmove(a, b + 1, b[0]);
 }
 
-void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
+void SavePtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 {
 	int 		iT, cPatterns, cSamps;
 	long	 	i;

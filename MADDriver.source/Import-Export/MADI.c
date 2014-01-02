@@ -41,13 +41,12 @@
 #include "embeddedPlugs.h"
 #endif
 
-enum
-{
-	ins 	= 1,
-	note	= 2,
-	cmd		= 4,
-	argu	= 8,
-	vol		= 16
+enum {
+	ins 	= 1 << 0,
+	note	= 1 << 1,
+	cmd		= 1 << 2,
+	argu	= 1 << 3,
+	vol		= 1 << 4
 };
 
 static oldPatData* oldDecompressPartitionMAD1(oldMADSpec *header, oldPatData* myPat)
@@ -111,27 +110,29 @@ static oldCmd* GetOldCommand(short PosX, short	TrackIdX, oldPatData*	tempMusicPa
 	return &(tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]);
 }
 
-static inline void MOToldsData(struct oldsData * s) {
+static __inline__ void MOToldsData(struct oldsData * s)
+{
 	PPBE32(&s->size);
 	PPBE32(&s->loopBeg);
 	PPBE32(&s->loopSize);
 	PPBE16(&s->c2spd);
 }
 
-static inline void MOToldPatHeader(struct oldPatHeader * p) {
+static __inline__ void MOToldPatHeader(struct oldPatHeader * p)
+{
 	PPBE32(&p->size);
 	PPBE32(&p->compMode);
 	PPBE32(&p->patBytes);
-	PPBE32(&p->unused2); // this is probably superfluous, but who knows
+	PPBE32(&p->unused2); // this is probably superfluous
 }
 
-static inline void MOToldEnvRec(struct oldEnvRec * e)
+static __inline__ void MOToldEnvRec(struct oldEnvRec * e)
 {
 	PPBE16(&e->pos);
 	PPBE16(&e->val);
 }
 
-static inline void MOToldInstrData(struct oldInstrData * i)
+static __inline__ void MOToldInstrData(struct oldInstrData * i)
 {
 	PPBE16(&i->firstSample);
 	PPBE16(&i->numSamples);

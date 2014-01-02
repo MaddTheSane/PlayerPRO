@@ -58,7 +58,7 @@ PPEXPORT void	iClose(UNFILE iFileRefI);
 ////////////////////////////////////////////////////////////
 
 //TODO: use system-based functions, such as the ones used on OS X/iOS
-static inline void MADByteSwap32(void *msg_buf)
+static __inline__ void MADByteSwap32(void *msg_buf)
 {
 	uint32_t temp = *((uint32_t*)msg_buf);
 #ifdef _MAC_H
@@ -71,7 +71,7 @@ static inline void MADByteSwap32(void *msg_buf)
 }
 
 //TODO: use system-based functions, such as the ones used on OS X/iOS
-static inline void MADByteSwap16(void *msg_buf)
+static __inline__ void MADByteSwap16(void *msg_buf)
 {
 	uint16_t buf = *((uint16_t*)msg_buf);
 #ifdef _MAC_H
@@ -84,12 +84,12 @@ static inline void MADByteSwap16(void *msg_buf)
 /////////////////////////////////
 
 #ifdef __LITTLE_ENDIAN__
-static inline void PPBE32(void *msg_buf)
+static __inline__ void PPBE32(void *msg_buf)
 {
 	MADByteSwap32(msg_buf);
 }
 
-static inline void PPBE16(void *msg_buf)
+static __inline__ void PPBE16(void *msg_buf)
 {
 	MADByteSwap16(msg_buf);
 }
@@ -101,12 +101,12 @@ static inline void PPBE16(void *msg_buf)
 /////////////////////////////////
 
 #ifdef __BIG_ENDIAN__
-static inline void PPLE32(void *msg_buf)
+static __inline__ void PPLE32(void *msg_buf)
 {
 	MADByteSwap32(msg_buf);
 }
 
-static inline void PPLE16(void *msg_buf)
+static __inline__ void PPLE16(void *msg_buf)
 {
 	MADByteSwap16(msg_buf);
 }
@@ -117,14 +117,14 @@ static inline void PPLE16(void *msg_buf)
 
 /////////////////////////////////
 
-static inline void OSType2Ptr(OSType type, char *str)
+static __inline__ void OSType2Ptr(OSType type, char *str)
 {
 	PPBE32(&type);
 	memcpy(str, &type, 4);
 	str[ 4] = 0;
 }
 
-static inline OSType Ptr2OSType(const char *str)
+static __inline__ OSType Ptr2OSType(const char *str)
 {
 	short	i;
 	OSType	type = '    ';

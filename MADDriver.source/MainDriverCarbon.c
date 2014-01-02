@@ -13,11 +13,11 @@
 OSErr MADLoadMusicFSRef(MADLibrary *lib, MADMusic **music, char *plugType, FSRefPtr theRef)
 {
 	CFURLRef tempURL;
+	OSErr returnErr = noErr;
 	if (theRef == NULL) {
 		return MADParametersErr;
 	}
 	
-	OSErr returnErr = noErr;
 	tempURL = CFURLCreateFromFSRef(kCFAllocatorDefault, theRef);
 	returnErr = MADLoadMusicCFURLFile(lib, music, plugType, tempURL);
 	CFRelease(tempURL);

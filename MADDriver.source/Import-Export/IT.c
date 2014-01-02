@@ -53,7 +53,7 @@ typedef struct ITPACK {
 } ITPACK;
 
 
-static inline Byte _mm_read_UBYTE(char **samplePtr)
+static __inline__ Byte _mm_read_UBYTE(char **samplePtr)
 {
 	Byte val = *((Byte*)*samplePtr);
 	
@@ -63,7 +63,7 @@ static inline Byte _mm_read_UBYTE(char **samplePtr)
 }
 
 //TODO: byteswapping?
-static inline unsigned short ReadUS(char **samplePtr)
+static __inline__ unsigned short ReadUS(char **samplePtr)
 {
 	unsigned short result=_mm_read_UBYTE(samplePtr);
 	result |= ((unsigned short)_mm_read_UBYTE(samplePtr)) << 8;
@@ -288,7 +288,7 @@ static OSErr DecompressSample( short bits, Ptr reader, size_t length, Ptr destPt
 }
 
 
-static inline Boolean ITcompMem(const void *a, const void *b, size_t s)
+static __inline__ Boolean ITcompMem(const void *a, const void *b, size_t s)
 {
 	if (memcmp(a, b, s) == 0)
 		return true;

@@ -1173,7 +1173,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 	return finalXMPtr;
 }
 
-static inline Boolean compMem(const void *a, const void *b, size_t s)
+static __inline__ Boolean compMem(const void *a, const void *b, size_t s)
 {
 	if (memcmp(a, b, s) == 0) {
 		return true;
@@ -1182,7 +1182,7 @@ static inline Boolean compMem(const void *a, const void *b, size_t s)
 	}
 }
 
-static OSErr TestXMFile( Ptr AlienFile)
+static OSErr TestXMFile(Ptr AlienFile)
 {
 	if (compMem(AlienFile, "Extended Module: ", 17)) {
 		theXMRead = AlienFile;
@@ -1217,7 +1217,6 @@ static OSErr TestXMFile( Ptr AlienFile)
 static OSErr ExtractXMInfo(PPInfoRec *info, void *AlienFile)
 {
 	short	i;
-	
 	
 	theXMRead = AlienFile;
 	

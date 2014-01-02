@@ -31,7 +31,6 @@
 #include "RDriver.h"
 #include "FileUtils.h"
 #endif
-#include "MOD.h"
 #include "MADH.h"
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
@@ -41,10 +40,10 @@
 enum
 {
 	ins 	= 1,
-	note	= 2,
-	cmd		= 4,
-	argu	= 8,
-	vol		= 16
+	note	= 1 << 1,
+	cmd		= 1 << 2,
+	argu	= 1 << 3,
+	vol		= 1 << 4
 };
 
 
@@ -56,8 +55,9 @@ static oldPatData* oldDecompressPartitionMAD1( oldMADSpec *header, oldPatData* m
 	short					maxCmd;
 	Byte					set;
 	
-	finalPtr = ( oldPatData*) calloc(sizeof(oldPatHeader) + myPat->header.size * header->numChn * sizeof(oldCmd), 1);
-	if (finalPtr == NULL) return NULL;
+	finalPtr = (oldPatData*)calloc(sizeof(oldPatHeader) + myPat->header.size * header->numChn * sizeof(oldCmd), 1);
+	if (finalPtr == NULL)
+		return NULL;
 	
 	memcpy(finalPtr, myPat, sizeof(oldPatHeader));
 	
@@ -95,12 +95,14 @@ static oldPatData* oldDecompressPartitionMAD1( oldMADSpec *header, oldPatData* m
 	return finalPtr;
 }
 
-static oldCmd* GetOldCommand( short PosX, short	TrackIdX, oldPatData*	tempMusicPat)
+static oldCmd* GetOldCommand(short PosX, short TrackIdX, oldPatData* tempMusicPat)
 {
-	if (PosX < 0) PosX = 0;
-	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
+	if (PosX < 0)
+		PosX = 0;
+	else if (PosX >= tempMusicPat->header.size)
+		PosX = tempMusicPat->header.size -1;
 	
-	return( &(tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
+	return &(tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]);
 }
 
 static void MOToldsData(struct oldsData * s) {
@@ -126,6 +128,7 @@ static void MOToldInstrData(struct oldInstrData * i) {
 	int j;
 	PPBE16(&i->numSamples);
 	PPBE16(&i->volFade);
+	//TODO: dispatch this
 	for(j = 0; j < 12; j++){
 		MOToldEnvRec(&i->volEnv[j]);
 		MOToldEnvRec(&i->pannEnv[j]);
@@ -137,17 +140,16 @@ static void MOToldMADSpec(struct oldMADSpec * m){
 	PPBE32(&m->MAD);
 	PPBE16(&m->speed);
 	PPBE16(&m->tempo);
+	//TODO: dispatch this
 	for (i = 0; i < 64; i++) {
 		MOToldInstrData(&m->fid[i]);
 	}
 }
 
-static OSErr MADH2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
+static OSErr MADH2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short		i, x;
 	SInt32		inOutCount, OffSetToSample = 0, z;
-	//OSErr		theErr = noErr;
-	//Ptr			tempPtr;
 	/*SInt32		finetune[16] =
 	 {
 	 8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
@@ -182,9 +184,11 @@ static OSErr MADH2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 	theMAD->header->speed			= oldMAD->speed;
 	theMAD->header->tempo			= oldMAD->tempo;
 	
-	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
-	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
-	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MAD-H Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	theMAD->sets = (FXSets*)calloc(sizeof(FXSets), MAXTRACK);
+	//TODO: dispatch this
+	for (i = 0; i < MAXTRACK; i++)
+		theMAD->header->chanBus[i].copyId = i;
+	strlcpy(theMAD->header->infos, "Converted by PlayerPRO MAD-H Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	/**** Patterns *******/
 	
@@ -205,11 +209,11 @@ static OSErr MADH2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 		
 		if (tempPatHeader.compMode == 'MAD1')
 		{
-			inOutCount = sizeof( oldPatData) + tempPatHeader.patBytes;
+			inOutCount = sizeof(oldPatData) + tempPatHeader.patBytes;
 		}
 		else
 		{
-			inOutCount = sizeof( oldPatData) + oldMAD->numChn * tempPatHeader.size * sizeof( oldCmd);
+			inOutCount = sizeof(oldPatData) + oldMAD->numChn * tempPatHeader.size * sizeof( oldCmd);
 		}
 		
 		tempPat = (struct oldPatData*) malloc( inOutCount);
@@ -222,9 +226,9 @@ static OSErr MADH2Mad( Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSetti
 		
 		if (tempPat->header.compMode == 'MAD1')
 		{
-			tempPat2 = oldDecompressPartitionMAD1( oldMAD, tempPat);
+			tempPat2 = oldDecompressPartitionMAD1(oldMAD, tempPat);
 			
-			free( (Ptr) tempPat);
+			free(tempPat);
 			
 			tempPat = tempPat2;
 		}
