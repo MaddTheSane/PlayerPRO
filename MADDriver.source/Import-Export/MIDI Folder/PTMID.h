@@ -26,6 +26,8 @@
 #define SEEK_END 2
 #endif
 
+#pragma pack(push, 2)
+
 #define ERROR /*perror(szProgram)*/
 
 typedef char *Sz;
@@ -74,6 +76,8 @@ typedef struct { /** MS structure represents a mix of samples **/
 	char bDefvol;
 	SI *psi;
 } MS;
+
+#pragma pack(pop)
 
 extern char bDrumch, szId[5];
 extern int fNocopy, fQuiet, fExtend, fStats, wPatmax, wMaxchan, wQuantval;
