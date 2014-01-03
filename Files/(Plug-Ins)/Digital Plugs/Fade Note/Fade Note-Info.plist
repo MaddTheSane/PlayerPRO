@@ -13,11 +13,11 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFPlugInDynamicRegistration</key>
 	<false/>
 	<key>CFPlugInFactories</key>
@@ -33,6 +33,6 @@
 		</array>
 	</dict>
 	<key>MADPlugMenuName</key>
-	<string>Fade Note</string>
+	<string>Note Fade</string>
 </dict>
 </plist>
