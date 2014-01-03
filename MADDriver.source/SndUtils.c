@@ -24,11 +24,10 @@ sData* inMADCreateSample()
 {
 	sData *curData;
 	
-	curData = (sData*) calloc(sizeof(sData), 1);
+	curData = (sData*)calloc(sizeof(sData), 1);
 	
-	if (curData == NULL) {
+	if (curData == NULL)
 		return NULL;
-	}
 	
 	curData->size		= 0;
 	curData->loopBeg	= 0;
@@ -43,15 +42,19 @@ sData* inMADCreateSample()
 	return curData;
 }
 
-Cmd* GetCmd( short row, short track, Pcmd* myPcmd)
+Cmd* GetCmd(short row, short track, Pcmd* myPcmd)
 {
-	if (row < 0) row = 0;
-	else if (row >= myPcmd->length) row = myPcmd->length -1;
+	if (row < 0)
+		row = 0;
+	else if (row >= myPcmd->length)
+		row = myPcmd->length - 1;
 	
-	if (track < 0) track = 0;
-	else if (track >= myPcmd->tracks) track = myPcmd->tracks -1;
+	if (track < 0)
+		track = 0;
+	else if (track >= myPcmd->tracks)
+		track = myPcmd->tracks - 1;
 	
-	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
+	return &(myPcmd->myCmd[(myPcmd->length * track) + row]);
 }
 
 OSErr inAddSoundToMAD(void			*theSound,
@@ -100,9 +103,9 @@ OSErr inAddSoundToMADCString(void			*theSound,
 	if (theSound == NULL)
 		return MADParametersErr;
 	
-	if (!sampleID || !InsHeader || !sample) {
+	if (!sampleID || !InsHeader || !sample)
 		return MADParametersErr;
-	}
+	
 	if (*sampleID > MAXSAMPLE)
 		return MADParametersErr;
 	
@@ -110,23 +113,20 @@ OSErr inAddSoundToMADCString(void			*theSound,
 	
 	///////
 	
-	if (*sampleID >= 0)		// replace this sample
-	{
-		curData = sample[ *sampleID];
-	}
-	else					// add a sample : why? because *sampleID == -1
-	{
+	if (*sampleID >= 0) {		// replace this sample
+		curData = sample[*sampleID];
+	} else {					// add a sample : why? because *sampleID == -1
 		*sampleID = InsHeader->numSamples;
 		InsHeader->numSamples++;
 		
-		curData = sample[ *sampleID] = inMADCreateSample();
+		curData = sample[*sampleID] = inMADCreateSample();
 		
-		if (!curData) {
+		if (!curData)
 			return MADNeedMemory;
-		}
 	}
 	
-	if (curData->data != NULL) free( curData->data);
+	if (curData->data != NULL)
+		free(curData->data);
 	curData->data = theSound;
 	
 	curData->size		= (int)inOutBytes;
@@ -138,7 +138,7 @@ OSErr inAddSoundToMADCString(void			*theSound,
 	curData->relNote	= 60 - bFreq;
 	curData->stereo		= stereo;
 	
-	strlcpy(curData->name, name, 32);
+	strlcpy(curData->name, name, sizeof(curData->name));
 	
 	return noErr;
 }

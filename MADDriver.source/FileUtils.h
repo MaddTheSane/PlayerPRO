@@ -42,22 +42,116 @@ extern "C" {
 #endif
 
 ////////////////////////////////////////////////////////////
-	
+
+/**
+ * @function	iFileOpen
+ * @abstract	Deprecated: Calls iFileOpenRead
+ * @discussion	You should be using iFileOpenRead instead
+ */
 PPEXPORT UNFILE	iFileOpen(const char *name) DEPRECATED_ATTRIBUTE;
+
+/**
+ * @function	iFileOpenRead
+ * @abstract	Opens a file for reading
+ * @result		an UNFILE that can be read from
+ * @param		name
+ *					The location of the file to read.
+ * @discussion	The file location can be either relative or absolute.
+ */
 PPEXPORT UNFILE	iFileOpenRead(const char *name);
+
+/**
+ * @function	iFileOpenWrite
+ * @abstract	Opens a file for writing
+ * @result		an UNFILE that can be written to
+ * @param		name
+ *					The location of the file to write.
+ * @discussion	The file location can be either relative or absolute.
+ */
 PPEXPORT UNFILE	iFileOpenWrite(const char *name);
+
+/**
+ * @function	iFileCreate
+ * @abstract	Create a file at path, optionally setting the file type
+ * @param		path
+ *					The path to create the new file
+ * @param		type
+ *					The File Type to set the file to.
+ * @discussion	type is ignored on platforms that aren't OS X.
+ *				type is mostly used on pre-OS X versions of Mac OS, and is rarely used nowadays.
+ */
 PPEXPORT void	iFileCreate(const char *path, OSType type);
 
+/**
+ * @function	iGetEOF
+ * @abstract	Get the length of the file
+ * @result		the size of the file pointed to by iFileRefI
+ * @param		iFileRefI
+ *					The file pointer to get the size from
+ * @discussion	As this returns a 'long' data type, files larger than 2 GiB on non-LP64 systems (including Win64) may result in an invalid value, or even crash your app.
+ *				As most tracker types (and audio files in general) are not that large, this will most likely not be an issue.
+ */
 PPEXPORT long	iGetEOF(UNFILE iFileRefI);
+
+/**
+ * @function	iRead
+ * @abstract	Reads data in file referenced from iFileRefI
+ * @result		An error value. 0, or enum noErr if there was no error.
+ * @param		size
+ *					The size of the data to read
+ * @param		dest
+ *					A pointer to put the data.
+ * @param		iFileRefI
+ *					The file reference to read from. Must have been opened with iFileOpenRead
+ * @discussion	The size cannot be larger than the data pointer, otherwise bad things will happen.
+ */
 PPEXPORT OSErr	iRead(long size, void *dest, UNFILE iFileRefI);
+
+/**
+ * @function	iWrite
+ * @abstract	Writes data to file reference from iFileRefI
+ * @result		An error value. 0, or enum noErr if there was no error.
+ * @param		size
+ *					The size of the data to write
+ * @param		src
+ *					A pointer to read data from.
+ * @param		iFileRefI
+ *					The file reference to write to. Must have been opened with iFileOpenWrite
+ * @discussion	The size cannot be larger than the data pointer, otherwise bad things will happen.
+ *				Data is written to the file from the current
+ */
 PPEXPORT OSErr	iWrite(long size, const void *src, UNFILE iFileRefI);
+
+/**
+ * @function    iSeekCur
+ * @abstract    Change the file position of file pointed at by iFileRefI
+ * @result      An error value. 0, or enum noErr if there was no error.
+ * @param       size
+ *					The offset from the current position.
+ * @param		iFileRefI
+ *					The file reference to change the file position on
+ * @discussion  additional notes
+ */
 PPEXPORT OSErr	iSeekCur(long size, UNFILE iFileRefI);
 
+/**
+ * @function	iClose
+ * @abstract	Closes the file reference
+ * @param		iFileRefI
+ *					The file reference to close.
+ */
 PPEXPORT void	iClose(UNFILE iFileRefI);
-	
+
 ////////////////////////////////////////////////////////////
 
 //TODO: use system-based functions, such as the ones used on OS X/iOS
+/**
+ * @function    MADByteSwap32
+ * @abstract    Byte-swaps a 32-bit value
+ * @param       msg_buf
+ *					A pointer to a 32-bit value. On output, the value will be byte-swapped.
+ * @discussion  Refrain from using this function directly: use either PPLE32 or PPBE32
+ */
 static __inline__ void MADByteSwap32(void *msg_buf)
 {
 	uint32_t temp = *((uint32_t*)msg_buf);
@@ -71,6 +165,13 @@ static __inline__ void MADByteSwap32(void *msg_buf)
 }
 
 //TODO: use system-based functions, such as the ones used on OS X/iOS
+/**
+ * @function    MADByteSwap16
+ * @abstract    Byte-swaps a 16-bit value
+ * @param       msg_buf
+ *					a pointer to a 16-bit value. On output, the value will be byte-swapped.
+ * @discussion  Refrain from using this function directly: use either PPLE16 or PPBE16
+ */
 static __inline__ void MADByteSwap16(void *msg_buf)
 {
 	uint16_t buf = *((uint16_t*)msg_buf);
@@ -82,6 +183,22 @@ static __inline__ void MADByteSwap16(void *msg_buf)
 }
 
 /////////////////////////////////
+
+/**
+ * @function    PPBE32
+ * @abstract    Gets the native value of a 32-bit big-endian value
+ * @param       msg_buf
+ *					A pointer to a 32-bit value from, or to, a big endian source. On return, the value is swapped on little-endian machines.
+ * @discussion  This function is preprocessed out on big endian machines.
+ */
+
+/**
+ * @function    PPBE16
+ * @abstract    Gets the native value of a 16-bit big-endian value
+ * @param       msg_buf
+ *					A pointer to a 16-bit value from, or to, a big endian source. On return, the value is swapped on little-endian machines.
+ * @discussion  This function is preprocessed out on big endian machines.
+ */
 
 #ifdef __LITTLE_ENDIAN__
 static __inline__ void PPBE32(void *msg_buf)
@@ -100,6 +217,22 @@ static __inline__ void PPBE16(void *msg_buf)
 
 /////////////////////////////////
 
+/**
+ * @function    PPLE32
+ * @abstract    Gets the native value of a 32-bit little-endian value
+ * @param       msg_buf
+ *					A pointer to a 32-bit value from, or to, a little endian source. On return, the value is swapped on big-endian machines.
+ * @discussion  This function is preprocessed out on little endian machines.
+ */
+
+/**
+ * @function    PPLE16
+ * @abstract    Gets the native value of a 16-bit little-endian value
+ * @param       msg_buf
+ *					A pointer to a 16-bit value from, or to, a little endian source. On return, the value is swapped on big-endian machines.
+ * @discussion  This function is preprocessed out on little endian machines.
+ */
+
 #ifdef __BIG_ENDIAN__
 static __inline__ void PPLE32(void *msg_buf)
 {
@@ -117,13 +250,31 @@ static __inline__ void PPLE16(void *msg_buf)
 
 /////////////////////////////////
 
+/**
+ * @function    OSType2Ptr
+ * @abstract    Converts an OSType to a c-string.
+ * @param       type
+ *					The OSType to convert
+ * @param		str
+ *					The address of the char array to write to
+ * @discussion  str must be at least five chars long: four for the size of the OSType, and one for the terminating null.
+ *				Note that OSTypes use the Mac OS Roman encoding. If needed, use iconv to convert from the Mac OS Roman encoding.
+ */
 static __inline__ void OSType2Ptr(OSType type, char *str)
 {
 	PPBE32(&type);
 	memcpy(str, &type, 4);
-	str[ 4] = 0;
+	str[4] = 0;
 }
 
+/**
+ * @function    Ptr2OSType
+ * @abstract    Converts a c-string to an OSType
+ * @result      The converted OSType.
+ * @param       str
+ *					The string to convert to an OSType, null-terminated.
+ * @discussion  Note that OSTypes use the Mac OS Roman encoding. UTF-8 special characters may cause issues. If needed, use iconv to convert to the Mac OS Roman encoding.
+ */
 static __inline__ OSType Ptr2OSType(const char *str)
 {
 	short	i;
