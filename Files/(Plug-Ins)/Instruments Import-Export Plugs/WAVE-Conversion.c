@@ -14,7 +14,7 @@
 #define kStereoStr 			"\pStereo"
 #define kMonoStr 			"\pMonaural"
 
-OSErr TestWAV( PCMWavePtr CC)
+OSErr TestWAV(PCMWavePtr CC)
 {
 	if (EndianU32_BtoN(CC->ckid) =='RIFF') return noErr;
 	else return MADFileNotSupportedByThisPlug;
@@ -93,28 +93,28 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 					
 					if((*WAVERsrc).wFormatTag != 1)
 					{
-						DisposePtr( (Ptr) WAVERsrc);
+						DisposePtr((Ptr) WAVERsrc);
 						FSCloseFork(fRef);
 						return NULL;
 					}
 				}
 				else
 				{
-					DisposePtr( (Ptr) WAVERsrc);
+					DisposePtr((Ptr) WAVERsrc);
 					FSCloseFork(fRef);
 					return NULL;
 				}	
 			}
 			else
 			{
-				DisposePtr( (Ptr) WAVERsrc);
+				DisposePtr((Ptr) WAVERsrc);
 				FSCloseFork(fRef);
 				return NULL;
 			}
 		}
 		else
 		{
-			DisposePtr( (Ptr) WAVERsrc);
+			DisposePtr((Ptr) WAVERsrc);
 			FSCloseFork(fRef);
 			return NULL;
 		}
@@ -129,12 +129,12 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 		
 		memmove(WAVERsrc, WAVERsrc->theData, sndSize);
 		
-		SetPtrSize( (Ptr) WAVERsrc, sndSize);
+		SetPtrSize((Ptr) WAVERsrc, sndSize);
 		
-		switch( *sampleSize)
+		switch(*sampleSize)
 		{
 			case 8:
-				ConvertInstrumentIn( (Byte*) WAVERsrc, sndSize);
+				ConvertInstrumentIn((Byte*) WAVERsrc, sndSize);
 			break;
 			
 			case 16:
@@ -143,7 +143,7 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 					unsigned short	*tt = (unsigned short*) WAVERsrc;
 					
 					i = sndSize/2;
-					while (i-- > 0) tt[ i] = shrtswap( tt[ i]);
+					while (i-- > 0) tt[ i] = shrtswap(tt[ i]);
 				}
 			break;
 		}
@@ -151,7 +151,7 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 	return (Ptr) WAVERsrc;
 }
 
-OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
+OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 {
 	OSErr					iErr;
 	Boolean					canceled;
@@ -168,17 +168,17 @@ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug
 		return -1;
 	}
 	
-	myCursH = GetCursor( 357);
+	myCursH = GetCursor(357);
 	
 	if (myCursH == NULL) Debugger();
-	DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-	watchCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+	DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
+	watchCrsr = **myCursH;					HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
 	
 	resRefNum = 0;
-	iErr = OpenMovieFile ( &file, &resRefNum, fsCurPerm);
+	iErr = OpenMovieFile (&file, &resRefNum, fsCurPerm);
 	
 	resId = 0;
-	iErr = NewMovieFromFile( &theMovie, resRefNum, &resId, resName, 0, &dataRefWasChanged);
+	iErr = NewMovieFromFile(&theMovie, resRefNum, &resId, resName, 0, &dataRefWasChanged);
 	
 	CallUpdateALLWindowUPP();
 	
@@ -189,7 +189,7 @@ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug
 		short tmpvRef;
 		long tmpDirID;
 		
-		iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tmpvRef, &tmpDirID);
+		iErr = FindFolder(kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tmpvRef, &tmpDirID);
 		if (iErr == noErr)
 		{
 			iErr = FSMakeFSSpec(tmpvRef, tmpDirID, file.name, newfile);
@@ -198,9 +198,9 @@ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug
 			/////////////////////////////////////////////////
 			
 			
-			SetCursor( &watchCrsr);
+			SetCursor(&watchCrsr);
 			
-			iErr = FSpDelete( newfile);
+			iErr = FSpDelete(newfile);
 			
 			iErr = ConvertMovieToFile(	theMovie,
 										0,
@@ -212,9 +212,9 @@ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug
 							 			0,
 							 			0);
 			
-			DisposeMovie( theMovie);
+			DisposeMovie(theMovie);
 			
-			CloseMovieFile( resRefNum);
+			CloseMovieFile(resRefNum);
 		}
 	}
 	

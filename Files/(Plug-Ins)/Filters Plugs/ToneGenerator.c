@@ -20,7 +20,7 @@ enum
 #define		PI      		M_PI
 #define		KHZ				22254.54545
 
-static void AutoPosition( DialogPtr aDia)
+static void AutoPosition(DialogPtr aDia)
 {
 	Point		Position, mouse;
 	Rect		ViewRect, caRect;
@@ -28,30 +28,30 @@ static void AutoPosition( DialogPtr aDia)
 	GDHandle	aH;
 	BitMap		screenBits;
 	
-	GetMouse( &mouse);
-	LocalToGlobal( &mouse);
+	GetMouse(&mouse);
+	LocalToGlobal(&mouse);
 	
-	GetPortBounds( GetDialogPort( aDia), &caRect);
+	GetPortBounds(GetDialogPort(aDia), &caRect);
 	
 	XSize = (caRect.right - caRect.left);
 	YSize = (caRect.bottom - caRect.top);
 	
-	GetQDGlobalsScreenBits( &screenBits);
+	GetQDGlobalsScreenBits(&screenBits);
 	
-	SetRect( &ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
+	SetRect(&ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
 						screenBits.bounds.right - 8, screenBits.bounds.bottom - 8);
 	
 	aH = GetDeviceList();
 	do
 	{
-		aH = GetNextDevice( aH);
+		aH = GetNextDevice(aH);
 		if (aH != NULL)
 		{
-			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect(mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
-				SetRect( &ViewRect, ar.left + 8, ar.top + 43,
+				SetRect(&ViewRect, ar.left + 8, ar.top + 43,
 									ar.right - 8, ar.bottom - 8);
 			}
 		}
@@ -66,12 +66,12 @@ static void AutoPosition( DialogPtr aDia)
 	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
 	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
-	SetDialogDefaultItem( aDia, 1 );
-	SetDialogCancelItem( aDia, 2 );
+	SetDialogDefaultItem(aDia, 1 );
+	SetDialogCancelItem(aDia, 2 );
 
-	MoveWindow( GetDialogWindow( aDia), Position.h, Position.v, false);
+	MoveWindow(GetDialogWindow(aDia), Position.h, Position.v, false);
 
-	ShowWindow( GetDialogWindow( aDia));
+	ShowWindow(GetDialogWindow(aDia));
 }
 
 static void GetDText (DialogPtr dlog, short item, StringPtr str)
@@ -88,12 +88,12 @@ static void SetDText (DialogPtr dlog, short item, Str255 str)
 {
 	ControlHandle	control;
 
-	GetDialogItemAsControl( dlog, item, &control );
-	SetControlData( control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
-	DrawOneControl( control);
+	GetDialogItemAsControl(dlog, item, &control );
+	SetControlData(control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
+	DrawOneControl(control);
 }
 
-static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, long AudioType, Boolean stereo)
+static Ptr CreateAudio8Ptr(long AudioLength, long AudioFreq, long AudioAmp, long AudioType, Boolean stereo)
 {
 	Ptr		Audio8Ptr;
 	long	i, temp, inter = 0, x, dest;
@@ -101,15 +101,15 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 	
 	if (stereo) AudioLength *= 2L;
 	
-	Audio8Ptr = NewPtr( AudioLength);
+	Audio8Ptr = NewPtr(AudioLength);
 	if (Audio8Ptr == NULL) return NULL;
 	
-	switch( AudioType)
+	switch(AudioType)
 	{
 		case wave:
 			for (i = 0, x = 0; i < AudioLength; i++, x++)
 			{
-				temp = 127. * sin( ( ((double) x * (double) AudioFreq * PI * 2.) / KHZ));
+				temp = 127. * sin((((double) x * (double) AudioFreq * PI * 2.) / KHZ));
 				
 				/** Amplitude resizing **/
 				temp *= AudioAmp;
@@ -203,7 +203,7 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 	return Audio8Ptr;
 }
 
-static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp, long AudioType, Boolean stereo)
+static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, long AudioType, Boolean stereo)
 {
 	short	*Audio16Ptr;
 	long	i, temp, inter = 0, x, dest;
@@ -211,15 +211,15 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 	
 	if (stereo) AudioLength *= 2L;
 	
-	Audio16Ptr = (short*) NewPtr( AudioLength*2);
+	Audio16Ptr = (short*) NewPtr(AudioLength*2);
 	if (Audio16Ptr == NULL) return NULL;
 	
-	switch( AudioType)
+	switch(AudioType)
 	{
 		case wave:
 			for (i = 0, x = 0; i < AudioLength; i++, x++)
 			{
-				temp = 32767. * sin( ( ((double) x * (double) AudioFreq * PI * 2.) / KHZ));
+				temp = 32767. * sin((((double) x * (double) AudioFreq * PI * 2.) / KHZ));
 				
 				/** Amplitude resizing **/
 				temp *= AudioAmp;
@@ -328,97 +328,97 @@ static OSErr mainToneGenerator(sData			*theData,
 	Rect				itemRect;
 	Str255				tStr;
 
-	myDia = GetNewDialog( 128, NULL, (WindowPtr) -1L);
-	SetPortDialogPort( myDia);
-	AutoPosition( myDia);
+	myDia = GetNewDialog(128, NULL, (WindowPtr) -1L);
+	SetPortDialogPort(myDia);
+	AutoPosition(myDia);
 	
 	// Mono
-	switch( theData->stereo)
+	switch(theData->stereo)
 	{
 		case false:
-			GetDialogItem( myDia, 22, &itemType, &itemHandle, &itemRect);
-			SetControlValue( (ControlHandle) itemHandle, true);
+			GetDialogItem(myDia, 22, &itemType, &itemHandle, &itemRect);
+			SetControlValue((ControlHandle) itemHandle, true);
 		break;
 		
 		case true:
-			GetDialogItem( myDia, 23, &itemType, &itemHandle, &itemRect);
-			SetControlValue( (ControlHandle) itemHandle, true);
+			GetDialogItem(myDia, 23, &itemType, &itemHandle, &itemRect);
+			SetControlValue((ControlHandle) itemHandle, true);
 		break;
 	}
 	
 	if (theData->size > 0)	// We CANNOT change stereo mode, since data is already here....
 	{
-		GetDialogItem( myDia, 22, &itemType, &itemHandle, &itemRect);		HiliteControl( (ControlHandle) itemHandle, 255);
-		GetDialogItem( myDia, 23, &itemType, &itemHandle, &itemRect);		HiliteControl( (ControlHandle) itemHandle, 255);
+		GetDialogItem(myDia, 22, &itemType, &itemHandle, &itemRect);		HiliteControl((ControlHandle) itemHandle, 255);
+		GetDialogItem(myDia, 23, &itemType, &itemHandle, &itemRect);		HiliteControl((ControlHandle) itemHandle, 255);
 	}
 	
 	AudioType = silence;
-	GetDialogItem( myDia, AudioType, &itemType, &itemHandle, &itemRect);
-	SetControlValue( (ControlHandle) itemHandle, true);
+	GetDialogItem(myDia, AudioType, &itemType, &itemHandle, &itemRect);
+	SetControlValue((ControlHandle) itemHandle, true);
 	
 	AudioLength = SelectionEnd - SelectionStart;
 	if (theData->amp == 16) AudioLength /= 2;
 	if (theData->stereo) AudioLength /= 2;
 	if (AudioLength <= 0) AudioLength = 2000;
-	NumToString( AudioLength, tStr);	SetDText( myDia, 8, tStr);
+	NumToString(AudioLength, tStr);	SetDText(myDia, 8, tStr);
 	
-	AudioFreq	= 440;								NumToString( AudioFreq, tStr);		SetDText( myDia, 9, tStr);
-	AudioAmp	= 100;								NumToString( AudioAmp, tStr);		SetDText( myDia, 10, tStr);
+	AudioFreq	= 440;								NumToString(AudioFreq, tStr);		SetDText(myDia, 9, tStr);
+	AudioAmp	= 100;								NumToString(AudioAmp, tStr);		SetDText(myDia, 10, tStr);
 	
-	SelectDialogItemText( myDia, 8, 0, 10000);
+	SelectDialogItemText(myDia, 8, 0, 10000);
 	/********************/
 	
 	Audio8Ptr	= NULL;	Audio16Ptr	= NULL;
 
 	do
 	{
-		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+		ModalDialog(thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 		
-		switch( itemHit)
+		switch(itemHit)
 		{
 			case 22:	// Mono
-				GetDialogItem( myDia, itemHit, &itemType, &itemHandle, &itemRect);
-				SetControlValue( (ControlHandle) itemHandle, true);
+				GetDialogItem(myDia, itemHit, &itemType, &itemHandle, &itemRect);
+				SetControlValue((ControlHandle) itemHandle, true);
 				theData->stereo = false;
 				
-				GetDialogItem( myDia, 23, &itemType, &itemHandle, &itemRect);	SetControlValue( (ControlHandle) itemHandle, false);
+				GetDialogItem(myDia, 23, &itemType, &itemHandle, &itemRect);	SetControlValue((ControlHandle) itemHandle, false);
 			break;
 			
 			case 23:	// Stereo
-				GetDialogItem( myDia, itemHit, &itemType, &itemHandle, &itemRect);
-				SetControlValue( (ControlHandle) itemHandle, true);
+				GetDialogItem(myDia, itemHit, &itemType, &itemHandle, &itemRect);
+				SetControlValue((ControlHandle) itemHandle, true);
 				theData->stereo = true;
 				
-				GetDialogItem( myDia, 22, &itemType, &itemHandle, &itemRect);	SetControlValue( (ControlHandle) itemHandle, false);
+				GetDialogItem(myDia, 22, &itemType, &itemHandle, &itemRect);	SetControlValue((ControlHandle) itemHandle, false);
 			break;
 		
 			case 7:
 			{
-				static OSErr			(*mPlay)		( Ptr, long, long, long, long, long, long, unsigned long, Boolean);
+				static OSErr			(*mPlay)		(Ptr, long, long, long, long, long, long, unsigned long, Boolean);
 				
 				mPlay = thePPInfoPlug->RPlaySoundUPP;
 				
-				GetDText( myDia, 8, tStr);		StringToNum( tStr, &AudioLength);
-				GetDText( myDia, 9, tStr);		StringToNum( tStr, &AudioFreq);
-				GetDText( myDia, 10, tStr);		StringToNum( tStr, &AudioAmp);
+				GetDText(myDia, 8, tStr);		StringToNum(tStr, &AudioLength);
+				GetDText(myDia, 9, tStr);		StringToNum(tStr, &AudioFreq);
+				GetDText(myDia, 10, tStr);		StringToNum(tStr, &AudioAmp);
 				
-				switch( theData->amp)
+				switch(theData->amp)
 				{
 					case 8:
-						if (Audio8Ptr != NULL) { DisposePtr( Audio8Ptr);			Audio8Ptr = NULL;}
-						Audio8Ptr	= CreateAudio8Ptr( AudioLength, AudioFreq, AudioAmp, AudioType, theData->stereo);
+						if (Audio8Ptr != NULL) { DisposePtr(Audio8Ptr);			Audio8Ptr = NULL;}
+						Audio8Ptr	= CreateAudio8Ptr(AudioLength, AudioFreq, AudioAmp, AudioType, theData->stereo);
 						if (Audio8Ptr != NULL)
 						{
-						//	iErr = mPlay( Audio8Ptr, AudioLength, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
+						//	iErr = mPlay(Audio8Ptr, AudioLength, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
 						}
 					break;
 					
 					case 16:
-						if (Audio16Ptr != NULL) { DisposePtr( (Ptr) Audio16Ptr);	Audio16Ptr = NULL;}
-						Audio16Ptr	= CreateAudio16Ptr( AudioLength, AudioFreq, AudioAmp, AudioType, theData->stereo);
+						if (Audio16Ptr != NULL) { DisposePtr((Ptr) Audio16Ptr);	Audio16Ptr = NULL;}
+						Audio16Ptr	= CreateAudio16Ptr(AudioLength, AudioFreq, AudioAmp, AudioType, theData->stereo);
 						if (Audio16Ptr != NULL)
 						{
-						//	iErr = mPlay( (Ptr) Audio16Ptr, AudioLength*2, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
+						//	iErr = mPlay((Ptr) Audio16Ptr, AudioLength*2, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
 						}
 					break;
 				}
@@ -435,7 +435,7 @@ static OSErr mainToneGenerator(sData			*theData,
 			case 5:
 			case 6:
 			
-				switch( itemHit)
+				switch(itemHit)
 				{
 					case 19:
 					case 20:	itemHit = 3;	break;
@@ -446,13 +446,13 @@ static OSErr mainToneGenerator(sData			*theData,
 			
 				for (i = 3; i <= 6;i ++)
 				{
-					GetDialogItem( myDia, i, &itemType, &itemHandle, &itemRect);
-					SetControlValue( (ControlHandle) itemHandle, 0);
+					GetDialogItem(myDia, i, &itemType, &itemHandle, &itemRect);
+					SetControlValue((ControlHandle) itemHandle, 0);
 				}
 				
 				AudioType = itemHit;
-				GetDialogItem( myDia, AudioType, &itemType, &itemHandle, &itemRect);
-				SetControlValue( (ControlHandle) itemHandle, true);
+				GetDialogItem(myDia, AudioType, &itemType, &itemHandle, &itemRect);
+				SetControlValue((ControlHandle) itemHandle, true);
 			break;
 		}
 		
@@ -462,39 +462,39 @@ static OSErr mainToneGenerator(sData			*theData,
 	{
 		Ptr		resultPtr;
 		
-		GetDText( myDia, 8, tStr);		StringToNum( tStr, &AudioLength);
-		GetDText( myDia, 9, tStr);		StringToNum( tStr, &AudioFreq);
-		GetDText( myDia, 10, tStr);		StringToNum( tStr, &AudioAmp);
+		GetDText(myDia, 8, tStr);		StringToNum(tStr, &AudioLength);
+		GetDText(myDia, 9, tStr);		StringToNum(tStr, &AudioFreq);
+		GetDText(myDia, 10, tStr);		StringToNum(tStr, &AudioAmp);
 		
-		if (Audio16Ptr != NULL)	{	DisposePtr( (Ptr) Audio16Ptr);			Audio16Ptr = NULL;}
-		if (Audio8Ptr != NULL)	{	DisposePtr( (Ptr) Audio8Ptr);			Audio8Ptr = NULL;}
+		if (Audio16Ptr != NULL)	{	DisposePtr((Ptr) Audio16Ptr);			Audio16Ptr = NULL;}
+		if (Audio8Ptr != NULL)	{	DisposePtr((Ptr) Audio8Ptr);			Audio8Ptr = NULL;}
 		
-		switch( theData->amp)
+		switch(theData->amp)
 		{
-			case 8:		Audio8Ptr	= CreateAudio8Ptr( AudioLength, AudioFreq, AudioAmp, AudioType, theData->stereo);	break;
+			case 8:		Audio8Ptr	= CreateAudio8Ptr(AudioLength, AudioFreq, AudioAmp, AudioType, theData->stereo);	break;
 			case 16:
-				Audio16Ptr	= CreateAudio16Ptr( AudioLength, AudioFreq, AudioAmp, AudioType, theData->stereo);
+				Audio16Ptr	= CreateAudio16Ptr(AudioLength, AudioFreq, AudioAmp, AudioType, theData->stereo);
 				AudioLength *= 2;
 			break;
 		}
 		
 		if (theData->stereo) AudioLength *= 2;
 		
-		resultPtr = NewPtr( theData->size - (SelectionEnd - SelectionStart) + AudioLength);
+		resultPtr = NewPtr(theData->size - (SelectionEnd - SelectionStart) + AudioLength);
 		
-		BlockMoveData( theData->data, resultPtr, SelectionStart);
+		BlockMoveData(theData->data, resultPtr, SelectionStart);
 		
-		if (theData->amp == 8) BlockMoveData( Audio8Ptr, resultPtr + SelectionStart, AudioLength);
-		else BlockMoveData( Audio16Ptr, resultPtr + SelectionStart, AudioLength);
+		if (theData->amp == 8) BlockMoveData(Audio8Ptr, resultPtr + SelectionStart, AudioLength);
+		else BlockMoveData(Audio16Ptr, resultPtr + SelectionStart, AudioLength);
 		
-		BlockMoveData( theData->data + SelectionEnd, resultPtr + SelectionStart + AudioLength, theData->size - SelectionEnd);
+		BlockMoveData(theData->data + SelectionEnd, resultPtr + SelectionStart + AudioLength, theData->size - SelectionEnd);
 		
-		DisposePtr( theData->data);		DisposePtr( Audio8Ptr);
+		DisposePtr(theData->data);		DisposePtr(Audio8Ptr);
 		theData->data = resultPtr;
 		theData->size = theData->size  - (SelectionEnd - SelectionStart) + AudioLength;
 	}
 	
-	DisposeDialog( myDia);
+	DisposeDialog(myDia);
 
 	return noErr;
 }

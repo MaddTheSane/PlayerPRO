@@ -13,16 +13,16 @@ extern	RGBColor	theColor;
 
 static	Str255		EstimatedTime, ElapsedTime, KWritten, Throughput;
 
-void NTStr( short	NoDigi, short		val, Ptr	theText);
-Boolean	IsPressed( unsigned short );
+void NTStr(short	NoDigi, short		val, Ptr	theText);
+Boolean	IsPressed(unsigned short );
 Boolean	AbortInQueue();
 void UpdateWorkingWindow();
 void StopAIFFExporting();
 OSErr ConvertMovieToMPEG4(FSSpec *inputFile, FSSpec *outputFile);
-void FlushPlugin( void);
-void GetDigitalSelection( short *XStart, short *YStart, short *XEnd, short *YEnd, short*);
-void MADCheckSpeedPattern( MADMusic *MDriver, MADDriverRec *intDriver);
-Boolean SoundQualityExport( 	Boolean OnlyCurrent,
+void FlushPlugin(void);
+void GetDigitalSelection(short *XStart, short *YStart, short *XEnd, short *YEnd, short*);
+void MADCheckSpeedPattern(MADMusic *MDriver, MADDriverRec *intDriver);
+Boolean SoundQualityExport(	Boolean OnlyCurrent,
 								short *ChannelNo,
 								OSType *CompressionType,
 								Fixed *FrequenceSpeed,
@@ -57,7 +57,7 @@ void SetToDoColor(void)
 	RGBBackColor(&kBlack);
 }
 
-void OpenWorkingWindow( short NumberCalls)
+void OpenWorkingWindow(short NumberCalls)
 {
 	short 	itemType;
 	Handle	itemHandle;
@@ -70,22 +70,22 @@ void OpenWorkingWindow( short NumberCalls)
 //	if (WorkTotal < MINIMUS) return;
 	
 	
-	GetPort( &SavePort);
+	GetPort(&SavePort);
 	
-	theProgressDia = GetNewDialog( 156, NULL, (WindowPtr) -1L);
-	SetPortDialogPort( theProgressDia);
-	ShowWindow( GetDialogWindow( theProgressDia));
-	SelectWindow2( GetDialogWindow( theProgressDia));
+	theProgressDia = GetNewDialog(156, NULL, (WindowPtr) -1L);
+	SetPortDialogPort(theProgressDia);
+	ShowWindow(GetDialogWindow(theProgressDia));
+	SelectWindow2(GetDialogWindow(theProgressDia));
 	
-	DisableMenuItem( ExportMenu, 1);
-	DisableMenuItem( ExportMenu, 2);
+	DisableMenuItem(ExportMenu, 1);
+	DisableMenuItem(ExportMenu, 2);
 	
 	FirstCall = TickCount();
 	
 	if (AppearanceManager)
 	{
-		GetDialogItem( theProgressDia, 1, &itemType, &itemHandle, &itemRect);
-		progCntl = NewControl( 	GetDialogWindow( theProgressDia),
+		GetDialogItem(theProgressDia, 1, &itemType, &itemHandle, &itemRect);
+		progCntl = NewControl(	GetDialogWindow(theProgressDia),
 								&itemRect,
 								"\p.",
 								true,
@@ -99,7 +99,7 @@ void OpenWorkingWindow( short NumberCalls)
 	
 	UpdateWorkingWindow();
 	
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
 void UpdateWorkingWindow()
@@ -112,12 +112,12 @@ void UpdateWorkingWindow()
 	
 	if (theProgressDia == NULL) return;
 	
-	GetPort( &SavePort);
-	SetPortDialogPort( theProgressDia);
+	GetPort(&SavePort);
+	SetPortDialogPort(theProgressDia);
 	
-	BeginUpdate( GetDialogWindow( theProgressDia));
+	BeginUpdate(GetDialogWindow(theProgressDia));
 	
-	DrawDialog( theProgressDia);
+	DrawDialog(theProgressDia);
 	
 	if (AppearanceManager)
 	{
@@ -125,16 +125,16 @@ void UpdateWorkingWindow()
 	}
 	else
 	{
-		GetDialogItem( theProgressDia, 1, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(theProgressDia, 1, &itemType, &itemHandle, &itemRect);
 		
 		itemRect.left -=1;				itemRect.top -=1;
 		itemRect.right +=1;				itemRect.bottom +=1;
 		SetFrameColor();
-		FrameRect( &itemRect);
+		FrameRect(&itemRect);
 		
-		GetDialogItem( theProgressDia, 1, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(theProgressDia, 1, &itemType, &itemHandle, &itemRect);
 		SetToDoColor();
-		PaintRect( &itemRect);	
+		PaintRect(&itemRect);	
 		
 		temp = itemRect.right - itemRect.left;
 		temp = (temp * WorkStatus) / WorkTotal;
@@ -142,27 +142,27 @@ void UpdateWorkingWindow()
 		itemRect.right = itemRect.left + temp;
 		
 		SetDoneColor();
-		PaintRect( &itemRect);
+		PaintRect(&itemRect);
 		
-		ForeColor( blackColor);
-		RGBBackColor( &theColor);
+		ForeColor(blackColor);
+		RGBBackColor(&theColor);
 	}
 	
-	GetDialogItem ( theProgressDia, 7, &itemType, &itemHandle, &itemRect);
-	TETextBox( EstimatedTime + 1, EstimatedTime[ 0], &itemRect, teJustRight);
+	GetDialogItem (theProgressDia, 7, &itemType, &itemHandle, &itemRect);
+	TETextBox(EstimatedTime + 1, EstimatedTime[ 0], &itemRect, teJustRight);
 	
-	GetDialogItem ( theProgressDia, 5, &itemType, &itemHandle, &itemRect);
-	TETextBox( ElapsedTime + 1, ElapsedTime[ 0], &itemRect, teJustRight);
+	GetDialogItem (theProgressDia, 5, &itemType, &itemHandle, &itemRect);
+	TETextBox(ElapsedTime + 1, ElapsedTime[ 0], &itemRect, teJustRight);
 	
-	GetDialogItem ( theProgressDia, 9, &itemType, &itemHandle, &itemRect);
-	TETextBox( Throughput + 1, Throughput[ 0], &itemRect, teJustRight);
+	GetDialogItem (theProgressDia, 9, &itemType, &itemHandle, &itemRect);
+	TETextBox(Throughput + 1, Throughput[ 0], &itemRect, teJustRight);
 	
-	GetDialogItem ( theProgressDia, 3, &itemType, &itemHandle, &itemRect);
-	TETextBox( KWritten + 1, KWritten[ 0], &itemRect, teJustRight);
+	GetDialogItem (theProgressDia, 3, &itemType, &itemHandle, &itemRect);
+	TETextBox(KWritten + 1, KWritten[ 0], &itemRect, teJustRight);
 	
-	EndUpdate( GetDialogWindow( theProgressDia));
+	EndUpdate(GetDialogWindow(theProgressDia));
 	
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
 Boolean DoWorkingWindow(void)
@@ -180,19 +180,19 @@ Boolean DoWorkingWindow(void)
 	
 	if (theProgressDia == NULL) return false;
 	
-	GetPort( &SavePort);
-	SetPortDialogPort( theProgressDia);
+	GetPort(&SavePort);
+	SetPortDialogPort(theProgressDia);
 	
 	WorkStatus ++;
 	if (WorkStatus > WorkTotal) WorkStatus = WorkTotal;
 	
 	if (AppearanceManager)
 	{
-		SetControlValue( progCntl, (100 * WorkStatus) / WorkTotal);
+		SetControlValue(progCntl, (100 * WorkStatus) / WorkTotal);
 	}
 	else
 	{
-		GetDialogItem( theProgressDia, 1, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(theProgressDia, 1, &itemType, &itemHandle, &itemRect);
 		
 		temp = itemRect.right - itemRect.left;
 		temp = (temp * WorkStatus) / WorkTotal;
@@ -204,9 +204,9 @@ Boolean DoWorkingWindow(void)
 			itemRect.right = itemRect.left + temp;
 		
 			SetDoneColor();
-			PaintRect( &itemRect);
-			ForeColor( blackColor);
-			RGBBackColor( &theColor);
+			PaintRect(&itemRect);
+			ForeColor(blackColor);
+			RGBBackColor(&theColor);
 		}
 	}
 	
@@ -219,7 +219,7 @@ Boolean DoWorkingWindow(void)
 	{
 		curTicks = TickCount();
 		
-		Ltemp = ((long) (curTicks - FirstCall) * ((long) WorkTotal))/ ( (long) WorkStatus);	// Temps total
+		Ltemp = ((long) (curTicks - FirstCall) * ((long) WorkTotal))/ ((long) WorkStatus);	// Temps total
 		Ltemp -= (long) (curTicks - FirstCall);
 	
 		Ltemp /= 60;
@@ -232,7 +232,7 @@ Boolean DoWorkingWindow(void)
 		
 		if (curTicks - FirstCall > 30)
 		{
-			Ltemp = ((long) (curTicks - FirstCall) * ((long) WorkTotal))/ ( (long) WorkStatus);	// Temps total
+			Ltemp = ((long) (curTicks - FirstCall) * ((long) WorkTotal))/ ((long) WorkStatus);	// Temps total
 			Ltemp -= (long) (curTicks - FirstCall);
 		
 			Ltemp /= 60;
@@ -245,53 +245,53 @@ Boolean DoWorkingWindow(void)
 				
 				// Estimated remaining time
 				
-				SecondsToDate( Ltemp, &dtrp);
+				SecondsToDate(Ltemp, &dtrp);
 				
-				NTStr( 2, dtrp.second, (Ptr) str);
-				NTStr( 2, dtrp.minute, (Ptr) str2);
+				NTStr(2, dtrp.second, (Ptr) str);
+				NTStr(2, dtrp.minute, (Ptr) str2);
 				
-				strcat( (Ptr) str2, ":");
-				strcat( (Ptr) str2, (Ptr) str);
-				MyC2PStr( (Ptr) str2);
+				strcat((Ptr) str2, ":");
+				strcat((Ptr) str2, (Ptr) str);
+				MyC2PStr((Ptr) str2);
 				
-				pStrcpy( EstimatedTime, str2); pStrcat( EstimatedTime, "\p ");
-				GetDialogItem ( theProgressDia, 7, &itemType, &itemHandle, &itemRect);
-				TETextBox( EstimatedTime+1, EstimatedTime[ 0], &itemRect, teJustRight);
+				pStrcpy(EstimatedTime, str2); pStrcat(EstimatedTime, "\p ");
+				GetDialogItem (theProgressDia, 7, &itemType, &itemHandle, &itemRect);
+				TETextBox(EstimatedTime+1, EstimatedTime[ 0], &itemRect, teJustRight);
 				
 				// Elapsed time
 				
 				Ltemp = curTicks - FirstCall;
 				Ltemp /= 60;
 				
-				SecondsToDate( Ltemp, &dtrp);
+				SecondsToDate(Ltemp, &dtrp);
 				
-				NTStr( 2, dtrp.second, (Ptr) str);
-				NTStr( 2, dtrp.minute, (Ptr) str2);
+				NTStr(2, dtrp.second, (Ptr) str);
+				NTStr(2, dtrp.minute, (Ptr) str2);
 				
-				strcat( (Ptr) str2, ":");
-				strcat( (Ptr) str2, (Ptr) str);
-				MyC2PStr( (Ptr) str2);
+				strcat((Ptr) str2, ":");
+				strcat((Ptr) str2, (Ptr) str);
+				MyC2PStr((Ptr) str2);
 				
-				pStrcpy( ElapsedTime, str2);  pStrcat( ElapsedTime, "\p ");
-				GetDialogItem ( theProgressDia, 5, &itemType, &itemHandle, &itemRect);
-				TETextBox( ElapsedTime+1, ElapsedTime[ 0], &itemRect, teJustRight);
+				pStrcpy(ElapsedTime, str2);  pStrcat(ElapsedTime, "\p ");
+				GetDialogItem (theProgressDia, 5, &itemType, &itemHandle, &itemRect);
+				TETextBox(ElapsedTime+1, ElapsedTime[ 0], &itemRect, teJustRight);
 				
 				// KBytes written
 				
 				if (totalSize > finalSize) temp = finalSize;
 				else temp = totalSize;
 				
-				NumToString( temp / 1024L, str);
-				pStrcat( str, "\p Kb of ");
+				NumToString(temp / 1024L, str);
+				pStrcat(str, "\p Kb of ");
 				
-				NumToString( finalSize / 1024L, str2);
-				pStrcat( str2, "\p Kb");
+				NumToString(finalSize / 1024L, str2);
+				pStrcat(str2, "\p Kb");
 				
-				pStrcat( str, str2);
+				pStrcat(str, str2);
 				
-				pStrcpy( KWritten, str);	pStrcat( KWritten, "\p ");
-				GetDialogItem ( theProgressDia, 3, &itemType, &itemHandle, &itemRect);
-				TETextBox( KWritten+1, KWritten[ 0], &itemRect, teJustRight);
+				pStrcpy(KWritten, str);	pStrcat(KWritten, "\p ");
+				GetDialogItem (theProgressDia, 3, &itemType, &itemHandle, &itemRect);
+				TETextBox(KWritten+1, KWritten[ 0], &itemRect, teJustRight);
 				
 				// Throughput
 				
@@ -300,21 +300,21 @@ Boolean DoWorkingWindow(void)
 				
 				if (Ltemp != 0)
 				{
-					NumToString( (totalSize / 1024L) / Ltemp, str);
-					pStrcat( str, "\p Kb / s");
+					NumToString((totalSize / 1024L) / Ltemp, str);
+					pStrcat(str, "\p Kb / s");
 					
-					pStrcpy( Throughput, str);	pStrcat( Throughput, "\p ");
-					GetDialogItem ( theProgressDia, 9, &itemType, &itemHandle, &itemRect);
-					TETextBox( Throughput+1, Throughput[ 0], &itemRect, teJustRight);
+					pStrcpy(Throughput, str);	pStrcat(Throughput, "\p ");
+					GetDialogItem (theProgressDia, 9, &itemType, &itemHandle, &itemRect);
+					TETextBox(Throughput+1, Throughput[ 0], &itemRect, teJustRight);
 				}
 			}
 		}
 	}
 	
-	SetPort( SavePort);
+	SetPort(SavePort);
 	
-	GetKeys( km);
-	if (IsPressed( 0x37) && IsPressed( 0x2F)) return true;
+	GetKeys(km);
+	if (IsPressed(0x37) && IsPressed(0x2F)) return true;
 	else return false;
 }
 
@@ -326,26 +326,26 @@ void CloseWorkingWindow(void)
 	Rect			itemRect;
 	long			tempLong;
 	
-	GetPort( &SavePort);
-	SetPortDialogPort( theProgressDia);
+	GetPort(&SavePort);
+	SetPortDialogPort(theProgressDia);
 	
-	GetDialogItem( theProgressDia, 8, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(theProgressDia, 8, &itemType, &itemHandle, &itemRect);
 	
 	SetDoneColor();
-	PaintRect( &itemRect);
+	PaintRect(&itemRect);
 	
-	ForeColor( blackColor);
-	RGBBackColor( &theColor);
+	ForeColor(blackColor);
+	RGBBackColor(&theColor);
 	
-	SelectWindow2( NextWindowVisible( GetDialogWindow( theProgressDia)));
+	SelectWindow2(NextWindowVisible(GetDialogWindow(theProgressDia)));
 	
-	DisposeDialog( theProgressDia);
+	DisposeDialog(theProgressDia);
 	theProgressDia = NULL;
 	
-	EnableMenuItem( ExportMenu, 1);
-	EnableMenuItem( ExportMenu, 2);
+	EnableMenuItem(ExportMenu, 1);
+	EnableMenuItem(ExportMenu, 2);
 
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
 static 		Ptr 					outSound, sndPtr, compSound;
@@ -367,17 +367,17 @@ static		unsigned long			inputFrames, outputFrames;
 static		unsigned long			inputBytes, outputBytes;
 static		Ptr						inputPtr, outputPtr;
 
-Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, OSType type, FSSpec *dstFile)
+Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, OSType type, FSSpec *dstFile)
 {
 	OSErr					iErr;
 	long					i;
 	CompressionInfo			cp;
 	Boolean					MPG4;
 	
-	pStrcpy( EstimatedTime, "\p00:00 ");
-	pStrcpy( ElapsedTime, "\p00:00 ");
-	pStrcpy( Throughput, "\p0 Kb / s ");
-	pStrcpy( KWritten, "\p0 Kb ");
+	pStrcpy(EstimatedTime, "\p00:00 ");
+	pStrcpy(ElapsedTime, "\p00:00 ");
+	pStrcpy(Throughput, "\p0 Kb / s ");
+	pStrcpy(KWritten, "\p0 Kb ");
 	
 	bufferSin = NULL;
 	bufferSout = NULL;
@@ -394,10 +394,10 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	
 //	thePrefs.DirectDriverType = MADDriver->DriverSettings;
 	
-	if (!SoundQualityExport( OnlyCurrent, &thePrefs.channelNumber, &thePrefs.Compressor, &thePrefs.FrequenceSpeed, &thePrefs.amplitude, &patternID, &thePrefs.DirectDriverType, MPG4))
+	if (!SoundQualityExport(OnlyCurrent, &thePrefs.channelNumber, &thePrefs.Compressor, &thePrefs.FrequenceSpeed, &thePrefs.amplitude, &patternID, &thePrefs.DirectDriverType, MPG4))
 	{
-		FSCloseFork( fRefNum);
-		FSpDelete( newFile);
+		FSCloseFork(fRefNum);
+		FSpDelete(newFile);
 		return false;
 	}
 	
@@ -414,10 +414,10 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	
 	UpdateALLWindow();
 	
-	copyMusic = (MADMusic*) NewPtr( sizeof( MADMusic));
-	memcpy( copyMusic, curMusic, sizeof( MADMusic));
+	copyMusic = (MADMusic*) NewPtr(sizeof(MADMusic));
+	memcpy(copyMusic, curMusic, sizeof(MADMusic));
 	
-	if (MADCreateDriver( &thePrefs.DirectDriverType, gMADLib, &copyDriver) != noErr) return false;
+	if (MADCreateDriver(&thePrefs.DirectDriverType, gMADLib, &copyDriver) != noErr) return false;
 	
 	
 	copyDriver->currentlyExporting	= true;
@@ -444,12 +444,12 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	
 	for (i = 0; i < MAXTRACK; i++) copyDriver->Active[ i] = MADDriver->Active[ i];
 	
-	MADCleanDriver( copyDriver);
-	MADPurgeTrack( copyDriver);
+	MADCleanDriver(copyDriver);
+	MADPurgeTrack(copyDriver);
 	
 	// Copy Adaptors Settings
 	
-	MADAttachDriverToMusic( copyDriver, copyMusic, NULL);
+	MADAttachDriverToMusic(copyDriver, copyMusic, NULL);
 
 	copyDriver->VExt		= MADDriver->VExt;
 	copyDriver->FreqExt		= MADDriver->FreqExt;
@@ -466,16 +466,16 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	
 	// In case of just one pattern to export // // // // // // // // 
 	
-	MADCheckSpeedPattern( copyMusic, copyDriver);
+	MADCheckSpeedPattern(copyMusic, copyDriver);
 	
-	switch( patternID)
+	switch(patternID)
 	{
 		case -2:
 		{
 			short	DStartTrack, DStartPos, DEndTrack, DEndPos;
 			short	u, v;
 			
-			GetDigitalSelection( &DStartTrack, &DStartPos, &DEndTrack, &DEndPos, &currentPat);
+			GetDigitalSelection(&DStartTrack, &DStartPos, &DEndTrack, &DEndPos, &currentPat);
 			
 			copyDriver->PL = copyMusic->header->numPointers-1;
 			copyDriver->Pat = currentPat;
@@ -484,12 +484,12 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 			
 			/****** ALLOCATION *********/
 		
-			copyMusic->partition[ copyMusic->header->numPat] = ( PatData*) NewPtrClear( sizeof( PatHeader) + copyMusic->header->numChn * DEndPos * sizeof( Cmd));
-			if (MemError()) MyDebugStr( __LINE__, __FILE__, "Error in AddAPattern...");
+			copyMusic->partition[ copyMusic->header->numPat] = (PatData*) NewPtrClear(sizeof(PatHeader) + copyMusic->header->numChn * DEndPos * sizeof(Cmd));
+			if (MemError()) MyDebugStr(__LINE__, __FILE__, "Error in AddAPattern...");
 			
 			copyMusic->partition[ copyMusic->header->numPat]->header.size = DEndPos;
 			copyMusic->partition[ copyMusic->header->numPat]->header.compMode = 'NONE';
-			strcpy( (Ptr) copyMusic->partition[ copyMusic->header->numPat]->header.name, "New pattern");
+			strcpy((Ptr) copyMusic->partition[ copyMusic->header->numPat]->header.name, "New pattern");
 			copyMusic->partition[ copyMusic->header->numPat]->header.patBytes = 0;
 			copyMusic->partition[ copyMusic->header->numPat]->header.unused2 = 0;
 			
@@ -499,12 +499,12 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 				{
 					Cmd*	cmd1, *cmd2;
 					
-					cmd1 = GetMADCommand(  v,  u, copyMusic->partition[ copyMusic->header->numPat]);
+					cmd1 = GetMADCommand( v,  u, copyMusic->partition[ copyMusic->header->numPat]);
 					
-					cmd2 = GetMADCommand(  v,  u, copyMusic->partition[ currentPat]);
+					cmd2 = GetMADCommand( v,  u, copyMusic->partition[ currentPat]);
 					
 					if (u >= DStartTrack && u < DEndTrack) *cmd1 = *cmd2;
-					else MADKillCmd( cmd1);
+					else MADKillCmd(cmd1);
 				}
 			}
 			
@@ -530,7 +530,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 					copyDriver->PL = i;
 					copyDriver->Pat = patternID;
 					
-					MADCheckSpeed( copyMusic, copyDriver);
+					MADCheckSpeed(copyMusic, copyDriver);
 				}
 			}
 			
@@ -541,27 +541,27 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	
 	// // // // // // // // // // // // // // // // // // 
 	
-	bufferSin = NewPtrClear( 128);
-	bufferSout = NewPtrClear( 128);
+	bufferSin = NewPtrClear(128);
+	bufferSout = NewPtrClear(128);
 		
 	Packet = MaxBlock()/ (copyDriver->ASCBUFFERReal *thePrefs.amplitude/8);
-	Packet /= ( 2L*2L + 1L);
+	Packet /= (2L*2L + 1L);
 	
 	if (Packet > 20) Packet = 20;
-	if (Packet <= 0) MyDebugStr( __LINE__, __FILE__, "Memory Error, Increase Memory");
+	if (Packet <= 0) MyDebugStr(__LINE__, __FILE__, "Memory Error, Increase Memory");
 	
 	
-	if (patternID != -1 || patternID == -2) OpenWorkingWindow( 1);
-	else OpenWorkingWindow( copyMusic->header->numPointers);
+	if (patternID != -1 || patternID == -2) OpenWorkingWindow(1);
+	else OpenWorkingWindow(copyMusic->header->numPointers);
 	
-	sndPtr =  NewPtrClear( (copyDriver->ASCBUFFER*2L*thePrefs.amplitude) / 8L);
-	if (sndPtr == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error, Increase Memory");
+	sndPtr =  NewPtrClear((copyDriver->ASCBUFFER*2L*thePrefs.amplitude) / 8L);
+	if (sndPtr == NULL) MyDebugStr(__LINE__, __FILE__, "Memory Error, Increase Memory");
 	
-	outSound = NewPtrClear( (copyDriver->ASCBUFFERReal*Packet*2L*thePrefs.amplitude) / 8L);
-	if (outSound == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error, Increase Memory");
+	outSound = NewPtrClear((copyDriver->ASCBUFFERReal*Packet*2L*thePrefs.amplitude) / 8L);
+	if (outSound == NULL) MyDebugStr(__LINE__, __FILE__, "Memory Error, Increase Memory");
 	
-	compSound = NewPtrClear( (copyDriver->ASCBUFFERReal*Packet*2L*thePrefs.amplitude) / 8L);
-	if (compSound == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error, Increase Memory");
+	compSound = NewPtrClear((copyDriver->ASCBUFFERReal*Packet*2L*thePrefs.amplitude) / 8L);
+	if (compSound == NULL) MyDebugStr(__LINE__, __FILE__, "Memory Error, Increase Memory");
 	
 	////////
 	
@@ -587,15 +587,15 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	iErr = SoundConverterOpen(&inputFormat, &outputFormat, &sc);
 	if (iErr != noErr)
 	{
-		MyDebugStr( __LINE__, __FILE__, "Open failed, Compressor NOT available");
+		MyDebugStr(__LINE__, __FILE__, "Open failed, Compressor NOT available");
 		
-		MyDisposePtr( & bufferSin);		MyDisposePtr( & bufferSout);		MyDisposePtr( & sndPtr);
-		MyDisposePtr( & outSound);		MyDisposePtr( & compSound);
+		MyDisposePtr(& bufferSin);		MyDisposePtr(& bufferSout);		MyDisposePtr(& sndPtr);
+		MyDisposePtr(& outSound);		MyDisposePtr(& compSound);
 		
 		/* Delete values */
 		
-		MADDisposeDriver( copyDriver);
-		DisposePtr( (Ptr) copyMusic);
+		MADDisposeDriver(copyDriver);
+		DisposePtr((Ptr) copyMusic);
 		
 		CloseWorkingWindow();
 		
@@ -604,11 +604,11 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	
 /*	iErr = SoundConverterGetBufferSizes(sc, 1024, &inputFrames, &inputBytes, &outputBytes);
 	if (iErr != noErr)
-	MyDebugStr( __LINE__, __FILE__, "GetBufferSizes failed");*/
+	MyDebugStr(__LINE__, __FILE__, "GetBufferSizes failed");*/
 	
 	iErr = SoundConverterBeginConversion(sc);
 	if (iErr != noErr)
-	MyDebugStr( __LINE__, __FILE__, "Begin Conversion failed");
+	MyDebugStr(__LINE__, __FILE__, "Begin Conversion failed");
 	
 	///////////////////////////////////	
 	
@@ -617,29 +617,29 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 		short	headerLen;
 		FInfo		fndrInfo;
 		
-		FSCloseFork( fRefNum);
+		FSCloseFork(fRefNum);
 		
-		iErr = FSpGetFInfo( newFile, &fndrInfo);
+		iErr = FSpGetFInfo(newFile, &fndrInfo);
 		if (iErr != noErr)
 		{
 			fndrInfo.fdCreator = '\?\?\?\?';
 			fndrInfo.fdType = '\?\?\?\?';
 		}
 		
-	//	SetResLoad( false);
+	//	SetResLoad(false);
 		
 		{
-			FSpCreateResFile( newFile, fndrInfo.fdCreator, fndrInfo.fdType, smSystemScript);
+			FSpCreateResFile(newFile, fndrInfo.fdCreator, fndrInfo.fdType, smSystemScript);
 			
-			RsrcRefNum = FSpOpenResFile( newFile, fsCurPerm);
+			RsrcRefNum = FSpOpenResFile(newFile, fsCurPerm);
 			if (RsrcRefNum == -1)
 			{
 				CloseWorkingWindow();
 				return false;
 			}
 			
-			sndHandle = NewHandle( 20000);
-			if (sndHandle == NULL) {MyDebugStr( __LINE__, __FILE__, "Need MEMORY");	CloseWorkingWindow(); return false;}
+			sndHandle = NewHandle(20000);
+			if (sndHandle == NULL) {MyDebugStr(__LINE__, __FILE__, "Need MEMORY");	CloseWorkingWindow(); return false;}
 			
 			iErr = SetupSndHeader(		(SndListHandle) sndHandle,
 										thePrefs.channelNumber,
@@ -650,23 +650,23 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 										50000,
 										&headerLen);
 			
-			AddResource( sndHandle, 'snd ', 7438, newFile->name);
-			WriteResource( sndHandle);
-			ReleaseResource( sndHandle);
+			AddResource(sndHandle, 'snd ', 7438, newFile->name);
+			WriteResource(sndHandle);
+			ReleaseResource(sndHandle);
 			
-			SetResLoad( false);
-			sndHandle = Get1Resource( 'snd ', 7438);
+			SetResLoad(false);
+			sndHandle = Get1Resource('snd ', 7438);
 			SndOffset = headerLen;
-			SetResLoad( true);
+			SetResLoad(true);
 		}
 	}
 	else if (theType == 'AIFF' | theType == 'MPG4')
 	{
 	/*	if (thePrefs.ChannelType == MultiFiles)
 		{
-			FSClose( fRefNum);
+			FSClose(fRefNum);
 			
-			FSpDelete( newFile);
+			FSpDelete(newFile);
 			
 			for (i = 0; i < thePrefs.channelNumber; i++)
 			{
@@ -675,14 +675,14 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 				
 				newFileMulti = *newFile;
 				
-				pStrcat( newFileMulti.name, "\p.");
-				NumToString( i+1, str); 
-				pStrcat( newFileMulti.name, str);
+				pStrcat(newFileMulti.name, "\p.");
+				NumToString(i+1, str); 
+				pStrcat(newFileMulti.name, str);
 				
-				FSpDelete( &newFileMulti);
+				FSpDelete(&newFileMulti);
 				
-				iErr = FSpCreate( &newFileMulti, 'TVOD', 'AIFF', smSystemScript);
-				iErr = FSpOpenDF( &newFileMulti, fsCurPerm, &MultiRef[ i]);
+				iErr = FSpCreate(&newFileMulti, 'TVOD', 'AIFF', smSystemScript);
+				iErr = FSpOpenDF(&newFileMulti, fsCurPerm, &MultiRef[ i]);
 				
 				iErr = SetupAIFFHeader(		MultiRef[ i],
 											1,
@@ -702,10 +702,10 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 									thePrefs.Compressor,
 									copyDriver->ASCBUFFERReal*Packet*thePrefs.channelNumber,
 									0);
-		if (iErr) MyDebugStr( __LINE__, __FILE__, "");
+		if (iErr) MyDebugStr(__LINE__, __FILE__, "");
 		}
 	}
-	else MyDebugStr( __LINE__, __FILE__, "");
+	else MyDebugStr(__LINE__, __FILE__, "");
 	
 	/***********************************************************/
 	
@@ -715,13 +715,13 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	finalSize			*= 	(thePrefs.amplitude / 8L);
 	{
 		long 	fullTime, curTime;
-		MADGetMusicStatus( copyDriver, &fullTime, &curTime);
+		MADGetMusicStatus(copyDriver, &fullTime, &curTime);
 		
 		finalSize		*= (fullTime+1) / 60;
 	}
 	if (patternID != -1 || patternID == -2) finalSize = 1;
 	
-	switch( thePrefs.Compressor)
+	switch(thePrefs.Compressor)
 	{
 		case 'MAC3':		finalSize /= 3L;		break;
 		case 'MAC6':		finalSize /= 6L;		break;
@@ -736,9 +736,9 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	return true;
 }
 /*
-Ptr DeInterlace( long inOutCount, Ptr outFile)
+Ptr DeInterlace(long inOutCount, Ptr outFile)
 {
-	Ptr	 	decPtr = NewPtr( inOutCount);
+	Ptr	 	decPtr = NewPtr(inOutCount);
 	long	x, i, chanLength = inOutCount/thePrefs.channelNumber;
 	
 	short	*dec16Ptr, *outFile16;
@@ -767,7 +767,7 @@ Ptr DeInterlace( long inOutCount, Ptr outFile)
 	return decPtr;
 }*/
 
-void DoAIFFExporting( void)
+void DoAIFFExporting(void)
 {
 	long	inOutCount, i, full, z, val;
 	Ptr		tempPtr = NULL, outFile;
@@ -781,7 +781,7 @@ void DoAIFFExporting( void)
 	
 	for (i = 0;  i < Packet; i++)
 	{
-		OnContinue = DirectSave( sndPtr, &thePrefs.DirectDriverType, copyDriver);
+		OnContinue = DirectSave(sndPtr, &thePrefs.DirectDriverType, copyDriver);
 		
 		if (thePrefs.amplitude == 8)
 		{
@@ -789,7 +789,7 @@ void DoAIFFExporting( void)
 			
 			if (theType == 'sfil')
 			{
-				memcpy( tempPtr, sndPtr, full);
+				memcpy(tempPtr, sndPtr, full);
 				tempPtr += full;
 			}
 			else
@@ -804,7 +804,7 @@ void DoAIFFExporting( void)
 		else
 		{
 			full = (copyDriver->ASCBUFFERReal - copyDriver->BytesToRemoveAtEnd) * 2L * 2L;
-			memcpy( tempPtr, sndPtr, full);
+			memcpy(tempPtr, sndPtr, full);
 			tempPtr += full;
 		}
 		
@@ -838,9 +838,9 @@ void DoAIFFExporting( void)
 	
 	iErr = SoundConverterConvertBuffer(sc, outSound, inputFrames, compSound, &outputFrames, &outputBytes);
 	if (iErr != noErr)
-	MyDebugStr( __LINE__, __FILE__, "Conversion failed");
+	MyDebugStr(__LINE__, __FILE__, "Conversion failed");
 	
-	if (outputBytes > inOutCount) MyDebugStr( __LINE__, __FILE__, "Err in memory size");
+	if (outputBytes > inOutCount) MyDebugStr(__LINE__, __FILE__, "Err in memory size");
 	
 	inOutCount = outputBytes;
 	
@@ -853,11 +853,11 @@ void DoAIFFExporting( void)
 	if (theType == 'sfil')
 	{
 		{
-			SetResourceSize( sndHandle, SndOffset + inOutCount);
+			SetResourceSize(sndHandle, SndOffset + inOutCount);
 			
-			SetResLoad( false);
-			WritePartialResource( sndHandle, SndOffset, outFile, inOutCount);
-			SetResLoad( true);
+			SetResLoad(false);
+			WritePartialResource(sndHandle, SndOffset, outFile, inOutCount);
+			SetResLoad(true);
 			
 			SndOffset += inOutCount;
 		}
@@ -869,25 +869,25 @@ void DoAIFFExporting( void)
 			Ptr 	inter;
 			long	ss = inOutCount / thePrefs.channelNumber;
 			
-			inter = DeInterlace( inOutCount, outFile);
+			inter = DeInterlace(inOutCount, outFile);
 			
 			for (i = 0 ; i < thePrefs.channelNumber; i++)
 			{
-				iErr = FSWrite( MultiRef[ i], &ss, inter + i*ss);
+				iErr = FSWrite(MultiRef[ i], &ss, inter + i*ss);
 			}
 			
-			DisposePtr( inter);
+			DisposePtr(inter);
 		}
 		else*/
 		{
-			iErr = FSWrite( fRefNum, &inOutCount, outFile);
+			iErr = FSWrite(fRefNum, &inOutCount, outFile);
 		}
 	}
 	
 	if (iErr != noErr || stopErr != noErr) StopAIFFExporting();
 }
 
-void StopAIFFExporting( void)
+void StopAIFFExporting(void)
 {
 	OSErr 	iErr = noErr;
 	long	inOutCount, i;
@@ -900,7 +900,7 @@ void StopAIFFExporting( void)
 	
 	iErr = SoundConverterEndConversion(sc, compSound, &outputFrames, &outputBytes);
 	if (iErr != noErr)
-	MyDebugStr( __LINE__, __FILE__, "End Conversion failed");
+	MyDebugStr(__LINE__, __FILE__, "End Conversion failed");
 	
 	if (outputBytes)
 	{
@@ -911,11 +911,11 @@ void StopAIFFExporting( void)
 		if (theType == 'sfil')
 		{
 			{
-				SetResourceSize( sndHandle, SndOffset + inOutCount);
+				SetResourceSize(sndHandle, SndOffset + inOutCount);
 				
-				SetResLoad( false);
-				WritePartialResource( sndHandle, SndOffset, outFile, inOutCount);
-				SetResLoad( true);
+				SetResLoad(false);
+				WritePartialResource(sndHandle, SndOffset, outFile, inOutCount);
+				SetResLoad(true);
 				
 				SndOffset += inOutCount;
 			}
@@ -927,18 +927,18 @@ void StopAIFFExporting( void)
 				Ptr 	inter;
 				long	ss = inOutCount / thePrefs.channelNumber;
 				
-				inter = DeInterlace( inOutCount, outFile);
+				inter = DeInterlace(inOutCount, outFile);
 				
 				for (i = 0 ; i < thePrefs.channelNumber; i++)
 				{
-					iErr = FSWrite( MultiRef[ i], &ss, inter + i*ss);
+					iErr = FSWrite(MultiRef[ i], &ss, inter + i*ss);
 				}
 				
-				DisposePtr( inter);
+				DisposePtr(inter);
 			}
 			else*/
 			{
-				iErr = FSWrite( fRefNum, &inOutCount, outFile);
+				iErr = FSWrite(fRefNum, &inOutCount, outFile);
 			}
 		}
 	}
@@ -946,15 +946,15 @@ void StopAIFFExporting( void)
 	
 	iErr = SoundConverterClose(sc);
 	if (iErr != noErr)
-	MyDebugStr( __LINE__, __FILE__, "Close failed");
+	MyDebugStr(__LINE__, __FILE__, "Close failed");
 	
 	if (theType == 'sfil')
 	{
 		Handle 	sndHandle2;
 		short	headerLen;
 		
-		sndHandle2 = NewHandle( 20000);
-		if (sndHandle2 == NULL) {MyDebugStr( __LINE__, __FILE__, "Need MEMORY");	return;}
+		sndHandle2 = NewHandle(20000);
+		if (sndHandle2 == NULL) {MyDebugStr(__LINE__, __FILE__, "Need MEMORY");	return;}
 		
 		iErr = SetupSndHeader(		(SndListHandle) sndHandle2,
 									thePrefs.channelNumber,
@@ -967,17 +967,17 @@ void StopAIFFExporting( void)
 		
 		inOutCount = headerLen;
 		
-		HLock( sndHandle2);
-		SetResLoad( false);
-		WritePartialResource( sndHandle, 0, *sndHandle2, inOutCount);
-		SetResLoad( true);
-		HUnlock( sndHandle2);
+		HLock(sndHandle2);
+		SetResLoad(false);
+		WritePartialResource(sndHandle, 0, *sndHandle2, inOutCount);
+		SetResLoad(true);
+		HUnlock(sndHandle2);
 		
-		ReleaseResource( sndHandle);
+		ReleaseResource(sndHandle);
 		
-		CloseResFile( RsrcRefNum);
+		CloseResFile(RsrcRefNum);
 		
-		DisposeHandle( sndHandle2);
+		DisposeHandle(sndHandle2);
 	}
 	else
 	{
@@ -987,8 +987,8 @@ void StopAIFFExporting( void)
 		{
 			for (i = 0; i < thePrefs.channelNumber; i++)
 			{
-				GetFPos( MultiRef[ i], &filePos);
-				SetFPos( MultiRef[ i], fsFromStart, NULL);
+				GetFPos(MultiRef[ i], &filePos);
+				SetFPos(MultiRef[ i], fsFromStart, NULL);
 				
 				SetupAIFFHeader(		MultiRef[ i],
 										1, 
@@ -998,15 +998,15 @@ void StopAIFFExporting( void)
 										totalSize,
 										0);
 				
-				SetFPos( MultiRef[ i], fsFromStart, filePos);
-				SetEOF( MultiRef[ i], filePos);
-				FSClose( MultiRef[ i]);
+				SetFPos(MultiRef[ i], fsFromStart, filePos);
+				SetEOF(MultiRef[ i], filePos);
+				FSClose(MultiRef[ i]);
 			}
 		}
 		else*/
 		{
-			GetFPos( fRefNum, &filePos);
-			SetFPos( fRefNum, fsFromStart, 0);
+			GetFPos(fRefNum, &filePos);
+			SetFPos(fRefNum, fsFromStart, 0);
 			
 			SetupAIFFHeader(		fRefNum,
 									thePrefs.channelNumber, 
@@ -1016,36 +1016,36 @@ void StopAIFFExporting( void)
 									totalSize,
 									0);
 			
-			SetFPos( fRefNum, fsFromStart, filePos);
-			SetEOF( fRefNum, filePos);
-			FSCloseFork( fRefNum);
+			SetFPos(fRefNum, fsFromStart, filePos);
+			SetEOF(fRefNum, filePos);
+			FSCloseFork(fRefNum);
 			
 			if (theType == 'MPG4')
 			{
 				FSSpec	newFile;
 				
-				ConvertMovieToMPEG4( &theAIFFSpec, &DestFile);
+				ConvertMovieToMPEG4(&theAIFFSpec, &DestFile);
 			}
 		}
 	}
-	MyDisposePtr( & bufferSin);		MyDisposePtr( & bufferSout);		MyDisposePtr( & sndPtr);
-	MyDisposePtr( & outSound);		MyDisposePtr( & compSound);
+	MyDisposePtr(& bufferSin);		MyDisposePtr(& bufferSout);		MyDisposePtr(& sndPtr);
+	MyDisposePtr(& outSound);		MyDisposePtr(& compSound);
 	
 	/***********/
 	
-	switch( patternID)
+	switch(patternID)
 	{
 		case -2:
 		{
 			copyMusic->header->numPat--;
 			
-			MyDisposePtr( ( Ptr*) &  copyMusic->partition[ copyMusic->header->numPat]);
+			MyDisposePtr((Ptr*) &  copyMusic->partition[ copyMusic->header->numPat]);
 			copyMusic->partition[ copyMusic->header->numPat] = NULL;
 		}
 	}
 	
-	MADDisposeDriver( copyDriver);
-	DisposePtr( (Ptr) copyMusic);
+	MADDisposeDriver(copyDriver);
+	DisposePtr((Ptr) copyMusic);
 	
 	FlushPlugin();
 	

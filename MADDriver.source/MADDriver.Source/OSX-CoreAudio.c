@@ -22,7 +22,7 @@ static OSStatus CAAudioCallback(void                            *inRefCon,
 {
 	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
 	if(theRec->Reading == false) {
-		switch( theRec->DriverSettings.outPutBits)
+		switch(theRec->DriverSettings.outPutBits)
 		{
 			case 8:
 				memset(theRec->CABuffer, 0x80, theRec->BufSize);
@@ -74,7 +74,7 @@ static OSStatus CAAudioCallback(void                            *inRefCon,
 	return noErr;
 }
 
-OSErr initCoreAudio( MADDriverRec *inMADDriver, long init)
+OSErr initCoreAudio(MADDriverRec *inMADDriver, long init)
 {
 	OSStatus result = noErr;
 	struct AURenderCallbackStruct callback, blankCallback = {0};
@@ -162,7 +162,7 @@ OSErr initCoreAudio( MADDriverRec *inMADDriver, long init)
 	return noErr;
 }
 
-OSErr closeCoreAudio( MADDriverRec *inMADDriver)
+OSErr closeCoreAudio(MADDriverRec *inMADDriver)
 {
 	struct AURenderCallbackStruct callback = {0};
 	

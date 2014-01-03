@@ -60,8 +60,8 @@ unsigned MidiVolume[128] = {
 
 #define MySignature		'SNPL'
 
-void DoPlayInstruInt( short	Note, short Instru, short effect, short arg, short vol, Channel *curVoice, long start, long end);
-void NPianoRecordProcess( short i, short, short, short);
+void DoPlayInstruInt(short	Note, short Instru, short effect, short arg, short vol, Channel *curVoice, long start, long end);
+void NPianoRecordProcess(short i, short, short, short);
 
 pascal void MyAppHook(OMSAppHookMsg *pkt, long myRefCon);
 pascal void MyAppHook(OMSAppHookMsg *pkt, long myRefCon)
@@ -115,7 +115,7 @@ void MyNullHook()
 			else
 			{
 				curins = -1;
-				GetIns( &curins, NULL);
+				GetIns(&curins, NULL);
 			}
 			
 			if (thePrefs.MIDIVelocity) curvol = MidiVolume[ pkt->data[ 2]];
@@ -139,12 +139,12 @@ void MyNullHook()
 				track = GetWhichTrackPlay();
 			}
 			
-			DoMidiSpeaker( myNote, curins, curvol);
-			if (PianoRecording) NPianoRecordProcess( myNote, curins, curvol, track);
-			else if (oldWindow == GetDialogWindow( EditorDlog)) DigitalEditorProcess( myNote, NULL, NULL, NULL);
+			DoMidiSpeaker(myNote, curins, curvol);
+			if (PianoRecording) NPianoRecordProcess(myNote, curins, curvol, track);
+			else if (oldWindow == GetDialogWindow(EditorDlog)) DigitalEditorProcess(myNote, NULL, NULL, NULL);
 			
-			if (thePrefs.MIDIChanInsTrack) SelectTouche( myNote, curins);
-			else SelectTouche( myNote, curins);
+			if (thePrefs.MIDIChanInsTrack) SelectTouche(myNote, curins);
+			else SelectTouche(myNote, curins);
 			
 			TouchIn++;
 			if (TouchIn < 0 || TouchIn >= 10) TouchIn = 0;
@@ -166,32 +166,32 @@ void MyNullHook()
 				{
 					if (PianoDlog != NULL)
 					{
-						GetPort( &savePort);
-						SetPortDialogPort( PianoDlog);
+						GetPort(&savePort);
+						SetPortDialogPort(PianoDlog);
 						
-						GetToucheRect( &tempRect, myNote);
-						EffaceTouche( myNote, &tempRect);
+						GetToucheRect(&tempRect, myNote);
+						EffaceTouche(myNote, &tempRect);
 						
-						switch( thePrefs.KeyUpMode)
+						switch(thePrefs.KeyUpMode)
 						{
 							case eStop:
 								if (PianoRecording)
 								{
-									NPianoRecordProcess( 0xFF, 0xFF, 0x10, TrackMem[ i]);
+									NPianoRecordProcess(0xFF, 0xFF, 0x10, TrackMem[ i]);
 								}
 							break;
 							
 							case eNoteOFF:
 								if (PianoRecording)
 								{
-									NPianoRecordProcess( 0xFE, 0xFF, 0xFF, TrackMem[ i]);
+									NPianoRecordProcess(0xFE, 0xFF, 0xFF, TrackMem[ i]);
 								}
 								
 								MADDriver->chan[ TrackMem[ i]].KeyOn = false;
 							break;
 						}
 						
-						SetPort( savePort);
+						SetPort(savePort);
 					}
 					TouchMem[i] = -1;
 				}
@@ -204,7 +204,7 @@ pascal void	MyReadHook(OMSPacket *pkt, long myRefCon);
 pascal void	MyReadHook(OMSPacket *pkt, long myRefCon)
 {
 
-	long 				olda5 = SetA5( myRefCon);
+	long 				olda5 = SetA5(myRefCon);
 	short				pLength, i, myNote, curins, curvol;
 	Rect				tempRect;
 	GrafPtr				savePort;
@@ -251,7 +251,7 @@ OSErr InitOMS(OSType appSignature, OSType inPortID, OSType outPortID)
 	readHook = NewOMSReadHook(MyReadHook);
 	
 	/*	Sign in to OMS */
-	err = OMSSignIn( appSignature, (long)LMGetCurrentA5(), LMGetCurApName(), appHook, &gCompatMode);
+	err = OMSSignIn(appSignature, (long)LMGetCurrentA5(), LMGetCurApName(), appHook, &gCompatMode);
 	/*	Passing CurrentA5 as the refCon solves the problem of A5 setup in the appHook.
 	 Using other Apple-recommended techniques for setting up A5 in the appHook
 	 are fine as well.  The client name will be the same as the application's name,
@@ -265,7 +265,7 @@ OSErr InitOMS(OSType appSignature, OSType inPortID, OSType outPortID)
 	if (err) goto errexit;
 	
 	gOutputPortRefNum = -1;
-	err = OMSAddPort( appSignature, outPortID, omsPortTypeOutput, NULL, NULL, &gOutputPortRefNum);
+	err = OMSAddPort(appSignature, outPortID, omsPortTypeOutput, NULL, NULL, &gOutputPortRefNum);
 	
 	prevSelectionIN		= NULL;
 	prevSelectionOUT	= NULL;
@@ -273,20 +273,20 @@ OSErr InitOMS(OSType appSignature, OSType inPortID, OSType outPortID)
 	return noErr;
 	
 errexit:
-	OMSSignOut( appSignature);
+	OMSSignOut(appSignature);
 	
 	return err;
 	
 	return noErr;
 }
 
-void OpenMIDIHardware( void)	
+void OpenMIDIHardware(void)	
 {
 	if (MIDIHardware == false) return;
 	
 	if (MIDIHardwareAlreadyOpen == true) return;
 	
-	if (InitOMS( 'SNPL', 'in  ', 'out ') != noErr)
+	if (InitOMS('SNPL', 'in  ', 'out ') != noErr)
 	{
 		MIDIHardware = false;
 		return;
@@ -318,7 +318,7 @@ void InitMIDIHarware(void)
 
 void NDoPlayInstru(short	Note, short Instru, short effect, short arg, short vol);
 
-void DoMidiSpeaker( short note, short Instru, long arg)
+void DoMidiSpeaker(short note, short Instru, long arg)
 {
 	Point	theCell;
 	short	vol, chan;
@@ -332,7 +332,7 @@ void DoMidiSpeaker( short note, short Instru, long arg)
 	
 	if (!thePrefs.MIDIChanInsTrack)
 	{
-		if (!GetIns( &Instru, NULL)) return;
+		if (!GetIns(&Instru, NULL)) return;
 		chan = LastCanal;
 	}
 	else
@@ -341,7 +341,7 @@ void DoMidiSpeaker( short note, short Instru, long arg)
 		if (chan >= curMusic->header->numChn) chan = curMusic->header->numChn-1;
 	}
 	
-	DoPlayInstruInt( note, Instru, 0, 0, vol, &MADDriver->chan[ chan], 0, 0);
+	DoPlayInstruInt(note, Instru, 0, 0, vol, &MADDriver->chan[ chan], 0, 0);
 }
 
 /*void SquidAllNotesOff(short PortRefNum)
@@ -372,11 +372,11 @@ void	OpenOrCloseConnection(Boolean opening)
 	else OMSCloseConnections(MySignature, 'in  ', 1, &conn);
 }
 
-void SelectOMSConnections( Boolean Input)
+void SelectOMSConnections(Boolean Input)
 {
 	GrafPtr	savedPort;
 	
-	GetPort( &savedPort);
+	GetPort(&savedPort);
 	
 	OpenMIDIHardware();
 	
@@ -384,39 +384,39 @@ void SelectOMSConnections( Boolean Input)
 	{
 		OMSIDListH	in;
 		
-		in = OMSChooseNodes( prevSelectionIN, "\pSelect Input", false, omsIncludeInputs + omsIncludeReal + omsIncludeVirtual + omsIncludeSync, NULL);
+		in = OMSChooseNodes(prevSelectionIN, "\pSelect Input", false, omsIncludeInputs + omsIncludeReal + omsIncludeVirtual + omsIncludeSync, NULL);
 		if (in)
 		{
-			if (prevSelectionIN) OMSDisposeHandle( prevSelectionIN);
+			if (prevSelectionIN) OMSDisposeHandle(prevSelectionIN);
 			prevSelectionIN = in;
 			
-			OpenOrCloseConnection( false);
+			OpenOrCloseConnection(false);
 			
 			gChosenInputID = (*prevSelectionIN)->id[ 0];
 			
-			OpenOrCloseConnection( true);
+			OpenOrCloseConnection(true);
 		}
 	}
 	else
 	{
 		OMSIDListH	out;
 		
-		out = OMSChooseNodes( prevSelectionOUT, "\pSelect Output", false, omsIncludeOutputs + omsIncludeReal + omsIncludeVirtual, NULL);
+		out = OMSChooseNodes(prevSelectionOUT, "\pSelect Output", false, omsIncludeOutputs + omsIncludeReal + omsIncludeVirtual, NULL);
 		if (out)
 		{
-			if (prevSelectionOUT) OMSDisposeHandle( prevSelectionOUT);
+			if (prevSelectionOUT) OMSDisposeHandle(prevSelectionOUT);
 			prevSelectionOUT = out;
 			
 			gChosenOutputID = (*prevSelectionOUT)->id[ 0];
 			
-			gOutNodeRefNum = OMSUniqueIDToRefNum( gChosenOutputID);
+			gOutNodeRefNum = OMSUniqueIDToRefNum(gChosenOutputID);
 		}
 	}
 	
-	SetPort( savedPort);
+	SetPort(savedPort);
 }
 
-void SendMIDIClock( MADDriverRec *intDriver, Byte MIDIByte)
+void SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte)
 {
 	OMSMIDIPacket pack;
 	
@@ -431,10 +431,10 @@ void SendMIDIClock( MADDriverRec *intDriver, Byte MIDIByte)
 	
 	pack.data[ 0] = MIDIByte;
 	
-	OMSWritePacket2( &pack, gOutNodeRefNum, gOutputPortRefNum);
+	OMSWritePacket2(&pack, gOutNodeRefNum, gOutputPortRefNum);
 }
 
-void SendMIDITimingClock( MADDriverRec *MDriver)
+void SendMIDITimingClock(MADDriverRec *MDriver)
 {
 	OMSMIDIPacket 	pack;
 	short			i, x, y;
@@ -473,7 +473,7 @@ void SendMIDITimingClock( MADDriverRec *MDriver)
 			
 			for (y = 0; y <  MDriver->curMusic->header->numChn; y++)
 			{
-				aCmd = GetMADCommand( x, y, MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]);
+				aCmd = GetMADCommand(x, y, MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]);
 				
 				/** SpeedE **/
 				
@@ -526,5 +526,5 @@ void SendMIDITimingClock( MADDriverRec *MDriver)
 	pack.data[ 1] = high;
 	pack.data[ 2] = low;
 	
-	OMSWritePacket2( &pack, gOutNodeRefNum, gOutputPortRefNum);
+	OMSWritePacket2(&pack, gOutNodeRefNum, gOutputPortRefNum);
 }

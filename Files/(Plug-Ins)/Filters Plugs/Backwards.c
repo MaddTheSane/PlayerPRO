@@ -11,16 +11,16 @@
 #include <PlayerPROCore/PPPlug.h>
 #include <Carbon/Carbon.h>
 
-static OSErr mainBackwards(	sData					*theData,
-						long					SelectionStart,
-						long					SelectionEnd,
-						PPInfoPlug				*thePPInfoPlug,
-						short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainBackwards(sData		*theData,
+						   long			SelectionStart,
+						   long			SelectionEnd,
+						   PPInfoPlug	*thePPInfoPlug,
+						   short		StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long	i;
 	unsigned short	temp1, temp2;
 	
-	switch( theData->amp)
+	switch(theData->amp)
 	{
 		case 8:
 		{

@@ -34,12 +34,12 @@ void DoGrowTrackView(void)
 	short		temp;
 	Rect		caRect;
 
-	GetPortBounds( GetDialogPort( TrackViewDlog), &caRect);
+	GetPortBounds(GetDialogPort(TrackViewDlog), &caRect);
 	
 	if (caRect.bottom >= 136) temp = 69;
 	else temp = 136;
 	
-	MySizeWindow( TrackViewDlog, 212, temp, true);
+	MySizeWindow(TrackViewDlog, 212, temp, true);
 	
 	SmallEffectTrack();
 }
@@ -54,10 +54,10 @@ void DoNullTrackView(void)
 	if (TickCount() <= oldTrackTicks) return;
 	oldTrackTicks = TickCount();
 	
- 	GetPort( &SavePort);
- 	SetPortDialogPort( TrackViewDlog);
+ 	GetPort(&SavePort);
+ 	SetPortDialogPort(TrackViewDlog);
 	
-	GetPortBounds( GetDialogPort( TrackViewDlog), &caRect);
+	GetPortBounds(GetDialogPort(TrackViewDlog), &caRect);
 
 	if (caRect.bottom >= 136) max = 32;
 	else max = 16;
@@ -76,31 +76,31 @@ void DoNullTrackView(void)
 				
 				if (oldTube[i] >= 0)
 				{
-					MoveTo( itemRect.left, itemRect.bottom);
-					LineTo( itemRect.right-1, itemRect.bottom);
+					MoveTo(itemRect.left, itemRect.bottom);
+					LineTo(itemRect.right-1, itemRect.bottom);
 				}
 			}
 			else
 			{
 				if (MicroPhone)
 				{
-					ForeColor( blueColor);
+					ForeColor(blueColor);
 				}
 				else
 				{
-					SwitchColor( i);
+					SwitchColor(i);
 				}
 				if (MADDriver->Tube[i] <= 0) MADDriver->Tube[i] = 1;
 				
 				itemRect.top = itemRect.bottom - MADDriver->Tube[i]+1;
-				PaintRect( &itemRect);
-				ForeColor( blackColor);
+				PaintRect(&itemRect);
+				ForeColor(blackColor);
 				
 				if (MADDriver->Tube[ i] != 64)
 				{
 					itemRect.bottom = itemRect.top;
 					itemRect.top = TracksBox[i].top;
-					PaintRect( &itemRect);
+					PaintRect(&itemRect);
 				}
 				
 				oldTube[ i] = MADDriver->Tube[i];
@@ -108,7 +108,7 @@ void DoNullTrackView(void)
 		}
 	}
 
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
 void  UpdateTrackView(DialogPtr GetSelection)  	/* Pointer to this dialog */
@@ -119,55 +119,55 @@ void  UpdateTrackView(DialogPtr GetSelection)  	/* Pointer to this dialog */
 		Rect		caRect, itemRect;
 		Str255		stemp;
 
- 		GetPort( &SavePort);
- 		SetPortDialogPort( TrackViewDlog);
+ 		GetPort(&SavePort);
+ 		SetPortDialogPort(TrackViewDlog);
 
- 		TextFont( 4);
- 		TextSize( 9);
+ 		TextFont(4);
+ 		TextSize(9);
 
-		BeginUpdate( GetDialogWindow( TrackViewDlog));
+		BeginUpdate(GetDialogWindow(TrackViewDlog));
 		
-		GetPortBounds( GetDialogPort( TrackViewDlog), &caRect);
+		GetPortBounds(GetDialogPort(TrackViewDlog), &caRect);
 
 		if (caRect.bottom >= 136) max = 32;
 		else max = 16;
 
 		GetDialogItem (TrackViewDlog, 1, &itemType, &itemHandle, &itemRect);
-		InsetRect( &itemRect, -1, -1);
-		itemRect.bottom--;		FrameRectRelief( &itemRect);
+		InsetRect(&itemRect, -1, -1);
+		itemRect.bottom--;		FrameRectRelief(&itemRect);
 		GetDialogItem (TrackViewDlog, 2, &itemType, &itemHandle, &itemRect);
-		InsetRect( &itemRect, -1, -1);
-		itemRect.bottom--;		FrameRectRelief( &itemRect);
+		InsetRect(&itemRect, -1, -1);
+		itemRect.bottom--;		FrameRectRelief(&itemRect);
 
  		for (i = 0; i < max; i++)
 		{
 			itemRect = TracksBox[ i];
 			itemRect.top--;	itemRect.left--;	
-			PaintRect( &itemRect);
+			PaintRect(&itemRect);
 			itemRect.top++;	itemRect.left++;
 			
-			if (MicroPhone) ForeColor( blueColor);
+			if (MicroPhone) ForeColor(blueColor);
 			else
 			{
-				SwitchColor( i);
+				SwitchColor(i);
 			}
 			if (MADDriver->Tube[i] > 80) MADDriver->Tube[i] = 80;
 			itemRect.top = itemRect.bottom - MADDriver->Tube[i]+1;
-			PaintRect( &itemRect);
-			ForeColor( blackColor);
+			PaintRect(&itemRect);
+			ForeColor(blackColor);
 						
-		/*	NTStr( 2, i+1, (Ptr) stemp);
-			MoveTo( itemRect.left + 5, itemRect.bottom + 9);
-			MyC2PStr( (Ptr) stemp);
-			DrawString( stemp);*/
+		/*	NTStr(2, i+1, (Ptr) stemp);
+			MoveTo(itemRect.left + 5, itemRect.bottom + 9);
+			MyC2PStr((Ptr) stemp);
+			DrawString(stemp);*/
 		}
 		
-		EndUpdate( GetDialogWindow( TrackViewDlog));
+		EndUpdate(GetDialogWindow(TrackViewDlog));
 
-		TextFont( 0);
-		TextSize( 0);
+		TextFont(0);
+		TextSize(0);
 
-		SetPort( SavePort);
+		SetPort(SavePort);
 } 
 
 void CreateTrackView(void)
@@ -176,13 +176,13 @@ void CreateTrackView(void)
 	Handle		itemHandle;
 	short		itemType, i;
 
-	SetItemMark( ViewsMenu, 5, checkMark);
+	SetItemMark(ViewsMenu, 5, checkMark);
 
-	TrackViewDlog = GetNewDialog( 157, NULL, GetDialogWindow( ToolsDlog));
-	SetWindEtat( GetDialogWindow(TrackViewDlog));
-	ShowWindow( GetDialogWindow( TrackViewDlog));
-	SetPortDialogPort( TrackViewDlog);
-	SelectWindow2( GetDialogWindow( TrackViewDlog));
+	TrackViewDlog = GetNewDialog(157, NULL, GetDialogWindow(ToolsDlog));
+	SetWindEtat(GetDialogWindow(TrackViewDlog));
+	ShowWindow(GetDialogWindow(TrackViewDlog));
+	SetPortDialogPort(TrackViewDlog);
+	SelectWindow2(GetDialogWindow(TrackViewDlog));
 	
 	GetDialogItem (TrackViewDlog, 3, &itemType, &itemHandle, &itemRect);
 	itemRect.top++;	itemRect.right--;	itemRect.left++;
@@ -209,8 +209,8 @@ void CreateTrackView(void)
 
 void CloseTrackViewDlog(void)
 {
-	if (TrackViewDlog != NULL) DisposeDialog( TrackViewDlog);
+	if (TrackViewDlog != NULL) DisposeDialog(TrackViewDlog);
 	TrackViewDlog = NULL;
 
-	SetItemMark( ViewsMenu, 5, noMark);
+	SetItemMark(ViewsMenu, 5, noMark);
 }

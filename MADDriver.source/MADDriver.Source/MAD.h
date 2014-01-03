@@ -108,7 +108,7 @@ typedef UInt32			UnsignedFixed;
 #define DisposePtr(x)				free(x)
 #define BlockMoveData(x,y,z)		memcpy(y,x,z)
 //#define BlockZero(x, y)				memset(x, y, 0)
-static inline void BlockZero( void* a, long size)
+static inline void BlockZero(void* a, long size)
 {
 	Ptr b = (Ptr) a;
 	long i;
@@ -135,20 +135,20 @@ enum {
 	noErr = 0
 };
 
-static inline void DebugStr( unsigned char* x)
+static inline void DebugStr(unsigned char* x)
 {
 	char *temp;
 	
-	temp = NewPtr( (x[ 0] + 1));
+	temp = NewPtr((x[ 0] + 1));
 	
-	BlockMoveData( x+1, temp, x[ 0]);
+	BlockMoveData(x+1, temp, x[ 0]);
 	temp[ x[ 0]] = 0;
 	
 #ifdef _MAC_H
-	debugger( temp);
+	debugger(temp);
 #endif
 	
-	DisposePtr( temp);
+	DisposePtr(temp);
 }
 
 #endif

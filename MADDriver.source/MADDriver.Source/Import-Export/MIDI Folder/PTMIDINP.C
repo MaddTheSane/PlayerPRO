@@ -44,7 +44,7 @@ static long		MADpos[ MAXFILES];
 static short	MADcur = 0;
 static Ptr		MIDIGenPtr = NULL;
 
-static short MADopen( void)
+static short MADopen(void)
 {
 	MADpos[ MADcur] = 0;
 	MADcur++;
@@ -54,22 +54,22 @@ static short MADopen( void)
 	return MADcur-1;
 }
 
-static short MADread( short id, Ptr dst, long size)
+static short MADread(short id, Ptr dst, long size)
 {
-	if (MADpos[ id] >= GetPtrSize( MIDIGenPtr)) return 0;
+	if (MADpos[ id] >= GetPtrSize(MIDIGenPtr)) return 0;
 	
-	if (MADpos[ id] + size >= GetPtrSize( MIDIGenPtr)) size = GetPtrSize( MIDIGenPtr) - MADpos[ id];
+	if (MADpos[ id] + size >= GetPtrSize(MIDIGenPtr)) size = GetPtrSize(MIDIGenPtr) - MADpos[ id];
 	
-	BlockMoveData( MIDIGenPtr + MADpos[ id], dst, size);
+	BlockMoveData(MIDIGenPtr + MADpos[ id], dst, size);
 	
 	MADpos[ id] += size;
 	
 	return size;
 }
 
-static short MADseek( short id, long size, short mode)
+static short MADseek(short id, long size, short mode)
 {
-	switch( mode)
+	switch(mode)
 	{
 		case SEEK_CUR:	MADpos[ id] += size;	break;
 		case SEEK_SET:	MADpos[ id]  = size;	break;
@@ -80,12 +80,12 @@ static short MADseek( short id, long size, short mode)
 	}
 	
 	if (MADpos[ id] < 0) return -1;
-	if (MADpos[ id] >= GetPtrSize( MIDIGenPtr)) return -1;
+	if (MADpos[ id] >= GetPtrSize(MIDIGenPtr)) return -1;
 	
 	return 0;
 }
 
-static long MADtell( short id)
+static long MADtell(short id)
 {
 	return MADpos[ id];
 }
@@ -458,7 +458,7 @@ static void Freearray(void)
  * a pointer to a collection of chords (a Tune structure). If MIDI file
  * cannot be processed, NULL is returned.
  */
-Tune *PtuneLoadFn( Ptr MIDIptr, short *channels)
+Tune *PtuneLoadFn(Ptr MIDIptr, short *channels)
 {
 	int 			MADfd, crf;
 	unsigned long 	cb, *pvlqWait, vlqMin = -1, vlqT, wCount, wNcount, cDev = 0;
@@ -469,8 +469,8 @@ Tune *PtuneLoadFn( Ptr MIDIptr, short *channels)
 
 	Init();
 	MADfd = MADopen();
-	MADread( MADfd, rgbTest, 9);
-	if (memcmp(rgbHeader, rgbTest, 9) || ChGetFd( MADfd) > 1)
+	MADread(MADfd, rgbTest, 9);
+	if (memcmp(rgbHeader, rgbTest, 9) || ChGetFd(MADfd) > 1)
 	{
 		MADclose(MADfd);
 		return NULL; /** Only process type 0 or type 1 general MIDI files **/

@@ -24,7 +24,7 @@
 #include "RDriver.h"
 #include "RDriverInt.h"
 
-void Sampler8in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver)
+void Sampler8in8AddPolyStereo(Channel *curVoice, register Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver)
 {
 	char 			*SndBuffer;
 	long 			i = intDriver->ASCBUFFER, volChn;
@@ -37,7 +37,7 @@ void Sampler8in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short 
 #if defined(HAS_LONG_DOUBLE)
 	{
 		long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
-		aDD = temp * ( 1 << BYTEDIV);
+		aDD = temp * (1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -48,7 +48,7 @@ void Sampler8in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short 
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) return;
 	
 	SndBuffer		= (char*) 	curVoice->curPtr;
-	volChn			= DoVolPanning256( 3, curVoice, intDriver, true)/256;
+	volChn			= DoVolPanning256(3, curVoice, intDriver, true)/256;
 	
 	while (i-- > 0)
 	{
@@ -85,7 +85,7 @@ void Sampler8in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short 
 }
 
 
-void Sampler8in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver)
+void Sampler8in8AddPoly(Channel *curVoice, register Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver)
 {
 	char 			*SndBuffer;
 	long 			i = intDriver->ASCBUFFER, volChn;
@@ -96,7 +96,7 @@ void Sampler8in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanNo
 #if defined(HAS_LONG_DOUBLE)
 	{
 		long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
-		aDD = temp * ( 1 << BYTEDIV);
+		aDD = temp * (1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -106,7 +106,7 @@ void Sampler8in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanNo
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) return;
 	
 	SndBuffer		= (char*) 	curVoice->curPtr;
-	volChn			= DoVolPanning256( 3, curVoice, intDriver, true)/256;
+	volChn			= DoVolPanning256(3, curVoice, intDriver, true)/256;
 	
 	while (i-- > 0)
 	{
@@ -137,7 +137,7 @@ void Sampler8in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanNo
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);
 }
 
-void Sampler16in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver)
+void Sampler16in8AddPolyStereo(Channel *curVoice, register Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver)
 {
 	char 			*SndBuffer;
 	long 			i = intDriver->ASCBUFFER, volChn;
@@ -150,7 +150,7 @@ void Sampler16in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short
 #if defined(HAS_LONG_DOUBLE)
 	{
 		long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
-		aDD = temp * ( 1 << BYTEDIV);
+		aDD = temp * (1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -161,7 +161,7 @@ void Sampler16in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) return;
 	
 	SndBuffer		= (char*) 	curVoice->curPtr;
-	volChn			= DoVolPanning256( 3, curVoice, intDriver, true)/256;
+	volChn			= DoVolPanning256(3, curVoice, intDriver, true)/256;
 	
 	while (i-- > 0)
 	{
@@ -198,7 +198,7 @@ void Sampler16in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short
 }
 
 
-void Sampler16in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver)
+void Sampler16in8AddPoly(Channel *curVoice, register Ptr	ASCBuffer, short chanNo, MADDriverRec *intDriver)
 {
 	char 			*SndBuffer;
 	long 			i = intDriver->ASCBUFFER, volChn;
@@ -209,7 +209,7 @@ void Sampler16in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanN
 #if defined(HAS_LONG_DOUBLE)
 	{
 		long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
-		aDD = temp * ( 1 << BYTEDIV);
+		aDD = temp * (1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -219,7 +219,7 @@ void Sampler16in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanN
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) return;
 	
 	SndBuffer		= (char*) 	curVoice->curPtr;
-	volChn			= DoVolPanning256( 3, curVoice, intDriver, true)/256;
+	volChn			= DoVolPanning256(3, curVoice, intDriver, true)/256;
 	
 	while (i-- > 0)
 	{
@@ -250,21 +250,21 @@ void Sampler16in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanN
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);
 }
 
-void Sample8BufferAddPoly( Channel *curVoice, register Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver)
+void Sample8BufferAddPoly(Channel *curVoice, register Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver)
 {
 	if (curVoice->stereo)
 	{
-		if (curVoice->amp == 8) Sampler8in8AddPolyStereo( curVoice, ASCBuffer, chanNo, intDriver);
-		else Sampler16in8AddPolyStereo( curVoice, ASCBuffer, chanNo, intDriver);
+		if (curVoice->amp == 8) Sampler8in8AddPolyStereo(curVoice, ASCBuffer, chanNo, intDriver);
+		else Sampler16in8AddPolyStereo(curVoice, ASCBuffer, chanNo, intDriver);
 	}
 	else
 	{
-		if (curVoice->amp == 8) Sampler8in8AddPoly( curVoice, ASCBuffer, chanNo, intDriver);
-		else Sampler16in8AddPoly( curVoice, ASCBuffer, chanNo, intDriver);
+		if (curVoice->amp == 8) Sampler8in8AddPoly(curVoice, ASCBuffer, chanNo, intDriver);
+		else Sampler16in8AddPoly(curVoice, ASCBuffer, chanNo, intDriver);
 	}
 }
 
-void Play8PolyPhonic( MADDriverRec *intDriver)
+void Play8PolyPhonic(MADDriverRec *intDriver)
 {
 	long	i;
 	//long x;
@@ -275,6 +275,6 @@ void Play8PolyPhonic( MADDriverRec *intDriver)
 	
 	for (i = 0 ; i < intDriver->DriverSettings.numChn; i++)	//
 	{
-		Sample8BufferAddPoly( &intDriver->chan[ i], intDriver->IntDataPtr + i, intDriver->DriverSettings.numChn, intDriver);
+		Sample8BufferAddPoly(&intDriver->chan[ i], intDriver->IntDataPtr + i, intDriver->DriverSettings.numChn, intDriver);
 	}
 }

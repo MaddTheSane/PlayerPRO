@@ -93,16 +93,16 @@ void SavePtunePfile(Tune *, MADMusic *theMAD, MADDriverSettings *init);
 
 int ValidquantSz(Sz);
 
-void PrintPro( Ptr	myStr);
+void PrintPro(Ptr	myStr);
 
 void Error(Sz, ...);
 
-void Erreur( short a, short b);
+void Erreur(short a, short b);
 
-void CreateResult( Ptr);
+void CreateResult(Ptr);
 
-Ptr LenOutPfileFn( long *Ssize,  Ptr fnSample);
-void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, short ins);
+Ptr LenOutPfileFn(long *Ssize,  Ptr fnSample);
+void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, short ins);
 
 extern short MIDIInstMOD[ 129];
 

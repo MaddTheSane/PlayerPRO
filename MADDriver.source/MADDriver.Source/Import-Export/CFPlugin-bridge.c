@@ -23,36 +23,36 @@ typedef struct _CFImpExpPlugType {
 	UInt32 _refCount;
 } CFImpExpPlugType;
 
-static void _deallocCFImpExpPlugType( CFImpExpPlugType *myInstance );
+static void _deallocCFImpExpPlugType(CFImpExpPlugType *myInstance );
 
 
-static HRESULT CFImpExpPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
+static HRESULT CFImpExpPlugQueryInterface(void *myInstance, REFIID iid, LPVOID *ppv )
 {
 	//  Create a CoreFoundation UUIDRef for the requested interface.
 	
-	CFUUIDRef interfaceID = CFUUIDCreateFromUUIDBytes( kCFAllocatorDefault, iid );
+	CFUUIDRef interfaceID = CFUUIDCreateFromUUIDBytes(kCFAllocatorDefault, iid );
 	
 	// Test the requested ID against the valid interfaces.
 	
-	if (CFEqual( interfaceID, kPlayerPROModFormatInterfaceID ) ) 
+	if (CFEqual(interfaceID, kPlayerPROModFormatInterfaceID ) ) 
 	{
 		
 		//  If the TestInterface was requested, bump the ref count, set the ppv parameter
 		//  equal to the instance, and return good status.
 		
-		( (CFImpExpPlugType *) myInstance )->_PPROCFPlugFormat->AddRef( myInstance );
+		((CFImpExpPlugType *) myInstance )->_PPROCFPlugFormat->AddRef(myInstance );
 		*ppv = myInstance;
-		CFRelease( interfaceID );
+		CFRelease(interfaceID );
 		return S_OK;
 	}
-	else if (CFEqual( interfaceID, IUnknownUUID ) ) 
+	else if (CFEqual(interfaceID, IUnknownUUID ) ) 
 	{
 		
 		//  If the IUnknown interface was requested, same as above.
 		
-		( (CFImpExpPlugType *) myInstance )->_PPROCFPlugFormat->AddRef( myInstance );
+		((CFImpExpPlugType *) myInstance )->_PPROCFPlugFormat->AddRef(myInstance );
 		*ppv = myInstance;
-		CFRelease( interfaceID );
+		CFRelease(interfaceID );
 		return S_OK;
 	}
 	else 
@@ -61,15 +61,15 @@ static HRESULT CFImpExpPlugQueryInterface( void *myInstance, REFIID iid, LPVOID 
 		//  Requested interface unknown, bail with error.
 		
 		*ppv = NULL;
-		CFRelease( interfaceID );
+		CFRelease(interfaceID );
 		return E_NOINTERFACE;
 	}
 }
 
-static ULONG CFImpExpPlugAddRef( void *myInstance )
+static ULONG CFImpExpPlugAddRef(void *myInstance )
 {
-	( (CFImpExpPlugType *) myInstance )->_refCount += 1;
-	return ( (CFImpExpPlugType *) myInstance )->_refCount;
+	((CFImpExpPlugType *) myInstance )->_refCount += 1;
+	return ((CFImpExpPlugType *) myInstance )->_refCount;
 }
 
 // -------------------------------------------------------------------------------------------
@@ -78,15 +78,15 @@ static ULONG CFImpExpPlugAddRef( void *myInstance )
 //  If the refCount goes to zero, deallocate the instance.
 //
 
-static ULONG CFImpExpPlugRelease( void *myInstance )
+static ULONG CFImpExpPlugRelease(void *myInstance )
 {
-	( (CFImpExpPlugType *) myInstance )->_refCount -= 1;
-	if ( ( (CFImpExpPlugType *) myInstance )->_refCount == 0 ) {
-		_deallocCFImpExpPlugType( (CFImpExpPlugType *) myInstance );
+	((CFImpExpPlugType *) myInstance )->_refCount -= 1;
+	if (((CFImpExpPlugType *) myInstance )->_refCount == 0 ) {
+		_deallocCFImpExpPlugType((CFImpExpPlugType *) myInstance );
 		return 0;
 	}
 	else
-		return ( (CFImpExpPlugType *) myInstance )->_refCount;
+		return ((CFImpExpPlugType *) myInstance )->_refCount;
 }
 
 static MADFileFormatPlugin CFImpExpPlugFormat =
@@ -98,11 +98,11 @@ static MADFileFormatPlugin CFImpExpPlugFormat =
 	PLUGMAIN
 };
 
-static CFImpExpPlugType *_allocCFPlugType( CFUUIDRef factoryID )
+static CFImpExpPlugType *_allocCFPlugType(CFUUIDRef factoryID )
 {
 	//  Allocate memory for the new instance.
 	
-	CFImpExpPlugType *newOne = (CFImpExpPlugType *)malloc( sizeof(CFImpExpPlugType) );
+	CFImpExpPlugType *newOne = (CFImpExpPlugType *)malloc(sizeof(CFImpExpPlugType) );
 	
 	//  Point to the function table
 	
@@ -111,8 +111,8 @@ static CFImpExpPlugType *_allocCFPlugType( CFUUIDRef factoryID )
 	//  Retain and keep an open instance refcount for each factory.
 	
 	if (factoryID) {
-		newOne->_factoryID = (CFUUIDRef)CFRetain( factoryID );
-		CFPlugInAddInstanceForFactory( factoryID );
+		newOne->_factoryID = (CFUUIDRef)CFRetain(factoryID );
+		CFPlugInAddInstanceForFactory(factoryID );
 	}
 	
 	//  This function returns the IUnknown interface so set the refCount to one.
@@ -126,24 +126,24 @@ static CFImpExpPlugType *_allocCFPlugType( CFUUIDRef factoryID )
 //  Utility function that deallocates the instance when the refCount goes to zero.
 //
 
-static void _deallocCFImpExpPlugType( CFImpExpPlugType *myInstance )
+static void _deallocCFImpExpPlugType(CFImpExpPlugType *myInstance )
 {
 	CFUUIDRef factoryID = myInstance->_factoryID;
-	free( myInstance );
-	if ( factoryID ) {
-		CFPlugInRemoveInstanceForFactory( factoryID );
-		CFRelease( factoryID );
+	free(myInstance );
+	if (factoryID ) {
+		CFPlugInRemoveInstanceForFactory(factoryID );
+		CFRelease(factoryID );
 	}
 }
 
-EXP void * PLUGINFACTORY( CFAllocatorRef allocator, CFUUIDRef typeID )
+EXP void * PLUGINFACTORY(CFAllocatorRef allocator, CFUUIDRef typeID )
 {
 	
 	//  If correct type is being requested, allocate an instance of TestType and return
 	//  the IUnknown interface.
 	
-	if ( CFEqual( typeID, kPlayerPROModFormatTypeID ) ) {
-		CFImpExpPlugType *result = _allocCFPlugType( PLUGUUID );
+	if (CFEqual(typeID, kPlayerPROModFormatTypeID ) ) {
+		CFImpExpPlugType *result = _allocCFPlugType(PLUGUUID );
 		return result;
 	}
 	else {

@@ -70,7 +70,7 @@ pascal OSErr GetFileIcon(
 		cpb.hFileInfo.ioDirID		= thing->parID;
 		cpb.hFileInfo.ioNamePtr		= thing->name;
 		cpb.hFileInfo.ioFDirIndex	= 0;
-		err = PBGetCatInfoSync( &cpb );
+		err = PBGetCatInfoSync(&cpb );
 
 		if (!err )
 		{
@@ -99,11 +99,11 @@ pascal OSErr GetFileIcon(
 		err = GetVolumeIcon(thing->vRefNum, iconSelector, theSuite);
 	}*/
 
-	return( err );
+	return(err );
 }
 
 
-Boolean	IsVolEjected( short vRefNum )
+Boolean	IsVolEjected(short vRefNum )
 {
 	OSErr			err;
 	HVolumeParam	vol_pb;
@@ -111,9 +111,9 @@ Boolean	IsVolEjected( short vRefNum )
 	vol_pb.ioNamePtr	= NULL;
 	vol_pb.ioVRefNum	= vRefNum;
 	vol_pb.ioVolIndex	= 0;
-	err = PBHGetVInfoSync( (HParmBlkPtr )&vol_pb );
+	err = PBHGetVInfoSync((HParmBlkPtr )&vol_pb );
 	
-	return( (err == noErr) && (vol_pb.ioVDRefNum > 0) );
+	return((err == noErr) && (vol_pb.ioVDRefNum > 0) );
 }
 
 
@@ -127,10 +127,10 @@ OSErr	GetCustomFileIcon(
 	OSErr	err;
 	
 	saveResFile = CurResFile();
-	SetResLoad( false );
+	SetResLoad(false );
 	customResFile = FSpOpenResFile(filespec, fsRdPerm);
 
-	SetResLoad( true );
+	SetResLoad(true );
 
 	if(customResFile == -1)
 	{
@@ -141,16 +141,16 @@ OSErr	GetCustomFileIcon(
 		err = GetResourceIcons(theSuite, kCustomIconResource, iconSelector);
 		if (!err )
 		{
-			if (IsSuiteEmpty( *theSuite ) )
+			if (IsSuiteEmpty(*theSuite ) )
 			{
 				err = GetResourceIcons(theSuite, kVolumeAliasIconResource, iconSelector);
 			}
 		}
 
-		CloseResFile( customResFile );
-		UseResFile( saveResFile );
+		CloseResFile(customResFile );
+		UseResFile(saveResFile );
 	}
-	return( err );
+	return(err );
 }
 
 
@@ -179,10 +179,10 @@ OSErr	GetNormalFileIcon(
 	{
 		FindFolder(kOnSystemDisk, kSystemFolderType, kDontCreateFolder, &sysVRefNum, &sysDirID);
 
-		SetResLoad( false );
-		GetFinderFilename( finderName );
+		SetResLoad(false );
+		GetFinderFilename(finderName );
 		FinderResFile = HOpenResFile(sysVRefNum, sysDirID, finderName, fsRdPerm);
-		SetResLoad( true );
+		SetResLoad(true );
 
 		if(FinderResFile == -1)
 		{
@@ -191,7 +191,7 @@ OSErr	GetNormalFileIcon(
 		else
 		{
 			err = GetResourceIcons(theSuite, iconID, iconSelector);
-			CloseResFile( FinderResFile );
+			CloseResFile(FinderResFile );
 		}
 	}
 	else	// icons in desktop DB or in System
@@ -201,7 +201,7 @@ OSErr	GetNormalFileIcon(
 
 		if(getData.DTRefNum != 0)	// the right icons are in some desktop
 		{
-			err = NewIconSuite( theSuite );
+			err = NewIconSuite(theSuite );
 			if (!err )
 			{
 				getData.fileCreator	= cpb->hFileInfo.ioFlFndrInfo.fdCreator;
@@ -210,21 +210,21 @@ OSErr	GetNormalFileIcon(
 				{
 					getData.fileType = 'APPL';
 				}
-				getIconProcPtr = NewIconActionUPP( GetIconProc );
+				getIconProcPtr = NewIconActionUPP(GetIconProc );
 				err = ForEachIconDo(*theSuite, iconSelector, getIconProcPtr, &getData);
-				DisposeIconActionUPP( getIconProcPtr );
+				DisposeIconActionUPP(getIconProcPtr );
 			}
 		}
-		if ((getData.DTRefNum == 0) || IsSuiteEmpty( *theSuite ) )
+		if ((getData.DTRefNum == 0) || IsSuiteEmpty(*theSuite ) )
 		{
-			UseResFile( 0 );
+			UseResFile(0 );
 			err = GetResourceIcons(theSuite, iconID, iconSelector);
 		}
 	}
 
-	UseResFile( saveResFile );
+	UseResFile(saveResFile );
 
-	return( err );
+	return(err );
 }
 
 
@@ -255,7 +255,7 @@ void GetFinderFilename(
 
 	err = noErr;
 	data = (GetIconData *)yourDataPtr;
-	*theIcon = NewHandle( kLarge8BitIconSize );
+	*theIcon = NewHandle(kLarge8BitIconSize );
 
 	if (!(*theIcon) )
 	{
@@ -263,7 +263,7 @@ void GetFinderFilename(
 	}
 	else
 	{
-		HLock( *theIcon );
+		HLock(*theIcon );
 	
 		deskRec.ioDTRefNum		= data->DTRefNum;
 		deskRec.ioDTBuffer		= **theIcon;
@@ -271,7 +271,7 @@ void GetFinderFilename(
 		deskRec.ioFileCreator	= data->fileCreator;
 		deskRec.ioFileType		= data->fileType;
 	
-		switch( theType )
+		switch(theType )
 		{
 			case kLarge1BitMask:
 				deskRec.ioIconType = kLargeIcon;
@@ -303,20 +303,20 @@ void GetFinderFilename(
 				break;
 		}
 
-		err = PBDTGetIconSync( &deskRec );
+		err = PBDTGetIconSync(&deskRec );
 		if(err == noErr)
 		{
-			HUnlock( *theIcon );
+			HUnlock(*theIcon );
 			SetHandleSize(*theIcon, deskRec.ioDTActCount);
 		}
 		else
 		{
-			DisposeHandle( *theIcon );
+			DisposeHandle(*theIcon );
 			*theIcon = NULL;
 			err = noErr;
 		}
 	}
-	return( err );
+	return(err );
 }
 
 
@@ -336,7 +336,7 @@ void GetFinderFilename(
 	
 	if(!InOneDesktop(firstVRefNum, fileCreator, &DTRefNum)) {
 		vpb.ioNamePtr = NULL;
-		for(vpb.ioVolIndex = 1; PBXGetVolInfoSync( &vpb) == noErr; ++vpb.ioVolIndex) {
+		for(vpb.ioVolIndex = 1; PBXGetVolInfoSync(&vpb) == noErr; ++vpb.ioVolIndex) {
 			if(vpb.ioVRefNum == firstVRefNum)
 				continue;
 			if (InOneDesktop(vpb.ioVRefNum, fileCreator, &DTRefNum) )
@@ -376,11 +376,11 @@ void GetFinderFilename(
 	_myHPB.ioParam.ioVRefNum  = vRefNum;
 	_myHPB.ioParam.ioBuffer   = (Ptr)&_infoBuffer;
 	_myHPB.ioParam.ioReqCount = sizeof(_infoBuffer);
-	if ( ((err=PBHGetVolParms(&_myHPB,false/*async*/))!=noErr) ||
+	if (((err=PBHGetVolParms(&_myHPB,false/*async*/))!=noErr) ||
 	((_infoBuffer.vMAttrib&(1L<<bHasDesktopMgr))==0) )
-		return( retVal );
+		return(retVal );
 
-	err = PBDTGetPath( &deskRec );
+	err = PBDTGetPath(&deskRec );
 	if (!err )
 	{
 		/*	We want to ignore any non-icon data, such as the 'paul'
@@ -390,7 +390,7 @@ void GetFinderFilename(
 		do
 		{
 			deskRec.ioTagInfo = 0;
-			err = PBDTGetIconInfoSync( &deskRec );
+			err = PBDTGetIconInfoSync(&deskRec );
 			deskRec.ioIndex += 1;
 		}while ((err == noErr) && (deskRec.ioIconType <= 0) );
 	
@@ -400,7 +400,7 @@ void GetFinderFilename(
 			*dtRefNum = deskRec.ioDTRefNum;
 		}
 	}
-	return( retVal );
+	return(retVal );
 }
 
 
@@ -414,9 +414,9 @@ pascal OSErr GetResourceIcons(
 	err = Get1IconSuite(theSuite, theID, theSelector);
 	if(err == noErr)
 	{
-		err = CopyEachIcon( *theSuite );
+		err = CopyEachIcon(*theSuite );
 	}
-	return( err );
+	return(err );
 }
 
 
@@ -429,12 +429,12 @@ pascal OSErr CopyOneIcon(
 	
 	if(*theIcon != NULL)
 	{
-		LoadResource( *theIcon );
-		err = HandToHand( theIcon );
+		LoadResource(*theIcon );
+		err = HandToHand(theIcon );
 		if(err != noErr)
 			*theIcon = NULL;
 	}
-	return( noErr );
+	return(noErr );
 }
 
 
@@ -443,10 +443,10 @@ OSErr CopyEachIcon(
 {
 	IconActionUPP	copyOneIconProc;
 	OSErr			err;
-	copyOneIconProc = NewIconActionUPP( CopyOneIcon );
+	copyOneIconProc = NewIconActionUPP(CopyOneIcon );
 	err = ForEachIconDo(theSuite, svAllAvailableData, copyOneIconProc, NULL);
-	DisposeIconActionUPP( copyOneIconProc );
-	return( err );
+	DisposeIconActionUPP(copyOneIconProc );
+	return(err );
 }
 
 
@@ -496,7 +496,7 @@ short	FindGenericIconID(
     if (_icon<_endIcon)
         id = _icon->id;
 
-	return( id );
+	return(id );
 }
 
 
@@ -521,14 +521,14 @@ pascal OSErr Get1IconSuite(
 	OSErr		err;
 	IconActionUPP	get1IconProc;
 
-	err = NewIconSuite( theSuite );
+	err = NewIconSuite(theSuite );
 	if (!err )
 	{
-		get1IconProc = NewIconActionUPP( Get1Icon );
+		get1IconProc = NewIconActionUPP(Get1Icon );
 		err = ForEachIconDo(*theSuite, theSelector, get1IconProc, &theID);
-		DisposeIconActionUPP( get1IconProc );
+		DisposeIconActionUPP(get1IconProc );
 	}
-	return( err );
+	return(err );
 }
 
 
@@ -539,7 +539,7 @@ pascal OSErr Get1Icon(
 {
 	*theIcon = Get1Resource(theType, *((short*)resID));
 
-	return( noErr );
+	return(noErr );
 }
 
 
@@ -552,16 +552,16 @@ pascal OSErr TestHandle(ResType theType, Handle *theIcon, void *yourDataPtr)
 }
 
 
-Boolean IsSuiteEmpty( Handle theSuite )
+Boolean IsSuiteEmpty(Handle theSuite )
 {
 	Boolean			retVal;
 	IconActionUPP	testHandleProc;
 	
-	testHandleProc = NewIconActionUPP( TestHandle );
+	testHandleProc = NewIconActionUPP(TestHandle );
 	
 	retVal = true;
 	ForEachIconDo(theSuite, svAllAvailableData, testHandleProc, &retVal);
-	DisposeIconActionUPP( testHandleProc );
+	DisposeIconActionUPP(testHandleProc );
 	
 	return retVal ;
 }

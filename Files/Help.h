@@ -12,4 +12,4 @@ enum
 	MIDIINPUT = 2009
 };
 
-void ShowPrefs( short PrefStartup);
+void ShowPrefs(short PrefStartup);

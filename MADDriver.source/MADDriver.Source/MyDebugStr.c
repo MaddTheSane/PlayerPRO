@@ -14,7 +14,7 @@
 
 extern void NSLog(CFStringRef format, ...);
 
-extern void MyDebugStr( short line, Ptr file, Ptr text)
+extern void MyDebugStr(short line, Ptr file, Ptr text)
 {
 	NSLog(CFSTR("%s:%u error text:%s!"), file, line, text);
 	
@@ -23,7 +23,7 @@ extern void MyDebugStr( short line, Ptr file, Ptr text)
 #else
 #include <stdio.h>
 
-extern void MyDebugStr( short line, Ptr file, Ptr text)
+extern void MyDebugStr(short line, Ptr file, Ptr text)
 {
 	fprintf(stderr, "%s:%u error text:%s!", file, line, text);
 	//TODO: call a debug function?

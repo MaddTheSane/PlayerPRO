@@ -35,7 +35,7 @@
 	static	long					*TimeScanPtr[ 256];
 	static	short					AHelp[ AHELPSIZE] = {	HBackP, HBack, HStop, HPlay, HFor, HForP, HIndi, HName, HIns,
 															HNote, HEff, HArg, HCellP, HDel, HSel, HLoop, 44};
-	void DoHelpTools( short **items, short *lsize)
+	void DoHelpTools(short **items, short *lsize)
 	{
 		*lsize = AHELPSIZE;
 		*items = AHelp;
@@ -58,15 +58,15 @@
 	static	short					LoopCntlState, PreviousLoop;
 	static	ControlActionUPP		ForeUPP, BackUPP;
 	
-	void FlushPlugin( void);
+	void FlushPlugin(void);
 	void ScanTime();
-	Boolean IsMyTypeMODList( DragReference theDrag);
-	void PurgeVSTEffects( void);
+	Boolean IsMyTypeMODList(DragReference theDrag);
+	void PurgeVSTEffects(void);
 	DragTrackingHandlerUPP	MyTrackingToolsUPP;
 	DragReceiveHandlerUPP	MyReceiveToolsUPP;
-pascal void myForeAction( ControlHandle theCntl, short ctlPart);
-pascal void myBackAction( ControlHandle theCntl, short ctlPart);
-void SetCurrentMOD( Str255 theMODName);
+pascal void myForeAction(ControlHandle theCntl, short ctlPart);
+pascal void myBackAction(ControlHandle theCntl, short ctlPart);
+void SetCurrentMOD(Str255 theMODName);
 
 
 pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
@@ -82,16 +82,16 @@ pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRe
 
 	if (!mainSystemDrag) return noErr;
 
-	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return( noErr);
+	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return(noErr);
 
-	SetPortWindowPort( theWindow);
+	SetPortWindowPort(theWindow);
 	
 	GetDragAttributes(theDrag, &attributes);
 	
 	switch (message) {
 
 		case kDragTrackingEnterHandler:
-			canAcceptDrag = IsMyTypeMODList( theDrag);
+			canAcceptDrag = IsMyTypeMODList(theDrag);
 		break;
 
 		case kDragTrackingEnterWindow:
@@ -115,9 +115,9 @@ pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRe
 			//	the mouse is over the window title bar or over the scroll bars).
 			//
 			
-			GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
+			GetPortBounds(GetDialogPort(ToolsDlog), &caRect);
 
-			if (PtInRect( localMouse, &caRect))
+			if (PtInRect(localMouse, &caRect))
 			{
 				RectRgn(theRgn = NewRgn(), &caRect);
 				
@@ -137,14 +137,14 @@ pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRe
 		break;
 
 		case kDragTrackingLeaveWindow:
-			HideDragHilite( theDrag);
+			HideDragHilite(theDrag);
 		break;
 
 		case kDragTrackingLeaveHandler:
 		
 		break;
 	}
-	RGBBackColor( &theColor);
+	RGBBackColor(&theColor);
 
 	return(noErr);
 }
@@ -171,7 +171,7 @@ pascal OSErr MyReceiveTools(WindowPtr theWindow, void* handlerRefCon, DragRefere
 	GetDragAttributes(theDrag, &attributes);
 	GetDragModifiers(theDrag, NULL, &mouseDownModifiers, &mouseUpModifiers);
 	
-	HideDragHilite( theDrag);
+	HideDragHilite(theDrag);
 
 	//
 	//	Un fichier en provenance du Finder
@@ -179,7 +179,7 @@ pascal OSErr MyReceiveTools(WindowPtr theWindow, void* handlerRefCon, DragRefere
 	
 	iErr = AECreateDesc(	typeApplSignature,
 							(Ptr) &sign,
-							sizeof( sign),
+							sizeof(sign),
 							&target);
 	
 	iErr = AECreateAppleEvent(	kCoreEventClass,
@@ -189,11 +189,11 @@ pascal OSErr MyReceiveTools(WindowPtr theWindow, void* handlerRefCon, DragRefere
 								kAnyTransactionID,
 								&aeEvent);
 	
-	iErr = AECreateList( nil,0,false, &fileList);
+	iErr = AECreateList(nil,0,false, &fileList);
 
 	CountDragItems(theDrag, &items);
 
-	SetCursor( &watchCrsr);
+	SetCursor(&watchCrsr);
 
 	for (index = 1; index <= items; index++)
 	{
@@ -207,21 +207,21 @@ pascal OSErr MyReceiveTools(WindowPtr theWindow, void* handlerRefCon, DragRefere
 		
 			GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
 			
-			ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
+			ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		
-			AECreateDesc(typeFSS, (Ptr) &myFlavor.fileSpec, sizeof( myFlavor.fileSpec), &listElem);
+			AECreateDesc(typeFSS, (Ptr) &myFlavor.fileSpec, sizeof(myFlavor.fileSpec), &listElem);
 			
-			iErr = AEPutDesc( &fileList, 0, &listElem);
+			iErr = AEPutDesc(&fileList, 0, &listElem);
 			if (iErr) return iErr;
 			
-			AEDisposeDesc( &listElem);
+			AEDisposeDesc(&listElem);
 			
-			iErr = AEPutParamDesc( &aeEvent, keyDirectObject,&fileList);
+			iErr = AEPutParamDesc(&aeEvent, keyDirectObject,&fileList);
 			if(iErr) return iErr;
 		}
 	}
 	
-	iErr = AEDisposeDesc( &fileList);
+	iErr = AEDisposeDesc(&fileList);
 	
 	iErr = AESend(	&aeEvent,
 					&reply,
@@ -232,7 +232,7 @@ pascal OSErr MyReceiveTools(WindowPtr theWindow, void* handlerRefCon, DragRefere
 					NULL);
 	if (iErr) return iErr;
 	
-	SetCursor( GetQDGlobalsArrow( &qdarrow));
+	SetCursor(GetQDGlobalsArrow(&qdarrow));
 	
 	return noErr;
 }
@@ -247,37 +247,37 @@ void DrawTimeBar(void)
 		PenState		penState;
 
 	if (curMusic == NULL) return;
-	GetPort( &SavePort);
-	SetPortDialogPort( ToolsDlog);
+	GetPort(&SavePort);
+	SetPortDialogPort(ToolsDlog);
 	
 	if (AppearanceManager)
 	{
-		SetControlValue( progCntl, (oldTime * 100) / maxTime);
+		SetControlValue(progCntl, (oldTime * 100) / maxTime);
 	}
 	else
 	{
-		GetDialogItem( ToolsDlog, 10, &itemType, &itemHandle, &itemRect);
-		InsetRect( &itemRect, 2, 2);
+		GetDialogItem(ToolsDlog, 10, &itemType, &itemHandle, &itemRect);
+		InsetRect(&itemRect, 2, 2);
 		i = itemRect.right;
 		itemRect.right = itemRect.left + (long) (oldTime * (long) (itemRect.right - itemRect.left) / maxTime);
 		if (itemRect.right > i) itemRect.right = i;
 		
-		GetPenState( &penState);
-		PenPixPat( workPixPat);
+		GetPenState(&penState);
+		PenPixPat(workPixPat);
 		
-		PaintRect( &itemRect);
+		PaintRect(&itemRect);
 		
-		SetPenState( &penState);
+		SetPenState(&penState);
 		
 		itemRect.left = itemRect.right;
 		itemRect.right = i;
-		RGBForeColor( &theColor);
+		RGBForeColor(&theColor);
 		
-		PaintRect( &itemRect);
+		PaintRect(&itemRect);
 		
-		ForeColor( blackColor);
+		ForeColor(blackColor);
 	}
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
 void DoNullTools(void)
@@ -285,8 +285,8 @@ void DoNullTools(void)
 	GrafPtr	savePort;
 	short	tro;
 
-	GetPort( &savePort);
-	SetPortDialogPort( ToolsDlog);
+	GetPort(&savePort);
+	SetPortDialogPort(ToolsDlog);
 
 	if (oldPartition != MADDriver->PartitionReader || oldPL != MADDriver->PL)
 	{
@@ -305,15 +305,15 @@ void DoNullTools(void)
 				
 				oldTime = (TimeScanPtr[ oldPL])[ oldPartition];
 				
-				SecondsToDate( oldTime / 60, &dtrp);
+				SecondsToDate(oldTime / 60, &dtrp);
 				
-				NTStr( 2, dtrp.minute, (Ptr) aStr);		MyC2PStr( (Ptr) aStr);
-				NTStr( 2, dtrp.second, (Ptr) bStr);		MyC2PStr( (Ptr) bStr);
-				pStrcat( aStr, "\p:");
-				pStrcat( aStr, bStr);
+				NTStr(2, dtrp.minute, (Ptr) aStr);		MyC2PStr((Ptr) aStr);
+				NTStr(2, dtrp.second, (Ptr) bStr);		MyC2PStr((Ptr) bStr);
+				pStrcat(aStr, "\p:");
+				pStrcat(aStr, bStr);
 				
-				RGBBackColor( &theColor);
-				SetDText( ToolsDlog, 8, aStr);
+				RGBBackColor(&theColor);
+				SetDText(ToolsDlog, 8, aStr);
 			}
 		}
 		
@@ -345,21 +345,21 @@ if (LoopCntlState != tro)
 	
 	if (LoopCntlState)
 	{
-		HiliteControl( LoopCntl, kControlButtonPart);
+		HiliteControl(LoopCntl, kControlButtonPart);
 		MADDriver->JumpToNextPattern = false;
 	}
 	else
 	{
-		HiliteControl( LoopCntl, 0);
+		HiliteControl(LoopCntl, 0);
 		MADDriver->JumpToNextPattern = true;
 	}
 }*/
 // **** **** **** **** **** **** **** **** **** **** **** **** **** ****
 
-SetPort( savePort);
+SetPort(savePort);
 }
 
-void UpdateToolsWindow( DialogPtr	GetSelection)
+void UpdateToolsWindow(DialogPtr	GetSelection)
 {
 		Rect   		itemRect;
  		GrafPtr		SavePort;
@@ -368,12 +368,12 @@ void UpdateToolsWindow( DialogPtr	GetSelection)
  		RgnHandle	visibleRegion;
 
 
- 		GetPort( &SavePort);
- 		SetPortDialogPort( GetSelection);
+ 		GetPort(&SavePort);
+ 		SetPortDialogPort(GetSelection);
  		
- 		BeginUpdate( GetDialogWindow( GetSelection));
+ 		BeginUpdate(GetDialogWindow(GetSelection));
  		
-		UpdateCmdDlogWindow( GetSelection);
+		UpdateCmdDlogWindow(GetSelection);
 		
 		Draw1Control(playCntl);
 		Draw1Control(stopCntl);
@@ -386,25 +386,25 @@ void UpdateToolsWindow( DialogPtr	GetSelection)
 		
 		visibleRegion = NewRgn();
 		
-		GetPortVisibleRegion( GetDialogPort( GetSelection), visibleRegion);
+		GetPortVisibleRegion(GetDialogPort(GetSelection), visibleRegion);
 		
-		UpdateDialog( GetSelection, visibleRegion);
+		UpdateDialog(GetSelection, visibleRegion);
 		
-		DisposeRgn( visibleRegion);
+		DisposeRgn(visibleRegion);
 		
  		DrawTimeBar();
  		
 		if (!AppearanceManager)
 		{
-	 		GetDialogItem( ToolsDlog, 10, &itemType, &itemHandle, &itemRect);
+	 		GetDialogItem(ToolsDlog, 10, &itemType, &itemHandle, &itemRect);
 	 		
-			FrameRect( &itemRect);
+			FrameRect(&itemRect);
  		}
-		else Draw1Control( progCntl);
+		else Draw1Control(progCntl);
 		
- 		SetCurrentMOD( curMusic->musicFileName);
+ 		SetCurrentMOD(curMusic->musicFileName);
 		/*******/		
-		EndUpdate( GetDialogWindow( GetSelection));
+		EndUpdate(GetDialogWindow(GetSelection));
 		
 		SetPort(SavePort);
 }
@@ -415,26 +415,26 @@ void CreateToolsDlog(void)
 	Handle		itemHandle;
 	short		itemType, i;
 	
-	ToolsDlog = GetNewDialog( 143, NULL, (WindowPtr) -1L);
-	SetWindEtat( GetDialogWindow(ToolsDlog));
-	SetPortDialogPort( ToolsDlog);
+	ToolsDlog = GetNewDialog(143, NULL, (WindowPtr) -1L);
+	SetWindEtat(GetDialogWindow(ToolsDlog));
+	SetPortDialogPort(ToolsDlog);
 	
 	LoopCntlState = !MADDriver->JumpToNextPattern;
 	PreviousLoop = -1;
 
-	MySizeWindow( ToolsDlog, 183, 48, false);
+	MySizeWindow(ToolsDlog, 183, 48, false);
 
-	workPixPat = GetPixPat( 130);
+	workPixPat = GetPixPat(130);
 	
 	CreateCmdDlog();
 	
-	ForeUPP = NewControlActionUPP( myForeAction);
-	BackUPP = NewControlActionUPP( myBackAction);
+	ForeUPP = NewControlActionUPP(myForeAction);
+	BackUPP = NewControlActionUPP(myBackAction);
 	
 	if (AppearanceManager)
 	{
-		GetDialogItem( ToolsDlog, 10, &itemType, &itemHandle, &itemRect);
-		progCntl = NewControl( 	GetDialogWindow( ToolsDlog),
+		GetDialogItem(ToolsDlog, 10, &itemType, &itemHandle, &itemRect);
+		progCntl = NewControl(	GetDialogWindow(ToolsDlog),
 							&itemRect,
 							"\p.",
 							true,
@@ -445,9 +445,9 @@ void CreateToolsDlog(void)
 							0);
 	}
 	
-	GetDialogItemAsControl( ToolsDlog, 5, &playCntl);
-/*	GetDialogItem( ToolsDlog , 5, &itemType, &itemHandle, &itemRect);
-	playCntl = NewControl( 	GetDialogWindow( ToolsDlog),
+	GetDialogItemAsControl(ToolsDlog, 5, &playCntl);
+/*	GetDialogItem(ToolsDlog , 5, &itemType, &itemHandle, &itemRect);
+	playCntl = NewControl(	GetDialogWindow(ToolsDlog),
 							&itemRect,
 							"\p.",
 							true,
@@ -457,9 +457,9 @@ void CreateToolsDlog(void)
 							512,
 							0);*/
 	
-	GetDialogItemAsControl( ToolsDlog, 4, &stopCntl);
-/*	GetDialogItem( ToolsDlog , 4, &itemType, &itemHandle, &itemRect);
-	stopCntl = NewControl( 	GetDialogWindow( ToolsDlog),
+	GetDialogItemAsControl(ToolsDlog, 4, &stopCntl);
+/*	GetDialogItem(ToolsDlog , 4, &itemType, &itemHandle, &itemRect);
+	stopCntl = NewControl(	GetDialogWindow(ToolsDlog),
 							&itemRect,
 							"\p.",
 							true,
@@ -469,11 +469,11 @@ void CreateToolsDlog(void)
 							512,
 							0);*/
 	
-	GetDialogItemAsControl( ToolsDlog, 46, &LoopCntl);
+	GetDialogItemAsControl(ToolsDlog, 46, &LoopCntl);
 
-	GetDialogItemAsControl( ToolsDlog, 44, &RecordCntl);
-/*	GetDialogItem( ToolsDlog , 44, &itemType, &itemHandle, &itemRect);
-	RecordCntl = NewControl( 	GetDialogWindow( ToolsDlog),
+	GetDialogItemAsControl(ToolsDlog, 44, &RecordCntl);
+/*	GetDialogItem(ToolsDlog , 44, &itemType, &itemHandle, &itemRect);
+	RecordCntl = NewControl(	GetDialogWindow(ToolsDlog),
 								&itemRect,
 								"\p.",
 								true,
@@ -483,11 +483,11 @@ void CreateToolsDlog(void)
 								512,
 								0);*/
 	
-	GetDialogItemAsControl( ToolsDlog, 3, &BackCntl);
-	SetControlAction( BackCntl, BackUPP );
+	GetDialogItemAsControl(ToolsDlog, 3, &BackCntl);
+	SetControlAction(BackCntl, BackUPP );
 	
-/*	GetDialogItem( ToolsDlog , 3, &itemType, &itemHandle, &itemRect);
-	BackCntl = NewControl( GetDialogWindow( 	ToolsDlog),
+/*	GetDialogItem(ToolsDlog , 3, &itemType, &itemHandle, &itemRect);
+	BackCntl = NewControl(GetDialogWindow(	ToolsDlog),
 							&itemRect,
 							"\p.",
 							true,
@@ -497,9 +497,9 @@ void CreateToolsDlog(void)
 							512,
 							0);*/
 
-	GetDialogItemAsControl( ToolsDlog, 2, &JumpBeforeCntl);
-/*	GetDialogItem( ToolsDlog , 2, &itemType, &itemHandle, &itemRect);
-	JumpBeforeCntl = NewControl( 	GetDialogWindow( ToolsDlog),
+	GetDialogItemAsControl(ToolsDlog, 2, &JumpBeforeCntl);
+/*	GetDialogItem(ToolsDlog , 2, &itemType, &itemHandle, &itemRect);
+	JumpBeforeCntl = NewControl(	GetDialogWindow(ToolsDlog),
 								&itemRect,
 								"\p.",
 								true,
@@ -509,10 +509,10 @@ void CreateToolsDlog(void)
 								512,
 								0);*/
 
-	GetDialogItemAsControl( ToolsDlog, 6, &ForCntl);
-	SetControlAction( ForCntl, ForeUPP );
-/*	GetDialogItem( ToolsDlog , 6, &itemType, &itemHandle, &itemRect);
-	ForCntl = NewControl( 	GetDialogWindow( ToolsDlog),
+	GetDialogItemAsControl(ToolsDlog, 6, &ForCntl);
+	SetControlAction(ForCntl, ForeUPP );
+/*	GetDialogItem(ToolsDlog , 6, &itemType, &itemHandle, &itemRect);
+	ForCntl = NewControl(	GetDialogWindow(ToolsDlog),
 								&itemRect,
 								"\p.",
 								true,
@@ -522,9 +522,9 @@ void CreateToolsDlog(void)
 								512,
 								0);*/
 
-	GetDialogItemAsControl( ToolsDlog, 7, &JumpNextCntl);
-/*	GetDialogItem( ToolsDlog , 7, &itemType, &itemHandle, &itemRect);
-	JumpNextCntl = NewControl( 	GetDialogWindow( ToolsDlog),
+	GetDialogItemAsControl(ToolsDlog, 7, &JumpNextCntl);
+/*	GetDialogItem(ToolsDlog , 7, &itemType, &itemHandle, &itemRect);
+	JumpNextCntl = NewControl(	GetDialogWindow(ToolsDlog),
 								&itemRect,
 								"\p.",
 								true,
@@ -534,18 +534,18 @@ void CreateToolsDlog(void)
 								512,
 								0);*/
 								
-	HiliteControl( playCntl, 0);
-	HiliteControl( stopCntl, kControlButtonPart);
+	HiliteControl(playCntl, 0);
+	HiliteControl(stopCntl, kControlButtonPart);
 	
 	TextFont(4);	TextSize(9);
 	
 	if (DragManagerUse)
 	{
-		MyTrackingToolsUPP = NewDragTrackingHandlerUPP( MyTrackingTools);
-		MyReceiveToolsUPP = NewDragReceiveHandlerUPP( MyReceiveTools);
+		MyTrackingToolsUPP = NewDragTrackingHandlerUPP(MyTrackingTools);
+		MyReceiveToolsUPP = NewDragReceiveHandlerUPP(MyReceiveTools);
 		
-		InstallTrackingHandler( (DragTrackingHandlerUPP) MyTrackingToolsUPP, GetDialogWindow( ToolsDlog), (void *) NULL);
-		InstallReceiveHandler( (DragReceiveHandlerUPP) MyReceiveToolsUPP, GetDialogWindow( ToolsDlog), (void *) NULL);
+		InstallTrackingHandler((DragTrackingHandlerUPP) MyTrackingToolsUPP, GetDialogWindow(ToolsDlog), (void *) NULL);
+		InstallReceiveHandler((DragReceiveHandlerUPP) MyReceiveToolsUPP, GetDialogWindow(ToolsDlog), (void *) NULL);
 	}
 	
 	for (i = 0; i < 256; i++)
@@ -553,14 +553,14 @@ void CreateToolsDlog(void)
 		TimeScanPtr[ i] = NULL;
 	}
 
-	SetItemMark( ViewsMenu, mTools, checkMark);
+	SetItemMark(ViewsMenu, mTools, checkMark);
 }
 
 void CloseToolsWindow(void)
 {
-	HideWindow( GetDialogWindow( ToolsDlog));
+	HideWindow(GetDialogWindow(ToolsDlog));
 
-	SetItemMark( ViewsMenu, mTools, noMark);
+	SetItemMark(ViewsMenu, mTools, noMark);
 }
 
 extern 	EventRecord			theEvent;
@@ -570,11 +570,11 @@ void DoRecord()
 {
 	PianoRecording = !PianoRecording;
 	
-	if (PianoRecording) HiliteControl( RecordCntl, kControlButtonPart);
-	else HiliteControl( RecordCntl, 0);
+	if (PianoRecording) HiliteControl(RecordCntl, kControlButtonPart);
+	else HiliteControl(RecordCntl, 0);
 }
 
-void DoRecule( void)
+void DoRecule(void)
 {
 	if(MADDriver-> PartitionReader != oldPartition2)
 	{
@@ -603,8 +603,8 @@ void DoPause(void)
 	MusicPlayActive = false;
 	
 	MADDriver->Reading = false;
-	MADPurgeTrack( MADDriver);
-	MADCleanDriver( MADDriver);	
+	MADPurgeTrack(MADDriver);
+	MADCleanDriver(MADDriver);	
 //	PurgeVSTEffects();
 	
 	if (thePrefs.GoToStop)
@@ -614,8 +614,8 @@ void DoPause(void)
 		MADDriver->PL = RememberPL;
 	}
 	
-	HiliteControl( playCntl, 0);
-	HiliteControl( stopCntl, kControlButtonPart);
+	HiliteControl(playCntl, 0);
+	HiliteControl(stopCntl, kControlButtonPart);
 	
 	if (MIDIHardwareAlreadyOpen)
 	{
@@ -625,10 +625,10 @@ void DoPause(void)
 			OMSAllNotesOff();
 #endif
 		}
-		AllNoteOff( MADDriver);
+		AllNoteOff(MADDriver);
 	}
 	
-	QTDoAction( false);
+	QTDoAction(false);
 }
 
 void DoStop(void)
@@ -649,13 +649,13 @@ short	newPL, newPartitionReader = 0;
 	newPL++;
 	if (newPL >= curMusic->header->numPointers) newPL--;
 	
-	MADPurgeTrack( MADDriver);
+	MADPurgeTrack(MADDriver);
 
 	MADDriver->PL = newPL;
 	MADDriver->Pat = curMusic->header->oPointers[ MADDriver->PL];
 	MADDriver->PartitionReader = newPartitionReader;
 
-	MADCheckSpeed( curMusic, MADDriver);
+	MADCheckSpeed(curMusic, MADDriver);
 }
 
 void DoSearchDown(void)
@@ -666,19 +666,19 @@ short	newPL, newPartitionReader = 0;
 	newPL--;
 	if (newPL <= 0) newPL = 0;
 	
-	MADPurgeTrack( MADDriver);
+	MADPurgeTrack(MADDriver);
 
 	MADDriver->PL = newPL;
 	MADDriver->Pat = curMusic->header->oPointers[ MADDriver->PL];
 	MADDriver->PartitionReader = newPartitionReader;
 
-	MADCheckSpeed( curMusic, MADDriver);
+	MADCheckSpeed(curMusic, MADDriver);
 }
 
 extern	RGBColor	theColor;
 extern	short			theDepth;
 
-void SetCurrentMOD( Str255 theMODName)
+void SetCurrentMOD(Str255 theMODName)
 {
 	Rect   		itemRect;   			/* Temporary rectangle */
  	GrafPtr		SavePort;
@@ -686,24 +686,24 @@ void SetCurrentMOD( Str255 theMODName)
  	Handle		itemHandle;
  	Str255		aStr, aStr2;
  
- 	GetPort( &SavePort);
- 	SetPortDialogPort( ToolsDlog);
+ 	GetPort(&SavePort);
+ 	SetPortDialogPort(ToolsDlog);
  	
- 	TextFont( 4);	TextSize( 9);
+ 	TextFont(4);	TextSize(9);
  	
- //	ForeColor( blackColor);
-//	RGBBackColor( &theColor);
+ //	ForeColor(blackColor);
+//	RGBBackColor(&theColor);
  	
- 	pStrcpy( aStr, theMODName);
- 	pStrcat( aStr, "\p - ");
- 	NumToString( curMusic->header->numChn, aStr2);
- 	pStrcat( aStr, aStr2);
+ 	pStrcpy(aStr, theMODName);
+ 	pStrcat(aStr, "\p - ");
+ 	NumToString(curMusic->header->numChn, aStr2);
+ 	pStrcat(aStr, aStr2);
  	
- 	GetDialogItem( ToolsDlog , 1, &itemType, &itemHandle, &itemRect);
- 	TETextBox( aStr + 1, aStr[ 0], &itemRect, teJustCenter);
+ 	GetDialogItem(ToolsDlog , 1, &itemType, &itemHandle, &itemRect);
+ 	TETextBox(aStr + 1, aStr[ 0], &itemRect, teJustCenter);
 	
- //	RGBBackColor( &theColor);
-//	ForeColor( blackColor);
+ //	RGBBackColor(&theColor);
+//	ForeColor(blackColor);
 	
 	SetPort(SavePort);
 }
@@ -719,14 +719,14 @@ void DoPlay(void)
 {
 	GrafPtr		savePort;
 	
-	GetPort( &savePort);
-	SetPortDialogPort( ToolsDlog);
+	GetPort(&savePort);
+	SetPortDialogPort(ToolsDlog);
 	
-	HiliteControl( stopCntl, 0);
-	HiliteControl( playCntl, kControlButtonPart);
+	HiliteControl(stopCntl, 0);
+	HiliteControl(playCntl, kControlButtonPart);
 	
 	ScanTime();
-	MADCheckSpeed( curMusic, MADDriver);
+	MADCheckSpeed(curMusic, MADDriver);
 	
 	if (MusicPlayActive == true) return;
 	MusicPlayActive = true;
@@ -736,14 +736,14 @@ void DoPlay(void)
 	RememberPL 			= MADDriver->PL;
 
 	MADDriver->Reading = true;
-	MADPurgeTrack( MADDriver);
+	MADPurgeTrack(MADDriver);
 	
-	SetPort( savePort);
+	SetPort(savePort);
 }
 
 static Boolean IsPlay;
 
-pascal void myBackAction( ControlHandle theCntl, short ctlPart)
+pascal void myBackAction(ControlHandle theCntl, short ctlPart)
 {
 	if (ctlPart == kControlButtonPart)
 	{
@@ -754,13 +754,13 @@ pascal void myBackAction( ControlHandle theCntl, short ctlPart)
 
 	DoGlobalNull();
 	
-	WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+	WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 }
 
 static	short		doubleSpeed;
 static	Boolean		alreadyReady;
 
-pascal void myForeAction( ControlHandle theCntl, short ctlPart)
+pascal void myForeAction(ControlHandle theCntl, short ctlPart)
 {
 	if (ctlPart == kControlButtonPart)
 	{
@@ -791,7 +791,7 @@ pascal void myForeAction( ControlHandle theCntl, short ctlPart)
 
 	DoGlobalNull();
 	
-	WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+	WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 }
 
 void ScanTime()
@@ -813,9 +813,9 @@ void ScanTime()
 	
 	for (i = 0; i < curMusic->header->numPointers; i++)
 	{
-		if (TimeScanPtr[ i] != NULL) DisposePtr( (Ptr) TimeScanPtr[ i]);
+		if (TimeScanPtr[ i] != NULL) DisposePtr((Ptr) TimeScanPtr[ i]);
 		
-		TimeScanPtr[ i] = (long*) NewPtr( curMusic->partition[ curMusic->header->oPointers[ i]]->header.size * sizeof( long) );
+		TimeScanPtr[ i] = (long*) NewPtr(curMusic->partition[ curMusic->header->oPointers[ i]]->header.size * sizeof(long) );
 		
 		for (x = 0; x < curMusic->partition[ curMusic->header->oPointers[ i]]->header.size; x++)
 		{
@@ -825,7 +825,7 @@ void ScanTime()
 			
 			for (y = 0; y <  curMusic->header->numChn; y++)
 			{
-				aCmd = GetMADCommand( x, y, curMusic->partition[ curMusic->header->oPointers[ i]]);
+				aCmd = GetMADCommand(x, y, curMusic->partition[ curMusic->header->oPointers[ i]]);
 				if (aCmd == NULL) 
 				{
 					MyDebugStr(__LINE__, __FILE__, "Could not find the selected command!");
@@ -875,24 +875,24 @@ void ScanTime()
 
 		maxTime = timeResult;
 		
-		SecondsToDate( timeResult / 60, &dtrp);
+		SecondsToDate(timeResult / 60, &dtrp);
 		
-		NTStr( 2, dtrp.minute, (Ptr) aStr);		MyC2PStr( (Ptr) aStr);
-		NTStr( 2, dtrp.second, (Ptr) bStr);		MyC2PStr( (Ptr) bStr);
-		pStrcat( aStr, "\p:");
-		pStrcat( aStr, bStr);
+		NTStr(2, dtrp.minute, (Ptr) aStr);		MyC2PStr((Ptr) aStr);
+		NTStr(2, dtrp.second, (Ptr) bStr);		MyC2PStr((Ptr) bStr);
+		pStrcat(aStr, "\p:");
+		pStrcat(aStr, bStr);
 		
-		SetDText( ToolsDlog, 9, aStr);
+		SetDText(ToolsDlog, 9, aStr);
 		
 
-	/*	SecondsToDate( curTimeResult, &dtrp);
+	/*	SecondsToDate(curTimeResult, &dtrp);
 		
-		NTStr( 2, dtrp.minute, (Ptr) aStr);		MyC2PStr( (Ptr) aStr);
-		NTStr( 2, dtrp.second, (Ptr) bStr);		MyC2PStr( (Ptr) bStr);
-		pStrcat( aStr, "\p:");
-		pStrcat( aStr, bStr);
+		NTStr(2, dtrp.minute, (Ptr) aStr);		MyC2PStr((Ptr) aStr);
+		NTStr(2, dtrp.second, (Ptr) bStr);		MyC2PStr((Ptr) bStr);
+		pStrcat(aStr, "\p:");
+		pStrcat(aStr, bStr);
 		
-		SetDText( ToolsDlog, 8, aStr);
+		SetDText(ToolsDlog, 8, aStr);
 	*/
 		/**/
 	}
@@ -914,7 +914,7 @@ void ScanTime()
 		{
 			for (y = curMusic->header->numChn-1; y >= 0 ; y--)
 			{
-				aCmd = GetMADCommand( x, y, curMusic->partition[ curMusic->header->oPointers[ i]]);
+				aCmd = GetMADCommand(x, y, curMusic->partition[ curMusic->header->oPointers[ i]]);
 				
 				if (aCmd->cmd == speedE)
 				{					
@@ -948,23 +948,23 @@ void ScanTime()
 	}
 }*/
 
-void DoChangeLoop( void)
+void DoChangeLoop(void)
 {
 	LoopCntlState = !LoopCntlState;
 	
 	if (LoopCntlState)
 	{
-		HiliteControl( LoopCntl, kControlButtonPart);
+		HiliteControl(LoopCntl, kControlButtonPart);
 		MADDriver->JumpToNextPattern = false;
 	}
 	else
 	{
-		HiliteControl( LoopCntl, 0);
+		HiliteControl(LoopCntl, 0);
 		MADDriver->JumpToNextPattern = true;
 	}
 }
 
-void DoItemPressTools( short whichItem, DialogPtr whichDialog)
+void DoItemPressTools(short whichItem, DialogPtr whichDialog)
 {
 	short				temp = 0,itemType, newPL, newPat, newPartitionReader;
 	Point				myPt;
@@ -974,13 +974,13 @@ void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 	GrafPtr				savePort;
 	Boolean				ReadingCopy;
 	
-	GetPort( &savePort);
-	SetPortDialogPort( ToolsDlog);
+	GetPort(&savePort);
+	SetPortDialogPort(ToolsDlog);
 	
-	switch( whichItem)
+	switch(whichItem)
 	{
 		case 2:
-			if (MyTrackControl( JumpBeforeCntl, theEvent.where, NULL))
+			if (MyTrackControl(JumpBeforeCntl, theEvent.where, NULL))
 			{
 				DoSearchDown();
 			}
@@ -993,28 +993,28 @@ void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 			break;
 			
 		case 44:
-			if (MyTrackControl( RecordCntl, theEvent.where, NULL))
+			if (MyTrackControl(RecordCntl, theEvent.where, NULL))
 			{
 				DoRecord();
 			}
 			break;
 			
 		case 46:
-			if (MyTrackControl( LoopCntl, theEvent.where, NULL))
+			if (MyTrackControl(LoopCntl, theEvent.where, NULL))
 			{
 				DoChangeLoop();
 			}
 			break;
 			
 		case 4:
-			if (MyTrackControl( stopCntl, theEvent.where, NULL))
+			if (MyTrackControl(stopCntl, theEvent.where, NULL))
 			{
 				DoPause();
 			}
 			break;
 			
 		case 5:
-			if (MyTrackControl( playCntl, theEvent.where, NULL))
+			if (MyTrackControl(playCntl, theEvent.where, NULL))
 			{
 				DoPlay();
 			}
@@ -1026,7 +1026,7 @@ void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 			alreadyReady = false;
 			
 			
-			MyTrackControl( ForCntl, theEvent.where, ForeUPP);
+			MyTrackControl(ForCntl, theEvent.where, ForeUPP);
 			
 			if (IsPlay)
 			{
@@ -1037,7 +1037,7 @@ void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 			break;
 			
 		case 7:
-			if (MyTrackControl( JumpNextCntl, theEvent.where, NULL))
+			if (MyTrackControl(JumpNextCntl, theEvent.where, NULL))
 			{
 				DoSearchUp();
 			}
@@ -1046,19 +1046,19 @@ void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 		case 10:
 			do
 			{
-				GetDialogItem( ToolsDlog , 10, &itemType, &itemHandle, &itemRect);
-				GetMouse( &myPt);
+				GetDialogItem(ToolsDlog , 10, &itemType, &itemHandle, &itemRect);
+				GetMouse(&myPt);
 				
 				DoGlobalNull();
 				
-				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+				WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 				
 				if (temp != myPt.h)
 				{
 					short i;
 					
 					if (myPt.h < itemRect.left) 		myPt.h = itemRect.left;
-					else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
+					else if (myPt.h > itemRect.right)	myPt.h = itemRect.right;
 					
 					temp = myPt.h;
 					itemRect.right = myPt.h;
@@ -1068,7 +1068,7 @@ void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 					
 					GetDialogItem (ToolsDlog, 10, &itemType, &itemHandle, &itemRect);
 					
-					MADSetMusicStatus( MADDriver, itemRect.left, itemRect.right, myPt.h);
+					MADSetMusicStatus(MADDriver, itemRect.left, itemRect.right, myPt.h);
 					
 					DrawTimeBar();
 				}
@@ -1076,6 +1076,6 @@ void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 			break;
 	}
 	
-	DoItemPressCmdDlog( whichItem, whichDialog);
+	DoItemPressCmdDlog(whichItem, whichDialog);
 	
 }

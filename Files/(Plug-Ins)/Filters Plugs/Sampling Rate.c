@@ -7,7 +7,7 @@
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
 
-static void AutoPosition( DialogPtr aDia)
+static void AutoPosition(DialogPtr aDia)
 {
 	Point		Position, mouse;
 	Rect		ViewRect, caRect;
@@ -15,30 +15,30 @@ static void AutoPosition( DialogPtr aDia)
 	GDHandle	aH;
 	BitMap		screenBits;
 	
-	GetMouse( &mouse);
-	LocalToGlobal( &mouse);
+	GetMouse(&mouse);
+	LocalToGlobal(&mouse);
 	
-	GetPortBounds( GetDialogPort( aDia), &caRect);
+	GetPortBounds(GetDialogPort(aDia), &caRect);
 	
 	XSize = (caRect.right - caRect.left);
 	YSize = (caRect.bottom - caRect.top);
 	
-	GetQDGlobalsScreenBits( &screenBits);
+	GetQDGlobalsScreenBits(&screenBits);
 	
-	SetRect( &ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
+	SetRect(&ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
 						screenBits.bounds.right - 8, screenBits.bounds.bottom - 8);
 	
 	aH = GetDeviceList();
 	do
 	{
-		aH = GetNextDevice( aH);
+		aH = GetNextDevice(aH);
 		if (aH != NULL)
 		{
-			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect(mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
-				SetRect( &ViewRect, ar.left + 8, ar.top + 43,
+				SetRect(&ViewRect, ar.left + 8, ar.top + 43,
 									ar.right - 8, ar.bottom - 8);
 			}
 		}
@@ -53,12 +53,12 @@ static void AutoPosition( DialogPtr aDia)
 	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
 	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
-	SetDialogDefaultItem( aDia, 1 );
-	SetDialogCancelItem( aDia, 2 );
+	SetDialogDefaultItem(aDia, 1 );
+	SetDialogCancelItem(aDia, 2 );
 
-	MoveWindow( GetDialogWindow( aDia), Position.h, Position.v, false);
+	MoveWindow(GetDialogWindow(aDia), Position.h, Position.v, false);
 
-	ShowWindow( GetDialogWindow( aDia));
+	ShowWindow(GetDialogWindow(aDia));
 }
 
 static void GetDText (DialogPtr dlog, short item, StringPtr str)
@@ -75,12 +75,12 @@ static void SetDText (DialogPtr dlog, short item, Str255 str)
 {
 	ControlHandle	control;
 
-	GetDialogItemAsControl( dlog, item, &control );
-	SetControlData( control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
-	DrawOneControl( control);
+	GetDialogItemAsControl(dlog, item, &control );
+	SetControlData(control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
+	DrawOneControl(control);
 }
 
-static Ptr ConvertSampleC4SPD( Ptr src, long srcSize, short amp, long srcC4SPD, long dstC4SPD, Boolean stereo)
+static Ptr ConvertSampleC4SPD(Ptr src, long srcSize, short amp, long srcC4SPD, long dstC4SPD, Boolean stereo)
 {
 	#define LRVAL	3L
 
@@ -95,13 +95,13 @@ static Ptr ConvertSampleC4SPD( Ptr src, long srcSize, short amp, long srcC4SPD, 
 	
 	newSize = (srcSize * dstC4SPD) / srcC4SPD;
 	
-	dst = NewPtr( newSize);
+	dst = NewPtr(newSize);
 	if (dst == NULL) return NULL;
 	
 	dst16 = (short*) dst;
 	dst8 = (char*) dst;
 		
-	switch( amp)
+	switch(amp)
 	{
 	case 8:
 		for (x = 0; x < newSize; x++)
@@ -191,23 +191,23 @@ static OSErr mainSampRate(	sData			*theData,
 	short			itemHit;
 	Str255			tStr;
 
-	myDia = GetNewDialog( 128, NULL, (WindowPtr) -1L);
-	SetPortDialogPort( myDia);
-	AutoPosition( myDia);
+	myDia = GetNewDialog(128, NULL, (WindowPtr) -1L);
+	SetPortDialogPort(myDia);
+	AutoPosition(myDia);
 	
 	/** Default values **/
-	NumToString( theData->c2spd, tStr);
-	SetDText( myDia, 4, tStr);
-	SetDText( myDia, 7, tStr);
+	NumToString(theData->c2spd, tStr);
+	SetDText(myDia, 4, tStr);
+	SetDText(myDia, 7, tStr);
 	
-	SelectDialogItemText( myDia, 7, 0, 10000);
+	SelectDialogItemText(myDia, 7, 0, 10000);
 	/********************/
 	
 	ReGo:
 	
 	do
 	{
-		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+		ModalDialog(thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 	}
 	while (itemHit != 1 && itemHit != 2);
 	
@@ -216,11 +216,11 @@ static OSErr mainSampRate(	sData			*theData,
 		long	newFreq;
 		Ptr		newPtr;
 		
-		GetDText( myDia, 7, tStr);		StringToNum( tStr, &newFreq);
+		GetDText(myDia, 7, tStr);		StringToNum(tStr, &newFreq);
 		if (newFreq < 2000L || newFreq > 50000)
 		{
-			SysBeep( 1);
-			SelectDialogItemText( myDia, 7, 0, 10000);
+			SysBeep(1);
+			SelectDialogItemText(myDia, 7, 0, 10000);
 			goto ReGo;
 		}
 		
@@ -236,9 +236,9 @@ static OSErr mainSampRate(	sData			*theData,
 		
 		if (newPtr != NULL)
 		{
-			DisposePtr( theData->data);
+			DisposePtr(theData->data);
 			theData->data		= newPtr;
-			theData->size		= GetPtrSize( newPtr);
+			theData->size		= GetPtrSize(newPtr);
 			theData->c2spd	= newFreq;
 		}
 		
@@ -249,7 +249,7 @@ static OSErr mainSampRate(	sData			*theData,
 		if (theData->loopBeg + theData->loopSize > theData->size) theData->loopSize = theData->size - theData->loopBeg;
 	}
 	
-	DisposeDialog( myDia);
+	DisposeDialog(myDia);
 
 	return noErr;
 }

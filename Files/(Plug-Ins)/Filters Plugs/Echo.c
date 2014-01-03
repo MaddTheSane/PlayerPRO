@@ -22,12 +22,12 @@ static void SetDText (DialogPtr dlog, short item, Str255 str)
 {
 	ControlHandle	control;
 
-	GetDialogItemAsControl( dlog, item, &control );
-	SetControlData( control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
-	DrawOneControl( control);
+	GetDialogItemAsControl(dlog, item, &control );
+	SetControlData(control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
+	DrawOneControl(control);
 }
 
-static void AutoPosition( DialogPtr aDia)
+static void AutoPosition(DialogPtr aDia)
 {
 	Point		Position, mouse;
 	Rect		ViewRect, caRect;
@@ -35,30 +35,30 @@ static void AutoPosition( DialogPtr aDia)
 	GDHandle	aH;
 	BitMap		screenBits;
 	
-	GetMouse( &mouse);
-	LocalToGlobal( &mouse);
+	GetMouse(&mouse);
+	LocalToGlobal(&mouse);
 	
-	GetPortBounds( GetDialogPort( aDia), &caRect);
+	GetPortBounds(GetDialogPort(aDia), &caRect);
 	
 	XSize = (caRect.right - caRect.left);
 	YSize = (caRect.bottom - caRect.top);
 	
-	GetQDGlobalsScreenBits( &screenBits);
+	GetQDGlobalsScreenBits(&screenBits);
 	
-	SetRect( &ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
+	SetRect(&ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
 						screenBits.bounds.right - 8, screenBits.bounds.bottom - 8);
 	
 	aH = GetDeviceList();
 	do
 	{
-		aH = GetNextDevice( aH);
+		aH = GetNextDevice(aH);
 		if (aH != NULL)
 		{
-			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect(mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
-				SetRect( &ViewRect, ar.left + 8, ar.top + 43,
+				SetRect(&ViewRect, ar.left + 8, ar.top + 43,
 									ar.right - 8, ar.bottom - 8);
 			}
 		}
@@ -73,12 +73,12 @@ static void AutoPosition( DialogPtr aDia)
 	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
 	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
-	SetDialogDefaultItem( aDia, 1 );
-	SetDialogCancelItem( aDia, 2 );
+	SetDialogDefaultItem(aDia, 1 );
+	SetDialogCancelItem(aDia, 2 );
 
-	MoveWindow( GetDialogWindow( aDia), Position.h, Position.v, false);
+	MoveWindow(GetDialogWindow(aDia), Position.h, Position.v, false);
 
-	ShowWindow( GetDialogWindow( aDia));
+	ShowWindow(GetDialogWindow(aDia));
 }
 
 static void raiseRect (Rect theRect)
@@ -102,10 +102,10 @@ static pascal void xRectProc (DialogPtr	theWindow,
 	Rect	iRect;
 
 	GetDialogItem(theWindow,theItem,&iType,&iHandle,&iRect);
-	raiseRect( iRect);
+	raiseRect(iRect);
 }
 
-static Boolean getParams ( short dlgID, long *p1, long *p2, PPInfoPlug *thePPInfoPlug)
+static Boolean getParams (short dlgID, long *p1, long *p2, PPInfoPlug *thePPInfoPlug)
 {
 	DialogPtr	theDialog;
 	Boolean		theResult = false;
@@ -117,23 +117,23 @@ static Boolean getParams ( short dlgID, long *p1, long *p2, PPInfoPlug *thePPInf
 		Rect	iRect;
 		Str255	textStr;
 		
-		SetPortDialogPort( theDialog);
-		AutoPosition( theDialog);
+		SetPortDialogPort(theDialog);
+		AutoPosition(theDialog);
 		GetDialogItem(theDialog,enclosure,&iType,&iHandle,&iRect);
 		SetDialogItem(theDialog,enclosure,iType,(Handle) NewUserItemUPP(xRectProc),&iRect);
 		
 		NumToString(*p1,textStr);
-		SetDText( theDialog, tdelay, textStr);
+		SetDText(theDialog, tdelay, textStr);
 		
 		NumToString(*p2,textStr);
-		SetDText( theDialog, tstrength, textStr);
+		SetDText(theDialog, tstrength, textStr);
 		SelectDialogItemText(theDialog,tdelay,0,32767);
 
 	//	SetDialogDefaultItem(theDialog,1);
 
 		do
 		{
-			ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+			ModalDialog(thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 		}
 		while ((itemHit != ok) && (itemHit != cancel));
 		
@@ -177,7 +177,7 @@ static OSErr mainEcho(	sData			*theData,
 
 		pDelay = (pDelay * timeConvert) / 1000;	//convert ms to samples
 
-		switch( theData->amp)
+		switch(theData->amp)
 		{
 			case 8:
 			{

@@ -20,10 +20,10 @@
 
 #define WINDOWHIGH 17
 
-	void AdjustZoomClassic2( Rect	*vRect);
-	void AdjustZoomPiano2( Rect *vRect);
-	void AdjustZoomOscillo2( Rect	*vRect);
-	void DoHelpStaff( short **items, short *lsize);
+	void AdjustZoomClassic2(Rect	*vRect);
+	void AdjustZoomPiano2(Rect *vRect);
+	void AdjustZoomOscillo2(Rect	*vRect);
+	void DoHelpStaff(short **items, short *lsize);
 	
 void DoAHelpInfo(void)
 {
@@ -42,16 +42,16 @@ void DoAHelpInfo(void)
 	
 	if (!HelpAvalaible) return;
 	if (AHelpDlog == NULL) return;
-	if (MacIsWindowVisible( GetDialogWindow( AHelpDlog)) == false) return;
+	if (MacIsWindowVisible(GetDialogWindow(AHelpDlog)) == false) return;
 	
-	GetFrontProcess( &PSN);
+	GetFrontProcess(&PSN);
 	if(PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
 	   PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN) return;
 	
-	GetPort( &savePort);
+	GetPort(&savePort);
 	
-	GetMouse( &pt);
-	LocalToGlobal( &pt);
+	GetMouse(&pt);
+	LocalToGlobal(&pt);
 	if (pt.h == savept.h && pt.v == savept.v) return;
 	
 	savept = pt;
@@ -62,72 +62,72 @@ void DoAHelpInfo(void)
 	{
 		strucRgn = NewRgn();
 		
-		/*	GetWindowFeatures( aWin, &outFeatures);
+		/*	GetWindowFeatures(aWin, &outFeatures);
 		 if (outFeatures & kWindowCanGetWindowRegion) aWin = aWin;
 		 else Debugger();*/
 		
-		GetWindowRegion( aWin, kWindowStructureRgn, strucRgn);
+		GetWindowRegion(aWin, kWindowStructureRgn, strucRgn);
 		
-		if (PtInRgn( pt, strucRgn))
+		if (PtInRgn(pt, strucRgn))
 		{
-			wref = GetWRefCon( aWin);
+			wref = GetWRefCon(aWin);
 			
-			switch( wref)
+			switch(wref)
 			{
 				case RefMozart:
-					DoHelpMozart( &items, &lsize);
+					DoHelpMozart(&items, &lsize);
 					break;
 				
 				case RefPartition:
-					DoHelpEditor( &items, &lsize);
+					DoHelpEditor(&items, &lsize);
 					break;
 				
 				case RefPlayer:
-					DoHelpOscillo( &items, &lsize);
+					DoHelpOscillo(&items, &lsize);
 					break;
 				
 				case RefSpectrum:
-					DoHelpSpectrum( &items, &lsize);
+					DoHelpSpectrum(&items, &lsize);
 					break;
 				
 				case RefInstruList:
-					DoHelpInstruList( &items, &lsize);
+					DoHelpInstruList(&items, &lsize);
 					break;
 				
 				case RefMODList:
-					DoHelpMODList( &items, &lsize);
+					DoHelpMODList(&items, &lsize);
 					break;
 				
 				case RefTools:
-					DoHelpTools( &items, &lsize);
+					DoHelpTools(&items, &lsize);
 					break;
 				
 				case RefPiano:
-					DoHelpPiano( &items, &lsize);
+					DoHelpPiano(&items, &lsize);
 					break;
 				
 				case RefSample:
-					DoHelpSamples( &items, &lsize);
+					DoHelpSamples(&items, &lsize);
 					break;
 				
 				case RefClassic:
-					DoHelpClassic( &items, &lsize);
+					DoHelpClassic(&items, &lsize);
 					break;
 				
 				case RefParti:
-					DoHelpPartition( &items, &lsize);
+					DoHelpPartition(&items, &lsize);
 					break;
 				
 				case RefAdaptators:
-					DoHelpAdap( &items, &lsize);
+					DoHelpAdap(&items, &lsize);
 					break;
 				
 				case RefPatList:
-					DoHelpPatList( &items, &lsize);
+					DoHelpPatList(&items, &lsize);
 					break;
 				
 				case RefStaff:
-					DoHelpStaff( &items, &lsize);
+					DoHelpStaff(&items, &lsize);
 					break;
 				
 				default:
@@ -138,55 +138,55 @@ void DoAHelpInfo(void)
 			
 			if (lsize > 0)
 			{
-				SetPortWindowPort( aWin);
+				SetPortWindowPort(aWin);
 				
-				GetMouse( &ptLocal);
+				GetMouse(&ptLocal);
 				for (i = 0; i < lsize; i++)
 				{
-					GetDialogItem( GetDialogFromWindow( aWin), items[ i], &iType, &iHandle, &iRect);
-					if (PtInRect( ptLocal, &iRect))
+					GetDialogItem(GetDialogFromWindow(aWin), items[ i], &iType, &iHandle, &iRect);
+					if (PtInRect(ptLocal, &iRect))
 					{
 						if (lastitem != i || lastwref != wref)
 						{
 							lastitem = i;
 							lastwref = wref;
 							
-							GetIndString( aStr, wref*200, i + 1);
+							GetIndString(aStr, wref*200, i + 1);
 							
-							SetPortDialogPort( AHelpDlog);
-							TextFont( kFontIDGeneva);
-							TextSize( 9);
-							TextFace( bold);
-							SetDText( AHelpDlog, 1, aStr);
-							SetPortWindowPort( aWin);
+							SetPortDialogPort(AHelpDlog);
+							TextFont(kFontIDGeneva);
+							TextSize(9);
+							TextFace(bold);
+							SetDText(AHelpDlog, 1, aStr);
+							SetPortWindowPort(aWin);
 						}
 						
-						SetPort( savePort);
+						SetPort(savePort);
 						return;
 					}
 				}
 				
-				//	UseResFile( iRefNum);
+				//	UseResFile(iRefNum);
 			}
 			/////
 			
-			SetDText( AHelpDlog, 1, "\p");
+			SetDText(AHelpDlog, 1, "\p");
 			wref = -1;		lastitem = -1;
-			SetPort( savePort);
+			SetPort(savePort);
 			return;
 		}
 		
-		DisposeRgn( strucRgn);
+		DisposeRgn(strucRgn);
 		
-		aWin = MacGetNextWindow( aWin);
+		aWin = MacGetNextWindow(aWin);
 	}
 	
-	SetDText( AHelpDlog, 1, "\p");
+	SetDText(AHelpDlog, 1, "\p");
 	wref = -1;		lastitem = -1;
-	SetPort( savePort);
+	SetPort(savePort);
 }
 
-void FrameRectRelief2( Rect *theRect)
+void FrameRectRelief2(Rect *theRect)
 {
 	RGBColor	theColor;
 	Rect		aCopy;
@@ -200,30 +200,30 @@ void FrameRectRelief2( Rect *theRect)
 		aCopy.right = theRect->right;
 		aCopy.top = theRect->top ;
 		aCopy.bottom = theRect->bottom;
-		ForeColor( blackColor);
-		FrameRect( &aCopy);
+		ForeColor(blackColor);
+		FrameRect(&aCopy);
 		return;
 	}
-	MoveTo( theRect->left, theRect->top);
+	MoveTo(theRect->left, theRect->top);
 	
 	theColor.red = GrisClair;	theColor.blue = GrisClair;	theColor.green = GrisClair;
-	RGBForeColor( &theColor);
-	LineTo( theRect->right-1, theRect->top);
+	RGBForeColor(&theColor);
+	LineTo(theRect->right-1, theRect->top);
 	
 	theColor.red = GrisFonce;	theColor.blue = GrisFonce;	theColor.green = GrisFonce;
-	RGBForeColor( &theColor);
-	LineTo( theRect->right-1, theRect->bottom-1);
+	RGBForeColor(&theColor);
+	LineTo(theRect->right-1, theRect->bottom-1);
 	
 	theColor.red = GrisFonce;	theColor.blue = GrisFonce;	theColor.green = GrisFonce;
-	RGBForeColor( &theColor);
-	LineTo( theRect->left, theRect->bottom-1);
+	RGBForeColor(&theColor);
+	LineTo(theRect->left, theRect->bottom-1);
 	
 	theColor.red = GrisClair;	theColor.blue = GrisClair;	theColor.green = GrisClair;
-	RGBForeColor( &theColor);
-	LineTo( theRect->left, theRect->top);
+	RGBForeColor(&theColor);
+	LineTo(theRect->left, theRect->top);
 	
 	
-	ForeColor( blackColor);
+	ForeColor(blackColor);
 }
 
 void  UpdateAHelpWindow(DialogPtr GetSelection)
@@ -234,32 +234,32 @@ void  UpdateAHelpWindow(DialogPtr GetSelection)
 	Rect		caRect;
 	RgnHandle	visibleRegion;
 	
-	GetPort( &SavePort);
-	SetPortDialogPort( AHelpDlog);
+	GetPort(&SavePort);
+	SetPortDialogPort(AHelpDlog);
 	
-	BeginUpdate( GetDialogWindow( AHelpDlog));
+	BeginUpdate(GetDialogWindow(AHelpDlog));
 	
-	TextFont( kFontIDGeneva);	TextSize( 9);	TextFace( bold);
+	TextFont(kFontIDGeneva);	TextSize(9);	TextFace(bold);
 	
 	visibleRegion = NewRgn();
 	
-	GetPortVisibleRegion( GetDialogPort( AHelpDlog), visibleRegion);
+	GetPortVisibleRegion(GetDialogPort(AHelpDlog), visibleRegion);
 	
-	UpdateDialog( AHelpDlog, visibleRegion);
+	UpdateDialog(AHelpDlog, visibleRegion);
 	
-	DisposeRgn( visibleRegion);
+	DisposeRgn(visibleRegion);
 	
-	GetPortBounds( GetDialogPort( AHelpDlog), &caRect);
+	GetPortBounds(GetDialogPort(AHelpDlog), &caRect);
 	
 	itemRect = caRect;
-	FrameRectRelief2( &itemRect);
-	EndUpdate( GetDialogWindow( AHelpDlog));
+	FrameRectRelief2(&itemRect);
+	EndUpdate(GetDialogWindow(AHelpDlog));
 	
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
 #if 0
-void MyFindControl( Point localPt, WindowPtr wind, ControlHandle *myCtl)
+void MyFindControl(Point localPt, WindowPtr wind, ControlHandle *myCtl)
 {
 	//WindowPeek		wPeek = (WindowPeek) wind;
 	//ControlHandle	aCtl = (ControlHandle) wPeek->controlList;
@@ -268,7 +268,7 @@ void MyFindControl( Point localPt, WindowPtr wind, ControlHandle *myCtl)
 	
 	while (aCtl != NULL)
 	{
-		if (PtInRect( localPt, &(*aCtl)->contrlRect))
+		if (PtInRect(localPt, &(*aCtl)->contrlRect))
 		{
 			if ((*aCtl)->contrlRect.right - (*aCtl)->contrlRect.left == 2)
 			{
@@ -282,7 +282,7 @@ void MyFindControl( Point localPt, WindowPtr wind, ControlHandle *myCtl)
 }
 #endif
 
-void AdjustZoomIn( WindowPtr	wind)
+void AdjustZoomIn(WindowPtr	wind)
 {
 	//WindowPeek		wPeek;
 	//WStateData		*wspd;
@@ -297,26 +297,26 @@ void AdjustZoomIn( WindowPtr	wind)
 	
 #define BORD	4
 	
-	GetPort( &savedPtr);
-	SetPortWindowPort( wind);
+	GetPort(&savedPtr);
+	SetPortWindowPort(wind);
 	
 	localPt.v = localPt.h = 1;
-	//FindControl( localPt, wind, &aCtl);
+	//FindControl(localPt, wind, &aCtl);
 	
 	mouse = theEvent.where;
 	
 	aH = GetDeviceList();
 	ar = (*(*aH)->gdPMap)->bounds;
-	SetRect( &ViewRect, ar.left + BORD, ar.top + BORD + 7, ar.right - BORD, ar.bottom - BORD);
+	SetRect(&ViewRect, ar.left + BORD, ar.top + BORD + 7, ar.right - BORD, ar.bottom - BORD);
 	if (AHelpDlog != NULL) ViewRect.top += WINDOWHIGH + 33;
 	else ViewRect.top += 35;
 	
 	do
 	{
-		aH = GetNextDevice( aH);
+		aH = GetNextDevice(aH);
 		if (aH != NULL)
 		{
-			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect(mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				ar = (*(*aH)->gdPMap)->bounds;
 				
@@ -330,11 +330,11 @@ void AdjustZoomIn( WindowPtr	wind)
 	//wPeek = (WindowPeek) wind;
 	//wspd = (WStateData*) *(wPeek->dataHandle);
 	
-	GetWindowStandardState( wind, &stdRect);
+	GetWindowStandardState(wind, &stdRect);
 	
 	/*	if (aCtl != NULL)
 	 {
-	 long lRefCon = GetControlReference( aCtl);
+	 long lRefCon = GetControlReference(aCtl);
 	 
 	 h = lRefCon>>16L;
 	 v = lRefCon & 0x0000FFFF;
@@ -354,31 +354,31 @@ void AdjustZoomIn( WindowPtr	wind)
 	stdRect.bottom = stdRect.top + v;
 	stdRect.right = stdRect.left + h;
 	
-	SetWindowStandardState( wind, &stdRect);
+	SetWindowStandardState(wind, &stdRect);
 	
-	switch( GetWRefCon( wind))
+	switch(GetWRefCon(wind))
 	{
 		case RefClassic:
-			AdjustZoomClassic2( &ViewRect);
+			AdjustZoomClassic2(&ViewRect);
 			break;
 		
 		case RefPiano:
-			AdjustZoomPiano2( &ViewRect);
+			AdjustZoomPiano2(&ViewRect);
 			break;
 		
 		case RefPlayer:
-			AdjustZoomOscillo2( &ViewRect);
+			AdjustZoomOscillo2(&ViewRect);
 			break;
 	}
 	
-	GetWindowStandardState( wind, &stdRect);
+	GetWindowStandardState(wind, &stdRect);
 	
 	if (stdRect.bottom > ViewRect.bottom) stdRect.bottom = ViewRect.bottom;
 	if (stdRect.right > ViewRect.right) stdRect.right = ViewRect.right;
 	
-	SetWindowStandardState( wind, &stdRect);
+	SetWindowStandardState(wind, &stdRect);
 	
-	SetPort( savedPtr);
+	SetPort(savedPtr);
 }
 
 void InitWindowBar(void)
@@ -389,23 +389,23 @@ void InitWindowBar(void)
 	oldMBarHeight = GetMBarHeight();
 	MBarHeightInt = oldMBarHeight + WINDOWHIGH;
 	
-	GetQDGlobalsScreenBits( &screenBits);
+	GetQDGlobalsScreenBits(&screenBits);
 	
 	SetRect(&mBarRect, screenBits.bounds.left, oldMBarHeight,
 			screenBits.bounds.right, MBarHeightInt);
 	
 	mBarRgn = NewRgn();
-	RectRgn( mBarRgn, &mBarRect);
+	RectRgn(mBarRgn, &mBarRect);
 }
 
 void AddWindowBar(void)
 {
-	DiffRgn( GetGrayRgn(), mBarRgn, GetGrayRgn());
+	DiffRgn(GetGrayRgn(), mBarRgn, GetGrayRgn());
 }
 
 void RemoveWindowBar(void)
 {
-	UnionRgn( GetGrayRgn(), mBarRgn, GetGrayRgn());
+	UnionRgn(GetGrayRgn(), mBarRgn, GetGrayRgn());
 }
 
 void CreateAHelpWindow(void)
@@ -421,42 +421,42 @@ void CreateAHelpWindow(void)
 	Rect		caRect;
 	
 	
-	SetItemMark( HelpMenu, 1, checkMark);
+	SetItemMark(HelpMenu, 1, checkMark);
 	
 	if (!HelpAvalaible) return;
 	if (AHelpDlog != NULL) return;
 	
-	GetPort( &savePort);
+	GetPort(&savePort);
 	
-	AHelpDlog = GetNewDialog( 173, NULL, GetDialogWindow( ToolsDlog));
-	SetPortDialogPort( AHelpDlog);
+	AHelpDlog = GetNewDialog(173, NULL, GetDialogWindow(ToolsDlog));
+	SetPortDialogPort(AHelpDlog);
 	
-	GetPortBounds( GetDialogPort( AHelpDlog), &caRect);
+	GetPortBounds(GetDialogPort(AHelpDlog), &caRect);
 	
-	MySizeWindow( AHelpDlog, (**GetMainDevice()).gdRect.right, caRect.bottom, true);
+	MySizeWindow(AHelpDlog, (**GetMainDevice()).gdRect.right, caRect.bottom, true);
 	
-	TextFont( kFontIDGeneva);	TextSize( 9);	TextFace( bold);
+	TextFont(kFontIDGeneva);	TextSize(9);	TextFace(bold);
 	
-	ShowWindow( GetDialogWindow( AHelpDlog));
-	SelectWindow2( GetDialogWindow( AHelpDlog));
-	HiliteWindow( GetDialogWindow( AHelpDlog), true);
+	ShowWindow(GetDialogWindow(AHelpDlog));
+	SelectWindow2(GetDialogWindow(AHelpDlog));
+	HiliteWindow(GetDialogWindow(AHelpDlog), true);
 	
-	//SetMenuItemText( HelpMenu, 1, "\pHide Online Help");
+	//SetMenuItemText(HelpMenu, 1, "\pHide Online Help");
 	
 	InitWindowBar();
 	
-	SetPort( savePort);
+	SetPort(savePort);
 }
 
 void CloseAHelp(void)
 {
 	if (AHelpDlog != NULL)
 	{
-		//SetMenuItemText( HelpMenu, 1, "\pShow Online Help");
+		//SetMenuItemText(HelpMenu, 1, "\pShow Online Help");
 		RemoveWindowBar();
-		DisposeDialog( AHelpDlog);
+		DisposeDialog(AHelpDlog);
 	}
 	AHelpDlog = NULL;
 	
-	SetItemMark( HelpMenu, 1, noMark);
+	SetItemMark(HelpMenu, 1, noMark);
 }

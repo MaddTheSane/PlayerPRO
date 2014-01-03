@@ -9,22 +9,22 @@
 	
 			DialogPtr				CubeDlog;
 
-void DoInternetMenu( short theItem);
+void DoInternetMenu(short theItem);
 
 void  UpdateCubeWindow(DialogPtr GetSelection)
 {
 	GrafPtr		SavePort;
 	
-	GetPort( &SavePort);
-	SetPortDialogPort( CubeDlog);
+	GetPort(&SavePort);
+	SetPortDialogPort(CubeDlog);
 
-	BeginUpdate( GetDialogWindow( CubeDlog));
+	BeginUpdate(GetDialogWindow(CubeDlog));
 
-	DrawDialog( CubeDlog);
+	DrawDialog(CubeDlog);
 
-	EndUpdate( GetDialogWindow( CubeDlog));
+	EndUpdate(GetDialogWindow(CubeDlog));
 
-	SetPort( SavePort);
+	SetPort(SavePort);
 } 
 
 void CreateCubeWindow(void)
@@ -39,36 +39,36 @@ void CreateCubeWindow(void)
 
 	if (CubeDlog != NULL)
 	{
-		SelectWindow2( GetDialogWindow( CubeDlog));
+		SelectWindow2(GetDialogWindow(CubeDlog));
 		return;
 	}
 	
-	CubeDlog = GetNewDialog( 132, NULL, GetDialogWindow( ToolsDlog));
+	CubeDlog = GetNewDialog(132, NULL, GetDialogWindow(ToolsDlog));
 	
-//	SetWindEtat( CubeDlog);
-	SetPortDialogPort( CubeDlog);
+//	SetWindEtat(CubeDlog);
+	SetPortDialogPort(CubeDlog);
 	
-	ShowWindow( GetDialogWindow( CubeDlog));
-	SelectWindow2( GetDialogWindow( CubeDlog));
+	ShowWindow(GetDialogWindow(CubeDlog));
+	SelectWindow2(GetDialogWindow(CubeDlog));
 }
 
 void CloseCube(void)
 {
 	if (CubeDlog != NULL)
 	{
-		DisposeDialog( CubeDlog);
+		DisposeDialog(CubeDlog);
 	}
 	CubeDlog = NULL;
 	
-//	SetItemMark( ViewsMenu, m3D, noMark);
+//	SetItemMark(ViewsMenu, m3D, noMark);
 }
 
-void DoItemPressCube( short whichItem, DialogPtr whichDialog)
+void DoItemPressCube(short whichItem, DialogPtr whichDialog)
 {
-	switch( whichItem)
+	switch(whichItem)
 	{
 		case 1:
-			DoInternetMenu( 1);
+			DoInternetMenu(1);
 		break;
 	}
 }

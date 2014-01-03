@@ -6,7 +6,7 @@
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
 
-static OSErr mainCrop( sData					*theData,
+static OSErr mainCrop(sData					*theData,
 				long					SelectionStart,
 				long					SelectionEnd,
 				PPInfoPlug				*thePPInfoPlug,
@@ -14,7 +14,7 @@ static OSErr mainCrop( sData					*theData,
 {
 	long	i;
 
-	switch( theData->amp)
+	switch(theData->amp)
 	{
 		case 8:
 		{
@@ -25,7 +25,7 @@ static OSErr mainCrop( sData					*theData,
 			}
 			
 			theData->size = SelectionEnd - SelectionStart;
-			SetPtrSize( theData->data, theData->size);
+			SetPtrSize(theData->data, theData->size);
 		}
 		break;
 
@@ -40,7 +40,7 @@ static OSErr mainCrop( sData					*theData,
 			}
 			
 			theData->size = SelectionEnd - SelectionStart;
-			SetPtrSize( theData->data, theData->size);
+			SetPtrSize(theData->data, theData->size);
 		}
 		break;
 	}

@@ -20,7 +20,7 @@ void DragManagerInstalled(void)
 	else */DragManagerUse = true;
 }
 
-void ReceiveNewFSSpec( AEDesc *dropLocation, FSSpec	*newFSSpec)
+void ReceiveNewFSSpec(AEDesc *dropLocation, FSSpec	*newFSSpec)
 {
 	OSErr			result;
 	AEDesc			dropSpec;
@@ -38,10 +38,10 @@ void ReceiveNewFSSpec( AEDesc *dropLocation, FSSpec	*newFSSpec)
 		(AECoerceDesc(dropLocation, typeFSS, &dropSpec) == noErr))
 	{
 		
-		result = MyAEGetDescData( &dropSpec, NULL, &theSpec, sizeof( theSpec), NULL);
+		result = MyAEGetDescData(&dropSpec, NULL, &theSpec, sizeof(theSpec), NULL);
 		if (result != noErr) return;
 		
-		//	HLock( dropSpec.dataHandle);
+		//	HLock(dropSpec.dataHandle);
 		//	theSpec = (FSSpec *) *dropSpec.dataHandle;
 		
 		//
@@ -94,7 +94,7 @@ Boolean DropLocationIsFinderTrash(AEDesc *dropLocation)
 		(AECoerceDesc(dropLocation, typeFSS, &dropSpec) == noErr))
 	{
 		
-		result = MyAEGetDescData( &dropSpec, NULL, &theSpec, sizeof( theSpec), NULL);
+		result = MyAEGetDescData(&dropSpec, NULL, &theSpec, sizeof(theSpec), NULL);
 		if (result != noErr) return false;
 		
 		//	HLock(dropSpec.dataHandle);

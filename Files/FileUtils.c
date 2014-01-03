@@ -32,33 +32,33 @@ void pstrinsert(StringPtr dst, StringPtr src)
 	/* adjust length byte */
 	*dst += *src;
 }
-void ScanDir( long dirID, short VRefNum, Boolean);
+void ScanDir(long dirID, short VRefNum, Boolean);
 
 extern	DialogPtr	MODListDlog;
 Boolean remonte;
 
-void DoScanDir( long	DirID, short VRefNum)
+void DoScanDir(long	DirID, short VRefNum)
 {
 	GrafPtr	savePort;
 	Rect	caRect;
 	
-	GetPort( &savePort);
-	SetPortDialogPort( MODListDlog);
+	GetPort(&savePort);
+	SetPortDialogPort(MODListDlog);
 	
 	remonte = false;
 	
-	ScanDir( DirID, VRefNum, true);
+	ScanDir(DirID, VRefNum, true);
 	
-	GetPortBounds( GetDialogPort( MODListDlog), &caRect);
+	GetPortBounds(GetDialogPort(MODListDlog), &caRect);
 	
-	InvalWindowRect( GetDialogWindow( MODListDlog), &caRect);
+	InvalWindowRect(GetDialogWindow(MODListDlog), &caRect);
 	
-	SetPort( savePort);
+	SetPort(savePort);
 }
 
 static	Str255		asc_WorkStr;
 
-void ScanDir( long dirID, short VRefNum, Boolean recurse)
+void ScanDir(long dirID, short VRefNum, Boolean recurse)
 {
 	short			i;
 	CInfoPBRec		info;
@@ -75,16 +75,16 @@ void ScanDir( long dirID, short VRefNum, Boolean recurse)
 		if (PBGetCatInfoSync(&info) != noErr)
 			break;
 		
-		pStrcpy( spec.name, info.hFileInfo.ioNamePtr);
+		pStrcpy(spec.name, info.hFileInfo.ioNamePtr);
 		spec.vRefNum = info.hFileInfo.ioVRefNum;
 		spec.parID = dirID;
 		
 		RollCursor();
 		
-		if(	OpenableFile( info.hFileInfo.ioFlFndrInfo.fdType, &spec))
+		if(	OpenableFile(info.hFileInfo.ioFlFndrInfo.fdType, &spec))
 		{
 			if (info.hFileInfo.ioFlFndrInfo.fdType != 'sTAT' && info.hFileInfo.ioFlFndrInfo.fdType != 'STCf')
-				AddMODList( 	false,
+				AddMODList(	false,
 						   info.hFileInfo.ioNamePtr,
 						   info.hFileInfo.ioVRefNum,
 						   dirID);
@@ -94,8 +94,8 @@ void ScanDir( long dirID, short VRefNum, Boolean recurse)
 			ScanDir(info.dirInfo.ioDrDirID, VRefNum, true);
 		}
 		
-		GetKeys( km);
-		if (IsPressed( 0x37) && IsPressed( 0x2F)) {remonte = true;	break;}
+		GetKeys(km);
+		if (IsPressed(0x37) && IsPressed(0x2F)) {remonte = true;	break;}
 	}
 }
 
@@ -106,8 +106,8 @@ void PathNameFromDirID(long dirID, short vRefNum, StringPtr fullPathName)
 	OSErr		err;
 	
 	
-	pStrcpy( directoryName, "\p");
-	pStrcpy( fullPathName, "\p");
+	pStrcpy(directoryName, "\p");
+	pStrcpy(fullPathName, "\p");
 	
 	block.dirInfo.ioDrParID = dirID;
 	block.dirInfo.ioNamePtr = directoryName;

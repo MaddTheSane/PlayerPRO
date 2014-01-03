@@ -59,8 +59,8 @@ unsigned MidiVolume[128] = {
 
 #define MySignature		'SNPL'
 
-void DoPlayInstruInt( short	Note, short Instru, short effect, short arg, short vol, Channel *curVoice, long start, long end);
-void NPianoRecordProcess( short i, short, short, short);
+void DoPlayInstruInt(short	Note, short Instru, short effect, short arg, short vol, Channel *curVoice, long start, long end);
+void NPianoRecordProcess(short i, short, short, short);
 
 static MIDIClientRef MADMIDICliRef;
 void MADMIDINotifyProc(const MIDINotification *message, void *refCon);
@@ -81,7 +81,7 @@ void CloseMIDIHarware(void)
 	MIDIHardware = false;
 }
 
-void OpenMIDIHardware( void)	
+void OpenMIDIHardware(void)	
 {
 	if(MIDIHardware)
 	{
@@ -104,7 +104,7 @@ void InitMIDIHarware(void)
 
 void NDoPlayInstru(short Note, short Instru, short effect, short arg, short vol);
 
-void DoMidiSpeaker( short note, short Instru, long arg)
+void DoMidiSpeaker(short note, short Instru, long arg)
 {
 	
 }
@@ -127,17 +127,17 @@ void OpenOrCloseConnection(Boolean opening)
 	
 }
 
-void SelectOMSConnections( Boolean Input)
+void SelectOMSConnections(Boolean Input)
 {
 	
 }
 
-void SendMIDIClock( MADDriverRec *intDriver, Byte MIDIByte)
+void SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte)
 {
 	
 }
 
-void SendMIDITimingClock( MADDriverRec *MDriver)
+void SendMIDITimingClock(MADDriverRec *MDriver)
 {
 	
 }

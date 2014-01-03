@@ -7,7 +7,7 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
-static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
+static Cmd* GetCmd(short row, short	track, Pcmd*	myPcmd)
 {
 	if (row < 0) row = 0;
 	else if (row >= myPcmd->length) row = myPcmd->length -1;
@@ -15,10 +15,10 @@ static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 	if (track < 0) track = 0;
 	else if (track >= myPcmd->tracks) track = myPcmd->tracks -1;
 	
-	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
+	return(&(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
 
-static OSErr mainPropagate( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
+static OSErr mainPropagate(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
 //	DialogPtr			myDia;
 	short				/*itemHit, mode,*/ track, row;
@@ -30,9 +30,9 @@ static OSErr mainPropagate( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		{
 			Cmd		*myCmd, *myCmdsrc;
 			
-			myCmdsrc = GetCmd( 0, 0, myPcmd);
+			myCmdsrc = GetCmd(0, 0, myPcmd);
 			
-			myCmd	 = GetCmd( row, track, myPcmd);
+			myCmd	 = GetCmd(row, track, myPcmd);
 			
 			*myCmd = *myCmdsrc;
 		}

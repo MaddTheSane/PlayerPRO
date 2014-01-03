@@ -32,14 +32,14 @@ void DoGrowInstruView(void)
 	short		temp;
 	Rect		caRect;
 
-	GetPortBounds( GetDialogPort( InstruViewDlog), &caRect);
+	GetPortBounds(GetDialogPort(InstruViewDlog), &caRect);
 	
 	if (caRect.bottom >= WLARG2) temp = WSMALL;
 	else if (caRect.bottom >= WLARG) temp = WLARG2;
 	else if (caRect.bottom >= WMEDIUM) temp = WLARG;
 	else temp = WMEDIUM;
 	
-	MySizeWindow( InstruViewDlog, 212, temp, true);		//caRect.right
+	MySizeWindow(InstruViewDlog, 212, temp, true);		//caRect.right
 	
 	SmallEffect();
 }
@@ -58,10 +58,10 @@ void DoNullInstruView(void)
 	if (TickCount() <= oldInstruTicks) return;
 	oldInstruTicks = TickCount();
 	
- 	GetPort( &SavePort);
- 	SetPortDialogPort( InstruViewDlog);
+ 	GetPort(&SavePort);
+ 	SetPortDialogPort(InstruViewDlog);
 	
-	GetPortBounds( GetDialogPort( InstruViewDlog), &caRect);
+	GetPortBounds(GetDialogPort(InstruViewDlog), &caRect);
 	
 	if (caRect.bottom >= WLARG2) max = 128;
 	else if (caRect.bottom >= WLARG) max = 64;
@@ -77,24 +77,24 @@ void DoNullInstruView(void)
 			if (MADDriver->InstruTube[i] == 64)
 			{
 				MADDriver->InstruTube[i]--;
-				SwitchColor( MADDriver->InstruActif[ i]);
+				SwitchColor(MADDriver->InstruActif[ i]);
 				
 				itemRect.top = itemRect.bottom - MADDriver->InstruTube[i];
-				PaintRect( &itemRect);
-				ForeColor( blackColor);
+				PaintRect(&itemRect);
+				ForeColor(blackColor);
 			}
 			else
 			{
 				itemRect.bottom -= MADDriver->InstruTube[i];
 				MADDriver->InstruTube[i]--;
 				
-				MoveTo( itemRect.left, itemRect.bottom);
-				LineTo( itemRect.right-1, itemRect.bottom);
+				MoveTo(itemRect.left, itemRect.bottom);
+				LineTo(itemRect.right-1, itemRect.bottom);
 			}
 		}
 	}
 
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
 void UpdateInstruView(DialogPtr GetSelection)  	/* Pointer to this dialog */
@@ -105,37 +105,37 @@ void UpdateInstruView(DialogPtr GetSelection)  	/* Pointer to this dialog */
 	Rect		caRect, itemRect;
 	Str255		stemp;
 	
- 	GetPort( &SavePort);
- 	SetPortDialogPort( InstruViewDlog);
+ 	GetPort(&SavePort);
+ 	SetPortDialogPort(InstruViewDlog);
 	
- 	TextFont( 4);
- 	TextSize( 9);
+ 	TextFont(4);
+ 	TextSize(9);
 	
-	BeginUpdate( GetDialogWindow( InstruViewDlog));
+	BeginUpdate(GetDialogWindow(InstruViewDlog));
 	
 	GetDialogItem (InstruViewDlog, 1, &itemType, &itemHandle, &itemRect);
-	InsetRect( &itemRect, -1, -1);
-	itemRect.bottom--;		FrameRectRelief( &itemRect);
+	InsetRect(&itemRect, -1, -1);
+	itemRect.bottom--;		FrameRectRelief(&itemRect);
 	GetDialogItem (InstruViewDlog, 7, &itemType, &itemHandle, &itemRect);
-	InsetRect( &itemRect, -1, -1);
-	itemRect.bottom--;		FrameRectRelief( &itemRect);
+	InsetRect(&itemRect, -1, -1);
+	itemRect.bottom--;		FrameRectRelief(&itemRect);
 	GetDialogItem (InstruViewDlog, 8, &itemType, &itemHandle, &itemRect);
-	InsetRect( &itemRect, -1, -1);
-	itemRect.bottom--;		FrameRectRelief( &itemRect);
+	InsetRect(&itemRect, -1, -1);
+	itemRect.bottom--;		FrameRectRelief(&itemRect);
 	GetDialogItem (InstruViewDlog, 6, &itemType, &itemHandle, &itemRect);
-	InsetRect( &itemRect, -1, -1);
-	itemRect.bottom--;		FrameRectRelief( &itemRect);
+	InsetRect(&itemRect, -1, -1);
+	itemRect.bottom--;		FrameRectRelief(&itemRect);
 	GetDialogItem (InstruViewDlog, 14, &itemType, &itemHandle, &itemRect);
-	InsetRect( &itemRect, -1, -1);
-	itemRect.bottom--;		FrameRectRelief( &itemRect);
+	InsetRect(&itemRect, -1, -1);
+	itemRect.bottom--;		FrameRectRelief(&itemRect);
 	GetDialogItem (InstruViewDlog, 15, &itemType, &itemHandle, &itemRect);
-	InsetRect( &itemRect, -1, -1);
-	itemRect.bottom--;		FrameRectRelief( &itemRect);
+	InsetRect(&itemRect, -1, -1);
+	itemRect.bottom--;		FrameRectRelief(&itemRect);
 	GetDialogItem (InstruViewDlog, 16, &itemType, &itemHandle, &itemRect);
-	InsetRect( &itemRect, -1, -1);
-	itemRect.bottom--;		FrameRectRelief( &itemRect);
+	InsetRect(&itemRect, -1, -1);
+	itemRect.bottom--;		FrameRectRelief(&itemRect);
 	
-	GetPortBounds( GetDialogPort( InstruViewDlog), &caRect);
+	GetPortBounds(GetDialogPort(InstruViewDlog), &caRect);
 	
 	if (caRect.bottom >= WLARG2) max = 128;
 	else if (caRect.bottom >= WLARG) max = 64;
@@ -146,22 +146,22 @@ void UpdateInstruView(DialogPtr GetSelection)  	/* Pointer to this dialog */
 	{
 		itemRect = InstruBox[ i];
 		itemRect.top--;	itemRect.left--;	
-		PaintRect( &itemRect);
+		PaintRect(&itemRect);
 		itemRect.top++;	itemRect.left++;
 		
-		SwitchColor( MADDriver->InstruActif[ i]);
+		SwitchColor(MADDriver->InstruActif[ i]);
 		
 		itemRect.top = itemRect.bottom - MADDriver->InstruTube[i]+1;
-		PaintRect( &itemRect);
-		ForeColor( blackColor);
+		PaintRect(&itemRect);
+		ForeColor(blackColor);
 		
 		itemRect.right += ILARG;
 		itemRect.left += ILARG;
 	}
 	
-	EndUpdate( GetDialogWindow( InstruViewDlog));
+	EndUpdate(GetDialogWindow(InstruViewDlog));
 	
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
 void CreateInstruView(void)
@@ -175,17 +175,17 @@ void CreateInstruView(void)
 
 	if (InstruViewDlog != NULL)
 	{
-		SetWindEtat( GetDialogWindow(InstruViewDlog));
+		SetWindEtat(GetDialogWindow(InstruViewDlog));
 		return;
 	}
 
-	SetItemMark( ViewsMenu, mInsV, checkMark);
+	SetItemMark(ViewsMenu, mInsV, checkMark);
 
-	InstruViewDlog = GetNewDialog( 129, NULL, GetDialogWindow( ToolsDlog));
-	SetWindEtat( GetDialogWindow(InstruViewDlog));
-	ShowWindow( GetDialogWindow( InstruViewDlog));
-	SetPortDialogPort( InstruViewDlog);
-	SelectWindow2( GetDialogWindow( InstruViewDlog));
+	InstruViewDlog = GetNewDialog(129, NULL, GetDialogWindow(ToolsDlog));
+	SetWindEtat(GetDialogWindow(InstruViewDlog));
+	ShowWindow(GetDialogWindow(InstruViewDlog));
+	SetPortDialogPort(InstruViewDlog);
+	SelectWindow2(GetDialogWindow(InstruViewDlog));
 	
 	GetDialogItem (InstruViewDlog, 2, &itemType, &itemHandle, &itemRect);
 	itemRect.top++;	itemRect.right--;	itemRect.left++;
@@ -214,8 +214,8 @@ void CreateInstruView(void)
 
 void CloseInstruViewDlog(void)
 {
-	if (InstruViewDlog != NULL) DisposeDialog( InstruViewDlog);
+	if (InstruViewDlog != NULL) DisposeDialog(InstruViewDlog);
 	InstruViewDlog = NULL;
 	
-	SetItemMark( ViewsMenu, mInsV, noMark);
+	SetItemMark(ViewsMenu, mInsV, noMark);
 }

@@ -42,7 +42,7 @@ static OSErr mainWave(OSType					order,						// Order to execute
 	short	iFileRefI;
 	long	inOutBytes;
 	
-	switch( order)
+	switch(order)
 	{
 #if 0
 		case 'PLAY':
@@ -53,13 +53,13 @@ static OSErr mainWave(OSType					order,						// Order to execute
 			unsigned long	rate;
 			Boolean			stereo;
 			
-			theSound = ConvertWAV( AlienFileFSSpec, &lS, &lE, &sS, &rate, &stereo);
+			theSound = ConvertWAV(AlienFileFSSpec, &lS, &lE, &sS, &rate, &stereo);
 			
 			if (theSound != 0L)
 			{
-				myErr = CallRPlaySoundUPP( theSound, GetPtrSize( theSound), 0, 0xFF, sS, lS, lE, rate, stereo);
+				myErr = CallRPlaySoundUPP(theSound, GetPtrSize(theSound), 0, 0xFF, sS, lS, lE, rate, stereo);
 				
-				DisposePtr( theSound);
+				DisposePtr(theSound);
 				theSound = 0L;
 			}
 		}
@@ -74,10 +74,10 @@ static OSErr mainWave(OSType					order,						// Order to execute
 			unsigned long	rate;
 			Boolean			stereo;
 			
-			theSound = ConvertWAV( AlienFileFSSpec, &lS, &lE, &sS, &rate, &stereo);
+			theSound = ConvertWAV(AlienFileFSSpec, &lS, &lE, &sS, &rate, &stereo);
 			
 			if (theSound != NULL)
-				inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
+				inAddSoundToMAD(theSound, lS, lE, sS, 60, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
 		}
 			break;
 			
@@ -85,22 +85,22 @@ static OSErr mainWave(OSType					order,						// Order to execute
 		{
 			Ptr	theSound;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr)
 			{
 				inOutBytes = 100L;
-				theSound = NewPtr( inOutBytes);
+				theSound = NewPtr(inOutBytes);
 				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					FSRead( iFileRefI, &inOutBytes, theSound);
+					FSRead(iFileRefI, &inOutBytes, theSound);
 					
-					myErr = TestWAV( (PCMWavePtr) theSound);
+					myErr = TestWAV((PCMWavePtr) theSound);
 				}
 				
-				DisposePtr( theSound);
+				DisposePtr(theSound);
 				
-				FSClose( iFileRefI);
+				FSClose(iFileRefI);
 			}
 		}
 			break;

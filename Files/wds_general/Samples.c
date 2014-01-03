@@ -21,41 +21,41 @@
 
 	static	short					AHelp[ AHELPSIZE] = { HInfo, HSel, HPenc, Hzoom, HPlug, HWave, HEnv, HSus, HLoop};
 
-	void DoHelpSamples( short **items, short *lsize)
+	void DoHelpSamples(short **items, short *lsize)
 	{
 		*lsize = AHELPSIZE;
 		*items = AHelp;
 	}
 
 	/*****************************/
-void			VSTSampleEditor( short item, sData	*curData, long Start, long End, Boolean StereoMode);
-void			NAppelVSTPlug( short InstruNo, short samp, short whichPlug);
-short			GetMaxSoundFilterPlugs( void);
-void			MoveLoopSelection( short InstruNo);
-void			NEditInstruInfo( short ins, short samp);
-void			SetMaxBottomWindow( short , DialogPtr);
-void			NCOPYSample( long, long, short, short);
-void			DoKeyPressSample( DialogPtr, short);
-short			PressSampleMenu( Rect	*PopUpRect);
-void			InternalUpdate( short whichWindow);
+void			VSTSampleEditor(short item, sData	*curData, long Start, long End, Boolean StereoMode);
+void			NAppelVSTPlug(short InstruNo, short samp, short whichPlug);
+short			GetMaxSoundFilterPlugs(void);
+void			MoveLoopSelection(short InstruNo);
+void			NEditInstruInfo(short ins, short samp);
+void			SetMaxBottomWindow(short , DialogPtr);
+void			NCOPYSample(long, long, short, short);
+void			DoKeyPressSample(DialogPtr, short);
+short			PressSampleMenu(Rect	*PopUpRect);
+void			InternalUpdate(short whichWindow);
 void			DoKeyPlay(short temp);
 short			NewOffscreenPixMap(PixMapHandle *thePixMap, Rect *picRect);
 short			NewOffscreenBitMap(BitMap *thePixMap, Rect *picRect);
 void			ZapBitMap(BitMap *offscreenPixMap);
 void			ZapPixMap(PixMapHandle *offscreenPixMap);
-void			GetInstruName( short, Ptr);
-void			GetQualityString( short ID, Str255 str);
-Boolean			DragSample( RgnHandle myRgn, short theNo, EventRecord *theEvent);
+void			GetInstruName(short, Ptr);
+void			GetQualityString(short ID, Str255 str);
+Boolean			DragSample(RgnHandle myRgn, short theNo, EventRecord *theEvent);
 pascal OSErr 	MySendSampleProc(FlavorType theFlavor,  void *refCon, ItemReference theItem,  DragReference theDrag);
-Handle			SoundQualityExportSnd( short , OSType	*, short *, long *, Str255);
-void			SetMobiusRect( Rect*, short, short, short, short);
-void			DrawSample( short pSt, short pEn, short Instru, DialogPtr theDia);
+Handle			SoundQualityExportSnd(short , OSType	*, short *, long *, Str255);
+void			SetMobiusRect(Rect*, short, short, short, short);
+void			DrawSample(short pSt, short pEn, short Instru, DialogPtr theDia);
 pascal OSErr 	MyTrackingSample(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag);
-void			NSelectInstruList( short , short);
-long			AmpToByte( short Pos, short InstruNo);
-void			ConvertInstrumentOut16( register	short	*tempPtr,	register long sSize);
-void			FFTSampleFilter( sData *SData, short instru, Boolean filter);
-void			SampleUpdateNow( void);
+void			NSelectInstruList(short , short);
+long			AmpToByte(short Pos, short InstruNo);
+void			ConvertInstrumentOut16(register	short	*tempPtr,	register long sSize);
+void			FFTSampleFilter(sData *SData, short instru, Boolean filter);
+void			SampleUpdateNow(void);
 
 extern	DialogPtr	InstruListDlog;
 extern	Boolean		PianoRecording, DragManagerUse;
@@ -121,15 +121,15 @@ enum
 #define ENVSIZE			300
 
 
-void PrintPixMap( PixMapHandle aPix);
-short		ByteToPos( long bytePosi, short InstruNo);
-long PosToByte( short Pos, short InstruNo);
-short FindSample( DialogPtr	theDia);
+void PrintPixMap(PixMapHandle aPix);
+short		ByteToPos(long bytePosi, short InstruNo);
+long PosToByte(short Pos, short InstruNo);
+short FindSample(DialogPtr	theDia);
 Boolean	IsPressed(unsigned short k);
-void ResetSelectionSample( short CurWin);
+void ResetSelectionSample(short CurWin);
 
 
-long GetStartSampleValue( long val, short InstruNo)
+long GetStartSampleValue(long val, short InstruNo)
 {
 	long	start;
 	long	size;
@@ -140,9 +140,9 @@ long GetStartSampleValue( long val, short InstruNo)
 	
 	size = curMusic->sample[ curMusic->fid[ InstruNo].firstSample + samp]->size;
 	
-	val = GetControlValue( xScroll[ InstruNo]);
+	val = GetControlValue(xScroll[ InstruNo]);
 	
-	if (val == GetControlMaximum( xScroll[ InstruNo]))
+	if (val == GetControlMaximum(xScroll[ InstruNo]))
 	{
 		start 		= size - size / ZoomLevel[ InstruNo];
 	}
@@ -154,19 +154,19 @@ long GetStartSampleValue( long val, short InstruNo)
 	return start;
 }
 
-/*inline long min( long a, long b)
+/*inline long min(long a, long b)
 {
 	if (a < b) return a;
 	else return b;
 }
 
-inline long max( long a, long b)
+inline long max(long a, long b)
 {
 	if (a < b) return b;
 	else return a;
 }*/
 
-void DrawSampleInt( long	sampleSize,
+void DrawSampleInt(long	sampleSize,
 					long 	start,
 					long 	tSS,
 					long 	tSE,
@@ -195,7 +195,7 @@ void DrawSampleInt( long	sampleSize,
 		}
 		temp = (theShortSample[ BS]  + 0x8000);
 		temp *= high;	temp >>= 16;
-		MoveTo( trueH + tSS, trueV + temp);
+		MoveTo(trueH + tSS, trueV + temp);
 		
 		for (i = tSS; i < tSE; i++)
 		{
@@ -214,7 +214,7 @@ void DrawSampleInt( long	sampleSize,
 			temp =(theShortSample[ BS]  + 0x8000);
 			minY = maxY = temp;
 			temp *= high;		temp >>= 16;
-			LineTo( trueH + i, temp + trueV);
+			LineTo(trueH + i, temp + trueV);
 			
 			if (BS != BE)
 			{
@@ -231,8 +231,8 @@ void DrawSampleInt( long	sampleSize,
 				maxY *= high;		maxY >>= 16;
 				minY *= high;		minY >>= 16;
 				
-				MoveTo( trueH + i, minY + trueV);
-				LineTo( trueH + i, maxY + trueV);
+				MoveTo(trueH + i, minY + trueV);
+				LineTo(trueH + i, maxY + trueV);
 			}
 		}
 	}
@@ -247,7 +247,7 @@ void DrawSampleInt( long	sampleSize,
 		
 		temp = (unsigned char) (theSample[ BS] - 0x80);
 		temp *= high;	temp >>= 8;
-		MoveTo( trueH + tSS, trueV + temp);
+		MoveTo(trueH + tSS, trueV + temp);
 		
 		for (i = tSS; i < tSE; i++)
 		{
@@ -266,7 +266,7 @@ void DrawSampleInt( long	sampleSize,
 			temp = (unsigned char) (theSample[ BS] - 0x80);
 			minY = maxY = temp;
 			temp *= high;		temp >>= 8;
-			LineTo( trueH + i, temp + trueV);
+			LineTo(trueH + i, temp + trueV);
 			
 			if (BS != BE)
 			{
@@ -282,28 +282,28 @@ void DrawSampleInt( long	sampleSize,
 				maxY *= high;		maxY >>= 8;
 				minY *= high;		minY >>= 8;
 			
-				MoveTo( trueH + i, minY + trueV);
-				LineTo( trueH + i, maxY + trueV);
+				MoveTo(trueH + i, minY + trueV);
+				LineTo(trueH + i, maxY + trueV);
 			}
 		}
 	}
 }
 
-void SetSelectionZero( short no)
+void SetSelectionZero(short no)
 {
 	SelecRect[ no].start	= 0;
 	SelecRect[ no].end		= 0;
 	ZoomLevel[ no]			= 1;
 }
 
-void SetSelection( short no, long start, long end)
+void SetSelection(short no, long start, long end)
 {
 	SelecRect[ no].start	= start;
 	SelecRect[ no].end		= end;
 	Clignote[ no]			= false;
 }
 
-void EraseTikTak( short ins)
+void EraseTikTak(short ins)
 {
 	Rect	tempRect;
 
@@ -313,19 +313,19 @@ void EraseTikTak( short ins)
 		{
 			TokTak[ ins] = false;
 			
-			tempRect.left = ByteToPos( SelecRect[ ins].start, ins);
+			tempRect.left = ByteToPos(SelecRect[ ins].start, ins);
 			tempRect.right = tempRect.left +1;
 			tempRect.top = SampleRect.top;
 			tempRect.bottom = SampleRect.bottom;
 			
-			InvertRect( &tempRect);
+			InvertRect(&tempRect);
 		}
 	}
 	
 	Clignote[ ins] = false;
 }
 
-void DoGrowSample( DialogPtr theDia)
+void DoGrowSample(DialogPtr theDia)
 {
 	long		lSizeVH;
 	GrafPtr		SavePort;
@@ -335,74 +335,74 @@ void DoGrowSample( DialogPtr theDia)
 	BitMap		screenBits;
 
 
-	GetPort( &SavePort);
- 	SetPortDialogPort( theDia);
+	GetPort(&SavePort);
+ 	SetPortDialogPort(theDia);
 	
-	GetQDGlobalsScreenBits( &screenBits);
+	GetQDGlobalsScreenBits(&screenBits);
 	
 	temp.left = 100;
 	temp.right = screenBits.bounds.right - 2;
 	temp.top = 80;
 	temp.bottom = 256 + SAMPLERECTTOP + 16;
 	
-	LocalToGlobal( &aPt);
+	LocalToGlobal(&aPt);
 	
 	lSizeVH = 0;
-	if (theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( theDia), theEvent.where, &temp);
+	if (theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(theDia), theEvent.where, &temp);
 	
 	if (lSizeVH != 0)
 	{
-		tempA = LoWord( lSizeVH);
-		tempB = HiWord( lSizeVH);
+		tempA = LoWord(lSizeVH);
+		tempB = HiWord(lSizeVH);
 	}
 	else
 	{
-		GetPortBounds( GetDialogPort( theDia), &caRect);
+		GetPortBounds(GetDialogPort(theDia), &caRect);
 		
 		tempA = caRect.right;
 		tempB = caRect.bottom;
 	}
 	
-	MySizeWindow( theDia, tempA, tempB , true);
+	MySizeWindow(theDia, tempA, tempB , true);
 	
-	GetPortBounds( GetDialogPort( theDia), &caRect);
+	GetPortBounds(GetDialogPort(theDia), &caRect);
 	
-	EraseRect( &caRect);
-	InvalWindowRect( GetDialogWindow( theDia), &caRect);
+	EraseRect(&caRect);
+	InvalWindowRect(GetDialogWindow(theDia), &caRect);
 	
-	InternalUpdate( FindSample( theDia));
+	InternalUpdate(FindSample(theDia));
 	
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
-void UpdateDisplaySize( short InstruNo)
+void UpdateDisplaySize(short InstruNo)
 {
 	Str255	StrTemp;
 
 	if (!SampleDlog[ InstruNo]) return;
 
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
-			NumToString( (long) curMusic->fid[ InstruNo].pannSize, StrTemp);
-			pStrcat( StrTemp, "\p Pts");
-			SetDText( SampleDlog[ InstruNo], 3, StrTemp);
+			NumToString((long) curMusic->fid[ InstruNo].pannSize, StrTemp);
+			pStrcat(StrTemp, "\p Pts");
+			SetDText(SampleDlog[ InstruNo], 3, StrTemp);
 		break;
 		
 		case volumeEnv:
-			NumToString( (long) curMusic->fid[ InstruNo].volSize, StrTemp);
-			pStrcat( StrTemp, "\p Pts");
-			SetDText( SampleDlog[ InstruNo], 3, StrTemp);
+			NumToString((long) curMusic->fid[ InstruNo].volSize, StrTemp);
+			pStrcat(StrTemp, "\p Pts");
+			SetDText(SampleDlog[ InstruNo], 3, StrTemp);
 		break;
 		
 		default:
-			GetSizeString( (long) SampleDataS( InstruNo, curSample[ InstruNo])->size, StrTemp, false);
-			SetDText( SampleDlog[ InstruNo], 3, StrTemp);
+			GetSizeString((long) SampleDataS(InstruNo, curSample[ InstruNo])->size, StrTemp, false);
+			SetDText(SampleDlog[ InstruNo], 3, StrTemp);
 		break;
 	}
 }
 
-void UpdateDisplay( short InstruNo)
+void UpdateDisplay(short InstruNo)
 {
 	short	itemType;
 	Rect	itemRect;
@@ -412,85 +412,85 @@ void UpdateDisplay( short InstruNo)
 	
 	if (!SampleDlog[ InstruNo]) return;
 	
-	val = GetControlValue( xScroll[ InstruNo]);
+	val = GetControlValue(xScroll[ InstruNo]);
 	
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 		case volumeEnv:	
 			start 		= (val * (ENVSIZE / SAMPLEDEF)) / ZoomLevel[ InstruNo];
 			sampleSize	= ENVSIZE / ZoomLevel[ InstruNo];
 			
-			NumToString( start, StrTemp);
-			SetDText( SampleDlog[ InstruNo], 20, StrTemp);
+			NumToString(start, StrTemp);
+			SetDText(SampleDlog[ InstruNo], 20, StrTemp);
 			
-			NumToString( start + sampleSize, StrTemp);
-			SetDText( SampleDlog[ InstruNo], 22, StrTemp);
+			NumToString(start + sampleSize, StrTemp);
+			SetDText(SampleDlog[ InstruNo], 22, StrTemp);
 		break;
 		
 		default:
-			start = GetStartSampleValue( val, InstruNo); //(val * (SampleDataD( InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
-			sampleSize = SampleDataD( InstruNo)->size / ZoomLevel[ InstruNo];
+			start = GetStartSampleValue(val, InstruNo); //(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
+			sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[ InstruNo];
 			
 			
 			// Real Note
 			
-			NumToString( SampleDataD( InstruNo)->relNote, StrTemp);
-			pStrcat( StrTemp, "\p/");
+			NumToString(SampleDataD(InstruNo)->relNote, StrTemp);
+			pStrcat(StrTemp, "\p/");
 			
-			NumToString( 60 - SampleDataD( InstruNo)->relNote, aStr);
-			pStrcat( StrTemp, aStr);
-			pStrcat( StrTemp, "\p/");
+			NumToString(60 - SampleDataD(InstruNo)->relNote, aStr);
+			pStrcat(StrTemp, aStr);
+			pStrcat(StrTemp, "\p/");
 			
-			OctavesName( 48 - SampleDataD( InstruNo)->relNote, (Ptr) aStr);
-			MyC2PStr(  (Ptr) aStr);
-			pStrcat( StrTemp, aStr);
+			OctavesName(48 - SampleDataD(InstruNo)->relNote, (Ptr) aStr);
+			MyC2PStr( (Ptr) aStr);
+			pStrcat(StrTemp, aStr);
 			
-			SetDText( SampleDlog[ InstruNo], 33, StrTemp);
+			SetDText(SampleDlog[ InstruNo], 33, StrTemp);
 			
 			// c4spd
 			
-			NumToString( SampleDataD( InstruNo)->c2spd, StrTemp);
-			pStrcat( StrTemp, "\p Hz");
+			NumToString(SampleDataD(InstruNo)->c2spd, StrTemp);
+			pStrcat(StrTemp, "\p Hz");
 			
-			SetDText( SampleDlog[ InstruNo], 32, StrTemp);
+			SetDText(SampleDlog[ InstruNo], 32, StrTemp);
 			
-			GetSizeString( start, StrTemp, false);
-			SetDText( SampleDlog[ InstruNo], 20, StrTemp);
+			GetSizeString(start, StrTemp, false);
+			SetDText(SampleDlog[ InstruNo], 20, StrTemp);
 			
-			GetSizeString( start + sampleSize, StrTemp, false);
-			SetDText( SampleDlog[ InstruNo], 22, StrTemp);
+			GetSizeString(start + sampleSize, StrTemp, false);
+			SetDText(SampleDlog[ InstruNo], 22, StrTemp);
 		break;
 	}
 		
-	NumToString( ZoomLevel[ InstruNo], StrTemp);
-	pStrcat( StrTemp, "\p x");
-	SetDText( SampleDlog[ InstruNo], 24, StrTemp);
+	NumToString(ZoomLevel[ InstruNo], StrTemp);
+	pStrcat(StrTemp, "\p x");
+	SetDText(SampleDlog[ InstruNo], 24, StrTemp);
 }
 
-void UpdateDisplayQuality( short InstruNo)
+void UpdateDisplayQuality(short InstruNo)
 {
 	Str255	StrTemp;
 
 	if (!SampleDlog[ InstruNo]) return;
 
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 		case volumeEnv:
-			SetDText( SampleDlog[ InstruNo], 17, "\p-");
-			SetDText( SampleDlog[ InstruNo], 17, "\p-");
+			SetDText(SampleDlog[ InstruNo], 17, "\p-");
+			SetDText(SampleDlog[ InstruNo], 17, "\p-");
 		break;
 		
 		default:
-			NumToString( SampleDataD( InstruNo)->amp, StrTemp);
-			pStrcat( StrTemp, "\p bits");
-			SetDText( SampleDlog[ InstruNo], 17, StrTemp);
+			NumToString(SampleDataD(InstruNo)->amp, StrTemp);
+			pStrcat(StrTemp, "\p bits");
+			SetDText(SampleDlog[ InstruNo], 17, StrTemp);
 		break;
 	}
 }
 
-void UpdateDisplayPosition( short InstruNo)
+void UpdateDisplayPosition(short InstruNo)
 {
 	Str255	StrTemp, StrTemp2, dst;
 	Point	myPt;
@@ -499,100 +499,100 @@ void UpdateDisplayPosition( short InstruNo)
 
 	if (!SampleDlog[ InstruNo]) return;
 	
-	GetMouse( &myPt);
+	GetMouse(&myPt);
 	
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 		case volumeEnv:
-			NumToString( PosToByte( myPt.h, InstruNo), StrTemp);
-			pStrcat( StrTemp, "\p/");
-			NumToString( AmpToByte( myPt.v, InstruNo), StrTemp2);
-			pStrcat( StrTemp, StrTemp2);
+			NumToString(PosToByte(myPt.h, InstruNo), StrTemp);
+			pStrcat(StrTemp, "\p/");
+			NumToString(AmpToByte(myPt.v, InstruNo), StrTemp2);
+			pStrcat(StrTemp, StrTemp2);
 			
-			SetDText( SampleDlog[ InstruNo], 38, StrTemp);
+			SetDText(SampleDlog[ InstruNo], 38, StrTemp);
 		break;
 		
 		default:
-			GetSizeString( PosToByte( myPt.h, InstruNo), StrTemp, false);
-			pStrcat( StrTemp, "\p/0x");
+			GetSizeString(PosToByte(myPt.h, InstruNo), StrTemp, false);
+			pStrcat(StrTemp, "\p/0x");
 			
-			val = (255UL * PosToByte( myPt.h, InstruNo)) / SampleDataD( InstruNo)->size;
-			sprintf( dest, "%02lX", val);
-			MyC2PStr( dest);
-			pStrcat( StrTemp, (unsigned char*) dest);
+			val = (255UL * PosToByte(myPt.h, InstruNo)) / SampleDataD(InstruNo)->size;
+			sprintf(dest, "%02lX", val);
+			MyC2PStr(dest);
+			pStrcat(StrTemp, (unsigned char*) dest);
 			
-			pStrcat( StrTemp, "\p%/0x");
-			val = PosToByte( myPt.h, InstruNo);
+			pStrcat(StrTemp, "\p%/0x");
+			val = PosToByte(myPt.h, InstruNo);
 			val /= 256;
-			if (SampleDataD( InstruNo)->amp == 16) val /= 2;
-			if (SampleDataD( InstruNo)->stereo == true) val /= 2;
-			sprintf( dest, "%02lX", val);
-			MyC2PStr( dest);
-			pStrcat( StrTemp, (unsigned char*) dest);
-			SetDText( SampleDlog[ InstruNo], 38, StrTemp);
+			if (SampleDataD(InstruNo)->amp == 16) val /= 2;
+			if (SampleDataD(InstruNo)->stereo == true) val /= 2;
+			sprintf(dest, "%02lX", val);
+			MyC2PStr(dest);
+			pStrcat(StrTemp, (unsigned char*) dest);
+			SetDText(SampleDlog[ InstruNo], 38, StrTemp);
 		break;
 	}
 }
 
-void UpdateDisplayLoop( short InstruNo)
+void UpdateDisplayLoop(short InstruNo)
 { 
 	Str255	StrTemp;
 	long 	temp;
 
 	if (!SampleDlog[ InstruNo]) return;
 
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 			if (curMusic->fid[ InstruNo].pannType & EFLOOP)
 			{
-				NumToString( (long) curMusic->fid[ InstruNo].pannBeg+1, StrTemp);
-				pStrcat( StrTemp, "\p Pt");
-				SetDText( SampleDlog[ InstruNo], 9, StrTemp);
+				NumToString((long) curMusic->fid[ InstruNo].pannBeg+1, StrTemp);
+				pStrcat(StrTemp, "\p Pt");
+				SetDText(SampleDlog[ InstruNo], 9, StrTemp);
 			
-				NumToString( (long) curMusic->fid[ InstruNo].pannEnd+1, StrTemp);
-				pStrcat( StrTemp, "\p Pt");
-				SetDText( SampleDlog[ InstruNo], 11, StrTemp);
+				NumToString((long) curMusic->fid[ InstruNo].pannEnd+1, StrTemp);
+				pStrcat(StrTemp, "\p Pt");
+				SetDText(SampleDlog[ InstruNo], 11, StrTemp);
 			}
 			else
 			{
-				SetDText( SampleDlog[ InstruNo], 9, "\p-");
-				SetDText( SampleDlog[ InstruNo], 11, "\p-");
+				SetDText(SampleDlog[ InstruNo], 9, "\p-");
+				SetDText(SampleDlog[ InstruNo], 11, "\p-");
 			}
 		break;
 	
 		case volumeEnv:
 			if (curMusic->fid[ InstruNo].volType & EFLOOP)
 			{
-				NumToString( (long) curMusic->fid[ InstruNo].volBeg+1, StrTemp);
-				pStrcat( StrTemp, "\p Pt");
-				SetDText( SampleDlog[ InstruNo], 9, StrTemp);
+				NumToString((long) curMusic->fid[ InstruNo].volBeg+1, StrTemp);
+				pStrcat(StrTemp, "\p Pt");
+				SetDText(SampleDlog[ InstruNo], 9, StrTemp);
 			
-				NumToString( (long) curMusic->fid[ InstruNo].volEnd+1, StrTemp);
-				pStrcat( StrTemp, "\p Pt");
-				SetDText( SampleDlog[ InstruNo], 11, StrTemp);
+				NumToString((long) curMusic->fid[ InstruNo].volEnd+1, StrTemp);
+				pStrcat(StrTemp, "\p Pt");
+				SetDText(SampleDlog[ InstruNo], 11, StrTemp);
 			}
 			else
 			{
-				SetDText( SampleDlog[ InstruNo], 9, "\p-");
-				SetDText( SampleDlog[ InstruNo], 11, "\p-");
+				SetDText(SampleDlog[ InstruNo], 9, "\p-");
+				SetDText(SampleDlog[ InstruNo], 11, "\p-");
 			}
 		break;
 		
 		default:
-			temp = SampleDataD( InstruNo)->loopBeg;
-			GetSizeString( temp, StrTemp, false);
-			SetDText( SampleDlog[ InstruNo], 9, StrTemp);
+			temp = SampleDataD(InstruNo)->loopBeg;
+			GetSizeString(temp, StrTemp, false);
+			SetDText(SampleDlog[ InstruNo], 9, StrTemp);
 			
-			temp += SampleDataD( InstruNo)->loopSize;
-			GetSizeString( temp, StrTemp, false);
-			SetDText( SampleDlog[ InstruNo], 11, StrTemp);
+			temp += SampleDataD(InstruNo)->loopSize;
+			GetSizeString(temp, StrTemp, false);
+			SetDText(SampleDlog[ InstruNo], 11, StrTemp);
 		break;
 	}
 }
 
-long	FindByteStart( short InstruNo)
+long	FindByteStart(short InstruNo)
 {
 	long	tempL;
 	
@@ -600,7 +600,7 @@ long	FindByteStart( short InstruNo)
 	
 	tempL = SelecRect[ InstruNo].start;
 	
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 		
@@ -611,9 +611,9 @@ long	FindByteStart( short InstruNo)
 		break;
 		
 		default:
-			if (SampleDataD( InstruNo)->stereo)
+			if (SampleDataD(InstruNo)->stereo)
 			{
-				if (SampleDataD( InstruNo)->amp == 16)
+				if (SampleDataD(InstruNo)->amp == 16)
 				{
 					tempL /= 4;		tempL *= 4;
 					if (curMode[ InstruNo]) tempL += 2;
@@ -630,7 +630,7 @@ long	FindByteStart( short InstruNo)
 	return tempL;
 }
 
-short		ByteToPos( long bytePosi, short InstruNo)
+short		ByteToPos(long bytePosi, short InstruNo)
 {
 	long long	bytePos, val, start, sampleSize;
 	short	itemType, tempInt;
@@ -639,9 +639,9 @@ short		ByteToPos( long bytePosi, short InstruNo)
 
 	bytePos = bytePosi;
 
-	val = GetControlValue( xScroll[ InstruNo]);
+	val = GetControlValue(xScroll[ InstruNo]);
 	
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 			start = (val * (ENVSIZE / SAMPLEDEF)) / ZoomLevel[ InstruNo];
@@ -654,8 +654,8 @@ short		ByteToPos( long bytePosi, short InstruNo)
 		break;
 		
 		default:
-			start = GetStartSampleValue( val, InstruNo);	//(val * (SampleDataD( InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
-			sampleSize = SampleDataD( InstruNo)->size / ZoomLevel[ InstruNo];
+			start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
+			sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[ InstruNo];
 		break;
 	}
 	
@@ -669,19 +669,19 @@ short		ByteToPos( long bytePosi, short InstruNo)
 	else if (bytePos < -30000) tempInt = -30000;
 	else tempInt = bytePos;
 	
-//	if (curSample[ InstruNo] >= 0) if (SampleDataD( InstruNo)->stereo) tempInt *= 2;
+//	if (curSample[ InstruNo] >= 0) if (SampleDataD(InstruNo)->stereo) tempInt *= 2;
 	
 	return tempInt;
 }
 
-long AmpToByte( short Pos, short InstruNo)
+long AmpToByte(short Pos, short InstruNo)
 {
 	long	tempL, sampleSize;
 	short	itemType;
 	Handle	itemHandle;
 	Rect	itemRect;
 	
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 			sampleSize = 256;
@@ -704,7 +704,7 @@ long AmpToByte( short Pos, short InstruNo)
 	if (tempL < 0) tempL = 0;
 	if (tempL > 256) tempL = 256;
 	
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 			tempL = 128 - tempL;
@@ -715,7 +715,7 @@ long AmpToByte( short Pos, short InstruNo)
 		break;
 		
 		default:
-			if (SampleDataD( InstruNo)->amp == 16)
+			if (SampleDataD(InstruNo)->amp == 16)
 			{
 				tempL -= 128;
 				tempL *= 256;
@@ -727,16 +727,16 @@ long AmpToByte( short Pos, short InstruNo)
 
 }
 
-long PosToByte( short Pos, short InstruNo)
+long PosToByte(short Pos, short InstruNo)
 {
 	long long	tempL, start, val, sampleSize;
 	short	itemType;
 	Handle	itemHandle;
 	Rect	itemRect;
 	
-	val = GetControlValue( xScroll[ InstruNo]);
+	val = GetControlValue(xScroll[ InstruNo]);
 	
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 			start = (val * (ENVSIZE / SAMPLEDEF)) / ZoomLevel[ InstruNo];
@@ -749,10 +749,10 @@ long PosToByte( short Pos, short InstruNo)
 		break;
 		
 		default:
-			start = GetStartSampleValue( val, InstruNo);	//(val * (SampleDataD( InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
-			sampleSize = SampleDataD( InstruNo)->size / ZoomLevel[ InstruNo];
+			start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
+			sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[ InstruNo];
 			
-			if (val == GetControlMaximum( xScroll[ InstruNo]))
+			if (val == GetControlMaximum(xScroll[ InstruNo]))
 			{
 				//Debugger();
 			}
@@ -766,7 +766,7 @@ long PosToByte( short Pos, short InstruNo)
 	
 	tempL += start;
 	
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 		break;
@@ -775,14 +775,14 @@ long PosToByte( short Pos, short InstruNo)
 		break;
 		
 		default:
-			if (SampleDataD( InstruNo)->amp == 16)
+			if (SampleDataD(InstruNo)->amp == 16)
 			{
 				tempL /= 2;	tempL *= 2;
 			}
 		
-			if (SampleDataD( InstruNo)->stereo)
+			if (SampleDataD(InstruNo)->stereo)
 			{
-				if (SampleDataD( InstruNo)->amp == 16)
+				if (SampleDataD(InstruNo)->amp == 16)
 				{
 					tempL /= 4;		tempL *= 4;
 				//	if (curMode[ InstruNo]) tempL += 2;
@@ -795,20 +795,20 @@ long PosToByte( short Pos, short InstruNo)
 			}
 			
 			if (tempL < 0 ) tempL = 0;
-			if (tempL >= SampleDataD( InstruNo)->size) tempL = SampleDataD( InstruNo)->size;
+			if (tempL >= SampleDataD(InstruNo)->size) tempL = SampleDataD(InstruNo)->size;
 		break;
 	}
 	
 	return tempL;
 }
 
-void GetSampleRect( DialogPtr theDia)
+void GetSampleRect(DialogPtr theDia)
 {
 	Rect caRect;
 	
-	if (theDia == NULL) MyDebugStr( __LINE__, __FILE__, "Big big ERROR");
+	if (theDia == NULL) MyDebugStr(__LINE__, __FILE__, "Big big ERROR");
 	
-	GetPortBounds( GetDialogPort( theDia), &caRect);
+	GetPortBounds(GetDialogPort(theDia), &caRect);
 	
 	SampleRect.top = SAMPLERECTTOP;
 	SampleRect.bottom = caRect.bottom - 15;
@@ -816,7 +816,7 @@ void GetSampleRect( DialogPtr theDia)
 	SampleRect.right = caRect.right;
 }
 
-long	FindByteEnd( short InstruNo)
+long	FindByteEnd(short InstruNo)
 {
 	long	tempL;
 	
@@ -824,7 +824,7 @@ long	FindByteEnd( short InstruNo)
 	
 	tempL = SelecRect[ InstruNo].end;
 	
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 		
@@ -835,9 +835,9 @@ long	FindByteEnd( short InstruNo)
 		break;
 		
 		default:
-			if (SampleDataD( InstruNo)->stereo)
+			if (SampleDataD(InstruNo)->stereo)
 			{
-				if (SampleDataD( InstruNo)->amp == 16)
+				if (SampleDataD(InstruNo)->amp == 16)
 				{
 					tempL /= 4;		tempL *= 4;
 					if (curMode[ InstruNo]) tempL += 2;
@@ -854,11 +854,11 @@ long	FindByteEnd( short InstruNo)
 	return tempL;
 }
 
-void Selection2Loop( short InstruNo)
+void Selection2Loop(short InstruNo)
 {
 InstrData	*curIns = &curMusic->fid[ InstruNo];
 
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 			if (Clignote[ InstruNo])
@@ -876,14 +876,14 @@ InstrData	*curIns = &curMusic->fid[ InstruNo];
 				
 				for (i = 0; i < curIns->pannSize; i++)
 				{
-					if (FindByteStart( InstruNo) <= curIns->pannEnv[ i].pos) break;
+					if (FindByteStart(InstruNo) <= curIns->pannEnv[ i].pos) break;
 				}
 				if (i >= curIns->pannSize) i = curIns->pannSize-1;
 				curIns->pannBeg = i;
 				
 				for (i = 0; i < curIns->pannSize; i++)
 				{
-					if (FindByteEnd( InstruNo) <= curIns->pannEnv[ i].pos) break;
+					if (FindByteEnd(InstruNo) <= curIns->pannEnv[ i].pos) break;
 				}
 				i--;
 				if (i < 0) i = 0;
@@ -907,14 +907,14 @@ InstrData	*curIns = &curMusic->fid[ InstruNo];
 				
 				for (i = 0; i < curIns->volSize; i++)
 				{
-					if (FindByteStart( InstruNo) <= curIns->volEnv[ i].pos) break;
+					if (FindByteStart(InstruNo) <= curIns->volEnv[ i].pos) break;
 				}
 				if (i >= curIns->volSize) i = curIns->volSize-1;
 				curIns->volBeg = i;
 				
 				for (i = 0; i < curIns->volSize; i++)
 				{
-					if (FindByteEnd( InstruNo) <= curIns->volEnv[ i].pos) break;
+					if (FindByteEnd(InstruNo) <= curIns->volEnv[ i].pos) break;
 				}
 				i--;
 				if (i < 0) i = 0;
@@ -925,39 +925,39 @@ InstrData	*curIns = &curMusic->fid[ InstruNo];
 		default:
 			if (Clignote[ InstruNo])
 			{
-				SampleDataD( InstruNo)->loopBeg = 0;
-				SampleDataD( InstruNo)->loopSize = 0;
+				SampleDataD(InstruNo)->loopBeg = 0;
+				SampleDataD(InstruNo)->loopSize = 0;
 			}
 			else
 			{
-				SampleDataD( InstruNo)->loopBeg = FindByteStart( InstruNo);
-				SampleDataD( InstruNo)->loopSize = (FindByteEnd( InstruNo) - FindByteStart( InstruNo));
+				SampleDataD(InstruNo)->loopBeg = FindByteStart(InstruNo);
+				SampleDataD(InstruNo)->loopSize = (FindByteEnd(InstruNo) - FindByteStart(InstruNo));
 				
-				if (SampleDataD( InstruNo)->stereo)
+				if (SampleDataD(InstruNo)->stereo)
 				{
-					if (SampleDataD( InstruNo)->amp == 8)
+					if (SampleDataD(InstruNo)->amp == 8)
 					{
-						SampleDataD( InstruNo)->loopBeg 	/= 2;		SampleDataD( InstruNo)->loopBeg 	*= 2;
-						SampleDataD( InstruNo)->loopSize	/= 2;		SampleDataD( InstruNo)->loopSize	*= 2;
+						SampleDataD(InstruNo)->loopBeg 	/= 2;		SampleDataD(InstruNo)->loopBeg 	*= 2;
+						SampleDataD(InstruNo)->loopSize	/= 2;		SampleDataD(InstruNo)->loopSize	*= 2;
 					}
 					else
 					{
-						SampleDataD( InstruNo)->loopBeg 	/= 4;		SampleDataD( InstruNo)->loopBeg 	*= 4;
-						SampleDataD( InstruNo)->loopSize	/= 4;		SampleDataD( InstruNo)->loopSize	*= 4;
+						SampleDataD(InstruNo)->loopBeg 	/= 4;		SampleDataD(InstruNo)->loopBeg 	*= 4;
+						SampleDataD(InstruNo)->loopSize	/= 4;		SampleDataD(InstruNo)->loopSize	*= 4;
 					}
 				}
 			}
 		break;
 	}
 	
-	InternalUpdate( InstruNo);
+	InternalUpdate(InstruNo);
 }
 
-void SetSustainPoint( short InstruNo)
+void SetSustainPoint(short InstruNo)
 {
 InstrData	*curIns = &curMusic->fid[ InstruNo];
 
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 			if (Clignote[ InstruNo])
@@ -974,7 +974,7 @@ InstrData	*curIns = &curMusic->fid[ InstruNo];
 				
 				for (i = 0; i < curIns->pannSize; i++)
 				{
-					if (FindByteStart( InstruNo) <= curIns->pannEnv[ i].pos) break;
+					if (FindByteStart(InstruNo) <= curIns->pannEnv[ i].pos) break;
 				}
 				if (i >= curIns->pannSize) i = curIns->pannSize-1;
 				curIns->pannSus = i;
@@ -996,7 +996,7 @@ InstrData	*curIns = &curMusic->fid[ InstruNo];
 				
 				for (i = 0; i < curIns->volSize; i++)
 				{
-					if (FindByteStart( InstruNo) <= curIns->volEnv[ i].pos) break;
+					if (FindByteStart(InstruNo) <= curIns->volEnv[ i].pos) break;
 				}
 				if (i >= curIns->volSize) i = curIns->volSize-1;
 				curIns->volSus = i;
@@ -1007,12 +1007,12 @@ InstrData	*curIns = &curMusic->fid[ InstruNo];
 		break;
 	}
 	
-	InternalUpdate( InstruNo);
+	InternalUpdate(InstruNo);
 }
 
-void Loop2Selection( short InstruNo)
+void Loop2Selection(short InstruNo)
 {
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 			if (!(curMusic->fid[ InstruNo].pannType & EFLOOP))
@@ -1047,61 +1047,61 @@ void Loop2Selection( short InstruNo)
 		break;
 		
 		default:
-			if (SampleDataD( InstruNo)->loopSize == 0)
+			if (SampleDataD(InstruNo)->loopSize == 0)
 			{
 				return;
 			}
 			else
 			{
-				SetSelection( InstruNo, SampleDataD( InstruNo)->loopBeg, SampleDataD( InstruNo)->loopBeg + SampleDataD( InstruNo)->loopSize);
+				SetSelection(InstruNo, SampleDataD(InstruNo)->loopBeg, SampleDataD(InstruNo)->loopBeg + SampleDataD(InstruNo)->loopSize);
 				
 				Clignote[ InstruNo] = false;
 			}
 		break;
 	}
 	
-	InternalUpdate( InstruNo);
+	InternalUpdate(InstruNo);
 }
 
 static	long	oldByteStart, oldByteEnd;
 
-void UpdateDisplaySelec( short InstruNo)
+void UpdateDisplaySelec(short InstruNo)
 { 
 	Str255	StrTemp;
 	long	newVal;
 
 	if (!SampleDlog[ InstruNo]) return;
 
-	newVal = FindByteStart( InstruNo);
+	newVal = FindByteStart(InstruNo);
 	if (newVal != oldByteStart)
 	{
-		GetSizeString( newVal, StrTemp, false);
-		SetDText( SampleDlog[ InstruNo], 5, StrTemp);
+		GetSizeString(newVal, StrTemp, false);
+		SetDText(SampleDlog[ InstruNo], 5, StrTemp);
 		oldByteStart = newVal;
 	}
 	
-	newVal = FindByteEnd( InstruNo);
+	newVal = FindByteEnd(InstruNo);
 	if (newVal != oldByteEnd)
 	{
-		GetSizeString( newVal, StrTemp, false);
-		SetDText( SampleDlog[ InstruNo], 7, StrTemp);
+		GetSizeString(newVal, StrTemp, false);
+		SetDText(SampleDlog[ InstruNo], 7, StrTemp);
 		oldByteEnd = newVal;
 	}
 }
 
-void COPYSampleInt( DialogPtr	theDia)
+void COPYSampleInt(DialogPtr	theDia)
 {
 short		CurWin;
 long		Start, End;
 OSErr		anErr;
 ScrapRef	scrap;
 
-	CurWin = FindSample( theDia);
+	CurWin = FindSample(theDia);
 
-	Start = FindByteStart( CurWin);
-	End = FindByteEnd( CurWin);
+	Start = FindByteStart(CurWin);
+	End = FindByteEnd(CurWin);
 
-	switch( curSample[ CurWin])
+	switch(curSample[ CurWin])
 	{
 		case panningEnv:
 			if (Start != End)
@@ -1124,8 +1124,8 @@ ScrapRef	scrap;
 					}
 				}
 				anErr = ClearCurrentScrap();
-				anErr = GetCurrentScrap( &scrap);
-				anErr = PutScrapFlavor( scrap, 'pEnv', 0, sizeof( InstrData), (Ptr) &copyEnv);
+				anErr = GetCurrentScrap(&scrap);
+				anErr = PutScrapFlavor(scrap, 'pEnv', 0, sizeof(InstrData), (Ptr) &copyEnv);
 			}
 		break;
 		
@@ -1151,18 +1151,18 @@ ScrapRef	scrap;
 				}
 				
 				anErr = ClearCurrentScrap();
-				anErr = GetCurrentScrap( &scrap);
-				anErr = PutScrapFlavor( scrap, 'vEnv', 0, sizeof( InstrData), (Ptr) &copyEnv);
+				anErr = GetCurrentScrap(&scrap);
+				anErr = PutScrapFlavor(scrap, 'vEnv', 0, sizeof(InstrData), (Ptr) &copyEnv);
 			}
 		break;
 		
 		default:
-			NCOPYSample( Start, End - Start, CurWin, curSample[ CurWin]);
+			NCOPYSample(Start, End - Start, CurWin, curSample[ CurWin]);
 		break;
 	}
 }
 
-void PASTESampleInt( DialogPtr	theDia)
+void PASTESampleInt(DialogPtr	theDia)
 {
 short				CurWin;
 long				Start;
@@ -1170,23 +1170,23 @@ ScrapRef			scrap;
 ScrapFlavorFlags	flags;
 OSErr				anErr;
 
-	CurWin = FindSample( theDia);
-	Start = FindByteStart( CurWin);
+	CurWin = FindSample(theDia);
+	Start = FindByteStart(CurWin);
 	
-	SaveUndo( USample, CurWin, "\pUndo 'Paste instrument'");
+	SaveUndo(USample, CurWin, "\pUndo 'Paste instrument'");
 	
-	DoKeyPressSample( theDia, (short) 0x0008);
+	DoKeyPressSample(theDia, (short) 0x0008);
 
-	switch( curSample[ CurWin])
+	switch(curSample[ CurWin])
 	{
 		case panningEnv:
 			{
 				long scrapOffset, lCntOrErr;
 				
 				lCntOrErr = 0;
-				anErr = GetCurrentScrap( &scrap);
-				anErr = GetScrapFlavorFlags( scrap, 'pEnv', &flags);
-				if (anErr == noErr) GetScrapFlavorSize( scrap, 'pEnv', &lCntOrErr);
+				anErr = GetCurrentScrap(&scrap);
+				anErr = GetScrapFlavorFlags(scrap, 'pEnv', &flags);
+				if (anErr == noErr) GetScrapFlavorSize(scrap, 'pEnv', &lCntOrErr);
 				
 				if (lCntOrErr > 0)
 				{
@@ -1198,14 +1198,14 @@ OSErr				anErr;
 					
 					// GetScrap
 					
-					tempH = MyNewHandle( lCntOrErr);
+					tempH = MyNewHandle(lCntOrErr);
 					
 					
-					HLock( tempH);
-					GetScrapFlavorData( scrap, 'pEnv', &lCntOrErr, *tempH);
-					BlockMoveData( *tempH, &pasteEnv, sizeof( InstrData));
-					HUnlock( tempH);
-					DisposeHandle( tempH);
+					HLock(tempH);
+					GetScrapFlavorData(scrap, 'pEnv', &lCntOrErr, *tempH);
+					BlockMoveData(*tempH, &pasteEnv, sizeof(InstrData));
+					HUnlock(tempH);
+					DisposeHandle(tempH);
 					
 					// Make room on existing volume envelope 
 					whichPt = curIns->pannSize;
@@ -1229,7 +1229,7 @@ OSErr				anErr;
 					if (curIns->pannSize > 12)
 					{
 						curIns->pannSize = 12;
-						Erreur( 79, -98);
+						Erreur(79, -98);
 					}
 					// Paste volume envelope
 					
@@ -1247,7 +1247,7 @@ OSErr				anErr;
 					
 					Clignote[ CurWin]			= false;
 					
-					InternalUpdate( CurWin);
+					InternalUpdate(CurWin);
 				}
 			}
 		break;
@@ -1257,9 +1257,9 @@ OSErr				anErr;
 				long scrapOffset, lCntOrErr;
 				
 				lCntOrErr = 0;
-				anErr = GetCurrentScrap( &scrap);
-				anErr = GetScrapFlavorFlags( scrap, 'vEnv', &flags);
-				if (anErr == noErr) GetScrapFlavorSize( scrap, 'vEnv', &lCntOrErr);
+				anErr = GetCurrentScrap(&scrap);
+				anErr = GetScrapFlavorFlags(scrap, 'vEnv', &flags);
+				if (anErr == noErr) GetScrapFlavorSize(scrap, 'vEnv', &lCntOrErr);
 				
 				if (lCntOrErr > 0)
 				{
@@ -1271,13 +1271,13 @@ OSErr				anErr;
 					
 					// GetScrap
 					
-					tempH = MyNewHandle( lCntOrErr);
+					tempH = MyNewHandle(lCntOrErr);
 					
-					HLock( tempH);
-					GetScrapFlavorData( scrap, 'vEnv', &lCntOrErr, *tempH);
-					BlockMoveData( *tempH, &pasteEnv, sizeof( InstrData));
-					HUnlock( tempH);
-					DisposeHandle( tempH);
+					HLock(tempH);
+					GetScrapFlavorData(scrap, 'vEnv', &lCntOrErr, *tempH);
+					BlockMoveData(*tempH, &pasteEnv, sizeof(InstrData));
+					HUnlock(tempH);
+					DisposeHandle(tempH);
 					
 					// Make room on existing volume envelope 
 					whichPt = curIns->volSize;
@@ -1301,7 +1301,7 @@ OSErr				anErr;
 					if (curIns->volSize > 12)
 					{
 						curIns->volSize = 12;
-						Erreur( 79, -98);
+						Erreur(79, -98);
 					}
 					// Paste volume envelope
 					
@@ -1319,13 +1319,13 @@ OSErr				anErr;
 					
 					Clignote[ CurWin]			= false;
 					
-					InternalUpdate( CurWin);
+					InternalUpdate(CurWin);
 				}
 			}
 		break;
 		
 		default:
-			NPASTESample( Start, CurWin, curSample[ CurWin]);
+			NPASTESample(Start, CurWin, curSample[ CurWin]);
 		break;
 	}
 }
@@ -1342,33 +1342,33 @@ void AfficheOldPoint(register	short	i)
 	
 	theIdle[i].oldInstru = -1;
 		
-	GetPort( &SavePort);
+	GetPort(&SavePort);
 	if (SampleDlog[ theInstru] == NULL) return;
 	
- 	SetPortDialogPort( SampleDlog[ theInstru]);
- 	GetSampleRect( SampleDlog[ theInstru]);
+ 	SetPortDialogPort(SampleDlog[ theInstru]);
+ 	GetSampleRect(SampleDlog[ theInstru]);
 	
 	UptRect.left = theIdle[i].oldPos;
 	UptRect.right = UptRect.left+2;
 	UptRect.top = SampleRect.top;
 	UptRect.bottom = SampleRect.bottom;
 	
-	BackColor( whiteColor);
+	BackColor(whiteColor);
 	if (BitMapSample[ theInstru])
 	{
-		CopyBits(		(BitMap*) *GetPortPixMap( BitMapSample[ theInstru]),
-	 					(BitMap*) *GetPortPixMap( GetDialogPort( SampleDlog[ theInstru])),
+		CopyBits(		(BitMap*) *GetPortPixMap(BitMapSample[ theInstru]),
+	 					(BitMap*) *GetPortPixMap(GetDialogPort(SampleDlog[ theInstru])),
 	 					&UptRect,
 	 					&UptRect,
 	 					srcCopy,
 	 					NULL);
  	}
  	
-	if ((**(**GetMainDevice()).gdPMap).pixelSize == 1) BackColor( whiteColor);
-	else RGBBackColor( &theColor);
+	if ((**(**GetMainDevice()).gdPMap).pixelSize == 1) BackColor(whiteColor);
+	else RGBBackColor(&theColor);
 	
-	SS = ByteToPos( SelecRect[ theInstru].start, theInstru);
-	EE = ByteToPos( SelecRect[ theInstru].end, theInstru);
+	SS = ByteToPos(SelecRect[ theInstru].start, theInstru);
+	EE = ByteToPos(SelecRect[ theInstru].end, theInstru);
 	
 	selRect.top = SampleRect.top;
 	selRect.bottom = SampleRect.bottom;
@@ -1391,9 +1391,9 @@ void AfficheOldPoint(register	short	i)
 		selRect.right = EE;
 	}
 	
-	if (SectRect( &UptRect, &selRect, &selRect))
+	if (SectRect(&UptRect, &selRect, &selRect))
 	{
-		InvertRect( &selRect);
+		InvertRect(&selRect);
 	}
 	
 /*	if (UptRect.right >= SS &&
@@ -1401,7 +1401,7 @@ void AfficheOldPoint(register	short	i)
 		{
 			if (UptRect.left < SS) UptRect.left = SS;
 			if (UptRect.right > EE) UptRect.right = EE;
-			InvertRect( &UptRect);
+			InvertRect(&UptRect);
 		}
 	else if (Clignote[ theInstru] == true && TokTak[ theInstru] == true)
 	{
@@ -1410,11 +1410,11 @@ void AfficheOldPoint(register	short	i)
 			{
 				UptRect.left = SS;
 				UptRect.right = SS+1;
-				InvertRect( &UptRect);
+				InvertRect(&UptRect);
 			}
 	}*/
 				
- 	SetPort( SavePort);
+ 	SetPort(SavePort);
 }
 
 static	long	oldNullTicks, Flashing;
@@ -1433,58 +1433,58 @@ RgnHandle	visibleRegion;
 	if (TickCount() <= oldNullTicks) return;
 	oldNullTicks = TickCount();
 
-	GetPort( &SavePort);
+	GetPort(&SavePort);
 	
 	if (oldWindow)
 	{
-	if (GetWRefCon( oldWindow) == RefSample && gNowMovingLoop == false)
+	if (GetWRefCon(oldWindow) == RefSample && gNowMovingLoop == false)
 	{
-		SetPortWindowPort( oldWindow);
+		SetPortWindowPort(oldWindow);
 		
 		pt = theEvent.where;
-		GlobalToLocal( &pt);
+		GlobalToLocal(&pt);
 		
 		visibleRegion = NewRgn();
 		
-		GetPortVisibleRegion( GetWindowPort( oldWindow), visibleRegion);
+		GetPortVisibleRegion(GetWindowPort(oldWindow), visibleRegion);
 		
-		if (PtInRgn( pt, visibleRegion))
+		if (PtInRgn(pt, visibleRegion))
 		{
-			GetPortBounds( GetWindowPort( oldWindow), &caRect);
+			GetPortBounds(GetWindowPort(oldWindow), &caRect);
 			
 			SampleRect.top = SAMPLERECTTOP;		SampleRect.bottom = caRect.bottom - 15;
 			SampleRect.left = 0;				SampleRect.right = caRect.right;
 			
-			if (PtInRect( pt, &SampleRect))
+			if (PtInRect(pt, &SampleRect))
 			{
-				InstruNo = FindSample( GetDialogFromWindow( oldWindow));
+				InstruNo = FindSample(GetDialogFromWindow(oldWindow));
 				
-				UpdateDisplayPosition( InstruNo);
+				UpdateDisplayPosition(InstruNo);
 				
-				GetKeys( km);
-				if (IsPressed( 0x003A) && ZoomLevel[ InstruNo] != 1)
+				GetKeys(km);
+				if (IsPressed(0x003A) && ZoomLevel[ InstruNo] != 1)
 				{
-					SetCursor( &ZoomOutCrsr);
+					SetCursor(&ZoomOutCrsr);
 				}
-				else if (IsPressed( 0x0037) && ZoomLevel[ InstruNo] < 1024)
+				else if (IsPressed(0x0037) && ZoomLevel[ InstruNo] < 1024)
 				{
-					SetCursor( &ZoomInCrsr);
+					SetCursor(&ZoomInCrsr);
 				}
 				else
 				{
-					switch( curSample[ InstruNo])
+					switch(curSample[ InstruNo])
 					{
 						case panningEnv:
 							if (SelectMode[ InstruNo] == ePencil)
 							{
 								InstrData	*curIns = &curMusic->fid[ InstruNo];
-								short		tcoc = PosToByte( pt.h, InstruNo);
+								short		tcoc = PosToByte(pt.h, InstruNo);
 								
 								for (i = 0; i < curIns->pannSize; i++)
 								{
 									if (tcoc >= curIns->pannEnv[ i].pos - 1 && tcoc <= curIns->pannEnv[ i].pos + 1)
 									{
-										SetCursor( &HandCrsr);
+										SetCursor(&HandCrsr);
 										goto END;
 									}
 								}
@@ -1495,13 +1495,13 @@ RgnHandle	visibleRegion;
 							if (SelectMode[ InstruNo] == ePencil)
 							{
 								InstrData	*curIns = &curMusic->fid[ InstruNo];
-								short		tcoc = PosToByte( pt.h, InstruNo);
+								short		tcoc = PosToByte(pt.h, InstruNo);
 								
 								for (i = 0; i < curIns->volSize; i++)
 								{
 									if (tcoc >= curIns->volEnv[ i].pos - 1 && tcoc <= curIns->volEnv[ i].pos + 1)
 									{
-										SetCursor( &HandCrsr);
+										SetCursor(&HandCrsr);
 										goto END;
 									}
 								}
@@ -1512,50 +1512,50 @@ RgnHandle	visibleRegion;
 							if (SelectMode[ InstruNo] == eSelect)
 							{
 								InstrData	*curIns = &curMusic->fid[ InstruNo];
-								long		start = ByteToPos( SampleDataD( InstruNo)->loopBeg, InstruNo);
-								long		end = ByteToPos( SampleDataD( InstruNo)->loopBeg + SampleDataD( InstruNo)->loopSize, InstruNo);
+								long		start = ByteToPos(SampleDataD(InstruNo)->loopBeg, InstruNo);
+								long		end = ByteToPos(SampleDataD(InstruNo)->loopBeg + SampleDataD(InstruNo)->loopSize, InstruNo);
 								
 								if (pt.h >= start-1 && pt.h <= start+1)
 								{
-									SetCursor( &HandCrsr);
+									SetCursor(&HandCrsr);
 									goto END;
 								}
 								
 								if (pt.h >= end-1 && pt.h <= end+1)
 								{
-									SetCursor( &HandCrsr);
+									SetCursor(&HandCrsr);
 									goto END;
 								}
 							}
 						
-							if (SampleDataD( InstruNo)->size <= 0)
+							if (SampleDataD(InstruNo)->size <= 0)
 							{
-								SetCursor( GetQDGlobalsArrow( &qdarrow));
+								SetCursor(GetQDGlobalsArrow(&qdarrow));
 								goto END;
 							}
 						break;
 					}
 					
-					if (SelectMode[ InstruNo] == eSelect) SetCursor( &beamCrsr);
+					if (SelectMode[ InstruNo] == eSelect) SetCursor(&beamCrsr);
 					else if (SelectMode[ InstruNo] == ePencil)
 					{
-						if (curSample[ InstruNo] >= 0 && IsPressed( 0x38) && SampleDataD( InstruNo)->stereo)
+						if (curSample[ InstruNo] >= 0 && IsPressed(0x38) && SampleDataD(InstruNo)->stereo)
 						{
-							SetCursor( &pencilCrsrStereo);
+							SetCursor(&pencilCrsrStereo);
 						}
-						else SetCursor( &pencilCrsr);
+						else SetCursor(&pencilCrsr);
 					}
-					else if (SelectMode[ InstruNo] == eZoom) SetCursor( &ZoomInCrsr);
+					else if (SelectMode[ InstruNo] == eZoom) SetCursor(&ZoomInCrsr);
 					
 					END:;
 				}
 				
 			}
-			else SetCursor( GetQDGlobalsArrow( &qdarrow));
+			else SetCursor(GetQDGlobalsArrow(&qdarrow));
 		}
-		else SetCursor( GetQDGlobalsArrow( &qdarrow));
+		else SetCursor(GetQDGlobalsArrow(&qdarrow));
 		
-		DisposeRgn( visibleRegion);
+		DisposeRgn(visibleRegion);
 	}
 	}
 	
@@ -1567,20 +1567,20 @@ RgnHandle	visibleRegion;
 		{
 			if (SampleDlog[ i] != NULL)
 			{
-				SetPortDialogPort( SampleDlog[ i]);
+				SetPortDialogPort(SampleDlog[ i]);
 				
 				if (Clignote[ i])
 				{
-					if (TokTak[ i] == true || oldWindow == GetDialogWindow( SampleDlog[ i]))
+					if (TokTak[ i] == true || oldWindow == GetDialogWindow(SampleDlog[ i]))
 					{
 						TokTak[ i] = !TokTak[ i];
-						GetSampleRect( SampleDlog[ i]);
+						GetSampleRect(SampleDlog[ i]);
 						
-						tempRect.left = ByteToPos( SelecRect[ i].start, i);
+						tempRect.left = ByteToPos(SelecRect[ i].start, i);
 						tempRect.right = tempRect.left +1;
 						tempRect.top = SampleRect.top;
 						tempRect.bottom = SampleRect.bottom;
-						InvertRect( &tempRect);
+						InvertRect(&tempRect);
 					}
 				}
 			}
@@ -1592,7 +1592,7 @@ RgnHandle	visibleRegion;
 	
 	for(i=0; i<maxChannels; i++)
 	{
-		AfficheOldPoint( i);
+		AfficheOldPoint(i);
 		
 		InstruNo = MADDriver->chan[i].ins;
 		
@@ -1600,28 +1600,28 @@ RgnHandle	visibleRegion;
 		{
 			if (SampleDlog[ InstruNo] != NULL)
 			{
-				switch( curSample[ InstruNo])
+				switch(curSample[ InstruNo])
 				{
 					case panningEnv:
 						if (curMusic->fid[ MADDriver->chan[i].ins].pannType  & EFON)
 						{
-					 		SetPortDialogPort( SampleDlog[ InstruNo]);
-					 		GetSampleRect( SampleDlog[ InstruNo]);
+					 		SetPortDialogPort(SampleDlog[ InstruNo]);
+					 		GetSampleRect(SampleDlog[ InstruNo]);
 					 		
 					 		if (MADDriver->chan[ i].curPtr < MADDriver->chan[ i].maxPtr)
 					 		{
 						 		if (MADDriver->chan[ i].pp > 0 && MADDriver->chan[ i].pp < ENVSIZE)
 						 		{
-						 			SwitchColor( MADDriver->chan[ i].TrackID);
+						 			SwitchColor(MADDriver->chan[ i].TrackID);
 						 			
-						 			theIdle[i].oldPos = ByteToPos( MADDriver->chan[ i].pp, InstruNo);
+						 			theIdle[i].oldPos = ByteToPos(MADDriver->chan[ i].pp, InstruNo);
 						 			theIdle[i].oldInstru = InstruNo;
-						 			PenSize( 2, 1);
-						 			MoveTo( theIdle[i].oldPos ,SampleRect.top);
-						 			LineTo( theIdle[i].oldPos ,SampleRect.bottom-1);
-						 			PenSize( 1, 1);
+						 			PenSize(2, 1);
+						 			MoveTo(theIdle[i].oldPos ,SampleRect.top);
+						 			LineTo(theIdle[i].oldPos ,SampleRect.bottom-1);
+						 			PenSize(1, 1);
 						 			
-						 			ForeColor( blackColor);
+						 			ForeColor(blackColor);
 						 		}
 					 		}
 					 	}
@@ -1630,23 +1630,23 @@ RgnHandle	visibleRegion;
 					case volumeEnv:
 						if (curMusic->fid[ MADDriver->chan[i].ins].volType  & EFON)
 						{
-					 		SetPortDialogPort( SampleDlog[ InstruNo]);
-					 		GetSampleRect( SampleDlog[ InstruNo]);
+					 		SetPortDialogPort(SampleDlog[ InstruNo]);
+					 		GetSampleRect(SampleDlog[ InstruNo]);
 					 		
 					 		if (MADDriver->chan[ i].curPtr < MADDriver->chan[ i].maxPtr)
 					 		{
 						 		if (MADDriver->chan[ i].p > 0 && MADDriver->chan[ i].p < ENVSIZE)
 						 		{
-						 			SwitchColor( MADDriver->chan[ i].TrackID);
+						 			SwitchColor(MADDriver->chan[ i].TrackID);
 						 			
-						 			theIdle[i].oldPos = ByteToPos( MADDriver->chan[ i].p, InstruNo);
+						 			theIdle[i].oldPos = ByteToPos(MADDriver->chan[ i].p, InstruNo);
 						 			theIdle[i].oldInstru = InstruNo;
-						 			PenSize( 2, 1);
-						 			MoveTo( theIdle[i].oldPos ,SampleRect.top);
-						 			LineTo( theIdle[i].oldPos ,SampleRect.bottom-1);
-						 			PenSize( 1, 1);
+						 			PenSize(2, 1);
+						 			MoveTo(theIdle[i].oldPos ,SampleRect.top);
+						 			LineTo(theIdle[i].oldPos ,SampleRect.bottom-1);
+						 			PenSize(1, 1);
 						 			
-						 			ForeColor( blackColor);
+						 			ForeColor(blackColor);
 						 		}
 					 		}
 					 	}
@@ -1655,27 +1655,27 @@ RgnHandle	visibleRegion;
 					default:
 						if (curSample[ InstruNo] == MADDriver->chan[i].samp)
 						{
-					 		SetPortDialogPort( SampleDlog[ InstruNo]);
-					 		GetSampleRect( SampleDlog[ InstruNo]);
+					 		SetPortDialogPort(SampleDlog[ InstruNo]);
+					 		GetSampleRect(SampleDlog[ InstruNo]);
 					 		
 					 		maxVal = (long) MADDriver->chan[ i].maxPtr;
-					 		maxVal -=(long) SampleDataD( InstruNo)->data;
+					 		maxVal -=(long) SampleDataD(InstruNo)->data;
 					 		
 					  		curVal = (long) MADDriver->chan[ i].curPtr;
-					 		curVal -= (long) SampleDataD( InstruNo)->data;
+					 		curVal -= (long) SampleDataD(InstruNo)->data;
 					 		
 					 		if (maxVal > curVal && curVal > 0 && maxVal > 0)
 					 		{
-					 			SwitchColor( MADDriver->chan[ i].TrackID);
+					 			SwitchColor(MADDriver->chan[ i].TrackID);
 					 			
-					 			theIdle[i].oldPos = ByteToPos( curVal, InstruNo);
+					 			theIdle[i].oldPos = ByteToPos(curVal, InstruNo);
 					 			theIdle[i].oldInstru = InstruNo;
-					 			PenSize( 2, 1);
-					 			MoveTo( theIdle[i].oldPos ,SampleRect.top);
-					 			LineTo( theIdle[i].oldPos ,SampleRect.bottom-1);
-					 			PenSize( 1, 1);
+					 			PenSize(2, 1);
+					 			MoveTo(theIdle[i].oldPos ,SampleRect.top);
+					 			LineTo(theIdle[i].oldPos ,SampleRect.bottom-1);
+					 			PenSize(1, 1);
 					 			
-					 			ForeColor( blackColor);
+					 			ForeColor(blackColor);
 					 		}
 				 		}
 					break;
@@ -1684,71 +1684,71 @@ RgnHandle	visibleRegion;
 		}
 	}
 		
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
-short FindSample( DialogPtr	theDia)
+short FindSample(DialogPtr	theDia)
 {
 short	i;
 
 	for(i=0;i < MAXINSTRU; i++)
 	{
-		if (SampleDlog[i] == theDia) return( i);
+		if (SampleDlog[i] == theDia) return(i);
 	}
 	
-	MyDebugStr( __LINE__, __FILE__, "FIND Sample ERROR");
+	MyDebugStr(__LINE__, __FILE__, "FIND Sample ERROR");
 	
 	return 0;
 }
 
-void DrawLoop( short ins)
+void DrawLoop(short ins)
 {
 	long	StartLoop;
 	long	SizeLoop, endLine, temp;
 	
 	if (curSample[ ins] >= 0)
 	{
-		GetSampleRect( SampleDlog[ ins]);
+		GetSampleRect(SampleDlog[ ins]);
 		
-		ForeColor( redColor);
+		ForeColor(redColor);
 		
-		StartLoop = (long) SampleDataD( ins)->loopBeg;
-		SizeLoop = (long) SampleDataD( ins)->loopSize;
-		endLine = ByteToPos( StartLoop + SizeLoop, ins);
+		StartLoop = (long) SampleDataD(ins)->loopBeg;
+		SizeLoop = (long) SampleDataD(ins)->loopSize;
+		endLine = ByteToPos(StartLoop + SizeLoop, ins);
 		
 		if (endLine > SampleRect.right) endLine = SampleRect.right + 2;
 		
-		PenSize( 2,2);
+		PenSize(2,2);
 		
 		if (SizeLoop > 2)
 		{
-			temp = ByteToPos( StartLoop, ins);
+			temp = ByteToPos(StartLoop, ins);
 			if (temp < SampleRect.left) temp = SampleRect.left - 2;
 	
-			MoveTo( temp, SampleRect.top);
-			LineTo( temp, SampleRect.bottom-2);
+			MoveTo(temp, SampleRect.top);
+			LineTo(temp, SampleRect.bottom-2);
 			
-			LineTo( endLine-2, SampleRect.bottom-2);
-			LineTo( endLine-2, SampleRect.top);
+			LineTo(endLine-2, SampleRect.bottom-2);
+			LineTo(endLine-2, SampleRect.top);
 			
-			LineTo( temp, SampleRect.top);
+			LineTo(temp, SampleRect.top);
 			
-			if (SampleDataD( ins)->loopType == ePingPongLoop)
+			if (SampleDataD(ins)->loopType == ePingPongLoop)
 			{
-				MoveTo( temp + 2, SampleRect.top + 13);
-				TextSize( 0);	TextFont( 0);
-				DrawString( "\pPingPong");
-				TextFont( 4);		TextSize( 9);
+				MoveTo(temp + 2, SampleRect.top + 13);
+				TextSize(0);	TextFont(0);
+				DrawString("\pPingPong");
+				TextFont(4);		TextSize(9);
 			}
 		}
 		
-		PenSize( 1,1);
+		PenSize(1,1);
 		
-		ForeColor( blackColor);
+		ForeColor(blackColor);
 	}
 }
 
-void UpdateSampleWindow( DialogPtr	GetSelection)
+void UpdateSampleWindow(DialogPtr	GetSelection)
 {
 		Rect   		caRect, tempRect;
  		GrafPtr		SavePort;
@@ -1763,127 +1763,127 @@ void UpdateSampleWindow( DialogPtr	GetSelection)
  		
  		if (GetSelection == NULL) return;
  		
- 		GetPort( &SavePort);
- 		SetPortDialogPort( GetSelection);
+ 		GetPort(&SavePort);
+ 		SetPortDialogPort(GetSelection);
  
- 		TextFont( 4);	TextSize( 9);
+ 		TextFont(4);	TextSize(9);
  		
- 		BeginUpdate( GetDialogWindow( GetSelection));
+ 		BeginUpdate(GetDialogWindow(GetSelection));
  		
  		visibleRegion = NewRgn();
 		
-		GetPortVisibleRegion( GetDialogPort( GetSelection), visibleRegion);
+		GetPortVisibleRegion(GetDialogPort(GetSelection), visibleRegion);
  		
- 		UpdateDialog( GetSelection, visibleRegion);
+ 		UpdateDialog(GetSelection, visibleRegion);
  		
- 		DisposeRgn( visibleRegion);
+ 		DisposeRgn(visibleRegion);
  		
- 		theInstru = FindSample( GetSelection);
- 		BackColor( whiteColor);
+ 		theInstru = FindSample(GetSelection);
+ 		BackColor(whiteColor);
  		
  		if (BitMapSample[ theInstru])
 		{
 	  		CopyBits(	(BitMap*) *GetPortPixMap(BitMapSample[ theInstru]),
-	 					(BitMap*) *GetPortPixMap(GetDialogPort( GetSelection)),
+	 					(BitMap*) *GetPortPixMap(GetDialogPort(GetSelection)),
 	 					&(*GetPortPixMap(BitMapSample[ theInstru]))->bounds,
 	 					&(*GetPortPixMap(BitMapSample[ theInstru]))->bounds,
 	 					srcCopy,
 	 					NULL);
  		}
  		
- 		if ((**(**GetMainDevice()).gdPMap).pixelSize == 1) BackColor( whiteColor);
-		else RGBBackColor( &theColor);
+ 		if ((**(**GetMainDevice()).gdPMap).pixelSize == 1) BackColor(whiteColor);
+		else RGBBackColor(&theColor);
 		
-		GetPortBounds( GetDialogPort( GetSelection), &caRect);
+		GetPortBounds(GetDialogPort(GetSelection), &caRect);
 		
- 		MoveTo( 0, SampleRect.top - 1);
- 		LineTo( caRect.right, SampleRect.top - 1);
+ 		MoveTo(0, SampleRect.top - 1);
+ 		LineTo(caRect.right, SampleRect.top - 1);
  		
  		if (Clignote[ theInstru])
  		{
  			if (TokTak[ theInstru])
  			{
- 				GetSampleRect( GetSelection);
+ 				GetSampleRect(GetSelection);
  			
- 				tempRect.left = ByteToPos( SelecRect[ theInstru].start, theInstru);
+ 				tempRect.left = ByteToPos(SelecRect[ theInstru].start, theInstru);
 				tempRect.right = tempRect.left +1;
 				tempRect.top = SampleRect.top;
 				tempRect.bottom = SampleRect.bottom;
 				
-				InvertRect( &tempRect);
+				InvertRect(&tempRect);
  			}
  		}
  		else
  		{
- 			GetSampleRect( GetSelection);
+ 			GetSampleRect(GetSelection);
  			
- 			tempRect.left = ByteToPos( SelecRect[ theInstru].start, theInstru);
-			tempRect.right = ByteToPos( SelecRect[ theInstru].end, theInstru);
+ 			tempRect.left = ByteToPos(SelecRect[ theInstru].start, theInstru);
+			tempRect.right = ByteToPos(SelecRect[ theInstru].end, theInstru);
 			tempRect.top = SampleRect.top;
 			tempRect.bottom = SampleRect.bottom;
 			
-		//	BackColor( blackColor);
-		//	LMSetHiliteMode( LMGetHiliteMode() & hiliteBit);
-			InvertRect( &tempRect);
-		//	RGBBackColor( &theColor);
+		//	BackColor(blackColor);
+		//	LMSetHiliteMode(LMGetHiliteMode() & hiliteBit);
+			InvertRect(&tempRect);
+		//	RGBBackColor(&theColor);
 		}
 		
-		DrawGrowIconP( SampleDlog[ theInstru]);
+		DrawGrowIconP(SampleDlog[ theInstru]);
 		
-		GetDialogItem( SampleDlog[ theInstru] , 30, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(SampleDlog[ theInstru] , 30, &itemType, &itemHandle, &itemRect);
 		itemRect.right = caRect.right;
-		switch( curSample[ theInstru])
+		switch(curSample[ theInstru])
 		{
 			case panningEnv:
-				pStrcpy( str, "\pPanning Envelope");
+				pStrcpy(str, "\pPanning Envelope");
 			break;
 			
 			case volumeEnv:
-				pStrcpy( str, "\pVolume Envelope");
+				pStrcpy(str, "\pVolume Envelope");
 			break;
 			
 			default:
 				curData = curMusic->sample[ curMusic->fid[ theInstru].firstSample + curSample[ theInstru]];
 			
-				strcpy( (Ptr) str, curData->name);
+				strcpy((Ptr) str, curData->name);
 				
-				MyC2PStr( (Ptr) str);
+				MyC2PStr((Ptr) str);
 				
 				if (str[ 0] == 0)
 				{
 					Str255	str2;
 					
-					pStrcpy( str, "\puntitled sample");
+					pStrcpy(str, "\puntitled sample");
 				}
 				if (str[ 0] > 27) str[ 0] = 27;
-				pStrcat( str, "\p #");
+				pStrcat(str, "\p #");
 				
-				NumToString( curSample[ theInstru] + 1, str2);
-				pStrcat( str, str2);
+				NumToString(curSample[ theInstru] + 1, str2);
+				pStrcat(str, str2);
 				
 				if (curData->stereo)
 				{
-					if (curMode[ theInstru] == 0) pStrcat( str, "\p Left");
-					else pStrcat( str, "\p Right");
+					if (curMode[ theInstru] == 0) pStrcat(str, "\p Left");
+					else pStrcat(str, "\p Right");
 				}
 			break;
 		}
 		
 		saveClipRgn = NewRgn();
-		GetClip( saveClipRgn );
+		GetClip(saveClipRgn );
 
-		ClipRect( &itemRect);
+		ClipRect(&itemRect);
 
-		TextFace( bold);
-	//	if (StringWidth( str) < (itemRect.right - itemRect.left)/2) itemRect.left = 50;
+		TextFace(bold);
+	//	if (StringWidth(str) < (itemRect.right - itemRect.left)/2) itemRect.left = 50;
 		itemRect.right -= 10;
-		TETextBox( str+1, str[ 0], &itemRect, teJustRight);
-		TextFace( 0);
+		TETextBox(str+1, str[ 0], &itemRect, teJustRight);
+		TextFace(0);
 		
-		SetClip( saveClipRgn);
-		DisposeRgn( saveClipRgn);
+		SetClip(saveClipRgn);
+		DisposeRgn(saveClipRgn);
 		
-		EndUpdate( GetDialogWindow( GetSelection));
+		EndUpdate(GetDialogWindow(GetSelection));
 		
 		SetPort(SavePort);
 }
@@ -1891,7 +1891,7 @@ void UpdateSampleWindow( DialogPtr	GetSelection)
 
 extern	short			theDepth;
 
-void DrawPencil( DialogPtr	theDia, short InstruNo)
+void DrawPencil(DialogPtr	theDia, short InstruNo)
 {
 	Point			aPt, prevPt, tempPt;
 	long long			BS, BE, sampleSize, x, start, nVal16E, nVal16S;
@@ -1910,16 +1910,16 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 	Boolean			PreInOutPt;
 
 	curMusic->hasChanged = true;
-	SaveUndo( USample, InstruNo, "\pUndo 'Draw Instrument'");
+	SaveUndo(USample, InstruNo, "\pUndo 'Draw Instrument'");
 
 	saveClipRgn = NewRgn();								/* get an empty region */
-	GetClip( saveClipRgn );								/* save current */
+	GetClip(saveClipRgn );								/* save current */
 
-	GetSampleRect( theDia);
+	GetSampleRect(theDia);
 	
-	val = GetControlValue( xScroll[ InstruNo]);
+	val = GetControlValue(xScroll[ InstruNo]);
 	
-	GetMouse( &prevPt);
+	GetMouse(&prevPt);
 	if (prevPt.v < SampleRect.top) prevPt.v = SampleRect.top;
 	else if (prevPt.v > SampleRect.bottom) prevPt.v = SampleRect.bottom;
 	
@@ -1934,7 +1934,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 		DoNullInstrument();
 	}
 	
-	switch( curSample[ InstruNo])
+	switch(curSample[ InstruNo])
 	{
 		case panningEnv:
 		case volumeEnv:
@@ -1953,18 +1953,18 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 		break;
 		
 		default:
-			theSample = SampleDataD( InstruNo)->data;
+			theSample = SampleDataD(InstruNo)->data;
 			theShortSample = (short*) theSample;
 			
 			if (ZoomLevel[ InstruNo] == 1)
 			{
 				start = 0;
-				sampleSize = SampleDataD( InstruNo)->size;
+				sampleSize = SampleDataD(InstruNo)->size;
 			}
 			else
 			{
-				start = GetStartSampleValue( val, InstruNo);	//(val * (SampleDataD( InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
-				sampleSize = SampleDataD( InstruNo)->size / ZoomLevel[ InstruNo];
+				start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
+				sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[ InstruNo];
 			}
 		break;
 	}
@@ -1972,16 +1972,16 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 	do
 	{
 		/**/
-		WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+		WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 	
-		if (QDIsPortBuffered( GetDialogPort( theDia)))
-    		QDFlushPortBuffer( GetDialogPort( theDia), NULL);
+		if (QDIsPortBuffered(GetDialogPort(theDia)))
+    		QDFlushPortBuffer(GetDialogPort(theDia), NULL);
 	
 		Boolean		InOutPt = false;
 	
 		PreInOutPt = InOutPt;
 	
-		GetMouse( &aPt);
+		GetMouse(&aPt);
 		if (aPt.v < SampleRect.top) { aPt.v = SampleRect.top;			InOutPt = true;}
 		else if (aPt.v > SampleRect.bottom) { aPt.v = SampleRect.bottom;InOutPt = true;}
 		else InOutPt = false;
@@ -1997,9 +1997,9 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 		{
 			firstTime = false;
 			
-			UpdateDisplayPosition( InstruNo);
+			UpdateDisplayPosition(InstruNo);
 			
-			switch( curSample[ InstruNo])
+			switch(curSample[ InstruNo])
 			{
 				case panningEnv:
 				{
@@ -2010,7 +2010,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 					InstrData	*curIns = &curMusic->fid[ InstruNo];
 					
 				//	aPt.h = prevPt.h;
-					tcoc = PosToByte( aPt.h, InstruNo);
+					tcoc = PosToByte(aPt.h, InstruNo);
 					
 					if (InOutPt)
 					{
@@ -2047,30 +2047,30 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 							
 							/************/
 							
-							GetGWorld( &oldPort, &oldGDeviceH);
+							GetGWorld(&oldPort, &oldGDeviceH);
 						//	theGWorld = NULL;
-						//	NewGWorld( &theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
+						//	NewGWorld(&theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
 						//	if (theGWorld)
 						//	{
-						//		LockPixels( GetPortPixMap( theGWorld));
+						//		LockPixels(GetPortPixMap(theGWorld));
 								
-						//		tempPM = GetPortPixMap( theGWorld);
+						//		tempPM = GetPortPixMap(theGWorld);
 						//		theGWorld->portPixMap = BitMapSample[ InstruNo];
 								
-								SetGWorld( BitMapSample[ InstruNo], NULL);
+								SetGWorld(BitMapSample[ InstruNo], NULL);
 								
-								DrawSample( -1, -1, InstruNo, SampleDlog[ InstruNo]);
+								DrawSample(-1, -1, InstruNo, SampleDlog[ InstruNo]);
 								
 						//		theGWorld->portPixMap = tempPM;
 								
-								SetGWorld( oldPort, oldGDeviceH);
-						//	 	UnlockPixels( GetPortPixMap( theGWorld));
-						//		DisposeGWorld( theGWorld);
+								SetGWorld(oldPort, oldGDeviceH);
+						//	 	UnlockPixels(GetPortPixMap(theGWorld));
+						//		DisposeGWorld(theGWorld);
 						//	}
 							/************/
 							
-							InvalWindowRect( GetDialogWindow( theDia), &SampleRect);
-							UpdateSampleWindow( theDia);
+							InvalWindowRect(GetDialogWindow(theDia), &SampleRect);
+							UpdateSampleWindow(theDia);
 							
 							prevPt = aPt;
 						}
@@ -2084,7 +2084,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 								if (tcoc >= curIns->pannEnv[ i].pos - 1 && tcoc <= curIns->pannEnv[ i].pos + 1)
 								{
 									editPtEnv = i;
-									SetCursor( &CHandCrsr);
+									SetCursor(&CHandCrsr);
 									break;
 								}
 								else if (tcoc < curIns->pannEnv[ i].pos)
@@ -2110,7 +2110,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 								}
 							}
 							
-							if (editPtEnv == -1)		// Le Pt est derriere le dernier pt pann ( curIns->pannSize)
+							if (editPtEnv == -1)		// Le Pt est derriere le dernier pt pann (curIns->pannSize)
 							{
 								if (curIns->pannSize < 12)
 								{
@@ -2149,34 +2149,34 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 							
 							/************/
 							
-							GetGWorld( &oldPort, &oldGDeviceH);
+							GetGWorld(&oldPort, &oldGDeviceH);
 						/*	theGWorld = NULL;
-							NewGWorld( &theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
+							NewGWorld(&theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
 							if (theGWorld)
 							{
-								LockPixels( GetPortPixMap( theGWorld));
+								LockPixels(GetPortPixMap(theGWorld));
 								
-								tempPM = GetPortPixMap( theGWorld);
+								tempPM = GetPortPixMap(theGWorld);
 								theGWorld->portPixMap = BitMapSample[ InstruNo];
 						*/
-								SetGWorld( BitMapSample[ InstruNo], NULL);
+								SetGWorld(BitMapSample[ InstruNo], NULL);
 								
-								DrawSample( -1, -1, InstruNo, SampleDlog[ InstruNo]);
+								DrawSample(-1, -1, InstruNo, SampleDlog[ InstruNo]);
 								
 						//		theGWorld->portPixMap = tempPM;
 								
-								SetGWorld( oldPort, oldGDeviceH);
-						/*	 	UnlockPixels( GetPortPixMap( theGWorld));
-								DisposeGWorld( theGWorld);
+								SetGWorld(oldPort, oldGDeviceH);
+						/*	 	UnlockPixels(GetPortPixMap(theGWorld));
+								DisposeGWorld(theGWorld);
 							}*/
 							/************/
 							
-							InvalWindowRect( GetDialogWindow( theDia), &SampleRect);
-							UpdateSampleWindow( theDia);
+							InvalWindowRect(GetDialogWindow(theDia), &SampleRect);
+							UpdateSampleWindow(theDia);
 							
 							prevPt = aPt;
 						}
-						else Erreur( 79, -98);
+						else Erreur(79, -98);
 					}
 				}
 				break;
@@ -2190,7 +2190,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 					InstrData	*curIns = &curMusic->fid[ InstruNo];
 					
 				//	aPt.h = prevPt.h;
-					tcoc = PosToByte( aPt.h, InstruNo);
+					tcoc = PosToByte(aPt.h, InstruNo);
 					
 					if (InOutPt)
 					{
@@ -2227,30 +2227,30 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 							
 							/************/
 							
-							GetGWorld( &oldPort, &oldGDeviceH);
+							GetGWorld(&oldPort, &oldGDeviceH);
 						/*	theGWorld = NULL;
-							NewGWorld( &theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
+							NewGWorld(&theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
 							if (theGWorld)
 							{
-								LockPixels( GetPortPixMap( theGWorld));
+								LockPixels(GetPortPixMap(theGWorld));
 								
-								tempPM = GetPortPixMap( theGWorld);
+								tempPM = GetPortPixMap(theGWorld);
 								theGWorld->portPixMap = BitMapSample[ InstruNo];
 						*/
-								SetGWorld( BitMapSample[ InstruNo], NULL);
+								SetGWorld(BitMapSample[ InstruNo], NULL);
 								
-								DrawSample( -1, -1, InstruNo, SampleDlog[ InstruNo]);
+								DrawSample(-1, -1, InstruNo, SampleDlog[ InstruNo]);
 								
 						//		theGWorld->portPixMap = tempPM;
 								
-								SetGWorld( oldPort, oldGDeviceH);
-						/*	 	UnlockPixels( GetPortPixMap( theGWorld));
-								DisposeGWorld( theGWorld);
+								SetGWorld(oldPort, oldGDeviceH);
+						/*	 	UnlockPixels(GetPortPixMap(theGWorld));
+								DisposeGWorld(theGWorld);
 							}*/
 							/************/
 	
-							InvalWindowRect( GetDialogWindow( theDia), &SampleRect);
-							UpdateSampleWindow( theDia);
+							InvalWindowRect(GetDialogWindow(theDia), &SampleRect);
+							UpdateSampleWindow(theDia);
 							
 							prevPt = aPt;
 						}
@@ -2264,7 +2264,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 								if (tcoc >= curIns->volEnv[ i].pos - 1 && tcoc <= curIns->volEnv[ i].pos + 1)
 								{
 									editPtEnv = i;
-									SetCursor( &CHandCrsr);
+									SetCursor(&CHandCrsr);
 									break;
 								}
 								else if (tcoc < curIns->volEnv[ i].pos)
@@ -2290,7 +2290,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 								}
 							}
 							
-							if (editPtEnv == -1)		// Le Pt est derriere le dernier pt vol ( curIns->volSize)
+							if (editPtEnv == -1)		// Le Pt est derriere le dernier pt vol (curIns->volSize)
 							{
 								if (curIns->volSize < 12)
 								{
@@ -2329,34 +2329,34 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 							
 							/************/
 							
-							GetGWorld( &oldPort, &oldGDeviceH);
+							GetGWorld(&oldPort, &oldGDeviceH);
 						/*	theGWorld = NULL;
-							NewGWorld( &theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
+							NewGWorld(&theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
 							if (theGWorld)
 							{
-								LockPixels( GetPortPixMap( theGWorld));
+								LockPixels(GetPortPixMap(theGWorld));
 								
-								tempPM = GetPortPixMap( theGWorld);
+								tempPM = GetPortPixMap(theGWorld);
 								theGWorld->portPixMap = BitMapSample[ InstruNo];
 						*/
-								SetGWorld( BitMapSample[ InstruNo], NULL);
+								SetGWorld(BitMapSample[ InstruNo], NULL);
 								
-								DrawSample( -1, -1, InstruNo, SampleDlog[ InstruNo]);
+								DrawSample(-1, -1, InstruNo, SampleDlog[ InstruNo]);
 								
 						//		theGWorld->portPixMap = tempPM;
 								
-								SetGWorld( oldPort, oldGDeviceH);
-						/*	 	UnlockPixels( GetPortPixMap( theGWorld));
-								DisposeGWorld( theGWorld);
+								SetGWorld(oldPort, oldGDeviceH);
+						/*	 	UnlockPixels(GetPortPixMap(theGWorld));
+								DisposeGWorld(theGWorld);
 							}*/
 							/************/
 							
-							InvalWindowRect( GetDialogWindow( theDia), &SampleRect);
-							UpdateSampleWindow( theDia);
+							InvalWindowRect(GetDialogWindow(theDia), &SampleRect);
+							UpdateSampleWindow(theDia);
 							
 							prevPt = aPt;
 						}
-						else Erreur( 79, -98);
+						else Erreur(79, -98);
 					}
 				}
 				break;
@@ -2378,51 +2378,51 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 					
 					if (BS == BE)
 					{
-						if (SampleDataD( InstruNo)->stereo) BE = BS + 2;
+						if (SampleDataD(InstruNo)->stereo) BE = BS + 2;
 						else BE = BS + 1;
 					}
 					
 					if (BS < 0) BS = 0;
-					if (BE > SampleDataD( InstruNo)->size) BE = SampleDataD( InstruNo)->size;
+					if (BE > SampleDataD(InstruNo)->size) BE = SampleDataD(InstruNo)->size;
 					
-					if (SampleDataD( InstruNo)->amp == 16)
+					if (SampleDataD(InstruNo)->amp == 16)
 					{
-						nVal16S = (( (long) (aPt.v - SampleRect.top) * 65535L) / (long) (SampleRect.bottom - SampleRect.top));
-						nVal16E = (( (long) (prevPt.v - SampleRect.top) * 65535L) / (long) (SampleRect.bottom - SampleRect.top));
+						nVal16S = (((long) (aPt.v - SampleRect.top) * 65535L) / (long) (SampleRect.bottom - SampleRect.top));
+						nVal16E = (((long) (prevPt.v - SampleRect.top) * 65535L) / (long) (SampleRect.bottom - SampleRect.top));
 						
 						BS /= 2;
 						BE /= 2;
 						
 						if (BS == BE)
 						{
-							if (SampleDataD( InstruNo)->stereo) BE = BS + 2;
+							if (SampleDataD(InstruNo)->stereo) BE = BS + 2;
 							else BE = BS + 1;
 						}
 						
-						if (BE > SampleDataD( InstruNo)->size/2) BE = SampleDataD( InstruNo)->size/2;		// Where are in 16 bits!
+						if (BE > SampleDataD(InstruNo)->size/2) BE = SampleDataD(InstruNo)->size/2;		// Where are in 16 bits!
 						
-						if (SampleDataD( InstruNo)->stereo)
+						if (SampleDataD(InstruNo)->stereo)
 						{
 							BS /= 2;		BS *= 2;
 							BE /= 2;		BE *= 2;
-							if (!IsPressed( 0x38)) if (curMode[ InstruNo]) BS++;
-							if (!IsPressed( 0x38)) if (curMode[ InstruNo]) BE++;
+							if (!IsPressed(0x38)) if (curMode[ InstruNo]) BS++;
+							if (!IsPressed(0x38)) if (curMode[ InstruNo]) BE++;
 							
 							for (x = BS; x < BE; x++)
 							{
-								val = (long) nVal16S +  ( (long) (x - BS) * (long) ( nVal16E - nVal16S)/ (long) (BE - BS));
+								val = (long) nVal16S +  ((long) (x - BS) * (long) (nVal16E - nVal16S)/ (long) (BE - BS));
 								theShortSample[ x] = val - 0x8000;
 								
 								x++;
 								
-								if (IsPressed( 0x38)) theShortSample[ x] = val - 0x8000;
+								if (IsPressed(0x38)) theShortSample[ x] = val - 0x8000;
 							}
 						}
 						else
 						{
 							for (x = BS; x < BE; x++)
 							{
-								val = (long) nVal16S +  ( (long) (x - BS) * (long) ( nVal16E - nVal16S)/ (long) (BE - BS));
+								val = (long) nVal16S +  ((long) (x - BS) * (long) (nVal16E - nVal16S)/ (long) (BE - BS));
 								theShortSample[ x] = val - 0x8000;
 							}
 						}
@@ -2432,30 +2432,30 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 						nVal8S = (((long) (aPt.v - SampleRect.top) * 255L) / (long) (SampleRect.bottom - SampleRect.top));
 						nVal8E = (((long) (prevPt.v - SampleRect.top) * 255L) / (long) (SampleRect.bottom - SampleRect.top));
 						
-						if (BE > SampleDataD( InstruNo)->size) BE = SampleDataD( InstruNo)->size;
+						if (BE > SampleDataD(InstruNo)->size) BE = SampleDataD(InstruNo)->size;
 						
-						if (SampleDataD( InstruNo)->stereo)
+						if (SampleDataD(InstruNo)->stereo)
 						{
 							BS /= 2;		BS *= 2;
 							BE /= 2;		BE *= 2;
-							if (!IsPressed( 0x38)) if (curMode[ InstruNo]) BS++;
-							if (!IsPressed( 0x38)) if (curMode[ InstruNo]) BE++;
+							if (!IsPressed(0x38)) if (curMode[ InstruNo]) BS++;
+							if (!IsPressed(0x38)) if (curMode[ InstruNo]) BE++;
 							
 							for (x = BS; x < BE; x++)
 							{
-								val = (long) nVal8S +  ( (long) (x - BS) * (long) ( nVal8E - nVal8S)/ (long) (BE - BS));
+								val = (long) nVal8S +  ((long) (x - BS) * (long) (nVal8E - nVal8S)/ (long) (BE - BS));
 								theSample[ x] = val - 0x80;
 								
 								x++;
 								
-								if (IsPressed( 0x38)) theSample[ x] = val - 0x80;
+								if (IsPressed(0x38)) theSample[ x] = val - 0x80;
 							}
 						}
 						else
 						{
 							for (x = BS; x < BE; x++)
 							{
-								val = (long) nVal8S +  ( (long) (x - BS) * (long) ( nVal8E - nVal8S)/ (long) (BE - BS));
+								val = (long) nVal8S +  ((long) (x - BS) * (long) (nVal8E - nVal8S)/ (long) (BE - BS));
 								theSample[ x] = val - 0x80;
 							}
 						}
@@ -2463,40 +2463,40 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 					
 					if (BS != BE)
 					{
-						SetRect( &tRect, aPt.h, SampleRect.top, prevPt.h, SampleRect.bottom);
+						SetRect(&tRect, aPt.h, SampleRect.top, prevPt.h, SampleRect.bottom);
 						
 						x = SampleRect.right;
 						
-						if (SampleDataD( InstruNo)->amp == 16) x *=2;
-						if (SampleDataD( InstruNo)->stereo) x *= 3;
+						if (SampleDataD(InstruNo)->amp == 16) x *=2;
+						if (SampleDataD(InstruNo)->stereo) x *= 3;
 						
 						tRect.left -= (x / sampleSize) + 2;
 						tRect.right += (x / sampleSize) + 2;
 						
-						ClipRect( &tRect);
+						ClipRect(&tRect);
 						
-						DrawSample( tRect.left - 4, tRect.right + 4, InstruNo, theDia);
+						DrawSample(tRect.left - 4, tRect.right + 4, InstruNo, theDia);
 						
 						if (Clignote[ InstruNo])
 				 		{
 				 			if (TokTak[ InstruNo])
 				 			{
-				 				tempRect.left = ByteToPos( SelecRect[ InstruNo].start, InstruNo);
+				 				tempRect.left = ByteToPos(SelecRect[ InstruNo].start, InstruNo);
 								tempRect.right = tempRect.left +1;
 								tempRect.top = SampleRect.top;
 								tempRect.bottom = SampleRect.bottom;
 								
-								InvertRect( &tempRect);
+								InvertRect(&tempRect);
 				 			}
 				 		}
 				 		else
 				 		{
-				 			tempRect.left = ByteToPos( SelecRect[ InstruNo].start, InstruNo);
-							tempRect.right = ByteToPos( SelecRect[ InstruNo].end, InstruNo);
+				 			tempRect.left = ByteToPos(SelecRect[ InstruNo].start, InstruNo);
+							tempRect.right = ByteToPos(SelecRect[ InstruNo].end, InstruNo);
 							tempRect.top = SampleRect.top;
 							tempRect.bottom = SampleRect.bottom;
 								
-							InvertRect( &tempRect);
+							InvertRect(&tempRect);
 						}
 					}
 					if (!Inverse) prevPt = aPt;
@@ -2506,61 +2506,61 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 		
 	}while (Button());
 	
-	SetClip( saveClipRgn);
-	DisposeRgn( saveClipRgn);
+	SetClip(saveClipRgn);
+	DisposeRgn(saveClipRgn);
 	
-	RGBBackColor( &theColor);
+	RGBBackColor(&theColor);
 	
-	InternalUpdate( InstruNo);
+	InternalUpdate(InstruNo);
 }
 
-void DrawEnveloppe( short ins, DialogPtr	theDia)
+void DrawEnveloppe(short ins, DialogPtr	theDia)
 {
 Str255		aStr;
 short		itemType;
 short		i, high;
 InstrData	*curIns = &curMusic->fid[ ins];
 
-	BackColor( whiteColor);
-	ForeColor( blackColor);
+	BackColor(whiteColor);
+	ForeColor(blackColor);
 	
-	GetSampleRect( theDia);
+	GetSampleRect(theDia);
 	
-	//PaintRect( &SampleRect);
+	//PaintRect(&SampleRect);
 	
 	high = SampleRect.bottom - SampleRect.top;
 	
 	// Envelope
 	
-	RGBForeColor( &theColor);
+	RGBForeColor(&theColor);
 	for (i = 0; i < curIns->volSize; i++)
 	{
-		MoveTo( ByteToPos( curIns->volEnv[ i].pos, ins), SampleRect.top);
-		LineTo( ByteToPos( curIns->volEnv[ i].pos, ins), SampleRect.bottom);
+		MoveTo(ByteToPos(curIns->volEnv[ i].pos, ins), SampleRect.top);
+		LineTo(ByteToPos(curIns->volEnv[ i].pos, ins), SampleRect.bottom);
 	}
 	
-	PenSize( 2, 2);
-	ForeColor( yellowColor);
+	PenSize(2, 2);
+	ForeColor(yellowColor);
 	if (curIns->volSize > 0)
 	{
-		MoveTo( ByteToPos( 0, ins), SampleRect.top + ((64 - curIns->volEnv[ 0].val) * high) / 64);
+		MoveTo(ByteToPos(0, ins), SampleRect.top + ((64 - curIns->volEnv[ 0].val) * high) / 64);
 		for (i = 0; i < curIns->volSize; i++)
 		{
-			LineTo( ByteToPos( curIns->volEnv[ i].pos, ins), SampleRect.top + ((64 - curIns->volEnv[ i].val) * high) / 64);
+			LineTo(ByteToPos(curIns->volEnv[ i].pos, ins), SampleRect.top + ((64 - curIns->volEnv[ i].val) * high) / 64);
 		}
-		LineTo( SampleRect.right, SampleRect.top + ((64 - curIns->volEnv[ curIns->volSize-1].val) * high) / 64);
+		LineTo(SampleRect.right, SampleRect.top + ((64 - curIns->volEnv[ curIns->volSize-1].val) * high) / 64);
 	}
 	
 	// Sustain Pt
 	if (curIns->volSize > 0)
 	{
-		PenSize( 2, 2);
+		PenSize(2, 2);
 		if ((curIns->volType & EFSUSTAIN))
 		{
-			ForeColor( greenColor);
+			ForeColor(greenColor);
 		
-			MoveTo( ByteToPos( curIns->volEnv[ curIns->volSus].pos, ins), SampleRect.top);
-			LineTo( ByteToPos( curIns->volEnv[ curIns->volSus].pos, ins), SampleRect.bottom);
+			MoveTo(ByteToPos(curIns->volEnv[ curIns->volSus].pos, ins), SampleRect.top);
+			LineTo(ByteToPos(curIns->volEnv[ curIns->volSus].pos, ins), SampleRect.bottom);
 		}
 	}
 	// Envelope Loop
@@ -2568,97 +2568,97 @@ InstrData	*curIns = &curMusic->fid[ ins];
 	{
 		if ((curIns->volType & EFLOOP))
 		{
-			ForeColor( redColor);
+			ForeColor(redColor);
 			
-			MoveTo( ByteToPos( curIns->volEnv[ curIns->volBeg].pos, ins)-2, SampleRect.top);
-			LineTo( ByteToPos( curIns->volEnv[ curIns->volBeg].pos, ins)-2 , SampleRect.bottom-2);
+			MoveTo(ByteToPos(curIns->volEnv[ curIns->volBeg].pos, ins)-2, SampleRect.top);
+			LineTo(ByteToPos(curIns->volEnv[ curIns->volBeg].pos, ins)-2 , SampleRect.bottom-2);
 				
-			LineTo( ByteToPos( curIns->volEnv[ curIns->volEnd].pos, ins)+2, SampleRect.bottom-2);
-			LineTo( ByteToPos( curIns->volEnv[ curIns->volEnd].pos, ins)+2, SampleRect.top);
+			LineTo(ByteToPos(curIns->volEnv[ curIns->volEnd].pos, ins)+2, SampleRect.bottom-2);
+			LineTo(ByteToPos(curIns->volEnv[ curIns->volEnd].pos, ins)+2, SampleRect.top);
 				
-			LineTo( ByteToPos( curIns->volEnv[ curIns->volBeg].pos, ins)-2, SampleRect.top);
+			LineTo(ByteToPos(curIns->volEnv[ curIns->volBeg].pos, ins)-2, SampleRect.top);
 		}
 	}
-	ForeColor( blackColor);
-	PenSize( 1, 1);
+	ForeColor(blackColor);
+	PenSize(1, 1);
 	
 	if (!(curIns->volType & EFON))
 	{
-		ForeColor( redColor);
+		ForeColor(redColor);
 	
-		pStrcpy( aStr, "\pEnvelope NOT active!");
-		itemType = StringWidth( aStr);
+		pStrcpy(aStr, "\pEnvelope NOT active!");
+		itemType = StringWidth(aStr);
 	
-		MoveTo( SampleRect.left + (SampleRect.right - SampleRect.left)/2 - itemType/2,
+		MoveTo(SampleRect.left + (SampleRect.right - SampleRect.left)/2 - itemType/2,
 				SampleRect.top + (SampleRect.bottom - SampleRect.top)/2);
 				
-		TextFont( 0);		TextSize( 0);
-		DrawString( aStr);
-		TextFont( 4);		TextSize( 9);
-		ForeColor( blackColor);
+		TextFont(0);		TextSize(0);
+		DrawString(aStr);
+		TextFont(4);		TextSize(9);
+		ForeColor(blackColor);
 	}
 	
-//	SetSelectionZero( ins);
+//	SetSelectionZero(ins);
 }
 
-void DrawPanningEnveloppe( short ins, DialogPtr	theDia)
+void DrawPanningEnveloppe(short ins, DialogPtr	theDia)
 {
 Str255		aStr;
 short		itemType;
 short		i, high;
 InstrData	*curIns = &curMusic->fid[ ins];
 
-	BackColor( whiteColor);
-	ForeColor( blackColor);
+	BackColor(whiteColor);
+	ForeColor(blackColor);
 	
-	GetSampleRect( theDia);
-	//PaintRect( &SampleRect);
+	GetSampleRect(theDia);
+	//PaintRect(&SampleRect);
 	
 	high = SampleRect.bottom - SampleRect.top;
 	
 	// Right / Left
 	
-	ForeColor( greenColor);
-	MoveTo( 0, SampleRect.top + high/2);
-	LineTo( SampleRect.right, SampleRect.top + high/2);
+	ForeColor(greenColor);
+	MoveTo(0, SampleRect.top + high/2);
+	LineTo(SampleRect.right, SampleRect.top + high/2);
 	
-	ForeColor( whiteColor);
-	TextFont( 0);		TextSize( 0);
-	pStrcpy( aStr, "\pRight");	MoveTo( SampleRect.left + 2, SampleRect.top + 13);		DrawString( aStr);
-	pStrcpy( aStr, "\pLeft");	MoveTo( SampleRect.left + 2, SampleRect.bottom - 4);	DrawString( aStr);
-	TextFont( 4);		TextSize( 9);
+	ForeColor(whiteColor);
+	TextFont(0);		TextSize(0);
+	pStrcpy(aStr, "\pRight");	MoveTo(SampleRect.left + 2, SampleRect.top + 13);		DrawString(aStr);
+	pStrcpy(aStr, "\pLeft");	MoveTo(SampleRect.left + 2, SampleRect.bottom - 4);	DrawString(aStr);
+	TextFont(4);		TextSize(9);
 	
 	// Envelope
 	
-	RGBForeColor( &theColor);
+	RGBForeColor(&theColor);
 	for (i = 0; i < curIns->pannSize; i++)
 	{
-		MoveTo( ByteToPos( curIns->pannEnv[ i].pos, ins), SampleRect.top);
-		LineTo( ByteToPos( curIns->pannEnv[ i].pos, ins), SampleRect.bottom);
+		MoveTo(ByteToPos(curIns->pannEnv[ i].pos, ins), SampleRect.top);
+		LineTo(ByteToPos(curIns->pannEnv[ i].pos, ins), SampleRect.bottom);
 	}
 	
-	PenSize( 2, 2);
-	ForeColor( yellowColor);
+	PenSize(2, 2);
+	ForeColor(yellowColor);
 	if (curIns->pannSize > 0)
 	{
-		MoveTo( ByteToPos( 0, ins), SampleRect.top + ((64 - curIns->pannEnv[ 0].val) * high) / 64);
+		MoveTo(ByteToPos(0, ins), SampleRect.top + ((64 - curIns->pannEnv[ 0].val) * high) / 64);
 		for (i = 0; i < curIns->pannSize; i++)
 		{
-			LineTo( ByteToPos( curIns->pannEnv[ i].pos, ins), SampleRect.top + ((64 - curIns->pannEnv[ i].val) * high) / 64);
+			LineTo(ByteToPos(curIns->pannEnv[ i].pos, ins), SampleRect.top + ((64 - curIns->pannEnv[ i].val) * high) / 64);
 		}
-		LineTo( SampleRect.right, SampleRect.top + ((64 - curIns->pannEnv[ curIns->pannSize-1].val) * high) / 64);
+		LineTo(SampleRect.right, SampleRect.top + ((64 - curIns->pannEnv[ curIns->pannSize-1].val) * high) / 64);
 	}
 	
 	// Sustain Pt
 	if (curIns->pannSize > 0)
 	{
-		PenSize( 2, 2);
+		PenSize(2, 2);
 		if ((curIns->pannType & EFSUSTAIN))
 		{
-			ForeColor( greenColor);
+			ForeColor(greenColor);
 		
-			MoveTo( ByteToPos( curIns->pannEnv[ curIns->pannSus].pos, ins), SampleRect.top);
-			LineTo( ByteToPos( curIns->pannEnv[ curIns->pannSus].pos, ins), SampleRect.bottom);
+			MoveTo(ByteToPos(curIns->pannEnv[ curIns->pannSus].pos, ins), SampleRect.top);
+			LineTo(ByteToPos(curIns->pannEnv[ curIns->pannSus].pos, ins), SampleRect.bottom);
 		}
 	}
 	// Envelope Loop
@@ -2666,40 +2666,40 @@ InstrData	*curIns = &curMusic->fid[ ins];
 	{
 		if ((curIns->pannType & EFLOOP))
 		{
-			ForeColor( redColor);
+			ForeColor(redColor);
 			
-			MoveTo( ByteToPos( curIns->pannEnv[ curIns->pannBeg].pos, ins)-2, SampleRect.top);
-			LineTo( ByteToPos( curIns->pannEnv[ curIns->pannBeg].pos, ins)-2 , SampleRect.bottom-2);
+			MoveTo(ByteToPos(curIns->pannEnv[ curIns->pannBeg].pos, ins)-2, SampleRect.top);
+			LineTo(ByteToPos(curIns->pannEnv[ curIns->pannBeg].pos, ins)-2 , SampleRect.bottom-2);
 				
-			LineTo( ByteToPos( curIns->pannEnv[ curIns->pannEnd].pos, ins)+2, SampleRect.bottom-2);
-			LineTo( ByteToPos( curIns->pannEnv[ curIns->pannEnd].pos, ins)+2, SampleRect.top);
+			LineTo(ByteToPos(curIns->pannEnv[ curIns->pannEnd].pos, ins)+2, SampleRect.bottom-2);
+			LineTo(ByteToPos(curIns->pannEnv[ curIns->pannEnd].pos, ins)+2, SampleRect.top);
 				
-			LineTo( ByteToPos( curIns->pannEnv[ curIns->pannBeg].pos, ins)-2, SampleRect.top);
+			LineTo(ByteToPos(curIns->pannEnv[ curIns->pannBeg].pos, ins)-2, SampleRect.top);
 		}
 	}
-	ForeColor( blackColor);
-	PenSize( 1, 1);
+	ForeColor(blackColor);
+	PenSize(1, 1);
 	
 	if (!(curIns->pannType & EFON))
 	{
-		ForeColor( redColor);
+		ForeColor(redColor);
 	
-		pStrcpy( aStr, "\pEnvelope NOT active!");
-		itemType = StringWidth( aStr);
+		pStrcpy(aStr, "\pEnvelope NOT active!");
+		itemType = StringWidth(aStr);
 	
-		MoveTo( SampleRect.left + (SampleRect.right - SampleRect.left)/2 - itemType/2,
+		MoveTo(SampleRect.left + (SampleRect.right - SampleRect.left)/2 - itemType/2,
 				SampleRect.top + (SampleRect.bottom - SampleRect.top)/2);
 				
-		TextFont( 0);		TextSize( 0);
-		DrawString( aStr);
-		TextFont( 4);		TextSize( 9);
-		ForeColor( blackColor);
+		TextFont(0);		TextSize(0);
+		DrawString(aStr);
+		TextFont(4);		TextSize(9);
+		ForeColor(blackColor);
 	}
 	
-//	SetSelectionZero( ins);
+//	SetSelectionZero(ins);
 }
 
-void DrawSample( short	tSS, short tSE, short InstruNo, DialogPtr	theDia)
+void DrawSample(short	tSS, short tSE, short InstruNo, DialogPtr	theDia)
 {
 	Point			PP;
 	long			sampleSize, x, temp, val, start, XPos, end, i, minY, maxY;
@@ -2716,16 +2716,16 @@ void DrawSample( short	tSS, short tSE, short InstruNo, DialogPtr	theDia)
 	short			samp;
 	Boolean			grayDraw = false;
 	
-	ForeColor( blackColor);
-	GetSampleRect( theDia);
-	PaintRect( &SampleRect);
+	ForeColor(blackColor);
+	GetSampleRect(theDia);
+	PaintRect(&SampleRect);
 	
 	if (curSample[ InstruNo] == volumeEnv)
 	{
 		grayDraw = true;
 		//if (!(curMusic->fid[ InstruNo].volType & EFNOTE))
 		{
-			DrawEnveloppe( InstruNo, theDia);
+			DrawEnveloppe(InstruNo, theDia);
 			return;
 		}
 	}
@@ -2734,15 +2734,15 @@ void DrawSample( short	tSS, short tSE, short InstruNo, DialogPtr	theDia)
 		grayDraw = true;
 		//if (!(curMusic->fid[ InstruNo].pannType & EFNOTE))
 		{
-			DrawPanningEnveloppe( InstruNo, theDia);
+			DrawPanningEnveloppe(InstruNo, theDia);
 			return;
 		}
 	}
 	
 	/**/
 	
-	BackColor( whiteColor);
-	ForeColor( blackColor);
+	BackColor(whiteColor);
+	ForeColor(blackColor);
 	
 
 	if (tSS == -1 && tSE == -1)
@@ -2766,7 +2766,7 @@ void DrawSample( short	tSS, short tSE, short InstruNo, DialogPtr	theDia)
 	curData = curMusic->sample[ curMusic->fid[ InstruNo].firstSample +  samp];
 	if (curData == NULL) 
 	{
-		MyDebugStr( __LINE__, __FILE__, "Samp ERR");
+		MyDebugStr(__LINE__, __FILE__, "Samp ERR");
 		return;
 	}
 	theSample = curData->data;
@@ -2778,26 +2778,26 @@ void DrawSample( short	tSS, short tSE, short InstruNo, DialogPtr	theDia)
 	{
 		RENVOI:
 		
-		ForeColor( redColor);
+		ForeColor(redColor);
 		
 		if (!grayDraw)
 		{
-			pStrcpy( aStr, "\pNo data in this sample");
-			itemType = StringWidth( aStr);
+			pStrcpy(aStr, "\pNo data in this sample");
+			itemType = StringWidth(aStr);
 		
-			MoveTo( SampleRect.left + (SampleRect.right - SampleRect.left)/2 - itemType/2,
+			MoveTo(SampleRect.left + (SampleRect.right - SampleRect.left)/2 - itemType/2,
 				SampleRect.top + (SampleRect.bottom - SampleRect.top)/2);
-			DrawString( aStr);
-			ForeColor( blackColor);
+			DrawString(aStr);
+			ForeColor(blackColor);
 		
-		SetSelectionZero( InstruNo);
+		SetSelectionZero(InstruNo);
 		}
 		goto ENDSAMPLE;
 		
 		return;
 	}
 	
-	val = GetControlValue( xScroll[ InstruNo]);
+	val = GetControlValue(xScroll[ InstruNo]);
 	
 	if (ZoomLevel[ InstruNo] == 1)
 	{
@@ -2806,7 +2806,7 @@ void DrawSample( short	tSS, short tSE, short InstruNo, DialogPtr	theDia)
 	}
 	else
 	{
-		start = GetStartSampleValue( val, InstruNo);	//(val * (SampleDataD( InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
+		start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
 		sampleSize = curMusic->sample[ curMusic->fid[ InstruNo].firstSample + samp]->size / ZoomLevel[ InstruNo];
 
 		end = start + sampleSize;
@@ -2815,32 +2815,32 @@ void DrawSample( short	tSS, short tSE, short InstruNo, DialogPtr	theDia)
 	high = SampleRect.bottom - SampleRect.top;
 
 	/***/ 	
-	ForeColor( greenColor);
-	MoveTo( 0, SampleRect.top + high/2);
-	LineTo( SampleRect.right, SampleRect.top + high/2);
+	ForeColor(greenColor);
+	MoveTo(0, SampleRect.top + high/2);
+	LineTo(SampleRect.right, SampleRect.top + high/2);
 
-	MoveTo( 0, SampleRect.top + high/4);
-	LineTo( SampleRect.right, SampleRect.top + high/4);
+	MoveTo(0, SampleRect.top + high/4);
+	LineTo(SampleRect.right, SampleRect.top + high/4);
 
-	MoveTo( 0, SampleRect.bottom - high/4);
-	LineTo( SampleRect.right, SampleRect.bottom - high/4);
+	MoveTo(0, SampleRect.bottom - high/4);
+	LineTo(SampleRect.right, SampleRect.bottom - high/4);
 	
-	MoveTo( SampleRect.right/2, SampleRect.top);
-	LineTo( SampleRect.right/2, SampleRect.bottom);
+	MoveTo(SampleRect.right/2, SampleRect.top);
+	LineTo(SampleRect.right/2, SampleRect.bottom);
 	
-	MoveTo( SampleRect.right/4, SampleRect.top);
-	LineTo( SampleRect.right/4, SampleRect.bottom);
+	MoveTo(SampleRect.right/4, SampleRect.top);
+	LineTo(SampleRect.right/4, SampleRect.bottom);
 
-	MoveTo( SampleRect.right - SampleRect.right/4, SampleRect.top);
-	LineTo( SampleRect.right - SampleRect.right/4, SampleRect.bottom);
+	MoveTo(SampleRect.right - SampleRect.right/4, SampleRect.top);
+	LineTo(SampleRect.right - SampleRect.right/4, SampleRect.bottom);
 
-	FrameRect( &SampleRect);
+	FrameRect(&SampleRect);
 
 	/********************/
 	
 	if (curData->stereo)
 	{
-		ForeColor( blueColor);
+		ForeColor(blueColor);
 		DrawSampleInt(	sampleSize,
 						start,
 						tSS,
@@ -2853,8 +2853,8 @@ void DrawSample( short	tSS, short tSE, short InstruNo, DialogPtr	theDia)
 						curData);
 	}
 	
-	if (grayDraw) ForeColor( blueColor);//RGBForeColor( &blueColor);
-	else ForeColor( whiteColor);
+	if (grayDraw) ForeColor(blueColor);//RGBForeColor(&blueColor);
+	else ForeColor(whiteColor);
 	DrawSampleInt(	sampleSize,
 					start,
 					tSS,
@@ -2868,20 +2868,20 @@ void DrawSample( short	tSS, short tSE, short InstruNo, DialogPtr	theDia)
 	
 	/********************/
 	
-	DrawLoop( InstruNo);
+	DrawLoop(InstruNo);
 	
 	ENDSAMPLE:
 	
 	if (curSample[ InstruNo] == volumeEnv)
 	{
-		if ((curMusic->fid[ InstruNo].volType & EFNOTE)) DrawEnveloppe( InstruNo, theDia);
+		if ((curMusic->fid[ InstruNo].volType & EFNOTE)) DrawEnveloppe(InstruNo, theDia);
 	}
 	if (curSample[ InstruNo] == panningEnv)
 	{
-		if ((curMusic->fid[ InstruNo].pannType & EFNOTE)) DrawPanningEnveloppe( InstruNo, theDia);
+		if ((curMusic->fid[ InstruNo].pannType & EFNOTE)) DrawPanningEnveloppe(InstruNo, theDia);
 	}
 	
-	ForeColor( blackColor);
+	ForeColor(blackColor);
 }
 
 void InitSampleWindow(void)
@@ -2889,15 +2889,15 @@ void InitSampleWindow(void)
 	short		i;
 	GrafPtr		SavePort;
 
-	GetPort( &SavePort);
+	GetPort(&SavePort);
  	 
  	Flashing = 200;
  	
  	gNowMovingLoop = false;
  	
- 	SampleDlog[ 0] = GetNewDialog( 137, NULL, GetDialogWindow( ToolsDlog));
- 	GetSampleRect( SampleDlog[ 0]);
- 	DisposeDialog( SampleDlog[ 0]);
+ 	SampleDlog[ 0] = GetNewDialog(137, NULL, GetDialogWindow(ToolsDlog));
+ 	GetSampleRect(SampleDlog[ 0]);
+ 	DisposeDialog(SampleDlog[ 0]);
  	
 	for (i = 0; i < MAXINSTRU; i++)
 	{
@@ -2912,37 +2912,37 @@ void InitSampleWindow(void)
 		curSample[ i]		= volumeEnv;
 	}
 	
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
-void SetControlH( short theInstru)
+void SetControlH(short theInstru)
 {
 short	itemType;
 Handle	itemHandle;
 Rect	caRect, itemRect;
 
-	GetPortBounds( GetDialogPort( SampleDlog[ theInstru]), &caRect);
+	GetPortBounds(GetDialogPort(SampleDlog[ theInstru]), &caRect);
 	
-	MyMoveControl( xScroll[ theInstru], -1, caRect.bottom-15);
+	MyMoveControl(xScroll[ theInstru], -1, caRect.bottom-15);
 	
-	MySizeControl( xScroll[ theInstru], caRect.right -13, 16);
+	MySizeControl(xScroll[ theInstru], caRect.right -13, 16);
 	
 	if (ZoomLevel[ theInstru] != 1)
 	{
-		SetControlMinimum( xScroll[ theInstru], 0);
-		SetControlMaximum( xScroll[ theInstru], ZoomLevel[ theInstru] * SAMPLEDEF - SAMPLEDEF);
+		SetControlMinimum(xScroll[ theInstru], 0);
+		SetControlMaximum(xScroll[ theInstru], ZoomLevel[ theInstru] * SAMPLEDEF - SAMPLEDEF);
 		
-		if (gUseControlSize) SetControlViewSize( xScroll[ theInstru], SAMPLEDEF);
+		if (gUseControlSize) SetControlViewSize(xScroll[ theInstru], SAMPLEDEF);
 	}
 	else
 	{
-		SetControlMinimum( xScroll[ theInstru], 0);
-		SetControlMaximum( xScroll[ theInstru], 0);
-		SetControlValue( xScroll[ theInstru], 0);
+		SetControlMinimum(xScroll[ theInstru], 0);
+		SetControlMaximum(xScroll[ theInstru], 0);
+		SetControlValue(xScroll[ theInstru], 0);
 	}
 }
 
-void InternalUpdate( short InstruNo)
+void InternalUpdate(short InstruNo)
 {
 	Str255			String, mainStr;
 	GrafPtr			SavePort;
@@ -2955,23 +2955,23 @@ void InternalUpdate( short InstruNo)
 	Rect			itemRect;
 	short			itemType;
 	
-	GetPort( &SavePort);
+	GetPort(&SavePort);
 	
 	UpdateWaveInfo();
 	
-	if (SampleDlog[ InstruNo] != NULL && IsWindowVisible( GetDialogWindow( SampleDlog[ InstruNo])) == true)
+	if (SampleDlog[ InstruNo] != NULL && IsWindowVisible(GetDialogWindow(SampleDlog[ InstruNo])) == true)
 	{
-		SetPortDialogPort( SampleDlog[ InstruNo]);
+		SetPortDialogPort(SampleDlog[ InstruNo]);
 		
-		GetDialogItem( SampleDlog[ InstruNo] , 30, &itemType, &itemHandle, &itemRect);
-		InvalWindowRect( GetDialogWindow( SampleDlog[ InstruNo]), &itemRect);
+		GetDialogItem(SampleDlog[ InstruNo] , 30, &itemType, &itemHandle, &itemRect);
+		InvalWindowRect(GetDialogWindow(SampleDlog[ InstruNo]), &itemRect);
 		
-		GetSampleRect( SampleDlog[ InstruNo]);
+		GetSampleRect(SampleDlog[ InstruNo]);
 		
-		TextFont( 4);	TextSize( 9);
+		TextFont(4);	TextSize(9);
 		
 		recheck:
-		switch( curSample[ InstruNo])
+		switch(curSample[ InstruNo])
 		{
 			case panningEnv:
 				if (SelecRect[ InstruNo].start > ENVSIZE || SelecRect[ InstruNo].end > ENVSIZE)
@@ -2980,24 +2980,24 @@ void InternalUpdate( short InstruNo)
 					SelecRect[ InstruNo].end	= 0;
 					ZoomLevel[ InstruNo]		= 1;
 				}
-			//	HiliteControl( ZoomBut[ InstruNo], 0);
+			//	HiliteControl(ZoomBut[ InstruNo], 0);
 				
-				ShowControl( FixedBut[ InstruNo]);
-				ShowControl( EnvBut[ InstruNo]);
-				ShowControl( SustainBut[ InstruNo]);
-				ShowControl( LoopBut[ InstruNo]);
+				ShowControl(FixedBut[ InstruNo]);
+				ShowControl(EnvBut[ InstruNo]);
+				ShowControl(SustainBut[ InstruNo]);
+				ShowControl(LoopBut[ InstruNo]);
 				
-				if (!(curMusic->fid[ InstruNo].pannType & EFNOTE))		HiliteControl( FixedBut[ InstruNo], kControlButtonPart);
-				else HiliteControl( FixedBut[ InstruNo], 0);
+				if (!(curMusic->fid[ InstruNo].pannType & EFNOTE))		HiliteControl(FixedBut[ InstruNo], kControlButtonPart);
+				else HiliteControl(FixedBut[ InstruNo], 0);
 				
-				if (curMusic->fid[ InstruNo].pannType & EFON)		HiliteControl( EnvBut[ InstruNo], kControlButtonPart);
-				else HiliteControl( EnvBut[ InstruNo], 0);
+				if (curMusic->fid[ InstruNo].pannType & EFON)		HiliteControl(EnvBut[ InstruNo], kControlButtonPart);
+				else HiliteControl(EnvBut[ InstruNo], 0);
 				
-				if (curMusic->fid[ InstruNo].pannType & EFSUSTAIN)	HiliteControl( SustainBut[ InstruNo], kControlButtonPart);
-				else HiliteControl( SustainBut[ InstruNo], 0);
+				if (curMusic->fid[ InstruNo].pannType & EFSUSTAIN)	HiliteControl(SustainBut[ InstruNo], kControlButtonPart);
+				else HiliteControl(SustainBut[ InstruNo], 0);
 				
-				if (curMusic->fid[ InstruNo].pannType & EFLOOP)	HiliteControl( LoopBut[ InstruNo], kControlButtonPart);
-				else HiliteControl( LoopBut[ InstruNo], 0);
+				if (curMusic->fid[ InstruNo].pannType & EFLOOP)	HiliteControl(LoopBut[ InstruNo], kControlButtonPart);
+				else HiliteControl(LoopBut[ InstruNo], 0);
 			break;
 		
 			case volumeEnv:
@@ -3007,31 +3007,31 @@ void InternalUpdate( short InstruNo)
 					SelecRect[ InstruNo].end	= 0;
 					ZoomLevel[ InstruNo]		= 1;
 				}
-			//	HiliteControl( ZoomBut[ InstruNo], 0);
+			//	HiliteControl(ZoomBut[ InstruNo], 0);
 				
-				ShowControl( FixedBut[ InstruNo]);
-				ShowControl( EnvBut[ InstruNo]);
-				ShowControl( SustainBut[ InstruNo]);
-				ShowControl( LoopBut[ InstruNo]);
+				ShowControl(FixedBut[ InstruNo]);
+				ShowControl(EnvBut[ InstruNo]);
+				ShowControl(SustainBut[ InstruNo]);
+				ShowControl(LoopBut[ InstruNo]);
 				
-				if (!(curMusic->fid[ InstruNo].volType & EFNOTE))		HiliteControl( FixedBut[ InstruNo], kControlButtonPart);
-				else HiliteControl( FixedBut[ InstruNo], 0);
+				if (!(curMusic->fid[ InstruNo].volType & EFNOTE))		HiliteControl(FixedBut[ InstruNo], kControlButtonPart);
+				else HiliteControl(FixedBut[ InstruNo], 0);
 				
-				if (curMusic->fid[ InstruNo].volType & EFON)		HiliteControl( EnvBut[ InstruNo], kControlButtonPart);
-				else HiliteControl( EnvBut[ InstruNo], 0);
+				if (curMusic->fid[ InstruNo].volType & EFON)		HiliteControl(EnvBut[ InstruNo], kControlButtonPart);
+				else HiliteControl(EnvBut[ InstruNo], 0);
 				
-				if (curMusic->fid[ InstruNo].volType & EFSUSTAIN)	HiliteControl( SustainBut[ InstruNo], kControlButtonPart);
-				else HiliteControl( SustainBut[ InstruNo], 0);
+				if (curMusic->fid[ InstruNo].volType & EFSUSTAIN)	HiliteControl(SustainBut[ InstruNo], kControlButtonPart);
+				else HiliteControl(SustainBut[ InstruNo], 0);
 				
-				if (curMusic->fid[ InstruNo].volType & EFLOOP)	HiliteControl( LoopBut[ InstruNo], kControlButtonPart);
-				else HiliteControl( LoopBut[ InstruNo], 0);
+				if (curMusic->fid[ InstruNo].volType & EFLOOP)	HiliteControl(LoopBut[ InstruNo], kControlButtonPart);
+				else HiliteControl(LoopBut[ InstruNo], 0);
 			break;
 			
 			default:
-				HideControl( FixedBut[ InstruNo]);
-				HideControl( EnvBut[ InstruNo]);
-				HideControl( SustainBut[ InstruNo]);
-				HideControl( LoopBut[ InstruNo]);
+				HideControl(FixedBut[ InstruNo]);
+				HideControl(EnvBut[ InstruNo]);
+				HideControl(SustainBut[ InstruNo]);
+				HideControl(LoopBut[ InstruNo]);
 			
 				if (curSample[ InstruNo] >= curMusic->fid[ InstruNo].numSamples)
 				{
@@ -3039,94 +3039,94 @@ void InternalUpdate( short InstruNo)
 					goto recheck;
 				}
 			
-				if (SelecRect[ InstruNo].start > SampleDataD( InstruNo)->size || SelecRect[ InstruNo].end > SampleDataD( InstruNo)->size)
+				if (SelecRect[ InstruNo].start > SampleDataD(InstruNo)->size || SelecRect[ InstruNo].end > SampleDataD(InstruNo)->size)
 				{
 					SelecRect[ InstruNo].start	= 0;
 					SelecRect[ InstruNo].end	= 0;
 					ZoomLevel[ InstruNo]		= 1;
 				}
-			//	HiliteControl( ZoomBut[ InstruNo], 0);
+			//	HiliteControl(ZoomBut[ InstruNo], 0);
 			break;
 		}
 		
-		InvalWindowRect( GetDialogWindow( SampleDlog[ InstruNo]), &SampleRect);
+		InvalWindowRect(GetDialogWindow(SampleDlog[ InstruNo]), &SampleRect);
 		
-		SetControlH( InstruNo);
+		SetControlH(InstruNo);
 		
 		if (BitMapSample[ InstruNo] != NULL)
 		{
-			DisposeGWorld( BitMapSample[ InstruNo]);
+			DisposeGWorld(BitMapSample[ InstruNo]);
 			BitMapSample[ InstruNo] = NULL;
 		}
 		BitMapSample[ InstruNo] = NULL;
-		if (NewGWorld( &BitMapSample[ InstruNo], 8, &SampleRect, nil, nil, (GWorldFlags) 0) == noErr)
-	//	if (NewOffscreenPixMap( &BitMapSample[ InstruNo], &SampleRect) == noErr)
+		if (NewGWorld(&BitMapSample[ InstruNo], 8, &SampleRect, nil, nil, (GWorldFlags) 0) == noErr)
+	//	if (NewOffscreenPixMap(&BitMapSample[ InstruNo], &SampleRect) == noErr)
 		{
 			/************/
 			
-			GetGWorld( &oldPort, &oldGDeviceH);
+			GetGWorld(&oldPort, &oldGDeviceH);
 		/*	theGWorld = NULL;
-			NewGWorld( &theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
+			NewGWorld(&theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
 			if (theGWorld)
 			{
-				LockPixels( GetPortPixMap( theGWorld));
+				LockPixels(GetPortPixMap(theGWorld));
 				
-				tempPM = GetPortPixMap( theGWorld);
+				tempPM = GetPortPixMap(theGWorld);
 				theGWorld->portPixMap = BitMapSample[ InstruNo];
 		*/
-				SetGWorld( BitMapSample[ InstruNo], NULL);
+				SetGWorld(BitMapSample[ InstruNo], NULL);
 				
-				DrawSample( -1, -1, InstruNo, SampleDlog[ InstruNo]);
+				DrawSample(-1, -1, InstruNo, SampleDlog[ InstruNo]);
 				
 		//		theGWorld->portPixMap = tempPM;
 				
-				SetGWorld( oldPort, oldGDeviceH);
-		/*	 	UnlockPixels( GetPortPixMap( theGWorld));
-				DisposeGWorld( theGWorld);
+				SetGWorld(oldPort, oldGDeviceH);
+		/*	 	UnlockPixels(GetPortPixMap(theGWorld));
+				DisposeGWorld(theGWorld);
 			}*/
 			/************/
 		}
 		else BitMapSample[ InstruNo] = NULL;
 		
-		UpdateDisplaySize( InstruNo);
-		UpdateDisplayLoop( InstruNo);
-		UpdateDisplaySelec( InstruNo);
-		UpdateDisplayQuality( InstruNo);
-		UpdateDisplay( InstruNo);
+		UpdateDisplaySize(InstruNo);
+		UpdateDisplayLoop(InstruNo);
+		UpdateDisplaySelec(InstruNo);
+		UpdateDisplayQuality(InstruNo);
+		UpdateDisplay(InstruNo);
 		
-		NTStr( (short) 2, (short) (InstruNo+1), (Ptr) String);
-		strcpy( (Ptr) mainStr, (Ptr) String);
-		strcat( (Ptr) mainStr, " - ");
-		GetInstruName( InstruNo, (Ptr) String);
-		strcat( (Ptr) mainStr, (Ptr) String);
-		MyC2PStr( (Ptr) mainStr);
+		NTStr((short) 2, (short) (InstruNo+1), (Ptr) String);
+		strcpy((Ptr) mainStr, (Ptr) String);
+		strcat((Ptr) mainStr, " - ");
+		GetInstruName(InstruNo, (Ptr) String);
+		strcat((Ptr) mainStr, (Ptr) String);
+		MyC2PStr((Ptr) mainStr);
 		{
-			WindowPtr	tempWin = GetDialogWindow( SampleDlog[ InstruNo]);
+			WindowPtr	tempWin = GetDialogWindow(SampleDlog[ InstruNo]);
 			Str255		winTitle;
 				
-			GetWTitle( tempWin, winTitle);
+			GetWTitle(tempWin, winTitle);
 			
-			if (!EqualString( mainStr, winTitle, true, true))	SetWTitle( tempWin, mainStr);
+			if (!EqualString(mainStr, winTitle, true, true))	SetWTitle(tempWin, mainStr);
 		}
 		DrawInfoInstrument();
 	}
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
 void UpdateSampleWindows(void)
 {
 	short		i;
 	
-	SetCursor( &watchCrsr);
+	SetCursor(&watchCrsr);
 	
-	for(i=0; i<MAXINSTRU; i++) InternalUpdate( i);
+	for(i=0; i<MAXINSTRU; i++) InternalUpdate(i);
 	
 	if (thePrefs.ClassicalProjection) UpdateMozartInfo();
 	
-	SetCursor( GetQDGlobalsArrow( &qdarrow));
+	SetCursor(GetQDGlobalsArrow(&qdarrow));
 }
 
-void NCreateSampleWindow( short ins, short samp)
+void NCreateSampleWindow(short ins, short samp)
 {
 	Rect		itemRect;
 	Handle		itemHandle;
@@ -3140,23 +3140,23 @@ void NCreateSampleWindow( short ins, short samp)
 	GWorldPtr		theGWorld = NULL;
 	PixMapHandle	tempPM;
 	
-	GetPort( &SavePort);
+	GetPort(&SavePort);
 
 	curSample[ ins] = samp;
 	curMode[ ins] = 0;
 	
 	if (SampleDlog[ ins] == NULL)
 	{
-		SampleDlog[ ins] = GetNewDialog( 137, NULL, GetDialogWindow( ToolsDlog));
+		SampleDlog[ ins] = GetNewDialog(137, NULL, GetDialogWindow(ToolsDlog));
 		
-		ChangeDialogFont( SampleDlog[ ins]);
+		ChangeDialogFont(SampleDlog[ ins]);
 		
 		SelectMode[ ins] = eSelect;
 	
-		SetPortDialogPort( SampleDlog[ ins]);
-		TextFont( 4);		TextSize( 9);
+		SetPortDialogPort(SampleDlog[ ins]);
+		TextFont(4);		TextSize(9);
 		
-		AutoPosition( SampleDlog[ ins]);
+		AutoPosition(SampleDlog[ ins]);
 	
 		TokTak[ ins] 			= false;
 		Clignote[ ins] 			= false;
@@ -3164,8 +3164,8 @@ void NCreateSampleWindow( short ins, short samp)
 		SelecRect[ ins].end		= 0;
 		ZoomLevel[ ins] 		= 1;
 		
-		SetRect( &itemRect, -100, -100, -90, -90);
-		xScroll[ ins] = NewControl( 	GetDialogWindow( SampleDlog[ ins]),
+		SetRect(&itemRect, -100, -100, -90, -90);
+		xScroll[ ins] = NewControl(	GetDialogWindow(SampleDlog[ ins]),
 								&itemRect,
 								"\p.",
 								true,
@@ -3175,9 +3175,9 @@ void NCreateSampleWindow( short ins, short samp)
 								gScrollBarID,
 								0);
 								
-		GetDialogItem( SampleDlog[ ins] , 40, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(SampleDlog[ ins] , 40, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		FixedBut[ ins] = NewControl( 	GetDialogWindow( SampleDlog[ ins]),
+		FixedBut[ ins] = NewControl(	GetDialogWindow(SampleDlog[ ins]),
 								&itemRect,
 								"\p",
 							true,
@@ -3187,9 +3187,9 @@ void NCreateSampleWindow( short ins, short samp)
 							kControlBevelButtonNormalBevelProc,
 							0);
 		
-		GetDialogItem( SampleDlog[ ins] , 13, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(SampleDlog[ ins] , 13, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		EnvBut[ ins] = NewControl( 	GetDialogWindow( SampleDlog[ ins]),
+		EnvBut[ ins] = NewControl(	GetDialogWindow(SampleDlog[ ins]),
 								&itemRect,
 								"\p",
 							true,
@@ -3198,9 +3198,9 @@ void NCreateSampleWindow( short ins, short samp)
 							190,
 							kControlBevelButtonNormalBevelProc,
 							0);
-		GetDialogItem( SampleDlog[ ins] , 36, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(SampleDlog[ ins] , 36, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		SustainBut[ ins] = NewControl( 	GetDialogWindow( SampleDlog[ ins]),
+		SustainBut[ ins] = NewControl(	GetDialogWindow(SampleDlog[ ins]),
 								&itemRect,
 								"\p",
 							true,
@@ -3209,9 +3209,9 @@ void NCreateSampleWindow( short ins, short samp)
 							192,
 							kControlBevelButtonNormalBevelProc,
 							0);
-		GetDialogItem( SampleDlog[ ins] , 37, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(SampleDlog[ ins] , 37, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		LoopBut[ ins] = NewControl( 	GetDialogWindow( SampleDlog[ ins]),
+		LoopBut[ ins] = NewControl(	GetDialogWindow(SampleDlog[ ins]),
 								&itemRect,
 								"\p",
 							true,
@@ -3223,8 +3223,8 @@ void NCreateSampleWindow( short ins, short samp)
 		
 		
 		
-		GetDialogItem( SampleDlog[ ins] , 25, &itemType, &itemHandle, &itemRect);
-		InfoBut[ ins] = NewControl( 	GetDialogWindow( SampleDlog[ ins]),
+		GetDialogItem(SampleDlog[ ins] , 25, &itemType, &itemHandle, &itemRect);
+		InfoBut[ ins] = NewControl(	GetDialogWindow(SampleDlog[ ins]),
 								&itemRect,
 								"\p",
 								true,
@@ -3235,8 +3235,8 @@ void NCreateSampleWindow( short ins, short samp)
 								0);
 								
 								
-		GetDialogItem( SampleDlog[ ins] , 26, &itemType, &itemHandle, &itemRect);
-		PencilBut[ ins] = NewControl(	GetDialogWindow( SampleDlog[ ins]),
+		GetDialogItem(SampleDlog[ ins] , 26, &itemType, &itemHandle, &itemRect);
+		PencilBut[ ins] = NewControl(	GetDialogWindow(SampleDlog[ ins]),
 								&itemRect,
 								"\p",
 								true,
@@ -3245,8 +3245,8 @@ void NCreateSampleWindow( short ins, short samp)
 								175,
 								kControlBevelButtonNormalBevelProc,
 								0);
-		GetDialogItem( SampleDlog[ ins] , 27, &itemType, &itemHandle, &itemRect);
-		SelectBut[ ins] = NewControl(	GetDialogWindow( SampleDlog[ ins]),
+		GetDialogItem(SampleDlog[ ins] , 27, &itemType, &itemHandle, &itemRect);
+		SelectBut[ ins] = NewControl(	GetDialogWindow(SampleDlog[ ins]),
 								&itemRect,
 								"\p",
 								true,
@@ -3256,8 +3256,8 @@ void NCreateSampleWindow( short ins, short samp)
 								kControlBevelButtonNormalBevelProc,
 								0);
 
-		GetDialogItem( SampleDlog[ ins] , 18, &itemType, &itemHandle, &itemRect);
-		ZoomBut[ ins] = NewControl(	GetDialogWindow( SampleDlog[ ins]),
+		GetDialogItem(SampleDlog[ ins] , 18, &itemType, &itemHandle, &itemRect);
+		ZoomBut[ ins] = NewControl(	GetDialogWindow(SampleDlog[ ins]),
 								&itemRect,
 								"\p",
 								true,
@@ -3267,46 +3267,46 @@ void NCreateSampleWindow( short ins, short samp)
 								kControlBevelButtonNormalBevelProc,
 								0);
 		
-		HiliteControl( SelectBut[ ins], kControlButtonPart);
-		HiliteControl( PencilBut[ ins], 0);
-		HiliteControl( ZoomBut[ ins], 0);
+		HiliteControl(SelectBut[ ins], kControlButtonPart);
+		HiliteControl(PencilBut[ ins], 0);
+		HiliteControl(ZoomBut[ ins], 0);
 
-		HideControl( FixedBut[ ins]);
-		HideControl( EnvBut[ ins]);
-		HideControl( SustainBut[ ins]);
-		HideControl( LoopBut[ ins]);
+		HideControl(FixedBut[ ins]);
+		HideControl(EnvBut[ ins]);
+		HideControl(SustainBut[ ins]);
+		HideControl(LoopBut[ ins]);
 
 		if (DragManagerUse)
 		{
-			MyTrackingHandlerUPP 		= NewDragTrackingHandlerUPP( MyTrackingSample);
-		//	MyReceiveDropHandlerUPP 	= NewDragReceiveHandlerUPP( MyReceiveDropHandler);
-		//	mySendDataUPP 				= NewDragSendDataUPP( MySendSampleProc);
+			MyTrackingHandlerUPP 		= NewDragTrackingHandlerUPP(MyTrackingSample);
+		//	MyReceiveDropHandlerUPP 	= NewDragReceiveHandlerUPP(MyReceiveDropHandler);
+		//	mySendDataUPP 				= NewDragSendDataUPP(MySendSampleProc);
 			
-		//	InstallTrackingHandler( (DragTrackingHandlerUPP) MyTrackingHandlerUPP, SampleDlog[ ins], (void *) NULL);
-		//	InstallReceiveHandler( (DragReceiveHandlerUPP) MyReceiveDropHandlerUPP, SampleDlog[ ins], (void *) NULL);
+		//	InstallTrackingHandler((DragTrackingHandlerUPP) MyTrackingHandlerUPP, SampleDlog[ ins], (void *) NULL);
+		//	InstallReceiveHandler((DragReceiveHandlerUPP) MyReceiveDropHandlerUPP, SampleDlog[ ins], (void *) NULL);
 		}
 	}
 	
-	SetPortDialogPort( SampleDlog[ ins]);
-	ShowWindow( GetDialogWindow( SampleDlog[ ins]));
-	SelectWindow2( GetDialogWindow( SampleDlog[ ins]));
-	GetSampleRect( SampleDlog[ ins]);
-//	SetMaxBottomWindow( 256 + SampleRect.top + 17 + SAMPLERECTTOP, SampleDlog[ ins]);
-	SetMaxWindow( 0, 256 + 15 + SAMPLERECTTOP, SampleDlog[ ins]);
+	SetPortDialogPort(SampleDlog[ ins]);
+	ShowWindow(GetDialogWindow(SampleDlog[ ins]));
+	SelectWindow2(GetDialogWindow(SampleDlog[ ins]));
+	GetSampleRect(SampleDlog[ ins]);
+//	SetMaxBottomWindow(256 + SampleRect.top + 17 + SAMPLERECTTOP, SampleDlog[ ins]);
+	SetMaxWindow(0, 256 + 15 + SAMPLERECTTOP, SampleDlog[ ins]);
 	
-	InternalUpdate( ins);
-	SetPort( SavePort);
+	InternalUpdate(ins);
+	SetPort(SavePort);
 }
 
 extern	KeyMap	km;
 
-void CloseSampleWindow( DialogPtr	theDia)
+void CloseSampleWindow(DialogPtr	theDia)
 {
 	short	i;
 	
-	GetKeys( km);
+	GetKeys(km);
 	
-	if (IsPressed( 0x3A) == true)
+	if (IsPressed(0x3A) == true)
 	{
 		for (i = MAXINSTRU; i >= 0 ; i--)
 		{
@@ -3314,60 +3314,60 @@ void CloseSampleWindow( DialogPtr	theDia)
 			{
 				if (DragManagerUse)
 				{
-				//	RemoveTrackingHandler( MyTrackingHandlerUPP, SampleDlog[ i]);
-				//	RemoveReceiveHandler( MyReceiveDropHandlerUPP, SampleDlog[ i]);
+				//	RemoveTrackingHandler(MyTrackingHandlerUPP, SampleDlog[ i]);
+				//	RemoveReceiveHandler(MyReceiveDropHandlerUPP, SampleDlog[ i]);
 				
-					DisposeDragTrackingHandlerUPP( MyTrackingHandlerUPP);
-				//	DisposeDragReceiveHandlerUPP( MyReceiveDropHandlerUPP);
-				//	DisposeDragSendDataUPP( mySendDataUPP);
+					DisposeDragTrackingHandlerUPP(MyTrackingHandlerUPP);
+				//	DisposeDragReceiveHandlerUPP(MyReceiveDropHandlerUPP);
+				//	DisposeDragSendDataUPP(mySendDataUPP);
 				}
 				if (BitMapSample[ i] != NULL)
 				{
-					DisposeGWorld( BitMapSample[ i]);
+					DisposeGWorld(BitMapSample[ i]);
 					BitMapSample[ i] = NULL;
 				}
-				DisposeDialog( SampleDlog[ i]);
+				DisposeDialog(SampleDlog[ i]);
 				SampleDlog[ i] = NULL;
 			}
 		}
 	}
 	else
 	{
-		i = FindSample( theDia);
+		i = FindSample(theDia);
 		
 		if (DragManagerUse)
 		{
-		//	RemoveTrackingHandler( MyTrackingHandlerUPP, SampleDlog[ i]);
-		//	RemoveReceiveHandler( MyReceiveDropHandlerUPP, SampleDlog[ i]);
+		//	RemoveTrackingHandler(MyTrackingHandlerUPP, SampleDlog[ i]);
+		//	RemoveReceiveHandler(MyReceiveDropHandlerUPP, SampleDlog[ i]);
 		
-			DisposeDragTrackingHandlerUPP( MyTrackingHandlerUPP);
-		//	DisposeDragReceiveHandlerUPP( MyReceiveDropHandlerUPP);
-		//	DisposeDragSendDataUPP( mySendDataUPP);
+			DisposeDragTrackingHandlerUPP(MyTrackingHandlerUPP);
+		//	DisposeDragReceiveHandlerUPP(MyReceiveDropHandlerUPP);
+		//	DisposeDragSendDataUPP(mySendDataUPP);
 		}
 		if (BitMapSample[ i] != NULL)
 		{
-			DisposeGWorld( BitMapSample[ i]);
+			DisposeGWorld(BitMapSample[ i]);
 			BitMapSample[ i] = NULL;
 		}
-		DisposeDialog( SampleDlog[ i]);
+		DisposeDialog(SampleDlog[ i]);
 		SampleDlog[ i] = NULL;
 	}
 	
-	SetCursor( GetQDGlobalsArrow( &qdarrow));
+	SetCursor(GetQDGlobalsArrow(&qdarrow));
 }
 
 extern 	EventRecord		theEvent;
 static	long			doubleClick;
 static	Point			lastPosition;
 
-void NAppelPlug( short InstruNo, short samp, short whichPlug)
+void NAppelPlug(short InstruNo, short samp, short whichPlug)
 {
 long	End, Start;
 sData	*curData = curMusic->sample[ curMusic->fid[ InstruNo].firstSample +  samp];
 short	StereoMode;
 
-	Start 	= FindByteStart( InstruNo);
-	End 	= FindByteEnd( InstruNo);
+	Start 	= FindByteStart(InstruNo);
+	End 	= FindByteEnd(InstruNo);
 
 	if (Start == End)
 	{
@@ -3386,12 +3386,12 @@ short	StereoMode;
 	
 	if (curData->stereo)
 	{
-		if (IsPressed( 0x38) && curData->stereo) StereoMode = 0;
+		if (IsPressed(0x38) && curData->stereo) StereoMode = 0;
 		else StereoMode = 1;
 	}
 	else StereoMode = 0;
 	
-	NCallPlugIns( 	whichPlug,
+	NCallPlugIns(	whichPlug,
 					curData,
 					Start,
 					End,
@@ -3400,13 +3400,13 @@ short	StereoMode;
 
 static	short 	currentInstru;
 
-void SampleUpdateNow( void)
+void SampleUpdateNow(void)
 {
-	InternalUpdate( currentInstru);
-	UpdateSampleWindow( SampleDlog[ currentInstru]);
+	InternalUpdate(currentInstru);
+	UpdateSampleWindow(SampleDlog[ currentInstru]);
 }
 
-void NAppelVSTPlug( short InstruNo, short samp, short whichPlug)
+void NAppelVSTPlug(short InstruNo, short samp, short whichPlug)
 {
 long	End, Start;
 sData	*curData = curMusic->sample[ curMusic->fid[ InstruNo].firstSample +  samp];
@@ -3414,8 +3414,8 @@ short	StereoMode;
 
 	currentInstru = InstruNo;
 	
-	Start 	= FindByteStart( InstruNo);
-	End 	= FindByteEnd( InstruNo);
+	Start 	= FindByteStart(InstruNo);
+	End 	= FindByteEnd(InstruNo);
 
 	if (Start == End)
 	{
@@ -3432,16 +3432,16 @@ short	StereoMode;
 		End		= curData->size;
 	}
 	
-	if (SampleDataD( InstruNo)->stereo)
+	if (SampleDataD(InstruNo)->stereo)
 	{
-		if (IsPressed( 0x38) && SampleDataD( InstruNo)->stereo) StereoMode = 0;
+		if (IsPressed(0x38) && SampleDataD(InstruNo)->stereo) StereoMode = 0;
 		else StereoMode = 1;
 	}
 	else StereoMode = 0;
 	
-	SaveUndo( USample, InstruNo, "\pUndo 'VST Sound Effect'");
+	SaveUndo(USample, InstruNo, "\pUndo 'VST Sound Effect'");
 	
-	VSTSampleEditor( 	whichPlug,
+	VSTSampleEditor(	whichPlug,
 						curData,
 						Start,
 						End,
@@ -3462,13 +3462,13 @@ PixMapHandle	tempPM;
 
 if (ctlPart <= 0) return;
 
-lRefCon = GetControlReference( theControl);
-maxValue = GetControlMaximum( theControl);
-minValue = GetControlMinimum( theControl);
-curVal = sVal = GetControlValue( theControl);
-CurWin = FindSample( theDialogControl);
+lRefCon = GetControlReference(theControl);
+maxValue = GetControlMaximum(theControl);
+minValue = GetControlMinimum(theControl);
+curVal = sVal = GetControlValue(theControl);
+CurWin = FindSample(theDialogControl);
 
-	switch( ctlPart)
+	switch(ctlPart)
 	{
 		case kControlUpButtonPart:
 			curVal -= 1;
@@ -3496,41 +3496,41 @@ CurWin = FindSample( theDialogControl);
 		break;
 	}
 	
-	SetControlValue( theControl, curVal);
+	SetControlValue(theControl, curVal);
 	
 	if (sVal != curVal)
 	{
 		/************/
-		GetGWorld( &oldPort, &oldGDeviceH);
-	/*	NewGWorld( &theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
+		GetGWorld(&oldPort, &oldGDeviceH);
+	/*	NewGWorld(&theGWorld, 8, &SampleRect, nil, nil, (GWorldFlags) 0);
 		if (theGWorld)
 		{
-			LockPixels( GetPortPixMap( theGWorld));
+			LockPixels(GetPortPixMap(theGWorld));
 			
-			tempPM = GetPortPixMap( theGWorld);
+			tempPM = GetPortPixMap(theGWorld);
 			theGWorld->portPixMap = BitMapSample[ CurWin];
 	*/
-			SetGWorld( BitMapSample[ CurWin], NULL);
+			SetGWorld(BitMapSample[ CurWin], NULL);
 		
-			DrawSample( -1, -1, CurWin, SampleDlog[ CurWin]);
+			DrawSample(-1, -1, CurWin, SampleDlog[ CurWin]);
 		
 		//	theGWorld->portPixMap = tempPM;
 		
-			SetGWorld( oldPort, oldGDeviceH);
-		 /*	UnlockPixels( GetPortPixMap( theGWorld));
-			DisposeGWorld( theGWorld);
+			SetGWorld(oldPort, oldGDeviceH);
+		 /*	UnlockPixels(GetPortPixMap(theGWorld));
+			DisposeGWorld(theGWorld);
 		}*/
 		/************/
 		
-		if (BitMapSample[ CurWin]) InvalWindowRect( GetDialogWindow( SampleDlog[ CurWin]), &(*GetPortPixMap( BitMapSample[ CurWin]))->bounds);
+		if (BitMapSample[ CurWin]) InvalWindowRect(GetDialogWindow(SampleDlog[ CurWin]), &(*GetPortPixMap(BitMapSample[ CurWin]))->bounds);
 		
-		UpdateSampleWindow( theDialogControl);
+		UpdateSampleWindow(theDialogControl);
 		
-		UpdateDisplay( CurWin);
+		UpdateDisplay(CurWin);
 	}
 }
 
-void MoveLoopSelection( short InstruNo)
+void MoveLoopSelection(short InstruNo)
 {
 	Boolean		firstTime = true;
 	Point		aPt, prevPt = {0};
@@ -3540,23 +3540,23 @@ void MoveLoopSelection( short InstruNo)
 	long		byte, i;
 	Boolean		TokTakCopy;
 	
-	GetMouse( &aPt);
-	byte = PosToByte( aPt.h, InstruNo);
+	GetMouse(&aPt);
+	byte = PosToByte(aPt.h, InstruNo);
 	
-	if (byte < SampleDataD( InstruNo)->loopBeg + SampleDataD( InstruNo)->loopSize/2) StartPoint = true;
+	if (byte < SampleDataD(InstruNo)->loopBeg + SampleDataD(InstruNo)->loopSize/2) StartPoint = true;
 	else StartPoint = false;
 	
 	TokTak[ InstruNo] = false;
 	
-	SetCursor( &CHandCrsr);
+	SetCursor(&CHandCrsr);
 	
-	SaveUndo( USample, InstruNo, "\pUndo 'Loop Edition'");
+	SaveUndo(USample, InstruNo, "\pUndo 'Loop Edition'");
 	
 	gNowMovingLoop = true;
 	
 	do
 	{
-		GetMouse( &aPt);
+		GetMouse(&aPt);
 		
 		if (aPt.h < SampleRect.left) aPt.h = SampleRect.left;
 		else if (aPt.h > SampleRect.right) aPt.h = SampleRect.right;
@@ -3565,53 +3565,53 @@ void MoveLoopSelection( short InstruNo)
 		{
 			firstTime = false;
 			
-			UpdateDisplayPosition( InstruNo);
-			UpdateDisplayLoop( InstruNo);
+			UpdateDisplayPosition(InstruNo);
+			UpdateDisplayLoop(InstruNo);
 			
 			//// *************
 			
 			if (StartPoint)
 			{
-				if (PosToByte( aPt.h, InstruNo) < SampleDataD( InstruNo)->loopBeg + SampleDataD( InstruNo)->loopSize) StartPoint = true;
+				if (PosToByte(aPt.h, InstruNo) < SampleDataD(InstruNo)->loopBeg + SampleDataD(InstruNo)->loopSize) StartPoint = true;
 				else StartPoint = false;
 			}
 			else
 			{
-				if (PosToByte( aPt.h, InstruNo) < SampleDataD( InstruNo)->loopBeg) StartPoint = true;
+				if (PosToByte(aPt.h, InstruNo) < SampleDataD(InstruNo)->loopBeg) StartPoint = true;
 				else StartPoint = false;
 			}
 			
 			if (StartPoint)
 			{
-				end = SampleDataD( InstruNo)->loopBeg + SampleDataD( InstruNo)->loopSize;
-				SampleDataD( InstruNo)->loopBeg = PosToByte( aPt.h, InstruNo);
-				SampleDataD( InstruNo)->loopSize = end - SampleDataD( InstruNo)->loopBeg;
+				end = SampleDataD(InstruNo)->loopBeg + SampleDataD(InstruNo)->loopSize;
+				SampleDataD(InstruNo)->loopBeg = PosToByte(aPt.h, InstruNo);
+				SampleDataD(InstruNo)->loopSize = end - SampleDataD(InstruNo)->loopBeg;
 			}
 			else
 			{
-				SampleDataD( InstruNo)->loopSize = PosToByte( aPt.h, InstruNo) - SampleDataD( InstruNo)->loopBeg;
+				SampleDataD(InstruNo)->loopSize = PosToByte(aPt.h, InstruNo) - SampleDataD(InstruNo)->loopBeg;
 			}
 			
-			if (SampleDataD( InstruNo)->stereo)
+			if (SampleDataD(InstruNo)->stereo)
 			{
-				if (SampleDataD( InstruNo)->amp == 8)
+				if (SampleDataD(InstruNo)->amp == 8)
 				{
-					SampleDataD( InstruNo)->loopBeg 	/= 2;		SampleDataD( InstruNo)->loopBeg 	*= 2;
-					SampleDataD( InstruNo)->loopSize	/= 2;		SampleDataD( InstruNo)->loopSize	*= 2;
+					SampleDataD(InstruNo)->loopBeg 	/= 2;		SampleDataD(InstruNo)->loopBeg 	*= 2;
+					SampleDataD(InstruNo)->loopSize	/= 2;		SampleDataD(InstruNo)->loopSize	*= 2;
 				}
 				else
 				{
-					SampleDataD( InstruNo)->loopBeg 	/= 4;		SampleDataD( InstruNo)->loopBeg 	*= 4;
-					SampleDataD( InstruNo)->loopSize	/= 4;		SampleDataD( InstruNo)->loopSize	*= 4;
+					SampleDataD(InstruNo)->loopBeg 	/= 4;		SampleDataD(InstruNo)->loopBeg 	*= 4;
+					SampleDataD(InstruNo)->loopSize	/= 4;		SampleDataD(InstruNo)->loopSize	*= 4;
 				}
 			}
 			
 			//// *************
 			
-			InternalUpdate( InstruNo);
+			InternalUpdate(InstruNo);
 			
-			InvalWindowRect( GetDialogWindow( SampleDlog[ InstruNo]), &SampleRect);
-			UpdateSampleWindow( SampleDlog[ InstruNo]);
+			InvalWindowRect(GetDialogWindow(SampleDlog[ InstruNo]), &SampleRect);
+			UpdateSampleWindow(SampleDlog[ InstruNo]);
 			
 			// Check to see if this instrument is currently playing, and update it!
 			
@@ -3621,16 +3621,16 @@ void MoveLoopSelection( short InstruNo)
 				 
 				if (curVoice->ins == InstruNo && curVoice->samp == curSample[ InstruNo])
 				{
-					if (curVoice->begPtr == SampleDataD( InstruNo)->data && curVoice->curPtr != curVoice->maxPtr)
+					if (curVoice->begPtr == SampleDataD(InstruNo)->data && curVoice->curPtr != curVoice->maxPtr)
 					{
-						if (SampleDataD( InstruNo)->loopSize > 2)
+						if (SampleDataD(InstruNo)->loopSize > 2)
 						{
-							curVoice->maxPtr = (Ptr) (	(long) SampleDataD( InstruNo)->data +
-														(long) SampleDataD( InstruNo)->loopBeg +
-														(long) SampleDataD( InstruNo)->loopSize);
+							curVoice->maxPtr = (Ptr) (	(long) SampleDataD(InstruNo)->data +
+														(long) SampleDataD(InstruNo)->loopBeg +
+														(long) SampleDataD(InstruNo)->loopSize);
 						}
-						curVoice->loopBeg 		= SampleDataD( InstruNo)->loopBeg;
-						curVoice->loopSize 		= SampleDataD( InstruNo)->loopSize;
+						curVoice->loopBeg 		= SampleDataD(InstruNo)->loopBeg;
+						curVoice->loopSize 		= SampleDataD(InstruNo)->loopSize;
 					}
 				}
 			}
@@ -3640,10 +3640,10 @@ void MoveLoopSelection( short InstruNo)
 		
 		DoGlobalNull();
 		
-		WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+		WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 	
-		if (QDIsPortBuffered( GetDialogPort( SampleDlog[ InstruNo])))
-    		QDFlushPortBuffer( GetDialogPort( SampleDlog[ InstruNo]), NULL);
+		if (QDIsPortBuffered(GetDialogPort(SampleDlog[ InstruNo])))
+    		QDFlushPortBuffer(GetDialogPort(SampleDlog[ InstruNo]), NULL);
 		
 	}while (Button());
 	
@@ -3652,7 +3652,7 @@ void MoveLoopSelection( short InstruNo)
 	TokTak[ InstruNo] = false;
 }
 
-void DoItemPressSample( short whichItem, DialogPtr whichDialog)
+void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 {
 		Cell				theCell;
  		short				ctlPart, bogus, CurWin, temp, itemType, InstruNo;
@@ -3666,49 +3666,49 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 		Rect				caRect, tempRect, oldSelect, itemRect;
 		ControlActionUPP	MyControlUPP;
 		
-	GetPort( &SavePort);
+	GetPort(&SavePort);
 	
-	InstruNo = FindSample( whichDialog);
-	NSelectInstruList( InstruNo, curSample[ InstruNo]);
+	InstruNo = FindSample(whichDialog);
+	NSelectInstruList(InstruNo, curSample[ InstruNo]);
 	
-	SetPortDialogPort( whichDialog);
-	GetSampleRect( whichDialog);
-	TextFont( 4);	TextSize( 9);
+	SetPortDialogPort(whichDialog);
+	GetSampleRect(whichDialog);
+	TextFont(4);	TextSize(9);
 
 	if (theEvent.what == mouseDown)
 	{
 		myPt = theEvent.where;
-		GlobalToLocal( &myPt);
+		GlobalToLocal(&myPt);
 		
-		//ctlPart = FindControl( myPt, GetDialogWindow( whichDialog), &theControl);
+		//ctlPart = FindControl(myPt, GetDialogWindow(whichDialog), &theControl);
 		
 		theControl = NULL;
-		if (TestControl( xScroll[ InstruNo], myPt)) theControl = xScroll[ InstruNo];
+		if (TestControl(xScroll[ InstruNo], myPt)) theControl = xScroll[ InstruNo];
 		
 		if (theControl == xScroll[ InstruNo])
 		{
 		/*	if (ctlPart == kControlIndicatorPart && gUseControlSize == false)
 			{
-				bogus = TrackControl( theControl, myPt, NULL);
+				bogus = TrackControl(theControl, myPt, NULL);
 				if (bogus != 0)
 				{
-					CurWin = FindSample( whichDialog);
-					InternalUpdate( CurWin);
+					CurWin = FindSample(whichDialog);
+					InternalUpdate(CurWin);
 				}
 			}
 			else if (ctlPart > 0)*/
 			{
 				theDialogControl = whichDialog;
-				MyControlUPP = NewControlActionUPP( actionProcSample);
-				gThumbPrev = GetControlValue( theControl);
+				MyControlUPP = NewControlActionUPP(actionProcSample);
+				gThumbPrev = GetControlValue(theControl);
 				TrackControl(theControl, myPt, MyControlUPP);
-				DisposeControlActionUPP( MyControlUPP);
+				DisposeControlActionUPP(MyControlUPP);
 			}
 		}
 		
-		if (PtInRect( myPt, &SampleRect))
+		if (PtInRect(myPt, &SampleRect))
 		{
-			switch( curSample[ InstruNo])
+			switch(curSample[ InstruNo])
 			{
 				case panningEnv:
 				
@@ -3722,22 +3722,22 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 				{
 					long	start, end;
 					
-					if (SampleDataD( InstruNo)->size <= 0) goto END3;
+					if (SampleDataD(InstruNo)->size <= 0) goto END3;
 					
 					if (SelectMode[ InstruNo] == eSelect)
 					{
-						start = ByteToPos( SampleDataD( InstruNo)->loopBeg, InstruNo);
-						end = ByteToPos( SampleDataD( InstruNo)->loopBeg + SampleDataD( InstruNo)->loopSize, InstruNo);
+						start = ByteToPos(SampleDataD(InstruNo)->loopBeg, InstruNo);
+						end = ByteToPos(SampleDataD(InstruNo)->loopBeg + SampleDataD(InstruNo)->loopSize, InstruNo);
 									
 						if (myPt.h >= start-1 && myPt.h <= start+1)
 						{
-							MoveLoopSelection( InstruNo);
+							MoveLoopSelection(InstruNo);
 							goto END3;
 						}
 						
 						if (myPt.h >= end-1 && myPt.h <= end+1)
 						{
-							MoveLoopSelection( InstruNo);
+							MoveLoopSelection(InstruNo);
 							goto END3;
 						}
 					}
@@ -3745,42 +3745,42 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 				break;
 			}
 			
-			GetKeys( km);
-			if (IsPressed( 0x003A))
+			GetKeys(km);
+			if (IsPressed(0x003A))
 			{
 				while (Button()){};
-				CurWin = FindSample( GetDialogFromWindow( oldWindow));
+				CurWin = FindSample(GetDialogFromWindow(oldWindow));
 				if (ZoomLevel[ CurWin] > 1)
 				{
 					ZoomLevel[ CurWin] /= 2;
 				
-					SetControlValue( 	xScroll[ CurWin],
-									GetControlValue( xScroll[ CurWin]) / 2);
+					SetControlValue(	xScroll[ CurWin],
+									GetControlValue(xScroll[ CurWin]) / 2);
 					
-					SetControlH( CurWin);
+					SetControlH(CurWin);
 					
-					InternalUpdate( CurWin);
+					InternalUpdate(CurWin);
 				}
 			}
-			else if (IsPressed( 0x0037) || SelectMode[ InstruNo] == eZoom)
+			else if (IsPressed(0x0037) || SelectMode[ InstruNo] == eZoom)
 			{
 				while (Button()){};
-				CurWin = FindSample( GetDialogFromWindow( oldWindow));
+				CurWin = FindSample(GetDialogFromWindow(oldWindow));
 				if (ZoomLevel[ CurWin] < 1024)
 				{
 					ZoomLevel[ CurWin] *= 2;
-					SetControlH( CurWin);
+					SetControlH(CurWin);
 					
-					GetPortBounds( GetDialogPort( whichDialog), &caRect);
+					GetPortBounds(GetDialogPort(whichDialog), &caRect);
 					
 					bogus = (myPt.h * SAMPLEDEF) / caRect.right;
 					bogus *= 2;
 					bogus -= SAMPLEDEF/2;
 					
-					SetControlValue( 	xScroll[ CurWin],
-									GetControlValue( xScroll[ CurWin])*2 + bogus);
+					SetControlValue(	xScroll[ CurWin],
+									GetControlValue(xScroll[ CurWin])*2 + bogus);
 					
-					InternalUpdate( CurWin);
+					InternalUpdate(CurWin);
 				}
 			}
 			else if (SelectMode[ InstruNo] == eSelect)		/** Selection mode **/
@@ -3791,55 +3791,55 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 					{
 						TokTak[ InstruNo] = false;
 						
-						tempRect.left = ByteToPos( SelecRect[ InstruNo].start, InstruNo);
+						tempRect.left = ByteToPos(SelecRect[ InstruNo].start, InstruNo);
 						tempRect.right = tempRect.left +1;
 						tempRect.top = SampleRect.top;
 						tempRect.bottom = SampleRect.bottom;
 						
-						InvertRect( &tempRect);
+						InvertRect(&tempRect);
 					}
 				}
 				else
 				{
-					tempRect.left = ByteToPos( SelecRect[ InstruNo].start, InstruNo);
-					tempRect.right = ByteToPos( SelecRect[ InstruNo].end, InstruNo);
+					tempRect.left = ByteToPos(SelecRect[ InstruNo].start, InstruNo);
+					tempRect.right = ByteToPos(SelecRect[ InstruNo].end, InstruNo);
 					tempRect.top = SampleRect.top;
 					tempRect.bottom = SampleRect.bottom;
 					
-					if (PtInRect( myPt, &tempRect))
+					if (PtInRect(myPt, &tempRect))
 					{
-						GetMouse( &aPt);
+						GetMouse(&aPt);
 					
 						TickEnd = TickCount() + 20;
 						while (Button() && TickCount() < TickEnd){};
 						
 						if (TickCount() >= TickEnd && curSample[ InstruNo] != volumeEnv && curSample[ InstruNo] != panningEnv)
 						{
-							SetCursor( &HandCrsr);
+							SetCursor(&HandCrsr);
 						
 							tempRgn = NewRgn();
-							RectRgn( tempRgn, &tempRect);
+							RectRgn(tempRgn, &tempRect);
 							
-							LocalToGlobal( &aPt);
+							LocalToGlobal(&aPt);
 							theEvent.where = aPt;
 							
-							DragSample( tempRgn, InstruNo, &theEvent);
+							DragSample(tempRgn, InstruNo, &theEvent);
 							
-							DisposeRgn( tempRgn);
+							DisposeRgn(tempRgn);
 							
-							SetCursor( GetQDGlobalsArrow( &qdarrow));
+							SetCursor(GetQDGlobalsArrow(&qdarrow));
 							
 							goto EndSample;
 						}
 					}
-					InvertRect( &tempRect);
+					InvertRect(&tempRect);
 				}
 				
 				Clignote[ InstruNo] = false;
 				
 				if (TickCount() - doubleClick <= GetDblTime() && lastPosition.h == myPt.h && lastPosition.v == myPt.v)
 				{
-					switch( curSample[ InstruNo])
+					switch(curSample[ InstruNo])
 					{
 						case volumeEnv:
 						case panningEnv:
@@ -3848,18 +3848,18 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 						break;
 						
 						default:
-							SetSelection( InstruNo, 0, SampleDataD( InstruNo)->size);
+							SetSelection(InstruNo, 0, SampleDataD(InstruNo)->size);
 						break;
 					}
 					
-					InvalWindowRect( GetDialogWindow( SampleDlog[ InstruNo]), &SampleRect);
-					UpdateDisplaySelec( InstruNo);
+					InvalWindowRect(GetDialogWindow(SampleDlog[ InstruNo]), &SampleRect);
+					UpdateDisplaySelec(InstruNo);
 				}
 				else
 				{
-					if (IsPressed( 0x0038))
+					if (IsPressed(0x0038))
 					{
-						if (PosToByte( myPt.h, InstruNo) < SelecRect[ InstruNo].end)
+						if (PosToByte(myPt.h, InstruNo) < SelecRect[ InstruNo].end)
 							beginPoint = SelecRect[ InstruNo].end;
 						else beginPoint = SelecRect[ InstruNo].start;
 					}
@@ -3868,12 +3868,12 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 						lastPosition.h = myPt.h;
 						lastPosition.v = myPt.v;
 					
-						beginPoint = PosToByte( myPt.h, InstruNo);
+						beginPoint = PosToByte(myPt.h, InstruNo);
 					}
 				//	SelecRect[ InstruNo].end = beginPoint;
 				//	SelecRect[ InstruNo].start = beginPoint;
 					
-					SetSelection( InstruNo, beginPoint, beginPoint);
+					SetSelection(InstruNo, beginPoint, beginPoint);
 					
 					doubleClick = TickCount();
 				
@@ -3884,7 +3884,7 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 				
 					theDialogControl = SampleDlog[ InstruNo];
 					
-					switch( curSample[ InstruNo])
+					switch(curSample[ InstruNo])
 					{
 						case panningEnv:
 						case volumeEnv:
@@ -3894,9 +3894,9 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 						break;
 						
 						default:
-							val = GetControlValue( xScroll[ InstruNo]);
-							start = GetStartSampleValue( val, InstruNo);	//(val * (SampleDataD( InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
-							sampleSize = SampleDataD( InstruNo)->size / ZoomLevel[ InstruNo];
+							val = GetControlValue(xScroll[ InstruNo]);
+							start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
+							sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[ InstruNo];
 						break;
 					}
 					
@@ -3904,32 +3904,32 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 					
 					do
 					{
-						GetMouse( &Pt2);
+						GetMouse(&Pt2);
 					
-						otherPoint = PosToByte( Pt2.h, InstruNo);
+						otherPoint = PosToByte(Pt2.h, InstruNo);
 						
 						if (tL != otherPoint)
 						{
 							tL = otherPoint;
 							
-							oldSelect.left = ByteToPos( SelecRect[ InstruNo].start ,InstruNo);
-							oldSelect.right = ByteToPos( SelecRect[ InstruNo].end, InstruNo);
+							oldSelect.left = ByteToPos(SelecRect[ InstruNo].start ,InstruNo);
+							oldSelect.right = ByteToPos(SelecRect[ InstruNo].end, InstruNo);
 							
 							oldSelect.top = SampleRect.top;
 							oldSelect.bottom = SampleRect.bottom;
 							
 							if (otherPoint >= beginPoint)
 							{
-								if (!InvertSwitch) InvertRect( &oldSelect);
+								if (!InvertSwitch) InvertRect(&oldSelect);
 								
-								if (oldSelect.right >= ByteToPos( otherPoint, InstruNo))
+								if (oldSelect.right >= ByteToPos(otherPoint, InstruNo))
 								{
-									tempRect.left = ByteToPos( otherPoint, InstruNo);
+									tempRect.left = ByteToPos(otherPoint, InstruNo);
 									tempRect.right = oldSelect.right;
 								}
 								else
 								{
-									tempRect.right = ByteToPos( otherPoint, InstruNo);
+									tempRect.right = ByteToPos(otherPoint, InstruNo);
 									tempRect.left = oldSelect.right;
 									
 								//	else tempRect.left = oldSelect.left;
@@ -3940,20 +3940,20 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 						//		SelecRect[ InstruNo].end = otherPoint;
 						//		SelecRect[ InstruNo].start = beginPoint;
 								
-								SetSelection( InstruNo, beginPoint, otherPoint);
+								SetSelection(InstruNo, beginPoint, otherPoint);
 							}
 							else
 							{
-								if (InvertSwitch) InvertRect( &oldSelect);
+								if (InvertSwitch) InvertRect(&oldSelect);
 							
-								if (oldSelect.left <= ByteToPos( otherPoint, InstruNo))
+								if (oldSelect.left <= ByteToPos(otherPoint, InstruNo))
 								{
-									tempRect.right = ByteToPos( otherPoint, InstruNo);
+									tempRect.right = ByteToPos(otherPoint, InstruNo);
 									tempRect.left = oldSelect.left;
 								}
 								else
 								{
-									tempRect.left = ByteToPos( otherPoint, InstruNo);
+									tempRect.left = ByteToPos(otherPoint, InstruNo);
 								//	if (InvertSwitch) tempRect.right = oldSelect.right;
 								
 									tempRect.right = oldSelect.left;
@@ -3964,12 +3964,12 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 							//	SelecRect[ InstruNo].start = otherPoint;
 							//	SelecRect[ InstruNo].end = beginPoint;
 								
-								SetSelection( InstruNo, otherPoint, beginPoint);
+								SetSelection(InstruNo, otherPoint, beginPoint);
 							}
 							
-							InvertRect( &tempRect);
+							InvertRect(&tempRect);
 							
-							switch( curSample[ InstruNo])
+							switch(curSample[ InstruNo])
 							{
 								case volumeEnv:
 								case panningEnv:
@@ -3978,7 +3978,7 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 										if (SelecRect[ InstruNo].start < 0) SelecRect[ InstruNo].start = 0;
 									}
 									
-									GetPortBounds( GetDialogPort( whichDialog), &caRect);
+									GetPortBounds(GetDialogPort(whichDialog), &caRect);
 									
 									if (Pt2.h > caRect.right)
 									{
@@ -3990,39 +3990,39 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 									if (Pt2.h < 0)
 									{
 										if (SelecRect[ InstruNo].start < 0) SelecRect[ InstruNo].start = 0;	//xxx
-										actionProcSample(  xScroll[ InstruNo],  kControlUpButtonPart);
+										actionProcSample( xScroll[ InstruNo],  kControlUpButtonPart);
 										
-										val = GetControlValue( xScroll[ InstruNo]);
-										start = GetStartSampleValue( val, InstruNo);	//(val * (SampleDataD( InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
-										sampleSize = SampleDataD( InstruNo)->size / ZoomLevel[ InstruNo];
+										val = GetControlValue(xScroll[ InstruNo]);
+										start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
+										sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[ InstruNo];
 									}
 									
-									GetPortBounds( GetDialogPort( whichDialog), &caRect);
+									GetPortBounds(GetDialogPort(whichDialog), &caRect);
 									
 									if (Pt2.h > caRect.right)
 									{
-										if (SelecRect[ InstruNo].end > SampleDataD( InstruNo)->size) SelecRect[ InstruNo].end = SampleDataD( InstruNo)->size;
-										actionProcSample(  xScroll[ InstruNo],  kControlDownButtonPart);
+										if (SelecRect[ InstruNo].end > SampleDataD(InstruNo)->size) SelecRect[ InstruNo].end = SampleDataD(InstruNo)->size;
+										actionProcSample( xScroll[ InstruNo],  kControlDownButtonPart);
 										
-										val = GetControlValue( xScroll[ InstruNo]);
-										start = GetStartSampleValue( val, InstruNo);	//(val * (SampleDataD( InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
-										sampleSize = SampleDataD( InstruNo)->size / ZoomLevel[ InstruNo];
+										val = GetControlValue(xScroll[ InstruNo]);
+										start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
+										sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[ InstruNo];
 									}
 								break;
 							}
-							UpdateDisplaySelec( InstruNo);
-							UpdateDisplayPosition( InstruNo);
+							UpdateDisplaySelec(InstruNo);
+							UpdateDisplayPosition(InstruNo);
 						}
 						
-						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+						WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 					
-						if (QDIsPortBuffered( GetDialogPort( SampleDlog[ InstruNo])))
-    					QDFlushPortBuffer( GetDialogPort( SampleDlog[ InstruNo]), NULL);
+						if (QDIsPortBuffered(GetDialogPort(SampleDlog[ InstruNo])))
+    					QDFlushPortBuffer(GetDialogPort(SampleDlog[ InstruNo]), NULL);
     				
 					}
 					while (Button());
 					
-					UpdateDisplaySelec( InstruNo);
+					UpdateDisplaySelec(InstruNo);
 				}
 				
 				if (SelecRect[ InstruNo].start == SelecRect[ InstruNo].end)
@@ -4034,164 +4034,164 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 			}
 			else if (SelectMode[ InstruNo] == ePencil) 	/** Pencil Mode **/
 			{
-				DrawPencil( SampleDlog[ InstruNo], InstruNo);
+				DrawPencil(SampleDlog[ InstruNo], InstruNo);
 			}
 			
 			END3:;
 		}
 	}
 
-	switch( whichItem)
+	switch(whichItem)
 	{
 		case 40:
-			if (curSample[ InstruNo] < 0 && MyTrackControl( FixedBut[ InstruNo], theEvent.where, NULL))
+			if (curSample[ InstruNo] < 0 && MyTrackControl(FixedBut[ InstruNo], theEvent.where, NULL))
 			{
-				switch( curSample[ InstruNo])
+				switch(curSample[ InstruNo])
 				{
 					case panningEnv:
 						if (curMusic->fid[ InstruNo].pannType & EFNOTE) curMusic->fid[ InstruNo].pannType -= EFNOTE;
 						else curMusic->fid[ InstruNo].pannType += EFNOTE;
 					
-						if (!(curMusic->fid[ InstruNo].pannType & EFNOTE))		HiliteControl( FixedBut[ InstruNo], kControlButtonPart);
-						else HiliteControl( FixedBut[ InstruNo], 0);
+						if (!(curMusic->fid[ InstruNo].pannType & EFNOTE))		HiliteControl(FixedBut[ InstruNo], kControlButtonPart);
+						else HiliteControl(FixedBut[ InstruNo], 0);
 					break;
 					
 					case volumeEnv:
 						if (curMusic->fid[ InstruNo].volType & EFNOTE) curMusic->fid[ InstruNo].volType -= EFNOTE;
 						else curMusic->fid[ InstruNo].volType += EFNOTE;
 					
-						if (!(curMusic->fid[ InstruNo].volType & EFNOTE))		HiliteControl( FixedBut[ InstruNo], kControlButtonPart);
-						else HiliteControl( FixedBut[ InstruNo], 0);
+						if (!(curMusic->fid[ InstruNo].volType & EFNOTE))		HiliteControl(FixedBut[ InstruNo], kControlButtonPart);
+						else HiliteControl(FixedBut[ InstruNo], 0);
 					break;
 				}
-				InternalUpdate( InstruNo);
+				InternalUpdate(InstruNo);
 			}
 		break;
 		
 		case 13:
-			if(curSample[ InstruNo] < 0 && MyTrackControl( EnvBut[ InstruNo], theEvent.where, NULL))
+			if(curSample[ InstruNo] < 0 && MyTrackControl(EnvBut[ InstruNo], theEvent.where, NULL))
 			{
-				switch( curSample[ InstruNo])
+				switch(curSample[ InstruNo])
 				{
 					case panningEnv:
 						if (curMusic->fid[ InstruNo].pannType & EFON) curMusic->fid[ InstruNo].pannType -= EFON;
 						else curMusic->fid[ InstruNo].pannType += EFON;
 					
-						if (curMusic->fid[ InstruNo].pannType & EFON)		HiliteControl( EnvBut[ InstruNo], kControlButtonPart);
-						else HiliteControl( EnvBut[ InstruNo], 0);
+						if (curMusic->fid[ InstruNo].pannType & EFON)		HiliteControl(EnvBut[ InstruNo], kControlButtonPart);
+						else HiliteControl(EnvBut[ InstruNo], 0);
 					break;
 					
 					case volumeEnv:
 						if (curMusic->fid[ InstruNo].volType & EFON) curMusic->fid[ InstruNo].volType -= EFON;
 						else curMusic->fid[ InstruNo].volType += EFON;
 					
-						if (curMusic->fid[ InstruNo].volType & EFON)		HiliteControl( EnvBut[ InstruNo], kControlButtonPart);
-						else HiliteControl( EnvBut[ InstruNo], 0);
+						if (curMusic->fid[ InstruNo].volType & EFON)		HiliteControl(EnvBut[ InstruNo], kControlButtonPart);
+						else HiliteControl(EnvBut[ InstruNo], 0);
 					break;
 				}
-				InternalUpdate( InstruNo);
+				InternalUpdate(InstruNo);
 			}
 		break;
 		
 		case 36:
-			if(curSample[ InstruNo] < 0 && MyTrackControl( SustainBut[ InstruNo], theEvent.where, NULL))
+			if(curSample[ InstruNo] < 0 && MyTrackControl(SustainBut[ InstruNo], theEvent.where, NULL))
 			{
-				switch( curSample[ InstruNo])
+				switch(curSample[ InstruNo])
 				{
 					case panningEnv:
 						if (curMusic->fid[ InstruNo].pannType & EFSUSTAIN) curMusic->fid[ InstruNo].pannType -= EFSUSTAIN;
 						else curMusic->fid[ InstruNo].pannType += EFSUSTAIN;
 					
-						if (curMusic->fid[ InstruNo].pannType & EFSUSTAIN)		HiliteControl( SustainBut[ InstruNo], kControlButtonPart);
-						else HiliteControl( SustainBut[ InstruNo], 0);
+						if (curMusic->fid[ InstruNo].pannType & EFSUSTAIN)		HiliteControl(SustainBut[ InstruNo], kControlButtonPart);
+						else HiliteControl(SustainBut[ InstruNo], 0);
 					break;
 					
 					case volumeEnv:
 						if (curMusic->fid[ InstruNo].volType & EFSUSTAIN) curMusic->fid[ InstruNo].volType -= EFSUSTAIN;
 						else curMusic->fid[ InstruNo].volType += EFSUSTAIN;
 					
-						if (curMusic->fid[ InstruNo].volType & EFSUSTAIN)		HiliteControl( SustainBut[ InstruNo], kControlButtonPart);
-						else HiliteControl( SustainBut[ InstruNo], 0);
+						if (curMusic->fid[ InstruNo].volType & EFSUSTAIN)		HiliteControl(SustainBut[ InstruNo], kControlButtonPart);
+						else HiliteControl(SustainBut[ InstruNo], 0);
 					break;
 				}
-				InternalUpdate( InstruNo);
+				InternalUpdate(InstruNo);
 			}
 		break;
 		
 		case 37:
-			if(curSample[ InstruNo] < 0 && MyTrackControl( LoopBut[ InstruNo], theEvent.where, NULL))
+			if(curSample[ InstruNo] < 0 && MyTrackControl(LoopBut[ InstruNo], theEvent.where, NULL))
 			{
-				switch( curSample[ InstruNo])
+				switch(curSample[ InstruNo])
 				{
 					case panningEnv:
 						if (curMusic->fid[ InstruNo].pannType & EFLOOP) curMusic->fid[ InstruNo].pannType -= EFLOOP;
 						else curMusic->fid[ InstruNo].pannType += EFLOOP;
 					
-						if (curMusic->fid[ InstruNo].pannType & EFLOOP)		HiliteControl( LoopBut[ InstruNo], kControlButtonPart);
-						else HiliteControl( LoopBut[ InstruNo], 0);
+						if (curMusic->fid[ InstruNo].pannType & EFLOOP)		HiliteControl(LoopBut[ InstruNo], kControlButtonPart);
+						else HiliteControl(LoopBut[ InstruNo], 0);
 					break;
 					
 					case volumeEnv:
 						if (curMusic->fid[ InstruNo].volType & EFLOOP) curMusic->fid[ InstruNo].volType -= EFLOOP;
 						else curMusic->fid[ InstruNo].volType += EFLOOP;
 					
-						if (curMusic->fid[ InstruNo].volType & EFLOOP)		HiliteControl( LoopBut[ InstruNo], kControlButtonPart);
-						else HiliteControl( LoopBut[ InstruNo], 0);
+						if (curMusic->fid[ InstruNo].volType & EFLOOP)		HiliteControl(LoopBut[ InstruNo], kControlButtonPart);
+						else HiliteControl(LoopBut[ InstruNo], 0);
 					break;
 				}
-				InternalUpdate( InstruNo);
+				InternalUpdate(InstruNo);
 			}
 		break;
 	
 		case 26:
-			if (GetControlHilite( PencilBut[ InstruNo]) != 255 && MyTrackControl( PencilBut[ InstruNo], theEvent.where, NULL))
+			if (GetControlHilite(PencilBut[ InstruNo]) != 255 && MyTrackControl(PencilBut[ InstruNo], theEvent.where, NULL))
 			{
-				EraseTikTak( InstruNo);
+				EraseTikTak(InstruNo);
 			
 				SelectMode[ InstruNo] = ePencil;
-				HiliteControl( PencilBut[ InstruNo], kControlButtonPart);
-				HiliteControl( SelectBut[ InstruNo], 0);
-				if (GetControlHilite( ZoomBut[ InstruNo]) != 255) HiliteControl( ZoomBut[ InstruNo], 0);
+				HiliteControl(PencilBut[ InstruNo], kControlButtonPart);
+				HiliteControl(SelectBut[ InstruNo], 0);
+				if (GetControlHilite(ZoomBut[ InstruNo]) != 255) HiliteControl(ZoomBut[ InstruNo], 0);
 			}
 		break;
 		
 		case 27:
-			if (GetControlHilite( SelectBut[ InstruNo]) != 255 && MyTrackControl( SelectBut[ InstruNo], theEvent.where, NULL))
+			if (GetControlHilite(SelectBut[ InstruNo]) != 255 && MyTrackControl(SelectBut[ InstruNo], theEvent.where, NULL))
 			{
 				SelectMode[ InstruNo] = eSelect;
-				HiliteControl( SelectBut[ InstruNo], kControlButtonPart);
-				HiliteControl( PencilBut[ InstruNo], 0);
-				if (GetControlHilite( ZoomBut[ InstruNo]) != 255) HiliteControl( ZoomBut[ InstruNo], 0);
+				HiliteControl(SelectBut[ InstruNo], kControlButtonPart);
+				HiliteControl(PencilBut[ InstruNo], 0);
+				if (GetControlHilite(ZoomBut[ InstruNo]) != 255) HiliteControl(ZoomBut[ InstruNo], 0);
 			}
 		break;
 
 		case 18:
-			if (GetControlHilite( ZoomBut[ InstruNo]) != 255 && MyTrackControl( ZoomBut[ InstruNo], theEvent.where, NULL))
+			if (GetControlHilite(ZoomBut[ InstruNo]) != 255 && MyTrackControl(ZoomBut[ InstruNo], theEvent.where, NULL))
 			{
 				SelectMode[ InstruNo] = eZoom;
-				HiliteControl( SelectBut[ InstruNo], 0);
-				HiliteControl( PencilBut[ InstruNo], 0);
-				HiliteControl( ZoomBut[ InstruNo], kControlButtonPart);
+				HiliteControl(SelectBut[ InstruNo], 0);
+				HiliteControl(PencilBut[ InstruNo], 0);
+				HiliteControl(ZoomBut[ InstruNo], kControlButtonPart);
 				
 				if (TickCount() - doubleClick <= GetDblTime())
 				{
 					ZoomLevel[ InstruNo] = 1;
 				
-					SetControlValue( 	xScroll[ InstruNo],
+					SetControlValue(	xScroll[ InstruNo],
 									0);
 					
-					SetControlH( InstruNo);
+					SetControlH(InstruNo);
 					
-					InternalUpdate( InstruNo);
+					InternalUpdate(InstruNo);
 				}
 				doubleClick = TickCount();
 			}
 		break;
 	
 		case 25:
-			if (MyTrackControl( InfoBut[ InstruNo], theEvent.where, NULL))
+			if (MyTrackControl(InfoBut[ InstruNo], theEvent.where, NULL))
 			{
-				NEditInstruInfo( InstruNo, curSample[ InstruNo]);
+				NEditInstruInfo(InstruNo, curSample[ InstruNo]);
 			}
 		break;
 	
@@ -4203,27 +4203,27 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 			MenuHandle	sMenu;
 			short		menuSampleId[ 255] = {0};
 		
-			sMenu = GetMenu( 156);
+			sMenu = GetMenu(156);
 			
-			InsertMenu( sMenu, hierMenu);
+			InsertMenu(sMenu, hierMenu);
 			
 			for (i = 0, kk = 0; i < curMusic->fid[ InstruNo].numSamples; i++)
 			{
 				sData		*curData = curMusic->sample[ curMusic->fid[ InstruNo].firstSample +  i];
 				Str255		str;
 				
-				strcpy( (Ptr) str, curData->name);
+				strcpy((Ptr) str, curData->name);
 				
-				MyC2PStr( (Ptr) str);
+				MyC2PStr((Ptr) str);
 				
 				if (str[ 0] == 0)
 				{
 					Str255	str2;
 					
-					pStrcpy( str, "\puntitled sample #");
+					pStrcpy(str, "\puntitled sample #");
 					
-					NumToString( i+1, str2);
-					pStrcat( str, str2);
+					NumToString(i+1, str2);
+					pStrcat(str, str2);
 				}
 				
 				if (curData->stereo)
@@ -4233,23 +4233,23 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 					menuSampleId[ kk++] = i;
 					menuSampleId[ kk++] = i;
 					
-					pStrcpy( str2, str);	pStrcat( str2, "\p Left");		AppendMenu( sMenu, str2);
-					pStrcpy( str2, str);	pStrcat( str2, "\p Right");		AppendMenu( sMenu, str2);
+					pStrcpy(str2, str);	pStrcat(str2, "\p Left");		AppendMenu(sMenu, str2);
+					pStrcpy(str2, str);	pStrcat(str2, "\p Right");		AppendMenu(sMenu, str2);
 				}
 				else
 				{
 					menuSampleId[ kk++] = i;
-					AppendMenu( sMenu, str);
+					AppendMenu(sMenu, str);
 				}
 			}
 			
-			GetDialogItem( whichDialog, 28, &itemType, &itemHandle, &itemRect);
+			GetDialogItem(whichDialog, 28, &itemType, &itemHandle, &itemRect);
 			Zone.h = itemRect.left;
 			Zone.v = itemRect.top;
 			
-			LocalToGlobal( &Zone);
+			LocalToGlobal(&Zone);
 			
-			switch( curSample[ InstruNo])
+			switch(curSample[ InstruNo])
 			{
 				case volumeEnv:
 					i = 1;
@@ -4274,14 +4274,14 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 										Zone.h,
 										i);
 										
-			DeleteMenu( GetMenuID( sMenu));
-			DisposeMenu( sMenu);
+			DeleteMenu(GetMenuID(sMenu));
+			DisposeMenu(sMenu);
 			
-			if ( HiWord( mresult ) != 0 )
+			if (HiWord(mresult ) != 0 )
 			{
 				short prevSample = curSample[ InstruNo];
 				
-				switch( LoWord( mresult))
+				switch(LoWord(mresult))
 				{
 					case 1:		// Volume Envelope
 						curSample[ InstruNo] = volumeEnv;
@@ -4292,11 +4292,11 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 					break;
 					
 					default:	// Select new sample
-						curSample[ InstruNo] = menuSampleId[ LoWord( mresult) - 4];
+						curSample[ InstruNo] = menuSampleId[ LoWord(mresult) - 4];
 						
-						if (LoWord( mresult) - 4 > 0)
+						if (LoWord(mresult) - 4 > 0)
 						{
-							if (menuSampleId[ LoWord( mresult) - 4] == menuSampleId[ LoWord( mresult) - 5]) curMode[ InstruNo] = 1;
+							if (menuSampleId[ LoWord(mresult) - 4] == menuSampleId[ LoWord(mresult) - 5]) curMode[ InstruNo] = 1;
 							else curMode[ InstruNo] = 0;
 						}
 						else curMode[ InstruNo] = 0;
@@ -4305,22 +4305,22 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 				
 				if (prevSample != curSample[ InstruNo])
 				{
-					ResetSelectionSample( InstruNo);
+					ResetSelectionSample(InstruNo);
 				
 					ZoomLevel[ InstruNo] = 1;
 				
-					SetControlValue( 	xScroll[ InstruNo], 0);
-					SetControlH( InstruNo);
+					SetControlValue(	xScroll[ InstruNo], 0);
+					SetControlH(InstruNo);
 				}
 				
-				InternalUpdate( InstruNo);
-				NSelectInstruList( InstruNo, curSample[ InstruNo]);
+				InternalUpdate(InstruNo);
+				NSelectInstruList(InstruNo, curSample[ InstruNo]);
 			}
 			}
 		break;
 		
 		case 14:
-			switch( curSample[ InstruNo])
+			switch(curSample[ InstruNo])
 			{
 				case volumeEnv:
 				case panningEnv:
@@ -4330,45 +4330,45 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 					short		i;
 					MenuHandle	tMenu;
 					
-					GetDialogItem( whichDialog, 14, &itemType, &itemHandle, &itemRect);
+					GetDialogItem(whichDialog, 14, &itemType, &itemHandle, &itemRect);
 					
-					tMenu = GetMenu( 162);
-					InsertMenu( tMenu, hierMenu);
+					tMenu = GetMenu(162);
+					InsertMenu(tMenu, hierMenu);
 					
 					Zone.h = itemRect.left;
 					Zone.v = itemRect.top;
 					
-					LocalToGlobal( &Zone);
+					LocalToGlobal(&Zone);
 					
 					mresult = PopUpMenuSelect(	tMenu,
 												Zone.v,
 												Zone.h,
 												0);
 					
-					DeleteMenu( GetMenuID( tMenu));
-					DisposeMenu( tMenu);
+					DeleteMenu(GetMenuID(tMenu));
+					DisposeMenu(tMenu);
 					
-					if ( HiWord( mresult ) != 0 )
+					if (HiWord(mresult ) != 0 )
 					{
-						temp = LoWord( mresult );
+						temp = LoWord(mresult );
 					
-						SaveUndo( USample, InstruNo, "\pUndo 'Plug editing'");
+						SaveUndo(USample, InstruNo, "\pUndo 'Plug editing'");
 					
-						switch( temp)
+						switch(temp)
 						{
 							case 1:	// Selection to loop
-								Selection2Loop( InstruNo);
+								Selection2Loop(InstruNo);
 							break;
 							
 							case 2:	// Loop to selection
-								Loop2Selection( InstruNo);
+								Loop2Selection(InstruNo);
 							break;
 							
 							case 3:	// set sustain point
-								SetSustainPoint( InstruNo);
+								SetSustainPoint(InstruNo);
 							break;
 						}
-						InternalUpdate( InstruNo);
+						InternalUpdate(InstruNo);
 						if (thePrefs.ClassicalProjection) UpdateMozartInfo();
 						curMusic->hasChanged = true;
 					}
@@ -4376,47 +4376,47 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 				break;
 				
 				default:
-					GetDialogItem( whichDialog, 14, &itemType, &itemHandle, &itemRect);
-					temp = PressSampleMenu( &itemRect);
+					GetDialogItem(whichDialog, 14, &itemType, &itemHandle, &itemRect);
+					temp = PressSampleMenu(&itemRect);
 					
 					if (temp != -1)
 					{
-						SaveUndo( USample, InstruNo, "\pUndo 'Plug editing'");
+						SaveUndo(USample, InstruNo, "\pUndo 'Plug editing'");
 					
-						switch( temp)
+						switch(temp)
 						{
 						case 1:
-							Selection2Loop( InstruNo);
+							Selection2Loop(InstruNo);
 						break;
 						
 						case 2:
-							Loop2Selection( InstruNo);
+							Loop2Selection(InstruNo);
 						break;
 						
 						case 3:
-							DoKeyPressSample( whichDialog, 0x0008);
+							DoKeyPressSample(whichDialog, 0x0008);
 						break;
 						
 						case 5:	// Hz Filter
-							FFTSampleFilter( curMusic->sample[ curMusic->fid[ InstruNo].firstSample +  curSample[ InstruNo]], InstruNo, false);
+							FFTSampleFilter(curMusic->sample[ curMusic->fid[ InstruNo].firstSample +  curSample[ InstruNo]], InstruNo, false);
 						break;
 						
 						case 6:	// Hz Shift
-							FFTSampleFilter( curMusic->sample[ curMusic->fid[ InstruNo].firstSample +  curSample[ InstruNo]], InstruNo, true);
+							FFTSampleFilter(curMusic->sample[ curMusic->fid[ InstruNo].firstSample +  curSample[ InstruNo]], InstruNo, true);
 						break;
 						
 						default:
 							if (temp - 8 >= GetMaxSoundFilterPlugs())
 							{
-								NAppelVSTPlug( InstruNo, curSample[ InstruNo], temp - 8 - GetMaxSoundFilterPlugs() - 1);
+								NAppelVSTPlug(InstruNo, curSample[ InstruNo], temp - 8 - GetMaxSoundFilterPlugs() - 1);
 							} 
 							else
 							{
-								NAppelPlug( InstruNo, curSample[ InstruNo], temp - 8);
+								NAppelPlug(InstruNo, curSample[ InstruNo], temp - 8);
 							}
 						break;
 						}
-						InternalUpdate( InstruNo);
+						InternalUpdate(InstruNo);
 						if (thePrefs.ClassicalProjection) UpdateMozartInfo();
 						curMusic->hasChanged = true;
 					}
@@ -4427,10 +4427,10 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 
 	EndSample:
 
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
-void DoKeyPressSample( DialogPtr	theDia, short theChar)
+void DoKeyPressSample(DialogPtr	theDia, short theChar)
 {
 GrafPtr		SavePort;
 short		CurWin, i;
@@ -4439,17 +4439,17 @@ long		Start, End, sSize, newSize, reste;
 Str255		str1;
 Point		theCell = { 0, 0}, ppt = { 0,0};
 
-	CurWin = FindSample( theDia);
+	CurWin = FindSample(theDia);
 		
-	GetPort( &SavePort);
-	SetPortDialogPort( theDia);
-	GetSampleRect( theDia);
+	GetPort(&SavePort);
+	SetPortDialogPort(theDia);
+	GetSampleRect(theDia);
 	
 	if (theChar == selectAll)
 	{
 		Clignote[ CurWin] = false;
 		
-		switch( curSample[ CurWin])
+		switch(curSample[ CurWin])
 		{
 			case volumeEnv:
 			case panningEnv:
@@ -4458,42 +4458,42 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 			break;
 			
 			default:
-			//	SelecRect[ CurWin].end = SampleDataD( CurWin)->size;
+			//	SelecRect[ CurWin].end = SampleDataD(CurWin)->size;
 			//	SelecRect[ CurWin].start = 0;
 				
-				SetSelection( CurWin, 0, SampleDataD( CurWin)->size);
+				SetSelection(CurWin, 0, SampleDataD(CurWin)->size);
 			break;
 		}
 		
-		InvalWindowRect( GetDialogWindow( SampleDlog[ CurWin]), &SampleRect);
-		UpdateDisplaySelec( CurWin);
+		InvalWindowRect(GetDialogWindow(SampleDlog[ CurWin]), &SampleRect);
+		UpdateDisplaySelec(CurWin);
 	}
 	
 	if (theChar == getinfo)
 	{
-		NEditInstruInfo( CurWin, curSample[ CurWin]);
+		NEditInstruInfo(CurWin, curSample[ CurWin]);
 	}
 	else if (theChar == 0x1C)		// Left Arrow
 	{
 		if (curSample[ CurWin] != volumeEnv && curSample[ CurWin] != panningEnv)
 		{
-			if (SampleDataD( CurWin)->stereo) curMode[ CurWin] = 0;
+			if (SampleDataD(CurWin)->stereo) curMode[ CurWin] = 0;
 		}
 		
-		ResetSelectionSample( CurWin);
-		InternalUpdate( CurWin);
-		NSelectInstruList( CurWin, curSample[ CurWin]);
+		ResetSelectionSample(CurWin);
+		InternalUpdate(CurWin);
+		NSelectInstruList(CurWin, curSample[ CurWin]);
 	}
 	else if (theChar == 0x1D)		// Right Arrow
 	{
 		if (curSample[ CurWin] != volumeEnv && curSample[ CurWin] != panningEnv)
 		{
-			if (SampleDataD( CurWin)->stereo) curMode[ CurWin] = 1;
+			if (SampleDataD(CurWin)->stereo) curMode[ CurWin] = 1;
 		}
 		
-		ResetSelectionSample( CurWin);
-		InternalUpdate( CurWin);
-		NSelectInstruList( CurWin, curSample[ CurWin]);
+		ResetSelectionSample(CurWin);
+		InternalUpdate(CurWin);
+		NSelectInstruList(CurWin, curSample[ CurWin]);
 	}
 	else if (theChar == 0x1E)		// --
 	{
@@ -4509,13 +4509,13 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 		}
 		
 		
-		ResetSelectionSample( CurWin);
+		ResetSelectionSample(CurWin);
 		ZoomLevel[ CurWin] = 1;
-		SetControlValue( 	xScroll[ CurWin], 0);
-		SetControlH( CurWin);
+		SetControlValue(	xScroll[ CurWin], 0);
+		SetControlH(CurWin);
 		
-		InternalUpdate( CurWin);
-		NSelectInstruList( CurWin, curSample[ CurWin]);
+		InternalUpdate(CurWin);
+		NSelectInstruList(CurWin, curSample[ CurWin]);
 	}
 	else if (theChar == 0x1F)		// ++
 	{
@@ -4533,26 +4533,26 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 			}
 		}
 		
-		ResetSelectionSample( CurWin);
+		ResetSelectionSample(CurWin);
 		ZoomLevel[ CurWin] = 1;
-		SetControlValue( 	xScroll[ CurWin], 0);
-		SetControlH( CurWin);
+		SetControlValue(	xScroll[ CurWin], 0);
+		SetControlH(CurWin);
 		
-		InternalUpdate( CurWin);
-		NSelectInstruList( CurWin, curSample[ CurWin]);
+		InternalUpdate(CurWin);
+		NSelectInstruList(CurWin, curSample[ CurWin]);
 	}
 	else if (theChar == 0x08)		// Delete
 	{
-		Start = FindByteStart( CurWin);
-		End = FindByteEnd( CurWin);
+		Start = FindByteStart(CurWin);
+		End = FindByteEnd(CurWin);
 		
 		if (Start != End)
 		{
-			SaveUndo( USample, CurWin, "\pUndo 'Delete instrument'");
+			SaveUndo(USample, CurWin, "\pUndo 'Delete instrument'");
 			
 			curMusic->hasChanged = true;
 			
-			switch( curSample[ CurWin])
+			switch(curSample[ CurWin])
 			{
 				case panningEnv:
 				{
@@ -4580,7 +4580,7 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 						if (curIns->pannType & EFON) curIns->pannType -= EFON;
 					}
 					
-					InternalUpdate( CurWin);
+					InternalUpdate(CurWin);
 				}
 				break;
 				
@@ -4610,12 +4610,12 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 						if (curIns->volType & EFON) curIns->volType -= EFON;
 					}
 					
-					InternalUpdate( CurWin);
+					InternalUpdate(CurWin);
 				}
 				break;
 				
 				default:
-					sSize = (long) SampleDataD( CurWin)->size;
+					sSize = (long) SampleDataD(CurWin)->size;
 					
 					if (End > sSize) End = sSize;
 					if (Start > sSize) Start = sSize;
@@ -4626,60 +4626,60 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 					
 					if (newSize == 0)
 					{
-						SampleDataD( CurWin)->loopBeg	= 0;
-						SampleDataD( CurWin)->loopSize	= 0;
-						SampleDataD( CurWin)->size		= 0;
-						MyDisposePtr( (Ptr*) &SampleDataD( CurWin)->data);
-						SampleDataD( CurWin)->data		= NewPtr( 0);
+						SampleDataD(CurWin)->loopBeg	= 0;
+						SampleDataD(CurWin)->loopSize	= 0;
+						SampleDataD(CurWin)->size		= 0;
+						MyDisposePtr((Ptr*) &SampleDataD(CurWin)->data);
+						SampleDataD(CurWin)->data		= NewPtr(0);
 						
-						InternalUpdate( CurWin);
+						InternalUpdate(CurWin);
 						if (thePrefs.ClassicalProjection) UpdateMozartInfo();
 					}
 					else
 					{
-						newSnd = MyNewPtr( newSize);
+						newSnd = MyNewPtr(newSize);
 						if (newSnd != NULL)
 						{
-							BlockMoveData( SampleDataD( CurWin)->data, newSnd, Start);
+							BlockMoveData(SampleDataD(CurWin)->data, newSnd, Start);
 							
-							if (reste < 0) MyDebugStr( __LINE__, __FILE__, "Error in Sample Delete");
-							BlockMoveData( SampleDataD( CurWin)->data + End, newSnd + Start, reste);
+							if (reste < 0) MyDebugStr(__LINE__, __FILE__, "Error in Sample Delete");
+							BlockMoveData(SampleDataD(CurWin)->data + End, newSnd + Start, reste);
 							
-							MyDisposePtr( & SampleDataD( CurWin)->data);
-							SampleDataD( CurWin)->data = newSnd;
+							MyDisposePtr(& SampleDataD(CurWin)->data);
+							SampleDataD(CurWin)->data = newSnd;
 							
-							SampleDataD( CurWin)->size = newSize;
+							SampleDataD(CurWin)->size = newSize;
 							
 							/*** Réajuste la loop ***/
 							
-							if (SampleDataD( CurWin)->loopBeg > Start)
+							if (SampleDataD(CurWin)->loopBeg > Start)
 							{
-								SampleDataD( CurWin)->loopBeg -= End - Start;
+								SampleDataD(CurWin)->loopBeg -= End - Start;
 							}
 							
-							if (SampleDataD( CurWin)->loopBeg < 0) SampleDataD( CurWin)->loopBeg = 0;
+							if (SampleDataD(CurWin)->loopBeg < 0) SampleDataD(CurWin)->loopBeg = 0;
 							
-							if (SampleDataD( CurWin)->loopBeg > SampleDataD( CurWin)->size)
+							if (SampleDataD(CurWin)->loopBeg > SampleDataD(CurWin)->size)
 							{
-								SampleDataD( CurWin)->loopBeg = 0;
-								SampleDataD( CurWin)->loopSize = 0;
+								SampleDataD(CurWin)->loopBeg = 0;
+								SampleDataD(CurWin)->loopSize = 0;
 							}
 							
-							if(		SampleDataD( CurWin)->loopBeg +
-									SampleDataD( CurWin)->loopSize > SampleDataD( CurWin)->size)
+							if(		SampleDataD(CurWin)->loopBeg +
+									SampleDataD(CurWin)->loopSize > SampleDataD(CurWin)->size)
 							{
-								SampleDataD( CurWin)->loopSize = SampleDataD( CurWin)->size - SampleDataD( CurWin)->loopBeg;
+								SampleDataD(CurWin)->loopSize = SampleDataD(CurWin)->size - SampleDataD(CurWin)->loopBeg;
 							}
 							
 							/***********************/
 							
 							curMusic->hasChanged = true;
 							
-							if (SelecRect[ CurWin].start > SampleDataD( CurWin)->size)
-								SelecRect[ CurWin].start = SampleDataD( CurWin)->size;	//xxx
+							if (SelecRect[ CurWin].start > SampleDataD(CurWin)->size)
+								SelecRect[ CurWin].start = SampleDataD(CurWin)->size;	//xxx
 							SelecRect[ CurWin].end = SelecRect[ CurWin].start;
 						
-							InternalUpdate( CurWin);
+							InternalUpdate(CurWin);
 							if (thePrefs.ClassicalProjection) UpdateMozartInfo();
 							
 							// Réduction de la sélection à une barre de clignotement:
@@ -4687,7 +4687,7 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 							Clignote[ CurWin] = true;
 							TokTak[ CurWin] = false;
 						}
-						else Erreur( 5, -84);
+						else Erreur(5, -84);
 					}
 				break;
 			}
@@ -4718,28 +4718,28 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 				curMusic->hasChanged = true;
 			}
 			
-			UpdateDisplay( CurWin);
+			UpdateDisplay(CurWin);
 		}
 	}
 	else if (theChar ==  9)
  	{
- 		HiliteControl( SelectBut[ CurWin], 0);
-		HiliteControl( PencilBut[ CurWin], 0);
-		HiliteControl( ZoomBut[ CurWin], 0);
+ 		HiliteControl(SelectBut[ CurWin], 0);
+		HiliteControl(PencilBut[ CurWin], 0);
+		HiliteControl(ZoomBut[ CurWin], 0);
 		
 		SelectMode[ CurWin]++;
 		if (SelectMode[ CurWin] > MODESIZE) SelectMode[ CurWin] = 0;
-		switch( SelectMode[ CurWin])
+		switch(SelectMode[ CurWin])
 		{
-			case eSelect:	HiliteControl( SelectBut[ CurWin], kControlButtonPart);	break;
-			case ePencil:	HiliteControl( PencilBut[ CurWin], kControlButtonPart);	break;
-			case eZoom:		HiliteControl( ZoomBut[ CurWin], kControlButtonPart);		break;
+			case eSelect:	HiliteControl(SelectBut[ CurWin], kControlButtonPart);	break;
+			case ePencil:	HiliteControl(PencilBut[ CurWin], kControlButtonPart);	break;
+			case eZoom:		HiliteControl(ZoomBut[ CurWin], kControlButtonPart);		break;
 		}
  	}
 	else if (theEvent.what == keyDown)
 	{
 		str1[0] = 1;	str1[1] = theChar;
-	//	UpperString( str1, true);
+	//	UpperString(str1, true);
 		theChar = str1[1];
 		
 		if ((short) theChar >= 0 && (short) theChar < 300)
@@ -4757,8 +4757,8 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 			{
 				short track = GetWhichTrackPlay();
 				
-				SelectTouche( i, -1);
-				SelectToucheMozart( i, 0);
+				SelectTouche(i, -1);
+				SelectToucheMozart(i, 0);
 				
 				TouchIn++;
 				if (TouchIn < 0 || TouchIn >= 10) TouchIn = 0;
@@ -4768,28 +4768,28 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 				
 				if (curSample[ CurWin] < 0)
 				{
-					DoPlayInstruInt( i, CurWin, 0, 0, 0xFF, &MADDriver->chan[ track], 0, 0);
+					DoPlayInstruInt(i, CurWin, 0, 0, 0xFF, &MADDriver->chan[ track], 0, 0);
 				}
 				else
 				{
-					if (SelecRect[ CurWin].start == SelecRect[ CurWin].end) DoPlayInstruInt( i, CurWin, 0, 0, 0xFF, &MADDriver->chan[ track], 0, 0);
+					if (SelecRect[ CurWin].start == SelecRect[ CurWin].end) DoPlayInstruInt(i, CurWin, 0, 0, 0xFF, &MADDriver->chan[ track], 0, 0);
 					else
 					{
-						DoPlayInstruInt( i, CurWin, 0, 0, 0xFF, &MADDriver->chan[ track], SelecRect[ CurWin].start, SelecRect[ CurWin].end);
+						DoPlayInstruInt(i, CurWin, 0, 0, 0xFF, &MADDriver->chan[ track], SelecRect[ CurWin].start, SelecRect[ CurWin].end);
 					}
 				}
 			}
 		}
 	}
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
-void PrintSample( DialogPtr theDia)
+void PrintSample(DialogPtr theDia)
 {
-	PrintPixMap( GetPortPixMap( BitMapSample[ FindSample( theDia)]));
+	PrintPixMap(GetPortPixMap(BitMapSample[ FindSample(theDia)]));
 }
 
-void ResetSelectionSample( short CurWin)
+void ResetSelectionSample(short CurWin)
 {
 GrafPtr	SavePort;
 
@@ -4799,14 +4799,14 @@ GrafPtr	SavePort;
 
 	if (SampleDlog[ CurWin] == NULL) return;
 
-	GetPort( &SavePort);
- 	SetPortDialogPort( SampleDlog[ CurWin]);
- 	GetSampleRect( SampleDlog[ CurWin]);
+	GetPort(&SavePort);
+ 	SetPortDialogPort(SampleDlog[ CurWin]);
+ 	GetSampleRect(SampleDlog[ CurWin]);
 		
-	InvalWindowRect( GetDialogWindow( SampleDlog[ CurWin]), &SampleRect);
-	UpdateDisplaySelec( CurWin);
+	InvalWindowRect(GetDialogWindow(SampleDlog[ CurWin]), &SampleRect);
+	UpdateDisplaySelec(CurWin);
 	
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
 static	Boolean	canAcceptDrag;
@@ -4826,15 +4826,15 @@ pascal OSErr MyTrackingSample(short message, WindowPtr theWindow, void *handlerR
 
 	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return(noErr);
 
-	SetPortWindowPort( theWindow);
-	BackColor( whiteColor);
+	SetPortWindowPort(theWindow);
+	BackColor(whiteColor);
 	
 	GetDragAttributes(theDrag, &attributes);
 
 	switch (message)
 	{
 		case kDragTrackingEnterHandler:
-			canAcceptDrag = true;	//IsMyTypeAvailable( theDrag);
+			canAcceptDrag = true;	//IsMyTypeAvailable(theDrag);
 		break;
 
 		case kDragTrackingEnterWindow:
@@ -4847,8 +4847,8 @@ pascal OSErr MyTrackingSample(short message, WindowPtr theWindow, void *handlerR
 			GlobalToLocal(&localMouse);
 
 
-			GetSampleRect( GetDialogFromWindow( theWindow));
-			if (PtInRect( localMouse, &SampleRect))
+			GetSampleRect(GetDialogFromWindow(theWindow));
+			if (PtInRect(localMouse, &SampleRect))
 			{
 				tempRect.top = SampleRect.top;
 				tempRect.bottom = SampleRect.bottom;
@@ -4859,11 +4859,11 @@ pascal OSErr MyTrackingSample(short message, WindowPtr theWindow, void *handlerR
 				ShowDragHilite(theDrag, theRgn, true);
 				DisposeRgn(theRgn);
 			}
-			else HideDragHilite( theDrag);
+			else HideDragHilite(theDrag);
 		break;
 
 		case kDragTrackingLeaveWindow:
-			HideDragHilite( theDrag);
+			HideDragHilite(theDrag);
 		break;
 
 		case kDragTrackingLeaveHandler:
@@ -4871,7 +4871,7 @@ pascal OSErr MyTrackingSample(short message, WindowPtr theWindow, void *handlerR
 		break;
 
 	}
-	RGBBackColor( &theColor);
+	RGBBackColor(&theColor);
 
 	return(noErr);
 }
@@ -4897,31 +4897,31 @@ pascal OSErr MyReceiveSampleHandler(WindowPtr theWindow, unsigned long handlerRe
 	if (!mainSystemDrag) return dragNotAcceptedErr;
 
 	SetPortWindowPort(theWindow);
-	if (CurInstruDrag == -1 && selectedControl == NULL) return( dragNotAcceptedErr);
-	if (!canAcceptDrag) return( dragNotAcceptedErr);
+	if (CurInstruDrag == -1 && selectedControl == NULL) return(dragNotAcceptedErr);
+	if (!canAcceptDrag) return(dragNotAcceptedErr);
 
 	GetDragAttributes(theDrag, &attributes);
 	GetDragModifiers(theDrag, NULL, &mouseDownModifiers, &mouseUpModifiers);
 
 	if (selectedControl != NULL)	// Drag sur un bouton !!!!
 	{
-		HiliteControl( selectedControl, 0);
+		HiliteControl(selectedControl, 0);
 		
-		if (selectedControl == SaveBut)		HandleInstruChoice( 5);
-		if (selectedControl == InfoBut)		HandleInstruChoice( 6);
-		if (selectedControl == DelBut)		HandleInstruChoice( 7);
-		if (selectedControl == RecBut)		HandleInstruChoice( 3);
-		if (selectedControl == LoadBut)		HandleInstruChoice( 4);
+		if (selectedControl == SaveBut)		HandleInstruChoice(5);
+		if (selectedControl == InfoBut)		HandleInstruChoice(6);
+		if (selectedControl == DelBut)		HandleInstruChoice(7);
+		if (selectedControl == RecBut)		HandleInstruChoice(3);
+		if (selectedControl == LoadBut)		HandleInstruChoice(4);
 		if (selectedControl == OpenBut)
 		{
 			theCell.v = 0;
-			if (GetIns( &theCell.v, NULL))
+			if (GetIns(&theCell.v, NULL))
 			{
 				short	ins, samp;
 			
-				ConvertIDtoInsSamp( theCell.v, &ins, &samp);
+				ConvertIDtoInsSamp(theCell.v, &ins, &samp);
 				
-				NCreateSampleWindow( ins, samp);
+				NCreateSampleWindow(ins, samp);
 			}
 		}
 
@@ -4933,16 +4933,16 @@ pascal OSErr MyReceiveSampleHandler(WindowPtr theWindow, unsigned long handlerRe
 	moveInstru = (attributes & kDragInsideSenderWindow) && (!((mouseDownModifiers & optionKey) | (mouseUpModifiers & optionKey)));
 	if (moveInstru && DragInstruSource == CurInstruDrag) return noErr;
 
-	BackColor( whiteColor);
+	BackColor(whiteColor);
 
 	HideDragHilite(theDrag);
 	
 	theCell.v = 0;	theCell.h = 0;
-//	while (LGetSelect( true, &theCell, InstruList)) LSetSelect( false, theCell, InstruList);
+//	while (LGetSelect(true, &theCell, InstruList)) LSetSelect(false, theCell, InstruList);
 	theCell.v = CurInstruDrag;
-//	LSetSelect( true, theCell, InstruList);
+//	LSetSelect(true, theCell, InstruList);
 	
-	RGBBackColor( &theColor);
+	RGBBackColor(&theColor);
 
 	curMusic->hasChanged = true;
 	
@@ -4953,20 +4953,20 @@ pascal OSErr MyReceiveSampleHandler(WindowPtr theWindow, unsigned long handlerRe
 
 	if (result == noErr)
 	{
-		SaveUndo( UAllSamples, 0, "\pUndo 'Drop instrument file'");
+		SaveUndo(UAllSamples, 0, "\pUndo 'Drop instrument file'");
 	
 		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, NULL);
 		
-		ResolveAliasFile( &myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
+		ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		
-		OpenSampleInt( CurInstruDrag, myFlavor.fileSpec, NULL);
+		OpenSampleInt(CurInstruDrag, myFlavor.fileSpec, NULL);
 		
-		TextFont( 4);	TextSize( 9);
+		TextFont(4);	TextSize(9);
 		CreateInstruList();
 		DrawInfoInstrument();
 		UpdateSampleWindows();
 		UpdateInstruMenu();
-		TextFont( 0);	TextSize( 0);
+		TextFont(0);	TextSize(0);
 		
 		return(noErr);
 	}
@@ -4978,29 +4978,29 @@ pascal OSErr MyReceiveSampleHandler(WindowPtr theWindow, unsigned long handlerRe
 
 	if (result == noErr)
 	{
-		SaveUndo( UAllSamples, 0, "\pUndo 'Move instrument'");
+		SaveUndo(UAllSamples, 0, "\pUndo 'Move instrument'");
 	
-		mySnd = MyNewHandle( textSize);
+		mySnd = MyNewHandle(textSize);
 		
-		HLock( mySnd);
+		HLock(mySnd);
 		
 		GetFlavorData(theDrag, theItem, 'snd ', *mySnd, &textSize, NULL);
 		
-		OpenSampleInt( CurInstruDrag, pseudoFF, mySnd);
+		OpenSampleInt(CurInstruDrag, pseudoFF, mySnd);
 		
 		if (moveInstru && DragInstruSource != CurInstruDrag)				// Delete the source, if moving without option key.
 		{
-			SetInstruName( DragInstruSource, "\p");
+			SetInstruName(DragInstruSource, "\p");
 
-			SampleDataD( DragInstruSource)->size 		= 0;
-			SampleDataD( DragInstruSource)->loopBeg		= 0;
-			SampleDataD( DragInstruSource)->loopSize 	= 0;
-			SampleDataD( DragInstruSource)->vol 		= 64;
-		//	SampleDataD( DragInstruSource)->freq 		= 1;
-			SampleDataD( DragInstruSource)->amp 		= 8;
+			SampleDataD(DragInstruSource)->size 		= 0;
+			SampleDataD(DragInstruSource)->loopBeg		= 0;
+			SampleDataD(DragInstruSource)->loopSize 	= 0;
+			SampleDataD(DragInstruSource)->vol 		= 64;
+		//	SampleDataD(DragInstruSource)->freq 		= 1;
+			SampleDataD(DragInstruSource)->amp 		= 8;
 	
-			if (SampleDataD( DragInstruSource)->data != NULL) MyDisposePtr( &SampleDataD( DragInstruSource)->data);
-			SampleDataD( DragInstruSource)->data = NULL;
+			if (SampleDataD(DragInstruSource)->data != NULL) MyDisposePtr(&SampleDataD(DragInstruSource)->data);
+			SampleDataD(DragInstruSource)->data = NULL;
 
 			DragInstruSource = -1;
 		}
@@ -5010,20 +5010,20 @@ pascal OSErr MyReceiveSampleHandler(WindowPtr theWindow, unsigned long handlerRe
 		{
 			GetFlavorData(theDrag, theItem, 'STR ', &myStr, &textSize, NULL);
 			
-			SetInstruName( CurInstruDrag, myStr);
+			SetInstruName(CurInstruDrag, myStr);
 		}
 		
-		TextFont( 4);	TextSize( 9);
+		TextFont(4);	TextSize(9);
 		CreateInstruList();
 		DrawInfoInstrument();
 		UpdateSampleWindows();
 		UpdateInstruMenu();
-		TextFont( 0);	TextSize( 0);
+		TextFont(0);	TextSize(0);
 		
 		return(noErr);
 	}
 
-	return( dragNotAcceptedErr);
+	return(dragNotAcceptedErr);
 }
 
 
@@ -5040,24 +5040,24 @@ pascal OSErr MySendSampleProc(FlavorType theFlavor,  void *refCon, ItemReference
 	
 	if (theFlavor == 'VCT1')
 	{
-		err = GetDropLocation( theDrag, &dropLoc);
+		err = GetDropLocation(theDrag, &dropLoc);
 		if (err) return (err);
 
 		err = ResolveAlias(nil, (AliasHandle) dropLoc.dataHandle, &target, &wasChanged);
 		if (err) return (err);
 		
-		theSound = SoundQualityExportSnd( DragInstruSource, &compressionType, &SoundType, &SoundSize);
+		theSound = SoundQualityExportSnd(DragInstruSource, &compressionType, &SoundType, &SoundSize);
 		if (theSound == NULL) return noErr;
 
-		strcpy( (Ptr) target.name, SampleDataD( DragInstruSource)->name);
-		for (i=0; i<strlen( (Ptr) target.name); i++) if (target.name[i] == ':') target.name[i] = '-';
-		MyC2PStr( (Ptr) target.name);
+		strcpy((Ptr) target.name, SampleDataD(DragInstruSource)->name);
+		for (i=0; i<strlen((Ptr) target.name); i++) if (target.name[i] == ':') target.name[i] = '-';
+		MyC2PStr((Ptr) target.name);
 
-		HSetVol( NULL, target.vRefNum, target.parID);
+		HSetVol(NULL, target.vRefNum, target.parID);
 		
-		SaveSampleInt( theSound, DragInstruSource, SoundType, compressionType, &target);
+		SaveSampleInt(theSound, DragInstruSource, SoundType, compressionType, &target);
 
-		err = SetDragItemFlavorData( theDrag, theItem, theFlavor, &target, sizeof( target), NULL);
+		err = SetDragItemFlavorData(theDrag, theItem, theFlavor, &target, sizeof(target), NULL);
 		if (err) return (err);
 	}
 
@@ -5065,7 +5065,7 @@ pascal OSErr MySendSampleProc(FlavorType theFlavor,  void *refCon, ItemReference
 }
 */
 
-Boolean DragSample( RgnHandle myRgn, short theNo, EventRecord *theEvent)
+Boolean DragSample(RgnHandle myRgn, short theNo, EventRecord *theEvent)
 {
 	short				result;
 	RgnHandle			dragRegion, tempRgn;
@@ -5078,7 +5078,7 @@ Boolean DragSample( RgnHandle myRgn, short theNo, EventRecord *theEvent)
 	long				inOutBytes, Start, End;
 	short				temp;
 	Handle				theSound;
-	Ptr					Instru = SampleDataD( theNo)->data;
+	Ptr					Instru = SampleDataD(theNo)->data;
 	Str255				theStr;
 	PromiseHFSFlavor	myNewFile;
 	FSSpec				mySpec;
@@ -5087,7 +5087,7 @@ Boolean DragSample( RgnHandle myRgn, short theNo, EventRecord *theEvent)
 	
 	if (!DragManagerUse) return false;
 	if (Instru == NULL) return false;
-	if (SampleDataD( theNo)->size == 0) return false;
+	if (SampleDataD(theNo)->size == 0) return false;
 
 	//******************************************
 	// Prepare l'instrument pour etre exporte !!
@@ -5095,60 +5095,60 @@ Boolean DragSample( RgnHandle myRgn, short theNo, EventRecord *theEvent)
 
 	DragInstruSource = theNo;
 
-	Start = FindByteStart( theNo);
-	End = FindByteEnd( theNo);
+	Start = FindByteStart(theNo);
+	End = FindByteEnd(theNo);
 	
 	inOutBytes = End - Start;
 
-	if (SampleDataD( theNo)->stereo) numChan = 2;
+	if (SampleDataD(theNo)->stereo) numChan = 2;
 	else numChan = 1;
 	
-	theSound = MyNewHandle( 10000);
+	theSound = MyNewHandle(10000);
 	SetupSndHeader(		(SndListHandle) theSound,
 						numChan,
-						((unsigned long) SampleDataD( theNo)->c2spd)<<16L,
-						SampleDataD( theNo)->amp,
+						((unsigned long) SampleDataD(theNo)->c2spd)<<16L,
+						SampleDataD(theNo)->amp,
 						'NONE',
-						60 - SampleDataD( theNo)->relNote,
+						60 - SampleDataD(theNo)->relNote,
 						inOutBytes,
 						&temp);
 	
-	SetHandleSize( theSound, inOutBytes + temp);
+	SetHandleSize(theSound, inOutBytes + temp);
 	
 /*	AddLoopToSndHandle(	theSound,
 						curMusic->fid[ theNo].loopBeg,
 						curMusic->fid[ theNo].loopBeg + curMusic->fid[ theNo].loopSize);*/
 
-	HLock( theSound);
-	BlockMoveData( Instru + Start, (Ptr) ((*theSound) + temp), inOutBytes);
-	if (SampleDataD( theNo)->amp == 8) ConvertInstrumentIn( (Byte*) (*theSound + temp), inOutBytes);
-	else ConvertInstrumentOut16( (short*) (*theSound + temp), inOutBytes);
+	HLock(theSound);
+	BlockMoveData(Instru + Start, (Ptr) ((*theSound) + temp), inOutBytes);
+	if (SampleDataD(theNo)->amp == 8) ConvertInstrumentIn((Byte*) (*theSound + temp), inOutBytes);
+	else ConvertInstrumentOut16((short*) (*theSound + temp), inOutBytes);
 	//******************************************
 	//******************************************
 	
-	CopyRgn( myRgn, dragRegion = NewRgn());
-	SetPt( &theLoc, 0, 0);
-	LocalToGlobal( &theLoc);
-	OffsetRgn( dragRegion, theLoc.h, theLoc.v);
+	CopyRgn(myRgn, dragRegion = NewRgn());
+	SetPt(&theLoc, 0, 0);
+	LocalToGlobal(&theLoc);
+	OffsetRgn(dragRegion, theLoc.h, theLoc.v);
 	
-	NewDrag( &theDrag);
+	NewDrag(&theDrag);
 	
 	myNewFile.fileType			=	'snd ';
 	myNewFile.fileCreator		=	'SNPL';
 	myNewFile.fdFlags			=	0;
 	myNewFile.promisedFlavor	=	0;	//'VCT1';
-//	AddDragItemFlavor( theDrag, 1, flavorTypePromiseHFS, &myNewFile, sizeof( myNewFile), flavorNotSaved);
-//	AddDragItemFlavor( theDrag, 1, 'VCT1', NULL, 0, 0);
-	AddDragItemFlavor( theDrag, 1, 'snd ', *theSound, GetHandleSize( theSound), 0);
+//	AddDragItemFlavor(theDrag, 1, flavorTypePromiseHFS, &myNewFile, sizeof(myNewFile), flavorNotSaved);
+//	AddDragItemFlavor(theDrag, 1, 'VCT1', NULL, 0, 0);
+	AddDragItemFlavor(theDrag, 1, 'snd ', *theSound, GetHandleSize(theSound), 0);
 
-/*	strcpy( (Ptr) theStr, SampleDataD( theNo)->name);
-	MyC2PStr( (Ptr) theStr);
-	AddDragItemFlavor( theDrag, 1, 'STR ', &theStr, sizeof( theStr), 0);
+/*	strcpy((Ptr) theStr, SampleDataD(theNo)->name);
+	MyC2PStr((Ptr) theStr);
+	AddDragItemFlavor(theDrag, 1, 'STR ', &theStr, sizeof(theStr), 0);
 */
 /*	
-	result = SetDragSendProc( theDrag, mySendDataUPP, NULL);
+	result = SetDragSendProc(theDrag, mySendDataUPP, NULL);
 */
-	SetDragItemBounds(theDrag, 1, GetRegionBounds( dragRegion, &dragRegionRect));
+	SetDragItemBounds(theDrag, 1, GetRegionBounds(dragRegion, &dragRegionRect));
 
 	tempRgn = NewRgn();
 	CopyRgn(dragRegion, tempRgn);
@@ -5178,9 +5178,9 @@ Boolean DragSample( RgnHandle myRgn, short theNo, EventRecord *theEvent)
 		GetDragModifiers(theDrag, NULL, &mouseDownModifiers, &mouseUpModifiers);
 		copyText = (mouseDownModifiers | mouseUpModifiers) & optionKey;
 
-		if ((!copyText) && ( DropLocationIsFinderTrash( &dropLocation)))
+		if ((!copyText) && (DropLocationIsFinderTrash(&dropLocation)))
 		{
-			DoKeyPressSample( SampleDlog[ theNo], 8);
+			DoKeyPressSample(SampleDlog[ theNo], 8);
 			
 			curMusic->hasChanged = true;
 			
@@ -5202,8 +5202,8 @@ Boolean DragSample( RgnHandle myRgn, short theNo, EventRecord *theEvent)
 
 	DisposeRgn(dragRegion);
 
-	HUnlock( theSound);
-	MyDisposHandle( & theSound);
+	HUnlock(theSound);
+	MyDisposHandle(& theSound);
 	
 	return(true);
 }

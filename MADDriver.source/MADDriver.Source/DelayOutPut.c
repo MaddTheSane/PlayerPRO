@@ -28,9 +28,9 @@ static Ptr	maxBuffer;
 
 unsigned long getfrequency(unsigned long period);
 
-Boolean IsVSTChanEffect( MADDriverRec *intDriver, short channel);
+Boolean IsVSTChanEffect(MADDriverRec *intDriver, short channel);
 
-static inline void PrepareInline( long *VolInter, long* rVolInter, double p2, double v1, double v2)
+static inline void PrepareInline(long *VolInter, long* rVolInter, double p2, double v1, double v2)
 {
 	double temp;
 
@@ -47,28 +47,28 @@ inline long InterpolateInline(long p,long p2,long v1,long v2)
 }
 */
 
-void MADCreateOverShoot( MADDriverRec *intDriver)
+void MADCreateOverShoot(MADDriverRec *intDriver)
 {
 	long	i, x;
 	
-	switch( intDriver->DriverSettings.outPutBits)
+	switch(intDriver->DriverSettings.outPutBits)
 	{
 		case 16:
-			intDriver->DASCBuffer 			= (long*) MADNewPtrClear( ( (long) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, intDriver->lib);
+			intDriver->DASCBuffer 			= (long*) MADNewPtrClear(((long) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, intDriver->lib);
 			
 			maxBuffer = (Ptr) intDriver->DASCBuffer;
-			maxBuffer = maxBuffer + ( (long) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L;
+			maxBuffer = maxBuffer + ((long) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L;
 			
 			for (i = 0; i < MAXCHANEFFECT; i++)
 			{
-				intDriver->DASCEffectBuffer[ i]	= (long*) MADNewPtrClear( ( (long) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, intDriver->lib);
+				intDriver->DASCEffectBuffer[ i]	= (long*) MADNewPtrClear(((long) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, intDriver->lib);
 			}
 		break;
 		
 		case 8:
-			intDriver->DASCBuffer8 			= (short*) MADNewPtrClear( ( (long) intDriver->ASCBUFFER * 4L) + intDriver->MDelay*2L*4L, intDriver->lib);
+			intDriver->DASCBuffer8 			= (short*) MADNewPtrClear(((long) intDriver->ASCBUFFER * 4L) + intDriver->MDelay*2L*4L, intDriver->lib);
 			
-			intDriver->OverShoot = (Ptr) MADNewPtrClear( 256L * 32L, intDriver->lib);
+			intDriver->OverShoot = (Ptr) MADNewPtrClear(256L * 32L, intDriver->lib);
 			
 			for (i = 0; i < 256L * 16L; i++)						intDriver->OverShoot[ i] = 0;
 			for (i = 256L * 16L, x = 0; i < 256L * 17L; i++, x++)	intDriver->OverShoot[ i] = x;
@@ -80,19 +80,19 @@ void MADCreateOverShoot( MADDriverRec *intDriver)
 	}
 }
 
-void MADKillOverShoot( MADDriverRec *intDriver)
+void MADKillOverShoot(MADDriverRec *intDriver)
 {
 	short	i;
 
-	switch( intDriver->DriverSettings.outPutBits)
+	switch(intDriver->DriverSettings.outPutBits)
 	{
 		case 16:
-			if (intDriver->DASCBuffer != NULL) DisposePtr( (Ptr) intDriver->DASCBuffer);
+			if (intDriver->DASCBuffer != NULL) DisposePtr((Ptr) intDriver->DASCBuffer);
 			intDriver->DASCBuffer = NULL;
 			
 			for (i = 0; i < MAXCHANEFFECT; i++)
 			{
-				if (intDriver->DASCEffectBuffer[ i] != NULL) DisposePtr( (Ptr) intDriver->DASCEffectBuffer[ i]);
+				if (intDriver->DASCEffectBuffer[ i] != NULL) DisposePtr((Ptr) intDriver->DASCEffectBuffer[ i]);
 				intDriver->DASCEffectBuffer[ i] = NULL;
 			}
 		break;
@@ -102,17 +102,17 @@ void MADKillOverShoot( MADDriverRec *intDriver)
 			{
 				intDriver->OverShoot -= 128L;
 				intDriver->OverShoot -= 256L*16L;
-				DisposePtr( (Ptr) intDriver->OverShoot);
+				DisposePtr((Ptr) intDriver->OverShoot);
 				intDriver->OverShoot = NULL;
 			}
 			
-			if (intDriver->DASCBuffer8 != NULL) DisposePtr( (Ptr) intDriver->DASCBuffer8);
+			if (intDriver->DASCBuffer8 != NULL) DisposePtr((Ptr) intDriver->DASCBuffer8);
 			intDriver->DASCBuffer8 = NULL;
 		break;
 	}
 }
 
-void Sampler16AddDelay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDriver)
+void Sampler16AddDelay(Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDriver)
 {
 	long				chnVol = 0, chnVol2 = 0;
 	long				chnVolS = 0, chnVol2S = 0;
@@ -134,7 +134,7 @@ void Sampler16AddDelay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDri
 		
 		if (intDriver->XMLinear)
 		{
-			finalperiod = getfrequency( curVoice->period);
+			finalperiod = getfrequency(curVoice->period);
 			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
 			
 			finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
@@ -143,7 +143,7 @@ void Sampler16AddDelay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDri
 		
 		finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
 		
-		temp = ( (long double) AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		temp = ((long double) AMIGA_CLOCKFREQ2) / (long double) ((long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
 		
 		if (temp >= 1) aa = false;
 		
@@ -156,13 +156,13 @@ void Sampler16AddDelay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDri
 	if (curVoice->pingpong == true && curVoice->loopType == ePingPongLoop) aDD = -aDD;	// PINGPONG
 	///
 	
-	chnVol2S	= DoVolPanning256( 0, curVoice, intDriver, true);
-	chnVolS		= DoVolPanning256( 1, curVoice, intDriver, true);
+	chnVol2S	= DoVolPanning256(0, curVoice, intDriver, true);
+	chnVolS		= DoVolPanning256(1, curVoice, intDriver, true);
 	
 	curVoice->volEnvInter += i;
 	
-	chnVol2D	= DoVolPanning256( 0, curVoice, intDriver, true);
-	chnVolD		= DoVolPanning256( 1, curVoice, intDriver, true);
+	chnVol2D	= DoVolPanning256(0, curVoice, intDriver, true);
+	chnVolD		= DoVolPanning256(1, curVoice, intDriver, true);
 	
 	if ((curVoice->TrackID % 2) == 0)
 	{
@@ -176,7 +176,7 @@ void Sampler16AddDelay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDri
 	}
 	
 	//*****************************************
-	if (intDriver->DriverSettings.TickRemover) MADTickRemoverStart8( curVoice, ASCBuffer1, ASCBuffer2, intDriver);
+	if (intDriver->DriverSettings.TickRemover) MADTickRemoverStart8(curVoice, ASCBuffer1, ASCBuffer2, intDriver);
 	//*****************************************
 	
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) return;
@@ -186,8 +186,8 @@ void Sampler16AddDelay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDri
 		long	RightWeight, LeftWeight, preOff = curVoice->preOff;
   		char  	preVal = curVoice->preVal, preVal2 = curVoice->preVal2;
   		
-  		PrepareInline( &VolInter1, &rVolInter1, intDriver->ASCBUFFER, chnVolS, chnVolD);
-  		PrepareInline( &VolInter2, &rVolInter2, intDriver->ASCBUFFER, chnVol2S, chnVol2D);
+  		PrepareInline(&VolInter1, &rVolInter1, intDriver->ASCBUFFER, chnVolS, chnVolD);
+  		PrepareInline(&VolInter2, &rVolInter2, intDriver->ASCBUFFER, chnVol2S, chnVol2D);
   		
 		while (i-- > 0)
 		{
@@ -227,7 +227,7 @@ void Sampler16AddDelay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDri
 						}
 						else	// If TICK remove
 						{
-							MADTickLoopFill8( curVoice, ASCBuffer1, ASCBuffer2, i, (tByte * chnVol) >> 8, (tByte * chnVol2) >> 8);
+							MADTickLoopFill8(curVoice, ASCBuffer1, ASCBuffer2, i, (tByte * chnVol) >> 8, (tByte * chnVol2) >> 8);
 							killSample = true;
 							break;
 						}
@@ -264,7 +264,7 @@ void Sampler16AddDelay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDri
 	}
 }
 
-void Sampler16AddDelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDriver)
+void Sampler16AddDelayStereo(Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDriver)
 {
 	long				chnVol = 0, chnVol2 = 0;
 	long				i = intDriver->ASCBUFFER;
@@ -285,7 +285,7 @@ void Sampler16AddDelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverRec *
 		
 		if (intDriver->XMLinear)
 		{
-			finalperiod = getfrequency( curVoice->period);
+			finalperiod = getfrequency(curVoice->period);
 			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
 			
 			finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
@@ -294,9 +294,9 @@ void Sampler16AddDelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverRec *
 		
 		finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
 		
-		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ((long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
 		
-		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ((long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
 		
 		if (temp >= 1) aa = false;
 		
@@ -310,13 +310,13 @@ void Sampler16AddDelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverRec *
 	if (curVoice->pingpong == true && curVoice->loopType == ePingPongLoop) aDD = -aDD;	// PINGPONG
 	///
 	
-	chnVol2S	= DoVolPanning256( 0, curVoice, intDriver, true);
-	chnVolS		= DoVolPanning256( 1, curVoice, intDriver, true);
+	chnVol2S	= DoVolPanning256(0, curVoice, intDriver, true);
+	chnVolS		= DoVolPanning256(1, curVoice, intDriver, true);
 	
 	curVoice->volEnvInter += i;
 	
-	chnVol2D	= DoVolPanning256( 0, curVoice, intDriver, true);
-	chnVolD		= DoVolPanning256( 1, curVoice, intDriver, true);
+	chnVol2D	= DoVolPanning256(0, curVoice, intDriver, true);
+	chnVolD		= DoVolPanning256(1, curVoice, intDriver, true);
 	
 	if ((curVoice->TrackID % 2) == 0)
 	{
@@ -330,7 +330,7 @@ void Sampler16AddDelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverRec *
 	}
 	
 	//*****************************************
-	if (intDriver->DriverSettings.TickRemover) MADTickRemoverStart8( curVoice, ASCBuffer1, ASCBuffer2, intDriver);
+	if (intDriver->DriverSettings.TickRemover) MADTickRemoverStart8(curVoice, ASCBuffer1, ASCBuffer2, intDriver);
 	//*****************************************
 	
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) return;
@@ -340,8 +340,8 @@ void Sampler16AddDelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverRec *
 		long	RightWeight, LeftWeight, preOff = curVoice->preOff;
   		char	preVal = curVoice->preVal, preValR = curVoice->preValR, preVal2 = curVoice->preVal2, preVal2R = curVoice->preVal2R;
 		
-		PrepareInline( &VolInter1, &rVolInter1, intDriver->ASCBUFFER, chnVolS, chnVolD);
-  		PrepareInline( &VolInter2, &rVolInter2, intDriver->ASCBUFFER, chnVol2S, chnVol2D);
+		PrepareInline(&VolInter1, &rVolInter1, intDriver->ASCBUFFER, chnVolS, chnVolD);
+  		PrepareInline(&VolInter2, &rVolInter2, intDriver->ASCBUFFER, chnVol2S, chnVol2D);
   		
 		while (i-- > 0)
 		{
@@ -383,7 +383,7 @@ void Sampler16AddDelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverRec *
 						}
 						else	// If TICK remove
 						{
-							MADTickLoopFill8( curVoice, ASCBuffer1, ASCBuffer2, i, (tByteL * chnVol)>>8, (tByteR * chnVol2)>>8);
+							MADTickLoopFill8(curVoice, ASCBuffer1, ASCBuffer2, i, (tByteL * chnVol)>>8, (tByteR * chnVol2)>>8);
 							killSample = true;
 							break;
 						}
@@ -423,7 +423,7 @@ void Sampler16AddDelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverRec *
 }
 
 
-void Sampler16Addin16Delay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDriver)
+void Sampler16Addin16Delay(Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDriver)
 {
 	long				i = intDriver->ASCBUFFER;
 	long				chnVol = 0, chnVol2 = 0;
@@ -445,7 +445,7 @@ void Sampler16Addin16Delay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *in
 		
 		if (intDriver->XMLinear)
 		{
-			finalperiod = getfrequency( curVoice->period);
+			finalperiod = getfrequency(curVoice->period);
 			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
 			
 			finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
@@ -454,10 +454,10 @@ void Sampler16Addin16Delay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *in
 		
 		finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
 		
-		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ((long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
 		
 		
-		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ((long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
 		
 		if (temp >= 1) aa = false;
 		
@@ -470,13 +470,13 @@ void Sampler16Addin16Delay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *in
 	if (curVoice->pingpong == true && curVoice->loopType == ePingPongLoop) aDD = -aDD;	// PINGPONG
 	///
 	
-	chnVol2S	= DoVolPanning256( 0, curVoice, intDriver, true);
-	chnVolS		= DoVolPanning256( 1, curVoice, intDriver, true);
+	chnVol2S	= DoVolPanning256(0, curVoice, intDriver, true);
+	chnVolS		= DoVolPanning256(1, curVoice, intDriver, true);
 	
 	curVoice->volEnvInter += i;
 	
-	chnVol2D	= DoVolPanning256( 0, curVoice, intDriver, true);
-	chnVolD		= DoVolPanning256( 1, curVoice, intDriver, true);
+	chnVol2D	= DoVolPanning256(0, curVoice, intDriver, true);
+	chnVolD		= DoVolPanning256(1, curVoice, intDriver, true);
 	
 	if ((curVoice->TrackID % 2) == 0)
 	{
@@ -491,7 +491,7 @@ void Sampler16Addin16Delay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *in
 		
 //	intDriver->DriverSettings.TickRemover = false;
 	//*****************************************
-	if (intDriver->DriverSettings.TickRemover) MADTickRemoverStart8( curVoice, ASCBuffer1, ASCBuffer2, intDriver);
+	if (intDriver->DriverSettings.TickRemover) MADTickRemoverStart8(curVoice, ASCBuffer1, ASCBuffer2, intDriver);
 	//*****************************************
 	
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) return;
@@ -501,8 +501,8 @@ void Sampler16Addin16Delay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *in
 		long 		RightWeight, LeftWeight, preOff = curVoice->preOff;
 		short 		spreVal = curVoice->spreVal, spreVal2 = curVoice->spreVal2;
 		
-		PrepareInline( &VolInter1, &rVolInter1, intDriver->ASCBUFFER, chnVolS, chnVolD);
-  		PrepareInline( &VolInter2, &rVolInter2, intDriver->ASCBUFFER, chnVol2S, chnVol2D);
+		PrepareInline(&VolInter1, &rVolInter1, intDriver->ASCBUFFER, chnVolS, chnVolD);
+  		PrepareInline(&VolInter2, &rVolInter2, intDriver->ASCBUFFER, chnVol2S, chnVol2D);
   		
 		while (i-- > 0)
 		{
@@ -544,7 +544,7 @@ void Sampler16Addin16Delay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *in
 						}
 						else	// If TICK remove
 						{
-							MADTickLoopFill8( curVoice, ASCBuffer1, ASCBuffer2, i, (tShort * chnVol) >> 16, (tShort * chnVol2) >> 16);
+							MADTickLoopFill8(curVoice, ASCBuffer1, ASCBuffer2, i, (tShort * chnVol) >> 16, (tShort * chnVol2) >> 16);
 							killSample = true;
 							break;
 						}
@@ -581,7 +581,7 @@ void Sampler16Addin16Delay( Channel *curVoice, long	*ASCBuffer, MADDriverRec *in
 	}
 }
 
-void Sampler16Addin16DelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDriver)
+void Sampler16Addin16DelayStereo(Channel *curVoice, long	*ASCBuffer, MADDriverRec *intDriver)
 {
 	long				chnVolS, chnVol2S;
 	long				chnVolD, chnVol2D;
@@ -602,7 +602,7 @@ void Sampler16Addin16DelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverR
 		
 		if (intDriver->XMLinear)
 		{
-			finalperiod = getfrequency( curVoice->period);
+			finalperiod = getfrequency(curVoice->period);
 			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
 			
 			finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
@@ -611,8 +611,8 @@ void Sampler16Addin16DelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverR
 		
 		finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
 		
-		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ((long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ((long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
 		
 		if (temp >= 1) aa = false;
 		
@@ -625,13 +625,13 @@ void Sampler16Addin16DelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverR
 	if (curVoice->pingpong == true && curVoice->loopType == ePingPongLoop) aDD = -aDD;	// PINGPONG
 	///
 	
-	chnVol2S	= DoVolPanning256( 0, curVoice, intDriver, true);
-	chnVolS		= DoVolPanning256( 1, curVoice, intDriver, true);
+	chnVol2S	= DoVolPanning256(0, curVoice, intDriver, true);
+	chnVolS		= DoVolPanning256(1, curVoice, intDriver, true);
 	
 	curVoice->volEnvInter += i;
 	
-	chnVol2D	= DoVolPanning256( 0, curVoice, intDriver, true);
-	chnVolD		= DoVolPanning256( 1, curVoice, intDriver, true);
+	chnVol2D	= DoVolPanning256(0, curVoice, intDriver, true);
+	chnVolD		= DoVolPanning256(1, curVoice, intDriver, true);
 	
 	if ((curVoice->TrackID % 2) == 0)
 	{
@@ -645,7 +645,7 @@ void Sampler16Addin16DelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverR
 	}
 	
 	//*****************************************
-	if (intDriver->DriverSettings.TickRemover) MADTickRemoverStart8( curVoice, ASCBuffer1, ASCBuffer2, intDriver);
+	if (intDriver->DriverSettings.TickRemover) MADTickRemoverStart8(curVoice, ASCBuffer1, ASCBuffer2, intDriver);
 	//*****************************************
 
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) return;
@@ -655,8 +655,8 @@ void Sampler16Addin16DelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverR
 		long	RightWeight, LeftWeight, preOff = curVoice->preOff;
   		short	spreVal = curVoice->spreVal, spreValR = curVoice->spreValR, spreVal2 = curVoice->spreVal2, spreVal2R = curVoice->spreVal2R;
 		
-		PrepareInline( &VolInter1, &rVolInter1, intDriver->ASCBUFFER, chnVolS, chnVolD);
-  		PrepareInline( &VolInter2, &rVolInter2, intDriver->ASCBUFFER, chnVol2S, chnVol2D);
+		PrepareInline(&VolInter1, &rVolInter1, intDriver->ASCBUFFER, chnVolS, chnVolD);
+  		PrepareInline(&VolInter2, &rVolInter2, intDriver->ASCBUFFER, chnVol2S, chnVol2D);
   		
 		while (i-- > 0)
 		{
@@ -698,7 +698,7 @@ void Sampler16Addin16DelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverR
 						}
 						else	// If TICK remove
 						{
-							MADTickLoopFill8( curVoice, ASCBuffer1, ASCBuffer2, i, (tShortL * chnVol) >> 16, (tShortR * chnVol2) >> 16);
+							MADTickLoopFill8(curVoice, ASCBuffer1, ASCBuffer2, i, (tShortL * chnVol) >> 16, (tShortR * chnVol2) >> 16);
 							killSample = true;
 							break;
 						}
@@ -739,28 +739,28 @@ void Sampler16Addin16DelayStereo( Channel *curVoice, long	*ASCBuffer, MADDriverR
 	}
 }
 
-void Sample16BufferAddDelay( Channel *curVoice, register long	*ASCBuffer, MADDriverRec *intDriver)
+void Sample16BufferAddDelay(Channel *curVoice, register long	*ASCBuffer, MADDriverRec *intDriver)
 {
 //	long	i;
 
 	if (curVoice->amp == 16)
 	{
-		if (curVoice->stereo) Sampler16Addin16DelayStereo( curVoice, ASCBuffer, intDriver);
-		else Sampler16Addin16Delay( curVoice, ASCBuffer, intDriver);
+		if (curVoice->stereo) Sampler16Addin16DelayStereo(curVoice, ASCBuffer, intDriver);
+		else Sampler16Addin16Delay(curVoice, ASCBuffer, intDriver);
 	}
 	else if (curVoice->amp == 8)
 	{
-		if (curVoice->stereo) Sampler16AddDelayStereo( curVoice, ASCBuffer, intDriver);
-		else Sampler16AddDelay( curVoice, ASCBuffer, intDriver);
+		if (curVoice->stereo) Sampler16AddDelayStereo(curVoice, ASCBuffer, intDriver);
+		else Sampler16AddDelay(curVoice, ASCBuffer, intDriver);
 	}
 }
 
-void Play16StereoDelay( MADDriverRec *intDriver)
+void Play16StereoDelay(MADDriverRec *intDriver)
 {
 //	short		*ASCBuffer, valP = 0x7FFFL, valN = -0x7FFFL;
 //long		*eee, *ttt, *ASCBuffer1, *ASCBuffer2, i, ii;
 	long		i;
-#if defined( MAINPLAYERPRO)
+#if defined(MAINPLAYERPRO)
 	long		ii;
 	short		chanCounter = 0, find, trackID;
 #endif
@@ -773,9 +773,9 @@ void Play16StereoDelay( MADDriverRec *intDriver)
 	
 	for (i = 0 ; i < intDriver->MultiChanNo; i++)	//intDriver->DriverSettings.numChn
 	{
-#if defined( MAINPLAYERPRO)
+#if defined(MAINPLAYERPRO)
 #warning VST Channel effect
-		if (IsVSTChanEffect( intDriver, i) && chanCounter < MAXCHANEFFECT)
+		if (IsVSTChanEffect(intDriver, i) && chanCounter < MAXCHANEFFECT)
 		{
 			trackID = intDriver->curMusic->header->chanBus[ intDriver->chan[ i].TrackID].copyId;
 		
@@ -792,18 +792,18 @@ void Play16StereoDelay( MADDriverRec *intDriver)
 			    find = chanCounter;
 			    chanCounter++;
 			}
-			Sample16BufferAddDelay( &intDriver->chan[ i], intDriver->DASCEffectBuffer[ find], intDriver);
+			Sample16BufferAddDelay(&intDriver->chan[ i], intDriver->DASCEffectBuffer[ find], intDriver);
 			
 			intDriver->EffectBufferID[ find] = trackID;
 			intDriver->EffectBufferRealID[ find] = i;
 		}
 		else
 #endif
-			Sample16BufferAddDelay( &intDriver->chan[ i], intDriver->DASCBuffer, intDriver);
+			Sample16BufferAddDelay(&intDriver->chan[ i], intDriver->DASCBuffer, intDriver);
 	}
 }
 
-void Sampler8in8AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver)
+void Sampler8in8AddDelay(Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver)
 {
 	char			tByte;
 	long 			i = intDriver->ASCBUFFER;
@@ -821,7 +821,7 @@ void Sampler8in8AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *int
 	
 		if (intDriver->XMLinear)
 		{
-			finalperiod = getfrequency( curVoice->period);
+			finalperiod = getfrequency(curVoice->period);
 			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
 		
 			finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
@@ -830,10 +830,10 @@ void Sampler8in8AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *int
 	
 		finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
 	
-		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ((long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
 
-//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-		aDD = temp * ( 1 << BYTEDIV);
+//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ((long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		aDD = temp * (1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -844,8 +844,8 @@ void Sampler8in8AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *int
 	
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) return;
 	
-	chnVol2	= DoVolPanning256( 0, curVoice, intDriver, true)/256;
-	chnVol	= DoVolPanning256( 1, curVoice, intDriver, true)/256;
+	chnVol2	= DoVolPanning256(0, curVoice, intDriver, true)/256;
+	chnVol	= DoVolPanning256(1, curVoice, intDriver, true)/256;
 	
 	if ((curVoice->TrackID % 2) == 0)
 	{
@@ -928,7 +928,7 @@ void Sampler8in8AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *int
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);
 }
 
-void Sampler8in16AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver)
+void Sampler8in16AddDelay(Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver)
 {
 	char				tByte;
 	long				chnVol, chnVol2;
@@ -946,7 +946,7 @@ void Sampler8in16AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *in
 		
 		if (intDriver->XMLinear)
 		{
-			finalperiod = getfrequency( curVoice->period);
+			finalperiod = getfrequency(curVoice->period);
 			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
 			
 			finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
@@ -955,9 +955,9 @@ void Sampler8in16AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *in
 		
 		finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
 		
-		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-		aDD = temp * ( 1 << BYTEDIV);
+		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ((long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ((long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		aDD = temp * (1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -968,8 +968,8 @@ void Sampler8in16AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *in
 	
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) return;
 	
-	chnVol2	= DoVolPanning256( 0, curVoice, intDriver, true)/256;
-	chnVol	= DoVolPanning256( 1, curVoice, intDriver, true)/256;
+	chnVol2	= DoVolPanning256(0, curVoice, intDriver, true)/256;
+	chnVol	= DoVolPanning256(1, curVoice, intDriver, true)/256;
 	
 	if ((curVoice->TrackID % 2) == 0)
 	{
@@ -1055,7 +1055,7 @@ void Sampler8in16AddDelay( Channel *curVoice, short	*ASCBuffer, MADDriverRec *in
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);
 }
 
-void Sampler8in8AddDelayStereo( Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver)
+void Sampler8in8AddDelayStereo(Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver)
 {
 	char			tByteL, tByteR;
 	long 			i = intDriver->ASCBUFFER;
@@ -1074,7 +1074,7 @@ void Sampler8in8AddDelayStereo( Channel *curVoice, short	*ASCBuffer, MADDriverRe
 		
 		if (intDriver->XMLinear)
 		{
-			finalperiod = getfrequency( curVoice->period);
+			finalperiod = getfrequency(curVoice->period);
 			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
 			
 			finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
@@ -1083,9 +1083,9 @@ void Sampler8in8AddDelayStereo( Channel *curVoice, short	*ASCBuffer, MADDriverRe
 		
 		finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
 		
-		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-		aDD = temp * ( 1 << BYTEDIV);
+		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ((long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ((long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		aDD = temp * (1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -1096,8 +1096,8 @@ void Sampler8in8AddDelayStereo( Channel *curVoice, short	*ASCBuffer, MADDriverRe
 	
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) return;
 	
-	chnVol2	= DoVolPanning256( 0, curVoice, intDriver, true)/256;
-	chnVol	= DoVolPanning256( 1, curVoice, intDriver, true)/256;
+	chnVol2	= DoVolPanning256(0, curVoice, intDriver, true)/256;
+	chnVol	= DoVolPanning256(1, curVoice, intDriver, true)/256;
 	
 	if ((curVoice->TrackID % 2) == 0)
 	{
@@ -1158,8 +1158,8 @@ void Sampler8in8AddDelayStereo( Channel *curVoice, short	*ASCBuffer, MADDriverRe
 				}
 			}
 			
-			tByteL = ( LeftWeight * 	preVal + RightWeight * 	*(SndBuffer + off + 2)) >> BYTEDIV;		*ASCBuffer1 += (chnVol * tByteL) >> 8;		ASCBuffer1 += 2;
-			tByteR = ( LeftWeight * 	preValR + RightWeight * 	*(SndBuffer + off + 3)) >> BYTEDIV;		*ASCBuffer2 += (chnVol2 * tByteR) >> 8;		ASCBuffer2 += 2;
+			tByteL = (LeftWeight * 	preVal + RightWeight * 	*(SndBuffer + off + 2)) >> BYTEDIV;		*ASCBuffer1 += (chnVol * tByteL) >> 8;		ASCBuffer1 += 2;
+			tByteR = (LeftWeight * 	preValR + RightWeight * 	*(SndBuffer + off + 3)) >> BYTEDIV;		*ASCBuffer2 += (chnVol2 * tByteR) >> 8;		ASCBuffer2 += 2;
 			
 			aCC += aDD;
 		}
@@ -1183,7 +1183,7 @@ void Sampler8in8AddDelayStereo( Channel *curVoice, short	*ASCBuffer, MADDriverRe
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);
 }
 
-void Sampler8in16AddDelayStereo( Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver)
+void Sampler8in16AddDelayStereo(Channel *curVoice, short	*ASCBuffer, MADDriverRec *intDriver)
 {
 	char				tByteL = 0, tByteR = 0;
 	long				chnVol, chnVol2;
@@ -1202,7 +1202,7 @@ void Sampler8in16AddDelayStereo( Channel *curVoice, short	*ASCBuffer, MADDriverR
 		
 		if (intDriver->XMLinear)
 		{
-			finalperiod = getfrequency( curVoice->period);
+			finalperiod = getfrequency(curVoice->period);
 			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
 			
 			finalperiod = (finalperiod * 8363L) / (long) curVoice->fineTune;
@@ -1211,9 +1211,9 @@ void Sampler8in16AddDelayStereo( Channel *curVoice, short	*ASCBuffer, MADDriverR
 		
 		finalperiod = ((long long) finalperiod * (long long) intDriver->FreqExt) / (long long) 8000;
 		
-		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ( (long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
-		aDD = temp * ( 1 << BYTEDIV);
+		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ((long double) finalperiod * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		//	long double		temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) ((long double) curVoice->period * (long double) (intDriver->DriverSettings.outPutRate>>16) * (long double) intDriver->DriverSettings.oversampling);
+		aDD = temp * (1 << BYTEDIV);
 	}
 #else
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate>>16) * intDriver->DriverSettings.oversampling);
@@ -1224,8 +1224,8 @@ void Sampler8in16AddDelayStereo( Channel *curVoice, short	*ASCBuffer, MADDriverR
 	
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) return;
 	
-	chnVol2	= DoVolPanning256( 0, curVoice, intDriver, true)/256;
-	chnVol	= DoVolPanning256( 1, curVoice, intDriver, true)/256;
+	chnVol2	= DoVolPanning256(0, curVoice, intDriver, true)/256;
+	chnVol	= DoVolPanning256(1, curVoice, intDriver, true)/256;
 	
 	if ((curVoice->TrackID % 2) == 0)
 	{
@@ -1314,25 +1314,25 @@ void Sampler8in16AddDelayStereo( Channel *curVoice, short	*ASCBuffer, MADDriverR
 	curVoice->lAC = aCC & ((1 << BYTEDIV) - 1);
 }
 
-void Sample8BufferAddDelay( Channel *curVoice, register short *ASCBuffer, MADDriverRec *intDriver)
+void Sample8BufferAddDelay(Channel *curVoice, register short *ASCBuffer, MADDriverRec *intDriver)
 {
 	if (curVoice->stereo)
 	{
-		if (curVoice->amp == 16) Sampler8in16AddDelayStereo( curVoice, ASCBuffer, intDriver);
-		else Sampler8in8AddDelayStereo( curVoice, ASCBuffer, intDriver);
+		if (curVoice->amp == 16) Sampler8in16AddDelayStereo(curVoice, ASCBuffer, intDriver);
+		else Sampler8in8AddDelayStereo(curVoice, ASCBuffer, intDriver);
 	}
 	else
 	{
-		if (curVoice->amp == 16) Sampler8in16AddDelay( curVoice, ASCBuffer, intDriver);
-		else Sampler8in8AddDelay( curVoice, ASCBuffer, intDriver);
+		if (curVoice->amp == 16) Sampler8in16AddDelay(curVoice, ASCBuffer, intDriver);
+		else Sampler8in8AddDelay(curVoice, ASCBuffer, intDriver);
 	}
 }
 
-void Play8StereoDelay( MADDriverRec *intDriver)
+void Play8StereoDelay(MADDriverRec *intDriver)
 {
 	long			i;
 //short			*ttt;
 //Ptr				ASCBuffer;
 
-	for (i = 0 ; i < intDriver->DriverSettings.numChn; i++) Sample8BufferAddDelay	( &intDriver->chan[i], intDriver->DASCBuffer8, intDriver);
+	for (i = 0 ; i < intDriver->DriverSettings.numChn; i++) Sample8BufferAddDelay	(&intDriver->chan[i], intDriver->DASCBuffer8, intDriver);
 }

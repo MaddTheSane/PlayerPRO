@@ -14,13 +14,13 @@
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
-static OSErr mainCrossFade( 	sData					*theData,
+static OSErr mainCrossFade(	sData					*theData,
 				long					SelectionStart,
 				long					SelectionEnd,
 				PPInfoPlug				*thePPInfoPlug,
 				short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	switch( theData->amp)
+	switch(theData->amp)
 	{
 		case 8:
 		{

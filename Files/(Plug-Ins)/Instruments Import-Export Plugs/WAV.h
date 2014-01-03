@@ -78,9 +78,9 @@ typedef struct _MyAtom{
 extern "C" {
 #endif
 
-OSErr TestWAV( PCMWavePtr CC);
+OSErr TestWAV(PCMWavePtr CC);
 Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo);
-OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug);
+OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug);
 
 #ifdef __cplusplus
 }

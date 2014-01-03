@@ -25,20 +25,20 @@
 #include "MOD.h"
 #include "MADfg.h"
 
-static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, short Tracks, MADDriverSettings *init)
+static struct MusicPattern* oldDecompressPartitionMAD1(struct MusicPattern* myPat, short Tracks, MADDriverSettings *init)
 {
 	struct MusicPattern*	finalPtr;
 	Byte 					*srcPtr;
 	struct Command			*myCmd;
 	short					maxCmd;
 	
-	finalPtr = ( struct MusicPattern*) MADPlugNewPtr( sizeof( struct oldPatHeader) + myPat->header.PatternSize * Tracks * sizeof( struct Command), init);
+	finalPtr = (struct MusicPattern*) MADPlugNewPtr(sizeof(struct oldPatHeader) + myPat->header.PatternSize * Tracks * sizeof(struct Command), init);
 	if (finalPtr == NULL) {
 		DebugStr("\pDecompressPartitionMAD1");
 		return NULL;
 	}
 	
-	BlockMoveData( myPat, finalPtr, sizeof( struct oldPatHeader));
+	BlockMoveData(myPat, finalPtr, sizeof(struct oldPatHeader));
 
 	srcPtr = (Byte*) myPat->Commands;
 	myCmd = (struct Command*) finalPtr->Commands;
@@ -57,7 +57,7 @@ static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myP
 	{
 		maxCmd--;
 		
-		switch( *srcPtr)
+		switch(*srcPtr)
 		{
 			case 0x03:
 				srcPtr++;
@@ -104,25 +104,25 @@ static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myP
 	return finalPtr;
 }
 
-static struct Command* GetOldCommand( short PosX, short TrackIdX, struct MusicPattern* tempMusicPat)
+static struct Command* GetOldCommand(short PosX, short TrackIdX, struct MusicPattern* tempMusicPat)
 {
 	if (PosX < 0) PosX = 0;
 	else if (PosX >= tempMusicPat->header.PatternSize) PosX = tempMusicPat->header.PatternSize -1;
 		
-	return( & (tempMusicPat->Commands[ (tempMusicPat->header.PatternSize * TrackIdX) + PosX]));
+	return(& (tempMusicPat->Commands[ (tempMusicPat->header.PatternSize * TrackIdX) + PosX]));
 }
 
-Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
+Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
 	if (PosX < 0) PosX = 0;
 	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 		
-	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
+	return(& (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
-static inline void mystrcpy( Ptr a, BytePtr b)
+static inline void mystrcpy(Ptr a, BytePtr b)
 {
-	BlockMoveData( b + 1, a, b[ 0]);
+	BlockMoveData(b + 1, a, b[ 0]);
 }
 
 static void MOToldPatHeader(struct oldPatHeader * p) {
@@ -149,7 +149,7 @@ static void MOToldMADSpec(struct oldMADSpec * m){
 	}
 }
 
-static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
+static OSErr MADFG2Mad(Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short 			i, x;
 	long 			inOutCount = 0, OffSetToSample = 0, z = 0;
@@ -177,27 +177,27 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 	if (oldMadIdent == 'MADF') MADConvert = true;
 	else if (oldMadIdent == 'MADG') MADConvert = false;
 	else return MADFileNotSupportedByThisPlug;
-	OffSetToSample += sizeof( oldMADSpec);
+	OffSetToSample += sizeof(oldMADSpec);
 	
 	// Conversion
-	inOutCount = sizeof( MADSpec);
-	theMAD->header = (MADSpec*) MADPlugNewPtrClear( inOutCount, init);	
+	inOutCount = sizeof(MADSpec);
+	theMAD->header = (MADSpec*) MADPlugNewPtrClear(inOutCount, init);	
 	if (theMAD->header == NULL) return MADNeedMemory;
 	
 	theMAD->header->MAD = 'MADK';
 	
-	BlockMoveData( oldMAD->NameSignature, theMAD->header->name, 32);
+	BlockMoveData(oldMAD->NameSignature, theMAD->header->name, 32);
 	theMAD->header->numPat			= oldMAD->PatMax;
 	theMAD->header->numChn			= oldMAD->Tracks;
 	theMAD->header->numPointers		= oldMAD->numPointers;
-	BlockMoveData( oldMAD->oPointers, theMAD->header->oPointers, 128);
+	BlockMoveData(oldMAD->oPointers, theMAD->header->oPointers, 128);
 	theMAD->header->speed			= 6;
 	theMAD->header->tempo			= 125;
 	
-	mystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug ((\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)");
+	mystrcpy(theMAD->header->infos, "\pConverted by PlayerPRO MAD-F-G Plug ((\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	
-	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
+	theMAD->sets = (FXSets*) NewPtrClear(MAXTRACK * sizeof(FXSets));
 	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 	
 	/**** Patterns *******/
@@ -211,7 +211,7 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 		/** Lecture du header de la partition **/
 		if (!MADConvert)
 		{
-			inOutCount = sizeof( struct oldPatHeader);
+			inOutCount = sizeof(struct oldPatHeader);
 			
 			memcpy(&tempPatHeader, MADPtr + OffSetToSample, inOutCount);
 			MOToldPatHeader(&tempPatHeader);
@@ -225,30 +225,30 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 		
 		if (CompMode == 'MAD1')
 		{
-			inOutCount = sizeof( struct MusicPattern) + tempPatHeader.PatBytes;
+			inOutCount = sizeof(struct MusicPattern) + tempPatHeader.PatBytes;
 		}
 		else
 		{
-			inOutCount = sizeof( struct MusicPattern) + oldMAD->Tracks * tempPatHeader.PatternSize * sizeof( struct Command);
+			inOutCount = sizeof(struct MusicPattern) + oldMAD->Tracks * tempPatHeader.PatternSize * sizeof(struct Command);
 		}
 		
-		tempPat = (struct MusicPattern*) MADPlugNewPtr( inOutCount, init);
+		tempPat = (struct MusicPattern*) MADPlugNewPtr(inOutCount, init);
 		if (tempPat == NULL) DebugStr("\pMemory Prob1");
 		
 		if (MADConvert)
 		{
-			tempPat = (struct MusicPattern*) ((Ptr) tempPat + sizeof( struct oldPatHeader));
-			inOutCount -= sizeof( struct oldPatHeader);
+			tempPat = (struct MusicPattern*) ((Ptr) tempPat + sizeof(struct oldPatHeader));
+			inOutCount -= sizeof(struct oldPatHeader);
 		}
 		
-		BlockMoveData( MADPtr + OffSetToSample, tempPat, inOutCount);
+		BlockMoveData(MADPtr + OffSetToSample, tempPat, inOutCount);
 		OffSetToSample += inOutCount;
 		MOToldPatHeader(&tempPat->header);
 		
 		
 		if (MADConvert)
 		{
-			tempPat = (struct MusicPattern*) ((Ptr) tempPat - sizeof( struct oldPatHeader));
+			tempPat = (struct MusicPattern*) ((Ptr) tempPat - sizeof(struct oldPatHeader));
 			tempPat->header.PatternSize = 64L;
 			tempPat->header.CompressionMode = 'NONE';
 			
@@ -259,9 +259,9 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 		
 		if (tempPat->header.CompressionMode == 'MAD1')
 		{
-			tempPat2 = oldDecompressPartitionMAD1( tempPat, oldMAD->Tracks, init);
+			tempPat2 = oldDecompressPartitionMAD1(tempPat, oldMAD->Tracks, init);
 			
-			DisposePtr( (Ptr) tempPat);
+			DisposePtr((Ptr) tempPat);
 			
 			tempPat = tempPat2;
 		}
@@ -270,13 +270,13 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 		/* CONVERSION */
 		/**************/
 		
-		theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear( sizeof( PatHeader) + theMAD->header->numChn * tempPat->header.PatternSize * sizeof( Cmd), init);
+		theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear(sizeof(PatHeader) + theMAD->header->numChn * tempPat->header.PatternSize * sizeof(Cmd), init);
 		if (theMAD->partition[ i] == NULL) return MADNeedMemory;
 		
 		theMAD->partition[ i]->header.size 		= tempPat->header.PatternSize;
 		theMAD->partition[ i]->header.compMode 	= 'NONE';
 		
-		BlockMoveData( tempPat->header.PatternName, theMAD->partition[ i]->header.name, 20);
+		BlockMoveData(tempPat->header.PatternName, theMAD->partition[ i]->header.name, 20);
 		
 		theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
 		
@@ -287,7 +287,7 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 				struct Command *oldCmd;
 				Cmd	*aCmd;
 				
-				aCmd = GetMADCommand(  x,  z, theMAD->partition[ i]);
+				aCmd = GetMADCommand( x,  z, theMAD->partition[ i]);
 				
 				oldCmd 	= GetOldCommand(	x,
 										z,
@@ -325,10 +325,10 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 	
 	/**** Instruments header *****/
 	
-	theMAD->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
+	theMAD->fid = (InstrData*) MADPlugNewPtrClear(sizeof(InstrData) * (long) MAXINSTRU, init);
 	if (!theMAD->fid) return MADNeedMemory;
 	
-	theMAD->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
+	theMAD->sample = (sData**) MADPlugNewPtrClear(sizeof(sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
 	if (!theMAD->sample) return MADNeedMemory;
 	
 	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
@@ -337,7 +337,7 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 	{
 		InstrData	*curIns = &theMAD->fid[ i];
 		
-		BlockMoveData( oldMAD->fid[ i].Filename, curIns->name, 32);
+		BlockMoveData(oldMAD->fid[ i].Filename, curIns->name, 32);
 		curIns->type = 0;
 		
 		if (oldMAD->fid[ i].insSize > 0)
@@ -347,7 +347,7 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 			curIns->numSamples = 1;
 			curIns->volFade = DEFAULT_VOLFADE;
 			
-			curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear( sizeof( sData), init);
+			curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear(sizeof(sData), init);
 			
 			curData->size		= oldMAD->fid[ i].insSize;
 			curData->loopBeg 	= oldMAD->fid[ i].loopStart;
@@ -359,10 +359,10 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 			
 			curData->relNote	= 0;
 			
-			curData->data 		= MADPlugNewPtr( curData->size, init);
+			curData->data 		= MADPlugNewPtr(curData->size, init);
 			if (curData->data == NULL) return MADNeedMemory;
 			
-			BlockMoveData( MADPtr + OffSetToSample, curData->data, curData->size);
+			BlockMoveData(MADPtr + OffSetToSample, curData->data, curData->size);
 			OffSetToSample += curData->size;
 #ifdef __LITTLE_ENDIAN__
 			if (curData->amp == 16)
@@ -370,7 +370,7 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 				long 	ll;
 				short	*shortPtr = (short*) curData->data;
 				
-				for (ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
+				for (ll = 0; ll < curData->size/2; ll++) MOT16(&shortPtr[ ll]);
 			}
 #endif
 		}
@@ -380,7 +380,7 @@ static OSErr MADFG2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettin
 	return noErr;
 }
 
-static OSErr TestoldMADFile( Ptr AlienFile)
+static OSErr TestoldMADFile(Ptr AlienFile)
 {
 	OSType myMADSign = *((OSType*) AlienFile);
 	MOT32(&myMADSign);
@@ -389,9 +389,9 @@ static OSErr TestoldMADFile( Ptr AlienFile)
 	else return  MADFileNotSupportedByThisPlug;
 }
 
-static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
+static OSErr ExtractoldMADInfo(PPInfoRec *info, Ptr AlienFile)
 {
-	oldMADSpec	*myMOD = ( oldMADSpec*) AlienFile;
+	oldMADSpec	*myMOD = (oldMADSpec*) AlienFile;
 	//long		PatternSize;
 	short		i;
 	//short		tracksNo;
@@ -404,7 +404,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	//myMOD->NameSignature[ 31] = '\0';
-	strlcpy( info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
+	strlcpy(info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
 	
 	/*** Tracks ***/
 	
@@ -433,7 +433,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 		if (insSizeSwap > 5) info->totalInstruments++;
 	}
 	
-	strcpy( info->formatDescription, "MAD-FG Plug");
+	strcpy(info->formatDescription, "MAD-FG Plug");
 
 	return noErr;
 }
@@ -442,87 +442,87 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 /* MAIN FUNCTION */
 /*****************/
 
-static OSErr mainMADfg( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+static OSErr mainMADfg(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
 		
-	switch( order)
+	switch(order)
 	{
 		case 'IMPL':
-			iFileRefI = iFileOpen( AlienFileName);
+			iFileRefI = iFileOpen(AlienFileName);
 			if (iFileRefI)
 			{
-				sndSize = iGetEOF( iFileRefI);
+				sndSize = iGetEOF(iFileRefI);
 			
 				// ** MEMORY Test Start
-				AlienFile = MADPlugNewPtr( sndSize * 2L, init);
+				AlienFile = MADPlugNewPtr(sndSize * 2L, init);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
 				else
 				{
-					DisposePtr( AlienFile);
+					DisposePtr(AlienFile);
 					
-					AlienFile = MADPlugNewPtr( sndSize, init);
+					AlienFile = MADPlugNewPtr(sndSize, init);
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					if (myErr == noErr)
 					{
-						myErr = TestoldMADFile( AlienFile);
+						myErr = TestoldMADFile(AlienFile);
 						if (myErr == noErr)
 						{
-							myErr = MADFG2Mad( AlienFile, GetPtrSize( AlienFile), MadFile, init);
+							myErr = MADFG2Mad(AlienFile, GetPtrSize(AlienFile), MadFile, init);
 						}
 					}
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr(AlienFile);	AlienFile = NULL;
 				}
-				iClose( iFileRefI);
+				iClose(iFileRefI);
 			}
 			else myErr = MADReadingErr;
 		break;
 		
 		case 'TEST':
-			iFileRefI = iFileOpen( AlienFileName);
+			iFileRefI = iFileOpen(AlienFileName);
 			if (iFileRefI)
 			{
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = MADPlugNewPtr( sndSize, init);
+				AlienFile = MADPlugNewPtr(sndSize, init);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if(myErr == noErr) myErr = TestoldMADFile( AlienFile);
+					if(myErr == noErr) myErr = TestoldMADFile(AlienFile);
 					
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr(AlienFile);	AlienFile = NULL;
 				}
-				iClose( iFileRefI);
+				iClose(iFileRefI);
 			}
 			else myErr = MADReadingErr;
 		break;
 
 		case 'INFO':
-			iFileRefI = iFileOpen( AlienFileName);
+			iFileRefI = iFileOpen(AlienFileName);
 			if (iFileRefI)
 			{
-				info->fileSize = iGetEOF( iFileRefI);
+				info->fileSize = iGetEOF(iFileRefI);
 			
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = MADPlugNewPtr( sndSize, init);
+				AlienFile = MADPlugNewPtr(sndSize, init);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
-					myErr = iRead( sndSize, AlienFile, iFileRefI);
+					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					if (myErr == noErr)
 					{
-						myErr = ExtractoldMADInfo( info, AlienFile);
+						myErr = ExtractoldMADInfo(info, AlienFile);
 					}
-					DisposePtr( AlienFile);	AlienFile = NULL;
+					DisposePtr(AlienFile);	AlienFile = NULL;
 				}
-				iClose( iFileRefI);
+				iClose(iFileRefI);
 			}
 			else myErr = MADReadingErr;
 		break;

@@ -13,7 +13,7 @@ struct VAGlobalsRecord
 typedef struct VAGlobalsRecord VAGlobalsRecord;
 
 
-void VABresenhamS( short x1, short y1, short x2, short y2, long **theGAM);
+void VABresenhamS(short x1, short y1, short x2, short y2, long **theGAM);
 void VABresenham(short x1, short y1, short x2, short y2);
 void VALine(short x1, short y1, short x2, short y2);
 void VALineTo(short x, short y);

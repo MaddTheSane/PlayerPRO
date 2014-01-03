@@ -49,23 +49,23 @@ typedef SInt16		UNFILE;
 typedef FILE*		UNFILE;
 #endif
 	
-EXP UNFILE iFileOpen( Ptr name);
-EXP void iFileCreate( Ptr name, OSType);
+EXP UNFILE iFileOpen(Ptr name);
+EXP void iFileCreate(Ptr name, OSType);
 
-EXP long iGetEOF( UNFILE iFileRefI);
-EXP OSErr iRead( long size, Ptr dest, UNFILE iFileRefI);
-EXP OSErr iWrite( long size, Ptr dest, UNFILE iFileRefI);
-EXP OSErr iSeekCur( long size, UNFILE iFileRefI);
+EXP long iGetEOF(UNFILE iFileRefI);
+EXP OSErr iRead(long size, Ptr dest, UNFILE iFileRefI);
+EXP OSErr iWrite(long size, Ptr dest, UNFILE iFileRefI);
+EXP OSErr iSeekCur(long size, UNFILE iFileRefI);
 
-EXP void iClose( UNFILE iFileRefI);
+EXP void iClose(UNFILE iFileRefI);
 
 #define MADstrcpy(char1, char2) strcpy(char1, char2)
 #define MADstrcmp(str1, str2) strcmp(str1, str2)
 	
-EXP unsigned char* MYC2PStr( Ptr cStr);
-EXP void MYP2CStr( unsigned char *cStr);
-EXP OSType Ptr2OSType( Ptr str);
-EXP void OSType2Ptr( OSType type, Ptr str);
+EXP unsigned char* MYC2PStr(Ptr cStr);
+EXP void MYP2CStr(unsigned char *cStr);
+EXP OSType Ptr2OSType(Ptr str);
+EXP void OSType2Ptr(OSType type, Ptr str);
 extern void pStrcpy(register unsigned char *s1, register const unsigned char *s2);
 
 
@@ -78,7 +78,7 @@ static inline void MADByteSwap32(void *msg_buf)
 	*((UInt32*) msg_buf) = CFSwapInt32(temp);
 #else
 	*((UInt32*) msg_buf) = ((((temp & 0xff000000) >> 24) | \
-							 (( temp & 0x00ff0000) >> 8) | (( temp & 0x0000ff00) << 8) | \
+							 ((temp & 0x00ff0000) >> 8) | ((temp & 0x0000ff00) << 8) | \
 							 (temp & 0x000000ff) << 24));
 #endif
 }

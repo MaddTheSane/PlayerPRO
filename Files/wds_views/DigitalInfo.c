@@ -17,21 +17,21 @@
 	static	Rect					viewRect;
 	static	ControlHandle			ControlDigi;
 
-void NTStr( short	NoDigi, short		val, Ptr	theText);
-void GetNoteString( short note, Str255	string);
+void NTStr(short	NoDigi, short		val, Ptr	theText);
+void GetNoteString(short note, Str255	string);
 
 void SetUpScrollDigi(void)
 {
-	MyMoveControl( ControlDigi, viewRect.left - 1, viewRect.bottom + 1);
-	MySizeControl( ControlDigi, viewRect.right - viewRect.left + 2, 16);
+	MyMoveControl(ControlDigi, viewRect.left - 1, viewRect.bottom + 1);
+	MySizeControl(ControlDigi, viewRect.right - viewRect.left + 2, 16);
 	
-	SetControlMinimum( ControlDigi, 0);
-	SetControlMaximum( ControlDigi, MAXTRACK - (viewRect.right - viewRect.left) / TEXTLARG);
+	SetControlMinimum(ControlDigi, 0);
+	SetControlMaximum(ControlDigi, MAXTRACK - (viewRect.right - viewRect.left) / TEXTLARG);
 	
-	if (gUseControlSize) SetControlViewSize( ControlDigi, (viewRect.right - viewRect.left) / TEXTLARG);
+	if (gUseControlSize) SetControlViewSize(ControlDigi, (viewRect.right - viewRect.left) / TEXTLARG);
 }
 
-void DoGrowDigi( DialogPtr theDialog)
+void DoGrowDigi(DialogPtr theDialog)
 {
 	long		lSizeVH;
 	GrafPtr		SavePort;
@@ -40,18 +40,18 @@ void DoGrowDigi( DialogPtr theDialog)
 	Point		theCell = { 0, 0}, aPt = { 0, 0};
 	Rect		caRect;
 	
-	GetPort( &SavePort);
- 	SetPortDialogPort( theDialog);
+	GetPort(&SavePort);
+ 	SetPortDialogPort(theDialog);
 	
 	temp.left = 381;
 	temp.right = viewRect.left + MAXTRACK * TEXTLARG + 2;
 	
-	LocalToGlobal( &aPt);
+	LocalToGlobal(&aPt);
 	
 	if (temp.right < temp.left) temp.bottom = temp.top;
 	//	else if (temp.right > qd.screenBits.bounds.right - aPt.h) temp.right = qd.screenBits.bounds.right - aPt.h -2;
 	
-	GetPortBounds( GetDialogPort( theDialog), &caRect);
+	GetPortBounds(GetDialogPort(theDialog), &caRect);
 	
 	temp.top = temp.bottom = caRect.bottom;
 	
@@ -61,40 +61,40 @@ void DoGrowDigi( DialogPtr theDialog)
 #endif
 	
 	lSizeVH = 0;
-	if (theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( theDialog), theEvent.where, &temp);
+	if (theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(theDialog), theEvent.where, &temp);
 	
 	if (lSizeVH != 0)
 	{
-		tempA = LoWord( lSizeVH);
-		tempB = HiWord( lSizeVH);
+		tempA = LoWord(lSizeVH);
+		tempB = HiWord(lSizeVH);
 	}
 	else
 	{
-		GetPortBounds( GetDialogPort( theDialog), &caRect);
+		GetPortBounds(GetDialogPort(theDialog), &caRect);
 		
 		tempA = caRect.right;
 		tempB = caRect.bottom;
 	}
 	
-	GetPortBounds( GetDialogPort( theDialog), &caRect);
+	GetPortBounds(GetDialogPort(theDialog), &caRect);
 	
 	avant = caRect.bottom - 15;
 	
-	MySizeWindow( theDialog, tempA, tempB, true);
+	MySizeWindow(theDialog, tempA, tempB, true);
 	
-	GetPortBounds( GetDialogPort( theDialog), &caRect);
+	GetPortBounds(GetDialogPort(theDialog), &caRect);
 	
 	viewRect.right = caRect.right - 2;
 	
-	EraseRect( &caRect);
-	InvalWindowRect( GetDialogWindow( theDialog), &caRect);
+	EraseRect(&caRect);
+	InvalWindowRect(GetDialogWindow(theDialog), &caRect);
 	
 	SetUpScrollDigi();
 	
-	SetPort( SavePort);
+	SetPort(SavePort);
 }
 
-void NoteName( short	Period, Ptr	String)
+void NoteName(short	Period, Ptr	String)
 {
 	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
 	short			NCount;
@@ -102,7 +102,7 @@ void NoteName( short	Period, Ptr	String)
 	
 /*	if(Period == 0)
 	{
-     	strcpy( String, "000");
+     	strcpy(String, "000");
      	return;
     }
    
@@ -111,13 +111,13 @@ void NoteName( short	Period, Ptr	String)
     {
     	if (Period >= MADDriver->pitchTable[ NCount][ 0] )
     	{
-    		OctavesName( NCount, String);
+    		OctavesName(NCount, String);
     		
     		return;
     	}
     	NCount++;
     }*/
-	strcpy( String, "000");
+	strcpy(String, "000");
 }
 
 void DoNullDigiWindow(void)
@@ -131,23 +131,23 @@ void DoNullDigiWindow(void)
 	
 	if (!DigitalDlog) return;
 	
-	GetPort( &savePort);
-	SetPortDialogPort( DigitalDlog);
+	GetPort(&savePort);
+	SetPortDialogPort(DigitalDlog);
 	
-	TextFont( 4);	TextSize( 9);
+	TextFont(4);	TextSize(9);
 	
 	saveClip = NewRgn();
-	GetClip( saveClip);
+	GetClip(saveClip);
  	tempRect = viewRect;
  	tempRect.top -= TEXTHI + 2;
- 	ClipRect( &tempRect);
+ 	ClipRect(&tempRect);
 	
 	tempRect = viewRect;
 	
 	tempRect.right = tempRect.left + TEXTLARG;
 	tempRect.bottom = tempRect.top + TEXTHI;
 	
-	start = GetControlValue( ControlDigi);
+	start = GetControlValue(ControlDigi);
 	end = start + 1 + (viewRect.right - viewRect.left) / TEXTLARG;
 	if (end > MAXTRACK) end = MAXTRACK;
 	
@@ -156,75 +156,75 @@ void DoNullDigiWindow(void)
 		/****** Instrument *********/
 		for (i = start; i < end; i ++)
 		{
-			switch( x)
+			switch(x)
 			{
 				case 0:
 					val = MADDriver->chan[ i].ins + 1;
-					NTStr( 2, val, (Ptr) tempStr);
-					MyC2PStr( (Ptr) tempStr);
+					NTStr(2, val, (Ptr) tempStr);
+					MyC2PStr((Ptr) tempStr);
 				break;
 				
 				case 1:
 					if (MADDriver->chan[ i].note < NUMBER_NOTES)
 					{
 						val = MADDriver->chan[ i].note;
-						GetNoteString( val, tempStr);
+						GetNoteString(val, tempStr);
 					}
 					else val = oldDigiValue[ x][ i];
 				break;
 				
 				case 2:
 					val = MADDriver->chan[ i].period;
-					NumToString( val, tempStr);
+					NumToString(val, tempStr);
 				break;
 				
 				case 3:
 					val = MADDriver->chan[ i].cmd;
-					if (val == -1) pStrcpy( tempStr, "\p--");
+					if (val == -1) pStrcpy(tempStr, "\p--");
 					else
 					{
 						val = MADDriver->chan[ i].cmd;
-						sprintf( (Ptr) tempStr, "%lX", val);
-						MyC2PStr( (Ptr) tempStr);
+						sprintf((Ptr) tempStr, "%lX", val);
+						MyC2PStr((Ptr) tempStr);
 					}
 				break;
 				
 				case 4:
-					if (MADDriver->chan[ i].cmd == -1) pStrcpy( tempStr, "\p--");
+					if (MADDriver->chan[ i].cmd == -1) pStrcpy(tempStr, "\p--");
 					else
 					{
 						val = MADDriver->chan[ i].arg;
-						sprintf( (Ptr) tempStr, "%lX", val);
-						MyC2PStr( (Ptr) tempStr);
+						sprintf((Ptr) tempStr, "%lX", val);
+						MyC2PStr((Ptr) tempStr);
 					}
 				break;
 				
 				case 5:
 					val = MADDriver->chan[ i].vol;
-					NTStr( 2, val, (Ptr) tempStr);
-					MyC2PStr( (Ptr) tempStr);
+					NTStr(2, val, (Ptr) tempStr);
+					MyC2PStr((Ptr) tempStr);
 				break;
 				
 				case 6:
 					if (MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].curPtr < 0) val = 0;
 					else val = MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].curPtr;
-					NumToString( val, tempStr);
+					NumToString(val, tempStr);
 				break;
 				
 				case 7:
 					if (MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].begPtr < 0) val = 0;
 					else val = MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].begPtr;
-					NumToString( val, tempStr);
+					NumToString(val, tempStr);
 				break;
 				
 				case 8:
 					val = MADDriver->chan[ i].loopBeg;
-					NumToString( val, tempStr);
+					NumToString(val, tempStr);
 				break;
 				
 				case 9:
 					val = MADDriver->chan[ i].loopSize;
-					NumToString( val, tempStr);
+					NumToString(val, tempStr);
 				break;
 				
 				case 10:
@@ -235,14 +235,14 @@ void DoNullDigiWindow(void)
 					
 					if (oldDigiValue[ x][ i] != val)
 					{
-						if (val ) ForeColor( redColor);
-						else ForeColor( blackColor);
+						if (val ) ForeColor(redColor);
+						else ForeColor(blackColor);
 						
 						aRect = tempRect;
-						InsetRect( &aRect, 15, 2);
-						PaintRect( &aRect);
+						InsetRect(&aRect, 15, 2);
+						PaintRect(&aRect);
 						aRect.left--;	aRect.top--;
-						FrameRectRelief( &aRect);
+						FrameRectRelief(&aRect);
 						
 						oldDigiValue[ x][ i] = val;
 					}
@@ -254,14 +254,14 @@ void DoNullDigiWindow(void)
 						val = 10;
 						oldDigiValue[ x][ i] = val;
 						
-						SwitchColor( i);
+						SwitchColor(i);
 						aRect = tempRect;
-						InsetRect( &aRect, 15, 2);
-						PaintRect( &aRect);
+						InsetRect(&aRect, 15, 2);
+						PaintRect(&aRect);
 						aRect.left--;	aRect.top--;
-						FrameRectRelief( &aRect);
+						FrameRectRelief(&aRect);
 						
-						ForeColor( blackColor);
+						ForeColor(blackColor);
 					}
 				break;
 				
@@ -271,14 +271,14 @@ void DoNullDigiWindow(void)
 					
 					if (oldDigiValue[ x][ i] != val)
 					{
-						if (val ) ForeColor( redColor);
-						else ForeColor( blackColor);
+						if (val ) ForeColor(redColor);
+						else ForeColor(blackColor);
 						
 						aRect = tempRect;
-						InsetRect( &aRect, 15, 2);
-						PaintRect( &aRect);
+						InsetRect(&aRect, 15, 2);
+						PaintRect(&aRect);
 						aRect.left--;	aRect.top--;
-						FrameRectRelief( &aRect);
+						FrameRectRelief(&aRect);
 						
 						oldDigiValue[ x][ i] = val;
 					}
@@ -291,14 +291,14 @@ void DoNullDigiWindow(void)
 						
 					if (oldDigiValue[ x][ i] != val)
 					{
-						if (val ) ForeColor( redColor);
-						else ForeColor( blackColor);
+						if (val ) ForeColor(redColor);
+						else ForeColor(blackColor);
 						
 						aRect = tempRect;
-						InsetRect( &aRect, 15, 2);
-						PaintRect( &aRect);
+						InsetRect(&aRect, 15, 2);
+						PaintRect(&aRect);
 						aRect.left--;	aRect.top--;
-						FrameRectRelief( &aRect);
+						FrameRectRelief(&aRect);
 						
 						oldDigiValue[ x][ i] = val;
 					}
@@ -308,8 +308,8 @@ void DoNullDigiWindow(void)
 			if (oldDigiValue[ x][ i] != val)
 			{
 				oldDigiValue[ x][ i] = val;
-				TETextBox( tempStr + 1, tempStr[0], &tempRect, teCenter);
-				ForeColor( blackColor);
+				TETextBox(tempStr + 1, tempStr[0], &tempRect, teCenter);
+				ForeColor(blackColor);
 			}
 			tempRect.right += TEXTLARG;		tempRect.left += TEXTLARG;
 		}
@@ -321,10 +321,10 @@ void DoNullDigiWindow(void)
 		tempRect.top += TEXTHI;					tempRect.bottom += TEXTHI;
 	}
 	
-	ForeColor( blackColor);
+	ForeColor(blackColor);
 	
-	SetClip( saveClip);
-	DisposeRgn( saveClip);
+	SetClip(saveClip);
+	DisposeRgn(saveClip);
 	
 	tempRect.top += TEXTHI;		tempRect.bottom += TEXTHI;
 	tempRect.top += TEXTHI;		tempRect.bottom += TEXTHI;
@@ -333,16 +333,16 @@ void DoNullDigiWindow(void)
 	if (oldDigiValue2[ 0] != MADDriver->speed)
 	{
 		oldDigiValue2[ 0] = MADDriver->speed;
-		NumToString( MADDriver->speed, tempStr);
-		TETextBox( tempStr + 1, tempStr[0], &tempRect, teCenter);
+		NumToString(MADDriver->speed, tempStr);
+		TETextBox(tempStr + 1, tempStr[0], &tempRect, teCenter);
 	}
 	tempRect.left += 2*TEXTLARG;		tempRect.right += 2*TEXTLARG;
 	
 	if (oldDigiValue2[ 1] != MADDriver->finespeed)
 	{
 		oldDigiValue2[ 1] = MADDriver->finespeed;
-		NumToString( MADDriver->finespeed, tempStr);
-		TETextBox( tempStr + 1, tempStr[0], &tempRect, teCenter);
+		NumToString(MADDriver->finespeed, tempStr);
+		TETextBox(tempStr + 1, tempStr[0], &tempRect, teCenter);
 	}
 	tempRect.left -= 2*TEXTLARG;		tempRect.right -= 2*TEXTLARG;
 	tempRect.top += TEXTHI;		tempRect.bottom += TEXTHI;
@@ -350,16 +350,16 @@ void DoNullDigiWindow(void)
 	if (oldDigiValue2[ 2] != MADDriver->Pat)
 	{
 		oldDigiValue2[ 2] = MADDriver->Pat;
-		NumToString( MADDriver->Pat, tempStr);
-		TETextBox( tempStr + 1, tempStr[0], &tempRect, teCenter);
+		NumToString(MADDriver->Pat, tempStr);
+		TETextBox(tempStr + 1, tempStr[0], &tempRect, teCenter);
 	}
 	tempRect.left += 2*TEXTLARG;		tempRect.right += 2*TEXTLARG;
 	
 	if (oldDigiValue2[ 3] != MADDriver->PartitionReader)
 	{
 		oldDigiValue2[ 3] = MADDriver->PartitionReader;
-		NumToString( MADDriver->PartitionReader, tempStr);
-		TETextBox( tempStr + 1, tempStr[0], &tempRect, teCenter);
+		NumToString(MADDriver->PartitionReader, tempStr);
+		TETextBox(tempStr + 1, tempStr[0], &tempRect, teCenter);
 	}
 	tempRect.left -= 2*TEXTLARG;		tempRect.right -= 2*TEXTLARG;
 	tempRect.top += TEXTHI;		tempRect.bottom += TEXTHI;
@@ -367,19 +367,19 @@ void DoNullDigiWindow(void)
 	if (oldDigiValue2[ 4] != MADDriver->DriverSettings.numChn)
 	{
 		oldDigiValue2[ 4] = MADDriver->DriverSettings.numChn;
-		NumToString( MADDriver->DriverSettings.numChn, tempStr);
-		TETextBox( tempStr + 1, tempStr[0], &tempRect, teCenter);
+		NumToString(MADDriver->DriverSettings.numChn, tempStr);
+		TETextBox(tempStr + 1, tempStr[0], &tempRect, teCenter);
 	}
 	tempRect.left += 2*TEXTLARG;		tempRect.right += 2*TEXTLARG;
 	
 	if (oldDigiValue2[ 5] != curMusic->header->numChn)
 	{
 		oldDigiValue2[ 5] = curMusic->header->numChn;
-		NumToString( curMusic->header->numChn, tempStr);
-		TETextBox( tempStr + 1, tempStr[0], &tempRect, teCenter);
+		NumToString(curMusic->header->numChn, tempStr);
+		TETextBox(tempStr + 1, tempStr[0], &tempRect, teCenter);
 	}
 
-	SetPort( savePort);
+	SetPort(savePort);
 }
 
 void  UpdateDigiListWindow(DialogPtr GetSelection)
@@ -392,28 +392,28 @@ void  UpdateDigiListWindow(DialogPtr GetSelection)
  		RgnHandle	visibleRegion;
  		
  		
-  		GetPort( &SavePort);
- 		SetPortDialogPort( DigitalDlog);
+  		GetPort(&SavePort);
+ 		SetPortDialogPort(DigitalDlog);
 
-		TextFont( 4);	TextSize( 9);
+		TextFont(4);	TextSize(9);
 
-		BeginUpdate( GetDialogWindow( DigitalDlog));
+		BeginUpdate(GetDialogWindow(DigitalDlog));
 		
 		visibleRegion = NewRgn();
 		
-		GetPortVisibleRegion( GetDialogPort( DigitalDlog), visibleRegion);
+		GetPortVisibleRegion(GetDialogPort(DigitalDlog), visibleRegion);
 		
- 		UpdateDialog( DigitalDlog, visibleRegion);
+ 		UpdateDialog(DigitalDlog, visibleRegion);
 		
-		DisposeRgn( visibleRegion);
+		DisposeRgn(visibleRegion);
 		
 		tempRect = viewRect;
 		
 		tempRect.top -= TEXTHI + 2;
 		tempRect.left -=2;	tempRect.left ++;
-		FrameRectRelief( &tempRect);
+		FrameRectRelief(&tempRect);
 		
-		TextFace( bold);
+		TextFace(bold);
 		
 		tempRect = viewRect;
 		
@@ -423,59 +423,59 @@ void  UpdateDigiListWindow(DialogPtr GetSelection)
 		aRect.bottom = aRect.top + TEXTHI;
 		
 		pStrcpy(tempStr, "\pInstrument");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		
 		pStrcpy(tempStr, "\pNote");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		
 		pStrcpy(tempStr, "\pPeriod");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 
 		pStrcpy(tempStr, "\pEffect");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		
 		pStrcpy(tempStr, "\pArgument");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		
 		pStrcpy(tempStr, "\pVolume");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		
 		pStrcpy(tempStr, "\pBytes left");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		
 		pStrcpy(tempStr, "\pInstru Size");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 
 		pStrcpy(tempStr, "\pLoop Pos");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 
 		pStrcpy(tempStr, "\pLoop Size");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 
 		pStrcpy(tempStr, "\pIn Loop?");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 
 		pStrcpy(tempStr, "\pIn Progress?");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 
 		pStrcpy(tempStr, "\pActif?");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 
 		pStrcpy(tempStr, "\pColor");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
@@ -486,43 +486,43 @@ void  UpdateDigiListWindow(DialogPtr GetSelection)
 		
 		tempRect.top = aRect.top;	tempRect.bottom = aRect.bottom;
 		pStrcpy(tempStr, "\pGeneral Information");
-		TETextBox( tempStr + 1, tempStr[ 0], &tempRect, teJustCenter);
+		TETextBox(tempStr + 1, tempStr[ 0], &tempRect, teJustCenter);
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		
 		pStrcpy(tempStr, "\pSpeed");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.left += 2*TEXTLARG;		aRect.right += 2*TEXTLARG;
 		
 		pStrcpy(tempStr, "\pFinespeed");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.left -= 2*TEXTLARG;		aRect.right -= 2*TEXTLARG;
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		
 		pStrcpy(tempStr, "\pPattern");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.left += 2*TEXTLARG;		aRect.right += 2*TEXTLARG;
 		
 		pStrcpy(tempStr, "\pPosition");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.left -= 2*TEXTLARG;		aRect.right -= 2*TEXTLARG;
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		
 		pStrcpy(tempStr, "\pTracks Driver");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.left += 2*TEXTLARG;		aRect.right += 2*TEXTLARG;
 		
 		pStrcpy(tempStr, "\pTracks Music");
-		TETextBox( tempStr + 1, tempStr[ 0], &aRect, teJustRight);
+		TETextBox(tempStr + 1, tempStr[ 0], &aRect, teJustRight);
 		aRect.left -= 2*TEXTLARG;		aRect.right -= 2*TEXTLARG;
 		aRect.top += TEXTHI;		aRect.bottom += TEXTHI;
 		
 		/********* LŽgende haut *************/
 
 		saveClip = NewRgn();
- 		GetClip( saveClip);
+ 		GetClip(saveClip);
  		tempRect = viewRect;
  		tempRect.top -= TEXTHI + 2;
- 		ClipRect( &tempRect);
+ 		ClipRect(&tempRect);
 
 		tempRect = viewRect;
 	
@@ -530,15 +530,15 @@ void  UpdateDigiListWindow(DialogPtr GetSelection)
 		tempRect.bottom = tempRect.top;
 		tempRect.top -= TEXTHI;
 		
-		start = GetControlValue( ControlDigi);
+		start = GetControlValue(ControlDigi);
 		end = start + 1 + (viewRect.right - viewRect.left) / TEXTLARG;
 		if (end > MAXTRACK) end = MAXTRACK;
 		
-		for (x = GetControlValue( ControlDigi); x < MAXTRACK; x++)
+		for (x = GetControlValue(ControlDigi); x < MAXTRACK; x++)
 		{
-			NumToString( x+1, aStr);
-			pStrcpy( tempStr, aStr);
-			TETextBox( tempStr+ 1, tempStr[0], &tempRect, teCenter);
+			NumToString(x+1, aStr);
+			pStrcpy(tempStr, aStr);
+			TETextBox(tempStr+ 1, tempStr[0], &tempRect, teCenter);
 			tempRect.right += TEXTLARG;		tempRect.left += TEXTLARG;
 		}
 		
@@ -552,16 +552,16 @@ void  UpdateDigiListWindow(DialogPtr GetSelection)
 			oldDigiValue2[ x] = -900;
 		}
 		
-		TextFace( normal);
+		TextFace(normal);
 		
-		SetClip( saveClip);
-		DisposeRgn( saveClip);
+		SetClip(saveClip);
+		DisposeRgn(saveClip);
 		
-		DrawGrowIconP( DigitalDlog);
+		DrawGrowIconP(DigitalDlog);
 		
-		EndUpdate( GetDialogWindow( DigitalDlog));
+		EndUpdate(GetDialogWindow(DigitalDlog));
 
-		SetPort( SavePort);
+		SetPort(SavePort);
 } 
 
 pascal void actionProcDigi(ControlHandle theControl, short ctlPart)
@@ -573,12 +573,12 @@ Rect			tempRect;
 
 if (ctlPart <= 0) return;
 
-lRefCon = GetControlReference( theControl);
-maxValue = GetControlMaximum( theControl);
-minValue = GetControlMinimum( theControl);
-curVal = sVal = GetControlValue( theControl);
+lRefCon = GetControlReference(theControl);
+maxValue = GetControlMaximum(theControl);
+minValue = GetControlMinimum(theControl);
+curVal = sVal = GetControlValue(theControl);
 
-	switch( ctlPart)
+	switch(ctlPart)
 		{
 			case kControlUpButtonPart:
 				curVal -= 1;
@@ -603,26 +603,26 @@ curVal = sVal = GetControlValue( theControl);
 			break;
 		}
 		
-		SetControlValue( theControl, curVal);
+		SetControlValue(theControl, curVal);
 		
 		if (sVal != curVal)
 		{
-			SetRect( &tempRect, viewRect.left, viewRect.top - TEXTHI + 2, viewRect.right, viewRect.bottom);
+			SetRect(&tempRect, viewRect.left, viewRect.top - TEXTHI + 2, viewRect.right, viewRect.bottom);
 		
 			aRgn = NewRgn();
 		
-			ScrollRect( &tempRect, (sVal - curVal)*TEXTLARG, 0, aRgn);
-			EraseRgn( aRgn);
-			InvalWindowRgn( GetDialogWindow( DigitalDlog), aRgn);
+			ScrollRect(&tempRect, (sVal - curVal)*TEXTLARG, 0, aRgn);
+			EraseRgn(aRgn);
+			InvalWindowRgn(GetDialogWindow(DigitalDlog), aRgn);
 			
-			UpdateDigiListWindow( DigitalDlog);
+			UpdateDigiListWindow(DigitalDlog);
 			DoNullDigiWindow();
 			
-			DisposeRgn( aRgn);
+			DisposeRgn(aRgn);
 		}
 }
 
-void DoItemPressDigiList( short whichItem, DialogPtr whichDialog)    			/* Item hit ID to pass to Dialog function */
+void DoItemPressDigiList(short whichItem, DialogPtr whichDialog)    			/* Item hit ID to pass to Dialog function */
 {
  		short				bogus, ctlPart;
  		Rect				tempRect;
@@ -631,45 +631,45 @@ void DoItemPressDigiList( short whichItem, DialogPtr whichDialog)    			/* Item 
  		Point				myPt;
  		ControlActionUPP	MyControlUPP;
  		
- 		GetPort( &SavePort);
- 		SetPortDialogPort( DigitalDlog);
+ 		GetPort(&SavePort);
+ 		SetPortDialogPort(DigitalDlog);
  
  		if (theEvent.what == mouseDown) /* See if a mouse click */
 		{
 			myPt = theEvent.where;
-			GlobalToLocal( &myPt);
+			GlobalToLocal(&myPt);
 			
-			ctlPart = FindControl( myPt, GetDialogWindow( whichDialog), &theControl);
+			ctlPart = FindControl(myPt, GetDialogWindow(whichDialog), &theControl);
 	
 			if (ctlPart == kControlIndicatorPart)
 			{
-				bogus = TrackControl( theControl, myPt, NULL);
+				bogus = TrackControl(theControl, myPt, NULL);
 				if (bogus != 0)
 				{
 					tempRect = viewRect;
 					tempRect.top -= TEXTHI + 2;
 					
-					EraseRect( &tempRect);
-					InvalWindowRect( GetDialogWindow( whichDialog), &tempRect);
+					EraseRect(&tempRect);
+					InvalWindowRect(GetDialogWindow(whichDialog), &tempRect);
 				}
 			}
 			else if (ctlPart > 0)
 			{
-    			MyControlUPP = NewControlActionUPP( actionProcDigi);
+    			MyControlUPP = NewControlActionUPP(actionProcDigi);
 				TrackControl(theControl, myPt, MyControlUPP);
-				DisposeControlActionUPP( MyControlUPP);
+				DisposeControlActionUPP(MyControlUPP);
 			}
 		}
 
-		SetPort( SavePort);
+		SetPort(SavePort);
 }
 
-/*void SetMaxBottomWindow( short maxRight, DialogPtr	whichWindow)
+/*void SetMaxBottomWindow(short maxRight, DialogPtr	whichWindow)
 {
 	WindowPeek	wPeek;
 	WStateData	*wspd;
 
-	wPeek = ( WindowPeek) whichWindow;
+	wPeek = (WindowPeek) whichWindow;
 	
 	wspd = (WStateData*) *(wPeek->dataHandle);
 	
@@ -689,53 +689,53 @@ void CreateDigiListWindow(void)
 
 	if (DigitalDlog != NULL)
 	{
-		SetWindEtat( GetDialogWindow(DigitalDlog));
+		SetWindEtat(GetDialogWindow(DigitalDlog));
 		return;
 	}
 	
-	GetPort( &savePort);
+	GetPort(&savePort);
 	
-	SetItemMark( ViewsMenu, 4, checkMark);
+	SetItemMark(ViewsMenu, 4, checkMark);
 	
-	DigitalDlog = GetNewDialog( 150, NULL, GetDialogWindow( ToolsDlog));
+	DigitalDlog = GetNewDialog(150, NULL, GetDialogWindow(ToolsDlog));
 	
-	SetWindEtat( GetDialogWindow(DigitalDlog));
-	SetPortDialogPort( DigitalDlog);
+	SetWindEtat(GetDialogWindow(DigitalDlog));
+	SetPortDialogPort(DigitalDlog);
 	
-	GetPortBounds( GetDialogPort( DigitalDlog), &caRect);
-	MySizeWindow( DigitalDlog, caRect.right, 22 * TEXTHI, false);
+	GetPortBounds(GetDialogPort(DigitalDlog), &caRect);
+	MySizeWindow(DigitalDlog, caRect.right, 22 * TEXTHI, false);
 	
-//	SetMaxBottomWindow( DigitalDlog->portRect.bottom + 42, DigitalDlog);
+//	SetMaxBottomWindow(DigitalDlog->portRect.bottom + 42, DigitalDlog);
 	
-	GetPortBounds( GetDialogPort( DigitalDlog), &caRect);
+	GetPortBounds(GetDialogPort(DigitalDlog), &caRect);
 	
-	SetMaxWindow( 0, caRect.bottom + 42, DigitalDlog);
+	SetMaxWindow(0, caRect.bottom + 42, DigitalDlog);
 	
-	GetDialogItem ( DigitalDlog, 1, &itemType, &itemHandle, &viewRect);
+	GetDialogItem (DigitalDlog, 1, &itemType, &itemHandle, &viewRect);
 	
 	viewRect.bottom = viewRect.top + 2 + (TEXTHI )*ITEMNO;
 	
-	GetDialogItem ( DigitalDlog, 2, &itemType, &itemHandle, &itemRect);	
+	GetDialogItem (DigitalDlog, 2, &itemType, &itemHandle, &itemRect);	
 	ControlDigi = (ControlHandle) itemHandle;
 	
 	TextFont(4);
 	TextSize(9);
 	
 	theEvent.what = 0;
-	DoGrowDigi( DigitalDlog);
+	DoGrowDigi(DigitalDlog);
 	
-	ShowWindow( GetDialogWindow( DigitalDlog));
-	SelectWindow2( GetDialogWindow( DigitalDlog));
+	ShowWindow(GetDialogWindow(DigitalDlog));
+	SelectWindow2(GetDialogWindow(DigitalDlog));
 	
-	SetPort( savePort);
+	SetPort(savePort);
 }
 
 void CloseDigiList(void)
 {
 	if (DigitalDlog != NULL)
 	{
-		DisposeDialog( DigitalDlog);
-		SetItemMark( ViewsMenu, 4, noMark);
+		DisposeDialog(DigitalDlog);
+		SetItemMark(ViewsMenu, 4, noMark);
 	}
 	DigitalDlog = NULL;
 }

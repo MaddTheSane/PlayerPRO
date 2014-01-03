@@ -1,7 +1,7 @@
 #include "Exemple.h"
 
-void Burk( short fRefnum)
+void Burk(short fRefnum)
 {
 	if (fRefnum == 0) return;
-	else FSClose( fRefnum);
+	else FSClose(fRefnum);
 }

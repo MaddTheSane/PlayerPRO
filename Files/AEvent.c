@@ -37,23 +37,23 @@ static	AEEventHandlerUPP	AEODocDesc,
 
 /********************************/
 
-pascal OSErr	AEODoc( const AppleEvent *theAppleEvent, AppleEvent* reply, long handlerRefCon);
-pascal OSErr	AEQDoc( const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
+pascal OSErr	AEODoc(const AppleEvent *theAppleEvent, AppleEvent* reply, long handlerRefCon);
+pascal OSErr	AEQDoc(const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
 static pascal OSErr  	ANEQApp (const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
 
-pascal OSErr	AEPlayMusic( const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
-pascal OSErr	AEStopMusic( const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
-pascal OSErr	AESetVolume( const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
-pascal OSErr	AESetSpeed(  const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
-pascal OSErr	AESetDriver( const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
+pascal OSErr	AEPlayMusic(const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
+pascal OSErr	AEStopMusic(const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
+pascal OSErr	AESetVolume(const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
+pascal OSErr	AESetSpeed( const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
+pascal OSErr	AESetDriver(const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
 OSErr MyGotRequiredParams (const AppleEvent *theAppleEvent);
 
 /********************************/
 
-void IntErreur( short ID, OSErr theErr);
-Boolean OpenFirst2( short pos);
-void MODListSelectThisMusic( Str255 str);
-OSType 		Ptr2OSType( Ptr str);
+void IntErreur(short ID, OSErr theErr);
+Boolean OpenFirst2(short pos);
+void MODListSelectThisMusic(Str255 str);
+OSType 		Ptr2OSType(Ptr str);
 
 extern short				DropZone;
 extern ProcessSerialNumber	playerPROPSN;
@@ -88,7 +88,7 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 	// now get each descriptor record from the list, coerce the returned
 	// data to an FSSpec record, and open the associated file
 	
-	SetCursor( &watchCrsr);
+	SetCursor(&watchCrsr);
 	
 	UpdateALLWindow();
 	
@@ -96,7 +96,7 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 	{
 		err = AEGetNthPtr (&docList, index, typeFSS, &keywd, &returnedType, (Ptr) &myFSS, sizeof(myFSS), &actualSize);
 		
-		err = HGetFInfo( myFSS.vRefNum, myFSS.parID, myFSS.name, &fndrInfo);
+		err = HGetFInfo(myFSS.vRefNum, myFSS.parID, myFSS.name, &fndrInfo);
 		
 		if (err != noErr)
 		{
@@ -110,7 +110,7 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 			
 			if (PBGetCatInfo(&info, false) == noErr)
 			{
-				DoScanDir( info.dirInfo.ioDrDirID, myFSS.vRefNum);
+				DoScanDir(info.dirInfo.ioDrDirID, myFSS.vRefNum);
 				
 				if (index == 1)
 				{
@@ -118,8 +118,8 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 					
 					if (thePrefs.AutomaticOpen)
 					{
-						if (DropZone >= 0) rrr = OpenFirst2( DropZone);
-						else rrr = OpenFirst2( 0);
+						if (DropZone >= 0) rrr = OpenFirst2(DropZone);
+						else rrr = OpenFirst2(0);
 						
 						DropZone = -1;
 						
@@ -133,14 +133,14 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 			OSType 	tempType;
 			char	tempC[ 5];
 			
-			if (OpenableFile( fndrInfo.fdType, &myFSS) == true ||
+			if (OpenableFile(fndrInfo.fdType, &myFSS) == true ||
 				fndrInfo.fdType == 'sTAT' ||
 				fndrInfo.fdType == 'STCf' ||
-				MADMusicIdentifyFSp( gMADLib, tempC, &myFSS) == noErr)
+				MADMusicIdentifyFSp(gMADLib, tempC, &myFSS) == noErr)
 			{
 				if (fndrInfo.fdType != 'sTAT' && fndrInfo.fdType != 'STCf')
 				{
-					AddMODList( 	false,
+					AddMODList(	false,
 									myFSS.name,
 									myFSS.vRefNum,
 									myFSS.parID);
@@ -149,7 +149,7 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 					{
 						if (index == 1)
 						{
-							if (ImportFile( myFSS.name, myFSS.vRefNum, myFSS.parID, fndrInfo.fdType))
+							if (ImportFile(myFSS.name, myFSS.vRefNum, myFSS.parID, fndrInfo.fdType))
 							{
 								if (thePrefs.AutoPlayWhenOpen) DoPlay();		// WANT TO PLAY ?
 							}
@@ -157,7 +157,7 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 					}
 					else
 					{
-						if (index == 1) MODListSelectThisMusic( myFSS.name);
+						if (index == 1) MODListSelectThisMusic(myFSS.name);
 					}
 				}
 				else	// Music File List
@@ -168,7 +168,7 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 						
 						if (index == 1)
 						{
-							if (ImportFile( myFSS.name, myFSS.vRefNum, myFSS.parID, fndrInfo.fdType))
+							if (ImportFile(myFSS.name, myFSS.vRefNum, myFSS.parID, fndrInfo.fdType))
 							{
 								if (thePrefs.AutoPlayWhenOpen) DoPlay();		// WANT TO PLAY ?
 							}
@@ -178,7 +178,7 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 			}
 		}
 	}
-	SetCursor( GetQDGlobalsArrow( &qdarrow));
+	SetCursor(GetQDGlobalsArrow(&qdarrow));
 	
 	UpdateALLWindow();
 	
@@ -212,7 +212,7 @@ static pascal OSErr  ANEQApp (const AppleEvent *theAppleEvent, AppleEvent *reply
 	return noErr;
 }
 
-pascal OSErr  AEErreur( const AppleEvent *theAppleEvent, AppleEvent *reply, long refcon)
+pascal OSErr  AEErreur(const AppleEvent *theAppleEvent, AppleEvent *reply, long refcon)
 {
 	AEDescList				docList;
 	OSErr					err;
@@ -238,14 +238,14 @@ pascal OSErr  AEErreur( const AppleEvent *theAppleEvent, AppleEvent *reply, long
 	if (err) return err;
 	
 	// count the number of descriptor records in the list
-	err = AECountItems( &docList, &itemsInList);
+	err = AECountItems(&docList, &itemsInList);
 	
 	// now get each descriptor record from the list, coerce the returned
 	// data to an FSSpec record, and open the associated file
 	
-	err = AEGetNthPtr (&docList, 1, 'dErr', &keywd, &returnedType, (Ptr) &dErr, sizeof( dErr), &actualSize);
+	err = AEGetNthPtr (&docList, 1, 'dErr', &keywd, &returnedType, (Ptr) &dErr, sizeof(dErr), &actualSize);
 		
-	GetFrontProcess( &PSN);
+	GetFrontProcess(&PSN);
 	if (PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
 		PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN)
 	{
@@ -254,7 +254,7 @@ pascal OSErr  AEErreur( const AppleEvent *theAppleEvent, AppleEvent *reply, long
 		myNotification.qType	= nmType;			//set queue type
 		myNotification.nmMark	= 1;				//put mark in Application menu
 		
-		err = GetIconSuite( &hd, 128, svAllSmallData);
+		err = GetIconSuite(&hd, 128, svAllSmallData);
 		myNotification.nmIcon	= hd;				//alternating icon
 		myNotification.nmSound	= (Handle) -1;		//play system alert
 		
@@ -262,48 +262,48 @@ pascal OSErr  AEErreur( const AppleEvent *theAppleEvent, AppleEvent *reply, long
 		myNotification.nmResp	= nil;				//no response procedure
 		myNotification.nmRefCon	= 0;				//not needed
 		
-		err = NMInstall( &myNotification);
+		err = NMInstall(&myNotification);
 		if (err) notif = false;
 	}
 	else notif = false;
 	
-	IntErreur( dErr[ 0], dErr[ 1]);
+	IntErreur(dErr[ 0], dErr[ 1]);
 	
 	if (notif)
 	{
-		NMRemove( &myNotification);
-		err = DisposeIconSuite( hd, true);
+		NMRemove(&myNotification);
+		err = DisposeIconSuite(hd, true);
 	}
 	err = AEDisposeDesc (&docList);
 	
 	return noErr;
 }
 
-pascal OSErr  AEStopMusic( const AppleEvent *event, AppleEvent *reply, long refcon)
+pascal OSErr  AEStopMusic(const AppleEvent *event, AppleEvent *reply, long refcon)
 {
 	DoPause();
 	return noErr;
 }
 
-pascal OSErr  AEPlayMusic( const AppleEvent *event, AppleEvent *reply, long refcon)
+pascal OSErr  AEPlayMusic(const AppleEvent *event, AppleEvent *reply, long refcon)
 {
 	DoPlay();
 	return noErr;
 }
 
-pascal OSErr  AENextPattern( const AppleEvent *event, AppleEvent *reply, long refcon)
+pascal OSErr  AENextPattern(const AppleEvent *event, AppleEvent *reply, long refcon)
 {
 	DoSearchUp();
 	return noErr;
 }
 
-pascal OSErr  AEPreviousPattern( const AppleEvent *event, AppleEvent *reply, long refcon)
+pascal OSErr  AEPreviousPattern(const AppleEvent *event, AppleEvent *reply, long refcon)
 {
 	DoSearchDown();
 	return noErr;
 }
 
-pascal OSErr  AESetSpeed( const AppleEvent *event, AppleEvent *reply, long refcon)
+pascal OSErr  AESetSpeed(const AppleEvent *event, AppleEvent *reply, long refcon)
 {
 OSErr		err;
 DescType	actualtype;
@@ -311,7 +311,7 @@ Size		actualSize;
 short		AESpeed;
 
 	err = AEGetParamPtr(	event, keyDirectObject, typeChar,
-							&actualtype, (Ptr)( &AESpeed), 2, &actualSize);
+							&actualtype, (Ptr)(&AESpeed), 2, &actualSize);
 
 	if (AESpeed > 0 && AESpeed < 20)
 	{
@@ -321,27 +321,27 @@ short		AESpeed;
 	return noErr;
 }
 
-pascal OSErr  AESetPitch( const AppleEvent *event, AppleEvent *reply, long refcon)
+pascal OSErr  AESetPitch(const AppleEvent *event, AppleEvent *reply, long refcon)
 {
 	return noErr;
 }
 
-pascal OSErr  AESetVolume( const AppleEvent *event, AppleEvent *reply, long refcon)
+pascal OSErr  AESetVolume(const AppleEvent *event, AppleEvent *reply, long refcon)
 {
 	return noErr;
 }
 
-pascal OSErr  AEGotoPattern( const AppleEvent *event, AppleEvent *reply, long refcon)
+pascal OSErr  AEGotoPattern(const AppleEvent *event, AppleEvent *reply, long refcon)
 {
 	return noErr;
 }
 
-pascal OSErr  AEGotoPosition( const AppleEvent *event, AppleEvent *reply, long refcon)
+pascal OSErr  AEGotoPosition(const AppleEvent *event, AppleEvent *reply, long refcon)
 {
 	return noErr;
 }
 
-pascal OSErr AEGotoPercent( const AppleEvent *event, AppleEvent *reply, long refcon)
+pascal OSErr AEGotoPercent(const AppleEvent *event, AppleEvent *reply, long refcon)
 {
 	return noErr;
 }
@@ -377,17 +377,17 @@ short InstallAE(void)
 	//appleevents.h
 	if (aEvents)
 	{
-			AEODocDesc 			= NewAEEventHandlerUPP( AEODoc);
-			AEQAppDesc 			= NewAEEventHandlerUPP( ANEQApp);
-			AEPlayMusicDesc		= NewAEEventHandlerUPP( AEPlayMusic);
-			AEStopMusicDesc		= NewAEEventHandlerUPP( AEStopMusic);
-			AESetSpeedDesc		= NewAEEventHandlerUPP( AESetSpeed);
-			AESetVolumeDesc		= NewAEEventHandlerUPP( AESetVolume);
-			AESetPitchDesc		= NewAEEventHandlerUPP( AESetPitch);
-			AEGotoPatternDesc	= NewAEEventHandlerUPP( AEGotoPattern);
-			AEGotoPositionDesc	= NewAEEventHandlerUPP( AEGotoPosition);
-			AEGotoPercentDesc	= NewAEEventHandlerUPP( AEGotoPercent);
-			AEErreurDesc		= NewAEEventHandlerUPP( AEErreur);
+			AEODocDesc 			= NewAEEventHandlerUPP(AEODoc);
+			AEQAppDesc 			= NewAEEventHandlerUPP(ANEQApp);
+			AEPlayMusicDesc		= NewAEEventHandlerUPP(AEPlayMusic);
+			AEStopMusicDesc		= NewAEEventHandlerUPP(AEStopMusic);
+			AESetSpeedDesc		= NewAEEventHandlerUPP(AESetSpeed);
+			AESetVolumeDesc		= NewAEEventHandlerUPP(AESetVolume);
+			AESetPitchDesc		= NewAEEventHandlerUPP(AESetPitch);
+			AEGotoPatternDesc	= NewAEEventHandlerUPP(AEGotoPattern);
+			AEGotoPositionDesc	= NewAEEventHandlerUPP(AEGotoPosition);
+			AEGotoPercentDesc	= NewAEEventHandlerUPP(AEGotoPercent);
+			AEErreurDesc		= NewAEEventHandlerUPP(AEErreur);
 			
 			err = AEInstallEventHandler (kCoreEventClass, kAEOpenDocuments, AEODocDesc, 0, false);
 			err = AEInstallEventHandler (kCoreEventClass, kAEQuitApplication, AEQAppDesc, 0, false);
@@ -404,7 +404,7 @@ short InstallAE(void)
 	}
 	else
 	{
-		 Erreur( 33, -1);
+		 Erreur(33, -1);
 		 ExitToShell();
 	}
 	return 0;
@@ -432,7 +432,7 @@ OSStatus LaunchURLC(ConstStr255Param urlStr)
 }
 
 
-void AESendOpenFile( FSSpec *spec)
+void AESendOpenFile(FSSpec *spec)
 {
 	//FIXME: Instruments seems to think that this function leaks quite a bit
 	OSType				sign = 'SNPL';
@@ -442,7 +442,7 @@ void AESendOpenFile( FSSpec *spec)
 
 	iErr = AECreateDesc(	typeProcessSerialNumber,
 							(Ptr) &playerPROPSN,
-							sizeof( playerPROPSN),
+							sizeof(playerPROPSN),
 							&target);
 	
 	iErr = AECreateAppleEvent(	kCoreEventClass,
@@ -452,18 +452,18 @@ void AESendOpenFile( FSSpec *spec)
 								kAnyTransactionID,
 								&aeEvent);
 	
-	iErr = AECreateList( NULL, 0, false, &fileList);
+	iErr = AECreateList(NULL, 0, false, &fileList);
 
-	AECreateDesc(typeFSS, (Ptr) spec, sizeof( *spec), &listElem);
+	AECreateDesc(typeFSS, (Ptr) spec, sizeof(*spec), &listElem);
 	
-	iErr = AEPutDesc( &fileList, 0, &listElem);
+	iErr = AEPutDesc(&fileList, 0, &listElem);
 	if (iErr) return;
 	
-	AEDisposeDesc( &listElem);
+	AEDisposeDesc(&listElem);
 	
-	iErr = AEPutParamDesc( &aeEvent, keyDirectObject, &fileList);
+	iErr = AEPutParamDesc(&aeEvent, keyDirectObject, &fileList);
 	if(iErr) return;
-	iErr = AEDisposeDesc( &fileList);
+	iErr = AEDisposeDesc(&fileList);
 	
 	iErr = AESend(	&aeEvent,
 					&replyAE,
@@ -473,7 +473,7 @@ void AESendOpenFile( FSSpec *spec)
 					NULL,
 					NULL);
 	
-	iErr = AEDisposeDesc( &target);
+	iErr = AEDisposeDesc(&target);
 
 	if (iErr) return;
 	

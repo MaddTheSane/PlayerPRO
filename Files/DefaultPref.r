@@ -32,7 +32,7 @@ data 'AGGA' (DEFAULTPREFSNUM, "Default Settings") {
 	$"660E 3029 FFFF 4CDE FFFF 3140 FFFF 6004"            /* f.0)ÿÿLÞÿÿ1@ÿÿ`. */
 	$"4CDE 0300 4A43 6606 4A68 FFFF 6D06 316A"            /* LÞ..JCf.Jhÿÿm.1j */
 	$"FFFF FFFF 6100 0196 6100 1600 6610 302A"            /* ÿÿÿÿa..–a...f.0* */
-	$"FFFF 9168 FFFF 302A 00A2 9168 FFFF 0828"            /* ÿÿ‘hÿÿ0*.¢‘hÿÿ.( */
+	$"FFFF 9168 FFFF 302A 00A2 9168 FFFF 0828"            /* ÿÿ‘hÿÿ0*.¢‘hÿÿ.(*/
 	$"FFFF FFFF 661A 303C 7C00 B068 FFFF 620E"            /* ÿÿÿÿf.0<|.°hÿÿb. */
 	$"3140 FFFF B068 FFFF 6204 3140 FFFF 6066"            /* 1@ÿÿ°hÿÿb.1@ÿÿ`f */
 	$"316A FFFF FFFF 316A FFFF FFFF 316A FFFF"            /* 1jÿÿÿÿ1jÿÿÿÿ1jÿÿ */
@@ -44,7 +44,7 @@ data 'AGGA' (DEFAULTPREFSNUM, "Default Settings") {
 	$"7020 A02E 205F 21CA 03EE 6100 155E 6606"            /* p  . _!Ê.îa..^f. */
 	$"6100 FC68 6602 7000 6000 EDB2 6100 ECFA"            /* a.ühf.p.`.í²a.ìú */
 	$"6100 FC7C 6666 6100 009C 6660 6100 112A"            /* a.ü|ffa..œf`a..* */
-	$"665A 2568 FFFF FFFF 2568 FFFF FFFF 3028"            /* fZ%hÿÿÿÿ%hÿÿÿÿ0( */
+	$"665A 2568 FFFF FFFF 2568 FFFF FFFF 3028"            /* fZ%hÿÿÿÿ%hÿÿÿÿ0(*/
 	$"FFFF 0240 8000 322A FFFF 0241 7FFF 8240"            /* ÿÿ.@€.2*ÿÿ.A.ÿ‚@ */
 	$"3541 FFFF 6100 1514 6622 2568 FFFF FFFF"            /* 5Aÿÿa...f"%hÿÿÿÿ */
 	$"2568 FFFF FFFF 3568 FFFF 0062 2F08 41E8"            /* %hÿÿÿÿ5hÿÿ.b/.Aè */

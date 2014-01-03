@@ -363,7 +363,7 @@ typedef struct MADDriverSettings
 //	To use with PlayerPRO for CodeWarrior
 //
 //	Your main function have to be in this form:
-//	OSErr main( 	OSType order,
+//	OSErr main(	OSType order,
 //					Ptr AlienFileName,
 //					MADMusic *MadFile,
 //					PPInfoRec *info,
@@ -427,7 +427,7 @@ enum {
   PPdbLastBuffer                  = 0x00000004 /*last double buffer to play*/
 };
 
-typedef CALLBACK_API( OSErr , PPSndDoubleBackProcPtr )(void);
+typedef CALLBACK_API(OSErr , PPSndDoubleBackProcPtr )(void);
 typedef STACK_UPP_TYPE(PPSndDoubleBackProcPtr)                    PPSndDoubleBackUPP;
 
 typedef struct PPSndDoubleBuffer {
@@ -487,7 +487,7 @@ typedef struct PlugInfo
 
 #ifdef WIN32
 #include <windows.h>
-typedef OSErr (*PLUGDLLFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
+typedef OSErr (*PLUGDLLFUNC) (OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 struct PlugInfo
 {
 	HMODULE			hLibrary;
@@ -504,7 +504,7 @@ typedef struct PlugInfo PlugInfo;
 #ifdef __UNIX__
 #include <dlfcn.h>
 #include <sys/param.h>  //For PATH_MAX
-typedef OSErr (*MADPLUGFUNC) ( OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
+typedef OSErr (*MADPLUGFUNC) (OSType , Ptr , MADMusic* , PPInfoRec *, MADDriverSettings *);
 struct PlugInfo
 {
 	void*			hLibrary;
@@ -737,60 +737,60 @@ enum MADEffectsID {
 extern "C" {
 #endif
 
-void MyDebugStr( short, char*, char*);								// Internal Debugger function, NORMALLY it is never called, only when FATAL error
+void MyDebugStr(short, char*, char*);								// Internal Debugger function, NORMALLY it is never called, only when FATAL error
 																	// You NEED to provide this function, see examples!
 
 MADLibrary* MADGetMADLibraryPtr();									// Get MADDriver structure pointer.
 
-OSErr	MADInitLibrary( FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
-OSErr	MADDisposeLibrary( MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
+OSErr	MADInitLibrary(FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **MADLib);	// Library initialisation, you have to CALL this function if you want to use other functions & variables
+OSErr	MADDisposeLibrary(MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
-void	MADGetBestDriver( MADDriverSettings	*DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
+void	MADGetBestDriver(MADDriverSettings	*DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
 Boolean MADSoundDriverIsAvalable(short theDriver);
 int MADSoundDriverList();
-OSErr	MADCreateDriver( MADDriverSettings	*DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
-OSErr	MADDisposeDriver( MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
+OSErr	MADCreateDriver(MADDriverSettings	*DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
+OSErr	MADDisposeDriver(MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
 
-OSErr	MADChangeDriverSettings( MADDriverSettings	*DriverInitParam, MADDriverRec** returnDriver);
+OSErr	MADChangeDriverSettings(MADDriverSettings	*DriverInitParam, MADDriverRec** returnDriver);
 
-OSErr	MADStartDriver( MADDriverRec *MDriver);										// NEW - Activate the sound generating procedure (interruption)
-OSErr	MADStopDriver( MADDriverRec *MDriver);										// NEW - DESActivate the sound generating procedure (interruption)
+OSErr	MADStartDriver(MADDriverRec *MDriver);										// NEW - Activate the sound generating procedure (interruption)
+OSErr	MADStopDriver(MADDriverRec *MDriver);										// NEW - DESActivate the sound generating procedure (interruption)
 
-OSErr	MADPlayMusic( MADDriverRec *MDriver);										// NEW - Read and play current music in memory - Call MADStartInterruption BEFORE
-OSErr	MADStopMusic( MADDriverRec *MDriver);										// NEW - Stop reading current music in memory, Use MADCleanDriver to stop sounds
-void	MADCleanDriver( MADDriverRec *intDriver);									// Clean the driver : stop playing sounds
+OSErr	MADPlayMusic(MADDriverRec *MDriver);										// NEW - Read and play current music in memory - Call MADStartInterruption BEFORE
+OSErr	MADStopMusic(MADDriverRec *MDriver);										// NEW - Stop reading current music in memory, Use MADCleanDriver to stop sounds
+void	MADCleanDriver(MADDriverRec *intDriver);									// Clean the driver : stop playing sounds
 
-OSErr	MADReset( MADDriverRec *MDriver);											// Reset the current music at the start position
-OSErr	MADGetMusicStatus( MADDriverRec *MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
-OSErr	MADSetMusicStatus( MADDriverRec *MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus( 0, 100, 50) = go to the middle of the music
+OSErr	MADReset(MADDriverRec *MDriver);											// Reset the current music at the start position
+OSErr	MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
+OSErr	MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus(0, 100, 50) = go to the middle of the music
 
-OSErr	MADSetHardwareVolume( long);								// 0...64, Mac HARDWARE volume, see MADDriver->VolGlobal for SOFTWARE volume
-long	MADGetHardwareVolume( void);										// Return HARDWARE volume, see MADDriver->VolGlobal for SOFTWARE volume
+OSErr	MADSetHardwareVolume(long);								// 0...64, Mac HARDWARE volume, see MADDriver->VolGlobal for SOFTWARE volume
+long	MADGetHardwareVolume(void);										// Return HARDWARE volume, see MADDriver->VolGlobal for SOFTWARE volume
 
-OSErr	MADAttachDriverToMusic( MADDriverRec *driver, MADMusic *music, unsigned char*);
+OSErr	MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned char*);
 
-OSErr	MADLoadMusicRsrc( MADMusic **music, OSType IDName, short IDNo);				// MAD ONLY - Load a MAD Rsrc into memory
-OSErr	MADLoadMusicPtr( MADMusic **music, Ptr myPtr);								// MAD ONLY - Load a MAD Ptr into memory, you can DisposPtr your Ptr after this call
+OSErr	MADLoadMusicRsrc(MADMusic **music, OSType IDName, short IDNo);				// MAD ONLY - Load a MAD Rsrc into memory
+OSErr	MADLoadMusicPtr(MADMusic **music, Ptr myPtr);								// MAD ONLY - Load a MAD Ptr into memory, you can DisposPtr your Ptr after this call
 
-OSErr	MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef);	// Load a music file with plugs
-OSErr	MADLoadMusicFilePString( MADLibrary *, MADMusic **music, char *type, Str255 fName);			// Load a music file with plugs
-OSErr	MADLoadMusicFileCString( MADLibrary *, MADMusic **music, char *type, Ptr fName);			// Load a music file with plugs
-OSErr	MADLoadMusicFSpFile( MADLibrary *, MADMusic **music, char *type, FSSpec *theSpec);			// Load a music file with plugs
+OSErr	MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef);	// Load a music file with plugs
+OSErr	MADLoadMusicFilePString(MADLibrary *, MADMusic **music, char *type, Str255 fName);			// Load a music file with plugs
+OSErr	MADLoadMusicFileCString(MADLibrary *, MADMusic **music, char *type, Ptr fName);			// Load a music file with plugs
+OSErr	MADLoadMusicFSpFile(MADLibrary *, MADMusic **music, char *type, FSSpec *theSpec);			// Load a music file with plugs
 
-OSErr	MADMusicIdentifyPString( MADLibrary *, char *type, Str255 pName);			// Identify what kind of music format is pName file.
-OSErr	MADMusicIdentifyCString( MADLibrary *, char *type, Ptr cName);			// Identify what kind of music format is cName file.
-OSErr	MADMusicIdentifyFSp( MADLibrary *, char *type, FSSpec *theSpec);			// Identify what kind of music format is theSpec file.
+OSErr	MADMusicIdentifyPString(MADLibrary *, char *type, Str255 pName);			// Identify what kind of music format is pName file.
+OSErr	MADMusicIdentifyCString(MADLibrary *, char *type, Ptr cName);			// Identify what kind of music format is cName file.
+OSErr	MADMusicIdentifyFSp(MADLibrary *, char *type, FSSpec *theSpec);			// Identify what kind of music format is theSpec file.
 
-Boolean	MADPlugAvailable( MADLibrary *, char *type);								// Is plug 'type' available?
+Boolean	MADPlugAvailable(MADLibrary *, char *type);								// Is plug 'type' available?
 
-OSErr	MADDisposeMusic( MADMusic **, MADDriverRec *MDriver);								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
+OSErr	MADDisposeMusic(MADMusic **, MADDriverRec *MDriver);								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
 
-void	MADChangeTracks( MADDriverRec *MDriver, short);				// Change current tracks number of the music driver
+void	MADChangeTracks(MADDriverRec *MDriver, short);				// Change current tracks number of the music driver
 Cmd*	GetMADCommand(	short		position,						// Extract a Command from a PatData structure
 						short		channel,
 						PatData*	aPatData);
 
-OSErr	MADPlaySndHandle( 	MADDriverRec *MDriver,
+OSErr	MADPlaySndHandle(	MADDriverRec *MDriver,
 							Handle sound,							// Handle to a 'snd ' handle, by ex: GetResource('snd ', 128);
 							long chan,								// channel ID on which to play sound
 							long note);								// note: 0 to NUMBER_NOTES or 0xFF: play sound at his normal sampleRate Khz
@@ -817,8 +817,8 @@ OSErr	MADPlaySoundDataSYNC(MADDriverRec *MDriver,
 							unsigned long	rate,					// sample rate of the sound data, by ex: rate22khz
 							Boolean			stereo);				// sample is in stereo or in mono?
 
-//Ptr MADNewPtr( long size, MADLibrary* init);
-//Ptr MADNewPtrClear( long size, MADLibrary* init);
+//Ptr MADNewPtr(long size, MADLibrary* init);
+//Ptr MADNewPtrClear(long size, MADLibrary* init);
 //Since we don't use MADLibrary any more, redefining these terms
 #define MADNewPtr(size, madlib) NewPtr(size)
 #define MADNewPtrClear(size, madlib) NewPtrClear(size)

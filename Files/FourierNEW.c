@@ -17,40 +17,40 @@ void InitFourier(void)
 	short	i;
 	Handle	rsrc;
 
-	x = (float*)			NewPtrClear( 512 * sizeof( float));
-	xInt = (Byte*)			NewPtrClear( 512 * sizeof( char));
-	logoScale = (short*)	NewPtrClear( 256 * sizeof( short));
+	x = (float*)			NewPtrClear(512 * sizeof(float));
+	xInt = (Byte*)			NewPtrClear(512 * sizeof(char));
+	logoScale = (short*)	NewPtrClear(256 * sizeof(short));
 	
-	rsrc = GetResource( 'LogC', 128);
-	DetachResource( rsrc);
+	rsrc = GetResource('LogC', 128);
+	DetachResource(rsrc);
 	
-	HLock( rsrc);
-	BlockMoveData( *rsrc, logoScale, 256 * sizeof( short));
-	HUnlock( rsrc);
-	DisposeHandle( rsrc);
+	HLock(rsrc);
+	BlockMoveData(*rsrc, logoScale, 256 * sizeof(short));
+	HUnlock(rsrc);
+	DisposeHandle(rsrc);
 	
 /*	for (i = 0; i < 256; i++)
 	{
 		double t = i;
 		
-		logoScale[ 255 - i] = 255 - (255. * ( log10( 1. + ( t * 22254.) / 255.)))/4.34740808371;
+		logoScale[ 255 - i] = 255 - (255. * (log10(1. + (t * 22254.) / 255.)))/4.34740808371;
 	}*/
 }
 
-long LogChangePos( long x)
+long LogChangePos(long x)
 {
 	return logoScale[ x];
 }
 
 void CloseFourier(void)
 {
-	if (x != NULL) DisposePtr( (Ptr) x);					x = NULL;
-	if (xInt != NULL) DisposePtr( (Ptr) xInt);				xInt = NULL;
-	if (logoScale != NULL) DisposePtr( (Ptr) logoScale);	logoScale = NULL;
+	if (x != NULL) DisposePtr((Ptr) x);					x = NULL;
+	if (xInt != NULL) DisposePtr((Ptr) xInt);				xInt = NULL;
+	if (logoScale != NULL) DisposePtr((Ptr) logoScale);	logoScale = NULL;
 }
 
-#define SWAP( a, b) tempr = (a); (a) = (b);  (b) = tempr
-void four1( float *data, unsigned long nn, int isign)
+#define SWAP(a, b) tempr = (a); (a) = (b);  (b) = tempr
+void four1(float *data, unsigned long nn, int isign)
 {
 	unsigned long	n, mmax, m, j, istep, i;
 	float			wtemp, wr, wpr, wpi, wi, theta;
@@ -62,8 +62,8 @@ void four1( float *data, unsigned long nn, int isign)
 	{
 		if (j > i)
 		{
-			SWAP( data[ j], data[ i]);
-			SWAP( data[ j+1], data[ i+1]);	
+			SWAP(data[ j], data[ i]);
+			SWAP(data[ j+1], data[ i+1]);	
 		}
 		
 		m = n >> 1;
@@ -80,10 +80,10 @@ void four1( float *data, unsigned long nn, int isign)
 	{
 		istep = mmax << 1;
 		theta = isign * (PI2 / mmax);
-		wtemp = sin( 0.5 * theta);
+		wtemp = sin(0.5 * theta);
 		wpr = -2.0*wtemp*wtemp;
 		
-		wpi = sin( theta);
+		wpi = sin(theta);
 		wr = 1.0;
 		wi = 0.0;
 		
@@ -107,7 +107,7 @@ void four1( float *data, unsigned long nn, int isign)
 	}
 }
 
-void realft( float *data, unsigned long n, int isign)
+void realft(float *data, unsigned long n, int isign)
 {
 	unsigned long	i, i1, i2, i3, i4, np3;
 	float			c1 = 0.5, c2, h1r, h1i, h2r, h2i;
@@ -118,7 +118,7 @@ void realft( float *data, unsigned long n, int isign)
 	if (isign == 1)
 	{
 		c2 = -0.5;
-		four1( data, n>>1, 1);
+		four1(data, n>>1, 1);
 	}
 	else
 	{
@@ -126,9 +126,9 @@ void realft( float *data, unsigned long n, int isign)
 		theta = -theta;
 	}
 	
-	wtemp	= sin( 0.5*theta);
+	wtemp	= sin(0.5*theta);
 	wpr		= -2.0*wtemp*wtemp;
-	wpi		= sin( theta);
+	wpi		= sin(theta);
 	wr		= 1.0 + wpr;
 	wi 		= wpi;
 	np3		= n + 3;
@@ -160,17 +160,17 @@ void realft( float *data, unsigned long n, int isign)
 	{
 		data[ 1]	= c1*((h1r = data[1]) + data[2]);
 		data[ 2]	= c1*(h1r - data[ 2]);
-		four1( data, n>>1, -1);
+		four1(data, n>>1, -1);
 	}
 }
 
-Ptr MakeCalculusSpectrum( Ptr srcPtr, Boolean logScale)
+Ptr MakeCalculusSpectrum(Ptr srcPtr, Boolean logScale)
 {
 	short				i, xx, lastLog, temp;
 	
 	for(i=0; i<256; i++) x[ i + 1] = *((Byte*)srcPtr++);
 	
-	realft( x, 256, 1);
+	realft(x, 256, 1);
 	
 	for(i= 1; i<=256; i++)
 	{

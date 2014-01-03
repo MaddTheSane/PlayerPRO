@@ -29,13 +29,13 @@
 
 void parse_slidevol(Channel *ch, Byte Arg)
 {
-	if ( HI( Arg) ) ch->volumerate = HI( Arg);
-	else ch->volumerate = -LOW( Arg);
+	if (HI(Arg) ) ch->volumerate = HI(Arg);
+	else ch->volumerate = -LOW(Arg);
 }
 
-void CloseEffect( Channel *ch, short notUsed, MADDriverRec *intDriver)
+void CloseEffect(Channel *ch, short notUsed, MADDriverRec *intDriver)
 {
-	switch( ch->cmd)
+	switch(ch->cmd)
 	{
 		case arpeggioE:
 			if (ch->arpUse)
@@ -70,26 +70,26 @@ void CloseEffect( Channel *ch, short notUsed, MADDriverRec *intDriver)
 			
 		case portaslideE:
 			ch->cmd = portamentoE;
-			CloseEffect( ch, 0, intDriver);
+			CloseEffect(ch, 0, intDriver);
 			
 			ch->cmd = slidevolE;
-			CloseEffect( ch, 0, intDriver);
+			CloseEffect(ch, 0, intDriver);
 			
 			ch->cmd = portaslideE;
 			break;
 			
 		case vibratoslideE:
 			ch->cmd = vibratoE;
-			CloseEffect( ch, 0, intDriver);
+			CloseEffect(ch, 0, intDriver);
 			
 			ch->cmd = slidevolE;
-			CloseEffect( ch, 0, intDriver);
+			CloseEffect(ch, 0, intDriver);
 			
 			ch->cmd = vibratoslideE;
 			break;
 			
 		case extendedE:
-			switch( HI( ch->arg))
+			switch(HI(ch->arg))
 		{
 			case 6:
 				
@@ -106,11 +106,11 @@ void CloseEffect( Channel *ch, short notUsed, MADDriverRec *intDriver)
 	ch->cmd = 0;
 }
 
-void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
+void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 {
 	long offset = 0;
 	
-	switch( ch->cmd)
+	switch(ch->cmd)
 	{
 		case arpeggioE:						// OK
 			if (ch->arg != 0 && ch->arpUse == true)
@@ -135,14 +135,14 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 						intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
 					}
 					
-					intDriver->PartitionReader = HI( ch->arg) * 10 + LOW( ch->arg);
+					intDriver->PartitionReader = HI(ch->arg) * 10 + LOW(ch->arg);
 					
 					if (intDriver->PL >= intDriver->curMusic->header->numPointers)
 					{
 						intDriver->PL = 0;
 						intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
 						
-						MADCleanDriver( intDriver);
+						MADCleanDriver(intDriver);
 						if (!intDriver->DriverSettings.repeatMusic) intDriver->Reading = false;
 						
 						intDriver->musicEnd = true;
@@ -179,7 +179,7 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 						intDriver->PL = 0;
 						intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
 						
-						MADCleanDriver( intDriver);
+						MADCleanDriver(intDriver);
 						if (!intDriver->DriverSettings.repeatMusic) intDriver->Reading = false;
 						
 						intDriver->musicEnd = true;
@@ -225,7 +225,7 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 		{
 			Byte q = (ch->viboffset>>2)&0x1f;
 			
-			switch( ch->vibtype)
+			switch(ch->vibtype)
 			{
 				case 0:
 					offset = intDriver->vibrato_table[ q];
@@ -261,7 +261,7 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 			break;
 			
 		case portamentoE:
-			//	if (ch->period == 0) MyDebugStr( __LINE__, __FILE__, "Goal");
+			//	if (ch->period == 0) MyDebugStr(__LINE__, __FILE__, "Goal");
 			if (ch->period != ch->pitchgoal)
 			{
 				if (ch->period < ch->pitchgoal)
@@ -289,41 +289,41 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 			
 		case portaslideE:
 			ch->cmd = portamentoE;
-			DoEffect( ch, call, intDriver);
+			DoEffect(ch, call, intDriver);
 			
 			ch->cmd = slidevolE;
-			DoEffect( ch, call, intDriver);
+			DoEffect(ch, call, intDriver);
 			
 			ch->cmd = portaslideE;
 			break;
 			
 		case vibratoslideE:
 			ch->cmd = vibratoE;
-			DoEffect( ch, call, intDriver);
+			DoEffect(ch, call, intDriver);
 			
 			ch->cmd = slidevolE;
-			DoEffect( ch, call, intDriver);
+			DoEffect(ch, call, intDriver);
 			
 			ch->cmd = vibratoslideE;
 			break;
 			
 		case extendedE:
-			switch( HI( ch->arg))
+			switch(HI(ch->arg))
 		{
 			case 12:
-				if (call >= LOW( ch->arg)) ch->vol = 0;
+				if (call >= LOW(ch->arg)) ch->vol = 0;
 				break;
 				
 			case 9:
-				if(LOW( ch->arg))
+				if(LOW(ch->arg))
 				{
 					if (ch->trig == 0)
 					{
 						ch->curPtr	= ch->begPtr;
-						StartPanning( ch);
-						StartEnvelope( ch);
+						StartPanning(ch);
+						StartEnvelope(ch);
 						
-						ch->trig	= LOW( ch->arg);
+						ch->trig	= LOW(ch->arg);
 					}
 					ch->trig--;
 				}
@@ -332,14 +332,14 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 			case 6:
 				if (call == intDriver->speed - 1)
 				{
-					if (LOW( ch->arg) == 0)		// Set Pattern loop
+					if (LOW(ch->arg) == 0)		// Set Pattern loop
 					{
 						ch->PatternLoopE6 = intDriver->PartitionReader;
 						ch->PatternLoopE6ID = intDriver->PL;
 					}
 					else
 					{
-						if (ch->PatternLoopE6Count == 0) ch->PatternLoopE6Count = LOW( ch->arg);
+						if (ch->PatternLoopE6Count == 0) ch->PatternLoopE6Count = LOW(ch->arg);
 						else ch->PatternLoopE6Count--;
 						
 						if (ch->PatternLoopE6Count > 0)
@@ -368,55 +368,55 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 	 }*/
 }
 
-void SetUpCmdEffect( Channel *ch, MADDriverRec *intDriver)
+void SetUpCmdEffect(Channel *ch, MADDriverRec *intDriver)
 {
 	short	vol = ch->volcmd;
 	short	volLO = vol & 0xf;
 	short	cmdCopy = ch->cmd;
 	short	argCopy = ch->arg;
 	
-	switch( vol >> 4)
+	switch(vol >> 4)
 	{
 		case 0x8:
 			ch->cmd		= extendedE;
 			ch->arg		= 0xb0|volLO;
 			
-			SetUpEffect( ch, intDriver);
+			SetUpEffect(ch, intDriver);
 			break;
 			
 		case 0x9:
 			ch->cmd		= extendedE;
 			ch->arg		= 0xa0|volLO;
 			
-			SetUpEffect( ch, intDriver);
+			SetUpEffect(ch, intDriver);
 			break;
 			
 		case 0xa:                       // set vibrato speed
 			ch->cmd		= vibratoE;
 			ch->arg		= vol<<4;
 			
-			SetUpEffect( ch, intDriver);
+			SetUpEffect(ch, intDriver);
 			break;
 			
 		case 0xb:                       // vibrato
 			ch->cmd		= vibratoE;
 			ch->arg		= volLO;
 			
-			SetUpEffect( ch, intDriver);
+			SetUpEffect(ch, intDriver);
 			break;
 			
 		case 0xc:                       // panning
 			ch->cmd		= panningE;
 			ch->arg		= vol<<4;
 			
-			SetUpEffect( ch, intDriver);
+			SetUpEffect(ch, intDriver);
 			break;
 			
 		case 0xf:                       // tone porta
 			ch->cmd		= portamentoE;
 			ch->arg		= vol<<4;
 			
-			SetUpEffect( ch, intDriver);
+			SetUpEffect(ch, intDriver);
 			break;
 	}
 	
@@ -424,14 +424,14 @@ void SetUpCmdEffect( Channel *ch, MADDriverRec *intDriver)
 	ch->arg = argCopy;
 }
 
-void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
+void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 {
 	short 	temp, note;
 	long	aL;
 	
 	if (ch->arg == 0)
 	{
-		switch( ch->cmd)
+		switch(ch->cmd)
 		{
 			case arpeggioE:
 			case nothingE:
@@ -451,7 +451,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 	}
 	else ch->oldArg[ ch->cmd] = ch->arg;
 	
-	switch( ch->cmd)
+	switch(ch->cmd)
 	{
 		case upslideE:							// OK
 			if (ch->arg) ch->slide = ch->arg;
@@ -462,10 +462,10 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			break;
 			
 		case vibratoE:							// OK
-			if (HI( ch->arg)) ch->vibrate = (ch->arg & 0xf0)>>2;	//HI( ch->arg);
+			if (HI(ch->arg)) ch->vibrate = (ch->arg & 0xf0)>>2;	//HI(ch->arg);
 			else ch->vibrate = ch->oldVibrate;
 			
-			if (LOW( ch->arg)) ch->vibdepth = LOW( ch->arg);
+			if (LOW(ch->arg)) ch->vibdepth = LOW(ch->arg);
 			else ch->vibdepth = ch->oldVibdepth;
 			
 			ch->oldVibdepth = ch->vibdepth;
@@ -485,11 +485,11 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 				
 				if (inNote != 0xFF)
 				{
-					note = inNote + HI( ch->arg);
-					if (note < NUMBER_NOTES) ch->arp[ 1] = GetOldPeriod( note, ch->fineTune, intDriver);
+					note = inNote + HI(ch->arg);
+					if (note < NUMBER_NOTES) ch->arp[ 1] = GetOldPeriod(note, ch->fineTune, intDriver);
 					
-					note = inNote + LOW( ch->arg);
-					if (note < NUMBER_NOTES) ch->arp[ 2] = GetOldPeriod( note, ch->fineTune, intDriver);
+					note = inNote + LOW(ch->arg);
+					if (note < NUMBER_NOTES) ch->arp[ 2] = GetOldPeriod(note, ch->fineTune, intDriver);
 					
 					ch->arpindex = 0;
 					ch->arp[ 0] = ch->period;
@@ -501,23 +501,23 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			break;
 			
 		case slidevolE:						// OK
-			parse_slidevol( ch, ch->arg);
+			parse_slidevol(ch, ch->arg);
 			break;
 			
 		case extendedE:
-			switch( HI( ch->arg))
+			switch(HI(ch->arg))
         {
 			case 0:		// Turn On/Off filter
 				break;
 				
 			case 1:		// Fineslide up
-				temp = LOW( ch->arg);
+				temp = LOW(ch->arg);
 				ch->period -= temp*4;
 				//	ch->slide = temp;
 				break;
 				
     		case 2:		// Fineslide down
-    			temp = LOW( ch->arg);
+    			temp = LOW(ch->arg);
 				ch->period += temp*4;
 				//	ch->slide = temp;
 				break;
@@ -527,7 +527,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 				break;
 				
 			case 4:		// Set vibrato waveform
-				switch( LOW( ch->arg))
+				switch(LOW(ch->arg))
 			{
 				case 0:
 				case 4:
@@ -552,8 +552,8 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 				break;
 				
 			case 5:		// Set finetune value
-				//	ch->fineTune	= finetune[ LOW( ch->arg)];
-				//	ch->period	= GetOldPeriod( ch->Amiga, ch->fineTune);
+				//	ch->fineTune	= finetune[ LOW(ch->arg)];
+				//	ch->period	= GetOldPeriod(ch->Amiga, ch->fineTune);
 				break;
 				
 			case 6:		// Loop pattern
@@ -563,12 +563,12 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 				break;
 				
 			case 8:		// Set Panning
-				ch->pann = LOW( ch->arg);
+				ch->pann = LOW(ch->arg);
 				
 				if(ch->pann<=8) ch->pann<<=4;
 				else ch->pann*=17;
 				
-				ch->pann = ( (long) ch->pann * (long)  MAX_PANNING) / (long) 0xFF;
+				ch->pann = ((long) ch->pann * (long)  MAX_PANNING) / (long) 0xFF;
 				
 				if (ch->pann < 0) ch->pann = 0;
 				else if (ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
@@ -577,26 +577,26 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 				break;
 				
 			case 9:
-				if(LOW( ch->arg))
+				if(LOW(ch->arg))
 				{
 					if (ch->trig == 0)
 					{
 						//ch->kick	= 1;
-						ch->trig	= LOW( ch->arg);
+						ch->trig	= LOW(ch->arg);
 					}
 					ch->trig--;
 				}
 				break;
 				
 			case 10:	// Fine volume slide up
-				ch->vol += LOW( ch->arg);
+				ch->vol += LOW(ch->arg);
 				
 				if (ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
 				else if (ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
 				break;
 				
 			case 11:	// Fine volume slide down
-				ch->vol -= LOW( ch->arg);
+				ch->vol -= LOW(ch->arg);
 				
 				if (ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
 				else if (ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
@@ -609,7 +609,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 				break;
 				
 			case 14:	// Delay pattern
-				intDriver->PatDelay = LOW( ch->arg) + 1;
+				intDriver->PatDelay = LOW(ch->arg) + 1;
 				break;
 				
 			case 15:	// Invert loop
@@ -628,7 +628,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			
 			if (inNote != 0xFF)
 			{
-				ch->pitchgoal = GetOldPeriod( inNote, ch->fineTune, intDriver);
+				ch->pitchgoal = GetOldPeriod(inNote, ch->fineTune, intDriver);
 			}
 			else if (ch->pitchgoal == 0) ch->pitchgoal = ch->period;
 		}
@@ -642,7 +642,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			
 			if (inNote != 0xFF)
 			{
-				ch->pitchgoal = GetOldPeriod( inNote, ch->fineTune, intDriver);
+				ch->pitchgoal = GetOldPeriod(inNote, ch->fineTune, intDriver);
 			}
 			else if (ch->pitchgoal == 0) ch->pitchgoal = ch->period;
 			
@@ -697,7 +697,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 		case NOffSetE:
 			ch->curPtr = ch->begPtr;
 			
-			aL = ( (unsigned long) ch->arg * (unsigned long) ( ch->sizePtr)) / 255UL;
+			aL = ((unsigned long) ch->arg * (unsigned long) (ch->sizePtr)) / 255UL;
 			
 			if (ch->amp == 16) aL /= 2;
 			if (ch->stereo == true) aL /= 2;
@@ -732,7 +732,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 		case panningE:
 			ch->pann = ch->arg;
 			
-			ch->pann = ( (long) ch->pann * (long)  MAX_PANNING) / (long) 0xFF;
+			ch->pann = ((long) ch->pann * (long)  MAX_PANNING) / (long) 0xFF;
 			
 			if (ch->pann < 0) ch->pann = 0;
 			else if (ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
@@ -747,12 +747,12 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 	}
 }
 
-void DoVolCmd( Channel *ch, short call, MADDriverRec *intDriver)
+void DoVolCmd(Channel *ch, short call, MADDriverRec *intDriver)
 {
 	short	vol = ch->volcmd;
 	short	volLO = vol & 0xf;
 	
-	switch( vol >> 4)
+	switch(vol >> 4)
 	{
 		case 0x6:					// volslide down
 			ch->vol -= volLO;

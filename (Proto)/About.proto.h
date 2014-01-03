@@ -3,7 +3,7 @@
 void MegaPurge(void);
 void DoInitScrollText(void);
 void MyScrollRect(Rect *);
-void DoScrollText( DialogPtr);
+void DoScrollText(DialogPtr);
 void CloseScrollText(void);
 void ShowPerformance(void);
 void DoAbout(void);

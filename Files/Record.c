@@ -7,20 +7,20 @@
 #include "PPPlug.h"
 #include <QuickTime/QuickTime.h>
 
-/*void 	SaveMODAPPL( short APPLType, short fRefNum);
+/*void 	SaveMODAPPL(short APPLType, short fRefNum);
 //pascal Boolean MyFilterPro();
-void 	TurnRadio( short	item, DialogPtr	dlog, Boolean alors);
-void 	ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
+void 	TurnRadio(short	item, DialogPtr	dlog, Boolean alors);
+void 	ConvertInstrumentIn(register	Byte	*tempPtr,	register long sSize);
 //Handle 	ConvertWAV(FSSpec*, long*, long*, short*, short*);
-void 	TurnRadio( short	item, DialogPtr	dlog, Boolean alors);
-void 	ConvertInstrumentIn16( register	short	*tempPtr,	register long sSize);
-void 	ExportFile( OSType theType, FSSpec *newFile);
-OSErr	ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 name);
-OSErr	OpenInstrumentsList( FSSpec *file);
-void	ConvertInstrumentMode( sData	*curData, short menuItem);
-void ConvertInstrument( register	Byte	*tempPtr,	register long sSize);*/
+void 	TurnRadio(short	item, DialogPtr	dlog, Boolean alors);
+void 	ConvertInstrumentIn16(register	short	*tempPtr,	register long sSize);
+void 	ExportFile(OSType theType, FSSpec *newFile);
+OSErr	ActiveSoundInput(Boolean RecordingMode, Handle *RecordedSound, Str255 name);
+OSErr	OpenInstrumentsList(FSSpec *file);
+void	ConvertInstrumentMode(sData	*curData, short menuItem);
+void ConvertInstrument(register	Byte	*tempPtr,	register long sSize);*/
 
-void ConvertInstrumentOut16( register	short	*tempPtr,	register long sSize);
+void ConvertInstrumentOut16(register	short	*tempPtr,	register long sSize);
 
 extern	Boolean			PatchSave;
 extern	Boolean			PianoRecording, PianoRecordingShift, OscilloMicrophone, SpectrumMicrophone;
@@ -33,7 +33,7 @@ void ActiveControl(short id, DialogPtr aDia)
 	Handle	itemHandle;
 	
 	GetDialogItem (aDia, id, &itemType, &itemHandle, &itemRect);
-	HiliteControl( (ControlHandle) itemHandle, 0);
+	HiliteControl((ControlHandle) itemHandle, 0);
 }
 
 void InactiveControl(short id, DialogPtr aDia)
@@ -84,12 +84,12 @@ OSErr NSoundQualityExportSnd(short ins, short samp, OSType *fileType, Str255 sNa
 	GetSampInstPPIN(&sampNo, &instNo);
 	if (samp < 0) {
 		if (instNo <= 0) {
-			Erreur( 86, 86);
+			Erreur(86, 86);
 			return -1;
 		}
 	} else {
 		if (sampNo <= 0) {
-			Erreur( 86, 86);
+			Erreur(86, 86);
 			return -1;
 		}
 	}
@@ -105,8 +105,8 @@ OSErr NSoundQualityExportSnd(short ins, short samp, OSType *fileType, Str255 sNa
 	ShowWindow(GetDialogWindow(aDialog));
 	
 	if (samp < 0) {
-		strcpy( cstr, curMusic->fid[ ins].name);
-		SetDText( aDialog, 4, "\pInstrument");
+		strcpy(cstr, curMusic->fid[ ins].name);
+		SetDText(aDialog, 4, "\pInstrument");
 	} else {
 		curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
 		strcpy(cstr, curData->name);
@@ -120,14 +120,14 @@ OSErr NSoundQualityExportSnd(short ins, short samp, OSType *fileType, Str255 sNa
 	SetDText(aDialog, 9, (unsigned char*) cstr);
 	SelectDialogItemText(aDialog, 9, 0, 2000);
 	if (samp >= 0) {
-		NumToString( curData->size/1024L, aStr);
+		NumToString(curData->size/1024L, aStr);
 	} else {
 		long tO = 0;
 		
 		for (i = 0; i < curMusic->fid[ ins].numSamples ; i++) {
 			tO += curMusic->sample[ curMusic->fid[ ins].firstSample + i]->size;
 		}
-		NumToString( tO/1024L, aStr);
+		NumToString(tO/1024L, aStr);
 	}
 	pStrcat(aStr, "\p Kb");
 	SetDText(aDialog, 11, aStr);
@@ -136,38 +136,38 @@ OSErr NSoundQualityExportSnd(short ins, short samp, OSType *fileType, Str255 sNa
 		*fileType = thePrefs.SoundTypeIns;
 	else
 		*fileType = thePrefs.SoundTypeSamp;
-	//	OSType2Str( *fileType, aStr);
+	//	OSType2Str(*fileType, aStr);
 	
-	if (PPINGetPlugName( *fileType, aStr) == noErr)
+	if (PPINGetPlugName(*fileType, aStr) == noErr)
 		SetDText(aDialog, 6, aStr);
 	else {
-		if (PPINGetPlugByID( fileType, 0, samp) == noErr) {
-			PPINGetPlugName( *fileType, aStr);
-			SetDText( aDialog, 6, aStr);
+		if (PPINGetPlugByID(fileType, 0, samp) == noErr) {
+			PPINGetPlugName(*fileType, aStr);
+			SetDText(aDialog, 6, aStr);
 		}
 		else
-			SetDText( aDialog, 6, "\pNone");
+			SetDText(aDialog, 6, "\pNone");
 	}
 	
 REGODIA:
 	
 	do {
-		//ModalDialog( MyDlgFilterDesc, &itemHit);
-		MyModalDialog( aDialog, &itemHit);
+		//ModalDialog(MyDlgFilterDesc, &itemHit);
+		MyModalDialog(aDialog, &itemHit);
 		
-		switch( itemHit)
+		switch(itemHit)
 		{
 			case 7:
 			{
 				OSType	tempOS;
 				
-				GetDialogItem( aDialog, 7, &itemType, &itemHandle, &itemRect);
-				tempOS = PressPPINMenu( &itemRect, *fileType, samp, aStr);
+				GetDialogItem(aDialog, 7, &itemType, &itemHandle, &itemRect);
+				tempOS = PressPPINMenu(&itemRect, *fileType, samp, aStr);
 				if (tempOS != '\?\?\?\?')
 				{
 					*fileType = tempOS;
-					//	OSType2Str( *fileType, aStr);
-					SetDText( aDialog, 6, aStr);
+					//	OSType2Str(*fileType, aStr);
+					SetDText(aDialog, 6, aStr);
 				}
 			}
 				break;
@@ -176,10 +176,10 @@ REGODIA:
 	} while (itemHit != 1 && itemHit != 2);
 	
 	if (itemHit == 1) {
-		GetDText( aDialog, 9, sName);
+		GetDText(aDialog, 9, sName);
 		if (sName[ 0] == 0) {
-			SelectDialogItemText( aDialog, 9, 0, 2000);
-			Erreur( 65, 65);
+			SelectDialogItemText(aDialog, 9, 0, 2000);
+			Erreur(65, 65);
 			goto REGODIA;
 		}
 		
@@ -195,26 +195,26 @@ REGODIA:
 					i = 0;
 				}
 			}
-			OSType2Str( *fileType, cStr);
+			OSType2Str(*fileType, cStr);
 			
-			pStrcat( sName, "\p.");
-			pStrcat( sName, cStr);
+			pStrcat(sName, "\p.");
+			pStrcat(sName, cStr);
 		}
 		
-		if (PPINAvailablePlug( *fileType, NULL) != noErr)
+		if (PPINAvailablePlug(*fileType, NULL) != noErr)
 		{
 			Erreur(86, 86);
 			goto REGODIA;
 		}
 		
 #if 0
-		sndHandle = MyNewHandle( curData->size);
+		sndHandle = MyNewHandle(curData->size);
 		if (sndHandle == NULL)
 		{
-			Erreur( 63, -3);
+			Erreur(63, -3);
 			goto ENDDialog;
 		}
-		HLock( sndHandle);
+		HLock(sndHandle);
 		
 		if (curData->amp == 8)
 		{
@@ -231,15 +231,15 @@ REGODIA:
 			}
 		}
 		
-		if (curData->amp == 16) ConvertInstrumentIn16( (short*) *sndHandle, (long) curData->size);
+		if (curData->amp == 16) ConvertInstrumentIn16((short*) *sndHandle, (long) curData->size);
 		
-		HUnlock( sndHandle);
+		HUnlock(sndHandle);
 #endif
 	}
 	
 ENDDialog:
 	
-	DisposeDialog( aDialog);
+	DisposeDialog(aDialog);
 	
 	UpdateALLWindow();
 	
@@ -267,7 +267,7 @@ void Convert8to16(Ptr srcPtr, Ptr destPtr, long size)
 	}
 }
 
-void Convert16to8( Ptr srcPtr, Ptr destPtr, long size)
+void Convert16to8(Ptr srcPtr, Ptr destPtr, long size)
 {
 	long 	i;
 	size /= 2;
@@ -278,7 +278,7 @@ void Convert16to8( Ptr srcPtr, Ptr destPtr, long size)
 	}
 }
 
-void ConvertInstrumentMode( sData	*curData, short menuItem)
+void ConvertInstrumentMode(sData	*curData, short menuItem)
 {
 	long	i;
 	Ptr		aNewPtr;
@@ -286,7 +286,7 @@ void ConvertInstrumentMode( sData	*curData, short menuItem)
 	if (curData->stereo) {
 		curData->stereo = false;
 		
-		aNewPtr = MyNewPtr( curData->size/2L);
+		aNewPtr = MyNewPtr(curData->size/2L);
 		
 		curData->loopBeg /=2;
 		curData->loopSize /=2;
@@ -369,12 +369,12 @@ void ConvertInstrumentMode( sData	*curData, short menuItem)
 		
 		curData->size /= 2;
 		if(curData->data != NULL)
-			MyDisposePtr( &curData->data);
+			MyDisposePtr(&curData->data);
 		curData->data = aNewPtr;
 	} else {
 		aNewPtr = MyNewPtr(curData->size*2L);
 		if (aNewPtr == NULL)
-			MyDebugStr( __LINE__, __FILE__, "Need more memory");
+			MyDebugStr(__LINE__, __FILE__, "Need more memory");
 		else {
 			curData->stereo = true;
 			
@@ -383,7 +383,7 @@ void ConvertInstrumentMode( sData	*curData, short menuItem)
 			
 			if (curData->amp == 8) {
 				for (i = 0 ; i < curData->size; i++) {
-					if (1 + i * 2 >= curData->size*2L) MyDebugStr( __LINE__, __FILE__, "");
+					if (1 + i * 2 >= curData->size*2L) MyDebugStr(__LINE__, __FILE__, "");
 					
 					aNewPtr[ i * 2] = aNewPtr[ 1 + i * 2] = curData->data[ i];
 				}
@@ -397,7 +397,7 @@ void ConvertInstrumentMode( sData	*curData, short menuItem)
 			
 			curData->size *= 2;
 			if (curData->data != NULL)
-				MyDisposePtr( &curData->data);
+				MyDisposePtr(&curData->data);
 			curData->data = aNewPtr;
 		}
 	}
@@ -409,7 +409,7 @@ void ConvertInstrumentAmpli(sData *curData, short newAmpli)
 	Ptr		aNewPtr;
 	
 	if (curData->amp == 8) {
-		switch( newAmpli)
+		switch(newAmpli)
 		{
 			case 16:			
 				aNewPtr = MyNewPtr(curData->size*2L);
@@ -421,7 +421,7 @@ void ConvertInstrumentAmpli(sData *curData, short newAmpli)
 					curData->size *= 2;
 					
 					if(curData->data != NULL)
-						MyDisposePtr( &curData->data);
+						MyDisposePtr(&curData->data);
 					curData->data = aNewPtr;
 				}
 				else
@@ -432,11 +432,11 @@ void ConvertInstrumentAmpli(sData *curData, short newAmpli)
 				break;
 				
 			default:
-				MyDebugStr( __LINE__, __FILE__, "Unknown amplitude");
+				MyDebugStr(__LINE__, __FILE__, "Unknown amplitude");
 				break;
 		}
 	} else if (curData->amp == 16) {
-		switch( newAmpli)
+		switch(newAmpli)
 		{
 			case 8:
 				Convert16to8(curData->data, curData->data, curData->size);
@@ -452,19 +452,19 @@ void ConvertInstrumentAmpli(sData *curData, short newAmpli)
 				break;
 				
 			default:
-				MyDebugStr( __LINE__, __FILE__, "Unknown amplitude");
+				MyDebugStr(__LINE__, __FILE__, "Unknown amplitude");
 				break;
 		}
 	}
 	
 	curData->amp = newAmpli;
 	
-	//ResetSelectionSample( whichInstru);
+	//ResetSelectionSample(whichInstru);
 }
 
 /*static inline void CopyInstruInFile(Ptr theSource, Ptr theDest, long	theSize)
 {
-	BlockMoveData( theSource, theDest, theSize);
+	BlockMoveData(theSource, theDest, theSize);
 }*/
 
 void SetUpPartition(short newVal)
@@ -483,9 +483,9 @@ void SetUpPartition(short newVal)
 	
 	/****** PARTITION ********/
 	for (i = 0; i< curMusic->header->numPat; i++) {
-		theNewPartition = (PatData*) NewPtrClear( sizeof( PatHeader) + newVal * curMusic->partition[ i]->header.size * sizeof( Cmd));
+		theNewPartition = (PatData*) NewPtrClear(sizeof(PatHeader) + newVal * curMusic->partition[ i]->header.size * sizeof(Cmd));
 		if (theNewPartition == NULL) {
-			MyDebugStr( __LINE__, __FILE__, "Memory Error");
+			MyDebugStr(__LINE__, __FILE__, "Memory Error");
 			return;
 		}
 		theNewPartition->header = curMusic->partition[ i]->header;
@@ -493,23 +493,23 @@ void SetUpPartition(short newVal)
 		for (x = 0; x < curMusic->partition[ i]->header.size; x++) {
 			for (z = 0; z < curMusic->header->numChn; z++) {
 				if (z < newVal) {
-					aCmd =  &(theNewPartition->Cmds[ ( curMusic->partition[ i]->header.size * z) + x]);
-					aCmdSource = GetMADCommand( x, z, curMusic->partition[ i]);
+					aCmd =  &(theNewPartition->Cmds[ (curMusic->partition[ i]->header.size * z) + x]);
+					aCmdSource = GetMADCommand(x, z, curMusic->partition[ i]);
 					
 					*aCmd = *aCmdSource;
 				}
 			}
 			
 			for (z = curMusic->header->numChn; z < newVal; z++) {
-				aCmd =  &(theNewPartition->Cmds[ ( curMusic->partition[ i]->header.size * z) + x]);
-				MADKillCmd( aCmd);
+				aCmd =  &(theNewPartition->Cmds[ (curMusic->partition[ i]->header.size * z) + x]);
+				MADKillCmd(aCmd);
 			}
 		}
-		MyDisposePtr( (Ptr*) &curMusic->partition[ i]);
+		MyDisposePtr((Ptr*) &curMusic->partition[ i]);
 		curMusic->partition[ i] = theNewPartition;
 	}
 	
-	if (MemError()) MyDebugStr( __LINE__, __FILE__, "Error in SetUp Partition...");
+	if (MemError()) MyDebugStr(__LINE__, __FILE__, "Error in SetUp Partition...");
 	
 	curMusic->header->numChn = newVal;
 	
@@ -525,7 +525,7 @@ static		short			Quality;
 static		short			Mode;
 static		Str255			instruNom;
 
-void GetInstruName( short theNo, Ptr theName)
+void GetInstruName(short theNo, Ptr theName)
 {
 	short	i;
 	
@@ -573,7 +573,7 @@ pascal Boolean MyFilterPro(DialogPtr theDialog, EventRecord *theEventI, short *i
 	Str255	theString;
 	
 	if (theEventI->what == 8) {
-		theDialog = GetDialogFromWindow( FrontWindow());
+		theDialog = GetDialogFromWindow(FrontWindow());
 		
 		if (!Append) {
 			Append = true;
@@ -587,11 +587,11 @@ pascal Boolean MyFilterPro(DialogPtr theDialog, EventRecord *theEventI, short *i
 			pStrcpy(theString, "\pInstrument ");
 			pStrcat(theString, instruNom);
 			SetDText(theDialog, base + 1, theString);
-			SelectDialogItemText( theDialog, base + 1, 0, 32767);
+			SelectDialogItemText(theDialog, base + 1, 0, 32767);
 			GetDText(theDialog, base + 1, (StringPtr) &instruNom);
 		}
 	} else if (theEventI->what == keyDown) {
-		theDialog = GetDialogFromWindow( FrontWindow());
+		theDialog = GetDialogFromWindow(FrontWindow());
 		GetDText(theDialog, base + 1, (StringPtr) &instruNom);
 	}
 	
@@ -641,7 +641,7 @@ Handle DoExp1to6(Handle sound, unsigned long numSampleFrames)
 	
 	outBuffer = MyNewHandle(numSampleFrames * 6);
 	if (outBuffer == nil)
-		Erreur( 2, MemError());
+		Erreur(2, MemError());
 	
 	HLock(sound);
 	HLock(outBuffer);
@@ -658,7 +658,7 @@ Handle DoExp1to6(Handle sound, unsigned long numSampleFrames)
 	return sound;
 }
 
-/*Handle NAIFFtoSnd( Handle sound, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate)
+/*Handle NAIFFtoSnd(Handle sound, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate)
 {
 long				i, SizeH, numSampleFrames, StartId, numChannels;
 ContainerChunk		*CC;
@@ -681,7 +681,7 @@ ID					compType;
 	if (CC->formType == AIFCID) Compression = true;
 	else if (CC->formType == AIFFID) Compression = false;
 
-	for (i = sizeof( ContainerChunk); i < CC->ckSize;)
+	for (i = sizeof(ContainerChunk); i < CC->ckSize;)
 	{
 		CH = (ChunkHeader*) (*sound + i);
 		if (CH->ckID == CommonID)
@@ -735,10 +735,10 @@ ID					compType;
 
 	StartId += 16;  		// Size of the SoundDataChunk beginning
 	
-	SizeH = GetHandleSize( sound);
+	SizeH = GetHandleSize(sound);
 	if (numChannels == 1)
 	{
-		BlockMoveData( *sound + StartId, *sound, SizeH - StartId);
+		BlockMoveData(*sound + StartId, *sound, SizeH - StartId);
 	}
 	else
 	{
@@ -759,21 +759,21 @@ ID					compType;
 	}
 	if (Compression)
 	{
-		switch( compType)
+		switch(compType)
 		{
 			case MACE3Type:
 				numSampleFrames *= 2;
-				sound = DoExp1to3( sound, numSampleFrames);
+				sound = DoExp1to3(sound, numSampleFrames);
 				numSampleFrames *= 3;
 			break;
 			
 			case MACE6Type:
-				sound = DoExp1to6( sound, numSampleFrames);
+				sound = DoExp1to6(sound, numSampleFrames);
 				numSampleFrames *= 6;
 			break;
 			
 			default:
-				Erreur( 7, (OSErr) compType);
+				Erreur(7, (OSErr) compType);
 			break;
 		}
 	}
@@ -785,12 +785,12 @@ ID					compType;
 		}
 	}
 	
-	HUnlock( sound);
-	SetHandleSize( sound, numSampleFrames);
+	HUnlock(sound);
+	SetHandleSize(sound, numSampleFrames);
 	
-	CompactMem( maxSize);
+	CompactMem(maxSize);
 	
-	return( sound);
+	return(sound);
 }
  */
 
@@ -809,7 +809,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 	Boolean			change = false;
 	Str255			aStr;
 	
-	if (!sound) MyDebugStr( __LINE__, __FILE__, "NSndToHandle");
+	if (!sound) MyDebugStr(__LINE__, __FILE__, "NSndToHandle");
 	
 	*loopStart = 0;
 	*loopEnd = 0;
@@ -838,7 +838,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 			break;
 			
 		default:					// jack says, what about 12? or 6?
-			MyDebugStr( __LINE__, __FILE__, " NSndToHandle... Burkk");
+			MyDebugStr(__LINE__, __FILE__, " NSndToHandle... Burkk");
 			break;
 	} 
 	
@@ -846,7 +846,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 	offset = 6 + 6*numSynths + 8*numCmds;
 	header = (SoundHeaderPtr) (*sound + offset);
 	
-	switch( header->encode)
+	switch(header->encode)
 	{
 		case cmpSH:
 			CmpHeader = (CmpSoundHeader*) header;
@@ -872,11 +872,11 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 				*loopStart *=2;
 				*loopEnd *=2;
 			}
-			HLock( sound);
+			HLock(sound);
 			memmove(*sound, CmpHeader->sampleArea, MusSize);
-			HUnlock( sound);
+			HUnlock(sound);
 			
-			switch( CompressID )
+			switch(CompressID )
 		{
 			case threeToOne:
 				MusSize *= 2;
@@ -928,7 +928,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 				*loopEnd *= 2;
 			}
 			
-			HLock( sound);
+			HLock(sound);
 			if (numChannels == 1) 
 				memmove(*sound, ExtHeader->sampleArea, MusSize);
 			else if (numChannels == 2) {
@@ -946,7 +946,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 					MusSize *= 2;
 				}
 			}
-			HUnlock( sound);
+			HUnlock(sound);
 			break;
 			
 		default:
@@ -1011,7 +1011,7 @@ RESTART:
 	
 	RecordCounter++;
 	NTStr(2, (short)RecordCounter, (Ptr)&theString);
-	MyC2PStr( (Ptr) theString);
+	MyC2PStr((Ptr) theString);
 	
 	pStrcpy(instruNom, "\pRecording ");
 	pStrcat(instruNom, theString);
@@ -1054,29 +1054,29 @@ RESTART:
 			//	curMusic->fid[ ins].numSamples++;
 			//	curMusic->header->numSamples++;
 			
-			MADCreateSample( curMusic, ins, samp);
+			MADCreateSample(curMusic, ins, samp);
 		}
 		
-		SetSampName( ins, samp, instruNom);
+		SetSampName(ins, samp, instruNom);
 		
-		tempPtr = MyNewPtr( inOutBytes);
+		tempPtr = MyNewPtr(inOutBytes);
 		if (tempPtr == NULL) {
-			Erreur( 63, -2);
-			HUnlock( newSound);
-			DisposeHandle( newSound);
+			Erreur(63, -2);
+			HUnlock(newSound);
+			DisposeHandle(newSound);
 		} else {
 			sData	*curData;
 			
-			BlockMoveData( *newSound, tempPtr, inOutBytes);
+			BlockMoveData(*newSound, tempPtr, inOutBytes);
 			// ICI: COLLER DANS LE FICHIER MOD !!!
 			
 			curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
 			
-			if (curData->data != NULL) MyDisposePtr( &curData->data);
+			if (curData->data != NULL) MyDisposePtr(&curData->data);
 			curData->data = tempPtr;
 			
-			HUnlock( newSound);
-			DisposeHandle( newSound);
+			HUnlock(newSound);
+			DisposeHandle(newSound);
 			
 			curData->size	 		= inOutBytes;
 			curData->loopBeg 		= lS;
@@ -1108,19 +1108,19 @@ RESTART:
 	
 	CloseSoundInput();
 	
-	SetPort( myPort);
+	SetPort(myPort);
 }
 
 void CopyResource(OSType type, short ID, short newID)
 {
 	Handle	hRsrc;
 	
-	hRsrc = GetResource( type, ID);			DetachResource( hRsrc);
-	AddResource( hRsrc, type, newID, "\p");	WriteResource( hRsrc);
-	DetachResource( hRsrc);					MyDisposHandle( & hRsrc);
+	hRsrc = GetResource(type, ID);			DetachResource(hRsrc);
+	AddResource(hRsrc, type, newID, "\p");	WriteResource(hRsrc);
+	DetachResource(hRsrc);					MyDisposHandle(& hRsrc);
 }
 
-void SaveMOD( Boolean	SaveAS, OSType theType)
+void SaveMOD(Boolean	SaveAS, OSType theType)
 {
 	OSErr			iErr;
 	short			fRefNum,i;
@@ -1130,11 +1130,11 @@ void SaveMOD( Boolean	SaveAS, OSType theType)
 	Str255			fileName, bStr, cStr;
 	FSSpec			spec;
 	
-	if (theType != 'MADK' && theType != 'MADC') if (CallPlug( 0)) return;
+	if (theType != 'MADK' && theType != 'MADC') if (CallPlug(0)) return;
 	
 	if (SaveAS == true || PatchSave == true)
 	{
-		pStrcpy( fileName, curMusic->musicFileName);
+		pStrcpy(fileName, curMusic->musicFileName);
 		
 		if (thePrefs.addExtension)
 		{
@@ -1147,42 +1147,42 @@ void SaveMOD( Boolean	SaveAS, OSType theType)
 				}
 			}
 			
-			OSType2Str( theType, cStr);
+			OSType2Str(theType, cStr);
 			
-			pStrcat( fileName, "\p.");
-			pStrcat( fileName, cStr);
+			pStrcat(fileName, "\p.");
+			pStrcat(fileName, cStr);
 		}
 		
-		pStrcpy( bStr, "\pSave as ");
+		pStrcpy(bStr, "\pSave as ");
 		
-		OSType2Str( theType, cStr);
+		OSType2Str(theType, cStr);
 		
-		pStrcat( bStr, "\p('");
-		pStrcat( bStr, cStr);
-		pStrcat( bStr, "\p') :");
+		pStrcat(bStr, "\p('");
+		pStrcat(bStr, cStr);
+		pStrcat(bStr, "\p') :");
 		
 		if (theType != 'MPG4')
 		{
-			if (DoCustomSave( bStr, fileName, theType, &spec)) return;
+			if (DoCustomSave(bStr, fileName, theType, &spec)) return;
 		}
 		else
 		{
-			pStrcpy( spec.name, fileName);
+			pStrcpy(spec.name, fileName);
 		}
 		
 		if (theType != 'AIFF' | theType != 'MPG4')
 			curMusic->hasChanged = false;
 		
-		ExportFile( theType, &spec);
+		ExportFile(theType, &spec);
 		
-		if (OpenableFile( theType, &spec))
+		if (OpenableFile(theType, &spec))
 		{
 			if (theType != 'sTAT' && theType != 'STCf')
 			{
-				AddMODList( true, spec.name, spec.vRefNum, spec.parID);
+				AddMODList(true, spec.name, spec.vRefNum, spec.parID);
 				
 			}
-			if (theType == 'MADK') ImportFile( spec.name, spec.vRefNum, spec.parID, 'MADK');
+			if (theType == 'MADK') ImportFile(spec.name, spec.vRefNum, spec.parID, 'MADK');
 		}
 	}
 	else
@@ -1191,13 +1191,13 @@ void SaveMOD( Boolean	SaveAS, OSType theType)
 		
 		fss.vRefNum = curvRefNum;
 		fss.parID 	= curparID;
-		pStrcpy( fss.name, curMusic->musicFileName);
+		pStrcpy(fss.name, curMusic->musicFileName);
 		
-		ExportFile( theType, &fss);
+		ExportFile(theType, &fss);
 		
-		FSpGetFInfo( &fss, &fndrInfo);
+		FSpGetFInfo(&fss, &fndrInfo);
 		fndrInfo.fdCreator = 'SNPL';	fndrInfo.fdType = theType;
-		FSpSetFInfo( &fss, &fndrInfo);
+		FSpSetFInfo(&fss, &fndrInfo);
 		
 		curMusic->hasChanged = false;
 	}
@@ -1211,41 +1211,41 @@ OSErr NOpenSampleInt(short ins, short samp, FSSpec sfFile)
 	OSErr				iErr;
 	FInfo				fndrInfo;
 	
-	SetCursor( &watchCrsr);
+	SetCursor(&watchCrsr);
 	
-	iErr = FSpGetFInfo( &sfFile, &fndrInfo);
+	iErr = FSpGetFInfo(&sfFile, &fndrInfo);
 	
-	switch( fndrInfo.fdType)
+	switch(fndrInfo.fdType)
 	{
 		case 'INso':	// Instrument List
-			OpenInstrumentsList( &sfFile);
+			OpenInstrumentsList(&sfFile);
 			break;
 			
 		default:
-			iErr = PPINTestFile( fndrInfo.fdType, &sfFile);
+			iErr = PPINTestFile(fndrInfo.fdType, &sfFile);
 			if (iErr == noErr)
 			{
-				iErr = PPINImportFile( fndrInfo.fdType, ins, &samp, &sfFile);
+				iErr = PPINImportFile(fndrInfo.fdType, ins, &samp, &sfFile);
 			}
 			else	// Try to identify file type
 			{
 				OSType type;
 				
-				iErr = PPINIdentifyFile( &type, &sfFile);
+				iErr = PPINIdentifyFile(&type, &sfFile);
 				if (iErr == noErr)
 				{
-					iErr = PPINImportFile( type, ins, &samp, &sfFile);
+					iErr = PPINImportFile(type, ins, &samp, &sfFile);
 					
 					if (iErr == noErr)
 					{
-						if (FSpSetFInfo( &sfFile, &fndrInfo) == noErr)		// write permission?
+						if (FSpSetFInfo(&sfFile, &fndrInfo) == noErr)		// write permission?
 						{
-							if (InfoL( 60))
+							if (InfoL(60))
 							{
 								fndrInfo.fdType		= type;
 								fndrInfo.fdCreator	= 'SNPL';
 								
-								FSpSetFInfo( &sfFile, &fndrInfo);
+								FSpSetFInfo(&sfFile, &fndrInfo);
 							}
 						}
 					}
@@ -1253,7 +1253,7 @@ OSErr NOpenSampleInt(short ins, short samp, FSSpec sfFile)
 			}
 			break;
 	}
-	SetCursor( GetQDGlobalsArrow( &qdarrow));
+	SetCursor(GetQDGlobalsArrow(&qdarrow));
 	
 	return iErr;
 }
@@ -1272,100 +1272,100 @@ void NPASTESample(long Pos, short ins, short samp)
 	ScrapRef			scrap;
 	ScrapFlavorFlags	flags;
 	
-	SetCursor( &watchCrsr);
+	SetCursor(&watchCrsr);
 	
-	aMovie = NewMovieFromScrap( 0);
+	aMovie = NewMovieFromScrap(0);
 	
 	if (aMovie) {
 		FSSpec	newFile;
 		
-		pStrcpy( newFile.name, "\pPasted sound");
-		iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newFile.vRefNum, &newFile.parID);
-		if (iErr) MyDebugStr( __LINE__, __FILE__, "FindFolder");
+		pStrcpy(newFile.name, "\pPasted sound");
+		iErr = FindFolder(kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newFile.vRefNum, &newFile.parID);
+		if (iErr) MyDebugStr(__LINE__, __FILE__, "FindFolder");
 		
-		FSpDelete( &newFile);
+		FSpDelete(&newFile);
 		
-		iErr = ConvertMovieToFile( aMovie, nil, &newFile, 'WAVE', 'TVOD', 0, nil, 0, nil);
-		if (iErr) MyDebugStr( __LINE__, __FILE__, "ConvertMovieToFile");
+		iErr = ConvertMovieToFile(aMovie, nil, &newFile, 'WAVE', 'TVOD', 0, nil, 0, nil);
+		if (iErr) MyDebugStr(__LINE__, __FILE__, "ConvertMovieToFile");
 		
-		iErr = NOpenSampleInt( ins, samp, newFile);
-		if (iErr) MyDebugStr( __LINE__, __FILE__, "NOpenSampleInt");
+		iErr = NOpenSampleInt(ins, samp, newFile);
+		if (iErr) MyDebugStr(__LINE__, __FILE__, "NOpenSampleInt");
 		
-		FSpDelete( &newFile);
+		FSpDelete(&newFile);
 		
-		DisposeMovie( aMovie);
+		DisposeMovie(aMovie);
 	} else {
 		if (samp < 0)
 			samp = curMusic->fid[ ins].numSamples;
 		
 		lCntOrErr = 0;
-		anErr = GetCurrentScrap( &scrap);
-		anErr = GetScrapFlavorFlags( scrap, 'MINo', &flags);
-		if (anErr == noErr) GetScrapFlavorSize( scrap, 'MINo', &lCntOrErr);
+		anErr = GetCurrentScrap(&scrap);
+		anErr = GetScrapFlavorFlags(scrap, 'MINo', &flags);
+		if (anErr == noErr) GetScrapFlavorSize(scrap, 'MINo', &lCntOrErr);
 		
 		if (lCntOrErr > 0) {
 			long	inOutCount;
 			short	x;
 			
-			MADKillInstrument( curMusic, ins);
+			MADKillInstrument(curMusic, ins);
 			
-			newSound = MyNewHandle( lCntOrErr);
+			newSound = MyNewHandle(lCntOrErr);
 			if (newSound) {
 				short numSamples;
 				
-				HLock( newSound);
-				GetScrapFlavorData( scrap, 'MINo', &lCntOrErr, *newSound);
-				HUnlock( newSound);
+				HLock(newSound);
+				GetScrapFlavorData(scrap, 'MINo', &lCntOrErr, *newSound);
+				HUnlock(newSound);
 				
-				HLock( newSound);
+				HLock(newSound);
 				
 				i = curMusic->fid[ ins].firstSample;
-				BlockMoveData( *newSound, &curMusic->fid[ ins], sizeof( InstrData));
+				BlockMoveData(*newSound, &curMusic->fid[ ins], sizeof(InstrData));
 				curMusic->fid[ ins].firstSample = i;
 				
 				numSamples = curMusic->fid[ ins].numSamples;
 				curMusic->fid[ ins].numSamples = 0;
 				
-				inOutCount = sizeof( InstrData);
+				inOutCount = sizeof(InstrData);
 				
 				for (x = 0; x < numSamples; x++) {
 					sData	*curData;
 					
-					curData = MADCreateSample( curMusic, ins, x);
+					curData = MADCreateSample(curMusic, ins, x);
 					
-					BlockMoveData( (*newSound) + inOutCount, curData, sizeof( sData));
-					inOutCount += sizeof( sData);
+					BlockMoveData((*newSound) + inOutCount, curData, sizeof(sData));
+					inOutCount += sizeof(sData);
 					
-					curData->data = MyNewPtr( curData->size);
+					curData->data = MyNewPtr(curData->size);
 					if (curData->data) {
-						BlockMoveData( (*newSound) + inOutCount, curData->data, curData->size);
+						BlockMoveData((*newSound) + inOutCount, curData->data, curData->size);
 						inOutCount += curData->size;
 					} else
-						Erreur( 63, MemError());
+						Erreur(63, MemError());
 				}
 				
-				HUnlock( newSound);
-				DisposeHandle( newSound);
+				HUnlock(newSound);
+				DisposeHandle(newSound);
 			}
 			else
-				Erreur( 63, MemError());
+				Erreur(63, MemError());
 			
 			// ***********INSTRU NAME, 'STR '
-			newSound = MyNewHandle( 60);
+			newSound = MyNewHandle(60);
 			if (newSound) {
 				lCntOrErr = 60;
-				HLock( newSound);
-				GetScrapFlavorData( scrap, 'STR ', &lCntOrErr, *newSound);
-				HUnlock( newSound);
+				HLock(newSound);
+				GetScrapFlavorData(scrap, 'STR ', &lCntOrErr, *newSound);
+				HUnlock(newSound);
 				
 				if (lCntOrErr > 0) {
-					HLock( newSound);
+					HLock(newSound);
 					
-					SetInstruName( ins, (unsigned char *) *newSound);
+					SetInstruName(ins, (unsigned char *) *newSound);
 					
-					HUnlock( newSound);
+					HUnlock(newSound);
 				}
-				DisposeHandle( newSound);
+				DisposeHandle(newSound);
 			}
 			
 			curMusic->hasChanged = true;
@@ -1373,9 +1373,9 @@ void NPASTESample(long Pos, short ins, short samp)
 			// ************  SON 'snd '
 			
 			lCntOrErr = 0;
-			anErr = GetCurrentScrap( &scrap);
-			anErr = GetScrapFlavorFlags( scrap, 'snd ', &flags);
-			if (anErr == noErr) GetScrapFlavorSize( scrap, 'snd ', &lCntOrErr);
+			anErr = GetCurrentScrap(&scrap);
+			anErr = GetScrapFlavorFlags(scrap, 'snd ', &flags);
+			if (anErr == noErr) GetScrapFlavorSize(scrap, 'snd ', &lCntOrErr);
 			
 			if (lCntOrErr > 0) {
 				sData			*curData;
@@ -1384,14 +1384,14 @@ void NPASTESample(long Pos, short ins, short samp)
 				Boolean			stereo;
 				Boolean			newSampleData = false;
 				
-				newSound = MyNewHandle( lCntOrErr);
+				newSound = MyNewHandle(lCntOrErr);
 				if (newSound) {
 					/* Check if it is necessary to create the sData struct */
 					if (samp >= curMusic->fid[ ins].numSamples) {
 						//	if (samp >= MAXSAMPLE) return;
 						samp = curMusic->fid[ ins].numSamples;
 						
-						MADCreateSample( curMusic, ins, samp);
+						MADCreateSample(curMusic, ins, samp);
 						
 						newSampleData = true;
 					}
@@ -1401,29 +1401,29 @@ void NPASTESample(long Pos, short ins, short samp)
 					if (curData->size == 0)
 						newSampleData = true;
 					
-					HLock( newSound);
-					GetScrapFlavorData( scrap, 'snd ', &lCntOrErr, *newSound);
-					HUnlock( newSound);
+					HLock(newSound);
+					GetScrapFlavorData(scrap, 'snd ', &lCntOrErr, *newSound);
+					HUnlock(newSound);
 					
-					HLock( newSound);
-					NSndToHandle( newSound, &lS, &lE, &sS, &rate, &bFreq, &stereo);
-					HLock( newSound);
+					HLock(newSound);
+					NSndToHandle(newSound, &lS, &lE, &sS, &rate, &bFreq, &stereo);
+					HLock(newSound);
 					
-					inOutBytes = GetHandleSize( newSound);
+					inOutBytes = GetHandleSize(newSound);
 					
 					if (sS == 8)
-						ConvertInstrumentIn( (Byte*) *newSound, inOutBytes);
+						ConvertInstrumentIn((Byte*) *newSound, inOutBytes);
 					else
-						ConvertInstrumentIn16( (short*) *newSound, inOutBytes);
+						ConvertInstrumentIn16((short*) *newSound, inOutBytes);
 					
 					if (!newSampleData) {		// We NEED to convert the pasted sound in current data
 						if (curData->amp != sS) {		// Amplitude conversion
-							switch( sS)
+							switch(sS)
 							{
 								case 8:		// Convert in 16 bits
-									HUnlock( newSound);
-									SetHandleSize( newSound, inOutBytes * 2L);
-									HLock( newSound);
+									HUnlock(newSound);
+									SetHandleSize(newSound, inOutBytes * 2L);
+									HLock(newSound);
 									
 									if (MemError() == noErr) {
 										Convert8to16(	*newSound,	*newSound, 	inOutBytes);
@@ -1438,9 +1438,9 @@ void NPASTESample(long Pos, short ins, short samp)
 								case 16:	// Convert in 8 bits
 									Convert16to8(	*newSound, *newSound, inOutBytes);
 									
-									HUnlock( newSound);
-									SetHandleSize( newSound, inOutBytes / 2L);
-									HLock( newSound);
+									HUnlock(newSound);
+									SetHandleSize(newSound, inOutBytes / 2L);
+									HLock(newSound);
 									
 									inOutBytes /= 2L;
 									lS /= 2L;
@@ -1451,7 +1451,7 @@ void NPASTESample(long Pos, short ins, short samp)
 						}
 						
 						if (curData->stereo != stereo) {		// Stereo conversion
-							switch( stereo)
+							switch(stereo)
 							{
 								case true:		// Convert in mono
 									if (sS == 8) {
@@ -1462,9 +1462,9 @@ void NPASTESample(long Pos, short ins, short samp)
 										for (i = 0 ; i < inOutBytes/2; i+=2) (*newSound)[ i / 2] = ((long) (*newSound)[ i] + (long) (*newSound)[ i + 1]) / 2L;
 									}
 									
-									HUnlock( newSound);
-									SetHandleSize( newSound, inOutBytes / 2L);
-									HLock( newSound);
+									HUnlock(newSound);
+									SetHandleSize(newSound, inOutBytes / 2L);
+									HLock(newSound);
 									
 									inOutBytes /= 2L;
 									lS /= 2L;
@@ -1473,14 +1473,14 @@ void NPASTESample(long Pos, short ins, short samp)
 									break;
 									
 								case false:		// Convert in stereo
-									HUnlock( newSound);
-									SetHandleSize( newSound, inOutBytes * 2L);
-									HLock( newSound);
+									HUnlock(newSound);
+									SetHandleSize(newSound, inOutBytes * 2L);
+									HLock(newSound);
 									
 									if (MemError() == noErr) {
 										if (sS == 8) {
 											for (i = inOutBytes-1 ; i >= 0; i--) {
-												if (1 + i * 2 >= inOutBytes*2L) MyDebugStr( __LINE__, __FILE__, "");
+												if (1 + i * 2 >= inOutBytes*2L) MyDebugStr(__LINE__, __FILE__, "");
 												
 												(*newSound)[ i * 2] = (*newSound)[ 1 + i * 2] = (*newSound)[ i];
 											}
@@ -1514,7 +1514,7 @@ void NPASTESample(long Pos, short ins, short samp)
 					
 					// ICI: COLLER DANS LE SAMPLE !!!
 					
-					finalPtr = MyNewPtr( totalSize);
+					finalPtr = MyNewPtr(totalSize);
 					if (finalPtr) {
 						BlockMoveData(curData->data,
 									  finalPtr,
@@ -1529,43 +1529,43 @@ void NPASTESample(long Pos, short ins, short samp)
 									  curData->size - Pos);
 						
 						if (curData->data != NULL)
-							MyDisposePtr( &curData->data);
+							MyDisposePtr(&curData->data);
 						curData->data = finalPtr;
 						curData->size = totalSize;
 					} else {
-						Erreur( 63, MemError());
-						MADKillSample( curMusic, ins, samp);
+						Erreur(63, MemError());
+						MADKillSample(curMusic, ins, samp);
 					}
 					
-					HUnlock( newSound);
-					DisposeHandle( newSound);
+					HUnlock(newSound);
+					DisposeHandle(newSound);
 				}
 				else
-					Erreur( 63, MemError());
+					Erreur(63, MemError());
 				
 				curMusic->hasChanged = true;
 				
 				// ***********INSTRU NAME, 'STR '
 				if (Pos == 0) {
-					newSound = MyNewHandle( 60);
+					newSound = MyNewHandle(60);
 					if (newSound) {
 						lCntOrErr = 60;
-						HLock( newSound);
-						GetScrapFlavorData( scrap, 'STR ', &lCntOrErr, *newSound);
-						HUnlock( newSound);
+						HLock(newSound);
+						GetScrapFlavorData(scrap, 'STR ', &lCntOrErr, *newSound);
+						HUnlock(newSound);
 						
 						if (lCntOrErr > 0) {
-							HLock( newSound);
+							HLock(newSound);
 							
-							SetSampName( ins, samp, (unsigned char *) *newSound);
+							SetSampName(ins, samp, (unsigned char *) *newSound);
 							
-							HUnlock( newSound);
+							HUnlock(newSound);
 						}
-						DisposeHandle( newSound);
+						DisposeHandle(newSound);
 					}
 				}
 				
-				SetSelection( ins, Pos, Pos + inOutBytes);
+				SetSelection(ins, Pos, Pos + inOutBytes);
 			}
 		}
 	}
@@ -1574,10 +1574,10 @@ void NPASTESample(long Pos, short ins, short samp)
 	UpdateSampleWindows();
 	UpdateInstruMenu();
 	
-	SetCursor( GetQDGlobalsArrow( &qdarrow));
+	SetCursor(GetQDGlobalsArrow(&qdarrow));
 }
 
-void NCOPYSample( long start, long length, short ins, short samp)
+void NCOPYSample(long start, long length, short ins, short samp)
 {
 	short		itemType,i,fRefNum, numPat;
 	long		inOutBytes, iL, OffSetToSample;
@@ -1589,10 +1589,10 @@ void NCOPYSample( long start, long length, short ins, short samp)
 	ScrapRef	scrap;
 	OSErr		anErr;
 	
-	SetCursor( &watchCrsr);
+	SetCursor(&watchCrsr);
 	
 	anErr = ClearCurrentScrap();
-	anErr = GetCurrentScrap( &scrap);
+	anErr = GetCurrentScrap(&scrap);
 	
 	/**************************/
 	// Copy an instrument
@@ -1603,54 +1603,54 @@ void NCOPYSample( long start, long length, short ins, short samp)
 		
 		// COPY Instru Name
 		
-		theSound = MyNewHandle( 200);
+		theSound = MyNewHandle(200);
 		if (theSound) {
-			strcpy( (Ptr) *theSound, curMusic->fid[ ins].name);
-			MyC2PStr( (Ptr) *theSound);
+			strcpy((Ptr) *theSound, curMusic->fid[ ins].name);
+			MyC2PStr((Ptr) *theSound);
 			
-			HLock( (Handle) theSound );
+			HLock((Handle) theSound );
 			
-			anErr = PutScrapFlavor( scrap, 'STR ', 0, (long) 30, (Ptr) *theSound);
+			anErr = PutScrapFlavor(scrap, 'STR ', 0, (long) 30, (Ptr) *theSound);
 			
-			HUnlock( (Handle) theSound );
+			HUnlock((Handle) theSound );
 			
-			MyDisposHandle( & theSound);
+			MyDisposHandle(& theSound);
 		}
 		
 		// COPY 'MINo' data
 		
-		inOutCount = sizeof( InstrData);
+		inOutCount = sizeof(InstrData);
 		for (x = 0; x < curMusic->fid[ ins].numSamples; x++) {
 			sData	*curData = curMusic->sample[ curMusic->fid[ ins].firstSample + x];
 			
-			inOutCount += sizeof( sData);
+			inOutCount += sizeof(sData);
 			inOutCount += curData->size;
 		}
 		
-		theSound = MyNewHandle( inOutCount);
+		theSound = MyNewHandle(inOutCount);
 		if (theSound) {
-			HLock( theSound);
+			HLock(theSound);
 			
-			BlockMoveData( &curMusic->fid[ ins], *theSound, sizeof( InstrData));
-			inOutCount = sizeof( InstrData);
+			BlockMoveData(&curMusic->fid[ ins], *theSound, sizeof(InstrData));
+			inOutCount = sizeof(InstrData);
 			
 			for (x = 0; x < curMusic->fid[ ins].numSamples; x++) {
 				sData	*curData;
 				
 				curData = curMusic->sample[ curMusic->fid[ ins].firstSample + x];
 				
-				BlockMoveData( curData, (*theSound) + inOutCount, sizeof( sData));
-				inOutCount += sizeof( sData);
+				BlockMoveData(curData, (*theSound) + inOutCount, sizeof(sData));
+				inOutCount += sizeof(sData);
 				
-				BlockMoveData( curData->data, (*theSound) + inOutCount, curData->size);
+				BlockMoveData(curData->data, (*theSound) + inOutCount, curData->size);
 				inOutCount += curData->size;
 			}
 			
-			anErr = PutScrapFlavor( scrap, 'MINo', 0, inOutCount, (Ptr) *theSound);
-			HUnlock( theSound);
-			MyDisposHandle( &theSound);
+			anErr = PutScrapFlavor(scrap, 'MINo', 0, inOutCount, (Ptr) *theSound);
+			HUnlock(theSound);
+			MyDisposHandle(&theSound);
 		} else {
-			Erreur( 63, MemError());
+			Erreur(63, MemError());
 			anErr = ClearCurrentScrap();
 		}
 	} else {
@@ -1671,22 +1671,22 @@ void NCOPYSample( long start, long length, short ins, short samp)
 		
 		// COPY Sample Name
 		
-		theSound = MyNewHandle( 200);
+		theSound = MyNewHandle(200);
 		if (theSound) {
-			strcpy( (Ptr) *theSound, curData->name);
-			MyC2PStr( (Ptr) *theSound);
+			strcpy((Ptr) *theSound, curData->name);
+			MyC2PStr((Ptr) *theSound);
 			
-			HLock( theSound );
+			HLock(theSound );
 			
-			anErr = PutScrapFlavor( scrap, 'STR ', 0, 30, (Ptr) *theSound);
+			anErr = PutScrapFlavor(scrap, 'STR ', 0, 30, (Ptr) *theSound);
 			
-			HUnlock( theSound );
+			HUnlock(theSound );
 			
-			MyDisposHandle( & theSound);
+			MyDisposHandle(& theSound);
 		}
 		// COPY 'snd '
 		
-		theSound = MyNewHandle( length + 5000);
+		theSound = MyNewHandle(length + 5000);
 		if (theSound) {
 			short	numChan;
 			
@@ -1702,7 +1702,7 @@ void NCOPYSample( long start, long length, short ins, short samp)
 						   length,
 						   &temp);
 			
-			SetHandleSize( theSound, length + temp);
+			SetHandleSize(theSound, length + temp);
 			
 			if (length == curData->size) {
 				AddLoopToSndHandle(theSound,
@@ -1710,27 +1710,27 @@ void NCOPYSample( long start, long length, short ins, short samp)
 								   curData->loopBeg + curData->loopSize);
 			}	
 			
-			HLock( theSound);
+			HLock(theSound);
 			
-			BlockMoveData( curData->data + start, (Ptr) ((*theSound) + temp), length);
+			BlockMoveData(curData->data + start, (Ptr) ((*theSound) + temp), length);
 			
-			if (curData->amp == 8) ConvertInstrument( (Byte*) (*theSound + temp), length);
-			else ConvertInstrumentOut16( (short*) (*theSound + temp), length);
+			if (curData->amp == 8) ConvertInstrument((Byte*) (*theSound + temp), length);
+			else ConvertInstrumentOut16((short*) (*theSound + temp), length);
 			
-			anErr = PutScrapFlavor( scrap, 'snd ', 0, GetHandleSize( (Handle) theSound), (Ptr) *theSound);
+			anErr = PutScrapFlavor(scrap, 'snd ', 0, GetHandleSize((Handle) theSound), (Ptr) *theSound);
 			
-			HUnlock( (Handle) theSound );
+			HUnlock((Handle) theSound );
 			
-			MyDisposHandle( & theSound);
+			MyDisposHandle(& theSound);
 		} else {
-			Erreur( 63, MemError());
+			Erreur(63, MemError());
 			anErr = ClearCurrentScrap();
 		}
 	}
-	SetCursor( GetQDGlobalsArrow( &qdarrow));
+	SetCursor(GetQDGlobalsArrow(&qdarrow));
 }
 
-void AddLoopToSndHandle( Handle sound, long Start, long End)
+void AddLoopToSndHandle(Handle sound, long Start, long End)
 {
 	Ptr 			soundPtr = NULL;
 	short 			soundFormat;
@@ -1744,7 +1744,7 @@ void AddLoopToSndHandle( Handle sound, long Start, long End)
 	if (!sound) return;
 	
 	/* make the sound safe to use at interrupt time. */
-	HLock( sound);
+	HLock(sound);
 	soundPtr = *sound;
 	
 	/* determine what format sound we have. */
@@ -1764,7 +1764,7 @@ void AddLoopToSndHandle( Handle sound, long Start, long End)
 			break;
 			
 		default:					/* jack says, what about 12? or 6? */
-			MyDebugStr( __LINE__, __FILE__, " NSndToHandle... Burkk");
+			MyDebugStr(__LINE__, __FILE__, " NSndToHandle... Burkk");
 			return;
 			break;
 	} 
@@ -1773,7 +1773,7 @@ void AddLoopToSndHandle( Handle sound, long Start, long End)
 	offset = 6 + 6*numSynths + 8*numCmds;
 	header = (SoundHeaderPtr) (*sound + offset);
 	
-	switch( header->encode)
+	switch(header->encode)
 	{
 		case cmpSH:
 			CmpHeader = (CmpSoundHeader*) header;
@@ -1800,11 +1800,11 @@ void AddLoopToSndHandle( Handle sound, long Start, long End)
 	}
 }
 
-void NSaveSampleInt( short whichIns, short whichSamp, OSType SoundType, FSSpec *sFile)
+void NSaveSampleInt(short whichIns, short whichSamp, OSType SoundType, FSSpec *sFile)
 {
-	FSpDelete( sFile);
+	FSpDelete(sFile);
 	
-	PPINExportFile( SoundType, whichIns, whichSamp, sFile);
+	PPINExportFile(SoundType, whichIns, whichSamp, sFile);
 }
 
 void SaveSample(void)
@@ -1823,20 +1823,20 @@ void SaveSample(void)
 	OSType					SoundFormat;
 	short					ins, samp;
 	
-	GetPort( &myPort);
+	GetPort(&myPort);
 	
-	if (GetIns( &ins, &samp)) {
+	if (GetIns(&ins, &samp)) {
 		if (samp >= 0)
-			pStrcpy( theString, "\pSave this sample as:");
+			pStrcpy(theString, "\pSave this sample as:");
 		else
-			pStrcpy( theString, "\pSave this instrument as:");
+			pStrcpy(theString, "\pSave this instrument as:");
 		
-		if (NSoundQualityExportSnd( ins, samp, &SoundFormat, mainStr) == noErr) {
-			if (DoCustomSave( theString, (unsigned char*) mainStr, SoundFormat, &spec)) return;
+		if (NSoundQualityExportSnd(ins, samp, &SoundFormat, mainStr) == noErr) {
+			if (DoCustomSave(theString, (unsigned char*) mainStr, SoundFormat, &spec)) return;
 			
-			iErr = HSetVol( NULL, spec.vRefNum, spec.parID);
+			iErr = HSetVol(NULL, spec.vRefNum, spec.parID);
 			
-			NSaveSampleInt( ins, samp, SoundFormat, &spec);
+			NSaveSampleInt(ins, samp, SoundFormat, &spec);
 		}
 	}
 }
@@ -1849,26 +1849,26 @@ void CreateNewMOD(void)
 	Point				where = { -1, -1};
 	Str255				str, str2;
 	
-	NumToString( UMindex, str2);
+	NumToString(UMindex, str2);
 	
-	pStrcpy( str, "\pUntitled Music #");
-	pStrcat( str, str2);
+	pStrcpy(str, "\pUntitled Music #");
+	pStrcat(str, str2);
 	
-	if (DoCustomSave( "\pCreate new MADK File:", str, 'MADK', &spec))
+	if (DoCustomSave("\pCreate new MADK File:", str, 'MADK', &spec))
 		return;
 	
 	UMindex++;
 	
-	ImportFile( spec.name, 128, 0, 'Rsrc');
+	ImportFile(spec.name, 128, 0, 'Rsrc');
 	
 	curvRefNum = spec.vRefNum;
 	curparID = spec.parID;
-	pStrcpy( curMusic->musicFileName, spec.name);
+	pStrcpy(curMusic->musicFileName, spec.name);
 	
-	HSetVol( NULL, spec.vRefNum, spec.parID);
+	HSetVol(NULL, spec.vRefNum, spec.parID);
 	
 	PatchSave = false;
-	SaveMOD( false, 'MADK');
+	SaveMOD(false, 'MADK');
 	
 	AddMODList(true,
 			   curMusic->musicFileName,
@@ -1881,7 +1881,7 @@ void CreateNewMOD(void)
 #define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
 #define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
 
-sData* ComputeRAWSound( Ptr srcSound, long length)
+sData* ComputeRAWSound(Ptr srcSound, long length)
 {
 	Ptr			destSound;
 	sData		*curData;
@@ -1900,15 +1900,15 @@ sData* ComputeRAWSound( Ptr srcSound, long length)
 		size *= 2;
 	}
 	
-	destSound = NewPtr( size);
+	destSound = NewPtr(size);
 	
 	if (destSound == NULL)
 		return NULL;
 	
-	switch( thePrefs.RAWBits)
+	switch(thePrefs.RAWBits)
 	{
 		case 8:
-			BlockMoveData( srcSound + thePrefs.RAWHeader, destSound, size);
+			BlockMoveData(srcSound + thePrefs.RAWHeader, destSound, size);
 			
 			// Signed
 			if (thePrefs.RAWSigned) {
@@ -1922,7 +1922,7 @@ sData* ComputeRAWSound( Ptr srcSound, long length)
 		{
 			short	*d16Sound = (short*) destSound;
 			
-			BlockMoveData( srcSound + thePrefs.RAWHeader, destSound, size);
+			BlockMoveData(srcSound + thePrefs.RAWHeader, destSound, size);
 			
 			// Coding
 			if (thePrefs.RAWLittleEndian) {
@@ -1941,7 +1941,7 @@ sData* ComputeRAWSound( Ptr srcSound, long length)
 			break;
 	}
 	
-	curData = (sData*) NewPtrClear( sizeof( sData));
+	curData = (sData*) NewPtrClear(sizeof(sData));
 	if (curData) {
 		curData->size		= size;
 		curData->loopBeg	= 0;
@@ -1955,14 +1955,14 @@ sData* ComputeRAWSound( Ptr srcSound, long length)
 		// curData->name
 		curData->data		= destSound;
 	} else {
-		DisposePtr( destSound);
+		DisposePtr(destSound);
 		return NULL;
 	}
 	
 	return curData;
 }
 
-OSErr RAWImportFile( FSSpec	*file)
+OSErr RAWImportFile(FSSpec	*file)
 {
 	DialogPtr		aDialog;
 	short			itemHit, itemType, ins, samp;
@@ -1983,114 +1983,114 @@ OSErr RAWImportFile( FSSpec	*file)
 	Boolean			needUpdateNow;
 	Point			pt;
 	
-	if (!GetIns( &ins, &samp)) {
-		Erreur( 13, ins);
+	if (!GetIns(&ins, &samp)) {
+		Erreur(13, ins);
 		return -1;
 	}
 	
 	////////////
 	
-	iErr = FSpOpenDF( file, fsCurPerm, &fRefNum);
+	iErr = FSpOpenDF(file, fsCurPerm, &fRefNum);
 	if (iErr) return -1;
 	
-	iErr = GetEOF( fRefNum, &curEOF);
+	iErr = GetEOF(fRefNum, &curEOF);
 	
-	fileBuf = NewPtr( curEOF*2);
+	fileBuf = NewPtr(curEOF*2);
 	if (fileBuf == NULL) {
-		Erreur( 63, iErr);
+		Erreur(63, iErr);
 		return -1;
 	}
-	DisposePtr( fileBuf);
-	fileBuf = NewPtr( curEOF);
+	DisposePtr(fileBuf);
+	fileBuf = NewPtr(curEOF);
 	
 	inOutCount = curEOF;
 	iErr = FSRead(fRefNum, &inOutCount, fileBuf);
 	
-	GetPort( &thePort);
+	GetPort(&thePort);
 	
-	SetCursor( GetQDGlobalsArrow( &qdarrow));
+	SetCursor(GetQDGlobalsArrow(&qdarrow));
 	
-	aDialog = GetNewDialog( 178, NULL, (WindowPtr) -1L);
-	SetPortDialogPort( aDialog);
+	aDialog = GetNewDialog(178, NULL, (WindowPtr) -1L);
+	SetPortDialogPort(aDialog);
 	
-	AutoPosition( aDialog);
-	ShowWindow( GetDialogWindow( aDialog));
-	SetWTitle( GetDialogWindow( aDialog), file->name);
+	AutoPosition(aDialog);
+	ShowWindow(GetDialogWindow(aDialog));
+	SetWTitle(GetDialogWindow(aDialog), file->name);
 	
-	GetDialogItem( aDialog, 25, &itemType, &itemHandle, &iRect);
+	GetDialogItem(aDialog, 25, &itemType, &itemHandle, &iRect);
 	
 	// Header
 	
-	NumToString( thePrefs.RAWHeader, aStr);
-	SetDText( aDialog, 17, aStr);
+	NumToString(thePrefs.RAWHeader, aStr);
+	SetDText(aDialog, 17, aStr);
 	
 	thePrefs.RAWLength = curEOF - thePrefs.RAWHeader;
-	NumToString( thePrefs.RAWLength, aStr);
-	SetDText( aDialog, 20, aStr);
+	NumToString(thePrefs.RAWLength, aStr);
+	SetDText(aDialog, 20, aStr);
 	
 	// Rate
 	
-	NumToString( thePrefs.RAWRate, aStr);
-	SetDText( aDialog, 24, aStr);
+	NumToString(thePrefs.RAWRate, aStr);
+	SetDText(aDialog, 24, aStr);
 	
 REGODIA:
 	
 	// Bits
 	
 	if (thePrefs.RAWBits == 8) {
-		TurnRadio( 8, aDialog, true);
-		TurnRadio( 9, aDialog, false);
+		TurnRadio(8, aDialog, true);
+		TurnRadio(9, aDialog, false);
 	} else {
-		TurnRadio( 9, aDialog, true);
-		TurnRadio( 8, aDialog, false);
+		TurnRadio(9, aDialog, true);
+		TurnRadio(8, aDialog, false);
 	}
 	
 	// Mode
 	
 	if (thePrefs.RAWStereo) {
-		TurnRadio( 11, aDialog, true);
-		TurnRadio( 10, aDialog, false);
+		TurnRadio(11, aDialog, true);
+		TurnRadio(10, aDialog, false);
 	} else {
-		TurnRadio( 10, aDialog, true);
-		TurnRadio( 11, aDialog, false);
+		TurnRadio(10, aDialog, true);
+		TurnRadio(11, aDialog, false);
 	}
 	
 	// Type
 	
 	if (thePrefs.RAWSigned) {
-		TurnRadio( 12, aDialog, true);
-		TurnRadio( 13, aDialog, false);
+		TurnRadio(12, aDialog, true);
+		TurnRadio(13, aDialog, false);
 	} else {
-		TurnRadio( 13, aDialog, true);
-		TurnRadio( 12, aDialog, false);
+		TurnRadio(13, aDialog, true);
+		TurnRadio(12, aDialog, false);
 	}
 	
 	// Coding
 	
 	if (thePrefs.RAWLittleEndian) {
-		TurnRadio( 15, aDialog, true);
-		TurnRadio( 16, aDialog, false);
+		TurnRadio(15, aDialog, true);
+		TurnRadio(16, aDialog, false);
 	} else {
-		TurnRadio( 16, aDialog, true);
-		TurnRadio( 15, aDialog, false);
+		TurnRadio(16, aDialog, true);
+		TurnRadio(15, aDialog, false);
 	}
 	
 	// Length
 	
 	if (thePrefs.RAWEOF) {
-		TurnRadio( 26, aDialog, true);
-		TurnRadio( 27, aDialog, false);
+		TurnRadio(26, aDialog, true);
+		TurnRadio(27, aDialog, false);
 	} else {
-		TurnRadio( 27, aDialog, true);
-		TurnRadio( 26, aDialog, false);
+		TurnRadio(27, aDialog, true);
+		TurnRadio(26, aDialog, false);
 	}
 	
 	needUpdateNow = true;
 	
 	do {
-		MyModalDialog( aDialog, &itemHit);
+		MyModalDialog(aDialog, &itemHit);
 		
-		switch( itemHit)
+		switch(itemHit)
 		{
 			case 33:
 			case -updateEvt:
@@ -2102,53 +2102,53 @@ REGODIA:
 					GDHandle	oldGDeviceH;
 					CGrafPtr	oldPort;
 					
-					SetPortDialogPort( aDialog);
+					SetPortDialogPort(aDialog);
 					
 					needUpdateNow = false;
 					
 					iErr = noErr;
 					
-					GetDText( aDialog, 17, (StringPtr) &theStr);
-					StringToNum( theStr, &mresult);
+					GetDText(aDialog, 17, (StringPtr) &theStr);
+					StringToNum(theStr, &mresult);
 					if (mresult >= 0 && mresult < curEOF)
 						thePrefs.RAWHeader = mresult;
 					else
 						iErr = -1;
 					
-					GetDText( aDialog, 20, (StringPtr) &theStr);
-					StringToNum( theStr, &mresult);
+					GetDText(aDialog, 20, (StringPtr) &theStr);
+					StringToNum(theStr, &mresult);
 					if (mresult >= 0 && mresult < curEOF - thePrefs.RAWHeader)
 						thePrefs.RAWLength = mresult;
 					else
 						thePrefs.RAWLength = curEOF - thePrefs.RAWHeader;
 					
-					GetDText( aDialog, 24, theStr);
-					StringToNum( theStr, &x);
+					GetDText(aDialog, 24, theStr);
+					StringToNum(theStr, &x);
 					thePrefs.RAWRate =  x;
 					
 					if (iErr == noErr) {
-						ControlSwitch( 1, aDialog, 0);
-						ControlSwitch( 33, aDialog, 0);
+						ControlSwitch(1, aDialog, 0);
+						ControlSwitch(33, aDialog, 0);
 						
-						curData = ComputeRAWSound( fileBuf, curEOF);
+						curData = ComputeRAWSound(fileBuf, curEOF);
 						if (curData) {
-							GetGWorld( &oldPort, &oldGDeviceH);
+							GetGWorld(&oldPort, &oldGDeviceH);
 							theGWorld = NULL;
-							NewGWorld( &theGWorld, 8, &iRect, nil, nil, (GWorldFlags) 0);
-							LockPixels( GetPortPixMap( theGWorld));
+							NewGWorld(&theGWorld, 8, &iRect, nil, nil, (GWorldFlags) 0);
+							LockPixels(GetPortPixMap(theGWorld));
 							
-							InsetRect( &iRect, -1, -1);
-							FrameRect( &iRect);
-							InsetRect( &iRect, 1, 1);
+							InsetRect(&iRect, -1, -1);
+							FrameRect(&iRect);
+							InsetRect(&iRect, 1, 1);
 							
-							SetGWorld( theGWorld, NULL);
+							SetGWorld(theGWorld, NULL);
 							
-							PaintRect( &iRect);
+							PaintRect(&iRect);
 							
-							ForeColor( whiteColor);
+							ForeColor(whiteColor);
 							
 							if (curData->stereo) {
-								ForeColor( blueColor);
+								ForeColor(blueColor);
 								DrawSampleInt(curData->size,
 											  0,
 											  0,
@@ -2161,7 +2161,7 @@ REGODIA:
 											  curData);
 							}
 							
-							ForeColor( redColor);
+							ForeColor(redColor);
 							DrawSampleInt(curData->size,
 										  0,
 										  0,
@@ -2173,43 +2173,43 @@ REGODIA:
 										  0,
 										  curData);
 							
-							ForeColor( whiteColor);
+							ForeColor(whiteColor);
 							
-							SetGWorld( oldPort, oldGDeviceH);
+							SetGWorld(oldPort, oldGDeviceH);
 							
-							CopyBits((BitMap*) *GetPortPixMap( theGWorld),
-									 (BitMap*) *GetPortPixMap(GetDialogPort( aDialog)),
+							CopyBits((BitMap*) *GetPortPixMap(theGWorld),
+									 (BitMap*) *GetPortPixMap(GetDialogPort(aDialog)),
 									 &iRect,
 									 &iRect,
 									 srcCopy,
 									 NULL);
 							
-				 			UnlockPixels( GetPortPixMap( theGWorld));
-							DisposeGWorld( theGWorld);
+				 			UnlockPixels(GetPortPixMap(theGWorld));
+							DisposeGWorld(theGWorld);
 						}
 						
 						if (itemHit == 33) {
 							Boolean		continueLoop;
 							KeyMap		km;
 							
-							GetDText( aDialog, 24, theStr);
-							StringToNum( theStr, &x);
+							GetDText(aDialog, 24, theStr);
+							StringToNum(theStr, &x);
 							curData->c2spd = thePrefs.RAWRate =  x;
 							
-							MADPlaySoundData( MADDriver, curData->data, curData->size, 0, 48 + curData->relNote, curData->amp, 0, 0, curData->c2spd << 16, curData->stereo);
+							MADPlaySoundData(MADDriver, curData->data, curData->size, 0, 48 + curData->relNote, curData->amp, 0, 0, curData->c2spd << 16, curData->stereo);
 							if (iErr == noErr) {
-								SetCursor( &PlayCrsr);
+								SetCursor(&PlayCrsr);
 								continueLoop = true;
 								while (continueLoop) {
-									GetKeys( km);
+									GetKeys(km);
 									
 									if (MADDriver->chan[ 0].samplePtr == NULL) continueLoop = false;
-									if (MADIsPressed( (unsigned char*) km, 0x37) && MADIsPressed( (unsigned char*) km, 0x2F)) continueLoop = false;
+									if (MADIsPressed((unsigned char*) km, 0x37) && MADIsPressed((unsigned char*) km, 0x2F)) continueLoop = false;
 									if (Button()) continueLoop = false;
 									DoGlobalNull();
 								}
 								
-								SetCursor( GetQDGlobalsArrow( &qdarrow));
+								SetCursor(GetQDGlobalsArrow(&qdarrow));
 								
 								if (MADDriver->chan[ 0].samplePtr != NULL) {
 									MADDriver->chan[ 0].curPtr 		= MADDriver->chan[ 0].maxPtr;
@@ -2221,23 +2221,23 @@ REGODIA:
 							}
 						}
 						
-						DisposePtr( curData->data);
-						DisposePtr( (Ptr) curData);
+						DisposePtr(curData->data);
+						DisposePtr((Ptr) curData);
 					} else {
-						ControlSwitch( 1, aDialog, 255);
-						ControlSwitch( 33, aDialog, 255);
+						ControlSwitch(1, aDialog, 255);
+						ControlSwitch(33, aDialog, 255);
 						
-						PaintRect( &iRect);
+						PaintRect(&iRect);
 						
-						ForeColor( redColor);
+						ForeColor(redColor);
 						
-						pStrcpy( aStr, "\pWrong Settings - Out of range");
-						itemType = StringWidth( aStr);
+						pStrcpy(aStr, "\pWrong Settings - Out of range");
+						itemType = StringWidth(aStr);
 						
-						MoveTo( iRect.left + (iRect.right - iRect.left)/2 - itemType/2,
+						MoveTo(iRect.left + (iRect.right - iRect.left)/2 - itemType/2,
 							   iRect.top + (iRect.bottom - iRect.top)/2);
-						DrawString( aStr);
-						ForeColor( blackColor);
+						DrawString(aStr);
+						ForeColor(blackColor);
 					}
 					
 					if(thePrefs.RAWEOF)
@@ -2249,7 +2249,7 @@ REGODIA:
 					pStrcat(theStr, bStr);
 					pStrcat(theStr, "\p Bytes");
 					
-					SetDText( aDialog, 31, theStr);
+					SetDText(aDialog, 31, theStr);
 				}
 				
 				if(iErr == noErr) {
@@ -2266,10 +2266,10 @@ REGODIA:
 						
 						i = (long) thePrefs.RAWHeader + ((long) size * (long) (pt.h - iRect.left)) / (long) (iRect.right - iRect.left);
 						
-						pStrcpy( theStr, "\pPos: ");
+						pStrcpy(theStr, "\pPos: ");
 						
-						NumToString( i, bStr);
-						pStrcat( theStr, bStr);
+						NumToString(i, bStr);
+						pStrcat(theStr, bStr);
 						
 						SetDText(aDialog, 32, theStr);
 					} else
@@ -2348,14 +2348,14 @@ REGODIA:
 				LocalToGlobal(&myPt);
 				
 				GetDText(aDialog, 24, theStr);
-				for (i = 1; i <= CountMenuItems( tempMenu); i++) {
-					GetMenuItemText( tempMenu, i, aStr);
+				for (i = 1; i <= CountMenuItems(tempMenu); i++) {
+					GetMenuItemText(tempMenu, i, aStr);
 					aStr[ 0] = theStr[ 0];
 					if (EqualString(theStr, aStr, false, false))
 						break;
 				}
 				
-				if (i <= CountMenuItems( tempMenu))
+				if (i <= CountMenuItems(tempMenu))
 					SetItemMark(tempMenu, i, 0xa5);
 				else
 					i = 1;
@@ -2368,22 +2368,22 @@ REGODIA:
 				if(i <= CountMenuItems(tempMenu))
 					SetItemMark(tempMenu, i, 0);
 				
-				if ( HiWord(mresult ) != 0 ) {
+				if (HiWord(mresult ) != 0 ) {
 					long	tempL;
 					
-					GetMenuItemText( tempMenu, LoWord( mresult), theStr);
+					GetMenuItemText(tempMenu, LoWord(mresult), theStr);
 					for (i = 1; i <= theStr[ 0]; i++) {
 						if (theStr[ i] == ' ') break;
 					}
 					theStr[ 0] = i-1;
 					
-					StringToNum( theStr, &tempL);
+					StringToNum(theStr, &tempL);
 					thePrefs.RAWRate =  tempL;
 					
-					SetDText( aDialog, 24, theStr);
+					SetDText(aDialog, 24, theStr);
 				}
-				DeleteMenu( GetMenuID( tempMenu));
-				DisposeMenu( tempMenu);
+				DeleteMenu(GetMenuID(tempMenu));
+				DisposeMenu(tempMenu);
 				
 				goto REGODIA;
 				break;
@@ -2392,15 +2392,15 @@ REGODIA:
 	} while (itemHit != 1 && itemHit != 2);
 	
 	if (itemHit == 1) {
-		curData = ComputeRAWSound( fileBuf, curEOF);
+		curData = ComputeRAWSound(fileBuf, curEOF);
 		
 		if (samp < 0) {
 			samp = curMusic->fid[ ins].numSamples;
 			curMusic->fid[ ins].numSamples++;
 		} else {
 			if (curMusic->sample[ ins * MAXSAMPLE + samp]) {
-				DisposePtr( curMusic->sample[ ins * MAXSAMPLE + samp]->data);
-				DisposePtr( (Ptr) curMusic->sample[ ins * MAXSAMPLE + samp]);
+				DisposePtr(curMusic->sample[ ins * MAXSAMPLE + samp]->data);
+				DisposePtr((Ptr) curMusic->sample[ ins * MAXSAMPLE + samp]);
 			}
 		}
 		

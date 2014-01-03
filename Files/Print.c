@@ -21,27 +21,27 @@ void DrawMODHeader(void)
 	unsigned long		secs;
 	Handle				aHandle;
 	
-	TextFont( 4);	TextSize( 9);
-	MoveTo( 20, 20);
+	TextFont(4);	TextSize(9);
+	MoveTo(20, 20);
 	
-	DrawString( versString);
+	DrawString(versString);
 	DrawString("\p   ");
 	
-	pStrcpy( aStr, "\pFilename: ");
-	pStrcat( aStr, curMusic->musicFileName);
-	DrawString( aStr);
+	pStrcpy(aStr, "\pFilename: ");
+	pStrcat(aStr, curMusic->musicFileName);
+	DrawString(aStr);
 	
 	DrawString("\p   ");
 	DrawString("\pPrinting: ");
-	GetDateTime( &secs);
-	DateString( secs, longDate, aStr, NULL);
-	DrawString( aStr);
-	DrawString( "\p at ");
-	TimeString( secs, longDate, aStr, NULL);
-	DrawString( aStr);
+	GetDateTime(&secs);
+	DateString(secs, longDate, aStr, NULL);
+	DrawString(aStr);
+	DrawString("\p at ");
+	TimeString(secs, longDate, aStr, NULL);
+	DrawString(aStr);
 }
 
-void PrintPixMap( PixMapHandle aPix)
+void PrintPixMap(PixMapHandle aPix)
 {
 	GrafPtr		curPort;
 	OSErr		err;
@@ -49,38 +49,38 @@ void PrintPixMap( PixMapHandle aPix)
 
 	if (aPix == NULL) return;
 	
-	GetPort( &curPort);
+	GetPort(&curPort);
 	
-	GetPortBounds( (CGrafPtr) curPort, &caRect);
+	GetPortBounds((CGrafPtr) curPort, &caRect);
 	
-	CenterRect( &caRect, &(*aPix)->bounds, &destRect);
+	CenterRect(&caRect, &(*aPix)->bounds, &destRect);
 
-	ClipRect( &destRect);
+	ClipRect(&destRect);
 	
-	CopyBits(	(BitMap*) *( aPix),
- 				(BitMap*) *GetPortPixMap( (CGrafPtr) curPort),
+	CopyBits(	(BitMap*) *(aPix),
+ 				(BitMap*) *GetPortPixMap((CGrafPtr) curPort),
  				&(*aPix)->bounds,
  				&destRect,
  				ditherCopy,				//ditherCopy
  				NULL);
 }
 
-void PrintBitMap( BitMap aBit)
+void PrintBitMap(BitMap aBit)
 {
 	GrafPtr		curPort;
 	OSErr		err;
 	Rect		caRect, destRect;
 
-	GetPort( &curPort);
+	GetPort(&curPort);
 	
-	GetPortBounds(  (CGrafPtr) curPort, &caRect);
+	GetPortBounds( (CGrafPtr) curPort, &caRect);
 	
-	CenterRect( &caRect, &aBit.bounds, &destRect);
+	CenterRect(&caRect, &aBit.bounds, &destRect);
 
-	ClipRect( &destRect);
+	ClipRect(&destRect);
 	
 	CopyBits(	(BitMap*) &aBit,
- 				(BitMap*) *GetPortPixMap(  (CGrafPtr) curPort),
+ 				(BitMap*) *GetPortPixMap( (CGrafPtr) curPort),
  				&aBit.bounds,
  				&destRect,
  				ditherCopy,				//ditherCopy
@@ -95,7 +95,7 @@ Boolean PageSetUp(void)
 
 	PrOpen();
 	
-	val = PrStlDialog( hPrint);
+	val = PrStlDialog(hPrint);
 	
 	PrClose();
 	
@@ -108,11 +108,11 @@ void InitPrinting(void)
 {
 #if MACOS9VERSION
 	
-	hPrint = (THPrint) MyNewHandle( sizeof( TPrint) + 50L);
+	hPrint = (THPrint) MyNewHandle(sizeof(TPrint) + 50L);
 	
 	PrOpen();
 	
-	PrintDefault( hPrint);
+	PrintDefault(hPrint);
 	
 	PrClose();
 	
@@ -129,9 +129,9 @@ void Print(void)
 	OSErr		err;
 	Rect		destRect;
 	
-	WindType = GetWRefCon( oldWindow);
+	WindType = GetWRefCon(oldWindow);
 	
-	switch( WindType)
+	switch(WindType)
 	{
 		case RefPartition:
 		case RefSample:
@@ -141,7 +141,7 @@ void Print(void)
 		break;
 	
 		default:
-			Erreur( 34, -4);
+			Erreur(34, -4);
 			return;
 		break;
 	}
@@ -150,27 +150,27 @@ void Print(void)
 	
 	PrOpen();
 	
-	if (PrJobDialog( hPrint))
+	if (PrJobDialog(hPrint))
 	{
-		printPort = PrOpenDoc( hPrint, nil, nil);
+		printPort = PrOpenDoc(hPrint, nil, nil);
 		if (PrError() == noErr)
 		{			
-			switch( WindType)
+			switch(WindType)
 			{
 				case 0:
-					PrOpenPage( printPort, nil);
+					PrOpenPage(printPort, nil);
 					DrawMODHeader();
 
 					PrintRegistration();
 					
-					PrClosePage( printPort);
+					PrClosePage(printPort);
 				break;
 			
 				case RefSample:
-					PrOpenPage( printPort, nil);
+					PrOpenPage(printPort, nil);
 					DrawMODHeader();
-					PrintSample( oldWindow);
-					PrClosePage( printPort);
+					PrintSample(oldWindow);
+					PrClosePage(printPort);
 				break;
 				
 				case RefPartition:
@@ -182,18 +182,18 @@ void Print(void)
 				break;
 				
 				default:
-					Erreur( 34, -4);
+					Erreur(34, -4);
 					return;
 				break;
 			}
 			if ((*hPrint)->prJob.bJDocLoop == bSpoolLoop  && PrError() == noErr )
-				PrPicFile( hPrint, NULL, NULL, NULL, &prStatus );
+				PrPicFile(hPrint, NULL, NULL, NULL, &prStatus );
 
-			PrCloseDoc( printPort);
+			PrCloseDoc(printPort);
 		}
-		else Erreur( 54, PrError());
+		else Erreur(54, PrError());
 
-		SetCursor( GetQDGlobalsArrow( &qdarrow));
+		SetCursor(GetQDGlobalsArrow(&qdarrow));
 	}
 	PrClose();
 	
@@ -201,19 +201,19 @@ void Print(void)
 }
 
 
-void DoneDrawingPagesOfATextFile( Ptr myText, long	TextLong)
+void DoneDrawingPagesOfATextFile(Ptr myText, long	TextLong)
 {
 	short	i;
 	Str255	aStringOfText;
 
-	TextSize( 9);
-	TextFont( 4);
+	TextSize(9);
+	TextFont(4);
 	
 	for (i = 1; i <= TextLong/250; ++i)
 	{
-			BlockMoveData( myText, (Ptr) aStringOfText, 250);
+			BlockMoveData(myText, (Ptr) aStringOfText, 250);
 			aStringOfText[ 250] = '\0';
-			MyC2PStr( (Ptr) aStringOfText);
+			MyC2PStr((Ptr) aStringOfText);
 			
 			/*
 			 * Carrige return characters mess up DrawString, so they are removed.
@@ -221,15 +221,15 @@ void DoneDrawingPagesOfATextFile( Ptr myText, long	TextLong)
 			 * for the programmer!
 			 */
 			 
-			if ( aStringOfText[ aStringOfText[0]] == '\n') aStringOfText[ aStringOfText[0]] = ' ';
+			if (aStringOfText[ aStringOfText[0]] == '\n') aStringOfText[ aStringOfText[0]] = ' ';
 			MoveTo(10, 14 * i);
-			DrawString( aStringOfText);
+			DrawString(aStringOfText);
 			
 			myText += 250;
 	}
 }
 
-void PrintTEHandle( TEHandle hTE)
+void PrintTEHandle(TEHandle hTE)
 {
 #define Margins 20
 
@@ -252,17 +252,17 @@ void PrintTEHandle( TEHandle hTE)
 	oldDest = (*hTE)->destRect;
 	oldPort	= (*hTE)->inPort;
 	
-	SetPort( (GrafPtr) printPort);
-	SetRect( &zeroRect, 0, 0, 0, 0 );
+	SetPort((GrafPtr) printPort);
+	SetRect(&zeroRect, 0, 0, 0, 0 );
 	
 	rView = (*hPrint)->prInfo.rPage;
-	InsetRect( &rView, Margins, Margins );
+	InsetRect(&rView, Margins, Margins );
 	(*hTE)->inPort = (GrafPtr) printPort;
 	(*hTE)->destRect = rView;
 	(*hTE)->viewRect = rView;
-	TECalText( hTE );
+	TECalText(hTE );
 	totalLines = (*hTE)->nLines;
-	totalHeight = TEGetHeight( totalLines, 0, hTE );
+	totalHeight = TEGetHeight(totalLines, 0, hTE );
 	(*hTE)->destRect.bottom = (*hTE)->destRect.top + totalHeight;
 	
 	abort = false;
@@ -270,36 +270,36 @@ void PrintTEHandle( TEHandle hTE)
 	
 	while (abort != true && currentLine <= totalLines)
 	{
-		PrOpenPage( printPort, NULL );
+		PrOpenPage(printPort, NULL );
 		scrollAmount = 0;
-		ClipRect( &(*hPrint)->prInfo.rPage );
+		ClipRect(&(*hPrint)->prInfo.rPage );
 		
 		viewHeight = (*hTE)->viewRect.bottom - (*hTE)->viewRect.top + 1;
 
 		//	{ figure out how many lines there are per page }
 	
-		while ((( scrollAmount + TEGetHeight( currentLine, currentLine, hTE ) ) <= viewHeight )
-			&& ( currentLine <= totalLines ) )
+		while (((scrollAmount + TEGetHeight(currentLine, currentLine, hTE ) ) <= viewHeight )
+			&& (currentLine <= totalLines ) )
 			{
-				scrollAmount = scrollAmount + TEGetHeight( currentLine, currentLine, hTE );
+				scrollAmount = scrollAmount + TEGetHeight(currentLine, currentLine, hTE );
 				currentLine = currentLine + 1;
 			}
 		
 		(*hTE)->viewRect.bottom = scrollAmount + Margins;	//{ Add margins since top has a margin }
-		TEDeactivate( hTE ); 								//{ Deactive the edit record so we don't print the cursor or selection range }
-		TEUpdate( &(*hTE)->viewRect, hTE ); 				//{ print the page }
-		ClipRect( &zeroRect); 								//{ Close clipping so that TEScroll doesn't redraw the text }
-		TEScroll( 0, -scrollAmount, hTE ); 					//{ scroll the page so we can print the next one }
+		TEDeactivate(hTE ); 								//{ Deactive the edit record so we don't print the cursor or selection range }
+		TEUpdate(&(*hTE)->viewRect, hTE ); 				//{ print the page }
+		ClipRect(&zeroRect); 								//{ Close clipping so that TEScroll doesn't redraw the text }
+		TEScroll(0, -scrollAmount, hTE ); 					//{ scroll the page so we can print the next one }
 		(*hTE)->viewRect.bottom = rView.bottom; 			//{ reset bottom to full page }
 
 		if (PrError() == iPrAbort) abort = true;
-		PrClosePage( printPort ); 						//{ close everything up }
+		PrClosePage(printPort ); 						//{ close everything up }
 	}
 	
 	(*hTE)->inPort = oldPort;
 	(*hTE)->viewRect = oldView;
 	(*hTE)->destRect = oldDest;
-	TECalText( hTE);
+	TECalText(hTE);
 	
 #endif
 }

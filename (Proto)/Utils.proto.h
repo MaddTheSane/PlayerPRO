@@ -29,49 +29,49 @@ void OSType2Str(OSType, Str255);
 
 static inline void ByteSwapMADSpec(MADSpec *toSwap)
 {
-	MOT32( &toSwap->MAD);
-	MOT16( &toSwap->speed);
-	MOT16( &toSwap->tempo);
-	MOT32( &toSwap->EPitch);
-	MOT32( &toSwap->ESpeed);
+	MOT32(&toSwap->MAD);
+	MOT16(&toSwap->speed);
+	MOT16(&toSwap->tempo);
+	MOT32(&toSwap->EPitch);
+	MOT32(&toSwap->ESpeed);
 }
 
 static inline void ByteSwapPatHeader(PatHeader *toSwap)
 {
-	MOT32( &toSwap->size);
-	MOT32( &toSwap->compMode);
-	MOT32( &toSwap->patBytes);
-	MOT32( &toSwap->unused2);
+	MOT32(&toSwap->size);
+	MOT32(&toSwap->compMode);
+	MOT32(&toSwap->patBytes);
+	MOT32(&toSwap->unused2);
 }
 
 static inline void ByteSwapInstrData(InstrData *toSwap)
 {
 	int x;
-	MOT16( &toSwap->numSamples);
-	MOT16( &toSwap->firstSample);
-	MOT16( &toSwap->volFade);
-	MOT16( &toSwap->MIDI);
-	MOT16( &toSwap->MIDIType);
+	MOT16(&toSwap->numSamples);
+	MOT16(&toSwap->firstSample);
+	MOT16(&toSwap->volFade);
+	MOT16(&toSwap->MIDI);
+	MOT16(&toSwap->MIDIType);
 	
 	for (x = 0; x < 12; x++)
 	{
-		MOT16( &toSwap->volEnv[ x].pos);
-		MOT16( &toSwap->volEnv[ x].val);
+		MOT16(&toSwap->volEnv[ x].pos);
+		MOT16(&toSwap->volEnv[ x].val);
 		
-		MOT16( &toSwap->pannEnv[ x].pos);
-		MOT16( &toSwap->pannEnv[ x].val);
+		MOT16(&toSwap->pannEnv[ x].pos);
+		MOT16(&toSwap->pannEnv[ x].val);
 		
-		MOT16( &toSwap->pitchEnv[ x].pos);
-		MOT16( &toSwap->pitchEnv[ x].val);
+		MOT16(&toSwap->pitchEnv[ x].pos);
+		MOT16(&toSwap->pitchEnv[ x].val);
 	}
 }
 
 static inline void ByteSwapsData(sData *toSwap)
 {
-	MOT32( &toSwap->size);
-	MOT32( &toSwap->loopBeg);
-	MOT32( &toSwap->loopSize);
-	MOT16( &toSwap->c2spd);
+	MOT32(&toSwap->size);
+	MOT32(&toSwap->loopBeg);
+	MOT32(&toSwap->loopSize);
+	MOT16(&toSwap->c2spd);
 }
 
 void pStrcpy(register unsigned char *, register const unsigned char *);

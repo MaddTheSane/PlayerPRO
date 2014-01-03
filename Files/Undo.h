@@ -19,6 +19,6 @@ typedef struct
 	long			dataSize;
 } UndoCmd;
 
-void SaveUndo( short UndoType, short ID, Str255 textMenu);
+void SaveUndo(short UndoType, short ID, Str255 textMenu);
 
 #endif

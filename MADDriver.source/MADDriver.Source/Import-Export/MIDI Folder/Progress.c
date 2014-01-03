@@ -27,25 +27,25 @@ void InitRollCrsr(void)
 	short		i;
 	CursHandle	tempH;
 	
-	myCursor = (Cursor*) NewPtr( 30 * sizeof( Cursor));
+	myCursor = (Cursor*) NewPtr(30 * sizeof(Cursor));
 	
 	previousTime = 0;
 
-	tempHandle = GetResource( 'acur', 200);
-	DetachResource( tempHandle);
-	HLock( tempHandle);
-	BlockMoveData( *tempHandle, &MyCrsrRec, GetHandleSize( tempHandle));
-	HUnlock( tempHandle);
-	DisposeHandle( tempHandle);
+	tempHandle = GetResource('acur', 200);
+	DetachResource(tempHandle);
+	HLock(tempHandle);
+	BlockMoveData(*tempHandle, &MyCrsrRec, GetHandleSize(tempHandle));
+	HUnlock(tempHandle);
+	DisposeHandle(tempHandle);
 	
 	for (i = 0; i < MyCrsrRec.total; i++)
 	{
-		tempH = GetCursor( MyCrsrRec.no[ i*2]);
-		DetachResource( (Handle) tempH);
-		HLock( (Handle) tempH);
+		tempH = GetCursor(MyCrsrRec.no[ i*2]);
+		DetachResource((Handle) tempH);
+		HLock((Handle) tempH);
 			myCursor[ i] = **tempH;
-		HUnlock( (Handle) tempH);
-		DisposeHandle( (Handle) tempH);
+		HUnlock((Handle) tempH);
+		DisposeHandle((Handle) tempH);
 	}
 }
 
@@ -57,10 +57,10 @@ void RollCursor(void)
 	MyCrsrRec.current ++;
 	if (MyCrsrRec.current >= MyCrsrRec.total) MyCrsrRec.current = 0;
 	
-	SetCursor( &myCursor[ MyCrsrRec.current]);
+	SetCursor(&myCursor[ MyCrsrRec.current]);
 }
 
 void CloseRollCrsrc()
 {
-	DisposePtr( (Ptr) myCursor);
+	DisposePtr((Ptr) myCursor);
 }

@@ -32,7 +32,7 @@ OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, 
 		acSize = maximumSize;
 	else
 		acSize = dataSize;
-	BlockMoveData( *h, dataBuffer, acSize);
+	BlockMoveData(*h, dataBuffer, acSize);
 	
 	if (actualSize) *actualSize = acSize;
 	
@@ -45,7 +45,7 @@ extern OSErr PPIdentifyFile(MADLibrary *lib, Ptr, Ptr);
 /****** MAIN FUNCTION ********/
 /*****************************/
 
-int main( int argc, char* argv[])
+int main(int argc, char* argv[])
 {
 	Boolean					End = false;
 	MADDriverRec			*MADDriver;
@@ -94,28 +94,28 @@ int main( int argc, char* argv[])
 		 */
 		
 		/* or AUTOMATIC DRIVER CONFIGURATION FOR CURRENT MAC HARDWARE*/
-		MADGetBestDriver( &init);
+		MADGetBestDriver(&init);
 		
 		init.driverMode = CoreAudioDriver;
 		
 		{
 			FSSpec	appSpec;
 			
-			HGetVol( NULL, &appSpec.vRefNum, &appSpec.parID);
+			HGetVol(NULL, &appSpec.vRefNum, &appSpec.parID);
 			
 			pStrcpy(appSpec.name, "\pPlugs");
 			
-			if (MADInitLibrary( &appSpec, init.sysMemory, &MADLib) != noErr) DebugStr("\pSmall Problem...");
+			if (MADInitLibrary(&appSpec, init.sysMemory, &MADLib) != noErr) DebugStr("\pSmall Problem...");
 		}
 		
-		if (MADCreateDriver( &init, MADLib, &MADDriver) != noErr) DebugStr("\pSmall Problem...");
+		if (MADCreateDriver(&init, MADLib, &MADDriver) != noErr) DebugStr("\pSmall Problem...");
 	}
 	/*********************************/
 	/*********************************/
 	/*********************************/
 	
 	
-	MADStartDriver( MADDriver);				// Turn interrupt driver function ON
+	MADStartDriver(MADDriver);				// Turn interrupt driver function ON
 	
 	/****** Open a music file via Plugs ********/
 	while (End == false)
@@ -123,7 +123,7 @@ int main( int argc, char* argv[])
 		OSErr					iErr;
 		FSSpec				spec;
 		
-		FlushEvents( everyEvent, 0);
+		FlushEvents(everyEvent, 0);
 		
 		
 		// Open Get File Dialog
@@ -134,10 +134,10 @@ int main( int argc, char* argv[])
 			
 			
 			// default behavior for browser and dialog:
-			iErr = NavGetDefaultDialogOptions( &dialogOptions);
+			iErr = NavGetDefaultDialogOptions(&dialogOptions);
 			
-			openList = (NavTypeListHandle) NewHandle( sizeof(NavTypeList) + 2 * sizeof(OSType));
-			if ( openList ) HLock((Handle)openList);
+			openList = (NavTypeListHandle) NewHandle(sizeof(NavTypeList) + 2 * sizeof(OSType));
+			if (openList ) HLock((Handle)openList);
 			
 			(*openList)->componentSignature = 'SNPL';
 			(*openList)->osTypeCount		= 2;
@@ -172,13 +172,13 @@ int main( int argc, char* argv[])
 					
 					if ((iErr = AEGetNthDesc(&(theReply.selection),index,typeFSS, &keyword, &resultDesc)) == noErr)
 					{
-						if ((iErr = MyAEGetDescData ( &resultDesc, NULL, &spec, sizeof ( FSSpec ), NULL )) == noErr)
+						if ((iErr = MyAEGetDescData (&resultDesc, NULL, &spec, sizeof (FSSpec ), NULL )) == noErr)
 							
 							iErr = AEDisposeDesc(&resultDesc);
 					}
 				}
 				
-				iErr = NavDisposeReply( &theReply);	// clean up after ourselves	
+				iErr = NavDisposeReply(&theReply);	// clean up after ourselves	
 			}
 			else iErr = -1;
 		}
@@ -190,9 +190,9 @@ int main( int argc, char* argv[])
 #if 0
 			FInfo	info;
 			
-			FSpGetFInfo( &spec, &info);
+			FSpGetFInfo(&spec, &info);
 			
-			OSType2Ptr( info.fdType, type);
+			OSType2Ptr(info.fdType, type);
 #else
 			Str63 filename;
 			memcpy(filename, spec.name, spec.name[0]+1);
@@ -203,13 +203,13 @@ int main( int argc, char* argv[])
 			PPIdentifyFile(MADLib, type, filename);
 			HSetVol(NULL, restoreSpec.vRefNum, restoreSpec.parID);
 #endif
-			if (MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
+			if (MADPlugAvailable(MADLib, type))		// Is available a plug to open this file?
 			{
-				if (MADLoadMusicFSpFile( MADLib, &MADMusic, type, &spec) == noErr)		// Load this music with help of Plugs
+				if (MADLoadMusicFSpFile(MADLib, &MADMusic, type, &spec) == noErr)		// Load this music with help of Plugs
 					// in application folder, in 'Plugs' folder or internal resources
 				{
-					MADAttachDriverToMusic( MADDriver, MADMusic, NULL);
-					MADPlayMusic( MADDriver);					// Read the current partition in memory
+					MADAttachDriverToMusic(MADDriver, MADMusic, NULL);
+					MADPlayMusic(MADDriver);					// Read the current partition in memory
 					
 					while (!Button())
 					{
@@ -220,19 +220,19 @@ int main( int argc, char* argv[])
 						
 						long	fT, cT;
 						
-						MADGetMusicStatus( MADDriver, &fT, &cT);	// Some infos about current music
+						MADGetMusicStatus(MADDriver, &fT, &cT);	// Some infos about current music
 					}
-					MADStopMusic( MADDriver);					// Stop reading current partition
-					MADCleanDriver( MADDriver);
-					MADDisposeMusic( &MADMusic, MADDriver);			// Dispose the current music
+					MADStopMusic(MADDriver);					// Stop reading current partition
+					MADCleanDriver(MADDriver);
+					MADDisposeMusic(&MADMusic, MADDriver);			// Dispose the current music
 				}
 			}
 		}
 	}
-	MADStopDriver( MADDriver);				// Stop driver interrupt function
-	MADDisposeDriver( MADDriver);			// Dispose music driver
-	MADDisposeLibrary( MADLib);				// Close music library
-	FlushEvents( everyEvent, 0);			// Kill your events and byebye...
+	MADStopDriver(MADDriver);				// Stop driver interrupt function
+	MADDisposeDriver(MADDriver);			// Dispose music driver
+	MADDisposeLibrary(MADLib);				// Close music library
+	FlushEvents(everyEvent, 0);			// Kill your events and byebye...
 	
 	return EXIT_SUCCESS;
 }

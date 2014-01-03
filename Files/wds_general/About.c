@@ -8,10 +8,10 @@
 
 pascal Boolean AboutFilter(DialogPtr, EventRecord *, short *);
 pascal void ScrollProc (ControlHandle theControl, short theCode);
-void ScrollTextClose( Boolean RemoveVBL);
-void ScrollTextInit( Boolean, Boolean);
-void InitBounceBall( short xx, short yy, short TypeB);
-void DoInternetMenu( short theItem);
+void ScrollTextClose(Boolean RemoveVBL);
+void ScrollTextInit(Boolean, Boolean);
+void InitBounceBall(short xx, short yy, short TypeB);
+void DoInternetMenu(short theItem);
 
 //pascal Boolean AboutFilter(DialogPtr, EventRecord *, short *);
 
@@ -25,7 +25,7 @@ static	GWorldPtr		gGWorldAbout = NULL, gMaskWorld = NULL, gResultWorld = NULL, g
 static	PicHandle		backPict;
 static	RgnHandle		maskHndl;
 
-Boolean	IsPressed( unsigned short );
+Boolean	IsPressed(unsigned short );
 
 extern	Boolean		DebuggingMode;
 extern	KeyMap		km;
@@ -37,15 +37,15 @@ void MegaPurge(void)
 	long	lBytesFree, contigSize, i;
 	Ptr		aPtr = NULL;
 
-	PurgeMem( FreeMem());
+	PurgeMem(FreeMem());
 	
-	PurgeSpace( &lBytesFree, &contigSize);
+	PurgeSpace(&lBytesFree, &contigSize);
 	
 	contigSize = FreeMem();
 
 	while (aPtr == NULL)
 	{
-		aPtr = MyNewPtr( contigSize);
+		aPtr = MyNewPtr(contigSize);
 		contigSize -= 2;
 	}
 	
@@ -58,11 +58,11 @@ void MegaPurge(void)
 	}
 	
 	
-	MyDisposePtr( & aPtr);
+	MyDisposePtr(& aPtr);
 }
 
 
-/*void MyScrollRect( Rect	*rect)
+/*void MyScrollRect(Rect	*rect)
 {
 	short	larg, haut, i, x;
 	long	*src, *dst;
@@ -82,7 +82,7 @@ void MegaPurge(void)
 	}
 }*/
 
-void DoScrollText( DialogPtr aDia)
+void DoScrollText(DialogPtr aDia)
 {
 	Str255		tempStr;
 	GDHandle	oldGDeviceH;
@@ -93,34 +93,34 @@ void DoScrollText( DialogPtr aDia)
 	Handle		itemHandle;
 	RGBColor	color;
 
-	GetGWorld( &oldPort, &oldGDeviceH);
+	GetGWorld(&oldPort, &oldGDeviceH);
 
-	SetGWorld( gGWorldAbout, NULL);
+	SetGWorld(gGWorldAbout, NULL);
 
-	ScrollRect( &(*GetPortPixMap( gGWorldAbout))->bounds, 0, -1, NULL);
+	ScrollRect(&(*GetPortPixMap(gGWorldAbout))->bounds, 0, -1, NULL);
 
 	if ((curPosT % 60) == 0)
 	{
-		TextSize( 24);
-		TextFont( kFontIDHelvetica);
-		TextFace( bold);
-		BackColor( blackColor);
+		TextSize(24);
+		TextFont(kFontIDHelvetica);
+		TextFace(bold);
+		BackColor(blackColor);
 
 		color .red = color .green = color .blue = 30583;
-		RGBForeColor( &color);
-		GetIndString( tempStr, 131, curPosT/60);
-	/*	OffsetRect( &textRect, 2, 2);
-		TETextBox( tempStr + 1, tempStr[ 0], &textRect, teCenter);
-		OffsetRect( &textRect, -2, -2);*/
-		SwitchColor( curPosT % 32);
+		RGBForeColor(&color);
+		GetIndString(tempStr, 131, curPosT/60);
+	/*	OffsetRect(&textRect, 2, 2);
+		TETextBox(tempStr + 1, tempStr[ 0], &textRect, teCenter);
+		OffsetRect(&textRect, -2, -2);*/
+		SwitchColor(curPosT % 32);
 		
-		TETextBox( tempStr + 1, tempStr[ 0], &textRect, teCenter);
+		TETextBox(tempStr + 1, tempStr[ 0], &textRect, teCenter);
 		
-	//	BackColor( whiteColor);
+	//	BackColor(whiteColor);
 	//	MoveTo(textRect.left, textRect.bottom);
-	//	DrawString( tempStr);
+	//	DrawString(tempStr);
 		
-		ForeColor( blackColor);
+		ForeColor(blackColor);
 		
 		if (tempStr[ 0] == 0) curPosT = 1;
 	}
@@ -128,14 +128,14 @@ void DoScrollText( DialogPtr aDia)
 	curPosT++;
 	
 
-	SetGWorld( oldPort, oldGDeviceH);
+	SetGWorld(oldPort, oldGDeviceH);
 
-	ForeColor( blackColor);
-	BackColor( whiteColor);
+	ForeColor(blackColor);
+	BackColor(whiteColor);
 
-/*CopyDeepMask(	(BitMap*)	*GetPortPixMap( gGWorldAbout),
-				(BitMap*) 	*GetPortPixMap( gMaskWorld),
-				(BitMap*) 	*GetPortPixMap( gResultWorld),
+/*CopyDeepMask(	(BitMap*)	*GetPortPixMap(gGWorldAbout),
+				(BitMap*) 	*GetPortPixMap(gMaskWorld),
+				(BitMap*) 	*GetPortPixMap(gResultWorld),
 							&scrollRect,
 							&scrollRect,
 							&scrollRect,
@@ -145,23 +145,23 @@ void DoScrollText( DialogPtr aDia)
 //CopyDeepMask(srcBits, maskBits, dstBits, srcRect, maskRect, dstRect, mode, maskRgn);
 
 
-	CopyBits(	(BitMap*) 	*GetPortPixMap( gMaskWorld),
-				(BitMap*)	*GetPortPixMap( gResultWorld),
+	CopyBits(	(BitMap*) 	*GetPortPixMap(gMaskWorld),
+				(BitMap*)	*GetPortPixMap(gResultWorld),
 							&scrollRect,
 							&scrollRect,
 							srcCopy,
 							NULL);
 
-	CopyBits(	(BitMap*) 	*GetPortPixMap( gGWorldAbout),
-				(BitMap*)	*GetPortPixMap( gResultWorld),
+	CopyBits(	(BitMap*) 	*GetPortPixMap(gGWorldAbout),
+				(BitMap*)	*GetPortPixMap(gResultWorld),
 							&scrollRect,
 							&scrollRect,
 							addMax,
 							NULL);
 
 
-	CopyBits(	(BitMap*) 	*GetPortPixMap( gResultWorld),
- 						(BitMap*) *GetPortPixMap(GetDialogPort( aDia)),
+	CopyBits(	(BitMap*) 	*GetPortPixMap(gResultWorld),
+ 						(BitMap*) *GetPortPixMap(GetDialogPort(aDia)),
  						&scrollRect,
  						&scrollRect,
  						srcCopy,
@@ -184,27 +184,27 @@ void ShowPerformance(void)
 	Ptr				tempPtr;
 	Boolean			MusiqueOn;
 	
-	aDialog = GetNewDialog( 158, NULL, (WindowPtr) -1L);
-	SetPortDialogPort( aDialog);
+	aDialog = GetNewDialog(158, NULL, (WindowPtr) -1L);
+	SetPortDialogPort(aDialog);
 	
 #define CSTTEST	4000
 	
 	do
 	{
-		ModalDialog( MyDlgFilterDesc, &itemHit);
+		ModalDialog(MyDlgFilterDesc, &itemHit);
 		if (itemHit == 7) DebuggingMode = true;
 		else if(itemHit == 8) DebuggingMode = false;
 		else if (itemHit == 1)
 		{
-			SetCursor( &watchCrsr);
+			SetCursor(&watchCrsr);
 		
 		//	MusiqueOn = MADDriver->Reading;
-			MADReset( MADDriver);
-			MADStopDriver( MADDriver);
+			MADReset(MADDriver);
+			MADStopDriver(MADDriver);
 			
 			MADDriver->Reading = true;
 
-			tempPtr = MyNewPtr( 8L*MADDriver->ASCBUFFERReal);
+			tempPtr = MyNewPtr(8L*MADDriver->ASCBUFFERReal);
 			
 			oldTicks = TickCount();
 			for (i = 0 ; i < CSTTEST; i++)
@@ -226,37 +226,37 @@ void ShowPerformance(void)
 				
 				/** TEST ROUTINES **/
 			
-				NoteAnalyse( MADDriver);
-			//	Play16Stereo( MADDriver);
+				NoteAnalyse(MADDriver);
+			//	Play16Stereo(MADDriver);
 			
 				/*******************/
 			}
 			
 			i = TickCount() - oldTicks - normal;
 			
-			NumToString( i, aStr);
-			SetDText( aDialog, 4, aStr);
+			NumToString(i, aStr);
+			SetDText(aDialog, 4, aStr);
 			
 			i *= 100;
-			sprintf( (Ptr) aStr, "%.2f", (double) i / (double) CSTTEST);
-			MyC2PStr( (Ptr) aStr);
+			sprintf((Ptr) aStr, "%.2f", (double) i / (double) CSTTEST);
+			MyC2PStr((Ptr) aStr);
 			pStrcat(aStr, "\p %");
-			SetDText( aDialog, 6, aStr);
+			SetDText(aDialog, 6, aStr);
 
-			MyDisposePtr( & tempPtr);
+			MyDisposePtr(& tempPtr);
 			
-			MADReset( MADDriver);
-			MADStartDriver( MADDriver);
+			MADReset(MADDriver);
+			MADStartDriver(MADDriver);
 		//	MADDriver->Reading = MusiqueOn;
 			
-			SetCursor( GetQDGlobalsArrow( &qdarrow));
+			SetCursor(GetQDGlobalsArrow(&qdarrow));
 		}
 		else if (itemHit == 9) MegaPurge();
 	
 	}while (itemHit != 2);
 	
-	FlushEvents( everyEvent, 0);
-	DisposeDialog( aDialog);
+	FlushEvents(everyEvent, 0);
+	DisposeDialog(aDialog);
 }
 
 void DoAbout(void)
@@ -272,59 +272,59 @@ void DoAbout(void)
 	CGrafPtr		oldPort;
 	PicHandle		tempPict;
 	
-	GetPort( &myPort);
+	GetPort(&myPort);
 	
-	GetKeys( km);
-	if (IsPressed( 0x31) == true)
+	GetKeys(km);
+	if (IsPressed(0x31) == true)
 	{
 		ShowPerformance();
-		SetPort( myPort);
+		SetPort(myPort);
 		return; 
 	}
 	
-	aDialog = GetNewDialog( 131, NULL, (WindowPtr) -1L);
-	SetPortDialogPort( aDialog);
+	aDialog = GetNewDialog(131, NULL, (WindowPtr) -1L);
+	SetPortDialogPort(aDialog);
 	
 	{
 	short				i;
 	Str255				text;
 	
-	GetDialogItem( aDialog, 8, &itemType, &itemHandle, &itemRect);
-	OffsetRect( &itemRect, 0, -300);
-	SetDialogItem( aDialog, 8, itemType, itemHandle, &itemRect);
+	GetDialogItem(aDialog, 8, &itemType, &itemHandle, &itemRect);
+	OffsetRect(&itemRect, 0, -300);
+	SetDialogItem(aDialog, 8, itemType, itemHandle, &itemRect);
 	}
 	
-	DrawDialog( aDialog);
+	DrawDialog(aDialog);
 	
-	GetDialogItem ( aDialog, 5, &itemType, &itemHandle, &scrollRect);
+	GetDialogItem (aDialog, 5, &itemType, &itemHandle, &scrollRect);
 	
 	ssPt.v = scrollRect.top;	ssPt.h = scrollRect.left;
-	LocalToGlobal( &ssPt);
+	LocalToGlobal(&ssPt);
 	scrollRect.left = 4*(scrollRect.left/4);		scrollRect.right = 4*(scrollRect.right/4);
 
 	textRect = scrollRect;
 	
 
-	GetGWorld( &oldPort, &oldGDeviceH);
+	GetGWorld(&oldPort, &oldGDeviceH);
 	gGWorldAbout = NULL;
 
 	scrollRect.bottom += 30;
-	NewGWorld( &gGWorldAbout, 32, &scrollRect, nil, nil, (GWorldFlags) 0);		LockPixels( GetPortPixMap( gGWorldAbout));
-	NewGWorld( &gMaskWorld, 32, &scrollRect, nil, nil, (GWorldFlags) 0);			LockPixels( GetPortPixMap( gMaskWorld));
-	NewGWorld( &gResultWorld, 32, &scrollRect, nil, nil, (GWorldFlags) 0);		LockPixels( GetPortPixMap( gResultWorld));
+	NewGWorld(&gGWorldAbout, 32, &scrollRect, nil, nil, (GWorldFlags) 0);		LockPixels(GetPortPixMap(gGWorldAbout));
+	NewGWorld(&gMaskWorld, 32, &scrollRect, nil, nil, (GWorldFlags) 0);			LockPixels(GetPortPixMap(gMaskWorld));
+	NewGWorld(&gResultWorld, 32, &scrollRect, nil, nil, (GWorldFlags) 0);		LockPixels(GetPortPixMap(gResultWorld));
 	scrollRect.bottom -= 30;
 
-	GetDialogItem( aDialog, 8, &itemType, &itemHandle, &itemRect);
-	NewGWorld( &gFreePict, 32, &itemRect, nil, nil, (GWorldFlags) 0);			LockPixels( GetPortPixMap( gFreePict));
+	GetDialogItem(aDialog, 8, &itemType, &itemHandle, &itemRect);
+	NewGWorld(&gFreePict, 32, &itemRect, nil, nil, (GWorldFlags) 0);			LockPixels(GetPortPixMap(gFreePict));
 
 	textRect.top = scrollRect.bottom;
 	textRect.bottom = textRect.top + 30;
 	
 //	HideCursor();
 	
-	backPict = GetPicture( 133);
+	backPict = GetPicture(133);
 	
-	SetRect( &destRect	,	(scrollRect.right - scrollRect.left)/2 - (*backPict)->picFrame.right/2 ,
+	SetRect(&destRect	,	(scrollRect.right - scrollRect.left)/2 - (*backPict)->picFrame.right/2 ,
 							(scrollRect.bottom - scrollRect.top)/2 - (*backPict)->picFrame.bottom/2,
 							(scrollRect.right - scrollRect.left)/2 + (*backPict)->picFrame.right/2,
 							(scrollRect.bottom - scrollRect.top)/2 + (*backPict)->picFrame.bottom/2);
@@ -337,100 +337,100 @@ void DoAbout(void)
 	
 	////////////////////////////////
 	
-	SetGWorld( gGWorldAbout, NULL);
+	SetGWorld(gGWorldAbout, NULL);
 	
-	BackColor( blackColor);
-	ForeColor( whiteColor);
-	EraseRect( &(*GetPortPixMap( gGWorldAbout))->bounds);
-	//DrawPicture( backPict, &destRect);
+	BackColor(blackColor);
+	ForeColor(whiteColor);
+	EraseRect(&(*GetPortPixMap(gGWorldAbout))->bounds);
+	//DrawPicture(backPict, &destRect);
 	
-	SetGWorld( oldPort, oldGDeviceH);
-	
-	////////////////////////////////
-
-	tempPict = GetPicture( 128);
-
-	SetGWorld( gMaskWorld, NULL);
-	
-	BackColor( blackColor);	ForeColor( whiteColor);
-	EraseRect( &(*GetPortPixMap( gMaskWorld))->bounds);
-	
-	GetDialogItem( aDialog, 1, &itemType, &itemHandle, &itemRect);
-	DrawPicture( tempPict, &itemRect);
-
-	SetGWorld( oldPort, oldGDeviceH);
-
-	ReleaseResource( (Handle) tempPict);
-
-	////////////////////////////////
-	
-	SetGWorld( gResultWorld, NULL);
-	
-	BackColor( blackColor);	ForeColor( whiteColor);
-	EraseRect( &(*GetPortPixMap( gResultWorld))->bounds);
-	
-	tempPict = GetPicture( 128);
-	GetDialogItem( aDialog, 1, &itemType, &itemHandle, &itemRect);
-	DrawPicture( tempPict, &itemRect);
-	ReleaseResource( (Handle) tempPict);
+	SetGWorld(oldPort, oldGDeviceH);
 	
 	////////////////////////////////
 
-	SetGWorld( gFreePict, NULL);
+	tempPict = GetPicture(128);
 
-	tempPict = GetPicture( 156);
-	GetDialogItem( aDialog, 8, &itemType, &itemHandle, &itemRect);
-	DrawPicture( tempPict, &itemRect);
-	ReleaseResource( (Handle) tempPict);
+	SetGWorld(gMaskWorld, NULL);
 	
-	SetGWorld( oldPort, oldGDeviceH);
+	BackColor(blackColor);	ForeColor(whiteColor);
+	EraseRect(&(*GetPortPixMap(gMaskWorld))->bounds);
+	
+	GetDialogItem(aDialog, 1, &itemType, &itemHandle, &itemRect);
+	DrawPicture(tempPict, &itemRect);
+
+	SetGWorld(oldPort, oldGDeviceH);
+
+	ReleaseResource((Handle) tempPict);
+
+	////////////////////////////////
+	
+	SetGWorld(gResultWorld, NULL);
+	
+	BackColor(blackColor);	ForeColor(whiteColor);
+	EraseRect(&(*GetPortPixMap(gResultWorld))->bounds);
+	
+	tempPict = GetPicture(128);
+	GetDialogItem(aDialog, 1, &itemType, &itemHandle, &itemRect);
+	DrawPicture(tempPict, &itemRect);
+	ReleaseResource((Handle) tempPict);
+	
+	////////////////////////////////
+
+	SetGWorld(gFreePict, NULL);
+
+	tempPict = GetPicture(156);
+	GetDialogItem(aDialog, 8, &itemType, &itemHandle, &itemRect);
+	DrawPicture(tempPict, &itemRect);
+	ReleaseResource((Handle) tempPict);
+	
+	SetGWorld(oldPort, oldGDeviceH);
 
 	////////////////////////////////	
 
-	ForeColor( blackColor);
-	BackColor( whiteColor);
+	ForeColor(blackColor);
+	BackColor(whiteColor);
 
 	zeroPt.h = 0; zeroPt.v = 0;
-	LocalToGlobal( &zeroPt);
+	LocalToGlobal(&zeroPt);
 	
 	oldTicks = TickCount() + 10;
 	
 	curPosT = 50;
 	
-//	if (theDepth == 8) InitBounceBall( zeroPt.h, zeroPt.v, 0);
+//	if (theDepth == 8) InitBounceBall(zeroPt.h, zeroPt.v, 0);
 
 	while (!Button())
 	{
 		while (oldTicks >= TickCount()) DoGlobalNull();
 		oldTicks = TickCount() + 1;
 		
-		DoScrollText( aDialog);
+		DoScrollText(aDialog);
 		
-		WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+		WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 	
-		if (QDIsPortBuffered( GetDialogPort( aDialog)))
-    					QDFlushPortBuffer( GetDialogPort( aDialog), NULL);
+		if (QDIsPortBuffered(GetDialogPort(aDialog)))
+    					QDFlushPortBuffer(GetDialogPort(aDialog), NULL);
 
 	}
 //	if (theDepth == 8) CloseBounceBall();
 	
-	ReleaseResource( (Handle) backPict);
+	ReleaseResource((Handle) backPict);
 
 	CloseScrollText();
 	
 //	ShowCursor();
 	
-	UnlockPixels( GetPortPixMap( gGWorldAbout));		DisposeGWorld( gGWorldAbout);
-	UnlockPixels( GetPortPixMap( gResultWorld));		DisposeGWorld( gResultWorld);
-	UnlockPixels( GetPortPixMap( gMaskWorld));			DisposeGWorld( gMaskWorld);
-	UnlockPixels( GetPortPixMap( gFreePict));			DisposeGWorld( gFreePict);
+	UnlockPixels(GetPortPixMap(gGWorldAbout));		DisposeGWorld(gGWorldAbout);
+	UnlockPixels(GetPortPixMap(gResultWorld));		DisposeGWorld(gResultWorld);
+	UnlockPixels(GetPortPixMap(gMaskWorld));			DisposeGWorld(gMaskWorld);
+	UnlockPixels(GetPortPixMap(gFreePict));			DisposeGWorld(gFreePict);
 	
 	while (Button()) {};
 	
-	WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+	WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 	
-	FlushEvents( everyEvent, 0);
-	DisposeDialog( aDialog);
+	FlushEvents(everyEvent, 0);
+	DisposeDialog(aDialog);
 }
 
 static	RgnHandle	mBarRgn;
@@ -441,7 +441,7 @@ void HideMenuBar2(void)
 	Point		xy = {0,0};
 	BitMap		screenBits;
 
-	GetQDGlobalsScreenBits( &screenBits);
+	GetQDGlobalsScreenBits(&screenBits);
 
 	SetRect(	&mBarRect,
 				screenBits.bounds.left,
@@ -449,25 +449,25 @@ void HideMenuBar2(void)
 				screenBits.bounds.right,
 				screenBits.bounds.bottom);
 	
-	PaintRect( &mBarRect);
+	PaintRect(&mBarRect);
 	
 	mBarRgn = NewRgn();
 	RectRgn(mBarRgn, &mBarRect);
 	
-	DiffRgn( GetGrayRgn(), mBarRgn, GetGrayRgn());
+	DiffRgn(GetGrayRgn(), mBarRgn, GetGrayRgn());
 	
 	(**GetGDevice()).gdRect.bottom -= 32;
-	SetDepth( GetGDevice(), 8, 0001, 0001);
+	SetDepth(GetGDevice(), 8, 0001, 0001);
 }
 
 void ShowMenuBar2(void)
 {
 	(**GetGDevice()).gdRect.bottom += 32;
 	
-	UnionRgn( GetGrayRgn(), mBarRgn, GetGrayRgn());
+	UnionRgn(GetGrayRgn(), mBarRgn, GetGrayRgn());
 	DisposeRgn(mBarRgn);
 	
-	SetDepth( GetGDevice(), 8, 0001, 0001);
+	SetDepth(GetGDevice(), 8, 0001, 0001);
 }
 
 Boolean DoHelp(void)
@@ -481,59 +481,59 @@ Boolean DoHelp(void)
 	ControlHandle	vScroll;
 	//Boolean			ScrollBasActive;
 	long			GestaltResponse, StartupWait;
-	ModalFilterUPP	AboutFilterDesc = NewModalFilterUPP( AboutFilter);
+	ModalFilterUPP	AboutFilterDesc = NewModalFilterUPP(AboutFilter);
 	Str255			str, str2;
 	
-	GetPort( &myPort);
+	GetPort(&myPort);
 	
-	Gestalt( gestaltProcessorType, &GestaltResponse);
+	Gestalt(gestaltProcessorType, &GestaltResponse);
 	
-	theDialog = GetNewDialog( 130, NULL, (WindowPtr) -1L);
-	SetPortDialogPort( theDialog);
-	DrawDialog( theDialog);
+	theDialog = GetNewDialog(130, NULL, (WindowPtr) -1L);
+	SetPortDialogPort(theDialog);
+	DrawDialog(theDialog);
 	
-	GetDialogItem ( theDialog, 2, &itemType, &itemHandle, &itemRect);
+	GetDialogItem (theDialog, 2, &itemType, &itemHandle, &itemRect);
 	itemRect.left++;  itemRect.right--; itemRect.top++; itemRect.bottom--;
-	hTE = TEStyleNew( &itemRect, &itemRect);
+	hTE = TEStyleNew(&itemRect, &itemRect);
 	
-	GetDialogItem ( theDialog, 2, &itemType, &itemHandle, &itemRect);
+	GetDialogItem (theDialog, 2, &itemType, &itemHandle, &itemRect);
 	itemRect.left = itemRect.right;
 	itemRect.right = itemRect.left + 16;
 	
-	vScroll = NewControl( GetDialogWindow( theDialog), &itemRect, "\p", true, 0, 0, 0, gScrollBarID, 0);
-	SetControlReference( vScroll, 1);
+	vScroll = NewControl(GetDialogWindow(theDialog), &itemRect, "\p", true, 0, 0, 0, gScrollBarID, 0);
+	SetControlReference(vScroll, 1);
 	
-	Text = GetResource( 'TEXT', 5632);
-	DetachResource( Text);
-	HLock( Text);
+	Text = GetResource('TEXT', 5632);
+	DetachResource(Text);
+	HLock(Text);
 	
-	theStyle = (StScrpHandle) GetResource( 'styl', 5632);
-	DetachResource( (Handle) theStyle);
+	theStyle = (StScrpHandle) GetResource('styl', 5632);
+	DetachResource((Handle) theStyle);
 	
-	TESetAlignment( teCenter, hTE);
-	TEStyleInsert( *Text, GetHandleSize( Text), theStyle, hTE);
+	TESetAlignment(teCenter, hTE);
+	TEStyleInsert(*Text, GetHandleSize(Text), theStyle, hTE);
 	
-	//TECalText( hTE);
+	//TECalText(hTE);
 	
-	SetScroll( vScroll, hTE);
+	SetScroll(vScroll, hTE);
 	
 	AboutFirstCall = true;
 	
-	GetDialogItem ( theDialog, 2, &itemType, &itemHandle, &itemRect);
+	GetDialogItem (theDialog, 2, &itemType, &itemHandle, &itemRect);
 	itemRect.right++;
-	FrameRect( &itemRect);
+	FrameRect(&itemRect);
 	
-	SetDialogDefaultItem( theDialog, 1);
+	SetDialogDefaultItem(theDialog, 1);
 	
-	SetDText( theDialog, 4, "\p");
+	SetDText(theDialog, 4, "\p");
 	StartupWait = 0;
-	//ControlSwitch( 1, theDialog, 255);
-	//ControlSwitch( 5, theDialog, 255);
-	ControlSwitch( 7, theDialog, 255);
+	//ControlSwitch(1, theDialog, 255);
+	//ControlSwitch(5, theDialog, 255);
+	ControlSwitch(7, theDialog, 255);
 	do {
-		ModalDialog( AboutFilterDesc, &itemHit);
+		ModalDialog(AboutFilterDesc, &itemHit);
 		
-		switch( itemHit)
+		switch(itemHit)
 		{
 			case 1:
 				if (StartupWait != 0) itemHit = 0;
@@ -546,20 +546,20 @@ Boolean DoHelp(void)
 				{
 					if (TickCount() >= StartupWait)
 					{
-						ControlSwitch( 7, theDialog, 0);
+						ControlSwitch(7, theDialog, 0);
 						
 						StartupWait = 0;
 						
-						SetDText( theDialog, 4, "\p");
+						SetDText(theDialog, 4, "\p");
 					}
 					else
 					{
-						NumToString( 1 + ((StartupWait - TickCount())/60), str);
+						NumToString(1 + ((StartupWait - TickCount())/60), str);
 						
-						pStrcpy( str2, "\pWait ");
-						pStrcat( str2, str);
-						pStrcat( str2, "\p s");
-						SetDText( theDialog, 4, str2);
+						pStrcpy(str2, "\pWait ");
+						pStrcat(str2, str);
+						pStrcat(str2, "\p s");
+						SetDText(theDialog, 4, str2);
 					}
 				}
 				break;
@@ -567,20 +567,20 @@ Boolean DoHelp(void)
 		
 	}while (itemHit != 1 && itemHit != 6 && itemHit != 7);
 	
-	DisposeDialog( theDialog);
-	TEDispose( hTE);
-	HUnlock( Text);
-	MyDisposHandle( & Text);
-	MyDisposHandle( (Handle*) &theStyle);
+	DisposeDialog(theDialog);
+	TEDispose(hTE);
+	HUnlock(Text);
+	MyDisposHandle(& Text);
+	MyDisposHandle((Handle*) &theStyle);
 	
 	UpdateALLWindow();
 	
-	DisposeModalFilterUPP( AboutFilterDesc);
+	DisposeModalFilterUPP(AboutFilterDesc);
 	
-	switch( itemHit)
+	switch(itemHit)
 	{
 		case 6:
-			DoInternetMenu( 1);
+			DoInternetMenu(1);
 			break;
 			
 		case 7:
@@ -589,7 +589,7 @@ Boolean DoHelp(void)
 	return false;
 }
 
-void MyAdjustText ( ControlHandle vScroll)
+void MyAdjustText (ControlHandle vScroll)
 {
 	short			oldScroll, newScroll, delta;
 	double			height;
@@ -599,14 +599,14 @@ void MyAdjustText ( ControlHandle vScroll)
 	CurrentTE = hTE;
 	
 	oldScroll = (**CurrentTE).viewRect.top - (**CurrentTE).destRect.top;
-	hStyle = TEGetStyleHandle( hTE);
+	hStyle = TEGetStyleHandle(hTE);
 	
-	height = TEGetHeight( 0, (*CurrentTE)->nLines, CurrentTE);
+	height = TEGetHeight(0, (*CurrentTE)->nLines, CurrentTE);
 	height /= (*CurrentTE)->nLines;
 
 	newScroll = GetControlValue(vScroll) * height;
 	delta = oldScroll - newScroll;
-	if (delta != 0) TEPinScroll( 0, delta, CurrentTE);
+	if (delta != 0) TEPinScroll(0, delta, CurrentTE);
 }
 
 void DoContent(WindowPtr theWindow, EventRecord *theEventI)
@@ -621,12 +621,12 @@ void DoContent(WindowPtr theWindow, EventRecord *theEventI)
 
 	GlobalToLocal(&theEventI->where);
 	cntlCode = FindControl(theEventI->where, theWindow, &theControl);
-	switch( cntlCode)
+	switch(cntlCode)
 	{
 	case kControlIndicatorPart:
 		if (gUseControlSize) goto LiveScroll;
 		else TrackControl(theControl, theEventI->where, NULL);
-		MyAdjustText( theControl);
+		MyAdjustText(theControl);
 	break;
 	
 	case kControlUpButtonPart:
@@ -636,9 +636,9 @@ void DoContent(WindowPtr theWindow, EventRecord *theEventI)
 
 		LiveScroll:		
 
-    	MyControlUPP = NewControlActionUPP( ScrollProc);
+    	MyControlUPP = NewControlActionUPP(ScrollProc);
 		TrackControl(theControl, theEventI->where, MyControlUPP);
-		DisposeControlActionUPP( MyControlUPP);
+		DisposeControlActionUPP(MyControlUPP);
 	break;
 	}
 	
@@ -659,7 +659,7 @@ pascal void ScrollProc (ControlHandle theControl, short theCode)
 	
 	CurrentTE = hTE;
 	
-	height = TEGetHeight( 0, (*CurrentTE)->nLines, CurrentTE);
+	height = TEGetHeight(0, (*CurrentTE)->nLines, CurrentTE);
 	height /= (*CurrentTE)->nLines;
 	
 	pageSize = ((**CurrentTE).viewRect.bottom-(**CurrentTE).viewRect.top) /  height - 1;
@@ -688,7 +688,7 @@ pascal void ScrollProc (ControlHandle theControl, short theCode)
 	
 	if (theCode != kControlIndicatorPart) SetControlValue(theControl, oldCtl+scrollAmt);
 
-	MyAdjustText( theControl);
+	MyAdjustText(theControl);
 }
 
 pascal Boolean AboutFilter (DialogPtr theDialog, EventRecord *theEventI, short *itemHit)
@@ -702,40 +702,40 @@ pascal Boolean AboutFilter (DialogPtr theDialog, EventRecord *theEventI, short *
 		Handle		itemHandle;
  
 		xMyFilter = false;
-		switch( theEventI->what)
+		switch(theEventI->what)
 		{		
 		case updateEvt:
 			GetPort(&CurrentPort);
 			
-			if ((WindowPtr) theEventI->message == GetDialogWindow( theDialog))
+			if ((WindowPtr) theEventI->message == GetDialogWindow(theDialog))
 			{
 				whichWindow = (WindowPtr) theEventI->message;
 				
-				SetPortWindowPort( whichWindow);
-				BeginUpdate( whichWindow);
-					DrawDialog( GetDialogFromWindow( whichWindow));
+				SetPortWindowPort(whichWindow);
+				BeginUpdate(whichWindow);
+					DrawDialog(GetDialogFromWindow(whichWindow));
 					
 					if (!AboutFirstCall)
 					{
 						Rect	caRect;
 						
-						TEUpdate( GetPortBounds( GetDialogPort( theDialog), &caRect), hTE);
+						TEUpdate(GetPortBounds(GetDialogPort(theDialog), &caRect), hTE);
 					}
 					else AboutFirstCall = false;
 					
-					GetDialogItem ( theDialog, 2, &itemType, &itemHandle, &itemRect);
+					GetDialogItem (theDialog, 2, &itemType, &itemHandle, &itemRect);
 					itemRect.right++;
-					FrameRect( &itemRect);
+					FrameRect(&itemRect);
 					
-				EndUpdate( whichWindow);
+				EndUpdate(whichWindow);
 				*itemHit = -updateEvt;
 				xMyFilter = true;
 			}
-			else DoUpdateEvent( theEventI);
+			else DoUpdateEvent(theEventI);
 		
-			SetPort( CurrentPort);
+			SetPort(CurrentPort);
 				
-			return( true);
+			return(true);
 		break;
 		
 		case nullEvent:
@@ -743,15 +743,15 @@ pascal Boolean AboutFilter (DialogPtr theDialog, EventRecord *theEventI, short *
 		
 			*itemHit = -5;
 			
-			return( true);
+			return(true);
 		break;
 		
 		case mouseDown:
 			thePart = FindWindow(theEventI->where, &whichWindow);
 			
-			if (whichWindow != GetDialogWindow( theDialog)) break;
+			if (whichWindow != GetDialogWindow(theDialog)) break;
 			
-			if(GetWRefCon( whichWindow) == GetWRefCon( FrontWindow()))
+			if(GetWRefCon(whichWindow) == GetWRefCon(FrontWindow()))
 			{
 			switch(thePart)
 			{
@@ -759,7 +759,7 @@ pascal Boolean AboutFilter (DialogPtr theDialog, EventRecord *theEventI, short *
 			{
 				BitMap	screenBits;
 				
-				GetQDGlobalsScreenBits( &screenBits);
+				GetQDGlobalsScreenBits(&screenBits);
 				
 				DragWindow(whichWindow,theEventI->where, &screenBits.bounds);
 				
@@ -768,11 +768,11 @@ pascal Boolean AboutFilter (DialogPtr theDialog, EventRecord *theEventI, short *
 			break;
 			
 			case inGoAway:
-				if (TrackGoAway( whichWindow, theEventI->where) ) xMyFilter =	true;
+				if (TrackGoAway(whichWindow, theEventI->where) ) xMyFilter =	true;
 			break;
 			
 			case inContent:
-				DoContent( whichWindow, theEventI);
+				DoContent(whichWindow, theEventI);
 			break;
 			}
 			}

@@ -4,10 +4,10 @@
 #include <stdio.h>
 
 void RecordSnd(Handle);
-OSErr NOpenMicroDevice( Str255 myDeviceName);
-void ChangeDialogFont( DialogPtr aDia);
-Ptr GetAudioInPut( Boolean LeftChannel, long Size);
-void DrawFillFree( Rect *rect);
+OSErr NOpenMicroDevice(Str255 myDeviceName);
+void ChangeDialogFont(DialogPtr aDia);
+Ptr GetAudioInPut(Boolean LeftChannel, long Size);
+void DrawFillFree(Rect *rect);
 void MicroOff(void);
 
 
@@ -59,14 +59,14 @@ pascal void CompletionRoutine (SPBPtr inParamPtr)
 	{
 		if (RecordingPtr - StartRecordingPtr + SOUNDINPUTMUL*deviceBufferSize < maxSndSize)
 		{
-			BlockMoveData( SoundInputPtr, RecordingPtr, SOUNDINPUTMUL*deviceBufferSize);
+			BlockMoveData(SoundInputPtr, RecordingPtr, SOUNDINPUTMUL*deviceBufferSize);
 			
 			if (SoundInputStereo == false && baseChan > 1)
 			{
 				long 		i;
 				short	*RecordingShortPtr = (short*) RecordingPtr;
 				
-				switch( SoundInputBits)
+				switch(SoundInputBits)
 				{
 					case 8:
 						for (i = 0; i < SOUNDINPUTMUL*deviceBufferSize; i++)
@@ -157,41 +157,41 @@ void SetUpDeviceInfo()
 	short			ChannelsList;
 	short			on = 1;
 	
-	myErr = SPBGetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
+	myErr = SPBGetDeviceInfo(myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
 	
-	myErr = SPBStopRecording( myInRefNum);
+	myErr = SPBStopRecording(myInRefNum);
 	
 	/** RATE **/
 	
-	myErr = SPBGetDeviceInfo( myInRefNum, siSampleRateAvailable, (Ptr) &RateList);
+	myErr = SPBGetDeviceInfo(myInRefNum, siSampleRateAvailable, (Ptr) &RateList);
 	if (myErr == noErr)
 	{	
-		if (rateM != NULL) DisposeMenu( rateM);
+		if (rateM != NULL) DisposeMenu(rateM);
 		
-		rateM = NewMenu( 344, "\pRate");
+		rateM = NewMenu(344, "\pRate");
 		
 		for (i = 0; i < RateList.no; i++)
 		{
-			NumToString( (unsigned long) (*RateList.l)[ i]/65535UL, str);
-			pStrcat( str, "\p Hz");
+			NumToString((unsigned long) (*RateList.l)[ i]/65535UL, str);
+			pStrcat(str, "\p Hz");
 			
-			AppendMenu( rateM, str);
+			AppendMenu(rateM, str);
 		}
 	}
 	
-	myErr = SPBGetDeviceInfo( myInRefNum, siSampleRate, (Ptr) &SoundInputRate);
+	myErr = SPBGetDeviceInfo(myInRefNum, siSampleRate, (Ptr) &SoundInputRate);
 	if (myErr == noErr)
 	{
-		NumToString( (unsigned long) SoundInputRate/65535UL, str);
-		pStrcat( str, "\p Hz");
-		SetDText( deviceDialog, 13, str);
+		NumToString((unsigned long) SoundInputRate/65535UL, str);
+		pStrcat(str, "\p Hz");
+		SetDText(deviceDialog, 13, str);
 		
-		for ( i = 0; i < RateList.no; i++) if (SoundInputRate == (*RateList.l)[ i]) curRate = i;
+		for (i = 0; i < RateList.no; i++) if (SoundInputRate == (*RateList.l)[ i]) curRate = i;
 	}
 	
 	/** MODE **/
 	
-	myErr = SPBGetDeviceInfo( myInRefNum, siChannelAvailable, (Ptr) &ChannelsList);
+	myErr = SPBGetDeviceInfo(myInRefNum, siChannelAvailable, (Ptr) &ChannelsList);
 	if (myErr == noErr)
 	{
 		monoAvailable = true;
@@ -202,69 +202,69 @@ void SetUpDeviceInfo()
 	
 	if (!stereoAvailable) SoundInputStereo = false;
 	
-	if (SoundInputStereo) pStrcpy( str, "\pStereo");
-	else pStrcpy( str, "\pMono");
+	if (SoundInputStereo) pStrcpy(str, "\pStereo");
+	else pStrcpy(str, "\pMono");
 	
-	SetDText( deviceDialog, 44, str);
+	SetDText(deviceDialog, 44, str);
 	
 	/** BITS **/
 	
-	myErr = SPBGetDeviceInfo( myInRefNum, siSampleSizeAvailable, (Ptr) &BitsList);
+	myErr = SPBGetDeviceInfo(myInRefNum, siSampleSizeAvailable, (Ptr) &BitsList);
 	if (myErr == noErr)
 	{	
-		if (bitsM != NULL) DisposeMenu( bitsM);
+		if (bitsM != NULL) DisposeMenu(bitsM);
 		
-		bitsM = NewMenu( 345, "\pBits");
+		bitsM = NewMenu(345, "\pBits");
 		
 		for (i = 0; i < BitsList.no; i++)
 		{
-			NumToString( (*BitsList.l)[ i], str);
-			pStrcat( str, "\p Bits");
+			NumToString((*BitsList.l)[ i], str);
+			pStrcat(str, "\p Bits");
 			
-			AppendMenu( bitsM, str);
+			AppendMenu(bitsM, str);
 		}
 	}
-	myErr = SPBGetDeviceInfo( myInRefNum, siSampleSize, (Ptr) &SoundInputBits);
+	myErr = SPBGetDeviceInfo(myInRefNum, siSampleSize, (Ptr) &SoundInputBits);
 	if (myErr == noErr)
 	{
-		NumToString( SoundInputBits, str);
-		pStrcat( str, "\p Bits");
-		SetDText( deviceDialog, 11, str);
+		NumToString(SoundInputBits, str);
+		pStrcat(str, "\p Bits");
+		SetDText(deviceDialog, 11, str);
 		
-		for ( i = 0; i < BitsList.no; i++) if (SoundInputBits == (*BitsList.l)[ i]) curBits = i;
+		for (i = 0; i < BitsList.no; i++) if (SoundInputBits == (*BitsList.l)[ i]) curBits = i;
 	}
 	/** Bytes / Samples **/
 	
 	tByte = maxSndSize;
-	sprintf( (Ptr) str, "%.1f",  (float) (tByte/1024.));		MyC2PStr( (Ptr) str); 		SetDText( deviceDialog, 34, str);
+	sprintf((Ptr) str, "%.1f",  (float) (tByte/1024.));		MyC2PStr((Ptr) str); 		SetDText(deviceDialog, 34, str);
 	
 	if (SoundInputBits != 0) 		tByte /= SoundInputBits / 8;
 	if (SoundInputStereo)			tByte /= 2;
-	if (SoundInputRate != 0) 		sprintf( (Ptr) str, "%.1f", (tByte * 65535.)/ (float) SoundInputRate);
+	if (SoundInputRate != 0) 		sprintf((Ptr) str, "%.1f", (tByte * 65535.)/ (float) SoundInputRate);
 	
-	MyC2PStr( (Ptr) str); 			SetDText( deviceDialog, 35, str);
+	MyC2PStr((Ptr) str); 			SetDText(deviceDialog, 35, str);
 	
-	//	SPBGetDeviceInfo( myInRefNum, siDeviceBufferInfo, (Ptr) &deviceBufferSize);
-	//	MyDebugStr( deviceBufferSize, __FILE__, "");
+	//	SPBGetDeviceInfo(myInRefNum, siDeviceBufferInfo, (Ptr) &deviceBufferSize);
+	//	MyDebugStr(deviceBufferSize, __FILE__, "");
 	
 	myErr = SPBSetDeviceInfo (myInRefNum, siContinuous, (Ptr) &on);
 	
 	mySPB.error = noErr;
 	mySPB.count	=	SOUNDINPUTMUL*deviceBufferSize;
-	myErr = SPBRecord( &mySPB, true);
+	myErr = SPBRecord(&mySPB, true);
 	
-	myErr = SPBSetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
+	myErr = SPBSetDeviceInfo(myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
 	
-	myErr = SPBGetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
-	if (myErr != noErr) pStrcpy( str, "\p-");
+	myErr = SPBGetDeviceInfo(myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
+	if (myErr != noErr) pStrcpy(str, "\p-");
 	else
 	{
-		if (infoData != 0) pStrcpy( str, "\pOn");
-		else pStrcpy( str, "\pOff");
+		if (infoData != 0) pStrcpy(str, "\pOn");
+		else pStrcpy(str, "\pOff");
 	}
-	SetDText( deviceDialog, 3, str);
+	SetDText(deviceDialog, 3, str);
 	
-	myErr = SPBGetDeviceInfo( myInRefNum, siNumberChannels, (Ptr) &baseChan);
+	myErr = SPBGetDeviceInfo(myInRefNum, siNumberChannels, (Ptr) &baseChan);
 	
 	
 	// INPUT LIST 
@@ -273,34 +273,34 @@ void SetUpDeviceInfo()
 		long			offset, sourceNo;
 		Point			theCell;
 		
-		SPBGetDeviceInfo ( myInRefNum, siInputSourceNames, &sourceNames);	
+		SPBGetDeviceInfo (myInRefNum, siInputSourceNames, &sourceNames);	
 		
 		offset = sizeof (short);    // skip over count field
 		
-		LDelRow( 0, 0, myList);
+		LDelRow(0, 0, myList);
 		
 		sourceNo = 1;
 		
 		for (i = 0; i < (*(short**)sourceNames)[0]; i++)
 		{
-			pStrcpy( sourceNameList[ sourceNo],  &((unsigned char*)(*sourceNames))[offset]);
+			pStrcpy(sourceNameList[ sourceNo],  &((unsigned char*)(*sourceNames))[offset]);
 			offset += (*(char**)sourceNames)[offset] + 1;
 			
-			theCell.v = LAddRow( 1, 20000, myList);
+			theCell.v = LAddRow(1, 20000, myList);
 			theCell.h = 0;
-			LSetCell( sourceNameList[ sourceNo]+1 , sourceNameList[ sourceNo][ 0], theCell, myList);
+			LSetCell(sourceNameList[ sourceNo]+1 , sourceNameList[ sourceNo][ 0], theCell, myList);
 			
 			sourceNo++;
 		}
 		
-		myErr = SPBGetDeviceInfo( myInRefNum, siInputSource, &inputSourceID);
+		myErr = SPBGetDeviceInfo(myInRefNum, siInputSource, &inputSourceID);
 		
 		theCell.h = 0;	theCell.v = inputSourceID-1;
-		LSetSelect( true, theCell, myList);
+		LSetSelect(true, theCell, myList);
 	}	
 }
 
-void DeviceFilterMouseDown( EventRecord *theEventI)
+void DeviceFilterMouseDown(EventRecord *theEventI)
 {
 	char			xMyFilter;
 	WindowPtr	whichWindow;
@@ -313,33 +313,33 @@ void DeviceFilterMouseDown( EventRecord *theEventI)
 	Handle		deviceIconHandle, itemHandle;
 	OSErr		myErr;
 
-	thePart = FindWindow( theEventI->where, &whichWindow);
+	thePart = FindWindow(theEventI->where, &whichWindow);
 
-	if (whichWindow == GetDialogWindow( deviceDialog))
+	if (whichWindow == GetDialogWindow(deviceDialog))
 	{
 		Rect tempRect = (*myList)->rView;
 		
 		aPoint.v = theEventI->where.v;
 		aPoint.h = theEventI->where.h;
-		GlobalToLocal( &aPoint);
+		GlobalToLocal(&aPoint);
 		
 		tempRect.right += 16;
-		if (PtInRect( aPoint, &tempRect) == true)
+		if (PtInRect(aPoint, &tempRect) == true)
 		{
 			Boolean isDbl;
 			
 			theCell.v = theCell.h = 0;
-			if(LGetSelect( true, &theCell, myList))
+			if(LGetSelect(true, &theCell, myList))
 			{
 				remember = theCell.v;
 			}
 			else remember = - 10;
 		
-			TextFont( kFontIDGeneva);	TextSize( 9);
+			TextFont(kFontIDGeneva);	TextSize(9);
 			isDbl = LClick(aPoint, theEventI->modifiers, myList);
 			
 			theCell.v = theCell.h = 0;
-			if(LGetSelect( true, &theCell, myList))
+			if(LGetSelect(true, &theCell, myList))
 			{
 				if (remember != theCell.v && theCell.v != inputSourceID-1)
 				{
@@ -347,11 +347,11 @@ void DeviceFilterMouseDown( EventRecord *theEventI)
 					
 					inputSourceID = theCell.v+1;
 					
-					myErr = SPBGetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
+					myErr = SPBGetDeviceInfo(myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
 					
 					myErr = SPBSetDeviceInfo (myInRefNum, siInputSource, &inputSourceID);
 					
-					myErr = SPBSetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
+					myErr = SPBSetDeviceInfo(myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
 					
 					SetUpDeviceInfo();
 				}
@@ -374,91 +374,91 @@ void DeviceFilterUpdate()
  	OSErr		myErr;
 	RgnHandle	visibleRegion;
 		
-    GetPort( &oldPort);
-	SetPortDialogPort( deviceDialog);
+    GetPort(&oldPort);
+	SetPortDialogPort(deviceDialog);
 	
-	BeginUpdate( GetDialogWindow( deviceDialog));
+	BeginUpdate(GetDialogWindow(deviceDialog));
 
-	DrawDialog( deviceDialog);
-	oldFrameButton( deviceDialog);
+	DrawDialog(deviceDialog);
+	oldFrameButton(deviceDialog);
 	
-	TextFont( kFontIDGeneva);	TextSize( 9);
+	TextFont(kFontIDGeneva);	TextSize(9);
 	
 	itemRect = (*myList)->rView;
 	
-	InsetRect( &itemRect, -1, -1);
-	FrameRect( &itemRect);
+	InsetRect(&itemRect, -1, -1);
+	FrameRect(&itemRect);
 	
 	visibleRegion = NewRgn();
 	
-	GetPortVisibleRegion( GetDialogPort( deviceDialog), visibleRegion);
+	GetPortVisibleRegion(GetDialogPort(deviceDialog), visibleRegion);
 	
-	LUpdate( visibleRegion, myList);
+	LUpdate(visibleRegion, myList);
 	
-	DisposeRgn( visibleRegion);
+	DisposeRgn(visibleRegion);
 	
-	GetDialogItem( deviceDialog, 8, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(deviceDialog, 8, &itemType, &itemHandle, &itemRect);
 	
-	myErr = SPBGetDeviceInfo( myInRefNum, 'icon', (Ptr) &deviceIconHandle);
+	myErr = SPBGetDeviceInfo(myInRefNum, 'icon', (Ptr) &deviceIconHandle);
 	if (myErr == noErr)
 	{
-		PlotIcon( &itemRect, deviceIconHandle);
-		DisposeHandle( deviceIconHandle);
+		PlotIcon(&itemRect, deviceIconHandle);
+		DisposeHandle(deviceIconHandle);
 	}
 	
-	GetDialogItem( deviceDialog, 27, &itemType, &itemHandle, &itemRect);
-	PaintRect( &itemRect);
-	FrameRectRelief( &itemRect);
+	GetDialogItem(deviceDialog, 27, &itemType, &itemHandle, &itemRect);
+	PaintRect(&itemRect);
+	FrameRectRelief(&itemRect);
 	
-	GetDialogItem( deviceDialog, 38, &itemType, &itemHandle, &itemRect);
-	PaintRect( &itemRect);
-	FrameRectRelief( &itemRect);
+	GetDialogItem(deviceDialog, 38, &itemType, &itemHandle, &itemRect);
+	PaintRect(&itemRect);
+	FrameRectRelief(&itemRect);
 	
-	GetDialogItem( deviceDialog, 40, &itemType, &itemHandle, &itemRect);
-	FrameRectRelief( &itemRect);
+	GetDialogItem(deviceDialog, 40, &itemType, &itemHandle, &itemRect);
+	FrameRectRelief(&itemRect);
 	itemRect.top++;	itemRect.left++;
-	DrawFillFree( &itemRect);
+	DrawFillFree(&itemRect);
 	
-	EndUpdate( GetDialogWindow( deviceDialog));
+	EndUpdate(GetDialogWindow(deviceDialog));
 	
-	SetPort( oldPort);
+	SetPort(oldPort);
 }
 
-void DrawLevelRect( short meterLevel)
+void DrawLevelRect(short meterLevel)
 {
 	short		itemType;
 	Rect		itemRect;
 	Handle		itemHandle;
 
-	GetDialogItem( deviceDialog, 27, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(deviceDialog, 27, &itemType, &itemHandle, &itemRect);
 	itemRect.left++;
-	ScrollRect( &itemRect, -1, 0, NULL);
+	ScrollRect(&itemRect, -1, 0, NULL);
 	
-	if (RecordingVBL) RGBForeColor( &redC);
-	else RGBForeColor( &blueC);
+	if (RecordingVBL) RGBForeColor(&redC);
+	else RGBForeColor(&blueC);
 	
-	MoveTo( itemRect.right - 1, itemRect.bottom - 1);
-	if (meterLevel != 0) LineTo( itemRect.right - 1, itemRect.bottom - meterLevel);
-	else MoveTo( itemRect.right - 1, itemRect.bottom - 1);
+	MoveTo(itemRect.right - 1, itemRect.bottom - 1);
+	if (meterLevel != 0) LineTo(itemRect.right - 1, itemRect.bottom - meterLevel);
+	else MoveTo(itemRect.right - 1, itemRect.bottom - 1);
 	
-	ForeColor( blackColor);
-	LineTo( itemRect.right - 1, itemRect.top + 1);
+	ForeColor(blackColor);
+	LineTo(itemRect.right - 1, itemRect.top + 1);
 }
 
-void DrawFillFree( Rect *rect)
+void DrawFillFree(Rect *rect)
 {
 	Rect	aRect;
 	
 	aRect = *rect;
 	
-	ForeColor( redColor);
+	ForeColor(redColor);
 	aRect.right = aRect.left + ((rect->right - rect->left) * (RecordingPtr - StartRecordingPtr))/ maxSndSize;
-	PaintRect( &aRect);
+	PaintRect(&aRect);
 	
 	aRect.left = aRect.right;
 	aRect.right = rect->right;
-	ForeColor( blackColor);
-	PaintRect( &aRect);
+	ForeColor(blackColor);
+	PaintRect(&aRect);
 }
 
 void DrawSmallOscillo()
@@ -473,26 +473,26 @@ void DrawSmallOscillo()
 	if (RecordingVBL) myC = redC;
 	else myC = blueC;
 
-	GetDialogItem( deviceDialog, 38, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(deviceDialog, 38, &itemType, &itemHandle, &itemRect);
 
 	itemRect.top++;
 	itemRect.left++;
 	hSize = itemRect.right - itemRect.left;
 
-	audioPtr = (Byte*) GetAudioInPut( false, hSize*2);
+	audioPtr = (Byte*) GetAudioInPut(false, hSize*2);
 	
-	if (hSize >= 200) MyDebugStr( __LINE__, __FILE__, "");
+	if (hSize >= 200) MyDebugStr(__LINE__, __FILE__, "");
 	
 	for (i = 0; i < hSize; i++)
 	{
-		SetCPixel( itemRect.left + i, itemRect.top + SmallOsci[ i], &blackC);
+		SetCPixel(itemRect.left + i, itemRect.top + SmallOsci[ i], &blackC);
 		SmallOsci[ i] = audioPtr[ i] / 16;
-		SetCPixel( itemRect.left + i, itemRect.top + SmallOsci[ i], &myC);
+		SetCPixel(itemRect.left + i, itemRect.top + SmallOsci[ i], &myC);
 	}
-	ForeColor( blackColor);
+	ForeColor(blackColor);
 }
 
-void ConvertInstrument16LL( register short *tempPtr, register long sSize)
+void ConvertInstrument16LL(register short *tempPtr, register long sSize)
 {
 	register	short			val = 0x8000;
 
@@ -509,12 +509,12 @@ void CloseSoundInput()
 {
 	if (deviceDialog != NULL)
 	{
-		DisposeDialog( deviceDialog);
+		DisposeDialog(deviceDialog);
 		deviceDialog = NULL;
 	}
 }
 
-OSErr ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 name)
+OSErr ActiveSoundInput(Boolean RecordingMode, Handle *RecordedSound, Str255 name)
 {
 	Str255			aStr;
 	short			infoData, itemHit, itemType, nameNo, sourceNo, i;
@@ -533,15 +533,15 @@ OSErr ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 nam
 	
 	if (deviceDialog == NULL)
 	{
-		deviceDialog = GetNewDialog( 165,NULL, (WindowPtr) -1L);
-		SetPortDialogPort( deviceDialog);
-		TextFont( kFontIDGeneva);	TextSize( 9);
-		ChangeDialogFont( deviceDialog);
-		AutoPosition( deviceDialog);
+		deviceDialog = GetNewDialog(165,NULL, (WindowPtr) -1L);
+		SetPortDialogPort(deviceDialog);
+		TextFont(kFontIDGeneva);	TextSize(9);
+		ChangeDialogFont(deviceDialog);
+		AutoPosition(deviceDialog);
 		
-		GetDialogItem( deviceDialog , 18, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(deviceDialog , 18, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		RecordBut = NewControl( GetDialogWindow( deviceDialog), &itemRect, "\p",
+		RecordBut = NewControl(GetDialogWindow(deviceDialog), &itemRect, "\p",
 							   true,
 							   0,
 							   kControlContentIconSuiteRes,
@@ -549,9 +549,9 @@ OSErr ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 nam
 							   kControlBevelButtonNormalBevelProc,
 							   0);
 		
-		GetDialogItem( deviceDialog , 19, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(deviceDialog , 19, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		StopBut = NewControl( GetDialogWindow( deviceDialog), &itemRect, "\p",
+		StopBut = NewControl(GetDialogWindow(deviceDialog), &itemRect, "\p",
 							 true,
 							 0,
 							 kControlContentIconSuiteRes,
@@ -559,9 +559,9 @@ OSErr ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 nam
 							 kControlBevelButtonNormalBevelProc,
 							 0);
 		
-		GetDialogItem( deviceDialog , 20, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(deviceDialog , 20, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		PauseBut = NewControl( GetDialogWindow( deviceDialog), &itemRect, "\p",
+		PauseBut = NewControl(GetDialogWindow(deviceDialog), &itemRect, "\p",
 							  true,
 							  0,
 							  kControlContentIconSuiteRes,
@@ -569,9 +569,9 @@ OSErr ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 nam
 							  kControlBevelButtonNormalBevelProc,
 							  0);
 		
-		GetDialogItem( deviceDialog , 21, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(deviceDialog , 21, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		PlayBut = NewControl( GetDialogWindow( deviceDialog), &itemRect, "\p",
+		PlayBut = NewControl(GetDialogWindow(deviceDialog), &itemRect, "\p",
 							 true,
 							 0,
 							 kControlContentIconSuiteRes,
@@ -579,24 +579,24 @@ OSErr ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 nam
 							 kControlBevelButtonNormalBevelProc,
 							 0);
 		
-		GetDialogItem( deviceDialog, 6, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(deviceDialog, 6, &itemType, &itemHandle, &itemRect);
 		
-		SetRect( &dataBounds, 0, 0, 1, 0);
+		SetRect(&dataBounds, 0, 0, 1, 0);
 		itemRect.right -= 16;
-		myList =  LNew( &itemRect, &dataBounds, myPt, 0, GetDialogWindow( deviceDialog), true, false, false, true);
+		myList =  LNew(&itemRect, &dataBounds, myPt, 0, GetDialogWindow(deviceDialog), true, false, false, true);
 		(*myList)->selFlags = lOnlyOne;
 	}
 	else
 	{
-		SetPortDialogPort( deviceDialog);
-		GetPortBounds( GetDialogPort( deviceDialog), &caRect);
-		InvalWindowRect( GetDialogWindow( deviceDialog), &caRect);
+		SetPortDialogPort(deviceDialog);
+		GetPortBounds(GetDialogPort(deviceDialog), &caRect);
+		InvalWindowRect(GetDialogWindow(deviceDialog), &caRect);
 	}
 	
 	if (!RecordingMode)
 	{
-		GetPortBounds( GetDialogPort( deviceDialog), &caRect);
-		MySizeWindow( deviceDialog, caRect.right, 122, true);
+		GetPortBounds(GetDialogPort(deviceDialog), &caRect);
+		MySizeWindow(deviceDialog, caRect.right, 122, true);
 		maxSndSize = 1;
 	}
 	else
@@ -605,32 +605,32 @@ OSErr ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 nam
 		
 		*RecordedSound = NULL;
 		
-		totalSizeApp = MaxMem( &contigSize);
+		totalSizeApp = MaxMem(&contigSize);
 		
 		maxSndSize = totalSizeApp/2L;
-		*RecordedSound = NewHandle( maxSndSize);
+		*RecordedSound = NewHandle(maxSndSize);
 		
 		if (*RecordedSound == NULL) return -1;
-		HLock( *RecordedSound);
+		HLock(*RecordedSound);
 		RecordingPtr = StartRecordingPtr = **RecordedSound;
 	}
 	
-	ShowWindow( GetDialogWindow( deviceDialog));
+	ShowWindow(GetDialogWindow(deviceDialog));
 	
 	/** Create Device List **/
 	
 	nameNo = 1;
 	
-	soundDrivers = NewMenu( 455, "\pSoundDrivers Menu");
+	soundDrivers = NewMenu(455, "\pSoundDrivers Menu");
 	
 	do
 	{
-		myErr = SPBGetIndexedDevice( nameNo, deviceName[ nameNo], &deviceIconHandle);
+		myErr = SPBGetIndexedDevice(nameNo, deviceName[ nameNo], &deviceIconHandle);
 		if (myErr == noErr)
 		{
-			DisposeHandle( deviceIconHandle);
+			DisposeHandle(deviceIconHandle);
 			
-			AppendMenu( soundDrivers, deviceName[ nameNo]);
+			AppendMenu(soundDrivers, deviceName[ nameNo]);
 		}
 		nameNo++;
 	}while (myErr == noErr);
@@ -638,48 +638,48 @@ OSErr ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 nam
 	if (MicroPhone == false)
 	{
 		MicroDeviceID = 1;
-		if (NOpenMicroDevice( deviceName[ MicroDeviceID]) != noErr)
+		if (NOpenMicroDevice(deviceName[ MicroDeviceID]) != noErr)
 		{
-			DisposeDialog( deviceDialog);
+			DisposeDialog(deviceDialog);
 			deviceDialog = NULL;
-			Erreur( 74, -22);
+			Erreur(74, -22);
 			return -1;
 		}
 	}
 	
 	/*****************/
-	myErr = SPBGetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
-	if (myErr != noErr) pStrcpy( aStr, "\p-");
+	myErr = SPBGetDeviceInfo(myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
+	if (myErr != noErr) pStrcpy(aStr, "\p-");
 	else
 	{
-		if (infoData != 0) pStrcpy( aStr, "\pOn");
-		else pStrcpy( aStr, "\pOff");
+		if (infoData != 0) pStrcpy(aStr, "\pOn");
+		else pStrcpy(aStr, "\pOff");
 	}
-	SetDText( deviceDialog, 3, aStr);
-	SetDText( deviceDialog, 39, name);
-	SelectDialogItemText( deviceDialog, 39, 0, 5000);
+	SetDText(deviceDialog, 3, aStr);
+	SetDText(deviceDialog, 39, name);
+	SelectDialogItemText(deviceDialog, 39, 0, 5000);
 	
-	aMenu = GetMenu( 144);
+	aMenu = GetMenu(144);
 	
 	bitsM = NULL;	rateM = NULL;
 	SetUpDeviceInfo();
 	
 	for (i = 0; i < 200; i++) SmallOsci[ i] = 0;
 	
-	SetDText( deviceDialog, 36, "\p0");
-	SetDText( deviceDialog, 37, "\p0");
+	SetDText(deviceDialog, 36, "\p0");
+	SetDText(deviceDialog, 37, "\p0");
 	
 	
 	// Set STOP state
 	
-	GetDialogItem( deviceDialog, 46, &itemType, &itemHandle, &itemRect);		// ADD IT button
-	HiliteControl( (ControlHandle) itemHandle, 255);
+	GetDialogItem(deviceDialog, 46, &itemType, &itemHandle, &itemRect);		// ADD IT button
+	HiliteControl((ControlHandle) itemHandle, 255);
 	
-	HiliteControl( PlayBut, 255);
-	HiliteControl( PauseBut, 255);
-	HiliteControl( RecordBut, 0);
+	HiliteControl(PlayBut, 255);
+	HiliteControl(PauseBut, 255);
+	HiliteControl(RecordBut, 0);
 	
-	HiliteControl( StopBut, kControlButtonPart);
+	HiliteControl(StopBut, kControlButtonPart);
 	
 	StopPressed = true;
 	RecordingVBL = false;
@@ -693,53 +693,53 @@ OSErr ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 nam
 	
 	if (LASTvolume != -1)
 	{
-		myErr = SPBStopRecording( myInRefNum);
+		myErr = SPBStopRecording(myInRefNum);
 		
-		myErr = SPBSetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &LASTvolume);
+		myErr = SPBSetDeviceInfo(myInRefNum, siPlayThruOnOff, (Ptr) &LASTvolume);
 		
 		{ short a;
 			a = 0;
-			myErr = SPBSetDeviceInfo( myInRefNum, siTwosComplementOnOff, &a);
+			myErr = SPBSetDeviceInfo(myInRefNum, siTwosComplementOnOff, &a);
 		}
 		
 		mySPB.error = noErr;
 		mySPB.count 			= 	SOUNDINPUTMUL*deviceBufferSize;
-		myErr = SPBRecord( &mySPB, true);
+		myErr = SPBRecord(&mySPB, true);
 		
 		SetUpDeviceInfo();
 	}
 	
 	if (LASTbits != -1)
 	{
-		myErr = SPBStopRecording( myInRefNum);
+		myErr = SPBStopRecording(myInRefNum);
 		
-		myErr = SPBSetDeviceInfo( myInRefNum, siSampleSize, (Ptr) &LASTbits);
+		myErr = SPBSetDeviceInfo(myInRefNum, siSampleSize, (Ptr) &LASTbits);
 		
 		{ short a;
 			a = 0;
-			myErr = SPBSetDeviceInfo( myInRefNum, siTwosComplementOnOff, &a);
+			myErr = SPBSetDeviceInfo(myInRefNum, siTwosComplementOnOff, &a);
 		}
 		
 		mySPB.error = noErr;
 		mySPB.count 			= 	SOUNDINPUTMUL*deviceBufferSize;
-		myErr = SPBRecord( &mySPB, true);
+		myErr = SPBRecord(&mySPB, true);
 		
 		SetUpDeviceInfo();
 	}
 	
 	if (LASTrate != -1)
 	{
-		myErr = SPBStopRecording( myInRefNum);
+		myErr = SPBStopRecording(myInRefNum);
 		
-		myErr = SPBSetDeviceInfo( myInRefNum, siSampleRate, (Ptr) &LASTrate);
+		myErr = SPBSetDeviceInfo(myInRefNum, siSampleRate, (Ptr) &LASTrate);
 		
 		{ short a;
 			a = 0;
-			myErr = SPBSetDeviceInfo( myInRefNum, siTwosComplementOnOff, &a);
+			myErr = SPBSetDeviceInfo(myInRefNum, siTwosComplementOnOff, &a);
 		}
 		mySPB.error = noErr;
 		mySPB.count 			= 	SOUNDINPUTMUL*deviceBufferSize;
-		myErr = SPBRecord( &mySPB, true);
+		myErr = SPBRecord(&mySPB, true);
 		
 		SetUpDeviceInfo();
 	}
@@ -747,17 +747,17 @@ OSErr ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 nam
 onrecommence:
 	do
 	{
-		//ModalDialog( MyPrefFilterDesc, &itemHit);
-		MyModalDialog( deviceDialog, &itemHit);
-		//ModalDialog( NULL, &itemHit);
+		//ModalDialog(MyPrefFilterDesc, &itemHit);
+		MyModalDialog(deviceDialog, &itemHit);
+		//ModalDialog(NULL, &itemHit);
 		
-		GetPort( &savePort);
-		SetPortDialogPort( deviceDialog);
+		GetPort(&savePort);
+		SetPortDialogPort(deviceDialog);
 		
-		GetMouse( &theEvent.where);
-		LocalToGlobal( &theEvent.where);
+		GetMouse(&theEvent.where);
+		LocalToGlobal(&theEvent.where);
 		
-		switch( itemHit)
+		switch(itemHit)
 		{
 			case -5:
 			{
@@ -778,18 +778,18 @@ onrecommence:
 					if (RecordingVBL)
 					{
 						tByte = RecordingPtr - **RecordedSound;
-						sprintf( (Ptr) str, "%.1f", tByte/1024.);		MyC2PStr( (Ptr) str); 		SetDText( deviceDialog, 36, str);
+						sprintf((Ptr) str, "%.1f", tByte/1024.);		MyC2PStr((Ptr) str); 		SetDText(deviceDialog, 36, str);
 						
 						tByte /= SoundInputBits / 8;
 						if (SoundInputStereo) tByte /= 2;
-						sprintf( (Ptr) str, "%.1f", (tByte * 65535.)/ (float) SoundInputRate);		MyC2PStr( (Ptr) str); 		SetDText( deviceDialog, 37, str);
+						sprintf((Ptr) str, "%.1f", (tByte * 65535.)/ (float) SoundInputRate);		MyC2PStr((Ptr) str); 		SetDText(deviceDialog, 37, str);
 						
-						GetDialogItem( deviceDialog, 40, &itemType, &itemHandle, &itemRect);
+						GetDialogItem(deviceDialog, 40, &itemType, &itemHandle, &itemRect);
 						itemRect.top++;	itemRect.left++;
-						DrawFillFree( &itemRect);
+						DrawFillFree(&itemRect);
 					}
 					
-					DrawLevelRect( meterLevel / 16);
+					DrawLevelRect(meterLevel / 16);
 				}
 				
 				DrawSmallOscillo();
@@ -797,60 +797,60 @@ onrecommence:
 				break;
 				
 			case 45:
-				tempMenu = GetMenu( 172);
+				tempMenu = GetMenu(172);
 				
-				InsertMenu( tempMenu, hierMenu);
+				InsertMenu(tempMenu, hierMenu);
 				
-				GetDialogItem( deviceDialog, itemHit, &itemType, &itemHandle, &itemRect);
+				GetDialogItem(deviceDialog, itemHit, &itemType, &itemHandle, &itemRect);
 				myPt.v = itemRect.top;	myPt.h = itemRect.left;
-				LocalToGlobal( &myPt);
+				LocalToGlobal(&myPt);
 				
-				SetItemMark( tempMenu, SoundInputStereo + 1, 0xa5);
+				SetItemMark(tempMenu, SoundInputStereo + 1, 0xa5);
 				
-				if (!monoAvailable) DisableMenuItem( tempMenu, 1);
-				if (!stereoAvailable) DisableMenuItem( tempMenu, 2);
-				DisableMenuItem( tempMenu, 4);
-				DisableMenuItem( tempMenu, 5);
-				DisableMenuItem( tempMenu, 6);
+				if (!monoAvailable) DisableMenuItem(tempMenu, 1);
+				if (!stereoAvailable) DisableMenuItem(tempMenu, 2);
+				DisableMenuItem(tempMenu, 4);
+				DisableMenuItem(tempMenu, 5);
+				DisableMenuItem(tempMenu, 6);
 				Result = PopUpMenuSelect(	tempMenu,
 										 myPt.v,
 										 myPt.h,
 										 SoundInputStereo + 1);
 				
-				SetItemMark( tempMenu, SoundInputStereo + 1, 0);
+				SetItemMark(tempMenu, SoundInputStereo + 1, 0);
 				
-				if ( HiWord( Result ) != 0 )
+				if (HiWord(Result ) != 0 )
 				{
-					if (LoWord( Result) != SoundInputStereo + 1)
+					if (LoWord(Result) != SoundInputStereo + 1)
 					{
-						SoundInputStereo = LoWord( Result) - 1;
+						SoundInputStereo = LoWord(Result) - 1;
 						
 						LASTchannels = SoundInputStereo;
 						
-						if (SoundInputStereo) pStrcpy( aStr, "\pStereo");
-						else pStrcpy( aStr, "\pMono");
+						if (SoundInputStereo) pStrcpy(aStr, "\pStereo");
+						else pStrcpy(aStr, "\pMono");
 						
-						SetDText( deviceDialog, 44, aStr);
+						SetDText(deviceDialog, 44, aStr);
 						
 						SetUpDeviceInfo();
 					}
 				}
 				
-				DeleteMenu( GetMenuID( tempMenu));
-				DisposeMenu( tempMenu);
+				DeleteMenu(GetMenuID(tempMenu));
+				DisposeMenu(tempMenu);
 				break;
 				
 			case 18:
-				if (GetControlHilite( RecordBut) == 0 && MyTrackControl( RecordBut, theEvent.where, NULL))
+				if (GetControlHilite(RecordBut) == 0 && MyTrackControl(RecordBut, theEvent.where, NULL))
 				{
-					GetDialogItem( deviceDialog, 46, &itemType, &itemHandle, &itemRect);		// ADD IT button
-					HiliteControl( (ControlHandle) itemHandle, 0);
+					GetDialogItem(deviceDialog, 46, &itemType, &itemHandle, &itemRect);		// ADD IT button
+					HiliteControl((ControlHandle) itemHandle, 0);
 					
-					HiliteControl( PlayBut, 255);
-					HiliteControl( PauseBut, 0);
-					HiliteControl( StopBut, 0);
+					HiliteControl(PlayBut, 255);
+					HiliteControl(PauseBut, 0);
+					HiliteControl(StopBut, 0);
 					
-					HiliteControl( RecordBut, kControlButtonPart);
+					HiliteControl(RecordBut, kControlButtonPart);
 					if (StopPressed)
 					{
 						StopPressed = false;
@@ -858,7 +858,7 @@ onrecommence:
 					}
 					else
 					{
-						if (SoundInputBits == 8) ConvertInstrument( (Byte*) **RecordedSound, RecordingPtr - **RecordedSound);
+						if (SoundInputBits == 8) ConvertInstrument((Byte*) **RecordedSound, RecordingPtr - **RecordedSound);
 					}
 					
 					RecordingVBL = true;
@@ -866,226 +866,226 @@ onrecommence:
 				break;
 				
 			case 19:
-				if (GetControlHilite( StopBut) == 0 && MyTrackControl( StopBut, theEvent.where, NULL))
+				if (GetControlHilite(StopBut) == 0 && MyTrackControl(StopBut, theEvent.where, NULL))
 				{
-					HiliteControl( PlayBut, 0);
-					HiliteControl( PauseBut, 255);
-					HiliteControl( RecordBut, 0);
+					HiliteControl(PlayBut, 0);
+					HiliteControl(PauseBut, 255);
+					HiliteControl(RecordBut, 0);
 					
-					HiliteControl( StopBut, kControlButtonPart);
+					HiliteControl(StopBut, kControlButtonPart);
 					
 					StopPressed = true;
 					RecordingVBL = false;
 					
-					if (SoundInputBits == 8) ConvertInstrumentIn( (Byte*) **RecordedSound, RecordingPtr - **RecordedSound);
+					if (SoundInputBits == 8) ConvertInstrumentIn((Byte*) **RecordedSound, RecordingPtr - **RecordedSound);
 				}
 				
-				MADCleanDriver( MADDriver);
+				MADCleanDriver(MADDriver);
 				break;
 				
 			case 20:
-				if (GetControlHilite( PauseBut) == 0 && MyTrackControl( PauseBut, theEvent.where, NULL))
+				if (GetControlHilite(PauseBut) == 0 && MyTrackControl(PauseBut, theEvent.where, NULL))
 				{
-					HiliteControl( StopBut, 0);
-					HiliteControl( PlayBut, 255);
-					HiliteControl( RecordBut, kControlButtonPart);
+					HiliteControl(StopBut, 0);
+					HiliteControl(PlayBut, 255);
+					HiliteControl(RecordBut, kControlButtonPart);
 					
-					HiliteControl( PauseBut, kControlButtonPart);
+					HiliteControl(PauseBut, kControlButtonPart);
 					
 					RecordingVBL = false;
 					
-					if (SoundInputBits == 8) ConvertInstrumentIn( (Byte*) **RecordedSound, RecordingPtr - **RecordedSound);
+					if (SoundInputBits == 8) ConvertInstrumentIn((Byte*) **RecordedSound, RecordingPtr - **RecordedSound);
 				}
-				else if (GetControlHilite( PauseBut) == kControlButtonPart && MyTrackControl( PauseBut, theEvent.where, NULL))
+				else if (GetControlHilite(PauseBut) == kControlButtonPart && MyTrackControl(PauseBut, theEvent.where, NULL))
 				{
-					HiliteControl( StopBut, 0);
-					HiliteControl( PlayBut, 255);
-					HiliteControl( RecordBut, kControlButtonPart);
+					HiliteControl(StopBut, 0);
+					HiliteControl(PlayBut, 255);
+					HiliteControl(RecordBut, kControlButtonPart);
 					
-					HiliteControl( PauseBut, 0);
+					HiliteControl(PauseBut, 0);
 					
-					if (SoundInputBits == 8) ConvertInstrument( (Byte*) **RecordedSound, RecordingPtr - **RecordedSound);
+					if (SoundInputBits == 8) ConvertInstrument((Byte*) **RecordedSound, RecordingPtr - **RecordedSound);
 					RecordingVBL = true;
 				}
 				break;
 				
 			case 21:
-				if (GetControlHilite( PlayBut) == 0 && MyTrackControl( PlayBut, theEvent.where, NULL))
+				if (GetControlHilite(PlayBut) == 0 && MyTrackControl(PlayBut, theEvent.where, NULL))
 				{
-					MADPlaySoundData( MADDriver, **RecordedSound, RecordingPtr - **RecordedSound, 0, 0xFF, SoundInputBits, 0, 0, SoundInputRate, SoundInputStereo);
-					MADPlaySoundData( MADDriver, **RecordedSound, RecordingPtr - **RecordedSound, 1, 0xFF, SoundInputBits, 0, 0, SoundInputRate, SoundInputStereo);
+					MADPlaySoundData(MADDriver, **RecordedSound, RecordingPtr - **RecordedSound, 0, 0xFF, SoundInputBits, 0, 0, SoundInputRate, SoundInputStereo);
+					MADPlaySoundData(MADDriver, **RecordedSound, RecordingPtr - **RecordedSound, 1, 0xFF, SoundInputBits, 0, 0, SoundInputRate, SoundInputStereo);
 				}
 				break;
 				
 			case 42:
-				InsertMenu( soundDrivers, hierMenu);
+				InsertMenu(soundDrivers, hierMenu);
 				
-				GetDialogItem( deviceDialog, 42, &itemType, &itemHandle, &itemRect);
+				GetDialogItem(deviceDialog, 42, &itemType, &itemHandle, &itemRect);
 				myPt.v = itemRect.top;	myPt.h = itemRect.left;
-				LocalToGlobal( &myPt);
+				LocalToGlobal(&myPt);
 				
-				SetItemMark( soundDrivers, MicroDeviceID, 0xa5);
+				SetItemMark(soundDrivers, MicroDeviceID, 0xa5);
 				
 				Result = PopUpMenuSelect(	soundDrivers,
 										 myPt.v,
 										 myPt.h,
 										 MicroDeviceID);
 				
-				SetItemMark( soundDrivers, MicroDeviceID, 0);
+				SetItemMark(soundDrivers, MicroDeviceID, 0);
 				
-				if ( HiWord( Result ) != 0 )
+				if (HiWord(Result ) != 0 )
 				{
-					MicroDeviceID = LoWord( Result);
-					SetDText( deviceDialog, 41, deviceName[ MicroDeviceID]);
+					MicroDeviceID = LoWord(Result);
+					SetDText(deviceDialog, 41, deviceName[ MicroDeviceID]);
 					
 					MicroOff();
 					
-					NOpenMicroDevice( deviceName[ MicroDeviceID]);
+					NOpenMicroDevice(deviceName[ MicroDeviceID]);
 					
 					SetUpDeviceInfo();
 				}
 				
-				DeleteMenu( GetMenuID( soundDrivers));
+				DeleteMenu(GetMenuID(soundDrivers));
 				break;
 				
 			case 4:
-				InsertMenu( aMenu, hierMenu);
+				InsertMenu(aMenu, hierMenu);
 				
-				GetDialogItem( deviceDialog, 4, &itemType, &itemHandle, &itemRect);
+				GetDialogItem(deviceDialog, 4, &itemType, &itemHandle, &itemRect);
 				myPt.v = itemRect.top;	myPt.h = itemRect.left;
-				LocalToGlobal( &myPt);
+				LocalToGlobal(&myPt);
 				
-				myErr = SPBGetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
+				myErr = SPBGetDeviceInfo(myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
 				if (infoData > 0) infoData = 1;
 				
-				SetItemMark( aMenu, infoData + 1, 0xa5);
+				SetItemMark(aMenu, infoData + 1, 0xa5);
 				
 				Result = PopUpMenuSelect(	aMenu,
 										 myPt.v,
 										 myPt.h,
 										 infoData + 1);
 				
-				SetItemMark( aMenu, infoData + 1, 0);
+				SetItemMark(aMenu, infoData + 1, 0);
 				
-				if ( HiWord( Result ) != 0 )
+				if (HiWord(Result ) != 0 )
 				{
-					infoData = LoWord( Result) - 1;
+					infoData = LoWord(Result) - 1;
 					
-					if (infoData != 0) pStrcpy( aStr, "\pOn");
-					else pStrcpy( aStr, "\pOff");
+					if (infoData != 0) pStrcpy(aStr, "\pOn");
+					else pStrcpy(aStr, "\pOff");
 					
-					SetDText( deviceDialog, 3, aStr);
+					SetDText(deviceDialog, 3, aStr);
 					
-					myErr = SPBStopRecording( myInRefNum);
+					myErr = SPBStopRecording(myInRefNum);
 					
 					LASTvolume = infoData;
 					
-					myErr = SPBSetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
+					myErr = SPBSetDeviceInfo(myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
 					
 					{ short a;
 						a = 0;
-						myErr = SPBSetDeviceInfo( myInRefNum, siTwosComplementOnOff, &a);
+						myErr = SPBSetDeviceInfo(myInRefNum, siTwosComplementOnOff, &a);
 					}
 					mySPB.error = noErr;
 					mySPB.count 			= 	SOUNDINPUTMUL*deviceBufferSize;
-					myErr = SPBRecord( &mySPB, true);
+					myErr = SPBRecord(&mySPB, true);
 				}
 				
-				DeleteMenu( GetMenuID( aMenu));
+				DeleteMenu(GetMenuID(aMenu));
 				break;
 				
 			case 7:
-				/*	myErr = SPBGetDeviceInfo( myInRefNum, siOptionsDialog, (Ptr) &infoData);
+				/*	myErr = SPBGetDeviceInfo(myInRefNum, siOptionsDialog, (Ptr) &infoData);
 				 if (infoData == 1)
 				 {
-				 myErr = SPBSetDeviceInfo( myInRefNum, siOptionsDialog, NULL);
+				 myErr = SPBSetDeviceInfo(myInRefNum, siOptionsDialog, NULL);
 				 
-				 SPBGetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
-				 if (infoData != 0) NumToString( (long) infoData, aStr);
-				 else pStrcpy( aStr, "\pOff");
-				 SetDText( deviceDialog, 3, aStr);
+				 SPBGetDeviceInfo(myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
+				 if (infoData != 0) NumToString((long) infoData, aStr);
+				 else pStrcpy(aStr, "\pOff");
+				 SetDText(deviceDialog, 3, aStr);
 				 
 				 UpdateALLWindow();
 				 }
-				 else Erreur( 61, -56);	*/
+				 else Erreur(61, -56);	*/
 				break;
 				
 			case 14:
-				InsertMenu( rateM, hierMenu );
-				GetDialogItem( deviceDialog, 14, &itemType, &itemHandle, &itemRect);
+				InsertMenu(rateM, hierMenu );
+				GetDialogItem(deviceDialog, 14, &itemType, &itemHandle, &itemRect);
 				
 				myPt.v = itemRect.top;	myPt.h = itemRect.left;
-				LocalToGlobal( &myPt);
+				LocalToGlobal(&myPt);
 				
-				SetItemMark( rateM, curRate + 1, 0xa5);
+				SetItemMark(rateM, curRate + 1, 0xa5);
 				
 				Result = PopUpMenuSelect(	rateM,
 										 myPt.v,
 										 myPt.h,
 										 curRate + 1);
 				
-				SetItemMark( rateM, curRate + 1, 0);
+				SetItemMark(rateM, curRate + 1, 0);
 				
-				if ( HiWord(Result ) != 0 )
+				if (HiWord(Result ) != 0 )
 				{
 					unsigned long		rate;
 					
-					curRate = LoWord( Result) - 1;
+					curRate = LoWord(Result) - 1;
 					
-					myErr = SPBStopRecording( myInRefNum);
+					myErr = SPBStopRecording(myInRefNum);
 					
 					LASTrate = rate = (*RateList.l)[ curRate];
-					myErr = SPBSetDeviceInfo( myInRefNum, siSampleRate, (Ptr) &rate);
+					myErr = SPBSetDeviceInfo(myInRefNum, siSampleRate, (Ptr) &rate);
 					
 					{ short a;
 						a = 0;
-						myErr = SPBSetDeviceInfo( myInRefNum, siTwosComplementOnOff, &a);
+						myErr = SPBSetDeviceInfo(myInRefNum, siTwosComplementOnOff, &a);
 					}
 					mySPB.error = noErr;
 					mySPB.count 			= 	SOUNDINPUTMUL*deviceBufferSize;
-					myErr = SPBRecord( &mySPB, true);
+					myErr = SPBRecord(&mySPB, true);
 					
 					SetUpDeviceInfo();
 				}
-				DeleteMenu( GetMenuID( rateM));
+				DeleteMenu(GetMenuID(rateM));
 				break;
 				
 			case 12:
-				InsertMenu( bitsM, hierMenu );
-				GetDialogItem( deviceDialog, 12, &itemType, &itemHandle, &itemRect);
+				InsertMenu(bitsM, hierMenu );
+				GetDialogItem(deviceDialog, 12, &itemType, &itemHandle, &itemRect);
 				
 				myPt.v = itemRect.top;	myPt.h = itemRect.left;
-				LocalToGlobal( &myPt);
+				LocalToGlobal(&myPt);
 				
-				SetItemMark( bitsM, curBits + 1, 0xa5);
+				SetItemMark(bitsM, curBits + 1, 0xa5);
 				
 				Result = PopUpMenuSelect(	bitsM,
 										 myPt.v,
 										 myPt.h,
 										 curBits + 1);
 				
-				SetItemMark( bitsM, curBits + 1, 0);
+				SetItemMark(bitsM, curBits + 1, 0);
 				
-				if ( HiWord(Result ) != 0 )
+				if (HiWord(Result ) != 0 )
 				{
 					short	bits, a;
 					OSType	aa;
 					
-					curBits = LoWord( Result) - 1;
+					curBits = LoWord(Result) - 1;
 					
-					myErr = SPBStopRecording( myInRefNum);
+					myErr = SPBStopRecording(myInRefNum);
 					
 					LASTbits = bits = (*BitsList.l)[ curBits];
-					myErr = SPBSetDeviceInfo( myInRefNum, siSampleSize, (Ptr) &bits);
+					myErr = SPBSetDeviceInfo(myInRefNum, siSampleSize, (Ptr) &bits);
 					
 					if (bits == 8)
 					{
 						//	aa = 'best';
-						//	myErr = SPBSetDeviceInfo( myInRefNum, 'qual', (Ptr) &aa);
+						//	myErr = SPBSetDeviceInfo(myInRefNum, 'qual', (Ptr) &aa);
 					}
 					
 					a = 0;
-					myErr = SPBSetDeviceInfo( myInRefNum, siTwosComplementOnOff, &a);
+					myErr = SPBSetDeviceInfo(myInRefNum, siTwosComplementOnOff, &a);
 					
 					if (RecordingMode)
 					{
@@ -1094,31 +1094,31 @@ onrecommence:
 					
 					mySPB.error				= noErr;
 					mySPB.count 			= 	SOUNDINPUTMUL*deviceBufferSize;
-					myErr = SPBRecord( &mySPB, true);
+					myErr = SPBRecord(&mySPB, true);
 					
 					SetUpDeviceInfo();
 				}
-				DeleteMenu( GetMenuID( bitsM));
+				DeleteMenu(GetMenuID(bitsM));
 				break;
 		}
 		
-		SetPort( savePort);
+		SetPort(savePort);
 		
 	}while (itemHit != 1 && itemHit != 16 && itemHit != 46);
 	
 	if (RecordingVBL)
 	{
 		RecordingVBL = false;
-		if (SoundInputBits == 8) ConvertInstrumentIn( (Byte*) **RecordedSound, RecordingPtr - **RecordedSound);
+		if (SoundInputBits == 8) ConvertInstrumentIn((Byte*) **RecordedSound, RecordingPtr - **RecordedSound);
 	}
 	
-	GetDText( deviceDialog, 39, name);
+	GetDText(deviceDialog, 39, name);
 	
-	if (rateM != NULL) DisposeMenu( rateM);
-	if (bitsM != NULL) DisposeMenu( bitsM);
+	if (rateM != NULL) DisposeMenu(rateM);
+	if (bitsM != NULL) DisposeMenu(bitsM);
 	
-	DisposeMenu( soundDrivers);
-	DisposeMenu( aMenu);
+	DisposeMenu(soundDrivers);
+	DisposeMenu(aMenu);
 	UpdateALLWindow();
 	
 	DoPause();
@@ -1132,18 +1132,18 @@ onrecommence:
 			Handle		tHandle;
 			short		channels;
 			
-			if (SoundInputBits == 8) ConvertInstrument( (Byte*) **RecordedSound, RecordingPtr - **RecordedSound);
+			if (SoundInputBits == 8) ConvertInstrument((Byte*) **RecordedSound, RecordingPtr - **RecordedSound);
 			
 			sndSize = RecordingPtr - **RecordedSound;
 			
 			if (sndSize <= 0)
 			{
-				HUnlock( *RecordedSound);
-				DisposeHandle( *RecordedSound);
+				HUnlock(*RecordedSound);
+				DisposeHandle(*RecordedSound);
 				return -2;
 			}
 			
-			tHandle = NewHandle( 1024L);
+			tHandle = NewHandle(1024L);
 			
 			if (SoundInputStereo) channels = 2;
 			else channels = 1;
@@ -1157,17 +1157,17 @@ onrecommence:
 						   sndSize,
 						   &headerLen);
 			
-			HUnlock( *RecordedSound);
-			SetHandleSize( *RecordedSound, sndSize + headerLen);
+			HUnlock(*RecordedSound);
+			SetHandleSize(*RecordedSound, sndSize + headerLen);
 			
-			HLock( *RecordedSound);
-			HLock( tHandle);
-			BlockMoveData( **RecordedSound, (**RecordedSound) + headerLen, sndSize);
-			if (SoundInputBits == 16) ConvertInstrument16LL( (short*) ((**RecordedSound) + headerLen), sndSize);
-			BlockMoveData( *tHandle, **RecordedSound, headerLen);
-			HUnlock( *RecordedSound);
-			HUnlock( tHandle);
-			DisposeHandle( tHandle);
+			HLock(*RecordedSound);
+			HLock(tHandle);
+			BlockMoveData(**RecordedSound, (**RecordedSound) + headerLen, sndSize);
+			if (SoundInputBits == 16) ConvertInstrument16LL((short*) ((**RecordedSound) + headerLen), sndSize);
+			BlockMoveData(*tHandle, **RecordedSound, headerLen);
+			HUnlock(*RecordedSound);
+			HUnlock(tHandle);
+			DisposeHandle(tHandle);
 		}
 		
 		if (itemHit == 46) return -999;
@@ -1177,8 +1177,8 @@ onrecommence:
 	{
 		if (RecordingVBL)
 		{
-			HUnlock( *RecordedSound);
-			DisposeHandle( *RecordedSound);
+			HUnlock(*RecordedSound);
+			DisposeHandle(*RecordedSound);
 			*RecordedSound = NULL;
 		}
 		MicroOff();
@@ -1186,39 +1186,39 @@ onrecommence:
 	}
 }
 
-OSErr NOpenMicroDevice( Str255 myDeviceName)
+OSErr NOpenMicroDevice(Str255 myDeviceName)
 {
 	OSErr			myErr;
 	Handle			aHdl;
 	
-//	MyDebugStr( myErr, __FILE__, (char*) myDeviceName);
+//	MyDebugStr(myErr, __FILE__, (char*) myDeviceName);
 	
 	myInRefNum = 0;
-	myErr = SPBOpenDevice( myDeviceName, siWritePermission, &myInRefNum);
-//	if (myErr) MyDebugStr( myErr, __FILE__, (char*) myDeviceName);
+	myErr = SPBOpenDevice(myDeviceName, siWritePermission, &myInRefNum);
+//	if (myErr) MyDebugStr(myErr, __FILE__, (char*) myDeviceName);
 	
 	if (myErr == noErr)
 	{
-		myErr = SPBGetDeviceInfo( myInRefNum, siDeviceName, (Ptr) &InPutName);
-	//	if (myErr) MyDebugStr( __LINE__, __FILE__, "2");
+		myErr = SPBGetDeviceInfo(myInRefNum, siDeviceName, (Ptr) &InPutName);
+	//	if (myErr) MyDebugStr(__LINE__, __FILE__, "2");
 		
-		myErr = SPBGetDeviceInfo( myInRefNum, siDeviceBufferInfo, (Ptr) &deviceBufferSize);
-	//	if (myErr) MyDebugStr( __LINE__, __FILE__, "3");
+		myErr = SPBGetDeviceInfo(myInRefNum, siDeviceBufferInfo, (Ptr) &deviceBufferSize);
+	//	if (myErr) MyDebugStr(__LINE__, __FILE__, "3");
 		
-		myErr = SPBGetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &previousSoundVolume);
-	//	if (myErr) MyDebugStr( __LINE__, __FILE__, "4");
+		myErr = SPBGetDeviceInfo(myInRefNum, siPlayThruOnOff, (Ptr) &previousSoundVolume);
+	//	if (myErr) MyDebugStr(__LINE__, __FILE__, "4");
 		myErr = noErr;
 		
-		myErr = SPBSetDeviceInfo( myInRefNum, siOSTypeInputSource, &lastOSTypeInput);
-	//	if (myErr) MyDebugStr( __LINE__, __FILE__, "5");
+		myErr = SPBSetDeviceInfo(myInRefNum, siOSTypeInputSource, &lastOSTypeInput);
+	//	if (myErr) MyDebugStr(__LINE__, __FILE__, "5");
 		myErr = noErr;
 		
-		mySPB.interruptRoutine 	= NULL;	//NewSIInterruptUPP( InterruptRoutine);
+		mySPB.interruptRoutine 	= NULL;	//NewSIInterruptUPP(InterruptRoutine);
 		mySPB.completionRoutine = NewSICompletionUPP (CompletionRoutine);
 		
 		RecordingVBL = false;
 		
-		if ( myErr == noErr)
+		if (myErr == noErr)
 		{
 			unsigned long	temp;
 			
@@ -1234,8 +1234,8 @@ OSErr NOpenMicroDevice( Str255 myDeviceName)
 			
 			{ short a;
 			a = 0;
-			myErr = SPBSetDeviceInfo( myInRefNum, siTwosComplementOnOff, &a);
-		//	if (myErr) MyDebugStr( __LINE__, __FILE__, "6");
+			myErr = SPBSetDeviceInfo(myInRefNum, siTwosComplementOnOff, &a);
+		//	if (myErr) MyDebugStr(__LINE__, __FILE__, "6");
 			myErr = noErr;
 			
 			a = 1;
@@ -1243,7 +1243,7 @@ OSErr NOpenMicroDevice( Str255 myDeviceName)
 			}
 			mySPB.error = noErr;
 			mySPB.count 			= 	SOUNDINPUTMUL*deviceBufferSize;
-			myErr = SPBRecord( &mySPB, true);
+			myErr = SPBRecord(&mySPB, true);
 			
 			MicroPhone = true;
 			SetWindowEnviron();
@@ -1267,39 +1267,39 @@ void MicroOff(void)
 	if (MicroPhone == false) return;
 	MicroPhone = false;
 	
-//	MyDebugStr( myErr, __FILE__, (char*) "off");
+//	MyDebugStr(myErr, __FILE__, (char*) "off");
 	
-	myErr = SPBSetDeviceInfo( myInRefNum, siPlayThruOnOff, (Ptr) &previousSoundVolume);
-//	if (myErr) MyDebugStr( myErr, __FILE__, "1");
+	myErr = SPBSetDeviceInfo(myInRefNum, siPlayThruOnOff, (Ptr) &previousSoundVolume);
+//	if (myErr) MyDebugStr(myErr, __FILE__, "1");
 	
-	myErr = SPBStopRecording( myInRefNum);
-//	if (myErr) MyDebugStr( myErr, __FILE__, "2");
+	myErr = SPBStopRecording(myInRefNum);
+//	if (myErr) MyDebugStr(myErr, __FILE__, "2");
 	
-	myErr = SPBGetDeviceInfo( myInRefNum, siOSTypeInputSource, &lastOSTypeInput);
-//	if (myErr) MyDebugStr( myErr, __FILE__, "3");
+	myErr = SPBGetDeviceInfo(myInRefNum, siOSTypeInputSource, &lastOSTypeInput);
+//	if (myErr) MyDebugStr(myErr, __FILE__, "3");
 	
 	fourchar = kNoSource;
-	myErr = SPBSetDeviceInfo( myInRefNum, siOSTypeInputSource, &fourchar);
+	myErr = SPBSetDeviceInfo(myInRefNum, siOSTypeInputSource, &fourchar);
 	
 	// Set Max Rate !!!
 	maxRate = (*RateList.l)[ RateList.no-1];
-	myErr = SPBSetDeviceInfo( myInRefNum, siSampleRate, &maxRate);
-//	if (myErr) MyDebugStr( myErr, __FILE__, "5");
+	myErr = SPBSetDeviceInfo(myInRefNum, siSampleRate, &maxRate);
+//	if (myErr) MyDebugStr(myErr, __FILE__, "5");
 	
-	myErr = SPBCloseDevice( myInRefNum);
-//	if (myErr) MyDebugStr( myErr, __FILE__, "6");
+	myErr = SPBCloseDevice(myInRefNum);
+//	if (myErr) MyDebugStr(myErr, __FILE__, "6");
 	
-	DisposeSICompletionUPP( mySPB.completionRoutine);
+	DisposeSICompletionUPP(mySPB.completionRoutine);
 	mySPB.completionRoutine = NULL;
 	
-//	DisposeSIInterruptUPP( mySPB.interruptRoutine);
+//	DisposeSIInterruptUPP(mySPB.interruptRoutine);
 }
 
 void InitSoundInput()
 {
 	outPutPtr = (Ptr) -1L;
 	
-	SoundInputPtr = NewPtrClear( 40*2048L);
+	SoundInputPtr = NewPtrClear(40*2048L);
 	lastOSTypeInput = kNoSource;
 	MicroPhone = false;
 	RecordingVBL = false;

@@ -31,19 +31,19 @@ extern void NSLog(CFStringRef format, ...);
 //TODO: HSetVol isn't available in 64-bit code :(
 //TODO: Also, FSSpec is defined as UInt8 hidden[70]
  
-unsigned char* MYC2PStr( Ptr cStr)
+unsigned char* MYC2PStr(Ptr cStr)
 {
-	long size = strlen( cStr);
-	memmove( cStr + 1, cStr, size);
+	long size = strlen(cStr);
+	memmove(cStr + 1, cStr, size);
 	cStr[ 0] = size;
 
 	return (unsigned char*) cStr;
 }
 
-void MYP2CStr( unsigned char *cStr)
+void MYP2CStr(unsigned char *cStr)
 {
 	long size = cStr[ 0];
-	memmove( cStr, cStr + 1, size);
+	memmove(cStr, cStr + 1, size);
 	cStr[ size] = 0;
 }
 
@@ -54,9 +54,9 @@ UNFILE iFileOpen(Ptr name)
 	FSRef	Ref;
 	FSSpec	spec;
 	
-	HGetVol( NULL, &spec.vRefNum, &spec.parID);
+	HGetVol(NULL, &spec.vRefNum, &spec.parID);
 	
-	MYC2PStr( name);
+	MYC2PStr(name);
 	FSMakeFSSpec(spec.vRefNum, spec.parID, (unsigned char*)name, &spec);
 	MYP2CStr((unsigned char*)name);
 	
@@ -92,7 +92,7 @@ OSErr iRead(long size, Ptr dest, UNFILE iFileRefI)
 
 OSErr iSeekCur(long size, UNFILE iFileRefI)
 {
-	return FSSetForkPosition( iFileRefI, fsFromMark, size);
+	return FSSetForkPosition(iFileRefI, fsFromMark, size);
 }
 
 void iFileCreate(Ptr name, OSType type)
@@ -102,10 +102,10 @@ void iFileCreate(Ptr name, OSType type)
 	FileInfo		*fInfo = (FileInfo*)&fileCat.finderInfo;
 	memset(&fileCat, 0, sizeof(fileCat));
 	
-	MYC2PStr( name);
+	MYC2PStr(name);
 	{
 		FSSpec	spec;
-		HGetVol( NULL, &spec.vRefNum, &spec.parID);
+		HGetVol(NULL, &spec.vRefNum, &spec.parID);
 		Str31 blankName = {0};
 		
 		FSMakeFSSpec(spec.vRefNum, spec.parID, (unsigned char*)name, &spec);
@@ -141,7 +141,7 @@ void iFileCreate(Ptr name, OSType type)
 	FSCreateFileUnicode(&ref, uniLen, UNICHARThing, kFSCatInfoFinderInfo, &fileCat, NULL, NULL);
 	free(UNICHARThing);
 	
-	MYP2CStr( (unsigned char*) name);
+	MYP2CStr((unsigned char*) name);
 }
 
 OSErr iWrite(long size, Ptr dest, UNFILE iFileRefI)
@@ -156,19 +156,19 @@ void iClose(UNFILE iFileRefI)
 
 /////////////////////////////////
 
-EXP void OSType2Ptr( OSType type, Ptr str)
+EXP void OSType2Ptr(OSType type, Ptr str)
 {
 	MOT32(&type);
 	memcpy(str, &type, 4);
 	str[ 4] = 0;
 }
 
-EXP OSType Ptr2OSType( char* str)
+EXP OSType Ptr2OSType(char* str)
 {
 	short 	i;
 	OSType	type;
 	
-	i = strlen( str);
+	i = strlen(str);
 	if (i > 4) i = 4;
 	type = '    ';
 	memcpy(&type, str, i);

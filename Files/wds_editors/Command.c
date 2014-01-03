@@ -26,11 +26,11 @@
 			MenuHandle				thePatternMenu = NULL;
 	
 	short	ConvertNote2No(	Str32);
-	void 	DoPlayInstruInt( short	Note, short Instru, short effect, short arg, short vol, Channel *curVoice, long start, long end);
+	void 	DoPlayInstruInt(short	Note, short Instru, short effect, short arg, short vol, Channel *curVoice, long start, long end);
 	void	DesactivateCmdWindow();
-	void	NSelectInstruList( short, short);
+	void	NSelectInstruList(short, short);
 	void	ApplyOnAllCell(short ins, short note, short ef, short argu, short vol);
-	void 	ApplyBut( short value);
+	void 	ApplyBut(short value);
 
 static	short	ActualShowEffect;
 
@@ -39,7 +39,7 @@ static	short	ActualShowEffect;
 #define SMALLL	183
 #define LARGEL	183 + 262 + 20
 
-void GetCurrentDlogCmd( short *pos, short *track)
+void GetCurrentDlogCmd(short *pos, short *track)
 {
 	*pos = oldPos;
 	*track = oldTrack;
@@ -49,17 +49,17 @@ void SwitchSize()
 {
 Rect	caRect;
 	
-	GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
+	GetPortBounds(GetDialogPort(ToolsDlog), &caRect);
 
-	if (caRect.bottom == SMALLH) MySizeWindow( ToolsDlog, caRect.right, LARGEH, true);
+	if (caRect.bottom == SMALLH) MySizeWindow(ToolsDlog, caRect.right, LARGEH, true);
 	else
 	{
-		MySizeWindow( ToolsDlog, SMALLL, SMALLH, true);
-		HiliteControl( FlipBut, 0);
+		MySizeWindow(ToolsDlog, SMALLL, SMALLH, true);
+		HiliteControl(FlipBut, 0);
 	}
 }
 
-void SizeCommandWindow( Boolean L, Boolean H)
+void SizeCommandWindow(Boolean L, Boolean H)
 {
 	short l, h;
 
@@ -69,13 +69,13 @@ void SizeCommandWindow( Boolean L, Boolean H)
 	if (H) h = LARGEH;
 	else h = SMALLH;
 	
-	MySizeWindow( ToolsDlog, l, h, true);
+	MySizeWindow(ToolsDlog, l, h, true);
 }
 
 Cmd* GetCmdDlogActif()
 {	
 	if ((*TEH[ curActif])->active != 0)
-		return GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
+		return GetMADCommand(oldPos, oldTrack, curMusic->partition[ oldPat]);
 	else
 		return (Cmd*) -1L;
 }
@@ -84,16 +84,16 @@ void ShowCurrentCmdNote(void)
 {
 Rect	caRect;
 	
-	GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
+	GetPortBounds(GetDialogPort(ToolsDlog), &caRect);
 
-	if (caRect.bottom == SMALLH) MySizeWindow( ToolsDlog, caRect.right, LARGEH, true);
+	if (caRect.bottom == SMALLH) MySizeWindow(ToolsDlog, caRect.right, LARGEH, true);
 	UpdateNow = true;
 	
-//	HandleViewsChoice( 10);
+//	HandleViewsChoice(10);
 
-	ShowWindow( GetDialogWindow( ToolsDlog));
-	SelectWindow( GetDialogWindow( ToolsDlog));
-	SelectWindow2( oldWindow);
+	ShowWindow(GetDialogWindow(ToolsDlog));
+	SelectWindow(GetDialogWindow(ToolsDlog));
+	SelectWindow2(oldWindow);
 }
 
 void UpdatePatternMenu(void)
@@ -103,77 +103,77 @@ Str255	aStr, theStr;
 
 	if (thePatternMenu == NULL) Debugger();
 	
-	x = CountMenuItems( thePatternMenu);
-	for (i = 0; i < x;i++) DeleteMenuItem( thePatternMenu, 1);
+	x = CountMenuItems(thePatternMenu);
+	for (i = 0; i < x;i++) DeleteMenuItem(thePatternMenu, 1);
 
 	for (i = 0; i < curMusic->header->numPat; i++)
 	{
-		NumToString( i, aStr);
-		pStrcat( aStr, "\p - ");
+		NumToString(i, aStr);
+		pStrcat(aStr, "\p - ");
 		
 		theStr[ 0] = 20;
 		for (x = 0; x < 20; x++) theStr[ x+1] = curMusic->partition[ i]->header.name[ x];
-		pStrcat( aStr, theStr);
+		pStrcat(aStr, theStr);
 		
-		AppendMenu( thePatternMenu, aStr);
+		AppendMenu(thePatternMenu, aStr);
 	}
 }
 
-void AfficheGoodEffect( short effect, Byte arg)
+void AfficheGoodEffect(short effect, Byte arg)
 {
 Handle			aH;
 StScrpHandle	theStyle;
 RGBColor		color;
 short			textID;
 
-	if (effect == 14) textID = 300 + HI( arg);
+	if (effect == 14) textID = 300 + HI(arg);
 	else textID = 200 + effect;
 
 	if (ActualShowEffect != textID)
 	{
-		GetBackColor( &color);
-		RGBBackColor( &theColor);
+		GetBackColor(&color);
+		RGBBackColor(&theColor);
 	
-		aH = GetResource( 'TEXT', textID);
-		theStyle = (StScrpHandle) GetResource( 'styl', textID);
+		aH = GetResource('TEXT', textID);
+		theStyle = (StScrpHandle) GetResource('styl', textID);
 	
-		DetachResource( (Handle) theStyle);
-		DetachResource( aH);
+		DetachResource((Handle) theStyle);
+		DetachResource(aH);
 	
-		HLock( aH);
+		HLock(aH);
 		(*EfTE)->selStart = 0;
 		(*EfTE)->selEnd = (*EfTE)->teLength;
-		TEDelete( EfTE);
-		TEStyleInsert( *aH, GetHandleSize( aH), theStyle, EfTE);
-		HUnlock( aH);
+		TEDelete(EfTE);
+		TEStyleInsert(*aH, GetHandleSize(aH), theStyle, EfTE);
+		HUnlock(aH);
 
-		MyDisposHandle( & aH);
+		MyDisposHandle(& aH);
 		
 		ActualShowEffect = textID;
 		
-		RGBBackColor( &color);
+		RGBBackColor(&color);
 	}
 }
 
-void SetCommandTrack( int theTrack, long incurPos)
+void SetCommandTrack(int theTrack, long incurPos)
 {
 	curTrack = theTrack;
 	curPos = incurPos;
 }
 
-short	Analyse( short	menuType)
+short	Analyse(short	menuType)
 {
 	Str255		aStr;
 	CharsHandle	cHdle;
 	short			Oct = 0;
 	long		ltemp = 0;
 	
-	switch( menuType)
+	switch(menuType)
 	{
 		case VolumeTE:
 			aStr[ 0] = (*TEH[ VolumeTE])->teLength;
 			
-			cHdle = TEGetText( TEH[ VolumeTE]);
+			cHdle = TEGetText(TEH[ VolumeTE]);
 			
 			if ((*cHdle)[ 1] >= 'A' && (*cHdle)[ 1] <= 'F') Oct = 10 + (*cHdle)[ 1] - 'A';
 			if ((*cHdle)[ 1] >= '0' && (*cHdle)[ 1] <= '9') Oct = (*cHdle)[ 1] - '0';
@@ -187,14 +187,14 @@ short	Analyse( short	menuType)
 		case InstruTE:
 			aStr[ 0] = (*TEH[ InstruTE])->teLength;
 			
-			cHdle = TEGetText( TEH[ InstruTE]);
+			cHdle = TEGetText(TEH[ InstruTE]);
 			
 			aStr[ 1] = (*cHdle)[ 0];
 			aStr[ 2] = (*cHdle)[ 1];
 			aStr[ 3] = (*cHdle)[ 2];
 			
 			if (aStr[ 2] == '-') ltemp = 0;
-			else StringToNum( aStr, &ltemp);
+			else StringToNum(aStr, &ltemp);
 			
 			if (ltemp >= 0 && ltemp < MAXINSTRU) return ltemp;
 			break;
@@ -202,19 +202,19 @@ short	Analyse( short	menuType)
 		case NoteTE:
 			aStr[ 0] = (*TEH[ NoteTE])->teLength;
 			
-			cHdle = TEGetText( TEH[ NoteTE]);
+			cHdle = TEGetText(TEH[ NoteTE]);
 			
 			aStr[ 1] = (*cHdle)[ 0];
 			aStr[ 2] = (*cHdle)[ 1];
 			aStr[ 3] = (*cHdle)[ 2];
 			
-			if (EqualString( aStr, "\pOFF", false, false))
+			if (EqualString(aStr, "\pOFF", false, false))
 			{
 				return NUMBER_NOTES+1;
 			}
 			else
 			{
-				Oct = ConvertNote2No( aStr);
+				Oct = ConvertNote2No(aStr);
 				if (Oct >= 0 && Oct < NUMBER_NOTES) return Oct;
 				else return NUMBER_NOTES;
 			}
@@ -223,7 +223,7 @@ short	Analyse( short	menuType)
 		case EffectTE:
 			aStr[ 0] = (*TEH[ EffectTE])->teLength;
 			
-			cHdle = TEGetText( TEH[ EffectTE]);
+			cHdle = TEGetText(TEH[ EffectTE]);
 			
 			Oct = -1;
 			
@@ -238,7 +238,7 @@ short	Analyse( short	menuType)
 		case ArguTE:
 			aStr[ 0] = (*TEH[ ArguTE])->teLength;
 			
-			cHdle = TEGetText( TEH[ ArguTE]);
+			cHdle = TEGetText(TEH[ ArguTE]);
 			
 			if ((*cHdle)[ 1] >= 'A' && (*cHdle)[ 1] <= 'F') Oct = 10 + (*cHdle)[ 1] - 'A';
 			if ((*cHdle)[ 1] >= '0' && (*cHdle)[ 1] <= '9') Oct = (*cHdle)[ 1] - '0';
@@ -253,7 +253,7 @@ short	Analyse( short	menuType)
 	return 1;
 }
 
-void SetCmdValue( short	menuType)
+void SetCmdValue(short	menuType)
 {
 	Str255			aStr;
 	CharsHandle		cHdle;
@@ -270,7 +270,7 @@ void SetCmdValue( short	menuType)
 	
 	curMusic->hasChanged = true;
 	
-	switch( menuType)
+	switch(menuType)
 	{
 		case VolumeTE:
 			aStr[ 0] = (*TEH[ VolumeTE])->teLength;
@@ -278,14 +278,14 @@ void SetCmdValue( short	menuType)
 			ltemp = 0;
 			if (aStr[ 0] == 1)
 			{
-				cHdle = TEGetText( TEH[ VolumeTE]);
+				cHdle = TEGetText(TEH[ VolumeTE]);
 				
 				if (**cHdle >= 'A' && **cHdle <= 'F') ltemp = 10 + **cHdle - 'A';
 				if (**cHdle >= '0' && **cHdle <= '9') ltemp = **cHdle - '0';
 			}
 			else if (aStr[ 0] >= 2)
 			{
-				cHdle = TEGetText( TEH[ VolumeTE]);
+				cHdle = TEGetText(TEH[ VolumeTE]);
 				
 				if (**cHdle >= 'A' && **cHdle <= 'F') ltemp = 10 + **cHdle - 'A';
 				if (**cHdle >= '0' && **cHdle <= '9') ltemp = **cHdle - '0';
@@ -299,11 +299,11 @@ void SetCmdValue( short	menuType)
 			
 			if (AllCellApply)
 			{
-				ApplyOnAllCell( -1, -1, -1, -1, ltemp);
+				ApplyOnAllCell(-1, -1, -1, -1, ltemp);
 			}
 			else
 			{
-				aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
+				aCmd = GetMADCommand(oldPos, oldTrack, curMusic->partition[ oldPat]);
 			}
 			
 			aCmd->vol = ltemp;
@@ -312,7 +312,7 @@ void SetCmdValue( short	menuType)
 		case InstruTE:
 			aStr[ 0] = (*TEH[ InstruTE])->teLength;
 			
-			cHdle = TEGetText( TEH[ InstruTE]);
+			cHdle = TEGetText(TEH[ InstruTE]);
 			
 			if ((*cHdle)[ 1] == '-') ltemp = 0;
 			else if (aStr[ 0] > 0)
@@ -321,22 +321,22 @@ void SetCmdValue( short	menuType)
 				aStr[ 2] = (*cHdle)[ 1];
 				aStr[ 3] = (*cHdle)[ 2];
 				
-				StringToNum( aStr, &ltemp);
+				StringToNum(aStr, &ltemp);
 			}
 			else ltemp = 0;
 			if (ltemp < 0 || ltemp > MAXINSTRU) ltemp = 0;
 			
 			if (AllCellApply)
 			{
-				ApplyOnAllCell( ltemp, -1, -1, -1, -1);
+				ApplyOnAllCell(ltemp, -1, -1, -1, -1);
 			}
 			else
 			{
-				aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
+				aCmd = GetMADCommand(oldPos, oldTrack, curMusic->partition[ oldPat]);
 			}
 			
 			aCmd->ins = ltemp;
-			NSelectInstruList( aCmd->ins - 1, -1);
+			NSelectInstruList(aCmd->ins - 1, -1);
 			break;
 			
 		case NoteTE:
@@ -344,13 +344,13 @@ void SetCmdValue( short	menuType)
 			
 			if (aStr[ 0] > 1)
 			{
-				cHdle = TEGetText( TEH[ NoteTE]);
+				cHdle = TEGetText(TEH[ NoteTE]);
 				
 				aStr[ 1] = (*cHdle)[ 0];
 				aStr[ 2] = (*cHdle)[ 1];
 				aStr[ 3] = (*cHdle)[ 2];
 				
-				if (EqualString( aStr, "\pOFF", false, false))
+				if (EqualString(aStr, "\pOFF", false, false))
 				{
 					Oct = 0xFE;
 				}
@@ -362,7 +362,7 @@ void SetCmdValue( short	menuType)
 						aStr[ 2] = ' ';
 					}
 					
-					Oct = ConvertNote2No( aStr);
+					Oct = ConvertNote2No(aStr);
 					
 					if (Oct < 0 || Oct > NUMBER_NOTES) Oct = 0xFF;
 				}
@@ -371,11 +371,11 @@ void SetCmdValue( short	menuType)
 			
 			if (AllCellApply)
 			{
-				ApplyOnAllCell( -1, Oct, -1, -1, -1);
+				ApplyOnAllCell(-1, Oct, -1, -1, -1);
 			}
 			else
 			{
-				aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
+				aCmd = GetMADCommand(oldPos, oldTrack, curMusic->partition[ oldPat]);
 				aCmd->note = Oct;
 			}
 			break;
@@ -386,7 +386,7 @@ void SetCmdValue( short	menuType)
 			
 			if (aStr[ 0] > 0)
 			{
-				cHdle = TEGetText( TEH[ EffectTE]);
+				cHdle = TEGetText(TEH[ EffectTE]);
 				
 				if (**cHdle == 'L') Oct = 17;
 				if (**cHdle == 'O') Oct = 18;
@@ -397,15 +397,15 @@ void SetCmdValue( short	menuType)
 			
 			if (AllCellApply)
 			{
-				ApplyOnAllCell( -1, -1, Oct, -1, -1);
+				ApplyOnAllCell(-1, -1, Oct, -1, -1);
 			}
 			else
 			{
-				aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
+				aCmd = GetMADCommand(oldPos, oldTrack, curMusic->partition[ oldPat]);
 				aCmd->cmd = Oct;
 			}
 			
-			AfficheGoodEffect( aCmd->cmd, aCmd->arg);
+			AfficheGoodEffect(aCmd->cmd, aCmd->arg);
 			break;
 			
 		case ArguTE:
@@ -414,14 +414,14 @@ void SetCmdValue( short	menuType)
 			Oct = 0;
 			if (aStr[ 0] == 1)
 			{
-				cHdle = TEGetText( TEH[ ArguTE]);
+				cHdle = TEGetText(TEH[ ArguTE]);
 				
 				if (**cHdle >= 'A' && **cHdle <= 'F') Oct = 10 + **cHdle - 'A';
 				if (**cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
 			}
 			else if (aStr[ 0] >= 2)
 			{
-				cHdle = TEGetText( TEH[ ArguTE]);
+				cHdle = TEGetText(TEH[ ArguTE]);
 				
 				if (**cHdle >= 'A' && **cHdle <= 'F') Oct = 10 + **cHdle - 'A';
 				if (**cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
@@ -434,15 +434,15 @@ void SetCmdValue( short	menuType)
 			
 			if (AllCellApply)
 			{
-				ApplyOnAllCell( -1, -1, -1, Oct, -1);
+				ApplyOnAllCell(-1, -1, -1, Oct, -1);
 			}
 			else
 			{
-				aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
+				aCmd = GetMADCommand(oldPos, oldTrack, curMusic->partition[ oldPat]);
 				aCmd->arg = Oct;
 			}
 			
-			AfficheGoodEffect( aCmd->cmd, aCmd->arg);
+			AfficheGoodEffect(aCmd->cmd, aCmd->arg);
 			break;
 	}
 	
@@ -452,7 +452,7 @@ void SetCmdValue( short	menuType)
 	{
 		if (aCmd != NULL)
 		{
-			UPDATE_Note( oldPos, oldTrack);
+			UPDATE_Note(oldPos, oldTrack);
 		}
 	}
 	
@@ -460,14 +460,14 @@ void SetCmdValue( short	menuType)
 	AllCellApply = allCellCopy;
 }
 
-void myTESetText( Ptr textPtr, long length, TEHandle hTE)
+void myTESetText(Ptr textPtr, long length, TEHandle hTE)
 {
 short	i;
 
 	if ((*hTE)->teLength != length)
 	{
-		TESetText( textPtr, length, hTE);
-		TEUpdate( &(*hTE)->viewRect, hTE);
+		TESetText(textPtr, length, hTE);
+		TEUpdate(&(*hTE)->viewRect, hTE);
 	}
 	else
 	{
@@ -475,8 +475,8 @@ short	i;
 		{
 			if ((*(*hTE)->hText)[ i] != textPtr[ i])
 			{
-				TESetText( textPtr, length, hTE);
-				TEUpdate( &(*hTE)->viewRect, hTE);
+				TESetText(textPtr, length, hTE);
+				TEUpdate(&(*hTE)->viewRect, hTE);
 				return;
 			}
 		}
@@ -494,10 +494,10 @@ void DoNullCmdWindow(void)
  	long				val, newVal;
  	Cmd					*theCommand;
 	
-	GetPort( &savePort);
-	SetPortDialogPort( ToolsDlog);
+	GetPort(&savePort);
+	SetPortDialogPort(ToolsDlog);
 	
-	for (i = InstruTE; i<= VolumeTE; i++) TEIdle( TEH[ i]);
+	for (i = InstruTE; i<= VolumeTE; i++) TEIdle(TEH[ i]);
 	
 	if (oldPat != MADDriver->Pat || UpdateNow == true)
 	{
@@ -509,8 +509,8 @@ void DoNullCmdWindow(void)
 			curTrack = 1;
 		}
 
-		NumToString( oldPat, tempStr);
-		SetDText( ToolsDlog, 15, tempStr);
+		NumToString(oldPat, tempStr);
+		SetDText(ToolsDlog, 15, tempStr);
 	}
 
 	if (oldTrack != curTrack || UpdateNow == true)
@@ -518,8 +518,8 @@ void DoNullCmdWindow(void)
 		oldTrack = curTrack;
 		UpdateNow = true;
 
-		NumToString( oldTrack + 1, tempStr);
-		SetDText( ToolsDlog, 17, tempStr);
+		NumToString(oldTrack + 1, tempStr);
+		SetDText(ToolsDlog, 17, tempStr);
 	}
 
 	if (thePrefs.MusicTrace == true || curPos == -1)
@@ -539,33 +539,33 @@ void DoNullCmdWindow(void)
 		
 		oldPos = newVal;
 		if (oldPos >= curMusic->partition[ oldPat]->header.size) oldPos = curMusic->partition[ oldPat]->header.size - 1;
-		NumToString( oldPos, tempStr);
-		SetDText( ToolsDlog, 16, tempStr);
+		NumToString(oldPos, tempStr);
+		SetDText(ToolsDlog, 16, tempStr);
 
-		theCommand = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
+		theCommand = GetMADCommand(oldPos, oldTrack, curMusic->partition[ oldPat]);
 		
-		BackColor( whiteColor);
+		BackColor(whiteColor);
 		
-		myTESetText( (Ptr) EInstru[ theCommand->ins], 3, TEH[ InstruTE]);
-		myTESetText( (Ptr) ENote[ theCommand->note], 3, TEH[ NoteTE]);
-		myTESetText( (Ptr) &EEffect[ theCommand->cmd], 1, TEH[ EffectTE]);
-		myTESetText( (Ptr) EArgu[ theCommand->arg], 2, TEH[ ArguTE]);
+		myTESetText((Ptr) EInstru[ theCommand->ins], 3, TEH[ InstruTE]);
+		myTESetText((Ptr) ENote[ theCommand->note], 3, TEH[ NoteTE]);
+		myTESetText((Ptr) &EEffect[ theCommand->cmd], 1, TEH[ EffectTE]);
+		myTESetText((Ptr) EArgu[ theCommand->arg], 2, TEH[ ArguTE]);
 		
-		if (theCommand->vol == 0xFF) myTESetText( (Ptr) EInstru[ 0], 2, TEH[ VolumeTE]);
-		else myTESetText( (Ptr) EArgu[ theCommand->vol], 2, TEH[ VolumeTE]);
+		if (theCommand->vol == 0xFF) myTESetText((Ptr) EInstru[ 0], 2, TEH[ VolumeTE]);
+		else myTESetText((Ptr) EArgu[ theCommand->vol], 2, TEH[ VolumeTE]);
 		
-		GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
+		GetPortBounds(GetDialogPort(ToolsDlog), &caRect);
 		
-		if (caRect.right > 240) AfficheGoodEffect( theCommand->cmd, theCommand->arg);
+		if (caRect.right > 240) AfficheGoodEffect(theCommand->cmd, theCommand->arg);
 		
-		TESetSelect( 0, 32000, TEH[ curActif]);
+		TESetSelect(0, 32000, TEH[ curActif]);
 
-		RGBBackColor( &theColor);
+		RGBBackColor(&theColor);
 		
 		UpdateNow = false;
 	}
 	
-	SetPort( savePort);
+	SetPort(savePort);
 }
 
 void  UpdateCmdDlogInfo(void)
@@ -584,51 +584,51 @@ void  UpdateCmdDlogWindow(DialogPtr GetSelection)
 	
 	
 
- 	/*	GetPort( &SavePort);
- 		SetPortDialogPort( GetSelection);
+ 	/*	GetPort(&SavePort);
+ 		SetPortDialogPort(GetSelection);
 		
-		BeginUpdate( GetDialogWindow( GetSelection));
+		BeginUpdate(GetDialogWindow(GetSelection));
 	
-		TextFont( 4);	TextSize( 9);
+		TextFont(4);	TextSize(9);
 	*/
 	
 		UpdateNow = true;
 	
- 	//	DrawDialog( GetSelection);
+ 	//	DrawDialog(GetSelection);
 			
 		for (i=31; i <=34; i++)
 		{
-			GetDialogItem( ToolsDlog, i, &itemType, &itemHandle, &tempRect);
+			GetDialogItem(ToolsDlog, i, &itemType, &itemHandle, &tempRect);
 			
-			InsetRect( &tempRect, -2, -2);
+			InsetRect(&tempRect, -2, -2);
 			tempRect.bottom--;
 			
-			ForeColor( whiteColor);
-			PaintRect( &tempRect);
-			ForeColor( blackColor);
+			ForeColor(whiteColor);
+			PaintRect(&tempRect);
+			ForeColor(blackColor);
 			
-			FrameRect( &tempRect);
+			FrameRect(&tempRect);
 		}
-		GetDialogItem( ToolsDlog, 42, &itemType, &itemHandle, &tempRect);
-		InsetRect( &tempRect, -2, -2);
+		GetDialogItem(ToolsDlog, 42, &itemType, &itemHandle, &tempRect);
+		InsetRect(&tempRect, -2, -2);
 		tempRect.bottom--;
 			
-		ForeColor( whiteColor);	PaintRect( &tempRect);	ForeColor( blackColor);
-		FrameRect( &tempRect);
+		ForeColor(whiteColor);	PaintRect(&tempRect);	ForeColor(blackColor);
+		FrameRect(&tempRect);
 		
-		BackColor( whiteColor);
+		BackColor(whiteColor);
 		
-		GetPortBounds( GetDialogPort( GetSelection), &caRect);
+		GetPortBounds(GetDialogPort(GetSelection), &caRect);
 		
-		for (i = InstruTE; i<= VolumeTE; i++) TEUpdate( &caRect, TEH[ i]);
+		for (i = InstruTE; i<= VolumeTE; i++) TEUpdate(&caRect, TEH[ i]);
 				
-		if ((**(**GetMainDevice()).gdPMap).pixelSize == 1) BackColor( whiteColor);
-		else RGBBackColor( &theColor);
+		if ((**(**GetMainDevice()).gdPMap).pixelSize == 1) BackColor(whiteColor);
+		else RGBBackColor(&theColor);
 
-		TEUpdate( &caRect, EfTE);
+		TEUpdate(&caRect, EfTE);
 		
-/*		EndUpdate( GetDialogWindow( GetSelection));
-		SetPort( SavePort);*/
+/*		EndUpdate(GetDialogWindow(GetSelection));
+		SetPort(SavePort);*/
 } 
 
 void PlayCurNote(void)
@@ -637,14 +637,14 @@ void PlayCurNote(void)
 	Channel			*curVoice;
 	Cmd				*aCmd;
 	
-	aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
+	aCmd = GetMADCommand(oldPos, oldTrack, curMusic->partition[ oldPat]);
 
 	curVoice = &MADDriver->chan[ oldTrack];
 	
-	DoPlayInstruInt( aCmd->note, aCmd->ins-1, aCmd->cmd, aCmd->arg, aCmd->vol, &MADDriver->chan[ oldTrack], 0, 0);
+	DoPlayInstruInt(aCmd->note, aCmd->ins-1, aCmd->cmd, aCmd->arg, aCmd->vol, &MADDriver->chan[ oldTrack], 0, 0);
 }
 
-void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
+void DoItemPressCmdDlog(short whichItem, DialogPtr whichDialog)
 {
 		Point		myPt, cell;
 		Str255		aStr;
@@ -661,31 +661,31 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
 	
 	
 
- 		GetPort( &SavePort);
- 		SetPortDialogPort( ToolsDlog);
+ 		GetPort(&SavePort);
+ 		SetPortDialogPort(ToolsDlog);
  
  		myPt = theEvent.where;
-		GlobalToLocal( &myPt);
+		GlobalToLocal(&myPt);
  
  		DesactivateCmdWindow();
 		
-		GetPortBounds( GetDialogPort( whichDialog), &caRect);
+		GetPortBounds(GetDialogPort(whichDialog), &caRect);
 		
- 		switch( whichItem)
+ 		switch(whichItem)
  		{
 			case 35:
-				//if ((*keyMapCntl) != 255 && MyTrackControl( keyMapCntl, theEvent.where, NULL))
-				if (GetControlHilite( FlipBut) != 255 && MyTrackControl( FlipBut, theEvent.where, NULL))
+				//if ((*keyMapCntl) != 255 && MyTrackControl(keyMapCntl, theEvent.where, NULL))
+				if (GetControlHilite(FlipBut) != 255 && MyTrackControl(FlipBut, theEvent.where, NULL))
 				{
 					if (caRect.right == LARGEL)
 					{
-						MySizeWindow( whichDialog, SMALLL , caRect.bottom, true);
-						HiliteControl( FlipBut, 0);
+						MySizeWindow(whichDialog, SMALLL , caRect.bottom, true);
+						HiliteControl(FlipBut, 0);
 					}
 					else
 					{
-						MySizeWindow( whichDialog, LARGEL, caRect.bottom, true);
-						HiliteControl( FlipBut, kControlButtonPart);
+						MySizeWindow(whichDialog, LARGEL, caRect.bottom, true);
+						HiliteControl(FlipBut, kControlButtonPart);
 						
 						UpdateNow = true;
 						DoNullCmdWindow();
@@ -697,207 +697,207 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
  			case 32:
  			case 33:
  			case 34:
- 				BackColor( whiteColor);
+ 				BackColor(whiteColor);
  				
- 				TEActivate( TEH[ whichItem - 31]);
- 			//	TEClick( myPt, false, TEH[ whichItem - 31]);
+ 				TEActivate(TEH[ whichItem - 31]);
+ 			//	TEClick(myPt, false, TEH[ whichItem - 31]);
  				
- 				if (whichItem - 31 != curActif) SetCmdValue( curActif);
+ 				if (whichItem - 31 != curActif) SetCmdValue(curActif);
 				
-				TESetSelect( 0, 300, TEH[ whichItem - 31]);
+				TESetSelect(0, 300, TEH[ whichItem - 31]);
 				
  				curActif = whichItem - 31;
  				
- 				RGBBackColor( &theColor);
+ 				RGBBackColor(&theColor);
  			break;
  			
  			case 42:
- 				BackColor( whiteColor);
- 				TESetSelect( 0, 300, TEH[ VolumeTE]);
+ 				BackColor(whiteColor);
+ 				TESetSelect(0, 300, TEH[ VolumeTE]);
  				
- 				TEActivate( TEH[ VolumeTE]);
- 			//	TEClick( myPt, false, TEH[ VolumeTE]);
+ 				TEActivate(TEH[ VolumeTE]);
+ 			//	TEClick(myPt, false, TEH[ VolumeTE]);
  				
- 				if (VolumeTE != curActif) SetCmdValue( curActif);
+ 				if (VolumeTE != curActif) SetCmdValue(curActif);
 
  				curActif = VolumeTE;
  				
- 				RGBBackColor( &theColor);
+ 				RGBBackColor(&theColor);
  			break;
 
  			case 18:
- 				InsertMenuItem( InstruMenu, "\pNo Ins", 0);
+ 				InsertMenuItem(InstruMenu, "\pNo Ins", 0);
  				
-				InsertMenu( InstruMenu, hierMenu );
-				GetDialogItem( ToolsDlog, whichItem, &itemType, &itemHandle, &tempRect);
-				curSelec = Analyse( InstruTE);
+				InsertMenu(InstruMenu, hierMenu );
+				GetDialogItem(ToolsDlog, whichItem, &itemType, &itemHandle, &tempRect);
+				curSelec = Analyse(InstruTE);
 				
 				myPt.v = tempRect.top;	myPt.h = tempRect.left;
-				LocalToGlobal( &myPt);
+				LocalToGlobal(&myPt);
 				
-				SetItemMark( InstruMenu, curSelec + 1, 0xa5);
+				SetItemMark(InstruMenu, curSelec + 1, 0xa5);
 				
 				mresult = PopUpMenuSelect(	InstruMenu,
 											myPt.v,
 											myPt.h,
 											curSelec + 1);
 				
-				SetItemMark( InstruMenu, curSelec + 1, 0);
+				SetItemMark(InstruMenu, curSelec + 1, 0);
 				
-				if ( HiWord(mresult ) != 0 )
+				if (HiWord(mresult ) != 0 )
 				{
-					SaveUndo( UPattern, oldPat, "\pUndo 'Command Editing'");
+					SaveUndo(UPattern, oldPat, "\pUndo 'Command Editing'");
 				
-					GetMenuItemText( InstruMenu, LoWord( mresult), aStr);
+					GetMenuItemText(InstruMenu, LoWord(mresult), aStr);
 					
-					TESetSelect( 0, 300, TEH[ InstruTE]);
-					TESetText( aStr + 1, 3, TEH[ InstruTE]);
-					InvalWindowRect( GetDialogWindow( ToolsDlog), &(*TEH[ InstruTE])->viewRect);
-					SetCmdValue( InstruTE);
+					TESetSelect(0, 300, TEH[ InstruTE]);
+					TESetText(aStr + 1, 3, TEH[ InstruTE]);
+					InvalWindowRect(GetDialogWindow(ToolsDlog), &(*TEH[ InstruTE])->viewRect);
+					SetCmdValue(InstruTE);
 				}
-				DeleteMenu( GetMenuID( InstruMenu));
+				DeleteMenu(GetMenuID(InstruMenu));
 				
-				DeleteMenuItem( InstruMenu, 1);
+				DeleteMenuItem(InstruMenu, 1);
  			break;
  			
  			case 41:
-				InsertMenu( EffectMenu, hierMenu );
-				GetDialogItem( ToolsDlog, whichItem, &itemType, &itemHandle, &tempRect);
-				curSelec = Analyse( EffectTE);
+				InsertMenu(EffectMenu, hierMenu );
+				GetDialogItem(ToolsDlog, whichItem, &itemType, &itemHandle, &tempRect);
+				curSelec = Analyse(EffectTE);
 				
 				myPt.v = tempRect.top;	myPt.h = tempRect.left;
-				LocalToGlobal( &myPt);
+				LocalToGlobal(&myPt);
 				
-				SetItemMark( EffectMenu, curSelec, 0xa5);
+				SetItemMark(EffectMenu, curSelec, 0xa5);
 				
 				mresult = PopUpMenuSelect(	EffectMenu,
 											myPt.v,
 											myPt.h,
 											curSelec);
 				
-				SetItemMark( EffectMenu, curSelec, 0);
+				SetItemMark(EffectMenu, curSelec, 0);
 				
-				if ( HiWord(mresult ) != 0 )
+				if (HiWord(mresult ) != 0 )
 				{
 					curMusic->hasChanged = true;
-					SaveUndo( UPattern, oldPat, "\pUndo 'Command Editing'");
+					SaveUndo(UPattern, oldPat, "\pUndo 'Command Editing'");
 				
-					GetMenuItemText( EffectMenu, LoWord( mresult), aStr);
+					GetMenuItemText(EffectMenu, LoWord(mresult), aStr);
 					
-					TESetSelect( 0, 300, TEH[ EffectTE]);
-					TESetText( aStr+1, 1, TEH[ EffectTE]);
-					InvalWindowRect( GetDialogWindow( ToolsDlog), &(*TEH[ EffectTE])->viewRect);
-					SetCmdValue( EffectTE);
+					TESetSelect(0, 300, TEH[ EffectTE]);
+					TESetText(aStr+1, 1, TEH[ EffectTE]);
+					InvalWindowRect(GetDialogWindow(ToolsDlog), &(*TEH[ EffectTE])->viewRect);
+					SetCmdValue(EffectTE);
 				}
-				DeleteMenu( GetMenuID( EffectMenu));
+				DeleteMenu(GetMenuID(EffectMenu));
  			break;
  			
  			case 43:
- 				tMenu = GetMenu( 161);
-				InsertMenu( tMenu, hierMenu );
-				GetDialogItem( ToolsDlog, whichItem, &itemType, &itemHandle, &tempRect);
+ 				tMenu = GetMenu(161);
+				InsertMenu(tMenu, hierMenu );
+				GetDialogItem(ToolsDlog, whichItem, &itemType, &itemHandle, &tempRect);
 				
-				curSelec = Analyse( VolumeTE);
+				curSelec = Analyse(VolumeTE);
 				
 				myPt.v = tempRect.top;	myPt.h = tempRect.left;
-				LocalToGlobal( &myPt);
+				LocalToGlobal(&myPt);
 				
-				SetItemMark( tMenu, curSelec+1, 0xa5);
+				SetItemMark(tMenu, curSelec+1, 0xa5);
 				
 				mresult = PopUpMenuSelect(	tMenu,
 											myPt.v,
 											myPt.h,
 											curSelec+1);
 				
-				SetItemMark( tMenu, curSelec+1, 0);
+				SetItemMark(tMenu, curSelec+1, 0);
 				
-				if ( HiWord(mresult ) != 0 )
+				if (HiWord(mresult ) != 0 )
 				{
 					curMusic->hasChanged = true;
-					SaveUndo( UPattern, oldPat, "\pUndo 'Command Editing'");
+					SaveUndo(UPattern, oldPat, "\pUndo 'Command Editing'");
 					
-					TESetSelect( 0, 300, TEH[ VolumeTE]);
-					TESetText( EArgu[ LoWord( mresult)-1], 2, TEH[ VolumeTE]);
-					InvalWindowRect( GetDialogWindow( ToolsDlog), &(*TEH[ VolumeTE])->viewRect);
-					SetCmdValue( VolumeTE);
+					TESetSelect(0, 300, TEH[ VolumeTE]);
+					TESetText(EArgu[ LoWord(mresult)-1], 2, TEH[ VolumeTE]);
+					InvalWindowRect(GetDialogWindow(ToolsDlog), &(*TEH[ VolumeTE])->viewRect);
+					SetCmdValue(VolumeTE);
 				}
-				DeleteMenu( GetMenuID( tMenu));
-				DisposeMenu( tMenu);
+				DeleteMenu(GetMenuID(tMenu));
+				DisposeMenu(tMenu);
 			break;
  			
  			case 26:
- 				tMenu = GetMenu( 161);
-				InsertMenu( tMenu, hierMenu );
-				GetDialogItem( ToolsDlog, whichItem, &itemType, &itemHandle, &tempRect);
+ 				tMenu = GetMenu(161);
+				InsertMenu(tMenu, hierMenu );
+				GetDialogItem(ToolsDlog, whichItem, &itemType, &itemHandle, &tempRect);
 				
-				curSelec = Analyse( ArguTE);
+				curSelec = Analyse(ArguTE);
 				
 				myPt.v = tempRect.top;	myPt.h = tempRect.left;
-				LocalToGlobal( &myPt);
+				LocalToGlobal(&myPt);
 				
-				SetItemMark( tMenu, curSelec+1, 0xa5);
+				SetItemMark(tMenu, curSelec+1, 0xa5);
 				
 				mresult = PopUpMenuSelect(	tMenu,
 											myPt.v,
 											myPt.h,
 											curSelec+1);
 				
-				SetItemMark( tMenu, curSelec+1, 0);
+				SetItemMark(tMenu, curSelec+1, 0);
 				
-				if ( HiWord(mresult ) != 0 )
+				if (HiWord(mresult ) != 0 )
 				{
 					curMusic->hasChanged = true;
-					SaveUndo( UPattern, oldPat, "\pUndo 'Command Editing'");
+					SaveUndo(UPattern, oldPat, "\pUndo 'Command Editing'");
 					
-					TESetSelect( 0, 300, TEH[ ArguTE]);
-					TESetText( EArgu[ LoWord( mresult)-1], 2, TEH[ ArguTE]);
-					InvalWindowRect( GetDialogWindow( ToolsDlog), &(*TEH[ ArguTE])->viewRect);
-					SetCmdValue( ArguTE);
+					TESetSelect(0, 300, TEH[ ArguTE]);
+					TESetText(EArgu[ LoWord(mresult)-1], 2, TEH[ ArguTE]);
+					InvalWindowRect(GetDialogWindow(ToolsDlog), &(*TEH[ ArguTE])->viewRect);
+					SetCmdValue(ArguTE);
 				}
-				DeleteMenu( GetMenuID( tMenu));
-				DisposeMenu( tMenu);
+				DeleteMenu(GetMenuID(tMenu));
+				DisposeMenu(tMenu);
 			break;
  			
  			case 19:
-				InsertMenuItem( NoteMenu, "\p000", NUMBER_NOTES);
- 				InsertMenuItem( NoteMenu, "\pOFF", NUMBER_NOTES+1);
+				InsertMenuItem(NoteMenu, "\p000", NUMBER_NOTES);
+ 				InsertMenuItem(NoteMenu, "\pOFF", NUMBER_NOTES+1);
  				
- 				InsertMenu( NoteMenu, hierMenu );
-				GetDialogItem( ToolsDlog, whichItem, &itemType, &itemHandle, &tempRect);
-				curSelec = Analyse( NoteTE);
+ 				InsertMenu(NoteMenu, hierMenu );
+				GetDialogItem(ToolsDlog, whichItem, &itemType, &itemHandle, &tempRect);
+				curSelec = Analyse(NoteTE);
 				
 				myPt.v = tempRect.top;	myPt.h = tempRect.left;
-				LocalToGlobal( &myPt);
+				LocalToGlobal(&myPt);
 				
 				mresult = PopUpMenuSelect(	NoteMenu,
 											myPt.v,
 											myPt.h,
 											curSelec + 1);
 				
-				if ( HiWord(mresult ) != 0 )
+				if (HiWord(mresult ) != 0 )
 				{
 					short note;
 				
 					curMusic->hasChanged = true;
-					SaveUndo( UPattern, oldPat, "\pUndo 'Command Editing'");
+					SaveUndo(UPattern, oldPat, "\pUndo 'Command Editing'");
 				
-					GetMenuItemText( NoteMenu, LoWord( mresult), aStr);
+					GetMenuItemText(NoteMenu, LoWord(mresult), aStr);
 					
-					TESetSelect( 0, 300, TEH[ NoteTE]);
-					TESetText( aStr + 1, 3, TEH[ NoteTE]);
-					InvalWindowRect( GetDialogWindow( ToolsDlog), &(*TEH[ NoteTE])->viewRect);
-					SetCmdValue( NoteTE);
+					TESetSelect(0, 300, TEH[ NoteTE]);
+					TESetText(aStr + 1, 3, TEH[ NoteTE]);
+					InvalWindowRect(GetDialogWindow(ToolsDlog), &(*TEH[ NoteTE])->viewRect);
+					SetCmdValue(NoteTE);
 				}
-				DeleteMenu( GetMenuID( NoteMenu));
-				DeleteMenuItem( NoteMenu, NUMBER_NOTES+1);
-				DeleteMenuItem( NoteMenu, NUMBER_NOTES+1);
+				DeleteMenu(GetMenuID(NoteMenu));
+				DeleteMenuItem(NoteMenu, NUMBER_NOTES+1);
+				DeleteMenuItem(NoteMenu, NUMBER_NOTES+1);
  			break;
  			
  		/*	case 11:
  				{
  				long	oTicks = TickCount(), iTick = TickCount();
  				
- 				HiliteControl( BackReader, kControlButtonPart);
+ 				HiliteControl(BackReader, kControlButtonPart);
  				
  				goto inBoucle;
  				
@@ -908,7 +908,7 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
 	 					inBoucle:
 	 					
 	 					iTick = TickCount();
-		 				SetCmdValue( curActif);
+		 				SetCmdValue(curActif);
 		 				if (MADDriver->PartitionReader > 0) MADDriver->PartitionReader--;
 		 				else
 		 				{
@@ -925,33 +925,33 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
 	 				}
 	 				
  				}
- 				HiliteControl( BackReader, 0);
+ 				HiliteControl(BackReader, 0);
  				}
  			break;*/
  			
  			case 21:
- 				if (MyTrackControl( DelBut, theEvent.where, NULL))
+ 				if (MyTrackControl(DelBut, theEvent.where, NULL))
 	 			{
 	 				Point	theCell;
 	 			
-	 				aCmd = GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
-					MADKillCmd( aCmd);
+	 				aCmd = GetMADCommand(oldPos, oldTrack, curMusic->partition[ oldPat]);
+					MADKillCmd(aCmd);
 	 				
-	 				UPDATE_Note( oldPos, oldTrack);
+	 				UPDATE_Note(oldPos, oldTrack);
  				}
  			break;
  			
  			case 45:
- 				if (GetControlHilite( keyMapCntl) != 255 && MyTrackControl( keyMapCntl, theEvent.where, NULL))
+ 				if (GetControlHilite(keyMapCntl) != 255 && MyTrackControl(keyMapCntl, theEvent.where, NULL))
 				{
 					if (keyMapNote == false)
 					{
-						HiliteControl( keyMapCntl, kControlButtonPart);
+						HiliteControl(keyMapCntl, kControlButtonPart);
 						keyMapNote = true;
 					}
 					else
 					{
-						HiliteControl( keyMapCntl, 0);
+						HiliteControl(keyMapCntl, 0);
 						keyMapNote = false;
 					}
 					
@@ -960,16 +960,16 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
  			break;
  			
  			case 40:
- 				if (GetControlHilite( AllBut) != 255 && MyTrackControl( AllBut, theEvent.where, NULL))
+ 				if (GetControlHilite(AllBut) != 255 && MyTrackControl(AllBut, theEvent.where, NULL))
 				{
 					if (AllCellApply == false)
 					{
-						HiliteControl( AllBut, kControlButtonPart);
+						HiliteControl(AllBut, kControlButtonPart);
 						AllCellApply = true;
 					}
 					else
 					{
-						HiliteControl( AllBut, 0);
+						HiliteControl(AllBut, 0);
 						AllCellApply = false;
 					}
 				}
@@ -979,7 +979,7 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
  			{
  				long	oTicks = TickCount(), iTick = TickCount();
  				
- 				HiliteControl( NextReader, kControlButtonPart);
+ 				HiliteControl(NextReader, kControlButtonPart);
  				
  				goto inBoucle2;
  				
@@ -990,7 +990,7 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
 	 					inBoucle2:
 	 					
 	 					iTick = TickCount();
-		 				SetCmdValue( curActif);
+		 				SetCmdValue(curActif);
 		 				if (MADDriver->PartitionReader < 63) MADDriver->PartitionReader++;
 		 				else
 		 				{	
@@ -1007,74 +1007,74 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
 	 				}
 	 				
  				}
- 				HiliteControl( NextReader, 0);
+ 				HiliteControl(NextReader, 0);
  				}
  			break;*/
  			
  			case 22:
- 				if (MyTrackControl( PlayCntl, theEvent.where, NULL))
+ 				if (MyTrackControl(PlayCntl, theEvent.where, NULL))
 	 			{
-	 				SetCmdValue( curActif);
+	 				SetCmdValue(curActif);
 	 				
  					PlayCurNote();
  				}
  			break;
  			
  			case 23:
- 				InsertMenu( TrackView, hierMenu );
-				GetDialogItem( ToolsDlog, 23, &itemType, &itemHandle, &tempRect);
+ 				InsertMenu(TrackView, hierMenu );
+				GetDialogItem(ToolsDlog, 23, &itemType, &itemHandle, &tempRect);
 				
 				myPt.v = tempRect.top;	myPt.h = tempRect.left;
-				LocalToGlobal( &myPt);
+				LocalToGlobal(&myPt);
 				
-				SetItemMark( TrackView, curTrack + 1, 0xa5);
+				SetItemMark(TrackView, curTrack + 1, 0xa5);
 				
 				mresult = PopUpMenuSelect(	TrackView,
 											myPt.v,
 											myPt.h,
 											curTrack + 1);
 				
-				SetItemMark( TrackView, curTrack + 1, 0);
+				SetItemMark(TrackView, curTrack + 1, 0);
 				
-				if ( HiWord(mresult ) != 0 )
+				if (HiWord(mresult ) != 0 )
 				{
-					curTrack = (Byte) LoWord( mresult) - 1;
+					curTrack = (Byte) LoWord(mresult) - 1;
 				}
-				DeleteMenu( GetMenuID( TrackView));
+				DeleteMenu(GetMenuID(TrackView));
  			break;
  			
  			case 24:
- 				GetDialogItem( ToolsDlog, 24, &itemType, &itemHandle, &tempRect);
+ 				GetDialogItem(ToolsDlog, 24, &itemType, &itemHandle, &tempRect);
 				myPt.v = tempRect.top;	myPt.h = tempRect.left;
-				LocalToGlobal( &myPt);
+				LocalToGlobal(&myPt);
  				UpdatePatternMenu();
  				
-				InsertMenu( thePatternMenu, hierMenu);
+				InsertMenu(thePatternMenu, hierMenu);
 				
-				SetItemMark( thePatternMenu, oldPat + 1, 0xa5);
+				SetItemMark(thePatternMenu, oldPat + 1, 0xa5);
 				
 				mresult = PopUpMenuSelect(	thePatternMenu,
 											myPt.v,
 											myPt.h,
 											oldPat + 1);
 			
-				SetItemMark( thePatternMenu, oldPat + 1, 0);
+				SetItemMark(thePatternMenu, oldPat + 1, 0);
 				
-				if ( HiWord(mresult ) != 0 )
+				if (HiWord(mresult ) != 0 )
 				{
-					MADDriver->Pat = (Byte) LoWord( mresult) - 1;
+					MADDriver->Pat = (Byte) LoWord(mresult) - 1;
 					MADDriver->PartitionReader = 0;
-					MADPurgeTrack( MADDriver);
+					MADPurgeTrack(MADDriver);
 				}
-				DeleteMenu( GetMenuID( thePatternMenu));
+				DeleteMenu(GetMenuID(thePatternMenu));
  			break;
  		}
  		
  		SelectCurrentActif();
  		
- 		SetPatternCell( oldPos, oldTrack);
+ 		SetPatternCell(oldPos, oldTrack);
  		
-		SetPort( SavePort);
+		SetPort(SavePort);
 }
 
 void CreateCmdDlog(void)
@@ -1087,50 +1087,50 @@ void CreateCmdDlog(void)
 	Str255		String;
 	GrafPtr		savePort;
 
-	GetPort( &savePort);
+	GetPort(&savePort);
 
 	ActualShowEffect = -1;
 
-	thePatternMenu = GetMenu( 146);
+	thePatternMenu = GetMenu(146);
 
-/*	ToolsDlog = GetNewDialog( 153, NULL, (WindowPtr) ToolsDlog);
-	SetWindEtat( ToolsDlog);
-	MySizeWindow( ToolsDlog, WLarg, WHaut, false);
-	ShowWindow( ToolsDlog);
-	SelectWindow2( ToolsDlog);
+/*	ToolsDlog = GetNewDialog(153, NULL, (WindowPtr) ToolsDlog);
+	SetWindEtat(ToolsDlog);
+	MySizeWindow(ToolsDlog, WLarg, WHaut, false);
+	ShowWindow(ToolsDlog);
+	SelectWindow2(ToolsDlog);
 */	
-	SetPortDialogPort( ToolsDlog);
+	SetPortDialogPort(ToolsDlog);
 	UpdateNow = true;
 	AllCellApply = false;
 	keyMapNote = thePrefs.keyMapNote;
 	
 	TextFont(4);	TextSize(9);
 	
-	BackColor( whiteColor);
+	BackColor(whiteColor);
 	
-	GetDialogItem( ToolsDlog, 37, &itemType, &itemHandle, &itemRect);
-	EfTE = TEStyleNew( &itemRect, &itemRect);
+	GetDialogItem(ToolsDlog, 37, &itemType, &itemHandle, &itemRect);
+	EfTE = TEStyleNew(&itemRect, &itemRect);
 
-	TESetAlignment( teFlushDefault, EfTE);
+	TESetAlignment(teFlushDefault, EfTE);
 	
 	for (i = InstruTE; i <= ArguTE; i++)
 	{
-		GetDialogItem( ToolsDlog, 31 + i, &itemType, &itemHandle, &itemRect);
-		TEH[ i] = TENew( &itemRect, &itemRect);
-		TESetAlignment( teCenter, TEH[ i]);
+		GetDialogItem(ToolsDlog, 31 + i, &itemType, &itemHandle, &itemRect);
+		TEH[ i] = TENew(&itemRect, &itemRect);
+		TESetAlignment(teCenter, TEH[ i]);
 	}
 	
-	GetDialogItem( ToolsDlog, 42, &itemType, &itemHandle, &itemRect);
-	TEH[ VolumeTE] = TENew( &itemRect, &itemRect);
-	TESetAlignment( teCenter, TEH[ VolumeTE]);
+	GetDialogItem(ToolsDlog, 42, &itemType, &itemHandle, &itemRect);
+	TEH[ VolumeTE] = TENew(&itemRect, &itemRect);
+	TESetAlignment(teCenter, TEH[ VolumeTE]);
 	
-//	TEActivate( TEH[ InstruTE]);
+//	TEActivate(TEH[ InstruTE]);
 
-	RGBBackColor( &theColor);
+	RGBBackColor(&theColor);
 	
-	GetDialogItem( ToolsDlog , 11, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(ToolsDlog , 11, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-/*	BackReader = NewControl( GetDialogWindow( ToolsDlog),
+/*	BackReader = NewControl(GetDialogWindow(ToolsDlog),
 							&itemRect,
 							"\p",
 							true,
@@ -1140,9 +1140,9 @@ void CreateCmdDlog(void)
 							kControlBevelButtonNormalBevelProc,
 							0);*/
 	
-	GetDialogItem( ToolsDlog , 21, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(ToolsDlog , 21, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	DelBut = NewControl( GetDialogWindow( ToolsDlog),
+	DelBut = NewControl(GetDialogWindow(ToolsDlog),
 							&itemRect,
 							"\p",
 							true,
@@ -1152,8 +1152,8 @@ void CreateCmdDlog(void)
 							kControlBevelButtonNormalBevelProc,
 							0);
 	
-	GetDialogItem( ToolsDlog , 45, &itemType, &itemHandle, &itemRect);
-	keyMapCntl = NewControl( GetDialogWindow( ToolsDlog),
+	GetDialogItem(ToolsDlog , 45, &itemType, &itemHandle, &itemRect);
+	keyMapCntl = NewControl(GetDialogWindow(ToolsDlog),
 							&itemRect,
 							"\p",
 							true,
@@ -1162,12 +1162,12 @@ void CreateCmdDlog(void)
 							201,
 							kControlBevelButtonNormalBevelProc,
 							0);
-	if (keyMapNote) HiliteControl( keyMapCntl, kControlButtonPart);
+	if (keyMapNote) HiliteControl(keyMapCntl, kControlButtonPart);
 	
 	
-	GetDialogItem( ToolsDlog , 40, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(ToolsDlog , 40, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	AllBut = NewControl( GetDialogWindow( ToolsDlog),
+	AllBut = NewControl(GetDialogWindow(ToolsDlog),
 							&itemRect,
 							"\p",
 							true,
@@ -1176,11 +1176,11 @@ void CreateCmdDlog(void)
 							141,
 							kControlBevelButtonNormalBevelProc,
 							0);
-	if (EditorDlog == NULL) ApplyBut( 255);
+	if (EditorDlog == NULL) ApplyBut(255);
 
-	GetDialogItem( ToolsDlog , 25, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(ToolsDlog , 25, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-/*	NextReader = NewControl( GetDialogWindow( ToolsDlog),
+/*	NextReader = NewControl(GetDialogWindow(ToolsDlog),
 								&itemRect,
 								"\p",
 							true,
@@ -1190,8 +1190,8 @@ void CreateCmdDlog(void)
 							kControlBevelButtonNormalBevelProc,
 							0);*/
 
-	GetDialogItem( ToolsDlog , 22, &itemType, &itemHandle, &itemRect);
-	PlayCntl = NewControl( 	GetDialogWindow( ToolsDlog),
+	GetDialogItem(ToolsDlog , 22, &itemType, &itemHandle, &itemRect);
+	PlayCntl = NewControl(	GetDialogWindow(ToolsDlog),
 							&itemRect,
 							"\p",
 							true,
@@ -1201,10 +1201,10 @@ void CreateCmdDlog(void)
 							kControlBevelButtonNormalBevelProc,
 							0);
 								
-	GetDialogItem( ToolsDlog , 35, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(ToolsDlog , 35, &itemType, &itemHandle, &itemRect);
 //	itemRect.right = itemRect.left + 32;
 //	itemRect.bottom = itemRect.top + 32;
-	FlipBut = NewControl( 		GetDialogWindow( ToolsDlog),
+	FlipBut = NewControl(		GetDialogWindow(ToolsDlog),
 								&itemRect,
 								"\p",
 								true,
@@ -1213,7 +1213,7 @@ void CreateCmdDlog(void)
 								211,
 								kControlBevelButtonNormalBevelProc,
 								0);
-	SetPort( savePort);
+	SetPort(savePort);
 }
 
 void CloseCmdDlog(void)
@@ -1222,23 +1222,23 @@ short	i;
 
 	if (ToolsDlog != NULL)
 	{
-		SetCmdValue( curActif);
+		SetCmdValue(curActif);
 		
-		DisposeDialog( ToolsDlog);
-		for (i = InstruTE; i <= VolumeTE; i++) TEDispose( TEH[ i]);
-		TEDispose( EfTE);
+		DisposeDialog(ToolsDlog);
+		for (i = InstruTE; i <= VolumeTE; i++) TEDispose(TEH[ i]);
+		TEDispose(EfTE);
 	}
 	ToolsDlog = NULL;
 }
 
-Boolean TakeDecimal( short	*theChar)
+Boolean TakeDecimal(short	*theChar)
 {
 	if (*theChar >= '0' && *theChar <= '9') return true;
 	
 	return false;
 }
 
-Boolean HexaDecimal( short	*theChar)
+Boolean HexaDecimal(short	*theChar)
 {
 	if (*theChar >= 'a' && *theChar <= 'f')
 	{
@@ -1251,7 +1251,7 @@ Boolean HexaDecimal( short	*theChar)
 	return false;
 }
 
-Boolean TakeEffect( short	*theChar)
+Boolean TakeEffect(short	*theChar)
 {
 	if (*theChar >= 'a' && *theChar <= 'z') *theChar -= 0x20; 
 	if (*theChar == 'L') return true;
@@ -1262,9 +1262,9 @@ Boolean TakeEffect( short	*theChar)
 	return false;
 }
 
-Boolean TakeNote( short	*theChar)
+Boolean TakeNote(short	*theChar)
 {
-	if (HexaDecimal( theChar)) return true;
+	if (HexaDecimal(theChar)) return true;
 	if (*theChar == 'G') return true;
 	if (*theChar == 'g') { *theChar -= 0x20; return true; }
 	
@@ -1277,18 +1277,18 @@ Boolean AcceptKeysTools(void)
 {
 Rect	caRect;
 	
-	GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
+	GetPortBounds(GetDialogPort(ToolsDlog), &caRect);
 
 	if (caRect.bottom <= 50)
 	{
-		if (EditorDlog != NULL) if (GetDialogWindow( EditorDlog) != oldWindow) return false;
+		if (EditorDlog != NULL) if (GetDialogWindow(EditorDlog) != oldWindow) return false;
 	}
 	
 	if ((*TEH[ curActif])->active != 0) return true;
 	else return false;
 }
 
-void DoKeyPressCmdDlog( short theChar)
+void DoKeyPressCmdDlog(short theChar)
 {
 Boolean		GoodNote = false;
 GrafPtr		savePort;
@@ -1299,63 +1299,63 @@ Point		myPt;
 		if (AcceptKeysTools() == false) return;
 	}
 	
-	GetPort( &savePort);
-	SetPortDialogPort( ToolsDlog);
+	GetPort(&savePort);
+	SetPortDialogPort(ToolsDlog);
 
-	BackColor( whiteColor);
+	BackColor(whiteColor);
 	
-	switch( curActif)
+	switch(curActif)
 	{
 		case VolumeTE:
-			if (HexaDecimal( &theChar))
+			if (HexaDecimal(&theChar))
 			{
 				if ((*TEH[ curActif])->teLength < 2 ||
 					(*TEH[ curActif])->selStart != (*TEH[ curActif])->selEnd)
 					{
 						curMusic->hasChanged = true;
-						SaveUndo( UPattern, oldPat, "\pUndo 'Command Editing'");
-						TEKey( (char) theChar, TEH[ curActif]);
+						SaveUndo(UPattern, oldPat, "\pUndo 'Command Editing'");
+						TEKey((char) theChar, TEH[ curActif]);
 					}
 				if ((*TEH[ curActif])->teLength >= 2)
 				{
-					TESetSelect( 0, 32000, TEH[ curActif]);
+					TESetSelect(0, 32000, TEH[ curActif]);
 				}
 			}
 		break;
 	
 		case InstruTE:
-			if (TakeDecimal( &theChar))
+			if (TakeDecimal(&theChar))
 			{
 				if ((*TEH[ curActif])->teLength < 3 ||
 					(*TEH[ curActif])->selStart != (*TEH[ curActif])->selEnd)
 					{
 						curMusic->hasChanged = true;
-						SaveUndo( UPattern, oldPat, "\pUndo 'Command Editing'");
-						TEKey( (char) theChar, TEH[ curActif]);
+						SaveUndo(UPattern, oldPat, "\pUndo 'Command Editing'");
+						TEKey((char) theChar, TEH[ curActif]);
 						
 					//	UpdateEditorInfo();
 					}
 				if ((*TEH[ curActif])->teLength >= 3)
 				{
-					TESetSelect( 0, 32000, TEH[ curActif]);
+					TESetSelect(0, 32000, TEH[ curActif]);
 				}
 			}
 		break;
 		
 		case EffectTE:
-			if (TakeEffect( &theChar))
+			if (TakeEffect(&theChar))
 			{
 				if ((*TEH[ curActif])->teLength < 1 ||
 					(*TEH[ curActif])->selStart != (*TEH[ curActif])->selEnd)
 					{
 						curMusic->hasChanged = true;
-						SaveUndo( UPattern, oldPat, "\pUndo 'Command Editing'");
-						TEKey( (char) theChar, TEH[ curActif]);
+						SaveUndo(UPattern, oldPat, "\pUndo 'Command Editing'");
+						TEKey((char) theChar, TEH[ curActif]);
 					}
 				
 				if ((*TEH[ curActif])->teLength >= 1)
 				{
-					TESetSelect( 0, 32000, TEH[ curActif]);
+					TESetSelect(0, 32000, TEH[ curActif]);
 				}
 			}
 		break;
@@ -1363,57 +1363,57 @@ Point		myPt;
 		case NoteTE:
 			if (keyMapNote)
 			{
-				short note = ConvertCharToNote( theChar);
+				short note = ConvertCharToNote(theChar);
 				if (note != -1)
 				{
 					Str32 str;
 					Rect	caRect;
 	
-					GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
+					GetPortBounds(GetDialogPort(ToolsDlog), &caRect);
 
-					GetNoteString( note, str);
+					GetNoteString(note, str);
 					
 					curMusic->hasChanged = true;
-					SaveUndo( UPattern, oldPat, "\pUndo 'Command Editing'");
-					TESetText( str+1, str[ 0], TEH[ curActif]);
-					TESetSelect( 0, 10, TEH[ curActif]);
-					TEUpdate( &caRect, TEH[ curActif]);
+					SaveUndo(UPattern, oldPat, "\pUndo 'Command Editing'");
+					TESetText(str+1, str[ 0], TEH[ curActif]);
+					TESetSelect(0, 10, TEH[ curActif]);
+					TEUpdate(&caRect, TEH[ curActif]);
 				}
 			}
 			else
 			{
-				if (TakeNote( &theChar))
+				if (TakeNote(&theChar))
 				{
 					if ((*TEH[ curActif])->teLength < 3 ||
 						(*TEH[ curActif])->selStart != (*TEH[ curActif])->selEnd)
 						{
 							curMusic->hasChanged = true;
-							SaveUndo( UPattern, oldPat, "\pUndo 'Command Editing'");
-							TEKey( (char) theChar, TEH[ curActif]);
+							SaveUndo(UPattern, oldPat, "\pUndo 'Command Editing'");
+							TEKey((char) theChar, TEH[ curActif]);
 						}
 						
 					if ((*TEH[ curActif])->teLength >= 3)
 					{
-						TESetSelect( 0, 32000, TEH[ curActif]);
+						TESetSelect(0, 32000, TEH[ curActif]);
 					}
 				}
 			}
 		break;
 		
 		case ArguTE:
-			if (HexaDecimal( &theChar))
+			if (HexaDecimal(&theChar))
 			{
 				if ((*TEH[ curActif])->teLength < 2 ||
 					(*TEH[ curActif])->selStart != (*TEH[ curActif])->selEnd)
 					{
 						curMusic->hasChanged = true;
-						SaveUndo( UPattern, oldPat, "\pUndo 'Command Editing'");
-						TEKey( (char) theChar, TEH[ curActif]);
+						SaveUndo(UPattern, oldPat, "\pUndo 'Command Editing'");
+						TEKey((char) theChar, TEH[ curActif]);
 					}
 				
 				if ((*TEH[ curActif])->teLength >= 2)
 				{
-					TESetSelect( 0, 32000, TEH[ curActif]);
+					TESetSelect(0, 32000, TEH[ curActif]);
 				}
 			}
 		break;
@@ -1423,16 +1423,16 @@ Point		myPt;
 	{
 		if ((*TEH[ curActif])->active != 0)
 		{
-			TEDeactivate( TEH[ curActif]);
+			TEDeactivate(TEH[ curActif]);
 			
-			SetCmdValue( curActif);
+			SetCmdValue(curActif);
 		}
 	}
 	if (theChar == 8)
 	{
 		curMusic->hasChanged = true;
-		SaveUndo( UPattern, oldPat, "\pUndo 'Command Editing'");
-		TEKey( (char) theChar, TEH[ curActif]);
+		SaveUndo(UPattern, oldPat, "\pUndo 'Command Editing'");
+		TEKey((char) theChar, TEH[ curActif]);
 		
 	//	UpdateEditorInfo();
 	}
@@ -1443,9 +1443,9 @@ Point		myPt;
 			Boolean		next;
 			short		loop;
 			
-			TEDeactivate( TEH[ curActif]);
+			TEDeactivate(TEH[ curActif]);
 			
-			SetCmdValue( curActif);
+			SetCmdValue(curActif);
 			
 			next = true;
 			loop = 6;
@@ -1481,8 +1481,8 @@ Point		myPt;
 		if (curActif > VolumeTE) curActif = InstruTE;
 		if (curActif < InstruTE) curActif = VolumeTE;
 		
-		TEActivate( TEH[ curActif]);
-		TESetSelect( 0, 32000, TEH[ curActif]);
+		TEActivate(TEH[ curActif]);
+		TESetSelect(0, 32000, TEH[ curActif]);
 	}
 	else if(	theChar == 0x1E ||
  				theChar == 0x03 ||
@@ -1491,16 +1491,16 @@ Point		myPt;
  				theChar == 0x0D ||
  				theChar == 0x1D )
  				{
- 					SetCmdValue( curActif);
- 					DoKeyPressEditor( theChar);
+ 					SetCmdValue(curActif);
+ 					DoKeyPressEditor(theChar);
 				}
 				
-	if ((**(**GetMainDevice()).gdPMap).pixelSize == 1) BackColor( whiteColor);
-	else RGBBackColor( &theColor);
+	if ((**(**GetMainDevice()).gdPMap).pixelSize == 1) BackColor(whiteColor);
+	else RGBBackColor(&theColor);
 	
-	SetPatternCell( oldPos, oldTrack);
+	SetPatternCell(oldPos, oldTrack);
 	
-	SetPort( savePort);
+	SetPort(savePort);
 }
 
 void UpdateCurrentCmd(void)
@@ -1512,31 +1512,31 @@ Rect	caRect;
 
 	if (ToolsDlog != NULL)
 	{
-		GetPort( &savePort);
-		SetPortDialogPort( ToolsDlog);
+		GetPort(&savePort);
+		SetPortDialogPort(ToolsDlog);
 		
-		GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
+		GetPortBounds(GetDialogPort(ToolsDlog), &caRect);
 		
 		if (caRect.bottom > 50)
 		{
 			if ((*TEH[ curActif])->active != 0)
 			{
-				BackColor( whiteColor);
-				SetCmdValue( curActif);
-				RGBBackColor( &theColor);
+				BackColor(whiteColor);
+				SetCmdValue(curActif);
+				RGBBackColor(&theColor);
 			}
 		}
-		SetPort( savePort);
+		SetPort(savePort);
 	}
 }
 
-void ApplyBut( short value)
+void ApplyBut(short value)
 {
 	AllCellApply = false;
-	HiliteControl( AllBut, value);
+	HiliteControl(AllBut, value);
 }
 
-void ActiveCmdWindow( short whichItem)
+void ActiveCmdWindow(short whichItem)
 {
 GrafPtr	savePort;
 
@@ -1546,22 +1546,22 @@ GrafPtr	savePort;
 	
 	if (ToolsDlog != NULL)
 	{
-		GetPort( &savePort);
-		SetPortDialogPort( ToolsDlog);
+		GetPort(&savePort);
+		SetPortDialogPort(ToolsDlog);
 		
-		BackColor( whiteColor);
+		BackColor(whiteColor);
  				
-		TEActivate( TEH[ whichItem]);
+		TEActivate(TEH[ whichItem]);
 		
-		SetCmdValue( curActif);
+		SetCmdValue(curActif);
 		
-		TESetSelect( 0, 300, TEH[ whichItem]);
+		TESetSelect(0, 300, TEH[ whichItem]);
 		
 		curActif = whichItem;
 		
-		RGBBackColor( &theColor);
+		RGBBackColor(&theColor);
  	
-		SetPort( savePort);
+		SetPort(savePort);
 	}
 }
 
@@ -1574,33 +1574,33 @@ Rect	caRect;
 
 	if (ToolsDlog != NULL)
 	{
-		GetPort( &savePort);
-		SetPortDialogPort( ToolsDlog);
+		GetPort(&savePort);
+		SetPortDialogPort(ToolsDlog);
 		
-		GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
+		GetPortBounds(GetDialogPort(ToolsDlog), &caRect);
 		
 		if (caRect.bottom > 50)
 		{
 			if ((*TEH[ curActif])->active != 0)
 			{
-				BackColor( whiteColor);
-				TEDeactivate( TEH[ curActif]);
-				SetCmdValue( curActif);
-				RGBBackColor( &theColor);
+				BackColor(whiteColor);
+				TEDeactivate(TEH[ curActif]);
+				SetCmdValue(curActif);
+				RGBBackColor(&theColor);
 				
-				SetPatternCell( oldPos, oldTrack);
+				SetPatternCell(oldPos, oldTrack);
 			}
 		}
 		else
 		{
 			if ((*TEH[ curActif])->active != 0)
 			{
-				TEDeactivate( TEH[ curActif]);
-				SetCmdValue( curActif);
+				TEDeactivate(TEH[ curActif]);
+				SetCmdValue(curActif);
 			}
-			SetPatternCell( oldPos, oldTrack);
+			SetPatternCell(oldPos, oldTrack);
 		}
 		
-		SetPort( savePort);
+		SetPort(savePort);
 	}
 }

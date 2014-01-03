@@ -16,14 +16,14 @@
 #define Tdecode32(msg_buf) *(int*)msg_buf
 #else
 
-static inline UInt32 Tdecode32( void *msg_buf)
+static inline UInt32 Tdecode32(void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
 	INT32(&toswap);
 	return toswap;
 }
 
-static inline UInt16 Tdecode16( void *msg_buf)
+static inline UInt16 Tdecode16(void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
 	INT16(&toswap);
@@ -33,7 +33,7 @@ static inline UInt16 Tdecode16( void *msg_buf)
 #endif
 #endif
 
-static OSErr TestPAT( Ptr CC)
+static OSErr TestPAT(Ptr CC)
 {
 	char	IDStr[ 50] = "GF1PATCH110";
 	short	i;
@@ -46,7 +46,7 @@ static OSErr TestPAT( Ptr CC)
 	return noErr;
 }
 
-static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
+static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 {
 	short			i;
 //	Boolean			IsReading;
@@ -57,10 +57,10 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 		{
 			if (sample[ i]->data != NULL)
 			{
-				DisposePtr( (Ptr) sample[ i]->data);
+				DisposePtr((Ptr) sample[ i]->data);
 				sample[ i]->data = NULL;
 			}
-			DisposePtr( (Ptr) sample[ i]);
+			DisposePtr((Ptr) sample[ i]);
 			sample[ i] = NULL;
 		}
 	}
@@ -117,7 +117,7 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	return noErr;
 }
 
-static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
+static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 {
 	PatchHeader		*PATHeader;
 	PatInsHeader	*PATIns;
@@ -149,7 +149,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 	
 	PATIns = (PatInsHeader*) PATData;
 	
-	PATIns->size = Tdecode32( &PATIns->size);
+	PATIns->size = Tdecode32(&PATIns->size);
 	PATData += 63;
 	
 	for (x = 0; x < 16; x++) InsHeader->name[ x] = PATIns->name[ x];
@@ -175,12 +175,12 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		for (i = 0; i < 6; i++) curData->name[ i] = PATSamp->name[ i];
 		
-		PATSamp->size		= Tdecode32( &PATSamp->size);		curData->size		= PATSamp->size;
+		PATSamp->size		= Tdecode32(&PATSamp->size);		curData->size		= PATSamp->size;
 		
-		PATSamp->startLoop	= Tdecode32( &PATSamp->startLoop);	curData->loopBeg 	= PATSamp->startLoop;
-		PATSamp->endLoop	= Tdecode32( &PATSamp->endLoop);	curData->loopSize 	= PATSamp->endLoop - PATSamp->startLoop;
+		PATSamp->startLoop	= Tdecode32(&PATSamp->startLoop);	curData->loopBeg 	= PATSamp->startLoop;
+		PATSamp->endLoop	= Tdecode32(&PATSamp->endLoop);	curData->loopSize 	= PATSamp->endLoop - PATSamp->startLoop;
 		
-		PATSamp->rate		= Tdecode16( &PATSamp->rate);		curData->c2spd		= PATSamp->rate;
+		PATSamp->rate		= Tdecode16(&PATSamp->rate);		curData->c2spd		= PATSamp->rate;
 		
 		
 		curData->vol		= 64;
@@ -203,10 +203,10 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		///////////////
 		
-		PATSamp->minFreq	= Tdecode32( &PATSamp->minFreq);
-		PATSamp->maxFreq	= Tdecode32( &PATSamp->maxFreq);
+		PATSamp->minFreq	= Tdecode32(&PATSamp->minFreq);
+		PATSamp->maxFreq	= Tdecode32(&PATSamp->maxFreq);
 		
-		PATSamp->originRate		= Tdecode32( &PATSamp->originRate);
+		PATSamp->originRate		= Tdecode32(&PATSamp->originRate);
 		
 		for (i = 0; i < 107; i++)
 		{
@@ -250,11 +250,11 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		// DATA
 		
-		curData->data = NewPtr( curData->size);
+		curData->data = NewPtr(curData->size);
 		
 		if (curData->data != NULL)
 		{
-			memcpy( curData->data, PATData, curData->size);
+			memcpy(curData->data, PATData, curData->size);
 			
 			if (curData->amp == 16)
 			{
@@ -265,7 +265,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 
 				for (tL = 0; tL < curData->size/2; tL++)
 				{
-					*(tt + tL) = Tdecode16( (Ptr) (tt + tL));
+					*(tt + tL) = Tdecode16((Ptr) (tt + tL));
 					
 					if (signedData) *(tt + tL) += 0x8000;
 				}
@@ -298,31 +298,31 @@ static OSErr mainPAT(		OSType					order,						// Order to execute
 //	short	x;
 	long	inOutCount;
 		
-	switch( order)
+	switch(order)
 	{
 		case 'IMPL':
 		{
 			Ptr				theSound;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr)
 			{
-				GetEOF( iFileRefI, &inOutCount);
+				GetEOF(iFileRefI, &inOutCount);
 				
-				theSound = NewPtr( inOutCount);
+				theSound = NewPtr(inOutCount);
 				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					FSRead( iFileRefI, &inOutCount, theSound);
+					FSRead(iFileRefI, &inOutCount, theSound);
 					
-					MAD2KillInstrument( InsHeader, sample);
+					MAD2KillInstrument(InsHeader, sample);
 					
-					myErr = PATImport( InsHeader, sample, theSound);
+					myErr = PATImport(InsHeader, sample, theSound);
 					
-					DisposePtr( theSound);
+					DisposePtr(theSound);
 				}
 				
-				FSClose( iFileRefI);
+				FSClose(iFileRefI);
 			}
 		}
 		break;
@@ -331,22 +331,22 @@ static OSErr mainPAT(		OSType					order,						// Order to execute
 		{
 			Ptr	theSound;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr)
 			{
 				inOutCount = 50L;
-				theSound = NewPtr( inOutCount);
+				theSound = NewPtr(inOutCount);
 				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					FSRead( iFileRefI, &inOutCount, theSound);
+					FSRead(iFileRefI, &inOutCount, theSound);
 					
-					myErr = TestPAT( theSound);
+					myErr = TestPAT(theSound);
 				}
 				
-				DisposePtr( theSound);
+				DisposePtr(theSound);
 				
-				FSClose( iFileRefI);
+				FSClose(iFileRefI);
 			}
 		}
 		break;

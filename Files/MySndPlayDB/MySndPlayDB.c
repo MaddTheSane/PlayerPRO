@@ -253,7 +253,7 @@ static pascal void	MySndPlayDoubleBufferCleanUpProc (SndChannelPtr theChannel, S
 	// Put our per channel data on the free queue so we can clean up later
 	Enqueue ((QElemPtr)perChanInfoPtr, gFreeList);
 	// Have to install our Notification Manager routine so that we can clean up the gFreeList
-	if (! OSAtomicTestAndSet ( 0, &gNMRecBusy)) {
+	if (! OSAtomicTestAndSet (0, &gNMRecBusy)) {
 		NMInstall (gNMRecPtr);
 	}
 	// Have to put the user's callback proc back so they get called when the next buffer finishes

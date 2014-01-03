@@ -7,7 +7,7 @@
 #include <Carbon/Carbon.h>
 #include "XM.h"
 
-static OSErr TestXI( Ptr CC)
+static OSErr TestXI(Ptr CC)
 {
 	OSType Ident = *((OSType*) CC);
 	MOT32(&Ident);
@@ -16,7 +16,7 @@ static OSErr TestXI( Ptr CC)
 	else return MADFileNotSupportedByThisPlug;
 }
 
-static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
+static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 {
 	short			i;
 //	Boolean			IsReading;
@@ -27,10 +27,10 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 		{
 			if (sample[ i]->data != NULL)
 			{
-				DisposePtr( (Ptr) sample[ i]->data);
+				DisposePtr((Ptr) sample[ i]->data);
 				sample[ i]->data = NULL;
 			}
-			DisposePtr( (Ptr) sample[ i]);
+			DisposePtr((Ptr) sample[ i]);
 			sample[ i] = NULL;
 		}
 	}
@@ -92,14 +92,14 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 #define Tdecode32(msg_buf) *(int*)msg_buf
 #else
 
-static inline UInt32 Tdecode32( void *msg_buf)
+static inline UInt32 Tdecode32(void *msg_buf)
 {
 	UInt32 toswap = *((UInt32*) msg_buf);
 	INT32(&toswap);
 	return toswap;
 }
 
-static inline UInt16 Tdecode16( void *msg_buf)
+static inline UInt16 Tdecode16(void *msg_buf)
 {
 	UInt16 toswap = *((UInt16*) msg_buf);
 	INT16(&toswap);
@@ -122,7 +122,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 	short	x;
 	long	inOutCount;
 		
-	switch( order)
+	switch(order)
 	{
 		case 'IMPL':
 		{
@@ -131,16 +131,16 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 			XMWAVHEADER		*wh;
 			short			numSamples;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr)
 			{
-				GetEOF( iFileRefI, &inOutCount);
+				GetEOF(iFileRefI, &inOutCount);
 				
-				theXI = NewPtr( inOutCount);
+				theXI = NewPtr(inOutCount);
 				if (theXI == NULL) myErr = MADNeedMemory;
 				else
 				{
-					MAD2KillInstrument( InsHeader, sample);
+					MAD2KillInstrument(InsHeader, sample);
 					
 					for (x = 0; x < 32; x++)
 					{
@@ -148,21 +148,21 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 						else InsHeader->name[ x] = '\0';
 					}
 					
-					GetEOF( iFileRefI, &inOutCount);
+					GetEOF(iFileRefI, &inOutCount);
 					
-					myErr = FSRead( iFileRefI, &inOutCount, theXI);
+					myErr = FSRead(iFileRefI, &inOutCount, theXI);
 					
 					// READ instrument header
 					
 					pth = (XMPATCHHEADER*) (theXI + 0x42);
 					
-					numSamples = *((short*) (theXI + 0x42 + sizeof( XMPATCHHEADER)));
-					InsHeader->numSamples = Tdecode16( &numSamples);
+					numSamples = *((short*) (theXI + 0x42 + sizeof(XMPATCHHEADER)));
+					InsHeader->numSamples = Tdecode16(&numSamples);
 					
-					pth->volfade 	= Tdecode16( &pth->volfade);
+					pth->volfade 	= Tdecode16(&pth->volfade);
 					
-					BlockMoveData( pth->what, 		InsHeader->what, 	96);
-					BlockMoveData( pth->volenv, 	InsHeader->volEnv, 	48);
+					BlockMoveData(pth->what, 		InsHeader->what, 	96);
+					BlockMoveData(pth->volenv, 	InsHeader->volEnv, 	48);
 					
 					InsHeader->volSize	= pth->volpts;
 					InsHeader->volType	= pth->volflg;
@@ -171,14 +171,14 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					InsHeader->volEnd	= pth->volend;
 					InsHeader->volFade	= pth->volfade;
 					
-					BlockMoveData( pth->panenv, InsHeader->pannEnv, 	48);
+					BlockMoveData(pth->panenv, InsHeader->pannEnv, 	48);
 					for (x = 0; x < 12; x++)
 					{
 						INT16(&InsHeader->volEnv[x].pos);
 						INT16(&InsHeader->volEnv[x].val);
 
-						INT16( &InsHeader->pannEnv[ x].pos);
-						INT16( &InsHeader->pannEnv[ x].val);
+						INT16(&InsHeader->pannEnv[ x].pos);
+						INT16(&InsHeader->pannEnv[ x].val);
 					}
 					
 					InsHeader->pannSize	= pth->panpts;
@@ -199,11 +199,11 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 							8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
 						};
 						
-						wh = (XMWAVHEADER*) (theXI + 0x42 + 0x02 + sizeof( XMPATCHHEADER) + x * sizeof( XMWAVHEADER));
+						wh = (XMWAVHEADER*) (theXI + 0x42 + 0x02 + sizeof(XMPATCHHEADER) + x * sizeof(XMWAVHEADER));
 						
-						wh->length 		= Tdecode32( &wh->length);
-						wh->loopstart 	= Tdecode32( &wh->loopstart);
-						wh->looplength 	= Tdecode32( &wh->looplength);
+						wh->length 		= Tdecode32(&wh->length);
+						wh->loopstart 	= Tdecode32(&wh->loopstart);
+						wh->looplength 	= Tdecode32(&wh->looplength);
 						
 						///////////
 						
@@ -236,16 +236,16 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					{
 						Ptr reader = (Ptr) wh;
 						
-						reader += sizeof( XMWAVHEADER);
+						reader += sizeof(XMWAVHEADER);
 						
 						for (x = 0; x < InsHeader->numSamples; x++)
 						{
 							sData *curData = sample[ x];
 							
-							curData->data = NewPtr( curData->size);
+							curData->data = NewPtr(curData->size);
 							if (curData->data != NULL)
 							{
-								BlockMoveData( reader, curData->data, curData->size);
+								BlockMoveData(reader, curData->data, curData->size);
 								
 								if (curData->amp == 16)
 								{
@@ -256,7 +256,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 
 									for (tL = 0; tL < curData->size/2; tL++)
 									{
-										*(tt + tL) = Tdecode16( (Ptr) (tt + tL));
+										*(tt + tL) = Tdecode16((Ptr) (tt + tL));
 									}
 									
 									{
@@ -296,7 +296,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					}
 				}
 				
-				FSCloseFork( iFileRefI);
+				FSCloseFork(iFileRefI);
 			}
 		}
 		break;
@@ -305,29 +305,29 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 		{
 			Ptr	theSound;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr)
 			{
 				inOutCount = 50L;
-				theSound = NewPtr( inOutCount);
+				theSound = NewPtr(inOutCount);
 				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					FSRead( iFileRefI, &inOutCount, theSound);
+					FSRead(iFileRefI, &inOutCount, theSound);
 					
-					myErr = TestXI( (Ptr) theSound);
+					myErr = TestXI((Ptr) theSound);
 				}
 				
-				DisposePtr( theSound);
+				DisposePtr(theSound);
 				
-				FSCloseFork( iFileRefI);
+				FSCloseFork(iFileRefI);
 			}
 		}
 		break;
 		
 		case 'EXPL':
-			myErr = FSpCreate( AlienFileFSSpec, 'SNPL', 'XI  ', smCurrentScript);
-			if(myErr == noErr) myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			myErr = FSpCreate(AlienFileFSSpec, 'SNPL', 'XI  ', smCurrentScript);
+			if(myErr == noErr) myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			
 			if (myErr == noErr)
 			{
@@ -339,16 +339,16 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 				XMPATCHHEADER	pth;
 				char			start[ 0x42];
 				
-				BlockMoveData( "Extended Instrument:                       FastTracker v2.00   ", start, 0x42);
+				BlockMoveData("Extended Instrument:                       FastTracker v2.00   ", start, 0x42);
 				
 				inOutCount = 0x42;
-				FSWrite( iFileRefI, &inOutCount, start);
+				FSWrite(iFileRefI, &inOutCount, start);
 				
-				BlockMoveData( InsHeader->what, pth.what, 96);
-				BlockMoveData( InsHeader->volEnv, pth.volenv, 48);
+				BlockMoveData(InsHeader->what, pth.what, 96);
+				BlockMoveData(InsHeader->volEnv, pth.volenv, 48);
 				for (x = 0; x < 24; x++)
 				{
-					pth.volenv[ x] = Tdecode16( &pth.volenv[ x]);
+					pth.volenv[ x] = Tdecode16(&pth.volenv[ x]);
 				}
 				
 				pth.volpts = InsHeader->volSize;
@@ -357,12 +357,12 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 				pth.volbeg = InsHeader->volBeg;
 				pth.volend = InsHeader->volEnd;
 				pth.volfade = InsHeader->volFade;
-				pth.volfade 	= Tdecode16( &pth.volfade);
+				pth.volfade 	= Tdecode16(&pth.volfade);
 				
-				BlockMoveData( InsHeader->pannEnv, pth.panenv, 48);
+				BlockMoveData(InsHeader->pannEnv, pth.panenv, 48);
 				for (x = 0; x < 24; x++)
 				{
-					pth.panenv[ x] = Tdecode16( &pth.panenv[ x]);
+					pth.panenv[ x] = Tdecode16(&pth.panenv[ x]);
 				}
 				
 				pth.panpts = InsHeader->pannSize;
@@ -371,13 +371,13 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 				pth.panbeg = InsHeader->pannBeg;
 				pth.panend = InsHeader->pannEnd;
 				
-				inOutCount = sizeof( XMPATCHHEADER);
-				FSWrite( iFileRefI, &inOutCount, &pth);
+				inOutCount = sizeof(XMPATCHHEADER);
+				FSWrite(iFileRefI, &inOutCount, &pth);
 				
 				inOutCount = 2;
 				x = InsHeader->numSamples;
-				x = Tdecode16( &x);
-				FSWrite( iFileRefI, &inOutCount, &x);
+				x = Tdecode16(&x);
+				FSWrite(iFileRefI, &inOutCount, &x);
 				
 				/** WRITE samples */
 				
@@ -426,12 +426,12 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					wh.relnote = curData->relNote;
 					for (x = 0; x < 22; x++) wh.samplename[ x] = curData->name[ x];
 					
-					wh.length 		= Tdecode32( &wh.length);
-					wh.loopstart 	= Tdecode32( &wh.loopstart);
-					wh.looplength 	= Tdecode32( &wh.looplength);
+					wh.length 		= Tdecode32(&wh.length);
+					wh.loopstart 	= Tdecode32(&wh.loopstart);
+					wh.looplength 	= Tdecode32(&wh.looplength);
 					
-					inOutCount = sizeof( wh);
-					FSWrite( iFileRefI, &inOutCount, &wh);
+					inOutCount = sizeof(wh);
+					FSWrite(iFileRefI, &inOutCount, &wh);
 				}
 				
 				for (u = 0 ; u < InsHeader->numSamples ; u++)
@@ -440,12 +440,12 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					Ptr		tempPtr;
 					long	dstSize;
 					
-					tempPtr = NewPtr( curData->size);
+					tempPtr = NewPtr(curData->size);
 						
 					/// WriteData
 					if (tempPtr != NULL)
 					{
-						BlockMoveData( curData->data, tempPtr, curData->size);
+						BlockMoveData(curData->data, tempPtr, curData->size);
 						
 						dstSize = curData->size;
 						
@@ -475,7 +475,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 							
 							for (tL = 0; tL < dstSize/2; tL++)
 							{
-								*(tt + tL) = Tdecode16( (Ptr) (tt + tL));
+								*(tt + tL) = Tdecode16((Ptr) (tt + tL));
 							}
 						}
 						else
@@ -483,7 +483,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 							/* Real to Delta */
 							long	oldV, newV;
 							long	xL;
-							Ptr		tt = ( Ptr) tempPtr;
+							Ptr		tt = (Ptr) tempPtr;
 							
 							if (curData->stereo)
 							{
@@ -502,13 +502,13 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 						}
 						
 						inOutCount = dstSize;
-						FSWrite( iFileRefI, &inOutCount, tempPtr);
+						FSWrite(iFileRefI, &inOutCount, tempPtr);
 						
-						DisposePtr( tempPtr);
+						DisposePtr(tempPtr);
 					}
 				}
 				
-				FSCloseFork( iFileRefI);
+				FSCloseFork(iFileRefI);
 			}
 		break;
 		

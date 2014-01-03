@@ -4,7 +4,7 @@
 //
 //	Version 3.0
 //
-//	To use with PlayerPRO & CodeWarrior ( current vers 8)
+//	To use with PlayerPRO & CodeWarrior (current vers 8)
 //
 //	Antoine ROSSET
 //	16 Tranchees
@@ -20,7 +20,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <Carbon/Carbon.h>
 
-void ConvertInstrumentIn( register Byte *tempPtr, register long sSize)
+void ConvertInstrumentIn(register Byte *tempPtr, register long sSize)
 {
 	register Byte val = 0x80;
 
@@ -35,7 +35,7 @@ sData* inMADCreateSample()
 {
 	sData	*curData;
 
-	curData = (sData*) NewPtrClear( sizeof( sData));
+	curData = (sData*) NewPtrClear(sizeof(sData));
 	
 	curData->size		= 0;
 	curData->loopBeg	= 0;
@@ -69,7 +69,7 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 
 	if (*sampleID > MAXSAMPLE) return MADParametersErr;
 
-	inOutBytes = GetPtrSize( theSound);
+	inOutBytes = GetPtrSize(theSound);
 	
 	///////
 	
@@ -85,7 +85,7 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 		curData = sample[ *sampleID] = inMADCreateSample();
 	}
 	
-	if (curData->data != NULL) DisposePtr( curData->data);
+	if (curData->data != NULL) DisposePtr(curData->data);
 	curData->data = theSound;
 	
 	curData->size		= inOutBytes;

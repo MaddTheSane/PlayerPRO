@@ -16,7 +16,7 @@ extern	Cursor		PlayCrsr;
 
 double EQInterpolate(double p,double p1,double p2,double v1,double v2);
 
-void InitFFTSampleFilter( void)
+void InitFFTSampleFilter(void)
 {
 	long	i;
 	
@@ -30,7 +30,7 @@ void InitFFTSampleFilter( void)
 	logMode = true;
 }
 
-void FFTSampleUpdate( DialogPtr TheDia, Boolean filter)
+void FFTSampleUpdate(DialogPtr TheDia, Boolean filter)
 {
 	long		Result, mresult;
 	short		PourCent, itemHit, i, z, itemType;
@@ -42,20 +42,20 @@ void FFTSampleUpdate( DialogPtr TheDia, Boolean filter)
 	Boolean		IsPlaying;
 	GWorldPtr	theGWorld = NULL;
 	
-	GetDialogItem( TheDia, 3, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(TheDia, 3, &itemType, &itemHandle, &itemRect);
 	
 	
-	GetGWorld( &oldPort, &oldGDeviceH);
+	GetGWorld(&oldPort, &oldGDeviceH);
 	theGWorld = NULL;
-	NewGWorld( &theGWorld, 8, &itemRect, nil, nil, (GWorldFlags) 0);
-	LockPixels( GetPortPixMap( theGWorld));
+	NewGWorld(&theGWorld, 8, &itemRect, nil, nil, (GWorldFlags) 0);
+	LockPixels(GetPortPixMap(theGWorld));
 	
-	SetGWorld( theGWorld, NULL);
+	SetGWorld(theGWorld, NULL);
 	
-	ForeColor( blackColor);
-	PaintRect( &itemRect);
+	ForeColor(blackColor);
+	PaintRect(&itemRect);
 	
-	ForeColor( greenColor);
+	ForeColor(greenColor);
 	
 	if (logMode && filter)
 	{
@@ -63,16 +63,16 @@ void FFTSampleUpdate( DialogPtr TheDia, Boolean filter)
 		{
 			z = 256-logoScale[  (256 * i) / 16];
 			
-			MoveTo( itemRect.left, itemRect.top + ((itemRect.bottom-itemRect.top)*z)/256);
-			LineTo( itemRect.right, itemRect.top + ((itemRect.bottom-itemRect.top)*z)/256);
+			MoveTo(itemRect.left, itemRect.top + ((itemRect.bottom-itemRect.top)*z)/256);
+			LineTo(itemRect.right, itemRect.top + ((itemRect.bottom-itemRect.top)*z)/256);
 		}
 	}
 	else
 	{
 		for (i = 0; i < 10; i++)
 		{
-			MoveTo( itemRect.left, itemRect.top + ((itemRect.bottom-itemRect.top)*i)/10);
-			LineTo( itemRect.right, itemRect.top + ((itemRect.bottom-itemRect.top)*i)/10);
+			MoveTo(itemRect.left, itemRect.top + ((itemRect.bottom-itemRect.top)*i)/10);
+			LineTo(itemRect.right, itemRect.top + ((itemRect.bottom-itemRect.top)*i)/10);
 		}
 	}
 	
@@ -82,70 +82,70 @@ void FFTSampleUpdate( DialogPtr TheDia, Boolean filter)
 		{
 			z = 256-logoScale[  (256 * i) / 16];
 		
-			MoveTo( itemRect.left + ((itemRect.right-itemRect.left)*z)/256, itemRect.top);
-			LineTo( itemRect.left + ((itemRect.right-itemRect.left)*z)/256, itemRect.bottom);
+			MoveTo(itemRect.left + ((itemRect.right-itemRect.left)*z)/256, itemRect.top);
+			LineTo(itemRect.left + ((itemRect.right-itemRect.left)*z)/256, itemRect.bottom);
 		}
 	}
 	else
 	{
 		for (i = 0; i < 10; i++)
 		{
-			MoveTo( itemRect.left + ((itemRect.right-itemRect.left)*i)/10, itemRect.top);
-			LineTo( itemRect.left + ((itemRect.right-itemRect.left)*i)/10, itemRect.bottom);
+			MoveTo(itemRect.left + ((itemRect.right-itemRect.left)*i)/10, itemRect.top);
+			LineTo(itemRect.left + ((itemRect.right-itemRect.left)*i)/10, itemRect.bottom);
 		}
 	}
 	
-	PenSize( 2, 2);
+	PenSize(2, 2);
 	
-	ForeColor( redColor);
+	ForeColor(redColor);
 	
 	if (filter)
 	{
 		if (logMode)
 		{
-			MoveTo( itemRect.left, itemRect.top);
-			for (i = 0; i < EQPACKET*2; i++) LineTo( itemRect.left + logoScale[ i/4], itemRect.top + i/4);
+			MoveTo(itemRect.left, itemRect.top);
+			for (i = 0; i < EQPACKET*2; i++) LineTo(itemRect.left + logoScale[ i/4], itemRect.top + i/4);
 		}
 		else
 		{
-			MoveTo( itemRect.left, itemRect.top);
-			LineTo( itemRect.right, itemRect.bottom);
+			MoveTo(itemRect.left, itemRect.top);
+			LineTo(itemRect.right, itemRect.bottom);
 		}
 		
-		ForeColor( yellowColor);
+		ForeColor(yellowColor);
 		
-		MoveTo( itemRect.left + ShiftFilter[ 0]/4, 0);
-		for (i = 0; i < EQPACKET*2; i++) LineTo( itemRect.left + ShiftFilter[ i]/4, itemRect.top + i/4);
+		MoveTo(itemRect.left + ShiftFilter[ 0]/4, 0);
+		for (i = 0; i < EQPACKET*2; i++) LineTo(itemRect.left + ShiftFilter[ i]/4, itemRect.top + i/4);
 	}
 	else
 	{
-		MoveTo( itemRect.left, itemRect.top + (itemRect.bottom-itemRect.top)/2 );
-		LineTo( itemRect.right, itemRect.top + (itemRect.bottom-itemRect.top)/2 );
+		MoveTo(itemRect.left, itemRect.top + (itemRect.bottom-itemRect.top)/2 );
+		LineTo(itemRect.right, itemRect.top + (itemRect.bottom-itemRect.top)/2 );
 		
-		ForeColor( yellowColor);
+		ForeColor(yellowColor);
 		
-		MoveTo( itemRect.left, itemRect.top + (2.0 - HzFilter[ 0]) * (EQPACKET / 4));
-		for (i = 0; i < EQPACKET*2; i++) LineTo( itemRect.left + i/4, itemRect.top + (2.0 - HzFilter[ i]) * (EQPACKET / 4));
+		MoveTo(itemRect.left, itemRect.top + (2.0 - HzFilter[ 0]) * (EQPACKET / 4));
+		for (i = 0; i < EQPACKET*2; i++) LineTo(itemRect.left + i/4, itemRect.top + (2.0 - HzFilter[ i]) * (EQPACKET / 4));
 	}
 	
-	PenSize( 1, 1);
+	PenSize(1, 1);
 	
-	FrameRectRelief( &itemRect);
+	FrameRectRelief(&itemRect);
 	
-	SetGWorld( oldPort, oldGDeviceH);
+	SetGWorld(oldPort, oldGDeviceH);
 	
-	CopyBits(		(BitMap*) *GetPortPixMap( theGWorld),
-					(BitMap*) *GetPortPixMap(GetDialogPort( TheDia)),
+	CopyBits(		(BitMap*) *GetPortPixMap(theGWorld),
+					(BitMap*) *GetPortPixMap(GetDialogPort(TheDia)),
 					&itemRect,
 					&itemRect,
 					srcCopy,
 					NULL);
 	
-	UnlockPixels( GetPortPixMap( theGWorld));
-	DisposeGWorld( theGWorld);
+	UnlockPixels(GetPortPixMap(theGWorld));
+	DisposeGWorld(theGWorld);
 }
 
-void ApplyFilter( Boolean filter, sData *SDataSrc)
+void ApplyFilter(Boolean filter, sData *SDataSrc)
 {
 	short	i, last, z, cur;
 
@@ -176,16 +176,16 @@ void ApplyFilter( Boolean filter, sData *SDataSrc)
 			}
 		}
 		
-		MADCallFFT( SDataSrc, loggedFilter, MADDriver, filter);
+		MADCallFFT(SDataSrc, loggedFilter, MADDriver, filter);
 	}
 	else
 	{
-		if (filter) MADCallFFT( SDataSrc, ShiftFilter, MADDriver, filter);
-		else MADCallFFT( SDataSrc, HzFilter, MADDriver, filter);
+		if (filter) MADCallFFT(SDataSrc, ShiftFilter, MADDriver, filter);
+		else MADCallFFT(SDataSrc, HzFilter, MADDriver, filter);
 	}
 }
 
-void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
+void FFTSampleFilter(sData *SDataSrc, short instru, Boolean filter)
 {
 	long		Result, mresult;
 	short		PourCent, itemHit, i, itemType, prev;
@@ -199,20 +199,20 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 	Boolean		IsPlaying;
 	sData		SData;
 	
-	GetPort( &myPort);
+	GetPort(&myPort);
 	
 	//////////
 	
-	rsrc = GetResource( 'LogC', 128);
-	DetachResource( rsrc);
+	rsrc = GetResource('LogC', 128);
+	DetachResource(rsrc);
 	
-	logoScale = (short*)		NewPtrClear( 256 * sizeof( short));
-	ilogoScale = (short*)	NewPtrClear( 256 * sizeof( short));
+	logoScale = (short*)		NewPtrClear(256 * sizeof(short));
+	ilogoScale = (short*)	NewPtrClear(256 * sizeof(short));
 	
-	HLock( rsrc);
-	BlockMoveData( *rsrc, logoScale, 256 * sizeof( short));
-	HUnlock( rsrc);
-	DisposeHandle( rsrc);
+	HLock(rsrc);
+	BlockMoveData(*rsrc, logoScale, 256 * sizeof(short));
+	HUnlock(rsrc);
+	DisposeHandle(rsrc);
 	
 	for (i = 0; i < 256; i++) ilogoScale[ i] = -1;
 
@@ -229,39 +229,39 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 	
 	
 	SData = *SDataSrc;
-	SData.data = NewPtr( SDataSrc->size);
+	SData.data = NewPtr(SDataSrc->size);
 	if (SData.data == NULL) return;
 	
-	BlockMoveData( SDataSrc->data, SData.data, SDataSrc->size);
+	BlockMoveData(SDataSrc->data, SData.data, SDataSrc->size);
 	
-	SetCursor( &watchCrsr);
+	SetCursor(&watchCrsr);
 	
-	if (EQPreview) ApplyFilter( filter, SDataSrc);
+	if (EQPreview) ApplyFilter(filter, SDataSrc);
 	
-	SetCursor( GetQDGlobalsArrow( &qdarrow));
+	SetCursor(GetQDGlobalsArrow(&qdarrow));
 	
 	UpdateSampleWindows();
 	
-	SaveUndo( USample, instru, "\pUndo 'FFT'");
+	SaveUndo(USample, instru, "\pUndo 'FFT'");
 	
-	TheDia = GetNewDialog( 184,NULL, (WindowPtr) -1L);
-	SetPortDialogPort( TheDia);
-	AutoPosition( TheDia);
-	ChangeDialogFont( TheDia);
+	TheDia = GetNewDialog(184,NULL, (WindowPtr) -1L);
+	SetPortDialogPort(TheDia);
+	AutoPosition(TheDia);
+	ChangeDialogFont(TheDia);
 	
-	if (filter) SetWTitle( GetDialogWindow( TheDia), "\pShift Filter");
-	else SetWTitle( GetDialogWindow( TheDia), "\pHz Filter");
+	if (filter) SetWTitle(GetDialogWindow(TheDia), "\pShift Filter");
+	else SetWTitle(GetDialogWindow(TheDia), "\pHz Filter");
 	
-	if (!logMode) TurnRadio( 7, TheDia, true);
-	else TurnRadio( 8, TheDia, true);
+	if (!logMode) TurnRadio(7, TheDia, true);
+	else TurnRadio(8, TheDia, true);
 	
-	TurnRadio( 6, TheDia, EQPreview);
+	TurnRadio(6, TheDia, EQPreview);
 	
 	do
 	{
-		MyModalDialog( TheDia, &itemHit);
+		MyModalDialog(TheDia, &itemHit);
 		
-		switch( itemHit)
+		switch(itemHit)
 		{
 			case 7:
 			case 8:
@@ -284,32 +284,32 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 					logMode = true;
 				}
 				
-				TurnRadio( 7, TheDia, false);
-				TurnRadio( 8, TheDia, false);
+				TurnRadio(7, TheDia, false);
+				TurnRadio(8, TheDia, false);
 				
-				if (!logMode) TurnRadio( 7, TheDia, true);
-				else TurnRadio( 8, TheDia, true);
+				if (!logMode) TurnRadio(7, TheDia, true);
+				else TurnRadio(8, TheDia, true);
 				
-				BlockMoveData( SData.data, SDataSrc->data, SDataSrc->size);
+				BlockMoveData(SData.data, SDataSrc->data, SDataSrc->size);
 				
-				if (EQPreview) ApplyFilter( filter, SDataSrc);
+				if (EQPreview) ApplyFilter(filter, SDataSrc);
 				
 				UpdateSampleWindows();
 				break;
 		
 			case 6:
 				EQPreview = !EQPreview;
-				TurnRadio( 6, TheDia, EQPreview);
+				TurnRadio(6, TheDia, EQPreview);
 				
-				BlockMoveData( SData.data, SDataSrc->data, SDataSrc->size);
+				BlockMoveData(SData.data, SDataSrc->data, SDataSrc->size);
 				
-				if (EQPreview) ApplyFilter( filter, SDataSrc);
+				if (EQPreview) ApplyFilter(filter, SDataSrc);
 				
 				UpdateSampleWindows();
 				break;
 		
 			case -updateEvt:
-				FFTSampleUpdate( TheDia, filter);
+				FFTSampleUpdate(TheDia, filter);
 				break;
 			
 			case 5:
@@ -322,31 +322,31 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 				{
 					for (i = 0; i < EQPACKET*2; i++) HzFilter[ i] = 1.0;
 				}
-				FFTSampleUpdate( TheDia, filter);
+				FFTSampleUpdate(TheDia, filter);
 				
-				BlockMoveData( SData.data, SDataSrc->data, SDataSrc->size);
+				BlockMoveData(SData.data, SDataSrc->data, SDataSrc->size);
 				
-				SetCursor( &watchCrsr);
+				SetCursor(&watchCrsr);
 				
-				if (EQPreview) ApplyFilter( filter, SDataSrc);
+				if (EQPreview) ApplyFilter(filter, SDataSrc);
 				
-				SetCursor( GetQDGlobalsArrow( &qdarrow));
+				SetCursor(GetQDGlobalsArrow(&qdarrow));
 				
 				UpdateSampleWindows();
 				break;
 			
 			case 3:
-				GetDialogItem( TheDia, 3, &itemType, &itemHandle, &itemRect);
+				GetDialogItem(TheDia, 3, &itemType, &itemHandle, &itemRect);
 				
-				GetMouse( &myPt);
+				GetMouse(&myPt);
 				
 				lastPt = myPt.v - itemRect.top;
 				lastValue = myPt.h - itemRect.left;
 				
-				GetKeys( km);
+				GetKeys(km);
 				do
 				{
-					GetMouse( &myPt);
+					GetMouse(&myPt);
 					
 					oldValue = myPt.h - itemRect.left;
 					NewValue = myPt.v - itemRect.top;
@@ -359,7 +359,7 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 					
 					if (filter)
 					{
-						if (IsPressed( 0x003A))
+						if (IsPressed(0x003A))
 						{
 							for (i = 0; i < EQPACKET*2; i++)
 							{
@@ -370,11 +370,11 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 						{
 							if (NewValue < lastPt)
 							{
-								for (i = NewValue*4; i <= (lastPt*4) + 3; i++) ShiftFilter[ i] = EQInterpolate( i, NewValue*4, (lastPt*4), (double) oldValue * 4.0, (double) lastValue * 4.0);
+								for (i = NewValue*4; i <= (lastPt*4) + 3; i++) ShiftFilter[ i] = EQInterpolate(i, NewValue*4, (lastPt*4), (double) oldValue * 4.0, (double) lastValue * 4.0);
 							}
 							else
 							{
-								for (i = NewValue*4 +3; i >= (lastPt*4); i--) ShiftFilter[ i] = EQInterpolate( i, NewValue*4, (lastPt*4), (double) oldValue * 4.0, (double) lastValue * 4.0);
+								for (i = NewValue*4 +3; i >= (lastPt*4); i--) ShiftFilter[ i] = EQInterpolate(i, NewValue*4, (lastPt*4), (double) oldValue * 4.0, (double) lastValue * 4.0);
 							}
 						}
 					}
@@ -382,49 +382,49 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 					{
 						if (oldValue < lastValue)
 						{
-							for (i = oldValue*4; i <= (lastValue*4) + 3; i++) HzFilter[ i] = 2.0 - EQInterpolate( i, oldValue*4, lastValue*4, (double) NewValue / (double) (EQPACKET/4), (double) lastPt / (double) (EQPACKET/4));
+							for (i = oldValue*4; i <= (lastValue*4) + 3; i++) HzFilter[ i] = 2.0 - EQInterpolate(i, oldValue*4, lastValue*4, (double) NewValue / (double) (EQPACKET/4), (double) lastPt / (double) (EQPACKET/4));
 						}
 						else
 						{
-							for (i = oldValue*4 +3; i >= (lastValue*4); i--) HzFilter[ i] = 2.0 - EQInterpolate( i, oldValue*4, lastValue*4, (double) NewValue / (double) (EQPACKET/4), (double) lastPt / (double) (EQPACKET/4));
+							for (i = oldValue*4 +3; i >= (lastValue*4); i--) HzFilter[ i] = 2.0 - EQInterpolate(i, oldValue*4, lastValue*4, (double) NewValue / (double) (EQPACKET/4), (double) lastPt / (double) (EQPACKET/4));
 						}
 					}
 					
-					FFTSampleUpdate( TheDia, filter);
+					FFTSampleUpdate(TheDia, filter);
 					
 					lastPt = NewValue;
 					lastValue = oldValue;
 					
-					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
+					WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 					DoGlobalNull();
 				}
 				while (Button());
 				
-				BlockMoveData( SData.data, SDataSrc->data, SDataSrc->size);
+				BlockMoveData(SData.data, SDataSrc->data, SDataSrc->size);
 				
-				SetCursor( &watchCrsr);
+				SetCursor(&watchCrsr);
 				
-				if (EQPreview) ApplyFilter( filter, SDataSrc);
+				if (EQPreview) ApplyFilter(filter, SDataSrc);
 				
-				SetCursor( GetQDGlobalsArrow( &qdarrow));
+				SetCursor(GetQDGlobalsArrow(&qdarrow));
 				
 				UpdateSampleWindows();
 				break;
 			
 			case 4:	// TEST
-				BlockMoveData( SData.data, SDataSrc->data, SDataSrc->size);
+				BlockMoveData(SData.data, SDataSrc->data, SDataSrc->size);
 				
-				SetCursor( &watchCrsr);
+				SetCursor(&watchCrsr);
 				
-				ApplyFilter( filter, SDataSrc);
+				ApplyFilter(filter, SDataSrc);
 				
-				SetCursor( GetQDGlobalsArrow( &PlayCrsr));
+				SetCursor(GetQDGlobalsArrow(&PlayCrsr));
 				
 				UpdateSampleWindows();
 				
-				MADPlaySoundDataSYNC( MADDriver, SDataSrc->data, SData.size, 0, 48 + SData.relNote, SData.amp, SData.loopBeg, SData.loopSize, ((long)SData.c2spd) << 16L, SData.stereo);
+				MADPlaySoundDataSYNC(MADDriver, SDataSrc->data, SData.size, 0, 48 + SData.relNote, SData.amp, SData.loopBeg, SData.loopSize, ((long)SData.c2spd) << 16L, SData.stereo);
 			
-				SetCursor( GetQDGlobalsArrow( &qdarrow));
+				SetCursor(GetQDGlobalsArrow(&qdarrow));
 				break;
 		}
 	
@@ -435,18 +435,18 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 	{
 		curMusic->hasChanged = true;
 	}
-	else BlockMoveData( SData.data, SDataSrc->data, SDataSrc->size);
+	else BlockMoveData(SData.data, SDataSrc->data, SDataSrc->size);
 	
-	DisposePtr( SData.data);
+	DisposePtr(SData.data);
 	
 	CreateInstruList();
 	DrawInfoInstrument();
 	UpdateSampleWindows();
 	UpdateInstruMenu();
 	
-	if (logoScale != NULL) DisposePtr( (Ptr) logoScale);	logoScale = NULL;
-	if (ilogoScale != NULL) DisposePtr( (Ptr) ilogoScale);	ilogoScale = NULL;
+	if (logoScale != NULL) DisposePtr((Ptr) logoScale);	logoScale = NULL;
+	if (ilogoScale != NULL) DisposePtr((Ptr) ilogoScale);	ilogoScale = NULL;
 	
-	DisposeDialog( TheDia);
-	SetPort( myPort);
+	DisposeDialog(TheDia);
+	SetPort(myPort);
 }

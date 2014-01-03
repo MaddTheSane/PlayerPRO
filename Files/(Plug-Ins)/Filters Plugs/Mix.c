@@ -82,8 +82,8 @@ static void drawSlider (Rect	theRect,
 	
 	ForeColor(blackColor);
 	NumToString(theValue, s);
-	TextFont( kFontIDGeneva);
-	TextSize( 9);
+	TextFont(kFontIDGeneva);
+	TextSize(9);
 	SetRect(&theRect,theRect.left - 20,theRect.top,theRect.left - 1,theRect.bottom - 4);
 	EraseRect(&theRect);
 	iWidth = TextWidth(&s[1],0,s[0]);
@@ -101,7 +101,7 @@ static pascal void xRectProc (DialogPtr	theWindow,
 	Rect	iRect;
 
 	GetDialogItem(theWindow,theItem,&iType,&iHandle,&iRect);
-	raiseRect( iRect);
+	raiseRect(iRect);
 }
 
 static pascal void sliderProc (DialogPtr	theWindow,
@@ -116,19 +116,19 @@ static pascal void sliderProc (DialogPtr	theWindow,
 	else v = gp2;
 
 	GetDialogItem(theWindow,theItem,&iType,&iHandle,&iRect);
-	drawSlider( iRect, v);
+	drawSlider(iRect, v);
 }
 
 static void SetDText (DialogPtr dlog, short item, Str255 str)
 {
 	ControlHandle	control;
 
-	GetDialogItemAsControl( dlog, item, &control );
-	SetControlData( control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
-	DrawOneControl( control);
+	GetDialogItemAsControl(dlog, item, &control );
+	SetControlData(control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
+	DrawOneControl(control);
 }
 
-static void AutoPosition( DialogPtr aDia)
+static void AutoPosition(DialogPtr aDia)
 {
 	Point		Position, mouse;
 	Rect		ViewRect, caRect;
@@ -136,30 +136,30 @@ static void AutoPosition( DialogPtr aDia)
 	GDHandle	aH;
 	BitMap		screenBits;
 	
-	GetMouse( &mouse);
-	LocalToGlobal( &mouse);
+	GetMouse(&mouse);
+	LocalToGlobal(&mouse);
 	
-	GetPortBounds( GetDialogPort( aDia), &caRect);
+	GetPortBounds(GetDialogPort(aDia), &caRect);
 	
 	XSize = (caRect.right - caRect.left);
 	YSize = (caRect.bottom - caRect.top);
 	
-	GetQDGlobalsScreenBits( &screenBits);
+	GetQDGlobalsScreenBits(&screenBits);
 	
-	SetRect( &ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
+	SetRect(&ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
 						screenBits.bounds.right - 8, screenBits.bounds.bottom - 8);
 	
 	aH = GetDeviceList();
 	do
 	{
-		aH = GetNextDevice( aH);
+		aH = GetNextDevice(aH);
 		if (aH != NULL)
 		{
-			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect(mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
-				SetRect( &ViewRect, ar.left + 8, ar.top + 43,
+				SetRect(&ViewRect, ar.left + 8, ar.top + 43,
 									ar.right - 8, ar.bottom - 8);
 			}
 		}
@@ -174,16 +174,16 @@ static void AutoPosition( DialogPtr aDia)
 	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
 	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
-	SetDialogDefaultItem( aDia, 1 );
-	SetDialogCancelItem( aDia, 2 );
+	SetDialogDefaultItem(aDia, 1 );
+	SetDialogCancelItem(aDia, 2 );
 
-	MoveWindow( GetDialogWindow( aDia), Position.h, Position.v, false);
+	MoveWindow(GetDialogWindow(aDia), Position.h, Position.v, false);
 
-	ShowWindow( GetDialogWindow( aDia));
+	ShowWindow(GetDialogWindow(aDia));
 }
 
 
-static Boolean getParams ( short dlgID, Str255 s1, Str255 s2, PPInfoPlug *thePPInfoPlug)
+static Boolean getParams (short dlgID, Str255 s1, Str255 s2, PPInfoPlug *thePPInfoPlug)
 {
 	DialogPtr	theDialog;
 	Boolean		theResult = false;
@@ -194,23 +194,23 @@ static Boolean getParams ( short dlgID, Str255 s1, Str255 s2, PPInfoPlug *thePPI
 		Handle	iHandle;
 		Rect	iRect;
 		
-		SetPortDialogPort( theDialog);
-		AutoPosition( theDialog);
-		SetDText( theDialog, sname1, s1);
+		SetPortDialogPort(theDialog);
+		AutoPosition(theDialog);
+		SetDText(theDialog, sname1, s1);
 		
-		SetDText( theDialog, sname2, s2);
+		SetDText(theDialog, sname2, s2);
 		
 		GetDialogItem(theDialog,slider1,&iType,&iHandle,&iRect);
-		SetDialogItem(theDialog,slider1,iType,(Handle) NewUserItemUPP( sliderProc),&iRect);
+		SetDialogItem(theDialog,slider1,iType,(Handle) NewUserItemUPP(sliderProc),&iRect);
 		
 		GetDialogItem(theDialog,slider2,&iType,&iHandle,&iRect);
-		SetDialogItem(theDialog,slider2,iType,(Handle) NewUserItemUPP( sliderProc),&iRect);
+		SetDialogItem(theDialog,slider2,iType,(Handle) NewUserItemUPP(sliderProc),&iRect);
 		
 		GetDialogItem(theDialog,enclosure,&iType,&iHandle,&iRect);
 		SetDialogItem(theDialog,enclosure,iType,(Handle) NewUserItemUPP(xRectProc),&iRect);
 
 		do {
-			ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+			ModalDialog(thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 			if ((itemHit == slider1) || (itemHit == slider2))
 			{	//track slider
 				GrafPtr	savePort;
@@ -221,10 +221,10 @@ static Boolean getParams ( short dlgID, Str255 s1, Str255 s2, PPInfoPlug *thePPI
 				while(WaitMouseUp()) {
 					GetMouse(&newp);
 					if (DeltaPoint(oldp,newp) & 0xFFFF) {
-						long newVal = min( 100, max( 0, ((newp.h - iRect.left) * 100) / (iRect.right - iRect.left)));
+						long newVal = min(100, max(0, ((newp.h - iRect.left) * 100) / (iRect.right - iRect.left)));
 						if (itemHit == slider1) gp1 = newVal;
 						else gp2 = newVal;
-						drawSlider( iRect, newVal);
+						drawSlider(iRect, newVal);
 						oldp = newp;
 					}
 				}
@@ -239,7 +239,7 @@ static Boolean getParams ( short dlgID, Str255 s1, Str255 s2, PPInfoPlug *thePPI
 	return theResult;
 }
 
-static void alertUser ( short errString)
+static void alertUser (short errString)
 {
 	Str255	s;
 	GetIndString(s,5010,errString);
@@ -247,7 +247,7 @@ static void alertUser ( short errString)
 	StopAlert(5011, NULL);
 }
 
-static OSErr mainMix( 	sData					*theData,
+static OSErr mainMix(	sData					*theData,
 				long					SelectionStart,
 				long					SelectionEnd,
 				PPInfoPlug				*thePPInfoPlug,
@@ -260,20 +260,20 @@ static OSErr mainMix( 	sData					*theData,
 	ScrapFlavorFlags	flags;
 	
 	lCntOrErr = 0;
-	GetCurrentScrap( &scrap);
-	anErr = GetScrapFlavorFlags( scrap, soundListRsrc, &flags);
-	if (anErr == noErr) GetScrapFlavorSize( scrap, soundListRsrc, &lCntOrErr);	
+	GetCurrentScrap(&scrap);
+	anErr = GetScrapFlavorFlags(scrap, soundListRsrc, &flags);
+	if (anErr == noErr) GetScrapFlavorSize(scrap, soundListRsrc, &lCntOrErr);	
 	
-	if ( lCntOrErr > 0) {
+	if (lCntOrErr > 0) {
 		Str255	s1, s2 = "\pUntitled";
 
 		aHandle = NewHandle(0);
 		s1[0] = strlen(theData->name);
 		BlockMove(theData->name,&s1[1],s1[0]);
 		
-		HLock( aHandle);
-		GetScrapFlavorData( scrap, 'STR ', &lCntOrErr, *aHandle);
-		HUnlock( aHandle);
+		HLock(aHandle);
+		GetScrapFlavorData(scrap, 'STR ', &lCntOrErr, *aHandle);
+		HUnlock(aHandle);
 		
 		gp1 = 50;
 		gp2 = 50;
@@ -285,9 +285,9 @@ static OSErr mainMix( 	sData					*theData,
 			
 			
 			
-			HLock( aHandle);
-			GetScrapFlavorData( scrap, soundListRsrc, &lCntOrErr, *aHandle);
-			HUnlock( aHandle);
+			HLock(aHandle);
+			GetScrapFlavorData(scrap, soundListRsrc, &lCntOrErr, *aHandle);
+			HUnlock(aHandle);
 			
 			HLockHi(aHandle);
 			
@@ -307,14 +307,14 @@ static OSErr mainMix( 	sData					*theData,
 	
 					length1 = theData->size - SelectionStart;
 					
-					resultLength = SelectionStart + max( length1, length2);
+					resultLength = SelectionStart + max(length1, length2);
 					resultPtr = NewPtr(resultLength);
 
 					worgPtr = theData->data; wclipPtr = clipPtr;
 					for (i = 0; i < SelectionStart; i++) // first pass to get max value.
 					{
 						temp1 = *worgPtr++;
-						peak = max( peak, labs( gp1 * temp1));
+						peak = max(peak, labs(gp1 * temp1));
 					}
 					for (i = 0; i < (resultLength - SelectionStart); i++)
 					{
@@ -325,7 +325,7 @@ static OSErr mainMix( 	sData					*theData,
 							temp2 = (*wclipPtr & 0xFF) - 0x80;
 						} else temp2 = 0;
 						
-						peak = max( peak, labs((gp1 * temp1) + (gp2 * temp2)));
+						peak = max(peak, labs((gp1 * temp1) + (gp2 * temp2)));
 							
 						worgPtr++;
 						wclipPtr++;

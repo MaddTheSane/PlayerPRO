@@ -6,13 +6,13 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <Carbon/Carbon.h>
 
-static OSErr TestMINS( InstrData *CC)
+static OSErr TestMINS(InstrData *CC)
 {
 	if (CC->type == 0 && CC->numSamples >= 0 && CC->numSamples < MAXSAMPLE) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
-static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
+static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 {
 	short		i;
 //	Boolean		IsReading;
@@ -23,10 +23,10 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 		{
 			if (sample[ i]->data != NULL)
 			{
-				DisposePtr( (Ptr) sample[ i]->data);
+				DisposePtr((Ptr) sample[ i]->data);
 				sample[ i]->data = NULL;
 			}
-			DisposePtr( (Ptr) sample[ i]);
+			DisposePtr((Ptr) sample[ i]);
 			sample[ i] = NULL;
 		}
 	}
@@ -119,27 +119,27 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 	long	inOutCount;
 	Ptr		theSound;
 
-	switch( order)
+	switch(order)
 	{
 		case 'IMPL':
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr)
 			{
-				GetEOF( iFileRefI, &inOutCount);
+				GetEOF(iFileRefI, &inOutCount);
 				
-				theSound = NewPtr( inOutCount);
+				theSound = NewPtr(inOutCount);
 				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					DisposePtr( theSound);
+					DisposePtr(theSound);
 					
-					MAD2KillInstrument( InsHeader, sample);
+					MAD2KillInstrument(InsHeader, sample);
 					
 					// READ instrument header
 					
-					inOutCount = sizeof( InstrData);
+					inOutCount = sizeof(InstrData);
 					
-					myErr = FSRead( iFileRefI, &inOutCount, InsHeader);
+					myErr = FSRead(iFileRefI, &inOutCount, InsHeader);
 					
 					ByteswapInstrument(InsHeader);
 					
@@ -149,17 +149,17 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 					{
 						sData *curData = sample[ x] = inMADCreateSample();
 						
-						inOutCount = sizeof( sData);
+						inOutCount = sizeof(sData);
 						
-						myErr = FSRead( iFileRefI, &inOutCount, curData);
+						myErr = FSRead(iFileRefI, &inOutCount, curData);
 						
 						ByteswapsData(curData);
 						
-						curData->data = NewPtr( curData->size);
+						curData->data = NewPtr(curData->size);
 						if (curData->data != NULL)
 						{
 							inOutCount = curData->size;
-							myErr = FSRead( iFileRefI, &inOutCount, curData->data);
+							myErr = FSRead(iFileRefI, &inOutCount, curData->data);
 						}
 						
 						if (curData->amp == 16)
@@ -167,54 +167,54 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 							SInt32 	ll;
 							short	*shortPtr = (short*) curData->data;
 							
-							for (ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
+							for (ll = 0; ll < curData->size/2; ll++) MOT16(&shortPtr[ ll]);
 						}
 
 					}
 				}
 				
-				FSCloseFork( iFileRefI);
+				FSCloseFork(iFileRefI);
 			}
 		
 			break;
 		
 		case 'TEST':
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr)
 			{
 				inOutCount = 50L;
-				theSound = NewPtr( inOutCount);
+				theSound = NewPtr(inOutCount);
 				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					FSRead( iFileRefI, &inOutCount, theSound);
+					FSRead(iFileRefI, &inOutCount, theSound);
 					
 					ByteswapInstrument((InstrData*)theSound);
 					
-					myErr = TestMINS( (InstrData*) theSound);
+					myErr = TestMINS((InstrData*) theSound);
 				}
 				
-				DisposePtr( theSound);
+				DisposePtr(theSound);
 				
-				FSCloseFork( iFileRefI);
+				FSCloseFork(iFileRefI);
 			}
 		
 			break;
 		
 		case 'EXPL':
 			
-			myErr = FSpCreate( AlienFileFSSpec, 'SNPL', 'MINs', smCurrentScript);
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			myErr = FSpCreate(AlienFileFSSpec, 'SNPL', 'MINs', smCurrentScript);
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			
 			if (myErr == noErr)
 			{
 				// Write instrument header
 				
-				inOutCount = sizeof( InstrData);
+				inOutCount = sizeof(InstrData);
 				InstrData *tempIns = (InstrData*)NewPtr(inOutCount);
 				BlockMoveData(InsHeader, tempIns, inOutCount);
 				ByteswapInstrument(tempIns);
-				myErr = FSWrite( iFileRefI, &inOutCount, (Ptr)tempIns);
+				myErr = FSWrite(iFileRefI, &inOutCount, (Ptr)tempIns);
 				DisposePtr((Ptr)tempIns);
 				
 				// Write samples headers & data
@@ -236,13 +236,13 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 						SInt32 	ll;
 						short	*shortPtr = (short*) copydataData;
 						
-						for (ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
+						for (ll = 0; ll < curData->size/2; ll++) MOT16(&shortPtr[ ll]);
 					}
 #endif
 					
 					copyData->data = 0;
 					
-					inOutCount = sizeof( sData);
+					inOutCount = sizeof(sData);
 					FSWrite(iFileRefI, &inOutCount, copyData);
 					
 					inOutCount = curData->size;
@@ -251,7 +251,7 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 					DisposePtr(copydataData);
 
 				}
-				FSCloseFork( iFileRefI);
+				FSCloseFork(iFileRefI);
 			}
 			break;
 		

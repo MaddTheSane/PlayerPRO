@@ -6,7 +6,7 @@
 #include <QuickTime/QuickTime.h>
 #include "Undo.h"
 
-//OSErr DoStandardOpen( FSSpec	*spec, Str255 string, OSType inType);
+//OSErr DoStandardOpen(FSSpec	*spec, Str255 string, OSType inType);
 
 pascal OSErr MyProgressUPP(Movie theMovie, short message, short whatOperation, Fixed percentDone, long refcon)
 {
@@ -31,17 +31,17 @@ void ImportAudioCD()
 	FInfo			fndrInfo;
 	MovieProgressUPP	progressUPP;
 	
-	if (!GetIns( &ins, &samp))
+	if (!GetIns(&ins, &samp))
 	{
-		Erreur( 13, ins);
+		Erreur(13, ins);
 		return;
 	}
 	
-	progressUPP = NewMovieProgressUPP( MyProgressUPP);
+	progressUPP = NewMovieProgressUPP(MyProgressUPP);
 	
-	if (DoStandardOpen( &file, "\pAudio CD", kQTFileTypeAudioCDTrack) == noErr)
+	if (DoStandardOpen(&file, "\pAudio CD", kQTFileTypeAudioCDTrack) == noErr)
 	{
-		iErr = FSpGetFInfo( &file, &fndrInfo);
+		iErr = FSpGetFInfo(&file, &fndrInfo);
 		
 		ci = OpenDefaultComponent (MovieImportType, kQTFileTypeAudioCDTrack);
 		
@@ -52,26 +52,26 @@ void ImportAudioCD()
 								NULL,
 								&canceled);
 			
-			iErr = MovieImportSetProgressProc( 	ci, progressUPP, 0);
+			iErr = MovieImportSetProgressProc(	ci, progressUPP, 0);
 			
 			UpdateALLWindow();
 			
 			if (!canceled && iErr == noErr)
 			{
-				pStrcpy( newfile.name, file.name);
+				pStrcpy(newfile.name, file.name);
 				
-				iErr = FindFolder( kOnSystemDisk, kTrashFolderType, kCreateFolder, &newfile.vRefNum, &newfile.parID);	// kDesktopFolderType, kTemporaryFolderType 
+				iErr = FindFolder(kOnSystemDisk, kTrashFolderType, kCreateFolder, &newfile.vRefNum, &newfile.parID);	// kDesktopFolderType, kTemporaryFolderType 
 				if (iErr == noErr)
 				{
 					/////////////////////////////////////////////////
 					//		AIFF CONVERSION
 					/////////////////////////////////////////////////
 					
-					SetCursor( &watchCrsr);
+					SetCursor(&watchCrsr);
 					
 					resRefNum = 0;
 					
-					FSpDelete( &newfile);
+					FSpDelete(&newfile);
 					
 					iErr = CreateMovieFile(	&newfile,
 					      		       'SNPL',
@@ -85,27 +85,27 @@ void ImportAudioCD()
 						addedDuration = 0;
 						outFlags = 0;
 						
-						iErr = MovieImportFile( ci, &file, theMovie, 0, &usedTrack, 0, &addedDuration, movieImportCreateTrack, &outFlags);
+						iErr = MovieImportFile(ci, &file, theMovie, 0, &usedTrack, 0, &addedDuration, movieImportCreateTrack, &outFlags);
 						
 						CloseMovieFile (resRefNum);
 						
-						DisposeMovie( theMovie);
+						DisposeMovie(theMovie);
 						
 						if (!iErr)
 						{
 							/////////////////////////////////////////////////
 							
-							iErr = FSpGetFInfo( &newfile, &fndrInfo);
+							iErr = FSpGetFInfo(&newfile, &fndrInfo);
 							fndrInfo.fdCreator = 'SNPL';
 							fndrInfo.fdType = 'AIFF';
-							iErr = FSpSetFInfo( &newfile, &fndrInfo);
+							iErr = FSpSetFInfo(&newfile, &fndrInfo);
 							
 							curMusic->hasChanged = true;
 							
-							SaveUndo( UAllSamples, 0, "\pUndo 'Import Audio CD Track'");
+							SaveUndo(UAllSamples, 0, "\pUndo 'Import Audio CD Track'");
 							
-							iErr = NOpenSampleInt( ins, samp, newfile);
-							MADErreur( iErr);
+							iErr = NOpenSampleInt(ins, samp, newfile);
+							MADErreur(iErr);
 							
 							CreateInstruList();
 							DrawInfoInstrument();
@@ -113,17 +113,17 @@ void ImportAudioCD()
 							UpdateInstruMenu();
 						}
 						
-						FSpDelete( &newfile);
+						FSpDelete(&newfile);
 					}
 					
-					SetCursor( GetQDGlobalsArrow( &qdarrow));
+					SetCursor(GetQDGlobalsArrow(&qdarrow));
 				}
 			}
-			CloseComponent( ci);
+			CloseComponent(ci);
 		}
 	}
 	
-	DisposeMovieProgressUPP( progressUPP);
+	DisposeMovieProgressUPP(progressUPP);
 }
 /*
 void ImportAudioCD()
@@ -141,13 +141,13 @@ void ImportAudioCD()
 	short					ins, samp;
 	FInfo					fndrInfo;
 	
-	if (!GetIns( &ins, &samp))
+	if (!GetIns(&ins, &samp))
 	{
-		Erreur( 13, ins);
+		Erreur(13, ins);
 		return;
 	}
 	
-	if (DoStandardOpen( &file, "\pAudio CD", 'MPEG') == noErr)
+	if (DoStandardOpen(&file, "\pAudio CD", 'MPEG') == noErr)
 	{
 		ci = OpenDefaultComponent (MovieImportType, 'MPEG');
 		
@@ -156,18 +156,18 @@ void ImportAudioCD()
 			canceled = false;
 			if (!canceled && iErr == noErr)
 			{
-				pStrcpy( newfile2.name, file.name);
+				pStrcpy(newfile2.name, file.name);
 				
-				iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newfile2.vRefNum, &newfile2.parID);	//
+				iErr = FindFolder(kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newfile2.vRefNum, &newfile2.parID);	//
 				if (iErr == noErr)
 				{
 					/////////////////////////////////////////////////
 					//		AIFF CONVERSION
 					/////////////////////////////////////////////////
 					
-					SetCursor( &watchCrsr);
+					SetCursor(&watchCrsr);
 					
-					theMovie = NewMovie( 0);
+					theMovie = NewMovie(0);
 					
 					if (!iErr)
 					{
@@ -175,9 +175,9 @@ void ImportAudioCD()
 						addedDuration = 0;
 						outFlags = 0;
 						
-						iErr = MovieImportFile( ci, &file, theMovie, 0, &usedTrack, 0, &addedDuration, movieImportCreateTrack, &outFlags);
+						iErr = MovieImportFile(ci, &file, theMovie, 0, &usedTrack, 0, &addedDuration, movieImportCreateTrack, &outFlags);
 						
-						FSpDelete( &newfile2);
+						FSpDelete(&newfile2);
 						
 						iErr = ConvertMovieToFile(	theMovie,
 										0,
@@ -189,23 +189,23 @@ void ImportAudioCD()
 									 	0,
 									 	0);
 						
-						DisposeMovie( theMovie);
+						DisposeMovie(theMovie);
 						
 						if (!iErr)
 						{
 							/////////////////////////////////////////////////
 							
-							iErr = FSpGetFInfo( &newfile2, &fndrInfo);
+							iErr = FSpGetFInfo(&newfile2, &fndrInfo);
 							fndrInfo.fdCreator = 'SNPL';
 							fndrInfo.fdType = 'AIFF';
-							iErr = FSpSetFInfo( &newfile2, &fndrInfo);
+							iErr = FSpSetFInfo(&newfile2, &fndrInfo);
 							
 							curMusic->hasChanged = true;
 							
-							SaveUndo( UAllSamples, 0, "\pUndo 'Import Audio CD Track'");
+							SaveUndo(UAllSamples, 0, "\pUndo 'Import Audio CD Track'");
 							
-							iErr = NOpenSampleInt( ins, samp, newfile2);
-							MADErreur( iErr);
+							iErr = NOpenSampleInt(ins, samp, newfile2);
+							MADErreur(iErr);
 							
 							CreateInstruList();
 							DrawInfoInstrument();
@@ -213,18 +213,18 @@ void ImportAudioCD()
 							UpdateInstruMenu();
 						}
 						
-						FSpDelete( &newfile2);
+						FSpDelete(&newfile2);
 					}
 					
-					SetCursor( GetQDGlobalsArrow( &qdarrow));
+					SetCursor(GetQDGlobalsArrow(&qdarrow));
 				}
 			}
-			CloseComponent( ci);
+			CloseComponent(ci);
 		}
 	}
 }*/
 
-/*OSErr ConvertDataToAIFF( FSSpec file, FSSpec *newfile)
+/*OSErr ConvertDataToAIFF(FSSpec file, FSSpec *newfile)
 {
 	MovieImportComponent	ci;
 	OSType					fileType;
@@ -241,11 +241,11 @@ void ImportAudioCD()
 	Str255					resName;
 	Boolean					dataRefWasChanged;
 	
-	myCursH = GetCursor( 357);
+	myCursH = GetCursor(357);
 	
 	if (myCursH == NULL) Debugger();
-	DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
-	watchCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
+	DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
+	watchCrsr = **myCursH;					HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
 	
 	ci = OpenDefaultComponent (MovieExportType, kQTFileTypeAIFF);
 	
@@ -253,20 +253,20 @@ void ImportAudioCD()
 	{
 		resRefNum = 0;
 		
-		iErr = OpenMovieFile ( &file, &resRefNum, fsCurPerm);
+		iErr = OpenMovieFile (&file, &resRefNum, fsCurPerm);
 		if (iErr) DebugStr("\p1");
 		
 		resId = 0;
-		iErr = NewMovieFromFile( &theMovie, resRefNum, &resId, resName, 0, &dataRefWasChanged);
+		iErr = NewMovieFromFile(&theMovie, resRefNum, &resId, resName, 0, &dataRefWasChanged);
 		if (iErr) DebugStr("\p2");
 		
 		canceled = false;
 		
 		if (!canceled && iErr == noErr)
 		{
-			pStrcpy( newfile->name, file.name);
+			pStrcpy(newfile->name, file.name);
 			
-			iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newfile->vRefNum, &newfile->parID);
+			iErr = FindFolder(kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newfile->vRefNum, &newfile->parID);
 			if (iErr == noErr)
 			{
 				/////////////////////////////////////////////////
@@ -274,9 +274,9 @@ void ImportAudioCD()
 				/////////////////////////////////////////////////
 				
 				
-				SetCursor( &watchCrsr);
+				SetCursor(&watchCrsr);
 				
-				iErr = FSpDelete( newfile);
+				iErr = FSpDelete(newfile);
 				
 				ConvertMovieToFile(	theMovie,
 							0,
@@ -288,25 +288,25 @@ void ImportAudioCD()
 						 	0,
 						 	0);
 				
-				DisposeMovie( theMovie);
+				DisposeMovie(theMovie);
 				
-				CloseMovieFile( resRefNum);
+				CloseMovieFile(resRefNum);
 				
 				if (!iErr)
 				{
 					/////////////////////////////////////////////////
 					
-					iErr = FSpGetFInfo( newfile, &fndrInfo);
+					iErr = FSpGetFInfo(newfile, &fndrInfo);
 					fndrInfo.fdCreator = 'SNPL';
 					fndrInfo.fdType = 'AIFF';
-					iErr = FSpSetFInfo( newfile, &fndrInfo);
+					iErr = FSpSetFInfo(newfile, &fndrInfo);
 					
 					curMusic->hasChanged = true;
 					
-					SaveUndo( UAllSamples, 0, "\pUndo 'Import Audio CD Track'");
+					SaveUndo(UAllSamples, 0, "\pUndo 'Import Audio CD Track'");
 					
-					iErr = NOpenSampleInt( ins, samp, newfile);
-					MADErreur( iErr);
+					iErr = NOpenSampleInt(ins, samp, newfile);
+					MADErreur(iErr);
 					
 					CreateInstruList();
 					DrawInfoInstrument();
@@ -316,7 +316,7 @@ void ImportAudioCD()
 				
 			}
 		}
-		CloseComponent( ci);
+		CloseComponent(ci);
 	}
 	else DebugStr("\p66");
 	

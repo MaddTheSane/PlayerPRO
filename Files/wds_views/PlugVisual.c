@@ -77,18 +77,18 @@ void DoFullScreenNow(WindowPtr mWind)
 		
 		HideCursor();
 		
-		CallVisualFonction( MADDriver, GetCurrentID(), kVisualPluginSetWindowMessage, (CGrafPtr) currentPort, 0, 0);
-		CallVisualFonction( MADDriver, GetCurrentID(), kVisualPluginUpdateMessage, (CGrafPtr) currentPort, 0, 0);
-		CallVisualFonction( MADDriver, GetCurrentID(), kVisualPluginEnableMessage, (CGrafPtr) currentPort, 0, 0);
+		CallVisualFonction(MADDriver, GetCurrentID(), kVisualPluginSetWindowMessage, (CGrafPtr) currentPort, 0, 0);
+		CallVisualFonction(MADDriver, GetCurrentID(), kVisualPluginUpdateMessage, (CGrafPtr) currentPort, 0, 0);
+		CallVisualFonction(MADDriver, GetCurrentID(), kVisualPluginEnableMessage, (CGrafPtr) currentPort, 0, 0);
 		
 		while (!Button()) 
 		{
-			CallVisualFonction( MADDriver, GetCurrentID(), 'vrnd', (CGrafPtr) currentPort, 0, 0);
+			CallVisualFonction(MADDriver, GetCurrentID(), 'vrnd', (CGrafPtr) currentPort, 0, 0);
 			
-			WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-			if (theEvent.what == keyDown) CallVisualFonction( MADDriver, GetCurrentID(), 'vevt', (CGrafPtr) currentPort, 0, 0);
+			WaitNextEvent(everyEvent, &theEvent, 1, NULL);
+			if (theEvent.what == keyDown) CallVisualFonction(MADDriver, GetCurrentID(), 'vevt', (CGrafPtr) currentPort, 0, 0);
 			
-			if (MADDriver->musicEnd == true) DoLoadOtherMusic( true);
+			if (MADDriver->musicEnd == true) DoLoadOtherMusic(true);
 		}
 		EndFrame();
 		
@@ -97,7 +97,7 @@ void DoFullScreenNow(WindowPtr mWind)
 		ShowCursor();
 	}
 	
-	FlushEvents( 0xFFFF, 0 );
+	FlushEvents(0xFFFF, 0 );
 }
 
 
@@ -106,7 +106,7 @@ short GetCurrentID()
 	return currentID;
 }
 
-void VisualFullScreen( void)
+void VisualFullScreen(void)
 {
 	Boolean	ActiveHelpActive;
 	
@@ -171,22 +171,22 @@ void DoGrowVisual(void)
 	}
 	
 	lSizeVH = 0;
-	if (theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( VisualDlog), theEvent.where, &temp);
+	if (theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(VisualDlog), theEvent.where, &temp);
 	
 	if (lSizeVH != 0) {
-		tempA = LoWord( lSizeVH);
-		tempB = HiWord( lSizeVH);
+		tempA = LoWord(lSizeVH);
+		tempB = HiWord(lSizeVH);
 		
 		wantedHeight = tempB;
 		wantedWidth = tempA;
 		
-		CallVisualFonction( MADDriver, currentID, kVisualPluginResizeMessage, 0, NULL, 0);
-		CallVisualFonction( MADDriver, currentID, kVisualPluginSetWindowMessage, 0, NULL, 0);
+		CallVisualFonction(MADDriver, currentID, kVisualPluginResizeMessage, 0, NULL, 0);
+		CallVisualFonction(MADDriver, currentID, kVisualPluginSetWindowMessage, 0, NULL, 0);
 		
-		GetPortBounds( GetDialogPort( VisualDlog), &caRect);
+		GetPortBounds(GetDialogPort(VisualDlog), &caRect);
 		
-		EraseRect( &caRect);
-		InvalWindowRect( GetDialogWindow( VisualDlog), &caRect);
+		EraseRect(&caRect);
+		InvalWindowRect(GetDialogWindow(VisualDlog), &caRect);
 	}
 #if 0
 	else {
@@ -198,7 +198,7 @@ void DoGrowVisual(void)
 
 OSStatus PlayerPROProc(void *appCookie, OSType message, struct PlayerMessageInfo *messageInfo)
 {
-	switch( message)
+	switch(message)
 	{
 		case kPlayerRegisterVisualPluginMessage:
 			VisualPlug[currentID].msgPlayer = *messageInfo;
@@ -233,7 +233,7 @@ void CallVisualMain(long PlugNo, OSType msg)
 	Str255				errName;
 	short				fileID;
 	
-	fileID = FSpOpenResFile( &VisualPlug[PlugNo].file, fsCurPerm);
+	fileID = FSpOpenResFile(&VisualPlug[PlugNo].file, fsCurPerm);
 	
 	myErr = GetDiskFragment(&VisualPlug[PlugNo].file, 0, kCFragGoesToEOF, VisualPlug[PlugNo].file.name, kLoadCFrag, &VisualPlug[ PlugNo].connID, (Ptr *) &mainPLUG, errName);
 	
@@ -245,14 +245,14 @@ void CallVisualMain(long PlugNo, OSType msg)
 		//VisualPlug[ PlugNo].msgVisual.u.initMessage.playerProc = PlayerPROProc;
 		//VisualPlug[ PlugNo].msgVisual.u.initMessage.appCookie = (void*) PlugNo;
 		
-		myErr = mainPLUG ( 	msg,
+		myErr = mainPLUG (	msg,
 						  &VisualPlug[ PlugNo].msgInfo,
 						  &VisualPlug[ PlugNo].msgInfo.u.initMessage.refcon);		
 		
-		DisposePtr( (Ptr) mainPLUG);
+		DisposePtr((Ptr) mainPLUG);
 	}
 	
-	CloseResFile( fileID);
+	CloseResFile(fileID);
 }
 
 void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGrafPtr port, short* sampleBuffer, long numSamples)
@@ -269,13 +269,13 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 			options = kWindowIsFullScreen;
 		}
 		else 
-			port = GetDialogPort( VisualDlog);
+			port = GetDialogPort(VisualDlog);
 		
 		fileID = FSpOpenResFile(&VisualPlug[ PlugNo].file, fsCurPerm);
 		UseResFile(fileID);
 	}
 	
-	switch( msg)
+	switch(msg)
 	{
 		case kVisualPluginInitializeMessage:
 			//msgVisual.u.initMessage.appCookie = VisualDlog;
@@ -296,7 +296,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 			break;
 			
 		case kVisualPluginShowWindowMessage:
-			GetPortBounds( port, &caRect);
+			GetPortBounds(port, &caRect);
 			
 			msgVisual.u.showWindowMessage.port = port;
 			msgVisual.u.showWindowMessage.drawRect = caRect;
@@ -304,7 +304,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 			break;
 			
 		case kVisualPluginSetWindowMessage:
-			GetPortBounds( port, &caRect);
+			GetPortBounds(port, &caRect);
 			
 			msgVisual.u.setWindowMessage.port = port;
 			msgVisual.u.setWindowMessage.drawRect = caRect;
@@ -323,16 +323,16 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 			currentData.numWaveformChannels = 2;
 			currentData.numSpectrumChannels = 2;
 			
-			Wave = (Byte*) GetAudioChannel( true, intDriver->ASCBUFFERReal);
-			Spectre = (Byte*) MakeCalculusSpectrum( GetAudioSourceSpectrum( 1), false);
+			Wave = (Byte*) GetAudioChannel(true, intDriver->ASCBUFFERReal);
+			Spectre = (Byte*) MakeCalculusSpectrum(GetAudioSourceSpectrum(1), false);
 			
 			for (i = 0; i < kVisualNumWaveformEntries; i++) {
 				currentData.waveformData[ 0][ i] = Wave[ i];
 				currentData.spectrumData[ 0][ i] = Spectre[ (i * 256) / kVisualNumSpectrumEntries];
 			}
 			
-			Wave = (Byte*) GetAudioChannel( false, intDriver->ASCBUFFERReal);
-			Spectre = (Byte*) MakeCalculusSpectrum( GetAudioSourceSpectrum( 0), false);
+			Wave = (Byte*) GetAudioChannel(false, intDriver->ASCBUFFERReal);
+			Spectre = (Byte*) MakeCalculusSpectrum(GetAudioSourceSpectrum(0), false);
 			
 			for (i = 0; i < kVisualNumWaveformEntries; i++) {
 				currentData.waveformData[ 1][ i] = Wave[ i];
@@ -370,9 +370,9 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 	Err = VisualPlug[ PlugNo].msgPlayer.u.registerVisualPluginMessage.handler(msg, &msgVisual, VisualPlug[ PlugNo].refCon);
 	
 	if (Err ) {
-		//Debugger();//Erreur( Err, Err);
+		//Debugger();//Erreur(Err, Err);
 	} else {
-		switch( msg)		// OutPut
+		switch(msg)		// OutPut
 		{
 			case kVisualPluginProcessSamplesMessage:
 			{
@@ -387,7 +387,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 				
 				//if (temp != msgVisual.u.processSamplesMessage.maxSamples) Debugger();
 			}
-				//Erreur( 0, msgVisual.u.processSamplesMessage.numOutputSamples);
+				//Erreur(0, msgVisual.u.processSamplesMessage.numOutputSamples);
 				break;
 				
 			case kVisualPluginInitializeMessage:
@@ -395,14 +395,14 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 				break;
 				
 			case kVisualPluginResizeMessage:
-				MySizeWindow( VisualDlog, msgVisual.u.resizeMessage.approvedWidth, msgVisual.u.resizeMessage.approvedHeight , true);
+				MySizeWindow(VisualDlog, msgVisual.u.resizeMessage.approvedWidth, msgVisual.u.resizeMessage.approvedHeight , true);
 				break;
 				
 		}
 	}
 	
 	if (msg != kVisualPluginProcessSamplesMessage) {
-		CloseResFile( fileID);
+		CloseResFile(fileID);
 	}
 }
 
@@ -410,9 +410,9 @@ void DoVisualNull()
 {
 	if (VisualDlog == NULL) return;
 	
-	CallVisualFonction( MADDriver, currentID, kVisualPluginRenderMessage, 0, NULL, 0);
+	CallVisualFonction(MADDriver, currentID, kVisualPluginRenderMessage, 0, NULL, 0);
 	
-	//CallVisualFonction( MADDriver, currentID, kVisualPluginEventMessage, 0, NULL, 0);
+	//CallVisualFonction(MADDriver, currentID, kVisualPluginEventMessage, 0, NULL, 0);
 }
 
 void  UpdateVisualWindow(DialogPtr GetSelection)
@@ -452,22 +452,22 @@ void LoadVisualPLUG(short No, StringPtr theName)
 	}
 	
 #if 0
-	fileID = FSpOpenResFile( &ThePPINPlug[ No].file, fsCurPerm);
+	fileID = FSpOpenResFile(&ThePPINPlug[ No].file, fsCurPerm);
 	
-	GetIndString( tStr, 1000, 1);
-	BlockMoveData( tStr + 1, &ThePPINPlug[ No].type, 4);
+	GetIndString(tStr, 1000, 1);
+	BlockMoveData(tStr + 1, &ThePPINPlug[ No].type, 4);
 	
-	GetIndString( tStr, 1000, 2);
-	BlockMoveData( tStr + 1, &ThePPINPlug[ No].mode, 4);
+	GetIndString(tStr, 1000, 2);
+	BlockMoveData(tStr + 1, &ThePPINPlug[ No].mode, 4);
 	
-	GetIndString( ThePPINPlug[ No].MenuName, 1000, 3);
-	GetIndString( ThePPINPlug[ No].AuthorString, 1000, 4);
+	GetIndString(ThePPINPlug[ No].MenuName, 1000, 3);
+	GetIndString(ThePPINPlug[ No].AuthorString, 1000, 4);
 	
-	GetIndString( tStr, 1000, 5);
-	BlockMoveData( tStr + 1, &ThePPINPlug[ No].InsSamp, 4);
-	if (ThePPINPlug[ No].InsSamp != 'SAMP' && ThePPINPlug[ No].InsSamp != 'INST') MyDebugStr( __LINE__, __FILE__, "Plug-Ins SAMP/INST Error");
+	GetIndString(tStr, 1000, 5);
+	BlockMoveData(tStr + 1, &ThePPINPlug[ No].InsSamp, 4);
+	if (ThePPINPlug[ No].InsSamp != 'SAMP' && ThePPINPlug[ No].InsSamp != 'INST') MyDebugStr(__LINE__, __FILE__, "Plug-Ins SAMP/INST Error");
 	
-	CloseResFile( fileID);
+	CloseResFile(fileID);
 #endif
 	/*************************/
 }
@@ -493,9 +493,9 @@ void ScanDirVisualPlug(long dirID, short VRefNum)
 			break;
 		
 		if (info.hFileInfo.ioFlFndrInfo.fdType == 'PLUG') {	
-			HGetVol( NULL, &vRefNum, &dirIDCopy);
+			HGetVol(NULL, &vRefNum, &dirIDCopy);
 			
-			iErr = HSetVol( NULL, info.hFileInfo.ioVRefNum, dirID);
+			iErr = HSetVol(NULL, info.hFileInfo.ioVRefNum, dirID);
 			
 			if (tPlug > 50) MyDebugStr(__LINE__, __FILE__, "Too many plugs");
 			
@@ -506,7 +506,7 @@ void ScanDirVisualPlug(long dirID, short VRefNum)
 			iErr = HSetVol(NULL, vRefNum, dirIDCopy);
 			if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "HSetVol error...");
 		} else if((info.hFileInfo.ioFlAttrib & 16)) {
-			if (EqualString( info.hFileInfo.ioNamePtr, "\pPlugs", false, false) || PlugsFolderOK > 0) {
+			if (EqualString(info.hFileInfo.ioNamePtr, "\pPlugs", false, false) || PlugsFolderOK > 0) {
 				PlugsFolderOK++;
 				ScanDirVisualPlug(info.dirInfo.ioDrDirID, VRefNum);
 				PlugsFolderOK--;
@@ -537,7 +537,7 @@ void CreateVisualWindow(short ID)
 	
 	if (VisualDlog != NULL) {
 		if (currentID == ID) {
-			SelectWindow2( GetDialogWindow( VisualDlog));
+			SelectWindow2(GetDialogWindow(VisualDlog));
 			return;
 		} else {
 			CloseVisual();
@@ -553,7 +553,7 @@ void CreateVisualWindow(short ID)
 	
 	currentID = ID;
 	
-	SetWTitle( GetDialogWindow(VisualDlog), VisualPlug[currentID].file.name);
+	SetWTitle(GetDialogWindow(VisualDlog), VisualPlug[currentID].file.name);
 	
 	CallVisualMain(currentID, kPluginInitializeMessage);
 	
@@ -566,18 +566,18 @@ void CreateVisualWindow(short ID)
 				 true);
 	
 	
-	//wantedHeight = thePrefs.WinHi[ GetWRefCon( VisualDlog)];
-	//wantedWidth = thePrefs.WinLarg[ GetWRefCon( VisualDlog)];
+	//wantedHeight = thePrefs.WinHi[ GetWRefCon(VisualDlog)];
+	//wantedWidth = thePrefs.WinLarg[ GetWRefCon(VisualDlog)];
 	
-	//CallVisualFonction( MADDriver, currentID, kVisualPluginResizeMessage, 0, NULL, 0);
-	CallVisualFonction( MADDriver, currentID, kVisualPluginSetWindowMessage, 0, NULL, 0);
-	CallVisualFonction( MADDriver, currentID, kVisualPluginShowWindowMessage, 0, NULL, 0);
-	CallVisualFonction( MADDriver, currentID, kVisualPluginPlayMessage, 0, NULL, 0);
+	//CallVisualFonction(MADDriver, currentID, kVisualPluginResizeMessage, 0, NULL, 0);
+	CallVisualFonction(MADDriver, currentID, kVisualPluginSetWindowMessage, 0, NULL, 0);
+	CallVisualFonction(MADDriver, currentID, kVisualPluginShowWindowMessage, 0, NULL, 0);
+	CallVisualFonction(MADDriver, currentID, kVisualPluginPlayMessage, 0, NULL, 0);
 	
-	ShowWindow( GetDialogWindow( VisualDlog));
-	SelectWindow2( GetDialogWindow( VisualDlog));
+	ShowWindow(GetDialogWindow(VisualDlog));
+	SelectWindow2(GetDialogWindow(VisualDlog));
 	
-	EnableMenuItem( ViewsMenu, tPlug + 1 + mVisual);
+	EnableMenuItem(ViewsMenu, tPlug + 1 + mVisual);
 	
 	ReadyToProcess = true;
 	
@@ -592,70 +592,70 @@ void CloseVisual(void)
 	
 	if (VisualDlog != NULL)
 	{
-		GetPort( &savedPort);
-		SetPortDialogPort( VisualDlog);
+		GetPort(&savedPort);
+		SetPortDialogPort(VisualDlog);
 		
 		ReadyToProcess = false;
 		
-		GetPortBounds( GetDialogPort( VisualDlog), &caRect);
+		GetPortBounds(GetDialogPort(VisualDlog), &caRect);
 		
-		thePrefs.WinHi[ GetWRefCon( GetDialogWindow( VisualDlog))] = caRect.bottom;
-		thePrefs.WinLarg[ GetWRefCon( GetDialogWindow( VisualDlog))] = caRect.right;
-		thePrefs.WinEtat[ GetWRefCon( GetDialogWindow( VisualDlog))] = 1;
+		thePrefs.WinHi[ GetWRefCon(GetDialogWindow(VisualDlog))] = caRect.bottom;
+		thePrefs.WinLarg[ GetWRefCon(GetDialogWindow(VisualDlog))] = caRect.right;
+		thePrefs.WinEtat[ GetWRefCon(GetDialogWindow(VisualDlog))] = 1;
 		
 		Start.h = Start.v = 0;
-		LocalToGlobal( &Start);
-		thePrefs.WinPos[ GetWRefCon( GetDialogWindow( VisualDlog))].v = Start.v;
-		thePrefs.WinPos[ GetWRefCon( GetDialogWindow( VisualDlog))].h = Start.h;
+		LocalToGlobal(&Start);
+		thePrefs.WinPos[ GetWRefCon(GetDialogWindow(VisualDlog))].v = Start.v;
+		thePrefs.WinPos[ GetWRefCon(GetDialogWindow(VisualDlog))].h = Start.h;
 		
-		CallVisualFonction( MADDriver, currentID, kVisualPluginDisableMessage, 0, NULL, 0);
-		CallVisualFonction( MADDriver, currentID, kVisualPluginHideWindowMessage, 0, NULL, 0);
-		CallVisualFonction( MADDriver, currentID, kVisualPluginCleanupMessage, 0, NULL, 0);
+		CallVisualFonction(MADDriver, currentID, kVisualPluginDisableMessage, 0, NULL, 0);
+		CallVisualFonction(MADDriver, currentID, kVisualPluginHideWindowMessage, 0, NULL, 0);
+		CallVisualFonction(MADDriver, currentID, kVisualPluginCleanupMessage, 0, NULL, 0);
 		
-		CallVisualMain( currentID, kPluginCleanupMessage);
+		CallVisualMain(currentID, kPluginCleanupMessage);
 		
-		DisposeDialog( VisualDlog);
+		DisposeDialog(VisualDlog);
 		
-		SetPort( savedPort);
+		SetPort(savedPort);
 		
-		CloseConnection( &VisualPlug[ currentID].connID);
+		CloseConnection(&VisualPlug[ currentID].connID);
 		
-		SetItemMark( ViewsMenu, mVisual + currentID, noMark);
+		SetItemMark(ViewsMenu, mVisual + currentID, noMark);
 	}
 	VisualDlog = NULL;
 	
-	if (tPlug > 0) DisableMenuItem( ViewsMenu, tPlug + 1 + mVisual);
+	if (tPlug > 0) DisableMenuItem(ViewsMenu, tPlug + 1 + mVisual);
 	
-//	SetItemMark( ViewsMenu, m3D, noMark);
+//	SetItemMark(ViewsMenu, m3D, noMark);
 }
 
-void DoItemPressVisual( short whichItem, DialogPtr whichDialog)
+void DoItemPressVisual(short whichItem, DialogPtr whichDialog)
 {
 	Point	Location;
 	Rect	caRect;
 
-	GetMouse( &Location);
+	GetMouse(&Location);
 	
-	GetPortBounds( GetDialogPort( whichDialog), &caRect);
+	GetPortBounds(GetDialogPort(whichDialog), &caRect);
 	
 	if (Location.h > caRect.right-16 &&
 		Location.h > caRect.right-16)
 		{
 			DoGrowVisual();
 		}
-	else CallVisualFonction( MADDriver, currentID, kVisualPluginEventMessage, 0, NULL, 0);
+	else CallVisualFonction(MADDriver, currentID, kVisualPluginEventMessage, 0, NULL, 0);
 }
 
-void DoKeyVisual( DialogPtr whichDialog)
+void DoKeyVisual(DialogPtr whichDialog)
 {
 	if (whichDialog == NULL) return;
 	
-	CallVisualFonction( MADDriver, currentID, kVisualPluginEventMessage, 0, NULL, 0);
+	CallVisualFonction(MADDriver, currentID, kVisualPluginEventMessage, 0, NULL, 0);
 }
 
 static	Boolean actuallyUse;
 
-void ProcessVisualPlug( MADDriverRec *intDriver, short* in, long inNum)
+void ProcessVisualPlug(MADDriverRec *intDriver, short* in, long inNum)
 {
 	if (actuallyUse) return;
 	
@@ -665,20 +665,20 @@ void ProcessVisualPlug( MADDriverRec *intDriver, short* in, long inNum)
 	{
 		if (ReadyToProcess)
 		{
-			CallVisualFonction( intDriver, currentID, kVisualPluginProcessSamplesMessage, 0, in, inNum);
+			CallVisualFonction(intDriver, currentID, kVisualPluginProcessSamplesMessage, 0, in, inNum);
 		}
 	}
 	
 	actuallyUse = false;
 }
 
-void FlushPlugin( void)
+void FlushPlugin(void)
 {
 	if (VisualDlog != NULL)
 	{
 		if (ReadyToProcess)
 		{
-			CallVisualFonction( MADDriver, currentID, kVisualPluginFlushSamplesMessage, 0, 0, 0);
+			CallVisualFonction(MADDriver, currentID, kVisualPluginFlushSamplesMessage, 0, 0, 0);
 		}
 	}
 }
@@ -691,32 +691,32 @@ void InitVisual(void)
 	
 	actuallyUse = false;
 	
-	VisualPlug = (VisualInfo*) MyNewPtr( 100 * sizeof( VisualInfo));
+	VisualPlug = (VisualInfo*) MyNewPtr(100 * sizeof(VisualInfo));
 	
-	HGetVol( NULL, &vRefNum, &dirID);
+	HGetVol(NULL, &vRefNum, &dirID);
 	
 	tPlug			= 0;
 	PlugsFolderOK	= 0;
-	GetApplicationPackageFSSpecFromBundle( &spec);
-	ScanDirVisualPlug( spec.parID, spec.vRefNum);
+	GetApplicationPackageFSSpecFromBundle(&spec);
+	ScanDirVisualPlug(spec.parID, spec.vRefNum);
 	
 	//InitPPINMenu();
 
-	HSetVol( NULL, vRefNum, dirID);
+	HSetVol(NULL, vRefNum, dirID);
 	
 	if (MacOSXSystem) tPlug = 0;
 	
 	if (tPlug > 0)
 	{
-		AppendMenu( ViewsMenu, "\p-");
+		AppendMenu(ViewsMenu, "\p-");
 		
-		for (i = 0; i < tPlug; i++)	AppendMenu( ViewsMenu, VisualPlug[ i].file.name);
+		for (i = 0; i < tPlug; i++)	AppendMenu(ViewsMenu, VisualPlug[ i].file.name);
 		
-		AppendMenu( ViewsMenu, "\p-");
+		AppendMenu(ViewsMenu, "\p-");
 		
-		AppendMenu( ViewsMenu, "\pUse Full Screen");
+		AppendMenu(ViewsMenu, "\pUse Full Screen");
 		
-		DisableMenuItem( ViewsMenu, tPlug + 1 + mVisual);
+		DisableMenuItem(ViewsMenu, tPlug + 1 + mVisual);
 	}
 }
 #else
@@ -725,7 +725,7 @@ short GetCurrentID()
 return 0;
 }
 
-void VisualFullScreen( void)
+void VisualFullScreen(void)
 {
 }
 
@@ -738,11 +738,11 @@ OSStatus PlayerPROProc(void *appCookie, OSType message, struct PlayerMessageInfo
 return noErr;
 }
 
-void CallVisualMain( short PlugNo, OSType msg)
+void CallVisualMain(short PlugNo, OSType msg)
 {
 }
 
-void CallVisualFonction( MADDriverRec*, short PlugNo, OSType msg, CGrafPtr port, short* sampleBuffer, long numSamples)
+void CallVisualFonction(MADDriverRec*, short PlugNo, OSType msg, CGrafPtr port, short* sampleBuffer, long numSamples)
 {
 }
 
@@ -758,16 +758,16 @@ void LoadVisualPLUG(	short	No, StringPtr	theName)
 {
 }
 
-void ScanDirVisualPlug( long dirID, short VRefNum)
+void ScanDirVisualPlug(long dirID, short VRefNum)
 {
 }
 
-short maxVisualPlug( void)
+short maxVisualPlug(void)
 {
 return 0;
 }
 
-void CreateVisualWindow( short ID)
+void CreateVisualWindow(short ID)
 {
 }
 
@@ -775,19 +775,19 @@ void CloseVisual(void)
 {
 }
 
-void DoItemPressVisual( short whichItem, DialogPtr whichDialog)
+void DoItemPressVisual(short whichItem, DialogPtr whichDialog)
 {
 }
 
-void DoKeyVisual( DialogPtr whichDialog)
+void DoKeyVisual(DialogPtr whichDialog)
 {
 }
 
-void ProcessVisualPlug( short* in, long inNum)
+void ProcessVisualPlug(short* in, long inNum)
 {
 }
 
-void FlushPlugin( void)
+void FlushPlugin(void)
 {
 }
 

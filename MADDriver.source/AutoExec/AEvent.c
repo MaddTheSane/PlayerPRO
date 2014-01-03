@@ -17,12 +17,12 @@ extern MADMusic		*music;
 extern MADLibrary	*MADLib;
 
 
-void OSType2Str( OSType type, Str255 str)
+void OSType2Str(OSType type, Str255 str)
 {
 	short i;
 
 	str[ 0] = 4;
-	BlockMoveData( &type, str+1, 4);
+	BlockMoveData(&type, str+1, 4);
 
 	for (i = 4; i > 0; i--)
 	{
@@ -31,9 +31,9 @@ void OSType2Str( OSType type, Str255 str)
 	}
 }
 
-void OSType2Ptr( OSType type, Ptr str)
+void OSType2Ptr(OSType type, Ptr str)
 {
-	BlockMoveData( &type, str, 4);
+	BlockMoveData(&type, str, 4);
 	str[ 4] = 0;
 }
 
@@ -88,25 +88,25 @@ OSErr MyGotRequiredParams (AppleEvent *theAppleEvent)
 			return err;
 }
 
-void ReadAndPlayMusic( Str255	myFile, OSType	fdType)
+void ReadAndPlayMusic(Str255	myFile, OSType	fdType)
 {
 	char str[ 5];
 	
-	OSType2Ptr( fdType, str);
+	OSType2Ptr(fdType, str);
 	
-	if (!MADPlugAvailable( MADLib, str)) return;
+	if (!MADPlugAvailable(MADLib, str)) return;
 
-	MADStopDriver( MADDriver);
-	MADDisposeMusic( &music, MADDriver);
+	MADStopDriver(MADDriver);
+	MADDisposeMusic(&music, MADDriver);
 
-	if (MADPlugAvailable( MADLib, str))		// Is available a plug to open this file?
+	if (MADPlugAvailable(MADLib, str))		// Is available a plug to open this file?
 	{
-		MADLoadMusicFilePString( MADLib, &music, str, myFile);
+		MADLoadMusicFilePString(MADLib, &music, str, myFile);
 	}
 	
-	SetWTitle( GetDialogWindow(myDialog), myFile);
+	SetWTitle(GetDialogWindow(myDialog), myFile);
 
-	MADStartDriver( MADDriver);
+	MADStartDriver(MADDriver);
 	MADDriver->Reading = true;
 }
 
@@ -145,13 +145,13 @@ pascal OSErr MyHandleODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, l
 		err = AEGetNthPtr (&docList, index, typeFSS, &keywd,
 						&returnedType, (Ptr) &myFSS, sizeof(myFSS), &actualSize);
 		
-		err = HGetFInfo( myFSS.vRefNum, myFSS.parID, myFSS.name, &fndrInfo);
+		err = HGetFInfo(myFSS.vRefNum, myFSS.parID, myFSS.name, &fndrInfo);
 		
-		err = HSetVol( 0L, myFSS.vRefNum, myFSS.parID);
+		err = HSetVol(0L, myFSS.vRefNum, myFSS.parID);
 
 		if (err == noErr)
 		{
-			ReadAndPlayMusic( myFSS.name, fndrInfo.fdType);
+			ReadAndPlayMusic(myFSS.name, fndrInfo.fdType);
 		}
 	}
 	
@@ -168,8 +168,8 @@ short InstallAE(void)
 	
 	if (aEvents)
 	{
-		err = AEInstallEventHandler (kCoreEventClass, kAEOpenDocuments, NewAEEventHandlerUPP( MyHandleODoc), 0, false);
-		err = AEInstallEventHandler (kCoreEventClass, kAEQuitApplication, NewAEEventHandlerUPP( MyHandleQApp), 0, false);
+		err = AEInstallEventHandler (kCoreEventClass, kAEOpenDocuments, NewAEEventHandlerUPP(MyHandleODoc), 0, false);
+		err = AEInstallEventHandler (kCoreEventClass, kAEQuitApplication, NewAEEventHandlerUPP(MyHandleQApp), 0, false);
 	}
 
 	return 0;

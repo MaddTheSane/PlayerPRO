@@ -233,8 +233,8 @@ DialogPtr		myDialog;
 Boolean			OnTourne;
 
 
-void MegaLoop( void);
-void ReadAndPlayMusic( Str255	myFile, OSType	fdType);
+void MegaLoop(void);
+void ReadAndPlayMusic(Str255	myFile, OSType	fdType);
 
 //#ifndef THINK_C
 #if 0
@@ -268,82 +268,82 @@ void InitDriverString()
 	
 	if (MADDriver->DriverSettings.Reverb)
 	{
-		NumToString( MADDriver->DriverSettings.ReverbSize, str);
-		pStrcat( str, "\pms");
-		SetDText( myDialog, 27, str);
+		NumToString(MADDriver->DriverSettings.ReverbSize, str);
+		pStrcat(str, "\pms");
+		SetDText(myDialog, 27, str);
 		
-		NumToString( MADDriver->DriverSettings.ReverbStrength, str);
-		pStrcat( str, "\p%");
-		SetDText( myDialog, 29, str);
+		NumToString(MADDriver->DriverSettings.ReverbStrength, str);
+		pStrcat(str, "\p%");
+		SetDText(myDialog, 29, str);
 	}
 	else
 	{
-		SetDText( myDialog, 27, "\pOFF");
+		SetDText(myDialog, 27, "\pOFF");
 		
-		NumToString( MADDriver->DriverSettings.ReverbStrength, str);
-		pStrcat( str, "\p%");
-		SetDText( myDialog, 29, str);
+		NumToString(MADDriver->DriverSettings.ReverbStrength, str);
+		pStrcat(str, "\p%");
+		SetDText(myDialog, 29, str);
 	}
 	
 	if (MADDriver->DriverSettings.MicroDelaySize)
 	{
-		NumToString( MADDriver->DriverSettings.MicroDelaySize, str);
-		pStrcat( str, "\pms");
-		SetDText( myDialog, 7, str);
+		NumToString(MADDriver->DriverSettings.MicroDelaySize, str);
+		pStrcat(str, "\pms");
+		SetDText(myDialog, 7, str);
 	}
-	else SetDText( myDialog, 7, "\pDelay OFF");
+	else SetDText(myDialog, 7, "\pDelay OFF");
 	
-	if (MADDriver->DriverSettings.surround) SetDText( myDialog, 24, "\pSurround ON");
-	else SetDText( myDialog, 24, "\pSurround OFF");
+	if (MADDriver->DriverSettings.surround) SetDText(myDialog, 24, "\pSurround ON");
+	else SetDText(myDialog, 24, "\pSurround OFF");
 	
-	switch( MADDriver->DriverSettings.outPutRate)
+	switch(MADDriver->DriverSettings.outPutRate)
 	{
-		case rate11khz:	SetDText( myDialog, 10, "\p11 Khz");					break;
-		case rate22khz:	SetDText( myDialog, 10, "\p22 Khz");					break;
-		case rate44khz:	SetDText( myDialog, 10, "\p44 Khz");					break;
+		case rate11khz:	SetDText(myDialog, 10, "\p11 Khz");					break;
+		case rate22khz:	SetDText(myDialog, 10, "\p22 Khz");					break;
+		case rate44khz:	SetDText(myDialog, 10, "\p44 Khz");					break;
 	}
 	
-	switch( MADDriver->DriverSettings.outPutMode)
+	switch(MADDriver->DriverSettings.outPutMode)
 	{
-			//	case MonoOutPut:			SetDText( myDialog, 13, "\pMono");			break;
-			//	case StereoOutPut:			SetDText( myDialog, 13, "\pStereo");		break;
-		case DeluxeStereoOutPut:	SetDText( myDialog, 13, "\pTrue Stereo");	break;
+			//	case MonoOutPut:			SetDText(myDialog, 13, "\pMono");			break;
+			//	case StereoOutPut:			SetDText(myDialog, 13, "\pStereo");		break;
+		case DeluxeStereoOutPut:	SetDText(myDialog, 13, "\pTrue Stereo");	break;
 	}
-	switch( MADDriver->DriverSettings.outPutBits)
+	switch(MADDriver->DriverSettings.outPutBits)
 	{
-		case 8:		SetDText( myDialog, 16, "\p8 bits");						break;
-		case 16:	SetDText( myDialog, 16, "\p16 bits");						break;
+		case 8:		SetDText(myDialog, 16, "\p8 bits");						break;
+		case 16:	SetDText(myDialog, 16, "\p16 bits");						break;
 	}
 	
 }
 
-void FrameRectRelief( Rect *theRect)
+void FrameRectRelief(Rect *theRect)
 {
 	RGBColor	theColor;
 	
 #define GrisClair	0xFFFF
 #define GrisFonce	0x4000
 	
-	MoveTo( theRect->left, theRect->top);
+	MoveTo(theRect->left, theRect->top);
 	
 	theColor.red = GrisFonce;	theColor.blue = GrisFonce;	theColor.green = GrisFonce;
-	RGBForeColor( &theColor);
-	LineTo( theRect->right, theRect->top);
+	RGBForeColor(&theColor);
+	LineTo(theRect->right, theRect->top);
 	
 	theColor.red = GrisClair;	theColor.blue = GrisClair;	theColor.green = GrisClair;
-	RGBForeColor( &theColor);
-	LineTo( theRect->right, theRect->bottom);
+	RGBForeColor(&theColor);
+	LineTo(theRect->right, theRect->bottom);
 	
 	theColor.red = GrisClair;	theColor.blue = GrisClair;	theColor.green = GrisClair;
-	RGBForeColor( &theColor);
-	LineTo( theRect->left, theRect->bottom);
+	RGBForeColor(&theColor);
+	LineTo(theRect->left, theRect->bottom);
 	
 	theColor.red = GrisFonce;	theColor.blue = GrisFonce;	theColor.green = GrisFonce;
-	RGBForeColor( &theColor);
-	LineTo( theRect->left, theRect->top);
+	RGBForeColor(&theColor);
+	LineTo(theRect->left, theRect->top);
 	
 	
-	ForeColor( blackColor);
+	ForeColor(blackColor);
 }
 
 pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
@@ -358,9 +358,9 @@ pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRe
 	FInfo				fndrInfo;
 	char				str[ 5];
 	
-	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return( noErr);
+	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return(noErr);
 	
-	SetPort( GetWindowPort(theWindow));
+	SetPort(GetWindowPort(theWindow));
 	
 	GetDragAttributes(theDrag, &attributes);
 	
@@ -373,16 +373,16 @@ pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRe
 			result = GetFlavorFlags(theDrag, theItem, flavorTypeHFS, &theFlags);
 			if (result == noErr)
 			{
-				GetFlavorDataSize( theDrag, theItem, flavorTypeHFS, &textSize);
+				GetFlavorDataSize(theDrag, theItem, flavorTypeHFS, &textSize);
 				
-				GetFlavorData( theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
+				GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
 				
-				HSetVol( NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
+				HSetVol(NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
 				HGetFInfo(myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID, myFlavor.fileSpec.name, &fndrInfo);
 				
-				OSType2Ptr( fndrInfo.fdType, str);
+				OSType2Ptr(fndrInfo.fdType, str);
 				
-				if (MADPlugAvailable( MADLib, str)) canAcceptDrag = true;
+				if (MADPlugAvailable(MADLib, str)) canAcceptDrag = true;
 			}
 			break;
 			
@@ -409,7 +409,7 @@ pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRe
 			Rect dRect;
 			GetDialogItem(myDialog, 0, 0, NULL, &dRect);
 			
-			if (PtInRect( localMouse, &dRect))
+			if (PtInRect(localMouse, &dRect))
 			{
 				RectRgn(theRgn = NewRgn(), &dRect);
 				
@@ -419,7 +419,7 @@ pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRe
 			break;
 			
 		case kDragTrackingLeaveWindow:
-			HideDragHilite( theDrag);
+			HideDragHilite(theDrag);
 			break;
 			
 		case kDragTrackingLeaveHandler:
@@ -449,7 +449,7 @@ pascal OSErr MyReceiveTools(WindowPtr theWindow, unsigned long handlerRefCon, Dr
 	
 	moveInstru = (attributes & kDragInsideSenderWindow) &&  (!((mouseDownModifiers & optionKey) | (mouseUpModifiers & optionKey)));
 	
-	HideDragHilite( theDrag);
+	HideDragHilite(theDrag);
 	
 	//
 	//	A file is coming...
@@ -467,11 +467,11 @@ pascal OSErr MyReceiveTools(WindowPtr theWindow, unsigned long handlerRefCon, Dr
 	{		
 		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0L);
 		
-		err = HGetFInfo( myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID, myFlavor.fileSpec.name, &fndrInfo);
+		err = HGetFInfo(myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID, myFlavor.fileSpec.name, &fndrInfo);
 		
 		if (err == noErr)
 		{
-			ReadAndPlayMusic( myFlavor.fileSpec.name, fndrInfo.fdType);
+			ReadAndPlayMusic(myFlavor.fileSpec.name, fndrInfo.fdType);
 			
 			return(noErr);
 		}
@@ -488,10 +488,10 @@ void SetDText (DialogPtr dlog, short item, Str255 str)
 	Str255	myStr;
 	
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
-	if (itemHandle == 0L) MyDebugStr( __LINE__, __FILE__, "Error in SetDText");
+	if (itemHandle == 0L) MyDebugStr(__LINE__, __FILE__, "Error in SetDText");
 	
 	GetDialogItemText (itemHandle, myStr);
-	if (RelString( myStr, str, true, true) != 0) SetDialogItemText (itemHandle, str);
+	if (RelString(myStr, str, true, true) != 0) SetDialogItemText (itemHandle, str);
 }
 
 void SetUpSize()
@@ -500,11 +500,11 @@ void SetUpSize()
 	Handle	hRsrc;
 	long	fileSize;
 	
-	hRsrc = GetResource( 'SIZE', -1);
+	hRsrc = GetResource('SIZE', -1);
 	if (hRsrc == 0L) Debugger();
 	
-	HNoPurge( hRsrc);
-	HLock( hRsrc);
+	HNoPurge(hRsrc);
+	HLock(hRsrc);
 	
 	fileSize = *((long*)((*hRsrc)+2));
 	
@@ -514,17 +514,17 @@ void SetUpSize()
 	*((long*)((*hRsrc)+2)) = (long) fileSize;
 	*((long*)((*hRsrc)+6)) = (long) fileSize;
 	
-	ChangedResource( hRsrc);
-	WriteResource( hRsrc);
+	ChangedResource(hRsrc);
+	WriteResource(hRsrc);
 	
-	HUnlock( hRsrc);
-	HPurge( hRsrc);
+	HUnlock(hRsrc);
+	HPurge(hRsrc);
 	
-	ReleaseResource( (Handle) hRsrc);
+	ReleaseResource((Handle) hRsrc);
 #endif
 }
 
-void	SKVolume( short vol)
+void	SKVolume(short vol)
 {
 	Point			tempL;
 	long			*tL;
@@ -540,14 +540,14 @@ void	SKVolume( short vol)
 			tempL.h = vol * 32L;
 			
 			tL = (long*) &tempL;
-			SetDefaultOutputVolume( *tL);
+			SetDefaultOutputVolume(*tL);
 		}
-		//else SetSoundVol( vol - 1);
+		//else SetSoundVol(vol - 1);
 	}
 	
 }
 
-short PressTypeMenu( short whichMenu, short item)
+short PressTypeMenu(short whichMenu, short item)
 {
 	long				mresult, r;
 	Point				Zone;
@@ -558,26 +558,26 @@ short PressTypeMenu( short whichMenu, short item)
 	Str255				str;
 	MADDriverSettings	Init;
 	
-	MenuDriver = GetMenu( whichMenu);
+	MenuDriver = GetMenu(whichMenu);
 	
-	for (i = 0 ; i < CountMenuItems( MenuDriver); i++) EnableMenuItem( MenuDriver, i+1);
+	for (i = 0 ; i < CountMenuItems(MenuDriver); i++) EnableMenuItem(MenuDriver, i+1);
 	
-	InsertMenu( MenuDriver, hierMenu);
+	InsertMenu(MenuDriver, hierMenu);
 	
-	GetDialogItem( myDialog, item, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(myDialog, item, &itemType, &itemHandle, &itemRect);
 	Zone.h = itemRect.left;	Zone.v = itemRect.top;
 	
-	LocalToGlobal( &Zone);
+	LocalToGlobal(&Zone);
 	
 	//Uhh... what?
 #define ApFontID	*((short*) 0x984)
 	
 	i = ApFontID;	ApFontID = 4;
 	
-	switch( whichMenu)
+	switch(whichMenu)
 	{
 		case 128:
-			if (!Stereo) DisableMenuItem( MenuDriver, 2);
+			if (!Stereo) DisableMenuItem(MenuDriver, 2);
 			
 			
 			if (MADDriver->DriverSettings.surround) startitem = 2;
@@ -587,20 +587,20 @@ short PressTypeMenu( short whichMenu, short item)
 		case 165:
 			if (!Stereo)
 			{
-				for (i = 1 ; i < CountMenuItems( MenuDriver); i++) DisableMenuItem( MenuDriver, i+1);
+				for (i = 1 ; i < CountMenuItems(MenuDriver); i++) DisableMenuItem(MenuDriver, i+1);
 			}
 			
 			if (MADDriver->DriverSettings.MicroDelaySize)
 			{
 				startitem = 2;
-				for (i = 1 ; i < CountMenuItems( MenuDriver); i++)
+				for (i = 1 ; i < CountMenuItems(MenuDriver); i++)
 				{
 					Str255	str;
 					long	r;
 					
-					GetMenuItemText( MenuDriver, i+1, str);
+					GetMenuItemText(MenuDriver, i+1, str);
 					
-					str[ 0] -= 3;	StringToNum( str, &r);	str[ 0] += 3;
+					str[ 0] -= 3;	StringToNum(str, &r);	str[ 0] += 3;
 					
 					if (r == MADDriver->DriverSettings.MicroDelaySize) startitem = i+1;
 				}
@@ -611,20 +611,20 @@ short PressTypeMenu( short whichMenu, short item)
 		case 170:
 			if (!Stereo)
 			{
-				for (i = 1 ; i < CountMenuItems( MenuDriver); i++) DisableMenuItem( MenuDriver, i+1);
+				for (i = 1 ; i < CountMenuItems(MenuDriver); i++) DisableMenuItem(MenuDriver, i+1);
 			}
 			
 			if (MADDriver->DriverSettings.Reverb)
 			{
 				startitem = 2;
-				for (i = 1 ; i < CountMenuItems( MenuDriver); i++)
+				for (i = 1 ; i < CountMenuItems(MenuDriver); i++)
 				{
 					Str255	str;
 					long	r;
 					
-					GetMenuItemText( MenuDriver, i+1, str);
+					GetMenuItemText(MenuDriver, i+1, str);
 					
-					str[ 0] -= 3;	StringToNum( str, &r);	str[ 0] += 3;
+					str[ 0] -= 3;	StringToNum(str, &r);	str[ 0] += 3;
 					
 					if (r == MADDriver->DriverSettings.ReverbSize) startitem = i+1;
 				}
@@ -634,23 +634,23 @@ short PressTypeMenu( short whichMenu, short item)
 			
 		case 169:
 			startitem = 2;
-			for (i = 0 ; i < CountMenuItems( MenuDriver); i++)
+			for (i = 0 ; i < CountMenuItems(MenuDriver); i++)
 			{
 				Str255	str;
 				long	r;
 				
-				GetMenuItemText( MenuDriver, i+1, str);
+				GetMenuItemText(MenuDriver, i+1, str);
 				
-				str[ 0] -= 2;	StringToNum( str, &r);	str[ 0] += 2;
+				str[ 0] -= 2;	StringToNum(str, &r);	str[ 0] += 2;
 				
 				if (r == MADDriver->DriverSettings.ReverbStrength) startitem = i+1;
 			}
 			break;
 			
 		case 131:
-			if (!has16Bit) { DisableMenuItem( MenuDriver, 3);}
+			if (!has16Bit) { DisableMenuItem(MenuDriver, 3);}
 			
-			switch( MADDriver->DriverSettings.outPutRate)
+			switch(MADDriver->DriverSettings.outPutRate)
 		{
 			default:
 			case rate11khz:		startitem = 1;	break;
@@ -660,9 +660,9 @@ short PressTypeMenu( short whichMenu, short item)
 			break;
 			
 		case 132:
-			if (!Stereo) { DisableMenuItem( MenuDriver, 2);		DisableMenuItem( MenuDriver, 3);}
+			if (!Stereo) { DisableMenuItem(MenuDriver, 2);		DisableMenuItem(MenuDriver, 3);}
 			
-			switch( MADDriver->DriverSettings.outPutMode)
+			switch(MADDriver->DriverSettings.outPutMode)
 		{
 			default:
 				//	case MonoOutPut:			startitem = 1;	break;
@@ -672,9 +672,9 @@ short PressTypeMenu( short whichMenu, short item)
 			break;
 			
 		case 133:
-			if (!has16Bit) { DisableMenuItem( MenuDriver, 2); }
+			if (!has16Bit) { DisableMenuItem(MenuDriver, 2); }
 			
-			switch( MADDriver->DriverSettings.outPutBits)
+			switch(MADDriver->DriverSettings.outPutBits)
 		{
 			default:
 			case 8:			startitem = 1;			break;
@@ -689,7 +689,7 @@ short PressTypeMenu( short whichMenu, short item)
 	ApFontID = i;
 	MenuID TheMenu = GetMenuID(MenuDriver);
 	
-	if (HiWord( mresult) != 0)
+	if (HiWord(mresult) != 0)
 	{
 		Boolean	IsPlaying;
 		long	fulltime, curTime;
@@ -699,17 +699,17 @@ short PressTypeMenu( short whichMenu, short item)
 		IsPlaying = MADDriver->Reading;
 		MADDriver->Reading = false;
 		
-		MADGetMusicStatus( MADDriver, &fulltime, &curTime);
+		MADGetMusicStatus(MADDriver, &fulltime, &curTime);
 		
-		if (MADStopDriver( MADDriver) != noErr) 			ExitToShell();
-		if (MADDisposeDriver( MADDriver) != noErr) 	ExitToShell();
+		if (MADStopDriver(MADDriver) != noErr) 			ExitToShell();
+		if (MADDisposeDriver(MADDriver) != noErr) 	ExitToShell();
 		
 		MADDriver = NULL;
 		
-		switch( whichMenu)
+		switch(whichMenu)
 		{
 			case 131:
-				switch( LoWord( mresult))
+				switch(LoWord(mresult))
 			{
 				default:
 				case 1:	Init.outPutRate = rate11khz;	break;
@@ -719,7 +719,7 @@ short PressTypeMenu( short whichMenu, short item)
 				break;
 				
 			case 132:
-				switch( LoWord( mresult))
+				switch(LoWord(mresult))
 			{
 				default:
 					//	case 1:	Init.outPutMode = MonoOutPut;			break;
@@ -729,7 +729,7 @@ short PressTypeMenu( short whichMenu, short item)
 				break;
 				
 			case 133:
-				switch( LoWord( mresult))
+				switch(LoWord(mresult))
 			{
 				default:
 				case 1:		Init.outPutBits = 8;	break;
@@ -738,7 +738,7 @@ short PressTypeMenu( short whichMenu, short item)
 				break;
 				
 			case 128:
-				switch( LoWord( mresult))
+				switch(LoWord(mresult))
 			{
 				default:
 				case 1:		Init.surround = false;	break;
@@ -747,15 +747,15 @@ short PressTypeMenu( short whichMenu, short item)
 				break;
 				
 			case 165:
-				if (LoWord( mresult) == 1)
+				if (LoWord(mresult) == 1)
 				{
 					Init.MicroDelaySize = 0;
 				}
 				else
 				{
-					GetMenuItemText( MenuDriver, LoWord( mresult), str);
+					GetMenuItemText(MenuDriver, LoWord(mresult), str);
 					str[ 0] -= 3;
-					StringToNum( str, &r);
+					StringToNum(str, &r);
 					str[ 0] += 3;
 					
 					if (r >= 0 && r <= 1000) Init.MicroDelaySize = r;
@@ -763,7 +763,7 @@ short PressTypeMenu( short whichMenu, short item)
 				break;
 				
 			case 170:
-				if (LoWord( mresult) == 1)
+				if (LoWord(mresult) == 1)
 				{
 					Init.Reverb = false;
 				}
@@ -771,9 +771,9 @@ short PressTypeMenu( short whichMenu, short item)
 				{
 					Init.Reverb = true;
 					
-					GetMenuItemText( MenuDriver, LoWord( mresult), str);
+					GetMenuItemText(MenuDriver, LoWord(mresult), str);
 					str[ 0] -= 3;
-					StringToNum( str, &r);
+					StringToNum(str, &r);
 					str[ 0] += 3;
 					
 					if (r >= 0 && r <= 1000) Init.ReverbSize = r;
@@ -781,9 +781,9 @@ short PressTypeMenu( short whichMenu, short item)
 				break;
 				
 			case 169:
-				GetMenuItemText( MenuDriver, LoWord( mresult), str);
+				GetMenuItemText(MenuDriver, LoWord(mresult), str);
 				str[ 0] -= 2;
-				StringToNum( str, &r);
+				StringToNum(str, &r);
 				str[ 0] += 2;
 				
 				if (r >= 0 && r <= 1000) Init.ReverbStrength = r;
@@ -791,23 +791,23 @@ short PressTypeMenu( short whichMenu, short item)
 				
 				
 		}
-		if (MADCreateDriver( &Init, MADLib, &MADDriver)  != noErr) ExitToShell();
+		if (MADCreateDriver(&Init, MADLib, &MADDriver)  != noErr) ExitToShell();
 		
 		InitDriverString();
 		
-		MADAttachDriverToMusic( MADDriver, music, NULL);
+		MADAttachDriverToMusic(MADDriver, music, NULL);
 		
-		MADStartDriver( MADDriver);
+		MADStartDriver(MADDriver);
 		
-		MADSetMusicStatus( MADDriver, 0, fulltime, curTime);
+		MADSetMusicStatus(MADDriver, 0, fulltime, curTime);
 		
 		if (IsPlaying) MADDriver->Reading = true;
-		DeleteMenu( TheMenu);
+		DeleteMenu(TheMenu);
 		return 0;
 	}
 	else
 	{
-		DeleteMenu( TheMenu);
+		DeleteMenu(TheMenu);
 		return -1;
 	}
 }
@@ -823,9 +823,9 @@ void DrawTimeBar()
 	Handle		itemHandle;
 	Str255		aStr;
 	
-	GetDialogItem( myDialog, 4, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(myDialog, 4, &itemType, &itemHandle, &itemRect);
 	
-	MADGetMusicStatus( MADDriver, &fullTime, &curTime);
+	MADGetMusicStatus(MADDriver, &fullTime, &curTime);
 	
 	tempL = ((long) (itemRect.right - itemRect.left) * curTime) / fullTime;
 	
@@ -838,29 +838,29 @@ void DrawTimeBar()
 		itemRect.right = itemRect.left + tempL;
 		if (itemRect.right > i) itemRect.right = i;
 		
-		ForeColor( blackColor);
-		PaintRect( &itemRect);
+		ForeColor(blackColor);
+		PaintRect(&itemRect);
 		
 		itemRect.left = itemRect.right;
 		itemRect.right = i;
 		
-		ForeColor( whiteColor);							
-		PaintRect( &itemRect);
-		ForeColor( blackColor);
+		ForeColor(whiteColor);							
+		PaintRect(&itemRect);
+		ForeColor(blackColor);
 		
 		/**/
 		
 		GetDialogItem (myDialog, 4, &itemType, &itemHandle, &itemRect);
-		MoveTo( itemRect.left + 2, itemRect.bottom - 1);
-		TextMode( srcXor);
+		MoveTo(itemRect.left + 2, itemRect.bottom - 1);
+		TextMode(srcXor);
 		if (tempL > 100) tempL = 100;
-		NumToString( tempL, aStr);	pStrcat( aStr, "\p %");
-		DrawString( aStr);
-		TextMode( srcCopy);
+		NumToString(tempL, aStr);	pStrcat(aStr, "\p %");
+		DrawString(aStr);
+		TextMode(srcCopy);
 		
 		/**/
 		
-		ForeColor( blackColor);
+		ForeColor(blackColor);
 	}
 }
 
@@ -880,68 +880,68 @@ void MegaLoop()
 	
 	do
 	{
-		WaitNextEvent( everyEvent, &theEvent, 60L, 0L);
+		WaitNextEvent(everyEvent, &theEvent, 60L, 0L);
 		
 		if (theEvent.what == nullEvent)
 		{
-			GetPort( &savePort);
-			SetPort( GetDialogPort(myDialog));
+			GetPort(&savePort);
+			SetPort(GetDialogPort(myDialog));
 			
 			DrawTimeBar();
 			
-			//SetCursor( &qd.arrow); TODO:FIXME?
+			//SetCursor(&qd.arrow); TODO:FIXME?
 			
-			SetPort( savePort);
+			SetPort(savePort);
 		}
 		else if (theEvent.what == mouseDown)
 		{
-			switch( thePart = FindWindow( theEvent.where, &whichWindow))
+			switch(thePart = FindWindow(theEvent.where, &whichWindow))
 			{
 				case inContent:
-					if (DialogSelect( &theEvent, &whichDialog, &whichItem ))
+					if (DialogSelect(&theEvent, &whichDialog, &whichItem ))
 					{
-						GetPort( &savePort);
-						SetPort( GetDialogPort(whichDialog));
+						GetPort(&savePort);
+						SetPort(GetDialogPort(whichDialog));
 						
-						switch( whichItem)
+						switch(whichItem)
 						{
 							case 2:
 								do
 								{
 									GetDialogItem (whichDialog, 2, &itemType, &itemHandle, &itemRect);
-									GetMouse( &Location);
+									GetMouse(&Location);
 									
 									if (oldH != Location.h)
 									{
 										oldH = Location.h;
 										
 										if (Location.h < itemRect.left) 		Location.h = itemRect.left;
-										else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
+										else if (Location.h > itemRect.right)	Location.h = itemRect.right;
 										
 										VolumeH = Location.h - itemRect.left;
 										itemRect.right = Location.h;
-										PaintRect( &itemRect);
+										PaintRect(&itemRect);
 										GetDialogItem (whichDialog, 2, &itemType, &itemHandle, &itemRect);
 										itemRect.left = Location.h;
 										
-										ForeColor( whiteColor);							
-										PaintRect( &itemRect);
-										ForeColor( blackColor);
+										ForeColor(whiteColor);							
+										PaintRect(&itemRect);
+										ForeColor(blackColor);
 										
 										/**/
 										
 										GetDialogItem (whichDialog, 2, &itemType, &itemHandle, &itemRect);
-										MoveTo( itemRect.left + 2, itemRect.bottom - 1);
-										TextMode( srcXor);
-										NumToString( VolumeH, aStr);	pStrcat( aStr, "\p %");
-										DrawString( aStr);
-										TextMode( srcCopy);
+										MoveTo(itemRect.left + 2, itemRect.bottom - 1);
+										TextMode(srcXor);
+										NumToString(VolumeH, aStr);	pStrcat(aStr, "\p %");
+										DrawString(aStr);
+										TextMode(srcCopy);
 										
 										/**/
 										
 										GetDialogItem (whichDialog, 2, &itemType, &itemHandle, &itemRect);
 										
-										SKVolume( 1 + (8 * (Location.h - itemRect.left) / (itemRect.right - itemRect.left)));
+										SKVolume(1 + (8 * (Location.h - itemRect.left) / (itemRect.right - itemRect.left)));
 									}
 								}while (Button());
 								break;
@@ -950,33 +950,33 @@ void MegaLoop()
 								do
 								{
 									GetDialogItem (whichDialog, 18, &itemType, &itemHandle, &itemRect);
-									GetMouse( &Location);
+									GetMouse(&Location);
 									
 									if (oldH != Location.h)
 									{
 										oldH = Location.h;
 										
 										if (Location.h < itemRect.left) 		Location.h = itemRect.left;
-										else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
+										else if (Location.h > itemRect.right)	Location.h = itemRect.right;
 										
 										SpeedH = Location.h - itemRect.left;
 										itemRect.right = Location.h;
-										PaintRect( &itemRect);
+										PaintRect(&itemRect);
 										GetDialogItem (whichDialog, 18, &itemType, &itemHandle, &itemRect);
 										itemRect.left = Location.h;
 										
-										ForeColor( whiteColor);							
-										PaintRect( &itemRect);
-										ForeColor( blackColor);
+										ForeColor(whiteColor);							
+										PaintRect(&itemRect);
+										ForeColor(blackColor);
 										
 										/**/
 										
 										GetDialogItem (whichDialog, 18, &itemType, &itemHandle, &itemRect);
-										MoveTo( itemRect.left + 2, itemRect.bottom - 1);
-										TextMode( srcXor);
-										NumToString( SpeedH*2, aStr);		pStrcat( aStr, "\p %");
-										DrawString( aStr);
-										TextMode( srcCopy);
+										MoveTo(itemRect.left + 2, itemRect.bottom - 1);
+										TextMode(srcXor);
+										NumToString(SpeedH*2, aStr);		pStrcat(aStr, "\p %");
+										DrawString(aStr);
+										TextMode(srcCopy);
 										
 										/**/
 										
@@ -993,15 +993,15 @@ void MegaLoop()
 								temp = -1;
 								do
 								{
-									GetDialogItem( whichDialog , 4, &itemType, &itemHandle, &itemRect);
-									GetMouse( &myPt);
+									GetDialogItem(whichDialog , 4, &itemType, &itemHandle, &itemRect);
+									GetMouse(&myPt);
 									
 									if (temp != myPt.h)
 									{
 										if (myPt.h < itemRect.left) 		myPt.h = itemRect.left;
-										else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
+										else if (myPt.h > itemRect.right)	myPt.h = itemRect.right;
 										
-										MADSetMusicStatus( MADDriver, itemRect.left, itemRect.right, myPt.h);
+										MADSetMusicStatus(MADDriver, itemRect.left, itemRect.right, myPt.h);
 										
 										DrawTimeBar();
 										
@@ -1010,77 +1010,77 @@ void MegaLoop()
 								}while (Button());
 								break;
 								
-							case 21:	PressTypeMenu( 129, whichItem);	break;
-							case 23:	PressTypeMenu( 128, whichItem);	break;
-							case 30:	PressTypeMenu( 130, whichItem);	break;
-							case 8:		PressTypeMenu( 165, whichItem);	break;
-							case 25:	PressTypeMenu( 170, whichItem);	break;
-							case 28:	PressTypeMenu( 169, whichItem);	break;
-							case 11:	PressTypeMenu( 131, whichItem);	break;
-							case 14:	PressTypeMenu( 132, whichItem);	break;
-							case 17:	PressTypeMenu( 133, whichItem);	break;
+							case 21:	PressTypeMenu(129, whichItem);	break;
+							case 23:	PressTypeMenu(128, whichItem);	break;
+							case 30:	PressTypeMenu(130, whichItem);	break;
+							case 8:		PressTypeMenu(165, whichItem);	break;
+							case 25:	PressTypeMenu(170, whichItem);	break;
+							case 28:	PressTypeMenu(169, whichItem);	break;
+							case 11:	PressTypeMenu(131, whichItem);	break;
+							case 14:	PressTypeMenu(132, whichItem);	break;
+							case 17:	PressTypeMenu(133, whichItem);	break;
 						}
 						
-						SetPort( savePort);
+						SetPort(savePort);
 					}
 					break;
 					
 				case inGoAway:
-					if (TrackGoAway( whichWindow, theEvent.where)) OnTourne = false;
+					if (TrackGoAway(whichWindow, theEvent.where)) OnTourne = false;
 					break;
 					
 				case inDrag:
-					DragWindow( whichWindow, theEvent.where, NULL);
+					DragWindow(whichWindow, theEvent.where, NULL);
 					break;
 					
 				case inSysWindow:
-					//SystemClick( &theEvent, whichWindow);
+					//SystemClick(&theEvent, whichWindow);
 					break;
 					
 				case inZoomIn:
 				case inZoomOut:
-					if (TrackBox( whichWindow, theEvent.where, thePart))
+					if (TrackBox(whichWindow, theEvent.where, thePart))
 					{
 						Rect theDiagBounds;
 						GetWindowBounds(whichWindow, kWindowContentRgn, &theDiagBounds);
 						
-						if (theDiagBounds.bottom > 29) SizeWindow( whichWindow, theDiagBounds.right, 29, true);
-						else SizeWindow( whichWindow, theDiagBounds.right, 100, true); 
+						if (theDiagBounds.bottom > 29) SizeWindow(whichWindow, theDiagBounds.right, 29, true);
+						else SizeWindow(whichWindow, theDiagBounds.right, 100, true); 
 					}
 					break;
 			}
 		}
 		else if (theEvent.what == updateEvt)
 		{
-			BeginUpdate( GetDialogWindow(myDialog));
-			DrawDialog( myDialog);
-			SetPort( GetDialogPort(myDialog));
+			BeginUpdate(GetDialogWindow(myDialog));
+			DrawDialog(myDialog);
+			SetPort(GetDialogPort(myDialog));
 			
 			/*** Volume ***/
 			GetDialogItem (myDialog, 2, &itemType, &itemHandle, &itemRect);
 			itemRect.left-=1;		//itemRect.right+=1;
 			itemRect.top-=1;		//itemRect.bottom+=1;
-			FrameRectRelief( &itemRect);
+			FrameRectRelief(&itemRect);
 			
 			GetDialogItem (myDialog, 2, &itemType, &itemHandle, &itemRect);
 			Location.h = VolumeH + itemRect.left;
 			itemRect.right = Location.h;
-			PaintRect( &itemRect);
+			PaintRect(&itemRect);
 			GetDialogItem (myDialog, 2, &itemType, &itemHandle, &itemRect);
 			itemRect.left = Location.h;
 			
-			ForeColor( whiteColor);							
-			PaintRect( &itemRect);
-			ForeColor( blackColor);
+			ForeColor(whiteColor);							
+			PaintRect(&itemRect);
+			ForeColor(blackColor);
 			
 			/**/
 			
 			GetDialogItem (myDialog, 2, &itemType, &itemHandle, &itemRect);
-			MoveTo( itemRect.left + 2, itemRect.bottom - 1);
-			TextMode( srcXor);
-			NumToString( VolumeH, aStr);	pStrcat( aStr, "\p %");
-			DrawString( aStr);
-			TextMode( srcCopy);
+			MoveTo(itemRect.left + 2, itemRect.bottom - 1);
+			TextMode(srcXor);
+			NumToString(VolumeH, aStr);	pStrcat(aStr, "\p %");
+			DrawString(aStr);
+			TextMode(srcCopy);
 			
 			/**/
 			/*****/
@@ -1090,27 +1090,27 @@ void MegaLoop()
 			GetDialogItem (myDialog, 18, &itemType, &itemHandle, &itemRect);
 			itemRect.left-=1;		//itemRect.right+=1;
 			itemRect.top-=1;		//itemRect.bottom+=1;
-			FrameRectRelief( &itemRect);
+			FrameRectRelief(&itemRect);
 			
 			GetDialogItem (myDialog, 18, &itemType, &itemHandle, &itemRect);
 			Location.h = SpeedH + itemRect.left;
 			itemRect.right = Location.h;
-			PaintRect( &itemRect);
+			PaintRect(&itemRect);
 			GetDialogItem (myDialog, 18, &itemType, &itemHandle, &itemRect);
 			itemRect.left = Location.h;
 			
-			ForeColor( whiteColor);							
-			PaintRect( &itemRect);
-			ForeColor( blackColor);
+			ForeColor(whiteColor);							
+			PaintRect(&itemRect);
+			ForeColor(blackColor);
 			
 			/**/
 			
 			GetDialogItem (myDialog, 18, &itemType, &itemHandle, &itemRect);
-			MoveTo( itemRect.left + 2, itemRect.bottom - 1);
-			TextMode( srcXor);
-			NumToString( SpeedH*2, aStr);		pStrcat( aStr, "\p %");
-			DrawString( aStr);
-			TextMode( srcCopy);
+			MoveTo(itemRect.left + 2, itemRect.bottom - 1);
+			TextMode(srcXor);
+			NumToString(SpeedH*2, aStr);		pStrcat(aStr, "\p %");
+			DrawString(aStr);
+			TextMode(srcCopy);
 			
 			/**/
 			
@@ -1118,13 +1118,13 @@ void MegaLoop()
 			GetDialogItem (myDialog, 4, &itemType, &itemHandle, &itemRect);
 			itemRect.left-=1;		//itemRect.right+=1;
 			itemRect.top-=1;		//itemRect.bottom+=1;
-			FrameRectRelief( &itemRect);
+			FrameRectRelief(&itemRect);
 			
 			DrawTimeBar();
 			/*****/
 			
 			
-			EndUpdate( GetDialogWindow(myDialog));
+			EndUpdate(GetDialogWindow(myDialog));
 		}
 		else if (theEvent.what == keyDown)
 		{
@@ -1168,8 +1168,8 @@ void MusiqueDriverInit(void)
 	init.TickRemover	= thePrefs.TickRemover;
 	init.oversampling	= thePrefs.oversampling;
 	
-	iErr = MADCreateDriver( &init, MADLib, &MADDriver);
-	if (iErr) MyDebugStr( __LINE__, __FILE__, "MusicDriver ERROR !");
+	iErr = MADCreateDriver(&init, MADLib, &MADDriver);
+	if (iErr) MyDebugStr(__LINE__, __FILE__, "MusicDriver ERROR !");
 }
 
 void DoPreferences2()
@@ -1179,13 +1179,13 @@ void DoPreferences2()
 	long			DirID, inOutBytes, SdirID;
 	Boolean			initOK;
 	
-	HGetVol( 0L, &SvRefNum,&SdirID);
+	HGetVol(0L, &SvRefNum,&SdirID);
 	
 	initOK = false;
 	
-	iErr = FindFolder( kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &vRefNum, &DirID);
+	iErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &vRefNum, &DirID);
 	
-	iErr = HSetVol( NULL, vRefNum, DirID);
+	iErr = HSetVol(NULL, vRefNum, DirID);
 	
 	FSSpec PrefsSpec;
 	
@@ -1194,9 +1194,9 @@ void DoPreferences2()
 	iErr = FSpOpenDF(&PrefsSpec, fsCurPerm, &fRefNum);
 	if (iErr == noErr)
 	{
-		inOutBytes = sizeof( Prefs);
-		iErr = FSRead( fRefNum, &inOutBytes, &thePrefs);
-		iErr = FSClose( fRefNum);
+		inOutBytes = sizeof(Prefs);
+		iErr = FSRead(fRefNum, &inOutBytes, &thePrefs);
+		iErr = FSClose(fRefNum);
 		
 		if (thePrefs.Version >= 0x0500)
 		{
@@ -1225,11 +1225,11 @@ void DoPreferences2()
 		init.TickRemover	= true;
 		init.oversampling	= 1;
 		
-		iErr = MADCreateDriver( &init, MADLib, &MADDriver);
-		if (iErr) MyDebugStr( __LINE__, __FILE__, "MusicDriver ERROR !");
+		iErr = MADCreateDriver(&init, MADLib, &MADDriver);
+		if (iErr) MyDebugStr(__LINE__, __FILE__, "MusicDriver ERROR !");
 	}
 	
-	HSetVol( 0L, SvRefNum, SdirID);
+	HSetVol(0L, SvRefNum, SdirID);
 }
 
 int main()
@@ -1248,33 +1248,33 @@ int main()
 	OnTourne = true;
 	MADInitLibrary(NULL, true, &MADLib);
 	
-	workPixPat = GetPixPat( 130);
+	workPixPat = GetPixPat(130);
 	
 	InstallAE();
 	
-	myDialog = GetNewDialog( diaNum, NULL, (WindowPtr)  -1L);
+	myDialog = GetNewDialog(diaNum, NULL, (WindowPtr)  -1L);
 	Rect theDiagBounds;
 	GetWindowBounds(GetDialogWindow(myDialog), kWindowContentRgn, &theDiagBounds);
-	SizeWindow( GetDialogWindow(myDialog), theDiagBounds.right, 29, true);
-	ShowWindow( GetDialogWindow(myDialog));
-	SetPort( GetDialogPort(myDialog));
-	TextFont( kFontIDGeneva);
-	TextSize( 9);
+	SizeWindow(GetDialogWindow(myDialog), theDiagBounds.right, 29, true);
+	ShowWindow(GetDialogWindow(myDialog));
+	SetPort(GetDialogPort(myDialog));
+	TextFont(kFontIDGeneva);
+	TextSize(9);
 	
-	GetDialogItem ( myDialog, 1, &itemType, &itemHandle, &itemRect);
+	GetDialogItem (myDialog, 1, &itemType, &itemHandle, &itemRect);
 	
-	Gestalt( gestaltSoundAttr, &gestaltAnswer);
+	Gestalt(gestaltSoundAttr, &gestaltAnswer);
 	myBit = gestaltStereoCapability;
-	Stereo = BitTst( &gestaltAnswer, 31-myBit);
+	Stereo = BitTst(&gestaltAnswer, 31-myBit);
 	
 	myBit = gestalt16BitSoundIO;
-	has16Bit = BitTst( &gestaltAnswer, 31-myBit);
+	has16Bit = BitTst(&gestaltAnswer, 31-myBit);
 	
 	NewSoundManager = true;
 	
 	//	if (NewSoundManager)
 	{
-		GetDefaultOutputVolume( (long*) &Svolume);
+		GetDefaultOutputVolume((long*) &Svolume);
 		Svolume.h /= 32;
 		OldVol = Svolume.h - 1;
 	}
@@ -1283,47 +1283,47 @@ int main()
 	//		GetSoundVol((void *)&OldVol);
 	//	}
 	GetDialogItem (myDialog, 2, &itemType, &itemHandle, &itemRect);
-	VolumeH 	= (OldVol + 1)*( itemRect.right - itemRect.left) / 8;
+	VolumeH 	= (OldVol + 1)*(itemRect.right - itemRect.left) / 8;
 	SpeedH 		= 50;
 	
-	SetWTitle( GetDialogWindow(myDialog), LMGetCurApName());
+	SetWTitle(GetDialogWindow(myDialog), LMGetCurApName());
 	
 	DoPreferences2();
 	
 	InitDriverString();
 	
-	if (MADLoadMusicRsrc( &music, 'MADI', 3214) != noErr)
+	if (MADLoadMusicRsrc(&music, 'MADI', 3214) != noErr)
 	{
 		ExitToShell();
 	}
 	
 	//#ifndef THINK_C
 #if 0
-	MyTrackingUPP = NewDragTrackingHandlerProc( MyTrackingTools);
-	MyReceiveUPP = NewDragReceiveHandlerProc( MyReceiveTools);
+	MyTrackingUPP = NewDragTrackingHandlerProc(MyTrackingTools);
+	MyReceiveUPP = NewDragReceiveHandlerProc(MyReceiveTools);
 	
-	InstallTrackingHandler( (DragTrackingHandlerUPP) MyTrackingUPP, myDialog, (void *) 0L);
-	InstallReceiveHandler( (DragReceiveHandlerUPP) MyReceiveUPP, myDialog, (void *) 0L);
+	InstallTrackingHandler((DragTrackingHandlerUPP) MyTrackingUPP, myDialog, (void *) 0L);
+	InstallReceiveHandler((DragReceiveHandlerUPP) MyReceiveUPP, myDialog, (void *) 0L);
 #endif
 	
 	
 	/* Music is turn ON !! */
 	
-	MADAttachDriverToMusic( MADDriver, music, NULL);
+	MADAttachDriverToMusic(MADDriver, music, NULL);
 	
-	MADStartDriver( MADDriver);
+	MADStartDriver(MADDriver);
 	MADDriver->Reading = true;
 	
 	MegaLoop();
 	
 	SetUpSize();
 	
-	MADStopDriver( MADDriver);
-	MADDisposeMusic( &music, MADDriver);
-	MADDisposeDriver( MADDriver);
-	MADDisposeLibrary( MADLib);
+	MADStopDriver(MADDriver);
+	MADDisposeMusic(&music, MADDriver);
+	MADDisposeDriver(MADDriver);
+	MADDisposeLibrary(MADLib);
 	
-	FlushEvents( everyEvent, 0);
+	FlushEvents(everyEvent, 0);
 	return EXIT_SUCCESS;
 }
 

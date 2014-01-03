@@ -63,20 +63,20 @@ static void Settings()
 	
 	InitCursor();
 
-	aDialog = GetNewDialog( 4094, NULL, (WindowPtr) -1L);
+	aDialog = GetNewDialog(4094, NULL, (WindowPtr) -1L);
 	
-	SetPortDialogPort( aDialog);
+	SetPortDialogPort(aDialog);
 	
-	SetDialogDefaultItem( aDialog, 1);
+	SetDialogDefaultItem(aDialog, 1);
 	
-	ShowWindow( GetDialogWindow( aDialog));	
+	ShowWindow(GetDialogWindow(aDialog));	
 
-	GetDialogItem( aDialog, 5, &itemType, &itemHandle, &itemRect);
-	SetControlValue( (ControlHandle) itemHandle, 1);
+	GetDialogItem(aDialog, 5, &itemType, &itemHandle, &itemRect);
+	SetControlValue((ControlHandle) itemHandle, 1);
 	
-	NumToString( wMaxchan, str);
-	GetDialogItem( aDialog, 4, &itemType, &itemHandle, &itemRect);
-	SetDialogItemText( itemHandle, str);
+	NumToString(wMaxchan, str);
+	GetDialogItem(aDialog, 4, &itemType, &itemHandle, &itemRect);
+	SetDialogItemText(itemHandle, str);
 	
 	SelectDialogItemText(aDialog,4,0,100);
 	
@@ -84,44 +84,44 @@ static void Settings()
 	{
 		reZo:
 		
-		ModalDialog( NULL, &itemHit);
+		ModalDialog(NULL, &itemHit);
 		
-		switch( itemHit)
+		switch(itemHit)
 		{
 			case 5:
-				GetDialogItem( aDialog, 5, &itemType, &itemHandle, &itemRect);
-				SetControlValue( (ControlHandle) itemHandle,!GetControlValue( (ControlHandle) itemHandle));
+				GetDialogItem(aDialog, 5, &itemType, &itemHandle, &itemRect);
+				SetControlValue((ControlHandle) itemHandle,!GetControlValue((ControlHandle) itemHandle));
 			break;
 		}
 	
 	}while (itemHit != 1);
 	
-	GetDialogItem( aDialog, 4, &itemType, &itemHandle, &itemRect);
-	GetDialogItemText( itemHandle, str);
-	StringToNum( str, &r);
+	GetDialogItem(aDialog, 4, &itemType, &itemHandle, &itemRect);
+	GetDialogItemText(itemHandle, str);
+	StringToNum(str, &r);
 	r /= 2;
 	r *= 2;
 	
 	if (r < 0 || r > 32)
 	{
-		SysBeep( 1);
+		SysBeep(1);
 		SelectDialogItemText(aDialog,4,0,100);
 		goto reZo;
 	}
 	
 	wMaxchan = r;
 	
-	GetDialogItem( aDialog, 5, &itemType, &itemHandle, &itemRect);
-	if (GetControlValue( (ControlHandle) itemHandle)) UseQKIns = true;
+	GetDialogItem(aDialog, 5, &itemType, &itemHandle, &itemRect);
+	if (GetControlValue((ControlHandle) itemHandle)) UseQKIns = true;
 	else UseQKIns = false;
 	
-	DisposeDialog( aDialog);
+	DisposeDialog(aDialog);
 }
 
 /*
  * main: Parses arguments to program and opens appropriate MOD and MID files.
  */
-void  ConvertMidiFile( char	*src, MADMusic *theMAD, MADDriverSettings *init)
+void  ConvertMidiFile(char	*src, MADMusic *theMAD, MADDriverSettings *init)
 {
 	//int 		cNames = 0;
 	short		channels;
@@ -131,7 +131,7 @@ void  ConvertMidiFile( char	*src, MADMusic *theMAD, MADDriverSettings *init)
 
 	Init();
 	
-	if ((ptuneMusic = PtuneLoadFn( src, &channels)) == NULL)
+	if ((ptuneMusic = PtuneLoadFn(src, &channels)) == NULL)
 	{
 		DebugStr("\pNot a legal MIDI file");
 		return;
@@ -149,5 +149,5 @@ void  ConvertMidiFile( char	*src, MADMusic *theMAD, MADDriverSettings *init)
 	
 	ResolvePtune(ptuneMusic);
 	
-	SavePtunePfile( ptuneMusic, theMAD, init);
+	SavePtunePfile(ptuneMusic, theMAD, init);
 }

@@ -29,47 +29,47 @@
 
 OSErr	MySndPlayDoubleBuffer (SndChannelPtr chan, PPSndDoubleBufferHeaderPtr theParams);
 
-SndChannelPtr CreateSndChannel( long init)
+SndChannelPtr CreateSndChannel(long init)
 {
 	SndChannelPtr 	mySndChan;	// pointer to a sound channel
 	OSErr 			myErr;
 
 	mySndChan = NULL;
-	myErr = SndNewChannel( &mySndChan, sampledSynth, init, nil);
+	myErr = SndNewChannel(&mySndChan, sampledSynth, init, nil);
 	
 	return mySndChan;			// return SndChannelPtr
 }
 
-OSErr	DBSndClose( MADDriverRec *inMADDriver)
+OSErr	DBSndClose(MADDriverRec *inMADDriver)
 {
 	OSErr		err;
 	short		i;
 
-	err = SndDisposeChannel( inMADDriver->MusicChannelPP, true);
+	err = SndDisposeChannel(inMADDriver->MusicChannelPP, true);
 	inMADDriver->MusicChannelPP = NULL;
 
 #if CALL_NOT_IN_CARBON
 	
-	DisposeSndDoubleBackUPP( inMADDriver->TheHeader.dbhDoubleBack);
+	DisposeSndDoubleBackUPP(inMADDriver->TheHeader.dbhDoubleBack);
 	
 #endif
 	
 	inMADDriver->TheHeader.dbhDoubleBack = NULL;
 
-	for ( i = 0;   i <= 1; i++) { DisposePtr( (Ptr) inMADDriver->TheHeader.dbhBufferPtr[i]); inMADDriver->TheHeader.dbhBufferPtr[i] = NULL;}
+	for (i = 0;   i <= 1; i++) { DisposePtr((Ptr) inMADDriver->TheHeader.dbhBufferPtr[i]); inMADDriver->TheHeader.dbhBufferPtr[i] = NULL;}
 
 	return noErr;
 }
 
-OSErr	InitDBSoundManager( MADDriverRec *inMADDriver, long init)
+OSErr	InitDBSoundManager(MADDriverRec *inMADDriver, long init)
 {
 	OSErr			err = noErr;
 
 	inMADDriver->MusicChannelPP = NULL;
-	inMADDriver->MusicChannelPP = CreateSndChannel( init);
+	inMADDriver->MusicChannelPP = CreateSndChannel(init);
 	if (inMADDriver->MusicChannelPP == NULL) return MADSoundManagerErr;
 	
-	err = DBSndPlay( inMADDriver, inMADDriver->MusicChannelPP);
+	err = DBSndPlay(inMADDriver, inMADDriver->MusicChannelPP);
 	return err;
 }
 
@@ -79,7 +79,7 @@ pascal void MyPPDoubleBackProc(SndChannelPtr chan, SndDoubleBufferPtr doubleBuff
 pascal void MyPPDoubleBackProc(SndChannelPtr chan, PPSndDoubleBufferPtr doubleBuffer);
 #endif
 
-OSErr DBSndPlay ( MADDriverRec *inMADDriver, SndChannelPtr chan)
+OSErr DBSndPlay (MADDriverRec *inMADDriver, SndChannelPtr chan)
 {
 #if CALL_NOT_IN_CARBON
 	SndDoubleBufferPtr 			doubleBuffer;
@@ -95,7 +95,7 @@ OSErr DBSndPlay ( MADDriverRec *inMADDriver, SndChannelPtr chan)
 	
 #if CALL_NOT_IN_CARBON
 	
-	inMADDriver->TheHeader.dbhDoubleBack 			= NewSndDoubleBackProc( MyPPDoubleBackProc);
+	inMADDriver->TheHeader.dbhDoubleBack 			= NewSndDoubleBackProc(MyPPDoubleBackProc);
 	
 #else
 	
@@ -112,9 +112,9 @@ OSErr DBSndPlay ( MADDriverRec *inMADDriver, SndChannelPtr chan)
 	for (i = 0; i <= 1; i++)
 	{
 #if CALL_NOT_IN_CARBON
-		doubleBuffer = (SndDoubleBufferPtr) MADNewPtrClear( sizeof (PPSndDoubleBuffer) + inMADDriver->BufSize + 20, inMADDriver->lib);
+		doubleBuffer = (SndDoubleBufferPtr) MADNewPtrClear(sizeof (PPSndDoubleBuffer) + inMADDriver->BufSize + 20, inMADDriver->lib);
 #else
-		doubleBuffer = (PPSndDoubleBufferPtr) MADNewPtrClear( sizeof (PPSndDoubleBuffer) + inMADDriver->BufSize + 20, inMADDriver->lib);
+		doubleBuffer = (PPSndDoubleBufferPtr) MADNewPtrClear(sizeof (PPSndDoubleBuffer) + inMADDriver->BufSize + 20, inMADDriver->lib);
 #endif
 		if (doubleBuffer == NULL) return MADNeedMemory;
 
@@ -123,21 +123,21 @@ OSErr DBSndPlay ( MADDriverRec *inMADDriver, SndChannelPtr chan)
 		doubleBuffer->dbUserInfo[ 0]	= (long) inMADDriver;
 		doubleBuffer->dbUserInfo[ 1]	= true;
 		
-		MyPPDoubleBackProc( chan, doubleBuffer);
+		MyPPDoubleBackProc(chan, doubleBuffer);
 		
 		inMADDriver->TheHeader.dbhBufferPtr[i] = doubleBuffer;
 	}
 #if CALL_NOT_IN_CARBON
-	err = SndPlayDoubleBuffer( chan, &inMADDriver->TheHeader);
+	err = SndPlayDoubleBuffer(chan, &inMADDriver->TheHeader);
 #else
-	err = MySndPlayDoubleBuffer( chan, &inMADDriver->TheHeader);
+	err = MySndPlayDoubleBuffer(chan, &inMADDriver->TheHeader);
 #endif
 	
 	if (err != noErr) return MADSoundManagerErr;
 	return err;
 }
 
-void StopChannel( MADDriverRec *inMADDriver)
+void StopChannel(MADDriverRec *inMADDriver)
 {
 	SndCommand			cmd;
 
@@ -152,16 +152,16 @@ void StopChannel( MADDriverRec *inMADDriver)
 	SndDoImmediate(	inMADDriver->MusicChannelPP,	&cmd);
 }
 
-void PlayChannel( MADDriverRec *inMADDriver)
+void PlayChannel(MADDriverRec *inMADDriver)
 {
 	OSErr					iErr;
 
-	MyPPDoubleBackProc( inMADDriver->MusicChannelPP, inMADDriver->TheHeader.dbhBufferPtr[ 0]);
-	MyPPDoubleBackProc( inMADDriver->MusicChannelPP, inMADDriver->TheHeader.dbhBufferPtr[ 1]);
+	MyPPDoubleBackProc(inMADDriver->MusicChannelPP, inMADDriver->TheHeader.dbhBufferPtr[ 0]);
+	MyPPDoubleBackProc(inMADDriver->MusicChannelPP, inMADDriver->TheHeader.dbhBufferPtr[ 1]);
 	
 #if CALL_NOT_IN_CARBON
-	iErr = SndPlayDoubleBuffer( inMADDriver->MusicChannelPP, &inMADDriver->TheHeader);
+	iErr = SndPlayDoubleBuffer(inMADDriver->MusicChannelPP, &inMADDriver->TheHeader);
 #else
-	iErr = MySndPlayDoubleBuffer( inMADDriver->MusicChannelPP, &inMADDriver->TheHeader);
+	iErr = MySndPlayDoubleBuffer(inMADDriver->MusicChannelPP, &inMADDriver->TheHeader);
 #endif
 }

@@ -92,7 +92,7 @@ public:
 	GrafPtr	BeginFrame();
 	void	EndFrame();
 	
-	//	void					SetPalette( PixPalEntry inPal[ 256 ] );
+	//	void					SetPalette(PixPalEntry inPal[ 256 ] );
 	
 	static long sMinDepth;
 	static long sOSDepth;

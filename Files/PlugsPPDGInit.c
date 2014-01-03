@@ -46,7 +46,7 @@ OSErr CallPPDGPlugIns(short PlugNo, Pcmd *myPcmd)
 	
 	if (iErr != noErr)
 	{
-		Erreur( 40, iErr);
+		Erreur(40, iErr);
 	}	
 	
 	return iErr;
@@ -64,7 +64,7 @@ void InitPPDGPlug(void)
 	CFArrayRef  PlugLocsDigital = GetDefaultPluginFolderLocations();
 	CFIndex		i, x, PlugLocNums;
 	
-	ThePlug = (FilterInfo*) MyNewPtr( FilterPlugMax * sizeof( FilterInfo));
+	ThePlug = (FilterInfo*) MyNewPtr(FilterPlugMax * sizeof(FilterInfo));
 	
 	tPlug	= 0;
 	
@@ -76,7 +76,7 @@ void InitPPDGPlug(void)
 		CFURLRef	aPlugLoc;
 		aPlugLoc = CFArrayGetValueAtIndex(PlugLocsDigital, i);
 		somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, NULL);
-		PlugNums = CFArrayGetCount( somePlugs );
+		PlugNums = CFArrayGetCount(somePlugs );
 		if (PlugNums > 0) {
 			for (x = 0; x < PlugNums; x++) {
 				CFPlugInRef tempPlugRef = NULL;
@@ -85,7 +85,7 @@ void InitPPDGPlug(void)
 				tempMADPlug = PPDGLoadPlug(tempPlugRef);
 				if (tempMADPlug) {
 					if (tPlug > FilterPlugMax) {
-						MyDebugStr( __LINE__, __FILE__, "Too many plugs!");
+						MyDebugStr(__LINE__, __FILE__, "Too many plugs!");
 						break;
 					}
 					
@@ -121,36 +121,36 @@ void InitPPDGMenu(void)
 {
 	short	i;
 	
-	PPDGMenu = GetMenu( 159);
+	PPDGMenu = GetMenu(159);
 	
 	for(i=0; i < tPlug; i++) {
 		Str255	PPDGPlugMenuName;
 		GetPStrFromCFString(ThePlug[ i].MenuName, PPDGPlugMenuName);
 
-		AppendMenu( PPDGMenu, PPDGPlugMenuName);
+		AppendMenu(PPDGMenu, PPDGPlugMenuName);
 	}
 }
 
-short PressPPDGMenu( Rect	*PopUpRect)
+short PressPPDGMenu(Rect	*PopUpRect)
 {
 	long	mresult;
 	Point	Zone;
 	short	i;
 	
-	InsertMenu( PPDGMenu, hierMenu);
+	InsertMenu(PPDGMenu, hierMenu);
 	
 	Zone.h = PopUpRect->left;
 	Zone.v = PopUpRect->top;
 	
-	LocalToGlobal( &Zone);
+	LocalToGlobal(&Zone);
 	
 	mresult = PopUpMenuSelect(PPDGMenu, Zone.v, Zone.h, 0);
 	
-	DeleteMenu( GetMenuID( PPDGMenu));
+	DeleteMenu(GetMenuID(PPDGMenu));
 	
-	if ( HiWord( mresult ) != 0 )
+	if (HiWord(mresult ) != 0 )
 	{
-		return LoWord( mresult );
+		return LoWord(mresult );
 	}
 	else return -1;
 }

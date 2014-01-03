@@ -46,7 +46,7 @@ static OSErr TestMIDIFile(const void *AlienFile)
 		return MADFileNotSupportedByThisPlug;
 }
 
-static OSErr ExtractMIDIInfo( PPInfoRec *info, Ptr theMIDI)
+static OSErr ExtractMIDIInfo(PPInfoRec *info, Ptr theMIDI)
 {
 	/*long	PatternSize;
 	short	i;
@@ -55,7 +55,7 @@ static OSErr ExtractMIDIInfo( PPInfoRec *info, Ptr theMIDI)
 	long	inOutCount;*/
 	
 	info->signature = 'Midi';
-	strcpy( info->internalFileName, "");
+	strcpy(info->internalFileName, "");
 	info->totalPatterns = 0;
 	info->partitionLength = 0;
 	info->totalInstruments = 0;
@@ -85,7 +85,7 @@ static OSErr mainMIDI(OSType order, char *AlienFileName, MADMusic *MadFile, PPIn
 		case 'IMPL':
 			iFileRefI = iFileOpen(AlienFileName);
 			if (iFileRefI) {
-				sndSize = iGetEOF( iFileRefI);
+				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
 				AlienFile = MADPlugNewPtr(sndSize * 2L, init);
@@ -144,7 +144,7 @@ static OSErr mainMIDI(OSType order, char *AlienFileName, MADMusic *MadFile, PPIn
 				if(AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
-					myErr = iRead( sndSize, AlienFile, iFileRefI);
+					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					if(myErr == noErr)
 						myErr = ExtractMIDIInfo(info, AlienFile);
 					DisposePtr(AlienFile);	AlienFile = NULL;

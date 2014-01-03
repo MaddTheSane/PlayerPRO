@@ -41,7 +41,7 @@
 //	*****************	FILTERS FOR SAMPLES/SOUNDS	***************/
 //
 //	Your main function have to be in this form:
-//	OSErr main( 	sData					*theData,					// Sample informations, see MAD.h
+//	OSErr main(	sData					*theData,					// Sample informations, see MAD.h
 //					long					SelectionStart,				// SelectionStart 
 //					long					SelectionEnd,				// SelectionEnd, your filter SHOULD apply his effect only on the selection
 //					PPInfoPlug				*thePPInfoPlug				// Some functions of PlayerPRO that you can use in your plugs
@@ -51,8 +51,8 @@
 //
 //	If you want to reallocate theData or theData->data:
 //	
-//	if (theData->data != 0L) DisposPtr( theData->data);		// VERY IMPORTANT to free memory
-//	theData->data = NewPtr( newsize);						// Use NewPtr ONLY to allocate memory!
+//	if (theData->data != 0L) DisposPtr(theData->data);		// VERY IMPORTANT to free memory
+//	theData->data = NewPtr(newsize);						// Use NewPtr ONLY to allocate memory!
 //	
 //	theData->size = newsize;								// In bytes !! Even for 16 bits !
 //	
@@ -78,18 +78,18 @@
 
 typedef struct
 {
-	void		*RPlaySoundUPP;			//	OSErr			RPlaySound( Ptr whichSound, long SoundSize, long whichTrack, long Period, long Amplitude, long loopStart, long loopLength, Boolean Stereo?)
-	void		*UpdateALLWindowUPP;	//	void			UpdateALLWindow( void)
-	void		*MyDlgFilterUPP;		//	pascal Boolean	MyDlgFilter( DialogPtr theDlg, EventRecord *theEvt, short *itemHit)
+	void		*RPlaySoundUPP;			//	OSErr			RPlaySound(Ptr whichSound, long SoundSize, long whichTrack, long Period, long Amplitude, long loopStart, long loopLength, Boolean Stereo?)
+	void		*UpdateALLWindowUPP;	//	void			UpdateALLWindow(void)
+	void		*MyDlgFilterUPP;		//	pascal Boolean	MyDlgFilter(DialogPtr theDlg, EventRecord *theEvt, short *itemHit)
 	OSType		fileType;
 } PPInfoPlug;
 
-typedef OSErr			(*RPlaySoundUPP)		( Ptr, long, long, long, long, long, long, unsigned long, Boolean);
-typedef void			(*UpdateALLWindowUPP)	( void);
-typedef pascal Boolean	(*MyDlgFilterUPP)		( DialogPtr, EventRecord*, short*);
+typedef OSErr			(*RPlaySoundUPP)		(Ptr, long, long, long, long, long, long, unsigned long, Boolean);
+typedef void			(*UpdateALLWindowUPP)	(void);
+typedef pascal Boolean	(*MyDlgFilterUPP)		(DialogPtr, EventRecord*, short*);
 
-#define CallRPlaySoundUPP( v1, v2, v3, v4, v5, v6, v7, v8, v9)		\
-		(* (RPlaySoundUPP) (thePPInfoPlug->RPlaySoundUPP))( v1, v2, v3, v4, v5, v6, v7, v8, v9)
+#define CallRPlaySoundUPP(v1, v2, v3, v4, v5, v6, v7, v8, v9)		\
+		(* (RPlaySoundUPP) (thePPInfoPlug->RPlaySoundUPP))(v1, v2, v3, v4, v5, v6, v7, v8, v9)
 
 #define CallUpdateALLWindowUPP()		\
 		(* (UpdateALLWindowUPP) (thePPInfoPlug->UpdateALLWindowUPP))()
@@ -108,7 +108,7 @@ typedef struct _PPFiltersPlugin {
 /********************						***********************/
 //
 //
-// RPlaySoundUPP	: Play Sound ( Ptr rawSound, long SoundSize, long whichTrack, long Period, long Amplitude, long loopStart, long loopLength, Boolean Stereo?)
+// RPlaySoundUPP	: Play Sound (Ptr rawSound, long SoundSize, long whichTrack, long Period, long Amplitude, long loopStart, long loopLength, Boolean Stereo?)
 // UpdateALLWindow	: Check all PlayerPRO windows and update them if need it.
 // MyDlgFilterUPP	: to use with a ModalDialog function: allow movable dialog, PlayerPRO windows updating, Item 1 Frame, Copy/Paste support, Key support
 //
@@ -120,7 +120,7 @@ typedef struct _PPFiltersPlugin {
 //******************* DIGITAL EDITOR PLUGS  ***********************/
 //
 //	Your main function have to be in this form:
-//	OSErr main( 	Pcmd					*Pcmd,						// Digital Selection
+//	OSErr main(	Pcmd					*Pcmd,						// Digital Selection
 //					PPInfoPlug				*thePPInfoPlug)				// Some functions of PlayerPRO that you can use in your plugs
 //
 //
@@ -128,10 +128,10 @@ typedef struct _PPFiltersPlugin {
 //
 //	If you want to reallocate Pcmd:
 //	
-//	if (Pcmd != 0L) DisposPtr( (Ptr) Pcmd);							// VERY IMPORTANT
-//	Pcmd = NewPtrClear( sizeof( Pcmd) + noCell * sizeof( Cmd));		// Use NewPtr ONLY to allocate memory!
+//	if (Pcmd != 0L) DisposPtr((Ptr) Pcmd);							// VERY IMPORTANT
+//	Pcmd = NewPtrClear(sizeof(Pcmd) + noCell * sizeof(Cmd));		// Use NewPtr ONLY to allocate memory!
 //
-//	myPcmd->structSize 	= sizeof( Pcmd) + noCell * sizeof( Cmd);
+//	myPcmd->structSize 	= sizeof(Pcmd) + noCell * sizeof(Cmd);
 //	
 //	Don't forget to UPDATE the myPcmd->structSize !!!!!!!!!!!!
 //
@@ -178,7 +178,7 @@ typedef struct _PPDigitalPlugin {
 //******************* INSTRUMENTS IMPORT/EXPORT PLUGS  ************/
 //
 //	Your main function have to be in this form:
-//	OSErr main( 	OSType					order,						// Order to execute
+//	OSErr main(	OSType					order,						// Order to execute
 //					InstrData				*InsHeader,					// Ptr on instrument header
 //					sData					**sample,					// Ptr on samples data
 //					short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
@@ -216,12 +216,12 @@ typedef struct _PPDigitalPlugin {
 /********************						***********************/
 
 //TODO: Rewrite to take advantage of UTIs
-OSErr	PPINImportFile( OSType	kindFile, short ins, short *samp, FSSpec	*AlienFile);
-OSErr	PPINTestFile( OSType	kindFile, FSSpec	*AlienFile);
-OSErr	PPINExportFile( OSType	kindFile, short ins, short samp, FSSpec	*AlienFile);
-OSType	PressPPINMenu( Rect	*PopUpRect, OSType curType, short, Str255);
-OSErr	PPINAvailablePlug( OSType	kindFile, OSType *plugType); // plugType == 'INST' or 'SAMP'
-OSErr	PPINGetPlugByID( OSType *type, short id, short samp);
+OSErr	PPINImportFile(OSType	kindFile, short ins, short *samp, FSSpec	*AlienFile);
+OSErr	PPINTestFile(OSType	kindFile, FSSpec	*AlienFile);
+OSErr	PPINExportFile(OSType	kindFile, short ins, short samp, FSSpec	*AlienFile);
+OSType	PressPPINMenu(Rect	*PopUpRect, OSType curType, short, Str255);
+OSErr	PPINAvailablePlug(OSType	kindFile, OSType *plugType); // plugType == 'INST' or 'SAMP'
+OSErr	PPINGetPlugByID(OSType *type, short id, short samp);
 
 #define kPlayerPROInstrumentPlugTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x0B, 0x3A, 0x46, 0x73, 0x91, 0x18, 0x46, 0x7E, 0xA4, 0x96, 0x84, 0x6F, 0x5E, 0x1C, 0x92, 0x76))
 //0B3A4673-9118-467E-A496-846F5E1C9276
@@ -237,11 +237,11 @@ typedef struct _PPInstrumentPlugin {
 // SndUtils.c Definition :
 
 Ptr		ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo);
-OSErr	ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug);
+OSErr	ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug);
 void	pStrcpy(register unsigned char *s1, register const unsigned char *s2);
-Ptr		MyExp1to6( Ptr sound, unsigned long numSampleFrames);
-Ptr		MyExp1to3( Ptr sound, unsigned long numSampleFrames);
-void	ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
+Ptr		MyExp1to6(Ptr sound, unsigned long numSampleFrames);
+Ptr		MyExp1to3(Ptr sound, unsigned long numSampleFrames);
+void	ConvertInstrumentIn(register	Byte	*tempPtr,	register long sSize);
 OSErr	inAddSoundToMAD(	Ptr				theSound,
 						long			lS,
 						long			lE,

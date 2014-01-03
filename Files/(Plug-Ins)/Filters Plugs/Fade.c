@@ -18,12 +18,12 @@ static void SetDText (DialogPtr dlog, short item, Str255 str)
 {
 	ControlHandle	control;
 
-	GetDialogItemAsControl( dlog, item, &control );
-	SetControlData( control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
-	DrawOneControl( control);
+	GetDialogItemAsControl(dlog, item, &control );
+	SetControlData(control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
+	DrawOneControl(control);
 }
 
-static void AutoPosition( DialogPtr aDia)
+static void AutoPosition(DialogPtr aDia)
 {
 	Point		Position, mouse;
 	Rect		ViewRect, caRect;
@@ -31,30 +31,30 @@ static void AutoPosition( DialogPtr aDia)
 	GDHandle	aH;
 	BitMap		screenBits;
 	
-	GetMouse( &mouse);
-	LocalToGlobal( &mouse);
+	GetMouse(&mouse);
+	LocalToGlobal(&mouse);
 	
-	GetPortBounds( GetDialogPort( aDia), &caRect);
+	GetPortBounds(GetDialogPort(aDia), &caRect);
 	
 	XSize = (caRect.right - caRect.left);
 	YSize = (caRect.bottom - caRect.top);
 	
-	GetQDGlobalsScreenBits( &screenBits);
+	GetQDGlobalsScreenBits(&screenBits);
 	
-	SetRect( &ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
+	SetRect(&ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
 						screenBits.bounds.right - 8, screenBits.bounds.bottom - 8);
 	
 	aH = GetDeviceList();
 	do
 	{
-		aH = GetNextDevice( aH);
+		aH = GetNextDevice(aH);
 		if (aH != NULL)
 		{
-			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect(mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
-				SetRect( &ViewRect, ar.left + 8, ar.top + 43,
+				SetRect(&ViewRect, ar.left + 8, ar.top + 43,
 									ar.right - 8, ar.bottom - 8);
 			}
 		}
@@ -69,52 +69,52 @@ static void AutoPosition( DialogPtr aDia)
 	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
 	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
-	SetDialogDefaultItem( aDia, 1 );
-	SetDialogCancelItem( aDia, 2 );
+	SetDialogDefaultItem(aDia, 1 );
+	SetDialogCancelItem(aDia, 2 );
 
-	MoveWindow( GetDialogWindow( aDia), Position.h, Position.v, false);
+	MoveWindow(GetDialogWindow(aDia), Position.h, Position.v, false);
 
-	ShowWindow( GetDialogWindow( aDia));
+	ShowWindow(GetDialogWindow(aDia));
 }
 
 
-static Boolean getParams ( long *p1, long *p2, PPInfoPlug *thePPInfoPlug)
+static Boolean getParams (long *p1, long *p2, PPInfoPlug *thePPInfoPlug)
 {
 	DialogPtr	theDialog;
 	Boolean		theResult = false;
 
-	theDialog = GetNewDialog( 128, NULL, (WindowPtr)-1);
+	theDialog = GetNewDialog(128, NULL, (WindowPtr)-1);
 	if (theDialog) {
 		short	iType, itemHit;
 		Handle	iHandle;
 		Rect	iRect;
 		Str255	textStr;
 		
-		SetPortDialogPort( theDialog);
-		AutoPosition( theDialog);
-		NumToString( *p1, textStr);
-		SetDText( theDialog, 3, textStr);
-		SelectDialogItemText( theDialog, 3, 0, 32767);
+		SetPortDialogPort(theDialog);
+		AutoPosition(theDialog);
+		NumToString(*p1, textStr);
+		SetDText(theDialog, 3, textStr);
+		SelectDialogItemText(theDialog, 3, 0, 32767);
 		
-		NumToString( *p2, textStr);
-		SetDText( theDialog, 7, textStr);
+		NumToString(*p2, textStr);
+		SetDText(theDialog, 7, textStr);
 		
 		do
 		{
-			ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+			ModalDialog(thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 		}
 		while ((itemHit != ok) && (itemHit != cancel));
 		
 		if (itemHit == ok)
 		{
 			theResult = true;
-			GetDialogItem( theDialog, 3,&iType,&iHandle,&iRect);
-			GetDialogItemText( iHandle, textStr);
-			StringToNum( textStr, p1);
+			GetDialogItem(theDialog, 3,&iType,&iHandle,&iRect);
+			GetDialogItemText(iHandle, textStr);
+			StringToNum(textStr, p1);
 			
-			GetDialogItem( theDialog, 7,&iType,&iHandle,&iRect);
-			GetDialogItemText( iHandle, textStr);
-			StringToNum( textStr, p2);
+			GetDialogItem(theDialog, 7,&iType,&iHandle,&iRect);
+			GetDialogItemText(iHandle, textStr);
+			StringToNum(textStr, p2);
 		}
 		DisposeDialog(theDialog);
 	}
@@ -134,9 +134,9 @@ static OSErr mainFade(	sData					*theData,
 	to = 100;
 	from = 70;
 	
-	if (getParams( &to, &from, thePPInfoPlug))
+	if (getParams(&to, &from, thePPInfoPlug))
 	{
-		switch( theData->amp)
+		switch(theData->amp)
 		{
 			case 8:
 				Sample8Ptr += SelectionStart;

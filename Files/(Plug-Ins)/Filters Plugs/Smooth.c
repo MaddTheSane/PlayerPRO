@@ -23,7 +23,7 @@ static OSErr mainSmooth(sData			*theData,
 
 	length = SelectionEnd - SelectionStart - 1;
 
-	switch( theData->amp)
+	switch(theData->amp)
 	{
 		case 8:
 		{

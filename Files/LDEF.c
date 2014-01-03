@@ -1,8 +1,8 @@
 #include "Shuddup.h"
 #include "GetFileIcon.h"
 
-void MDrawTheText( Rect *bounds, Str255 data, Boolean selected, Str63 Str);
-void MDrawItem( Boolean selected, Rect* bounds, Str255 data, Str63 Str, FSSpec*);
+void MDrawTheText(Rect *bounds, Str255 data, Boolean selected, Str63 Str);
+void MDrawItem(Boolean selected, Rect* bounds, Str255 data, Str63 Str, FSSpec*);
 pascal	OSErr	DTGetIcon(ConstStr255Param volName,
 						  short vRefNum,
 						  short iconType,
@@ -12,7 +12,7 @@ pascal	OSErr	DTGetIcon(ConstStr255Param volName,
 						  
 extern	DialogPtr	MODListDlog;
 
-void MDrawTheText( Rect *bounds, Str255 data, Boolean selected, Str63 Str)
+void MDrawTheText(Rect *bounds, Str255 data, Boolean selected, Str63 Str)
 {	
 	if (selected)
 	{
@@ -20,26 +20,26 @@ void MDrawTheText( Rect *bounds, Str255 data, Boolean selected, Str63 Str)
 	
 		aRect.left = bounds->left + 23;		// 38
 		aRect.top = bounds->top + 4;
-		aRect.right = aRect.left + StringWidth( data) + 2;
+		aRect.right = aRect.left + StringWidth(data) + 2;
 		aRect.bottom = aRect.top + 13;
 
-		PaintRect( &aRect);
+		PaintRect(&aRect);
 
-		ForeColor( whiteColor);
-		BackColor( blackColor);
+		ForeColor(whiteColor);
+		BackColor(blackColor);
 	}
 	
-	MoveTo( bounds->left + 24, bounds->top + 14);
-	DrawString( data);
+	MoveTo(bounds->left + 24, bounds->top + 14);
+	DrawString(data);
 	
 	if (selected)
 	{
-		ForeColor( blackColor);
-		BackColor( whiteColor);
+		ForeColor(blackColor);
+		BackColor(whiteColor);
 	}
 }
 
-void MDrawItem( Boolean selected, Rect* bounds, Str255 data, Str63 Str, FSSpec	*spec)
+void MDrawItem(Boolean selected, Rect* bounds, Str255 data, Str63 Str, FSSpec	*spec)
 {
 	PenState			ps;
 	short			iconID;
@@ -66,22 +66,22 @@ void MDrawItem( Boolean selected, Rect* bounds, Str255 data, Str63 Str, FSSpec	*
 		IconRef	iconref;
 		SInt16	label;
 		
-		iErr = GetIconRefFromFile( spec, &iconref, &label);
+		iErr = GetIconRefFromFile(spec, &iconref, &label);
 		
 		if (iErr == noErr)
 		{
-			if (!selected) PlotIconRef( &iconRect, kAlignNone, kTransformNone, kIconServicesNormalUsageFlag, iconref);
-			else PlotIconRef( &iconRect, kAlignNone, kTransformSelected, kIconServicesNormalUsageFlag, iconref);
-			ReleaseIconRef( iconref);
+			if (!selected) PlotIconRef(&iconRect, kAlignNone, kTransformNone, kIconServicesNormalUsageFlag, iconref);
+			else PlotIconRef(&iconRect, kAlignNone, kTransformSelected, kIconServicesNormalUsageFlag, iconref);
+			ReleaseIconRef(iconref);
 		}
 		else
 		{
-			iErr=GetIconRef( kOnSystemDisk, 'SNPL', 'MADK', &iconref);
+			iErr=GetIconRef(kOnSystemDisk, 'SNPL', 'MADK', &iconref);
 			if (iErr == noErr)
 			{
-				if (!selected) PlotIconRef( &iconRect, kAlignNone, kTransformOffline, kIconServicesNormalUsageFlag, iconref);
-				else PlotIconRef( &iconRect, kAlignNone, kTransformSelectedOffline, kIconServicesNormalUsageFlag, iconref);
-				ReleaseIconRef( iconref);
+				if (!selected) PlotIconRef(&iconRect, kAlignNone, kTransformOffline, kIconServicesNormalUsageFlag, iconref);
+				else PlotIconRef(&iconRect, kAlignNone, kTransformSelectedOffline, kIconServicesNormalUsageFlag, iconref);
+				ReleaseIconRef(iconref);
 			}
 			else
 			{
@@ -90,5 +90,5 @@ void MDrawItem( Boolean selected, Rect* bounds, Str255 data, Str63 Str, FSSpec	*
 			}
 		}
 	}
-	MDrawTheText( bounds, data, selected, Str);
+	MDrawTheText(bounds, data, selected, Str);
 }

@@ -37,7 +37,7 @@ OSErr				result;
 	if (CC->formType == AIFCID) Compression = true;
 	else if (CC->formType == AIFFID) Compression = false;
 
-	for (i = sizeof( ContainerChunk); i < CC->ckSize;)
+	for (i = sizeof(ContainerChunk); i < CC->ckSize;)
 	{
 		CH = (ChunkHeader*) (sound + i);
 		if (CH->ckID == CommonID)
@@ -100,14 +100,14 @@ OSErr				result;
 
 	StartId += 16;
 	
-	SizeH = GetPtrSize( sound);
+	SizeH = GetPtrSize(sound);
 	if (numChannels == 1)
 	{
-		BlockMoveData( sound + StartId, sound, SizeH - StartId);
+		BlockMoveData(sound + StartId, sound, SizeH - StartId);
 	}
 	else if (numChannels == 2)
 	{
-		BlockMoveData( sound + StartId, sound, SizeH - StartId);
+		BlockMoveData(sound + StartId, sound, SizeH - StartId);
 		*stereo = true;
 	}
 	else
@@ -132,7 +132,7 @@ OSErr				result;
 	{
 			CompressionInfo 		cp;
 			
-			result = GetCompressionInfo( -1, compType, numChannels, *sampleSize, &cp);
+			result = GetCompressionInfo(-1, compType, numChannels, *sampleSize, &cp);
 			if (result != noErr) DebugStr("\pGetCompressionInfo");
 			
 			{
@@ -168,10 +168,10 @@ OSErr				result;
 			
 			inputFrames = (SizeH - StartId) / cp.bytesPerFrame;
 			
-			dstPtr = NewPtr( inputFrames * numChannels * (*sampleSize/8) * cp.samplesPerPacket);
+			dstPtr = NewPtr(inputFrames * numChannels * (*sampleSize/8) * cp.samplesPerPacket);
 			if (dstPtr == 0L)
 			{
-				DisposePtr( sound);
+				DisposePtr(sound);
 				return 0L;
 			}
 			
@@ -191,17 +191,17 @@ OSErr				result;
 			if (err != noErr)
 			DebugStr("\pClose failed");
 			
-			DisposePtr( sound);
+			DisposePtr(sound);
 			sound = dstPtr;
 			}
 	}
 	
-	SetPtrSize( sound, soundSize);
+	SetPtrSize(sound, soundSize);
 	
 	return sound;
 }*/
 
-static OSErr TestAIFF( ContainerChunk* CC)
+static OSErr TestAIFF(ContainerChunk* CC)
 {
 	if (CC->formType == AIFCID) return noErr;
 	else if (CC->formType == AIFFID) return noErr;
@@ -221,7 +221,7 @@ EXP OSErr main(		OSType					order,						// Order to execute
 	short	iFileRefI;
 	long	inOutBytes = 0;
 		
-	switch( order)
+	switch(order)
 	{
 		case 'IMPL':
 		{
@@ -232,18 +232,18 @@ EXP OSErr main(		OSType					order,						// Order to execute
 			Boolean			stereo;
 			FSSpec			newFile;
 			
-			myErr = ConvertDataToWAVE( *AlienFileFSSpec, &newFile, thePPInfoPlug);
+			myErr = ConvertDataToWAVE(*AlienFileFSSpec, &newFile, thePPInfoPlug);
 			if (myErr == noErr)
 			{
-				theSound = ConvertWAV( &newFile, &lS, &lE, &sS, &rate, &stereo);
+				theSound = ConvertWAV(&newFile, &lS, &lE, &sS, &rate, &stereo);
 				
-				if (theSound) inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
+				if (theSound) inAddSoundToMAD(theSound, lS, lE, sS, 60, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
 				else
 				{
 					myErr = MADNeedMemory;
 				}
 				
-				FSpDelete( &newFile);
+				FSpDelete(&newFile);
 			}
 		}
 		break;
@@ -252,22 +252,22 @@ EXP OSErr main(		OSType					order,						// Order to execute
 		{
 			Ptr	theSound;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr)
 			{
 				inOutBytes = 50L;
-				theSound = NewPtr( inOutBytes);
+				theSound = NewPtr(inOutBytes);
 				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					FSRead( iFileRefI, &inOutBytes, theSound);
+					FSRead(iFileRefI, &inOutBytes, theSound);
 					
-					myErr = TestAIFF( (ContainerChunk*) theSound);
+					myErr = TestAIFF((ContainerChunk*) theSound);
 				}
 				
-				DisposePtr( theSound);
+				DisposePtr(theSound);
 				
-				FSClose( iFileRefI);
+				FSClose(iFileRefI);
 			}
 		}
 		break;
@@ -280,8 +280,8 @@ EXP OSErr main(		OSType					order,						// Order to execute
 				sData 				*curData = sample[ *sampleID];
 				short				numChan;
 				
-				myErr = FSpCreate( AlienFileFSSpec, 'TVOD', 'AIFF', smCurrentScript);
-				myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+				myErr = FSpCreate(AlienFileFSSpec, 'TVOD', 'AIFF', smCurrentScript);
+				myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 				
 				if (myErr == noErr)
 				{
@@ -299,7 +299,7 @@ EXP OSErr main(		OSType					order,						// Order to execute
 												inOutBytes,
 												0);
 					
-					myErr = FSWrite( iFileRefI, &inOutBytes, curData->data);
+					myErr = FSWrite(iFileRefI, &inOutBytes, curData->data);
 					
 					/*
 					marker = (MarkerChunk*) CH;
@@ -318,7 +318,7 @@ EXP OSErr main(		OSType					order,						// Order to execute
 						}
 					}*/
 					
-					FSClose( iFileRefI);
+					FSClose(iFileRefI);
 				}
 			}
 		break;

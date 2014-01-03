@@ -15,12 +15,12 @@ static void SetDText (DialogPtr dlog, short item, Str255 str)
 {
 	ControlHandle	control;
 
-	GetDialogItemAsControl( dlog, item, &control );
-	SetControlData( control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
-	DrawOneControl( control);
+	GetDialogItemAsControl(dlog, item, &control );
+	SetControlData(control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
+	DrawOneControl(control);
 }
 
-static void AutoPosition( DialogPtr aDia)
+static void AutoPosition(DialogPtr aDia)
 {
 	Point		Position, mouse;
 	Rect		ViewRect, caRect;
@@ -28,30 +28,30 @@ static void AutoPosition( DialogPtr aDia)
 	GDHandle	aH;
 	BitMap		screenBits;
 	
-	GetMouse( &mouse);
-	LocalToGlobal( &mouse);
+	GetMouse(&mouse);
+	LocalToGlobal(&mouse);
 	
-	GetPortBounds( GetDialogPort( aDia), &caRect);
+	GetPortBounds(GetDialogPort(aDia), &caRect);
 	
 	XSize = (caRect.right - caRect.left);
 	YSize = (caRect.bottom - caRect.top);
 	
-	GetQDGlobalsScreenBits( &screenBits);
+	GetQDGlobalsScreenBits(&screenBits);
 	
-	SetRect( &ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
+	SetRect(&ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
 						screenBits.bounds.right - 8, screenBits.bounds.bottom - 8);
 	
 	aH = GetDeviceList();
 	do
 	{
-		aH = GetNextDevice( aH);
+		aH = GetNextDevice(aH);
 		if (aH != NULL)
 		{
-			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect(mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
-				SetRect( &ViewRect, ar.left + 8, ar.top + 43,
+				SetRect(&ViewRect, ar.left + 8, ar.top + 43,
 									ar.right - 8, ar.bottom - 8);
 			}
 		}
@@ -66,41 +66,41 @@ static void AutoPosition( DialogPtr aDia)
 	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
 	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
-	SetDialogDefaultItem( aDia, 1 );
-	SetDialogCancelItem( aDia, 2 );
+	SetDialogDefaultItem(aDia, 1 );
+	SetDialogCancelItem(aDia, 2 );
 
-	MoveWindow( GetDialogWindow( aDia), Position.h, Position.v, false);
+	MoveWindow(GetDialogWindow(aDia), Position.h, Position.v, false);
 
-	ShowWindow( GetDialogWindow( aDia));
+	ShowWindow(GetDialogWindow(aDia));
 }
 
 
-static Boolean getParams ( long *p1, PPInfoPlug *thePPInfoPlug)
+static Boolean getParams (long *p1, PPInfoPlug *thePPInfoPlug)
 {
 	DialogPtr	theDialog;
 	Boolean		theResult = false;
 
-	theDialog = GetNewDialog( 128,nil,(WindowPtr)-1);
+	theDialog = GetNewDialog(128,nil,(WindowPtr)-1);
 	if (theDialog) {
 		short	iType, itemHit;
 		Handle	iHandle;
 		Rect	iRect;
 		Str255	textStr;
 		
-		SetPortDialogPort( theDialog);
-		AutoPosition( theDialog);
-		NumToString( *p1, textStr);
-		SetDText( theDialog, 3, textStr);
-		SelectDialogItemText( theDialog, 3, 0, 32767);
+		SetPortDialogPort(theDialog);
+		AutoPosition(theDialog);
+		NumToString(*p1, textStr);
+		SetDText(theDialog, 3, textStr);
+		SelectDialogItemText(theDialog, 3, 0, 32767);
 
 		do
 		{
 			RESTART:
 			
 //			#if defined(powerc) || defined(__powerc)
-			ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+			ModalDialog(thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 //			#else
-//			ModalDialog( (ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+//			ModalDialog((ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 //			#endif
 		}
 		while ((itemHit != ok) && (itemHit != cancel));
@@ -108,15 +108,15 @@ static Boolean getParams ( long *p1, PPInfoPlug *thePPInfoPlug)
 		if (itemHit == ok)
 		{
 			theResult = true;
-			GetDialogItem( theDialog, 3,&iType,&iHandle,&iRect);
-			GetDialogItemText( iHandle, textStr);
-			StringToNum( textStr, p1);
+			GetDialogItem(theDialog, 3,&iType,&iHandle,&iRect);
+			GetDialogItemText(iHandle, textStr);
+			StringToNum(textStr, p1);
 			
 			if (*p1 < 1 || *p1 > 16)
 			{
-				SysBeep( 1);
+				SysBeep(1);
 				
-				SelectDialogItemText( theDialog, 3, 0, 150);
+				SelectDialogItemText(theDialog, 3, 0, 150);
 				
 				goto RESTART;
 			}
@@ -128,7 +128,7 @@ static Boolean getParams ( long *p1, PPInfoPlug *thePPInfoPlug)
 	return theResult;
 }
 
-static OSErr mainDepth( 	sData					*theData,
+static OSErr mainDepth(	sData					*theData,
 					long					SelectionStart,
 					long					SelectionEnd,
 					PPInfoPlug				*thePPInfoPlug,
@@ -136,13 +136,13 @@ static OSErr mainDepth( 	sData					*theData,
 {
 	long			i, temp, Inc;
 	Byte			*Sample8Ptr = (Byte*) theData->data;
-	short			*Sample16Ptr = ( short*) theData->data;
+	short			*Sample16Ptr = (short*) theData->data;
 
 	Inc = 8;
-	if (getParams( &Inc, thePPInfoPlug))
+	if (getParams(&Inc, thePPInfoPlug))
 	{
 		if (Inc == 0) Inc = 1;
-		switch( theData->amp)
+		switch(theData->amp)
 		{
 			case 8:
 				Sample8Ptr += SelectionStart;
