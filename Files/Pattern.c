@@ -7,18 +7,17 @@
 #define ON	true
 #define OFF	false
 
-	/******** HELP MODULE ********/
-	enum
-	{
-		HNew	= 7,
-		HLoad	= 3,
-		HSave	= 4,
-		HDel	= 5,
-		HInfo	= 6,
-		HOpenA	= 8,
-		HList	= 1
-	};
-#define	AHELPSIZE 7
+/******** HELP MODULE ********/
+enum
+{
+	HNew	= 7,
+	HLoad	= 3,
+	HSave	= 4,
+	HDel	= 5,
+	HInfo	= 6,
+	HOpenA	= 8,
+	HList	= 1
+};
 
 static pascal Boolean myDragClickLoop(void);
 pascal OSErr MyPATTrackingHandler(short, WindowPtr, void *, DragReference);
@@ -28,11 +27,11 @@ pascal OSErr MyPATSendDataProc(FlavorType, void *, ItemReference, DragReference)
 pascal OSErr MyPATTrackingHandler(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag);
 pascal OSErr MyPATReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, DragReference theDrag);
 pascal OSErr MyPATSendDataProc(FlavorType theFlavor, void *refCon, ItemReference theItem, DragReference theDrag);
-static short  AHelp[ AHELPSIZE] = { HNew, HLoad, HSave, HDel, HInfo, HOpenA, HList};
+static short AHelp[] = {HNew, HLoad, HSave, HDel, HInfo, HOpenA, HList};
 
 void DoHelpPatList(short **items, short *lsize)
 {
-	*lsize = AHELPSIZE;
+	*lsize = sizeof(AHelp) / sizeof(AHelp[0]);
 	*items = AHelp;
 }
 
@@ -563,7 +562,8 @@ void DeleteAPattern(Boolean AskDelete)
 	}
 	MADReset(MADDriver);
 	
-	if (MusiqueOn) MADDriver->Reading = true;
+	if (MusiqueOn)
+		MADDriver->Reading = true;
 	
 	UpdateEditorInfo();
 	UpdatePatListInfo();
@@ -578,15 +578,16 @@ void SaveAPatternInt(FSSpec	sFile, short theID)
 
 	FSpDelete(&sFile);
 	iErr = FSpCreate(&sFile, 'SNPL', 'PATN', smSystemScript);
-	if (iErr == noErr)
-	{
+	if (iErr == noErr) {
 		iErr = FSpOpenDF(&sFile, fsCurPerm, &fRefNum);
 		
-		for (x = 0; x < sFile.name[ 0]; x++) curMusic->partition[ theID]->header.name[ x] = sFile.name[ x + 1];
-		for (sFile.name[ 0]; x < 20; x++) curMusic->partition[ theID]->header.name[ x] = 0;
+		for (x = 0; x < sFile.name[0]; x++)
+			curMusic->partition[theID]->header.name[x] = sFile.name[x + 1];
+		for (x = sFile.name[0]; x < 20; x++)
+			curMusic->partition[theID]->header.name[x] = 0;
 		
-		inOutBytes = GetPtrSize((Ptr) curMusic->partition[ theID]);
-		iErr = FSWrite(fRefNum, &inOutBytes, curMusic->partition[ theID]);
+		inOutBytes = GetPtrSize((Ptr)curMusic->partition[theID]);
+		iErr = FSWrite(fRefNum, &inOutBytes, curMusic->partition[theID]);
 		iErr = FSCloseFork(fRefNum);
 	}
 
@@ -596,61 +597,68 @@ void SaveAPatternInt(FSSpec	sFile, short theID)
 
 void SaveAPattern(void)
 {
-short				itemType,i, x, selectedPos, thePos;
-long				inOutBytes, Id;
-Rect				itemRect;
-Point				where = { -1, -1}, theCell ={ 0, 0};
-OSErr				iErr;
-GrafPtr				myPort;
-SFTypeList 			typeList;
-FSSpec				spec;
-Ptr					tempPtr;
-short				fRefNum;
-Str255				theStr;
-
-if (LGetSelect(true, &theCell, PatList2)) thePos = theCell.v;
-else return;
-
-theStr[ 0] = 20;
-for (x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ thePos]->header.name[ x];
-for (x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
-
-if (DoCustomSave("\pSave this pattern as:", theStr, 'PATN', &spec)) return;
-
-iErr = HSetVol(NULL, spec.vRefNum, spec.parID);
-
-SaveAPatternInt(spec, thePos);
-
-UpdatePatListInfo();
-UpdatePartiInfo();
+	short				itemType,i, x, selectedPos, thePos;
+	long				inOutBytes, Id;
+	Rect				itemRect;
+	Point				where = { -1, -1}, theCell ={ 0, 0};
+	OSErr				iErr;
+	GrafPtr				myPort;
+	SFTypeList 			typeList;
+	FSSpec				spec;
+	Ptr					tempPtr;
+	short				fRefNum;
+	Str255				theStr;
+	
+	if (LGetSelect(true, &theCell, PatList2))
+		thePos = theCell.v;
+	else
+		return;
+	
+	theStr[ 0] = 20;
+	for (x = 0; x < 20; x++)
+		theStr[ x + 1] = curMusic->partition[ thePos]->header.name[ x];
+	for (x = 1; x < 20; x++) {
+		if (theStr[x] == 0) {
+			theStr[0] = x - 1;
+			break;}
+	}
+	
+	if (DoCustomSave("\pSave this pattern as:", theStr, 'PATN', &spec)) return;
+	
+	iErr = HSetVol(NULL, spec.vRefNum, spec.parID);
+	
+	SaveAPatternInt(spec, thePos);
+	
+	UpdatePatListInfo();
+	UpdatePartiInfo();
 }
 
 void LoadAPatternInt(FSSpec sFile, short selectedPos)
 {
-short					iFileRefI, tracksNo;
-long					inOutBytes;
-PatData					*theNewPattern;
-Boolean					readingActif = MADDriver->Reading;
-
+	short					iFileRefI, tracksNo;
+	long					inOutBytes;
+	PatData					*theNewPattern;
+	Boolean					readingActif = MADDriver->Reading;
+	
 	MADDriver->Reading = false;
-
-//	HSetVol(NULL, sFile.vRefNum, sFile.parID);
-
+	
+	//HSetVol(NULL, sFile.vRefNum, sFile.parID);
+	
 	FSpOpenDF(&sFile, fsCurPerm, &iFileRefI);
 	GetEOF(iFileRefI, &inOutBytes);
 	
 	if (selectedPos < curMusic->header->numPat) MyDisposePtr((Ptr*) &curMusic->partition[ selectedPos]);
-
+	
 	theNewPattern = (PatData*) MyNewPtr(inOutBytes);
 	
 	FSRead(iFileRefI, &inOutBytes, theNewPattern);
 	FSCloseFork(iFileRefI);
-
+	
 	/****/
 	
 	inOutBytes = (long) theNewPattern + (long) GetPtrSize((Ptr) theNewPattern) - (long) &theNewPattern->Cmds;
 	tracksNo = inOutBytes / (sizeof(Cmd) * theNewPattern->header.size);
-
+	
 	if (tracksNo == curMusic->header->numChn)
 	{
 		curMusic->partition[ selectedPos] = theNewPattern;
@@ -666,7 +674,7 @@ Boolean					readingActif = MADDriver->Reading;
 		BlockMoveData(theNewPattern->header.name, curMusic->partition[ selectedPos]->header.name, 20);
 		curMusic->partition[ selectedPos]->header.patBytes = theNewPattern->header.size * sizeof(Cmd) * curMusic->header->numChn;
 		curMusic->partition[ selectedPos]->header.unused2 = 0;
-
+		
 		for (x = 0; x < theNewPattern->header.size; x++)
 		{
 			for (z = 0; z < curMusic->header->numChn; z++)
@@ -685,9 +693,9 @@ Boolean					readingActif = MADDriver->Reading;
 			}
 		}
 	}
-
+	
 	/****/
-
+	
 	if (selectedPos == curMusic->header->numPat) curMusic->header->numPat++;
 	
 	MADDriver->Reading = readingActif;
@@ -761,26 +769,26 @@ Boolean					readingActif = MADDriver->Reading;
 
 void LoadAPattern(void)
 {
-short				itemType,i, theNo, selectedPos;
-long				inOutBytes, Id;
-Rect				itemRect;
-Point				where = { -1, -1}, theCell ={ 0, 0};
-OSErr				iErr;
-GrafPtr				myPort;
-FSSpec				spec;
-Ptr					tempPtr;
-
+	short				itemType,i, theNo, selectedPos;
+	long				inOutBytes, Id;
+	Rect				itemRect;
+	Point				where = { -1, -1}, theCell ={ 0, 0};
+	OSErr				iErr;
+	GrafPtr				myPort;
+	FSSpec				spec;
+	Ptr					tempPtr;
+	
 	selectedPos = curMusic->header->numPat;
-
+	
 	GetPort(&myPort);
-
+	
 	if (DoStandardOpen(&spec, "\ppattern file", 'PATN')) return;
 	
 	curMusic->hasChanged = true;
 	SetCursor(&watchCrsr);
 	
 	SaveUndo(UAllPatterns, 0, "\pUndo 'Open Pattern'");
-
+	
 	LoadAPatternInt(spec, selectedPos);
 	
 	/** Select loaded pattern **/
@@ -791,9 +799,9 @@ Ptr					tempPtr;
 	LSetSelect(true, theCell, PatList2);
 	HiliteControl(InfoBut, 0);		HiliteControl(DelBut, 0);
 	HiliteControl(SaveBut, 0);		HiliteControl(OpenBut, 0);
-
+	
 	/**/
-
+	
 	UpdatePatListInfo();
 	UpdatePartiInfo();
 	
@@ -802,10 +810,10 @@ Ptr					tempPtr;
 
 void AddAPattern(void)
 {
-long					oldSize, newSize, u, v;
-Boolean					MusiqueOn = false;
-Point					theCell = { 0, 0};
-
+	long					oldSize, newSize, u, v;
+	Boolean					MusiqueOn = false;
+	Point					theCell = { 0, 0};
+	
 	SaveUndo(UAllPatterns, 0, "\pUndo 'New Pattern'");
 	
 	curMusic->hasChanged = true;
@@ -813,7 +821,7 @@ Point					theCell = { 0, 0};
 	MADDriver->Reading = false;
 	
 	/****** ALLOCATION *********/
-		
+	
 	curMusic->partition[ curMusic->header->numPat] = (PatData*) NewPtrClear(sizeof(PatHeader) + curMusic->header->numChn * 64L * sizeof(Cmd));
 	if (MemError()) MyDebugStr(__LINE__, __FILE__, "Error in AddAPattern...");
 	
@@ -908,27 +916,27 @@ void UpdatePatListInfo(void)
 
 short GetPatternSelect(void)
 {
-Point					theCell = { 0, 0};
-
-	if (PatListDlog == NULL) return 0;
-
-	if (LGetSelect(true, &theCell, PatList2)) return theCell.v;
-	else return 0;
+	Point theCell = { 0, 0};
+	
+	if (PatListDlog == NULL)
+		return 0;
+	
+	if (LGetSelect(true, &theCell, PatList2))
+		return theCell.v;
+	else
+		return 0;
 }
 
 void SetSpeed(PatData* tempMusicPat, short val)
 {
 	Cmd			*aCmd;
-
+	
 	aCmd = GetMADCommand(0, 0, tempMusicPat);
 	
-	if (val == -1)
-	{
+	if (val == -1) {
 		aCmd->cmd = 0;
 		aCmd->arg = 0;
-	}
-	else
-	{
+	} else {
 		aCmd->cmd = speedE;
 		aCmd->arg = val;
 	}
@@ -937,16 +945,13 @@ void SetSpeed(PatData* tempMusicPat, short val)
 void SetFineSpeed(PatData* tempMusicPat, short val)
 {
 	Cmd			*aCmd;
-
+	
 	aCmd = GetMADCommand(0, 1, tempMusicPat);
 	
-	if (val == -1)
-	{
+	if (val == -1) {
 		aCmd->cmd = 0;
 		aCmd->arg = 0;
-	}
-	else
-	{
+	} else {
 		aCmd->cmd = speedE;
 		aCmd->arg = val;
 	}
@@ -954,13 +959,11 @@ void SetFineSpeed(PatData* tempMusicPat, short val)
 
 short GetSpeed(PatData* tempMusicPat)
 {
-	Cmd			*aCmd;
-
-	aCmd = GetMADCommand(0, 0, tempMusicPat);
+	Cmd *aCmd = GetMADCommand(0, 0, tempMusicPat);
 	
-	if (aCmd->cmd == speedE)
-	{
-		if (aCmd->arg < 32) return aCmd->arg;
+	if (aCmd->cmd == speedE) {
+		if (aCmd->arg < 32)
+			return aCmd->arg;
 	}
 	
 	return -1;
@@ -968,14 +971,13 @@ short GetSpeed(PatData* tempMusicPat)
 
 short GetFineSpeed(PatData* tempMusicPat)
 {
-	Cmd			*aCmd;
-
-	aCmd = GetMADCommand(0, 1, tempMusicPat);
+	Cmd *aCmd = GetMADCommand(0, 1, tempMusicPat);
 	
-	if (aCmd->cmd == speedE)
-	{
-		if (aCmd->arg >= 32) return aCmd->arg;
-		else return -1;
+	if (aCmd->cmd == speedE) {
+		if (aCmd->arg >= 32)
+			return aCmd->arg;
+		else
+			return -1;
 	}
 
 	return -1;
@@ -999,7 +1001,7 @@ Boolean DialogPatternInfo(short thePos)
 	GetPort(&myPort);
 	
 	SaveUndo(UPattern, thePos, "\pUndo 'Pattern Info Editing'");
-
+	
 	TheDia = GetNewDialog(167, NULL, (WindowPtr) -1L);
 	SetPortDialogPort(TheDia);
 	ChangeDialogFont(TheDia);
@@ -1014,138 +1016,125 @@ Boolean DialogPatternInfo(short thePos)
 	
 	NumToString(curMusic->partition[ thePos]->header.size, theStr);
 	SetDText(TheDia, 4, theStr);
-
+	
 	NumToString(thePos, theStr);
 	SetDText(TheDia, 13, theStr);
-
+	
 	NumToString(curMusic->header->numChn, theStr);
 	SetDText(TheDia, 8, theStr);
 	
 	NumToString(GetPtrSize((Ptr) curMusic->partition[ thePos]), theStr);
 	SetDText(TheDia, 10, theStr);
-
+	
 	x = GetSpeed(curMusic->partition[ thePos]);
-	if (x > 0)
-	{
+	if (x > 0) {
 		TurnRadio(17, TheDia, true);
 		
 		NumToString(x, theStr);
 		SetDText(TheDia, 19, theStr);
 	}
 	x = GetFineSpeed(curMusic->partition[ thePos]);
-	if (x > 0)
-	{
+	if (x > 0) {
 		TurnRadio(18, TheDia, true);
 		
 		NumToString(x, theStr);
 		SetDText(TheDia, 20, theStr);
 	}
-
-	if (curMusic->partition[ thePos]->header.compMode == 'MAD1')
-	{
+	
+	if (curMusic->partition[ thePos]->header.compMode == 'MAD1') {
 		SetDText(TheDia, 16, "\pMAD1");
 		curSelecPat = 1;
-	}
-	else
-	{
+	} else {
 		SetDText(TheDia, 16, "\pNONE");
 		curSelecPat = 0;
 	}
 	thePatternMenuIN = GetMenu(147);
 	
 	
-	OnRepart:
-
-	do
-	{
+OnRepart:
+	
+	do {
 		//ModalDialog(MyDlgFilterDesc, &itemHit);
 		MyModalDialog(TheDia, &itemHit);
 		
 		switch(itemHit)
 		{
-		case  15:
-			InsertMenu(thePatternMenuIN, hierMenu );
-			GetDialogItem(TheDia, itemHit, &itemType, &itemHandle, &itemRect);
-			
-			myPt.v = itemRect.top;	myPt.h = itemRect.left;
-			LocalToGlobal(&myPt);
-			
-			SetItemMark(thePatternMenuIN, curSelecPat + 1, 0xa5);
-			
-			mresult = PopUpMenuSelect(	thePatternMenuIN,
-										myPt.v,
-										myPt.h,
-										curSelecPat + 1);
-			
-			SetItemMark(thePatternMenuIN, curSelecPat + 1, 0);
-			
-			if (HiWord(mresult ) != 0 )
-			{
-				curSelecPat = (Byte) LoWord(mresult) - 1;
-				if (curSelecPat == 1)
+			case  15:
+				InsertMenu(thePatternMenuIN, hierMenu );
+				GetDialogItem(TheDia, itemHit, &itemType, &itemHandle, &itemRect);
+				
+				myPt.v = itemRect.top;	myPt.h = itemRect.left;
+				LocalToGlobal(&myPt);
+				
+				SetItemMark(thePatternMenuIN, curSelecPat + 1, 0xa5);
+				
+				mresult = PopUpMenuSelect(	thePatternMenuIN,
+										  myPt.v,
+										  myPt.h,
+										  curSelecPat + 1);
+				
+				SetItemMark(thePatternMenuIN, curSelecPat + 1, 0);
+				
+				if (HiWord(mresult) != 0 )
 				{
-					curMusic->partition[ thePos]->header.compMode = 'MAD1';
-					SetDText(TheDia, 16, "\pMAD1");
+					curSelecPat = (Byte) LoWord(mresult) - 1;
+					if (curSelecPat == 1)
+					{
+						curMusic->partition[ thePos]->header.compMode = 'MAD1';
+						SetDText(TheDia, 16, "\pMAD1");
+					}
+					else
+					{
+						SetDText(TheDia, 16, "\pNONE");
+						curMusic->partition[ thePos]->header.compMode = 'NONE';
+					}
 				}
-				else
-				{
-					SetDText(TheDia, 16, "\pNONE");
-					curMusic->partition[ thePos]->header.compMode = 'NONE';
-				}
-			}
-			DeleteMenu(GetMenuID(thePatternMenuIN));
-		break;
-		
-		case 17:
-		case 18:
-			InverseRadio(itemHit, TheDia);
-		break;
+				DeleteMenu(GetMenuID(thePatternMenuIN));
+				break;
+				
+			case 17:
+			case 18:
+				InverseRadio(itemHit, TheDia);
+				break;
 		}
 		
 	}while (itemHit != 1 && itemHit != 2);
-
+	
 	if (itemHit == 1)
 	{
 		curMusic->hasChanged = true;
-	
+		
 		GetDialogItem (TheDia, 17, &itemType, &itemHandle, &itemRect);
-		if (GetControlValue((ControlHandle) itemHandle) != 0)
-		{
+		if (GetControlValue((ControlHandle) itemHandle) != 0) {
 			GetDText (TheDia, 19, theStr);
 			StringToNum(theStr, &mresult);
-			if (mresult < 1 || mresult > 31)
-			{
+			if (mresult < 1 || mresult > 31) {
 				SelectDialogItemText(TheDia, 19, 0 , 32767);
 				SysBeep(1);
 				goto OnRepart;
 			}
 			SetSpeed(curMusic->partition[ thePos], mresult);
-		}
-		else
-		{
-			x = GetSpeed(curMusic->partition[ thePos]);
-			if (x != -1) SetSpeed(curMusic->partition[ thePos], -1);
+		} else {
+			x = GetSpeed(curMusic->partition[thePos]);
+			if (x != -1)
+				SetSpeed(curMusic->partition[thePos], -1);
 		}
 		
 		GetDialogItem (TheDia, 18, &itemType, &itemHandle, &itemRect);
-		if (GetControlValue((ControlHandle) itemHandle) != 0)
-		{
+		if (GetControlValue((ControlHandle) itemHandle) != 0) {
 			GetDText (TheDia, 20, theStr);
 			StringToNum(theStr, &mresult);
-			if (mresult < 32 || mresult > 255)
-			{
+			if (mresult < 32 || mresult > 255) {
 				SelectDialogItemText(TheDia, 20, 0 , 32767);
 				SysBeep(1);
 				goto OnRepart;
 			}
-
+			
 			SetFineSpeed(curMusic->partition[ thePos], mresult);
-		}
-		else
-		{
+		} else {
 			x = GetFineSpeed(curMusic->partition[ thePos]);
 			if (x != -1) SetFineSpeed(curMusic->partition[ thePos], -1);
-		}		
+		}
 		
 		GetDText(TheDia, 4, theStr);
 		StringToNum(theStr, &mresult);
@@ -1155,8 +1144,7 @@ Boolean DialogPatternInfo(short thePos)
 			goto OnRepart;
 		}
 		
-		if (mresult != curMusic->partition[ thePos]->header.size)
-		{
+		if (mresult != curMusic->partition[ thePos]->header.size) {
 			short 				u, v, mm;
 			Cmd					*inCmd, *ouCmd;
 			
@@ -1169,12 +1157,10 @@ Boolean DialogPatternInfo(short thePos)
 			
 			/** Copy old notes **/
 			
-			for (u = 0; u < curMusic->header->numChn; u++)
-			{
-				for (v = 0; v < mm; v++)
-				{
-					ouCmd = GetMADCommand( v,  u, curMusic->partition[ thePos]);
-					inCmd = GetMADCommand( v,  u, newPattern);
+			for (u = 0; u < curMusic->header->numChn; u++) {
+				for (v = 0; v < mm; v++) {
+					ouCmd = GetMADCommand(v, u, curMusic->partition[thePos]);
+					inCmd = GetMADCommand(v, u, newPattern);
 					
 					*inCmd = *ouCmd;
 				}
@@ -1182,11 +1168,9 @@ Boolean DialogPatternInfo(short thePos)
 			
 			/** New notes **/
 			
-			for (u = 0; u < curMusic->header->numChn; u++)
-			{
-				for (v = mm; v < newPattern->header.size; v++)
-				{
-					MADKillCmd(GetMADCommand( v,  u, newPattern));
+			for (u = 0; u < curMusic->header->numChn; u++) {
+				for (v = mm; v < newPattern->header.size; v++) {
+					MADKillCmd(GetMADCommand(v, u, newPattern));
 				}
 			}
 			
@@ -1197,13 +1181,13 @@ Boolean DialogPatternInfo(short thePos)
 			
 			UPDATE_Pattern();
 		}
-	
+		
 		GetDText(TheDia, 3, theStr);
-		if (theStr[ 0] > 20) 
+		if (theStr[ 0] > 20)
 			theStr[ 0] = 20;
-		for (x = 0; x < theStr[ 0]; x++) 
+		for (x = 0; x < theStr[ 0]; x++)
 			curMusic->partition[thePos]->header.name[x] = theStr[x + 1];
-		for (x = theStr[0]; x < 20; x++) 
+		for (x = theStr[0]; x < 20; x++)
 			curMusic->partition[thePos]->header.name[x] = 0;
 		
 		UpdateEditorInfo();
@@ -1215,14 +1199,15 @@ Boolean DialogPatternInfo(short thePos)
 		
 		ScanTime();
 	}
-
+	
 	DisposeMenu(thePatternMenuIN);
-
 	DisposeDialog(TheDia);
 	SetPort(myPort);
 	
-	if (itemHit == 1) return true;
-	else return false;
+	if (itemHit == 1)
+		return true;
+	else
+		return false;
 }
 
 void UpdatePartitionWindow(DialogPtr);
@@ -1236,8 +1221,8 @@ void DoGrowPatList(DialogPtr theDialog)
 	Handle		itemHandle;
 	Point		theCell = { 0, 0}, aPt = { 0, 0};
 	BitMap		screenBits;
-
-
+	
+	
 	GetPort(&SavePort);
  	SetPortDialogPort(theDialog);
 	
@@ -1250,9 +1235,9 @@ void DoGrowPatList(DialogPtr theDialog)
 	GetQDGlobalsScreenBits(&screenBits);
 	
 	LRect(&cellRect, theCell, PatList2);
-//	temp.bottom = PatRectList2.top + (*PatList2)->dataBounds.bottom*(cellRect.bottom - cellRect.top);
+	//temp.bottom = PatRectList2.top + (*PatList2)->dataBounds.bottom*(cellRect.bottom - cellRect.top);
 	temp.bottom = screenBits.bounds.bottom;
-
+	
 	LocalToGlobal(&aPt);
 	
 	if (temp.bottom < temp.top) temp.bottom = temp.top;
@@ -1264,15 +1249,13 @@ void DoGrowPatList(DialogPtr theDialog)
 #endif
 	
 	lSizeVH = 0;
-	if (theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(theDialog), theEvent.where, &temp);
-
-	if (lSizeVH != 0)
-	{
+	if (theEvent.what == mouseDown)
+		lSizeVH = GrowWindow(GetDialogWindow(theDialog), theEvent.where, &temp);
+	
+	if (lSizeVH != 0) {
 		tempA = LoWord(lSizeVH);
 		tempB = HiWord(lSizeVH);
-	}
-	else
-	{
+	} else {
 		GetPortBounds(GetDialogPort(theDialog), &caRect);
 		
 		tempA = caRect.right;
@@ -1290,7 +1273,8 @@ void DoGrowPatList(DialogPtr theDialog)
 	LSize(PatRectList2.right - PatRectList2.left - 15, tempB - PatRectList2.top - 15, PatList2);
 	PatRectList2.bottom = caRect.bottom - 15;
 	
-	if (avant > PatRectList2.bottom) avant = PatRectList2.bottom;
+	if (avant > PatRectList2.bottom)
+		avant = PatRectList2.bottom;
 	tempRect.top = caRect.top;
 	tempRect.bottom = caRect.bottom;
 	tempRect.left = 0;
@@ -1298,7 +1282,7 @@ void DoGrowPatList(DialogPtr theDialog)
 	
 	EraseRect(&tempRect);
 	InvalWindowRect(GetDialogWindow(theDialog), &tempRect);
-
+	
 	SetPort(SavePort);
 }
 

@@ -234,6 +234,7 @@ static void SetSampNameM(Str255 theNewName, Ptr destName)
 	}
 }
 
+#if 0
 static short OpenResFileQK(long dirID, short VRefNum)
 {
 	CInfoPBRec		info;
@@ -283,7 +284,6 @@ static short OpenResFileQK(long dirID, short VRefNum)
 	return ret;
 }
 
-#if 0
 void ComputeQuicktimeSound25(short GMInstruID, sData **sample, InstrData* inst, short ins)
 {
 	long					lS, lE, inOutBytes;
@@ -1104,6 +1104,7 @@ BAIL:
 	return;
 }
 
+#if 0
 static void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 {
 	short 						no, ii, i;
@@ -1280,6 +1281,7 @@ BAIL:
 	
 	;
 }
+#endif
 
 static short GenerateDLSFromBundle()
 {

@@ -96,8 +96,8 @@ void DoGrowDigi(DialogPtr theDialog)
 
 void NoteName(short	Period, Ptr	String)
 {
-	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
-	short			NCount;
+	const char	NNames[][3] = {"C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "};
+	short		NCount;
 	Str255		WorkStr;
 	
 /*	if(Period == 0)

@@ -515,6 +515,7 @@ static long ConvertSampleC4SPD(Ptr src, long srcSize, short amp, long srcC4SPD, 
 	return (srcSize * dstC4SPD) / srcC4SPD;
 }
 
+#if 0
 static Ptr PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *PtrSize)
 {
 	long 				i, x, z, maxInstru;
@@ -822,6 +823,7 @@ static Ptr PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *Ptr
 	
 	return((Ptr) theMOD);
 }
+#endif
 
 static OSErr ExtractUMXInfo(PPInfoRec *info, Ptr AlienFile)
 {
