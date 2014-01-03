@@ -27,7 +27,7 @@
 
 struct MODCom
 {
-	Byte	a,b,c,d;
+	Byte a, b, c, d;
 };
 
 struct MODPat
@@ -37,23 +37,23 @@ struct MODPat
 
 struct FileInstrDataz
 {
-	char Filename[22];
-	unsigned short numWords;
-	Byte fineTune;
-	Byte volume;
-	unsigned short loopWord;
-	unsigned short loopWords;
+	char			Filename[22];
+	unsigned short	numWords;
+	Byte			fineTune;
+	Byte			volume;
+	unsigned short	loopWord;
+	unsigned short	loopWords;
 };
 
 typedef struct MODDef
 {
-	char NameSignature[ 20];
-	struct FileInstrDataz fid[ 31];
-	Byte numPointers;
-	Byte maxPointers;
-	Byte oPointers[ MAXPTRS];
-	OSType longFmtSignature;
-	struct MODPat patterns[];
+	char			NameSignature[ 20];
+	struct			FileInstrDataz fid[ 31];
+	Byte			numPointers;
+	Byte			maxPointers;
+	Byte			oPointers[MAXPTRS];
+	OSType			longFmtSignature;
+	struct MODPat	patterns[];
 } MODDef;
 
 #pragma pack(pop)

@@ -21,28 +21,30 @@
 //
 /********************						***********************/
 
+#pragma pack(push, 2)
+
 typedef struct s3mform
 {
-	char             		name[28];
-	char             		sig1;
-	char             		type;
+	char				name[28];
+	char				sig1;
+	char				type;
 	char				sig2[2];
-	short  			ordernum;
-	short   			insnum;
-	short      			patnum;
-	short      			flags;
-	short     			cwtv;
-	short      			ffv;
-	char             		s3msig[4];
-	unsigned char 		mastervol;
-	unsigned char    	initialspeed;
-	unsigned char    	initialtempo;
-	unsigned char    	mastermul;
+	short				ordernum;
+	short				insnum;
+	short				patnum;
+	short				flags;
+	short				cwtv;
+	short				ffv;
+	char				s3msig[4];
+	unsigned char		mastervol;
+	unsigned char		initialspeed;
+	unsigned char		initialtempo;
+	unsigned char		mastermul;
 	unsigned char		ultraclick;
 	unsigned char		pantable;
-	char            	 	sig3[10];
-	unsigned char    	chanset[32];
-	unsigned char  		*orders;
+	char				sig3[10];
+	unsigned char		chanset[32];
+	unsigned char		*orders; //TODO: check for pointer size inconsistencies.
 	unsigned short		*parapins;
 	unsigned short		*parappat;
 	struct s3minsform	*insdata;
@@ -76,5 +78,7 @@ typedef struct s3minsform
 	unsigned short		insint512;
 	UInt32				insintlastused;
 	unsigned char		insname[28];
-	unsigned char		inssig[ 4];
+	unsigned char		inssig[4];
 } s3minsform;
+
+#pragma pack(pop)

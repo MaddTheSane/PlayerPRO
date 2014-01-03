@@ -29,6 +29,8 @@
  #define BYTE char
  #define BOOL Boolean */
 
+#pragma pack(push, 2)
+
 typedef struct MMD0 {
 	ULONG   id;
 	ULONG   modlen;
@@ -91,5 +93,7 @@ typedef struct InstrHdr {
 	WORD    type;
 	/* Followed by actual data */
 } InstrHdr;
+
+#pragma pack(pop)
 
 #endif

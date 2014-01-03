@@ -24,12 +24,15 @@
 #ifndef __AMFH__
 #define __AMFH__
 
+#pragma pack(push, 2)
+
 typedef unsigned char uchar;
 #ifndef __APPLE__
 typedef unsigned short ushort;
 #endif
 //typedef unsigned long ulong;
 
+//TODO: Check pointer values use in files
 typedef struct {
     uchar       type;
     char        name[32],filename[13];
@@ -49,5 +52,8 @@ typedef struct {
     uchar       volume;
     UInt32      loopstart,loopend;
 } INSTRUMENT;
+
+#pragma pack(pop)
+
 
 #endif

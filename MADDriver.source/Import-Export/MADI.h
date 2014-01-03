@@ -26,123 +26,110 @@
 
 #pragma pack(push, 2)
 
-// ***	
+// ***
 // ***	PATTERN DESCRIPTION
-// ***	
+// ***
 
 struct oldCmd							// COMMAND
 {
-	Byte	ins;					// Instrument no		0x00: no ins cmd
-	Byte 	note;					// Note, see table		0xFF : no note cmd
-	Byte 	cmd;					// Effect cmd
-	Byte 	arg;					// Effect argument
-	Byte	vol;					// Volume				0xFF : no volume cmd
+	Byte	ins;	// Instrument no		0x00: no ins cmd
+	Byte 	note;	// Note, see table		0xFF : no note cmd
+	Byte 	cmd;	// Effect cmd
+	Byte 	arg;	// Effect argument
+	Byte	vol;	// Volume				0xFF : no volume cmd
 	Byte	unused;
 };
 typedef struct oldCmd oldCmd;
 
 struct oldPatHeader					// HEADER
 {
-	SInt32	size;					// Length of pattern: standard = 64
-	OSType	compMode;				// Compression mode, none = 'NONE'
-	char	name[ 32];
-	SInt32	patBytes;				// Pattern Size in Bytes
+	SInt32	size;		// Length of pattern: standard = 64
+	OSType	compMode;	// Compression mode, none = 'NONE'
+	char	name[32];
+	SInt32	patBytes;	// Pattern Size in Bytes
 	SInt32	unused2;
 };
 typedef struct oldPatHeader oldPatHeader;
 
-struct oldPatData						// DATA STRUCTURE : HEADER + COMMANDS
-{									// Pattern = 64 notes to play
+struct oldPatData	// DATA STRUCTURE : HEADER + COMMANDS
+{					// Pattern = 64 notes to play
 	oldPatHeader	header;
-	oldCmd			Cmds[ 1];
+	oldCmd			Cmds[1];
 };
 typedef struct oldPatData oldPatData;
 
-// ***	
+// ***
 // ***	INSTRUMENT DESCRIPTION
-// ***	
+// ***
 
-struct oldsData								// SAMPLE
+typedef struct oldsData								// SAMPLE
 {
-	SInt32 				size;				// Sample length
-	SInt32				loopBeg;			// LoopStart
-	SInt32				loopSize;			// LoopLength
-	Byte 				vol;				// Base volume
-	unsigned short		c2spd;				// c2spd
-	Byte				loopType;
-	Byte				amp;				// 8 or 16 bits
-	char				relNote;
-	char 				name[ 32];			// Sample name
-	Byte				stereo;				// Stereo
-	UInt32				data;				// Used only in memory, not in files
-};
-typedef struct oldsData oldsData;
+	SInt32 			size;		// Sample length
+	SInt32			loopBeg;	// LoopStart
+	SInt32			loopSize;	// LoopLength
+	Byte 			vol;		// Base volume
+	unsigned short	c2spd;		// c2spd
+	Byte			loopType;
+	Byte			amp;		// 8 or 16 bits
+	char			relNote;
+	char 			name[32];	// Sample name
+	Byte			stereo;		// Stereo
+	UInt32			data;		// Used only in memory, not in files
+}oldsData;
 
-struct oldEnvRec				// Volume Enveloppe
+typedef struct oldEnvRec				// Volume Enveloppe
 {
-	short 	pos;				// pos
-	short	val;				// val
-};
-typedef struct oldEnvRec oldEnvRec;
+	short 	pos;	// pos
+	short	val;	// val
+} oldEnvRec;
 
-struct oldInstrData				// INSTRUMENT
+typedef struct oldInstrData				// INSTRUMENT
 {
-	char 	name[ 32];			// instrument name
-	Byte 	type;				// Instrument type = 0
-	Byte	no;					// Instrument number
+	char		name[32];			// instrument name
+	Byte		type;				// Instrument type = 0
+	Byte		no;					// Instrument number
 	
-	short	firstSample;		// First sample ID in sample list
-	short	numSamples;			// Number of samples in instrument
-	
-//	short	MIDI;				// MIDI Channel Value
-
-//	short	MIDIType;			// 0 Sound output only, 1 MIDI output only, 2 both
+	short		firstSample;		// First sample ID in sample list
+	short		numSamples;			// Number of samples in instrument
 	
 	/**/
 	
-	Byte	what[ 96];			// Sample number for all notes
-	oldEnvRec 	volEnv[ 12];		// Points for volume envelope
-	oldEnvRec	pannEnv[ 12];		// Points for panning envelope
-//	EnvRec	pitchEnv[ 12];		// Points for panning envelope
-// ENVELOPPES PLUS LONGUES !!!!!!!
+	Byte		what[96];			// Sample number for all notes
+	oldEnvRec 	volEnv[12];		// Points for volume envelope
+	oldEnvRec	pannEnv[12];		// Points for panning envelope
+	// ENVELOPPES PLUS LONGUES !!!!!!!
 	
-	Byte	volSize;			// Number of volume points
-	Byte	pannSize;			// Number of panning points
-//	Byte	pitchSize;			// Number of panning points
+	Byte		volSize;			// Number of volume points
+	Byte		pannSize;			// Number of panning points
 	
-	Byte	volSus;				// Volume sustain point
-	Byte	volBeg;				// Volume loop start point
-	Byte	volEnd;				// Volume loop end point
+	Byte		volSus;				// Volume sustain point
+	Byte		volBeg;				// Volume loop start point
+	Byte		volEnd;				// Volume loop end point
 	
-	Byte	pannSus;			// Panning sustain point
-	Byte	pannBeg;			// Panning loop start point
-	Byte	pannEnd;			// Panning loop end point
+	Byte		pannSus;			// Panning sustain point
+	Byte		pannBeg;			// Panning loop start point
+	Byte		pannEnd;			// Panning loop end point
 	
-//	Byte	pitchSus;			// Pitch sustain point
-//	Byte	pitchBeg;			// Pitch loop start point
-//	Byte	pitchEnd;			// Pitch loop end point
-	
-	Byte	volType;			// Volume type: bit 0: On; 1: Sustain; 2: Loop
-	Byte	pannType;			// Panning type: bit 0: On; 1: Sustain; 2: Loop
+	Byte		volType;			// Volume type: bit 0: On; 1: Sustain; 2: Loop
+	Byte		pannType;			// Panning type: bit 0: On; 1: Sustain; 2: Loop
 	
 	unsigned short	volFade;	// Volume fadeout
 	
-	Byte	vibDepth;
-	Byte	vibRate;
-};
-typedef struct oldInstrData oldInstrData;
+	Byte		vibDepth;
+	Byte		vibRate;
+} oldInstrData;
 
-// ***	
+// ***
 // ***	MAD FILE HEADER DESCRIPTION
-// ***	
+// ***
 
 #define INFOSSIZE 239
 
-struct oldMADSpec
+typedef struct oldMADSpec
 {
 	OSType		MAD;						// Mad Identification
-	char 		name[ 32];					// Music's name
-	char		infos[ INFOSSIZE];			// Informations & Author name of the music
+	char 		name[32];					// Music's name
+	char		infos[INFOSSIZE];			// Informations & Author name of the music
 	Byte		generalPan;					// General Panning
 	Byte		MultiChanNo;				// Number of chan for multichannel
 	Byte		MultiChan;					// MultiChannel per tracks?
@@ -159,15 +146,13 @@ struct oldMADSpec
 	Byte 		numPointers;				// Partition length
 	Byte		numInstru;					// Instruments number
 	Byte		numSamples;					// Samples number
-	Byte		oPointers[ MAXPOINTER];		// Partition : Patterns ID List
+	Byte		oPointers[MAXPOINTER];		// Partition : Patterns ID List
 	short		speed;						// Default speed
 	short		tempo;						// Default tempo
-	Byte		chanPan[ MAXTRACK];			// Channel settings, from 0 to 256
-	Byte		chanVol[ MAXTRACK];			// Channel Volume, from 0 to 64
-};
-typedef struct oldMADSpec oldMADSpec;
+	Byte		chanPan[MAXTRACK];			// Channel settings, from 0 to 256
+	Byte		chanVol[MAXTRACK];			// Channel Volume, from 0 to 64
+} oldMADSpec;
 
 #pragma pack(pop)
-
 
 #endif

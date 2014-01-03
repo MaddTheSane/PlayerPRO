@@ -24,10 +24,12 @@
 #ifndef __MADFG__
 #define __MADFG__
 
+#pragma pack(push, 2)
+
 struct oldPatHeader {
 	SInt32	PatternSize;			// Length of pattern: standard = 64
 	OSType	CompressionMode;		// Compression mode, none = 'NONE'
-	char	PatternName[ 20];
+	char	PatternName[20];
 	SInt32	PatBytes;				// Pattern Size in Bytes
 	SInt32	unused2;
 };
@@ -46,7 +48,7 @@ struct MusicPattern
 };
 
 struct FileInstrData {
-	char 	Filename[ 32];		// Instrument's filename
+	char 	Filename[32];		// Instrument's filename
 	SInt32 	insSize;			// Sample length
 	Byte 	fineTune;
 	Byte 	volume;				// Base volume
@@ -57,16 +59,18 @@ struct FileInstrData {
 	SInt32	loopLenght;			// LoopLength
 };
 
-struct oldMADSpec
+typedef struct oldMADSpec
 {
 	OSType	MADIdentification;		// Mad Identification: MADG in version 2.0
-	char 	NameSignature[ 32];		// Music's name
-	struct 	FileInstrData fid[ 64];	// 64 instruments descriptor
+	char 	NameSignature[32];		// Music's name
+	struct 	FileInstrData fid[64];	// 64 instruments descriptor
 	Byte	PatMax;
 	Byte 	numPointers;			// Patterns number
 	Byte	oPointers[128];			// Patterns list
 	Byte	Tracks;					// Tracks number
-};
-typedef struct oldMADSpec oldMADSpec;
+} oldMADSpec;
+
+#pragma pack(pop)
+
 
 #endif

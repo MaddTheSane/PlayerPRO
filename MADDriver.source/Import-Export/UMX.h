@@ -23,6 +23,8 @@
 
 #define MAXPTRS 128
 
+#pragma pack(push, 2)
+
 struct MODCom
 {
 	Byte	a,b,c,d;
@@ -45,11 +47,13 @@ struct FileInstrDataz
 
 typedef struct MODDef
 {
-	char NameSignature[ 20];
-	struct FileInstrDataz fid[ 31];
+	char NameSignature[20];
+	struct FileInstrDataz fid[31];
 	Byte numPointers;
 	Byte maxPointers;
 	Byte oPointers[ MAXPTRS];
 	OSType longFmtSignature;
 	struct MODPat patterns[];
-}MODDef;
+} MODDef;
+
+#pragma pack(pop)

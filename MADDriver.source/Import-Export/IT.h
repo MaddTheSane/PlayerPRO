@@ -21,23 +21,25 @@
 //
 /********************						***********************/
 
+#pragma pack(push, 2)
+
 typedef struct ITPatForm
 {
-	unsigned short		length;
-	unsigned short		row;
-	SInt32				no;
-	char				data[];
+	unsigned short	length;
+	unsigned short	row;
+	SInt32			no;
+	char			data[];
 } ITPatForm;
 
 typedef struct ITSampForm
 {
 	SInt32		ID;
-	char		DOSName[ 12];
+	char		DOSName[12];
 	Byte		no;
 	Byte		GvL;
 	Byte		Flag;
 	Byte		Vol;
-	char		SampName[ 26];
+	char		SampName[26];
 	short		Convert;
 	SInt32		length;
 	SInt32		loopBegin;
@@ -54,8 +56,8 @@ typedef struct ITSampForm
 
 typedef struct ITNode
 {
-	char		y;
-	short		x;
+	char	y;
+	short	x;
 } ITNode;
 
 typedef struct ITEnv
@@ -66,7 +68,7 @@ typedef struct ITEnv
 	Byte		LpE;
 	Byte		SLB;
 	Byte		SLE;
-	ITNode	nodes[25];
+	ITNode		nodes[25];
 } ITEnv;
 
 typedef struct ITKeyMap
@@ -78,23 +80,23 @@ typedef struct ITKeyMap
 typedef struct ITInsForm		// size = 547
 {
 	OSType		ID;
-	char		DOSName[ 12];
+	char		DOSName[12];
 	Byte		no;
 	Byte		NNA;
 	Byte		DCT;
 	Byte		DCA;
-	short	FadeOut;
+	short		FadeOut;
 	Byte		PPS;
 	Byte		PPC;
 	Byte		GbV;
 	Byte		DfP;
-	char		no2[ 2];
-	short	TrkVers;
+	char		no2[2];
+	short		TrkVers;
 	Byte		NoS;
 	Byte		no3;
-	char		INSName[ 26];
-	char		no4[ 6];
-	ITKeyMap	keyMap[ 120];
+	char		INSName[26];
+	char		no4[6];
+	ITKeyMap	keyMap[120];
 	
 	// new structure
 	
@@ -107,7 +109,7 @@ typedef struct ITInsForm		// size = 547
 typedef struct ITOldInsForm		// size = 554
 {
 	OSType		ID;
-	char		DOSName[ 12];
+	char		DOSName[12];
 	Byte		no;
 	Byte		NNA;
 	Byte		DCT;
@@ -117,17 +119,17 @@ typedef struct ITOldInsForm		// size = 554
 	Byte		PPC;
 	Byte		GbV;
 	Byte		DfP;
-	char		no2[ 2];
+	char		no2[2];
 	short		TrkVers;
 	Byte		NoS;
 	Byte		no3;
-	char		INSName[ 26];
-	char		no4[ 6];
-	ITKeyMap	keyMap[ 120];
+	char		INSName[26];
+	char		no4[6];
+	ITKeyMap	keyMap[120];
 	
 	// old structure
 	
-	ITKeyMap	volEnv[ 100];
+	ITKeyMap	volEnv[100];
 	
 } ITOldInsForm;
 
@@ -135,7 +137,7 @@ typedef struct ITForm
 {
 	OSType				ID;
 	char				name[26];
-	char				no[ 2];
+	char				no[2];
 	
 	short				orderNum;
 	short				insNum;
@@ -154,10 +156,10 @@ typedef struct ITForm
 	char				null;
 	short				MsgLgth;
 	SInt32				MsgOffset;
-	char				no2[ 4];
+	char				no2[4];
 	
-	char				chanPan[ 64];
-	char				chanVol[ 64];
+	char				chanPan[64];
+	char				chanVol[64];
 	
 	unsigned char		*orders;
 	SInt32				*parapins;
@@ -167,6 +169,9 @@ typedef struct ITForm
 	ITInsForm			*insdata;
 	ITSampForm			*sampdata;
 } ITForm;
+
+#pragma pack(pop)
+
 
 #pragma mark Impulse Header Layout
 /*
