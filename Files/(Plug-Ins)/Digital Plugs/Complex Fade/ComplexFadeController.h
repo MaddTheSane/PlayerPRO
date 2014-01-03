@@ -20,8 +20,11 @@ typedef NS_ENUM(NSInteger, FadeTypeEnum) {
 };
 
 @interface ComplexFadeController : PPDigitalPluginWindowController
-@property (weak) IBOutlet NSMatrix *fadeTypeMatrix;
 @property (weak) IBOutlet NSFormCell *stepCell;
+@property (weak) IBOutlet NSFormCell *fromCell;
+@property (weak) IBOutlet NSFormCell *toCell;
+
+@property (weak) IBOutlet NSMatrix *fadeTypeMatrix;
 @property (weak) IBOutlet NSTextField *valueInfo;
 //@property (strong) IBOutlet CompFadeNoteFormatter *noteFormatter;
 @property FadeTypeEnum fadeType;

@@ -8,7 +8,9 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ComplexFadeController">
             <connections>
                 <outlet property="fadeTypeMatrix" destination="5" id="Kv8-PP-dyA"/>
+                <outlet property="fromCell" destination="36" id="adM-VJ-sW5"/>
                 <outlet property="stepCell" destination="20" id="WQ3-8U-Nss"/>
+                <outlet property="toCell" destination="38" id="Xr2-qL-QrE"/>
                 <outlet property="valueInfo" destination="wDQ-Ma-n9H" id="GSi-cN-BOU"/>
                 <outlet property="window" destination="1" id="3"/>
             </connections>

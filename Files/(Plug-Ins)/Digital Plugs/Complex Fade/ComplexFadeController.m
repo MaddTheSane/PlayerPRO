@@ -13,108 +13,87 @@
 
 @end
 
-static short Text2Note( char *myTT)
+static short NSStringToNote(NSString *myTT)
 {
 	short		Oct;
-	
-	if (strlen(myTT) > 3) Oct = myTT[ 2] - 48;
-	else Oct = myTT[ 1] - 48;
-	
+	NSString	*val1 = [myTT substringWithRange:[myTT rangeOfComposedCharacterSequencesForRange:NSMakeRange(0, 1)]];
+	NSString	*val2 = [myTT length] >= 3 ? [myTT substringWithRange:[myTT rangeOfComposedCharacterSequencesForRange:NSMakeRange(1, 1)]] : @" ";
+	NSString	*val3 = [myTT substringWithRange:[myTT rangeOfComposedCharacterSequencesForRange:NSMakeRange( [myTT length] >= 3 ? 2 : 1, 1)]];
+	Oct = [val3 intValue];
 	Oct *= 12;
 	
 	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
 	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
-	switch( myTT[0])
-	{
-		case 'C':
-		case 'c':
-			Oct += 0;
-			break;
-			
-		case 'D':
-		case 'd':
-			Oct += 2;
-			break;
-			
-		case 'E':
-		case 'e':
-			Oct += 4;
-			break;
-			
-		case 'F':
-		case 'f':
-			Oct += 5;
-			break;
-			
-		case 'G':
-		case 'g':
-			Oct += 7;
-			break;
-			
-		case 'A':
-		case 'a':
-			Oct += 9;
-			break;
-			
-		case 'B':
-		case 'b':
-			Oct += 11;
-			break;
-			
-		default:
-			Oct = 0xFF;
-			break;
-	}
+	if ([val1 compare:@"C" options:(NSCaseInsensitiveSearch | NSWidthInsensitiveSearch)]) {
+		Oct += 0;
+	} else if ([val1 compare:@"D" options:(NSCaseInsensitiveSearch | NSWidthInsensitiveSearch)]) {
+		Oct += 2;
+	} else if ([val1 compare:@"E" options:(NSCaseInsensitiveSearch | NSWidthInsensitiveSearch)]) {
+		Oct += 4;
+	} else if ([val1 compare:@"F" options:(NSCaseInsensitiveSearch | NSWidthInsensitiveSearch)]) {
+		Oct += 5;
+	} else if ([val1 compare:@"G" options:(NSCaseInsensitiveSearch | NSWidthInsensitiveSearch)]) {
+		Oct += 7;
+	} else if ([val1 compare:@"A" options:(NSCaseInsensitiveSearch | NSWidthInsensitiveSearch)]) {
+		Oct += 9;
+	} else if ([val1 compare:@"B" options:(NSCaseInsensitiveSearch | NSWidthInsensitiveSearch)]) {
+		Oct += 11;
+	} else
+		Oct = 0xFF;
 	
 	if (Oct != 0xFF)
 	{
-		if (myTT[ 2] == '#') Oct++;
-		if (Oct >= 96) Oct = 0xFF;
-		if (Oct < 0) Oct = 0xFF;
+		if ([val2 isEqualToString:@"#"])
+			Oct++;
+		if (Oct >= 96)
+			Oct = 0xFF;
+		if (Oct < 0)
+			Oct = 0xFF;
 	}
 	
-	return( Oct);
+	return Oct;
 }
 
-#if 0
-static void StringToHex( char *str, int *oct)
+static unsigned int NSStringToHex(NSString *str)
 {
-	if (str[ 2] >= 'A' && str[ 2] <= 'F') *oct = 10 + str[ 2] - 'A';
-	if (str[ 2] >= '0' && str[ 2] <= '9') *oct = str[ 2] - '0';
+	NSScanner *tmpScanner = [[NSScanner alloc] initWithString:str];
+	unsigned int tmpVal = 0;
+	if (![tmpScanner scanHexInt:&tmpVal])
+		return 0;
+	if (tmpVal == UINT32_MAX) {
+		return 0;
+	}
 	
-	if (str[ 1] >= 'A' && str[ 1] <= 'F') *oct += (10 + str[ 1] - 'A')<<4;
-	if (str[ 1] >= '0' && str[ 1] <= '9') *oct += (str[ 1] - '0')<<4;
+	return tmpVal;
 }
-#endif
-
 
 @implementation ComplexFadeController
 @synthesize fadeType;
 
 - (BOOL)validateSettings;
 {
-	
+	return NO;
 }
 
 - (instancetype)initWithWindow:(NSWindow *)window
 {
-    self = [super initWithWindow:window];
-    if (self) {
+	if (self = [super initWithWindow:window]) {
 		isMultipleIstanceSafe = YES;
 		dispatch_block_t tmp = ^{
 			
 		};
 		self.plugBlock = tmp;
-    }
-    
-    return self;
+	}
+	
+	return self;
 }
 
 - (void)windowDidLoad
 {
 	[super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	
+	
 }
 
 - (IBAction)changeFadeType:(id)sender
@@ -124,11 +103,27 @@ static void StringToHex( char *str, int *oct)
 		case fadeInstrument:
 			
 			break;
+			
+		case fadeArgument:
+			
+			break;
+			
+		case fadeNote:
+			
+			break;
+			
+		case fadeVolume:
+			
+			break;
 	}
 }
 
 - (IBAction)okOrCancel:(id)sender
 {
+	if ([sender tag] == 1) {
+		[super okOrCancel:sender];
+		return;
+	}
 	if (![self validateSettings]) {
 		
 	} else
