@@ -54,14 +54,14 @@ static short NSStringToNote(NSString *myTT)
 	return Oct;
 }
 
-static unsigned int NSStringToHex(NSString *str)
+static int NSStringToHex(NSString *str)
 {
 	NSScanner *tmpScanner = [[NSScanner alloc] initWithString:str];
 	unsigned int tmpVal = 0;
 	if (![tmpScanner scanHexInt:&tmpVal])
-		return 0;
-	if (tmpVal == UINT32_MAX) {
-		return 0;
+		return -1;
+	else if (tmpVal == UINT32_MAX || tmpVal > 0xFF) {
+		return -1;
 	}
 	
 	return tmpVal;

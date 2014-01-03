@@ -26,8 +26,6 @@
 #define SEEK_END 2
 #endif
 
-#pragma pack(push, 2)
-
 #define ERROR /*perror(szProgram)*/
 
 typedef char *Sz;
@@ -77,8 +75,6 @@ typedef struct { /** MS structure represents a mix of samples **/
 	SI *psi;
 } MS;
 
-#pragma pack(pop)
-
 extern char bDrumch, szId[5];
 extern int fNocopy, fQuiet, fExtend, fStats, wPatmax, wMaxchan, wQuantval;
 extern int wRgmode, wModfmt;
@@ -97,12 +93,12 @@ void SavePtunePfile(Tune *, MADMusic *theMAD, MADDriverSettings *init);
 
 int ValidquantSz(Sz);
 
-void PrintPro( Ptr	myStr);
+void PrintPro(Ptr	myStr);
 
 void Error(Sz, ...);
 
-void Erreur( short a, short b);
+void Erreur(short a, short b);
 
-void CreateResult( Ptr);
+void CreateResult(Ptr);
 
 #endif

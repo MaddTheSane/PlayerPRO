@@ -172,10 +172,10 @@ typedef struct
 /*************************/
 
 #pragma mark Atom functions prototypes
-OSErr GetAtomData(MyAtom at, void* data, long size);
-long CountAtomById(MyAtom at, OSType type);
-OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, OSType type, short id);
-OSErr GetAtomDataById(MyAtom at, OSType type, void *data, long size);
+static OSErr GetAtomData(MyAtom at, void* data, long size);
+static long CountAtomById(MyAtom at, OSType type);
+static OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, OSType type, short id);
+static OSErr GetAtomDataById(MyAtom at, OSType type, void *data, long size);
 
 /*************************/
 
@@ -183,7 +183,7 @@ void pStrcpy(unsigned char *s1, const unsigned char *s2);
 void pStrcat(unsigned char *s1, unsigned char *s2);
 
 
-void OctavesMIDIName(short id, Str255 String)
+static void OctavesMIDIName(short id, Str255 String)
 {
 	const char	NNames[][3] = {"C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "};
 	/*	{'Do', 'Do#', 'Ré', 'Ré#', 'Mi', 'Fa', 'Fa#', 'Sol', 'Sol#', 'La', 'La#', 'Si'};	*/
@@ -201,7 +201,7 @@ void OctavesMIDIName(short id, Str255 String)
 	pStrcat(String, WorkStr);
 }
 
-void SetInstruNameM(short theNo, Str255 theNewName, short MIDIgm, Ptr destName)
+static void SetInstruNameM(short theNo, Str255 theNewName, short MIDIgm, Ptr destName)
 {
 	short	i;
 	Str255	aStr, bStr;
@@ -220,7 +220,7 @@ void SetInstruNameM(short theNo, Str255 theNewName, short MIDIgm, Ptr destName)
 	}
 }
 
-void SetSampNameM(Str255 theNewName, Ptr destName)
+static void SetSampNameM(Str255 theNewName, Ptr destName)
 {
 	short i;
 	
@@ -846,7 +846,7 @@ FSIORefNum GenerateDLSFromBundle()
 }
 
 #pragma mark Atom functions
-OSErr GetAtomData(MyAtom at, void* data, long size)
+static OSErr GetAtomData(MyAtom at, void* data, long size)
 {
 	ByteCount	fSize;
 	CK			sck;
@@ -866,7 +866,7 @@ OSErr GetAtomData(MyAtom at, void* data, long size)
 	return noErr;
 }
 
-long CountAtomById(MyAtom at, OSType type)
+static long CountAtomById(MyAtom at, OSType type)
 {
 	long		index = 0, listSize = at.size - 4;
 	ByteCount	fSize = 0;
@@ -917,7 +917,7 @@ long CountAtomById(MyAtom at, OSType type)
 	return index;
 }
 
-OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, OSType type, short id)
+static OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, OSType type, short id)
 {
 	OSType		ilistType;
 	long		index = 0, listSize = at.size - 4;
@@ -989,7 +989,7 @@ OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, OSType type, short id
 	return -1;
 }
 
-OSErr GetAtomDataById(MyAtom at, OSType type, void *data, long size)
+static OSErr GetAtomDataById(MyAtom at, OSType type, void *data, long size)
 {
 	MyAtom 	tempAt;
 	OSErr	iErr;
