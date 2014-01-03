@@ -22,13 +22,13 @@
 
 typedef struct iPlugInfo
 {
-	MADPLUGFUNC	IOPlug;			// Plug CODE
-	CFStringRef	MenuName;		// Plug name
-	CFStringRef	AuthorString;	// Plug author
-	char		type[ 5];		// OSType of file support.
+	char		type[5];		// OSType of file support.
 	OSType		mode;			// Mode support : Import +/ Export
 	UInt32		version;		// Plug-in version
+	CFStringRef	MenuName;		// Plug name
+	CFStringRef	AuthorString;	// Plug author
 	CFStringRef UTIType;
+	MADPLUGFUNC	IOPlug;			// Plug CODE
 } iPlugInfo;
 
 #define PLUGVERS 2 << 24 | 0 << 16 | 0 << 8 | 0
@@ -218,12 +218,9 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 					 MADMusic				*theNewMAD,
 					 PPInfoRec				*info)
 {
-	OSErr				iErr = noErr;
-	MADDriverSettings	driverSettings = {0};
+	MADDriverSettings driverSettings = {0};
 	
-	iErr = (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);
-	
-	return iErr;
+	return (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);
 }
 
 static void MovePluginInfoOver(const iPlugInfo *src, PlugInfo *dst)

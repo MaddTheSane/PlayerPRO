@@ -73,6 +73,8 @@ static short NSStringToNote(NSString *myTT)
 	[super windowDidLoad];
 	
 	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	char NNames[][3] = {"C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "};
+
 }
 
 @end

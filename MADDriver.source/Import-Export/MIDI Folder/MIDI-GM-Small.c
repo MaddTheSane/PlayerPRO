@@ -183,21 +183,20 @@ void pStrcpy(unsigned char *s1, const unsigned char *s2);
 void pStrcat(unsigned char *s1, unsigned char *s2);
 
 
-void OctavesMIDIName(short	id, Str255	String)
+void OctavesMIDIName(short id, Str255 String)
 {
-	//TODO: endian check!
-	short	NNames[] = {'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#', 'B '};
-	/*	{'Do','Do#','Ré','Ré#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
-	Str255	WorkStr;
+	const char	NNames[][3] = {"C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "};
+	/*	{'Do', 'Do#', 'Ré', 'Ré#', 'Mi', 'Fa', 'Fa#', 'Sol', 'Sol#', 'La', 'La#', 'Si'};	*/
+	Str255		WorkStr;
 	
 	if (id == 0xFF) {
-		pStrcpy( String, "\p---");
+		pStrcpy(String, "\p---");
 		return;
 	}
 	
 	NumToString((id / 12), WorkStr);
-	String[1] = NNames[(id) % 12] >> 8;
-	String[2] = NNames[(id) % 12];
+	String[1] = NNames[(id) % 12][0];
+	String[2] = NNames[(id) % 12][1];
 	String[0] = 2;
 	pStrcat(String, WorkStr);
 }
