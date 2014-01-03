@@ -8,3 +8,5 @@
 
 #include "PPCPlugs.xcconfig"
 
+//For MSVC compatibility checking.
+GCC_WARN_PEDANTIC = YES

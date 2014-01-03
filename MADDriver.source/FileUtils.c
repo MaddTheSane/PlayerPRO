@@ -34,6 +34,9 @@
 
 void iFileCreate(const char *path, OSType type)
 {
+#if defined _MAC_H && !TARGET_OS_IPHONE
+	CFURLRef fileURL;
+#endif
 	int status = 0;
 	int fd = 0;
 	errno = 0;
@@ -61,7 +64,7 @@ void iFileCreate(const char *path, OSType type)
 	close(fd);
 
 #if defined _MAC_H && !TARGET_OS_IPHONE
-	CFURLRef fileURL = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8*)path, strlen(path), false);
+	fileURL = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8*)path, strlen(path), false);
 	SetOSType(fileURL, type);
 	CFRelease(fileURL);
 #endif

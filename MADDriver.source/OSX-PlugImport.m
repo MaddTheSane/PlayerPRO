@@ -28,10 +28,10 @@ const CFStringRef kMadPlugDoesImport =		CFSTR("MADCanImport");
 const CFStringRef kMadPlugDoesExport =		CFSTR("MADCanExport");
 const CFStringRef kMadPlugModeKey =			CFSTR("MADPlugMode");
 
-static CFTypeID stringtype = 0;
-static CFTypeID numbertype = 0;
-static CFTypeID arraytype = 0;
-static CFTypeID booleantype = 0;
+static CFTypeID stringtype;
+static CFTypeID numbertype;
+static CFTypeID arraytype;
+static CFTypeID booleantype;
 
 typedef enum _MADPlugCapabilities {
 	PPMADCanDoNothing = 0,
@@ -233,7 +233,6 @@ badplug:
 
 static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
-	PlugInfo *FillPlug;
 	static dispatch_once_t typeIDToken;
 	dispatch_once(&typeIDToken, ^{
 		stringtype = CFStringGetTypeID();
@@ -251,11 +250,12 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		return false;
 	}
 	
-	FillPlug = &(inMADDriver->ThePlug[inMADDriver->TotalPlug]);
+	PlugInfo *FillPlug = &(inMADDriver->ThePlug[inMADDriver->TotalPlug]);
 	{
+		FillPlug->version = CFBundleGetVersionNumber(tempBundle);
+		
 		CFTypeID InfoDictionaryType;
 		CFTypeRef OpaqueDictionaryType;
-		FillPlug->version = CFBundleGetVersionNumber(tempBundle);
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugTypeKey);
 		if (OpaqueDictionaryType == NULL) {
@@ -330,7 +330,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		}
 	}
 badplug:
-	NSLog(@"Error with plug-in %@", tempBundle);
+	NSLog(@"PlayerPROCore: Error with plug-in %@", tempBundle);
 	bzero(FillPlug, sizeof(PlugInfo));
 	return false;
 }
@@ -481,17 +481,15 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 					 MADMusic				*theNewMAD,
 					 PPInfoRec				*info)
 {
-	OSErr					iErr = noErr;
-	CFBundleRefNum			resFileNum;
-	MADDriverSettings		driverSettings = {0};
-	
 #ifdef __x86_64__
 	if (inMADDriver->ThePlug[PlugNo].is32BitOnly) {
 		return CallImportPlugXPC(inMADDriver, inMADDriver->ThePlug[PlugNo].type, order, AlienFile, theNewMAD, info);
 	}
 #endif
 	
-	resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
+	OSErr					iErr = noErr;
+	CFBundleRefNum			resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
+	MADDriverSettings		driverSettings = {0};
 	
 	iErr = (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);
 	
@@ -567,12 +565,11 @@ OSErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MAD
 	
 	for (int i = 0; i < inMADDriver->TotalPlug; i++) {
 		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
-			OSErr iErr;
 			*theNewMAD = (MADMusic*)calloc(sizeof(MADMusic), 1);
 			if (!theNewMAD)
 				return MADNeedMemory;
 			
-			iErr = CallImportPlug(inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
+			OSErr iErr = CallImportPlug(inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
 			if (iErr != noErr) {
 				free(*theNewMAD);
 				*theNewMAD = NULL;
