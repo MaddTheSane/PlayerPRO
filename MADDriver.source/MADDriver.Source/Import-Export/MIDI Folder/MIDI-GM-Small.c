@@ -16,7 +16,7 @@
 static NoteRequest		myNoteRequest;
 static Boolean			QK50;
 Boolean					QuicktimeInstruAvailable;
-extern		MADMusic			*curMusic;
+extern MADMusic			*curMusic;
 
 
 void ConvertInstrument( register	Byte	*tempPtr,	register long sSize);
@@ -101,32 +101,31 @@ static Boolean TestRunningOnCarbonX(void)
 	&& (response >= 0x01000);
 }
 
-static void ConvertInstrument16( register	short	*tempPtr,	register long sSize)
+static void ConvertInstrument16(register short *tempPtr, register long sSize)
 {
-	register	short			val = 0x8000;
+	register short val = 0x8000;
 	
 	sSize /= 2;
 	
-	while( sSize > 0)
-	{
+	while(sSize > 0) {
 		sSize--;
 		*(tempPtr++) += val;
 	}
 }
 
-static inline void ConvertInstrumentIn16( register short *tempPtr, register long sSize)
+static inline void ConvertInstrumentIn16(register short *tempPtr, register long sSize)
 {
-	ConvertInstrument16( tempPtr, sSize);
+	ConvertInstrument16(tempPtr, sSize);
 }
 
-static void DebugLong( long type)
+static void DebugLong(long type)
 {
-	Str31	str;
+	Str31 str;
 	
-	str[ 0] = 4;
-	BlockMoveData( &type, &str[ 1], 4);
+	str[0] = 4;
+	BlockMoveData(&type, &str[1], 4);
 	
-	DebugStr( str);
+	DebugStr(str);
 }
 
 typedef struct
@@ -134,10 +133,9 @@ typedef struct
 	long	size;
 	OSType	type;
 	long	id;
-	long	a[ 2];
+	long	a[2];
 	
 	Byte	data[];
-	
 } QuictimeRsrc25;
 
 
@@ -150,7 +148,6 @@ typedef struct
 	long	resID;
 	long	e;
 	long	f;
-	
 } QuictimeSs25;
 
 typedef struct
@@ -158,7 +155,6 @@ typedef struct
 	char			unused[ 0x58];
 	Str31			name;
 	QuictimeSs25	Ss[];
-	
 } QuicktimeInst25;
 
 /*************************/
@@ -174,7 +170,6 @@ typedef struct
 	long	resID;
 	long	e;
 	long	f;
-	
 } QuictimeSs;
 
 typedef struct
@@ -182,7 +177,6 @@ typedef struct
 	char			unused[ 0x62];
 	short			no;
 	QuictimeSs		Ss[];
-	
 } QuicktimeInst;
 
 /*************************/
@@ -195,22 +189,22 @@ static OSErr GetAtomDataById( MyAtom at, long type, void *data, long size);
 
 /*************************/
 
-static void OctavesMIDIName(short	id, Str255	String)
+static void OctavesMIDIName(short id, Str255 String)
 {
-	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
-									/*	{'Do','Do#','RŽ','RŽ#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
+	const char	NNames[][3] = {"C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "};
+	/*	{'Do', 'Do#', 'RŽ', 'RŽ#', 'Mi', 'Fa', 'Fa#', 'Sol', 'Sol#', 'La', 'La#', 'Si'};	*/
 	Str255		WorkStr;
 	
-	if( id == 0xFF)
-	{
-		pStrcpy( String, "\p---");
+	if (id == 0xFF) {
+		pStrcpy(String, "\p---");
 		return;
 	}
 	
-	NumToString( (id / 12), WorkStr);
-  	String[ 1] = NNames[ (id) % 12]>>8;			String[ 2] = NNames[ (id) % 12];
-	String[ 0] = 2;
-  	pStrcat( String, WorkStr);	
+	NumToString((id / 12), WorkStr);
+	String[1] = NNames[(id) % 12][0];
+	String[2] = NNames[(id) % 12][1];
+	String[0] = 2;
+	pStrcat(String, WorkStr);
 }
 
 static void SetInstruNameM( short	theNo, Str255 theNewName, short MIDIgm, Ptr destName)
@@ -231,14 +225,15 @@ static void SetInstruNameM( short	theNo, Str255 theNewName, short MIDIgm, Ptr de
 	}
 }
 
-static void SetSampNameM( Str255 theNewName, Ptr destName)
+static void SetSampNameM(Str255 theNewName, Ptr destName)
 {
 	short	i;
 
-	for(i=0; i<32; i++)
-	{
-		if( i < theNewName[ 0]) destName[i] = theNewName[i+1];
-		else destName[i] = '\0';
+	for(i=0; i<32; i++) {
+		if (i < theNewName[0])
+			destName[i] = theNewName[i + 1];
+		else
+			destName[i] = '\0';
 	}
 }
 
@@ -762,16 +757,15 @@ void InitQuicktimeInstruments(void)
 
 static void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 {
-	short 						foundVRefNum, iFileRef, no, ii, i, x;
+	short 						foundVRefNum, iFileRef, ii, i, x;
 	OSErr 						iErr;
-	NoteAllocator 				na;
 	Str255						aStr, bStr;
 	sData						*curData;
-	long						size, inOutBytes, foundDirID;
+	long						foundDirID;
 	Ptr							data;
 	CK							ck;
 	long						listType, noIns, fSize, tot;
-	MyAtom						at, sat, insAt, insHe, rgnAt, sat3, sat4, InfoAt, InfoData;
+	MyAtom						at, sat, insAt, insHe, rgnAt;
 	INSTHEADER 					curIns;
 	
 	if( TestRunningOnCarbonX())
@@ -846,9 +840,8 @@ static void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *ins
 				//Apple protects many of the following info in a Big-endian wrapper. We need to work around this
 				if( GetNELong(NoteRequest->tone.instrumentNumber) >= 16384) // DRUM KIT
 				{
-					if( BitTst( &curIns.Locale.ulBank, 31-31))
-					{
-						long	valeurQT, gmID, valeurBank;
+					if(BitTst( &curIns.Locale.ulBank, 31-31)) {
+						long gmID;
 						
 						gmID = GetNELong(NoteRequest->tone.instrumentNumber);
 						gmID = gmID & 0x000000FF;
@@ -858,9 +851,7 @@ static void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *ins
 							break;
 						}
 					}
-				}
-				else  if( GetNELong(NoteRequest->tone.instrumentNumber) != 0 && GetNELong(NoteRequest->tone.instrumentNumber) > 128)
-				{
+				} else if( GetNELong(NoteRequest->tone.instrumentNumber) != 0 && GetNELong(NoteRequest->tone.instrumentNumber) > 128) {
 					long	valeurQT, gmID, valeurBank;
 					
 					valeurQT = GetNELong(NoteRequest->tone.instrumentNumber);
@@ -880,10 +871,9 @@ static void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *ins
 							break;
 						}
 					}
-				}
-				else
-				{
-					if( curIns.Locale.ulInstrument+1 == GetNELong(NoteRequest->tone.instrumentNumber)) break;
+				} else {
+					if(curIns.Locale.ulInstrument+1 == GetNELong(NoteRequest->tone.instrumentNumber))
+						break;
 				}
 			}
 			
@@ -914,7 +904,7 @@ static void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *ins
 				for( x = 0; x < 32 && x < NoteRequest->tone.instrumentName[0]; x++) inst->name[ x]	= NoteRequest->tone.instrumentName[ x+1]; //insName[ x];
 				
 				iErr = FindAtomById( insAt, &sat, true, 'lrgn', 0);
-				if( iErr) DebugLong( iErr);
+				if (iErr) DebugLong(iErr);
 				
 				for( x = 0; x < curIns.cRegions; x++)
 				{
@@ -1051,8 +1041,9 @@ static void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *ins
 					}
 					else
 					{
-						if( dataAt.size) BlockMoveData( data, curData->data, dataAt.size);
-						DisposePtr( data);
+						if(dataAt.size)
+							BlockMoveData(data, curData->data, dataAt.size);
+						DisposePtr(data);
 						
 						switch( fmt.wBitsPerSample)
 						{

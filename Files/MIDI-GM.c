@@ -140,22 +140,22 @@ void InitQuicktimeInstruments(void)
 	HSetVol( NULL, vRefNum, dirID);
 }
 
-void OctavesMIDIName(short	id, Str255	String)
+void OctavesMIDIName(short id, Str255 String)
 {
-	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
-	/*	{'Do','Do#','RŽ','RŽ#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
+	const char	NNames[][3] = {"C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "};
+	/*	{'Do', 'Do#', 'RŽ', 'RŽ#', 'Mi', 'Fa', 'Fa#', 'Sol', 'Sol#', 'La', 'La#', 'Si'};	*/
 	Str255		WorkStr;
 	
-	if( id == 0xFF)
-	{
-		pStrcpy( String, "\p---");
+	if (id == 0xFF) {
+		pStrcpy(String, "\p---");
 		return;
 	}
 	
-	NumToString( (id / 12), WorkStr);
-  	String[ 1] = NNames[ (id) % 12]>>8;			String[ 2] = NNames[ (id) % 12];
-	String[ 0] = 2;
-  	pStrcat( String, WorkStr);	
+	NumToString((id / 12), WorkStr);
+	String[1] = NNames[(id) % 12][0];
+	String[2] = NNames[(id) % 12][1];
+	String[0] = 2;
+	pStrcat(String, WorkStr);
 }
 
 void SetInstruNameM( short	theNo, Str255 theNewName, short MIDIgm, Ptr destName)
