@@ -217,7 +217,6 @@
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E10FF10D6F09F00BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		554E112A10D6F10100BB619C /* FadeNote.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE710D6C79D00BB619C /* FadeNote.r */; };
 		554E114610D6F1BF00BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E11B310D6F32900BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E11F710D6F3E100BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -1900,7 +1899,7 @@
 		552581FB16C6FC350016A31C /* InstrumentInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstrumentInfoController.h; sourceTree = "<group>"; };
 		552581FC16C6FC350016A31C /* InstrumentInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstrumentInfoController.m; sourceTree = "<group>"; };
 		552581FD16C6FC350016A31C /* InstrumentInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstrumentInfoController.xib; sourceTree = "<group>"; };
-		55268A551874CA9800A82269 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		55268A551874CA9800A82269 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		55268A561874CDD100A82269 /* CompFadeNoteFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompFadeNoteFormatter.h; sourceTree = "<group>"; };
 		55268A571874CDD200A82269 /* CompFadeNoteFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompFadeNoteFormatter.m; sourceTree = "<group>"; };
 		552711E3124881F4005120FC /* UserDefaultKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDefaultKeys.h; path = ../Classes/UserDefaultKeys.h; sourceTree = "<group>"; };
@@ -2012,8 +2011,6 @@
 		554703D81834368F008E5B9B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPSoundSettingsViewController.strings; sourceTree = "<group>"; };
 		554E0FE110D6C79D00BB619C /* CompFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CompFade.c; sourceTree = "<group>"; };
 		554E0FE210D6C79D00BB619C /* CompFade.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = CompFade.r; sourceTree = "<group>"; };
-		554E0FE610D6C79D00BB619C /* FadeNote.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = FadeNote.c; sourceTree = "<group>"; };
-		554E0FE710D6C79D00BB619C /* FadeNote.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = FadeNote.r; sourceTree = "<group>"; };
 		554E0FF010D6C79D00BB619C /* Propagate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Propagate.c; sourceTree = "<group>"; };
 		554E0FF310D6C79D00BB619C /* Read-Me */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read-Me"; sourceTree = "<group>"; };
 		554E0FF410D6C79D00BB619C /* Revert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Revert.c; sourceTree = "<group>"; };
@@ -3619,8 +3616,6 @@
 		554E11A510D6F2DC00BB619C /* Fade Note */ = {
 			isa = PBXGroup;
 			children = (
-				554E0FE610D6C79D00BB619C /* FadeNote.c */,
-				554E0FE710D6C79D00BB619C /* FadeNote.r */,
 				552C440417DFDF5A00AFCB5C /* FadeNoteController.h */,
 				552C440517DFDF5A00AFCB5C /* FadeNoteController.m */,
 				554E112910D6F0A000BB619C /* Fade Note-Info.plist */,
@@ -4461,7 +4456,6 @@
 				554E10FA10D6F09F00BB619C /* Resources */,
 				554E10FB10D6F09F00BB619C /* Sources */,
 				554E10FD10D6F09F00BB619C /* Frameworks */,
-				554E110010D6F09F00BB619C /* Rez */,
 			);
 			buildRules = (
 			);
@@ -5963,14 +5957,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXRezBuildPhase section */
-		554E110010D6F09F00BB619C /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				554E112A10D6F10100BB619C /* FadeNote.r in Rez */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		55868A7710BFB46100FCC24D /* Rez */ = {
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;

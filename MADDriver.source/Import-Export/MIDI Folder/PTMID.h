@@ -93,7 +93,7 @@ void SavePtunePfile(Tune *, MADMusic *theMAD, MADDriverSettings *init);
 
 int ValidquantSz(Sz);
 
-void PrintPro(Ptr	myStr);
+void PrintPro(Ptr myStr);
 
 void Error(Sz, ...);
 

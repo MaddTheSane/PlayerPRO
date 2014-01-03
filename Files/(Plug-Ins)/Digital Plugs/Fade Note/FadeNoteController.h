@@ -12,5 +12,6 @@
 @interface FadeNoteController : PPDigitalPluginWindowController
 @property (weak) IBOutlet NSComboBox *fromBox;
 @property (weak) IBOutlet NSComboBox *toBox;
-
+@property (copy) NSString* initialFrom;
+@property (copy) NSString* initialTo;
 @end
