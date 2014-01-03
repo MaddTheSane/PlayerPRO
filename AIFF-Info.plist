@@ -32,22 +32,22 @@
 			<string>C4B85FAC-BD58-4661-9004-CBBF84BA4EDD</string>
 		</array>
 	</dict>
+	<key>MADCanExport</key>
+	<true/>
+	<key>MADCanImport</key>
+	<false/>
+	<key>MADPlugAuthorName</key>
+	<string>Copyright 2014, Charles "Madd the Sane" Betts, Sourceforge</string>
+	<key>MADPlugIsSample</key>
+	<true/>
+	<key>MADPlugMenuName</key>
+	<string>AIFF</string>
+	<key>MADPlugType</key>
+	<string>AIFF</string>
 	<key>MADPlugUTITypes</key>
 	<array>
 		<string>public.aiff-audio</string>
 		<string>public.aifc-audio</string>
 	</array>
-	<key>MADPlugMenuName</key>
-	<string>AIFF</string>
-	<key>MADPlugType</key>
-	<string>AIFF</string>
-	<key>MADPlugAuthorName</key>
-	<string>Copyright 96 Antoine ROSSET</string>
-	<key>MADPlugIsSample</key>
-	<true/>
-	<key>MADCanImport</key>
-	<false/>
-	<key>MADCanExport</key>
-	<true/>
 </dict>
 </plist>
