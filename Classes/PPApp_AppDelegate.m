@@ -476,9 +476,13 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	return NO;
 }
 
-- (id)openUntitledDocumentAndDisplay:(BOOL)displayDocument error:(NSError **)outError;
+- (id)makeUntitledDocumentOfType:(NSString *)typeName error:(NSError *__autoreleasing *)outError
 {
+	NSAssert([typeName isEqualToString:MADPackageUTI], @"Unknown type passed to %s: %@", sel_getName(_cmd), typeName);
 	PPDocument *theDoc = [[PPDocument alloc] init];
+	if (!theDoc) {
+		*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFormattingError userInfo:nil];
+	}
 	[theDoc importMusicObjectWrapper:[[PPMusicObjectWrapper alloc] init]];
 	
 	return theDoc;
@@ -493,8 +497,9 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	NSInteger plugCount = [instrumentImporter plugInCount];
 	samplesDict = [[NSMutableDictionary alloc] initWithCapacity:plugCount];
 	for (PPInstrumentImporterObject *obj in instrumentImporter) {
-		NSArray *tmpArray = obj.UTITypes;
-		samplesDict[obj.menuName] = tmpArray;
+		if (obj.mode == MADPlugImport || obj.mode == MADPlugImportExport) {
+			samplesDict[obj.menuName] = obj.UTITypes;
+		}
 	}
 	
 	NSDictionary *otherDict = @{@"PCMD": @[PPPCMDUTI], @"Instrument List": @[PPInstrumentListUTI]};

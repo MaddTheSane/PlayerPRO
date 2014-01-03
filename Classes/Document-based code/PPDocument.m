@@ -67,8 +67,7 @@
 
 - (id)init
 {
-	self = [super init];
-	if (self) {
+	if (self = [super init]) {
 		MADDriverSettings init;
 		{
 			MADGetBestDriver(&init);
@@ -300,152 +299,136 @@
 
 #import "getAIFF.i"
 
-typedef struct {
-	NSInteger	tag;
-	CFURLRef	fileURL;
-} ExportContextInfo;
-
-- (void)exportSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
-{
-	ExportContextInfo *ei = contextInfo;
-	NSURL *outURL = CFBridgingRelease(ei->fileURL);
-	
-	if (returnCode == NSAlertDefaultReturn) {
-		switch (ei->tag)
-		{
-			case -1:
-				//AIFF
-			{
-				PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:outURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
-					if (errStr)
-						*errStr = nil;
-
-					OSErr theErr = [self saveMusicAsAIFFToURL:theURL usingSettings:&exportSettings];
-					[_theDriver endExport];
-					return theErr;
-				}];
-				[[NSApp delegate] addExportObject:expObj];
-			}
-				break;
-				
-			case -2:
-				//M4A
-			{
-				PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:outURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
-					OSErr theErr = noErr;
-					if (errStr)
-						*errStr = nil;
-					
-					NSArray *metadataInfo;
-					NSString *oldMusicName = self.musicName;
-					NSString *oldMusicInfo = self.musicInfo;
-					NSURL *oldURL = [self fileURL];
-					NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:NULL] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", (oldMusicName && ![oldMusicName isEqualToString:@""]) ? oldMusicName : @"untitled"] isDirectory:NO];
-					theErr = [self saveMusicAsAIFFToURL:tmpURL usingSettings:&exportSettings];
-					[_theDriver endExport];
-					if (theErr) {
-						if (errStr)
-							*errStr = [[NSString alloc] initWithFormat:@"Unable to save temporary file to %@, error %d.", [tmpURL path], theErr];
-
-						return theErr;
-					}
-					
-					AVAsset *exportMov = [AVAsset assetWithURL:tmpURL];
-					
-					{
-						AVMutableMetadataItem *titleName = [AVMutableMetadataItem new];
-						[titleName setKeySpace:AVMetadataKeySpaceCommon];
-						[titleName setKey:AVMetadataCommonKeyTitle];
-						[titleName setValue:oldMusicName];
-						
-						AVMutableMetadataItem *dataInfo = [AVMutableMetadataItem new];
-						[titleName setKeySpace:AVMetadataKeySpaceCommon];
-						[titleName setKey:AVMetadataCommonKeySoftware];
-						[titleName setValue:@"PlayerPRO 6"];
-						
-						AVMutableMetadataItem *musicInfoQTUser = [AVMutableMetadataItem new];
-						[musicInfoQTUser setKeySpace:AVMetadataKeySpaceQuickTimeUserData];
-						[musicInfoQTUser setKey:AVMetadataQuickTimeUserDataKeyInformation];
-						[musicInfoQTUser setValue:oldMusicInfo];
-						
-						AVMutableMetadataItem *musicInfoiTunes = [AVMutableMetadataItem new];
-						[musicInfoiTunes setKeySpace:AVMetadataKeySpaceiTunes];
-						[musicInfoiTunes setKey:AVMetadataiTunesMetadataKeyUserComment];
-						[musicInfoiTunes setValue:oldMusicInfo];
-						
-						AVMutableMetadataItem *musicInfoQTMeta = [AVMutableMetadataItem new];
-						[musicInfoQTMeta setKeySpace:AVMetadataKeySpaceQuickTimeMetadata];
-						[musicInfoQTMeta setKey:AVMetadataQuickTimeMetadataKeyInformation];
-						[musicInfoQTMeta setValue:oldMusicInfo];
-						
-						
-						metadataInfo = @[titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
-					}
-					
-					oldMusicInfo = nil;
-					if (!exportMov) {
-						if (errStr) {
-							*errStr = [[NSString alloc] initWithFormat:@"Init Failed for %@.", oldMusicName];
-						}
-						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-						return MADWritingErr;
-					}
-					
-					AVAssetExportSession *session = [[AVAssetExportSession alloc] initWithAsset:exportMov presetName:AVAssetExportPresetAppleM4A];
-					if (!session) {
-						if (errStr)
-							*errStr = [[NSString alloc] initWithFormat:@"Export session creation for %@ failed.", oldMusicName];
-						
-						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-						return MADWritingErr;
-					}
-					[[NSFileManager defaultManager] removeItemAtURL:theURL error:NULL];
-					session.outputURL = theURL;
-					session.outputFileType = AVFileTypeAppleM4A;
-					session.metadata = metadataInfo;
-					metadataInfo = nil;
-					dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create(0);
-					[session exportAsynchronouslyWithCompletionHandler:^{
-						dispatch_semaphore_signal(sessionWaitSemaphore);
-					}];
-					dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
-					
-					BOOL didFinish = [session status] == AVAssetExportSessionStatusCompleted;
-					[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
-					
-					if (didFinish) {
-						return noErr;
-					} else {
-						if (errStr)
-							*errStr = [[NSString alloc] initWithFormat:@"export of \"%@\" failed.", oldMusicName];
-						
-						return MADWritingErr;
-					}
-				}];
-				[[NSApp delegate] addExportObject:expObj];
-			}
-				break;
-				
-			default:
-				break;
-		}
-	}
-	[_theDriver endExport];
-	
-	free(contextInfo);
-}
-
 - (void)showExportSettingsWithExportType:(NSInteger)expType URL:(NSURL*)theURL
 {
 	MADGetBestDriver(&exportSettings);
 	exportSettings.driverMode = NoHardwareDriver;
 	exportSettings.repeatMusic = FALSE;
 	[_exportController settingsFromDriverSettings:&exportSettings];
-	ExportContextInfo *ei = calloc(sizeof(ExportContextInfo), 1);
-	ei->tag = expType;
-	ei->fileURL = CFBridgingRetain(theURL);
 	
-	[NSApp beginSheet:_exportWindow modalForWindow:[self windowForSheet] modalDelegate:self didEndSelector:@selector(exportSheetDidEnd:returnCode:contextInfo:) contextInfo:ei];
+	[[self windowForSheet] beginSheet:_exportWindow completionHandler:^(NSModalResponse returnCode) {
+		if (returnCode == NSAlertDefaultReturn) {
+			switch (expType)
+			{
+				case -1:
+					//AIFF
+				{
+					PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:theURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
+						if (errStr)
+							*errStr = nil;
+						
+						OSErr theErr = [self saveMusicAsAIFFToURL:theURL usingSettings:&exportSettings];
+						[_theDriver endExport];
+						return theErr;
+					}];
+					[[NSApp delegate] addExportObject:expObj];
+				}
+					break;
+					
+				case -2:
+					//M4A
+				{
+					PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:theURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
+						OSErr theErr = noErr;
+						if (errStr)
+							*errStr = nil;
+						
+						NSArray *metadataInfo;
+						NSString *oldMusicName = self.musicName;
+						NSString *oldMusicInfo = self.musicInfo;
+						NSURL *oldURL = [self fileURL];
+						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:NULL] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", (oldMusicName && ![oldMusicName isEqualToString:@""]) ? oldMusicName : @"untitled"] isDirectory:NO];
+						theErr = [self saveMusicAsAIFFToURL:tmpURL usingSettings:&exportSettings];
+						[_theDriver endExport];
+						if (theErr) {
+							if (errStr)
+								*errStr = [[NSString alloc] initWithFormat:@"Unable to save temporary file to %@, error %d.", [tmpURL path], theErr];
+							
+							return theErr;
+						}
+						
+						AVAsset *exportMov = [AVAsset assetWithURL:tmpURL];
+						
+						{
+							AVMutableMetadataItem *titleName = [AVMutableMetadataItem new];
+							[titleName setKeySpace:AVMetadataKeySpaceCommon];
+							[titleName setKey:AVMetadataCommonKeyTitle];
+							[titleName setValue:oldMusicName];
+							
+							AVMutableMetadataItem *dataInfo = [AVMutableMetadataItem new];
+							[titleName setKeySpace:AVMetadataKeySpaceCommon];
+							[titleName setKey:AVMetadataCommonKeySoftware];
+							[titleName setValue:@"PlayerPRO 6"];
+							
+							AVMutableMetadataItem *musicInfoQTUser = [AVMutableMetadataItem new];
+							[musicInfoQTUser setKeySpace:AVMetadataKeySpaceQuickTimeUserData];
+							[musicInfoQTUser setKey:AVMetadataQuickTimeUserDataKeyInformation];
+							[musicInfoQTUser setValue:oldMusicInfo];
+							
+							AVMutableMetadataItem *musicInfoiTunes = [AVMutableMetadataItem new];
+							[musicInfoiTunes setKeySpace:AVMetadataKeySpaceiTunes];
+							[musicInfoiTunes setKey:AVMetadataiTunesMetadataKeyUserComment];
+							[musicInfoiTunes setValue:oldMusicInfo];
+							
+							AVMutableMetadataItem *musicInfoQTMeta = [AVMutableMetadataItem new];
+							[musicInfoQTMeta setKeySpace:AVMetadataKeySpaceQuickTimeMetadata];
+							[musicInfoQTMeta setKey:AVMetadataQuickTimeMetadataKeyInformation];
+							[musicInfoQTMeta setValue:oldMusicInfo];
+							
+							
+							metadataInfo = @[titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
+						}
+						
+						oldMusicInfo = nil;
+						if (!exportMov) {
+							if (errStr) {
+								*errStr = [[NSString alloc] initWithFormat:@"Init Failed for %@.", oldMusicName];
+							}
+							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
+							return MADWritingErr;
+						}
+						
+						AVAssetExportSession *session = [[AVAssetExportSession alloc] initWithAsset:exportMov presetName:AVAssetExportPresetAppleM4A];
+						if (!session) {
+							if (errStr)
+								*errStr = [[NSString alloc] initWithFormat:@"Export session creation for %@ failed.", oldMusicName];
+							
+							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
+							return MADWritingErr;
+						}
+						[[NSFileManager defaultManager] removeItemAtURL:theURL error:NULL];
+						session.outputURL = theURL;
+						session.outputFileType = AVFileTypeAppleM4A;
+						session.metadata = metadataInfo;
+						metadataInfo = nil;
+						dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create(0);
+						[session exportAsynchronouslyWithCompletionHandler:^{
+							dispatch_semaphore_signal(sessionWaitSemaphore);
+						}];
+						dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
+						
+						BOOL didFinish = [session status] == AVAssetExportSessionStatusCompleted;
+						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
+						
+						if (didFinish) {
+							return noErr;
+						} else {
+							if (errStr)
+								*errStr = [[NSString alloc] initWithFormat:@"export of \"%@\" failed.", oldMusicName];
+							
+							return MADWritingErr;
+						}
+					}];
+					[[NSApp delegate] addExportObject:expObj];
+				}
+					break;
+					
+				default:
+					[_theDriver endExport];
+					break;
+			}
+		}
+	}];
 }
 
 - (IBAction)exportMusicAs:(id)sender
