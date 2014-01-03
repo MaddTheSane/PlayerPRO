@@ -375,8 +375,8 @@ pascal OSErr MyPATSendDataProc(FlavorType theFlavor,  void *refCon, ItemReferenc
 		HGetVol( NULL, &target.vRefNum, &target.parID);
 		
 		bStr[ 0] = 20;
-		for( x = 0; x < 20; x++) bStr[ x + 1] = curMusic->partition[ DragPatSource]->header.name[ x];
-		for( x = 1; x < 20; x++) if (bStr[ x] == 0) { bStr[ 0] = x - 1; break;}
+		for (x = 0; x < 20; x++) bStr[ x + 1] = curMusic->partition[ DragPatSource]->header.name[ x];
+		for (x = 1; x < 20; x++) if (bStr[ x] == 0) { bStr[ 0] = x - 1; break;}
 
 		if (bStr[ 0] == 0)
 		{
@@ -534,7 +534,7 @@ void DeleteAPattern( Boolean AskDelete)
 	/***** Update la pattern list ******/
 	
 	theCell.h = 0;
-	for( theCell.v = (*PatList2)->dataBounds.bottom-1; theCell.v >= 0; theCell.v--)
+	for (theCell.v = (*PatList2)->dataBounds.bottom-1; theCell.v >= 0; theCell.v--)
 	{
 		if (curMusic->header->numPat > 1)
 		{
@@ -545,14 +545,14 @@ void DeleteAPattern( Boolean AskDelete)
 				MyDisposePtr( ( Ptr*) &  curMusic->partition[ theCell.v]);
 				curMusic->partition[ theCell.v] = NULL;
 			
-				for( i = theCell.v; i < curMusic->header->numPat; i++)
+				for (i = theCell.v; i < curMusic->header->numPat; i++)
 				{
 					curMusic->partition[ i] = curMusic->partition[ i + 1];
 				}
-				for( i = curMusic->header->numPat; i < MAXPATTERN; i++) curMusic->partition[ i] = NULL;
+				for (i = curMusic->header->numPat; i < MAXPATTERN; i++) curMusic->partition[ i] = NULL;
 				
 				/***** Update la partition list ******/
-				for( i = 0; i < 128; i++)
+				for (i = 0; i < 128; i++)
 				{
 					if (curMusic->header->oPointers[ i] > theCell.v) curMusic->header->oPointers[ i]--;
 					else if (curMusic->header->oPointers[ i] == theCell.v) curMusic->header->oPointers[ i] = 0;
@@ -582,8 +582,8 @@ void SaveAPatternInt( FSSpec	sFile, short theID)
 	{
 		iErr = FSpOpenDF( &sFile, fsCurPerm, &fRefNum);
 		
-		for( x = 0; x < sFile.name[ 0]; x++) curMusic->partition[ theID]->header.name[ x] = sFile.name[ x + 1];
-		for( sFile.name[ 0]; x < 20; x++) curMusic->partition[ theID]->header.name[ x] = 0;
+		for (x = 0; x < sFile.name[ 0]; x++) curMusic->partition[ theID]->header.name[ x] = sFile.name[ x + 1];
+		for (sFile.name[ 0]; x < 20; x++) curMusic->partition[ theID]->header.name[ x] = 0;
 		
 		inOutBytes = GetPtrSize( (Ptr) curMusic->partition[ theID]);
 		iErr = FSWrite( fRefNum, &inOutBytes, curMusic->partition[ theID]);
@@ -612,8 +612,8 @@ if (LGetSelect( true, &theCell, PatList2)) thePos = theCell.v;
 else return;
 
 theStr[ 0] = 20;
-for( x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ thePos]->header.name[ x];
-for( x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
+for (x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ thePos]->header.name[ x];
+for (x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
 
 if (DoCustomSave( "\pSave this pattern as:", theStr, 'PATN', &spec)) return;
 
@@ -667,9 +667,9 @@ Boolean					readingActif = MADDriver->Reading;
 		curMusic->partition[ selectedPos]->header.patBytes = theNewPattern->header.size * sizeof( Cmd) * curMusic->header->numChn;
 		curMusic->partition[ selectedPos]->header.unused2 = 0;
 
-		for( x = 0; x < theNewPattern->header.size; x++)
+		for (x = 0; x < theNewPattern->header.size; x++)
 		{
-			for( z = 0; z < curMusic->header->numChn; z++)
+			for (z = 0; z < curMusic->header->numChn; z++)
 			{
 				outACmd = GetMADCommand( x, z, curMusic->partition[ selectedPos]);
 				
@@ -823,9 +823,9 @@ Point					theCell = { 0, 0};
 	curMusic->partition[ curMusic->header->numPat]->header.patBytes = 0;
 	curMusic->partition[ curMusic->header->numPat]->header.unused2 = 0;
 	
-	for( u = 0; u < curMusic->header->numChn; u++)
+	for (u = 0; u < curMusic->header->numChn; u++)
 	{
-		for( v = 0; v < curMusic->partition[ curMusic->header->numPat]->header.size; v++)
+		for (v = 0; v < curMusic->partition[ curMusic->header->numPat]->header.size; v++)
 		{
 			MADKillCmd( GetMADCommand(  v,  u, curMusic->partition[ curMusic->header->numPat]));
 		}
@@ -868,9 +868,9 @@ void PurgePattern(void)
 
 	curMusic->hasChanged = true;
 
-	for( tracks = 0; tracks < curMusic->header->numChn; tracks++)
+	for (tracks = 0; tracks < curMusic->header->numChn; tracks++)
 	{
-		for( position = 0; position < curMusic->partition[ thePos]->header.size; position++)
+		for (position = 0; position < curMusic->partition[ thePos]->header.size; position++)
 		{
 			aCmd = GetMADCommand( position, tracks, curMusic->partition[ thePos]);
 			MADKillCmd( aCmd);
@@ -1007,8 +1007,8 @@ Boolean DialogPatternInfo( short thePos)
 	AutoPosition( TheDia);
 	
 	theStr[ 0] = 20;
-	for( x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ thePos]->header.name[ x];
-	for( x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
+	for (x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ thePos]->header.name[ x];
+	for (x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
 	SetDText( TheDia, 3, theStr);
 	SelectDialogItemText( TheDia, 3, 0, 32767);
 	
@@ -1169,9 +1169,9 @@ Boolean DialogPatternInfo( short thePos)
 			
 			/** Copy old notes **/
 			
-			for( u = 0; u < curMusic->header->numChn; u++)
+			for (u = 0; u < curMusic->header->numChn; u++)
 			{
-				for( v = 0; v < mm; v++)
+				for (v = 0; v < mm; v++)
 				{
 					ouCmd = GetMADCommand(  v,  u, curMusic->partition[ thePos]);
 					inCmd = GetMADCommand(  v,  u, newPattern);
@@ -1182,9 +1182,9 @@ Boolean DialogPatternInfo( short thePos)
 			
 			/** New notes **/
 			
-			for( u = 0; u < curMusic->header->numChn; u++)
+			for (u = 0; u < curMusic->header->numChn; u++)
 			{
-				for( v = mm; v < newPattern->header.size; v++)
+				for (v = mm; v < newPattern->header.size; v++)
 				{
 					MADKillCmd( GetMADCommand(  v,  u, newPattern));
 				}
@@ -1201,9 +1201,9 @@ Boolean DialogPatternInfo( short thePos)
 		GetDText( TheDia, 3, theStr);
 		if (theStr[ 0] > 20) 
 			theStr[ 0] = 20;
-		for( x = 0; x < theStr[ 0]; x++) 
+		for (x = 0; x < theStr[ 0]; x++) 
 			curMusic->partition[thePos]->header.name[x] = theStr[x + 1];
-		for( x = theStr[0]; x < 20; x++) 
+		for (x = theStr[0]; x < 20; x++) 
 			curMusic->partition[thePos]->header.name[x] = 0;
 		
 		UpdateEditorInfo();
@@ -2113,7 +2113,7 @@ void DoKeyPressPatList( short theChar)
 
 		theCell.v = theCell.h = 0;
 		while( LGetSelect( true, &theCell, PatList2)) LSetSelect( false, theCell, PatList2);
-		for( theCell.v = maxCell; theCell.v < (*PatList2)->dataBounds.bottom; theCell.v++) LSetSelect( true, theCell, PatList2);
+		for (theCell.v = maxCell; theCell.v < (*PatList2)->dataBounds.bottom; theCell.v++) LSetSelect( true, theCell, PatList2);
 	}
 
 	/********************/

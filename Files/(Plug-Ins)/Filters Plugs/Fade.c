@@ -141,7 +141,7 @@ static OSErr mainFade(	sData					*theData,
 			case 8:
 				Sample8Ptr += SelectionStart;
 				
-				for( i = 0; i < SelectionEnd - SelectionStart; i++)
+				for (i = 0; i < SelectionEnd - SelectionStart; i++)
 				{
 					temp = *Sample8Ptr;
 					if (temp >= 0x80) temp -= 0xFF;
@@ -168,7 +168,7 @@ static OSErr mainFade(	sData					*theData,
 			case 16:
 				Sample16Ptr += SelectionStart/2;						// Div 2, because it's in bytes !!!
 			
-				for( i = 0; i < (SelectionEnd - SelectionStart)/2; i++)	// Div 2, because it's in bytes !!!
+				for (i = 0; i < (SelectionEnd - SelectionStart)/2; i++)	// Div 2, because it's in bytes !!!
 				{
 					temp = *Sample16Ptr;
 					

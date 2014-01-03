@@ -134,9 +134,9 @@ static OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 			goto RESTART;
 		}
 		
-		for( track = 0; track < myPcmd->tracks; track++)
+		for (track = 0; track < myPcmd->tracks; track++)
 		{
-			for( row = 0; row < myPcmd->length; row++)
+			for (row = 0; row < myPcmd->length; row++)
 			{
 				myCmd = GetCmd( row, track, myPcmd);
 				

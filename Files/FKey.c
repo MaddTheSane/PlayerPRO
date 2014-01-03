@@ -35,7 +35,7 @@ void InitFKeyMenu( void)
 	
 	FKeymaxItems++;
 	
-	for( i = 0 ; i < FKeymaxItems; i++)
+	for (i = 0 ; i < FKeymaxItems; i++)
 	{
 		PKEYDesc[ i] = (unsigned char*) tempPtr;
 		tempPtr += tempPtr[ 0] + 1;
@@ -53,7 +53,7 @@ void InitFKeyMenu( void)
 	
 	FKeyMenu = NewMenu( 366, "\pFKey Menu");
 	
-	for( i = 0 ; i < FKeymaxItems; i++)
+	for (i = 0 ; i < FKeymaxItems; i++)
 	{
 		AppendMenu( FKeyMenu, PKEYDesc[ i]);
 	}
@@ -69,7 +69,7 @@ void GetFKeyDesc( short whichFKey, Str255 str)
 {
 	short	i;
 	
-	for( i = 0 ; i < FKeymaxItems; i++)
+	for (i = 0 ; i < FKeymaxItems; i++)
 	{
 		if (thePrefs.FKeyItem[ whichFKey] == FKeyItem[ i] &&
 			thePrefs.FKeyWind[ whichFKey] == FKeyWind[ i])
@@ -106,7 +106,7 @@ Boolean PressFKeyMenu( short itemID, DialogPtr dia, short whichFKey, Str255	str)
 	
 	if (thePrefs.FKeyItem[ whichFKey] != 0)
 	{
-		for( i = 0 ; i < FKeymaxItems; i++)
+		for (i = 0 ; i < FKeymaxItems; i++)
 		{
 			if (thePrefs.FKeyItem[ whichFKey] == FKeyItem[ i] &&
 				thePrefs.FKeyWind[ whichFKey] == FKeyWind[ i])
@@ -170,7 +170,7 @@ void PressFKey( short whichFKey)
 		{
 			short	noActive;
 			
-			for( i = 0, noActive = 0; i < curMusic->header->numChn; i++)
+			for (i = 0, noActive = 0; i < curMusic->header->numChn; i++)
 			{
 				if (MADDriver->Active[ i] == true)
 				{
@@ -180,11 +180,11 @@ void PressFKey( short whichFKey)
 			
 			if (noActive <= 1 && MADDriver->Active[ whichFKey] == true)
 			{
-				for( i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
+				for (i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
 			}
 			else
 			{
-				for( i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
+				for (i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
 				MADDriver->Active[ whichFKey] = true;
 			}
 		}

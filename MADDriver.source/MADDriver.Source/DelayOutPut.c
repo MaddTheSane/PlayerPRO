@@ -59,7 +59,7 @@ void MADCreateOverShoot( MADDriverRec *intDriver)
 			maxBuffer = (Ptr) intDriver->DASCBuffer;
 			maxBuffer = maxBuffer + ( (long) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L;
 			
-			for( i = 0; i < MAXCHANEFFECT; i++)
+			for (i = 0; i < MAXCHANEFFECT; i++)
 			{
 				intDriver->DASCEffectBuffer[ i]	= (long*) MADNewPtrClear( ( (long) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, intDriver->lib);
 			}
@@ -70,9 +70,9 @@ void MADCreateOverShoot( MADDriverRec *intDriver)
 			
 			intDriver->OverShoot = (Ptr) MADNewPtrClear( 256L * 32L, intDriver->lib);
 			
-			for( i = 0; i < 256L * 16L; i++)						intDriver->OverShoot[ i] = 0;
-			for( i = 256L * 16L, x = 0; i < 256L * 17L; i++, x++)	intDriver->OverShoot[ i] = x;
-			for( i = 256L * 17L; i < 256L * 32L; i++)				intDriver->OverShoot[ i] = 0xFF;
+			for (i = 0; i < 256L * 16L; i++)						intDriver->OverShoot[ i] = 0;
+			for (i = 256L * 16L, x = 0; i < 256L * 17L; i++, x++)	intDriver->OverShoot[ i] = x;
+			for (i = 256L * 17L; i < 256L * 32L; i++)				intDriver->OverShoot[ i] = 0xFF;
 			
 			intDriver->OverShoot += 256L*16L;
 			intDriver->OverShoot += 128L;
@@ -90,7 +90,7 @@ void MADKillOverShoot( MADDriverRec *intDriver)
 			if (intDriver->DASCBuffer != NULL) DisposePtr( (Ptr) intDriver->DASCBuffer);
 			intDriver->DASCBuffer = NULL;
 			
-			for( i = 0; i < MAXCHANEFFECT; i++)
+			for (i = 0; i < MAXCHANEFFECT; i++)
 			{
 				if (intDriver->DASCEffectBuffer[ i] != NULL) DisposePtr( (Ptr) intDriver->DASCEffectBuffer[ i]);
 				intDriver->DASCEffectBuffer[ i] = NULL;
@@ -765,13 +765,13 @@ void Play16StereoDelay( MADDriverRec *intDriver)
 	short		chanCounter = 0, find, trackID;
 #endif
 
-	for( i = 0; i < MAXCHANEFFECT; i++)
+	for (i = 0; i < MAXCHANEFFECT; i++)
 	{
 		intDriver->EffectBufferID[ i] = -1;
 		intDriver->EffectBufferRealID[ i] = -1;
 	}
 	
-	for( i = 0 ; i < intDriver->MultiChanNo; i++)	//intDriver->DriverSettings.numChn
+	for (i = 0 ; i < intDriver->MultiChanNo; i++)	//intDriver->DriverSettings.numChn
 	{
 #if defined( MAINPLAYERPRO)
 #warning VST Channel effect
@@ -782,7 +782,7 @@ void Play16StereoDelay( MADDriverRec *intDriver)
 			// Try to find a DASCEffectBuffer with the same ID
 			
 			find = -1;
-			for( ii = 0; ii < MAXCHANEFFECT; ii++)
+			for (ii = 0; ii < MAXCHANEFFECT; ii++)
 			{
 				if (intDriver->EffectBufferID[ ii] == trackID) find = ii;
 			}
@@ -1334,5 +1334,5 @@ void Play8StereoDelay( MADDriverRec *intDriver)
 //short			*ttt;
 //Ptr				ASCBuffer;
 
-	for( i = 0 ; i < intDriver->DriverSettings.numChn; i++) Sample8BufferAddDelay	( &intDriver->chan[i], intDriver->DASCBuffer8, intDriver);
+	for (i = 0 ; i < intDriver->DriverSettings.numChn; i++) Sample8BufferAddDelay	( &intDriver->chan[i], intDriver->DASCBuffer8, intDriver);
 }

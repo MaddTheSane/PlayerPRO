@@ -151,10 +151,10 @@ void DoNullDigiWindow(void)
 	end = start + 1 + (viewRect.right - viewRect.left) / TEXTLARG;
 	if (end > MAXTRACK) end = MAXTRACK;
 	
-	for( x = 0; x < ITEMNO; x++)
+	for (x = 0; x < ITEMNO; x++)
 	{
 		/****** Instrument *********/
-		for( i = start; i < end; i ++)
+		for (i = start; i < end; i ++)
 		{
 			switch( x)
 			{
@@ -534,7 +534,7 @@ void  UpdateDigiListWindow(DialogPtr GetSelection)
 		end = start + 1 + (viewRect.right - viewRect.left) / TEXTLARG;
 		if (end > MAXTRACK) end = MAXTRACK;
 		
-		for( x = GetControlValue( ControlDigi); x < MAXTRACK; x++)
+		for (x = GetControlValue( ControlDigi); x < MAXTRACK; x++)
 		{
 			NumToString( x+1, aStr);
 			pStrcpy( tempStr, aStr);
@@ -542,12 +542,12 @@ void  UpdateDigiListWindow(DialogPtr GetSelection)
 			tempRect.right += TEXTLARG;		tempRect.left += TEXTLARG;
 		}
 		
-		for( x = 0; x < ITEMNO ; x++)
+		for (x = 0; x < ITEMNO ; x++)
 		{
-			for( i = start; i < end; i++) oldDigiValue[ x][ i] = -900;
+			for (i = start; i < end; i++) oldDigiValue[ x][ i] = -900;
 		}
 		
-		for( x = 0; x < MAXTRACK; x++)
+		for (x = 0; x < MAXTRACK; x++)
 		{	
 			oldDigiValue2[ x] = -900;
 		}

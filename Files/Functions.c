@@ -149,13 +149,13 @@ Boolean FindInternal( short FindType)
 		break;
 	}
 	
-	for( FPat = FStartPat; FPat < FEndPat; FPat++)
+	for (FPat = FStartPat; FPat < FEndPat; FPat++)
 	{
 		if (FindWhere == Everywhere) FEndPos = curMusic->partition[ FPat]->header.size;
 
-		for( FPos = FStartPos; FPos < FEndPos; FPos++)
+		for (FPos = FStartPos; FPos < FEndPos; FPos++)
 		{
-			for( FTrack = FStartTrack; FTrack< FEndTrack; FTrack++)
+			for (FTrack = FStartTrack; FTrack< FEndTrack; FTrack++)
 			{
 				Cmd		*cmd;
 				
@@ -279,7 +279,7 @@ void SetUpButtons(void)
 		if (FindWhere == DigitalSelection) FindWhere = CurrentPat;
 	}
 
-	for( i = 10; i <= 13; i++) TurnRadio( i, FindDlog, false);
+	for (i = 10; i <= 13; i++) TurnRadio( i, FindDlog, false);
 	switch( FindWhere)
 	{
 		case CurrentPat:			TurnRadio( 10, FindDlog, true);		break;
@@ -645,7 +645,7 @@ void DoItemPressFind( short whichItem, DialogPtr whichDialog)
 		case 13:
 			FindModify = true;
 			
-			for( i = 10; i <= 13; i++) TurnRadio( i, FindDlog, false);
+			for (i = 10; i <= 13; i++) TurnRadio( i, FindDlog, false);
 			TurnRadio( whichItem, FindDlog, true);
 			
 			switch( whichItem)

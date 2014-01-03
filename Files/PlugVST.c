@@ -70,7 +70,7 @@ void PurgeVSTEffects( void)
 {
 	short i, x;
 	
-	for( i = 0; i < 10; i++)
+	for (i = 0; i < 10; i++)
 	{
 		if (MADDriver->masterVST[ i] != NULL)
 		{
@@ -82,9 +82,9 @@ void PurgeVSTEffects( void)
 		}
 	}
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
-		for( x = 0; x < 4; x++)
+		for (x = 0; x < 4; x++)
 		{
 			if (MADDriver->chanVST[ i][ x] != NULL)
 			{
@@ -174,7 +174,7 @@ short PressPresetButton( long id, Point myPt, short *curSelec)
 	presetMenu = NewMenu( 244, "\pPreset Menu");
 	
 	
-	for( i = 0, maxitem = 0; i < MAXVSTPREF;i++)
+	for (i = 0, maxitem = 0; i < MAXVSTPREF;i++)
 	{
 		if (VSTPref[ i] != NULL)
 		{
@@ -421,7 +421,7 @@ void ApplyVSTFilter( VSTEffect *effect, sData *SDataSrc, long Start, long End)
 		{
 			if (SDataSrc->amp == 8)
 			{
-				for( i = 0; i < datasize; i++)
+				for (i = 0; i < datasize; i++)
 				{
 					in1[ i] = data8[ i*2] / 128.;
 					in2[ i] = data8[ i*2 + 1] / 128.;
@@ -429,7 +429,7 @@ void ApplyVSTFilter( VSTEffect *effect, sData *SDataSrc, long Start, long End)
 			}
 			else
 			{
-				for( i = 0; i < datasize; i++)
+				for (i = 0; i < datasize; i++)
 				{
 					in1[ i] = data16[ i*2] / 32767.;
 					in2[ i] = data16[ i*2 + 1] / 32767.;
@@ -440,7 +440,7 @@ void ApplyVSTFilter( VSTEffect *effect, sData *SDataSrc, long Start, long End)
 		{
 			if (SDataSrc->amp == 8)
 			{
-				for( i = 0; i < datasize; i++)
+				for (i = 0; i < datasize; i++)
 				{
 					in1[ i] = data8[ i] / 128.;
 					in2[ i] = data8[ i] / 128.;
@@ -448,7 +448,7 @@ void ApplyVSTFilter( VSTEffect *effect, sData *SDataSrc, long Start, long End)
 			}
 			else
 			{
-				for( i = 0; i < datasize; i++)
+				for (i = 0; i < datasize; i++)
 				{
 					in1[ i] = data16[ i] / 32767.;
 					in2[ i] = data16[ i] / 32767.;
@@ -458,7 +458,7 @@ void ApplyVSTFilter( VSTEffect *effect, sData *SDataSrc, long Start, long End)
 		
 		if (datasize != VSTBUFFERSIZE)
 		{
-			for( i = datasize; i < VSTBUFFERSIZE; i++)
+			for (i = datasize; i < VSTBUFFERSIZE; i++)
 			{
 				in1[ i] = 0;
 				in2[ i] = 0;
@@ -478,7 +478,7 @@ void ApplyVSTFilter( VSTEffect *effect, sData *SDataSrc, long Start, long End)
 		
 		if (ce[ 0]->numInputs == 1 && ce[ 0]->numOutputs == 2)
 		{
-			for( i = 0; i < datasize; i++)
+			for (i = 0; i < datasize; i++)
 			{
 				out1[ i] = 0;
 				out2[ i] = 0;
@@ -488,10 +488,10 @@ void ApplyVSTFilter( VSTEffect *effect, sData *SDataSrc, long Start, long End)
 			}
 							
 			ce[ 0]->processReplacing( ce[ 0], inputs, outputs, datasize);
-			for( i = 0; i < datasize; i++) out1[ i] = (out1[ i] + out2[ i]) / 2.0;
+			for (i = 0; i < datasize; i++) out1[ i] = (out1[ i] + out2[ i]) / 2.0;
 			
 			ce[ 1]->processReplacing( ce[ 1], &inputs[ 1], outputs2, datasize);
-			for( i = 0; i < datasize; i++) out2[ i] = (out21[ i] + out22[ i]) / 2.0;
+			for (i = 0; i < datasize; i++) out2[ i] = (out21[ i] + out22[ i]) / 2.0;
 		}
 		
 		BlockMoveData( out1, in1, sizeof( float) * datasize);
@@ -503,7 +503,7 @@ void ApplyVSTFilter( VSTEffect *effect, sData *SDataSrc, long Start, long End)
 		{
 			if (SDataSrc->amp == 8)
 			{
-				for( i = 0; i < datasize; i++)
+				for (i = 0; i < datasize; i++)
 				{
 					data8[ i*2] 	= ClipConvert8( in1[ i]);
 					data8[ i*2 + 1] = ClipConvert8( in2[ i]);
@@ -511,7 +511,7 @@ void ApplyVSTFilter( VSTEffect *effect, sData *SDataSrc, long Start, long End)
 			}
 			else
 			{
-				for( i = 0; i < datasize; i++)
+				for (i = 0; i < datasize; i++)
 				{
 					data16[ i*2] 		= ClipConvert( in1[ i]);
 					data16[ i*2 + 1] 	= ClipConvert( in2[ i]);
@@ -522,14 +522,14 @@ void ApplyVSTFilter( VSTEffect *effect, sData *SDataSrc, long Start, long End)
 		{
 			if (SDataSrc->amp == 8)
 			{
-				for( i = 0; i < datasize; i++)
+				for (i = 0; i < datasize; i++)
 				{
 					data8[ i] = (ClipConvert8( in1[ i]) + ClipConvert8( in2[ i])) / 2.;
 				}
 			}
 			else
 			{
-				for( i = 0; i < datasize; i++)
+				for (i = 0; i < datasize; i++)
 				{
 					data16[ i] = (ClipConvert( in1[ i]) + ClipConvert( in2[ i])) / 2.;
 				}
@@ -624,7 +624,7 @@ void ProcessVSTPlug( MADDriverRec *intDriver, long *data, long datasize, short c
 	{
 		if (intDriver->curMusic->header->globalFXActive == false) return;
 		
-		for( x = 0; x < 10; x++)
+		for (x = 0; x < 10; x++)
 		{
 			if (intDriver->masterVST[ x])
 			{
@@ -667,7 +667,7 @@ void ProcessVSTPlug( MADDriverRec *intDriver, long *data, long datasize, short c
 	{
 		short	toTest, ChanToApply;
 		
-		for( i = 0; i < datasize; i++)
+		for (i = 0; i < datasize; i++)
 		{
 			in1[ i] = data[ i*2] / 32767.;
 			in2[ i] = data[ i*2 + 1] / 32767.;
@@ -677,7 +677,7 @@ void ProcessVSTPlug( MADDriverRec *intDriver, long *data, long datasize, short c
 		else toTest = 4;
 		
 		ChanToApply = 0;
-		for( x = 0; x < toTest; x++)
+		for (x = 0; x < toTest; x++)
 		{
 			VSTEffect	*vsteffect;
 			
@@ -693,7 +693,7 @@ void ProcessVSTPlug( MADDriverRec *intDriver, long *data, long datasize, short c
 			}
 		}
 		
-		for( x = 0; x < toTest; x++)
+		for (x = 0; x < toTest; x++)
 		{
 			VSTEffect	*vsteffect;
 			
@@ -708,7 +708,7 @@ void ProcessVSTPlug( MADDriverRec *intDriver, long *data, long datasize, short c
 					
 				/*	if (vsteffect->ProcessReplacingNotAvailable)
 					{
-						for( i = 0; i < datasize; i++)
+						for (i = 0; i < datasize; i++)
 						{
 							out1[ i] = 0;
 							out2[ i] = 0;
@@ -732,10 +732,10 @@ void ProcessVSTPlug( MADDriverRec *intDriver, long *data, long datasize, short c
 						if (ce[ 0]->numInputs == 1 && ce[ 0]->numOutputs == 2)
 						{
 							ce[ 0]->process( ce[ 0], inputs, outputs, datasize);
-							for( i = 0; i < datasize; i++) out1[ i] = (out1[ i] + out2[ i]) / 2.0;
+							for (i = 0; i < datasize; i++) out1[ i] = (out1[ i] + out2[ i]) / 2.0;
 							
 							ce[ 1]->process( ce[ 1], &inputs[ 1], outputs2, datasize);
-							for( i = 0; i < datasize; i++) out2[ i] = (out21[ i] + out22[ i]) / 2.0;
+							for (i = 0; i < datasize; i++) out2[ i] = (out21[ i] + out22[ i]) / 2.0;
 						}
 					}
 					else*/
@@ -754,7 +754,7 @@ void ProcessVSTPlug( MADDriverRec *intDriver, long *data, long datasize, short c
 						
 						if (ce[ 0]->numInputs == 1 && ce[ 0]->numOutputs == 2)
 						{
-							for( i = 0; i < datasize; i++)
+							for (i = 0; i < datasize; i++)
 							{
 								out1[ i] = 0;
 								out2[ i] = 0;
@@ -764,10 +764,10 @@ void ProcessVSTPlug( MADDriverRec *intDriver, long *data, long datasize, short c
 							}
 							
 							ce[ 0]->processReplacing( ce[ 0], inputs, outputs, datasize);
-							for( i = 0; i < datasize; i++) out1[ i] = (out1[ i] + out2[ i]) / 2.0;
+							for (i = 0; i < datasize; i++) out1[ i] = (out1[ i] + out2[ i]) / 2.0;
 							
 							ce[ 1]->processReplacing( ce[ 1], &inputs[ 1], outputs2, datasize);
-							for( i = 0; i < datasize; i++) out2[ i] = (out21[ i] + out22[ i]) / 2.0;
+							for (i = 0; i < datasize; i++) out2[ i] = (out21[ i] + out22[ i]) / 2.0;
 						}
 					}
 					
@@ -784,7 +784,7 @@ void ProcessVSTPlug( MADDriverRec *intDriver, long *data, long datasize, short c
 		
 		if (Apply == true)
 		{
-			for( i = 0; i < datasize; i++)
+			for (i = 0; i < datasize; i++)
 			{
 				data[ i*2]		= out1[ i] * 32767.;
 				data[ i*2 + 1]	= out2[ i] * 32767.;
@@ -825,7 +825,7 @@ void CloseVSTPlug( void)
 	iErr = FSpOpenDF( &spec, fsCurPerm, &fRefNum);
 	if (iErr == noErr)
 	{
-		for( i = 0; i < MAXVSTPREF; i++)
+		for (i = 0; i < MAXVSTPREF; i++)
 		{
 			if (VSTPref[ i] != NULL)
 			{
@@ -851,7 +851,7 @@ void CloseVSTPlug( void)
 	{
 		VSTPrefsStruct	tempPref;
 		
-		for( i = 0; i < 10; i++)
+		for (i = 0; i < 10; i++)
 		{
 			if (MADDriver->masterVST[ i] != 0)
 			{
@@ -863,7 +863,7 @@ void CloseVSTPlug( void)
 				
 				if (ce->ce[ 0]->numParams >= MAXVSTITEM) MyDebugStr( __LINE__, __FILE__, "Too many VSTITEM, press continue.");
 				
-				for( x = 0; x < ce->ce[ 0]->numParams && x < MAXVSTITEM; x++)
+				for (x = 0; x < ce->ce[ 0]->numParams && x < MAXVSTITEM; x++)
 				{
 					tempPref.value[ x] = ce->ce[ 0]->getParameter( ce->ce[ 0], x);
 				}
@@ -885,7 +885,7 @@ void CloseVSTPlug( void)
 	
 	// ***  ***  ***  ***  ***  ***  ***  ***  ***  ***  *** 
 	
-//	for( i = 0; i < tPlug; i++) CloseVST( i);
+//	for (i = 0; i < tPlug; i++) CloseVST( i);
 	
 	DisposePtr( (Ptr) inputs[ 0]);
 	DisposePtr( (Ptr) inputs[ 1]);
@@ -1044,12 +1044,12 @@ void InitVSTPlug( void)
 	
 	HGetVol( NULL, &vRefNum, &dirID);
 	
-	for( i = 0; i < 10; i++) MADDriver->masterVST[ i] = NULL;
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < 10; i++) MADDriver->masterVST[ i] = NULL;
+	for (i = 0; i < MAXTRACK; i++)
 	{
-		for( x = 0; x < 4; x++) MADDriver->chanVST[ i][ x] = NULL;
+		for (x = 0; x < 4; x++) MADDriver->chanVST[ i][ x] = NULL;
 	}
-	for( i = 0; i < MAXVSTPREF; i++) VSTPref[ i] = NULL;
+	for (i = 0; i < MAXVSTPREF; i++) VSTPref[ i] = NULL;
 	
 	tPlug		= 0;
 	PlugsFolderOK = 0;
@@ -1060,7 +1060,7 @@ void InitVSTPlug( void)
 //	if (MacOSXSystem) tPlug = 0;
 	
 	// Load the Unique ID
-	for( i = 0; i < tPlug; i++)
+	for (i = 0; i < tPlug; i++)
 	{
 		myEffect = CreateVSTEffect( i);
 		
@@ -1071,7 +1071,7 @@ void InitVSTPlug( void)
 	
 	// TEST TEST TEST TEST TEST
 	
-/*	for( i = 0; i < tPlug; i++)
+/*	for (i = 0; i < tPlug; i++)
 	{
 		Rect	*tRect;
 		
@@ -1133,11 +1133,11 @@ void InitVSTPlug( void)
 	
 	if (tPlug > 0)
 	{
-		for( i = 0; i < tPlug; i++)	AppendMenu( VSTMenu, VSTPlug[ i].file.name);
+		for (i = 0; i < tPlug; i++)	AppendMenu( VSTMenu, VSTPlug[ i].file.name);
 		
 		AppendMenu( SampleMenu, "\p-");
 		
-		for( i = 0; i < tPlug; i++)	AppendMenu( SampleMenu, VSTPlug[ i].file.name);
+		for (i = 0; i < tPlug; i++)	AppendMenu( SampleMenu, VSTPlug[ i].file.name);
 	}
 	else
 	{
@@ -1165,13 +1165,13 @@ void InitVSTPlug( void)
 			{
 				if (FXCounter >= 10) Debugger();
 				
-				for( i = 0; i < tPlug; i++)
+				for (i = 0; i < tPlug; i++)
 				{
 					if (tempStruct.ID == VSTPlug[ i].ID)
 					{
 						MADDriver->masterVST[ FXCounter] = CreateVSTEffect( i);
 						
-						for( x = 0; x < MADDriver->masterVST[ FXCounter]->ce[ 0]->numParams; x++)
+						for (x = 0; x < MADDriver->masterVST[ FXCounter]->ce[ 0]->numParams; x++)
 						{
 							MADDriver->masterVST[ FXCounter]->ce[ 0]->setParameter( MADDriver->masterVST[ FXCounter]->ce[ 0], x, tempStruct.value[ x]);
 							if (MADDriver->masterVST[ FXCounter]->ce[ 1]) MADDriver->masterVST[ FXCounter]->ce[ 1]->setParameter( MADDriver->masterVST[ FXCounter]->ce[ 1], x, tempStruct.value[ x]);
@@ -1191,7 +1191,7 @@ short ConvertUniqueIDToIndex( long uniqueID)
 {
 	long i;
 	
-	for( i = 0; i < tPlug; i++)
+	for (i = 0; i < tPlug; i++)
 	{
 		if (uniqueID == VSTPlug[ i].ID)
 		{
@@ -1350,7 +1350,7 @@ Boolean VSTEditorOpen( VSTEffect *ce, sData	*curData, long Start, long End, Bool
 		GetDialogItem( VSTDlog, 6, &itemType, &itemHandle, &itemRect2);
 		GetDialogItem( VSTDlog, 7, &itemType, &itemHandle, &itemRect3);
 		
-		for( i = 0; i < ce->ce[ 0]->numParams; i++)
+		for (i = 0; i < ce->ce[ 0]->numParams; i++)
 		{
 			VSTCntl[ i] = NewControl( GetDialogWindow( VSTDlog), &itemRect, "\p", true, ce->ce[ 0]->getParameter( ce->ce[ 0], i) * 100, 0, 100, 80, i);
 			
@@ -1542,7 +1542,7 @@ void VSTEditorDoItemPress( short itemHit, DialogPtr aDia)
 				{
 					if (flag)	// Clear all settings flags
 					{
-						for( i = 0; i < MAXVSTPREF; i++)
+						for (i = 0; i < MAXVSTPREF; i++)
 						{
 							if (VSTPref[ i] != NULL)
 							{
@@ -1554,7 +1554,7 @@ void VSTEditorDoItemPress( short itemHit, DialogPtr aDia)
 						}
 					}
 						
-					for( i = 0; i < MAXVSTPREF; i++)
+					for (i = 0; i < MAXVSTPREF; i++)
 					{
 						if (VSTPref[ i] == NULL)
 						{
@@ -1567,7 +1567,7 @@ void VSTEditorDoItemPress( short itemHit, DialogPtr aDia)
 							
 							if (CurrentDialogCE->ce[ 0]->numParams >= MAXVSTITEM) MyDebugStr( __LINE__, __FILE__, "MAXVST TOO SMALL, Press continue.");
 								
-							for( x = 0; x < CurrentDialogCE->ce[ 0]->numParams && x < MAXVSTITEM; x++)
+							for (x = 0; x < CurrentDialogCE->ce[ 0]->numParams && x < MAXVSTITEM; x++)
 							{
 								VSTPref[ i]->value[ x] = CurrentDialogCE->ce[ 0]->getParameter( CurrentDialogCE->ce[ 0], x);
 							}
@@ -1593,7 +1593,7 @@ void VSTEditorDoItemPress( short itemHit, DialogPtr aDia)
 					{
 						if (flag)	// Clear all settings flags
 						{
-							for( i = 0; i < MAXVSTPREF; i++)
+							for (i = 0; i < MAXVSTPREF; i++)
 							{
 								if (VSTPref[ i] != NULL)
 								{
@@ -1608,7 +1608,7 @@ void VSTEditorDoItemPress( short itemHit, DialogPtr aDia)
 						pStrcpy( VSTPref[ id]->name, theString);
 						VSTPref[ id]->flag = flag;
 						
-						for( x = 0; x < CurrentDialogCE->ce[ 0]->numParams; x++)
+						for (x = 0; x < CurrentDialogCE->ce[ 0]->numParams; x++)
 						{
 							VSTPref[ id]->value[ x] = CurrentDialogCE->ce[ 0]->getParameter( CurrentDialogCE->ce[ 0], x);
 						}
@@ -1616,7 +1616,7 @@ void VSTEditorDoItemPress( short itemHit, DialogPtr aDia)
 				}
 				else
 				{
-					for( x = 0; x < CurrentDialogCE->ce[ 0]->numParams; x++)
+					for (x = 0; x < CurrentDialogCE->ce[ 0]->numParams; x++)
 					{
 						CurrentDialogCE->ce[ 0]->setParameter( CurrentDialogCE->ce[ 0], x, VSTPref[ id]->value[ x]);
 						if (CurrentDialogCE->ce[ 1]) CurrentDialogCE->ce[ 1]->setParameter( CurrentDialogCE->ce[ 1], x, VSTPref[ id]->value[ x]);
@@ -1664,7 +1664,7 @@ void VSTEditorDoItemPress( short itemHit, DialogPtr aDia)
 				
 				theControl = NULL;
 		
-				for( i = 0; i < CurrentDialogCE->ce[ 0]->numParams; i++)
+				for (i = 0; i < CurrentDialogCE->ce[ 0]->numParams; i++)
 				{
 					Rect contrlRect;
 					
@@ -1744,7 +1744,7 @@ void VSTEditorDoItemPress( short itemHit, DialogPtr aDia)
 				
 				if (CurrentDialogCE->ce[ 1])
 				{
-					for( i = 0; i < CurrentDialogCE->ce[ 0]->numParams; i++)
+					for (i = 0; i < CurrentDialogCE->ce[ 0]->numParams; i++)
 					{
 						float myVal;
 						
@@ -1902,7 +1902,7 @@ VSTEffect* CreateVSTEffect( short effectID)
 	else myEffect->ProcessReplacingNotAvailable = true;
 	
 	// Check to see a default settings !
-	for( i = 0; i < MAXVSTPREF; i++)
+	for (i = 0; i < MAXVSTPREF; i++)
 	{
 		if (VSTPref[ i] != NULL)
 		{
@@ -1910,7 +1910,7 @@ VSTEffect* CreateVSTEffect( short effectID)
 			{
 				if (VSTPref[ i]->flag)
 				{
-					for( x = 0; x < myEffect->ce[ 0]->numParams; x++)
+					for (x = 0; x < myEffect->ce[ 0]->numParams; x++)
 					{
 						myEffect->ce[ 0]->setParameter( myEffect->ce[ 0], x, VSTPref[ i]->value[ x]);
 						if (myEffect->ce[ 1]) myEffect->ce[ 1]->setParameter( myEffect->ce[ 1], x, VSTPref[ i]->value[ x]);
@@ -1937,15 +1937,15 @@ void FillVSTEffects( void)
 	
 //	return;
 	
-	for( i = 0; i < 10; i++)
+	for (i = 0; i < 10; i++)
 	{
 		if (MADDriver->masterVST[ i]) curMusic->header->globalEffect[ i] = MADDriver->masterVST[ i]->ce[ 0]->uniqueID;
 		else curMusic->header->globalEffect[ i] = 0;
 	}
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
-		for( x = 0; x < 4; x++)
+		for (x = 0; x < 4; x++)
 		{
 			if (MADDriver->chanVST[ i][ x]) curMusic->header->chanEffect[ i][ x] = MADDriver->chanVST[ i][ x]->ce[ 0]->uniqueID;
 			else curMusic->header->chanEffect[ i][ x] = 0;
@@ -1953,7 +1953,7 @@ void FillVSTEffects( void)
 	}
 	
 	alpha = 0;
-	for( i = 0; i < 10 ; i++)	// Global Effects
+	for (i = 0; i < 10 ; i++)	// Global Effects
 	{
 		if (MADDriver->masterVST[ i])
 		{
@@ -1968,7 +1968,7 @@ void FillVSTEffects( void)
 			
 			pStrcpy( set->name, myEffect->name);
 			
-			for( xx = 0; xx < set->noArg; xx++)
+			for (xx = 0; xx < set->noArg; xx++)
 			{
 				set->values[ xx] = myEffect->ce[ 0]->getParameter( myEffect->ce[ 0], xx);
 			}
@@ -1977,9 +1977,9 @@ void FillVSTEffects( void)
 		}
 	}
 	
-	for( i = 0; i < curMusic->header->numChn ; i++)	// Channel Effects
+	for (i = 0; i < curMusic->header->numChn ; i++)	// Channel Effects
 	{
-		for( x = 0; x < 4; x++)
+		for (x = 0; x < 4; x++)
 		{
 			if (MADDriver->chanVST[ i][ x])
 			{
@@ -1992,7 +1992,7 @@ void FillVSTEffects( void)
 				set->FXID = myEffect->ce[ 0]->uniqueID;
 				set->noArg = myEffect->ce[ 0]->numParams;
 				
-				for( xx = 0; xx < set->noArg; xx++)
+				for (xx = 0; xx < set->noArg; xx++)
 				{
 					set->values[ xx] = myEffect->ce[ 0]->getParameter( myEffect->ce[ 0], xx);
 				}
@@ -2009,7 +2009,7 @@ void ApplyVSTSets( VSTEffect* myEffect, FXSets* set)
 	
 	if (set->noArg != myEffect->ce[ 0]->numParams) DebugStr("\pApplyVSTSets");
 	
-	for( x = 0; x < myEffect->ce[ 0]->numParams; x++)
+	for (x = 0; x < myEffect->ce[ 0]->numParams; x++)
 	{
 		myEffect->ce[ 0]->setParameter( myEffect->ce[ 0], x, set->values[ x]);
 		if (myEffect->ce[ 1]) myEffect->ce[ 1]->setParameter( myEffect->ce[ 1], x, set->values[ x]);

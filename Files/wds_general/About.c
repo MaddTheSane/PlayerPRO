@@ -49,9 +49,9 @@ void MegaPurge(void)
 		contigSize -= 2;
 	}
 	
-	//for( i = 0; i < contigSize/4; i++) aPtr[ i] = 0x12344321; //FIXME: Overflow in implicit constant conversion
+	//for (i = 0; i < contigSize/4; i++) aPtr[ i] = 0x12344321; //FIXME: Overflow in implicit constant conversion
 	//XXX: what is the point of this, again?
-	for( i = 0; i < contigSize/4; i += 4)
+	for (i = 0; i < contigSize/4; i += 4)
 	{
 		UInt32 *toconv = (UInt32*)(&aPtr[ i]);
 		*toconv = 0x12344321;
@@ -74,9 +74,9 @@ void MegaPurge(void)
 	src = (long*) ((long) VA[ 0].quickrow[ zeroPt.v + rect->top + 1] + (long) zeroPt.h + (long) rect->left);
 	dst = (long*) ((long) src - (long) VA[ 0].row);
 
-	for( i = 0; i < haut; i++)
+	for (i = 0; i < haut; i++)
 	{
-		for( x = 0; x < larg; x++) dst[ x] = src[ x];
+		for (x = 0; x < larg; x++) dst[ x] = src[ x];
 		dst += VA[ 0].row/4;
 		src += VA[ 0].row/4;
 	}
@@ -207,7 +207,7 @@ void ShowPerformance(void)
 			tempPtr = MyNewPtr( 8L*MADDriver->ASCBUFFERReal);
 			
 			oldTicks = TickCount();
-			for( i = 0 ; i < CSTTEST; i++)
+			for (i = 0 ; i < CSTTEST; i++)
 			{
 				proto *= 123;
 				proto -= 255;
@@ -217,7 +217,7 @@ void ShowPerformance(void)
 			
 			oldTicks = TickCount();
 			
-			for( i = 0 ; i < CSTTEST; i++)
+			for (i = 0 ; i < CSTTEST; i++)
 			{
 				proto *= 123;
 				proto -= 255;

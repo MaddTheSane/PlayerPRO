@@ -284,7 +284,7 @@ static MenuHandle CreateMenu()
 	returnMenu = GetMenu( 141);
 	
 	OctavesName( 1, aStr);		SetMenuItemText( returnMenu, 1, aStr);
-	for( i = 1; i < 96; i++)
+	for (i = 1; i < 96; i++)
 	{
 		OctavesName( i, aStr);
 		AppendMenu( returnMenu, aStr);
@@ -414,9 +414,9 @@ static OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 			goto RESTART;
 		}
 		
-		for( track = 0; track < myPcmd->tracks; track++)
+		for (track = 0; track < myPcmd->tracks; track++)
 		{
-			for( row = 0; row < myPcmd->length; row++)
+			for (row = 0; row < myPcmd->length; row++)
 			{
 				myCmd = GetCmd( row, track, myPcmd);
 				

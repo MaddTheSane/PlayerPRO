@@ -136,7 +136,7 @@ Boolean	OnOff;
 		mini = (dstRect->left	- xTr) / MOLarg;				if (mini < 0)	mini = 0;
 		maxi = (dstRect->right - xTr) / MOLarg;		maxi+=2;	if (maxi > curMusic->partition[ PatCopy]->header.size + 1)	maxi = curMusic->partition[ PatCopy]->header.size + 1;
 	
-		for( i = mini; i< maxi; i ++)
+		for (i = mini; i< maxi; i ++)
 		{
 			if (i >= thePrefs.MarkersOffSet)
 			{
@@ -162,7 +162,7 @@ Boolean	OnOff;
 		mini = (dstRect->top	- yTr) / MOHaut;				if (mini < 0)	mini = 0;
 		maxi = (dstRect->bottom - yTr) / MOHaut;	maxi+=2;	if (maxi > NUMBER_NOTES)	maxi = NUMBER_NOTES;
 		
-		for( i = 0; i < mini; i++)
+		for (i = 0; i < mini; i++)
 		{
 			if (i % 12 == 0)
 			{
@@ -172,7 +172,7 @@ Boolean	OnOff;
 			}
 		}
 		
-		for( i = mini; i < maxi; i ++)
+		for (i = mini; i < maxi; i ++)
 		{
 			if (i % 12 == 0)
 			{
@@ -199,7 +199,7 @@ Boolean	OnOff;
 	mini = (dstRect->top	- yTr) / MOHaut;				if (mini < 0)	mini = 0;
 	maxi = (dstRect->bottom - yTr) / MOHaut;	maxi+=2;	if (maxi > NUMBER_NOTES)	maxi = NUMBER_NOTES;
 	
-	for( i = mini; i <= maxi; i ++)
+	for (i = mini; i <= maxi; i ++)
 	{
 		MoveTo( dstRect->left, yTr + i * MOHaut);
 		LineTo( dstRect->right,  yTr + i * MOHaut);
@@ -208,7 +208,7 @@ Boolean	OnOff;
 	mini = (dstRect->left	- xTr) / MOLarg;				if (mini < 0)	mini = 0;
 	maxi = (dstRect->right - xTr) / MOLarg;		maxi+=2;	if (maxi > curMusic->partition[ PatCopy]->header.size + 1)	maxi = curMusic->partition[ PatCopy]->header.size + 1;
 
-	for( i = mini; i < maxi; i ++)
+	for (i = mini; i < maxi; i ++)
 	{	
 		MoveTo( xTr + i * MOLarg, dstRect->top);
 		LineTo( xTr + i * MOLarg, dstRect->bottom);
@@ -541,7 +541,7 @@ void DeleteSelecNote( short start, short end)
 
 	xTr = GetControlValue( c2h);	yTr = GetControlValue( c1h);
 		
-	for( tt = start; tt <= end; tt++)
+	for (tt = start; tt <= end; tt++)
 	{
 		theCommand = GetMADCommand( tt, selecTrack, curMusic->partition[ PatCopy]);
 
@@ -681,7 +681,7 @@ void SetUpTracksMenu(void)
 	
 	TrackView = GetMenu( 137);		// 137
 	
-	for( i = 0; i < curMusic->header->numChn; i++)
+	for (i = 0; i < curMusic->header->numChn; i++)
 	{
 		pStrcpy( str, "\pTrack ");
 		NumToString( i + 1, str2);
@@ -785,10 +785,10 @@ short		itemType, dataLen, menuNum;
 Str255		mainStr, stemp;
 
 	x = CountMenuItems( InstruMenu);
-	for( i = 0; i < x; i++) DeleteMenuItem( InstruMenu, 1);
+	for (i = 0; i < x; i++) DeleteMenuItem( InstruMenu, 1);
 	
 	menuNum = 0;
-	for( i=0; i<curMusic->header->numInstru; i++)
+	for (i=0; i<curMusic->header->numInstru; i++)
 	{
 		if (curMusic->fid[i].numSamples > 0) menuNum = i;
 		
@@ -803,7 +803,7 @@ Str255		mainStr, stemp;
 	
 	menuNum++;
 	
-	for( i=0; i<menuNum; i++)
+	for (i=0; i<menuNum; i++)
 	{
 		NTStr( 3, i+1, (Ptr) stemp);
 		strcpy( (Ptr) mainStr, (Ptr) stemp);
@@ -818,7 +818,7 @@ Str255		mainStr, stemp;
 		
 		MyC2PStr( (Ptr) mainStr);
 		
-		for( z = 1; z <= mainStr[ 0]; z++)
+		for (z = 1; z <= mainStr[ 0]; z++)
 		{
 			if (mainStr[ z] == '(') mainStr[ z] = ' ';
 			if (mainStr[ z] == ')') mainStr[ z] = ' ';
@@ -1285,7 +1285,7 @@ void UpdateMozartInfoInternal(void)
 	
 	// Tracks
 	
-/*	for( tI = GetControlValue( c3h); tI < curMusic->header->numChn; tI++)
+/*	for (tI = GetControlValue( c3h); tI < curMusic->header->numChn; tI++)
 	{
 		// Position des controls gauches
 		
@@ -1294,7 +1294,7 @@ void UpdateMozartInfoInternal(void)
 	}	*/
 	
 	GetDialogItem( MozartDlog, 16, &itemType, &itemHandle, &itemRect);
-	for( tI = GetControlValue( c3h); tI < GetMaxYBox(); tI++)	//
+	for (tI = GetControlValue( c3h); tI < GetMaxYBox(); tI++)	//
 	{
 		Str255		String;
 				
@@ -1393,11 +1393,11 @@ void UpdateMozartInfoInternal(void)
 		
 		if (showAllNotes)
 		{
-			for( i = 0 ; i < MADDriver->DriverSettings.numChn; i++)
+			for (i = 0 ; i < MADDriver->DriverSettings.numChn; i++)
 			{
 				if (i != tI)
 				{
-					for( tt = StartX; tt < EndX; tt++)
+					for (tt = StartX; tt < EndX; tt++)
 					{
 						Note = false;
 						theCommand = GetMADCommand( tt, i, curMusic->partition[ PatCopy]);
@@ -1435,7 +1435,7 @@ void UpdateMozartInfoInternal(void)
 				MADCheckSpeed( curMusic, MADDriver);
 			}
 			
-			for( tt = StartX; tt < EndX; tt++)
+			for (tt = StartX; tt < EndX; tt++)
 			{
 				Note = false;
 				theCommand = GetMADCommand( tt, tI, curMusic->partition[ PatCopy]);
@@ -2003,7 +2003,7 @@ copyval = curVal = GetControlValue( theControl);
 			SetClip( saveClipRgn);
 			DisposeRgn( saveClipRgn);
 			
-			for( tI = GetControlValue( c3h); tI < curMusic->header->numChn; tI++)
+			for (tI = GetControlValue( c3h); tI < curMusic->header->numChn; tI++)
 			{
 				itemRect = MozartRect;
 				itemRect.left -= LegendeLaS;
@@ -2423,7 +2423,7 @@ void DoItemPressMozart( short whichItem, DialogPtr whichDialog)
 					{
 						short	noActive;
 						
-						for( i = 0, noActive = 0; i < curMusic->header->numChn; i++)
+						for (i = 0, noActive = 0; i < curMusic->header->numChn; i++)
 						{
 							if (MADDriver->Active[ i] == true)
 							{
@@ -2433,11 +2433,11 @@ void DoItemPressMozart( short whichItem, DialogPtr whichDialog)
 						
 						if (noActive <= 1 && MADDriver->Active[ track] == true)
 						{
-							for( i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
+							for (i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
 						}
 						else
 						{
-							for( i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
+							for (i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
 							MADDriver->Active[ track] = true;
 						}
 						
@@ -2719,7 +2719,7 @@ void SetUpLabels()
 	
 	if (MOHaut >= 8)
 	{
-		for( tt = 0; tt <= NUMBER_NOTES; tt++)
+		for (tt = 0; tt <= NUMBER_NOTES; tt++)
 		{
 			MoveTo( itemRect.left + 1, itemRect.top + tt*MOHaut - MidMOHaut -2);
 			
@@ -2729,7 +2729,7 @@ void SetUpLabels()
 	}
 	else
 	{
-		for( tt = 0; tt < 8; tt++)
+		for (tt = 0; tt < 8; tt++)
 		{
 			MoveTo( itemRect.left, 	itemRect.top  + tt*12*MOHaut);
 			LineTo( itemRect.right,	itemRect.top  + tt*12*MOHaut);
@@ -2786,7 +2786,7 @@ void SetUpLabels()
 		else 					add = 4;
 	}
 	
-	for( tt = 0; tt < curMusic->partition[ PatCopy]->header.size; tt += add)
+	for (tt = 0; tt < curMusic->partition[ PatCopy]->header.size; tt += add)
 	{
 		if (add != 1)
 		{
@@ -3159,7 +3159,7 @@ Pcmd* CreatePcmdFromSelectionMozart(void)
 	myPcmd->posStart = selecStart.h;
 	
 	count = 0;
-	for( i = selecStart.h; i <= selecEnd.h; i++)
+	for (i = selecStart.h; i <= selecEnd.h; i++)
 	{
 		theCommand = GetMADCommand( i, selecTrack, curMusic->partition[ PatCopy]);
 		Pos = NUMBER_NOTES - theCommand->note-1;
@@ -3207,7 +3207,7 @@ void GetMinMaxPcmd( Pcmd *myPcmd, short *minNote, short *maxNote)
 {
 	short	i;
 	
-	for( i = 0, *maxNote = 0, *minNote = 2000; i < myPcmd->length; i++)
+	for (i = 0, *maxNote = 0, *minNote = 2000; i < myPcmd->length; i++)
 	{
 		if (myPcmd->myCmd[ i].note != 0xFF)
 		{
@@ -3230,7 +3230,7 @@ Rect				itemRect;
 	
 	GetMinMaxPcmd( myPcmd, &minNote, &maxNote);
 	
-	for( temp = 0; temp < myPcmd->length; temp++)
+	for (temp = 0; temp < myPcmd->length; temp++)
 	{
 		if (selecStart.h + temp >= 0 && selecStart.h + temp < curMusic->partition[ PatCopy]->header.size)
 		{

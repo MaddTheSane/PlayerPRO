@@ -69,14 +69,14 @@ pascal void CompletionRoutine (SPBPtr inParamPtr)
 				switch( SoundInputBits)
 				{
 					case 8:
-						for( i = 0; i < SOUNDINPUTMUL*deviceBufferSize; i++)
+						for (i = 0; i < SOUNDINPUTMUL*deviceBufferSize; i++)
 						{
 							RecordingPtr[ i] = RecordingPtr[ i*baseChan];
 						}
 					break;
 					
 					case 16:
-						for( i = 0; i < SOUNDINPUTMUL*deviceBufferSize; i++)
+						for (i = 0; i < SOUNDINPUTMUL*deviceBufferSize; i++)
 						{
 							RecordingShortPtr[ i] = RecordingShortPtr[ i*baseChan];
 						}
@@ -170,7 +170,7 @@ void SetUpDeviceInfo()
 		
 		rateM = NewMenu( 344, "\pRate");
 		
-		for( i = 0; i < RateList.no; i++)
+		for (i = 0; i < RateList.no; i++)
 		{
 			NumToString( (unsigned long) (*RateList.l)[ i]/65535UL, str);
 			pStrcat( str, "\p Hz");
@@ -216,7 +216,7 @@ void SetUpDeviceInfo()
 		
 		bitsM = NewMenu( 345, "\pBits");
 		
-		for( i = 0; i < BitsList.no; i++)
+		for (i = 0; i < BitsList.no; i++)
 		{
 			NumToString( (*BitsList.l)[ i], str);
 			pStrcat( str, "\p Bits");
@@ -483,7 +483,7 @@ void DrawSmallOscillo()
 	
 	if (hSize >= 200) MyDebugStr( __LINE__, __FILE__, "");
 	
-	for( i = 0; i < hSize; i++)
+	for (i = 0; i < hSize; i++)
 	{
 		SetCPixel( itemRect.left + i, itemRect.top + SmallOsci[ i], &blackC);
 		SmallOsci[ i] = audioPtr[ i] / 16;
@@ -664,7 +664,7 @@ OSErr ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 nam
 	bitsM = NULL;	rateM = NULL;
 	SetUpDeviceInfo();
 	
-	for( i = 0; i < 200; i++) SmallOsci[ i] = 0;
+	for (i = 0; i < 200; i++) SmallOsci[ i] = 0;
 	
 	SetDText( deviceDialog, 36, "\p0");
 	SetDText( deviceDialog, 37, "\p0");

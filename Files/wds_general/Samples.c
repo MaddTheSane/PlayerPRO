@@ -197,7 +197,7 @@ void DrawSampleInt( long	sampleSize,
 		temp *= high;	temp >>= 16;
 		MoveTo( trueH + tSS, trueV + temp);
 		
-		for( i = tSS; i < tSE; i++)
+		for (i = tSS; i < tSE; i++)
 		{
 			BS = start + (i * sampleSize) / larg;
 			BE = start + ((i+1) * sampleSize) / larg;
@@ -218,7 +218,7 @@ void DrawSampleInt( long	sampleSize,
 			
 			if (BS != BE)
 			{
-				for( x = BS; x < BE; x++)
+				for (x = BS; x < BE; x++)
 				{
 					temp = (theShortSample[ x]  + 0x8000);
 					
@@ -249,7 +249,7 @@ void DrawSampleInt( long	sampleSize,
 		temp *= high;	temp >>= 8;
 		MoveTo( trueH + tSS, trueV + temp);
 		
-		for( i = tSS; i < tSE; i++)
+		for (i = tSS; i < tSE; i++)
 		{
 			BS = start + (i * sampleSize) / larg;
 			BE = start + ((i+1) * sampleSize) / larg;
@@ -270,7 +270,7 @@ void DrawSampleInt( long	sampleSize,
 			
 			if (BS != BE)
 			{
-				for( x = BS; x < BE; x++)
+				for (x = BS; x < BE; x++)
 				{
 					temp = (unsigned char) (theSample[ x] - 0x80);
 					
@@ -874,14 +874,14 @@ InstrData	*curIns = &curMusic->fid[ InstruNo];
 				
 				if (!(curMusic->fid[ InstruNo].pannType & EFLOOP)) curMusic->fid[ InstruNo].pannType += EFLOOP;
 				
-				for( i = 0; i < curIns->pannSize; i++)
+				for (i = 0; i < curIns->pannSize; i++)
 				{
 					if (FindByteStart( InstruNo) <= curIns->pannEnv[ i].pos) break;
 				}
 				if (i >= curIns->pannSize) i = curIns->pannSize-1;
 				curIns->pannBeg = i;
 				
-				for( i = 0; i < curIns->pannSize; i++)
+				for (i = 0; i < curIns->pannSize; i++)
 				{
 					if (FindByteEnd( InstruNo) <= curIns->pannEnv[ i].pos) break;
 				}
@@ -905,14 +905,14 @@ InstrData	*curIns = &curMusic->fid[ InstruNo];
 				
 				if (!(curMusic->fid[ InstruNo].volType & EFLOOP)) curMusic->fid[ InstruNo].volType += EFLOOP;
 				
-				for( i = 0; i < curIns->volSize; i++)
+				for (i = 0; i < curIns->volSize; i++)
 				{
 					if (FindByteStart( InstruNo) <= curIns->volEnv[ i].pos) break;
 				}
 				if (i >= curIns->volSize) i = curIns->volSize-1;
 				curIns->volBeg = i;
 				
-				for( i = 0; i < curIns->volSize; i++)
+				for (i = 0; i < curIns->volSize; i++)
 				{
 					if (FindByteEnd( InstruNo) <= curIns->volEnv[ i].pos) break;
 				}
@@ -972,7 +972,7 @@ InstrData	*curIns = &curMusic->fid[ InstruNo];
 				
 				if (!(curMusic->fid[ InstruNo].pannType & EFSUSTAIN)) curMusic->fid[ InstruNo].pannType += EFSUSTAIN;
 				
-				for( i = 0; i < curIns->pannSize; i++)
+				for (i = 0; i < curIns->pannSize; i++)
 				{
 					if (FindByteStart( InstruNo) <= curIns->pannEnv[ i].pos) break;
 				}
@@ -994,7 +994,7 @@ InstrData	*curIns = &curMusic->fid[ InstruNo];
 				
 				if (!(curMusic->fid[ InstruNo].volType & EFSUSTAIN)) curMusic->fid[ InstruNo].volType += EFSUSTAIN;
 				
-				for( i = 0; i < curIns->volSize; i++)
+				for (i = 0; i < curIns->volSize; i++)
 				{
 					if (FindByteStart( InstruNo) <= curIns->volEnv[ i].pos) break;
 				}
@@ -1113,7 +1113,7 @@ ScrapRef	scrap;
 				copyEnv.pannSize = 0;
 				copyEnv.numSamples = End - Start;
 				
-				for( i = 0; i < curIns->pannSize; i++)
+				for (i = 0; i < curIns->pannSize; i++)
 				{
 					if (curIns->pannEnv[ i].pos >= Start && curIns->pannEnv[ i].pos <= End)
 					{
@@ -1139,7 +1139,7 @@ ScrapRef	scrap;
 				copyEnv.volSize = 0;
 				copyEnv.numSamples = End - Start;
 				
-				for( i = 0; i < curIns->volSize; i++)
+				for (i = 0; i < curIns->volSize; i++)
 				{
 					if (curIns->volEnv[ i].pos >= Start && curIns->volEnv[ i].pos <= End)
 					{
@@ -1209,7 +1209,7 @@ OSErr				anErr;
 					
 					// Make room on existing volume envelope 
 					whichPt = curIns->pannSize;
-					for( i = curIns->pannSize-1; i >= 0 ; i--)
+					for (i = curIns->pannSize-1; i >= 0 ; i--)
 					{
 						if (curIns->pannEnv[ i].pos >= Start)
 						{
@@ -1233,7 +1233,7 @@ OSErr				anErr;
 					}
 					// Paste volume envelope
 					
-					for( i = 0; i < pasteEnv.pannSize; i++)
+					for (i = 0; i < pasteEnv.pannSize; i++)
 					{
 						curIns->pannEnv[ i + whichPt].pos = pasteEnv.pannEnv[ i].pos + Start;
 						if (curIns->pannEnv[ i + whichPt].pos >= ENVSIZE) curIns->pannEnv[ i + whichPt].pos = ENVSIZE-1;
@@ -1281,7 +1281,7 @@ OSErr				anErr;
 					
 					// Make room on existing volume envelope 
 					whichPt = curIns->volSize;
-					for( i = curIns->volSize-1; i >= 0 ; i--)
+					for (i = curIns->volSize-1; i >= 0 ; i--)
 					{
 						if (curIns->volEnv[ i].pos >= Start)
 						{
@@ -1305,7 +1305,7 @@ OSErr				anErr;
 					}
 					// Paste volume envelope
 					
-					for( i = 0; i < pasteEnv.volSize; i++)
+					for (i = 0; i < pasteEnv.volSize; i++)
 					{
 						curIns->volEnv[ i + whichPt].pos = pasteEnv.volEnv[ i].pos + Start;
 						if (curIns->volEnv[ i + whichPt].pos >= ENVSIZE) curIns->volEnv[ i + whichPt].pos = ENVSIZE-1;
@@ -1480,7 +1480,7 @@ RgnHandle	visibleRegion;
 								InstrData	*curIns = &curMusic->fid[ InstruNo];
 								short		tcoc = PosToByte( pt.h, InstruNo);
 								
-								for( i = 0; i < curIns->pannSize; i++)
+								for (i = 0; i < curIns->pannSize; i++)
 								{
 									if (tcoc >= curIns->pannEnv[ i].pos - 1 && tcoc <= curIns->pannEnv[ i].pos + 1)
 									{
@@ -1497,7 +1497,7 @@ RgnHandle	visibleRegion;
 								InstrData	*curIns = &curMusic->fid[ InstruNo];
 								short		tcoc = PosToByte( pt.h, InstruNo);
 								
-								for( i = 0; i < curIns->volSize; i++)
+								for (i = 0; i < curIns->volSize; i++)
 								{
 									if (tcoc >= curIns->volEnv[ i].pos - 1 && tcoc <= curIns->volEnv[ i].pos + 1)
 									{
@@ -2016,13 +2016,13 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 					{
 						if (editPtEnv != -1)
 						{
-							for( i = 0; i < curIns->pannSize; i++)
+							for (i = 0; i < curIns->pannSize; i++)
 							{
 								if (i == editPtEnv)
 								{
 									short ww;
 									
-									for( ww = i; ww < curIns->pannSize-1; ww++)
+									for (ww = i; ww < curIns->pannSize-1; ww++)
 									{
 										curIns->pannEnv[ ww] = curIns->pannEnv[ ww+1];
 									}
@@ -2079,7 +2079,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 					{
 						if (editPtEnv == -1)
 						{
-							for( i = 0; i < curIns->pannSize; i++)
+							for (i = 0; i < curIns->pannSize; i++)
 							{
 								if (tcoc >= curIns->pannEnv[ i].pos - 1 && tcoc <= curIns->pannEnv[ i].pos + 1)
 								{
@@ -2094,7 +2094,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 										short ww;
 										// déplace les pts après ce pt
 										
-										for( ww = 11; ww >= i; ww--) curIns->pannEnv[ ww] = curIns->pannEnv[ ww-1];
+										for (ww = 11; ww >= i; ww--) curIns->pannEnv[ ww] = curIns->pannEnv[ ww-1];
 										
 										curIns->pannSize++;
 										
@@ -2196,13 +2196,13 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 					{
 						if (editPtEnv != -1)
 						{
-							for( i = 0; i < curIns->volSize; i++)
+							for (i = 0; i < curIns->volSize; i++)
 							{
 								if (i == editPtEnv)
 								{
 									short ww;
 									
-									for( ww = i; ww < curIns->volSize-1; ww++)
+									for (ww = i; ww < curIns->volSize-1; ww++)
 									{
 										curIns->volEnv[ ww] = curIns->volEnv[ ww+1];
 									}
@@ -2259,7 +2259,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 					{
 						if (editPtEnv == -1)
 						{
-							for( i = 0; i < curIns->volSize; i++)
+							for (i = 0; i < curIns->volSize; i++)
 							{
 								if (tcoc >= curIns->volEnv[ i].pos - 1 && tcoc <= curIns->volEnv[ i].pos + 1)
 								{
@@ -2274,7 +2274,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 										short ww;
 										// déplace les pts après ce pt
 										
-										for( ww = 11; ww >= i; ww--) curIns->volEnv[ ww] = curIns->volEnv[ ww-1];
+										for (ww = 11; ww >= i; ww--) curIns->volEnv[ ww] = curIns->volEnv[ ww-1];
 										
 										curIns->volSize++;
 										
@@ -2408,7 +2408,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 							if (!IsPressed( 0x38)) if (curMode[ InstruNo]) BS++;
 							if (!IsPressed( 0x38)) if (curMode[ InstruNo]) BE++;
 							
-							for( x = BS; x < BE; x++)
+							for (x = BS; x < BE; x++)
 							{
 								val = (long) nVal16S +  ( (long) (x - BS) * (long) ( nVal16E - nVal16S)/ (long) (BE - BS));
 								theShortSample[ x] = val - 0x8000;
@@ -2420,7 +2420,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 						}
 						else
 						{
-							for( x = BS; x < BE; x++)
+							for (x = BS; x < BE; x++)
 							{
 								val = (long) nVal16S +  ( (long) (x - BS) * (long) ( nVal16E - nVal16S)/ (long) (BE - BS));
 								theShortSample[ x] = val - 0x8000;
@@ -2441,7 +2441,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 							if (!IsPressed( 0x38)) if (curMode[ InstruNo]) BS++;
 							if (!IsPressed( 0x38)) if (curMode[ InstruNo]) BE++;
 							
-							for( x = BS; x < BE; x++)
+							for (x = BS; x < BE; x++)
 							{
 								val = (long) nVal8S +  ( (long) (x - BS) * (long) ( nVal8E - nVal8S)/ (long) (BE - BS));
 								theSample[ x] = val - 0x80;
@@ -2453,7 +2453,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 						}
 						else
 						{
-							for( x = BS; x < BE; x++)
+							for (x = BS; x < BE; x++)
 							{
 								val = (long) nVal8S +  ( (long) (x - BS) * (long) ( nVal8E - nVal8S)/ (long) (BE - BS));
 								theSample[ x] = val - 0x80;
@@ -2533,7 +2533,7 @@ InstrData	*curIns = &curMusic->fid[ ins];
 	// Envelope
 	
 	RGBForeColor( &theColor);
-	for( i = 0; i < curIns->volSize; i++)
+	for (i = 0; i < curIns->volSize; i++)
 	{
 		MoveTo( ByteToPos( curIns->volEnv[ i].pos, ins), SampleRect.top);
 		LineTo( ByteToPos( curIns->volEnv[ i].pos, ins), SampleRect.bottom);
@@ -2544,7 +2544,7 @@ InstrData	*curIns = &curMusic->fid[ ins];
 	if (curIns->volSize > 0)
 	{
 		MoveTo( ByteToPos( 0, ins), SampleRect.top + ((64 - curIns->volEnv[ 0].val) * high) / 64);
-		for( i = 0; i < curIns->volSize; i++)
+		for (i = 0; i < curIns->volSize; i++)
 		{
 			LineTo( ByteToPos( curIns->volEnv[ i].pos, ins), SampleRect.top + ((64 - curIns->volEnv[ i].val) * high) / 64);
 		}
@@ -2631,7 +2631,7 @@ InstrData	*curIns = &curMusic->fid[ ins];
 	// Envelope
 	
 	RGBForeColor( &theColor);
-	for( i = 0; i < curIns->pannSize; i++)
+	for (i = 0; i < curIns->pannSize; i++)
 	{
 		MoveTo( ByteToPos( curIns->pannEnv[ i].pos, ins), SampleRect.top);
 		LineTo( ByteToPos( curIns->pannEnv[ i].pos, ins), SampleRect.bottom);
@@ -2642,7 +2642,7 @@ InstrData	*curIns = &curMusic->fid[ ins];
 	if (curIns->pannSize > 0)
 	{
 		MoveTo( ByteToPos( 0, ins), SampleRect.top + ((64 - curIns->pannEnv[ 0].val) * high) / 64);
-		for( i = 0; i < curIns->pannSize; i++)
+		for (i = 0; i < curIns->pannSize; i++)
 		{
 			LineTo( ByteToPos( curIns->pannEnv[ i].pos, ins), SampleRect.top + ((64 - curIns->pannEnv[ i].val) * high) / 64);
 		}
@@ -2899,7 +2899,7 @@ void InitSampleWindow(void)
  	GetSampleRect( SampleDlog[ 0]);
  	DisposeDialog( SampleDlog[ 0]);
  	
-	for( i = 0; i < MAXINSTRU; i++)
+	for (i = 0; i < MAXINSTRU; i++)
 	{
 		Clignote[ i] = false;
 		TokTak[ i] = false;
@@ -3308,7 +3308,7 @@ void CloseSampleWindow( DialogPtr	theDia)
 	
 	if (IsPressed( 0x3A) == true)
 	{
-		for( i = MAXINSTRU; i >= 0 ; i--)
+		for (i = MAXINSTRU; i >= 0 ; i--)
 		{
 			if (SampleDlog[ i] != NULL)
 			{
@@ -3615,7 +3615,7 @@ void MoveLoopSelection( short InstruNo)
 			
 			// Check to see if this instrument is currently playing, and update it!
 			
-			for( i=0; i< MADDriver->DriverSettings.numChn; i++)
+			for (i=0; i< MADDriver->DriverSettings.numChn; i++)
 			{
 				Channel *curVoice = &MADDriver->chan[i];
 				 
@@ -4207,7 +4207,7 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 			
 			InsertMenu( sMenu, hierMenu);
 			
-			for( i = 0, kk = 0; i < curMusic->fid[ InstruNo].numSamples; i++)
+			for (i = 0, kk = 0; i < curMusic->fid[ InstruNo].numSamples; i++)
 			{
 				sData		*curData = curMusic->sample[ curMusic->fid[ InstruNo].firstSample +  i];
 				Str255		str;
@@ -4260,7 +4260,7 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 				break;
 				
 				default:
-					for( i = 0; i < 255; i++)
+					for (i = 0; i < 255; i++)
 					{
 						if (menuSampleId[ i] == curSample[ InstruNo]) break;
 					}
@@ -4558,13 +4558,13 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 				{
 					InstrData	*curIns = &curMusic->fid[ CurWin];
 					
-					for( i = 0; i < curIns->pannSize; i++)
+					for (i = 0; i < curIns->pannSize; i++)
 					{
 						if (curIns->pannEnv[ i].pos >= Start && curIns->pannEnv[ i].pos <= End)
 						{
 							short ww;
 							
-							for( ww = i; ww < curIns->pannSize-1; ww++)
+							for (ww = i; ww < curIns->pannSize-1; ww++)
 							{
 								curIns->pannEnv[ ww] = curIns->pannEnv[ ww+1];
 							}
@@ -4588,13 +4588,13 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 				{
 					InstrData	*curIns = &curMusic->fid[ CurWin];
 					
-					for( i = 0; i < curIns->volSize; i++)
+					for (i = 0; i < curIns->volSize; i++)
 					{
 						if (curIns->volEnv[ i].pos >= Start && curIns->volEnv[ i].pos <= End)
 						{
 							short ww;
 							
-							for( ww = i; ww < curIns->volSize-1; ww++)
+							for (ww = i; ww < curIns->volSize-1; ww++)
 							{
 								curIns->volEnv[ ww] = curIns->volEnv[ ww+1];
 							}
@@ -4744,7 +4744,7 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 		
 		if ((short) theChar >= 0 && (short) theChar < 300)
 		{
-		/*	for( i = 1; i < 61; i++)
+		/*	for (i = 1; i < 61; i++)
 			{
 				if (thePrefs.PianoKey[ (short) theChar] == MADDriver->pitchTable[ i * MAXSAMPLE +  0] ) break;
 			}*/
@@ -5050,7 +5050,7 @@ pascal OSErr MySendSampleProc(FlavorType theFlavor,  void *refCon, ItemReference
 		if (theSound == NULL) return noErr;
 
 		strcpy( (Ptr) target.name, SampleDataD( DragInstruSource)->name);
-		for( i=0; i<strlen( (Ptr) target.name); i++) if (target.name[i] == ':') target.name[i] = '-';
+		for (i=0; i<strlen( (Ptr) target.name); i++) if (target.name[i] == ':') target.name[i] = '-';
 		MyC2PStr( (Ptr) target.name);
 
 		HSetVol( NULL, target.vRefNum, target.parID);

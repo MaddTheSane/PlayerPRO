@@ -229,7 +229,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	ITForm			ITinfo;
 	/********************************/
 
-	for( i = 0 ; i < 64; i ++)
+	for (i = 0 ; i < 64; i ++)
 	{
 		theInstrument[ i] = NULL;
 	}
@@ -263,7 +263,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	}
 	BlockMoveData( theITCopy, ITinfo.parapins, ITinfo.insNum * 4L);
 	theITCopy += ITinfo.insNum * 4L;
-	for( i = 0; i < ITinfo.insNum; i++)
+	for (i = 0; i < ITinfo.insNum; i++)
 	{
 		ITinfo.parapins[ i] = Tdecode32(  &ITinfo.parapins[ i]);
 	}
@@ -279,7 +279,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	}
 	BlockMoveData( theITCopy, ITinfo.parapsamp, ITinfo.smpNum * 4L);
 	theITCopy += ITinfo.smpNum * 4L;
-	for( i = 0; i < ITinfo.smpNum; i++)
+	for (i = 0; i < ITinfo.smpNum; i++)
 	{
 		ITinfo.parapsamp[ i] = Tdecode32(  &ITinfo.parapsamp[ i]);
 	}
@@ -296,7 +296,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	}
 	BlockMoveData( theITCopy, ITinfo.parappat, ITinfo.patNum * 4L);
 	theITCopy += ITinfo.patNum * 4L;
-	for( i = 0; i < ITinfo.patNum; i++)
+	for (i = 0; i < ITinfo.patNum; i++)
 	{
 		ITinfo.parappat[ i] = Tdecode32(  &ITinfo.parappat[ i]);
 	}
@@ -444,7 +444,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 		if (theMAD->header->oPointers[ i] < 0 || theMAD->header->oPointers[ i] >= ITinfo.patNum) theMAD->header->oPointers[ i] = 0;
 	}
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
 		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
@@ -468,7 +468,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 		
 		return MADNeedMemory;
 	}
-	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 
 	// ********************
 	// ***** INSTRUMENTS *****
@@ -503,11 +503,11 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 		return MADNeedMemory;
 	}
 	
-	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 
 	for(i  = 0 ; i < MAXINSTRU; i++)
 	{
-		for( x = 0; x < MAXSAMPLE; x++) theMAD->sample[ i*MAXSAMPLE + x] = NULL;
+		for (x = 0; x < MAXSAMPLE; x++) theMAD->sample[ i*MAXSAMPLE + x] = NULL;
 		
 		theMAD->fid[i].numSamples	= 0;
 	}
@@ -567,7 +567,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 				curData->amp			= 8;		if (ITinfo.sampdata[i].Flag&1)	curData->amp		= 16;
 				
 				curData->relNote	= 0;
-				for( x = 0; x < 28; x++) theMAD->fid[i].name[x] = ITinfo.sampdata[i].DOSName[x];
+				for (x = 0; x < 28; x++) theMAD->fid[i].name[x] = ITinfo.sampdata[i].DOSName[x];
 				
 				curData->data 		= MADPlugNewPtr( curData->size, init);
 				if (curData->data == NULL) {
@@ -602,7 +602,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 					{
 						long temp;
 						
-						for( temp = 0; temp < curData->size; temp++) *(curData->data + temp) -= 0x80;
+						for (temp = 0; temp < curData->size; temp++) *(curData->data + temp) -= 0x80;
 					}*/
 				}
 			}
@@ -630,8 +630,8 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 	
 	starting = 0;
 
-	for( i = 0; i < MAXPATTERN; i++) theMAD->partition[ i] = NULL;
-	for( i = 0; i < theMAD->header->numPat ; i++)
+	for (i = 0; i < MAXPATTERN; i++) theMAD->partition[ i] = NULL;
+	for (i = 0; i < theMAD->header->numPat ; i++)
 	{
 		ITPatForm		*curITPat;
 		
@@ -673,12 +673,12 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 		theMAD->partition[ i]->header.size 			= curITPat->row;
 		theMAD->partition[ i]->header.compMode 	= 'NONE';
 		
-		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
+		for (x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
 		
 		MaxPtr = (Ptr) theMAD->partition[ i];
 		MaxPtr += sizeof( PatHeader) + theMAD->header->numChn * curITPat->row * sizeof( Cmd);
 		
-		for( Row = 0; Row < curITPat->row; Row++)
+		for (Row = 0; Row < curITPat->row; Row++)
 		{
 			for(z = 0; z < theMAD->header->numChn; z++)
 			{

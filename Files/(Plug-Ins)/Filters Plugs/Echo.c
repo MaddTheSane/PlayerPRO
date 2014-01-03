@@ -183,7 +183,7 @@ static OSErr mainEcho(	sData			*theData,
 			{
 				Ptr	orgPtr = (theData->data) + SelectionStart, destPtr = orgPtr + pDelay;
 				
-				for( i = 0; i < (length - pDelay); i++)
+				for (i = 0; i < (length - pDelay); i++)
 				{
 					temp1 = *orgPtr++;
 					temp1 = (pStrength * temp1) / 100;
@@ -205,7 +205,7 @@ static OSErr mainEcho(	sData			*theData,
 				short	*orgPtr = (short*) theData->data + (SelectionStart / 2),
 				*destPtr = orgPtr + pDelay;
 				
-				for( i = 0; i < length / 2 - pDelay; i++)
+				for (i = 0; i < length / 2 - pDelay; i++)
 				{
 					temp1 = *orgPtr++;
 					temp1 = (pStrength * temp1) / 100;

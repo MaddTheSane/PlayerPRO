@@ -285,7 +285,7 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 			{
 				if (*sampleSize == 8)
 				{
-					for( i = 0; i < MusSize; i ++)
+					for (i = 0; i < MusSize; i ++)
 					{
 						soundPtr[ i] = ExtHeader->sampleArea[ i * numChannels];
 					}
@@ -293,7 +293,7 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 				else
 				{
 					MusSize /= 2;
-					for( i = 0; i < MusSize; i ++)
+					for (i = 0; i < MusSize; i ++)
 					{
 						((short*) soundPtr)[ i] = ((short*) ExtHeader->sampleArea)[ i * numChannels];
 					}
@@ -390,9 +390,9 @@ void DrawBottomInfo()
 	fileSize = 0;
 	sampleNum = 0;
 	insNum = 0;
-	for( i = 0; i < MAXINSTRU ; i++)
+	for (i = 0; i < MAXINSTRU ; i++)
 	{
-		for( x = 0; x < curMusic->fid[ i].numSamples ; x++)
+		for (x = 0; x < curMusic->fid[ i].numSamples ; x++)
 		{
 			sData	*curData = curMusic->sample[ curMusic->fid[ i].firstSample + x];
 			fileSize += curData->size;
@@ -696,7 +696,7 @@ void NInitSmallPiano( Rect mainRect, Rect *listRect)
 	
 	prevP = itemRect.left;
 	
-	for( i = 0; i < NUMBER_NOTES ; i++)
+	for (i = 0; i < NUMBER_NOTES ; i++)
 	{
 		listRect[ i] = itemRect;
 	
@@ -724,7 +724,7 @@ void DrawWhatSample( short ins, short samp)
 	short 	i;
 	Rect	aRect;
 	
-	for( i = 0; i < NUMBER_NOTES; i++)
+	for (i = 0; i < NUMBER_NOTES; i++)
 	{
 		if (curMusic->fid[ ins].what[ i] == samp)
 		{
@@ -766,7 +766,7 @@ void NPressSmallPiano( short itemHit, DialogPtr TheDia, short theInstru)
 		GetMouse( &Mouse);
 	
 		Position = -1;
-		for( i = 0; i < NUMBER_NOTES; i++)
+		for (i = 0; i < NUMBER_NOTES; i++)
 		{
 			if (PtInRect( Mouse, &SPianoRect[ i]))
 			{
@@ -899,7 +899,7 @@ void ChangeDialogFont( DialogPtr aDia)
 	
 	num = CountDITL( aDia);
 	
-	for( i = 1; i <= num; i++)
+	for (i = 1; i <= num; i++)
 	{
 		GetDialogItem( aDia, i, &iType, &iHandle, &iRect);
 		GetDialogItemAsControl( aDia, i, &ctl);
@@ -986,7 +986,7 @@ pascal void actionProcInstru( ControlHandle theControl, short ctlPart)
 			
 			if (ctlPart != kControlIndicatorPart)
 			{
-				for( i = 0; i < STEP; i++)
+				for (i = 0; i < STEP; i++)
 				{
 					GetDialogItem( EditInfoDlog, 44, &itemType, &itemHandle, &itemRect);
 					itemRect.left = LEFTBOX + 1;
@@ -1424,7 +1424,7 @@ OnRepart:
 				
 				GetDText( TheDia, 6, theStr);
 				//	NumToString( curEData->c2spd, theStr);
-				for( i = 1; i <= CountMenuItems( tempMenu); i++)
+				for (i = 1; i <= CountMenuItems( tempMenu); i++)
 				{
 					GetMenuItemText( tempMenu, i, aStr);
 					aStr[ 0] = theStr[ 0];
@@ -1448,7 +1448,7 @@ OnRepart:
 					if (CloseSampleData( TheDia) != noErr) goto OnRepart;
 					
 					GetMenuItemText( tempMenu, LoWord( mresult), theStr);
-					for( i = 1; i <= theStr[ 0]; i++)
+					for (i = 1; i <= theStr[ 0]; i++)
 					{
 						if (theStr[ i] == ' ') break;
 					}
@@ -1824,7 +1824,7 @@ void CreateInstruList( void)
 		PLSetControl( &myList);
 	}
 	
-	for( i = 0; i < myList.maxY; i++)  SAButState[ i] = false;
+	for (i = 0; i < myList.maxY; i++)  SAButState[ i] = false;
 	
 	DrawBottomInfo();
 	
@@ -1932,7 +1932,7 @@ void DoNullInstruList(void)
 
 	max = PLGetMaxYValue( &myList);
 
-	for( i = GetControlValue( myList.yScroll); i < max; i++) InstrUsed[ i] = false;
+	for (i = GetControlValue( myList.yScroll); i < max; i++) InstrUsed[ i] = false;
 	
 	maxChannels = MADDriver->MultiChanNo;
 	if (MADDriver->DriverSettings.numChn > maxChannels) maxChannels = MADDriver->DriverSettings.numChn;
@@ -1997,7 +1997,7 @@ void DoNullInstruList(void)
 			}
 	}
 	
-	for( i = GetControlValue( myList.yScroll); i < max; i++)
+	for (i = GetControlValue( myList.yScroll); i < max; i++)
 	{
 		if (!InstrUsed[ i])
 		{
@@ -2058,7 +2058,7 @@ short ConvertInsSampToID( short ins, short samp)
 	short	i, ret;
 	
 	ret = 0;
-	for( i = 0; i < ins; i++)
+	for (i = 0; i < ins; i++)
 	{
 		if (thePrefs.OCArrow[ i]) ret += curMusic->fid[ i].numSamples;
 	}
@@ -2076,7 +2076,7 @@ short ComputeMaxY()
 	short i, tot;
 	
 	tot = MAXINSTRU;
-	for( i = 0; i < MAXINSTRU; i++)
+	for (i = 0; i < MAXINSTRU; i++)
 	{
 		if (thePrefs.OCArrow[ i]) tot += curMusic->fid[ i].numSamples;
 	}
@@ -2398,7 +2398,7 @@ void UpdateInstruListWindow( DialogPtr	GetSelection)
 	ForeColor( blackColor);
 	
 	BackColor( whiteColor);
-	for( i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++)
+	for (i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++)
 	{
 		DrawInstruListItem( i);
 	}
@@ -2547,7 +2547,7 @@ void DrawInfoInstrument(void)
 		{
 			long	x, fileSize = 0;
 			
-			for( x = 0; x < curMusic->fid[ ins].numSamples ; x++)
+			for (x = 0; x < curMusic->fid[ ins].numSamples ; x++)
 			{
 				sData	*curData = curMusic->sample[ curMusic->fid[ ins].firstSample + x];
 				
@@ -2762,7 +2762,7 @@ pascal OSErr MyTrackingHandler(short message, WindowPtr theWindow, void *handler
 				else
 				{
 					theCell.h = 0;
-					for( theCell.v = 0; theCell.v < myList.maxY; theCell.v++)
+					for (theCell.v = 0; theCell.v < myList.maxY; theCell.v++)
 					{
 						PLRect( &tempRect, theCell, &myList);
 						if (PtInRect( localMouse, &tempRect))
@@ -3858,7 +3858,7 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 						
 						if ((theEvent.modifiers & optionKey) != 0)
 						{
-							for( i = 0; i < MAXINSTRU ; i++) thePrefs.OCArrow[ i] = thePrefs.OCArrow[ ins];
+							for (i = 0; i < MAXINSTRU ; i++) thePrefs.OCArrow[ i] = thePrefs.OCArrow[ ins];
 						}
 						
 						theCell.v = ConvertInsSampToID( ins, samp);
@@ -4269,9 +4269,9 @@ void SaveInstrumentsList()
 			inOutCount = sizeof( InstrData) * MAXINSTRU;
 			iErr = FSWrite( refNum, &inOutCount, curMusic->fid);
 			
-			for( i = 0; i < MAXINSTRU ; i++)
+			for (i = 0; i < MAXINSTRU ; i++)
 			{
-				for( x = 0; x < curMusic->fid[i].numSamples; x++)
+				for (x = 0; x < curMusic->fid[i].numSamples; x++)
 				{
 					sData	*curData;
 					
@@ -4300,16 +4300,16 @@ OSErr OpenInstrumentsList( FSSpec *file)
 	theErr = FSpOpenDF( file, fsCurPerm, &srcFile);
 	if (theErr) return theErr;
 	
-	for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( curMusic, x);
+	for (x = 0; x < MAXINSTRU ; x++) MADKillInstrument( curMusic, x);
 	
 	// **** HEADER ***
 	inOutCount = sizeof( InstrData) * MAXINSTRU;
 	theErr = FSRead( srcFile, &inOutCount, curMusic->fid);
 	
 	// **** INSTRUMENTS ***
-	for( i = 0; i < MAXINSTRU ; i++)
+	for (i = 0; i < MAXINSTRU ; i++)
 	{
-		for( x = 0; x < curMusic->fid[ i].numSamples ; x++)
+		for (x = 0; x < curMusic->fid[ i].numSamples ; x++)
 		{
 			sData	*curData;
 		

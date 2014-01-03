@@ -177,7 +177,7 @@ void CreatePianoPixMap(void)
 			TextFont( 4);	TextSize( 9);
 		
 			SetRect( &nRect, 0, 0, ToucheLarg, ToucheHaut);
-			for( i = 0; i < NUMBER_NOTES; i++)
+			for (i = 0; i < NUMBER_NOTES; i++)
 			{
 				/** Touche **/
 				
@@ -210,7 +210,7 @@ void CreatePianoPixMap(void)
 			
 			TextFont( kFontIDCourier);
 			
-			for( i = 0; i < NUMBER_NOTES; i++)
+			for (i = 0; i < NUMBER_NOTES; i++)
 			{
 				GetNoteString( i, str);
 			
@@ -234,7 +234,7 @@ void CreatePianoPixMap(void)
 				
 				TextFont( 4);	TextSize( 9);
 				
-				for( i = 0; i < NUMBER_NOTES; i++)
+				for (i = 0; i < NUMBER_NOTES; i++)
 				{
 					/** Caractre **/
 					
@@ -255,7 +255,7 @@ void CreatePianoPixMap(void)
 				
 					SetRect( &aRect, 0, PianoRect.bottom - 10, OCLARG, PianoRect.bottom);
 				
-					for( i = 0 ; i < 8; i++)
+					for (i = 0 ; i < 8; i++)
 					{
 						SwitchColorBack( i);
 						
@@ -268,7 +268,7 @@ void CreatePianoPixMap(void)
 					BackColor (whiteColor);
 					
 					SetRect( &aRect, 0, PianoRect.bottom - 10, OCLARG, PianoRect.bottom);
-					for( i = 0 ; i < 8; i++)
+					for (i = 0 ; i < 8; i++)
 					{
 						MoveTo( aRect.right, aRect.top);
 						LineTo( aRect.right, aRect.bottom);
@@ -880,7 +880,7 @@ void DoItemPressPiano( short whichItem, DialogPtr whichDialog)    			/* Item hit
 								tPt = myPt;
 								tPt.h += GetControlValue( PianoCtl);
 								
-								for( i = 0; i < NUMBER_NOTES; i++)
+								for (i = 0; i < NUMBER_NOTES; i++)
 								{
 									if (PtInRect( tPt, &SPianoRect[ i]))
 									{
@@ -1109,11 +1109,11 @@ void UpdatePressChar(void)
 short	i, x;
 Str255	str, bstr;
 
-	for( x = 0; x < NUMBER_NOTES; x++) thePressChar[ x] = 0;
+	for (x = 0; x < NUMBER_NOTES; x++) thePressChar[ x] = 0;
 	
-	for( x = 0; x < NUMBER_NOTES; x++)
+	for (x = 0; x < NUMBER_NOTES; x++)
 	{
-		for( i = 0; i < 300; i++)
+		for (i = 0; i < 300; i++)
 		{
 			if (thePrefs.PianoKey[ (short) i] == x)
 			{
@@ -1293,7 +1293,7 @@ void InitRecording( void)
 {
 	short	i;
 	
-	for( i = 0; i < 32; i++)
+	for (i = 0; i < 32; i++)
 	{
 		lastReaderTrack[ i] = -1;
 	}

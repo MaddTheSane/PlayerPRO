@@ -139,8 +139,8 @@ void InitUndo(void)
 {
 	short	i;
 	
-	for( i = 0; i < MAXINSTRU; i++) CopyAllInstruments[ i] = NULL;
-	for( i = 0; i < MAXPATTERN; i++) CopyPartition[ i] = NULL;
+	for (i = 0; i < MAXINSTRU; i++) CopyAllInstruments[ i] = NULL;
+	for (i = 0; i < MAXPATTERN; i++) CopyPartition[ i] = NULL;
 	
 	myUndo.UndoType = 0;
 	myUndo.ID = 0;
@@ -165,13 +165,13 @@ void ResetUndo(void)
 	
 	BlockZero( CopySets, MAXTRACK * sizeof(FXSets));
 	
-	for( i = 0; i < MAXINSTRU; i++)
+	for (i = 0; i < MAXINSTRU; i++)
 	{
 		if (CopyAllInstruments[ i] != NULL) MyDisposePtr( & CopyAllInstruments[ i]);
 		CopyAllInstruments[ i] = NULL;
 	}
 	
-	for( i = 0; i < MAXPATTERN; i++)
+	for (i = 0; i < MAXPATTERN; i++)
 	{
 		if (CopyPartition[ i] != NULL) MyDisposePtr( (Ptr*) &CopyPartition[ i]);
 		CopyPartition[ i] = NULL;
@@ -197,12 +197,12 @@ void SaveUndo( short UndoType, short ID, Str255 textMenu)
 	if (myUndo.data != NULL) MyDisposePtr( & myUndo.data);
 	myUndo.data = NULL;
 	
-	for( i = 0; i < MAXINSTRU; i++)
+	for (i = 0; i < MAXINSTRU; i++)
 	{
 		if (CopyAllInstruments[ i] != NULL) MyDisposePtr( & CopyAllInstruments[ i]);
 		CopyAllInstruments[ i] = NULL;
 	}
-	for( i = 0; i < MAXPATTERN; i++)
+	for (i = 0; i < MAXPATTERN; i++)
 	{
 		if (CopyPartition[ i] != NULL) MyDisposePtr( (Ptr*) &CopyPartition[ i]);
 		CopyPartition[ i] = NULL;
@@ -226,7 +226,7 @@ void SaveUndo( short UndoType, short ID, Str255 textMenu)
 			CopyFid			= curMusic->fid[ ID];
 			
 			myUndo.dataSize = 0;
-			for( i = 0; i < CopyFid.numSamples; i++)
+			for (i = 0; i < CopyFid.numSamples; i++)
 			{
 				sData	*curData = curMusic->sample[ curMusic->fid[ ID].firstSample + i];
 				myUndo.dataSize	+= sizeof( sData) + curData->size;
@@ -237,7 +237,7 @@ void SaveUndo( short UndoType, short ID, Str255 textMenu)
 			else
 			{
 				myUndo.dataSize = 0;
-				for( i = 0; i < CopyFid.numSamples; i++)
+				for (i = 0; i < CopyFid.numSamples; i++)
 				{
 					sData	*curData = curMusic->sample[ curMusic->fid[ ID].firstSample +  i];
 					
@@ -274,12 +274,12 @@ void SaveUndo( short UndoType, short ID, Str255 textMenu)
 			/*** UAllSamples ***/
 			if (UndoType == UAllSamples)
 			{
-				for( i = 0; i < MAXINSTRU; i++)
+				for (i = 0; i < MAXINSTRU; i++)
 				{
 					long size;
 					
 					size = sizeof( InstrData);
-					for( x = 0; x < curMusic->fid[ i].numSamples; x++)
+					for (x = 0; x < curMusic->fid[ i].numSamples; x++)
 					{
 						sData	*curData = curMusic->sample[ curMusic->fid[ i].firstSample +  x];
 						
@@ -293,7 +293,7 @@ void SaveUndo( short UndoType, short ID, Str255 textMenu)
 						BlockMoveData( &curMusic->fid[ i], CopyAllInstruments[ i] + size, sizeof( InstrData));
 						size += sizeof( InstrData);
 						
-						for( x = 0; x < curMusic->fid[ i].numSamples; x++)
+						for (x = 0; x < curMusic->fid[ i].numSamples; x++)
 						{
 							sData	*curData = curMusic->sample[ curMusic->fid[ i].firstSample +  x];
 							
@@ -325,7 +325,7 @@ void SaveUndo( short UndoType, short ID, Str255 textMenu)
 			/*** UAllPatterns ***/
 			if (UndoType == UAllPatterns)
 			{
-				for( i = 0; i < MAXPATTERN; i++)
+				for (i = 0; i < MAXPATTERN; i++)
 				{
 					CopyPartition[ i]  = NULL;
 					
@@ -404,7 +404,7 @@ void DoUndo(void)
 			// ** REDO **
 			myTempFid 	= curMusic->fid[ myUndo.ID];
 			myTempSize 	= 0;
-			for( i = 0; i < myTempFid.numSamples; i++)
+			for (i = 0; i < myTempFid.numSamples; i++)
 			{
 				sData	*curData = curMusic->sample[ curMusic->fid[ myUndo.ID].firstSample +  i];
 				myTempSize	+= sizeof( sData) + curData->size;
@@ -419,7 +419,7 @@ void DoUndo(void)
 			else
 			{
 				myTempSize = 0;
-				for( i = 0; i < myTempFid.numSamples; i++)
+				for (i = 0; i < myTempFid.numSamples; i++)
 				{
 					sData	*curData = curMusic->sample[ curMusic->fid[ myUndo.ID].firstSample +  i];
 					
@@ -447,7 +447,7 @@ void DoUndo(void)
 			curMusic->fid[ myUndo.ID].numSamples = 0;
 			
 			size = 0;
-			for( i = 0; i < CopyFid.numSamples; i++)
+			for (i = 0; i < CopyFid.numSamples; i++)
 			{
 				sData	*curData;
 				
@@ -521,13 +521,13 @@ void DoUndo(void)
 			
 			if (myUndo.UndoType == UAllSamples)
 			{
-				for( i = 0; i < MAXINSTRU; i++)
+				for (i = 0; i < MAXINSTRU; i++)
 				{
 					long size;
 					
 					// ** REDO **
 					myTempSize 	= sizeof( InstrData);
-					for( x = 0; x < curMusic->fid[ i].numSamples; x++)
+					for (x = 0; x < curMusic->fid[ i].numSamples; x++)
 					{
 						sData	*curData = curMusic->sample[ curMusic->fid[ i].firstSample +  x];
 						myTempSize	+= sizeof( sData) + curData->size;
@@ -540,7 +540,7 @@ void DoUndo(void)
 						BlockMoveData( &curMusic->fid[ i], myTempInstru + myTempSize, sizeof( InstrData));
 						myTempSize	+= sizeof( InstrData);
 						
-						for( x = 0; x < curMusic->fid[ i].numSamples; x++)
+						for (x = 0; x < curMusic->fid[ i].numSamples; x++)
 						{
 							sData	*curData = curMusic->sample[ curMusic->fid[ i].firstSample +  x];
 							
@@ -578,7 +578,7 @@ void DoUndo(void)
 						numSamples = curMusic->fid[ i].numSamples;
 						curMusic->fid[ i].numSamples = 0;
 						
-						for( x = 0; x < numSamples; x++)
+						for (x = 0; x < numSamples; x++)
 						{
 							sData	*curData;
 							
@@ -612,7 +612,7 @@ void DoUndo(void)
 
 			if (myUndo.UndoType == UAllPatterns)
 			{
-				for( i = 0; i < MAXPATTERN; i++)
+				for (i = 0; i < MAXPATTERN; i++)
 				{
 					/** REDO **/
 					if (curMusic->partition[ i] != NULL)

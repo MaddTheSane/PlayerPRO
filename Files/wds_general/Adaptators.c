@@ -316,7 +316,7 @@ void DoNullAdap( void)
  	GetClip( saveClip);
  	ClipRect( &viewRect);
 	
-	for( i = 0; i < curMusic->header->numChn; i++)
+	for (i = 0; i < curMusic->header->numChn; i++)
 	{
 		if (MADDriver->Tube[i] >= -MINPULSE*2-1)
 		{
@@ -399,7 +399,7 @@ void DoNullAdap( void)
 			
 			found = false;
 			
-			for( i = 0; i < gCurrentTrack; i++)
+			for (i = 0; i < gCurrentTrack; i++)
 			{
 				
 				GetControlBounds( volCntl[ i], &contrlRect);
@@ -410,7 +410,7 @@ void DoNullAdap( void)
 				
 				if (PtInRect( pt, &contrlRect)) { found = true;	val = 100. * ((curMusic->header->chanPan[ i] - 32)/32.); percent = true;}
 				
-				for( x = 0; x < 4; x++)
+				for (x = 0; x < 4; x++)
 				{
 					GetControlBounds( VSTFx[ i][ x], &contrlRect);
 					
@@ -428,7 +428,7 @@ void DoNullAdap( void)
 				if (found) break;
 			}
 			
-			for( x = 0; x < 10; x++)
+			for (x = 0; x < 10; x++)
 			{
 				GetControlBounds( MainFx[ x], &contrlRect);
 			
@@ -617,7 +617,7 @@ void FillFxControl( short id)
 	short	x;
 	Str32	str1, str2;
 	
-	for( x = 0; x < 4; x++)
+	for (x = 0; x < 4; x++)
 	{
 		GetControlBounds( VSTFx[ id][ x], &contrlRect);
 		
@@ -899,7 +899,7 @@ void UpdateAdapWindow( DialogPtr	GetSelection)
 	if (MADDriver->globPan != 64) HiliteControl( ResetPanBut, 0);
 	else HiliteControl( ResetPanBut, 255);
 	
-	for( i = 0; i < 10; i++)
+	for (i = 0; i < 10; i++)
 	{
 		if (curMusic->header->globalFXActive == true)
 		{
@@ -950,7 +950,7 @@ void ResetAdaptators(void)
 	viewRect.top	= VolumeRect.top - 4;
 	viewRect.right	= XWINDOWSIZE - 16;
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
 		HideControl( pannCntl[ i]);		HideControl( volCntl[ i]);		HideControl( OnOff[ i]);
 	}
@@ -983,7 +983,7 @@ void ResetAdaptators(void)
 	if (MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
 	else HiliteControl( ResetSpeedBut, 255);
 	
-	for( i = 0; i < 10; i++)
+	for (i = 0; i < 10; i++)
 	{
 		if (curMusic->header->globalFXActive == true)
 		{
@@ -1006,16 +1006,16 @@ void ResetAdaptators(void)
 	
 	SetControlValue( MainFXOnOff, curMusic->header->globalFXActive);
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
-		for( x = 0; x < 4; x++)
+		for (x = 0; x < 4; x++)
 		{
 			if (MADDriver->chanVST[ i][ x] != NULL) HiliteControl( VSTFx[ i][ x], kControlButtonPart);
 			else HiliteControl( VSTFx[ i][ x], 0);
 		}
 	}
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
 		if (curMusic->header->chanBus[ i].ByPass) HiliteControl( VSTDest[ i], kControlButtonPart);
 		else HiliteControl( VSTDest[ i], 0);
@@ -1027,7 +1027,7 @@ void ResetAdaptators(void)
 		else
 		{
 			SetControlValue( VSTOnOff[ i], 0);
-			for( x = 0; x < 4; x++) HiliteControl( VSTFx[ i][ x], 255);
+			for (x = 0; x < 4; x++) HiliteControl( VSTFx[ i][ x], 255);
 			HiliteControl( VSTDest[ i], 255);
 		}
 	}
@@ -1054,7 +1054,7 @@ void CreateControlAdap()
 
 	// Purge OLD controls
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
 		if (volCntl[ i]) { DisposeControl( volCntl[ i]);	volCntl[ i] = NULL;}
 		if (Mono[ i]) { DisposeControl( Mono[ i]);	Mono[ i] = NULL;}
@@ -1064,14 +1064,14 @@ void CreateControlAdap()
 		if (VSTDest[ i]) { DisposeControl( VSTDest[ i]);	VSTDest[ i] = NULL;}
 		if (OnOff[ i]) { DisposeControl( OnOff[ i]);	OnOff[ i] = NULL;}
 		
-		for( x = 0; x < 4; x++)
+		for (x = 0; x < 4; x++)
 		{
 			if (VSTFx[ i][ x]) { DisposeControl( VSTFx[ i][ x]);	VSTFx[ i][ x] = NULL;}
 		}
 	}
 	
 	GetDialogItem( AdapDlog, 2, &itemType, &itemHandle, &itemRect);
-	for( i = 0; i < gCurrentTrack; i++)
+	for (i = 0; i < gCurrentTrack; i++)
 	{
 		//#if MACOS9VERSION
 		volCntl[ i] = NewControl( 	GetDialogWindow( AdapDlog),
@@ -1130,7 +1130,7 @@ void CreateControlAdap()
 
 		OffsetRect( &cRect, 3 + 15, 0);
 		
-		for( x = 0; x < 4; x++)
+		for (x = 0; x < 4; x++)
 		{
 			
 			cRect.right = cRect.left + 13;
@@ -1179,7 +1179,7 @@ void CreateControlAdap()
 	itemRect.right = itemRect.left + 18;
 	itemRect.bottom = itemRect.top + 14;
 	
-	for( i = 0; i < gCurrentTrack; i++)
+	for (i = 0; i < gCurrentTrack; i++)
 	{
 		//#if MACOS9VERSION
 		OnOff[ i] = NewControl( 	GetDialogWindow( AdapDlog),
@@ -1208,7 +1208,7 @@ void InitAdapWindow(void)
 	ControlHandle				ctl;
 	ControlFontStyleRec			inStyle;
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
 		volCntl[ i] = 0;
 		Mono[ i] = 0;
@@ -1218,7 +1218,7 @@ void InitAdapWindow(void)
 		VSTDest[ i] = 0;
 		OnOff[ i] = 0;
 		
-		for( x = 0; x < 4; x++)
+		for (x = 0; x < 4; x++)
 		{
 			VSTFx[ i][ x] = 0;
 		}
@@ -1278,7 +1278,7 @@ void InitAdapWindow(void)
 		MainFXOnOff = NewControl( 	GetDialogWindow( AdapDlog), &cRect, "\p", true, 1, 0, 100, checkBoxProc, 0);
 		OffsetRect( &cRect, 3 + 18, 1);
 		
-		for( x = 0; x < 10; x++)
+		for (x = 0; x < 10; x++)
 		{
 			cRect.right = cRect.left + 13;
 			cRect.bottom = cRect.top + 13;
@@ -1556,7 +1556,7 @@ void LoadAdaptatorsInt( FSSpec *file)
 	{
 		short 	x, alpha = 0;
 		
-		for( i = 0; i < 10 ; i++)	// Global Effects
+		for (i = 0; i < 10 ; i++)	// Global Effects
 		{
 			if (curMusic->header->globalEffect[ i])
 			{
@@ -1566,9 +1566,9 @@ void LoadAdaptatorsInt( FSSpec *file)
 			}
 		}
 		
-		for( i = 0; i < curMusic->header->numChn ; i++)	// Channel Effects
+		for (i = 0; i < curMusic->header->numChn ; i++)	// Channel Effects
 		{
-			for( x = 0; x < 4; x++)
+			for (x = 0; x < 4; x++)
 			{
 				if (curMusic->header->chanEffect[ i][ x])
 				{
@@ -1603,7 +1603,7 @@ void LoadAdaptatorsInt( FSSpec *file)
 	if (MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
 	else HiliteControl( ResetSpeedBut, 255);
 	
-	for( i = 0; i < 10; i++)
+	for (i = 0; i < 10; i++)
 	{
 		if (curMusic->header->globalFXActive == true)
 		{
@@ -1877,7 +1877,7 @@ void SaveAdaptorsFile( FSSpec *file)
 		{
 			short 	x, alpha = 0;
 			
-			for( i = 0; i < 10 ; i++)	// Global Effects
+			for (i = 0; i < 10 ; i++)	// Global Effects
 			{
 				if (curMusic->header->globalEffect[ i])
 				{
@@ -1887,9 +1887,9 @@ void SaveAdaptorsFile( FSSpec *file)
 				}
 			}
 			
-			for( i = 0; i < curMusic->header->numChn ; i++)	// Channel Effects
+			for (i = 0; i < curMusic->header->numChn ; i++)	// Channel Effects
 			{
-				for( x = 0; x < 4; x++)
+				for (x = 0; x < 4; x++)
 				{
 					if (curMusic->header->chanEffect[ i][ x])
 					{
@@ -2187,7 +2187,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 			
 			if (GetControlHilite( FlipBut) == 0 && MyTrackControl( FlipBut, theEvent.where, NULL))
 			{
-				for( i = 1; i < gCurrentTrack; i++)
+				for (i = 1; i < gCurrentTrack; i++)
 				{
 					if (i % 2 == 0) curMusic->header->chanPan[ i] = curMusic->header->chanPan[ 0];
 					else curMusic->header->chanPan[ i] = MAX_PANNING -curMusic->header->chanPan[ 0];
@@ -2374,7 +2374,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 			myPt = theEvent.where;
 			GlobalToLocal( &myPt);
 			
-			for( i = 0; i < 10; i++)
+			for (i = 0; i < 10; i++)
 			{
 				Rect contrlRect;
 				
@@ -2476,7 +2476,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 			
 			theControl = NULL;
 			
-			for( i = 0; i < gCurrentTrack; i++)
+			for (i = 0; i < gCurrentTrack; i++)
 			{
 				Rect contrlRect;
 				
@@ -2504,7 +2504,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 				
 				if (PtInRect( myPt, &contrlRect)) {	kindCntl = 'M';	theControl = Mono[ i];	}
 				
-				for( x = 0; x < 4; x++)
+				for (x = 0; x < 4; x++)
 				{
 					GetControlBounds( VSTFx[ i][ x], &contrlRect);
 					
@@ -2544,7 +2544,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 							
 							VSTDestMenu = GetMenu( 181);
 							
-							for( x = 0; x < curMusic->header->numChn; x++)
+							for (x = 0; x < curMusic->header->numChn; x++)
 							{
 								pStrcpy( myStr, "\pUse settings of track ");
 								NumToString( x+1, myStr2);
@@ -2555,7 +2555,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 							
 							DisableMenuItem( VSTDestMenu, i + 4);
 							
-							for( x = 0; x < curMusic->header->numChn; x++)
+							for (x = 0; x < curMusic->header->numChn; x++)
 							{
 								if (curMusic->header->chanBus[ x].copyId != x) DisableMenuItem( VSTDestMenu, x + 4);
 							}
@@ -2612,7 +2612,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 										curMusic->header->chanBus[ i].copyId = temp -4;
 										curMusic->header->chanBus[ i].ByPass = false;
 										
-										for( x = 0; x < curMusic->header->numChn; x++)
+										for (x = 0; x < curMusic->header->numChn; x++)
 										{
 											if (curMusic->header->chanBus[ x].copyId == i) curMusic->header->chanBus[ x].copyId = x;
 										}
@@ -2709,7 +2709,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 								if (GetControlHilite( Mono[ i]) == false) newVal = true;
 								else newVal = false;
 								
-								for( ww = 0; ww < gCurrentTrack; ww++)
+								for (ww = 0; ww < gCurrentTrack; ww++)
 								{
 									FillMonoControl( ww);
 									
@@ -2761,7 +2761,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 									{
 										short	ww;
 										
-										for( ww = 0; ww < gCurrentTrack; ww++)
+										for (ww = 0; ww < gCurrentTrack; ww++)
 										{
 											curMusic->header->chanVol[ ww] = (MAX_CHANVOL * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
 											FillBarControl( ww, curMusic->header->chanVol[ ww], MAX_CHANVOL);
@@ -2818,7 +2818,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 										if (i % 2 == 0 ) OnOff = 0;
 										else OnOff = 1;
 										
-										for( ww = 0; ww < gCurrentTrack; ww++)
+										for (ww = 0; ww < gCurrentTrack; ww++)
 										{
 											if (GetControlHilite( Mono[ ww]) == 0)
 											{
@@ -2854,7 +2854,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 								short		ww, noActive;
 								Boolean		newVal;
 								
-								for( ww = 0, noActive = 0; ww < curMusic->header->numChn; ww++)
+								for (ww = 0, noActive = 0; ww < curMusic->header->numChn; ww++)
 								{
 									if (curMusic->header->chanBus[ ww].Active == true)
 									{
@@ -2864,7 +2864,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 								if (noActive <= 1 && curMusic->header->chanBus[ i].Active == true) newVal = true;
 								else newVal = false;
 								
-								for( ww = 0; ww < gCurrentTrack; ww++)
+								for (ww = 0; ww < gCurrentTrack; ww++)
 								{
 									curMusic->header->chanBus[ ww].Active = newVal;
 								}
@@ -2891,7 +2891,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 								short		ww, noActive;
 								Boolean		newVal;
 								
-								for( ww = 0, noActive = 0; ww < curMusic->header->numChn; ww++)
+								for (ww = 0, noActive = 0; ww < curMusic->header->numChn; ww++)
 								{
 									if (MADDriver->Active[ ww] == true)
 									{
@@ -2901,7 +2901,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 								if (noActive <= 1 && MADDriver->Active[ i] == true) newVal = true;
 								else newVal = false;
 								
-								for( ww = 0; ww < gCurrentTrack; ww++)
+								for (ww = 0; ww < gCurrentTrack; ww++)
 								{
 									MADDriver->Active[ ww] = newVal;
 									

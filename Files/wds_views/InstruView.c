@@ -20,7 +20,7 @@ void SmallEffect(void)
 {
 	short	i;
 	
-	for( i = 0; i < MAXINSTRU ; i++)
+	for (i = 0; i < MAXINSTRU ; i++)
 	{
 		MADDriver->InstruTube[ i] = 64;
 		MADDriver->InstruActif[ i] = 1;
@@ -68,7 +68,7 @@ void DoNullInstruView(void)
 	else if (caRect.bottom >= WMEDIUM) max = 32;
 	else max = 16;
 	
-	for( i = 0; i < max; i++)
+	for (i = 0; i < max; i++)
 	{
 		if (MADDriver->InstruTube[i] > 0)
 		{
@@ -142,7 +142,7 @@ void UpdateInstruView(DialogPtr GetSelection)  	/* Pointer to this dialog */
 	else if (caRect.bottom >= WMEDIUM) max = 32;
 	else max = 16;
 	
-	for( i = 0; i < max; i++)
+	for (i = 0; i < max; i++)
 	{
 		itemRect = InstruBox[ i];
 		itemRect.top--;	itemRect.left--;	
@@ -189,7 +189,7 @@ void CreateInstruView(void)
 	
 	GetDialogItem (InstruViewDlog, 2, &itemType, &itemHandle, &itemRect);
 	itemRect.top++;	itemRect.right--;	itemRect.left++;
-	for( i = 0; i < 128; i++)
+	for (i = 0; i < 128; i++)
 	{
 		InstruBox[ i] = itemRect;
 		

@@ -69,7 +69,7 @@ void SetInternetMapping( void)
                 err = ICCountMapEntries( inst, prefh, &count);
                 if (err) Debugger();
                  
-                for( i = 1; i < count; i++)
+                for (i = 1; i < count; i++)
                 {
                 	 err = ICGetIndMapEntry( inst, prefh, i, &pos, &entry);
                 	 if (err) Debugger();

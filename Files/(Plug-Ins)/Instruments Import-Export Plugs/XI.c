@@ -21,7 +21,7 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	short			i;
 //	Boolean			IsReading;
 
-	for( i = 0; i < curIns->numSamples; i++)
+	for (i = 0; i < curIns->numSamples; i++)
 	{
 		if (sample[ i] != NULL)
 		{
@@ -36,7 +36,7 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	}
 	
 	
-	for( i = 0; i < 32; i++) curIns->name[ i]	= 0;
+	for (i = 0; i < 32; i++) curIns->name[ i]	= 0;
 	curIns->type		= 0;
 	curIns->numSamples	= 0;
 	
@@ -47,9 +47,9 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	memset(curIns->pannEnv, 0, sizeof(curIns->pannEnv));
 	memset(curIns->pitchEnv, 0, sizeof(curIns->pitchEnv));
 #else
-	for( i = 0; i < 96; i++) curIns->what[ i]		= 0;
+	for (i = 0; i < 96; i++) curIns->what[ i]		= 0;
 
-	for( i = 0; i < 12; i++)
+	for (i = 0; i < 12; i++)
 	{
 		curIns->volEnv[ i].pos		= 0;
 		curIns->volEnv[ i].val		= 0;
@@ -142,7 +142,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 				{
 					MAD2KillInstrument( InsHeader, sample);
 					
-					for( x = 0; x < 32; x++)
+					for (x = 0; x < 32; x++)
 					{
 						if (x < AlienFileFSSpec->name[ 0]) InsHeader->name[ x] = AlienFileFSSpec->name[ x + 1];
 						else InsHeader->name[ x] = '\0';
@@ -172,7 +172,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					InsHeader->volFade	= pth->volfade;
 					
 					BlockMoveData( pth->panenv, InsHeader->pannEnv, 	48);
-					for( x = 0; x < 12; x++)
+					for (x = 0; x < 12; x++)
 					{
 						INT16(&InsHeader->volEnv[x].pos);
 						INT16(&InsHeader->volEnv[x].val);
@@ -189,7 +189,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					
 					// Read SAMPLE HEADERS
 					
-					for( x = 0; x < InsHeader->numSamples; x++)
+					for (x = 0; x < InsHeader->numSamples; x++)
 					{
 						sData	*curData;
 						long	size, i;
@@ -229,7 +229,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 						
 					//	curData->panning	= wh->panning;
 						curData->relNote	= wh->relnote;
-						for( i = 0; i < 22; i++) curData->name[ i] = wh->samplename[ i];
+						for (i = 0; i < 22; i++) curData->name[ i] = wh->samplename[ i];
 					}
 					
 					// Read SAMPLE DATA
@@ -238,7 +238,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 						
 						reader += sizeof( XMWAVHEADER);
 						
-						for( x = 0; x < InsHeader->numSamples; x++)
+						for (x = 0; x < InsHeader->numSamples; x++)
 						{
 							sData *curData = sample[ x];
 							
@@ -254,7 +254,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 									
 									tt = (short*) curData->data;
 
-									for( tL = 0; tL < curData->size/2; tL++)
+									for (tL = 0; tL < curData->size/2; tL++)
 									{
 										*(tt + tL) = Tdecode16( (Ptr) (tt + tL));
 									}
@@ -266,7 +266,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 									
 									oldV = 0;
 									
-									for( xL = 0; xL < curData->size/2; xL++)
+									for (xL = 0; xL < curData->size/2; xL++)
 									{
 										newV = tt[ xL] + oldV;
 										tt[ xL] = newV;
@@ -282,7 +282,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 									
 									oldV = 0;
 
-									for( xL = 0; xL < curData->size; xL++)
+									for (xL = 0; xL < curData->size; xL++)
 									{
 										newV = curData->data[ xL] + oldV;
 										curData->data[ xL] = newV;
@@ -346,7 +346,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 				
 				BlockMoveData( InsHeader->what, pth.what, 96);
 				BlockMoveData( InsHeader->volEnv, pth.volenv, 48);
-				for( x = 0; x < 24; x++)
+				for (x = 0; x < 24; x++)
 				{
 					pth.volenv[ x] = Tdecode16( &pth.volenv[ x]);
 				}
@@ -360,7 +360,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 				pth.volfade 	= Tdecode16( &pth.volfade);
 				
 				BlockMoveData( InsHeader->pannEnv, pth.panenv, 48);
-				for( x = 0; x < 24; x++)
+				for (x = 0; x < 24; x++)
 				{
 					pth.panenv[ x] = Tdecode16( &pth.panenv[ x]);
 				}
@@ -381,7 +381,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 				
 				/** WRITE samples */
 				
-				for( u = 0 ; u < InsHeader->numSamples ; u++)
+				for (u = 0 ; u < InsHeader->numSamples ; u++)
 				{
 					XMWAVHEADER		wh;
 					sData			*curData;
@@ -424,7 +424,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					
 				//	wh.panning = curData->panning;
 					wh.relnote = curData->relNote;
-					for( x = 0; x < 22; x++) wh.samplename[ x] = curData->name[ x];
+					for (x = 0; x < 22; x++) wh.samplename[ x] = curData->name[ x];
 					
 					wh.length 		= Tdecode32( &wh.length);
 					wh.loopstart 	= Tdecode32( &wh.loopstart);
@@ -434,7 +434,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					FSWrite( iFileRefI, &inOutCount, &wh);
 				}
 				
-				for( u = 0 ; u < InsHeader->numSamples ; u++)
+				for (u = 0 ; u < InsHeader->numSamples ; u++)
 				{
 					sData 	*curData = sample[ u];
 					Ptr		tempPtr;
@@ -460,20 +460,20 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 							
 							if (curData->stereo)
 							{
-								for( i = 0; i < dstSize; i++) tt[ i] = tt[ i*2];
+								for (i = 0; i < dstSize; i++) tt[ i] = tt[ i*2];
 								dstSize /= 2;
 							}
 							
 							oldV = 0;
 							
-							for( xL = 0; xL < dstSize/2; xL++)
+							for (xL = 0; xL < dstSize/2; xL++)
 							{
 								newV = tt[ xL];
 								tt[ xL] -= oldV;
 								oldV = newV;
 							}
 							
-							for( tL = 0; tL < dstSize/2; tL++)
+							for (tL = 0; tL < dstSize/2; tL++)
 							{
 								*(tt + tL) = Tdecode16( (Ptr) (tt + tL));
 							}
@@ -487,13 +487,13 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 							
 							if (curData->stereo)
 							{
-								for( i = 0; i < dstSize; i++) tt[ i] = tt[ i*2];
+								for (i = 0; i < dstSize; i++) tt[ i] = tt[ i*2];
 								dstSize /= 2;
 							}
 							
 							oldV = 0;
 							
-							for( xL = 0; xL < dstSize; xL++)
+							for (xL = 0; xL < dstSize; xL++)
 							{
 								newV = tt[ xL];
 								tt[ xL] -= oldV;

@@ -212,7 +212,7 @@ void ComputeCurrentQuickPixMapSpec()
 	
 	CurrentQuickPixMap = (long*) NewPtr( sizeof( long) * (*specPixMap[ 0])->bounds.bottom);
 	
-	for( i = 0; i < (*specPixMap[ 0])->bounds.bottom; i++)
+	for (i = 0; i < (*specPixMap[ 0])->bounds.bottom; i++)
 	{
 		CurrentQuickPixMap[ i] = i * rowBytes;
 	}
@@ -244,7 +244,7 @@ void SetControlSpectrum(void)
 	{
 		short i;
 		
-		for( i = 0; i < OsciNo; i++)
+		for (i = 0; i < OsciNo; i++)
 		{
 			Rect	tempRect;
 			long	bb, rowbytes;
@@ -332,7 +332,7 @@ void DrawOsciFreq2( short OsciFreq, short LocalV, short OffSet, short no, Byte c
 		Ptr		pixmap = (*specPixMap[ no])->baseAddr;
 		short	i;
 		
-		for( i = 0; i < (*specPixMap[ no])->bounds.bottom; i++)
+		for (i = 0; i < (*specPixMap[ no])->bounds.bottom; i++)
 		{
 			*(pixmap + CurrentQuickPixMap[ i] + OsciFreq + 1 - OffSet) = col;
 			*(pixmap + CurrentQuickPixMap[ i] + OsciFreq - 1 - OffSet) = col;
@@ -347,7 +347,7 @@ void UpdateSpectrumData( short LocalV, Byte *tempPtr2)
 	
 	RGBForeColor( &r);
 	
-	for( i = 0; i < SIter; i+= 2)
+	for (i = 0; i < SIter; i+= 2)
 	{
 		MoveTo( i, LocalV + OsciH - 1);
 		LineTo( i, LocalV + OsciH - *tempPtr2++);
@@ -372,7 +372,7 @@ LocalV			+= OsciH - 1;
 CurrentQuickInt	+= offsetV;
 VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
 
-for( i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
+for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 {
 	thePt.h		= i;
 	
@@ -408,7 +408,7 @@ void C8BitSpectrumPixMap( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr, Byte *sp
 	long		*CurrentQuickInt = CurrentQuickPixMap + OsciH - 1;
 	VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
 	
-	for( i = 0; i < SIter; i+= 2)
+	for (i = 0; i < SIter; i+= 2)
 	{
 		high		= VFast;
 		while( high-- > 0 && *tempPtr2 > 0)
@@ -475,7 +475,7 @@ LocalV 			+= OsciH - 1;
 CurrentQuickInt	+= offsetV;
 VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
 
-for( i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
+for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 {
 	high		= VFast;
 	while( high-- > 0 && *tempPtr2 > 0)
@@ -518,7 +518,7 @@ LocalV 			+= OsciH - 1;
 CurrentQuickInt	+= offsetV;
 VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
 
-for( i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
+for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 {
 	thePt.h = i;
 
@@ -573,7 +573,7 @@ LocalV 			+= OsciH - 1;
 CurrentQuickInt	+= offsetV;
 VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
 
-for( i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
+for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 {
 	high		= VFast;
 	while( high-- > 0 && *tempPtr2 > 0)
@@ -683,7 +683,7 @@ void DoNullSpectrum(void)
 	GetPortBounds( GetDialogPort( SpectrumDlog), &caRect);
 	
 	OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
-	for( i = GetControlValue( VControl); i < GetControlValue( VControl) + OsciSee; i++) DrawSpectrum( &osci[ i], i);
+	for (i = GetControlValue( VControl); i < GetControlValue( VControl) + OsciSee; i++) DrawSpectrum( &osci[ i], i);
 	
 	if (Test) ShowCursor();
 	
@@ -718,7 +718,7 @@ void  UpdateSpectrumWindow(DialogPtr GetSelection)
 	GetPortBounds( GetDialogPort( SpectrumDlog), &caRect);
 	
 	OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
-	for( i = GetControlValue( VControl); i < GetControlValue( VControl) + OsciSee; i++)
+	for (i = GetControlValue( VControl); i < GetControlValue( VControl) + OsciSee; i++)
 	{
 		tempRect.left	= 0;
 		tempRect.right	= caRect.right - 15;
@@ -872,14 +872,14 @@ pascal void actionProcSpectrum(ControlHandle theControl, short ctlPart)
 			InvalWindowRect( GetDialogWindow( theDialogControl), &aRect);
 			UpdateSpectrumWindow( theDialogControl);
 			
-			for( i = 0; i < 2;i++) ErasePixMap( specPixMap[ i]);
-			for( i = 0; i < VALSIZE; i++) ValSaveData[ i] = 0;
-			for( i = 0; i < VALSIZE; i++) SpotData[ i] = 0;
-			for( i = 0; i < VALSIZE; i++) SpotTimeData[ i] = 0;
+			for (i = 0; i < 2;i++) ErasePixMap( specPixMap[ i]);
+			for (i = 0; i < VALSIZE; i++) ValSaveData[ i] = 0;
+			for (i = 0; i < VALSIZE; i++) SpotData[ i] = 0;
+			for (i = 0; i < VALSIZE; i++) SpotTimeData[ i] = 0;
 			
 			OsciOffSet	= GetControlValue( HControl);
 			
-			for( i =0 ; i < 2;i++)
+			for (i =0 ; i < 2;i++)
 			{
 				ForeColor( redColor);
 				DrawOsciFreq2( osci[ i].Freq, osci[ i].VPos, (OsciOffSet/2)*2, i, 215);
@@ -1074,7 +1074,7 @@ void DoItemPressSpectrum( short whichItem, DialogPtr whichDialog)
 			GetPortBounds( GetDialogPort( SpectrumDlog), &caRect);
 			
 			OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
-			for( i = GetControlValue( VControl); i < GetControlValue( VControl) + OsciSee; i++)
+			for (i = GetControlValue( VControl); i < GetControlValue( VControl) + OsciSee; i++)
 			{
 				if (PtInRect( myPt, &osci[ i].rect))
 				{
@@ -1170,9 +1170,9 @@ void SetWindowSpectrum(void)
 		break;
 	}
 	
-	for( i = 0; i < OsciNo; i++)
+	for (i = 0; i < OsciNo; i++)
 	{
-		for( tempB = 0; tempB < osci[ i].Size; tempB++) osci[ i].SavePtr[ tempB] = 0;
+		for (tempB = 0; tempB < osci[ i].Size; tempB++) osci[ i].SavePtr[ tempB] = 0;
 	}
 	
 	/**** Check Window Size ****/
@@ -1297,7 +1297,7 @@ void CreateSpectrumWindow(void)
 
 	GetPort( &savePort);
 	
-	for( i = 0 ; i < 2; i++) specPixMap[ i] = NULL;
+	for (i = 0 ; i < 2; i++) specPixMap[ i] = NULL;
 	CurrentQuickPixMap = NULL;
 	
 	SpectrumDlog = GetNewDialog( 164, NULL, GetDialogWindow( ToolsDlog));
@@ -1386,11 +1386,11 @@ void CloseSpectrum(void)
 		
 		SetItemMark( ViewsMenu, mSpectrumV, noMark);
 		
-		for( i = 0 ; i < 2; i++) if (specPixMap[ i] != NULL) ZapPixMap( &specPixMap[ i]);
+		for (i = 0 ; i < 2; i++) if (specPixMap[ i] != NULL) ZapPixMap( &specPixMap[ i]);
 		if (CurrentQuickPixMap != NULL) DisposePtr( (Ptr) CurrentQuickPixMap);
 		
 		MADDriver->useOsciBuffers = false;
-		for( i = 0; i < MAXDRAW; i++) MADDriver->newData[ i] = false;
+		for (i = 0; i < MAXDRAW; i++) MADDriver->newData[ i] = false;
 	}
 	SpectrumDlog = NULL;
 }
@@ -1408,8 +1408,8 @@ void ResetSpectrum(void)
 	GetPortBounds( GetDialogPort( SpectrumDlog), &caRect);
 	InvalWindowRect( GetDialogWindow( SpectrumDlog), &caRect);
 	
-	for( i =0 ; i < 2;i++) ErasePixMap( specPixMap[ i]);
-//	for( i = 0; i < VALSIZE; i++) ValSaveData[ i] = 0;
+	for (i =0 ; i < 2;i++) ErasePixMap( specPixMap[ i]);
+//	for (i = 0; i < VALSIZE; i++) ValSaveData[ i] = 0;
 	
 	SetPort( savePort);
 }

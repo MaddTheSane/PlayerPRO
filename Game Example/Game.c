@@ -44,7 +44,7 @@ int main( int argc, char* argv[])
 	/*** Load and prepare my sound resource ***/
 	/******************************************/
 	
-	for( i = 0 ; i < 4; i++)
+	for (i = 0 ; i < 4; i++)
 	{
 		mySound[ i] = GetResource( 'snd ', kStartSound + i);
 		DetachResource( mySound[ i]);
@@ -131,7 +131,7 @@ int main( int argc, char* argv[])
 	MADDisposeDriver( MADDriver);				// Dispose driver
 	MADDisposeLibrary( MADLib);					// Close Music Library
 	
-	for( i = 0 ; i < 4; i++)
+	for (i = 0 ; i < 4; i++)
 	{
 		HUnlock( mySound[ i]);
 		DisposeHandle( mySound[ i]);

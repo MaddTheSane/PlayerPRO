@@ -105,7 +105,7 @@ OSErr CreateNameListQuicktime25(void)
 			
 			x = 0;
 			GM = 1;
-			for( i = 1; i <= 128; i++)
+			for (i = 1; i <= 128; i++)
 			{
 				if (((i-1) % 8) == 0)
 				{
@@ -131,7 +131,7 @@ OSErr CreateNameListQuicktime25(void)
 						
 						tPtr = (Ptr) rsrc->data + 36;
 						
-						for( z = 1; z <= tPtr[ 0]; z++)
+						for (z = 1; z <= tPtr[ 0]; z++)
 						{
 							if (tPtr[ z] == '(') tPtr[ z] = ' ';
 							if (tPtr[ z] == ')') tPtr[ z] = ' ';
@@ -159,7 +159,7 @@ OSErr CreateNameListQuicktime25(void)
 				
 				tPtr = (Ptr) rsrc->data + 36;
 				
-				for( z = 1; z <= tPtr[ 0]; z++)
+				for (z = 1; z <= tPtr[ 0]; z++)
 				{
 					if (tPtr[ z] == '(') tPtr[ z] = ' ';
 					if (tPtr[ z] == ')') tPtr[ z] = ' ';
@@ -208,7 +208,7 @@ OSErr CreateNameListQuicktime(void)
 			
 			x = 0;
 			GM = 1;
-			for( i = 1; i <= 128; i++)
+			for (i = 1; i <= 128; i++)
 			{
 				if (((i-1) % 8) == 0)
 				{
@@ -224,7 +224,7 @@ OSErr CreateNameListQuicktime(void)
 					QuickInst = (QuicktimeInst*) *hRsrc;
 					tPtr = (Ptr) (((Ptr) &QuickInst->no) + 4L + QuickInst->no * sizeof( QuictimeSs));
 					
-					for( z = 1; z <= tPtr[ 0]; z++)
+					for (z = 1; z <= tPtr[ 0]; z++)
 					{
 						if (tPtr[ z] == '(') tPtr[ z] = ' ';
 						if (tPtr[ z] == ')') tPtr[ z] = ' ';
@@ -246,7 +246,7 @@ OSErr CreateNameListQuicktime(void)
 				QuickInst = (QuicktimeInst*) *hRsrc;
 				tPtr = (Ptr) (((Ptr) &QuickInst->no) + 4L + QuickInst->no * sizeof( QuictimeSs));
 				
-				for( z = 1; z <= tPtr[ 0]; z++)
+				for (z = 1; z <= tPtr[ 0]; z++)
 				{
 					if (tPtr[ z] == '(') tPtr[ z] = ' ';
 					if (tPtr[ z] == ')') tPtr[ z] = ' ';
@@ -307,7 +307,7 @@ void PressSmallPianoQ( DialogPtr TheDia, InstrData	*inst, short ins)
 		GetMouse( &Mouse);
 		
 		Position = -1;
-		for( i = 0; i < NUMBER_NOTES; i++)
+		for (i = 0; i < NUMBER_NOTES; i++)
 		{
 			if (PtInRect( Mouse, &SPianoRect[ i]))
 			{
@@ -370,7 +370,7 @@ void DLSImport(void)
 	InstrData				*inst;
 	Handle					instCopy = NULL;
 	
-	for( i = 0; i < 18; i++) QKInstruMenu[ i] = NULL;
+	for (i = 0; i < 18; i++) QKInstruMenu[ i] = NULL;
 	
 	if (CreateNameListQuicktime() != noErr) return;
 	
@@ -390,7 +390,7 @@ void DLSImport(void)
 	NInitSmallPiano( tempRect, SPianoRect);
 
 	CategoryMenu = GetMenu( 152);
-	for( i = 1; i <= 16; i++)
+	for (i = 1; i <= 16; i++)
 	{
 		if (CountMenuItems( QKInstruMenu[ i]) < 1)
 		{
@@ -571,7 +571,7 @@ void DLSImport(void)
 		
 		curMusic->fid[ ins].numSamples = 0;
 		
-		for( x = 0; x < temp; x++)
+		for (x = 0; x < temp; x++)
 		{
 			sData	*curData;
 			
@@ -606,7 +606,7 @@ void DLSImport(void)
 	DisposeDialog( aDialog);
 
 	DisposeMenu( CategoryMenu);
-	for( i = 0; i < 18; i++)
+	for (i = 0; i < 18; i++)
 	{
 		if (QKInstruMenu[ i] != NULL) DisposeMenu( QKInstruMenu[ i]);
 	}

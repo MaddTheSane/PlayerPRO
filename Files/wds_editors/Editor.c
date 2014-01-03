@@ -241,7 +241,7 @@ void CreateEditorPixMap( short PatID)
 	TextFont( 4);	TextSize( 9);
 
 	SetRect( &nRect, 0, 0, LEFTBORD, myList.HCell);
-	for( i = 0; i < curMusic->partition[ PatID]->header.size; i++)
+	for (i = 0; i < curMusic->partition[ PatID]->header.size; i++)
 	{
 		NTStr( 3, i, (Ptr) aStr);
 		TETextBox( (Ptr) aStr, 3, &nRect, teCenter);
@@ -523,7 +523,7 @@ void InitStringEditor(void)
 	Str255		stemp;
 	short		i, x;
 
-	for( i = 1; i <= MAXINSTRU; i++)
+	for (i = 1; i <= MAXINSTRU; i++)
 	{
 		NTStr( 3, i, (Ptr) stemp);
 		
@@ -535,7 +535,7 @@ void InitStringEditor(void)
 	EInstru[ 0][ 1] = '0';
 	EInstru[ 0][ 2] = '0';
 
-	for( i = 0; i < NUMBER_NOTES; i++)
+	for (i = 0; i < NUMBER_NOTES; i++)
 	{
 		OctavesName( i, (Ptr) stemp);
 		
@@ -552,7 +552,7 @@ void InitStringEditor(void)
 	ENote[ 0xFE][ 2] = 'F';
 	
 
-	for( i = 0; i < 16; i++)
+	for (i = 0; i < 16; i++)
 	{
 		OutPutHexShort( stemp, 1, i);		MyP2CStr( stemp);
 		EEffect[ i] = stemp[ 0];
@@ -561,7 +561,7 @@ void InitStringEditor(void)
 	EEffect[ 17] = 'L';
 	EEffect[ 18] = 'O';
 	
-	for( i = 0; i <= 256; i++)
+	for (i = 0; i <= 256; i++)
 	{
 		OutPutHexShort( stemp, 2, i);		MyP2CStr( stemp);
 		EArgu[ i][ 0] = stemp[ 0];
@@ -752,8 +752,8 @@ void SetNewPat()
 	pStrcat( String, aStr);
 	
 	theStr[ 0] = 20;
-	for( x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ CurrentPat]->header.name[ x];
-	for( x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
+	for (x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ CurrentPat]->header.name[ x];
+	for (x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
 	pStrcat( String, "\p ");
 	pStrcat( String, theStr);
 	
@@ -858,7 +858,7 @@ void DrawLeft( RgnHandle	clipRgn, Boolean Update)
 	
 	xO = myList.rect.top + myList.HCell;
 	
-	for( i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++)
+	for (i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++)
 	{
 		if (thePrefs.UseMarkers)
 		{
@@ -957,7 +957,7 @@ void DrawEditorUp(void)
 
 	/*::*/GetThemeDrawingState( &state );
 	
-	for( i = 0; i < PLGetMaxXValue( &myList) - GetControlValue( myList.xScroll); i++)
+	for (i = 0; i < PLGetMaxXValue( &myList) - GetControlValue( myList.xScroll); i++)
 	{
 		tempRect.top = bRect.top;				tempRect.bottom = bRect.bottom;
 		tempRect.left = LEFTBORD + i*myList.LCell;		tempRect.right = tempRect.left + myList.LCell;
@@ -1239,7 +1239,7 @@ void DrawEditorLegende(void)
 	short	i;
 	Str255	aStr;
 
-	for( i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++)
+	for (i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++)
 	{
 		MoveTo( 2, (i - GetControlValue( myList.yScroll)) * myList.HCell + myList.rect.top + 8);
 	
@@ -1328,7 +1328,7 @@ void DrawMarkers( short y1, short y2)
 	
 	off = GetControlValue( myList.yScroll);
 	
-	for( i = y1; i < y2; i ++)
+	for (i = y1; i < y2; i ++)
 	{
 		if (i < thePrefs.MarkersOffSet) ForeColor( whiteColor);
 		else
@@ -1441,7 +1441,7 @@ void MyLUpdate()
 	else EraseRect( &myList.rect);
 	
 	xPos = myList.rect.left + 4;
-	for( x = GetControlValue( myList.xScroll); x < PLGetMaxXValue( &myList); x++)
+	for (x = GetControlValue( myList.xScroll); x < PLGetMaxXValue( &myList); x++)
 	{
 		DrawGrayLines( xPos);
 	
@@ -1452,7 +1452,7 @@ void MyLUpdate()
 		
 		if (MADDriver->Active[ x] == false) RGBForeColor( &Gray[ 0]);
 		
-		for( i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++)
+		for (i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++)
 		{
 			if (CreateNoteString( CmdPtr, aStr, false))
 			{
@@ -1515,7 +1515,7 @@ void MyLUpdateSpecific( short startY, short endY)
 	else EraseRect( &eraseRect);
 	
 	xPos = myList.rect.left + 4;
-	for( x = GetControlValue( myList.xScroll); x < PLGetMaxXValue( &myList); x++)
+	for (x = GetControlValue( myList.xScroll); x < PLGetMaxXValue( &myList); x++)
 	{
 		DrawGrayLines( xPos);
 		
@@ -1526,7 +1526,7 @@ void MyLUpdateSpecific( short startY, short endY)
 		
 		if (MADDriver->Active[ x] == false) RGBForeColor(  &Gray[ 0]);
 		
-		for( i = startY; i < endY; i++)
+		for (i = startY; i < endY; i++)
 		{
 			if (CreateNoteString( CmdPtr, aStr, false)) { MoveTo( xPos, yPos-tLH);	DrawString( aStr); }
 			
@@ -2216,8 +2216,8 @@ void DoItemPressPartition( short whichItem, DialogPtr whichDialog)    			/* Item
 						
 						DoRemember();
 						
-						for( i = 0; i < myList.select.left; i++)			MADDriver->TrackReading[ i] = false;
-						for( i = myList.select.right+1; i < MAXTRACK; i++)	MADDriver->TrackReading[ i] = false;
+						for (i = 0; i < myList.select.left; i++)			MADDriver->TrackReading[ i] = false;
+						for (i = myList.select.right+1; i < MAXTRACK; i++)	MADDriver->TrackReading[ i] = false;
 						
 						MADDriver->Reading = true;
 						while( Button() == true  && MADDriver->PartitionReader <= myList.select.bottom && MADDriver->PartitionReader >= myList.select.top && rePat == MADDriver->Pat)
@@ -2237,7 +2237,7 @@ void DoItemPressPartition( short whichItem, DialogPtr whichDialog)    			/* Item
 						MADDriver->PartitionReader = reReader;
 						MADDriver->PL = rePL;
 						
-						for( i = 0; i < MAXTRACK; i++)					MADDriver->TrackReading[ i] = true;		// Restore
+						for (i = 0; i < MAXTRACK; i++)					MADDriver->TrackReading[ i] = true;		// Restore
 						
 						HiliteControl( PlayBut, 0);
 					}
@@ -2297,9 +2297,9 @@ void DoItemPressPartition( short whichItem, DialogPtr whichDialog)    			/* Item
 				
 				SaveUndo( UPattern, CurrentPat, "\pUndo 'Fill Digital Editor'");
 				
-				for( X = myList.select.left; X <= myList.select.right; X++)
+				for (X = myList.select.left; X <= myList.select.right; X++)
 				{
-					for( Y = myList.select.top; Y <= myList.select.bottom; Y++)
+					for (Y = myList.select.top; Y <= myList.select.bottom; Y++)
 					{
 						theCommand = GetMADCommand( Y, X, curMusic->partition[ CurrentPat]);
 						
@@ -2688,7 +2688,7 @@ void DoItemPressPartition( short whichItem, DialogPtr whichDialog)    			/* Item
 					HiliteControl( RecBut, kControlButtonPart);
 					
 					/*	RGBBackColor( &theColor);
-					 for( i = 0; i < 4; i++) HiliteControl( CheckBut[ i], 0);
+					 for (i = 0; i < 4; i++) HiliteControl( CheckBut[ i], 0);
 					 BackColor( whiteColor);*/
 				}
 				else
@@ -2696,7 +2696,7 @@ void DoItemPressPartition( short whichItem, DialogPtr whichDialog)    			/* Item
 					HiliteControl( RecBut, 0);
 					
 					/*	RGBBackColor( &theColor);
-					 for( i = 0; i < 4; i++) HiliteControl( CheckBut[ i], 255);
+					 for (i = 0; i < 4; i++) HiliteControl( CheckBut[ i], 255);
 					 BackColor( whiteColor);*/
 				}
 			}
@@ -2804,7 +2804,7 @@ void DoItemPressPartition( short whichItem, DialogPtr whichDialog)    			/* Item
 				{
 					short	noActive;
 					
-					for( i = 0, noActive = 0; i < curMusic->header->numChn; i++)
+					for (i = 0, noActive = 0; i < curMusic->header->numChn; i++)
 					{
 						if (MADDriver->Active[ i] == true)
 						{
@@ -2814,11 +2814,11 @@ void DoItemPressPartition( short whichItem, DialogPtr whichDialog)    			/* Item
 					
 					if (noActive <= 1 && MADDriver->Active[ theCell.h] == true)
 					{
-						for( i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
+						for (i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
 					}
 					else
 					{
-						for( i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
+						for (i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
 						MADDriver->Active[ theCell.h] = true;
 					}
 					
@@ -3175,7 +3175,7 @@ void CreatePartitionWindow(void)
 							kControlBevelButtonNormalBevelProc,
 							0);
 	
-	for( i = 0; i < 4; i++)
+	for (i = 0; i < 4; i++)
 	{
 		GetDialogItem( EditorDlog , 37 + i, &itemType, &itemHandle, &itemRect);
 		CheckBut[ i] = NewControl( GetDialogWindow( EditorDlog), &itemRect, "\p", true, 0, 0, 1, 1, 0);
@@ -3583,9 +3583,9 @@ void DoKeyPressEditor( short theChar)
 		
  		SaveUndo( UPattern, CurrentPat, "\pUndo 'Change Note in Digital Editor'");
  		
-		for( X = myList.select.left; X <= myList.select.right; X++)
+		for (X = myList.select.left; X <= myList.select.right; X++)
 		{
-			for( Y = myList.select.top; Y <= myList.select.bottom; Y++)
+			for (Y = myList.select.top; Y <= myList.select.bottom; Y++)
 			{
 				theCommand = GetMADCommand( Y, X, curMusic->partition[ CurrentPat]);
 				
@@ -3627,9 +3627,9 @@ void DoKeyPressEditor( short theChar)
 		
  		SaveUndo( UPattern, CurrentPat, "\pUndo 'Delete Digital Editor'");
  		
-		for( X = myList.select.left; X <= myList.select.right; X++)
+		for (X = myList.select.left; X <= myList.select.right; X++)
 		{
-			for( Y = myList.select.top; Y <= myList.select.bottom; Y++)
+			for (Y = myList.select.top; Y <= myList.select.bottom; Y++)
 			{
 				theCommand = GetMADCommand( Y, X, curMusic->partition[ CurrentPat]);
 				theCommand->ins		= 0;			theCommand->note	= 0xFF;
@@ -3699,9 +3699,9 @@ Ptr ConvertPcmd2Text( Pcmd *myPcmd)
 	if (myText == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error");
 	strcpy( myText, "");
 	
-	for( i = 0; i < myPcmd->length; i++)
+	for (i = 0; i < myPcmd->length; i++)
 	{
-		for( x = 0; x < myPcmd->tracks; x++)
+		for (x = 0; x < myPcmd->tracks; x++)
 		{
 			Cmd		*myCmd = GetCmd( i, x, myPcmd);
 			
@@ -3747,9 +3747,9 @@ Pcmd* CreatePcmdFromSelection(void)
 	myPcmd->trackStart 	= myList.select.left;
 	myPcmd->posStart 	= myList.select.top;
 	
-	for( X = myList.select.left; X <= myList.select.right; X++)
+	for (X = myList.select.left; X <= myList.select.right; X++)
 	{
-		for( Y = myList.select.top; Y <= myList.select.bottom; Y++)
+		for (Y = myList.select.top; Y <= myList.select.bottom; Y++)
 		{
 			cmd = GetMADCommand( Y, X, curMusic->partition[ CurrentPat]);
 			cmd2 = GetCmd( Y - myList.select.top, X - myList.select.left, myPcmd);
@@ -3770,9 +3770,9 @@ void ApplyOnAllCell(short ins, short note, short ef, short argu, short vol)
 	
 	theCell.h = theCell.v = 0;
 	
-	for( X = myList.select.left; X <= myList.select.right; X++)
+	for (X = myList.select.left; X <= myList.select.right; X++)
 	{
-		for( Y = myList.select.top; Y <= myList.select.bottom; Y++)
+		for (Y = myList.select.top; Y <= myList.select.bottom; Y++)
 		{
 			theCell.v = Y;		theCell.h = X;
 			
@@ -3815,11 +3815,11 @@ void PasteCmdEditor( Point theCell, Pcmd *myPcmd)
 	PLSetSelect( theCell.h, theCell.v, theCell.h + myPcmd->tracks - 1, theCell.v + myPcmd->length - 1, &myList);
 	
 	StartH = theCell.h;
-	for( i = 0; i < myPcmd->length; i++)
+	for (i = 0; i < myPcmd->length; i++)
 	{
 		theCell.h = StartH;
 		
-		for( x = 0; x < myPcmd->tracks; x++)
+		for (x = 0; x < myPcmd->tracks; x++)
 		{
 			if (theCell.v >= 0 &&
 			   theCell.v < curMusic->partition[ CurrentPat]->header.size &&
@@ -3967,7 +3967,7 @@ void EraseHilite( Rect *newRect)
 	else EraseRect( &myList.rect);
 	
 	xPos = myList.rect.left + 4;
-	for( x = GetControlValue( myList.xScroll); x < PLGetMaxXValue( &myList); x++)
+	for (x = GetControlValue( myList.xScroll); x < PLGetMaxXValue( &myList); x++)
 	{
 		DrawGrayLines( xPos);
 		
@@ -4239,7 +4239,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 				//	pStrcpy( str, "\pMy Pcmd (");
 				pStrcpy( str, curMusic->musicFileName);
 				
-				for( i = str[ 0]; i > 0; i--)
+				for (i = str[ 0]; i > 0; i--)
 				{
 					if (str[ i] == '.')
 					{

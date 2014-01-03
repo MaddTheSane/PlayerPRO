@@ -442,7 +442,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	copyDriver->speed = copyMusic->header->speed;
 	copyDriver->finespeed = copyMusic->header->tempo;
 	
-	for( i = 0; i < MAXTRACK; i++) copyDriver->Active[ i] = MADDriver->Active[ i];
+	for (i = 0; i < MAXTRACK; i++) copyDriver->Active[ i] = MADDriver->Active[ i];
 	
 	MADCleanDriver( copyDriver);
 	MADPurgeTrack( copyDriver);
@@ -455,7 +455,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	copyDriver->FreqExt		= MADDriver->FreqExt;
 	copyDriver->VolGlobal	= MADDriver->VolGlobal;
 	
-	for( i = 0; i < EQPACKET*2; i++)
+	for (i = 0; i < EQPACKET*2; i++)
 	{
 		copyDriver->Filter[ i] = MADDriver->Filter[ i];
 	}
@@ -493,9 +493,9 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 			copyMusic->partition[ copyMusic->header->numPat]->header.patBytes = 0;
 			copyMusic->partition[ copyMusic->header->numPat]->header.unused2 = 0;
 			
-			for( u = 0; u < copyMusic->header->numChn; u++)
+			for (u = 0; u < copyMusic->header->numChn; u++)
 			{
-				for( v = 0; v < copyMusic->partition[ copyMusic->header->numPat]->header.size; v++)
+				for (v = 0; v < copyMusic->partition[ copyMusic->header->numPat]->header.size; v++)
 				{
 					Cmd*	cmd1, *cmd2;
 					
@@ -512,9 +512,9 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 			
 			copyMusic->header->numPat++;
 			
-		//	for( i = 0; i < DStartTrack; i++) copyDriver->Active[ i] = false;
-		//	for( i = DStartTrack; i < DEndTrack; i++) if (copyDriver->Active[ i] = true;
-		//	for( i = DEndTrack; i < MAXTRACK; i++) copyDriver->Active[ i] = false;
+		//	for (i = 0; i < DStartTrack; i++) copyDriver->Active[ i] = false;
+		//	for (i = DStartTrack; i < DEndTrack; i++) if (copyDriver->Active[ i] = true;
+		//	for (i = DEndTrack; i < MAXTRACK; i++) copyDriver->Active[ i] = false;
 		}
 		break;
 		
@@ -523,7 +523,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 		break;
 		
 		default:
-			for( i = 0; i < copyMusic->header->numPointers; i++)
+			for (i = 0; i < copyMusic->header->numPointers; i++)
 			{
 				if (copyMusic->header->oPointers[ i] == patternID)
 				{
@@ -668,7 +668,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 			
 			FSpDelete( newFile);
 			
-			for( i = 0; i < thePrefs.channelNumber; i++)
+			for (i = 0; i < thePrefs.channelNumber; i++)
 			{
 				FSSpec	newFileMulti;
 				Str255	str;
@@ -745,9 +745,9 @@ Ptr DeInterlace( long inOutCount, Ptr outFile)
 	
 	if (thePrefs.amplitude == 8)
 	{
-		for( i = 0; i < thePrefs.channelNumber; i ++)
+		for (i = 0; i < thePrefs.channelNumber; i ++)
 		{
-			for( x = 0 ; x < chanLength; x ++) *(decPtr + x + chanLength*i) = *(outFile + i + x*thePrefs.channelNumber);
+			for (x = 0 ; x < chanLength; x ++) *(decPtr + x + chanLength*i) = *(outFile + i + x*thePrefs.channelNumber);
 		}
 	}
 	else
@@ -758,9 +758,9 @@ Ptr DeInterlace( long inOutCount, Ptr outFile)
 		chanLength = inOutCount/thePrefs.channelNumber;
 		chanLength /= 2;
 		
-		for( i = 0; i < thePrefs.channelNumber; i ++)
+		for (i = 0; i < thePrefs.channelNumber; i ++)
 		{
-			for( x = 0 ; x < chanLength; x ++) *(dec16Ptr + x + chanLength*i) = *(outFile16 + i + x*thePrefs.channelNumber);
+			for (x = 0 ; x < chanLength; x ++) *(dec16Ptr + x + chanLength*i) = *(outFile16 + i + x*thePrefs.channelNumber);
 		}
 	}
 	
@@ -779,7 +779,7 @@ void DoAIFFExporting( void)
 	inOutCount 	= 0;
 	tempPtr 	= outSound;
 	
-	for( i = 0;  i < Packet; i++)
+	for (i = 0;  i < Packet; i++)
 	{
 		OnContinue = DirectSave( sndPtr, &thePrefs.DirectDriverType, copyDriver);
 		
@@ -871,7 +871,7 @@ void DoAIFFExporting( void)
 			
 			inter = DeInterlace( inOutCount, outFile);
 			
-			for( i = 0 ; i < thePrefs.channelNumber; i++)
+			for (i = 0 ; i < thePrefs.channelNumber; i++)
 			{
 				iErr = FSWrite( MultiRef[ i], &ss, inter + i*ss);
 			}
@@ -929,7 +929,7 @@ void StopAIFFExporting( void)
 				
 				inter = DeInterlace( inOutCount, outFile);
 				
-				for( i = 0 ; i < thePrefs.channelNumber; i++)
+				for (i = 0 ; i < thePrefs.channelNumber; i++)
 				{
 					iErr = FSWrite( MultiRef[ i], &ss, inter + i*ss);
 				}
@@ -985,7 +985,7 @@ void StopAIFFExporting( void)
 		
 	/*	if (thePrefs.ChannelType == MultiFiles)
 		{
-			for( i = 0; i < thePrefs.channelNumber; i++)
+			for (i = 0; i < thePrefs.channelNumber; i++)
 			{
 				GetFPos( MultiRef[ i], &filePos);
 				SetFPos( MultiRef[ i], fsFromStart, NULL);

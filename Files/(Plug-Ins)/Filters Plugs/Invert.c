@@ -19,7 +19,7 @@ static OSErr mainInvert(sData					*theData,
 		case 8:
 		{
 			Ptr	SamplePtr = (theData->data) + SelectionStart;
-			for( i = 0; i < SelectionEnd - SelectionStart; i++)
+			for (i = 0; i < SelectionEnd - SelectionStart; i++)
 			{
 				temp = *SamplePtr;
 				
@@ -39,7 +39,7 @@ static OSErr mainInvert(sData					*theData,
 		{
 			short	*SamplePtr = (short*) theData->data + (SelectionStart / 2);
 			
-			for( i = 0; i < (SelectionEnd - SelectionStart) / 2; i++)
+			for (i = 0; i < (SelectionEnd - SelectionStart) / 2; i++)
 			{
 				temp = (long)*SamplePtr;
 				

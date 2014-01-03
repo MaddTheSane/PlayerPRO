@@ -759,7 +759,7 @@ void OSType2Str( OSType type, Str255 str)
 	MOT32(&type);
 	memcpy( str+1, &type, 4);
 	
-	for( i = 4; i > 0; i--)
+	for (i = 4; i > 0; i--)
 	{
 		if (str[ i] == ' ') str[ 0]--;
 		else return;
@@ -806,7 +806,7 @@ void ErasePixMap( PixMapHandle pix)
 	long	rowbytes, bb;
 
 	rowbytes = (*pix)->rowBytes + 0x8000;
-	for( bb = 0; bb < (*pix)->bounds.bottom * rowbytes; bb++)
+	for (bb = 0; bb < (*pix)->bounds.bottom * rowbytes; bb++)
 	{
 		*((*pix)->baseAddr + bb) = 0xFF;
 	}
@@ -986,12 +986,12 @@ short IclToPix (Handle theIcon, PixMapHandle *offscreenPixMap)
 	
 	if (theDepth == 8)
 	{
-		for( i = 0; i < picRect.bottom * picRect.right; i++)
+		for (i = 0; i < picRect.bottom * picRect.right; i++)
 		(***offscreenPixMap).baseAddr[i] = (char) (*theIcon)[i];
 	}
 	else
 	{
-		for( i=0, x=0; i< picRect.bottom * picRect.right/2; i++,x++)
+		for (i=0, x=0; i< picRect.bottom * picRect.right/2; i++,x++)
 		{
 			temp1 = (*theIcon)[x++] / 16;
 			temp2 = (*theIcon)[x] / 16;

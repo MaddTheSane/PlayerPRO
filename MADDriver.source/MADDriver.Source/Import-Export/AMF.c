@@ -134,10 +134,10 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	//BlockMoveData( oldMAD->oPointers, theMAD->header->oPointers, 128);
 	
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
-	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 	/**** Patterns *******/
 	
-	for( i = 0; i < theMAD->header->numPat; i++ )
+	for (i = 0; i < theMAD->header->numPat; i++ )
 	{
 		long patSize;
 		
@@ -153,19 +153,19 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 		theMAD->partition[ i]->header.size 		= patSize;
 		theMAD->partition[ i]->header.compMode 	= 'NONE';
 		
-		for( x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
+		for (x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
 		
 		theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
 		
-		for( x = 0; x < theMAD->header->numChn; x++ )
+		for (x = 0; x < theMAD->header->numChn; x++ )
 		{
 			//	fread(&(module->patterns[t].track[i]),2,1,file);
 			READAMFFILE( &tempShort, 2);
 		}
 	}
-	for( i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[ i] = NULL;
+	for (i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[ i] = NULL;
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
 		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
@@ -186,9 +186,9 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	theMAD->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
 	if (!theMAD->sample) return MADNeedMemory;
 	
-	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
-	for( i = 0; i < noIns; i++)
+	for (i = 0; i < noIns; i++)
 	{
 		InstrData		*curIns = &theMAD->fid[ i];
 		
@@ -273,13 +273,13 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 	}
 	
 	trckPtr = 0;
-	for( t = 0; t < trackCount; t++ )
+	for (t = 0; t < trackCount; t++ )
 	{
 		READAMFFILE( &tempShort, 2);	tempShort = Tdecode16( &tempShort);
 		if (tempShort > trckPtr) trckPtr = tempShort;
 	}
 	
-	for( t = 0; t < trckPtr; t++)
+	for (t = 0; t < trckPtr; t++)
 	{
 		READAMFFILE( &tempShort, 2);		tempShort = Tdecode16( &tempShort);
 		READAMFFILE( &tempByte, 1);
@@ -293,7 +293,7 @@ static OSErr AMF2Mad( Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSett
 		}
 	}
 	
-	for( i = 0; i < noIns; i++)
+	for (i = 0; i < noIns; i++)
 	{
 		InstrData		*curIns = &theMAD->fid[ i];
 		

@@ -146,13 +146,13 @@ void AboutPlugs()
 	
 	///////// LIST CREATION ////////////
 	
-	for( i = 0, x = 0; i < MADDriver->lib->TotalPlug; i++, x++)
+	for (i = 0, x = 0; i < MADDriver->lib->TotalPlug; i++, x++)
 	{
 		plugType[ x]	= eMusicFilePlug;
 		plugID[ x]		= i;
  	}
 	
-	for( i = 0, x = 0; i < GetNoPPDG(); i++, x++)
+	for (i = 0, x = 0; i < GetNoPPDG(); i++, x++)
 	{
 		plugType[ x]	= eDigitalEditorPlug;
 		plugID[ x]		= i;
@@ -203,7 +203,7 @@ void UpdatePlugsAbout( DialogPtr aDialog)
 	PaintRect( &myList.rect);
 	ForeColor( blackColor);
 	
-	for( i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++) {
+	for (i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++) {
 		DrawPlugInfo( i);
 	}
 	

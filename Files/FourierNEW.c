@@ -29,7 +29,7 @@ void InitFourier(void)
 	HUnlock( rsrc);
 	DisposeHandle( rsrc);
 	
-/*	for( i = 0; i < 256; i++)
+/*	for (i = 0; i < 256; i++)
 	{
 		double t = i;
 		
@@ -58,7 +58,7 @@ void four1( float *data, unsigned long nn, int isign)
 	
 	n = nn << 1;
 	j = 1;
-	for( i = 1; i < n; i+= 2)
+	for (i = 1; i < n; i+= 2)
 	{
 		if (j > i)
 		{
@@ -87,9 +87,9 @@ void four1( float *data, unsigned long nn, int isign)
 		wr = 1.0;
 		wi = 0.0;
 		
-		for( m = 1; m < mmax; m+= 2)
+		for (m = 1; m < mmax; m+= 2)
 		{
-			for( i=m; i <= n; i+= istep)
+			for (i=m; i <= n; i+= istep)
 			{
 				j = i + mmax;
 				tempr = wr*data[ j] - wi*data[ j + 1];
@@ -132,7 +132,7 @@ void realft( float *data, unsigned long n, int isign)
 	wr		= 1.0 + wpr;
 	wi 		= wpi;
 	np3		= n + 3;
-	for( i = 2; i <= (n>>2); i++)
+	for (i = 2; i <= (n>>2); i++)
 	{
 		i4	= 1 + (i3=np3 - (i2=1 +(i1=i+i-1)));
 		
@@ -196,7 +196,7 @@ Ptr MakeCalculusSpectrum( Ptr srcPtr, Boolean logScale)
 		{
 			
 			if (logoScale[ i] == lastLog) temp = xInt[ logoScale[ i]];
-			else for( xx = logoScale[ i], temp = 0; xx < lastLog; xx++) temp += xInt[ xx];
+			else for (xx = logoScale[ i], temp = 0; xx < lastLog; xx++) temp += xInt[ xx];
 			
 			//	FINIR ICI
 			
@@ -205,13 +205,13 @@ Ptr MakeCalculusSpectrum( Ptr srcPtr, Boolean logScale)
 			lastLog = logoScale[ i];
 		}
 		
-		/*	for( xx = 0, sumL = 0, i = 0; i < 256; i++)
+		/*	for (xx = 0, sumL = 0, i = 0; i < 256; i++)
 		 {
 		 if (xx == 16)
 		 {
 		 sumL /= 16;
 		 
-		 for( xx = i - 16; xx < i; xx++)
+		 for (xx = i - 16; xx < i; xx++)
 		 {
 		 xInt[ xx] = sumL;
 		 }

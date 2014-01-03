@@ -24,7 +24,7 @@ void OSType2Str( OSType type, Str255 str)
 	str[ 0] = 4;
 	BlockMoveData( &type, str+1, 4);
 
-	for( i = 4; i > 0; i--)
+	for (i = 4; i > 0; i--)
 	{
 		if (str[ i] == ' ') str[ 0]--;
 		else return;

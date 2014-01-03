@@ -142,7 +142,7 @@ OSErr	PPTestFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile)
 	MADMusic		aMAD;
 	PPInfoRec		InfoRec;
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if (!MADstrcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
@@ -199,7 +199,7 @@ OSErr	PPInfoFile( MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile, PPIn
 		return noErr;
 	}
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
@@ -214,7 +214,7 @@ OSErr	PPExportFile( MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile, MA
 	short		i;
 	PPInfoRec	InfoRec;
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if (!MADstrcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
@@ -229,7 +229,7 @@ OSErr	PPImportFile( MADLibrary *inMADDriver, char	*kindFile, char *AlienFile, MA
 	short		i;
 	PPInfoRec	InfoRec;
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if (!MADstrcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
@@ -293,7 +293,7 @@ OSErr	PPIdentifyFile( MADLibrary *inMADDriver, char *type, char *AlienFile)
 		return noErr;
 	}
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if (CallImportPlug( inMADDriver, i, 'TEST', AlienFile, NULL, &InfoRec) == noErr)
 		{
@@ -313,7 +313,7 @@ OSType	GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 
 	if (ID >= inMADDriver->TotalPlug) MyDebugStr( __LINE__, __FILE__, "PP-Plug ERROR. ");
 
-	for( i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if (inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == 'EXIM')
 		{
@@ -344,7 +344,7 @@ Boolean	MADPlugAvailable( MADLibrary		*inMADDriver, char	*kindFile)
 
 	if (!strcmp( kindFile, "MADK")) return true;
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type)) return true;
 	}
@@ -453,7 +453,7 @@ short	i;
 	ExportMenu	= GetMenu( 139);
 
 
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		switch( inMADDriver->ThePlug[ i].mode)
 		{
@@ -482,7 +482,7 @@ void NScanResource( MADLibrary *inMADDriver)
 	
 #define BASERES	1000
 	
-	for( i = 0; i < MAXPLUG; i++)
+	for (i = 0; i < MAXPLUG; i++)
 	{
 		Boolean ResourceOK;
 		Handle	aRes, bRes;
@@ -577,7 +577,7 @@ void CloseImportPlug( MADLibrary		*inMADDriver)
 {
 	short	i;
 
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 	}
 

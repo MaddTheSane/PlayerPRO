@@ -150,10 +150,10 @@ Ptr ConvertCurrentMusicToPtr(void)
 	PatData*			PatMAD;
 
 	fileSize = sizeof( MADSpec);
-	for( i = 0; i < curMusic->header->numPat; i++) fileSize += sizeof( PatternHeader) + curMusic->header->numChn * curMusic->partition[ i]->header.size * sizeof( Cmd);
-	for( i = 0; i < MAXINSTRU ; i++)
+	for (i = 0; i < curMusic->header->numPat; i++) fileSize += sizeof( PatternHeader) + curMusic->header->numChn * curMusic->partition[ i]->header.size * sizeof( Cmd);
+	for (i = 0; i < MAXINSTRU ; i++)
 	{
-		for( x = 0; x < curMusic->fid[i].numSamples; x++)
+		for (x = 0; x < curMusic->fid[i].numSamples; x++)
 		{
 			fileSize += curMusic->sample[ curMusic->fid[ i].firstSample + x]->size;
 		}
@@ -166,7 +166,7 @@ Ptr ConvertCurrentMusicToPtr(void)
 	BlockMoveData( curMusic->header, tempPtr, inOutCount);
 	tt += inOutCount;
 	
-	for( i = 0; i < curMusic->header->numPat ; i++)
+	for (i = 0; i < curMusic->header->numPat ; i++)
 	{
 		if (curMusic->partition[ i]->header.compMode == 'MAD1')
 		{
@@ -186,9 +186,9 @@ Ptr ConvertCurrentMusicToPtr(void)
 		}
 	}
 
-	for( i = 0; i < MAXINSTRU ; i++)
+	for (i = 0; i < MAXINSTRU ; i++)
 	{
-		for( x = 0; x < curMusic->fid[i].numSamples; x++)
+		for (x = 0; x < curMusic->fid[i].numSamples; x++)
 		{
 			sData	*curData;
 		
@@ -304,7 +304,7 @@ void InitSoundQualityExport( 	DialogPtr				aDialog,
 	
 	// Amplitude
 	
-	for( i = 12; i <= 14; i++) TurnRadio( i, aDialog, false);
+	for (i = 12; i <= 14; i++) TurnRadio( i, aDialog, false);
 	
 	switch( *amplitude)
 	{
@@ -491,7 +491,7 @@ Boolean SoundQualityExport( 	Boolean OnlyCurrent,
 					
 					LocalToGlobal( &Zone);
 					
-					for( i = 1 ; i < CountMenuItems( tMenu); i++)
+					for (i = 1 ; i < CountMenuItems( tMenu); i++)
 					{
 						Str255	str;
 						
@@ -534,7 +534,7 @@ Boolean SoundQualityExport( 	Boolean OnlyCurrent,
 					
 					curSelec = 1;
 					
-					for( i = 0 ; i < CountMenuItems( tMenu); i++)
+					for (i = 0 ; i < CountMenuItems( tMenu); i++)
 					{
 						Str255	str;
 						long	r;
@@ -804,7 +804,7 @@ void ExportFile( OSType theType, FSSpec *newFile)
 			// HEADER
 			// We need to compute number of valid instruments !!! See above....
 			
-			for( i = 0, x = 0; i < MAXINSTRU; i++)
+			for (i = 0, x = 0; i < MAXINSTRU; i++)
 			{
 				curMusic->fid[ i].no = i;
 				
@@ -824,7 +824,7 @@ void ExportFile( OSType theType, FSSpec *newFile)
 			if (iErr) Erreur( 75, iErr);
 			
 			// PATTERNS
-			for( i = 0; i < curMusic->header->numPat ; i++)
+			for (i = 0; i < curMusic->header->numPat ; i++)
 			{
 				if (thePrefs.MADCompression) curMusic->partition[ i]->header.compMode = 'MAD1';
 				
@@ -853,7 +853,7 @@ void ExportFile( OSType theType, FSSpec *newFile)
 			
 			// INSTRUMENTS
 			
-			for( i = 0; i < MAXINSTRU; i++)
+			for (i = 0; i < MAXINSTRU; i++)
 			{
 				if (curMusic->fid[ i].numSamples > 0 || curMusic->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
 				{
@@ -869,9 +869,9 @@ void ExportFile( OSType theType, FSSpec *newFile)
 			
 			// SAMPLES
 			
-			for( i = 0; i < MAXINSTRU ; i++)
+			for (i = 0; i < MAXINSTRU ; i++)
 			{
-				for( x = 0; x < curMusic->fid[i].numSamples; x++)
+				for (x = 0; x < curMusic->fid[i].numSamples; x++)
 				{
 					sData	*curData;
 					
@@ -890,7 +890,7 @@ void ExportFile( OSType theType, FSSpec *newFile)
 			// EFFECTS *** *** *** *** *** *** *** *** *** *** *** ***
 			
 			alpha = 0;
-			for( i = 0; i < 10 ; i++)	// Global Effects
+			for (i = 0; i < 10 ; i++)	// Global Effects
 			{
 				if (curMusic->header->globalEffect[ i])
 				{
@@ -900,9 +900,9 @@ void ExportFile( OSType theType, FSSpec *newFile)
 				}
 			}
 			
-			for( i = 0; i < curMusic->header->numChn ; i++)	// Channel Effects
+			for (i = 0; i < curMusic->header->numChn ; i++)	// Channel Effects
 			{
-				for( x = 0; x < 4; x++)
+				for (x = 0; x < 4; x++)
 				{
 					if (curMusic->header->chanEffect[ i][ x])
 					{
@@ -998,9 +998,9 @@ void CheckInstrument(void)
 	if (curMusic->header->tempo < 0) MyDebugStr( __LINE__, __FILE__, "curMusic->header->tempo");
 	if (curMusic->header->numPat < 1) MyDebugStr( __LINE__, __FILE__, "curMusic->header->numPat");
 	
-	for( i = 0; i < MAXINSTRU; i++)
+	for (i = 0; i < MAXINSTRU; i++)
 	{
-		for( x = 0; x < 96; x++)
+		for (x = 0; x < 96; x++)
 		{
 			if (curMusic->fid[ i].what[ x])
 			{
@@ -1011,7 +1011,7 @@ void CheckInstrument(void)
 			}
 		}
 		
-		for( x = 0; x < curMusic->fid[ i].numSamples; x++)
+		for (x = 0; x < curMusic->fid[ i].numSamples; x++)
 		{
 			sData	*curData = curMusic->sample[ curMusic->fid[i].firstSample + x];
 			
@@ -1063,20 +1063,20 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 		thePrefs.previousSpec.ESpeed		= MADDriver->VExt;
 		
 		thePrefs.previousSpec.generalVol	= MADDriver->VolGlobal;
-		for( i = 0 ; i < MAXTRACK; i++) thePrefs.previousSpec.chanPan[ i] = curMusic->header->chanPan[ i];
-		for( i = 0 ; i < MAXTRACK; i++) thePrefs.previousSpec.chanVol[ i] = curMusic->header->chanVol[ i];
+		for (i = 0 ; i < MAXTRACK; i++) thePrefs.previousSpec.chanPan[ i] = curMusic->header->chanPan[ i];
+		for (i = 0 ; i < MAXTRACK; i++) thePrefs.previousSpec.chanVol[ i] = curMusic->header->chanVol[ i];
 		
 		
 		thePrefs.Previous_globalFXActive 	= curMusic->header->globalFXActive;
-		for( i = 0 ; i < 10; i++) 			thePrefs.Previous_globalEffect[ i] 		= curMusic->header->globalEffect[ i];
-		for( i = 0 ; i < MAXTRACK; i++)
+		for (i = 0 ; i < 10; i++) 			thePrefs.Previous_globalEffect[ i] 		= curMusic->header->globalEffect[ i];
+		for (i = 0 ; i < MAXTRACK; i++)
 		{
-			for( x = 0 ; x < 4; x++)
+			for (x = 0 ; x < 4; x++)
 			{
 				thePrefs.Previous_chanEffect[ i][ x] 		= curMusic->header->chanEffect[ i][ x];
 			}
 		}
-		for( i = 0 ; i < MAXTRACK; i++) 	thePrefs.Previous_chanBus[ i] 			= curMusic->header->chanBus[ i];
+		for (i = 0 ; i < MAXTRACK; i++) 	thePrefs.Previous_chanBus[ i] 			= curMusic->header->chanBus[ i];
 		
 		BlockMoveData( curMusic->sets, &thePrefs.Previous_Sets, MAXTRACK * sizeof(FXSets));
 //	}
@@ -1339,7 +1339,7 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 	
 	/**** Updates obligatoires *******/
 	
-	for( i = 0; i < curMusic->header->numChn; i++)
+	for (i = 0; i < curMusic->header->numChn; i++)
 	{
 		MADDriver->Active[ i] = true;
 	}
@@ -1376,20 +1376,20 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 		curMusic->header->ESpeed	= thePrefs.previousSpec.ESpeed;
 		
 		curMusic->header->generalVol	= thePrefs.previousSpec.generalVol;
-		for( i = 0 ; i < MAXTRACK; i++) curMusic->header->chanPan[ i] = thePrefs.previousSpec.chanPan[ i];
-		for( i = 0 ; i < MAXTRACK; i++) curMusic->header->chanVol[ i] = thePrefs.previousSpec.chanVol[ i];
+		for (i = 0 ; i < MAXTRACK; i++) curMusic->header->chanPan[ i] = thePrefs.previousSpec.chanPan[ i];
+		for (i = 0 ; i < MAXTRACK; i++) curMusic->header->chanVol[ i] = thePrefs.previousSpec.chanVol[ i];
 		
 		
 		curMusic->header->globalFXActive	= thePrefs.Previous_globalFXActive;
-		for( i = 0 ; i < 10; i++) 			curMusic->header->globalEffect[ i] = thePrefs.Previous_globalEffect[ i];
-		for( i = 0 ; i < MAXTRACK; i++)
+		for (i = 0 ; i < 10; i++) 			curMusic->header->globalEffect[ i] = thePrefs.Previous_globalEffect[ i];
+		for (i = 0 ; i < MAXTRACK; i++)
 		{
-			for( x = 0 ; x < 4; x++)
+			for (x = 0 ; x < 4; x++)
 			{
 				curMusic->header->chanEffect[ i][ x] = thePrefs.Previous_chanEffect[ i][ x];
 			}
 		}
-		for( i = 0 ; i < MAXTRACK; i++) 	curMusic->header->chanBus[ i] = thePrefs.Previous_chanBus[ i];
+		for (i = 0 ; i < MAXTRACK; i++) 	curMusic->header->chanBus[ i] = thePrefs.Previous_chanBus[ i];
 		
 		BlockMoveData(  &thePrefs.Previous_Sets, curMusic->sets,MAXTRACK * sizeof(FXSets));
 	}

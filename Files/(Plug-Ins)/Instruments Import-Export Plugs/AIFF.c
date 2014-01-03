@@ -37,7 +37,7 @@ OSErr				result;
 	if (CC->formType == AIFCID) Compression = true;
 	else if (CC->formType == AIFFID) Compression = false;
 
-	for( i = sizeof( ContainerChunk); i < CC->ckSize;)
+	for (i = sizeof( ContainerChunk); i < CC->ckSize;)
 	{
 		CH = (ChunkHeader*) (sound + i);
 		if (CH->ckID == CommonID)
@@ -114,14 +114,14 @@ OSErr				result;
 	{
 		if (*sampleSize == 8)
 		{
-			for( i = 0; i < SizeH - StartId; i++)
+			for (i = 0; i < SizeH - StartId; i++)
 			{
 				(sound)[ i] = (sound + StartId)[ i * numChannels];
 			}
 		}
 		else
 		{
-			for( i = 0; i < (SizeH - StartId)/2; i++)
+			for (i = 0; i < (SizeH - StartId)/2; i++)
 			{
 				((short*) sound)[ i] = ((short*) (sound + StartId))[ i * numChannels];
 			}

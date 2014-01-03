@@ -61,7 +61,7 @@ OSErr MADInitEqualizer( MADDriverRec *intDriver)
 		return MADNeedMemory;
 	}
 	
-	for( i = 0; i <= EQPACKET*2; i++)
+	for (i = 0; i <= EQPACKET*2; i++)
 	{
 		intDriver->Filter[ i] = 1.0;
 	}
@@ -293,7 +293,7 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 		return;
 	}
 	
-	for( y = 0; y < nochan; y++)
+	for (y = 0; y < nochan; y++)
 	{
 		// Copy data
 		
@@ -301,24 +301,24 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 		{
 			if (powersize*2 > size)
 			{
-				for( i = 0 ; i < size/2; i++) fDataCopy[ i+1] = SData[ 2*i];
-				for( i = size/2 ; i < powersize; i++) fDataCopy[ i+1] = 0;
+				for (i = 0 ; i < size/2; i++) fDataCopy[ i+1] = SData[ 2*i];
+				for (i = size/2 ; i < powersize; i++) fDataCopy[ i+1] = 0;
 			}
 			else
 			{
-				for( i = 0 ; i < powersize; i++) fDataCopy[ i+1] = SData[ 2*i];
+				for (i = 0 ; i < powersize; i++) fDataCopy[ i+1] = SData[ 2*i];
 			}
 		}
 		else				// MONO
 		{
 			if (powersize > size)
 			{
-				for( i = 0 ; i < size; i++) fDataCopy[ i+1] = SData[ i];
-				for( i = size ; i < powersize; i++) fDataCopy[ i+1] = 0;
+				for (i = 0 ; i < size; i++) fDataCopy[ i+1] = SData[ i];
+				for (i = size ; i < powersize; i++) fDataCopy[ i+1] = 0;
 			}
 			else
 			{
-				for( i = 0 ; i < powersize; i++) fDataCopy[ i+1] = SData[ i];
+				for (i = 0 ; i < powersize; i++) fDataCopy[ i+1] = SData[ i];
 			}
 		}
 		
@@ -326,7 +326,7 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 		pente = (fDataCopy[ powersize] - fDataCopy[ 1]) / (double) (powersize -1);
 		axe = fDataCopy[ 1];
 		
-		for( i = 1 ; i <= powersize; i++)
+		for (i = 1 ; i <= powersize; i++)
 		{
 			fDataCopy[ i] -= (axe + (double)(i-1) * pente);
 		}
@@ -338,7 +338,7 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 		{
 			long shiftval, a;//, b;
 			
-			for( i = 0 ; i < powersize; i++)
+			for (i = 0 ; i < powersize; i++)
 			{
 				a = (i * EQPACKET*2) / powersize;
 				//	b = a+1;
@@ -354,7 +354,7 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 				fDataCopy2[ i] = 0;
 			}
 			
-			for( i = 0 ; i < powersize; i++)
+			for (i = 0 ; i < powersize; i++)
 			{
 				if (shiftAr[ i] >= 0 && shiftAr[ i] < powersize) fDataCopy2[ shiftAr[ i] +1] += fDataCopy[ i +1];
 			}
@@ -365,11 +365,11 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 		{
 			if (size != EQPACKET*2*2)
 			{
-				for( i = 0 ; i < powersize; i++) fDataCopy[ i +1] *= filter[ (i * EQPACKET*2) / powersize];
+				for (i = 0 ; i < powersize; i++) fDataCopy[ i +1] *= filter[ (i * EQPACKET*2) / powersize];
 			}
 			else
 			{
-				for( i = 0 ; i < powersize; i++) fDataCopy[ i +1] *= filter[ i];
+				for (i = 0 ; i < powersize; i++) fDataCopy[ i +1] *= filter[ i];
 			}
 		}
 		
@@ -379,16 +379,16 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 		pente = (fDataCopy[ powersize] - fDataCopy[ 1]) / (double) (powersize -1);
 		axe = fDataCopy[ 1];
 		
-		for( i = 1 ; i <= powersize; i++)
+		for (i = 1 ; i <= powersize; i++)
 		{
 			fDataCopy[ i] -= (axe + (double)(i-1) * pente);
 		}
 		// ** //  // ** //  // ** //  // ** //  // ** //  // ** //  // ** //
 		   
-		for( i = 1 ; i <= powersize; i++) fDataCopy[ i] /= powersize/2;
+		for (i = 1 ; i <= powersize; i++) fDataCopy[ i] /= powersize/2;
 		
 		// Check data
-		for( i = 1 ; i <= powersize; i++)
+		for (i = 1 ; i <= powersize; i++)
 		{
 			if (fDataCopy[ i] > 127) fDataCopy[ i] = 127;
 			if (fDataCopy[ i] < -127) fDataCopy[ i] = -127;
@@ -399,22 +399,22 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 		{
 			if (powersize*2 > size)
 			{
-				for( i = 0 ; i < size/2; i++) SData[ 2*i] = fDataCopy[ i+1];
+				for (i = 0 ; i < size/2; i++) SData[ 2*i] = fDataCopy[ i+1];
 			}
 			else
 			{
-				for( i = 0 ; i < powersize; i++) SData[ 2*i] = fDataCopy[ i+1];
+				for (i = 0 ; i < powersize; i++) SData[ 2*i] = fDataCopy[ i+1];
 			}
 		}
 		else				// MONO
 		{
 			if (powersize > size)
 			{
-				for( i = 0 ; i < size; i++) SData[ i] = fDataCopy[ i+1];
+				for (i = 0 ; i < size; i++) SData[ i] = fDataCopy[ i+1];
 			}
 			else
 			{
-				for( i = 0 ; i < powersize; i++) SData[ i] = fDataCopy[ i+1];
+				for (i = 0 ; i < powersize; i++) SData[ i] = fDataCopy[ i+1];
 			}
 		}
 		
@@ -506,7 +506,7 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 		return;
 	}
 	
-	for( y = 0; y < nochan; y++)
+	for (y = 0; y < nochan; y++)
 	{
 		// Copy data
 		
@@ -514,24 +514,24 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 		{
 			if (powersize*2 > size)
 			{
-				for( i = 0 ; i < size/2; i++) fDataCopy[ i+1] = SData[ 2*i];
-				for( i = size/2 ; i < powersize; i++) fDataCopy[ i+1] = 0;
+				for (i = 0 ; i < size/2; i++) fDataCopy[ i+1] = SData[ 2*i];
+				for (i = size/2 ; i < powersize; i++) fDataCopy[ i+1] = 0;
 			}
 			else
 			{
-				for( i = 0 ; i < powersize; i++) fDataCopy[ i+1] = SData[ 2*i];
+				for (i = 0 ; i < powersize; i++) fDataCopy[ i+1] = SData[ 2*i];
 			}
 		}
 		else				// MONO
 		{
 			if (powersize > size)
 			{
-				for( i = 0 ; i < size; i++) fDataCopy[ i+1] = SData[ i];
-				for( i = size ; i < powersize; i++) fDataCopy[ i+1] = 0;
+				for (i = 0 ; i < size; i++) fDataCopy[ i+1] = SData[ i];
+				for (i = size ; i < powersize; i++) fDataCopy[ i+1] = 0;
 			}
 			else
 			{
-				for( i = 0 ; i < powersize; i++) fDataCopy[ i+1] = SData[ i];
+				for (i = 0 ; i < powersize; i++) fDataCopy[ i+1] = SData[ i];
 			}
 		}
 		
@@ -551,7 +551,7 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 		NumToString( PreviousAxe[ y], str);
 		DebugStr( str);*/
 		
-		for( i = 1 ; i <= powersize; i++)
+		for (i = 1 ; i <= powersize; i++)
 		{
 			fDataCopy[ i] -= (axe + (double)(i-1) * pente);
 		}
@@ -563,7 +563,7 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 		{
 			long shiftval, a, b;
 			
-			for( i = 0 ; i < powersize; i++)
+			for (i = 0 ; i < powersize; i++)
 			{
 				a = (i * EQPACKET*2) / powersize;
 				b = a+1;
@@ -572,7 +572,7 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 				fDataCopy2[ i] = 0;
 			}
 			
-			for( i = 0 ; i < powersize; i++)
+			for (i = 0 ; i < powersize; i++)
 			{
 				if (shiftAr[ i] >= 0 && shiftAr[ i] < powersize) fDataCopy2[ shiftAr[ i] +1] += fDataCopy[ i +1];
 			}
@@ -583,17 +583,17 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 		{
 			if (size != EQPACKET*2*2)
 			{
-				for( i = 0 ; i < powersize; i++) fDataCopy[ i +1] *= filter[ (i * EQPACKET*2) / powersize];
+				for (i = 0 ; i < powersize; i++) fDataCopy[ i +1] *= filter[ (i * EQPACKET*2) / powersize];
 			}
 			else
 			{
-				for( i = 0 ; i < powersize; i++) fDataCopy[ i +1] *= filter[ i];
+				for (i = 0 ; i < powersize; i++) fDataCopy[ i +1] *= filter[ i];
 			}
 		}
 		
 		MADrealft( fDataCopy, powersize/2, false);
 		
-		for( i = 1 ; i <= powersize; i++) fDataCopy[ i] /= powersize/2;
+		for (i = 1 ; i <= powersize; i++) fDataCopy[ i] /= powersize/2;
 
 		// First and last values MUST be zero! // ** //  // ** //  // ** //
 		pente = (fDataCopy[ powersize] - fDataCopy[ 1]) / (double) (powersize -1);
@@ -603,7 +603,7 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 	//		axe = PreviousAxe2[ y];
 	//		PreviousAxe2[ y] = fDataCopy[ powersize];
 		
-		for( i = 1 ; i <= powersize; i++)
+		for (i = 1 ; i <= powersize; i++)
 		{
 			fDataCopy[ i] -= (axe + (double)(i-1) * pente);
 		}
@@ -618,7 +618,7 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 		}*/
 		
 		// Check data
-		for( i = 1 ; i <= powersize; i++)
+		for (i = 1 ; i <= powersize; i++)
 		{
 			if (fDataCopy[ i] > 32767) fDataCopy[ i] = 32767;
 			if (fDataCopy[ i] < -32767) fDataCopy[ i] = -32767;
@@ -629,22 +629,22 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 		{
 			if (powersize*2 > size)
 			{
-				for( i = 0 ; i < size/2; i++) SData[ 2*i] = fDataCopy[ i+1];
+				for (i = 0 ; i < size/2; i++) SData[ 2*i] = fDataCopy[ i+1];
 			}
 			else
 			{
-				for( i = 0 ; i < powersize; i++) SData[ 2*i] = fDataCopy[ i+1];
+				for (i = 0 ; i < powersize; i++) SData[ 2*i] = fDataCopy[ i+1];
 			}
 		}
 		else				// MONO
 		{
 			if (powersize > size)
 			{
-				for( i = 0 ; i < size; i++) SData[ i] = fDataCopy[ i+1];
+				for (i = 0 ; i < size; i++) SData[ i] = fDataCopy[ i+1];
 			}
 			else
 			{
-				for( i = 0 ; i < powersize; i++) SData[ i] = fDataCopy[ i+1];
+				for (i = 0 ; i < powersize; i++) SData[ i] = fDataCopy[ i+1];
 			}
 		}
 		
@@ -670,9 +670,9 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 {
 	long	i, x, y;
 	
-	for( x = 0; x < size; x += EQPACKET*2*2)
+	for (x = 0; x < size; x += EQPACKET*2*2)
 	{
-		for( y = 0; y < 2; y++)
+		for (y = 0; y < 2; y++)
 		{
 			// Copy data
 			
@@ -680,22 +680,22 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 			
 			if (x + EQPACKET*2*2 > size)
 			{
-				for( i = 0 ; i < (size - x)/2; i++) intDriver->fData[ i+1] = SData[ x + 2*i];
-				for( i = (size - x)/2 ; i < EQPACKET*2; i++) intDriver->fData[ i+1] = 0;
+				for (i = 0 ; i < (size - x)/2; i++) intDriver->fData[ i+1] = SData[ x + 2*i];
+				for (i = (size - x)/2 ; i < EQPACKET*2; i++) intDriver->fData[ i+1] = 0;
 			}
 			else
 			{
-				for( i = 0 ; i < EQPACKET*2; i++) intDriver->fData[ i+1] = SData[ x + 2*i];
+				for (i = 0 ; i < EQPACKET*2; i++) intDriver->fData[ i+1] = SData[ x + 2*i];
 			}
 			
 			MADrealft( intDriver->fData, EQPACKET, true);
 			
 			MADrealft( intDriver->fData, EQPACKET, false);
 			
-			for( i = 1 ; i <= EQPACKET*2; i++) intDriver->fData[ i] /= EQPACKET;
+			for (i = 1 ; i <= EQPACKET*2; i++) intDriver->fData[ i] /= EQPACKET;
 			
 			// Check data
-			for( i = 1 ; i <= EQPACKET*2; i++)
+			for (i = 1 ; i <= EQPACKET*2; i++)
 			{
 				if (intDriver->fData[ i] > 127) intDriver->fData[ i] = 127;
 				if (intDriver->fData[ i] < -127) intDriver->fData[ i] = -127;
@@ -704,11 +704,11 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 			// Restore data
 			if (x + EQPACKET*2*2 > size)
 			{
-				for( i = 0 ; i < (size - x)/2; i++) SData[ x + 2*i] = intDriver->fData[ i+1];
+				for (i = 0 ; i < (size - x)/2; i++) SData[ x + 2*i] = intDriver->fData[ i+1];
 			}
 			else
 			{
-				for( i = 0 ; i < EQPACKET*2; i++) SData[ x + 2*i] = intDriver->fData[ i+1];
+				for (i = 0 ; i < EQPACKET*2; i++) SData[ x + 2*i] = intDriver->fData[ i+1];
 			}
 			
 			//// ***********************              Now the left channel !

@@ -189,9 +189,9 @@ static void MED_Convert0( short patID, MADMusic *theMAD)
 	MMD0NOTE 	*n;
 	Cmd			*aCmd;
 	
-	for( t = 0 ; t < theMAD->partition[ patID]->header.size; t++)
+	for (t = 0 ; t < theMAD->partition[ patID]->header.size; t++)
 	{
-		for( zz = 0 ; zz < theMAD->header->numChn; zz++)
+		for (zz = 0 ; zz < theMAD->header->numChn; zz++)
 		{
 			n= &d0note( t, zz);
 			
@@ -236,7 +236,7 @@ static OSErr LoadMMD0Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 	
 	// first, scan patterns to see how many channels are used
 	
-	for( t = 0; t < theMAD->header->numPat; t++)
+	for (t = 0; t < theMAD->header->numPat; t++)
 	{
 		theMEDRead = theMED + ba[ t];
 		READMEDFILE( &tC, sizeof( char));	numtracks = tC;
@@ -252,7 +252,7 @@ static OSErr LoadMMD0Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 	/* second read: no more mr. nice guy,
 	 really read and convert patterns */
 	
-	for( t = 0 ; t < theMAD->header->numPat; t++)
+	for (t = 0 ; t < theMAD->header->numPat; t++)
 	{
 		theMEDRead = theMED + ba[ t];
 		READMEDFILE( &tC, sizeof( char));	numtracks = tC;
@@ -266,22 +266,22 @@ static OSErr LoadMMD0Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 		theMAD->partition[ t]->header.size 		= numlines;
 		theMAD->partition[ t]->header.compMode 	= 'NONE';
 		
-		for( x = 0; x < 20; x++) theMAD->partition[ t]->header.name[ x] = 0;
+		for (x = 0; x < 20; x++) theMAD->partition[ t]->header.name[ x] = 0;
 		
 		theMAD->partition[ t]->header.patBytes = 0;		theMAD->partition[ t]->header.unused2 = 0;
 		
 		//memset( mmd0pat, 0, of.numchn * maxlines * sizeof(MMD0NOTE));
 		
-		for( x = 0; x < theMAD->header->numChn * maxlines * sizeof(MMD0NOTE); x++)
+		for (x = 0; x < theMAD->header->numChn * maxlines * sizeof(MMD0NOTE); x++)
 		{
 			((Ptr) mmd0pat)[ x] = 0;
 		}
 		
-		for( row = 0 ; row < numlines; row++)
+		for (row = 0 ; row < numlines; row++)
 		{
 			short ztz;
 			
-			for( ztz = 0; ztz < numtracks; ztz++)
+			for (ztz = 0; ztz < numtracks; ztz++)
 				READMEDFILE( &d0note( row, ztz), 3);		// sizeof(MMD0NOTE) != 3 probleme compilation alignement
 		}
 		
@@ -299,7 +299,7 @@ static OSErr LoadMMD1Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 	
 	// first, scan patterns to see how many channels are used
 	
-	for( t = 0 ; t < theMAD->header->numPat; t++)
+	for (t = 0 ; t < theMAD->header->numPat; t++)
 	{
 		theMEDRead = theMED + ba[ t];
 		READMEDFILE( &numtracks, sizeof( short));
@@ -337,18 +337,18 @@ static OSErr LoadMMD1Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 		theMAD->partition[ t]->header.size 		= numlines;
 		theMAD->partition[ t]->header.compMode 	= 'NONE';
 		
-		for( x = 0; x < 20; x++) theMAD->partition[ t]->header.name[ x] = 0;
+		for (x = 0; x < 20; x++) theMAD->partition[ t]->header.name[ x] = 0;
 		
 		theMAD->partition[ t]->header.patBytes = 0;		theMAD->partition[ t]->header.unused2 = 0;
 		
 		
 		
-		for( x = 0; x < theMAD->header->numChn * maxlines * sizeof(MMD0NOTE); x++)
+		for (x = 0; x < theMAD->header->numChn * maxlines * sizeof(MMD0NOTE); x++)
 		{
 			((Ptr) mmd1pat)[ x] = 0;
 		}
 		
-		for( row = 0 ; row < numlines ; row++)
+		for (row = 0 ; row < numlines ; row++)
 		{
 			READMEDFILE( &d1note( row, 0), sizeof(MMD1NOTE) * numtracks);
 		}
@@ -432,7 +432,7 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	
 	if (theMAD->header->numPointers > 128) theMAD->header->numPointers = 128;
 	
-	for( i = 0; i < ms->songlen; i++)
+	for (i = 0; i < ms->songlen; i++)
 	{
 		theMAD->header->oPointers[ i] = ms->playseq[ i];
 		if (theMAD->header->oPointers[ i] >= theMAD->header->numPat)
@@ -440,9 +440,9 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	}
 	
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
-	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
 		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
@@ -464,9 +464,9 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	theMAD->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
 	if (!theMAD->sample) return MADNeedMemory;
 	
-	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
-	for( t = 0 ; t < ms->numsamples ; t++)
+	for (t = 0 ; t < ms->numsamples ; t++)
 	{
 		theMEDRead = theMED + sa[ t];
 		READMEDFILE( &s, sizeof(InstrHdr));
@@ -526,7 +526,7 @@ static Boolean compMem( Ptr a, Ptr b, long s)
 {
 	long 	i;
 
-	for( i = 0; i < s; i++)
+	for (i = 0; i < s; i++)
 	{
 		if (a[ i] != b[ i]) return false;
 	}

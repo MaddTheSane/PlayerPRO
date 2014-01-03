@@ -379,7 +379,7 @@ void  UpdatePartiWindow(DialogPtr GetSelection)  	/* Pointer to this dialog */
 	
 	/**********************/
 	
-	for( i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++)
+	for (i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++)
 	{
 		DrawPartiListItem( i);
 	}
@@ -728,7 +728,7 @@ void DoItemPressParti( short whichItem, DialogPtr whichDialog)    			/* Item hit
 				theCell.v = theCell.h = 0;
 				if (PLGetSelect( &theCell, &myList))
 				{
-					for( i = MAXPOINTER-1; i >= theCell.v+1; i--) {
+					for (i = MAXPOINTER-1; i >= theCell.v+1; i--) {
 						curMusic->header->oPointers[ i] = curMusic->header->oPointers[ i-1];
 					}
 					//	curMusic->header->oPointers[ theCell.v] = curMusic->header->oPointers[ theCell.v-1];
@@ -747,7 +747,7 @@ void DoItemPressParti( short whichItem, DialogPtr whichDialog)    			/* Item hit
 			if (GetControlHilite( RemoveBut) == 0 && MyTrackControl( RemoveBut, theEvent.where, NULL)) {
 				theCell.v = theCell.h = 0;
 				if (PLGetSelect( &theCell, &myList)) {
-					for( i = theCell.v; i < MAXPOINTER-1; i++) {
+					for (i = theCell.v; i < MAXPOINTER-1; i++) {
 						curMusic->header->oPointers[ i] = curMusic->header->oPointers[ i+1];
 					}
 					curMusic->header->oPointers[ MAXPOINTER-1] = 0;
@@ -1048,7 +1048,7 @@ void PASTEParti(void)
 		{
 			SaveUndo( UHeader, 0, "\pUndo 'Paste Partition'");
 			
-			for( count = 0; count < lCntOrErr ; count++)
+			for (count = 0; count < lCntOrErr ; count++)
 			{
 				if (CheckValidParti( (*theHandle)[ count], theCell.v + count))
 				{

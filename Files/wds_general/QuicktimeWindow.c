@@ -835,7 +835,7 @@ RETRY:
 		gSoundMediaHandler = NULL;
 		gDataHandler = NULL;
 		
-		for( i = 1; i <= GetMovieTrackCount( QTMovie); i++)
+		for (i = 1; i <= GetMovieTrackCount( QTMovie); i++)
 		{
 			aTrack = GetMovieIndTrack( QTMovie, i);
 			

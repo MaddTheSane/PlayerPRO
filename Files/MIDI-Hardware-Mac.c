@@ -459,9 +459,9 @@ void SendMIDITimingClock( MADDriverRec *MDriver)
 	
 	curTime				= 0;
 	
-	for( i = 0; i < MDriver->curMusic->header->numPointers; i++)
+	for (i = 0; i < MDriver->curMusic->header->numPointers; i++)
 	{
-		for( x = 0; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
+		for (x = 0; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
 		{
 			time ++;
 			
@@ -471,7 +471,7 @@ void SendMIDITimingClock( MADDriverRec *MDriver)
 					curTime = time;
 				}
 			
-			for( y = 0; y <  MDriver->curMusic->header->numChn; y++)
+			for (y = 0; y <  MDriver->curMusic->header->numChn; y++)
 			{
 				aCmd = GetMADCommand( x, y, MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]);
 				
@@ -500,7 +500,7 @@ void SendMIDITimingClock( MADDriverRec *MDriver)
 				
 				if (aCmd->cmd == skipE)
 				{
-					for( ; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
+					for (; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
 					{
 						if (i == MDriver->PL	&&
 							x == MDriver->PartitionReader)

@@ -33,7 +33,7 @@ void DrawCourbe( DialogPtr dia)
 	
 	MoveTo( itemRect.left, itemRect.top + (MADDriver->Filter[ 0] * 256) / 2);
 	
-	for( i = 0; i < EQPACKET*2; i++)
+	for (i = 0; i < EQPACKET*2; i++)
 	{
 		LineTo( itemRect.left+i/4, itemRect.top + (MADDriver->Filter[ i] * 256) / 2);
 	}
@@ -54,7 +54,7 @@ void  UpdateEQWindow( DialogPtr GetSelection)
 
 	BeginUpdate( GetDialogWindow( EQDlog));
 
-	for( i = 0; i<MAXBAR;i++) SetControlVisibility( EQCntl[ i], true, false);
+	for (i = 0; i<MAXBAR;i++) SetControlVisibility( EQCntl[ i], true, false);
 
 	ForeColor( blackColor);
 	
@@ -72,7 +72,7 @@ void  UpdateEQWindow( DialogPtr GetSelection)
 /*	ForeColor( whiteColor);
 	PaintRect( &itemRect);*/
 	
-	for( i = 0; i<MAXBAR;i++) SetControlVisibility( EQCntl[ i], false, false);
+	for (i = 0; i<MAXBAR;i++) SetControlVisibility( EQCntl[ i], false, false);
 	
 	EndUpdate( GetDialogWindow( EQDlog));
 
@@ -105,7 +105,7 @@ Str255	str;
 	next = logoScale[ ((EQPACKET*2) / (MAXBAR-1))/4]*4;
 	nextC = 1;
 	
-	for( i = 0 ; i < EQPACKET*2; i++)
+	for (i = 0 ; i < EQPACKET*2; i++)
 	{
 		if (i > next)
 		{
@@ -132,7 +132,7 @@ Str255	str;
 		thePrefs.Filter[ i] = MADDriver->Filter[ i] = EQInterpolate( i, prev, next, GetControlValue( EQCntl[ prevC]) / 100.0, GetControlValue( EQCntl[ nextC]) / 100.0);
 	}
 	
-/*	for( i = 0; i < MAXBAR; i++)
+/*	for (i = 0; i < MAXBAR; i++)
 		{
 			 x = (i * EQPACKET*2) / (MAXBAR-1);
 			 
@@ -147,7 +147,7 @@ Str255	str;
 	
 	khz = MADDriver->DriverSettings.outPutRate>>16;
 	
-	for( i = 0; i < MAXBAR; i++)
+	for (i = 0; i < MAXBAR; i++)
 	{
 		x = (i * EQPACKET) / MAXBAR;
 		
@@ -179,7 +179,7 @@ void InitEQWindow( void)
 {
 	long	i;
 	
-	for( i = 0 ; i < EQPACKET*2; i++)
+	for (i = 0 ; i < EQPACKET*2; i++)
 	{
 		MADDriver->Filter[ i] = thePrefs.Filter[ i];
 	}
@@ -205,7 +205,7 @@ void LoadEQ( void)
 		
 		iErr = FSCloseFork( fRefNum);
 		
-		for( i = 0; i < MAXBAR; i++)
+		for (i = 0; i < MAXBAR; i++)
 		{
 			 x = (i * EQPACKET*2) / (MAXBAR-1);
 			 
@@ -284,7 +284,7 @@ void CreateEQWindow( void)
 	TextSize( 9);
 	
 	
-	for( i = 0; i < MAXBAR; i++)
+	for (i = 0; i < MAXBAR; i++)
 	{
 		GetDialogItem( EQDlog, i + 2, &itemType, &itemHandle, &itemRect);
 		EQCntl[ i] = NewControl( GetDialogWindow( EQDlog), &itemRect, "\p", true, MADDriver->Filter[ (i * EQPACKET*2) / MAXBAR] * 100.0, 0, 200, 57, 0);
@@ -293,7 +293,7 @@ void CreateEQWindow( void)
 		else HiliteControl( EQCntl[ i], 255);
 	}
 	
-	for( i = 0; i < MAXBAR; i++)
+	for (i = 0; i < MAXBAR; i++)
 		{
 			 x = (i * EQPACKET*2) / (MAXBAR-1);
 			 
@@ -387,7 +387,7 @@ void DoItemPressEQ( short whichItem, DialogPtr whichDialog)
 					if (MADDriver->Equalizer) HiliteControl( OnOff, kControlButtonPart);
 					else HiliteControl( OnOff, 0);
 					
-					for( i = 0; i < MAXBAR; i++)
+					for (i = 0; i < MAXBAR; i++)
 					{
 						SetControlVisibility( EQCntl[ i], true, false);
 						

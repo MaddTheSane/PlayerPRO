@@ -113,7 +113,7 @@ static inline void BlockZero( void* a, long size)
 	Ptr b = (Ptr) a;
 	long i;
 	
-	for( i = 0; i < size ; i++)
+	for (i = 0; i < size ; i++)
 	{
 		b[ i] = 0;
 	}

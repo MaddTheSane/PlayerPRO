@@ -560,7 +560,7 @@ short PressTypeMenu( short whichMenu, short item)
 	
 	MenuDriver = GetMenu( whichMenu);
 	
-	for( i = 0 ; i < CountMenuItems( MenuDriver); i++) EnableMenuItem( MenuDriver, i+1);
+	for (i = 0 ; i < CountMenuItems( MenuDriver); i++) EnableMenuItem( MenuDriver, i+1);
 	
 	InsertMenu( MenuDriver, hierMenu);
 	
@@ -587,13 +587,13 @@ short PressTypeMenu( short whichMenu, short item)
 		case 165:
 			if (!Stereo)
 			{
-				for( i = 1 ; i < CountMenuItems( MenuDriver); i++) DisableMenuItem( MenuDriver, i+1);
+				for (i = 1 ; i < CountMenuItems( MenuDriver); i++) DisableMenuItem( MenuDriver, i+1);
 			}
 			
 			if (MADDriver->DriverSettings.MicroDelaySize)
 			{
 				startitem = 2;
-				for( i = 1 ; i < CountMenuItems( MenuDriver); i++)
+				for (i = 1 ; i < CountMenuItems( MenuDriver); i++)
 				{
 					Str255	str;
 					long	r;
@@ -611,13 +611,13 @@ short PressTypeMenu( short whichMenu, short item)
 		case 170:
 			if (!Stereo)
 			{
-				for( i = 1 ; i < CountMenuItems( MenuDriver); i++) DisableMenuItem( MenuDriver, i+1);
+				for (i = 1 ; i < CountMenuItems( MenuDriver); i++) DisableMenuItem( MenuDriver, i+1);
 			}
 			
 			if (MADDriver->DriverSettings.Reverb)
 			{
 				startitem = 2;
-				for( i = 1 ; i < CountMenuItems( MenuDriver); i++)
+				for (i = 1 ; i < CountMenuItems( MenuDriver); i++)
 				{
 					Str255	str;
 					long	r;
@@ -634,7 +634,7 @@ short PressTypeMenu( short whichMenu, short item)
 			
 		case 169:
 			startitem = 2;
-			for( i = 0 ; i < CountMenuItems( MenuDriver); i++)
+			for (i = 0 ; i < CountMenuItems( MenuDriver); i++)
 			{
 				Str255	str;
 				long	r;

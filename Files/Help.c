@@ -115,7 +115,7 @@ void SwitchDriverTo( short aaa)
 	IsPlaying = MADDriver->Reading;
 	IsEQ = MADDriver->Equalizer;
 	IsJumpToNextPattern = MADDriver->JumpToNextPattern;
-	for( i = 0; i <= EQPACKET*2; i++)
+	for (i = 0; i <= EQPACKET*2; i++)
 	{
 		filter[ i] = MADDriver->Filter[ i];
 	}
@@ -182,7 +182,7 @@ void SwitchDriverTo( short aaa)
 	
 	MADDriver->JumpToNextPattern = IsJumpToNextPattern;
 	
-	for( i = 0; i <= EQPACKET*2; i++)
+	for (i = 0; i <= EQPACKET*2; i++)
 	{
 		MADDriver->Filter[ i] = filter[ i];
 	}
@@ -202,7 +202,7 @@ void DrawAllNote(void)
 	cSize.h = cSize.v = 0;
 	LSetDrawingMode( true, PianoList);
 	
-	for( i = 0; i < NUMBER_NOTES+1; i++)
+	for (i = 0; i < NUMBER_NOTES+1; i++)
 	{
 		if (i == NUMBER_NOTES)
 		{
@@ -304,7 +304,7 @@ void PrefFilterPiano( DialogPtr theDialog, EventRecord *theEventI, short *itemHi
 					{
 						if (theCell.v == NUMBER_NOTES) theCell.v = 0xFF;	// NO NOTE
 						
-						for( i = 0; i < 299; i++)
+						for (i = 0; i < 299; i++)
 						{
 							if (thePrefs.PianoKey[ i] == theCell.v) thePrefs.PianoKey[ i] = -1;
 						}
@@ -854,9 +854,9 @@ void InitCOLOR( short colorID)
 	{
 		PaintRect( &itemRect);
 
-		for( i = 0; i< 8; i++)
+		for (i = 0; i< 8; i++)
 		{
-			for( x = 0; x < 12; x++)
+			for (x = 0; x < 12; x++)
 			{
 				aRc.left = itemRect.left + i*larg + 2;
 				aRc.right = aRc.left + larg - 2;
@@ -1002,9 +1002,9 @@ void DrawChooseColorWindow(void)
 	ForeColor( blackColor);
 	//	BackColor( whiteColor);
 	
-	for( i = 0; i < 8; i++)
+	for (i = 0; i < 8; i++)
 	{
-		for( x = 0; x < 32; x++)
+		for (x = 0; x < 32; x++)
 		{
 			aRect.top = i*COLARG;
 			aRect.top += 3;
@@ -1226,7 +1226,7 @@ void CreateTrackList()
 	cSize.h = cSize.v = 0;
 	LSetDrawingMode( true, TrackList);
 	
-	for( i = 0; i < 99; i++)	//
+	for (i = 0; i < 99; i++)	//
 	{
 		NumToString( i + 1, aStr);
 		
@@ -1544,7 +1544,7 @@ void DoEDITOR(short itemHit)
 				{
 					Point	cSize = { 0, 0};
 					
-					for( i = 0; i < 99; i++)
+					for (i = 0; i < 99; i++)
 					{
 						thePrefs.SelectedTracks[ i] = LGetSelect( false, &cSize, TrackList);
 						
@@ -1661,7 +1661,7 @@ void CloseEDITORF()
 		Point	cSize = { 0, 0};
 		short	i;
 		
-		for( i = 0; i < 99; i++)
+		for (i = 0; i < 99; i++)
 		{
 			thePrefs.SelectedTracks[ i] = LGetSelect( false, &cSize, TrackList);
 			
@@ -1917,7 +1917,7 @@ void DoKEY( short itemHit)
 			
 			thePrefs.FKeyTracks = true;
 			
-			for( i = 0; i < 13; i++)
+			for (i = 0; i < 13; i++)
 			{
 				//	TurnRadio( base + 2 + i, prefDlog, thePrefs.FKeyActive[ i]);
 				InactiveControl( base + 2 + i, prefDlog);
@@ -1930,7 +1930,7 @@ void DoKEY( short itemHit)
 			
 			thePrefs.FKeyTracks = false;
 			
-			for( i = 0; i < 13; i++)
+			for (i = 0; i < 13; i++)
 			{
 				//TurnRadio( base + 2 + i, prefDlog, thePrefs.FKeyActive[ i]);
 				ActiveControl( base + 2 + i, prefDlog);
@@ -1964,7 +1964,7 @@ void InitKEY()
 		//TurnRadio( base + 42, prefDlog, true);
 		TurnRadio( base + 1, prefDlog, false);
 		
-		for( i = 0; i < 13; i++)
+		for (i = 0; i < 13; i++)
 		{
 			//TurnRadio( base + 2 + i, prefDlog, thePrefs.FKeyActive[ i]);
 			InactiveControl( base + 2 + i, prefDlog);
@@ -1976,7 +1976,7 @@ void InitKEY()
 		TurnRadio( base + 1, prefDlog, true);
 	}
 	
-	for( i = 0; i < 13; i++)
+	for (i = 0; i < 13; i++)
 	{
 		if (thePrefs.FKeyActive[ i])
 		{
@@ -2418,7 +2418,7 @@ void TestProcessor(void)
 	MADStopDriver( MADDriver);
 	
 	oldTicks = TickCount();
-	for( i = 0 ; i < CSTTEST; i++)
+	for (i = 0 ; i < CSTTEST; i++)
 	{
 		proto *= 123;
 		proto -= 255;
@@ -2429,7 +2429,7 @@ void TestProcessor(void)
 	MADStartDriver( MADDriver);
 	MADDriver->Reading = true;
 	oldTicks = TickCount();
-	for( i = 0 ; i < CSTTEST; i++)
+	for (i = 0 ; i < CSTTEST; i++)
 	{
 		proto *= 123;
 		proto -= 255;
@@ -2478,7 +2478,7 @@ Boolean PressMenuItem( short menuID, short itemID, DialogPtr dia, long *curVal, 
 	
 	curSelec = 1;
 	
-	for( i = 0 ; i < CountMenuItems( tMenu); i++)
+	for (i = 0 ; i < CountMenuItems( tMenu); i++)
 	{
 		Str255	str;
 		long	r;
@@ -2977,7 +2977,7 @@ void ShowPrefs( short PrefStartup)
 		aPtr = (Ptr) &thePrefs;
 		bPtr = (Ptr) copyPrefs;
 		
-		for( i = 0; i < tSize ; i++)
+		for (i = 0; i < tSize ; i++)
 		{
 			if (aPtr[ i] != bPtr[ i])
 			{

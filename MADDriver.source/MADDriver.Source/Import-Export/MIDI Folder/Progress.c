@@ -38,7 +38,7 @@ void InitRollCrsr(void)
 	HUnlock( tempHandle);
 	DisposeHandle( tempHandle);
 	
-	for( i = 0; i < MyCrsrRec.total; i++)
+	for (i = 0; i < MyCrsrRec.total; i++)
 	{
 		tempH = GetCursor( MyCrsrRec.no[ i*2]);
 		DetachResource( (Handle) tempH);

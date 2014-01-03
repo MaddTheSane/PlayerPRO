@@ -24,9 +24,9 @@ static OSErr mainPropagate( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	short				/*itemHit, mode,*/ track, row;
 //	Str255				tStr;
 		
-	for( track = 0; track < myPcmd->tracks; track ++)
+	for (track = 0; track < myPcmd->tracks; track ++)
 	{
-		for( row = 0; row < myPcmd->length; row ++)
+		for (row = 0; row < myPcmd->length; row ++)
 		{
 			Cmd		*myCmd, *myCmdsrc;
 			

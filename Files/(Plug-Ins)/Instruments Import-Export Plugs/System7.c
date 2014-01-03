@@ -254,7 +254,7 @@ Ptr inNSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize
 			{
 				if (*sampleSize == 8)
 				{
-					for( i = 0; i < MusSize; i ++)
+					for (i = 0; i < MusSize; i ++)
 					{
 						soundPtr[ i] = ExtHeader->sampleArea[ i * numChannels];
 					}
@@ -262,7 +262,7 @@ Ptr inNSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize
 				else
 				{
 					MusSize /= 2;
-					for( i = 0; i < MusSize; i ++)
+					for (i = 0; i < MusSize; i ++)
 					{
 						((short*) soundPtr)[ i] = ((short*) ExtHeader->sampleArea)[ i * numChannels];
 					}

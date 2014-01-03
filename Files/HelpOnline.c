@@ -42,7 +42,7 @@ void ShowSection( short selectionID)
 	{
 		curSect = selectionID;
 
-		for( i=0; i < (*hTE)->nLines; i++)
+		for (i=0; i < (*hTE)->nLines; i++)
 		{
 			if (lineList[ curSect] <= (*hTE)->lineStarts[ i]) break;
 		}
@@ -98,7 +98,7 @@ void WriteLineList(void)
 	if (iHelpPP != -1)
 	{
 		UseResFile( iHelpPP);
-		for( i = 0; i < CountMenuItems( sectMenu); i++)
+		for (i = 0; i < CountMenuItems( sectMenu); i++)
 		{
 			myRes = GetResource( 'SECT', i + 128);
 			if (myRes != NULL)

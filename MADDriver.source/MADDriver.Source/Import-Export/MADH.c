@@ -188,12 +188,12 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 	theMAD->header->tempo			= oldMAD->tempo;
 	
 	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
-	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 	MADHmystrcpy( theMAD->header->infos, "\pConverted by PlayerPRO MAD-H Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	/**** Patterns *******/
 	
-	for( i = 0; i < oldMAD->numPat; i++)
+	for (i = 0; i < oldMAD->numPat; i++)
 	{
 		struct oldPatData		*tempPat, *tempPat2;
 		struct oldPatHeader		tempPatHeader;
@@ -247,9 +247,9 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 		
 		theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
 		
-		for( x = 0; x < theMAD->partition[ i]->header.size; x++)
+		for (x = 0; x < theMAD->partition[ i]->header.size; x++)
 		{
-			for( z = 0; z < theMAD->header->numChn; z++)
+			for (z = 0; z < theMAD->header->numChn; z++)
 			{
 				struct oldCmd *oldCmd;
 				Cmd	*aCmd;
@@ -272,9 +272,9 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 		DisposePtr( (Ptr) tempPat);
 		tempPat = NULL;
 	}
-	for( i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[ i] = NULL;
+	for (i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[ i] = NULL;
 	
-	for( i = 0; i < MAXTRACK; i++)
+	for (i = 0; i < MAXTRACK; i++)
 	{
 		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
@@ -294,9 +294,9 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 	theMAD->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
 	if (!theMAD->sample) return MADNeedMemory;
 	
-	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
-	for( i = 0; i < 64; i++)
+	for (i = 0; i < 64; i++)
 	{
 		//InstrData	*curIns = &theMAD->fid[ i];
 		
@@ -321,7 +321,7 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 		theMAD->fid[ i].vibDepth = oldMAD->fid[ i].vibDepth;
 		theMAD->fid[ i].vibRate = oldMAD->fid[ i].vibRate;
 		
-		for( x = 0; x < oldMAD->fid[ i].numSamples ; x++)
+		for (x = 0; x < oldMAD->fid[ i].numSamples ; x++)
 		{
 			oldsData	 *oldcurData;
 			sData		 *curData;
@@ -353,7 +353,7 @@ static OSErr MADH2Mad( Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 				long 	ll;
 				short	*shortPtr = (short*) curData->data;
 				
-				for( ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
+				for (ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
 			}
 #endif
 		}
@@ -395,7 +395,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Total Patterns ***/
 	
 	info->totalPatterns = 0;
-	for( i = 0; i < 128; i++)
+	for (i = 0; i < 128; i++)
 	{
 		if (myMOD->oPointers[ i] >= info->totalPatterns)	info->totalPatterns = myMOD->oPointers[ i];
 	}
@@ -407,7 +407,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Total Instruments ***/
 	
-	for( i = 0, info->totalInstruments = 0; i < 64 ; i++)
+	for (i = 0, info->totalInstruments = 0; i < 64 ; i++)
 	{
 		short numSamSwap = myMOD->fid[ i].numSamples;
 		MOT16(&numSamSwap);

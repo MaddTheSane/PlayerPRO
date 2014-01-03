@@ -18,12 +18,12 @@ void SmallEffectTrack(void)
 {
 	short	i;
 	
-	for( i = 0; i < 16 ; i++)
+	for (i = 0; i < 16 ; i++)
 	{
 		MADDriver->Tube[i] = i*2 + 32;
 	}
 	
-	for( i = 0; i < 16 ; i++)
+	for (i = 0; i < 16 ; i++)
 	{
 		MADDriver->Tube[i + 16] = 64 - i*2;
 	}
@@ -62,7 +62,7 @@ void DoNullTrackView(void)
 	if (caRect.bottom >= 136) max = 32;
 	else max = 16;
 	
-	for( i = 0; i < max; i++)
+	for (i = 0; i < max; i++)
 	{
 		if (MADDriver->Tube[i] >= 0)
 		{
@@ -139,7 +139,7 @@ void  UpdateTrackView(DialogPtr GetSelection)  	/* Pointer to this dialog */
 		InsetRect( &itemRect, -1, -1);
 		itemRect.bottom--;		FrameRectRelief( &itemRect);
 
- 		for( i = 0; i < max; i++)
+ 		for (i = 0; i < max; i++)
 		{
 			itemRect = TracksBox[ i];
 			itemRect.top--;	itemRect.left--;	
@@ -186,7 +186,7 @@ void CreateTrackView(void)
 	
 	GetDialogItem (TrackViewDlog, 3, &itemType, &itemHandle, &itemRect);
 	itemRect.top++;	itemRect.right--;	itemRect.left++;
-	for( i = 0; i < 16; i++)
+	for (i = 0; i < 16; i++)
 	{
 		TracksBox[i] = itemRect;
 		
@@ -195,7 +195,7 @@ void CreateTrackView(void)
 	}
 	GetDialogItem (TrackViewDlog, 4, &itemType, &itemHandle, &itemRect);
 	itemRect.top++;	itemRect.right--;	itemRect.left++;
-	for( i = 16; i < 32; i++)
+	for (i = 16; i < 32; i++)
 	{
 		TracksBox[i] = itemRect;
 		

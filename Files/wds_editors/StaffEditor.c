@@ -351,8 +351,8 @@ void DoNullStaff(void)
 		pStrcat( String, aStr);
 		
 		theStr[ 0] = 20;
-		for( x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ CurrentPat]->header.name[ x];
-		for( x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
+		for (x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ CurrentPat]->header.name[ x];
+		for (x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
 		pStrcat( String, "\p ");
 		pStrcat( String, theStr);
 		
@@ -658,7 +658,7 @@ void DrawStaffFrame()
 	MoveTo( tRect.right-1, tRect.top);
 	LineTo( tRect.right-1, tRect.bottom);
 	
-	for( i = GetControlValue( xScroll); i < GetMaxXStaff(); i+= add)
+	for (i = GetControlValue( xScroll); i < GetMaxXStaff(); i+= add)
 	{
 		tRect.left	= StaffRect.left + (i - GetControlValue( xScroll)) * XSize + XSize/2 - (add*XSize)/2;
 		tRect.right	= tRect.left + (add*XSize);
@@ -716,7 +716,7 @@ void DrawStaffFrame()
 	
 	ClipRect( &tRect);
 	
-	for( i = GetControlValue( yScroll); i < GetMaxYStaff(); i++)
+	for (i = GetControlValue( yScroll); i < GetMaxYStaff(); i++)
 	{
 		Str255		str;
 		short		add;
@@ -912,7 +912,7 @@ void DrawStaffNotes()
 	saveClipRgn = NewRgn();
  	GetClip( saveClipRgn);
 	
- 	for( x = GetControlValue( yScroll); x < GetMaxYStaff(); x++)
+ 	for (x = GetControlValue( yScroll); x < GetMaxYStaff(); x++)
 	{
 		tRect = StaffRect;
 		
@@ -934,7 +934,7 @@ void DrawStaffNotes()
 		LineTo( tRect.right, tRect.bottom-1);
  		
  		/////
- 		for( i = GetControlValue( xScroll); i < GetMaxXStaff() ; i++)
+ 		for (i = GetControlValue( xScroll); i < GetMaxXStaff() ; i++)
  		{
  			tRect.left	= StaffRect.left + (i - GetControlValue( xScroll)) * XSize;
 			
@@ -950,13 +950,13 @@ void DrawStaffNotes()
  		tRect.top 		+= (tRect.bottom - tRect.top - ((*MainNote)->picFrame.bottom - (*MainNote)->picFrame.top))/2;
 		tRect.bottom 	= tRect.top + ((*MainNote)->picFrame.bottom - (*MainNote)->picFrame.top);
 		
-		for( z = 0; z < 5; z++)
+		for (z = 0; z < 5; z++)
 		{
 			MoveTo( StaffRect.left, tRect.top + 9 + z*FULLINE);
 			LineTo( StaffRect.right, tRect.top + 9 + z*FULLINE);
 		}
 		
-		for( z = 0; z < 5; z++)
+		for (z = 0; z < 5; z++)
 		{
 			MoveTo( StaffRect.left, tRect.top + 16 + 5*FULLINE + z*FULLINE);
 			LineTo( StaffRect.right, tRect.top + 16 + 5*FULLINE + z*FULLINE);
@@ -973,7 +973,7 @@ void DrawStaffNotes()
 			endTT	= curMusic->header->numChn;
 		}*/
  		
- 		for( tr = startTT; tr < endTT; tr++)
+ 		for (tr = startTT; tr < endTT; tr++)
  		{
  			if (tr == x)
  			{
@@ -987,7 +987,7 @@ void DrawStaffNotes()
  		//	if (MADDriver->Active[ tr]) ForeColor( blackColor);
 		//	else RGBForeColor( &Gray);
  			
-		 	for( i = 0; i < GetMaxXStaff() ;)
+		 	for (i = 0; i < GetMaxXStaff() ;)
 			{
 				Cmd 			*cmd, *note;
 				short			temp, temp2, startNote, endNote, startScan;
@@ -1210,7 +1210,7 @@ void DrawStaffNotes()
 								Boolean		OnOff = true;
 								short		yy = StaffRect.top + 1 + (x - GetControlValue( yScroll)) * YSize;
 								
-								for( z = 78; z <  note->note + 3; z ++)
+								for (z = 78; z <  note->note + 3; z ++)
 								{
 									if (!BlackWhite[ z%12])
 									{
@@ -1233,7 +1233,7 @@ void DrawStaffNotes()
 								Boolean		OnOff = true;
 								short		yy = StaffRect.top + 1 + (x - GetControlValue( yScroll)) * YSize;
 								
-								for( z = 41; z > note->note; z --)
+								for (z = 41; z > note->note; z --)
 								{
 									if (!BlackWhite[ z%12])
 									{
@@ -1404,9 +1404,9 @@ Pcmd* CreatePcmdFromSelectionStaff(void)
 	myPcmd->trackStart 	= startYSelec;
 	myPcmd->posStart 	= startXSelec;
 	
-	for( X = startYSelec; X <= endYSelec; X++)
+	for (X = startYSelec; X <= endYSelec; X++)
 	{
-		for( Y = startXSelec; Y <= endXSelec; Y++)
+		for (Y = startXSelec; Y <= endXSelec; Y++)
 		{
 			cmd = GetMADCommand( Y, X, curMusic->partition[ CurrentPat]);
 			cmd2 = GetCmd( Y - startXSelec, X - startYSelec, myPcmd);
@@ -1525,12 +1525,12 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 				
 				DoRemember();
 				
-		//		for( i = 0; i < MAXTRACK; i++)						VolExtCopy[ i] = curMusic->header->chanVol[ i];		// Copy
-		//		for( i = 0; i < startYSelec; i++)					curMusic->header->chanVol[ i] = 0;
-		//		for( i = endYSelec+1; i < MAXTRACK; i++)			curMusic->header->chanVol[ i] = 0;
+		//		for (i = 0; i < MAXTRACK; i++)						VolExtCopy[ i] = curMusic->header->chanVol[ i];		// Copy
+		//		for (i = 0; i < startYSelec; i++)					curMusic->header->chanVol[ i] = 0;
+		//		for (i = endYSelec+1; i < MAXTRACK; i++)			curMusic->header->chanVol[ i] = 0;
 				
-				for( i = 0; i < startYSelec; i++)			MADDriver->TrackReading[ i] = false;
-				for( i = endYSelec+1; i < MAXTRACK; i++)	MADDriver->TrackReading[ i] = false;
+				for (i = 0; i < startYSelec; i++)			MADDriver->TrackReading[ i] = false;
+				for (i = endYSelec+1; i < MAXTRACK; i++)	MADDriver->TrackReading[ i] = false;
 				
 				MADDriver->Reading = true;
 				while( Button() == true  && MADDriver->PartitionReader <= endXSelec) 
@@ -1546,7 +1546,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 				}
 				DoPause();
 				
-				for( i = 0; i < MAXTRACK; i++)					MADDriver->TrackReading[ i] = true;		// Restore
+				for (i = 0; i < MAXTRACK; i++)					MADDriver->TrackReading[ i] = true;		// Restore
 				
 				HiliteControl( playBut, 0);
 			}
@@ -1756,7 +1756,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 						}
 						else
 						{
-							for( i = 1; i <= curNoteLength; i++)
+							for (i = 1; i <= curNoteLength; i++)
 							{
 								if (pos + i < curMusic->partition[ CurrentPat]->header.size)
 								{
@@ -1852,7 +1852,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 				{
 					short	noActive;
 					
-					for( i = 0, noActive = 0; i < curMusic->header->numChn; i++)
+					for (i = 0, noActive = 0; i < curMusic->header->numChn; i++)
 					{
 						if (MADDriver->Active[ i] == true)
 						{
@@ -1862,11 +1862,11 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 					
 					if (noActive <= 1 && MADDriver->Active[ track] == true)
 					{
-						for( i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
+						for (i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
 					}
 					else
 					{
-						for( i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
+						for (i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
 						MADDriver->Active[ track] = true;
 					}
 					
@@ -1996,7 +1996,7 @@ switch( whichItem)
 	case 15:
 	case 16:
 	case 17:
-		for( i = 0; i < 6; i++) HiliteControl( notesIcl[ i], 0);
+		for (i = 0; i < 6; i++) HiliteControl( notesIcl[ i], 0);
 		HiliteControl( notesIcl[ whichItem-13], kControlButtonPart);
 		
 		switch( whichItem)
@@ -2010,7 +2010,7 @@ switch( whichItem)
 	break;
 	
 	case 25:	// KEY OFF
-		for( i = 0; i < 6; i++) HiliteControl( notesIcl[ i], 0);
+		for (i = 0; i < 6; i++) HiliteControl( notesIcl[ i], 0);
 		HiliteControl( notesIcl[ 5], kControlButtonPart);
 		curNoteLength = 0;
 	break;
@@ -2030,7 +2030,7 @@ switch( whichItem)
 	case 18:
 	case 19:
 	case 20:
-		for( i = 0; i < 3; i++) HiliteControl( modifIcl[ i], 0);
+		for (i = 0; i < 3; i++) HiliteControl( modifIcl[ i], 0);
 		HiliteControl( modifIcl[ whichItem-18], kControlButtonPart);
 		
 		switch( whichItem)
@@ -2245,7 +2245,7 @@ void CreateStaffWindow(void)
 	
 	MainNote = GetPicture( 500);
 	
-	for( i = 0; i < 5; i++)
+	for (i = 0; i < 5; i++)
 	{
 	GetDialogItem( StaffDlog , 13+i, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
@@ -2274,7 +2274,7 @@ void CreateStaffWindow(void)
 							kControlBevelButtonNormalBevelProc,
 							0);
 	
-	for( i = 0; i < 3; i++)
+	for (i = 0; i < 3; i++)
 	{
 	GetDialogItem( StaffDlog , 18+i, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
@@ -2291,7 +2291,7 @@ void CreateStaffWindow(void)
 	curModif = cNul;
 	HiliteControl( modifIcl[ 0], kControlButtonPart);
 	
-/*	for( i = 0; i < 2; i++)
+/*	for (i = 0; i < 2; i++)
 	{
 	GetDialogItem( StaffDlog , 21+i, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
@@ -2477,10 +2477,10 @@ void CreateStaffWindow(void)
 	SelectWindow2( GetDialogWindow( StaffDlog));
 	
 	ptIcon = GetCIcon( 800);
-	for( i = 0; i < 5; i++) silence[ i] 		= GetCIcon( 400+i);
-	for( i = 0; i < 5; i++) noteIcn[ i] 		= GetCIcon( 500+i);
-	for( i = 0; i < 5; i++) noteinv[ i] 		= GetCIcon( 600+i);
-	for( i = 0; i < 3; i++) demitonIcon[ i] 	= GetCIcon( 700+i);
+	for (i = 0; i < 5; i++) silence[ i] 		= GetCIcon( 400+i);
+	for (i = 0; i < 5; i++) noteIcn[ i] 		= GetCIcon( 500+i);
+	for (i = 0; i < 5; i++) noteinv[ i] 		= GetCIcon( 600+i);
+	for (i = 0; i < 3; i++) demitonIcon[ i] 	= GetCIcon( 700+i);
 	
 	if (DragManagerUse)
 	{
@@ -2526,10 +2526,10 @@ Rect	caRect;
 		
 		ReleaseResource( (Handle) MainNote);
 		DisposeHandle( (Handle) ptIcon);
-		for( i = 0; i < 5; i++) DisposeHandle( (Handle) silence[ i]);
-		for( i = 0; i < 5; i++) DisposeHandle( (Handle) noteIcn[ i]);
-		for( i = 0; i < 5; i++) DisposeHandle( (Handle) noteinv[ i]);
-		for( i = 0; i < 3; i++) DisposeHandle( (Handle) demitonIcon[ i]);
+		for (i = 0; i < 5; i++) DisposeHandle( (Handle) silence[ i]);
+		for (i = 0; i < 5; i++) DisposeHandle( (Handle) noteIcn[ i]);
+		for (i = 0; i < 5; i++) DisposeHandle( (Handle) noteinv[ i]);
+		for (i = 0; i < 3; i++) DisposeHandle( (Handle) demitonIcon[ i]);
 
 		
 		DisposeDialog( StaffDlog);
@@ -2560,9 +2560,9 @@ void DoKeyPressStaff( short theChar)
 
  		SaveUndo( UPattern, CurrentPat, "\pUndo 'Delete Classic Editor'");
  		
-		for( X = startYSelec; X <= endYSelec; X++)
+		for (X = startYSelec; X <= endYSelec; X++)
 		{
-			for( Y = startXSelec; Y <= endXSelec; Y++)
+			for (Y = startXSelec; Y <= endXSelec; Y++)
 			{
 				theCommand = GetMADCommand( Y, X, curMusic->partition[ CurrentPat]);
 				MADKillCmd( theCommand);
@@ -2979,9 +2979,9 @@ void PasteCmdStaff( Pcmd *myPcmd)
 	
 	endXSelec = startXSelec+myPcmd->length - 1;			endYSelec = startYSelec+myPcmd->tracks - 1;
 	
-	for( i = 0; i < myPcmd->length; i++)
+	for (i = 0; i < myPcmd->length; i++)
 	{
-		for( x = 0; x < myPcmd->tracks; x++)
+		for (x = 0; x < myPcmd->tracks; x++)
 		{
 			if(startXSelec + i >= 0 &&
 			   startXSelec + i < curMusic->partition[ CurrentPat]->header.size &&

@@ -128,7 +128,7 @@ void PPINGetFileName( void)
 	 (*openList)->componentSignature	= 'SNPL';
 	 (*openList)->osTypeCount			= tPlug+1;
 	 (*openList)->osType[ 0]			= 'INso';
-	 for( i = 1; i <= tPlug; i++) (*openList)->osType[ i] = ThePPINPlug[ i].type;*/
+	 for (i = 1; i <= tPlug; i++) (*openList)->osType[ i] = ThePPINPlug[ i].type;*/
 	
 	
 	iErr = NavGetFile(			NULL,	// use system's default location
@@ -376,7 +376,7 @@ OSErr PPINAvailablePlug( OSType kindFile, OSType *plugType)
 {
 	short		i;
 	
-	for( i = 0; i < tPlug; i++)
+	for (i = 0; i < tPlug; i++)
 	{
 		if (kindFile == ThePPINPlug[ i].type)
 		{
@@ -401,7 +401,7 @@ OSErr PPINImportFile( OSType kindFile, short ins, short *samp, FSSpec *AlienFile
 {
 	short		i;
 	
-	for( i = 0; i < tPlug; i++)
+	for (i = 0; i < tPlug; i++)
 	{
 		if (kindFile == ThePPINPlug[ i].type)
 		{
@@ -415,7 +415,7 @@ OSErr PPINExportFile( OSType kindFile, short ins, short samp, FSSpec *AlienFile)
 {
 	short		i;
 	
-	for( i = 0; i < tPlug; i++)
+	for (i = 0; i < tPlug; i++)
 	{
 		if (kindFile == ThePPINPlug[ i].type)
 		{
@@ -429,7 +429,7 @@ OSErr PPINTestFile( OSType kindFile, FSSpec *AlienFile)
 {
 	short		i, temp;
 	
-	for( i = 0; i < tPlug; i++)
+	for (i = 0; i < tPlug; i++)
 	{
 		if (kindFile == ThePPINPlug[ i].type)
 		{
@@ -446,7 +446,7 @@ OSErr PPINIdentifyFile( OSType *type, FSSpecPtr AlienFile)
 	
 	*type = '!!!!';
 	
-	for( i = 0; i < tPlug; i++)
+	for (i = 0; i < tPlug; i++)
 	{
 		if (CallPPINPlugIns( i, 'TEST', 0, &temp, AlienFile) == noErr)
 		{
@@ -506,7 +506,7 @@ OSErr PPINGetPlugName( OSType kindFile, Str255 name)
 {
 	short		i;
 	
-	for( i = 0; i < tPlug; i++)
+	for (i = 0; i < tPlug; i++)
 	{
 		if (kindFile == ThePPINPlug[i].type)
 		{
@@ -533,7 +533,7 @@ OSErr PPINPlayFile( OSType kindFile, FSSpec *AlienFile)
 	insData = (InstrData*) NewPtrClear( sizeof( sData*) * (long) MAXSAMPLE);
 	if (insData == NULL) return -1;
 	
-	for( i = 0; i < tPlug; i++)
+	for (i = 0; i < tPlug; i++)
 	{
 		if (kindFile == ThePPINPlug[ i].type)
 		{
@@ -580,7 +580,7 @@ ENDPLAY:
 		
 		MADPurgeTrack( MADDriver);
 		
-		for( i = 0; i < insData->numSamples; i++)
+		for (i = 0; i < insData->numSamples; i++)
 		{
 			if (sampData[ i] != NULL)
 			{
@@ -767,7 +767,7 @@ pascal Boolean MyInsCustomFilter( AEDesc *theItem, void *info, NavCallBackUserDa
 			if (ShowAllFiles) return true;
 			else
 			{
-				for( i = 1; i <= tPlug; i++) if (fndrInfo.fdType == ThePPINPlug[ i].type) return true;
+				for (i = 1; i <= tPlug; i++) if (fndrInfo.fdType == ThePPINPlug[ i].type) return true;
 				
 				return false;
 			}

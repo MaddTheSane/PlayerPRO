@@ -94,7 +94,7 @@ short MLAddRow( short no, short pos)
 	
 	if (pos >= MAXITEM) return MAXITEM - 1;
 	
-	for( i = myList.maxY-1; i >= pos; i--)
+	for (i = myList.maxY-1; i >= pos; i--)
 	{
 		specList[ i + no] = specList[ i];
 		pathStrList[ i + no] = pathStrList[ i];
@@ -102,7 +102,7 @@ short MLAddRow( short no, short pos)
 	
 	myList.maxY += no;
 	
-	for( i = pos; i < pos + no; i++)
+	for (i = pos; i < pos + no; i++)
 	{
 		specList[ i] = (FSSpec*) NewPtrClear( sizeof( FSSpec));
 		pathStrList[ i] = (unsigned char*) -1L;
@@ -126,7 +126,7 @@ void MLDelRow( short no, short pos)
 {
 	short i;
 	
-	for( i = pos; i < pos + no; i++)
+	for (i = pos; i < pos + no; i++)
 	{
 		if (i < myList.maxY)
 		{
@@ -138,7 +138,7 @@ void MLDelRow( short no, short pos)
 		}
 	}
 	
-	for( i = pos; i < myList.maxY; i++)
+	for (i = pos; i < myList.maxY; i++)
 	{
 		if (i + no < MAXITEM)
 		{
@@ -461,7 +461,7 @@ void SaveMyMODListSTCf( FSSpec spec)
 	aCopy += 2;
 	
 	theCell.v = 0;	theCell.h = 0;
-	for( theCell.v = 0 ; theCell.v < myList.maxY; theCell.v++)
+	for (theCell.v = 0 ; theCell.v < myList.maxY; theCell.v++)
 	{
 		myFSS = *specList[ theCell.v];
 		
@@ -530,7 +530,7 @@ FSSpec					myFSS;
 	aCopy += 2;
 	
 	theCell.v = 0;	theCell.h = 0;
-	for( theCell.v = 0 ; theCell.v < myList.maxY; theCell.v++)
+	for (theCell.v = 0 ; theCell.v < myList.maxY; theCell.v++)
 	{
 		myFSS = *specList[ theCell.v];
 	
@@ -673,7 +673,7 @@ void OpenMODListSTCf( FSSpec spec)
 	else val = MLAddRow( theNo, MAXITEM);
 	
 	theCell.h = 0;
-	for( theCell.v = val, i = 1; theCell.v < theNo + val ; theCell.v++, i += 2)
+	for (theCell.v = val, i = 1; theCell.v < theNo + val ; theCell.v++, i += 2)
 	{
 		GetIndString( aStr, 128, i);
 		
@@ -803,7 +803,7 @@ if (Count1Resources( 'REFo') == 0)
 	else val = MLAddRow( theNo, MAXITEM);
 	
 	theCell.h = 0;
-	for( theCell.v = val; theCell.v < theNo + val ; theCell.v++)
+	for (theCell.v = val; theCell.v < theNo + val ; theCell.v++)
 	{
 		pStrcpy( myFSS.name, (unsigned char*) aCopy);
 		aCopy += myFSS.name[ 0] +1;
@@ -848,7 +848,7 @@ Boolean PLSearch( Ptr text, short size, short mode, Point *cell, PrivateList	*aL
 	Ptr		bPtr;
 	short	bSize, i;
 
-	for( i = 0; i < aL->maxY; i++)
+	for (i = 0; i < aL->maxY; i++)
 	{
 		switch( mode)
 		{
@@ -903,7 +903,7 @@ void NMoveMusicCell( short whichCell, short noCell)
 	
 	myFSS = (FSSpec*) NewPtr( sizeof( FSSpec) * 100);
 	
-	for( i = 0; i < noCell; i++)
+	for (i = 0; i < noCell; i++)
 	{
 		myFSS[ i] = *specList[ whichCell + i];
 		pStrcpy( myPath[ i], pathStrList[ whichCell + i]);
@@ -915,7 +915,7 @@ void NMoveMusicCell( short whichCell, short noCell)
 	
 	DropZone = MLAddRow( noCell, DropZone);
 	
-	for( i = 0; i < noCell; i++)
+	for (i = 0; i < noCell; i++)
 	{
 		*specList[ DropZone + i] = myFSS[ i];
 		pathStrList[ DropZone + i] = (unsigned char*) NewPtr( myPath[ i][ 0] + 1);
@@ -1123,7 +1123,7 @@ void UpdateMODListWindow( DialogPtr	GetSelection)
  		PaintRect( &myList.rect);
 		ForeColor( blackColor);
  		
- 		for( i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++)
+ 		for (i = GetControlValue( myList.yScroll); i < PLGetMaxYValue( &myList); i++)
  		{
 	 		DrawMODListItem( i);
  		}
@@ -1486,7 +1486,7 @@ Boolean NDragMusicFile( RgnHandle myRgn, EventRecord *theEvent, Point theCell, s
 	
 	NewDrag( &theDrag);
 	
-	for( i = 0; i < noCell; i++)
+	for (i = 0; i < noCell; i++)
 	{
 		Rect dragRegionRect;
 		
@@ -1525,7 +1525,7 @@ Boolean NDragMusicFile( RgnHandle myRgn, EventRecord *theEvent, Point theCell, s
 		GetDragModifiers(theDrag, NULL, &mouseDownModifiers, &mouseUpModifiers);
 		copyText = (mouseDownModifiers | mouseUpModifiers) & optionKey;
 		
-		for( i = 0; i < noCell; i++) ReceiveNewFSSpec( &dropLocation, specList[ theCell.v + i]);
+		for (i = 0; i < noCell; i++) ReceiveNewFSSpec( &dropLocation, specList[ theCell.v + i]);
 		
 		if ((!copyText) && ( DropLocationIsFinderTrash( &dropLocation)))
 		{
@@ -1569,7 +1569,7 @@ void DragMODSelect()
 			
 			dstRgn = NewRgn();
 			
-			for( i = 0; i < myList.select.bottom - myList.select.top + 1; i++)
+			for (i = 0; i < myList.select.bottom - myList.select.top + 1; i++)
 			{
 				tempRgn = NewRgn();
 				
@@ -1813,7 +1813,7 @@ void CreateMODListWindow(void)
 	
 	{
 		short i;
-		for( i = 0; i < MAXITEM;i++)
+		for (i = 0; i < MAXITEM;i++)
 		{
 			specList[ i] = (FSSpec*) -1L;
 			pathStrList[ i] = (unsigned char*) -1L;
@@ -2437,7 +2437,7 @@ short FindTYPE( Str255	aStr, MenuHandle	menu)
 	short	i;
 	Str255	bStr;
 	
-	for( i = 1; i <= CountMenuItems( menu); i++)
+	for (i = 1; i <= CountMenuItems( menu); i++)
 	{
 		GetMenuItemText( menu, i, bStr);
 		
@@ -2777,7 +2777,7 @@ void SortMusicList(void)
 		}
 		
 		theCell.h = 0;	theCell.v = 0;
-		for( i = 0; i < myList.maxY; i++)
+		for (i = 0; i < myList.maxY; i++)
 		{
 			myFSS[ i].spec = specList[ i];
 			myFSS[ i].tt = pathStrList[ i];
@@ -2786,7 +2786,7 @@ void SortMusicList(void)
 		qsort( myFSS, myList.maxY, sizeof( QSort), CompareFSSpec);
 		
 		theCell.h = 0;	theCell.v = 0;
-		for( i = 0; i < myList.maxY; i++)
+		for (i = 0; i < myList.maxY; i++)
 		{
 			specList[ i] 	= myFSS[ i].spec;
 			pathStrList[ i]	= myFSS[ i].tt;

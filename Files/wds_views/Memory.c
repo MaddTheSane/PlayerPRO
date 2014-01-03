@@ -113,7 +113,7 @@ void DoNullMemWindow(void)
 	//	if (MADDriver->Vol != NULL) 			tempLong += GetPtrSize( MADDriver->Vol);
 		if (MADDriver->IntDataPtr != NULL) 	tempLong += GetPtrSize( MADDriver->IntDataPtr);
 		
-	/*	for( i = 0; i < MAX_PITCH; i++)
+	/*	for (i = 0; i < MAX_PITCH; i++)
 		{
 			if (MADDriver->FreqHandle[ i] != NULL) tempLong += GetPtrSize( (Ptr) MADDriver->FreqHandle[ i]);
 		}*/
@@ -136,9 +136,9 @@ void DoNullMemWindow(void)
 		
 		//**** Instruments ********
 		tempLong = 0;
-		for( i = 0; i < MAXINSTRU; i++)
+		for (i = 0; i < MAXINSTRU; i++)
 		{
-			for( x = 0; x < curMusic->fid[i].numSamples; x++)
+			for (x = 0; x < curMusic->fid[i].numSamples; x++)
 			{
 				if (curMusic->sample[ curMusic->fid[ i].firstSample + x] == NULL) MyDebugStr( __LINE__, __FILE__, "numSamples ERR");
 				tempLong += curMusic->sample[ curMusic->fid[ i].firstSample + x]->size;
@@ -163,7 +163,7 @@ void DoNullMemWindow(void)
 		
 		//***** Partition ********
 		tempLong = 0;
-		for( i = 0; i < curMusic->header->numPat; i++)
+		for (i = 0; i < curMusic->header->numPat; i++)
 		{
 			tempLong += GetPtrSize( (Ptr) curMusic->partition[ i]);
 		}

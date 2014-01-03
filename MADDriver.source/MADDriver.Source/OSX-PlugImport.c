@@ -367,7 +367,7 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 	short	i;
 	ULONG	RelCount = 0;
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		MADFileFormatPlugin	**formatPlugA = inMADDriver->ThePlug[i].IOPlug;
 
@@ -399,7 +399,7 @@ OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInf
 		return noErr;
 	}
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
@@ -414,7 +414,7 @@ OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	short		i;
 	PPInfoRec	InfoRec;
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
@@ -477,7 +477,7 @@ OSErr PPIdentifyFile( MADLibrary *inMADDriver, char *type, char *AlienFile)
 		return noErr;
 	}
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if (CallImportPlug( inMADDriver, i, 'TEST', AlienFile, NULL, &InfoRec) == noErr)
 		{
@@ -495,7 +495,7 @@ Boolean	MADPlugAvailable( MADLibrary *inMADDriver, char* kindFile)
 	short		i;
 	
 	if (!strcmp( kindFile, "MADK")) return TRUE;
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type)) return TRUE;
 	}
@@ -507,7 +507,7 @@ OSErr PPExportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	short		i;
 	PPInfoRec	InfoRec;
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
@@ -523,7 +523,7 @@ OSErr PPTestFile( MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
 	MADMusic		aMAD;
 	PPInfoRec		InfoRec;
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
@@ -539,7 +539,7 @@ OSType GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 	
 	if (ID >= inMADDriver->TotalPlug) MyDebugStr( __LINE__, __FILE__, "PP-Plug ERROR. ");
 	
-	for( i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
+	for (i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
 	{
 		if (inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == 'EXIM')
 		{

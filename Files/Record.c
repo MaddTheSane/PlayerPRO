@@ -124,7 +124,7 @@ OSErr NSoundQualityExportSnd(short ins, short samp, OSType *fileType, Str255 sNa
 	} else {
 		long tO = 0;
 		
-		for( i = 0; i < curMusic->fid[ ins].numSamples ; i++) {
+		for (i = 0; i < curMusic->fid[ ins].numSamples ; i++) {
 			tO += curMusic->sample[ curMusic->fid[ ins].firstSample + i]->size;
 		}
 		NumToString( tO/1024L, aStr);
@@ -187,7 +187,7 @@ REGODIA:
 		{
 			Str255	cStr;
 			
-			for( i = sName[ 0]; i > 0 ; i--)
+			for (i = sName[ 0]; i > 0 ; i--)
 			{
 				if (sName[ i] == '.')
 				{
@@ -218,14 +218,14 @@ REGODIA:
 		
 		if (curData->amp == 8)
 		{
-			for( x = 0; x < curData->size; x++)
+			for (x = 0; x < curData->size; x++)
 			{
 				*(*sndHandle + x) =  *(curData->data + x) - 0x80;
 			}
 		}
 		else
 		{
-			for( temp = 0; temp < curData->size/2; temp++)
+			for (temp = 0; temp < curData->size/2; temp++)
 			{
 				*(((short*)*sndHandle) + temp) = *(((short*) curData->data) + temp);
 			}
@@ -260,7 +260,7 @@ void Convert8to16(Ptr srcPtr, Ptr destPtr, long size)
 {
 	long 	i;
 	
-	for( i = size -1; i >= 0; i --)
+	for (i = size -1; i >= 0; i --)
 	{
 		destPtr[ i*2] = srcPtr[ i];
 		destPtr[ i*2 + 1] = 0;
@@ -272,7 +272,7 @@ void Convert16to8( Ptr srcPtr, Ptr destPtr, long size)
 	long 	i;
 	size /= 2;
 	
-	for( i = 0; i < size; i ++)
+	for (i = 0; i < size; i ++)
 	{
 		destPtr[ i] = srcPtr[i*2];
 	}
@@ -309,13 +309,13 @@ void ConvertInstrumentMode( sData	*curData, short menuItem)
 				
 			case 4: // Delete Right
 				if (curData->amp == 8) {
-					for( i = 0 ; i < curData->size; i+=2) {
+					for (i = 0 ; i < curData->size; i+=2) {
 						aNewPtr[ i / 2] = (long) curData->data[ i + 1];
 					}
 				} else {
 					short *short16out = (short*) aNewPtr, *short16in = (short*) curData->data;
 					
-					for( i = 0 ; i < curData->size/2; i+=2) {
+					for (i = 0 ; i < curData->size/2; i+=2) {
 						short16out[i / 2] = (long) short16in[i + 1];
 					}
 				}
@@ -326,7 +326,7 @@ void ConvertInstrumentMode( sData	*curData, short menuItem)
 					long 	templ;
 					
 					
-					for( i = 0 ; i < curData->size; i+=2) {
+					for (i = 0 ; i < curData->size; i+=2) {
 						templ = ((long) curData->data[ i] + (long) curData->data[ i + 1]);
 						
 						if (templ < -127)
@@ -681,7 +681,7 @@ ID					compType;
 	if (CC->formType == AIFCID) Compression = true;
 	else if (CC->formType == AIFFID) Compression = false;
 
-	for( i = sizeof( ContainerChunk); i < CC->ckSize;)
+	for (i = sizeof( ContainerChunk); i < CC->ckSize;)
 	{
 		CH = (ChunkHeader*) (*sound + i);
 		if (CH->ckID == CommonID)
@@ -744,14 +744,14 @@ ID					compType;
 	{
 		if (*sampleSize == 8)
 		{
-			for( i = 0; i < SizeH - StartId; i++)
+			for (i = 0; i < SizeH - StartId; i++)
 			{
 				(*sound)[ i] = (*sound + StartId)[ i * numChannels];
 			}
 		}
 		else
 		{
-			for( i = 0; i < (SizeH - StartId)/2; i++)
+			for (i = 0; i < (SizeH - StartId)/2; i++)
 			{
 				((short*) *sound)[ i] = ((short*) (*sound + StartId))[ i * numChannels];
 			}
@@ -781,7 +781,7 @@ ID					compType;
 	{
 		if (*sampleSize == 8)
 		{
-			for( i = 0; i < numSampleFrames; i++) *((*sound) + i) -= 128;
+			for (i = 0; i < numSampleFrames; i++) *((*sound) + i) -= 128;
 		}
 	}
 	
@@ -935,12 +935,12 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 				memmove(*sound, ExtHeader->sampleArea, MusSize);
 			} else {
 				if (*sampleSize == 8) {
-					for( i = 0; i < MusSize; i ++) {
+					for (i = 0; i < MusSize; i ++) {
 						(*sound)[ i] = ExtHeader->sampleArea[ i * numChannels];
 					}
 				} else {
 					MusSize /= 2;
-					for( i = 0; i < MusSize; i ++) {
+					for (i = 0; i < MusSize; i ++) {
 						((short*) (*sound))[ i] = ((short*) ExtHeader->sampleArea)[ i * numChannels];
 					}
 					MusSize *= 2;
@@ -1138,7 +1138,7 @@ void SaveMOD( Boolean	SaveAS, OSType theType)
 		
 		if (thePrefs.addExtension)
 		{
-			for( i = fileName[ 0]; i > 0 ; i--)
+			for (i = fileName[ 0]; i > 0 ; i--)
 			{
 				if (fileName[ i] == '.')
 				{
@@ -1328,7 +1328,7 @@ void NPASTESample(long Pos, short ins, short samp)
 				
 				inOutCount = sizeof( InstrData);
 				
-				for( x = 0; x < numSamples; x++) {
+				for (x = 0; x < numSamples; x++) {
 					sData	*curData;
 					
 					curData = MADCreateSample( curMusic, ins, x);
@@ -1455,11 +1455,11 @@ void NPASTESample(long Pos, short ins, short samp)
 							{
 								case true:		// Convert in mono
 									if (sS == 8) {
-										for( i = 0 ; i < inOutBytes; i+=2) (*newSound)[ i / 2] = ((long) (*newSound)[ i] + (long) (*newSound)[ i + 1]) / 2L;
+										for (i = 0 ; i < inOutBytes; i+=2) (*newSound)[ i / 2] = ((long) (*newSound)[ i] + (long) (*newSound)[ i + 1]) / 2L;
 									} else {
 										short *short16out = (short*) *newSound, *short16in = (short*) *newSound;
 										
-										for( i = 0 ; i < inOutBytes/2; i+=2) (*newSound)[ i / 2] = ((long) (*newSound)[ i] + (long) (*newSound)[ i + 1]) / 2L;
+										for (i = 0 ; i < inOutBytes/2; i+=2) (*newSound)[ i / 2] = ((long) (*newSound)[ i] + (long) (*newSound)[ i + 1]) / 2L;
 									}
 									
 									HUnlock( newSound);
@@ -1479,7 +1479,7 @@ void NPASTESample(long Pos, short ins, short samp)
 									
 									if (MemError() == noErr) {
 										if (sS == 8) {
-											for( i = inOutBytes-1 ; i >= 0; i--) {
+											for (i = inOutBytes-1 ; i >= 0; i--) {
 												if (1 + i * 2 >= inOutBytes*2L) MyDebugStr( __LINE__, __FILE__, "");
 												
 												(*newSound)[ i * 2] = (*newSound)[ 1 + i * 2] = (*newSound)[ i];
@@ -1487,7 +1487,7 @@ void NPASTESample(long Pos, short ins, short samp)
 										} else {
 											short *short16out = (short*) *newSound, *short16in = (short*) *newSound;
 											
-											for( i = inOutBytes/2 -1 ; i >= 0; i--) {
+											for (i = inOutBytes/2 -1 ; i >= 0; i--) {
 												short16out[ i * 2] = short16out[ 1 + i * 2] = short16in[ i];
 											}
 										}
@@ -1620,7 +1620,7 @@ void NCOPYSample( long start, long length, short ins, short samp)
 		// COPY 'MINo' data
 		
 		inOutCount = sizeof( InstrData);
-		for( x = 0; x < curMusic->fid[ ins].numSamples; x++) {
+		for (x = 0; x < curMusic->fid[ ins].numSamples; x++) {
 			sData	*curData = curMusic->sample[ curMusic->fid[ ins].firstSample + x];
 			
 			inOutCount += sizeof( sData);
@@ -1634,7 +1634,7 @@ void NCOPYSample( long start, long length, short ins, short samp)
 			BlockMoveData( &curMusic->fid[ ins], *theSound, sizeof( InstrData));
 			inOutCount = sizeof( InstrData);
 			
-			for( x = 0; x < curMusic->fid[ ins].numSamples; x++) {
+			for (x = 0; x < curMusic->fid[ ins].numSamples; x++) {
 				sData	*curData;
 				
 				curData = curMusic->sample[ curMusic->fid[ ins].firstSample + x];
@@ -1912,7 +1912,7 @@ sData* ComputeRAWSound( Ptr srcSound, long length)
 			
 			// Signed
 			if (thePrefs.RAWSigned) {
-				for( i = 0; i < size; i++) {
+				for (i = 0; i < size; i++) {
 					destSound[ i] = 0x80 - destSound[ i];
 				}
 			}
@@ -1926,14 +1926,14 @@ sData* ComputeRAWSound( Ptr srcSound, long length)
 			
 			// Coding
 			if (thePrefs.RAWLittleEndian) {
-				for( i = 0; i < size/2; i++) {
+				for (i = 0; i < size/2; i++) {
 					d16Sound[ i] = Tdecode16(&d16Sound[ i]);
 				}
 			}
 			
 			// Signed
 			if (thePrefs.RAWSigned) {
-				for( i = 0; i < size/2; i++) {
+				for (i = 0; i < size/2; i++) {
 					d16Sound[ i] = 0x8000 - d16Sound[ i];
 				}
 			}

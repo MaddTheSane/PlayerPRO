@@ -548,7 +548,7 @@ void CreateToolsDlog(void)
 		InstallReceiveHandler( (DragReceiveHandlerUPP) MyReceiveToolsUPP, GetDialogWindow( ToolsDlog), (void *) NULL);
 	}
 	
-	for( i = 0; i < 256; i++)
+	for (i = 0; i < 256; i++)
 	{
 		TimeScanPtr[ i] = NULL;
 	}
@@ -811,19 +811,19 @@ void ScanTime()
 	
 	dstPL	= 0;
 	
-	for( i = 0; i < curMusic->header->numPointers; i++)
+	for (i = 0; i < curMusic->header->numPointers; i++)
 	{
 		if (TimeScanPtr[ i] != NULL) DisposePtr( (Ptr) TimeScanPtr[ i]);
 		
 		TimeScanPtr[ i] = (long*) NewPtr( curMusic->partition[ curMusic->header->oPointers[ i]]->header.size * sizeof( long) );
 		
-		for( x = 0; x < curMusic->partition[ curMusic->header->oPointers[ i]]->header.size; x++)
+		for (x = 0; x < curMusic->partition[ curMusic->header->oPointers[ i]]->header.size; x++)
 		{
 			time ++;
 			
 			(TimeScanPtr[ i])[ x] = timeResult + (time * 125L * speed * 60) / (50 * finespeed);
 			
-			for( y = 0; y <  curMusic->header->numChn; y++)
+			for (y = 0; y <  curMusic->header->numChn; y++)
 			{
 				aCmd = GetMADCommand( x, y, curMusic->partition[ curMusic->header->oPointers[ i]]);
 				if (aCmd == NULL) 
@@ -856,7 +856,7 @@ void ScanTime()
 				
 				if (aCmd->cmd == skipE)
 				{
-					for( ; x < curMusic->partition[ curMusic->header->oPointers[ i]]->header.size; x++)
+					for (; x < curMusic->partition[ curMusic->header->oPointers[ i]]->header.size; x++)
 					{
 						(TimeScanPtr[ i])[ x] = timeResult + (time * 125L * speed * 60) / (50 * finespeed);
 					}
@@ -908,11 +908,11 @@ void ScanTime()
 	dstPL	= 0;
 //	newPartitionReader = 63;
 	
-	for( i = newPL; i >= dstPL; i--)
+	for (i = newPL; i >= dstPL; i--)
 	{
-		for( x = newPartitionReader; x >= 0; x--)
+		for (x = newPartitionReader; x >= 0; x--)
 		{
-			for( y = curMusic->header->numChn-1; y >= 0 ; y--)
+			for (y = curMusic->header->numChn-1; y >= 0 ; y--)
 			{
 				aCmd = GetMADCommand( x, y, curMusic->partition[ curMusic->header->oPointers[ i]]);
 				

@@ -105,7 +105,7 @@ void FinishFrame()
 		LineTo( mx, caRect.bottom - 16);
 	}*/
 	
-	for( i = GetControlValue( yScroll); i < GetMaxYWave(); i++)
+	for (i = GetControlValue( yScroll); i < GetMaxYWave(); i++)
 	{
 		short temp = WaveRect.top + (i - GetControlValue( yScroll)) * YSize + YSize;
 		
@@ -217,8 +217,8 @@ void DoNullWave(void)
 		pStrcat( String, aStr);
 		
 		theStr[ 0] = 20;
-		for( x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ CurrentPat]->header.name[ x];
-		for( x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
+		for (x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ CurrentPat]->header.name[ x];
+		for (x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
 		pStrcat( String, "\p ");
 		pStrcat( String, theStr);
 		
@@ -384,7 +384,7 @@ void GetMinMax( long BS, long BE, Ptr ptr, long *mi, long *mx)
 	{
 		long	x;
 		
-		for( x = BS; x < BE; x++)
+		for (x = BS; x < BE; x++)
 		{
 			temp =   ptr[ x*WaveDriverType.numChn];
 			if (temp < 0) temp += 128;
@@ -411,9 +411,9 @@ void UpdateCmdWave( short Pos, short track)
 	SetPortDialogPort( WaveDlog);
 	
 	/**/ // SCAN FOR SPEED CHANGE
-	for( maxX = GetControlValue( xScroll); maxX < GetMaxXWave(); maxX++)
+	for (maxX = GetControlValue( xScroll); maxX < GetMaxXWave(); maxX++)
 	{
-		for( tt = 0; tt < curMusic->header->numChn; tt++)
+		for (tt = 0; tt < curMusic->header->numChn; tt++)
 		{
 			theCommand = GetMADCommand( maxX, tt, curMusic->partition[ CurrentPat]);
 			
@@ -428,7 +428,7 @@ void UpdateCmdWave( short Pos, short track)
 		}
 	}
 	
-	for( maxX = Pos+1; maxX < GetMaxXWave(); maxX++)
+	for (maxX = Pos+1; maxX < GetMaxXWave(); maxX++)
 	{
 		theCommand = GetMADCommand( maxX, track, curMusic->partition[ CurrentPat]);
 		
@@ -519,13 +519,13 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 	/***********/
 	
 	RGBForeColor( &theColor);
-	for( i = fromX; i < toX; i++)
+	for (i = fromX; i < toX; i++)
 	{
 		MoveTo( i*XSize + XOffSet - 1, cRect.top);
 		LineTo( i*XSize + XOffSet - 1, cRect.bottom);
 	}
 	
-	for( i = GetControlValue( yScroll); i < GetMaxYWave(); i++)
+	for (i = GetControlValue( yScroll); i < GetMaxYWave(); i++)
 	{
 		MoveTo( cRect.left, i*YSize + YSize/2 + YOffSet);
 		LineTo( cRect.right, i*YSize + YSize/2 + YOffSet);
@@ -568,11 +568,11 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 		Cmd 		*theCmd;
 		Boolean		okT[ MAXTRACK];
 	
-		for( tt = 0; tt < curMusic->header->numChn; tt++) okT[ tt] = false;
+		for (tt = 0; tt < curMusic->header->numChn; tt++) okT[ tt] = false;
 	
-		for( pos = 0; pos < fromX; pos++)
+		for (pos = 0; pos < fromX; pos++)
 		{
-			for( tt = 0; tt < curMusic->header->numChn; tt++)
+			for (tt = 0; tt < curMusic->header->numChn; tt++)
 			{
 				theCmd = GetMADCommand( pos, tt, curMusic->partition[ CurrentPat]);
 				
@@ -582,7 +582,7 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 				
 					okT[ tt] = true;
 					
-					for( xt = 0; xt < curMusic->header->numChn; xt++)
+					for (xt = 0; xt < curMusic->header->numChn; xt++)
 					{
 						if (
 					}
@@ -656,7 +656,7 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 				ey++;
 			}
 			
-			for( whichTrack = sy; whichTrack < ey; whichTrack++)
+			for (whichTrack = sy; whichTrack < ey; whichTrack++)
 			{
 				long	temp, minY, maxY, BS, BE;
 				
@@ -669,7 +669,7 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 				
 				MoveTo( temp, whichTrack*YSize + YSize/2 + YOffSet);
 				
-				for( i = 0, BE = 0; BE < WaveCopyDriver->ASCBUFFER; i ++, temp++)			//i < XSize
+				for (i = 0, BE = 0; BE < WaveCopyDriver->ASCBUFFER; i ++, temp++)			//i < XSize
 				{
 					BS = (i * CellXBytes) / XSize;
 					BE = ((i+1) * CellXBytes) / XSize;
@@ -783,7 +783,7 @@ void DrawFrame()
 	MoveTo( tRect.right-1, tRect.top);
 	LineTo( tRect.right-1, tRect.bottom);
 	
-	for( i = GetControlValue( xScroll); i < GetMaxXWave(); i+= add)
+	for (i = GetControlValue( xScroll); i < GetMaxXWave(); i+= add)
 	{
 		tRect.left	= WaveRect.left + (i - GetControlValue( xScroll)) * XSize + XSize/2 - (add*XSize)/2;
 		tRect.right	= tRect.left + (add*XSize);
@@ -821,7 +821,7 @@ void DrawFrame()
 	tRect.top	= WaveRect.top;
 	ClipRect( &tRect);
 	
-	for( i = GetControlValue( yScroll); i < GetMaxYWave(); i++)
+	for (i = GetControlValue( yScroll); i < GetMaxYWave(); i++)
 	{
 		tRect.left	= 0;
 		tRect.right	= WaveRect.left;
@@ -1013,7 +1013,7 @@ void DoItemPressWave( short whichItem, DialogPtr whichDialog)
 			{
 				short	noActive;
 				
-				for( i = 0, noActive = 0; i < curMusic->header->numChn; i++)
+				for (i = 0, noActive = 0; i < curMusic->header->numChn; i++)
 				{
 					if (MADDriver->Active[ i] == true)
 					{
@@ -1023,11 +1023,11 @@ void DoItemPressWave( short whichItem, DialogPtr whichDialog)
 				
 				if (noActive <= 1 && MADDriver->Active[ myPt.v] == true)
 				{
-					for( i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
+					for (i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
 				}
 				else
 				{
-					for( i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
+					for (i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
 					MADDriver->Active[ myPt.v] = true;
 				}
 				

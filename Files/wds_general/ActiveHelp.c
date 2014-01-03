@@ -141,7 +141,7 @@ void DoAHelpInfo(void)
 				SetPortWindowPort( aWin);
 				
 				GetMouse( &ptLocal);
-				for( i = 0; i < lsize; i++)
+				for (i = 0; i < lsize; i++)
 				{
 					GetDialogItem( GetDialogFromWindow( aWin), items[ i], &iType, &iHandle, &iRect);
 					if (PtInRect( ptLocal, &iRect))

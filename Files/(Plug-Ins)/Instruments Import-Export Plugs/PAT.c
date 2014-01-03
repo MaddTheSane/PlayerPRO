@@ -38,7 +38,7 @@ static OSErr TestPAT( Ptr CC)
 	char	IDStr[ 50] = "GF1PATCH110";
 	short	i;
 	
-	for( i = 0; i < 12; i++)
+	for (i = 0; i < 12; i++)
 	{
 		if (CC[ i] != IDStr[ i]) return MADFileNotSupportedByThisPlug;
 	}
@@ -51,7 +51,7 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	short			i;
 //	Boolean			IsReading;
 
-	for( i = 0; i < curIns->numSamples; i++)
+	for (i = 0; i < curIns->numSamples; i++)
 	{
 		if (sample[ i] != NULL)
 		{
@@ -66,14 +66,14 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	}
 	
 	
-	for( i = 0; i < 32; i++) curIns->name[ i]	= 0;
+	for (i = 0; i < 32; i++) curIns->name[ i]	= 0;
 	curIns->type		= 0;
 	curIns->numSamples	= 0;
 	
 	/**/
 	
-	for( i = 0; i < 96; i++) curIns->what[ i]		= 0;
-	for( i = 0; i < 12; i++)
+	for (i = 0; i < 96; i++) curIns->what[ i]		= 0;
+	for (i = 0; i < 12; i++)
 	{
 		curIns->volEnv[ i].pos		= 0;
 		curIns->volEnv[ i].val		= 0;
@@ -85,12 +85,12 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 		curIns->pitchEnv[ i].val	= 0;
 	}
 #if 0
-	for( i = 0; i < 12; i++)
+	for (i = 0; i < 12; i++)
 	{
 		curIns->pannEnv[ i].pos	= 0;
 		curIns->pannEnv[ i].val	= 0;
 	}
-	for( i = 0; i < 12; i++)
+	for (i = 0; i < 12; i++)
 	{
 		curIns->pitchEnv[ i].pos	= 0;
 		curIns->pitchEnv[ i].val	= 0;
@@ -152,17 +152,17 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 	PATIns->size = Tdecode32( &PATIns->size);
 	PATData += 63;
 	
-	for( x = 0; x < 16; x++) InsHeader->name[ x] = PATIns->name[ x];
+	for (x = 0; x < 16; x++) InsHeader->name[ x] = PATIns->name[ x];
 	
 	
 	// LAYERS
 	
-	for( i = 0; i < PATIns->layer; i++) PATData += 47;
+	for (i = 0; i < PATIns->layer; i++) PATData += 47;
 	
 	
 	// SAMPLES
 	
-	for( x = 0; x < InsHeader->numSamples; x++)
+	for (x = 0; x < InsHeader->numSamples; x++)
 	{
 		sData		*curData;
 		Boolean		signedData;
@@ -173,7 +173,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		curData = sample[ x] = inMADCreateSample();
 		
-		for( i = 0; i < 6; i++) curData->name[ i] = PATSamp->name[ i];
+		for (i = 0; i < 6; i++) curData->name[ i] = PATSamp->name[ i];
 		
 		PATSamp->size		= Tdecode32( &PATSamp->size);		curData->size		= PATSamp->size;
 		
@@ -208,7 +208,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		PATSamp->originRate		= Tdecode32( &PATSamp->originRate);
 		
-		for( i = 0; i < 107; i++)
+		for (i = 0; i < 107; i++)
 		{
 			if (scale_table[ i] >= PATSamp->originRate)
 			{
@@ -219,7 +219,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		curData->relNote = 60 - (12 + PATSamp->originRate);
 		
-		for( i = 0; i < 107; i++)
+		for (i = 0; i < 107; i++)
 		{
 			if (scale_table[ i] >= PATSamp->minFreq)
 			{
@@ -228,7 +228,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 			}
 		}
 		
-		for( i = 0; i < 107; i++)
+		for (i = 0; i < 107; i++)
 		{
 			if (scale_table[ i] >= PATSamp->maxFreq)
 			{
@@ -237,7 +237,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 			}
 		}
 		
-		for( i = PATSamp->minFreq; i < PATSamp->maxFreq; i++)
+		for (i = PATSamp->minFreq; i < PATSamp->maxFreq; i++)
 		{
 			if (i < 96 && i >= 0)
 			{
@@ -263,7 +263,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 				
 				tt = (short*) curData->data;
 
-				for( tL = 0; tL < curData->size/2; tL++)
+				for (tL = 0; tL < curData->size/2; tL++)
 				{
 					*(tt + tL) = Tdecode16( (Ptr) (tt + tL));
 					
@@ -272,7 +272,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 			}
 			else
 			{
-				for( i = 0; i < curData->size; i++)
+				for (i = 0; i < curData->size; i++)
 				{
 					if (signedData) curData->data[ i] = curData->data[i] + 0x80;
 				}

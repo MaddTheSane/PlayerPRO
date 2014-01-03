@@ -128,7 +128,7 @@ void NWriteSupportedFormat( DialogPtr	aDia)
 	
 	pStrcpy( text, "\pMADI");
 	
-	for( i = 0; i < MADGetMADLibraryPtr()->TotalPlug; i++)
+	for (i = 0; i < MADGetMADLibraryPtr()->TotalPlug; i++)
 	{
 		pStrcat( text, "\p - ");
 		pStrcat( text, MADGetMADLibraryPtr()->ThePlug[ i].MenuName);
@@ -674,7 +674,7 @@ pascal Boolean MyCustomFilter( AEDesc *theItem, void *info, NavCallBackUserData 
 					if (fndrInfo.fdType == 'STCf') return true;
 					if (fndrInfo.fdType == 'MADK') return true;
 					
-					for( i = 0; i < gMADLib->TotalPlug; i++)
+					for (i = 0; i < gMADLib->TotalPlug; i++)
 					{
 						if (fndrInfo.fdType == Ptr2OSType( gMADLib->ThePlug[ i].type))	return true;
 					}
@@ -750,7 +750,7 @@ OSErr DoCustomOpen( FSSpec	*spec)
 	
 	showWhatMenu = GetMenu( 500);
 	
-	for( i = 0; i < gMADLib->TotalPlug; i++)
+	for (i = 0; i < gMADLib->TotalPlug; i++)
 	{
 		Str255 pMenuName;
 		GetPStrFromCFString(gMADLib->ThePlug[ i].MenuName, pMenuName);

@@ -326,7 +326,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 			Wave = (Byte*) GetAudioChannel( true, intDriver->ASCBUFFERReal);
 			Spectre = (Byte*) MakeCalculusSpectrum( GetAudioSourceSpectrum( 1), false);
 			
-			for( i = 0; i < kVisualNumWaveformEntries; i++) {
+			for (i = 0; i < kVisualNumWaveformEntries; i++) {
 				currentData.waveformData[ 0][ i] = Wave[ i];
 				currentData.spectrumData[ 0][ i] = Spectre[ (i * 256) / kVisualNumSpectrumEntries];
 			}
@@ -334,7 +334,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 			Wave = (Byte*) GetAudioChannel( false, intDriver->ASCBUFFERReal);
 			Spectre = (Byte*) MakeCalculusSpectrum( GetAudioSourceSpectrum( 0), false);
 			
-			for( i = 0; i < kVisualNumWaveformEntries; i++) {
+			for (i = 0; i < kVisualNumWaveformEntries; i++) {
 				currentData.waveformData[ 1][ i] = Wave[ i];
 				currentData.spectrumData[ 1][ i] = Spectre[ (i * 256) / kVisualNumSpectrumEntries];
 			}
@@ -360,7 +360,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 			msgVisual.u.processSamplesMessage.maxSamples		=	numSamples;
 			msgVisual.u.processSamplesMessage.numOutputSamples	= 	numSamples;
 			
-			/*	for( i = 0; i < numSamples; i++)
+			/*	for (i = 0; i < numSamples; i++)
 			 {
 			 sampleBuffer[ i] -= 0x8000;
 			 }*/
@@ -379,7 +379,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 				//long temp = msgVisual.u.processSamplesMessage.numOutputSamples;
 				
 #if 0
-				for( i = 0; i < numSamples; i++)
+				for (i = 0; i < numSamples; i++)
 				{
 					sampleBuffer[ i] += 0x8000;
 				}
@@ -710,7 +710,7 @@ void InitVisual(void)
 	{
 		AppendMenu( ViewsMenu, "\p-");
 		
-		for( i = 0; i < tPlug; i++)	AppendMenu( ViewsMenu, VisualPlug[ i].file.name);
+		for (i = 0; i < tPlug; i++)	AppendMenu( ViewsMenu, VisualPlug[ i].file.name);
 		
 		AppendMenu( ViewsMenu, "\p-");
 		

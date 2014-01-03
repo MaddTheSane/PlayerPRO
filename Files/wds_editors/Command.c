@@ -104,15 +104,15 @@ Str255	aStr, theStr;
 	if (thePatternMenu == NULL) Debugger();
 	
 	x = CountMenuItems( thePatternMenu);
-	for( i = 0; i < x;i++) DeleteMenuItem( thePatternMenu, 1);
+	for (i = 0; i < x;i++) DeleteMenuItem( thePatternMenu, 1);
 
-	for( i = 0; i < curMusic->header->numPat; i++)
+	for (i = 0; i < curMusic->header->numPat; i++)
 	{
 		NumToString( i, aStr);
 		pStrcat( aStr, "\p - ");
 		
 		theStr[ 0] = 20;
-		for( x = 0; x < 20; x++) theStr[ x+1] = curMusic->partition[ i]->header.name[ x];
+		for (x = 0; x < 20; x++) theStr[ x+1] = curMusic->partition[ i]->header.name[ x];
 		pStrcat( aStr, theStr);
 		
 		AppendMenu( thePatternMenu, aStr);
@@ -471,7 +471,7 @@ short	i;
 	}
 	else
 	{
-		for( i = 0; i < (*hTE)->teLength; i++)
+		for (i = 0; i < (*hTE)->teLength; i++)
 		{
 			if ((*(*hTE)->hText)[ i] != textPtr[ i])
 			{
@@ -497,7 +497,7 @@ void DoNullCmdWindow(void)
 	GetPort( &savePort);
 	SetPortDialogPort( ToolsDlog);
 	
-	for( i = InstruTE; i<= VolumeTE; i++) TEIdle( TEH[ i]);
+	for (i = InstruTE; i<= VolumeTE; i++) TEIdle( TEH[ i]);
 	
 	if (oldPat != MADDriver->Pat || UpdateNow == true)
 	{
@@ -596,7 +596,7 @@ void  UpdateCmdDlogWindow(DialogPtr GetSelection)
 	
  	//	DrawDialog( GetSelection);
 			
-		for( i=31; i <=34; i++)
+		for (i=31; i <=34; i++)
 		{
 			GetDialogItem( ToolsDlog, i, &itemType, &itemHandle, &tempRect);
 			
@@ -620,7 +620,7 @@ void  UpdateCmdDlogWindow(DialogPtr GetSelection)
 		
 		GetPortBounds( GetDialogPort( GetSelection), &caRect);
 		
-		for( i = InstruTE; i<= VolumeTE; i++) TEUpdate( &caRect, TEH[ i]);
+		for (i = InstruTE; i<= VolumeTE; i++) TEUpdate( &caRect, TEH[ i]);
 				
 		if ((**(**GetMainDevice()).gdPMap).pixelSize == 1) BackColor( whiteColor);
 		else RGBBackColor( &theColor);
@@ -1113,7 +1113,7 @@ void CreateCmdDlog(void)
 
 	TESetAlignment( teFlushDefault, EfTE);
 	
-	for( i = InstruTE; i <= ArguTE; i++)
+	for (i = InstruTE; i <= ArguTE; i++)
 	{
 		GetDialogItem( ToolsDlog, 31 + i, &itemType, &itemHandle, &itemRect);
 		TEH[ i] = TENew( &itemRect, &itemRect);
@@ -1225,7 +1225,7 @@ short	i;
 		SetCmdValue( curActif);
 		
 		DisposeDialog( ToolsDlog);
-		for( i = InstruTE; i <= VolumeTE; i++) TEDispose( TEH[ i]);
+		for (i = InstruTE; i <= VolumeTE; i++) TEDispose( TEH[ i]);
 		TEDispose( EfTE);
 	}
 	ToolsDlog = NULL;

@@ -32,9 +32,9 @@ static OSErr mainRevert( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	srcCmd->length = myPcmd->length;
 	srcCmd->tracks = myPcmd->tracks;
 	
-	for( track = 0; track < myPcmd->tracks; track ++)
+	for (track = 0; track < myPcmd->tracks; track ++)
 	{
-		for( row = 0; row < myPcmd->length; row ++)
+		for (row = 0; row < myPcmd->length; row ++)
 		{
 			Cmd		*myCmd, *myCmdsrc;
 			
@@ -46,9 +46,9 @@ static OSErr mainRevert( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		}
 	}
 	
-	for( track = 0; track < myPcmd->tracks; track ++)
+	for (track = 0; track < myPcmd->tracks; track ++)
 	{
-		for( row = 0; row < myPcmd->length; row ++)
+		for (row = 0; row < myPcmd->length; row ++)
 		{
 			Cmd		*myCmd, *myCmdsrc;
 			

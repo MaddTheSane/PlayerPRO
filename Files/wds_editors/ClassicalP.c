@@ -137,8 +137,8 @@ void SetWClassic( short No)
 	pStrcat( String, aStr);
 	
 	theStr[ 0] = 20;
-	for( x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ PatCopyXIM]->header.name[ x];
-	for( x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
+	for (x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ PatCopyXIM]->header.name[ x];
+	for (x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
 	pStrcat( String, "\p ");
 	pStrcat( String, theStr);
 	

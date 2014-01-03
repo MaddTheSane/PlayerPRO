@@ -136,7 +136,7 @@ static void AnalyzePtune(Tune *ptune)
 	
 	short					i, NewIns;
 	
-	for( i = 0; i < 129; i++) 
+	for (i = 0; i < 129; i++) 
 		MIDIInstMOD[ i] = -1;
 	NewIns = 0;
 	

@@ -182,7 +182,7 @@ void ComputeCurrentQuickPixMap()
 	
 	CurrentQuickPixMap = (long*) NewPtr( sizeof( long) * (*osciPixMap[ 0])->bounds.bottom);
 	
-	for( i = 0; i < (*osciPixMap[ 0])->bounds.bottom; i++)
+	for (i = 0; i < (*osciPixMap[ 0])->bounds.bottom; i++)
 	{
 		CurrentQuickPixMap[ i] = i * rowBytes;
 	}
@@ -659,7 +659,7 @@ void C8BitOsciPixMap( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 	pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ (*osciPixMap[ 0])->bounds.bottom/2];
 	while( i-- > 0) *(pixMapPtr++) = 0xE5;
 	
-	for( x = 0; x < 5; x++)
+	for (x = 0; x < 5; x++)
 	{
 		i = (*osciPixMap[ 0])->bounds.bottom - 2;
 		pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ 1] + (x * ((*osciPixMap[ 0])->bounds.right - (*osciPixMap[ 0])->bounds.left)) / 4;
@@ -802,7 +802,7 @@ void C8BitOsciPixMapLine( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 	pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ (*osciPixMap[ 0])->bounds.bottom/2];
 	while( i-- > 0) *(pixMapPtr++) = 0xE5;
 	
-	for( x = 0; x < 5; x++)
+	for (x = 0; x < 5; x++)
 	{
 		i = (*osciPixMap[ 0])->bounds.bottom - 2;
 		pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ 1] + (x * ((*osciPixMap[ 0])->bounds.right - (*osciPixMap[ 0])->bounds.left)) / 4;
@@ -867,7 +867,7 @@ Rect		caRect, inRect;
 	
 	if (osciPixMap[ no] != NULL)
 	{
-		for( i = 0; i < SIter; i++)
+		for (i = 0; i < SIter; i++)
 		{
 			if (gmax < osciPtr->SavePtr[ i]) gmax = osciPtr->SavePtr[ i];
 			if (gmin > osciPtr->SavePtr[ i]) gmin = osciPtr->SavePtr[ i];
@@ -888,7 +888,7 @@ Rect		caRect, inRect;
 		
 		//
 		
-		for( i = 0; i < SIter; i++)
+		for (i = 0; i < SIter; i++)
 		{
 			if (gmax < osciPtr->SavePtr[ i]) gmax = osciPtr->SavePtr[ i];
 			if (gmin > osciPtr->SavePtr[ i]) gmin = osciPtr->SavePtr[ i];
@@ -1053,7 +1053,7 @@ Handle			itemHandle;
 		}
 	}*/
 	
-	for( i = GetControlValue( VControl); i < GetControlValue( VControl) + OsciSee; i++)
+	for (i = GetControlValue( VControl); i < GetControlValue( VControl) + OsciSee; i++)
 		DrawOscilloscope2( &osci[ i], i, false);
 	
 	if (thePrefs.osciTile)
@@ -1146,7 +1146,7 @@ void  UpdateOscilloWindow(DialogPtr GetSelection)
 		if (thePrefs.osciTile) OsciSee = 1;			// OscinO
 		else OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
 		
-		for( i = GetControlValue( VControl); i < GetControlValue( VControl) + OsciSee; i++)
+		for (i = GetControlValue( VControl); i < GetControlValue( VControl) + OsciSee; i++)
 		{
 			if (OsciType == OutPutAudio) tempRect.left	= 15;
 			else tempRect.left	= 0;
@@ -1699,7 +1699,7 @@ void InitOscillo(void)
 				(GWorldFlags) 0);
 	
 	PseudoSilence = MyNewPtr( 750);
-	for( i = 0; i < 740; i++) PseudoSilence[ i] = 0x80;
+	for (i = 0; i < 740; i++) PseudoSilence[ i] = 0x80;
 	
 	AudioDSPPtr = (Ptr) MyNewPtr( AUDIODSPSIZE * 4L);
 	
@@ -1714,7 +1714,7 @@ void InitOscillo(void)
 	
 	PreviousOscilloPtr = MADDriver->OsciDrawPtr[ 0];
 	
-/*	for( i = 0; i < DRAWBUFFERSIZE; i++)
+/*	for (i = 0; i < DRAWBUFFERSIZE; i++)
 	{
 		DrawBuf[ i] = NewPtrClear( MADDriver->BufSize);
 		AlreadyDraw[ i] = false;

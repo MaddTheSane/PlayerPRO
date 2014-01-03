@@ -28,19 +28,19 @@ static OSErr MADResetInstrument( InstrData		*curIns)
 {
 	short i;
 	
-	for( i = 0; i < 32; i++) curIns->name[ i]	= 0;
+	for (i = 0; i < 32; i++) curIns->name[ i]	= 0;
 	curIns->type		= 0;
 	curIns->numSamples	= 0;
 	
 	///
 	
-	for( i = 0; i < 96; i++) curIns->what[ i]		= 0;
-	for( i = 0; i < 12; i++)
+	for (i = 0; i < 96; i++) curIns->what[ i]		= 0;
+	for (i = 0; i < 12; i++)
 	{
 		curIns->volEnv[ i].pos		= 0;
 		curIns->volEnv[ i].val		= 0;
 	}
-	for( i = 0; i < 12; i++)
+	for (i = 0; i < 12; i++)
 	{
 		curIns->pannEnv[ i].pos	= 0;
 		curIns->pannEnv[ i].val	= 0;
@@ -79,7 +79,7 @@ static OSErr MADKillInstrument( MADMusic *music, short ins)
 	IsReading = music->musicUnderModification;
 	music->musicUnderModification = true;
 	
-	for( i = 0; i < curIns->numSamples; i++)
+	for (i = 0; i < curIns->numSamples; i++)
 	{
 		if (music->sample[ ins * MAXSAMPLE + i] != NULL)
 		{
@@ -149,9 +149,9 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	
 	
 	/**** PARTITION ****/
-	for( i = MadHeader->numPat; i < MAXPATTERN; i++) MadFile->partition[ i] = NULL;
+	for (i = MadHeader->numPat; i < MAXPATTERN; i++) MadFile->partition[ i] = NULL;
 	
-	for( i = 0; i < MadHeader->numPat; i++)
+	for (i = 0; i < MadHeader->numPat; i++)
 	{
 		inOutCount = sizeof( PatHeader);
 		BlockMoveData( MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
@@ -165,7 +165,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		MadFile->partition[ i] = (PatData*) NewPtr( inOutCount);
 		if (MadFile->partition[ i] == NULL)
 		{
-			for( x = 0; x < i; x++)
+			for (x = 0; x < i; x++)
 			{
 				if (MadFile->partition[ x] != NULL)	DisposePtr( (Ptr)MadFile->partition[ x]);
 			}
@@ -190,7 +190,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	BlockMoveData( MADPtr + OffSetToSample, MadFile->fid, inOutCount);
 	OffSetToSample += inOutCount;
 	
-	for( i = MadFile->header->numInstru-1; i >= 0 ; i--)
+	for (i = MadFile->header->numInstru-1; i >= 0 ; i--)
 	{
 		InstrData	*curIns = &MadFile->fid[ i];
 		int x = 0;
@@ -198,7 +198,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		MOT16( &curIns->firstSample);
 		MOT16( &curIns->volFade);
 		
-		for( x = 0; x < 12; x++)
+		for (x = 0; x < 12; x++)
 		{
 			MOT16( &curIns->volEnv[ x].pos);
 			MOT16( &curIns->volEnv[ x].val);
@@ -211,7 +211,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		}
 		
 #if 0
-		for( x = 0; x < 12; x++)
+		for (x = 0; x < 12; x++)
 		{
 			MOT16( &curIns->pannEnv[ x].pos);
 			MOT16( &curIns->pannEnv[ x].val);
@@ -226,11 +226,11 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	}
 	MadFile->header->numInstru = MAXINSTRU;
 	
-	for( i = 0; i < MAXINSTRU ; i++)
+	for (i = 0; i < MAXINSTRU ; i++)
 	{
 		short x;
 		
-		for( x = 0; x < MadFile->fid[ i].numSamples ; x++)
+		for (x = 0; x < MadFile->fid[ i].numSamples ; x++)
 		{
 			sData	*curData;
 			
@@ -239,9 +239,9 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			curData = MadFile->sample[ i*MAXSAMPLE + x] = (sData*) NewPtr( sizeof( sData));
 			if (curData == NULL)
 			{
-				for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( MadFile, x);
+				for (x = 0; x < MAXINSTRU ; x++) MADKillInstrument( MadFile, x);
 				
-				for( x = 0; x < MadFile->header->numPat; x++)
+				for (x = 0; x < MadFile->header->numPat; x++)
 				{
 					if (MadFile->partition[ x] != NULL)	DisposePtr( (Ptr)MadFile->partition[ x]);
 				}
@@ -268,9 +268,9 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			curData->data = NewPtr( inOutCount);
 			if (curData->data == NULL)
 			{
-				for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( MadFile, x);
+				for (x = 0; x < MAXINSTRU ; x++) MADKillInstrument( MadFile, x);
 				
-				for( x = 0; x < MadFile->header->numPat; x++)
+				for (x = 0; x < MadFile->header->numPat; x++)
 				{
 					if (MadFile->partition[ x] != NULL)	DisposePtr( (Ptr)MadFile->partition[ x]);
 				}
@@ -287,13 +287,13 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 				long 	ll;
 				short	*shortPtr = (short*) curData->data;
 				
-				for( ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
+				for (ll = 0; ll < curData->size/2; ll++) MOT16( &shortPtr[ ll]);
 			}
 #endif
 		}
 	}
 	
-	for( i = 0; i < MAXINSTRU; i++) MadFile->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) MadFile->fid[ i].firstSample = i * MAXSAMPLE;
 	
 	/*********************/
 	
@@ -304,7 +304,7 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		
 		alpha = 0;
 		
-		for( i = 0; i < 10 ; i++)	// Global Effects
+		for (i = 0; i < 10 ; i++)	// Global Effects
 		{
 			if (MadFile->header->globalEffect[ i])
 			{
@@ -323,9 +323,9 @@ static OSErr LoadMADH( Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			}
 		}
 		
-		for( i = 0; i < MadFile->header->numChn ; i++)	// Channel Effects
+		for (i = 0; i < MadFile->header->numChn ; i++)	// Channel Effects
 		{
-			for( x = 0; x < 4; x++)
+			for (x = 0; x < 4; x++)
 			{
 				if (MadFile->header->chanEffect[ i][ x])
 				{
@@ -401,7 +401,7 @@ static OSErr mainAPPL( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 		{
 			AlienFileFSSpec.parID = parIDCur;
 			AlienFileFSSpec.vRefNum = vRefNumCur;
-			for( i = 0; i <= AlienFileName[ 0]; i++) AlienFileFSSpec.name[ i] = AlienFileName[ i];
+			for (i = 0; i <= AlienFileName[ 0]; i++) AlienFileFSSpec.name[ i] = AlienFileName[ i];
 		}
 	}
 	FSpMakeFSRef(&AlienFileFSSpec, &AlienFileFSRef);	
