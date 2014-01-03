@@ -206,92 +206,78 @@ short GenerateDLSFromBundle()
 	short			i, ff = -1;
 	
 	
-	//DoStandardOpen( &file, "\pHello", 'ANYK');
+	iErr = FindFolder(kOnSystemDisk, kComponentsFolderType, kDontCreateFolder, &file.vRefNum, &file.parID);
+	if (iErr == noErr) {
+		FSMakeFSSpec(file.vRefNum, file.parID, "\pCoreAudio.component", &file);
+	} else
+		return -1;
 	
-	iErr = FindFolder( kOnSystemDisk, kComponentsFolderType, kDontCreateFolder, &file.vRefNum, &file.parID);
-	if( iErr == noErr)
-	{
-		pStrcpy( file.name, "\pCoreAudio.component");
-	}
-	else return -1;
+	FSpMakeFSRef(&file, &bundleFSRef);
 	
-	FSpMakeFSRef( &file, &bundleFSRef);
+	bundleURL = CFURLCreateFromFSRef(kCFAllocatorDefault, &bundleFSRef);
 	
-	bundleURL = CFURLCreateFromFSRef( kCFAllocatorDefault, &bundleFSRef);
-	
-	AudioBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL);
+	AudioBundle = CFBundleCreate(kCFAllocatorDefault, bundleURL);
 	CFRelease(bundleURL);
-	if( AudioBundle == NULL) 
-	{
+	if(AudioBundle == NULL) {
 		MyDebugStr(__LINE__, __FILE__, "Unable to load CoreAudio.component");
 		return -1;
 	}
 	
-	
 	// MacOS X 10.2
 	
-	rsrcURL = 		CFBundleCopyResourceURL( AudioBundle, 
-											CFSTR("gs_instruments"), 			//CoreAudio
-											CFSTR("dls"),	 					//rsrc
-											NULL);
+	rsrcURL = CFBundleCopyResourceURL(AudioBundle, CFSTR("gs_instruments"), CFSTR("dls"), NULL);
 	
-	CFURLGetFSRef( rsrcURL, &rsrcRef);
+	CFURLGetFSRef(rsrcURL, &rsrcRef);
 	
-	iErr = FSOpenFork( &rsrcRef, 0, 0, fsRdPerm, &refNum);
+	iErr = FSOpenFork(&rsrcRef, 0, 0, fsRdPerm, &refNum);
 	CFRelease(rsrcURL);
-	CFRelease(AudioBundle);
-	if( iErr == noErr) return refNum;
+	if (iErr == noErr) {
+		CFRelease(AudioBundle);
+		return refNum;
+	}
 	
-	// Look for a resource in the main bundle by name and type.
-	rsrcURL = 		CFBundleCopyResourceURL( AudioBundle, 
-											CFSTR("CoreAudio"), 			//CoreAudio
-											CFSTR("rsrc"), 					//rsrc
-											NULL);
+	// Look for and open the bundle's resource file
+	refNum = CFBundleOpenBundleResourceMap(AudioBundle);
+	if (refNum == -1) {
+		CFRelease(AudioBundle);
+		return -1;
+	}
 	
-	CFURLGetFSRef( rsrcURL, &rsrcRef);
-	
-	iErr = FSOpenResourceFile( &rsrcRef, 0, 0, fsRdPerm, &refNum);
-	CFRelease(rsrcURL);
-	if( iErr) return -1;
-	
-	for( i = 0; i < Count1Types(); i++)
-	{
-		Get1IndType( &theType, i+1);
+	for (i = 0; i < Count1Types(); i++) {
+		Get1IndType(&theType, i + 1);
 		
-		if( theType == 'dls2')
-		{
-			Handle	rsrc = Get1IndResource( 'dls2', 1);
-			DetachResource( rsrc);
+		if(theType == 'dls2') {
+			Handle	rsrc = Get1IndResource('dls2', 1);
+			DetachResource(rsrc);
 			
 			// Write a temp DLS2 File on the hard drive...
 			
-			iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tempDLS.vRefNum, &tempDLS.parID);
-			if( iErr == noErr)
-			{
-				pStrcpy( tempDLS.name, "\pTempDLS2.dls");
+			iErr = FindFolder(kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tempDLS.vRefNum, &tempDLS.parID);
+			if (iErr == noErr) {
+				FSMakeFSSpec(tempDLS.vRefNum, tempDLS.parID, "\pTempDLS2.dls", &tempDLS);
 				
-				FSpDelete( &tempDLS);
-				iErr = FSpCreate( &tempDLS, 'INIT', 'dvb ', smSystemScript);
-				if( iErr == noErr)
-				{
+				FSpDelete(&tempDLS);
+				iErr = FSpCreate(&tempDLS, 'INIT', 'dvb ', smSystemScript);
+				if (iErr == noErr) {
 					long	count;
 					
-					FSpOpenDF( &tempDLS, fsCurPerm, &ff);
+					FSpOpenDF(&tempDLS, fsCurPerm, &ff);
 					
-					HLock( rsrc);
-					count = GetHandleSize( rsrc);
-					FSWrite( ff, &count, *rsrc);
-					HUnlock( rsrc);
+					HLock(rsrc);
+					count = GetHandleSize(rsrc);
+					FSWrite(ff, &count, *rsrc);
+					HUnlock(rsrc);
 					
-					SetFPos( ff, fsFromStart, 0);
+					SetFPos(ff, fsFromStart, 0);
 				}
 			}
 			
-			DisposeHandle( rsrc);
+			DisposeHandle(rsrc);
 		}
 	}
 	
-	CloseResFile( refNum);
+	CFBundleCloseBundleResourceMap(AudioBundle, refNum);
+	CFRelease(AudioBundle);
 	
 	return ff;
 }
@@ -301,17 +287,14 @@ void DeleteDLSFile()
 	OSErr	iErr;
 	FSSpec	tempDLS;
 	
-	iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tempDLS.vRefNum, &tempDLS.parID);
-	if( iErr == noErr)
-	{
-		pStrcpy( tempDLS.name, "\pTempDLS2.dls");
-		
-		FSpDelete( &tempDLS);
+	iErr = FindFolder(kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tempDLS.vRefNum, &tempDLS.parID);
+	if (iErr == noErr) {
+		FSMakeFSSpec(tempDLS.vRefNum, tempDLS.parID, "\pTempDLS2.dls", &tempDLS);
+		FSpDelete(&tempDLS);
 	}
 }
 
-
-short OpenDataFileQK( long dirID, short VRefNum)
+short OpenDataFileQK(long dirID, short VRefNum)
 {
 	CInfoPBRec		info;
 	Str255			tempStr;

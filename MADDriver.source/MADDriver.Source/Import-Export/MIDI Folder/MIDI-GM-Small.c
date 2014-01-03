@@ -18,12 +18,11 @@ static Boolean			QK50;
 Boolean					QuicktimeInstruAvailable;
 extern MADMusic			*curMusic;
 
-
-void ConvertInstrument( register	Byte	*tempPtr,	register long sSize);
-void NInitSmallPiano( Rect mainRect, Rect *listRect);
-void DrawSmallPianoKey( short i, short color, Rect aRect);
-void NDoPlayInstru(short	Note, short Instru, short effect, short arg, short vol);
-void ConvertInstrumentIn( register	Byte	*tempPtr,	register long sSize);
+void ConvertInstrument(register Byte *tempPtr, register long sSize);
+void NInitSmallPiano(Rect mainRect, Rect *listRect);
+void DrawSmallPianoKey(short i, short color, Rect aRect);
+void NDoPlayInstru(short Note, short Instru, short effect, short arg, short vol);
+void ConvertInstrumentIn(register Byte *tempPtr, register long sSize);
 
 static void DeleteDLSFile();
 static short GenerateDLSFromBundle();
@@ -31,25 +30,24 @@ static void TESTNEWSYSTEM( sData **sample, InstrData *inst, AtomicInstrument ai)
 static void Quicktime5( NoteRequest *NoteRequest, sData **sample, InstrData *inst);
 static short OpenDataFileQK( long dirID, short VRefNum);
 
-
 /**** Resource Format QK25 ****/
 
 //Tip: the original code was written thus:
 //long GetNELong(BigEndianLong toget)
 //{
 //#ifdef __BIG_ENDIAN__
-//return toget;
+//	return toget;
 //#else
-//return EndianU32_BtoL(toget.bigEndianValue);
+//	return EndianU32_BtoL(toget.bigEndianValue);
 //#endif
 //}
 //
 //void SetNEOSType(BigEndianOSType *toset, OSType theval)
 //{
 //#ifdef __BIG_ENDIAN__
-//*toset = theval;
+//	*toset = theval;
 //#else
-//toset->bigEndianValue = EndianU32_LtoB(theval);
+//	toset->bigEndianValue = EndianU32_LtoB(theval);
 //#endif
 //}
 //As such, you can substitute in your mind what the function would have
@@ -59,31 +57,31 @@ static short OpenDataFileQK( long dirID, short VRefNum);
 #ifdef __BIG_ENDIAN__
 #define GetNELong(toget) toget
 #else
-#define	GetNELong(toget) EndianS32_BtoL(toget.bigEndianValue)
+#define	GetNELong(toget) EndianS32_BtoL((toget).bigEndianValue)
 #endif
 
 #ifdef __BIG_ENDIAN__
-#define SetNELong(toset, theval)	*toset = theval
+#define SetNELong(toset, theval) *toset = theval
 #else
-#define SetNELong(toset, theval)	(toset)->bigEndianValue = EndianS32_LtoB(theval)	
+#define SetNELong(toset, theval) (toset)->bigEndianValue = EndianS32_LtoB(theval)
 #endif
 
 #ifdef __BIG_ENDIAN__
-#define SetNEOSType(toset, theval)	*toset = theval
+#define SetNEOSType(toset, theval) *(toset) = theval
 #else
-#define SetNEOSType(toset, theval)	(toset)->bigEndianValue = EndianU32_LtoB(theval)	
+#define SetNEOSType(toset, theval) (toset)->bigEndianValue = EndianU32_LtoB(theval)
 #endif
 
 #ifdef __BIG_ENDIAN__
 #define GetNEShort
 #else
-#define GetNEShort(toget) EndianS16_BtoL(toget.bigEndianValue)
+#define GetNEShort(toget) EndianS16_BtoL((toget).bigEndianValue)
 #endif
 
 #ifdef __BIG_ENDIAN__
 #define GetNEOSType(toget) toget
 #else
-#define GetNEOSType(toget) EndianU32_BtoL(toget.bigEndianValue)
+#define GetNEOSType(toget) EndianU32_BtoL((toget).bigEndianValue)
 #endif
 
 #ifdef __BIG_ENDIAN__
@@ -138,7 +136,6 @@ typedef struct
 	Byte	data[];
 } QuictimeRsrc25;
 
-
 typedef struct
 {
 	long	from;
@@ -182,10 +179,10 @@ typedef struct
 /*************************/
 
 #pragma mark Atom functions prototypes
-static OSErr GetAtomData( MyAtom at, void* data, long size);
-static long CountAtomById( MyAtom at, long type);
-static OSErr FindAtomById( MyAtom at, MyAtom *retat, Boolean LIST, long type, short id);
-static OSErr GetAtomDataById( MyAtom at, long type, void *data, long size);
+static OSErr GetAtomData(MyAtom at, void* data, long size);
+static long CountAtomById(MyAtom at, long type);
+static OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, long type, short id);
+static OSErr GetAtomDataById(MyAtom at, long type, void *data, long size);
 
 /*************************/
 
@@ -1296,90 +1293,74 @@ static short GenerateDLSFromBundle()
 	ResType			theType;
 	short			i, ff = -1;
 	
-	//DoStandardOpen( &file, "\pHello", 'ANYK');
 	
-	iErr = FindFolder( kOnSystemDisk, kComponentsFolderType, kDontCreateFolder, &file.vRefNum, &file.parID);
-	if( iErr == noErr)
-	{
-		pStrcpy( file.name, "\pCoreAudio.component");
-	}
-	else return -1;
+	iErr = FindFolder(kOnSystemDisk, kComponentsFolderType, kDontCreateFolder, &file.vRefNum, &file.parID);
+	if (iErr == noErr) {
+		FSMakeFSSpec(file.vRefNum, file.parID, "\pCoreAudio.component", &file);
+	} else
+		return -1;
 	
-	FSpMakeFSRef( &file, &bundleFSRef);
+	FSpMakeFSRef(&file, &bundleFSRef);
 	
-	bundleURL = CFURLCreateFromFSRef( kCFAllocatorDefault, &bundleFSRef);
+	bundleURL = CFURLCreateFromFSRef(kCFAllocatorDefault, &bundleFSRef);
 	
-	AudioBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL);
+	AudioBundle = CFBundleCreate(kCFAllocatorDefault, bundleURL);
 	CFRelease(bundleURL);
-	if( AudioBundle == NULL) Debugger();
-	
+	if(AudioBundle == NULL)  {
+		MyDebugStr(__LINE__, __FILE__, "Unable to load CoreAudio.component");
+		return -1;
+	}
 	
 	// MacOS X 10.2
 	
-	rsrcURL = 		CFBundleCopyResourceURL( AudioBundle, 
-											CFSTR("gs_instruments"), 			//CoreAudio
-											CFSTR("dls"),	 					//rsrc
-											NULL);
+	rsrcURL = CFBundleCopyResourceURL(AudioBundle, CFSTR("gs_instruments"), CFSTR("dls"), NULL);
 	
-	CFURLGetFSRef( rsrcURL, &rsrcRef);
+	CFURLGetFSRef(rsrcURL, &rsrcRef);
 	
-	iErr = FSOpenFork( &rsrcRef, 0, 0, fsRdPerm, &refNum);
+	iErr = FSOpenFork(&rsrcRef, 0, 0, fsRdPerm, &refNum);
 	CFRelease(rsrcURL);
-	
-	if( iErr == noErr) 
-	{
+	if (iErr == noErr) {
 		CFRelease(AudioBundle);
 		return refNum;
 	}
 	
-	
-	// Look for a resource in the main bundle by name and type.
-	/*rsrcURL = 		CFBundleCopyResourceURL( AudioBundle, 
-											CFSTR("CoreAudio"), 			//CoreAudio
-											CFSTR("rsrc"), 					//rsrc
-											NULL);
-	
-	CFURLGetFSRef( rsrcURL, &rsrcRef);
-	
-	iErr = FSOpenResourceFile( &rsrcRef, 0, 0, fsRdPerm, &refNum);
-	CFRelease(rsrcURL);
-	if( iErr) return -1;*/
+	// Look for and open the bundle's resource file
 	refNum = CFBundleOpenBundleResourceMap(AudioBundle);
+	if (refNum == -1) {
+		CFRelease(AudioBundle);
+		return -1;
+	}
 	
-	for( i = 0; i < Count1Types(); i++)
-	{
-		Get1IndType( &theType, i+1);
+	for (i = 0; i < Count1Types(); i++) {
+		Get1IndType(&theType, i+1);
 		
-		if( theType == 'dls2')
-		{
-			Handle	rsrc = Get1IndResource( 'dls2', 1);
-			DetachResource( rsrc);
+		if(theType == 'dls2') {
+			Handle	rsrc = Get1IndResource('dls2', 1);
+			DetachResource(rsrc);
 			
 			// Write a temp DLS2 File on the hard drive...
 			
-			iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tempDLS.vRefNum, &tempDLS.parID);
-			if( iErr == noErr)
-			{
-				pStrcpy( tempDLS.name, "\pTempDLS2.dls");
+			iErr = FindFolder(kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tempDLS.vRefNum, &tempDLS.parID);
+			if (iErr == noErr) {
+				FSMakeFSSpec(tempDLS.vRefNum, tempDLS.parID, "\pTempDLS2.dls", &tempDLS);
 				
-				FSpDelete( &tempDLS);
-				iErr = FSpCreate( &tempDLS, 'INIT', 'dvb ', smSystemScript);
-				if( iErr == noErr)
-				{
+				FSpDelete(&tempDLS);
+				iErr = FSpCreate(&tempDLS, 'INIT', 'dvb ', smSystemScript);
+				if (iErr == noErr) {
 					long	count;
 					
-					FSpOpenDF( &tempDLS, fsCurPerm, &ff);
+					FSpOpenDF(&tempDLS, fsCurPerm, &ff);
 					
-					HLock( rsrc);
-					count = GetHandleSize( rsrc);
-					FSWrite( ff, &count, *rsrc);
-					HUnlock( rsrc);
+					HLock(rsrc);
+					count = GetHandleSize(rsrc);
+					FSWrite(ff, &count, *rsrc);
+					HUnlock(rsrc);
 					
-					SetFPos( ff, fsFromStart, 0);
+					SetFPos(ff, fsFromStart, 0);
 				}
 			}
 			
-			DisposeHandle( rsrc);
+			DisposeHandle(rsrc);
 		}
 	}
 	
@@ -1394,12 +1375,10 @@ static void DeleteDLSFile()
 	OSErr	iErr;
 	FSSpec	tempDLS;
 	
-	iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tempDLS.vRefNum, &tempDLS.parID);
-	if( iErr == noErr)
-	{
-		pStrcpy( tempDLS.name, "\pTempDLS2.dls");
-		
-		FSpDelete( &tempDLS);
+	iErr = FindFolder(kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tempDLS.vRefNum, &tempDLS.parID);
+	if (iErr == noErr) {
+		FSMakeFSSpec(tempDLS.vRefNum, tempDLS.parID, "\pTempDLS2.dls", &tempDLS);
+		FSpDelete(&tempDLS);
 	}
 }
 
