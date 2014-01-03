@@ -427,7 +427,8 @@
 					[_theDriver endExport];
 					break;
 			}
-		}
+		} else
+			[_theDriver endExport];
 	}];
 }
 
