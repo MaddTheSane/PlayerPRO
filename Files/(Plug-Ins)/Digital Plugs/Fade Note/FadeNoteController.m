@@ -10,7 +10,7 @@
 
 static short NSStringToNote(NSString *myTT)
 {
-	if (!myTT || [myTT isEqualToString:@""] || [myTT isEqualToString:@"---"]) {
+	if (!myTT || [myTT isEqualToString:@""] || [myTT isEqualToString:@"---"] || [myTT length] < 2) {
 		return 0xFF;
 	}
 	
