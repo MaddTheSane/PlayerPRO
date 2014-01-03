@@ -11,34 +11,33 @@ enum
 	HPref	= 6,		// 1
 	HLoad	= 3,		// 2
 	HSave	= 4,		// 3
-	HUp		= 10,	// 4
-	HInfo		= 2,		// 5
+	HUp		= 10,		// 4
+	HInfo	= 2,		// 5
 	HPlay	= 7,		// 6
-	HRec		= 11,	// 7
+	HRec	= 11,		// 7
 	HOpenA	= 8,		// 8
 	HTrack	= 5,		// 9
-	HPos		= 9,		// 10
+	HPos	= 9,		// 10
 	HPatt	= 1,		// 11
-	HFX		= 12,	// 12
-	HLoop	= 13,	// 13
-	HFind	= 14,	// 14
-	HDown	= 23,	// 15
-	HFill		= 18,
+	HFX		= 12,		// 12
+	HLoop	= 13,		// 13
+	HFind	= 14,		// 14
+	HDown	= 23,		// 15
+	HFill	= 18,
 	HD1		= 37,
 	HD2		= 38,
 	HD3		= 39,
 	HD4		= 40,
 	HStep	= 21
 };
-#define	AHELPSIZE	21
 
 //static pascal Boolean myDragClickLoop(void);
-static	short		AHelp[ AHELPSIZE] =
+static short AHelp[] =
 { HPref, HLoad, HSave, HUp, HInfo, HPlay, HRec, HOpenA, HTrack, HPos, HPatt, HFX, HLoop, HFind, HDown, HFill, HD1, HD2, HD3, HD4, HStep};
 
 void DoHelpEditor(short **items, short *lsize)
 {
-	*lsize = AHELPSIZE;
+	*lsize = sizeof(AHelp) / sizeof(AHelp[0]);
 	*items = AHelp;
 }
 
@@ -107,15 +106,19 @@ void ClosePartitionWindow(void);
 void DoKeyPressEditor(short theChar);
 
 
-Cmd* GetCmd(short row, short	track, Pcmd*	myPcmd)
+Cmd* GetCmd(short row, short track, Pcmd* myPcmd)
 {
-	if (row < 0) row = 0;
-	else if (row >= myPcmd->length) row = myPcmd->length -1;
+	if (row < 0)
+		row = 0;
+	else if (row >= myPcmd->length)
+		row = myPcmd->length -1;
 
-	if (track < 0) track = 0;
-	else if (track >= myPcmd->tracks) track = myPcmd->tracks -1;
+	if (track < 0)
+		track = 0;
+	else if (track >= myPcmd->tracks)
+		track = myPcmd->tracks -1;
 	
-	return(&(myPcmd->myCmd[ (myPcmd->length * track) + row]));
+	return &(myPcmd->myCmd[(myPcmd->length * track) + row]);
 }
 
 void ConvertPointAndType(Point *cPt, short *Type)
@@ -135,31 +138,41 @@ void ConvertPointAndType(Point *cPt, short *Type)
 	dist /= CharWidth(' ');
 	
 	*Type = -1;
-	if (thePrefs.DigitalInstru && *Type == -1)
-	{
-		ttI += 4;	if (dist < ttI) *Type = InstruTE;
+	if (thePrefs.DigitalInstru && *Type == -1) {
+		ttI += 4;
+		if (dist < ttI)
+			*Type = InstruTE;
 	}
-	if (thePrefs.DigitalNote && *Type == -1)
-	{
-		ttI += 4;	if (dist < ttI) *Type = NoteTE;
+	if (thePrefs.DigitalNote && *Type == -1) {
+		ttI += 4;
+		if (dist < ttI)
+			*Type = NoteTE;
 	}
-	if (thePrefs.DigitalEffect && *Type == -1)
-	{
-		ttI += 2;	if (dist < ttI) *Type = EffectTE;
+	if (thePrefs.DigitalEffect && *Type == -1) {
+		ttI += 2;
+		if (dist < ttI)
+			*Type = EffectTE;
 	}
-	if (thePrefs.DigitalArgu && *Type == -1)
-	{
-		ttI += 3;	if (dist < ttI) *Type = ArguTE;
+	if (thePrefs.DigitalArgu && *Type == -1) {
+		ttI += 3;
+		if (dist < ttI)
+			*Type = ArguTE;
 	}
-	if (thePrefs.DigitalVol && *Type == -1)
-	{
-		ttI += 3;	if (dist < ttI) *Type = VolumeTE;
+	if (thePrefs.DigitalVol && *Type == -1) {
+		ttI += 3;
+		if (dist < ttI)
+			*Type = VolumeTE;
 	}
 	
-	if (cPt->h < 0) cPt->h = 0;			if (cPt->v < 0) cPt->v = 0;
+	if (cPt->h < 0)
+		cPt->h = 0;
+	if (cPt->v < 0)
+		cPt->v = 0;
 	
-	if (cPt->h >= curMusic->header->numChn ) cPt->h = curMusic->header->numChn - 1;
-	if (cPt->v >= curMusic->partition[ CurrentPat]->header.size ) cPt->v = curMusic->partition[ CurrentPat]->header.size - 1;
+	if (cPt->h >= curMusic->header->numChn )
+		cPt->h = curMusic->header->numChn - 1;
+	if (cPt->v >= curMusic->partition[CurrentPat]->header.size )
+		cPt->v = curMusic->partition[CurrentPat]->header.size - 1;
 }
 
 Cmd * GetEditorSelectCmd(short *track, short *position)
@@ -167,25 +180,24 @@ Cmd * GetEditorSelectCmd(short *track, short *position)
 	GrafPtr	savePort;
 	Cell	theCell = { 0, 0};
 
-	if (EditorDlog != NULL)
-	{
-		if (PLGetSelect(&theCell, &myList))
-		{
+	if (EditorDlog != NULL) {
+		if (PLGetSelect(&theCell, &myList)) {
 			*track = theCell.h;	*position = theCell.v;
-			return(GetMADCommand(theCell.v, theCell.h, curMusic->partition[ CurrentPat]));		
-		}
-		else return NULL;
-	}
-	else return NULL;
+			return GetMADCommand(theCell.v, theCell.h, curMusic->partition[CurrentPat]);
+		} else
+			return NULL;
+	} else
+		return NULL;
 }
 
 void SetSelectionEditor(short FPat, short FPos, short FTrack)
 {
-	GrafPtr	savePort;
-	Cell	theCell = { 0, 0};
+	GrafPtr			savePort;
+	Cell			theCell = { 0, 0};
 	unsigned long	ttt;
 	
-	if (EditorDlog == NULL) CreatePartitionWindow();
+	if (EditorDlog == NULL)
+		CreatePartitionWindow();
 	
 	MADDriver->Pat = FPat;
 	DoNullEditor();
@@ -193,9 +205,9 @@ void SetSelectionEditor(short FPat, short FPos, short FTrack)
 	GetPort(&savePort);
 	SetPortDialogPort(EditorDlog);
 	
-//	TextFont(4);	TextSize(9);
+	//TextFont(4);	TextSize(9);
 	
-//	PLSetSelect(-1, -1, -1, -1, &myList);
+	//PLSetSelect(-1, -1, -1, -1, &myList);
 	
 	theCell.h = FTrack;	theCell.v = FPos;
 	
@@ -207,7 +219,7 @@ void SetSelectionEditor(short FPat, short FPos, short FTrack)
 	SetPort(savePort);
 }
 
-/*
+#if 0
 void CreateEditorPixMap(short PatID)
 {
 	GDHandle			oldGDeviceH;
@@ -264,7 +276,7 @@ void CreateEditorPixMap(short PatID)
 	
 	InvalWindowRect(GetDialogWindow(&aRect);
 }
-*/
+#endif
 
 void SetMaxWindow(short maxRight, short maxBottom, DialogPtr	whichDialog)
 {
@@ -278,44 +290,41 @@ void SetMaxWindow(short maxRight, short maxBottom, DialogPtr	whichDialog)
 	
 	GetWindowStandardState(GetDialogWindow(whichDialog), &stdRect);
 	
-//	GetPortBounds(GetDialogPort(whichDialog), &caRect);
+	//GetPortBounds(GetDialogPort(whichDialog), &caRect);
 	
 	stdRect.right = stdRect.left + maxRight;
 	stdRect.bottom = stdRect.top + maxBottom;
 	
 	SetWindowStandardState(GetDialogWindow(whichDialog), &stdRect);
 	
-/*	localPt.v = localPt.h = 1;
+#if 0
+	localPt.v = localPt.h = 1;
 	FindControl(localPt,whichDialog,&aCtl);
 	
-	if (aCtl == NULL)
-	{
+	if (aCtl == NULL) {
 		long tL = ((long) maxRight<<16L) + (long) maxBottom;
 		
 		SetRect(&ttt, 0, 0, 2, 2);
 		aCtl = NewControl(whichWindow, &ttt,"\p", false, 0, 0, 0,0,  tL);
-	}
-	else
-	{
+	} else {
 		long tL = ((long) maxRight<<16L) + (long) maxBottom;
 		
 		SetControlReference(aCtl, tL);
-	}*/
+	}
 	
-/*	wPeek = (WindowPeek) whichWindow;
+	wPeek = (WindowPeek) whichWindow;
 	wspd = (WStateData*) *(wPeek->dataHandle);
 	
-	if (maxRight != 0)
-	{
-	//	if (wspd->stdState.left + maxRight > qd.screenBits.bounds.right - 2) maxRight = qd.screenBits.bounds.right - 2 - wspd->stdState.left;
+	if (maxRight != 0) {
+		//	if (wspd->stdState.left + maxRight > qd.screenBits.bounds.right - 2) maxRight = qd.screenBits.bounds.right - 2 - wspd->stdState.left;
 		wspd->stdState.right = wspd->stdState.left + maxRight;
 	}
 	
-	if (maxBottom != 0)
-	{
-	//	if (wspd->stdState.top + maxBottom > qd.screenBits.bounds.bottom - 2) maxBottom = qd.screenBits.bounds.bottom - 2 - wspd->stdState.top;
+	if (maxBottom != 0) {
+		//	if (wspd->stdState.top + maxBottom > qd.screenBits.bounds.bottom - 2) maxBottom = qd.screenBits.bounds.bottom - 2 - wspd->stdState.top;
 		wspd->stdState.bottom = wspd->stdState.top + maxBottom;
-	}*/
+	}
+#endif
 	
 	SetPort(savedPtr);
 }
@@ -345,25 +354,26 @@ void SelectCurrentActif(void)
 	}
 }
 
-void OctavesName(short	id, Ptr	String)
+void OctavesName(short id, char *String)
 {
-	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
-							/*	{'Do','Do#','Ré','Ré#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
+	const char	NNames[][3] = {"C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "};
+	/*	{'Do','Do#','Ré','Ré#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'};	*/
 	Str255		WorkStr;
 	
-	if (id == 0xFF)
-	{
+	if (id == 0xFF) {
 		strcpy(String, "---");
 		return;
 	}
 	
-	NumToString((id / 12), WorkStr);			
+	NumToString((id / 12), WorkStr);
 	MyP2CStr(WorkStr);
-  	String[0] = NNames[ (id) % 12]>>8;			String[1] = NNames[ (id) % 12]; String[2]='\0';
-  	strcat(String, (Ptr) WorkStr);	
+	String[0] = NNames[(id) % 12][0];
+	String[1] = NNames[(id) % 12][1];
+	String[2]='\0';
+	strcat(String, (Ptr)WorkStr);
 }
 
-short ConvertNote2No(	Str32 	myTT)
+short ConvertNote2No(Str32 myTT)
 {
 	long	ThZ;
 	short	Oct;
@@ -375,31 +385,61 @@ short ConvertNote2No(	Str32 	myTT)
 	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
 	switch(myTT[1])
 	{
-		case 'C':	case'c':	Oct += 0;	break;
-		case 'D':	case'd':	Oct += 2;	break;
-		case 'E':	case'e':	Oct += 4;	break;
-		case 'F':	case'f':	Oct += 5;	break;
-		case 'G':	case'g':	Oct += 7;	break;
-		case 'A':	case'a':	Oct += 9;	break;
-		case 'B':	case'b':	Oct += 11;	break;
+		case 'C':
+		case 'c':
+			Oct += 0;
+			break;
+			
+		case 'D':
+		case 'd':
+			Oct += 2;
+			break;
+			
+		case 'E':
+		case 'e':
+			Oct += 4;
+			break;
+			
+		case 'F':
+		case 'f':
+			Oct += 5;
+			break;
+			
+		case 'G':
+		case 'g':
+			Oct += 7;
+			break;
+			
+		case 'A':
+		case 'a':
+			Oct += 9;
+			break;
+			
+		case 'B':
+		case 'b':
+			Oct += 11;
+			break;
 		
-		default:	Oct = 0xFF;		break;
+		default:
+			Oct = 0xFF;
+			break;
 	}
 	
-	if (Oct != 0xFF)
-	{
-		if (myTT[2] == '#') Oct++;
-		if (Oct >= NUMBER_NOTES) Oct = NUMBER_NOTES-1;
-		if (Oct < 0) Oct = 0;
+	if (Oct != 0xFF) {
+		if (myTT[2] == '#')
+			Oct++;
+		if (Oct >= NUMBER_NOTES)
+			Oct = NUMBER_NOTES-1;
+		if (Oct < 0)
+			Oct = 0;
 	}
 	
-	return(Oct);
+	return Oct;
 }
 
 void CheckColumn(void)
 {
-	if (GetControlMaximum(myList.xScroll) != curMusic->header->numChn - (myList.rect.right - myList.rect.left) / myList.LCell)
-	{
+	if (GetControlMaximum(myList.xScroll) != curMusic->header->numChn - (myList.rect.right - myList.rect.left) / myList.LCell) {
 		DrawEditorUp();
 		PLSetControl(&myList);
 	}
@@ -415,8 +455,7 @@ void OutPutHexShort(Str255 outch, short column, short shortNumber)
 //	# define abs(a) ((a) <0? - (a):(a))
 	
 	temporaryInteger = abs(shortNumber);
-	for(i=1;i <=10; i++)
-	{
+	for(i = 1; i <= 10; i++) {
 		nextTemporary = temporaryInteger / 16;
 		digit = temporaryInteger - nextTemporary*16;
 		temporaryInteger = nextTemporary;
@@ -429,60 +468,54 @@ void OutPutHexShort(Str255 outch, short column, short shortNumber)
 	
 	j=column;
 	
-	for(i = 1; i <= column; i++)
-	{
+	for(i = 1; i <= column; i++) {
 		outch[ i] = buffer[j];
 		j--;
 	}
 	outch[ 0] = column;
 }
 
-void NTStr(short	NoDigi, short		val, Ptr	theText)
+void NTStr(short NoDigi, short val, char *theText)
 {
 	short	temp;
 	
 	switch(NoDigi)
 	{
 		case 1:
-			theText[ 0] = 0x30 + val;
-			theText[ 1] = 0;
+			theText[0] = 0x30 + val;
+			theText[1] = 0;
 			break;
 			
 		case 2:
 			temp = val/10;
 			
-			theText[ 0] = 0x30 + temp;
-			theText[ 1] = 0x30 + val - temp*10;
-			theText[ 2] = 0;
+			theText[0] = 0x30 + temp;
+			theText[1] = 0x30 + val - temp*10;
+			theText[2] = 0;
 			break;
 			
 		case 3:
-			if (val < 10)
-			{
-				theText[ 0] = 0x30;
-				theText[ 1] = 0x30;
-				theText[ 2] = 0x30 + val;
-			}
-			else if (val < 100)
-			{
-				temp = val/10;
+			if (val < 10) {
+				theText[0] = 0x30;
+				theText[1] = 0x30;
+				theText[2] = 0x30 + val;
+			} else if (val < 100) {
+				temp = val / 10;
 				
-				theText[ 0] = 0x30;
-				theText[ 1] = 0x30 + temp;
-				theText[ 2] = 0x30 + val - temp*10;
-			}
-			else
-			{
-				temp = val/100;
+				theText[0] = 0x30;
+				theText[1] = 0x30 + temp;
+				theText[2] = 0x30 + val - temp * 10;
+			} else {
+				temp = val / 100;
 				
-				theText[ 0] = 0x30 + temp;
+				theText[0] = 0x30 + temp;
 				val -= temp*100;
 				
 				temp = val/10;
-				theText[ 1] = 0x30 + temp;
-				theText[ 2] = 0x30 + val - temp*10;
+				theText[1] = 0x30 + temp;
+				theText[2] = 0x30 + val - temp * 10;
 			}
-			theText[ 3] = 0;
+			theText[3] = 0;
 			break;
 			
 		default:
@@ -496,7 +529,8 @@ void SetPatternCell(short pos, short track)
 	GrafPtr		SavePort;
 	Rect			aR;
 	
-	if (EditorDlog == NULL) return;
+	if (EditorDlog == NULL)
+		return;
 	
 	GetPort(&SavePort);
  	SetPortDialogPort(EditorDlog);
@@ -508,14 +542,15 @@ void SetPatternCell(short pos, short track)
 	SetPort(SavePort);
 }
 
-void GetNoteString(short note, Str255	string)
+void GetNoteString(short note, Str255 string)
 {
-	if (note < 0 || note > NUMBER_NOTES) pStrcpy(string, "\p---");
+	if (note < 0 || note > NUMBER_NOTES)
+		pStrcpy(string, "\p---");
 
 	string[ 0] = 3;
-	string[ 1] = ENote[ note][ 0];
-	string[ 2] = ENote[ note][ 1];
-	string[ 3] = ENote[ note][ 2];
+	string[ 1] = ENote[note][0];
+	string[ 2] = ENote[note][1];
+	string[ 3] = ENote[note][2];
 }
 
 void InitStringEditor(void)
@@ -523,25 +558,23 @@ void InitStringEditor(void)
 	Str255		stemp;
 	short		i, x;
 
-	for (i = 1; i <= MAXINSTRU; i++)
-	{
-		NTStr(3, i, (Ptr) stemp);
+	for (i = 1; i <= MAXINSTRU; i++) {
+		NTStr(3, i, (Ptr)stemp);
 		
-		EInstru[ i][ 0] = stemp[ 0];
-		EInstru[ i][ 1] = stemp[ 1];
-		EInstru[ i][ 2] = stemp[ 2];
+		EInstru[i][0] = stemp[0];
+		EInstru[i][1] = stemp[1];
+		EInstru[i][2] = stemp[2];
 	}
-	EInstru[ 0][ 0] = '0';
-	EInstru[ 0][ 1] = '0';
-	EInstru[ 0][ 2] = '0';
+	EInstru[0][0] = '0';
+	EInstru[0][1] = '0';
+	EInstru[0][2] = '0';
 
-	for (i = 0; i < NUMBER_NOTES; i++)
-	{
-		OctavesName(i, (Ptr) stemp);
+	for (i = 0; i < NUMBER_NOTES; i++) {
+		OctavesName(i, (Ptr)stemp);
 		
-		ENote[ i][ 0] = stemp[ 0];
-		ENote[ i][ 1] = stemp[ 1];
-		ENote[ i][ 2] = stemp[ 2];
+		ENote[i][0] = stemp[0];
+		ENote[i][1] = stemp[1];
+		ENote[i][2] = stemp[2];
 	}
 	ENote[ 0xFF][ 0] = '0';
 	ENote[ 0xFF][ 1] = '0';
@@ -552,9 +585,9 @@ void InitStringEditor(void)
 	ENote[ 0xFE][ 2] = 'F';
 	
 
-	for (i = 0; i < 16; i++)
-	{
-		OutPutHexShort(stemp, 1, i);		MyP2CStr(stemp);
+	for (i = 0; i < 16; i++) {
+		OutPutHexShort(stemp, 1, i);
+		MyP2CStr(stemp);
 		EEffect[ i] = stemp[ 0];
 	}
 	EEffect[ 16] = 'G';
@@ -563,7 +596,8 @@ void InitStringEditor(void)
 	
 	for (i = 0; i <= 256; i++)
 	{
-		OutPutHexShort(stemp, 2, i);		MyP2CStr(stemp);
+		OutPutHexShort(stemp, 2, i);
+		MyP2CStr(stemp);
 		EArgu[ i][ 0] = stemp[ 0];
 		EArgu[ i][ 1] = stemp[ 1];
 	}

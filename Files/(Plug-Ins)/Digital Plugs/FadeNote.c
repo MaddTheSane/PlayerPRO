@@ -257,22 +257,21 @@ static Cmd* GetCmd(short row, short	track, Pcmd*	myPcmd)
 	return(&(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
 
-static void OctavesName(short	id, Str255	String)
+static void OctavesName(short id, Str255 String)
 {
-	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
+	const char		NNames[][3] = {"C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "};
 	Str255			WorkStr;
 	
-	if (id == 0xFF)
-	{
+	if (id == 0xFF) {
 		pStrcpy(String, "\p---");
 		return;
 	}
 	
 	NumToString((id / 12), WorkStr);
-	String[ 0] = 3;
-	String[ 1] = NNames[ (id) % 12]>>8;
-	String[ 2] = NNames[ (id) % 12];
-  	String[ 3] = WorkStr[ 1];
+	String[0] = 3;
+	String[1] = NNames[(id) % 12][0];
+	String[2] = NNames[(id) % 12][1];
+  	String[3] = WorkStr[1];
 }
 
 static MenuHandle CreateMenu()
@@ -283,9 +282,9 @@ static MenuHandle CreateMenu()
 	
 	returnMenu = GetMenu(141);
 	
-	OctavesName(1, aStr);		SetMenuItemText(returnMenu, 1, aStr);
-	for (i = 1; i < 96; i++)
-	{
+	OctavesName(1, aStr);
+	SetMenuItemText(returnMenu, 1, aStr);
+	for (i = 1; i < 96; i++) {
 		OctavesName(i, aStr);
 		AppendMenu(returnMenu, aStr);
 	}
@@ -297,32 +296,63 @@ static short Text2Note(Str255 myTT)
 {
 	short		Oct;
 
-	Oct = myTT[ 3] - 48;
+	Oct = myTT[3] - 48;
 	Oct *= 12;
 	
 	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
 	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
 	switch(myTT[1])
 	{
-		case 'C':	case'c':	Oct += 0;	break;
-		case 'D':	case'd':	Oct += 2;	break;
-		case 'E':	case'e':	Oct += 4;	break;
-		case 'F':	case'f':	Oct += 5;	break;
-		case 'G':	case'g':	Oct += 7;	break;
-		case 'A':	case'a':	Oct += 9;	break;
-		case 'B':	case'b':	Oct += 11;	break;
+		case 'C':
+		case 'c':
+			Oct += 0;
+			break;
+			
+		case 'D':
+		case 'd':
+			Oct += 2;
+			break;
+			
+		case 'E':
+		case 'e':
+			Oct += 4;
+			break;
+			
+		case 'F':
+		case 'f':
+			Oct += 5;
+			break;
+			
+		case 'G':
+		case 'g':
+			Oct += 7;
+			break;
+			
+		case 'A':
+		case 'a':
+			Oct += 9;
+			break;
+			
+		case 'B':
+		case 'b':
+			Oct += 11;
+			break;
 		
-		default:	Oct = 0xFF;		break;
+		default:
+			Oct = 0xFF;
+			break;
 	}
 	
-	if (Oct != 0xFF)
-	{
-		if (myTT[ 2] == '#') Oct++;
-		if (Oct >= 96) Oct = 0xFF;
-		if (Oct < 0) Oct = 0xFF;
+	if (Oct != 0xFF) {
+		if (myTT[2] == '#')
+			Oct++;
+		if (Oct >= 96)
+			Oct = 0xFF;
+		if (Oct < 0)
+			Oct = 0xFF;
 	}
 	
-	return(Oct);
+	return Oct;
 }
 
 static OSErr mainFadeNote(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
@@ -351,8 +381,7 @@ static OSErr mainFadeNote(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	
 	noteMenu = CreateMenu();
 	
-	do
-	{
+	do {
 	RESTART:
 	
 		ModalDialog(thePPInfoPlug->MyDlgFilterUPP, &itemHit);
@@ -370,16 +399,15 @@ static OSErr mainFadeNote(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 				GetDText(myDia, itemHit-4, aStr);
 				SetItemMark(noteMenu, Text2Note(aStr) + 1, 0xa5);
 				
-				Result = PopUpMenuSelect(	noteMenu,
+				Result = PopUpMenuSelect( noteMenu,
 											myPt.v,
 											myPt.h,
 											Text2Note(aStr) + 1);
 				
 				SetItemMark(noteMenu, Text2Note(aStr) + 1, 0);
 				
-				if (HiWord(Result ) != 0 )
-				{
-					OctavesName(LoWord(Result)-1, aStr);
+				if (HiWord(Result) != 0 ) {
+					OctavesName(LoWord(Result) - 1, aStr);
 					SetDText(myDia, itemHit-4, aStr);
 					SelectDialogItemText(myDia, 3, 0, 200);
 				}
@@ -387,37 +415,34 @@ static OSErr mainFadeNote(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 				DeleteMenu(GetMenuID(noteMenu));
 			break;
 		}
-	}while (itemHit != 1 && itemHit != 2);
+	} while (itemHit != 1 && itemHit != 2);
 	
-	if (itemHit == 1)
-	{
+	if (itemHit == 1) {
 		short	track, row;
 		long	from, to;
 		Cmd		*myCmd;
 	
-		GetDText(myDia, 3, aStr);		from 	= Text2Note(aStr);
-		GetDText(myDia, 4, aStr);		to 		= Text2Note(aStr);
+		GetDText(myDia, 3, aStr);
+		from 	= Text2Note(aStr);
+		GetDText(myDia, 4, aStr);
+		to 		= Text2Note(aStr);
 		
 		// Check values
 		
-		if (from < 0 || from >= 96)
-		{
+		if (from < 0 || from >= 96) {
 			SelectDialogItemText(myDia, 3, 0, 200);
 			SysBeep(1);
 			goto RESTART;
 		}
 		
-		if (to < 0 || to >= 96)
-		{
+		if (to < 0 || to >= 96) {
 			SelectDialogItemText(myDia, 4, 0, 200);
 			SysBeep(1);
 			goto RESTART;
 		}
 		
-		for (track = 0; track < myPcmd->tracks; track++)
-		{
-			for (row = 0; row < myPcmd->length; row++)
-			{
+		for (track = 0; track < myPcmd->tracks; track++) {
+			for (row = 0; row < myPcmd->length; row++) {
 				myCmd = GetCmd(row, track, myPcmd);
 				
 				if (myPcmd->length > 1)			// no zero div !!
