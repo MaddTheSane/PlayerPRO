@@ -216,16 +216,16 @@ typedef struct Channel
 
 typedef struct MADMusic
 {
+	Boolean		musicUnderModification;		// Tell the driver to NOT access music data
+	Boolean		hasChanged;
+	Str255		musicFileName;
+	int			position, fullTime;
+	OSType		originalFormat;
 	MADSpec		*header;					// Music Header - See 'MAD.h'
 	PatData		*partition[MAXPATTERN];		// Patterns
 	InstrData	*fid;						// Instruments
 	sData		**sample;					// Samples
 	FXSets		*sets;						// FXSettings
-	Boolean		musicUnderModification;		// Tell the driver to NOT access music data
-	Str255		musicFileName;
-	Boolean		hasChanged;
-	int			position, fullTime;
-	OSType		originalFormat;
 } MADMusic;
 
 /********************						***********************/
@@ -273,19 +273,19 @@ enum OutputChannels
 
 typedef struct MADDriverSettings
 {
-	short			numChn;								// Active tracks from 2 to 32, automatically setup when a new music is loaded
-	short			outPutBits;							// 8 or 16 Bits TODO: 24 Bits
-	unsigned int	outPutRate;							// Integer of audio sample rate
-	short			outPutMode;							// Now, only DeluxeStereoOutPut is available !
-	short			driverMode;							// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
-	Boolean			repeatMusic;						// If music finished, repeat it or stop.
-	int				MicroDelaySize;						// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
-	Boolean			surround;							// Surround effect active? true/false
-	Boolean			Reverb;								// Reverb effect active? true/false
-	int				ReverbSize;							// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
-	int				ReverbStrength;						// Reverb strength in % (0 <-> 70)
-	Boolean			TickRemover;						// Remove volume/sample/loop ticks.
-	int				oversampling;						// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
+	Boolean			TickRemover;		// Remove volume/sample/loop ticks.
+	Boolean			surround;			// Surround effect active? true/false
+	Boolean			Reverb;				// Reverb effect active? true/false
+	Boolean			repeatMusic;		// If music finished, repeat it or stop.
+	short			numChn;				// Active tracks from 2 to 32, automatically setup when a new music is loaded
+	short			outPutBits;			// 8 or 16 Bits TODO: 24 Bits
+	short			outPutMode;			// Now, only DeluxeStereoOutPut is available !
+	short			driverMode;			// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
+	unsigned int	outPutRate;			// Integer of audio sample rate
+	int				MicroDelaySize;		// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
+	int				ReverbSize;			// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
+	int				ReverbStrength;		// Reverb strength in % (0 <-> 70)
+	int				oversampling;		// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
 } MADDriverSettings;
 
 /******************************************************************/
@@ -322,11 +322,11 @@ typedef struct PPInfoRec
 	char	internalFileName[60];
 	char	formatDescription[60];
 	
-	int		totalPatterns;
-	int		partitionLength;
-	
 	short	totalTracks;
 	short	totalInstruments;
+	
+	int		totalPatterns;
+	int		partitionLength;
 	
 	OSType	signature;
 	
@@ -365,19 +365,19 @@ typedef OSErr (*MADPLUGFUNC)(OSType, char *, MADMusic *, PPInfoRec *, MADDriverS
 
 typedef struct PlugInfo
 {
+	char		type[5];		// OSType of file support.
+#ifdef __x86_64__
+	Boolean		is32BitOnly;	// if the specified plug-in is only 32-bit
+#endif
+	OSType		mode;			// Mode support : Import +/ Export
+	UInt32		version;		// Plug-in version
 	MADPLUGFUNC	IOPlug;			// Plug CODE
 	CFStringRef	MenuName;		// Plug name
 	CFStringRef	AuthorString;	// Plug author
 #if !TARGET_OS_IPHONE
 	CFBundleRef	file;			// Location of plug file
 #endif
-	char		type[5];		// OSType of file support.
 	CFArrayRef	UTItypes;		// CFStrings of supported UTIs
-	OSType		mode;			// Mode support : Import +/ Export
-	UInt32		version;		// Plug-in version
-#ifdef __x86_64__
-	Boolean		is32BitOnly;	// if the specified plug-in is only 32-bit
-#endif
 } PlugInfo;
 #endif
 
@@ -386,14 +386,14 @@ typedef struct PlugInfo
 typedef OSErr (*PLUGDLLFUNC)(OSType, char *, MADMusic*, PPInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
-	HMODULE		hLibrary;
-	PLUGDLLFUNC	IOPlug;				// Plug CODE
 	char		MenuName[65];		// Plug name
 	char		AuthorString[65];	// Plug author
 	char		file[MAX_PATH * 2];	// Location of plug file
 	char		type[5];			// OSType of file support
 	OSType		mode;				// Mode support : Import +/ Export
 	int			version;			// Plug-in version
+	HMODULE		hLibrary;
+	PLUGDLLFUNC	IOPlug;				// Plug CODE
 } PlugInfo;
 #endif
 
@@ -403,14 +403,14 @@ typedef	OSErr (*MADPlug)(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPI
 
 typedef struct PlugInfo
 {
-	image_id	hLibrary;
-	MADPlug		IOPlug;				// Plug CODE
 	char		MenuName[ 65];		// Plug name
 	char		AuthorString[ 65];	// Plug author
 	char		file[1024];			// Location of plug file
 	char		type[5];			// OSType of file support
 	OSType		mode;				// Mode support : Import +/ Export
 	int			version;			// Plug-in version
+	image_id	hLibrary;
+	MADPlug		IOPlug;				// Plug CODE
 } PlugInfo;
 #endif
 
@@ -420,14 +420,14 @@ typedef struct PlugInfo
 typedef OSErr (*MADPLUGFUNC)(OSType, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
-	void*		hLibrary;
-	MADPLUGFUNC	IOPlug;				// Plug CODE
 	char		MenuName[65];		// Plug name
 	char		AuthorString[65];	// Plug author
 	char		file[PATH_MAX];		// Location of plug file
 	char		type[5];			// OSType of file support
 	OSType		mode;				// Mode support : Import +/ Export
 	int			version;			// Plug-in version
+	void*		hLibrary;
+	MADPLUGFUNC	IOPlug;				// Plug CODE
 } PlugInfo;
 #endif
 
@@ -486,7 +486,7 @@ typedef AEffect *(*VSTPlugInPtr)(audioMasterCallback  cb);
 //TODO: update VST headers
 typedef struct __VSTEffect
 {
-	AEffect				*ce[ 2];
+	AEffect				*ce[2];
 	short				VSTid;
 	CFStringRef			name;
 	Boolean				Active;
@@ -499,7 +499,7 @@ typedef struct __VSTEffect
 #ifdef WIN32
 typedef struct __VSTEffect
 {
-	AEffect				*ce[ 2];
+	AEffect				*ce[2];
 	short				VSTid;
 	char				name[50];
 	Boolean				Active;
@@ -512,7 +512,7 @@ typedef struct __VSTEffect
 #if (defined(__UNIX__) && !(defined (_MAC_H) || defined (_BE_H)))
 typedef struct __VSTEffect
 {
-	AEffect				*ce[ 2];
+	AEffect				*ce[2];
 	short				VSTid;
 	char				name[50];
 	Boolean				Active;
