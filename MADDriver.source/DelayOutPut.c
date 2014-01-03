@@ -25,7 +25,7 @@
 #include "RDriverInt.h"
 #include "PPPrivate.h"
 
-static Ptr	maxBuffer;
+//static Ptr	maxBuffer;
 
 UInt32 getfrequency(UInt32 period);
 
@@ -35,18 +35,11 @@ static __inline__ void PrepareInline(SInt32 *VolInter, SInt32* rVolInter, double
 {
 	double temp;
 	
-	temp = (v2-v1) / p2;
+	temp = (v2 - v1) / p2;
 	*VolInter = temp * (1 << BYTEDIV);
 	
 	*rVolInter = ((SInt32)v1 << BYTEDIV);
 }
-
-/*
-static inline long InterpolateInline(long p,long p2,long v1,long v2)
-{
-	return v1 + (((p2 - p)*(v2-v1)) / p2);
-}
-*/
 
 void MADCreateOverShoot(MADDriverRec *intDriver)
 {
@@ -57,8 +50,8 @@ void MADCreateOverShoot(MADDriverRec *intDriver)
 		case 16:
 			intDriver->DASCBuffer = (SInt32*)calloc((intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, 1);
 			
-			maxBuffer = (Ptr) intDriver->DASCBuffer;
-			maxBuffer = maxBuffer + ((size_t)intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L;
+			//maxBuffer = (Ptr)intDriver->DASCBuffer;
+			//maxBuffer = maxBuffer + ((size_t)intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L;
 			
 			for (i = 0; i < MAXCHANEFFECT; i++)
 				intDriver->DASCEffectBuffer[i]	= (SInt32*)calloc((intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, 1);
