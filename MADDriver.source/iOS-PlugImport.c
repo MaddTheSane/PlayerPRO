@@ -22,13 +22,13 @@
 
 typedef struct iPlugInfo
 {
-	char		type[5];		// OSType of file support.
 	OSType		mode;			// Mode support : Import +/ Export
 	UInt32		version;		// Plug-in version
 	CFStringRef	MenuName;		// Plug name
 	CFStringRef	AuthorString;	// Plug author
 	CFStringRef UTIType;
 	MADPLUGFUNC	IOPlug;			// Plug CODE
+	char		type[5];		// OSType of file support.
 } iPlugInfo;
 
 #define PLUGVERS 2 << 24 | 0 << 16 | 0 << 8 | 0
@@ -177,7 +177,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 	}
 };
 
-static OSErr PPMADInfoFile( char *AlienFile, PPInfoRec	*InfoRec)
+static OSErr PPMADInfoFile(const char *AlienFile, PPInfoRec	*InfoRec)
 {
 	MADSpec	*theMAD;
 	long	fileSize;
